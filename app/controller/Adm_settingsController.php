@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controller; fff
+namespace app\controller;
 
 use app\controller\AdminscController;
 use app\core\App;
