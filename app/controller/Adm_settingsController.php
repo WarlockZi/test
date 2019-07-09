@@ -37,6 +37,11 @@ class Adm_settingsController extends AdminscController {
    }
    public function actionDumpWWW() {
 
+      if($this->isAjax()){
+         
+      $a = 3;   
+      }
+      
       $this->auth();
 
       $this->layout = 'crm';

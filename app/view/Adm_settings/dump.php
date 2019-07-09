@@ -11,8 +11,8 @@
   <? if (in_array('3', $user['rightId'])): // admin ?>
      <div class="admin-actions">
 
-       <a href  = '/adminsc/settings/DumpWWW'>Dump WWW</a>
-       <a href  = '/adminsc/settings/DumpSQL'>Dump SQL</a>
+       <a href  = '/adminsc/settings/dumpwww'>Dump WWW</a>
+       <a href  = '/adminsc/settings/dumpsql'>Dump SQL</a>
      </div>
   <? endif; ?>
 

@@ -10,11 +10,18 @@
 
 
   <? if (in_array('3', $user['rightId'])): // admin ?>
-     <div class="admin-actions">
+     <form class = 'column dump-form' action="/adminsc/settings/dumpwww">
 
-       <a href  = '/adminsc/settings/DumpWWW'>Dump WWW</a>
-    
-     </div>
+
+       <label class ='row' for="name" value = >file name<input id = "name" type="text" VALUE = <?= $_SERVER['DOCUMENT_ROOT'] ?>>
+       </label>
+       
+       
+       <input type="submit" value = 'вперед'>
+
+     </form>
+
+
   <? endif; ?>
 
 
