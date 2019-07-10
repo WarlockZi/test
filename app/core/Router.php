@@ -73,7 +73,6 @@ class Router {
          // передаем route, из него в Contriller вычленяем (route[action] = view)
          $controller = 'app\controller\\' . self::$route['controller'] . 'Controller';
          $cObj = new $controller(self::$route);
-         //exit('url --- '.$url.' cont--- '.$controller);
          // Если удалось подключить класс 
          if (class_exists($controller)) {
             $action = 'action' . self::upperCamelCase(self::$route['action']); // . 'Action'; //Action для того, чтобы пользователь не мог обращаться к функции(хотя можно написать protected)
@@ -81,7 +80,6 @@ class Router {
             if (method_exists($cObj, $action)) {
                $cObj->$action(self::$aCategoryOrProduct); // Выполним метод
                $cObj->getView(); // Подключим вид
-               $url = $_SERVER['QUERY_STRING'];
             } else {
                echo "<br><b>$action</b> не найден...  ";
             }

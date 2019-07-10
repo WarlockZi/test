@@ -52,7 +52,7 @@ class View {
       }
       $page_cache = ob_get_clean();
       echo $page_cache;
-      return $page_cache;
+//      return $page_cache;
    }
 
    public static function getMeta() {
