@@ -11,15 +11,29 @@ class Catalog extends Model {
 
 
    public function isProduct($url) {
-
-      $arr = explode('/', $url);
-
-      if ($product = $this->findOne($arr[1], 'name')) {
-         return $product;
+      
+      
+      //      $category = App::$app->cache->get('category'.$url);
+      if (!$product) {
+         $arr = explode('/', $url);
+         if (count($arr) > 3) {
+            http_response_code(404);
+            exit(include '../public/404.html');
+         }
+         
+         
+         if ($product = $this->findOne($arr[0], 'name')[0]) {
+            $product['parents'] = $this->getCategoryParents($product['parent']);
+            $product['children'] = $this->getCategoryChildren($product['id']);
+            App::$app->cache->set('category' . $url, $product, 30);
+         }
       }
-      return FALSE;
+      if (!$product) {
+         return FALSE;
+      };
+      return $product;
    }
-
+   
    public function productsCnt() {
 
       $sql = 'SELECT COUNT(*) FROM PRODUCTS';

@@ -44,6 +44,9 @@
      <form method="post" action= '/Adminsc'>
        <input class = "list" type="submit" name = 'replaceUnderlinesDashesInURLS' value = "Заменить _ дефисами">
      </form> 
+     <form method="post" action= '/Adminsc'>
+       <input class = "list" type="submit" name = 'fixProductsPath' value = "Замена пути товаров">
+     </form> 
    <!--           <div id="vk_post_2083688_2227"></div><script type="text/javascript">
          (function (d, s, id) {
              var js, fjs = d.getElementsByTagName(s)[0];

@@ -168,20 +168,6 @@ class AdminscController extends AppController {
 
    public function replaceUnderlinesDashesInURLS() {
 
-//      $sql = "UPDATE durl "
-//         . "VALUE = "
-//         . "(SELECT )IN `vitex_test` AS s"
-//         . "FROM `migration` "
-//         . "IN `db_name` AS t"
-//         . "WHERE s.name = t.name";
-//      $sql = "LEFT JOIN db_name.migration as s ON
-//t.name = s.name
-//SET t.durl = s.durl";
-//      $sql = "UPDATE products "
-//         . "IN vitex_test AS t "         
-//         . "SET durl = (SELECT durl "
-//         . "FROM migration IN db_name AS s "
-//         . "WHERE t.name = s.name)";
       $sql = "UPDATE products "
          . "SET durl = REPLACE(durl, '_','-')";
 
@@ -191,11 +177,32 @@ class AdminscController extends AppController {
          . "SET name = REPLACE(name, '_','-')";
 
       App::$app->catalog->insertBySql($sql, $params);
-      
+
       $sql = "UPDATE products "
          . "SET durl = REPLACE(durl, '/catalog','')";
 
       App::$app->catalog->insertBySql($sql, $params);
+
+      exit;
+   }
+
+   public function fixProductsPath() {
+
+//      $sql = "SELECT * FROM products where durl='/letnyaya-spetsodezhda/kostyumy-dlya-itr/kostyum-gudzon-1/'";
+      $sql = "SELECT * FROM products";
+      $products = App::$app->catalog->findBySql($sql);
+
+      foreach ($products as $key => $value) {
+         $durl = $value['durl'];
+         $arr = explode('/', $durl);
+         $name = array_pop($arr);
+         $name = array_pop($arr);
+         $string = 
+            "UPDATE products SET alias = '{$name}' where durl='{$durl}'";
+         $sql = str_replace('/', '\/', $string);
+
+         App::$app->catalog->insertBySql($string);
+      }
 
       exit;
    }
