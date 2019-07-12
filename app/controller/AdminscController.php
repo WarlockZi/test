@@ -189,20 +189,20 @@ class AdminscController extends AppController {
    public function fixProductsPath() {
 
 //      $sql = "SELECT * FROM products where durl='/letnyaya-spetsodezhda/kostyumy-dlya-itr/kostyum-gudzon-1/'";
-      $sql = "SELECT * FROM products";
-      $products = App::$app->catalog->findBySql($sql);
-
-      foreach ($products as $key => $value) {
-         $durl = $value['durl'];
-         $arr = explode('/', $durl);
-         $name = array_pop($arr);
-         $name = array_pop($arr);
-         $string = 
-            "UPDATE products SET alias = '{$name}' where durl='{$durl}'";
-         $sql = str_replace('/', '\/', $string);
-
-         App::$app->catalog->insertBySql($string);
-      }
+//      $sql = "SELECT * FROM products";
+//      $products = App::$app->catalog->findBySql($sql);
+//
+//      foreach ($products as $key => $value) {
+//         $durl = $value['durl'];
+//         $arr = explode('/', $durl);
+//         $name = array_pop($arr);
+//         $name = array_pop($arr);
+//         $string = 
+//            "UPDATE products SET alias = '{$name}' where durl='{$durl}'";
+//         $sql = str_replace('/', '\/', $string);
+//
+//         App::$app->catalog->insertBySql($string);
+//      }
 
       exit;
    }
