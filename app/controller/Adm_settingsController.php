@@ -27,6 +27,18 @@ class Adm_settingsController extends AdminscController {
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
+   public function actionPics() {
+
+      $this->auth();
+
+      $this->layout = 'crm';
+      $this->vars['js'] = $this->getJSCSS('.js');
+      
+      $pics = App::$app->adminsc->findAll('pic');
+      
+      $this->set(compact('pics', 'js'));
+
+   }
    public function actionDump() {
 
       $this->auth();

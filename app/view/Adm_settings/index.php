@@ -16,6 +16,7 @@
        <a href  = '/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
        <a href  = '/adminsc/settings/instructions'>Инструкции</a>
        <a href  = '/adminsc/settings/dump'>Dump</a>
+       <a href  = '/adminsc/settings/pics'>Картинки</a>
 
      </div>
   <? endif; ?>
@@ -46,6 +47,9 @@
      </form> 
      <form method="post" action= '/Adminsc'>
        <input class = "list" type="submit" name = 'fixProductsPath' value = "Замена пути товаров">
+     </form> 
+     <form method="post" action= '/Adminsc'>
+       <input class = "list" type="submit" name = 'fixPicNames' value = "Замена арт картинки">
      </form> 
    <!--           <div id="vk_post_2083688_2227"></div><script type="text/javascript">
          (function (d, s, id) {

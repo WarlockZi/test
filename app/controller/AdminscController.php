@@ -185,7 +185,15 @@ class AdminscController extends AppController {
 
       exit;
    }
+   
+   public function fixPicNames() {
 
+      $sql = "UPDATE pic SET nameRu = REPLACE('.jpg','') LIMIT 1";
+      $products = App::$app->catalog->findBySql($sql);
+
+      exit;
+   }
+   
    public function fixProductsPath() {
 
 //      $sql = "SELECT * FROM products where durl='/letnyaya-spetsodezhda/kostyumy-dlya-itr/kostyum-gudzon-1/'";
