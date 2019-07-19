@@ -21,6 +21,18 @@ class User extends Model {
       return $this->findAll('users');
    }
 
+   public function getUserRightsSet($userId) {
+      $sql = "SELECT u.surName, ur.name, ur.id FROM `users` AS u"
+         . " LEFT JOIN `users_rights_set` AS urs"
+         . " ON urs.parent=u.id"
+         . " LEFT JOIN `user_rights` AS ur"
+         . " ON ur.id=urs.name"
+         . " WHERE u.id=?"
+         . "";
+      $params = [$userId];
+      return $this->findBySql($sql, $params);
+   }
+
    public function confirm($hash) {
 
       $sql = ' 
@@ -147,7 +159,6 @@ class User extends Model {
       $sql = "SELECT * FROM {$this->table} WHERE email = ? AND password = ?";
       try {
          $user = $this->findBySql($sql, [$email, $password]);
-         
       } catch (Exception $exc) {
          echo $exc->getTraceAsString();
       }
@@ -183,7 +194,7 @@ class User extends Model {
     * @return string <p>Идентификатор пользователя</p>
     */
    public function userId() {
-	   
+
       // Получим id пользователя из сессии
       if (isset($_SESSION['id'])) {
          return $_SESSION['id'];
@@ -235,7 +246,7 @@ class User extends Model {
       if (strlen($password) >= 6) {
          return true;
       }
-      
+
       return false;
    }
 
@@ -250,7 +261,7 @@ class User extends Model {
       }
       return false;
    }
-   
+
    /**
     * Проверяет не занят ли email другим пользователем
     * @param type $email <p>E-mail</p>
@@ -258,33 +269,32 @@ class User extends Model {
     */
    public function checkEmailExists($email) {
 
-      $res = $this->findOne($email,'email');
+      $res = $this->findOne($email, 'email');
       if (count($res)) {
          return $res[0];
       }
       return $res;
    }
-   
+
    /**
     * Проверяет не занят ли email другим пользователем
     * @param type $email <p>E-mail</p>
     * @return boolean <p>Результат выполнения метода</p>
     */
-   
    public function send_mail($email, $tema, $mail_body, $headers) {
 
-         require_once(ROOT . '/libs/PHPMailer/src/Exception.php');
-         require_once(ROOT . '/libs/PHPMailer/src/OAuth.php');
-         require_once(ROOT . '/libs/PHPMailer/src/PHPMailer.php');
-         require_once(ROOT . '/libs/PHPMailer/src/SMTP.php');
-         require_once(ROOT . '/libs/PHPMailer/src/POP3.php');
+      require_once(ROOT . '/libs/PHPMailer/src/Exception.php');
+      require_once(ROOT . '/libs/PHPMailer/src/OAuth.php');
+      require_once(ROOT . '/libs/PHPMailer/src/PHPMailer.php');
+      require_once(ROOT . '/libs/PHPMailer/src/SMTP.php');
+      require_once(ROOT . '/libs/PHPMailer/src/POP3.php');
 
-         $config = require CONFIG;
-         if ($_SERVER['SERVER_NAME'] == 'vitexopt.ru') {
-            $config = $config['Mailer_vitex'];
-         } else {
-            $config = $config['Mailer_openServer'];
-         }
+      $config = require CONFIG;
+      if ($_SERVER['SERVER_NAME'] == 'vitexopt.ru') {
+         $config = $config['Mailer_vitex'];
+      } else {
+         $config = $config['Mailer_openServer'];
+      }
 
 //         $userName = $post->name;
 //         $testName = $post->test_name;
@@ -292,43 +302,42 @@ class User extends Model {
 //         $errorCnt = (int) $post->errorCnt;
 //         $errorSubj = $errorCnt == 0 ? 'СДАН' : "не сдан: $errorCnt ош из $questCnt";
 
-         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
-         try {
-            $mail->SMTPDebug = 2;  // Enable verbose debug output
-            if ($config['smtp_mode']) {
-               $mail->isSMTP();                                      // Set mailer to use SMTP
-               $mail->SMTPAuth = true;                               // Enable SMTP authentication
-               $mail->Username = $config['smtp_username'];                 // SMTP username
-               $mail->Password = $config['smtp_pass'];                           // SMTP password
-               $mail->SMTPSecure = $config['smtp_SMTPSecure'];                            // Enable TLS encryption, `ssl` also accepted
-               $mail->Port = $config['smtp_port'];
-            };
-            $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-            //Recipients
-            $mail->setFrom('vitexopt@vitexopt.ru', 'vitexopt@vitexopt.ru');
-            $mail->addAddress($email);     // Add a recipient
+      $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+      try {
+         $mail->SMTPDebug = 2;  // Enable verbose debug output
+         if ($config['smtp_mode']) {
+            $mail->isSMTP();                                      // Set mailer to use SMTP
+            $mail->SMTPAuth = true;                               // Enable SMTP authentication
+            $mail->Username = $config['smtp_username'];                 // SMTP username
+            $mail->Password = $config['smtp_pass'];                           // SMTP password
+            $mail->SMTPSecure = $config['smtp_SMTPSecure'];                            // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = $config['smtp_port'];
+         };
+         $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+         //Recipients
+         $mail->setFrom('vitexopt@vitexopt.ru', 'vitexopt@vitexopt.ru');
+         $mail->addAddress($email);     // Add a recipient
 //            if (trim($userName) !== "Вороник Виталий Викторович") {
 //               $mail->addAddress('sno_dir@vitexopt.ru', 'SNO');
 //            };
-            //Content
-            $mail->isHTML(true);                                  // Set email format to HTML
-            $mail->Subject = $tema;
+         //Content
+         $mail->isHTML(true);                                  // Set email format to HTML
+         $mail->Subject = $tema;
 
 //            ob_start();
 //            require APP . '/view/Freetest/email.php';
 //            $body = ob_get_clean();
 
-            $mail->Body = $mail_body;
-            $mail->AltBody = "Ссылка на страницу с результатами: тут";
+         $mail->Body = $mail_body;
+         $mail->AltBody = "Ссылка на страницу с результатами: тут";
 
-            $mail->send();
-            echo 'Message has been sent';
-         } catch (Exception $e) {
-            echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
-         }
+         $mail->send();
+         echo 'Message has been sent';
+      } catch (Exception $e) {
+         echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+      }
 //      };
    }
-
 
    /**
     * Возвращает пользователя с указанным id
@@ -336,7 +345,7 @@ class User extends Model {
     * @return array <p>Массив с информацией о пользователе</p>
     */
    public function getUserById($id) {
-	   
+
 
       $res = $this->findOne($id, 'id');
       if ($res) {
@@ -381,7 +390,7 @@ class User extends Model {
    //    // Преобразуем инд массив в числа
    //    $indexArrayOfNums = array_map(create_function('$value', 'return (int)$value;'), $indexArrayOfStr);
    //	foreach ($indexArrayOfNums as $k => $v){
-   //        $sql = 'SELECT id, rightNameEn FROM rights WHERE id = ?';
+   //        $sql = 'SELECT id, nameEn FROM rights WHERE id = ?';
    //		$arrRights[] = $this->findBySql($sql, [$v]);
    //	}
    //

@@ -51,16 +51,6 @@ class DB {
         }
         return [];
     }
-    public function insert($sql, $params = []) {
-//        self::$countSql++;
-//        self::$queries[] = $sql;
-        $stmt = $this->pdo->prepare($sql);
-        $res = $stmt->execute($params);
-        if ($res !== FALSE) {
-            return true;
-        }
-        return FALSE;
-    }
 
     /**
      * Устанавливает соединение с базой данных

@@ -141,9 +141,42 @@ class AdminscController extends AppController {
 
       $this->auth();
 
-      $us = App::$app->user->findAll('users');
-      $rightTypes = App::$app->user->getRightTypes();
-      $this->set(compact('us', 'rightTypes'));
+      $users = App::$app->user->findAll('users');
+
+      foreach ($users as $key => $value) {
+         $userId = $value['id'];
+         $user_rights_set = App::$app->user->getUserRightsSet($userId);
+         foreach ($user_rights_set as $k) {
+
+            $users[$key]['rights_set'][] = $k['name'];
+         }
+      }
+
+      $rights = App::$app->user->findAll('user_rights');
+      ;
+
+      $this->set(compact('users', 'rights'));
+   }
+   
+   public function actionUser() {
+
+//      $this->auth();
+
+      $users = App::$app->user->findAll('users');
+
+      foreach ($users as $key => $value) {
+         $userId = $value['id'];
+         $user_rights_set = App::$app->user->getUserRightsSet($userId);
+         foreach ($user_rights_set as $k) {
+
+            $users[$key]['rights_set'][] = $k['name'];
+         }
+      }
+
+      $rights = App::$app->user->findAll('user_rights');
+      ;
+
+      $this->set(compact('users', 'rights'));
    }
 
    public function actionIndex() {
@@ -185,21 +218,29 @@ class AdminscController extends AppController {
 
       exit;
    }
-   
+
    public function fixPicNames() {
 
-      $sql = "UPDATE pic SET nameRu = REPLACE('.jpg','') LIMIT 1";
-      $products = App::$app->catalog->findBySql($sql);
+//      $sql = "UPDATE pic SET nameHash = REPLACE(nameHash, nameHash, concat(nameHash,'.jpg')) where nameHash = '26602552'";
+// уберем .jpg из nameHash  
+//      $sql = "UPDATE pic SET nameHash = REPLACE(nameHash, nameHash, concat(nameHash,'\.jpg'))";
+//      App::$app->catalog->insertBySql($sql);
+// уберем upload/iblock/ из dpic
+//      $sql = "UPDATE products SET dpic = REPLACE(dpic, '/upload/iblock', '')";
+//      App::$app->catalog->insertBySql($sql);
+// уберем upload/iblock/ из preview_pic
+      $sql = "UPDATE products SET preview_pic = REPLACE(preview_pic, '/upload/iblock', '')";
+      App::$app->catalog->insertBySql($sql);
 
-      exit;
+
+      header('settings');
    }
-   
-   public function fixProductsPath() {
 
+   public function fixProductsPath() {
+// уберем /letnaya/bla bla/
 //      $sql = "SELECT * FROM products where durl='/letnyaya-spetsodezhda/kostyumy-dlya-itr/kostyum-gudzon-1/'";
 //      $sql = "SELECT * FROM products";
 //      $products = App::$app->catalog->findBySql($sql);
-//
 //      foreach ($products as $key => $value) {
 //         $durl = $value['durl'];
 //         $arr = explode('/', $durl);
@@ -208,10 +249,8 @@ class AdminscController extends AppController {
 //         $string = 
 //            "UPDATE products SET alias = '{$name}' where durl='{$durl}'";
 //         $sql = str_replace('/', '\/', $string);
-//
 //         App::$app->catalog->insertBySql($string);
 //      }
-
       exit;
    }
 

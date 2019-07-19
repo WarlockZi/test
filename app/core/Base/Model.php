@@ -72,7 +72,7 @@ abstract class Model {
    }
 
    public function insertBySql($sql, $params = []) {
-      return $this->pdo->insert($sql, $params);
+      return $this->pdo->execute($sql, $params);
    }
 
    public function autoincrement($table, $db = 'vitex_test') {

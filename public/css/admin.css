@@ -70,7 +70,6 @@ span.close{
 	position: absolute;
     right: 0px;
     top: 0px;
-	cursor: pointer;
     border: 1px solid #ccc;
     padding: 0 5px; 
 }
@@ -89,14 +88,7 @@ menu{
     top: 100%;
     margin: 0;
 }
-.flex1{
-	display: flex;
-	flex:1;
-}
-.row{
-	display: flex;
-	flex-flow: wrap;
-}
+
 .name{
 	display: flex;
 	flex:1;
@@ -127,9 +119,10 @@ menu{
 }
 
 
-/*//////////////*/
-/*//alert//////*/
-/*//////////////*/
+/*/////////////////////////////*/
+/*//       ALERT        //////*/
+/*///////////////////////////*/
+
 .prop-name{
 	display:flex;
 	border-bottom: 1px solid #d8d8d8;
@@ -191,7 +184,6 @@ menu{
     background: #ccc;
     text-transform: uppercase;
     font-weight: 800;
-    cursor: pointer;
 }
 .messageClose:hover{
     background: #4cb000;
@@ -357,23 +349,7 @@ menu{
 * и оставляем иконки на малых экранах
 */
 
-@media screen and (max-width: 680px) {
-	.tabs>label {
-		font-size: 0;
-	}
-	.tabs>label:before {
-		margin: 0;
-		font-size: 18px;
-	}
-}
-/* Изменяем внутренние отступы 
-*  переключателей для малых экранов
-*/
-@media screen and (max-width: 400px) {
-	.tabs>label {
-		padding: 15px;
-	}
-}
+
 
 
 .title{
@@ -531,8 +507,104 @@ td a
 	outline: none;
 }
 
+/*//////////////////////////////*/
+/*////////   FORMS  /////////*/
+/*//////////////////////////////*/
+
+.add:before    { content: "\271A"; }
+.edit:before   { content: "\270E"; }
+.delete:before { content: "\2718";}
+.save:before   { content: "\2714";}
+.email:before  { content: "\2709";}
+.cross:before  { content: "\2716"; } 
+
+.like:before               { content: "\2764"; }
+.star:before               { content: "\2605"; }
+.spark:before              { content: "\2737"; }
+.play:before               { content: "\25B6"; }
+.watch:before              { content: "\231A"; }
+.blacksun:before           { content: "\2600"; }
+.cloud:before              { content: "\2601"; }
+.umbrella:before           { content: "\2602"; }
+.snowman:before            { content: "\2603"; }
+.blackstar:before          { content: "\2605"; }
+.whitestar:before          { content: "\2606"; }
+.blackphone:before         { content: "\260E"; }
+.whitephone:before         { content: "\260F"; }
+.saltire:before            { content: "\2613"; }
+.hot_drink:before          { content: "\2615"; }
+.skull:before              { content: "\2620"; }
+.radioactive:before        { content: "\2622"; }
+.biohazard:before          { content: "\2623"; }
+.peace:before              { content: "\262E"; }
+.yingyang:before           { content: "\262F"; }
+.frowning_face:before      { content: "\2639"; }
+.smiling_face:before       { content: "\263A"; }
+.first_quarter_moon:before { content: "\263D"; }
+.last_quarter_moon:before  { content: "\263E"; }
+.wheelchair:before         { content: "\267F"; }
+.recycle:before            { content: "\267D"; }
+.recycle2:before           { content: "\267C"; }
+.music_note:before         { content: "\266C"; }
+.warning:before            { content: "\26A0"; }
+.male_and_female:before    { content: "\26A4"; }
+.scissors:before           { content: "\2701"; }
+.airplane:before           { content: "\2708"; }
+.snow:before               { content: "\2042"; }
 
 
+
+
+/*//////////////////////////////*/
+/*////////   TABLE USERS  /////////*/
+/*//////////////////////////////*/
+
+
+.buttons
+{
+    display: inline-block;
+    white-space: nowrap;
+	text-align: center;
+	line-height: 20px;
+    background: #eeeeee;
+    background: -moz-linear-gradient(top, #eeeeee 0%, #eeeeee 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#eeeeee));
+    background: -webkit-linear-gradient(top, #eeeeee 0%,#eeeeee 100%);
+    background: -o-linear-gradient(top, #eeeeee 0%,#eeeeee 100%);
+    background: -ms-linear-gradient(top, #eeeeee 0%,#eeeeee 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#eeeeee',GradientType=0 );
+    background: linear-gradient(top, #eeeeee 0%,#eeeeee 100%);
+    border: 1px solid #a1a1a1;
+    color: #333;
+    text-shadow: 0 1px 0 rgba(255,255,255,.8);
+    -moz-border-radius: .2em;
+    -webkit-border-radius: .2em;
+    border-radius: .2em;
+    -moz-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+    box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+} 
+.buttons:hover {
+    background: #ffffff;
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5));
+    background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+    background: -o-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 );
+    background: linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+}
+.buttons:active {
+    -moz-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+    -webkit-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+    box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+    position: relative;
+    top: 1px;
+}
+
+#users {
+
+}
 
 .type
 {
@@ -542,15 +614,9 @@ td a
 {
 	width: 90px;
 }
-.save
-
-{
-	width: 50px;
+.phone{
+	width:105px;
 }
-/*.thumb
-{
-	width: 90px;
-}*/
 
 .navi
 {
@@ -567,23 +633,38 @@ td a
 }
 .navi a:hover
 {
-
     background-color: #e8e8e8;;	
 }
+
+
+
 
 .filter
 {
 	padding: 30px;
 }
-table
-{
-	text-align: left;
-	/*	cellpadding: 4px; 
-		border:1px;*/
+
+
+#users div[data-id]{
+	justify-content: flex-start;
+    align-items: flex-start;
 }
-tbody tr:nth-child(odd)
+#users div[data-id]:nth-child(odd)
 {
 	background-color:#f7f7f7;
+}
+
+/*//////////////////////////////*/
+/*////////   COMMON   /////////*/
+/*//////////////////////////////*/
+
+.flex1{
+	display: flex;
+	flex:1;
+}
+.row{
+	display: flex;
+	flex-flow: wrap;
 }
 
 .column
@@ -591,6 +672,17 @@ tbody tr:nth-child(odd)
 	display:flex;
 	flex-flow:column;
 }
+
+.plr{
+	padding: 0 10px ;
+}
+.pud{
+	padding: 10px 0;
+}
+
+
+
+
 
 input
 {
@@ -601,14 +693,8 @@ input
 
 .sName,
 .mName
-
 {
     width: 22%;
-}
-
-tbody tr:first-child
-{
-    height: 50px;
 }
 
 .ref-row
@@ -619,13 +705,13 @@ tbody tr:first-child
 .hired,
 .bday
 {
-	width: 130px;
+	width: 126px;
 
 }
 .admin-actions{
 	display: flex;
 	flex-flow:column;
-	margin-bottom: 250px;
+	margin-bottom: 50px;
 	width: 150px;
 	border: 1px solid #ddd;
 	padding: 10px;
@@ -667,14 +753,12 @@ tbody tr:first-child
 	background: #123aff;
 	color: #fff;
 	height: 100%;
-	cursor: pointer;
 	font-weight: 600;
     padding: 3px 6px;
 	transition: .1s;
 }
 .add-prop:hover{
 	background: #0070ff;
-	cursor: pointer;
 	color:#fff;
 }
 .val>.name>input{
@@ -706,7 +790,7 @@ tbody tr:first-child
 	transition:.3s;
 	border-radius: 0 0 7px 7px;
     line-height: 200%;
-	cursor: pointer;
+
 }
 .del-prop span{
 	position:absolute;
@@ -752,9 +836,7 @@ tbody tr:first-child
 	/*border-right: 1px solid slategray;*/
 }
 
-.button{
-	cursor: pointer;
-}
+
 
 
 html,
@@ -817,7 +899,14 @@ a,
 a:hover,
 .list,
 .a label,
-.submit
+.submit,
+.button,
+.buttons,
+.del-prop,
+span.close,
+.messageClose,
+.add-prop,
+.add-prop:hover
 {
     cursor: pointer;
 }
@@ -965,7 +1054,7 @@ footer p{
 .confirm
 {
 	text-align: center;
-	width: 60px;
+	width: 20px;
 }
 .right
 {
@@ -977,4 +1066,22 @@ footer p{
 	min-width: 15px;
 	border:none;
 	border-right: 1px #ddd solid;
+}
+
+@media screen and (max-width: 680px) {
+	.tabs>label {
+		font-size: 0;
+	}
+	.tabs>label:before {
+		margin: 0;
+		font-size: 18px;
+	}
+}
+/* Изменяем внутренние отступы 
+*  переключателей для малых экранов
+*/
+@media screen and (max-width: 400px) {
+	.tabs>label {
+		padding: 15px;
+	}
 }

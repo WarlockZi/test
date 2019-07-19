@@ -1,6 +1,12 @@
-$(function () {
+
+   
+   $('#users').on('change', function(){
+      crudUser('UPDATE',event.target);
+   });
+   
    function crudUser(crud, self) {
 
+   debugger;
       var rightsStr = '',
       userId = self.prop('id'),
       tr = $('.' + userId)[0];
@@ -10,8 +16,7 @@ $(function () {
       for (var i = 0; i < rights.length; i++) {
          if (rights[i].checked == true) {
             rightsStr += i + 1 + ',';
-         }
-         ;
+         };
       }
       rightsStr = rightsStr.replace(/,\s*$/, "");
 //debugger;
@@ -32,8 +37,8 @@ $(function () {
          crud: crud,
       }
       post(PROJ + '/adminsc/users', data);
-   }
-   ;
+   };
+   
 
 
    $('.wrap').on('click', '.save', function () {
@@ -44,20 +49,16 @@ $(function () {
       else {
          crudUser('UPDATE', $(this));
       }
-
-
    });
 
 
    $('.wrap').on('click', '.btnadd-user', function () {
-
       var data = {
          action: 'addUser'
       }
       post(PROJ + '/adminsc/users', data).then(function (str) {
          $('tbody').append(str);
       });
-
    });
 
    function post(url, data) {
@@ -78,5 +79,5 @@ $(function () {
       });
    }
 
-});
+
 
