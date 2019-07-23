@@ -24,12 +24,15 @@ class AboutController extends AppController {
 //      View::setMeta('Каталог спецодежды', 'Каталог спецодежды', 'Каталог спецодежды');
 //      $this->set(compact('cats_id', 'user'));
    }
+   public function actionRequisites() {
+
+   }
 
    public function actionOferta() {
-      
+
    }
    public function actionReturn_change() {
-      
+
    }
 
 
