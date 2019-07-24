@@ -33,7 +33,7 @@
             $arr = explode('/', $product['durl']);
             $prodLink = array_pop($arr);
             $prodLink = array_pop($arr);
-            ?>          
+            ?>
 
             <a  href="/<?= $prodLink; ?>">
               <div class="action-labels">
@@ -46,7 +46,7 @@
               </div>
 
               <div class="price-block">
-                <span class="final price">550 р </span>
+                <span class="final price" editable>550 р </span>
                 <span class="price strikethrough">500 р</span>
               </div>
 

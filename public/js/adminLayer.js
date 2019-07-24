@@ -15,8 +15,23 @@
 
 
 $('.product.column').hover(
-       function(){ $(this).addClass('edit') },
-       function(){ $(this).removeClass('edit') }
+       function(){ 
+          $(this).wrap("<span class = 'edit' ></span>");
+//          $(this).addClass('edit');
+          
+          $(this).find('a').click(function(event){
+             event.preventDefault();
+          }); 
+          
+//          debugger;
+          
+       
+       },
+       
+       
+       function(){ 
+          $(this).unwrap().unwrap();
+       }
 );
 
 
