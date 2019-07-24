@@ -73,7 +73,7 @@ class UserController extends AppController {
             // Если данные правильные, запоминаем пользователя (в сессию)
             App::$app->user->setAuth($user);
 
-            // Перенаправляем пользователя в закрытую часть - кабинет 
+            // Перенаправляем пользователя в закрытую часть - кабинет
 //            if (in_array('5', explode(",", $user['rightId'])) && !in_array('2', explode(",", $user['rightId']))) {
 //
 //               echo 'squash';
@@ -110,7 +110,7 @@ class UserController extends AppController {
          $confPass = App::$app->user->clean_data($_POST['confPass']);
          $name = App::$app->user->clean_data($_POST['name']); //$post['reg_name'];//
          $surName = App::$app->user->clean_data($_POST['surName']); //$post['reg_name'];//
-         $secName = App::$app->user->clean_data($_POST['secName']); //$post['reg_name'];//		
+         $secName = App::$app->user->clean_data($_POST['secName']); //$post['reg_name'];//
 
          if ($msg = $this->regDataWrong($email, $password, $confPass, $name, $surName, $secName)) {
             echo include APP . '/view/User/alert.php';
@@ -250,7 +250,7 @@ class UserController extends AppController {
 
       $this->auth(); // Авторизация
       // Проверяем существует ли пользователь и подтвердил ли регистрацию
-//      $user = App::$app->user->getUserById($_SESSION['id']);
+      $user = App::$app->user->getUserWithRightsSet($_SESSION['id']);
 
       if ($this->vars['user'] === false) {
          // Если пароль или почна неправильные - показываем ошибку
@@ -261,7 +261,7 @@ class UserController extends AppController {
       } else {
          View::setMeta('Спецодежда оптом с доставкой', 'Доставим спецодежду в любую точку России', 'Спецодежда, доставка, производство, по России');
 //         $rightId = explode(",", $user['rightId']);
-//         $this->set(compact('user', 'rightId'));
+//         $this->set(compact('user'));
       }
    }
 

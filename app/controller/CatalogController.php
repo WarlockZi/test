@@ -52,11 +52,14 @@ class CatalogController extends AppController {
 
       $products = $aCategory['children']['products'];
       $categories = $aCategory['children']['categories'];
+
+      if ($urerId = $_SESSION['id']) {
+         $user = App::$app->user->getUserWithRightsSet($urerId);
+      }
       View::setMeta($lastParent, $lastParent, $lastParent);
-      $this->set(compact('breadcrumbs', 'products', 'tov', 'categories'));
+      $this->set(compact('breadcrumbs','user', 'products', 'tov', 'categories'));
 
       }
 
 //   }
    }
-   

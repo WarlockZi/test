@@ -148,16 +148,15 @@ class AdminscController extends AppController {
          $user_rights_set = App::$app->user->getUserRightsSet($userId);
          foreach ($user_rights_set as $k) {
 
-            $users[$key]['rights_set'][] = $k['name'];
+            $users[$key]['rights_set'][$k['id']] = $k['name'];
          }
       }
 
       $rights = App::$app->user->findAll('user_rights');
-      ;
 
       $this->set(compact('users', 'rights'));
    }
-   
+
    public function actionUser() {
 
 //      $this->auth();
@@ -222,7 +221,7 @@ class AdminscController extends AppController {
    public function fixPicNames() {
 
 //      $sql = "UPDATE pic SET nameHash = REPLACE(nameHash, nameHash, concat(nameHash,'.jpg')) where nameHash = '26602552'";
-// уберем .jpg из nameHash  
+// уберем .jpg из nameHash
 //      $sql = "UPDATE pic SET nameHash = REPLACE(nameHash, nameHash, concat(nameHash,'\.jpg'))";
 //      App::$app->catalog->insertBySql($sql);
 // уберем upload/iblock/ из dpic
@@ -246,7 +245,7 @@ class AdminscController extends AppController {
 //         $arr = explode('/', $durl);
 //         $name = array_pop($arr);
 //         $name = array_pop($arr);
-//         $string = 
+//         $string =
 //            "UPDATE products SET alias = '{$name}' where durl='{$durl}'";
 //         $sql = str_replace('/', '\/', $string);
 //         App::$app->catalog->insertBySql($string);

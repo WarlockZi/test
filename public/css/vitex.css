@@ -1,5 +1,13 @@
 
 /*************************************
+*******      ADMIN    ******
+**************************************/
+
+.edit{
+	border:solid;
+}
+
+/*************************************
 *******      HTML BODY    ******
 **************************************/
 h1,
@@ -573,6 +581,9 @@ h3.may-also-like-wrap
 *******      AUTOCOMPLETE    ******
 **************************************/
 
+.ui-menu .ui-menu-item-wrapper{
+	display: flex;
+}
 .ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front img{
 	max-height: 50px;
 
@@ -816,7 +827,7 @@ h3.may-also-like-wrap
 }
 
 .icon-menu{
-    padding:10px;
+    padding:3px;
 }
 
 /*
@@ -944,11 +955,11 @@ header {
     z-index: 500;
     width: 100%;
     -webkit-box-shadow: 0 0 18px 0 #d2d2d2;
-    box-shadow: 0 0 18px 0 #d2d2d2;
+    box-shadow: 0 5px  18px 0 #d2d2d2;
     margin-bottom: 10px;
 }
 .logo-wrap{
-    flex: 2;
+    width: 515px;
 }
 
 .h-phone{
@@ -996,8 +1007,9 @@ header {
 
 .search-block{
     position: relative;
-    width: 43%;
     margin-top: 7px;
+	margin-right: 10px;
+	width: 43%;
 }
 
 .inner-wrap{
@@ -1010,8 +1022,8 @@ header {
     background: #fff;
     border: 0;
     border-radius: 2px;
-    padding: 4px 34px 4px 10px;
-    font: 15px/17px 'Proxima Nova', sans-serif;
+    padding: 4px 0px 4px 10px;
+    font: 14px/17px 'Proxima Nova', sans-serif;
     color: #343133;
     height: 22px;
     width: 100%;
@@ -1019,11 +1031,9 @@ header {
 
 .search-block .form-submit {
     border: 0;
-    background-color: transparent !important;
-    background-position: -53px -20px;
     position: absolute;
     top: 0px;
-    right: -44px;
+    right: 0px;
     cursor: pointer;
     height: 77%;
     width: 35px;
@@ -1070,7 +1080,7 @@ header {
     padding: 25px 25px;
     overflow: visible;
 }
-.bx_sitemap_ul{
+.inner ul{
     padding:  0 30px;
 }
 .sub-cat .inner:before {
@@ -1094,6 +1104,10 @@ header {
 
 
 /**********  FRAME   *********/
+
+.none{
+	display: none;
+}
 .wrap {
     flex: 1 0 auto;
 }
@@ -1113,6 +1127,7 @@ footer {
 	color: #777;
     flex: 0 0 auto;
     justify-content: space-between;
+	width: 119%;
 }
 
 footer p{
@@ -1135,7 +1150,7 @@ footer p{
 	display:flex;
     flex: 1;
     justify-content: start;
-	height: 50px;
+	height: 45px;
 }
 .logo img{
     width: 100%;
@@ -1156,7 +1171,6 @@ footer p{
     color:#343133;
 }
 .user-menu{
-    flex:2;
     justify-content: flex-end;
     align-items: center;
 }
@@ -1169,15 +1183,14 @@ footer p{
 }
 .enter-button
 {
-    width: 50px;
-    height: 40px;
-	/*    border: 1px solid #949494*/
+    width: 29px;
+    height: 25px;
 }
 .enter-button:hover a{
     color:#ff2929;
 }
 .enter-button:hover {
-    background: #e5e5e5;
+    background: #626262;
 }
 
 .enter-button,
@@ -1188,17 +1201,13 @@ footer p{
     position: relative;
 }
 
-.search-img
+/*.search-img
 {
 	display:flex;
 	justify-content: center;
 	width:100px;
 
-}
-.search-img img
-{
-
-}
+}*/
 
 .form-submit input
 {
@@ -1216,7 +1225,6 @@ footer p{
 .user-button div:first-child
 {
     align-items: center;
-    border: 1px #e5e5e5 solid;
     font-size: 11px;
     display:flex;
 }
@@ -1225,7 +1233,7 @@ footer p{
 {
     padding-left: 10px;
     min-width: 120px;
-    color: #757575;
+    color: #fff;
 }
 
 .nav{
@@ -1394,12 +1402,9 @@ footer p{
     }
 	.logo svg
 	{
-		width:50%;
+		width: 235px;;
 	}
 
-	.h-lower{
-		justify-content: start;
-	}
 }
 
 /* xs (<=543px) */
@@ -1443,9 +1448,12 @@ footer p{
     .logo-wrap{
         min-width: 280px;
     }
+	.search-block{
+		width: 67%;
+	}
 }
 /* sm (>=576 и <=767) */
-@media (min-width: 576px) and (max-width: 767px) {  
+@media (min-width: 576px) and (max-width: 768px) {  
 
 	.h-upper>div:not([class])
 	{
@@ -1463,10 +1471,12 @@ footer p{
         display:none;
     }
     .logo-wrap{
-        min-width: 280px;
+        width: 240px;
     }
 
-
+	.search-block{
+		width: 67%;
+	}
 }
 
 /* md (>=768 и <=991) */
@@ -1485,6 +1495,10 @@ footer p{
 	.logo-wrap {
 		min-width: 271px;
 		height: 45px;
+		max-width:403px;
+	}
+	.search-block{
+		width: 67%;
 	}
 }
 
@@ -1499,6 +1513,7 @@ footer p{
 
 	.logo-wrap {
 		min-width: 437px;
+		max-width:583px;
 	}
 
 }

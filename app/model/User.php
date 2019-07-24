@@ -22,7 +22,8 @@ class User extends Model {
    }
 
    public function getUserRightsSet($userId) {
-      $sql = "SELECT u.surName, ur.name, ur.id FROM `users` AS u"
+
+      $sql = "SELECT u.id, u.surName, ur.name, ur.id FROM `users` AS u"
          . " LEFT JOIN `users_rights_set` AS urs"
          . " ON urs.parent=u.id"
          . " LEFT JOIN `user_rights` AS ur"
@@ -33,9 +34,19 @@ class User extends Model {
       return $this->findBySql($sql, $params);
    }
 
+   public function getUserWithRightsSet($userId) {
+
+      $user = $this->getUserById($userId);
+      $user_rights_set = $this->getUserRightsSet($userId);
+      foreach ($user_rights_set as $k) {
+         $user['rights_set'][$k['id']] = $k['name'];
+      }
+      return $user;
+   }
+
    public function confirm($hash) {
 
-      $sql = ' 
+      $sql = '
             UPDATE users
             SET confirm= "1"
             WHERE hash = ?
@@ -54,7 +65,7 @@ class User extends Model {
    public function getPassword($email) {
 
       $email = $this->clean_data($email);
-      $sql = " 
+      $sql = "
             SELECT id
             FROM {$this->table}
             WHERE email = ?
@@ -79,7 +90,7 @@ class User extends Model {
             $pass .= $str[$x];
          }
          $md5pass = md5($pass);
-         $sql = "  
+         $sql = "
                     UPDATE {$this->table}
                     SET password = ?
                     WHERE id = ?
@@ -111,7 +122,7 @@ class User extends Model {
          } else {
             $_SESSION['msg'] = $msg;
          }
-      } else {                      //не  отпарвляли форму 
+      } else {                      //не  отпарвляли форму
          $_SESSION['msg'] = '';
       }
    }
@@ -132,7 +143,7 @@ class User extends Model {
     */
    public function update($id, $email, $name, $surName, $middleName, $birthDate, $phone, $password) {
       $password = md5($password);
-      $sql = "UPDATE users 
+      $sql = "UPDATE users
             SET  email 	= ?,
 			name 		= ?,
 			password 	= ?,
@@ -182,7 +193,7 @@ class User extends Model {
    /**
     * Запоминаем пользователя
     * @param integer $userId <p>id пользователя</p>
-    * @return 
+    * @return
     */
    public function setAuth($user) {
       // Записываем идентификатор пользователя в сессию
@@ -380,7 +391,7 @@ class User extends Model {
     * @return array <p>Массив с информацией о правах</p>
     */
    //public function getUserRights($user) {
-   //	
+   //
    //    $userEmail = $user['email'];
    //    $sql = 'SELECT rightId FROM users WHERE email = ?';
    //	$rightId = $this->findBySql($sql, [$userEmail]);
