@@ -82,7 +82,7 @@ abstract class Model {
    }
 
    public function getBreadcrumbs($category, $parents, $type) {
-      if ($type='category') {
+      if ($type=='category') {
 
       // в parents массив из адресной строки - надо получить aliases
       foreach ($parents as $key) {
@@ -104,7 +104,12 @@ abstract class Model {
       foreach ($parents as $parent) {
          $breadcrumbs .= "<a href = '/{$parent['name']}'>{$parent['alias']}</a>";
       }
-      return $breadcrumbs . "<span>{$category['alias']}</span>";
+      if ($type == 'category') {
+         return $breadcrumbs . "<span>{$category['alias']}</span>";
+      }else{
+         return $breadcrumbs . "<span>{$category['name']}</span>";
+
+      }
    }
 
    public function send_result_mail($cache_path, $action) {
