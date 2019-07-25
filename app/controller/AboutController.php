@@ -27,6 +27,11 @@ class AboutController extends AppController {
    public function actionRequisites() {
 
    }
+   public function actionContacts() {
+
+
+
+   }
 
    public function actionOferta() {
 

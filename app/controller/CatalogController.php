@@ -24,18 +24,29 @@ class CatalogController extends AppController {
       $this->set(compact('cats_id', 'user'));
    }
 
-   public function actionProduct() {
+   public function actionProduct($product) {
 
-      if (!$this->route['cat3']) {// значит одна подкатегория
-         $cat1 = $this->route['cat1'];
-         $tov = $this->route['cat2'];
-      } else {
-         $cat1 = $this->route['cat1'];
-         $cat2 = $this->route['cat2'];
-         $tov = $this->route['cat3'];
+      header('Cache-Control: private, max-age=8400');
+      header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
+
+      $js = '/public/jscss/Catalog/index.js';
+      $this->set(compact('js'));
+
+      $parents = $aCategory['parents'];
+      $breadcrumbs = App::$app->catalog->getBreadcrumbs($product, $product['parents'],'product');
+
+//      $products = $aCategory['children']['products'];
+//      $categories = $aCategory['children']['categories'];
+
+      if ($urerId = $_SESSION['id']) {
+         $user = App::$app->user->getUserWithRightsSet($urerId);
       }
+      View::setMeta($lastParent, $lastParent, $lastParent);
+      $this->set(compact('breadcrumbs','user', 'product', 'tov', 'categories'));
 
-      View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
+
+
+//      View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
       $this->set(compact('user', 'tov'));
    }
 
@@ -48,7 +59,7 @@ class CatalogController extends AppController {
       $this->set(compact('js'));
 
       $parents = $aCategory['parents'];
-      $breadcrumbs = App::$app->catalog->getBreadcrumbs($aCategory, $parents);
+      $breadcrumbs = App::$app->catalog->getBreadcrumbs($aCategory, $parents,'product');
 
       $products = $aCategory['children']['products'];
       $categories = $aCategory['children']['categories'];
@@ -58,8 +69,5 @@ class CatalogController extends AppController {
       }
       View::setMeta($lastParent, $lastParent, $lastParent);
       $this->set(compact('breadcrumbs','user', 'products', 'tov', 'categories'));
-
       }
-
-//   }
    }

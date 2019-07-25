@@ -1,6 +1,6 @@
 window.onload = function () {
 
-     $('#autocomplete').autocomplete({
+   $('#autocomplete').autocomplete({
 
       source: '/search', //window.location.hostname + 
       minLength: 1,

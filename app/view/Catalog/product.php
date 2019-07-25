@@ -8,8 +8,8 @@
       <div class="card">
         <div class="card-left">
           <div class = "row">
-            <H1><?= $product['name']; ?></H1>   
-            <div class = "art"><?= $product['art']; ?></div>    
+            <H1><?= $product['name']; ?></H1>
+            <div class = "art"><?= $product['art']; ?></div>
           </div>
 
           <div class="image">
@@ -41,12 +41,9 @@
 
             <div class="prod-info-wrap">
               <div class="info-tag">Информация о товаре</div>
-              <ul class="properties">
-                <li>first</li>
-                <li>second</li>
-                <li>third</li>
-                <li>forth</li>
-              </ul>
+              <div class="dtxt">
+                  <?= $product['dtxt'] ?>
+              </div>
               <span>Больше информации о товаре »</span>
             </div>
             <h3 class="may-also-like-wrap">
@@ -87,7 +84,7 @@
             <div class="note">
               Внимание: предоставляя отзыв вы подтверждаете и гарантируете, что вам исполнилось 18 лет. Ваш отзыв будет рассмотрен в течение 5 дней.
             </div>
-          </div>     
+          </div>
 
 
         </div>

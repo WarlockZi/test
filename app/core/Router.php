@@ -37,7 +37,7 @@ class Router {
          self::$aCategoryOrProduct = $product;
          return TRUE;
 
-// это страница не продукт и не категория         
+// это страница не продукт и не категория
       } else {
 
          foreach (self::$routes as $pattern => $route) {
@@ -73,7 +73,7 @@ class Router {
          // передаем route, из него в Contriller вычленяем (route[action] = view)
          $controller = 'app\controller\\' . self::$route['controller'] . 'Controller';
          $cObj = new $controller(self::$route);
-         // Если удалось подключить класс 
+         // Если удалось подключить класс
          if (class_exists($controller)) {
             $action = 'action' . self::upperCamelCase(self::$route['action']); // . 'Action'; //Action для того, чтобы пользователь не мог обращаться к функции(хотя можно написать protected)
             // Если удалось подключить метод Action
@@ -88,7 +88,7 @@ class Router {
          }
       } else {
          http_response_code(404);
-         include '../public/404.html'; // '404.html'; 
+         include '../public/404.html'; // '404.html';
       }
    }
 

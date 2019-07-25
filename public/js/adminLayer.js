@@ -16,11 +16,11 @@
 
 $('.product.column').hover(
        function(){ 
-          $(this).wrap("<span class = 'edit' ></span>");
+//          $(this).wrap("<span class = 'edit' ></span>");
 //          $(this).addClass('edit');
           
           $(this).find('a').click(function(event){
-             event.preventDefault();
+//             event.preventDefault();
           }); 
           
 //          debugger;

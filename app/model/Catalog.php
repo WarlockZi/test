@@ -4,36 +4,43 @@ namespace app\model;
 
 use app\model\Test;
 use app\core\Base\Model;
+use app\core\App;
 
 class Catalog extends Model {
 
    public $table = 'products';
 
+   public function getProductParents($parentId) {
+
+      if ($parentId) {
+         $sql = 'SELECT * FROM category WHERE id = ?';
+         $params = [$parentId];
+         $parent = $this->findBySql($sql, $params)[0];
+
+         return $parent;
+      }
+   }
 
    public function isProduct($url) {
-      
-      
-      //      $category = App::$app->cache->get('category'.$url);
+
+      $cacheName = 'product' . $url;
+      $product = App::$app->cache->get($cacheName);
       if (!$product) {
-         $arr = explode('/', $url);
-         if (count($arr) > 3) {
-            http_response_code(404);
-            exit(include '../public/404.html');
-         }
-         
-         
-         if ($product = $this->findOne($arr[0], 'name')[0]) {
-            $product['parents'] = $this->getCategoryParents($product['parent']);
-            $product['children'] = $this->getCategoryChildren($product['id']);
-            App::$app->cache->set('category' . $url, $product, 30);
-         }
+         if ($product = $this->findOne($url, 'alias')[0]) {
+            $product['parents'][] = $this->getProductParents($product['parent']);
+            while ($last = end($product['parents'])['parent']) {
+               $product['parents'][] = $this->getProductParents($last);
+            }
+            App::$app->cache->set('product' . $url, $product, 30);
+         };
       }
+
       if (!$product) {
          return FALSE;
       };
       return $product;
    }
-   
+
    public function productsCnt() {
 
       $sql = 'SELECT COUNT(*) FROM PRODUCTS';
@@ -47,13 +54,11 @@ class Catalog extends Model {
 //      $params = [$id];
 //      return $this->findBySql($sql, $params);
 //   }
-
 //   public function getCategory($id) {
 //      $sql = 'SELECT * FROM category WHERE id = ?';
 //      $params = [$id];
 //      return $this->findBySql($sql, $params);
 //   }
-
 //   public function getCategoryParents($parentId) {
 //// получим родителей
 //      $i = 0;

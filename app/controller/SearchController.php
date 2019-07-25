@@ -8,6 +8,8 @@ class SearchController extends AppController {
 
    public function actionIndex() {
 
+      $url = 'alias';
+
       if (empty($_GET['term']) && empty($_GET['q']))
          exit();
 
@@ -18,7 +20,7 @@ class SearchController extends AppController {
       $qSql = addslashes('%' . $q . '%');
 
 
-      $sql = "SELECT durl, name, preview_pic FROM products WHERE name LIKE ? LIMIT 10";
+      $sql = "SELECT $url, name, preview_pic FROM products WHERE name LIKE ? LIMIT 10";
       $params = [$qSql];
       $arr = App::$app->catalog->findBySql($sql, $params);
 //      foreach ($arr as $i => $v){
@@ -31,7 +33,7 @@ class SearchController extends AppController {
          if (strpos(mb_strtolower($value['name']), $q) !== false) {
             array_push($result, array(
                 'pic' => $value['preview_pic'],
-                'url' => $value['durl'],
+                'url' => $value[$url],
 //                'label' => $value['name'],
                 'value' => strip_tags($value['name'])));
          }

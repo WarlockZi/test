@@ -81,20 +81,22 @@ abstract class Model {
       return $this->pdo->query($sql, $params)[0]['Auto_increment'];
    }
 
-   public function getBreadcrumbs($category, $parents) {
+   public function getBreadcrumbs($category, $parents, $type) {
+      if ($type='category') {
 
-      // в parents массив из адресной строки - надо получить aliases 
+      // в parents массив из адресной строки - надо получить aliases
       foreach ($parents as $key) {
          $params = [$key['name']];
          $sql = 'SELECT * FROM category WHERE name = ?';
          //если это категория, а ее не нашли вернем 404  ошибку
          if ($arrParents[] = $this->findBySql($sql, $params)[0]) {
-            
+
          } else {
             http_response_code(404);
             include '../public/404.html';
             exit();
          }
+      }
       }
 
       $breadcrumbs = "<a href = '/'>Главная</a>";

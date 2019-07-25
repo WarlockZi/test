@@ -420,7 +420,10 @@ h3.may-also-like-wrap
 }
 .properties
 {
-	position: relative;	
+	position: relative;
+	width: 80%;
+    text-align: left;
+    margin: 0 auto;
 }
 .properties:after
 {
@@ -597,6 +600,7 @@ h3.may-also-like-wrap
 .ui-menu-item-wrapper a{
 	display: flex;
 	justify-content: space-between;
+	width: 100%;
 }
 
 .product-container a{
@@ -824,32 +828,28 @@ h3.may-also-like-wrap
 	display: flex;
     align-items: center;
 	font: bold 17px/21px 'Proxima Nova', sans-serif;
+	padding: 0 25px;
 }
 
 .icon-menu{
     padding:3px;
 }
 
-/*
+
 .icon-phone:before { 
-    content: ''; 
+    content: '\1F57B'; 
     width: 26px; 
     height: 26px; 
     background-position: 0 -44px; 
     position: absolute; 
     left: 0; 
-    bottom: -4px; 
-}*/
-
-.icon-phone .popup-info { 
-    position: absolute; 
-    left: 0; 
-    top: 100%; 
-    padding-top: 0; 
-    height: 0; 
-    z-index: 6; 
+    bottom: 9px; 
+	color: #e30000;
+	font-size:27px;
+	transform: rotate(-30deg);
 }
-.icon-phone>a:after {
+
+.icon-phone:after {
     content: '';
     width: 8px;
     height: 8px;
@@ -859,8 +859,18 @@ h3.may-also-like-wrap
     transform: rotate(45deg);
 	position:absolute;
 	top: 34%;
-    right: -11px;
+    right: 3px;
 }
+
+.icon-phone .popup-info { 
+    position: absolute; 
+    left: 0; 
+    top: 100%; 
+    padding-top: 0; 
+    height: 0; 
+    z-index: 6; 
+}
+
 .icon-phone .popup-info .inner { 
     width: 200px; 
     background: #fff; 
@@ -933,6 +943,8 @@ body,
 .user-button:hover .nav,
 .user-button:hover .nav>a,
 .nav:hover>a,
+.user-menu:hover .nav,
+.user-menu:hover .nav a,
 footer,
 footer p
 { 
@@ -1116,12 +1128,24 @@ header {
     background: black;
 	color: #fff;
 }
+.top-menu a{
+	color: #fff;
+}
 
-.top-menu .row
+.top-menu>.row
 {
     height: 100%;
     justify-content: space-around;
     align-items: center;
+	max-width: 1310px;
+    margin: auto;
+}
+
+.top-menu .row .row
+{
+
+    align-items: center;
+	justify-content: space-between;
 }
 footer {
 	color: #777;
@@ -1173,6 +1197,8 @@ footer p{
 .user-menu{
     justify-content: flex-end;
     align-items: center;
+	height: 100%;
+	position: relative;
 }
 
 .h-phone,
@@ -1181,24 +1207,30 @@ footer p{
     top: 8px;
     white-space: nowrap;
 }
-.enter-button
+.user-menu>a
 {
-    width: 29px;
-    height: 25px;
+	position: absolute;
+    top: 0;
+    right: 0;
+	width: 100%;
+	height: 100%;
 }
-.enter-button:hover a{
+.user-menu a:hover{
     color:#ff2929;
 }
-.enter-button:hover {
+.user-menu a{
+	color:#8d8d8d;
+}
+.user-menu:hover {
     background: #626262;
 }
 
-.enter-button,
+.user-menu,
 .user-button
 {
     justify-content: center;
     align-items: center;
-    position: relative;
+	height: 100%;
 }
 
 /*.search-img
@@ -1209,6 +1241,19 @@ footer p{
 
 }*/
 
+
+.form-submit:before
+{
+	content:'\1F50D';
+	display: block;
+}
+.user-menu:before
+{
+	content:'☰';
+	display: block;
+	padding: 0 8px;
+}
+
 .form-submit input
 {
 	position: absolute;
@@ -1218,21 +1263,23 @@ footer p{
     width: 100%;
 	opacity:0;
 }
+
+
 .user-button
 {
     flex-direction: column;
 }
-.user-button div:first-child
+/*.user-button div:first-child
 {
     align-items: center;
     font-size: 11px;
     display:flex;
-}
+}*/
 
 .user-button div:first-child span
 {
     padding-left: 10px;
-    min-width: 120px;
+	/*    min-width: 120px;*/
     color: #fff;
 }
 
@@ -1245,7 +1292,8 @@ footer p{
     z-index: 2;
     position: absolute;
     top: 100%;
-    width: 100%;
+    right: -20px;
+    width: 300px;
 }
 .nav a:hover{
     background: rgba(0,0,0,0.2);
@@ -1394,7 +1442,7 @@ footer p{
     .title,
 	.logo>span,
     .basket,
-	.user-menu,
+	.user-button span,
 	.icon-phone,    
 	.contacts
 	{
@@ -1416,7 +1464,7 @@ footer p{
 	.logo>span,
     .basket,
 	.icon-phone,
-	.user-menu
+	.user-button span
 
     {
         display:none;
@@ -1466,7 +1514,8 @@ footer p{
 	.logo>span,
     .basket,
 	.icon-phone,  
-	.user-menu
+	.user-button span,
+	.user-button
     {
         display:none;
     }
@@ -1527,10 +1576,10 @@ footer p{
     .q,
     .menu a, 
     textarea,
-    .pagination a,
-    .user-button div:first-child
+    .pagination a
+
     {
-        font-size: .7vw;
+        font-size: .9vw;
     }
     .content
     {
@@ -1562,10 +1611,10 @@ footer p{
     {
         font-size: 1vw;
     }
-    .user-button .icon-menu:before 
-    {
-        padding: .2vw;
-    }
+	/*    .user-button .icon-menu:before 
+		{
+			padding: .2vw;
+		}*/
 
 
 }

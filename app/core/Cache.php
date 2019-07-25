@@ -5,7 +5,6 @@ namespace app\core;
 class Cache {
 
    public function __construct() {
-      //exit('ff');
    }
 
    public  function set($key, $data, $seconds = 3600) {

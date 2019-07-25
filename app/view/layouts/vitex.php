@@ -22,33 +22,28 @@
       <div class="top-menu">
         <div class="row">
 
-          <div class="item1">О нас</div>
-          <div class="item2">контакты</div>
-          <div class="item2">статьи</div>
+          <a class="item" href="/about">О НАС</a>
+          <a class="item" href="/about/contacts">КОНТАКТЫ</a>
+          <div class="item">СТАТЬИ</div>
 
           <div class="user-menu">
               <? if (!isset($user)): ?>
                <a href="/user/login">
-                 <svg class="enter-button">
+<!--                 <svg class="enter-button">
                  <use xlink:href="#greyAvatar">
-                 </svg>
+                 </svg>-->
                </a>
 
             <? else: ?>
                <? $rights = $user['rights_set'] ?>
                <div class = "user-button">
-                 <div>
-                   <span><?
-                       if (isset($user)) {
-                          echo $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'];
-                       }
-                       ?></span>
-                   <div class="icon-menu">
-                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                     <path fill = '#ccc' d="M1 3h14v2h-14zM1 7h14v2h-14zM1 11h14v2h-14z"></path>
-                     </svg>
-                   </div>
-                 </div>
+
+                 <?
+                 if (isset($user)) {
+                    echo $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'];
+                 }
+                 ?>
+
 
                  <div class="nav">
                    <a  href="/user/edit" >Редактировать свой профиль</a>
@@ -73,7 +68,7 @@
 
 
 
-                   <? if (isset($user)): ?>
+   <? if (isset($user)): ?>
                       <a href="/test/contacts">
                         <span class="icon-envelope">
                           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 20 20">
@@ -90,10 +85,10 @@
                         </span>
                         Выход
                       </a>
-                   <? endif; ?>
+               <? endif; ?>
                  </div>
                </div>
-            <? endif; ?>
+<? endif; ?>
 
           </div>
 
@@ -114,10 +109,7 @@
             </div>
             <div class = 'icon-phone'>
 
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="16" viewBox="0 0 16 16">
-              <title>phone</title>
-              <path fill = '#e30000' d="M11 10c-1 1-1 2-2 2s-2-1-3-2-2-2-2-3 1-1 2-2-2-4-3-4-3 3-3 3c0 2 2.055 6.055 4 8s6 4 8 4c0 0 3-2 3-3s-3-4-4-3z"></path>
-              </svg>
+
               <a href="tel:+79217131767">8 (921) 713-17-67</a>
 
 
@@ -153,9 +145,9 @@
               <div class="sub-cat">
                 <div class="inner">
                   <ul>
-                      <? foreach ($list as $item => $arr): ?>
+                    <? foreach ($list as $item => $arr): ?>
                        <li><a href="/<?= $catName = $arr['name']; ?>" aria-label="<?= $catName; ?>" ><?= $arr['alias'] ?></a></li>
-                    <? endforeach; ?>
+<? endforeach; ?>
                   </ul>
                   <div style="clear: both;"></div>                            </div>
               </div>
@@ -185,7 +177,7 @@
 
 
 
-      <?= $content ?>
+<?= $content ?>
 
 
 
@@ -260,7 +252,7 @@
 
     <? if (in_array('Admin', $rights)): // Admin    ?>
        <script src = "/public/js/adminLayer.js?<?= time() ?>"></script>
-    <? endif; ?>
+<? endif; ?>
 
 
     <div class = 'none'>
@@ -291,6 +283,10 @@
       <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#b1d9vAIQqx"/>
       <use width="100%" height="100%" fill="#ff2929" xlink:href="#b22YyPyZK"/>
       </g>
+      </svg>
+
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+      <path fill = '#ccc' d="M1 3h14v2h-14zM1 7h14v2h-14zM1 11h14v2h-14z"></path>
       </svg>
 
       <svg  id= 'greyAvatar' width = "30" fill = '#fff' version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve"><g><path d="M500,990.1c-290,0-490-219.4-490-490C10,229.3,229.4,9.9,500,9.9c270.7,0,490,219.4,490,490.1C990,770.7,790,990.1,500,990.1z M500,73.4c-235.6,0-426.5,191-426.5,426.6c0,110.2,42.1,210.3,110.7,286c61.8-29.9,39.1-5,119.9-38.3c82.7-34,102.3-45.9,102.3-45.9l0.8-78.4c0,0-31-23.5-40.5-97.3c-19.4,5.6-25.8-22.6-27-40.5c-1-17.3-11.2-71.4,12.4-66.5c-4.8-36.1-8.3-68.6-6.6-85.9c5.9-60.5,64.7-123.8,155.2-128.4c106.5,4.6,148.7,67.8,154.6,128.4c1.7,17.3-2.1,49.9-6.9,85.9c23.6-4.8,13.4,49.2,12.2,66.5c-1,17.9-7.6,46-26.9,40.4c-9.7,73.8-40.7,97.1-40.7,97.1l0.7,78c0,0,19.6,11,102.3,45.1c80.8,33.3,58.1,9.9,119.9,39.8c68.6-75.7,110.7-175.8,110.7-286C926.6,264.4,735.6,73.4,500,73.4z"/></g></svg>
