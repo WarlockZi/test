@@ -4,7 +4,26 @@
 **************************************/
 
 .edit{
-	border:solid;
+	position: absolute;
+	width:70%;
+	top:0;
+	right:0;
+	height:25px;
+	background-color: #ddd;
+	padding: 0 0 0 10px;
+	text-align: center;
+
+}
+.edit:before
+{
+	content:'\270e';
+	display: block;
+	position: absolute;
+	width:10px;
+	height: 10px;
+	z-index:2;
+	color: #000;
+
 }
 
 /*************************************
@@ -241,6 +260,7 @@ main{
 	border: 1px solid #dcefd1;
 	max-width: 260px;
 	position: relative;
+	margin: 54px 0 0 0;
 }
 #subcat{
 	display:none;
@@ -261,8 +281,8 @@ main{
 .product{
 	display: flex;
 	position: relative;
-	justify-content: center; 
-	width: 17vw;
+	justify-content: baseline; 
+	width: 240px;
 	padding: 0 10px;
 	margin-right: 10px;
 	box-sizing: border-box;
@@ -623,9 +643,15 @@ h3.may-also-like-wrap
     position: relative;
     overflow: hidden;
 }
-
+.dtxt
+{
+    width: 500px;
+    margin: 0 10px;
+    text-align: left;
+}
 .card-left
 {
+	    flex: 20;
 	display: flex;
     -webkit-box-direction: normal;
     -webkit-box-orient: vertical;
@@ -633,10 +659,10 @@ h3.may-also-like-wrap
     -moz-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    -webkit-flex-shrink: 0;
-    -moz-flex-shrink: 0;
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
+    -webkit-flex-shrink: 1;
+    -moz-flex-shrink: 1;
+    -ms-flex-negative: 1;
+    flex-shrink: 1;
     position: relative;
     overflow: hidden;
     -webkit-flex-basis: 760px;
@@ -648,6 +674,7 @@ h3.may-also-like-wrap
 
 .card-right
 {
+	    flex: 1;
 	-webkit-flex-basis: 240px;
     -moz-flex-basis: 240px;
     -ms-flex-preferred-size: 240px;
@@ -721,13 +748,9 @@ h3.may-also-like-wrap
 
 .badge .image img
 {
-	/*max-width:  85%;*/
-	/*min-width: 270px;*/
-	min-height: 450px;
-	height: auto;
-    width: auto;
-    max-width: 450px;
-    max-height: 450px;
+	min-width: 300px;
+
+    max-width: 100%;
 }
 
 
@@ -1130,6 +1153,7 @@ header {
 }
 .top-menu a{
 	color: #fff;
+	font: 600 17px/17px 'Proxima Nova', sans-serif;
 }
 
 .top-menu>.row
@@ -1244,8 +1268,8 @@ footer p{
 
 .form-submit:before
 {
-	content:'\1F50D';
-	display: block;
+	/*	content:'\1F50D';
+		display: block;*/
 }
 .user-menu:before
 {
@@ -1442,15 +1466,20 @@ footer p{
     .title,
 	.logo>span,
     .basket,
+	.user-button,
 	.user-button span,
 	.icon-phone,    
-	.contacts
+	.contacts,
+	.card-right
 	{
         display:none;
     }
 	.logo svg
 	{
 		width: 235px;;
+	}
+		.dtxt{
+		width:80%;
 	}
 
 }
@@ -1464,7 +1493,9 @@ footer p{
 	.logo>span,
     .basket,
 	.icon-phone,
-	.user-button span
+	.user-button span,
+	.user-button,
+	.card-right
 
     {
         display:none;
@@ -1486,7 +1517,9 @@ footer p{
     .test-menu-wrap{
         margin: 0;
     }
-
+	.dtxt{
+		width:80%;
+	}
 
     .nav{
         right: 0px;
@@ -1508,14 +1541,15 @@ footer p{
         display: none;
     }
 
-    .t-1,
+
     .t-2,
     .title,
 	.logo>span,
     .basket,
 	.icon-phone,  
 	.user-button span,
-	.user-button
+	.user-button,
+	.card-right
     {
         display:none;
     }
@@ -1534,7 +1568,6 @@ footer p{
     .h-upper>div:not([class]),
 	.title,
 	.logo>span,
-    .t-2,
     .basket	
 
 	{

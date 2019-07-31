@@ -2,82 +2,83 @@
 
 <main>
   <div class="site">
-    <nav class="breadcrumbs">
-        <?= $breadcrumbs ?>
-    </nav>
+
     <div class="categories row">
 
       <div class="filters column">
-        <?if ($categories):?>
-        <input name = "subcat" class="filter" id="subcat" type="checkbox">
-        <label for="subcat">подкатегории
-          <? $parent = array_pop($categories) ?>
-          <? foreach ($categories as $category): ?>
-          <div class="subcat">
-            <a href="/<?= $category['name']; ?>"><?= $category['alias']; ?></a>
-          </div>
-          <? endforeach; ?>
-        </label>
-        <?endif;?>
+          <? if ($categories): ?>
+           <input name = "subcat" class="filter" id="subcat" type="checkbox">
+           <label for="subcat">подкатегории
+               <? $parent = array_pop($categories) ?>
+               <? foreach ($categories as $category): ?>
+                <div class="subcat">
+                  <a href="/<?= $category['name']; ?>"><?= $category['alias']; ?></a>
+                </div>
+             <? endforeach; ?>
+           </label>
+        <? endif; ?>
 
       </div>
 
 
       <div class="right-block">
+        <nav class="breadcrumbs">
+            <?= $breadcrumbs ?>
+        </nav>
         <div class="products">
-          <? foreach ($products as $product): ?>
-          <? if ($product['act'] == 'Y'): ?>
-          <div class="product column">
+            <? foreach ($products as $product): ?>
+               <? if ($product['act'] == 'Y'): ?>
+                <div class="product column">
 
-            <?
-            $arr = explode('/', $product['durl']);
-            $prodLink = array_pop($arr);
-            $prodLink = array_pop($arr);
-            ?>
+                  <?
+                  $arr = explode('/', $product['durl']);
+                  $prodLink = array_pop($arr);
+                  $prodLink = array_pop($arr);
+                  ?>
 
-            <a  href="/<?= $prodLink; ?>">
-              <div class="action-labels">
+                  <a  href="/<?= $prodLink; ?>">
+                    <div class="action-labels">
 
-              </div>
-              <div class="pic-container">
-                <div class="pic">
-                  <img src="/pic<?= $product['dpic'] ?: '/srvc/nophoto-min.jpg' ?>" alt="">
+                    </div>
+                    <div class="pic-container">
+                      <div class="pic">
+                        <img src="/pic<?= $product['dpic'] ?: '/srvc/nophoto-min.jpg' ?>" alt="">
+                      </div>
+                    </div>
+
+                    <div class="price-block">
+                      <span class="final price" editable>550 р </span>
+                      <span class="price strikethrough">500 р</span>
+                    </div>
+
+                    <div class="item-title">
+                        <?= $product['name']; ?>
+                    </div>
+
+
+
+
+                  </a>
+
+
+                  <div class="star-rating">
+                    <div class="star-rating__wrap">
+                      <input class="star-rating__input" id="star-rating-5" type="radio" name="rating" value="5">
+                      <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-5" title="5 out of 5 stars"></label>
+                      <input class="star-rating__input" id="star-rating-4" type="radio" name="rating" value="4">
+                      <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4" title="4 out of 5 stars"></label>
+                      <input class="star-rating__input" id="star-rating-3" type="radio" name="rating" value="3">
+                      <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3" title="3 out of 5 stars"></label>
+                      <input class="star-rating__input" id="star-rating-2" type="radio" name="rating" value="2">
+                      <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2" title="2 out of 5 stars"></label>
+                      <input class="star-rating__input" id="star-rating-1" type="radio" name="rating" value="1">
+                      <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1" title="1 out of 5 stars"></label>
+                    </div>
+                  </div>
+
+
                 </div>
-              </div>
-
-              <div class="price-block">
-                <span class="final price" editable>550 р </span>
-                <span class="price strikethrough">500 р</span>
-              </div>
-
-              <div class="item-title">
-                  <?= $product['name']; ?>
-              </div>
-
-
-
-
-            </a>
-
-
-            <div class="star-rating">
-              <div class="star-rating__wrap">
-                <input class="star-rating__input" id="star-rating-5" type="radio" name="rating" value="5">
-                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-5" title="5 out of 5 stars"></label>
-                <input class="star-rating__input" id="star-rating-4" type="radio" name="rating" value="4">
-                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4" title="4 out of 5 stars"></label>
-                <input class="star-rating__input" id="star-rating-3" type="radio" name="rating" value="3">
-                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3" title="3 out of 5 stars"></label>
-                <input class="star-rating__input" id="star-rating-2" type="radio" name="rating" value="2">
-                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2" title="2 out of 5 stars"></label>
-                <input class="star-rating__input" id="star-rating-1" type="radio" name="rating" value="1">
-                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1" title="1 out of 5 stars"></label>
-              </div>
-            </div>
-
-
-          </div>
-          <? endif; ?>
+             <? endif; ?>
           <? endforeach; ?>
 
         </div>
