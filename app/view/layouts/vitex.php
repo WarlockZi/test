@@ -146,7 +146,7 @@
                 <div class="inner">
                   <ul>
                     <? foreach ($list as $item => $arr): ?>
-                       <li><a href="/<?= $catName = $arr['name']; ?>" aria-label="<?= $catName; ?>" ><?= $arr['alias'] ?></a></li>
+                       <li><a href="/<?= $catName = $arr['alias']; ?>" aria-label="<?= $catName; ?>" ><?= $arr['name'] ?></a></li>
 <? endforeach; ?>
                   </ul>
                   <div style="clear: both;"></div>                            </div>

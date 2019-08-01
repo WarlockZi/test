@@ -12,7 +12,7 @@
                <? $parent = array_pop($categories) ?>
                <? foreach ($categories as $category): ?>
                 <div class="subcat">
-                  <a href="/<?= $category['name']; ?>"><?= $category['alias']; ?></a>
+                  <a href="/<?= $category['alias']; ?>"><?= $category['name']; ?></a>
                 </div>
              <? endforeach; ?>
            </label>

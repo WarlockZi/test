@@ -5,13 +5,14 @@
 
 .edit{
 	position: absolute;
-	width:70%;
+	width:60%;
 	top:0;
 	right:0;
-	height:25px;
+
 	background-color: #ddd;
-	padding: 0 0 0 10px;
+	padding: 0 0 0 9px;
 	text-align: center;
+	line-height: 25px;
 
 }
 .edit:before
@@ -294,7 +295,7 @@ main{
     align-items: center;
 }
 .pic {
-    width: 15vw;
+    /*width: 15vw;*/
     height: 220px;
 }
 .pic img{
@@ -651,7 +652,7 @@ h3.may-also-like-wrap
 }
 .card-left
 {
-	    flex: 20;
+	flex: 20;
 	display: flex;
     -webkit-box-direction: normal;
     -webkit-box-orient: vertical;
@@ -674,7 +675,7 @@ h3.may-also-like-wrap
 
 .card-right
 {
-	    flex: 1;
+	flex: 1;
 	-webkit-flex-basis: 240px;
     -moz-flex-basis: 240px;
     -ms-flex-preferred-size: 240px;
@@ -700,12 +701,12 @@ h3.may-also-like-wrap
 	display: flex;
 	align-items: self-start;
 }
-.badge{
+/*.badge{
     position: relative;
     color: #212121;
     background-color: #fff;
     margin: 7px 0 0;
-}
+}*/
 
 .cust-questions-wrap ol
 {
@@ -733,26 +734,25 @@ h3.may-also-like-wrap
 	text-align: left;
 }
 
-.badge H1{
+.card H1{
     font: normal 19px Verdana,Arial,sans;
     color: #555;
     text-align: center;
     padding: 1.14rem 1.14rem ;
 }
 
-.badge .image {
+.card .image {
     text-align: center;
 	position: relative;
 	padding: 0 10px 36px;
 }
 
-.badge .image img
+.card .image img
 {
 	min-width: 300px;
-
+    padding-bottom: 40px;
     max-width: 100%;
 }
-
 
 .horiz-thumbs
 {
@@ -1478,7 +1478,7 @@ footer p{
 	{
 		width: 235px;;
 	}
-		.dtxt{
+	.dtxt{
 		width:80%;
 	}
 

@@ -3,8 +3,6 @@
     <div class="breadcrumbs">
         <?= $breadcrumbs ?>
     </div>
-    <div class="badge">
-
       <div class="card">
         <div class="card-left">
           <div class = "row">
@@ -51,7 +49,7 @@
             <div class="dtxt">
                 <?= $product['dtxt'] ?>
             </div>
-            <span>Больше информации о товаре »</span>
+            <!--<span>Больше информации о товаре »</span>-->
           </div>
           <h3 class="may-also-like-wrap">
             <span>Вам также может понравится</span>
@@ -134,7 +132,6 @@
 
 
     </div>
-  </div>
 </div>
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
 <symbol id="star" viewBox="-4 -6 48 48" >

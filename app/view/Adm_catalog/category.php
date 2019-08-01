@@ -6,7 +6,7 @@
     <a href  = "/adminsc/catalog/categories">Категории товаров</a>
   </div>
   <div class="nav-catalog breadcrumbs-adm">
-      <? if (isset($category['parents'])): ?> 
+      <? if (isset($category['parents'])): ?>
          <? foreach ($category['parents'] as $k => $v): ?>
     <a href  = "/adminsc/catalog/category?id=<?= $v['id'] ?>"><?= $v['name'] ?></a><span><?= $v['title'] ?></span>
        <? endforeach; ?>
@@ -32,10 +32,10 @@
         <section id="content-tab1">
           <div class="left-menu column">
               <? foreach ($category['children'] as $key => $value) : ?>
-               <a href="<?= PROJ ?>/adminsc/catalog/category?id=<?= $value['id'] ?>"><?= $value['alias'] ?></a>
+               <a href="/adminsc/catalog/category?id=<?= $value['id'] ?>"><?= $value['alias'] ?></a>
             <? endforeach; ?>
           </div>
-        </section>  
+        </section>
 
         <section id="content-tab2">
 
@@ -54,17 +54,17 @@
           </div>
 
 
-        </section> 
+        </section>
         <section id="content-tab3">
 
 
 
-        </section> 
+        </section>
         <section id="content-tab4">
 
 
 
-        </section>    
+        </section>
       </div>
 
     </div>

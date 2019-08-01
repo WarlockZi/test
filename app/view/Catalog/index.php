@@ -1,10 +1,10 @@
 
 <div class="site">
     <? foreach ($cats_id as $id): ?>
-     <a href="/catalog/<?= $id['name']; ?>">
+     <a href="/catalog/<?= $id['alias']; ?>">
        <div class="badge">
          <?= $id['id']; ?>
-         <?= $id['alias']; ?>
+         <?= $id['name']; ?>
        </div>
      </a>
   <? endforeach; ?>

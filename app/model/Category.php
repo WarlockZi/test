@@ -83,7 +83,7 @@ class Category extends Model {
             http_response_code(404);
             exit(include '../public/404.html');
          }
-         if ($category = $this->findOne($arr[0], 'name')[0]) {
+         if ($category = $this->findOne($arr[0], 'alias')[0]) {
             $category['parents'] = $this->getCategoryParents($category['parent']);
             $category['children'] = $this->getCategoryChildren($category['id']);
             App::$app->cache->set('category' . $url, $category, 30);
