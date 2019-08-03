@@ -6,17 +6,19 @@
     <div class="categories row">
 
       <div class="filters column">
-          <? if ($categories): ?>
-           <input name = "subcat" class="filter" id="subcat" type="checkbox">
-           <label for="subcat">подкатегории
-               <? $parent = array_pop($categories) ?>
-               <? foreach ($categories as $category): ?>
-                <div class="subcat">
-                  <a href="/<?= $category['alias']; ?>"><?= $category['name']; ?></a>
-                </div>
-             <? endforeach; ?>
-           </label>
-        <? endif; ?>
+        <div class="filter column">
+            <? if ($categories): ?>
+             <input name = "subcat" class="filter" id="subcat" type="checkbox">
+             <label for="subcat">подкатегории
+                 <? $parent = array_pop($categories) ?>
+                 <? foreach ($categories as $category): ?>
+                  <div class="subcat">
+                    <a  href="/<?= $category['alias']; ?>"><?= $category['name']; ?></a>
+                  </div>
+               <? endforeach; ?>
+             </label>
+          <? endif; ?>
+        </div>
 
       </div>
 
@@ -28,37 +30,37 @@
         <div class="products">
             <? foreach ($products as $product): ?>
                <? if ($product['act'] == 'Y'): ?>
-                <div class="product column">
-
                   <?
                   $arr = explode('/', $product['durl']);
                   $prodLink = array_pop($arr);
                   $prodLink = array_pop($arr);
                   ?>
+                <a data-id = '<?= $product['id']; ?>' href="/<?= $prodLink; ?>"class="product column">
 
-                  <a  href="/<?= $prodLink; ?>">
-                    <div class="action-labels">
 
+
+                  <!--<a  >-->
+                  <div class="action-labels">
+
+                  </div>
+                  <div class="pic-container">
+                    <div class="pic">
+                      <img src="/pic<?= $product['dpic'] ?: '/srvc/nophoto-min.jpg' ?>" alt="">
                     </div>
-                    <div class="pic-container">
-                      <div class="pic">
-                        <img src="/pic<?= $product['dpic'] ?: '/srvc/nophoto-min.jpg' ?>" alt="">
-                      </div>
-                    </div>
+                  </div>
 
-                    <div class="price-block">
-                      <span class="final price" editable>550 р </span>
-                      <span class="price strikethrough">500 р</span>
-                    </div>
+                  <div class="price-block">
+                    <span class="final price" editable>550 р </span>
+                    <span class="price strikethrough">500 р</span>
+                  </div>
 
-                    <div class="item-title">
-                        <?= $product['name']; ?>
-                    </div>
+                  <div class="item-title">
+                      <?= $product['name']; ?>
+                  </div>
 
 
 
 
-                  </a>
 
 
                   <div class="star-rating">
@@ -77,7 +79,8 @@
                   </div>
 
 
-                </div>
+                </a>
+                <!--</div>-->
              <? endif; ?>
           <? endforeach; ?>
 

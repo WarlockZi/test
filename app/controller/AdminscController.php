@@ -47,13 +47,13 @@ class AdminscController extends AppController {
 
       $this->auth();
 
-      $productId = $this->route['id'];
+      $productId = $_GET['id'];
       $this->vars['css'] = $this->getJSCSS('.css');
       $product = App::$app->catalog->getProduct($productId);
 
       $i = 0;
       while ($product['parent']) {
-         $category = App::$app->catalog->getCategory($product['parent'])[0];
+         $category = App::$app->category->getCategory($product['parent'])[0];
          $catProps = Prop::getByIds([$category['prop']]);
          foreach ($catProps as $key) {
             $i++;
@@ -61,7 +61,7 @@ class AdminscController extends AppController {
          }
          $product['parent'] = $category['parent'];
       };
-//         unset($categoryProps[0]);
+      unset($categoryProps[0]);
 
 
       $this->set(compact('product', 'categoryProps'));

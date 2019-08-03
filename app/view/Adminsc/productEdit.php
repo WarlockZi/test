@@ -1,7 +1,7 @@
 <div class = 'wrap-admin'>
   <div class = 'admin-product-edit'>
     <div class="title">
-      <div ><?= $product['name'] ?></div>
+      <div contenteditable="true"><?= $product['name'] ?></div>
     </div>
     <div class="main">
 
@@ -32,7 +32,7 @@
                 <div class="val" contenteditable="true"> <?= $product['art'] ?></div>
               </div>
 
-              <? foreach ($categoryProps as $k): ?> 
+              <? foreach ($categoryProps as $k): ?>
                  <div class="prop">
                    <div class="key"><?= $k['name'] ?>:</div>
                    <select class="val" name="" id="">
@@ -42,9 +42,9 @@
                         <option  value="<?= $d ?>"><?= $d ?></option>
                      <? endforeach; ?>
                    </select>
-                   <? if ($k['type']=='multy'):?>
-                   <div class="add">Добавить</div>
-                   <? endif;?>
+                   <? if ($k['type'] == 'multy'): ?>
+                      <div class="add">Добавить</div>
+                   <? endif; ?>
                    <!--<div class="art" contenteditable="true"> <?= $k['name'] ?></div>-->
                  </div>
               <? endforeach; ?>
@@ -55,7 +55,7 @@
 
           </div>
 
-        </section>  
+        </section>
         <section id="content-tab2">
 
           <div class="flex">
@@ -64,17 +64,30 @@
           </div>
 
 
-        </section> 
+        </section>
         <section id="content-tab3">
 
 
 
-        </section> 
+        </section>
+
         <section id="content-tab4">
 
+          <div class="prop">
+            <div class="key">title:</div>
+            <div class="val" contenteditable="true"> <?= $product['title'] ?></div>
+          </div>
+          <div class="prop">
+            <div class="key">description:</div>
+            <div class="val" contenteditable="true"> <?= $product['description'] ?></div>
+          </div>
+          <div class="prop">
+            <div class="key">keywords:</div>
+            <div class="val" contenteditable="true"> <?= $product['keywords'] ?></div>
+          </div>
 
 
-        </section>    
+        </section>
       </div>
 
 
@@ -83,5 +96,5 @@
 
       </div>
     </div>
-  </div> 
-</div> 
+  </div>
+</div>

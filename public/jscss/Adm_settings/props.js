@@ -1,18 +1,22 @@
 $(function () {
    var url = '/adminsc/settings';
-   
+//         debugger;
    
    // изменили название значения
    $('.property-block').on('keyup', '.value', function (event) {
       var name = this.innerText,
       id = $(this).data('id');
-//      debugger;
+      var d = $(this).parent().find('.value');
+      d = $.makeArray(d);
+      debugger;
+      var arr = d.map((val)=>val.innerText);
+      var val = arr.join(',').trim();
 
 // ^,-зпт в нач слова  |  (\+-знак плюса ,-зпт \s-пробел)*$  
-      name = name.replace(/[\+\,\s]*$/, "");
+      val = val.replace(/[\+\,\s]*$/, "");
       var param = {
          action: 'updateProp',
-         name: name,
+         val: val,
          id: id
       };
       setTimeout(function(){post(url, param)}, 800);
@@ -34,7 +38,6 @@ $(function () {
    });
 
    function addProp(self, enter) {
-//debugger;
       var a = $(self).parent().find('.value'),
       b = a[0],
       a = $(b).clone();
@@ -55,6 +58,7 @@ $(function () {
 // добавление значения 
    $('.property-block').on('click', '.add-prop-val', function () {
       var parentId = $(this).parent().parent().parent().data('prop');
+debugger;
       var data = {
          action:'addPropValue',
          parentId:parentId

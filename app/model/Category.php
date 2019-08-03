@@ -74,7 +74,22 @@ class Category extends Model {
       return $cont;
    }
 
-   public function isCategory($url) {
+   public function getCategory($id) {
+
+//      $category = App::$app->cache->get('category'.$url);
+
+         if ($category = $this->findOne($id)[0]) {
+            $category['parents'] = $this->getCategoryParents($category['parent']);
+            $category['children'] = $this->getCategoryChildren($category['id']);
+            App::$app->cache->set('category' . $url, $category, 30);
+         }
+
+      if (!$category) {
+         return FALSE;
+      };
+      return $category;
+   }
+   public function getCategoryByUrl($url) {
 
 //      $category = App::$app->cache->get('category'.$url);
       if (!$category) {
@@ -93,31 +108,6 @@ class Category extends Model {
          return FALSE;
       };
       return $category;
-   }
-
-   public function getCatPropsValsSnip($catProps) {
-
-//      foreach ($props as $key) {
-//         $catProps = $key;
-//         $catProps = Prop::getByIds($key['id']);
-//         if ($catProps) {
-//            $catProps = Prop::getPropsVals($catProps);
-//         }
-
-      ob_start();
-      include APP . '/view/Adm_catalog/snippet/KeyVal.php';
-      $cont = ob_get_clean();
-      echo $cont;
-   }
-
-//   }
-
-   public function getProp($prop) {
-
-      ob_start();
-      include APP . '/view/Adm_settings/snippet/KeyVal.php';
-      $cont = ob_get_clean();
-      echo $cont;
    }
 
    /**

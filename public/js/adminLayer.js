@@ -1,19 +1,17 @@
-
 ///////////////////////////////
 //////// PRODUCTS /////////////
 ///////////////////////////////
 
-
 $('.product.column, .edit::before').hover(
 function () {
-   $(this).find('a').prepend(
-   "<span class = 'edit'> редактировать"+
-   "</span>"
-   );
-   $(this).css('border:solid');
+//   debugger;
+   $(this).toggleClass('edit');
+   let id = $(this).data('id');
+   $(this).prop('href', '/adminsc/productEdit?id='+id);
+
 },
 function () {
-   $(this).find('.edit').remove();
+   $(this).toggleClass('edit');
 }
 );
 

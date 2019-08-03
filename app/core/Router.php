@@ -19,7 +19,7 @@ class Router {
    public static function matchRoute($url) {
 
 // если это категория
-      if ($category = App::$app->category->isCategory($url)) {
+      if ($category = App::$app->category->getCategoryByUrl($url)) {
          $route['controller'] = 'Catalog';
          $route['action'] = 'category';
 

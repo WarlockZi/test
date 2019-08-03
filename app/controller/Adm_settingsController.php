@@ -33,9 +33,9 @@ class Adm_settingsController extends AdminscController {
 
       $this->layout = 'crm';
       $this->vars['js'] = $this->getJSCSS('.js');
-      
+
       $pics = App::$app->adminsc->findAll('pic');
-      
+
       $this->set(compact('pics', 'js'));
 
    }
@@ -50,10 +50,10 @@ class Adm_settingsController extends AdminscController {
    public function actionDumpWWW() {
 
       if($this->isAjax()){
-         
-      $a = 3;   
+
+      $a = 3;
       }
-      
+
       $this->auth();
 
       $this->layout = 'crm';
@@ -118,7 +118,8 @@ class Adm_settingsController extends AdminscController {
 
       $catProps = App::$app->catalog->findAll('props');
       foreach ($catProps as $k => $v) {
-         $catProps[$k]['val'] = App::$app->catalog->findWhere($v['id'], 'parent', 'vals');
+//         $catProps[$k]['val'] = App::$app->catalog->findWhere($v['id'], 'parent', 'props');
+         $catProps[$k]['val'] = explode(',', $catProps[$k]['val']);
       };
 
       $this->vars['catProps'] = $catProps;

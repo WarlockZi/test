@@ -8,7 +8,7 @@ use app\core\App;
 class Adminsc extends Model {
 
    public function createSiteMap() {
-      
+
    }
 
    public function getAllModuls() {
@@ -45,7 +45,7 @@ class Adminsc extends Model {
 
       $nextid = $this->autoincrement('vals');
 
-      $sql = "INSERT INTO vals (name, parent) VALUES ('', {$post['parentId']})";
+      $sql = "INSERT INTO props (name, parent) VALUES ('', {$post['parentId']})";
       $this->insertBySql($sql);
       exit($nextid);
    }
@@ -74,16 +74,11 @@ class Adminsc extends Model {
 
    public function updateProp($post) {
 
-      $name = $this->clean_data($post['name']);
+      $val = $this->clean_data($post['val']);
       $id = $this->clean_data($post['id']);
-      if (isset($post['type'])) {
-         $type = $this->clean_data($post['type']);
-         $param = [$type, $id];
-         $sql = "UPDATE props SET type = ? WHERE id = ?";
-         return $types = $this->insertBySql($sql, $param);
-      }
-      $param = [$name, $id];
-      $sql = "UPDATE vals SET name = ? WHERE id = ?";
+
+      $param = [$val, $id];
+      $sql = "UPDATE props SET val = ? WHERE id = ?";
       return $types = $this->insertBySql($sql, $param);
    }
 
@@ -95,7 +90,7 @@ class Adminsc extends Model {
       $sql = "INSERT INTO props SET name = ?, parent = ?";
       $add = $this->insertBySql($sql, $params);
       if ($add) {
-         $block = " 
+         $block = "
             <div class='property' data-prop='{$id}'>
           <div class='prop blue'>
             <div class='del-prop'>
@@ -180,7 +175,7 @@ class Adminsc extends Model {
 
       if ($crud == 'INSERT') {
          $sql = "
-            INSERT INTO users 
+            INSERT INTO users
             (name, surName, middleName, birthDate, phone, confirm, email, rightId, hired, fired)
             VALUES
             (?,?,?,?,?,?,?,?,?,?)

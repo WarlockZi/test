@@ -3,6 +3,7 @@
 $config['components'] = [
     'cache' => 'app\core\Cache',
     'main' => 'app\model\Main',
+    'prop' => 'app\model\Prop',
     'user' => 'app\model\User',
     'test' => 'app\model\Test',
     'freetest' => 'app\model\Freetest',
