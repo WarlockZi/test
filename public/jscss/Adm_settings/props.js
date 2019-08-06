@@ -1,7 +1,12 @@
 $(function () {
    var url = '/adminsc/settings';
 //         debugger;
-   
+   var f = window.location.pathname.indexOf('adminsc/settings/');
+   switch (true) {
+      case (f > 0):
+         $('.module.settings').addClass('activ');
+         break;
+   }
    // изменили название значения
    $('.property-block').on('keyup', '.value', function (event) {
       var name = this.innerText,
@@ -9,7 +14,7 @@ $(function () {
       var d = $(this).parent().find('.value');
       d = $.makeArray(d);
       debugger;
-      var arr = d.map((val)=>val.innerText);
+      var arr = d.map((val) => val.innerText);
       var val = arr.join(',').trim();
 
 // ^,-зпт в нач слова  |  (\+-знак плюса ,-зпт \s-пробел)*$  
@@ -19,10 +24,12 @@ $(function () {
          val: val,
          id: id
       };
-      setTimeout(function(){post(url, param)}, 800);
+      setTimeout(function () {
+         post(url, param)
+      }, 800);
    });
-   
-   
+
+
 // изменили название свойства
    $('.property-block').on('keyup', '.property input', function () {
       var name = this.value,
@@ -34,7 +41,9 @@ $(function () {
          name: name,
          id: id
       };
-      setTimeout(function(){post(url, param)}, 800);
+      setTimeout(function () {
+         post(url, param)
+      }, 800);
    });
 
    function addProp(self, enter) {
@@ -58,15 +67,15 @@ $(function () {
 // добавление значения 
    $('.property-block').on('click', '.add-prop-val', function () {
       var parentId = $(this).parent().parent().parent().data('prop');
-debugger;
+      debugger;
       var data = {
-         action:'addPropValue',
-         parentId:parentId
+         action: 'addPropValue',
+         parentId: parentId
       };
-      
-      post(url,data).then(function(nextid){
+
+      post(url, data).then(function (nextid) {
          addProp(nextid);
-      
+
       });
    });
 
@@ -141,12 +150,12 @@ debugger;
       return p ? p[1] : false;
    }
 
-/**
- * 
- * @param {type} url глобальный
- * @param {type} data данные
- * @return {Promise}
- */
+   /**
+    * 
+    * @param {type} url глобальный
+    * @param {type} data данные
+    * @return {Promise}
+    */
 
    function post(url, data) {
 //      debugger;

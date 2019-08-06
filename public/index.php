@@ -52,7 +52,7 @@ Router::add('^user/(?P<action>[a-z]+)$', ['controller' => 'User']);
 
 Router::add('^adminsc\/product\/edit\/(?P<id>[0-9]+)$', ['controller' => 'Adminsc', 'action' => 'ProductEdit']);
 
-Router::add('^adminsc\/crm\/(?P<action>[0-9a-z]+)$', ['controller' => 'AdmcrmController']);
+Router::add('^adminsc\/crm\/(?P<action>[0-9a-z]+)$', ['controller' => 'Adm_crm']);
 Router::add('^adminsc\/crm$', ['controller' => 'Adm_crm']);
 
 Router::add('^adminsc\/catalog\/(?P<action>[0-9a-z]+)$', ['controller' => 'Adm_catalog']);

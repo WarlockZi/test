@@ -24,12 +24,7 @@ class Adm_catalogController extends AppController {
          };
       }
    }
-   
-//   public function addCatProps($post) {
-//      
-//      $sql = 'SELECT * FROM prod_type WHERE parent = 0';
-//      return $types = $this->findBySql($sql);
-//   }
+
 
    public function actionProducts() {
 
@@ -105,7 +100,6 @@ class Adm_catalogController extends AppController {
 
       $this->auth();
 
-      $this->layout = 'crm';
       $this->vars['js'] = $this->getJSCSS('.js');
    }
 
@@ -130,19 +124,12 @@ class Adm_catalogController extends AppController {
          $ids = explode(',', $category['prop']);
 //         $category['props'] = Prop::getByIds($ids);
          $category['props'] = unserialize($category['prop']) ;
-//         $arr['id'] = $arrCategory[0]['id'];
-//         $arr['name'] = $arrCategory[0]['alias'];
-//         $arr['parent'] = $arrCategory[0]['parent'];
-//         $arr['props'] = Prop::getByIds([$arr['id']])  ;
 
          $category['children'] = App::$app->category->findWhere($id, 'parent', NULL);
          if ($category['parent']) {
             $category['parents'] = App::$app->category->getCategoryParents($arr['parent']);
          }
-
-
       }
-
       $this->set(compact('category'));
    }
 

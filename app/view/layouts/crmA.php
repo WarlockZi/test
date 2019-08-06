@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+    <!--CRM-LAYOUT-->
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="robots" content="noindex,nofollow" />
@@ -90,7 +91,7 @@
                      Напишите нам
                    </a>
 
-                   <a href="<?= PROJ ?>/user/logout">             
+                   <a href="<?= PROJ ?>/user/logout">
                      <svg width="16" height="8" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" viewBox="-5 0 16 8">
                      <title>lock 1</title>
                      <rect stroke="#e30000" stroke-opacity="0" id="svg_2" height="4.582587" width="4.582587" y="3.349051" x="0.267697" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="#e30000"/>
@@ -98,7 +99,7 @@
                      </svg>
                      Выход</a>
                 <? endif; ?>
-              </div>						
+              </div>
             </div>
 
 
