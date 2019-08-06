@@ -137,46 +137,6 @@ class AdminscController extends AppController {
       $this->set(compact('products', 'productsCnt', 'cnt_pages', 'QSA'));
    }
 
-   public function actionUsers() {
-
-      $this->auth();
-
-      $users = App::$app->user->findAll('users');
-
-      foreach ($users as $key => $value) {
-         $userId = $value['id'];
-         $user_rights_set = App::$app->user->getUserRightsSet($userId);
-         foreach ($user_rights_set as $k) {
-
-            $users[$key]['rights_set'][$k['id']] = $k['name'];
-         }
-      }
-
-      $rights = App::$app->user->findAll('user_rights');
-
-      $this->set(compact('users', 'rights'));
-   }
-
-   public function actionUser() {
-
-//      $this->auth();
-
-      $users = App::$app->user->findAll('users');
-
-      foreach ($users as $key => $value) {
-         $userId = $value['id'];
-         $user_rights_set = App::$app->user->getUserRightsSet($userId);
-         foreach ($user_rights_set as $k) {
-
-            $users[$key]['rights_set'][] = $k['name'];
-         }
-      }
-
-      $rights = App::$app->user->findAll('user_rights');
-      ;
-
-      $this->set(compact('users', 'rights'));
-   }
 
    public function actionIndex() {
 

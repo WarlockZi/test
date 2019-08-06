@@ -1,14 +1,10 @@
 $(function () {
 
-
-   var f = window.location.pathname.indexOf('adminsc');
-   switch (true) {
-      case (f > 0):
-         $('.module.home').addClass('activ');
-         break;
-   }
-
-
+   switch (window.location.pathname) {
+      case '/adminsc/settings':
+         $('.module.settings').addClass('activ');
+         break;}
+   
    function $_GET(key) {
       var p = window.location.search;
       p = p.match(new RegExp(key + '=([^&=]+)'));

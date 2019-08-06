@@ -15,7 +15,6 @@ class Adm_settingsController extends AdminscController {
 
       $this->auth();
 
-      $this->layout = 'crm';
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
@@ -23,7 +22,6 @@ class Adm_settingsController extends AdminscController {
 
       $this->auth();
 
-      $this->layout = 'crm';
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
@@ -31,7 +29,6 @@ class Adm_settingsController extends AdminscController {
 
       $this->auth();
 
-      $this->layout = 'crm';
       $this->vars['js'] = $this->getJSCSS('.js');
 
       $pics = App::$app->adminsc->findAll('pic');
@@ -43,7 +40,6 @@ class Adm_settingsController extends AdminscController {
 
       $this->auth();
 
-      $this->layout = 'crm';
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
@@ -56,7 +52,6 @@ class Adm_settingsController extends AdminscController {
 
       $this->auth();
 
-      $this->layout = 'crm';
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
@@ -65,7 +60,6 @@ class Adm_settingsController extends AdminscController {
 
       $this->auth();
 
-      $this->layout = 'crm';
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
       $id = $this->route['id'];
@@ -76,7 +70,6 @@ class Adm_settingsController extends AdminscController {
    public function actionInstructions() {
 
       $this->auth();
-      $this->layout = 'crm';
       $this->vars['js'] = $this->getJSCSS('.js');
 
       $query = '';
@@ -112,7 +105,6 @@ class Adm_settingsController extends AdminscController {
 
       $this->auth();
 
-      $this->layout = 'crm';
       $this->vars['js'] = $this->getJSCSS('.js');
       $this->vars['css'] = $this->getJSCSS('.css');
 

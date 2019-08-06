@@ -1,6 +1,9 @@
 $(function () {
 
-
+   switch (window.location.pathname) {
+      case '/adminsc/catalog':
+         $('.module.catalog').addClass('activ');
+         break;}
 
    function $_GET(key) {
       var p = window.location.search;

@@ -28,67 +28,54 @@
 
           <div class="user-menu">
               <? if (!isset($user)): ?>
-               <a href="/user/login">
-<!--                 <svg class="enter-button">
-                 <use xlink:href="#greyAvatar">
-                 </svg>-->
-               </a>
-
+               <a href="/user/login"></a>
             <? else: ?>
-               <? $rights = $user['rights_set'] ?>
-               <div class = "user-button">
+               <?
+               $rights = $user['rights_set'];
+               if (isset($user)) {
+                  echo '<span class = "FIO">' . $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'] . '</span>';
+               }
+               ?>
 
-                 <?
-                 if (isset($user)) {
-                    echo $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'];
-                 }
+               <div class="nav">
+                 <a  href="/user/edit" >Редактировать свой профиль</a>
+
+                 <? $rights = $user['rights_set']; ?>
+                 <?=
+                 array_key_exists('1', $rights) ? // редактировать
+                    '<a href="/edit/1">Редактировать тесты</a>
+                      <a href="/freetest/edit/41">Редактировать свободный тест</a>' : ''
+                 ?>
+
+                 <?=
+                 array_key_exists('2', $rights) ? // проходить
+                    '<a href="/test/1">Проходить тесты</a>
+                      <a href="/freetest/41">Свободный тест</a>' : '';
+                 ?>
+
+                 <?=
+                 array_key_exists('3', $rights) ?
+                    '<a href="/adminsc">Admin</a>' : ''; // Admin
                  ?>
 
 
-                 <div class="nav">
-                   <a  href="/user/edit" >Редактировать свой профиль</a>
 
-                   <? $rights = $user['rights_set']; ?>
-                   <?=
-                   array_key_exists('1', $rights) ? // редактировать
-                      '<a href="/edit/1">Редактировать тесты</a>
-                      <a href="/freetest/edit/41">Редактировать свободный тест</a>' : ''
-                   ?>
-
-                   <?=
-                   array_key_exists('2', $rights) ? // проходить
-                      '<a href="/test/1">Проходить тесты</a>
-                      <a href="/freetest/41">Свободный тест</a>' : '';
-                   ?>
-
-                   <?=
-                   array_key_exists('3', $rights) ?
-                      '<a href="/adminsc">Admin</a>' : ''; // Admin
-                   ?>
-
-
-
-   <? if (isset($user)): ?>
-                      <a href="/test/contacts">
-                        <span class="icon-envelope">
-                          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 20 20">
-                          <path fill = '#e30000' d="M18 2c1.105 0 2 0.895 2 2v0 12c0 1.105-0.895 2-2 2v0h-16c-1.105 0-2-0.895-2-2v0-12c0-1.1 0.9-2 2-2h16zM13.63 11.1l6.37 4.9v-2l-5.12-3.9 5.12-4.1v-2l-10 8-10-8v2l5.12 4.1-5.12 3.9v2l6.37-4.9 3.63 2.9 3.63-2.9z"></path>
-                          </svg>
-                        </span>
-                        Напишите нам
-                      </a>
-                      <a href="/user/logout">
-                        <span class="icon-logout">
-                          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 20 20">
-                          <path fill = '#e30000' d="M4 8v-2c0-3.314 2.686-6 6-6s6 2.686 6 6v0h-3v2h4c1.105 0 2 0.895 2 2v0 8c0 1.105-0.895 2-2 2v0h-14c-1.105 0-2-0.895-2-2v0-8c0-1.1 0.9-2 2-2h1zM9 14.73v2.27h2v-2.27c0.602-0.352 1-0.996 1-1.732 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.736 0.398 1.38 0.991 1.727l0.009 0.005zM7 6v2h6v-2c0-1.657-1.343-3-3-3s-3 1.343-3 3v0z"></path>
-                          </svg>
-                        </span>
-                        Выход
-                      </a>
-               <? endif; ?>
-                 </div>
+                 <? if (isset($user)): ?>
+                    <a href="/test/contacts">
+                      <span class="icon-envelope">✉</span>
+                      Напишите нам
+                    </a>
+                    <a href="/user/logout">
+                      <span class="icon-logout">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 20 20">
+                        <path fill = '#e30000' d="M4 8v-2c0-3.314 2.686-6 6-6s6 2.686 6 6v0h-3v2h4c1.105 0 2 0.895 2 2v0 8c0 1.105-0.895 2-2 2v0h-14c-1.105 0-2-0.895-2-2v0-8c0-1.1 0.9-2 2-2h1zM9 14.73v2.27h2v-2.27c0.602-0.352 1-0.996 1-1.732 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.736 0.398 1.38 0.991 1.727l0.009 0.005zM7 6v2h6v-2c0-1.657-1.343-3-3-3s-3 1.343-3 3v0z"></path>
+                        </svg>
+                      </span>
+                      Выход
+                    </a>
+                 <? endif; ?>
                </div>
-<? endif; ?>
+            <? endif; ?>
 
           </div>
 
@@ -145,9 +132,9 @@
               <div class="sub-cat">
                 <div class="inner">
                   <ul>
-                    <? foreach ($list as $item => $arr): ?>
+                      <? foreach ($list as $item => $arr): ?>
                        <li><a href="/<?= $catName = $arr['alias']; ?>" aria-label="<?= $catName; ?>" ><?= $arr['name'] ?></a></li>
-<? endforeach; ?>
+                    <? endforeach; ?>
                   </ul>
                   <div style="clear: both;"></div>                            </div>
               </div>
@@ -177,7 +164,7 @@
 
 
 
-<?= $content ?>
+      <?= $content ?>
 
 
 
@@ -250,9 +237,9 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/7715905" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
-    <? if (in_array('Admin', $rights)): // Admin    ?>
+    <? if (in_array('Admin', $rights)): // Admin     ?>
        <script src = "/public/js/adminLayer.js?<?= time() ?>"></script>
-<? endif; ?>
+    <? endif; ?>
 
 
     <div class = 'none'>

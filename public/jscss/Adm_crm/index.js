@@ -4,7 +4,10 @@ $(function () {
    var a = $(d).css('background', '#e0e0e0');
 
 
-
+   switch (window.location.pathname) {
+      case '/adminsc/crm':
+         $('.module.crm').addClass('activ');
+         break;}
 
 
 

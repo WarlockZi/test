@@ -1253,28 +1253,7 @@ footer p{
     background: #626262;
 }
 
-.user-menu,
-.user-button
-{
-    justify-content: center;
-    align-items: center;
-	height: 100%;
-}
 
-/*.search-img
-{
-	display:flex;
-	justify-content: center;
-	width:100px;
-
-}*/
-
-
-.form-submit:before
-{
-	/*	content:'\1F50D';
-		display: block;*/
-}
 .user-menu:before
 {
 	content:'☰';
@@ -1297,12 +1276,6 @@ footer p{
 {
     flex-direction: column;
 }
-/*.user-button div:first-child
-{
-    align-items: center;
-    font-size: 11px;
-    display:flex;
-}*/
 
 .user-button div:first-child span
 {
@@ -1465,6 +1438,7 @@ footer p{
 **************************************/
 
 @media (max-width: 400px) {
+	.FIO,
 	.t-1,
     .t-2,
     .title,
@@ -1490,7 +1464,7 @@ footer p{
 
 /* xs (<=543px) */
 @media (min-width: 401px) and (max-width: 575px){
-
+	.FIO,
     .t-1,
     .t-2,
     .title,
@@ -1538,12 +1512,7 @@ footer p{
 	}
 }
 /* sm (>=576 и <=767) */
-@media (min-width: 576px) and (max-width: 768px) {  
-
-	.h-upper>div:not([class])
-	{
-        display: none;
-    }
+@media (min-width: 575px) and (max-width: 768px) {  
 
 
     .t-2,
@@ -1552,8 +1521,11 @@ footer p{
     .basket,
 	.icon-phone,  
 	.user-button span,
+	.h-upper>div:not([class]),
 	.user-button,
-	.card-right
+	.card-right,
+	.FIO
+	
     {
         display:none;
     }

@@ -1,28 +1,10 @@
-<div class="wrap-admin">
+
+  <div class="adm-submenu">
 
 
-  <div class="breadcrumbs-adm">
-    <div>Админ</div>
-  </div>
-  
-  
-  <? if (in_array('3', $user['rightId'])): // admin ?>
-     <div class="admin-actions">
-       <a href  = "<?= PROJ ?>/adminsc/crm">CRM</a>
-       <a href  = "<?= PROJ ?>/adminsc/catalog">Каталог товаров</a>
-       <a href  = "<?= PROJ ?>/adminsc/settings">Настройки</a>
-<!--       <a href  = "<?= PROJ ?>/adminsc/products">Товары</a>
-       <a href  = "<?= PROJ ?>/adminsc/categories">Категории</a>
-       <a href  = "<?= PROJ ?>/adminsc/orders">Заказы</a>
-       <a href  = '<?= PROJ ?>/adminsc/users'>Пользователи</a>
-       <a href  = '<?= PROJ ?>/adminsc/prodtypes'>Типы товаров</a>
-       <a href  = '<?= PROJ ?>/adminsc/Sitemap'>Создать SiteMap</a>-->
-     </div>
-  <? endif; ?>
-  
 
-  <? if (in_array('4', $user['rightId'])):// SU ?> 
-    
+  <? if (in_array('4', $user['rightId'])):// SU ?>
+
    <!--           <div id="vk_post_2083688_2227"></div><script type="text/javascript">
          (function (d, s, id) {
              var js, fjs = d.getElementsByTagName(s)[0];
@@ -40,6 +22,10 @@
      </script>-->
   <? endif; ?>
 
+</div>
 
-
+  <div class="adm-content">
+  <div class="breadcrumbs-adm">
+    <div>Admin</div>
+  </div>
 </div>

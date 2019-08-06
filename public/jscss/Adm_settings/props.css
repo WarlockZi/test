@@ -1,3 +1,14 @@
+@import url('/public/css/admin.css');
+
+
+.module.settings.activ{
+	background-image: 
+		url(/pic/admin-mainmenu-items.png),
+		url(/pic/admin-mainmenu-items-bg.png);
+	background-position: 20px -743px, 5px -88px;
+	background-repeat: no-repeat,no-repeat;
+}
+
 .multy input{
 	transform: scale(.8); 
 
@@ -393,9 +404,7 @@ tbody tr:first-child
 .val>.name>input{
 	max-width: 200px;
 }
-.breadcrumbs-adm {
-	margin: 0 0 25px 0;
-}
+
 
 .breadcrumbs-adm div,
 .breadcrumbs-adm a,
@@ -557,12 +566,12 @@ footer p
 header {
     background: #fff;
     padding: 10px 0;
-    height: 45px;
+
     z-index: 500;
     width: 100%;
     -webkit-box-shadow: 0 0 18px 0 #d2d2d2;
     box-shadow: 0 0 18px 0 #d2d2d2;
-    margin-bottom: 10px;
+
 }
 .logo-wrap{
     flex: 2;
