@@ -3,23 +3,23 @@
 /*//////////////////////////////*/
 
 .pic .column{
-	padding:10px;
+    padding:10px;
 }
 .pic img{
-	max-width:100%;	
-	max-height: 100%;;
+    max-width:100%;	
+    max-height: 100%;;
 }
 .pic .column div{
-	height: 150px;
-	width: 150px;
-	text-align: center;
+    height: 150px;
+    width: 150px;
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .pic span{
-	padding: 20px 0px 5px 10px;
+    padding: 20px 0px 5px 10px;
     max-width: 150px;
 }
 
@@ -29,10 +29,10 @@
 /*//////////////////////////////*/
 
 .dump-form *{
-	padding: 10px;
+    padding: 10px;
 } 
 .dump-form input{
-	flex: 1;
+    flex: 1;
 }
 
 /*//////////////////////////////*/
@@ -41,48 +41,49 @@
 
 .categories .row
 {
-	justify-content: space-around;
+    justify-content: space-around;
+    align-items: center;
 }
 .categories .row:hover
 {
-	background: #ccc;
+    background: #ccc;
 }
 
 .breadcrumbs-adm > div{
-	text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 
 .desc:hover + .no{
-	display: flex;
+    display: flex;
 }
 .no{
-	display: none;
-	display: none;
+    display: none;
+    display: none;
     position: absolute;
     top: 0;
     left: 100%;
 }
 menu p{
-	margin: 0;
+    margin: 0;
 }
 span.close{
-	position: absolute;
+    position: absolute;
     right: 0px;
     top: 0px;
     border: 1px solid #ccc;
     padding: 0 5px; 
 }
 .doc{
-	position: relative;
+    position: relative;
 }
 .doc ul{
-	margin: 0 10px 0 0;
+    margin: 0 10px 0 0;
 }
 menu{
-	position: absolute;
-	display: none;
-	background-color: #fff;
+    position: absolute;
+    display: none;
+    background-color: #fff;
     border: 1px solid #ccc;
     padding: 10px;
     top: 100%;
@@ -90,32 +91,32 @@ menu{
 }
 
 .name{
-	display: flex;
-	flex:1;
+    display: flex;
+    flex:1;
 }
 .val-block{
-	flex:1;
-	display: flex;
+    flex:1;
+    display: flex;
 }
 .val-item{
-	display: flex;
+    display: flex;
 }
 .val-item .value{
-	padding-left: 10px;
+    padding-left: 10px;
 }
 .prop{
-	display:flex;
-	flex-flow:column;
-	justify-content: space-between;
-	position: relative;
-	flex:1;
+    display:flex;
+    flex-flow:column;
+    justify-content: space-between;
+    position: relative;
+    flex:1;
 }
 .val{
-	padding: 10px;
-	flex:1;
+    padding: 10px;
+    flex:1;
 }
 .value:focus{
-	border-bottom:1px #ddd solid ;
+    border-bottom:1px #ddd solid ;
 }
 
 
@@ -124,12 +125,12 @@ menu{
 /*///////////////////////////*/
 
 .prop-name{
-	display:flex;
-	border-bottom: 1px solid #d8d8d8;
+    display:flex;
+    border-bottom: 1px solid #d8d8d8;
 }
 .prop-val-list{
-	padding-left: 25px;
-	flex: 1;
+    padding-left: 25px;
+    flex: 1;
 }
 .overlay{
     width:100%;
@@ -221,129 +222,129 @@ menu{
 .property{
     padding: 10px 5px;
     min-width: 140px;
-	display: flex;
-	/*margin-top: 20px;*/
+    display: flex;
+    /*margin-top: 20px;*/
 }
 .prop.prod-type-title 
 {
-	background:#123aff;	
+    background:#123aff;	
 }
 .property-block{
-	display:flex;
-	flex-flow: wrap column;
-	padding-left: 12px;
+    display:flex;
+    flex-flow: wrap column;
+    padding-left: 12px;
 
 }
 .prop-head{
-	display:flex;
-	background: #c7c7c7;
-	padding: 10px;
-	margin-bottom: 12px;
+    display:flex;
+    background: #c7c7c7;
+    padding: 10px;
+    margin-bottom: 12px;
     justify-content: space-between;
 }
 .left-menu{
-	width:250px;
-	padding: 10px;
+    width:250px;
+    padding: 10px;
 }
 
 .tabs>section>.flex {
-	display:flex;
+    display:flex;
 }
 
 .props{
-	display: flex;
-	flex-flow:column;
+    display: flex;
+    flex-flow:column;
 }
 .props>div{
-	display: flex;
+    display: flex;
 }
 
 /* Базовый контейнер табов */
 .tabs {
-	min-width: 320px;
-	/*max-width: 800px;*/
-	width: 85%;
-	padding: 0px;
-	margin: 0 auto;
+    min-width: 320px;
+    /*max-width: 800px;*/
+    width: 85%;
+    padding: 0px;
+    margin: 0 auto;
 }
 /* Стили секций с содержанием */
 .tabs>section {
-	display: none;
-	/*padding: 15px;*/
-	background: #fff;
-	border: 1px solid #ddd;
+    display: none;
+    /*padding: 15px;*/
+    background: #fff;
+    border: 1px solid #ddd;
 }
 .tabs>section>.flex {
-	margin: 0 0 5px;
-	line-height: 1.5;
-	color: #383838;
-	/* прикрутим анимацию */
-	-webkit-animation-duration: .5s;
-	animation-duration: .5s;
-	-webkit-animation-fill-mode: both;
-	animation-fill-mode: both;
-	-webkit-animation-name: fadeIn;
-	animation-name: fadeIn;
+    margin: 0 0 5px;
+    line-height: 1.5;
+    color: #383838;
+    /* прикрутим анимацию */
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
 }
 /* Описываем анимацию свойства opacity */
 
 @-webkit-keyframes fadeIn {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 @keyframes fadeIn {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 /* Прячем чекбоксы */
 .tabs>input {
-	display: none;
-	position: absolute;
+    display: none;
+    position: absolute;
 }
 /* Стили переключателей вкладок (табов) */
 .tabs>label {
-	display: inline-block;
-	margin: 0 0 -1px;
-	padding: 15px 25px;
-	font-weight: 600;
-	text-align: center;
-	color: #aaa;
-	border: 0px solid #ddd;
-	border-width: 1px 1px 1px 1px;
-	background: #f1f1f1;
-	border-radius: 3px 3px 0 0;
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 15px 25px;
+    font-weight: 600;
+    text-align: center;
+    color: #aaa;
+    border: 0px solid #ddd;
+    border-width: 1px 1px 1px 1px;
+    background: #f1f1f1;
+    border-radius: 3px 3px 0 0;
 }
 /* Шрифт-иконки от Font Awesome в формате Unicode */
 .tabs>label:before {
-	font-family: fontawesome;
-	font-weight: normal;
-	margin-right: 10px;
+    font-family: fontawesome;
+    font-weight: normal;
+    margin-right: 10px;
 }
 
 /* Изменения стиля переключателей вкладок при наведении */
 
 .tabs>label:hover {
-	color: #888;
-	cursor: pointer;
+    color: #888;
+    cursor: pointer;
 }
 /* Стили для активной вкладки */
 .tabs>input:checked+label {
-	color: #555;
-	border-top: 1px solid #ffa500;
-	border-bottom: 1px solid #fff;
-	background: #fff;
+    color: #555;
+    border-top: 1px solid #ffa500;
+    border-bottom: 1px solid #fff;
+    background: #fff;
 }
 /* Активация секций с помощью псевдокласса :checked */
 #tab1:checked~#content-tab1, #tab2:checked~#content-tab2, #tab3:checked~#content-tab3, #tab4:checked~#content-tab4 {
-	display: block;
+    display: block;
 }
 /* Убираем текст с переключателей 
 * и оставляем иконки на малых экранах
@@ -358,23 +359,23 @@ menu{
     font-size: 25px;
     color: #343436;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	padding: 10px;
+    padding: 10px;
 }
 
 .main{
-	display: flex;
+    display: flex;
 }
 
 .props{
-	display: flex;
-	flex-flow: column;
-	margin: 20px 20px;
+    display: flex;
+    flex-flow: column;
+    margin: 20px 20px;
 }
 
 .admin-product-edit{
-	display: flex;
-	flex-flow:column;
-	margin: 0 10px; 
+    display: flex;
+    flex-flow:column;
+    margin: 0 10px; 
 }
 .admin-product-edit img{
     max-height: 500px;
@@ -382,16 +383,16 @@ menu{
 }
 td a
 {
-	border: 1px solid #949494;
+    border: 1px solid #949494;
     padding: 3px 8px;
 }
 .work-area{
-	display:flex;
+    display:flex;
 }
 .work-middle{
-	padding: 5px 35px; 
-	display:flex;
-	flex-flow: column;
+    padding: 5px 35px; 
+    display:flex;
+    flex-flow: column;
 }
 .work-middle button {
     margin: 10px 0;
@@ -400,11 +401,11 @@ td a
 
 .right-check
 {
-	display: flex;
+    display: flex;
 }
 
 .btnadd-user{
-	width: 205px;
+    width: 205px;
     height: 49px;
 }
 .has-children>label a:before
@@ -413,45 +414,45 @@ td a
     border: 4px solid;
     border-color: transparent transparent transparent #ccc;
     position: absolute;
-	right: -16px;
+    right: -16px;
     top: 3px;
 }
 
 .menu label, .menu a, .menu li {
-	position: relative;
-	display: block;
-	color: #c1c1c1;
-	font-size: 12px;
+    position: relative;
+    display: block;
+    color: #c1c1c1;
+    font-size: 12px;
 }
 .has-children label
 {
-	display: flex;
+    display: flex;
 }
 .menu input:checked+label>a
 {
-	font-size: 13px;
-	font-weight: 600;
-	color: #fff;
-	text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
 }
 
 .menu>li
 {
-	font-size: 13px;
+    font-size: 13px;
 }
 .menu li ul li:hover,
 .menu li ul li a:hover
 {
-	/*padding: 2px;*/
-	font-size: 13px;
-	color:#ffa500;
-	font-weight: 600;
+    /*padding: 2px;*/
+    font-size: 13px;
+    color:#ffa500;
+    font-weight: 600;
 }
 
 .menu .drop
 {
-	background: #001a98;
-	cursor: pointer;
+    background: #001a98;
+    cursor: pointer;
 
 }
 
@@ -459,41 +460,41 @@ td a
 .menu li:hover>li label,
 .menu>label a:hover
 {
-	background: #5e5e5e;
+    background: #5e5e5e;
 }
 .menu>li:not(.has-children){
-	padding: 9px 0 9px 0px;
+    padding: 9px 0 9px 0px;
 
 }
 .menu>li>label 
 {
-	padding: 9px 0 9px 9px;
+    padding: 9px 0 9px 9px;
 }
 .menu .drop
 {
-	padding: 9px 0 9px 9px;
+    padding: 9px 0 9px 9px;
 }
 
 
 
 .menu {
-	width: 130px;
-	background: #001a98;
-	align-self: flex-start;
+    width: 130px;
+    background: #001a98;
+    align-self: flex-start;
 }
 .menu ul {
-	display: none;
-	cursor: pointer;
+    display: none;
+    cursor: pointer;
 }
 
 
 .menu input[type=checkbox]:checked + label + ul,
 .menu input[type=checkbox]:checked + label:nth-of-type(n) + ul {
-	display: block;
+    display: block;
 }
 .menu input[type=checkbox] {
-	position: absolute;
-	opacity: 0;
+    position: absolute;
+    opacity: 0;
 }
 
 
@@ -505,7 +506,7 @@ td a
 
 :focus
 {
-	outline: none;
+    outline: none;
 }
 
 /*//////////////////////////////*/
@@ -565,8 +566,8 @@ td a
 {
     display: inline-block;
     white-space: nowrap;
-	text-align: center;
-	line-height: 20px;
+    text-align: center;
+    line-height: 20px;
     background: #eeeeee;
     background: -moz-linear-gradient(top, #eeeeee 0%, #eeeeee 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#eeeeee));
@@ -609,20 +610,20 @@ td a
 
 .type
 {
-	width: 200px;
+    width: 200px;
 }
 .edit
 {
-	width: 90px;
+    width: 90px;
 }
 .phone{
-	width:105px;
+    width:105px;
 }
 
 .navi
 {
-	display:flex;
-	flex-flow: wrap;
+    display:flex;
+    flex-flow: wrap;
 }
 .navi a
 {
@@ -630,7 +631,7 @@ td a
     display: block;
     padding: 6px;
     background-color: #f5f5f5;	
-	text-align: center;
+    text-align: center;
 }
 .navi a:hover
 {
@@ -642,17 +643,17 @@ td a
 
 .filter
 {
-	padding: 30px;
+    padding: 30px;
 }
 
 
 #users div[data-id]{
-	justify-content: flex-start;
+    justify-content: flex-start;
     align-items: flex-start;
 }
 #users div[data-id]:nth-child(odd)
 {
-	background-color:#f7f7f7;
+    background-color:#f7f7f7;
 }
 
 /*//////////////////////////////*/
@@ -660,25 +661,25 @@ td a
 /*//////////////////////////////*/
 
 .flex1{
-	display: flex;
-	flex:1;
+    display: flex;
+    flex:1;
 }
 .row{
-	display: flex;
-	flex-flow: wrap;
+    display: flex;
+    flex-flow: wrap;
 }
 
 .column
 {
-	display:flex;
-	flex-flow:column;
+    display:flex;
+    flex-flow:column;
 }
 
 .plr{
-	padding: 0 10px ;
+    padding: 0 10px ;
 }
 .pud{
-	padding: 10px 0;
+    padding: 10px 0;
 }
 
 
@@ -692,212 +693,204 @@ input
     border-right: 1px solid #ccc;	
 }
 
-.sName,
-.mName
-{
-    width: 22%;
-}
+
 
 .ref-row
 {
-	display:flex;
+    display:flex;
 }
 
-.hired,
-.bday
-{
-	width: 126px;
 
-}
 
 .adm-wrap{
-	height: 100%;
+    height: 100%;
+    flex-flow: nowrap;
 }
 .admin-actions{
-	display: flex;
-	flex-flow:column;
-	margin-bottom: 50px;
-	width: 150px;
-	border: 1px solid #ddd;
-	padding: 10px;
+    display: flex;
+    flex-flow:column;
+    margin-bottom: 50px;
+    width: 150px;
+    border: 1px solid #ddd;
+    padding: 10px;
 }
 .admin-actions a{
-	color:#4a4a4a;
+    color:#4a4a4a;
 
 }
 .admin-actions a{
-	padding: 10px;
+    padding: 10px;
 }
 .admin-actions a:hover{
-	background: #ccc;
-	padding: 10px;
+    background: #ccc;
+    padding: 10px;
 }
 
 .wrap-admin{
-	margin: 30px;
-	background-color: #fff;
+    margin: 30px;
+    background-color: #fff;
 }
 
 .wrap-admin-content{
-	display: flex;
+    display: flex;
 
 }
 .adm-submenu{
-	width: 180px;
+    width: 180px;
     background-image: url(/pic/submenu-bg.png);
-	border-right: 1px solid #ddd;
+    border-right: 1px solid #ddd;
 }
 
 .adm-content{
-	flex: 1;
-	background-color: #f4fbfb;
+    flex: 1;
+    background-color: #f4fbfb;
 }
 .adm-save-cansel{
-	position: fixed;
-	bottom: 0;
-	margin-bottom: 20px;
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 20px;
 }
 .adm-save-cansel button{
-	padding: 10px;
+    padding: 10px;
 }
 .adm-menu{
-	width: 80px;
-	font-size: 8px;
-	align-items: center;
-	background-color: #8a92a0;
-	padding-top: 10px;
+    width: 80px;
+    font-size: 8px;
+    align-items: center;
+    background-color: #8a92a0;
+    padding-top: 10px;
 }
 
 .module{
-	width:80px;
-	height: 80px;
-	margin-bottom: 5px;
-	text-align: center;
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: flex-end;
+    width:80px;
+    height: 80px;
+    margin-bottom: 5px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 .module span{
 
-	color:#fff;
-	padding: 10px 0;
+    color:#fff;
+    padding: 10px 0;
 }
 
 .module.home{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png);
-	background-position: 20px 4px;
-	background-repeat: no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png);
+    background-position: 20px 4px;
+    background-repeat: no-repeat;
 
 }
 .module.home:hover{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png),
-		url(/pic/admin-mainmenu-items-bg.png);
-	background-position: 20px -51px, 5px -0px;
-	background-repeat: no-repeat,no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png),
+        url(/pic/admin-mainmenu-items-bg.png);
+    background-position: 20px -51px, 5px -0px;
+    background-repeat: no-repeat,no-repeat;
 }
 .module.home.activ{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png),
-		url(/pic/admin-mainmenu-items-bg.png);
-	background-position: 20px 0px, 5px -88px;
-	background-repeat: no-repeat,no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png),
+        url(/pic/admin-mainmenu-items-bg.png);
+    background-position: 20px 0px, 5px -88px;
+    background-repeat: no-repeat,no-repeat;
 }
 
 
 
 .module.catalog{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png);
-	background-position: 20px -352px;
-	background-repeat: no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png);
+    background-position: 20px -352px;
+    background-repeat: no-repeat;
 
 }
 .module.catalog:hover{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png),
-		url(/pic/admin-mainmenu-items-bg.png);
-	background-position: 20px -407px, 5px 0px;
-	background-repeat: no-repeat,no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png),
+        url(/pic/admin-mainmenu-items-bg.png);
+    background-position: 20px -407px, 5px 0px;
+    background-repeat: no-repeat,no-repeat;
 }
 .module.catalog.activ{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png),
-		url(/pic/admin-mainmenu-items-bg.png);
-	background-position: 20px -408px, 5px -88px;
-	background-repeat: no-repeat,no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png),
+        url(/pic/admin-mainmenu-items-bg.png);
+    background-position: 20px -408px, 5px -88px;
+    background-repeat: no-repeat,no-repeat;
 }
 
 
 .module.settings{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png);
-	background-position: 20px -685px;
-	background-repeat: no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png);
+    background-position: 20px -685px;
+    background-repeat: no-repeat;
 
 }
 .module.settings:hover{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png),
-		url(/pic/admin-mainmenu-items-bg.png);
-	background-position: 20px -740px, 5px 0px;
-	background-repeat: no-repeat,no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png),
+        url(/pic/admin-mainmenu-items-bg.png);
+    background-position: 20px -740px, 5px 0px;
+    background-repeat: no-repeat,no-repeat;
 }
 
 .module.settings.activ{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png),
-		url(/pic/admin-mainmenu-items-bg.png);
-	background-position: 20px -743px, 5px -88px;
-	background-repeat: no-repeat,no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png),
+        url(/pic/admin-mainmenu-items-bg.png);
+    background-position: 20px -743px, 5px -88px;
+    background-repeat: no-repeat,no-repeat;
 }
 
 
 .module.crm{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png);
-	background-position: 20px -110px;
-	background-repeat: no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png);
+    background-position: 20px -110px;
+    background-repeat: no-repeat;
 
 }
 .module.crm:hover{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png),
-		url(/pic/admin-mainmenu-items-bg.png);
-	background-position: 20px -168px, 5px 0px;
-	background-repeat: no-repeat,no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png),
+        url(/pic/admin-mainmenu-items-bg.png);
+    background-position: 20px -168px, 5px 0px;
+    background-repeat: no-repeat,no-repeat;
 }
 
 .module.crm.activ{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png),
-		url(/pic/admin-mainmenu-items-bg.png);
-	background-position: 20px -110px, 5px -88px;
-	background-repeat: no-repeat,no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png),
+        url(/pic/admin-mainmenu-items-bg.png);
+    background-position: 20px -110px, 5px -88px;
+    background-repeat: no-repeat,no-repeat;
 }
 .module.marketing{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png);
-	background-position: 20px -1722px;
-	background-repeat: no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png);
+    background-position: 20px -1722px;
+    background-repeat: no-repeat;
 
 }
 .module.marketing:hover{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png),
-		url(/pic/admin-mainmenu-items-bg.png);
-	background-position: 20px -1778px, 5px 0px;
-	background-repeat: no-repeat,no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png),
+        url(/pic/admin-mainmenu-items-bg.png);
+    background-position: 20px -1778px, 5px 0px;
+    background-repeat: no-repeat,no-repeat;
 }
 
 .module.marketing.activ{
-	background-image: 
-		url(/pic/admin-mainmenu-items.png),
-		url(/pic/admin-mainmenu-items-bg.png);
-	background-position: 20px -27px, 5px -88px;
-	background-repeat: no-repeat,no-repeat;
+    background-image: 
+        url(/pic/admin-mainmenu-items.png),
+        url(/pic/admin-mainmenu-items-bg.png);
+    background-position: 20px -27px, 5px -88px;
+    background-repeat: no-repeat,no-repeat;
 }
 
 
@@ -905,97 +898,97 @@ input
 .blue
 {
 
-	border-bottom: 1px #123aff solid;
-	padding: 3px 6px;
-	font-weight: 600;
-	/*text-align: center;*/
+    border-bottom: 1px #123aff solid;
+    padding: 3px 6px;
+    font-weight: 600;
+    /*text-align: center;*/
 }
 .add-prop{
-	/*color: #5e5e5e;*/
-	background: #123aff;
-	color: #fff;
-	height: 100%;
-	font-weight: 600;
+    /*color: #5e5e5e;*/
+    background: #123aff;
+    color: #fff;
+    height: 100%;
+    font-weight: 600;
     padding: 3px 6px;
-	transition: .1s;
+    transition: .1s;
 }
 .add-prop:hover{
-	background: #0070ff;
-	color:#fff;
+    background: #0070ff;
+    color:#fff;
 }
 .val>.name>input{
-	max-width: 200px;
+    max-width: 200px;
 }
 .breadcrumbs-adm {
-	margin: 25px 0;
+    margin: 25px 0;
 }
 
 .breadcrumbs-adm div,
 .breadcrumbs-adm a,
 .orange
 {
-	background: orange;
-	padding: 3px 6px;
-	color: #fff;
-	font-weight: 600;
-	margin-left: 5px;
+    background: orange;
+    padding: 3px 6px;
+    color: #fff;
+    font-weight: 600;
+    margin-left: 5px;
 }
 .del-prop{
-	width: 15px;
+    width: 15px;
     height: 15px;
     position: absolute;
     background: red;
     right: 0;
     top: 100%;
-	color:#fff;
-	font-size:8px;
-	transition:.3s;
-	border-radius: 0 0 7px 7px;
+    color:#fff;
+    font-size:8px;
+    transition:.3s;
+    border-radius: 0 0 7px 7px;
     line-height: 200%;
 
 }
 .del-prop span{
-	position:absolute;
+    position:absolute;
 }
 
 .del-prop span:nth-child(1){
-	opacity: 1;
-	right: 5px;
+    opacity: 1;
+    right: 5px;
 }
 .del-prop span:nth-child(2){
-	opacity: 0;
-	display: none;
+    opacity: 0;
+    display: none;
 }
 .del-prop:hover{
-	width: 50px;
-	transition:.3s;
+    width: 50px;
+    transition:.3s;
 }
 .del-prop:hover.del-prop span:nth-child(1){
-	opacity: 0;
-	transition:.3s;
+    opacity: 0;
+    transition:.3s;
 }
 .del-prop:hover.del-prop span:nth-child(2){
-	opacity: 1;
-	transition:.3s;
+    opacity: 1;
+    transition:.3s;
     right: 6px;
-	display:block;
+    display:block;
 }
 .add-prop-val{
-	height: 17px;
-	transition: .1s;
+    height: 17px;
+    transition: .1s;
 }
 .clear{
-	border-top: 1px solid #ddd;
-	font-weight: 600;
-	text-align: center;	
-	padding: 3px 6px;
-	color: #6b6b6b;
+    border-top: 1px solid #ddd;
+    font-weight: 600;
+    text-align: center;	
+    padding: 3px 6px;
+    color: #6b6b6b;
 }
 .clear:hover{
-	color:#fff;
-	background: #4d5158;
-	/*border-bottom: 1px solid slategray;*/
-	/*border-right: 1px solid slategray;*/
+    color:#fff;
+    background: #4d5158;
+    /*border-bottom: 1px solid slategray;*/
+    /*border-right: 1px solid slategray;*/
 }
 
 
@@ -1014,7 +1007,7 @@ body{
     overflow-y: scroll;
     margin:0;
     font-family: 'Roboto', sans-serif;
-	flex-direction: column;
+    flex-direction: column;
     height: 100%;
 }
 
@@ -1038,11 +1031,37 @@ body{
     padding:5px 10px;
 }
 
+.column.categories{
+    align-items: flex-start;
+}
+.column.categories a.row span{
+    position: relative;
+    padding-left: 20px;
+}
+.column.categories a.row span:before{
+content: '';
+    position: absolute;
+    left: -2px;
+    display: block;
+    width: 0;
+    height: 0;
+    border-right: #343133 7px solid;
+    border-left: rgba(255, 255, 255, 0) 3px solid;
+    border-bottom: rgba(255, 255, 255, 0) 3px solid;
+    border-top: rgba(255, 255, 255, 0) 3px solid;
+    margin: 6px;
+}
 
+.admin-actions label ul{
+    display: none;
+}
+.admin-actions label input:checked~.admin-actions label ul{
+    display: flex;
+}
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     border-top: 1px solid #d5d5d5;
     border-right: 1px solid #d5d5d5;
 }
@@ -1126,7 +1145,7 @@ header {
     box-shadow: 0 0 18px 0 #d2d2d2;
 }
 header {
-	justify-content: space-between;
+    justify-content: space-between;
 }
 
 
@@ -1147,10 +1166,10 @@ footer p{
 .logo{
     flex: 1;
     justify-content: center;
-	flex-basis: 56px;
-	width: 503px;
-	max-width: 498px;
-	margin-left: 10px;
+    flex-basis: 56px;
+    width: 503px;
+    max-width: 498px;
+    margin-left: 10px;
 }
 .logo img{
     width: 100%;
@@ -1174,15 +1193,15 @@ footer p{
     display:flex;
     justify-content: flex-end;
     align-items: center;
-	position: relative;
-	margin-right: 10px;
+    position: relative;
+    margin-right: 10px;
 }
 
 .user-menu:before
 {
-	content:'☰';
-	display: block;
-	padding: 0 8px;
+    content:'☰';
+    display: block;
+    padding: 0 8px;
 }
 
 .enter-button,
@@ -1209,7 +1228,7 @@ footer p{
     border: 1px #e5e5e5 solid;
     font-size: 11px;
     display:flex;
-	padding:10px;
+    padding:10px;
 
 }
 
@@ -1229,39 +1248,39 @@ footer p{
 
 .content-90
 {
-	margin: 20px 1%;
+    margin: 20px 1%;
 }
 .confirm
 {
-	text-align: center;
-	width: 20px;
+    text-align: center;
+    width: 20px;
 }
 .right
 {
-	width:15px;
+    width:15px;
 }
 .ref-row>*
 {
-	padding-left: 7px; 
-	min-width: 15px;
-	border:none;
-	border-right: 1px #ddd solid;
+    padding-left: 7px; 
+    min-width: 15px;
+    border:none;
+    border-right: 1px #ddd solid;
 }
 
 @media screen and (max-width: 680px) {
-	.tabs>label {
-		font-size: 0;
-	}
-	.tabs>label:before {
-		margin: 0;
-		font-size: 18px;
-	}
+    .tabs>label {
+        font-size: 0;
+    }
+    .tabs>label:before {
+        margin: 0;
+        font-size: 18px;
+    }
 }
 /* Изменяем внутренние отступы 
 *  переключателей для малых экранов
 */
 @media screen and (max-width: 400px) {
-	.tabs>label {
-		padding: 15px;
-	}
+    .tabs>label {
+        padding: 15px;
+    }
 }

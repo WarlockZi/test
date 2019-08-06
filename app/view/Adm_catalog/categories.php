@@ -1,16 +1,16 @@
-
-
-
-
 <div class="adm-submenu">
-  <div class="wrap-admin">
+    <label for="category"  >Категории
+    <input type="checkbox" class="title" id="category">
+    </label>
+    
+
     <div class="column categories">
         <? foreach ($iniCatList as $key => $value) : ?>
          <a class="row" href="/adminsc/catalog/category?id=<?= $value['id'] ?>">
            <span><?= $value['name'] ?></span>
          </a>
       <? endforeach; ?>
-    </div>
+
   </div>
 
 </div>

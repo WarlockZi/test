@@ -1,11 +1,11 @@
 <div class="adm-submenu">
 
-
+  <div class="title">Настройки</div>
 
   <? if (in_array('3', $user['rightId'])): // admin ?>
      <div class="admin-actions">
 
-       <a href  = '<?= PROJ ?>/adminsc/Sitemap'>Создать SiteMap</a>
+       <a href  = '/adminsc/Sitemap'>Создать SiteMap</a>
        <a href  = #>Права пользователей</a>
        <a href  = #>Должности пользователей</a>
        <a href  = '/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
