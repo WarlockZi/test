@@ -174,9 +174,30 @@
 
     </div>
 
-    <footer>
+    <footer class = 'column'>
+
+      <div class="row">
+        <div class="column">
+          <a href="/about/contacts">Контакты</a>
+          <a href="/about/requisites">Реквизиты</a>
+
+        </div>
+        <div class="column">
+          <a href="#">Новости</a>
+
+        </div>
+        <div class="column">
+          <a href="/about/oferta">Оферта</a>
+          <a href="/service/return_change">Возврат и обмен</a>
+
+
+        </div>
+
+      </div>
+      <div class="row">
       <p>© <? echo date('Y') ?> Витекс. Цены, указанные на сайте, не являются публичной офертой, определяемой положением Статьи 437 (2) ГК РФ и зависят от объема заказа. ОГРН:1173525018292</p>
       <p>Created by VORONIKLAB</p>
+      </div>
     </footer>
 
     <div id="cookie-notice" role="banner">
@@ -187,23 +208,25 @@
 
     <script src="/public/js/jq.js"></script>
     <script src="/public/js/auto.js"></script>
-    <script src="<?= $js ?>"></script>
+    <?=  $js?'<script src="'.$js.'"></script>':'' ?>
+
     <script>
          function setCookie() {
 //          debugger;
             $('#cookie-notice').css({bottom: "-100%"});
-            var date = new Date();
-            var minutes = 1;
-            var minute = 60 * 1000;
-            var month = minute * 60 * 24 * 30;
+            var days = 1;
             var months = 1;
-            date.setTime(date.getTime() + (months * month));
+            var date = new Date();
+            var minute = 60 * 1000;
+            var day = minute * 60 * 24;
+            var week = day * 7;
+            var month = minute * 60 * 24 * 30;
+            date.setTime(date.getTime() + (days * day));
             $.cookie("cn", "1", {
                expires: date,
                path: "/"
             });
-         }
-         ;
+         };
 
          $(function () {
 //               debugger;

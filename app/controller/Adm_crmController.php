@@ -54,7 +54,6 @@ class Adm_crmController extends AdminscController{
       }
 
       $rights = App::$app->user->findAll('user_rights');
-      ;
 
       $this->set(compact('users', 'rights'));
    }

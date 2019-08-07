@@ -1,14 +1,26 @@
-<div class="wrap-admin">
-
+<div class="adm-submenu">
+  <div class="title">Каталог</div>
+  <div class="admin-actions">
+      <?
+      new app\view\widgets\menu\Menu([
+          'class' => 'admin-category-menu',
+          'tpl' => ROOT . "/app/view/widgets/menu/menu_tpl/site_admin_category_menu.php",
+          'cache' => 60,
+          'sql' => "SELECT * FROM category "
+      ]);
+      ?>
+  </div>
+</div>
+<div class="adm-content">
   <div class="breadcrumbs-adm">
-    <a href  = "/adminsc/index">Admin</a>
-    <a href  = "/adminsc/catalog">Каталог</a>
-    <a href  = "/adminsc/catalog/categories">Категории товаров</a>
+    <a href  = "/adminsc/index">Admin  ></a>
+    <a href  = "/adminsc/catalog">Каталог  ></a>
+    <!--<a href  = "/adminsc/catalog/categories">Категории товаров</a>-->
   </div>
   <div class="nav-catalog breadcrumbs-adm">
       <? if (isset($category['parents'])): ?>
          <? foreach ($category['parents'] as $k => $v): ?>
-    <a href  = "/adminsc/catalog/category?id=<?= $v['id'] ?>"><?= $v['name'] ?></a><span><?= $v['title'] ?></span>
+          <a href  = "/adminsc/catalog/category?id=<?= $v['id'] ?>"><?= $v['name'] ?></a><span><?= $v['title'] ?></span>
        <? endforeach; ?>
     <? endif; ?>
     <div data-id = <?= $category['id'] ?>><?= $category['title'] ?></div>
@@ -46,11 +58,11 @@
                       <? app\core\App::$app->category->getCatPropsValsSnip($k['props']); ?>
                   </div>
                <? endforeach; ?>
-                 <? unset($category['parents']) ?>
+               <? unset($category['parents']) ?>
             <? endif; ?>
-               <div class="properties">
-                   <? app\core\App::$app->category->getCatPropsValsSnip($category['props']); ?>
-               </div>
+            <div class="properties">
+                <? // app\core\App::$app->category->getCatPropsValsSnip($category['props']); ?>
+            </div>
           </div>
 
 
@@ -69,5 +81,4 @@
 
     </div>
   </div>
-
 </div>

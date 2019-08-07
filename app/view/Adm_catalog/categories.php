@@ -1,19 +1,17 @@
 <div class="adm-submenu">
-    <label for="category"  >Категории
-    <input type="checkbox" class="title" id="category">
-    </label>
-    
 
-    <div class="column categories">
-        <? foreach ($iniCatList as $key => $value) : ?>
-         <a class="row" href="/adminsc/catalog/category?id=<?= $value['id'] ?>">
-           <span><?= $value['name'] ?></span>
-         </a>
-      <? endforeach; ?>
-
-  </div>
+  <?
+  new app\view\widgets\menu\Menu([
+      'class' => 'admin-category-menu',
+      'tpl' => ROOT . "/app/view/widgets/menu/menu_tpl/site_admin_category_menu.php",
+      'cache' => 60,
+      'sql' => "SELECT * FROM category "
+  ]);
+  ?>
 
 </div>
+
+
 <div class="adm-content">
   <div class="breadcrumbs-adm">
     <a href  = "/adminsc/index">Admin</a>

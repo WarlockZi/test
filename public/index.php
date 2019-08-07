@@ -65,9 +65,10 @@ Router::add('^adminsc$', ['controller' => 'Adminsc', 'action' => 'index']);
 
 Router::add('^catalog\/(?P<cat1>[a-z0-9-]+)\/?(?P<cat2>[0-9a-z-]+)?\/?(?P<cat3>[0-9a-z-]+)?\/?(?P<cat4>[0-9a-z-]+)?$', ['controller' => 'Catalog', 'action' => 'category']);
 
-Router::add('^about\/(?P<action>[a-z0-9_]+)$', ['controller' => 'about']);
+Router::add('^about\/(?P<action>[a-z0-9_]+)$', ['controller' => 'main']);
+Router::add('^about$', ['controller' => 'main', 'action' => 'about']);
 
-Router::add('^service\/(?P<action>[a-z0-9_]+)$', ['controller' => 'about']);
+Router::add('^service\/(?P<action>[a-z0-9_]+)$', ['controller' => 'main']);
 
 Router::add('^freetest\/?(?P<alias>[0-9]+)$', ['controller' => 'Freetest ', 'action' => 'do']);
 Router::add('^freetest/edit/(?P<alias>[0-9]+)$', ['controller' => 'Freetest ', 'action' => 'edit']);
@@ -81,5 +82,5 @@ Router::add('^freetest/results/(?P<cache>[a-zA-Z0-9]{32})$', ['controller' => 'F
 Router::add('^(?P<controller>[a-z-]+)/?(?P<action>[a-z-]+)?$'); // fw/test/do -> controller/action
 
 Router::add('^$', ['controller' => 'main', 'action' => 'index']); // fw/ -> main/index
- 
+
 Router::dispatch($url);

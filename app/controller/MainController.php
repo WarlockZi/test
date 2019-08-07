@@ -3,15 +3,16 @@
 namespace app\controller;
 
 use app\core\Base\View;
+use app\model\User;
+use app\model\Catalog;
 use app\core\App;
+
 
 class MainController Extends AppController {
 
    public function __construct($route) {
       parent::__construct($route);
-
       $list = App::$app->cache->get('list');
-
       if (!$list) {
          $list = App::$app->category->getInitCategories();
          App::$app->cache->set('list', $list, 30);
@@ -43,6 +44,29 @@ class MainController Extends AppController {
       }
       View::setMeta('Спецодежда оптом с доставкой', 'Доставим спецодежду в любую точку России', 'Спецодежда, доставка, производство, по России');
    }
+
+
+
+
+   public function actionRequisites() {
+
+   }
+   public function actionContacts() {
+
+
+
+   }
+
+   public function actionOferta() {
+
+   }
+   public function actionAbout() {
+
+   }
+   public function actionReturn_change() {
+
+   }
+
 
 
 

@@ -262,10 +262,9 @@ menu{
 /* Базовый контейнер табов */
 .tabs {
     min-width: 320px;
-    /*max-width: 800px;*/
     width: 85%;
     padding: 0px;
-    margin: 0 auto;
+    margin: 0 auto 0 0;
 }
 /* Стили секций с содержанием */
 .tabs>section {
@@ -313,7 +312,7 @@ menu{
 .tabs>label {
     display: inline-block;
     margin: 0 0 -1px;
-    padding: 15px 25px;
+    padding: 9px 15px;
     font-weight: 600;
     text-align: center;
     color: #aaa;
@@ -712,22 +711,32 @@ input
     margin-bottom: 50px;
     width: 150px;
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 10px 0;
 }
-.admin-actions a{
+/*.admin-actions label{
+	padding: 0 0 0 5px;
+}*/
+.admin-actions a,
+.admin-actions label{
     color:#4a4a4a;
+	font-size: 16px;	
+	padding: 0 0 0 5px;
+}
+.admin-actions label:before{
 
 }
-.admin-actions a{
-    padding: 10px;
+
+.admin-actions label a{
+	padding: 3px;
+    color:#4a4a4a;
+	font-size: 14px;
 }
 .admin-actions a:hover{
-    background: #ccc;
-    padding: 10px;
+    background: #cedbdf;
 }
 
 .wrap-admin{
-    margin: 30px;
+
     background-color: #fff;
 }
 
@@ -744,6 +753,7 @@ input
 .adm-content{
     flex: 1;
     background-color: #f4fbfb;
+	    margin: 5px;
 }
 .adm-save-cansel{
     position: fixed;
@@ -754,7 +764,7 @@ input
     padding: 10px;
 }
 .adm-menu{
-    width: 80px;
+    width: 71px;
     font-size: 8px;
     align-items: center;
     background-color: #8a92a0;
@@ -927,9 +937,10 @@ input
 .breadcrumbs-adm a,
 .orange
 {
-    background: orange;
+    /*background: orange;*/
     padding: 3px 6px;
-    color: #fff;
+	font-size: 0.7rem;
+    color: #7e98ba;
     font-weight: 600;
     margin-left: 5px;
 }
@@ -1039,7 +1050,7 @@ body{
     padding-left: 20px;
 }
 .column.categories a.row span:before{
-content: '';
+	content: '';
     position: absolute;
     left: -2px;
     display: block;
@@ -1054,9 +1065,15 @@ content: '';
 
 .admin-actions label ul{
     display: none;
+	transition: all 1s;
 }
-.admin-actions label input:checked~.admin-actions label ul{
+.admin-actions label input{
+	display: none;
+}
+.admin-actions label input:checked+ul{
     display: flex;
+	height: 100%;
+	transition: all 1s;
 }
 
 .grid {
@@ -1143,6 +1160,7 @@ header {
     width: 100%;
     -webkit-box-shadow: 0 0 18px 0 #d2d2d2;
     box-shadow: 0 0 18px 0 #d2d2d2;
+	background-image: url(/pic/header-big.png);
 }
 header {
     justify-content: space-between;
@@ -1157,6 +1175,7 @@ header {
 footer {
     flex: 0 0 auto;
     justify-content: space-between;
+	background-image: url(/pic/header-big.png);
 }
 
 footer p{
@@ -1166,9 +1185,9 @@ footer p{
 .logo{
     flex: 1;
     justify-content: center;
-    flex-basis: 56px;
-    width: 503px;
-    max-width: 498px;
+	/*    flex-basis: 56px;
+		width: .admin-actions label;
+		max-width: 498px;*/
     margin-left: 10px;
 }
 .logo img{
@@ -1195,6 +1214,8 @@ footer p{
     align-items: center;
     position: relative;
     margin-right: 10px;
+	color: #fff;
+	font-size: 0.8rem;
 }
 
 .user-menu:before
@@ -1203,6 +1224,98 @@ footer p{
     display: block;
     padding: 0 8px;
 }
+
+
+
+/*//////////////////////*/
+/*//////  MENU  ////////*/
+/*//////////////////////*/
+
+.admin-category-menu{
+    flex:1;
+    z-index: 1;
+    max-width: 350px;
+}
+
+.admin-category-menu a{
+    display: flex;
+    align-items: center;
+    flex: 1;
+    padding: 7px 14px 7px 7px;
+    -webkit-transition: 0.1s all;
+    transition: 0.5s all;
+    font-size: 1.4vw;
+    font-weight: bold;
+    text-transform: uppercase;
+    min-width: 40px;
+    max-width: 190px;
+    background-color: rgba(229, 237, 239, 0.73)
+}
+
+.test-params,
+.freetest-params{
+    flex: 1;
+    max-width: 37px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+	/*min-width: 40px;*/
+}
+
+
+.admin-category-menu li .test-link a{
+    text-transform: uppercase;
+}
+
+.admin-category-menu li {
+    display: flex;
+    position: relative;
+    border-bottom: 1px solid #b7b7b7;
+    -webkit-transition: 0.5s all;
+    transition: 0.5s all;
+    justify-content: flex-end;
+
+}
+
+/*Всплывающие меню*/
+.vert-menu__drop{
+    position: absolute;
+    width: 100%;
+    left: 100%;
+    top:-9999em;
+    opacity: 0;
+    border-left: 1px solid transparent;
+    -webkit-transition: 0.5s opacity;
+    transition: 0.5s opacity;
+}
+
+.admin-category-menu .vert-menu__list:hover>.vert-menu__drop{
+    opacity: 1;
+    top: 0;
+    z-index: 1;
+}
+
+/*Иконки для всплывающих менюшек*/
+.vert-menu__list::after{
+    content: " ";
+    position: absolute;
+    border: .6vw solid;
+    border-color: transparent transparent transparent #84989a;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    align-self: center;
+}
+
+.vert-menu__list:hover::after{
+    -webkit-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+
+/*//////////////////////*/
+/*//////  END  MENU  ////////*/
+/*//////////////////////*/
 
 .enter-button,
 .user-button

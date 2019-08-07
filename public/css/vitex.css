@@ -191,13 +191,16 @@ a:hover,
 
 
 .site{
-	margin: 0 auto;
     position: relative;
-    padding: 30px 10px;
-    margin-bottom: 9px;
 
 }
-
+.site .wrap{
+	margin: 0 auto;
+    padding: 30px 10px;
+    margin-bottom: 9px;
+	max-width: 1310px;
+	box-sizing: border-box;
+}
 main{
     max-width: 1310px;
 	margin: auto;
@@ -1050,9 +1053,13 @@ header {
 	margin-right: 10px;
 	width: 43%;
 }
-
+.map{
+	position: absolute;
+	width: 100%;
+	margin-top: 60px;
+}
 .inner-wrap{
-    padding: 0 15px;
+
     max-width: 1310px;
     margin: auto;
     box-sizing: border-box;
@@ -1176,13 +1183,21 @@ header {
 	justify-content: space-between;
 }
 footer {
-	color: #777;
-    flex: 0 0 auto;
     justify-content: space-between;
-	width: 119%;
+	background-image: url(/pic/header-big.png);
+}
+footer>.row>.column {
+margin: 15px 3vw;;
+}
+footer>.row{
+	flex-basis: 50%;
+	margin: 0 auto;
 }
 
-footer p{
+footer p,
+footer a
+{
+	color: #fff;
     padding: 0 15px;
 	font-size: 10px;
 }
@@ -1525,7 +1540,7 @@ footer p{
 	.user-button,
 	.card-right,
 	.FIO
-	
+
     {
         display:none;
     }
