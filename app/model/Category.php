@@ -75,15 +75,15 @@ class Category extends Model {
    }
 
    public function getCategory($id) {
-
-//      $category = App::$app->cache->get('category'.$url);
+      $category = App::$app->cache->get('category'.$url);
+if(!$category){ 
 
          if ($category = $this->findOne($id)[0]) {
             $category['parents'] = $this->getCategoryParents($category['parent']);
             $category['children'] = $this->getCategoryChildren($category['id']);
             App::$app->cache->set('category' . $url, $category, 30);
          }
-
+}
       if (!$category) {
          return FALSE;
       };

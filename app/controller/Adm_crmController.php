@@ -13,14 +13,12 @@ class Adm_crmController extends AdminscController{
 
    public function actionIndex() {
 
-      $this->auth();
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
 
       public function actionUsers() {
 
-      $this->auth();
 
       $users = App::$app->user->findAll('users');
 
@@ -40,7 +38,6 @@ class Adm_crmController extends AdminscController{
 
       public function actionUser() {
 
-//      $this->auth();
 
       $users = App::$app->user->findAll('users');
 

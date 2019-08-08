@@ -13,21 +13,15 @@ class Adm_settingsController extends AdminscController {
 
    public function actionIndex() {
 
-      $this->auth();
-
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
    public function actionDumpSQL() {
 
-      $this->auth();
-
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
    public function actionPics() {
-
-      $this->auth();
 
       $this->vars['js'] = $this->getJSCSS('.js');
 
@@ -37,8 +31,6 @@ class Adm_settingsController extends AdminscController {
 
    }
    public function actionDump() {
-
-      $this->auth();
 
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
@@ -50,15 +42,11 @@ class Adm_settingsController extends AdminscController {
       $a = 3;
       }
 
-      $this->auth();
-
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
 
    public function actionModule() {
-
-      $this->auth();
 
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
@@ -69,7 +57,6 @@ class Adm_settingsController extends AdminscController {
 
    public function actionInstructions() {
 
-      $this->auth();
       $this->vars['js'] = $this->getJSCSS('.js');
 
       $query = '';
@@ -102,8 +89,6 @@ class Adm_settingsController extends AdminscController {
 
 
    public function actionProps() {
-
-      $this->auth();
 
       $this->vars['js'] = $this->getJSCSS('.js');
       $this->vars['css'] = $this->getJSCSS('.css');

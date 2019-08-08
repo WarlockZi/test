@@ -262,7 +262,7 @@ menu{
 /* Базовый контейнер табов */
 .tabs {
     min-width: 320px;
-    width: 85%;
+    width: 100%;
     padding: 0px;
     margin: 0 auto 0 0;
 }
@@ -1244,7 +1244,7 @@ footer p{
     padding: 7px 14px 7px 7px;
     -webkit-transition: 0.1s all;
     transition: 0.5s all;
-    font-size: 1.4vw;
+    font-size: 0.65rem;
     font-weight: bold;
     text-transform: uppercase;
     min-width: 40px;

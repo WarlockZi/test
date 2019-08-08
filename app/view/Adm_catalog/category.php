@@ -31,13 +31,13 @@
 
       <div class="tabs">
         <input id="tab1" type="radio" name="tabs" checked>
-        <label for="tab1" title="Вкладка 1">Подкатегории</label>
+        <label for="tab1" title="Подкатегории">Подкатегории</label>
         <input id="tab2" type="radio" name="tabs">
-        <label for="tab2" title="Вкладка 2">Свойства</label>
+        <label for="tab2" title="Свойства">Свойства</label>
         <input id="tab3" type="radio" name="tabs">
-        <label for="tab3" title="Вкладка 3">Сео</label>
+        <label for="tab3" title="Сео">Сео</label>
         <input id="tab4" type="radio" name="tabs">
-        <label for="tab4" title="Вкладка 4">Подробно</label>
+        <label for="tab4" title="Подробно">Подробно</label>
 
 
 

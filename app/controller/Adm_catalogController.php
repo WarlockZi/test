@@ -7,7 +7,7 @@ use app\controller\AppController;
 use app\model\Catalog;
 use app\model\Prop;
 
-class Adm_catalogController extends AppController {
+class Adm_catalogController extends AdminscController {
 
     public function __construct($route) {
         parent::__construct($route);
@@ -26,8 +26,6 @@ class Adm_catalogController extends AppController {
     }
 
     public function actionProducts() {
-
-        $this->auth();
 
         $fName = $fAct = $fArt = 0;
         $params = [];
@@ -97,8 +95,6 @@ class Adm_catalogController extends AppController {
 
     public function actionIndex() {
 
-        $this->auth();
-
         $this->vars['js'] = $this->getJSCSS('.js');
         $iniCatList = App::$app->category->getInitCategories();
         $this->set(compact('iniCatList'));
@@ -106,22 +102,18 @@ class Adm_catalogController extends AppController {
 
     public function actionCategories() {
 
-        $this->auth();
-
         $iniCatList = App::$app->category->getInitCategories();
         $this->set(compact('iniCatList'));
     }
 
     public function actionCategory() {
 
-        $this->auth();
-
         if (isset($_GET['id'])) {
             $id = (int) $_GET['id'];
         }
 
         if ($id) { /// иначе это корнвой каталог
-            $category = App::$app->category->findOne($id)[0];
+            $category = App::$app->category->getCategory($id);
             $ids = explode(',', $category['prop']);
 //         $category['props'] = Prop::getByIds($ids);
             $category['props'] = unserialize($category['prop']);

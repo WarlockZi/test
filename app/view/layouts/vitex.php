@@ -40,7 +40,6 @@
                <div class="nav">
                  <a  href="/user/edit" >Редактировать свой профиль</a>
 
-                 <? $rights = $user['rights_set']; ?>
                  <?=
                  array_key_exists('1', $rights) ? // редактировать
                     '<a href="/edit/1">Редактировать тесты</a>
