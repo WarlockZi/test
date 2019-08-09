@@ -39,13 +39,15 @@ class Category extends Model {
       return $combinedProducts;
    }
 
-   public function getCategoryChildren($parentId, $children) {
+   public function getCategoryChildren($parentId, $children, $k = false) {
 
       $sql = 'SELECT * FROM category WHERE parent = ?';
       $params = [$parentId];
       if (!isset($children['categories'])) {
          $children['categories'] = $this->findBySql($sql, $params);
       }
+      if ($k !== false)
+         $children['categories'][$k]['categories'] = $this->findBySql($sql, $params);
 // найдем продукты категории
       $children['products'] = $this->mergeArrays($children, $parentId);
       foreach ($children['categories'] as $key => $value) {
@@ -54,8 +56,9 @@ class Category extends Model {
 // найдем детей ребенка
          $sql = 'SELECT * FROM category WHERE parent = ?';
          $params = [$value['id']];
-         if ($this->findBySql($sql, $params)) {
-            getCategoryChildren($value['id'], $children);
+         $arr = $this->findBySql($sql, $params);
+         if ($arr) {
+            $this->getCategoryChildren($value['id'], &$children, $key);
          }
       }
 
@@ -74,22 +77,7 @@ class Category extends Model {
       return $cont;
    }
 
-   public function getCategory($id) {
-      $category = App::$app->cache->get('category'.$url);
-if(!$category){ 
-
-         if ($category = $this->findOne($id)[0]) {
-            $category['parents'] = $this->getCategoryParents($category['parent']);
-            $category['children'] = $this->getCategoryChildren($category['id']);
-            App::$app->cache->set('category' . $url, $category, 30);
-         }
-}
-      if (!$category) {
-         return FALSE;
-      };
-      return $category;
-   }
-   public function getCategoryByUrl($url) {
+   public function isCategory($url) {
 
 //      $category = App::$app->cache->get('category'.$url);
       if (!$category) {
@@ -108,6 +96,31 @@ if(!$category){
          return FALSE;
       };
       return $category;
+   }
+
+   public function getCatPropsValsSnip($catProps) {
+
+//      foreach ($props as $key) {
+//         $catProps = $key;
+//         $catProps = Prop::getByIds($key['id']);
+//         if ($catProps) {
+//            $catProps = Prop::getPropsVals($catProps);
+//         }
+
+      ob_start();
+      include APP . '/view/Adm_catalog/snippet/KeyVal.php';
+      $cont = ob_get_clean();
+      echo $cont;
+   }
+
+//   }
+
+   public function getProp($prop) {
+
+      ob_start();
+      include APP . '/view/Adm_settings/snippet/KeyVal.php';
+      $cont = ob_get_clean();
+      echo $cont;
    }
 
    /**

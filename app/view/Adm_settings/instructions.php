@@ -9,7 +9,7 @@
 
 
   <div class="admin-instructions row">
-      <? if (in_array('3', $user['rightId'])): // admin ?>
+      <? if (in_array('3', $user['rights'])): // admin ?>
          <? if (isset($roles)): ?>
           <div class="admin-actions">
               <? foreach ($roles as $key => $value) : ?>

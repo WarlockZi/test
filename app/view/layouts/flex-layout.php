@@ -27,8 +27,8 @@
 
           <div class="user-menu">
 
-            <? if (app\model\User::isGuest()): ?>
-               <a class = "enter-button" href="<?= PROJ ?>/user/login"> Вход</a>
+            <? if (!$_SESSION['id']): ?>
+               <a class = "enter-button" href="/user/login"> Вход</a>
             <? else: ?>
 
                <div class = "user-button">
@@ -45,7 +45,7 @@
                  <div class="nav">
                    <a  href="<?= PROJ ?>/user/edit" >Редактировать свой профиль</a>
                    <?
-                   $arr = $user['rightId'];
+                   $arr = $user['rights'];
                    if (in_array('3', $arr)):
                       ?>
                       <a href="<?= PROJ ?>/adminsc">Admin</a>

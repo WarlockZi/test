@@ -56,7 +56,7 @@ class UserController extends AppController {
 
          // Проверяем существует ли пользователь и подтвердил ли регистрацию
          $user = App::$app->user->getUserByEmail($email, $password);
-         $user['rightId'] = explode(",", $user['rightId']);
+         $user['rights'] = explode(",", $user['rights']);
          // Почта с паролем существуют, но нет подтверждения
          if ($user === false) {
             // Нет пользователя с таким паролем
@@ -74,7 +74,7 @@ class UserController extends AppController {
             App::$app->user->setAuth($user);
 
             // Перенаправляем пользователя в закрытую часть - кабинет
-//            if (in_array('5', explode(",", $user['rightId'])) && !in_array('2', explode(",", $user['rightId']))) {
+//            if (in_array('5', explode(",", $user['rights'])) && !in_array('2', explode(",", $user['rights']))) {
 //
 //               echo 'squash';
 //               exit();
@@ -87,7 +87,7 @@ class UserController extends AppController {
       View::setMeta('Авторизация', 'Авторизация', 'Авторизация');
 
       if (isset($_SESSION['id'])) {
-         $user = App::$app->user->getUserById($_SESSION['id']);
+         $user = App::$app->user->getUser($_SESSION['id']);
       }
 
       $token = $this->token;
@@ -228,7 +228,7 @@ class UserController extends AppController {
 
       View::setMeta('Проверка почты', 'Почта пользователя проверена', 'проверка почты');
 
-      $rightId = explode(",", $user['rightId']);
+      $rightId = explode(",", $user['rights']);
       $js = $this->getJSCSS('.js');
       $this->set(compact('user', 'rightId'));
 //      if (isset($_GET['squash']) && $_GET['squash'] == "1") {
@@ -250,7 +250,7 @@ class UserController extends AppController {
 
       $this->auth(); // Авторизация
       // Проверяем существует ли пользователь и подтвердил ли регистрацию
-      $user = App::$app->user->getUserWithRightsSet($_SESSION['id']);
+      $user = App::$app->user->getUser($_SESSION['id']);
 
       if ($this->vars['user'] === false) {
          // Если пароль или почна неправильные - показываем ошибку
@@ -260,19 +260,19 @@ class UserController extends AppController {
          $errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
       } else {
          View::setMeta('Спецодежда оптом с доставкой', 'Доставим спецодежду в любую точку России', 'Спецодежда, доставка, производство, по России');
-//         $rightId = explode(",", $user['rightId']);
+//         $rightId = explode(",", $user['rights']);
 //         $this->set(compact('user'));
       }
    }
 
    public function actionEdit() {
-      $this->auth(); // Авторизация
+      $this->auth(); // Авторизация $_SESSION['id']
       // Получаем идентификатор пользователя из сессии, если есть
-      if (App::$app->user->userId()) {
-         $userId = App::$app->user->userId();
+      if (isset($_SESSION['id'])) {
+         $userId = $_SESSION['id'];
       }
       // Получаем информацию о пользователе из БД
-      $user = App::$app->user->getUserById($userId);
+      $user = App::$app->user->getUser($userId);
 
       // Флаг результата
       $result = false;
@@ -304,7 +304,7 @@ class UserController extends AppController {
          }
          View::setMeta('Профиль', 'Профиль', 'Профиль');
          $css = 'style.css';
-         $rightId = explode(",", $user['rightId']);
+         $rightId = explode(",", $user['rights']);
          $this->set(compact('css', 'user', 'rightId', 'result', 'errors'));
       } else {// форма из базы данных
          $email = $user['email'];
@@ -316,7 +316,7 @@ class UserController extends AppController {
          $password = $user['password'];
 
          View::setMeta('Профиль', 'Профиль', 'Профиль');
-//         $rightId = explode(",", $user['rightId']);
+//         $rightId = explode(",", $user['rights']);
          $this->set(compact('user', 'rightId'));
       }
    }

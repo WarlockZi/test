@@ -11,7 +11,7 @@ use app\core\App;
 class TestController Extends AppController {
 
 //   public function __construct($route) {
-//      
+//
 //      if ($this->isAjax()) {
 //         if (isset($_POST['param'])) {
 //            $arr = json_decode($_POST['param'], true);
@@ -43,7 +43,7 @@ class TestController Extends AppController {
          exit();
       }
 
-      //Получим id теста 		
+      //Получим id теста
       if (is_array($this->route)) {
          if (array_key_exists('alias', $this->route)) {
             if ($this->route['alias']) {
@@ -57,7 +57,7 @@ class TestController Extends AppController {
       $testDataToEdit = App::$app->test->getTestDataToEdit($testId);
       $css = 'style.css';
 
-      if ($testDataToEdit === FALSE) {//Вообще не нашли такого теста с номером 
+      if ($testDataToEdit === FALSE) {//Вообще не нашли такого теста с номером
          $error = '<H1>Теста с таким номером нет.</H1>';
          $this->set(compact('css', 'error'));
       }
@@ -104,7 +104,7 @@ class TestController Extends AppController {
       View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
 
 
-      //Получим id теста 
+      //Получим id теста
       if (is_array($this->route)) {
          if (array_key_exists('alias', $this->route)) {
             if ($this->route['alias']) {
@@ -115,10 +115,7 @@ class TestController Extends AppController {
          }
       }
       //Получим данные теста
-//      if (!$testData = App::$app->cache->get('testData' . $testId)) {
       $testData = App::$app->test->getTestData($testId);
-//         App::$app->cache->set('testData' . $testId, $testData, 60 * 5);
-//      }
       $_SESSION['testData'] = $testData;
 
       if ($testData === 0) {//  0 - это просто альтернатива FALSE это папка
@@ -136,6 +133,8 @@ class TestController Extends AppController {
          unset($testData['testId']);
          $_SESSION['correct_answers'] = $testData['correct_answers'];
          unset($testData['correct_answers']);
+         unset($_SESSION['correct_answers']);
+         unset($_SESSION['testData']);
          $pagination = App::$app->test->pagination($testData);
          $this->set(compact('css', 'js', 'testData', 'pagination', 'testName', 'testId'));
       }

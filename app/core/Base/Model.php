@@ -3,6 +3,7 @@
 namespace app\core\Base;
 
 use app\core\DB;
+use app\core\App;
 use app\view\widgets\menu\Menu;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -21,7 +22,7 @@ abstract class Model {
     * очистка введенных данных
     */
    public function clean_data($str) {
-      return strip_tags(trim($str));
+      return mysqli_escape_string(strip_tags(trim($str)));
    }
 
    public function findAll($table) {
@@ -82,21 +83,21 @@ abstract class Model {
    }
 
    public function getBreadcrumbs($category, $parents, $type) {
-      if ($type=='category') {
+      if ($type == 'category') {
 
-      // в parents массив из адресной строки - надо получить aliases
-      foreach ($parents as $key) {
-         $params = [$key['name']];
-         $sql = 'SELECT * FROM category WHERE name = ?';
-         //если это категория, а ее не нашли вернем 404  ошибку
-         if ($arrParents[] = $this->findBySql($sql, $params)[0]) {
+         // в parents массив из адресной строки - надо получить aliases
+         foreach ($parents as $key) {
+            $params = [$key['name']];
+            $sql = 'SELECT * FROM category WHERE name = ?';
+            //если это категория, а ее не нашли вернем 404  ошибку
+            if ($arrParents[] = $this->findBySql($sql, $params)[0]) {
 
-         } else {
-            http_response_code(404);
-            include '../public/404.html';
-            exit();
+            } else {
+               http_response_code(404);
+               include '../public/404.html';
+               exit();
+            }
          }
-      }
       }
 
       $breadcrumbs = "<a href = '/'>Главная</a>";
@@ -106,13 +107,12 @@ abstract class Model {
             $breadcrumbs .= "<a href = '/{$parent['alias']}'>{$parent['name']}</a>";
          }
          return $breadcrumbs . "<span>{$category['name']}</span>";
-      }else{
+      } else {
          $parents = array_reverse($parents);
          foreach ($parents as $parent) {
             $breadcrumbs .= "<a href = '/{$parent['alias']}'>{$parent['name']}</a>";
          }
          return $breadcrumbs . "<span>{$category['name']}</span>";
-
       }
    }
 
@@ -189,6 +189,32 @@ abstract class Model {
       require_once(ROOT . '/libs/PHPMailer/src/POP3.php');
 
       return new PHPMailer(true);
+   }
+
+      public function getAssoc($table) {
+
+      $params = array();
+      $res = App::$app->{$table}->findBySql($this->sql, $params);
+
+      if ($res !== FALSE) {
+         $all = [];
+         foreach ($res as $key => $v) {
+            $all[$v['id']] = $v;
+         }
+         return $all;
+      }
+   }
+   protected function hierachy() {
+      $tree = [];
+      $data = $this->data;
+      foreach ($data as $id => &$node) {
+         if (isset($node['parent']) && !$node['parent']) {
+            $tree[$id] = &$node;
+         } elseif (isset($node['parent']) && $node['parent']) {
+            $data[$node['parent']]['childs'][$id] = &$node;
+         }
+      }
+      return $tree;
    }
 
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
   <!--ADMIN-LAYOUT-->
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,27 +16,23 @@
   <body>
     <div class="wrap">
       <header class = 'row'>
-
-        <a class="logo" href= "/">
-          <svg width="150" height="30" version="1.1" viewBox="0 0 140.93602 25.903431" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
-
-          <g transform="matrix(.23439 0 0 .23439 .18676 .23738)">
-          <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#a4bgr29v3"/>
-          <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#c1VGvvv2Z"/>
-          <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#gUAoYJIok"/>
-          <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#b1d9vAIQqx"/>
-          <use width="100%" height="100%" fill="#ff2929" xlink:href="#b22YyPyZK"/>
-
-          </g>
-          </svg>
-        </a>
-
+        <div class="logo">
+          <a  href= "/">
+            <svg width="30" height="30" version="1.1" viewBox="0 -4 26 30" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g transform="matrix(.23439 0 0 .23439 .18676 .23738)">
+            <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#c1VGvvv2Z"/>
+            <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#b1d9vAIQqx"/>
+            <use width="100%" height="100%" fill="#ff2929" xlink:href="#b22YyPyZK"/>
+            </g>
+            </svg>
+          </a>
+        </div>
 
 
         <div class="user-menu">
 
           <span class="FIO"><?
-              $rightId = $user['rightId'];
+              $rightId = $user['rights'];
               if (isset($user)) {
                  echo $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'];
               }
@@ -80,21 +75,27 @@
 
 
       </header>
+      <div class="tabs column">
+        <div class="column">
+          <div>Сайт
+            <a href="/"></a>
+          </div>
+          <div>Администирование</div>
+        </div>
+        <div>
+        </div>
 
+      </div>
       <div class="adm-wrap row">
 
 
         <div class="adm-menu column">
-
-          <? if (in_array('3', $user['rightId'])): // admin ?>
 
              <a href  ="/adminsc"         class="module home"><span>Admin</span></a>
              <a href  = "/adminsc/catalog" class="module catalog"><span>Каталог</span></a>
              <a href  = "/adminsc/settings" class="module settings"><span>Настройки</span></a>
              <a href  = "/adminsc/crm"     class="module crm"><span>CRM</span></a>
              <a href  ="#"                 class="module marketing"><span>Маркетинг</span></a>
-
-          <? endif; ?>
 
         </div>
 
@@ -118,7 +119,7 @@
 
   <script type="text/javascript">var PROJ = '<?= PROJ ?>';</script>
   <script src="/public/js/jq.js"></script>
-   <? $this::getJS() ?>
+  <? $this::getJS() ?>
   <script src="<?= $vars['js'] ?>"></script>
 
   <svg width="150" height="30" version="1.1" viewBox="0 0 140.93602 25.903431" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -136,12 +137,12 @@
   <path id="b22YyPyZK" d="m0.1 109c32.99-53.38 53.6-86.75 61.85-100.1 3.25-5.26 9-8.46 15.18-8.46h33.79c-34.57 53.96-56.17 87.69-64.81 101.18-2.95 4.6-8.04 7.38-13.5 7.38h-32.51z"/>
   </defs>
   <g>
-               <!--<use width="100%" height="100%" fill="#ff2929" xlink:href="#d1QYQspoc"/>-->
-          <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#c2Sj5L9Of"/>-->
-          <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#a22pvJeVTv"/>-->
-          <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#b3VxPr9vMy"/>-->
-          <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#f2bkoof7Mq"/>-->
-          <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#bbT7DNVUa"/>-->
+  <!--<use width="100%" height="100%" fill="#ff2929" xlink:href="#d1QYQspoc"/>-->
+  <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#c2Sj5L9Of"/>-->
+  <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#a22pvJeVTv"/>-->
+  <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#b3VxPr9vMy"/>-->
+  <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#f2bkoof7Mq"/>-->
+  <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#bbT7DNVUa"/>-->
   </g>>
 
   </svg>

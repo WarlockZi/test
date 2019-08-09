@@ -16,7 +16,8 @@ class AdminscController extends AppController {
         $this->auth();
         $this->layout = 'admin';
         $this->vars['js'] = $this->getJSCSS('.js'); //'admin.js';
-        $this->vars['css'] = '/public/css/admin.css';
+        $this->vars['css'] =
+           '/public/css/admin.css';
 
         if ($this->isAjax()) {
             if (isset($_POST['param'])) {
@@ -150,7 +151,6 @@ class AdminscController extends AppController {
         }
 
 // Проверяем существует ли пользователь и подтвердил ли регистрацию
-//      $user = App::$app->user->getUserById($_SESSION['id']);
 
         View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 

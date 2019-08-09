@@ -3,7 +3,7 @@
 
 
 
-  <? if (in_array('4', $user['rightId'])):// SU ?>
+  <? if (in_array('4', $user['rights'])):// SU ?>
 
    <!--           <div id="vk_post_2083688_2227"></div><script type="text/javascript">
          (function (d, s, id) {

@@ -47,7 +47,7 @@ class DB {
         $stmt = $this->pdo->prepare($sql);
         $res = $stmt->execute($params);
         if ($res !== FALSE) {
-            return $arr = $stmt->fetchAll();
+            return $stmt->fetchAll();
         }
         return [];
     }

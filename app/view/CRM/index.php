@@ -5,9 +5,9 @@
     <a href  = "index">Admin</a>
     <div>CRM</div>
   </div>
-  
-  
-  <? if (in_array('3', $user['rightId'])): // admin ?>
+
+
+  <? if (in_array('3', $user['rights'])): // admin ?>
      <div class="admin-actions">
        <a href  = "<?= PROJ ?>/adminsc/products">Товары</a>
        <a href  = "<?= PROJ ?>/adminsc/categories">Категории</a>
@@ -19,9 +19,9 @@
 
      </div>
   <? endif; ?>
-  
 
-  <? if (in_array('4', $user['rightId'])):// SU ?> 
+
+  <? if (in_array('4', $user['rights'])):// SU ?>
      <input class = "list" type="button" name="scr" id="scr" value = "выгрузить ">
      <form method="post" action= '<?= PROJ ?>/Adminsc/FileImport'>
        <input class = "list" type="submit" name = 'scrImport' value = "загрузить ">
@@ -39,7 +39,7 @@
      </form>
      <form method="post" action= '<?= PROJ ?>/Adminsc'>
        <input class = "list" type="submit" name = 'translitCat' value = "Категории транслит">
-     </form>        
+     </form>
    <!--           <div id="vk_post_2083688_2227"></div><script type="text/javascript">
          (function (d, s, id) {
              var js, fjs = d.getElementsByTagName(s)[0];

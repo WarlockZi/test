@@ -9,7 +9,7 @@
   </div>
 
 
-  <? if (in_array('3', $user['rightId'])): // admin ?>
+  <? if (in_array('3', $user['rights'])): // admin ?>
      <form method = 'post' class = 'column dump-form' action="/adminsc/settings/dumpwww">
 
 

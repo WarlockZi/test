@@ -16,9 +16,9 @@ class User extends Model {
       parent::__construct();
    }
 
-   public function getRightTypes() {
-      $this->table = 'rights';
-      return $this->findAll('users');
+   public function getRights() {
+      $this->table = 'user_rights';
+      return $this->findAll('user_rights');
    }
 
    public function getUserRightsSet($userId) {
@@ -34,10 +34,10 @@ class User extends Model {
       return $this->findBySql($sql, $params);
    }
 
-   public function getUserWithRightsSet($userId) {
+   public function getUserWithRightsSet($id) {
 
-      $user = $this->getUserById($userId);
-      $user_rights_set = $this->getUserRightsSet($userId);
+      $user = $this->getUser($id);
+      $user_rights_set = $this->getUserRightsSet($id);
       foreach ($user_rights_set as $k) {
          $user['rights_set'][$k['id']] = $k['name'];
       }
@@ -127,12 +127,6 @@ class User extends Model {
       }
    }
 
-   /**
-    * очистка введенных данных
-    */
-   public function clean_data($str) {
-      return strip_tags(trim($str));
-   }
 
    /**
     * Редактирование данных пользователя
@@ -200,29 +194,6 @@ class User extends Model {
       $_SESSION['id'] = (int) $user['id'];
    }
 
-   /**
-    * Возвращает идентификатор пользователя, если он авторизирован.<br/>
-    * @return string <p>Идентификатор пользователя</p>
-    */
-   public function userId() {
-
-      // Получим id пользователя из сессии
-      if (isset($_SESSION['id'])) {
-         return $_SESSION['id'];
-      }
-      return 0;
-   }
-
-   /**
-    * Проверяет является ли пользователь гостем
-    * @return boolean <p>Пользователь залогинился</p>
-    */
-   public static function isGuest() {
-      if (isset($_SESSION['id']) && $_SESSION['id']) {// Зареган
-         return false;
-      }
-      return true; // Не зареган
-   }
 
    /**
     * Проверяет имя: не меньше, чем 2 символа
@@ -355,7 +326,7 @@ class User extends Model {
     * @param integer $id <p>id пользователя</p>
     * @return array <p>Массив с информацией о пользователе</p>
     */
-   public function getUserById($id) {
+   public function getUser($id) {
 
 
       $res = $this->findOne($id, 'id');

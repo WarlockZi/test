@@ -8,7 +8,7 @@
   </div>
 
   <div class="pic row">
-      <? if (in_array('3', $user['rightId'])): // admin ?>
+      <? if (in_array('3', $user['rights'])): // admin ?>
          <? foreach ($pics as $key => $value): ?>
           <div class="column">
               <div >

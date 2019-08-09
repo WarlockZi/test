@@ -30,11 +30,9 @@ class Pagination extends Model {
 
   protected function run() {
 
-    //Получим id теста 
     $testId = $this->id;
 
     $count_questions = count($this->testData);
-    // Получаем массив id вопросов  
     $keys = array_keys($this->testData);
 
     $pagination = '<div class="pagination">';
@@ -48,7 +46,7 @@ class Pagination extends Model {
       }
     }
     $pagination .= '</div>';
-    
+
     echo $pagination;
   }
 

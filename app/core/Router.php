@@ -19,7 +19,9 @@ class Router {
    public static function matchRoute($url) {
 
 // если это категория
-      if ($category = App::$app->category->getCategoryByUrl($url)) {
+//      if($url) return;
+
+      if ($url && $category = App::$app->category->isCategory($url)) {
          $route['controller'] = 'Catalog';
          $route['action'] = 'category';
 
@@ -28,7 +30,7 @@ class Router {
          return TRUE;
 
 // это продукт
-      } elseif ($product = App::$app->catalog->isProduct($url)) {
+      } elseif ($url && $product = App::$app->catalog->isProduct($url)) {
 
          $route['controller'] = 'Catalog';
          $route['action'] = 'product';
@@ -86,6 +88,8 @@ class Router {
          } else {
             echo "<br>Класс <b>$controller</b> не найден";
          }
+         exit;
+//         session_destroy();
       } else {
          http_response_code(404);
          include '../public/404.html'; // '404.html';

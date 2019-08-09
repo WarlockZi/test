@@ -5,7 +5,7 @@ namespace app\controller;
 use app\controller\AdminscController;
 use app\core\App;
 
-class Adm_crmController extends AdminscController{
+class Adm_crmController extends AdminscController {
 
    public function __construct($route) {
       parent::__construct($route);
@@ -17,44 +17,23 @@ class Adm_crmController extends AdminscController{
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
 
-      public function actionUsers() {
-
+   public function actionUsers() {
 
       $users = App::$app->user->findAll('users');
-
-      foreach ($users as $key => $value) {
-         $userId = $value['id'];
-         $user_rights_set = App::$app->user->getUserRightsSet($userId);
-         foreach ($user_rights_set as $k) {
-
-            $users[$key]['rights_set'][$k['id']] = $k['name'];
-         }
-      }
-
       $rights = App::$app->user->findAll('user_rights');
-
       $this->set(compact('users', 'rights'));
    }
 
-      public function actionUser() {
+   public function actionUser() {
 
+      if (!isset($_GET['id']) || !$id = $_GET['id']) {
+         header('Location: /adminsc/crm/users');
+      };
 
-      $users = App::$app->user->findAll('users');
+      $user = App::$app->user->getUser($id);
+      $rights = App::$app->user->getRights();
 
-      foreach ($users as $key => $value) {
-         $userId = $value['id'];
-         $user_rights_set = App::$app->user->getUserRightsSet($userId);
-         foreach ($user_rights_set as $k) {
-
-            $users[$key]['rights_set'][] = $k['name'];
-         }
-      }
-
-      $rights = App::$app->user->findAll('user_rights');
-
-      $this->set(compact('users', 'rights'));
+      $this->set(compact('user', 'rights'));
    }
-
 
 }
-

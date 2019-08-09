@@ -8,7 +8,7 @@
 
   <div class="work-area">
 
-    <? if (in_array('3',$user['rightId'])): // admin ?>
+    <? if (in_array('3',$user['rights'])): // admin ?>
        <div class="admin-actions">
          <div>Создать sitemap</div>
        </div>

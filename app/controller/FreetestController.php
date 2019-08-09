@@ -25,7 +25,7 @@ class FreetestController extends AppController {
          exit();
       }
 
-      //Получим id теста 		
+      //Получим id теста
       if (is_array($this->route)) {
          if (array_key_exists('alias', $this->route)) {
             if ($this->route['alias']) {
@@ -40,7 +40,7 @@ class FreetestController extends AppController {
       $css = 'style.css';
       $js = $this->getJSCSS('.js');
 
-      if ($freeTestDataToEdit === FALSE) {//Вообще не нашли такого теста с номером 
+      if ($freeTestDataToEdit === FALSE) {//Вообще не нашли такого теста с номером
          $error = '<H1>Теста с таким номером нет.</H1>';
          $this->set(compact('error'));
       }
@@ -115,6 +115,8 @@ class FreetestController extends AppController {
 
          $_SESSION['key_words'] = $testData['key_words'];
          unset($testData['key_words']);
+         unset($_SESSION['key_words']);
+         unset($_SESSION['freetestData']);
 
          $this->set(compact('js', 'css', 'testData', 'testName', 'testId'));
       }

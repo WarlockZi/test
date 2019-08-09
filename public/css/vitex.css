@@ -222,6 +222,10 @@ main{
 .filter>label{
 	padding: 0 25px 0 0;
 }  
+
+.subcat a{
+	width: 100%;
+}
 #subcat:checked~label>.subcat{
 	display: flex;
 	background: #f4f4f4;
@@ -302,7 +306,7 @@ main{
     align-items: center;
 }
 .pic {
-    /*width: 15vw;*/
+    width: 95%;
     height: 220px;
 }
 .pic img{
@@ -1187,7 +1191,7 @@ footer {
 	background-image: url(/pic/header-big.png);
 }
 footer>.row>.column {
-margin: 15px 3vw;;
+	margin: 15px 3vw;;
 }
 footer>.row{
 	flex-basis: 50%;
@@ -1639,6 +1643,8 @@ footer a
 		{
 			padding: .2vw;
 		}*/
+
+
 
 
 }

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -31,7 +30,6 @@
                <a href="/user/login"></a>
             <? else: ?>
                <?
-               $rights = $user['rights_set'];
                if (isset($user)) {
                   echo '<span class = "FIO">' . $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'] . '</span>';
                }
@@ -41,19 +39,19 @@
                  <a  href="/user/edit" >Редактировать свой профиль</a>
 
                  <?=
-                 array_key_exists('1', $rights) ? // редактировать
+                 array_key_exists('1', $user['rights']) ? // редактировать
                     '<a href="/edit/1">Редактировать тесты</a>
                       <a href="/freetest/edit/41">Редактировать свободный тест</a>' : ''
                  ?>
 
                  <?=
-                 array_key_exists('2', $rights) ? // проходить
+                 array_key_exists('2', $user['rights']) ? // проходить
                     '<a href="/test/1">Проходить тесты</a>
                       <a href="/freetest/41">Свободный тест</a>' : '';
                  ?>
 
                  <?=
-                 array_key_exists('3', $rights) ?
+                 array_key_exists('3', $user['rights']) ?
                     '<a href="/adminsc">Admin</a>' : ''; // Admin
                  ?>
 

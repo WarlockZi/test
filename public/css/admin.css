@@ -720,7 +720,7 @@ input
 .admin-actions label{
     color:#4a4a4a;
 	font-size: 16px;	
-	padding: 0 0 0 5px;
+	padding: 0 0 7px 5px;
 }
 .admin-actions label:before{
 
@@ -752,8 +752,8 @@ input
 
 .adm-content{
     flex: 1;
-    background-color: #f4fbfb;
-	    margin: 5px;
+    background-color: #ebf4f4;
+	margin: 5px;
 }
 .adm-save-cansel{
     position: fixed;
@@ -1035,11 +1035,12 @@ body{
     width: 100%;
 }
 .nav a:hover{
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.08);
 } 
 .nav a{
     display: none;
     padding:5px 10px;
+
 }
 
 .column.categories{
@@ -1079,15 +1080,62 @@ body{
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    border-top: 1px solid #d5d5d5;
-    border-right: 1px solid #d5d5d5;
+    /*border-top: 1px solid #d5d5d5;*/
+    /*border-right: 1px solid #d5d5d5;*/
 }
 
 .grid >span {
     padding: 8px 4px;
-    border-left: 1px solid #d5d5d5;
-    border-bottom: 1px solid #d5d5d5;
+    /*border-left: 1px solid #d5d5d5;*/
+    /*border-bottom: 1px solid #d5d5d5;*/
 }
+.user.content-90{
+	height: 100%;
+	padding-top: 20px;
+	position: relative;
+}
+.user.content-90 *{
+	display: flex;
+	padding: 3px;
+}
+.user.content-90 div *{
+	flex: 1;
+}
+.user.content-90 span[contenteditable='true']{
+	border: 1px #71ff668c solid;
+}
+.user.content-90 span[contenteditable='true']:hover{
+	border: 1px #71ff66ff solid;
+}
+
+.user.content-90 strong
+{
+	flex: 1;
+	justify-content: flex-end;
+	margin-right: 25px;
+}
+.user.content-90 div input
+{
+	justify-content: flex-start;
+}
+.user.content-90 .btnadd-user,
+.user.content-90 .btnupdate-user
+{
+	width: 180px;
+    height: 27px;
+    margin: 24px;
+    justify-content: center;
+}
+.separator{
+	padding: 5px;
+	background-color: #ebf4f4;
+	margin: 10px 0;
+}
+.separator.btns button
+{
+	display: block;
+}
+
 
 .wrap .list:hover{
     background:#f6f6f6;
@@ -1159,17 +1207,57 @@ header {
     z-index: 500;
     width: 100%;
     -webkit-box-shadow: 0 0 18px 0 #d2d2d2;
-    box-shadow: 0 0 18px 0 #d2d2d2;
 	background-image: url(/pic/header-big.png);
-}
-header {
     justify-content: space-between;
 }
+.wrap header{
+	-webkit-box-shadow: 0 0 0px 0 #d2d2d2;
 
+}
 
+.wrap .tabs .column div:first-child{
+	height: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 19px;
+    left: 54px;
+    background-color: #000;
+	color: #ccc;;
+    border-radius: 5px 5px 0 0;
+	cursor: pointer;
+}
+.wrap .tabs .column div{
+	height: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 20px;
+    left: 120px;
+    background-color: #fff;
+    border-radius: 5px 5px 0 0;
+}
+.wrap .tabs.column div:last-child{
+    height: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.wrap .tabs.column .column div:last-child{
+    height: 10px;
+    border-bottom: 0;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.wrap .tabs.column a{
+	height: 100%;
+	width: 100%;
+	display: block;
+	position: absolute;
+    top: 0;
+    left: 0;
+}
 
 .wrap {
     flex: 1 0 auto;
+	position: relative;
 }
 
 footer {
@@ -1197,7 +1285,7 @@ footer p{
 }
 .logo a
 {
-    width: 22vw;
+    width: 30px;
     display: block;
 }
 .logo>span
@@ -1362,6 +1450,7 @@ footer p{
 .content-90
 {
     margin: 20px 1%;
+	background-color: #fff;
 }
 .confirm
 {

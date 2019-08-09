@@ -113,7 +113,7 @@ class Adm_catalogController extends AdminscController {
         }
 
         if ($id) { /// иначе это корнвой каталог
-            $category = App::$app->category->getCategory($id);
+            $category = App::$app->category->isCategory($id);
             $ids = explode(',', $category['prop']);
 //         $category['props'] = Prop::getByIds($ids);
             $category['props'] = unserialize($category['prop']);

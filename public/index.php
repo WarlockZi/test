@@ -6,6 +6,7 @@ use app\core\App;
 
 session_start();
 
+
 if ($_SERVER['HTTP_HOST'] == 'vitexopt.ru') {
    define('ROOT', $_SERVER['DOCUMENT_ROOT']);
    define('PROJ', ''); // сам оопределит в каой папке лежит

@@ -27,7 +27,7 @@ class MainController Extends AppController {
       // этот кусок вместо стандартной $this->auth()
       if (isset($_SESSION['id'])) {
          // Проверяем существует ли пользователь и подтвердил ли регистрацию
-         $user = App::$app->user->getUserWithRightsSet($_SESSION['id']);
+         $user = App::$app->user->getUser($_SESSION['id']);
          if ($user === false) {
             // Если пароль или почта неправильные - показываем ошибку
             $errors[] = 'Неправильные данные для входа на сайт';
@@ -35,10 +35,10 @@ class MainController Extends AppController {
             // Пароль почта в порядке, но нет подтверждения
             $errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
          } else {
-            $rightId = explode(",", $user['rightId']);
-            $this->set(compact('user', 'rightId'));
+
+            $user['rights']= explode(",", $user['rights']);
 			$home = '';
-            $this->set(compact('user', 'rightId','home'));
+            $this->set(compact('user','home'));
          }
          return TRUE;
       }

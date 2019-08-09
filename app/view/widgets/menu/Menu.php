@@ -32,38 +32,12 @@ class Menu extends Model {
 
    protected function run() {
 
-      $this->data = $this->getAssoc($this->sql);
+      $this->data = $this->getAssoc('test');
       $this->tree = $this->hierachy();
       $this->menuHTML = $this->getMenuHtml($this->tree);
       $this->output();
    }
 
-   
-   public function getAssoc() {
-
-      $params = array();
-      $res = App::$app->test->findBySql($this->sql, $params);
-
-      if ($res !== FALSE) {
-         $all = [];
-         foreach ($res as $key => $testData) {
-            $all[$testData['id']] = $testData;
-         }
-         return $all;
-      }
-   }
-   protected function hierachy() {
-      $tree = [];
-      $data = $this->data;
-      foreach ($data as $id => &$node) {
-         if (isset($node['parent']) && !$node['parent']) {
-            $tree[$id] = &$node;
-         } elseif (isset($node['parent']) && $node['parent']) {
-            $data[$node['parent']]['childs'][$id] = &$node;
-         }
-      }
-      return $tree;
-   }
 
    public function getMenuHtml($tree, $tab = ' ') {
       $str = '';

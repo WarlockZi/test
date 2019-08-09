@@ -22,7 +22,6 @@ class Catalog extends Model {
    }
 
    public function isProduct($url) {
-
       $cacheName = 'product' . $url;
       $product = App::$app->cache->get($cacheName);
       if (!$product) {

@@ -56,7 +56,6 @@ class CatalogController extends AppController {
       header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
 
       $js = '/public/jscss/Catalog/index.js';
-      $this->set(compact('js'));
 
       $parents = $aCategory['parents'];
       $breadcrumbs = App::$app->catalog->getBreadcrumbs($aCategory, $parents,'category');
@@ -65,9 +64,9 @@ class CatalogController extends AppController {
       $categories = $aCategory['children']['categories'];
 
       if ($urerId = $_SESSION['id']) {
-         $user = App::$app->user->getUserWithRightsSet($urerId);
+         $user = App::$app->user->getUser($urerId);
       }
       View::setMeta($lastParent, $lastParent, $lastParent);
-      $this->set(compact('breadcrumbs','user', 'products', 'tov', 'categories'));
+      $this->set(compact('breadcrumbs','user', 'products', 'tov', 'categories','js'));
       }
    }
