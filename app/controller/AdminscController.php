@@ -23,7 +23,9 @@ class AdminscController extends AppController {
             if (isset($_POST['param'])) {
                 $arr = json_decode($_POST['param'], true);
                 $func = $arr['action'];
-                App::$app->adminsc->$func($arr);
+                $model = $arr['model']?:'adminsc';
+                
+                App::$app->{$model}->$func($arr);
                 exit('okey');
             };
         }
@@ -177,15 +179,12 @@ class AdminscController extends AppController {
         exit;
     }
 
-    public function fixPicNames() {
+    public function FixPicNames() {
 
-//      $sql = "UPDATE pic SET nameHash = REPLACE(nameHash, nameHash, concat(nameHash,'.jpg')) where nameHash = '26602552'";
-// уберем .jpg из nameHash
-//      $sql = "UPDATE pic SET nameHash = REPLACE(nameHash, nameHash, concat(nameHash,'\.jpg'))";
-//      App::$app->catalog->insertBySql($sql);
+
 // уберем upload/iblock/ из dpic
-//      $sql = "UPDATE products SET dpic = REPLACE(dpic, '/upload/iblock', '')";
-//      App::$app->catalog->insertBySql($sql);
+      $sql = "UPDATE products SET dpic = REPLACE(dpic, '/upload/iblock', '')";
+      App::$app->catalog->insertBySql($sql);
 // уберем upload/iblock/ из preview_pic
         $sql = "UPDATE products SET preview_pic = REPLACE(preview_pic, '/upload/iblock', '')";
         App::$app->catalog->insertBySql($sql);

@@ -12,6 +12,7 @@
        <a href  = '/adminsc/settings/instructions'>Инструкции</a>
        <a href  = '/adminsc/settings/dump'>Dump</a>
        <a href  = '/adminsc/settings/pics'>Картинки</a>
+       <a href  = '/adminsc/settings/game'>Игра</a>
 
      </div>
   <? endif; ?>

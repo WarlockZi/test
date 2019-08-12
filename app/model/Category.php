@@ -8,97 +8,116 @@ use app\model\Prop;
 
 class Category extends Model {
 
-   public $table = 'category';
+    public $table = 'category';
 
-   public function getCategoryParents($parentId, $parents = []) {
+    public function getCategoryParents($parentId, $parents = []) {
 
-      if ($parentId) {
-         $sql = 'SELECT * FROM category WHERE id = ?';
-         $params = [$parentId];
-         $parents[] = $this->findBySql($sql, $params)[0];
+        if ($parentId) {
+            $sql = 'SELECT * FROM category WHERE id = ?';
+            $params = [$parentId];
+            $parents[] = $this->findBySql($sql, $params)[0];
 
-         return $parents;
-      }
-      return array();
-   }
+            return $parents;
+        }
+        return array();
+    }
 
-   public function mergeArrays($children, $catId) {
+    public function mergeArrays($children, $catId) {
 
-      $sql = 'SELECT * FROM products WHERE parent = ?';
-      $params = [$catId];
-      $products = $this->findBySql($sql, $params);
+        $sql = 'SELECT * FROM products WHERE parent = ?';
+        $params = [$catId];
+        $products = $this->findBySql($sql, $params);
 
-      if (!isset($children['products'])) {
-         $children['products'] = [];
-      }
-      $exisingProducts = $children['products'];
+        if (!isset($children['products'])) {
+            $children['products'] = [];
+        }
+        $exisingProducts = $children['products'];
 
-      $combinedProducts = array_merge(
-         $products, $exisingProducts
-      );
-      return $combinedProducts;
-   }
+        $combinedProducts = array_merge(
+                $products, $exisingProducts
+        );
+        return $combinedProducts;
+    }
 
-   public function getCategoryChildren($parentId, $children, $k = false) {
+    public function getAssocCategory() {
 
-      $sql = 'SELECT * FROM category WHERE parent = ?';
-      $params = [$parentId];
-      if (!isset($children['categories'])) {
-         $children['categories'] = $this->findBySql($sql, $params);
-      }
-      if ($k !== false)
-         $children['categories'][$k]['categories'] = $this->findBySql($sql, $params);
+        $sql = 'SELECT * FROM category';
+        $res = App::$app->category->findBySql($sql, $params = array());
+
+        if ($res !== FALSE) {
+            $all = [];
+            foreach ($res as $key => $v) {
+                $params = [$v['id']];
+                $sql = 'SELECT * FROM products WHERE parent = ?';
+                $res = App::$app->catalog->findBySql($sql, $params);
+
+                $all[$v['id']] = $v;
+                $all[$v['id']]['products'] = $res;
+            }
+            return $all;
+        }
+    }
+
+    public function getCategoryChildren($parentId, $children, $k = false) {
+        $categories = $this->getAssocCategory('category');
+        $sql = 'SELECT * FROM category WHERE parent = ?';
+        $params = [$parentId];
+        if (!isset($children['categories'])) {
+            $children['categories'] = $this->findBySql($sql, $params);
+        }
+        if ($k !== false)
+            $children['categories'][$k]['categories'] = $this->findBySql($sql, $params);
 // найдем продукты категории
-      $children['products'] = $this->mergeArrays($children, $parentId);
-      foreach ($children['categories'] as $key => $value) {
+        $children['products'] = $this->mergeArrays($children, $parentId);
+        foreach ($children['categories'] as $key => $value) {
 // найдем продукты ребенка
-         $children['products'] = $this->mergeArrays($children, $value['id']);
+            $children['products'] = $this->mergeArrays($children, $value['id']);
 // найдем детей ребенка
-         $sql = 'SELECT * FROM category WHERE parent = ?';
-         $params = [$value['id']];
-         $arr = $this->findBySql($sql, $params);
-         if ($arr) {
-            $this->getCategoryChildren($value['id'], &$children, $key);
-         }
-      }
+            $sql = 'SELECT * FROM category WHERE parent = ?';
+            $params = [$value['id']];
+            $arr = $this->findBySql($sql, $params);
+            if ($arr) {
+                $this->getCategoryChildren($value['id'], $children, $key);
+            }
+        }
 
-      return $children;
-   }
+        return $children;
+    }
 
-   public function getCategoryPropertiesSnippet($Id) {
+    public function getCategoryPropertiesSnippet($Id) {
 
-      $sql = 'SELECT * FROM props WHERE parent = ?';
-      $params = [$Id];
-      $arr['property'] = $this->findBySql($sql, $params);
+        $sql = 'SELECT * FROM props WHERE parent = ?';
+        $params = [$Id];
+        $arr['property'] = $this->findBySql($sql, $params);
 
-      ob_start();
-      include APP . '/view/Adm_catalog/snippet/KeyVal.php';
-      $cont = ob_get_clean();
-      return $cont;
-   }
+        ob_start();
+        include APP . '/view/Adm_catalog/snippet/KeyVal.php';
+        $cont = ob_get_clean();
+        return $cont;
+    }
 
-   public function isCategory($url) {
+    public function isCategory($url) {
 
 //      $category = App::$app->cache->get('category'.$url);
-      if (!$category) {
-         $arr = explode('/', $url);
-         if (count($arr) > 3) {
-            http_response_code(404);
-            exit(include '../public/404.html');
-         }
-         if ($category = $this->findOne($arr[0], 'alias')[0]) {
-            $category['parents'] = $this->getCategoryParents($category['parent']);
-            $category['children'] = $this->getCategoryChildren($category['id']);
-            App::$app->cache->set('category' . $url, $category, 30);
-         }
-      }
-      if (!$category) {
-         return FALSE;
-      };
-      return $category;
-   }
+        if (!$category) {
+            $arr = explode('/', $url);
+            if (count($arr) > 3) {
+                http_response_code(404);
+                exit(include '../public/404.html');
+            }
+            if ($category = $this->findOne($arr[0], 'alias')[0]) {
+                $category['parents'] = $this->getCategoryParents($category['parent']);
+                $category['children'] = $this->getCategoryChildren($category['id']);
+                App::$app->cache->set('category' . $url, $category, 30);
+            }
+        }
+        if (!$category) {
+            return FALSE;
+        };
+        return $category;
+    }
 
-   public function getCatPropsValsSnip($catProps) {
+    public function getCatPropsValsSnip($catProps) {
 
 //      foreach ($props as $key) {
 //         $catProps = $key;
@@ -107,30 +126,30 @@ class Category extends Model {
 //            $catProps = Prop::getPropsVals($catProps);
 //         }
 
-      ob_start();
-      include APP . '/view/Adm_catalog/snippet/KeyVal.php';
-      $cont = ob_get_clean();
-      echo $cont;
-   }
+        ob_start();
+        include APP . '/view/Adm_catalog/snippet/KeyVal.php';
+        $cont = ob_get_clean();
+        echo $cont;
+    }
 
 //   }
 
-   public function getProp($prop) {
+    public function getProp($prop) {
 
-      ob_start();
-      include APP . '/view/Adm_settings/snippet/KeyVal.php';
-      $cont = ob_get_clean();
-      echo $cont;
-   }
+        ob_start();
+        include APP . '/view/Adm_settings/snippet/KeyVal.php';
+        $cont = ob_get_clean();
+        echo $cont;
+    }
 
-   /**
-    * Получить категории, у которых нет родителей
-    * */
-   public function getInitCategories() {
+    /**
+     * Получить категории, у которых нет родителей
+     * */
+    public function getInitCategories() {
 
-      $sql = 'SELECT * FROM category WHERE parent = 0';
-      $arr = $this->findBySql($sql);
-      return $arr;
-   }
+        $sql = 'SELECT * FROM category WHERE parent = 0';
+        $arr = $this->findBySql($sql);
+        return $arr;
+    }
 
 }

@@ -21,6 +21,9 @@ class Adm_settingsController extends AdminscController {
       $this->vars['js'] = $this->getJSCSS('.js');
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
+//   public function actionGame() {
+//   }
+   
    public function actionPics() {
 
       $this->vars['js'] = $this->getJSCSS('.js');
@@ -82,11 +85,8 @@ class Adm_settingsController extends AdminscController {
          $doc = App::$app->instructions->getDoc($role)[0];
          $this->vars['doc'] = $doc;
       }
-
-
 //      $this->vars['css'] = $this->getJSCSS('.css');
    }
-
 
    public function actionProps() {
 
