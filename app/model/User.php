@@ -321,7 +321,9 @@ class User extends Model {
 
         $res = $this->findOne($id, 'id');
         if ($res) {
-            return $res[0];
+           $res = $res[0];
+           $res['rights']= explode(",", $res['rights']);
+            return $res;
         }
         return false;
     }

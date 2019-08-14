@@ -23,7 +23,7 @@ class Adm_settingsController extends AdminscController {
    }
 //   public function actionGame() {
 //   }
-   
+
    public function actionPics() {
 
       $this->vars['js'] = $this->getJSCSS('.js');
@@ -89,6 +89,7 @@ class Adm_settingsController extends AdminscController {
    }
 
    public function actionProps() {
+//      $this->layout = 'admin.php';
 
       $this->vars['js'] = $this->getJSCSS('.js');
       $this->vars['css'] = $this->getJSCSS('.css');

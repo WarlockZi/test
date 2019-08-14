@@ -27,7 +27,7 @@ class View {
       if (is_array($vars)) {
          extract($vars);
       }
-      $file_view =  ROOT."/app/view/{$this->route['controller']}/{$this->view}.php";
+      $file_view = ROOT . "/app/view/{$this->route['controller']}/{$this->view}.php";
       // если режим отладки вкл, ставим метку и не кешируем
 
 
@@ -38,7 +38,6 @@ class View {
          echo "<br>Не найден файл вида {$this->view} ";
       }
       $content = ob_get_clean();
-//exit($content);
 
       ob_start();
       // Если в вид передали false то и в $this->layout устанавливаем false для отключения layout
@@ -52,7 +51,6 @@ class View {
       }
       $page_cache = ob_get_clean();
       echo $page_cache;
-//      return $page_cache;
    }
 
    public static function getMeta() {
@@ -60,12 +58,14 @@ class View {
                <meta name = "description" content = "' . self::$meta['desc'] . '">
                <meta name = "keywords" content = "' . self::$meta['keywords'] . '">';
    }
+
    public static function getCSS() {
       echo
       '<title>' . self::$meta['title'] . '</title>
       <meta name = "description" content = "' . self::$meta['desc'] . '">
       <meta name = "keywords" content = "' . self::$meta['keywords'] . '">';
    }
+
    public static function getJS() {
       echo '<title>' . self::$meta['title'] . '</title>
                <meta name = "description" content = "' . self::$meta['desc'] . '">
@@ -79,6 +79,10 @@ class View {
       self::$meta['title'] = $title;
       self::$meta['desc'] = $desc;
       self::$meta['keywords'] = $keywords;
+   }
+
+   public static function e($str) {
+      return htmlspecialchars($str, ENT_QUOTES, 'utf-8');
    }
 
 }

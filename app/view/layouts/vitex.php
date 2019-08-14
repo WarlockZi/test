@@ -31,6 +31,7 @@
             <? else: ?>
                <?
                if (isset($user)) {
+//                  $rights = explode(',',$user['rights']);
                   echo '<span class = "FIO">' . $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'] . '</span>';
                }
                ?>
@@ -39,19 +40,19 @@
                  <a  href="/user/edit" >Редактировать свой профиль</a>
 
                  <?=
-                 array_key_exists('1', $user['rights']) ? // редактировать
+                 in_array('1', $user['rights']) ? // редактировать
                     '<a href="/edit/1">Редактировать тесты</a>
                       <a href="/freetest/edit/41">Редактировать свободный тест</a>' : ''
                  ?>
 
                  <?=
-                 array_key_exists('2', $user['rights']) ? // проходить
+                 in_array('2', $user['rights']) ? // проходить
                     '<a href="/test/1">Проходить тесты</a>
                       <a href="/freetest/41">Свободный тест</a>' : '';
                  ?>
 
                  <?=
-                 array_key_exists('3', $user['rights']) ?
+                 in_array('3', $user['rights']) ?
                     '<a href="/adminsc">Admin</a>' : ''; // Admin
                  ?>
 
@@ -257,7 +258,7 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/7715905" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
-    <? if (in_array('Admin', $rights)): // Admin     ?>
+    <? if (isset($user) && in_array('3', $user['rights'])): // Admin     ?>
        <script src = "/public/js/adminLayer.js?<?= time() ?>"></script>
     <? endif; ?>
 

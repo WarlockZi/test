@@ -72,7 +72,7 @@ class AppController extends Controller {
                $errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
             } else {
 
-               $user['rights'] = explode(",", $user['rights']);
+//               $user['rights'] = explode(",", $user['rights']);
                $this->set(compact('user'));
             }
 

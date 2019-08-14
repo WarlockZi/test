@@ -563,16 +563,14 @@ footer p
     display: flex;
 }
 
-header {
+/*header {
     background: #fff;
     padding: 10px 0;
-
     z-index: 500;
     width: 100%;
     -webkit-box-shadow: 0 0 18px 0 #d2d2d2;
     box-shadow: 0 0 18px 0 #d2d2d2;
-
-}
+}*/
 .logo-wrap{
     flex: 2;
     min-width: 520px;
@@ -617,19 +615,7 @@ footer p{
     font-size: 14px;
     color:#343133;
 }
-.user-menu{
-    flex:2;
-    justify-content: flex-end;
-    align-items: center;
-}
 
-.enter-button,
-.user-button
-{
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
 .enter-button
 {
     width: 20%;

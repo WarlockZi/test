@@ -7,13 +7,13 @@
 
       <div class="filters column">
         <div class="filter column">
-            <? if ($categories): ?>
+            <? if ($category['children']['categories']): ?>
              <input name = "subcat" class="filter" id="subcat" type="checkbox">
              <label for="subcat">подкатегории
-                 <? $parent = array_pop($categories) ?>
-                 <? foreach ($categories as $category): ?>
+
+                 <? foreach ($category['children']['categories'] as $cat): ?>
                   <div class="subcat">
-                    <a  href="/<?= $category['alias']; ?>"><?= $category['name']; ?></a>
+                    <a  href="/<?= $cat['alias']; ?>"><?= $cat['name']; ?></a>
                   </div>
                <? endforeach; ?>
              </label>
@@ -28,7 +28,7 @@
             <?= $breadcrumbs ?>
         </nav>
         <div class="products">
-            <? foreach ($products as $product): ?>
+            <? foreach ($category['children']['products'] as $product): ?>
                <? if ($product['act'] == 'Y'): ?>
                   <?
                   $arr = explode('/', $product['durl']);
@@ -39,7 +39,6 @@
 
 
 
-                  <!--<a  >-->
                   <div class="action-labels">
 
                   </div>

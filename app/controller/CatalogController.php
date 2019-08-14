@@ -2,8 +2,9 @@
 
 namespace app\controller;
 
-use app\core\Base\View;
 use app\core\App;
+use \app\model\Prop;
+use app\core\Base\View;
 
 class CatalogController extends AppController {
 
@@ -35,38 +36,25 @@ class CatalogController extends AppController {
       $parents = $aCategory['parents'];
       $breadcrumbs = App::$app->catalog->getBreadcrumbs($product, $product['parents'],'product');
 
-//      $products = $aCategory['children']['products'];
-//      $categories = $aCategory['children']['categories'];
-
       if ($urerId = $_SESSION['id']) {
          $user = App::$app->user->getUserWithRightsSet($urerId);
       }
       View::setMeta($product['name'], $product['name'], $lastParent);
       $this->set(compact('breadcrumbs','user', 'product', 'tov', 'categories'));
 
-
-
-//      View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
       $this->set(compact('user', 'tov'));
    }
 
-   public function actionCategory($aCategory) {
-
-      header('Cache-Control: private, max-age=8400');
-      header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
+   public function actionCategory($category) {
 
       $js = '/public/jscss/Catalog/index.js';
 
-      $parents = $aCategory['parents'];
-      $breadcrumbs = App::$app->catalog->getBreadcrumbs($aCategory, $parents,'category');
-
-      $products = $aCategory['children']['products'];
-      $categories = $aCategory['children']['categories'];
-
-      if ($urerId = $_SESSION['id']) {
-         $user = App::$app->user->getUser($urerId);
+      if ($id = $_SESSION['id']) {
+         $user = App::$app->user->getUser($id);
       }
-      View::setMeta($lastParent, $lastParent, $lastParent);
-      $this->set(compact('breadcrumbs','user', 'products', 'tov', 'categories','js'));
+
+      $breadcrumbs = App::$app->catalog->getBreadcrumbs($category, $category['parents'],'category');
+
+      $this->set(compact('user','breadcrumbs', 'category','js'));
       }
    }

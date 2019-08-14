@@ -18,9 +18,13 @@ abstract class Model {
       $this->pdo = DB::instance();
    }
 
-   /**
-    * очистка введенных данных
-    */
+   function multi_implode($glue, $array) {
+      $_array = array();
+      foreach ($array as $val)
+         $_array[] = is_array($val) ? $this->multi_implode($glue, $val) : $val;
+      return implode($glue, $_array);
+   }
+
    public function clean_data($str) {
       return mysqli_escape_string(strip_tags(trim($str)));
    }

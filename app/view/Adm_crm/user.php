@@ -46,6 +46,9 @@
       <strong>phone:</strong><span id ='phone' contenteditable="true"><?= $user['phone']; ?> </span>
     </div>
     <div>
+      <strong>добавочный:</strong><span id ='extension' contenteditable="true"><?= $user['extension']; ?> </span>
+    </div>
+    <div>
       <strong>принят:</strong>
       <span>
           <?
@@ -81,9 +84,8 @@
        <div>
          <strong><?=
              $right['name'];
-             $user_rights = explode(',', $user['rights']);
              ?> </strong>
-         <input class ="right" data-id ='<?=$right['id']?>' type="checkbox" <?= in_array($right['id'], $user_rights) ? 'checked' : '' ?>>
+         <input class ="right" data-id ='<?=$right['id']?>' type="checkbox" <?= in_array($right['id'], $user['rights']) ? 'checked' : '' ?>>
        </div>
 <? endforeach; ?>
 

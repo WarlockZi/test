@@ -33,22 +33,26 @@ class Prop extends Model {
       return $props;
    }
 
-
    public static function getByIds($ids = []) {
       if ($ids) {
-//         $ids = explode(',', $ids);
          foreach ($ids as $k => $v) {
             $sql = 'SELECT * FROM props WHERE id = ?';
             $params = [$v];
             $props[$k] = App::$app->catalog->findBySql($sql, $params);
             if ($props[$k]) {
                $props[$k]['vals'] = self::getVals($v);
-
             }
          }
          return $props;
       }
-//      return FALSE;
+   }
+
+   public function getProps() {
+
+      $sql = 'SELECT * FROM props';
+      $params = [];
+      $props = App::$app->prop->findBySql($sql, $params);
+      return $props;
    }
 
 }

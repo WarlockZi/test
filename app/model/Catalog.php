@@ -22,17 +22,16 @@ class Catalog extends Model {
    }
 
    public function isProduct($url) {
-      $cacheName = 'product' . $url;
-      $product = App::$app->cache->get($cacheName);
-      if (!$product) {
-         if ($product = $this->findOne($url, 'alias')[0]) {
+
+         if ($product = $this->findOne($url, 'alias')) {
+            $product = $product[0];
             $product['parents'][] = $this->getProductParents($product['parent']);
             while ($last = end($product['parents'])['parent']) {
                $product['parents'][] = $this->getProductParents($last);
             }
             App::$app->cache->set('product' . $url, $product, 30);
          };
-      }
+
 
       if (!$product) {
          return FALSE;

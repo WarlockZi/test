@@ -36,7 +36,6 @@ class MainController Extends AppController {
             $errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
          } else {
 
-            $user['rights']= explode(",", $user['rights']);
 			$home = '';
             $this->set(compact('user','home'));
          }

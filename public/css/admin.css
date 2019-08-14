@@ -312,7 +312,7 @@ menu{
 .tabs>label {
     display: inline-block;
     margin: 0 0 -1px;
-    padding: 9px 15px;
+    padding: 9px 7px;
     font-weight: 600;
     text-align: center;
     color: #aaa;
@@ -343,7 +343,7 @@ menu{
 }
 /* Активация секций с помощью псевдокласса :checked */
 #tab1:checked~#content-tab1, #tab2:checked~#content-tab2, #tab3:checked~#content-tab3, #tab4:checked~#content-tab4 {
-    display: block;
+    display: flex;
 }
 /* Убираем текст с переключателей 
 * и оставляем иконки на малых экранах
@@ -725,7 +725,13 @@ input
 .admin-actions label:before{
 
 }
-
+.clear-cache{
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: slategray;
+    border-radius: 3px;
+}
 .admin-actions label a{
 	padding: 3px;
     color:#4a4a4a;
@@ -1092,7 +1098,7 @@ body{
 .user.content-90{
 	height: 100%;
 	padding-top: 20px;
-	position: relative;
+	/*position: relative;*/
 }
 .user.content-90 *{
 	display: flex;
@@ -1126,14 +1132,29 @@ body{
     margin: 24px;
     justify-content: center;
 }
+.separator button
+{
+    width: 180px;
+    height: 27px;
+    margin: 24px;
+    justify-content: center;
+	flex:1;
+}
 .separator{
 	padding: 5px;
 	background-color: #ebf4f4;
 	margin: 10px 0;
+	display: flex;
+    padding: 3px;
+	
 }
 .separator.btns button
 {
 	display: block;
+}
+.separator.btns{
+    position: absolute;
+    bottom: 0;
 }
 
 
@@ -1215,7 +1236,7 @@ header {
 
 }
 
-.wrap .tabs .column div:first-child{
+.wrap .header-tabs .column div:first-child{
 	height: 10px;
     padding: 10px;
     position: absolute;
@@ -1226,7 +1247,7 @@ header {
     border-radius: 5px 5px 0 0;
 	cursor: pointer;
 }
-.wrap .tabs .column div{
+.wrap .header-tabs .column div{
 	height: 10px;
     padding: 10px;
     position: absolute;
@@ -1235,18 +1256,18 @@ header {
     background-color: #fff;
     border-radius: 5px 5px 0 0;
 }
-.wrap .tabs.column div:last-child{
+.wrap .header-tabs.column div:last-child{
     height: 10px;
     border-bottom: 1px solid #ccc;
 }
-.wrap .tabs.column .column div:last-child{
+.wrap .header-tabs.column .column div:last-child{
     height: 10px;
     border-bottom: 0;
 	font-weight: 600;
 	cursor: pointer;
 }
 
-.wrap .tabs.column a{
+.wrap .header-tabs.column a{
 	height: 100%;
 	width: 100%;
 	display: block;
@@ -1313,7 +1334,33 @@ footer p{
     padding: 0 8px;
 }
 
+.properties {
+	padding: 5px;
+}
+.cat-prop{
+	padding: 10px 0;
+}
+.properties select{
+	margin: 5px 0;
+}
 
+.add-property select{
+	float: 1;;
+}
+
+.add-property span{
+	padding: 10px 10px 10px 0;
+}
+
+.lists{
+	height: 100%;
+    padding-top: 20px;
+    /*position: relative;*/
+	/*margin: 20px 1%;*/
+    background-color: #fff;
+	display: flex;
+    flex-flow: column;
+}
 
 /*//////////////////////*/
 /*//////  MENU  ////////*/
@@ -1449,7 +1496,7 @@ footer p{
 
 .content-90
 {
-    margin: 20px 1%;
+    /*margin: 20px 1%;*/
 	background-color: #fff;
 }
 .confirm

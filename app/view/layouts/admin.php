@@ -29,6 +29,8 @@
         </div>
 
 
+        <div class="clear-cache" title = 'очистить кэш' onclick='clearCache()'>
+        </div>
         <div class="user-menu">
 
           <span class="FIO"><?
@@ -46,12 +48,12 @@
                <a href="/adminsc">Admin</a>
             <? endif; ?>
             <? if (in_array('1', $rightId)): ?>
-               <a href="<?= PROJ ?>test/edit/1">Ред. закрытые тесты</a>
-               <a href="<?= PROJ ?>/freetest/edit/41">Ред. открытые  тест</a>
+               <a href="test/edit/1">Ред. закрытые тесты</a>
+               <a href="/freetest/edit/41">Ред. открытые  тест</a>
             <? endif; ?>
             <? if (in_array('2', $rightId)): ?>
-               <a href="<?= PROJ ?>/test/1">Закрытый тест</a>
-               <a href="<?= PROJ ?>/freetest/41">Открытый тест</a>
+               <a href="/test/1">Закрытый тест</a>
+               <a href="/freetest/41">Открытый тест</a>
             <? endif; ?>
 
 
@@ -75,7 +77,7 @@
 
 
       </header>
-      <div class="tabs column">
+      <div class="header-tabs column">
         <div class="column">
           <div>Сайт
             <a href="/"></a>
@@ -117,12 +119,13 @@
 
   </footer>
 
-  <script type="text/javascript">var PROJ = '<?= PROJ ?>';</script>
+  <!--<script type="text/javascript">var PROJ = '<?= PROJ ?>';</script>-->
   <script src="/public/js/jq.js"></script>
-  <? $this::getJS() ?>
+  <script src="/public/js/adminLayer.js?<?=time();?>"></script>
+  <? // $this::getJS() ?>
   <script src="<?= $vars['js'] ?>"></script>
 
-  <svg width="150" height="30" version="1.1" viewBox="0 0 140.93602 25.903431" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <svg width="150" height="30"  viewBox="0 0 140.93602 25.903431" >
   <defs>
   <path id="a4bgr29v3" d="m473.35 105.73c5.3 0.04 0.86 0.08-9.88 0.08s-15.1-0.04-9.65-0.08c5.44-0.07 14.23-0.07 19.53 0z"/>
   <path id="c1VGvvv2Z" d="m0.1 55.82c16.91-27.81 27.48-45.2 31.71-52.15 1.55-2.55 4.32-4.11 7.31-4.12 2.41-0.01 8.45-0.03 18.1-0.06-16.26 26.9-26.43 43.71-30.5 50.44-2.21 3.66-6.18 5.89-10.46 5.89h-16.16z"/>
@@ -137,14 +140,7 @@
   <path id="b22YyPyZK" d="m0.1 109c32.99-53.38 53.6-86.75 61.85-100.1 3.25-5.26 9-8.46 15.18-8.46h33.79c-34.57 53.96-56.17 87.69-64.81 101.18-2.95 4.6-8.04 7.38-13.5 7.38h-32.51z"/>
   </defs>
   <g>
-  <!--<use width="100%" height="100%" fill="#ff2929" xlink:href="#d1QYQspoc"/>-->
-  <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#c2Sj5L9Of"/>-->
-  <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#a22pvJeVTv"/>-->
-  <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#b3VxPr9vMy"/>-->
-  <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#f2bkoof7Mq"/>-->
-  <!--<use width="100%" height="100%" fill="#4e4e4e" xlink:href="#bbT7DNVUa"/>-->
-  </g>>
-
+  </g>
   </svg>
 
 </body>

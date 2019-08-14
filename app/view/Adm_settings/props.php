@@ -28,7 +28,7 @@
     <div class="property-block">
         <? foreach ($catProps as $key): ?>
          <div class="property" data-prop = '<?= $key['id'] ?>'>
-           <input size="50" type="text" value="<?= $key['name'] ?>">
+           <input size="35" type="text" value="<?= $key['name'] ?>">
    <!--             <input size="50" type="text" value="<?= $key['subname'] ?>">-->
 
            <div class="prop">

@@ -27,7 +27,7 @@
 
           <div class="user-menu">
 
-            <? if (!$_SESSION['id']): ?>
+            <? if (isset($_SESSION['id']) && !$_SESSION['id']): ?>
                <a class = "enter-button" href="/user/login"> Вход</a>
             <? else: ?>
 

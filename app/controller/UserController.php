@@ -122,9 +122,9 @@ class UserController extends AppController {
          $squash = (isset($_SESSION['back_url']) && $_SESSION['back_url'] == 'squash') ? 1 : 0;
 
 
-         $sql = 'INSERT INTO users (squa, rightId, surName, middleName, name, email, password, hash)'
-            . 'VALUES (?,?,?,?,?,?,?,?)';
-         $params = [$squash, 2, $surName, $secName, $name, $email, $password, $hash];
+         $sql = 'INSERT INTO users (rightId, surName, middleName, name, email, password, hash)'
+            . 'VALUES (,?,?,?,?,?,?,?)';
+         $params = [2, $surName, $secName, $name, $email, $password, $hash];
 
          $res = App::$app->user->insertBySql($sql, $params);
 
@@ -151,7 +151,7 @@ class UserController extends AppController {
       View::setMeta('Регистрация', 'Регистрация', 'Регистрация');
       $token = $this->token;
       $js = $this->getJSCSS('.js');
-      $this->set(compact('js','token'));
+      $this->set(compact('js', 'token'));
    }
 
    public function regDataWrong($email, $password, $confPass, $name, $surName, $secName) {

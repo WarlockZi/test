@@ -17,14 +17,17 @@ if ($_SERVER['HTTP_HOST'] == 'vitexopt.ru') {
 define('DEBU', '1'); //0-не выводить ошибки
 
 if (DEBU) {
-   error_reporting(1);
+   ini_set('error_reporting', E_ALL);
+   ini_set('display_errors', 1);
+//   ini_set('display_startup_errors', 1);
+//   error_reporting(1);
 } else {
    error_reporting(0);
 }
 
 define('APP', ROOT . PROJ . '/app');
 define('CACHE', ROOT . PROJ . '/tmp/cache');
-define('CONFIG', APP. '/config.php');
+define('CONFIG', APP . '/config.php');
 
 
 spl_autoload_register(function ($class) {
