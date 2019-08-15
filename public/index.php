@@ -8,22 +8,20 @@ session_start();
 
 
 if ($_SERVER['HTTP_HOST'] == 'vitexopt.ru') {
+
+   error_reporting(0);
+
    define('ROOT', $_SERVER['DOCUMENT_ROOT']);
    define('PROJ', ''); // сам оопределит в каой папке лежит
 } else {
    define('ROOT', dirname(__DIR__));
    define('PROJ', ''); // например /test
-}
-define('DEBU', '1'); //0-не выводить ошибки
 
-if (DEBU) {
    ini_set('error_reporting', E_ALL);
    ini_set('display_errors', 1);
-//   ini_set('display_startup_errors', 1);
-//   error_reporting(1);
-} else {
-   error_reporting(0);
 }
+
+define('DEBU', '1'); //0-не выводить ошибки
 
 define('APP', ROOT . PROJ . '/app');
 define('CACHE', ROOT . PROJ . '/tmp/cache');

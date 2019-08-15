@@ -1,8 +1,122 @@
 
 /*************************************
+*******      menu    ******
+**************************************/
+
+
+.mini-menu {
+    margin: 0px auto;
+    max-width: 220px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow:0 0 8px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow:0 0 8px rgba(0, 0, 0, 0.4);
+    box-shadow:0 0 8px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    font: normal 14px Helvetica, Arial, sans-serif;
+}
+.mini-menu ul {
+    margin: 0;
+    padding:0;
+    list-style: none;
+}
+.mini-menu > ul > li {
+    position: relative;
+}
+.mini-menu > ul > li > a {
+    display: block;	
+    padding: .7em 1em;	
+    outline: 0;	
+    border-bottom: 1px solid #222;
+    background: #333;
+    background-image:-webkit-linear-gradient(#444, #333);
+    background-image:-moz-linear-gradient(#444, #333);
+    background-image:-ms-linear-gradient(#444, #333);
+    background-image:linear-gradient(#444, #333);
+    -webkit-box-shadow:inset 0 1px 0 0 rgba(250,250,250,0.1);
+    -moz-box-shadow:inset 0 1px 0 0 rgba(250,250,250,0.1);
+    box-shadow:inset 0 1px 0 0 rgba(250,250,250,0.1);
+    color:#C9C9C9;
+    text-decoration: none;	
+    text-shadow: 1px 1px 3px #111;	
+    font-weight: normal;
+}
+.mini-menu > ul > li > a:hover, 
+.mini-menu > ul > li > a.active {
+    color:#f2bd00;
+}
+.mini-menu .sub  ul {
+    display: none;
+    overflow: hidden;
+    background: #eee;
+    -webkit-box-shadow:inset 0 0 50px #bbb;
+    -moz-box-shadow:inset 0 0 50px #bbb;
+    box-shadow:inset 0 0 50px #bbb;
+}
+.mini-menu .sub ul li a {
+    display: block;
+    padding: .7em 1em;
+    border-bottom: 1px dotted #bababa;
+    color:#514b92;
+    font-size: 12px;
+    text-decoration: none;
+}
+.mini-menu .sub ul li a:hover,
+.mini-menu .sub ul li a.active {
+    padding-left: 1.3em;
+    background: #d8d8d8;
+    color: red;
+}
+.mini-menu .sub ul li a:after{
+    float: left;
+    margin-right:6px;
+    content: "»";
+    line-height: 12px;
+}
+.mini-menu .sub > a:before {
+    content:'•';
+    height:12px;
+    width:12px;
+    font-size: 1em;
+    display:inline-block;
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    background: #333;
+    line-height: .8em;
+    color: red;
+    text-indent: 0;
+    text-align: center;
+    text-shadow:none;
+    font-weight: 500;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    border-radius:50%;
+    -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, .26), 0px 1px 0px 0px rgba(255, 255, 255, .15);
+    -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, .26), 0px 1px 0px 0px rgba(255, 255, 255, .15);
+    box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, .26), 0px 1px 0px 0px rgba(255, 255, 255, .15);
+}
+/* активный переключатель */
+.mini-menu .sub > a.active:before{
+    color: #f2bd00;
+}
+
+/*************************************
 *******      ADMIN    ******
 **************************************/
 
+.edit{
+	/*	position: absolute;
+		width:60%;
+		top:0;
+		right:0;*/
+	/*background-color: #ddd;*/
+	/*	padding: 0 0 0 9px;
+		text-align: center;
+		line-height: 25px;*/
+}
 .edit:before
 {
     content: '\270e изменить';
@@ -193,7 +307,7 @@ a:hover,
 }
 main{
     max-width: 1310px;
-    margin: auto;
+	margin: auto;
 	padding: 0 10px;
 }
 
@@ -345,7 +459,7 @@ main{
     line-height: 20px;
     text-align: center;
 	display: flex;
-	margin: 12px 0;
+	margin-bottom: 20px;
 
 }
 
@@ -380,6 +494,11 @@ main{
 *******     BADGE    ******
 **************************/
 
+.search-wrap
+{
+	margin: 40px auto 10px;
+	width: 1200px;
+}
 .string
 {
 	display:flex;
@@ -834,9 +953,13 @@ h3.may-also-like-wrap
 
 
 /***** Всплывающие телефоны */
-.phone-wrap{
-    align-items: center;
-    display: flex;
+
+.icon-envelope,
+.icon-phone,
+.icon-basket,
+.icon-logout{
+    padding: 0 10px 0 0;
+    white-space: nowrap;
 }
 .icon-phone{
     position: relative;
@@ -844,40 +967,37 @@ h3.may-also-like-wrap
     align-items: center;
 	font: bold 17px/21px 'Proxima Nova', sans-serif;
 	padding: 0 25px;
-	white-space: nowrap;
 }
 
 .icon-menu{
     padding:3px;
 }
 
-.icon-phone>a{
-	position: relative;
-}
-.icon-phone>a:before { 
+
+.icon-phone:before { 
     content: '\1F57B'; 
     width: 26px; 
     height: 26px; 
     background-position: 0 -44px; 
     position: absolute; 
-	left: -20px;
-    top: -3px;
+    left: 0; 
+    bottom: 9px; 
 	color: #e30000;
 	font-size:27px;
 	transform: rotate(-30deg);
 }
 
-.icon-phone>a:after {
+.icon-phone:after {
     content: '';
-    display: block;
-    position: absolute; 
-	top: 3px;
-    right: -21px;
     width: 8px;
     height: 8px;
     border-bottom: 3px solid #e30000;
     border-right: 3px solid #e30000;
+    display: block;
     transform: rotate(45deg);
+	position:absolute;
+	top: 34%;
+    right: 3px;
 }
 
 .icon-phone .popup-info { 
@@ -980,6 +1100,7 @@ body {
 
 header {
     background: #fff;
+    padding: 10px 0;
     height: 120px;
     z-index: 500;
     width: 100%;
@@ -988,20 +1109,9 @@ header {
     margin-bottom: 10px;
 }
 .logo-wrap{
-	display: flex;
     width: 515px;
-	margin: 0 0 0 10px;
-	font-size: 13px;
-	position: relative;
-}
-.logo-wrap>a{
-    height: 45px;
-    width: 60%;
-    position: absolute;
 }
 
-.logo-wrap>svg{    width: 250px;}
-.logo-desc{    width: 120px;}
 .h-phone{
     color: #343133;
     font: bold 21px/17px 'Proxima Nova', sans-serif;
@@ -1029,16 +1139,11 @@ header {
 .catalog-menu span{
     padding-right: 8px;
 }
-.h-upper>* {
-	flex: 1;
-}
 .h-upper{
     padding: 12px 0 10px 0;
     max-width: 1310px;
     margin: auto;
     display: flex;
-	position: relative;
-	height: 45px;
 }
 .h-lower{
     padding-right: 10px;
@@ -1050,46 +1155,39 @@ header {
     justify-content: space-between;
 }
 
-
+.search-wrap{
+    position: relative;
+    margin-top: 7px;
+	margin-right: 10px;
+	width: 43%;
+}
 .map{
 	position: absolute;
 	width: 100%;
 	margin-top: 60px;
 }
 .inner-wrap{
+
     max-width: 1310px;
     margin: auto;
     box-sizing: border-box;
-}
-.search-wrap{
-    position: relative;
-    border: 1px solid #ddd;
-    border-radius: 19px;
-    height: 32px;
-    margin: 6px 35px;
 }
 .search-wrap .form-text{
     background: #fff;
     border: 0;
     border-radius: 2px;
-    padding: 4px 0px 4px 0px;
+    padding: 4px 0px 4px 10px;
     font: 14px/17px 'Proxima Nova', sans-serif;
     color: #343133;
     height: 22px;
     width: 100%;
 }
-.search-wrap form{
-    position: absolute;
-	height: 30px;
-    width: 90%;
-    top: 1px;
-    left: 15px;
-}
+
 .search-wrap .form-submit {
     border: 0;
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 0px;
+    right: 0px;
     cursor: pointer;
     height: 77%;
     width: 35px;
@@ -1228,7 +1326,6 @@ footer a
     flex: 1;
     justify-content: start;
 	height: 45px;
-	margin-left: 10px;
 }
 .logo img{
     width: 100%;
@@ -1294,7 +1391,7 @@ footer a
     left: 0;
     height: 100%;
     width: 100%;
-    opacity: 0;
+	opacity:0;
 }
 
 
@@ -1466,7 +1563,7 @@ footer a
 @media (max-width: 400px) {
 	.FIO,
 	.t-1,
-    .logo-desc,
+    .t-2,
     .title,
 	.logo>span,
     .basket,
@@ -1490,10 +1587,9 @@ footer a
 
 /* xs (<=543px) */
 @media (min-width: 401px) and (max-width: 575px){
-
 	.FIO,
     .t-1,
-    .logo-desc,
+    .t-2,
     .title,
 	.logo>span,
     .basket,
@@ -1501,12 +1597,16 @@ footer a
 	.user-button span,
 	.user-button,
 	.card-right
-    .user-button div span,
-    .top-strip	
+
     {
         display:none;
     }
 
+    .user-button div span,
+    .top-strip
+    {
+        display:none;
+    }
     .user-button i{
         font-size: 3.5vw;
     }
@@ -1530,15 +1630,15 @@ footer a
     .logo-wrap{
         min-width: 280px;
     }
-	.search-wrap form{
-		width: 79%;
+	.search-wrap{
+		width: 67%;
 	}
 }
 /* sm (>=576 и <=767) */
 @media (min-width: 575px) and (max-width: 768px) {  
 
 
-    .logo-desc,
+    .t-2,
     .title,
 	.logo>span,
     .basket,
@@ -1556,8 +1656,8 @@ footer a
         width: 240px;
     }
 
-	.search-wrap form{
-		width: 86%;
+	.search-wrap{
+		width: 67%;
 	}
 }
 
@@ -1568,13 +1668,19 @@ footer a
 	.title,
 	.logo>span,
     .basket	
+
 	{
         display: none;
     }
-	.search-wrap form{
-		width: 88%;
-	}
 
+	.logo-wrap {
+		min-width: 271px;
+		height: 45px;
+		max-width:403px;
+	}
+	.search-wrap{
+		width: 67%;
+	}
 }
 
 /* lg (>=992 и <=1199) */
@@ -1589,10 +1695,6 @@ footer a
 	.logo-wrap {
 		min-width: 437px;
 		max-width:583px;
-	}
-
-	.search-wrap form{
-		width: 91%;
 	}
 
 }
@@ -1641,9 +1743,10 @@ footer a
     {
         font-size: 1vw;
     }
-	.search-wrap form{
-		width: 93%;
-	}
+	/*    .user-button .icon-menu:before 
+		{
+			padding: .2vw;
+		}*/
 
 
 

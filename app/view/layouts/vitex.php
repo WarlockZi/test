@@ -31,7 +31,6 @@
             <? else: ?>
                <?
                if (isset($user)) {
-//                  $rights = explode(',',$user['rights']);
                   echo '<span class = "FIO">' . $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'] . '</span>';
                }
                ?>
@@ -85,30 +84,40 @@
         <div class="inner-wrap">
           <div class = 'h-upper'>
             <div class="logo-wrap">
-              <a class="logo" <?= $vars['home'] ?: '' ?> aria-label="На главную">
-                <svg class="">
-                <use xlink:href="#logo-svg">
-                </svg>
-                <span class="logo-desc">Cредства индивидуальной <br>защиты оптом<span class="title">  </span></span>
-              </a>
+                <?= (!($this->route['action'] == "index" && $this->route['controller'] == "Main"))?"<a href = '/' aria-label = 'На главную'></a>":"" ?>
+              <svg>
+              <use xlink:href="#logo-svg">
+              </svg>
+              <span class="logo-desc">Cредства индивидуальной <br>защиты оптом</span>
             </div>
-            <div class = 'icon-phone'>
 
-
-              <a href="tel:+79217131767">8 (921) 713-17-67</a>
-
-
-              <div class="popup-info">
-                <div class="inner">
-                  <div class="head">Время работы 8:30 – 17.30 по Москве</div>
-                  <p>Дополнительные телефоны:</p>
-                  <p class="phones">
-                    <a href="tel:+78172217762">8 (8172) 21-77-62</a><br>
-                    <a href="tel:+79095942911">8 (909) 594-29-11</a></p>
-                  <p></p>
+            <div class = 'phone-wrap'>
+              <div class = 'icon-phone'>
+                <a href="tel:+79217131767">8 (921) 713-17-67</a>
+                <div class="popup-info">
+                  <div class="inner">
+                    <div class="head">Время работы 8:30 – 17.30 по Москве</div>
+                    <p>Дополнительные телефоны:</p>
+                    <p class="phones">
+                      <a href="tel:+78172217762">8 (8172) 21-77-62</a><br>
+                      <a href="tel:+79095942911">8 (909) 594-29-11</a></p>
+                    <p></p>
+                  </div>
                 </div>
               </div>
+            </div>
 
+
+            <div class="search-wrap">
+              <form action="search" method="GET">
+                <input  id="autocomplete" type="text" placeholder="Поиск" name="q" value="" size="20" maxlength="50" class="form-text" autocomplete="on" aria-label = "поиск">
+                <div class="form-submit">
+                  <input type="submit" class="search-go" name = "search-go" id = "search-go">
+                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="27" viewBox="0 0 512 512">
+                  <path fill = '#e30000' d="M76.302 496.131l103.147-121.276c11.283-12.537 16.463-25.945 15.963-36.776 33.534 28.628 77.039 45.921 124.588 45.921 106.039 0 192-85.961 192-192s-85.961-192-192-192-192 85.961-192 192c0 47.549 17.293 91.054 45.922 124.588-10.831-0.5-24.239 4.68-36.776 15.963l-121.276 103.147c-19.623 17.661-21.277 46.511-3.678 64.11s46.449 15.946 64.11-3.677zM192 192c0-70.692 57.308-128 128-128s128 57.308 128 128-57.308 128-128 128-128-57.307-128-128z"/>
+                  </svg>
+                </div>
+              </form>
             </div>
 
 
@@ -122,9 +131,7 @@
                   <path fill="#fff" d="M5 3h14v2h-14zM3 9h14v2h-14zM1 15h14v2h-14z"></path>
                   </svg>
                 </div>
-
                 <span class = 't-1'>Каталог </span>
-                <span class = 't-2'>продукции</span>
               </a>
 
               <div class="sub-cat">
@@ -140,27 +147,12 @@
 
 
 
-            <div id="title-search" class="search-block">
-              <form action="search" method="GET">
-                <input  id="autocomplete" type="text" placeholder="Поиск" name="q" value="" size="20" maxlength="50" class="form-text" autocomplete="on" aria-label = "поиск">
-                <div class="form-submit">
-                  <input type="submit" class="search-go" name = "search-go" id = "search-go">
-                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="27" viewBox="0 0 512 512">
-                  <path fill = '#e30000' d="M76.302 496.131l103.147-121.276c11.283-12.537 16.463-25.945 15.963-36.776 33.534 28.628 77.039 45.921 124.588 45.921 106.039 0 192-85.961 192-192s-85.961-192-192-192-192 85.961-192 192c0 47.549 17.293 91.054 45.922 124.588-10.831-0.5-24.239 4.68-36.776 15.963l-121.276 103.147c-19.623 17.661-21.277 46.511-3.678 64.11s46.449 15.946 64.11-3.677zM192 192c0-70.692 57.308-128 128-128s128 57.308 128 128-57.308 128-128 128-128-57.307-128-128z"/>
-                  </svg>
-                </div>
 
-              </form>
-            </div>
 
 
           </div>
         </div>
       </header>
-
-
-
-
 
       <?= $content ?>
 
@@ -193,8 +185,8 @@
 
       </div>
       <div class="row">
-      <p>© <? echo date('Y') ?> Витекс. Цены, указанные на сайте, не являются публичной офертой, определяемой положением Статьи 437 (2) ГК РФ и зависят от объема заказа. ОГРН:1173525018292</p>
-      <p>Created by VORONIKLAB</p>
+        <p>© <? echo date('Y') ?> Витекс. Цены, указанные на сайте, не являются публичной офертой, определяемой положением Статьи 437 (2) ГК РФ и зависят от объема заказа. ОГРН:1173525018292</p>
+        <p>Created by VORONIKLAB</p>
       </div>
     </footer>
 
@@ -206,7 +198,7 @@
 
     <script src="/public/js/jq.js"></script>
     <script src="/public/js/auto.js"></script>
-    <?=  $js?'<script src="'.$js.'"></script>':'' ?>
+    <?= isset($js) ? '<script src="' . $js . '"></script>' : '' ?>
 
     <script>
          function setCookie() {
@@ -224,7 +216,8 @@
                expires: date,
                path: "/"
             });
-         };
+         }
+         ;
 
          $(function () {
 //               debugger;
@@ -258,13 +251,13 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/7715905" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
-    <? if (isset($user) && in_array('3', $user['rights'])): // Admin     ?>
+    <? if (isset($user) && in_array('3', $user['rights'])): // Admin       ?>
        <script src = "/public/js/adminLayer.js?<?= time() ?>"></script>
     <? endif; ?>
 
 
     <div class = 'none'>
-      <svg  id = 'logo-svg' width="235" height="45" version="1.1" viewBox="0 0 140.93602 25.903431" >
+      <svg  id = 'logo-svg' width="200" height="45" version="1.1" viewBox="0 0 140.93602 25.903431" >
       <defs>
       <path id="a4bgr29v3" d="m473.35 105.73c5.3 0.04 0.86 0.08-9.88 0.08s-15.1-0.04-9.65-0.08c5.44-0.07 14.23-0.07 19.53 0z"/>
       <path id="c1VGvvv2Z" d="m0.1 55.82c16.91-27.81 27.48-45.2 31.71-52.15 1.55-2.55 4.32-4.11 7.31-4.12 2.41-0.01 8.45-0.03 18.1-0.06-16.26 26.9-26.43 43.71-30.5 50.44-2.21 3.66-6.18 5.89-10.46 5.89h-16.16z"/>
@@ -279,17 +272,15 @@
       <path id="b22YyPyZK" d="m0.1 109c32.99-53.38 53.6-86.75 61.85-100.1 3.25-5.26 9-8.46 15.18-8.46h33.79c-34.57 53.96-56.17 87.69-64.81 101.18-2.95 4.6-8.04 7.38-13.5 7.38h-32.51z"/>
       </defs>
       <g transform="matrix(.23439 0 0 .23439 .18676 .23738)">
-      <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#a4bgr29v3"/>
       <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#c1VGvvv2Z"/>
-      <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#gUAoYJIok"/>
-      <use width="100%" height="100%" fill="#ff2929" xlink:href="#d1QYQspoc"/>
+      <use width="100%" height="100%" fill="#ff2929" xlink:href="#b22YyPyZK"/>
+      <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#b1d9vAIQqx"/>
       <use width="100%" height="100%" fill="#4e4e4e" xlink:href="#c2Sj5L9Of"/>
       <use width="100%" height="100%" fill="#4e4e4e" xlink:href="#a22pvJeVTv"/>
       <use width="100%" height="100%" fill="#4e4e4e" xlink:href="#b3VxPr9vMy"/>
       <use width="100%" height="100%" fill="#4e4e4e" xlink:href="#f2bkoof7Mq"/>
       <use width="100%" height="100%" fill="#4e4e4e" xlink:href="#bbT7DNVUa"/>
-      <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#b1d9vAIQqx"/>
-      <use width="100%" height="100%" fill="#ff2929" xlink:href="#b22YyPyZK"/>
+      <use width="100%" height="100%" fill="#ff2929" xlink:href="#d1QYQspoc"/>
       </g>
       </svg>
 

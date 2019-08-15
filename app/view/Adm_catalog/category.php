@@ -2,9 +2,7 @@
   <div class="title">Каталог</div>
   <div class="admin-actions">
       <?
-
       use \app\core\Base\View;
-
 new app\view\widgets\menu\Menu([
           'class' => 'admin-category-menu',
           'tpl' => ROOT . "/app/view/widgets/menu/menu_tpl/site_admin_category_menu.php",
@@ -68,42 +66,42 @@ new app\view\widgets\menu\Menu([
 
         <section id="content-tab2">
 
-            <? if (isset($category['parents'])): ?>
-               <? foreach ($category['parents'] as $k): ?>
-                  <div class="parent-properties">
-                    <div class="prop-head ">
-                      <div class="parent-prop">
-                        Свойства родительской категории
-                      </div>
+          <? if (isset($category['parents'])): ?>
+             <? foreach ($category['parents'] as $k): ?>
+                <div class="parent-properties">
+                  <div class="prop-head ">
+                    <div class="parent-prop">
+                      Свойства родительской категории
                     </div>
                   </div>
-               <? endforeach; ?>
-            <? endif; ?>
+                </div>
+             <? endforeach; ?>
+          <? endif; ?>
 
-            <div class="properties column">
-              <div class="cat-prop">
-                Свойства категории
-              </div>
-
-              <? foreach ($category['prop'] as $k => $catProp): ?>
-                 <select name="category-properties" id="category-properties">
-                   <option value=""></option>
-                   <? foreach ($props as $i => $prop): ?>
-                      <option value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></option>
-                   <? endforeach; ?>
-                 </select>
-              <? endforeach; ?>
-              <div class="add-property row" >
-                <span>добавить свойство</span>
-                <select name="category-properties" id="category-properties">
-                  <option value="" selected="true"><выбрать></option>
-                  <? foreach ($props as $i => $prop): ?>
-                     <option value="<?= $prop['id']; ?>" ><?= $prop['name'] ?></option>
-                  <? endforeach; ?>
-                </select>
-              </div>
-
+          <div class="properties column">
+            <div class="cat-prop">
+              Свойства категории
             </div>
+
+            <? foreach ($category['prop'] as $k => $catProp): ?>
+               <select name="category-properties" id="category-properties">
+                 <option value=""></option>
+                 <? foreach ($props as $i => $prop): ?>
+                    <option value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></option>
+                 <? endforeach; ?>
+               </select>
+            <? endforeach; ?>
+            <div class="add-property row" >
+              <span>добавить свойство</span>
+              <select name="category-properties" id="category-properties">
+                <option value="" selected="true"><выбрать></option>
+                <? foreach ($props as $i => $prop): ?>
+                   <option value="<?= $prop['id']; ?>" ><?= $prop['name'] ?></option>
+                <? endforeach; ?>
+              </select>
+            </div>
+
+          </div>
 
 
         </section>
