@@ -49,7 +49,7 @@ class CatalogController extends AppController {
 
       $js = '/public/jscss/Catalog/index.js';
 
-      if (isset($_SESSION['id']) && $_SESSION['id']) {
+      if (isset($_SESSION['id'])) {
          $id = $_SESSION['id'];
          $user = App::$app->user->getUser($id);
       }
