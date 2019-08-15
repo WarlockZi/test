@@ -34,13 +34,13 @@ class CatalogController extends AppController {
       $this->set(compact('js'));
 
       $parents = $aCategory['parents'];
-      $breadcrumbs = App::$app->catalog->getBreadcrumbs($product, $product['parents'],'product');
+      $breadcrumbs = App::$app->catalog->getBreadcrumbs($product, $product['parents'], 'product');
 
       if ($urerId = $_SESSION['id']) {
          $user = App::$app->user->getUserWithRightsSet($urerId);
       }
       View::setMeta($product['name'], $product['name'], $lastParent);
-      $this->set(compact('breadcrumbs','user', 'product', 'tov', 'categories'));
+      $this->set(compact('breadcrumbs', 'user', 'product', 'tov', 'categories'));
 
       $this->set(compact('user', 'tov'));
    }
@@ -54,8 +54,9 @@ class CatalogController extends AppController {
          $user = App::$app->user->getUser($id);
       }
 
-      $breadcrumbs = App::$app->catalog->getBreadcrumbs($category, $category['parents'],'category');
+      $breadcrumbs = App::$app->catalog->getBreadcrumbs($category, $category['parents'], 'category');
 
-      $this->set(compact('user','breadcrumbs', 'category','js'));
-      }
+      $this->set(compact('user', 'breadcrumbs', 'category', 'js'));
    }
+
+}

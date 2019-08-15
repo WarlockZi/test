@@ -43,32 +43,33 @@
                    </svg>
                  </div>
                  <div class="nav">
-                   <a  href="<?= PROJ ?>/user/edit" >Редактировать свой профиль</a>
-                   <?
-                   $arr = $user['rights'];
-                   if (in_array('3', $arr)):
-                      ?>
-                      <a href="<?= PROJ ?>/adminsc">Admin</a>
+                   <a  href="/user/edit" >Редактировать свой профиль</a>
+                   <? if (isset($user)): ?>                                          }?>
+                      <?
+                      $arr = $user['rights'];
+                      if (in_array('3', $arr)):
+                         ?>
+                         <a href="/adminsc">Admin</a>
+                      <? endif; ?>
+                      <? if (in_array('1', $arr)): ?>
+                         <a href="/test/edit/1">Ред. закрытые тесты</a>
+                         <a href="/freetest/edit/41">Ред. открытые  тест</a>
+                      <? endif; ?>
+                      <? if (in_array('2', $arr)): ?>
+                         <a href="/test/1">Закрытый тест</a>
+                         <a href="/freetest/41">Открытый тест</a>
+                      <? endif; ?>
                    <? endif; ?>
-                   <? if (in_array('1', $arr)): ?>
-                      <a href="<?= PROJ ?>/test/edit/1">Ред. закрытые тесты</a>
-                      <a href="<?= PROJ ?>/freetest/edit/41">Ред. открытые  тест</a>
-                   <? endif; ?>
-                   <? if (in_array('2', $arr)): ?>
-                      <a href="<?= PROJ ?>/test/1">Закрытый тест</a>
-                      <a href="<?= PROJ ?>/freetest/41">Открытый тест</a>
-                   <? endif; ?>
-
 
                    <? if (isset($user)): ?>
-                      <a href="<?= PROJ ?>/test/contacts">
+                      <a href="/test/contacts">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 20 20">
                         <path fill="#e30000" d="M18 2c1.105 0 2 0.895 2 2v0 12c0 1.105-0.895 2-2 2v0h-16c-1.105 0-2-0.895-2-2v0-12c0-1.1 0.9-2 2-2h16zM13.63 11.1l6.37 4.9v-2l-5.12-3.9 5.12-4.1v-2l-10 8-10-8v2l5.12 4.1-5.12 3.9v2l6.37-4.9 3.63 2.9 3.63-2.9z"></path>
                         </svg>
                         Напишите нам
                       </a>
 
-                      <a href="<?= PROJ ?>/user/logout">
+                      <a href="/user/logout">
                         <svg width="16" height="8" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" viewBox="-5 0 16 8">
                         <title>lock 1</title>
                         <rect stroke="#e30000" stroke-opacity="0" id="svg_2" height="4.582587" width="4.582587" y="3.349051" x="0.267697" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="#e30000"/>
@@ -89,7 +90,7 @@
 
         <div class="header">
 
-          <a class="logo" href= "<?= PROJ ?>/">
+          <a class="logo" href= "/">
             <svg width="235" height="45" version="1.1" viewBox="0 0 140.93602 25.903431" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
             <defs>
             <path id="a4bgr29v3" d="m473.35 105.73c5.3 0.04 0.86 0.08-9.88 0.08s-15.1-0.04-9.65-0.08c5.44-0.07 14.23-0.07 19.53 0z"/>
@@ -147,21 +148,26 @@
        <script src="<?= PROJ ?>/public/js/scripts.js"></script>
     <? endif; ?>
 
-       <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+           (function (m, e, t, r, i, k, a) {
+              m[i] = m[i] || function () {
+                 (m[i].a = m[i].a || []).push(arguments)
+              };
+              m[i].l = 1 * new Date();
+              k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+           })
+           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-   ym(7715905, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        webvisor:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/7715905" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+           ym(7715905, "init", {
+              clickmap: true,
+              trackLinks: true,
+              accurateTrackBounce: true,
+              webvisor: true
+           });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/7715905" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 
   </body>
 </html>
