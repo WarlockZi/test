@@ -57,7 +57,7 @@ new app\view\widgets\menu\Menu([
           </div>
           <div>
             <strong>Описание :</strong>
-            <span contenteditable id = 'text'><?= $category['text'] ?: ''; ?></span>
+            <span contenteditable id = 'text' class="column"><?= htmlspecialchars($category['text'] ?: ''); ?></span>
           </div>
 
 

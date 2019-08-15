@@ -262,7 +262,7 @@ main{
 	border: 1px solid #dcefd1;
 	max-width: 260px;
 	position: relative;
-	margin: 54px 0 0 0;
+	margin: 54px 10px 0 0;
 }
 #subcat{
 	display:none;

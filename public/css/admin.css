@@ -1103,9 +1103,10 @@ body{
 .user.content-90 *{
 	display: flex;
 	padding: 3px;
+	align-items: flex-start;
 }
 .user.content-90 div *{
-	flex: 1;
+	flex: 2;
 }
 .user.content-90 span[contenteditable='true']{
 	border: 1px #71ff668c solid;
@@ -1119,6 +1120,7 @@ body{
 	flex: 1;
 	justify-content: flex-end;
 	margin-right: 25px;
+	align-items: flex-end;
 }
 .user.content-90 div input
 {
@@ -1146,7 +1148,7 @@ body{
 	margin: 10px 0;
 	display: flex;
     padding: 3px;
-	
+
 }
 .separator.btns button
 {

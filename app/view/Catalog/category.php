@@ -27,6 +27,7 @@
         <nav class="breadcrumbs">
             <?= $breadcrumbs ?>
         </nav>
+        <H1><?=$category['name']?></H1>
         <div class="products">
             <? foreach ($category['children']['products'] as $product): ?>
                <? if ($product['act'] == 'Y'): ?>
@@ -84,7 +85,11 @@
           <? endforeach; ?>
 
         </div>
-
+        <H2>Описание</H2>
+          <div class="description">
+           <?//=htmlspecialchars($category['text'])?>
+           <?=$category['text']?>
+        </div>
       </div>
     </div>
   </div>
