@@ -44,7 +44,7 @@
                  </div>
                  <div class="nav">
                    <a  href="/user/edit" >Редактировать свой профиль</a>
-                   <? if (isset($user)): ?>                                          }?>
+                   <? if (isset($user)): ?>                                        
                       <?
                       $arr = $user['rights'];
                       if (in_array('3', $arr)):

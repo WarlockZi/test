@@ -29,6 +29,7 @@
         </nav>
         <H1><?=$category['name']?></H1>
         <div class="products">
+            <? if (isset($category['children']['products'])): ?>
             <? foreach ($category['children']['products'] as $product): ?>
                <? if ($product['act'] == 'Y'): ?>
                   <?
@@ -51,7 +52,8 @@
 
                   <div class="price-block">
                     <span class="final price" editable>550 р </span>
-                    <span class="price strikethrough">500 р</span>
+
+                    <span class="price strikethrough"><?= $product['old-price']?$product['old-price'].' р':''; ?></span>
                   </div>
 
                   <div class="item-title">
@@ -80,12 +82,12 @@
 
 
                 </a>
-                <!--</div>-->
              <? endif; ?>
           <? endforeach; ?>
+          <? endif; ?>
 
         </div>
-        <H2>Описание</H2>
+
           <div class="description">
            <?//=htmlspecialchars($category['text'])?>
            <?=$category['text']?>

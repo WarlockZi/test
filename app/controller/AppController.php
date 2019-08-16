@@ -23,13 +23,9 @@ class AppController extends Controller {
       echo '<pre>' . print_r($arr, true) . '</pre>';
    }
 
-
-
    public function getFromCache($cache_path) {
 
       $this->auth();
-      View::setMeta('Перчатки и бахилы оптом от производителя', 'Перчатки и бахилы оптом от производителя с доставкой по всей России', 'Пречатки, бахилы, производитель');
-
       if (is_array($this->route)) {
          if (array_key_exists('cache', $this->route)) {
             if ($this->route['cache']) {
@@ -39,9 +35,7 @@ class AppController extends Controller {
       }
 
       $file = CACHE . $cache_path . $cache . '.txt';
-
       if (file_exists($file)) {
-
          $results = require $file;
       }
       $this->set(compact('results'));

@@ -38,8 +38,6 @@ class Adm_catalogController extends AdminscController {
          $replacement = '';
          $QSA = preg_replace($pattern, $replacement, $QSA);
       }
-
-
       if (isset($_GET['name'])) {
          $fName = $_GET['name'];
       }
@@ -49,9 +47,7 @@ class Adm_catalogController extends AdminscController {
       if (isset($_GET['art'])) {
          $fArt = $_GET['art'];
       }
-
       $perpage = 15;
-
       // Получение текущей страницы
       if (isset($_GET['page'])) {
          $page = (int) $_GET['page'];
@@ -60,8 +56,6 @@ class Adm_catalogController extends AdminscController {
       }else {
          $page = 1;
       }
-
-
 // начальная позиция для запроса
       $start_pos = ($page - 1) * $perpage;
 
@@ -75,7 +69,6 @@ class Adm_catalogController extends AdminscController {
          $cnt_pages = ceil($productsCnt / $perpage);
          if (!$cnt_pages)
             $cnt_pages = 1;
-
          if ($page > $cnt_pages)
             $page = $cnt_pages;
       } else {
@@ -115,7 +108,6 @@ class Adm_catalogController extends AdminscController {
 
       if ($id) { /// иначе это корнвой каталог
          $category = App::$app->category->getCategory($id);
-         $category['children'] = App::$app->category->findWhere($id, 'parent', NULL);
          $props = App::$app->prop->getProps();
       }
       $this->set(compact('category', 'props'));

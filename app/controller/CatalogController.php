@@ -18,9 +18,7 @@ class CatalogController extends AppController {
 
    public function actionIndex() {
 
-      //exit(__FILE__. ' имя категории - ' );
       $cats_id = App::$app->category->getInitCategories();
-
       View::setMeta('Каталог спецодежды', 'Каталог спецодежды', 'Каталог спецодежды');
       $this->set(compact('cats_id', 'user'));
    }
@@ -33,13 +31,14 @@ class CatalogController extends AppController {
       $js = '/public/jscss/Catalog/index.js';
       $this->set(compact('js'));
 
-      $parents = $aCategory['parents'];
+      $parents = $product['parents'];
       $breadcrumbs = App::$app->catalog->getBreadcrumbs($product, $product['parents'], 'product');
 
-      if ($urerId = $_SESSION['id']) {
+      if (isset($_SESSION['id']) && $_SESSION['id']) {
+         $urerId = $_SESSION['id'];
          $user = App::$app->user->getUserWithRightsSet($urerId);
       }
-      View::setMeta($product['name'], $product['name'], $lastParent);
+      View::setMeta($product['title'], $product['description'],$product['keywords']);
       $this->set(compact('breadcrumbs', 'user', 'product', 'tov', 'categories'));
 
       $this->set(compact('user', 'tov'));

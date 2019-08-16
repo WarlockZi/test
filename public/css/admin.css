@@ -344,6 +344,7 @@ menu{
 /* Активация секций с помощью псевдокласса :checked */
 #tab1:checked~#content-tab1, #tab2:checked~#content-tab2, #tab3:checked~#content-tab3, #tab4:checked~#content-tab4 {
     display: flex;
+	flex-direction: column;
 }
 /* Убираем текст с переключателей 
 * и оставляем иконки на малых экранах
@@ -672,6 +673,7 @@ td a
 {
     display:flex;
     flex-flow:column;
+
 }
 
 .plr{
@@ -1108,10 +1110,10 @@ body{
 .user.content-90 div *{
 	flex: 2;
 }
-.user.content-90 span[contenteditable='true']{
+span[contenteditable]{
 	border: 1px #71ff668c solid;
 }
-.user.content-90 span[contenteditable='true']:hover{
+span[contenteditable]:hover{
 	border: 1px #71ff66ff solid;
 }
 
@@ -1148,7 +1150,7 @@ body{
 	margin: 10px 0;
 	display: flex;
     padding: 3px;
-
+	font-weight: 600;
 }
 .separator.btns button
 {
@@ -1341,7 +1343,10 @@ footer p{
 }
 .cat-prop{
 	padding: 10px 0;
+	font-weight: 600;
 }
+
+
 .properties select{
 	margin: 5px 0;
 }
@@ -1349,7 +1354,10 @@ footer p{
 .add-property select{
 	float: 1;;
 }
+.add-property{
+	justify-content: flex-end;
 
+}
 .add-property span{
 	padding: 10px 10px 10px 0;
 }

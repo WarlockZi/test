@@ -25,7 +25,7 @@ function clearCache() {
    clearCache().catch(alert);
 }
 
-
+const uniq = (array) => Array.from(new Set(array));
 
 function $_GET(key) {
    var p = window.location.search;
