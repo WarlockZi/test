@@ -117,24 +117,24 @@ class Category extends Model {
    }
 
    public function isCategory($url) {
-      $aCategory = 0;
-      if (!$aCategory) {
+      $category = 0;
+      if (!$category) {
          $arr = explode('/', $url);
          if (count($arr) > 3) {
             http_response_code(404);
             exit(include '../public/404.html');
          }
-         $aCategory = $this->findOne($arr[0], 'alias');
-         if ($aCategory && is_array($aCategory)) {
-            $aCategory = $aCategory[0];
-            $aCategory['parents'] = $this->getCategoryParents($aCategory['parent']);
-            $aCategory['children'] = $this->getCategoryChildren($aCategory['id']);
+         $category = $this->findOne($arr[0], 'alias');
+         if ($category && is_array($category)) {
+            $category = $category[0];
+            $category['parents'] = $this->getCategoryParents($category['parent']);
+            $category['children'] = $this->getCategoryChildren($category['id']);
          }
       }
-      if (!$aCategory) {
+      if (!$category) {
          return FALSE;
       };
-      return $aCategory;
+      return $category;
    }
 
    public function getCategory($id) {

@@ -18,16 +18,16 @@ new app\view\widgets\menu\Menu([
     <div class="breadcrumbs-adm">
         <a href  = "/adminsc/index">Admin  ></a>
         <a href  = "/adminsc/catalog">Каталог  ></a>
-        <? if (isset($category['parents'])): ?>
-            <? foreach ($category['parents'] as $k => $v): ?>
+        <? if (isset($product['parents'])): ?>
+            <? foreach ($product['parents'] as $k => $v): ?>
                 <a href  = "/adminsc/catalog/category?id=<?= View::e($v['id']) ?>"><?= View::e($v['name']) ?></a>
             <? endforeach; ?>
-            <div><?= View::e($category['name']); ?></div>
+            <div><?= View::e($product['name']); ?></div>
         </div>
         <!--<div class="nav-catalog breadcrumbs-adm">-->
 
     <? endif; ?>
-    <!--</div>-->
+    </div>
 
     <div class="wrap-admin">
         <div class="work-area">
@@ -46,20 +46,24 @@ new app\view\widgets\menu\Menu([
 
                 <section id="content-tab1" class="user content-90 column">
                     <div>
+                        <strong>pic :</strong>
+                        <img id = 'id' src = "<?= '/pic'.$product['dpic'] ?: ''; ?>">
+                    </div>
+                    <div>
                         <strong>id :</strong>
-                        <span contenteditable id = 'id'><?= $category['id'] ?: ''; ?></span>
+                        <span contenteditable id = 'id'><?= $product['id'] ?: ''; ?></span>
                     </div>
                     <div>
                         <strong>Наименование :</strong>
-                        <span contenteditable id = 'name'><?= $category['name'] ?: ''; ?></span>
+                        <span contenteditable id = 'name'><?= $product['name'] ?: ''; ?></span>
                     </div>
                     <div>
                         <strong>url :</strong>
-                        <span contenteditable id = 'alias'><?= $category['alias'] ?: ''; ?></span>
+                        <span contenteditable id = 'alias'><?= $product['alias'] ?: ''; ?></span>
                     </div>
                     <div>
                         <strong>Описание :</strong>
-                        <span contenteditable id = 'text' class="column"><?= htmlspecialchars($category['text'] ?: ''); ?></span>
+                        <span contenteditable id = 'text' class="column"><?= htmlspecialchars($product['dtxt'] ?: ''); ?></span>
                     </div>
 
 
@@ -68,8 +72,8 @@ new app\view\widgets\menu\Menu([
 
                 <section id="content-tab2">
 
-                    <? if (isset($category['parents'])): ?>
-                        <? foreach ($category['parents'] as $parentCat): ?>
+                    <? if (isset($product['parents'])): ?>
+                        <? foreach ($product['parents'] as $parentCat): ?>
                             <div class="parent-properties separator">Свойства родительской категории</div>
                             <div class="parent-prop column">
                                 <? foreach ($parentCat['prop'] as $Pprop): ?>
@@ -103,18 +107,6 @@ new app\view\widgets\menu\Menu([
 
                         <? endforeach; ?>
 
-                        <select class = 'new-prop'>
-
-                            <option value=""></option>
-
-                            <? foreach ($props as $prop): ?>
-                                <? if (!in_array($prop['id'], $category['parentProps']) && !in_array($prop['id'], $category['prop'])): ?>
-                                    <option value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></option>
-                                <? endif; ?>
-                            <? endforeach; ?>
-
-                        </select>
-
 
                         <div class="add-property row" >
 
@@ -129,19 +121,19 @@ new app\view\widgets\menu\Menu([
 
                     <div>
                         <strong>title :</strong>
-                        <span contenteditable id = 'title'><?= $category['title'] ?: ''; ?></span>
+                        <span contenteditable id = 'title'><?= $product['title'] ?: ''; ?></span>
                     </div>
                     <div>
                         <strong>key words :</strong>
-                        <span contenteditable id = 'keywords'><?= $category['keywords'] ?: ''; ?></span>
+                        <span contenteditable id = 'keywords'><?= $product['keywords'] ?: ''; ?></span>
                     </div>
                     <div>
                         <strong>description :</strong>
-                        <span contenteditable id = 'description'><?= $category['description'] ?: ''; ?></span>
+                        <span contenteditable id = 'description'><?= $product['description'] ?: ''; ?></span>
                     </div>
                     <div>
                         <strong>семантическое ядро :</strong>
-                        <span contenteditable id = 'core'><?= $category['core'] ?: ''; ?></span>
+                        <span contenteditable id = 'core'><?= $product['core'] ?: ''; ?></span>
                     </div>
 
 
@@ -149,8 +141,8 @@ new app\view\widgets\menu\Menu([
 
                 <section id="content-tab4">
                     <div class="left-menu column">
-                        <? if (isset($category['children']['categories'])): ?>
-                            <? foreach ($category['children']['categories'] as $key => $value) : ?>
+                        <? if (isset($product['children']['categories'])): ?>
+                            <? foreach ($product['children']['categories'] as $key => $value) : ?>
                                 <a href="/adminsc/catalog/category?id=<?= $value['id'] ?>"><?= $value['alias'] ?></a>
                             <? endforeach; ?>
                         <? endif; ?>

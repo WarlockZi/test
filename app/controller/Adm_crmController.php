@@ -2,19 +2,23 @@
 
 namespace app\controller;
 
-use app\controller\AdminscController;
 use app\core\App;
+use app\core\Base\View;
+use app\controller\AdminscController;
 
 class Adm_crmController extends AdminscController {
 
    public function __construct($route) {
       parent::__construct($route);
+
+      $routeView = ['js' => $this->route, 'view' => $this->view];
+      View::setJsCss($routeView);
+      $routeView = ['css' => $this->route, 'view' => $this->view];
+      View::setJsCss($routeView);
    }
 
    public function actionIndex() {
 
-      $this->vars['js'] = $this->getJSCSS('.js');
-//      $this->vars['css'] = $this->getJSCSS('.css');
    }
 
    public function actionUsers() {

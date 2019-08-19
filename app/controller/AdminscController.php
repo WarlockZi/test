@@ -16,14 +16,8 @@ class AdminscController extends AppController {
       $this->auth();
       $this->layout = 'admin';
 
-      $this->vars['js'] = $this->getJSCSS('.js'); //'admin.js';
-      $this->vars['css'] = '/public/css/admin.css';
       View::setJsCss(['js'=>'/public/js/admin.js']);
       View::setJsCss(['css'=>'/public/css/admin.css']);
-      $routeView= ['js'=> $this->route,'view'=> $this->view];
-      View::setJsCss($routeView);
-      $routeView= ['css'=> $this->route,'view'=> $this->view];
-      View::setJsCss($routeView);
 
       if ($this->isAjax()) {
          if (isset($_POST['param'])) {
@@ -50,14 +44,11 @@ class AdminscController extends AppController {
 
    public function actionSiteMap() {
 
-      $this->auth();
       $iniCatList = App::$app->category->getInitCategories();
       $this->set(compact('iniCatList'));
    }
 
    public function actionProducts() {
-
-      $this->auth();
 
       $fName = $fAct = $fArt = 0;
       $params = [];
@@ -121,8 +112,6 @@ class AdminscController extends AppController {
    }
 
    public function actionIndex() {
-
-      $this->auth();
 
       if ($_POST && count($_POST) == 1) {
          reset($_POST);

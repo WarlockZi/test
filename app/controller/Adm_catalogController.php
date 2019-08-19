@@ -12,9 +12,6 @@ class Adm_catalogController extends AdminscController {
 
    public function __construct($route) {
       parent::__construct($route);
-      $this->layout = 'admin';
-//      $this->vars['js'] = $this->getJSCSS('.js'); //'admin.js';
-//      $this->vars['css'] = '/public/css/admin.css';
 
       if ($this->isAjax()) {
          if (isset($_POST['param'])) {
@@ -24,6 +21,10 @@ class Adm_catalogController extends AdminscController {
             exit();
          };
       }
+      $routeView = ['js' => $this->route, 'view' => $this->view];
+      View::setJsCss($routeView);
+      $routeView = ['css' => $this->route, 'view' => $this->view];
+      View::setJsCss($routeView);
    }
 
    public function actionProducts() {
@@ -84,22 +85,27 @@ class Adm_catalogController extends AdminscController {
          $page = $cnt_pages;
       $this->set(compact('products', 'productsCnt', 'cnt_pages', 'QSA'));
    }
-public function actionProduct() {
 
-      $this->auth();
+   public function actionProduct() {
 
-      $productId = $_GET['id'];
-      $this->vars['css'] = $this->getJSCSS('.css');
-      $product = App::$app->catalog->getProduct($productId);
-      $i = 0;
+      if (isset($_GET['id'])) {
+         $id = (int) View::e($_GET['id']);
+      }
+
+      $product = App::$app->catalog->getProduct($id);
+
+      $category = App::$app->category->getCategory($product['parent']);
+      $props = App::$app->prop->getProps();
+
       while ($product['parent']) {
          $category = App::$app->category->getCategory($product['parent']);
          $product['parent'] = $category['parent'];
       };
-      $this->set(compact('product', 'categoryProps'));
+      $this->set(compact('product', 'category', 'props'));
+      $routeView = ['css' => $this->route, 'view' => $this->view];
+      View::setJsCss($routeView);
    }
-   
-   
+
    public function actionIndex() {
 
 //      $this->vars['js'] = $this->getJSCSS('.js');
@@ -118,7 +124,6 @@ public function actionProduct() {
       if (isset($_GET['id'])) {
          $id = (int) View::e($_GET['id']);
       }
-
       if ($id) { /// иначе это корнвой каталог
          $category = App::$app->category->getCategory($id);
          $props = App::$app->prop->getProps();
