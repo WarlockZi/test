@@ -7,9 +7,10 @@
     <meta charset="utf-8">
     <link rel="canonical" href="/<?=isset($vars['canonical'])?$vars['canonical']:''?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <? $this::getMeta() ?>
+    <? $this::getMeta(); ?>
     <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
-    <link href="/public/css/<?= $vars['css'] ?>?<?= time() ?>" rel="stylesheet">
+    <!--<link href="/public/css/<?//= $vars['css'] ?>?<?//=time() ?>" rel="stylesheet">-->
+    <? $this::getCSS(); ?>
     <link href="/public/css/jquery-ui.css" rel="stylesheet">
     <link href="/public/css/jquery-ui.theme.css" rel="stylesheet">
     <!--<link rel="manifest" href="/public/manifest.json">-->
@@ -199,8 +200,8 @@
 
     <script src="/public/js/jq.js"></script>
     <script src="/public/js/auto.js"></script>
-    <?= isset($js) ? '<script src="' . $js . '"></script>' : '' ?>
-
+    //<?= isset($js) ? '<script src="' . $js . '"></script>' : '' ?>
+    <? $this::getJS(); ?>
     <script>
          function setCookie() {
 //          debugger;

@@ -13,8 +13,8 @@ class Adm_catalogController extends AdminscController {
    public function __construct($route) {
       parent::__construct($route);
       $this->layout = 'admin';
-      $this->vars['js'] = $this->getJSCSS('.js'); //'admin.js';
-      $this->vars['css'] = '/public/css/admin.css';
+//      $this->vars['js'] = $this->getJSCSS('.js'); //'admin.js';
+//      $this->vars['css'] = '/public/css/admin.css';
 
       if ($this->isAjax()) {
          if (isset($_POST['param'])) {
@@ -102,7 +102,7 @@ public function actionProduct() {
    
    public function actionIndex() {
 
-      $this->vars['js'] = $this->getJSCSS('.js');
+//      $this->vars['js'] = $this->getJSCSS('.js');
       $iniCatList = App::$app->category->getInitCategories();
       $this->set(compact('iniCatList'));
    }

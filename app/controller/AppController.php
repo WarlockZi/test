@@ -9,7 +9,6 @@ use app\core\App;
 
 class AppController extends Controller {
 
-
    public function __construct($route) {
       parent::__construct($route);
       $this->layout = 'flex-layout';

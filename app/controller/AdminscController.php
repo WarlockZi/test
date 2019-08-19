@@ -15,9 +15,15 @@ class AdminscController extends AppController {
 
       $this->auth();
       $this->layout = 'admin';
-      View::setJSCSS(['js' => '/public/js/admin.js']);
-      View::setJSCSS(['css' => '/public/css/admin.css']);
-      $this->vars['css'][] = '/public/css/admin.css';
+
+      $this->vars['js'] = $this->getJSCSS('.js'); //'admin.js';
+      $this->vars['css'] = '/public/css/admin.css';
+      View::setJsCss(['js'=>'/public/js/admin.js']);
+      View::setJsCss(['css'=>'/public/css/admin.css']);
+      $routeView= ['js'=> $this->route,'view'=> $this->view];
+      View::setJsCss($routeView);
+      $routeView= ['css'=> $this->route,'view'=> $this->view];
+      View::setJsCss($routeView);
 
       if ($this->isAjax()) {
          if (isset($_POST['param'])) {
@@ -109,8 +115,8 @@ class AdminscController extends AppController {
 
       if ($page > $cnt_pages)
          $page = $cnt_pages;
-      $this->vars['js'][] = $this->getJSCSS('.js'); 
-      
+      $this->vars['js'][] = $this->getJSCSS('.js');
+
       $this->set(compact('products', 'productsCnt', 'cnt_pages', 'QSA'));
    }
 

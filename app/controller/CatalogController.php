@@ -11,9 +11,10 @@ class CatalogController extends AppController {
    public function __construct($route) {
       parent::__construct($route);
       $this->layout = 'vitex';
-      $css = 'vitex.css';
+//      $css = 'vitex.css';
       $list = App::$app->category->getInitCategories();
-      $this->set(compact('list', 'css'));
+      $this->set(compact('list'));
+      View::setJsCss(['css' => '/public/css/vitex.css']);
    }
 
    public function actionIndex() {
@@ -28,9 +29,6 @@ class CatalogController extends AppController {
       header('Cache-Control: private, max-age=8400');
       header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
 
-      $js = '/public/jscss/Catalog/index.js';
-      $this->set(compact('js'));
-
       $parents = $product['parents'];
       $breadcrumbs = App::$app->catalog->getBreadcrumbs($product, $product['parents'], 'product');
 
@@ -41,8 +39,6 @@ class CatalogController extends AppController {
       $canonical = $product['alias'];
       View::setMeta($product['title'], $product['description'],$product['keywords']);
       $this->set(compact('canonical','breadcrumbs', 'user', 'product', 'tov', 'categories'));
-
-//      $this->set(compact('user', 'tov'));
    }
 
    public function actionCategory($category) {
