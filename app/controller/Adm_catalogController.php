@@ -102,8 +102,6 @@ class Adm_catalogController extends AdminscController {
          $product['parent'] = $category['parent'];
       };
       $this->set(compact('product', 'category', 'props'));
-      $routeView = ['css' => $this->route, 'view' => $this->view];
-      View::setJsCss($routeView);
    }
 
    public function actionIndex() {
