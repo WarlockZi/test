@@ -15,8 +15,9 @@ class AdminscController extends AppController {
 
       $this->auth();
       $this->layout = 'admin';
-      $this->vars['js'] = $this->getJSCSS('.js'); //'admin.js';
-      $this->vars['css'] = '/public/css/admin.css';
+      View::setJSCSS(['js' => '/public/js/admin.js']);
+      View::setJSCSS(['css' => '/public/css/admin.css']);
+      $this->vars['css'][] = '/public/css/admin.css';
 
       if ($this->isAjax()) {
          if (isset($_POST['param'])) {
@@ -44,33 +45,8 @@ class AdminscController extends AppController {
    public function actionSiteMap() {
 
       $this->auth();
-
       $iniCatList = App::$app->category->getInitCategories();
       $this->set(compact('iniCatList'));
-   }
-
-   public function actionProductEdit() {
-
-      $this->auth();
-
-      $productId = $_GET['id'];
-      $this->vars['css'] = $this->getJSCSS('.css');
-      $product = App::$app->catalog->getProduct($productId);
-
-      $i = 0;
-      while ($product['parent']) {
-         $category = App::$app->category->getCategory($product['parent'])[0];
-         $catProps = Prop::getByIds([$category['prop']]);
-         foreach ($catProps as $key) {
-            $i++;
-            $categoryProps[$i] = $key;
-         }
-         $product['parent'] = $category['parent'];
-      };
-      unset($categoryProps[0]);
-
-
-      $this->set(compact('product', 'categoryProps'));
    }
 
    public function actionProducts() {
@@ -88,7 +64,6 @@ class AdminscController extends AppController {
          $QSA = preg_replace($pattern, $replacement, $QSA);
       }
 
-
       if (isset($_GET['name'])) {
          $fName = $_GET['name'];
       }
@@ -98,9 +73,7 @@ class AdminscController extends AppController {
       if (isset($_GET['art'])) {
          $fArt = $_GET['art'];
       }
-
       $perpage = 15;
-
       // Получение текущей страницы
       if (isset($_GET['page'])) {
          $page = (int) $_GET['page'];
@@ -109,11 +82,8 @@ class AdminscController extends AppController {
       }else {
          $page = 1;
       }
-
-
 // начальная позиция для запроса
       $start_pos = ($page - 1) * $perpage;
-
       if ($fName || $fAct || !$fAct || $fArt) {
          $where = App::$app->adminsc->where($fName, $fAct, $fArt);
          $params = App::$app->adminsc->params($fName, $fAct, $fArt);
@@ -139,7 +109,8 @@ class AdminscController extends AppController {
 
       if ($page > $cnt_pages)
          $page = $cnt_pages;
-
+      $this->vars['js'][] = $this->getJSCSS('.js'); 
+      
       $this->set(compact('products', 'productsCnt', 'cnt_pages', 'QSA'));
    }
 
@@ -154,19 +125,14 @@ class AdminscController extends AppController {
             $this->$action();
          }
       }
-
 // Проверяем существует ли пользователь и подтвердил ли регистрацию
-
       View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
-
-//      $this->set(compact('user'));
    }
 
-   public function replaceUnderlinesDashesInURLS() {
+   public function OreplaceUnderlinesDashesInURLS() {
 
       $sql = "UPDATE products "
          . "SET durl = REPLACE(durl, '_','-')";
-
       App::$app->catalog->insertBySql($sql, $params);
 
       $sql = "UPDATE category "
@@ -182,8 +148,7 @@ class AdminscController extends AppController {
       exit;
    }
 
-   public function FixPicNames() {
-
+   public function OFixPicNames() {
 
 // уберем upload/iblock/ из dpic
       $sql = "UPDATE products SET dpic = REPLACE(dpic, '/upload/iblock', '')";

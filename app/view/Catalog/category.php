@@ -7,7 +7,7 @@
 
       <div class="filters column">
         <div class="filter column">
-            <? if ($category['children']['categories']): ?>
+            <? if (isset($category['children']['categories'])): ?>
              <input name = "subcat" class="filter" id="subcat" type="checkbox">
              <label for="subcat">подкатегории
 
@@ -37,7 +37,7 @@
                   $prodLink = array_pop($arr);
                   $prodLink = array_pop($arr);
                   ?>
-                <a data-id = '<?= $product['id']; ?>' href="/<?= $prodLink; ?>"class="product column">
+                <a data-id = '<?= $product['id']; ?>' href="/<?= $product['alias']; ?>"class="product column">
 
 
 
@@ -51,7 +51,7 @@
                   </div>
 
                   <div class="price-block">
-                    <span class="final price" editable>550 р </span>
+                    <span class="final price">550 р </span>
 
                     <span class="price strikethrough"><?= $product['old-price']?$product['old-price'].' р':''; ?></span>
                   </div>

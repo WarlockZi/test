@@ -38,10 +38,11 @@ class CatalogController extends AppController {
          $urerId = $_SESSION['id'];
          $user = App::$app->user->getUserWithRightsSet($urerId);
       }
+      $canonical = $product['title'];
       View::setMeta($product['title'], $product['description'],$product['keywords']);
       $this->set(compact('breadcrumbs', 'user', 'product', 'tov', 'categories'));
-
-      $this->set(compact('user', 'tov'));
+      $this->set(compact('canonical'));
+//      $this->set(compact('user', 'tov'));
    }
 
    public function actionCategory($category) {
@@ -54,8 +55,9 @@ class CatalogController extends AppController {
       }
 
       $breadcrumbs = App::$app->catalog->getBreadcrumbs($category, $category['parents'], 'category');
-
-      $this->set(compact('user', 'breadcrumbs', 'category', 'js'));
+      $canonical = $category['alias'];
+      View::setMeta($category['title'], $category['description'],$category['keywords']);
+      $this->set(compact('user', 'breadcrumbs', 'category', 'js','canonical'));
    }
 
 }

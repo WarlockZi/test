@@ -72,7 +72,6 @@ class Adm_catalogController extends AdminscController {
          if ($page > $cnt_pages)
             $page = $cnt_pages;
       } else {
-
          $sql = "SELECT * FROM products LIMIT $start_pos,$perpage";
          $products = App::$app->catalog->findBySql($sql);
          $productsCnt = (INT) App::$app->catalog->productsCnt();
@@ -83,10 +82,24 @@ class Adm_catalogController extends AdminscController {
 
       if ($page > $cnt_pages)
          $page = $cnt_pages;
-
       $this->set(compact('products', 'productsCnt', 'cnt_pages', 'QSA'));
    }
+public function actionProduct() {
 
+      $this->auth();
+
+      $productId = $_GET['id'];
+      $this->vars['css'] = $this->getJSCSS('.css');
+      $product = App::$app->catalog->getProduct($productId);
+      $i = 0;
+      while ($product['parent']) {
+         $category = App::$app->category->getCategory($product['parent']);
+         $product['parent'] = $category['parent'];
+      };
+      $this->set(compact('product', 'categoryProps'));
+   }
+   
+   
    public function actionIndex() {
 
       $this->vars['js'] = $this->getJSCSS('.js');

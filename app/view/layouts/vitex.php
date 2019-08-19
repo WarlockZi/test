@@ -5,13 +5,14 @@
     <!--<meta http-equiv="Cache-Control" content="max-age=30, must-revalidate">-->
     <meta name="robots" content="follow" />
     <meta charset="utf-8">
+    <link rel="canonical" href="/<?=isset($vars['canonical'])?$vars['canonical']:''?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <? $this::getMeta() ?>
     <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
     <link href="/public/css/<?= $vars['css'] ?>?<?= time() ?>" rel="stylesheet">
     <link href="/public/css/jquery-ui.css" rel="stylesheet">
     <link href="/public/css/jquery-ui.theme.css" rel="stylesheet">
-    <link rel="manifest" href="/public/manifest.json">
+    <!--<link rel="manifest" href="/public/manifest.json">-->
   </head>
 
 

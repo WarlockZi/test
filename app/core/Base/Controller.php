@@ -8,6 +8,7 @@ abstract class Controller {
     public $view;
     public $layout;
     public $js;
+    public $jscss;
     public $vars = [];
     protected $token;
 

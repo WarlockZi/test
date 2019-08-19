@@ -13,10 +13,6 @@ class AppController extends Controller {
    public function __construct($route) {
       parent::__construct($route);
       $this->layout = 'flex-layout';
-	  $home = 'href = "/"';
-
-      $this->set(compact('home'));
-	        //exit(var_dump($this->vars));
    }
 
    public static function debug($arr) {

@@ -85,11 +85,9 @@ class Adm_settingsController extends AdminscController {
          $doc = App::$app->instructions->getDoc($role)[0];
          $this->vars['doc'] = $doc;
       }
-//      $this->vars['css'] = $this->getJSCSS('.css');
    }
 
    public function actionProps() {
-//      $this->layout = 'admin.php';
 
       $this->vars['js'] = $this->getJSCSS('.js');
       $this->vars['css'] = $this->getJSCSS('.css');

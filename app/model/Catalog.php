@@ -55,7 +55,7 @@ class Catalog extends Model {
    public function getProduct($productId) {
 
       $param = [$productId];
-      $sql = 'SELECT * FROM products WHERE id = ?';
+      $sql = 'SELECT * FROM products WHERE id = ? LIMIT 1';
       $product = $this->findBySql($sql, $param);
       return $product[0];
    }
