@@ -38,10 +38,10 @@ class CatalogController extends AppController {
          $urerId = $_SESSION['id'];
          $user = App::$app->user->getUserWithRightsSet($urerId);
       }
-      $canonical = $product['title'];
+      $canonical = $product['alias'];
       View::setMeta($product['title'], $product['description'],$product['keywords']);
-      $this->set(compact('breadcrumbs', 'user', 'product', 'tov', 'categories'));
-      $this->set(compact('canonical'));
+      $this->set(compact('canonical','breadcrumbs', 'user', 'product', 'tov', 'categories'));
+
 //      $this->set(compact('user', 'tov'));
    }
 
