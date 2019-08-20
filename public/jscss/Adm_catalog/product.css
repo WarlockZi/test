@@ -1,4 +1,4 @@
-.content-90.column img{
+.prod-details.column img{
     display: block;
     width: 80px;
     flex: 1;
@@ -6,4 +6,24 @@
 
 .left.column div {
     align-items: self-start;
+}
+
+.prod-details .row .left.column{
+    flex:3;
+}
+.prod-details .row .right.column{
+    flex:1;
+}
+.prop.row {
+    flex:1;
+    align-items: self-start;
+    margin: 5px 10px;
+}
+
+.prop.row strong,
+.prop.row span
+{
+    flex:1;
+    display:flex;
+
 }

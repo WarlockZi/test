@@ -33,8 +33,8 @@ class CatalogController extends AppController {
       $breadcrumbs = App::$app->catalog->getBreadcrumbs($product, $product['parents'], 'product');
 
       if (isset($_SESSION['id']) && $_SESSION['id']) {
-         $urerId = $_SESSION['id'];
-         $user = App::$app->user->getUserWithRightsSet($urerId);
+         $id = $_SESSION['id'];
+         $user = App::$app->user->getUser($id);
       }
       $canonical = $product['alias'];
       View::setMeta($product['title'], $product['description'],$product['keywords']);

@@ -97,10 +97,10 @@ class Adm_catalogController extends AdminscController {
       $category = App::$app->category->getCategory($product['parent']);
       $props = App::$app->prop->getProps();
 
-      while ($product['parent']) {
-         $category = App::$app->category->getCategory($product['parent']);
-         $product['parent'] = $category['parent'];
-      };
+//      while ($product['parent']) {
+//         $category = App::$app->category->getCategory($product['parent']);
+//         $product['parent'] = $category['parent'];
+//      };
       $this->set(compact('product', 'category', 'props'));
    }
 

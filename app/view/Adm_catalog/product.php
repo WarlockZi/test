@@ -44,29 +44,29 @@ new app\view\widgets\menu\Menu([
 
 
 
-            <section id="content-tab1" class="user content-90 column">
-                <div class="left row">
-                <div class="left column">
-                    <div>
-                        <strong>id :</strong>
-                        <span contenteditable id = 'id'><?= $product['id'] ?: ''; ?></span>
+            <section id="content-tab1" class="prod-details column">
+                <div class="row">
+                    <div class="left column">
+                        <div class = 'prop row'>
+                            <strong>id :</strong>
+                            <span><?= $product['id'] ?: ''; ?></span>
+                        </div>
+                        <div class = 'prop row'>
+                            <strong>Наименование :</strong>
+                            <span contenteditable id = 'name'><?= $product['name'] ?: ''; ?></span>
+                        </div>
+                        <div class = 'prop row'>
+                            <strong>url :</strong>
+                            <span contenteditable id = 'alias'><?= $product['alias'] ?: ''; ?></span>
+                        </div>
                     </div>
-                    <div>
-                        <strong>Наименование :</strong>
-                        <span contenteditable id = 'name'><?= $product['name'] ?: ''; ?></span>
-                    </div>
-                    <div>
-                        <strong>url :</strong>
-                        <span contenteditable id = 'alias'><?= $product['alias'] ?: ''; ?></span>
+                    <div class="right  column">
+                        <div>
+                            <img id = 'id' src = "<?= '/pic' . $product['dpic'] ?: ''; ?>">
+                        </div>
                     </div>
                 </div>
-                <div class="right  column">
-                    <div>
-                        <img id = 'id' src = "<?= '/pic' . $product['dpic'] ?: ''; ?>">
-                    </div>
-                </div>
-                </div>
-                    
+
                 <div>
                     <strong>Описание :</strong>
                     <span contenteditable id = 'text' class="column"><?= htmlspecialchars($product['dtxt'] ?: ''); ?></span>
@@ -78,38 +78,37 @@ new app\view\widgets\menu\Menu([
 
             <section id="content-tab2">
 
-                <? if (isset($product['parents'])): ?>
-                    <? foreach ($product['parents'] as $parentCat): ?>
-                        <div class="parent-properties separator">Свойства родительской категории</div>
-                        <div class="parent-prop column">
-                            <? foreach ($parentCat['prop'] as $Pprop): ?>
-                                <div class="category-properties">
-                                    <? foreach ($props as $prop): ?>
-                                        <? if ($Pprop == $prop['id']): ?>
-                                            <?= $prop['name'] ?>
-                                        <? endif; ?>
-                                    <? endforeach; ?>
-                                </div>
-                            <? endforeach; ?>
-                        </div>
-                    <? endforeach; ?>
-                <? endif; ?>
+
 
                 <div class="properties column">
-                    <div class="cat-prop">
-                        Свойства категории
-                    </div>
+                    <div class="prod-prop">Свойства товара</div>
+
+                    <? if (isset($category['parents'])): ?>
+                        <? foreach ($category['parents'] as $parentCat): ?>
+                            <div class="parent-prop column">
+                                <? foreach ($parentCat['prop'] as $Pprop): ?>
+                                    <div class="category-properties">
+                                        <? foreach ($props as $prop): ?>
+                                            <? if ($Pprop == $prop['id']): ?>
+                                                <?= $prop['name'] ?>
+                                            <? endif; ?>
+                                        <? endforeach; ?>
+                                    </div>
+                                <? endforeach; ?>
+                            </div>
+                        <? endforeach; ?>
+                    <? endif; ?>
+
+
+
 
                     <? foreach ($category['prop'] as $k => $catProp): ?>
 
-                        <select>
-                            <option value=""></option>
                             <? foreach ($props as $prop): ?>
                                 <? if (!in_array($prop['id'], $category['parentProps'])): ?>
-                                    <option value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></option>
+                                    <div value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></div>
                                 <? endif; ?>
                             <? endforeach; ?>
-                        </select>
 
                     <? endforeach; ?>
 
