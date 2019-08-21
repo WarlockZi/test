@@ -65,7 +65,7 @@ Router::add('^adminsc\/settings\/instructions\/module\/(?P<id>[0-9]+)$', ['contr
 Router::add('^adminsc\/settings$', ['controller' => 'Adm_settings']);
 Router::add('^adminsc$', ['controller' => 'Adminsc', 'action' => 'index']);
 
-Router::add('^catalog\/(?P<cat1>[a-z0-9-]+)\/?(?P<cat2>[0-9a-z-]+)?\/?(?P<cat3>[0-9a-z-]+)?\/?(?P<cat4>[0-9a-z-]+)?$', ['controller' => 'Catalog', 'action' => 'category']);
+//Router::add('^catalog\/(?P<cat1>[a-z0-9-]+)\/?(?P<cat2>[0-9a-z-]+)?\/?(?P<cat3>[0-9a-z-]+)?\/?(?P<cat4>[0-9a-z-]+)?$', ['controller' => 'Product', 'action' => 'category']);
 
 Router::add('^about\/(?P<action>[a-z0-9_]+)$', ['controller' => 'main']);
 Router::add('^about$', ['controller' => 'main', 'action' => 'about']);

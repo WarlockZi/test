@@ -85,9 +85,9 @@ class AdminscController extends AppController {
          $where = App::$app->adminsc->where($fName, $fAct, $fArt);
          $params = App::$app->adminsc->params($fName, $fAct, $fArt);
          $sql = "SELECT * FROM products $where LIMIT $start_pos,$perpage";
-         $products = App::$app->catalog->findBySql($sql, $params);
+         $products = App::$app->product->findBySql($sql, $params);
          $sql = "SELECT * FROM products $where";
-         $productsCnt = count(App::$app->catalog->findBySql($sql, $params));
+         $productsCnt = count(App::$app->product->findBySql($sql, $params));
          $cnt_pages = ceil($productsCnt / $perpage);
          if (!$cnt_pages)
             $cnt_pages = 1;
@@ -97,8 +97,8 @@ class AdminscController extends AppController {
       } else {
 
          $sql = "SELECT * FROM products LIMIT $start_pos,$perpage";
-         $products = App::$app->catalog->findBySql($sql);
-         $productsCnt = (INT) App::$app->catalog->productsCnt();
+         $products = App::$app->product->findBySql($sql);
+         $productsCnt = (INT) App::$app->product->productsCnt();
       }
       $cnt_pages = ceil($productsCnt / $perpage);
       if (!$cnt_pages)
@@ -128,17 +128,17 @@ class AdminscController extends AppController {
 
       $sql = "UPDATE products "
          . "SET durl = REPLACE(durl, '_','-')";
-      App::$app->catalog->insertBySql($sql, $params);
+      App::$app->product->insertBySql($sql, $params);
 
       $sql = "UPDATE category "
          . "SET name = REPLACE(name, '_','-')";
 
-      App::$app->catalog->insertBySql($sql, $params);
+      App::$app->product->insertBySql($sql, $params);
 
       $sql = "UPDATE products "
          . "SET durl = REPLACE(durl, '/catalog','')";
 
-      App::$app->catalog->insertBySql($sql, $params);
+      App::$app->product->insertBySql($sql, $params);
 
       exit;
    }
@@ -147,10 +147,10 @@ class AdminscController extends AppController {
 
 // уберем upload/iblock/ из dpic
       $sql = "UPDATE products SET dpic = REPLACE(dpic, '/upload/iblock', '')";
-      App::$app->catalog->insertBySql($sql);
+      App::$app->product->insertBySql($sql);
 // уберем upload/iblock/ из preview_pic
       $sql = "UPDATE products SET preview_pic = REPLACE(preview_pic, '/upload/iblock', '')";
-      App::$app->catalog->insertBySql($sql);
+      App::$app->product->insertBySql($sql);
 
       header('settings');
    }
@@ -158,7 +158,7 @@ class AdminscController extends AppController {
    public function fixProductsPath() {
 
 //      $sql = "SELECT * FROM products";
-//      $products = App::$app->catalog->findBySql($sql);
+//      $products = App::$app->product->findBySql($sql);
 //      foreach ($products as $key => $value) {
 //         $durl = $value['durl'];
 //         $arr = explode('/', $durl);
@@ -166,7 +166,7 @@ class AdminscController extends AppController {
 //         $string =
 //            "UPDATE products SET alias = '{$name}' where durl='{$durl}'";
 //         $sql = str_replace('/', '\/', $string);
-//         App::$app->catalog->insertBySql($string);
+//         App::$app->product->insertBySql($string);
 //      }
       exit;
    }

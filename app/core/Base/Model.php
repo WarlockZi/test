@@ -49,7 +49,8 @@ abstract class Model {
    public function findOne($id, $field = '') {
       $field = $field ?: $this->pk;
       $sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
-      return $this->pdo->query($sql, [$id]);
+      $result = $this->pdo->query($sql, [$id]);
+      return $result?$result[0]:FALSE;
    }
 
    /**

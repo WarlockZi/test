@@ -47,7 +47,7 @@ class Adm_settingsController extends AdminscController {
    public function actionModule() {
 
       $id = $this->route['id'];
-      $module = App::$app->instructions->findOne($id)[0];
+      $module = App::$app->instructions->findOne($id);
       $this->vars['module'] = $module;
    }
 
@@ -81,7 +81,7 @@ class Adm_settingsController extends AdminscController {
    public function actionProps() {
 
 
-      $catProps = App::$app->catalog->findAll('props');
+      $catProps = App::$app->product->findAll('props');
       foreach ($catProps as $k => $v) {
          $catProps[$k]['val'] = explode(',', $catProps[$k]['val']);
       };

@@ -30,7 +30,7 @@ class CatalogController extends AppController {
       header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
 
       $parents = $product['parents'];
-      $breadcrumbs = App::$app->catalog->getBreadcrumbs($product, $product['parents'], 'product');
+      $breadcrumbs = App::$app->product->getBreadcrumbs($product, $product['parents'], 'product');
 
       if (isset($_SESSION['id']) && $_SESSION['id']) {
          $id = $_SESSION['id'];
@@ -39,21 +39,26 @@ class CatalogController extends AppController {
       $canonical = $product['alias'];
       View::setMeta($product['title'], $product['description'],$product['keywords']);
       $this->set(compact('canonical','breadcrumbs', 'user', 'product', 'tov', 'categories'));
-   }
+
+//      $this->view = 'product_1';
+      View::setJsCss(['css'=> $this->route,'view'=> $this->view]);
+
+      }
 
    public function actionCategory($category) {
 
-      $js = '/public/jscss/Catalog/index.js';
+//      $js = '/public/jscss/Catalog/index.js';
 
-      if (isset($_SESSION['id'])) {
-         $id = $_SESSION['id'];
-         $user = App::$app->user->getUser($id);
+      if (isset($_SESSION['id'])&&$_SESSION['id']) {
+         $user = App::$app->user->getUser($_SESSION['id']);
       }
 
-      $breadcrumbs = App::$app->catalog->getBreadcrumbs($category, $category['parents'], 'category');
+      $breadcrumbs = App::$app->product->getBreadcrumbs($category, $category['parents'], 'category');
       $canonical = $category['alias'];
-      View::setMeta($category['title'], $category['description'],$category['keywords']);
-      $this->set(compact('user', 'breadcrumbs', 'category', 'js','canonical'));
+      View::setMeta($category['title'],$category['keywords'], $category['description']);
+      $this->set(compact('user', 'breadcrumbs', 'category', 'canonical'));
+      View::setJsCss(['css'=> $this->route,'view'=> $this->view]);
+
    }
 
 }

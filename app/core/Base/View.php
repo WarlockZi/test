@@ -52,10 +52,10 @@ class View {
 
    public static function setJsCss($data) {
       $ext = array_keys($data)[0];
+      $doCache = DEBU ? "?" . time() : '';
       if (isset($data["{$ext}"]) && $data["{$ext}"]) {
          // если передан массив - это route>подключим индивид файл
          if (is_array($data["{$ext}"])) {
-            $doCache = DEBU ? "?" . time() : '';
             $controller = $data["{$ext}"]['controller'];
             $view = $data['view'];
             $script = "/public/jscss/" . $controller . '/' . $view . '.' . $ext;
@@ -66,13 +66,13 @@ class View {
                } else {
                   $jscss = "<link href='{$script}{$doCache}' type='text/css' rel='stylesheet'>";
                }
-            self::$jsCss[$ext][] = $jscss;
+               self::$jsCss[$ext][] = $jscss;
             }
          } else {
             if ($ext == 'js') {
-               self::$jsCss[$ext][] = "<script src='$data[$ext]'></script>";
+               self::$jsCss[$ext][] = "<script src='$data[$ext]{$doCache}'></script>";
             } else {
-               self::$jsCss[$ext][] = "<link href='$data[$ext]' type='text/css' rel='stylesheet'>";
+               self::$jsCss[$ext][] = "<link href='$data[$ext]{$doCache}' type='text/css' rel='stylesheet'>";
             }
          }
       }

@@ -11,24 +11,24 @@ class Prop extends Model {
 
    public static function getPropsVals($props = array()) {
       foreach ($props as $k => $v) {
-         $props[$k]['vals'] = App::$app->catalog->findWhere($v, 'parent', 'props');
+         $props[$k]['vals'] = App::$app->product->findWhere($v, 'parent', 'props');
       };
       return $props;
    }
 
    public static function getVals($id) {
-      return App::$app->catalog->findWhere($id, 'parent', 'props');
+      return App::$app->product->findWhere($id, 'parent', 'props');
    }
 
    public static function getAll() {
 
-      return App::$app->catalog->findAll('props');
+      return App::$app->product->findAll('props');
    }
 
    public static function getAllWithVals() {
       $props = self::getAll();
       foreach ($props as $key => $value) {
-         $props[$key]['vals'] = App::$app->catalog->findWhere($value['id'], 'parent', 'vals');
+         $props[$key]['vals'] = App::$app->product->findWhere($value['id'], 'parent', 'vals');
       }
       return $props;
    }
@@ -38,7 +38,7 @@ class Prop extends Model {
          foreach ($ids as $k => $v) {
             $sql = 'SELECT * FROM props WHERE id = ?';
             $params = [$v];
-            $props[$k] = App::$app->catalog->findBySql($sql, $params);
+            $props[$k] = App::$app->product->findBySql($sql, $params);
             if ($props[$k]) {
                $props[$k]['vals'] = self::getVals($v);
             }

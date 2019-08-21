@@ -30,7 +30,7 @@ class Router {
             return TRUE;
 
 // это продукт
-        } elseif ($url && $product = App::$app->catalog->isProduct($url)) {
+        } elseif ($url && $product = App::$app->product->isProduct($url)) {
 
             $route['controller'] = 'Catalog';
             $route['action'] = 'product';

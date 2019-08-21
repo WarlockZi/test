@@ -1,0 +1,331 @@
+
+
+/*************************
+*******     PRODUCT    ******
+**************************/
+
+
+.card
+{
+    display: flex;
+    border: 1px solid #ddd;
+    width: auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+.dtxt
+{
+    width: 500px;
+    margin: 0 10px;
+    text-align: left;
+}
+.card-left
+{
+    flex: 20;
+    display: flex;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-shrink: 1;
+    -moz-flex-shrink: 1;
+    -ms-flex-negative: 1;
+    flex-shrink: 1;
+    position: relative;
+    overflow: hidden;
+    -webkit-flex-basis: 760px;
+    -moz-flex-basis: 760px;
+    -ms-flex-preferred-size: 760px;
+    flex-basis: 760px;
+}
+
+
+.card-right
+{
+    flex: 1;
+    -webkit-flex-basis: 240px;
+    -moz-flex-basis: 240px;
+    -ms-flex-preferred-size: 240px;
+    flex-basis: 240px;
+    -webkit-flex-shrink: 1;
+    -moz-flex-shrink: 1;
+    -ms-flex-negative: 1;
+    flex-shrink: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -moz-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    border-left: 1px solid #ccc;
+}	
+
+.card-wrap{
+    display: flex;
+    align-items: self-start;
+}
+/*.badge{
+    position: relative;
+    color: #212121;
+    background-color: #fff;
+    margin: 7px 0 0;
+}*/
+
+.cust-questions-wrap ol
+{
+    margin-left: 14px;
+    font: 700 italic 24px Georgia,serif;
+    color: #fc5800;
+    text-align: left;
+}
+.cust-questions-wrap ol li
+{
+    list-style-type: decimal;
+    margin: 0 0 20px;
+}
+.cust-questions-wrap span
+{
+    font: normal 16px Verdana,Arial,sans;
+    padding: 0 0 15px;
+    margin: 0;
+    color: #555;
+
+}
+.info
+{
+    margin: 10px 30px 40px;
+    text-align: left;
+}
+
+.card H1{
+    font: normal 19px Intro,Verdana,Arial,sans;
+    color: #555;
+    text-align: center;
+    padding: 1.14rem 1.14rem ;
+}
+
+.card .image {
+    text-align: center;
+    position: relative;
+    padding: 0 10px 36px;
+}
+
+.card .image img
+{
+    min-width: 300px;
+    padding-bottom: 40px;
+    max-width: 100%;
+}
+
+.horiz-thumbs
+{
+    display:flex;
+    justify-content: center;
+}
+.also-viewed
+{
+    display:flex;
+    justify-content: center;
+}
+
+
+
+.thumb
+{
+    height: 76px;
+    width: 70px;
+    border: 1px #bbb solid;
+    margin: 10px;
+}
+.thumb-small
+{
+    height: 40px;
+    width: 60px;
+    margin: 2px 0;
+    border: 1px #bbb solid;
+}
+.thumb-big
+{
+    height: 157px;
+    width: 168px;
+    border: 1px #bbb solid;
+}
+
+
+
+
+.vert-thumbs
+{
+    position: absolute;
+    top:0;
+    left:0;
+    padding: 0 10px;
+}
+
+.desc 
+{
+    display: flex;
+    flex-flow:column;
+    max-height: 400px;
+    justify-content: flex-end;
+}
+.desc span
+{
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.desc p:first-child
+{
+    color:#b7b7b7;
+}
+
+
+.add-to-cart {
+    margin-top: 20px;
+    background-color: #e60000;
+    border: 0;
+    cursor: pointer;
+    font: 600 17px/17px 'Proxima Nova', sans-serif;
+    color: #fff;
+    border-radius: 2px;
+    padding: 11px 19px 13px 19px;
+    width: 230px;
+}
+
+
+.prod-info-wrap,
+.cust-questions-wrap
+{
+    display: flex;
+    flex-flow:column;
+    align-items: flex-start;
+}
+.cust-questions-wrap input:focus 
+{
+
+    outline: none;
+    border-color: #85c0ff;
+    box-shadow: 0 0 6px #85c0ff;
+
+}
+
+.share .f
+{
+    background-color: #3b5998;
+    border-radius: 5px;
+    transition: none;
+    width: 28px;
+    height: 26px;
+}
+
+.note
+{
+    font: normal 10px Verdana,Arial,sans;
+    margin: 20px 0;
+    line-height: 1.5em;
+    color: #777;
+}
+.cust-questions-wrap input
+{
+    display: block;
+    font: normal 12px Verdana,Arial,sans;
+    padding: 6px;
+    border: 1px solid #ccc;
+    width: 400px;
+    margin: 20px;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+.cust-questions-wrap p
+{
+    margin: 0;
+    font: normal 16px Verdana,Arial,sans;
+    padding: 0 0 15px;
+    margin: 0;
+    color: #555;
+}
+.info-tag {
+    font: italic 18px Georgia,serif;
+    background: #e30000;
+    color: #fff;
+    position: relative;
+    margin: 0 10px 16px 0;
+    line-height: 38px;
+    padding: 0 28px 0 23px;
+    overflow: visible;
+}
+
+
+
+
+/*************************
+*******     RATING    ******
+**************************/
+
+
+.star-rating{
+    font-size: 0;
+}
+.star-rating__wrap{
+    display: inline-block;
+    font-size: 1rem;
+}
+.star-rating__wrap:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+.star-rating__ico{
+    float: right;
+    padding-left: 2px;
+    cursor: pointer;
+    color: #FFB300;
+}
+.star-rating__ico:last-child{
+    padding-left: 0;
+}
+.star-rating__input{
+    display: none;
+}
+.star-rating__ico:hover:before,
+.star-rating__ico:hover ~ .star-rating__ico:before,
+.star-rating__input:checked ~ .star-rating__ico:before
+{
+    content: '★ ';
+    color: #FFB300;
+    /*content: "\f005";*/
+}
+
+.fa-lg {
+    font-size: 1.33333333em;
+    line-height: .75em;
+    vertical-align: -15%;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+}
+.fa-star-o:before {
+    content: '★ ';
+    color: #ccc;
+    /*content: "\f006";*/
+}
+/*.star-rating__ico:hover:before,
+.star-rating__ico:hover ~ .star-rating__ico:before,
+.star-rating__input:checked ~ .star-rating__ico:before
+{
+    content: '★ ';
+}*/
