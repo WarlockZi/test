@@ -6,7 +6,7 @@ use app\model\Test;
 use app\core\Base\Model;
 use app\core\App;
 
-class Catalog extends Model {
+class Product extends Model {
 
    public $table = 'products';
 
@@ -24,7 +24,6 @@ class Catalog extends Model {
    public function isProduct($url) {
 
       if ($product = $this->findOne($url, 'alias')) {
-         $product = $product[0];
          $product['parents'][] = $this->getProductParents($product['parent']);
          while ($last = end($product['parents'])['parent']) {
             $product['parents'][] = $this->getProductParents($last);

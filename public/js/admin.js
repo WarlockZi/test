@@ -14,6 +14,9 @@ $(function () {
       case '/adminsc/settings/pics':
          $('.module.settings').addClass('activ');
          break;
+      case '/adminsc':
+         $('.module.home').addClass('activ');
+         break;
    }
 });
 function clearCache() {

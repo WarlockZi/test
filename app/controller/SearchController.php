@@ -22,7 +22,7 @@ class SearchController extends AppController {
 
       $sql = "SELECT $url, name, preview_pic FROM products WHERE name LIKE ? LIMIT 10";
       $params = [$qSql];
-      $arr = App::$app->catalog->findBySql($sql, $params);
+      $arr = App::$app->product->findBySql($sql, $params);
 //      foreach ($arr as $i => $v){
 //         $items[$v['name']] = '/pic'.$v['preview_pic'];
 //      }

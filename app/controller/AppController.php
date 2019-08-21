@@ -37,13 +37,13 @@ class AppController extends Controller {
       exit();
    }
 
-   public function getJSCSS($extension) {
-      $doCache = DEBU ? "?" . time() : '';
-      $controller = $this->route['controller'];
-      $view = $this->view;
-      $js = PROJ . "/public/jscss/" . $controller . '/' . $view . $extension . $doCache;
-      return $js;
-   }
+//   public function getJSCSS($extension) {
+//      $doCache = DEBU ? "?" . time() : '';
+//      $controller = $this->route['controller'];
+//      $view = $this->view;
+//      $js = PROJ . "/public/jscss/" . $controller . '/' . $view . $extension . $doCache;
+//      return $js;
+//   }
 
    public function auth() {
       try {

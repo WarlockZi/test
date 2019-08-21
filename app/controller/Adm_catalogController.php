@@ -64,9 +64,9 @@ class Adm_catalogController extends AdminscController {
          $where = App::$app->adminsc->where($fName, $fAct, $fArt);
          $params = App::$app->adminsc->params($fName, $fAct, $fArt);
          $sql = "SELECT * FROM products $where LIMIT $start_pos,$perpage";
-         $products = App::$app->catalog->findBySql($sql, $params);
+         $products = App::$app->product->findBySql($sql, $params);
          $sql = "SELECT * FROM products $where";
-         $productsCnt = count(App::$app->catalog->findBySql($sql, $params));
+         $productsCnt = count(App::$app->product->findBySql($sql, $params));
          $cnt_pages = ceil($productsCnt / $perpage);
          if (!$cnt_pages)
             $cnt_pages = 1;
@@ -74,8 +74,8 @@ class Adm_catalogController extends AdminscController {
             $page = $cnt_pages;
       } else {
          $sql = "SELECT * FROM products LIMIT $start_pos,$perpage";
-         $products = App::$app->catalog->findBySql($sql);
-         $productsCnt = (INT) App::$app->catalog->productsCnt();
+         $products = App::$app->product->findBySql($sql);
+         $productsCnt = (INT) App::$app->product->productsCnt();
       }
       $cnt_pages = ceil($productsCnt / $perpage);
       if (!$cnt_pages)
@@ -91,22 +91,14 @@ class Adm_catalogController extends AdminscController {
       if (isset($_GET['id'])) {
          $id = (int) View::e($_GET['id']);
       }
-
-      $product = App::$app->catalog->getProduct($id);
-
+      $product = App::$app->product->getProduct($id);
       $category = App::$app->category->getCategory($product['parent']);
       $props = App::$app->prop->getProps();
-
-//      while ($product['parent']) {
-//         $category = App::$app->category->getCategory($product['parent']);
-//         $product['parent'] = $category['parent'];
-//      };
       $this->set(compact('product', 'category', 'props'));
    }
 
    public function actionIndex() {
 
-//      $this->vars['js'] = $this->getJSCSS('.js');
       $iniCatList = App::$app->category->getInitCategories();
       $this->set(compact('iniCatList'));
    }

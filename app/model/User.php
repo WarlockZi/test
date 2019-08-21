@@ -158,8 +158,6 @@ class User extends Model {
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
-
-
         if ($user) {
             $user = $user[0];
             // Если запись существует и подтверждена, возвращаем id пользователя
@@ -170,7 +168,6 @@ class User extends Model {
                 return NULL;
             }
         }
-
         //  Такого пользователя нет возвращаем FALSE
         return false;
     }
@@ -218,7 +215,6 @@ class User extends Model {
         if (strlen($password) >= 6) {
             return true;
         }
-
         return false;
     }
 
@@ -243,7 +239,7 @@ class User extends Model {
 
         $res = $this->findOne($email, 'email');
         if (count($res)) {
-            return $res[0];
+            return $res;
         }
         return $res;
     }
@@ -321,7 +317,6 @@ class User extends Model {
 
         $res = $this->findOne($id, 'id');
         if ($res) {
-           $res = $res[0];
            $res['rights']= explode(",", $res['rights']);
             return $res;
         }

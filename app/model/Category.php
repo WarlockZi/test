@@ -17,8 +17,6 @@ class Category extends Model {
          $params = [$parentId];
          $parent = $this->findBySql($sql, $params);
          $parent[0]['prop'] = explode(',', $parent[0]['prop']);
-         ;
-
          $parents = array_merge($parents, $parent);
          $i++;
          return $this->getCategoryParents($parents[$i]['parent'], $parents, $i);
@@ -37,11 +35,10 @@ class Category extends Model {
          foreach ($res as $key => $v) {
             $params = [$v['id']];
             $sql = 'SELECT * FROM products WHERE parent = ?';
-            $res = App::$app->catalog->findBySql($sql, $params);
+            $res = App::$app->product->findBySql($sql, $params);
             $all[$v['id']] = $v;
             $all[$v['id']]['products'] = $res;
          }
-
          return $all;
       }
    }
@@ -126,7 +123,6 @@ class Category extends Model {
          }
          $category = $this->findOne($arr[0], 'alias');
          if ($category && is_array($category)) {
-            $category = $category[0];
             $category['parents'] = $this->getCategoryParents($category['parent']);
             $category['children'] = $this->getCategoryChildren($category['id']);
          }
@@ -142,7 +138,6 @@ class Category extends Model {
       $category = $this->findOne($id);
 
       if ($category && is_array($category)) {
-         $category = $category[0];
          $category['prop'] = explode(',', $category['prop']);
          $category['parents'] = $this->getCategoryParents($category['parent']);
          if ($ch = $this->getCategoryChildren($category['id']))
@@ -178,27 +173,6 @@ class Category extends Model {
       $sql = 'SELECT * FROM category WHERE parent = 0';
       $arr = $this->findBySql($sql);
       return $arr;
-   }
-
-   function update($arr) {
-      $i = 0;
-      $set = $values = '';
-      $params = [];
-      $d = count($arr['values']);
-      foreach ($arr['values'] as $k => $v) {
-         $i++;
-         $set .= $k . "=?";
-         $values .= '?';
-         $params[] .= $v;
-         if (count($arr['values']) > $i) {
-            $set .= ', ';
-            $values .= ', ';
-         }
-      }
-      $params[] .= (int) $arr['id'];
-      $sql = "UPDATE {$arr['model']} SET {$set} WHERE {$arr['field']} = ?";
-      $this->insertBySql($sql, $params);
-      exit('успешно обновлено!');
    }
 
 }

@@ -6,9 +6,10 @@
     <meta name="robots" content="noindex,nofollow" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <? $this::getMeta() ?>
-    <link rel="shortcut icon" href="<?= PROJ ?>/public/favicon.ico">
-    <link 	href="<?= PROJ ?>/public/css/<?= $vars['css'] ?>?<?= time() ?>" rel="stylesheet">
+    <? $this::getMeta(); ?>
+    <? $this::getCss(); ?>
+    <link rel="shortcut icon" href="/public/favicon.ico">
+    <!--<link 	href="/public/css/<?= $vars['css'] ?>?<?= time() ?>" rel="stylesheet">-->
     <meta name="theme-color" content="#ff2929"/>
   </head>
 
@@ -44,7 +45,7 @@
                  </div>
                  <div class="nav">
                    <a  href="/user/edit" >Редактировать свой профиль</a>
-                   <? if (isset($user)): ?>                                        
+                   <? if (isset($user)): ?>
                       <?
                       $arr = $user['rights'];
                       if (in_array('3', $arr)):
@@ -140,31 +141,29 @@
       <p>Created by VORONIKLAB</p>
     </footer>
 
-    <script type="text/javascript">var PROJ = '<?= PROJ ?>';</script>
-    <script src="<?= PROJ ?>/public/js/jq.js"></script>
-    <? if (isset($js)): ?>
-       <script src="<?= $js ?>"></script>
-    <? else: ?>
-       <script src="<?= PROJ ?>/public/js/scripts.js"></script>
-    <? endif; ?>
+    <!--<script type="text/javascript">var PROJ = '<?= PROJ ?>';</script>-->
+    <script src="/public/js/jq.js"></script>
+    <? $this::getJS(); ?>
+
+
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript" >
-           (function (m, e, t, r, i, k, a) {
-              m[i] = m[i] || function () {
-                 (m[i].a = m[i].a || []).push(arguments)
-              };
-              m[i].l = 1 * new Date();
-              k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-           })
-           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+       (function (m, e, t, r, i, k, a) {
+          m[i] = m[i] || function () {
+             (m[i].a = m[i].a || []).push(arguments)
+          };
+          m[i].l = 1 * new Date();
+          k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+       })
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-           ym(7715905, "init", {
-              clickmap: true,
-              trackLinks: true,
-              accurateTrackBounce: true,
-              webvisor: true
-           });
+       ym(7715905, "init", {
+          clickmap: true,
+          trackLinks: true,
+          accurateTrackBounce: true,
+          webvisor: true
+       });
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/7715905" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
