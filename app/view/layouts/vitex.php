@@ -9,7 +9,7 @@
         <? $this::getMeta(); ?>
         <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
         <? $this::getCSS(); ?>
-        <!--<link rel="manifest" href="/public/manifest.json">-->
+        <!--<link dd rel="manifest" href="/public/manifest.json">-->
     </head>
 
 
