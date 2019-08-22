@@ -93,6 +93,7 @@ class Adm_catalogController extends AdminscController {
       }
       $product = App::$app->product->getProduct($id);
       $category = App::$app->category->getCategory($product['parent']);
+      $prodProps = App::$app->product->getProductProps($category);
       $props = App::$app->prop->getProps();
       $this->set(compact('product', 'category', 'props'));
    }
@@ -112,7 +113,7 @@ class Adm_catalogController extends AdminscController {
    public function actionCategory() {
 
       if (isset($_GET['id'])) {
-         $id = (int) View::e($_GET['id']);
+         $id = (int) $_GET['id'];
       }
       if ($id) { /// иначе это корнвой каталог
          $category = App::$app->category->getCategory($id);

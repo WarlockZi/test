@@ -3,6 +3,8 @@ $(function () {
    switch (window.location.pathname) {
       case '/adminsc/catalog':
       case '/adminsc/catalog/category':
+      case '/adminsc/catalog/product':
+      case '/adminsc/catalog/products':
          $('.module.catalog').addClass('activ');
          break;
       case '/adminsc/crm':

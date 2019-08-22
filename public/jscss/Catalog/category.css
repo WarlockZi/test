@@ -2,17 +2,33 @@
 *******     PRODUCT    ******
 **************************/
 
+
+.pic-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pic {
+    width: 100%;
+    height: 160px;
+}
+.pic img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 h1{
 	font-family: Intro,sans-serif;
 }
 .product
 {
     display: flex;
-    border: 1px solid #ddd;
-    width: auto;
+    /*border: 1px solid #ddd;*/
+    /*width: auto;*/
     padding: 0;
     position: relative;
     overflow: hidden;
+	width: 160px;
 }
 .dtxt
 {

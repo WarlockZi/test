@@ -1,3 +1,9 @@
+h1{
+    font-family: cursive;
+    background-color: white;
+    margin: 0;
+    padding: 20px 10px;
+}
 .prod-details.column img{
     display: block;
     width: 80px;
@@ -25,5 +31,24 @@
 {
     flex:1;
     display:flex;
+}
+.prop.row strong{
+	justify-content: flex-end;
+	margin-right: 15px;
+}
 
+.category-properties {
+	display: flex;
+}
+.category-properties input,
+.category-properties select
+{
+	flex:2;
+	margin-right: 20px;
+}
+.category-properties span{
+	margin: 10px 10px 0 0;
+	flex: 1;
+    display: flex;
+    justify-content: flex-end;
 }

@@ -9,6 +9,11 @@
 }
 
 
+
+
+
+
+
 /*************************************
 *******      JQ UI THEME         ******
 **************************************/
@@ -348,30 +353,7 @@ main{
     flex-wrap: wrap;
 }
 
-/*.product{
-    display: flex;
-    position: relative;
-    justify-content: baseline; 
-    width: 160px;
-    padding: 0 10px;
-    margin-right: 10px;
-    box-sizing: border-box;
-}*/
 
-.pic-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.pic {
-    width: 95%;
-    height: 220px;
-}
-.pic img{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
 
 .final.price{
     font-size: 16px;

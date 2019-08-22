@@ -10,13 +10,25 @@ class Product extends Model {
 
    public $table = 'products';
 
-   public function getProductParents($parentId) {
+//   public function getProductParents($parentId) {
+//
+//      if ($parentId) {
+//         $sql = 'SELECT * FROM category WHERE id = ?';
+//         $params = [$parentId];
+//         $parent = $this->findBySql($sql, $params)[0];
+//         return $parent;
+//      }
+//   }
+   public function getProductProps($category) {
+      if (is_array($category)) {
+         $props = [];
+         if (isset($category['parents'])) {
+            $category = 1;
 
-      if ($parentId) {
+         }
          $sql = 'SELECT * FROM category WHERE id = ?';
          $params = [$parentId];
          $parent = $this->findBySql($sql, $params)[0];
-
          return $parent;
       }
    }

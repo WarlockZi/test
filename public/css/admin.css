@@ -733,6 +733,7 @@ input
     height: 20px;
     background-color: slategray;
     border-radius: 3px;
+	margin: auto 0;
 }
 .admin-actions label a{
     padding: 3px;
@@ -942,10 +943,8 @@ input
 }
 
 .breadcrumbs-adm div,
-.breadcrumbs-adm a,
-.orange
+.breadcrumbs-adm a
 {
-    /*background: orange;*/
     padding: 3px 6px;
     font-size: 0.7rem;
     color: #7e98ba;
@@ -1110,11 +1109,15 @@ body{
 .user.content-90 div *{
     flex: 2;
 }
+input[contenteditable],
 span[contenteditable]{
-    border: 1px #71ff668c solid;
+    border: 1px #71ffff solid;
+	padding: 5px;
 }
+input[contenteditable]:hover,
 span[contenteditable]:hover{
-    border: 1px #71ff66ff solid;
+    border: 1px #ebf4f4 solid;
+    box-shadow: 0 0 2px 2px #71ffff ;
 }
 
 .user.content-90 strong
@@ -1343,6 +1346,7 @@ footer p{
 
 .properties {
     padding: 5px;
+	margin: 0 0 0 15px;
 }
 .cat-prop{
     padding: 10px 0;

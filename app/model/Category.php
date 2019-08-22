@@ -155,19 +155,6 @@ class Category extends Model {
       return $category;
    }
 
-//   public function getCatPropsValsSnip($catProps) {
-//      ob_start();
-//      include APP . '/view/Adm_catalog/snippet/KeyVal.php';
-//      $cont = ob_get_clean();
-//      echo $cont;
-//   }
-//   public function getProp($prop) {
-//      ob_start();
-//      include APP . '/view/Adm_settings/snippet/KeyVal.php';
-//      $cont = ob_get_clean();
-//      echo $cont;
-//   }
-
    public function getInitCategories() {
 
       $sql = 'SELECT * FROM category WHERE parent = 0';

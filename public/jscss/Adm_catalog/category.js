@@ -94,12 +94,15 @@ $(function () {
 //   $('.properties.column select').append(slef);
 //   l$('.properties.column option[value= '+val+']').not($(this).find('option:selected')).remove();
 //   $(clone).insertBefore($('.add-property'));
-//});
-
+//}); 
+//<H1>
+//Костюмы для ИТР от производителя спецодежды</H1>
+//Подберем для Ваших работников Костюмы для ИТР. Можно нанести логотипы и нашивки по необходимости
 
    $('.category-update-btn').on('click', function (event) {
 
       let id = $('#id').text(),
+      token = $('#token').val(),
       name = $('#name').text(),
       alias = $('#alias').text(),
       title = $('#title').text(),
@@ -119,12 +122,13 @@ $(function () {
       prop = uniq(prop);
       prop = prop.join(',');
       debugger;
-      param = 'param=' + JSON.stringify({
-
+      let param = 'param=' + JSON.stringify({
+         'token': token,
          'action': 'update',
          'model': 'category',
+         'table': 'category',
          'field': 'id',
-         'id': id,
+         'val': id,
          values: {
             'name': name,
             'alias': alias,
@@ -141,11 +145,14 @@ $(function () {
          method: 'POST',
          data: param,
          success: function (res) {
-//   debugger;
-            alert('Успешно сохранено.');
+            debugger;
+            if (res===true) {
+               alert('Успешно сохранено.');
+               
+            }
          },
          error: function (res) {
-//   debugger;
+            debugger;
             let d = res;
          },
       });
