@@ -14,7 +14,7 @@
 
 
     <body>
-        <div class="wrap dddddddd">
+        <div class="wrap">
 
             <div class="top-menu">
                 <div class="row">
