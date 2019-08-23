@@ -92,8 +92,11 @@ class Adm_catalogController extends AdminscController {
          $id = (int) View::e($_GET['id']);
       }
       $product = App::$app->product->getProduct($id);
+      $product['props'] = json_decode($product['props'], true);
+
       $category = App::$app->category->getCategory($product['parent']);
-      $prodProps = App::$app->product->getProductProps($category);
+
+//      $prodProps = App::$app->product->getProductProps($category);
       $props = App::$app->prop->getProps();
       $this->set(compact('product', 'category', 'props'));
    }

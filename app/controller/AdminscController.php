@@ -24,10 +24,11 @@ class AdminscController extends AppController {
             $arr = json_decode($_POST['param'], true);
             $func = $arr['action'];
             $model = $arr['model'] ?: 'adminsc';
-
-            App::$app->{$model}->$func($arr);
-            exit('okey');
-         };
+            if (App::$app->{$model}->$func($arr)) {
+               exit('true');
+            }
+               exit(FALSE);
+         }
       }
    }
 

@@ -19,19 +19,22 @@ class Product extends Model {
 //         return $parent;
 //      }
 //   }
-   public function getProductProps($category) {
-      if (is_array($category)) {
-         $props = [];
-         if (isset($category['parents'])) {
-            $category = 1;
-
-         }
-         $sql = 'SELECT * FROM category WHERE id = ?';
-         $params = [$parentId];
-         $parent = $this->findBySql($sql, $params)[0];
-         return $parent;
-      }
-   }
+//   public function getProductProps($category) {
+//      if (is_array($category)) {
+//         $props = [];
+//         if (isset($category['parentProps'])) {
+//            $props = array_merge($category['parentProps'],$props);
+//         }
+//         if (isset($category['children']['categories'])) {
+//            while ($category['children']['categories']){
+//
+//               $props = array_merge($category['parentProps'],$props);
+//            }
+//         }
+//
+//         return $props;
+//      }
+//   }
 
    public function isProduct($url) {
 

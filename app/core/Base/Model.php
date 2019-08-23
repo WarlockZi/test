@@ -184,7 +184,6 @@ abstract class Model {
          $sql = "UPDATE `{$table}` SET {$str} WHERE `{$field}` = ?";
          array_push($param, $vl);
          if ($this->insertBySql($sql, $param)) {
-
             return true;
          }
          return 'Видимо, ошибка в запросе!';

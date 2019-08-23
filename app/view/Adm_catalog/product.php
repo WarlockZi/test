@@ -29,7 +29,7 @@
 
   <div class="wrap-admin">
     <div class="work-area">
-
+      <input id = 'token' type="hidden" value="<?= $_SESSION['token'] ?>">
       <div class="tabs">
         <input id="tab1" type="radio" name="tabs" checked>
         <label for="tab1" title="Подкатегории">Подробно</label>
@@ -47,7 +47,7 @@
             <div class="left column">
               <div class = 'prop row'>
                 <strong>id :</strong>
-                <span><?= $product['id'] ?: ''; ?></span>
+                <span id = 'id' <?= $product['id'] ?: ''; ?>><?= $product['id'] ?: ''; ?></span>
               </div>
               <div class = 'prop row'>
                 <strong>Наименование :</strong>
@@ -60,14 +60,14 @@
             </div>
             <div class="right  column">
               <div>
-                <img id = 'id' src = "<?= '/pic' . $product['dpic'] ?: ''; ?>">
+                <img src = "<?= '/pic' . $product['dpic'] ?: ''; ?>">
               </div>
             </div>
           </div>
 
           <div>
             <strong>Описание :</strong>
-            <span contenteditable id = 'text' class="column"><?= htmlspecialchars($product['dtxt'] ?: ''); ?></span>
+            <span contenteditable id = 'text' class="column"><?= $product['dtxt'] ?: ''; ?></span>
           </div>
 
 
@@ -80,58 +80,46 @@
 
           <div class="properties column">
             <H1 class="prod-prop">Свойства товара</H1>
-            <? isset($category['parentProps']) ? $pr = array_merge($category['parentProps'], $category['prop']) : $pr = []; ?>
 
-            <? if (isset($category['parents'])): ?>
-               <? foreach ($category['parents'] as $parentCat): ?>
-                  <div class="parent-prop column">
-                      <? foreach ($parentCat['prop'] as $Pprop): ?>
-                       <div class="category-properties">
-                           <? foreach ($props as $prop): ?>
-                              <? if ($Pprop == $prop['id']): ?>
-                               <span><?= $prop['name'] ?></span>
+            <?
+            if (isset($category['parents'])) {
+               $category['prop'] = array_merge($category['parentProps'],$category['prop']);
+            }
+            ?>
 
-                               <? if ($prop['type'] == 'string'): ?>
-                                  <input contenteditable type="text">
+            <div class="product-prop column">
+                <? foreach ($category['prop'] as $Pprop): ?>
+                 <div class="category-properties">
+                     <? foreach ($props as $prop): ?>
+                        <? if ($Pprop == $prop['id']): ?>
+                         <span><?= $prop['name'] ?></span>
 
-                               <? elseif ($prop['type'] == 'multi'): ?>
-                                  <? $val = explode(',', $prop['val']); ?>
-                                  <select multiple title = "для выбора нескольких значений зажмите 'CTRL'" name="" id="">
-                                      <? foreach ($val as $p): ?>
-                                       <option value="<?= $p; ?>"><?= $p; ?></option>
-                                    <? endforeach; ?>
-                                  </select>
+                         <? if ($prop['type'] == 'string') : ?>
+                         <input value="<?= array_key_exists($Pprop, $product['props'])?$product['props'][$Pprop]:''?>" data-type = 'text' data-id="<?= $prop['id']; ?>" contenteditable type="text">
 
-                               <? elseif ($prop['type'] == 'select'): ?>
-                                  <? $val = explode(',', $prop['val']); ?>
-                                  <select name="" id="">
-                                    <option value=""></option>
-                                    <? foreach ($val as $p): ?>
-                                       <option value="<?= $p; ?>"><?= $p; ?></option>
-                                    <? endforeach; ?>
-                                  </select>
-                               <? endif; ?>
+                         <? elseif ($prop['type'] == 'multi'): ?>
+                            <? $val = explode(',', $prop['val']); ?>
+                            <select data-type = 'multi-select' data-id="<?= $prop['id']; ?>" multiple title = "для выбора нескольких значений зажмите 'CTRL'" name="" id="">
+                                <? foreach ($val as $i => $p): ?>
+                                 <option value="<?= $i; ?>"><?= $p; ?></option>
+                              <? endforeach; ?>
+                            </select>
 
-                            <? endif; ?>
-                         <? endforeach; ?>
-                       </div>
-                    <? endforeach; ?>
-                  </div>
-               <? endforeach; ?>
-            <? endif; ?>
+                         <? elseif ($prop['type'] == 'select'): ?>
+                            <? $val = explode(',', $prop['val']); ?>
+                            <select data-type = 'select' data-id="<?= $prop['id']; ?>">
+                              <option value=""></option>
+                              <? foreach ($val as $i => $p): ?>
+                                 <option value="<?= $i; ?>"><?= $p; ?></option>
+                              <? endforeach; ?>
+                            </select>
+                         <? endif; ?>
 
-
-
-
-            <? foreach ($category['prop'] as $k => $catProp): ?>
-
-               <? foreach ($props as $prop): ?>
-                  <? if (!in_array($prop['id'], $category['parentProps'])): ?>
-                     <div value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></div>
-                  <? endif; ?>
-               <? endforeach; ?>
-
-            <? endforeach; ?>
+                      <? endif; ?>
+                   <? endforeach; ?>
+                 </div>
+              <? endforeach; ?>
+            </div>
 
 
             <div class="add-property row" >
@@ -177,9 +165,9 @@
 
         </section>
         <div class="separator btns">
-          <button class="category-update-btn">Сохранить
+          <button id="product-update-btn">Сохранить
           </button>
-          <button class="category-create-btn">Добавить категорию
+          <button id="product-create-btn">Добавить категорию
           </button>
         </div>
       </div>
