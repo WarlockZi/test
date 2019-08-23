@@ -97,22 +97,26 @@
                          <? if ($prop['type'] == 'string') : ?>
                          <input value="<?= array_key_exists($Pprop, $product['props'])?$product['props'][$Pprop]:''?>" data-type = 'text' data-id="<?= $prop['id']; ?>" contenteditable type="text">
 
-                         <? elseif ($prop['type'] == 'multi'): ?>
-                            <? $val = explode(',', $prop['val']); ?>
-                            <select data-type = 'multi-select' data-id="<?= $prop['id']; ?>" multiple title = "для выбора нескольких значений зажмите 'CTRL'" name="" id="">
-                                <? foreach ($val as $i => $p): ?>
-                                 <option value="<?= $i; ?>"><?= $p; ?></option>
-                              <? endforeach; ?>
-                            </select>
 
                          <? elseif ($prop['type'] == 'select'): ?>
                             <? $val = explode(',', $prop['val']); ?>
                             <select data-type = 'select' data-id="<?= $prop['id']; ?>">
                               <option value=""></option>
                               <? foreach ($val as $i => $p): ?>
-                                 <option value="<?= $i; ?>"><?= $p; ?></option>
+                                 <option <?= array_key_exists($Pprop, $product['props'])&&($i==$product['props'][$Pprop])?'selected':'';?> value="<?= $i; ?>"><?= $p; ?></option>
                               <? endforeach; ?>
                             </select>
+
+
+                         <? elseif ($prop['type'] == 'multi'): ?>
+                            <? $val = explode(',', $prop['val']); ?>
+                            <select data-type = 'multi-select' data-id="<?= $prop['id']; ?>" multiple title = "для выбора нескольких значений зажмите 'CTRL'" name="" id="">
+                                <? foreach ($val as $i => $p): ?>
+                                <? $multi = explode(',',$product['props'][$Pprop]); ?>
+                              <option value="<?= $i; ?>" <?= array_key_exists($Pprop, $product['props'])&&(array_key_exists($i, $multi))?'selected':''?>><?= $p; ?></option>
+                              <? endforeach; ?>
+                            </select>
+
                          <? endif; ?>
 
                       <? endif; ?>

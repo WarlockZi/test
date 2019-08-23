@@ -37,7 +37,7 @@ $(function () {
             }
          }
       }
-      debugger;
+//      debugger;
       prop = JSON.stringify(prop);
 
       let param = 'param=' + JSON.stringify({
@@ -58,13 +58,13 @@ $(function () {
             'dtxt': dtxt
          },
       });
-      debugger;
+//      debugger;
       $.ajax({
          url: '/adminsc/catalog',
          method: 'POST',
          data: param,
          success: function (res) {
-            debugger;
+//            debugger;
             if (res == 'true') {
                alert('Успешно сохранено.');
 
