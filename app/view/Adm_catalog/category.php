@@ -72,7 +72,7 @@ new app\view\widgets\menu\Menu([
              <? foreach ($category['parents'] as $parentCat): ?>
                 <div class="parent-properties separator">Свойства родительской категории</div>
                 <div class="parent-prop column">
-                    <? foreach ($parentCat['prop'] as $Pprop): ?>
+                    <? foreach ($parentCat['props'] as $Pprop): ?>
                      <div class="category-properties">
                          <? foreach ($props as $prop): ?>
                             <? if ($Pprop == $prop['id']): ?>
@@ -90,7 +90,7 @@ new app\view\widgets\menu\Menu([
               Свойства категории
             </div>
 
-            <? foreach ($category['prop'] as $k => $catProp): ?>
+            <? foreach ($category['props'] as $k => $catProp): ?>
 
                <select>
                  <option value=""></option>
@@ -108,7 +108,7 @@ new app\view\widgets\menu\Menu([
               <option value=""></option>
 
               <? foreach ($props as $prop): ?>
-                 <? if (!in_array($prop['id'], $category['parentProps']) && !in_array($prop['id'], $category['prop'])): ?>
+                 <? if (!in_array($prop['id'], $category['parentProps']) && !in_array($prop['id'], $category['props'])): ?>
                     <option value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></option>
                  <? endif; ?>
               <? endforeach; ?>

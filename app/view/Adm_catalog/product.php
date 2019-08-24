@@ -32,13 +32,13 @@
       <input id = 'token' type="hidden" value="<?= $_SESSION['token'] ?>">
       <div class="tabs">
         <input id="tab1" type="radio" name="tabs" checked>
-        <label for="tab1" title="Подкатегории">Подробно</label>
+        <label for="tab1" title="Подробно">Подробно</label>
         <input id="tab2" type="radio" name="tabs">
         <label for="tab2" title="Свойства">Свойства</label>
         <input id="tab3" type="radio" name="tabs">
         <label for="tab3" title="Сео">Сео</label>
         <input id="tab4" type="radio" name="tabs">
-        <label for="tab4" title="Подробно">Подкатегории</label>
+        <label for="tab4" title="Картинки">Картики</label>
 
 
 
@@ -83,19 +83,19 @@
 
             <?
             if (isset($category['parents'])) {
-               $category['prop'] = array_merge($category['parentProps'],$category['prop']);
+               $category['props'] = array_merge($category['parentProps'],$category['props']);
             }
             ?>
 
             <div class="product-prop column">
-                <? foreach ($category['prop'] as $Pprop): ?>
+                <? foreach ($category['props'] as $Pprop): ?>
                  <div class="category-properties">
                      <? foreach ($props as $prop): ?>
                         <? if ($Pprop == $prop['id']): ?>
                          <span><?= $prop['name'] ?></span>
 
                          <? if ($prop['type'] == 'string') : ?>
-                         <input value="<?= array_key_exists($Pprop, $product['props'])?$product['props'][$Pprop]:''?>" data-type = 'text' data-id="<?= $prop['id']; ?>" contenteditable type="text">
+                         <input value="<?= is_array($product['props'])&&array_key_exists($Pprop, $product['props'])?$product['props'][$Pprop]:''?>" data-type = 'text' data-id="<?= $prop['id']; ?>" contenteditable type="text">
 
 
                          <? elseif ($prop['type'] == 'select'): ?>
@@ -103,7 +103,7 @@
                             <select data-type = 'select' data-id="<?= $prop['id']; ?>">
                               <option value=""></option>
                               <? foreach ($val as $i => $p): ?>
-                                 <option <?= array_key_exists($Pprop, $product['props'])&&($i==$product['props'][$Pprop])?'selected':'';?> value="<?= $i; ?>"><?= $p; ?></option>
+                              <option <?= is_array($product['props'])&&array_key_exists($Pprop, $product['props'])&&($i==$product['props'][$Pprop])?'selected':'';?> value="<?= $i; ?>"><?= $p; ?></option>
                               <? endforeach; ?>
                             </select>
 
@@ -113,7 +113,7 @@
                             <select data-type = 'multi-select' data-id="<?= $prop['id']; ?>" multiple title = "для выбора нескольких значений зажмите 'CTRL'" name="" id="">
                                 <? foreach ($val as $i => $p): ?>
                                 <? $multi = explode(',',$product['props'][$Pprop]); ?>
-                              <option value="<?= $i; ?>" <?= array_key_exists($Pprop, $product['props'])&&(array_key_exists($i, $multi))?'selected':''?>><?= $p; ?></option>
+                                <option value="<?= $i; ?>" <?= is_array($product['props'])&&array_key_exists($Pprop, $product['props'])&&(array_key_exists($i, $multi))?'selected':''?>><?= $p; ?></option>
                               <? endforeach; ?>
                             </select>
 
@@ -138,15 +138,15 @@
         <section id="content-tab3" class="user content-90 column">
 
           <div>
-            <strong>title :</strong>
+            <strong>название вкладки :</strong>
             <span contenteditable id = 'title'><?= $product['title'] ?: ''; ?></span>
           </div>
           <div>
-            <strong>key words :</strong>
+            <strong>ключевые слова :</strong>
             <span contenteditable id = 'keywords'><?= $product['keywords'] ?: ''; ?></span>
           </div>
           <div>
-            <strong>description :</strong>
+            <strong>сниппет для поисковиков :</strong>
             <span contenteditable id = 'description'><?= $product['description'] ?: ''; ?></span>
           </div>
           <div>

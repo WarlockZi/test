@@ -1110,12 +1110,16 @@ body{
     flex: 2;
 }
 input[contenteditable],
-span[contenteditable]{
+span[contenteditable],
+.category-properties select
+{
     border: 1px #71ffff solid;
 	padding: 5px;
 }
 input[contenteditable]:hover,
-span[contenteditable]:hover{
+span[contenteditable]:hover,
+.category-properties select:hover
+{
     border: 1px #ebf4f4 solid;
     box-shadow: 0 0 2px 2px #71ffff ;
 }

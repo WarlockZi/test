@@ -16,7 +16,7 @@ class Category extends Model {
          $sql = 'SELECT * FROM category WHERE id = ?';
          $params = [$parentId];
          $parent = $this->findBySql($sql, $params);
-         $parent[0]['prop'] = explode(',', $parent[0]['prop']);
+         $parent[0]['props'] = explode(',', $parent[0]['props']);
          $parents = array_merge($parents, $parent);
          $i++;
          return $this->getCategoryParents($parents[$i]['parent'], $parents, $i);
@@ -138,14 +138,14 @@ class Category extends Model {
       $category = $this->findOne($id);
 
       if ($category && is_array($category)) {
-         $category['prop'] = explode(',', $category['prop']);
+         $category['props'] = explode(',', $category['props']);
          $category['parents'] = $this->getCategoryParents($category['parent']);
          if ($ch = $this->getCategoryChildren($category['id']))
             $category['children'] = $ch;
          $parentProps = [];
          foreach ($category['parents'] as $value) {
 //            $arr = array_intersect($parentProps, $value['prop']);
-            $parentProps = array_merge($parentProps, $value['prop']);
+            $parentProps = array_merge($parentProps, $value['props']);
          }
          $category['parentProps'] = array_unique($parentProps);
       }

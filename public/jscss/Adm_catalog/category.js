@@ -118,7 +118,6 @@ $(function () {
             prop.push(val.value);
       }
 
-      debugger;
       prop = uniq(prop);
       prop = prop.join(',');
       debugger;
@@ -132,7 +131,7 @@ $(function () {
          values: {
             'name': name,
             'alias': alias,
-            'prop': prop,
+            'props': prop,
             'title': title,
             'keywords': keywords,
             'description': description,
