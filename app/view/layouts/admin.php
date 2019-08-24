@@ -1,129 +1,125 @@
 <!DOCTYPE html>
-<html lang="ru">
-  <!--ADMIN-LAYOUT-->
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="robots" content="noindex,nofollow" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <? $this::getMeta() ?>
-    <? $this::getCSS() ?>
-    <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
-    <link 	href="<?= $vars['css'] ?>?<?= time() ?>" rel="stylesheet">
-  </head>
+<html>
+    <!--ADMIN-LAYOUT-->
+    <head>
+        <meta name="robots" content="noindex,nofollow" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
+        <? $this::getCSS() ?>
+        <!--<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>-->
+    </head>
 
 
-  <body>
-    <div class="wrap">
-      <header class = 'row'>
-        <div class="logo">
-          <a  href= "/">
-            <svg width="30" height="30" version="1.1" viewBox="0 -4 26 30" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g transform="matrix(.23439 0 0 .23439 .18676 .23738)">
-            <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#c1VGvvv2Z"/>
-            <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#b1d9vAIQqx"/>
-            <use width="100%" height="100%" fill="#ff2929" xlink:href="#b22YyPyZK"/>
-            </g>
-            </svg>
-          </a>
+    <body>
+        <div class="wrap">
+            <header class = 'row'>
+                <div class="logo">
+                    <a  href= "/">
+                        <svg width="30" height="30" version="1.1" viewBox="0 -4 26 30" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g transform="matrix(.23439 0 0 .23439 .18676 .23738)">
+                        <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#c1VGvvv2Z"/>
+                        <use width="100%" height="100%" fill="#8d8d8d" xlink:href="#b1d9vAIQqx"/>
+                        <use width="100%" height="100%" fill="#ff2929" xlink:href="#b22YyPyZK"/>
+                        </g>
+                        </svg>
+                    </a>
+                </div>
+
+
+                <div class="clear-cache" title = 'очистить кэш' onclick='clearCache()'></div>
+
+                <div class="user-menu">
+
+                    <span class="FIO"><?
+                        $rightId = $user['rights'];
+                        if (isset($user)) {
+                            echo $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'];
+                        }
+                        ?></span>
+
+                    <div class="nav">
+                        <a  href="/user/edit" >Редактировать свой профиль</a>
+                        <?
+                        if (in_array('3', $rightId)):
+                            ?>
+                            <a href="/adminsc">Admin</a>
+                        <? endif; ?>
+                        <? if (in_array('1', $rightId)): ?>
+                            <a href="test/edit/1">Ред. закрытые тесты</a>
+                            <a href="/freetest/edit/41">Ред. открытые  тест</a>
+                        <? endif; ?>
+                        <? if (in_array('2', $rightId)): ?>
+                            <a href="/test/1">Закрытый тест</a>
+                            <a href="/freetest/41">Открытый тест</a>
+                        <? endif; ?>
+
+
+                        <? if (isset($user)): ?>
+                            <a href="/test/contacts">
+                                <span class="icon-envelope">✉ Напишите нам</span>
+                            </a>
+
+                            <a href="/user/logout">
+                                <svg width="16" height="8" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" viewBox="-5 0 16 8">
+                                <title>lock 1</title>
+                                <rect stroke="#e30000" stroke-opacity="0" id="svg_2" height="4.582587" width="4.582587" y="3.349051" x="0.267697" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="#e30000"/>
+                                <path stroke="#e30000" fill-opacity="0" id="svg_17" d="m0.813005,3.42179c0.127532,-4.291629 3.592734,-3.018688 3.527173,-1.091092" stroke-linecap="null" stroke-linejoin="round" stroke-dasharray="null" fill="#e30000"/>
+                                </svg>
+                                Выход</a>
+                        <? endif; ?>
+                    </div>
+
+
+                </div>
+
+
+            </header>
+            <div class="header-tabs column">
+                <div class="column">
+                    <div>Сайт
+                        <a href="/"></a>
+                    </div>
+                    <div>Администирование</div>
+                </div>
+                <div>
+                </div>
+
+            </div>
+            <div class="adm-wrap row">
+
+
+                <div class="adm-menu column">
+
+                    <a href  ="/adminsc"         class="module home"><span>Admin</span></a>
+                    <a href  = "/adminsc/catalog" class="module catalog"><span>Каталог</span></a>
+                    <a href  = "/adminsc/settings" class="module settings"><span>Настройки</span></a>
+                    <a href  = "/adminsc/crm"     class="module crm"><span>CRM</span></a>
+                    <a href  ="#"                 class="module marketing"><span>Маркетинг</span></a>
+
+                </div>
+
+
+
+
+                <?= $content ?>
+
+
+            </div>
         </div>
 
 
-        <div class="clear-cache" title = 'очистить кэш' onclick='clearCache()'>
-        </div>
-        <div class="user-menu">
+        <div class = "page-buffer"></div>
 
-          <span class="FIO"><?
-              $rightId = $user['rights'];
-              if (isset($user)) {
-                 echo $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'];
-              }
-              ?></span>
-
-          <div class="nav">
-            <a  href="/user/edit" >Редактировать свой профиль</a>
-            <?
-            if (in_array('3', $rightId)):
-               ?>
-               <a href="/adminsc">Admin</a>
-            <? endif; ?>
-            <? if (in_array('1', $rightId)): ?>
-               <a href="test/edit/1">Ред. закрытые тесты</a>
-               <a href="/freetest/edit/41">Ред. открытые  тест</a>
-            <? endif; ?>
-            <? if (in_array('2', $rightId)): ?>
-               <a href="/test/1">Закрытый тест</a>
-               <a href="/freetest/41">Открытый тест</a>
-            <? endif; ?>
-
-
-            <? if (isset($user)): ?>
-               <a href="/test/contacts">
-                 <span class="icon-envelope">✉ Напишите нам</span>
-               </a>
-
-               <a href="/user/logout">
-                 <svg width="16" height="8" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" viewBox="-5 0 16 8">
-                 <title>lock 1</title>
-                 <rect stroke="#e30000" stroke-opacity="0" id="svg_2" height="4.582587" width="4.582587" y="3.349051" x="0.267697" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="#e30000"/>
-                 <path stroke="#e30000" fill-opacity="0" id="svg_17" d="m0.813005,3.42179c0.127532,-4.291629 3.592734,-3.018688 3.527173,-1.091092" stroke-linecap="null" stroke-linejoin="round" stroke-dasharray="null" fill="#e30000"/>
-                 </svg>
-                 Выход</a>
-            <? endif; ?>
-          </div>
-
-
-        </div>
-
-
-      </header>
-      <div class="header-tabs column">
-        <div class="column">
-          <div>Сайт
-            <a href="/"></a>
-          </div>
-          <div>Администирование</div>
-        </div>
-        <div>
-        </div>
-
-      </div>
-      <div class="adm-wrap row">
-
-
-        <div class="adm-menu column">
-
-             <a href  ="/adminsc"         class="module home"><span>Admin</span></a>
-             <a href  = "/adminsc/catalog" class="module catalog"><span>Каталог</span></a>
-             <a href  = "/adminsc/settings" class="module settings"><span>Настройки</span></a>
-             <a href  = "/adminsc/crm"     class="module crm"><span>CRM</span></a>
-             <a href  ="#"                 class="module marketing"><span>Маркетинг</span></a>
-
-        </div>
-
-
-
-
-        <?= $content ?>
-
-
-      </div>
     </div>
 
+    <footer>
 
-    <div class = "page-buffer"></div>
+    </footer>
 
-  </div>
-
-  <footer>
-
-  </footer>
-
-  <!--<script type="text/javascript">var PROJ = '<?= PROJ ?>';</script>-->
   <script src="/public/js/jq.js"></script>
   <script src="/public/js/adminLayer.js?<?=time();?>"></script>
-  <? // $this::getJS() ?>
-  <script src="<?= $vars['js'] ?>"></script>
+  <? $this::getJS(['route'=>['controller'=>$this->route['controller'],'view'=>$this->view]]) ?>
 
   <svg width="150" height="30"  viewBox="0 0 140.93602 25.903431" >
   <defs>

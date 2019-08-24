@@ -12,9 +12,6 @@ class Adm_catalogController extends AdminscController {
 
    public function __construct($route) {
       parent::__construct($route);
-      $this->layout = 'admin';
-      $this->vars['js'] = $this->getJSCSS('.js'); //'admin.js';
-      $this->vars['css'] = '/public/css/admin.css';
 
       if ($this->isAjax()) {
          if (isset($_POST['param'])) {
@@ -24,6 +21,10 @@ class Adm_catalogController extends AdminscController {
             exit();
          };
       }
+      $routeView = ['js' => $this->route, 'view' => $this->view];
+      View::setJsCss($routeView);
+      $routeView = ['css' => $this->route, 'view' => $this->view];
+      View::setJsCss($routeView);
    }
 
    public function actionProducts() {
@@ -38,8 +39,6 @@ class Adm_catalogController extends AdminscController {
          $replacement = '';
          $QSA = preg_replace($pattern, $replacement, $QSA);
       }
-
-
       if (isset($_GET['name'])) {
          $fName = $_GET['name'];
       }
@@ -49,9 +48,7 @@ class Adm_catalogController extends AdminscController {
       if (isset($_GET['art'])) {
          $fArt = $_GET['art'];
       }
-
       $perpage = 15;
-
       // Получение текущей страницы
       if (isset($_GET['page'])) {
          $page = (int) $_GET['page'];
@@ -60,8 +57,6 @@ class Adm_catalogController extends AdminscController {
       }else {
          $page = 1;
       }
-
-
 // начальная позиция для запроса
       $start_pos = ($page - 1) * $perpage;
 
@@ -69,20 +64,18 @@ class Adm_catalogController extends AdminscController {
          $where = App::$app->adminsc->where($fName, $fAct, $fArt);
          $params = App::$app->adminsc->params($fName, $fAct, $fArt);
          $sql = "SELECT * FROM products $where LIMIT $start_pos,$perpage";
-         $products = App::$app->catalog->findBySql($sql, $params);
+         $products = App::$app->product->findBySql($sql, $params);
          $sql = "SELECT * FROM products $where";
-         $productsCnt = count(App::$app->catalog->findBySql($sql, $params));
+         $productsCnt = count(App::$app->product->findBySql($sql, $params));
          $cnt_pages = ceil($productsCnt / $perpage);
          if (!$cnt_pages)
             $cnt_pages = 1;
-
          if ($page > $cnt_pages)
             $page = $cnt_pages;
       } else {
-
          $sql = "SELECT * FROM products LIMIT $start_pos,$perpage";
-         $products = App::$app->catalog->findBySql($sql);
-         $productsCnt = (INT) App::$app->catalog->productsCnt();
+         $products = App::$app->product->findBySql($sql);
+         $productsCnt = (INT) App::$app->product->productsCnt();
       }
       $cnt_pages = ceil($productsCnt / $perpage);
       if (!$cnt_pages)
@@ -90,13 +83,26 @@ class Adm_catalogController extends AdminscController {
 
       if ($page > $cnt_pages)
          $page = $cnt_pages;
-
       $this->set(compact('products', 'productsCnt', 'cnt_pages', 'QSA'));
+   }
+
+   public function actionProduct() {
+
+      if (isset($_GET['id'])) {
+         $id = (int) View::e($_GET['id']);
+      }
+      $product = App::$app->product->getProduct($id);
+      $product['props'] = json_decode($product['props'], true);
+
+      $category = App::$app->category->getCategory($product['parent']);
+
+//      $prodProps = App::$app->product->getProductProps($category);
+      $props = App::$app->prop->getProps();
+      $this->set(compact('product', 'category', 'props'));
    }
 
    public function actionIndex() {
 
-      $this->vars['js'] = $this->getJSCSS('.js');
       $iniCatList = App::$app->category->getInitCategories();
       $this->set(compact('iniCatList'));
    }
@@ -110,12 +116,10 @@ class Adm_catalogController extends AdminscController {
    public function actionCategory() {
 
       if (isset($_GET['id'])) {
-         $id = (int) View::e($_GET['id']);
+         $id = (int) $_GET['id'];
       }
-
       if ($id) { /// иначе это корнвой каталог
          $category = App::$app->category->getCategory($id);
-         $category['children'] = App::$app->category->findWhere($id, 'parent', NULL);
          $props = App::$app->prop->getProps();
       }
       $this->set(compact('category', 'props'));

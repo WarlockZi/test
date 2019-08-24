@@ -18,9 +18,10 @@ class MainController Extends AppController {
          App::$app->cache->set('list', $list, 30);
       }
       $this->layout = 'vitex';
-      $css = 'vitex.css';
-      $js = $this->getJSCSS('.js');
-      $this->set(compact('js', 'list', 'css'));
+//      $routeView= ['js'=> $this->route,'view'=> $this->view];
+//      View::setJsCss($routeView);
+      View::setJsCss(['css'=>'/public/css/vitex.css']);
+      $this->set(compact('list', 'css'));
    }
 
    public function actionIndex() {

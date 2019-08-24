@@ -16,6 +16,7 @@ class Category extends Model {
          $sql = 'SELECT * FROM category WHERE id = ?';
          $params = [$parentId];
          $parent = $this->findBySql($sql, $params);
+         $parent[0]['props'] = explode(',', $parent[0]['props']);
          $parents = array_merge($parents, $parent);
          $i++;
          return $this->getCategoryParents($parents[$i]['parent'], $parents, $i);
@@ -34,11 +35,10 @@ class Category extends Model {
          foreach ($res as $key => $v) {
             $params = [$v['id']];
             $sql = 'SELECT * FROM products WHERE parent = ?';
-            $res = App::$app->catalog->findBySql($sql, $params);
+            $res = App::$app->product->findBySql($sql, $params);
             $all[$v['id']] = $v;
             $all[$v['id']]['products'] = $res;
          }
-
          return $all;
       }
    }
@@ -90,10 +90,14 @@ class Category extends Model {
          $children['categories'] = $categories['childs'];
          $products = $this->getCategoriesProducts($categories['childs']);
       } else {
-         $children['categories'] = [];
          $products = $this->getCategoriesProducts(array($categories));
       }
-      $children['products'] = $products;
+      if ($products) {
+         $children['products'] = $products;
+      }
+      if (!$products && !isset($categories['childs'])) {
+         return FALSE;
+      }
       return $children;
    }
 
@@ -110,82 +114,52 @@ class Category extends Model {
    }
 
    public function isCategory($url) {
-      $aCategory = 0;
-      if (!$aCategory) {
+      $category = 0;
+      if (!$category) {
          $arr = explode('/', $url);
          if (count($arr) > 3) {
             http_response_code(404);
             exit(include '../public/404.html');
          }
-         $aCategory = $this->findOne($arr[0], 'alias');
-         if ($aCategory && is_array($aCategory)) {
-            $aCategory = $aCategory[0];
-            $aCategory['parents'] = $this->getCategoryParents($aCategory['parent']);
-            $aCategory['children'] = $this->getCategoryChildren($aCategory['id']);
+         $category = $this->findOne($arr[0], 'alias');
+         if ($category && is_array($category)) {
+            $category['parents'] = $this->getCategoryParents($category['parent']);
+            $category['children'] = $this->getCategoryChildren($category['id']);
          }
       }
-      if (!$aCategory) {
+      if (!$category) {
          return FALSE;
       };
-      return $aCategory;
+      return $category;
    }
 
    public function getCategory($id) {
 
-      $aCategory = $this->findOne($id);
-      if ($aCategory && is_array($aCategory)) {
-         $aCategory = $aCategory[0];
-         $aCategory['prop'] = explode(',',$aCategory['prop']);
-         $aCategory['parents'] = $this->getCategoryParents($aCategory['parent']);
-         $aCategory['children'] = $this->getCategoryChildren($aCategory['id']);
+      $category = $this->findOne($id);
+
+      if ($category && is_array($category)) {
+         $category['props'] = explode(',', $category['props']);
+         $category['parents'] = $this->getCategoryParents($category['parent']);
+         if ($ch = $this->getCategoryChildren($category['id']))
+            $category['children'] = $ch;
+         $parentProps = [];
+         foreach ($category['parents'] as $value) {
+//            $arr = array_intersect($parentProps, $value['prop']);
+            $parentProps = array_merge($parentProps, $value['props']);
+         }
+         $category['parentProps'] = array_unique($parentProps);
       }
-      if (!$aCategory) {
+      if (!$category) {
          return FALSE;
       };
-      return $aCategory;
+      return $category;
    }
-
-//   public function getCatPropsValsSnip($catProps) {
-//      ob_start();
-//      include APP . '/view/Adm_catalog/snippet/KeyVal.php';
-//      $cont = ob_get_clean();
-//      echo $cont;
-//   }
-
-//   public function getProp($prop) {
-//      ob_start();
-//      include APP . '/view/Adm_settings/snippet/KeyVal.php';
-//      $cont = ob_get_clean();
-//      echo $cont;
-//   }
 
    public function getInitCategories() {
 
       $sql = 'SELECT * FROM category WHERE parent = 0';
       $arr = $this->findBySql($sql);
       return $arr;
-   }
-
-   function update($arr) {
-      $i = 0;
-      $set=$values='';
-      $params = [];
-      $d = count($arr['values']);
-      foreach ($arr['values'] as $k=>$v){
-         $i++;
-         $set .= $k."=?";
-         $values .= '?';
-         $params[].=$v;
-         if(count($arr['values']) > $i) {
-            $set.=', ';
-            $values.=', ';
-         }
-      }
-          $params[].=(int)$arr['id'];
-      $sql = "UPDATE {$arr['model']} SET {$set} WHERE {$arr['field']} = ?";
-      $this->insertBySql($sql, $params);
-      exit('успешно обновлено!');
-
    }
 
 }

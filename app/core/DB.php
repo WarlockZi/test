@@ -41,6 +41,7 @@ class DB {
         return $stmt->execute($params);
     }
 
+
     public function query($sql, $params = []) {
 //        self::$countSql++;
 //        self::$queries[] = $sql;

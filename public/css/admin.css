@@ -344,6 +344,7 @@ menu{
 /* Активация секций с помощью псевдокласса :checked */
 #tab1:checked~#content-tab1, #tab2:checked~#content-tab2, #tab3:checked~#content-tab3, #tab4:checked~#content-tab4 {
     display: flex;
+    flex-direction: column;
 }
 /* Убираем текст с переключателей 
 * и оставляем иконки на малых экранах
@@ -672,6 +673,7 @@ td a
 {
     display:flex;
     flex-flow:column;
+
 }
 
 .plr{
@@ -714,13 +716,13 @@ input
     padding: 10px 0;
 }
 /*.admin-actions label{
-	padding: 0 0 0 5px;
+        padding: 0 0 0 5px;
 }*/
 .admin-actions a,
 .admin-actions label{
     color:#4a4a4a;
-	font-size: 16px;	
-	padding: 0 0 7px 5px;
+    font-size: 16px;	
+    padding: 0 0 7px 5px;
 }
 .admin-actions label:before{
 
@@ -731,19 +733,20 @@ input
     height: 20px;
     background-color: slategray;
     border-radius: 3px;
+	margin: auto 0;
 }
 .admin-actions label a{
-	padding: 3px;
+    padding: 3px;
     color:#4a4a4a;
-	font-size: 14px;
+    font-size: 14px;
 }
 .admin-actions a:hover{
     background: #cedbdf;
 }
 
 .wrap-admin{
-
     background-color: #fff;
+    margin: 0 5px;
 }
 
 .wrap-admin-content{
@@ -759,7 +762,7 @@ input
 .adm-content{
     flex: 1;
     background-color: #ebf4f4;
-	margin: 5px;
+    margin: 5px;
 }
 .adm-save-cansel{
     position: fixed;
@@ -940,12 +943,10 @@ input
 }
 
 .breadcrumbs-adm div,
-.breadcrumbs-adm a,
-.orange
+.breadcrumbs-adm a
 {
-    /*background: orange;*/
     padding: 3px 6px;
-	font-size: 0.7rem;
+    font-size: 0.7rem;
     color: #7e98ba;
     font-weight: 600;
     margin-left: 5px;
@@ -1057,7 +1058,7 @@ body{
     padding-left: 20px;
 }
 .column.categories a.row span:before{
-	content: '';
+    content: '';
     position: absolute;
     left: -2px;
     display: block;
@@ -1072,15 +1073,15 @@ body{
 
 .admin-actions label ul{
     display: none;
-	transition: all 1s;
+    transition: all 1s;
 }
 .admin-actions label input{
-	display: none;
+    display: none;
 }
 .admin-actions label input:checked+ul{
     display: flex;
-	height: 100%;
-	transition: all 1s;
+    height: 100%;
+    transition: all 1s;
 }
 
 .grid {
@@ -1096,38 +1097,48 @@ body{
     /*border-bottom: 1px solid #d5d5d5;*/
 }
 .user.content-90{
-	height: 100%;
-	padding-top: 20px;
-	/*position: relative;*/
+    height: 100%;
+    padding-top: 20px;
+    /*position: relative;*/
 }
 .user.content-90 *{
-	display: flex;
-	padding: 3px;
+    display: flex;
+    padding: 3px;
+    align-items: flex-start;
 }
 .user.content-90 div *{
-	flex: 1;
+    flex: 2;
 }
-.user.content-90 span[contenteditable='true']{
-	border: 1px #71ff668c solid;
+input[contenteditable],
+span[contenteditable],
+.category-properties select
+{
+    border: 1px #71ffff solid;
+	padding: 5px;
 }
-.user.content-90 span[contenteditable='true']:hover{
-	border: 1px #71ff66ff solid;
+input[contenteditable]:hover,
+span[contenteditable]:hover,
+.category-properties select:hover
+{
+    border: 1px #ebf4f4 solid;
+    box-shadow: 0 0 2px 2px #71ffff ;
 }
 
 .user.content-90 strong
 {
-	flex: 1;
-	justify-content: flex-end;
-	margin-right: 25px;
+    flex: 1;
+    justify-content: flex-end;
+    margin-right: 25px;
+    align-items: flex-end;
 }
 .user.content-90 div input
 {
-	justify-content: flex-start;
+    justify-content: flex-start;
 }
 .user.content-90 .btnadd-user,
 .user.content-90 .btnupdate-user
 {
-	width: 180px;
+    width: 180px;
     height: 27px;
     margin: 24px;
     justify-content: center;
@@ -1138,19 +1149,19 @@ body{
     height: 27px;
     margin: 24px;
     justify-content: center;
-	flex:1;
+    flex:1;
 }
 .separator{
-	padding: 5px;
-	background-color: #ebf4f4;
-	margin: 10px 0;
-	display: flex;
+    padding: 5px;
+    background-color: #ebf4f4;
+    margin: 10px 0;
+    display: flex;
     padding: 3px;
-	
+    font-weight: 600;
 }
 .separator.btns button
 {
-	display: block;
+    display: block;
 }
 .separator.btns{
     position: absolute;
@@ -1228,27 +1239,27 @@ header {
     z-index: 500;
     width: 100%;
     -webkit-box-shadow: 0 0 18px 0 #d2d2d2;
-	background-image: url(/pic/header-big.png);
+    background-image: url(/pic/header-big.png);
     justify-content: space-between;
 }
 .wrap header{
-	-webkit-box-shadow: 0 0 0px 0 #d2d2d2;
+    -webkit-box-shadow: 0 0 0px 0 #d2d2d2;
 
 }
 
 .wrap .header-tabs .column div:first-child{
-	height: 10px;
+    height: 10px;
     padding: 10px;
     position: absolute;
-    top: 19px;
+    top: 20px;
     left: 54px;
     background-color: #000;
-	color: #ccc;;
+    color: #ccc;;
     border-radius: 5px 5px 0 0;
-	cursor: pointer;
+    cursor: pointer;
 }
 .wrap .header-tabs .column div{
-	height: 10px;
+    height: 10px;
     padding: 10px;
     position: absolute;
     top: 20px;
@@ -1263,28 +1274,28 @@ header {
 .wrap .header-tabs.column .column div:last-child{
     height: 10px;
     border-bottom: 0;
-	font-weight: 600;
-	cursor: pointer;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .wrap .header-tabs.column a{
-	height: 100%;
-	width: 100%;
-	display: block;
-	position: absolute;
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: absolute;
     top: 0;
     left: 0;
 }
 
 .wrap {
     flex: 1 0 auto;
-	position: relative;
+    position: relative;
 }
 
 footer {
     flex: 0 0 auto;
     justify-content: space-between;
-	background-image: url(/pic/header-big.png);
+    background-image: url(/pic/header-big.png);
 }
 
 footer p{
@@ -1294,9 +1305,9 @@ footer p{
 .logo{
     flex: 1;
     justify-content: center;
-	/*    flex-basis: 56px;
-		width: .admin-actions label;
-		max-width: 498px;*/
+    /*    flex-basis: 56px;
+            width: .admin-actions label;
+            max-width: 498px;*/
     margin-left: 10px;
 }
 .logo img{
@@ -1323,8 +1334,8 @@ footer p{
     align-items: center;
     position: relative;
     margin-right: 10px;
-	color: #fff;
-	font-size: 0.8rem;
+    color: #fff;
+    font-size: 0.8rem;
 }
 
 .user-menu:before
@@ -1333,32 +1344,42 @@ footer p{
     display: block;
     padding: 0 8px;
 }
+.category-properties{
+    margin: 5px 0 5px 50px;
+}
 
 .properties {
-	padding: 5px;
+    padding: 5px;
+	margin: 0 0 0 15px;
 }
 .cat-prop{
-	padding: 10px 0;
+    padding: 10px 0;
+    font-weight: 600;
 }
+
+
 .properties select{
-	margin: 5px 0;
+    margin: 5px 0;
 }
 
 .add-property select{
-	float: 1;;
+    float: 1;;
 }
+.add-property{
+    justify-content: flex-end;
 
+}
 .add-property span{
-	padding: 10px 10px 10px 0;
+    padding: 10px 10px 10px 0;
 }
 
 .lists{
-	height: 100%;
+    height: 100%;
     padding-top: 20px;
     /*position: relative;*/
-	/*margin: 20px 1%;*/
+    /*margin: 20px 1%;*/
     background-color: #fff;
-	display: flex;
+    display: flex;
     flex-flow: column;
 }
 
@@ -1394,7 +1415,7 @@ footer p{
     display: flex;
     justify-content: space-around;
     align-items: center;
-	/*min-width: 40px;*/
+    /*min-width: 40px;*/
 }
 
 
@@ -1497,17 +1518,14 @@ footer p{
 .content-90
 {
     /*margin: 20px 1%;*/
-	background-color: #fff;
+    background-color: #fff;
 }
 .confirm
 {
     text-align: center;
     width: 20px;
 }
-.right
-{
-    width:15px;
-}
+
 .ref-row>*
 {
     padding-left: 7px; 

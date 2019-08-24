@@ -34,12 +34,6 @@ abstract class Model {
       return $this->pdo->query($sql);
    }
 
-   public function del($table, $id) {
-      $param[0] = $id;
-      $sql = "DELETE FROM $table WHERE id = ?";
-      return $this->insertBySql($sql, $param);
-   }
-
    /**
     * Получить строку из таблицы table по полю field, где id искомый параметр<br/>
     * @param str $field <p>field поле, по которому ищем</p>
@@ -49,7 +43,8 @@ abstract class Model {
    public function findOne($id, $field = '') {
       $field = $field ?: $this->pk;
       $sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
-      return $this->pdo->query($sql, [$id]);
+      $result = $this->pdo->query($sql, [$id]);
+      return $result ? $result[0] : FALSE;
    }
 
    /**
@@ -88,12 +83,11 @@ abstract class Model {
 
    public function getBreadcrumbs($category, $parents, $type) {
       if ($type == 'category') {
-
-         // в parents массив из адресной строки - надо получить aliases
+// в parents массив из адресной строки - надо получить aliases
          foreach ($parents as $key) {
             $params = [$key['name']];
             $sql = 'SELECT * FROM category WHERE name = ?';
-            //если это категория, а ее не нашли вернем 404  ошибку
+//если это категория, а ее не нашли вернем 404  ошибку
             if ($arrParents[] = $this->findBySql($sql, $params)[0]) {
 
             } else {
@@ -103,9 +97,7 @@ abstract class Model {
             }
          }
       }
-
       $breadcrumbs = "<a href = '/'>Главная</a>";
-
       if ($type == 'category') {
          foreach ($parents as $parent) {
             $breadcrumbs .= "<a href = '/{$parent['alias']}'>{$parent['name']}</a>";
@@ -120,82 +112,7 @@ abstract class Model {
       }
    }
 
-   public function send_result_mail($cache_path, $action) {
-
-      $post = json_decode($_POST['param']);
-      $pageCache = $post->pageCache;
-      $file = md5(date(' d m - H i s'));
-      $fileUTF8 = CACHE . $cache_path . $file . '.txt';
-      $fileWin = mb_convert_encoding($fileUTF8, 'cp1251');
-// ссылка присоединяется в форме письма  в строке require APP . '/view/Freetest/email.php';
-      $httpRes = "http://" . $_SERVER['HTTP_HOST'] . PROJ . $action . $file;
-
-      if (file_put_contents($fileWin, $pageCache)) {
-
-         $userName = $post->name;
-         $testName = $post->test_name;
-         $questCnt = $post->questionCnt; //count($_SESSION['freetestData']) - 1; // один элемент это key_words
-         $errorCnt = (int) $post->errorCnt;
-         $errorSubj = $errorCnt == 0 ? 'СДАН' : "не сдан: $errorCnt ош из $questCnt";
-
-         $mail = $this->getPhpMailer();
-
-         try {
-            $mail->SMTPDebug = 2;  // Enable verbose debug output
-            $config = require CONFIG;
-            $config = $config['Mailer'];
-            if ($config['smtp_mode']) {
-               $mail->isSMTP();                                      // Set mailer to use SMTP
-               $mail->SMTPAuth = true;                               // Enable SMTP authentication
-               $mail->Username = $config['smtp_username'];                 // SMTP username
-               $mail->Password = $config['smtp_pass'];                           // SMTP password
-               $mail->SMTPSecure = $config['smtp_SMTPSecure'];                            // Enable TLS encryption, `ssl` also accepted
-               $mail->Port = $config['smtp_port'];
-            };
-            $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-            //Recipients
-            $mail->setFrom('vvoronik@yandex.ru', $userName);
-            $mail->addAddress('vvoronik@yandex.ru', 'vvv');     // Add a recipient
-            if (trim($userName) !== "Вороник Виталий Викторович") {
-               $mail->addAddress('sno_dir@vitexopt.ru', 'SNO');
-            };
-            //Content
-            $mail->isHTML(true);                                  // Set email format to HTML
-            $mail->Subject = $errorSubj;
-
-            ob_start();
-            require APP . '/view/Freetest/email.php';
-            $body = ob_get_clean();
-
-            $mail->Body = $body;
-            $mail->AltBody = "Название теста: $testName/r/n"
-               . "От кого: $userName/r/n
-                  Результат: $errorCnt ошибок из $questCnt
-                  Ссылка на страницу с результатами: тут";
-
-            $mail->send();
-            echo 'Message has been sent';
-         } catch (Exception $e) {
-            echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
-         }
-      };
-   }
-
-   /**
-    * подключает PHPMailer
-    */
-   public function getPhpMailer() {
-
-      require_once(ROOT . '/libs/PHPMailer/src/Exception.php');
-      require_once(ROOT . '/libs/PHPMailer/src/OAuth.php');
-      require_once(ROOT . '/libs/PHPMailer/src/PHPMailer.php');
-      require_once(ROOT . '/libs/PHPMailer/src/SMTP.php');
-      require_once(ROOT . '/libs/PHPMailer/src/POP3.php');
-
-      return new PHPMailer(true);
-   }
-
-      public function getAssoc($table) {
+   public function getAssoc($table) {
 
       $params = array();
       $res = App::$app->{$table}->findBySql($this->sql, $params);
@@ -208,6 +125,7 @@ abstract class Model {
          return $all;
       }
    }
+
    protected function hierachy() {
       $tree = [];
       $data = $this->data;
@@ -219,6 +137,58 @@ abstract class Model {
          }
       }
       return $tree;
+   }
+
+   public function create($arr) {
+
+   }
+
+   public function read($arr) {
+
+   }
+
+   public function delete($arr) {
+      $token = $arr['token'];
+      if (isset($token) && $token === $_SESSION['token']) {
+         $table = $arr['table'];
+         $field = $arr['field'];
+         $val = $arr['val'];
+         $param = [$table, $field, $id];
+         $sql = "DELETE FROM ? WHERE  ? = ?";
+         return $this->insertBySql($sql, $param);
+      }
+      exit('Неправильный ключ !');
+   }
+
+   public function update($arr) {
+      $token = $arr['token'];
+      if (isset($token) && $token === $_SESSION['token']) {
+         $table = $arr['table'];
+         $field = $arr['field'];
+         $vl = $arr['val'];
+         $vals = $arr['values'];
+         $str = '';
+         $vs = [];
+         $valsCount = count($vals);
+         $k = 1;
+         $param = [];
+         foreach ($vals as $i => $val) {
+            if ($k < $valsCount) {
+               $str .= "`$i`".'= ?, ';
+               $k++;
+            } else {
+               $str .= "`$i`".'= ?';
+            }
+            array_push($param, $val);
+         }
+         $sql = "UPDATE `{$table}` SET {$str} WHERE `{$field}` = ?";
+         array_push($param, $vl);
+         if ($this->insertBySql($sql, $param)) {
+            return true;
+         }
+         return 'Видимо, ошибка в запросе!';
+      }
+      exit('Неправильный ключ !');
    }
 
 }

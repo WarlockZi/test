@@ -9,27 +9,18 @@ use app\core\App;
 
 class AppController extends Controller {
 
-
    public function __construct($route) {
       parent::__construct($route);
       $this->layout = 'flex-layout';
-	  $home = 'href = "/"';
-
-      $this->set(compact('home'));
-	        //exit(var_dump($this->vars));
    }
 
    public static function debug($arr) {
       echo '<pre>' . print_r($arr, true) . '</pre>';
    }
 
-
-
    public function getFromCache($cache_path) {
 
       $this->auth();
-      View::setMeta('Перчатки и бахилы оптом от производителя', 'Перчатки и бахилы оптом от производителя с доставкой по всей России', 'Пречатки, бахилы, производитель');
-
       if (is_array($this->route)) {
          if (array_key_exists('cache', $this->route)) {
             if ($this->route['cache']) {
@@ -39,22 +30,20 @@ class AppController extends Controller {
       }
 
       $file = CACHE . $cache_path . $cache . '.txt';
-
       if (file_exists($file)) {
-
          $results = require $file;
       }
       $this->set(compact('results'));
       exit();
    }
 
-   public function getJSCSS($extension) {
-      $doCache = DEBU ? "?" . time() : '';
-      $controller = $this->route['controller'];
-      $view = $this->view;
-      $js = PROJ . "/public/jscss/" . $controller . '/' . $view . $extension . $doCache;
-      return $js;
-   }
+//   public function getJSCSS($extension) {
+//      $doCache = DEBU ? "?" . time() : '';
+//      $controller = $this->route['controller'];
+//      $view = $this->view;
+//      $js = PROJ . "/public/jscss/" . $controller . '/' . $view . $extension . $doCache;
+//      return $js;
+//   }
 
    public function auth() {
       try {

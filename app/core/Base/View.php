@@ -8,6 +8,7 @@ class View {
    public $layout;
    public $view;
    public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
+   public static $jsCss = ['js' => '', 'css' => ''];
 
    function __construct($route, $layout = '', $view = '') {
 
@@ -23,14 +24,11 @@ class View {
    }
 
    public function render($vars) {
-
       if (is_array($vars)) {
          extract($vars);
       }
       $file_view = ROOT . "/app/view/{$this->route['controller']}/{$this->view}.php";
       // если режим отладки вкл, ставим метку и не кешируем
-
-
       ob_start();
       if (is_file($file_view)) {
          require $file_view;
@@ -38,7 +36,6 @@ class View {
          echo "<br>Не найден файл вида {$this->view} ";
       }
       $content = ob_get_clean();
-
       ob_start();
       // Если в вид передали false то и в $this->layout устанавливаем false для отключения layout
       if ($this->layout !== FALSE) {
@@ -53,32 +50,68 @@ class View {
       echo $page_cache;
    }
 
+   public static function setJsCss($data) {
+      $ext = array_keys($data)[0];
+      $doCache = DEBU ? "?" . time() : '';
+      if (isset($data["{$ext}"]) && $data["{$ext}"]) {
+         // если передан массив - это route>подключим индивид файл
+         if (is_array($data["{$ext}"])) {
+            $controller = $data["{$ext}"]['controller'];
+            $view = $data['view'];
+            $script = "/public/jscss/" . $controller . '/' . $view . '.' . $ext;
+            $file = ROOT . $script;
+            if (is_readable($file)) {
+               if ($ext == 'js') {
+                  $jscss = "<script src='{$script}{$doCache}'></script>";
+               } else {
+                  $jscss = "<link href='{$script}{$doCache}' type='text/css' rel='stylesheet'>";
+               }
+               self::$jsCss[$ext][] = $jscss;
+            }
+         } else {
+            if ($ext == 'js') {
+               self::$jsCss[$ext][] = "<script src='$data[$ext]{$doCache}'></script>";
+            } else {
+               self::$jsCss[$ext][] = "<link href='$data[$ext]{$doCache}' type='text/css' rel='stylesheet'>";
+            }
+         }
+      }
+   }
+
+   public static function getCSS() {
+      $css = '';
+      $arr = self::$jsCss['css'];
+      if (is_array($arr)) {
+         foreach ($arr as $v) {
+            $css .= $v;
+//            $css .= "<link type='text/css' rel='stylesheet' href='{$value}'>";
+         }
+      }
+      echo $css;
+   }
+
+   public static function getJS() {
+// если передали route. значит хотим подключить индивид.
+// скрипт, если не передали, то тот который передали
+      $js = '';
+      if (is_array(self::$jsCss['js'])) {
+         foreach (self::$jsCss['js'] as $v) {
+            $js .= $v;
+         }
+      }
+      echo $js;
+   }
+
    public static function getMeta() {
       echo '<title>' . self::$meta['title'] . '</title>
                <meta name = "description" content = "' . self::$meta['desc'] . '">
                <meta name = "keywords" content = "' . self::$meta['keywords'] . '">';
    }
 
-   public static function getCSS() {
-      echo
-      '<title>' . self::$meta['title'] . '</title>
-      <meta name = "description" content = "' . self::$meta['desc'] . '">
-      <meta name = "keywords" content = "' . self::$meta['keywords'] . '">';
-   }
-
-   public static function getJS() {
-      echo '<title>' . self::$meta['title'] . '</title>
-               <meta name = "description" content = "' . self::$meta['desc'] . '">
-               <meta name = "keywords" content = "' . self::$meta['keywords'] . '">';
-   }
-
-   /**
-    * title - desc - keywords
-    * */
-   public static function setMeta($title = '', $desc = '', $keywords = '') {
+   public static function setMeta($title = '', $keywords = '', $description = '') {
       self::$meta['title'] = $title;
-      self::$meta['desc'] = $desc;
       self::$meta['keywords'] = $keywords;
+      self::$meta['desc'] = $description;
    }
 
    public static function e($str) {

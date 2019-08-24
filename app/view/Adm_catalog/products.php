@@ -1,17 +1,18 @@
 <div class="adm-submenu">
 
-    <div class="navi">
+  <div class="navi">
       <?
       $i = 1;
       while ($i < $cnt_pages):
          ?>
        <a href="?page=<?= $i ?><?= $QSA ? '&' . $QSA : '' ?>"><? echo $i;
-      $i++; ?></a>
+      $i++;
+         ?></a>
 <? endwhile; ?>
   </div>
-  
-  </div>
-  <div class="adm-content">
+
+</div>
+<div class="adm-content">
   <div class="breadcrumbs-adm">
     <a href  = "/adminsc/index">Admin</a>
     <a href  = "/adminsc/catalog">Каталог</a>
@@ -76,7 +77,7 @@
                <a class="save" data-id = <?= $product['id'] ?>>Удал.</a>
              </td>
              <td>
-               <a href = "/adminsc/product/edit/<?= $product['id'] ?>" class="edit" >Измен.</a>
+               <a href = "/adminsc/catalog/product/?id=<?= $product['id'] ?>" class="edit" >Измен.</a>
              </td>
 
            </tr>

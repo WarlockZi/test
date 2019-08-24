@@ -2,65 +2,56 @@
 
 namespace app\controller;
 
-use app\controller\AdminscController;
 use app\core\App;
+use app\core\Base\View;
+use app\controller\AdminscController;
 
 class Adm_settingsController extends AdminscController {
 
    public function __construct($route) {
       parent::__construct($route);
+
+      $routeView = ['js' => $this->route, 'view' => $this->view];
+      View::setJsCss($routeView);
+      $routeView = ['css' => $this->route, 'view' => $this->view];
+      View::setJsCss($routeView);
    }
 
    public function actionIndex() {
 
-      $this->vars['js'] = $this->getJSCSS('.js');
-//      $this->vars['css'] = $this->getJSCSS('.css');
    }
+
    public function actionDumpSQL() {
 
-      $this->vars['js'] = $this->getJSCSS('.js');
-//      $this->vars['css'] = $this->getJSCSS('.css');
    }
-//   public function actionGame() {
-//   }
 
    public function actionPics() {
 
-      $this->vars['js'] = $this->getJSCSS('.js');
-
       $pics = App::$app->adminsc->findAll('pic');
 
-      $this->set(compact('pics', 'js'));
-
+      $this->set(compact('pics'));
    }
+
    public function actionDump() {
 
-      $this->vars['js'] = $this->getJSCSS('.js');
-//      $this->vars['css'] = $this->getJSCSS('.css');
    }
+
    public function actionDumpWWW() {
 
-      if($this->isAjax()){
+      if ($this->isAjax()) {
 
-      $a = 3;
+         $a = 3;
       }
-
-      $this->vars['js'] = $this->getJSCSS('.js');
-//      $this->vars['css'] = $this->getJSCSS('.css');
    }
 
    public function actionModule() {
 
-      $this->vars['js'] = $this->getJSCSS('.js');
-//      $this->vars['css'] = $this->getJSCSS('.css');
       $id = $this->route['id'];
-      $module = App::$app->instructions->findOne($id)[0];
+      $module = App::$app->instructions->findOne($id);
       $this->vars['module'] = $module;
    }
 
    public function actionInstructions() {
-
-      $this->vars['js'] = $this->getJSCSS('.js');
 
       $query = '';
       $parts = parse_url($_SERVER['REQUEST_URI']);
@@ -85,18 +76,13 @@ class Adm_settingsController extends AdminscController {
          $doc = App::$app->instructions->getDoc($role)[0];
          $this->vars['doc'] = $doc;
       }
-//      $this->vars['css'] = $this->getJSCSS('.css');
    }
 
    public function actionProps() {
-//      $this->layout = 'admin.php';
 
-      $this->vars['js'] = $this->getJSCSS('.js');
-      $this->vars['css'] = $this->getJSCSS('.css');
 
-      $catProps = App::$app->catalog->findAll('props');
+      $catProps = App::$app->product->findAll('props');
       foreach ($catProps as $k => $v) {
-//         $catProps[$k]['val'] = App::$app->catalog->findWhere($v['id'], 'parent', 'props');
          $catProps[$k]['val'] = explode(',', $catProps[$k]['val']);
       };
 

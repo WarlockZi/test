@@ -11,16 +11,15 @@ class CatalogController extends AppController {
    public function __construct($route) {
       parent::__construct($route);
       $this->layout = 'vitex';
-      $css = 'vitex.css';
+//      $css = 'vitex.css';
       $list = App::$app->category->getInitCategories();
-      $this->set(compact('list', 'css'));
+      $this->set(compact('list'));
+      View::setJsCss(['css' => '/public/css/vitex.css']);
    }
 
    public function actionIndex() {
 
-      //exit(__FILE__. ' имя категории - ' );
       $cats_id = App::$app->category->getInitCategories();
-
       View::setMeta('Каталог спецодежды', 'Каталог спецодежды', 'Каталог спецодежды');
       $this->set(compact('cats_id', 'user'));
    }
@@ -30,33 +29,36 @@ class CatalogController extends AppController {
       header('Cache-Control: private, max-age=8400');
       header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
 
-      $js = '/public/jscss/Catalog/index.js';
-      $this->set(compact('js'));
+      $parents = $product['parents'];
+      $breadcrumbs = App::$app->product->getBreadcrumbs($product, $product['parents'], 'product');
 
-      $parents = $aCategory['parents'];
-      $breadcrumbs = App::$app->catalog->getBreadcrumbs($product, $product['parents'], 'product');
-
-      if ($urerId = $_SESSION['id']) {
-         $user = App::$app->user->getUserWithRightsSet($urerId);
-      }
-      View::setMeta($product['name'], $product['name'], $lastParent);
-      $this->set(compact('breadcrumbs', 'user', 'product', 'tov', 'categories'));
-
-      $this->set(compact('user', 'tov'));
-   }
-
-   public function actionCategory($category) {
-
-      $js = '/public/jscss/Catalog/index.js';
-
-      if (isset($_SESSION['id'])) {
+      if (isset($_SESSION['id']) && $_SESSION['id']) {
          $id = $_SESSION['id'];
          $user = App::$app->user->getUser($id);
       }
+      $canonical = $product['alias'];
+      View::setMeta($product['title'], $product['description'],$product['keywords']);
+      $this->set(compact('canonical','breadcrumbs', 'user', 'product', 'tov', 'categories'));
 
-      $breadcrumbs = App::$app->catalog->getBreadcrumbs($category, $category['parents'], 'category');
+//      $this->view = 'product_1';
+      View::setJsCss(['css'=> $this->route,'view'=> $this->view]);
 
-      $this->set(compact('user', 'breadcrumbs', 'category', 'js'));
+      }
+
+   public function actionCategory($category) {
+
+//      $js = '/public/jscss/Catalog/index.js';
+
+      if (isset($_SESSION['id'])&&$_SESSION['id']) {
+         $user = App::$app->user->getUser($_SESSION['id']);
+      }
+
+      $breadcrumbs = App::$app->product->getBreadcrumbs($category, $category['parents'], 'category');
+      $canonical = $category['alias'];
+      View::setMeta($category['title'],$category['keywords'], $category['description']);
+      $this->set(compact('user', 'breadcrumbs', 'category', 'canonical'));
+      View::setJsCss(['css'=> $this->route,'view'=> $this->view]);
+
    }
 
 }

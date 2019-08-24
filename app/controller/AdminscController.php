@@ -15,18 +15,20 @@ class AdminscController extends AppController {
 
       $this->auth();
       $this->layout = 'admin';
-      $this->vars['js'] = $this->getJSCSS('.js'); //'admin.js';
-      $this->vars['css'] = '/public/css/admin.css';
+
+      View::setJsCss(['js'=>'/public/js/admin.js']);
+      View::setJsCss(['css'=>'/public/css/admin.css']);
 
       if ($this->isAjax()) {
          if (isset($_POST['param'])) {
             $arr = json_decode($_POST['param'], true);
             $func = $arr['action'];
             $model = $arr['model'] ?: 'adminsc';
-
-            App::$app->{$model}->$func($arr);
-            exit('okey');
-         };
+            if (App::$app->{$model}->$func($arr)) {
+               exit('true');
+            }
+               exit(FALSE);
+         }
       }
    }
 
@@ -43,39 +45,11 @@ class AdminscController extends AppController {
 
    public function actionSiteMap() {
 
-      $this->auth();
-
       $iniCatList = App::$app->category->getInitCategories();
       $this->set(compact('iniCatList'));
    }
 
-   public function actionProductEdit() {
-
-      $this->auth();
-
-      $productId = $_GET['id'];
-      $this->vars['css'] = $this->getJSCSS('.css');
-      $product = App::$app->catalog->getProduct($productId);
-
-      $i = 0;
-      while ($product['parent']) {
-         $category = App::$app->category->getCategory($product['parent'])[0];
-         $catProps = Prop::getByIds([$category['prop']]);
-         foreach ($catProps as $key) {
-            $i++;
-            $categoryProps[$i] = $key;
-         }
-         $product['parent'] = $category['parent'];
-      };
-      unset($categoryProps[0]);
-
-
-      $this->set(compact('product', 'categoryProps'));
-   }
-
    public function actionProducts() {
-
-      $this->auth();
 
       $fName = $fAct = $fArt = 0;
       $params = [];
@@ -88,7 +62,6 @@ class AdminscController extends AppController {
          $QSA = preg_replace($pattern, $replacement, $QSA);
       }
 
-
       if (isset($_GET['name'])) {
          $fName = $_GET['name'];
       }
@@ -98,9 +71,7 @@ class AdminscController extends AppController {
       if (isset($_GET['art'])) {
          $fArt = $_GET['art'];
       }
-
       $perpage = 15;
-
       // Получение текущей страницы
       if (isset($_GET['page'])) {
          $page = (int) $_GET['page'];
@@ -109,18 +80,15 @@ class AdminscController extends AppController {
       }else {
          $page = 1;
       }
-
-
 // начальная позиция для запроса
       $start_pos = ($page - 1) * $perpage;
-
       if ($fName || $fAct || !$fAct || $fArt) {
          $where = App::$app->adminsc->where($fName, $fAct, $fArt);
          $params = App::$app->adminsc->params($fName, $fAct, $fArt);
          $sql = "SELECT * FROM products $where LIMIT $start_pos,$perpage";
-         $products = App::$app->catalog->findBySql($sql, $params);
+         $products = App::$app->product->findBySql($sql, $params);
          $sql = "SELECT * FROM products $where";
-         $productsCnt = count(App::$app->catalog->findBySql($sql, $params));
+         $productsCnt = count(App::$app->product->findBySql($sql, $params));
          $cnt_pages = ceil($productsCnt / $perpage);
          if (!$cnt_pages)
             $cnt_pages = 1;
@@ -130,8 +98,8 @@ class AdminscController extends AppController {
       } else {
 
          $sql = "SELECT * FROM products LIMIT $start_pos,$perpage";
-         $products = App::$app->catalog->findBySql($sql);
-         $productsCnt = (INT) App::$app->catalog->productsCnt();
+         $products = App::$app->product->findBySql($sql);
+         $productsCnt = (INT) App::$app->product->productsCnt();
       }
       $cnt_pages = ceil($productsCnt / $perpage);
       if (!$cnt_pages)
@@ -139,13 +107,12 @@ class AdminscController extends AppController {
 
       if ($page > $cnt_pages)
          $page = $cnt_pages;
+      $this->vars['js'][] = $this->getJSCSS('.js');
 
       $this->set(compact('products', 'productsCnt', 'cnt_pages', 'QSA'));
    }
 
    public function actionIndex() {
-
-      $this->auth();
 
       if ($_POST && count($_POST) == 1) {
          reset($_POST);
@@ -154,43 +121,37 @@ class AdminscController extends AppController {
             $this->$action();
          }
       }
-
 // Проверяем существует ли пользователь и подтвердил ли регистрацию
-
       View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
-
-//      $this->set(compact('user'));
    }
 
-   public function replaceUnderlinesDashesInURLS() {
+   public function OreplaceUnderlinesDashesInURLS() {
 
       $sql = "UPDATE products "
          . "SET durl = REPLACE(durl, '_','-')";
-
-      App::$app->catalog->insertBySql($sql, $params);
+      App::$app->product->insertBySql($sql, $params);
 
       $sql = "UPDATE category "
          . "SET name = REPLACE(name, '_','-')";
 
-      App::$app->catalog->insertBySql($sql, $params);
+      App::$app->product->insertBySql($sql, $params);
 
       $sql = "UPDATE products "
          . "SET durl = REPLACE(durl, '/catalog','')";
 
-      App::$app->catalog->insertBySql($sql, $params);
+      App::$app->product->insertBySql($sql, $params);
 
       exit;
    }
 
-   public function FixPicNames() {
-
+   public function OFixPicNames() {
 
 // уберем upload/iblock/ из dpic
       $sql = "UPDATE products SET dpic = REPLACE(dpic, '/upload/iblock', '')";
-      App::$app->catalog->insertBySql($sql);
+      App::$app->product->insertBySql($sql);
 // уберем upload/iblock/ из preview_pic
       $sql = "UPDATE products SET preview_pic = REPLACE(preview_pic, '/upload/iblock', '')";
-      App::$app->catalog->insertBySql($sql);
+      App::$app->product->insertBySql($sql);
 
       header('settings');
    }
@@ -198,7 +159,7 @@ class AdminscController extends AppController {
    public function fixProductsPath() {
 
 //      $sql = "SELECT * FROM products";
-//      $products = App::$app->catalog->findBySql($sql);
+//      $products = App::$app->product->findBySql($sql);
 //      foreach ($products as $key => $value) {
 //         $durl = $value['durl'];
 //         $arr = explode('/', $durl);
@@ -206,7 +167,7 @@ class AdminscController extends AppController {
 //         $string =
 //            "UPDATE products SET alias = '{$name}' where durl='{$durl}'";
 //         $sql = str_replace('/', '\/', $string);
-//         App::$app->catalog->insertBySql($string);
+//         App::$app->product->insertBySql($string);
 //      }
       exit;
    }
