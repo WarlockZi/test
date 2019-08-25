@@ -1,5 +1,5 @@
 $(function () {   
-   
+//   chown -R 500:500 /var/www/vitexopt/data/www/vitexopt.ru
    $('.wrap').on('click', '.btn-filter', function () {
 
       var name = $('.filter').find("[name = 'name']").val();

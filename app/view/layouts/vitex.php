@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
     <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="robots" content="follow" />
         <meta charset="utf-8">
+        <meta name="robots" content="follow" />
         <link rel="canonical" href="/<?= isset($vars['canonical']) ? $vars['canonical'] : '' ?>" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <? $this::getMeta(); ?>
         <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
+        <? $this::getMeta(); ?>
         <? $this::getCSS(); ?>
         <!--<link dd rel="manifest" href="/public/manifest.json">-->
     </head>
@@ -118,37 +118,138 @@
                             </form>
                         </div>
 
-
-
                     </div>
-                    <div class = 'h-lower'>
-                        <div class="catalog-menu">
-                            <a href="/catalog" class = 'a-cat' onclick = "event.preventDefault();" aria-label="В каталог">
-                                <div class="cat-menu-icon">
-                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 2 16 16">
-                                    <path fill="#fff" d="M5 3h14v2h-14zM3 9h14v2h-14zM1 15h14v2h-14z"></path>
-                                    </svg>
-                                </div>
-                                <span class = 't-1'>Каталог </span>
-                            </a>
 
-                            <div class="sub-cat">
-                                <div class="inner">
-                                    <ul>
-                                        <? foreach ($list as $item => $arr): ?>
-                                            <li><a href="/<?= $catName = $arr['alias']; ?>" aria-label="<?= $catName; ?>" ><?= $arr['name'] ?></a></li>
-                                        <? endforeach; ?>
-                                    </ul>
-                                    <div style="clear: both;"></div>                            </div>
-                            </div>
+                    <div class="header-lower row">
+
+
+                        <div class = 'h-cat'>перчатки
+                            <ul>
+                                <li>
+                                    <a href="/perchatki-rezinovye-tekhnicheskie">перчатки резиновые технические</a>
+                                </li>
+                                <li>
+                                    <a href="/sredstva-zashchity-ruk">средства защиты рук</a>
+                                </li>
+
+
+                            </ul>
                         </div>
 
+                        <div class = 'h-cat'>бахилы
+                            <ul>
+                                <li>
+                                    <a href="/#">бахилы однослойные</a>
+                                </li>
+                                <li>
+                                    <a href="#">бахилы многослойные</a>
+                                </li>
 
+                            </ul>
+                        </div>
 
+                        <div class = 'h-cat transition'>СИЗ
+                            <ul>
+                                <li>
+                                    <a href="/zashchita-organov-slukha">защита органов слуха</a>
+                                </li>
+                                <li>
+                                    <a href="/zashchita-golovy-i-litsa">защита головы и лица</a>
+                                </li>
+                                <li>
+                                    <a href="/zashchita-organov-dykhaniya">защита органов дыхания</a>
+                                </li>
+                                <li>
+                                    <a href="/zashchita-organov-zreniya">защита органов зрения</a>
+                                </li>
+                            </ul>
+                        </div>
 
+                        <div class = 'h-cat'> шприцы
+                            <ul>
+                                <li>
+                                    <a href="/#">шприцы двукомпонентные</a>
+                                </li>
+                                <li>
+                                    <a href="#">шприцы однокомпонентные</a>
+                                </li>
+                            </ul>
+                        </div>
 
+                        <div class = 'h-cat'>обувь
+                            <ul>
+                                <li>
+                                    <a href="/obuv-marki-roverboots">обувь марки roverboots</a>
+                                </li>
+                                <li>
+                                    <a href="/obuv-iz-pvkh-i-eva">обувь из пвх и эва</a>
+                                </li>
+                                <li>
+                                    <a href="/obuv-zimnyaya-uteplennaya">обувь зимняя утепленная</a>
+                                </li>
+                                <li>
+                                    <a href="/obuv-letnyaya">обувь летняя</a>
+                                </li>
+                                <li>
+                                    <a href="/obuv-povsednevnaya">обувь повседневная</a>
+                                </li>
+                                <li>
+                                    <a href="/obuv-povsednevnaya">обувь повседневная</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class = 'h-cat'>спецодежда
+                            <ul>
+                                <li>
+                                    <a href="/kostyumy-dlya-itr">костюмы для итр</a>
+                                </li>
+                                <li>
+                                    <a href="/khalaty-rabochie">халаты рабочие</a>
+                                </li>
+                                <li>
+                                    <a href="/kostyumy-i-kurtki-rabochie">костюмы и куртки рабочие</a>
+                                </li>
+                                <li>
+                                    <a href="/bryuki-i-polukombinezony">брюки и полукомбинезоны</a>
+                                </li>
+                                <li>
+                                    <a href="/zashchitnaya-odezhda">защитная одежда</a>
+                                </li>
+                                <li>
+                                    <a href="/sfera-obsluzhivaniya">сфера обслуживания</a>
+                                </li>
+                                <li>
+                                    <a href="/odezhda-dlya-okhrannykh-struktur">одежда для охранных структур</a>
+                                </li>
+                                <li>
+                                    <a href="/zimnyaya-uteplennaya-spetsodezhda">зимняя утепленная спецодежда</a>
+                                </li>
+                                <li>
+                                    <a href="/odezhda-dlya-turizma-i-otdykha">одежда для туризма и отдыха</a>
+                                </li>
+                                <li>
+                                    <a href="/trikotazhnye-izdeliya">трикотажные изделия</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class = 'h-cat'>Акции
+                            <ul>
+                                <li>
+                                    <a href="/inventar">инвентарь</a>
+                                </li>
+                                <li>
+                                    <a href="/obraztsy">образцы</a>
+                                </li>
+                                <li>
+                                    <a href="/rasprodazha">распродажа</a>
+                                </li>
+
+                            </ul>
+                        </div>
 
                     </div>
+
                 </div>
             </header>
 
@@ -199,32 +300,32 @@
         //<?= isset($js) ? '<script src="' . $js . '"></script>' : '' ?>
         <? $this::getJS(); ?>
         <script>
-              function setCookie() {
-    //          debugger;
-                  $('#cookie-notice').css({bottom: "-100%"});
-                  var days = 1;
-                  var months = 1;
-                  var date = new Date();
-                  var minute = 60 * 1000;
-                  var day = minute * 60 * 24;
-                  var week = day * 7;
-                  var month = minute * 60 * 24 * 30;
-                  date.setTime(date.getTime() + (days * day));
-                  $.cookie("cn", "1", {
-                      expires: date,
-                      path: "/"
-                  });
-              }
-              ;
+                function setCookie() {
+                    //          debugger;
+                    $('#cookie-notice').css({bottom: "-100%"});
+                    var days = 1;
+                    var months = 1;
+                    var date = new Date();
+                    var minute = 60 * 1000;
+                    var day = minute * 60 * 24;
+                    var week = day * 7;
+                    var month = minute * 60 * 24 * 30;
+                    date.setTime(date.getTime() + (days * day));
+                    $.cookie("cn", "1", {
+                        expires: date,
+                        path: "/"
+                    });
+                }
+                ;
 
-              $(function () {
-    //               debugger;
-                  if ($.cookie("cn")) {
-                      $('#cookie-notice').css({bottom: "-100%"});
-                  } else {
-                      $('#cookie-notice').css({bottom: "0"});
-                  }
-              });
+                $(function () {
+                    //               debugger;
+                    if ($.cookie("cn")) {
+                        $('#cookie-notice').css({bottom: "-100%"});
+                    } else {
+                        $('#cookie-notice').css({bottom: "0"});
+                    }
+                });
         </script>
 
         <!-- Yandex.Metrika counter -->
@@ -281,9 +382,7 @@
             </g>
             </svg>
 
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-            <path fill = '#ccc' d="M1 3h14v2h-14zM1 7h14v2h-14zM1 11h14v2h-14z"></path>
-            </svg>
+
 
             <svg  id= 'greyAvatar' width = "30" fill = '#fff' version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve"><g><path d="M500,990.1c-290,0-490-219.4-490-490C10,229.3,229.4,9.9,500,9.9c270.7,0,490,219.4,490,490.1C990,770.7,790,990.1,500,990.1z M500,73.4c-235.6,0-426.5,191-426.5,426.6c0,110.2,42.1,210.3,110.7,286c61.8-29.9,39.1-5,119.9-38.3c82.7-34,102.3-45.9,102.3-45.9l0.8-78.4c0,0-31-23.5-40.5-97.3c-19.4,5.6-25.8-22.6-27-40.5c-1-17.3-11.2-71.4,12.4-66.5c-4.8-36.1-8.3-68.6-6.6-85.9c5.9-60.5,64.7-123.8,155.2-128.4c106.5,4.6,148.7,67.8,154.6,128.4c1.7,17.3-2.1,49.9-6.9,85.9c23.6-4.8,13.4,49.2,12.2,66.5c-1,17.9-7.6,46-26.9,40.4c-9.7,73.8-40.7,97.1-40.7,97.1l0.7,78c0,0,19.6,11,102.3,45.1c80.8,33.3,58.1,9.9,119.9,39.8c68.6-75.7,110.7-175.8,110.7-286C926.6,264.4,735.6,73.4,500,73.4z"/></g></svg>
         </div>

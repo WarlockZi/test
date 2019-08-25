@@ -70,7 +70,7 @@
 }
 
 .ui-menu-item:hover{
-	background-color: #e8e8e8;
+    background-color: #e8e8e8;
 }
 /*************************************
 *******      ADMIN    ******
@@ -730,26 +730,9 @@ header {
     font: bold 21px/17px 'Proxima Nova', sans-serif;
 }
 
-.a-cat{
-    background: #e30000;
-    color: #fff;
-    font: 600 17px/17px 'Proxima Nova', sans-serif;
-    text-decoration: none;
-    height: 100%;
-    display: inline-block;
-    position: relative;
-    border-radius: 2px 0 0 2px;
-    display: flex;
-    align-items: center;
-}
-.cat-menu-icon{
-    padding: 0 10px;
-}
 
 
-
-
-.catalog-menu span{
+.header-lower span{
     padding-right: 8px;
 }
 .h-upper>* {
@@ -784,6 +767,10 @@ header {
     margin: auto;
     box-sizing: border-box;
 }
+
+
+/*///////////////  SEARCH  /////////////////////////*/
+
 .search-wrap{
     position: relative;
     height: 32px;
@@ -821,10 +808,84 @@ header {
 /*///////////////  CATALOG MENU  /////////////////////////*/
 
 
-.catalog-menu{
-    margin-right: 20px;
+.header-lower{
     position: relative;
+    background-color: #000;
 }
+
+
+.h-cat,
+.a-cat{
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 13px;
+    background: #e30000;
+    color: #fff;
+    font: 400 17px/17px intro,'Proxima Nova', sans-serif;
+}
+.h-cat:last-child ul{
+    right:0;
+}
+.h-cat ul{
+    height: 0;
+    position: absolute;
+    top: 45px;
+    overflow: hidden;
+    color:black;
+    z-index: 2;
+}
+.h-cat:hover ul
+{
+    padding: 30px 25px 15px 25px;
+    height: auto;
+    max-height: auto;
+    background-color: white;
+    position: absolute;
+    top: 45px;
+    box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
+    overflow: visible;
+}
+.h-cat ul:before{
+    content: '';
+    display: block;
+    width: 0px;
+    height: 0px;
+    transform: rotate(45deg);
+    position: absolute;
+    top: -8px;
+    right: 50%;
+    border-top: 35px solid white;
+    border-left: 35px solid white;
+
+}
+.h-cat ul li{
+    padding: 0px 10px;
+    font: 600 14px/17px 'Proxima Nova', sans-serif;
+    transistion: .3s;
+}
+.h-cat:hover ul>li{
+    padding: 10px;
+    transition: .3s;
+}
+
+
+.transition{
+    transition: .3s;
+}
+
+
+
+
+
+
+
+.cat-menu-icon{
+    padding: 0 10px;
+}
+
 .sub-cat {
     font: 600 14px/17px 'Proxima Nova', sans-serif;
     position: absolute;
@@ -836,22 +897,21 @@ header {
     box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
 }
 
-.catalog-menu .inner {
+.header-lower .inner {
     padding: 0 25px;
     width: 300px;
     background: #fff;
-    /*box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);*/
     color: #181617;
     overflow: hidden;
     border-radius: 2px;
     position: relative;
-    -webkit-transition: max-height .5s, padding .5s;
     transition: max-height .1s, padding .5s;
     max-height: 0;  
 }
 
-.catalog-menu:hover  .inner,
-.inner:hover {
+
+.a-cat:hover  .inner
+{
     max-height: 700px;
     padding: 25px 25px;
     overflow: visible;
@@ -908,7 +968,6 @@ header {
 
 .top-menu .row .row
 {
-
     align-items: center;
     justify-content: space-between;
 }
@@ -1026,7 +1085,6 @@ footer a
 .user-button div:first-child span
 {
     padding-left: 10px;
-    /*    min-width: 120px;*/
     color: #fff;
 }
 
@@ -1050,13 +1108,6 @@ footer a
     padding:5px 10px;
 }
 
-
-
-
-
-/*************************
-*******      CONTENT    ******
-**************************/
 
 
 /*************************
@@ -1095,89 +1146,14 @@ footer a
     position: absolute;
 }
 
-.product-back,
-.product-front{
-    backface-visibility: hidden;
-    /*border: 1px #ccc solid;*/
-}
-.product-front{
-    z-index: 2;
-    /* for firefox 31 */
-    transform: rotateY(0deg);
-    display: flex;
-    flex-flow: column;
-    height: 100%;
-    justify-content: space-between;
-    overflow: hidden;
-}
-.product-front a {
-    padding: 10px;
-    height: 50px;
-    background: rgba(0,0,0,.75);
-    color: #fff;
-    font-weight: bold;
-}
+
+
 .img-container{
     height: 300px;
     align-self: center;
 }
 
-.product-back{
-    transform: rotateY(180deg);
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    overflow: hidden;
-    width: 100%;
-    background: rgba(41, 41, 41, 0.97);
-    padding: 0 35px;
-    box-sizing: border-box;
-    color: #fff;
-}
-.product-back:before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 400px;
-    position: absolute;
-    bottom: 0;
-    background: -moz-linear-gradient(top, rgba(117,70,63,0) 0%, rgba(62,49,47,0) 72%, rgba(48,48,48,1) 83%, rgba(48,48,48,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top, rgba(117,70,63,0) 0%,rgba(62,49,47,0) 72%,rgba(48,48,48,1) 83%,rgba(48,48,48,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom, rgba(117,70,63,0) 0%,rgba(62,49,47,0) 72%,rgba(48,48,48,1) 83%,rgba(48,48,48,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0075463f', endColorstr='#292929',GradientType=0 ); /* IE6-9 */
-}
 
-
-
-/*
-.product-back a {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        display: block;
-}
-
-.product-back span {
-    position: absolute;
-    bottom: 4%;
-    left: 10%;
-    padding: 8% 4%;
-    width: 76%;
-    background: #fff;
-    color: #303030;
-    text-transform: uppercase;
-    font-size: 1vw;
-    white-space: nowrap;
-    text-align: center;
-}
-
-
-.product img{
-    min-width: 90%;
-    max-width: 120%;
-}*/
 
 /*************************************
 *******     MEDIA QUERRIES    ******
@@ -1248,10 +1224,10 @@ footer a
         right: 0px;
         width:auto;
     }
-.search-wrap{
+    .search-wrap{
 
-    margin: 6px 5px;
-}
+        margin: 6px 5px;
+    }
 
 }
 /* sm (>=576 и <=767) */
