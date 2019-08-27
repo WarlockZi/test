@@ -29,13 +29,15 @@
         <? foreach ($catProps as $key): ?>
          <div class="property" data-prop = '<?= $key['id'] ?>'>
            <input size="35" type="text" value="<?= $key['name'] ?>">
-   <!--             <input size="50" type="text" value="<?= $key['subname'] ?>">-->
 
            <div class="prop">
              <div class="left-set">
-               <input  class = "check" type="checkbox" <?= $key['type'] == 'multy' ? 'checked' : '' ?>>
-               <label class = 'multy'>
-                 мульти</label>
+               <input  name="type" type="radio" <?= $key['type'] == 'multy' ? 'checked' : '' ?>>
+               <label class = 'multy'>выбор нескольких значений</label>
+               <input  name="type" type="radio" <?= $key['type'] == 'multy' ? 'checked' : '' ?>>
+               <label class = 'multy'>выбор одного значения</label>
+               <input  name="type" type="radio" <?= $key['type'] == 'multy' ? 'checked' : '' ?>>
+               <label class = 'multy'>строка</label>
 
              </div>
              <div class="val">

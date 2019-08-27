@@ -13,11 +13,6 @@ class AdminscController extends AppController {
    public function __construct($route) {
       parent::__construct($route);
 
-      $this->auth();
-      $this->layout = 'admin';
-
-      View::setJsCss(['js'=>'/public/js/admin.js']);
-      View::setJsCss(['css'=>'/public/css/admin.css']);
 
       if ($this->isAjax()) {
          if (isset($_POST['param'])) {
@@ -30,6 +25,11 @@ class AdminscController extends AppController {
                exit(FALSE);
          }
       }
+      $this->auth();
+      $this->layout = 'admin';
+
+      View::setJsCss(['js' => '/public/js/admin.js']);
+      View::setJsCss(['css' => '/public/css/admin.css']);
    }
 
    public function actionClearCache() {

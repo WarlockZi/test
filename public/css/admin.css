@@ -724,9 +724,6 @@ input
     font-size: 16px;	
     padding: 0 0 7px 5px;
 }
-.admin-actions label:before{
-
-}
 .clear-cache{
     display: block;
     width: 20px;

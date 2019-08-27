@@ -1430,8 +1430,6 @@ li.vert-menu__list>li.vert-menu__list a
 /* xl (>=1200) */
 @media (min-width: 1200px) {
     .wrap{
-        width:92%;
-        margin:0 auto;
     }
     .q,
     .menu a, 

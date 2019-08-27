@@ -91,15 +91,16 @@ new app\view\widgets\menu\Menu([
             </div>
 
             <? foreach ($category['props'] as $k => $catProp): ?>
-
-               <select>
-                 <option value=""></option>
-                 <? foreach ($props as $prop): ?>
-                    <? if (!in_array($prop['id'], $category['parentProps'])): ?>
-                       <option value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></option>
-                    <? endif; ?>
-                 <? endforeach; ?>
-               </select>
+               <? if ($catProp): ?>
+                  <select>
+                    <option value=""></option>
+                    <? foreach ($props as $prop): ?>
+                       <? if (!in_array($prop['id'], $category['parentProps'])): ?>
+                          <option value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></option>
+                       <? endif; ?>
+                    <? endforeach; ?>
+                  </select>
+               <? endif; ?>
 
             <? endforeach; ?>
 

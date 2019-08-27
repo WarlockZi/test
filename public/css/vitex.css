@@ -768,8 +768,9 @@ header {
     box-sizing: border-box;
 }
 
-
-/*///////////////  SEARCH  /////////////////////////*/
+/****************************
+*******      SEARCH    ******
+****************************/
 
 .search-wrap{
     position: relative;
@@ -804,15 +805,15 @@ header {
     justify-content: center;
 
 }
-
-/*///////////////  CATALOG MENU  /////////////////////////*/
+/**********************************
+*******      CATALOG MENU    ******
+***********************************/
 
 
 .header-lower{
     position: relative;
     background-color: #000;
 }
-
 
 .h-cat,
 .a-cat{
@@ -825,6 +826,9 @@ header {
     background: #e30000;
     color: #fff;
     font: 400 17px/17px intro,'Proxima Nova', sans-serif;
+}
+.h-cat:first-child ul{
+    left:0;
 }
 .h-cat:last-child ul{
     right:0;
@@ -844,7 +848,7 @@ header {
     max-height: auto;
     background-color: white;
     position: absolute;
-    top: 45px;
+    top: 100%;
     box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
     overflow: visible;
 }
@@ -855,22 +859,30 @@ header {
     height: 0px;
     transform: rotate(45deg);
     position: absolute;
-    top: -8px;
+    top: -4px;
     right: 50%;
-    border-top: 35px solid white;
-    border-left: 35px solid white;
-
+    border-top: 10px solid white;
+    border-left: 10px solid white;
 }
-.h-cat ul li{
-    padding: 0px 10px;
+.h-cat:first-child ul:before{
+    right: 80%;
+}
+.h-cat:hover ul li 
+{
+	padding: 10px 5px;
+    border-bottom: #f0f0f0 1px solid;
+	transition:.3s;
+	
+}
+.h-cat ul li 
+{
+    padding: 0px 0px;
+	transition:.3s;
+}
+.h-cat ul li a
+{
     font: 600 14px/17px 'Proxima Nova', sans-serif;
-    transistion: .3s;
 }
-.h-cat:hover ul>li{
-    padding: 10px;
-    transition: .3s;
-}
-
 
 .transition{
     transition: .3s;
@@ -879,6 +891,13 @@ header {
 
 
 
+
+
+/*.slick-slider{
+    height: 49vw;
+    max-height: 660px;
+    overflow: hidden;
+}*/
 
 
 
@@ -927,6 +946,11 @@ header {
     position: absolute;
     left: 55px;
     top: -10px;
+}
+.sub-cat li:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
 }
 .sub-cat li:first-child {
     margin-top: 0;

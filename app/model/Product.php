@@ -19,20 +19,12 @@ class Product extends Model {
          return $parent;
       }
    }
-//   public function getProductProps($category) {
-//      if (is_array($category)) {
-//         $props = [];
-//         if (isset($category['parentProps'])) {
-//            $props = array_merge($category['parentProps'],$props);
-//         }
-//         if (isset($category['children']['categories'])) {
-//            while ($category['children']['categories']){
-//               $props = array_merge($category['parentProps'],$props);
-//            }
-//         }
-//         return $props;
-//      }
-//   }
+   public function getSale() {
+         $sql = 'SELECT * FROM products WHERE sale = ?';
+         $params = [1];
+         $products = $this->findBySql($sql, $params);
+         return $products;
+   }
 
    public function isProduct($url) {
 
@@ -71,5 +63,18 @@ class Product extends Model {
       $product = $this->findBySql($sql, $param);
       return $product[0];
    }
-
+//   public function getProductProps($category) {
+//      if (is_array($category)) {
+//         $props = [];
+//         if (isset($category['parentProps'])) {
+//            $props = array_merge($category['parentProps'],$props);
+//         }
+//         if (isset($category['children']['categories'])) {
+//            while ($category['children']['categories']){
+//               $props = array_merge($category['parentProps'],$props);
+//            }
+//         }
+//         return $props;
+//      }
+//   }
 }

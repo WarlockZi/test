@@ -140,7 +140,28 @@ abstract class Model {
    }
 
    public function create($arr) {
+      $values = $arr['values'];
+      $table = $arr['table'];
+      $vals = $arr['values'];
+      $str = '';
+      $vs = '';
+      $valsCount = count($vals);
+      $k = 1;
+      $param = [];
+      foreach ($values as $i => $val) {
+         if ($k < $valsCount) {
+            $str .= "`$i`,";
+            $vs .= '?, ';
+            $k++;
+         } else {
+            $str .= "`$i`";
+            $vs .= '?';
 
+         }
+         array_push($param, $val);
+      }
+      $sql = "INSERT INTO {$table} ({$str}) VALUES ({$vs})";
+      return $this->insertBySql($sql, $param);
    }
 
    public function read($arr) {
@@ -174,10 +195,10 @@ abstract class Model {
          $param = [];
          foreach ($vals as $i => $val) {
             if ($k < $valsCount) {
-               $str .= "`$i`".'= ?, ';
+               $str .= "`$i`" . '= ?, ';
                $k++;
             } else {
-               $str .= "`$i`".'= ?';
+               $str .= "`$i`" . '= ?';
             }
             array_push($param, $val);
          }

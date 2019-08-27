@@ -69,6 +69,7 @@ $(function () {
       var parentId = $(this).parent().parent().parent().data('prop');
       debugger;
       var data = {
+         model: 'props',
          action: 'addPropValue',
          parentId: parentId
       };
@@ -79,29 +80,67 @@ $(function () {
       });
    });
 
+   async function sendPropName(params) {
+
+
+      let body = {
+         action: 'create',
+         name: 'dd',
+         table: 'props',
+         values: {
+            name: 'dd',
+         }
+      }
+      debugger;
+      var myHeaders = new Headers();
+      myHeaders.append('HTTP_X_REQUESTED_WITH','XMLHttpRequest');
+      let response = await fetch('/adminsc', {
+         method: 'POST',
+         body: 'param=' + JSON.stringify(body),
+         mode: 'no-cors',
+         headers: {HTTP_X_REQUESTED_WITH:'XMLHttpRequest'}, 
+      });
+      
+      return response
+
+
+   }
+
+
+
+
 // Добавить свойство
    $('.prop-head').on('click', '.add-prop', function () {
       var name = prompt('Введите название'),
       parent = $('.orange').data('id');
       if (!name)
          return;
+
       var param = {
-         action: 'addPropBlock',
-         name: name,
-         parent: parent
+         model:'prop',
+         action: 'create',
+         table: 'props',
+         values:{
+            name: name,
+         }
       };
+      debugger;
+
+//      sendPropName(param);
+
       var data = 'param=' + JSON.stringify(param);
 
       $.ajax({
          type: 'POST',
-         url: '/adminsc/prodtypes',
+         url: '/adminsc',
          data: data,
          success: function (obj) {
             debugger;
             var str = JSON.parse(obj);
             $('.property-block').append(str);
-         },
+         }
       });
+
    });
 
 
@@ -138,44 +177,12 @@ $(function () {
    });
 
 
-
-
-
-
-
-
-   function $_GET(key) {
-      var p = window.location.search;
-      p = p.match(new RegExp(key + '=([^&=]+)'));
-      return p ? p[1] : false;
-   }
-
    /**
     * 
     * @param {type} url глобальный
     * @param {type} data данные
     * @return {Promise}
     */
-
-   function post(url, data) {
-//      debugger;
-      return new Promise(function (resolve, reject) {
-         var req = new XMLHttpRequest();
-         req.open('POST', url);
-         req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-         req.setRequestHeader('Content-Type', 'application/json');
-         req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-         req.send('param=' + JSON.stringify(data));
-         req.onerror = function () {
-            reject(Error("Что-то пошло не так"));
-         };
-         req.onload = function () {
-            resolve(req.response);
-         };
-      });
-   }
-
-
 
 
 });
