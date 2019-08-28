@@ -50,4 +50,5 @@ main
 .image-height>div{
     font-weight: 600;
     padding: 7px;
+	min-height: 54px;
 }
