@@ -32,6 +32,7 @@ $(function () {
 
 // изменили название свойства
    $('.property-block').on('keyup', '.property input', function () {
+      
       var name = this.value,
       name = name.trim();
       url = '/adminsc/settings/props',

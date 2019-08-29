@@ -13,8 +13,6 @@
     <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
     <? $this::getMeta(); ?>
     <? $this::getCSS(); ?>
-    <link rel="stylesheet" type="text/css" href="/public/js/slick-1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="/public/js/slick-1.8.1/slick/slick-theme.css"/>
 
   </head>
 
@@ -23,10 +21,21 @@
 
     <div class="row">
       <input name="toggle-button" type="checkbox" id="toggle-button">
-      <label for="toggle-button">☰</label>
+      <label id="toggle-label" for="toggle-button">☰</label>
+
       <nav id="menu" class = "transition">
-        <h2>Menu</h2>
+        <div class="menu-wrap">
+          <div class="item">ОПЛАТА</div>
+          <div class="item">ДОСТАВКА</div>
+          <div class="item">СИСТЕМА СКИДОК</div>
+          <div class="item">СТАТЬИ</div>
+          <a href="/test/contacts">
+            <span class="icon-envelope">✉</span>
+            Напишите нам
+          </a>
+        </div>
       </nav>
+
       <div id="panel">
 
         <header>
@@ -36,59 +45,57 @@
             <div class="top-menu">
               <div class="row">
 
-                <a class="item" href="/about">О НАС</a>
-                <a class="item" href="/about/contacts">КОНТАКТЫ</a>
-                <div class="item">СТАТЬИ</div>
+                <div class="flex1">
+                  <a class="item flex1" href="/about">О НАС</a>
+                  <a class="item flex1" href="/about/contacts">КОНТАКТЫ</a>
+                </div>
 
-                <div class="user-menu">
-                    <? if (!isset($user)): ?>
-                     <a href="/user/login"></a>
-                  <? else: ?>
-                     <?
-                     if (isset($user)) {
-                        echo '<span class = "FIO">' . $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'] . '</span>';
-                     }
-                     ?>
-
-                     <div class="nav">
-                       <a  href="/user/edit" >Редактировать свой профиль</a>
-
-                       <?=
-                       in_array('1', $user['rights']) ? // редактировать
-                          '<a href="/edit/1">Редактировать тесты</a>
+                <div class="user-menu  flex1">
+                  <span class="row">
+                      <? if (!isset($user)): ?>
+                       <a href="/user/login">
+                         <span class = "icon"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="far" data-icon="user" class="svg-inline--fa fa-user fa-w-14" role="img" viewBox="0 0 448 512"><path fill="currentColor" d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"/></svg></span>
+                       </a>
+                    <? else: ?>
+                       <span class = "icon"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="far" data-icon="user" class="svg-inline--fa fa-user fa-w-14" role="img" viewBox="0 0 448 512"><path fill="currentColor" d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"/></svg></span>
+                       <?
+                       if (isset($user)) {
+                          echo '<span class = "FIO">' . $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'] . '</span>';
+                       }
+                       ?>
+                       <div class="nav">
+                         <a  href="/user/edit" >Редактировать свой профиль</a>
+                         <?=
+                         in_array('1', $user['rights']) ? // редактировать
+                            '<a href="/edit/1">Редактировать тесты</a>
                       <a href="/freetest/edit/41">Редактировать свободный тест</a>' : ''
-                       ?>
+                         ?>
 
-                       <?=
-                       in_array('2', $user['rights']) ? // проходить
-                          '<a href="/test/1">Проходить тесты</a>
+                         <?=
+                         in_array('2', $user['rights']) ? // проходить
+                            '<a href="/test/1">Проходить тесты</a>
                       <a href="/freetest/41">Свободный тест</a>' : '';
-                       ?>
+                         ?>
 
-                       <?=
-                       in_array('3', $user['rights']) ?
-                          '<a href="/adminsc">Admin</a>' : ''; // Admin
-                       ?>
+                         <?=
+                         in_array('3', $user['rights']) ?
+                            '<a href="/adminsc">Admin</a>' : ''; // Admin
+                         ?>
 
+                         <? if (isset($user)): ?>
+                            <a href="/user/logout">
+                              <span class="icon-logout">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 20 20">
+                                <path fill = '#e30000' d="M4 8v-2c0-3.314 2.686-6 6-6s6 2.686 6 6v0h-3v2h4c1.105 0 2 0.895 2 2v0 8c0 1.105-0.895 2-2 2v0h-14c-1.105 0-2-0.895-2-2v0-8c0-1.1 0.9-2 2-2h1zM9 14.73v2.27h2v-2.27c0.602-0.352 1-0.996 1-1.732 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.736 0.398 1.38 0.991 1.727l0.009 0.005zM7 6v2h6v-2c0-1.657-1.343-3-3-3s-3 1.343-3 3v0z"></path>
+                                </svg>
+                              </span>
+                              Выход
+                            </a>
+                         <? endif; ?>
+                       </div>
+                    <? endif; ?>
 
-
-                       <? if (isset($user)): ?>
-                          <a href="/test/contacts">
-                            <span class="icon-envelope">✉</span>
-                            Напишите нам
-                          </a>
-                          <a href="/user/logout">
-                            <span class="icon-logout">
-                              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 20 20">
-                              <path fill = '#e30000' d="M4 8v-2c0-3.314 2.686-6 6-6s6 2.686 6 6v0h-3v2h4c1.105 0 2 0.895 2 2v0 8c0 1.105-0.895 2-2 2v0h-14c-1.105 0-2-0.895-2-2v0-8c0-1.1 0.9-2 2-2h1zM9 14.73v2.27h2v-2.27c0.602-0.352 1-0.996 1-1.732 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.736 0.398 1.38 0.991 1.727l0.009 0.005zM7 6v2h6v-2c0-1.657-1.343-3-3-3s-3 1.343-3 3v0z"></path>
-                              </svg>
-                            </span>
-                            Выход
-                          </a>
-                       <? endif; ?>
-                     </div>
-                  <? endif; ?>
-
+                  </span>
                 </div>
 
 

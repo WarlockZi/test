@@ -6,6 +6,7 @@ main
 
 .info{
 	flex:3;
+	padding: 0 48px;
 }
 .white-space{
 	background-color: white;
