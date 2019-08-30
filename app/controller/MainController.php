@@ -59,10 +59,15 @@ class MainController Extends AppController {
    public function actionRequisites() {
 
    }
+   public function actionDiscount() {
+
+   }
+   public function actionDelivery() {
+
+   }
+   public function actionPayment() {
+   }
    public function actionContacts() {
-
-
-
    }
 
    public function actionOferta() {

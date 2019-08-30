@@ -24,10 +24,12 @@
       <label id="toggle-label" for="toggle-button">☰</label>
 
       <nav id="menu" class = "transition">
-        <div class="menu-wrap">
-          <div class="item">ОПЛАТА</div>
-          <div class="item">ДОСТАВКА</div>
-          <div class="item">СИСТЕМА СКИДОК</div>
+        <div class="menu-wrap column">
+          <a class="item" href="/about/payment">ОПЛАТА</a>
+          <a class="item" href="/about/delivery">ДОСТАВКА</a>
+          <a class="item" href="/about/discount">СИСТЕМА СКИДОК</a>
+
+          
           <div class="item">СТАТЬИ</div>
           <a href="/test/contacts">
             <span class="icon-envelope">✉</span>
