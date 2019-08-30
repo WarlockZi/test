@@ -37,7 +37,7 @@ class Adm_crmController extends AdminscController {
       $user = App::$app->user->getUser($id);
       $rights = App::$app->user->getRights();
 
-      $this->set(compact('user', 'rights'));
+      $this->set(compact('user','rights'));
    }
 
 }

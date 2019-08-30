@@ -26,11 +26,12 @@ abstract class Model {
    }
 
    public function clean_data($str) {
-      return mysqli_escape_string(strip_tags(trim($str)));
+//      $str =  mysqli_escape_string($str);
+      return strip_tags(trim($str));
    }
 
-   public function findAll($table) {
-      $sql = "SELECT * FROM " . $table ?: $this->table;
+   public function findAll($table, $sort='') {
+      $sql = "SELECT * FROM " . ($table ?: $this->table).($sort?" ORDER BY {$sort}":"");
       return $this->pdo->query($sql);
    }
 
@@ -156,7 +157,6 @@ abstract class Model {
          } else {
             $str .= "`$i`";
             $vs .= '?';
-
          }
          array_push($param, $val);
       }
@@ -164,8 +164,30 @@ abstract class Model {
       return $this->insertBySql($sql, $param);
    }
 
-   public function read($arr) {
-
+   public function update($arr) {
+      $table = $arr['table'];
+      $field = $arr['field'];
+      $fieldVal = $arr['val'];
+      $vals = $arr['values'];
+      $valsCount = count($vals);
+      $str = '';
+      $param = [];
+      $k = 1;
+      foreach ($vals as $i => $val) {
+         if ($k < $valsCount) {
+            $str .= "`$i`" . '= ?, ';
+            $k++;
+         } else {
+            $str .= "`$i`" . '= ?';
+         }
+         array_push($param, $val);
+      }
+      $sql = "UPDATE `{$table}` SET {$str} WHERE `{$field}` = ?";
+      array_push($param, $fieldVal);
+      if ($this->insertBySql($sql, $param)) {
+         return true;
+      }
+      return 'Видимо, ошибка в запросе!';
    }
 
    public function delete($arr) {
@@ -177,37 +199,6 @@ abstract class Model {
          $param = [$table, $field, $id];
          $sql = "DELETE FROM ? WHERE  ? = ?";
          return $this->insertBySql($sql, $param);
-      }
-      exit('Неправильный ключ !');
-   }
-
-   public function update($arr) {
-      $token = $arr['token'];
-      if (isset($token) && $token === $_SESSION['token']) {
-         $table = $arr['table'];
-         $field = $arr['field'];
-         $vl = $arr['val'];
-         $vals = $arr['values'];
-         $str = '';
-         $vs = [];
-         $valsCount = count($vals);
-         $k = 1;
-         $param = [];
-         foreach ($vals as $i => $val) {
-            if ($k < $valsCount) {
-               $str .= "`$i`" . '= ?, ';
-               $k++;
-            } else {
-               $str .= "`$i`" . '= ?';
-            }
-            array_push($param, $val);
-         }
-         $sql = "UPDATE `{$table}` SET {$str} WHERE `{$field}` = ?";
-         array_push($param, $vl);
-         if ($this->insertBySql($sql, $param)) {
-            return true;
-         }
-         return 'Видимо, ошибка в запросе!';
       }
       exit('Неправильный ключ !');
    }

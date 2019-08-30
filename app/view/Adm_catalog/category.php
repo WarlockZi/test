@@ -44,7 +44,7 @@ new app\view\widgets\menu\Menu([
 
 
 
-        <section id="content-tab1" class="user content-90 column">
+        <section id="content-tab1" class="admin-content column">
           <div>
             <strong>id :</strong>
             <span contenteditable id = 'id'><?= $category['id'] ?: ''; ?></span>
@@ -126,7 +126,7 @@ new app\view\widgets\menu\Menu([
 
         </section>
 
-        <section id="content-tab3" class="user content-90 column">
+        <section id="content-tab3" class="admin-content column">
 
           <div>
             <strong>title :</strong>

@@ -1,13 +1,8 @@
 $(function () {
-   var url = '/adminsc/settings';
+
 //         debugger;
-   var f = window.location.pathname.indexOf('adminsc/settings/');
-   switch (true) {
-      case (f > 0):
-         $('.module.settings').addClass('activ');
-         break;
-   }
-   // изменили название значения
+
+   // update name значения
    $('.property-block').on('keyup', '.value', function (event) {
       var name = this.innerText,
       id = $(this).data('id');
@@ -30,18 +25,28 @@ $(function () {
    });
 
 
-// изменили название свойства
+// update name свойства
    $('.property-block').on('keyup', '.property input', function () {
-      
+
       var name = this.value,
       name = name.trim();
       url = '/adminsc/settings/props',
-      id = $(this).parent().data('prop');
+      id = $(this).parent().data('prop'),
+      token= $('#token').val()  
+      ;
+      
       var param = {
-         action: 'updatePropName',
-         name: name,
-         id: id
+         token:token,
+         action: 'update',
+         model: 'prop',
+         table: 'props',
+         val: id,
+         values: {
+            name: name,
+         }
+
       };
+      debugger;
       setTimeout(function () {
          post(url, param)
       }, 800);
@@ -93,15 +98,15 @@ $(function () {
          }
       }
       debugger;
-      var myHeaders = new Headers();
-      myHeaders.append('HTTP_X_REQUESTED_WITH','XMLHttpRequest');
+//      var myHeaders = new Headers();
+//      myHeaders.append('HTTP_X_REQUESTED_WITH','XMLHttpRequest');
       let response = await fetch('/adminsc', {
          method: 'POST',
          body: 'param=' + JSON.stringify(body),
          mode: 'no-cors',
-         headers: {HTTP_X_REQUESTED_WITH:'XMLHttpRequest'}, 
+         headers: {HTTP_X_REQUESTED_WITH: 'XMLHttpRequest'},
       });
-      
+
       return response
 
 
@@ -118,10 +123,10 @@ $(function () {
          return;
 
       var param = {
-         model:'prop',
+         model: 'prop',
          action: 'create',
          table: 'props',
-         values:{
+         values: {
             name: name,
          }
       };

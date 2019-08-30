@@ -81,7 +81,7 @@ class Adm_settingsController extends AdminscController {
    public function actionProps() {
 
 
-      $catProps = App::$app->product->findAll('props');
+      $catProps = App::$app->product->findAll('props',"`sort`");
       foreach ($catProps as $k => $v) {
          $catProps[$k]['val'] = explode(',', $catProps[$k]['val']);
       };

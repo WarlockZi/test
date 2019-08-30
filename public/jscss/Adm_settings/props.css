@@ -57,7 +57,7 @@
     font-weight: 100;
     display: flex;
     padding: 0 18px;
-	padding: 10px 20px;
+    padding: 4px 17px;
 }
 .property:hover{
 	background: #ccc;
@@ -67,7 +67,7 @@
 	transition: .3s;
     padding: 10px 5px;
     min-width: 140px;
-	max-width: 380px;
+	/*max-width: 380px;*/
 	position: relative;
 
 	/*margin-top: 20px;*/
@@ -116,3 +116,48 @@
     color: #343436;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
+
+/*
+.multy{
+    font-size: 18px;
+    font-weight: 100;
+}
+.property{
+    padding: 10px 5px;
+    min-width: 140px;
+    display: flex;
+    margin-top: 20px;
+}
+.prop.prod-type-title 
+{
+    background:#123aff;	
+}
+.property-block{
+    display:flex;
+    flex-flow: wrap column;
+    padding-left: 12px;
+
+}
+.prop-head{
+    display:flex;
+    background: #c7c7c7;
+    padding: 10px;
+    margin-bottom: 12px;
+    justify-content: space-between;
+}
+.left-menu{
+    width:250px;
+    padding: 10px;
+}
+
+.tabs>section>.flex {
+    display:flex;
+}
+
+.props{
+    display: flex;
+    flex-flow:column;
+}
+.props>div{
+    display: flex;
+}*/

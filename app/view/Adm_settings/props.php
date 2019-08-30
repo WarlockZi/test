@@ -18,14 +18,12 @@
       <div class="parent-prop">
         Свойства
       </div>
-      <div class="add-prop">
-        Добавить свойство
-      </div>
 
     </div>
 
 
     <div class="property-block">
+      <input type="hidden" id="token" value="<?= $_SESSION['token'] ?>">
         <? foreach ($catProps as $key): ?>
          <div class="property" data-prop = '<?= $key['id'] ?>'>
            <input size="35" type="text" value="<?= $key['name'] ?>">

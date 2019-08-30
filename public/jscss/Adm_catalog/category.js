@@ -1,5 +1,5 @@
 $(function () {
-   var url = '/adminsc/catalog';
+   
 // При закрытии окна выбора свойств
    $('body').on('click', '.messageClose', function () {
       debugger;

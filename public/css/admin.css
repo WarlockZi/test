@@ -1,3 +1,33 @@
+
+
+
+/*//////////////////////////////*/
+/*/////  ADMIN FLEX TABLE  //////*/
+/*//////////////////////////////*/
+
+.admin-flex-table {
+	padding: 10px;
+}
+.admin-flex-table .row {
+	padding: 5px;
+}
+.admin-flex-table .row strong{
+	padding-right: 5px;
+	display: flex;
+	flex:1;
+	justify-content: flex-end;
+}
+.admin-flex-table .row div,
+.admin-flex-table .row span,
+.admin-flex-table .row select,
+.admin-flex-table .row input
+{
+	flex:1;
+	justify-content: flex-start;
+	/*padding: 5px;*/
+}
+
+
 /*//////////////////////////////*/
 /*////////   PIC  /////////*/
 /*//////////////////////////////*/
@@ -105,8 +135,8 @@ menu{
     padding-left: 10px;
 }
 .prop{
-    display:flex;
-    flex-flow:column;
+/*    display:flex;
+    flex-flow:column;*/
     justify-content: space-between;
     position: relative;
     flex:1;
@@ -214,51 +244,6 @@ menu{
 
 
 
-
-.multy{
-    font-size: 18px;
-    font-weight: 100;
-}
-.property{
-    padding: 10px 5px;
-    min-width: 140px;
-    display: flex;
-    /*margin-top: 20px;*/
-}
-.prop.prod-type-title 
-{
-    background:#123aff;	
-}
-.property-block{
-    display:flex;
-    flex-flow: wrap column;
-    padding-left: 12px;
-
-}
-.prop-head{
-    display:flex;
-    background: #c7c7c7;
-    padding: 10px;
-    margin-bottom: 12px;
-    justify-content: space-between;
-}
-.left-menu{
-    width:250px;
-    padding: 10px;
-}
-
-.tabs>section>.flex {
-    display:flex;
-}
-
-.props{
-    display: flex;
-    flex-flow:column;
-}
-.props>div{
-    display: flex;
-}
-
 /* Базовый контейнер табов */
 .tabs {
     min-width: 320px;
@@ -285,24 +270,7 @@ menu{
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
 }
-/* Описываем анимацию свойства opacity */
 
-@-webkit-keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
 /* Прячем чекбоксы */
 .tabs>input {
     display: none;
@@ -1044,7 +1012,6 @@ body{
 .nav a{
     display: none;
     padding:5px 10px;
-
 }
 
 .column.categories{
@@ -1081,6 +1048,14 @@ body{
     transition: all 1s;
 }
 
+
+
+
+/*//////////////////////////////*/
+/*////////   GRID   /////////*/
+/*//////////////////////////////*/
+
+
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1098,12 +1073,12 @@ body{
     padding-top: 20px;
     /*position: relative;*/
 }
-.user.content-90 *{
+.admin-content *{
     display: flex;
     padding: 3px;
     align-items: flex-start;
 }
-.user.content-90 div *{
+.admin-contentdiv *{
     flex: 2;
 }
 input[contenteditable],
@@ -1121,19 +1096,19 @@ span[contenteditable]:hover,
     box-shadow: 0 0 2px 2px #71ffff ;
 }
 
-.user.content-90 strong
+.admin-contentstrong
 {
     flex: 1;
     justify-content: flex-end;
     margin-right: 25px;
     align-items: flex-end;
 }
-.user.content-90 div input
+.admin-contentdiv input
 {
     justify-content: flex-start;
 }
-.user.content-90 .btnadd-user,
-.user.content-90 .btnupdate-user
+.admin-content.btnadd-user,
+.admin-content.btnupdate-user
 {
     width: 180px;
     height: 27px;
@@ -1289,15 +1264,6 @@ header {
     position: relative;
 }
 
-footer {
-    flex: 0 0 auto;
-    justify-content: space-between;
-    background-image: url(/pic/header-big.png);
-}
-
-footer p{
-    padding: 0 15px;
-}
 
 .logo{
     flex: 1;
@@ -1531,6 +1497,15 @@ footer p{
     border-right: 1px #ddd solid;
 }
 
+footer {
+    flex: 0 0 auto;
+    justify-content: space-between;
+    background-image: url(/pic/header-big.png);
+}
+
+footer p{
+    padding: 0 15px;
+}
 @media screen and (max-width: 680px) {
     .tabs>label {
         font-size: 0;
