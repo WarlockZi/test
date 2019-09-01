@@ -66,12 +66,12 @@ $(function () {
 
 
 // создание нового селекта
-   $('.properties.column').on('change', '.new-prop', function (event) {
+   $('.properties.column').on('change', '.new-prop', function () {
       let val = $(this).find('option:selected').val();
       let clone = $(this).clone(true);
       $(this).removeClass('new-prop');
       $(clone).find('option[value = ' + val + ']').remove();
-      debugger;
+//      debugger;
       $('.properties.column option[value= ' + val + ']').not($(this).find('option:selected')).remove();
       $(clone).insertBefore($('.add-property'));
    });

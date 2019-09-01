@@ -50,6 +50,10 @@
                 <span id = 'id' <?= $product['id'] ?: ''; ?>><?= $product['id'] ?: ''; ?></span>
               </div>
               <div class = 'prop row'>
+                <strong>Активный  :</strong>
+                <input type="checkbox" id = 'act' <?= $product['act']=='Y' ?'ckecked': ''; ?>>
+              </div>
+              <div class = 'prop row'>
                 <strong>Наименование :</strong>
                 <span contenteditable id = 'name'><?= $product['name'] ?: ''; ?></span>
               </div>

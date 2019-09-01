@@ -166,8 +166,8 @@ abstract class Model {
 
    public function update($arr) {
       $table = $arr['table'];
-      $field = $arr['field'];
-      $fieldVal = $arr['val'];
+      $pkey = $arr['pkey'];
+      $pkeyVal = $arr['pkeyVal'];
       $vals = $arr['values'];
       $valsCount = count($vals);
       $str = '';
@@ -182,8 +182,8 @@ abstract class Model {
          }
          array_push($param, $val);
       }
-      $sql = "UPDATE `{$table}` SET {$str} WHERE `{$field}` = ?";
-      array_push($param, $fieldVal);
+      $sql = "UPDATE `{$table}` SET {$str} WHERE `{$pkey}` = ?";
+      array_push($param, $pkeyVal);
       if ($this->insertBySql($sql, $param)) {
          return true;
       }

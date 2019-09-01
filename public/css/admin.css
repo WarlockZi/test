@@ -6,25 +6,25 @@
 /*//////////////////////////////*/
 
 .admin-flex-table {
-	padding: 10px;
+    padding: 10px;
 }
 .admin-flex-table .row {
-	padding: 5px;
+    padding: 5px;
 }
 .admin-flex-table .row strong{
-	padding-right: 5px;
-	display: flex;
-	flex:1;
-	justify-content: flex-end;
+    padding-right: 5px;
+    display: flex;
+    flex:1;
+    justify-content: flex-end;
 }
 .admin-flex-table .row div,
 .admin-flex-table .row span,
 .admin-flex-table .row select,
 .admin-flex-table .row input
 {
-	flex:1;
-	justify-content: flex-start;
-	/*padding: 5px;*/
+    flex:1;
+    justify-content: flex-start;
+    /*padding: 5px;*/
 }
 
 
@@ -134,13 +134,13 @@ menu{
 .val-item .value{
     padding-left: 10px;
 }
-.prop{
-/*    display:flex;
-    flex-flow:column;*/
+/*.prop{
+    display:flex;
+    flex-flow:column;
     justify-content: space-between;
     position: relative;
     flex:1;
-}
+}*/
 .val{
     padding: 10px;
     flex:1;
@@ -698,7 +698,7 @@ input
     height: 20px;
     background-color: slategray;
     border-radius: 3px;
-	margin: auto 0;
+    margin: auto 0;
 }
 .admin-actions label a{
     padding: 3px;
@@ -1086,7 +1086,7 @@ span[contenteditable],
 .category-properties select
 {
     border: 1px #71ffff solid;
-	padding: 5px;
+    padding: 5px;
 }
 input[contenteditable]:hover,
 span[contenteditable]:hover,
@@ -1136,7 +1136,7 @@ span[contenteditable]:hover,
     display: block;
 }
 .separator.btns{
-    position: absolute;
+    position: sticky;
     bottom: 0;
 }
 
@@ -1313,7 +1313,7 @@ header {
 
 .properties {
     padding: 5px;
-	margin: 0 0 0 15px;
+    margin: 0 0 0 15px;
 }
 .cat-prop{
     padding: 10px 0;
