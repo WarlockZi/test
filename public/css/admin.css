@@ -313,6 +313,7 @@ menu{
 #tab1:checked~#content-tab1, #tab2:checked~#content-tab2, #tab3:checked~#content-tab3, #tab4:checked~#content-tab4 {
     display: flex;
     flex-direction: column;
+	padding-top: 10px;
 }
 /* Убираем текст с переключателей 
 * и оставляем иконки на малых экранах
@@ -1049,6 +1050,9 @@ body{
 }
 
 
+h2{
+	margin: 0;
+}
 
 
 /*//////////////////////////////*/
@@ -1059,15 +1063,30 @@ body{
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /*border-top: 1px solid #d5d5d5;*/
-    /*border-right: 1px solid #d5d5d5;*/
+	background-color: white;
 }
 
-.grid >span {
+.grid >span, 
+.grid5 >span
+{
     padding: 8px 4px;
-    /*border-left: 1px solid #d5d5d5;*/
-    /*border-bottom: 1px solid #d5d5d5;*/
+	display: flex;
 }
+
+.grid5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+.grid-head{
+	font-weight: 600;
+	background-color: #ccc;
+	text-shadow: 2px 1px 1px white; 
+	    border-left: #e1e1e1 1px solid;
+}
+
+
+
+srong{font-weight: 600;}
 .user.content-90{
     height: 100%;
     padding-top: 20px;

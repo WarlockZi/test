@@ -1,5 +1,49 @@
 $(function () {
-   
+
+   function obj(action) {
+      return {
+         token: $('#token').val(),
+         url: '/adminsc',
+         model: 'category',
+         table: 'category',
+         action: action ? action : 'update',
+         pkey: 'id',
+         pkeyVal: 'nul',
+         values: {}
+      }
+   }
+   ;
+
+// изменение  / добавление названия значения 
+   $('.category-update-btn').on('click',function () {
+
+      var Obj = new obj('update');
+      Obj.pkeyVal = $('#id').text();
+
+      Obj.values.name = $('#name').text();
+      Obj.values.alias = $('#alias').text();
+      Obj.values.title = $('#title').text();
+      Obj.values.keywords = $('#keywords').text();
+      Obj.values.description = $('#description').text();
+      Obj.values.core = $('#core').text();
+      Obj.values.text = $('#text').text();
+      var props = $('.properties select option:selected');
+//      debugger;
+      var prop = [];
+      
+      for (let val of props) {
+         if (val.value)
+            prop.push(val.value);
+      }
+
+      prop = uniq(prop);
+      Obj.values.props = prop.join(',');
+//      debugger;
+      setTimeout(function () {
+         post(Obj.url, Obj)
+      }, 800);
+   });
+
 // При закрытии окна выбора свойств
    $('body').on('click', '.messageClose', function () {
       debugger;
@@ -75,85 +119,5 @@ $(function () {
       $('.properties.column option[value= ' + val + ']').not($(this).find('option:selected')).remove();
       $(clone).insertBefore($('.add-property'));
    });
-// изменение селекта
-//$('.properties.column select').chosen().on('change', function(evt, params){
-//   let slef = $(this);
-//   let val = $(this).val();
-//   let target = e.target;
-//   debugger;
 
-//   $("select").chosen().on("change", function (evt, params) {
-////    if (params.selected === "Portugal") {
-//      var previous = $(this).data("previous") || "";
-//      debugger;
-//      $(this).val(previous).trigger("chosen:updated");
-////    } else {
-//      $(this).data("previous", params.selected);
-////    }
-//   });
-//   $('.properties.column select').append(slef);
-//   l$('.properties.column option[value= '+val+']').not($(this).find('option:selected')).remove();
-//   $(clone).insertBefore($('.add-property'));
-//}); 
-//<H1>
-//Костюмы для ИТР от производителя спецодежды</H1>
-//Подберем для Ваших работников Костюмы для ИТР. Можно нанести логотипы и нашивки по необходимости
-
-   $('.category-update-btn').on('click', function (event) {
-
-      let id = $('#id').text(),
-      token = $('#token').val(),
-      name = $('#name').text(),
-      alias = $('#alias').text(),
-      title = $('#title').text(),
-      keywords = $('#keywords').text(),
-      description = $('#description').text(),
-      core = $('#core').text(),
-      text = $('#text').text(),
-      props = $('.properties select option:selected'),
-      prop = []
-      ;
-      for (let val of props) {
-         if (val.value)
-            prop.push(val.value);
-      }
-
-      prop = uniq(prop);
-      prop = prop.join(',');
-      debugger;
-      let param = 'param=' + JSON.stringify({
-         'token': token,
-         'action': 'update',
-         'model': 'category',
-         'table': 'category',
-         'field': 'id',
-         'val': id,
-         values: {
-            'name': name,
-            'alias': alias,
-            'props': prop,
-            'title': title,
-            'keywords': keywords,
-            'description': description,
-            'core': core,
-            'text': text
-         },
-      });
-      $.ajax({
-         url: '/adminsc/catalog',
-         method: 'POST',
-         data: param,
-         success: function (res) {
-            debugger;
-            if (res===true) {
-               alert('Успешно сохранено.');
-               
-            }
-         },
-         error: function (res) {
-            debugger;
-            let d = res;
-         },
-      });
-   });
 });

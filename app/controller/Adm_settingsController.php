@@ -80,13 +80,23 @@ class Adm_settingsController extends AdminscController {
 
    public function actionProps() {
 
-
-      $catProps = App::$app->product->findAll('props',"`sort`");
+      $catProps = App::$app->product->findAll('props', "`sort`");
       foreach ($catProps as $k => $v) {
          $catProps[$k]['val'] = explode(',', $catProps[$k]['val']);
       };
-
       $this->vars['catProps'] = $catProps;
+//      View::setJsCss(['js' => '/public/js/sortable.min.js']);
+   }
+
+   public function actionProp() {
+      if (isset($_GET['id']) && $_GET['id']) {
+         $id = $_GET['id'];
+      }
+      $prop = App::$app->prop->findOne($id);
+      $prop['val'] = $prop['val']?explode(',', $prop['val']):[];
+
+      $this->vars['prop'] = $prop;
+//      View::setJsCss(['js' => '/public/js/sortable.min.js']);
    }
 
 }

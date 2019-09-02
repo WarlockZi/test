@@ -66,12 +66,17 @@
 {
     background:#123aff;	
 }
-.property-block{
-    width: 40%;
-    display:flex;
-    flex-flow: wrap column;
-    padding-left: 12px;
+.property-block .edit:before{
+	color: #111;
+    padding: 6px;
+    background-color: #c1efef;
+    border-radius: 5px;
+	border-bottom: 1px #ddd solid;
+	border-right: 1px #ddd solid;
+}
+.property-block .edit:hover:before {
 
+	box-shadow: 1px 2px 4px 0px;
 }
 .prop-head{
     display:flex;

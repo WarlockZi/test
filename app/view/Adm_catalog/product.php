@@ -51,7 +51,10 @@
               </div>
               <div class = 'prop row'>
                 <strong>Активный  :</strong>
-                <input type="checkbox" id = 'act' <?= $product['act']=='Y' ?'ckecked': ''; ?>>
+                <span>
+                  <input type="checkbox" id = 'act' <?= $product['act'] == 'Y' ? 'ckecked' : ''; ?>>
+
+                </span>
               </div>
               <div class = 'prop row'>
                 <strong>Наименование :</strong>
@@ -64,7 +67,7 @@
             </div>
             <div class="right  column">
               <div>
-                <img src = "<?= '/pic' . $product['dpic'] ?: ''; ?>">
+                <img id = 'dpic' dpic = '<?= $product['dpic'] ?: ''; ?>' src = "<?= '/pic' . $product['dpic'] ?: ''; ?>">
               </div>
             </div>
           </div>
