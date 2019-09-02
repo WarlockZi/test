@@ -16,13 +16,14 @@
     display: flex;
     flex:1;
     justify-content: flex-end;
+    font-size: 14px;
 }
 .admin-flex-table .row div,
 .admin-flex-table .row span,
 .admin-flex-table .row select,
 .admin-flex-table .row input
 {
-    flex:1;
+    flex:3;
     justify-content: flex-start;
     /*padding: 5px;*/
 }
@@ -313,7 +314,8 @@ menu{
 #tab1:checked~#content-tab1, #tab2:checked~#content-tab2, #tab3:checked~#content-tab3, #tab4:checked~#content-tab4 {
     display: flex;
     flex-direction: column;
-	padding-top: 10px;
+    padding: 15px;
+        min-height: 100vh;
 }
 /* Убираем текст с переключателей 
 * и оставляем иконки на малых экранах
@@ -720,7 +722,7 @@ input
 
 }
 .adm-submenu{
-    width: 180px;
+       max-width: 180px;
     background-image: url(/pic/submenu-bg.png);
     border-right: 1px solid #ddd;
 }
@@ -1051,7 +1053,7 @@ body{
 
 
 h2{
-	margin: 0;
+    margin: 0;
 }
 
 
@@ -1063,14 +1065,14 @@ h2{
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-	background-color: white;
+    background-color: white;
 }
 
 .grid >span, 
 .grid5 >span
 {
     padding: 8px 4px;
-	display: flex;
+    display: flex;
 }
 
 .grid5 {
@@ -1078,10 +1080,10 @@ h2{
     grid-template-columns: repeat(5, 1fr);
 }
 .grid-head{
-	font-weight: 600;
-	background-color: #ccc;
-	text-shadow: 2px 1px 1px white; 
-	    border-left: #e1e1e1 1px solid;
+    font-weight: 600;
+    background-color: #ccc;
+    text-shadow: 2px 1px 1px white; 
+    border-left: #e1e1e1 1px solid;
 }
 
 
