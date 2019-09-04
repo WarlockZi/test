@@ -25,13 +25,22 @@
 
       <nav id="menu" class = "transition">
         <div class="menu-wrap column">
+          <a class="item" href="/perchatki-rezinovye-tekhnicheskie">перчатки</a>
+          <a class="item" href="/about/payment">бахилы</a>
+          <a class="item" href="/about/payment">сиз</a>
+          <a class="item" href="/about/payment">шприцы</a>
+          <a class="item" href="/about/payment">обувь</a>
+          <a class="item" href="/about/payment">спецодежда</a>
+          <a class="item" href="/about/payment">акции</a>
+
           <a class="item" href="/about/payment">ОПЛАТА</a>
           <a class="item" href="/about/delivery">ДОСТАВКА</a>
           <a class="item" href="/about/discount">СИСТЕМА СКИДОК</a>
+          <a class="item" href="/about/contacts">Контакты</a>
 
-          
+
           <div class="item">СТАТЬИ</div>
-          <a href="/test/contacts">
+          <a href="/about/contact-us">
             <span class="icon-envelope">✉</span>
             Напишите нам
           </a>
@@ -47,7 +56,7 @@
             <div class="top-menu">
               <div class="row">
 
-                <div class="flex1">
+                <div class="contacts flex1">
                   <a class="item flex1" href="/about">О НАС</a>
                   <a class="item flex1" href="/about/contacts">КОНТАКТЫ</a>
                 </div>

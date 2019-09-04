@@ -34,13 +34,15 @@ $(function () {
       var u = uniq(props);
       u.map((i) => {
          var d = i;
-         var el='' ;
-      debugger;
-         if ( el = i.querySelector('select')) {
-            prop.el.name=el.selected;
-         }else if(el = i.querySelector('input')){
+         var el = '';
+         debugger;
+         if (el = i.querySelector('select')) {
+            prop.el.name = el.selected;
+         }
+         else if (el = i.querySelector('input')) {
 //              prop.i.querySelector('span'):'dd';
-         };
+         }
+         ;
       });
 
       for (let val of props) {
@@ -56,61 +58,137 @@ $(function () {
       }, 800);
    });
 
-//   
-//   $('#product-update-btn').on('click', function () {
-//      let id = $('#id').text(),
-//      token = $('#token').val(),
-//      name = $('#name').text(),
-//      alias = $('#alias').text(),
-//      title = $('#title').text(),
-//      keywords = $('#keywords').text(),
-//      description = $('#description').text(),
-//      core = $('#core').text(),
-//      dtxt = $('#text').text(),
-//      props = $('.properties [data-type]'),
-//      prop = ({})
-//      ;
-//      for (let val of props) {
-//         if (val.value) {
-////            debugger;
-//            if (val.getAttribute('data-type') == 'select') {
-//               let id = val.getAttribute('data-id');
-//               let selected = $(val).find(':selected');
-//               prop[id] = selected.val();
-//            }
-//            else if (val.getAttribute('data-type') == 'text') {
-//               let id = val.getAttribute('data-id');
-//               prop[id] = val.value;
-//            }
-//            else if (val.getAttribute('data-type') == 'multi-select') {
-//               let id = val.getAttribute('data-id');
-//               let options = $(val).find('option:selected');
-//               let obj = [];
-//               for (let opt of options) {
-//                  obj.push(opt.value);
-//               }
-//               prop[id] = obj.join(',');
-//
-//            }
-//         }
-//      }
-////      debugger;
-//      prop = JSON.stringify(prop);
-//
-//
-//         values: {
-//            'name': name,
-//            'alias': alias,
-//            'props': prop,
-//            'title': title,
-//            'keywords': keywords,
-//            'description': description,
-//            'core': core,
-//            'dtxt': dtxt
-//         },
-//      });
-////      debugger;
+
+   function check() {
+
+      var holder = document.getElementsByClassName('holder'),
+      tests = {
+         filereader: typeof FileReader != 'undefined',
+         dnd: 'draggable' in document.createElement('span'),
+         formdata: !!window.FormData,
+         progress: "upload" in new XMLHttpRequest
+      },
+      support = {
+         filereader: document.querySelectorAll('.filereader'),
+         formdata: document.querySelectorAll('.formdata'),
+         progress: document.querySelectorAll('.progress')
+      },
+      acceptedTypes = {
+         'image/png': true,
+         'image/jpeg': true,
+         'image/gif': true
+      },
+      progress = document.getElementById('uploadprogress'),
+      fileupload = document.getElementById('upload'),
+      message = "filereader formdata progress".split(' '); // преобразует строку в массив, разбив по сепаратору
 
 
-//   $('.menu').accordion();
+      for (var key in message) { //(function (api) 
+         if (tests[message[key]] === false) {
+            support[message[key]].className = 'fail'; // присвоим класс 
+         }
+         else {
+            collItem = support[message[key]];
+            for (var key1 = 0; key1 < collItem.length; ++key1) {
+               var item = collItem[key1]; // Вызов myNodeList.item(i) необязателен в JavaScript
+               item.className = 'hidden';
+            }
+         }
+      }
+
+      if (tests.dnd) {
+
+         for (i = 0; i < holder.length; i++) {
+            holder[i].ondragover = function () {
+//               debugger;
+               this.classList.add('hover');
+               return false;
+            };
+            holder[i].ondragleave = function () {
+               this.classList.remove('hover');
+               return false;
+            };
+            holder[i].ondrop = function (e) {
+//               this.className = 'holder';
+               e.preventDefault();
+               readfiles(e.dataTransfer.files, this);
+            };
+         }
+
+      }
+      else {
+         fileupload.className = 'hidden'; // прячем кнопку загрузки
+         fileupload.querySelector('input').onchange = function () {// загружаем файлы
+            readfiles(this.files);
+         };
+      }
+
+      function previewfile(file, elem) {
+         if (tests.filereader === true && acceptedTypes[file.type] === true) {
+            var imageContainer = elem, //document.querySelector('#'+fid+' [data-prefix = "'+pref+'"]');
+            reader = new FileReader();
+            reader.onload = function (event) {
+
+               if (!imageContainer.getElementsByTagName('img').length == 0) {
+                  var elem = imageContainer.getElementsByTagName('img')[0];
+                  elem.remove();
+               }
+               var image = new Image();
+               if (imageContainer.getAttribute('data-prefix') == 'q') {
+                  image.id = 'imq' + imageContainer.getAttribute('id');
+               }
+               else if (imageContainer.getAttribute('data-prefix') == 'a') {
+                  image.id = 'ima' + imageContainer.getAttribute('id');
+               }
+               image.src = event.target.result;
+               image.width = 150; // a fake resize
+               imageContainer.appendChild(image);
+            };
+            reader.readAsDataURL(file);
+         }
+         else {
+            holder.innerHTML += '<p>Загружен ' + file.name + ' ' + (file.size ? (file.size / 1024 | 0) + 'K' : '');
+            console.log(file);
+         }
+      }
+
+      function readfiles(files, elem) {
+
+         var formData = tests.formdata ? new FormData() : null;
+         for (var i = 0; i < files.length; i++) {
+            var pref = elem.getAttribute('data-prefix');
+            var fid = elem.id;
+            if (tests.formdata) {
+               formData.append('file', files[i]);
+//window.alert( files[i]['name']);
+               previewfile(files[i], elem);
+            }
+         }
+         formData.append('pref', pref);
+         formData.append('fid', fid);
+// now post a new XHR request
+         if (tests.formdata) {
+            var xhr = new XMLHttpRequest();
+//            controller = 'test';
+//            if (window.location.pathname.indexOf('freetest') + 1) {
+//               controller = 'freetest';
+//            }
+//            xhr.open('POST', `${PROJ}/${controller}/edit`, true);
+            xhr.open('POST', `/adminsc`, true);
+            xhr.send(formData);
+            xhr.onreadystatechange = function () {
+               if (xhr.readyState != 4) {
+                  return
+               }
+               if (xhr.status != 200) {
+                  alert(xhr.status + ': Ошибка' + xhr.statusText); // пример вывода: 404: Not Found
+               }
+            }
+         }
+      }
+
+   }
+
+   check();
+
 });

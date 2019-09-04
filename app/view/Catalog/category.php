@@ -44,11 +44,9 @@
                   <div class="action-labels">
 
                   </div>
-                  <div class="pic-container">
                     <div class="pic">
                       <img src="/pic<?= $product['dpic'] ?: '/srvc/nophoto-min.jpg' ?>" alt="">
                     </div>
-                  </div>
 
                   <div class="price-block">
                     <span class="final price">550 р </span>

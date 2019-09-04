@@ -115,13 +115,11 @@
 **************************/
 
 
-.pic-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
+/********     pic-box    *******/
+
+
 .pic {
-    width: 100%;
     height: 160px;
 }
 .pic img{
@@ -129,6 +127,10 @@
     height: 100%;
     object-fit: contain;
 }
+
+/*******     layout    ******/
+
+
 h1{
 	font-family: Intro,sans-serif;
 }
