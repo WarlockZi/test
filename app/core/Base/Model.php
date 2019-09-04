@@ -101,15 +101,15 @@ abstract class Model {
       $breadcrumbs = "<a href = '/'>Главная</a>";
       if ($type == 'category') {
          foreach ($parents as $parent) {
-            $breadcrumbs .= "<a href = '/{$parent['alias']}'>{$parent['name']}</a>";
+            $breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
          }
-         return $breadcrumbs . "<span>{$category['name']}</span>";
+         return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
       } else {
          $parents = array_reverse($parents);
          foreach ($parents as $parent) {
-            $breadcrumbs .= "<a href = '/{$parent['alias']}'>{$parent['name']}</a>";
+            $breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
          }
-         return $breadcrumbs . "<span>{$category['name']}</span>";
+         return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
       }
    }
 

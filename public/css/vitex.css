@@ -307,7 +307,7 @@ a:hover,
 
 .site{
     position: relative;
-    margin: 90px;
+    /*margin: 90px;*/
 }
 .site .wrap{
     margin: 0 auto;
@@ -1064,8 +1064,17 @@ footer a
 
 
 /*************************
+*******      Category    ******
+**************************/
+
+.right-block .description{
+	padding: 10px;
+    margin-top: 50px;
+}
+/*************************
 *******      PRODUCT    ******
 **************************/
+
 /***** Карточка товара */
 
 .product-container{
@@ -1079,18 +1088,6 @@ footer a
     max-width: 22%;
 }
 
-/*.product{
-    transition: .6s;
-    transform-style: preserve-3d;
-    position: relative;
-    height: 100%;
-}*/
-/*.product-container:hover .product,
-.product:hover,
-.product-container.hover .product{
-    transform: rotatey(180deg);
-    backface-visibility: hidden;
-}*/
 
 .link{
     display: block;

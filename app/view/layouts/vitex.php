@@ -267,15 +267,15 @@
                       <li>
                         <a href="/trikotazhnye-izdeliya">трикотажные изделия</a>
                       </li>
+                      <li>
+                        <a href="/obraztsy">образцы</a>
+                      </li>
                     </ul>
                   </div>
                   <div class = 'h-cat'>Акции
                     <ul>
                       <li>
                         <a href="/inventar">инвентарь</a>
-                      </li>
-                      <li>
-                        <a href="/obraztsy">образцы</a>
                       </li>
                       <li>
                         <a href="/rasprodazha">распродажа</a>
