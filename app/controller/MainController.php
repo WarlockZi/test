@@ -12,16 +12,25 @@ class MainController Extends AppController {
 
    public function __construct($route) {
       parent::__construct($route);
+
       $list = App::$app->cache->get('list');
       if (!$list) {
          $list = App::$app->category->getInitCategories();
          App::$app->cache->set('list', $list, 30);
       }
+
+      $sale = App::$app->cache->get('sale');
+      if (!$sale) {
+         $sale = App::$app->product->getSale();
+         App::$app->cache->set('sale', $sale, 30);
+      }
+
       $this->layout = 'vitex';
-//      $routeView= ['js'=> $this->route,'view'=> $this->view];
-//      View::setJsCss($routeView);
+
       View::setJsCss(['css'=>'/public/css/vitex.css']);
-      $this->set(compact('list', 'css'));
+      View::setJsCss(['js'=> $this->route, 'view'=>$this->view]);
+      View::setJsCss(['css'=> $this->route, 'view'=>$this->view]);
+      $this->set(compact('sale','list'));
    }
 
    public function actionIndex() {
@@ -50,10 +59,15 @@ class MainController Extends AppController {
    public function actionRequisites() {
 
    }
+   public function actionDiscount() {
+
+   }
+   public function actionDelivery() {
+
+   }
+   public function actionPayment() {
+   }
    public function actionContacts() {
-
-
-
    }
 
    public function actionOferta() {

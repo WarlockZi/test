@@ -13,23 +13,25 @@ class AdminscController extends AppController {
    public function __construct($route) {
       parent::__construct($route);
 
-      $this->auth();
-      $this->layout = 'admin';
-
-      View::setJsCss(['js'=>'/public/js/admin.js']);
-      View::setJsCss(['css'=>'/public/css/admin.css']);
 
       if ($this->isAjax()) {
          if (isset($_POST['param'])) {
             $arr = json_decode($_POST['param'], true);
-            $func = $arr['action'];
-            $model = $arr['model'] ?: 'adminsc';
-            if (App::$app->{$model}->$func($arr)) {
-               exit('true');
+            if (isset($arr['token']) && $arr['token']) {
+               $func = $arr['action'];
+               $model = $arr['model'] ?: 'adminsc';
+               if (App::$app->{$model}->$func($arr)) {
+                  exit('true');
+               }
             }
-               exit(FALSE);
+            exit(FALSE);
          }
       }
+      $this->auth();
+      $this->layout = 'admin';
+
+      View::setJsCss(['js' => '/public/js/admin.js']);
+      View::setJsCss(['css' => '/public/css/admin.css']);
    }
 
    public function actionClearCache() {

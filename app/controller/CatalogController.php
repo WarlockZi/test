@@ -40,7 +40,7 @@ class CatalogController extends AppController {
       View::setMeta($product['title'], $product['description'],$product['keywords']);
       $this->set(compact('canonical','breadcrumbs', 'user', 'product', 'tov', 'categories'));
 
-//      $this->view = 'product_1';
+      $this->view = 'product_1';
       View::setJsCss(['css'=> $this->route,'view'=> $this->view]);
 
       }

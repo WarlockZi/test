@@ -106,13 +106,13 @@ class User extends Model {
     * @param string $password <p>Пароль</p>
     * @return boolean <p>Результат выполнения метода</p>
     */
-   public function update($arr) {
-//        $password = md5($arr['password']);
-      $sql = "UPDATE users SET  email = ?, name = ?, confirm = ?, surName = ?, middleName = ?, birthDate = ?, hired = ?, fired = ?, phone = ?, rights  =? WHERE id = ?";
-
-      $params = [$arr['email'], $arr['name'], (int) $arr['conf'], $arr['sName'], $arr['mName'], $arr['bday'] ?: NULL, $arr['hired'] ?: NULL, $arr['fired'] ?: NULL, $arr['phone'], $arr['rights'], $arr['id']];
-      return $this->insertBySql($sql, $params);
-   }
+//   public function update($arr) {
+////        $password = md5($arr['password']);
+//      $sql = "UPDATE users SET  email = ?, name = ?, confirm = ?, surName = ?, middleName = ?, birthDate = ?, hired = ?, fired = ?, phone = ?, rights  =? WHERE id = ?";
+//
+//      $params = [$arr['email'], $arr['name'], (int) $arr['conf'], $arr['sName'], $arr['mName'], $arr['bday'] ?: NULL, $arr['hired'] ?: NULL, $arr['fired'] ?: NULL, $arr['phone'], $arr['rights'], $arr['id']];
+//      return $this->insertBySql($sql, $params);
+//   }
 
    /**
     * Проверяем существует ли пользователь с заданными $email и $password
@@ -227,6 +227,17 @@ class User extends Model {
       $res = $this->findOne($id, 'id');
       if ($res) {
          $res['rights'] = explode(",", $res['rights']);
+         return $res;
+      }
+      return false;
+   }
+
+   public function getRights() {
+
+
+      $res = $this->findAll('user_rights');
+      if ($res) {
+//         $res['rights'] = explode(",", $res['rights']);
          return $res;
       }
       return false;

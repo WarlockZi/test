@@ -1,155 +1,283 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="robots" content="follow" />
-        <meta charset="utf-8">
-        <link rel="canonical" href="/<?= isset($vars['canonical']) ? $vars['canonical'] : '' ?>" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <? $this::getMeta(); ?>
-        <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
-        <? $this::getCSS(); ?>
-        <!--<link dd rel="manifest" href="/public/manifest.json">-->
-    </head>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="robots" content="follow" />
+    <link rel="canonical" href="/<?= isset($vars['canonical']) ? $vars['canonical'] : '' ?>" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
+    <? $this::getMeta(); ?>
+    <? $this::getCSS(); ?>
+
+  </head>
 
 
-    <body>
-        <div class="wrap">
+  <body>
+
+    <div class="row">
+      <input name="toggle-button" type="checkbox" id="toggle-button">
+      <label id="toggle-label" for="toggle-button">☰</label>
+
+      <nav id="menu" class = "transition">
+        <div class="menu-wrap column">
+          <a class="item" href="/about/payment">ОПЛАТА</a>
+          <a class="item" href="/about/delivery">ДОСТАВКА</a>
+          <a class="item" href="/about/discount">СИСТЕМА СКИДОК</a>
+
+          
+          <div class="item">СТАТЬИ</div>
+          <a href="/test/contacts">
+            <span class="icon-envelope">✉</span>
+            Напишите нам
+          </a>
+        </div>
+      </nav>
+
+      <div id="panel">
+
+        <header>
+
+          <div class="wrap">
 
             <div class="top-menu">
-                <div class="row">
+              <div class="row">
 
-                    <a class="item" href="/about">О НАС</a>
-                    <a class="item" href="/about/contacts">КОНТАКТЫ</a>
-                    <div class="item">СТАТЬИ</div>
-
-                    <div class="user-menu">
-                        <? if (!isset($user)): ?>
-                            <a href="/user/login"></a>
-                        <? else: ?>
-                            <?
-                            if (isset($user)) {
-                                echo '<span class = "FIO">' . $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'] . '</span>';
-                            }
-                            ?>
-
-                            <div class="nav">
-                                <a  href="/user/edit" >Редактировать свой профиль</a>
-
-                                <?=
-                                in_array('1', $user['rights']) ? // редактировать
-                                        '<a href="/edit/1">Редактировать тесты</a>
-                      <a href="/freetest/edit/41">Редактировать свободный тест</a>' : ''
-                                ?>
-
-                                <?=
-                                in_array('2', $user['rights']) ? // проходить
-                                        '<a href="/test/1">Проходить тесты</a>
-                      <a href="/freetest/41">Свободный тест</a>' : '';
-                                ?>
-
-                                <?=
-                                in_array('3', $user['rights']) ?
-                                        '<a href="/adminsc">Admin</a>' : ''; // Admin
-                                ?>
-
-
-
-                                <? if (isset($user)): ?>
-                                    <a href="/test/contacts">
-                                        <span class="icon-envelope">✉</span>
-                                        Напишите нам
-                                    </a>
-                                    <a href="/user/logout">
-                                        <span class="icon-logout">
-                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 20 20">
-                                            <path fill = '#e30000' d="M4 8v-2c0-3.314 2.686-6 6-6s6 2.686 6 6v0h-3v2h4c1.105 0 2 0.895 2 2v0 8c0 1.105-0.895 2-2 2v0h-14c-1.105 0-2-0.895-2-2v0-8c0-1.1 0.9-2 2-2h1zM9 14.73v2.27h2v-2.27c0.602-0.352 1-0.996 1-1.732 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.736 0.398 1.38 0.991 1.727l0.009 0.005zM7 6v2h6v-2c0-1.657-1.343-3-3-3s-3 1.343-3 3v0z"></path>
-                                            </svg>
-                                        </span>
-                                        Выход
-                                    </a>
-                                <? endif; ?>
-                            </div>
-                        <? endif; ?>
-
-                    </div>
-
-
+                <div class="flex1">
+                  <a class="item flex1" href="/about">О НАС</a>
+                  <a class="item flex1" href="/about/contacts">КОНТАКТЫ</a>
                 </div>
+
+                <div class="user-menu  flex1">
+                  <span class="row">
+                      <? if (!isset($user)): ?>
+                       <a href="/user/login">
+                         <span class = "icon"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="far" data-icon="user" class="svg-inline--fa fa-user fa-w-14" role="img" viewBox="0 0 448 512"><path fill="currentColor" d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"/></svg></span>
+                       </a>
+                    <? else: ?>
+                       <span class = "icon"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="far" data-icon="user" class="svg-inline--fa fa-user fa-w-14" role="img" viewBox="0 0 448 512"><path fill="currentColor" d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"/></svg></span>
+                       <?
+                       if (isset($user)) {
+                          echo '<span class = "FIO">' . $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'] . '</span>';
+                       }
+                       ?>
+                       <div class="nav">
+                         <a  href="/user/edit" >Редактировать свой профиль</a>
+                         <?=
+                         in_array('1', $user['rights']) ? // редактировать
+                            '<a href="/edit/1">Редактировать тесты</a>
+                      <a href="/freetest/edit/41">Редактировать свободный тест</a>' : ''
+                         ?>
+
+                         <?=
+                         in_array('2', $user['rights']) ? // проходить
+                            '<a href="/test/1">Проходить тесты</a>
+                      <a href="/freetest/41">Свободный тест</a>' : '';
+                         ?>
+
+                         <?=
+                         in_array('3', $user['rights']) ?
+                            '<a href="/adminsc">Admin</a>' : ''; // Admin
+                         ?>
+
+                         <? if (isset($user)): ?>
+                            <a href="/user/logout">
+                              <span class="icon-logout">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 20 20">
+                                <path fill = '#e30000' d="M4 8v-2c0-3.314 2.686-6 6-6s6 2.686 6 6v0h-3v2h4c1.105 0 2 0.895 2 2v0 8c0 1.105-0.895 2-2 2v0h-14c-1.105 0-2-0.895-2-2v0-8c0-1.1 0.9-2 2-2h1zM9 14.73v2.27h2v-2.27c0.602-0.352 1-0.996 1-1.732 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.736 0.398 1.38 0.991 1.727l0.009 0.005zM7 6v2h6v-2c0-1.657-1.343-3-3-3s-3 1.343-3 3v0z"></path>
+                                </svg>
+                              </span>
+                              Выход
+                            </a>
+                         <? endif; ?>
+                       </div>
+                    <? endif; ?>
+
+                  </span>
+                </div>
+
+
+              </div>
             </div>
 
             <header>
-                <div class="inner-wrap">
-                    <div class = 'h-upper'>
-                        <div class="logo-wrap">
-                            <?= (!($this->route['action'] == "index" && $this->route['controller'] == "Main")) ? "<a href = '/' aria-label = 'На главную'></a>" : "" ?>
-                            <svg>
-                            <use xlink:href="#logo-svg">
-                            </svg>
-                            <span class="logo-desc">Cредства индивидуальной <br>защиты оптом</span>
+              <div class="inner-wrap">
+                <div class = 'h-upper'>
+                  <div class="logo-wrap">
+                      <?= (!($this->route['action'] == "index" && $this->route['controller'] == "Main")) ? "<a href = '/' aria-label = 'На главную'></a>" : "" ?>
+                    <svg>
+                    <use xlink:href="#logo-svg">
+                    </svg>
+                    <span class="logo-desc">Cредства индивидуальной <br>защиты оптом</span>
+                  </div>
+
+                  <div class = 'phone-wrap'>
+                    <div class = 'icon-phone'>
+                      <a href="tel:+79217131767">8 (921) 713-17-67</a>
+                      <div class="popup-info">
+                        <div class="inner">
+                          <div class="head">Время работы 8:30 – 17.30 по Москве</div>
+                          <p>Дополнительные телефоны:</p>
+                          <p class="phones">
+                            <a href="tel:+78172217762">8 (8172) 21-77-62</a><br>
+                            <a href="tel:+79095942911">8 (909) 594-29-11</a></p>
+                          <p></p>
                         </div>
-
-                        <div class = 'phone-wrap'>
-                            <div class = 'icon-phone'>
-                                <a href="tel:+79217131767">8 (921) 713-17-67</a>
-                                <div class="popup-info">
-                                    <div class="inner">
-                                        <div class="head">Время работы 8:30 – 17.30 по Москве</div>
-                                        <p>Дополнительные телефоны:</p>
-                                        <p class="phones">
-                                            <a href="tel:+78172217762">8 (8172) 21-77-62</a><br>
-                                            <a href="tel:+79095942911">8 (909) 594-29-11</a></p>
-                                        <p></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="search-wrap">
-                            <form action="search" method="GET">
-                                <input  id="autocomplete" type="text" placeholder="Поиск" name="q" value="" size="20" maxlength="50" class="form-text" autocomplete="on" aria-label = "поиск">
-                                <div class="form-submit">
-                                    <input type="submit" class="search-go" name = "search-go" id = "search-go">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="27" viewBox="0 0 512 512">
-                                    <path fill = '#e30000' d="M76.302 496.131l103.147-121.276c11.283-12.537 16.463-25.945 15.963-36.776 33.534 28.628 77.039 45.921 124.588 45.921 106.039 0 192-85.961 192-192s-85.961-192-192-192-192 85.961-192 192c0 47.549 17.293 91.054 45.922 124.588-10.831-0.5-24.239 4.68-36.776 15.963l-121.276 103.147c-19.623 17.661-21.277 46.511-3.678 64.11s46.449 15.946 64.11-3.677zM192 192c0-70.692 57.308-128 128-128s128 57.308 128 128-57.308 128-128 128-128-57.307-128-128z"/>
-                                    </svg>
-                                </div>
-                            </form>
-                        </div>
-
-
-
+                      </div>
                     </div>
-                    <div class = 'h-lower'>
-                        <div class="catalog-menu">
-                            <a href="/catalog" class = 'a-cat' onclick = "event.preventDefault();" aria-label="В каталог">
-                                <div class="cat-menu-icon">
-                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 2 16 16">
-                                    <path fill="#fff" d="M5 3h14v2h-14zM3 9h14v2h-14zM1 15h14v2h-14z"></path>
-                                    </svg>
-                                </div>
-                                <span class = 't-1'>Каталог </span>
-                            </a>
-
-                            <div class="sub-cat">
-                                <div class="inner">
-                                    <ul>
-                                        <? foreach ($list as $item => $arr): ?>
-                                            <li><a href="/<?= $catName = $arr['alias']; ?>" aria-label="<?= $catName; ?>" ><?= $arr['name'] ?></a></li>
-                                        <? endforeach; ?>
-                                    </ul>
-                                    <div style="clear: both;"></div>                            </div>
-                            </div>
-                        </div>
+                  </div>
 
 
+                  <div class="search-wrap">
+                    <form action="search" method="GET">
+                      <input  id="autocomplete" type="text" placeholder="Поиск" name="q" value="" size="20" maxlength="50" class="form-text" autocomplete="on" aria-label = "поиск">
+                      <div class="form-submit">
+                        <input type="submit" class="search-go" name = "search-go" id = "search-go">
+                        <svg version="1.1" width="20" height="27" viewBox="0 0 512 512">
+                        <path fill = '#e30000' d="M76.302 496.131l103.147-121.276c11.283-12.537 16.463-25.945 15.963-36.776 33.534 28.628 77.039 45.921 124.588 45.921 106.039 0 192-85.961 192-192s-85.961-192-192-192-192 85.961-192 192c0 47.549 17.293 91.054 45.922 124.588-10.831-0.5-24.239 4.68-36.776 15.963l-121.276 103.147c-19.623 17.661-21.277 46.511-3.678 64.11s46.449 15.946 64.11-3.677zM192 192c0-70.692 57.308-128 128-128s128 57.308 128 128-57.308 128-128 128-128-57.307-128-128z"/>
+                        </svg>
+                      </div>
+                    </form>
+                  </div>
 
-
-
-
-                    </div>
                 </div>
+
+                <div class="header-lower row">
+
+
+                  <div class = 'h-cat'></span>перчатки
+                    <ul>
+                      <li>
+                        <a href="/perchatki-rezinovye-tekhnicheskie">перчатки резиновые технические</a>
+                      </li>
+                      <li>
+                        <a href="/sredstva-zashchity-ruk">средства защиты рук</a>
+                      </li>
+
+
+                    </ul>
+                  </div>
+
+                  <div class = 'h-cat'>
+                    бахилы
+                    <ul>
+                      <li>
+                        <a href="/#">бахилы однослойные</a>
+                      </li>
+                      <li>
+                        <a href="#">бахилы многослойные</a>
+                      </li>
+
+                    </ul>
+                  </div>
+
+                  <div class = 'h-cat transition'></span>СИЗ
+                    <ul>
+                      <li>
+                        <a href="/zashchita-organov-slukha">защита органов слуха</a>
+                      </li>
+                      <li>
+                        <a href="/zashchita-golovy-i-litsa">защита головы и лица</a>
+                      </li>
+                      <li>
+                        <a href="/zashchita-organov-dykhaniya">защита органов дыхания</a>
+                      </li>
+                      <li>
+                        <a href="/zashchita-organov-zreniya">защита органов зрения</a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class = 'h-cat'> шприцы
+                    <ul>
+                      <li>
+                        <a href="/#">шприцы двукомпонентные</a>
+                      </li>
+                      <li>
+                        <a href="#">шприцы однокомпонентные</a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class = 'h-cat'></span>обувь
+                    <ul>
+                      <li>
+                        <a href="/obuv-marki-roverboots">обувь марки roverboots</a>
+                      </li>
+                      <li>
+                        <a href="/obuv-iz-pvkh-i-eva">обувь из пвх и эва</a>
+                      </li>
+                      <li>
+                        <a href="/obuv-zimnyaya-uteplennaya">обувь зимняя утепленная</a>
+                      </li>
+                      <li>
+                        <a href="/obuv-letnyaya">обувь летняя</a>
+                      </li>
+                      <li>
+                        <a href="/obuv-povsednevnaya">обувь повседневная</a>
+                      </li>
+                      <li>
+                        <a href="/obuv-povsednevnaya">обувь повседневная</a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class = 'h-cat'></span>спецодежда
+                    <ul>
+                      <li>
+                        <a href="/kostyumy-dlya-itr">костюмы для итр</a>
+                      </li>
+                      <li>
+                        <a href="/khalaty-rabochie">халаты рабочие</a>
+                      </li>
+                      <li>
+                        <a href="/kostyumy-i-kurtki-rabochie">костюмы и куртки рабочие</a>
+                      </li>
+                      <li>
+                        <a href="/bryuki-i-polukombinezony">брюки и полукомбинезоны</a>
+                      </li>
+                      <li>
+                        <a href="/zashchitnaya-odezhda">защитная одежда</a>
+                      </li>
+                      <li>
+                        <a href="/sfera-obsluzhivaniya">сфера обслуживания</a>
+                      </li>
+                      <li>
+                        <a href="/odezhda-dlya-okhrannykh-struktur">одежда для охранных структур</a>
+                      </li>
+                      <li>
+                        <a href="/zimnyaya-uteplennaya-spetsodezhda">зимняя утепленная спецодежда</a>
+                      </li>
+                      <li>
+                        <a href="/odezhda-dlya-turizma-i-otdykha">одежда для туризма и отдыха</a>
+                      </li>
+                      <li>
+                        <a href="/trikotazhnye-izdeliya">трикотажные изделия</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class = 'h-cat'>Акции
+                    <ul>
+                      <li>
+                        <a href="/inventar">инвентарь</a>
+                      </li>
+                      <li>
+                        <a href="/obraztsy">образцы</a>
+                      </li>
+                      <li>
+                        <a href="/rasprodazha">распродажа</a>
+                      </li>
+
+                    </ul>
+                  </div>
+
+                </div>
+
+              </div>
             </header>
 
             <?= $content ?>
@@ -160,47 +288,47 @@
 
             <div class = "page-buffer"></div>
 
-        </div>
+          </div>
 
-        <footer class = 'column'>
+          <footer class = 'column'>
 
             <div class="row">
-                <div class="column">
-                    <a href="/about/contacts">Контакты</a>
-                    <a href="/about/requisites">Реквизиты</a>
+              <div class="column">
+                <a href="/about/contacts">Контакты</a>
+                <a href="/about/requisites">Реквизиты</a>
 
-                </div>
-                <div class="column">
-                    <a href="#">Новости</a>
+              </div>
+              <div class="column">
+                <a href="#">Новости</a>
 
-                </div>
-                <div class="column">
-                    <a href="/about/oferta">Оферта</a>
-                    <a href="/service/return_change">Возврат и обмен</a>
+              </div>
+              <div class="column">
+                <a href="/about/oferta">Оферта</a>
+                <a href="/service/return_change">Возврат и обмен</a>
 
 
-                </div>
+              </div>
 
             </div>
             <div class="row">
-                <p>© <? echo date('Y') ?> Витекс. Цены, указанные на сайте, не являются публичной офертой, определяемой положением Статьи 437 (2) ГК РФ и зависят от объема заказа. ОГРН:1173525018292</p>
-                <p>Created by VORONIKLAB</p>
+              <p>© <? echo date('Y') ?> Витекс. Цены, указанные на сайте, не являются публичной офертой, определяемой положением Статьи 437 (2) ГК РФ и зависят от объема заказа. ОГРН:1173525018292</p>
+              <p>Created by VORONIKLAB</p>
             </div>
-        </footer>
+          </footer>
 
-        <div id="cookie-notice" role="banner">
+          <div id="cookie-notice" role="banner">
             Продолжая использовать сайт, вы даете согласие на обработку файлов cookie, пользовательских данных (сведения о местоположении; тип и версия ОС; тип и версия Браузера; тип устройства и разрешение его экрана; источник откуда пришел на сайт пользователь; с какого сайта или по какой рекламе; язык ОС и Браузера; какие страницы открывает и на какие кнопки нажимает пользователь; ip-адрес) в целях функционирования сайта, проведения ретаргетинга и проведения статистических исследований и обзоров. Если вы не хотите, чтобы ваши данные обрабатывались, покиньте сайт.
             <a href="#" id="cn-accept-cookie" onclick= "return setCookie(this);">Соглашаюсь
             </a>
-        </div>
+          </div>
 
-        <script src="/public/js/jq.js"></script>
-        <script src="/public/js/auto.js"></script>
-        //<?= isset($js) ? '<script src="' . $js . '"></script>' : '' ?>
-        <? $this::getJS(); ?>
-        <script>
-              function setCookie() {
-    //          debugger;
+          <script src="/public/js/jq.js"></script>
+          <script src="/public/js/auto.js"></script>
+          <script src="/public/js/slick-1.8.1/slick/slick.min.js"></script>
+          <? $this::getJS(); ?>
+          <script>
+               function setCookie() {
+                  //          debugger;
                   $('#cookie-notice').css({bottom: "-100%"});
                   var days = 1;
                   var months = 1;
@@ -211,49 +339,53 @@
                   var month = minute * 60 * 24 * 30;
                   date.setTime(date.getTime() + (days * day));
                   $.cookie("cn", "1", {
-                      expires: date,
-                      path: "/"
+                     expires: date,
+                     path: "/"
                   });
-              }
-              ;
+               }
+               ;
 
-              $(function () {
-    //               debugger;
+               $(function () {
+                  //               debugger;
                   if ($.cookie("cn")) {
-                      $('#cookie-notice').css({bottom: "-100%"});
-                  } else {
-                      $('#cookie-notice').css({bottom: "0"});
+                     $('#cookie-notice').css({bottom: "-100%"});
                   }
-              });
-        </script>
+                  else {
+                     $('#cookie-notice').css({bottom: "0"});
+                  }
+               });
+          </script>
 
-        <!-- Yandex.Metrika counter -->
-        <script >
-            (function (m, e, t, r, i, k, a) {
+          <!-- Yandex.Metrika counter -->
+          <script >
+             (function (m, e, t, r, i, k, a) {
                 m[i] = m[i] || function () {
-                    (m[i].a = m[i].a || []).push(arguments)
+                   (m[i].a = m[i].a || []).push(arguments)
                 };
                 m[i].l = 1 * new Date();
                 k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-            })
-                    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+             })
+             (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-            ym(7715905, "init", {
+             ym(7715905, "init", {
                 clickmap: true,
                 trackLinks: true,
                 accurateTrackBounce: true,
                 webvisor: true
-            });
-        </script>
-        <noscript><div><img src="https://mc.yandex.ru/watch/7715905" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-        <!-- /Yandex.Metrika counter -->
+             });
+          </script>
+          <noscript><div><img src="https://mc.yandex.ru/watch/7715905" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+          <!-- /Yandex.Metrika counter -->
 
-        <? if (isset($user) && in_array('3', $user['rights'])): // Admin       ?>
-            <script src = "/public/js/adminLayer.js?<?= time() ?>"></script>
-        <? endif; ?>
+          <? if (isset($user) && in_array('3', $user['rights'])): // Admin       ?>
+             <script src = "/public/js/adminLayer.js?<?= time() ?>"></script>
+          <? endif; ?>
 
+          <script type="text/javascript">
 
-        <div class = 'none'>
+          </script>
+
+          <div class = 'none'>
             <svg  id = 'logo-svg' width="200" height="45" version="1.1" viewBox="0 0 140.93602 25.903431" >
             <defs>
             <path id="a4bgr29v3" d="m473.35 105.73c5.3 0.04 0.86 0.08-9.88 0.08s-15.1-0.04-9.65-0.08c5.44-0.07 14.23-0.07 19.53 0z"/>
@@ -281,11 +413,17 @@
             </g>
             </svg>
 
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-            <path fill = '#ccc' d="M1 3h14v2h-14zM1 7h14v2h-14zM1 11h14v2h-14z"></path>
-            </svg>
+
 
             <svg  id= 'greyAvatar' width = "30" fill = '#fff' version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve"><g><path d="M500,990.1c-290,0-490-219.4-490-490C10,229.3,229.4,9.9,500,9.9c270.7,0,490,219.4,490,490.1C990,770.7,790,990.1,500,990.1z M500,73.4c-235.6,0-426.5,191-426.5,426.6c0,110.2,42.1,210.3,110.7,286c61.8-29.9,39.1-5,119.9-38.3c82.7-34,102.3-45.9,102.3-45.9l0.8-78.4c0,0-31-23.5-40.5-97.3c-19.4,5.6-25.8-22.6-27-40.5c-1-17.3-11.2-71.4,12.4-66.5c-4.8-36.1-8.3-68.6-6.6-85.9c5.9-60.5,64.7-123.8,155.2-128.4c106.5,4.6,148.7,67.8,154.6,128.4c1.7,17.3-2.1,49.9-6.9,85.9c23.6-4.8,13.4,49.2,12.2,66.5c-1,17.9-7.6,46-26.9,40.4c-9.7,73.8-40.7,97.1-40.7,97.1l0.7,78c0,0,19.6,11,102.3,45.1c80.8,33.3,58.1,9.9,119.9,39.8c68.6-75.7,110.7-175.8,110.7-286C926.6,264.4,735.6,73.4,500,73.4z"/></g></svg>
-        </div>
-    </body>
+          </div>
+
+        </header>
+
+
+      </div>
+    </div>
+
+
+  </body>
 </html>

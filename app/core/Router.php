@@ -19,7 +19,7 @@ class Router {
     public static function matchRoute($url) {
 
 // если это категория
-//      if($url) return;
+
 
         if ($url && $category = App::$app->category->isCategory($url)) {
             $route['controller'] = 'Catalog';
@@ -92,6 +92,9 @@ class Router {
 //         session_destroy();
         } else {
             http_response_code(404);
+//            $cObj=new \app\controller\MainController($route);
+//            $cObj->error(self::$aCategoryOrProduct); // Выполним метод
+//            $cObj->getView(); // Подключим вид
             include '../public/404.html'; // '404.html';
         }
     }

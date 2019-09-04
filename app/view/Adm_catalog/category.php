@@ -44,20 +44,20 @@ new app\view\widgets\menu\Menu([
 
 
 
-        <section id="content-tab1" class="user content-90 column">
-          <div>
+        <section id="content-tab1" class="admin-flex-table">
+          <div class="row">
             <strong>id :</strong>
             <span contenteditable id = 'id'><?= $category['id'] ?: ''; ?></span>
           </div>
-          <div>
+          <div class="row">
             <strong>Наименование :</strong>
             <span contenteditable id = 'name'><?= $category['name'] ?: ''; ?></span>
           </div>
-          <div>
+          <div class="row">
             <strong>url :</strong>
             <span contenteditable id = 'alias'><?= $category['alias'] ?: ''; ?></span>
           </div>
-          <div>
+          <div class="row">
             <strong>Описание :</strong>
             <span contenteditable id = 'text' class="column"><?= htmlspecialchars($category['text'] ?: ''); ?></span>
           </div>
@@ -91,15 +91,16 @@ new app\view\widgets\menu\Menu([
             </div>
 
             <? foreach ($category['props'] as $k => $catProp): ?>
-
-               <select>
-                 <option value=""></option>
-                 <? foreach ($props as $prop): ?>
-                    <? if (!in_array($prop['id'], $category['parentProps'])): ?>
-                       <option value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></option>
-                    <? endif; ?>
-                 <? endforeach; ?>
-               </select>
+               <? if ($catProp): ?>
+                  <select>
+                    <option value=""></option>
+                    <? foreach ($props as $prop): ?>
+                       <? if (!in_array($prop['id'], $category['props'])&&$prop['id']!==$catProp): ?>
+                          <option value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></option>
+                       <? endif; ?>
+                    <? endforeach; ?>
+                  </select>
+               <? endif; ?>
 
             <? endforeach; ?>
 
@@ -125,21 +126,21 @@ new app\view\widgets\menu\Menu([
 
         </section>
 
-        <section id="content-tab3" class="user content-90 column">
+        <section id="content-tab3" class="admin-flex-table">
 
-          <div>
+          <div class="row">
             <strong>title :</strong>
             <span contenteditable id = 'title'><?= $category['title'] ?: ''; ?></span>
           </div>
-          <div>
+          <div class="row">
             <strong>key words :</strong>
             <span contenteditable id = 'keywords'><?= $category['keywords'] ?: ''; ?></span>
           </div>
-          <div>
+          <div class="row">
             <strong>description :</strong>
             <span contenteditable id = 'description'><?= $category['description'] ?: ''; ?></span>
           </div>
-          <div>
+          <div class="row">
             <strong>семантическое ядро :</strong>
             <span contenteditable id = 'core'><?= $category['core'] ?: ''; ?></span>
           </div>

@@ -1,3 +1,34 @@
+
+
+
+/*//////////////////////////////*/
+/*/////  ADMIN FLEX TABLE  //////*/
+/*//////////////////////////////*/
+
+.admin-flex-table {
+    padding: 10px;
+}
+.admin-flex-table .row {
+    padding: 5px;
+}
+.admin-flex-table .row strong{
+    padding-right: 5px;
+    display: flex;
+    flex:1;
+    justify-content: flex-end;
+    font-size: 14px;
+}
+.admin-flex-table .row div,
+.admin-flex-table .row span,
+.admin-flex-table .row select,
+.admin-flex-table .row input
+{
+    flex:3;
+    justify-content: flex-start;
+    /*padding: 5px;*/
+}
+
+
 /*//////////////////////////////*/
 /*////////   PIC  /////////*/
 /*//////////////////////////////*/
@@ -104,13 +135,13 @@ menu{
 .val-item .value{
     padding-left: 10px;
 }
-.prop{
+/*.prop{
     display:flex;
     flex-flow:column;
     justify-content: space-between;
     position: relative;
     flex:1;
-}
+}*/
 .val{
     padding: 10px;
     flex:1;
@@ -214,51 +245,6 @@ menu{
 
 
 
-
-.multy{
-    font-size: 18px;
-    font-weight: 100;
-}
-.property{
-    padding: 10px 5px;
-    min-width: 140px;
-    display: flex;
-    /*margin-top: 20px;*/
-}
-.prop.prod-type-title 
-{
-    background:#123aff;	
-}
-.property-block{
-    display:flex;
-    flex-flow: wrap column;
-    padding-left: 12px;
-
-}
-.prop-head{
-    display:flex;
-    background: #c7c7c7;
-    padding: 10px;
-    margin-bottom: 12px;
-    justify-content: space-between;
-}
-.left-menu{
-    width:250px;
-    padding: 10px;
-}
-
-.tabs>section>.flex {
-    display:flex;
-}
-
-.props{
-    display: flex;
-    flex-flow:column;
-}
-.props>div{
-    display: flex;
-}
-
 /* Базовый контейнер табов */
 .tabs {
     min-width: 320px;
@@ -285,24 +271,7 @@ menu{
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
 }
-/* Описываем анимацию свойства opacity */
 
-@-webkit-keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
 /* Прячем чекбоксы */
 .tabs>input {
     display: none;
@@ -345,6 +314,8 @@ menu{
 #tab1:checked~#content-tab1, #tab2:checked~#content-tab2, #tab3:checked~#content-tab3, #tab4:checked~#content-tab4 {
     display: flex;
     flex-direction: column;
+    padding: 15px;
+        min-height: 100vh;
 }
 /* Убираем текст с переключателей 
 * и оставляем иконки на малых экранах
@@ -724,16 +695,13 @@ input
     font-size: 16px;	
     padding: 0 0 7px 5px;
 }
-.admin-actions label:before{
-
-}
 .clear-cache{
     display: block;
     width: 20px;
     height: 20px;
     background-color: slategray;
     border-radius: 3px;
-	margin: auto 0;
+    margin: auto 0;
 }
 .admin-actions label a{
     padding: 3px;
@@ -754,7 +722,7 @@ input
 
 }
 .adm-submenu{
-    width: 180px;
+       max-width: 180px;
     background-image: url(/pic/submenu-bg.png);
     border-right: 1px solid #ddd;
 }
@@ -1047,7 +1015,6 @@ body{
 .nav a{
     display: none;
     padding:5px 10px;
-
 }
 
 .column.categories{
@@ -1084,29 +1051,55 @@ body{
     transition: all 1s;
 }
 
+
+h2{
+    margin: 0;
+}
+
+
+/*//////////////////////////////*/
+/*////////   GRID   /////////*/
+/*//////////////////////////////*/
+
+
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /*border-top: 1px solid #d5d5d5;*/
-    /*border-right: 1px solid #d5d5d5;*/
+    background-color: white;
 }
 
-.grid >span {
+.grid >span, 
+.grid5 >span
+{
     padding: 8px 4px;
-    /*border-left: 1px solid #d5d5d5;*/
-    /*border-bottom: 1px solid #d5d5d5;*/
+    display: flex;
 }
+
+.grid5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+.grid-head{
+    font-weight: 600;
+    background-color: #ccc;
+    text-shadow: 2px 1px 1px white; 
+    border-left: #e1e1e1 1px solid;
+}
+
+
+
+srong{font-weight: 600;}
 .user.content-90{
     height: 100%;
     padding-top: 20px;
     /*position: relative;*/
 }
-.user.content-90 *{
+.admin-content *{
     display: flex;
     padding: 3px;
     align-items: flex-start;
 }
-.user.content-90 div *{
+.admin-contentdiv *{
     flex: 2;
 }
 input[contenteditable],
@@ -1114,7 +1107,7 @@ span[contenteditable],
 .category-properties select
 {
     border: 1px #71ffff solid;
-	padding: 5px;
+    padding: 5px;
 }
 input[contenteditable]:hover,
 span[contenteditable]:hover,
@@ -1124,19 +1117,19 @@ span[contenteditable]:hover,
     box-shadow: 0 0 2px 2px #71ffff ;
 }
 
-.user.content-90 strong
+.admin-contentstrong
 {
     flex: 1;
     justify-content: flex-end;
     margin-right: 25px;
     align-items: flex-end;
 }
-.user.content-90 div input
+.admin-contentdiv input
 {
     justify-content: flex-start;
 }
-.user.content-90 .btnadd-user,
-.user.content-90 .btnupdate-user
+.admin-content.btnadd-user,
+.admin-content.btnupdate-user
 {
     width: 180px;
     height: 27px;
@@ -1164,7 +1157,7 @@ span[contenteditable]:hover,
     display: block;
 }
 .separator.btns{
-    position: absolute;
+    position: sticky;
     bottom: 0;
 }
 
@@ -1292,15 +1285,6 @@ header {
     position: relative;
 }
 
-footer {
-    flex: 0 0 auto;
-    justify-content: space-between;
-    background-image: url(/pic/header-big.png);
-}
-
-footer p{
-    padding: 0 15px;
-}
 
 .logo{
     flex: 1;
@@ -1350,7 +1334,7 @@ footer p{
 
 .properties {
     padding: 5px;
-	margin: 0 0 0 15px;
+    margin: 0 0 0 15px;
 }
 .cat-prop{
     padding: 10px 0;
@@ -1534,6 +1518,15 @@ footer p{
     border-right: 1px #ddd solid;
 }
 
+footer {
+    flex: 0 0 auto;
+    justify-content: space-between;
+    background-image: url(/pic/header-big.png);
+}
+
+footer p{
+    padding: 0 15px;
+}
 @media screen and (max-width: 680px) {
     .tabs>label {
         font-size: 0;

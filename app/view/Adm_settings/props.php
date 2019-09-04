@@ -9,53 +9,52 @@
   <div class="breadcrumbs-adm">
     <a href  = "/adminsc">Admin</a>
     <a href  = "/adminsc/settings">Настройки</a>
-    <div>Свойства</div>
+    <div>Настройка свойств</div>
   </div>
 
   <div class="column">
     <div class="prop-head ">
 
-      <div class="parent-prop">
-        Свойства
-      </div>
-      <div class="add-prop">
-        Добавить свойство
-      </div>
+      <H2 class="parent-prop">Настройка свойств</H2>
 
     </div>
 
-
-    <div class="property-block">
-        <? foreach ($catProps as $key): ?>
-         <div class="property" data-prop = '<?= $key['id'] ?>'>
-           <input size="35" type="text" value="<?= $key['name'] ?>">
-   <!--             <input size="50" type="text" value="<?= $key['subname'] ?>">-->
-
-           <div class="prop">
-             <div class="left-set">
-               <input  class = "check" type="checkbox" <?= $key['type'] == 'multy' ? 'checked' : '' ?>>
-               <label class = 'multy'>
-                 мульти</label>
-
-             </div>
-             <div class="val">
-                 <? foreach ($key['val'] as $k): ?>
-                  <div class="value" data-id = "<?= $key['id'] ?>" contenteditable="true">
-                      <?= $k ?>
-                  </div>
-               <? endforeach; ?>
-               <div class="add-prop-val clear button">+</div>
-             </div>
+    <div class="grid5 property-block">
+      <input type="hidden" id="token" value="<?= $_SESSION['token'] ?>">
+      <span class="grid-head">id</span>
+      <span class="grid-head">сорт.</span>
+      <span class="grid-head">название</span>
+      <span class="grid-head">тип</span>
+      <span class="grid-head">измен.</span>
+      <? foreach ($catProps as $key): ?>
 
 
-           </div>
+         <span>
+           <span> <?=$id = $key['id'] ?>    </span>
+         </span>
+         <span>
+           <span data-id = "<?=$id?>" class="sort" contenteditable> <?= $key['sort'] ?>    </span>
+         </span>
 
-         </div>
+         <span>
+           <input data-id = "<?=$id?>" class="property-name" contenteditable size="35" type="text" value="<?= $key['name'] ?>">
+         </span>
+
+         <span>
+           <select data-id = "<?=$id?>" class="type">
+             <option value="select"<?= $key['type'] == 'select' ? 'selected' : '' ?>>выбор одного значения</option>
+             <option value="multi"<?= $key['type'] == 'multi' ? 'selected' : '' ?>>выбор нескольких значений</option>
+             <option value="string" <?= $key['type'] == 'string' ? 'selected' : '' ?>>строка</option>
+           </select>
+         </span>
+
+         <span>
+           <a href = "prop?id=<?=$id?>" data-id = "<?=$id?>" class="edit">
+           </a>
+         </span>
       <? endforeach; ?>
+
     </div>
-
-
-
   </div>
 
 

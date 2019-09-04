@@ -50,6 +50,13 @@
                 <span id = 'id' <?= $product['id'] ?: ''; ?>><?= $product['id'] ?: ''; ?></span>
               </div>
               <div class = 'prop row'>
+                <strong>Активный  :</strong>
+                <span>
+                  <input type="checkbox" id = 'act' <?= $product['act'] == 'Y' ? 'ckecked' : ''; ?>>
+
+                </span>
+              </div>
+              <div class = 'prop row'>
                 <strong>Наименование :</strong>
                 <span contenteditable id = 'name'><?= $product['name'] ?: ''; ?></span>
               </div>
@@ -60,7 +67,7 @@
             </div>
             <div class="right  column">
               <div>
-                <img src = "<?= '/pic' . $product['dpic'] ?: ''; ?>">
+                <img id = 'dpic' dpic = '<?= $product['dpic'] ?: ''; ?>' src = "<?= '/pic' . $product['dpic'] ?: ''; ?>">
               </div>
             </div>
           </div>
@@ -83,7 +90,7 @@
 
             <?
             if (isset($category['parents'])) {
-               $category['props'] = array_merge($category['parentProps'],$category['props']);
+               $category['props'] = array_merge($category['parentProps'], $category['props']);
             }
             ?>
 
@@ -95,7 +102,7 @@
                          <span><?= $prop['name'] ?></span>
 
                          <? if ($prop['type'] == 'string') : ?>
-                         <input value="<?= is_array($product['props'])&&array_key_exists($Pprop, $product['props'])?$product['props'][$Pprop]:''?>" data-type = 'text' data-id="<?= $prop['id']; ?>" contenteditable type="text">
+                            <input value="<?= is_array($product['props']) && array_key_exists($Pprop, $product['props']) ? $product['props'][$Pprop] : '' ?>" data-type = 'text' data-id="<?= $prop['id']; ?>" contenteditable type="text">
 
 
                          <? elseif ($prop['type'] == 'select'): ?>
@@ -103,7 +110,7 @@
                             <select data-type = 'select' data-id="<?= $prop['id']; ?>">
                               <option value=""></option>
                               <? foreach ($val as $i => $p): ?>
-                              <option <?= is_array($product['props'])&&array_key_exists($Pprop, $product['props'])&&($i==$product['props'][$Pprop])?'selected':'';?> value="<?= $i; ?>"><?= $p; ?></option>
+                                 <option <?= is_array($product['props']) && array_key_exists($Pprop, $product['props']) && ($i == $product['props'][$Pprop]) ? 'selected' : ''; ?> value="<?= $i; ?>"><?= $p; ?></option>
                               <? endforeach; ?>
                             </select>
 
@@ -112,8 +119,8 @@
                             <? $val = explode(',', $prop['val']); ?>
                             <select data-type = 'multi-select' data-id="<?= $prop['id']; ?>" multiple title = "для выбора нескольких значений зажмите 'CTRL'" name="" id="">
                                 <? foreach ($val as $i => $p): ?>
-                                <? $multi = explode(',',$product['props'][$Pprop]); ?>
-                                <option value="<?= $i; ?>" <?= is_array($product['props'])&&array_key_exists($Pprop, $product['props'])&&(array_key_exists($i, $multi))?'selected':''?>><?= $p; ?></option>
+                                   <? $multi = explode(',', $product['props'][$Pprop]); ?>
+                                 <option value="<?= $i; ?>" <?= is_array($product['props']) && array_key_exists($Pprop, $product['props']) && (array_key_exists($i, $multi)) ? 'selected' : '' ?>><?= $p; ?></option>
                               <? endforeach; ?>
                             </select>
 
@@ -135,23 +142,25 @@
 
         </section>
 
-        <section id="content-tab3" class="user content-90 column">
+        <section id="content-tab3">
 
-          <div>
-            <strong>название вкладки :</strong>
-            <span contenteditable id = 'title'><?= $product['title'] ?: ''; ?></span>
-          </div>
-          <div>
-            <strong>ключевые слова :</strong>
-            <span contenteditable id = 'keywords'><?= $product['keywords'] ?: ''; ?></span>
-          </div>
-          <div>
-            <strong>сниппет для поисковиков :</strong>
-            <span contenteditable id = 'description'><?= $product['description'] ?: ''; ?></span>
-          </div>
-          <div>
-            <strong>семантическое ядро :</strong>
-            <span contenteditable id = 'core'><?= $product['core'] ?: ''; ?></span>
+          <div class="admin-flex-table">
+            <div class="row">
+              <strong>название вкладки :</strong>
+              <span contenteditable id = 'title'><?= $product['title'] ?: ''; ?></span>
+            </div>
+            <div class="row">
+              <strong>ключевые слова :</strong>
+              <span contenteditable id = 'keywords'><?= $product['keywords'] ?: ''; ?></span>
+            </div>
+            <div class="row">
+              <strong>сниппет для поисковиков :</strong>
+              <span contenteditable id = 'description'><?= $product['description'] ?: ''; ?></span>
+            </div>
+            <div class="row">
+              <strong>семантическое ядро :</strong>
+              <span contenteditable id = 'core'><?= $product['core'] ?: ''; ?></span>
+            </div>
           </div>
 
 

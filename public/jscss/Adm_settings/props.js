@@ -1,179 +1,101 @@
 $(function () {
-   var url = '/adminsc/settings';
-//         debugger;
-   var f = window.location.pathname.indexOf('adminsc/settings/');
-   switch (true) {
-      case (f > 0):
-         $('.module.settings').addClass('activ');
-         break;
+
+   function obj(self, action) {
+      return {
+         token: $('#token').val(),
+         url: '/adminsc',
+         model: 'prop',
+         table: 'props',
+         action: action ? action : 'update',
+         pkey: 'id',
+         pkeyVal: 'nul',
+         values: {}
    }
-   // изменили название значения
-   $('.property-block').on('keyup', '.value', function (event) {
-      var name = this.innerText,
-      id = $(this).data('id');
-      var d = $(this).parent().find('.value');
-      d = $.makeArray(d);
-      debugger;
-      var arr = d.map((val) => val.innerText);
-      var val = arr.join(',').trim();
-
-// ^,-зпт в нач слова  |  (\+-знак плюса ,-зпт \s-пробел)*$  
-      val = val.replace(/[\+\,\s]*$/, "");
-      var param = {
-         action: 'updateProp',
-         val: val,
-         id: id
-      };
-      setTimeout(function () {
-         post(url, param)
-      }, 800);
-   });
-
-
-// изменили название свойства
-   $('.property-block').on('keyup', '.property input', function () {
-      var name = this.value,
-      name = name.trim();
-      url = '/adminsc/settings/props',
-      id = $(this).parent().data('prop');
-      var param = {
-         action: 'updatePropName',
-         name: name,
-         id: id
-      };
-      setTimeout(function () {
-         post(url, param)
-      }, 800);
-   });
-
-   function addProp(self, enter) {
-      var a = $(self).parent().find('.value'),
-      b = a[0],
-      a = $(b).clone();
-      $(a).text(' ');
-      debugger;
-// установка курсора в начало ред строки
-      var list = $('.val:first');
-      if (enter) {
-         $(self).parent().append(a);
-      }
-      else {
-         $(self).before(a);
-      }
-      $(a).focus();
    }
    ;
 
-// добавление значения 
-   $('.property-block').on('click', '.add-prop-val', function () {
-      var parentId = $(this).parent().parent().parent().data('prop');
-      debugger;
-      var data = {
-         action: 'addPropValue',
-         parentId: parentId
-      };
+// изменение названия свойства / добавление
+   $('.property-block').on('input', '.property-name', function () {
 
-      post(url, data).then(function (nextid) {
-         addProp(nextid);
-
-      });
-   });
-
-// Добавить свойство
-   $('.prop-head').on('click', '.add-prop', function () {
-      var name = prompt('Введите название'),
-      parent = $('.orange').data('id');
-      if (!name)
-         return;
-      var param = {
-         action: 'addPropBlock',
-         name: name,
-         parent: parent
-      };
-      var data = 'param=' + JSON.stringify(param);
-
-      $.ajax({
-         type: 'POST',
-         url: '/adminsc/prodtypes',
-         data: data,
-         success: function (obj) {
-            debugger;
-            var str = JSON.parse(obj);
-            $('.property-block').append(str);
-         },
-      });
-   });
-
-
-// удаление значения 
-   $('.properties').on('click', '.del-prop span:nth-child(2)', function () {
-//      debugger;
-      var id = $(this).parent().parent().parent().data('prop');
-      var param = {
-         action: 'delPropBlock',
-         id: id,
-      };
-      var data = 'param=' + JSON.stringify(param);
-
-      $.ajax({
-         type: 'POST',
-         url: '/adminsc/prodtypes',
-         data: data,
-         success: function (obj) {
+      var Obj = new obj(this, 'update');
+      Obj.pkeyVal = this.getAttribute('data-id');
+      Obj.values.name = this.value.trim();
+      
 //         debugger;
-            var id = JSON.parse(obj).id[0];
-            $("[data-prop = " + id + "]").fadeOut(200);
-         },
-      });
-
-   });
-
-   $('.property-block').on('keydown', '.value', function (event) {
-      var char = event.which;
-      if (char == 13) { // это Enter
-         event.preventDefault();
-         addProp($(this), true);
-         return;
+      if (this.parentNode.classList.contains('new')) {
+         var clone = this.parentNode.cloneNode(true);
+         clone.innerHTML = '';
+         var parent = this.parentNode.parentNode;
+         parent.append(clone);
+         this.classList.remove('new');
       }
-   });
-
-
-
-
-
-
-
-
-   function $_GET(key) {
-      var p = window.location.search;
-      p = p.match(new RegExp(key + '=([^&=]+)'));
-      return p ? p[1] : false;
-   }
-
-   /**
-    * 
-    * @param {type} url глобальный
-    * @param {type} data данные
-    * @return {Promise}
-    */
-
-   function post(url, data) {
+      ;
 //      debugger;
-      return new Promise(function (resolve, reject) {
-         var req = new XMLHttpRequest();
-         req.open('POST', url);
-         req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-         req.setRequestHeader('Content-Type', 'application/json');
-         req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-         req.send('param=' + JSON.stringify(data));
-         req.onerror = function () {
-            reject(Error("Что-то пошло не так"));
-         };
-         req.onload = function () {
-            resolve(req.response);
-         };
+      setTimeout(function () {
+         post(Obj.url, Obj)
+      }, 800);
+   });
+// изменение селекта
+   $('select.type').on('change', function () {
+      var Obj = new obj(this, 'update');
+      Obj.pkeyVal = this.getAttribute('data-id');
+      Obj.values.type = this[this.selectedIndex].value;
+      post(Obj.url, Obj);
+   })
+ // изменение сортировки
+   $('.property-block').on('input','.sort', function () {
+//      debugger;
+      var Obj = new obj(this, 'update');
+      Obj.pkeyVal = this.getAttribute('data-id');
+      Obj.values.sort = this.innerHTML;
+      post(Obj.url, Obj);
+   })
+   
+// добавление значения 
+   $('.property-block').on('input', '.value, .add-prop-val', function (event) {
+
+      var url = '/adminsc',
+      val = $(this).text(),
+      id = $(this).parent().parent().parent().data('prop'),
+      str = $(this).parent().find('span'),
+      val = '',
+      vals = new Set(str),
+      dd = [];
+
+      vals.forEach(function (item, same, set) {
+         if (item.innerText)
+            dd.push(item.innerText);
       });
-   }
+
+      val = dd.join(',').trim(',');
+
+      debugger;
+      if (this.classList.contains('add-prop-val')) {
+         var clone = this.cloneNode(true);
+         clone.innerHTML = '';
+         this.classList.remove('add-prop-val');
+         var el = this.parentNode.querySelector('.new');
+         var parent = this.parentNode;
+         parent.insertBefore(clone, el);
+      }
+
+//        if (!val&&!'')
+//            return false;
+
+      var data = {
+         token: $('#token').val(),
+         model: 'prop',
+         action: 'update',
+         table: 'props',
+         pkey: 'id',
+         pkeyVal: id,
+         values: {
+            val: val,
+         }
+      };
+      post(url, data);
+
+   });
 
 
 

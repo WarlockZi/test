@@ -5,6 +5,7 @@ Disallow: /libs/
 Disallow: /config/
 Disallow: /bit/
 Disallow: /app/
+Disallow: /catalog/
 Disallow: /*?
 
 Sitemap: https://vitexopt.ru/sitemap.xml
