@@ -20,9 +20,9 @@ new app\view\widgets\menu\Menu([
     <a href  = "/adminsc/catalog">Каталог  ></a>
     <? if (isset($category['parents'])): ?>
        <? foreach ($category['parents'] as $k => $v): ?>
-          <a href  = "/adminsc/catalog/category?id=<?= View::e($v['id']) ?>"><?= View::e($v['name']) ?></a>
+          <a href  = "/adminsc/catalog/category?id=<?= $v['id']; ?>"><?= $v['name']; ?></a>
        <? endforeach; ?>
-       <div><?= View::e($category['name']); ?></div>
+       <div><?= $category['name']; ?></div>
      </div>
      <!--<div class="nav-catalog breadcrumbs-adm">-->
 
@@ -40,23 +40,24 @@ new app\view\widgets\menu\Menu([
         <input id="tab3" type="radio" name="tabs">
         <label for="tab3" title="Сео">Сео</label>
         <input id="tab4" type="radio" name="tabs">
-        <label for="tab4" title="Подробно">Подкатегории</label>
+        <?
+        $children = isset($category['children']['categories']) &&
+           $category['children']['categories'] ? 'Подкатегории' : 'Товары'
+        ?>
+        <label for="tab4" title="<?= $children ?>"><?= $children ?></label>
 
 
 
         <section id="content-tab1" class="admin-flex-table">
           <div class="row">
             <strong>id :</strong>
-            <span contenteditable id = 'id'><?= $category['id'] ?: ''; ?></span>
+            <span  id = 'id'><?= $category['id'] ?: ''; ?></span>
           </div>
           <div class="row">
             <strong>Наименование :</strong>
             <span contenteditable id = 'name'><?= $category['name'] ?: ''; ?></span>
           </div>
-          <div class="row">
-            <strong>url :</strong>
-            <span contenteditable id = 'alias'><?= $category['alias'] ?: ''; ?></span>
-          </div>
+
           <div class="row">
             <strong>Описание :</strong>
             <span contenteditable id = 'text' class="column"><?= htmlspecialchars($category['text'] ?: ''); ?></span>
@@ -66,11 +67,17 @@ new app\view\widgets\menu\Menu([
 
         </section>
 
+        <?
+        $thisCatAndParentCatProps = isset($category['parents']) ?
+           array_merge($category['parentProps'], $category['props']) :
+           $category['props'];
+        ?>
         <section id="content-tab2">
+            <? if (isset($category['parents'])): ?>
 
-          <? if (isset($category['parents'])): ?>
              <? foreach ($category['parents'] as $parentCat): ?>
-                <div class="parent-properties separator">Свойства родительской категории</div>
+                <div class="parent-properties separator">
+                  Свойства родительской категории</div>
                 <div class="parent-prop column">
                     <? foreach ($parentCat['props'] as $Pprop): ?>
                      <div class="category-properties">
@@ -90,13 +97,17 @@ new app\view\widgets\menu\Menu([
               Свойства категории
             </div>
 
-            <? foreach ($category['props'] as $k => $catProp): ?>
+            <? foreach ($category['props'] as $catProp): ?>
                <? if ($catProp): ?>
                   <select>
                     <option value=""></option>
                     <? foreach ($props as $prop): ?>
-                       <? if (!in_array($prop['id'], $category['props'])&&$prop['id']!==$catProp): ?>
+                       <? if (!in_array($prop['id'], $thisCatAndParentCatProps)): ?>
                           <option value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></option>
+                       <? else: ?>
+                          <? if ($prop['id'] == $catProp): ?>
+                             <option value="<?= $prop['id']; ?>" <?= $catProp == $prop['id'] ? 'selected' : ''; ?>><?= $prop['name'] ?></option>
+                          <? endif; ?>
                        <? endif; ?>
                     <? endforeach; ?>
                   </select>
@@ -133,6 +144,10 @@ new app\view\widgets\menu\Menu([
             <span contenteditable id = 'title'><?= $category['title'] ?: ''; ?></span>
           </div>
           <div class="row">
+            <strong>url :</strong>
+            <span contenteditable id = 'alias'><?= $category['alias'] ?: ''; ?></span>
+          </div>
+          <div class="row">
             <strong>key words :</strong>
             <span contenteditable id = 'keywords'><?= $category['keywords'] ?: ''; ?></span>
           </div>
@@ -149,13 +164,26 @@ new app\view\widgets\menu\Menu([
         </section>
 
         <section id="content-tab4">
-          <div class="left-menu column">
-              <? if (isset($category['children']['categories'])): ?>
-                 <? foreach ($category['children']['categories'] as $key => $value) : ?>
-                  <a href="/adminsc/catalog/category?id=<?= $value['id'] ?>"><?= $value['alias'] ?></a>
+
+
+          <? if (isset($category['children']['categories']) && $category['children']['categories']): ?>
+             <? foreach ($category['children']['categories'] as $key => $value) : ?>
+                <a href="/adminsc/catalog/category?id=<?= $value['id'] ?>"><?= $value['alias'] ?></a>
+             <? endforeach; ?>
+
+          <? else: ?>
+             <div class="products row">
+                 <? foreach ($category['children']['products'] as $product) : ?>
+               <a class="product w200" href="product?id=<?= $product['id'] ?>">
+                    <div class="pic w200 h200">
+                      <img src="<?= $product['dpic'] ? '/pic' . $product['dpic'] : '/pic/srvc/nophoto-min.jpg' ?>" alt="">
+                    </div>
+                    <span><?= $product['name'] ?></span>
+                  </a>
+
                <? endforeach; ?>
-            <? endif; ?>
-          </div>
+             </div>
+          <? endif; ?>
 
 
         </section>

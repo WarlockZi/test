@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\core\App;
+use app\core\Base\View;
 
 class SearchController extends AppController {
 
@@ -19,8 +20,7 @@ class SearchController extends AppController {
       }
       $qSql = addslashes('%' . $q . '%');
 
-
-      $sql = "SELECT $url, name, preview_pic FROM products WHERE name LIKE ? LIMIT 10";
+      $sql = "SELECT $url, name, preview_pic FROM products WHERE name LIKE ? AND `act`= 'Y' LIMIT 10";
       $params = [$qSql];
       $arr = App::$app->product->findBySql($sql, $params);
 //      foreach ($arr as $i => $v){
@@ -42,6 +42,7 @@ class SearchController extends AppController {
       }
       if (empty($_GET['q'])) { // вход не через кнопку
          $this->layout = false;
+         View::setJsCss(['css'=>'/public/css/vitex.css']);
 //        $css = 'vitex.css';
 //        $this->set(compact('css'));
          echo json_encode($result);
@@ -50,6 +51,7 @@ class SearchController extends AppController {
          $this->layout = 'vitex';
          $list = App::$app->category->getInitCategories();
          $css = 'vitex.css';
+               View::setJsCss(['css'=>'/public/css/vitex.css']);
          $this->set(compact('css','list','result'));
       }
    }

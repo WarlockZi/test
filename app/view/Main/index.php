@@ -1,13 +1,5 @@
 <main>
 
-
-  <!--    <div class="single-slide">
-        <img src="/pic/slick/1.jpg">
-        <img src="/pic/slick/2.jpg">
-        <img src="/pic/slick/3.jpg">
-        <img src="/pic/slick/4.jpg">
-      </div>-->
-
   <div class="info">
     <h1>Оптовые поставки спецодежды по России</h1>
     <p>
@@ -38,11 +30,12 @@
 
         <? foreach ($sale as $product) : ?>
            <div>
-             <div class="image-height column">
-               <img src="/pic<?= $product['dpic']; ?>" alt="<?= $product['name']; ?>">
-               <div><?= $product['name']; ?> </div>
-
-             </div>
+             <a href="/<?= $product['alias']; ?>">
+               <div class="image-height column">
+                 <img src="/pic<?= $product['dpic']; ?>" alt="<?= $product['name']; ?>">
+                 <div><?= $product['name']; ?> </div>
+               </div>
+             </a>
            </div>
         <? endforeach; ?>
       </div>

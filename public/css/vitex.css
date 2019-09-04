@@ -32,6 +32,12 @@
 iframe .map{
 	margin: 20px 0;
 }
+
+.image-height.column a{
+	width: 100%;
+	height: 100%;
+}
+
 /*************************************
 *******      MOBILE PANEL        ******
 **************************************/
@@ -43,7 +49,8 @@ label[for="toggle-button"]{
     color: #fff;
     font-size: 21px;
     padding: 7px 9px;
-	    cursor: pointer;
+	cursor: pointer;
+	z-index: 2;
 }
 #panel{
 	width: 100%;
@@ -91,7 +98,8 @@ nav#menu{
 .menu-wrap .item{
 	padding:  0;
 	transition: .3s;
-	
+	text-transform: uppercase;
+
 }
 #toggle-button:checked ~#menu .menu-wrap .item
 {
@@ -684,7 +692,7 @@ header {
 
 .search-wrap{
     position: relative;
-    height: 32px;
+    /*height: 32px;*/
     margin: 6px 5px;
 }
 .search-wrap .form-text{
@@ -877,6 +885,9 @@ header {
     background: black;
     color: #fff;
 	padding: 0 48px;
+	position: sticky;
+    top: 0;
+    z-index: 1;
 }
 .top-menu a{
     color: #fff;
@@ -956,13 +967,13 @@ footer a
 .user-menu .icon{
     padding: 5px 16px;
     display: flex;
-	
+
 }
 .user-menu .icon svg{
     width: 14px;
 }
 .user-menu>.row{
-height: 100%;
+	height: 100%;
 }
 .user-menu>span.row>a{
     color: #fff;
@@ -1377,29 +1388,22 @@ height: 100%;
 .slick-dots li
 {
     position: relative;
-
     display: inline-block;
-
     width: 20px;
     height: 20px;
     margin: 0 5px;
     padding: 0;
-
     cursor: pointer;
 }
 .slick-dots li button
 {
     font-size: 0;
     line-height: 0;
-
     display: block;
-
     width: 20px;
     height: 20px;
     padding: 5px;
-
     cursor: pointer;
-
     color: transparent;
     border: 0;
     outline: none;
@@ -1420,20 +1424,15 @@ height: 100%;
     font-family: 'slick';
     font-size: 6px;
     line-height: 20px;
-
     position: absolute;
     top: 0;
     left: 0;
-
     width: 20px;
     height: 20px;
-
     content: '•';
     text-align: center;
-
     opacity: .25;
     color: black;
-
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -1442,7 +1441,13 @@ height: 100%;
     opacity: .75;
     color: black;
 }
-
+.slick-slider *:active,
+.slick-slider *:focus,
+.image-height.column *:active,
+.image-height.column *:focus
+{
+	outline: none;
+}
 
 
 
@@ -1510,16 +1515,79 @@ height: 100%;
 
 
 /*************************************
+*******     copied from MAIN    ******
+**************************************/
+main
+{
+	display:flex;
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
+
+.info{
+	flex:3;
+	padding: 0 48px;
+}
+.white-space{
+	background-color: white;
+    margin: 16px;
+}
+
+.sale-action-wrap span{
+	font-family: intro, sans-serif;
+    font-size: 33px;
+	margin-top: 15px;
+}
+.sale-action-wrap{
+	align-items: center;
+	width: 250px;
+	background-color: #fbe61f;
+    box-shadow: 0 0 6px 5px #d2d2d2;
+    border: 1px #d2d2d2 solid;
+
+}
+.single-slide{
+    height: 500px;
+    flex: 1;
+	flex-basis: 49px;
+	width: 225px;
+    margin: auto;
+}
+.single-slide img{
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+}
+
+.image-height{
+    height: 500px;
+    display: flex;
+    margin: 0 27px;
+    justify-content: space-between;
+}
+.image-height>div{
+    font-weight: 600;
+    padding: 7px;
+	min-height: 54px;
+}
+
+/*************************************
 *******     MEDIA QUERRIES    ******
 **************************************/
 
 @media (max-width: 400px) {
+
+	.top-menu{
+		padding: 0 20px;
+	}
     .FIO,
     .t-1,
     .logo-desc,
     .title,
     .logo>span,
     .basket,
+	.header-lower,
+	.top-menu .contacts,
     .user-button,
     .user-button span,
     .icon-phone,    
@@ -1529,6 +1597,10 @@ height: 100%;
     {
         display:none;
     }
+	header{
+		height: 65px;
+
+	}
     .logo svg
     {
         width: 235px;;
@@ -1537,10 +1609,12 @@ height: 100%;
         width:80%;
     }
 
+
 }
 
 /* xs (<=543px) */
 @media (min-width: 401px) and (max-width: 575px){
+
 
     .FIO,
     .t-1,
@@ -1549,6 +1623,8 @@ height: 100%;
     .logo>span,
     .basket,
     .icon-phone,
+	.header-lower,
+	.top-menu .contacts,
     .user-button span,
     .user-button,
     .card-right
@@ -1558,6 +1634,10 @@ height: 100%;
     {
         display:none;
     }
+	header{
+		height: 65px;
+
+	}
 
     .user-button i{
         font-size: 3.5vw;
@@ -1588,7 +1668,9 @@ height: 100%;
 
 	.toggle-button{
 		display: block;
-
+	}
+	header{
+		height: 65px;
 	}
     .logo-desc,
     .title,
@@ -1600,8 +1682,8 @@ height: 100%;
     .user-button,
     .card-right,
     .FIO,
-    .phone-wrap
-
+    .phone-wrap,
+	.header-lower
     {
         display:none;
     }
@@ -1681,3 +1763,6 @@ height: 100%;
         font-size: 1vw;
     }
 }
+
+
+

@@ -37,28 +37,29 @@ class CatalogController extends AppController {
          $user = App::$app->user->getUser($id);
       }
       $canonical = $product['alias'];
-      View::setMeta($product['title'], $product['description'],$product['keywords']);
-      $this->set(compact('canonical','breadcrumbs', 'user', 'product', 'tov', 'categories'));
+      View::setMeta($product['title'], $product['description'], $product['keywords']);
+      $this->set(compact('canonical', 'breadcrumbs', 'user', 'product', 'tov', 'categories'));
 
-      $this->view = 'product_1';
-      View::setJsCss(['css'=> $this->route,'view'=> $this->view]);
-
-      }
+      $this->view = 'product';
+      View::setJsCss(['css' => $this->route, 'view' => $this->view]);
+   }
 
    public function actionCategory($category) {
 
-//      $js = '/public/jscss/Catalog/index.js';
 
-      if (isset($_SESSION['id'])&&$_SESSION['id']) {
-         $user = App::$app->user->getUser($_SESSION['id']);
-      }
+      http_response_code(404);
 
-      $breadcrumbs = App::$app->product->getBreadcrumbs($category, $category['parents'], 'category');
-      $canonical = $category['alias'];
-      View::setMeta($category['title'],$category['keywords'], $category['description']);
-      $this->set(compact('user', 'breadcrumbs', 'category', 'canonical'));
-      View::setJsCss(['css'=> $this->route,'view'=> $this->view]);
+      include '../public/404.html'; // '404.html';
 
+//      if (isset($_SESSION['id']) && $_SESSION['id']) {
+//         $user = App::$app->user->getUser($_SESSION['id']);
+//      }
+//
+//      $breadcrumbs = App::$app->product->getBreadcrumbs($category, $category['parents'], 'category');
+//      $canonical = $category['alias'];
+//      View::setMeta($category['title'], $category['keywords'], $category['description']);
+//      $this->set(compact('user', 'breadcrumbs', 'category', 'canonical'));
+//      View::setJsCss(['css' => $this->route, 'view' => $this->view]);
    }
 
 }

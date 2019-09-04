@@ -108,10 +108,10 @@ class View {
                <meta name = "keywords" content = "' . self::$meta['keywords'] . '">';
    }
 
-   public static function setMeta($title = '', $keywords = '', $description = '') {
+   public static function setMeta($title = '', $description = '', $keywords = '') {
       self::$meta['title'] = $title;
-      self::$meta['keywords'] = $keywords;
       self::$meta['desc'] = $description;
+      self::$meta['keywords'] = $keywords;
    }
 
    public static function e($str) {
