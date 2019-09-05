@@ -1,5 +1,6 @@
 
-<main><div class="site">
+<main>
+  <div class="site">
     <div class="column">
       <a href="/about/requisites">Реквизиты</a>
       <a href="/about/oferta">Оферта</a>

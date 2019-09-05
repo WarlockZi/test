@@ -40,10 +40,18 @@ new app\view\widgets\menu\Menu([
         <input id="tab3" type="radio" name="tabs">
         <label for="tab3" title="Сео">Сео</label>
         <input id="tab4" type="radio" name="tabs">
+
         <?
-        $children = isset($category['children']['categories']) &&
-           $category['children']['categories'] ? 'Подкатегории' : 'Товары'
+        if (isset($category['children']['categories']) &&
+           $category['children']['categories']) {
+           $children = 'Подкатегории';
+           $ddProductButton = '';
+        } else {
+           $children = 'Товары';
+           $ddProductButton = '<a href = "product?id=new&category='.$category['id'].'" class="add-product">добавить товар</a>';
+        }
         ?>
+
         <label for="tab4" title="<?= $children ?>"><?= $children ?></label>
 
 
@@ -172,9 +180,10 @@ new app\view\widgets\menu\Menu([
              <? endforeach; ?>
 
           <? else: ?>
+                      <?= $ddProductButton ?>
              <div class="products row">
                  <? foreach ($category['children']['products'] as $product) : ?>
-               <a class="product w200" href="product?id=<?= $product['id'] ?>">
+                  <a class="product w200" href="product?id=<?= $product['id'] ?>">
                     <div class="pic w200 h200">
                       <img src="<?= $product['dpic'] ? '/pic' . $product['dpic'] : '/pic/srvc/nophoto-min.jpg' ?>" alt="">
                     </div>

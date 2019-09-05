@@ -89,16 +89,29 @@ class Adm_catalogController extends AdminscController {
    public function actionProduct() {
 
       if (isset($_GET['id'])) {
-         $id = (int) View::e($_GET['id']);
+         if ($_GET['id'] = 'new') {
+            if (!isset($_GET['category'])) {
+               exit('не указана родительская категория !');
+            }
+
+            $product = [];
+            $id = (int)$_GET['category'];
+            $category = App::$app->category->getCategory($id);
+            $parent = $_GET['id'];
+            $props = App::$app->prop->getProps();
+            $this->set(compact('product', 'category', 'props'));
+         } else {
+            $id = (int) $_GET['id'];
+
+            $product = App::$app->product->getProduct($id);
+            $product['props'] = json_decode($product['props'], true);
+
+            $category = App::$app->category->getCategory($product['parent']);
+
+            $props = App::$app->prop->getProps();
+            $this->set(compact('product', 'category', 'props'));
+         }
       }
-      $product = App::$app->product->getProduct($id);
-      $product['props'] = json_decode($product['props'], true);
-
-      $category = App::$app->category->getCategory($product['parent']);
-
-//      $prodProps = App::$app->product->getProductProps($category);
-      $props = App::$app->prop->getProps();
-      $this->set(compact('product', 'category', 'props'));
    }
 
    public function actionIndex() {

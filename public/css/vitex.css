@@ -104,6 +104,7 @@ nav#menu{
 #toggle-button:checked ~#menu .menu-wrap .item
 {
 	padding:  10px 0;
+	    position: relative;
 }
 
 .transition {

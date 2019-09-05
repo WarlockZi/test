@@ -143,9 +143,9 @@
 
                   <div class="search-wrap">
                     <form action="search" method="GET">
-                      <input  id="autocomplete" type="text" placeholder="Поиск" name="q" value="" size="20" maxlength="50" class="form-text" autocomplete="on" aria-label = "поиск">
+                      <input id="autocomplete" type="text" placeholder="Поиск" name="q" value="" size="20" maxlength="50" class="form-text" autocomplete="on" aria-label = "поиск">
                       <div class="form-submit">
-                        <input type="submit" class="search-go" name = "search-go" id = "search-go">
+                        <input onclick="return empty_form()" type="submit" class="search-go" name = "search-go" id = "search-go">
                         <svg version="1.1" width="20" height="27" viewBox="0 0 512 512">
                         <path fill = '#e30000' d="M76.302 496.131l103.147-121.276c11.283-12.537 16.463-25.945 15.963-36.776 33.534 28.628 77.039 45.921 124.588 45.921 106.039 0 192-85.961 192-192s-85.961-192-192-192-192 85.961-192 192c0 47.549 17.293 91.054 45.922 124.588-10.831-0.5-24.239 4.68-36.776 15.963l-121.276 103.147c-19.623 17.661-21.277 46.511-3.678 64.11s46.449 15.946 64.11-3.677zM192 192c0-70.692 57.308-128 128-128s128 57.308 128 128-57.308 128-128 128-128-57.307-128-128z"/>
                         </svg>
