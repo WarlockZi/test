@@ -39,6 +39,7 @@
     flex:1;
     justify-content: flex-end;
     font-size: 14px;
+	align-items: center;
 }
 .admin-flex-table .row div,
 .admin-flex-table .row span,
@@ -1099,7 +1100,7 @@ h2{
 
 .grid5 {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 40px 40px 1fr 1fr 80px;
 }
 .grid-head{
     font-weight: 600;
@@ -1164,7 +1165,7 @@ span[contenteditable]:hover,
     height: 27px;
     margin: 24px;
     justify-content: center;
-    flex:1;
+    /*flex:1;*/
 }
 .separator{
     padding: 5px;
@@ -1370,7 +1371,7 @@ header {
 
 .properties select{
     margin: 5px 0;
-	max-width: 330px;
+/*	max-width: 330px;*/
 }
 
 .add-property select{

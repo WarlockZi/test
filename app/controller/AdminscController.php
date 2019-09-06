@@ -13,7 +13,6 @@ class AdminscController extends AppController {
    public function __construct($route) {
       parent::__construct($route);
 
-
       if ($this->isAjax()) {
          if (isset($_POST['param'])) {
             $arr = json_decode($_POST['param'], true);

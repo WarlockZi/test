@@ -4,8 +4,8 @@ $(function () {
       return {
          token: $('#token').val(),
          url: '/adminsc',
-         model: 'category',
-         table: 'category',
+         model: 'product',
+         table: 'product',
          action: action ? action : 'update',
          pkey: 'id',
          pkeyVal: 'nul',
@@ -14,11 +14,13 @@ $(function () {
    }
    ;
 // сохранить изменения
-   $('#product-update-btn').on('click', function () {
+   $('#product-save-btn').on('click', function () {
+      if (!$('#name').text()) {
+         return;
+      }
 
-      var Obj = new obj();
+      var Obj = new obj('create');
       Obj.pkeyVal = $('#id').text();
-
       Obj.values.act = document.querySelector('#act').checked ? 'Y' : 'N';
       Obj.values.name = $('#name').text();
       Obj.values.alias = $('#alias').text();
@@ -30,32 +32,40 @@ $(function () {
       Obj.values.core = $('#core').text();
 
       var props = $('.work-area .category-properties');
-      var prop = ({});
+      var prop = {};
       var u = uniq(props);
       u.map((i) => {
-         var d = i;
+//         var d = i;
          var el = '';
-         debugger;
-         if (el = i.querySelector('select')) {
-            prop.el.name = el.selected;
+         let name = i.querySelector('strong').innerText;
+         if (el = i.querySelector('select[multiple]')) {
+           
+            debugger;
+            options =   JSON.stringify(options);
+            prop[name] = el.value;
+            
+//            prop.el.name = el.selected;
+         }
+         else if (el = i.querySelector('select')) {
+//            debugger;
+//            let name = i.querySelector('strong').innerText;
+            prop[name] = el.value;
          }
          else if (el = i.querySelector('input')) {
-//              prop.i.querySelector('span'):'dd';
+//            debugger;
+//            let name = i.querySelector('strong').innerText;
+            prop[name] = el.value;
          }
          ;
       });
-
       for (let val of props) {
          if (val.value)
             prop.push(val.value);
       }
-
       prop = uniq(prop);
       Obj.values.props = prop.join(',');
-//      debugger;
-      setTimeout(function () {
-         post(Obj.url, Obj)
-      }, 800);
+      debugger;
+      post(Obj.url, Obj)
    });
 
 
@@ -82,7 +92,6 @@ $(function () {
       fileupload = document.getElementById('upload'),
       message = "filereader formdata progress".split(' '); // преобразует строку в массив, разбив по сепаратору
 
-
       for (var key in message) { //(function (api) 
          if (tests[message[key]] === false) {
             support[message[key]].className = 'fail'; // присвоим класс 
@@ -95,9 +104,7 @@ $(function () {
             }
          }
       }
-
       if (tests.dnd) {
-
          for (i = 0; i < holder.length; i++) {
             holder[i].ondragover = function () {
 //               debugger;
@@ -114,7 +121,6 @@ $(function () {
                readfiles(e.dataTransfer.files, this);
             };
          }
-
       }
       else {
          fileupload.className = 'hidden'; // прячем кнопку загрузки
@@ -169,11 +175,6 @@ $(function () {
 // now post a new XHR request
          if (tests.formdata) {
             var xhr = new XMLHttpRequest();
-//            controller = 'test';
-//            if (window.location.pathname.indexOf('freetest') + 1) {
-//               controller = 'freetest';
-//            }
-//            xhr.open('POST', `${PROJ}/${controller}/edit`, true);
             xhr.open('POST', `/adminsc`, true);
             xhr.send(formData);
             xhr.onreadystatechange = function () {

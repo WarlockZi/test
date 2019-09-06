@@ -1,5 +1,5 @@
 <div class="adm-submenu">
-  <div class="title">Каталог</div>
+  <!--<div class="title">Новый товар</div>-->
   <div class="admin-actions">
       <?
       new app\view\widgets\menu\Menu([
@@ -20,12 +20,12 @@
        <? foreach ($category['parents'] as $k => $v): ?>
           <a href  = "/adminsc/catalog/category?id=<?= $v['id'] ?>"><?= $v['name'] ?></a>
        <? endforeach; ?>
-       <a href  = "/adminsc/catalog/category?id=<?= $category['id'] ?>"><?= $category['name']?:'' ?></a>
-       <div><?= $product['name']?:''; ?></div>
+       <a href  = "/adminsc/catalog/category?id=<?= $category['id'] ?>"><?= $category['name'] ?: '' ?></a>
+       <div>Создание нового товара</div>
 
     <? endif; ?>
   </div>
-  <H1><?= $product['name']?:''; ?></H1>
+  <H1>Создание нового товара</H1>
 
   <div class="wrap-admin">
     <div class="work-area">
@@ -47,31 +47,31 @@
             <div class="left column">
               <div class = 'prop row'>
                 <strong>id :</strong>
-                <span id = 'id' <?= $product['id']?:''; ?>><?= $product['id']?:''; ?></span>
+                <span id = 'id' <?= 'new' ?>></span>
               </div>
               <div class = 'prop row'>
-                <strong>Показать на сайте :</strong>
+                <strong>Показать на сайте  :</strong>
                 <span>
-                  <input type="checkbox" id = 'act' <?= $product['act'] == 'Y' ? 'ckecked' : ''; ?>>
+                  <input type="checkbox" id = 'act' <?= 'ckecked'; ?>>
 
                 </span>
               </div>
               <div class = 'prop row'>
                 <strong>Наименование :</strong>
-                <span contenteditable id = 'name'><?= $product['name'] ?: ''; ?></span>
+                <span contenteditable id = 'name'></span>
               </div>
 
             </div>
             <div class="right  column">
               <div>
-                <img id = 'dpic' dpic = '/pic<?= $product['dpic'] ?: ''; ?>' src = '/pic<?=  $product['dpic'] ?: '/srvc/nophoto-min.jpg'; ?>'>
+                <img id = 'dpic' dpic = '/pic/srvc/nophoto-min.jpg' src = '/pic/srvc/nophoto-min.jpg'>
               </div>
             </div>
           </div>
 
           <div>
             <strong>Описание :</strong>
-            <span contenteditable id = 'text' class="column"><?= $product['dtxt'] ?: ''; ?></span>
+            <span contenteditable id = 'text' class="column"></span>
           </div>
 
 
@@ -91,15 +91,15 @@
             }
             ?>
 
-            <div class="product-prop column">
+            <div class="admin-flex-table">
                 <? foreach ($category['props'] as $Pprop): ?>
-                 <div class="category-properties">
+                 <div class="row category-properties">
                      <? foreach ($props as $prop): ?>
                         <? if ($Pprop == $prop['id']): ?>
-                         <span><?= $prop['name'] ?></span>
+                         <strong><?= $prop['name'] ?></strong>
 
                          <? if ($prop['type'] == 'string') : ?>
-                            <input value="<?= is_array($product['props']) && array_key_exists($Pprop, $product['props']) ? $product['props'][$Pprop] : '' ?>" data-type = 'text' data-id="<?= $prop['id']; ?>" contenteditable type="text">
+                         <input data-type = 'text' data-id="<?= $prop['id']; ?>" contenteditable type="text">
 
 
                          <? elseif ($prop['type'] == 'select'): ?>
@@ -107,7 +107,9 @@
                             <select data-type = 'select' data-id="<?= $prop['id']; ?>">
                               <option value=""></option>
                               <? foreach ($val as $i => $p): ?>
-                                 <option <?= is_array($product['props']) && array_key_exists($Pprop, $product['props']) && ($i == $product['props'][$Pprop]) ? 'selected' : ''; ?> value="<?= $i; ?>"><?= $p; ?></option>
+
+                                 <option value="<?= $i; ?>"><?= $p; ?></option>
+
                               <? endforeach; ?>
                             </select>
 
@@ -116,8 +118,12 @@
                             <? $val = explode(',', $prop['val']); ?>
                             <select data-type = 'multi-select' data-id="<?= $prop['id']; ?>" multiple title = "для выбора нескольких значений зажмите 'CTRL'" name="" id="">
                                 <? foreach ($val as $i => $p): ?>
-                                   <? $multi = explode(',', $product['props'][$Pprop]); ?>
-                                 <option value="<?= $i; ?>" <?= is_array($product['props']) && array_key_exists($Pprop, $product['props']) && (array_key_exists($i, $multi)) ? 'selected' : '' ?>><?= $p; ?></option>
+                                   <? $multi = isset($product['props']) ? explode(',', $product['props'][$Pprop]) : []; ?>
+                                   <? if ($multi): ?>
+                                    <option value="<?= $i; ?>" <?= is_array($product['props']) && array_key_exists($Pprop, $product['props']) && (array_key_exists($i, $multi)) ? 'selected' : '' ?>><?= $p; ?></option>
+                                 <? else: ?>
+                                    <option value="<?= $i; ?>"><?= $p; ?></option>
+                                 <? endif; ?>
                               <? endforeach; ?>
                             </select>
 
@@ -144,23 +150,23 @@
           <div class="admin-flex-table">
             <div class="row">
               <strong>название вкладки :</strong>
-              <span contenteditable id = 'title'><?= $product['title'] ?: ''; ?></span>
+              <span contenteditable id = 'title'></span>
             </div>
             <div class = 'row'>
               <strong>url :</strong>
-              <span contenteditable id = 'alias'><?= $product['alias'] ?: ''; ?></span>
+              <span contenteditable id = 'alias'></span>
             </div>
             <div class="row">
               <strong>ключевые слова :</strong>
-              <span contenteditable id = 'keywords'><?= $product['keywords'] ?: ''; ?></span>
+              <span contenteditable id = 'keywords'></span>
             </div>
             <div class="row">
               <strong>сниппет для поисковиков :</strong>
-              <span contenteditable id = 'description'><?= $product['description'] ?: ''; ?></span>
+              <span contenteditable id = 'description'></span>
             </div>
             <div class="row">
               <strong>семантическое ядро :</strong>
-              <span contenteditable id = 'core'><?= $product['core'] ?: ''; ?></span>
+              <span contenteditable id = 'core'></span>
             </div>
           </div>
 
@@ -179,7 +185,7 @@
             </div>
 
             <div class="pic w200 h200">
-              <img src="/pic<?= $product['dpic'] ?: '/pic/srvc/nophoto-min.jpg'; ?>" alt="">
+              <img src="/pic/srvc/nophoto-min.jpg" alt="">
             </div>
 
           </div>
@@ -215,7 +221,8 @@
 
         </section>
         <div class="separator btns">
-          <button id="product-update-btn">Сохранить
+          <button id="product-save-btn">Сохранить
+          </button>
 
         </div>
       </div>

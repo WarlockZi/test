@@ -89,17 +89,20 @@ class Adm_catalogController extends AdminscController {
    public function actionProduct() {
 
       if (isset($_GET['id'])) {
-         if ($_GET['id'] = 'new') {
+         if ($_GET['id'] == 'new') {
             if (!isset($_GET['category'])) {
                exit('не указана родительская категория !');
             }
 
             $product = [];
-            $id = (int)$_GET['category'];
+            $id = (int) $_GET['category'];
             $category = App::$app->category->getCategory($id);
-            $parent = $_GET['id'];
+//            $parent = $_GET['id'];
             $props = App::$app->prop->getProps();
             $this->set(compact('product', 'category', 'props'));
+            $this->view = 'product_new';
+            $routeView = ['js' => $this->route, 'view' => $this->view];
+            View::setJsCss($routeView);
          } else {
             $id = (int) $_GET['id'];
 
