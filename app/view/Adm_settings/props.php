@@ -55,11 +55,11 @@
   </div>
 
 
-  <div class="separator btns">
+<!--  <div class="separator btns">
     <button>
       сохранить
     </button>
 
-  </div>
+  </div>-->
 
 </div>

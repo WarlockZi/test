@@ -1,26 +1,27 @@
 .holder input{
-	max-width: 115px;
-	display: none;
+    max-width: 115px;
+    display: none;
 }
 .holder label{
     background-color: #bdebee;
     padding: 10px;
-	cursor: pointer;
+    cursor: pointer;
 }
 
 #content-tab4 .holder.hover{
-	/*background-color: red;*/
-	border: 3px dashed #ccd2d4;
+    /*background-color: red;*/
+    border: 5px dashed #aca2d4;
 }
 .load-pic{
-	display:flex;
+    display:flex;
     justify-content: flex-end;
     align-items: center;
     padding-bottom: 5px;
-	width: 200px;
-	height: 200px;
-	border-radius: 25px;
-	border: 3px dashed #dee3e4;
+    width: 200px;
+    height: 200px;
+    border-radius: 25px;
+    border: 3px dashed #dee3e4;
+        box-sizing: border-box;
 }
 
 h1{
@@ -58,22 +59,22 @@ h1{
     display:flex;
 }
 .prop.row strong{
-	justify-content: flex-end;
-	margin-right: 15px;
+    justify-content: flex-end;
+    margin-right: 15px;
 }
 
 .category-properties {
-	display: flex;
+    display: flex;
 }
 .category-properties input,
 .category-properties select
 {
-	flex:2;
-	margin-right: 20px;
+    flex:2;
+    margin-right: 20px;
 }
 .category-properties span{
-	margin: 10px 10px 0 0;
-	flex: 1;
+    margin: 10px 10px 0 0;
+    flex: 1;
     display: flex;
     justify-content: flex-end;
 }

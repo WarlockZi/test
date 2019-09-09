@@ -6,6 +6,8 @@ Disallow: /config/
 Disallow: /bit/
 Disallow: /app/
 Disallow: /catalog/
+Disallow: /about/
+Disallow: /search/
 Disallow: /*?
 
 Sitemap: https://vitexopt.ru/sitemap.xml

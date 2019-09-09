@@ -52,8 +52,7 @@
               <div class = 'prop row'>
                 <strong>Показать на сайте :</strong>
                 <span>
-                  <input type="checkbox" id = 'act' <?= $product['act'] == 'Y' ? 'ckecked' : ''; ?>>
-
+                  <input type="checkbox" id = 'act' <?= $product['act'] == 'Y' ? 'checked' : ''; ?>>
                 </span>
               </div>
               <div class = 'prop row'>
