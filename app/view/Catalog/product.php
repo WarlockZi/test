@@ -11,7 +11,7 @@
           </div>
 
 
-          <div class="image">
+          <div class="pic h400 w400">
               <? if (!DEBU): ?>
                <div class="vert-thumbs">
                  <div class="thumb-small">
@@ -29,8 +29,7 @@
                </div>
             <? endif; ?>
 
-          <!--</div>-->
-            <img src="/pic<?= $product['dpic']; ?>" alt="<?= $product['name']; ?>">
+            <img title="<?= $product['name']; ?>" src="/pic<?= $product['dpic']; ?>" alt="<?= $product['name']; ?>">
 
           <div class="horiz-thumbs">
               <? if (!DEBU): ?>
@@ -49,7 +48,6 @@
             <div class="dtxt">
                 <?= $product['dtxt'] ?>
             </div>
-            <!--<span>Больше информации о товаре »</span>-->
           </div>
           <h3 class="may-also-like-wrap">
             <span>Вам также может понравится</span>

@@ -1,8 +1,13 @@
-.holder input{
+.js-pic-main{
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.load-pic-main input{
     max-width: 115px;
     display: none;
 }
-.holder label{
+.load-pic-main label{
     background-color: #bdebee;
     padding: 10px;
     cursor: pointer;
@@ -12,18 +17,26 @@
     /*background-color: red;*/
     border: 5px dashed #aca2d4;
 }
-.load-pic{
+.holder{
+    position: absolute;
+    width: 100%;
+    height: 100%;    
+	border-radius: 25px;
+    border: 3px dashed #dee3e4;
+	box-sizing: border-box;
+}
+
+.load-pic-main{
+	position: relative;
     display:flex;
+	flex-flow: column;
     justify-content: flex-end;
     align-items: center;
     padding-bottom: 5px;
     width: 200px;
     height: 200px;
-    border-radius: 25px;
-    border: 3px dashed #dee3e4;
-        box-sizing: border-box;
-}
 
+}
 h1{
     font-family: cursive;
     background-color: white;
