@@ -69,7 +69,7 @@ Router::add('^adminsc$', ['controller' => 'Adminsc', 'action' => 'index']);
 Router::add('^about\/(?P<action>[a-z0-9_]+)$', ['controller' => 'main']);
 Router::add('^about$', ['controller' => 'main', 'action' => 'about']);
 
-Router::add('^service\/(?P<action>[a-z0-9_]+)$', ['controller' => 'main']);
+Router::add('^service\/(?P<action>[a-z0-9-]+)$', ['controller' => 'main']);
 
 Router::add('^freetest\/?(?P<alias>[0-9]+)$', ['controller' => 'Freetest ', 'action' => 'do']);
 Router::add('^freetest/edit/(?P<alias>[0-9]+)$', ['controller' => 'Freetest ', 'action' => 'edit']);

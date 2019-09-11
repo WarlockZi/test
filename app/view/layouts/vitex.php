@@ -303,8 +303,8 @@
 
             <div class="row">
               <div class="column">
-                <a href="/about/contacts">Контакты</a>
-                <a href="/about/requisites">Реквизиты</a>
+                <a href="/about/contacts" nofollow noindex>Контакты</a>
+                <a href="/about/requisites" nofollow noindex>Реквизиты</a>
 
               </div>
               <div class="column">
@@ -312,8 +312,9 @@
 
               </div>
               <div class="column">
-                <a href="/about/oferta">Оферта</a>
-                <a href="/service/return_change">Возврат и обмен</a>
+                <a href="/service/return_change" nofollow noindex>Возврат и обмен</a>
+                <a href="/about/politicaconf" nofollow noindex>Политика конфиденциальности</a>
+                <a href="/about/oferta" nofollow noindex>Оферта</a>
 
 
               </div>

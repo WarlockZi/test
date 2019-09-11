@@ -30,25 +30,6 @@ abstract class Model {
       return strip_tags(trim($str));
    }
 
-   public function resize_photo($path, $filename, $filesize, $type, $tmp_name) {
-      $quality = 30; //Качество в процентах. В данном случае будет сохранено 60% от начального качества.
-      $size = 10485760; //Максимальный размер файла в байтах. В данном случае приблизительно 10 МБ.
-      if ($filesize < $size) {
-         switch($type){
-         case 'image/jpeg': $source = imagecreatefromjpeg($tmp_name);
-         break; //Создаём изображения по
-         case 'image/png': $source = imagecreatefrompng($tmp_name);
-         break;  //образцу загруженного
-         case 'image/gif': $source = imagecreatefromgif($tmp_name);
-         break; //исходя из его формата
-         default: return false;
-      }
-      imagejpeg($source, $path .'/'. $filename, $quality); //Сохраняем созданное изображение по указанному пути в формате jpg
-      imagedestroy($source); //Чистим память
-      return true;
-      } else return false;
-   }
-
    public function findAll($table, $sort = '') {
       $sql = "SELECT * FROM " . ($table ?: $this->table) . ($sort ? " ORDER BY {$sort}" : "");
       return $this->pdo->query($sql);
