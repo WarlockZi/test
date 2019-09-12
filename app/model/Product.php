@@ -12,46 +12,84 @@ class Product extends Model {
 
    public $table = 'products';
 
-   public function updateMainPic($arr) {
+   protected function createImgPaths($alias, $rate = 800, $for, $ext = 'jpg') {
+      $p['filename'] = $rate ? "{$alias}-{$for}-{$rate}.{$ext}" : "{$alias}-{$for}.{$ext}";
+      $p['toPath'] = $toPath = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias;
+      $p['relPath'] = '/' . $alias . '/' . $p['filename'];
+      $p['to'] = $toPath . '/' . $p['filename'];
+      return $p;
+   }
 
+   public function updateMainPic($arr) {
       if ($_FILES) {
          $file = $_FILES['file'];
       }
-      $alias = $arr['alias'];
-      $toPath = $_SERVER['DOCUMENT_ROOT'] . '/pic/0-' . $alias;
-      if (!is_dir($toPath)) {
-         mkdir($toPath, 0777, true);
-      }
-      $filename = $alias . '-main.jpg';
-      $filename500 = $alias . '-main-500.jpg';
-      $filename150 = $alias . '-main-150.jpg';
-      $relPath = '/0-' . $alias . '/' . $filename;
-      $relPath500 = '/0-' . $alias . '/' . $filename500;
-      $relPath150 = '/0-' . $alias . '/' . $filename150;
-      $to = $toPath . '/' . $filename;
-      $to500 = $toPath . '/' . $filename500;
-      $to150 = $toPath . '/' . $filename150;
-      // Перемещаем из tmp папки (прописана в php.config)
-      move_uploaded_file($file['tmp_name'], $to);
+      $ext = 'webp';
       $quality = 75;
       $rights = 0777;
+      $alias = $arr['alias'];
+      $p = $this->createImgPaths($alias, null, 'main');
+      $p600 = $this->createImgPaths($alias, 600, 'main', $ext);
+      $p250 = $this->createImgPaths($alias, 250, 'main', $ext);
+      $p80 = $this->createImgPaths($alias, 80, 'main', $ext);
+      if (!is_dir($p['toPath'])) {
+         mkdir($p['toPath'], 0777, true);
+      }
 
-      $new_image = new picture($to);
-      $new_image->autoimageresize(500, 500);
-      $new_image->imagesave('jpeg', $to500 , $quality, $rights);
+      move_uploaded_file($file['tmp_name'], $p['to']);
 
-      $new_image = new picture($to);
-      $new_image->autoimageresize(150, 150);
-      $new_image->imagesave('jpeg', $to150, $quality, $rights);
+      $new_image = new picture($p['to']);
+      $new_image->autoimageresize(600, 600);
+      $new_image->imagesave($ext, $p600['to'], $quality, $rights);
 
-      $sql = 'UPDATE products SET  dpic = ? preview_pic = ? WHERE id = ?';
-      $params = [$relPath500, $relPath150, $arr['pkeyVal']];
+      $new_image = new picture($p['to']);
+      $new_image->autoimageresize(250, 250);
+      $new_image->imagesave($ext, $p250['to'], $quality, $rights);
+
+      $new_image = new picture($p['to']);
+      $new_image->autoimageresize(80, 80);
+      $new_image->imagesave($ext, $p80['to'], $quality, $rights);
+
+      $sql = "UPDATE `products` SET `dpic` = ?, `preview_pic` = ? WHERE `id` = ?";
+      $params = [$p600['relPath'], $p250['relPath'], $arr['pkeyVal']];
       $res = $this->insertBySql($sql, $params);
+      exit($p['to']);
+   }
 
-      exit($to);
-//         $params = [$nameHash, $nameRu];
-//         $sql = "INSERT INTO pic (nameHash, nameRu) VALUES (?,?)";
-//         $this->insertBySql($sql, $params);
+   public function updateProductIMG($arr) {
+      if ($_FILES) {
+         $file = $_FILES['file'];
+      }
+      $ext = 'webp';
+      $quality = 75;
+      $rights = 0777;
+      $alias = $arr['alias'];
+      $p = $this->createImgPaths($alias, null, 'main');
+      $p600 = $this->createImgPaths($alias, 600, 'main', $ext);
+      $p250 = $this->createImgPaths($alias, 250, 'main', $ext);
+      $p80 = $this->createImgPaths($alias, 80, 'main', $ext);
+      if (!is_dir($p['toPath'])) {
+         mkdir($p['toPath'], 0777, true);
+      }
+
+      move_uploaded_file($file['tmp_name'], $p['to']);
+
+      $new_image = new picture($p['to']);
+      $new_image->autoimageresize(600, 600);
+      $new_image->imagesave($ext, $p600['to'], $quality, $rights);
+
+      $new_image = new picture($p['to']);
+      $new_image->autoimageresize(250, 250);
+      $new_image->imagesave($ext, $p250['to'], $quality, $rights);
+
+      $new_image = new picture($p['to']);
+      $new_image->autoimageresize(80, 80);
+      $new_image->imagesave($ext, $p80['to'], $quality, $rights);
+
+      $sql = "UPDATE `products` SET `dpic` = ?, `preview_pic` = ? WHERE `id` = ?";
+      $params = [$p600['relPath'], $p250['relPath'], $arr['pkeyVal']];
+      $res = $this->insertBySql($sql, $params);
+      exit($p['to']);
    }
 
    public function getProductParents($parentId) {
@@ -132,6 +170,35 @@ class picture {
    public $image_type;
    public $image_width;
    public $image_height;
+
+   public function imagesave($image_type = 'jpeg', $image_file = NULL, $image_compress = 100, $image_permiss = '') {
+      if ($image_file == NULL) {
+         switch ($image_type) {
+            case 'gif': header("Content-type: image/gif");
+               break;
+            case 'jpeg': header("Content-type: image/jpeg");
+               break;
+            case 'png': header("Content-type: image/png");
+               break;
+            case 'webp': header("Content-type: image/webp");
+               break;
+         }
+      }
+      switch ($image_type) {
+         case 'gif': imagegif($this->image, $image_file);
+            break;
+         case 'jpeg': imagejpeg($this->image, $image_file, $image_compress);
+            break;
+         case 'png': imagepng($this->image, $image_file);
+            break;
+         case 'webp': imagewebp($this->image, $image_file);
+            break;
+      }
+      if ($image_permiss != '') {
+         chmod($image_file, $image_permiss);
+      }
+      imagedestroy($this->image);
+   }
 
    public function __construct($image_file) {
       $this->image_file = $image_file;
@@ -234,31 +301,6 @@ class picture {
       $this->image_width = $new_w;
       $this->image_height = $new_h;
       $this->image = $new_image;
-   }
-
-   public function imagesave($image_type = 'jpeg', $image_file = NULL, $image_compress = 100, $image_permiss = '') {
-      if ($image_file == NULL) {
-         switch ($this->image_type) {
-            case 'gif': header("Content-type: image/gif");
-               break;
-            case 'jpeg': header("Content-type: image/jpeg");
-               break;
-            case 'png': header("Content-type: image/png");
-               break;
-         }
-      }
-      switch ($this->image_type) {
-         case 'gif': imagegif($this->image, $image_file);
-            break;
-         case 'jpeg': imagejpeg($this->image, $image_file, $image_compress);
-            break;
-         case 'png': imagepng($this->image, $image_file);
-            break;
-      }
-      if ($image_permiss != '') {
-         chmod($image_file, $image_permiss);
-      }
-      imagedestroy($this->image);
    }
 
    public function __destruct() {

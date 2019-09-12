@@ -61,7 +61,7 @@ $(function () {
       });
       prop = JSON.stringify(prop);
       Obj.values.props = prop;
-      
+
       var d = await post(Obj.url, Obj);
       debugger;
    });
@@ -126,15 +126,16 @@ $(function () {
          reader.readAsDataURL(file);
       }
 
-      function readfiles(files, elem) {
+      async function readfiles(files, elem) {
 
          var Obj = new obj();
          Obj.pkeyVal = $('#id').text();
          Obj.action = 'updateMainPic';
+         
+         Obj.imgRole = 'main';
          Obj.alias = $('#alias').text();
          Obj.values.dpic = files[0]['name'];
 
-         debugger;
          var formData = tests.formdata ? new FormData() : null;
 //            debugger;
          for (var i = 0; i < files.length; i++) {
@@ -147,14 +148,13 @@ $(function () {
             }
          }
          if (tests.formdata) {
-            let promise = fetch(`/adminsc`, {
+//            debugger;
+            let promise = await fetch(`/adminsc`, {
                body: formData,
                method: 'post',
-            })
-
+            });
          }
       }
-
    }
 
    check();

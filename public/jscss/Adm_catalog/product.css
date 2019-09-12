@@ -3,15 +3,7 @@
 	box-sizing: border-box;
 }
 
-.load-pic-main input{
-    max-width: 115px;
-    display: none;
-}
-.load-pic-main label{
-    background-color: #bdebee;
-    padding: 10px;
-    cursor: pointer;
-}
+
 
 #content-tab4 .holder.hover{
     /*background-color: red;*/
@@ -30,7 +22,7 @@
 	position: relative;
     display:flex;
 	flex-flow: column;
-    justify-content: flex-end;
+    justify-content: space-evenly;
     align-items: center;
     padding-bottom: 5px;
     width: 200px;

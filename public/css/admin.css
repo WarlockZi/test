@@ -1170,6 +1170,7 @@ span[contenteditable]:hover,
     font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 2px;
+	    color: #646464;
 }
 .separator.btns button
 {
