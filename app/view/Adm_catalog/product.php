@@ -31,13 +31,13 @@
     <div class="work-area">
       <input id = 'token' type="hidden" value="<?= $_SESSION['token'] ?>">
       <div class="tabs">
-        <input id="tab1" type="radio" name="tabs" checked>
+        <input id="tab1" type="radio" name="tabs" >
         <label for="tab1" title="Подробно">Подробно</label>
         <input id="tab2" type="radio" name="tabs">
         <label for="tab2" title="Свойства">Свойства</label>
         <input id="tab3" type="radio" name="tabs">
         <label for="tab3" title="Сео">Сео</label>
-        <input id="tab4" type="radio" name="tabs">
+        <input id="tab4" type="radio" name="tabs" checked>
         <label for="tab4" title="Картинки">Картики</label>
 
 
@@ -170,45 +170,44 @@
 
           <div class="row separator">основная картинка</div>
 
-          <div class="row">
-            <div class="load-pic-main">
-              <span>Перетащи файл сюда или</span>
-              <input id=choose-main-pic type="file">
-              <label for="choose-main-pic">выбрери файл</label>
-              <div class="holder"></div>
+          <div class="row js-pic">
 
+            <div class="holder column"  data-pic-type = 'dpic'>
+              <span>Перетащи файл сюда или выбери</span>
+              <input id=main type="file"   data-pic-type = 'dpic'>
+              <label for="main">с компьютера</label>
+              <div class="dpic"></div>
             </div>
-
-            <div class="pic w200 h200 js-pic-main">
-              <img id = 'dpic' src="/pic<?= $product['dpic'] ?: '/srvc/nophoto-min.jpg'; ?>" alt="">
+            <div class="pic w200 h200  js-one">
+              <img src="/pic<?= $product['dpic'] ?: '/srvc/nophoto-min.jpg'; ?>" alt="">
             </div>
 
           </div>
 
           <div class="row separator">дополнительные картинки</div>
 
-          <div class="row">
-            <div class="load-pic holder column">
-              <span>Перетащи файл сюда или</span>
-              <input id="choose-main-pic" type="file">
-              <label for="choose-main-pic">выбрери файл</label>
+          <div class="row js-pic" >
+            <div class="holder column" data-pic-type="dop">
+              <span>Перетащи файл сюда или выбери</span>
+              <input id ='dop' type="file" data-dop-type="dop">
+              <label for="dop">с компьютера</label>
             </div>
 
-            <div class="pic w200 h200">
+            <div class="pic h200 new" data-pic-type="dop">
             </div>
 
           </div>
 
           <div class="row separator">расцветки</div>
 
-          <div class="row">
-            <div class="load-pic holder column">
-              <span>Перетащи файл сюда или</span>
-              <input id=choose-main-pic type="file">
-              <label for="choose-main-pic">выбрери файл</label>
+          <div class="row js-pic"  >
+            <div class="holder column"  data-pic-type = 'color'>
+              <span>Перетащи файл сюда или выбери</span>
+              <input id ='color' type="file" data-pic-type = 'color'>
+              <label for="color">с компьютера</label>
             </div>
 
-            <div class="pic w200 h200">
+            <div class="pic h200 new" data-pic-type="color">
             </div>
 
           </div>
@@ -225,24 +224,28 @@
   </div>
 </div>
 <style>
-  .load-pic span {
+
+  .pic{
+      margin-left: 10px;
+  }
+  .holder span {
       width: 100px;
       color: #7d7d7d;
       text-align: center;
       line-height: 1.5;
   }
-  .load-pic-main label,
-  .load-pic label {
+
+  .holder label {
       background-color: #ebf4f4;
       padding: 10px;
       cursor: pointer;
+      z-index: 1;
   }
-  .load-pic input,
-  .load-pic-main input{
+  .holder input{
       max-width: 115px;
       display: none;
   }
-  .load-pic{
+  .holder{
       position: relative;
       display: flex;
       flex-flow: column;
@@ -251,13 +254,9 @@
       padding-bottom: 5px;
       width: 200px;
       height: 200px;
+      border-radius: 25px;
+      border: 3px dashed #dee3e4;
+      box-sizing: border-box;
   }
-  .load-pic-main span{
-      width: 100px;
-      color: #7d7d7d;
-      text-align: center;
-      line-height: 1.5;
-  }
-
 
 </style>

@@ -1179,6 +1179,7 @@ span[contenteditable]:hover,
 .separator.btns{
     position: sticky;
     bottom: 0;
+	    z-index: 1;
 }
 
 
