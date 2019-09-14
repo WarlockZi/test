@@ -170,7 +170,7 @@
 
           <div class="row separator">основная картинка</div>
 
-          <div class="row js-pic">
+          <div class="row js-pic" >
 
             <div class="holder column"  data-pic-type = 'dpic'>
               <span>Перетащи файл сюда или выбери</span>

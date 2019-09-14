@@ -12,9 +12,30 @@ class Product extends Model {
 
    public $table = 'products';
 
-   protected function createImgPaths($alias, $rate = 800, $for, $ext = 'jpg') {
-      $p['filename'] = $rate ? "{$alias}-{$for}-{$rate}.{$ext}" : "{$alias}-{$for}.{$ext}";
-      $p['toPath'] = $toPath = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias;
+   protected function createImgPaths($alias, $rate = 800, $for, $ext = 'jpg',$isOnly) {
+
+      $p['filename'] = $rate ? "{$alias}-{$rate}.{$ext}" : "{$alias}-{$for}.{$ext}";
+      $p['toPath'] = $toPath = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $for . '/1';
+      $p['group'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $for.'/';
+
+      if (!$isOnly && is_dir($p['toPath'])) {
+
+         $skip = array('.', '..');
+         $files = scandir($p['group']);
+         $i = 2;
+         foreach ($files as $file) {
+            if (!in_array($file, $skip))
+               if (is_dir($p['group'].$file)) {
+                  rename($p['group'].$file, $p['group'].$i);
+//                  rename(basename($file), $i);
+                  $i++;
+               }
+         }
+
+//         if (!is_dir($dir)) {
+//            mkdir($dir, 0777, true);
+//         }
+      }
       $p['relPath'] = '/' . $alias . '/' . $p['filename'];
       $p['to'] = $toPath . '/' . $p['filename'];
       return $p;
@@ -64,10 +85,12 @@ class Product extends Model {
       $quality = 75;
       $rights = 0777;
       $alias = $arr['alias'];
-      $p = $this->createImgPaths($alias, null, 'main');
-      $p600 = $this->createImgPaths($alias, 600, 'main', $ext);
-      $p250 = $this->createImgPaths($alias, 250, 'main', $ext);
-      $p80 = $this->createImgPaths($alias, 80, 'main', $ext);
+      $picType = $arr['picType'];
+      $isOnly = $arr['isOnly'];
+      $p = $this->createImgPaths($alias, null, $picType,null,$isOnly);
+      $p600 = $this->createImgPaths($alias, 600, $picType, $ext,$isOnly);
+      $p250 = $this->createImgPaths($alias, 250, $picType, $ext,$isOnly);
+      $p80 = $this->createImgPaths($alias, 80, $picType, $ext,$isOnly);
       if (!is_dir($p['toPath'])) {
          mkdir($p['toPath'], 0777, true);
       }
