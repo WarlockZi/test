@@ -62,7 +62,7 @@ $(function () {
       var d = await post(Obj.url, Obj);
       debugger;
    });
-   
+
    function check(input) {
       var holder = document.getElementsByClassName('holder'),
       fileupload = Array.from(document.querySelectorAll('input[type="file"]')),
@@ -137,18 +137,17 @@ $(function () {
             temporaryFileReader.readAsDataURL(inputFile);
          });
       };
-      
+
       async function updateImg(file, elem) {
          var Obj = new obj();
-         var productName = document.querySelector('#name').innerText;
+         var productName = document.querySelector('#alias').innerText;
          Obj.pkeyVal = $('#id').text();
          Obj.action = 'updateProductIMG';
-         let f = pics(productName, file, elem);
          Obj.alias = $('#alias').text();
-//         debugger;
          Obj.picType = elem.getAttribute('data-pic-type');
          Obj.isOnly = !!elem.parentNode.querySelector('.js-one');
-         Obj.values.img = f;
+//         debugger;
+         Obj.values.img = pics(productName, file, elem);
          var formData = tests.formdata ? new FormData() : null;
          if (tests.formdata) {
             formData.append('ajax', 'true');
@@ -164,27 +163,34 @@ $(function () {
          }
       }
 
-      function picNamesToJson(productName, file) {
-         var ext = file['name'].slice(-4);
-         return filePath = '/pic/' + productName + '/' + productName + ext;
+      function picNamesToJson(productName, file, name) {
+//         var ext = file['name'].slice(-4);
+         return filePath = '/pic/' + productName + '/' + name + '/1/' + productName;
       }
-      
+
       function pics(productName, file, elem) {
          let row = {},
-         arr = Array.from(document.querySelectorAll('.js-pic')),
-         picArr = arr.map(row => {
+         arr = Array.from(document.querySelectorAll('.js-pic'), row => {
             let obj = {};
             let name = row.querySelector('.holder').getAttribute('data-pic-type');
-            let picA = Array.from(row.querySelectorAll('img'));
-            let pics = picA.map((item, ind) => {
-               let d = {};
-               return d[ind] = picNamesToJson(productName, file)
+            let picA = Array.from(row.querySelectorAll('img'), (item, ind) => {
+               let d = {},
+               name = item.parentNode.parentNode.querySelector('.holder').getAttribute('data-pic-type');
+               return d[ind] = picNamesToJson(productName, file, name)
             });
-            obj[name] = pics;
+            obj[name] = picA;
             return obj;
          })
+
+         var f = {};
+         for (var i = 0; i < arr.length; i++) {
+            var keys = Object.keys(arr[i])
+            f[keys[i]] = arr[i][keys[i]]
+//            f[arr[s]] = arr[s];
+         }
          debugger;
-         return JSON.stringify(picArr);
+
+         return JSON.stringify(f);
       }
    }
 

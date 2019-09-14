@@ -167,22 +167,25 @@
         </section>
 
         <section id="content-tab4">
+            <? $product['img'] = json_decode($product['img']); ?>
+            <? // foreach ($product['img'] as $pic): ?>
+             <div class="row separator">основная картинка</div>
 
-          <div class="row separator">основная картинка</div>
+             <div class="row js-pic" >
 
-          <div class="row js-pic" >
+               <div class="holder column"  data-pic-type = 'dpic'>
+                 <span>Перетащи файл сюда или выбери</span>
+                 <input id=main type="file"   data-pic-type = 'dpic'>
+                 <label for="main">с компьютера</label>
+                 <div class="dpic"></div>
+               </div>
+               <div class="pic w200 h200  js-one">
+                 <img src="<?= $product['img']->dpic[0].'-600.webp' ?: '/srvc/nophoto-min.jpg'; ?>" alt="">
+                 <!--<img src="/pic<?//=$pic['dpic'] ?: '/srvc/nophoto-min.jpg'; ?>" alt="">-->
+               </div>
 
-            <div class="holder column"  data-pic-type = 'dpic'>
-              <span>Перетащи файл сюда или выбери</span>
-              <input id=main type="file"   data-pic-type = 'dpic'>
-              <label for="main">с компьютера</label>
-              <div class="dpic"></div>
-            </div>
-            <div class="pic w200 h200  js-one">
-              <img src="/pic<?= $product['dpic'] ?: '/srvc/nophoto-min.jpg'; ?>" alt="">
-            </div>
-
-          </div>
+             </div>
+          <? // endforeach; ?>
 
           <div class="row separator">дополнительные картинки</div>
 

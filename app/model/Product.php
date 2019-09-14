@@ -12,9 +12,9 @@ class Product extends Model {
 
    public $table = 'products';
 
-   protected function createImgPaths($alias, $rate = 800, $for, $ext = 'jpg',$isOnly) {
-
-      $p['filename'] = $rate ? "{$alias}-{$rate}.{$ext}" : "{$alias}-{$for}.{$ext}";
+   protected function createImgPaths($alias, $rate = 800, $for, $ext,$isOnly) {
+      $ext=$ext?:'jpg';
+      $p['filename'] = $rate ? "{$alias}-{$rate}.{$ext}" : "{$alias}.{$ext}";
       $p['toPath'] = $toPath = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $for . '/1';
       $p['group'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $for.'/';
 
@@ -31,50 +31,10 @@ class Product extends Model {
                   $i++;
                }
          }
-
-//         if (!is_dir($dir)) {
-//            mkdir($dir, 0777, true);
-//         }
       }
       $p['relPath'] = '/' . $alias . '/' . $p['filename'];
       $p['to'] = $toPath . '/' . $p['filename'];
       return $p;
-   }
-
-   public function updateMainPic($arr) {
-      if ($_FILES) {
-         $file = $_FILES['file'];
-      }
-      $ext = 'webp';
-      $quality = 75;
-      $rights = 0777;
-      $alias = $arr['alias'];
-      $p = $this->createImgPaths($alias, null, 'main');
-      $p600 = $this->createImgPaths($alias, 600, 'main', $ext);
-      $p250 = $this->createImgPaths($alias, 250, 'main', $ext);
-      $p80 = $this->createImgPaths($alias, 80, 'main', $ext);
-      if (!is_dir($p['toPath'])) {
-         mkdir($p['toPath'], 0777, true);
-      }
-
-      move_uploaded_file($file['tmp_name'], $p['to']);
-
-      $new_image = new picture($p['to']);
-      $new_image->autoimageresize(600, 600);
-      $new_image->imagesave($ext, $p600['to'], $quality, $rights);
-
-      $new_image = new picture($p['to']);
-      $new_image->autoimageresize(250, 250);
-      $new_image->imagesave($ext, $p250['to'], $quality, $rights);
-
-      $new_image = new picture($p['to']);
-      $new_image->autoimageresize(80, 80);
-      $new_image->imagesave($ext, $p80['to'], $quality, $rights);
-
-      $sql = "UPDATE `products` SET `dpic` = ?, `preview_pic` = ? WHERE `id` = ?";
-      $params = [$p600['relPath'], $p250['relPath'], $arr['pkeyVal']];
-      $res = $this->insertBySql($sql, $params);
-      exit($p['to']);
    }
 
    public function updateProductIMG($arr) {
@@ -87,6 +47,7 @@ class Product extends Model {
       $alias = $arr['alias'];
       $picType = $arr['picType'];
       $isOnly = $arr['isOnly'];
+      $img = $arr['values']['img'];
       $p = $this->createImgPaths($alias, null, $picType,null,$isOnly);
       $p600 = $this->createImgPaths($alias, 600, $picType, $ext,$isOnly);
       $p250 = $this->createImgPaths($alias, 250, $picType, $ext,$isOnly);
@@ -109,8 +70,8 @@ class Product extends Model {
       $new_image->autoimageresize(80, 80);
       $new_image->imagesave($ext, $p80['to'], $quality, $rights);
 
-      $sql = "UPDATE `products` SET `dpic` = ?, `preview_pic` = ? WHERE `id` = ?";
-      $params = [$p600['relPath'], $p250['relPath'], $arr['pkeyVal']];
+      $sql = "UPDATE `products` SET `img` = ? WHERE `id` = ?";
+      $params = [$img, $arr['pkeyVal']];
       $res = $this->insertBySql($sql, $params);
       exit($p['to']);
    }
@@ -124,6 +85,42 @@ class Product extends Model {
          return $parent;
       }
    }
+
+//   public function updateMainPic($arr) {
+//      if ($_FILES) {
+//         $file = $_FILES['file'];
+//      }
+//      $ext = 'webp';
+//      $quality = 75;
+//      $rights = 0777;
+//      $alias = $arr['alias'];
+//      $p = $this->createImgPaths($alias,null , 'main');
+//      $p600 = $this->createImgPaths($alias, 600, 'main', $ext);
+//      $p250 = $this->createImgPaths($alias, 250, 'main', $ext);
+//      $p80 = $this->createImgPaths($alias, 80, 'main', $ext);
+//      if (!is_dir($p['toPath'])) {
+//         mkdir($p['toPath'], 0777, true);
+//      }
+//
+//      move_uploaded_file($file['tmp_name'], $p['to']);
+//
+//      $new_image = new picture($p['to']);
+//      $new_image->autoimageresize(600, 600);
+//      $new_image->imagesave($ext, $p600['to'], $quality, $rights);
+//
+//      $new_image = new picture($p['to']);
+//      $new_image->autoimageresize(250, 250);
+//      $new_image->imagesave($ext, $p250['to'], $quality, $rights);
+//
+//      $new_image = new picture($p['to']);
+//      $new_image->autoimageresize(80, 80);
+//      $new_image->imagesave($ext, $p80['to'], $quality, $rights);
+//
+//      $sql = "UPDATE `products` SET `dpic` = ?, `preview_pic` = ? WHERE `id` = ?";
+//      $params = [$p600['relPath'], $p250['relPath'], $arr['pkeyVal']];
+//      $res = $this->insertBySql($sql, $params);
+//      exit($p['to']);
+//   }
 
    public function getSale() {
       $sql = 'SELECT * FROM products WHERE sale = ?';
