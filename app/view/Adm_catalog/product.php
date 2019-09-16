@@ -41,7 +41,10 @@
         <label for="tab4" title="Картинки">Картики</label>
 
 
-
+        <?
+        $smallSize = "-150";
+        $bigSize = "-600";
+        ?>
         <section id="content-tab1" class="prod-details column">
           <div class="row">
             <div class="left column">
@@ -63,7 +66,8 @@
             </div>
             <div class="right  column">
               <div>
-                <img dpic = '/pic<?= $product['dpic'] ?: ''; ?>' src = '/pic<?= $product['dpic'] ?: '/srvc/nophoto-min.jpg'; ?>'>
+                <!--<img dpic = '/pic<? //= $product['dpic'] ?: '';            ?>' src = '/pic<? //= $product['dpic'] ?: '/srvc/nophoto-min.jpg';            ?>'>-->
+                <img src="/pic/<?= $product['img']['dpic'][0] . $smallSize . '.webp' ?: '/srvc/nophoto-min.jpg'; ?>" >
               </div>
             </div>
           </div>
@@ -167,53 +171,93 @@
         </section>
 
         <section id="content-tab4">
-            <? $product['img'] = json_decode($product['img']); ?>
-            <? // foreach ($product['img'] as $pic): ?>
-             <div class="row separator">основная картинка</div>
 
-             <div class="row js-pic" >
-
-               <div class="holder column"  data-pic-type = 'dpic'>
-                 <span>Перетащи файл сюда или выбери</span>
-                 <input id=main type="file"   data-pic-type = 'dpic'>
-                 <label for="main">с компьютера</label>
-                 <div class="dpic"></div>
-               </div>
-               <div class="pic w200 h200  js-one">
-                 <img src="<?= $product['img']->dpic[0].'-600.webp' ?: '/srvc/nophoto-min.jpg'; ?>" alt="">
-                 <!--<img src="/pic<?//=$pic['dpic'] ?: '/srvc/nophoto-min.jpg'; ?>" alt="">-->
-               </div>
-
-             </div>
-          <? // endforeach; ?>
-
-          <div class="row separator">дополнительные картинки</div>
+          <div class="row separator">основная картинка</div>
 
           <div class="row js-pic" >
-            <div class="holder column" data-pic-type="dop">
+              <?
+              $ptype = 'dpic';
+              $saveInSizes = "0,50,150,600";
+              if (isset($product['img'][$ptype])) {
+                 $size = explode(',', $product['img'][$ptype]['saveInSizes']);
+              }
+              ?>
+            <div class="holder column"  data-pic-type = '<?= $ptype; ?>' data-save-in-sizes = <?= $saveInSizes ?>>
               <span>Перетащи файл сюда или выбери</span>
-              <input id ='dop' type="file" data-dop-type="dop">
-              <label for="dop">с компьютера</label>
+              <input id=main type="file"   data-pic-type = '<?= $ptype; ?>'>
+              <label for="main">с компьютера</label>
+              <div class="<?= $ptype; ?>"></div>
             </div>
+            <div class="pic w200 h200  js-one">
+                <? $y = isset($product['img'][$ptype]) ? '/pic/'.$product['img'][$ptype][0] . '-' . $size[3] . '.webp' : '/pic/srvc/nophoto-min.jpg';
+                ?>
+              <img src="<?= $y; ?>" >
 
-            <div class="pic h200 new" data-pic-type="dop">
             </div>
 
           </div>
 
-          <div class="row separator">расцветки</div>
 
-          <div class="row js-pic"  >
-            <div class="holder column"  data-pic-type = 'color'>
+          <div class="row separator">дополнительные картинки</div>
+          <?
+          $ptype = 'dop';
+          $saveInSizes = "0,50,150,600";
+          if (isset($product['img'][$ptype])) {
+             $size = explode(',', $product['img'][$ptype]['saveInSizes']);
+          }
+          ?>
+          <div class="row js-pic" >
+            <div class="holder column" data-pic-type="<?= $ptype; ?>" data-save-in-sizes = <?= $saveInSizes ?>>
               <span>Перетащи файл сюда или выбери</span>
-              <input id ='color' type="file" data-pic-type = 'color'>
-              <label for="color">с компьютера</label>
+              <input id ='<?= $ptype; ?>' type="file" >
+              <label for="<?= $ptype; ?>">с компьютера</label>
             </div>
+            <div class="pic h200 new" data-pic-type="<?= $ptype; ?>">
+            </div>
+            <? if (isset($product['img'][$ptype])): ?>
 
-            <div class="pic h200 new" data-pic-type="color">
-            </div>
+               <? foreach ($product['img'][$ptype] as $pic): ?>
+                  <div class="pic w200 h200 ">
+                    <img src="/pic/<?= $pic . '-' . $size[3] . '.webp' ?: '/srvc/nophoto-min.jpg'; ?>" >
+                  </div>
+               <? endforeach; ?>
+            <? endif; ?>
 
           </div>
+
+
+          <div class="row separator">транспортная упаковка</div>
+          <?
+          $ptype = 'big-pack';
+          $saveInSizes = "0,350";
+          if (isset($product['img'][$ptype])) {
+             $size = explode(',', $product['img'][$ptype]['saveInSizes']);
+          }
+          ?>
+          <div class="row js-pic" >
+            <div class="holder column" data-pic-type="<?= $ptype; ?>" data-save-in-sizes = <?= $saveInSizes ?>>
+              <span>Перетащи файл сюда или выбери</span>
+              <input id ='<?= $ptype; ?>' type="file" >
+              <label for="<?= $ptype; ?>">с компьютера</label>
+            </div>
+            <div class="pic h200 new" data-pic-type="<?= $ptype; ?>">
+            </div>
+            <? if (isset($product['img'][$ptype])): ?>
+               <? foreach ($product['img'][$ptype] as $pic): ?>
+                  <div class="pic w200 h200 ">
+                    <img src="/pic/<?= $pic . '-'.$size[1] . '.webp' ?: '/srvc/nophoto-min.jpg'; ?>" >
+                  </div>
+               <? endforeach; ?>
+            <? endif; ?>
+
+          </div>
+
+
+
+
+
+
+
 
 
         </section>

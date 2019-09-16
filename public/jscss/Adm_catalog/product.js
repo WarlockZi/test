@@ -147,7 +147,7 @@ $(function () {
          Obj.picType = elem.getAttribute('data-pic-type');
          Obj.isOnly = !!elem.parentNode.querySelector('.js-one');
 //         debugger;
-         Obj.values.img = pics(productName, file, elem);
+         Obj.values.img = img(productName, file, elem);
          var formData = tests.formdata ? new FormData() : null;
          if (tests.formdata) {
             formData.append('ajax', 'true');
@@ -163,34 +163,27 @@ $(function () {
          }
       }
 
-      function picNamesToJson(productName, file, name) {
-//         var ext = file['name'].slice(-4);
-         return filePath = '/pic/' + productName + '/' + name + '/1/' + productName;
-      }
 
-      function pics(productName, file, elem) {
-         let row = {},
-         arr = Array.from(document.querySelectorAll('.js-pic'), row => {
-            let obj = {};
-            let name = row.querySelector('.holder').getAttribute('data-pic-type');
-            let picA = Array.from(row.querySelectorAll('img'), (item, ind) => {
-               let d = {},
-               name = item.parentNode.parentNode.querySelector('.holder').getAttribute('data-pic-type');
-               return d[ind] = picNamesToJson(productName, file, name)
-            });
-            obj[name] = picA;
-            return obj;
-         })
+      function img(productName, file, elem) {
 
-         var f = {};
-         for (var i = 0; i < arr.length; i++) {
-            var keys = Object.keys(arr[i])
-            f[keys[i]] = arr[i][keys[i]]
-//            f[arr[s]] = arr[s];
-         }
-         debugger;
+         const row = Array.from(document.querySelectorAll('.js-pic'))
+         .reduce((acc, row, i) => {
+            let name = row.querySelector('.holder').getAttribute('data-pic-type'),
+            paths = Array.from(row.querySelectorAll('img'))
+            .reduce((acc, pic, i) => {
+//               debugger;
+//            debugger;
+               let productName = document.querySelector('#alias').innerText,
+               saveInSizes = row.querySelector('.holder').getAttribute('data-save-in-sizes');
+               acc['saveInSizes'] = saveInSizes;
+               acc[i]['pics'] = productName + '/' + name + '/' + (i + 1) + '/' + productName;
+               return acc;
+            }, {});
+            acc[name] = paths;
+            return acc;
 
-         return JSON.stringify(f);
+         }, {})
+         return JSON.stringify(row);
       }
    }
 

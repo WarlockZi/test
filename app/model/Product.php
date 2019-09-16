@@ -12,28 +12,33 @@ class Product extends Model {
 
    public $table = 'products';
 
-   protected function createImgPaths($alias, $rate = 800, $for, $ext,$isOnly) {
-      $ext=$ext?:'jpg';
+   protected function createImgPaths($num, $alias, $rate = 800, $picType, $ext, $isOnly) {
+      $ext = $ext ?: 'jpg';
       $p['filename'] = $rate ? "{$alias}-{$rate}.{$ext}" : "{$alias}.{$ext}";
-      $p['toPath'] = $toPath = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $for . '/1';
-      $p['group'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $for.'/';
-
-      if (!$isOnly && is_dir($p['toPath'])) {
-
-         $skip = array('.', '..');
+      $p['group'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $picType . '/';
+      if ($num){
+         $p['toPath'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $picType . "/".$num;
+      }else{
+         $p['toPath'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $picType . "/1";
+      }
+// если в группе несколько картинок, переименуем папки +1
+// а текущий файл вставим на первое место
+      $i = 1;
+      if (!$isOnly && is_dir($p['toPath'] )&& !$num) {
          $files = scandir($p['group']);
-         $i = 2;
          foreach ($files as $file) {
-            if (!in_array($file, $skip))
-               if (is_dir($p['group'].$file)) {
-                  rename($p['group'].$file, $p['group'].$i);
-//                  rename(basename($file), $i);
-                  $i++;
-               }
+            if ($file == "." || $file == "..")
+               continue;
+            if (is_dir($p['group'] . $file)) {
+//               rename($p['group'] . $file, $p['group'] . $i);
+               $i++;
+               $p['toPath'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $picType . "/{$i}";
+            }
          }
       }
       $p['relPath'] = '/' . $alias . '/' . $p['filename'];
-      $p['to'] = $toPath . '/' . $p['filename'];
+      $p['to'] = $p['toPath'] . '/' . $p['filename'];
+      $p['num'] = $i;
       return $p;
    }
 
@@ -41,34 +46,32 @@ class Product extends Model {
       if ($_FILES) {
          $file = $_FILES['file'];
       }
-      $ext = 'webp';
-      $quality = 75;
-      $rights = 0777;
       $alias = $arr['alias'];
       $picType = $arr['picType'];
       $isOnly = $arr['isOnly'];
       $img = $arr['values']['img'];
-      $p = $this->createImgPaths($alias, null, $picType,null,$isOnly);
-      $p600 = $this->createImgPaths($alias, 600, $picType, $ext,$isOnly);
-      $p250 = $this->createImgPaths($alias, 250, $picType, $ext,$isOnly);
-      $p80 = $this->createImgPaths($alias, 80, $picType, $ext,$isOnly);
-      if (!is_dir($p['toPath'])) {
-         mkdir($p['toPath'], 0777, true);
+      $imp = json_decode($img, true);
+      $sizes = explode(',',$imp[$picType]['saveInSizes']);
+
+      $toExt = 'webp';
+      $quality = 75;
+      $rights = 0777;
+
+      foreach ($sizes as $size) {
+         if (!$size) {
+            $ps = $this->createImgPaths(null, $alias, null, $picType, null, $isOnly);
+            if (!is_dir($ps['toPath'])) {
+               mkdir($ps['toPath'], 0777, true);
+            }
+            move_uploaded_file($file['tmp_name'], $ps['to']);
+         } else {
+            $pX = $this->createImgPaths($ps['num'], $alias, $size, $picType, $toExt, $isOnly);
+
+            $new_image = new picture($ps['to']);
+            $new_image->autoimageresize($size, $size);
+            $new_image->imagesave($toExt, $pX['to'], $quality, $rights);
+         }
       }
-
-      move_uploaded_file($file['tmp_name'], $p['to']);
-
-      $new_image = new picture($p['to']);
-      $new_image->autoimageresize(600, 600);
-      $new_image->imagesave($ext, $p600['to'], $quality, $rights);
-
-      $new_image = new picture($p['to']);
-      $new_image->autoimageresize(250, 250);
-      $new_image->imagesave($ext, $p250['to'], $quality, $rights);
-
-      $new_image = new picture($p['to']);
-      $new_image->autoimageresize(80, 80);
-      $new_image->imagesave($ext, $p80['to'], $quality, $rights);
 
       $sql = "UPDATE `products` SET `img` = ? WHERE `id` = ?";
       $params = [$img, $arr['pkeyVal']];
@@ -85,42 +88,6 @@ class Product extends Model {
          return $parent;
       }
    }
-
-//   public function updateMainPic($arr) {
-//      if ($_FILES) {
-//         $file = $_FILES['file'];
-//      }
-//      $ext = 'webp';
-//      $quality = 75;
-//      $rights = 0777;
-//      $alias = $arr['alias'];
-//      $p = $this->createImgPaths($alias,null , 'main');
-//      $p600 = $this->createImgPaths($alias, 600, 'main', $ext);
-//      $p250 = $this->createImgPaths($alias, 250, 'main', $ext);
-//      $p80 = $this->createImgPaths($alias, 80, 'main', $ext);
-//      if (!is_dir($p['toPath'])) {
-//         mkdir($p['toPath'], 0777, true);
-//      }
-//
-//      move_uploaded_file($file['tmp_name'], $p['to']);
-//
-//      $new_image = new picture($p['to']);
-//      $new_image->autoimageresize(600, 600);
-//      $new_image->imagesave($ext, $p600['to'], $quality, $rights);
-//
-//      $new_image = new picture($p['to']);
-//      $new_image->autoimageresize(250, 250);
-//      $new_image->imagesave($ext, $p250['to'], $quality, $rights);
-//
-//      $new_image = new picture($p['to']);
-//      $new_image->autoimageresize(80, 80);
-//      $new_image->imagesave($ext, $p80['to'], $quality, $rights);
-//
-//      $sql = "UPDATE `products` SET `dpic` = ?, `preview_pic` = ? WHERE `id` = ?";
-//      $params = [$p600['relPath'], $p250['relPath'], $arr['pkeyVal']];
-//      $res = $this->insertBySql($sql, $params);
-//      exit($p['to']);
-//   }
 
    public function getSale() {
       $sql = 'SELECT * FROM products WHERE sale = ?';

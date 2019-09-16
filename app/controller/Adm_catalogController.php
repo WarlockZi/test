@@ -108,7 +108,7 @@ class Adm_catalogController extends AdminscController {
 
             $product = App::$app->product->getProduct($id);
             $product['props'] = json_decode($product['props'], true);
-
+            $product['img'] = json_decode($product['img'], true);
             $category = App::$app->category->getCategory($product['parent']);
 
             $props = App::$app->prop->getProps();
