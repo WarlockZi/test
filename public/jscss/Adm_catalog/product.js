@@ -172,11 +172,11 @@ $(function () {
             paths = Array.from(row.querySelectorAll('img'))
             .reduce((acc, pic, i) => {
 //               debugger;
-//            debugger;
+            debugger;
                let productName = document.querySelector('#alias').innerText,
                saveInSizes = row.querySelector('.holder').getAttribute('data-save-in-sizes');
                acc['saveInSizes'] = saveInSizes;
-               acc[i]['pics'] = productName + '/' + name + '/' + (i + 1) + '/' + productName;
+               acc[i] = productName + '/' + name + '/' + (i + 1) + '/' + productName;
                return acc;
             }, {});
             acc[name] = paths;

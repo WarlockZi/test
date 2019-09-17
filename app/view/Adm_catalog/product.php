@@ -43,7 +43,7 @@
 
                 <?
                 $ptype = 'dpic';
-                if (isset($product['img'][$ptype])) {
+                if (isset($product['img'][$ptype])&&$product['img'][$ptype]) {
                     $size = explode(',', $product['img'][$ptype]['saveInSizes']);
                 }
                 ?>
@@ -182,8 +182,9 @@
                         <?
                         $ptype = 'dpic';
                         $saveInSizes = "0,50,150,600";
-                        if (isset($product['img'][$ptype])) {
+                        if (isset($product['img'][$ptype])&&$product['img'][$ptype]) {
                             $size = explode(',', $product['img'][$ptype]['saveInSizes']);
+                        unset ($product['img'][$ptype]['saveInSizes']);
                         }
                         ?>
                         <div class="holder column"  data-pic-type = '<?= $ptype; ?>' data-save-in-sizes = <?= $saveInSizes ?>>
@@ -206,8 +207,9 @@
                     <?
                     $ptype = 'dop';
                     $saveInSizes = "0,50,150,600";
-                    if (isset($product['img'][$ptype])) {
+                    if (isset($product['img'][$ptype])&&$product['img'][$ptype]) {
                         $size = explode(',', $product['img'][$ptype]['saveInSizes']);
+                        unset ($product['img'][$ptype]['saveInSizes']);
                     }
                     ?>
                     <div class="row js-pic" >
@@ -234,8 +236,10 @@
                     <?
                     $ptype = 'big-pack';
                     $saveInSizes = "0,350";
-                    if (isset($product['img'][$ptype])) {
+                    if (isset($product['img'][$ptype])&&$product['img'][$ptype]) {
                         $size = explode(',', $product['img'][$ptype]['saveInSizes']);
+                        unset ($product['img'][$ptype]['saveInSizes']);
+
                     }
                     ?>
                     <div class="row js-pic" >
