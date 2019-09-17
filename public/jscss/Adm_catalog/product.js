@@ -65,6 +65,7 @@ $(function () {
 
    function check(input) {
       var holder = document.getElementsByClassName('holder'),
+      del = document.querySelectorAll('.pic span'),
       fileupload = Array.from(document.querySelectorAll('input[type="file"]')),
       tests = {
          filereader: typeof FileReader != 'undefined',
@@ -77,6 +78,15 @@ $(function () {
          'image/gif': true
       }
 
+      for (i = 0; i < del.length; i++) {
+         del[i].onclick = function () {
+            debugger;
+            let id = this.getAttribute('data-del-id')
+            picType = this.parentNode.getAttribute('data-del-id')
+
+
+         }
+      }
       for (i = 0; i < holder.length; i++) {
          holder[i].ondragover = function () {
             this.classList.add('hover');
@@ -116,7 +126,7 @@ $(function () {
          image.src = cont;
          image.width = 150; // a fake resize
 //         debugger;
-         image.setAttribute('data-pic-type', imageContainer.getAttribute('data-pic-type'));
+//         image.setAttribute('data-pic-type', imageContainer.getAttribute('data-pic-type'));
          imageContainer.appendChild(image);
          if (!imageContainer.classList.contains('js-one')) {
             imageContainer.classList.add('w200');
@@ -137,6 +147,30 @@ $(function () {
             temporaryFileReader.readAsDataURL(inputFile);
          });
       };
+      async function deleteImg(id, elem) {
+         var Obj = new obj();
+         var productName = document.querySelector('#alias').innerText;
+         Obj.pkeyVal = $('#id').text();
+         Obj.action = 'updateProductIMG';
+         Obj.alias = $('#alias').text();
+         Obj.picType = elem.getAttribute('data-pic-type');
+         Obj.isOnly = !!elem.parentNode.querySelector('.js-one');
+//         debugger;
+         Obj.values.img = imgs(productName, file, elem);
+         var formData = tests.formdata ? new FormData() : null;
+         if (tests.formdata) {
+            formData.append('ajax', 'true');
+            formData.append('param', JSON.stringify(Obj));
+            formData.append('file', file, file['name']);
+         }
+
+         if (tests.formdata) {
+            let promise = await fetch(`/adminsc`, {
+               body: formData,
+               method: 'post',
+            });
+         }
+      }
 
       async function updateImg(file, elem) {
          var Obj = new obj();
@@ -147,7 +181,7 @@ $(function () {
          Obj.picType = elem.getAttribute('data-pic-type');
          Obj.isOnly = !!elem.parentNode.querySelector('.js-one');
 //         debugger;
-         Obj.values.img = img(productName, file, elem);
+         Obj.values.img = imgs(productName, file, elem);
          var formData = tests.formdata ? new FormData() : null;
          if (tests.formdata) {
             formData.append('ajax', 'true');
@@ -164,21 +198,34 @@ $(function () {
       }
 
 
-      function img(productName, file, elem) {
+      function imgs(productName, file, elem) {
 
          const row = Array.from(document.querySelectorAll('.js-pic'))
          .reduce((acc, row, i) => {
-            let name = row.querySelector('.holder').getAttribute('data-pic-type'),
+            let saveInSizes = row.getAttribute('data-save-in-sizes');
+            let name = row.getAttribute('data-pic-type'),
             paths = Array.from(row.querySelectorAll('img'))
-            .reduce((acc, pic, i) => {
-//               debugger;
-            debugger;
+            .reduce((prev, next, i) => {
+               debugger;
                let productName = document.querySelector('#alias').innerText,
-               saveInSizes = row.querySelector('.holder').getAttribute('data-save-in-sizes');
-               acc['saveInSizes'] = saveInSizes;
-               acc[i] = productName + '/' + name + '/' + (i + 1) + '/' + productName;
-               return acc;
+               obj = {};
+//               obj['pic']= productName + '/' + name + '/' + (i + 1) + '/' + productName;
+               let saveInSizes = row.getAttribute('data-save-in-sizes');
+               dd = saveInSizes.split(',').reduce((start, next, i, arr) => {
+//                  obj = {};
+                  start[i] = productName + '/'+ name + '/' + (i + 1) + '/'+arr[i] +'/' + productName;
+                  return start;
+               }, {});
+
+               obj['pics'] = dd;
+               obj['title'] = productName + ' сбоку';
+               obj['alt'] = productName + ' просто';
+               prev[i] = obj;
+               return prev;
             }, {});
+//            let saveInSizes = row.getAttribute('data-save-in-sizes');
+            acc['saveInSizes'] = saveInSizes,
+            acc['title'] = 'дополнительные картинки',
             acc[name] = paths;
             return acc;
 
