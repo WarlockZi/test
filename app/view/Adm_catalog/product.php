@@ -70,10 +70,11 @@
             </div>
             <div class="right column">
               <div>
-                <!--<img dpic = '/pic<? //= $product['dpic'] ?: '';                 ?>' src = '/pic<? //= $product['dpic'] ?: '/srvc/nophoto-min.jpg';                 ?>'>-->
-                <? $y = isset($product['img'][$ptype]) ? '/pic/' . $product['img'][$ptype][0] . '-' . $size[3] . '.webp' : '/pic/srvc/nophoto-min.jpg';
-                ?>
-                <img src="<?= $y; ?>" >
+                  <?
+                  $da = $product['img'][$ptype]['pics'][0]['pics'][$size];
+                  $y = isset($da) ? '/pic/' . $product['alias'] . '/' . $ptype . '/1/' . $da . '.webp' : '/pic/srvc/nophoto-min.jpg';
+                  ?>
+                <img src="<?= $y ?: '/srvc/nophoto-min.jpg'; ?>" >
               </div>
             </div>
           </div>
@@ -184,11 +185,9 @@
           $saveInSizes = "0,50,150,600";
           if (isset($product['img'][$ptype]) && $product['img'][$ptype]) {
              $size = 600;
-//             $size = explode(',', $product['img'][$ptype]['saveInSizes']);
-             unset($product['img'][$ptype]['saveInSizes']);
           }
           ?>
-          <div class="row js-pic" data-pic-type = '<?= $ptype; ?>' data-save-in-sizes = '<?= $saveInSizes ?>'>
+          <div class="row js-pic" data-pic-type = '<?= $ptype; ?>' data-save-in-sizes = '<?= $saveInSizes ?>'  data-title = 'основная картинка'>
 
             <div class="holder column">
               <span>Перетащи файл сюда или выбери</span>
@@ -196,40 +195,46 @@
               <label for="main">с компьютера</label>
               <div class="<?= $ptype; ?>"></div>
             </div>
-            <div class="pic w200 h200  js-one">
-                <? $y = isset($product['img'][$ptype]) ? '/pic/' . $product['img'][$ptype][0] . '-' . $size[3] . '.webp' : '/pic/srvc/nophoto-min.jpg'; ?>
-              <img src="<?= $y; ?>" >
-              <span data-del-id = 1>x</span>
-            </div>
-
+            <? if (isset($product['img'][$ptype]['pics']) && $product['img'][$ptype]['pics']): ?>
+               <div class="pic w200 h200 new js-one">
+                   <?
+                   $da = $product['img'][$ptype]['pics'][0]['pics'][$size];
+                   $y = isset($da) ? '/pic/' . $product['alias'] . '/' . $ptype . '/1/' . $da . '.webp' : '/pic/srvc/nophoto-min.jpg';
+                   ?>
+                 <img src="<?= $y; ?>" >
+                 <span data-del-id = 1>x</span>
+               </div>
+            <? endif; ?>
           </div>
 
 
-          <div class="row separator">дополнительные картинки</div>
+          <div class="row separator" >дополнительные картинки</div>
           <?
           $ptype = 'dop';
           $saveInSizes = "0,50,150,600";
           if (isset($product['img'][$ptype]) && $product['img'][$ptype]) {
-             $size = explode(',', $product['img'][$ptype]['saveInSizes']);
-             unset($product['img'][$ptype]['saveInSizes']);
+             $size = 600;
           }
           ?>
-          <div class="row js-pic" data-pic-type="<?= $ptype; ?>" data-save-in-sizes = <?= $saveInSizes ?>>
+          <div class="row js-pic" data-pic-type="<?= $ptype; ?>" data-save-in-sizes = '<?= $saveInSizes ?>' data-title = 'дополнительные картинки'>
             <div class="holder column" >
               <span>Перетащи файл сюда или выбери</span>
               <input id ='<?= $ptype; ?>' type="file" >
               <label for="<?= $ptype; ?>">с компьютера</label>
             </div>
-            <div class="pic h200 new"></div>
-            <? if (isset($product['img'][$ptype])): ?>
-
-               <? foreach ($product['img'][$ptype] as $i => $pic): ?>
+                <? if (isset($product['img'][$ptype]['pics']) && $product['img'][$ptype]['pics']): ?>
+                   <? foreach ($product['img'][$ptype]['pics'] as $i => $pic): ?>
                   <div class="pic w200 h200 ">
-                    <img src="/pic/<?= $pic . '-' . $size[3] . '.webp' ?: '/srvc/nophoto-min.jpg'; ?>" >
+                      <?
+                      $da = $product['img'][$ptype]['pics'][$i]['pics'][$size];
+                      $y = isset($da) ? '/pic/' . $product['alias'] . '/' . $ptype . '/' . ($i + 1) . '/' . $da . '.webp' : '/pic/srvc/nophoto-min.jpg';
+                      ?>
+                    <img src="<?= $y ?: '/srvc/nophoto-min.jpg'; ?>" >
                     <span data-del-id = <?= $i + 1; ?>>x</span>
                   </div>
-               <? endforeach; ?>
-            <? endif; ?>
+   <? endforeach; ?>
+<? endif; ?>
+            <div class="pic h200 new"><span data-del-id = <?= $i + 2; ?>>x</span></div>
 
           </div>
 
@@ -239,26 +244,28 @@
           $ptype = 'big-pack';
           $saveInSizes = "0,350";
           if (isset($product['img'][$ptype]) && $product['img'][$ptype]) {
-             $size = explode(',', $product['img'][$ptype]['saveInSizes']);
-             unset($product['img'][$ptype]['saveInSizes']);
+             $size = 350;
           }
           ?>
-          <div class="row js-pic"  data-pic-type="<?= $ptype; ?>" data-save-in-sizes = <?= $saveInSizes ?>>
+          <div class="row js-pic"  data-pic-type="<?= $ptype; ?>" data-save-in-sizes = '<?= $saveInSizes ?>' data-title = 'транспортная упаковка'>
             <div class="holder column">
               <span>Перетащи файл сюда или выбери</span>
               <input id ='<?= $ptype; ?>' type="file" >
               <label for="<?= $ptype; ?>">с компьютера</label>
             </div>
-            <div class="pic h200 new">
-            </div>
-            <? if (isset($product['img'][$ptype])): ?>
-               <? foreach ($product['img'][$ptype] as $i => $pic): ?>
+                <? if (isset($product['img'][$ptype]['pics']) && $product['img'][$ptype]['pics']): ?>
+                   <? foreach ($product['img'][$ptype]['pics'] as $i => $pic): ?>
                   <div class="pic w200 h200 ">
-                    <img src="/pic/<?= $pic . '-' . $size[1] . '.webp' ?: '/srvc/nophoto-min.jpg'; ?>" >
+                      <?
+                      $da = $product['img'][$ptype]['pics'][$i]['pics'][$size];
+                      $y = isset($da) ? '/pic/' . $product['alias'] . '/' . $ptype . '/' . ($i + 1) . '/' . $da . '.webp' : '/pic/srvc/nophoto-min.jpg';
+                      ?>
+                    <img src="<?= $y ?: '/srvc/nophoto-min.jpg'; ?>" >
                     <span data-del-id = <?= $i + 1; ?>>x</span>
                   </div>
-               <? endforeach; ?>
-            <? endif; ?>
+   <? endforeach; ?>
+<? endif; ?>
+            <div class="pic h200 new"><span data-del-id = <?= $i + 2; ?>>x</span></div>
 
           </div>
 

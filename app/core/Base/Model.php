@@ -81,6 +81,14 @@ abstract class Model {
       $sql = "SHOW TABLE STATUS FROM vitex_test LIKE '$table'";
       return $this->pdo->query($sql, $params)[0]['Auto_increment'];
    }
+   static function removeDirectory($dir) {
+    if ($objs = glob($dir."/*")) {
+       foreach($objs as $obj) {
+         is_dir($obj) ? removeDirectory($obj) : unlink($obj);
+       }
+    }
+    rmdir($dir);
+  }
 
    public function getBreadcrumbs($category, $parents, $type) {
       if ($type == 'category') {

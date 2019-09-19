@@ -12,19 +12,19 @@ class Product extends Model {
 
    public $table = 'products';
 
-   protected function createImgPaths($num, $alias, $rate = 800, $picType, $ext, $isOnly) {
+   protected function createImgPaths($num, $alias, $rate = 800, $picType, $ext, $isOnly, $pic) {
       $ext = $ext ?: 'jpg';
       $p['filename'] = $rate ? "{$alias}-{$rate}.{$ext}" : "{$alias}.{$ext}";
       $p['group'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $picType . '/';
-      if ($num){
-         $p['toPath'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $picType . "/".$num;
-      }else{
+      if ($num) {
+         $p['toPath'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $picType . "/" . $num;
+      } else {
          $p['toPath'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $picType . "/1";
       }
 // если в группе несколько картинок, переименуем папки +1
 // а текущий файл вставим на первое место
       $i = 1;
-      if (!$isOnly && is_dir($p['toPath'] )&& !$num) {
+      if (!$isOnly && is_dir($p['toPath']) && !$num) {
          $files = scandir($p['group']);
          foreach ($files as $file) {
             if ($file == "." || $file == "..")
@@ -36,7 +36,6 @@ class Product extends Model {
             }
          }
       }
-      $p['relPath'] = '/' . $alias . '/' . $p['filename'];
       $p['to'] = $p['toPath'] . '/' . $p['filename'];
       $p['num'] = $i;
       return $p;
@@ -50,33 +49,34 @@ class Product extends Model {
       $picType = $arr['picType'];
       $isOnly = $arr['isOnly'];
       $img = $arr['values']['img'];
-      $imp = json_decode($img, true);
-      $sizes = explode(',',$imp[$picType]['saveInSizes']);
+      $img = json_decode($img, true);
 
       $toExt = 'webp';
       $quality = 75;
       $rights = 0777;
 
-      foreach ($sizes as $size) {
-         if (!$size) {
-            $ps = $this->createImgPaths(null, $alias, null, $picType, null, $isOnly);
-            if (!is_dir($ps['toPath'])) {
-               mkdir($ps['toPath'], 0777, true);
+      foreach ($img[$picType]['pics'] as $pType => $pTblock) {
+         foreach ($pTblock['pics'] as $size => $path) {
+            if (!$size) {
+               $ps = $this->createImgPaths(null, $alias, null, $picType, null, $isOnly, $p);
+               if (!is_dir($ps['toPath'])) {
+                  mkdir($ps['toPath'], 0777, true);
+               }
+               move_uploaded_file($file['tmp_name'], $ps['to']);
+            } else {
+               $pX = $this->createImgPaths($ps['num'], $alias, $size, $picType, $toExt, $isOnly);
+
+               $new_image = new picture($ps['to']);
+               $new_image->autoimageresize($size, $size);
+               $new_image->imagesave($toExt, $pX['to'], $quality, $rights);
             }
-            move_uploaded_file($file['tmp_name'], $ps['to']);
-         } else {
-            $pX = $this->createImgPaths($ps['num'], $alias, $size, $picType, $toExt, $isOnly);
-
-            $new_image = new picture($ps['to']);
-            $new_image->autoimageresize($size, $size);
-            $new_image->imagesave($toExt, $pX['to'], $quality, $rights);
          }
-      }
 
-      $sql = "UPDATE `products` SET `img` = ? WHERE `id` = ?";
-      $params = [$img, $arr['pkeyVal']];
-      $res = $this->insertBySql($sql, $params);
-      exit($p['to']);
+         $sql = "UPDATE `products` SET `img` = ? WHERE `id` = ?";
+         $params = [$arr['values']['img'], $arr['pkeyVal']];
+         $res = $this->insertBySql($sql, $params);
+         exit($p['to']);
+      }
    }
 
    public function getProductParents($parentId) {
@@ -87,6 +87,24 @@ class Product extends Model {
          $parent = $this->findBySql($sql, $params)[0];
          return $parent;
       }
+   }
+
+//{"dpic":{"saveInSizes":"0,50,150,600","title":"основная картинка","pics":{"0":{"pics":{"0":"kostyum-gudzon-1-0","50":"kostyum-gudzon-1-50","150":"kostyum-gudzon-1-150","600":"kostyum-gudzon-1-600"},"title":"kostyum-gudzon-1 сбоку","alt":"kostyum-gudzon-1 просто"}}},"dop":{"saveInSizes":"0,50,150,600","title":"дополнительные картинки","pics":{"0":{"pics":{"0":"kostyum-gudzon-1-0","50":"kostyum-gudzon-1-50","150":"kostyum-gudzon-1-150","600":"kostyum-gudzon-1-600"},"title":"kostyum-gudzon-1 сбоку","alt":"kostyum-gudzon-1 просто"},"1":{"pics":{"0":"kostyum-gudzon-1-0","50":"kostyum-gudzon-1-50","150":"kostyum-gudzon-1-150","600":"kostyum-gudzon-1-600"},"title":"kostyum-gudzon-1 сбоку","alt":"kostyum-gudzon-1 просто"}}},"big-pack":{"saveInSizes":"0,350","title":"транспортная упаковка","pics":{}}}
+
+public function delProductImg($arr) {
+
+      $name = $arr['alias'];
+      $type = $arr['picType'];
+      $delId =$arr['deletableImgId'];
+
+      $dir = ROOT.'/pic/'.$name.'/'.$type.'/'.$delId;
+      if (is_dir($dir)) {
+         $res = Model::removeDirectory($dir);
+      }
+      $sql = "UPDATE `products` SET `img` = ? WHERE `id` = ?";
+      $params = [$arr['values']['img'], $arr['pkeyVal']];
+      $res = $this->insertBySql($sql, $params);
+      exit($p['to']);
    }
 
    public function getSale() {

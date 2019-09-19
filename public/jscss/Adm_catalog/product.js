@@ -1,6 +1,6 @@
 $(function () {
 
-   function obj(action) {
+   function objProd(action) {
       return {
          token: $('#token').val(),
          url: '/adminsc',
@@ -16,7 +16,7 @@ $(function () {
 // сохранить изменения
    $('#product-update-btn').on('click', async function () {
 
-      var Obj = new obj();
+      var Obj = new objProd();
       Obj.pkeyVal = $('#id').text();
       Obj.values.act = document.querySelector('#act').checked ? 'Y' : 'N';
       Obj.values.name = $('#name').text();
@@ -60,7 +60,6 @@ $(function () {
       prop = JSON.stringify(prop);
       Obj.values.props = prop;
       var d = await post(Obj.url, Obj);
-      debugger;
    });
 
    function check(input) {
@@ -77,14 +76,9 @@ $(function () {
          'image/jpeg': true,
          'image/gif': true
       }
-
-      for (i = 0; i < del.length; i++) {
+      for (var i = 0; i < del.length; i++) {
          del[i].onclick = function () {
-            debugger;
-            let id = this.getAttribute('data-del-id')
-            picType = this.parentNode.getAttribute('data-del-id')
-
-
+            delImg(this)
          }
       }
       for (i = 0; i < holder.length; i++) {
@@ -99,37 +93,62 @@ $(function () {
          holder[i].ondrop = async function (e) {
             e.preventDefault();
             this.classList.remove('hover');
-            let file = e.dataTransfer.files[0];
-            let imageContainer = this.parentNode.querySelector('.pic');
+            let file = e.dataTransfer.files[0],
+            isOnly = !!this.parentNode.querySelector('.js-one');
+            if (isOnly) {
+               var imageContainer = this.parentNode.querySelector('.new');
+            }
+            else {
+               var imageContainer = this.parentNode.querySelector('.new');
+            }
             const fileContents = await readUploadedFileAsURI(file);
             insert(file, fileContents, imageContainer);
             updateImg(file, this);
-         };
+         }
       }
 
-      fileupload.map(i => i.onchange = async (e) => {
-            let file = this.files[0];
-            let imageContainer = this.parentNode.parentNode.querySelector('.pic');
+      fileupload.map(function (i) {
+         i.onchange = async function () {
+            let file = i.files[0];
+            let imageContainer = i.closest('.js-pic').querySelector('.new');
             const fileContents = await readUploadedFileAsURI(file);
             insert(file, fileContents, imageContainer);
-            updateImg(this.files[0], this);
+            updateImg(this.files[0], i);
          }
-      )
+      })
+
+
+      async function delImg(self) {
+         var Obj = new objProd();
+         Obj.pkeyVal = $('#id').text();
+         Obj.action = 'delProductImg';
+         Obj.alias = $('#alias').text();
+         Obj.picType = self.parentNode.parentNode.getAttribute('data-pic-type');
+         Obj.isOnly = !!self.parentNode.querySelector('.js-one');
+         Obj.deletableImgId = self.getAttribute('data-del-id');
+         self.parentNode.remove();
+         Obj.values.img = imgs(Obj.alias, null, self);
+         fetchWrap(Obj);
+      }
+
+
 
       function insert(file, cont, imageContainer) {
-         let clone = imageContainer.cloneNode(true)
-         if (!imageContainer.getElementsByTagName('img').length == 0) {
-            var elem = imageContainer.getElementsByTagName('img')[0];
+//            debugger;
+         let clone = imageContainer.cloneNode(true),
+         isOnly = !!imageContainer.parentNode.querySelector('.js-one')
+         if (isOnly) {
+            var elem = imageContainer.querySelector('img');
             elem.remove();
          }
          var image = new Image();
-         image.src = cont;
          image.width = 150; // a fake resize
-//         debugger;
-//         image.setAttribute('data-pic-type', imageContainer.getAttribute('data-pic-type'));
+         image.src = cont;
          imageContainer.appendChild(image);
-         if (!imageContainer.classList.contains('js-one')) {
-            imageContainer.classList.add('w200');
+         imageContainer.classList.add('w200');
+         imageContainer.classList.remove('new');
+//         debugger;
+         if (!isOnly) {
             imageContainer.parentNode.appendChild(clone);
          }
       }
@@ -147,93 +166,73 @@ $(function () {
             temporaryFileReader.readAsDataURL(inputFile);
          });
       };
-      async function deleteImg(id, elem) {
-         var Obj = new obj();
-         var productName = document.querySelector('#alias').innerText;
-         Obj.pkeyVal = $('#id').text();
-         Obj.action = 'updateProductIMG';
-         Obj.alias = $('#alias').text();
-         Obj.picType = elem.getAttribute('data-pic-type');
-         Obj.isOnly = !!elem.parentNode.querySelector('.js-one');
-//         debugger;
-         Obj.values.img = imgs(productName, file, elem);
-         var formData = tests.formdata ? new FormData() : null;
-         if (tests.formdata) {
-            formData.append('ajax', 'true');
-            formData.append('param', JSON.stringify(Obj));
-            formData.append('file', file, file['name']);
-         }
 
-         if (tests.formdata) {
-            let promise = await fetch(`/adminsc`, {
-               body: formData,
-               method: 'post',
-            });
-         }
-      }
 
       async function updateImg(file, elem) {
-         var Obj = new obj();
+         var Obj = new objProd();
          var productName = document.querySelector('#alias').innerText;
          Obj.pkeyVal = $('#id').text();
          Obj.action = 'updateProductIMG';
          Obj.alias = $('#alias').text();
-         Obj.picType = elem.getAttribute('data-pic-type');
-         Obj.isOnly = !!elem.parentNode.querySelector('.js-one');
 //         debugger;
+
+         Obj.picType = elem.closest(".js-pic").getAttribute('data-pic-type');
+         Obj.isOnly = !!elem.parentNode.querySelector('.js-one');
          Obj.values.img = imgs(productName, file, elem);
-         var formData = tests.formdata ? new FormData() : null;
-         if (tests.formdata) {
-            formData.append('ajax', 'true');
-            formData.append('param', JSON.stringify(Obj));
-            formData.append('file', file, file['name']);
-         }
 
-         if (tests.formdata) {
-            let promise = await fetch(`/adminsc`, {
-               body: formData,
-               method: 'post',
-            });
-         }
-      }
-
-
-      function imgs(productName, file, elem) {
-
-         const row = Array.from(document.querySelectorAll('.js-pic'))
-         .reduce((acc, row, i) => {
-            let saveInSizes = row.getAttribute('data-save-in-sizes');
-            let name = row.getAttribute('data-pic-type'),
-            paths = Array.from(row.querySelectorAll('img'))
-            .reduce((prev, next, i) => {
-               debugger;
-               let productName = document.querySelector('#alias').innerText,
-               obj = {};
-//               obj['pic']= productName + '/' + name + '/' + (i + 1) + '/' + productName;
-               let saveInSizes = row.getAttribute('data-save-in-sizes');
-               dd = saveInSizes.split(',').reduce((start, next, i, arr) => {
-//                  obj = {};
-                  start[i] = productName + '/'+ name + '/' + (i + 1) + '/'+arr[i] +'/' + productName;
-                  return start;
-               }, {});
-
-               obj['pics'] = dd;
-               obj['title'] = productName + ' сбоку';
-               obj['alt'] = productName + ' просто';
-               prev[i] = obj;
-               return prev;
-            }, {});
-//            let saveInSizes = row.getAttribute('data-save-in-sizes');
-            acc['saveInSizes'] = saveInSizes,
-            acc['title'] = 'дополнительные картинки',
-            acc[name] = paths;
-            return acc;
-
-         }, {})
-         return JSON.stringify(row);
+         fetchWrap(Obj, file);
       }
    }
 
+
+   function imgs(productName, file, elem) {
+
+      const row = Array.from(document.querySelectorAll('.js-pic'))
+      .reduce((acc, row, i) => {
+         let saveInSizes = row.getAttribute('data-save-in-sizes'),
+         name = row.getAttribute('data-pic-type'),
+         obj1 = {},
+         paths = Array.from(row.querySelectorAll('img'))
+         .reduce((prev, next, i) => {
+
+            debugger;
+            let productName = document.querySelector('#alias').innerText,
+            fsId = next.closest('.pic').querySelector('[data-del-id]').getAttribute('data-del-id'),
+  
+            obj = {},
+            saveInSizes = row.getAttribute('data-save-in-sizes'),
+            dd = saveInSizes.split(',').reduce((start, next, i, arr) => {
+               start[arr[i]] = productName + '-' + arr[i];
+               return start;
+            }, {});
+            obj['pics'] = dd;
+            obj['title'] = productName + ' сбоку';
+            obj['alt'] = productName + ' просто';
+//            obj['fsPicId'] = fsPicId;
+            prev[fsId] = obj;
+            return prev;
+         }, {});
+         obj1['saveInSizes'] = saveInSizes,
+         obj1['title'] = row.getAttribute('data-title'),
+         obj1['pics'] = paths;
+         acc[name] = obj1;
+         return acc;
+
+      }, {})
+      return JSON.stringify(row);
+   }
+      async function fetchWrap(Obj, file) {
+
+         let data = new FormData;
+         data.append('ajax', true);
+         data.append('param', JSON.stringify(Obj));
+         file ? data.append('file', file) : '';
+         let promise = await fetch(`/adminsc`, {
+            body: data,
+            method: 'post',
+         })
+      }
+
    check();
-}
-);
+
+});
