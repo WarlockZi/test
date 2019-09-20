@@ -189,20 +189,22 @@
           ?>
           <div class="row js-pic" data-pic-type = '<?= $ptype; ?>' data-save-in-sizes = '<?= $saveInSizes ?>'  data-title = 'основная картинка'>
 
-            <div class="holder column">
+            <div class="holder column js-one">
               <span>Перетащи файл сюда или выбери</span>
               <input id=main type="file">
               <label for="main">с компьютера</label>
               <div class="<?= $ptype; ?>"></div>
             </div>
+            <div class="pic h200 new"><span data-del-id = 1>x</span></div>
             <? if (isset($product['img'][$ptype]['pics']) && $product['img'][$ptype]['pics']): ?>
-               <div class="pic w200 h200 new js-one">
+               <div class="pic w200 h200 new ">
                    <?
-                   $da = $product['img'][$ptype]['pics'][0]['pics'][$size];
+                   $da = $product['img'][$ptype]['pics'][1]['pics'][$size];
                    $y = isset($da) ? '/pic/' . $product['alias'] . '/' . $ptype . '/1/' . $da . '.webp' : '/pic/srvc/nophoto-min.jpg';
                    ?>
-                 <img src="<?= $y; ?>" >
-                 <span data-del-id = 1>x</span>
+                    <img src="<?= $y ?: '/srvc/nophoto-min.jpg'; ?>" >
+                    <span data-del-id = '1'>x</span>
+
                </div>
             <? endif; ?>
           </div>
@@ -222,19 +224,19 @@
               <input id ='<?= $ptype; ?>' type="file" >
               <label for="<?= $ptype; ?>">с компьютера</label>
             </div>
-                <? if (isset($product['img'][$ptype]['pics']) && $product['img'][$ptype]['pics']): ?>
-                   <? foreach ($product['img'][$ptype]['pics'] as $i => $pic): ?>
+            <? if (isset($product['img'][$ptype]['pics']) && $product['img'][$ptype]['pics']): ?>
+               <? foreach ($product['img'][$ptype]['pics'] as $i => $pic): ?>
                   <div class="pic w200 h200 ">
                       <?
                       $da = $product['img'][$ptype]['pics'][$i]['pics'][$size];
-                      $y = isset($da) ? '/pic/' . $product['alias'] . '/' . $ptype . '/' . ($i + 1) . '/' . $da . '.webp' : '/pic/srvc/nophoto-min.jpg';
+                      $y = isset($da) ? '/pic/' . $product['alias'] . '/' . $ptype . '/' . ($i) . '/' . $da . '.webp' : '/pic/srvc/nophoto-min.jpg';
                       ?>
                     <img src="<?= $y ?: '/srvc/nophoto-min.jpg'; ?>" >
-                    <span data-del-id = <?= $i + 1; ?>>x</span>
+                    <span data-del-id = <?= $i; ?>>x</span>
                   </div>
-   <? endforeach; ?>
-<? endif; ?>
-            <div class="pic h200 new"><span data-del-id = <?= $i + 2; ?>>x</span></div>
+               <? endforeach; ?>
+            <? endif; ?>
+            <div class="pic h200 new"><span data-del-id = 0>x</span></div>
 
           </div>
 
@@ -253,19 +255,19 @@
               <input id ='<?= $ptype; ?>' type="file" >
               <label for="<?= $ptype; ?>">с компьютера</label>
             </div>
-                <? if (isset($product['img'][$ptype]['pics']) && $product['img'][$ptype]['pics']): ?>
-                   <? foreach ($product['img'][$ptype]['pics'] as $i => $pic): ?>
+            <? if (isset($product['img'][$ptype]['pics']) && $product['img'][$ptype]['pics']): ?>
+               <? foreach ($product['img'][$ptype]['pics'] as $i => $pic): ?>
                   <div class="pic w200 h200 ">
                       <?
                       $da = $product['img'][$ptype]['pics'][$i]['pics'][$size];
                       $y = isset($da) ? '/pic/' . $product['alias'] . '/' . $ptype . '/' . ($i + 1) . '/' . $da . '.webp' : '/pic/srvc/nophoto-min.jpg';
                       ?>
                     <img src="<?= $y ?: '/srvc/nophoto-min.jpg'; ?>" >
-                    <span data-del-id = <?= $i + 1; ?>>x</span>
+                    <span data-del-id = <?= $i; ?>>x</span>
                   </div>
-   <? endforeach; ?>
-<? endif; ?>
-            <div class="pic h200 new"><span data-del-id = <?= $i + 2; ?>>x</span></div>
+               <? endforeach; ?>
+            <? endif; ?>
+            <div class="pic h200 new"><span data-del-id = 0>x</span></div>
 
           </div>
 
