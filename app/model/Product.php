@@ -91,18 +91,25 @@ class Product extends Model {
 
 //{"dpic":{"saveInSizes":"0,50,150,600","title":"основная картинка","pics":{"0":{"pics":{"0":"kostyum-gudzon-1-0","50":"kostyum-gudzon-1-50","150":"kostyum-gudzon-1-150","600":"kostyum-gudzon-1-600"},"title":"kostyum-gudzon-1 сбоку","alt":"kostyum-gudzon-1 просто"}}},"dop":{"saveInSizes":"0,50,150,600","title":"дополнительные картинки","pics":{"0":{"pics":{"0":"kostyum-gudzon-1-0","50":"kostyum-gudzon-1-50","150":"kostyum-gudzon-1-150","600":"kostyum-gudzon-1-600"},"title":"kostyum-gudzon-1 сбоку","alt":"kostyum-gudzon-1 просто"},"1":{"pics":{"0":"kostyum-gudzon-1-0","50":"kostyum-gudzon-1-50","150":"kostyum-gudzon-1-150","600":"kostyum-gudzon-1-600"},"title":"kostyum-gudzon-1 сбоку","alt":"kostyum-gudzon-1 просто"}}},"big-pack":{"saveInSizes":"0,350","title":"транспортная упаковка","pics":{}}}
 
-public function delProductImg($arr) {
+   public function delProductImg($arr) {
 
       $name = $arr['alias'];
       $type = $arr['picType'];
-      $delId =$arr['deletableImgId'];
+      $delId = $arr['deletableImgId'];
 
-      $dir = ROOT.'/pic/'.$name.'/'.$type.'/'.$delId;
+      $sql = "SELECT * FROM `products` WHERE `id` = ?";
+      $ob = $this->findOne($arr['pkeyVal']);
+
+      $ob = json_decode($ob['img']);
+      unset($ob->$type->pics->$delId);
+      $ob = json_encode($ob);
+
+      $dir = ROOT . '/pic/' . $name . '/' . $type . '/' . $delId;
       if (is_dir($dir)) {
          $res = Model::removeDirectory($dir);
       }
       $sql = "UPDATE `products` SET `img` = ? WHERE `id` = ?";
-      $params = [$arr['values']['img'], $arr['pkeyVal']];
+      $params = [$ob, $arr['pkeyVal']];
       $res = $this->insertBySql($sql, $params);
       exit($p['to']);
    }

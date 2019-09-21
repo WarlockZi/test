@@ -75,11 +75,16 @@ $(function () {
          'image/jpeg': true,
          'image/gif': true
       }
+
+
       for (var i = 0; i < del.length; i++) {
+//         debugger;
          del[i].onclick = function () {
             delImg(this)
          }
       }
+
+
       for (i = 0; i < holder.length; i++) {
          holder[i].ondragover = function () {
             this.classList.add('hover');
@@ -122,31 +127,27 @@ $(function () {
          Obj.deletableImgId = self.getAttribute('data-del-id');
          self.parentNode.remove();
          Obj.values.img = imgs(Obj.alias, null, self);
-//         debugger;
          fetchWrap(Obj);
       }
 
       function insert(file, cont, imageContainer) {
-         let clone = imageContainer.cloneNode(true),
-         isOnly = !!imageContainer.parentNode.querySelector('.js-one')
+         let clone = imageContainer.cloneNode(true)
+         clone.querySelector('span').onclick = function () {
+            delImg(this)
+         }
+         debugger;
+
+         let spanDatas = Array.from(imageContainer.parentNode.querySelectorAll('span'), i => {
+            return i.getAttribute('data-del-id')
+         }),
+         spanLastChild = +Math.max.apply(null, spanDatas)
+         imageContainer.querySelector('span').setAttribute('data-del-id', spanLastChild + 1)
+               debugger;
+         let isOnly = !!imageContainer.parentNode.querySelector('.js-one')
          if (isOnly && imageContainer.querySelector('img')) {
             imageContainer.querySelector('img').remove();
          }
-         let fsId = Array.from(imageContainer.closest('.js-pic').querySelectorAll('[data-del-id]'));
-         let spanNew = fsId.length>1?fsId.pop():0;
-         debugger;
-         var lost = fsId.reduce((prev, next, i, arr) => {
-            if (!prev && prev.getAttribute('data-del-id')) {
-               var pr = pr ? prev.getAttribute('data-del-id') : 0;
-               var ne = next.getAttribute('data-del-id');
 
-               return ne - pr > 1? pr + 1 : 0;
-            }
-
-         }, 0),
-//         num = +fsId.pop().getAttribute('data-del-id'),
-         nextId = lost?lost:num+1;
-         imageContainer.querySelector('span').setAttribute('data-del-id', nextId);
          var image = new Image();
          image.width = 150; // a fake resize
          image.src = cont;
@@ -167,7 +168,6 @@ $(function () {
             obj1 = {},
             paths = Array.from(row.querySelectorAll('img'))
             .reduce((prev, next, i) => {
-//               debugger;
                var fsId = next.getAttribute('data-del-id'),
                obj = {},
                saveInSizes = row.getAttribute('data-save-in-sizes'),
@@ -178,8 +178,7 @@ $(function () {
                obj['pics'] = dd;
                obj['title'] = productName + ' сбоку';
                obj['alt'] = productName + ' просто';
-//            obj['fsPicId'] = fsPicId;
-               prev[fsId] = obj;
+               prev[i + 1] = obj;
                return prev;
             }, {});
             obj1['saveInSizes'] = saveInSizes,
@@ -233,5 +232,4 @@ $(function () {
    }
 
    check();
-
 });
