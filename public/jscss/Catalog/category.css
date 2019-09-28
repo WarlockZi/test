@@ -136,9 +136,6 @@ h1{
 }
 .product
 {
-    display: flex;
-    /*border: 1px solid #ddd;*/
-    /*width: auto;*/
     padding: 0;
     position: relative;
     overflow: hidden;
@@ -386,6 +383,7 @@ h1{
 
 .star-rating{
     font-size: 0;
+	margin-top: auto;
 }
 .star-rating__wrap{
     display: inline-block;

@@ -38,7 +38,11 @@ class DB {
 //        self::$countSql++;
 //        self::$queries[] = $sql;
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute($params);
+        try {
+           return $stmt->execute($params);
+        } catch (Exception $ex) {
+           exit($ex);
+        }
     }
 
 

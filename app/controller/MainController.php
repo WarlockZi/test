@@ -59,6 +59,9 @@ class MainController Extends AppController {
    public function actionRequisites() {
 
    }
+   public function actionPoliticaconf() {
+
+   }
    public function actionDiscount() {
 
    }
@@ -77,6 +80,9 @@ class MainController Extends AppController {
 
    }
    public function actionReturn_change() {
+
+   }
+   public function actionArticles() {
 
    }
 

@@ -26,12 +26,12 @@ abstract class Model {
    }
 
    public function clean_data($str) {
-//      $str =  mysqli_escape_string($str);
+//      $str =  mysql_real_escape_string($str);
       return strip_tags(trim($str));
    }
 
-   public function findAll($table, $sort='') {
-      $sql = "SELECT * FROM " . ($table ?: $this->table).($sort?" ORDER BY {$sort}":"");
+   public function findAll($table, $sort = '') {
+      $sql = "SELECT * FROM " . ($table ?: $this->table) . ($sort ? " ORDER BY {$sort}" : "");
       return $this->pdo->query($sql);
    }
 
@@ -82,6 +82,17 @@ abstract class Model {
       return $this->pdo->query($sql, $params)[0]['Auto_increment'];
    }
 
+   static function removeDirectory($dir) {
+
+      if ($objs = glob($dir . "/*")) {
+         foreach ($objs as $obj) {
+            is_dir($obj) ? rmdir($obj) : unlink($obj);
+         }
+      }
+      return rmdir($dir);
+
+   }
+
    public function getBreadcrumbs($category, $parents, $type) {
       if ($type == 'category') {
 // в parents массив из адресной строки - надо получить aliases
@@ -101,15 +112,15 @@ abstract class Model {
       $breadcrumbs = "<a href = '/'>Главная</a>";
       if ($type == 'category') {
          foreach ($parents as $parent) {
-            $breadcrumbs .= "<a href = '/{$parent['alias']}'>{$parent['name']}</a>";
+            $breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
          }
-         return $breadcrumbs . "<span>{$category['name']}</span>";
+         return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
       } else {
          $parents = array_reverse($parents);
          foreach ($parents as $parent) {
-            $breadcrumbs .= "<a href = '/{$parent['alias']}'>{$parent['name']}</a>";
+            $breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
          }
-         return $breadcrumbs . "<span>{$category['name']}</span>";
+         return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
       }
    }
 

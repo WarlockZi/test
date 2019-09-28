@@ -14,6 +14,7 @@ $(function () {
       case '/adminsc/settings':
       case '/adminsc/Sitemap':
       case '/adminsc/settings/pics':
+      case '/adminsc/settings/prop':
       case '/adminsc/settings/props':
          $('.module.settings').addClass('activ');
          break;

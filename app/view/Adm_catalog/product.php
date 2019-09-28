@@ -13,6 +13,7 @@
 </div>
 <div class="adm-content">
   <div class="breadcrumbs-adm">
+    <!--<input type="hidden" id='js-object' value=<?= json_encode($product); ?>>-->
     <a href  = "/adminsc/index">Admin  ></a>
     <a href  = "/adminsc/catalog">Каталог  ></a>
 
@@ -20,28 +21,34 @@
        <? foreach ($category['parents'] as $k => $v): ?>
           <a href  = "/adminsc/catalog/category?id=<?= $v['id'] ?>"><?= $v['name'] ?></a>
        <? endforeach; ?>
-       <a href  = "/adminsc/catalog/category?id=<?= $category['id'] ?>"><?= $category['name'] ?></a>
-       <div><?= $product['name']; ?></div>
+       <a href  = "/adminsc/catalog/category?id=<?= $category['id'] ?>"><?= $category['name'] ?: '' ?></a>
+       <div><?= $product['name'] ?: ''; ?></div>
 
     <? endif; ?>
   </div>
-  <H1><?= $product['name']; ?></H1>
+  <H1><?= $product['name'] ?: ''; ?></H1>
 
   <div class="wrap-admin">
     <div class="work-area">
       <input id = 'token' type="hidden" value="<?= $_SESSION['token'] ?>">
       <div class="tabs">
-        <input id="tab1" type="radio" name="tabs" checked>
+        <input id="tab1" type="radio" name="tabs" >
         <label for="tab1" title="Подробно">Подробно</label>
         <input id="tab2" type="radio" name="tabs">
         <label for="tab2" title="Свойства">Свойства</label>
         <input id="tab3" type="radio" name="tabs">
         <label for="tab3" title="Сео">Сео</label>
-        <input id="tab4" type="radio" name="tabs">
+        <input id="tab4" type="radio" name="tabs" checked>
         <label for="tab4" title="Картинки">Картики</label>
 
 
-
+        <?
+        $ptype = 'dpic';
+        if (isset($product['img'][$ptype]) && $product['img'][$ptype]) {
+           $size = 600;
+//           $size = explode(',', $product['img'][$ptype]['saveInSizes']);
+        }
+        ?>
         <section id="content-tab1" class="prod-details column">
           <div class="row">
             <div class="left column">
@@ -50,10 +57,9 @@
                 <span id = 'id' <?= $product['id'] ?: ''; ?>><?= $product['id'] ?: ''; ?></span>
               </div>
               <div class = 'prop row'>
-                <strong>Показать на сайте  :</strong>
+                <strong>Показать на сайте :</strong>
                 <span>
-                  <input type="checkbox" id = 'act' <?= $product['act'] == 'Y' ? 'ckecked' : ''; ?>>
-
+                  <input type="checkbox" id = 'act' <?= $product['act'] == 'Y' ? 'checked' : ''; ?>>
                 </span>
               </div>
               <div class = 'prop row'>
@@ -62,9 +68,13 @@
               </div>
 
             </div>
-            <div class="right  column">
+            <div class="right column">
               <div>
-                <img id = 'dpic' dpic = '<?= $product['dpic'] ?: ''; ?>' src = "<?= '/pic' . $product['dpic'] ?: ''; ?>">
+                  <?
+                  $da = $product['img'][$ptype]['pics'][0]['pics'][$size];
+                  $y = isset($da) ? '/pic/' . $product['alias'] . '/' . $ptype . '/1/' . $da . '.webp' : '/pic/srvc/nophoto-min.jpg';
+                  ?>
+                <img src="<?= $y ?: '/srvc/nophoto-min.jpg'; ?>" >
               </div>
             </div>
           </div>
@@ -99,7 +109,7 @@
                          <span><?= $prop['name'] ?></span>
 
                          <? if ($prop['type'] == 'string') : ?>
-                            <input value="<?= is_array($product['props']) && array_key_exists($Pprop, $product['props']) ? $product['props'][$Pprop] : '' ?>" data-type = 'text' data-id="<?= $prop['id']; ?>" contenteditable type="text">
+                            <input value="<?= is_array($product['props']) ? $product['props'][$prop['name']] : '' ?>" data-type = 'text' data-id="<?= $prop['id']; ?>" contenteditable type="text">
 
 
                          <? elseif ($prop['type'] == 'select'): ?>
@@ -107,7 +117,7 @@
                             <select data-type = 'select' data-id="<?= $prop['id']; ?>">
                               <option value=""></option>
                               <? foreach ($val as $i => $p): ?>
-                                 <option <?= is_array($product['props']) && array_key_exists($Pprop, $product['props']) && ($i == $product['props'][$Pprop]) ? 'selected' : ''; ?> value="<?= $i; ?>"><?= $p; ?></option>
+                                 <option <?= is_array($product['props']) && ($val[$i] == $product['props'][$prop['name']]) ? 'selected' : ''; ?> value="<?= $i; ?>"><?= $p; ?></option>
                               <? endforeach; ?>
                             </select>
 
@@ -146,7 +156,7 @@
               <strong>название вкладки :</strong>
               <span contenteditable id = 'title'><?= $product['title'] ?: ''; ?></span>
             </div>
-            <div class = 'prop row'>
+            <div class = 'row'>
               <strong>url :</strong>
               <span contenteditable id = 'alias'><?= $product['alias'] ?: ''; ?></span>
             </div>
@@ -169,59 +179,141 @@
 
         <section id="content-tab4">
 
-          <div class="row separator">основная картинка</div>
+          <?
+          $arr = [
+              'основная картинка' => [
+                  'ptype' => 'dpic',
+                  'size' => '-80',
+                  'isOnly' => true
+              ],
+              'дополнительные картинки' => [
+                  'ptype' => 'dop',
+                  'size' => '-300',
+                  'isOnly' => false
+              ],
+              'транспортная упаковка' => [
+                  'ptype' => 'big-pack',
+                  'size' => '-300',
+                  'isOnly' => false
+              ]
+             ]
+          ?>
+          <? foreach ($arr as $sep => $b): ?>
 
-          <div class="row">
-            <div class="load-pic holder column">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 30" width="132px" height="122" style=""><path fill="#bdebee" d="M25.913 8.143c-.438-4.563-4.237-8.143-8.914-8.143-3.619 0-6.718 2.148-8.146 5.23-.43-.137-.878-.23-1.353-.23-2.485 0-4.5 2.016-4.5 4.5 0 .494.099.961.246 1.404-1.933 1.127-3.246 3.196-3.246 5.594 0 3.59 2.91 6.5 6.5 6.5v.002h17.999v-.002c4.144 0 7.499-3.357 7.499-7.5 0-3.656-2.62-6.693-6.085-7.355zm-6.134 5.757h-1.78v4.012c0 .553-.446 1.002-1 1.002h-2c-.552 0-1-.449-1-1.002v-4.012h-1.781c-1.086 0-1.529-.725-.987-1.609l3.781-3.727c.741-.74 1.21-.765 1.974 0l3.781 3.727c.544.885.098 1.609-.988 1.609z"></path></svg>
-              <input id=choose-main-pic type="file">
-              <label for="choose-main-pic">Выбрать файл</label>
-            </div>
+             <div class="row separator"><?= $sep ?></div>
 
-            <div class="pic w200 h200">
-              <img src="/pic<?= $product['dpic'] ?: '/pic/srvc/nophoto-min.jpg'; ?>" alt="">
-            </div>
+             <div class="row js-pic" data-pic-type = '<?= $b['ptype']; ?>'  data-title = <?= $sep ?>>
 
-          </div>
+               <div class="holder column <?= $b['isOnly'] ? 'js-one' : '' ?>">
+                 <span>Перетащи файл сюда или выбери</span>
+                 <input id=main type="file">
+                 <label for="main">с компьютера</label>
+               </div>
+               <?
+               if (isset($product['img'][$b['ptype']]) && $da = $product['img'][$b['ptype']]) :
+                  foreach ($product['img'][$b['ptype']] as $i => $pic):
+                     ?>
 
-          <div class="row separator">дополнительные картинки</div>
+                     <?
+                     $path = '/pic/' . $pic['path'];
+                     $y = $path . $product['alias'] . $b['size'] . '.webp';
+                     ?>
+                     <div class="pic w200 h200">
+                       <img src="<?= $y ?: '/srvc/nophoto-min.jpg'; ?>" >
+                       <span data-del-id = <?= $pic['path'] ?>>x</span>
+                     </div>
 
-          <div class="row">
-            <div class="load-pic holder column">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 30" width="132px" height="122" style=""><path fill="#bdebee" d="M25.913 8.143c-.438-4.563-4.237-8.143-8.914-8.143-3.619 0-6.718 2.148-8.146 5.23-.43-.137-.878-.23-1.353-.23-2.485 0-4.5 2.016-4.5 4.5 0 .494.099.961.246 1.404-1.933 1.127-3.246 3.196-3.246 5.594 0 3.59 2.91 6.5 6.5 6.5v.002h17.999v-.002c4.144 0 7.499-3.357 7.499-7.5 0-3.656-2.62-6.693-6.085-7.355zm-6.134 5.757h-1.78v4.012c0 .553-.446 1.002-1 1.002h-2c-.552 0-1-.449-1-1.002v-4.012h-1.781c-1.086 0-1.529-.725-.987-1.609l3.781-3.727c.741-.74 1.21-.765 1.974 0l3.781 3.727c.544.885.098 1.609-.988 1.609z"></path></svg>
-              <input id=choose-main-pic type="file">
-              <label for="choose-main-pic">Выбрать файл</label>
-            </div>
+                     <?
+                  endforeach;
+               else:
+                  ?>
+                  <div class="pic w200 h200">
+                    <img src="/pic/srvc/nophoto-min.jpg" >
+                    <span data-del-id = >x</span>
+                  </div>
+   <? endif; ?>
 
-            <div class="pic w200 h200">
-            </div>
 
-          </div>
+             </div>
 
-          <div class="row separator">расцветки</div>
+<? endforeach; ?>
 
-          <div class="row">
-            <div class="load-pic holder column">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 30" width="132px" height="122" style=""><path fill="#bdebee" d="M25.913 8.143c-.438-4.563-4.237-8.143-8.914-8.143-3.619 0-6.718 2.148-8.146 5.23-.43-.137-.878-.23-1.353-.23-2.485 0-4.5 2.016-4.5 4.5 0 .494.099.961.246 1.404-1.933 1.127-3.246 3.196-3.246 5.594 0 3.59 2.91 6.5 6.5 6.5v.002h17.999v-.002c4.144 0 7.499-3.357 7.499-7.5 0-3.656-2.62-6.693-6.085-7.355zm-6.134 5.757h-1.78v4.012c0 .553-.446 1.002-1 1.002h-2c-.552 0-1-.449-1-1.002v-4.012h-1.781c-1.086 0-1.529-.725-.987-1.609l3.781-3.727c.741-.74 1.21-.765 1.974 0l3.781 3.727c.544.885.098 1.609-.988 1.609z"></path></svg>
-              <input id=choose-main-pic type="file">
-              <label for="choose-main-pic">Выбрать файл</label>
-            </div>
 
-            <div class="pic w200 h200">
-            </div>
 
-          </div>
+
+
+
+
+
 
 
         </section>
         <div class="separator btns">
-          <button id="product-update-btn">Сохранить
-          </button>
-          <button id="product-create-btn">Добавить категорию
-          </button>
+          <button id="product-update-btn">Сохранить</button>
+
         </div>
       </div>
     </div>
 
   </div>
 </div>
+<style>
+
+  .pic:hover{
+      border: 1px #ddd solid;
+  }
+  .pic span{
+      display: none;
+  }
+  .pic:hover span{
+      display: flex;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      position: absolute;
+      bottom: 0;
+      right: 0px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+  }
+  .pic{
+      box-sizing: border-box;
+      position: relative;
+      margin-left: 10px;
+  }
+  .holder span {
+      width: 100px;
+      color: #7d7d7d;
+      text-align: center;
+      line-height: 1.5;
+  }
+
+  .holder label {
+      background-color: #ebf4f4;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1;
+  }
+  .holder input{
+      max-width: 115px;
+      display: none;
+  }
+  .holder{
+      position: relative;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-evenly;
+      align-items: center;
+      padding-bottom: 5px;
+      width: 200px;
+      height: 200px;
+      border-radius: 25px;
+      border: 3px dashed #dee3e4;
+      box-sizing: border-box;
+  }
+
+</style>

@@ -1,4 +1,4 @@
-@font-face {
+/*@font-face {
     font-family: 'fontello';
     src: url('../fontello/font/fontello.eot?39208138');
     src: url('../fontello/font/fontello.eot?39208138#iefix') format('embedded-opentype'),
@@ -9,6 +9,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 [class^="icon-"]:before, [class*=" icon-"]:before {
     font-family: "fontello";
     font-style: normal;
@@ -26,14 +27,14 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.icon-lock:before { content: '\e800'; } /* '' */
-.icon-lock-open:before { content: '\e801'; } /* '' */
-.icon-user:before { content: '\e802'; } /* '' */
-.icon-phone:before { content: '\e803'; } /* '' */
-.icon-mail-alt:before { content: '\f0e0'; } /* '' */
-.icon-copyright:before { content: '\f1f9'; } /* '' */
+.icon-lock:before { content: '\e800'; }  '' 
+.icon-lock-open:before { content: '\e801'; }  '' 
+.icon-user:before { content: '\e802'; }  '' 
+.icon-phone:before { content: '\e803'; }  '' 
+.icon-mail-alt:before { content: '\f0e0'; }  '' 
+.icon-copyright:before { content: '\f1f9'; }  '' */
 
-.icon-menu:before {
+/*.icon-menu:before {
     content: '\f0c9';
     position: relative;
     float: right;
@@ -42,7 +43,18 @@
 }
 .user-button .icon-menu:before {
     padding: .5vw;
+}*/
+.add-product
+{
+	font-weight: bold;
+    display: block;
+    padding: 8px;
+    align-self: flex-start;
+    background-color: #16ff13;
+	cursor: pointer;
+	    margin: 10px 0;
 }
+
 
 .product.w200 span{
     display: block;
@@ -703,7 +715,7 @@ a.index{
     font-size: 13px;
     line-height: 1.1vw;
     color:#fff;
-	    display: flex;
+	display: flex;
     align-items: center;
     justify-content: center;
 }

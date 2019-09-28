@@ -117,38 +117,38 @@ class Adminsc extends Model {
 //      }
 //   }
 
-//   public function where($fName = '', $fAct = '', $fArt = '', $prop = []) {
-//      $where = ' WHERE ';
-//      $and = '';
-//      if ($fName) {
-//         $where .= " name LIKE ? ";
-//         $and = ' and ';
+   public function where($fName = '', $fAct = '', $fArt = '', $prop = []) {
+      $where = ' WHERE ';
+      $and = '';
+      if ($fName) {
+         $where .= " name LIKE ? ";
+         $and = ' and ';
+      }
+//      if ($fAct) {
+      $where .= $and . ' act = ?';
+      $and = ' and ';
 //      }
-////      if ($fAct) {
-//      $where .= $and . ' act = ?';
-//      $and = ' and ';
-////      }
-//      if ($fArt) {
-//         $where .= $and . " art LIKE ?";
-//      }
-//      return $where;
-//   }
+      if ($fArt) {
+         $where .= $and . " art LIKE ?";
+      }
+      return $where;
+   }
 
-//   public function params($fName = '', $fAct = '', $fArt = '', $prop = []) {
-//      $params = [];
-//
-//      if ($fName) {
-//         array_push($params, '%' . $fName . '%');
+   public function params($fName = '', $fAct = '', $fArt = '', $prop = []) {
+      $params = [];
+
+      if ($fName) {
+         array_push($params, '%' . $fName . '%');
+      }
+//      if ($fAct) {
+      array_push($params, $fAct ? 'Y' : 'N');
 //      }
-////      if ($fAct) {
-//      array_push($params, $fAct ? 'Y' : 'N');
-////      }
-//      if ($fArt) {
-//         array_push($params, '%' . $fArt . '%');
-//      }
-//
-//      return $params;
-//   }
+      if ($fArt) {
+         array_push($params, '%' . $fArt . '%');
+      }
+
+      return $params;
+   }
 
 //   public function save($post) {
 //

@@ -1,7 +1,4 @@
 
-
-
-
 .h200{
 	height: 200px;
 }
@@ -14,9 +11,6 @@
 /*/////  PIC BOX  //////*/
 /*//////////////////////////////*/
 
-.pic {
-    /*height: 160px;*/
-}
 .pic img{
     width: 100%;
     height: 100%;
@@ -39,6 +33,7 @@
     flex:1;
     justify-content: flex-end;
     font-size: 14px;
+	align-items: center;
 }
 .admin-flex-table .row div,
 .admin-flex-table .row span,
@@ -58,10 +53,10 @@
 .pic .column{
     padding:10px;
 }
-.pic img{
+/*.pic img{
     max-width:100%;	
     max-height: 100%;;
-}
+}*/
 .pic .column div{
     height: 150px;
     width: 150px;
@@ -1099,7 +1094,7 @@ h2{
 
 .grid5 {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 40px 40px 1fr 1fr 80px;
 }
 .grid-head{
     font-weight: 600;
@@ -1164,7 +1159,7 @@ span[contenteditable]:hover,
     height: 27px;
     margin: 24px;
     justify-content: center;
-    flex:1;
+    /*flex:1;*/
 }
 .separator{
     padding: 5px;
@@ -1175,6 +1170,7 @@ span[contenteditable]:hover,
     font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 2px;
+	    color: #646464;
 }
 .separator.btns button
 {
@@ -1183,6 +1179,7 @@ span[contenteditable]:hover,
 .separator.btns{
     position: sticky;
     bottom: 0;
+	    z-index: 1;
 }
 
 
@@ -1370,7 +1367,7 @@ header {
 
 .properties select{
     margin: 5px 0;
-	max-width: 330px;
+/*	max-width: 330px;*/
 }
 
 .add-property select{

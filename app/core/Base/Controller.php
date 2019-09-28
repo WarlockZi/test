@@ -34,7 +34,7 @@ abstract class Controller {
    }
 
    public function isAjax() {
-      return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+      return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest' || isset($_POST['ajax'])&&($_POST['ajax']=='true') ;
    }
 
    public function clean_data($str) {
