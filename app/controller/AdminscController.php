@@ -18,7 +18,7 @@ class AdminscController extends AppController {
 
          if (isset($_POST['param'])) {
             $arr = json_decode($_POST['param'], true);
-            if (isset($arr['token']) && $arr['token']) {
+            if (isset($arr['token']) && $arr['token']==$_SESSION['token']) {
                $func = $arr['action'];
                $model = $arr['model'] ?: 'adminsc';
                if (App::$app->{$model}->$func($arr)) {

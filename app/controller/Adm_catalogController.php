@@ -97,7 +97,6 @@ class Adm_catalogController extends AdminscController {
             $product = [];
             $id = (int) $_GET['category'];
             $category = App::$app->category->getCategory($id);
-//            $parent = $_GET['id'];
             $props = App::$app->prop->getProps();
             $this->set(compact('product', 'category', 'props'));
             $this->view = 'product_new';
@@ -108,7 +107,8 @@ class Adm_catalogController extends AdminscController {
 
             $product = App::$app->product->getProduct($id);
             $product['props'] = json_decode($product['props'], true);
-            $product['img'] = json_decode($product['img'], true);
+
+            $product['img'] = App::$app->product->getProductImg($id);
             $category = App::$app->category->getCategory($product['parent']);
 
             $props = App::$app->prop->getProps();
@@ -116,6 +116,9 @@ class Adm_catalogController extends AdminscController {
          }
       }
    }
+
+
+
 
    public function actionIndex() {
 

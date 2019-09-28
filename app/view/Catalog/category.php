@@ -49,7 +49,7 @@
                     </div>
 
                   <div class="price-block">
-                    <span class="final price">550 р </span>
+                    <span class="final price"></span>
 
                     <span class="price strikethrough"><?= $product['old-price']?$product['old-price'].' р':''; ?></span>
                   </div>

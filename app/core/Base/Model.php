@@ -26,7 +26,7 @@ abstract class Model {
    }
 
    public function clean_data($str) {
-//      $str =  mysqli_escape_string($str);
+//      $str =  mysql_real_escape_string($str);
       return strip_tags(trim($str));
    }
 
@@ -81,14 +81,17 @@ abstract class Model {
       $sql = "SHOW TABLE STATUS FROM vitex_test LIKE '$table'";
       return $this->pdo->query($sql, $params)[0]['Auto_increment'];
    }
+
    static function removeDirectory($dir) {
-    if ($objs = glob($dir."/*")) {
-       foreach($objs as $obj) {
-         is_dir($obj) ? removeDirectory($obj) : unlink($obj);
-       }
-    }
-    rmdir($dir);
-  }
+
+      if ($objs = glob($dir . "/*")) {
+         foreach ($objs as $obj) {
+            is_dir($obj) ? rmdir($obj) : unlink($obj);
+         }
+      }
+      return rmdir($dir);
+
+   }
 
    public function getBreadcrumbs($category, $parents, $type) {
       if ($type == 'category') {
