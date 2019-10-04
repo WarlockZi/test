@@ -13,7 +13,7 @@ class View {
    function __construct($route, $layout = '', $view = '') {
 
       $this->route = $route;
-      // Если в вид передали false то и в $this->layout устанавливаем false для отключения layout
+// Если в вид передали false то и в $this->layout устанавливаем false для отключения layout
       if ($layout === false) {
          $this->layout = false;
       } else {
@@ -28,7 +28,7 @@ class View {
          extract($vars);
       }
       $file_view = ROOT . "/app/view/{$this->route['controller']}/{$this->view}.php";
-      // если режим отладки вкл, ставим метку и не кешируем
+// если режим отладки вкл, ставим метку и не кешируем
       ob_start();
       if (is_file($file_view)) {
          require $file_view;
@@ -37,7 +37,7 @@ class View {
       }
       $content = ob_get_clean();
       ob_start();
-      // Если в вид передали false то и в $this->layout устанавливаем false для отключения layout
+// Если в вид передали false то и в $this->layout устанавливаем false для отключения layout
       if ($this->layout !== FALSE) {
          $file_layout = ROOT . "/app/view/layouts/{$this->layout}.php";
          if (is_file($file_layout)) {
@@ -50,32 +50,40 @@ class View {
       echo $page_cache;
    }
 
-   public static function setJsCss($data) {
-      $ext = array_keys($data)[0];
-      $doCache = DEBU ? "?" . time() : '';
-      if (isset($data["{$ext}"]) && $data["{$ext}"]) {
-         // если передан массив - это route>подключим индивид файл
-         if (is_array($data["{$ext}"])) {
-            $controller = $data["{$ext}"]['controller'];
-            $view = $data['view'];
-            $script = "/public/jscss/" . $controller . '/' . $view . '.' . $ext;
-            $file = ROOT . $script;
-            if (is_readable($file)) {
-               if ($ext == 'js') {
-                  $jscss = "<script src='{$script}{$doCache}'></script>";
-               } else {
-                  $jscss = "<link href='{$script}{$doCache}' type='text/css' rel='stylesheet'>";
-               }
-               self::$jsCss[$ext][] = $jscss;
-            }
-         } else {
+   public static function getJsCssProps($data, $ext) {
+      $noCache = isset($data['nocache']) ? false : true;
+      $doCache = DEBU && $noCache ? "?" . time() : '';
+      $defer = isset($data['defer']) ? 'defer' : '';
+      $async = isset($data['defer']) ? 'async' : '';
+      $deferAsync = $defer ?: $async;
+      if (isset($data['controller']) && isset($data['view'])) {
+         $file = ROOT . "/public/jscss/" . $data['controller'] . '/' . $data['view'] . '.' . $ext;
+         if (is_readable($file)) {
             if ($ext == 'js') {
-               self::$jsCss[$ext][] = "<script src='$data[$ext]{$doCache}'></script>";
+               $jscss = "<script {$deferAsync} src='{$script}{$doCache}'></script>";
             } else {
-               self::$jsCss[$ext][] = "<link href='$data[$ext]{$doCache}' type='text/css' rel='stylesheet'>";
+               $jscss = "<link href='{$script}{$doCache}' type='text/css' rel='stylesheet'>";
             }
+            self::$jsCss[$ext][] = $jscss;
          }
       }
+      else{
+         return compact('doCache', 'deferAsync');
+
+      }
+   }
+
+   public static function setJs($data) {
+      extract(self::getJsCssProps($data, 'js'));
+      self::$jsCss['js'][] = "<script {$deferAsync} src='$data[$ext]{$doCache}'></script>";
+   }
+
+   public static function setCss($data) {
+      extract(self::getJsCssProps($data, 'css'));
+      self::$jsCss['css'][] = "<link href='$data[$ext]{$doCache}' type='text/css' rel='stylesheet'>";
+   }
+
+   public static function setJsCss($data) {
    }
 
    public static function getCSS() {

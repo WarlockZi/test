@@ -12,6 +12,15 @@ class AppController extends Controller {
    public function __construct($route) {
       parent::__construct($route);
       $this->layout = 'flex-layout';
+      View::setJs([
+          'js' => '/public/js/jq.js',
+//          'defer' => true,
+          'nocache' => true]);
+      View::setJs([
+          'js' => '/public/js/auto.js',
+//          'defer' => true
+          ]);
+
    }
 
    public static function debug($arr) {
@@ -60,11 +69,8 @@ class AppController extends Controller {
                // Пароль почта в порядке, но нет подтверждения
                $errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
             } else {
-
-//               $user['rights'] = explode(",", $user['rights']);
                $this->set(compact('user'));
             }
-
          } elseif (!isset($_SESSION['id'])) {
             header("Location:" . PROJ . "/user/login");
             $_SESSION['back_url'] = $_SERVER['QUERY_STRING'];

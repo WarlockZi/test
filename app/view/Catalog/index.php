@@ -1,5 +1,4 @@
-
-<div class="site">
+<main class = 'column'>
     <? foreach ($cats_id as $id): ?>
      <a href="/catalog/<?= $id['alias']; ?>">
        <div class="badge">
@@ -8,4 +7,4 @@
        </div>
      </a>
   <? endforeach; ?>
-</div>
+</main>

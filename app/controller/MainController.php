@@ -7,7 +7,6 @@ use app\model\User;
 use app\model\Catalog;
 use app\core\App;
 
-
 class MainController Extends AppController {
 
    public function __construct($route) {
@@ -27,10 +26,18 @@ class MainController Extends AppController {
 
       $this->layout = 'vitex';
 
-      View::setJsCss(['css'=>'/public/css/vitex.css']);
-      View::setJsCss(['js'=> $this->route, 'view'=>$this->view]);
-      View::setJsCss(['css'=> $this->route, 'view'=>$this->view]);
-      $this->set(compact('sale','list'));
+      View::setJsCss([
+          'js' => $this->route,
+          'view' => $this->view,
+          'defer' => true
+      ]);
+
+      View::setJsCss(['css' => '/public/css/vitex.css']);
+      View::setJsCss(['css' => $this->route, 'view' => $this->view]);
+      if ($this->route['action'] !== 'index') {
+         View::setJsCss(['css' => '/public/css/about.css']);
+      }
+      $this->set(compact('sale', 'list'));
    }
 
    public function actionIndex() {
@@ -45,7 +52,10 @@ class MainController Extends AppController {
             // Пароль почта в порядке, но нет подтверждения
             $errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
          } else {
-
+            View::setJs([
+                'js' => '/public/js/slick-1.8.1/slick/slick.min.js',
+//                'defer'=>true
+            ]);
             $this->set(compact('user'));
          }
          return TRUE;
@@ -53,40 +63,40 @@ class MainController Extends AppController {
       View::setMeta('Медицинские расходные материалы', 'Доставим медицинские расходные материалы в любую точку России', 'медицинские расходные материалы, доставка, производство, по России');
    }
 
-
-
-
-   public function actionRequisites() {
-
-   }
    public function actionPoliticaconf() {
 
    }
+
    public function actionDiscount() {
 
    }
+
    public function actionDelivery() {
 
    }
+
    public function actionPayment() {
+
    }
+
    public function actionContacts() {
+
    }
 
    public function actionOferta() {
 
    }
+
    public function actionAbout() {
 
    }
+
    public function actionReturn_change() {
 
    }
+
    public function actionArticles() {
 
    }
-
-
-
 
 }

@@ -12,50 +12,31 @@ class Product extends Model {
 
    public $table = 'products';
 
-   protected function createImgPaths($num, $alias, $rate = 800, $sub, $ext, $isOnly) {
+   protected function createImgPaths($alias, $num, $fname, $rate = 800, $sub, $ext, $isOnly) {
       $ext = $ext ?: 'jpg';
-      $p['filename'] = $rate ? "{$alias}-{$rate}.{$ext}" : "{$alias}.{$ext}";
-      $p['group'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $sub . '/';
-      if ($num) {
-         $p['toPath'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $sub . "/" . $num . "/";
-      } else {
-         $p['toPath'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $sub . "/1/";
-      }
-// если в группе несколько картинок, переименуем папки +1
-// а текущий файл вставим на первое место
-      $i = 1;
-      if (!$isOnly && is_dir($p['toPath']) && !$num) {
-         $files = scandir($p['group']);
-         foreach ($files as $file) {
-            if ($file == "." || $file == "..")
-               continue;
-            if (is_dir($p['group'] . $i)) {
-               $i++;
-               $p['toPath'] = $_SERVER['DOCUMENT_ROOT'] . '/pic/' . $alias . '/' . $sub . "/{$i}" . '/';
-            }
-         }
-      }
-      $p['to'] = $p['toPath'] . $p['filename'];
-      $p['rel'] = $alias . '/' . $sub . '/' . $num . '/';
-      $p['num'] = $i;
+      $p['filename'] = $rate ? "{$fname}-{$rate}.{$ext}" : "{$fname}.{$ext}";
+      $p['group'] = $_SERVER['DOCUMENT_ROOT'] . "/pic/{$alias}/";
+      $p['to'] = $p['group'] . $p['filename'];
+      $p['rel'] = "{$alias}/{$fname}";
       return $p;
    }
 
-   public function uploadIMG($alias, $sub, $isOnly, $file) {
-      $toExt = 'webp';
-      $quality = 75;
-      $sizes = [0, 80, 300, 700];
+   public function getImgParams() {
+      return ['toExt' => 'webp',
+          'quality' => 75,
+          'sizes' => [0, 80, 300, 700]
+      ];
+   }
 
+   public function uploadIMG($alias, $sub, $isOnly, $file) {
+      $arr = extract($this->getImgParams());
+      $fname = substr($file['name'], 0, strlen($file['name']) - 4);
       foreach ($sizes as $size) {
          if (!$size) {
-            $ps = $this->createImgPaths(null, $alias, null, $sub, null, $isOnly);
-            if (!is_dir($ps['toPath'])) {
-               mkdir($ps['toPath'], 0777, true);
-            }
+            $ps = $this->createImgPaths($alias, null, $fname, null, $sub, null, $isOnly);
             move_uploaded_file($file['tmp_name'], $ps['to']);
          } else {
-            $pX = $this->createImgPaths($ps['num'], $alias, $size, $sub, $toExt, $isOnly);
-
+            $pX = $this->createImgPaths($alias, $ps['num'], $fname, $size, $sub, $toExt, $isOnly);
             $new_image = new picture($ps['to']);
             $new_image->autoimageresize($size, $size);
             $new_image->imagesave($toExt, $pX['to'], $quality, 0777);
@@ -84,68 +65,77 @@ class Product extends Model {
          exit('Файл не передан на сервер!');
       }
       extract($arr);
-      $file = $_FILES['file'];
       $hash = hash_file('md5', $file['tmp_name']);
-      $path = '/' . $model . '/' . $alias . '/' . $picType . '/';
-
 
       if ($isOnly) {// у данной продукции есть картинка, но не такая
-         $sql = "SELECT * FROM `pic` WHERE `model` = ? AND `sub` = ? AND `modelId` = ?";
-         $params = [$model, $picType, $pkeyVal];
-         $thisProductHasSomePic = $this->findBySql($sql, $params);
-         if (isset($thisProductHasSomePic[0])) {// у продукта уже есть картинка
-            if ($newPath = $this->uploadIMG($alias, $picType, $isOnly, $file)) {
-               if ($hash !== $thisProductHasSomePic[0]['hash']) { // и отличается от вставляемой
-                  $sql = "UPDATE `pic` SET `hash` = ?, `path` = ? WHERE `id` = ?";
-                  $params = [$hash, $thisProductHasSomePic[0]['path'], $thisProductHasSomePic[0]['id']];
-                  $this->insertBySql($sql, $params);
+         $thisProductHasSomePic = $this->thisProductHasSomePic($model, $picType, $pkeyVal);
+         if (isset($thisProductHasSomePic)) {// у продукта уже есть картинка
+            if ($newPath = $this->uploadIMG($alias, $picType, $isOnly, $_FILES['file'])) {
+               if ($hash !== $thisProductHasSomePic['hash']) { // и отличается от вставляемой
+                  exit($this->updatePic($hash, $thisProductHasSomePic['path'], $thisProductHasSomePic['id']));
                }
             }
          } else {
-            if ($newPath = $this->uploadIMG($alias, $picType, $isOnly, $file)) {
-               $sql = "INSERT INTO `pic` (`alias`, `path`, `hash`, `model`, `sub`, `modelId`)  VALUES (?, ?, ?, ?, ?, ?)";
-               $params = [$alias, $newPath, $hash, $model, $picType, $pkeyVal];
-               $this->insertBySql($sql, $params);
+            if ($newPath = $this->uploadIMG($alias, $picType, $isOnly, $_FILES['file'])) {
+               $this->isertImgDB($newPath, $arr, $hash);
             }
          }
       } else { // множественная картинка
-         $sql = "SELECT * FROM `pic` WHERE `hash` = ? AND `model` = ? AND `sub` = ? AND `modelId` = ?";
-         $params = [$hash, $model, $picType, $pkeyVal];
-         $thisProductHasThisPic = $this->findBySql($sql, $params);
+         $thisProductHasThisPic = $this->thisProductHasThisPic($hash, $model, $picType, $pkeyVal);
          if (!$thisProductHasThisPic) { /// у данного товара еще нет такой картинки картинки
-            if ($newPath = $this->uploadIMG($alias, $picType, $isOnly, $file)) {
-               $sql = "INSERT INTO `pic` (`alias`, `path`, `hash`, `model`, `sub`, `modelId`)  VALUES (?, ?, ?, ?, ?, ?)";
-               $params = [$alias, $newPath, $hash, $model, $picType, $pkeyVal];
-               $this->insertBySql($sql, $params);
-               exit($newPath);
+            if ($newPath = $this->uploadIMG($alias, $picType, $isOnly, $_FILES['file'])) {
+               $this->isertImgDB($newPath, $arr, $hash);
             }
          } else {
             exit('Такая картинка уже есть!');
          }// иначе у данного товара уже есть такая картинка-не делаем ничего
-         if ($newPath = $this->uploadIMG($alias, $picType, $isOnly, $file)) {
-            $sql = "INSERT INTO `pic` (`alias`, `path`, `hash`, `model`, `sub`, `modelId`)VALUES (?, ?, ?, ?, ?, ?)";
-            $params = [$alias, $newPath, $hash, $model, $picType, $pkeyVal];
-            $this->insertBySql($sql, $params);
-            exit($newPath);
+         if ($newPath = $this->uploadIMG($alias, $picType, $isOnly, $_FILES['file'])) {
+            $this->isertImgDB($newPath, $arr, $hash);
          }
-         exit($newPath);
-      }
+      }exit('All is done');
+   }
+
+   public function updatePic($hash, $path, $id) {
+      $sql = "UPDATE `pic` SET `hash` = ?, `path` = ? WHERE `id` = ?";
+      $params = [$hash, $path, $id];
+      return $this->insertBySql($sql, $params);
+   }
+
+   public function thisProductHasSomePic($model, $picType, $pkeyVal) {
+      $sql = "SELECT * FROM `pic` WHERE `model` = ? AND `sub` = ? AND `modelId` = ?";
+      $params = [$model, $picType, $pkeyVal];
+      return $thisProductHasSomePic = $this->findBySql($sql, $params)[0];
+   }
+
+   public function thisProductHasThisPic($hash, $model, $picType, $pkeyVal) {
+      $sql = "SELECT * FROM `pic` WHERE `hash` = ? AND `model` = ? AND `sub` = ? AND `modelId` = ?";
+      $params = [$hash, $model, $picType, $pkeyVal];
+      return $thisProductHasThisPic = $this->findBySql($sql, $params);
+   }
+
+   public function isertImgDB($newPath, $arr, $hash) {
+      extract($arr);
+      $sql = "INSERT INTO `pic` (`alias`, `path`, `hash`, `model`, `sub`, `modelId`)VALUES (?, ?, ?, ?, ?, ?)";
+      $params = [$alias, $newPath, $hash, $model, $picType, $pkeyVal];
+      $this->insertBySql($sql, $params);
+      exit($newPath);
    }
 
    public function delProductImg($arr) {
+      extract(getImgParams());
       extract($arr);
       $sql = "SELECT * FROM pic WHERE `model` = ? AND `modelId` = ? AND `path`= ? AND `sub`= ?";
       $params = [$model, $pkeyVal, $delPath, $sub];
       $res = $this->findBySql($sql, $params);
-      if (count($res) > 0) {
+      if (count($res) == 1) {// eсли
          $dir = ROOT . '/pic/' . $delPath;
          if (is_dir($dir)) {
             $res1 = Model::removeDirectory($dir);
          }
       }
-      $sql = "DELETE FROM pic WHERE `model` = ? AND `modelId` = ? AND `path`=? AND `sub`= ?";
-      $params = [$model, $pkeyVal, $delPath, $sub];
-      $res = $this->insertBySql($sql, $params);
+      $sql1 = "DELETE FROM pic WHERE `model` = ? AND `modelId` = ? AND `path`=? AND `sub`= ?";
+      $params1 = [$model, $pkeyVal, $delPath, $sub];
+      $this->insertBySql($sql1, $params1);
       exit($delPath);
    }
 

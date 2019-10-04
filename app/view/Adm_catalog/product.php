@@ -206,8 +206,8 @@
 
                <div class="holder column <?= $b['isOnly'] ? 'js-one' : '' ?>">
                  <span>Перетащи файл сюда или выбери</span>
-                 <input id=main type="file">
-                 <label for="main">с компьютера</label>
+                 <input id="<?= $b['ptype']; ?>" type="file">
+                 <label for="<?= $b['ptype']; ?>">с компьютера</label>
                </div>
                <?
                if (isset($product['img'][$b['ptype']]) && $da = $product['img'][$b['ptype']]) :
@@ -216,7 +216,7 @@
 
                      <?
                      $path = '/pic/' . $pic['path'];
-                     $y = $path . $product['alias'] . $b['size'] . '.webp';
+                     $y = $path  . $b['size'] . '.webp';
                      ?>
                      <div class="pic w200 h200">
                        <img src="<?= $y ?: '/srvc/nophoto-min.jpg'; ?>" >

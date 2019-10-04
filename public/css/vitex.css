@@ -354,6 +354,7 @@ a:hover,
     box-sizing: border-box;
 }
 main{
+	display:flex;
     max-width: 1310px;
     margin: auto;
     padding: 0 10px;
@@ -744,7 +745,7 @@ header {
     padding: 4px 0px 4px 0px;
     font: 14px/17px 'Proxima Nova', sans-serif;
     color: #343133;
-    height: 22px;
+    height: 21px;
     width: 100%;
 }
 .search-wrap form{
@@ -1016,6 +1017,7 @@ footer a
 }
 .user-menu>.row{
 	height: 100%;
+	flex-basis: 280px;
 }
 .user-menu>span.row>a{
     color: #fff;
@@ -1093,7 +1095,7 @@ footer a
     z-index: 2;
     position: absolute;
     top: 100%;
-    right: 0;
+    right: -1px;
     width: 280px;
 }
 .nav a:hover{
@@ -1557,12 +1559,12 @@ footer a
 /*************************************
 *******     copied from MAIN    ******
 **************************************/
-main
+/*main
 {
 	display:flex;
 	align-items: flex-start;
 	flex-wrap: wrap;
-}
+}*/
 
 .info{
 	flex:3;
@@ -1584,7 +1586,7 @@ main
 	background-color: #fbe61f;
     box-shadow: 0 0 6px 5px #d2d2d2;
     border: 1px #d2d2d2 solid;
-
+    max-height: 585px;
 }
 .single-slide{
     height: 500px;

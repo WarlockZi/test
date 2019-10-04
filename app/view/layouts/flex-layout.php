@@ -9,7 +9,6 @@
     <? $this::getMeta(); ?>
     <? $this::getCss(); ?>
     <link rel="shortcut icon" href="/public/favicon.ico">
-    <!--<link 	href="/public/css/<?= $vars['css'] ?>?<?= time() ?>" rel="stylesheet">-->
     <meta name="theme-color" content="#ff2929"/>
   </head>
 
@@ -141,8 +140,7 @@
       <p>Created by VORONIKLAB</p>
     </footer>
 
-    <!--<script type="text/javascript">var PROJ = '<?= PROJ ?>';</script>-->
-    <script src="/public/js/jq.js"></script>
+    <!--<script src="/public/js/jq.js"></script>-->
     <? $this::getJS(); ?>
 
 

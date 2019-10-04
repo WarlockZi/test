@@ -70,19 +70,13 @@ $(function () {
          dnd: 'draggable' in document.createElement('span'),
          formdata: !!window.FormData
       },
-      acceptedTypes = {
-         'image/png': true,
-         'image/jpeg': true,
-         'image/gif': true
-      };
-
+      acceptedTypes = {'image/png': true, 'image/jpeg': true, 'image/gif': true};
 
       for (var i = 0; i < del.length; i++) {
          del[i].onclick = function () {
             delImg(this);
          };
       }
-
 
       for (i = 0; i < holder.length; i++) {
          holder[i].ondragover = function () {
@@ -100,9 +94,10 @@ $(function () {
             debugger;
             const fileContents = await readUploadedFileAsURI(file);
             const imgPath = await updateImg(file, this);
-            if (imgPath!== 'Такая картинка уже есть!') {
+            if (imgPath !== 'Такая картинка уже есть!') {
                await insert(fileContents, this, imgPath);
-            }
+            }else{alert('Такая картинка уже есть!');}
+            
          };
       }
 
@@ -120,7 +115,6 @@ $(function () {
 
       async function delImg(self) {
          var Obj = new objProd();
-         debugger;
          Obj.action = 'delProductImg';
          Obj.isOnly = !!self.parentNode.querySelector('.js-one');
          Obj.delPath = self.getAttribute('data-del-id');
@@ -128,78 +122,7 @@ $(function () {
          self.parentNode.querySelector('img').setAttribute('src', '/pic/srvc/nophoto-min.jpg');
          let sent = await fetchWrap(Obj);
          return sent;
-
       }
-
-      function insert(cont, drop, imgPath) {
-
-         let isOnly = !!drop.parentNode.querySelector('.js-one');
-         if (isOnly) {
-            drop.nextElementSibling.querySelector('img').setAttribute('src', cont);
-         }
-         else {
-            let container = drop.nextElementSibling;
-               debugger;
-            if (container.querySelector('img').getAttribute('src')== '/pic/srvc/nophoto-min.jpg'){
-               let container = drop.nextElementSibling;
-               container.querySelector('span').onclick = function () {
-                  delImg(this);
-               };
-               container.querySelector('img').setAttribute('src', cont);
-               container.querySelector('span').setAttribute('data-del-id', imgPath);
-               drop.after(container);
-               
-            }else{
-               let container = drop.nextElementSibling.cloneNode(true);
-               container.querySelector('span').onclick = function () {
-                  delImg(this);
-               };
-               container.querySelector('img').setAttribute('src', cont);
-               container.querySelector('span').setAttribute('data-del-id', imgPath);
-               drop.after(container);
-               
-            } 
-
-//            let spanDatas = Array.from(drop.parentNode.querySelectorAll('span'), i => {
-//               return i.getAttribute('data-del-id')
-//            }),
-//            spanLastChild = +Math.max.apply(null, spanDatas)
-//            drop.querySelector('span').setAttribute('data-del-id', spanLastChild + 1)
-//         
-//            var image = new Image();
-//            image.width = 150; // a fake resize
-//            image.src = cont;
-//            drop.appendChild(image);
-//            drop.classList.add('w200');
-//            drop.classList.remove('new');
-         }
-      }
-
-      async function fetchWrap(Obj, file) {
-         let data = new FormData;
-         data.append('ajax', true);
-         data.append('param', JSON.stringify(Obj));
-         file ? data.append('file', file) : '';
-         let prom = await fetch(`/adminsc`, {
-            body: data,
-            method: 'post'
-         });
-         return prom.text();
-      }
-
-      const readUploadedFileAsURI = (inputFile) => {
-         const temporaryFileReader = new FileReader();
-         return new Promise((resolve, reject) => {
-            temporaryFileReader.onerror = () => {
-               temporaryFileReader.abort();
-               reject(new DOMException("Problem parsing input file."));
-            };
-            temporaryFileReader.onload = () => {
-               resolve(temporaryFileReader.result);
-            };
-            temporaryFileReader.readAsDataURL(inputFile);
-         });
-      };
 
       async function updateImg(file, elem) {
          var Obj = new objProd();
@@ -211,6 +134,66 @@ $(function () {
       }
 
    }
+   
+   function insert(cont, drop, imgPath) {
+
+      let isOnly = !!drop.parentNode.querySelector('.js-one');
+      if (isOnly) {
+         drop.nextElementSibling.querySelector('img').setAttribute('src', cont);
+      }
+      else {
+         let container = drop.nextElementSibling;
+         debugger;
+         if (container.querySelector('img').getAttribute('src') == '/pic/srvc/nophoto-min.jpg') {
+            container.querySelector('span').onclick = function () {
+               delImg(this);
+            };
+            container.querySelector('img').setAttribute('src', cont);
+            container.querySelector('span').setAttribute('data-del-id', imgPath);
+            drop.after(container);
+
+         }
+         else {
+            let container = drop.nextElementSibling.cloneNode(true);
+            container.querySelector('span').onclick = function () {
+               delImg(this);
+            };
+            container.querySelector('img').setAttribute('src', cont);
+            container.querySelector('span').setAttribute('data-del-id', imgPath);
+            drop.after(container);
+
+         }
+
+      }
+   }
+
+   async function fetchWrap(Obj, file) {
+      let data = new FormData;
+      data.append('ajax', true);
+      data.append('param', JSON.stringify(Obj));
+      file ? data.append('file', file) : '';
+      let prom = await fetch(`/adminsc`, {
+         body: data,
+         method: 'post'
+      });
+      return prom.text();
+   }
+
+   const readUploadedFileAsURI = (inputFile) => {
+      const temporaryFileReader = new FileReader();
+      return new Promise((resolve, reject) => {
+         temporaryFileReader.onerror = () => {
+            temporaryFileReader.abort();
+            reject(new DOMException("Problem parsing input file."));
+         };
+         temporaryFileReader.onload = () => {
+            resolve(temporaryFileReader.result);
+         };
+         temporaryFileReader.readAsDataURL(inputFile);
+      });
+   };
+
+
 
    check();
 });
