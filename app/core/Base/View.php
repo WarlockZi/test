@@ -51,39 +51,41 @@ class View {
    }
 
    public static function getJsCssProps($data, $ext) {
-      $noCache = isset($data['nocache']) ? false : true;
-      $doCache = DEBU && $noCache ? "?" . time() : '';
-      $defer = isset($data['defer']) ? 'defer' : '';
-      $async = isset($data['defer']) ? 'async' : '';
+      $addtime = in_array('addtime', $data) ? true : false;
+      $addtime = DEBU && $addtime ? "?" . time() : '';
+      $defer = in_array('defer', $data) ? 'defer' : '';
+      $async = in_array('defer', $data) ? 'async' : '';
       $deferAsync = $defer ?: $async;
-      if (isset($data['controller']) && isset($data['view'])) {
-         $file = ROOT . "/public/jscss/" . $data['controller'] . '/' . $data['view'] . '.' . $ext;
-         if (is_readable($file)) {
-            if ($ext == 'js') {
-               $jscss = "<script {$deferAsync} src='{$script}{$doCache}'></script>";
-            } else {
-               $jscss = "<link href='{$script}{$doCache}' type='text/css' rel='stylesheet'>";
-            }
-            self::$jsCss[$ext][] = $jscss;
-         }
-      }
-      else{
-         return compact('doCache', 'deferAsync');
-
-      }
+      return compact('deferAsync', 'addtime');
    }
 
    public static function setJs($data) {
       extract(self::getJsCssProps($data, 'js'));
-      self::$jsCss['js'][] = "<script {$deferAsync} src='$data[$ext]{$doCache}'></script>";
+      if (isset($data['controller']) && isset($data['view'])) {
+         $script = "/public/jscss/" . $data['controller'] . '/' . $data['view'] . '.js';
+         $file = ROOT . $script;
+         if (is_readable($file)) {
+            self::$jsCss['js'][] = "<script {$deferAsync} src='{$script}{$addtime}'></script>";
+         }
+      } else {
+         self::$jsCss['js'][] = "<script {$deferAsync} src='{$data['js']}{$addtime}'></script>";
+      }
    }
 
    public static function setCss($data) {
       extract(self::getJsCssProps($data, 'css'));
-      self::$jsCss['css'][] = "<link href='$data[$ext]{$doCache}' type='text/css' rel='stylesheet'>";
+      if (isset($data['controller']) && isset($data['view'])) {
+         $file = ROOT . "/public/jscss/" . $data['controller'] . '/' . $data['view'] . '.css';
+         if (is_readable($file)) {
+            self::$jsCss['css'][] = "<link href='{$data['css']}{$addtime}' type='text/css' rel='stylesheet'>";
+         }
+      } else {
+         self::$jsCss['css'][] = "<link href='{$data['css']}{$addtime}' type='text/css' rel='stylesheet'>";
+      }
    }
 
    public static function setJsCss($data) {
+
    }
 
    public static function getCSS() {

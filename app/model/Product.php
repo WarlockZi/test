@@ -6,13 +6,12 @@ use app\model\Test;
 use app\core\Base\Model;
 use app\core\App;
 
-//use Intervention\Image\ImageManagerStatic as Image;
 
 class Product extends Model {
 
    public $table = 'products';
 
-   protected function createImgPaths($alias, $num, $fname, $rate = 800, $sub, $ext, $isOnly) {
+   protected function createImgPaths($alias, $fname, $rate = 800, $ext, $isOnly) {
       $ext = $ext ?: 'jpg';
       $p['filename'] = $rate ? "{$fname}-{$rate}.{$ext}" : "{$fname}.{$ext}";
       $p['group'] = $_SERVER['DOCUMENT_ROOT'] . "/pic/{$alias}/";
@@ -33,10 +32,10 @@ class Product extends Model {
       $fname = substr($file['name'], 0, strlen($file['name']) - 4);
       foreach ($sizes as $size) {
          if (!$size) {
-            $ps = $this->createImgPaths($alias, null, $fname, null, $sub, null, $isOnly);
+            $ps = $this->createImgPaths($alias, $fname, null, null, $isOnly);
             move_uploaded_file($file['tmp_name'], $ps['to']);
          } else {
-            $pX = $this->createImgPaths($alias, $ps['num'], $fname, $size, $sub, $toExt, $isOnly);
+            $pX = $this->createImgPaths($alias, $fname, $size, $toExt, $isOnly);
             $new_image = new picture($ps['to']);
             $new_image->autoimageresize($size, $size);
             $new_image->imagesave($toExt, $pX['to'], $quality, 0777);

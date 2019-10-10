@@ -32,8 +32,8 @@ class AdminscController extends AppController {
       $this->auth();
       $this->layout = 'admin';
 
-      View::setJsCss(['js' => '/public/js/admin.js']);
-      View::setJsCss(['css' => '/public/css/admin.css']);
+      View::setJs(['js' => '/public/js/admin.js']);
+      View::setCss(['css' => '/public/css/admin.css']);
    }
 
    public function actionClearCache() {

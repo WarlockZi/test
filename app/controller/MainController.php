@@ -10,6 +10,20 @@ use app\core\App;
 class MainController Extends AppController {
 
    public function __construct($route) {
+      
+      if ($this->isAjax()) {
+         if (isset($_POST['param'])) {
+            $arr = json_decode($_POST['param'], true);
+            if (!isset($arr['token']) || !$arr['token'] == $_SESSION['token']) {
+               exit(FALSE);
+            }
+            $func = $arr['action'];
+            $model = $arr['model'] ?: 'adminsc';
+            if (App::$app->{$model}->$func($arr)) {
+               exit('true');
+            }
+         }
+      }
       parent::__construct($route);
 
       $list = App::$app->cache->get('list');
@@ -26,35 +40,30 @@ class MainController Extends AppController {
 
       $this->layout = 'vitex';
 
-      View::setJsCss([
-          'js' => $this->route,
+      View::setJs([
+          'controller' => $this->route['controller'],
           'view' => $this->view,
-          'defer' => true
+          'defer'
       ]);
 
-      View::setJsCss(['css' => '/public/css/vitex.css']);
-      View::setJsCss(['css' => $this->route, 'view' => $this->view]);
+      View::setCss(['css' => '/public/css/vitex.css']);
+      View::setCss(['controller' => $this->route['controller'], 'view' => $this->view]);
       if ($this->route['action'] !== 'index') {
-         View::setJsCss(['css' => '/public/css/about.css']);
+         View::setCss(['css' => '/public/css/about.css']);
       }
       $this->set(compact('sale', 'list'));
    }
 
    public function actionIndex() {
-      // этот кусок вместо стандартной $this->auth()
       if (isset($_SESSION['id'])) {
-         // Проверяем существует ли пользователь и подтвердил ли регистрацию
          $user = App::$app->user->getUser($_SESSION['id']);
          if ($user === false) {
-            // Если пароль или почта неправильные - показываем ошибку
             $errors[] = 'Неправильные данные для входа на сайт';
          } elseif ($user === NULL) {
-            // Пароль почта в порядке, но нет подтверждения
             $errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
          } else {
             View::setJs([
                 'js' => '/public/js/slick-1.8.1/slick/slick.min.js',
-//                'defer'=>true
             ]);
             $this->set(compact('user'));
          }

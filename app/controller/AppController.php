@@ -10,15 +10,15 @@ use app\core\App;
 class AppController extends Controller {
 
    public function __construct($route) {
+
       parent::__construct($route);
-      $this->layout = 'flex-layout';
+      $this->layout = 'vitex';
       View::setJs([
           'js' => '/public/js/jq.js',
-//          'defer' => true,
-          'nocache' => true]);
+          ]);
       View::setJs([
           'js' => '/public/js/auto.js',
-//          'defer' => true
+          'addtime'
           ]);
 
    }

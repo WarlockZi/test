@@ -10,8 +10,24 @@ use app\core\App;
 class UserController extends AppController {
 
    public function __construct($route) {
+      if ($this->isAjax()) {
+         if (isset($_POST['param'])) {
+            $arr = json_decode($_POST['param'], true);
+            if (!isset($arr['token']) || !$arr['token'] == $_SESSION['token']) {
+               exit(FALSE);
+            }
+            $func = $arr['action'];
+            $model = $arr['model'] ?: 'adminsc';
+            if (App::$app->{$model}->$func($arr)) {
+               exit('true');
+            }
+         }
+      }
       parent::__construct($route);
-      View::setJsCss(['css' => '/public/css/style.css']);
+      View::setCss([
+          'css' => '/public/css/vitex.css',
+          'addtime'
+      ]);
    }
 
    public function actionContacts() {
@@ -29,16 +45,8 @@ class UserController extends AppController {
    public function actionLogin() {
 
       if ($this->isAjax()) {
-
-         if (isset($_POST['token']) && !($_SESSION['token'] === $_POST['token'])) {
-            $msg[] = "Обновите страницу";
-            echo include APP . '/view/User/alert.php';
-            exit('Обновите страницу');
-         }
-
          $email = $_POST['email'];
          $password = $_POST['password'];
-
          if (!App::$app->user->checkEmail($email)) {
             $msg[] = "Неверный формат email";
             exit(include APP . '/view/User/alert.php');
@@ -47,21 +55,17 @@ class UserController extends AppController {
             $msg[] = "Пароль не должен быть короче 6-ти символов";
             exit(include APP . '/view/User/alert.php');
          }
-         // Проверяем существует ли пользователь и подтвердил ли регистрацию
          $user = App::$app->user->getUserByEmail($email, $password);
-         // Почта с паролем существуют, но нет подтверждения
-         if ($user === false) {
+         if ($user === false) { // Почта с паролем существуют, но нет подтверждения
             // Нет пользователя с таким паролем
             $msg[] = "Пользователь с 'e-mail' : $email не зарегистрирован";
             $msg[] = "Перейдите по <a href = 'https://vitexopt.ru" . PROJ . "/user/register'>ССЫЛКЕ</a> чтобы зарегистрироваться.";
             exit(include APP . '/view/User/alert.php');
-         } elseif ($user === NULL) {
-            // Пароль, почта в порядке, но нет подтверждения
+         } elseif ($user === NULL) {// Пароль, почта в порядке, но нет подтверждения
             $msg[] = 'Зайдите на <a href ="https://mail.vitexopt.ru/webmail/login/">РАБОЧУЮ ПОЧТУ</a>, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
             echo include APP . '/view/User/alert.php';
             exit();
-         } else {
-            // Если данные правильные, запоминаем пользователя (в сессию)
+         } else {// Если данные правильные, запоминаем пользователя (в сессию)
             $user['rights'] = explode(",", $user['rights']);
             App::$app->user->setAuth($user);
             exit('true');
@@ -70,7 +74,11 @@ class UserController extends AppController {
       if (isset($_SESSION['id'])) {
          $user = App::$app->user->getUser($_SESSION['id']);
       }
-      View::setJsCss(['js' => $this->route, 'view' => $this->view]);
+      View::setJs([
+          'controller' => $this->route['controller'],
+          'view' => $this->view,
+          'addtime'
+      ]);
       $token = $this->token;
       $this->set(compact('user', 'token'));
    }
@@ -78,12 +86,6 @@ class UserController extends AppController {
    public function actionRegister() {
 
       if ($this->isAjax()) {
-
-         if (isset($_POST['token'])) {
-            if ($_SESSION['token'] !== $_POST['token']) {
-               exit('Обновите страницу');
-            }
-         }
 
          $email = App::$app->user->clean_data($_POST['email']); //$post['reg_email'];//
          $password = App::$app->user->clean_data($_POST['password']);

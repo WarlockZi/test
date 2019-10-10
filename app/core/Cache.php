@@ -19,7 +19,7 @@ class Cache {
 
    public function get($key) {
       $file = $_SERVER['DOCUMENT_ROOT'].'/tmp/cache/' . md5($key) . '.txt';
-      if (file_exists($file)) {
+      if (is_readable($file)) {
          $content = unserialize(file_get_contents($file));
          if (time() <= $content['end_time']) {
             return $content['data'];

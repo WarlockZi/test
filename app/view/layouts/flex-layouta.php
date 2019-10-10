@@ -12,18 +12,14 @@
     <meta name="theme-color" content="#ff2929"/>
   </head>
 
-
   <body>
     <div class="wrap">
 
       <header>
 
-
         <div class="top-strip">
           <div>
-
             +7 921 715 24 64 </div>
-
 
           <div class="user-menu">
 
@@ -119,7 +115,7 @@
             <use width="100%" height="100%" fill="#ff2929" xlink:href="#b22YyPyZK"/>
             </g>
             </svg>
-            <span class="logo-desc">Спецодежда, спецобувь, средства<br> индивидуальной защиты СИЗ оптом</span>
+            <span class="logo-desc">Cредства<br> индивидуальной защиты оптом</span>
           </a>
 
 
@@ -140,9 +136,7 @@
       <p>Created by VORONIKLAB</p>
     </footer>
 
-    <!--<script src="/public/js/jq.js"></script>-->
     <? $this::getJS(); ?>
-
 
   </body>
 </html>
