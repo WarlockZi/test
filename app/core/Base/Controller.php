@@ -35,6 +35,9 @@ abstract class Controller {
 
    public function isAjax() {
 
+//      $ddd = $_POST;
+      $dd = json_decode($_POST);
+//      $d = json_last_error();
       if (isset($_POST['token'])) {
          if ($_SESSION['token'] !== $_POST['token']) {
             exit('Обновите страницу');

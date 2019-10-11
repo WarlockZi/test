@@ -75,9 +75,10 @@ class View {
    public static function setCss($data) {
       extract(self::getJsCssProps($data, 'css'));
       if (isset($data['controller']) && isset($data['view'])) {
-         $file = ROOT . "/public/jscss/" . $data['controller'] . '/' . $data['view'] . '.css';
+         $css = "/public/jscss/" . $data['controller'] . '/' . $data['view'] . '.css';
+         $file = ROOT . $css;
          if (is_readable($file)) {
-            self::$jsCss['css'][] = "<link href='{$data['css']}{$addtime}' type='text/css' rel='stylesheet'>";
+            self::$jsCss['css'][] = "<link href='{$css}{$addtime}' type='text/css' rel='stylesheet'>";
          }
       } else {
          self::$jsCss['css'][] = "<link href='{$data['css']}{$addtime}' type='text/css' rel='stylesheet'>";

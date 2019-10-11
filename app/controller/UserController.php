@@ -132,7 +132,7 @@ class UserController extends AppController {
       }
       View::setMeta('Регистрация', 'Регистрация', 'Регистрация');
       $token = $this->token;
-      View::setJsCss(['css' => $this->route, 'view' => $this->view]);
+      View::setCss(['css' => $this->route['controller'], 'view' => $this->view, 'addtime']);
       $this->set(compact('token'));
    }
 

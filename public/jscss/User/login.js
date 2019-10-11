@@ -3,22 +3,28 @@ window.onload = function () {
 
 
 ///////////////////////////    Login     /////////////////////
-   var loginButton = document.querySelector("#login"); //превряем есть ли на стр логин
-   if (loginButton) {
-      loginButton.addEventListener("click", async function (e) {
+//   var loginButton = ; //превряем есть ли на стр логин
+//   if (loginButton) {
+      document.querySelector("#login").addEventListener("click", async function (e) {
          e.preventDefault();
-         obj = {};
-         var email = $('input[type = email]').val(),
-         password = $('input[type= password]').val(),
-         token = document.querySelector("[name = 'token']").value;
-         obj.email = email;         
-//         formData = new FormData(),
-//         xhr = new XMLHttpRequest();
-//         formData.append('email', email);
-//         formData.append('password', password);
-//         formData.append('token', token);
+         var obj = {};
+         obj.email = $('input[type = email]').val();
+         obj.pass = $('input[type= password]').val();
+         obj.token = document.querySelector("[name = 'token']").value;
+         var body = JSON.stringify(obj);
+//         var body = ''+obj;
          debugger;
-         var res = await fetch('/user/login', obj);
+//         formData = new FormData(),
+
+//         var res = await fetch('/user/login', obj);
+         var res = await fetch('/user/login', {
+            method: 'POST',
+            body: body,
+            headers: new Headers({
+               'Content-Type': 'application/x-www-form-urlencoded'
+            }),
+            credentials: "same-origin"
+         });
          debugger;
 
 //         xhr.open('POST', '/user/login', true);
@@ -46,6 +52,6 @@ window.onload = function () {
 //            };
 //         };
       });
-   }
+//   }
    ;
 };

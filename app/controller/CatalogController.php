@@ -11,10 +11,10 @@ class CatalogController extends AppController {
    public function __construct($route) {
       parent::__construct($route);
       $this->layout = 'vitex';
-//      $css = 'vitex.css';
       $list = App::$app->category->getInitCategories();
       $this->set(compact('list'));
-      View::setJsCss(['css' => '/public/css/vitex.css']);
+      View::setCss(['css' => '/public/css/vitex.css', 'addtime']);
+
    }
 
    public function actionIndex() {
@@ -41,15 +41,10 @@ class CatalogController extends AppController {
       $this->set(compact('canonical', 'breadcrumbs', 'user', 'product', 'tov', 'categories'));
 
       $this->view = 'product';
-      View::setJsCss(['css' => $this->route, 'view' => $this->view]);
+      View::setCss(['css' => $this->route['controller'], 'view' => $this->view, 'addtime']);
    }
 
    public function actionCategory($category) {
-
-
-//      http_response_code(404);
-//
-//      include '../public/404.html'; // '404.html';
 
       if (isset($_SESSION['id']) && $_SESSION['id']) {
          $user = App::$app->user->getUser($_SESSION['id']);
@@ -59,7 +54,8 @@ class CatalogController extends AppController {
       $canonical = $category['alias'];
       View::setMeta($category['title'], $category['keywords'], $category['description']);
       $this->set(compact('user', 'breadcrumbs', 'category', 'canonical'));
-      View::setJsCss(['css' => $this->route, 'view' => $this->view]);
+//      $this->view = 'category';
+      View::setCss(['controller' => $this->route['controller'], 'view' => $this->view, 'addtime']);
    }
 
 }

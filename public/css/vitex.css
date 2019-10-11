@@ -140,7 +140,7 @@ nav#menu{
 #toggle-button:checked ~#menu .menu-wrap .item
 {
 	padding:  10px 0;
-	    position: relative;
+	position: relative;
 }
 
 .transition {
@@ -719,7 +719,7 @@ header {
 	padding: 0;
 }
 .map{
-/*    position: absolute;*/
+	/*    position: absolute;*/
     width: 100%;
     margin-top: 60px;
 }
@@ -922,6 +922,7 @@ header {
 
 .wrap {
     flex: 1 0 auto;
+	min-height: 100vh;
 }
 .top-menu{
     height: 25px;
@@ -945,13 +946,9 @@ header {
     margin: auto;
 }
 
-.top-menu .row .row
-{
-	/*    align-items: center;
-		flex: 1;
-		justify-content: flex-end;*/
-}
 footer {
+	margin-top: -94px;
+    max-height: 94px;
     justify-content: space-between;
     background-image: url(/pic/header-big.png);
 }
@@ -1018,6 +1015,7 @@ footer a
 .user-menu>.row{
 	height: 100%;
 	flex-basis: 280px;
+	justify-content: flex-end;
 }
 .user-menu>span.row>a{
     color: #fff;
@@ -1055,7 +1053,7 @@ footer a
 .FIO{
 	display: flex;
     align-items: center;
-	    padding-right: 10px;
+	padding-right: 10px;
 }
 /*.user-menu>span:after
 {
