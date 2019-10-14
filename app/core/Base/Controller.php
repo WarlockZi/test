@@ -36,13 +36,17 @@ abstract class Controller {
    public function isAjax() {
 
 //      $ddd = $_POST;
-      $dd = json_decode($_POST);
 //      $d = json_last_error();
+//         $dd = json_decode($_POST);
+      $data_json = json_decode($_POST['param'], JSON_UNESCAPED_UNICODE);
+//      $data = stream_get_contents($_POST);
+//      echo $data_json;
       if (isset($_POST['token'])) {
          if ($_SESSION['token'] !== $_POST['token']) {
             exit('Обновите страницу');
          }
       }
+//      exit($_POST);
       return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest' || isset($_POST['ajax']) && ($_POST['ajax'] == 'true');
    }
 
