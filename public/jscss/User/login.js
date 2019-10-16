@@ -16,8 +16,24 @@ window.onload = function () {
 //      var formData = new FormData();
 //      formData.append('email',obj.email);
 //         var res = await fetch('/user/login', obj);
-      let response = await post('/user/login',body);
 
+      let response = await fetch('/user/login',{
+         body:body,
+         method:'POST',
+         headers:{
+            "Content-Type": "application/x-www-form-urlencoded, application/json",
+//            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest"
+            
+         }
+      });
+      
+//      let response = await post('/user/login', 'dd');
+//      
+//      
+//      req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+//      req.setRequestHeader('Content-Type', 'application/json');
+//      req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
       debugger;
 
 //         xhr.open('POST', '/user/login', true);
