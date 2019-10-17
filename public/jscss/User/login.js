@@ -7,18 +7,20 @@ window.onload = function () {
 //   if (loginButton) {
    document.querySelector("#login").addEventListener("click", async function (e) {
       e.preventDefault();
-      var obj = {};
-      obj.email = $('input[type = email]').val();
-      obj.pass = $('input[type= password]').val();
-      obj.token = document.querySelector("[name = 'token']").value;
-      var body = JSON.stringify(obj);
+      var obj = {},
+      email = $('input[type = email]').val(),
+      pass = $('input[type= password]').val(),
+      token = document.querySelector("[name = 'token']").value;
+      var body = JSON.stringify({email:email,pass:pass,token:token});
       debugger;
-//      var formData = new FormData();
-//      formData.append('email',obj.email);
+      var formData = new FormData();
+      formData.append('email',email);
+      formData.append('pass',pass);
+      formData.append('token',token);
 //         var res = await fetch('/user/login', obj);
 
       let response = await fetch('/user/login',{
-         body:body,
+         body:formData,
          method:'POST',
          headers:{
             "Content-Type": "application/x-www-form-urlencoded, application/json",
