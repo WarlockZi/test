@@ -27,6 +27,8 @@ window.onload = function () {
             
          }
       });
+      debugger;
+      let text = await response.json();
       
 //      let response = await post('/user/login', 'dd');
 //      
@@ -34,7 +36,6 @@ window.onload = function () {
 //      req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 //      req.setRequestHeader('Content-Type', 'application/json');
 //      req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-      debugger;
 
 //         xhr.open('POST', '/user/login', true);
 //         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
