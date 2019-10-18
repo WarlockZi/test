@@ -10,19 +10,19 @@ use app\core\App;
 class UserController extends AppController {
 
    public function __construct($route) {
-      if ($this->isAjax()) {
-         if (isset($_POST['param'])) {
-            $arr = json_decode($_POST['param'], true);
-            if (!isset($arr['token']) || !$arr['token'] == $_SESSION['token']) {
-               exit(FALSE);
-            }
-            $func = $arr['action'];
-            $model = $arr['model'] ?: 'adminsc';
-            if (App::$app->{$model}->$func($arr)) {
-               exit('true');
-            }
-         }
-      }
+//      if ($this->isAjax()) {
+//         if (isset($_POST['param'])) {
+//            $arr = json_decode($_POST['param'], true);
+//            if (!isset($arr['token']) || !$arr['token'] == $_SESSION['token']) {
+//               exit(FALSE);
+//            }
+//            $func = $arr['action'];
+//            $model = $arr['model'] ?: 'adminsc';
+//            if (App::$app->{$model}->$func($arr)) {
+//               exit('true');
+//            }
+//         }
+//      }
       parent::__construct($route);
       View::setCss([
           'css' => '/public/css/vitex.css',

@@ -7,31 +7,46 @@ window.onload = function () {
 //   if (loginButton) {
    document.querySelector("#login").addEventListener("click", async function (e) {
       e.preventDefault();
-      var obj = {},
-      email = $('input[type = email]').val(),
-      pass = $('input[type= password]').val(),
-      token = document.querySelector("[name = 'token']").value;
-      var body = JSON.stringify({email:email,pass:pass,token:token});
+      var obj = {};
+      obj.email = $('input[type = email]').val(),
+      obj.pass = $('input[type= password]').val(),
+      obj.token = document.querySelector("[name = 'token']").value;
       debugger;
-      var formData = new FormData();
-      formData.append('email',email);
-      formData.append('pass',pass);
-      formData.append('token',token);
-//         var res = await fetch('/user/login', obj);
+//      let response = await fetch('/user/login', {
+//         body: 'param=' + JSON.stringify(obj),
+//         method: 'POST',
+//         headers: {
+//            "Content-Type": "application/x-www-form-urlencoded",
+////            "Content-Type": "application/json;charset=utf-8",
+//            "X-Requested-With": "XMLHttpRequest"
+//         }})
+//      .catch(function (error) {
+//         console.log('Request failed', error);
+//      });
 
-      let response = await fetch('/user/login',{
-         body:formData,
-         method:'POST',
-         headers:{
-            "Content-Type": "application/x-www-form-urlencoded, application/json",
-//            "Content-Type": "application/json",
-            "X-Requested-With": "XMLHttpRequest"
-            
-         }
-      });
+      var b = {
+         login: 'andrey',
+         password: 'dh7dhhd27dh',
+         cache: '7fc4y7fby4c378cfy4bc4g8y4f'};
+
+      let response = await fetch('/user/login', {
+
+         method: 'POST',
+         body: new URLSearchParams(JSON.stringify(b))
+         ,
+         headers: new Headers({
+            'Content-Type': 'application/json'
+         }),
+         credentials: 'include',
+         referrer: 'http://site1.com/login'})
+      .catch(function (error) {
+         console.log('Request failed', error);
+      })
+//      });
+
       debugger;
       let text = await response.json();
-      
+
 //      let response = await post('/user/login', 'dd');
 //      
 //      

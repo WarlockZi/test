@@ -35,17 +35,11 @@ abstract class Controller {
 
    public function isAjax() {
 
-//      $ddd = $_POST;
-//      $d = json_last_error();
-//         $dd = json_decode($_POST);
-//      $data = stream_get_contents($_POST);
-//      echo $data_json;
       if (isset($_POST) && $_POST) {
-         $df = $_POST;
-         $dfs = json_decode($_POST);
-         $data_json = json_decode($_POST[0], true);
-         if (isset($_POST['token'])) {
-            if ($_SESSION['token'] !== $_POST['token']) {
+         $data_json = json_decode($_POST['param'], true);
+         $data = json_decode($_POST, true);
+         if (isset($data_json['token'])) {
+            if ($_SESSION['token'] !== $data_json['token']) {
                exit('Обновите страницу');
             }
          }
