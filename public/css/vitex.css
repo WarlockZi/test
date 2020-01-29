@@ -1,4 +1,4 @@
-@charset 'UTF-8';
+@charset "UTF-8";
 /* Slider */
 .slick-loading .slick-list
 {
@@ -12,12 +12,13 @@
     font-weight: normal;
     font-style: normal;
 
-    src: url('../..//public/js/slick-1.8.1/slick/fonts/slick.eot');
-    src: url('../..//public/js/slick-1.8.1/slick/fonts/slick.eot?#iefix') format('embedded-opentype'), url('../..//public/js/slick-1.8.1/slick/fonts/slick.woff') format('woff'), url('../..//public/js/slick-1.8.1/slick/fonts/slick.ttf') format('truetype'), url('../..//public/js/slick-1.8.1/slick/fonts/slick.svg#slick') format('svg');
+    src: url('../../public/js/slick-1.8.1/slick/fonts/slick.eot');
+    src: url('../../public/js/slick-1.8.1/slick/fonts/slick.eot?#iefix') format('embedded-opentype'), url('../../public/js/slick-1.8.1/slick/fonts/slick.woff') format('woff'), url('../../public/js/slick-1.8.1/slick/fonts/slick.ttf') format('truetype'), url('../../public/js/slick-1.8.1/slick/fonts/slick.svg#slick') format('svg');
 }
 
 @font-face {
     font-family: 'Intro';
+    font-display: swap;
     src: url('/public/css/fonts/intro.eot'); /* IE 9 Compatibility Mode */
     src: url('/public/css/fonts/intro.eot?#iefix') format('embedded-opentype'), /* IE < 9 */
         url('/public/css/fonts/intro.woff2') format('woff2'), /* Super Modern Browsers */
@@ -894,7 +895,7 @@ header {
 {
     padding: 30px 25px 15px 25px;
     height: auto;
-    max-height: auto;
+    max-height: fit-content;
     background-color: white;
     position: absolute;
     top: 100%;
@@ -1128,7 +1129,7 @@ footer a
 .user-menu a{
     color:#8d8d8d;
 }
-.user-menu>span:hover {
+.user-menu>span .icon:hover {
     background: #626262;
 }
 
@@ -1136,6 +1137,7 @@ footer a
 	display: flex;
     align-items: center;
 	padding-right: 10px;
+    font-size: 12px;
 }
 /*.user-menu>span:after
 {

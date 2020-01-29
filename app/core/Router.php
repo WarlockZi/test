@@ -88,7 +88,7 @@ class Router {
             } else {
                 echo "<br>Класс <b>$controller</b> не найден";
             }
-            exit;
+            //exit;
 //         session_destroy();
         } else {
             http_response_code(404);

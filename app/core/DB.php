@@ -6,8 +6,8 @@ class DB {
 
     public $pdo;
     protected static $instance;
-    protected static $countSql;
-    protected static $queries = [];
+//    protected static $countSql;
+//    protected static $queries = [];
 
     public function __construct() {
 

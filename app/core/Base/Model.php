@@ -175,33 +175,7 @@ abstract class Model {
       return $this->insertBySql($sql, $param);
    }
 
-   public function update($arr) {
-      $table = $arr['table'];
-      $pkey = $arr['pkey'];
-      $pkeyVal = $arr['pkeyVal'];
-      $vals = $arr['values'];
-      $valsCount = count($vals);
-      $str = '';
-      $param = [];
-      $k = 1;
-      foreach ($vals as $i => $val) {
-         if ($k < $valsCount) {
-            $str .= "`$i`" . '= ?, ';
-            $k++;
-         } else {
-            $str .= "`$i`" . '= ?';
-         }
-         array_push($param, $val);
-      }
-      $sql = "UPDATE `{$table}` SET {$str} WHERE `{$pkey}` = ?";
-      array_push($param, $pkeyVal);
-      if ($this->insertBySql($sql, $param)) {
-         return true;
-      }
-      return 'Видимо, ошибка в запросе!';
-   }
-
-   public function delete($arr) {
+    public function delete($arr) {
       $token = $arr['token'];
       if (isset($token) && $token === $_SESSION['token']) {
          $table = $arr['table'];
@@ -213,5 +187,38 @@ abstract class Model {
       }
       exit('Неправильный ключ !');
    }
+
+    /**
+     * @param $arr[table]
+     * @param $arr[pkey]
+     * @param $arr[pkeyVal]
+     * @param $arr[values]
+     * @return bool|string
+     */
+    public function update($arr) {
+        $table = $arr['table'];
+        $pkey = $arr['pkey'];
+        $pkeyVal = $arr['pkeyVal'];
+        $vals = $arr['values'];
+        $valsCount = count($vals);
+        $str = '';
+        $param = [];
+        $k = 1;
+        foreach ($vals as $i => $val) {
+            if ($k < $valsCount) {
+                $str .= "`$i`" . '= ?, ';
+                $k++;
+            } else {
+                $str .= "`$i`" . '= ?';
+            }
+            array_push($param, $val);
+        }
+        $sql = "UPDATE `{$table}` SET {$str} WHERE `{$pkey}` = ?";
+        array_push($param, $pkeyVal);
+        if ($this->insertBySql($sql, $param)) {
+            return true;
+        }
+        return 'Видимо, ошибка в запросе!';
+    }
 
 }

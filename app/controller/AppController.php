@@ -9,17 +9,18 @@ use app\core\App;
 
 class AppController extends Controller {
 
-   public function __construct($route) {
+   public function __construct(array $route) {
 
       parent::__construct($route);
       $this->layout = 'vitex';
-      View::setJs([
-          'js' => '/public/js/jq.js',
-          ]);
-      View::setJs([
-          'js' => '/public/js/auto.js',
-          'addtime'
-          ]);
+//      View::setJs([
+//          'js' => '/public/js/jq.js',
+//          ]);
+
+//      View::setJs([
+//          'js' => '/public/js/auto.js',
+//          'addtime'
+//          ]);
 
    }
 

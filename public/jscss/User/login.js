@@ -32,13 +32,12 @@ window.onload = function () {
       let response = await fetch('/user/login', {
 
          method: 'POST',
-         body: new URLSearchParams(JSON.stringify(b))
-         ,
+         body: JSON.stringify(obj),
          headers: new Headers({
             'Content-Type': 'application/json'
          }),
-         credentials: 'include',
-         referrer: 'http://site1.com/login'})
+
+      })
       .catch(function (error) {
          console.log('Request failed', error);
       })

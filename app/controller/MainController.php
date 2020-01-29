@@ -10,7 +10,7 @@ use app\core\App;
 class MainController Extends AppController {
 
    public function __construct($route) {
-      
+
       if ($this->isAjax()) {
          if (isset($_POST['param'])) {
             $arr = json_decode($_POST['param'], true);

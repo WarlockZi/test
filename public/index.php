@@ -1,7 +1,6 @@
 <?
 
 use app\core\Router;
-use app\model\User;
 use app\core\App;
 
 session_start();
@@ -27,15 +26,16 @@ define('CACHE', ROOT . PROJ . '/tmp/cache');
 define('CONFIG', APP . '/config.php');
 
 
-spl_autoload_register(function ($class) {
-   $file = $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', '/', $class) . '.php';
-   if (is_readable($file)) {
-      require_once $file;
-   }
-});
-
+function vitexAutoload($class) {
+    $file = ROOT. DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+    if (is_readable($file)) {
+        $d = require_once $file;
+    }
+}
+spl_autoload_register('vitexAutoload');
 new App;
 
+//exit(var_dump($_SERVER['QUERY_STRING']));
 $url = $_SERVER['QUERY_STRING'];
 
 Router::add('^.?search.?', ['controller' => 'search', 'action' => 'index']); // fw/ -> main/index

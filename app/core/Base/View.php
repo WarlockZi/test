@@ -8,7 +8,7 @@ class View {
    public $layout;
    public $view;
    public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
-   public static $jsCss = ['js' => '', 'css' => ''];
+   public static $jsCss = ['js' => [], 'css' => []];
 
    function __construct($route, $layout = '', $view = '') {
 

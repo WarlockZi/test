@@ -12,3 +12,17 @@
 	</div>
 	<div class="messageClose">Закрыть</div>
 </div>
+
+<script>
+         var overlay = document.querySelector(".overlay"),
+         box = document.querySelector(".messageBox"),
+         clos = document.querySelector(".messageClose");
+         overlay.addEventListener("click", function () {
+            overlay.style.display = 'none';
+            box.style.display = 'none';
+         });
+         clos.addEventListener("click", function () {
+            overlay.style.display = 'none';
+            box.style.display = 'none';
+         });
+</script>
