@@ -1,3 +1,9 @@
+/*!********************************************!*\
+  !*** ./node_modules/jquery/dist/jquery.js ***!
+  \********************************************/
+
+/*! no static exports found */
+
 /*!
  * jQuery JavaScript Library v3.4.1
  * https://jquery.com/
@@ -22,3 +28,19 @@
  *
  * Date: 2019-04-08
  */
+
+/*!***********************!*\
+  !*** ./src/common.js ***!
+  \***********************/
+
+/*! exports provided: post, get, uniq */
+
+/*!********************************!*\
+  !*** ./src/user/user-login.js ***!
+  \********************************/
+
+/*! no exports provided */
+
+/*! jquery */
+
+/*! ../common */

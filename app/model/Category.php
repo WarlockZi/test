@@ -43,7 +43,7 @@ class Category extends Model {
       }
    }
 
-   protected function categoriesTree($cat) {
+   public function categoriesTree($cat) {
 
       $tree = [];
       $data = $cat;
@@ -155,9 +155,16 @@ class Category extends Model {
       return $category;
    }
 
-   public function getInitCategories() {
+   public function getInitCategories($fromCache=0) {
+   	if ($fromCache){
+			$list = App::$app->cache->get('list');
+			if (!$list) {
+				$list = $this->getInitCategories();
+				App::$app->cache->set('list', $list, 30);
+			}
+		}
 
-      $sql = 'SELECT * FROM category WHERE parent = 0';
+      $sql = 'SELECT * FROM category WHERE parent = 0 AND act = 1';
       $arr = $this->findBySql($sql);
       return $arr;
    }

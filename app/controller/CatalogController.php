@@ -10,9 +10,9 @@ class CatalogController extends AppController {
 
    public function __construct($route) {
       parent::__construct($route);
-      $this->layout = 'vitex';
-      $list = App::$app->category->getInitCategories();
-      $this->set(compact('list'));
+//      $this->layout = 'vitex';
+//      $list = App::$app->category->getInitCategories();
+//      $this->set(compact('list'));
       View::setCss(['css' => '/public/css/vitex.css', 'addtime']);
 
    }
@@ -48,12 +48,13 @@ class CatalogController extends AppController {
 
       if (isset($_SESSION['id']) && $_SESSION['id']) {
          $user = App::$app->user->getUser($_SESSION['id']);
+			$this->set(compact('user'));
       }
 
       $breadcrumbs = App::$app->product->getBreadcrumbs($category, $category['parents'], 'category');
       $canonical = $category['alias'];
       View::setMeta($category['title'], $category['keywords'], $category['description']);
-      $this->set(compact('user', 'breadcrumbs', 'category', 'canonical'));
+      $this->set(compact( 'breadcrumbs', 'category', 'canonical'));
 //      $this->view = 'category';
       View::setCss(['controller' => $this->route['controller'], 'view' => $this->view, 'addtime']);
    }

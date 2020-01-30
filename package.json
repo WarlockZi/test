@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack --mode development",
     "build": "webpack --mode production",
+    "dev": "webpack --mode development",
     "watch": "webpack --mode development --watch -d",
     "start": "webpack-dev-server --mode development --open"
   },
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "jquery": "^3.4.1",
+    "slick-carousel": "^1.8.1",
     "terser-webpack-plugin": "^2.3.2",
     "uglifyjs-webpack-plugin": "^2.2.0"
   }

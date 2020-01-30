@@ -26,11 +26,11 @@ class MainController Extends AppController {
       }
       parent::__construct($route);
 
-      $list = App::$app->cache->get('list');
-      if (!$list) {
-         $list = App::$app->category->getInitCategories();
-         App::$app->cache->set('list', $list, 30);
-      }
+//      $list = App::$app->cache->get('list');
+//      if (!$list) {
+//         $list = App::$app->category->getInitCategories(1);
+//         App::$app->cache->set('list', $list, 30);
+//      }
 
       $sale = App::$app->cache->get('sale');
       if (!$sale) {
@@ -40,17 +40,18 @@ class MainController Extends AppController {
 
       $this->layout = 'vitex';
 
-      View::setJs([
-          'controller' => $this->route['controller'],
-          'view' => $this->view,
-          'defer'
-      ]);
+//      View::setJs([
+//          'controller' => $this->route['controller'],
+//          'view' => $this->view,
+//          'defer'
+//      ]);
 
       View::setCss(['css' => '/public/css/vitex.css']);
       View::setCss(['controller' => $this->route['controller'], 'view' => $this->view]);
       if ($this->route['action'] !== 'index') {
          View::setCss(['css' => '/public/css/about.css']);
       }
+      $list = $this->list;
       $this->set(compact('sale', 'list'));
    }
 
@@ -62,9 +63,9 @@ class MainController Extends AppController {
          } elseif ($user === NULL) {
             $errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
          } else {
-            View::setJs([
-                'js' => '/public/js/slick-1.8.1/slick/slick.min.js',
-            ]);
+//            View::setJs([
+//                'js' => '/public/js/slick-1.8.1/slick/slick.min.js',
+//            ]);
             $this->set(compact('user'));
          }
          return TRUE;

@@ -46,8 +46,6 @@ class UserController extends AppController
     public function actionCabinet()
     {
         $this->auth(); // Авторизация
-        // Проверяем существует ли пользователь и подтвердил ли регистрацию
-        $user = App::$app->user->getUser($_SESSION['id']);
 
         if ($this->vars['user'] === false) {
             // Если пароль или почна неправильные - показываем ошибку
@@ -56,12 +54,11 @@ class UserController extends AppController
             // Пароль почта в порядке, но нет подтверждения
             $errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
         } else {
-            View::setMeta('Спецодежда оптом с доставкой', 'Доставим спецодежду в любую точку России', 'Спецодежда, доставка, производство, по России');
+            View::setMeta('Личный кабинет', 'Личный кабинет', '');
         }
     }
     public function actionLogin()
     {
-
         if ($data = $this->isAjax()) {
             $email = (string)$data['email'];
             $password = (int)$data['pass'];
@@ -96,11 +93,7 @@ class UserController extends AppController
             $user = App::$app->user->getUser($_SESSION['id']);
             $this->set(compact('user'));
         }
-//        View::setJs([
-//            'controller' => $this->route['controller'],
-//            'view' => $this->view,
-//            'addtime'
-//        ]);
+//        View::setJs(['controller' => $this->route['controller'],'view' => $this->view,'addtime']);
 
     }
 

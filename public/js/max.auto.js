@@ -1570,7 +1570,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 			}
 
 			match = this._filterMenuItems( character );
-			match = skip && match.index( this.active.next() ) !== -1 ?
+			match = skip && match.main( this.active.next() ) !== -1 ?
 				this.active.nextAll( ".ui-menu-item" ) :
 				match;
 

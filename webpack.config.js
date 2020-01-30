@@ -10,10 +10,12 @@ const PATHS = {
 module.exports = {
     mode: 'development',
     devtool: "source-map",
+    watch: true, //live-reloading
     entry: {
         cabinet: PATHS.source + '/user/cabinet.js',
-        login: PATHS.source + '/user/user.login.js',
-        admin: PATHS.source + '/admin/admin.crm.user.js',
+        login: PATHS.source + '/user/user-login.js',
+        admin: PATHS.source + '/admin/admin-crm-user.js',
+        mainIndex: PATHS.source + '/main/main-index.js',
     },
     output: {
         chunkFilename: '[name].bundle.js',
@@ -33,7 +35,11 @@ module.exports = {
     plugins: [
         new webpack.ProvidePlugin({
             $: 'jquery',
-            jQuery: 'jquery'
+            jQuery: 'jquery',
+            "window.jQuery": "jquery"
+        }),
+        new webpack.ProvidePlugin({
+            slick:'slick-carousel'
         }),
         new CleanWebpackPlugin(),
     ]

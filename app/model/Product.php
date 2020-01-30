@@ -2,7 +2,6 @@
 
 namespace app\model;
 
-use app\model\Test;
 use app\core\Base\Model;
 use app\core\App;
 
