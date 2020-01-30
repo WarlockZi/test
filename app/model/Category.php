@@ -25,9 +25,10 @@ class Category extends Model {
       }
    }
 
-   public function getAssocCategory() {
+   public function getAssocCategory($options) {
 
-      $sql = 'SELECT * FROM category';
+   	$onlyActive = $options['active']?' AND act = 1':'';
+      $sql = 'SELECT * FROM category'.$onlyActive;
       $res = App::$app->category->findBySql($sql, $params = array());
 
       if ($res !== FALSE) {

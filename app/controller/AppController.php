@@ -14,7 +14,7 @@ class AppController extends Controller
 		parent::__construct($route);
 		$this->layout = 'vitex';
 		if (strpos(strtolower($route['controller']), 'adminsc') === false) {
-			$list = App::$app->category->getAssocCategory();
+			$list = App::$app->category->getAssocCategory(['active'=>'true']);
 			$this->list = App::$app->category->categoriesTree($list);
 		}
 	}

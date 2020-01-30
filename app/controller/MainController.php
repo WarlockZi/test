@@ -26,19 +26,13 @@ class MainController Extends AppController {
       }
       parent::__construct($route);
 
-//      $list = App::$app->cache->get('list');
-//      if (!$list) {
-//         $list = App::$app->category->getInitCategories(1);
-//         App::$app->cache->set('list', $list, 30);
-//      }
-
       $sale = App::$app->cache->get('sale');
       if (!$sale) {
          $sale = App::$app->product->getSale();
          App::$app->cache->set('sale', $sale, 30);
       }
 
-      $this->layout = 'vitex';
+//      $this->layout = 'vitex';
 
 //      View::setJs([
 //          'controller' => $this->route['controller'],
