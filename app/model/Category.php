@@ -4,7 +4,6 @@ namespace app\model;
 
 use app\core\App;
 use app\core\Base\Model;
-use app\model\Prop;
 
 class Category extends Model {
 
@@ -27,7 +26,7 @@ class Category extends Model {
 
    public function getAssocCategory($options) {
 
-   	$onlyActive = $options['active']?' AND act = 1':'';
+   	$onlyActive = $options['active']?" WHERE `act` = 1":"";
       $sql = 'SELECT * FROM category'.$onlyActive;
       $res = App::$app->category->findBySql($sql, $params = array());
 
@@ -42,6 +41,7 @@ class Category extends Model {
          }
          return $all;
       }
+      return false;
    }
 
    public function categoriesTree($cat) {
@@ -84,7 +84,7 @@ class Category extends Model {
    }
 
    public function getCategoryChildren($parentId) {
-      $cat = $this->getAssocCategory();
+      $cat = $this->getAssocCategory(['act'=>0]);
       $tree = $this->categoriesTree($cat);
       $categories = $this->findValueByKey($tree, $parentId);
       if (isset($categories['childs'])) {
@@ -102,17 +102,17 @@ class Category extends Model {
       return $children;
    }
 
-   public function getCategoryPropertiesSnippet($Id) {
-
-      $sql = 'SELECT * FROM props WHERE parent = ?';
-      $params = [$Id];
-      $arr['property'] = $this->findBySql($sql, $params);
-
-      ob_start();
-      include APP . '/view/Adm_catalog/snippet/KeyVal.php';
-      $cont = ob_get_clean();
-      return $cont;
-   }
+//   public function getCategoryPropertiesSnippet($Id) {
+//
+//      $sql = 'SELECT * FROM props WHERE parent = ?';
+//      $params = [$Id];
+//      $arr['property'] = $this->findBySql($sql, $params);
+//
+//      ob_start();
+//      include APP . '/view/Adm_catalog/snippet/KeyVal.php';
+//      $cont = ob_get_clean();
+//      return $cont;
+//   }
 
    public function isCategory($url) {
       $category = 0;
@@ -120,7 +120,7 @@ class Category extends Model {
          $arr = explode('/', $url);
          if (count($arr) > 3) {
             http_response_code(404);
-            exit(include '../public/404.html');
+            exit(include '../../public/404.html');
          }
          $category = $this->findOne($arr[0], 'alias');
          if ($category && is_array($category)) {

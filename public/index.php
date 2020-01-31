@@ -29,9 +29,10 @@ define('CONFIG', APP . '/config.php');
 function vitexAutoload($class) {
     $file = ROOT. DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
     if (is_readable($file)) {
-        $d = require_once $file;
+        require_once $file;
     }
 }
+
 spl_autoload_register('vitexAutoload');
 new App;
 
