@@ -7,17 +7,17 @@ session_start();
 
 if ($_SERVER['HTTP_HOST'] == 'vitexopt.ru') {
 
-   error_reporting(0);
-   define('ROOT', $_SERVER['DOCUMENT_ROOT']);
-   define('PROJ', ''); // сам оопределит в каой папке лежит
-   define('DEBU', '0'); //0-не выводить ошибки
+	error_reporting(0);
+	define('ROOT', $_SERVER['DOCUMENT_ROOT']);
+	define('PROJ', ''); // сам оопределит в каой папке лежит
+	define('DEBU', '0'); //0-не выводить ошибки
 } else {
-   define('ROOT', dirname(__DIR__));
-   define('PROJ', ''); // например /test
+	define('ROOT', dirname(__DIR__));
+	define('PROJ', ''); // например /test
 
-   ini_set('error_reporting', E_ALL);
-   ini_set('display_errors', 1);
-   define('DEBU', '1'); //0-не выводить ошибки
+	ini_set('error_reporting', E_ALL);
+	ini_set('display_errors', 1);
+	define('DEBU', '1'); //0-не выводить ошибки
 }
 
 
@@ -26,16 +26,18 @@ define('CACHE', ROOT . PROJ . '/tmp/cache');
 define('CONFIG', APP . '/config.php');
 
 
-function vitexAutoload($class) {
-    $file = ROOT. DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-    if (is_readable($file)) {
-        require_once $file;
-    }
+function vitexAutoload($class)
+{
+	$file = ROOT . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+	if (is_readable($file)) {
+		require_once $file;
+	}
 }
 
 spl_autoload_register('vitexAutoload');
 new App;
-
+$mi = new \app\Migrations();
+$mi->up();
 //exit(var_dump($_SERVER['QUERY_STRING']));
 $url = $_SERVER['QUERY_STRING'];
 
