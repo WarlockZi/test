@@ -86,7 +86,8 @@ class UserController extends AppController
 
                 $this->set(compact('user'));
                 $msg[] = "Все ок";
-                exit(include APP . '/view/User/alert.php');
+                $_SESSION['id'] = $user['id'];
+                exit(include ROOT.'/app/view/User/alert.php');
             }
         }
         if (isset($_SESSION['id'])) {
@@ -230,10 +231,7 @@ class UserController extends AppController
         $rightId = explode(",", $user['rights']);
         $js = $this->getJSCSS('.js');
         $this->set(compact('user', 'rightId'));
-//      if (isset($_GET['squash']) && $_GET['squash'] == "1") {
-//         header('Location:/test2/squash');
-//         exit();
-//      }
+
     }
 
     public function actionReturnPass()

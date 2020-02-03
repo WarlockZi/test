@@ -28,8 +28,9 @@ class CatalogController extends AppController {
 
       header('Cache-Control: private, max-age=8400');
       header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
+      $this->view = 'product';
 
-      $parents = $product['parents'];
+//      $parents = $product['parents'];
       $breadcrumbs = App::$app->product->getBreadcrumbs($product, $product['parents'], 'product');
 
       if (isset($_SESSION['id']) && $_SESSION['id']) {
@@ -40,7 +41,6 @@ class CatalogController extends AppController {
       View::setMeta($product['title'], $product['description'], $product['keywords']);
       $this->set(compact('canonical', 'breadcrumbs', 'user', 'product', 'tov', 'categories'));
 
-      $this->view = 'product';
       View::setCss(['css' => $this->route['controller'], 'view' => $this->view, 'addtime']);
    }
 

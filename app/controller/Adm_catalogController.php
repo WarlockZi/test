@@ -21,8 +21,8 @@ class Adm_catalogController extends AdminscController {
             exit();
          };
       }
-      $routeView = ['js' => $this->route, 'view' => $this->view];
-      View::setJsCss($routeView);
+//      $routeView = ['js' => $this->route, 'view' => $this->view];
+//      View::setJsCss($routeView);
       $routeView = ['css' => $this->route, 'view' => $this->view];
       View::setJsCss($routeView);
    }
@@ -116,8 +116,6 @@ class Adm_catalogController extends AdminscController {
          }
       }
    }
-
-
 
 
    public function actionIndex() {

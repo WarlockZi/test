@@ -16,6 +16,7 @@ module.exports = {
         login: PATHS.source + '/user/user-login.js',
         admin: PATHS.source + '/admin/admin-crm-user.js',
         mainIndex: PATHS.source + '/main/main-index.js',
+        adminCategory
     },
     output: {
         chunkFilename: '[name].bundle.js',

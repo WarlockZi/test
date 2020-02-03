@@ -45,8 +45,8 @@ class MainController Extends AppController {
       if ($this->route['action'] !== 'index') {
          View::setCss(['css' => '/public/css/about.css']);
       }
-      $list = $this->list;
-      $this->set(compact('sale', 'list'));
+//      $list = $this->list;
+      $this->set(compact('sale'));
    }
 
    public function actionIndex() {

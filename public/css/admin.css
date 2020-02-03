@@ -1131,6 +1131,7 @@ span[contenteditable]:hover,
 {
     border: 1px #ebf4f4 solid;
     box-shadow: 0 0 2px 2px #71ffff ;
+    min-height: 18px;
 }
 
 .admin-contentstrong
@@ -1370,7 +1371,7 @@ header {
 }
 
 .add-property select{
-    float: 1;;
+    float: 1;
 }
 .add-property{
     justify-content: flex-end;

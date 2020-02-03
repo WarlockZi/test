@@ -6,25 +6,15 @@ use app\core\App;
 session_start();
 
 if ($_SERVER['HTTP_HOST'] == 'vitexopt.ru') {
-
 	error_reporting(0);
 	define('ROOT', $_SERVER['DOCUMENT_ROOT']);
-	define('PROJ', ''); // сам оопределит в каой папке лежит
 	define('DEBU', '0'); //0-не выводить ошибки
 } else {
 	define('ROOT', dirname(__DIR__));
-	define('PROJ', ''); // например /test
-
-	ini_set('error_reporting', E_ALL);
 	ini_set('display_errors', 1);
+	ini_set('error_reporting', E_ALL);
 	define('DEBU', '1'); //0-не выводить ошибки
 }
-
-
-define('APP', ROOT . PROJ . '/app');
-define('CACHE', ROOT . PROJ . '/tmp/cache');
-define('CONFIG', APP . '/config.php');
-
 
 function vitexAutoload($class)
 {
@@ -36,14 +26,15 @@ function vitexAutoload($class)
 
 spl_autoload_register('vitexAutoload');
 new App;
-$mi = new \app\Migrations();
-$mi->up();
-//exit(var_dump($_SERVER['QUERY_STRING']));
+
+//$mi = new \app\core\Migrations();
+//$mi->up();
+
 $url = $_SERVER['QUERY_STRING'];
 
 Router::add('^.?search.?', ['controller' => 'search', 'action' => 'index']); // fw/ -> main/index
 
-Router::add('^' . PROJ . '/(?P<action>[a-z]+)/(?P<alias>[0-9]+)$', ['controller' => 'Test']);
+Router::add('^/(?P<action>[a-z]+)/(?P<alias>[0-9]+)$', ['controller' => 'Test']);
 
 Router::add('^test/(?P<alias>[0-9]+)$', ['controller' => 'Test', 'action' => 'do']);
 Router::add('^test/do$', ['controller' => 'Test', 'action' => 'do']);

@@ -27,7 +27,7 @@ class AdminscController extends AppController
 		$this->auth();
 		$this->layout = 'admin';
 
-		View::setJs(['js' => '/public/js/admin.js']);
+//		View::setJs(['js' => '/public/js/admin.js']);
 		View::setCss(['css' => '/public/css/admin.css']);
 	}
 

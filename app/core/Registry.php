@@ -8,7 +8,7 @@ class Registry {
    protected static $instance;
 
    protected function __construct() {
-      require_once CONFIG;
+      require_once ROOT.'/app/config.php';
       foreach ($config['components'] as $name => $object) {
          self::$objects[$name] = new $object;
       }

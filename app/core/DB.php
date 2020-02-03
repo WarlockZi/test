@@ -11,7 +11,7 @@ class DB {
 
     public function __construct() {
 
-        $db = require CONFIG;
+        $db =  require ROOT.'/app/config.php';
         $db = $db['config_db'];
 		//exit(var_dump($db));
         $options = [

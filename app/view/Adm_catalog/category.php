@@ -29,8 +29,15 @@ new app\view\widgets\menu\Menu([
   <? endif; ?>
 
   <div class="wrap-admin">
+	    <div class="separator btns">
+		    <button class="category-update-btn">Сохранить
+		    </button>
+		    <button class="category-create-btn">Добавить категорию
+		    </button>
+	    </div>
     <div class="work-area">
       <input id = 'token' type="hidden" value="<?= $_SESSION['token'] ?>">
+
 
       <div class="tabs">
         <input id="tab1" type="radio" name="tabs" checked>
