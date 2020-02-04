@@ -39,9 +39,9 @@
 
         <? foreach ($sale as $product) : ?>
            <div>
-             <a href="/<?= $product['alias']; ?>">
-               <div class="image-height column">
-                 <img src="/pic<?= $product['dpic']; ?>" alt="<?= $product['name']; ?>">
+             <a href="/<?= $product['alias'];?>">
+               <div class="image-height column ">
+                 <img src="//vit1/pic<?= $product['dpic']; ?>" alt="<?= $product['name']; ?>">
                  <div><?= $product['name']; ?> </div>
                </div>
              </a>
@@ -52,4 +52,4 @@
     </div>
   </div>
 </main>
-<script src = "../../../public/build/mainIndex.js"></script>
+<script src = "/public/build/mainIndex.js"></script>

@@ -39,7 +39,8 @@ class CatalogController extends AppController {
       }
       $canonical = $product['alias'];
       View::setMeta($product['title'], $product['description'], $product['keywords']);
-      $this->set(compact('canonical', 'breadcrumbs', 'user', 'product', 'tov', 'categories'));
+//      'user', , 'categories', 'tov'
+      $this->set(compact('canonical', 'breadcrumbs', 'product'));
 
       View::setCss(['css' => $this->route['controller'], 'view' => $this->view, 'addtime']);
    }

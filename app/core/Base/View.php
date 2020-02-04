@@ -85,9 +85,6 @@ class View {
       }
    }
 
-   public static function setJsCss($data) {
-
-   }
 
    public static function getCSS() {
       $css = '';
@@ -95,7 +92,6 @@ class View {
       if (is_array($arr)) {
          foreach ($arr as $v) {
             $css .= $v;
-//            $css .= "<link type='text/css' rel='stylesheet' href='{$value}'>";
          }
       }
       echo $css;

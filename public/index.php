@@ -25,6 +25,7 @@ function vitexAutoload($class)
 }
 
 spl_autoload_register('vitexAutoload');
+
 new App;
 
 //$mi = new \app\core\Migrations();

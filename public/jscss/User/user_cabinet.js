@@ -1,6 +1,6 @@
 import 'jquery';
-import '../../public/js/max.auto';
-import '../../public/js/auto.js';
+import '../max.auto';
+import '../common';
 
 $(function () {
     // var a = $('#menu').html();

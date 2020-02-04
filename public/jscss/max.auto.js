@@ -2555,7 +2555,7 @@ $.widget( "ui.autocomplete", {
 		return $( "<li>" )
       
 			.append( $( "<div>" ).html( 
-            "<a href = /catalog/"+item.url + "><span>"+item.label + "</span><img src = /pic"+item.pic+">"+"</a>"   
+            "<a href = /catalog/"+item.url + "><span>"+item.label + "</span><img src = "+item.pic+"/pic>"+"</a>"
             ) )
 			.appendTo( ul );
 	},

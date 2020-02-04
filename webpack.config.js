@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const PATHS = {
-    source: path.join(__dirname, 'src'),
+    source: path.join(__dirname, 'public/jscss'),
     build: path.join(__dirname, 'public/build')
 }
 
@@ -12,11 +12,11 @@ module.exports = {
     devtool: "source-map",
     watch: true, //live-reloading
     entry: {
-        cabinet: PATHS.source + '/user/cabinet.js',
-        login: PATHS.source + '/user/user-login.js',
-        admin: PATHS.source + '/admin/admin-crm-user.js',
-        mainIndex: PATHS.source + '/main/main-index.js',
-        adminCategory
+        cabinet: PATHS.source + '/User/user_cabinet.js',
+        login: PATHS.source + '/User/user_login.js',
+        admin: PATHS.source + '/Adm_crm/admin_crm_user.js',
+        mainIndex: PATHS.source + '/Main/main_index.js',
+        adminCategory: PATHS.source + '/Adm_catalog/category.js',
     },
     output: {
         chunkFilename: '[name].bundle.js',

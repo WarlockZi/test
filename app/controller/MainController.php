@@ -31,21 +31,16 @@ class MainController Extends AppController {
          $sale = App::$app->product->getSale();
          App::$app->cache->set('sale', $sale, 30);
       }
-
-//      $this->layout = 'vitex';
-
 //      View::setJs([
 //          'controller' => $this->route['controller'],
 //          'view' => $this->view,
 //          'defer'
 //      ]);
-
       View::setCss(['css' => '/public/css/vitex.css']);
       View::setCss(['controller' => $this->route['controller'], 'view' => $this->view]);
       if ($this->route['action'] !== 'index') {
          View::setCss(['css' => '/public/css/about.css']);
       }
-//      $list = $this->list;
       $this->set(compact('sale'));
    }
 
