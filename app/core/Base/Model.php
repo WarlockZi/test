@@ -84,6 +84,11 @@ abstract class Model
 		return $this->pdo->execute($sql, $params);
 	}
 
+	/**
+	 * @param $table
+	 * @param string $db
+	 * @return mixed
+	 */
 	public function autoincrement($table, $db = 'vitex_test')
 	{
 		$params = [$db, $table];

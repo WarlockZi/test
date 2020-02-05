@@ -60,7 +60,7 @@
 					<div class="user-menu  flex1">
                 <span class="row">
                     <? if (!isset($user)): ?>
-	                    <a href="/user/login">
+	                    <a href="/user/login" aria-label="login">
                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
                                                data-prefix="far" data-icon="user" class="svg-inline--fa fa-user fa-w-14"
                                                role="img" viewBox="0 0 448 512"><path fill="currentColor"
@@ -106,7 +106,7 @@
 								  ?>
 
 								  <? if (isset($user)): ?>
-			                    <a href="/user/logout">
+			                    <a href="/user/logout" aria-label="logout">
                             <span class="icon-logout">
                               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="20"
                                    viewBox="0 0 20 20">
@@ -187,55 +187,6 @@
 
 						</div>
 						<?endforeach; ?>
-						<!--						<div class='h-cat'>перчатки-->
-						<!--							<ul>-->
-						<!--								<li>-->
-						<!--									<a href="/perchatki-rezinovye-tekhnicheskie">перчатки резиновые технические</a>-->
-						<!--								</li>-->
-						<!--								<li>-->
-						<!--									<a href="/sredstva-zashchity-ruk">средства защиты рук</a>-->
-						<!--								</li>-->
-						<!--							</ul>-->
-						<!--						</div>-->
-
-						<!--						<div class='h-cat'>бахилы-->
-						<!--							<ul>-->
-						<!--								<li>-->
-						<!--									<a href="/#">бахилы однослойные</a>-->
-						<!--								</li>-->
-						<!--								<li>-->
-						<!--									<a href="#">бахилы многослойные</a>-->
-						<!--								</li>-->
-						<!--							</ul>-->
-						<!--						</div>-->
-
-						<!--						<div class='h-cat'></span>СИЗ-->
-						<!--							<ul>-->
-						<!--								<li>-->
-						<!--									<a href="/zashchita-organov-slukha">защита органов слуха</a>-->
-						<!--								</li>-->
-						<!--								<li>-->
-						<!--									<a href="/zashchita-golovy-i-litsa">защита головы и лица</a>-->
-						<!--								</li>-->
-						<!--								<li>-->
-						<!--									<a href="/zashchita-organov-dykhaniya">защита органов дыхания</a>-->
-						<!--								</li>-->
-						<!--								<li>-->
-						<!--									<a href="/zashchita-organov-zreniya">защита органов зрения</a>-->
-						<!--								</li>-->
-						<!--							</ul>-->
-						<!--						</div>-->
-
-						<!--						<div class='h-cat'> шприцы-->
-						<!--							<ul>-->
-						<!--								<li>-->
-						<!--									<a href="/#">шприцы двукомпонентные</a>-->
-						<!--								</li>-->
-						<!--								<li>-->
-						<!--									<a href="#">шприцы однокомпонентные</a>-->
-						<!--								</li>-->
-						<!--							</ul>-->
-						<!--						</div>-->
 
 
 						<div class='h-cat'>Акции
@@ -305,29 +256,6 @@
 
 		<? $this::getJS(); ?>
 
-		<!-- Yandex.Metrika counter -->
-		<script defer>
-          (function (m, e, t, r, i, k, a) {
-              m[i] = m[i] || function () {
-                  (m[i].a = m[i].a || []).push(arguments)
-              };
-              m[i].l = 1 * new Date();
-              k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-          })
-          (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-          ym(7715905, "init", {
-              clickmap: true,
-              trackLinks: true,
-              accurateTrackBounce: true,
-              webvisor: true
-          });
-		</script>
-		<noscript>
-			<div><img src="https://mc.yandex.ru/watch/7715905" style="position:absolute; left:-9999px;" alt=""/></div>
-		</noscript>
-		<!-- /Yandex.Metrika counter -->
-
 
 		<div class='none'>
 			<svg id='logo-svg' width="200" height="45" version="1.1" viewBox="0 0 140.93602 25.903431">
@@ -379,6 +307,27 @@
 
 	</div>
 </div>
+<!-- Yandex.Metrika counter -->
+<script defer>
+    (function (m, e, t, r, i, k, a) {
+        m[i] = m[i] || function () {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        m[i].l = 1 * new Date();
+        k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+    })
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
+    ym(7715905, "init", {
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+        webvisor: true
+    });
+</script>
+<noscript>
+	<div><img src="https://mc.yandex.ru/watch/7715905" style="position:absolute; left:-9999px;" alt=""/></div>
+</noscript>
+<!-- /Yandex.Metrika counter -->
 </body>
 </html>

@@ -13,11 +13,11 @@
     font-style: normal;
     font-display: swap;
 
-    src: url('//public/js/slick-1.8.1/slick/fonts/slick.eot');
+    src: url('/public/js/slick-1.8.1/slick/fonts/slick.eot');
     src: url('/public/js/slick-1.8.1/slick/fonts/slick.eot?#iefix') format('embedded-opentype'),
-    url('//public/js/slick-1.8.1/slick/fonts/slick.woff') format('woff'),
-    url('//public/js/slick-1.8.1/slick/fonts/slick.ttf') format('truetype'),
-    url('//public/js/slick-1.8.1/slick/fonts/slick.svg#slick') format('svg');
+    url('/public/js/slick-1.8.1/slick/fonts/slick.woff') format('woff'),
+    url('/public/js/slick-1.8.1/slick/fonts/slick.ttf') format('truetype'),
+    url('/public/js/slick-1.8.1/slick/fonts/slick.svg#slick') format('svg');
 }
 
 @font-face {
@@ -1107,6 +1107,7 @@ footer a
 }
 .user-menu>span.row>a{
     color: #fff;
+    display: flex;
 }
 .user-menu{
 	display: flex;

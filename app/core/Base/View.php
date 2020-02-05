@@ -84,7 +84,9 @@ class View {
          self::$jsCss['css'][] = "<link href='{$data['css']}{$addtime}' type='text/css' rel='stylesheet'>";
       }
    }
-
+//	public static function setJsCss($data) {
+//
+//	}
 
    public static function getCSS() {
       $css = '';
