@@ -10,10 +10,10 @@
         <input type="hidden" name="token" value= <?= isset($_SESSION['token']) ?$_SESSION['token']: ngei123555 ?>>
         <ul class="bottom">
             <li>
-                <a class="register" href="<?= PROJ ?>/user/register">Регистрация</a>
+                <a class="register" href="/user/register">Регистрация</a>
             </li>
             <li>
-                <a class="forgot" href="<?= PROJ ?>/user/returnpass">Забыли пароль</a>
+                <a class="forgot" href="/user/returnpass">Забыли пароль</a>
             </li>
         </ul>
     </form>
