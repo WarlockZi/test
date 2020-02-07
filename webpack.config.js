@@ -1,7 +1,8 @@
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const path = require('path');
+const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const PATHS = {
@@ -44,8 +45,17 @@ module.exports = {
                 exclude: /(node_modules)/
             },
             {
-                test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    // Creates `style` nodes from JS strings
+                    // 'style-loader',
+                    // Translates CSS into CommonJS
+                    'css-loader',
+                    // Compiles Sass to CSS
+                    'sass-loader',
+                    // 'css-loader'
+                ],
             }
         ]
     },

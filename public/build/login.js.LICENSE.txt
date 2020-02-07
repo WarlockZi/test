@@ -25,6 +25,8 @@
 
 /*! ../common */
 
+/*! ../components/header/header.sass */
+
 /*! exports provided: post, get, uniq, autocomplete */
 
 /*! jquery */
@@ -44,3 +46,7 @@
 /*!********************************************!*\
   !*** ./node_modules/jquery/dist/jquery.js ***!
   \********************************************/
+
+/*!****************************************************!*\
+  !*** ./public/jscss/components/header/header.sass ***!
+  \****************************************************/

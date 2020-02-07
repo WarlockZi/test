@@ -985,7 +985,7 @@ $.fn.position = function( options ) {
 			marginTop: marginTop
 		};
 
-		$.each( [ "left", "top" ], function( i, dir ) {
+		$.each( [ "left", "_top.sass" ], function(i, dir ) {
 			if ( $.ui.position[ collision[ i ] ] ) {
 				$.ui.position[ collision[ i ] ][ dir ]( position, {
 					targetWidth: targetWidth,
@@ -1028,7 +1028,7 @@ $.fn.position = function( options ) {
 							height: elemHeight
 						},
 						horizontal: right < 0 ? "left" : left > 0 ? "right" : "center",
-						vertical: bottom < 0 ? "top" : top > 0 ? "bottom" : "middle"
+						vertical: bottom < 0 ? "_top.sass" : top > 0 ? "bottom" : "middle"
 					};
 				if ( targetWidth < elemWidth && abs( left + right ) < targetWidth ) {
 					feedback.horizontal = "center";
@@ -1097,7 +1097,7 @@ $.ui.position = {
 		},
 		top: function( position, data ) {
 			var within = data.within,
-				withinOffset = within.isWindow ? within.scrollTop : within.offset.top,
+				withinOffset = within.isWindow ? within.scrollTop : within.offset._top,
 				outerHeight = data.within.height,
 				collisionPosTop = position.top - data.collisionPosition.marginTop,
 				overTop = withinOffset - collisionPosTop,
@@ -1179,19 +1179,19 @@ $.ui.position = {
 		},
 		top: function( position, data ) {
 			var within = data.within,
-				withinOffset = within.offset.top + within.scrollTop,
+				withinOffset = within.offset._top + within.scrollTop,
 				outerHeight = within.height,
-				offsetTop = within.isWindow ? within.scrollTop : within.offset.top,
+				offsetTop = within.isWindow ? within.scrollTop : within.offset._top,
 				collisionPosTop = position.top - data.collisionPosition.marginTop,
 				overTop = collisionPosTop - offsetTop,
 				overBottom = collisionPosTop + data.collisionHeight - outerHeight - offsetTop,
-				top = data.my[ 1 ] === "top",
+				top = data.my[ 1 ] === "_top.sass",
 				myOffset = top ?
 					-data.elemHeight :
 					data.my[ 1 ] === "bottom" ?
 						data.elemHeight :
 						0,
-				atOffset = data.at[ 1 ] === "top" ?
+				atOffset = data.at[ 1 ] === "_top.sass" ?
 					data.targetHeight :
 					data.at[ 1 ] === "bottom" ?
 						-data.targetHeight :
@@ -1738,7 +1738,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 		if ( this._hasScroll() ) {
 			borderTop = parseFloat( $.css( this.activeMenu[ 0 ], "borderTopWidth" ) ) || 0;
 			paddingTop = parseFloat( $.css( this.activeMenu[ 0 ], "paddingTop" ) ) || 0;
-			offset = item.offset().top - this.activeMenu.offset().top - borderTop - paddingTop;
+			offset = item.offset()._top - this.activeMenu.offset()._top - borderTop - paddingTop;
 			scroll = this.activeMenu.scrollTop();
 			elementHeight = this.activeMenu.height();
 			itemHeight = item.outerHeight();
@@ -1920,11 +1920,11 @@ var widgetsMenu = $.widget( "ui.menu", {
 			return;
 		}
 		if ( this._hasScroll() ) {
-			base = this.active.offset().top;
+			base = this.active.offset()._top;
 			height = this.element.height();
 			this.active.nextAll( ".ui-menu-item" ).each( function() {
 				item = $( this );
-				return item.offset().top - base - height < 0;
+				return item.offset()._top - base - height < 0;
 			} );
 
 			this.focus( event, item );
@@ -1944,11 +1944,11 @@ var widgetsMenu = $.widget( "ui.menu", {
 			return;
 		}
 		if ( this._hasScroll() ) {
-			base = this.active.offset().top;
+			base = this.active.offset()._top;
 			height = this.element.height();
 			this.active.prevAll( ".ui-menu-item" ).each( function() {
 				item = $( this );
-				return item.offset().top - base + height > 0;
+				return item.offset()._top - base + height > 0;
 			} );
 
 			this.focus( event, item );
@@ -4185,7 +4185,7 @@ if ( $.uiBackCompat !== false ) {
 					position: element.css( "position" ),
 					zIndex: element.css( "z-index" )
 				} );
-				$.each( [ "top", "left", "bottom", "right" ], function( i, pos ) {
+				$.each( [ "_top.sass", "left", "bottom", "right" ], function(i, pos ) {
 					props[ pos ] = element.css( pos );
 					if ( isNaN( parseInt( props[ pos ], 10 ) ) ) {
 						props[ pos ] = "auto";
@@ -4261,9 +4261,9 @@ $.extend( $.effects, {
 	clipToBox: function( animation ) {
 		return {
 			width: animation.clip.right - animation.clip.left,
-			height: animation.clip.bottom - animation.clip.top,
+			height: animation.clip.bottom - animation.clip._top,
 			left: animation.clip.left,
-			top: animation.clip.top
+			top: animation.clip._top
 		};
 	},
 
@@ -4304,7 +4304,7 @@ $.extend( $.effects, {
 		var y, x;
 
 		switch ( origin[ 0 ] ) {
-		case "top":
+		case "_top.sass":
 			y = 0;
 			break;
 		case "middle":
@@ -4385,7 +4385,7 @@ $.extend( $.effects, {
 		element.css( {
 			position: cssPosition,
 			left: position.left,
-			top: position.top
+			top: position._top
 		} );
 
 		return placeholder;
@@ -4658,7 +4658,7 @@ $.fn.extend( {
 
 	cssClip: function( clipObj ) {
 		if ( clipObj ) {
-			return this.css( "clip", "rect(" + clipObj.top + "px " + clipObj.right + "px " +
+			return this.css( "clip", "rect(" + clipObj._top + "px " + clipObj.right + "px " +
 				clipObj.bottom + "px " + clipObj.left + "px)" );
 		}
 		return parseClip( this.css( "clip" ), this );
@@ -4673,7 +4673,7 @@ $.fn.extend( {
 			fixLeft = targetFixed ? body.scrollLeft() : 0,
 			endPosition = target.offset(),
 			animation = {
-				top: endPosition.top - fixTop,
+				top: endPosition._top - fixTop,
 				left: endPosition.left - fixLeft,
 				height: target.innerHeight(),
 				width: target.innerWidth()
@@ -4683,7 +4683,7 @@ $.fn.extend( {
 				.appendTo( "body" )
 				.addClass( options.className )
 				.css( {
-					top: startPosition.top - fixTop,
+					top: startPosition._top - fixTop,
 					left: startPosition.left - fixLeft,
 					height: element.innerHeight(),
 					width: element.innerWidth(),
@@ -4806,9 +4806,9 @@ var effect = $.effects;
 
 var effectsEffectBlind = $.effects.define( "blind", "hide", function( options, done ) {
 	var map = {
-			up: [ "bottom", "top" ],
-			vertical: [ "bottom", "top" ],
-			down: [ "top", "bottom" ],
+			up: [ "bottom", "_top.sass" ],
+			vertical: [ "bottom", "_top.sass" ],
+			down: [ "_top.sass", "bottom" ],
 			left: [ "right", "left" ],
 			horizontal: [ "right", "left" ],
 			right: [ "left", "right" ]
@@ -4878,7 +4878,7 @@ var effectsEffectBounce = $.effects.define( "bounce", function( options, done ) 
 		easing = options.easing,
 
 		// Utility:
-		ref = ( direction === "up" || direction === "down" ) ? "top" : "left",
+		ref = ( direction === "up" || direction === "down" ) ? "_top.sass" : "left",
 		motion = ( direction === "up" || direction === "left" ),
 		i = 0,
 
@@ -4890,7 +4890,7 @@ var effectsEffectBounce = $.effects.define( "bounce", function( options, done ) 
 
 	// Default distance for the BIGGEST bounce is the outer Distance / 3
 	if ( !distance ) {
-		distance = element[ ref === "top" ? "outerHeight" : "outerWidth" ]() / 3;
+		distance = element[ ref === "_top.sass" ? "outerHeight" : "outerWidth" ]() / 3;
 	}
 
 	if ( show ) {
@@ -5014,7 +5014,7 @@ var effectsEffectDrop = $.effects.define( "drop", "hide", function( options, don
 		mode = options.mode,
 		show = mode === "show",
 		direction = options.direction || "left",
-		ref = ( direction === "up" || direction === "down" ) ? "top" : "left",
+		ref = ( direction === "up" || direction === "down" ) ? "_top.sass" : "left",
 		motion = ( direction === "up" || direction === "left" ) ? "-=" : "+=",
 		oppositeMotion = ( motion === "+=" ) ? "-=" : "+=",
 		animation = {
@@ -5024,7 +5024,7 @@ var effectsEffectDrop = $.effects.define( "drop", "hide", function( options, don
 	$.effects.createPlaceholder( element );
 
 	distance = options.distance ||
-		element[ ref === "top" ? "outerHeight" : "outerWidth" ]( true ) / 2;
+		element[ ref === "_top.sass" ? "outerHeight" : "outerWidth" ]( true ) / 2;
 
 	animation[ ref ] = motion + distance;
 
@@ -5091,7 +5091,7 @@ var effectsEffectExplode = $.effects.define( "explode", "hide", function( option
 
 	// Clone the element for each row and cell.
 	for ( i = 0; i < rows; i++ ) { // ===>
-		top = offset.top + i * height;
+		top = offset._top + i * height;
 		my = i - ( rows - 1 ) / 2;
 
 		for ( j = 0; j < cells; j++ ) { // |||
@@ -5381,9 +5381,9 @@ var effectsEffectSize = $.effects.define( "size", function( options, done ) {
 	// Adjust the position properties based on the provided origin points
 	if ( origin ) {
 		baseline = $.effects.getBaseline( origin, original );
-		from.top = ( original.outerHeight - from.outerHeight ) * baseline.y + pos.top;
+		from.top = ( original.outerHeight - from.outerHeight ) * baseline.y + pos._top;
 		from.left = ( original.outerWidth - from.outerWidth ) * baseline.x + pos.left;
-		to.top = ( original.outerHeight - to.outerHeight ) * baseline.y + pos.top;
+		to.top = ( original.outerHeight - to.outerHeight ) * baseline.y + pos._top;
 		to.left = ( original.outerWidth - to.outerWidth ) * baseline.x + pos.left;
 	}
 	element.css( from );
@@ -5614,7 +5614,7 @@ var effectsEffectShake = $.effects.define( "shake", function( options, done ) {
 		times = options.times || 3,
 		anims = times * 2 + 1,
 		speed = Math.round( options.duration / anims ),
-		ref = ( direction === "up" || direction === "down" ) ? "top" : "left",
+		ref = ( direction === "up" || direction === "down" ) ? "_top.sass" : "left",
 		positiveMotion = ( direction === "up" || direction === "left" ),
 		animation = {},
 		animation1 = {},
@@ -5669,17 +5669,17 @@ var effectsEffectSlide = $.effects.define( "slide", "show", function( options, d
 	var startClip, startRef,
 		element = $( this ),
 		map = {
-			up: [ "bottom", "top" ],
-			down: [ "top", "bottom" ],
+			up: [ "bottom", "_top.sass" ],
+			down: [ "_top.sass", "bottom" ],
 			left: [ "right", "left" ],
 			right: [ "left", "right" ]
 		},
 		mode = options.mode,
 		direction = options.direction || "left",
-		ref = ( direction === "up" || direction === "down" ) ? "top" : "left",
+		ref = ( direction === "up" || direction === "down" ) ? "_top.sass" : "left",
 		positiveMotion = ( direction === "up" || direction === "left" ),
 		distance = options.distance ||
-			element[ ref === "top" ? "outerHeight" : "outerWidth" ]( true ),
+			element[ ref === "_top.sass" ? "outerHeight" : "outerWidth" ]( true ),
 		animation = {};
 
 	$.effects.createPlaceholder( element );

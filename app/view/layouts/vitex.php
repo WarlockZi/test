@@ -12,6 +12,7 @@
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
 	<? $this::getMeta(); ?>
 	<? $this::getCSS(); ?>
+	<link rel="preload" href='/public/build/login.css' as="style" onload="this.rel='stylesheet'" media="all">
 
 </head>
 

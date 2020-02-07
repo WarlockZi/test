@@ -2005,7 +2005,7 @@
             position = -position;
         }
         x = _.positionProp == 'left' ? Math.ceil(position) + 'px' : '0px';
-        y = _.positionProp == 'top' ? Math.ceil(position) + 'px' : '0px';
+        y = _.positionProp == '_top.sass' ? Math.ceil(position) + 'px' : '0px';
 
         positionProps[_.positionProp] = position;
 
@@ -2228,9 +2228,9 @@
         var _ = this,
             bodyStyle = document.body.style;
 
-        _.positionProp = _.options.vertical === true ? 'top' : 'left';
+        _.positionProp = _.options.vertical === true ? '_top.sass' : 'left';
 
-        if (_.positionProp === 'top') {
+        if (_.positionProp === '_top.sass') {
             _.$slider.addClass('slick-vertical');
         } else {
             _.$slider.removeClass('slick-vertical');
