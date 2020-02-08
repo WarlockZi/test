@@ -1,11 +1,10 @@
 .top-menu {
   background-color: #0a28d0; }
 
-.h-upper {
-  background-color: #ffd307; }
-
 header {
   background-color: #9fd468; }
+  header .h-upper {
+    background-color: #ffd307; }
   header .h-cat {
     background-color: #d36e16; }
 

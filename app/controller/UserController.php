@@ -285,9 +285,9 @@ class UserController extends AppController
                 $result = App::$app->user->update($ff);
             }
             View::setMeta('Профиль', 'Профиль', 'Профиль');
-            $css = 'style.css';
+//            $css = 'style.css';
 //            $rightId = explode(",", $user['rights']);
-            $this->set(compact('css', 'user', 'result', 'errors'));
+            $this->set(compact('user', 'result', 'errors'));
         } else {// форма из базы данных
             $email = $user['email'];
             $name = $user['name'];
