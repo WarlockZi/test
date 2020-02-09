@@ -1,12 +1,11 @@
-import 'jquery';
-import 'slick-carousel';
-import {auto} from "../common";
-import autocomplete from "../max.auto";
+// import 'jquery';
+// import 'slick-carousel';
+// import {auto} from "../common";
+import f from '../components/autocomplete';
+// import autocomplete from "../max.auto";
 
 window.onload = function () {
-    // auto();
-    // autocomplete();
-
+    f();
     $.event.special.touchstart = {// чтобы не было ошибки при прикосновениях пальцем на мобилке
         setup: function (_, ns, handle) {
             if (ns.includes("noPreventDefault")) {
@@ -35,10 +34,10 @@ window.onload = function () {
         return true;
     };
 
-    $('.single-slide').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-    });
+    // $('.single-slide').slick({
+    //     slidesToShow: 1,
+    //     slidesToScroll: 1,
+    //     autoplay: true,
+    //     autoplaySpeed: 3000,
+    // });
 }

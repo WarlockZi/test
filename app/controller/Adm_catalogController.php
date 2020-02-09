@@ -138,20 +138,9 @@ class Adm_catalogController extends AdminscController
 
 	public function actionCategory()
 	{
-
-		if (isset($_GET['id'])) {
-			$id = (int)$_GET['id'];
-		}
-		if ($id) { /// иначе это корнвой каталог
-			$category = App::$app->category->getCategory($id);
-			$props = App::$app->prop->getProps();
-			$thisCatAndParentCatProps = isset($category['parents']) ?
-				array_merge($category['parentProps'], $category['props']) :
-				$category['props'];
-			$this->set(compact('category', 'props', 'thisCatAndParentCatProps'));
-		} elseif ($id = 'new') {
+		if (isset($_GET['id']) && ($_GET['id'] == 'new')) {
 			$props = [];
-			$parent = (string) $_GET['parent'];
+			$parent = isset($_GET['parent']) && (int)$_GET['parent']!==0 ? (int)$_GET['parent'] : 0;
 			$idAutoincrement = App::$app->category->autoincrement('category');
 			$category['id'] = $idAutoincrement;
 			$category['name'] = '';
@@ -165,6 +154,15 @@ class Adm_catalogController extends AdminscController
 			$category['children'] = '';
 
 			$this->set(compact('category'));
+		} elseif (isset($_GET['id']) && $_GET['id']) { /// иначе это корнвой каталог
+			///
+			$id = (int)$_GET['id'];
+			$category = App::$app->category->getCategory($id);
+			$props = App::$app->prop->getProps();
+			$thisCatAndParentCatProps = isset($category['parents']) ?
+				array_merge($category['parentProps'], $category['props']) :
+				$category['props'];
+			$this->set(compact('category', 'props', 'thisCatAndParentCatProps'));
 		}
 	}
 

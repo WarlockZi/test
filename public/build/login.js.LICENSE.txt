@@ -27,7 +27,7 @@
 
 /*! ../components/header/header.sass */
 
-/*! exports provided: post, get, uniq, autocomplete */
+/*! exports provided: post, get, uniq */
 
 /*! jquery */
 

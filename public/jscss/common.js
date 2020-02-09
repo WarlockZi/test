@@ -1,13 +1,13 @@
-function autocomplete() {
-    $('#autocomplete').autocomplete({
-        source: '/search',
-        minLength: 1,
-        appendTo: $("#autocomplete").parent(),
-        select: function (event, ui) {
-            window.location = 'http://catalog/search?search=' + encodeURIcomponent(ui.item.value);
-        }
-    });
-};
+// function autocomplete() {
+//     $('#autocomplete').autocomplete({
+//         source: '/search',
+//         minLength: 1,
+//         appendTo: $("#autocomplete").parent(),
+//         select: function (event, ui) {
+//             window.location = 'http://catalog/search?search=' + encodeURIcomponent(ui.item.value);
+//         }
+//     });
+// };
 
 
 function get_cookie(cookie_name) {
@@ -62,4 +62,4 @@ async function post(url, data) {
 }
 
 
-export {post, get, uniq, autocomplete};
+export {post, get, uniq}; //, autocomplete};

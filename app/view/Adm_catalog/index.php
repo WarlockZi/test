@@ -20,7 +20,11 @@
     <a href  = "/adminsc/index">Admin</a>
     <div>Каталог</div>
   </div>
-
+<section>
+	<div class="separator btns">
+		<a href="/adminsc/catalog/category?id=new" class="btn-add-category">Добавить категорию</a>
+	</div>
+</section>
 
 
 </div>

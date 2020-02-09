@@ -103,6 +103,7 @@
     background-color: #71ffff;
     padding: 5px 10px;
     cursor: pointer;
+    color: #444444;
 }
 
 
@@ -371,6 +372,10 @@ menu {
     flex-direction: column;
     padding: 15px;
     min-height: 100vh;
+}
+#content-tab1 strong
+{
+    color: #4d4d4d;
 }
 
 /* Убираем текст с переключателей

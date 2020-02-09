@@ -11,6 +11,9 @@
 			'cache' => 60,
 			'sql' => "SELECT * FROM category "
 		]);
+		$new = $_GET['id'] == 'new';
+		$addCategoryButton = "<a href='/adminsc/catalog/category?id=new&parent=`{$_GET['id']}`' 
+					   class='btn-add-category'>Добавить категорию</a>";
 		?>
 	</div>
 </div>
@@ -52,25 +55,32 @@
 				?>
 
 				<label for="tab4" title="<?= $children ?>"><?= $children ?></label>
-				<a href="/adminsc/catalog/category?id=new&parent=<?=$_GET['id']?>" class="btn-add-category">Добавить категорию</a>
-
+				<? if ((!$new) && ($category)): ?>
+					<?=$addCategoryButton?>
+				<? endif; ?>
 
 				<section id="content-tab1" class="admin-flex-table">
-					<div class="row">
-						<strong>id :</strong>
-						<span id='id'><?= $category['id'] ?: ''; ?></span>
-					</div>
-					<div class="row">
-						<strong>Наименование :</strong>
-						<span contenteditable id='name'><?= $category['name'] ?: ''; ?></span>
-					</div>
+					<? if ($category): ?>
+						<div class="row">
+							<strong>id :</strong>
+							<span id='id'><?= $category['id'] ?: ''; ?></span>
+						</div>
+						<div class="row">
+							<strong>Наименование :</strong>
+							<span contenteditable id='name'><?= $category['name'] ?: ''; ?></span>
+						</div>
 
-					<div class="row">
-						<strong>Описание :</strong>
-						<span contenteditable id='text'
-						      class="column"><?= htmlspecialchars($category['text'] ?: ''); ?></span>
-					</div>
-
+						<div class="row">
+							<strong>Описание :</strong>
+							<span contenteditable id='text'
+							      class="column"><?= htmlspecialchars($category['text'] ?: ''); ?></span>
+						</div>
+					<? else: ?>
+						<div class="row">
+							Такой категории пока что не существует!
+							<!--							<span id='id'>--><? //= $category['id'] ?: ''; ?><!--</span>-->
+						</div>
+					<? endif; ?>
 
 				</section>
 
@@ -100,7 +110,7 @@
 						<div class="cat-prop">
 							Свойства категории
 						</div>
-						<? if (isset($category['props'])&&$category['props']): ?>
+						<? if (isset($category['props']) && $category['props']): ?>
 							<? foreach ($category['props'] as $catProp): ?>
 								<? if ($catProp): ?>
 									<select>
@@ -198,8 +208,12 @@
 
 				</section>
 				<div class="separator btns">
-					<div class="btn-add-category">Сохранить</div>
-					<a href="/adminsc/catalog/category?id=new" class="btn-add-category">Добавить категорию</a>
+					<? if ($category): ?>
+						<div class="btn-add-category">Сохранить</div>
+					<? endif; ?>
+					<? if ((!$new) && ($category)): ?>
+						<?=$addCategoryButton?>
+					<? endif; ?>
 				</div>
 			</div>
 		</div>

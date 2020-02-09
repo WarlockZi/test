@@ -85,7 +85,7 @@
 
 /*! ../max.auto */
 
-/*! exports provided: post, get, uniq, autocomplete */
+/*! exports provided: post, get, uniq */
 
 /*! jQuery UI - v1.12.1 - 2018-03-22
 * http://jqueryui.com
