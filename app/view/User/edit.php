@@ -4,15 +4,10 @@
 		<p  class="result">Данные отредактированы!</p>
 	</div>
 		<script>
-          let a = document.querySelector("p.result");
-          a.bind(aler());
-          function ssss() {
-              // alert('dddd');
-              document.querySelector("p.result").parentNode.style.height = '0%';
-          }
-          function aler() {
-              setTimeout(ssss, 2000);
-          }
+          setTimeout(function(){
+              let p = document.querySelector("p.result");
+              p.parentNode.remove();
+          }, 2000);
 		</script>
 	<? endif; ?>
 	<?php if (isset($errors) && is_array($errors)): ?>

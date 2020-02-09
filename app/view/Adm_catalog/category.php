@@ -52,7 +52,7 @@
 				?>
 
 				<label for="tab4" title="<?= $children ?>"><?= $children ?></label>
-				<a href="/adminsc/catalog/category?id=new" class="btn-add-category">Добавить категорию</a>
+				<a href="/adminsc/catalog/category?id=new&parent=<?=$_GET['id']?>" class="btn-add-category">Добавить категорию</a>
 
 
 				<section id="content-tab1" class="admin-flex-table">

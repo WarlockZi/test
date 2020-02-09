@@ -151,6 +151,7 @@ class Adm_catalogController extends AdminscController
 			$this->set(compact('category', 'props', 'thisCatAndParentCatProps'));
 		} elseif ($id = 'new') {
 			$props = [];
+			$parent = (string) $_GET['parent'];
 			$idAutoincrement = App::$app->category->autoincrement('category');
 			$category['id'] = $idAutoincrement;
 			$category['name'] = '';
