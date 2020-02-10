@@ -6,12 +6,12 @@ class DB {
 
     public $pdo;
     protected static $instance;
-    protected static $countSql;
-    protected static $queries = [];
+//    protected static $countSql;
+//    protected static $queries = [];
 
     public function __construct() {
 
-        $db = require CONFIG;
+        $db =  require ROOT.'/app/config.php';
         $db = $db['config_db'];
 		//exit(var_dump($db));
         $options = [

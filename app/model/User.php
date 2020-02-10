@@ -151,7 +151,9 @@ class User extends Model {
     */
    public function setAuth($user) {
       // Записываем идентификатор пользователя в сессию
-      $_SESSION['id'] = (int) $user['id'];
+       if (!isset($_SESSION['id']) || $_SESSION['id']='') {
+           $_SESSION['id'] = (int)$user['id'];
+       }
    }
 
    /**

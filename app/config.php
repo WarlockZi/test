@@ -10,7 +10,7 @@ $config['components'] = [
     'product' => 'app\model\Product',
     'category' => 'app\model\Category',
     'adminsc' => 'app\model\Adminsc',
-   //'instructions' => 'app\model\Instructions',
+    //'instructions' => 'app\model\Instructions',
 ];
 
 $config['Mailer'] = [
@@ -31,16 +31,16 @@ $config['Mailer'] = [
 //        'smtp_username' => "VVV_DIR",
 ];
 
-if ($_SERVER['HTTP_HOST'] == 'vitexopt.ru') {
+if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] == 'vitexopt.ru') {
 
-   $config['config_db']['dsn'] = 'mysql:host=localhost;dbname=vitex_test;charset=utf8';
-   $config['config_db']['user'] = 'vitexopt';
-   $config['config_db']['password'] = '8D8p6L2x';
+    $config['config_db']['dsn'] = 'mysql:host=localhost;dbname=vitex_test;charset=utf8';
+    $config['config_db']['user'] = 'vitexopt';
+    $config['config_db']['password'] = '8D8p6L2x';
 } else {
 
-   $config['config_db']['dsn'] = 'mysql:host=127.0.0.1;dbname=vitex_test;charset=utf8';
-   $config['config_db']['user'] = 'root';
-   $config['config_db']['password'] = '';
+    $config['config_db']['dsn'] = 'mysql:host=127.0.0.1;dbname=vitex_test;charset=utf8';
+    $config['config_db']['user'] = 'root';
+    $config['config_db']['password'] = '';
 };
 
 

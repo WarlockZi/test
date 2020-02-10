@@ -117,8 +117,8 @@
 
     </footer>
 
-  <script src="/public/js/jq.js"></script>
-  <script src="/public/js/adminLayer.js?<?=time();?>"></script>
+<!--  <script src="/public/js/jq.js"></script>-->
+  <script src="/public/jscss/adminLayer.js?<?=time();?>"></script>
   <? $this::getJS(['route'=>['controller'=>$this->route['controller'],'view'=>$this->view]]) ?>
 
   <svg width="150" height="30"  viewBox="0 0 140.93602 25.903431" >

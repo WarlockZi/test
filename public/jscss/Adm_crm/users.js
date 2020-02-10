@@ -60,7 +60,7 @@ $('.wrap').on('click', '.btnadd-user', function () {
    });
 });
 
-function post(url, data) {
+async function  post(url, data) {
 //      debugger;
    return new Promise(function (resolve, reject) {
       var req = new XMLHttpRequest();

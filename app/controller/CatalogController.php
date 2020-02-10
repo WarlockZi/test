@@ -10,11 +10,11 @@ class CatalogController extends AppController {
 
    public function __construct($route) {
       parent::__construct($route);
-      $this->layout = 'vitex';
-//      $css = 'vitex.css';
-      $list = App::$app->category->getInitCategories();
-      $this->set(compact('list'));
-      View::setJsCss(['css' => '/public/css/vitex.css']);
+//      $this->layout = 'vitex';
+//      $list = App::$app->category->getInitCategories();
+//      $this->set(compact('list'));
+      View::setCss(['css' => '/public/css/vitex.css', 'addtime']);
+
    }
 
    public function actionIndex() {
@@ -28,8 +28,9 @@ class CatalogController extends AppController {
 
       header('Cache-Control: private, max-age=8400');
       header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
+      $this->view = 'product';
 
-      $parents = $product['parents'];
+//      $parents = $product['parents'];
       $breadcrumbs = App::$app->product->getBreadcrumbs($product, $product['parents'], 'product');
 
       if (isset($_SESSION['id']) && $_SESSION['id']) {
@@ -38,28 +39,25 @@ class CatalogController extends AppController {
       }
       $canonical = $product['alias'];
       View::setMeta($product['title'], $product['description'], $product['keywords']);
-      $this->set(compact('canonical', 'breadcrumbs', 'user', 'product', 'tov', 'categories'));
+//      'user', , 'categories', 'tov'
+      $this->set(compact('canonical', 'breadcrumbs', 'product'));
 
-      $this->view = 'product';
-      View::setJsCss(['css' => $this->route, 'view' => $this->view]);
+      View::setCss(['css' => $this->route['controller'], 'view' => $this->view, 'addtime']);
    }
 
    public function actionCategory($category) {
 
-
-//      http_response_code(404);
-//
-//      include '../public/404.html'; // '404.html';
-
       if (isset($_SESSION['id']) && $_SESSION['id']) {
          $user = App::$app->user->getUser($_SESSION['id']);
+			$this->set(compact('user'));
       }
 
       $breadcrumbs = App::$app->product->getBreadcrumbs($category, $category['parents'], 'category');
       $canonical = $category['alias'];
       View::setMeta($category['title'], $category['keywords'], $category['description']);
-      $this->set(compact('user', 'breadcrumbs', 'category', 'canonical'));
-      View::setJsCss(['css' => $this->route, 'view' => $this->view]);
+      $this->set(compact( 'breadcrumbs', 'category', 'canonical'));
+//      $this->view = 'category';
+      View::setCss(['controller' => $this->route['controller'], 'view' => $this->view, 'addtime']);
    }
 
 }

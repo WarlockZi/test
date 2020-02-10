@@ -4,6 +4,17 @@ AddDefaultCharset  utf-8
 
 RewriteEngine on
 RewriteBase /
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#RewriteCond %{SERVER_PORT} !^443$
+#RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+
+#RewriteCond %{SERVER_PORT} !^443$
+#RewriteRule ^(.*)$ https://vit1/$1 [R=301,L]
+
 #RewriteCond %{HTTPS} off
 #RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
@@ -37,6 +48,8 @@ Header set Cache-Control "max-age=31536000, public"
 Header set Cache-Control "max-age=2628000, public"
 </filesMatch>
 
-
+<ifModule mod_headers.c>
+Header set Connection keep-alive
+</ifModule>
 
 
