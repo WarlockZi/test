@@ -5,9 +5,9 @@ AddDefaultCharset  utf-8
 RewriteEngine on
 RewriteBase /
 
-RewriteCond %{HTTPS} off
-RewriteCond %{HTTP:X-Forwarded-Proto} !https
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#RewriteCond %{HTTPS} off
+#RewriteCond %{HTTP:X-Forwarded-Proto} !https
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 #RewriteCond %{SERVER_PORT} !^443$
 #RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]

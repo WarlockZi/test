@@ -4,12 +4,17 @@ use app\core\Router;
 use app\core\App;
 
 session_start();
+// exit(var_dump($_SERVER));
 
+// if(isset($_SERVER['HTTP_HOST'])){
+	// echo ('aaaaaaaaaaaaaaaaaaaa');
+// exit(var_dump($_SERVER['HTTP_HOST']));
+// }
+	error_reporting(1);
 if ($_SERVER['HTTP_HOST'] == 'vitexopt.ru') {
-	error_reporting(0);
 	define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 	define('DEBU', '0'); //0-не выводить ошибки
-} else {
+ } else {
 	define('ROOT', dirname(__DIR__));
 	ini_set('display_errors', 1);
 	ini_set('error_reporting', E_ALL);

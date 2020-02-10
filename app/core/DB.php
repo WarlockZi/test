@@ -13,7 +13,7 @@ class DB {
 
         $db =  require ROOT.'/app/config.php';
         $db = $db['config_db'];
-		//exit(var_dump($db));
+		// exit(var_dump($db));
         $options = [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
