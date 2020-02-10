@@ -1,25 +1,23 @@
-// import {get} from "../common";
-var result = document.querySelector('.result-search');
-var Arr = ['HTML', 'CSS', 'PHP', 'Javascript', 'Dart', 'Python', 'Swift', 'Java', 'C++', 'Go', 'SASS', 'C#', 'LESS', 'Perl', 'Ruby']
 
-// auto complete function
-async function autoComplete(Arr, Input) {
+function closeSearch(){
+    var search = document.querySelector('#autocomplete');
+    document.addEventListener('click', closeSearch());
 
+    alert(search.value);
+};
+async function autoComplete(Input) {
     let response = await fetch('/search?q=' + Input);
     return await response.json();
 
 }
-
 export default window.getValue = async function (val) {
-
     // if no value
     if (!val) {
         result.innerHTML = '';
         return
     }
-
     // search goes here
-    var data = await autoComplete(Arr, val);
+    var data = await autoComplete(val);
     debugger;
 
     // append list data
@@ -32,6 +30,7 @@ export default window.getValue = async function (val) {
             '</a></li>';
     })
     res += '</ul>';
+    var result = document.querySelector('.result-search')
     result.innerHTML = res;
 }
 

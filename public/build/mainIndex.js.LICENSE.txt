@@ -22,25 +22,3 @@
  *
  * Date: 2019-05-01T21:04Z
  */
-
-/*! ../components/autocomplete */
-
-/*! exports provided: default */
-
-/*! jquery */
-
-/*! no exports provided */
-
-/*! no static exports found */
-
-/*!*****************************************!*\
-  !*** ./public/jscss/Main/main_index.js ***!
-  \*****************************************/
-
-/*!********************************************!*\
-  !*** ./node_modules/jquery/dist/jquery.js ***!
-  \********************************************/
-
-/*!*************************************************!*\
-  !*** ./public/jscss/components/autocomplete.js ***!
-  \*************************************************/

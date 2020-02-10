@@ -1,11 +1,12 @@
 // import 'jquery';
 // import 'slick-carousel';
 // import {auto} from "../common";
-import f from '../components/autocomplete';
+import autocomplete from '../components/autocomplete';
 // import autocomplete from "../max.auto";
 
 window.onload = function () {
-    f();
+    // autocomplete();
+
     $.event.special.touchstart = {// чтобы не было ошибки при прикосновениях пальцем на мобилке
         setup: function (_, ns, handle) {
             if (ns.includes("noPreventDefault")) {
