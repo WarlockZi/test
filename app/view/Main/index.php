@@ -41,7 +41,7 @@
            <div>
              <a href="/<?= $product['alias'];?>">
                <div class="image-height column ">
-                 <img src="//vit1/pic<?= $product['dpic']; ?>" alt="<?= $product['name']; ?>">
+                 <img src="/pic<?= $product['dpic']; ?>" alt="<?= $product['name']; ?>">
                  <div><?= $product['name']; ?> </div>
                </div>
              </a>

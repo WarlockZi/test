@@ -857,6 +857,7 @@ header {
     position: absolute;
     top: 100%;
     z-index: 1;
+    width: 100%;
  }
 .result-search ul li a{
     display: flex;
