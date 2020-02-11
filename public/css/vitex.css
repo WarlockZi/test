@@ -1706,6 +1706,35 @@ footer a
 
 
 /*************************************
+*******     SLIDER    ******
+**************************************/
+
+#slides {
+    position: relative;
+    height: 300px;
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+}
+
+.slide {
+    /*position: absolute;*/
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 1s;
+}
+
+.showing {
+    opacity: 1;
+    z-index: 2;
+}
+
+
+/*************************************
 *******     copied from MAIN    ******
 **************************************/
 /*main
