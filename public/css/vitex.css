@@ -1742,6 +1742,7 @@ footer a
 	flex-basis: 49px;
 	width: 225px;
     margin: auto;
+    overflow: hidden;
 }
 .single-slide img{
     max-width: 100%;

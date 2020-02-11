@@ -64,11 +64,11 @@ module.exports = {
             filename: '[name].css',
             chunkFilename: '[id].css',
         }),
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            "window.jQuery": "jquery"
-        }),
+        // new webpack.ProvidePlugin({
+        //     $: 'jquery',
+        //     jQuery: 'jquery',
+        //     "window.jQuery": "jquery"
+        // }),
         new webpack.ProvidePlugin({
             slick: 'slick-carousel'
         }),
