@@ -69,9 +69,9 @@ module.exports = {
         //     jQuery: 'jquery',
         //     "window.jQuery": "jquery"
         // }),
-        new webpack.ProvidePlugin({
-            slick: 'slick-carousel'
-        }),
+        // new webpack.ProvidePlugin({
+        //     slick: 'slick-carousel'
+        // }),
         new CleanWebpackPlugin(),
     ]
 

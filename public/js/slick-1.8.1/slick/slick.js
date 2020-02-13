@@ -516,7 +516,7 @@
         _.$slides.each(function(index, element) {
             $(element)
                 .attr('data-slick-index', index)
-                .data('originalStyling', $(element).attr('style') || '');
+                .data('originalStyling', $(element).attr('autocomplete.sass') || '');
         });
 
         _.$slider.addClass('slick-slider');
@@ -823,7 +823,7 @@
 
         if(_.options.rows > 0) {
             originalSlides = _.$slides.children().children();
-            originalSlides.removeAttr('style');
+            originalSlides.removeAttr('autocomplete.sass');
             _.$slider.empty().append(originalSlides);
         }
 
@@ -889,7 +889,7 @@
                 .removeAttr('aria-hidden')
                 .removeAttr('data-slick-index')
                 .each(function(){
-                    $(this).attr('style', $(this).data('originalStyling'));
+                    $(this).attr('autocomplete.sass', $(this).data('originalStyling'));
                 });
 
             _.$slideTrack.children(this.options.slide).detach();

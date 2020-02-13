@@ -323,7 +323,7 @@ $.Widget.prototype = {
 					}
 				}
 			} );
-			this.document = $( element.style ?
+			this.document = $( element.autocomplete ?
 
 				// Element within the document
 				element.ownerDocument :
@@ -3331,8 +3331,8 @@ $.effects = {
 	each = jQuery.each;
 
 // Determine rgba support immediately
-supportElem.style.cssText = "background-color:rgba(1,1,1,.5)";
-support.rgba = supportElem.style.backgroundColor.indexOf( "rgba" ) > -1;
+supportElem.autocomplete.cssText = "background-color:rgba(1,1,1,.5)";
+support.rgba = supportElem.autocomplete.backgroundColor.indexOf( "rgba" ) > -1;
 
 // Define cache name and alpha properties
 // for rgba and hsla spaces
@@ -3789,7 +3789,7 @@ color.hook = function( hook ) {
 						curElem = hook === "backgroundColor" ? elem.parentNode : elem;
 						while (
 							( backgroundColor === "" || backgroundColor === "transparent" ) &&
-							curElem && curElem.style
+							curElem && curElem.autocomplete
 						) {
 							try {
 								backgroundColor = jQuery.css( curElem, "backgroundColor" );
@@ -3806,7 +3806,7 @@ color.hook = function( hook ) {
 					value = value.toRgbaString();
 				}
 				try {
-					elem.style[ hook ] = value;
+					elem.autocomplete[ hook ] = value;
 				} catch ( e ) {
 
 					// Wrapped to prevent IE from throwing errors on "invalid" values like
@@ -3893,7 +3893,7 @@ $.each(
 	function( _, prop ) {
 		$.fx.step[ prop ] = function( fx ) {
 			if ( fx.end !== "none" && !fx.setAttr || fx.pos === 1 && !fx.setAttr ) {
-				jQuery.style( fx.elem, prop, fx.end );
+				jQuery.autocomplete( fx.elem, prop, fx.end );
 				fx.setAttr = true;
 			}
 		};
@@ -4102,7 +4102,7 @@ if ( $.uiBackCompat !== false ) {
 			var i = 0, length = set.length;
 			for ( ; i < length; i++ ) {
 				if ( set[ i ] !== null ) {
-					element.data( dataSpace + set[ i ], element[ 0 ].style[ set[ i ] ] );
+					element.data( dataSpace + set[ i ], element[ 0 ].autocomplete[ set[ i ] ] );
 				}
 			}
 		},
@@ -4279,11 +4279,11 @@ $.extend( $.effects, {
 	},
 
 	saveStyle: function( element ) {
-		element.data( dataSpaceStyle, element[ 0 ].style.cssText );
+		element.data( dataSpaceStyle, element[ 0 ].autocomplete.cssText );
 	},
 
 	restoreStyle: function( element ) {
-		element[ 0 ].style.cssText = element.data( dataSpaceStyle ) || "";
+		element[ 0 ].autocomplete.cssText = element.data( dataSpaceStyle ) || "";
 		element.removeData( dataSpaceStyle );
 	},
 

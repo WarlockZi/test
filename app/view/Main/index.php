@@ -1,4 +1,4 @@
-<main>
+<main class="column">
 
 	<div class="info">
 		<h1>Расходные материалы для медицины оптом</h1>
@@ -31,26 +31,26 @@
 			на соответствие ГОСТам.
 		</p>
 	</div>
-	<div class="sale-action-wrap column ">
-		<span>акция !!!</span>
-		<div class="white-space">
+<!--		<span>акция !!!</span>-->
+<!--		<div class="next">&#62;</div>-->
+<!--		<div class="prev">&#60;</div>-->
 
-			<div id="slides">
-				<? $i = 0; ?>
-				<? foreach ($sale as $product) : ?>
-				<? $i++; ?>
-				<div class="slide <?=$i==1?'showing':''?>" >
-             <a href="/<?= $product['alias']; ?>">
-				<div class="image-height column pic">
-					<img src="/pic<?= $product['dpic']; ?>" alt="<?= $product['name']; ?>">
-					<div><?= $product['name']; ?> </div>
+
+	<div class="swiper-container">
+		<div class="swiper-wrapper" >
+			<? foreach ($sale as $product) : ?>
+				<div class="swiper-slide">
+					<a href="/<?= $product['alias']; ?>">
+						<img class="pic" src="/pic<?= $product['dpic']; ?>" alt="<?= $product['name']; ?>">
+						<span><?= $product['name']; ?> </span>
+					</a>
 				</div>
-				</a>
-			</div>
 			<? endforeach; ?>
 		</div>
+		<!-- Add Pagination -->
+		<div class="swiper-pagination"></div>
 
-	</div>
+
 	</div>
 </main>
 <script src="/public/build/mainIndex.js"></script>

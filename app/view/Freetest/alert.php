@@ -19,8 +19,8 @@
       ;
       debugger;
       close.onclick = function(){
-        overlay.style.display = "none";
-        box.style.display = "none";
+        overlay.autocomplete.display = "none";
+        box.autocomplete.display = "none";
         window.location.replace('/freetest');
       };
 

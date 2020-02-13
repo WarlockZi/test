@@ -79,7 +79,7 @@ window.onload = function () {
                      reg = new RegExp(our_string, 'g');
                      if (reg.test(text)) {
                         elem.innerHTML = elem.innerHTML.replace(reg, "<span style ='color:green;font-weight:800'> " + our_string + "</span>");
-                        paginItem.style.boxShadow = green; // greennew RegExp(our_string, 'g')
+                        paginItem.autocomplete.boxShadow = green; // greennew RegExp(our_string, 'g')
                      }
                   }
                }
@@ -91,8 +91,8 @@ window.onload = function () {
 // Правильные ответы зеленым
             a = document.querySelectorAll("a[href^='#question-']");
             for (var i = 0; i < a.length; i++) {
-               if (a[i].style.boxShadow != green) {// Если не красный, раскрасим в зеленый
-                  a[i].style.boxShadow = bxShdRed;
+               if (a[i].autocomplete.boxShadow != green) {// Если не красный, раскрасим в зеленый
+                  a[i].autocomplete.boxShadow = bxShdRed;
                   errorsCnt++;
                }
             }

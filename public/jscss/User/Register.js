@@ -34,12 +34,12 @@ window.onload = function () {
                clos = document.querySelector(".messageClose")
                ;
                overlay.addEventListener("click", function () {
-                  overlay.style.display = 'none';
-                  box.style.display = 'none';
+                  overlay.autocomplete.display = 'none';
+                  box.autocomplete.display = 'none';
                });
                clos.addEventListener("click", function () {
-                  overlay.style.display = 'none';
-                  box.style.display = 'none';
+                  overlay.autocomplete.display = 'none';
+                  box.autocomplete.display = 'none';
                });
             }
          }

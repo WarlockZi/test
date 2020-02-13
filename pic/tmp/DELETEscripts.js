@@ -63,10 +63,10 @@ window.onload = function () {
                      label.classList.add('done'); //green check зеленый значек
                   }
                   else if (input.checked == true && correctAnswers.indexOf(inpVal) == -1) {// checkbox нажат,и есть в correct answer. в correct_answers нет, кнопка не нажата
-                     paginItem.style.boxShadow = bxShdRed; // red
+                     paginItem.autocomplete.boxShadow = bxShdRed; // red
                   }
                   else if (input.checked == false && correctAnswers.indexOf(inpVal) != -1) {// кнопка не нажата, в correct_answers есть
-                     paginItem.style.boxShadow = bxShdRed; // red
+                     paginItem.autocomplete.boxShadow = bxShdRed; // red
                      label.classList.add('done');// green check зеленый значек
                   }
                   else if (input.checked == false && correctAnswers.indexOf(inpVal) == -1) {// кнопка не нажата, в correct_answers нет 
@@ -77,8 +77,8 @@ window.onload = function () {
 // Правильные ответы зеленым
             var a = document.querySelectorAll("a[href^='#question-']");
             for (var i = 0; i < a.length; i++) {
-               if (a[i].style.boxShadow != bxShdRed) {// Если не красный, раскрасим в зеленый
-                  a[i].style.boxShadow = "rgb(159, 212, 104) 0px 2px 11px 3px";
+               if (a[i].autocomplete.boxShadow != bxShdRed) {// Если не красный, раскрасим в зеленый
+                  a[i].autocomplete.boxShadow = "rgb(159, 212, 104) 0px 2px 11px 3px";
                   errorsCnt--;
                }
             }
@@ -269,7 +269,7 @@ window.onload = function () {
                      reg = new RegExp(our_string, 'g');
                      if (reg.test(text)) {
                         elem.innerHTML = elem.innerHTML.replace(reg, "<span style ='color:green;font-weight:800'> " + our_string + "</span>");
-                        paginItem.style.boxShadow = green; // greennew RegExp(our_string, 'g')
+                        paginItem.autocomplete.boxShadow = green; // greennew RegExp(our_string, 'g')
                      }
                   }
                }
@@ -281,8 +281,8 @@ window.onload = function () {
 // Правильные ответы зеленым
             a = document.querySelectorAll("a[href^='#question-']");
             for (var i = 0; i < a.length; i++) {
-               if (a[i].style.boxShadow != green) {// Если не красный, раскрасим в зеленый
-                  a[i].style.boxShadow = bxShdRed;
+               if (a[i].autocomplete.boxShadow != green) {// Если не красный, раскрасим в зеленый
+                  a[i].autocomplete.boxShadow = bxShdRed;
                   errorsCnt++;
                }
             }
@@ -749,12 +749,12 @@ window.onload = function () {
                   clos = document.querySelector(".messageClose")
                   ;
                   overlay.addEventListener("click", function () {
-                     overlay.style.display = 'none';
-                     box.style.display = 'none';
+                     overlay.autocomplete.display = 'none';
+                     box.autocomplete.display = 'none';
                   });
                   clos.addEventListener("click", function () {
-                     overlay.style.display = 'none';
-                     box.style.display = 'none';
+                     overlay.autocomplete.display = 'none';
+                     box.autocomplete.display = 'none';
                   });
 
                }
@@ -815,12 +815,12 @@ window.onload = function () {
                clos = document.querySelector(".messageClose")
                ;
                overlay.addEventListener("click", function () {
-                  overlay.style.display = 'none';
-                  box.style.display = 'none';
+                  overlay.autocomplete.display = 'none';
+                  box.autocomplete.display = 'none';
                });
                clos.addEventListener("click", function () {
-                  overlay.style.display = 'none';
-                  box.style.display = 'none';
+                  overlay.autocomplete.display = 'none';
+                  box.autocomplete.display = 'none';
                });
             }
          }

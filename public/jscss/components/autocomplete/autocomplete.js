@@ -1,3 +1,4 @@
+import './autocomplete.sass';
 
 function closeSearch(){
     var search = document.querySelector('#autocomplete');
@@ -32,6 +33,14 @@ export default window.getValue = async function (val) {
     res += '</ul>';
     var result = document.querySelector('.result-search')
     result.innerHTML = res;
+
+    document.querySelector('body').addEventListener('click', function (e) {
+        const search = document.querySelector('.result-search ul');
+        if (document.querySelector('.result-search ul') && e.target !== search) {
+            search.remove();
+            // alert('Удаляем !');
+        }
+    });
 }
 
 
