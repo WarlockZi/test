@@ -1,7 +1,8 @@
 const path = require('path');
-const WebpackDevServer = require('webpack-dev-server');
-const webpack = require('webpack');
+// const WebpackDevServer = require('webpack-dev-server');
+// const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -39,6 +40,13 @@ module.exports = {
 
     module: {
         rules: [
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [{
+                        loader: 'file-loader',
+                    }]
+            },
+
             {
                 test: /\.js/,
                 loader: 'babel-loader',

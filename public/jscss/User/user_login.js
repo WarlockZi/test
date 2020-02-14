@@ -1,12 +1,12 @@
-import "jquery";
+// import "jquery";
 import {post} from '../common';
 import '../components/header/header.sass';
 
 ///////////////////////////    Login     /////////////////////
-$(function () {
+window.onload = function () {
+
     document.querySelector("body").addEventListener("click",
         function (e) {
-            // debugger;
             if (e.target.className === "messageClose") {
                 window.location.href = "/user/cabinet";
             }
@@ -15,14 +15,15 @@ $(function () {
         async function (e) {
             e.preventDefault();
             let obj = {};
-            obj.email = $('input[type = email]').val();
-            obj.pass = $('input[type= password]').val();
-            obj.token = document.querySelector("[name = 'token']").value;
+            obj.email = document.querySelector('input[type = email]').value,
+                obj.pass = document.querySelector('input[type= password]').value,
+                obj.token = document.querySelector("[name = 'token']").value;
+            debugger;
 
-            let response = await post('/user/login', obj);
-            $('body').append(response);
-            $('.overlay').css({"display": "block"});
-
-
+            let res = await post('/user/login', obj);
+            let overlayWrap = document.createElement('div');
+            overlayWrap.innerHTML = res;
+            document.querySelector('body').append(overlayWrap);
+            overlayWrap.querySelector('.overlay').style.display = "block";
         });
-});
+};

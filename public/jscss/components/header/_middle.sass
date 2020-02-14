@@ -1,2 +1,97 @@
-.h-upper
-  background-color: $middle-color
+//.h-upper
+//  background-color: $middle-color
+
+.contact p,
+.contact H3
+  margin: 0
+  padding: 0
+
+.map
+  width: 100%
+  margin-top: 60px
+
+.inner-wrap
+  max-width: 1310px
+  margin: auto
+  box-sizing: border-box
+  padding-bottom: 3px
+
+
+
+.header-lower
+  position: relative
+  background-color: #000
+
+
+.h-cat:hover
+  background-color: #9e0000
+
+.h-cat
+
+  text-transform: uppercase
+  transition: .5s
+  display: flex
+  align-items: center
+  justify-content: center
+  flex: 1
+  padding: 13px
+  background: #e30000
+  color: #fff
+  font: 400 17px/17px intro,'Proxima Nova', sans-serif
+
+.h-cat:first-child ul
+  left: 0
+
+.h-cat:last-child ul
+  right: 0
+
+.h-cat ul
+  height: 0
+  position: absolute
+  top: 45px
+  overflow: hidden
+  color: black
+  z-index: 2
+
+.h-cat:hover ul
+
+  padding: 30px 25px 15px 25px
+  height: auto
+  max-height: fit-content
+  background-color: white
+  position: absolute
+  top: 100%
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28)
+  overflow: visible
+
+.h-cat ul:before
+  content: ''
+  display: block
+  width: 0px
+  height: 0px
+  transform: rotate(45deg)
+  position: absolute
+  top: -4px
+  right: 50%
+  border-top: 10px solid white
+  border-left: 10px solid white
+
+.h-cat:first-child ul:before
+  right: 80%
+
+.h-cat:hover ul li
+
+  padding: 10px 5px
+  border-bottom: #f0f0f0 1px solid
+  transition: .3s
+
+
+.h-cat ul li
+
+  padding: 0px 0px
+  transition: .3s
+
+.h-cat ul li a
+
+  font: 600 14px/17px 'Proxima Nova', sans-serif
+

@@ -1,8 +1,361 @@
+@import "../autocomplete/autocomplete"
+@import "../header-panel/header-panel"
 $top-color: #0a28d0
 $middle-color: #ffd307
 $menu-color: #d36e16
 @import "_top"
+
+
+///*************************************
+//*******      HTML BODY    ******
+//**************************************/
+h1,
+h2
+
+  text-transform: uppercase
+  color: #4e4e4e
+  font-size: 1.6em
+  font-weight: 400
+
+html,
+body
+  height: 100%
+  overflow-x: hidden /*для скрытия горизонтального скрола при появлении ответов*/
+  overflow-y: hidden
+
+
+body
+  margin-left: calc(100vw - 100%)
+  margin-right: 0
+  overflow-y: scroll
+  margin: 0
+  font-family: 'Roboto', sans-serif
+/*font-family: Verdana,Arial,sans*/
+
+body,
+a,
+p 
+  color: #595959
+
+
+a,
+a:hover,
+.form-title,
+.navi__item,
+.navi__item:hover,
+.p-no-active
+  text-decoration: none
+
+
+ul, li
+  list-style: none
+  margin: 0
+  padding: 0
+
+input,
+textarea,
+textarea:focus,
+.button:focus
+  outline:  none
+
+a,
+.add-freetest,
+a:hover,
+.checkbox + label,
+.pic-upload label,
+.pic-del,
+.checkbox:checked + label:before,
+.cansel-rename-test-button,
+.add-pic-button label,
+.navi__item,
+.button,
+.a label,
+.pic-upload label,
+.add-question,
+.add-test,
+.test-params,
+.freetest-params,
+.user-button,
+.messageTitleClose,
+.delete-question,
+.smallButton:hover,
+#addNewTestOk,
+.submit
+  cursor: pointer
+
+///*************************
+//*******      Site    ******
+//**************************/
+
+
+.wrap
+  flex: 1 0 auto
+  min-height: 100vh
+
+.d-content
+  max-width: 800px
+  margin: auto
+
+.column
+  display: flex
+  flex-flow: column
+
+
+.row 
+  display: flex
+  flex-flow: row
+
+.flex1
+  flex: 1
+
+.none
+  display: none
+
+.art
+  margin: 10px 0
+  padding: 1.14rem 1.14rem
+  font: normal 19px Verdana,Arial,sans
+  color: #555
+  text-align: right
+
+.card-left .row 
+  justify-content: space-between
+
+
+#cookie-notice 
+  color: rgb(255, 255, 255)
+  background-color: rgb(0, 0, 0)
+  display: block
+  position: fixed
+  min-width: 100%
+  height: auto
+  z-index: 10
+  font-size: 10px
+  line-height: 15px
+  left: 0
+  bottom: -100%
+  text-align: center
+  transition: 1s
+  padding: 10px
+
+
+
+#cn-accept-cookie 
+  font-family: sans-serif
+  display: inline-block
+  margin-right: 0.3em
+  margin-bottom: 0
+  line-height: 20px
+  text-align: center
+  font-style: normal
+  vertical-align: middle
+  cursor: pointer
+  color: #ffffff
+  background-color: #e60000
+  background-repeat: repeat-x
+  border-style: solid
+  border-width: 1px
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0)
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false)
+  padding: 2px 10px
+  font-size: 12px
+  text-decoration: none
+  -webkit-border-radius: 3px
+  -moz-border-radius: 3px
+  border-radius: 3px
+  outline: none
+
+.site
+  position: relative
+/*margin: 90px*/
+
+.site .wrap
+  margin: 0 auto
+  padding: 30px 10px
+  margin-bottom: 9px
+  max-width: 1310px
+  box-sizing: border-box
+
+main
+  display: flex
+  max-width: 1310px
+  margin: auto
+  padding: 0 10px
+
+
+.main-menu-wrap
+  margin: 0 15px 0 15px
+
+.main-menu-wrap  li a
+  padding: 5px 15px 5px 15px
+
+
+
 header
-  background-color: #9fd468
+  //background-color: #9fd468
   @import "_middle"
   @import "_header-menu"
+
+
+///*************************************
+//*******     MEDIA QUERRIES    ******
+//**************************************/
+
+@media only screen and (max-width: 400px)
+  .top-menu
+    padding: 0 20px
+
+  .FIO,
+  .t-1,
+  .logo-desc,
+  .title,
+  .logo>span,
+  .basket,
+  .header-lower,
+  .top-menu .contacts,
+  .user-button,
+  .user-button span,
+  .icon-phone,
+  .contacts,
+  .card-right,
+  .phone-wrap
+    display: none
+
+  header
+    height: 65px
+
+  .logo svg
+
+    width: 235px
+
+  .dtxt
+    width: 80%
+
+
+
+///* xs (<=543px) */
+@media (min-width: 401px) and (max-width: 575px)
+  .FIO,
+  .t-1,
+  .logo-desc,
+  .title,
+  .logo>span,
+  .basket,
+  .icon-phone,
+  .header-lower,
+  .top-menu .contacts,
+  .user-button span,
+  .user-button,
+  .card-right,
+  .user-button div span,
+  .top-strip,
+  .phone-wrap
+    display: none
+
+  header
+    height: 65px
+
+  .user-button i
+    font-size: 3.5vw
+
+  .container-do-test
+    flex-direction: column
+    align-items: flex-start
+
+  .test-menu-wrap
+    margin: 0
+
+  .dtxt
+    width: 80%
+
+  .nav
+    right: 0px
+    width: auto
+
+  .search-wrap
+    margin: 6px 5px
+
+
+
+///* sm (>=576 и <=767) */
+@media (min-width: 575px) and (max-width: 768px)
+  .toggle-button
+    display: block
+
+  header
+    height: 65px
+
+  .logo-desc,
+  .title,
+  .logo>span,
+  .basket,
+  .icon-phone,
+  .user-button span,
+  .h-upper>div:not([class]),
+  .user-button,
+  .card-right,
+  .FIO,
+  .phone-wrap,
+  .header-lower
+    display: none
+
+  .logo-wrap
+    width: 240px
+
+
+
+
+///* md (>=768 и <=991) */
+@media (min-width: 768px) and (max-width: 991px)
+  .h-upper>div:not([class]),
+    .title,
+    .logo>span,
+    .basket
+    display: none
+
+
+
+
+///* lg (>=992 и <=1199) */
+@media (min-width: 992px) and (max-width: 1199px)
+  .h-upper>div:not([class]),
+  .title
+    display: none
+
+  .logo-wrap
+    min-width: 437px
+    max-width: 583px
+
+
+
+///* xl (>=1200) */
+@media (min-width: 1200px)
+  .q,
+  .menu a,
+  textarea,
+  .pagination a
+    font-size: .9vw
+
+  .content
+    flex: 3
+
+  textarea
+    font-family: inherit
+
+  .holder
+    font-size: .6vw
+
+  .vert-menu__list::after
+    border: .4vw solid
+    border-color: transparent transparent transparent #eee
+
+
+  .pagination a
+    width: 1.1vw
+    padding: .1vw .3vw
+
+  .button,
+  .test-name
+    font-size: 1vw

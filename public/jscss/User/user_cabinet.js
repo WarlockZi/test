@@ -1,5 +1,5 @@
 import 'jquery';
-import '../max.auto';
+// import '../max.auto';
 import '../common';
 
 $(function () {

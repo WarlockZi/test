@@ -18,10 +18,7 @@ jQuery.event.special.touchmove =
             }
         }
     };
-
-
 $(function () {
-
     function empty_form() {
         var text = document.querySelector('#autocomplete').value;
         if (!text) {
@@ -30,12 +27,10 @@ $(function () {
         }
         return true;
     };
-
     $('.single-slide').slick({
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
     });
-
-})
+});

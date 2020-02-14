@@ -11,8 +11,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
-	<link rel="preload" href="/public/css/fonts/intro.woff2" as="font" crossorigin="anonymous" />
-	<link rel="preload" href="/node_modules/swiper/css/swiper.min.css" as="stylesheet" crossorigin="anonymous" />
+<!--	<link rel="preload" href="/public/css/fonts/intro.woff2" as="font" crossorigin="anonymous" />-->
+<!--	<link rel="preload" href="/node_modules/swiper/css/swiper.css" as="style" crossorigin="anonymous" />-->
 <!--	<link rel="preload" href="/pic/header-big.png" as="image" crossorigin="anonymous" />-->
 	<? $this::getMeta(); ?>
 <!--	--><?// $this::getCSS(); ?>
@@ -52,7 +52,7 @@
 
 	<div id="panel">
 
-		<div class="wrap">
+<!--		<div class="wrap">-->
 
 			<div class="top-menu">
 				<div class="row">
@@ -214,7 +214,7 @@
 
 			<div class="page-buffer"></div>
 
-		</div>
+<!--		</div>-->
 
 		<footer class='column'>
 
