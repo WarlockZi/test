@@ -1,53 +1,30 @@
-
-.sort-q {
-  text-align: center;
-  border: 1px #9fd468 solid;
-}
-
-
-.check_right_answer {
-  @import '../../components/checbox-slider';
-
-  //& > .checkbox:not(checked) + label:before {
-  //  top: -1px;
-  //  left: 4px;
-  //  width: 40px;
-  //  height: 20px;
-  //}
-  //
-  //& > .checkbox:not(checked) + label:after {
-  //  top: 1px;
-  //}
-  //
-  //& > .checkbox:checked + label:after {
-  //  width: 16px;
-  //  height: 16px;
-  //  left: 6px;
-  //}
-  //
-  //& > .checkbox:not(checked) + label:after {
-  //  width: 16px;
-  //  height: 16px;
-  //  left: 28px;
-  //}
-
-}
-
-
 .content {
   margin: 0 5px;
   flex: 1;
 }
 
 .add-test {
+  color: #fff;
+  font-weight: 600;
   border: 1px solid #eee;
   text-align: center;
   padding: 8px 15px;
   transition: background-color 0.5s ease-out;
   margin-bottom: 20px;
   white-space: nowrap;
-  background: #9FD468;
+  background: #1bbc9b;
   cursor: pointer;
+}
+
+.sort-q {
+  text-align: center;
+  border: 1px #1bbc9b solid;
+}
+
+
+.check_right_answer {
+  margin: 10px 0;
+  @import '../../components/checbox-slider';
 }
 
 
@@ -66,7 +43,6 @@
   position: relative;
   padding: .8vw;
 }
-
 
 //* менюшка в редакторе тестов добавить/удалить ответ*/
 .navi {
@@ -135,31 +111,39 @@
 
   .answers_show {
     position: absolute;
-    top: 148px;
-    left: 50%;
+    top: 150px;
+    left: 25%;
+    cursor: pointer;
 
     &:after {
-
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -25px;
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-bottom: #1bbc9b solid 3px;
+      border-left: #1bbc9b solid 3px;
+      transform: rotate(-45deg);
     }
   }
-
-  .answers_show:after {
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-bottom: #1bbc9b solid 3px;
-    border-left: #1bbc9b solid 3px;
-    transform: rotate(-45deg);
-  }
-
 
   [data-toggle] {
     display: none;
   }
 
   [data-toggle]:checked + .answers {
-    transition: height 10s;
-    height: auto;
+    transform: translateY(100%);
+  }
+
+  .answers {
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+    transition: all .3s;
+    transform: translateY(0);
+    transform-origin: 50% 0;
   }
 
   .field__wrapper {
@@ -238,7 +222,7 @@
   .e-block-a {
     border: 1px #eee solid;
     padding: 5px;
-    margin: 0 0 10px 0;
+    margin: 5px 0 10px 0;
     overflow: hidden;
     position: relative;
     min-height: 100px;
@@ -255,7 +239,7 @@
 
 
   .e-block-q {
-    padding: 5px;
+    padding: 5px 5px 10px 5px;
     overflow: visible;
     position: relative;
     background-color: #dcefd1;
@@ -280,42 +264,8 @@
   }
 
 
-  .answers {
-    transition: height 10s;
-    position: relative;
-    height: 0;
-    overflow: hidden;
-  }
 }
 
-
-/* менюшка в редакторе тестов добавить/удалить ответ*/
-.navi {
-  box-shadow: inset 0 5px rgba(0, 0, 0, 0.5);
-  position: absolute;
-  right: 0;
-  display: none;
-  z-index: 1;
-}
-
-.navi__item {
-  display: block;
-  font-weight: bold;
-  font-size: .8vw;
-  text-align: center;
-  text-transform: uppercase;
-  background-color: #bcbcbc;
-  transition: background-color 0.5s linear, color 3.1s linear;
-  white-space: nowrap;
-  line-height: 17px;
-  padding: 5px;
-  margin: 0;
-}
-
-.navi__item:active {
-  background-color: #5e5e5e;
-
-}
 
 .test-menu-wrap {
 
@@ -464,21 +414,25 @@
     display: flex;
     flex-direction: column;
   }
+$add-color: #1bbc9b;
+$add-color_hover: #19ad8e;
 
   .pagination {
     .add-question {
-      background-color: #e30000;
+      background-color: $add-color;
       border: none;
       color: white;
       padding: 0 5px;
       text-align: center;
       font-size: 27px;
-      box-shadow: 0 2px 4px 0 #e30000;
+      box-shadow: 0 2px 4px 0 $add-color;
       margin: 0 3px 1px 0;
       line-height: 20px;
+      cursor: pointer;
 
       &:hover {
-        background-color: #9e0000;
+        background-color: $add-color_hover;
+
       }
 
     }
