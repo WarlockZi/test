@@ -183,11 +183,9 @@ class Product extends Model
 				$product['parents'][] = $this->getProductParents($last);
 			}
 			App::$app->cache->set('product' . $url, $product, 30);
+			return $product;
 		};
-		if (!$product) {
 			return FALSE;
-		};
-		return $product;
 	}
 
 	public function productsCnt()

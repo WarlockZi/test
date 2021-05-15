@@ -6,7 +6,7 @@
   </svg>
 </div>
 <a href=
-<?= isset($cat['childs']) ? "#" : PROJ . "/freetest/edit/" . $cat['id'] ?>
+<?= isset($cat['childs']) ? "#" : "/freetest/edit/" . $cat['id'] ?>
    ><?= $cat['name'] ?>
 </a>
 <? if (isset($cat['childs'])): ?>

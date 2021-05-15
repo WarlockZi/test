@@ -1,10 +1,9 @@
-import 'jquery';
-// import '../max.auto';
 import '../common';
+import '../components/header/header';
 
-$(function () {
-    // var a = $('#menu').html();
-    // alert(a);
-});
+import './cabinet.scss'
+
+import '../components/footer/footer.sass';
+
 
 

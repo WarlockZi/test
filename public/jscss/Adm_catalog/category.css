@@ -16,21 +16,6 @@
     padding: 23px;
 } 
 
-html,
-body{
-    height: 100%;
-    overflow-x: hidden;/*для скрытия горизонтального скрола при появлении ответов*/
-    overflow-y: hidden;
-}
-
-body{
-    margin-left: calc(100vw - 100%);
-    margin-right: 0;
-    overflow-y: scroll;
-    margin:0;
-    font-family: 'Roboto', sans-serif;
-}
-
 a {
     color: #616161;
 }
@@ -50,29 +35,18 @@ ul, li{
     margin: 0;
     padding: 0;
 }
-input, 
-textaria,
-textarea:focus,
-.button:focus
-{ 
-    outline:none;
-}
 
 
 a,
 .add-freetest,
 a:hover,
-.checkbox + label,
 .pic-upload label,
-.pic-del, 
-.checkbox:checked + label:before,
 .cansel-rename-test-button,
 .add-pic-button label,
 .navi__item,
 .button,
 .a label,
 .pic-upload label,
-.add-question,
 .add-test,
 .test-params,
 .freetest-params,
@@ -147,13 +121,9 @@ a:hover,
     display: flex;
     flex-flow:  column wrap;
     max-height: 350px;
-}
-.key_words input, 
-.button_key,
-body,
-textarea{
     color: #5d5d5d;
 }
+
 .key_words input{
     width:30%;
     padding: 4px;
@@ -613,11 +583,6 @@ a.index{
 }
 
 
-.num{
-    float: left;
-    clear: left;
-    padding-right: 10px;
-}
 
 .block{
     flex-direction: column;
@@ -643,7 +608,6 @@ a.index{
 .a{
     min-height: 50px;
     padding: 3px 20px;
-
 }
 
 
@@ -660,8 +624,8 @@ a.index{
     border: 1px solid #BBBBBB;
     background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(240, 240, 240,1) 100%); 
     box-shadow: 15px 11px 20px 2px #6a8784;
-    width: 60%;
     color: #4d4d4d;
+    width: 100%;
 }
 .a label:hover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, .58);
@@ -673,14 +637,38 @@ a.index{
 }
 
 
+.num{
+    float: left;
+    clear: left;
+    padding-right: 10px;
+}
+
+.block{
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 25px 25px 20px  25px;
+    border: 3px solid #ccc;
+    margin: 10px 0px;
+    background: #fafafa;
+    position: relative;
+    display:none;
+
+}
+.test-data{
+    border: 10px solid #f3f3f3;
+    padding:10px;
+    margin: 0px 0 20px 0;
+    box-shadow: 0 8px 16px 0 #607F7C;
+    box-sizing: border-box;
+    width: 100%;
+}
 
 .q-text{
     float: left;
     width: 60%;
     margin-bottom: 10px;
 }
-
-
 
 .q {
     /*display:  FLEX;*/
@@ -692,7 +680,6 @@ a.index{
     clear: both;
 }
 
-
 .question{
     display: none;
 }
@@ -700,8 +687,6 @@ a.index{
 .none{
     display: none;
 }
-
-
 
 
 
@@ -923,20 +908,6 @@ progress:after { content: '%'; }
 
 
 
-/*Чекбокс*/
-/*.checkbox {
-    vertical-align: top;
-    margin: 0 3px 0 0;
-    width: 17px;
-    height: 17px;
-}*/
-
-/*.checkbox:not(checked) {
-    position: absolute;
-    opacity: 0;
-}*/
-
-
 
 .checkbox:not(checked) + label {
     position: relative; /* будем позиционировать псевдочекбокс относительно label */
@@ -1031,7 +1002,6 @@ progress:after { content: '%'; }
 }
 
 /*Кнопка маленькая зеленая*/
-.pic-del,
 .checkbox:checked + label:before,
 .smallButton{
     text-align: center;
@@ -1253,9 +1223,6 @@ h2,
 .menu a:hover,
 .vert-menu a:hover,
 #saveTestParamsOK:hover,
-/*#saveFreetestParamsOK:hover,
-#saveTestParmsCansel:hover,
-#TestParamsDEL:hover,*/
 .pagination > a.nav-active:hover,
 .smallButton:hover
 

@@ -21,10 +21,8 @@
             </nav>-->
 
       <div data-prefix = "q" id = "<?= $row['qid'] ?>" class = "holder">Перетащить картинку.
-        <p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-        <p class="filereader">FileAPI&FileReaderAPI Обратитесь к ВВ.</p>
-        <p class="formdata">FormData Обратитесь к ВВ.</p>
-        <p class="progress">upload progr isn\'t  Обратитесь к ВВ.</p>                         
+        <p id="upload" class="hidden"><br><input type="file"></p>
+
         <!--<p><progress class="hidden" id="uploadprogress" max="100" value="0">0</progress></p>-->
         <?= $picQ ?>
         <div class="pic-del" data-q = <?= $row['qid'] ?>>  X  </div>	

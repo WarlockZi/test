@@ -98,7 +98,7 @@ class Freetest extends Model {
       $row['sort'] = $sort = (int) $_POST['sort'];
       $enable = (int) $_POST['enable'];
 
-      // Следующий id теста 
+      // Следующий id теста
       $sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'freetest'";
       $nextTest = $this->findBySql($sql)[0];
       $tId = $nextTest['Auto_increment'];
@@ -233,25 +233,25 @@ class Freetest extends Model {
     */
    public function pagination($test_data) {
 
-      // Удалим название теста из массива. Оно нам не понадобится
+
       unset($test_data['test_name']);
       unset($test_data['testId']);
       unset($test_data['correct_answers']);
-      // Получаем количество вопросов
-      $count_questions = count($test_data);
-      // Получаем массив id вопросов  
+
       $keys = array_keys($test_data);
 
       $pagination = '<div class="pagination">';
-      for ($i = 1; $i <= $count_questions; $i++) {
-         // Убираем ключи, оставляем только значения
+      $i = 0;
+      foreach ($test_data as $index=>$item)
+//      for ($i = 1; $i <= $count_questions; $i++) {
+
          $key = array_shift($keys);
          if ($i == 1) {
             $pagination .= '<a href="#question-' . $key . '" class="nav-active"><div>' . $i . '</div></a>';
          } else {
             $pagination .= '<a href="#question-' . $key . '" class = "p-no-active" ><div>' . $i . '</div></a>';
          }
-      }
+//      }
 
       $pagination .= '</div>';
 
@@ -280,7 +280,7 @@ class Freetest extends Model {
    }
 
    public function send_mail_Freetest() {
-      
+
       $this->send_result_mail('/results/freetest/', '/freetest/results/');
 
    }
@@ -367,7 +367,7 @@ class Freetest extends Model {
       if (empty($pic)) {
 
          $nameHash = $fid . $pref . round(microtime(true)) . substr($nameRu, -4); // напр. 4526q1541554561.jpg
-         $to = $_SERVER['DOCUMENT_ROOT'] . "/" . PROJ . "pic/" . $nameHash;   //"/" . $nameHash; 
+         $to = $_SERVER['DOCUMENT_ROOT'] . "/" . PROJ . "pic/" . $nameHash;   //"/" . $nameHash;
          // Перемещаем из tmp папки (прописана в php.config)
          move_uploaded_file($_FILES['file']['tmp_name'], $to);
 
@@ -382,7 +382,7 @@ class Freetest extends Model {
       } else {
          $nameHash = $pic[0]['nameHash'];
 
-         $to = $_SERVER['DOCUMENT_ROOT'] . "/" . PROJ . "pic/" . $nameHash;   //"/" . $nameHash; 
+         $to = $_SERVER['DOCUMENT_ROOT'] . "/" . PROJ . "pic/" . $nameHash;   //"/" . $nameHash;
          // Перемещаем из tmp папки (прописана в php.config)
          move_uploaded_file($_FILES['file']['tmp_name'], $to);
 

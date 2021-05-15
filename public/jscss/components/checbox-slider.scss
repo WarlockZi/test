@@ -1,0 +1,45 @@
+/*Кнопка маленькая зеленая*/
+.checkbox:checked + label:before,
+.smallButton {
+  text-align: center;
+  overflow: hidden;
+  transition: background-color 0.5s ease-out;
+}
+.checkbox:not(checked) + .answers {
+  transition: height 10s;
+  height: 0;
+}
+
+.checkbox:not(checked) + label {
+  position: relative; /* будем позиционировать псевдочекбокс относительно label */
+  padding: 0 0 0 60px; /* оставляем слева от label место под псевдочекбокс */
+  font-weight: normal;
+}
+
+.checkbox:not(checked) + label:before {
+  content: '';
+  position: absolute;
+  border-radius: 13px;
+  background: #CDD1DA;
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, .2);
+}
+
+.checkbox:not(checked) + label:after {
+  content: '';
+  position: absolute;
+  border-radius: 10px;
+  transition: all .2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+  background-color: #fff;
+}
+
+.checkbox:focus + label:before {
+  box-shadow: 0 0 0 3px rgba(255, 255, 0, .5);
+}
+
+.checkbox:checked + label:before {
+  text-align: center;
+  background: #9FD468;
+  overflow: hidden;
+  transition: background-color 0.5s ease-out;
+}

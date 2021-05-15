@@ -1,60 +1,30 @@
 <section>
-<div class= "container-edit-test">
-	
-	<div class = 'test-menu-wrap'>
-		<div class = 'add-test'>Добавить тест</div>
 
-        <? 
-        new app\view\widgets\menu\Menu([
-            'tpl' => ROOT.PROJ."/app/view/widgets/menu/menu_tpl/edit_test_menu.php",
-            'cache' => 60,
-        ]);
-        ?>
+	<div class="container-edit-test">
 
-	</div>
+		<div class='test-menu-wrap'>
+			<div class='add-test'>Добавить тест</div>
 
-    <div class="content">
-	<?if (isset($testDataToEdit)&&!isset($error)&&!$testDataToEdit==0):// Проверим, чтобы запрашивали конкретный тест?>
-<!--        <div class="add-question" data-tooltip="Добавить вопрос">+
-            <div id="tooltip"></div>
-        </div>-->
-        
-
-        <p class="test-name" name = "test_id" value = "<?= $testId ?>"><?=$testDataToEdit[0]['test_name'] ?></p>
-        <?= $pagination ?>
-
-        <? $q = '' ?>
-        <? foreach ($testDataToEdit as $row): ?>
-		<? $picQ = $row['picq'] == "" ? "" : "<img id = 'imq".$row['qid']."'   src= ".PROJ.'/pic/' . $row['picq'] .  ">";?>
-        <? if ($q == ''): // Выводим вопрос в первый раз  ' data-id = ' . $row['picq'] ?>
-		<?  require APP . '/view/Test/editBlockQuestion.php'; ?>
-                <? $q = $row['qid'] ?>
-
-                <!--следующие вопросы-->   
-        <? elseif ($q !== $row['qid']):// Если id вопроса не совпадает с предыдущим - это следующий вопрос   ?>
-                <!--закончим предыдущий ответ-->
-                <? $q = $row['qid'] ?>
+			<?
+			new app\view\widgets\menu\Menu([
+				'tpl' => ROOT . "/app/view/widgets/menu/menu_tpl/edit_test_menu.php",
+				'cache' => 60,
+			]);
+			?>
 
 		</div>
-    
-		<? require APP . '/view/Test/editBlockQuestion.php' ?>
 
-		<? endif; ?>
+		<div class="content">
+			<p class="test-name" value="<?= $_SESSION['testId'] ?>"><?= $_SESSION['test_name'] ?></p>
+			<?= $pagination ?>
 
-		<? $correctAnswer = $row['correct_answer'] == 1 ? "checked" : "";
-		$picA = $row['pica'] == "" ? "" : '<img id = "ima'.$row['id'].'"   src= '.PROJ.'/pic/' . $row['pica'] . '   data-id = ' . $row['pica'] . "'>";
-		?>
+			<div class="blocks">
+				<? foreach ($testDataToEdit as $q_id => $block): ?>
+					<? require ROOT . '/app/view/Test/editBlockQuestion.php' ?>
+				<? endforeach; ?>
 
-		<? require APP . '/view/Test/editBlockAnswer.php' ?>
+			</div>
+		</div>
 
-		<? endforeach; ?>
-
-	<? else: ?>
-
-		<?=$error?>
-
-	<? endif; ?>
-    </div>
-
-</div>
+		<?= $this::getJs() ?>
 </section>

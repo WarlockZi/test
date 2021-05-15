@@ -13,12 +13,10 @@ class DB {
 
         $db =  require ROOT.'/app/config.php';
         $db = $db['config_db'];
-		// exit(var_dump($db));
         $options = [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
         ];
-        // Проверка корректности подключения
         try {
             $this->pdo = new \PDO($db['dsn'], $db['user'], $db['password'], $options);
         } catch (PDOException $e) {
@@ -33,7 +31,6 @@ class DB {
         return self::$instance;
     }
 
-    // Метод используется, когда требуется только определить true или false
     public function execute($sql, $params = []) {
 //        self::$countSql++;
 //        self::$queries[] = $sql;
@@ -62,7 +59,6 @@ class DB {
      * @return \PDO <p>Объект класса PDO для работы с БД</p>
      */
     public static function getConnection() {
-        // Получаем параметры подключения из файла
         $params = include(ROOT . '/config/config_db.php');
         $options = array(
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
@@ -70,7 +66,6 @@ class DB {
             \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8"
         );
 
-        // Устанавливаем соединение
         try {
             $db = new \PDO($params['dsn'], $params['user'], $params['password'], $options);
         } catch (Exception $e) {

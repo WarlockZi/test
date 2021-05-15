@@ -540,15 +540,7 @@ body{
     height: 100%;
 }
 
-
-/*.wrap .list{
-    display: flex;
-    justify-content: flex-start;
-    padding: 10px;
-    border: 1px solid #eee;
-}*/
 .wrap .list:hover
-/*.menu a:hover*/
 {
     background:#f6f6f6;
 }

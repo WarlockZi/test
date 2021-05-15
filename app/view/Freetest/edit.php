@@ -25,7 +25,7 @@
         <? foreach ($freeTestDataToEdit as $row): ?>
           <? $picQ = $row['picq'] == "" ? "" : "<img id = 'imq" . $row['qid'] . "'   src= " . PROJ . '/pic/' . $row['picq'] . ">"; ?>
           <? if ($q == ''): // Выводим вопрос в первый раз  ' data-id = ' . $row['picq'] ?>
-            <? require APP . '/view/Freetest/editBlockQuestion.php'; ?>
+            <? require ROOT. '/app/view/Freetest/editBlockQuestion.php'; ?>
             <? $q = $row['qid'] ?>
 
             <!--следующие вопросы-->   
@@ -35,7 +35,7 @@
 
           </div>
 
-          <? require APP . '/view/Freetest/editBlockQuestion.php' ?>
+          <? require ROOT. '/app/view/Freetest/editBlockQuestion.php' ?>
 
         <? endif; ?>
 

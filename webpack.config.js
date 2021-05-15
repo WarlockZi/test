@@ -1,10 +1,9 @@
 const path = require('path');
-// const WebpackDevServer = require('webpack-dev-server');
-// const webpack = require('webpack');
-const TerserPlugin = require('terser-webpack-plugin');
-
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const env = require('dotenv');
+console.log(env);
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
 
 const PATHS = {
     source: path.join(__dirname, 'public/jscss'),
@@ -13,78 +12,71 @@ const PATHS = {
 
 module.exports = {
     mode: 'development',
-    devtool: "source-map",
-    watch: true, //live-reloading
+    devtool: 'source-map',
     entry: {
-        cabinet: PATHS.source + '/User/user_cabinet.js',
-        login: PATHS.source + '/User/user_login.js',
         admin: PATHS.source + '/Adm_crm/admin_crm_user.js',
-        mainIndex: PATHS.source + '/Main/main_index.js',
         adminCategory: PATHS.source + '/Adm_catalog/adm_category.js',
+        cabinet: PATHS.source + '/User/user_cabinet.js',
+        freeTest: PATHS.source + '/Freetest/free-test.js',
+        login: PATHS.source + '/User/user_login.js',
+        mainIndex: PATHS.source + '/Main/main_index.js',
+        test: PATHS.source + '/Test/test.js',
     },
     output: {
         chunkFilename: '[name].bundle.js',
         path: PATHS.build,
         filename: "[name].js"
     },
-    resolve: {
-        modules: ['node_modules']
-    },
+
     optimization: {
         minimize: true,
-        minimizer: [new TerserPlugin({
-            parallel: true,
-            cache: true,
-        })],
+        minimizer: [new TerserJSPlugin({})],
     },
 
     module: {
         rules: [
             {
-                test: /\.(png|jpe?g|gif)$/i,
-                use: [{
-                        loader: 'file-loader',
-                    }]
+                test: /\.js$/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                    }
+                ],
             },
-
             {
-                test: /\.js/,
-                loader: 'babel-loader',
-                exclude: /(node_modules)/
+                test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+                type: 'asset/resource',
             },
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
-                    // Creates `style` nodes from JS strings
-                    // 'style-loader',
-                    // Translates CSS into CommonJS
-                    'css-loader',
-                    // Compiles Sass to CSS
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {},
+                    }, 'css-loader','postcss-loader',
                     'sass-loader',
-                    // 'css-loader'
                 ],
-            }
+            },
         ]
     },
     plugins: [
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[id].css',
+            ignoreOrder: false, // Enable to remove warnings about conflicting order
         }),
-        // new webpack.ProvidePlugin({
-        //     $: 'jquery',
-        //     jQuery: 'jquery',
-        //     "window.jQuery": "jquery"
-        // }),
-        // new webpack.ProvidePlugin({
-        //     slick: 'slick-carousel'
-        // }),
+
         new CleanWebpackPlugin(),
-    ]
+
+    ],
 
 
-}
+    devServer: {  // configuration for webpack-dev-server
+        contentBase: './public/build',  //source of static assets
+        port: 7700, // port to run dev-server
+    }
+
+};
 
 
 

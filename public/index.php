@@ -13,7 +13,7 @@ if ($_SERVER['HTTP_HOST'] == 'vitexopt.ru') {
 	define('ROOT', dirname(__DIR__));
 	ini_set('display_errors', 1);
 	ini_set('error_reporting', E_ALL);
-	define('DEBU', '1'); //0-не выводить ошибки
+	define('DEBU', '0'); //0-не выводить ошибки
 }
 
 function vitexAutoload($class)
@@ -23,13 +23,19 @@ function vitexAutoload($class)
 		require_once $file;
 	}
 }
+function composerAutoload($class)
+{
+	require (ROOT.'/vendor/autoload.php');
+	$file = ROOT . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+	if (is_readable($file)) {
+		require_once $file;
+	}
+}
 
+spl_autoload_register('composerAutoload');
 spl_autoload_register('vitexAutoload');
 
 new App;
-
-//$mi = new \app\core\Migrations();
-//$mi->up();
 
 $url = $_SERVER['QUERY_STRING'];
 

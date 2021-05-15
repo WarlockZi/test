@@ -1,38 +1,62 @@
 <style>
-  p {
-      font-size: 10px;
-  }
+	p {
+		font-size: 10px;
+		width: 50%;
+		margin: 0 auto;
+	}
 </style>
 <section>
-   
-            <form class="form-container"  action="#" method="post">
-			
-				<div class="form-title">Регистрация на сайте</div>
 
-                <input type="email"	   name="email"    class="form-input"                
-                       placeholder="E-mail"/>
-                
-                <input type="password"  name="password" class="form-input"            
-                       placeholder="Пароль"/>
-                
-                <input type='password'  name='confPass' class="form-input"
-                       placeholder="Подтвердите пароль"/>
-                
-                <input type="text"      name="surName"    class="form-input"             
-                       placeholder="Фамилия" />
-                
-                <input type="text"      name="name"   class="form-input"              
-                       placeholder="Имя"/>
+	<form class="form-container" action="#" method="post">
 
-                <input type="text"      name="secName"   class="form-input"              
-                       placeholder="Отчесво"/>
-				<input type = "hidden" name="token" value=<?=$token?>>				
+	<div class="form-title">Регистрация на сайте</div>
 
-                <input type="submit"    name="reg"          class="form-input submit"     value="Зарегистрироваться" />
-            </form>
+		<div class='error'>
+			<?  echo isset($_SESSION['email_exists']) ? "<p>Почта уже существует</p>": "";
+				unset($_SESSION['email_exists']);
+			?>
+		</div>
 
-  <p>Нажимая на кнопку "Регистрация", вы принимаете условия  <a href="/about/oferta">Публичной оферты</a> и подтверждаете, что ознакомились с   <a href="/about/oferta">Политикой</a> в отношении обработки персональных данных, принимаете ее условия и подтверждаете свое согласие на обработку персональных данных. Персональные данные, которые вы предоставили, будут использоваться исключительно для исполнения договора купли-продажи товара.</p>
+		<input type="email" name="email" class="form-input"
+		       placeholder="E-mail"/>
+
+		<input type="password" name="password" class="form-input"
+		       placeholder="Пароль"/>
+
+		<input type="text" name="surName" class="form-input"
+		       placeholder="Фамилия"/>
+
+		<input type="text" name="name" class="form-input"
+		       placeholder="Имя"/>
+
+		<input type="hidden" name="token" value=<?= $_SESSION['token'] ?>>
+
+		<input type="submit" name="reg" class="form-input submit" value="Зарегистрироваться"/>
 
 
-  
+	</form>
+
+
+	<p>Нажимая на кнопку "Регистрация", вы принимаете условия <a href="/about/oferta">Публичной оферты</a> и
+		подтверждаете, что ознакомились с <a href="/about/oferta">Политикой</a> в отношении обработки персональных данных,
+		принимаете ее условия и подтверждаете свое согласие на обработку персональных данных. Персональные данные, которые
+		вы предоставили, будут использоваться исключительно для исполнения договора купли-продажи товара.</p>
+
+
 </section>
+
+<style>
+	.error{
+		background-color: #ff6f6f;
+		display: flex;
+		align-items: center;
+	}
+	.error p{
+		color: #ffffff;
+		margin: 0;
+		padding: 4px;
+		font-size: 1rem;
+		font-weight: 600;
+		width: 100%;
+	}
+</style>

@@ -1,13 +1,13 @@
-// function autocomplete() {
-//     $('#autocomplete').autocomplete({
-//         source: '/search',
-//         minLength: 1,
-//         appendTo: $("#autocomplete").parent(),
-//         select: function (event, ui) {
-//             window.location = 'http://catalog/search?search=' + encodeURIcomponent(ui.item.value);
-//         }
-//     });
-// };
+function autocomplete() {
+    $('#autocomplete').autocomplete({
+        source: '/search',
+        minLength: 1,
+        appendTo: $("#autocomplete").parent(),
+        select: function (event, ui) {
+            window.location = 'http://catalog/search?search=' + encodeURIcomponent(ui.item.value);
+        }
+    });
+};
 
 
 function get_cookie(cookie_name) {
@@ -22,7 +22,6 @@ function get_cookie(cookie_name) {
     return null;
 }
 
-
 function setCookie() {
     const date = new Date(),
         minute = 60 * 1000,
@@ -32,8 +31,7 @@ function setCookie() {
     date.setTime(date.getTime() + (days * day));
     $('#cookie-notice').css({bottom: "-100%"});
     document.cookie = "cn=1; expires=" + date + "path=/; SameSite=lax";
-};
-
+}
 
 const uniq = (array) => Array.from(new Set(array));
 

@@ -1,0 +1,486 @@
+
+.sort-q {
+  text-align: center;
+  border: 1px #9fd468 solid;
+}
+
+
+.check_right_answer {
+  @import '../../components/checbox-slider';
+
+  //& > .checkbox:not(checked) + label:before {
+  //  top: -1px;
+  //  left: 4px;
+  //  width: 40px;
+  //  height: 20px;
+  //}
+  //
+  //& > .checkbox:not(checked) + label:after {
+  //  top: 1px;
+  //}
+  //
+  //& > .checkbox:checked + label:after {
+  //  width: 16px;
+  //  height: 16px;
+  //  left: 6px;
+  //}
+  //
+  //& > .checkbox:not(checked) + label:after {
+  //  width: 16px;
+  //  height: 16px;
+  //  left: 28px;
+  //}
+
+}
+
+
+.content {
+  margin: 0 5px;
+  flex: 1;
+}
+
+.add-test {
+  border: 1px solid #eee;
+  text-align: center;
+  padding: 8px 15px;
+  transition: background-color 0.5s ease-out;
+  margin-bottom: 20px;
+  white-space: nowrap;
+  background: #9FD468;
+  cursor: pointer;
+}
+
+
+.right-sidebar {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.left-sidebar {
+  display: flex;
+  flex: 2;
+  flex-flow: wrap column;
+  position: relative;
+  padding: .8vw;
+}
+
+
+//* менюшка в редакторе тестов добавить/удалить ответ*/
+.navi {
+  box-shadow: inset 0 5px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  right: 0;
+  display: none;
+  z-index: 1;
+}
+
+.navi__item {
+  display: block;
+  font-weight: bold;
+  font-size: .8vw;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #bcbcbc;
+  transition: background-color 0.5s linear, color 3.1s linear;
+  white-space: nowrap;
+  line-height: 17px;
+  padding: 5px;
+  margin: 0;
+}
+
+.navi__item:active {
+  background-color: #5e5e5e;
+}
+
+.holder {
+  position: relative;
+  border: 4px dashed #ccc;
+  text-align: center;
+  border-radius: 12px;
+  font-size: 1rem;
+  min-height: 60px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  p {
+    flex: 1;
+  }
+}
+
+
+.block {
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  margin: 10px 0;
+  background: #fafafa;
+  position: relative;
+
+  textarea {
+    font-size: 1.1rem;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: rgb(216, 216, 216);
+    resize: vertical;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: inherit;
+    width: 100%;
+  }
+
+  .answers_show {
+    position: absolute;
+    top: 148px;
+    left: 50%;
+
+    &:after {
+
+    }
+  }
+
+  .answers_show:after {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-bottom: #1bbc9b solid 3px;
+    border-left: #1bbc9b solid 3px;
+    transform: rotate(-45deg);
+  }
+
+
+  [data-toggle] {
+    display: none;
+  }
+
+  [data-toggle]:checked + .answers {
+    transition: height 10s;
+    height: auto;
+  }
+
+  .field__wrapper {
+    width: 100%;
+    position: relative;
+    margin: 5px 0;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .field__file {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+  }
+
+  .field__file-wrapper {
+    width: 95%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .field__file-fake {
+    height: 20px;
+    width: calc(100% - 41px);
+    display: flex;
+    align-items: center;
+    border: 1px solid #c7c7c7;
+    border-radius: 3px 0 0 3px;
+    border-right: none;
+    font-size: .5rem;
+  }
+
+  .field__file-button {
+    width: 39px;
+    height: 22px;
+    background: #1bbc9b;
+    color: #fff;
+    font-size: .5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 3px 3px 0;
+    cursor: pointer;
+  }
+
+  /*Картинка*/
+  #imq, #ima {
+    width: 98%;
+    vertical-align: top;
+    display: inline-block;
+    max-height: 450px;
+  }
+
+
+  .pic-del {
+    text-align: center;
+    overflow: hidden;
+    transition: background-color 0.5s ease-out;
+    width: 20%;
+    z-index: 1;
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    display: none;
+  }
+
+  /*****  Редактировать тесты   ******/
+
+  .e-block-a {
+    border: 1px #eee solid;
+    padding: 5px;
+    margin: 0 0 10px 0;
+    overflow: hidden;
+    position: relative;
+    min-height: 100px;
+    display: flex;
+  }
+
+  .e-block-a:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .58);
+  }
+
+  .e-block-a:hover .navi {
+    display: inline-block;
+  }
+
+
+  .e-block-q {
+    padding: 5px;
+    overflow: visible;
+    position: relative;
+    background-color: #dcefd1;
+    display: flex;
+
+    &:after {
+      content: '☰';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      padding: 0 8px;
+    }
+
+    &:hover {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, .58);
+    }
+
+    &:hover .navi {
+      display: inline-block;
+    }
+  }
+
+
+  .answers {
+    transition: height 10s;
+    position: relative;
+    height: 0;
+    overflow: hidden;
+  }
+}
+
+
+/* менюшка в редакторе тестов добавить/удалить ответ*/
+.navi {
+  box-shadow: inset 0 5px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  right: 0;
+  display: none;
+  z-index: 1;
+}
+
+.navi__item {
+  display: block;
+  font-weight: bold;
+  font-size: .8vw;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #bcbcbc;
+  transition: background-color 0.5s linear, color 3.1s linear;
+  white-space: nowrap;
+  line-height: 17px;
+  padding: 5px;
+  margin: 0;
+}
+
+.navi__item:active {
+  background-color: #5e5e5e;
+
+}
+
+.test-menu-wrap {
+
+  .menu {
+    width: 100%;
+    flex: 1;
+    z-index: 1;
+    background: #4e4e4e;
+    align-self: flex-start;
+
+    input:checked + label > a {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      text-transform: uppercase;
+
+    }
+
+    li .test-link a {
+      text-transform: uppercase;
+    }
+
+    li {
+      display: flex;
+      position: relative;
+      border-bottom: 1px solid #b7b7b7;
+      transition: 0.5s all;
+      justify-content: flex-end;
+    }
+
+    li ul li:hover,
+    li ul li a:hover {
+
+    }
+
+    .drop {
+      background: #4e4e4e;
+      cursor: pointer;
+      padding: 9px 0 9px 9px;
+    }
+
+    & > li:hover,
+    li:hover > li label,
+    & > label a:hover {
+      background: #5e5e5e;
+    }
+
+    & > li:not(.has-children) {
+
+    }
+
+    & > li > label {
+      padding: 9px 0 9px 9px;
+    }
+
+    .vert-menu__list:hover > .vert-menu__drop {
+      opacity: 1;
+      top: 0;
+      z-index: 1;
+    }
+
+    li .test-link a {
+      text-transform: uppercase;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      padding: 7px 14px 7px 7px;
+      transition: 0.5s all;
+      font-size: .7rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      min-width: 40px;
+      max-width: 190px;
+      color: #ffffff;
+      background-color: #5e5e5e;
+    }
+
+    ul {
+      display: none;
+      cursor: pointer;
+    }
+
+    input[type=checkbox]:checked + label + ul,
+    input[type=checkbox]:checked + label:nth-of-type(n) + ul {
+      display: block;
+    }
+
+    input[type=checkbox] {
+      position: absolute;
+      opacity: 0;
+    }
+  }
+}
+
+.test-params,
+.freetest-params {
+  flex: 1;
+  max-width: 37px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: gray;
+
+  a {
+    color: #ffffff;
+  }
+
+}
+
+
+/*Всплывающие меню*/
+.vert-menu__drop {
+  position: absolute;
+  width: 100%;
+  left: 100%;
+  top: -9999em;
+  opacity: 0;
+  border-left: 1px solid transparent;
+  transition: 0.5s opacity;
+}
+
+.container-edit-test {
+  display: flex;
+
+  /*Иконки для всплывающих менюшек*/
+  .vert-menu__list::after {
+    content: " ";
+    position: absolute;
+    border: .4rem solid;
+    border-color: transparent transparent transparent #eee;
+    transition: 0.5s;
+    align-self: center;
+  }
+
+  .vert-menu__list:hover::after {
+    transform: scaleX(-1);
+  }
+
+  .menu .vert-menu__list:hover > .vert-menu__drop {
+    opacity: 1;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pagination {
+    .add-question {
+      background-color: #e30000;
+      border: none;
+      color: white;
+      padding: 0 5px;
+      text-align: center;
+      font-size: 27px;
+      box-shadow: 0 2px 4px 0 #e30000;
+      margin: 0 3px 1px 0;
+      line-height: 20px;
+
+      &:hover {
+        background-color: #9e0000;
+      }
+
+    }
+  }
+}

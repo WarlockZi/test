@@ -40,16 +40,15 @@ abstract class Controller
 	{
 		if (isset($_POST) && $_POST) {
 			$data = json_decode($_POST['param'], true);
-//         $data = json_decode($_POST, true);
 			if (isset($data['token'])) {
 				if ($_SESSION['token'] !== $data['token']) {
 					exit('Обновите страницу');
 				}
 			}
-			return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest' && $data || isset($_POST['ajax']) && ($_POST['ajax'] == 'true') && $data) ? $data : false;
+			return (
+				isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest' && $data || isset($_POST['ajax']) && ($_POST['ajax'] == 'true') && $data) ? $data : false;
 		}
 	}
-
 
 
 }
