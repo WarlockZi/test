@@ -1,23 +1,22 @@
 <?php
-
-use \PHPMailer\PHPMailer\PHPMailer;
-
 namespace app\model;
+
+use  \PHPMailer\PHPMailer\PHPMailer;
 
 class Mail {
 
-   public function send_mail($email, $tema, $mail_body, $headers) {
-      require_once(ROOT . '/libs/PHPMailer/src/Exception.php');
-      require_once(ROOT . '/libs/PHPMailer/src/OAuth.php');
-      require_once(ROOT . '/libs/PHPMailer/src/PHPMailer.php');
-      require_once(ROOT . '/libs/PHPMailer/src/SMTP.php');
-      require_once(ROOT . '/libs/PHPMailer/src/POP3.php');
+   public static function send_mail($email, $tema, $mail_body, $headers) {
+//      require_once(ROOT . '/vendor/phpmailer/phpmailer/src/Exception.php');
+//      require_once(ROOT . '/vendor/phpmailer/phpmailer/src/OAuth.php');
+//      require_once(ROOT . '/vendor/phpmailer/phpmailer/src/PHPMailer.php');
+//      require_once(ROOT . '/vendor/phpmailer/phpmailer/src/SMTP.php');
+//      require_once(ROOT . '/vendor/phpmailer/phpmailer/src/POP3.php');
 
-      $config = require CONFIG;
+      $config = require ROOT.'/app/config.php';
       if ($_SERVER['SERVER_NAME'] == 'vitexopt.ru') {
          $config = $config['Mailer_vitex'];
       } else {
-         $config = $config['Mailer_openServer'];
+         $config = $config['Mailer'];
       }
       $mail = new PHPMailer(true);
       try {

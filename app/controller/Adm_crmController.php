@@ -11,10 +11,6 @@ class Adm_crmController extends AdminscController {
    public function __construct($route) {
       parent::__construct($route);
 
-      $routeView = ['js' => $this->route, 'view' => $this->view];
-      View::setJsCss($routeView);
-      $routeView = ['css' => $this->route, 'view' => $this->view];
-      View::setJsCss($routeView);
    }
 
    public function actionIndex() {

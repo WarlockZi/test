@@ -1,6 +1,6 @@
 <?= isset($cat['childs']) ? '<li class = "vert-menu__list">' : '<li>'?>
     <a href=
-    <?= isset($cat['childs']) ? "#" : PROJ."/freetest/" . $cat['id'] ?>
+    <?= isset($cat['childs']) ? "#" : "/freetest/" . $cat['id'] ?>
        ><?= $cat['name'] ?>
     </a>
 <? if (isset($cat['childs'])): ?>
@@ -9,3 +9,4 @@
     </ul>
 <? endif ?>
 </li>
+

@@ -11,6 +11,9 @@
             <? endif; ?>
             <? if (in_array('2', $user['rights'])): ?>
                 <a class="list" href="/test/1">Проходить тесты</a>
+					<? if (in_array('2', $user['rights'])): ?>
+		            <a class="list" href="/freetest/1">Проходить свободные тесты</a>
+					<? endif; ?>
             <? endif; ?>
 
 </section>
@@ -21,6 +24,8 @@
     .container{
         max-width: 500px;
         margin: 0 auto;
+	    display: flex;
+	    flex-direction: column;
     }
 
     .wrap h3{
@@ -42,6 +47,3 @@
     }
 </style>
 
-<script src="/public/build/cabinet.js">
-
-</script>

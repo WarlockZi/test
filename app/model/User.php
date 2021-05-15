@@ -90,7 +90,7 @@ class User extends Model {
 
          if ($msg === TRUE) {
             $_SESSION['msg'] = "Новый пароль выслан Вам на почту";
-            header("Location:" . PROJ . "/user/login");
+            header("Location:/user/login");
          } else {
             $_SESSION['msg'] = $msg;
          }
@@ -212,10 +212,11 @@ class User extends Model {
    public function checkEmailExists($email) {
 
       $res = $this->findOne($email, 'email');
-      if (count($res)) {
-         return $res;
+      if ($res) {
+      	$_SESSION['email_exists']=1;
+         return true;
       }
-      return $res;
+      return false;
    }
 
    /**

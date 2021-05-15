@@ -28,9 +28,9 @@ class Category extends Model
 
 	public function getAssocCategory($options)
 	{
-		$onlyActive = (isset($options['active']) && $options['active'])?" WHERE `act` = 1" : "";
+		$onlyActive = (isset($options['active']) && $options['active']) ? " WHERE `act` = 1" : "";
 		$sql = 'SELECT * FROM category' . $onlyActive;
-		$res = App::$app->category->findBySql($sql, $params = array());
+		$res = App::$app->category->findBySql($sql, $params = []);
 
 		if ($res !== FALSE) {
 			$all = [];
@@ -133,12 +133,11 @@ class Category extends Model
 			if ($category && is_array($category)) {
 				$category['parents'] = $this->getCategoryParents($category['parent']);
 				$category['children'] = $this->getCategoryChildren($category['id']);
+				return $category;
 			}
-		}
-		if (!$category) {
 			return FALSE;
-		};
-		return $category;
+		}
+
 	}
 
 	public function getCategory($id)

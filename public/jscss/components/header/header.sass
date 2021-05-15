@@ -1,51 +1,38 @@
-@import "../autocomplete/autocomplete"
-@import "../header-panel/header-panel"
 $top-color: #0a28d0
 $middle-color: #ffd307
 $menu-color: #d36e16
-@import "_top"
-
 
 ///*************************************
 //*******      HTML BODY    ******
 //**************************************/
-h1,
-h2
 
-  text-transform: uppercase
-  color: #4e4e4e
-  font-size: 1.6em
-  font-weight: 400
-
-html,
-body
+html
   height: 100%
-  overflow-x: hidden /*для скрытия горизонтального скрола при появлении ответов*/
-  overflow-y: hidden
-
 
 body
-  margin-left: calc(100vw - 100%)
-  margin-right: 0
-  overflow-y: scroll
+  display: flex
+  flex-direction: column
+  height: 100%
   margin: 0
   font-family: 'Roboto', sans-serif
-/*font-family: Verdana,Arial,sans*/
 
-body,
-a,
-p 
-  color: #595959
+h1,
+h2
+  text-transform: uppercase
+  color: #4e4e4e
+  font-size: 1.4rem
+  font-weight: 600
+  letter-spacing: 1px
 
+p
+  letter-spacing: 1px
 
 a,
 a:hover,
 .form-title,
 .navi__item,
-.navi__item:hover,
-.p-no-active
+.navi__item:hover
   text-decoration: none
-
 
 ul, li
   list-style: none
@@ -69,10 +56,7 @@ a:hover,
 .add-pic-button label,
 .navi__item,
 .button,
-.a label,
 .pic-upload label,
-.add-question,
-.add-test,
 .test-params,
 .freetest-params,
 .user-button,
@@ -103,7 +87,6 @@ a:hover,
 
 .row 
   display: flex
-  flex-flow: row
 
 .flex1
   flex: 1
@@ -137,7 +120,6 @@ a:hover,
   text-align: center
   transition: 1s
   padding: 10px
-
 
 
 #cn-accept-cookie 
@@ -180,10 +162,11 @@ a:hover,
 
 main
   display: flex
+  flex: 0 1 auto
+  flex-flow:
   max-width: 1310px
   margin: auto
   padding: 0 10px
-
 
 .main-menu-wrap
   margin: 0 15px 0 15px
@@ -191,12 +174,6 @@ main
 .main-menu-wrap  li a
   padding: 5px 15px 5px 15px
 
-
-
-header
-  //background-color: #9fd468
-  @import "_middle"
-  @import "_header-menu"
 
 
 ///*************************************
@@ -207,7 +184,6 @@ header
   .top-menu
     padding: 0 20px
 
-  .FIO,
   .t-1,
   .logo-desc,
   .title,
@@ -237,7 +213,6 @@ header
 
 ///* xs (<=543px) */
 @media (min-width: 401px) and (max-width: 575px)
-  .FIO,
   .t-1,
   .logo-desc,
   .title,
@@ -296,7 +271,6 @@ header
   .h-upper>div:not([class]),
   .user-button,
   .card-right,
-  .FIO,
   .phone-wrap,
   .header-lower
     display: none
@@ -317,7 +291,6 @@ header
 
 
 
-
 ///* lg (>=992 и <=1199) */
 @media (min-width: 992px) and (max-width: 1199px)
   .h-upper>div:not([class]),
@@ -332,11 +305,6 @@ header
 
 ///* xl (>=1200) */
 @media (min-width: 1200px)
-  .q,
-  .menu a,
-  textarea,
-  .pagination a
-    font-size: .9vw
 
   .content
     flex: 3
@@ -344,18 +312,10 @@ header
   textarea
     font-family: inherit
 
-  .holder
-    font-size: .6vw
-
   .vert-menu__list::after
     border: .4vw solid
     border-color: transparent transparent transparent #eee
 
-
-  .pagination a
-    width: 1.1vw
-    padding: .1vw .3vw
-
   .button,
   .test-name
-    font-size: 1vw
+    font-size: 1rem

@@ -1,8 +1,10 @@
-// import "jquery";
 import {post} from '../common';
-import '../components/header/header.sass';
+import '../components/header/header';
+import './login.scss'
+import '../components/footer/footer.sass'
+import '../components/forms.sass'
+import {reg} from './register'
 
-///////////////////////////    Login     /////////////////////
 window.onload = function () {
 
     document.querySelector("body").addEventListener("click",
@@ -14,13 +16,13 @@ window.onload = function () {
     document.querySelector("#login").addEventListener("click",
         async function (e) {
             e.preventDefault();
-            let obj = {};
-            obj.email = document.querySelector('input[type = email]').value,
-                obj.pass = document.querySelector('input[type= password]').value,
-                obj.token = document.querySelector("[name = 'token']").value;
-            debugger;
+            var data = {
+                "email": document.querySelector('input[type = email]').value,
+                "password": document.querySelector("input[type= password]").value,
+                "token": document.querySelector("[name = 'token']").value,
+            }
 
-            let res = await post('/user/login', obj);
+            let res = await post('/user/login', data);
             let overlayWrap = document.createElement('div');
             overlayWrap.innerHTML = res;
             document.querySelector('body').append(overlayWrap);

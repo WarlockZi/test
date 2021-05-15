@@ -7,15 +7,14 @@ use app\core\App;
 
 class AppController extends Controller
 {
-	protected $list;
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
 		$this->layout = 'vitex';
 		if (strpos(strtolower($route['controller']), 'adminsc') === false) {
-			$list = App::$app->category->getAssocCategory(['active'=>'true']);
-			$this->list = App::$app->category->categoriesTree($list);
+			$l = App::$app->category->getAssocCategory(['active' => 'true']);
+			$list = App::$app->category->categoriesTree($l);
 			$this->set(compact('list'));
 		}
 	}

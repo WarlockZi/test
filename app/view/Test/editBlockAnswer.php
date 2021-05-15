@@ -1,27 +1,37 @@
-<div class="e-block-a animated bounceInRight" id = "<?= $row['id'] ?>">
-  <div class = "left-sidebar">
+<div class="e-block-a" id="<?= $id ?>">
+	<div class="left-sidebar">
 
-    <textarea data-answer-id = "<?= $row['id'] ?>" cols = "20" rows = "2" name = "<?= $row['id'] ?>"><?= $row['answer'] ?></textarea>
-    <div class="check_right_answer">
-      <input id = "right_answer<?= $row['id'] ?>" type = "checkbox" class = "checkbox none" data-answer = "<?= $row['id'] ?>" <?= $correctAnswer ?>>
-      <label for = "right_answer<?= $row['id'] ?>" >Верный ответ</label>
-    </div>
+		<textarea data-answer-id="<?= $id ?>" cols="20" rows="2"
+		          name="<?= $id ?>"><?= $answer['answer_text'] ?></textarea>
+		<div class="check_right_answer">
+			<input id="right_answer<?= $id ?>" type="checkbox" class="checkbox none"
+			       data-answer="<?= $id ?>" <?= $answer['answer_correct'] == 1 ? "checked" : "" ?>>
+			<label for="right_answer<?= $id ?>">Верный ответ</label>
+		</div>
 
-  </div> 
-  <div class = "right-sidebar">
-    <nav class="navi">
-      <p id = "d_a" class="navi__item" onClick = "edit('delete_a',<?= $row['id'] ?>,<?= $row['qid'] ?>)">Удалить ответ</p>
-    </nav>
+	</div>
+	<div class="right-sidebar">
+		<nav class="navi">
+			<p id="d_a" class="navi__item" onClick="edit('delete_a',<?= $a_id ?>)">Удалить ответ</p>
+		</nav>
 
-    <div data-prefix = "a" id = '<?= $row['id'] ?>' class = "holder">Перетащить картинку.
-      <p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-      <p class="filereader">FileAPI&FileReaderAPI Обратитесь к ВВ.</p>
-      <p class="formdata">FormData Обратитесь к ВВ.</p>
-      <p class="progress">upload progr isn\'t  Обратитесь к ВВ.</p>                         
-      <!--<p><progress class="hidden" id="uploadprogress" max="100" value="0">0</progress></p>-->
-      <?= $picA ?>
-      <div class="pic-del" data-a = "<?= $row['id'] ?>">  X  </div>	
-    </div> 
+		<div data-prefix="a" id='<?= $id ?>' class="holder">
+			<p>Перетащить картинку</p>
+			<p id="upload" class="hidden"></p>
 
-  </div>    
+			<div class="field__wrapper">
+				<input name="file" type="file" name="file" id="field__file-2" class="field field__file" multiple>
+				<label class="field__file-wrapper" for="field__file-2">
+					<div class="field__file-fake">Файл не выбран</div>
+					<div class="field__file-button">Выбрать</div>
+				</label>
+			</div>
+
+
+			<!--<p><progress class="hidden" id="uploadprogress" max="100" value="0">0</progress></p>-->
+			<? !isset($answer['answer_pic']) ? "" : '<img id = "ima' . $id . '"   src= /pic/' . $answer['answer_pic'] . '   data-id = ' . $answer['answer_pic'] . "'>"; ?>
+			<div class="pic-del" data-a="<?= $id ?>"> X</div>
+		</div>
+
+	</div>
 </div>

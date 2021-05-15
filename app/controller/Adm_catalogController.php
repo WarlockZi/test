@@ -23,18 +23,14 @@ class Adm_catalogController extends AdminscController
 				exit();
 			};
 		}
-//      $routeView = ['js' => $this->route, 'view' => $this->view];
-//      View::setJsCss($routeView);
-//		$routeView = ['css' => $this->route, 'view' => $this->view];
-//      View::setJsCss($routeView);
+
 	}
 
 	public function actionProducts()
 	{
-
 		$fName = $fAct = $fArt = 0;
-		$params = [];
-		$where = $QSA = '';
+//		$params = [];
+//		$where = $QSA = '';
 		$params = explode('&', $_SERVER['QUERY_STRING'], 2);
 		if (count($params) > 1) {
 			$QSA = urldecode($params[1]);
@@ -52,7 +48,6 @@ class Adm_catalogController extends AdminscController
 			$fArt = $_GET['art'];
 		}
 		$perpage = 15;
-		// Получение текущей страницы
 		if (isset($_GET['page'])) {
 			$page = (int)$_GET['page'];
 			if ($page < 1)
@@ -60,7 +55,6 @@ class Adm_catalogController extends AdminscController
 		} else {
 			$page = 1;
 		}
-// начальная позиция для запроса
 		$start_pos = ($page - 1) * $perpage;
 
 		if ($fName || $fAct || !$fAct || $fArt) {
@@ -85,7 +79,7 @@ class Adm_catalogController extends AdminscController
 			$cnt_pages = 1;
 
 		if ($page > $cnt_pages)
-			$page = $cnt_pages;
+//			$page = $cnt_pages;
 		$this->set(compact('products', 'productsCnt', 'cnt_pages', 'QSA'));
 	}
 
@@ -104,8 +98,8 @@ class Adm_catalogController extends AdminscController
 				$props = App::$app->prop->getProps();
 				$this->set(compact('product', 'category', 'props'));
 				$this->view = 'product_new';
-				$routeView = ['js' => $this->route, 'view' => $this->view];
-//            View::setJsCss($routeView);
+//				$routeView = ['js' => $this->route, 'view' => $this->view];
+////            View::setJsCss($routeView);
 			} else {
 				$id = (int)$_GET['id'];
 
@@ -139,8 +133,8 @@ class Adm_catalogController extends AdminscController
 	public function actionCategory()
 	{
 		if (isset($_GET['id']) && ($_GET['id'] == 'new')) {
-			$props = [];
-			$parent = isset($_GET['parent']) && (int)$_GET['parent']!==0 ? (int)$_GET['parent'] : 0;
+//			$props = [];
+//			$parent = isset($_GET['parent']) && (int)$_GET['parent']!==0 ? (int)$_GET['parent'] : 0;
 			$idAutoincrement = App::$app->category->autoincrement('category');
 			$category['id'] = $idAutoincrement;
 			$category['name'] = '';
@@ -155,7 +149,6 @@ class Adm_catalogController extends AdminscController
 
 			$this->set(compact('category'));
 		} elseif (isset($_GET['id']) && $_GET['id']) { /// иначе это корнвой каталог
-			///
 			$id = (int)$_GET['id'];
 			$category = App::$app->category->getCategory($id);
 			$props = App::$app->prop->getProps();

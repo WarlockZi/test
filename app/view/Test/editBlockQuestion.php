@@ -1,27 +1,47 @@
-<div class="block" id = "question-<?= $row['qid'] ?>">
+<div class="block" id="question-<?= $q_id ?> draggable">
 
-  <input class = "sort-q" type = "text"  data-q-sort="<?= $row['qid'] ?>" size = "1" value = "<?= $row['sort'] ?>">
-  <div class="e-block-q " id="<?= $row['qid'] ?>q">
-    <div class="left-sidebar">
-      <textarea data-question-id="<?= $row['qid'] ?>" cols="20" rows="3" name="<?= $row['qid'] ?>q"><?= $row['qustion'] ?></textarea>
-    </div>  
+	<div class="e-block-q " id="<?= $q_id ?>q">
+		<div class="left-sidebar">
+			<input class="sort-q" type="text" data-q-sort="<?= $q_id ?>" size="1" value="<?= $block[0]['sort'] ?>">
+			<textarea data-question-id="<?= $q_id ?>" cols="20" rows="5"
+			          name="<?= $q_id ?>q"><?= $block[0]['question_text'] ?></textarea>
+		</div>
 
-    <div class="right-sidebar">
-
-      <nav class="navi">      
-        <a class="navi__item add-answer" data-id = "<?= $row['qid'] ?>"> Добавить ответ </a>
-      </nav>
-
-      <div data-prefix = "q" id = "<?= $row['qid'] ?>" class = "holder">Перетащить картинку.
-        <p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-        <p class="filereader">FileAPI&FileReaderAPI Обратитесь к ВВ.</p>
-        <p class="formdata">FormData Обратитесь к ВВ.</p>
-        <p class="progress">upload progr isn\'t  Обратитесь к ВВ.</p>                         
-        <!--<p><progress class="hidden" id="uploadprogress" max="100" value="0">0</progress></p>-->
-        <?= $picQ ?>
-        <div class="pic-del" data-q = <?= $row['qid'] ?>>  X  </div>	
-      </div> 
+		<div class="right-sidebar">
+			<nav class="navi">
+				<a class="navi__item add-answer" data-id="<?= $q_id ?>"> Добавить ответ </a>
+			</nav>
 
 
-    </div>
-  </div>
+			<div data-prefix="q" id="<?= $q_id ?>" class="holder">
+				<p>Перетащить картинку</p>
+				<p id="upload" class="hidden">
+				<div class="field__wrapper">
+					<input name="file" type="file" name="file" id="field__file-2" class="field field__file" multiple>
+					<label class="field__file-wrapper" for="field__file-2">
+						<div class="field__file-fake">Файл не выбран</div>
+						<div class="field__file-button">Выбрать</div>
+					</label>
+				</div>
+
+				<?= isset($block[0]['question_pic']) ? $block[0]['question_pic'] : "" ?>
+				<div class="pic-del" data-q= <?= $q_id ?>> X</div>
+			</div>
+
+
+		</div>
+	</div>
+	<label for="<?="show_".$q_id?>" class="answers_show">Показать ответы</label>
+	<input id="<?="show_".$q_id?>" data-toggle type="checkbox" >
+
+
+	<div class="answers">
+		<? foreach ($block as $id => $answer): ?>
+			<? if (isset($answer['answer_text'])): ?>
+				<? require ROOT . '/app/view/Test/editBlockAnswer.php' ?>
+			<? endif; ?>
+		<? endforeach; ?>
+	</div>
+
+
+</div>

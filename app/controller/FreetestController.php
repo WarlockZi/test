@@ -6,123 +6,145 @@ use app\core\Base\View;
 use app\model\Freetest;
 use app\controller\AppController;
 use app\core\App;
+use app\view\widgets\menu\Menu;
+use app\view\widgets\pagination\Pagination;
 
-class FreetestController extends AppController {
+class FreetestController extends AppController
+{
 
-    public function actionEdit() {
+	public function actionEdit()
+	{
 
-        //Если пользователь не авторизовался отправим на форму авторизации
-        $this->auth();
+		//Если пользователь не авторизовался отправим на форму авторизации
+		$this->auth();
 
-        $Freetest = new Freetest;
-        // Загрузка картинок drag-n-drop
-        if (isset($_FILES['file']) && !empty($_FILES['file'])) {
-            $Freetest->QPic();
-            exit();
-        } elseif ($this->isAjax()) {
-            $func = $_POST['action'];
-            $Freetest->$func();
-            exit();
-        }
+		$Freetest = new Freetest;
+		// Загрузка картинок drag-n-drop
+		if (isset($_FILES['file']) && !empty($_FILES['file'])) {
+			$Freetest->QPic();
+			exit();
+		} elseif ($this->isAjax()) {
+			$func = $_POST['action'];
+			$Freetest->$func();
+			exit();
+		}
 
-        //Получим id теста
-        if (is_array($this->route)) {
-            if (array_key_exists('alias', $this->route)) {
-                if ($this->route['alias']) {
-                    $testId = (int) $this->route['alias'];
-                }
-            } else {
-                $testId = 1;
-            }
-        }
+		//Получим id теста
+		if (is_array($this->route)) {
+			if (array_key_exists('alias', $this->route)) {
+				if ($this->route['alias']) {
+					$testId = (int)$this->route['alias'];
+				}
+			} else {
+				$testId = 1;
+			}
+		}
 
-        $freeTestDataToEdit = $Freetest->getFreeTestDataToEdit($testId);
-//        $css = 'style.css';
-//      $js = $this->getJSCSS('.js');
-        View::setJsCss(['css' => '/public/css/style.css']);
-        View::setJsCss(['js' => $this->route, 'view' => $this->view]);
+		$freeTestDataToEdit = $Freetest->getFreeTestDataToEdit($testId);
+		View::setCss(['css' => '/public/build/freeTest.css']);
+		View::setJs(['js' => 'public/build/freeTest.js']);
 
 
-        if ($freeTestDataToEdit === FALSE) {//Вообще не нашли такого теста с номером
-            $error = '<H1>Теста с таким номером нет.</H1>';
-            $this->set(compact('error'));
-        }
+		if ($freeTestDataToEdit === FALSE) {//Вообще не нашли такого теста с номером
+			$error = '<H1>Теста с таким номером нет.</H1>';
+			$this->set(compact('error'));
+		}
 
-        if ($freeTestDataToEdit) {
-            $pagination = $Freetest->paginationEdit($freeTestDataToEdit, $testId);
-            $this->set(compact('js', 'css', 'freeTestDataToEdit', 'pagination', 'testId'));
-        }
-        View::setMeta('Редактор тестов', 'Редактор тестов', 'Редактор тестов');
-    }
+		if ($freeTestDataToEdit) {
+			$pagination = $Freetest->paginationEdit($freeTestDataToEdit, $testId);
+			$this->set(compact('freeTestDataToEdit', 'pagination', 'testId'));
+		}
+		View::setMeta('Редактор тестов', 'Редактор тестов', 'Редактор тестов');
+	}
 
-    public function actionIndex() {
-        // Обработка результатов теста
-        if ($this->isAjax()) {
-            if ($_POST['action'] == 'result') {
-                $Test->result();
-                exit();
-            }
-        }
-        $this->auth();
-        View::setMeta('Свободный тест', 'Свободный тест', 'Свободный тест');
-    }
+	public function actionIndex()
+	{
+		// Обработка результатов теста
+		if ($this->isAjax()) {
+			if ($_POST['action'] == 'result') {
+				$Test->result();
+				exit();
+			}
+		}
+		$this->auth();
+		View::setMeta('Свободный тест', 'Свободный тест', 'Свободный тест');
+	}
 
-    public function getTestId() {
-        if (is_array($this->route)) {
-            if (array_key_exists('alias', $this->route)) {
-                if ($this->route['alias']) {
-                    return (int) $this->route['alias'];
-                }
-            } else {
-                return 1;
-            }
-        }
-    }
+	public function getTestId()
+	{
+		if (is_array($this->route)) {
+			if (array_key_exists('alias', $this->route)) {
+				if ($this->route['alias']) {
+					return (int)$this->route['alias'];
+				}
+			} else {
+				return 1;
+			}
+		}
+	}
 
-    public function actionResults() {
+	public function actionResults()
+	{
 
-        $this->getFromCache('/results/freetest/');
-    }
+		$this->getFromCache('/results/freetest/');
+	}
 
-    public function actionDo() {
+	public function actionDo()
+	{
 
-        $this->auth();
-        View::setMeta('Свободный тест', 'Свободный тест', 'Свободный тест');
+		$this->auth();
+		View::setMeta('Свободный тест', 'Свободный тест', 'Свободный тест');
 
-        if ($this->isAjax()) {
-            $func = json_decode($_POST['param'])->action;
-            App::$app->freetest->$func();
-            exit();
-        }
-        $testId = $this->getTestId();
-        $testData = App::$app->freetest->getFreetestData($testId);
-        $css = 'style.css';
-        $js = $this->getJSCSS('.js');
+		if ($this->isAjax()) {
+			$func = json_decode($_POST['param'])->action;
+			App::$app->freetest->$func();
+			exit();
+		}
+		$testId = $this->getTestId();
+		$testData = App::$app->freetest->getFreetestData($testId);
+		View::setJS(['js' => "/public/build/freeTest.js"]);
+		View::setCss(['css' => "/public/build/freeTest.css"]);
 
-        if ($testData === 0) {//  0 -  это папка
-            $msg[] = 'Это папка! <a href = ' . PROJ . '/1>Перейти к тестам</a>';
-            $error = include APP . '/view/User/alert.php'; //
-            $this->set(compact('js', 'css', 'error', 'msg'));
-        } elseif ($testData === FALSE) {//Теста с таким номером нет
-            $msg[] = 'Теста с таким номером нет.';
-            $error = include APP . '/view/Freetest/alert.php'; //
-            $this->set(compact('js', 'css', 'msg', 'error'));
-        }
+		if ($testData === 0) {//  0 -  это папка
+			$msg[] = 'Это папка! <a href = ' . PROJ . '/1>Перейти к тестам</a>';
+			$error = include APP . '/view/User/alert.php'; //
+			$this->set(compact('js', 'css', 'error', 'msg'));
+		} elseif ($testData === FALSE) {//Теста с таким номером нет
+			$msg[] = 'Теста с таким номером нет.';
+			$error = include ROOT . '/app/view/Freetest/alert.php'; //
+			$this->set(compact('msg', 'error'));
+		}
 
-        if ($testData) {
-            $testName = $testData[0]['name'];
+		if ($testData) {
+			$testName = $testData[0]['name'];
+			$testId = $testData[0]['parent'];
+			$_SESSION['freetestData'] = $testData;
 
-            $testId = $testData[0]['parent'];
+			$_SESSION['key_words'] = $testData['key_words'];
+			unset($testData['key_words']);
+			unset($_SESSION['key_words']);
+			unset($_SESSION['freetestData']);
 
-            $_SESSION['freetestData'] = $testData;
+			ob_start();
+			new Pagination([
+				'id' => $this->route['alias'],
+				'testData' => $testData,
+				'tpl' => ROOT . "/app/view/widgets/pagination/pagination_tpl/do_freetest_pagination.php",
+				'cache' => 60,
+				'sql' => "SELECT * FROM freetest_quest WHERE parent = ?"
+			]);
+			$pagination = ob_get_clean();
 
-            $_SESSION['key_words'] = $testData['key_words'];
-            unset($testData['key_words']);
-            unset($_SESSION['key_words']);
-            unset($_SESSION['freetestData']);
+			ob_start();
+			new Menu([
+				'tpl' => ROOT . "/app/view/widgets/menu/menu_tpl/do_freetest_menu.php",
+				'cache' => 60,
+				'sql' => "SELECT * FROM freetest WHERE enable = '1'"
+			]);
+			$testsMenu = ob_get_clean();
 
-            $this->set(compact('js', 'css', 'testData', 'testName', 'testId'));
-        }
-    }
+			$this->set(compact('testData', 'testName', 'testId', 'pagination', 'testsMenu'));
+		}
+	}
 
 }
