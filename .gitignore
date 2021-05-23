@@ -1,6 +1,7 @@
 /refs/
-/tmp/
+/tmp
 /node_modules/
 /.idea/
 /composer.phar
 /public/build
+/vendor
