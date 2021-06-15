@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-use app\core\Base\Model;
+use app\model\Model;
 use app\core\App;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -186,79 +186,26 @@ class Test extends Model
 		$res = $this->insertBySql($sql, $params);
 	}
 
-	public function aAdd()
-	{
+//	public function aAdd()
+//	{
+//
+//
+//// Получаем id следующего ответа
+//		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'answer'";
+//		$next = $this->findBySql($sql)[0];
+//		$row['qid'] = $_POST['qid'];
+//		$row['id'] = $next['Auto_increment'];
+//		$row['answer'] = "";
+//		$picA = "";
+//		$correctAnswer = "";
+//
+//		$params = [$row['qid']];
+//		$sql = "INSERT INTO answer (parent_question) VALUES (?)";
+//		$this->insertBySql($sql, $params);
+//
+//		include APP . '/view/Test/editBlockAnswer.php';
+//	}
 
-
-// Получаем id следующего ответа
-		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'answer'";
-		$next = $this->findBySql($sql)[0];
-		$row['qid'] = $_POST['qid'];
-		$row['id'] = $next['Auto_increment'];
-		$row['answer'] = "";
-		$picA = "";
-		$correctAnswer = "";
-
-		$params = [$row['qid']];
-		$sql = "INSERT INTO answer (parent_question) VALUES (?)";
-		$this->insertBySql($sql, $params);
-
-		include APP . '/view/Test/editBlockAnswer.php';
-	}
-
-	public function qAdd()
-	{
-		$tId = $_POST['testid'];
-		$sort = $_POST['questQnt'];
-		//exit($sort);
-		$picQ = '';
-		$textQuestion = '';
-		$picA = '';
-		$answerText = '';
-		$corrAnswer = '';
-
-		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'question'";
-		$next = $this->findBySql($sql)[0];
-		$qId = $next['Auto_increment'];
-
-		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'answer'";
-		$next = $this->findBySql($sql)[0];
-		$aId = $next['Auto_increment'];
-
-////////////////////////        
-		$params = [$tId, $sort];
-		$sql = "INSERT INTO question (parent,sort) VALUES (?,?)";
-		$this->insertBySql($sql, $params);
-
-		$params = [$qId];
-		$sql = "INSERT INTO answer (parent_question) VALUES (?)";
-		$this->insertBySql($sql, $params);
-
-		$row['answer'] = '';
-		$correctAnswer = '';
-		$picA = '';
-		$picQ = '';
-		$row['qustion'] = "";
-		$row['qid'] = $qId;
-		$row['sort'] = $sort;
-		$row['id'] = $aId;
-
-		ob_start();
-		require APP . '/view/Test/editBlockQuestion.php';
-		$question = ob_get_clean();
-
-		ob_start();
-		require APP . '/view/Test/editBlockAnswer.php';
-		$answer = ob_get_clean();
-		ob_end_clean();
-
-		$block = $question . $answer;
-		$pagination = "<a href='#question-$qId' class='nav-active'>$sort</a>";
-
-		$data = compact("pagination", "tId", "block");
-		// Превратим объект в строку JSON
-		echo $json = json_encode($data);
-	}
 
 	public function tAdd()
 	{
@@ -403,128 +350,110 @@ class Test extends Model
 		return $new;
 	}
 
-	/**
-	 * Получаем массив вопросов+ответы + название теста<br/>
-	 * @param integer $testId <p>id теста</p>
-	 * @return array <p>Массив вопросов/ответов + название теста</p>
-	 */
-	public
-	function getTestData($testId)
+	public function getTestData($testId, bool $shuffle = false)
 	{
 		$testId = $testId ?? '(SELECT id FROM test limit 1)';
-		$sql = <<<here
-SELECT *, q.id as q_id, a.id as a_id, test.parent as parent_test, test.id as test_id
+		$sql =
+		<<<her
+		
+SELECT i.path, i.name,
+       iq.path as qpath, iq.name as qname, 
+       q.qustion, q.sort, a.answer, a.correct_answer, q.id as q_id, a.id as a_id
 FROM question q
 LEFT JOIN answer a
-ON q.id = a.parent_question
-LEFT JOIN test
-ON test.id = q.parent
-WHERE q.parent = ?
-ORDER by q.sort+0
-here;
+	ON a.parent_question=q.id 
+    
+left join image_morph im
+   on im.type='answer' and im.type_id=a.id
+left join images i 
+   on i.id=im.image_id
+    
+left join image_morph imq
+   on imq.type='question' and imq.type_id=q.id
+left join images iq 
+   on iq.id=imq.image_id
+
+WHERE q.parent = $testId
+ORDER by q.sort+0,q.qustion
+
+her;
+
 		// +0 для сортировки чисел, чтобы не было 2>10 // AND test.enable = :testEnable
 		$params = [$testId];
 		$result = $this->findBySql($sql, $params);
 
-		if (!$result) {
-			return false;
-		}
-
 		$data = [];
-		$_SESSION['test_name'] = $result[0]['test_name'];
-		$_SESSION['testId'] = $result[0]['parent'];
-
 		$prevQuest = 0;
 
 		foreach ($result as $row) {
-
-			if ($prevQuest != $row['parent_question'] && $prevQuest != 0) {
-
-				$data[$prevQuest] = self::shuffle_assoc($data[$prevQuest]);
+			$q_id = $row['q_id'];
+			if ($prevQuest != $q_id) {
+				$data[$q_id][0]['question_text'] = htmlentities($row['qustion']);
+				$data[$q_id][0]['question_pic'] = ($row['qpath'] && $row['qname']) ? $row['qpath'] . '/' . $row['qname'] : '';
+				$data[$q_id][0]['sort'] = $row['sort'];
+				if ($prevQuest && $shuffle) {
+					$data[$prevQuest] = self::shuffle_assoc($data[$prevQuest]);
+				}
 			}
-			$prevQuest = $row['parent_question'];
-
-			$data[$prevQuest][0]['question_text'] = htmlentities($row['qustion']);
-			$data[$prevQuest][0]['question_pic'] = $row['picq'];
-			$data[$prevQuest][0]['sort'] = $row['sort'];
-			$data[$prevQuest][$row['a_id']]['answer_text'] = htmlentities($row['answer']);
-			$data[$prevQuest][$row['a_id']]['answer_pic'] = $row['pica'];
-			$data[$prevQuest][$row['a_id']]['answer_correct'] = $row['correct_answer'];
+			$a_id = $row['a_id'];
+			$data[$q_id][$a_id]['answer_text'] = htmlentities($row['answer']);
+			$data[$q_id][$a_id]['answer_pic'] = ($row['path'] && $row['name']) ? $row['path'] . '/' . $row['name'] : '';
+			$data[$q_id][$a_id]['correct_answer'] = $row['correct_answer'];
 
 			if ($row['correct_answer'] == 1) {
-				$data['correct_answers'][] = $row['id'];
+				$data['correct_answers'][] = $row['a_id'];
 			}
+			$prevQuest = $q_id;
 		}
 
 		return $data;
 	}
 
-	public
-	function getTestDataToEdit($testId)
+//	public
+//	function getTestDataToEdit($testId)
+//	{
+//		$sql = <<<here
+//SELECT q.id AS qid, q.qustion, q.picq,q.parent, a.id, a.answer, a.correct_answer, a.pica, a.parent_question, test.enable, test.test_name, q.sort
+//FROM question q
+//LEFT JOIN answer a
+//ON q.id = a.parent_question
+//LEFT JOIN test
+//ON test.id = q.parent
+//WHERE q.parent = ?
+//ORDER by q.sort, a.id
+//here;
+//		$params = [$testId];
+//		$res = $this->findBySql($sql, $params);
+//
+//		return $res ?? false;
+//	}
+
+
+	public function pagination(array $items, $addBtn)
 	{
-		$sql = <<<here
-SELECT q.id AS qid, q.qustion, q.picq,q.parent, a.id, a.answer, a.correct_answer, a.pica, a.parent_question, test.enable, test.test_name, q.sort 
-FROM question q
-LEFT JOIN answer a
-ON q.id = a.parent_question
-LEFT JOIN test
-ON test.id = q.parent
-WHERE q.parent = ?
-ORDER by q.sort, a.id
-here;
-		$params = [$testId];
-		$res = $this->findBySql($sql, $params);
-
-		if ($res) return $res;
-		return false;
-	}
-
-	/**
-	 * Возвращает навигацию <br/>
-	 * @return string <p>Массив вопросов</p>
-	 */
-	public
-	function pagination($test_data)
-	{
-		unset($test_data['correct_answers']);
-
 		$pagination = '<div class="pagination">';
 		$i = 0;
-		foreach ($test_data as $id => $item) {
+		foreach ($items as $id => $el) {
 			$i++;
 			$d = <<<heretext
-<div  data-pagination=$id>
-<div>$i</div>
-</div>
+<div data-pagination=$id>$i</div>
 heretext;
 			$pagination .= $d;
+		}
+		if ($addBtn) {
+			$pagination .= "<div class='add-question'>+</div>";
 		}
 
 		return $pagination . '</div>';
 	}
 
-	public
-	function paginationEdit(array $items)
+	public function getCorrectAnswers()
 	{
-		$pagination = '<div class="pagination">';
-		$i = 0;
-		foreach ($items as $id => $el) {
-			$pagination .= '<div data-pagination=' . $id . ' >' . $i++ . '</div>';
-		}
-		$pagination .= "<div class='add-question'>+</div></div>";
-
-		return $pagination;
-	}
-
-	public
-	function getCorrectAnswers()
-	{
-		$correct_answers = $_SESSION['correct_answers'];
+		$correct_answers = $_SESSION['testData']['correct_answers'];
 		exit(json_encode($correct_answers));
 	}
 
-	public
-	function send_mail()
+	public function send_mail()
 	{
 		$this->send_result_mail('/results/test/', '/test/results/');
 	}

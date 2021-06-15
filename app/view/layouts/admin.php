@@ -2,6 +2,7 @@
 <html>
 <!--ADMIN-LAYOUT-->
 <head>
+	<meta name="token" content="<?= $_SESSION['token'] ?>">
 	<meta name="robots" content="noindex,nofollow"/>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +22,6 @@
 		</div>
 
 
-		<div class="clear-cache" title='очистить кэш' onclick='clearCache()'></div>
 
 		<div class="user-menu">
 
@@ -34,9 +34,7 @@
 
 			<div class="nav">
 				<a href="/user/edit">Редактировать свой профиль</a>
-				<?
-				if (in_array('3', $rightId)):
-					?>
+				<? if (in_array('3', $rightId)): ?>
 					<a href="/adminsc">Admin</a>
 				<? endif; ?>
 				<? if (in_array('1', $rightId)): ?>
@@ -55,16 +53,7 @@
 					</a>
 
 					<a href="/user/logout">
-						<svg width="16" height="8" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
-						     viewBox="-5 0 16 8">
-							<title>lock 1</title>
-							<rect stroke="#e30000" stroke-opacity="0" id="svg_2" height="4.582587" width="4.582587"
-							      y="3.349051" x="0.267697" stroke-linecap="null" stroke-linejoin="null"
-							      stroke-dasharray="null" stroke-width="null" fill="#e30000"/>
-							<path stroke="#e30000" fill-opacity="0" id="svg_17"
-							      d="m0.813005,3.42179c0.127532,-4.291629 3.592734,-3.018688 3.527173,-1.091092"
-							      stroke-linecap="null" stroke-linejoin="round" stroke-dasharray="null" fill="#e30000"/>
-						</svg>
+						<?=require_once ROOT. '/app/view/components/logout.php'?>
 						Выход</a>
 				<? endif; ?>
 			</div>
@@ -74,17 +63,7 @@
 
 
 	</header>
-	<div class="header-tabs column">
-		<div class="column">
-			<div>Сайт
-				<a href="/"></a>
-			</div>
-			<div>Администирование</div>
-		</div>
-		<div>
-		</div>
 
-	</div>
 	<div class="adm-wrap">
 
 
@@ -94,7 +73,7 @@
 			<a href="/adminsc/catalog" class="module catalog"><span>Каталог</span></a>
 			<a href="/adminsc/settings" class="module settings"><span>Настройки</span></a>
 			<a href="/adminsc/crm" class="module crm"><span>CRM</span></a>
-			<a href="#" class="module marketing"><span>Маркетинг</span></a>
+			<a href="/adminsc/test/edit/1" class="module test"><span>Тестирование</span></a>
 
 		</div>
 

@@ -1,0 +1,56 @@
+
+html {
+  height: 100%;
+}
+
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif
+}
+
+h1, h2 {
+  text-transform: uppercase;
+  color: #4e4e4e;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+p {
+  letter-spacing: 1px;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+input,
+textarea,
+textarea:focus,
+.button:focus {
+  outline: none;
+}
+
+.column {
+  display: flex;
+  flex-flow: column;
+}
+.row{
+  display: flex
+}
+.flex1 {
+  display: flex;
+  flex: 1;
+}
+.none
+{ display: none;}

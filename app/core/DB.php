@@ -6,12 +6,12 @@ class DB {
 
     public $pdo;
     protected static $instance;
-//    protected static $countSql;
-//    protected static $queries = [];
+    protected static $countSql;
+    protected static $queries = [];
 
     public function __construct() {
 
-        $db =  require ROOT.'/app/config.php';
+        $db = require ROOT . '/app/core/config.php';
         $db = $db['config_db'];
         $options = [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
@@ -42,22 +42,17 @@ class DB {
         }
     }
 
-
     public function query($sql, $params = []) {
 //        self::$countSql++;
 //        self::$queries[] = $sql;
         $stmt = $this->pdo->prepare($sql);
         $res = $stmt->execute($params);
-        if ($res !== FALSE) {
+        if ($res !== false) {
             return $stmt->fetchAll();
         }
         return [];
     }
 
-    /**
-     * Устанавливает соединение с базой данных
-     * @return \PDO <p>Объект класса PDO для работы с БД</p>
-     */
     public static function getConnection() {
         $params = include(ROOT . '/config/config_db.php');
         $options = array(

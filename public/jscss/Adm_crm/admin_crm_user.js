@@ -1,2 +1,0 @@
-// import '../adminLayer'
-import '../admin'

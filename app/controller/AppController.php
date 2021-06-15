@@ -2,16 +2,19 @@
 
 namespace app\controller;
 
-use app\core\Base\Controller;
 use app\core\App;
+use http\Message;
 
 class AppController extends Controller
 {
+	protected $ajax;
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
 		$this->layout = 'vitex';
+		$this->isAjax();
+
 		if (strpos(strtolower($route['controller']), 'adminsc') === false) {
 			$l = App::$app->category->getAssocCategory(['active' => 'true']);
 			$list = App::$app->category->categoriesTree($l);
@@ -19,30 +22,13 @@ class AppController extends Controller
 		}
 	}
 
-	public
-	function getFromCache($cache_path)
-	{
-		$this->auth();
-		if (is_array($this->route) && array_key_exists('cache', $this->route)) {
-			if ($this->route['cache']) {
-				$cache = $this->route['cache'];
-			}
-		}
-
-		$file = CACHE . $cache_path . $cache . '.txt';
-		if (file_exists($file)) {
-			$results = require $file;
-		}
-		$this->set(compact('results'));
-		exit();
-	}
 
 	public
 	function auth()
 	{
 		try {
 			if (isset($_SESSION['id']) && !$_SESSION['id'] && $_SERVER['QUERY_STRING'] != '') { // REDIRECT на регистрацию, если запросили не корень
-				throw new \Exception();
+				throw new \Exception(\Exception );
 			} elseif (isset($_SESSION['id'])) {
 				// Проверяем существует ли пользователь и подтвердил ли регистрацию
 				$user = App::$app->user->getUser($_SESSION['id']);

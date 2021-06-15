@@ -8,7 +8,7 @@
 
 			<? if (isset($testData) && !isset($error) && !$testData == 0):// Проверим, чтобы запрашивали конекретный тест?>
 
-				<div class="test-name"><?= $_SESSION['test_name']; ?></div>
+				<div class="test-name" data-test-id =<?=$test['id']?> ><?= $test['test_name']; ?></div>
 
 				<?=
 				$pagination;
@@ -27,20 +27,20 @@
 
 								<? if ($item[0]['question_pic']): ?>
 									<div class="qpic">
-										<img class="test-qpic" src="<?= '/pic/' . $item[0]['question_pic'] ?>"
-										     alt="<?= substr($item[0]['question_pic'], 5); ?>">
+										<img class="test-qpic"
+										     src="<?= $item[0]['question_pic'] ? '/pic/' . $item[0]['question_pic'] : '' ?>">
 									</div>
 								<? endif; ?>
 								<? unset($item[0]); ?>
 
 								<? foreach ($item as $id_answer => $answer): ?>
-									<? if (is_array($answer) and $id_answer !== 'correct_answer'): //выложим ответы               ?>
+									<? if (is_array($answer) and $id_answer !== 'correct_answer'): ?>
+							</div>
 
 										<div class="a">
-											<hr size=1,5px width=85% align="left">
-											<input type="checkbox" name="question-<?= $id_quest ?>"
-											       id="answer-<?= $id_answer ?>" value="<?= $id_answer ?>">
-											<label for="answer-<?= $id_answer ?>"><?= $answer['answer_text'] ?></label>
+											<input type="checkbox" id="answer-<?= $id_answer ?>">
+											<label for="answer-<?= $id_answer ?>"></label>
+											<div><?= $answer['answer_text'] ?></div>
 
 											<? if ($answer['answer_pic']): ?>
 												<div class="apic">
@@ -49,7 +49,6 @@
 											<? endif ?>
 
 
-										</div>
 									<? endif; ?>
 								<? endforeach; ?>
 							</div>
@@ -57,13 +56,12 @@
 					<? endforeach; ?>
 				</div>
 
-				<a class="button" id="btnn" data-id="<?= $_SESSION['testId']; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
+				<a class="button" id="btnn" data-id="<?= $test['id']; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
 			<? else: ?>
 
 				<?= $error ?>
 
 			<? endif; ?>
 		</div>
-		<?= $this::getJs() ?>
 
 </section>

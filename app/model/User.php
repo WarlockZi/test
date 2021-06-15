@@ -3,7 +3,7 @@
 namespace app\model;
 
 use app\core\DB;
-use app\core\Base\Model;
+use app\model\Model;
 
 /**
  * Класс User - модель для работы с пользователями
@@ -132,10 +132,8 @@ class User extends Model {
       }
       if ($user) {
          $user = $user[0];
-         // Если запись существует и подтверждена, возвращаем id пользователя
          if ($user['confirm'] == 1) {
             return $user;
-            // Не подтверждена, возвращаем NULL
          } elseif ($user['confirm'] == 0) {
             return NULL;
          }
@@ -151,7 +149,7 @@ class User extends Model {
     */
    public function setAuth($user) {
       // Записываем идентификатор пользователя в сессию
-       if (!isset($_SESSION['id']) || $_SESSION['id']='') {
+       if (!isset($_SESSION['id']) || $_SESSION['id']==="") {
            $_SESSION['id'] = (int)$user['id'];
        }
    }

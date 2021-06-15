@@ -1,5 +1,0 @@
-import './do'
-import './edit/edit'
-import '../components/header/header'
-import '../components/test-pagination/test-pagination'
-import '../components/footer/footer.sass'

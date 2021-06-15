@@ -1,10 +1,3 @@
-<style>
-	p {
-		font-size: 10px;
-		width: 50%;
-		margin: 0 auto;
-	}
-</style>
 <section>
 
 	<form class="form-container" action="#" method="post">
@@ -33,30 +26,11 @@
 
 		<input type="submit" name="reg" class="form-input submit" value="Зарегистрироваться"/>
 
-
 	</form>
-
 
 	<p>Нажимая на кнопку "Регистрация", вы принимаете условия <a href="/about/oferta">Публичной оферты</a> и
 		подтверждаете, что ознакомились с <a href="/about/oferta">Политикой</a> в отношении обработки персональных данных,
 		принимаете ее условия и подтверждаете свое согласие на обработку персональных данных. Персональные данные, которые
 		вы предоставили, будут использоваться исключительно для исполнения договора купли-продажи товара.</p>
 
-
 </section>
-
-<style>
-	.error{
-		background-color: #ff6f6f;
-		display: flex;
-		align-items: center;
-	}
-	.error p{
-		color: #ffffff;
-		margin: 0;
-		padding: 4px;
-		font-size: 1rem;
-		font-weight: 600;
-		width: 100%;
-	}
-</style>

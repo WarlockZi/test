@@ -6,7 +6,7 @@ use app\core\App;
 use app\controller\AppController;
 use app\model\Catalog;
 use app\model\Prop;
-use app\core\Base\View;
+use app\view\View;
 
 class Adm_catalogController extends AdminscController
 {
@@ -119,15 +119,15 @@ class Adm_catalogController extends AdminscController
 	public function actionIndex()
 	{
 
-		$iniCatList = App::$app->category->getInitCategories();
-		$this->set(compact('iniCatList'));
+//		$iniCatList = App::$app->category->getInitCategories();
+//		$this->set(compact('iniCatList'));
 	}
 
 	public function actionCategories()
 	{
 
-		$iniCatList = App::$app->category->getInitCategories();
-		$this->set(compact('iniCatList'));
+//		$iniCatList = App::$app->category->getInitCategories();
+//		$this->set(compact('iniCatList'));
 	}
 
 	public function actionCategory()

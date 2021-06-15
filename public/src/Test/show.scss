@@ -1,0 +1,37 @@
+section {
+  margin: 0 15px;
+}
+
+.grid {
+  display: grid;
+  grid: 1fr 16px/1fr 2fr;
+  grid-row-gap: 15px;
+  grid-column-gap: 10px;
+}
+
+#test_name{
+  outline: #b0ddff 1px solid;
+  &:hover {
+    outline: #b0ddff 2px solid;
+  }
+}
+.save-test{
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 15px;
+  margin-bottom: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+  background-color: #1bbc9b;
+  box-shadow: 0 2px 4px 0 #316358;
+  transition: box-shadow 100ms;
+  display: flex;
+  justify-content: center;
+  //padding: 5px;
+  margin-top: 20px;
+  width: 80px;
+
+  &:hover{
+    box-shadow:none;
+  }
+}

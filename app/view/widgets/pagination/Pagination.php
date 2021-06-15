@@ -2,7 +2,7 @@
 
 namespace app\view\widgets\pagination;
 
-use app\core\Base\Model;
+use app\model\Model;
 use app\core\DB;
 use app\model\Test;
 
