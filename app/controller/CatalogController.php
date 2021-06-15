@@ -4,7 +4,7 @@ namespace app\controller;
 
 use app\core\App;
 use \app\model\Prop;
-use app\core\Base\View;
+use app\view\View;
 
 class CatalogController extends AppController {
 
@@ -13,7 +13,7 @@ class CatalogController extends AppController {
 //      $this->layout = 'vitex';
 //      $list = App::$app->category->getInitCategories();
 //      $this->set(compact('list'));
-      View::setCss(['css' => '/public/css/vitex.css', 'addtime']);
+      View::setCss('vitex.css');
 
    }
 

@@ -20,7 +20,7 @@
               <a class="navi__item add-answer" data-id = "<?= $row['qid'] ?>"> Добавить ответ </a>
             </nav>-->
 
-      <div data-prefix = "q" id = "<?= $row['qid'] ?>" class = "holder">Перетащить картинку.
+      <div data-prefix = "question" id = "<?= $row['qid'] ?>" class = "holder">Перетащить картинку.
         <p id="upload" class="hidden"><br><input type="file"></p>
 
         <!--<p><progress class="hidden" id="uploadprogress" max="100" value="0">0</progress></p>-->

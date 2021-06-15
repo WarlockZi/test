@@ -3,7 +3,7 @@
 namespace app\model;
 
 use app\core\App;
-use app\core\Base\Model;
+use app\model\Model;
 
 class Category extends Model
 {
@@ -122,6 +122,7 @@ class Category extends Model
 
 	public function isCategory($url)
 	{
+		return false;
 		$category = 0;
 		if (!$category) {
 			$arr = explode('/', $url);
@@ -135,7 +136,7 @@ class Category extends Model
 				$category['children'] = $this->getCategoryChildren($category['id']);
 				return $category;
 			}
-			return FALSE;
+			return false;
 		}
 
 	}

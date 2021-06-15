@@ -62,7 +62,7 @@ class Router
 					$route['controller'] = isset($route['controller']) ? self::upperCamelCase($route['controller']) : '';
 
 					self::$route = $route;
-					return TRUE;
+					return true;
 				}
 			}
 		}
@@ -71,6 +71,7 @@ class Router
 
 	public static function dispatch($url)
 	{
+		require_once ROOT . '/app/core/routes.php';
 
 		$url = self::removeQuryString($url);
 		if (self::matchRoute($url)) {
@@ -83,6 +84,11 @@ class Router
 					$cObj->$action(self::$aCategoryOrProduct); // Выполним метод
 					$cObj->getView(); // Подключим вид
 				} else {
+					$ajaxAction =self::$route['action'];
+					if (method_exists($cObj, $ajaxAction)) {
+						$cObj->$ajaxAction(); // Выполним метод
+						exit();
+					}
 					echo "<br><b>$action</b> не найден...  ";
 				}
 			} else {
@@ -94,8 +100,8 @@ class Router
 //            $cObj=new \app\controller\MainController($route);
 //            $cObj->error(self::$aCategoryOrProduct); // Выполним метод
 //            $cObj->getView(); // Подключим вид
-			session_destroy();
-			include '../public/404.html'; // '404.html';
+//			session_destroy();
+			include './public/404.html'; // '404.html';
 		}
 	}
 

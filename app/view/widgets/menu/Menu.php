@@ -2,7 +2,7 @@
 
 namespace app\view\widgets\menu;
 
-use app\core\Base\Model;
+use app\model\Model;
 use app\core\DB;
 use app\core\App;
 

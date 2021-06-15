@@ -235,9 +235,9 @@
 		</div>
 
 
-		<? $this::getJS(); ?>
 
 	</div>
+		<? $this::getJS(); ?>
 </div>
 <!-- Yandex.Metrika counter -->
 <!--<script defer>-->

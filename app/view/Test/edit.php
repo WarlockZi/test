@@ -1,9 +1,7 @@
-<section>
-
-	<div class="container-edit-test">
+<section class = "test-edit-wrapper">
 
 		<div class='test-menu-wrap'>
-			<div class='add-test'>Добавить тест</div>
+			<a class='add-test' href="/adminsc/test/show">Добавить тест</a>
 
 			<?
 			new app\view\widgets\menu\Menu([
@@ -14,17 +12,19 @@
 
 		</div>
 
-		<div class="content">
-			<p class="test-name" value="<?= $_SESSION['testId'] ?>"><?= $_SESSION['test_name'] ?></p>
+		<div class="content"><div class="row">
+			<p class="test-name" value="<?= $test['id'] ?>"><?= $test['test_name']?></p>
+				<div class = "test_delete" data-hover = "showTip" data-click = "delete" tip = "удалить тест : <?= $test['test_name']?>">
+					<?=require_once ROOT.'/app/view/components/trashIcon.php'?>
+				</div>
+
+			</div>
 			<?= $pagination ?>
 
 			<div class="blocks">
 				<? foreach ($testDataToEdit as $q_id => $block): ?>
 					<? require ROOT . '/app/view/Test/editBlockQuestion.php' ?>
 				<? endforeach; ?>
-
 			</div>
-		</div>
 
-		<?= $this::getJs() ?>
 </section>

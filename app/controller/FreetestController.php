@@ -2,7 +2,7 @@
 
 namespace app\controller;
 
-use app\core\Base\View;
+use app\view\View;
 use app\model\Freetest;
 use app\controller\AppController;
 use app\core\App;
@@ -41,8 +41,8 @@ class FreetestController extends AppController
 		}
 
 		$freeTestDataToEdit = $Freetest->getFreeTestDataToEdit($testId);
-		View::setCss(['css' => '/public/build/freeTest.css']);
-		View::setJs(['js' => 'public/build/freeTest.js']);
+		View::setCss('freeTest.css');
+		View::setJs('freeTest.js');
 
 
 		if ($freeTestDataToEdit === FALSE) {//Вообще не нашли такого теста с номером
@@ -102,8 +102,8 @@ class FreetestController extends AppController
 		}
 		$testId = $this->getTestId();
 		$testData = App::$app->freetest->getFreetestData($testId);
-		View::setJS(['js' => "/public/build/freeTest.js"]);
-		View::setCss(['css' => "/public/build/freeTest.css"]);
+		View::setJS('freeTest.js');
+		View::setCss('freeTest.css');
 
 		if ($testData === 0) {//  0 -  это папка
 			$msg[] = 'Это папка! <a href = ' . PROJ . '/1>Перейти к тестам</a>';

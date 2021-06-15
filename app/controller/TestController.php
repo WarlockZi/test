@@ -2,9 +2,10 @@
 
 namespace app\controller;
 
+use app\core\Cache;
 use app\model\User;
 use app\model\Test;
-use app\core\Base\View;
+use app\view\View;
 use app\view\widgets\menu\Menu;
 use app\core\App;
 
@@ -15,67 +16,129 @@ class TestController Extends AppController
 	{
 		parent::__construct($route);
 		$this->auth();
-		View::setCss(['css' => '/public/build/test.css']);
-		View::setJs(['js' => '/public/build/test.js']);
+		View::setCss('test.css');
+		View::setJs('test.js');
 
 	}
 
 	public function actionIndex()
 	{
-
 		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
-		View::setJs(['js' => '/public/build/test.js']);
-		View::setCss(['css' => '/public/build/test.css']);
+		View::setJs('test.js');
+		View::setCss('test.css');
+	}
+
+	public function actionCreate()
+	{
+		if ($this->ajax) {
+			unset($this->ajax['token']);
+			if (!$this->ajax['isTest']){
+				$this->ajax['parent'] = 0;
+			}
+			$id = App::$app->test->create($this->ajax);
+			exit(json_encode(['id'=>$id]));
+		}
 	}
 
 	public function actionEdit()
 	{
-
-		// Загрузка картинок drag-n-drop
-		if (isset($_FILES['file']) && !empty($_FILES['file'])) {
-			App::$app->test->QPic();
-			exit();
-		} elseif ($this->isAjax()) {
-			$func = $_POST['action'];
-			App::$app->test->$func();
+		if ($this->ajax) {
 			exit();
 		}
+		$this->layout = 'admin';
 
-		$testId = (int)$this->route['alias'];
+		$testId = (int)$this->route['id'];
 
 		$testDataToEdit = App::$app->test->getTestData($testId);
+		$test = App::$app->test->findOne($testId);
+
 		unset ($testDataToEdit['correct_answers']);
-		if ($testDataToEdit === FALSE) {//Вообще не нашли такого теста с номером
+		if (!$test) {//Вообще не нашли такого теста с номером
 			$error = '<H1>Теста с таким номером нет.</H1>';
 			$this->set(compact('css', 'error'));
 		}
 
-		$pagination = App::$app->test->paginationEdit($testDataToEdit);
-		$this->set(compact('testDataToEdit', 'pagination', 'testId'));
+		$pagination = App::$app->test->pagination($testDataToEdit, true);
+		$this->set(compact('test', 'testDataToEdit', 'pagination', 'testId'));
 
 	}
+//	public function actionGetResult()
+//	{
+//		if (is_array($this->route) && array_key_exists('cache', $this->route)) {
+//			if ($this->route['cache']) {
+//				$cache = $this->route['cache'];
+//			}
+//		}
+//		$this->getFromCache('/results/test/');
+//		exit();
+//		$file = ROOT . '/tmp/cache/results/' . $cache . '.txt';
+//		if (file_exists($file)) {
+//			$results = require $file;
+//		}
+////		exit();
+//	}
+
 
 	public function actionResults()
 	{
-
-		$this->getFromCache('/results/test/');
-		exit();
-		View::setMeta('Свободный тест', 'Свободный тест', 'Свободный тест');
-
+		$this->auth();
 
 		if (array_key_exists('cache', $this->route)) {
 			if ($this->route['cache']) {
-				$cache = $this->route['cache'];
+				$file_name = $this->route['cache'];
+				$cached_page = App::$app->cache->getFromCache($file_name);
+				exit($cached_page);
 			}
 		}
 
-		$file = ROOT . '/tmp/cache/results/' . $cache . '.txt';
-		if (file_exists($file)) {
-			$results = require $file;
+	}
+	public function actionDelete()
+	{
+		$this->auth();
+		if(App::$app->test->delete($this->ajax['id'])){
+			exit(json_encode(['msg'=>'ok']));
 		}
 
-		$this->set(compact('results'));
-		exit();
+	}
+
+	private function prepareCacheDir()
+	{
+		if (!is_dir(ROOT . '/tmp')) {
+			mkdir(ROOT . '/tmp');
+			if (!is_dir(ROOT . '/tmp/cache')) {
+				mkdir(ROOT . '/tmp/cache');
+				if (!is_dir(ROOT . '/tmp/cache/test_results')) {
+					mkdir(ROOT . '/tmp/cache/test_results');
+				}
+			}
+		} elseif (is_dir(ROOT . '/tmp')) {
+			if (!is_dir(ROOT . '/tmp/cache')) {
+				mkdir(ROOT . '/tmp/cache');
+			} elseif (is_dir(ROOT . '/tmp/cache')) {
+				if (!is_dir(ROOT . '/tmp/cache/test_results')) {
+					mkdir(ROOT . '/tmp/cache/test_results');
+				}
+			}
+		}
+	}
+
+	public function actionCachePageSendEmail()
+	{
+		$post = json_decode($_POST['param']);
+		$this->prepareCacheDir();
+		$file = md5(date(' d m - H i s'));
+		$fileUTF8 = ROOT . '/tmp/cache/test_results/' . $file . '.txt';
+//		$fileWin = mb_convert_encoding($fileUTF8, 'cp1251');
+
+		if (file_put_contents($fileUTF8, $post->pageCache))
+			App::$app->mail->mail_test_result(
+				$file,
+				$post->userName,
+				$post->test_name,
+				$post->questionCnt,
+				(int)$post->errorCnt,
+				$post);
+		exit(json_encode('ok'));
 	}
 
 	private function getMenu()
@@ -95,32 +158,37 @@ class TestController Extends AppController
 		}
 	}
 
+	public function actionGetCorrectAnswers()
+	{
+		App::$app->test->getCorrectAnswers();
+	}
+
+	public function actionShow()
+	{
+		$this->layout = 'admin';
+		$rootTests = App::$app->test->findWhere('isTest', 0);
+		$this->set(compact('rootTests'));
+
+	}
 
 	public function actionDo()
 	{
-
 		$menuTestDo = $this->getMenu();
-
 		$testId = (int)$this->route['alias'];
-		$testData = App::$app->test->getTestData($testId);
-
+		$testData = App::$app->test->getTestData($testId, true);
+		$test = App::$app->test->findOne($testId);
 		$_SESSION['testData'] = $testData;
-
-
 		if ($testData === 0) {//  0 - это просто альтернатива FALSE это папка
-			$msg[] = 'Это папка! <a href = ' . PROJ . '/1>Перейти к тестам</a>';
+			$msg[] = 'Это папка! <a href = "/1">Перейти к тестам</a>';
 			$error = include ROOT . '/app/view/User/alert.php'; //
 			$this->set(compact('error', 'msg'));
 		} elseif ($testData === FALSE) {//Теста с таким номером нет
 			$error = '<H1>Теста с таким номером нет.</H1>';
 			$this->set(compact('error'));
 		}
-
-		$_SESSION['correct_answers'] = $testData['correct_answers'];
+//		$_SESSION['correct_answers'] = $testData['correct_answers'];
 		unset($testData['correct_answers']);
-		$pagination = App::$app->test->pagination($testData);
-		$this->set(compact('testData', 'pagination', 'menuTestDo'));
-
+		$pagination = App::$app->test->pagination($testData, false);
+		$this->set(compact('testData', 'test', 'pagination', 'menuTestDo'));
 	}
-
 }

@@ -14,17 +14,14 @@
 </div>
 
 <script>
-    var overlay = document.querySelector(".overlay"),
-        box = document.querySelector(".messageBox"),
-        clos = document.querySelector(".messageClose");
-    overlay.addEventListener("click", function () {
-        overlay.autocomplete.display = 'none';
-        box.autocomplete.display = 'none';
-    });
-    clos.addEventListener("click", function () {
-        overlay.autocomplete.display = 'none';
-        box.autocomplete.display = 'none';
-    });
+    document.querySelector("body").addEventListener("click",
+        function (e) {
+            if (e.target.className === "messageClose") {
+                alert(e.target.className )
+                window.location.href = "/user/cabinet";
+            }
+        });
+
 </script>
 <style>
 	.overlay{

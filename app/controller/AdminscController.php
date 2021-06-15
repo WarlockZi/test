@@ -2,7 +2,7 @@
 
 namespace app\controller;
 
-use app\core\Base\View;
+use app\view\View;
 use app\core\App;
 
 class AdminscController extends AppController
@@ -27,8 +27,8 @@ class AdminscController extends AppController
 		$this->auth();
 		$this->layout = 'admin';
 
-		View::setJs(['js'=>'/public/build/admin.js']);
-		View::setCss(['css' => '/public/css/admin.css']);
+		View::setJs('admin.js');
+		View::setCss('admin.css');
 	}
 
 	public function actionClearCache()

@@ -2,13 +2,12 @@
 
 namespace app\controller;
 
-use app\core\Base\View;
+use app\view\View;
 use app\model\Mail;
 use app\core\App;
 
-//use app\model\User;
-//use app\core\Base\Controller;
-//use PHPMailer\PHPMailer\PHPMailer;
+use app\model\User;
+
 
 class UserController extends AppController
 {
@@ -16,24 +15,11 @@ class UserController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
-
-	}
-
-	public function actionContacts()
-	{
-		$this->auth();
-		if (isset($_POST['token'])) {
-			if ($_SESSION['token'] !== $_POST['token']) {
-				echo $_POST['token'] . '  +  +  ' . $_SESSION['token'];
-				exit('Обновите страницу.');
-			}
-		}
-		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
 	}
 
 	public function actionCabinet()
 	{
-		$this->auth(); // Авторизация
+		$this->auth();
 
 		if ($this->vars['user'] === false) {
 			// Если пароль или почна неправильные - показываем ошибку
@@ -43,24 +29,32 @@ class UserController extends AppController
 			$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
 		}
 		View::setMeta('Личный кабинет', 'Личный кабинет', '');
-		View::setCss(['css'=>'/public/build/cabinet.css']);
-		View::setJs(['js'=>'/public/build/cabinet.js']);
+		View::setCss('cabinet.css');
+		View::setJs('cabinet.js');
 
+	}
+
+	public function logins()
+	{
+		if ($_POST) {
+			unset($_POST);
+		}
 	}
 
 	public function actionLogin()
 	{
 		if ($data = $this->isAjax()) {
+//			$data = $_POST;
 			$email = (string)$data['email'];
 			$password = (string)$data['password'];
 
-			if (!App::$app->user->checkEmail($email)) {
+			if (!User::checkEmail($email)) {
 				$msg[] = "Неверный формат email";
 				$_SESSION['error'][] = "Неверный формат email";
 				exit(include ROOT . '/app/view/User/alert.php');
 			}
 
-			if (!App::$app->user->checkPassword($password)) {
+			if (!User::checkPassword($password)) {
 				$msg[] = "Пароль не должен быть короче 6-ти символов";
 				exit(include ROOT . '/app/view/User/alert.php');
 			}
@@ -77,12 +71,11 @@ class UserController extends AppController
 				exit(include ROOT . '/app/view/User/alert.php');
 
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
+
 				$user['rights'] = explode(",", $user['rights']);
 				App::$app->user->setAuth($user);
-
 				$this->set(compact('user'));
 				$msg[] = "Все ок";
-				$_SESSION['id'] = $user['id'];
 				exit(include ROOT . '/app/view/User/alert.php');
 			}
 		}
@@ -90,25 +83,25 @@ class UserController extends AppController
 			$user = App::$app->user->getUser($_SESSION['id']);
 			$this->set(compact('user'));
 		}
-		View::setJs(['js' => '/public/build/login.js', 'addtime']);
-		View::setCss(['css' => '/public/build/login.css', 'addtime']);
+		View::setJs('login.js');
+		View::setCss('login.css');
 
 	}
 
 
 	public function actionRegister()
 	{
-		if ($data = $this->isAjax()) {
+		if ($data = $this->ajax) {
 
-			$email = App::$app->user->clean_data($data['email']);
+			$email = $data['email'];
 
 			if (App::$app->user->checkEmailExists($email)) {
-				return;
+				exit(json_encode(['msg'=>'mail exists']));
 			}
 
-			$password = App::$app->user->clean_data($data['password']);
-			$name = App::$app->user->clean_data($data['name']); //$post['reg_name'];//
-			$surName = App::$app->user->clean_data($data['surName']); //$post['reg_name'];//
+			$password = $data['password'];
+			$name = $data['name'];
+			$surName = $data['surName'];
 			$password = md5($password);
 			$hash = md5(microtime());
 
@@ -130,16 +123,14 @@ class UserController extends AppController
 
 		View::setMeta('Регистрация', 'Регистрация', 'Регистрация');
 		$token = $this->token;
-		View::setCss(['css' => $this->route['controller'], 'view' => $this->view, 'addtime']);
-		View::setJs(['js' => '/public/build/mainIndex.js', 'view' => $this->view, 'addtime']);
+		View::setCss('login.css');
+		View::setJs('login.js');
 		$this->set(compact('token'));
 	}
 
 	public function send_mail($email, $tema, $mail_body, $headers)
 	{
-
 // Переменные, которые отправляет пользователь
-
 		$text = $tema;
 
 // Формирование самого письма
@@ -170,10 +161,8 @@ HERETEXT;
 			$mail->Port = 465;
 			$mail->setFrom('vvoronik@yandex.ru', 'Виталий'); // Адрес самой почты и имя отправителя
 
-			// Получатель письма
 			$mail->addAddress($email);
 
-			// Прикрипление файлов к письму
 			if (!empty($file['name'][0])) {
 				for ($ct = 0; $ct < count($file['tmp_name']); $ct++) {
 					$uploadfile = tempnam(sys_get_temp_dir(), sha1($file['name'][$ct]));
@@ -186,12 +175,10 @@ HERETEXT;
 					}
 				}
 			}
-// Отправка сообщения
 			$mail->isHTML(true);
 			$mail->Subject = $title;
 			$mail->Body = $body;
 
-// Проверяем отравленность сообщения
 			if ($mail->send()) {
 				$result = "success";
 			} else {
@@ -203,7 +190,6 @@ HERETEXT;
 			$status = "Сообщение не было отправлено. Причина ошибки: {$mail->ErrorInfo}";
 		}
 
-// Отображение результата
 		echo json_encode(["result" => $result]);
 	}
 
@@ -250,20 +236,17 @@ HERETEXT;
 		if (isset($_COOKIE[session_name()])) {  // session_name() - получаем название текущей сессии
 			setcookie(session_name(), '', time() - 86400, '/');
 		}
-		//очистить массив  $_SESSION
 		$_SESSION = array();
 
 		session_destroy();
 
-		// Перенаправляем пользователя на главную страницу
 		header("Location: /");
 	}
 
 	public function actionConfirm()
-	{ // Забишем что пользователь подтвердил почту в базу данных
-		// Получим id пользователя по hash
+	{
 		try {
-			$hash = App::$app->user->clean_data($_GET['hash']);
+			$hash = $_GET['hash'];
 			if (!$hash) {
 				throw new \Exception();
 			}
@@ -276,13 +259,14 @@ HERETEXT;
 			exit('Не удалось подтвердить почту');
 		};
 		$user = App::$app->user->getUserByHash($hash);
-		// Сохраним id пользователя в сессии
+
 		App::$app->user->setAuth($user);
 
 		View::setMeta('Проверка почты', 'Почта пользователя проверена', 'проверка почты');
+		View::setCss('login.css');
+		View::setJs('login.js');
 
 		$rightId = explode(",", $user['rights']);
-		$js = $this->getJSCSS('.js');
 		$this->set(compact('user', 'rightId'));
 
 	}
@@ -298,21 +282,15 @@ HERETEXT;
 
 	public function actionEdit()
 	{
-		$this->auth(); // Авторизация $_SESSION['id']
-		// Получаем идентификатор пользователя из сессии, если есть
+		$this->auth();
 		if (isset($_SESSION['id'])) {
 			$userId = $_SESSION['id'];
 		}
-		// Получаем информацию о пользователе из БД
 		$user = App::$app->user->getUser($userId);
 
-		// Флаг результата
 		$result = false;
 
-		// Обработка формы
 		if (isset($_POST['submit'])) { //нажали кнопку сохранить
-			// Если форма отправлена
-			// Получаем данные из формы редактирования
 
 			$ff['table'] = 'users';
 			$ff['pkey'] = 'id';
@@ -331,26 +309,31 @@ HERETEXT;
 			}
 
 			if ($errors == false) {
-				// Если ошибок нет, сохраняет изменения профиля
 				$result = App::$app->user->update($ff);
 			}
 			View::setMeta('Профиль', 'Профиль', 'Профиль');
-//            $css = 'style.css';
-//            $rightId = explode(",", $user['rights']);
 			$this->set(compact('user', 'result', 'errors'));
-		} else {// форма из базы данных
+		} else {
 			$email = $user['email'];
 			$name = $user['name'];
 			$surName = $user['surName'];
 			$middleName = $user['middleName'];
 			$birthDate = $user['birthDate'];
 			$phone = $user['phone'];
-//            $password = $user['password'];
 
 			View::setMeta('Профиль', 'Профиль', 'Профиль');
-//         $rightId = explode(",", $user['rights']);
 			$this->set(compact('user'));
 		}
 	}
-
+	public function actionContacts()
+	{
+		$this->auth();
+		if (isset($_POST['token'])) {
+			if ($_SESSION['token'] !== $_POST['token']) {
+				echo $_POST['token'] . '  +  +  ' . $_SESSION['token'];
+				exit('Обновите страницу.');
+			}
+		}
+		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
+	}
 }

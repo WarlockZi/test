@@ -3,7 +3,7 @@
 namespace app\model;
 
 use app\core\App;
-use app\core\Base\Model;
+use app\model\Model;
 
 class Prop extends Model {
 

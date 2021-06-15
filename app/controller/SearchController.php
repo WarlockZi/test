@@ -3,7 +3,7 @@
 namespace app\controller;
 
 use app\core\App;
-use app\core\Base\View;
+use app\view\View;
 
 class SearchController extends AppController
 {

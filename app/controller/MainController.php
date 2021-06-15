@@ -2,7 +2,7 @@
 
 namespace app\controller;
 
-use app\core\Base\View;
+use app\view\View;
 use app\core\App;
 
 class MainController Extends AppController
@@ -21,6 +21,7 @@ class MainController Extends AppController
 				}
 			}
 		}
+
 		parent::__construct($route);
 
 		$sale = App::$app->cache->get('sale');
@@ -30,6 +31,9 @@ class MainController Extends AppController
 		}
 
 		$this->set(compact('sale'));
+			View::setCss('main.css');
+			View::setJs('main.js');
+
 	}
 
 	public function actionIndex()
@@ -45,53 +49,42 @@ class MainController Extends AppController
 			}
 		}
 			View::setMeta('Медицинские расходные материалы', 'Доставим медицинские расходные материалы в любую точку России', 'медицинские расходные материалы, доставка, производство, по России');
-			View::setCss(['css' => '/public/build/mainIndex.css']);
-			View::setJs(['js' => '/public/build/mainIndex.js']);
 	}
 
 	public function actionPoliticaconf()
 	{
-		View::setCss(['css' => '/public/build/mainIndex.css']);
 	}
 
 	public function actionDiscount()
 	{
-		View::setCss(['css' => '/public/build/mainIndex.css']);
 	}
 
 	public function actionDelivery()
 	{
-		View::setCss(['css' => '/public/build/mainIndex.css']);
 	}
 
 	public function actionPayment()
 	{
-		View::setCss(['css' => '/public/build/mainIndex.css']);
 	}
 
 	public function actionContacts()
 	{
-		View::setCss(['css' => '/public/build/mainIndex.css']);
 	}
 
 	public function actionOferta()
 	{
-		View::setCss(['css' => '/public/build/mainIndex.css']);
 	}
 
 	public function actionAbout()
 	{
-		View::setCss(['css' => '/public/build/mainIndex.css']);
 	}
 
 	public function actionReturn_change()
 	{
-
 	}
 
 	public function actionArticles()
 	{
-		View::setCss(['css' => '/public/build/mainIndex.css']);
 	}
 
 }

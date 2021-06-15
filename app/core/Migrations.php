@@ -3,7 +3,7 @@
 
 namespace app\core;
 
-use app\core\Base\Model;
+use app\model\Model;
 
 class Migrations extends Model
 {
