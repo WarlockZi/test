@@ -2,12 +2,13 @@
 
 namespace app\model;
 
+use app\core\App;
 use  \PHPMailer\PHPMailer\PHPMailer;
 
 class Mail
 {
 
-	public static function send_mail($email, $tema, $mail_body, $headers)
+	public static function send_mail($to, $subj, $body)
 	{
 		$mail = new PHPMailer(true);
 		$config = require ROOT . '/app/core/config.php';
@@ -26,13 +27,17 @@ class Mail
 				$mail->Password = $config['smtp_pass'];                           // SMTP password
 				$mail->SMTPSecure = $config['smtp_SMTPSecure'];                            // Enable TLS encryption, `ssl` also accepted
 			};
-			$mail->Host =  $config['smtp_host'];  // Specify main and backup SMTP servers
+			$mail->Host = $config['smtp_host'];  // Specify main and backup SMTP servers
 			//Recipients
 			$mail->setFrom('vvoronik@yandex.ru', 'vitexopt@vitexopt.ru');
-			$mail->addAddress($email);     // Add a recipient
+
+			foreach ($to as $address) {
+				$mail->addAddress($address);     // Add a recipient
+			}
+
 			$mail->isHTML(true);      // Set email format to HTML
-			$mail->Subject = $tema;
-			$mail->Body = $mail_body;
+			$mail->Subject = App::$app->mail->toBase64($subj);
+			$mail->Body = $body;
 			$mail->AltBody = "Ссылка на страницу с результатами: тут";
 
 			$mail->send();
@@ -42,6 +47,37 @@ class Mail
 		}
 	}
 
+	protected function toBase64($str)
+	{
+		return "=?utf-8?b?" . base64_encode($str) . "?=";
+	}
+
+//	protected static function getBody($str)
+//	{
+//		if ($str === 'testResults') {
+//			return Mail::testResults();
+//		} elseif ($str === 'register') {
+//			return Mail::register();
+//		}
+//	}
+
+	protected static function prepareBodyTestResults($file, $userName, $test_name, $questionCnt, $errorCnt)
+	{
+		$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/results/' . $file;
+		ob_start();
+		require ROOT . '/app/view/Test/email.php';
+		$template = ob_get_clean();
+		return $template;
+	}
+
+	public static function prepareBodyRegister($hash)
+	{
+//		$confirm_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/results/' . $hash;
+		ob_start();
+		require ROOT . '/app/view/User/email.php';
+		$template = ob_get_clean();
+		return $template;
+	}
 
 	private function getSubject($errorCnt, $questCnt)
 	{
@@ -49,15 +85,12 @@ class Mail
 		return "=?utf-8?b?" . base64_encode($errorSubj) . "?=";
 	}
 
-	private function getBody($file,$userName, $testName, $questCnt, $errorCnt)
+	private function getBodyTest($file, $userName, $testName, $questCnt, $errorCnt)
 	{
-		$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/results/' . $file;
-		ob_start();// ссылка присоединяется шаблоне письма
-		require ROOT . '/app/view/Test/email.php';
-		return ob_get_clean();
+		return Mail::testResults();
 	}
 
-	public function mail_test_result($file, $userName, $testName, $questCnt, $errorCnt, $post)
+	public function mail_test_result($to = [], $subject, $body)
 	{
 		$mail = new PHPMailer(TRUE);
 		$config = require ROOT . '/app/core/config.php';
@@ -76,19 +109,16 @@ class Mail
 			$mail->Host = $config['smtp_host'];  // Specify main and backup SMTP servers
 			//Recipients
 			$mail->setFrom('vvoronik@yandex.ru', $userName);
-			$mail->addAddress('vvoronik@yandex.ru', 'vvv');     // Add a recipient
-			$mail->addAddress('vitaliy04111979@gmail.com', 'vvv');     // Add a recipient
-			$mail->addAddress('sno_dir@vitexopt.ru', 'SNO');
-			if (trim($userName) !== "Вороник Виталий Викторович") {
-				$mail->addAddress('vvoronik@yandex.ru', 'VVV');
-			};
+			foreach ($to as $address) {
+				$mail->addAddress('vvoronik@yandex.ru', 'vvv');     // Add a recipient
+			}
 
 			//Content
 			$mail->isHTML(true); // Set email format to HTML
 
 			$mail->Subject = $this->getSubject($errorCnt, $questCnt);
 
-			$mail->Body = $this->getBody($file,$userName, $testName, $questCnt, $errorCnt);
+			$mail->Body = $this->getBodyTest($file, $userName, $testName, $questCnt, $errorCnt);
 
 			$mail->AltBody = "Название теста: $testName/r/n"
 				. "От кого: $userName/r/n

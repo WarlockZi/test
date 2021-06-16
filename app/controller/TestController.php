@@ -32,11 +32,11 @@ class TestController Extends AppController
 	{
 		if ($this->ajax) {
 			unset($this->ajax['token']);
-			if (!$this->ajax['isTest']){
+			if (!$this->ajax['isTest']) {
 				$this->ajax['parent'] = 0;
 			}
 			$id = App::$app->test->create($this->ajax);
-			exit(json_encode(['id'=>$id]));
+			exit(json_encode(['id' => $id]));
 		}
 	}
 
@@ -92,11 +92,12 @@ class TestController Extends AppController
 		}
 
 	}
+
 	public function actionDelete()
 	{
 		$this->auth();
-		if(App::$app->test->delete($this->ajax['id'])){
-			exit(json_encode(['msg'=>'ok']));
+		if (App::$app->test->delete($this->ajax['id'])) {
+			exit(json_encode(['msg' => 'ok']));
 		}
 
 	}
@@ -131,13 +132,20 @@ class TestController Extends AppController
 //		$fileWin = mb_convert_encoding($fileUTF8, 'cp1251');
 
 		if (file_put_contents($fileUTF8, $post->pageCache))
-			App::$app->mail->mail_test_result(
-				$file,
-				$post->userName,
-				$post->test_name,
-				$post->questionCnt,
-				(int)$post->errorCnt,
-				$post);
+			$to = [
+				'vvoronik@yandex.ru',
+				'vitaliy04111979@gmail.com',
+				'sno_dir@vitexopt.ru',
+			];
+		$subject = Mail::prepareSubjectTestResults();
+		$mail_body = Mail::prepareBodyTestResults(
+			$file,
+			$post->userName,
+			$post->test_name,
+			$post->questionCnt,
+			(int)$post->errorCnt
+		);
+		App::$app->mail->mail_test_result($to, $subject, $body);
 		exit(json_encode('ok'));
 	}
 

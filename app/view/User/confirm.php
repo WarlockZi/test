@@ -6,7 +6,7 @@
             <a class="list" href="/user/edit" >Редактировать свой профиль</a>
 
             <? if (in_array('2', $rightId)): ?>
-                <a class="list" href="<?= PROJ ?>/1">Проходить закрытые тесты</a>
+                <a class="list" href="/test/1">Проходить закрытые тесты</a>
             <? endif; ?>
 
             <? if (in_array('2', $rightId)): ?>
