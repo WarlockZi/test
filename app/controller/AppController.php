@@ -27,6 +27,7 @@ class AppController extends Controller
 	function auth()
 	{
 		try {
+//			unset($_SESSION['id']);
 			if (isset($_SESSION['id']) && !$_SESSION['id'] && $_SERVER['QUERY_STRING'] != '') { // REDIRECT на регистрацию, если запросили не корень
 				throw new \Exception(\Exception );
 			} elseif (isset($_SESSION['id'])) {

@@ -44,7 +44,6 @@ class UserController extends AppController
 	public function actionLogin()
 	{
 		if ($data = $this->isAjax()) {
-//			$data = $_POST;
 			$email = (string)$data['email'];
 			$password = (string)$data['password'];
 
@@ -92,10 +91,8 @@ class UserController extends AppController
 	public function actionRegister()
 	{
 		if ($data = $this->ajax) {
-
-			$email = $data['email'];
-
-			if (App::$app->user->checkEmailExists($email)) {
+			$to = [$data['email']];
+			if (App::$app->user->checkEmailExists($to)) {
 				exit(json_encode(['msg'=>'mail exists']));
 			}
 
@@ -107,14 +104,14 @@ class UserController extends AppController
 
 			$sql = 'INSERT INTO users (rights, surName, name, email, password, hash)'
 				. 'VALUES (?,?,?,?,?,?)';
-			$params = [2, $surName, $name, $email, $password, $hash];
+			$params = [2, $surName, $name, $to, $password, $hash];
 
 			App::$app->user->insertBySql($sql, $params);
 
-			$headers = "Content-Type: text/plain; charset=utf8";
-			$tema = "Регистрация VITEX";
-			$mail_body = "Для продолжения работы перейдите по ссылке: " . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . "/user/confirm?hash=" . $hash;
-			Mail::send_mail($email, $tema, $mail_body, $headers);
+			$subj = "Регистрация VITEX";
+			$body = Mail::prepareBodyRegister($hash);
+
+			Mail::send_mail($to, $subj, $body);
 
 			$msg[] = "Для подтвержения регистрации перейдите по ссылке в <br><a href ='https://mail.vitexopt.ru/webmail/login/'>ПОЧТЕ</a>.<br>Письмо может попасть в папку 'Спам'";
 			exit(include ROOT . '/app/view/User/alert.php');
@@ -216,8 +213,6 @@ HERETEXT;
 				$msg[] = "Введите фамилию.";
 			}
 
-
-			// Если есть пользователь с таким email.
 			if (App::$app->user->checkEmailExists($email)) {
 				$msg[] = "Пользователь с таким e-mail уже существует<br>"
 					. "Перейдите по ссылке, чтобы получить пароль на эту почту. <br>"
