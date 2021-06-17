@@ -29,16 +29,29 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("[name = 'reg']").on("click", function (e) {
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("[name = 'reg']").on("click", async function (e) {
   e.preventDefault();
+  let email = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type = email]').el[0].value;
+  if (!email) return false;
   let data = {
-    "email": (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type = email]').el[0].value,
+    "email": email,
     "password": (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("input[type= password]").el[0].value,
     "surName": (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("[name='surName']").el[0].value,
     "name": (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("[name='name']").el[0].value,
     "token": (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('meta[name="token"]').el[0].getAttribute('content')
   };
-  (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/user/register', data);
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/user/register', data);
+  res = JSON.parse(res);
+
+  if (res.msg === 'ok') {
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').addClass('success');
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').el[0].innerHTML = 'Зарегистрирован. Теперь, чтобы попасть в личный кабинет, необходимо зайти на почту, с которой производилась регистрация и перейти по ссылке для подтверждения почты.';
+  } else if (res.msg === 'mail exists') {
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').addClass('error');
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.error').el[0].innerHTML = 'Почта уже зарегистрирована. Вам необходимо <a href="/user/login">ВОЙТИ</a>';
+  } else {
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.error').el[0].innerHTML = res;
+  }
 });
 
 /***/ }),
@@ -324,6 +337,53 @@ async function fetchW(url, Obj) {
 
 /***/ }),
 
+/***/ "./public/src/components/header/autocomplete.js":
+/*!******************************************************!*\
+  !*** ./public/src/components/header/autocomplete.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _autocomplete_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./autocomplete.sass */ "./public/src/components/header/autocomplete.sass");
+
+
+window.onload = function () {
+  let inp = document.querySelector('#autocomplete').addEventListener('input', function () {
+    autocomplete(this.value);
+  });
+};
+
+async function fetchJson(Input) {
+  let response = await fetch('/search?q=' + Input);
+  return await response.json();
+}
+
+async function autocomplete(val) {
+  if (val.length < 1) {
+    result.innerHTML = '';
+    return;
+  }
+
+  var data = await fetchJson(val);
+  debugger;
+  var res = '<ul>';
+  data.forEach(e => {
+    res += '<li>' + `<a href = '${e.alias}'>` + `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name + '</a></li>';
+  });
+  res += '</ul>';
+  var result = document.querySelector('.result-search');
+  result.innerHTML = res;
+  document.querySelector('body').addEventListener('click', function (e) {
+    const search = document.querySelector('.result-search ul');
+
+    if (document.querySelector('.result-search ul') && e.target !== search) {
+      search.remove();
+    }
+  });
+} // module.exports = autocomplete
+
+/***/ }),
+
 /***/ "./public/src/components/header/header.js":
 /*!************************************************!*\
   !*** ./public/src/components/header/header.js ***!
@@ -384,6 +444,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************!*\
   !*** ./public/src/components/forms.sass ***!
   \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/components/header/autocomplete.sass":
+/*!********************************************************!*\
+  !*** ./public/src/components/header/autocomplete.sass ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -462,6 +534,18 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 
+/***/ }),
+
+/***/ "./public/src/var.scss":
+/*!*****************************!*\
+  !*** ./public/src/var.scss ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
 /***/ })
 
 /******/ 	});
@@ -528,13 +612,17 @@ var __webpack_exports__ = {};
   \**********************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
-/* harmony import */ var _login_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./login.scss */ "./public/src/User/login.scss");
-/* harmony import */ var _components_footer_footer_sass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/footer/footer.sass */ "./public/src/components/footer/footer.sass");
-/* harmony import */ var _components_forms_sass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/forms.sass */ "./public/src/components/forms.sass");
-/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
-/* harmony import */ var _register__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./register */ "./public/src/User/register.js");
-/* harmony import */ var _cabinet__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./cabinet */ "./public/src/User/cabinet.js");
+/* harmony import */ var _var_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../var.scss */ "./public/src/var.scss");
+/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
+/* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
+/* harmony import */ var _components_footer_footer_sass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/footer/footer.sass */ "./public/src/components/footer/footer.sass");
+/* harmony import */ var _components_forms_sass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/forms.sass */ "./public/src/components/forms.sass");
+/* harmony import */ var _login_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./login.scss */ "./public/src/User/login.scss");
+/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
+/* harmony import */ var _register__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./register */ "./public/src/User/register.js");
+/* harmony import */ var _cabinet__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./cabinet */ "./public/src/User/cabinet.js");
+
+
 
 
 
