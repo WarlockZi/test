@@ -18,7 +18,7 @@ class Mail
 			$config = $config['Mailer'];
 		}
 		try {
-			$mail->SMTPDebug = 2;  // Enable verbose debug output
+//			$mail->SMTPDebug = 2;  // Enable verbose debug output
 			if ($config['smtp_mode']) {
 				$mail->isSMTP();                                      // Set mailer to use SMTP
 				$mail->SMTPAuth = $config['auth'];                               // Enable SMTP authentication
@@ -40,8 +40,8 @@ class Mail
 			$mail->Body = $body;
 			$mail->AltBody = "Ссылка на страницу с результатами: тут";
 
-			$mail->send();
-			echo 'Message has been sent';
+			$output = $mail->send();
+			return true;
 		} catch (Exception $e) {
 			echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
 		}

@@ -1,8 +1,10 @@
 import {post, $} from '../common';
+import '../var.scss'
 import '../components/header/header';
-import './login.scss'
+import '../components/header/autocomplete'
 import '../components/footer/footer.sass'
 import '../components/forms.sass'
+import './login.scss'
 import '../normalize.scss'
 import './register'
 import './cabinet'

@@ -211,7 +211,6 @@ class User extends Model {
 
       $res = $this->findOne($email, 'email');
       if ($res) {
-      	$_SESSION['email_exists']=1;
          return true;
       }
       return false;

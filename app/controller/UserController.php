@@ -34,12 +34,12 @@ class UserController extends AppController
 
 	}
 
-	public function logins()
-	{
-		if ($_POST) {
-			unset($_POST);
-		}
-	}
+//	public function logins()
+//	{
+//		if ($_POST) {
+//			unset($_POST);
+//		}
+//	}
 
 	public function actionLogin()
 	{
@@ -92,8 +92,8 @@ class UserController extends AppController
 	{
 		if ($data = $this->ajax) {
 			$to = [$data['email']];
-			if (App::$app->user->checkEmailExists($to)) {
-				exit(json_encode(['msg'=>'mail exists']));
+			if (App::$app->user->checkEmailExists($to[0])) {
+				exit(json_encode(['msg' => 'mail exists']));
 			}
 
 			$password = $data['password'];
@@ -102,11 +102,22 @@ class UserController extends AppController
 			$password = md5($password);
 			$hash = md5(microtime());
 
-			$sql = 'INSERT INTO users (rights, surName, name, email, password, hash)'
+			$sql = 'INSERT INTO users (rights, surName, name, {$to[0]}, password, hash)'
 				. 'VALUES (?,?,?,?,?,?)';
-			$params = [2, $surName, $name, $to, $password, $hash];
-
-			App::$app->user->insertBySql($sql, $params);
+//			$params = [2, $surName, $name, $to, $password, $hash];
+			$values = [
+				'rights' => 2,
+				'surName' => $surName,
+				'name' => $name,
+				'email' => $to[0],
+				'password' => $password,
+				'hash' => $hash,
+			];
+			try {
+				App::$app->user->create($values);
+			} catch (\Exception $e) {
+				exit($e->getMessage());
+			};
 
 			$subj = "Регистрация VITEX";
 			$body = Mail::prepareBodyRegister($hash);
@@ -114,7 +125,10 @@ class UserController extends AppController
 			Mail::send_mail($to, $subj, $body);
 
 			$msg[] = "Для подтвержения регистрации перейдите по ссылке в <br><a href ='https://mail.vitexopt.ru/webmail/login/'>ПОЧТЕ</a>.<br>Письмо может попасть в папку 'Спам'";
-			exit(include ROOT . '/app/view/User/alert.php');
+			ob_start();
+			include ROOT . '/app/view/User/alert.php';
+			$overlay = ob_get_clean();
+				exit(json_encode(['overlay'=>$overlay, 'msg'=>'ok']));
 		}
 
 
@@ -320,6 +334,7 @@ HERETEXT;
 			$this->set(compact('user'));
 		}
 	}
+
 	public function actionContacts()
 	{
 		$this->auth();
