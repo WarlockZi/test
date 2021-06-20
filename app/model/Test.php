@@ -373,7 +373,7 @@ left join image_morph imq
 left join images iq 
    on iq.id=imq.image_id
 
-WHERE q.parent = $testId
+WHERE q.parent = ?
 ORDER by q.sort+0,q.qustion
 
 her;
