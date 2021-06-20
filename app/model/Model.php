@@ -181,11 +181,6 @@ here;
 	public
 	function findBySql($sql, $params = [])
 	{
-		echo $sql;
-		foreach ($params as $p) {
-
-			echo $p;
-		}
 		return $this->pdo->query($sql, $params);
 	}
 

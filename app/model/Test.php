@@ -352,7 +352,7 @@ class Test extends Model
 
 	public function getTestData($testId, bool $shuffle = false)
 	{
-		$testId = $testId ?? '(SELECT id FROM test limit 1)';
+//		$testId = $testId ?? '(SELECT id FROM test limit 1)';
 		$sql =
 		<<<her
 		
@@ -381,6 +381,7 @@ her;
 		// +0 для сортировки чисел, чтобы не было 2>10 // AND test.enable = :testEnable
 		$params = [$testId];
 		$result = $this->findBySql($sql, $params);
+		echo $result;
 
 		$data = [];
 		$prevQuest = 0;
