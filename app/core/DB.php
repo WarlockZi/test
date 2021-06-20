@@ -45,6 +45,10 @@ class DB {
     public function query($sql, $params = []) {
 //        self::$countSql++;
 //        self::$queries[] = $sql;
+		 echo $sql;
+		 foreach ($params as $p) {
+			 echo $p;
+		 }
         $stmt = $this->pdo->prepare($sql);
         $res = $stmt->execute($params);
         if ($res !== false) {
