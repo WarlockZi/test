@@ -183,7 +183,7 @@ class User extends Model {
     * @param string $password <p>Пароль</p>
     * @return boolean <p>Результат выполнения метода</p>
     */
-   public function checkPassword($password) {
+   public static function checkPassword($password) {
       if (strlen($password) >= 6) {
          return true;
       }
