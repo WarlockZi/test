@@ -381,7 +381,6 @@ her;
 		// +0 для сортировки чисел, чтобы не было 2>10 // AND test.enable = :testEnable
 		$params = [$testId];
 		$result = $this->findBySql($sql, $params);
-		echo $result;
 
 		$data = [];
 		$prevQuest = 0;
