@@ -182,7 +182,10 @@ here;
 	function findBySql($sql, $params = [])
 	{
 		echo $sql;
-		echo $params;
+		foreach ($params as $p) {
+
+			echo $p;
+		}
 		return $this->pdo->query($sql, $params);
 	}
 
