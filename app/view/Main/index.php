@@ -42,9 +42,3 @@
 			</p>
 		</div>
 </main>
-<style>
-	.card {
-		width: 50%;
-		margin: 65px auto;
-	}
-</style>
