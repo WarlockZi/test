@@ -13,9 +13,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
-	<title></title>
-               <meta name = "description" content = "">
-               <meta name = "keywords" content = "">	<link href='/public/dist/login.css' type='text/css' rel='stylesheet'>
+	<title>Личный кабинет</title>
+               <meta name = "description" content = "Личный кабинет">
+               <meta name = "keywords" content = "">	<link href='/public/dist/cabinet.css' type='text/css' rel='stylesheet'>
 </head>
 
 
@@ -67,15 +67,10 @@
 
 	                    <div class="nav">
                        <a href="/user/edit">Редактировать свой профиль</a>
-                       <br />
-<b>Warning</b>:  in_array() expects parameter 2 to be array, null given in <b>C:\OpenServer\domains\vi-production\app\view\layouts\vitex.php</b> on line <b>89</b><br />
-
-								  <br />
-<b>Warning</b>:  in_array() expects parameter 2 to be array, null given in <b>C:\OpenServer\domains\vi-production\app\view\layouts\vitex.php</b> on line <b>95</b><br />
-
-								  <br />
-<b>Warning</b>:  in_array() expects parameter 2 to be array, null given in <b>C:\OpenServer\domains\vi-production\app\view\layouts\vitex.php</b> on line <b>101</b><br />
-
+                       
+								  <a href="/test/1">Проходить тесты</a>
+                      <a href="/freetest/41">Свободный тест</a>
+								  
 								  			                    <a href="/user/logout" aria-label="logout">
                             <span class="icon-logout">
                               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="20"
@@ -192,25 +187,17 @@
 			</div>
 		</header>
 
-		<main>
+		<section class="container">
 
-	<form method="post" class="form-container">
-		<h1 class="form-title">Вход на сайт</h1>
-				<input name="email" class="form-input" type="email" placeholder="E-mail"
-		       value=""/>
-		<input name="password" class="form-input" type="password" placeholder="Пароль" autocomplete="current-password"/>
-		<div class="form-input submit" id="login">Войти</div>
-		<input type="hidden" name="token" value= 3fe353f0efae57d16cacadba0d7cfbd0>
-		<ul class="bottom">
-			<li>
-				<a class="register" href="/user/register">Регистрация</a>
-			</li>
-			<li>
-				<a class="forgot" href="/user/returnpass">Забыли пароль</a>
-			</li>
-		</ul>
-	</form>
-</main>
+        <h3>Личный кабинет</h3>
+
+            <a class="list" href="/user/edit" >Редактировать свой профиль</a>
+                                                    <a class="list" href="/test/1">Проходить тесты</a>
+							            <a class="list" href="/freetest/1">Проходить свободные тесты</a>
+					            
+</section>
+
+
 
 
 		<footer>
@@ -250,7 +237,7 @@
 
 
 	</div>
-		<script src='/public/dist/login.js'></script></div>
+		<script src='/public/dist/cabinet.js'></script></div>
 <!-- Yandex.Metrika counter -->
 <!--<script defer>-->
 <!--    (function (m, e, t, r, i, k, a) {-->

@@ -1,5 +1,12 @@
 {
+    "autoload": {
+        "psr-4": {
+            "Dotenv\\Dotenv\\": "vendor/vlucas/phpdotenv/src"
+
+        }
+    },
     "require": {
-        "phpmailer/phpmailer": "^6.4"
+        "phpmailer/phpmailer": "^6.4",
+        "vlucas/phpdotenv": "^5.3"
     }
 }
