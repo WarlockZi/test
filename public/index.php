@@ -2,6 +2,7 @@
 
 use app\core\Router;
 use app\core\App;
+//use Dotenv\Dotenv;
 
 session_start();
 
@@ -27,13 +28,17 @@ function composerAutoload($class)
 {
 	require (ROOT.'/vendor/autoload.php');
 	$file = ROOT . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-	if (is_readable($file)) {
+	if (is_file($file)) {
 		require_once $file;
 	}
 }
 
 spl_autoload_register('composerAutoload');
 spl_autoload_register('vitexAutoload');
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 
 new App;
 
