@@ -17,77 +17,6 @@ class UserController extends AppController
 		parent::__construct($route);
 	}
 
-	public function actionCabinet()
-	{
-		$this->auth();
-
-		if ($this->vars['user'] === false) {
-			// Если пароль или почна неправильные - показываем ошибку
-			$errors[] = 'Неправильные данные для входа на сайт';
-		} elseif ($this->vars['user'] === NULL) {
-			// Пароль почта в порядке, но нет подтверждения
-			$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
-		}
-		View::setMeta('Личный кабинет', 'Личный кабинет', '');
-		View::setCss('cabinet.css');
-		View::setJs('cabinet.js');
-
-	}
-
-//	public function logins()
-//	{
-//		if ($_POST) {
-//			unset($_POST);
-//		}
-//	}
-
-	public function actionLogin()
-	{
-		if ($data = $this->isAjax()) {
-			$email = (string)$data['email'];
-			$password = (string)$data['password'];
-
-			if (!User::checkEmail($email)) {
-				$msg[] = "Неверный формат email";
-				$_SESSION['error'][] = "Неверный формат email";
-				exit(include ROOT . '/app/view/User/alert.php');
-			}
-
-			if (!User::checkPassword($password)) {
-				$msg[] = "Пароль не должен быть короче 6-ти символов";
-				exit(include ROOT . '/app/view/User/alert.php');
-			}
-
-			$user = App::$app->user->getUserByEmail($email, $password);
-			if ($user === false) { // Почта с паролем существуют, но нет подтверждения
-				// Нет пользователя с таким паролем
-				$msg[] = "Пользователь с 'e-mail' : $email не зарегистрирован";
-				$msg[] = "Перейдите по <a href = 'https://vitexopt.ru" . "/user/register'>ССЫЛКЕ</a> чтобы зарегистрироваться.";
-				exit(include ROOT . '/app/view/User/alert.php');
-
-			} elseif ($user === NULL) {// Пароль, почта в порядке, но нет подтверждения
-				$msg[] = 'Зайдите на <a href ="https://mail.vitexopt.ru/webmail/login/">РАБОЧУЮ ПОЧТУ</a>, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
-				exit(include ROOT . '/app/view/User/alert.php');
-
-			} else {// Если данные правильные, запоминаем пользователя (в сессию)
-
-				$user['rights'] = explode(",", $user['rights']);
-				App::$app->user->setAuth($user);
-				$this->set(compact('user'));
-				$msg[] = "Все ок";
-				exit(include ROOT . '/app/view/User/alert.php');
-			}
-		}
-		if (isset($_SESSION['id'])) {
-			$user = App::$app->user->getUser($_SESSION['id']);
-			$this->set(compact('user'));
-		}
-		View::setJs('login.js');
-		View::setCss('login.css');
-
-	}
-
-
 	public function actionRegister()
 	{
 		if ($data = $this->ajax) {
@@ -128,7 +57,7 @@ class UserController extends AppController
 			ob_start();
 			include ROOT . '/app/view/User/alert.php';
 			$overlay = ob_get_clean();
-				exit(json_encode(['overlay'=>$overlay, 'msg'=>'ok']));
+			exit(json_encode(['overlay' => $overlay, 'msg' => 'ok']));
 		}
 
 
@@ -141,10 +70,7 @@ class UserController extends AppController
 
 	public function send_mail($email, $tema, $mail_body, $headers)
 	{
-// Переменные, которые отправляет пользователь
 		$text = $tema;
-
-// Формирование самого письма
 		$title = $tema;
 		$body = <<< HERETEXT
 <h2>Новое письмо $tema</h2>
@@ -207,9 +133,7 @@ HERETEXT;
 
 	public function regDataWrong($email, $password, $name, $surName)
 	{
-
 		if (isset($_POST)) {
-
 			$msg = [];
 			if (empty($password)) {
 				$msg[] = "Введите пароль.";
@@ -226,7 +150,6 @@ HERETEXT;
 			if (empty($surName)) {
 				$msg[] = "Введите фамилию.";
 			}
-
 			if (App::$app->user->checkEmailExists($email)) {
 				$msg[] = "Пользователь с таким e-mail уже существует<br>"
 					. "Перейдите по ссылке, чтобы получить пароль на эту почту. <br>"
@@ -241,52 +164,90 @@ HERETEXT;
 
 	public function actionLogout()
 	{
-
 		if (isset($_COOKIE[session_name()])) {  // session_name() - получаем название текущей сессии
 			setcookie(session_name(), '', time() - 86400, '/');
 		}
-		$_SESSION = array();
-
-		session_destroy();
-
+		unset($_SESSION);
 		header("Location: /");
 	}
 
 	public function actionConfirm()
 	{
-		try {
-			$hash = $_GET['hash'];
-			if (!$hash) {
-				throw new \Exception();
-			}
-		} catch (\Exception $e) {
+		$hash = $_GET['hash'];
+		if (!$hash) {
 			header('Location:/');
-			exit();
-		};
-
+		}
 		if (!App::$app->user->confirm($hash)) {
 			exit('Не удалось подтвердить почту');
 		};
-		$user = App::$app->user->getUserByHash($hash);
+		header('Location:/user/cabinet');
+		exit();
+	}
 
-		App::$app->user->setAuth($user);
-
-		View::setMeta('Проверка почты', 'Почта пользователя проверена', 'проверка почты');
-		View::setCss('login.css');
-		View::setJs('login.js');
-
-		$rightId = explode(",", $user['rights']);
-		$this->set(compact('user', 'rightId'));
-
+	public function actionCabinet()
+	{
+		$this->auth();
+		View::setMeta('Личный кабинет', 'Личный кабинет', '');
+		View::setCss('cabinet.css');
+		View::setJs('cabinet.js');
 	}
 
 	public function actionReturnPass()
 	{
-		$_SESSION['id'] = '';
-		App::$app->user->returnPass();
-
+		if ($data = $this->ajax) {
+			$_SESSION['id'] = '';
+			App::$app->user->returnPass($data['email']);
+			$_SESSION["msg"] = 'Новый пароль проверьте на почте';
+			exit('ok');
+		}
 		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
-		$this->set(compact('user'));
+		View::setJs('login.js');
+		View::setCss('login.css');
+
+	}
+	public function actionLogin()
+	{
+		if ($data = $this->isAjax()) {
+			$email = (string)$data['email'];
+			$password = (string)$data['password'];
+
+			if (!User::checkEmail($email)) {
+				$msg[] = "Неверный формат email";
+				$_SESSION['error'][] = "Неверный формат email";
+				exit(include ROOT . '/app/view/User/alert.php');
+			}
+
+			if (!User::checkPassword($password)) {
+				$msg[] = "Пароль не должен быть короче 6-ти символов";
+				exit(include ROOT . '/app/view/User/alert.php');
+			}
+
+			$user = App::$app->user->getUserByEmail($email, $password);
+			if ($user === false) {
+				$msg[] = "Пользователь с 'e-mail' : $email не зарегистрирован";
+				$msg[] = "Перейдите в раздел <a href = '/user/register'>Регистрация</a> чтобы зарегистрироваться.";
+				exit(include ROOT . '/app/view/User/alert.php');
+
+			} elseif ($user === NULL) {// Пароль, почта в порядке, но нет подтверждения
+				$msg[] = 'Зайдите на <a href ="https://mail.vitexopt.ru/webmail/login/">РАБОЧУЮ ПОЧТУ</a>, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
+				exit(include ROOT . '/app/view/User/alert.php');
+
+			} else {// Если данные правильные, запоминаем пользователя (в сессию)
+
+				$user['rights'] = explode(",", $user['rights']);
+				$this->setAuth($user);
+				$this->set(compact('user'));
+				$msg[] = "Все ок";
+				exit(include ROOT . '/app/view/User/alert.php');
+			}
+		}
+		if (isset($_SESSION['id'])) {
+			$user = App::$app->user->get($_SESSION['id']);
+			$this->set(compact('user'));
+		}
+		View::setJs('login.js');
+		View::setCss('login.css');
+
 	}
 
 	public function actionEdit()
@@ -295,11 +256,11 @@ HERETEXT;
 		if (isset($_SESSION['id'])) {
 			$userId = $_SESSION['id'];
 		}
-		$user = App::$app->user->getUser($userId);
+		$user = App::$app->user->get($userId);
 
 		$result = false;
 
-		if (isset($_POST['submit'])) { //нажали кнопку сохранить
+		if (isset($_POST['submit'])) {
 
 			$ff['table'] = 'users';
 			$ff['pkey'] = 'id';
@@ -338,12 +299,7 @@ HERETEXT;
 	public function actionContacts()
 	{
 		$this->auth();
-		if (isset($_POST['token'])) {
-			if ($_SESSION['token'] !== $_POST['token']) {
-				echo $_POST['token'] . '  +  +  ' . $_SESSION['token'];
-				exit('Обновите страницу.');
-			}
-		}
+
 		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
 	}
 }

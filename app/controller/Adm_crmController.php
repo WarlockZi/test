@@ -30,7 +30,7 @@ class Adm_crmController extends AdminscController {
          header('Location: /adminsc/crm/users');
       };
 
-      $user = App::$app->user->getUser($id);
+      $user = App::$app->user->get($id);
       $rights = App::$app->user->getRights();
 
       $this->set(compact('user','rights'));

@@ -8,7 +8,7 @@ use  \PHPMailer\PHPMailer\PHPMailer;
 class Mail
 {
 
-	public static function send_mail($to, $subj, $body)
+	public static function send_mail($to=[], $subj, $body)
 	{
 		$mail = new PHPMailer(true);
 		$config = require ROOT . '/app/core/config.php';
@@ -40,7 +40,7 @@ class Mail
 			$mail->Body = $body;
 			$mail->AltBody = "Ссылка на страницу с результатами: тут";
 
-			$output = $mail->send();
+			$mail->send();
 			return true;
 		} catch (Exception $e) {
 			echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;

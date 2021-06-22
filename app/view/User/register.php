@@ -4,8 +4,7 @@
 
 	<div class="form-title">Регистрация на сайте</div>
 
-		<div class='message'>
-		</div>
+		<div class='message'></div>
 
 		<input type="email" name="email" class="form-input"
 		       placeholder="E-mail"/>

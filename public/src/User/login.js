@@ -8,6 +8,7 @@ import './login.scss'
 import '../normalize.scss'
 import './register'
 import './cabinet'
+import './return_pass'
 
 $("body").on("click",
     function (e) {
