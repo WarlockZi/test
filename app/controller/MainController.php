@@ -39,7 +39,7 @@ class MainController Extends AppController
 	public function actionIndex()
 	{
 		if (isset($_SESSION['id'])) {
-			$user = App::$app->user->getUser($_SESSION['id']);
+			$user = App::$app->user->get($_SESSION['id']);
 			if ($user === false) {
 				$errors[] = 'Неправильные данные для входа на сайт';
 			} elseif ($user === NULL) {

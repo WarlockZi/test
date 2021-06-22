@@ -54,6 +54,8 @@ textarea:focus,
   width: 300px;
   margin: 3% auto;
   align-items: stretch; }
+  .form-container p {
+    font-size: 0.8rem; }
 
 .form-title {
   font-weight: bold;
