@@ -498,7 +498,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Dotenv\\": "src/vlucas/phpdotenv"
+                    "Dotenv\\": "vendor/vlucas/phpdotenv"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",

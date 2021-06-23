@@ -53,7 +53,7 @@ const config = {
 };
 
 module.exports = () => {
-    let isDev = env.ENV==='dev'?true:false
+    let isDev = env.MODE==='dev'
     config.cache = !isDev
     config.mode = isDev ? 'development' : 'production'
     config.devtool = isDev ? 'source-map' : false
