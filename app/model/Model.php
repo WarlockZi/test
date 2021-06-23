@@ -57,6 +57,7 @@ abstract class Model
 		return $this->insertBySql($sql, $param);
 	}
 
+
 	public function morphOne($type, $typeId, $id)
 	{
 		$morphTable = $this->model . '_morph';

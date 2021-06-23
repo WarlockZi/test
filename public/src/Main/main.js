@@ -1,5 +1,5 @@
 import '../normalize.scss'
-import '../components/forms.sass'
+import '../components/forms.scss'
 import '../components/footer/footer.sass'
 import '../components/header/autocomplete'
 import '../components/header/header'

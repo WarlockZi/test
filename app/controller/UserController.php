@@ -31,9 +31,6 @@ class UserController extends AppController
 			$password = md5($password);
 			$hash = md5(microtime());
 
-			$sql = 'INSERT INTO users (rights, surName, name, {$to[0]}, password, hash)'
-				. 'VALUES (?,?,?,?,?,?)';
-//			$params = [2, $surName, $name, $to, $password, $hash];
 			$values = [
 				'rights' => 2,
 				'surName' => $surName,
@@ -222,14 +219,16 @@ HERETEXT;
 				exit(include ROOT . '/app/view/User/alert.php');
 			}
 
-			$user = App::$app->user->getUserByEmail($email, $password);
-			if ($user === false) {
+			$user = App::$app->user->findWhere("email", $email)[0];
+			if (!$user) {
 				$msg[] = "Пользователь с 'e-mail' : $email не зарегистрирован";
-				$msg[] = "Перейдите в раздел <a href = '/user/register'>Регистрация</a> чтобы зарегистрироваться.";
+				$msg[] = "Перейдите в раздел <a href = '/user/register'>Регистрация</a> для регистрации.";
 				exit(include ROOT . '/app/view/User/alert.php');
 
-			} elseif ($user === NULL) {// Пароль, почта в порядке, но нет подтверждения
-				$msg[] = 'Зайдите на <a href ="https://mail.vitexopt.ru/webmail/login/">РАБОЧУЮ ПОЧТУ</a>, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
+			} elseif (!(int)$user['confirm']) {
+				$msg[] = 'зайдите на почту, с которой регистрировались.';
+				$msg[] = 'найдите письмо "Регистрация VITEX".';
+				$msg[] = 'перейдите по ссылке в письме.';
 				exit(include ROOT . '/app/view/User/alert.php');
 
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
@@ -237,8 +236,9 @@ HERETEXT;
 				$user['rights'] = explode(",", $user['rights']);
 				$this->setAuth($user);
 				$this->set(compact('user'));
-				$msg[] = "Все ок";
-				exit(include ROOT . '/app/view/User/alert.php');
+				header('Location: /user/cabinet');
+//				$msg[] = "Все ок";
+//				exit(include ROOT . '/app/view/User/alert.php');
 			}
 		}
 		if (isset($_SESSION['id'])) {

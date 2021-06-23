@@ -1,12 +1,16 @@
 {
-    "autoload": {
-        "psr-4": {
-            "Dotenv\\Dotenv\\": "vendor/vlucas/phpdotenv/src"
-
-        }
-    },
-    "require": {
-        "phpmailer/phpmailer": "^6.4",
-        "vlucas/phpdotenv": "^5.3"
+  "autoload": {
+    "psr-4": {
+      "Dotenv\\": "vendor/vlucas/phpdotenv/src",
+      "app\\": "app"
     }
+  },
+  "classmap": [
+    "vendor/vlucas/phpdotenv/src",
+    "app"
+  ],
+  "require": {
+    "phpmailer/phpmailer": "^6.4",
+    "vlucas/phpdotenv": "^5.3"
+  }
 }

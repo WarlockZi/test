@@ -369,6 +369,26 @@ async function fetchW(url, Obj) {
 
 /***/ }),
 
+/***/ "./public/src/components/alert/alert.js":
+/*!**********************************************!*\
+  !*** ./public/src/components/alert/alert.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _alert_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alert.scss */ "./public/src/components/alert/alert.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+
+
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("body").on("click", function (e) {
+  if (e.target.className === "messageClose") {
+    // alert(e.target.className)
+    window.location.href = "/user/cabinet";
+  }
+});
+
+/***/ }),
+
 /***/ "./public/src/components/header/autocomplete.js":
 /*!******************************************************!*\
   !*** ./public/src/components/header/autocomplete.js ***!
@@ -460,6 +480,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/src/components/alert/alert.scss":
+/*!************************************************!*\
+  !*** ./public/src/components/alert/alert.scss ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./public/src/components/footer/footer.sass":
 /*!**************************************************!*\
   !*** ./public/src/components/footer/footer.sass ***!
@@ -472,9 +504,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/forms.sass":
+/***/ "./public/src/components/forms.scss":
 /*!******************************************!*\
-  !*** ./public/src/components/forms.sass ***!
+  !*** ./public/src/components/forms.scss ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -647,13 +679,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _var_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../var.scss */ "./public/src/var.scss");
 /* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
 /* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
-/* harmony import */ var _components_footer_footer_sass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/footer/footer.sass */ "./public/src/components/footer/footer.sass");
-/* harmony import */ var _components_forms_sass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/forms.sass */ "./public/src/components/forms.sass");
-/* harmony import */ var _login_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./login.scss */ "./public/src/User/login.scss");
-/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
-/* harmony import */ var _register__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./register */ "./public/src/User/register.js");
-/* harmony import */ var _cabinet__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./cabinet */ "./public/src/User/cabinet.js");
-/* harmony import */ var _return_pass__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./return_pass */ "./public/src/User/return_pass.js");
+/* harmony import */ var _components_alert_alert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/alert/alert */ "./public/src/components/alert/alert.js");
+/* harmony import */ var _components_footer_footer_sass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/footer/footer.sass */ "./public/src/components/footer/footer.sass");
+/* harmony import */ var _components_forms_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/forms.scss */ "./public/src/components/forms.scss");
+/* harmony import */ var _login_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./login.scss */ "./public/src/User/login.scss");
+/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
+/* harmony import */ var _register__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./register */ "./public/src/User/register.js");
+/* harmony import */ var _cabinet__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./cabinet */ "./public/src/User/cabinet.js");
+/* harmony import */ var _return_pass__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./return_pass */ "./public/src/User/return_pass.js");
+
 
 
 
