@@ -8,7 +8,7 @@ use  \PHPMailer\PHPMailer\PHPMailer;
 class Mail
 {
 
-	public static function send_mail($to=[], $subj, $body)
+	public static function send_mail( $subj, $body, $to=[])
 	{
 		$mail = new PHPMailer(true);
 		$config = require ROOT . '/app/core/config.php';

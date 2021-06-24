@@ -56,9 +56,6 @@ class View
 		$file = ROOT.'/public/src/template.html';
 		if (is_readable($file)){
 			file_put_contents($file, $page_cache);
-//			$f=fopen($file,'w');
-//			fwrite($f,$page_cache);
-//			fclose($f);
 		}
 
 	}
