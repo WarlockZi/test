@@ -28,7 +28,7 @@ class Cache
 	private function createFileInDir($dir)
 	{
 		if(!is_dir($dir)) {
-			mkdir($dir, 0777, true);
+			mkdir($dir, 0773, true);
 		}
 	}
 
