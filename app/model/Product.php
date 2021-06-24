@@ -11,7 +11,7 @@ class Product extends Model
 
 	public $table = 'products';
 
-	protected function createImgPaths($alias, $fname, $rate = 800, $ext, $isOnly)
+	protected function createImgPaths($alias, $fname,  $ext, $isOnly, $rate = 800)
 	{
 		$ext = $ext ?: 'jpg';
 		$p['filename'] = $rate ? "{$fname}-{$rate}.{$ext}" : "{$fname}.{$ext}";
