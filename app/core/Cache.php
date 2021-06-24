@@ -30,7 +30,6 @@ class Cache
 		if(!is_dir($dir)) {
 			mkdir($dir, 0777, true);
 		}
-//		if (!file_exists($filename)) fopen($filename, 'x');
 	}
 
 	public function set($key, $data, $seconds = 3600)
@@ -39,7 +38,7 @@ class Cache
 		$content['end_time'] = time() + $seconds;
 		$file = ROOT . '/tmp/cache/'. md5($key) . '.txt';
 
-		$this->createFileInDir( ROOT.'\tmp\cache');
+		$this->createFileInDir( ROOT.'/tmp/cache');
 
 		if (file_put_contents($file, serialize($content))) {
 			return true;
