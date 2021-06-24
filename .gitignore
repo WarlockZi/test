@@ -1,5 +1,8 @@
 /refs/
-/tmp
+!/tmp
+/tmp/*
+!/tmp/cache
+/tmp/cache/*
 /node_modules/
 /.idea/
 /composer.phar
