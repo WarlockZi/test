@@ -107,7 +107,8 @@ footer {
   flex-flow: column;
   flex: 0 0 auto;
   background: url(/public/dist/6a2d04cb970344ebca0b.png) repeat;
-  padding: 10px; }
+  padding: 10px;
+  min-height: 110px; }
   footer a {
     color: #ffffff; }
   footer p {

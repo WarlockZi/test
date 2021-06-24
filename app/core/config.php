@@ -48,16 +48,16 @@ $config['Mailer'] = [
 
 ];
 
-if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'vitexopt.ru') {
-	$config['config_db']['dsn'] = 'mysql:host=localhost;dbname=vitex;charset=utf8';
-	$config['config_db']['user'] = 'vitexopt';
-	$config['config_db']['password'] = '123vitexopt123';
-} else {
-	$config['config_db']['dsn'] = 'mysql:host=127.0.0.1;dbname=vitex_test;charset=utf8';
-	$config['config_db']['user'] = 'root';
-	$config['config_db']['password'] = 'root';
-//	$config['config_db']['password'] = '8D8p6L2x';
-};
+//if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'vitexopt.ru') {
+//	$config['config_db']['dsn'] = 'mysql:host=localhost;dbname=vitex;charset=utf8';
+//	$config['config_db']['user'] = 'vitexopt';
+//	$config['config_db']['password'] = '123vitexopt123';
+//} else {
+//	$config['config_db']['dsn'] = 'mysql:host=127.0.0.1;dbname=vitex_test;charset=utf8';
+//	$config['config_db']['user'] = 'root';
+//	$config['config_db']['password'] = 'root';
+////	$config['config_db']['password'] = '8D8p6L2x';
+//};
 
 
 return $config;
