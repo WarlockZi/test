@@ -90,7 +90,7 @@ class Mail
 		return Mail::testResults();
 	}
 
-	public function mail_test_result($to = [], $subject, $body)
+	public function mail_test_result($subject, $body, $to = [])
 	{
 		$mail = new PHPMailer(TRUE);
 		$config = require ROOT . '/app/core/config.php';
