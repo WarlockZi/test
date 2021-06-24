@@ -38,7 +38,7 @@ class Cache
 		$content['end_time'] = time() + $seconds;
 		$file = ROOT . '/tmp/cache/'. md5($key) . '.txt';
 
-		$this->createFileInDir( ROOT.'/tmp/cache');
+		$this->createFileInDir( '../../tmp/cache');
 
 		if (file_put_contents($file, serialize($content))) {
 			return true;
