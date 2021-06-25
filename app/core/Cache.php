@@ -25,20 +25,16 @@ class Cache
 		return false;
 	}
 
-	private function createFileInDir($dir)
-	{
-		if(!is_dir($dir)) {
-			mkdir($dir, 0777, true);
-		}
-	}
 
 	public function set($key, $data, $seconds = 3600)
 	{
 		$content['data'] = $data;
 		$content['end_time'] = time() + $seconds;
-		$file = ROOT . '/tmp/cache/'. md5($key) . '.txt';
-
-		$this->createFileInDir( '../../tmp/cache');
+		$dir = ROOT.'/tmp/cache/';
+		$file= $dir. md5($key) . '.txt';
+		if(!is_dir($dir)) {
+			mkdir($dir, 0777, true);
+		}
 
 		if (file_put_contents($file, serialize($content))) {
 			return true;
