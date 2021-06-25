@@ -30,6 +30,7 @@ class Cache
 	{
 		$content['data'] = $data;
 		$content['end_time'] = time() + $seconds;
+		exit(ROOT);
 		$dir = ROOT.'/tmp/cache/';
 		$file= $dir. md5($key) . '.txt';
 		if(!is_dir($dir)) {
