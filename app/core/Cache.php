@@ -30,11 +30,11 @@ class Cache
 	{
 		$content['data'] = $data;
 		$content['end_time'] = time() + $seconds;
-		$dir = ROOT.'/tmp/cache/';
+		$dir = ROOT.'\tmp\cache';
 		$file= $dir. md5($key) . '.txt';
-		if(!is_dir($dir)) {
-			mkdir($dir, 0777, true);
-		}
+//		if(!is_dir($dir)) {
+//			mkdir($dir, 0777, true);
+//		}
 
 		if (file_put_contents($file, serialize($content))) {
 			return true;

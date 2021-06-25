@@ -1,4 +1,6 @@
 !*
+/tmp/*
+/tmp/cache/*
 /refs/
 /node_modules/
 /.idea/
