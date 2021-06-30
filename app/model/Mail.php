@@ -52,15 +52,6 @@ class Mail
 		return "=?utf-8?b?" . base64_encode($str) . "?=";
 	}
 
-//	protected static function getBody($str)
-//	{
-//		if ($str === 'testResults') {
-//			return Mail::testResults();
-//		} elseif ($str === 'register') {
-//			return Mail::register();
-//		}
-//	}
-
 	protected static function prepareBodyTestResults($file, $userName, $test_name, $questionCnt, $errorCnt)
 	{
 		$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/results/' . $file;
@@ -72,7 +63,6 @@ class Mail
 
 	public static function prepareBodyRegister($hash)
 	{
-//		$confirm_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/results/' . $hash;
 		ob_start();
 		require ROOT . '/app/view/User/email.php';
 		$template = ob_get_clean();

@@ -35,6 +35,11 @@ class AppController extends Controller
 	public
 	function auth()
 	{
+		if (!isset($_SESSION['id'])||!$_SESSION['id']){
+			header("Location:/user/login");
+			exit();
+		}
+
 		try {
 			if (isset($_SESSION['id']) && !$_SESSION['id'] && $_SERVER['QUERY_STRING'] != '') {
 				throw new \Exception('Зарегистрируйтесь ' );
