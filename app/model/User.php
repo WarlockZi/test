@@ -23,9 +23,8 @@ class User extends Model
 	{
 		$sql = 'UPDATE users SET confirm= "1" WHERE hash = ?';
 		$params = [$hash];
-		$result = $this->insertBySql($sql, $params);
 
-		if ($result) {
+		if ($this->insertBySql($sql, $params)) {
 			$_SESSION['id'] = $this->autoincrement() - 1;
 			$this->user = App::$app->user->get($_SESSION['id']);
 

@@ -1,16 +1,7 @@
-import {post, $} from '../common';
-import '../var.scss'
-import '../components/header/header';
-import '../components/header/autocomplete'
-import '../components/alert/alert'
-import '../components/footer/footer.sass'
-import '../components/forms.scss'
 import './login.scss'
-import '../normalize.scss'
-import './register'
-import './cabinet'
-import './return_pass'
+import {$, post} from "../common";
 
+'./login.scss'
 
 $("body").on("click",
     function (e) {
@@ -37,4 +28,3 @@ if (typeof $("#login").el[0] !== 'undefined') {
             overlayWrap.querySelector('.overlay').style.display = "block";
         })
 }
-

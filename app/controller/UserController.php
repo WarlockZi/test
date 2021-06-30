@@ -20,112 +20,65 @@ class UserController extends AppController
 	public function actionRegister()
 	{
 		if ($data = $this->ajax) {
+
 			$to = [$data['email']];
 			if (App::$app->user->checkEmailExists($to[0])) {
 				exit(json_encode(['msg' => 'mail exists']));
 			}
-
-			$password = $data['password'];
-			$name = $data['name'];
-			$surName = $data['surName'];
-			$password = md5($password);
 			$hash = md5(microtime());
 
 			$values = [
 				'rights' => 2,
-				'surName' => $surName,
-				'name' => $name,
+				'surName' => $data['surName'],
+				'name' => $data['name'],
 				'email' => $to[0],
-				'password' => $password,
+				'password' => md5($data['password']),
 				'hash' => $hash,
 			];
-			try {
-				App::$app->user->create($values);
-			} catch (\Exception $e) {
-				exit($e->getMessage());
-			};
+			if (!App::$app->user->create($values)){
+				exit(json_encode(["msg"=>'Регистрация не удалась']));
+			}
 
 			$subj = "Регистрация VITEX";
 			$body = Mail::prepareBodyRegister($hash);
 
-			Mail::send_mail($to, $subj, $body);
+			Mail::send_mail($subj, $body, $to);
+			$overlay = $this->registerGetOverlay();
 
-			$msg[] = "Для подтвержения регистрации перейдите по ссылке в <br><a href ='https://mail.vitexopt.ru/webmail/login/'>ПОЧТЕ</a>.<br>Письмо может попасть в папку 'Спам'";
-			ob_start();
-			include ROOT . '/app/view/User/alert.php';
-			$overlay = ob_get_clean();
 			exit(json_encode(['overlay' => $overlay, 'msg' => 'ok']));
+
 		}
-
-
 		View::setMeta('Регистрация', 'Регистрация', 'Регистрация');
-		$token = $this->token;
-		View::setCss('login.css');
-		View::setJs('login.js');
-		$this->set(compact('token'));
+		View::setJs('auth.js');
+		View::setCss('auth.css');
 	}
 
-	public function send_mail($email, $tema, $mail_body, $headers)
-	{
-		$text = $tema;
-		$title = $tema;
-		$body = <<< HERETEXT
-<h2>Новое письмо $tema</h2>
-<b>Имя:</b> dd<br>
-<b>Почта:</b> $email<br><br>
-<b>Сообщение:</b><br>$mail_body
-HERETEXT;
-
-// Настройки PHPMailer
-		$mail = new PHPMailer();
-		try {
-			$mail->isSMTP();
-			$mail->CharSet = "UTF-8";
-			$mail->SMTPAuth = true;
-			//$mail->SMTPDebug = 2;
-			$mail->Debugoutput = function ($str, $level) {
-				$GLOBALS['status'][] = $str;
-			};
-
-			// Настройки вашей почты
-			$mail->Host = 'smtp.yandex.ru'; // SMTP сервера вашей почты
-			$mail->Username = 'vvoronik@yandex.ru'; // Логин на почте
-			$mail->Password = 'tExtile2002'; // Пароль на почте
-			$mail->SMTPSecure = 'ssl';
-			$mail->Port = 465;
-			$mail->setFrom('vvoronik@yandex.ru', 'Виталий'); // Адрес самой почты и имя отправителя
-
-			$mail->addAddress($email);
-
-			if (!empty($file['name'][0])) {
-				for ($ct = 0; $ct < count($file['tmp_name']); $ct++) {
-					$uploadfile = tempnam(sys_get_temp_dir(), sha1($file['name'][$ct]));
-					$filename = $file['name'][$ct];
-					if (move_uploaded_file($file['tmp_name'][$ct], $uploadfile)) {
-						$mail->addAttachment($uploadfile, $filename);
-						$rfile[] = "Файл $filename прикреплён";
-					} else {
-						$rfile[] = "Не удалось прикрепить файл $filename";
-					}
-				}
-			}
-			$mail->isHTML(true);
-			$mail->Subject = $title;
-			$mail->Body = $body;
-
-			if ($mail->send()) {
-				$result = "success";
-			} else {
-				$result = "error";
-			}
-
-		} catch (Exception $e) {
-			$result = "error";
-			$status = "Сообщение не было отправлено. Причина ошибки: {$mail->ErrorInfo}";
-		}
-
-		echo json_encode(["result" => $result]);
+	private function registerGetOverlay(){
+		$msg[] = "Для подтвержения регистрации перейдите по ссылке в <br><a href ='https://mail.vitexopt.ru/webmail/login/'>ПОЧТЕ</a>.<br>Письмо может попасть в папку 'Спам'";
+		ob_start();
+		include ROOT . '/app/view/User/alert.php';
+		return ob_get_clean();
 	}
+
+//	private function registrationGetEmailBody($subj, $email, $mail_body)
+//	{
+//		return <<< HERETEXT
+//<h2>Новое письмо $subj</h2>
+//<b>Имя:</b> dd<br>
+//<b>Почта:</b> $email<br><br>
+//<b>Сообщение:</b><br>$mail_body
+//HERETEXT;
+//	}
+
+//	public function send_mail($email, $subj, $mail_body)
+//	{
+//		$body = $this->registrationGetEmailBody($subj, $email, $mail_body);
+//		$from = 'vvoronik@yandex.ru';
+//		$to[] = $email;
+//		if (!Mail::send_mail($subj, $body, $to, $from)) {
+//			echo json_encode(["result" => "error"]);
+//		}
+//	}
 
 
 	public function regDataWrong($email, $password, $name, $surName)
@@ -198,10 +151,11 @@ HERETEXT;
 			exit('ok');
 		}
 		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
-		View::setJs('login.js');
-		View::setCss('login.css');
+		View::setJs('auth.js');
+		View::setCss('auth.css');
 
 	}
+
 	public function actionLogin()
 	{
 		if ($data = $this->isAjax()) {
@@ -242,23 +196,22 @@ HERETEXT;
 			}
 		}
 		if (isset($_SESSION['id'])) {
-			$user = App::$app->user->get($_SESSION['id']);
-			$this->set(compact('user'));
+			if ($user = App::$app->user->get($_SESSION['id'])) {
+				$this->set(compact('user'));
+			} else {
+				$_SESSION['msg'] = 'Зарегистрируйтесь.';
+				unset($_SESSION['id']);
+			}
 		}
-		View::setJs('login.js');
-		View::setCss('login.css');
+		View::setJs('auth.js');
+		View::setCss('auth.css');
 
 	}
 
 	public function actionEdit()
 	{
 		$this->auth();
-		if (isset($_SESSION['id'])) {
-			$userId = $_SESSION['id'];
-		}
-		$user = App::$app->user->get($userId);
-
-		$result = false;
+		$user = App::$app->user->get($_SESSION['id']);
 
 		if (isset($_POST['submit'])) {
 
@@ -294,12 +247,13 @@ HERETEXT;
 			View::setMeta('Профиль', 'Профиль', 'Профиль');
 			$this->set(compact('user'));
 		}
+		View::setJs('auth.js');
+		View::setCss('auth.css');
 	}
 
 	public function actionContacts()
 	{
 		$this->auth();
-
 		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
 	}
 }

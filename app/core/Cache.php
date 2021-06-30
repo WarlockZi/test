@@ -25,12 +25,22 @@ class Cache
 		return false;
 	}
 
+	private function mkdir_r($dirName, $rights=0755){
+		$dirs = explode('/', $dirName);
+		$dir='';
+		foreach ($dirs as $part) {
+			$dir.=$part.'/';
+			if (!is_dir($dir) && strlen($dir)>0)
+				mkdir($dir, $rights);
+		}
+	}
 
 	public function set($key, $data, $seconds = 3600)
 	{
 		$content['data'] = $data;
 		$content['end_time'] = time() + $seconds;
 		$dir = ROOT.'\tmp\cache';
+		$this->mkdir_r($dir);
 		$file= $dir. md5($key) . '.txt';
 //		if(!is_dir($dir)) {
 //			mkdir($dir, 0777, true);
@@ -46,7 +56,7 @@ class Cache
 
 	public function delete($key)
 	{
-		$file = CACHE . '/' . md5($key) . '.txt';
+		$file = ROOT . '/' . md5($key) . '.txt';
 		if (file_exists($file)) {
 			unlink($file);
 		}
