@@ -31,27 +31,15 @@ class Cache
 			$dirs = explode('/', $dirName) :
 			$dirs = explode('\\', $dirName);
 		$slash = DIRECTORY_SEPARATOR;
-<<<<<<< HEAD
-		$dir = ROOT . $slash;
-		chmod(ROOT, 0777);
-		foreach ($dirs as $part) {
-			if ($part) {
-				$dir .= $part . $slash;
-				if (!is_dir($dir))
-					mkdir($dir, $rights);
-				echo is_dir($dir);
-=======
 		$dir = ROOT;
 		foreach ($dirs as $part) {
 			if ($part) {
 			    $dir .=  $slash . $part;
 				if (!is_dir($dir)){
-				mkdir($dir, $rights, true);
+				mkdir($dir, $rights);
 				}
->>>>>>> fc96fd667c1e3f9986ce4ef6e32fe89826d258fb
 			}
 		}
-		chmod(ROOT, 0755);
 		return $dir;
 	}
 
