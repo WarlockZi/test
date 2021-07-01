@@ -31,12 +31,13 @@ class Cache
 			$dirs = explode('/', $dirName) :
 			$dirs = explode('\\', $dirName);
 		$slash = DIRECTORY_SEPARATOR;
-		$dir = ROOT . $slash;
+		$dir = ROOT;
 		foreach ($dirs as $part) {
 			if ($part) {
-				$dir .= $part . $slash;
-				if (!is_dir($dir) && strlen($dir) > 0)
-					mkdir($dir, $rights);
+			    $dir .=  $slash . $part;
+				if (!is_dir($dir)){
+				mkdir($dir, $rights, true);
+				}
 			}
 		}
 		return $dir;
@@ -47,7 +48,7 @@ class Cache
 		$content['data'] = $data;
 		$content['end_time'] = time() + $seconds;
 		$dir = $this->mkdir_r('\tmp\cache');
-		$file = $dir . md5($key) . '.txt';
+		$file = $dir .DIRECTORY_SEPARATOR. md5($key) . '.txt';
 
 		if (file_put_contents($file, serialize($content))) {
 			return true;
