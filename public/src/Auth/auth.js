@@ -4,7 +4,7 @@ import '../var.scss'
 import '../components/header/header';
 import '../components/header/autocomplete'
 import '../components/alert/alert'
-import '../components/footer/footer.sass'
+import '../components/footer/footer.scss'
 import '../components/forms.scss'
 import './login'
 import './register'
