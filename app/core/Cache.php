@@ -13,9 +13,9 @@ class Cache
 		}
 	}
 
-	public function get($key, $path='')
+	public function get($key, $path = '')
 	{
-		$file = ROOT . '/tmp/cache/' .$path. md5($key) . '.txt';
+		$file = ROOT . '/tmp/cache/' . $path . md5($key) . '.txt';
 		if (is_readable($file)) {
 			$content = unserialize(file_get_contents($file));
 			if (time() <= $content['end_time']) {
@@ -25,33 +25,35 @@ class Cache
 		return false;
 	}
 
-	private function mkdir_r($dirName, $rights=0755){
-		$dirs = explode('/', $dirName);
-		$dir='';
+	private function mkdir_r($dirName, $rights = 0755)
+	{
+		str_contains('/', $dirName) ?
+			$dirs = explode('/', $dirName) :
+			$dirs = explode('\\', $dirName);
+		$slash = DIRECTORY_SEPARATOR;
+		$dir = ROOT . $slash;
 		foreach ($dirs as $part) {
-			$dir.=$part.'/';
-			if (!is_dir($dir) && strlen($dir)>0)
-				mkdir($dir, $rights);
+			if ($part) {
+				$dir .= $part . $slash;
+				if (!is_dir($dir) && strlen($dir) > 0)
+					mkdir($dir, $rights);
+			}
 		}
+		return $dir;
 	}
 
 	public function set($key, $data, $seconds = 3600)
 	{
 		$content['data'] = $data;
 		$content['end_time'] = time() + $seconds;
-		$dir = ROOT.'\tmp\cache';
-		$this->mkdir_r($dir);
-		$file= $dir. md5($key) . '.txt';
-//		if(!is_dir($dir)) {
-//			mkdir($dir, 0777, true);
-//		}
+		$dir = $this->mkdir_r('\tmp\cache');
+		$file = $dir . md5($key) . '.txt';
 
 		if (file_put_contents($file, serialize($content))) {
 			return true;
 		}
 		return false;
 	}
-
 
 
 	public function delete($key)
