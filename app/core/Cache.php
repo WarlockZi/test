@@ -32,13 +32,16 @@ class Cache
 			$dirs = explode('\\', $dirName);
 		$slash = DIRECTORY_SEPARATOR;
 		$dir = ROOT . $slash;
+		chmod(ROOT, 0777);
 		foreach ($dirs as $part) {
 			if ($part) {
 				$dir .= $part . $slash;
-				if (!is_dir($dir) && strlen($dir) > 0)
+				if (!is_dir($dir))
 					mkdir($dir, $rights);
+				echo is_dir($dir);
 			}
 		}
+		chmod(ROOT, 0755);
 		return $dir;
 	}
 
@@ -52,7 +55,7 @@ class Cache
 		if (file_put_contents($file, serialize($content))) {
 			return true;
 		}
-		return false;
+		return false; //lUPKLGANZK
 	}
 
 

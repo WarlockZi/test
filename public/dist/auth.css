@@ -952,7 +952,9 @@ footer {
 
 .footer_menu {
   display: flex;
-  justify-content: space-around; }
+  justify-content: space-around;
+  max-width: 1310px;
+  margin: 0 auto; }
 
 .form-container {
   display: flex;

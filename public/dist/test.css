@@ -2653,7 +2653,9 @@ footer {
 
 .footer_menu {
   display: flex;
-  justify-content: space-around; }
+  justify-content: space-around;
+  max-width: 1310px;
+  margin: 0 auto; }
 
 section {
   margin: 0 15px; }

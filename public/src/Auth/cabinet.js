@@ -5,7 +5,7 @@ import '../components/header/autocomplete'
 import '../components/header/middle.sass'
 import './cabinet.scss'
 
-import '../components/footer/footer.sass';
+import '../components/footer/footer.scss';
 
 
 

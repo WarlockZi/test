@@ -97,8 +97,6 @@ class View
 
 	public static function getJS()
 	{
-// если передали route. значит хотим подключить индивид.
-// скрипт, если не передали, то тот который передали
 		$js = '';
 		if (is_array(self::$jsCss['js'])) {
 			foreach (self::$jsCss['js'] as $v) {
