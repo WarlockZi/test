@@ -45,9 +45,9 @@ class View
 				'<br> Не найден шаблон Layout' . $this->layout;
 			}
 		}
-		//$page_cache = ob_get_clean();
-		//self::toFile($page_cache);
-		//echo $page_cache;
+		$page_cache = ob_get_clean();
+		self::toFile($page_cache);
+		echo $page_cache;
 	}
 
 

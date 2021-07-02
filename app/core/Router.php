@@ -84,11 +84,6 @@ class Router
 					$cObj->$action(self::$aCategoryOrProduct); // Выполним метод
 					$cObj->getView(); // Подключим вид
 				} else {
-					$ajaxAction =self::$route['action'];
-					if (method_exists($cObj, $ajaxAction)) {
-						$cObj->$ajaxAction(); // Выполним метод
-						exit();
-					}
 					echo "<br><b>$action</b> не найден...  ";
 				}
 			} else {
@@ -101,7 +96,7 @@ class Router
 //            $cObj->error(self::$aCategoryOrProduct); // Выполним метод
 //            $cObj->getView(); // Подключим вид
 //			session_destroy();
-			include './public/404.html'; // '404.html';
+			include ROOT.'/public/404.html'; // '404.html';
 		}
 	}
 

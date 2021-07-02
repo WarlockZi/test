@@ -1,4 +1,4 @@
-import {post, $} from '../common'
+import {post, $,validate} from '../common'
 
 $("[name = 'reg']").on("click", async function (e) {
         e.preventDefault()
@@ -6,11 +6,22 @@ $("[name = 'reg']").on("click", async function (e) {
         let email = $('input[type = email]').el[0].value
         let password = $('input[type = password]').el[0].value
         if (email) {
-            if (!validateEmail(email)) {
+            if (!validate(email)) {
+                let $result = $(".message").el[0];
+                $result.innerText = "Неправильный формат почты"
+                $($result).addClass('error')
                 return false
             }
             if (password) {
-                if (!validatePassword(password)) {
+                if (!validate(password)) {
+                    let $result = $(".message").el[0]
+                    $result.innerText = "Пароль может состоять из \n " +
+                        "- Большие латинские бкувы \n" +
+                        "- Мальенькие латинские буквы \n" +
+                        "- Цифры \n" +
+                        "- должен содержать не менее 6 символов"
+
+                    $($result).addClass('error')
                     return false
                 }
             }
@@ -21,34 +32,6 @@ $("[name = 'reg']").on("click", async function (e) {
     }
 )
 
-function validateEmail(email) {
-    let $result = $(".message").el[0];
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (!re.test(email)) {
-        $result.innerText = "Неправильный формат почты"
-        $($result).addClass('error')
-        return false
-    }
-    return true;
-}
-
-function validatePassword(password) {
-    let $result = $(".message").el[0];
-    const re = /^[a-zA-Z\-0-9]{6,20}$/;
-
-    if (!re.test(password)) {
-        $result.innerText = "Пароль может состоять из \n " +
-            "- Большие латинские бкувы \n" +
-            "- Мальенькие латинские буквы \n" +
-            "- Цифры \n" +
-            "- должен содержать не менее 6 символов"
-
-        $($result).addClass('error')
-        return false
-    }
-    return true;
-}
 
 async function send(email) {
     let data = {

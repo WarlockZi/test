@@ -10,5 +10,6 @@ import './login'
 import './register'
 import './cabinet'
 import './return_pass'
+import './edit'
 
 

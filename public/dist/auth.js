@@ -26,6 +26,53 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/src/Auth/edit.js":
+/*!*********************************!*\
+  !*** ./public/src/Auth/edit.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _edit_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit.scss */ "./public/src/Auth/edit.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+
+
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("[name = 'edit']").on("click", async function (e) {
+  e.preventDefault();
+  let data = {
+    email: check_email(),
+    name: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "name"]').el[0].value,
+    surName: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "surName"]').el[0].value,
+    middleName: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "middleName"]').el[0].value,
+    birthDate: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "birthDate"]').el[0].value,
+    phone: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "phone"]').el[0].value
+  };
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/user/edit', data);
+
+  if (res === 'ok') {
+    debugger;
+    _common__WEBPACK_IMPORTED_MODULE_1__.popup.show('Сохранено');
+  }
+});
+
+function check_email() {
+  let email = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[type = email]').el[0].value;
+
+  if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.email(email)) {
+    let $result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
+    $result.innerText = "Неправильный формат почты";
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)($result).addClass('error');
+    return false;
+  }
+
+  return email;
+} // setTimeout(function () {
+//     let p = document.querySelector("p.result");
+//     p.parentNode.remove();
+// }, 2000);
+
+/***/ }),
+
 /***/ "./public/src/Auth/login.js":
 /*!**********************************!*\
   !*** ./public/src/Auth/login.js ***!
@@ -77,12 +124,18 @@ __webpack_require__.r(__webpack_exports__);
   let password = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type = password]').el[0].value;
 
   if (email) {
-    if (!validateEmail(email)) {
+    if (!(0,_common__WEBPACK_IMPORTED_MODULE_0__.validate)(email)) {
+      let $result = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
+      $result.innerText = "Неправильный формат почты";
+      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)($result).addClass('error');
       return false;
     }
 
     if (password) {
-      if (!validatePassword(password)) {
+      if (!(0,_common__WEBPACK_IMPORTED_MODULE_0__.validate)(password)) {
+        let $result = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
+        $result.innerText = "Пароль может состоять из \n " + "- Большие латинские бкувы \n" + "- Мальенькие латинские буквы \n" + "- Цифры \n" + "- должен содержать не менее 6 символов";
+        (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)($result).addClass('error');
         return false;
       }
     }
@@ -92,32 +145,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 });
-
-function validateEmail(email) {
-  let $result = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
-  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-  if (!re.test(email)) {
-    $result.innerText = "Неправильный формат почты";
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)($result).addClass('error');
-    return false;
-  }
-
-  return true;
-}
-
-function validatePassword(password) {
-  let $result = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
-  const re = /^[a-zA-Z\-0-9]{6,20}$/;
-
-  if (!re.test(password)) {
-    $result.innerText = "Пароль может состоять из \n " + "- Большие латинские бкувы \n" + "- Мальенькие латинские буквы \n" + "- Цифры \n" + "- должен содержать не менее 6 символов";
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)($result).addClass('error');
-    return false;
-  }
-
-  return true;
-}
 
 async function send(email) {
   let data = {
@@ -200,6 +227,24 @@ let validate = {
         error.style.opacity = '0';
       }
     }
+  },
+  email: function (email) {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (!re.test(email)) {
+      return false;
+    }
+
+    return true;
+  },
+  password: function (password) {
+    const re = /^[a-zA-Z\-0-9]{6,20}$/;
+
+    if (!re.test(password)) {
+      return false;
+    }
+
+    return true;
   }
 };
 
@@ -215,15 +260,6 @@ function get_cookie(cookie_name) {
   return null;
 }
 
-function clearCache() {
-  async function clearCache() {
-    let response = await fetch('/adminsc/clearCache');
-    let result = await response.text();
-  }
-
-  clearCache().catch(alert);
-}
-
 function setCookie() {
   const date = new Date(),
         minute = 60 * 1000,
@@ -235,6 +271,32 @@ function setCookie() {
   });
   document.cookie = "cn=1; expires=" + date + "path=/; SameSite=lax";
 }
+
+function clearCache() {
+  async function clearCache() {
+    let response = await fetch('/adminsc/clearCache');
+    let result = await response.text();
+  }
+
+  clearCache().catch(alert);
+}
+
+let popup = {
+  show: function (txt) {
+    let close = document.createElement('div');
+    close.classList.add('close');
+    let popup = document.createElement('div');
+    popup.innerText = txt;
+    popup.append(close);
+    popup.addEventListener('click', this.close);
+    document.body.append(popup);
+  },
+  close: function (e) {
+    if (e.target.classList.contains('close')) {}
+  }
+};
+
+function close() {}
 
 const uniq = array => Array.from(new Set(array));
 
@@ -249,15 +311,12 @@ async function post(url, data) {
   return new Promise(function (resolve, reject) {
     data.token = document.querySelector('meta[name="token"]').getAttribute('content');
     var req = new XMLHttpRequest();
-    req.open('POST', url, true); // req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    // req.setRequestHeader('Content-Type', 'multipart/form-data');
-
+    req.open('POST', url, true);
     req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
     if (data instanceof FormData) {
       req.send(data);
     } else {
-      // req.setRequestHeader('Content-Type', 'application/json');
       req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       req.send('param=' + JSON.stringify(data));
     }
@@ -550,6 +609,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/src/Auth/edit.scss":
+/*!***********************************!*\
+  !*** ./public/src/Auth/edit.scss ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./public/src/Auth/login.scss":
 /*!************************************!*\
   !*** ./public/src/Auth/login.scss ***!
@@ -769,6 +840,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _register__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./register */ "./public/src/Auth/register.js");
 /* harmony import */ var _cabinet__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./cabinet */ "./public/src/Auth/cabinet.js");
 /* harmony import */ var _return_pass__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./return_pass */ "./public/src/Auth/return_pass.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./edit */ "./public/src/Auth/edit.js");
+
 
 
 

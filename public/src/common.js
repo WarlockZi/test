@@ -10,6 +10,22 @@ let validate = {
                 error.style.opacity = '0'
             }
         }
+    },
+
+    email:function (email) {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!re.test(email)) {
+            return false
+        }
+        return true;
+    },
+
+    password:function (password) {
+        const re = /^[a-zA-Z\-0-9]{6,20}$/;
+        if (!re.test(password)) {
+            return false
+        }
+        return true;
     }
 }
 
@@ -25,14 +41,6 @@ function get_cookie(cookie_name) {
     setCookie();
     return null;
 }
-function clearCache() {
-    async function clearCache() {
-        let response = await fetch('/adminsc/clearCache')
-        let result = await response.text();
-    }
-    clearCache().catch(alert);
-}
-
 function setCookie() {
     const date = new Date(),
         minute = 60 * 1000,
@@ -43,7 +51,35 @@ function setCookie() {
     $('#cookie-notice').css({bottom: "-100%"});
     document.cookie = "cn=1; expires=" + date + "path=/; SameSite=lax";
 }
+function clearCache() {
+    async function clearCache() {
+        let response = await fetch('/adminsc/clearCache')
+        let result = await response.text();
+    }
+    clearCache().catch(alert);
+}
 
+let popup = {
+    show:function (txt) {
+        let close = document.createElement('div')
+        close.classList.add('close')
+        let popup = document.createElement('div')
+        popup.innerText = txt
+        popup.append(close)
+        popup.addEventListener('click', this.close)
+        document.body.append(popup)
+    },
+    close:function (e) {
+        if (e.target.classList.contains('close')){
+
+        }
+        
+    }
+}
+
+function close() {
+    
+}
 const uniq = (array) => Array.from(new Set(array));
 
 async function get(key) {
@@ -58,13 +94,10 @@ async function post(url, data) {
         data.token = document.querySelector('meta[name="token"]').getAttribute('content')
         var req = new XMLHttpRequest();
         req.open('POST', url, true);
-        // req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        // req.setRequestHeader('Content-Type', 'multipart/form-data');
         req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         if (data instanceof FormData) {
             req.send(data);
         } else {
-            // req.setRequestHeader('Content-Type', 'application/json');
             req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             req.send('param=' + JSON.stringify(data));
         }
