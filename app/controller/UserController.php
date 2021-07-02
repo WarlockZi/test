@@ -219,32 +219,21 @@ class UserController extends AppController
 	{
 		$this->auth();
 		$user = App::$app->user->get($_SESSION['id']);
-		if ($user = $this->ajax){
-
+		if ($f = $this->ajax){
+			foreach ($f as $key=>$value){
+				if (array_key_exists($key, $user)){
+					$user[$key] = $value;
+				}
+			}
 		}
-
-		if (isset($_POST['submit'])) {
-			$ff['table'] = 'users';
-			$ff['pkey'] = 'id';
-			$ff['pkeyVal'] = $user['id'];
-			$ff['values']['email'] = App::$app->user->clean_data($_POST['email']);
-			$ff['values']['name'] = App::$app->user->clean_data($_POST['name']);
-			$ff['values']['surName'] = App::$app->user->clean_data($_POST['surName']);
-			$ff['values']['middleName'] = App::$app->user->clean_data($_POST['middleName']);
-			$ff['values']['birthDate'] = App::$app->user->clean_data($_POST['birthDate']);
-			$ff['values']['phone'] = App::$app->user->clean_data($_POST['phone']);
-
 			$errors = false;
-
-			if (!App::$app->user->checkName(App::$app->user->clean_data($_POST['name']))) {
+			if (!App::$app->user->checkName($f['name'])) {
 				$errors[] = 'Имя не должно быть короче 2-х символов';
 			}
-
 			if ($errors == false) {
-				$result = App::$app->user->update($ff);
+				$result = App::$app->user->update($user);
 			}
-			$this->set(compact('user', 'result', 'errors'));
-		}
+			$this->set(compact('user'));
 
 		View::setMeta('Профиль', 'Профиль', 'Профиль');
 		View::setJs('auth.js');

@@ -1,9 +1,4 @@
 <section>
-	<? if (isset($result) && $result): ?>
-	<div style="height: 100%; transition: height 5s">
-		<p  class="result">Данные отредактированы!</p>
-	</div>
-	<? endif; ?>
 
 	<form class="form-container" action="/user/edit" method="post">
 		<div class="form-title">Редактирование данных</div>
@@ -19,10 +14,10 @@
 
 		<input class="form-input" placeholder="Телефон" name="phone" value="<?= $user['phone'] ?>"/>
 
-		<input class="form-input" placeholder="email" name="email" type="email" value="<?= $user['email'] ?>" required/>
+<!--		<input class="form-input" placeholder="email" name="email" type="email" value="--><?//= $user['email'] ?><!--" required/>-->
 
 		<input name="edit" class="form-input submit" value="Сохранить"/>
-		<a href="/user/changepassword" class="form-input submit">Изменить пароль</a>
 	</form>
+		<a href="/user/changepassword" class="form-input submit">Изменить пароль</a>
 
 </section>

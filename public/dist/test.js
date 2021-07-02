@@ -918,6 +918,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "popup": () => (/* binding */ popup),
 /* harmony export */   "test_delete": () => (/* binding */ test_delete),
 /* harmony export */   "post": () => (/* binding */ post),
 /* harmony export */   "get": () => (/* binding */ get),
@@ -999,17 +1000,19 @@ let popup = {
     let close = document.createElement('div');
     close.classList.add('close');
     let popup = document.createElement('div');
+    close.classList.add('popup');
     popup.innerText = txt;
     popup.append(close);
+    let wrapper = document.createElement('div');
+    wrapper.classList.add('popup__wrapper');
+    wrapper.append(popup);
     popup.addEventListener('click', this.close);
-    document.body.append(popup);
+    document.body.append(wrapper);
   },
   close: function (e) {
     if (e.target.classList.contains('close')) {}
   }
 };
-
-function close() {}
 
 const uniq = array => Array.from(new Set(array));
 

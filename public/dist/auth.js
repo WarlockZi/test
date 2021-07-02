@@ -40,33 +40,29 @@ __webpack_require__.r(__webpack_exports__);
 (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("[name = 'edit']").on("click", async function (e) {
   e.preventDefault();
   let data = {
-    email: check_email(),
+    // email: check_email(),
     name: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "name"]').el[0].value,
     surName: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "surName"]').el[0].value,
     middleName: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "middleName"]').el[0].value,
     birthDate: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "birthDate"]').el[0].value,
     phone: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "phone"]').el[0].value
   };
-  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/user/edit', data);
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/user/edit', data); // if (res === 'ok'){
 
-  if (res === 'ok') {
-    debugger;
-    _common__WEBPACK_IMPORTED_MODULE_1__.popup.show('Сохранено');
-  }
-});
-
-function check_email() {
-  let email = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[type = email]').el[0].value;
-
-  if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.email(email)) {
-    let $result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
-    $result.innerText = "Неправильный формат почты";
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)($result).addClass('error');
-    return false;
-  }
-
-  return email;
-} // setTimeout(function () {
+  debugger;
+  _common__WEBPACK_IMPORTED_MODULE_1__.popup.show('Сохранено'); // }
+}); //
+// function check_email() {
+//     let email = $('input[type = email]').el[0].value
+//     if (!validate.email(email)) {
+//         let $result = $(".message").el[0];
+//         $result.innerText = "Неправильный формат почты"
+//         $($result).addClass('error')
+//         return false
+//     }
+//     return email
+// }
+// setTimeout(function () {
 //     let p = document.querySelector("p.result");
 //     p.parentNode.remove();
 // }, 2000);
@@ -205,6 +201,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "popup": () => (/* binding */ popup),
 /* harmony export */   "test_delete": () => (/* binding */ test_delete),
 /* harmony export */   "post": () => (/* binding */ post),
 /* harmony export */   "get": () => (/* binding */ get),
@@ -286,17 +283,19 @@ let popup = {
     let close = document.createElement('div');
     close.classList.add('close');
     let popup = document.createElement('div');
+    close.classList.add('popup');
     popup.innerText = txt;
     popup.append(close);
+    let wrapper = document.createElement('div');
+    wrapper.classList.add('popup__wrapper');
+    wrapper.append(popup);
     popup.addEventListener('click', this.close);
-    document.body.append(popup);
+    document.body.append(wrapper);
   },
   close: function (e) {
     if (e.target.classList.contains('close')) {}
   }
 };
-
-function close() {}
 
 const uniq = array => Array.from(new Set(array));
 
