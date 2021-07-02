@@ -141,6 +141,13 @@ class UserController extends AppController
 		View::setCss('cabinet.css');
 		View::setJs('cabinet.js');
 	}
+	public function actionChangePassword()
+	{
+		$this->auth();
+		View::setMeta('Личный кабинет', 'Личный кабинет', '');
+		View::setCss('auth.css');
+		View::setJs('auth.js');
+	}
 
 	public function actionReturnPass()
 	{
@@ -212,9 +219,11 @@ class UserController extends AppController
 	{
 		$this->auth();
 		$user = App::$app->user->get($_SESSION['id']);
+		if ($user = $this->ajax){
+
+		}
 
 		if (isset($_POST['submit'])) {
-
 			$ff['table'] = 'users';
 			$ff['pkey'] = 'id';
 			$ff['pkeyVal'] = $user['id'];
@@ -234,19 +243,10 @@ class UserController extends AppController
 			if ($errors == false) {
 				$result = App::$app->user->update($ff);
 			}
-			View::setMeta('Профиль', 'Профиль', 'Профиль');
 			$this->set(compact('user', 'result', 'errors'));
-		} else {
-			$email = $user['email'];
-			$name = $user['name'];
-			$surName = $user['surName'];
-			$middleName = $user['middleName'];
-			$birthDate = $user['birthDate'];
-			$phone = $user['phone'];
-
-			View::setMeta('Профиль', 'Профиль', 'Профиль');
-			$this->set(compact('user'));
 		}
+
+		View::setMeta('Профиль', 'Профиль', 'Профиль');
 		View::setJs('auth.js');
 		View::setCss('auth.css');
 	}

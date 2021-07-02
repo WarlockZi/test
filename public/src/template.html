@@ -13,9 +13,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
-	<title>Медицинские расходные материалы</title>
-               <meta name = "description" content = "Доставим медицинские расходные материалы в любую точку России">
-               <meta name = "keywords" content = "медицинские расходные материалы, доставка, производство, по России">	<link href='/public/dist/main.css' type='text/css' rel='stylesheet'>
+	<title>Профиль</title>
+               <meta name = "description" content = "Профиль">
+               <meta name = "keywords" content = "Профиль">	<link href='/public/dist/auth.css' type='text/css' rel='stylesheet'>
 </head>
 
 
@@ -94,7 +94,7 @@
 			<div class="inner-wrap">
 				<div class='h-upper'>
 					<div class="logo-wrap">
-															<svg id='logo-svg' width="200" height="45" version="1.1" viewBox="0 0 140.93602 25.903431">
+						<a href = '/' aria-label = 'На главную'></a>									<svg id='logo-svg' width="200" height="45" version="1.1" viewBox="0 0 140.93602 25.903431">
 				<defs>
 					<path id="a4bgr29v3"
 					      d="m473.35 105.73c5.3 0.04 0.86 0.08-9.88 0.08s-15.1-0.04-9.65-0.08c5.44-0.07 14.23-0.07 19.53 0z"/>
@@ -187,51 +187,29 @@
 			</div>
 		</header>
 
-		<main>
+		<section>
+	
+	<form class="form-container" action="/user/edit" method="post">
+		<div class="form-title">Редактирование данных</div>
 
-	<div class="info">
-		<div class="card">
-			<h1>Расходные материалы для медицины оптом</h1>
-			<p>
-				Обеспечим ваш медицинский центр, стоматологию или лабораторию перчатками,
-				бахилами, масками и другими расходниками с бесплтной доставкой
-				в оговоренные сроки. Поможем Вам найти оптимальное решение.
-			</p>
-		</div>
-		<div class="card">
-			<h2>Широкий ассортимент</h2>
-			<p>
-				Оптимально подобранный перечень товаров поможет быстро
-				сориентироваться в ассортименте. Мы не держим ничего лишнего.
-			</p>
-		</div>
-		<div class="card">
-			<h2>Низкие цены</h2>
-			<p>
-				Покупая оптом, Вы снижаете затраты своего предприятия.
-				Ведь лидеры рынка всегда уделяют большое внимание на затраты.
-			</p>
-		</div>
-		<div class="card"></div>
-		<div class="card">
-			<h2>Доставим до дверей</h2>
-			<p>
-				Вам не нужно беспокоится о доставке. Мы огранизуем и доставим
-				ваш товар бесплатно почти в любую точку России.
-				Даже если ваше предприятие не имеет собственного транспорта,
-				составив заявку на доставку "до дверей", товар вы получите в
-				оговоренный срок.
-			</p>
-		</div>
-		<div class="card">
-			<h2>Вся продукция сертифицирована</h2>
-			<p>
-				На всю приобретенную у нас продукцию Вы получаете российские сертификаты
-				на соответствие ГОСТам.
-			</p>
-		</div>
-</main>
+		<input class="form-input" placeholder="Имя" name="name" value=""/>
 
+		<input class="form-input" placeholder="Фамилия" name="surName" value=""/>
+
+		<input class="form-input" placeholder="Отчество" name="middleName" value=""/>
+
+		<input class="form-input" placeholder="День рождения:" name="birthDate" type="date"
+		       value=""/>
+
+		<input class="form-input" placeholder="Телефон" name="phone" value=""/>
+
+		<input class="form-input" placeholder="email" name="email" type="email" value="vvoronik@yandex.ru" required/>
+
+		<input name="edit" class="form-input submit" value="Сохранить"/>
+		<a href="/user/changepassword" class="form-input submit">Изменить пароль</a>
+	</form>
+
+</section>
 
 		<footer>
 
@@ -270,7 +248,7 @@
 
 
 	</div>
-		<script src='/public/dist/main.js'></script></div>
+		<script src='/public/dist/auth.js'></script></div>
 <!-- Yandex.Metrika counter -->
 <!--<script defer>-->
 <!--    (function (m, e, t, r, i, k, a) {-->

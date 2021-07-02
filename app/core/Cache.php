@@ -7,9 +7,10 @@ class Cache
 
 	public function getFromCache($file_name)
 	{
-		$file = ROOT . '/tmp/cache/test_results/' . $file_name . '.txt';
-		if (file_exists($file)) {
-			return require $file;
+		$dir = $this->mkdir_r('\tmp\cache\test_results');
+		$path = $dir . $file_name . '.txt';
+		if (file_exists($path)) {
+			return require $path;
 		}
 	}
 
@@ -53,7 +54,7 @@ class Cache
 		if (file_put_contents($file, serialize($content))) {
 			return true;
 		}
-		return false; //lUPKLGANZK
+		return false;
 	}
 
 

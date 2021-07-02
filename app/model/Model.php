@@ -38,13 +38,20 @@ abstract class Model
 	{
 		$id = $values['id'];
 		unset($values['id']);
-		array_push($values, $id);
-		$param = implode(',', array_keys($values));
-		$strQestMarks = array_fill(0, count($values), '?');
+		$par = '';
+		foreach ($values as $key => $value) {
+			if ($value) {
+				$par .= $key . " = '" . $value . "', ";
+			} else {
+				$par .= $key . " = NULL, ";
+			}
+		}
+		$par = trim($par, ' '); // first trim last space
+		$par = trim($par, ',');
 
-		$sql = "UPDATE `{$this->table}` SET {$strQestMarks} WHERE id = ?";
+		$sql = "UPDATE `{$this->table}` SET {$par} WHERE id = ?";
 
-		if ($this->insertBySql($sql, $param)) {
+		if ($this->insertBySql($sql, [$id])) {
 			return true;
 		}
 		return 'Видимо, ошибка в запросе!';

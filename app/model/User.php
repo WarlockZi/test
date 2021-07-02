@@ -36,20 +36,17 @@ class User extends Model
 
 	public function returnPass($email)
 	{
-		$sql = "SELECT id FROM {$this->table} WHERE email = ?";
-		$params = [$email];
-		$id = $this->findBySql($sql, $params)[0]['id'];
+		$user = $this->findWhere('email', $email )[0];
 
-		if ($id) {
-			$pass = substr(md5(rand()), 0, 7);;
-			$new_pass = md5($pass);
-			$sql = "UPDATE {$this->table} SET password = ? WHERE id = ?";
-			$params = [$new_pass, $id];
-			if ($this->insertBySql($sql, $params)) {
+		if ($user) {
+			$pass = substr(md5(rand()), 0, 7);
+			$user['password']=md5($pass);
+			$this->update($user);
+
 				$subject = 'Новый пароль';
-				$mail_body = "Ваш новый пароль: " . $pass;
-				Mail::send_mail([$email], $subject, $mail_body);
-			}
+				$body = "Ваш новый пароль: " . $pass;
+				Mail::send_mail($subject, $body,[$email]);
+//			}
 		} else {
 			exit(json_encode(["smg" => "Пользователя с таким e-mail нет"]));
 		}
