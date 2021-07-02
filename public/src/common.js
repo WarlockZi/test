@@ -64,10 +64,14 @@ let popup = {
         let close = document.createElement('div')
         close.classList.add('close')
         let popup = document.createElement('div')
+        close.classList.add('popup')
         popup.innerText = txt
         popup.append(close)
+        let wrapper = document.createElement('div')
+        wrapper.classList.add('popup__wrapper')
+        wrapper.append(popup)
         popup.addEventListener('click', this.close)
-        document.body.append(popup)
+        document.body.append(wrapper)
     },
     close:function (e) {
         if (e.target.classList.contains('close')){
@@ -77,9 +81,6 @@ let popup = {
     }
 }
 
-function close() {
-    
-}
 const uniq = (array) => Array.from(new Set(array));
 
 async function get(key) {
@@ -261,4 +262,4 @@ async function fetchW(url, Obj) {
     });
     return prom
 }
-export {test_delete, post, get, uniq, validate, $, fetchWrap, fetchW}
+export {popup, test_delete, post, get, uniq, validate, $, fetchWrap, fetchW}
