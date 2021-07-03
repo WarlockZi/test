@@ -8,6 +8,7 @@ use http\Message;
 class AppController extends Controller
 {
 	protected $ajax;
+	protected $user;
 
 	public function __construct(array $route)
 	{
@@ -24,21 +25,30 @@ class AppController extends Controller
 
 
 	public
+	function setAuth($user)
+	{
+		if (!isset($_SESSION['id']) || !$_SESSION['id']) {
+			$_SESSION['id'] = (int)$user['id'];
+		}
+
+	}
+	public
 	function auth()
 	{
-		try {
-//			unset($_SESSION['id']);
-			if (isset($_SESSION['id']) && !$_SESSION['id'] && $_SERVER['QUERY_STRING'] != '') { // REDIRECT на регистрацию, если запросили не корень
-				throw new \Exception(\Exception );
-			} elseif (isset($_SESSION['id'])) {
-				// Проверяем существует ли пользователь и подтвердил ли регистрацию
-				$user = App::$app->user->getUser($_SESSION['id']);
+		if (!isset($_SESSION['id'])||!$_SESSION['id']){
+			header("Location:/user/login");
+			exit();
+		}
 
-				if ($user === false) {
-					// Если пароль или почта неправильные - показываем ошибку
+		try {
+			if (isset($_SESSION['id']) && !$_SESSION['id'] && $_SERVER['QUERY_STRING'] != '') {
+				throw new \Exception('Зарегистрируйтесь ' );
+			} elseif (isset($_SESSION['id'])) {
+				$user = $this->user = App::$app->user->get($_SESSION['id']);
+
+				if ($this->user === false) {
 					$errors[] = 'Неправильные данные для входа на сайт';
-				} elseif ($user === NULL) {
-					// Пароль почта в порядке, но нет подтверждения
+				} elseif ($this->user === NULL) {
 					$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
 				} else {
 					$this->set(compact('user'));

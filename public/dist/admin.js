@@ -1,59 +1,16 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./public/src/admin.js":
-/*!*****************************!*\
-  !*** ./public/src/admin.js ***!
-  \*****************************/
+/***/ "./public/src/admin/index.js":
+/*!***********************************!*\
+  !*** ./public/src/admin/index.js ***!
+  \***********************************/
 /***/ (() => {
 
-window.onload = function () {
-  switch (window.location.pathname) {
-    case '/adminsc/catalog':
-    case '/adminsc/catalog/category':
-    case '/adminsc/catalog/product':
-    case '/adminsc/catalog/products':
-      document.querySelector('.module.catalog').classList.add('activ');
-      break;
-
-    case '/adminsc/test/edit':
-      document.querySelector('.module.test').classList.add('activ');
-      break;
-
-    case '/adminsc/crm':
-    case '/adminsc/crm/users':
-      document.querySelector('.module.crm').classList.add('activ');
-      break;
-
-    case '/adminsc/settings':
-    case '/adminsc/Sitemap':
-    case '/adminsc/settings/pics':
-    case '/adminsc/settings/prop':
-    case '/adminsc/settings/props':
-      document.querySelector('.module.settings').classList.add('activ');
-      break;
-
-    case '/adminsc':
-      document.querySelector('.module.home').classList.add('activ');
-      break;
-  }
-}; // }
-//
-/////////////////////////////////
-//////// PRODUCTS /////////////
-///////////////////////////////
-// $('.product.column, .edit::before').hover(
-//     function () {
-// //   debugger;
-//         $(this).toggleClass('edit');
-//         let id = $(this).data('id');
-//         $(this).prop('href', '/adminsc/catalog/product?id=' + id);
-//
-//     },
-//     function () {
-//         $(this).toggleClass('edit');
-//     }
-// );
+$(function () {
+  var d = 'a[href^="?page=' + $_GET('page') + '&"]';
+  var a = $(d).css('background', '#e0e0e0');
+});
 
 /***/ }),
 
@@ -258,7 +215,7 @@ var __webpack_exports__ = {};
   !*** ./public/src/Admin/admin.js ***!
   \***********************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _admin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../admin */ "./public/src/admin.js");
+/* harmony import */ var _admin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../admin */ "./public/src/admin/index.js");
 /* harmony import */ var _admin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_admin__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _admin_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admin.scss */ "./public/src/Admin/admin.scss");
 /* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");

@@ -53,7 +53,7 @@ const config = {
 };
 
 module.exports = () => {
-    let isDev = env.ENV==='dev'?true:false
+    let isDev = env.MODE==='dev'
     config.cache = !isDev
     config.mode = isDev ? 'development' : 'production'
     config.devtool = isDev ? 'source-map' : false
@@ -62,8 +62,8 @@ module.exports = () => {
     config.entry = {
         admin: path.resolve(src, 'Admin/admin.js'),
         adminCategory: path.resolve(src, 'Adm_catalog/adm_category.js'),
-        cabinet: path.resolve(src, 'User/cabinet.js'),
-        login: path.resolve(src, 'User/login.js'),
+        cabinet: path.resolve(src, 'Auth/cabinet.js'),
+        auth: path.resolve(src, 'Auth/auth.js'),
         // freeTest: path.resolve(src, 'Freetest/free-test.js'),
         test: path.resolve(src, 'Test/test.js'),
         main: path.resolve(src, 'Main/main.js'),

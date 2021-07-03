@@ -12,7 +12,7 @@
 
 
           <div class="pic h400 w400">
-              <? if (!DEBU): ?>
+              <? if (!DEV): ?>
                <div class="vert-thumbs">
                  <div class="thumb-small">
                    Вид1
@@ -32,7 +32,7 @@
             <img title="<?= $product['name']; ?>" src="/pic<?= $product['dpic']; ?>" alt="<?= $product['name']; ?>">
 
           <div class="horiz-thumbs">
-              <? if (!DEBU): ?>
+              <? if (!DEV): ?>
                <div class="thumb">
                  Расцв етка 1
                </div>

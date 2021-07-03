@@ -367,7 +367,7 @@ class Freetest extends Model {
       if (empty($pic)) {
 
          $nameHash = $fid . $pref . round(microtime(true)) . substr($nameRu, -4); // напр. 4526q1541554561.jpg
-         $to = $_SERVER['DOCUMENT_ROOT'] . "/" . PROJ . "pic/" . $nameHash;   //"/" . $nameHash;
+         $to = $_SERVER['DOCUMENT_ROOT'] . "/" . "pic/" . $nameHash;   //"/" . $nameHash;
          // Перемещаем из tmp папки (прописана в php.config)
          move_uploaded_file($_FILES['file']['tmp_name'], $to);
 
@@ -382,7 +382,7 @@ class Freetest extends Model {
       } else {
          $nameHash = $pic[0]['nameHash'];
 
-         $to = $_SERVER['DOCUMENT_ROOT'] . "/" . PROJ . "pic/" . $nameHash;   //"/" . $nameHash;
+         $to = $_SERVER['DOCUMENT_ROOT'] . "/" .  "pic/" . $nameHash;   //"/" . $nameHash;
          // Перемещаем из tmp папки (прописана в php.config)
          move_uploaded_file($_FILES['file']['tmp_name'], $to);
 

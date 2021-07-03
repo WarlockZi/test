@@ -10,7 +10,7 @@
 
 
       <div class="image">
-          <? if (!DEBU): ?>
+          <? if (!DEV): ?>
            <div class="vert-thumbs">
              <div class="thumb-small">
                Вид1
@@ -30,7 +30,7 @@
       </div>
 
       <div class="horiz-thumbs">
-          <? if (!DEBU): ?>
+          <? if (!DEV): ?>
            <div class="thumb">
              Расцв етка 1
            </div>
