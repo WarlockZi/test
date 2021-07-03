@@ -1,7 +1,11 @@
+!*
+!/tmp/
+/tmp/*
+!/tmp/cache/
+/tmp/cache/*
 /refs/
-/tmp
 /node_modules/
 /.idea/
 /composer.phar
 /public/build
-/vendor
+/.env

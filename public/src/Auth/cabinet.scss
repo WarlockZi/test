@@ -1,0 +1,40 @@
+.list{
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  border: 1px solid #eee;
+}
+
+.site-wrapper{
+  height: 100%;
+}
+
+.wrap{
+  width: 700px;
+  margin: 10px auto;
+}
+section{
+  flex: 1 0 auto;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrap h3{
+  margin: 5px 0;
+  font-weight: bold;
+  font-size: 120%;
+  text-align: center;
+  color: #949494;
+  margin-bottom: 20px;
+}
+.wrap .list{
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  /*border: 1px solid #eee;*/
+}
+.wrap .list:hover{
+  background:#f6f6f6;
+}

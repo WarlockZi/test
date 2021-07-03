@@ -1,6 +1,6 @@
 import './Do'
 import '../components/header/header'
-import '../components/footer/footer.sass'
+import '../components/footer/footer.scss'
 // import '../components/header/autocomplete'
 import './free-test.scss'
 

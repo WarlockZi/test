@@ -11,17 +11,6 @@ class MainController Extends AppController
 	public function __construct($route)
 	{
 
-		if ($this->isAjax()) {
-			if (isset($_POST['param'])) {
-				$arr = json_decode($_POST['param'], true);
-				$func = $arr['action'];
-				$model = $arr['model'] ?: 'adminsc';
-				if (App::$app->{$model}->$func($arr)) {
-					exit(true);
-				}
-			}
-		}
-
 		parent::__construct($route);
 
 		$sale = App::$app->cache->get('sale');
@@ -39,7 +28,7 @@ class MainController Extends AppController
 	public function actionIndex()
 	{
 		if (isset($_SESSION['id'])) {
-			$user = App::$app->user->getUser($_SESSION['id']);
+			$user = App::$app->user->get($_SESSION['id']);
 			if ($user === false) {
 				$errors[] = 'Неправильные данные для входа на сайт';
 			} elseif ($user === NULL) {

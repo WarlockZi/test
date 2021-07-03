@@ -11,14 +11,12 @@ class DB {
 
     public function __construct() {
 
-        $db = require ROOT . '/app/core/config.php';
-        $db = $db['config_db'];
         $options = [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
         ];
         try {
-            $this->pdo = new \PDO($db['dsn'], $db['user'], $db['password'], $options);
+            $this->pdo = new \PDO($_ENV['DB_DSN'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $options);
         } catch (PDOException $e) {
             die('Подключение не удалось: ' . $e->getMessage());
         }
@@ -45,6 +43,7 @@ class DB {
     public function query($sql, $params = []) {
 //        self::$countSql++;
 //        self::$queries[] = $sql;
+
         $stmt = $this->pdo->prepare($sql);
         $res = $stmt->execute($params);
         if ($res !== false) {

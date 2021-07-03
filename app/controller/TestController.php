@@ -49,35 +49,18 @@ class TestController Extends AppController
 
 		$testId = (int)$this->route['id'];
 
-		$testDataToEdit = App::$app->test->getTestData($testId);
 		$test = App::$app->test->findOne($testId);
+		$testDataToEdit = App::$app->test->getTestData($testId);
 
 		unset ($testDataToEdit['correct_answers']);
 		if (!$test) {//Вообще не нашли такого теста с номером
 			$error = '<H1>Теста с таким номером нет.</H1>';
-			$this->set(compact('css', 'error'));
 		}
 
 		$pagination = App::$app->test->pagination($testDataToEdit, true);
 		$this->set(compact('test', 'testDataToEdit', 'pagination', 'testId'));
 
 	}
-//	public function actionGetResult()
-//	{
-//		if (is_array($this->route) && array_key_exists('cache', $this->route)) {
-//			if ($this->route['cache']) {
-//				$cache = $this->route['cache'];
-//			}
-//		}
-//		$this->getFromCache('/results/test/');
-//		exit();
-//		$file = ROOT . '/tmp/cache/results/' . $cache . '.txt';
-//		if (file_exists($file)) {
-//			$results = require $file;
-//		}
-////		exit();
-//	}
-
 
 	public function actionResults()
 	{
@@ -90,7 +73,6 @@ class TestController Extends AppController
 				exit($cached_page);
 			}
 		}
-
 	}
 
 	public function actionDelete()
@@ -99,7 +81,6 @@ class TestController Extends AppController
 		if (App::$app->test->delete($this->ajax['id'])) {
 			exit(json_encode(['msg' => 'ok']));
 		}
-
 	}
 
 	private function prepareCacheDir()
@@ -138,7 +119,7 @@ class TestController Extends AppController
 				'sno_dir@vitexopt.ru',
 			];
 		$subject = Mail::prepareSubjectTestResults();
-		$mail_body = Mail::prepareBodyTestResults(
+		$body = Mail::prepareBodyTestResults(
 			$file,
 			$post->userName,
 			$post->test_name,

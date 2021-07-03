@@ -55,9 +55,7 @@ class View
 	{
 		$file = ROOT.'/public/src/template.html';
 		if (is_readable($file)){
-			$f=fopen($file,'w');
-			fwrite($f,$page_cache);
-			fclose($f);
+			file_put_contents($file, $page_cache);
 		}
 
 	}
@@ -99,8 +97,6 @@ class View
 
 	public static function getJS()
 	{
-// если передали route. значит хотим подключить индивид.
-// скрипт, если не передали, то тот который передали
 		$js = '';
 		if (is_array(self::$jsCss['js'])) {
 			foreach (self::$jsCss['js'] as $v) {

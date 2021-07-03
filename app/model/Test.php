@@ -32,14 +32,13 @@ class Test extends Model
 			}
 			$depOptions = '<option value = "0">Не принадлежит</option>';
 			foreach ($testList as $testDep) {
-				// Проставим от какого теста зависит
 				if ($testDep['id'] == $test['parent']) {
 					$depOptions .= '<option value = ' . $testDep['id'] . ' selected >' . $testDep['test_name'] . '</option>';
 				} else {
 					$depOptions .= '<option value = ' . $testDep['id'] . '>' . $testDep['test_name'] . '</option>';
 				}
 			}
-		} else {// Добавляем новый тест
+		} else {
 			$test['id'] = 0;
 			$test['test_name'] = '';
 			$test['sort'] = 0;
@@ -112,7 +111,7 @@ class Test extends Model
 			$nameHash = $pic[0]['nameHash'];
 
 			$to = $_SERVER['DOCUMENT_ROOT'] . "/" . PROJ . "/pic/" . $nameHash;   //"/" . $nameHash;
-			// Перемещаем из tmp папки (прописана в php.config)
+
 			move_uploaded_file($_FILES['file']['tmp_name'], $to);
 
 			if ($pref == "q") {// это картинка для вопроса
@@ -134,7 +133,6 @@ class Test extends Model
 		$rightAnswer = $_POST['right_answer'];
 		if (isset($_POST['apic'])) {
 			$aPic = $_POST['apic'];
-			// Отсекаем из пути папку Проекта,если добавили
 			if (!strpos($aPic, PROJ)) {
 				$aPic = substr($aPic, 6);
 			}
@@ -159,7 +157,7 @@ class Test extends Model
 
 		if (isset($_POST['qpic'])) {
 			$qPic = $_POST['qpic'];
-			// Отсекаем из пути папку Проекта,если добавили
+
 			if (!strpos($qPic, PROJ)) {
 				$qPic = substr($qPic, 6);
 			}
@@ -186,27 +184,6 @@ class Test extends Model
 		$res = $this->insertBySql($sql, $params);
 	}
 
-//	public function aAdd()
-//	{
-//
-//
-//// Получаем id следующего ответа
-//		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'answer'";
-//		$next = $this->findBySql($sql)[0];
-//		$row['qid'] = $_POST['qid'];
-//		$row['id'] = $next['Auto_increment'];
-//		$row['answer'] = "";
-//		$picA = "";
-//		$correctAnswer = "";
-//
-//		$params = [$row['qid']];
-//		$sql = "INSERT INTO answer (parent_question) VALUES (?)";
-//		$this->insertBySql($sql, $params);
-//
-//		include APP . '/view/Test/editBlockAnswer.php';
-//	}
-
-
 	public function tAdd()
 	{
 		$testName = $_POST['test_name'];
@@ -215,22 +192,18 @@ class Test extends Model
 		$row['sort'] = $sort = (int)$_POST['sort'];
 		$enable = (int)$_POST['enable'];
 
-		// Следующий id теста
 		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'test'";
 		$nextTest = $this->findBySql($sql)[0];
 		$tId = $nextTest['Auto_increment'];
 
-		// Следующий id ответа
 		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'question'";
 		$next = $this->findBySql($sql)[0];
 		$row['qid'] = $qId = $next['Auto_increment'];
 
-		// Следующий id вопроса
 		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'answer'";
 		$next = $this->findBySql($sql)[0];
 		$row['id'] = $aId = $next['Auto_increment'];
 
-/////////////////////////////
 		$params = [$tId, $testName, $parent, $isTest, $sort, $enable];
 		$sql = 'INSERT INTO test (id,test_name,parent,isTest,sort,enable) VALUES (?,?,?,?,?,?)';
 		$this->insertBySql($sql, $params);
@@ -268,13 +241,13 @@ class Test extends Model
         </li >";
 
 		$data = compact("pagination", "tId", "testName", "question", "answer", "menuItem");
-		// Превратим объект в строку JSON
+
 		echo $json = json_encode($data);
 	}
 
 	public function tUpd()
 	{
-		if ($_POST['testId']) {// Это существующий тест
+		if ($_POST['testId']) {
 			$testName = $_POST['testName'];
 			$params = [$testName,
 				(int)$_POST['parentTest'],
@@ -284,11 +257,11 @@ class Test extends Model
 				(int)$_POST['testId']];
 			$sql = 'UPDATE test SET test_name = ?, parent = ?, isTest = ?, sort = ?, enable = ? WHERE id = ?';
 			$this->insertBySql($sql, $params);
-			if ($testName) { // чтобы поменять название в спске и названии
+			if ($testName) {
 				echo $testName;
 			}
-		} else {// Это новый тест
-			if ($_POST['test_name']) {// Ообязательно заполняем имя теста
+		} else {
+			if ($_POST['test_name']) {
 				$this->tAdd();
 			} else {
 				return FALSE;
@@ -352,10 +325,8 @@ class Test extends Model
 
 	public function getTestData($testId, bool $shuffle = false)
 	{
-		$testId = $testId ?? '(SELECT id FROM test limit 1)';
 		$sql =
 		<<<her
-		
 SELECT i.path, i.name,
        iq.path as qpath, iq.name as qname, 
        q.qustion, q.sort, a.answer, a.correct_answer, q.id as q_id, a.id as a_id
@@ -373,9 +344,8 @@ left join image_morph imq
 left join images iq 
    on iq.id=imq.image_id
 
-WHERE q.parent = $testId
+WHERE q.parent = ?
 ORDER by q.sort+0,q.qustion
-
 her;
 
 		// +0 для сортировки чисел, чтобы не было 2>10 // AND test.enable = :testEnable

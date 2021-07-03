@@ -1,0 +1,41 @@
+.site-wrapper {
+  width: 100%;
+  display: flex;
+  flex-basis: 100%;
+  height: 100%;
+}
+
+section,
+main {
+  flex: 1 0 auto;
+}
+
+.message{
+  font-size: .9rem;
+  a{
+    color: blue;
+  }
+}
+.error{
+  border: 3px solid #c14000;
+  border-radius: 3px;
+  padding: 10px;
+  color: #c14000;
+}
+
+.success{
+  border: 3px solid #1bbc9b;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.return_pass .submit{
+  cursor: pointer;
+}
+.login_return_pass{
+  color: #1bbc9b;
+  font-weight: 600;
+  background-color: #ffffff;
+  border: 1px solid;
+  padding: 15px;
+}

@@ -8,7 +8,7 @@ use  \PHPMailer\PHPMailer\PHPMailer;
 class Mail
 {
 
-	public static function send_mail($to, $subj, $body)
+	public static function send_mail( $subj, $body, $to=[])
 	{
 		$mail = new PHPMailer(true);
 		$config = require ROOT . '/app/core/config.php';
@@ -18,7 +18,7 @@ class Mail
 			$config = $config['Mailer'];
 		}
 		try {
-			$mail->SMTPDebug = 2;  // Enable verbose debug output
+//			$mail->SMTPDebug = 2;  // Enable verbose debug output
 			if ($config['smtp_mode']) {
 				$mail->isSMTP();                                      // Set mailer to use SMTP
 				$mail->SMTPAuth = $config['auth'];                               // Enable SMTP authentication
@@ -41,7 +41,7 @@ class Mail
 			$mail->AltBody = "Ссылка на страницу с результатами: тут";
 
 			$mail->send();
-			echo 'Message has been sent';
+			return true;
 		} catch (Exception $e) {
 			echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
 		}
@@ -51,15 +51,6 @@ class Mail
 	{
 		return "=?utf-8?b?" . base64_encode($str) . "?=";
 	}
-
-//	protected static function getBody($str)
-//	{
-//		if ($str === 'testResults') {
-//			return Mail::testResults();
-//		} elseif ($str === 'register') {
-//			return Mail::register();
-//		}
-//	}
 
 	protected static function prepareBodyTestResults($file, $userName, $test_name, $questionCnt, $errorCnt)
 	{
@@ -72,7 +63,6 @@ class Mail
 
 	public static function prepareBodyRegister($hash)
 	{
-//		$confirm_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/results/' . $hash;
 		ob_start();
 		require ROOT . '/app/view/User/email.php';
 		$template = ob_get_clean();
@@ -90,7 +80,7 @@ class Mail
 		return Mail::testResults();
 	}
 
-	public function mail_test_result($to = [], $subject, $body)
+	public function mail_test_result($subject, $body, $to = [])
 	{
 		$mail = new PHPMailer(TRUE);
 		$config = require ROOT . '/app/core/config.php';
