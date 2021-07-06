@@ -96,10 +96,15 @@ if (typeof (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#login").el[0] !== 'undef
       "token": document.querySelector("[name = 'token']").getAttribute('content')
     };
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/user/login', data);
-    let overlayWrap = document.createElement('div');
-    overlayWrap.innerHTML = res;
-    document.body.append(overlayWrap);
-    overlayWrap.querySelector('.overlay').style.display = "block";
+
+    if (JSON.parse(res).msg === 'ok') {
+      window.location = '/user/cabinet';
+    } //     let overlayWrap = document.createElement('div');
+    //     overlayWrap.innerHTML = res;
+    //     document.body.append(overlayWrap);
+    //     overlayWrap.querySelector('.overlay').style.display = "block";
+    //
+
   });
 }
 
@@ -120,7 +125,7 @@ __webpack_require__.r(__webpack_exports__);
   let password = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type = password]').el[0].value;
 
   if (email) {
-    if (!(0,_common__WEBPACK_IMPORTED_MODULE_0__.validate)(email)) {
+    if (!_common__WEBPACK_IMPORTED_MODULE_0__.validate.email(email)) {
       let $result = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
       $result.innerText = "Неправильный формат почты";
       (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)($result).addClass('error');
@@ -128,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     if (password) {
-      if (!(0,_common__WEBPACK_IMPORTED_MODULE_0__.validate)(password)) {
+      if (!_common__WEBPACK_IMPORTED_MODULE_0__.validate.password(password)) {
         let $result = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
         $result.innerText = "Пароль может состоять из \n " + "- Большие латинские бкувы \n" + "- Мальенькие латинские буквы \n" + "- Цифры \n" + "- должен содержать не менее 6 символов";
         (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)($result).addClass('error');

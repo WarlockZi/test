@@ -4,6 +4,7 @@ namespace app\model;
 
 use app\core\DB;
 use app\core\App;
+use mysql_xdevapi\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
 abstract class Model
@@ -22,16 +23,21 @@ abstract class Model
 
 	public function create($values)
 	{
+		if (isset($values['id'])) unset($values['id']);
 		$fields = implode(',', array_keys($values));
 		$param = array_values($values);
 		$questionMarks = array_fill(0, count($values), '?');
 		$strQMarks = implode(',', array_values($questionMarks));
 
 		$sql = "INSERT INTO {$this->table} ({$fields}) VALUES ({$strQMarks})";
-		$this->insertBySql($sql, $param);
-		return $this->autoincrement();
-
+		try {
+			$this->insertBySql($sql, $param);
+			return $this->autoincrement();
+		} catch (Exception $e) {
+			exit('Пользователь не создан' . $e->getMessage());
+		}
 	}
+
 
 	public
 	function update($values)

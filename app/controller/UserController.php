@@ -22,21 +22,20 @@ class UserController extends AppController
 		if ($data = $this->ajax) {
 
 			$to = [$data['email']];
-			if (App::$app->user->checkEmailExists($to[0])) {
+			if (!$user = App::$app->user->findWhere('email',$to[0])[0]) {
 				exit(json_encode(['msg' => 'mail exists']));
 			}
-			$hash = md5(microtime());
 
-			$values = [
-				'rights' => 2,
-				'surName' => $data['surName'],
-				'name' => $data['name'],
-				'email' => $to[0],
-				'password' => md5($data['password']),
-				'hash' => $hash,
-			];
-			if (!App::$app->user->create($values)){
-				exit(json_encode(["msg"=>'Регистрация не удалась']));
+			$hash = md5(microtime());
+			$user['rights']=2;
+			$user['surName']=$data['surName'];
+			$user['name']=$data['name'];
+			$user['email']=$to[0];
+			$user['password']=md5($data['password']);
+			$user['hash']=$hash;
+
+			if (!App::$app->user->create($user)) {
+				exit(json_encode(["msg" => 'Регистрация не удалась']));
 			}
 
 			$subj = "Регистрация VITEX";
@@ -53,64 +52,14 @@ class UserController extends AppController
 		View::setCss('auth.css');
 	}
 
-	private function registerGetOverlay(){
+	private function registerGetOverlay()
+	{
 		$msg[] = "Для подтвержения регистрации перейдите по ссылке в <br><a href ='https://mail.vitexopt.ru/webmail/login/'>ПОЧТЕ</a>.<br>Письмо может попасть в папку 'Спам'";
 		ob_start();
 		include ROOT . '/app/view/User/alert.php';
 		return ob_get_clean();
 	}
 
-//	private function registrationGetEmailBody($subj, $email, $mail_body)
-//	{
-//		return <<< HERETEXT
-//<h2>Новое письмо $subj</h2>
-//<b>Имя:</b> dd<br>
-//<b>Почта:</b> $email<br><br>
-//<b>Сообщение:</b><br>$mail_body
-//HERETEXT;
-//	}
-
-//	public function send_mail($email, $subj, $mail_body)
-//	{
-//		$body = $this->registrationGetEmailBody($subj, $email, $mail_body);
-//		$from = 'vvoronik@yandex.ru';
-//		$to[] = $email;
-//		if (!Mail::send_mail($subj, $body, $to, $from)) {
-//			echo json_encode(["result" => "error"]);
-//		}
-//	}
-
-
-	public function regDataWrong($email, $password, $name, $surName)
-	{
-		if (isset($_POST)) {
-			$msg = [];
-			if (empty($password)) {
-				$msg[] = "Введите пароль.";
-			}
-			if (empty($email)) {
-				$msg[] = "Введите адрес почтового ящика.";
-			}
-			if (!App::$app->user->checkEmail($email) && !empty($email)) {
-				$msg[] = "Введите правильный адрес почтового ящика.";
-			}
-			if (empty($name)) {
-				$msg[] = "Введите имя.";
-			}
-			if (empty($surName)) {
-				$msg[] = "Введите фамилию.";
-			}
-			if (App::$app->user->checkEmailExists($email)) {
-				$msg[] = "Пользователь с таким e-mail уже существует<br>"
-					. "Перейдите по ссылке, чтобы получить пароль на эту почту. <br>"
-					. "<a href='" . PROJ . "/user/returnpass'>Забыли пароль</a>";
-			}
-			if ($msg) {//есть ошибки
-				return $msg;
-			}
-		}
-		return false;
-	}
 
 	public function actionLogout()
 	{
@@ -141,6 +90,7 @@ class UserController extends AppController
 		View::setCss('cabinet.css');
 		View::setJs('cabinet.js');
 	}
+
 	public function actionChangePassword()
 	{
 		$this->auth();
@@ -165,7 +115,7 @@ class UserController extends AppController
 
 	public function actionLogin()
 	{
-		if ($data = $this->isAjax()) {
+		if ($data = $this->ajax) {
 			$email = (string)$data['email'];
 			$password = (string)$data['password'];
 
@@ -196,20 +146,17 @@ class UserController extends AppController
 
 				$user['rights'] = explode(",", $user['rights']);
 				$this->setAuth($user);
-				$this->set(compact('user'));
-				header('Location: /user/cabinet');
-//				$msg[] = "Все ок";
-//				exit(include ROOT . '/app/view/User/alert.php');
+				exit(json_encode(['msg'=>'ok']));
 			}
 		}
-		if (isset($_SESSION['id'])) {
-			if ($user = App::$app->user->get($_SESSION['id'])) {
-				$this->set(compact('user'));
-			} else {
-				$_SESSION['msg'] = 'Зарегистрируйтесь.';
-				unset($_SESSION['id']);
-			}
-		}
+//		if (isset($_SESSION['id'])) {
+//			if ($user = App::$app->user->get($_SESSION['id'])) {
+//				$this->set(compact('user'));
+//			} else {
+//				$_SESSION['msg'] = 'Зарегистрируйтесь.';
+//				unset($_SESSION['id']);
+//			}
+//		}
 		View::setJs('auth.js');
 		View::setCss('auth.css');
 
@@ -219,21 +166,21 @@ class UserController extends AppController
 	{
 		$this->auth();
 		$user = App::$app->user->get($_SESSION['id']);
-		if ($f = $this->ajax){
-			foreach ($f as $key=>$value){
-				if (array_key_exists($key, $user)){
+		if ($f = $this->ajax) {
+			foreach ($f as $key => $value) {
+				if (array_key_exists($key, $user)) {
 					$user[$key] = $value;
 				}
 			}
 		}
-			$errors = false;
-			if (!App::$app->user->checkName($f['name'])) {
-				$errors[] = 'Имя не должно быть короче 2-х символов';
-			}
-			if ($errors == false) {
-				$result = App::$app->user->update($user);
-			}
-			$this->set(compact('user'));
+		$errors = false;
+		if (!App::$app->user->checkName($f['name'])) {
+			$errors[] = 'Имя не должно быть короче 2-х символов';
+		}
+		if ($errors == false) {
+			$result = App::$app->user->update($user);
+		}
+		$this->set(compact('user'));
 
 		View::setMeta('Профиль', 'Профиль', 'Профиль');
 		View::setJs('auth.js');
@@ -245,4 +192,35 @@ class UserController extends AppController
 		$this->auth();
 		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
 	}
+
+
+//	public function regDataWrong($email, $password, $name, $surName)
+//	{
+//		if (isset($_POST)) {
+//			$msg = [];
+//			if (empty($password)) {
+//				$msg[] = "Введите пароль.";
+//			}
+//			if (empty($email)) {
+//				$msg[] = "Введите адрес почтового ящика.";
+//			}
+//			if (!App::$app->user->checkEmail($email) && !empty($email)) {
+//				$msg[] = "Введите правильный адрес почтового ящика.";
+//			}
+//			if (empty($name)) {
+//				$msg[] = "Введите имя.";
+//			}
+//			if (empty($surName)) {
+//				$msg[] = "Введите фамилию.";
+//			}
+//			if (App::$app->user->checkEmailExists($email)) {
+//				$msg[] = "Пользователь с таким e-mail уже существует<br>"
+//					. "Перейдите по ссылке, чтобы получить пароль на эту почту. <br>"
+//					. "<a href='" . PROJ . "/user/returnpass'>Забыли пароль</a>";
+//			}
+//			return $msg ?? '';
+//
+//		}
+//		return false;
+//	}
 }

@@ -59,7 +59,7 @@
 				<a class="button" id="btnn" data-id="<?= $test['id']; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
 			<? else: ?>
 
-				<?= $error ?>
+				<?= $error??''; ?>
 
 			<? endif; ?>
 		</div>

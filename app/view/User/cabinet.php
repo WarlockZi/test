@@ -21,7 +21,7 @@
 	<? endif; ?>
 
 	<? if (in_array('2', $user['rights'])): ?>
-		<a class="list" href="/user/change_password">Сменить пароль</a>
+		<a class="list" href="/user/changepassword">Сменить пароль</a>
 	<? endif; ?>
 
 </section>

@@ -21,10 +21,14 @@ if (typeof $("#login").el[0] !== 'undefined') {
                 "token": document.querySelector("[name = 'token']").getAttribute('content'),
             }
 
-            let res = await post('/user/login', data);
-            let overlayWrap = document.createElement('div');
-            overlayWrap.innerHTML = res;
-            document.body.append(overlayWrap);
-            overlayWrap.querySelector('.overlay').style.display = "block";
+            let res = await post('/user/login', data)
+            if (JSON.parse(res).msg === 'ok') {
+                window.location = '/user/cabinet'
+            }
+            //     let overlayWrap = document.createElement('div');
+            //     overlayWrap.innerHTML = res;
+            //     document.body.append(overlayWrap);
+            //     overlayWrap.querySelector('.overlay').style.display = "block";
+            //
         })
 }
