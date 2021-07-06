@@ -48,6 +48,7 @@ class AppController extends Controller
 
 				if ($this->user === false) {
 					$errors[] = 'Неправильные данные для входа на сайт';
+					header("Location:/user/login");
 				} elseif ($this->user === NULL) {
 					$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
 				} else {

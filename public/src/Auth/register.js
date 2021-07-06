@@ -6,14 +6,14 @@ $("[name = 'reg']").on("click", async function (e) {
         let email = $('input[type = email]').el[0].value
         let password = $('input[type = password]').el[0].value
         if (email) {
-            if (!validate(email)) {
+            if (!validate.email(email)) {
                 let $result = $(".message").el[0];
                 $result.innerText = "Неправильный формат почты"
                 $($result).addClass('error')
                 return false
             }
             if (password) {
-                if (!validate(password)) {
+                if (!validate.password(password)) {
                     let $result = $(".message").el[0]
                     $result.innerText = "Пароль может состоять из \n " +
                         "- Большие латинские бкувы \n" +

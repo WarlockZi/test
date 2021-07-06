@@ -8,28 +8,22 @@ use  \PHPMailer\PHPMailer\PHPMailer;
 class Mail
 {
 
-	public static function send_mail( $subj, $body, $to=[])
+	public static function send_mail($subj, $body, $to = [])
 	{
 		$mail = new PHPMailer(true);
-		$config = require ROOT . '/app/core/config.php';
-		if ($_SERVER['SERVER_NAME'] == 'vitexopt.ru') {
-			$config = $config['Mailer_vitex'];
-		} else {
-			$config = $config['Mailer'];
-		}
 		try {
-//			$mail->SMTPDebug = 2;  // Enable verbose debug output
-			if ($config['smtp_mode']) {
-				$mail->isSMTP();                                      // Set mailer to use SMTP
-				$mail->SMTPAuth = $config['auth'];                               // Enable SMTP authentication
-				$mail->Port = $config['smtp_port'];
-				$mail->Username = $config['smtp_username'];                 // SMTP username
-				$mail->Password = $config['smtp_pass'];                           // SMTP password
-				$mail->SMTPSecure = $config['smtp_SMTPSecure'];                            // Enable TLS encryption, `ssl` also accepted
-			};
-			$mail->Host = $config['smtp_host'];  // Specify main and backup SMTP servers
-			//Recipients
-			$mail->setFrom('vvoronik@yandex.ru', 'vitexopt@vitexopt.ru');
+			//$mail->SMTPDebug = 2;  // Enable verbose debug output
+			$mail->SMTP_MODE = (bool)$_ENV['SMTP_MODE'];// Set mailer to use SMTP
+			$mail->isSMTP();
+			$mail->SMTPAuth = (bool)$_ENV['SMTP_AUTH'];                               // Enable SMTP authentication
+			$mail->Port = (int)$_ENV['SMTP_PORT'];
+			$mail->Username = $_ENV['SMTP_USERNAME'];                 // SMTP username
+			$mail->Password = $_ENV['SMTP_PASS'];                           // SMTP password
+			$mail->SMTPSecure = (bool)$_ENV['SMTP_SMTPSECURE'];                            // Enable TLS encryption, `ssl` also accepted
+
+			$mail->Host = $_ENV['SMTP_HOST'];  // Specify main and backup SMTP servers
+
+			$mail->setFrom($_ENV['SMTP_FROM_EMAIL'], $_ENV['SMTP_FROM_NAME']);
 
 			foreach ($to as $address) {
 				$mail->addAddress($address);     // Add a recipient
