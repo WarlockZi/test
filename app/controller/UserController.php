@@ -22,17 +22,17 @@ class UserController extends AppController
 		if ($data = $this->ajax) {
 
 			$to = [$data['email']];
-			if (!$user = App::$app->user->findWhere('email',$to[0])[0]) {
+			if (!$user = App::$app->user->findWhere('email', $to[0])[0]) {
 				exit(json_encode(['msg' => 'mail exists']));
 			}
 
 			$hash = md5(microtime());
-			$user['rights']=2;
-			$user['surName']=$data['surName'];
-			$user['name']=$data['name'];
-			$user['email']=$to[0];
-			$user['password']=md5($data['password']);
-			$user['hash']=$hash;
+			$user['rights'] = 2;
+			$user['surName'] = $data['surName'];
+			$user['name'] = $data['name'];
+			$user['email'] = $to[0];
+			$user['password'] = md5($data['password']);
+			$user['hash'] = $hash;
 
 			if (!App::$app->user->create($user)) {
 				exit(json_encode(["msg" => 'Регистрация не удалась']));
@@ -94,6 +94,17 @@ class UserController extends AppController
 	public function actionChangePassword()
 	{
 		$this->auth();
+		if ($data = $this->ajax) {
+			$old_password = "" . md5($data['old_password']);
+			if ($user = App::$app->user->findWhere('password', $old_password)[0]) {
+				$user['password'] = "" . md5($data['new_password']);
+				App::$app->user->update($user);
+				exit('ok');
+			}else{
+				exit('fail');
+			}
+		}
+
 		View::setMeta('Личный кабинет', 'Личный кабинет', '');
 		View::setCss('auth.css');
 		View::setJs('auth.js');
@@ -146,17 +157,9 @@ class UserController extends AppController
 
 				$user['rights'] = explode(",", $user['rights']);
 				$this->setAuth($user);
-				exit(json_encode(['msg'=>'ok']));
+				exit(json_encode(['msg' => 'ok']));
 			}
 		}
-//		if (isset($_SESSION['id'])) {
-//			if ($user = App::$app->user->get($_SESSION['id'])) {
-//				$this->set(compact('user'));
-//			} else {
-//				$_SESSION['msg'] = 'Зарегистрируйтесь.';
-//				unset($_SESSION['id']);
-//			}
-//		}
 		View::setJs('auth.js');
 		View::setCss('auth.css');
 
@@ -194,33 +197,4 @@ class UserController extends AppController
 	}
 
 
-//	public function regDataWrong($email, $password, $name, $surName)
-//	{
-//		if (isset($_POST)) {
-//			$msg = [];
-//			if (empty($password)) {
-//				$msg[] = "Введите пароль.";
-//			}
-//			if (empty($email)) {
-//				$msg[] = "Введите адрес почтового ящика.";
-//			}
-//			if (!App::$app->user->checkEmail($email) && !empty($email)) {
-//				$msg[] = "Введите правильный адрес почтового ящика.";
-//			}
-//			if (empty($name)) {
-//				$msg[] = "Введите имя.";
-//			}
-//			if (empty($surName)) {
-//				$msg[] = "Введите фамилию.";
-//			}
-//			if (App::$app->user->checkEmailExists($email)) {
-//				$msg[] = "Пользователь с таким e-mail уже существует<br>"
-//					. "Перейдите по ссылке, чтобы получить пароль на эту почту. <br>"
-//					. "<a href='" . PROJ . "/user/returnpass'>Забыли пароль</a>";
-//			}
-//			return $msg ?? '';
-//
-//		}
-//		return false;
-//	}
 }

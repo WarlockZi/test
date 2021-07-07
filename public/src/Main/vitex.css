@@ -200,17 +200,17 @@ h3.may-also-like-wrap
     box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
 }
 
-.header-lower .inner {
-    padding: 0 25px;
-    width: 300px;
-    background: #fff;
-    color: #181617;
-    overflow: hidden;
-    border-radius: 2px;
-    position: relative;
-    transition: max-height .1s, padding .5s;
-    max-height: 0;  
-}
+/*.header-lower .inner {*/
+/*    padding: 0 25px;*/
+/*    width: 300px;*/
+/*    background: #fff;*/
+/*    color: #181617;*/
+/*    overflow: hidden;*/
+/*    border-radius: 2px;*/
+/*    position: relative;*/
+/*    transition: max-height .1s, padding .5s;*/
+/*    max-height: 0;  */
+/*}*/
 
 
 .a-cat:hover  .inner
