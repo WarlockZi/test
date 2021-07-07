@@ -9,11 +9,18 @@ main {
 .card {
   width: 50%;
   margin: 65px auto;
+
   p {
     font-size: 1rem
   }
 }
 
-.site-wrapper{
+.site-wrapper {
   height: 100%;
+}
+
+.contact p,
+.contact H3 {
+  margin: 0;
+  padding: 0;
 }

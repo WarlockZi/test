@@ -25,9 +25,11 @@ main {
 }
 
 .success{
-  border: 3px solid #1bbc9b;
-  border-radius: 3px;
-  padding: 10px;
+  color: #1bbc9b;
+  font-weight: 600;
+  background-color: #ffffff;
+  border: 1px solid;
+  padding: 15px;
 }
 
 .return_pass .submit{

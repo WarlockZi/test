@@ -12,7 +12,7 @@ section{
   display: flex;
   justify-content: start;
   flex: 1 0 auto;
-  width: 1310px;
+  max-width: 1310px;
   margin: auto;
 
   .content {

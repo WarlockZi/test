@@ -188,7 +188,7 @@ here;
 	public
 	function findWhere($field, $value)
 	{
-		$sql = "SELECT * FROM {$this->table} WHERE $field = ?";
+		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
 		return $this->pdo->query($sql, [$value]);
 	}
 
