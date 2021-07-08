@@ -112,33 +112,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
 
-'./login.scss';
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("body").on("click", function (e) {
-  if (e.target.className === "messageClose") {
-    window.location.href = "/user/cabinet";
-  }
-});
+let loginBtn = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#login").el[0];
 
-if (typeof (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#login").el[0] !== 'undefined') {
-  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#login").on("click", async function (e) {
+if (loginBtn) {
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(loginBtn).on("click", async function (e) {
     e.preventDefault();
-    var data = {
-      "email": document.querySelector('input[type = email]').value,
-      "password": document.querySelector("input[type= password]").value,
-      "token": document.querySelector("[name = 'token']").getAttribute('content')
-    };
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/user/login', data);
+    let email = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[type = email]').el[0].value;
+    let password = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[type = password]').el[0].value;
 
-    if (JSON.parse(res).msg === 'ok') {
-      window.location = '/user/cabinet';
-    } //     let overlayWrap = document.createElement('div');
-    //     overlayWrap.innerHTML = res;
-    //     document.body.append(overlayWrap);
-    //     overlayWrap.querySelector('.overlay').style.display = "block";
-    //
+    if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.email(email)) {
+      let $result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
+      $result.innerText = "Неправильный формат почты";
+      (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)($result).addClass('error');
+      return false;
+    }
 
+    if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.password(password)) {
+      let $result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
+      $result.innerText = "Пароль может состоять из \n " + "- Большие латинские бкувы \n" + "- Мальенькие латинские буквы \n" + "- Цифры \n" + "- должен содержать не менее 6 символов";
+      (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)($result).addClass('error');
+      return false;
+    }
+
+    send(email);
   });
 }
+
+async function send(email) {
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/user/login', {
+    "email": email,
+    "password": (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("input[type= password]").el[0].value
+  });
+  let msg = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.message').el[0];
+
+  if (res === 'fail') {
+    msg.innerHTML = 'Не верный email или пароль';
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(msg).addClass('error');
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(msg).removeClass('success');
+  } else if (res === 'ok') {
+    window.location = '/user/cabinet';
+  }
+} //
+// $("body").on("click",
+//     function (e) {
+//         if (e.target.className === "messageClose") {
+//             window.location.href = "/user/cabinet";
+//         }
+//     })
 
 /***/ }),
 
@@ -264,6 +284,7 @@ let validate = {
   },
   email: function (email) {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!email) return false;
 
     if (!re.test(email)) {
       return false;
@@ -273,6 +294,7 @@ let validate = {
   },
   password: function (password) {
     const re = /^[a-zA-Z\-0-9]{6,20}$/;
+    if (!password) return false;
 
     if (!re.test(password)) {
       return false;

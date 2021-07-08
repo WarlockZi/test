@@ -142,7 +142,12 @@ class UserController extends AppController
 			}
 
 			$user = App::$app->user->findWhere("email", $email)[0];
-			if (!$user) {
+			if ($user['password']!==md5($password)){
+				exit('fail');
+//				$user = false;
+//				$msg[] = "Не верный email иои пароль";
+//				exit(include ROOT . '/app/view/User/alert.php');
+			}elseif (!$user) {
 				$msg[] = "Пользователь с 'e-mail' : $email не зарегистрирован";
 				$msg[] = "Перейдите в раздел <a href = '/user/register'>Регистрация</a> для регистрации.";
 				exit(include ROOT . '/app/view/User/alert.php');
@@ -154,10 +159,9 @@ class UserController extends AppController
 				exit(include ROOT . '/app/view/User/alert.php');
 
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
-
 				$user['rights'] = explode(",", $user['rights']);
 				$this->setAuth($user);
-				exit(json_encode(['msg' => 'ok']));
+				exit( 'ok');
 			}
 		}
 		View::setJs('auth.js');
