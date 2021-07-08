@@ -877,7 +877,8 @@ main {
   flex: 1 0 auto;
   max-width: 1310px;
   margin: auto;
-  padding: 0 10px; }
+  padding: 0 10px;
+  flex-flow: column; }
 
 .card {
   width: 50%;

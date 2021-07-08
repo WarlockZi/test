@@ -33,7 +33,7 @@
 							  ?></span>
 
 			<div class="nav">
-				<a href="/user/edit">Редактировать свой профиль</a>
+				<a href="/user/edit">Изменить свой профиль</a>
 				<? if (in_array('3', $rightId)): ?>
 					<a href="/adminsc">Admin</a>
 				<? endif; ?>
