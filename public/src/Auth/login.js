@@ -1,34 +1,54 @@
 import './login.scss'
-import {$, post} from "../common";
+import {$, post, validate} from "../common";
 
-'./login.scss'
-
-$("body").on("click",
-    function (e) {
-        if (e.target.className === "messageClose") {
-            window.location.href = "/user/cabinet";
-        }
-    });
-
-if (typeof $("#login").el[0] !== 'undefined') {
-    $("#login").on("click",
+let loginBtn = $("#login").el[0]
+if (loginBtn) {
+    $(loginBtn).on("click",
         async function (e) {
             e.preventDefault();
 
-            var data = {
-                "email": document.querySelector('input[type = email]').value,
-                "password": document.querySelector("input[type= password]").value,
-                "token": document.querySelector("[name = 'token']").getAttribute('content'),
+            let email = $('input[type = email]').el[0].value
+            let password = $('input[type = password]').el[0].value
+            if (!validate.email(email)) {
+                let $result = $(".message").el[0];
+                $result.innerText = "Неправильный формат почты"
+                $($result).addClass('error')
+                return false
             }
+            if (!validate.password(password)) {
+                let $result = $(".message").el[0]
+                $result.innerText = "Пароль может состоять из \n " +
+                    "- Большие латинские бкувы \n" +
+                    "- Мальенькие латинские буквы \n" +
+                    "- Цифры \n" +
+                    "- должен содержать не менее 6 символов"
 
-            let res = await post('/user/login', data)
-            if (JSON.parse(res).msg === 'ok') {
-                window.location = '/user/cabinet'
+                $($result).addClass('error')
+                return false
             }
-            //     let overlayWrap = document.createElement('div');
-            //     overlayWrap.innerHTML = res;
-            //     document.body.append(overlayWrap);
-            //     overlayWrap.querySelector('.overlay').style.display = "block";
-            //
+            send(email)
         })
 }
+
+async function send(email) {
+    let res = await post('/user/login', {
+        "email": email,
+        "password": $("input[type= password]").el[0].value,
+    })
+    let msg = $('.message').el[0]
+    if (res === 'fail') {
+        msg.innerHTML = 'Не верный email или пароль'
+        $(msg).addClass('error')
+        $(msg).removeClass('success')
+    }else if(res==='ok'){
+        window.location = '/user/cabinet'
+    }
+}
+
+//
+// $("body").on("click",
+//     function (e) {
+//         if (e.target.className === "messageClose") {
+//             window.location.href = "/user/cabinet";
+//         }
+//     })

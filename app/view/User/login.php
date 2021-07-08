@@ -2,6 +2,7 @@
 
 	<form method="post" class="form-container">
 		<h1 class="form-title">Вход на сайт</h1>
+		<div class='message'></div>
 		<?if(isset($_SESSION['msg'])):?>
 		<div class="login_return_pass"><?=$_SESSION['msg'];unset($_SESSION['msg']) ?></div>
 		<?endif;?>
