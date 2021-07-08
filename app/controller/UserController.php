@@ -28,7 +28,7 @@ class UserController extends AppController
 			if ($user) exit('mail exists');
 
 			$hash = md5(microtime());
-			$user['rights'] = 2;
+			$user['rights'] = '2';
 			$user['surName'] = $data['surName'];
 			$user['name'] = $data['name'];
 			$user['email'] = $to[0];
@@ -36,7 +36,7 @@ class UserController extends AppController
 			$user['hash'] = $hash;
 
 			if (!App::$app->user->create($user)) {
-				exit(json_encode(["msg" => 'Регистрация не удалась']));
+				exit('registration failed');
 			}
 
 			$subj = "Регистрация VITEX";
