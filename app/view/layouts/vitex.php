@@ -44,7 +44,8 @@
 				<?= "{$user['surName']} {$user['name']}"; ?>
 
 				<div class="nav">
-					<a href="/user/edit">Редактировать свой профиль</a>
+					<a href="/user/edit">Изменить свой профиль</a>
+					<a href="/user/cabinet">Личный кабинет</a>
 					<?= in_array('1', $user['rights']) ? // редактировать
 						'<a href="/test/edit/1">Редактировать тесты</a>
                            <a href="/freetest/edit/41">Редактировать свободный тест</a>' : ''
