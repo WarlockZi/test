@@ -14,20 +14,18 @@ $("[name = 'reg']").on("click", async function (e) {
             }
             if (password) {
                 if (!validate.password(password)) {
-                    let $result = $(".message").el[0]
-                    $result.innerText = "Пароль может состоять из \n " +
-                        "- Большие латинские бкувы \n" +
-                        "- Мальенькие латинские буквы \n" +
-                        "- Цифры \n" +
+                    let msg = $(".message").el[0]
+                    msg.innerText = "Пароль может состоять из \n " +
+                        "- больших латинских букв \n" +
+                        "- маленьких латинских букв \n" +
+                        "- цифр \n" +
                         "- должен содержать не менее 6 символов"
 
-                    $($result).addClass('error')
+                    $(msg).addClass('error')
                     return false
                 }
             }
-            if(send(email)==='ok'){
-                window.location = '/user/cabinet'
-            }
+            send(email)
         }
     }
 )
@@ -42,8 +40,9 @@ async function send(email) {
         "token": $('meta[name="token"]').el[0].getAttribute('content'),
     }
     let res = await post('/user/register', data)
-    res = JSON.parse(res)
-    if (res.msg === 'ok') {
+    let msg = $('.message')
+
+    if (res === 'ok') {
         $('.message').removeClass('error')
         $('.message').addClass('success')
         $('.message').el[0].innerHTML =
@@ -51,12 +50,14 @@ async function send(email) {
             'Для подтверждения регистрации зайдите на почту, ' +
             'с которой производилась регистрация, ' +
             'и перейдите по ссылке в письме.'
-    } else if (res.msg === 'mail exists') {
-        $('.message').addClass('error')
-        $('.error').el[0].innerHTML = 'Почта уже зарегистрирована. Вам необходимо <a href="/user/login">войти</a>'
-
-    } else {
-        $('.error').el[0].innerHTML = res
+    } else if(res==='mail exists'){
+        msg.removeClass('success')
+        msg.addClass('error')
+        msg.el[0].innerHTML = 'Эта почта уже зарегистрирована'
+    }else if(res==='empty password'){
+        msg.removeClass('success')
+        msg.addClass('error')
+        msg.el[0].innerHTML = 'Зполните пароль'
     }
 
 }

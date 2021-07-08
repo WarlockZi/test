@@ -21,10 +21,11 @@ class UserController extends AppController
 	{
 		if ($data = $this->ajax) {
 
+			if (!$data['password']) exit('empty password');
+			if (!$data['email']) exit('empty email');
 			$to = [$data['email']];
-			if (!$user = App::$app->user->findWhere('email', $to[0])[0]) {
-				exit(json_encode(['msg' => 'mail exists']));
-			}
+			if ($user = App::$app->user->findWhere('email', $to[0])[0]) exit('mail exists');
+
 
 			$hash = md5(microtime());
 			$user['rights'] = 2;
@@ -100,7 +101,7 @@ class UserController extends AppController
 				$user['password'] = "" . md5($data['new_password']);
 				App::$app->user->update($user);
 				exit('ok');
-			}else{
+			} else {
 				exit('fail');
 			}
 		}
@@ -142,12 +143,12 @@ class UserController extends AppController
 			}
 
 			$user = App::$app->user->findWhere("email", $email)[0];
-			if ($user['password']!==md5($password)){
+			if ($user['password'] !== md5($password)) {
 				exit('fail');
 //				$user = false;
 //				$msg[] = "Не верный email иои пароль";
 //				exit(include ROOT . '/app/view/User/alert.php');
-			}elseif (!$user) {
+			} elseif (!$user) {
 				$msg[] = "Пользователь с 'e-mail' : $email не зарегистрирован";
 				$msg[] = "Перейдите в раздел <a href = '/user/register'>Регистрация</a> для регистрации.";
 				exit(include ROOT . '/app/view/User/alert.php');
@@ -161,7 +162,7 @@ class UserController extends AppController
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
 				$user['rights'] = explode(",", $user['rights']);
 				$this->setAuth($user);
-				exit( 'ok');
+				exit('ok');
 			}
 		}
 		View::setJs('auth.js');
