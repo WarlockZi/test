@@ -113,7 +113,7 @@ here;
 	}
 
 	public
-	function autoincrement($db)
+	function autoincrement()
 	{
 		$db = $_ENV["DB_DB"];
 		$params = [$db, $this->table];
