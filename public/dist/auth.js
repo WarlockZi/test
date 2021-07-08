@@ -212,10 +212,10 @@ async function send(email) {
   let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/user/register', data);
   let msg = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message');
 
-  if (res === 'ok') {
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').removeClass('error');
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').addClass('success');
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').el[0].innerHTML = 'Пользователь зарегистрирован.\n' + 'Для подтверждения регистрации зайдите на почту, ' + 'с которой производилась регистрация, ' + 'и перейдите по ссылке в письме.';
+  if (res === 'confirm') {
+    msg.removeClass('error');
+    msg.addClass('success');
+    msg.el[0].innerHTML = 'Пользователь зарегистрирован.<br>' + 'Для подтверждения регистрации зайдите на почту, ' + 'с которой производилась регистрация.<br> ' + 'Перейдите по ссылке в письме.'; // window.location='/user/cabinet'
   } else if (res === 'mail exists') {
     msg.el[0].innerHTML = 'Эта почта уже зарегистрирована';
     msg.removeClass('success');
@@ -224,11 +224,12 @@ async function send(email) {
     msg.el[0].innerHTML = 'Зполните пароль';
     msg.removeClass('success');
     msg.addClass('error');
-  } else if (res === 'confirm') {
-    msg.el[0].innerHTML = "Для подтвержения регистрации перейдите по ссылке в письме. <br>Письмо может попасть в папку СПАМ";
-    msg.removeClass('error');
-    msg.addClass('success');
-  }
+  } // else if(res==='confirm'){
+  //     msg.el[0].innerHTML = "Для подтвержения регистрации перейдите по ссылке в письме. <br>Письмо может попасть в папку СПАМ"
+  //     msg.removeClass('error')
+  //     msg.addClass('success')
+  // }
+
 }
 
 /***/ }),
