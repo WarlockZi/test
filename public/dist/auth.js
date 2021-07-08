@@ -186,16 +186,14 @@ __webpack_require__.r(__webpack_exports__);
 
     if (password) {
       if (!_common__WEBPACK_IMPORTED_MODULE_0__.validate.password(password)) {
-        let $result = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
-        $result.innerText = "Пароль может состоять из \n " + "- Большие латинские бкувы \n" + "- Мальенькие латинские буквы \n" + "- Цифры \n" + "- должен содержать не менее 6 символов";
-        (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)($result).addClass('error');
+        let msg = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
+        msg.innerText = "Пароль может состоять из \n " + "- больших латинских букв \n" + "- маленьких латинских букв \n" + "- цифр \n" + "- должен содержать не менее 6 символов";
+        (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(msg).addClass('error');
         return false;
       }
     }
 
-    if (send(email) === 'ok') {
-      window.location = '/user/cabinet';
-    }
+    send(email);
   }
 });
 
@@ -208,17 +206,20 @@ async function send(email) {
     "token": (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('meta[name="token"]').el[0].getAttribute('content')
   };
   let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/user/register', data);
-  res = JSON.parse(res);
+  let msg = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message');
 
-  if (res.msg === 'ok') {
+  if (res === 'ok') {
     (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').removeClass('error');
     (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').addClass('success');
     (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').el[0].innerHTML = 'Пользователь зарегистрирован.\n' + 'Для подтверждения регистрации зайдите на почту, ' + 'с которой производилась регистрация, ' + 'и перейдите по ссылке в письме.';
-  } else if (res.msg === 'mail exists') {
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').addClass('error');
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.error').el[0].innerHTML = 'Почта уже зарегистрирована. Вам необходимо <a href="/user/login">войти</a>';
-  } else {
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.error').el[0].innerHTML = res;
+  } else if (res === 'mail exists') {
+    msg.removeClass('success');
+    msg.addClass('error');
+    msg.el[0].innerHTML = 'Эта почта уже зарегистрирована';
+  } else if (res === 'empty password') {
+    msg.removeClass('success');
+    msg.addClass('error');
+    msg.el[0].innerHTML = 'Зполните пароль';
   }
 }
 
