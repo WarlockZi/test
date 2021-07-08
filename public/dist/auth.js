@@ -151,6 +151,10 @@ async function send(email) {
     (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(msg).removeClass('success');
   } else if (res === 'ok') {
     window.location = '/user/cabinet';
+  } else if (res === 'not_registered') {
+    msg.innerHTML = "Для регистрации перейдите в раздел <a href = '/user/register'>Регистрация</a>";
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(msg).addClass('error');
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(msg).removeClass('success');
   }
 } //
 // $("body").on("click",
@@ -213,13 +217,17 @@ async function send(email) {
     (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').addClass('success');
     (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.message').el[0].innerHTML = 'Пользователь зарегистрирован.\n' + 'Для подтверждения регистрации зайдите на почту, ' + 'с которой производилась регистрация, ' + 'и перейдите по ссылке в письме.';
   } else if (res === 'mail exists') {
-    msg.removeClass('success');
-    msg.addClass('error');
     msg.el[0].innerHTML = 'Эта почта уже зарегистрирована';
-  } else if (res === 'empty password') {
     msg.removeClass('success');
     msg.addClass('error');
+  } else if (res === 'empty password') {
     msg.el[0].innerHTML = 'Зполните пароль';
+    msg.removeClass('success');
+    msg.addClass('error');
+  } else if (res === 'confirm') {
+    msg.el[0].innerHTML = "Для подтвержения регистрации перейдите по ссылке в письме. <br>Письмо может попасть в папку СПАМ";
+    msg.removeClass('error');
+    msg.addClass('success');
   }
 }
 

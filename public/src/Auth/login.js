@@ -42,6 +42,10 @@ async function send(email) {
         $(msg).removeClass('success')
     }else if(res==='ok'){
         window.location = '/user/cabinet'
+    }  else if(res==='not_registered'){
+        msg.innerHTML = "Для регистрации перейдите в раздел <a href = '/user/register'>Регистрация</a>"
+        $(msg).addClass('error')
+        $(msg).removeClass('success')
     }
 }
 

@@ -24,8 +24,8 @@ class UserController extends AppController
 			if (!$data['password']) exit('empty password');
 			if (!$data['email']) exit('empty email');
 			$to = [$data['email']];
-			if ($user = App::$app->user->findWhere('email', $to[0])[0]) exit('mail exists');
-
+			$user = App::$app->user->findWhere('email', $to[0]);
+			if ($user) exit('mail exists');
 
 			$hash = md5(microtime());
 			$user['rights'] = 2;
@@ -43,9 +43,9 @@ class UserController extends AppController
 			$body = Mail::prepareBodyRegister($hash);
 
 			Mail::send_mail($subj, $body, $to);
-			$overlay = $this->registerGetOverlay();
+//			$overlay = $this->registerGetOverlay();
 
-			exit(json_encode(['overlay' => $overlay, 'msg' => 'ok']));
+			exit('confirm');
 
 		}
 		View::setMeta('Регистрация', 'Регистрация', 'Регистрация');
@@ -142,17 +142,14 @@ class UserController extends AppController
 				exit(include ROOT . '/app/view/User/alert.php');
 			}
 
-			$user = App::$app->user->findWhere("email", $email)[0];
-			if ($user['password'] !== md5($password)) {
-				exit('fail');
-//				$user = false;
-//				$msg[] = "Не верный email иои пароль";
-//				exit(include ROOT . '/app/view/User/alert.php');
-			} elseif (!$user) {
-				$msg[] = "Пользователь с 'e-mail' : $email не зарегистрирован";
-				$msg[] = "Перейдите в раздел <a href = '/user/register'>Регистрация</a> для регистрации.";
-				exit(include ROOT . '/app/view/User/alert.php');
+			$user = App::$app->user->findWhere("email", $email);
 
+			if ($user === null) {
+				exit('not_registered');
+			} elseif (!$user) {
+				exit('not_registered');
+			} elseif ($user['password'] !== md5($password)) {
+				exit('fail');
 			} elseif (!(int)$user['confirm']) {
 				$msg[] = 'зайдите на почту, с которой регистрировались.';
 				$msg[] = 'найдите письмо "Регистрация VITEX".';

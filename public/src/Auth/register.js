@@ -1,4 +1,4 @@
-import {post, $,validate} from '../common'
+import {post, $, validate} from '../common'
 
 $("[name = 'reg']").on("click", async function (e) {
         e.preventDefault()
@@ -50,16 +50,19 @@ async function send(email) {
             'Для подтверждения регистрации зайдите на почту, ' +
             'с которой производилась регистрация, ' +
             'и перейдите по ссылке в письме.'
-    } else if(res==='mail exists'){
-        msg.removeClass('success')
-        msg.addClass('error')
+    } else if (res === 'mail exists') {
         msg.el[0].innerHTML = 'Эта почта уже зарегистрирована'
-    }else if(res==='empty password'){
         msg.removeClass('success')
         msg.addClass('error')
+    } else if (res === 'empty password') {
         msg.el[0].innerHTML = 'Зполните пароль'
+        msg.removeClass('success')
+        msg.addClass('error')
+    } else if(res==='confirm'){
+        msg.el[0].innerHTML = "Для подтвержения регистрации перейдите по ссылке в письме. <br>Письмо может попасть в папку СПАМ"
+        msg.removeClass('error')
+        msg.addClass('success')
     }
-
 }
 
 
