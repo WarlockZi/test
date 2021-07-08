@@ -113,10 +113,11 @@ here;
 	}
 
 	public
-	function autoincrement($db = 'vitex_test')
+	function autoincrement($db)
 	{
+		$db = $_ENV["DB_DB"];
 		$params = [$db, $this->table];
-		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE '$this->table'";
+		$sql = "SHOW TABLE STATUS FROM ? LIKE ?";
 		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
 
 	}
