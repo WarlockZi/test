@@ -20,17 +20,14 @@ class Router
 
 	public static function matchRoute($url)
 	{
-
 // если это категория
-
-
 		if ($url && $category = App::$app->category->isCategory($url)) {
 			$route['controller'] = 'Catalog';
 			$route['action'] = 'category';
 
 			self::$route = $route;
 			self::$aCategoryOrProduct = $category;
-			return TRUE;
+			return true;
 
 // это продукт
 		} elseif ($url && $product = App::$app->product->isProduct($url)) {
@@ -40,7 +37,7 @@ class Router
 
 			self::$route = $route;
 			self::$aCategoryOrProduct = $product;
-			return TRUE;
+			return true;
 
 // это страница не продукт и не категория
 		} else {
@@ -92,11 +89,7 @@ class Router
 
 		} else {
 			http_response_code(404);
-//            $cObj=new \app\controller\MainController($route);
-//            $cObj->error(self::$aCategoryOrProduct); // Выполним метод
-//            $cObj->getView(); // Подключим вид
-//			session_destroy();
-			include ROOT.'/public/404.html'; // '404.html';
+			include ROOT.'/public/404.html';
 		}
 	}
 
@@ -127,7 +120,6 @@ class Router
 
 	protected static function removeQuryString($url)
 	{
-
 		if ($url) {
 			$params = explode('&', $url, 2);
 
@@ -139,5 +131,4 @@ class Router
 			}
 		}
 	}
-
 }
