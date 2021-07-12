@@ -35,9 +35,9 @@ class UserController extends AppController
 			$user['password'] = md5($data['password']);
 			$user['hash'] = $hash;
 
-//			if (!App::$app->user->create($user)) {
-//				exit('registration failed');
-//			}
+			if (!App::$app->user->create($user)) {
+				exit('registration failed');
+			}
 
 			$subj = "Регистрация VITEX";
 			$body = Mail::prepareBodyRegister($hash);
