@@ -64,10 +64,10 @@ class UserController extends AppController
 	}
 	public function actionUnsubscribe()
 	{
+		exit('unsubscribed');
 		//unsubscribe
 
 	}
-
 
 	public function actionLogout()
 	{
