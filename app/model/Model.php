@@ -78,7 +78,6 @@ abstract class Model
 		$secodId = 'type_id';
 		$param = [$typeId];
 
-
 		$sql1 = "SELECT * FROM $morphTable WHERE type='{$type}' AND $secodId=?";
 		$found = $this->findBySql($sql1, $param);
 		if (!$found) {
@@ -115,11 +114,9 @@ here;
 	public
 	function autoincrement()
 	{
-		$db = $_ENV["DB_DB"];
-		$params = [$db, $this->table];
-		$sql = "SHOW TABLE STATUS FROM ? LIKE ?";
+		$params = [$this->table];
+		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";
 		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
-
 	}
 
 
