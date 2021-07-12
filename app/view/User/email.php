@@ -10,6 +10,6 @@ here; ?>
 Подтверждение почты
 		</a>
 	</p>
-	<a href="https://vitexpopt.ru/unsubscribe?email=<?=$address?>">Отписаться от рассылки</a>
+	<a href="https://vitexpopt.ru/user/unsubscribe?email=<?=$address?>">Отписаться от рассылки</a>
   </body>
 </html></html>
