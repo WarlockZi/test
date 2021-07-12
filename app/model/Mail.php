@@ -30,8 +30,7 @@ class Mail
 			foreach ($to as $address) {
 				$mail->addAddress($address);     // Add a recipient
 				$mail->addCustomHeader("List-Unsubscribe",
-					"<mailto:{$_ENV['SMTP_FROM_EMAIL']}
-			?subject=unsubscribe&body=отписка>");
+					"<mailto:vvoronik@yandex.ru?subject=unsubscribe>");
 			}
 
 			$mail->isHTML(true);// Set email format to HTML
