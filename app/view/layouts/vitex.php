@@ -127,9 +127,9 @@
 
 			<div class='h-cat'>Акции
 				<ul>
-					<li>
-						<a href="/inventar">Скидка</a>
-					</li>
+<!--					<li>-->
+<!--						<a href="/inventar">Скидка</a>-->
+<!--					</li>-->
 					<li>
 						<a href="/rasprodazha">распродажа</a>
 					</li>

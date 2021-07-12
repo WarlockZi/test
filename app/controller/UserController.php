@@ -42,11 +42,13 @@ class UserController extends AppController
 			$subj = "Регистрация VITEX";
 			$body = Mail::prepareBodyRegister($hash);
 
-			Mail::send_mail($subj, $body, $to);
+			try {
+				Mail::send_mail($subj, $body, $to);
+				exit('confirm');
+			} catch (\Exception $e){
+				exit($e->getMessage());
+			}
 //			$overlay = $this->registerGetOverlay();
-
-			exit('confirm');
-
 		}
 		View::setMeta('Регистрация', 'Регистрация', 'Регистрация');
 		View::setJs('auth.js');
