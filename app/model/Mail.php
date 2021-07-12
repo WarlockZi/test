@@ -8,9 +8,10 @@ use  \PHPMailer\PHPMailer\PHPMailer;
 class Mail
 {
 
-	protected static function setMailer($mail){
-		//$mail->SMTPDebug = 2;  // Enable verbose debug output
-		$mail->SMTP_MODE = (bool)$_ENV['SMTP_MODE'];// Set mailer to use SMTP
+	protected static function setMailer(){
+		$mail = new PHPMailer(true);
+		$mail->SMTPDebug = 2;  // Enable verbose debug output
+//		$mail->SMTP_MODE = (bool)$_ENV['SMTP_MODE'];// Set mailer to use SMTP
 		$mail->isSMTP();
 		$mail->SMTPAuth = (bool)$_ENV['SMTP_AUTH'];                               // Enable SMTP authentication
 		$mail->Port = (int)$_ENV['SMTP_PORT'];
@@ -27,8 +28,7 @@ class Mail
 
 	public static function send_mail($subj, $body, $to = [])
 	{
-		$mail = new PHPMailer(true);
-		$mail = self::setMailer($mail);
+		$mail = self::setMailer();
 		try {
 			foreach ($to as $address) {
 				$mail->addAddress($address);     // Add a recipient
