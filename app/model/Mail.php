@@ -30,7 +30,7 @@ class Mail
 			foreach ($to as $address) {
 				$mail->addAddress($address);     // Add a recipient
 				$mail->addCustomHeader("List-Unsubscribe",
-					"<mailto:${$_ENV['SMTP_FROM_EMAIL']}
+					"<mailto:{$_ENV['SMTP_FROM_EMAIL']}
 			?subject=unsubscribe&body={отписка}>, <{$address}>");
 			}
 
