@@ -62,6 +62,11 @@ class UserController extends AppController
 		include ROOT . '/app/view/User/alert.php';
 		return ob_get_clean();
 	}
+	public function actionUnsubscribe()
+	{
+		//unsubscribe
+
+	}
 
 
 	public function actionLogout()
