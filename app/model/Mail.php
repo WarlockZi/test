@@ -10,7 +10,7 @@ class Mail
 
 	protected static function setMailer(){
 		$mail = new PHPMailer(true);
-		$mail->SMTPDebug = 2;  // Enable verbose debug output
+		$mail->SMTPDebug = true;  // Enable verbose debug output
 //		$mail->SMTP_MODE = (bool)$_ENV['SMTP_MODE'];// Set mailer to use SMTP
 		$mail->isSMTP();
 		$mail->SMTPAuth = (bool)$_ENV['SMTP_AUTH'];                               // Enable SMTP authentication
@@ -29,6 +29,7 @@ class Mail
 	public static function send_mail($subj, $body, $to = [])
 	{
 		$mail = self::setMailer();
+
 		try {
 			foreach ($to as $address) {
 				$mail->addAddress($address);     // Add a recipient
