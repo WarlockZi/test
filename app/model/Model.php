@@ -21,6 +21,14 @@ abstract class Model
 		$this->pdo = DB::instance();
 	}
 
+	public
+	function autoincrement()
+	{
+		$params = [$this->table];
+		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";
+		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
+	}
+
 	public function create($values)
 	{
 		if (isset($values['id'])) unset($values['id']);
@@ -111,13 +119,7 @@ here;
 		}
 	}
 
-	public
-	function autoincrement()
-	{
-		$params = [$this->table];
-		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";
-		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
-	}
+
 
 
 	public
