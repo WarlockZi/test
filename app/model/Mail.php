@@ -10,19 +10,15 @@ class Mail
 
 	protected static function setMailer(){
 		$mail = new PHPMailer(true);
-		$mail->SMTPDebug = true;  // Enable verbose debug output
-//		$mail->SMTP_MODE = (bool)$_ENV['SMTP_MODE'];// Set mailer to use SMTP
-		$mail->isSMTP();
-		$mail->SMTPAuth = (bool)$_ENV['SMTP_AUTH'];                               // Enable SMTP authentication
+//		$mail->SMTPDebug = true;
+		$mail->isSMTP();//$mail->SMTP_MODE = (bool)$_ENV['SMTP_MODE'];// Set mailer to use SMTP
+		$mail->SMTPAuth = (bool)$_ENV['SMTP_AUTH'];// Enable SMTP authentication
 		$mail->Port = (int)$_ENV['SMTP_PORT'];
-		$mail->Username = $_ENV['SMTP_USERNAME'];                 // SMTP username
-		$mail->Password = $_ENV['SMTP_PASS'];                           // SMTP password
-		$mail->SMTPSecure = (bool)$_ENV['SMTP_SMTPSECURE'];                            // Enable TLS encryption, `ssl` also accepted
-
+		$mail->Username = $_ENV['SMTP_USERNAME'];// SMTP username
+		$mail->Password = $_ENV['SMTP_PASS'];    // SMTP password
+		$mail->SMTPSecure = (bool)$_ENV['SMTP_SMTPSECURE'];// Enable TLS encryption, `ssl` also accepted
 		$mail->Host = $_ENV['SMTP_HOST'];  // Specify main and backup SMTP servers
-
 		$mail->setFrom($_ENV['SMTP_FROM_EMAIL'], $_ENV['SMTP_FROM_NAME']);
-
 		return $mail;
 	}
 
@@ -33,8 +29,12 @@ class Mail
 		try {
 			foreach ($to as $address) {
 				$mail->addAddress($address);     // Add a recipient
+				$mail->addCustomHeader("List-Unsubscribe",
+					"<mailto:${$_ENV['SMTP_FROM_EMAIL']}
+			?subject=unsubscribe&body={отписка}>, <{$address}>");
 			}
-			$mail->isHTML(true);      // Set email format to HTML
+
+			$mail->isHTML(true);// Set email format to HTML
 			$mail->Subject = App::$app->mail->toBase64($subj);
 			$mail->Body = $body;
 			$mail->AltBody = "Ссылка на страницу с результатами: тут";
