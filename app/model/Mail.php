@@ -29,12 +29,13 @@ class Mail
 		try {
 			foreach ($to as $address) {
 				$mail->addAddress($address);     // Add a recipient
+				$mail->addCustomHeader("Content-Type", "text/plain; charset=utf-8");
 				$mail->addCustomHeader("List-Unsubscribe",
 					"<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$address}>");
 			}
 
 			$mail->isHTML(true);// Set email format to HTML
-			$mail->Subject = App::$app->mail->toBase64($subj);
+			$mail->Subject = self::toBase64($subj);
 			$mail->Body = $body;
 			$mail->AltBody = "Ссылка на страницу с результатами: тут";
 
@@ -45,9 +46,18 @@ class Mail
 		}
 	}
 
-	protected function toBase64($str)
+	public static function toBase64($str)
 	{
 		return "=?utf-8?b?" . base64_encode($str) . "?=";
+	}
+
+	public static function prepareBodyRegister($hash)
+	{
+		$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/user/confirm?hash={$hash}";
+		ob_start();
+		require ROOT . '/app/view/User/email.php';
+		$template = ob_get_clean();
+		return $template;
 	}
 
 	protected static function prepareBodyTestResults($file, $userName, $test_name, $questionCnt, $errorCnt)
@@ -59,14 +69,6 @@ class Mail
 		return $template;
 	}
 
-	public static function prepareBodyRegister($hash)
-	{
-		$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/user/confirm?hash={$hash}";
-		ob_start();
-		require ROOT . '/app/view/User/email.php';
-		$template = ob_get_clean();
-		return $template;
-	}
 
 	private function getSubject($errorCnt, $questCnt)
 	{
