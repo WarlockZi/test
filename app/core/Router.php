@@ -74,8 +74,8 @@ class Router
 		if (self::matchRoute($url)) {
 
 			$controller = 'app\controller\\' . self::$route['controller'] . 'Controller';
-			$cObj = new $controller(self::$route);
 			if (class_exists($controller)) {
+				$cObj = new $controller(self::$route);
 				$action = 'action' . self::upperCamelCase(self::$route['action']); // . 'Action'; //Action для того, чтобы пользователь не мог обращаться к функции(хотя можно написать protected)
 				if (method_exists($cObj, $action)) {
 					$cObj->$action(self::$aCategoryOrProduct); // Выполним метод
@@ -89,7 +89,7 @@ class Router
 
 		} else {
 			http_response_code(404);
-			include ROOT.'/public/404.html';
+			include ROOT . '/public/404.html';
 		}
 	}
 
