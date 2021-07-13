@@ -179,18 +179,23 @@ __webpack_require__.r(__webpack_exports__);
   e.preventDefault();
   let email = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type = email]').el[0].value;
   let password = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type = password]').el[0].value;
+  let msg = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
+
+  if (!email || !password) {
+    msg.innerText = "Заполните email и пароль";
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(msg).addClass('error');
+    return false;
+  }
 
   if (email) {
     if (!_common__WEBPACK_IMPORTED_MODULE_0__.validate.email(email)) {
-      let $result = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
-      $result.innerText = "Неправильный формат почты";
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)($result).addClass('error');
+      msg.innerText = "Неправильный формат почты";
+      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(msg).addClass('error');
       return false;
     }
 
     if (password) {
       if (!_common__WEBPACK_IMPORTED_MODULE_0__.validate.password(password)) {
-        let msg = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
         msg.innerText = "Пароль может состоять из \n " + "- больших латинских букв \n" + "- маленьких латинских букв \n" + "- цифр \n" + "- должен содержать не менее 6 символов";
         (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(msg).addClass('error');
         return false;
@@ -215,7 +220,7 @@ async function send(email) {
   if (res === 'confirm') {
     msg.removeClass('error');
     msg.addClass('success');
-    msg.el[0].innerHTML = 'Пользователь зарегистрирован.<br>' + 'Для подтверждения регистрации зайдите на почту, ' + 'с которой производилась регистрация.<br> ' + 'Перейдите по ссылке в письме.'; // window.location='/user/cabinet'
+    msg.el[0].innerHTML = '-Пользователь зарегистрирован.<br>' + '-Для подтверждения регистрации зайдите на почту, ' + '<bold>email</bold>.<br> ' + '-Перейдите по ссылке в письме.';
   } else if (res === 'mail exists') {
     msg.el[0].innerHTML = 'Эта почта уже зарегистрирована';
     msg.removeClass('success');
@@ -224,12 +229,11 @@ async function send(email) {
     msg.el[0].innerHTML = 'Зполните пароль';
     msg.removeClass('success');
     msg.addClass('error');
-  } // else if(res==='confirm'){
-  //     msg.el[0].innerHTML = "Для подтвержения регистрации перейдите по ссылке в письме. <br>Письмо может попасть в папку СПАМ"
-  //     msg.removeClass('error')
-  //     msg.addClass('success')
-  // }
-
+  } else {
+    msg.el[0].innerHTML = res;
+    msg.removeClass('success');
+    msg.addClass('error');
+  }
 }
 
 /***/ }),

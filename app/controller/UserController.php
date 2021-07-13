@@ -66,7 +66,6 @@ class UserController extends AppController
 	{
 		exit('unsubscribed');
 		//unsubscribe
-
 	}
 
 	public function actionLogout()
@@ -155,16 +154,16 @@ class UserController extends AppController
 				exit('not_registered');
 			} elseif (!$user) {
 				exit('not_registered');
-			} elseif ($user['password'] !== md5($password)) {
+			} elseif ($user[0]['password'] !== md5($password)) {
 				exit('fail');
-			} elseif (!(int)$user['confirm']) {
+			} elseif (!(int)$user[0]['confirm']) {
 				$msg[] = 'зайдите на почту, с которой регистрировались.';
 				$msg[] = 'найдите письмо "Регистрация VITEX".';
 				$msg[] = 'перейдите по ссылке в письме.';
 				exit(include ROOT . '/app/view/User/alert.php');
 
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
-				$user['rights'] = explode(",", $user['rights']);
+				$user[0]['rights'] = explode(",", $user[0]['rights']);
 				$this->setAuth($user);
 				exit('ok');
 			}

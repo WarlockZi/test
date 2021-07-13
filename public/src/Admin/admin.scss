@@ -854,7 +854,7 @@ input {
 .adm-content {
     flex: 1;
     background-color: #ebf4f4;
-    margin: 5px;
+    margin: 0 5px;
 }
 
 .adm-save-cansel {
@@ -874,6 +874,9 @@ input {
     font-size: 8px;
     align-items: center;
     background-color: #8a92a0;
+    a{
+        padding: 0;
+    }
 }
 
 

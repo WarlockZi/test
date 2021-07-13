@@ -911,7 +911,9 @@ main {
 .message {
   font-size: .9rem; }
   .message a {
-    color: blue; }
+    padding: 0;
+    color: #009979;
+    font-weight: 600; }
 
 .error {
   border: 3px solid #c14000;

@@ -61,6 +61,7 @@ class Mail
 
 	public static function prepareBodyRegister($hash)
 	{
+		$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/user/confirm?hash={$hash}";
 		ob_start();
 		require ROOT . '/app/view/User/email.php';
 		$template = ob_get_clean();
