@@ -1524,7 +1524,7 @@ input {
 .adm-content {
   flex: 1;
   background-color: #ebf4f4;
-  margin: 5px; }
+  margin: 0 5px; }
 
 .adm-save-cansel {
   position: fixed;
@@ -1541,6 +1541,8 @@ input {
   font-size: 8px;
   align-items: center;
   background-color: #8a92a0; }
+  .adm-menu a {
+    padding: 0; }
 
 .blue {
   border-bottom: 1px #123aff solid;

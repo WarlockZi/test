@@ -3,7 +3,7 @@
 	<p><strong> Для подтверждения почты перейдите по ссылке</strong>
 		<a style='cursor:pointer;'
 		   target="_blank"
-		   href="<?="{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/user/confirm?hash={$hash}";?>
+		   href="<?=$href;?>
 		   ">
 		Подтверждение почты</a>
 	</p>

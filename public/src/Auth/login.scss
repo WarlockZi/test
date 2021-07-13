@@ -1,3 +1,4 @@
+@import "../var";
 .site-wrapper {
   width: 100%;
   display: flex;
@@ -14,7 +15,9 @@ main {
 .message{
   font-size: .9rem;
   a{
-    color: blue;
+    padding: 0;
+    color: $color-main-hover;
+    font-weight: 600;
   }
 }
 .error{
