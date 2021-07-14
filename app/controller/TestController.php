@@ -119,7 +119,7 @@ class TestController Extends AppController
 				'vitaliy04111979@gmail.com',
 				'10@vitexopt.ru',
 			];
-		$subject = Mail::prepareSubjectTestResults();
+		$subject = Mail::getSubject();
 		$body = Mail::prepareBodyTestResults(
 			$file,
 			$post->userName,
