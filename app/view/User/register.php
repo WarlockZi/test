@@ -10,7 +10,7 @@
 		       placeholder="E-mail"/>
 
 		<input type="password" name="password" class="form-input"
-		       placeholder="Пароль"/>
+		       placeholder="Пароль" current-password/>
 
 		<input type="text" name="surName" class="form-input"
 		       placeholder="Фамилия"/>

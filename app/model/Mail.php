@@ -19,6 +19,7 @@ class Mail
 		$mail->SMTPSecure = (bool)$_ENV['SMTP_SMTPSECURE'];// Enable TLS encryption, `ssl` also accepted
 		$mail->Host = $_ENV['SMTP_HOST'];  // Specify main and backup SMTP servers
 		$mail->setFrom($_ENV['SMTP_FROM_EMAIL'], $_ENV['SMTP_FROM_NAME']);
+		$mail->CharSet = "utf-8";
 		return $mail;
 	}
 
@@ -29,7 +30,7 @@ class Mail
 		try {
 			foreach ($to as $address) {
 				$mail->addAddress($address);     // Add a recipient
-				$mail->addCustomHeader("Content-Type", "text/plain; charset=utf-8");
+//				$mail->addCustomHeader("Content-Type", "text/plain; charset=utf-8");
 				$mail->addCustomHeader("List-Unsubscribe",
 					"<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$address}>");
 			}
