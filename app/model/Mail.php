@@ -61,7 +61,7 @@ class Mail
 		return $template;
 	}
 
-	protected static function prepareBodyTestResults($file, $userName, $test_name, $questionCnt, $errorCnt)
+	public static function prepareBodyTestResults($file, $userName, $test_name, $questionCnt, $errorCnt)
 	{
 		$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/results/' . $file;
 		ob_start();
@@ -71,7 +71,7 @@ class Mail
 	}
 
 
-	private function getSubject($errorCnt, $questCnt)
+	public static function getSubject($errorCnt, $questCnt)
 	{
 		$errorSubj = $errorCnt == 0 ? 'СДАН' : "не сдан: $errorCnt ош из $questCnt";
 		return "=?utf-8?b?" . base64_encode($errorSubj) . "?=";
@@ -108,7 +108,7 @@ class Mail
 			//Content
 			$mail->isHTML(true); // Set email format to HTML
 
-			$mail->Subject = $this->getSubject($errorCnt, $questCnt);
+			$mail->Subject = $this::getSubject($errorCnt, $questCnt);
 
 			$mail->Body = $this->getBodyTest($file, $userName, $testName, $questCnt, $errorCnt);
 
