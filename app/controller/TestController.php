@@ -8,6 +8,8 @@ use app\model\Test;
 use app\view\View;
 use app\view\widgets\menu\Menu;
 use app\core\App;
+use app\model\Mail;
+
 
 class TestController Extends AppController
 {
@@ -114,9 +116,8 @@ class TestController Extends AppController
 
 		if (file_put_contents($fileUTF8, $post->pageCache))
 			$to = [
-				'vvoronik@yandex.ru',
 				'vitaliy04111979@gmail.com',
-				'sno_dir@vitexopt.ru',
+				'10@vitexopt.ru',
 			];
 		$subject = Mail::prepareSubjectTestResults();
 		$body = Mail::prepareBodyTestResults(
