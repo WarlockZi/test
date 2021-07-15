@@ -7,7 +7,7 @@ class Cache
 
 	public function getFromCache($file_name)
 	{
-		$dir = $this->mkdir_r('\tmp\cache\test_results');
+		$dir = ROOT.'\tmp\cache\test_results\\';
 		$path = $dir . $file_name . '.txt';
 		if (file_exists($path)) {
 			return require $path;

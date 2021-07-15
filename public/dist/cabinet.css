@@ -816,7 +816,7 @@ h3 {
 section {
   flex: 1 0 auto;
   max-width: 500px;
-  margin: 0 auto;
+  margin: 20px auto;
   display: flex;
   flex-direction: column; }
 
