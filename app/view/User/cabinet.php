@@ -6,11 +6,11 @@
 	<? if (in_array('2', $user['rights'])): ?>
 		<a class="list" href="/user/changepassword">Сменить пароль</a>
 	<? endif; ?>
-	<? if (in_array('3', $user['rights'])): ?>
+	<? if (in_array('3', $user['rights'])||SU): ?>
 		<a class="list" href="/adminsc">Admin</a>
 	<? endif; ?>
 
-	<? if (in_array('1', $user['rights'])): ?>
+	<? if (in_array('1', $user['rights'])||SU): ?>
 		<a class="list" href="/test/edit/1">Редактировать тесты</a></li>
 	<? endif; ?>
 

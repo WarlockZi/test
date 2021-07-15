@@ -30,7 +30,6 @@ class AppController extends Controller
 		if (!isset($_SESSION['id']) || !$_SESSION['id']) {
 			$_SESSION['id'] = (int)$user['id'];
 		}
-
 	}
 	public
 	function auth()
@@ -52,7 +51,11 @@ class AppController extends Controller
 				} elseif ($this->user === NULL) {
 					$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
 				} else {
+					if ($user['email']===$_ENV['SU_EMAIL']){
+						define('SU', true);
+					}
 					$this->set(compact('user'));
+
 				}
 			} elseif (!isset($_SESSION['id'])) {
 				header("Location:/user/login");
