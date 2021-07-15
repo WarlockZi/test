@@ -1472,7 +1472,7 @@ input {
   display: flex; }
 
 .adm-wrap {
-  /*height: 100%;*/
+  height: 100%;
   display: flex;
   flex-flow: nowrap; }
 
@@ -2578,7 +2578,8 @@ footer {
   flex: 0 0 auto;
   background: url(/public/dist/6a2d04cb970344ebca0b.png) repeat;
   padding: 10px;
-  min-height: 110px; }
+  min-height: 110px;
+  margin-top: 20px; }
   footer a {
     color: #ffffff; }
   footer p {
