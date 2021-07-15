@@ -108,27 +108,40 @@ class TestController Extends AppController
 
 	public function actionCachePageSendEmail()
 	{
-		$post = json_decode($_POST['param']);
-		$this->prepareCacheDir();
-		$file = md5(date(' d m - H i s'));
-		$fileUTF8 = ROOT . '/tmp/cache/test_results/' . $file . '.txt';
-//		$fileWin = mb_convert_encoding($fileUTF8, 'cp1251');
+		if ($data = $this->ajax) {
+			$this->prepareCacheDir();
+			$file = md5(date(' d m - H i s'));
+			$fileUTF8 = ROOT . '/tmp/cache/test_results/' . $file . '.txt';
+//			$fileWin = mb_convert_encoding($fileUTF8, 'cp1251');
 
-		if (file_put_contents($fileUTF8, $post->pageCache))
-			$to = [
-				'vitaliy04111979@gmail.com',
-				'10@vitexopt.ru',
-			];
-		$subject = Mail::getSubject();
-		$body = Mail::prepareBodyTestResults(
-			$file,
-			$post->userName,
-			$post->test_name,
-			$post->questionCnt,
-			(int)$post->errorCnt
-		);
-		App::$app->mail->mail_test_result($to, $subject, $body);
-		exit(json_encode('ok'));
+			if (file_put_contents($fileUTF8, $data['pageCache'])) {
+				$data['to']= [
+					'vitaliy04111979@gmail.com',
+//					'10@vitexopt.ru',
+				];
+
+				$data['subject'] = $this->getSubjectTestResults($data);
+				$data['body']= $this->prepareBodyTestResults($data,$file);
+				$data['altBody'] = "Ссылка на страницу с результатами: тут";
+
+				App::$app->mail->send_mail($data);
+				exit(json_encode('ok'));
+			}
+		}
+	}
+
+	private function getSubjectTestResults($data)
+	{
+		return $errorSubj = $data['errorCnt'] == 0 ? 'СДАН' : "не сдан: {$data['errorCnt']} ош из {$data['questionCnt']}";
+	}
+
+	private function prepareBodyTestResults($data, $file)
+	{
+			$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/results/' . $file;
+			ob_start();
+			require ROOT . '/app/view/Test/email.php';
+			$template = ob_get_clean();
+			return $template;
 	}
 
 	private function getMenu()

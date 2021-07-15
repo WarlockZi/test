@@ -23,27 +23,28 @@ class UserController extends AppController
 
 			if (!$data['password']) exit('empty password');
 			if (!$data['email']) exit('empty email');
-			$to = [$data['email']];
-			$user = App::$app->user->findWhere('email', $to[0]);
+			$data['to'] = [$data['email']];
+			$user = App::$app->user->findWhere('email', $data['to'][0]);
 			if ($user) exit('mail exists');
 
 			$hash = md5(microtime());
 			$user['rights'] = '2';
 			$user['surName'] = $data['surName'];
 			$user['name'] = $data['name'];
-			$user['email'] = $to[0];
+			$user['email'] = $data['to'][0];
 			$user['password'] = md5($data['password']);
 			$user['hash'] = $hash;
 
 			if (!App::$app->user->create($user)) {
 				exit('registration failed');
 			}
-
-			$subj = "Регистрация VITEX";
-			$body = Mail::prepareBodyRegister($hash);
+			$data['subject'] = "Регистрация VITEX";
+			$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/user/confirm?hash={$hash}";
+			$data['body']= $this->prepareBodyRegister($href, $hash);
+			$data['altBody'] = "Подтверждение почты: <a href = '{$href}'>нажать сюда</a>>";
 
 			try {
-				Mail::send_mail($subj, $body, $to);
+				Mail::send_mail($data);
 				exit('confirm');
 			} catch (\Exception $e){
 				exit($e->getMessage());
@@ -55,6 +56,13 @@ class UserController extends AppController
 		View::setCss('auth.css');
 	}
 
+	private function prepareBodyRegister($href, $hash)
+	{
+		ob_start();
+		require ROOT . '/app/view/User/email.php';
+		$template = ob_get_clean();
+		return $template;
+	}
 	private function registerGetOverlay()
 	{
 		$msg[] = "Для подтвержения регистрации перейдите по ссылке в <br><a href ='https://mail.vitexopt.ru/webmail/login/'>ПОЧТЕ</a>.<br>Письмо может попасть в папку 'Спам'";
