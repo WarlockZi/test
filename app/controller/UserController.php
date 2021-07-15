@@ -172,7 +172,7 @@ class UserController extends AppController
 
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
 				$user[0]['rights'] = explode(",", $user[0]['rights']);
-				$this->setAuth($user);
+				$this->setAuth($user[0]);
 				exit('ok');
 			}
 		}
