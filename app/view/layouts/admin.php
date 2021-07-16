@@ -15,6 +15,7 @@
 <body>
 <div class="wrap">
 	<header>
+
 		<div class="logo">
 			<a href="/">
 				<?= require ROOT . '/app/view/components/Logo_small.php'; ?>
