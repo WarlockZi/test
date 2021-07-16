@@ -10,7 +10,8 @@ section {
   justify-content: start;
   flex: 1 0 auto;
   max-width: 1310px;
-  margin: auto; }
+  margin: auto;
+  flex-wrap: wrap; }
   .container-do-test .content {
     margin: 0px 40px; }
 
@@ -46,7 +47,8 @@ section {
   padding: 3px 0px;
   margin-bottom: 0;
   width: 100%;
-  display: flex; }
+  display: flex;
+  flex-wrap: wrap; }
 
 .test-name {
   color: #5e5e5e;
