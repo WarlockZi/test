@@ -44,13 +44,15 @@ abstract class Controller
 		if (!$data) return false;
 		if (!$data['token']
 			&& !$_SESSION['token'] === $_POST['token']
-		) return true;
+		) {
+			unset($data['token']);
+			return true;
+		}
 		return false;
 	}
 
 	public function isAjax()
 	{
-		/// json
 		if (isset($_POST['param'])) {
 			$data = json_decode($_POST['param'], true);
 			if ($this->badToken($data)) return "Плохой запрос";

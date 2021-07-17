@@ -42,7 +42,7 @@ class CatalogController extends AppController {
 //      'user', , 'categories', 'tov'
       $this->set(compact('canonical', 'breadcrumbs', 'product'));
 
-      View::setCss(['css' => $this->route['controller'], 'view' => $this->view, 'addtime']);
+		View::setCss('vitex.css');
    }
 
    public function actionCategory($category) {
@@ -57,7 +57,7 @@ class CatalogController extends AppController {
       View::setMeta($category['title'], $category['keywords'], $category['description']);
       $this->set(compact( 'breadcrumbs', 'category', 'canonical'));
 //      $this->view = 'category';
-      View::setCss(['controller' => $this->route['controller'], 'view' => $this->view, 'addtime']);
+		View::setCss('vitex.css');
    }
 
 }

@@ -15,6 +15,7 @@
 <body>
 <div class="wrap">
 	<header>
+
 		<div class="logo">
 			<a href="/">
 				<?= require ROOT . '/app/view/components/Logo_small.php'; ?>
@@ -33,7 +34,7 @@
 							  ?></span>
 
 			<div class="nav">
-				<a href="/user/edit">Редактировать свой профиль</a>
+				<a href="/user/edit">Изменить свой профиль</a>
 				<? if (in_array('3', $rightId)): ?>
 					<a href="/adminsc">Admin</a>
 				<? endif; ?>
@@ -73,7 +74,7 @@
 			<a href="/adminsc/catalog" class="module catalog"><span>Каталог</span></a>
 			<a href="/adminsc/settings" class="module settings"><span>Настройки</span></a>
 			<a href="/adminsc/crm" class="module crm"><span>CRM</span></a>
-			<a href="/adminsc/test/edit/1" class="module test"><span>Тестирование</span></a>
+			<a href="/adminsc/test/edit/1" class="module test"><span>Тесты</span></a>
 
 		</div>
 

@@ -1,16 +1,55 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./public/src/admin/admin_main_menu.js":
+/*!*********************************************!*\
+  !*** ./public/src/admin/admin_main_menu.js ***!
+  \*********************************************/
+/***/ (() => {
+
+switch (window.location.pathname) {
+  case '/adminsc/catalog':
+  case '/adminsc/catalog/category':
+  case '/adminsc/catalog/product':
+  case '/adminsc/catalog/products':
+    document.querySelector('.module.catalog').classList.add('activ');
+    break;
+
+  case '/adminsc/test/edit':
+    document.querySelector('.module.test').classList.add('activ');
+    break;
+
+  case '/adminsc/crm':
+  case '/adminsc/crm/users':
+    document.querySelector('.module.crm').classList.add('activ');
+    break;
+
+  case '/adminsc/settings':
+  case '/adminsc/Sitemap':
+  case '/adminsc/settings/pics':
+  case '/adminsc/settings/prop':
+  case '/adminsc/settings/props':
+    document.querySelector('.module.settings').classList.add('activ');
+    break;
+
+  case '/adminsc':
+    document.querySelector('.module.home').classList.add('activ');
+    break;
+}
+
+/***/ }),
+
 /***/ "./public/src/admin/index.js":
 /*!***********************************!*\
   !*** ./public/src/admin/index.js ***!
   \***********************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-$(function () {
-  var d = 'a[href^="?page=' + $_GET('page') + '&"]';
-  var a = $(d).css('background', '#e0e0e0');
-});
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _admin_main_menu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin_main_menu */ "./public/src/admin/admin_main_menu.js");
+/* harmony import */ var _admin_main_menu__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_admin_main_menu__WEBPACK_IMPORTED_MODULE_0__);
+
 
 /***/ }),
 
@@ -22,8 +61,8 @@ $(function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _top_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.sass */ "./public/src/components/header/top.sass");
-/* harmony import */ var _middle_sass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./middle.sass */ "./public/src/components/header/middle.sass");
+/* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
+/* harmony import */ var _middle_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./middle.scss */ "./public/src/components/header/middle.scss");
 /* harmony import */ var _header_menu_sass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header-menu.sass */ "./public/src/components/header/header-menu.sass");
 /* harmony import */ var _header_sass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./header.sass */ "./public/src/components/header/header.sass");
 /* harmony import */ var _header_panel_sass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./header-panel.sass */ "./public/src/components/header/header-panel.sass");
@@ -100,9 +139,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/middle.sass":
+/***/ "./public/src/components/header/middle.scss":
 /*!**************************************************!*\
-  !*** ./public/src/components/header/middle.sass ***!
+  !*** ./public/src/components/header/middle.scss ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -113,9 +152,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/top.sass":
+/***/ "./public/src/components/header/top.scss":
 /*!***********************************************!*\
-  !*** ./public/src/components/header/top.sass ***!
+  !*** ./public/src/components/header/top.scss ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -216,15 +255,10 @@ var __webpack_exports__ = {};
   \***********************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _admin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../admin */ "./public/src/admin/index.js");
-/* harmony import */ var _admin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_admin__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _admin_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admin.scss */ "./public/src/Admin/admin.scss");
 /* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
 /* harmony import */ var _admin_catalog_menu_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./admin_catalog_menu.scss */ "./public/src/Admin/admin_catalog_menu.scss");
 /* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
-// import '../adminLayer'
- // import './index.css'
-// import '../Crm/crm.css'
-// import '../Crm/index.css'
 
 
 
