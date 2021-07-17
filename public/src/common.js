@@ -1,5 +1,5 @@
 let validate = {
-    sort: function (s) {
+    sort: function () {
         let error = this.nextElementSibling
         let ar = this.value.match(/\D+/)
         if (ar) {
@@ -14,43 +14,19 @@ let validate = {
 
     email:function (email) {
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!re.test(email)) {
-            return false
-        }
-        return true;
+        if (!email) return false
+        return !re.test(email)
     },
 
     password:function (password) {
-        const re = /^[a-zA-Z\-0-9]{6,20}$/;
-        if (!re.test(password)) {
-            return false
-        }
-        return true;
+        const re = /^[a-zA-Z\-0-9]{6,20}$/
+        if (!password) return false
+        return !re.test(password)
     }
 }
 
 
-function get_cookie(cookie_name) {
-    var results = document.cookie.match('(^|;)?' + cookie_name + '=([^;]*)');
 
-    if (results)
-        $('#cookie-notice').css({bottom: "-100%"});
-    // return (unescape(results[2]));
-    else
-        $('#cookie-notice').css({bottom: "0"});
-    setCookie();
-    return null;
-}
-function setCookie() {
-    const date = new Date(),
-        minute = 60 * 1000,
-        day = minute * 60 * 24;
-
-    var days = 1;
-    date.setTime(date.getTime() + (days * day));
-    $('#cookie-notice').css({bottom: "-100%"});
-    document.cookie = "cn=1; expires=" + date + "path=/; SameSite=lax";
-}
 function clearCache() {
     async function clearCache() {
         let response = await fetch('/adminsc/clearCache')
@@ -84,7 +60,7 @@ let popup = {
 const uniq = (array) => Array.from(new Set(array));
 
 async function get(key) {
-    var p = window.location.search;
+    let p = window.location.search;
     p = p.match(new RegExp(key + '=([^&=]+)'));
     return p ? p[1] : false;
 }
@@ -93,7 +69,7 @@ async function post(url, data) {
 //      debugger;
     return new Promise(function (resolve, reject) {
         data.token = document.querySelector('meta[name="token"]').getAttribute('content')
-        var req = new XMLHttpRequest();
+        let req = new XMLHttpRequest();
         req.open('POST', url, true);
         req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         if (data instanceof FormData) {
@@ -169,7 +145,7 @@ function MyJquery(elements) {
     }
     this.css = function (attr, val) {
         if (!val) {
-            return el.style[attr]
+            return this.el.style[attr]
         }
         if (this.elType === "[object HTMLDivElement]") {
             this.el.style[attr] = val
@@ -184,11 +160,10 @@ function MyJquery(elements) {
 
 
 function $(selector) {
-    let elements = []
     if (typeof selector === "string") {
-        elements = document.querySelectorAll(selector)
+        let elements = document.querySelectorAll(selector)
     } else {
-        elements = selector
+        let elements = selector
     }
 
     return new MyJquery(elements);

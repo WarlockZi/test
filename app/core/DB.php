@@ -52,21 +52,20 @@ class DB {
         return [];
     }
 
-    public static function getConnection() {
-        $params = include(ROOT . '/config/config_db.php');
-        $options = array(
-            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-            \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8"
-        );
-
-        try {
-            $db = new \PDO($params['dsn'], $params['user'], $params['password'], $options);
-        } catch (Exception $e) {
-            echo 'Выброшено исключение: ', $e->getMessage(), "\n";
-        }
-
-        return $db;
-    }
+//    public static function getConnection() {
+//        $params = include(ROOT . '/config/config_db.php');
+//        $options = array(
+//            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+//            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+//            \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8"
+//        );
+//
+//        try {
+//            $db = new \PDO($params['dsn'], $params['user'], $params['password'], $options);
+//        } catch (Exception $e) {
+//            echo 'Выброшено исключение: ', $e->getMessage(), "\n";
+//        }
+//        return $db;
+//    }
 
 }

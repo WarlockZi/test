@@ -11,6 +11,8 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 /* harmony import */ var _do_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./do.scss */ "./public/src/Test/do.scss");
+/* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
+
 
  //Скрыть все вопросы
 
@@ -929,7 +931,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchW": () => (/* binding */ fetchW)
 /* harmony export */ });
 let validate = {
-  sort: function (s) {
+  sort: function () {
     let error = this.nextElementSibling;
     let ar = this.value.match(/\D+/);
 
@@ -944,47 +946,15 @@ let validate = {
   },
   email: function (email) {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (!re.test(email)) {
-      return false;
-    }
-
-    return true;
+    if (!email) return false;
+    return !re.test(email);
   },
   password: function (password) {
     const re = /^[a-zA-Z\-0-9]{6,20}$/;
-
-    if (!re.test(password)) {
-      return false;
-    }
-
-    return true;
+    if (!password) return false;
+    return !re.test(password);
   }
 };
-
-function get_cookie(cookie_name) {
-  var results = document.cookie.match('(^|;)?' + cookie_name + '=([^;]*)');
-  if (results) $('#cookie-notice').css({
-    bottom: "-100%"
-  }); // return (unescape(results[2]));
-  else $('#cookie-notice').css({
-      bottom: "0"
-    });
-  setCookie();
-  return null;
-}
-
-function setCookie() {
-  const date = new Date(),
-        minute = 60 * 1000,
-        day = minute * 60 * 24;
-  var days = 1;
-  date.setTime(date.getTime() + days * day);
-  $('#cookie-notice').css({
-    bottom: "-100%"
-  });
-  document.cookie = "cn=1; expires=" + date + "path=/; SameSite=lax";
-}
 
 function clearCache() {
   async function clearCache() {
@@ -1017,7 +987,7 @@ let popup = {
 const uniq = array => Array.from(new Set(array));
 
 async function get(key) {
-  var p = window.location.search;
+  let p = window.location.search;
   p = p.match(new RegExp(key + '=([^&=]+)'));
   return p ? p[1] : false;
 }
@@ -1026,7 +996,7 @@ async function post(url, data) {
   //      debugger;
   return new Promise(function (resolve, reject) {
     data.token = document.querySelector('meta[name="token"]').getAttribute('content');
-    var req = new XMLHttpRequest();
+    let req = new XMLHttpRequest();
     req.open('POST', url, true);
     req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
@@ -1117,7 +1087,7 @@ function MyJquery(elements) {
 
   this.css = function (attr, val) {
     if (!val) {
-      return el.style[attr];
+      return this.el.style[attr];
     }
 
     if (this.elType === "[object HTMLDivElement]") {
@@ -1133,12 +1103,10 @@ function MyJquery(elements) {
 }
 
 function $(selector) {
-  let elements = [];
-
   if (typeof selector === "string") {
-    elements = document.querySelectorAll(selector);
+    let elements = document.querySelectorAll(selector);
   } else {
-    elements = selector;
+    let elements = selector;
   }
 
   return new MyJquery(elements);
@@ -1223,6 +1191,45 @@ async function fetchW(url, Obj) {
 }
 
 
+
+/***/ }),
+
+/***/ "./public/src/components/cookie/cookie.js":
+/*!************************************************!*\
+  !*** ./public/src/components/cookie/cookie.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _cookie_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cookie.scss */ "./public/src/components/cookie/cookie.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+
+
+check_cookie('cn');
+
+function check_cookie(cookie_name) {
+  if (getCookie(cookie_name)) (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cookie-notice').css('bottom', '-100%');else (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cookie-notice').css('bottom', "0");
+}
+
+function getCookie(cookie_name) {
+  return document.cookie.match('(^|;)?' + cookie_name + '=([^;]*)');
+}
+
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cn-accept-cookie').on('click', clicked);
+
+function clicked() {
+  setCookie();
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cookie-notice').css('bottom', '-100%');
+}
+
+function setCookie() {
+  const date = new Date(),
+        minute = 60 * 1000,
+        day = minute * 60 * 24;
+  let days = 1;
+  date.setTime(date.getTime() + days * day);
+  document.cookie = "cn=1; expires=" + date + "path=/; SameSite=lax";
+}
 
 /***/ }),
 
@@ -1372,8 +1379,8 @@ function check(url) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _top_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.sass */ "./public/src/components/header/top.sass");
-/* harmony import */ var _middle_sass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./middle.sass */ "./public/src/components/header/middle.sass");
+/* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
+/* harmony import */ var _middle_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./middle.scss */ "./public/src/components/header/middle.scss");
 /* harmony import */ var _header_menu_sass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header-menu.sass */ "./public/src/components/header/header-menu.sass");
 /* harmony import */ var _header_sass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./header.sass */ "./public/src/components/header/header.sass");
 /* harmony import */ var _header_panel_sass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./header-panel.sass */ "./public/src/components/header/header-panel.sass");
@@ -1555,6 +1562,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/src/components/cookie/cookie.scss":
+/*!**************************************************!*\
+  !*** ./public/src/components/cookie/cookie.scss ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./public/src/components/dnd/dnd.scss":
 /*!********************************************!*\
   !*** ./public/src/components/dnd/dnd.scss ***!
@@ -1615,9 +1634,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/middle.sass":
+/***/ "./public/src/components/header/middle.scss":
 /*!**************************************************!*\
-  !*** ./public/src/components/header/middle.sass ***!
+  !*** ./public/src/components/header/middle.scss ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -1627,9 +1646,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/top.sass":
+/***/ "./public/src/components/header/top.scss":
 /*!***********************************************!*\
-  !*** ./public/src/components/header/top.sass ***!
+  !*** ./public/src/components/header/top.scss ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 

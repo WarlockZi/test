@@ -1,13 +1,20 @@
-//*{
-//  border: 1px solid;
-//  box-sizing: border-box;
-//}
+@import "../var";
+
+
+section{
+  flex: 1 0 auto;
+}
+
 .site-wrapper {
   height: 100%
 }
 .container-do-test{
   display: flex;
   justify-content: start;
+  flex: 1 0 auto;
+  max-width: 1310px;
+  margin: auto;
+  flex-wrap: wrap;
 
   .content {
     margin: 0px 40px;
@@ -15,11 +22,6 @@
 }
 
 
-#panel{
-  section{
-    flex: 1 0 auto;
-  }
-}
 .apic{
 img{
   width: 100px;
@@ -33,11 +35,7 @@ img{
     object-fit: contain;
   }
 }
-//section{
-//  align-self: center;
-//  width: 100%;
-//  max-width: 1310px;
-//}
+
 
 .test-data{
   border: 10px solid #f3f3f3;
@@ -67,7 +65,7 @@ img{
   margin-bottom: 0;
   width: 100%;
   display: flex;
-
+  flex-wrap: wrap;
 }
 
 .test-name
@@ -117,10 +115,6 @@ img{
   box-shadow: 0 3px 6px rgba(0, 0, 0, .58);
 }
 
-//.a input:checked + label {
-//  background: #949494;
-//  box-shadow: 0 0 0px 0px #fff;
-//}
 .pushed{
   background: #949494 !important;
   box-shadow: 0 0 0px 0px #fff!important;
@@ -161,6 +155,10 @@ img{
     font-weight: bold;
     text-transform: uppercase;
     color: #ffffff;
+    //
+    //&:hover{
+    //    color: #ffffff;
+    //}
   }
 
   .menu li .test-link a {
@@ -170,7 +168,7 @@ img{
   .menu li {
     position: relative;
     border-bottom: 1px solid #b7b7b7;
-    background: #949494;
+    //background: #949494;
     transition: 0.5s all;
     justify-content: flex-end;
 
@@ -188,8 +186,13 @@ img{
 }
 .vert-menu__drop li a{
   background-color: #797979;
-  color: #434343;
   width: 100%;
+}
+.vert-menu__list{
+  background-color: $color-main;
+  &:hover{
+    background-color: $color-main-hover;
+  }
 }
 
 .vert-menu__list:hover>.vert-menu__drop{
@@ -212,11 +215,7 @@ img{
   transform: scaleX(-1);
 }
 
-.menu a:hover
-{
-  background: #797979;
-  color: #ffffff;
-}
+
 
 
 

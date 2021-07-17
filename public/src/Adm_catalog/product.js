@@ -167,17 +167,6 @@ $(function () {
       }
    }
 
-   async function fetchWrap(Obj, file) {
-      let data = new FormData;
-      data.append('ajax', true);
-      data.append('param', JSON.stringify(Obj));
-      file ? data.append('file', file) : '';
-      let prom = await fetch(`/adminsc`, {
-         body: data,
-         method: 'post'
-      });
-      return prom.text();
-   }
 
    const readUploadedFileAsURI = (inputFile) => {
       const temporaryFileReader = new FileReader();

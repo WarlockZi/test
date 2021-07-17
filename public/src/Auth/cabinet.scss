@@ -1,12 +1,21 @@
+@import "../var";
+
+.icon-logout{
+  width: 10px;
+  height: 10px;
+}
+h3{
+  color: $color-a;
+}
 .list{
   display: flex;
   justify-content: flex-start;
   padding: 10px;
   border: 1px solid #eee;
-}
-
-.site-wrapper{
-  height: 100%;
+  color: $color-a;
+  &:hover{
+    background-color: $color-white-hover;
+  }
 }
 
 .wrap{
@@ -16,7 +25,7 @@
 section{
   flex: 1 0 auto;
   max-width: 500px;
-  margin: 0 auto;
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
 }

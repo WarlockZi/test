@@ -1,11 +1,13 @@
-import './autocomplete.sass';
+import './autocomplete.scss';
+import {$} from '../../common'
 
-window.onload = function() {
-    let inp = document.querySelector('#autocomplete').
-    addEventListener('input', function () {
+let inp = $('#autocomplete').el[0]
+if (inp){
+    inp.addEventListener('input', function () {
         autocomplete(this.value)
     })
 }
+
 
 async function fetchJson(Input) {
     let response = await fetch('/search?q=' + Input);
@@ -14,7 +16,7 @@ async function fetchJson(Input) {
 
 
 async function autocomplete(val) {
-    if (val.length<1) {
+    if (val.length < 1) {
         result.innerHTML = '';
         return
     }
@@ -42,4 +44,3 @@ async function autocomplete(val) {
     });
 }
 
-// module.exports = autocomplete

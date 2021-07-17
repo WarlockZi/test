@@ -4,6 +4,7 @@ namespace app\model;
 
 use app\core\DB;
 use app\core\App;
+use mysql_xdevapi\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
 abstract class Model
@@ -20,18 +21,31 @@ abstract class Model
 		$this->pdo = DB::instance();
 	}
 
+	public
+	function autoincrement()
+	{
+		$params = [$this->table];
+		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";
+		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
+	}
+
 	public function create($values)
 	{
+		if (isset($values['id'])) unset($values['id']);
 		$fields = implode(',', array_keys($values));
 		$param = array_values($values);
 		$questionMarks = array_fill(0, count($values), '?');
 		$strQMarks = implode(',', array_values($questionMarks));
 
 		$sql = "INSERT INTO {$this->table} ({$fields}) VALUES ({$strQMarks})";
-		$this->insertBySql($sql, $param);
-		return $this->autoincrement();
-
+		try {
+			$this->insertBySql($sql, $param);
+			return $this->autoincrement();
+		} catch (Exception $e) {
+			exit('Пользователь не создан' . $e->getMessage());
+		}
 	}
+
 
 	public
 	function update($values)
@@ -72,7 +86,6 @@ abstract class Model
 		$secodId = 'type_id';
 		$param = [$typeId];
 
-
 		$sql1 = "SELECT * FROM $morphTable WHERE type='{$type}' AND $secodId=?";
 		$found = $this->findBySql($sql1, $param);
 		if (!$found) {
@@ -106,14 +119,7 @@ here;
 		}
 	}
 
-	public
-	function autoincrement($db = 'vitex_test')
-	{
-		$params = [$db, $this->table];
-		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE '$this->table'";
-		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
 
-	}
 
 
 	public
@@ -182,7 +188,7 @@ here;
 	public
 	function findWhere($field, $value)
 	{
-		$sql = "SELECT * FROM {$this->table} WHERE $field = ?";
+		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
 		return $this->pdo->query($sql, [$value]);
 	}
 

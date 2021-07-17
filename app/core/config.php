@@ -31,33 +31,16 @@ $config['Mailer_openserver'] = [
 
 $config['Mailer'] = [
 	'smtp_mode' => true, // enabled or disabled (включен или выключен)
-
 	'auth' => true,
 	'smtp_port' => 465,
 	'smtp_username' => "vvoronik",
 //	'smtp_pass' => "tExtile2002",
 	'smtp_pass' => "2021(Li)ya",
 	'smtp_SMTPSecure' => "ssl",
-
 	'smtp_host' => "ssl://smtp.yandex.ru",
-
 	'from_name' => 'Виталий Викторович', // from (от) имя
 	'from_email' => 'vvoronik@yandex.ru', // from (от) email адрес
 
-
-
 ];
-
-//if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'vitexopt.ru') {
-//	$config['config_db']['dsn'] = 'mysql:host=localhost;dbname=vitex;charset=utf8';
-//	$config['config_db']['user'] = 'vitexopt';
-//	$config['config_db']['password'] = '123vitexopt123';
-//} else {
-//	$config['config_db']['dsn'] = 'mysql:host=127.0.0.1;dbname=vitex_test;charset=utf8';
-//	$config['config_db']['user'] = 'root';
-//	$config['config_db']['password'] = 'root';
-////	$config['config_db']['password'] = '8D8p6L2x';
-//};
-
 
 return $config;

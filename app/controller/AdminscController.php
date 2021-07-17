@@ -11,19 +11,19 @@ class AdminscController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
-		if ($this->isAjax()) {
-			if (isset($_POST['param'])) {
-				$arr = json_decode($_POST['param'], true);
-				if (!isset($arr['token']) || !$arr['token'] == $_SESSION['token']) {
-					exit(FALSE);
-				}
-				$func = $arr['action'];
-				$model = $arr['model'] ?: 'adminsc';
-				if (App::$app->{$model}->$func($arr)) {
-					exit('true');
-				}
-			}
-		}
+//		if ($this->isAjax()) {
+//			if (isset($_POST['param'])) {
+//				$arr = json_decode($_POST['param'], true);
+//				if (!isset($arr['token']) || !$arr['token'] == $_SESSION['token']) {
+//					exit(FALSE);
+//				}
+//				$func = $arr['action'];
+//				$model = $arr['model'] ?: 'adminsc';
+//				if (App::$app->{$model}->$func($arr)) {
+//					exit('true');
+//				}
+//			}
+//		}
 		$this->auth();
 		$this->layout = 'admin';
 
@@ -117,15 +117,15 @@ class AdminscController extends AppController
 
 	public function actionIndex()
 	{
+//		$this->auth();
 
-		if ($_POST && count($_POST) == 1) {
-			reset($_POST);
-			$action = key($_POST);
-			if (isset($_POST[$action])) {
-				$this->$action();
-			}
-		}
-// Проверяем существует ли пользователь и подтвердил ли регистрацию
+//		if ($_POST && count($_POST) == 1) {
+//			reset($_POST);
+//			$action = key($_POST);
+//			if (isset($_POST[$action])) {
+//				$this->$action();
+//			}
+//		}
 		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
 
