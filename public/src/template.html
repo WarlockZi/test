@@ -13,9 +13,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
-	<title>Медицинские расходные материалы</title>
-               <meta name = "description" content = "Доставим медицинские расходные материалы в любую точку России">
-               <meta name = "keywords" content = "медицинские расходные материалы, доставка, производство, по России">	<link href='/public/dist/main.css' type='text/css' rel='stylesheet'>
+	<title>Регистрация</title>
+               <meta name = "description" content = "Регистрация">
+               <meta name = "keywords" content = "Регистрация">	<link href='/public/dist/auth.css' type='text/css' rel='stylesheet'>
 </head>
 
 
@@ -86,7 +86,7 @@
 			<div class="inner-wrap">
 				<div class='h-upper'>
 					<div class="logo-wrap">
-															<svg id='logo-svg' width="200" height="45" version="1.1" viewBox="0 0 140.93602 25.903431">
+						<a href = '/' aria-label = 'На главную'></a>									<svg id='logo-svg' width="200" height="45" version="1.1" viewBox="0 0 140.93602 25.903431">
 				<defs>
 					<path id="a4bgr29v3"
 					      d="m473.35 105.73c5.3 0.04 0.86 0.08-9.88 0.08s-15.1-0.04-9.65-0.08c5.44-0.07 14.23-0.07 19.53 0z"/>
@@ -179,50 +179,37 @@
 			</div>
 		</header>
 
-		<main>
+		<section>
 
-	<div class="info">
-		<div class="card">
-			<h1>Расходные материалы для медицины оптом</h1>
-			<p>
-				Обеспечим ваш медицинский центр, стоматологию или лабораторию перчатками,
-				бахилами, масками и другими расходниками с бесплтной доставкой
-				в оговоренные сроки. Поможем Вам найти оптимальное решение.
-			</p>
-		</div>
-		<div class="card">
-			<h2>Оптимальный ассортимент</h2>
-			<p>
-				Оптимально подобранный перечень товаров поможет быстро
-				сориентироваться в ассортименте. Мы не держим ничего лишнего.
-			</p>
-		</div>
-		<div class="card">
-			<h2>Низкие цены</h2>
-			<p>
-				Покупая оптом, Вы снижаете затраты своего предприятия.
-				Ведь лидеры рынка всегда уделяют большое внимание затратам.
-			</p>
-		</div>
-		<div class="card"></div>
-		<div class="card">
-			<h2>Доставим до дверей</h2>
-			<p>
-				Вам не нужно беспокоится о доставке. Мы огранизуем и доставим
-				ваш товар бесплатно почти в любую точку России.
-				Даже если ваше предприятие не имеет собственного транспорта,
-				составив заявку на доставку "до дверей", товар вы получите в
-				оговоренный срок.
-			</p>
-		</div>
-		<div class="card">
-			<h2>сертификаты</h2>
-			<p>
-				На всю приобретенную у нас продукцию Вы получаете российские сертификаты
-				на соответствие ГОСТам.
-			</p>
-		</div>
-</main>
+	<form class="form-container" action="#" method="post">
+
+	<div class="form-title">Регистрация на сайте</div>
+
+		<div class='message'></div>
+
+		<input type="email" name="email" class="form-input"
+		       placeholder="E-mail"/>
+
+		<input type="password" name="password" class="form-input"
+		       placeholder="Пароль"/>
+
+		<input type="text" name="surName" class="form-input"
+		       placeholder="Фамилия"/>
+
+		<input type="text" name="name" class="form-input"
+		       placeholder="Имя"/>
+
+		<input type="hidden" name="token" value=0a5dccd61484e57e223d3c1d4d8171a7>
+
+		<input type="submit" name="reg" class="form-input submit" value="Зарегистрироваться"/>
+
+	<p>Нажимая на кнопку "Регистрация", вы принимаете условия <a href="/about/oferta">Публичной оферты</a> и
+		подтверждаете, что ознакомились с <a href="/about/oferta">Политикой</a> в отношении обработки персональных данных,
+		принимаете ее условия и подтверждаете свое согласие на обработку персональных данных. </p>
+	</form>
+
+
+</section>
 
 
 		<footer>
@@ -262,7 +249,7 @@
 
 
 	</div>
-		<script src='/public/dist/main.js'></script></div>
+		<script src='/public/dist/auth.js'></script></div>
 <!-- Yandex.Metrika counter -->
 <!--<script defer>-->
 <!--    (function (m, e, t, r, i, k, a) {-->
