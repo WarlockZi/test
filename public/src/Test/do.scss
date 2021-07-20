@@ -1,6 +1,5 @@
 @import "../var";
 
-
 section{
   flex: 1 0 auto;
 }
@@ -155,10 +154,6 @@ img{
     font-weight: bold;
     text-transform: uppercase;
     color: #ffffff;
-    //
-    //&:hover{
-    //    color: #ffffff;
-    //}
   }
 
   .menu li .test-link a {
@@ -168,7 +163,6 @@ img{
   .menu li {
     position: relative;
     border-bottom: 1px solid #b7b7b7;
-    //background: #949494;
     transition: 0.5s all;
     justify-content: flex-end;
 

@@ -2,7 +2,7 @@
 
 	<div class="e-block-q " id=<?= $q_id ?>>
 		<div class="left-sidebar">
-			<textarea data-question-id="<?= $q_id ?>" cols="20" rows="5"
+			<textarea data-question-id="<?= $q_id ?>" cols="10" rows="5"
 			          name="<?= $q_id ?>q"><?= $block[0]['question_text'] ?></textarea>
 			<div class="block__top">
 				<input class="sort-q" type="text" data-q-sort="<?= $q_id ?>" size="1" value="<?= $block[0]['sort'] ?>">

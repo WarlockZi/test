@@ -129,7 +129,7 @@ if (loginBtn) {
 
     if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.password(password)) {
       let $result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
-      $result.innerText = "Пароль может состоять из \n " + "- Большие латинские бкувы \n" + "- Мальенькие латинские буквы \n" + "- Цифры \n" + "- должен содержать не менее 6 символов";
+      $result.innerText = "Пароль может состоять из \n " + "- Большие латинские бкувы \n" + "- Маленькие латинские буквы \n" + "- Цифры \n" + "- Должен содержать не менее 6 символов";
       (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)($result).addClass('error');
       return false;
     }
@@ -297,14 +297,14 @@ let validate = {
     }
   },
   email: function (email) {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!email) return false;
-    return !re.test(email);
+    let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   },
   password: function (password) {
-    const re = /^[a-zA-Z\-0-9]{6,20}$/;
     if (!password) return false;
-    return !re.test(password);
+    let re = /^[a-zA-Z\-0-9]{6,20}$/;
+    return re.test(password);
   }
 };
 
@@ -455,10 +455,12 @@ function MyJquery(elements) {
 }
 
 function $(selector) {
+  let elements = '';
+
   if (typeof selector === "string") {
-    let elements = document.querySelectorAll(selector);
+    elements = document.querySelectorAll(selector);
   } else {
-    let elements = selector;
+    elements = selector;
   }
 
   return new MyJquery(elements);
@@ -616,7 +618,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
 
-let inp = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#autocomplete').el[0];
+let inp = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#autocomplete").el[0];
 
 if (inp) {
   inp.addEventListener('input', function () {
@@ -665,7 +667,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
 /* harmony import */ var _middle_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./middle.scss */ "./public/src/components/header/middle.scss");
 /* harmony import */ var _header_menu_sass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header-menu.sass */ "./public/src/components/header/header-menu.sass");
-/* harmony import */ var _header_sass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./header.sass */ "./public/src/components/header/header.sass");
+/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
 /* harmony import */ var _header_panel_sass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./header-panel.sass */ "./public/src/components/header/header-panel.sass");
 
 
@@ -795,9 +797,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/header.sass":
+/***/ "./public/src/components/header/header.scss":
 /*!**************************************************!*\
-  !*** ./public/src/components/header/header.sass ***!
+  !*** ./public/src/components/header/header.scss ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 

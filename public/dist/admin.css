@@ -1073,33 +1073,6 @@ span[contenteditable]:hover,
   top: 0;
   left: 0; }
 
-/*.wrap {*/
-/*    display: flex;*/
-/*    flex-flow: column;*/
-/*    flex: 1 0 auto;*/
-/*    position: relative;*/
-/*}*/
-/*.logo {*/
-/*    flex: 1;*/
-/*    justify-content: center;*/
-/*    margin-left: 10px;*/
-/*}*/
-/*.logo img {*/
-/*    width: 100%;*/
-/*    max-width: 35%;*/
-/*    min-width: 50px;*/
-/*}*/
-/*.logo a {*/
-/*    width: 30px;*/
-/*    display: block;*/
-/*}*/
-.logo > span {
-  margin: 3px 0 0 12px;
-  display: inline-block;
-  vertical-align: top;
-  font-size: 14px;
-  color: #343133; }
-
 .category-properties {
   margin: 5px 0 5px 50px; }
 
@@ -1306,11 +1279,12 @@ textarea:focus,
   background: #1bbc9b;
   display: flex;
   justify-content: space-between;
-  margin: auto;
+  margin: 0 auto;
   position: sticky;
   top: 0px;
   z-index: 1;
-  max-width: 1310px; }
+  max-width: 1310px;
+  width: 100%; }
 
 .contacts {
   align-self: center;
@@ -1332,13 +1306,11 @@ textarea:focus,
   color: #ffffff; }
   .user-menu:hover {
     background-color: #3da58f; }
-  .user-menu .icon {
+  .user-menu .user-icon {
     padding: 5px 16px;
-    display: flex; }
-
-svg {
-  width: 14px;
-  height: 14px; }
+    display: flex;
+    width: 14px;
+    height: 14px; }
 
 .FIO {
   position: relative;
@@ -1370,10 +1342,9 @@ svg {
   right: -1px;
   width: 280px;
   padding: 10px; }
-
-a {
-  padding: 5px 10px;
-  color: #5a5a5a; }
+  .nav a {
+    padding: 5px 10px;
+    color: #5a5a5a; }
 
 #icon-locked {
   fill: #e30000; }
@@ -1396,44 +1367,27 @@ a {
 @charset "UTF-8";
 .logo {
   display: flex;
-  flex: 1;
-  justify-content: start;
-  margin-left: 10px; }
+  width: 400px;
+  margin: 0 0 0 10px; }
+  .logo a {
+    width: 100px;
+    display: block; }
 
-.logo img {
-  width: 100%;
-  max-width: 35%;
-  min-width: 50px; }
+.logo_square {
+  height: 100%; }
+  @media (max-width: 600px) {
+    .logo_square {
+      display: none; } }
 
-.logo a {
-  width: 22vw;
-  display: block; }
+.logo_vitex {
+  height: 100%; }
 
-.logo > span {
-  margin: 3px 0 0 -50px;
+.logo__description {
+  width: 120px;
+  margin: 0 10px 0 20px;
   display: inline-block;
-  vertical-align: top;
   font-size: 14px;
   color: #343133; }
-
-.logo-wrap {
-  display: flex;
-  width: 400px;
-  margin: 0 0 0 10px;
-  font-size: 13px;
-  position: relative; }
-
-.logo-wrap > a {
-  height: 45px;
-  width: 60%;
-  position: absolute; }
-
-.logo-wrap > svg {
-  width: 250px;
-  height: 40px; }
-
-.logo-desc {
-  width: 120px; }
 
 /***** Всплывающие телефоны */
 .phone-wrap {
@@ -1730,7 +1684,7 @@ a:hover {
 .art {
   margin: 10px 0;
   padding: 1.14rem 1.14rem;
-  font: normal 19px Verdana,Arial,sans;
+  font: normal 19px Verdana, Arial, sans;
   color: #555;
   text-align: right; }
 
@@ -1740,7 +1694,6 @@ a:hover {
 .site {
   position: relative; }
 
-/*margin: 90px*/
 .site .wrap {
   margin: 0 auto;
   padding: 30px 10px;
@@ -1758,7 +1711,6 @@ header {
   display: flex;
   flex: 0 0 auto;
   background: #fff;
-  z-index: 500;
   width: 100%;
   box-shadow: 0px 6px 10px 0px #d2d2d2;
   margin-bottom: 20px;
@@ -1767,76 +1719,36 @@ header {
 @media only screen and (max-width: 400px) {
   .top-menu {
     padding: 0 20px; }
-  .t-1,
-  .logo-desc,
-  .title,
-  .logo > span,
-  .basket,
-  .top-menu .contacts,
-  .user-button,
-  .user-button span,
-  .icon-phone,
-  .contacts,
-  .card-right,
-  .phone-wrap {
-    display: none; }
-  .logo svg {
-    width: 235px; }
   .dtxt {
     width: 80%; } }
 
 @media (min-width: 401px) and (max-width: 575px) {
-  .t-1,
-  .logo-desc,
-  .title,
-  .logo > span,
-  .basket,
-  .icon-phone,
-  .top-menu .contacts,
-  .user-button span,
-  .user-button,
-  .card-right,
-  .user-button div span,
-  .top-strip,
-  .phone-wrap {
-    display: none; }
   .top-menu > .row {
-    justify-content: flex-end; }
-  .user-button i {
-    font-size: 3.5vw; }
-  .container-do-test {
-    align-items: flex-start; }
-  .test-menu-wrap {
-    margin: 0; }
-  .dtxt {
-    width: 80%; }
-  .nav {
-    right: 0px;
-    width: auto; } }
+    justify-content: flex-end; } }
+
+header .user-button i {
+  font-size: 3.5vw; }
+
+header .container-do-test {
+  align-items: flex-start; }
+
+header .test-menu-wrap {
+  margin: 0; }
+
+header .dtxt {
+  width: 80%; }
+
+header .nav {
+  right: 0;
+  width: auto; }
 
 @media (min-width: 575px) and (max-width: 768px) {
   .toggle-button {
-    display: block; }
-  .logo-desc,
-  .title,
-  .logo > span,
-  .basket,
-  .icon-phone,
-  .user-button span,
-  .user-button,
-  .card-right,
-  .phone-wrap {
-    display: none; } }
-
-@media (min-width: 768px) and (max-width: 991px) {
-  display: none; }
+    display: block; } }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .title {
-    display: none; }
-  .logo-wrap {
-    min-width: 437px;
-    max-width: 583px; } }
+    display: none; } }
 
 @media (min-width: 1200px) {
   .content {
