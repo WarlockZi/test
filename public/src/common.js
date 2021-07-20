@@ -13,15 +13,15 @@ let validate = {
     },
 
     email:function (email) {
-        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!email) return false
-        return !re.test(email)
+        let  re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
     },
 
     password:function (password) {
-        const re = /^[a-zA-Z\-0-9]{6,20}$/
         if (!password) return false
-        return !re.test(password)
+        let re = /^[a-zA-Z\-0-9]{6,20}$/
+        return re.test(password)
     }
 }
 
@@ -160,12 +160,12 @@ function MyJquery(elements) {
 
 
 function $(selector) {
+    let elements = ''
     if (typeof selector === "string") {
-        let elements = document.querySelectorAll(selector)
+        elements = document.querySelectorAll(selector)
     } else {
-        let elements = selector
+        elements = selector
     }
-
     return new MyJquery(elements);
 }
 class test_delete {

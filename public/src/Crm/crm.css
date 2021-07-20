@@ -608,11 +608,6 @@ header {
     box-shadow: 0 0 18px 0 #d2d2d2;
     margin-bottom: 10px;
 }
-.logo-wrap{
-    flex: 2;
-    min-width: 520px;
-}
-
 
 .wrap {
     flex: 1 0 auto;
@@ -627,31 +622,6 @@ footer p{
     padding: 0 15px;
 }
 
-.logo{
-    flex: 1;
-    justify-content: center;
-	flex-basis: 56px;
-	width: 503px;
-	max-width: 498px;
-}
-.logo img{
-    width: 100%;
-    max-width: 35%;
-    min-width:50px;
-}
-.logo a
-{
-    width: 22vw;
-    display: block;
-}
-.logo>span
-{
-    margin: 3px 0 0 12px;
-    display: inline-block;
-    vertical-align: top;
-    font-size: 14px;
-    color:#343133;
-}
 .user-menu{
     flex:2;
     justify-content: flex-end;

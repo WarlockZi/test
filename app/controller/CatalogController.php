@@ -21,7 +21,7 @@ class CatalogController extends AppController {
 
       $cats_id = App::$app->category->getInitCategories();
       View::setMeta('Каталог спецодежды', 'Каталог спецодежды', 'Каталог спецодежды');
-      $this->set(compact('cats_id', 'user'));
+      $this->set(compact('cats_id'));
    }
 
    public function actionProduct($product) {

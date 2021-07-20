@@ -117,7 +117,6 @@ test-edit-wrapper{
 
 
 .right-sidebar {
-  flex: 1;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -127,9 +126,10 @@ test-edit-wrapper{
 
 .left-sidebar {
   display: flex;
-  flex: 2;
   flex-flow: wrap column;
   position: relative;
+  margin-right: 15px;
+  flex: 1;
 }
 
 //* менюшка в редакторе тестов добавить/удалить ответ*/
@@ -396,7 +396,7 @@ test-edit-wrapper{
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: gray;
+  background-color: hsl(0, 0%, 31%);
   cursor: pointer;
 
   a {
@@ -410,7 +410,7 @@ test-edit-wrapper{
   position: relative;
   width: 35px;
   height: 35px;
-  margin: 7px 0 20px 0;
+  margin: 7px 0 10px 0;
   color:red;
   align-items: center;
   justify-content: center;
@@ -449,7 +449,6 @@ test-edit-wrapper{
 .test-edit-wrapper {
   display: flex;
   margin: 10px;
-  flex: 1 0 auto;
 
   /*Иконки для всплывающих менюшек*/
   .vert-menu__list::after {

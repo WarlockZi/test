@@ -10,12 +10,12 @@
   background: #1bbc9b;
   display: flex;
   justify-content: space-between;
-  margin: auto;
+  margin: 0 auto;
   position: sticky;
   top: 0px;
   z-index: 1;
   max-width: 1310px;
-
+  width: 100%;
 }
 
 
@@ -46,18 +46,12 @@
     background-color: #3da58f;
   }
 
-  .icon {
+  .user-icon {
     padding: 5px 16px;
     display: flex;
-
+    width: 14px;
+    height: 14px;
   }
-}
-
-
-svg {
-  width: 14px;
-  height: 14px;
-
 }
 
 .FIO {
@@ -98,24 +92,20 @@ svg {
   right: -1px;
   width: 280px;
   padding: 10px;
-}
-
-
-a {
-  padding: 5px 10px;
-  color: $color-a;
+  a{
+      padding: 5px 10px;
+      color: $color-a;
+  }
 }
 
 #icon-locked {
   fill: #e30000;
 }
 
-
 .h-upper > div:not([class]) {
   position: relative;
   top: 8px;
   white-space: nowrap;
-
 }
 
 .h-upper {

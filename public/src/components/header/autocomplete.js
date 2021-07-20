@@ -1,7 +1,8 @@
 import './autocomplete.scss';
 import {$} from '../../common'
 
-let inp = $('#autocomplete').el[0]
+let inp = $("#autocomplete").el[0]
+
 if (inp){
     inp.addEventListener('input', function () {
         autocomplete(this.value)
