@@ -1946,6 +1946,37 @@ span[contenteditable]:hover,
   max-width: 1310px;
   width: 100%; }
 
+.top-menu__find {
+  height: 18px;
+  width: 18px;
+  position: absolute;
+  top: 9px;
+  right: 42px;
+  cursor: pointer; }
+
+.top-menu__find:before {
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  box-sizing: border-box;
+  left: 0;
+  top: 0px;
+  height: 14px;
+  width: 14px;
+  content: '';
+  display: block;
+  position: absolute; }
+
+.top-menu__find:after {
+  background: #ccc;
+  bottom: 0px;
+  transform: rotate(-45deg);
+  right: 3px;
+  height: 9px;
+  width: 2px;
+  content: '';
+  display: block;
+  position: absolute; }
+
 .contacts {
   align-self: center;
   margin-left: 50px; }
@@ -2020,6 +2051,7 @@ span[contenteditable]:hover,
   position: relative;
   height: 45px;
   justify-content: space-between;
+  align-items: center;
   max-width: 1310px;
   width: 100%;
   margin: auto; }
@@ -2027,15 +2059,20 @@ span[contenteditable]:hover,
 @charset "UTF-8";
 .logo {
   display: flex;
-  width: 400px;
-  margin: 0 0 0 10px; }
+  margin: 0 0 0 10px;
+  align-items: center;
+  height: 40px; }
+  @media (max-width: 800px) {
+    .logo {
+      height: 32px; } }
   .logo a {
     width: 100px;
     display: block; }
 
 .logo_square {
-  height: 100%; }
-  @media (max-width: 600px) {
+  height: 100%;
+  margin-right: 5px; }
+  @media (max-width: 800px) {
     .logo_square {
       display: none; } }
 
@@ -2046,15 +2083,14 @@ span[contenteditable]:hover,
   width: 120px;
   margin: 0 10px 0 20px;
   display: inline-block;
-  font-size: 14px;
-  color: #343133; }
+  color: #343133;
+  font-size: 14px; }
+  @media (max-width: 800px) {
+    .logo__description {
+      font-size: 12px; } }
 
 /***** Всплывающие телефоны */
-.phone-wrap {
-  align-items: center;
-  display: flex; }
-
-.icon-phone {
+.phone {
   position: relative;
   display: flex;
   align-items: center;
@@ -2062,35 +2098,34 @@ span[contenteditable]:hover,
   padding: 0 25px;
   white-space: nowrap; }
 
-.icon-phone > a {
+.phone > a {
   position: relative;
   color: #4e4e4e; }
 
-.icon-phone > a:before {
+.phone > a:before {
   content: '\1F57B';
+  position: absolute;
   width: 26px;
   height: 26px;
-  background-position: 0 -44px;
-  position: absolute;
   left: -20px;
-  top: 2px;
-  color: #e30000;
+  top: -4px;
+  color: #1bbc9b;
   font-size: 27px;
+  background-position: 0 -44px;
   transform: rotate(-30deg); }
 
-.icon-phone > a:after {
+.phone > a:after {
   content: '';
-  display: block;
   position: absolute;
-  top: 8px;
-  right: -20px;
   width: 8px;
   height: 8px;
-  border-bottom: 3px solid #e30000;
-  border-right: 3px solid #e30000;
+  right: -20px;
+  top: 3px;
+  border-bottom: 3px solid #1bbc9b;
+  border-right: 3px solid #1bbc9b;
   transform: rotate(45deg); }
 
-.icon-phone .popup-info {
+.phone__popup {
   position: absolute;
   left: 0;
   top: 100%;
@@ -2098,7 +2133,7 @@ span[contenteditable]:hover,
   height: 0;
   z-index: 6; }
 
-.icon-phone .popup-info .inner {
+.phone__popup-inner {
   width: 200px;
   background: #fff;
   -webkit-box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
@@ -2114,12 +2149,12 @@ span[contenteditable]:hover,
   -o-transition: all 0.3s;
   transition: all 0.3s; }
 
-.icon-phone:hover .popup-info .inner {
+.phone:hover .phone__popup-inner {
   padding: 25px 30px;
   height: auto;
   overflow: visible; }
 
-.icon-phone .popup-info .inner:before {
+.phone__popup-inner:before {
   content: '';
   border-bottom: 10px solid #fff;
   border-left: 11px solid transparent;
@@ -2128,33 +2163,22 @@ span[contenteditable]:hover,
   left: 55px;
   top: -10px; }
 
-.icon-phone .popup-info .head {
+.phone__popup-head {
   border-bottom: 1px solid #ebebeb;
   padding-bottom: 15px;
   margin-bottom: 16px;
   white-space: initial; }
 
-.icon-phone .popup-info p {
+.phone__popup p {
   margin: 0 0 11px; }
 
-.icon-phone .popup-info p:last-child {
+.phone__popup-phones {
   margin: 0; }
 
-.icon-phone .popup-info .phones a {
+.phone__popup-phones a {
   font: bold 17px/21px 'Proxima Nova', sans-serif;
   color: #343133;
   line-height: 1.7; }
-
-.icon-phone:hover .popup-info {
-  padding-top: 15px;
-  height: auto; }
-
-.h-phone {
-  color: #343133;
-  font: bold 21px/17px 'Proxima Nova', sans-serif;
-  position: relative;
-  top: 8px;
-  white-space: nowrap; }
 
 .header-catalog-menu {
   display: flex;
@@ -2226,11 +2250,7 @@ span[contenteditable]:hover,
 
 @charset "UTF-8";
 /***** Всплывающие телефоны */
-.phone-wrap {
-  align-items: center;
-  display: flex; }
-
-.icon-phone {
+.phone {
   position: relative;
   display: flex;
   align-items: center;
@@ -2238,35 +2258,34 @@ span[contenteditable]:hover,
   padding: 0 25px;
   white-space: nowrap; }
 
-.icon-phone > a {
+.phone > a {
   position: relative;
   color: #4e4e4e; }
 
-.icon-phone > a:before {
+.phone > a:before {
   content: '\1F57B';
+  position: absolute;
   width: 26px;
   height: 26px;
-  background-position: 0 -44px;
-  position: absolute;
   left: -20px;
-  top: 2px;
-  color: #e30000;
+  top: -4px;
+  color: #1bbc9b;
   font-size: 27px;
+  background-position: 0 -44px;
   transform: rotate(-30deg); }
 
-.icon-phone > a:after {
+.phone > a:after {
   content: '';
-  display: block;
   position: absolute;
-  top: 8px;
-  right: -20px;
   width: 8px;
   height: 8px;
-  border-bottom: 3px solid #e30000;
-  border-right: 3px solid #e30000;
+  right: -20px;
+  top: 3px;
+  border-bottom: 3px solid #1bbc9b;
+  border-right: 3px solid #1bbc9b;
   transform: rotate(45deg); }
 
-.icon-phone .popup-info {
+.phone__popup {
   position: absolute;
   left: 0;
   top: 100%;
@@ -2274,7 +2293,7 @@ span[contenteditable]:hover,
   height: 0;
   z-index: 6; }
 
-.icon-phone .popup-info .inner {
+.phone__popup-inner {
   width: 200px;
   background: #fff;
   -webkit-box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
@@ -2290,12 +2309,12 @@ span[contenteditable]:hover,
   -o-transition: all 0.3s;
   transition: all 0.3s; }
 
-.icon-phone:hover .popup-info .inner {
+.phone:hover .phone__popup-inner {
   padding: 25px 30px;
   height: auto;
   overflow: visible; }
 
-.icon-phone .popup-info .inner:before {
+.phone__popup-inner:before {
   content: '';
   border-bottom: 10px solid #fff;
   border-left: 11px solid transparent;
@@ -2304,33 +2323,22 @@ span[contenteditable]:hover,
   left: 55px;
   top: -10px; }
 
-.icon-phone .popup-info .head {
+.phone__popup-head {
   border-bottom: 1px solid #ebebeb;
   padding-bottom: 15px;
   margin-bottom: 16px;
   white-space: initial; }
 
-.icon-phone .popup-info p {
+.phone__popup p {
   margin: 0 0 11px; }
 
-.icon-phone .popup-info p:last-child {
+.phone__popup-phones {
   margin: 0; }
 
-.icon-phone .popup-info .phones a {
+.phone__popup-phones a {
   font: bold 17px/21px 'Proxima Nova', sans-serif;
   color: #343133;
   line-height: 1.7; }
-
-.icon-phone:hover .popup-info {
-  padding-top: 15px;
-  height: auto; }
-
-.h-phone {
-  color: #343133;
-  font: bold 21px/17px 'Proxima Nova', sans-serif;
-  position: relative;
-  top: 8px;
-  white-space: nowrap; }
 
 a,
 .add-freetest,
@@ -2361,12 +2369,6 @@ a:hover {
   max-width: 1310px;
   box-sizing: border-box; }
 
-.main-menu-wrap {
-  margin: 0 15px 0 15px; }
-
-.main-menu-wrap li a {
-  padding: 5px 15px 5px 15px; }
-
 header {
   display: flex;
   flex: 0 0 auto;
@@ -2375,16 +2377,6 @@ header {
   box-shadow: 0px 6px 10px 0px #d2d2d2;
   margin-bottom: 20px;
   flex-flow: column; }
-
-@media only screen and (max-width: 400px) {
-  .top-menu {
-    padding: 0 20px; }
-  .dtxt {
-    width: 80%; } }
-
-@media (min-width: 401px) and (max-width: 575px) {
-  .top-menu > .row {
-    justify-content: flex-end; } }
 
 header .user-button i {
   font-size: 3.5vw; }
@@ -2401,26 +2393,6 @@ header .dtxt {
 header .nav {
   right: 0;
   width: auto; }
-
-@media (min-width: 575px) and (max-width: 768px) {
-  .toggle-button {
-    display: block; } }
-
-@media (min-width: 992px) and (max-width: 1199px) {
-  .title {
-    display: none; } }
-
-@media (min-width: 1200px) {
-  .content {
-    flex: 3; }
-  textarea {
-    font-family: inherit; }
-  .vert-menu__list::after {
-    border: .4vw solid;
-    border-color: transparent transparent transparent #eee; }
-  .button,
-  .test-name {
-    font-size: 1rem; } }
 
 label[for="toggle-button"] {
   position: absolute;

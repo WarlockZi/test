@@ -1,18 +1,21 @@
 @import "../../var";
 .find{
-  height: 18px;
-  width: 18px;
+  height: 30px;
+  width: 32px;
   position: absolute;
-  top: 14px;
-  right: 15px;
+  top: 1px;
+  right: 1px;
   cursor: pointer;
+  &:hover{
+    background-color: hsl(0, 0%, 50%);
+  }
 }
 .find:before{
   border: 2px solid #ccc;
   border-radius: 50%;
   box-sizing: border-box;
-  left: 0;
-  top: -7px;
+  left: 9px;
+  top: 5px;
   height: 14px;
   width: 14px;
   content: '';
@@ -23,7 +26,7 @@
   background: #ccc;
   bottom: 5px;
   transform: rotate(-45deg);
-  right: 2px;
+  right: 8px;
   height: 9px;
   width: 2px;
   content: '';
@@ -49,14 +52,15 @@
 
 .search-wrap{
   position: relative;
-  /*height: 32px*/
+  height: 32px;
   margin: 6px 5px;
   display: inline-flex;
 }
 .search-wrap .form-text{
   flex: 1;
   padding: 0 0 0 12px;
-  border: 1px solid;
+  border: hsl(0, 0, 31%) 1px solid;
+  border-radius: 2px;
 }
 .search-wrap .result{
   position: absolute;

@@ -1,13 +1,16 @@
 import './autocomplete.scss';
 import {$} from '../../common'
 
-let inp = $("#autocomplete").el[0]
+let inp = $("#autocomplete").el
 
-if (inp){
-    inp.addEventListener('input', function () {
-        autocomplete(this.value)
-    })
-}
+Array.from(inp).map((inp)=>{
+    if (inp){
+        inp.addEventListener('input', function () {
+            autocomplete(this.value, inp)
+        })
+    }
+})
+
 
 
 async function fetchJson(Input) {
@@ -16,30 +19,29 @@ async function fetchJson(Input) {
 }
 
 
-async function autocomplete(val) {
+async function autocomplete(val, inp) {
     if (val.length < 1) {
         result.innerHTML = '';
         return
     }
 
-    var data = await fetchJson(val);
-    debugger;
+    let data = await fetchJson(val);
 
-    var res = '<ul>';
+    let res = '<ul>';
     data.forEach(e => {
         res += '<li>' +
             `<a href = '${e.alias}'>` +
             `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` +
             e.name +
-            '</a></li>';
+            '</a></li>'
     });
-    res += '</ul>';
-    var result = document.querySelector('.result-search');
-    result.innerHTML = res;
+    res += '</ul>'
+    let result = $(inp.parentNode).find('.result-search')
+    result.innerHTML = res
 
-    document.querySelector('body').addEventListener('click', function (e) {
-        const search = document.querySelector('.result-search ul');
-        if (document.querySelector('.result-search ul') && e.target !== search) {
+    $('body').on('click', function (e) {
+        const search = $('.result-search ul').el[0]
+        if ($('.result-search ul') && e.target !== search) {
             search.remove();
         }
     });

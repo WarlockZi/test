@@ -9,13 +9,13 @@
 					<? include_once ROOT . '/app/view/components/header/logo.php'; ?>
 				</div>
 				<? else: ?>
-				<a href='/' aria-label='На главную' class="logo">
+				<a href='/' class="logo" aria-label='На главную' >
 					<? include_once ROOT . '/app/view/components/header/logo.php'; ?>
 				</a>
 			<? endif; ?>
 
 			<? include_once ROOT . '/app/view/components/header/header-phone.php' ?>
-			<? include_once ROOT . '/app/view/components/header/header-search.php' ?>
+			<? include ROOT . '/app/view/components/header/header-search.php' ?>
 
 
 		</div>

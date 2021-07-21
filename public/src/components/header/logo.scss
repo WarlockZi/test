@@ -2,8 +2,12 @@
 
 .logo {
   display: flex;
-  width: 400px;
   margin: 0 0 0 10px;
+  align-items: center;
+  height: 40px;
+  @include _800 {
+    height: 32px;
+  }
 
   a {
     width: 100px;
@@ -14,8 +18,9 @@
 
 .logo_square {
   height: 100%;
+  margin-right: 5px;
 
-  @include _600 {
+  @include _800 {
     display: none;
   }
 
@@ -29,6 +34,9 @@
   width: 120px;
   margin: 0 10px 0 20px;
   display: inline-block;
-  font-size: 14px;
   color: #343133;
+  font-size: 14px;
+  @include _800 {
+    font-size: 12px;
+  }
 }

@@ -1076,7 +1076,7 @@ function MyJquery(elements) {
   };
 
   this.find = function (selector) {
-    if (this.elType === "[object HTMLDivElement]") {
+    if (["[object HTMLDivElement]", "[object HTMLInputElement]"].includes(this.elType)) {
       return this.el.querySelector(selector);
     }
 
@@ -1087,7 +1087,7 @@ function MyJquery(elements) {
 
   this.css = function (attr, val) {
     if (!val) {
-      return this.el.style[attr];
+      return this.el[0].style[attr];
     }
 
     if (this.elType === "[object HTMLDivElement]") {

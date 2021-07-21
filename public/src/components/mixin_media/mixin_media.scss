@@ -1,28 +1,24 @@
 // Using
 //.div {
-//   @include _1170 {
+//   @include _1200 {
 //       @content;
 //   }
 //}
 
-
-
-//media_mixin.scss
-
-@mixin _1170 {
-  @media (max-width: 1170px){
+@mixin _1200 {
+  @media (max-width: 1200px){
     @content;
   }
 }
 
-@mixin _979 {
-  @media (max-width: 979px){
+@mixin _1000 {
+  @media (max-width: 1000px){
     @content;
   }
 }
 
-@mixin _768 {
-  @media (max-width: 768px){
+@mixin _800 {
+  @media (max-width: 800px){
     @content;
   }
 }
@@ -33,14 +29,14 @@
   }
 }
 
-@mixin _480 {
-  @media (max-width: 480px){
+@mixin _500 {
+  @media (max-width: 500px){
     @content;
   }
 }
 
-@mixin _350{
-  @media (max-width: 350px){
+@mixin _400{
+  @media (max-width: 400px){
     @content;
   }
 }

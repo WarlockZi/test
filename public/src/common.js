@@ -136,7 +136,7 @@ function MyJquery(elements) {
         this.el[0].appendChild(el)
     }
     this.find = function (selector) {
-        if (this.elType === "[object HTMLDivElement]") {
+        if (["[object HTMLDivElement]", "[object HTMLInputElement]"].includes(this.elType)) {
             return this.el.querySelector(selector)
         }
         if (["[object NodeList]", "[object Array]"].includes(this.elType)) {
@@ -145,7 +145,7 @@ function MyJquery(elements) {
     }
     this.css = function (attr, val) {
         if (!val) {
-            return this.el.style[attr]
+            return this.el[0].style[attr]
         }
         if (this.elType === "[object HTMLDivElement]") {
             this.el.style[attr] = val
