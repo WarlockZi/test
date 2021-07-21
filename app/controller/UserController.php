@@ -32,7 +32,7 @@ class UserController extends AppController
 			$user['surName'] = $data['surName'];
 			$user['name'] = $data['name'];
 			$user['email'] = $data['to'][0];
-			$user['password'] = md5($data['password']);
+			$user['password'] = md5($data['password'].$this->salt);
 			$user['hash'] = $hash;
 
 			if (!App::$app->user->create($user)) {
@@ -143,7 +143,7 @@ class UserController extends AppController
 	{
 		if ($data = $this->ajax) {
 			$email = (string)$data['email'];
-			$password = (string)$data['password'];
+			$password = (string)$data['password'].$this->salt;
 
 			if (!User::checkEmail($email)) {
 				$msg[] = "Неверный формат email";

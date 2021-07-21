@@ -166,7 +166,7 @@ function MyJquery(elements) {
   };
 
   this.find = function (selector) {
-    if (this.elType === "[object HTMLDivElement]") {
+    if (["[object HTMLDivElement]", "[object HTMLInputElement]"].includes(this.elType)) {
       return this.el.querySelector(selector);
     }
 
@@ -177,7 +177,7 @@ function MyJquery(elements) {
 
   this.css = function (attr, val) {
     if (!val) {
-      return this.el.style[attr];
+      return this.el[0].style[attr];
     }
 
     if (this.elType === "[object HTMLDivElement]") {
@@ -336,38 +336,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
 
-let inp = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#autocomplete").el[0];
-
-if (inp) {
-  inp.addEventListener('input', function () {
-    autocomplete(this.value);
-  });
-}
+let inp = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#autocomplete").el;
+Array.from(inp).map(inp => {
+  if (inp) {
+    inp.addEventListener('input', function () {
+      autocomplete(this.value, inp);
+    });
+  }
+});
 
 async function fetchJson(Input) {
   let response = await fetch('/search?q=' + Input);
   return await response.json();
 }
 
-async function autocomplete(val) {
+async function autocomplete(val, inp) {
   if (val.length < 1) {
     result.innerHTML = '';
     return;
   }
 
-  var data = await fetchJson(val);
-  debugger;
-  var res = '<ul>';
+  let data = await fetchJson(val);
+  let res = '<ul>';
   data.forEach(e => {
     res += '<li>' + `<a href = '${e.alias}'>` + `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name + '</a></li>';
   });
   res += '</ul>';
-  var result = document.querySelector('.result-search');
+  let result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(inp.parentNode).find('.result-search');
   result.innerHTML = res;
-  document.querySelector('body').addEventListener('click', function (e) {
-    const search = document.querySelector('.result-search ul');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('body').on('click', function (e) {
+    const search = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.result-search ul').el[0];
 
-    if (document.querySelector('.result-search ul') && e.target !== search) {
+    if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.result-search ul') && e.target !== search) {
       search.remove();
     }
   });
