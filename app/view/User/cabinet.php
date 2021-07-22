@@ -7,9 +7,6 @@
 		<a class="list" href="/user/changepassword">Сменить пароль</a>
 	<? endif; ?>
 
-	<?print_r($user['rights']);?>
-	<?='<br>super_usser = '.SU;?>
-
 	<? if (in_array('3', $user['rights'])||SU): ?>
 		<a class="list" href="/adminsc">Admin</a>
 	<? endif; ?>
