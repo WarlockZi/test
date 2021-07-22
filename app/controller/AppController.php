@@ -23,7 +23,7 @@ class AppController extends Controller
 			if ($user['email'] === $_ENV['SU_EMAIL']) {
 				define('SU', true);
 			} else {
-				define('SU', true);
+				define('SU', false);
 			}
 		}
 
