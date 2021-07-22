@@ -15,7 +15,7 @@
 		<div class="content"><div class="row">
 			<p class="test-name" value="<?= $test['id'] ?>"><?= $test['test_name']?></p>
 				<div class = "test_delete" data-hover = "showTip" data-click = "delete" tip = "удалить тест : <?= $test['test_name']?>">
-					<?= require_once ROOT . '/app/view/components/trashIcon.php' ?>
+					<?= include  ROOT . '/app/view/components/icons/trashIcon.php' ?>
 				</div>
 
 			</div>

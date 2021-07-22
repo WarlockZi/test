@@ -36,6 +36,11 @@ a:hover {
   box-sizing: border-box;
 }
 
+.header__wrap{
+  max-width: 1310px;
+  margin: auto;
+  width: 100%;
+}
 
 header {
   display: flex;
@@ -48,37 +53,12 @@ header {
 }
 
 @media only screen and (max-width: 400px) {
-
 }
 
 ///* xs (<=543px) */
 @media (min-width: 401px) and (max-width: 575px) {
-
 }
 
-header {
-
-  .user-button i {
-    font-size: 3.5vw;
-  }
-
-  .container-do-test {
-    align-items: flex-start;
-  }
-
-  .test-menu-wrap {
-    margin: 0;
-  }
-
-  .dtxt {
-    width: 80%;
-  }
-
-  .nav {
-    right: 0;
-    width: auto;
-  }
-}
 
 ///* s (>=576 и <=767) */
 @media (min-width: 575px) and (max-width: 768px) {
@@ -95,5 +75,4 @@ header {
 
 ///* xl (>=1200) */
 @media (min-width: 1200px) {
-
 }

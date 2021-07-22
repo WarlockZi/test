@@ -75,6 +75,13 @@ class View
 		self::$jsCss['css'][] = "<link href='/public/dist/{$file}{$time}' type='text/css' rel='stylesheet'>";
 	}
 
+	public static function getSearch($selector)
+	{
+		echo "<div class='search {$selector}'>";
+		include ROOT . '/app/view/components/header/search.php' ;
+		echo "</div>";
+	}
+
 	public static function getCSS()
 	{
 		$css = '';

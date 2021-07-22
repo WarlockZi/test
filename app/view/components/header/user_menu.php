@@ -8,7 +8,7 @@
 
 <? else: ?>
 
-<div class="FIO">
+<div class="user-menu__FIO">
 	<?= "{$user['surName']} {$user['name']}"; ?>
 
 	<div class="nav">

@@ -6,7 +6,7 @@
 	</div>
 <!--	<a title="Whatsapp" href="whatsapp://send?phone=79814362309"><img src="/pic/WhatsApp.jpg" alt="Написать в Whatsapp" /></a>-->
 
-	<? include ROOT . '/app/view/components/header/header-search.php' ?>
+	<? $this::getSearch("search-top") ?>
 
 	<?include_once ROOT.'/app/view/components/header/user_menu.php'?>
 

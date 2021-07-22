@@ -20,7 +20,7 @@
 
 <body>
 
-<? include_once ROOT . '/app/view/components/header/header_top.php';?>
+<? include_once ROOT . '/app/view/components/header/top.php';?>
 <? include_once ROOT . '/app/view/components/header/header.php';?>
 
 <?= $content ?>
