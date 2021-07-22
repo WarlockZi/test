@@ -1392,7 +1392,8 @@ textarea:focus,
   align-items: center;
   font: bold 17px/21px 'Proxima Nova', sans-serif;
   padding: 0 25px;
-  white-space: nowrap; }
+  white-space: nowrap;
+  margin: 0 auto; }
 
 .phone > a {
   position: relative;
@@ -1551,7 +1552,8 @@ textarea:focus,
   align-items: center;
   font: bold 17px/21px 'Proxima Nova', sans-serif;
   padding: 0 25px;
-  white-space: nowrap; }
+  white-space: nowrap;
+  margin: 0 auto; }
 
 .phone > a {
   position: relative;
