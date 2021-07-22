@@ -350,6 +350,12 @@ async function fetchJson(Input) {
   return await response.json();
 }
 
+function decorate(content, tag) {
+  let el = document.createElement(tag);
+  el.appendChild(content);
+  return el;
+}
+
 async function autocomplete(val, inp) {
   if (val.length < 1) {
     result.innerHTML = '';
@@ -357,13 +363,15 @@ async function autocomplete(val, inp) {
   }
 
   let data = await fetchJson(val);
-  let res = '<ul>';
-  data.forEach(e => {
-    res += '<li>' + `<a href = '${e.alias}'>` + `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name + '</a></li>';
+  let ul = document.createElement('ul');
+  let lis = data.map(e => {
+    let a = document.createElement("a");
+    a.href = e.alias;
+    a.innerHTML = `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name;
+    ul.appendChild(decorate(a, 'li'));
   });
-  res += '</ul>';
-  let result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(inp.parentNode).find('.result-search');
-  result.innerHTML = res;
+  let result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(inp.parentNode).find('.search__result');
+  result.appendChild(ul);
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('body').on('click', function (e) {
     const search = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.result-search ul').el[0];
 

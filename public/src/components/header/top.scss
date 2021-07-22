@@ -1,10 +1,5 @@
 @import "../../var";
-
-.header__wrap{
-  max-width: 1310px;
-  margin: auto;
-  width: 100%;
-}
+@import "../mixin_media/mixin_media";
 
 .top-menu {
   background: #1bbc9b;
@@ -18,37 +13,6 @@
   width: 100%;
 }
 
-.top-menu__find{
-  height: 18px;
-  width: 18px;
-  position: absolute;
-  top: 9px;
-  right: 42px;
-  cursor: pointer;
-}
-.top-menu__find:before{
-  border: 2px solid #ccc;
-  border-radius: 50%;
-  box-sizing: border-box;
-  left: 0;
-  top: 0px;
-  height: 14px;
-  width: 14px;
-  content: '';
-  display: block;
-  position: absolute;
-}
-.top-menu__find:after{
-  background: #ccc;
-  bottom: 0px;
-  transform: rotate(-45deg);
-  right: 3px;
-  height: 9px;
-  width: 2px;
-  content: '';
-  display: block;
-  position: absolute;
-}
 .contacts {
   align-self: center;
   margin-left: 50px;
@@ -76,7 +40,7 @@
     background-color: #3da58f;
   }
 
-  .user-icon {
+  .user-menu__icon {
     padding: 5px 16px;
     display: flex;
     width: 14px;
@@ -84,7 +48,7 @@
   }
 }
 
-.FIO {
+.user-menu__FIO {
 
   position: relative;
   display: flex;
@@ -126,16 +90,6 @@
       padding: 5px 10px;
       color: $color-a;
   }
-}
-
-#icon-locked {
-  fill: #e30000;
-}
-
-.h-upper > div:not([class]) {
-  position: relative;
-  top: 8px;
-  white-space: nowrap;
 }
 
 .h-upper {

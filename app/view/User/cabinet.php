@@ -19,9 +19,6 @@
 		<a class="list" href="/freetest/1">Проходить свободные тесты</a>
 	<? endif; ?>
 
-
-
-
 </section>
 
 

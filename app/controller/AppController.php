@@ -21,6 +21,8 @@ class AppController extends Controller
 			$user = $this->user = App::$app->user->get($_SESSION['id']);
 			if ($user['email'] === $_ENV['SU_EMAIL']) {
 				define('SU', true);
+			} else {
+				define('SU', true);
 			}
 		}
 

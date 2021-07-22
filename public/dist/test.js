@@ -109,7 +109,7 @@ function objToServer(errorCnt) {
     pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
     testId: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-test-id]').el[0].dataset.testId,
     test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText,
-    userName: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.FIO').el[0].innerText
+    userName: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.user-menu__FIO').el[0].innerText
   };
 }
 
