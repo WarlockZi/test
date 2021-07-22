@@ -6,6 +6,10 @@
 	<? if (in_array('2', $user['rights'])): ?>
 		<a class="list" href="/user/changepassword">Сменить пароль</a>
 	<? endif; ?>
+
+	<?=$user['rights'];?>
+	<?=SU;?>
+
 	<? if (in_array('3', $user['rights'])||SU): ?>
 		<a class="list" href="/adminsc">Admin</a>
 	<? endif; ?>
