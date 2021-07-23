@@ -10,15 +10,6 @@ new test_delete($('.test_delete').el[0]);
 if (window.location.pathname.match('/adminsc\/test/')) {
     document.querySelector('.module.test').classList.add('activ')
 }
-/// delete test tip
-// $('.content').on('mouseover', function (e) {
-//     if ($(e.target).hasClass('test_delete')) {
-//         let tipTxt = e.target.getAttribute('tip')
-//         let tipEl = document.createElement('div')
-//         $(tipEl).addClass('tip')
-//         tipEl.innerText = tipTxt
-//     }
-// })
 
 
 check('/image/create')

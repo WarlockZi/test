@@ -480,6 +480,7 @@ class test_delete {
       let res = await post('/test/delete', {
         id: id
       });
+      res = JSON.parse(res);
 
       if (res.msg === 'ok') {
         window.location = '/test/edit';
