@@ -35,14 +35,14 @@ class QuestionController Extends AppController
 		ob_start();
 		require ROOT . '/app/view/Test/editBlockQuestion.php';
 		$block = ob_get_clean();
-		$block = '<div class = "overlay">' . $block . '</div>';
+//		$block = '<div class = "overlay">' . $block . '</div>';
 
 		$testid = $this->req['testid'];
 		$data = compact("testid", "block");
 		exit($json = json_encode($data));
 	}
 
-	public function actionCreateOrUpdate()
+	public function actionUpdateOrCreate()
 	{
 		try {
 			$answers = $this->req['answers'];

@@ -139,16 +139,7 @@ if (typeof (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test_delete').el[0] !== 
 
 if (window.location.pathname.match('/adminsc\/test/')) {
   document.querySelector('.module.test').classList.add('activ');
-} /// delete test tip
-// $('.content').on('mouseover', function (e) {
-//     if ($(e.target).hasClass('test_delete')) {
-//         let tipTxt = e.target.getAttribute('tip')
-//         let tipEl = document.createElement('div')
-//         $(tipEl).addClass('tip')
-//         tipEl.innerText = tipTxt
-//     }
-// })
-
+}
 
 (0,_components_dnd_dnd__WEBPACK_IMPORTED_MODULE_2__.check)('/image/create'); //Скрыть все вопросы
 
@@ -907,7 +898,7 @@ __webpack_require__.r(__webpack_exports__);
   res = await JSON.parse(res);
 
   if (res) {
-    window.location.href = '/adminsc/test/edit/?id=' + res.id + '&name=' + test_name; // $(".test-name").el[0].innerText = res.test_name
+    window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + test_name;
   }
 });
 
@@ -1131,6 +1122,7 @@ class test_delete {
       let res = await post('/test/delete', {
         id: id
       });
+      res = JSON.parse(res);
 
       if (res.msg === 'ok') {
         window.location = '/test/edit';
@@ -1439,18 +1431,20 @@ function paginate(self) {
 } //// добавление вопроса
 
 
-async function show() {
+async function show(e) {
   let testId = +(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-name').value();
   let questCount = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("[data-pagination]").count();
-  let param = {};
   let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/question/show', {
     testid: testId,
     questQnt: questCount
   });
   res = JSON.parse(res);
-  let overlayedBlock = res.block;
-  document.body.insertAdjacentHTML('afterBegin', overlayedBlock);
-  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.overlay').on('click', clickOverlay);
+  let Block = res.block;
+  let blocks = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks').el[0];
+  blocks.insertAdjacentHTML('afterBegin', Block);
+  let newBlock = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks .block:last-child').el[0];
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newBlock).addClass('flex1');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newBlock).find('.question__save').on('click', questionSave(e)); // $('.overlay').on('click', clickOverlay)
 }
 
 function showHidePaginBtn(e, pagItem) {
@@ -1468,36 +1462,32 @@ function appendBlock() {
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-add').on('click', _Test_edit__WEBPACK_IMPORTED_MODULE_2__.aAdd);
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.q-delete').on('click', _Test_edit__WEBPACK_IMPORTED_MODULE_2__.qDelete);
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-del').on('click', _Test_edit__WEBPACK_IMPORTED_MODULE_2__.aDelete);
-}
+} // function clickOverlay(e) {
+//     if (e.target.classList.contains('question__save')) {
+//         questionSave(e);
+//         return
+//     }
+//     if (e.target.classList.contains('question__cansel')) {
+//         closeOverlay();
+//         return
+//     }
+//     if (e.target.classList.contains('overlay')) {
+//         closeOverlay();
+//         return
+//     }
+// }
 
-function clickOverlay(e) {
-  if (e.target.classList.contains('question__save')) {
-    questionSave(e);
-    return;
-  }
-
-  if (e.target.classList.contains('question__cansel')) {
-    closeOverlay();
-    return;
-  }
-
-  if (e.target.classList.contains('overlay')) {
-    closeOverlay();
-    return;
-  }
-}
 
 function hideVisibleBlock() {
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block.flex1').removeClass('flex1');
-}
+} // function closeOverlay() {
+//     document.body.removeChild($('.overlay').el[0])
+// }
 
-function closeOverlay() {
-  document.body.removeChild((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.overlay').el[0]);
-}
 
 async function questionSave(e) {
   let block = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.overlay').find('.block');
-  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/question/CreateOrUpdate', {
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/question/UpdateOrCreate', {
     question: (0,_Test_edit__WEBPACK_IMPORTED_MODULE_2__.getQuestion)(e, block),
     answers: (0,_Test_edit__WEBPACK_IMPORTED_MODULE_2__.getAnswers)(e, block, (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(block).find('textarea').value)
   });

@@ -37,11 +37,10 @@ function paginate(self) {
 }
 
 //// добавление вопроса
-async function show() {
+async function show(e) {
     let testId = +$('.test-name').value()
     let questCount = $("[data-pagination]").count()
 
-    let param = {}
     let res = await post(
         '/question/show',
         {
@@ -49,9 +48,13 @@ async function show() {
             questQnt: questCount
         })
     res = JSON.parse(res)
-    let overlayedBlock = res.block
-    document.body.insertAdjacentHTML('afterBegin', overlayedBlock)
-    $('.overlay').on('click', clickOverlay)
+    let Block = res.block
+    let blocks = $('.blocks').el[0]
+    blocks.insertAdjacentHTML('afterBegin', Block)
+    let newBlock = $('.blocks .block:last-child').el[0]
+    $(newBlock).addClass('flex1')
+    $(newBlock).find('.question__save').on('click', questionSave(e))
+    // $('.overlay').on('click', clickOverlay)
 }
 
 function showHidePaginBtn(e, pagItem) {
@@ -71,34 +74,34 @@ function appendBlock() {
     $('.a-del').on('click', aDelete)
 }
 
-function clickOverlay(e) {
-    if (e.target.classList.contains('question__save')) {
-        questionSave(e);
-        return
-    }
-    if (e.target.classList.contains('question__cansel')) {
-        closeOverlay();
-        return
-    }
-    if (e.target.classList.contains('overlay')) {
-        closeOverlay();
-        return
-    }
-}
+// function clickOverlay(e) {
+//     if (e.target.classList.contains('question__save')) {
+//         questionSave(e);
+//         return
+//     }
+//     if (e.target.classList.contains('question__cansel')) {
+//         closeOverlay();
+//         return
+//     }
+//     if (e.target.classList.contains('overlay')) {
+//         closeOverlay();
+//         return
+//     }
+// }
 
 function hideVisibleBlock() {
     $('.block.flex1').removeClass('flex1')
 }
 
-function closeOverlay() {
-    document.body.removeChild($('.overlay').el[0])
-}
+// function closeOverlay() {
+//     document.body.removeChild($('.overlay').el[0])
+// }
 
 async function questionSave(e) {
 
     let block = $('.overlay').find('.block')
     let res = await post(
-        '/question/CreateOrUpdate',
+        '/question/UpdateOrCreate',
         {
             question: getQuestion(e, block),
             answers: getAnswers(e, block, $(block).find('textarea').value),

@@ -14,7 +14,7 @@ $(".save-test").on('click', async function () {
     })
     res = await JSON.parse(res)
     if (res) {
-        window.location.href = '/adminsc/test/edit/?id='+res.id+'&name='+test_name
+        window.location.href = `/adminsc/test/edit/${res.id}`+'?id='+res.id+'&name='+test_name
     }
 
 })
