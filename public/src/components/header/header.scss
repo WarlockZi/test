@@ -1,10 +1,6 @@
+@import "logo";
 @import "phone";
-
-a,
-.add-freetest,
-a:hover {
-  cursor: pointer;
-}
+@import "header-catalog-menu";
 
 .d-content {
   max-width: 800px;
@@ -36,11 +32,11 @@ a:hover {
   box-sizing: border-box;
 }
 
-.header__wrap{
-  max-width: 1310px;
-  margin: auto;
-  width: 100%;
-}
+//.header__wrap{
+//  max-width: 1310px;
+//  margin: auto;
+//  width: 100%;
+//}
 
 header {
   display: flex;

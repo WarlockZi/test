@@ -177,7 +177,7 @@ async function aDelete(e) {
 }
 async function aAdd(e) {
   if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(e.target).hasClass('a-add')) {
-    let q_id = +e.target.closest('.e-block-a').id;
+    let q_id = +e.target.closest('.e-block-q').id;
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/answer/show', {
       q_id
     });
@@ -904,9 +904,10 @@ __webpack_require__.r(__webpack_exports__);
     sort,
     parent
   });
+  res = await JSON.parse(res);
 
   if (res) {
-    window.location.href = '/adminsc/test/edit/1';
+    window.location.href = '/adminsc/test/edit/?id=' + res.id + '&name=' + test_name; // $(".test-name").el[0].innerText = res.test_name
   }
 });
 
@@ -1132,7 +1133,7 @@ class test_delete {
       });
 
       if (res.msg === 'ok') {
-        window.location.reload();
+        window.location = '/test/edit';
       }
     }
   }
@@ -1382,12 +1383,8 @@ function check(url) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
-/* harmony import */ var _middle_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./middle.scss */ "./public/src/components/header/middle.scss");
-/* harmony import */ var _header_menu_sass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header-menu.sass */ "./public/src/components/header/header-menu.sass");
-/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
-/* harmony import */ var _header_panel_sass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./header-panel.sass */ "./public/src/components/header/header-panel.sass");
-
-
+/* harmony import */ var _header_menu_sass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header-menu.sass */ "./public/src/components/header/header-menu.sass");
+/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
 
 
 
@@ -1612,33 +1609,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/header-panel.sass":
-/*!********************************************************!*\
-  !*** ./public/src/components/header/header-panel.sass ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./public/src/components/header/header.scss":
 /*!**************************************************!*\
   !*** ./public/src/components/header/header.scss ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/header/middle.scss":
-/*!**************************************************!*\
-  !*** ./public/src/components/header/middle.scss ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 

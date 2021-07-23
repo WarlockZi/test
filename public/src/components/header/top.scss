@@ -1,5 +1,5 @@
 @import "../../var";
-@import "../mixin_media/mixin_media";
+@import "../../mixin_media";
 
 .top-menu {
   background: #1bbc9b;
@@ -16,6 +16,9 @@
 .contacts {
   align-self: center;
   margin-left: 50px;
+  @include _500{
+    display: none;
+  }
 
   .item {
     padding: 0 10px;
@@ -92,7 +95,7 @@
   }
 }
 
-.h-upper {
+.header__info {
   padding: 12px 0 10px 0;
   display: flex;
   position: relative;

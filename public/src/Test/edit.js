@@ -2,10 +2,7 @@ import './edit.scss'
 import {test_delete, validate, post, $} from '../common'
 import {check} from '../components/dnd/dnd'
 
-
-
-
-if (typeof $('.test_delete').el[0] !=='undefined') 
+if (typeof $('.test_delete').el[0] !=='undefined')
 new test_delete($('.test_delete').el[0]);
 
 
@@ -50,7 +47,7 @@ export async function aDelete(e) {
 
 export async function aAdd(e) {
     if ($(e.target).hasClass('a-add')) {
-        let q_id = +e.target.closest('.e-block-a').id
+        let q_id = +e.target.closest('.e-block-q').id
         let res = await post('/answer/show', {q_id})
         let visibleBlock = $('.block').getWithStyle('display', 'flex')
         $(visibleBlock).find('.answers').insertAdjacentHTML('afterBegin', res)

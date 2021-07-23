@@ -1,4 +1,6 @@
 @import "../../var";
+@import "../../mixin_media";
+
 /***** Всплывающие телефоны */
 .phone{
   position: relative;
@@ -8,6 +10,10 @@
   padding: 0 25px;
   white-space: nowrap;
   margin: 0 auto;
+  @include _400{
+    display: none;
+  }
+
 }
 .phone > a{
   position: relative;
@@ -36,10 +42,17 @@
   border-right: 3px solid $color-main;
   transform: rotate(45deg);
 }
+
+.phone:hover .phone__popup-inner{
+  padding: 25px 30px;
+  height: auto;
+  overflow: visible;
+}
+
 .phone__popup{
   position: absolute;
-  left: 0;
-  top: 100%;
+  left: -15%;
+  bottom: -10px;
   padding-top: 0;
   height: 0;
   z-index: 6;
@@ -47,8 +60,7 @@
 .phone__popup-inner{
   width: 200px;
   background: #fff;
-  -webkit-box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
-  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
+  box-shadow: 0 10px 25px 0 hsl(0, 0, 0);
   font: 15px/19px 'Proxima Nova', sans-serif;
   color: #181617;
   padding: 0 30px;
@@ -56,26 +68,16 @@
   overflow: hidden;
   border-radius: 2px;
   position: relative;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
   transition: all 0.3s;
 }
-.phone:hover .phone__popup-inner{
-  padding: 25px 30px;
-  height: auto;
-  overflow: visible;
-}
-//.phone:hover .popup-info{
-//   padding-top: 15px;
-//   height: auto;
-// }
+
 .phone__popup-inner:before{
   content: '';
   border-bottom: 10px solid #fff;
   border-left: 11px solid transparent;
   border-right: 11px solid transparent;
   position: absolute;
-  left: 55px;
+  left: 192px;
   top: -10px;
 }
 .phone__popup-head{

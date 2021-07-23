@@ -13,6 +13,9 @@
 .contacts {
   align-self: center;
   margin-left: 50px; }
+  @media (max-width: 500px) {
+    .contacts {
+      display: none; } }
   .contacts .item {
     padding: 0 10px;
     color: #fff; }
@@ -70,7 +73,7 @@
     padding: 5px 10px;
     color: #5a5a5a; }
 
-.h-upper {
+.header__info {
   padding: 12px 0 10px 0;
   display: flex;
   position: relative;
@@ -81,15 +84,13 @@
   width: 100%;
   margin: auto; }
 
+
 @charset "UTF-8";
 .logo {
   display: flex;
   margin: 0 0 0 10px;
   align-items: center;
-  height: 40px; }
-  @media (max-width: 800px) {
-    .logo {
-      height: 32px; } }
+  height: 100%; }
   .logo a {
     width: 100px;
     display: block; }
@@ -100,9 +101,15 @@
   @media (max-width: 800px) {
     .logo_square {
       display: none; } }
+  @media (max-width: 600px) {
+    .logo_square {
+      display: flex; } }
 
 .logo_vitex {
   height: 100%; }
+  @media (max-width: 600px) {
+    .logo_vitex {
+      display: none; } }
 
 .logo__description {
   width: 120px;
@@ -123,6 +130,9 @@
   padding: 0 25px;
   white-space: nowrap;
   margin: 0 auto; }
+  @media (max-width: 400px) {
+    .phone {
+      display: none; } }
 
 .phone > a {
   position: relative;
@@ -151,10 +161,15 @@
   border-right: 3px solid #1bbc9b;
   transform: rotate(45deg); }
 
+.phone:hover .phone__popup-inner {
+  padding: 25px 30px;
+  height: auto;
+  overflow: visible; }
+
 .phone__popup {
   position: absolute;
-  left: 0;
-  top: 100%;
+  left: -15%;
+  bottom: -10px;
   padding-top: 0;
   height: 0;
   z-index: 6; }
@@ -162,8 +177,7 @@
 .phone__popup-inner {
   width: 200px;
   background: #fff;
-  -webkit-box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
-  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
+  box-shadow: 0 10px 25px 0 black;
   font: 15px/19px 'Proxima Nova', sans-serif;
   color: #181617;
   padding: 0 30px;
@@ -171,14 +185,7 @@
   overflow: hidden;
   border-radius: 2px;
   position: relative;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
   transition: all 0.3s; }
-
-.phone:hover .phone__popup-inner {
-  padding: 25px 30px;
-  height: auto;
-  overflow: visible; }
 
 .phone__popup-inner:before {
   content: '';
@@ -186,7 +193,7 @@
   border-left: 11px solid transparent;
   border-right: 11px solid transparent;
   position: absolute;
-  left: 55px;
+  left: 192px;
   top: -10px; }
 
 .phone__popup-head {
@@ -272,105 +279,6 @@
       border-top: 10px solid white;
       border-left: 10px solid white; }
 
-
-@charset "UTF-8";
-/***** Всплывающие телефоны */
-.phone {
-  position: relative;
-  display: flex;
-  align-items: center;
-  font: bold 17px/21px 'Proxima Nova', sans-serif;
-  padding: 0 25px;
-  white-space: nowrap;
-  margin: 0 auto; }
-
-.phone > a {
-  position: relative;
-  color: #4e4e4e; }
-
-.phone > a:before {
-  content: '\1F57B';
-  position: absolute;
-  width: 26px;
-  height: 26px;
-  left: -20px;
-  top: -4px;
-  color: #1bbc9b;
-  font-size: 27px;
-  background-position: 0 -44px;
-  transform: rotate(-30deg); }
-
-.phone > a:after {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  right: -20px;
-  top: 3px;
-  border-bottom: 3px solid #1bbc9b;
-  border-right: 3px solid #1bbc9b;
-  transform: rotate(45deg); }
-
-.phone__popup {
-  position: absolute;
-  left: 0;
-  top: 100%;
-  padding-top: 0;
-  height: 0;
-  z-index: 6; }
-
-.phone__popup-inner {
-  width: 200px;
-  background: #fff;
-  -webkit-box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
-  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
-  font: 15px/19px 'Proxima Nova', sans-serif;
-  color: #181617;
-  padding: 0 30px;
-  height: 0;
-  overflow: hidden;
-  border-radius: 2px;
-  position: relative;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s; }
-
-.phone:hover .phone__popup-inner {
-  padding: 25px 30px;
-  height: auto;
-  overflow: visible; }
-
-.phone__popup-inner:before {
-  content: '';
-  border-bottom: 10px solid #fff;
-  border-left: 11px solid transparent;
-  border-right: 11px solid transparent;
-  position: absolute;
-  left: 55px;
-  top: -10px; }
-
-.phone__popup-head {
-  border-bottom: 1px solid #ebebeb;
-  padding-bottom: 15px;
-  margin-bottom: 16px;
-  white-space: initial; }
-
-.phone__popup p {
-  margin: 0 0 11px; }
-
-.phone__popup-phones {
-  margin: 0; }
-
-.phone__popup-phones a {
-  font: bold 17px/21px 'Proxima Nova', sans-serif;
-  color: #343133;
-  line-height: 1.7; }
-
-a,
-.add-freetest,
-a:hover {
-  cursor: pointer; }
-
 .d-content {
   max-width: 800px;
   margin: auto; }
@@ -395,11 +303,6 @@ a:hover {
   max-width: 1310px;
   box-sizing: border-box; }
 
-.header__wrap {
-  max-width: 1310px;
-  margin: auto;
-  width: 100%; }
-
 header {
   display: flex;
   flex: 0 0 auto;
@@ -408,70 +311,6 @@ header {
   box-shadow: 0px 6px 10px 0px #d2d2d2;
   margin-bottom: 20px;
   flex-flow: column; }
-
-label[for="toggle-button"] {
-  position: absolute;
-  top: -9px;
-  left: 0px;
-  color: #fff;
-  font-size: 21px;
-  padding: 7px 9px;
-  cursor: pointer;
-  z-index: 4; }
-
-#panel {
-  width: 100%;
-  display: flex;
-  flex-flow: column;
-  height: 100%; }
-
-#panel header .wrap {
-  box-shadow: 0 5px 18px 0 #d2d2d2;
-  min-height: 100vh;
-  margin: 0 0 -83px 0; }
-
-input#toggle-button {
-  display: none; }
-
-/************      MENU ***************/
-nav#menu {
-  max-width: 0px;
-  min-width: 0px;
-  position: relative;
-  overflow: hidden;
-  display: none; }
-
-#toggle-button:checked ~ nav#menu {
-  min-width: 400px;
-  max-width: 400px; }
-
-#toggle-button:checked ~ label[for="toggle-button"] {
-  position: absolute;
-  text-align: center;
-  padding: 1px;
-  left: 0px;
-  top: 0px;
-  width: 30px;
-  height: 30px;
-  color: #000;
-  z-index: 3;
-  border: 1px solid #e30000; }
-
-.menu-wrap {
-  margin: 50px 20px 0 20px;
-  width: 360px; }
-
-.menu-wrap .item {
-  padding: 0;
-  transition: .3s;
-  text-transform: uppercase; }
-
-#toggle-button:checked ~ #menu .menu-wrap .item {
-  padding: 10px 0;
-  position: relative; }
-
-.transition {
-  transition: .3s; }
 
 html {
   height: 100%;
@@ -525,8 +364,8 @@ textarea:focus,
 .search {
   position: relative;
   height: 32px;
-  margin: 6px 5px;
-  display: inline-flex; }
+  margin: 0 15px;
+  display: flex; }
   @media (max-width: 800px) {
     .search.search-header {
       display: none; } }
@@ -534,7 +373,8 @@ textarea:focus,
     display: none; }
     @media (max-width: 800px) {
       .search.search-top {
-        display: flex; } }
+        display: flex;
+        margin: 2px; } }
 
 .search input {
   flex: 1;
