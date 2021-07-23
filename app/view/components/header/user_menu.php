@@ -1,9 +1,7 @@
 <? if (!isset($user)): ?>
 
 	<a class="user-menu" href="/user/login" aria-label="login">
-<!--		<div class="icon">-->
 			<?= include_once ROOT . '/app/view/components/icons/userIcon.php'; ?>
-<!--		</div>-->
 	</a>
 
 <? else: ?>
@@ -14,7 +12,7 @@
 	<div class="nav">
 		<a href="/user/edit">Изменить свой профиль</a>
 		<a href="/user/cabinet">Личный кабинет</a>
-		<?= in_array('1', $user['rights']) ? // редактировать
+		<?= (in_array('1', $user['rights'])||SU) ? // редактировать
 			'<a href="/test/edit/1">Редактировать тесты</a>
 			<a href="/freetest/edit/41">Редактировать свободный тест</a>' : ''
 		?>

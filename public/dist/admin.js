@@ -62,12 +62,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
-/* harmony import */ var _middle_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./middle.scss */ "./public/src/components/header/middle.scss");
-/* harmony import */ var _header_menu_sass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header-menu.sass */ "./public/src/components/header/header-menu.sass");
-/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
-/* harmony import */ var _header_panel_sass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./header-panel.sass */ "./public/src/components/header/header-panel.sass");
-
-
+/* harmony import */ var _header_menu_sass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header-menu.sass */ "./public/src/components/header/header-menu.sass");
+/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
 
 
 
@@ -113,35 +109,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/header-panel.sass":
-/*!********************************************************!*\
-  !*** ./public/src/components/header/header-panel.sass ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./public/src/components/header/header.scss":
 /*!**************************************************!*\
   !*** ./public/src/components/header/header.scss ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/header/middle.scss":
-/*!**************************************************!*\
-  !*** ./public/src/components/header/middle.scss ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -260,7 +230,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _admin_catalog_menu_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./admin_catalog_menu.scss */ "./public/src/Admin/admin_catalog_menu.scss");
 /* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
 
- // import '../components/header/logo.scss'
 
 
 

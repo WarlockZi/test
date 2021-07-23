@@ -184,7 +184,7 @@ class test_delete {
                 {id: id}
             )
             if (res.msg === 'ok'){
-                window.location.reload()
+                window.location = '/test/edit'
             }
         }
     }

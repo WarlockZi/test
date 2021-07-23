@@ -3,7 +3,7 @@
 
 
 
-  <? if (in_array('4', $user['rights'])):// SU ?>
+  <? if (in_array('4', $user['rights'])||SU):// SU ?>
 
 
 

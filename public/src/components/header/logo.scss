@@ -1,13 +1,13 @@
-@import "../mixin_media/mixin_media";
+@import "../../mixin_media";
 
 .logo {
   display: flex;
   margin: 0 0 0 10px;
   align-items: center;
-  height: 40px;
-  @include _800 {
-    height: 32px;
-  }
+  height: 100%;
+  //@include _800 {
+  //  height: 32px;
+  //}
 
   a {
     width: 100px;
@@ -23,11 +23,19 @@
   @include _800 {
     display: none;
   }
+  @include _600 {
+    display: flex;
+  }
+
 
 }
 
 .logo_vitex {
   height: 100%;
+  @include _600 {
+    display: none;
+  }
+
 }
 
 .logo__description {

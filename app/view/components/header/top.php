@@ -1,6 +1,6 @@
 <div class="top-menu">
 
-	<div class="contacts ">
+	<div class="contacts">
 		<a class="item" href="/about">О НАС</a>
 		<a class="item" href="/about/contacts">КОНТАКТЫ</a>
 	</div>
