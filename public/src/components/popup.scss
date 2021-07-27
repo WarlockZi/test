@@ -1,0 +1,18 @@
+.popup{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-flow: column;
+
+}
+.popup__item{
+  width: 204px;
+  height: 26px;
+  background: #4e4e4e;
+  padding: 10px;
+  color: #ffffff;
+}
+.popup__close{
+
+}

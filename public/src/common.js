@@ -37,23 +37,26 @@ function clearCache() {
 
 let popup = {
     show:function (txt) {
-        let close = document.createElement('div')
-        close.classList.add('close')
-        let popup = document.createElement('div')
-        close.classList.add('popup')
-        popup.innerText = txt
-        popup.append(close)
-        let wrapper = document.createElement('div')
-        wrapper.classList.add('popup__wrapper')
-        wrapper.append(popup)
+        let close = this.el('div', 'popup__close')
+        // let popup = this.el('div', 'popup')
+        let popup__item = this.el('div', 'popup__item')
+
+        popup__item.innerText = txt
+        popup__item.append(close)
+        let popup = this.el('div', 'popup')
+        popup.append(popup__item)
         popup.addEventListener('click', this.close)
-        document.body.append(wrapper)
+        document.body.append(popup)
     },
     close:function (e) {
         if (e.target.classList.contains('close')){
 
         }
-        
+    },
+    el:function (tagName, className) {
+        let el = document.createElement(tagName)
+        el.classList.add(className)
+        return el
     }
 }
 
@@ -157,6 +160,7 @@ function MyJquery(elements) {
         }
     }
 }
+
 
 
 function $(selector) {
