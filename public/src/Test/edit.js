@@ -1,9 +1,10 @@
 import './edit.scss'
-import {test_delete, validate, post, $} from '../common'
+import '../components/popup.scss'
+import {test_delete, validate, post, $, popup} from '../common'
 import {check} from '../components/dnd/dnd'
 
-if (typeof $('.test_delete').el[0] !=='undefined')
-new test_delete($('.test_delete').el[0]);
+if (typeof $('.test_delete').el[0] !== 'undefined')
+    new test_delete($('.test_delete').el[0]);
 
 
 /// class active для admin_main_menu
@@ -24,13 +25,14 @@ $('.a-del').on('click', aDelete)
 
 export async function aDelete(e) {
     if ($(e.target).hasClass('a-del')) {
-        let a_id = +e.target.closest('.e-block-a').id
-        let res = await post('/answer/delete', {a_id})
-        res = JSON.parse(res)
-        if (res.msg === 'ok') {
-            let f = e.target.closest('.e-block-a')
-            if (confirm("Удалить этот ответ?")) {
+        if (confirm("Удалить этот ответ?")) {
+            let a_id = +e.target.closest('.e-block-a').id
+            let res = await post('/answer/delete', {a_id})
+            res = JSON.parse(res)
+            if (res.msg === 'ok') {
+                let f = e.target.closest('.e-block-a')
                 f.remove()
+                popup.show('Ответ удален')
             }
         }
     }
@@ -41,13 +43,13 @@ export async function aAdd(e) {
         let q_id = +e.target.closest('.e-block-q').id
         let res = await post('/answer/show', {q_id})
         let visibleBlock = $('.block.flex1').el[0]
-        $(visibleBlock).find('.answers').insertAdjacentHTML('afterBegin', res)
-        let newAnswer = $(visibleBlock).find('.e-block-a:first-child')
+        $(visibleBlock).find('.answers').insertAdjacentHTML('beforeend', res)
+        let newAnswer = $(visibleBlock).find('.e-block-a:last-child')
         $(newAnswer).css('background-color', 'pink')
         setTimeout(function () {
                 $(newAnswer).css('background-color', 'white')
 
-            }, 300
+            }, 400
         )
         $(newAnswer).on('click', aDelete)
 

@@ -11,7 +11,9 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 /* harmony import */ var _do_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./do.scss */ "./public/src/Test/do.scss");
-/* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
+/* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
+/* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
+
 
 
  //Скрыть все вопросы
@@ -130,63 +132,65 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getAnswers": () => (/* binding */ getAnswers)
 /* harmony export */ });
 /* harmony import */ var _edit_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit.scss */ "./public/src/Test/edit.scss");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _components_dnd_dnd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/dnd/dnd */ "./public/src/components/dnd/dnd.js");
+/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _components_dnd_dnd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/dnd/dnd */ "./public/src/components/dnd/dnd.js");
 
 
 
-if (typeof (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test_delete').el[0] !== 'undefined') new _common__WEBPACK_IMPORTED_MODULE_1__.test_delete((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test_delete').el[0]); /// class active для admin_main_menu
+
+if (typeof (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.test_delete').el[0] !== 'undefined') new _common__WEBPACK_IMPORTED_MODULE_2__.test_delete((0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.test_delete').el[0]); /// class active для admin_main_menu
 
 if (window.location.pathname.match('/adminsc\/test/')) {
   document.querySelector('.module.test').classList.add('activ');
 }
 
-(0,_components_dnd_dnd__WEBPACK_IMPORTED_MODULE_2__.check)('/image/create'); //Скрыть все вопросы
+(0,_components_dnd_dnd__WEBPACK_IMPORTED_MODULE_3__.check)('/image/create'); //Скрыть все вопросы
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block').removeClass("flex1"); //Показть первый вопрос
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block').removeClass("flex1"); //Показть первый вопрос
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block:first-child').addClass("flex1");
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-add').on('click', aAdd);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.q-delete').on('click', qDelete);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-del').on('click', aDelete);
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block:first-child').addClass("flex1");
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.a-add').on('click', aAdd);
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.q-delete').on('click', qDelete);
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.a-del').on('click', aDelete);
 async function aDelete(e) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(e.target).hasClass('a-del')) {
-    let a_id = +e.target.closest('.e-block-a').id;
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/answer/delete', {
-      a_id
-    });
-    res = JSON.parse(res);
+  if ((0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(e.target).hasClass('a-del')) {
+    if (confirm("Удалить этот ответ?")) {
+      let a_id = +e.target.closest('.e-block-a').id;
+      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_2__.post)('/answer/delete', {
+        a_id
+      });
+      res = JSON.parse(res);
 
-    if (res.msg === 'ok') {
-      let f = e.target.closest('.e-block-a');
-
-      if (confirm("Удалить этот ответ?")) {
+      if (res.msg === 'ok') {
+        let f = e.target.closest('.e-block-a');
         f.remove();
+        _common__WEBPACK_IMPORTED_MODULE_2__.popup.show('Ответ удален');
       }
     }
   }
 }
 async function aAdd(e) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(e.target).hasClass('a-add')) {
+  if ((0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(e.target).hasClass('a-add')) {
     let q_id = +e.target.closest('.e-block-q').id;
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/answer/show', {
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_2__.post)('/answer/show', {
       q_id
     });
-    let visibleBlock = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block.flex1').el[0];
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(visibleBlock).find('.answers').insertAdjacentHTML('afterBegin', res);
-    let newAnswer = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(visibleBlock).find('.e-block-a:first-child');
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newAnswer).css('background-color', 'pink');
+    let visibleBlock = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block.flex1').el[0];
+    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(visibleBlock).find('.answers').insertAdjacentHTML('beforeend', res);
+    let newAnswer = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(visibleBlock).find('.e-block-a:last-child');
+    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(newAnswer).css('background-color', 'pink');
     setTimeout(function () {
-      (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newAnswer).css('background-color', 'white');
-    }, 300);
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newAnswer).on('click', aDelete);
+      (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(newAnswer).css('background-color', 'white');
+    }, 400);
+    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(newAnswer).on('click', aDelete);
   }
 }
 async function qDelete(e) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(e.target).hasClass('q-delete')) {
+  if ((0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(e.target).hasClass('q-delete')) {
     if (confirm("Удалить вопрос со всеми его ответами?")) {
       let q_id = +e.target.closest('.e-block-q').id;
-      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/question/delete', {
+      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_2__.post)('/question/delete', {
         q_id
       });
       res = JSON.parse(res);
@@ -194,24 +198,24 @@ async function qDelete(e) {
       if (res.msg === 'ok') {
         let block = e.target.closest('.block');
         block.remove();
-        (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(`[data-pagination = "${res.q_id}"]`).el[0].remove();
-        (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[data-pagination]:first-child').addClass('nav-active');
-        (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block:first-child').addClass('flex1');
+        (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(`[data-pagination = "${res.q_id}"]`).el[0].remove();
+        (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('[data-pagination]:first-child').addClass('nav-active');
+        (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block:first-child').addClass('flex1');
       }
     }
   }
 } ///// question sort input validate
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.sort-q').on('change', _common__WEBPACK_IMPORTED_MODULE_1__.validate.sort); ////////// Update
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.sort-q').on('change', _common__WEBPACK_IMPORTED_MODULE_2__.validate.sort); ////////// Update
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks').on('click', function (e) {
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.blocks').on('click', function (e) {
   if (e.target.classList.contains('question__save')) {
-    let visibleBlock = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block.flex1').el[0]; // let q = $(visibleBlock).find('.e-block-q')
+    let visibleBlock = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block.flex1').el[0]; // let q = $(visibleBlock).find('.e-block-q')
     // let a = $(visibleBlock).find('.e-block-a')
 
     let question = getQuestion(e, visibleBlock);
     let answers = getAnswers(e, visibleBlock, question.id);
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/question/update', {
+    (0,_common__WEBPACK_IMPORTED_MODULE_2__.post)('/question/update', {
       question,
       answers
     });
@@ -220,10 +224,10 @@ async function qDelete(e) {
 function getQuestion(e, block) {
   return {
     id: +e.target.dataset['qid'],
-    parent: +(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-name').el[0].getAttribute('value'),
+    parent: +(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.test-name').el[0].getAttribute('value'),
     picq: '',
-    qustion: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(block).find('textarea').value,
-    sort: +(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(block).find('.sort-q').value
+    qustion: (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(block).find('textarea').value,
+    sort: +(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(block).find('.sort-q').value
   };
 }
 function getAnswers(e, block, q_id) {
@@ -959,20 +963,23 @@ function clearCache() {
 
 let popup = {
   show: function (txt) {
-    let close = document.createElement('div');
-    close.classList.add('close');
-    let popup = document.createElement('div');
-    close.classList.add('popup');
-    popup.innerText = txt;
-    popup.append(close);
-    let wrapper = document.createElement('div');
-    wrapper.classList.add('popup__wrapper');
-    wrapper.append(popup);
+    let close = this.el('div', 'popup__close'); // let popup = this.el('div', 'popup')
+
+    let popup__item = this.el('div', 'popup__item');
+    popup__item.innerText = txt;
+    popup__item.append(close);
+    let popup = this.el('div', 'popup');
+    popup.append(popup__item);
     popup.addEventListener('click', this.close);
-    document.body.append(wrapper);
+    document.body.append(popup);
   },
   close: function (e) {
     if (e.target.classList.contains('close')) {}
+  },
+  el: function (tagName, className) {
+    let el = document.createElement(tagName);
+    el.classList.add(className);
+    return el;
   }
 };
 
@@ -1367,6 +1374,64 @@ function check(url) {
 
 /***/ }),
 
+/***/ "./public/src/components/header/autocomplete.js":
+/*!******************************************************!*\
+  !*** ./public/src/components/header/autocomplete.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _autocomplete_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./autocomplete.scss */ "./public/src/components/header/autocomplete.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+
+
+let inp = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#autocomplete").el;
+Array.from(inp).map(inp => {
+  if (inp) {
+    inp.addEventListener('input', function () {
+      autocomplete(this.value, inp);
+    });
+  }
+});
+
+async function fetchJson(Input) {
+  let response = await fetch('/search?q=' + Input);
+  return await response.json();
+}
+
+function decorate(content, tag) {
+  let el = document.createElement(tag);
+  el.appendChild(content);
+  return el;
+}
+
+async function autocomplete(val, inp) {
+  if (val.length < 1) {
+    result.innerHTML = '';
+    return;
+  }
+
+  let data = await fetchJson(val);
+  let ul = document.createElement('ul');
+  let lis = data.map(e => {
+    let a = document.createElement("a");
+    a.href = e.alias;
+    a.innerHTML = `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name;
+    ul.appendChild(decorate(a, 'li'));
+  });
+  let result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(inp.parentNode).find('.search__result');
+  result.appendChild(ul);
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('body').on('click', function (e) {
+    const search = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.result-search ul').el[0];
+
+    if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.result-search ul') && e.target !== search) {
+      search.remove();
+    }
+  });
+}
+
+/***/ }),
+
 /***/ "./public/src/components/header/header.js":
 /*!************************************************!*\
   !*** ./public/src/components/header/header.js ***!
@@ -1587,6 +1652,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/src/components/header/autocomplete.scss":
+/*!********************************************************!*\
+  !*** ./public/src/components/header/autocomplete.scss ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./public/src/components/header/header-menu.sass":
 /*!*******************************************************!*\
   !*** ./public/src/components/header/header-menu.sass ***!
@@ -1615,6 +1692,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./public/src/components/header/top.scss ***!
   \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/components/popup.scss":
+/*!******************************************!*\
+  !*** ./public/src/components/popup.scss ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);

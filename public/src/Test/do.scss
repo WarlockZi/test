@@ -1,13 +1,14 @@
 @import "../var";
 
-section{
+section {
   flex: 1 0 auto;
 }
 
 .site-wrapper {
   height: 100%
 }
-.container-do-test{
+
+.container-do-test {
   display: flex;
   justify-content: start;
   flex: 1 0 auto;
@@ -21,14 +22,15 @@ section{
 }
 
 
-.apic{
-img{
-  width: 100px;
-  height: 100px;
+.apic {
+  img {
+    width: 100px;
+    height: 100px;
+  }
 }
-}
-.qpic{
-  img{
+
+.qpic {
+  img {
     width: 100px;
     height: 100px;
     object-fit: contain;
@@ -36,23 +38,23 @@ img{
 }
 
 
-.test-data{
+.test-data {
   border: 10px solid #f3f3f3;
-  padding:10px;
+  padding: 10px;
   margin: 0px 0 20px 0;
   box-shadow: 0 8px 16px 0 #949494;
   box-sizing: border-box;
   width: 100%;
 }
 
-.question{
+.question {
   display: none;
   width: 100%;
   flex-direction: column;
 }
 
 
-.q-text{
+.q-text {
   width: 60%;
   margin-bottom: 10px;
   flex: 1 0 auto;
@@ -67,31 +69,31 @@ img{
   flex-wrap: wrap;
 }
 
-.test-name
-{
+.test-name {
   color: #5e5e5e;
   font-weight: 600;
-  text-transform:uppercase;
+  text-transform: uppercase;
   font-size: 1.5rem;
   margin: 7px 0 20px 0;
 }
-.num{
+
+.num {
   float: left;
   clear: left;
   padding-right: 10px;
 }
 
 
-
-.a{
+.a {
   min-height: 50px;
   display: flex;
   align-items: center;
 
-  div{
+  div {
     width: 100%;
     margin: 4px 0;
   }
+
   input {
     position: absolute;
     left: -9999px;
@@ -101,7 +103,7 @@ img{
 
 .a label {
   border: 1px solid #BBBBBB;
-  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(240, 240, 240,1) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(240, 240, 240, 1) 100%);
   box-shadow: 2px 5px 8px 1px #6a8784;
   cursor: pointer;
   width: 15px;
@@ -110,14 +112,16 @@ img{
   display: block;
   position: relative;
 }
+
 .a label:hover {
   box-shadow: 0 3px 6px rgba(0, 0, 0, .58);
 }
 
-.pushed{
+.pushed {
   background: #949494 !important;
-  box-shadow: 0 0 0px 0px #fff!important;
+  box-shadow: 0 0 0px 0px #fff !important;
 }
+
 .done::before {
   content: '';
   position: absolute;
@@ -131,10 +135,12 @@ img{
   transform: rotate(45deg);
   width: 0.5em;
 }
-.redShadow{
+
+.redShadow {
   box-shadow: rgb(255, 41, 41) 1px 2px 0px 0px !important;
 }
-.greenShadow{
+
+.greenShadow {
   box-shadow: #1bbc9b 1px 2px 0px 0px !important;
 }
 
@@ -144,6 +150,19 @@ img{
   .menu {
     z-index: 1;
     max-width: 300px;
+
+    & > li {
+      background-color: #797979;
+
+      &.vert-menu__list {
+        background-color: $color-main;
+
+        &:hover {
+          background-color: $color-main-hover;
+        }
+      }
+    }
+
   }
 
   .menu a {
@@ -165,38 +184,34 @@ img{
     border-bottom: 1px solid #b7b7b7;
     transition: 0.5s all;
     justify-content: flex-end;
-
   }
 }
+
 /*Всплывающие меню*/
-.vert-menu__drop{
+.vert-menu__drop {
   position: absolute;
   width: 100%;
   left: 100%;
-  top:-9999em;
+  top: -9999em;
   opacity: 0;
   border-left: 1px solid transparent;
   transition: 0.5s opacity;
 }
-.vert-menu__drop li a{
+
+.vert-menu__drop li a {
   background-color: #797979;
   width: 100%;
 }
-.vert-menu__list{
-  background-color: $color-main;
-  &:hover{
-    background-color: $color-main-hover;
-  }
-}
 
-.vert-menu__list:hover>.vert-menu__drop{
+
+.vert-menu__list:hover > .vert-menu__drop {
   opacity: 1;
   top: 0;
   z-index: 1;
 }
 
 /*Иконки для всплывающих менюшек*/
-.vert-menu__list::after{
+.vert-menu__list::after {
   content: " ";
   position: absolute;
   border: .6vw solid;
@@ -205,15 +220,12 @@ img{
   align-self: center;
 }
 
-.vert-menu__list:hover::after{
+.vert-menu__list:hover::after {
   transform: scaleX(-1);
 }
 
 
-
-
-
-a.button{
+a.button {
   justify-content: center;
   padding: 10px;
   margin: 29px auto;
@@ -223,7 +235,8 @@ a.button{
   display: flex;
   font-weight: 600;
   box-shadow: 5px 4px 6px 1px #6a8784;
-  &:hover{
+
+  &:hover {
     transition: box-shadow 100ms;
     box-shadow: 2px 2px 12px 0px #6a8784;
   }

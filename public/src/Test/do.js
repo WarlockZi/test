@@ -1,5 +1,6 @@
 import {post, $, fetchW} from '../common'
 import './do.scss'
+import '../components/header/autocomplete'
 import '../components/cookie/cookie'
 
 //Скрыть все вопросы
