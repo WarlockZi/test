@@ -40,7 +40,7 @@ export async function aAdd(e) {
     if ($(e.target).hasClass('a-add')) {
         let q_id = +e.target.closest('.e-block-q').id
         let res = await post('/answer/show', {q_id})
-        let visibleBlock = $('.block').getWithStyle('display', 'flex')
+        let visibleBlock = $('.block.flex1').el[0]
         $(visibleBlock).find('.answers').insertAdjacentHTML('afterBegin', res)
         let newAnswer = $(visibleBlock).find('.e-block-a:first-child')
         $(newAnswer).css('background-color', 'pink')

@@ -25,7 +25,7 @@ class QuestionController Extends AppController
 		$id = App::$app->answer->autoincrement();
 		$q_id = App::$app->question->autoincrement();
 
-		$sort = $this->req['questQnt'] + 1;
+		$sort = $this->req['questCount'] + 1;
 		$block[0]['question_text'] = '';
 		$block[0]['question_pic'] = '/srvc/nophoto-min.jpg';
 		$block[0]['sort'] = $sort;
@@ -35,8 +35,6 @@ class QuestionController Extends AppController
 		ob_start();
 		require ROOT . '/app/view/Test/editBlockQuestion.php';
 		$block = ob_get_clean();
-//		$block = '<div class = "overlay">' . $block . '</div>';
-
 		$testid = $this->req['testid'];
 		$data = compact("testid", "block");
 		exit($json = json_encode($data));

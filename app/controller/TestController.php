@@ -30,6 +30,13 @@ class TestController Extends AppController
 		View::setCss('test.css');
 	}
 
+	public function actionShow()
+	{
+		$this->layout = 'admin';
+		$rootTests = App::$app->test->findWhere('isTest', 0);
+		$this->set(compact('rootTests'));
+	}
+
 	public function actionCreate()
 	{
 		if ($this->ajax) {
@@ -38,9 +45,11 @@ class TestController Extends AppController
 				$this->ajax['parent'] = 0;
 			}
 			if ($id = App::$app->test->create($this->ajax)) {
+				$q_id = App::$app->question->create();
+//				$question_block = QuestionController::getQuestionBlock();
 				exit(json_encode([
 					'id' => $id,
-//					'test_name' => $this->ajax['test_name']
+//					'qestion_block' => $question_block,
 				]));
 			}
 
@@ -49,7 +58,6 @@ class TestController Extends AppController
 
 	public function actionEdit()
 	{
-
 		if ($this->ajax) {
 			exit();
 		}
@@ -60,8 +68,13 @@ class TestController Extends AppController
 			$test = App::$app->test->findOne($testId);
 			$testDataToEdit = App::$app->test->getTestData($testId);
 			unset ($testDataToEdit['correct_answers']);
+//			if ($testDataToEdit) {
 			$pagination = App::$app->test->pagination($testDataToEdit, true);
-			$this->set(compact('test', 'testDataToEdit', 'pagination', 'testId'));
+			$this->set(compact('test', 'testDataToEdit', 'pagination'));
+//			} else {
+//				$pagination = App::$app->test->pagination($testDataToEdit, true);
+//				$this->set(compact('test', 'testDataToEdit', 'pagination'));
+//			}
 		} else {
 			$error = '<H1>Теста с таким номером нет.</H1>';
 		}
@@ -167,14 +180,6 @@ class TestController Extends AppController
 	public function actionGetCorrectAnswers()
 	{
 		App::$app->test->getCorrectAnswers();
-	}
-
-	public function actionShow()
-	{
-		$this->layout = 'admin';
-		$rootTests = App::$app->test->findWhere('isTest', 0);
-		$this->set(compact('rootTests'));
-
 	}
 
 	public function actionDo()
