@@ -317,18 +317,21 @@ function clearCache() {
 
 let popup = {
   show: function (txt) {
-    let close = this.el('div', 'popup__close'); // let popup = this.el('div', 'popup')
-
+    let close = this.el('div', 'popup__close');
+    close.innerText = 'X';
     let popup__item = this.el('div', 'popup__item');
     popup__item.innerText = txt;
     popup__item.append(close);
     let popup = this.el('div', 'popup');
     popup.append(popup__item);
-    popup.addEventListener('click', this.close);
+    popup.addEventListener('click', this.close); // document.body.addEventListener('click', this.close)
+
     document.body.append(popup);
   },
   close: function (e) {
-    if (e.target.classList.contains('close')) {}
+    if (e.target.classList.contains('popup__close')) {
+      let popup = this.closest('.popup').remove();
+    }
   },
   el: function (tagName, className) {
     let el = document.createElement(tagName);
