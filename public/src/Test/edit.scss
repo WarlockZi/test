@@ -8,6 +8,10 @@ test-edit-wrapper{
   margin: 10px;
 }
 
+.title{
+  display: flex;
+  flex-wrap: wrap;
+}
 .wrap{
   flex: 1 0 auto;
 }
