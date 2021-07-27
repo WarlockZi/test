@@ -59,10 +59,10 @@ const config = {
 module.exports = () => {
     let isDev = env.MODE==='dev'
     config.cache = !isDev
-    config.mode = 'production'
-    // config.mode = isDev ? 'development' : 'production'
-    config.devtool = false
-    // config.devtool = isDev ? 'source-map' : false
+    config.mode = isDev ? 'development' : 'production'
+    // config.mode = 'production'
+    // config.devtool = false
+    config.devtool = isDev ? 'source-map' : false
     config.target = isDev ? "web" : "browserslist"
 
     config.entry = {

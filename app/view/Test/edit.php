@@ -1,4 +1,4 @@
-<section class="test-edit-wrapper">
+<div class="test-edit-wrapper">
 
 	<div class='test-menu-wrap'>
 		<a class='add-test' href="/adminsc/test/show">Добавить тест</a>
@@ -13,7 +13,7 @@
 	</div>
 
 	<div class="content">
-		<div class="row">
+		<div class="title">
 			<? if (isset($test)): ?>
 				<p class="test-name" value="<?= $_REQUEST['id']??$test['id'] ?>"><?= $_REQUEST['name']??$test['test_name'] ?></p>
 			<div class="test_delete" data-hover="showTip" data-click="delete"
@@ -33,4 +33,4 @@
 			<? endif; ?>
 		</div>
 
-</section>
+</div>
