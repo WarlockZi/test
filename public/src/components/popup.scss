@@ -1,18 +1,35 @@
 .popup{
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  position: sticky;
+  right: 116%;
+  bottom: 70px;
   display: flex;
   flex-flow: column;
+  align-items: flex-end;
 
 }
 .popup__item{
+  position: relative;
   width: 204px;
   height: 26px;
   background: #4e4e4e;
   padding: 10px;
   color: #ffffff;
+  display: flex;
+  opacity: 0.9;
+  border-radius: 5px;
 }
 .popup__close{
-
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  color: white;
+  background: red;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
