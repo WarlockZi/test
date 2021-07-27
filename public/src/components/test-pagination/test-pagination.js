@@ -7,6 +7,7 @@ $('[data-pagination]').removeClass('nav-active')
 // Показать первую кнопку
 $('[data-pagination]:first-child').addClass('nav-active')
 
+
 //// Пагинация
 $('.pagination').on('click', function (e) {
 //// add question
@@ -38,22 +39,20 @@ function paginate(self) {
 
 //// добавление вопроса
 async function show(e) {
-    let testId = +$('.test-name').value()
+    let testid = +$('.test-name').value()
     let questCount = $("[data-pagination]").count()
 
     let res = await post(
         '/question/show',
-        {
-            testid: testId,
-            questQnt: questCount
-        })
+        {testid, questCount})
     res = JSON.parse(res)
     let Block = res.block
     let blocks = $('.blocks').el[0]
     blocks.insertAdjacentHTML('afterBegin', Block)
     let newBlock = $('.blocks .block:last-child').el[0]
     $(newBlock).addClass('flex1')
-    $(newBlock).find('.question__save').on('click', questionSave(e))
+    let save_button = $(newBlock).find('.question__save')
+        $(save_button).on('click', questionSave)
     // $('.overlay').on('click', clickOverlay)
 }
 
@@ -74,32 +73,14 @@ function appendBlock() {
     $('.a-del').on('click', aDelete)
 }
 
-// function clickOverlay(e) {
-//     if (e.target.classList.contains('question__save')) {
-//         questionSave(e);
-//         return
-//     }
-//     if (e.target.classList.contains('question__cansel')) {
-//         closeOverlay();
-//         return
-//     }
-//     if (e.target.classList.contains('overlay')) {
-//         closeOverlay();
-//         return
-//     }
-// }
-
 function hideVisibleBlock() {
     $('.block.flex1').removeClass('flex1')
 }
 
-// function closeOverlay() {
-//     document.body.removeChild($('.overlay').el[0])
-// }
 
 async function questionSave(e) {
 
-    let block = $('.overlay').find('.block')
+    let block = $('.block.flex1').el[0]
     let res = await post(
         '/question/UpdateOrCreate',
         {
@@ -115,3 +96,22 @@ async function questionSave(e) {
         closeOverlay()
     }
 }
+
+// function closeOverlay() {
+//     document.body.removeChild($('.overlay').el[0])
+// }
+
+// function clickOverlay(e) {
+//     if (e.target.classList.contains('question__save')) {
+//         questionSave(e);
+//         return
+//     }
+//     if (e.target.classList.contains('question__cansel')) {
+//         closeOverlay();
+//         return
+//     }
+//     if (e.target.classList.contains('overlay')) {
+//         closeOverlay();
+//         return
+//     }
+// }

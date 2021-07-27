@@ -326,7 +326,7 @@ class Test extends Model
 	public function getTestData($testId, bool $shuffle = false)
 	{
 		$sql =
-		<<<her
+			<<<her
 SELECT i.path, i.name,
        iq.path as qpath, iq.name as qname, 
        q.qustion, q.sort, a.answer, a.correct_answer, q.id as q_id, a.id as a_id
@@ -402,18 +402,22 @@ her;
 	public function pagination(array $items, $addBtn)
 	{
 		$pagination = '<div class="pagination">';
-		$i = 0;
-		foreach ($items as $id => $el) {
-			$i++;
-			$d = <<<heretext
+//		if ($items) {
+			$i = 0;
+			foreach ($items as $id => $el) {
+				$i++;
+				$d = <<<heretext
 <div data-pagination=$id>$i</div>
 heretext;
-			$pagination .= $d;
-		}
+				$pagination .= $d;
+			}
+
+//		} else {
+//			$pagination .= "<div data-pagination='new'>Н</div>";
+//		}
 		if ($addBtn) {
 			$pagination .= "<div class='add-question'>+</div>";
 		}
-
 		return $pagination . '</div>';
 	}
 

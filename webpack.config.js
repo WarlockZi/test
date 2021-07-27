@@ -31,6 +31,10 @@ const config = {
         // }),
         new CleanWebpackPlugin(),
     ],
+    // optimization: {
+    //     runtimeChunk: 'single',
+    // },
+
     module: {
         rules: [
             // {test: /\.js$/, loader: 'babel-loader', exclude: '/node_modules/'},
@@ -55,8 +59,10 @@ const config = {
 module.exports = () => {
     let isDev = env.MODE==='dev'
     config.cache = !isDev
-    config.mode = isDev ? 'development' : 'production'
-    config.devtool = isDev ? 'source-map' : false
+    config.mode = 'production'
+    // config.mode = isDev ? 'development' : 'production'
+    config.devtool = false
+    // config.devtool = isDev ? 'source-map' : false
     config.target = isDev ? "web" : "browserslist"
 
     config.entry = {
@@ -86,6 +92,7 @@ module.exports = () => {
 
     // }:''
     console.log(config.devtool)
+    console.log(config.mode)
     // console.log(env)
     return config
 
