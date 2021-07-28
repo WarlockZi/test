@@ -46,9 +46,10 @@ let popup = {
         let popup = this.el('div', 'popup')
         popup.append(popup__item)
         popup.addEventListener('click', this.close)
-        // document.body.addEventListener('click', this.close)
         document.body.append(popup)
+        popup.style()
     },
+
     close:function (e) {
         if (e.target.classList.contains('popup__close')){
             let popup = this.closest('.popup').remove()

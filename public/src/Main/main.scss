@@ -30,3 +30,33 @@ main {
   margin: 0;
   padding: 0;
 }
+
+.d-content {
+  max-width: 800px;
+  margin: auto;
+}
+
+.art {
+  margin: 10px 0;
+  padding: 1.14rem 1.14rem;
+  font: normal 19px Verdana, Arial, sans;
+  color: #555;
+  text-align: right;
+}
+
+.card-left .row {
+  justify-content: space-between;
+}
+
+
+.site {
+  position: relative;
+}
+
+.site .wrap {
+  margin: 0 auto;
+  padding: 30px 10px;
+  margin-bottom: 9px;
+  max-width: 1310px;
+  box-sizing: border-box;
+}

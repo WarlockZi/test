@@ -324,9 +324,9 @@ let popup = {
     popup__item.append(close);
     let popup = this.el('div', 'popup');
     popup.append(popup__item);
-    popup.addEventListener('click', this.close); // document.body.addEventListener('click', this.close)
-
+    popup.addEventListener('click', this.close);
     document.body.append(popup);
+    popup.style();
   },
   close: function (e) {
     if (e.target.classList.contains('popup__close')) {
@@ -678,9 +678,7 @@ async function autocomplete(val, inp) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
-/* harmony import */ var _header_menu_sass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header-menu.sass */ "./public/src/components/header/header-menu.sass");
-/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
-
+/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
 
 
 
@@ -774,18 +772,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************!*\
   !*** ./public/src/components/header/autocomplete.scss ***!
   \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/header/header-menu.sass":
-/*!*******************************************************!*\
-  !*** ./public/src/components/header/header-menu.sass ***!
-  \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
