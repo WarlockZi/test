@@ -1,4 +1,4 @@
-<div class='header__info'>
+<div class='admin-header__info'>
 
 	<? if ($this->route['action'] == "index" && $this->route['controller'] == "Main"): ?>
 		<div class="logo">

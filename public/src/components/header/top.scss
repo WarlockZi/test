@@ -1,16 +1,24 @@
 @import "../../var";
 @import "../../mixin_media";
 
-.top-menu {
+@mixin top-menu{
   background: #1bbc9b;
   display: flex;
-  justify-content: space-between;
   margin: 0 auto;
   position: sticky;
   top: 0px;
   z-index: 1;
-  max-width: 1310px;
   width: 100%;
+}
+
+.top-menu {
+  @include top-menu;
+  max-width: 1310px;
+  justify-content: space-between;
+}
+.admin-top-menu{
+  @include top-menu;
+  justify-content: flex-end;
 }
 
 .contacts {
@@ -95,14 +103,3 @@
   }
 }
 
-.header__info {
-  padding: 12px 0 10px 0;
-  display: flex;
-  position: relative;
-  height: 45px;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1310px;
-  width: 100%;
-  margin: auto;
-}

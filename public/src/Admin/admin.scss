@@ -795,6 +795,7 @@ input {
     display: flex;
     flex-flow: nowrap;
     max-width: 95vw;
+    flex: 1 0 auto;
 }
 
 .admin-actions {

@@ -1,17 +1,16 @@
+@import "../var";
 .popup{
-  position: sticky;
+  position: absolute;
   right: 116%;
   bottom: 70px;
   display: flex;
   flex-flow: column;
   align-items: flex-end;
-
 }
 .popup__item{
   position: relative;
   width: 204px;
-  height: 26px;
-  background: #4e4e4e;
+  background: $color-main;
   padding: 10px;
   color: #ffffff;
   display: flex;
@@ -20,8 +19,8 @@
 }
 .popup__close{
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 1px;
+  left: 1px;
   width: 10px;
   height: 10px;
   color: white;
@@ -32,4 +31,5 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1px;
 }

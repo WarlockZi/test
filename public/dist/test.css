@@ -319,23 +319,24 @@ test-edit-wrapper {
     display: flex;
     margin: 120px auto; }
 
-.block__top {
-  display: flex;
-  margin-bottom: 3px; }
-  .block__top .error {
-    background: #ffffff;
-    color: red;
-    padding: 6px;
-    height: 16px;
-    border: 1px red solid;
-    opacity: 0;
-    transition: opacity 1000ms; }
-  .block__top .sort-q {
-    text-align: center;
-    border: 1px #1bbc9b solid;
-    width: 24px;
-    height: 26px;
-    margin: 0px 5px 0px 5px; }
+.qestion__error {
+  background: #ffffff;
+  color: red;
+  padding: 6px;
+  display: none;
+  height: 16px;
+  border: 1px red solid;
+  opacity: 0;
+  transition: opacity 1000ms; }
+
+.question__sort {
+  text-align: center;
+  width: 26px;
+  height: 1rem;
+  margin: 5px 5px 5px 0px; }
+
+.e-block-q label {
+  font-size: 13px; }
 
 .question__save {
   display: block;
@@ -395,7 +396,8 @@ test-edit-wrapper {
     box-shadow: none; }
 
 .check_right_answer {
-  margin: 10px 0; }
+  margin: 10px 0;
+  font-size: .7rem; }
   .check_right_answer > .checkbox:checked + label:after {
     width: 16px;
     height: 16px;
@@ -513,9 +515,9 @@ test-edit-wrapper {
   display: none;
   /*Картинка*/ }
   .block textarea {
-    font-size: 1rem;
+    font-size: .9rem;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     border-color: #d8d8d8;
     resize: vertical;
     box-sizing: border-box;
@@ -549,46 +551,6 @@ test-edit-wrapper {
     transition: all .3s;
     transform: translateY(0);
     transform-origin: 50% 0; }
-  .block .field__wrapper {
-    width: 16vw;
-    position: relative;
-    margin: 5px 0;
-    text-align: center;
-    display: flex;
-    justify-content: space-around; }
-  .block .field__file {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute; }
-  .block .field__file-wrapper {
-    width: 95%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap; }
-  .block .field__file-fake {
-    height: 20px;
-    width: calc(100% - 72px);
-    display: flex;
-    align-items: center;
-    border: 1px solid #c7c7c7;
-    border-radius: 0px 3px 3px 0px;
-    border-left: none;
-    font-size: .5rem;
-    background-color: #fff;
-    padding: 0 0 0 5px; }
-  .block .field__file-button {
-    width: 65px;
-    height: 22px;
-    background: #1bbc9b;
-    color: #fff;
-    font-size: .5rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px 0 0 3px;
-    cursor: pointer; }
   .block #imq, .block #ima {
     width: 98%;
     vertical-align: top;
@@ -604,6 +566,49 @@ test-edit-wrapper {
     right: 1px;
     bottom: 1px;
     display: none; }
+
+.field__wrapper {
+  position: relative;
+  margin: 5px 0;
+  text-align: center;
+  display: flex;
+  justify-content: flex-start; }
+
+.field__file {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute; }
+
+.field__file-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
+.field__file-fake {
+  height: 20px;
+  width: calc(100% - 72px);
+  display: flex;
+  align-items: center;
+  border: 1px solid #c7c7c7;
+  border-radius: 0px 3px 3px 0px;
+  border-left: none;
+  font-size: .5rem;
+  background-color: #fff;
+  padding: 0 0 0 5px; }
+
+.field__file-button {
+  width: 65px;
+  height: 22px;
+  background: #1bbc9b;
+  color: #fff;
+  font-size: .5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px 0 0 3px;
+  cursor: pointer; }
 
 .test-menu-wrap {
   margin-left: 15px; }
@@ -696,6 +701,8 @@ test-edit-wrapper {
 .test-edit-wrapper {
   display: flex;
   margin: 10px;
+  flex: 1 0 auto;
+  max-width: 850px;
   /*Иконки для всплывающих менюшек*/ }
   .test-edit-wrapper .vert-menu__list::after {
     content: " ";
@@ -727,7 +734,7 @@ test-edit-wrapper {
       background-color: #19ad8e; }
 
 .popup {
-  position: sticky;
+  position: absolute;
   right: 116%;
   bottom: 70px;
   display: flex;
@@ -737,8 +744,7 @@ test-edit-wrapper {
 .popup__item {
   position: relative;
   width: 204px;
-  height: 26px;
-  background: #4e4e4e;
+  background: #1bbc9b;
   padding: 10px;
   color: #ffffff;
   display: flex;
@@ -747,8 +753,8 @@ test-edit-wrapper {
 
 .popup__close {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 1px;
+  left: 1px;
   width: 10px;
   height: 10px;
   color: white;
@@ -758,7 +764,8 @@ test-edit-wrapper {
   font-size: 10px;
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  padding: 1px; }
 
 .holder {
   position: relative;
@@ -1584,7 +1591,8 @@ input {
 .adm-wrap {
   display: flex;
   flex-flow: nowrap;
-  max-width: 95vw; }
+  max-width: 95vw;
+  flex: 1 0 auto; }
 
 .admin-actions {
   display: flex;
@@ -2042,13 +2050,23 @@ span[contenteditable]:hover,
 .top-menu {
   background: #1bbc9b;
   display: flex;
-  justify-content: space-between;
   margin: 0 auto;
   position: sticky;
   top: 0px;
   z-index: 1;
+  width: 100%;
   max-width: 1310px;
-  width: 100%; }
+  justify-content: space-between; }
+
+.admin-top-menu {
+  background: #1bbc9b;
+  display: flex;
+  margin: 0 auto;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  width: 100%;
+  justify-content: flex-end; }
 
 .contacts {
   align-self: center;
@@ -2112,18 +2130,6 @@ span[contenteditable]:hover,
   .nav a {
     padding: 5px 10px;
     color: #5a5a5a; }
-
-.header__info {
-  padding: 12px 0 10px 0;
-  display: flex;
-  position: relative;
-  height: 45px;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1310px;
-  width: 100%;
-  margin: auto; }
-
 
 @charset "UTF-8";
 .logo {
@@ -2319,29 +2325,28 @@ span[contenteditable]:hover,
       border-top: 10px solid white;
       border-left: 10px solid white; }
 
-.d-content {
-  max-width: 800px;
-  margin: auto; }
-
-.art {
-  margin: 10px 0;
-  padding: 1.14rem 1.14rem;
-  font: normal 19px Verdana, Arial, sans;
-  color: #555;
-  text-align: right; }
-
-.card-left .row {
+.header__info {
+  padding: 12px 0 10px 0;
+  display: flex;
+  position: relative;
+  height: 45px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+  max-width: 1310px;
   justify-content: space-between; }
 
-.site {
-  position: relative; }
-
-.site .wrap {
-  margin: 0 auto;
-  padding: 30px 10px;
-  margin-bottom: 9px;
-  max-width: 1310px;
-  box-sizing: border-box; }
+.admin-header__info {
+  padding: 12px 0 10px 0;
+  display: flex;
+  position: relative;
+  height: 45px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+  justify-content: flex-start; }
 
 header {
   display: flex;
