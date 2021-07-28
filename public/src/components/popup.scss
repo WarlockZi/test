@@ -16,6 +16,11 @@
   display: flex;
   opacity: 0.9;
   border-radius: 5px;
+
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-in-out;
+  visibility: visible !important;
 }
 .popup__close{
   position: absolute;
@@ -32,4 +37,16 @@
   align-items: center;
   justify-content: center;
   padding: 1px;
+}
+
+@keyframes fadeIn {
+  0% {transform: scale(0.7);opacity: 0.5;}
+  80% {transform: scale(1.1);}
+  100% {transform: scale(1);opacity: 1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {-webkit-transform: scale(0.7);opacity: 0.5;}
+  80% {-webkit-transform: scale(1.1);}
+  100% {-webkit-transform: scale(1);opacity: 1;}
 }

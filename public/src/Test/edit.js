@@ -77,14 +77,18 @@ export async function qDelete(e) {
 $('.sort-q').on('change', validate.sort)
 
 ////////// Update
-$('.blocks').on('click', function (e) {
+$('.blocks').on('click', async function (e) {
     if (e.target.classList.contains('question__save')) {
         let visibleBlock = $('.block.flex1').el[0]
         // let q = $(visibleBlock).find('.e-block-q')
         // let a = $(visibleBlock).find('.e-block-a')
         let question = getQuestion(e, visibleBlock)
         let answers = getAnswers(e, visibleBlock, question.id)
-        post('/question/update', {question, answers})
+        let res = await post('/question/update', {question, answers})
+        res = JSON.parse(res)
+        if (res){
+            popup.show(res.msg)
+        }
     }
 })
 
@@ -94,7 +98,7 @@ export function getQuestion(e, block) {
         parent: +$('.test-name').el[0].getAttribute('value'),
         picq: '',
         qustion: $(block).find('textarea').value,
-        sort: +$(block).find('.sort-q').value,
+        sort: +$(block).find('.question__sort').value,
     }
 }
 

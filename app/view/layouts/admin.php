@@ -14,12 +14,9 @@
 
 <body>
 
-	<header>
-
 		<? include_once ROOT . '/app/view/components/header/admin_top.php'; ?>
+	<header>
 		<? include_once ROOT . '/app/view/components/header/admin_header.php'; ?>
-
-
 	</header>
 
 	<div class="adm-wrap">
