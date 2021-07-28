@@ -62,11 +62,16 @@ let popup = {
     let popup__item = this.el('div', 'popup__item');
     popup__item.innerText = txt;
     popup__item.append(close);
-    let popup = this.el('div', 'popup');
+    let popup = $('.popup').el[0];
+
+    if (!popup) {
+      popup = this.el('div', 'popup');
+    }
+
     popup.append(popup__item);
     popup.addEventListener('click', this.close);
     document.body.append(popup);
-    popup.style();
+    popup.style.position = 'sticky';
   },
   close: function (e) {
     if (e.target.classList.contains('popup__close')) {

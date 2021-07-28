@@ -1,5 +1,5 @@
 import './test-pagination.scss'
-import {$, post} from "../../common";
+import {$, popup, post} from "../../common";
 import {getAnswers, getQuestion, aAdd, aDelete, qDelete} from '../../Test/edit'
 
 //Скрыть все кнопки
@@ -49,7 +49,8 @@ async function show(e) {
     let Block = res.block
     let blocks = $('.blocks').el[0]
     blocks.insertAdjacentHTML('afterBegin', Block)
-    let newBlock = $('.blocks .block:last-child').el[0]
+    let newBlock = $('.blocks .block:first-child').el[0]
+    document.querySelector('.flex1').classList.remove('flex1')
     $(newBlock).addClass('flex1')
     let save_button = $(newBlock).find('.question__save')
         $(save_button).on('click', questionSave)
@@ -91,27 +92,8 @@ async function questionSave(e) {
 
     if (res) {
         showHidePaginBtn(e, res.paginationButton)
-        hideVisibleBlock()
         appendBlock(e)
-        closeOverlay()
+        popup.show(res.msg)
     }
 }
 
-// function closeOverlay() {
-//     document.body.removeChild($('.overlay').el[0])
-// }
-
-// function clickOverlay(e) {
-//     if (e.target.classList.contains('question__save')) {
-//         questionSave(e);
-//         return
-//     }
-//     if (e.target.classList.contains('question__cansel')) {
-//         closeOverlay();
-//         return
-//     }
-//     if (e.target.classList.contains('overlay')) {
-//         closeOverlay();
-//         return
-//     }
-// }

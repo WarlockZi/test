@@ -208,17 +208,22 @@ async function qDelete(e) {
 
 (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.sort-q').on('change', _common__WEBPACK_IMPORTED_MODULE_2__.validate.sort); ////////// Update
 
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.blocks').on('click', function (e) {
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.blocks').on('click', async function (e) {
   if (e.target.classList.contains('question__save')) {
     let visibleBlock = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block.flex1').el[0]; // let q = $(visibleBlock).find('.e-block-q')
     // let a = $(visibleBlock).find('.e-block-a')
 
     let question = getQuestion(e, visibleBlock);
     let answers = getAnswers(e, visibleBlock, question.id);
-    (0,_common__WEBPACK_IMPORTED_MODULE_2__.post)('/question/update', {
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_2__.post)('/question/update', {
       question,
       answers
     });
+    res = JSON.parse(res);
+
+    if (res) {
+      _common__WEBPACK_IMPORTED_MODULE_2__.popup.show(res.msg);
+    }
   }
 });
 function getQuestion(e, block) {
@@ -227,7 +232,7 @@ function getQuestion(e, block) {
     parent: +(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.test-name').el[0].getAttribute('value'),
     picq: '',
     qustion: (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(block).find('textarea').value,
-    sort: +(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(block).find('.sort-q').value
+    sort: +(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(block).find('.question__sort').value
   };
 }
 function getAnswers(e, block, q_id) {
@@ -968,11 +973,16 @@ let popup = {
     let popup__item = this.el('div', 'popup__item');
     popup__item.innerText = txt;
     popup__item.append(close);
-    let popup = this.el('div', 'popup');
+    let popup = $('.popup').el[0];
+
+    if (!popup) {
+      popup = this.el('div', 'popup');
+    }
+
     popup.append(popup__item);
     popup.addEventListener('click', this.close);
     document.body.append(popup);
-    popup.style();
+    popup.style.position = 'sticky';
   },
   close: function (e) {
     if (e.target.classList.contains('popup__close')) {
@@ -1508,7 +1518,8 @@ async function show(e) {
   let Block = res.block;
   let blocks = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks').el[0];
   blocks.insertAdjacentHTML('afterBegin', Block);
-  let newBlock = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks .block:last-child').el[0];
+  let newBlock = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks .block:first-child').el[0];
+  document.querySelector('.flex1').classList.remove('flex1');
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newBlock).addClass('flex1');
   let save_button = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newBlock).find('.question__save');
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(save_button).on('click', questionSave); // $('.overlay').on('click', clickOverlay)
@@ -1545,27 +1556,10 @@ async function questionSave(e) {
 
   if (res) {
     showHidePaginBtn(e, res.paginationButton);
-    hideVisibleBlock();
     appendBlock(e);
-    closeOverlay();
+    _common__WEBPACK_IMPORTED_MODULE_1__.popup.show(res.msg);
   }
-} // function closeOverlay() {
-//     document.body.removeChild($('.overlay').el[0])
-// }
-// function clickOverlay(e) {
-//     if (e.target.classList.contains('question__save')) {
-//         questionSave(e);
-//         return
-//     }
-//     if (e.target.classList.contains('question__cansel')) {
-//         closeOverlay();
-//         return
-//     }
-//     if (e.target.classList.contains('overlay')) {
-//         closeOverlay();
-//         return
-//     }
-// }
+}
 
 /***/ }),
 
