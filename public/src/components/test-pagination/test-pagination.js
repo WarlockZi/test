@@ -1,4 +1,5 @@
 import './test-pagination.scss'
+import {questionSave} from '../../Test/question'
 import {$, popup, post} from "../../common";
 import {getAnswers, getQuestion, aAdd, aDelete, qDelete} from '../../Test/edit'
 
@@ -57,9 +58,10 @@ async function show(e) {
     // $('.overlay').on('click', clickOverlay)
 }
 
-function showHidePaginBtn(e, pagItem) {
-    if ($('.pagination .nav-active').el[0]) {
-        $('.pagination .nav-active').el[0].classList.remove('nav-active')
+function showHidePaginBtn(pagItem) {
+    let activePaginBtn = $('.pagination .nav-active').el[0]
+    if (activePaginBtn) {
+        activePaginBtn.classList.remove('nav-active')
     }
     $('.add-question').el[0]
         .insertAdjacentHTML('beforeBegin', pagItem)
@@ -78,22 +80,6 @@ function hideVisibleBlock() {
     $('.block.flex1').removeClass('flex1')
 }
 
+export {showHidePaginBtn, appendBlock}
 
-async function questionSave(e) {
-
-    let block = $('.block.flex1').el[0]
-    let res = await post(
-        '/question/UpdateOrCreate',
-        {
-            question: getQuestion(e, block),
-            answers: getAnswers(e, block, $(block).find('textarea').value),
-        })
-    res = JSON.parse(res)
-
-    if (res) {
-        showHidePaginBtn(e, res.paginationButton)
-        appendBlock(e)
-        popup.show(res.msg)
-    }
-}
 

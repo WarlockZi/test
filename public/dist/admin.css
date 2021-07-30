@@ -1422,14 +1422,10 @@ textarea:focus,
 
 .phone > a:after {
   content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  right: -20px;
-  top: 3px;
-  border-bottom: 3px solid #1bbc9b;
-  border-right: 3px solid #1bbc9b;
-  transform: rotate(45deg); }
+  display: inline-block;
+  border: 5px solid transparent;
+  border-top-color: #1bbc9b;
+  margin-left: 9px; }
 
 .phone:hover .phone__popup-inner {
   padding: 25px 30px;

@@ -53,7 +53,17 @@ function clearCache() {
   }
 
   clearCache().catch(alert);
-}
+} // function up() {
+//    var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+//    if (top > 0) {
+//       window.scrollBy(0, -100);
+//       var t = setTimeout('up()', 20);
+//    }
+//    else
+//       clearTimeout(t);
+//    return false;
+// }
+
 
 let popup = {
   show: function (txt) {
@@ -71,7 +81,15 @@ let popup = {
     popup.append(popup__item);
     popup.addEventListener('click', this.close);
     document.body.append(popup);
-    popup.style.position = 'sticky';
+    let delay = 5000;
+    let removeDelay = delay + 1000;
+    setTimeout(() => {
+      popup__item.classList.remove('popup__item');
+      popup__item.classList.add('popup-hide');
+    }, delay);
+    setTimeout(() => {
+      popup__item.remove();
+    }, removeDelay);
   },
   close: function (e) {
     if (e.target.classList.contains('popup__close')) {
@@ -348,47 +366,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
 
-let inp = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#autocomplete").el;
-Array.from(inp).map(inp => {
-  if (inp) {
-    inp.addEventListener('input', function () {
-      autocomplete(this.value, inp);
+[...(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".search input").el].map(input => {
+  if (input) {
+    input.addEventListener('input', function () {
+      autocomplete(input);
     });
   }
 });
 
-async function fetchJson(Input) {
-  let response = await fetch('/search?q=' + Input);
-  return await response.json();
-}
+async function autocomplete(input) {
+  let search = input.parentNode;
+  let result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(search).find('.search__result');
 
-function decorate(content, tag) {
-  let el = document.createElement(tag);
-  el.appendChild(content);
-  return el;
-}
-
-async function autocomplete(val, inp) {
-  if (val.length < 1) {
-    result.innerHTML = '';
+  if (input.value.length < 1) {
+    if (result) result.innerHTML = '';
     return;
   }
 
-  let data = await fetchJson(val);
-  let ul = document.createElement('ul');
-  let lis = data.map(e => {
+  let data = await fetch('/search?q=' + input.value);
+  data = await data.json(data);
+
+  if (result.childNodes.length !== 0) {
+    result.innerHTML = '';
+  }
+
+  data.map(e => {
     let a = document.createElement("a");
     a.href = e.alias;
     a.innerHTML = `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name;
-    ul.appendChild(decorate(a, 'li'));
+    result.appendChild(a);
   });
-  let result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(inp.parentNode).find('.search__result');
-  result.appendChild(ul);
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('body').on('click', function (e) {
-    const search = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.result-search ul').el[0];
-
-    if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.result-search ul') && e.target !== search) {
-      search.remove();
+    if (result && e.target !== result) {
+      result.innerHTML = '';
     }
   });
 }

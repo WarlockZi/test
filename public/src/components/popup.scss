@@ -1,8 +1,8 @@
 @import "../var";
 .popup{
-  position: absolute;
-  right: 116%;
-  bottom: 70px;
+  position: fixed;
+  right: 0;
+  bottom: 80px;
   display: flex;
   flex-flow: column;
   align-items: flex-end;
@@ -11,32 +11,41 @@
   position: relative;
   width: 204px;
   background: $color-main;
-  padding: 10px;
+  padding: 15px;
   color: #ffffff;
   display: flex;
   opacity: 0.9;
   border-radius: 5px;
+  margin: 2px 0;
 
   animation-name: fadeIn;
   animation-duration: 0.4s;
   animation-timing-function: ease-in-out;
   visibility: visible !important;
 }
-.popup__close{
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  width: 10px;
-  height: 10px;
-  color: white;
-  background: red;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 10px;
+
+.popup-hide{
+  position: relative;
+  width: 204px;
+  background: $color-main;
+  padding: 15px;
+  color: #ffffff;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1px;
+  opacity: 0.9;
+  border-radius: 5px;
+  margin: 2px 0;
+
+  animation-name: fadeOut;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  visibility: visible;
+}
+
+@keyframes fadeOut {
+  0%{transform: scale(1.1);}
+  80%{transform: scale(0.8);opacity:.5;}
+  99%{transform: scale(.7);opacity: 0.1;}
+  100%{opacity: 0;}
 }
 
 @keyframes fadeIn {
@@ -50,3 +59,20 @@
   80% {-webkit-transform: scale(1.1);}
   100% {-webkit-transform: scale(1);opacity: 1;}
 }
+
+.popup__close{
+   position: absolute;
+   top: 1px;
+   left: 1px;
+   width: 10px;
+   height: 10px;
+   color: white;
+   background: red;
+   border-radius: 3px;
+   cursor: pointer;
+   font-size: 10px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 1px;
+ }

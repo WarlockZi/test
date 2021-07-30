@@ -145,7 +145,7 @@ test-edit-wrapper {
   position: absolute;
   right: 0;
   display: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .navi__item {
@@ -175,7 +175,6 @@ test-edit-wrapper {
   border: 1px #eee solid;
   padding: 5px;
   margin: 5px 0 10px 0;
-  overflow: hidden;
   position: relative;
   min-height: 100px;
   display: flex;
@@ -237,6 +236,7 @@ test-edit-wrapper {
     overflow: hidden;
     font-family: inherit;
     width: 100%;
+    flex: 1 0 auto;
   }
 
   .answers_show {
@@ -269,7 +269,6 @@ test-edit-wrapper {
 
   .answers {
     position: relative;
-    overflow: hidden;
     will-change: transform;
     transition: all .3s;
     transform: translateY(0);
