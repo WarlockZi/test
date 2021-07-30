@@ -34,6 +34,16 @@ function clearCache() {
 
     clearCache().catch(alert);
 }
+// function up() {
+//    var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+//    if (top > 0) {
+//       window.scrollBy(0, -100);
+//       var t = setTimeout('up()', 20);
+//    }
+//    else
+//       clearTimeout(t);
+//    return false;
+// }
 
 let popup = {
     show: function (txt) {
@@ -50,7 +60,15 @@ let popup = {
         popup.append(popup__item)
         popup.addEventListener('click', this.close)
         document.body.append(popup)
-        popup.style.position = 'sticky'
+        let delay = 5000;
+        let removeDelay = delay + 1000;
+        setTimeout(() => {
+            popup__item.classList.remove('popup__item')
+            popup__item.classList.add('popup-hide')
+        }, delay)
+        setTimeout(() => {
+            popup__item.remove()
+        }, removeDelay)
     },
 
     close: function (e) {

@@ -1,51 +1,41 @@
 import './autocomplete.scss';
 import {$} from '../../common'
 
-let inp = $("#autocomplete").el
-
-Array.from(inp).map((inp) => {
-    if (inp) {
-        inp.addEventListener('input', function () {
-            autocomplete(this.value, inp)
+[...$(".search input").el].map((input) => {
+    if (input) {
+        input.addEventListener('input', function () {
+            autocomplete(input)
         })
     }
 })
 
 
-async function fetchJson(Input) {
-    let response = await fetch('/search?q=' + Input);
-    return await response.json();
-}
+async function autocomplete(input) {
+    let search = input.parentNode
+    let result = $(search).find('.search__result')
 
-function decorate(content, tag) {
-    let el = document.createElement(tag)
-    el.appendChild(content)
-    return el
-}
-
-async function autocomplete(val, inp) {
-    if (val.length < 1) {
-        result.innerHTML = '';
+    if (input.value.length < 1) {
+        if (result) result.innerHTML = ''
         return
     }
 
-    let data = await fetchJson(val);
-    let ul = document.createElement('ul')
+    let data = await fetch('/search?q=' + input.value)
+    data = await data.json(data)
 
-    let lis = data.map(e => {
+    if (result.childNodes.length!==0) {
+        result.innerHTML = ''
+    }
+
+    data.map(e => {
         let a = document.createElement("a")
         a.href = e.alias
-        a.innerHTML =`<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name
-        ul.appendChild(decorate(a, 'li'))
+        a.innerHTML = `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name
+        result.appendChild(a)
     });
 
-    let result = $(inp.parentNode).find('.search__result')
-    result.appendChild(ul)
-
     $('body').on('click', function (e) {
-        const search = $('.result-search ul').el[0]
-        if ($('.result-search ul') && e.target !== search) {
-            search.remove();
+        if (result && e.target !== result) {
+            result.innerHTML = '';
         }
     });
 }

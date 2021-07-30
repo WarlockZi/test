@@ -31,16 +31,25 @@
   background-position: 0 -44px;
   transform: rotate(-30deg);
 }
+
+//.phone > a:after{
+//  content: '';
+//  position: absolute;
+//  width: 8px;
+//  height: 8px;
+//  right: -20px;
+//  top: 3px;
+//  border-bottom: 3px solid $color-main;
+//  border-right: 3px solid $color-main;
+//  transform: rotate(45deg);
+//}
+
 .phone > a:after{
   content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  right: -20px;
-  top: 3px;
-  border-bottom: 3px solid $color-main;
-  border-right: 3px solid $color-main;
-  transform: rotate(45deg);
+  display: inline-block;
+  border: 5px solid transparent;
+  border-top-color: $color-main;
+  margin-left: 9px;
 }
 
 .phone:hover .phone__popup-inner{
