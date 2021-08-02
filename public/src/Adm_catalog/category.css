@@ -367,14 +367,6 @@ a:hover,
 **************************/
 
 
-.test-menu-wrap{
-    display:flex;
-    flex-flow: column;
-    flex:1;
-    margin: 50px 2vw;
-    max-width: 350px;
-}
-
 /*Кнопка добавить тест*/
 .add-freetest,
 .add-test{
@@ -1253,11 +1245,6 @@ li.vert-menu__list>li.vert-menu__list a
         flex-direction: column;
         align-items: flex-start;
     }
-
-    .test-menu-wrap{
-        margin: 0;
-    }
-
 
     .nav{
         right: 0px;

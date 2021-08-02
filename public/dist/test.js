@@ -134,6 +134,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 /* harmony import */ var _components_dnd_dnd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/dnd/dnd */ "./public/src/components/dnd/dnd.js");
 /* harmony import */ var _question__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./question */ "./public/src/Test/question.js");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
+
 
 
 
@@ -151,7 +153,18 @@ if (window.location.pathname.match('/adminsc\/test/')) {
 
 (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block:first-child').addClass("flex1");
 (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.a-add').on('click', aAdd);
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.q-delete').on('click', qDelete);
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.q-delete').on('click', e => {
+  let res = (0,_question__WEBPACK_IMPORTED_MODULE_4__._question)().delete();
+
+  if (res.msg === 'ok') {
+    let block = e.target.closest('.block');
+    block.remove();
+    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(`[data-pagination = "${res.q_id}"]`).el[0].remove();
+    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('[data-pagination]:first-child').addClass('nav-active');
+    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block:first-child').addClass('flex1');
+  }
+}); // $('.q-delete').on('click', qDelete)
+
 (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.a-del').on('click', aDelete);
 async function aDelete(e) {
   if ((0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(e.target).hasClass('a-del')) {
@@ -186,33 +199,18 @@ async function aAdd(e) {
     (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(newAnswer).on('click', aDelete);
   }
 }
-async function qDelete(e) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(e.target).hasClass('q-delete')) {
-    if (confirm("Удалить вопрос со всеми его ответами?")) {
-      let q_id = +e.target.closest('.e-block-q').id;
-      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_2__.post)('/question/delete', {
-        q_id
-      });
-      res = JSON.parse(res);
-
-      if (res.msg === 'ok') {
-        let block = e.target.closest('.block');
-        block.remove();
-        (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(`[data-pagination = "${res.q_id}"]`).el[0].remove();
-        (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('[data-pagination]:first-child').addClass('nav-active');
-        (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block:first-child').addClass('flex1');
-      }
-    }
-  }
-} ///// question sort input validate
+async function qDelete(e) {} ///// question sort input validate
 
 (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.sort-q').on('change', _common__WEBPACK_IMPORTED_MODULE_2__.validate.sort); ////////// Save
 
 (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.blocks').on('click', function (e) {
   if ((0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(e.target).hasClass('question__save')) {
-    (0,_question__WEBPACK_IMPORTED_MODULE_4__._question)().save();
-  } // questionSave(e)
-
+    if ((0,_question__WEBPACK_IMPORTED_MODULE_4__._question)().save()) {
+      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_5__.showHidePaginBtn)(res.paginationButton);
+      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_5__.appendBlock)();
+      _common__WEBPACK_IMPORTED_MODULE_2__.popup.show(res.msg);
+    }
+  }
 }); // export function getAnswers(block, q_id) {
 //     let answerBlocks = block.querySelectorAll('.e-block-a')
 //     let answers = []
@@ -248,8 +246,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _question() {
-  let q = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.block.flex1 .e-block-q').el[0];
+function _question(id) {
+  let q = id ? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(`.e-block-q#{id}`).el[0] : (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.block.flex1 .e-block-q').el[0];
   return new question(q);
 }
 
@@ -258,25 +256,27 @@ function question(q) {
 
   this.add = function () {};
 
-  this.save = async function () {
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/UpdateOrCreate', {
-      // question: getQuestion(e, q),
-      question: this.get(),
-      answers: this.getAnswers()
-    });
-    res = JSON.parse(res);
-
-    if (res) {
-      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_2__.showHidePaginBtn)(res.paginationButton);
-      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_2__.appendBlock)();
-      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg);
+  this.delete = async function () {
+    if (confirm("Удалить вопрос со всеми его ответами?")) {
+      let q_id = +this.q.id;
+      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/delete', {
+        q_id
+      });
+      return JSON.parse(res);
     }
   };
 
-  this.getAnswers = function () {
-    let answerBlocks = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.block.flex1 .e-block-a').el; // let answers = []
+  this.save = async function () {
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/UpdateOrCreate', {
+      question: this.get(),
+      answers: this.getAnswers()
+    });
+    return await JSON.parse(res);
+  };
 
-    return Array.from(answerBlocks).map(a => {
+  this.getAnswers = function () {
+    let answerBlocks = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.block.flex1 .e-block-a').el;
+    return [...answerBlocks].map(a => {
       return {
         id: +a.querySelector('.checkbox').dataset['answer'],
         answer: a.querySelector('textarea').value,
@@ -284,16 +284,7 @@ function question(q) {
         parent_question: +this.q.id,
         pica: ''
       };
-    }, this.q); // answerBlocks.forEach((a) => {
-    //     answers.push({
-    //         id: +a.querySelector('.checkbox').dataset['answer'],
-    //         answer: a.querySelector('textarea').value,
-    //         correct_answer: +a.querySelector('.checkbox').checked,
-    //         parent_question: +this.q.id,
-    //         pica: '',
-    //     })
-    // }, this.q)
-    // return answers
+    }, this.q);
   };
 
   this.get = function () {
@@ -925,10 +916,9 @@ __webpack_require__.r(__webpack_exports__);
 
 (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('[data-pagination]').removeClass('nav-active'); // Показать первую кнопку
 
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('[data-pagination]:first-child').addClass('nav-active'); //// Пагинация
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('[data-pagination]:first-child').addClass('nav-active'); //// add question
 
 (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.pagination').on('click', function (e) {
-  //// add question
   if (e.target.classList.contains('add-question')) {
     show();
     return;

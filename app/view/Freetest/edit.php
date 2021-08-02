@@ -1,7 +1,7 @@
 <section>
   <div class= "container-edit-test">
 
-    <div class = 'test-menu-wrap'>
+    <div class = 'test-menu'>
       <div class = 'add-freetest'>Добавить тест</div>
 
       <?

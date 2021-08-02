@@ -1,6 +1,6 @@
 <div class="test-edit-wrapper">
 
-	<div class='test-menu-wrap'>
+	<div class='test-edit-menu'>
 		<a class='add-test' href="/adminsc/test/show">Добавить тест</a>
 
 		<?

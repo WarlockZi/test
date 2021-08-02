@@ -3,6 +3,7 @@ import '../components/popup.scss'
 import {test_delete, validate, post, $, popup} from '../common'
 import {check} from '../components/dnd/dnd'
 import {_question, questionSave} from './question'
+import {appendBlock, showHidePaginBtn} from "../components/test-pagination/test-pagination";
 
 if (typeof $('.test_delete').el[0] !== 'undefined')
     new test_delete($('.test_delete').el[0]);
@@ -21,7 +22,19 @@ $('.block').removeClass("flex1")
 $('.block:first-child').addClass("flex1")
 
 $('.a-add').on('click', aAdd)
-$('.q-delete').on('click', qDelete)
+$('.q-delete').on('click',
+    (e) => {
+        let res = _question().delete()
+        if (res.msg === 'ok') {
+            let block = e.target.closest('.block')
+            block.remove()
+            $(`[data-pagination = "${res.q_id}"]`).el[0].remove()
+            $('[data-pagination]:first-child').addClass('nav-active')
+            $('.block:first-child').addClass('flex1')
+        }
+    })
+// $('.q-delete').on('click', qDelete)
+
 $('.a-del').on('click', aDelete)
 
 export async function aDelete(e) {
@@ -57,36 +70,24 @@ export async function aAdd(e) {
     }
 }
 
+
 export async function qDelete(e) {
-    if ($(e.target).hasClass('q-delete')) {
-        if (confirm("Удалить вопрос со всеми его ответами?")) {
-            let q_id = +e.target.closest('.e-block-q').id
-            let res = await post('/question/delete', {q_id})
-            res = JSON.parse(res)
-            if (res.msg === 'ok') {
-                let block = e.target.closest('.block')
-                block.remove()
-                $(`[data-pagination = "${res.q_id}"]`).el[0].remove()
-                $('[data-pagination]:first-child').addClass('nav-active')
-                $('.block:first-child').addClass('flex1')
-            }
-        }
-    }
 }
 
 ///// question sort input validate
 $('.sort-q').on('change', validate.sort)
 
 ////////// Save
-$('.blocks').on('click', function (e){
-    if ($(e.target).hasClass('question__save')) {
-    _question().save()
-
+$('.blocks').on('click', function (e) {
+        if ($(e.target).hasClass('question__save')) {
+            if (_question().save()) {
+                showHidePaginBtn(res.paginationButton)
+                appendBlock()
+                popup.show(res.msg)
+            }
+        }
     }
-    // questionSave(e)
-}
 )
-
 
 
 // export function getAnswers(block, q_id) {
