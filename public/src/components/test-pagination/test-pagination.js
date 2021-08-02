@@ -9,9 +9,8 @@ $('[data-pagination]').removeClass('nav-active')
 $('[data-pagination]:first-child').addClass('nav-active')
 
 
-//// Пагинация
-$('.pagination').on('click', function (e) {
 //// add question
+$('.pagination').on('click', function (e) {
     if (e.target.classList.contains('add-question')) {
         show()
         return
@@ -63,8 +62,7 @@ function showHidePaginBtn(pagItem) {
     if (activePaginBtn) {
         activePaginBtn.classList.remove('nav-active')
     }
-    $('.add-question').el[0]
-        .insertAdjacentHTML('beforeBegin', pagItem)
+    $('.add-question').el[0].insertAdjacentHTML('beforeBegin', pagItem)
 }
 
 function appendBlock() {

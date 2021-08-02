@@ -322,14 +322,6 @@ footer {
 *******      Menu    ******
 **************************/
 
-.test-menu-wrap{
-    display:flex;
-    flex-flow: column;
-    flex:1;
-    margin: 50px 2vw;
-    max-width: 235px;
-}
-
 /*Кнопка добавить тест*/
 .add-freetest,
 .add-test{
@@ -889,9 +881,9 @@ footer p:nth-child(2){
 .navi a:hover,
 .button:hover,
 .e-block-q:hover  .navi,
-.menu li .test-link a:hover,
+.test-link a:hover,
 .navi__item,
-.menu a,
+
 .pic-upload,
 .pagination > a.nav-active:hover,
 .pagination > a.nav-active,
@@ -935,12 +927,7 @@ h2,
 }
 
 
-.menu li .test-params,
-.menu li,
-.menu li .test-link a
-{
-    background: #9FD468;
-}
+
 
 
 
@@ -954,11 +941,6 @@ h2,
     transition: 0.5s opacity;
 }
 
-.menu .vert-menu__list:hover>.vert-menu__drop{
-    opacity: 1;
-    top: 0;
-    z-index: 1;
-}
 
 /*Иконки для всплывающих менюшек*/
 .vert-menu__list::after{
@@ -992,10 +974,6 @@ h2,
         align-items: flex-start;
     }
 
-    .test-menu-wrap{
-        margin: 0;
-    }
-
     .nav{
         right: 0px;
         width:auto;
@@ -1018,7 +996,6 @@ h2,
         margin:0 auto;
     }
     .q,
-    .menu a, 
     textarea,
     .pagination a,
     .user-button div:first-child{

@@ -2,37 +2,41 @@ import {$, popup, post} from "../common";
 import {getAnswers, getQuestion} from "./edit";
 import {showHidePaginBtn, appendBlock} from "../components/test-pagination/test-pagination";
 
-function _question() {
-    let q = $('.block.flex1 .e-block-q').el[0]
+function _question(id) {
+    let q = id ?
+        $(`.e-block-q#{id}`).el[0] :
+        $('.block.flex1 .e-block-q').el[0]
+
     return new question(q)
 }
 
 function question(q) {
     this.q = q
     this.add = function () {
-
     }
+
+    this.delete = async function () {
+        if (confirm("Удалить вопрос со всеми его ответами?")) {
+            let q_id = +this.q.id
+            let res = await post('/question/delete', {q_id})
+            return JSON.parse(res)
+        }
+    }
+
     this.save = async function () {
         let res = await post(
             '/question/UpdateOrCreate',
             {
-                // question: getQuestion(e, q),
                 question: this.get(),
                 answers: this.getAnswers(),
             })
-        res = JSON.parse(res)
-
-        if (res) {
-            showHidePaginBtn(res.paginationButton)
-            appendBlock()
-            popup.show(res.msg)
-        }
+        return await JSON.parse(res)
     }
+
     this.getAnswers = function () {
 
         let answerBlocks = $('.block.flex1 .e-block-a').el
-        // let answers = []
-        return Array.from(answerBlocks).map((a) => {
+        return [...answerBlocks].map((a) => {
             return {
                 id: +a.querySelector('.checkbox').dataset['answer'],
                 answer: a.querySelector('textarea').value,
@@ -42,16 +46,6 @@ function question(q) {
             }
         }, this.q)
 
-        // answerBlocks.forEach((a) => {
-        //     answers.push({
-        //         id: +a.querySelector('.checkbox').dataset['answer'],
-        //         answer: a.querySelector('textarea').value,
-        //         correct_answer: +a.querySelector('.checkbox').checked,
-        //         parent_question: +this.q.id,
-        //         pica: '',
-        //     })
-        // }, this.q)
-        // return answers
     }
     this.get = function () {
         return {
