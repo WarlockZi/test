@@ -1,5 +1,7 @@
+import {test} from './Test/model/test'
+
 let validate = {
-    sort: function () {
+    sort: ()=> {
         let error = this.nextElementSibling
         let ar = this.value.match(/\D+/)
         if (ar) {
@@ -11,14 +13,12 @@ let validate = {
             }
         }
     },
-
-    email: function (email) {
+    email: (email)=> {
         if (!email) return false
         let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     },
-
-    password: function (password) {
+    password: (password)=> {
         if (!password) return false
         let re = /^[a-zA-Z\-0-9]{6,20}$/
         return re.test(password)
@@ -92,7 +92,6 @@ async function get(key) {
 }
 
 async function post(url, data) {
-//      debugger;
     return new Promise(function (resolve, reject) {
         data.token = document.querySelector('meta[name="token"]').getAttribute('content')
         let req = new XMLHttpRequest();
@@ -184,7 +183,6 @@ function MyJquery(elements) {
     }
 }
 
-
 function $(selector) {
     let elements = ''
     if (typeof selector === "string") {
@@ -195,37 +193,23 @@ function $(selector) {
     return new MyJquery(elements);
 }
 
-class test_delete {
+class test_delete_button {
     constructor(elem) {
-        this._elem = elem;
-        elem.onclick = this.onClick.bind(this); // (*)
-        elem.onmouseenter = this.showToolip
-        elem.onmouseleave = this.hideTooltip
-        elem.onmousemove = this.changeTooltipPos
+        if (!elem) return
+        this._elem = $(elem).el[0];
+        this._elem.onclick = this.delete
+        this._elem.onmouseenter = this.showToolip
+        this._elem.onmouseleave = this.hideTooltip
+        this._elem.onmousemove = this.changeTooltipPos
     }
-
     async delete() {
         if (confirm('Удалить тест?')) {
-            let id = $('.test-name').value()
-            let res = await post('/test/delete',
-                {id: id}
-            )
-            res = JSON.parse(res)
+            let res = test.del()
             if (res.msg === 'ok') {
                 window.location = '/test/edit'
             }
         }
     }
-
-    changeTooltipPos(e) {
-        this.tip.style.top = e.pageY + 35 + 'px'
-        this.tip.style.left = e.pageX - 170 + 'px'
-    }
-
-    hideTooltip() {
-        this.tip.remove()
-    }
-
     showToolip(e) {
         let x = e.clientX
         let y = e.clientY
@@ -237,12 +221,12 @@ class test_delete {
         this.tip = tip
         document.body.append(tip)
     }
-
-    onClick(event) {
-        let action = event.target.closest('.test_delete').dataset['click'];
-        if (action) {
-            this[action]();
-        }
+    hideTooltip() {
+        this.tip.remove()
+    }
+    changeTooltipPos(e) {
+        this.tip.style.top = e.pageY + 35 + 'px'
+        this.tip.style.left = e.pageX - 170 + 'px'
     }
 }
 
@@ -270,4 +254,4 @@ async function fetchW(url, Obj) {
     return prom
 }
 
-export {popup, test_delete, post, get, uniq, validate, $, fetchWrap, fetchW}
+export {popup, test_delete_button, post, get, uniq, validate, $, fetchWrap, fetchW}

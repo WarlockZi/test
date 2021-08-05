@@ -12,7 +12,7 @@ test-edit-wrapper {
   margin: 10px;
 }
 
-.title {
+.test-edit__title {
   display: flex;
   flex-wrap: wrap;
 }
@@ -91,7 +91,7 @@ test-edit-wrapper {
 }
 
 .content {
-  margin: 0 5px;
+  margin: 0 5px 0 20px;
   flex: 1;
 }
 
@@ -422,27 +422,5 @@ test-edit-wrapper {
     flex-direction: column;
   }
 
-  $add-color: #1bbc9b;
-  $add-color_hover: #19ad8e;
 
-  .pagination {
-    .add-question {
-      background-color: $add-color;
-      border: none;
-      color: white;
-      padding: 0 6px;
-      text-align: center;
-      font-size: 1rem;
-      box-shadow: 0 2px 4px 0 $add-color;
-      margin: 0 3px 4px 0;
-      line-height: 19px;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $add-color_hover;
-
-      }
-
-    }
-  }
 }

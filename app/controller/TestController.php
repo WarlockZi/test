@@ -18,8 +18,8 @@ class TestController Extends AppController
 	{
 		parent::__construct($route);
 		$this->auth();
-		View::setCss('test.css');
-		View::setJs('test.js');
+//		View::setCss('test.css');
+//		View::setJs('test.js');
 
 	}
 
@@ -52,7 +52,6 @@ class TestController Extends AppController
 //					'qestion_block' => $question_block,
 				]));
 			}
-
 		}
 	}
 
@@ -67,17 +66,19 @@ class TestController Extends AppController
 		if ($testId) {
 			$test = App::$app->test->findOne($testId);
 			$testDataToEdit = App::$app->test->getTestData($testId);
+
 			unset ($testDataToEdit['correct_answers']);
-//			if ($testDataToEdit) {
 			$pagination = App::$app->test->pagination($testDataToEdit, true);
-			$this->set(compact('test', 'testDataToEdit', 'pagination'));
-//			} else {
-//				$pagination = App::$app->test->pagination($testDataToEdit, true);
-//				$this->set(compact('test', 'testDataToEdit', 'pagination'));
-//			}
 		} else {
+			$testDataToEdit = [];
+			$test['id'] = '';
+			$test['test_name'] = '';
+			$pagination = '';
 			$error = '<H1>Теста с таким номером нет.</H1>';
 		}
+		$this->set(compact('test', 'testDataToEdit', 'pagination'));
+		View::setJs('test_edit.js');
+		View::setCss('test_edit.css');
 	}
 
 	public function actionResults()

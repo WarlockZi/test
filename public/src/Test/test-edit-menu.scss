@@ -65,3 +65,26 @@
     box-shadow: none;
   }
 }
+.test-edit__view-toggle{
+  display: flex;
+  justify-content: space-between;
+
+  .with-pagination,.without-pagination{
+    display: flex;
+    width: 40%;
+    height: 50px;
+    background: grey;
+    margin: 10px 0px;
+    cursor: pointer;
+  }
+}
+
+.test-edit__content{
+  margin-left: 10px;
+  flex-flow: column;
+}
+.test-edit__content-2{
+  display: none;
+  margin-left: 10px;
+  flex-flow: column;
+}

@@ -1,5 +1,4 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./public/src/Test/do.js":
@@ -8,6 +7,7 @@
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 /* harmony import */ var _do_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./do.scss */ "./public/src/Test/do.scss");
@@ -117,132 +117,19 @@ function objToServer(errorCnt) {
 
 /***/ }),
 
-/***/ "./public/src/Test/edit.js":
-/*!*********************************!*\
-  !*** ./public/src/Test/edit.js ***!
-  \*********************************/
+/***/ "./public/src/Test/model/question.js":
+/*!*******************************************!*\
+  !*** ./public/src/Test/model/question.js ***!
+  \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "aDelete": () => (/* binding */ aDelete),
-/* harmony export */   "aAdd": () => (/* binding */ aAdd),
-/* harmony export */   "qDelete": () => (/* binding */ qDelete)
-/* harmony export */ });
-/* harmony import */ var _edit_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit.scss */ "./public/src/Test/edit.scss");
-/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _components_dnd_dnd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/dnd/dnd */ "./public/src/components/dnd/dnd.js");
-/* harmony import */ var _question__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./question */ "./public/src/Test/question.js");
-/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
-
-
-
-
-
-
-if (typeof (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.test_delete').el[0] !== 'undefined') new _common__WEBPACK_IMPORTED_MODULE_2__.test_delete((0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.test_delete').el[0]); /// class active для admin_main_menu
-
-if (window.location.pathname.match('/adminsc\/test/')) {
-  document.querySelector('.module.test').classList.add('activ');
-}
-
-(0,_components_dnd_dnd__WEBPACK_IMPORTED_MODULE_3__.check)('/image/create'); //Скрыть все вопросы
-
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block').removeClass("flex1"); //Показть первый вопрос
-
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block:first-child').addClass("flex1");
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.a-add').on('click', aAdd);
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.q-delete').on('click', e => {
-  let res = (0,_question__WEBPACK_IMPORTED_MODULE_4__._question)().delete();
-
-  if (res.msg === 'ok') {
-    let block = e.target.closest('.block');
-    block.remove();
-    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(`[data-pagination = "${res.q_id}"]`).el[0].remove();
-    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('[data-pagination]:first-child').addClass('nav-active');
-    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block:first-child').addClass('flex1');
-  }
-}); // $('.q-delete').on('click', qDelete)
-
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.a-del').on('click', aDelete);
-async function aDelete(e) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(e.target).hasClass('a-del')) {
-    if (confirm("Удалить этот ответ?")) {
-      let a_id = +e.target.closest('.e-block-a').id;
-      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_2__.post)('/answer/delete', {
-        a_id
-      });
-      res = JSON.parse(res);
-
-      if (res.msg === 'ok') {
-        let f = e.target.closest('.e-block-a');
-        f.remove();
-        _common__WEBPACK_IMPORTED_MODULE_2__.popup.show('Ответ удален');
-      }
-    }
-  }
-}
-async function aAdd(e) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(e.target).hasClass('a-add')) {
-    let q_id = +e.target.closest('.e-block-q').id;
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_2__.post)('/answer/show', {
-      q_id
-    });
-    let visibleBlock = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block.flex1').el[0];
-    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(visibleBlock).find('.answers').insertAdjacentHTML('beforeend', res);
-    let newAnswer = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(visibleBlock).find('.e-block-a:last-child');
-    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(newAnswer).css('background-color', 'pink');
-    setTimeout(function () {
-      (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(newAnswer).css('background-color', 'white');
-    }, 400);
-    (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(newAnswer).on('click', aDelete);
-  }
-}
-async function qDelete(e) {} ///// question sort input validate
-
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.sort-q').on('change', _common__WEBPACK_IMPORTED_MODULE_2__.validate.sort); ////////// Save
-
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.blocks').on('click', function (e) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(e.target).hasClass('question__save')) {
-    if ((0,_question__WEBPACK_IMPORTED_MODULE_4__._question)().save()) {
-      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_5__.showHidePaginBtn)(res.paginationButton);
-      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_5__.appendBlock)();
-      _common__WEBPACK_IMPORTED_MODULE_2__.popup.show(res.msg);
-    }
-  }
-}); // export function getAnswers(block, q_id) {
-//     let answerBlocks = block.querySelectorAll('.e-block-a')
-//     let answers = []
-//     answerBlocks.forEach((a) => {
-//         answers.push({
-//             id: +a.querySelector('.checkbox').dataset['answer'],
-//             answer: a.querySelector('textarea').value,
-//             correct_answer: +a.querySelector('.checkbox').checked,
-//             parent_question: +q_id,
-//             pica: '',
-//         })
-//     }, q_id)
-//     return answers
-// }
-
-/***/ }),
-
-/***/ "./public/src/Test/question.js":
-/*!*************************************!*\
-  !*** ./public/src/Test/question.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "questionSave": () => (/* binding */ questionSave),
 /* harmony export */   "_question": () => (/* binding */ _question)
 /* harmony export */ });
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./public/src/Test/edit.js");
-/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
-
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
 
 
 
@@ -298,9 +185,17 @@ function question(q) {
   };
 }
 
-async function questionSave(e) {}
 
 
+/***/ }),
+
+/***/ "./public/src/Test/model/test.js":
+/*!***************************************!*\
+  !*** ./public/src/Test/model/test.js ***!
+  \***************************************/
+/***/ (() => {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\OpenServer\\domains\\vi-production\\public\\src\\Test\\model\\test.js: Unexpected keyword 'this'. (5:24)\n\n\u001b[0m \u001b[90m 3 |\u001b[39m     id\u001b[33m:\u001b[39m$(\u001b[32m'.test-name'\u001b[39m)\u001b[33m.\u001b[39mvalue()\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 4 |\u001b[39m     name\u001b[33m:\u001b[39m$(\u001b[32m'.test-name'\u001b[39m)\u001b[33m.\u001b[39mel[\u001b[35m0\u001b[39m]\u001b[33m.\u001b[39minnerText\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 5 |\u001b[39m     del\u001b[33m:\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mid){\u001b[0m\n\u001b[0m \u001b[90m   |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 6 |\u001b[39m         \u001b[36mawait\u001b[39m post(\u001b[32m'/test/delete'\u001b[39m\u001b[33m,\u001b[39m{id})\u001b[0m\n\u001b[0m \u001b[90m 7 |\u001b[39m         \u001b[36mreturn\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mparse(res)\u001b[0m\n\u001b[0m \u001b[90m 8 |\u001b[39m     }\u001b[33m,\u001b[39m\u001b[0m\n    at Parser._raise (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:810:17)\n    at Parser.raiseWithData (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:803:17)\n    at Parser.raise (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:764:17)\n    at Parser.checkReservedWord (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:12188:12)\n    at Parser.parseIdentifierName (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:12157:12)\n    at Parser.parseIdentifier (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:12124:23)\n    at Parser.parseBindingAtom (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10398:17)\n    at Parser.parseMaybeDefault (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10460:50)\n    at Parser.parseAssignableListItem (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10440:23)\n    at Parser.parseBindingList (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10432:24)");
 
 /***/ }),
 
@@ -310,6 +205,7 @@ async function questionSave(e) {}
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _show_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./show.scss */ "./public/src/Test/show.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
@@ -338,16 +234,153 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/src/Test/test-edit.js":
+/*!**************************************!*\
+  !*** ./public/src/Test/test-edit.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "aDelete": () => (/* binding */ aDelete),
+/* harmony export */   "aAdd": () => (/* binding */ aAdd)
+/* harmony export */ });
+/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
+/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
+/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
+/* harmony import */ var _test_edit_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./test-edit.scss */ "./public/src/Test/test-edit.scss");
+/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./show */ "./public/src/Test/show.js");
+/* harmony import */ var _Admin_admin_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Admin/admin.scss */ "./public/src/Admin/admin.scss");
+/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _components_dnd_dnd__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/dnd/dnd */ "./public/src/components/dnd/dnd.js");
+/* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
+// import './test-edit'
+
+
+
+
+
+
+
+
+
+
+
+
+new _common__WEBPACK_IMPORTED_MODULE_8__.test_delete_button('.test_delete'); /// class active для admin_main_menu
+
+if (window.location.pathname.match('/adminsc\/test/')) {
+  document.querySelector('.module.test').classList.add('activ');
+}
+
+(0,_components_dnd_dnd__WEBPACK_IMPORTED_MODULE_9__.check)('/image/create'); //Скрыть все вопросы
+
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.block').removeClass("flex1"); //Показть первый вопрос
+
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.block:first-child').addClass("flex1");
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.a-add').on('click', aAdd);
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.q-delete').on('click', e => {
+  let res = (0,_model_question__WEBPACK_IMPORTED_MODULE_10__._question)().delete();
+
+  if (res.msg === 'ok') {
+    let block = e.target.closest('.block');
+    block.remove();
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(`[data-pagination = "${res.q_id}"]`).el[0].remove();
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('[data-pagination]:first-child').addClass('nav-active');
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.block:first-child').addClass('flex1');
+  }
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.a-del').on('click', aDelete);
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.without-pagination').on('click', () => {
+  (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.test-edit__content').el[0].classList.toggle('flex1');
+  (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.test-edit__content-2').el[0].classList.toggle('flex1');
+  addScript();
+});
+
+let addScript = () => {
+  // let cssLink = $('link[href*="/public/dist/test_edit.css"]').el[0];
+  let cssLink = (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('link[href]').el[0];
+  let cloneNode = cssLink.cloneNode(true);
+  cloneNode.setAttribute('href', "/public/dist/test_edit_theme_2.css");
+  document.head.append(cloneNode);
+};
+
+async function aDelete(e) {
+  if ((0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(e.target).hasClass('a-del')) {
+    if (confirm("Удалить этот ответ?")) {
+      let a_id = +e.target.closest('.e-block-a').id;
+      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_8__.post)('/answer/delete', {
+        a_id
+      });
+      res = JSON.parse(res);
+
+      if (res.msg === 'ok') {
+        let f = e.target.closest('.e-block-a');
+        f.remove();
+        _common__WEBPACK_IMPORTED_MODULE_8__.popup.show('Ответ удален');
+      }
+    }
+  }
+}
+async function aAdd(e) {
+  if ((0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(e.target).hasClass('a-add')) {
+    let q_id = +e.target.closest('.e-block-q').id;
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_8__.post)('/answer/show', {
+      q_id
+    });
+    let visibleBlock = (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.block.flex1').el[0];
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(visibleBlock).find('.answers').insertAdjacentHTML('beforeend', res);
+    let newAnswer = (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(visibleBlock).find('.e-block-a:last-child');
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(newAnswer).css('background-color', 'pink');
+    setTimeout(function () {
+      (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(newAnswer).css('background-color', 'white');
+    }, 400);
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(newAnswer).on('click', aDelete);
+  }
+} ///// question sort input validate
+
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.sort-q').on('change', _common__WEBPACK_IMPORTED_MODULE_8__.validate.sort); ////////// Save событие навешиваем
+// на родителя така как могут быть созданы новые блоки
+
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.blocks').on('click', function (e) {
+  if ((0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(e.target).hasClass('question__save')) {
+    if ((0,_model_question__WEBPACK_IMPORTED_MODULE_10__._question)().save()) {
+      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__.showHidePaginBtn)(res.paginationButton);
+      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__.appendBlock)();
+      _common__WEBPACK_IMPORTED_MODULE_8__.popup.show(res.msg);
+    }
+  }
+}); // export function getAnswers(block, q_id) {
+//     let answerBlocks = block.querySelectorAll('.e-block-a')
+//     let answers = []
+//     answerBlocks.forEach((a) => {
+//         answers.push({
+//             id: +a.querySelector('.checkbox').dataset['answer'],
+//             answer: a.querySelector('textarea').value,
+//             correct_answer: +a.querySelector('.checkbox').checked,
+//             parent_question: +q_id,
+//             pica: '',
+//         })
+//     }, q_id)
+//     return answers
+// }
+
+/***/ }),
+
 /***/ "./public/src/common.js":
 /*!******************************!*\
   !*** ./public/src/common.js ***!
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "popup": () => (/* binding */ popup),
-/* harmony export */   "test_delete": () => (/* binding */ test_delete),
+/* harmony export */   "test_delete_button": () => (/* binding */ test_delete_button),
 /* harmony export */   "post": () => (/* binding */ post),
 /* harmony export */   "get": () => (/* binding */ get),
 /* harmony export */   "uniq": () => (/* binding */ uniq),
@@ -356,10 +389,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchWrap": () => (/* binding */ fetchWrap),
 /* harmony export */   "fetchW": () => (/* binding */ fetchW)
 /* harmony export */ });
+/* harmony import */ var _Test_model_test__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Test/model/test */ "./public/src/Test/model/test.js");
+/* harmony import */ var _Test_model_test__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Test_model_test__WEBPACK_IMPORTED_MODULE_0__);
+
 let validate = {
-  sort: function () {
-    let error = this.nextElementSibling;
-    let ar = this.value.match(/\D+/);
+  sort: () => {
+    let error = undefined.nextElementSibling;
+    let ar = undefined.value.match(/\D+/);
 
     if (ar) {
       error.innerText = 'Только цифры';
@@ -370,12 +406,12 @@ let validate = {
       }
     }
   },
-  email: function (email) {
+  email: email => {
     if (!email) return false;
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   },
-  password: function (password) {
+  password: password => {
     if (!password) return false;
     let re = /^[a-zA-Z\-0-9]{6,20}$/;
     return re.test(password);
@@ -448,7 +484,6 @@ async function get(key) {
 }
 
 async function post(url, data) {
-  //      debugger;
   return new Promise(function (resolve, reject) {
     data.token = document.querySelector('meta[name="token"]').getAttribute('content');
     let req = new XMLHttpRequest();
@@ -569,37 +604,24 @@ function $(selector) {
   return new MyJquery(elements);
 }
 
-class test_delete {
+class test_delete_button {
   constructor(elem) {
-    this._elem = elem;
-    elem.onclick = this.onClick.bind(this); // (*)
-
-    elem.onmouseenter = this.showToolip;
-    elem.onmouseleave = this.hideTooltip;
-    elem.onmousemove = this.changeTooltipPos;
+    if (!elem) return;
+    this._elem = $(elem).el[0];
+    this._elem.onclick = this.delete;
+    this._elem.onmouseenter = this.showToolip;
+    this._elem.onmouseleave = this.hideTooltip;
+    this._elem.onmousemove = this.changeTooltipPos;
   }
 
   async delete() {
     if (confirm('Удалить тест?')) {
-      let id = $('.test-name').value();
-      let res = await post('/test/delete', {
-        id: id
-      });
-      res = JSON.parse(res);
+      let res = _Test_model_test__WEBPACK_IMPORTED_MODULE_0__.test.del();
 
       if (res.msg === 'ok') {
         window.location = '/test/edit';
       }
     }
-  }
-
-  changeTooltipPos(e) {
-    this.tip.style.top = e.pageY + 35 + 'px';
-    this.tip.style.left = e.pageX - 170 + 'px';
-  }
-
-  hideTooltip() {
-    this.tip.remove();
   }
 
   showToolip(e) {
@@ -614,12 +636,13 @@ class test_delete {
     document.body.append(tip);
   }
 
-  onClick(event) {
-    let action = event.target.closest('.test_delete').dataset['click'];
+  hideTooltip() {
+    this.tip.remove();
+  }
 
-    if (action) {
-      this[action]();
-    }
+  changeTooltipPos(e) {
+    this.tip.style.top = e.pageY + 35 + 'px';
+    this.tip.style.left = e.pageX - 170 + 'px';
   }
 
 }
@@ -658,6 +681,7 @@ async function fetchW(url, Obj) {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _cookie_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cookie.scss */ "./public/src/components/cookie/cookie.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
@@ -697,6 +721,7 @@ function setCookie() {
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "check": () => (/* binding */ check)
@@ -836,6 +861,7 @@ function check(url) {
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _autocomplete_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./autocomplete.scss */ "./public/src/components/header/autocomplete.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
@@ -886,6 +912,7 @@ async function autocomplete(input) {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
 /* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
@@ -900,25 +927,27 @@ __webpack_require__.r(__webpack_exports__);
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "showHidePaginBtn": () => (/* binding */ showHidePaginBtn),
 /* harmony export */   "appendBlock": () => (/* binding */ appendBlock)
 /* harmony export */ });
 /* harmony import */ var _test_pagination_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./test-pagination.scss */ "./public/src/components/test-pagination/test-pagination.scss");
-/* harmony import */ var _Test_question__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Test/question */ "./public/src/Test/question.js");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
-/* harmony import */ var _Test_edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Test/edit */ "./public/src/Test/edit.js");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+/* harmony import */ var _Test_test_edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Test/test-edit */ "./public/src/Test/test-edit.js");
+/* harmony import */ var _Test_model_question__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Test/model/question */ "./public/src/Test/model/question.js");
+ // import {questionSave} from '../../Test/model/question'
 
 
 
  //Скрыть все кнопки
 
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('[data-pagination]').removeClass('nav-active'); // Показать первую кнопку
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[data-pagination]').removeClass('nav-active'); // Показать первую кнопку
 
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('[data-pagination]:first-child').addClass('nav-active'); //// add question
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[data-pagination]:first-child').addClass('nav-active'); //// add question
 
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.pagination').on('click', function (e) {
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.pagination').on('click', function (e) {
   if (e.target.classList.contains('add-question')) {
     show();
     return;
@@ -934,58 +963,58 @@ __webpack_require__.r(__webpack_exports__);
 function paginate(self) {
   /// get clicked button Return if clicked is active
   if (self.classList.contains('nav-active')) return;
-  let active_btn = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.pagination .nav-active').el[0]; //// change active button
+  let active_btn = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.pagination .nav-active').el[0]; //// change active button
 
   active_btn.classList.remove('nav-active');
   self.classList.add('nav-active'); //// hide the card
 
   let id_to_hide = active_btn.dataset['pagination'];
-  (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(`#question-${id_to_hide}`).removeClass('flex1'); //// show the card
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(`#question-${id_to_hide}`).removeClass('flex1'); //// show the card
 
   let id_to_show = self.dataset['pagination'];
-  (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(`#question-${id_to_show}`).addClass('flex1');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(`#question-${id_to_show}`).addClass('flex1');
 } //// добавление вопроса
 
 
 async function show(e) {
-  let testid = +(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.test-name').value();
-  let questCount = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)("[data-pagination]").count();
-  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_2__.post)('/question/show', {
+  let testid = +(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-name').value();
+  let questCount = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("[data-pagination]").count();
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/question/show', {
     testid,
     questCount
   });
   res = JSON.parse(res);
   let Block = res.block;
-  let blocks = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.blocks').el[0];
+  let blocks = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks').el[0];
   blocks.insertAdjacentHTML('afterBegin', Block);
-  let newBlock = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.blocks .block:first-child').el[0];
+  let newBlock = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks .block:first-child').el[0];
   document.querySelector('.flex1').classList.remove('flex1');
-  (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(newBlock).addClass('flex1');
-  let save_button = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(newBlock).find('.question__save');
-  (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(save_button).on('click', _Test_question__WEBPACK_IMPORTED_MODULE_1__.questionSave); // $('.overlay').on('click', clickOverlay)
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newBlock).addClass('flex1');
+  let save_button = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newBlock).find('.question__save');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(save_button).on('click', (0,_Test_model_question__WEBPACK_IMPORTED_MODULE_3__._question)().save); // $('.overlay').on('click', clickOverlay)
 }
 
 function showHidePaginBtn(pagItem) {
-  let activePaginBtn = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.pagination .nav-active').el[0];
+  let activePaginBtn = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.pagination .nav-active').el[0];
 
   if (activePaginBtn) {
     activePaginBtn.classList.remove('nav-active');
   }
 
-  (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.add-question').el[0].insertAdjacentHTML('beforeBegin', pagItem);
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.add-question').el[0].insertAdjacentHTML('beforeBegin', pagItem);
 }
 
 function appendBlock() {
-  let block = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.overlay').find('.block');
-  (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.blocks').append(block);
-  (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(block).addClass('flex1');
-  (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.a-add').on('click', _Test_edit__WEBPACK_IMPORTED_MODULE_3__.aAdd);
-  (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.q-delete').on('click', _Test_edit__WEBPACK_IMPORTED_MODULE_3__.qDelete);
-  (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.a-del').on('click', _Test_edit__WEBPACK_IMPORTED_MODULE_3__.aDelete);
+  let block = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.overlay').find('.block');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks').append(block);
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(block).addClass('flex1');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-add').on('click', _Test_test_edit__WEBPACK_IMPORTED_MODULE_2__.aAdd);
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.q-delete').on('click', (0,_Test_model_question__WEBPACK_IMPORTED_MODULE_3__._question)().delete());
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-del').on('click', _Test_test_edit__WEBPACK_IMPORTED_MODULE_2__.aDelete);
 }
 
 function hideVisibleBlock() {
-  (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.block.flex1').removeClass('flex1');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block.flex1').removeClass('flex1');
 }
 
 
@@ -998,6 +1027,7 @@ function hideVisibleBlock() {
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1010,18 +1040,7 @@ __webpack_require__.r(__webpack_exports__);
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/Test/edit.scss":
-/*!***********************************!*\
-  !*** ./public/src/Test/edit.scss ***!
-  \***********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1034,6 +1053,20 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/Test/test-edit.scss":
+/*!****************************************!*\
+  !*** ./public/src/Test/test-edit.scss ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1046,6 +1079,7 @@ __webpack_require__.r(__webpack_exports__);
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1058,6 +1092,7 @@ __webpack_require__.r(__webpack_exports__);
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1070,6 +1105,7 @@ __webpack_require__.r(__webpack_exports__);
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1082,6 +1118,7 @@ __webpack_require__.r(__webpack_exports__);
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1094,6 +1131,7 @@ __webpack_require__.r(__webpack_exports__);
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1106,6 +1144,7 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1118,6 +1157,7 @@ __webpack_require__.r(__webpack_exports__);
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1130,6 +1170,7 @@ __webpack_require__.r(__webpack_exports__);
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1142,6 +1183,7 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -1175,6 +1217,18 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -1205,23 +1259,18 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
+"use strict";
 /*!*********************************!*\
   !*** ./public/src/Test/test.js ***!
   \*********************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _do__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./do */ "./public/src/Test/do.js");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./public/src/Test/edit.js");
-/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
-/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
-/* harmony import */ var _Admin_admin_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Admin/admin.scss */ "./public/src/Admin/admin.scss");
-/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
-/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
-/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./show */ "./public/src/Test/show.js");
-
-
-
+/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
+/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
+/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
 
 
 

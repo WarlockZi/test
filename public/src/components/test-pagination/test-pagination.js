@@ -1,8 +1,8 @@
 import './test-pagination.scss'
-import {questionSave} from '../../Test/question'
+// import {questionSave} from '../../Test/model/question'
 import {$, popup, post} from "../../common";
-import {getAnswers, getQuestion, aAdd, aDelete, qDelete} from '../../Test/edit'
-
+import {getAnswers, getQuestion, aAdd, aDelete} from '../../Test/test-edit'
+import {_question} from "../../Test/model/question";
 //Скрыть все кнопки
 $('[data-pagination]').removeClass('nav-active')
 // Показать первую кнопку
@@ -53,7 +53,7 @@ async function show(e) {
     document.querySelector('.flex1').classList.remove('flex1')
     $(newBlock).addClass('flex1')
     let save_button = $(newBlock).find('.question__save')
-        $(save_button).on('click', questionSave)
+        $(save_button).on('click', _question().save)
     // $('.overlay').on('click', clickOverlay)
 }
 
@@ -70,7 +70,7 @@ function appendBlock() {
     $('.blocks').append(block)
     $(block).addClass('flex1')
     $('.a-add').on('click', aAdd)
-    $('.q-delete').on('click', qDelete)
+    $('.q-delete').on('click', _question().delete())
     $('.a-del').on('click', aDelete)
 }
 

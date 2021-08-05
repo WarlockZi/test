@@ -1,6 +1,15 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
+
+/***/ "./public/src/Test/model/test.js":
+/*!***************************************!*\
+  !*** ./public/src/Test/model/test.js ***!
+  \***************************************/
+/***/ (() => {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\OpenServer\\domains\\vi-production\\public\\src\\Test\\model\\test.js: Unexpected keyword 'this'. (5:24)\n\n\u001b[0m \u001b[90m 3 |\u001b[39m     id\u001b[33m:\u001b[39m$(\u001b[32m'.test-name'\u001b[39m)\u001b[33m.\u001b[39mvalue()\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 4 |\u001b[39m     name\u001b[33m:\u001b[39m$(\u001b[32m'.test-name'\u001b[39m)\u001b[33m.\u001b[39mel[\u001b[35m0\u001b[39m]\u001b[33m.\u001b[39minnerText\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 5 |\u001b[39m     del\u001b[33m:\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mid){\u001b[0m\n\u001b[0m \u001b[90m   |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 6 |\u001b[39m         \u001b[36mawait\u001b[39m post(\u001b[32m'/test/delete'\u001b[39m\u001b[33m,\u001b[39m{id})\u001b[0m\n\u001b[0m \u001b[90m 7 |\u001b[39m         \u001b[36mreturn\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mparse(res)\u001b[0m\n\u001b[0m \u001b[90m 8 |\u001b[39m     }\u001b[33m,\u001b[39m\u001b[0m\n    at Parser._raise (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:810:17)\n    at Parser.raiseWithData (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:803:17)\n    at Parser.raise (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:764:17)\n    at Parser.checkReservedWord (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:12188:12)\n    at Parser.parseIdentifierName (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:12157:12)\n    at Parser.parseIdentifier (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:12124:23)\n    at Parser.parseBindingAtom (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10398:17)\n    at Parser.parseMaybeDefault (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10460:50)\n    at Parser.parseAssignableListItem (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10440:23)\n    at Parser.parseBindingList (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10432:24)");
+
+/***/ }),
 
 /***/ "./public/src/common.js":
 /*!******************************!*\
@@ -8,10 +17,11 @@
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "popup": () => (/* binding */ popup),
-/* harmony export */   "test_delete": () => (/* binding */ test_delete),
+/* harmony export */   "test_delete_button": () => (/* binding */ test_delete_button),
 /* harmony export */   "post": () => (/* binding */ post),
 /* harmony export */   "get": () => (/* binding */ get),
 /* harmony export */   "uniq": () => (/* binding */ uniq),
@@ -20,10 +30,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchWrap": () => (/* binding */ fetchWrap),
 /* harmony export */   "fetchW": () => (/* binding */ fetchW)
 /* harmony export */ });
+/* harmony import */ var _Test_model_test__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Test/model/test */ "./public/src/Test/model/test.js");
+/* harmony import */ var _Test_model_test__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Test_model_test__WEBPACK_IMPORTED_MODULE_0__);
+
 let validate = {
-  sort: function () {
-    let error = this.nextElementSibling;
-    let ar = this.value.match(/\D+/);
+  sort: () => {
+    let error = undefined.nextElementSibling;
+    let ar = undefined.value.match(/\D+/);
 
     if (ar) {
       error.innerText = 'Только цифры';
@@ -34,12 +47,12 @@ let validate = {
       }
     }
   },
-  email: function (email) {
+  email: email => {
     if (!email) return false;
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   },
-  password: function (password) {
+  password: password => {
     if (!password) return false;
     let re = /^[a-zA-Z\-0-9]{6,20}$/;
     return re.test(password);
@@ -112,7 +125,6 @@ async function get(key) {
 }
 
 async function post(url, data) {
-  //      debugger;
   return new Promise(function (resolve, reject) {
     data.token = document.querySelector('meta[name="token"]').getAttribute('content');
     let req = new XMLHttpRequest();
@@ -233,37 +245,24 @@ function $(selector) {
   return new MyJquery(elements);
 }
 
-class test_delete {
+class test_delete_button {
   constructor(elem) {
-    this._elem = elem;
-    elem.onclick = this.onClick.bind(this); // (*)
-
-    elem.onmouseenter = this.showToolip;
-    elem.onmouseleave = this.hideTooltip;
-    elem.onmousemove = this.changeTooltipPos;
+    if (!elem) return;
+    this._elem = $(elem).el[0];
+    this._elem.onclick = this.delete;
+    this._elem.onmouseenter = this.showToolip;
+    this._elem.onmouseleave = this.hideTooltip;
+    this._elem.onmousemove = this.changeTooltipPos;
   }
 
   async delete() {
     if (confirm('Удалить тест?')) {
-      let id = $('.test-name').value();
-      let res = await post('/test/delete', {
-        id: id
-      });
-      res = JSON.parse(res);
+      let res = _Test_model_test__WEBPACK_IMPORTED_MODULE_0__.test.del();
 
       if (res.msg === 'ok') {
         window.location = '/test/edit';
       }
     }
-  }
-
-  changeTooltipPos(e) {
-    this.tip.style.top = e.pageY + 35 + 'px';
-    this.tip.style.left = e.pageX - 170 + 'px';
-  }
-
-  hideTooltip() {
-    this.tip.remove();
   }
 
   showToolip(e) {
@@ -278,12 +277,13 @@ class test_delete {
     document.body.append(tip);
   }
 
-  onClick(event) {
-    let action = event.target.closest('.test_delete').dataset['click'];
+  hideTooltip() {
+    this.tip.remove();
+  }
 
-    if (action) {
-      this[action]();
-    }
+  changeTooltipPos(e) {
+    this.tip.style.top = e.pageY + 35 + 'px';
+    this.tip.style.left = e.pageX - 170 + 'px';
   }
 
 }
@@ -322,6 +322,7 @@ async function fetchW(url, Obj) {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _cookie_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cookie.scss */ "./public/src/components/cookie/cookie.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
@@ -361,6 +362,7 @@ function setCookie() {
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _autocomplete_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./autocomplete.scss */ "./public/src/components/header/autocomplete.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
@@ -411,6 +413,7 @@ async function autocomplete(input) {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
 /* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
@@ -425,6 +428,7 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -437,6 +441,7 @@ __webpack_require__.r(__webpack_exports__);
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -449,6 +454,7 @@ __webpack_require__.r(__webpack_exports__);
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -461,6 +467,7 @@ __webpack_require__.r(__webpack_exports__);
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -473,6 +480,7 @@ __webpack_require__.r(__webpack_exports__);
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -485,6 +493,7 @@ __webpack_require__.r(__webpack_exports__);
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -497,6 +506,7 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -509,6 +519,7 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -542,6 +553,18 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -572,8 +595,9 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
+"use strict";
 /*!*********************************!*\
   !*** ./public/src/Main/main.js ***!
   \*********************************/
