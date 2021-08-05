@@ -1,6 +1,5 @@
-import {$, popup, post} from "../common";
-import {getAnswers, getQuestion} from "./edit";
-import {showHidePaginBtn, appendBlock} from "../components/test-pagination/test-pagination";
+import {$, popup, post} from "../../common";
+import {showHidePaginBtn, appendBlock} from "../../components/test-pagination/test-pagination";
 
 function _question(id) {
     let q = id ?
@@ -58,8 +57,4 @@ function question(q) {
     }
 }
 
-
-async function questionSave(e) {
-}
-
-export {questionSave, _question}
+export {_question}

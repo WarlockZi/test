@@ -46,9 +46,8 @@
 
 <footer></footer>
 
-<div style="display: none">
 	<!--	--><? //= include ROOT . '/app/view/components/icons/logo.php' ?>
-</div>
+
 
 <? $this::getJS() ?>
 

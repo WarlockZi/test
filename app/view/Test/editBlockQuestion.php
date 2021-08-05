@@ -6,7 +6,8 @@
 			          name="<?= $q_id ?>q"><?= $block[0]['question_text'] ?></textarea>
 
 			<label>
-			<input class="question__sort" type="text" data-q-sort="<?= $q_id ?>" size="1" value="<?= $block[0]['sort'] ?>">
+				<input class="question__sort" type="text" data-q-sort="<?= $q_id ?>" size="1"
+				       value="<?= $block[0]['sort'] ?>">
 				Порядковый номер вопроса в тесте
 			</label>
 			<div class="field__wrapper">
@@ -42,9 +43,9 @@
 
 	<div class="answers">
 		<? foreach ($block as $id => $answer): ?>
-			<? if (isset($answer['answer_text'])): ?>
+
 				<? require ROOT . '/app/view/Test/editBlockAnswer.php' ?>
-			<? endif; ?>
+
 		<? endforeach; ?>
 	</div>
 

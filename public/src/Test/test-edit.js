@@ -1,12 +1,22 @@
-import './edit.scss'
+// import './test-edit'
+import '../normalize.scss'
+import '../components/test-pagination/test-pagination'
+
+import '../components/header/header'
+import '../components/footer/footer.scss'
+
+import './test-edit.scss'
+import './show'
+import '../Admin/admin.scss'
+
 import '../components/popup.scss'
-import {test_delete, validate, post, $, popup} from '../common'
+
+import {test_delete_button, validate, post, $, popup} from '../common'
 import {check} from '../components/dnd/dnd'
-import {_question, questionSave} from './question'
+import {_question} from './model/question'
 import {appendBlock, showHidePaginBtn} from "../components/test-pagination/test-pagination";
 
-if (typeof $('.test_delete').el[0] !== 'undefined')
-    new test_delete($('.test_delete').el[0]);
+new test_delete_button('.test_delete');
 
 
 /// class active для admin_main_menu
@@ -33,9 +43,23 @@ $('.q-delete').on('click',
             $('.block:first-child').addClass('flex1')
         }
     })
-// $('.q-delete').on('click', qDelete)
 
 $('.a-del').on('click', aDelete)
+
+$('.without-pagination').on('click', ()=>{
+    $('.test-edit__content').el[0].classList.toggle('flex1')
+    $('.test-edit__content-2').el[0].classList.toggle('flex1')
+    addScript()
+
+})
+
+let addScript = ()=> {
+    // let cssLink = $('link[href*="/public/dist/test_edit.css"]').el[0];
+    let cssLink = $('link[href]').el[0];
+    let cloneNode = cssLink.cloneNode(true)
+    cloneNode.setAttribute('href', "/public/dist/test_edit_theme_2.css")
+    document.head.append(cloneNode)
+}
 
 export async function aDelete(e) {
     if ($(e.target).hasClass('a-del')) {
@@ -71,13 +95,11 @@ export async function aAdd(e) {
 }
 
 
-export async function qDelete(e) {
-}
-
 ///// question sort input validate
 $('.sort-q').on('change', validate.sort)
 
-////////// Save
+////////// Save событие навешиваем
+// на родителя така как могут быть созданы новые блоки
 $('.blocks').on('click', function (e) {
         if ($(e.target).hasClass('question__save')) {
             if (_question().save()) {

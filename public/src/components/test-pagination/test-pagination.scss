@@ -1,10 +1,10 @@
-.pagination{
+.pagination {
   margin: 3px 0 3px;
   display: flex;
   flex-wrap: wrap;
   font-weight: 600;
 
-  a{
+  a {
     text-align: center;
     display: block;
     width: 1.1rem;
@@ -17,7 +17,7 @@
     color: black;
   }
 
-  [data-pagination]{
+  [data-pagination] {
     cursor: pointer;
     background-color: #949494;
     border: none;
@@ -30,22 +30,45 @@
     border-radius: 1px;
     box-shadow: 0 2px 4px 0 #607f7c;
     margin: 0px 3px 4px 0;
-    &:hover{
+
+    &:hover {
       background: #ababab;
       box-shadow: 0 6px 11px 0 rgba(0, 0, 0, 0.24),
       0 6px 5px 0 rgba(0, 0, 0, 0.19);
     }
   }
 
-  .nav-active{
+  .nav-active {
     background-color: #6e6e6e; /* Green */
 
-    &:hover{
-      border-color:#6e6e6e;
-      box-shadow: 0 12px 11px 0 rgba(0,0,0,0.24),
-      0 17px 50px 0 rgba(0,0,0,0.19)
+    &:hover {
+      border-color: #6e6e6e;
+      box-shadow: 0 12px 11px 0 rgba(0, 0, 0, 0.24),
+      0 17px 50px 0 rgba(0, 0, 0, 0.19)
     }
   }
 }
 
+$add-color: #1bbc9b;
+$add-color_hover: #19ad8e;
+
+
+.pagination__add-question {
+  background-color: $add-color;
+  border: none;
+  color: white;
+  padding: 0 6px;
+  text-align: center;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px 0 $add-color;
+  margin: 0 3px 4px 0;
+  line-height: 19px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $add-color_hover;
+
+  }
+
+}
 
