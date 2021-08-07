@@ -1,4 +1,5 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./public/src/Auth/cabinet.js":
@@ -7,7 +8,6 @@
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 /* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
@@ -32,7 +32,6 @@ __webpack_require__.r(__webpack_exports__);
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
@@ -63,7 +62,6 @@ __webpack_require__.r(__webpack_exports__);
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _edit_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit.scss */ "./public/src/Auth/edit.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
@@ -107,7 +105,6 @@ __webpack_require__.r(__webpack_exports__);
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _login_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./login.scss */ "./public/src/Auth/login.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
@@ -173,7 +170,6 @@ async function send(email) {
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
@@ -246,7 +242,6 @@ async function send(email) {
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
@@ -271,9 +266,25 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************!*\
   !*** ./public/src/Test/model/test.js ***!
   \***************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\OpenServer\\domains\\vi-production\\public\\src\\Test\\model\\test.js: Unexpected keyword 'this'. (5:24)\n\n\u001b[0m \u001b[90m 3 |\u001b[39m     id\u001b[33m:\u001b[39m$(\u001b[32m'.test-name'\u001b[39m)\u001b[33m.\u001b[39mvalue()\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 4 |\u001b[39m     name\u001b[33m:\u001b[39m$(\u001b[32m'.test-name'\u001b[39m)\u001b[33m.\u001b[39mel[\u001b[35m0\u001b[39m]\u001b[33m.\u001b[39minnerText\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 5 |\u001b[39m     del\u001b[33m:\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mid){\u001b[0m\n\u001b[0m \u001b[90m   |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 6 |\u001b[39m         \u001b[36mawait\u001b[39m post(\u001b[32m'/test/delete'\u001b[39m\u001b[33m,\u001b[39m{id})\u001b[0m\n\u001b[0m \u001b[90m 7 |\u001b[39m         \u001b[36mreturn\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mparse(res)\u001b[0m\n\u001b[0m \u001b[90m 8 |\u001b[39m     }\u001b[33m,\u001b[39m\u001b[0m\n    at Parser._raise (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:810:17)\n    at Parser.raiseWithData (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:803:17)\n    at Parser.raise (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:764:17)\n    at Parser.checkReservedWord (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:12188:12)\n    at Parser.parseIdentifierName (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:12157:12)\n    at Parser.parseIdentifier (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:12124:23)\n    at Parser.parseBindingAtom (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10398:17)\n    at Parser.parseMaybeDefault (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10460:50)\n    at Parser.parseAssignableListItem (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10440:23)\n    at Parser.parseBindingList (C:\\OpenServer\\domains\\vi-production\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:10432:24)");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Test": () => (/* binding */ Test)
+/* harmony export */ });
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+
+function Test() {
+  this.id = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
+  this.name = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText;
+
+  this.delete = async function () {
+    await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/delete', {
+      id: this.id
+    });
+    return JSON.parse(res);
+  };
+}
 
 /***/ }),
 
@@ -283,7 +294,6 @@ throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "popup": () => (/* binding */ popup),
@@ -297,7 +307,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchW": () => (/* binding */ fetchW)
 /* harmony export */ });
 /* harmony import */ var _Test_model_test__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Test/model/test */ "./public/src/Test/model/test.js");
-/* harmony import */ var _Test_model_test__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Test_model_test__WEBPACK_IMPORTED_MODULE_0__);
 
 let validate = {
   sort: () => {
@@ -523,7 +532,7 @@ class test_delete_button {
 
   async delete() {
     if (confirm('Удалить тест?')) {
-      let res = _Test_model_test__WEBPACK_IMPORTED_MODULE_0__.test.del();
+      let res = test.del();
 
       if (res.msg === 'ok') {
         window.location = '/test/edit';
@@ -588,7 +597,6 @@ async function fetchW(url, Obj) {
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _alert_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alert.scss */ "./public/src/components/alert/alert.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
@@ -609,7 +617,6 @@ __webpack_require__.r(__webpack_exports__);
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _cookie_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cookie.scss */ "./public/src/components/cookie/cookie.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
@@ -649,7 +656,6 @@ function setCookie() {
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _autocomplete_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./autocomplete.scss */ "./public/src/components/header/autocomplete.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
@@ -700,7 +706,6 @@ async function autocomplete(input) {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
 /* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
@@ -715,7 +720,6 @@ __webpack_require__.r(__webpack_exports__);
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -728,7 +732,6 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -741,7 +744,6 @@ __webpack_require__.r(__webpack_exports__);
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -754,7 +756,6 @@ __webpack_require__.r(__webpack_exports__);
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -767,7 +768,6 @@ __webpack_require__.r(__webpack_exports__);
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -780,7 +780,6 @@ __webpack_require__.r(__webpack_exports__);
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -793,7 +792,6 @@ __webpack_require__.r(__webpack_exports__);
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -806,7 +804,6 @@ __webpack_require__.r(__webpack_exports__);
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -819,7 +816,6 @@ __webpack_require__.r(__webpack_exports__);
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -832,7 +828,6 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -845,7 +840,6 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -879,18 +873,6 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -921,9 +903,8 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 /*!*********************************!*\
   !*** ./public/src/Auth/auth.js ***!
   \*********************************/

@@ -73,8 +73,6 @@ module.exports = () => {
         // freeTest: path.resolve(src, 'Freetest/free-test.js'),
         test: path.resolve(src, 'Test/test.js'),
         test_edit: path.resolve(src, 'Test/test-edit.js'),
-        test_edit_theme_1: path.resolve(src, 'Test/test_edit_theme_1.js'),
-        test_edit_theme_2: path.resolve(src, 'Test/test_edit_theme_2.js'),
         main: path.resolve(src, 'Main/main.js'),
     }
 

@@ -18,7 +18,6 @@ import {appendBlock, showHidePaginBtn} from "../components/test-pagination/test-
 
 new test_delete_button('.test_delete');
 
-
 /// class active для admin_main_menu
 if (window.location.pathname.match('/adminsc\/test/')) {
     document.querySelector('.module.test').classList.add('activ')
@@ -46,20 +45,20 @@ $('.q-delete').on('click',
 
 $('.a-del').on('click', aDelete)
 
-$('.without-pagination').on('click', ()=>{
+$('.without-pagination').on('click', () => {
     $('.test-edit__content').el[0].classList.toggle('flex1')
     $('.test-edit__content-2').el[0].classList.toggle('flex1')
-    addScript()
+    changeTheme()
 
 })
 
-let addScript = ()=> {
-    // let cssLink = $('link[href*="/public/dist/test_edit.css"]').el[0];
-    let cssLink = $('link[href]').el[0];
-    let cloneNode = cssLink.cloneNode(true)
-    cloneNode.setAttribute('href', "/public/dist/test_edit_theme_2.css")
-    document.head.append(cloneNode)
+function setTheme() {
 }
+
+
+let changeTheme = () => {
+}
+
 
 export async function aDelete(e) {
     if ($(e.target).hasClass('a-del')) {

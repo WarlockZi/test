@@ -1,4 +1,4 @@
-import {test} from './Test/model/test'
+import {Test} from './Test/model/test'
 
 let validate = {
     sort: ()=> {
