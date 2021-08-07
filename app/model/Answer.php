@@ -24,7 +24,7 @@ class Answer extends Model
 		$this->insertBySql($sql, $params);
 		$answer = $this->answer;
 
-		exit(require ROOT. '/app/view/Test/editBlockAnswer.php');
+		exit(include ROOT. '/app/view/Test/editBlockAnswer.php');
 	}
 	public function delete($id)
 	{

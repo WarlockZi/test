@@ -11,7 +11,9 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 /* harmony import */ var _do_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./do.scss */ "./public/src/Test/do.scss");
-/* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
+/* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
+/* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
+
 
 
  //Скрыть все вопросы
@@ -109,773 +111,106 @@ function objToServer(errorCnt) {
     pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
     testId: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-test-id]').el[0].dataset.testId,
     test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText,
-    userName: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.FIO').el[0].innerText
+    userName: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.user-menu__FIO').el[0].innerText
   };
 }
 
 /***/ }),
 
-/***/ "./public/src/Test/edit.js":
-/*!*********************************!*\
-  !*** ./public/src/Test/edit.js ***!
-  \*********************************/
+/***/ "./public/src/Test/model/question.js":
+/*!*******************************************!*\
+  !*** ./public/src/Test/model/question.js ***!
+  \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "aDelete": () => (/* binding */ aDelete),
-/* harmony export */   "aAdd": () => (/* binding */ aAdd),
-/* harmony export */   "qDelete": () => (/* binding */ qDelete),
-/* harmony export */   "getQuestion": () => (/* binding */ getQuestion),
-/* harmony export */   "getAnswers": () => (/* binding */ getAnswers)
+/* harmony export */   "_question": () => (/* binding */ _question)
 /* harmony export */ });
-/* harmony import */ var _edit_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit.scss */ "./public/src/Test/edit.scss");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _components_dnd_dnd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/dnd/dnd */ "./public/src/components/dnd/dnd.js");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
 
 
 
-if (typeof (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test_delete').el[0] !== 'undefined') new _common__WEBPACK_IMPORTED_MODULE_1__.test_delete((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test_delete').el[0]); /// class active для admin_main_menu
-
-if (window.location.pathname.match('/adminsc\/test/')) {
-  document.querySelector('.module.test').classList.add('activ');
-} /// delete test tip
-// $('.content').on('mouseover', function (e) {
-//     if ($(e.target).hasClass('test_delete')) {
-//         let tipTxt = e.target.getAttribute('tip')
-//         let tipEl = document.createElement('div')
-//         $(tipEl).addClass('tip')
-//         tipEl.innerText = tipTxt
-//     }
-// })
-
-
-(0,_components_dnd_dnd__WEBPACK_IMPORTED_MODULE_2__.check)('/image/create'); //Скрыть все вопросы
-
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block').removeClass("flex1"); //Показть первый вопрос
-
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block:first-child').addClass("flex1");
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-add').on('click', aAdd);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.q-delete').on('click', qDelete);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-del').on('click', aDelete);
-async function aDelete(e) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(e.target).hasClass('a-del')) {
-    let a_id = +e.target.closest('.e-block-a').id;
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/answer/delete', {
-      a_id
-    });
-    res = JSON.parse(res);
-
-    if (res.msg === 'ok') {
-      let f = e.target.closest('.e-block-a');
-
-      if (confirm("Удалить этот ответ?")) {
-        f.remove();
-      }
-    }
-  }
+function _question(id) {
+  let q = id ? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(`.e-block-q#{id}`).el[0] : (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.block.flex1 .e-block-q').el[0];
+  return new question(q);
 }
-async function aAdd(e) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(e.target).hasClass('a-add')) {
-    let q_id = +e.target.closest('.e-block-a').id;
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/answer/show', {
-      q_id
-    });
-    let visibleBlock = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block').getWithStyle('display', 'flex');
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(visibleBlock).find('.answers').insertAdjacentHTML('afterBegin', res);
-    let newAnswer = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(visibleBlock).find('.e-block-a:first-child');
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newAnswer).css('background-color', 'pink');
-    setTimeout(function () {
-      (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newAnswer).css('background-color', 'white');
-    }, 300);
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newAnswer).on('click', aDelete);
-  }
-}
-async function qDelete(e) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(e.target).hasClass('q-delete')) {
+
+function question(q) {
+  this.q = q;
+
+  this.add = function () {};
+
+  this.delete = async function () {
     if (confirm("Удалить вопрос со всеми его ответами?")) {
-      let q_id = +e.target.closest('.e-block-q').id;
-      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/question/delete', {
+      let q_id = +this.q.id;
+      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/delete', {
         q_id
       });
-      res = JSON.parse(res);
-
-      if (res.msg === 'ok') {
-        let block = e.target.closest('.block');
-        block.remove();
-        (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(`[data-pagination = "${res.q_id}"]`).el[0].remove();
-        (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[data-pagination]:first-child').addClass('nav-active');
-        (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block:first-child').addClass('flex1');
-      }
+      return JSON.parse(res);
     }
-  }
-} ///// question sort input validate
+  };
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.sort-q').on('change', _common__WEBPACK_IMPORTED_MODULE_1__.validate.sort); ////////// Update
-
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks').on('click', function (e) {
-  if (e.target.classList.contains('question__save')) {
-    let visibleBlock = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block.flex1').el[0]; // let q = $(visibleBlock).find('.e-block-q')
-    // let a = $(visibleBlock).find('.e-block-a')
-
-    let question = getQuestion(e, visibleBlock);
-    let answers = getAnswers(e, visibleBlock, question.id);
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/question/update', {
-      question,
-      answers
+  this.save = async function () {
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/UpdateOrCreate', {
+      question: this.get(),
+      answers: this.getAnswers()
     });
-  }
-});
-function getQuestion(e, block) {
-  return {
-    id: +e.target.dataset['qid'],
-    parent: +(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-name').el[0].getAttribute('value'),
-    picq: '',
-    qustion: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(block).find('textarea').value,
-    sort: +(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(block).find('.sort-q').value
+    return await JSON.parse(res);
+  };
+
+  this.getAnswers = function () {
+    let answerBlocks = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.block.flex1 .e-block-a').el;
+    return [...answerBlocks].map(a => {
+      return {
+        id: +a.querySelector('.checkbox').dataset['answer'],
+        answer: a.querySelector('textarea').value,
+        correct_answer: +a.querySelector('.checkbox').checked,
+        parent_question: +this.q.id,
+        pica: ''
+      };
+    }, this.q);
+  };
+
+  this.get = function () {
+    return {
+      id: +this.q.id,
+      parent: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].getAttribute('value'),
+      picq: '',
+      qustion: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(this.q).find('textarea').value,
+      sort: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(this.q).find('.question__sort').value
+    };
   };
 }
-function getAnswers(e, block, q_id) {
-  let answerBlocks = block.querySelectorAll('.e-block-a');
-  let answers = [];
-  answerBlocks.forEach(a => {
-    answers.push({
-      id: +a.querySelector('.checkbox').dataset['answer'],
-      answer: a.querySelector('textarea').value,
-      correct_answer: +a.querySelector('.checkbox').checked,
-      parent_question: +q_id,
-      pica: ''
+
+
+
+/***/ }),
+
+/***/ "./public/src/Test/model/test.js":
+/*!***************************************!*\
+  !*** ./public/src/Test/model/test.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Test": () => (/* binding */ Test)
+/* harmony export */ });
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+
+function Test() {
+  this.id = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
+  this.name = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText;
+
+  this.delete = async function () {
+    await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/delete', {
+      id: this.id
     });
-  }, q_id);
-  return answers;
-} //
-// window.onload = function () {
-//
-//
-// //////////////////////////////// Параметры теста///////////////
-//
-// // Открываем панель параметров теста
-//    $('body').on('click', ".add-test, .test-params", function () {
-// // Если форма открытa, закроем ее
-// //debugger;
-//       if (document.querySelector('.testParamsBorder')) {
-//          $('.testParamsBorder').remove();
-//       }
-//       var testId = $(this).data('testid');
-// //      var data = {testId: testId, action: 'testParams'};
-// //      data = 'param=' + JSON.stringify(data);
-//
-//       $.ajax({
-//          url: PROJ + '/test/edit',
-//          type: 'POST',
-//          data: ({testId: testId, action: 'testParams'}),
-//          success: function (res) {
-//             $('.wrap').after(res);
-//             $('.overlay').add('.testParamsBorder').fadeIn();
-//          }
-//       });
-//    });
-// // Удалить тест
-//    $('body').on('click', '#TestParamsDEL', function () {
-//
-//       var testId = +$('.testId').text();
-//       $.ajax({
-//          url: PROJ + '/test/edit',
-//          type: 'POST',
-//          data: ({tId: testId, action: 'tDel'}),
-//          cache: false,
-//          success: function (res) {
-//             if (confirm('Удалить тест?')) {
-//                $('.testParamsBorder').hide(100, function () {
-//                   $(this).remove();
-//                   $('body .test-params[data-testid =' + testId + ']').parent().add('.overlay').remove();
-//                });
-// // Удаляем из второго меню тест
-//                $('[href="/test/edit/' + testId + '"]').parent().remove();
-//             }
-//
-//          },
-//          error: function () {
-//             alert('Тест не удалился.');
-//          }
-//       });
-//    });
-// // Кнопка "Отмена"  - не сохранять параметры теста
-//    $('body').on('click', '#saveTestParmsCansel, .overlay', function () {
-//       $('.testParamsBorder').add('.overlay').fadeOut(400, function () {
-//          $(this).remove();
-//       });
-//    });
-// // Кнопака "ОК"  - сохранить параметры теста/Добавить новый тест
-//    $('body').on('click', '#saveTestParamsOK', function () {
-//       var testId = +$('.testId').text(),
-//       testName = $('#saveTestName').val(),
-//       parentTest = +$('#selectParenTest option:selected').val(),
-//       isTest = +$('#isTest option:selected').val(),
-//       sort = +$('.sort input').val(),
-//       enable = $('input[data-test-id]').prop("checked") ? 1 : 0;
-//       if ($('input[data-test-id]').prop("checked"))
-//          var enable = 1;
-//       else
-//          var enable = 0;
-//
-//       if (testId) { // Редактируем существующий тест
-//          $.ajax({
-//             url: PROJ + '/test/edit',
-//             type: 'POST',
-//             data: ({action: 'tUpd', testId: testId, testName: testName, parentTest: parentTest, isTest: isTest, sort: sort, enable: enable}),
-//             cache: false,
-//             success: function (res) {
-//                if (res) {
-//
-//                   $('a[href="' + PROJ + '/edit/' + testId + '"]').text(res);
-//                   $('.test-name').text('Тест - ' + res);
-//                   $('.testParamsBorder').add('.overlay').hide(100, function () {
-//                      $(this).remove()
-//                   });
-//                }
-//                else {
-//                   window.alert('Заполнитe название');
-//                }
-//             },
-//             error: function () {
-//                window.alert("Обновление не прошло");
-//             }
-//          });
-//       }
-//       else { // Создаем новый тест
-//          if (testName) {
-//             $.ajax({
-//                url: PROJ + '/test/edit',
-//                type: 'POST',
-//                data: ({action: 'tAdd', testId: testId, test_name: testName, parentTest: parentTest, isTest: isTest, sort: sort, enable: enable}),
-//                success: function (res) {
-//                   var obj = JSON.parse(res);
-// // Если открыт тест и есть в DOM назв теста удаляем вопросы
-//                   if (!$('.test-name')) {
-//                      $('div.block').remove();
-//                      $('.test-name').after(obj.answer);
-//                      $('.test-name').after(obj.question);
-// // Находимся в папке а не в тесте, поэтому контент добавляем
-//                   }
-//                   else {
-// // Всатвляем все после контента
-//                      var divTestName = '<p class="test-name" name = "test_id" value = "1">Тест - ' + obj.testName + '</p>' + obj.pagination + obj.question + obj.answer;
-//                      $('.content').html(divTestName);
-//                      $('.content .block').show();
-//                   }
-// // Закрываем рамку создания нового теста
-//                   $('.testParamsBorder').add('.overlay').fadeOut(150);
-// // Добавим пункты меню
-//                   $('.menu').append(obj.menuItem);
-//                },
-//                error: function () {
-//                }
-//             });
-//          }
-//          else {
-//             window.alert('Укажите название теста');
-//             return;
-//          }
-//       }
-//    });
-// ///////////////////
-//
-// // Изменить сортировку Вопросов
-//    $('body').on('change', "input[data-q-sort]", function () {
-//       var qid = +$(this).data('q-sort');
-//       edit("save_q", null, qid);
-//    });
-// // Textarea Вопрос
-//    $('body').on('change', "textarea[data-question-id]", function () {
-//       var qid = +$(this).data('question-id');
-//       edit("save_q", null, qid); //,null,null,sort);
-//    });
-// // Textarea Ответ
-//    $('body').on('change', "textarea[data-answer-id]", function () {
-//       var id = $(this).data('answer-id');
-//       edit("save_a", id);
-//    });
-// // Включить-выключить Checkbox Right Answer
-//    $('body').on('change', "input[data-answer]", function () {
-//       var id = $(this).data('answer');
-//       edit("save_a", id);
-//    });
-//
-//
-//
-// // Пагинация
-//             $('.pagination>.nav-active').removeClass('nav-active').addClass('p-no-active'); // убираем активность
-// //                alert(obj.menuItem);// Порядковый номер вопроса
-//             $('.pagination>a:last').before(obj.pagination); // Добавить следующий пункт пагинации
-//             $('.pagination>a:last').text('+'); // Порядковый номер вопроса
-//
-//             $('.block:visible').hide(); // Спрячем видимый блок
-//             $('.block:last').after(obj.block); // Выведем новый блок
-//             $('.content .block:last').show(200); //Покажем новый блок
-//             check(0);
-//          },
-//          error: function () {
-//             alert('Произошел сбой.');
-//          }
-//
-//       });
-//    });
-// /////////////////////// Добавить О Т В Е Т   ///////////
-//    $('body').on('click', '.add-answer', function () {
-//       var qid = +$(this).data('id');
-//       $.ajax({
-//          url: PROJ + '/test/edit',
-//          type: 'POST',
-//          data: ({action: 'aAdd', qid: qid}),
-//          cache: false,
-//          success: function (res) {
-//             var holder = document.querySelectorAll('.holder');
-//             var a = $('.e-block-q[id = "' + qid + 'q"]').siblings(".e-block-a").last().after(res);
-//             setTimeout(function () {
-//                check(1);
-//             }, 150);
-//          },
-//          error: function () {
-//          }
-//       });
-//       check();
-//    });
-//
-//
-//
-// //////////// Edit pagination
-//    var prevActive = $('.pagination').find('.nav-active').attr('href');
-//    $('.content').add('.test-data').find(prevActive).show();
-// // Пагинация
-//    $('.pagination').on('click', '.p-no-active', function () {
-//       if ($(this).attr('class') == 'nav-active')
-//          return false;
-// // Сылка нажатой клавищи
-//       var link = $(this).attr('href');
-// // Ссылка активной клавиши
-//       var prevActive = $('.pagination>a.nav-active ').attr('href');
-// // C активной клавищи снимаем активность
-//       $('.pagination>.nav-active').removeClass('nav-active').addClass('p-no-active');
-// // Нажатой клавище добавляем активность
-//       $(this).removeClass('p-no-active').addClass('nav-active');
-//       if ($(prevActive) !== 0) {// Если удалили вопрос из DOM, его длинна будет 0 и следующий вопрос не покажется
-//          $(prevActive).fadeOut(100, function () {
-//             if (link != '#') {
-//                $(link).fadeIn(100);
-//             }
-//          });
-//       }
-//       else {
-//          $(link).fadeIn(100);
-//       }
-//       return false;
-//    });
-//
-// /////////// Удалить картинку
-//    $('body').on('click', ".pic-del", function () {
-//       var a = $(this).data('a');
-//       var q = $(this).data('q');
-//       edit("del_a_q_pic", a, q);
-//    });
-// ////////////////////////////////// Функции ///////////////////////
-//
-//
-//    function edit(action, id, question_id, test_id, test_name) {
-//       var controller = 'test';
-//       debugger;
-//       if (window.location.pathname.indexOf('freetest') + 1) {
-//          controller = 'freetest';
-//       }
-//       if (action == "save_q") {
-//          var qpic = $('#imq[data-id = "' + question_id + '"]').attr('src'),
-//          text = $.trim($('textarea[name = "' + question_id + 'q"]').val()),
-//          sort = $.trim($('input[data-q-sort = ' + question_id + ']').val()),
-//          k_word = $.trim($('input[data-q-sort = ' + question_id + ']').val()),
-//          data = ({action: 'qUpd', data, qid: question_id, qpic: qpic, qtext: text, sort: sort}),
-//          url = `${PROJ}/${controller}/edit`;
-//          $.ajax({
-//             url: url,
-//             type: 'POST',
-//             data: data,
-//          });
-//       }
-//       else if (action == "save_a") {
-//          var apic = $('#ima[data-id = "' + id + '"]').attr('src');
-//          var text = $.trim($('textarea[name = ' + id + ']').val());
-//          var right_answer = ($('#right_answer' + id).prop("checked")) ? "1" : "0";
-//          var url = PROJ + `/${controller}/edit`;
-//          $.ajax({
-//             url: url,
-//             type: 'POST',
-//             data: ({action: 'aUpd', aid: id, apic: apic, atext: text, right_answer: right_answer}),
-//             cache: false,
-//          });
-//       }
-//       else if (action == "delete_a") {
-//          //debugger;
-//          var url = PROJ + '/test/edit';
-//          $.ajax({
-//             url: url,
-//             type: 'POST',
-//             data: ({aid: id, qid: question_id, action: action}),
-//             cache: false,
-//             success: function (res) {
-//                if (+res > 1) {
-//                   if (confirm('Удалить ответ?')) {
-//                      $('#' + id).slideUp(200, function () {
-//                         $(this).remove()
-//                      });
-//                   }
-//                }
-//                else {
-//                   if (confirm('Это последний ответ для данного вопроса. Если его удалите, удалится и весь вопрос. Удалять?')) {
-//                      edit('delete_q_a', id, question_id);
-//                   }
-//                   else {
-//                      return;
-//                   }
-//                }
-//             },
-//             error: function () {
-//                alert('Ошибка при удалении');
-//             }
-//          });
-//       }
-//       else if (action == "delete_q_a") {
-//          var activePagination = +$('.pagination>a.nav-active ').text();
-//          $.ajax({
-//             url: PROJ + '/test/edit',
-//             type: 'POST',
-//             data: ({action: 'delete_q_a', aid: id, qid: question_id}),
-//             cache: false,
-//             success: function (res) {
-//
-//                $('#' + question_id + 'q').parent().add('.pagination>a.nav-active ').slideUp(400, function () {
-//                   $(this).remove();
-//                   $('.pagination>a').each(function (index, elem) {// Пересчет номеров пагинации
-//                      index++
-//                      $(this).text('' + index);
-//                   });
-//                });
-//             },
-//             error: function () {
-//                alert('Ошибка при удалении');
-//             },
-//          });
-//       }
-//       else if (action == "del_a_q_pic") {
-//
-//          $.ajax({
-//             url: `${PROJ}/${controller}/edit`,
-//             type: 'POST',
-//             data: ({action: 'aqPicDel', aid: id, qid: question_id}),
-//             cache: false,
-//             success: function (res) {
-//                $('#ima' + id).remove();
-//                $('#imq' + question_id).remove();
-//             },
-//             error: function () {
-//                alert('Ошибка при удалении');
-//             },
-//          });
-//       }
-//
-//
-//    }
-//
-//    function check() {
-//
-//       var holder = document.getElementsByClassName('holder'),
-//       tests = {
-//          filereader: typeof FileReader != 'undefined',
-//          dnd: 'draggable' in document.createElement('span'),
-//          formdata: !!window.FormData,
-//          progress: "upload" in new XMLHttpRequest
-//       },
-//       support = {
-//          filereader: document.querySelectorAll('.filereader'),
-//          formdata: document.querySelectorAll('.formdata'),
-//          progress: document.querySelectorAll('.progress')
-//       },
-//       acceptedTypes = {
-//          'image/png': true,
-//          'image/jpeg': true,
-//          'image/gif': true
-//       },
-//       progress = document.getElementById('uploadprogress'),
-//       fileupload = document.getElementById('upload'),
-//       message = "filereader formdata progress".split(' '); // преобразует строку в массив, разбив по сепаратору
-//
-//
-//       for (var key in message) { //(function (api)
-//          if (tests[message[key]] === false) {
-//             support[message[key]].className = 'fail'; // присвоим класс
-//          }
-//          else {
-//             collItem = support[message[key]];
-//             for (var key1 = 0; key1 < collItem.length; ++key1) {
-//                var item = collItem[key1]; // Вызов myNodeList.item(i) необязателен в JavaScript
-//                item.className = 'hidden';
-//             }
-//          }
-//       }
-//
-//       if (tests.dnd) {
-//
-//          for (i = 0; i < holder.length; i++) {
-//             holder[i].ondragover = function () {
-//                this.className = 'hover';
-//                return false;
-//             };
-//             holder[i].ondragleave = function () {
-//                this.className = 'holder';
-//                return false;
-//             };
-// //        holder[i].ondragend = function () {
-// //            this.className = '';
-// //            return false;
-// //        };
-//             holder[i].ondrop = function (e) {
-//                this.className = 'holder';
-//                e.preventDefault();
-//                readfiles(e.dataTransfer.files, this);
-//             };
-//          }
-//
-//       }
-//       else {
-//          fileupload.className = 'hidden'; // прячем кнопку загрузки
-//          fileupload.querySelector('input').onchange = function () {// загружаем файлы
-//             readfiles(this.files);
-//          };
-//       }
-//
-//       function previewfile(file, elem) {
-//          if (tests.filereader === true && acceptedTypes[file.type] === true) {
-//             var imageContainer = elem, //document.querySelector('#'+fid+' [data-prefix = "'+pref+'"]');
-//             reader = new FileReader();
-//             reader.onload = function (event) {
-//
-//                if (!imageContainer.getElementsByTagName('img').length == 0) {
-//                   var elem = imageContainer.getElementsByTagName('img')[0];
-//                   elem.remove();
-//                }
-//                var image = new Image();
-//                if (imageContainer.getAttribute('data-prefix') == 'q') {
-//                   image.id = 'imq' + imageContainer.getAttribute('id');
-//                }
-//                else if (imageContainer.getAttribute('data-prefix') == 'a') {
-//                   image.id = 'ima' + imageContainer.getAttribute('id');
-//                }
-//                image.src = event.target.result;
-//                image.width = 150; // a fake resize
-//                imageContainer.appendChild(image);
-//             };
-//             reader.readAsDataURL(file);
-//          }
-//          else {
-//             holder.innerHTML += '<p>Загружен ' + file.name + ' ' + (file.size ? (file.size / 1024 | 0) + 'K' : '');
-//             console.log(file);
-//          }
-//       }
-//
-//       function readfiles(files, elem) {
-//
-//          var formData = tests.formdata ? new FormData() : null;
-//          for (var i = 0; i < files.length; i++) {
-//             var pref = elem.getAttribute('data-prefix');
-//             var fid = elem.id;
-//             if (tests.formdata) {
-//                formData.append('file', files[i]);
-// //window.alert( files[i]['name']);
-//                previewfile(files[i], elem);
-//             }
-//          }
-//          formData.append('pref', pref);
-//          formData.append('fid', fid);
-// // now post a new XHR request
-//          if (tests.formdata) {
-//             var xhr = new XMLHttpRequest(),
-//             controller = 'test';
-//             if (window.location.pathname.indexOf('freetest') + 1) {
-//                controller = 'freetest';
-//             }
-//             xhr.open('POST', `${PROJ}/${controller}/edit`, true);
-//             xhr.send(formData);
-//             xhr.onreadystatechange = function () {
-//                if (xhr.readyState != 4) {
-//                   return
-//                }
-//                if (xhr.status != 200) {
-//                   alert(xhr.status + ': Ошибка' + xhr.statusText); // пример вывода: 404: Not Found
-//                }
-//             }
-//          }
-//       }
-//
-//    }
-//
-//
-//    check();
-//
-// }
-//    function readfiles(files, elem) {
-//
-//       var formData = tests.formdata ? new FormData() : null;
-//       for (var i = 0; i < files.length; i++) {
-//          var pref = elem.getAttribute('data-prefix');
-//          var fid = elem.id;
-//          if (tests.formdata) {
-//             formData.append('file', files[i]);
-// //window.alert( files[i]['name']);
-//             previewfile(files[i], elem);
-//          }
-//       }
-//       formData.append('pref', pref);
-//       formData.append('fid', fid);
-// // now post a new XHR request
-//       if (tests.formdata) {
-//          var xhr = new XMLHttpRequest(),
-//          controller = 'test';
-//          if (window.location.pathname.indexOf('freetest') + 1) {
-//             controller = 'freetest';
-//          }
-//          xhr.open('POST', `${PROJ}/${controller}/edit`, true);
-//          xhr.send(formData);
-//          xhr.onreadystatechange = function () {
-//             if (xhr.readyState != 4) {
-//                return
-//             }
-//             if (xhr.status != 200) {
-//                alert(xhr.status + ': Ошибка' + xhr.statusText); // пример вывода: 404: Not Found
-//             }
-//          }
-//       }
-//    }
-//
-// }
-//
-// function edit(action, id, question_id, test_id, test_name) {
-//    var controller = 'test';
-// //        debugger;
-//    if (window.location.pathname.indexOf('freetest') + 1) {
-//       controller = 'freetest';
-//    }
-//    if (action == "save_q") {
-//       var qpic = $('#imq[data-id = "' + question_id + '"]').attr('src'),
-//       text = $.trim($('textarea[name = "' + question_id + 'q"]').val()),
-//       sort = $.trim($('input[data-q-sort = ' + question_id + ']').val()),
-//       k_word = $.trim($('input[data-q-sort = ' + question_id + ']').val()),
-//       data = ({action: 'qUpd', data, qid: question_id, qpic: qpic, qtext: text, sort: sort}),
-//       url = `${PROJ}/${controller}/edit`;
-//       $.ajax({
-//          url: url,
-//          type: 'POST',
-//          data: data,
-//       });
-//    }
-//    else if (action == "save_a") {
-//       var apic = $('#ima[data-id = "' + id + '"]').attr('src');
-//       var text = $.trim($('textarea[name = ' + id + ']').val());
-//       var right_answer = ($('#right_answer' + id).prop("checked")) ? "1" : "0";
-//       var url = PROJ + `/${controller}/edit`;
-//       $.ajax({
-//          url: url,
-//          type: 'POST',
-//          data: ({action: 'aUpd', aid: id, apic: apic, atext: text, right_answer: right_answer}),
-//          cache: false,
-//       });
-//    }
-//    else if (action == "delete_a") {
-//       //debugger;
-//       var url = PROJ + '/test/edit';
-//       $.ajax({
-//          url: url,
-//          type: 'POST',
-//          data: ({aid: id, qid: question_id, action: action}),
-//          cache: false,
-//          success: function (res) {
-//             if (+res > 1) {
-//                if (confirm('Удалить ответ?')) {
-//                   $('#' + id).slideUp(200, function () {
-//                      $(this).remove()
-//                   });
-//                }
-//             }
-//             else {
-//                if (confirm('Это последний ответ для данного вопроса. Если его удалите, удалится и весь вопрос. Удалять?')) {
-//                   edit('delete_q_a', id, question_id);
-//                }
-//                else {
-//                   return;
-//                }
-//             }
-//          },
-//          error: function () {
-//             alert('Ошибка при удалении');
-//          }
-//       });
-//    }
-//    else if (action == "delete_q_a") {
-//       var activePagination = +$('.pagination>a.nav-active ').text();
-//       //debugger;
-//       $.ajax({
-//          url: PROJ + '/test/edit',
-//          type: 'POST',
-//          data: ({action: 'delete_q_a', aid: id, qid: question_id}),
-//          cache: false,
-//          success: function (res) {
-//             $('#' + question_id + 'q').parent().add('.pagination>a.nav-active ').slideUp(400, function () {
-//                $(this).remove();
-//                var paginationACollection = $('.pagination>a');
-//                var len = paginationACollection.length;
-//                paginationACollection.each(function (index, elem) {// Пересчет номеров пагинации
-//                   index++;
-//                   if (index < len) {
-//                      $(this).text('' + index);
-//                   }
-//                });
-//                var paginItem = $('.pagination a:first').removeClass('p-no-active').addClass('nav-active');
-//                var questId = paginItem[0].hash.replace('#question-', '');
-//                $('#question-' + questId).show();
-//             });
-//          },
-//          error: function () {
-//             alert('Ошибка при удалении');
-//          },
-//       });
-//    }
-//    else if (action == "del_a_q_pic") {
-//
-//       $.ajax({
-//          url: `${PROJ}/${controller}/edit`,
-//          type: 'POST',
-//          data: ({action: 'aqPicDel', aid: id, qid: question_id}),
-//          cache: false,
-//          success: function (res) {
-//             $('#ima' + id).remove();
-//             $('#imq' + question_id).remove();
-//          },
-//          error: function () {
-//             alert('Ошибка при удалении');
-//          },
-//       });
-//    }
-//
-// }
-//
-//
-// function up() {
-//    var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-//    if (top > 0) {
-//       window.scrollBy(0, -100);
-//       var t = setTimeout('up()', 20);
-//    }
-//    else
-//       clearTimeout(t);
-//    return false;
-// }
+    return JSON.parse(res);
+  };
+}
 
 /***/ }),
 
@@ -904,11 +239,143 @@ __webpack_require__.r(__webpack_exports__);
     sort,
     parent
   });
+  res = await JSON.parse(res);
 
   if (res) {
-    window.location.href = '/adminsc/test/edit/1';
+    window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + test_name;
   }
 });
+
+/***/ }),
+
+/***/ "./public/src/Test/test-edit.js":
+/*!**************************************!*\
+  !*** ./public/src/Test/test-edit.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "aDelete": () => (/* binding */ aDelete),
+/* harmony export */   "aAdd": () => (/* binding */ aAdd)
+/* harmony export */ });
+/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
+/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
+/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
+/* harmony import */ var _test_edit_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./test-edit.scss */ "./public/src/Test/test-edit.scss");
+/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./show */ "./public/src/Test/show.js");
+/* harmony import */ var _Admin_admin_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Admin/admin.scss */ "./public/src/Admin/admin.scss");
+/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _components_dnd_dnd__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/dnd/dnd */ "./public/src/components/dnd/dnd.js");
+/* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
+// import './test-edit'
+
+
+
+
+
+
+
+
+
+
+
+
+new _common__WEBPACK_IMPORTED_MODULE_8__.test_delete_button('.test_delete'); /// class active для admin_main_menu
+
+if (window.location.pathname.match('/adminsc\/test/')) {
+  document.querySelector('.module.test').classList.add('activ');
+}
+
+(0,_components_dnd_dnd__WEBPACK_IMPORTED_MODULE_9__.check)('/image/create'); //Скрыть все вопросы
+
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.block').removeClass("flex1"); //Показть первый вопрос
+
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.block:first-child').addClass("flex1");
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.a-add').on('click', aAdd);
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.q-delete').on('click', e => {
+  let res = (0,_model_question__WEBPACK_IMPORTED_MODULE_10__._question)().delete();
+
+  if (res.msg === 'ok') {
+    let block = e.target.closest('.block');
+    block.remove();
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(`[data-pagination = "${res.q_id}"]`).el[0].remove();
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('[data-pagination]:first-child').addClass('nav-active');
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.block:first-child').addClass('flex1');
+  }
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.a-del').on('click', aDelete);
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.without-pagination').on('click', () => {
+  (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.test-edit__content').el[0].classList.toggle('flex1');
+  (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.test-edit__content-2').el[0].classList.toggle('flex1');
+  changeTheme();
+});
+
+function setTheme() {}
+
+let changeTheme = () => {};
+
+async function aDelete(e) {
+  if ((0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(e.target).hasClass('a-del')) {
+    if (confirm("Удалить этот ответ?")) {
+      let a_id = +e.target.closest('.e-block-a').id;
+      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_8__.post)('/answer/delete', {
+        a_id
+      });
+      res = JSON.parse(res);
+
+      if (res.msg === 'ok') {
+        let f = e.target.closest('.e-block-a');
+        f.remove();
+        _common__WEBPACK_IMPORTED_MODULE_8__.popup.show('Ответ удален');
+      }
+    }
+  }
+}
+async function aAdd(e) {
+  if ((0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(e.target).hasClass('a-add')) {
+    let q_id = +e.target.closest('.e-block-q').id;
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_8__.post)('/answer/show', {
+      q_id
+    });
+    let visibleBlock = (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.block.flex1').el[0];
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(visibleBlock).find('.answers').insertAdjacentHTML('beforeend', res);
+    let newAnswer = (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(visibleBlock).find('.e-block-a:last-child');
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(newAnswer).css('background-color', 'pink');
+    setTimeout(function () {
+      (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(newAnswer).css('background-color', 'white');
+    }, 400);
+    (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(newAnswer).on('click', aDelete);
+  }
+} ///// question sort input validate
+
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.sort-q').on('change', _common__WEBPACK_IMPORTED_MODULE_8__.validate.sort); ////////// Save событие навешиваем
+// на родителя така как могут быть созданы новые блоки
+
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.blocks').on('click', function (e) {
+  if ((0,_common__WEBPACK_IMPORTED_MODULE_8__.$)(e.target).hasClass('question__save')) {
+    if ((0,_model_question__WEBPACK_IMPORTED_MODULE_10__._question)().save()) {
+      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__.showHidePaginBtn)(res.paginationButton);
+      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__.appendBlock)();
+      _common__WEBPACK_IMPORTED_MODULE_8__.popup.show(res.msg);
+    }
+  }
+}); // export function getAnswers(block, q_id) {
+//     let answerBlocks = block.querySelectorAll('.e-block-a')
+//     let answers = []
+//     answerBlocks.forEach((a) => {
+//         answers.push({
+//             id: +a.querySelector('.checkbox').dataset['answer'],
+//             answer: a.querySelector('textarea').value,
+//             correct_answer: +a.querySelector('.checkbox').checked,
+//             parent_question: +q_id,
+//             pica: '',
+//         })
+//     }, q_id)
+//     return answers
+// }
 
 /***/ }),
 
@@ -921,7 +388,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "popup": () => (/* binding */ popup),
-/* harmony export */   "test_delete": () => (/* binding */ test_delete),
+/* harmony export */   "test_delete_button": () => (/* binding */ test_delete_button),
 /* harmony export */   "post": () => (/* binding */ post),
 /* harmony export */   "get": () => (/* binding */ get),
 /* harmony export */   "uniq": () => (/* binding */ uniq),
@@ -930,10 +397,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchWrap": () => (/* binding */ fetchWrap),
 /* harmony export */   "fetchW": () => (/* binding */ fetchW)
 /* harmony export */ });
+/* harmony import */ var _Test_model_test__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Test/model/test */ "./public/src/Test/model/test.js");
+
 let validate = {
-  sort: function () {
-    let error = this.nextElementSibling;
-    let ar = this.value.match(/\D+/);
+  sort: () => {
+    let error = undefined.nextElementSibling;
+    let ar = undefined.value.match(/\D+/);
 
     if (ar) {
       error.innerText = 'Только цифры';
@@ -944,15 +413,15 @@ let validate = {
       }
     }
   },
-  email: function (email) {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  email: email => {
     if (!email) return false;
-    return !re.test(email);
+    let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   },
-  password: function (password) {
-    const re = /^[a-zA-Z\-0-9]{6,20}$/;
+  password: password => {
     if (!password) return false;
-    return !re.test(password);
+    let re = /^[a-zA-Z\-0-9]{6,20}$/;
+    return re.test(password);
   }
 };
 
@@ -963,24 +432,53 @@ function clearCache() {
   }
 
   clearCache().catch(alert);
-}
+} // function up() {
+//    var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+//    if (top > 0) {
+//       window.scrollBy(0, -100);
+//       var t = setTimeout('up()', 20);
+//    }
+//    else
+//       clearTimeout(t);
+//    return false;
+// }
+
 
 let popup = {
   show: function (txt) {
-    let close = document.createElement('div');
-    close.classList.add('close');
-    let popup = document.createElement('div');
-    close.classList.add('popup');
-    popup.innerText = txt;
-    popup.append(close);
-    let wrapper = document.createElement('div');
-    wrapper.classList.add('popup__wrapper');
-    wrapper.append(popup);
+    let close = this.el('div', 'popup__close');
+    close.innerText = 'X';
+    let popup__item = this.el('div', 'popup__item');
+    popup__item.innerText = txt;
+    popup__item.append(close);
+    let popup = $('.popup').el[0];
+
+    if (!popup) {
+      popup = this.el('div', 'popup');
+    }
+
+    popup.append(popup__item);
     popup.addEventListener('click', this.close);
-    document.body.append(wrapper);
+    document.body.append(popup);
+    let delay = 5000;
+    let removeDelay = delay + 1000;
+    setTimeout(() => {
+      popup__item.classList.remove('popup__item');
+      popup__item.classList.add('popup-hide');
+    }, delay);
+    setTimeout(() => {
+      popup__item.remove();
+    }, removeDelay);
   },
   close: function (e) {
-    if (e.target.classList.contains('close')) {}
+    if (e.target.classList.contains('popup__close')) {
+      let popup = this.closest('.popup').remove();
+    }
+  },
+  el: function (tagName, className) {
+    let el = document.createElement(tagName);
+    el.classList.add(className);
+    return el;
   }
 };
 
@@ -993,7 +491,6 @@ async function get(key) {
 }
 
 async function post(url, data) {
-  //      debugger;
   return new Promise(function (resolve, reject) {
     data.token = document.querySelector('meta[name="token"]').getAttribute('content');
     let req = new XMLHttpRequest();
@@ -1076,7 +573,7 @@ function MyJquery(elements) {
   };
 
   this.find = function (selector) {
-    if (this.elType === "[object HTMLDivElement]") {
+    if (["[object HTMLDivElement]", "[object HTMLInputElement]"].includes(this.elType)) {
       return this.el.querySelector(selector);
     }
 
@@ -1087,7 +584,7 @@ function MyJquery(elements) {
 
   this.css = function (attr, val) {
     if (!val) {
-      return this.el.style[attr];
+      return this.el[0].style[attr];
     }
 
     if (this.elType === "[object HTMLDivElement]") {
@@ -1103,45 +600,35 @@ function MyJquery(elements) {
 }
 
 function $(selector) {
+  let elements = '';
+
   if (typeof selector === "string") {
-    let elements = document.querySelectorAll(selector);
+    elements = document.querySelectorAll(selector);
   } else {
-    let elements = selector;
+    elements = selector;
   }
 
   return new MyJquery(elements);
 }
 
-class test_delete {
+class test_delete_button {
   constructor(elem) {
-    this._elem = elem;
-    elem.onclick = this.onClick.bind(this); // (*)
-
-    elem.onmouseenter = this.showToolip;
-    elem.onmouseleave = this.hideTooltip;
-    elem.onmousemove = this.changeTooltipPos;
+    if (!elem) return;
+    this._elem = $(elem).el[0];
+    this._elem.onclick = this.delete;
+    this._elem.onmouseenter = this.showToolip;
+    this._elem.onmouseleave = this.hideTooltip;
+    this._elem.onmousemove = this.changeTooltipPos;
   }
 
   async delete() {
     if (confirm('Удалить тест?')) {
-      let id = $('.test-name').value();
-      let res = await post('/test/delete', {
-        id: id
-      });
+      let res = test.del();
 
       if (res.msg === 'ok') {
-        window.location.reload();
+        window.location = '/test/edit';
       }
     }
-  }
-
-  changeTooltipPos(e) {
-    this.tip.style.top = e.pageY + 35 + 'px';
-    this.tip.style.left = e.pageX - 170 + 'px';
-  }
-
-  hideTooltip() {
-    this.tip.remove();
   }
 
   showToolip(e) {
@@ -1156,12 +643,13 @@ class test_delete {
     document.body.append(tip);
   }
 
-  onClick(event) {
-    let action = event.target.closest('.test_delete').dataset['click'];
+  hideTooltip() {
+    this.tip.remove();
+  }
 
-    if (action) {
-      this[action]();
-    }
+  changeTooltipPos(e) {
+    this.tip.style.top = e.pageY + 35 + 'px';
+    this.tip.style.left = e.pageX - 170 + 'px';
   }
 
 }
@@ -1372,6 +860,56 @@ function check(url) {
 
 /***/ }),
 
+/***/ "./public/src/components/header/autocomplete.js":
+/*!******************************************************!*\
+  !*** ./public/src/components/header/autocomplete.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _autocomplete_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./autocomplete.scss */ "./public/src/components/header/autocomplete.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+
+
+[...(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".search input").el].map(input => {
+  if (input) {
+    input.addEventListener('input', function () {
+      autocomplete(input);
+    });
+  }
+});
+
+async function autocomplete(input) {
+  let search = input.parentNode;
+  let result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(search).find('.search__result');
+
+  if (input.value.length < 1) {
+    if (result) result.innerHTML = '';
+    return;
+  }
+
+  let data = await fetch('/search?q=' + input.value);
+  data = await data.json(data);
+
+  if (result.childNodes.length !== 0) {
+    result.innerHTML = '';
+  }
+
+  data.map(e => {
+    let a = document.createElement("a");
+    a.href = e.alias;
+    a.innerHTML = `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name;
+    result.appendChild(a);
+  });
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('body').on('click', function (e) {
+    if (result && e.target !== result) {
+      result.innerHTML = '';
+    }
+  });
+}
+
+/***/ }),
+
 /***/ "./public/src/components/header/header.js":
 /*!************************************************!*\
   !*** ./public/src/components/header/header.js ***!
@@ -1380,13 +918,7 @@ function check(url) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
-/* harmony import */ var _middle_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./middle.scss */ "./public/src/components/header/middle.scss");
-/* harmony import */ var _header_menu_sass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header-menu.sass */ "./public/src/components/header/header-menu.sass");
-/* harmony import */ var _header_sass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./header.sass */ "./public/src/components/header/header.sass");
-/* harmony import */ var _header_panel_sass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./header-panel.sass */ "./public/src/components/header/header-panel.sass");
-
-
-
+/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
 
 
 
@@ -1399,19 +931,25 @@ __webpack_require__.r(__webpack_exports__);
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "showHidePaginBtn": () => (/* binding */ showHidePaginBtn),
+/* harmony export */   "appendBlock": () => (/* binding */ appendBlock)
+/* harmony export */ });
 /* harmony import */ var _test_pagination_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./test-pagination.scss */ "./public/src/components/test-pagination/test-pagination.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
-/* harmony import */ var _Test_edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Test/edit */ "./public/src/Test/edit.js");
+/* harmony import */ var _Test_test_edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Test/test-edit */ "./public/src/Test/test-edit.js");
+/* harmony import */ var _Test_model_question__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Test/model/question */ "./public/src/Test/model/question.js");
+ // import {questionSave} from '../../Test/model/question'
+
 
 
  //Скрыть все кнопки
 
 (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[data-pagination]').removeClass('nav-active'); // Показать первую кнопку
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[data-pagination]:first-child').addClass('nav-active'); //// Пагинация
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[data-pagination]:first-child').addClass('nav-active'); //// add question
 
 (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.pagination').on('click', function (e) {
-  //// add question
   if (e.target.classList.contains('add-question')) {
     show();
     return;
@@ -1440,23 +978,29 @@ function paginate(self) {
 } //// добавление вопроса
 
 
-async function show() {
-  let testId = +(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-name').value();
+async function show(e) {
+  let testid = +(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-name').value();
   let questCount = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("[data-pagination]").count();
-  let param = {};
   let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/question/show', {
-    testid: testId,
-    questQnt: questCount
+    testid,
+    questCount
   });
   res = JSON.parse(res);
-  let overlayedBlock = res.block;
-  document.body.insertAdjacentHTML('afterBegin', overlayedBlock);
-  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.overlay').on('click', clickOverlay);
+  let Block = res.block;
+  let blocks = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks').el[0];
+  blocks.insertAdjacentHTML('afterBegin', Block);
+  let newBlock = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks .block:first-child').el[0];
+  document.querySelector('.flex1').classList.remove('flex1');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newBlock).addClass('flex1');
+  let save_button = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newBlock).find('.question__save');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(save_button).on('click', (0,_Test_model_question__WEBPACK_IMPORTED_MODULE_3__._question)().save); // $('.overlay').on('click', clickOverlay)
 }
 
-function showHidePaginBtn(e, pagItem) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.pagination .nav-active').el[0]) {
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.pagination .nav-active').el[0].classList.remove('nav-active');
+function showHidePaginBtn(pagItem) {
+  let activePaginBtn = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.pagination .nav-active').el[0];
+
+  if (activePaginBtn) {
+    activePaginBtn.classList.remove('nav-active');
   }
 
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.add-question').el[0].insertAdjacentHTML('beforeBegin', pagItem);
@@ -1466,51 +1010,16 @@ function appendBlock() {
   let block = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.overlay').find('.block');
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks').append(block);
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(block).addClass('flex1');
-  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-add').on('click', _Test_edit__WEBPACK_IMPORTED_MODULE_2__.aAdd);
-  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.q-delete').on('click', _Test_edit__WEBPACK_IMPORTED_MODULE_2__.qDelete);
-  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-del').on('click', _Test_edit__WEBPACK_IMPORTED_MODULE_2__.aDelete);
-}
-
-function clickOverlay(e) {
-  if (e.target.classList.contains('question__save')) {
-    questionSave(e);
-    return;
-  }
-
-  if (e.target.classList.contains('question__cansel')) {
-    closeOverlay();
-    return;
-  }
-
-  if (e.target.classList.contains('overlay')) {
-    closeOverlay();
-    return;
-  }
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-add').on('click', _Test_test_edit__WEBPACK_IMPORTED_MODULE_2__.aAdd);
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.q-delete').on('click', (0,_Test_model_question__WEBPACK_IMPORTED_MODULE_3__._question)().delete());
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-del').on('click', _Test_test_edit__WEBPACK_IMPORTED_MODULE_2__.aDelete);
 }
 
 function hideVisibleBlock() {
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.block.flex1').removeClass('flex1');
 }
 
-function closeOverlay() {
-  document.body.removeChild((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.overlay').el[0]);
-}
 
-async function questionSave(e) {
-  let block = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.overlay').find('.block');
-  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/question/CreateOrUpdate', {
-    question: (0,_Test_edit__WEBPACK_IMPORTED_MODULE_2__.getQuestion)(e, block),
-    answers: (0,_Test_edit__WEBPACK_IMPORTED_MODULE_2__.getAnswers)(e, block, (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(block).find('textarea').value)
-  });
-  res = JSON.parse(res);
-
-  if (res) {
-    showHidePaginBtn(e, res.paginationButton);
-    hideVisibleBlock();
-    appendBlock(e);
-    closeOverlay();
-  }
-}
 
 /***/ }),
 
@@ -1538,9 +1047,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/Test/edit.scss":
+/***/ "./public/src/Test/show.scss":
 /*!***********************************!*\
-  !*** ./public/src/Test/edit.scss ***!
+  !*** ./public/src/Test/show.scss ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -1550,10 +1059,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/Test/show.scss":
-/*!***********************************!*\
-  !*** ./public/src/Test/show.scss ***!
-  \***********************************/
+/***/ "./public/src/Test/test-edit.scss":
+/*!****************************************!*\
+  !*** ./public/src/Test/test-edit.scss ***!
+  \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1598,21 +1107,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/header-menu.sass":
-/*!*******************************************************!*\
-  !*** ./public/src/components/header/header-menu.sass ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/header/header-panel.sass":
+/***/ "./public/src/components/header/autocomplete.scss":
 /*!********************************************************!*\
-  !*** ./public/src/components/header/header-panel.sass ***!
+  !*** ./public/src/components/header/autocomplete.scss ***!
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -1622,21 +1119,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/header.sass":
+/***/ "./public/src/components/header/header.scss":
 /*!**************************************************!*\
-  !*** ./public/src/components/header/header.sass ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/header/middle.scss":
-/*!**************************************************!*\
-  !*** ./public/src/components/header/middle.scss ***!
+  !*** ./public/src/components/header/header.scss ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -1650,6 +1135,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./public/src/components/header/top.scss ***!
   \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/components/popup.scss":
+/*!******************************************!*\
+  !*** ./public/src/components/popup.scss ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1746,16 +1243,10 @@ var __webpack_exports__ = {};
   \*********************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _do__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./do */ "./public/src/Test/do.js");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./public/src/Test/edit.js");
-/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
-/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
-/* harmony import */ var _Admin_admin_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Admin/admin.scss */ "./public/src/Admin/admin.scss");
-/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
-/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
-/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./show */ "./public/src/Test/show.js");
-
-
-
+/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
+/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
+/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
 
 
 

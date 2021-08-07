@@ -1,15 +1,16 @@
 import './test-pagination.scss'
-import {$, post} from "../../common";
-import {getAnswers, getQuestion, aAdd, aDelete, qDelete} from '../../Test/edit'
-
+// import {questionSave} from '../../Test/model/question'
+import {$, popup, post} from "../../common";
+import {getAnswers, getQuestion, aAdd, aDelete} from '../../Test/test-edit'
+import {_question} from "../../Test/model/question";
 //Скрыть все кнопки
 $('[data-pagination]').removeClass('nav-active')
 // Показать первую кнопку
 $('[data-pagination]:first-child').addClass('nav-active')
 
-//// Пагинация
-$('.pagination').on('click', function (e) {
+
 //// add question
+$('.pagination').on('click', function (e) {
     if (e.target.classList.contains('add-question')) {
         show()
         return
@@ -37,29 +38,31 @@ function paginate(self) {
 }
 
 //// добавление вопроса
-async function show() {
-    let testId = +$('.test-name').value()
+async function show(e) {
+    let testid = +$('.test-name').value()
     let questCount = $("[data-pagination]").count()
 
-    let param = {}
     let res = await post(
         '/question/show',
-        {
-            testid: testId,
-            questQnt: questCount
-        })
+        {testid, questCount})
     res = JSON.parse(res)
-    let overlayedBlock = res.block
-    document.body.insertAdjacentHTML('afterBegin', overlayedBlock)
-    $('.overlay').on('click', clickOverlay)
+    let Block = res.block
+    let blocks = $('.blocks').el[0]
+    blocks.insertAdjacentHTML('afterBegin', Block)
+    let newBlock = $('.blocks .block:first-child').el[0]
+    document.querySelector('.flex1').classList.remove('flex1')
+    $(newBlock).addClass('flex1')
+    let save_button = $(newBlock).find('.question__save')
+        $(save_button).on('click', _question().save)
+    // $('.overlay').on('click', clickOverlay)
 }
 
-function showHidePaginBtn(e, pagItem) {
-    if ($('.pagination .nav-active').el[0]) {
-        $('.pagination .nav-active').el[0].classList.remove('nav-active')
+function showHidePaginBtn(pagItem) {
+    let activePaginBtn = $('.pagination .nav-active').el[0]
+    if (activePaginBtn) {
+        activePaginBtn.classList.remove('nav-active')
     }
-    $('.add-question').el[0]
-        .insertAdjacentHTML('beforeBegin', pagItem)
+    $('.add-question').el[0].insertAdjacentHTML('beforeBegin', pagItem)
 }
 
 function appendBlock() {
@@ -67,48 +70,14 @@ function appendBlock() {
     $('.blocks').append(block)
     $(block).addClass('flex1')
     $('.a-add').on('click', aAdd)
-    $('.q-delete').on('click', qDelete)
+    $('.q-delete').on('click', _question().delete())
     $('.a-del').on('click', aDelete)
-}
-
-function clickOverlay(e) {
-    if (e.target.classList.contains('question__save')) {
-        questionSave(e);
-        return
-    }
-    if (e.target.classList.contains('question__cansel')) {
-        closeOverlay();
-        return
-    }
-    if (e.target.classList.contains('overlay')) {
-        closeOverlay();
-        return
-    }
 }
 
 function hideVisibleBlock() {
     $('.block.flex1').removeClass('flex1')
 }
 
-function closeOverlay() {
-    document.body.removeChild($('.overlay').el[0])
-}
+export {showHidePaginBtn, appendBlock}
 
-async function questionSave(e) {
 
-    let block = $('.overlay').find('.block')
-    let res = await post(
-        '/question/CreateOrUpdate',
-        {
-            question: getQuestion(e, block),
-            answers: getAnswers(e, block, $(block).find('textarea').value),
-        })
-    res = JSON.parse(res)
-
-    if (res) {
-        showHidePaginBtn(e, res.paginationButton)
-        hideVisibleBlock()
-        appendBlock(e)
-        closeOverlay()
-    }
-}

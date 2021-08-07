@@ -1,5 +1,7 @@
+import {Test} from './Test/model/test'
+
 let validate = {
-    sort: function () {
+    sort: ()=> {
         let error = this.nextElementSibling
         let ar = this.value.match(/\D+/)
         if (ar) {
@@ -11,20 +13,17 @@ let validate = {
             }
         }
     },
-
-    email:function (email) {
-        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    email: (email)=> {
         if (!email) return false
-        return !re.test(email)
+        let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
     },
-
-    password:function (password) {
-        const re = /^[a-zA-Z\-0-9]{6,20}$/
+    password: (password)=> {
         if (!password) return false
-        return !re.test(password)
+        let re = /^[a-zA-Z\-0-9]{6,20}$/
+        return re.test(password)
     }
 }
-
 
 
 function clearCache() {
@@ -32,28 +31,55 @@ function clearCache() {
         let response = await fetch('/adminsc/clearCache')
         let result = await response.text();
     }
+
     clearCache().catch(alert);
 }
+// function up() {
+//    var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+//    if (top > 0) {
+//       window.scrollBy(0, -100);
+//       var t = setTimeout('up()', 20);
+//    }
+//    else
+//       clearTimeout(t);
+//    return false;
+// }
 
 let popup = {
-    show:function (txt) {
-        let close = document.createElement('div')
-        close.classList.add('close')
-        let popup = document.createElement('div')
-        close.classList.add('popup')
-        popup.innerText = txt
-        popup.append(close)
-        let wrapper = document.createElement('div')
-        wrapper.classList.add('popup__wrapper')
-        wrapper.append(popup)
-        popup.addEventListener('click', this.close)
-        document.body.append(wrapper)
-    },
-    close:function (e) {
-        if (e.target.classList.contains('close')){
+    show: function (txt) {
+        let close = this.el('div', 'popup__close')
+        close.innerText = 'X'
+        let popup__item = this.el('div', 'popup__item')
 
+        popup__item.innerText = txt
+        popup__item.append(close)
+        let popup = $('.popup').el[0]
+        if (!popup) {
+            popup = this.el('div', 'popup')
         }
-        
+        popup.append(popup__item)
+        popup.addEventListener('click', this.close)
+        document.body.append(popup)
+        let delay = 5000;
+        let removeDelay = delay + 1000;
+        setTimeout(() => {
+            popup__item.classList.remove('popup__item')
+            popup__item.classList.add('popup-hide')
+        }, delay)
+        setTimeout(() => {
+            popup__item.remove()
+        }, removeDelay)
+    },
+
+    close: function (e) {
+        if (e.target.classList.contains('popup__close')) {
+            let popup = this.closest('.popup').remove()
+        }
+    },
+    el: function (tagName, className) {
+        let el = document.createElement(tagName)
+        el.classList.add(className)
+        return el
     }
 }
 
@@ -66,7 +92,6 @@ async function get(key) {
 }
 
 async function post(url, data) {
-//      debugger;
     return new Promise(function (resolve, reject) {
         data.token = document.querySelector('meta[name="token"]').getAttribute('content')
         let req = new XMLHttpRequest();
@@ -136,7 +161,7 @@ function MyJquery(elements) {
         this.el[0].appendChild(el)
     }
     this.find = function (selector) {
-        if (this.elType === "[object HTMLDivElement]") {
+        if (["[object HTMLDivElement]", "[object HTMLInputElement]"].includes(this.elType)) {
             return this.el.querySelector(selector)
         }
         if (["[object NodeList]", "[object Array]"].includes(this.elType)) {
@@ -145,7 +170,7 @@ function MyJquery(elements) {
     }
     this.css = function (attr, val) {
         if (!val) {
-            return this.el.style[attr]
+            return this.el[0].style[attr]
         }
         if (this.elType === "[object HTMLDivElement]") {
             this.el.style[attr] = val
@@ -158,42 +183,32 @@ function MyJquery(elements) {
     }
 }
 
-
 function $(selector) {
+    let elements = ''
     if (typeof selector === "string") {
-        let elements = document.querySelectorAll(selector)
+        elements = document.querySelectorAll(selector)
     } else {
-        let elements = selector
+        elements = selector
     }
-
     return new MyJquery(elements);
 }
-class test_delete {
-    constructor(elem) {
-        this._elem = elem;
-        elem.onclick = this.onClick.bind(this); // (*)
-        elem.onmouseenter = this.showToolip
-        elem.onmouseleave = this.hideTooltip
-        elem.onmousemove = this.changeTooltipPos
-    }
 
+class test_delete_button {
+    constructor(elem) {
+        if (!elem) return
+        this._elem = $(elem).el[0];
+        this._elem.onclick = this.delete
+        this._elem.onmouseenter = this.showToolip
+        this._elem.onmouseleave = this.hideTooltip
+        this._elem.onmousemove = this.changeTooltipPos
+    }
     async delete() {
         if (confirm('Удалить тест?')) {
-            let id = $('.test-name').value()
-            let res = await post('/test/delete',
-                {id: id}
-            )
-            if (res.msg === 'ok'){
-                window.location.reload()
+            let res = test.del()
+            if (res.msg === 'ok') {
+                window.location = '/test/edit'
             }
         }
-    }
-    changeTooltipPos(e) {
-        this.tip.style.top = e.pageY + 35 + 'px'
-        this.tip.style.left = e.pageX - 170 + 'px'
-    }
-    hideTooltip() {
-        this.tip.remove()
     }
     showToolip(e) {
         let x = e.clientX
@@ -206,11 +221,12 @@ class test_delete {
         this.tip = tip
         document.body.append(tip)
     }
-    onClick(event) {
-        let action = event.target.closest('.test_delete').dataset['click'];
-        if (action) {
-            this[action]();
-        }
+    hideTooltip() {
+        this.tip.remove()
+    }
+    changeTooltipPos(e) {
+        this.tip.style.top = e.pageY + 35 + 'px'
+        this.tip.style.left = e.pageX - 170 + 'px'
     }
 }
 
@@ -228,13 +244,14 @@ async function fetchWrap(Obj, file) {
 
 async function fetchW(url, Obj) {
     let prom = await fetch(url, {
-        body: 'param='+ JSON.stringify(Obj),
+        body: 'param=' + JSON.stringify(Obj),
         method: 'post',
-        headers:{
-            'Content-Type':'application/x-www-form-urlencoded',
-            'HTTP_X_REQUESTED_WITH':'XMLHttpRequest',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest',
         }
     });
     return prom
 }
-export {popup, test_delete, post, get, uniq, validate, $, fetchWrap, fetchW}
+
+export {popup, test_delete_button, post, get, uniq, validate, $, fetchWrap, fetchW}

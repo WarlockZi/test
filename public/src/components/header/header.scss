@@ -1,0 +1,62 @@
+@import "logo";
+@import "phone";
+@import "header-catalog-menu";
+
+@mixin header__info{
+  padding: 12px 0 10px 0;
+  display: flex;
+  position: relative;
+  height: 45px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+}
+
+.header__info {
+  @include header__info;
+  max-width: 1310px;
+  justify-content: space-between;
+}
+.admin-header__info{
+  @include header__info;
+  justify-content: flex-start;
+}
+
+
+header {
+  display: flex;
+  flex: 0 0 auto;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0px 6px 10px 0px #d2d2d2;
+  margin-bottom: 20px;
+  flex-flow: column;
+}
+
+
+
+@media only screen and (max-width: 400px) {
+}
+
+///* xs (<=543px) */
+@media (min-width: 401px) and (max-width: 575px) {
+}
+
+
+///* s (>=576 и <=767) */
+@media (min-width: 575px) and (max-width: 768px) {
+}
+
+///* m (>=768 и <=991) */
+@media (min-width: 768px) and (max-width: 991px) {
+}
+
+///* l (>=992 и <=1199) */
+@media (min-width: 992px) and (max-width: 1199px) {
+}
+
+
+///* xl (>=1200) */
+@media (min-width: 1200px) {
+}

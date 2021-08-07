@@ -1,14 +1,23 @@
+@import "./test-edit-menu";
+
 html {
   overflow-y: scroll
 }
-header{
+
+header {
   display: flex;
 }
-test-edit-wrapper{
+
+test-edit-wrapper {
   margin: 10px;
 }
 
-.wrap{
+.test-edit__title {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wrap {
   flex: 1 0 auto;
 }
 
@@ -26,28 +35,26 @@ test-edit-wrapper{
   }
 }
 
-.block__top {
-  display: flex;
-  margin-bottom: 3px;
+.qestion__error {
+  background: #ffffff;
+  color: red;
+  padding: 6px;
+  display: none;
+  height: 16px;
+  border: 1px red solid;
+  opacity: 0;
+  transition: opacity 1000ms;
+}
 
-  .error {
-    background: #ffffff;
-    color: red;
-    padding: 6px;
-    //display: none;
-    height: 16px;
-    border: 1px red solid;
-    opacity: 0;
-    transition: opacity 1000ms;
-  }
+.question__sort {
+  text-align: center;
+  width: 26px;
+  height: 1rem;
+  margin: 5px 5px 5px 0px;
+}
 
-  .sort-q {
-    text-align: center;
-    border: 1px #1bbc9b solid;
-    width: 24px;
-    height: 26px;
-    margin: 0px 5px 0px 5px;
-  }
+.e-block-q label {
+  font-size: 13px;
 }
 
 @mixin question_buttons() {
@@ -84,40 +91,25 @@ test-edit-wrapper{
 }
 
 .content {
-  margin: 0 5px;
+  margin: 0 5px 0 20px;
   flex: 1;
 }
 
-.add-test {
-  color: #fff;
-  font-weight: 600;
-  padding: 8px 15px;
-  margin-bottom: 20px;
-  white-space: nowrap;
-  cursor: pointer;
-  background-color: #1bbc9b;
-  box-shadow: 0 2px 4px 0 #316358;
-  transition: box-shadow 100ms;
-  display:flex;
-  justify-content: center;
 
-  &:hover {
-    box-shadow: none;
-  }
-}
 
 
 .check_right_answer {
   margin: 10px 0;
+  font-size: .7rem;
   @import '../components/checbox-slider';
-  input{
+
+  input {
     display: none;
   }
 }
 
 
 .right-sidebar {
-  flex: 1;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -127,9 +119,10 @@ test-edit-wrapper{
 
 .left-sidebar {
   display: flex;
-  flex: 2;
   flex-flow: wrap column;
   position: relative;
+  margin-right: 15px;
+  flex: 1;
 }
 
 //* менюшка в редакторе тестов добавить/удалить ответ*/
@@ -138,7 +131,7 @@ test-edit-wrapper{
   position: absolute;
   right: 0;
   display: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .navi__item {
@@ -168,15 +161,16 @@ test-edit-wrapper{
   border: 1px #eee solid;
   padding: 5px;
   margin: 5px 0 10px 0;
-  overflow: hidden;
   position: relative;
   min-height: 100px;
   display: flex;
   transition: background-color 1s;
   background-color: #ffffff;
+
   &:hover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, .58);
   }
+
   &:hover .navi {
     display: inline-block;
   }
@@ -219,15 +213,16 @@ test-edit-wrapper{
   display: none;
 
   textarea {
-    font-size: 1rem;
+    font-size: .9rem;
     padding: 10px;
-    border-radius: 10px;
-    border-color: rgb(216, 216, 216);
+    border-radius: 4px;
+    border-color: #d8d8d8;
     resize: vertical;
     box-sizing: border-box;
     overflow: hidden;
     font-family: inherit;
     width: 100%;
+    flex: 1 0 auto;
   }
 
   .answers_show {
@@ -260,61 +255,10 @@ test-edit-wrapper{
 
   .answers {
     position: relative;
-    overflow: hidden;
     will-change: transform;
     transition: all .3s;
     transform: translateY(0);
     transform-origin: 50% 0;
-  }
-
-  .field__wrapper {
-    width: 16vw;
-    position: relative;
-    margin: 5px 0;
-    text-align: center;
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .field__file {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-  }
-
-  .field__file-wrapper {
-    width: 95%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .field__file-fake {
-    height: 20px;
-    width: calc(100% - 72px);
-    display: flex;
-    align-items: center;
-    border: 1px solid #c7c7c7;
-    border-radius: 0px 3px 3px 0px;
-    border-left: none;
-    font-size: .5rem;
-    background-color: #fff;
-    padding: 0 0 0 5px;
-  }
-
-  .field__file-button {
-    width: 65px;
-    height: 22px;
-    background: #1bbc9b;
-    color: #fff;
-    font-size: .5rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px 0 0 3px;
-    cursor: pointer;
   }
 
   /*Картинка*/
@@ -336,95 +280,99 @@ test-edit-wrapper{
     bottom: 1px;
     display: none;
   }
+}
 
+.field__wrapper {
+  position: relative;
+  margin: 5px 0;
+  text-align: center;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.field__file {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+.field__file-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.field__file-fake {
+  height: 20px;
+  width: calc(100% - 72px);
+  display: flex;
+  align-items: center;
+  border: 1px solid #c7c7c7;
+  border-radius: 0px 3px 3px 0px;
+  border-left: none;
+  font-size: .5rem;
+  background-color: #fff;
+  padding: 0 0 0 5px;
+}
+
+.field__file-button {
+  width: 65px;
+  height: 22px;
+  background: #1bbc9b;
+  color: #fff;
+  font-size: .5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px 0 0 3px;
+  cursor: pointer;
 }
 
 
-.test-menu-wrap {
-  margin-left: 15px;
-  .menu {
-    width: 100%;
-    flex: 1;
-    z-index: 1;
-    background: #4e4e4e;
-    align-self: flex-start;
-
-    li {
-      display: flex;
-      position: relative;
-      border-bottom: 1px solid #b7b7b7;
-      transition: 0.5s all;
-      justify-content: flex-end;
-    }
-
-    .drop {
-      background: #4e4e4e;
-      cursor: pointer;
-      padding: 9px 0 9px 9px;
-    }
-
-    .vert-menu__list:hover > .vert-menu__drop {
-      opacity: 1;
-      top: 0;
-      z-index: 1;
-    }
-
-    a[href="#"] {
-      background-color: #808080;
-    }
-
-    a {
-      background-color: #4e4e4e;
-      display: flex;
-      align-items: center;
-      flex: 1;
-      padding: 7px 14px 7px 7px;
-      font-size: .7rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      min-width: 40px;
-      max-width: 190px;
-      color: #ffffff;
-    }
-  }
-}
-
-.test-params{
+.test-params {
   position: relative;
   flex: 1;
   max-width: 37px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: gray;
+  background-color: hsl(0, 0%, 31%);
   cursor: pointer;
 
   a {
     color: #ffffff;
   }
 }
-.test-name{
+
+.test-name {
   flex: 1 0 auto;
 }
-.test_delete{
+
+.test_delete {
   position: relative;
   width: 35px;
   height: 35px;
-  margin: 7px 0 20px 0;
-  color:red;
+  margin: 7px 0 10px 0;
+  color: red;
   align-items: center;
   justify-content: center;
-  svg{
+  border-radius: 15px;
+
+  svg {
     height: 100%;
     width: 100%;
   }
-  &:hover{
+
+  &:hover {
     cursor: pointer;
     box-shadow: 0 2px 20px 3px #ff2929;
   }
 
 }
-.tip{
+
+.tip {
   position: absolute;
   display: flex;
   background: #ff0000;
@@ -450,6 +398,7 @@ test-edit-wrapper{
   display: flex;
   margin: 10px;
   flex: 1 0 auto;
+  max-width: 850px;
 
   /*Иконки для всплывающих менюшек*/
   .vert-menu__list::after {
@@ -473,27 +422,5 @@ test-edit-wrapper{
     flex-direction: column;
   }
 
-  $add-color: #1bbc9b;
-  $add-color_hover: #19ad8e;
 
-  .pagination {
-    .add-question {
-      background-color: $add-color;
-      border: none;
-      color: white;
-      padding: 0 6px;
-      text-align: center;
-      font-size: 1rem;
-      box-shadow: 0 2px 4px 0 $add-color;
-      margin: 0 3px 4px 0;
-      line-height: 19px;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $add-color_hover;
-
-      }
-
-    }
-  }
 }

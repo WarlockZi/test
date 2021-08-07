@@ -1,27 +1,32 @@
 @import "../../var";
+@import "../../mixin_media";
 
-.header__wrap{
-  max-width: 1310px;
-  margin: auto;
+@mixin top-menu{
+  background: #1bbc9b;
+  display: flex;
+  margin: 0 auto;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
   width: 100%;
 }
 
 .top-menu {
-  background: #1bbc9b;
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-  position: sticky;
-  top: 0px;
-  z-index: 1;
+  @include top-menu;
   max-width: 1310px;
-
+  justify-content: space-between;
 }
-
+.admin-top-menu{
+  @include top-menu;
+  justify-content: flex-end;
+}
 
 .contacts {
   align-self: center;
   margin-left: 50px;
+  @include _500{
+    display: none;
+  }
 
   .item {
     padding: 0 10px;
@@ -46,21 +51,15 @@
     background-color: #3da58f;
   }
 
-  .icon {
+  .user-menu__icon {
     padding: 5px 16px;
     display: flex;
-
+    width: 14px;
+    height: 14px;
   }
 }
 
-
-svg {
-  width: 14px;
-  height: 14px;
-
-}
-
-.FIO {
+.user-menu__FIO {
 
   position: relative;
   display: flex;
@@ -98,33 +97,9 @@ svg {
   right: -1px;
   width: 280px;
   padding: 10px;
+  a{
+      padding: 5px 10px;
+      color: $color-a;
+  }
 }
 
-
-a {
-  padding: 5px 10px;
-  color: $color-a;
-}
-
-#icon-locked {
-  fill: #e30000;
-}
-
-
-.h-upper > div:not([class]) {
-  position: relative;
-  top: 8px;
-  white-space: nowrap;
-
-}
-
-.h-upper {
-  padding: 12px 0 10px 0;
-  display: flex;
-  position: relative;
-  height: 45px;
-  justify-content: space-between;
-  max-width: 1310px;
-  width: 100%;
-  margin: auto;
-}

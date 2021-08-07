@@ -1,0 +1,42 @@
+// Using
+//.div {
+//   @include _1200 {
+//       @content;
+//   }
+//}
+
+@mixin _1200 {
+  @media (max-width: 1200px){
+    @content;
+  }
+}
+
+@mixin _1000 {
+  @media (max-width: 1000px){
+    @content;
+  }
+}
+
+@mixin _800 {
+  @media (max-width: 800px){
+    @content;
+  }
+}
+
+@mixin _600 {
+  @media (max-width: 600px){
+    @content;
+  }
+}
+
+@mixin _500 {
+  @media (max-width: 500px){
+    @content;
+  }
+}
+
+@mixin _400{
+  @media (max-width: 400px){
+    @content;
+  }
+}

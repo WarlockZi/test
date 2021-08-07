@@ -1,7 +1,7 @@
 <div class="e-block-a" id="<?= $id ?>">
 	<div class="left-sidebar">
 
-		<textarea data-answer-id="<?= $id ?>" cols="20" rows="5"
+		<textarea data-answer-id="<?= $id ?>" cols="10" rows="3"
 		          name="<?= $id ?>"><?= $answer['answer_text'] ?? '' ?></textarea>
 		<div class="check_right_answer">
 			<input id="right_answer<?= $id ?>" type="checkbox" class="checkbox"

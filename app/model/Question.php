@@ -10,4 +10,11 @@ class Question extends Model
 {
 	public $table = 'question';
 
+	protected $fillable = [
+		'qustion'=>'',
+		'parent'=>null,
+		'picq'=>'',
+		'sort'=>'100'
+	];
+
 }

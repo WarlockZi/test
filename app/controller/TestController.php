@@ -18,8 +18,8 @@ class TestController Extends AppController
 	{
 		parent::__construct($route);
 		$this->auth();
-		View::setCss('test.css');
-		View::setJs('test.js');
+//		View::setCss('test.css');
+//		View::setJs('test.js');
 
 	}
 
@@ -30,6 +30,13 @@ class TestController Extends AppController
 		View::setCss('test.css');
 	}
 
+	public function actionShow()
+	{
+		$this->layout = 'admin';
+		$rootTests = App::$app->test->findWhere('isTest', 0);
+		$this->set(compact('rootTests'));
+	}
+
 	public function actionCreate()
 	{
 		if ($this->ajax) {
@@ -37,8 +44,14 @@ class TestController Extends AppController
 			if (!$this->ajax['isTest']) {
 				$this->ajax['parent'] = 0;
 			}
-			$id = App::$app->test->create($this->ajax);
-			exit(json_encode(['id' => $id]));
+			if ($id = App::$app->test->create($this->ajax)) {
+				$q_id = App::$app->question->create();
+//				$question_block = QuestionController::getQuestionBlock();
+				exit(json_encode([
+					'id' => $id,
+//					'qestion_block' => $question_block,
+				]));
+			}
 		}
 	}
 
@@ -49,19 +62,23 @@ class TestController Extends AppController
 		}
 		$this->layout = 'admin';
 
-		$testId = (int)$this->route['id'];
+		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+		if ($testId) {
+			$test = App::$app->test->findOne($testId);
+			$testDataToEdit = App::$app->test->getTestData($testId);
 
-		$test = App::$app->test->findOne($testId);
-		$testDataToEdit = App::$app->test->getTestData($testId);
-
-		unset ($testDataToEdit['correct_answers']);
-		if (!$test) {//Вообще не нашли такого теста с номером
+			unset ($testDataToEdit['correct_answers']);
+			$pagination = App::$app->test->pagination($testDataToEdit, true);
+		} else {
+			$testDataToEdit = [];
+			$test['id'] = '';
+			$test['test_name'] = '';
+			$pagination = '';
 			$error = '<H1>Теста с таким номером нет.</H1>';
 		}
-
-		$pagination = App::$app->test->pagination($testDataToEdit, true);
-		$this->set(compact('test', 'testDataToEdit', 'pagination', 'testId'));
-
+		$this->set(compact('test', 'testDataToEdit', 'pagination'));
+		View::setJs('test_edit.js');
+		View::setCss('test_edit.css');
 	}
 
 	public function actionResults()
@@ -115,13 +132,13 @@ class TestController Extends AppController
 //			$fileWin = mb_convert_encoding($fileUTF8, 'cp1251');
 
 			if (file_put_contents($fileUTF8, $data['pageCache'])) {
-				$data['to']= [
+				$data['to'] = [
 					'vitaliy04111979@gmail.com',
 //					'10@vitexopt.ru',
 				];
 
 				$data['subject'] = $this->getSubjectTestResults($data);
-				$data['body']= $this->prepareBodyTestResults($data,$file);
+				$data['body'] = $this->prepareBodyTestResults($data, $file);
 				$data['altBody'] = "Ссылка на страницу с результатами: тут";
 
 				App::$app->mail->send_mail($data);
@@ -137,11 +154,11 @@ class TestController Extends AppController
 
 	private function prepareBodyTestResults($data, $file)
 	{
-			$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/results/' . $file;
-			ob_start();
-			require ROOT . '/app/view/Test/email.php';
-			$template = ob_get_clean();
-			return $template;
+		$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/results/' . $file;
+		ob_start();
+		require ROOT . '/app/view/Test/email.php';
+		$template = ob_get_clean();
+		return $template;
 	}
 
 	private function getMenu()
@@ -164,14 +181,6 @@ class TestController Extends AppController
 	public function actionGetCorrectAnswers()
 	{
 		App::$app->test->getCorrectAnswers();
-	}
-
-	public function actionShow()
-	{
-		$this->layout = 'admin';
-		$rootTests = App::$app->test->findWhere('isTest', 0);
-		$this->set(compact('rootTests'));
-
 	}
 
 	public function actionDo()

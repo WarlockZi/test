@@ -234,7 +234,7 @@ class Test extends Model
 
 
 		$pagination = "<div class='pagination'><a href='#question-$qId' class='nav-active'>1</a></div>";
-		$pagination .= "<a href='#' class='add-question p-no-active'>+</a>";
+		$pagination .= "<a href='#' class='pagination__add-question p-no-active'>+</a>";
 		$menuItem = "<li>
             <div class = 'test-params icon-menu' data-testid = $tId></div>
             <a href = '/test/edit/$tId'>$testName</a>
@@ -326,7 +326,7 @@ class Test extends Model
 	public function getTestData($testId, bool $shuffle = false)
 	{
 		$sql =
-		<<<her
+			<<<her
 SELECT i.path, i.name,
        iq.path as qpath, iq.name as qname, 
        q.qustion, q.sort, a.answer, a.correct_answer, q.id as q_id, a.id as a_id
@@ -376,44 +376,24 @@ her;
 			$prevQuest = $q_id;
 		}
 
-		return $data;
+		return $data??[];
 	}
-
-//	public
-//	function getTestDataToEdit($testId)
-//	{
-//		$sql = <<<here
-//SELECT q.id AS qid, q.qustion, q.picq,q.parent, a.id, a.answer, a.correct_answer, a.pica, a.parent_question, test.enable, test.test_name, q.sort
-//FROM question q
-//LEFT JOIN answer a
-//ON q.id = a.parent_question
-//LEFT JOIN test
-//ON test.id = q.parent
-//WHERE q.parent = ?
-//ORDER by q.sort, a.id
-//here;
-//		$params = [$testId];
-//		$res = $this->findBySql($sql, $params);
-//
-//		return $res ?? false;
-//	}
-
 
 	public function pagination(array $items, $addBtn)
 	{
 		$pagination = '<div class="pagination">';
-		$i = 0;
-		foreach ($items as $id => $el) {
-			$i++;
-			$d = <<<heretext
+			$i = 0;
+			foreach ($items as $id => $el) {
+				$i++;
+				$d = <<<heretext
 <div data-pagination=$id>$i</div>
 heretext;
-			$pagination .= $d;
-		}
-		if ($addBtn) {
-			$pagination .= "<div class='add-question'>+</div>";
-		}
+				$pagination .= $d;
+			}
 
+		if ($addBtn) {
+			$pagination .= "<div class='pagination__add-question'>+</div>";
+		}
 		return $pagination . '</div>';
 	}
 

@@ -12,8 +12,9 @@ $(".save-test").on('click', async function () {
     let res = await post('/test/create', {
         test_name, enable, isTest, sort, parent,
     })
+    res = await JSON.parse(res)
     if (res) {
-        window.location.href = '/adminsc/test/edit/1'
+        window.location.href = `/adminsc/test/edit/${res.id}`+'?id='+res.id+'&name='+test_name
     }
 
 })

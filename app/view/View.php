@@ -42,7 +42,7 @@ class View
 			if (is_file($file_layout)) {
 				require $file_layout;
 			} else {
-				'<br> Не найден шаблон Layout' . $this->layout;
+				echo '<br> Не найден шаблон Layout' . $this->layout;
 			}
 		}
 		$page_cache = ob_get_clean();
@@ -75,13 +75,14 @@ class View
 		self::$jsCss['css'][] = "<link href='/public/dist/{$file}{$time}' type='text/css' rel='stylesheet'>";
 	}
 
-	public static function getLogo()
+	public static function getSearch()
 	{
-//		return require_once(ROOT . '/app/view/components/Logo.php');
-		return require_once(ROOT . '/app/view/components/Logo_squared.php');
-		return require_once(ROOT . '/app/view/components/Logo_small.php');
-	}
 
+//		return require_once(ROOT . '/app/view/components/Logo.php');
+		return include(ROOT . '/app/view/components/Logo_squared.php');
+//		return include(ROOT . '/app/view/components/Logo_small.php');
+
+	}
 
 	public static function getCSS()
 	{
