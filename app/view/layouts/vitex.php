@@ -56,8 +56,8 @@
                            <a href="/freetest/41">Свободный тест</a>' : '';
 					?>
 
-					<?= in_array('3', $user['rights']) ?
-						'<a href="/adminsc">Admin</a>' : ''; // Admin
+					<?= (in_array('3', $user['rights'])||SU) ?
+						'<a href="/adminsc">Admin</a>' : '';
 					?>
 
 
@@ -77,7 +77,7 @@
 		<div class='h-upper'>
 			<div class="logo-wrap">
 				<?= (!($this->route['action'] == "index" && $this->route['controller'] == "Main")) ? "<a href = '/' aria-label = 'На главную'></a>" : "" ?>
-				<?= $this::getLogo() ?>
+				<?= include ROOT . '/app/view/components/Logo_squared.php'?>
 				<span class="logo-desc">Медицинские расходные <br>материалы оптом</span>
 			</div>
 			<? if ('Test' !== $this->route['controller']): ?>
@@ -126,9 +126,6 @@
 
 			<div class='h-cat'>Акции
 				<ul>
-<!--					<li>-->
-<!--						<a href="/inventar">Скидка</a>-->
-<!--					</li>-->
 					<li>
 						<a href="/rasprodazha">распродажа</a>
 					</li>
