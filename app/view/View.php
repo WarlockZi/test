@@ -77,9 +77,9 @@ class View
 
 	public static function getLogo()
 	{
-		return require_once(ROOT . '/app/view/components/Logo.php');
-//		return require_once(ROOT . '/app/view/components/Logo_squared.php');
-//		return require_once(ROOT . '/app/view/components/Logo_small.php');
+//		return require_once(ROOT . '/app/view/components/Logo.php');
+		return require_once(ROOT . '/app/view/components/Logo_squared.php');
+		return require_once(ROOT . '/app/view/components/Logo_small.php');
 	}
 
 
