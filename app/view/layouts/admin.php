@@ -13,56 +13,10 @@
 
 
 <body>
-<div class="wrap">
+
+		<? include_once ROOT . '/app/view/components/header/admin_top.php'; ?>
 	<header>
-
-		<div class="logo">
-			<a href="/">
-				<?= require ROOT . '/app/view/components/Logo_small.php'; ?>
-			</a>
-		</div>
-
-
-
-		<div class="user-menu">
-
-                    <span class="FIO"><?
-							  $rightId = $user['rights'];
-							  if (isset($user)) {
-								  echo $user['surName'] . ' ' . $user['name'] . ' ' . $user['middleName'];
-							  }
-							  ?></span>
-
-			<div class="nav">
-				<a href="/user/edit">Изменить свой профиль</a>
-				<? if (in_array('3', $rightId)): ?>
-					<a href="/adminsc">Admin</a>
-				<? endif; ?>
-				<? if (in_array('1', $rightId)): ?>
-					<a href="test/edit/1">Ред. закрытые тесты</a>
-					<a href="/freetest/edit/41">Ред. открытые тест</a>
-				<? endif; ?>
-				<? if (in_array('2', $rightId)): ?>
-					<a href="/test/1">Закрытый тест</a>
-					<a href="/freetest/41">Открытый тест</a>
-				<? endif; ?>
-
-
-				<? if (isset($user)): ?>
-					<a href="/test/contacts">
-						<span class="icon-envelope">✉ Напишите нам</span>
-					</a>
-
-					<a href="/user/logout">
-						<?=require_once ROOT. '/app/view/components/logout.php'?>
-						Выход</a>
-				<? endif; ?>
-			</div>
-
-
-		</div>
-
-
+		<? include_once ROOT . '/app/view/components/header/admin_header.php'; ?>
 	</header>
 
 	<div class="adm-wrap">
@@ -83,7 +37,7 @@
 
 
 	</div>
-</div>
+
 
 
 <div class="page-buffer"></div>
@@ -92,9 +46,8 @@
 
 <footer></footer>
 
-<div style="display: none">
-	<?= include ROOT . '/app/view/components/Logo.php' ?>
-</div>
+	<!--	--><? //= include ROOT . '/app/view/components/icons/logo.php' ?>
+
 
 <? $this::getJS() ?>
 

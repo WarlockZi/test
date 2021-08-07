@@ -3,7 +3,6 @@
 .header-catalog-menu {
   display: flex;
   position: relative;
-  background-color: #000;
   max-width: 1310px;
   width: 100%;
   margin:auto;
@@ -74,8 +73,7 @@
     z-index: 2;
 
     li {
-      //padding: 0 0;
-      //transition: .3s;
+
       a {
         font: 600 14px/17px 'Proxima Nova', sans-serif;
       }

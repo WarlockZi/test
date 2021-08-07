@@ -5,7 +5,7 @@
 
   <div class="e-block-q " id="<?= $row['qid'] ?>q">
     <div class="left-sidebar">
-      <textarea data-question-id="<?= $row['qid'] ?>" cols="20" rows="3" name="<?= $row['qid'] ?>q"><?= $row['question'] ?></textarea>
+      <textarea data-question-id="<?= $row['qid'] ?>" cols="10" rows="3" name="<?= $row['qid'] ?>q"><?= $row['question'] ?></textarea>
       <div class="key_words">
         <? foreach ($row['key_words'] as $key => $value): ?>
         <input class = "input_key" type="text" value="<?= htmlspecialchars(trim($value))?>">

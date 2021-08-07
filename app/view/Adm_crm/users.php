@@ -1,6 +1,6 @@
 <div class="adm-submenu">
   <div class="title">CRM</div>
-  <? if (in_array('3', $user['rights'])): // admin ?>
+  <? if (in_array('3', $user['rights'])||SU): // admin ?>
      <div class="admin-actions">
 
        <a href  = "crm/orders">Заказы</a>

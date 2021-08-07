@@ -1,0 +1,50 @@
+@import "../../mixin_media";
+
+.logo {
+  display: flex;
+  margin: 0 0 0 10px;
+  align-items: center;
+  height: 100%;
+  //@include _800 {
+  //  height: 32px;
+  //}
+
+  a {
+    width: 100px;
+    display: block;
+  }
+
+}
+
+.logo_square {
+  height: 100%;
+  margin-right: 5px;
+
+  @include _800 {
+    display: none;
+  }
+  @include _600 {
+    display: flex;
+  }
+
+
+}
+
+.logo_vitex {
+  height: 100%;
+  @include _600 {
+    display: none;
+  }
+
+}
+
+.logo__description {
+  width: 120px;
+  margin: 0 10px 0 20px;
+  display: inline-block;
+  color: #343133;
+  font-size: 14px;
+  @include _800 {
+    font-size: 12px;
+  }
+}

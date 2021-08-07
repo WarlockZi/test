@@ -29,8 +29,9 @@ abstract class Model
 		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
 	}
 
-	public function create($values)
+	public function create($values=[])
 	{
+		$values = $values?$values:$this->fillable;
 		if (isset($values['id'])) unset($values['id']);
 		$fields = implode(',', array_keys($values));
 		$param = array_values($values);

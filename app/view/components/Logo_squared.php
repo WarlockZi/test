@@ -1,5 +1,5 @@
 <?php
-return {<<<here
+return <<<here
 <svg width="150" height="30"  viewBox="0 0 140.93602 25.903431" >
   <defs>
   <path id="a4bgr29v3" d="m473.35 105.73c5.3 0.04 0.86 0.08-9.88 0.08s-15.1-0.04-9.65-0.08c5.44-0.07 14.23-0.07 19.53 0z"/>
@@ -17,4 +17,4 @@ return {<<<here
   <g>
   </g>
 </svg>
-here;}
+here;

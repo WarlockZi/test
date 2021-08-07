@@ -1,9 +1,11 @@
 import '../components/header/header';
 import '../components/header/autocomplete'
+
 import '../components/alert/alert'
-import '../components/footer/footer.scss'
 import '../components/forms.scss'
+
 import '../components/cookie/cookie'
+import '../components/footer/footer.scss'
 
 import './changepassword'
 import './login'
