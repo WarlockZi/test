@@ -18,9 +18,6 @@ class TestController Extends AppController
 	{
 		parent::__construct($route);
 		$this->auth();
-//		View::setCss('test.css');
-//		View::setJs('test.js');
-
 	}
 
 	public function actionIndex()
@@ -35,6 +32,8 @@ class TestController Extends AppController
 		$this->layout = 'admin';
 		$rootTests = App::$app->test->findWhere('isTest', 0);
 		$this->set(compact('rootTests'));
+		View::setCss('test_edit.css');
+		View::setJs('test_edit.js');
 	}
 
 	public function actionCreate()

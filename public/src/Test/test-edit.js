@@ -1,4 +1,3 @@
-// import './test-edit'
 import '../normalize.scss'
 import '../components/test-pagination/test-pagination'
 
@@ -14,9 +13,13 @@ import '../components/popup.scss'
 import {test_delete_button, validate, post, $, popup} from '../common'
 import {check} from '../components/dnd/dnd'
 import {_question} from './model/question'
+import {_test} from './model/test'
 import {appendBlock, showHidePaginBtn} from "../components/test-pagination/test-pagination";
 
-new test_delete_button('.test_delete');
+$('.blocks .block:first-child').addClass('flex1')
+
+$('.test_delete').on('click', _test().delete())
+// new test_delete_button('.test_delete');
 
 /// class active для admin_main_menu
 if (window.location.pathname.match('/adminsc\/test/')) {
