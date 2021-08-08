@@ -81,13 +81,15 @@ function question(q) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Test": () => (/* binding */ Test)
+/* harmony export */   "_test": () => (/* binding */ _test)
 /* harmony export */ });
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
-function Test() {
-  this.id = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
+function _test(id = 0) {
+  this.id = id ?? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
   this.name = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText;
+
+  this.create = function () {};
 
   this.delete = async function () {
     await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/delete', {
@@ -155,7 +157,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 /* harmony import */ var _components_dnd_dnd__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/dnd/dnd */ "./public/src/components/dnd/dnd.js");
 /* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
-// import './test-edit'
+/* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
 
 
 
@@ -168,7 +170,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-new _common__WEBPACK_IMPORTED_MODULE_8__.test_delete_button('.test_delete'); /// class active для admin_main_menu
+
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.blocks .block:first-child').addClass('flex1');
+(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.test_delete').on('click', (0,_model_test__WEBPACK_IMPORTED_MODULE_11__._test)().delete()); // new test_delete_button('.test_delete');
+/// class active для admin_main_menu
 
 if (window.location.pathname.match('/adminsc\/test/')) {
   document.querySelector('.module.test').classList.add('activ');
