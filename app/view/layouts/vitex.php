@@ -19,11 +19,10 @@
 </head>
 
 <body>
-
 <? include_once ROOT . '/app/view/components/header/top.php';?>
 <? include_once ROOT . '/app/view/components/header/header.php';?>
 
-<?= $content ?>
+<?= $content ;?>
 
 
 <footer>
