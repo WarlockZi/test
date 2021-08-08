@@ -18,3 +18,4 @@ return <<<here
   </g>
 </svg>
 here;
+
