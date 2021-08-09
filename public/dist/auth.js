@@ -274,19 +274,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
-function _test(id = 0) {
-  this.id = id ?? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
-  this.name = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText;
-
-  this.create = function () {};
-
-  this.delete = async function () {
-    await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/delete', {
+let _test = {
+  id: id => {
+    return id ?? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
+  },
+  name: () => {
+    return (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText;
+  },
+  create: () => {},
+  delete: async function () {
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/delete', {
       id: this.id
     });
-    return JSON.parse(res);
-  };
-}
+    return await JSON.parse(res);
+  }
+};
 
 /***/ }),
 

@@ -1,4 +1,4 @@
-<div class="test-edit__content-2 flex1">
+<div class="test-edit__content-2">
 	<div class="test-edit__title">
 		<? if (isset($test)): ?>
 			<p class="test-name"

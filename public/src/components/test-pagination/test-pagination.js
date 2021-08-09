@@ -1,13 +1,11 @@
 import './test-pagination.scss'
-// import {questionSave} from '../../Test/model/question'
 import {$, popup, post} from "../../common";
-import {getAnswers, getQuestion, aAdd, aDelete} from '../../Test/test-edit'
 import {_question} from "../../Test/model/question";
-//Скрыть все кнопки
-$('[data-pagination]').removeClass('nav-active')
+import {_answer} from "../../Test/model/answer";
+
 // Показать первую кнопку
 $('[data-pagination]:first-child').addClass('nav-active')
-
+$('.test-edit__content').addClass('flex1')
 
 //// add question
 $('.pagination').on('click', function (e) {
@@ -54,7 +52,6 @@ async function show(e) {
     $(newBlock).addClass('flex1')
     let save_button = $(newBlock).find('.question__save')
         $(save_button).on('click', _question().save)
-    // $('.overlay').on('click', clickOverlay)
 }
 
 function showHidePaginBtn(pagItem) {
@@ -69,14 +66,14 @@ function appendBlock() {
     let block = $('.overlay').find('.block')
     $('.blocks').append(block)
     $(block).addClass('flex1')
-    $('.a-add').on('click', aAdd)
+    $('.a-add').on('click', _answer.create)
     $('.q-delete').on('click', _question().delete())
-    $('.a-del').on('click', aDelete)
+    $('.a-del').on('click', _answer.delete())
 }
 
-function hideVisibleBlock() {
-    $('.block.flex1').removeClass('flex1')
-}
+// function hideVisibleBlock() {
+//     $('.block.flex1').removeClass('flex1')
+// }
 
 export {showHidePaginBtn, appendBlock}
 
