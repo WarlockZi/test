@@ -6,34 +6,32 @@ import '../components/footer/footer.scss'
 
 import './test-edit.scss'
 import './show'
+import '../Test/test_edit_theme_2'
 import '../Admin/admin.scss'
 
 import '../components/popup.scss'
 
-import {test_delete_button, validate, post, $, popup} from '../common'
+import {validate, $, popup} from '../common'
 import {check} from '../components/dnd/dnd'
+
 import {_question} from './model/question'
 import {_test} from './model/test'
 import {appendBlock, showHidePaginBtn} from "../components/test-pagination/test-pagination";
+import {_answer} from "./model/answer";
 
-$('.blocks .block:first-child').addClass('flex1')
-
-$('.test_delete').on('click', _test().delete())
-// new test_delete_button('.test_delete');
+_question().showFirst()
+$('.test_delete').on('click', _test.delete)
 
 /// class active для admin_main_menu
 if (window.location.pathname.match('/adminsc\/test/')) {
     document.querySelector('.module.test').classList.add('activ')
 }
 
-
 check('/image/create')
-//Скрыть все вопросы
-$('.block').removeClass("flex1")
-//Показть первый вопрос
-$('.block:first-child').addClass("flex1")
 
-$('.a-add').on('click', aAdd)
+$('.a-add').on('click', _answer.create)
+$('.a-del').on('click', _answer.delete)
+
 $('.q-delete').on('click',
     (e) => {
         let res = _question().delete()
@@ -44,58 +42,19 @@ $('.q-delete').on('click',
             $('[data-pagination]:first-child').addClass('nav-active')
             $('.block:first-child').addClass('flex1')
         }
-    })
+    }
+)
 
-$('.a-del').on('click', aDelete)
+toggleTheme()
 
 $('.without-pagination').on('click', () => {
-    $('.test-edit__content').el[0].classList.toggle('flex1')
-    $('.test-edit__content-2').el[0].classList.toggle('flex1')
-    changeTheme()
-
+    toggleTheme()
 })
 
-function setTheme() {
+function toggleTheme() {
+    $('.test-edit__content').el[0].classList.toggle('flex1')
+    $('.test-edit__content-2').el[0].classList.toggle('flex1')
 }
-
-
-let changeTheme = () => {
-}
-
-
-export async function aDelete(e) {
-    if ($(e.target).hasClass('a-del')) {
-        if (confirm("Удалить этот ответ?")) {
-            let a_id = +e.target.closest('.e-block-a').id
-            let res = await post('/answer/delete', {a_id})
-            res = JSON.parse(res)
-            if (res.msg === 'ok') {
-                let f = e.target.closest('.e-block-a')
-                f.remove()
-                popup.show('Ответ удален')
-            }
-        }
-    }
-}
-
-export async function aAdd(e) {
-    if ($(e.target).hasClass('a-add')) {
-        let q_id = +e.target.closest('.e-block-q').id
-        let res = await post('/answer/show', {q_id})
-        let visibleBlock = $('.block.flex1').el[0]
-        $(visibleBlock).find('.answers').insertAdjacentHTML('beforeend', res)
-        let newAnswer = $(visibleBlock).find('.e-block-a:last-child')
-        $(newAnswer).css('background-color', 'pink')
-        setTimeout(function () {
-                $(newAnswer).css('background-color', 'white')
-
-            }, 400
-        )
-        $(newAnswer).on('click', aDelete)
-
-    }
-}
-
 
 ///// question sort input validate
 $('.sort-q').on('change', validate.sort)

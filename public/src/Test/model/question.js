@@ -13,6 +13,9 @@ function question(q) {
     this.q = q
     this.add = function () {
     }
+    this.showFirst =() => {
+        $('.block:first-child').addClass('flex1')
+    }
 
     this.delete = async function () {
         if (confirm("Удалить вопрос со всеми его ответами?")) {

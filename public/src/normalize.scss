@@ -50,8 +50,7 @@ textarea:focus,
   display: flex
 }
 .flex1 {
-  display: flex;
-  flex: 1;
+  display: flex !important;
 }
 .none
 { display: none;}

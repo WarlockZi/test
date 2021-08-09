@@ -1,16 +1,18 @@
 import {$, post} from '../../common'
 
-export function _test (id=0){
+export let _test = {
+    id: (id) => {
+        return id ?? $('.test-name').value()
+    },
+    name: () => {
+        return $('.test-name').el[0].innerText
+    },
+    create: () => {
 
-    this.id = id ?? $('.test-name').value()
-    this.name = $('.test-name').el[0].innerText
+    },
+    delete: async function(){
+        let res = await post('/test/delete', {id: this.id})
+        return await JSON.parse(res)
+    },
 
-    this.create = function(){
-
-    }
-
-    this.delete = async function(){
-        await post('/test/delete',{id:this.id})
-        return JSON.parse(res)
-    }
 }
