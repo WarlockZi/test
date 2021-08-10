@@ -348,6 +348,9 @@ test-edit-wrapper {
 
 .test-name {
   flex: 1 0 auto;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0 0 30px 15px;
 }
 
 .test_delete {
@@ -397,8 +400,10 @@ test-edit-wrapper {
 .test-edit-wrapper {
   display: flex;
   margin: 10px;
-  flex: 1 0 auto;
+  //flex: 1 0 auto;
   max-width: 850px;
+  font-family: 'Roboto', Arial;
+
 
   /*Иконки для всплывающих менюшек*/
   .vert-menu__list::after {

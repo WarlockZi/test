@@ -19,6 +19,14 @@ import {_test} from './model/test'
 import {appendBlock, showHidePaginBtn} from "../components/test-pagination/test-pagination";
 import {_answer} from "./model/answer";
 
+$('.question__text').on('click',function (e) {
+    let parent = e.target.parentNode.parentNode
+    let answers = $(parent).find('.question__answers')
+    answers.classList.toggle('height')
+    // answers.style.height = 'auto'
+
+})
+
 _question().showFirst()
 $('.test_delete').on('click', _test.delete)
 

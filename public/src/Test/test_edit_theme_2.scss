@@ -1,15 +1,13 @@
 .questions {
   display: flex;
   flex-flow: column;
-  background-color: #ddfff8;
 
   .question-edit {
+    border-bottom: #1bbc9b 1px solid;
     display: flex;
     flex-flow: column;
-    margin: 0;
     padding: 5px;
-    //align-items: center;
-    //grid-template-columns: auto 200px 200px;
+    margin-bottom: 10px;
   }
 
   .question__text {
@@ -20,6 +18,19 @@
     background-color: white;
     flex: 1 0;
     margin: 0 3px;
+    font-weight: 600;
+
+    &:hover {
+      .answer{
+        height: auto;
+        padding: 5px;
+      }
+      .question__answers-show{
+        &:before{
+          transform: rotate(180deg);
+        }
+      }
+    }
   }
 
   .question__sort {
@@ -30,14 +41,50 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    //place-content: center center;
+    font-weight: 600;
   }
 }
+.question__image{
+  display: flex;
+  flex: 2;
+}
+
 .question-edit_row{
   display: flex;
   justify-content: space-between;
 
+  &:hover .question__sort,
+  &:hover .question__text,
+  &:hover .question__delete{
+    background-color: #ddfff8;
+  }
+
 }
+
+.height{
+  height: auto !important;
+}
+
+.question__answers{
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  flex: 2;
+  margin: 15px 0 0 30px;
+  height: 0;
+  transition: height 1s;
+}
+
+//.question__answers-show{
+//  &:before{
+//    content: '';
+//    display: inline-block;
+//    border: 5px solid transparent;
+//    border-top-color: #1bbc9b;
+//    margin: 0 9px;
+//  }
+//}
+
 .question__delete {
   width: 35px;
   height: 100%;
@@ -52,3 +99,46 @@
 
   }
 }
+
+//.question__save{
+//  padding: 10px 20px;
+//  background-color: #1bbc9b;
+//  color: #fff;
+//}
+
+//*//          ANSWER   ///*
+.answer__number{
+  padding: 5px;
+  font-size: .8rem;
+}
+
+.answer__text{
+  padding: 5px;
+  flex: 1;
+  font-size: .8rem;
+}
+.answer__delete{
+  width: 35px;
+  height: 100%;
+  cursor: pointer;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.answer__correct{
+  margin: 0 20px;
+}
+
+.answer{
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  overflow: hidden;
+  align-items: center;
+  //height: 0;
+}
+
+
+
