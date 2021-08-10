@@ -1,5 +1,5 @@
 import {$, popup, post} from "../../common";
-import {showHidePaginBtn, appendBlock} from "../../components/test-pagination/test-pagination";
+
 
 function _question(id) {
     let q = id ?

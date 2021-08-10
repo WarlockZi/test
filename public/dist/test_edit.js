@@ -64,8 +64,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "_question": () => (/* binding */ _question)
 /* harmony export */ });
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
-/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
-
 
 
 function _question(id) {
@@ -980,6 +978,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+(0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.question__text').on('click', function (e) {
+  let parent = e.target.parentNode.parentNode;
+  let answers = (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)(parent).find('.question__answers');
+  answers.classList.toggle('height'); // answers.style.height = 'auto'
+});
 
 (0,_model_question__WEBPACK_IMPORTED_MODULE_11__._question)().showFirst();
 
