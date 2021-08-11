@@ -20,11 +20,15 @@ import {appendBlock, showHidePaginBtn} from "../components/test-pagination/test-
 import {_answer} from "./model/answer";
 
 $('.question__text').on('click',function (e) {
-    let parent = e.target.parentNode.parentNode
+    let text =  e.target
+    let parent = text.parentNode.parentNode
     let answers = $(parent).find('.question__answers')
     answers.classList.toggle('height')
-    // answers.style.height = 'auto'
+    answers.classList.toggle('scale')
 
+    // answers.style.transform = 'scaleY(1)'
+    text.classList.toggle('rotate')
+    // answers.style.height = 'auto'
 })
 
 _question().showFirst()

@@ -979,9 +979,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.question__text').on('click', function (e) {
-  let parent = e.target.parentNode.parentNode;
+  let text = e.target;
+  let parent = text.parentNode.parentNode;
   let answers = (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)(parent).find('.question__answers');
-  answers.classList.toggle('height'); // answers.style.height = 'auto'
+  answers.classList.toggle('height');
+  answers.classList.toggle('scale'); // answers.style.transform = 'scaleY(1)'
+
+  text.classList.toggle('rotate'); // answers.style.height = 'auto'
 });
 
 (0,_model_question__WEBPACK_IMPORTED_MODULE_11__._question)().showFirst();

@@ -908,38 +908,52 @@ test-edit-wrapper {
   .save-test:hover {
     box-shadow: none; }
 
+.question-edit {
+  border-bottom: #1bbc9b 1px solid;
+  display: flex;
+  flex-flow: column;
+  padding: 5px;
+  margin-bottom: 10px; }
+
+.question__text {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 300px;
+  padding: 10px 10px 10px 30px;
+  background-color: white;
+  flex: 1 0;
+  margin: 0 3px;
+  font-weight: 600;
+  position: relative; }
+  .question__text:before {
+    content: '';
+    display: inline-block;
+    border-right: 2px solid #1bbc9b;
+    border-top: 2px solid #1bbc9b;
+    width: 10px;
+    height: 10px;
+    top: 30%;
+    left: 5px;
+    position: absolute;
+    transition: transform 300ms;
+    transform: rotate(-45deg); }
+
+.rotate:before {
+  transform: rotate(135deg) !important; }
+
+.question__sort {
+  background-color: #fff;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600; }
+
 .questions {
   display: flex;
   flex-flow: column; }
-  .questions .question-edit {
-    border-bottom: #1bbc9b 1px solid;
-    display: flex;
-    flex-flow: column;
-    padding: 5px;
-    margin-bottom: 10px; }
-  .questions .question__text {
-    display: flex;
-    flex-wrap: wrap;
-    min-width: 300px;
-    padding: 10px;
-    background-color: white;
-    flex: 1 0;
-    margin: 0 3px;
-    font-weight: 600; }
-    .questions .question__text:hover .answer {
-      height: auto;
-      padding: 5px; }
-    .questions .question__text:hover .question__answers-show:before {
-      transform: rotate(180deg); }
-  .questions .question__sort {
-    background-color: #fff;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600; }
 
 .question__image {
   display: flex;
@@ -948,22 +962,23 @@ test-edit-wrapper {
 .question-edit_row {
   display: flex;
   justify-content: space-between; }
-  .question-edit_row:hover .question__sort,
-  .question-edit_row:hover .question__text,
-  .question-edit_row:hover .question__delete {
-    background-color: #ddfff8; }
 
-.height {
+.question__answers.height {
   height: auto !important; }
+
+.question__answers.scale {
+  transform: scaleY(1) !important;
+  margin: 15px 0 15px  30px; }
 
 .question__answers {
   display: flex;
   flex-flow: column;
   width: 100%;
   flex: 2;
-  margin: 15px 0 0 30px;
   height: 0;
-  transition: height 1s; }
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.1s; }
 
 .question__delete {
   width: 35px;
