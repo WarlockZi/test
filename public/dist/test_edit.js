@@ -198,7 +198,22 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _test_edit_theme_2_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./test_edit_theme_2.scss */ "./public/src/Test/test_edit_theme_2.scss");
+/* harmony import */ var _model_answer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./model/answer */ "./public/src/Test/model/answer.js");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
+
+
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.answer__create-button').on('click', function (e) {
+  let button = e.target;
+  let newAnswer = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(button.parentNode).find('.answer__create');
+  let clone = newAnswer.cloneNode(true);
+  clone.style.display = 'flex';
+  newAnswer.after(clone);
+
+  if (_model_answer__WEBPACK_IMPORTED_MODULE_1__._answer.create) {
+    let create__answerButton = 0;
+  }
+});
 
 /***/ }),
 
@@ -978,6 +993,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+let newAnser = (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.answer__create');
 (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.question__text').on('click', function (e) {
   let text = e.target;
   let parent = text.parentNode.parentNode;

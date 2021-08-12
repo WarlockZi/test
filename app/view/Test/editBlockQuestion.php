@@ -43,9 +43,11 @@
 
 	<div class="answers">
 		<? foreach ($block as $id => $answer): ?>
+			<? if ($id): ?>
 
 				<? require ROOT . '/app/view/Test/editBlockAnswer.php' ?>
 
+			<? endif; ?>
 		<? endforeach; ?>
 	</div>
 

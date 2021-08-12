@@ -19,6 +19,8 @@ import {_test} from './model/test'
 import {appendBlock, showHidePaginBtn} from "../components/test-pagination/test-pagination";
 import {_answer} from "./model/answer";
 
+
+let newAnser = $('.answer__create')
 $('.question__text').on('click',function (e) {
     let text =  e.target
     let parent = text.parentNode.parentNode
