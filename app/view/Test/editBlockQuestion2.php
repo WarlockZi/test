@@ -22,7 +22,7 @@
 				<? if ($index): ?>
 
 					<div class="answer">
-						<div class="answer__number"><?= ++$i ?></div>
+						<div class="answer__sort"><?= ++$i ?></div>
 						<input type="checkbox" class="answer__correct" <?= $a['correct_answer'] ? 'checked' : '' ?>>
 						<div class="answer__text" contenteditable="true">
 							<?= $a['answer_text'] ?>
@@ -37,7 +37,7 @@
 
 				<div class="answer__create-button">+</div>
 				<div class="answer__create">
-					<div class="answer__number">№</div>
+					<div class="answer__sort">№</div>
 					<input type="checkbox" class="answer__correct">
 					<div class="answer__text" contenteditable="true"></div>
 					<div class="answer__delete"><?= include ROOT . '/app/view/components/icons/trashIcon.php'; ?></div>

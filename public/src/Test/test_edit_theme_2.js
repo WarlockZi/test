@@ -4,10 +4,21 @@ import {$} from "../common";
 
 $('.answer__create-button').on('click', function (e){
     let button = e.target
-    let newAnswer = $(button.parentNode).find('.answer__create')
-    let clone = newAnswer.cloneNode(true)
+    let answers = button.parentNode.querySelector('.answer')
+    let lastAnswer = answers.querySelector
+    ('.answer')
+        [answers.length]
+    let clone = lastAnswer.cloneNode(true)
+
+    let sort = $(lastAnswer).find('.answer__sort').innerText
+    let newSort = $(clone).find('.answer__sort')
+
+    newSort.innerText = sort+1
     clone.style.display = 'flex'
-    newAnswer.after(clone)
+
+    button.before(clone)
+    clone.style.opacity = 1
+
 
     if (_answer.create){
         let create__answerButton = 0

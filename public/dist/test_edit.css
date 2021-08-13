@@ -981,10 +981,10 @@ test-edit-wrapper {
   height: auto !important; }
 
 .question__answers.scale {
-  transform: scaleY(1) !important;
-  margin: 15px 0 15px 30px; }
+  transform: scaleY(1) !important; }
 
 .question__answers {
+  margin: 15px 0 0 30px;
   display: flex;
   flex-flow: column;
   width: 100%;
@@ -1005,7 +1005,7 @@ test-edit-wrapper {
   .question__delete svg {
     fill: red; }
 
-.answer__number {
+.answer__sort {
   padding: 5px;
   font-size: .8rem;
   flex-basis: 20px; }
@@ -1019,7 +1019,6 @@ test-edit-wrapper {
   width: 35px;
   height: 100%;
   cursor: pointer;
-  background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: center; }
@@ -1059,10 +1058,10 @@ test-edit-wrapper {
 .answer__create {
   display: none;
   opacity: 0;
-  border-top: #1bbc9b 1px solid;
   align-items: center;
-  color: #fff;
-  background-color: #1bbc9b; }
+  transition: opacity 1s; }
+  .answer__create:nth-child(odd) {
+    background: #1bbc9b3d; }
 
 @charset "UTF-8";
 .module {
