@@ -97,10 +97,10 @@
 
 .question__answers.scale {
   transform: scaleY(1) !important;
-  margin: 15px 0 15px 30px;
 }
 
 .question__answers {
+  margin: 15px 0 0 30px;
   display: flex;
   flex-flow: column;
   width: 100%;
@@ -135,7 +135,7 @@
 //}
 
 //*//          ANSWER   ///*
-.answer__number {
+.answer__sort {
   padding: 5px;
   font-size: .8rem;
   flex-basis: 20px;
@@ -151,7 +151,7 @@
   width: 35px;
   height: 100%;
   cursor: pointer;
-  background-color: #fff;
+  //background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -197,13 +197,13 @@
 .answer__create{
   display: none;
   opacity: 0;
-  border-top: $color-main 1px solid;
+  //border-top: $color-main 1px solid;
   align-items: center;
-  //display: flex;
-  //opacity: 1;
-  color: #fff;
-  background-color: $color-main;
-
+  transition: opacity 1s;
+  &:nth-child(odd) {
+    background: #1bbc9b3d;
+  }
 }
+
 
 

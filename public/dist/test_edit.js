@@ -205,10 +205,15 @@ __webpack_require__.r(__webpack_exports__);
 
 (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.answer__create-button').on('click', function (e) {
   let button = e.target;
-  let newAnswer = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(button.parentNode).find('.answer__create');
-  let clone = newAnswer.cloneNode(true);
+  let answers = button.parentNode.querySelector('.answer');
+  let lastAnswer = answers.querySelector('.answer')[answers.length];
+  let clone = lastAnswer.cloneNode(true);
+  let sort = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(lastAnswer).find('.answer__sort').innerText;
+  let newSort = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(clone).find('.answer__sort');
+  newSort.innerText = sort + 1;
   clone.style.display = 'flex';
-  newAnswer.after(clone);
+  button.before(clone);
+  clone.style.opacity = 1;
 
   if (_model_answer__WEBPACK_IMPORTED_MODULE_1__._answer.create) {
     let create__answerButton = 0;
