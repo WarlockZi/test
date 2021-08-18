@@ -44,8 +44,11 @@ import {$, popup, post} from "../../common";
 
 export let _question = {
 
-    getEl:(save_button)=>{
-        save_button.closest('.question-edit')
+    getEl:(el)=>{
+        return{
+        el:el.closest('.question-edit'),
+
+        }
     },
 
     create:(add_button)=>{
