@@ -2,19 +2,25 @@
 	<div class="test-edit__title">
 		<? if (isset($test)): ?>
 			<p class="test-name"
-			   value="<?= $_REQUEST['id'] ?? $test['id'] ?>"><?= $_REQUEST['name'] ?? $test['test_name'] ?></p>
-			<div class="test_delete" data-hover="showTip" data-click="delete"
-			     tip="удалить тест : <?= $test['test_name'] ?>">
-				<?= include ROOT . '/app/view/components/icons/trashIcon.php' ?>
-			</div>
+			   value="<?= $_REQUEST['id'] ?? $test['id'] ?>"><?= $_REQUEST['name'] ?? $test['test_name'] ?>
+			</p>
 		<? endif; ?>
-
 	</div>
-	<?= $pagination ?? '' ?>
 
-	<div class="blocks">
-			<? foreach ($testDataToEdit as $q_id => $block): ?>
-				<? require ROOT . '/app/view/Test/editBlockQuestion.php' ?>
-			<? endforeach; ?>
+	<div class="questions">
+
+		<div class="question__create-button" data-action-hover="Добавить вопрос">+</div>
+
+		<div class="question__create">
+			<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
+		</div>
+
+		<div class="answer__create">
+			<? include ROOT . '/app/view/Test/editBlockAnswer.php' ?>
+		</div>
+		<? foreach ($testDataToEdit as $q_id => $block): ?>
+
+			<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
+		<? endforeach; ?>
 	</div>
 </div>

@@ -9,13 +9,8 @@
 			'cache' => 60,
 		]);
 		?>
-		<div class="test-edit__view-toggle">
-			<div class="with-pagination"></div>
-			<div class="without-pagination"></div>
-		</div>
 
 	</div>
 
 	<? include ROOT . '/app/view/Test/edit_content.php' ?>
-	<? include ROOT . '/app/view/Test/edit_content2.php' ?>
 </div>
