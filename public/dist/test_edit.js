@@ -153,8 +153,10 @@ __webpack_require__.r(__webpack_exports__);
 // }
 
 let _question = {
-  getEl: save_button => {
-    save_button.closest('.question-edit');
+  getEl: el => {
+    return {
+      el: el.closest('.question-edit')
+    };
   },
   create: add_button => {
     _question.createOnServer(add_button);
