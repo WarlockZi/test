@@ -113,12 +113,12 @@ let popup = {
     popup.append(popup__item);
     popup.addEventListener('click', this.close);
     document.body.append(popup);
-    let delay = 5000;
-    let removeDelay = delay + 1000;
+    let hideDelay = 5000;
     setTimeout(() => {
       popup__item.classList.remove('popup__item');
       popup__item.classList.add('popup-hide');
-    }, delay);
+    }, hideDelay);
+    let removeDelay = hideDelay + 950;
     setTimeout(() => {
       popup__item.remove();
     }, removeDelay);
@@ -143,7 +143,7 @@ async function get(key) {
   return p ? p[1] : false;
 }
 
-async function post(url, data) {
+async function post(url, data = {}) {
   return new Promise(function (resolve, reject) {
     data.token = document.querySelector('meta[name="token"]').getAttribute('content');
     let req = new XMLHttpRequest();
@@ -161,7 +161,7 @@ async function post(url, data) {
       reject(Error("Network Error"));
     };
 
-    req.onload = function () {
+    req.onload = async function () {
       resolve(req.response);
     };
   });
@@ -212,9 +212,15 @@ function MyJquery(elements) {
   };
 
   this.removeClass = function (className) {
-    this.el.forEach(s => {
-      s.classList.remove(className);
-    });
+    if (this.elType === "[object HTMLDivElement]") {
+      this.el.classList.remove(className);
+    }
+
+    if (["[object NodeList]", "[object Array]"].includes(this.elType)) {
+      this.el.forEach(s => {
+        s.classList.remove(className);
+      });
+    }
   };
 
   this.hasClass = function (className) {

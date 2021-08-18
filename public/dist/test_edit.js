@@ -15,40 +15,88 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
 let _answer = {
-  create: async e => {
-    if ((0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(e.target).hasClass('a-add')) {
-      let q_id = +e.target.closest('.e-block-q').id;
-      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/answer/show', {
-        q_id
-      });
-      let visibleBlock = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.block.flex1').el[0];
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(visibleBlock).find('.answers').insertAdjacentHTML('beforeend', res);
-      let newAnswer = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(visibleBlock).find('.e-block-a:last-child');
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(newAnswer).css('background-color', 'pink');
-      setTimeout(function () {
-        (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(newAnswer).css('background-color', 'white');
-      }, 400);
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(newAnswer).on('click', undefined.delete);
+  el: add_button => {
+    let answers = add_button.parentNode.querySelectorAll('.answer');
+    let prev_sort = 0;
+
+    if (answers.length) {
+      prev_sort = +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(answers[answers.length - 1]).find('.answer__sort').innerText;
+    }
+
+    let el = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.answer__create').find('.answer').cloneNode(true);
+    el.classList.add('answer');
+    el.classList.remove('answer__create');
+    return {
+      el: el,
+      id: 'new',
+      q_id: +add_button.closest('.question-edit').id,
+      previous_sort: prev_sort,
+      sort: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(el).find('.answer__sort'),
+      checked: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(el).find('input'),
+      text: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(el).find('.answer__text'),
+      delete: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)((0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(el).find('.answer__delete')).on('click', function () {
+        _answer2.del(this);
+      })
+    };
+  },
+
+  getModelForServer(el) {
+    return {
+      answer: '',
+      parent_question: el.q_id,
+      correct_answer: 0,
+      pica: ''
+    };
+  },
+
+  async create(button) {
+    let a_id = await createOnServer(button);
+    show(a_id);
+
+    async function createOnServer(button) {
+      let newEl = _answer2.getModelForServer(_answer2.el(button));
+
+      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/answer/create', newEl);
+      res = JSON.parse(res);
+      return res.id;
+    }
+
+    function show(a_id) {
+      let el = _answer2.el(button);
+
+      el.checked.checked = false;
+      el.el.dataset['answerId'] = a_id;
+      el.text.innerText = '';
+      el.sort.innerText = el.previous_sort + 1;
+      el.el.style.display = 'flex';
+      button.before(el.el);
+      el.el.style.opacity = 1;
     }
   },
-  update: () => {},
-  delete: async function (e) {
-    if ((0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(e.target).hasClass('a-del')) {
+
+  async del(del_button) {
+    await deleteFromServer(del_button);
+    deleteFromView(del_button);
+
+    function deleteFromView(del_button) {
+      del_button.parentNode.remove();
+    }
+
+    async function deleteFromServer(del_button) {
       if (confirm("Удалить этот ответ?")) {
-        let a_id = +e.target.closest('.e-block-a').id;
+        let a_id = +del_button.closest('.answer').dataset['answerId'];
         let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/answer/delete', {
           a_id
         });
         res = JSON.parse(res);
 
         if (res.msg === 'ok') {
-          let f = e.target.closest('.e-block-a');
-          f.remove();
           _common__WEBPACK_IMPORTED_MODULE_0__.popup.show('Ответ удален');
         }
       }
     }
   }
+
 };
 
 /***/ }),
@@ -64,65 +112,181 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "_question": () => (/* binding */ _question)
 /* harmony export */ });
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+ // let _question1 = {
+//     get:()=>{
+//         return {
+//             id: +this.q.id,
+//             parent: +$('.test-name').el[0].getAttribute('value'),
+//             picq: '',
+//             qustion: $(this.q).find('.question__text').innerText,
+//             sort: +$(this.q).find('.question__sort').innerText,
+//         }
+//     },
+//     delete:async()=>{
+//         if (confirm("Удалить вопрос со всеми его ответами?")) {
+//             let q_id = +this.q.id
+//             let res = await post('/question/delete', {q_id})
+//             return JSON.parse(res)
+//         }
+//     },
+//     save:async()=>{
+//         let res = await post(
+//             '/question/UpdateOrCreate',
+//             {
+//                 question: this.get(),
+//                 answers: this.getAnswers(),
+//             })
+//         return await JSON.parse(res)
+//     },
+//     getAnswers:()=>{
+//         let answerBlocks = this.q.querySelectorAll('.answer')
+//         return [...answerBlocks].map((a) => {
+//             return {
+//                 id: +a.dataset['answerId'],
+//                 answer: a.querySelector('.answer__text').innerText,
+//                 correct_answer: +a.querySelector('[type="checkbox"]').checked,
+//                 parent_question: +this.q.id,
+//                 pica: '',
+//             }
+//         }, this.q)
+//     },
+// }
 
+let _question = {
+  getEl: save_button => {
+    save_button.closest('.question-edit');
+  },
+  create: add_button => {
+    _question.createOnServer(add_button);
 
-function _question(id) {
-  let q = id ? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(`.e-block-q#{id}`).el[0] : (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.block.flex1 .e-block-q').el[0];
-  return new question(q);
-}
+    _question.createOnView();
+  },
+  createOnServer: async add_button => {
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/updateOrCreate');
+    return JSON.parse(res);
+  },
+  createOnView: save_button => {
+    save_button.closest('.question-edit');
+  },
+  showFirst: () => {
+    let questions = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question-edit');
 
-function question(q) {
-  this.q = q;
-
-  this.add = function () {};
-
-  this.showFirst = () => {
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.block:first-child').addClass('flex1');
-  };
-
-  this.delete = async function () {
-    if (confirm("Удалить вопрос со всеми его ответами?")) {
-      let q_id = +this.q.id;
-      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/delete', {
-        q_id
-      });
-      return JSON.parse(res);
+    if (!questions.length) {
+      let question = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question__create .question-edit').el[0].cloneNode(true);
+      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(question).addClass('question-edit');
+      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(question).removeClass('question__create');
+      let questionsWrapper = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions').el[0];
+      questionsWrapper.prepend(question);
     }
-  };
-
-  this.save = async function () {
+  },
+  save: async save_button => {
+    let question = save_button.closest('.question-edit');
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/UpdateOrCreate', {
-      question: this.get(),
-      answers: this.getAnswers()
+      question: _question2.getModelForServer(question),
+      answers: _question2.getAnswers(question)
     });
-    return await JSON.parse(res);
-  };
+    res = await JSON.parse(res);
+    _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg);
+  },
+  delete: async del_button => {
+    if (confirm("Удалить вопрос со всеми его ответами?")) {
+      let q_id = +undefined.q.id;
+      let deleted = await _question2.deleteFromServer(q_id);
 
-  this.getAnswers = function () {
-    let answerBlocks = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.block.flex1 .e-block-a').el;
-    return [...answerBlocks].map(a => {
-      return {
-        id: +a.querySelector('.checkbox').dataset['answer'],
-        answer: a.querySelector('textarea').value,
-        correct_answer: +a.querySelector('.checkbox').checked,
-        parent_question: +this.q.id,
-        pica: ''
-      };
-    }, this.q);
-  };
-
-  this.get = function () {
+      if (deleted) {
+        _question2.deleteFromView();
+      }
+    }
+  },
+  deleteFromView: async del_button => {
+    del_button.closest('.question-edit').remove();
+  },
+  deleteFromServer: async q_id => {
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/delete', {
+      q_id
+    });
+    return JSON.parse(res);
+  },
+  getModelForServer: question => {
     return {
-      id: +this.q.id,
+      id: +question.id,
       parent: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].getAttribute('value'),
       picq: '',
-      qustion: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(this.q).find('textarea').value,
-      sort: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(this.q).find('.question__sort').value
+      qustion: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(question).find('.question__text').innerText,
+      sort: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(question).find('.question__sort').innerText
     };
-  };
-}
-
-
+  },
+  getAnswers: question => {
+    let answerBlocks = question.querySelectorAll('.answer');
+    return [...answerBlocks].map(a => {
+      return {
+        id: +a.dataset['answerId'],
+        answer: a.querySelector('.answer__text').innerText,
+        correct_answer: +a.querySelector('[type="checkbox"]').checked,
+        parent_question: +question.id,
+        pica: ''
+      };
+    }, question);
+  }
+}; //
+// function _question(id) {
+//     let q = id ?
+//         $(`.e-block-q#{id}`).el[0] :
+//         $('.block.flex1 .e-block-q').el[0]
+//
+//     return new question(q)
+// }
+//
+// function question(q) {
+//     this.q = q
+//     this.add = function () {
+//     }
+//     this.showFirst =() => {
+//         $('.block:first-child').addClass('flex1')
+//     }
+//
+//     this.delete = async function () {
+//         if (confirm("Удалить вопрос со всеми его ответами?")) {
+//             let q_id = +this.q.id
+//             let res = await post('/question/delete', {q_id})
+//             return JSON.parse(res)
+//         }
+//     }
+//
+//     this.save = async function () {
+//         let res = await post(
+//             '/question/UpdateOrCreate',
+//             {
+//                 question: this.get(),
+//                 answers: this.getAnswers(),
+//             })
+//         return await JSON.parse(res)
+//     }
+//
+//     this.getAnswers = function () {
+//
+//         let answerBlocks = $('.block.flex1 .e-block-a').el
+//         return [...answerBlocks].map((a) => {
+//             return {
+//                 id: +a.querySelector('.checkbox').dataset['answer'],
+//                 answer: a.querySelector('textarea').value,
+//                 correct_answer: +a.querySelector('.checkbox').checked,
+//                 parent_question: +this.q.id,
+//                 pica: '',
+//             }
+//         }, this.q)
+//
+//     }
+//     this.get = function () {
+//         return {
+//             id: +this.q.id,
+//             parent: +$('.test-name').el[0].getAttribute('value'),
+//             picq: '',
+//             qustion: $(this.q).find('textarea').value,
+//             sort: +$(this.q).find('.question__sort').value,
+//         }
+//     }
+// }
 
 /***/ }),
 
@@ -200,24 +364,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _test_edit_theme_2_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./test_edit_theme_2.scss */ "./public/src/Test/test_edit_theme_2.scss");
 /* harmony import */ var _model_answer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./model/answer */ "./public/src/Test/model/answer.js");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
 
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.answer__create-button').on('click', function (e) {
-  let button = e.target;
-  let answers = button.parentNode.querySelector('.answer');
-  let lastAnswer = answers.querySelector('.answer')[answers.length];
-  let clone = lastAnswer.cloneNode(true);
-  let sort = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(lastAnswer).find('.answer__sort').innerText;
-  let newSort = (0,_common__WEBPACK_IMPORTED_MODULE_2__.$)(clone).find('.answer__sort');
-  newSort.innerText = sort + 1;
-  clone.style.display = 'flex';
-  button.before(clone);
-  clone.style.opacity = 1;
 
-  if (_model_answer__WEBPACK_IMPORTED_MODULE_1__._answer.create) {
-    let create__answerButton = 0;
-  }
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.answer__delete').on('click', function () {
+  _model_answer__WEBPACK_IMPORTED_MODULE_1__._answer.del(this);
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.answer__create-button').on('click', async function (e) {
+  _model_answer__WEBPACK_IMPORTED_MODULE_1__._answer.create(this);
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.question__save2').on('click', function () {
+  _model_question__WEBPACK_IMPORTED_MODULE_3__._question.save(this);
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_2__.$)('.question__create-button').on('click', function () {
+  _model_question__WEBPACK_IMPORTED_MODULE_3__._question.create(this);
 });
 
 /***/ }),
@@ -303,12 +465,12 @@ let popup = {
     popup.append(popup__item);
     popup.addEventListener('click', this.close);
     document.body.append(popup);
-    let delay = 5000;
-    let removeDelay = delay + 1000;
+    let hideDelay = 5000;
     setTimeout(() => {
       popup__item.classList.remove('popup__item');
       popup__item.classList.add('popup-hide');
-    }, delay);
+    }, hideDelay);
+    let removeDelay = hideDelay + 950;
     setTimeout(() => {
       popup__item.remove();
     }, removeDelay);
@@ -333,7 +495,7 @@ async function get(key) {
   return p ? p[1] : false;
 }
 
-async function post(url, data) {
+async function post(url, data = {}) {
   return new Promise(function (resolve, reject) {
     data.token = document.querySelector('meta[name="token"]').getAttribute('content');
     let req = new XMLHttpRequest();
@@ -351,7 +513,7 @@ async function post(url, data) {
       reject(Error("Network Error"));
     };
 
-    req.onload = function () {
+    req.onload = async function () {
       resolve(req.response);
     };
   });
@@ -402,9 +564,15 @@ function MyJquery(elements) {
   };
 
   this.removeClass = function (className) {
-    this.el.forEach(s => {
-      s.classList.remove(className);
-    });
+    if (this.elType === "[object HTMLDivElement]") {
+      this.el.classList.remove(className);
+    }
+
+    if (["[object NodeList]", "[object Array]"].includes(this.elType)) {
+      this.el.forEach(s => {
+        s.classList.remove(className);
+      });
+    }
   };
 
   this.hasClass = function (className) {
@@ -522,145 +690,6 @@ async function fetchW(url, Obj) {
 }
 
 
-
-/***/ }),
-
-/***/ "./public/src/components/dnd/dnd.js":
-/*!******************************************!*\
-  !*** ./public/src/components/dnd/dnd.js ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "check": () => (/* binding */ check)
-/* harmony export */ });
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
-/* harmony import */ var _dnd_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dnd.scss */ "./public/src/components/dnd/dnd.scss");
-
-
-function check(url) {
-  let holder = document.getElementsByClassName('holder'),
-      tests = {
-    filereader: typeof FileReader != 'undefined',
-    dnd: 'draggable' in document.createElement('span'),
-    formdata: !!window.FormData,
-    progress: "upload" in new XMLHttpRequest()
-  },
-      support = {
-    filereader: document.querySelectorAll('.filereader'),
-    formdata: document.querySelectorAll('.formdata'),
-    progress: document.querySelectorAll('.progress')
-  },
-      acceptedTypes = {
-    'image/png': true,
-    'image/jpeg': true,
-    'image/gif': true
-  },
-      progress = document.getElementById('uploadprogress'),
-      fileupload = document.getElementById('upload'),
-      message = "filereader formdata progress".split(' '); // преобразует строку в массив, разбив по сепаратору
-
-  for (var key in message) {
-    //(function (api)
-    if (tests[message[key]] === false) {
-      support[message[key]].className = 'fail'; // присвоим класс
-    } else {
-      let collItem = support[message[key]];
-
-      for (var key1 = 0; key1 < collItem.length; ++key1) {
-        var item = collItem[key1]; // Вызов myNodeList.item(i) необязателен в JavaScript
-
-        item.className = 'hidden';
-      }
-    }
-  }
-
-  if (tests.dnd) {
-    for (let i = 0; i < holder.length; i++) {
-      holder[i].ondragover = function () {
-        this.className = 'hover';
-        this.style.width = '234px';
-        this.style.height = '162px';
-        return false;
-      };
-
-      holder[i].ondragleave = function () {
-        this.className = 'holder';
-        return false;
-      };
-
-      holder[i].ondragend = function () {
-        this.className = '';
-        return false;
-      };
-
-      holder[i].ondrop = function (e) {
-        this.className = 'holder';
-        e.preventDefault();
-        readfiles(e.dataTransfer.files, this);
-      };
-    }
-  } else {
-    fileupload.className = 'hidden'; // прячем кнопку загрузки
-
-    fileupload.querySelector('input').onchange = function () {
-      // загружаем файлы
-      readfiles(this.files);
-    };
-  }
-
-  function previewfile(file, elem) {
-    if (tests.filereader === true && acceptedTypes[file.type] === true) {
-      var imageContainer = elem,
-          //document.querySelector('#'+fid+' [data-prefix = "'+pref+'"]');
-      reader = new FileReader();
-
-      reader.onload = function (event) {
-        if (imageContainer.getElementsByTagName('img').length) {
-          var elem = imageContainer.getElementsByTagName('img')[0];
-          elem.remove();
-        }
-
-        var image = new Image();
-
-        if (imageContainer.getAttribute('data-prefix') === 'q') {
-          image.id = 'imq' + imageContainer.getAttribute('id');
-        } else if (imageContainer.getAttribute('data-prefix') === 'a') {
-          image.id = 'ima' + imageContainer.getAttribute('id');
-        }
-
-        image.src = event.target.result; // image.width = 150; // a fake resize
-
-        imageContainer.appendChild(image);
-      };
-
-      reader.readAsDataURL(file);
-    } else {
-      holder.innerHTML += '<p>Загружен ' + file.name + ' ' + (file.size ? (file.size / 1024 | 0) + 'K' : '');
-      console.log(file);
-    }
-  }
-
-  async function readfiles(files, elem) {
-    let formData = new FormData();
-
-    for (var i = 0; i < files.length; i++) {
-      formData.append('file', files[i], files[i]['name']);
-      formData.append('type', elem.dataset['prefix']);
-      formData.append('typeId', elem.id);
-      previewfile(files[i], elem);
-    }
-
-    let res = await fetch(url, {
-      method: 'POST',
-      body: formData
-    }); // let res = await post(url, formData)
-    // if (res) {
-    //     alert(res)
-    // }
-  }
-}
 
 /***/ }),
 
@@ -822,18 +851,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/dnd/dnd.scss":
-/*!********************************************!*\
-  !*** ./public/src/components/dnd/dnd.scss ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./public/src/components/footer/footer.scss":
 /*!**************************************************!*\
   !*** ./public/src/components/footer/footer.scss ***!
@@ -979,10 +996,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Admin_admin_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Admin/admin.scss */ "./public/src/Admin/admin.scss");
 /* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _components_dnd_dnd__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/dnd/dnd */ "./public/src/components/dnd/dnd.js");
-/* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
-/* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
-/* harmony import */ var _model_answer__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./model/answer */ "./public/src/Test/model/answer.js");
+/* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
 
 
 
@@ -995,65 +1009,75 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+_model_question__WEBPACK_IMPORTED_MODULE_10__._question.showFirst();
 
-
-
-let newAnser = (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.answer__create');
 (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.question__text').on('click', function (e) {
   let text = e.target;
   let parent = text.parentNode.parentNode;
   let answers = (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)(parent).find('.question__answers');
   answers.classList.toggle('height');
-  answers.classList.toggle('scale'); // answers.style.transform = 'scaleY(1)'
-
-  text.classList.toggle('rotate'); // answers.style.height = 'auto'
-});
-
-(0,_model_question__WEBPACK_IMPORTED_MODULE_11__._question)().showFirst();
-
-(0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.test_delete').on('click', _model_test__WEBPACK_IMPORTED_MODULE_12__._test.delete); /// class active для admin_main_menu
-
-if (window.location.pathname.match('/adminsc\/test/')) {
-  document.querySelector('.module.test').classList.add('activ');
-}
-
-(0,_components_dnd_dnd__WEBPACK_IMPORTED_MODULE_10__.check)('/image/create');
-(0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.a-add').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_13__._answer.create);
-(0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.a-del').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_13__._answer.delete);
-(0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.q-delete').on('click', e => {
-  let res = (0,_model_question__WEBPACK_IMPORTED_MODULE_11__._question)().delete();
-
-  if (res.msg === 'ok') {
-    let block = e.target.closest('.block');
-    block.remove();
-    (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)(`[data-pagination = "${res.q_id}"]`).el[0].remove();
-    (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('[data-pagination]:first-child').addClass('nav-active');
-    (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.block:first-child').addClass('flex1');
-  }
-});
-toggleTheme();
-(0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.without-pagination').on('click', () => {
-  toggleTheme();
-});
-
-function toggleTheme() {
-  (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.test-edit__content').el[0].classList.toggle('flex1');
-  (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.test-edit__content-2').el[0].classList.toggle('flex1');
-} ///// question sort input validate
-
-
-(0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.sort-q').on('change', _common__WEBPACK_IMPORTED_MODULE_9__.validate.sort); ////////// Save событие навешиваем
-// на родителя така как могут быть созданы новые блоки
-
-(0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.blocks').on('click', function (e) {
-  if ((0,_common__WEBPACK_IMPORTED_MODULE_9__.$)(e.target).hasClass('question__save')) {
-    if ((0,_model_question__WEBPACK_IMPORTED_MODULE_11__._question)().save()) {
-      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__.showHidePaginBtn)(res.paginationButton);
-      (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__.appendBlock)();
-      _common__WEBPACK_IMPORTED_MODULE_9__.popup.show(res.msg);
-    }
-  }
-}); // export function getAnswers(block, q_id) {
+  answers.classList.toggle('scale');
+  text.classList.toggle('rotate');
+}); // check('/image/create')
+///// question sort input validate
+// $('.sort-q').on('change', validate.sort)
+//
+// import {validate, $, popup} from '../common'
+// import {check} from '../components/dnd/dnd'
+//
+// import {_question} from './model/question'
+// import {_test} from './model/test'
+// import {appendBlock, showHidePaginBtn} from "../components/test-pagination/test-pagination";
+// import {_answer} from "./model/answer";
+//
+//
+// // let newAnser = $('.answer__create')
+//
+//
+// // _question().showFirst()
+// // $('.test_delete').on('click', _test.delete)
+//
+// /// class active для admin_main_menu
+// if (window.location.pathname.match('/adminsc\/test/')) {
+//     document.querySelector('.module.test').classList.add('activ')
+// }
+// $('.a-add').on('click', _answer.create)
+// $('.a-del').on('click', _answer.delete)
+//
+// $('.q-delete').on('click',
+//     (e) => {
+//         let res = _question().delete()
+//         if (res.msg === 'ok') {
+//             let block = e.target.closest('.block')
+//             block.remove()
+//             $(`[data-pagination = "${res.q_id}"]`).el[0].remove()
+//             $('[data-pagination]:first-child').addClass('nav-active')
+//             $('.block:first-child').addClass('flex1')
+//         }
+//     }
+// )
+// toggleTheme()
+// $('.without-pagination').on('click', () => {
+//     toggleTheme()
+// })
+//
+// function toggleTheme() {
+//     $('.test-edit__content').el[0].classList.toggle('flex1')
+//     $('.test-edit__content-2').el[0].classList.toggle('flex1')
+// }
+////////// Save событие навешиваем
+// на родителя так  как могут быть созданы новые блоки
+// $('.blocks').on('click', function (e) {
+//         if ($(e.target).hasClass('question__save')) {
+//             if (_question().save()) {
+//                 showHidePaginBtn(res.paginationButton)
+//                 appendBlock()
+//                 popup.show(res.msg)
+//             }
+//         }
+//     }
+// )
+// export function getAnswers(block, q_id) {
 //     let answerBlocks = block.querySelectorAll('.e-block-a')
 //     let answers = []
 //     answerBlocks.forEach((a) => {

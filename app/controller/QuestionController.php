@@ -33,7 +33,7 @@ class QuestionController Extends AppController
 		$block[$id]['correct_answer'] = '';
 
 		ob_start();
-		require ROOT . '/app/view/Test/editBlockQuestion.php';
+		require ROOT . '/app/view/Test/editBlockQuestion1.php';
 		$block = ob_get_clean();
 		$testid = $this->req['testid'];
 		$data = compact("testid", "block");
@@ -62,6 +62,8 @@ class QuestionController Extends AppController
 				foreach ($answers as $answer) {
 					App::$app->answer->updateOrCreate($answer['id'], $answer);
 				}
+				exit(json_encode([
+					'msg' => 'Вопросы и ответы сохранены']));
 			}
 
 		} catch (Exception $exception) {
