@@ -481,26 +481,6 @@ footer {
   .add-test:hover {
     box-shadow: none; }
 
-.test-edit__view-toggle {
-  display: flex;
-  justify-content: space-between; }
-  .test-edit__view-toggle .with-pagination, .test-edit__view-toggle .without-pagination {
-    display: flex;
-    width: 40%;
-    height: 50px;
-    background: grey;
-    margin: 10px 0px;
-    cursor: pointer; }
-
-.test-edit__content1 {
-  display: none;
-  margin-left: 10px;
-  flex-flow: column; }
-
-.test-edit__content {
-  margin-left: 10px;
-  flex-flow: column; }
-
 html {
   overflow-y: scroll; }
 
@@ -862,7 +842,8 @@ test-edit-wrapper {
   display: flex;
   margin: 10px;
   max-width: 850px;
-  font-family: 'Roboto', Arial;
+  width: 100%;
+  font-family: 'Roboto', Arial, Serif;
   /*Иконки для всплывающих менюшек*/ }
   .test-edit-wrapper .vert-menu__list::after {
     content: " ";
@@ -907,6 +888,11 @@ test-edit-wrapper {
   width: 80px; }
   .save-test:hover {
     box-shadow: none; }
+
+.test-edit__content {
+  margin-left: 10px;
+  flex-flow: column;
+  flex: 1 0 auto; }
 
 .question__create-button {
   flex-basis: 12px;

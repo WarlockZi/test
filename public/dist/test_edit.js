@@ -112,7 +112,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "_question": () => (/* binding */ _question)
 /* harmony export */ });
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
- // let _question1 = {
+ // import {_question} from "./question"
+// let _question1 = {
 //     get:()=>{
 //         return {
 //             id: +this.q.id,
@@ -155,26 +156,52 @@ __webpack_require__.r(__webpack_exports__);
 let _question = {
   getEl: el => {
     return {
-      el: el.closest('.question-edit')
+      sort: el.querySelector('.question__sort'),
+      save: el.querySelector('.question__save'),
+      text: el.querySelector('.question__text'),
+      del: el.querySelector('.question__delete')
     };
   },
+  qestions: add_button => {
+    let questionsWrap = add_button.closest('.questions');
+    return questionsWrap.parentNode.querySelectorAll('.questions>.question-edit');
+  },
+  lastQuestion: questions => {
+    return qestions[questions.length - 1];
+  },
+  questionsCount: () => {
+    return document.querySelectorAll('.questions>.question-edit').length;
+  },
   create: add_button => {
-    _question.createOnServer(add_button);
-
-    _question.createOnView();
+    // add_button.closest('.questions')
+    // _question.createOnServer(add_button)
+    _question.createOnView(add_button);
   },
   createOnServer: async add_button => {
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/updateOrCreate');
     return JSON.parse(res);
   },
-  createOnView: save_button => {
-    save_button.closest('.question-edit');
+  createOnView: add_button => {
+    let questions = _question.qestions(add_button);
+
+    let lastQuestion = _question.lastQuestion(questions);
+
+    let clone = lastQuestion.cloneNode(true);
+
+    let model = _question.getEl(clone);
+
+    model.sort.innerText = model.questionsCount(clone);
+    add_button.before(clone);
   },
   showFirst: () => {
     let questions = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question-edit');
 
     if (!questions.length) {
       let question = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question__create .question-edit').el[0].cloneNode(true);
+
+      let model = _question.getEl(question);
+
+      model.sort.innerText = '1';
       (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(question).addClass('question-edit');
       (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(question).removeClass('question__create');
       let questionsWrapper = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions').el[0];
@@ -196,7 +223,7 @@ let _question = {
       let deleted = await _question2.deleteFromServer(q_id);
 
       if (deleted) {
-        _question2.deleteFromView();
+        _question.deleteFromView();
       }
     }
   },

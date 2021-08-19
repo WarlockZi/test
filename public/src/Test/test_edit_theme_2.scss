@@ -1,5 +1,12 @@
 @import "../var";
 
+
+
+.test-edit__content {
+  margin-left: 10px;
+  flex-flow: column;
+  flex: 1 0 auto;
+}
 .question__create-button {
   flex-basis: 12px;
   display: flex;

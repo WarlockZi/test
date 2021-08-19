@@ -402,9 +402,9 @@ test-edit-wrapper {
 .test-edit-wrapper {
   display: flex;
   margin: 10px;
-  //flex: 1 0 auto;
   max-width: 850px;
-  font-family: 'Roboto', Arial;
+  width: 100%;
+  font-family: 'Roboto', Arial, Serif;
 
 
   /*Иконки для всплывающих менюшек*/
