@@ -1,4 +1,5 @@
-import {$, popup, post} from "../../common";
+import {$, popup, post} from "../../common"
+// import {_question} from "./question"
 
 // let _question1 = {
 //     get:()=>{
@@ -41,34 +42,57 @@ import {$, popup, post} from "../../common";
 // }
 
 
-
 export let _question = {
 
-    getEl:(el)=>{
-        return{
-        el:el.closest('.question-edit'),
-
+    getEl: (el) => {
+        return {
+            sort: el.querySelector('.question__sort'),
+            save: el.querySelector('.question__save'),
+            text: el.querySelector('.question__text'),
+            del: el.querySelector('.question__delete'),
         }
     },
 
-    create:(add_button)=>{
-        _question.createOnServer(add_button)
-        _question.createOnView()
-   },
+    qestions:(add_button)=>{
+        let questionsWrap = add_button.closest('.questions')
+        return questionsWrap.parentNode.querySelectorAll('.questions>.question-edit')
+    },
 
-    createOnServer:async (add_button)=>{
-       let res = await post('/question/updateOrCreate')
+    lastQuestion:(questions)=>{
+        return qestions[questions.length - 1]
+    },
+    questionsCount: () => {
+        return document.querySelectorAll('.questions>.question-edit').length
+    },
+
+    create: (add_button) => {
+        // add_button.closest('.questions')
+        // _question.createOnServer(add_button)
+        _question.createOnView(add_button)
+    },
+
+    createOnServer: async (add_button) => {
+        let res = await post('/question/updateOrCreate')
         return JSON.parse(res)
     },
 
-    createOnView:(save_button)=>{
-        save_button.closest('.question-edit')
+    createOnView: (add_button) => {
+
+        let questions = _question.qestions(add_button)
+        let lastQuestion = _question.lastQuestion(questions)
+        let clone = lastQuestion.cloneNode(true)
+        let model = _question.getEl(clone)
+        model.sort.innerText = model.questionsCount(clone)
+        add_button.before(clone)
     },
 
-    showFirst:()=>{
+    showFirst: () => {
         let questions = $('.questions .question-edit')
         if (!questions.length) {
             let question = $('.questions .question__create .question-edit').el[0].cloneNode(true)
+            let model = _question.getEl(question)
+            model.sort.innerText = '1'
+
             $(question).addClass('question-edit')
             $(question).removeClass('question__create')
             let questionsWrapper = $('.questions').el[0]
@@ -93,7 +117,7 @@ export let _question = {
             let q_id = +this.q.id
             let deleted = await _question2.deleteFromServer(q_id)
             if (deleted) {
-                _question2.deleteFromView()
+                _question.deleteFromView()
             }
         }
     },
