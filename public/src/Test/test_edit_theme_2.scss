@@ -5,7 +5,7 @@
 .test-edit__content {
   margin-left: 10px;
   flex-flow: column;
-  flex: 1 0 auto;
+  //flex: 1 0 auto;
 }
 .question__create-button {
   flex-basis: 12px;
@@ -30,7 +30,6 @@
 }
 .question-edit {
   background-color: #f6f6f6;
-  border-bottom: #dbdbdb 1px solid;
   display: flex;
   flex-flow: column;
   padding: 5px;
@@ -39,11 +38,11 @@
 
 .question__text {
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
   min-width: 90px;
   padding: 10px 10px 10px 30px;
   background-color: white;
-  flex: 1 0;
   margin: 0 3px;
   font-weight: 600;
   position: relative;
@@ -72,21 +71,22 @@
 }
 
 .question__sort {
+  display: flex;
+  flex-basis: 45px;
+  align-items: center;
+  justify-content: center;
   background-color: #fff;
   height: 100%;
   margin-right: 3px;
   padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-weight: 600;
 }
 
-.question__save2{
-
+.question__save{
   display: flex;
   align-items: center;
   background-color: #ffffff;
+  height: 100%;
   svg{
     width: 20px;
     margin: 10px;

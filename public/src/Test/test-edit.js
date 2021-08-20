@@ -10,13 +10,16 @@ import '../Test/test_edit_theme_2'
 import '../Admin/admin.scss'
 
 import '../components/popup.scss'
-import {$,tooltip} from '../common'
+import {$, tooltip} from '../common'
 import {_question} from "./model/question";
 
-_question.showFirst()
+let questions = $('.questions>.question-edit').el
+if (!questions.length) {
+    _question.showFirst()
+}
 
-$('.question__text').on('click',function (e) {
-    let text =  e.target
+$('.question__text').on('click', function (e) {
+    let text = e.target
     let parent = text.parentNode.parentNode
     let answers = $(parent).find('.question__answers')
     answers.classList.toggle('height')
@@ -52,7 +55,6 @@ $('.question__text').on('click',function (e) {
 // if (window.location.pathname.match('/adminsc\/test/')) {
 //     document.querySelector('.module.test').classList.add('activ')
 // }
-
 
 
 // $('.a-add').on('click', _answer.create)

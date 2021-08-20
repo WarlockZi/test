@@ -156,57 +156,75 @@ __webpack_require__.r(__webpack_exports__);
 let _question = {
   getEl: el => {
     return {
+      el: el,
       sort: el.querySelector('.question__sort'),
       save: el.querySelector('.question__save'),
       text: el.querySelector('.question__text'),
       del: el.querySelector('.question__delete')
     };
   },
-  qestions: add_button => {
-    let questionsWrap = add_button.closest('.questions');
-    return questionsWrap.parentNode.querySelectorAll('.questions>.question-edit');
+  elForServer: el => {
+    return {
+      question: {
+        id: null,
+        qustion: '',
+        parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value(),
+        sort: _question.questionsCount
+      }
+    };
   },
-  lastQuestion: questions => {
-    return qestions[questions.length - 1];
+  qestions: document.querySelectorAll('.questions>.question-edit'),
+  questionsCount: document.querySelectorAll('.questions>.question-edit').length,
+  lastQuestion: () => {
+    let questions = _question.qestions;
+    return questions[questions.length - 1];
   },
-  questionsCount: () => {
-    return document.querySelectorAll('.questions>.question-edit').length;
-  },
-  create: add_button => {
-    // add_button.closest('.questions')
-    // _question.createOnServer(add_button)
-    _question.createOnView(add_button);
-  },
-  createOnServer: async add_button => {
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/updateOrCreate');
-    return JSON.parse(res);
-  },
-  createOnView: add_button => {
-    let questions = _question.qestions(add_button);
+  create: async add_button => {
+    let el = add_button.closest('.question-edit');
 
-    let lastQuestion = _question.lastQuestion(questions);
+    let model = _question.elForServer(el);
+
+    let q_id = await _question.createOnServer(model);
+
+    if (q_id) {
+      _question.createOnView(add_button, q_id);
+    }
+  },
+  createOnServer: async question => {
+    question.question.parent = +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
+    question.question.sort = +_question.questionsCount;
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/updateOrCreate', {
+      question: question.question,
+      answers: {}
+    });
+    res = await JSON.parse(res);
+    return res.id;
+  },
+  createOnView: (add_button, q_id) => {
+    let questions = _question.qestions;
+
+    let lastQuestion = _question.lastQuestion();
 
     let clone = lastQuestion.cloneNode(true);
 
     let model = _question.getEl(clone);
 
-    model.sort.innerText = model.questionsCount(clone);
+    model.sort.innerText = questions.length;
+    model.text.innerText = '';
+    model.text.innerText = '';
+    model.el.id = q_id;
     add_button.before(clone);
   },
   showFirst: () => {
-    let questions = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question-edit');
+    let question = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question__create .question-edit').el[0].cloneNode(true);
 
-    if (!questions.length) {
-      let question = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question__create .question-edit').el[0].cloneNode(true);
+    let model = _question.getEl(question);
 
-      let model = _question.getEl(question);
-
-      model.sort.innerText = '1';
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(question).addClass('question-edit');
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(question).removeClass('question__create');
-      let questionsWrapper = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions').el[0];
-      questionsWrapper.prepend(question);
-    }
+    model.sort.innerText = '1';
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(question).addClass('question-edit');
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(question).removeClass('question__create');
+    let questionsWrapper = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions').el[0];
+    questionsWrapper.prepend(question);
   },
   save: async save_button => {
     let question = save_button.closest('.question-edit');
@@ -1037,8 +1055,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+let questions = (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.questions>.question-edit').el;
 
-_model_question__WEBPACK_IMPORTED_MODULE_10__._question.showFirst();
+if (!questions.length) {
+  _model_question__WEBPACK_IMPORTED_MODULE_10__._question.showFirst();
+}
 
 (0,_common__WEBPACK_IMPORTED_MODULE_9__.$)('.question__text').on('click', function (e) {
   let text = e.target;

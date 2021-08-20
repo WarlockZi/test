@@ -9,7 +9,6 @@
 
 	<div class="questions">
 
-		<div class="question__create-button" data-action-hover="Добавить вопрос">+</div>
 
 		<div class="question__create">
 			<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
@@ -22,5 +21,7 @@
 
 			<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
 		<? endforeach; ?>
+		<div class="question__create-button" data-action-hover="Добавить вопрос">+</div>
 	</div>
+
 </div>

@@ -46,6 +46,7 @@ export let _question = {
 
     getEl: (el) => {
         return {
+            el:el,
             sort: el.querySelector('.question__sort'),
             save: el.querySelector('.question__save'),
             text: el.querySelector('.question__text'),
@@ -53,51 +54,64 @@ export let _question = {
         }
     },
 
-    qestions:(add_button)=>{
-        let questionsWrap = add_button.closest('.questions')
-        return questionsWrap.parentNode.querySelectorAll('.questions>.question-edit')
+    elForServer:(el)=>{
+        return{
+            question:{
+                id:null,
+                qustion:'',
+                parent:$('.test-name').value(),
+                sort:_question.questionsCount,
+            }
+        }
     },
 
-    lastQuestion:(questions)=>{
-        return qestions[questions.length - 1]
-    },
-    questionsCount: () => {
-        return document.querySelectorAll('.questions>.question-edit').length
-    },
+    qestions: document.querySelectorAll('.questions>.question-edit'),
+    questionsCount: document.querySelectorAll('.questions>.question-edit').length,
 
-    create: (add_button) => {
-        // add_button.closest('.questions')
-        // _question.createOnServer(add_button)
-        _question.createOnView(add_button)
+    lastQuestion: () => {
+        let questions = _question.qestions
+        return questions[questions.length - 1]
     },
 
-    createOnServer: async (add_button) => {
-        let res = await post('/question/updateOrCreate')
-        return JSON.parse(res)
+    create: async (add_button) => {
+        let el = add_button.closest('.question-edit')
+        let model = _question.elForServer(el)
+        let q_id = await _question.createOnServer(model)
+        if (q_id) {
+            _question.createOnView(add_button, q_id)
+        }
     },
 
-    createOnView: (add_button) => {
+    createOnServer: async (question) => {
+        question.question.parent = +$('.test-name').value()
+        question.question.sort = +_question.questionsCount
 
-        let questions = _question.qestions(add_button)
-        let lastQuestion = _question.lastQuestion(questions)
+        let res = await post('/question/updateOrCreate',{question:question.question, answers:{}})
+        res = await JSON.parse(res)
+        return res.id
+    },
+
+    createOnView: (add_button, q_id) => {
+        let questions = _question.qestions
+        let lastQuestion = _question.lastQuestion()
         let clone = lastQuestion.cloneNode(true)
         let model = _question.getEl(clone)
-        model.sort.innerText = model.questionsCount(clone)
+        model.sort.innerText = questions.length
+        model.text.innerText = ''
+        model.text.innerText = ''
+        model.el.id = q_id
         add_button.before(clone)
     },
 
     showFirst: () => {
-        let questions = $('.questions .question-edit')
-        if (!questions.length) {
-            let question = $('.questions .question__create .question-edit').el[0].cloneNode(true)
-            let model = _question.getEl(question)
-            model.sort.innerText = '1'
+        let question = $('.questions .question__create .question-edit').el[0].cloneNode(true)
+        let model = _question.getEl(question)
+        model.sort.innerText = '1'
 
-            $(question).addClass('question-edit')
-            $(question).removeClass('question__create')
-            let questionsWrapper = $('.questions').el[0]
-            questionsWrapper.prepend(question)
-        }
+        $(question).addClass('question-edit')
+        $(question).removeClass('question__create')
+        let questionsWrapper = $('.questions').el[0]
+        questionsWrapper.prepend(question)
     },
 
     save: async (save_button) => {
