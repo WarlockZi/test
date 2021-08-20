@@ -46,42 +46,42 @@ test-edit-wrapper {
   transition: opacity 1000ms;
 }
 
-.question__sort {
-  text-align: center;
-  width: 26px;
-  height: 1rem;
-  margin: 5px 5px 5px 0px;
-}
+//.question__sort {
+//  text-align: center;
+//  width: 26px;
+//  height: 1rem;
+//  margin: 5px 5px 5px 0px;
+//}
 
 .e-block-q label {
   font-size: 13px;
 }
+//
+//@mixin question_buttons() {
+//  display: block;
+//  background-color: #1bbc9b;
+//  align-self: center;
+//  flex-basis: 12px;
+//  font-weight: 600;
+//  letter-spacing: 2px;
+//  color: white;
+//  padding: 7px 11px;
+//  cursor: pointer;
+//  margin: 10px 5px;
+//  box-shadow: 0 2px 4px 0 #316358;
+//  transition: box-shadow 100ms;
+//  &:hover {
+//    box-shadow: none;
+//  }
+//}
 
-@mixin question_buttons() {
-  display: block;
-  background-color: #1bbc9b;
-  align-self: center;
-  flex-basis: 12px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: white;
-  padding: 7px 11px;
-  cursor: pointer;
-  margin: 10px 5px;
-  box-shadow: 0 2px 4px 0 #316358;
-  transition: box-shadow 100ms;
-  &:hover {
-    box-shadow: none;
-  }
-}
-
-.question__save {
-  @include question_buttons()
-}
-
-.question__cansel {
-  @include question_buttons
-}
+//.question__save {
+//  @include question_buttons()
+//}
+//
+//.question__cansel {
+//  @include question_buttons
+//}
 
 .question__buttons {
   display: flex;
@@ -349,7 +349,7 @@ test-edit-wrapper {
 .test-name {
   flex: 1 0 auto;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 800;
   margin: 0px 0 20px 15px;
   padding: 5px 0;
 
@@ -401,9 +401,8 @@ test-edit-wrapper {
 
 .test-edit-wrapper {
   display: flex;
+  //flex: 1 0 auto;
   margin: 10px;
-  max-width: 850px;
-  width: 100%;
   font-family: 'Roboto', Arial, Serif;
 
 

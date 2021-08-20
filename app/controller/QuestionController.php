@@ -43,18 +43,22 @@ class QuestionController Extends AppController
 	public function actionUpdateOrCreate()
 	{
 		try {
-			$answers = $this->req['answers'];
-			$q_id = $this->req['question']['id'];
-			$sort = $this->req['question']['sort'];
-			$qId = App::$app->question->updateOrCreate($q_id, $this->req['question']);
+			$answers = $this->req['answers']??'';
+			$question = $this->req['question']??'';
+			$q_id = $this->req['question']['id']??'';
+			$sort = $this->req['question']['sort']??'';
+			$qId = App::$app->question->updateOrCreate($q_id, $question);
 			if ($qId===false) {
 				return;
 			}elseif(is_int($qId)){
-				foreach ($answers as $answer) {
-					$answer['parent_question'] = $qId;
-					App::$app->answer->updateOrCreate($answer['id'], $answer);
+				if ($answers){
+					foreach ($answers as $answer) {
+						$answer['parent_question'] = $qId;
+						App::$app->answer->updateOrCreate($answer['id'], $answer);
+					}
 				}
 				exit(json_encode([
+					'id'=>$qId,
 					'msg' => 'Вопросы и ответы сохранены',
 					'paginationButton' => $pagination = "<div data-pagination = $q_id class='nav-active'>{$sort}</div>"
 				]));
