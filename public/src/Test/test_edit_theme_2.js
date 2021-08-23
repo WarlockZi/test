@@ -12,7 +12,7 @@ $('.answer__create-button').on('click', async function (e){
     _answer.create(this)
 })
 
-$('.question__save2').on('click', function () {
+$('.question__save').on('click', function () {
     _question.save(this)
 })
 
