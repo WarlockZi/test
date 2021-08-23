@@ -150,7 +150,7 @@ let _answer = {
       checked: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(el).find('input'),
       text: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(el).find('.answer__text'),
       delete: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)((0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(el).find('.answer__delete')).on('click', function () {
-        _answer2.del(this);
+        _answer.del(this);
       })
     };
   },
@@ -169,7 +169,7 @@ let _answer = {
     show(a_id);
 
     async function createOnServer(button) {
-      let newEl = _answer2.getModelForServer(_answer2.el(button));
+      let newEl = _answer.getModelForServer(_answer.el(button));
 
       let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/answer/create', newEl);
       res = JSON.parse(res);
@@ -177,7 +177,7 @@ let _answer = {
     }
 
     function show(a_id) {
-      let el = _answer2.el(button);
+      let el = _answer.el(button);
 
       el.checked.checked = false;
       el.el.dataset['answerId'] = a_id;
@@ -228,45 +228,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
  // import {_question} from "./question"
-// let _question1 = {
-//     get:()=>{
-//         return {
-//             id: +this.q.id,
-//             parent: +$('.test-name').el[0].getAttribute('value'),
-//             picq: '',
-//             qustion: $(this.q).find('.question__text').innerText,
-//             sort: +$(this.q).find('.question__sort').innerText,
-//         }
-//     },
-//     delete:async()=>{
-//         if (confirm("Удалить вопрос со всеми его ответами?")) {
-//             let q_id = +this.q.id
-//             let res = await post('/question/delete', {q_id})
-//             return JSON.parse(res)
-//         }
-//     },
-//     save:async()=>{
-//         let res = await post(
-//             '/question/UpdateOrCreate',
-//             {
-//                 question: this.get(),
-//                 answers: this.getAnswers(),
-//             })
-//         return await JSON.parse(res)
-//     },
-//     getAnswers:()=>{
-//         let answerBlocks = this.q.querySelectorAll('.answer')
-//         return [...answerBlocks].map((a) => {
-//             return {
-//                 id: +a.dataset['answerId'],
-//                 answer: a.querySelector('.answer__text').innerText,
-//                 correct_answer: +a.querySelector('[type="checkbox"]').checked,
-//                 parent_question: +this.q.id,
-//                 pica: '',
-//             }
-//         }, this.q)
-//     },
-// }
 
 let _question = {
   getEl: el => {
@@ -344,8 +305,8 @@ let _question = {
   save: async save_button => {
     let question = save_button.closest('.question-edit');
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/UpdateOrCreate', {
-      question: _question2.getModelForServer(question),
-      answers: _question2.getAnswers(question)
+      question: _question.getModelForServer(question),
+      answers: _question.getAnswers(question)
     });
     res = await JSON.parse(res);
     _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg);
@@ -390,7 +351,46 @@ let _question = {
       };
     }, question);
   }
-}; //
+}; // let _question1 = {
+//     get:()=>{
+//         return {
+//             id: +this.q.id,
+//             parent: +$('.test-name').el[0].getAttribute('value'),
+//             picq: '',
+//             qustion: $(this.q).find('.question__text').innerText,
+//             sort: +$(this.q).find('.question__sort').innerText,
+//         }
+//     },
+//     delete:async()=>{
+//         if (confirm("Удалить вопрос со всеми его ответами?")) {
+//             let q_id = +this.q.id
+//             let res = await post('/question/delete', {q_id})
+//             return JSON.parse(res)
+//         }
+//     },
+//     save:async()=>{
+//         let res = await post(
+//             '/question/UpdateOrCreate',
+//             {
+//                 question: this.get(),
+//                 answers: this.getAnswers(),
+//             })
+//         return await JSON.parse(res)
+//     },
+//     getAnswers:()=>{
+//         let answerBlocks = this.q.querySelectorAll('.answer')
+//         return [...answerBlocks].map((a) => {
+//             return {
+//                 id: +a.dataset['answerId'],
+//                 answer: a.querySelector('.answer__text').innerText,
+//                 correct_answer: +a.querySelector('[type="checkbox"]').checked,
+//                 parent_question: +this.q.id,
+//                 pica: '',
+//             }
+//         }, this.q)
+//     },
+// }
+//
 // function _question(id) {
 //     let q = id ?
 //         $(`.e-block-q#{id}`).el[0] :

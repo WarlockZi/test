@@ -118,7 +118,7 @@
 
 .question__answers.height {
   height: auto !important;
-  margin: 15px 0 0 30px;
+
 }
 
 .question__answers.scale {
@@ -131,7 +131,7 @@
   width: 100%;
   flex: 2;
   height: 0;
-
+  margin: 5px 0 0 47px;
   transform: scaleY(0);
   transform-origin: top;
   transition: transform 0.1s;

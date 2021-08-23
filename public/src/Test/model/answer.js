@@ -20,7 +20,7 @@ export let _answer = {
             checked: $(el).find('input'),
             text: $(el).find('.answer__text'),
             delete: $($(el).find('.answer__delete')).on('click', function () {
-                _answer2.del(this)
+                _answer.del(this)
             })
         }
     },
@@ -37,9 +37,8 @@ export let _answer = {
         let a_id = await createOnServer(button)
         show(a_id)
 
-
         async function createOnServer(button) {
-            let newEl = _answer2.getModelForServer(_answer2.el(button))
+            let newEl = _answer.getModelForServer(_answer.el(button))
 
             let res = await post('/answer/create', newEl)
             res = JSON.parse(res)
@@ -48,7 +47,7 @@ export let _answer = {
         }
 
         function show(a_id) {
-            let el = _answer2.el(button)
+            let el = _answer.el(button)
 
             el.checked.checked = false
             el.el.dataset['answerId'] = a_id
@@ -69,7 +68,6 @@ export let _answer = {
         function deleteFromView(del_button) {
             del_button.parentNode.remove()
         }
-
         async function deleteFromServer(del_button) {
 
             if (confirm("Удалить этот ответ?")) {
@@ -82,5 +80,4 @@ export let _answer = {
             }
         }
     },
-
 }
