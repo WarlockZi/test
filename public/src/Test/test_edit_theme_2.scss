@@ -1,12 +1,12 @@
 @import "../var";
 
 
-
 .test-edit__content {
   margin-left: 10px;
   flex-flow: column;
   //flex: 1 0 auto;
 }
+
 .question__create-button {
   flex-basis: 12px;
   display: flex;
@@ -25,11 +25,13 @@
     box-shadow: none;
   }
 }
-.question__create{
+
+.question__create {
   display: none;
 }
+
 .question-edit {
-  background-color: #f6f6f6;
+  background-color: #efefef;
   display: flex;
   flex-flow: column;
   padding: 5px;
@@ -76,23 +78,30 @@
   align-items: center;
   justify-content: center;
   background-color: #fff;
-  height: 100%;
   margin-right: 3px;
   padding: 0;
   font-weight: 600;
 }
 
-.question__save{
+.question__save {
   display: flex;
   align-items: center;
   background-color: #ffffff;
-  height: 100%;
-  svg{
+  cursor: pointer;
+
+  :hover svg g {
+    fill: red;
+  }
+
+  svg {
     width: 20px;
     margin: 10px;
-    cursor: pointer;
 
-    &:hover .save{
+    .save {
+      fill: red;
+    }
+
+    &:hover .save {
       fill: #1bbc9b;
     }
   }
@@ -112,12 +121,11 @@
 .question-edit_row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-
 }
 
 .question__answers.height {
   height: auto !important;
+  margin: 5px 0 0 47px;
 
 }
 
@@ -131,7 +139,6 @@
   width: 100%;
   flex: 2;
   height: 0;
-  margin: 5px 0 0 47px;
   transform: scaleY(0);
   transform-origin: top;
   transition: transform 0.1s;
@@ -140,7 +147,6 @@
 
 .question__delete {
   width: 35px;
-  height: 100%;
   cursor: pointer;
   background-color: #fff;
   display: flex;
@@ -175,7 +181,8 @@
   align-items: center;
   justify-content: center;
 }
-.answer__delete:nth-child(odd){
+
+.answer__delete:nth-child(odd) {
   background: #1bbc9b3d;
 }
 
@@ -191,7 +198,8 @@
   overflow: hidden;
   align-items: center;
 }
-.answer:nth-child(odd){
+
+.answer:nth-child(odd) {
   background: #1bbc9b3d;
 }
 
@@ -206,17 +214,20 @@
   color: $color-main;
   background-color: #fff;
   border-top: 1px solid $color-main;
-  transition: color .5s , background-color .5s;
-  &:hover{
+  transition: color .5s, background-color .5s;
+
+  &:hover {
     background-color: #c8efe7;
   }
 
 }
-.answer__create{
+
+.answer__create {
   display: none;
   opacity: 0;
   align-items: center;
   transition: opacity 1s;
+
   &:nth-child(odd) {
     background: #1bbc9b3d;
   }

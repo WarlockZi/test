@@ -1,7 +1,6 @@
 <div class="test-edit-wrapper">
 
 	<div class='test-edit-menu'>
-		<a class='add-test' href="/adminsc/test/show">Добавить тест</a>
 
 		<?
 		new app\view\widgets\menu\Menu([
@@ -10,6 +9,7 @@
 		]);
 		?>
 
+		<a class='add-test' href="/adminsc/test/show">Добавить тест</a>
 	</div>
 
 	<? include ROOT . '/app/view/Test/edit_content.php' ?>

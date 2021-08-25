@@ -561,7 +561,8 @@ input {
   display: flex;
   flex-flow: nowrap;
   max-width: 95vw;
-  flex: 1 0 auto; }
+  flex: 1 0 auto;
+  margin-top: -20px; }
 
 .admin-actions {
   display: flex;

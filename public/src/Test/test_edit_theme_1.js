@@ -1,1 +1,0 @@
-import './test_edit_theme_1.scss'
