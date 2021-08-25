@@ -16,6 +16,7 @@ switch (window.location.pathname) {
     break;
 
   case '/adminsc/test/edit':
+  case '/adminsc/test/edit':
     document.querySelector('.module.test').classList.add('activ');
     break;
 

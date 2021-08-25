@@ -9,7 +9,6 @@
 
 	<div class="questions">
 
-
 		<div class="question__create">
 			<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
 		</div>
@@ -17,11 +16,13 @@
 		<div class="answer__create">
 			<? include ROOT . '/app/view/Test/editBlockAnswer.php' ?>
 		</div>
-		<? foreach ($testDataToEdit as $q_id => $block): ?>
 
+		<? foreach ($testDataToEdit as $q_id => $block): ?>
 			<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
 		<? endforeach; ?>
+
 		<div class="question__create-button" data-action-hover="Добавить вопрос">+</div>
+
 	</div>
 
 </div>
