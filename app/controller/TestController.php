@@ -36,6 +36,20 @@ class TestController Extends AppController
 		View::setJs('test_edit.js');
 	}
 
+	public function actionUpdate()
+	{
+		$this->layout = 'admin';
+
+		$id = $this->route['id'];
+		$test = App::$app->test->findOne($id);
+
+		$rootTests = App::$app->test->findWhere('isTest', 0);
+		$this->set(compact('rootTests', 'test'));
+
+		View::setCss('test_edit.css');
+		View::setJs('test_edit.js');
+	}
+
 	public function actionCreate()
 	{
 		if ($this->ajax) {

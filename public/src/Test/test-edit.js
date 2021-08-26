@@ -23,10 +23,9 @@ let sortable = Sortable.create(el, {
     animation: 150,
     onEnd: function (/**Event*/evt) {
         debugger
-        let itemEl = evt.item;  // dragged HTMLElement
         evt.oldIndex;  // element's old index within old parent
         evt.newIndex;  // element's new index within new parent
-        evt.clone // the clone element
+
     },
 });
 

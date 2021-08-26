@@ -4747,13 +4747,9 @@ let sortable = sortablejs__WEBPACK_IMPORTED_MODULE_10__.default.create(el, {
   /**Event*/
   evt) {
     debugger;
-    let itemEl = evt.item; // dragged HTMLElement
-
     evt.oldIndex; // element's old index within old parent
 
     evt.newIndex; // element's new index within new parent
-
-    evt.clone; // the clone element
   }
 });
 let questions = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.questions>.question-edit').el;
