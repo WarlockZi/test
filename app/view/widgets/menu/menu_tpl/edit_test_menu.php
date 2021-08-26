@@ -1,12 +1,11 @@
 
 <?= isset($cat['childs']) ? '<li class = "vert-menu__list">' : '<li>'; ?>
 
-<div class="test-params" data-testid="{$cat['id']}">
+<a class="test-params"  href = "/adminsc/test/update/<?=$cat['id'];?>" data-testid="<?=$cat['id'];?>">
 
 <?= include ROOT.'/app/view/components/icons/gamburger.php' ?>
-<?//= isset($cat['childs']) ? '' : include ROOT.'/app/view/components/icons/gamburger.php' ?>
 
-</div>
+</a>
 
 <a href=
    <?= isset($cat['childs']) ? "#" : "/adminsc/test/edit/" . $cat['id'] ?>

@@ -29,6 +29,7 @@ Router::add('^adminsc\/catalog$', ['controller' => 'Adm_catalog']);
 Router::add('^adminsc\/settings\/(?P<action>[0-9a-z]+)$', ['controller' => 'Adm_settings']);
 Router::add('^adminsc\/settings\/instructions\/module\/(?P<id>[0-9]+)$', ['controller' => 'Adm_settings', 'action' => 'module']);
 
+Router::add('^adminsc\/test\/update\/(?P<id>[0-9]+)$', ['controller' => 'Test', 'action' => 'update']);
 Router::add('^adminsc\/test\/edit\/(?P<id>[0-9]+)$', ['controller' => 'Test', 'action' => 'edit']);
 Router::add('^adminsc\/test\/show$', ['controller' => 'Test', 'action' => 'show']);
 
