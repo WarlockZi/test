@@ -8,8 +8,8 @@ header {
   display: flex;
 }
 
-test-edit-wrapper {
-  margin: 10px;
+.test-edit__container{
+  margin-left: clamp(10px, 20%, 50px);
 }
 
 .test-edit__title {
@@ -330,21 +330,6 @@ test-edit-wrapper {
   cursor: pointer;
 }
 
-
-.test-params {
-  position: relative;
-  flex: 1;
-  max-width: 37px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: hsl(0, 0%, 31%);
-  cursor: pointer;
-
-  a {
-    color: #ffffff;
-  }
-}
 
 .test-name {
   flex: 1 0 auto;

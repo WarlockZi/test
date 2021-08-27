@@ -1,4 +1,5 @@
-<section>
+<section class="test-edit__container">
+
 	<h1>Добавление теста</h1>
 	<div class="grid">
 		<div >Название теста</div>
@@ -17,9 +18,7 @@
 		<input id="enable" type = "checkbox" <?=$test['enable']?'checked':'';?>>
 
 	</div>
-		<div class="save-test">Сохранить</div>
-
-
+		<div class="test-update__save">Сохранить</div>
 
 
 </section>

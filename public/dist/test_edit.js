@@ -177,7 +177,9 @@ let _question = {
     add_button.before(clone);
   },
   showFirst: () => {
-    let question = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question__create .question-edit').el[0].cloneNode(true);
+    let question = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question__create .question-edit').el[0];
+    if (!question) return;
+    question = question.cloneNode(true);
 
     let model = _question.getEl(question);
 
@@ -350,13 +352,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
 let _test = {
+  serverModel: {
+    id: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').el[0].innerText,
+    test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').el[0].innerText,
+    enable: 1,
+    isTest: +!(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#isPath').el[0].checked,
+    sort: 0,
+    parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').el[0].options[(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').el[0].selectedIndex].value
+  },
   id: id => {
     return id ?? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
   },
   name: () => {
     return (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText;
   },
-  create: () => {},
+  create: async () => {
+    _test.createUpdate('/test/create');
+  },
+  update: () => {
+    let url = window.location.href;
+    let id = +url.split('/').pop();
+
+    _test.createUpdate(`/test/update/${id}`);
+  },
+  createUpdate: async url => {
+    let model = _test.serverModel;
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)(url, model);
+    res = await JSON.parse(res);
+
+    if (res) {
+      window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + model.test_name;
+    }
+  },
   delete: async function () {
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/delete', {
       id: this.id
@@ -376,28 +403,12 @@ let _test = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _show_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./show.scss */ "./public/src/Test/show.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".save-test").on('click', async function () {
-  let test_name = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#test_name').el[0].innerText;
-  let enable = 1;
-  let sel = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('select').el[0];
-  let isTest = +!(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#isPath').el[0].checked;
-  let sort = 0;
-  let parent = sel.options[sel.selectedIndex].value;
-  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/test/create', {
-    test_name,
-    enable,
-    isTest,
-    sort,
-    parent
-  });
-  res = await JSON.parse(res);
 
-  if (res) {
-    window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + test_name;
-  }
-});
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".test-show__save").on('click', _model_test__WEBPACK_IMPORTED_MODULE_2__._test.create);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".test-update__save").on('click', _model_test__WEBPACK_IMPORTED_MODULE_2__._test.update);
 
 /***/ }),
 
@@ -751,6 +762,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
 
 
+
+/***/ }),
+
+/***/ "./public/src/components/sortable.js":
+/*!*******************************************!*\
+  !*** ./public/src/components/sortable.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "sortable": () => (/* binding */ sortable)
+/* harmony export */ });
+/* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sortablejs */ "./node_modules/sortablejs/modular/sortable.esm.js");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+
+
+let sortable = {
+  connect: selector => {
+    let el = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(selector).el[0];
+
+    if (el) {
+      let sortable = sortablejs__WEBPACK_IMPORTED_MODULE_0__.default.create(el, {
+        animation: 150,
+        onEnd: function (evt) {
+          evt.oldIndex;
+          evt.newIndex;
+        }
+      });
+    }
+  }
+};
 
 /***/ }),
 
@@ -4725,9 +4768,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Admin_admin_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Admin/admin.scss */ "./public/src/Admin/admin.scss");
 /* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
 /* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
-/* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! sortablejs */ "./node_modules/sortablejs/modular/sortable.esm.js");
-
- // import '../components/test-pagination/test-pagination'
+/* harmony import */ var _components_sortable__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/sortable */ "./public/src/components/sortable.js");
 
 
 
@@ -4737,21 +4778,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // Default SortableJS
 
 
-let el = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.questions').el[0];
-let sortable = sortablejs__WEBPACK_IMPORTED_MODULE_10__.default.create(el, {
-  animation: 150,
-  onEnd: function (
-  /**Event*/
-  evt) {
-    debugger;
-    evt.oldIndex; // element's old index within old parent
 
-    evt.newIndex; // element's new index within new parent
-  }
-});
+_components_sortable__WEBPACK_IMPORTED_MODULE_10__.sortable.connect('.questions');
 let questions = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.questions>.question-edit').el;
 
 if (!questions.length) {
@@ -4769,6 +4799,9 @@ if (!questions.length) {
 ///// question sort input validate
 
 (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.question__sort').on('change', _common__WEBPACK_IMPORTED_MODULE_1__.validate.sort);
+let url = window.location.href;
+let last = url.split('/').pop();
+console.log(last);
 })();
 
 /******/ })()

@@ -275,13 +275,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
 let _test = {
+  serverModel: {
+    id: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').el[0].innerText,
+    test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').el[0].innerText,
+    enable: 1,
+    isTest: +!(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#isPath').el[0].checked,
+    sort: 0,
+    parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').el[0].options[(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').el[0].selectedIndex].value
+  },
   id: id => {
     return id ?? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
   },
   name: () => {
     return (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText;
   },
-  create: () => {},
+  create: async () => {
+    _test.createUpdate('/test/create');
+  },
+  update: () => {
+    let url = window.location.href;
+    let id = +url.split('/').pop();
+
+    _test.createUpdate(`/test/update/${id}`);
+  },
+  createUpdate: async url => {
+    let model = _test.serverModel;
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)(url, model);
+    res = await JSON.parse(res);
+
+    if (res) {
+      window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + model.test_name;
+    }
+  },
   delete: async function () {
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/delete', {
       id: this.id

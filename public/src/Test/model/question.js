@@ -63,7 +63,9 @@ export let _question = {
     },
 
     showFirst: () => {
-        let question = $('.questions .question__create .question-edit').el[0].cloneNode(true)
+        let question = $('.questions .question__create .question-edit').el[0]
+        if (!question) return
+        question = question.cloneNode(true)
         let model = _question.getEl(question)
         model.sort.innerText = '1'
 
