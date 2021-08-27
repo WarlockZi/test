@@ -1,8 +1,6 @@
 import '../normalize.scss'
 import {validate} from "../common";
 
-// import '../components/test-pagination/test-pagination'
-
 import '../components/header/header'
 import '../components/footer/footer.scss'
 
@@ -14,20 +12,11 @@ import '../Admin/admin.scss'
 import '../components/popup.scss'
 import {$, tooltip} from '../common'
 import {_question} from "./model/question";
+import {sortable} from "../components/sortable";
 
-// Default SortableJS
-import Sortable from 'sortablejs';
 
-let el = $('.questions').el[0];
-let sortable = Sortable.create(el, {
-    animation: 150,
-    onEnd: function (/**Event*/evt) {
-        debugger
-        evt.oldIndex;  // element's old index within old parent
-        evt.newIndex;  // element's new index within new parent
+sortable.connect('.questions')
 
-    },
-});
 
 let questions = $('.questions>.question-edit').el
 if (!questions.length) {
@@ -50,4 +39,6 @@ $('.question__text').on('click', function (e) {
 $('.question__sort').on('change', validate.sort)
 
 
-
+let url = window.location.href;
+let last = url.split('/').pop();
+console.log(last);

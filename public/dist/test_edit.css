@@ -14,7 +14,8 @@ h1, h2 {
   color: #4e4e4e;
   font-size: 1.4rem;
   font-weight: 600;
-  letter-spacing: 1px; }
+  letter-spacing: 1px;
+  margin: 35px 0; }
 
 p {
   letter-spacing: 1px; }
@@ -375,14 +376,37 @@ footer {
   margin: 0 auto; }
 
 @charset "UTF-8";
+.test-edit-menu__params {
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  align-items: center;
+  background-color: #4f4f4f;
+  color: #ffffff;
+  padding: 7px;
+  width: 16px;
+  cursor: pointer; }
+
+.test-edit-menu__test-name {
+  background-color: #4e4e4e;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 7px 14px 7px 7px;
+  font-size: .7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  min-width: 40px;
+  max-width: 190px;
+  color: #ffffff; }
+
 .test-edit-menu {
   max-width: 170px; }
   .test-edit-menu .menu {
     width: 100%;
     flex: 1;
     z-index: 1;
-    align-self: flex-start;
-    overflow: hidden; }
+    align-self: flex-start; }
   .test-edit-menu li {
     display: flex;
     position: relative;
@@ -399,18 +423,6 @@ footer {
     z-index: 1; }
   .test-edit-menu a[href="#"] {
     background-color: #808080; }
-  .test-edit-menu a {
-    background-color: #4e4e4e;
-    display: flex;
-    align-items: center;
-    flex: 1;
-    padding: 7px 14px 7px 7px;
-    font-size: .7rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    min-width: 40px;
-    max-width: 190px;
-    color: #ffffff; }
 
 .add-test {
   color: #fff;
@@ -433,8 +445,8 @@ html {
 header {
   display: flex; }
 
-test-edit-wrapper {
-  margin: 10px; }
+.test-edit__container {
+  margin-left: clamp(10px, 20%, 50px); }
 
 .test-edit__title {
   display: flex;
@@ -691,18 +703,6 @@ test-edit-wrapper {
   border-radius: 3px 0 0 3px;
   cursor: pointer; }
 
-.test-params {
-  position: relative;
-  flex: 1;
-  max-width: 37px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #4f4f4f;
-  cursor: pointer; }
-  .test-params a {
-    color: #ffffff; }
-
 .test-name {
   flex: 1 0 auto;
   text-transform: uppercase;
@@ -778,7 +778,8 @@ test-edit-wrapper {
   #test_name:hover {
     outline: #b0ddff 2px solid; }
 
-.save-test {
+.test-update__save,
+.test-show__save {
   color: #fff;
   font-weight: 600;
   padding: 8px 15px;
@@ -792,7 +793,8 @@ test-edit-wrapper {
   justify-content: center;
   margin-top: 20px;
   width: 80px; }
-  .save-test:hover {
+  .test-update__save:hover,
+  .test-show__save:hover {
     box-shadow: none; }
 
 .test-edit__content {
