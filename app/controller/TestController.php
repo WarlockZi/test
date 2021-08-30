@@ -215,5 +215,8 @@ class TestController Extends AppController
 		unset($testData['correct_answers']);
 		$pagination = App::$app->test->pagination($testData, false);
 		$this->set(compact('testData', 'test', 'pagination', 'menuTestDo'));
+		View::setJs('test.js');
+		View::setCss('test.css');
+
 	}
 }

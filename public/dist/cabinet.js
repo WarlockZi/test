@@ -16,12 +16,12 @@ __webpack_require__.r(__webpack_exports__);
 
 let _test = {
   serverModel: {
-    id: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').el[0].innerText,
-    test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').el[0].innerText,
+    id: +window.location.href.split('/').pop(),
+    test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
     enable: 1,
-    isTest: +!(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#isPath').el[0].checked,
+    isTest: +!(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#isPath').checked(),
     sort: 0,
-    parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').el[0].options[(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').el[0].selectedIndex].value
+    parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()
   },
   id: id => {
     return id ?? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
@@ -32,14 +32,9 @@ let _test = {
   create: async () => {
     _test.createUpdate('/test/create');
   },
-  update: () => {
-    let url = window.location.href;
-    let id = +url.split('/').pop();
-
-    _test.createUpdate(`/test/update/${id}`);
-  },
-  createUpdate: async url => {
+  update: async () => {
     let model = _test.serverModel;
+    let url = `/adminsc/test/update/${model.id}`;
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)(url, model);
     res = await JSON.parse(res);
 
@@ -197,6 +192,8 @@ function MyJquery(elements) {
   this.elType = {}.toString.call(elements);
 
   this.on = function (ev, f) {
+    if (!this.el) return;
+
     if (this.elType === "[object HTMLDivElement]") {
       this.el.addEventListener(ev, f);
     }
@@ -210,8 +207,24 @@ function MyJquery(elements) {
     return this.el[0].getAttribute('value');
   };
 
+  this.selectedIndexValue = function () {
+    if (this.el.length) return this.el[0].options[this.el[0].options.selectedIndex].value;
+  };
+
+  this.options = function () {
+    if (this.el.length) return this.el[0].options;
+  };
+
   this.count = function () {
     return this.el.length;
+  };
+
+  this.text = function () {
+    if (this.el.length) return this.el[0].innerText;
+  };
+
+  this.checked = function () {
+    if (this.el.length) return this.el[0].checked;
   };
 
   this.getWithStyle = function (attr, val) {

@@ -3,12 +3,12 @@ import {$, post} from '../../common'
 export let _test = {
     serverModel:
         {
-            id: $('#test_name').el[0].innerText,
-            test_name: $('#test_name').el[0].innerText,
+            id: +window.location.href.split('/').pop(),
+            test_name: $('#test_name').text(),
             enable: 1,
-            isTest: +!$('#isPath').el[0].checked,
+            isTest: +!$('#isPath').checked(),
             sort: 0,
-            parent: $('select').el[0].options[$('select').el[0].selectedIndex].value,
+            parent: $('select').selectedIndexValue(),
         },
     id: (id) => {
         return id ?? $('.test-name').value()
@@ -20,14 +20,9 @@ export let _test = {
         _test.createUpdate('/test/create')
     },
 
-    update: () => {
-        let url = window.location.href
-        let id = +url.split('/').pop()
-        _test.createUpdate(`/test/update/${id}`)
-    },
-
-    createUpdate: async (url) => {
+    update: async () => {
         let model = _test.serverModel
+        let url = `/adminsc/test/update/${model.id}`
         let res = await post(url, model)
         res = await JSON.parse(res)
         if (res) {
