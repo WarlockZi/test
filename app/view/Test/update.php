@@ -1,6 +1,6 @@
 <section class="test-edit__container">
 
-	<h1>Добавление теста</h1>
+	<h1>Изменение теста</h1>
 	<div class="grid">
 		<div >Название теста</div>
 		<div id="test_name" class="field" contenteditable="true"><?=$test['test_name']?></div>

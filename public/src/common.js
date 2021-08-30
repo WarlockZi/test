@@ -116,6 +116,8 @@ function MyJquery(elements) {
     this.el = elements
     this.elType = {}.toString.call(elements)
     this.on = function (ev, f) {
+        if (!this.el)return
+
         if (this.elType === "[object HTMLDivElement]") {
             this.el.addEventListener(ev, f)
         }
@@ -126,9 +128,23 @@ function MyJquery(elements) {
     this.value = function () {
         return this.el[0].getAttribute('value')
     }
+
+    this.selectedIndexValue = function () {
+        if (this.el.length) return this.el[0].options.[this.el[0].options.selectedIndex].value
+    }
+    this.options = function () {
+        if (this.el.length) return this.el[0].options
+    }
     this.count = function () {
         return this.el.length
     }
+    this.text = function () {
+        if (this.el.length) return this.el[0].innerText
+    }
+    this.checked = function () {
+        if (this.el.length) return this.el[0].checked
+    }
+
     this.getWithStyle = function (attr, val) {
         let arr = []
         elements.forEach((s) => {

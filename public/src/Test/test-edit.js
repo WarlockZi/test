@@ -17,12 +17,13 @@ import {sortable} from "../components/sortable";
 
 sortable.connect('.questions')
 
-
+// при создании нового теста показать пустой вопрос
 let questions = $('.questions>.question-edit').el
 if (!questions.length) {
     _question.showFirst()
 }
 
+// раскрытие ответов
 $('.question__text').on('click', function (e) {
     let text = e.target
     let parent = text.parentNode.parentNode
@@ -37,8 +38,3 @@ $('.question__text').on('click', function (e) {
 
 ///// question sort input validate
 $('.question__sort').on('change', validate.sort)
-
-
-let url = window.location.href;
-let last = url.split('/').pop();
-console.log(last);
