@@ -15,6 +15,9 @@ import {_question} from "./model/question";
 import {sortable} from "../components/sortable";
 
 
+// $('.module.test').addClass('activ')
+
+
 sortable.connect('.questions')
 
 // при создании нового теста показать пустой вопрос

@@ -424,7 +424,7 @@ footer {
   .test-edit-menu a[href="#"] {
     background-color: #808080; }
 
-.add-test {
+.test-edit-menu__add-bttn {
   color: #fff;
   font-weight: 600;
   padding: 8px 15px;
@@ -436,8 +436,16 @@ footer {
   transition: box-shadow 100ms;
   display: flex;
   justify-content: center; }
-  .add-test:hover {
+  .test-edit-menu__add-bttn:hover {
     box-shadow: none; }
+
+.test-edit-menu__add-bttn-wrap {
+  display: none;
+  opacity: 0; }
+
+.test-edit-menu__add-bttn-test {
+  opacity: 0;
+  display: none; }
 
 html {
   overflow-y: scroll; }
