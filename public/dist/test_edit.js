@@ -4796,6 +4796,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // $('.module.test').addClass('activ')
 
 _components_sortable__WEBPACK_IMPORTED_MODULE_10__.sortable.connect('.questions'); // при создании нового теста показать пустой вопрос
 

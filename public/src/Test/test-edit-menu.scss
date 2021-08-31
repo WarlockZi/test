@@ -62,7 +62,7 @@
 
 }
 
-.add-test {
+.test-edit-menu__add-bttn {
   color: #fff;
   font-weight: 600;
   padding: 8px 15px;
@@ -79,6 +79,14 @@
     box-shadow: none;
   }
 }
+.test-edit-menu__add-bttn-wrap{
+  display: none;
+  opacity: 0;
 
+}
+.test-edit-menu__add-bttn-test{
+  opacity: 0;
+  display: none;
+}
 
 

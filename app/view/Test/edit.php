@@ -9,7 +9,13 @@
 		]);
 		?>
 
-		<a class='add-test' href="/adminsc/test/show">Добавить тест</a>
+		<div class='test-edit-menu__add-bttn' href="/adminsc/test/show">Добавить
+			<div class="test-edit-menu__add-bttn-wrap">
+
+				<div class="test-edit-menu__add-bttn-test">Добавить тест</div>
+				<div class="test-edit-menu__add-bttn-path">Добавить папку</div>
+			</div>
+		</div>
 	</div>
 
 	<? include ROOT . '/app/view/Test/edit_content.php' ?>
