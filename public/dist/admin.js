@@ -15,16 +15,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
 let _test = {
-  serverModel: {
-    id: +window.location.href.split('/').pop(),
-    test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
-    enable: 1,
-    isTest: +!(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#isPath').checked(),
-    sort: 0,
-    parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()
+  serverModel: () => {
+    return {
+      id: +window.location.href.split('/').pop(),
+      test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
+      enable: 1,
+      isTest: +!(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#isPath').checked(),
+      sort: 0,
+      parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()
+    };
   },
   id: id => {
     return id ?? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
+  },
+  path_create: async () => {
+    let test_path = _test.serverModel();
+
+    test_path.id = 0;
+    test_path.isTest = 0;
+    let url = `/test/create`;
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)(url, test_path);
+    res = await JSON.parse(res);
+
+    if (res) {
+      window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + test_path.test_name;
+    }
   },
   name: () => {
     return (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText;
@@ -33,13 +48,14 @@ let _test = {
     _test.createUpdate('/test/create');
   },
   update: async () => {
-    let model = _test.serverModel;
+    let model = _test.serverModel();
+
     let url = `/adminsc/test/update/${model.id}`;
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)(url, model);
     res = await JSON.parse(res);
 
     if (res) {
-      window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + model.test_name;
+      window.location.href = `/adminsc/test/edit/${model.id}`;
     }
   },
   delete: async function () {
@@ -64,33 +80,25 @@ __webpack_require__.r(__webpack_exports__);
 
 function navigate(str) {
   switch (true) {
-    case /\/adminsc\/test\/edit/.test(str):
-    case /\/test\/edit/.test(str):
+    case /\/adminsc\/test/.test(str):
       (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.module.test').addClass('activ');
       break;
 
-    case /\/adminsc/.test(str):
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.module.home').addClass('activ');
-      break;
-
-    case /\/adminsc\/settings/:
-    case /\/adminsc\/Sitemap/:
-    case /\/adminsc\/setings\/pics/:
-    case /\/adminsc\/settings\/prop/:
-    case /\/adminsc\/settings\/props/:
+    case /\/adminsc\/settings/.test(str):
+    case /\/adminsc\/Sitemap/.test(str):
       (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.module.settings').addClass('activ');
       break;
 
-    case /\/adminsc\/crm/:
-    case /\/adminsc\/crm\/users/:
+    case /\/adminsc\/crm/.test(str):
       (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.module.crm').addClass('activ');
       break;
 
-    case '/adminsc/catalog':
-    case '/adminsc/catalog/category':
-    case '/adminsc/catalog/product':
-    case '/adminsc/catalog/products':
+    case /\/adminsc\/catalog/.test(str):
       (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.module.catalog').addClass('activ');
+      break;
+
+    default:
+      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.module.home').addClass('activ');
       break;
   }
 }

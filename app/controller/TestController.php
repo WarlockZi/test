@@ -35,19 +35,32 @@ class TestController Extends AppController
 		View::setCss('test_edit.css');
 		View::setJs('test_edit.js');
 	}
+	public function actionPathshow()
+	{
+		$this->layout = 'admin';
+		$rootTests = App::$app->test->findAllWhere('isTest', 0);
+		$this->set(compact('rootTests'));
+		View::setCss('test_edit.css');
+		View::setJs('test_edit.js');
+	}
 
 	public function actionUpdate()
 	{
+		if ($this->ajax){
+			$id = App::$app->test->update($this->ajax);
+			exit(json_encode(['id'=>$id]));
+		}
 		$this->layout = 'admin';
 
 		$id = $this->route['id'];
 		$test = App::$app->test->findOne($id);
 
-		$rootTests = App::$app->test->findWhere('isTest', 0);
+		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 		$this->set(compact('rootTests', 'test'));
 
 		View::setCss('test_edit.css');
 		View::setJs('test_edit.js');
+
 	}
 
 	public function actionCreate()

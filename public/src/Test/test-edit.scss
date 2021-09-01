@@ -3,10 +3,13 @@
 html {
   overflow-y: scroll
 }
-
-header {
-  display: flex;
+section{
+  margin: 5px 20px;
 }
+
+//header {
+//  display: flex;
+//}
 
 .test-edit__container{
   margin-left: clamp(10px, 20%, 50px);
@@ -17,23 +20,23 @@ header {
   flex-wrap: wrap;
 }
 
-.wrap {
-  flex: 1 0 auto;
-}
+//.wrap {
+//  flex: 1 0 auto;
+//}
 
-.overlay {
-  background-color: #0000008f;
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1500;
-
-  .block {
-    width: 500px;
-    display: flex;
-    margin: 120px auto;
-  }
-}
+//.overlay {
+//  background-color: #0000008f;
+//  position: absolute;
+//  width: 100vw;
+//  height: 100vh;
+//  z-index: 1500;
+//
+//  .block {
+//    width: 500px;
+//    display: flex;
+//    margin: 120px auto;
+//  }
+//}
 
 .qestion__error {
   background: #ffffff;

@@ -1,6 +1,6 @@
 <section>
 	<h1>Добавление теста</h1>
-	<div class="grid">
+	<div class="test-path-add__table">
 		<div >Название теста</div>
 		<div id="test_name" class="field" contenteditable="true"></div>
 		<div>Группа</div>

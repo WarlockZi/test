@@ -150,6 +150,7 @@ textarea:focus,
       display: none; } }
   @media (max-width: 600px) {
     .logo_square {
+      height: 70%;
       display: flex; } }
 
 .logo_vitex {
@@ -166,7 +167,8 @@ textarea:focus,
   font-size: 14px; }
   @media (max-width: 800px) {
     .logo__description {
-      font-size: 12px; } }
+      font-size: 10px;
+      width: 90px; } }
 
 /***** Всплывающие телефоны */
 .phone {
@@ -327,23 +329,27 @@ textarea:focus,
   display: flex;
   position: relative;
   height: 45px;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
   margin: auto;
   max-width: 1310px;
   justify-content: space-between; }
+  @media (max-width: 600px) {
+    .header__info {
+      padding: 0; } }
 
 .admin-header__info {
   padding: 12px 0 10px 0;
   display: flex;
   position: relative;
   height: 45px;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
   margin: auto;
   justify-content: flex-start; }
+  @media (max-width: 600px) {
+    .admin-header__info {
+      padding: 0; } }
 
 header {
   display: flex;
@@ -400,6 +406,9 @@ footer {
   max-width: 190px;
   color: #ffffff; }
 
+.test-edit-menu__test-name.test {
+  background-color: #364e2f; }
+
 .test-edit-menu {
   max-width: 170px; }
   .test-edit-menu .menu {
@@ -425,10 +434,11 @@ footer {
     background-color: #808080; }
 
 .test-edit-menu__add-bttn {
+  position: relative;
   color: #fff;
   font-weight: 600;
   padding: 8px 15px;
-  margin-bottom: 20px;
+  margin: 15px 0;
   white-space: nowrap;
   cursor: pointer;
   background-color: #1bbc9b !important;
@@ -438,20 +448,38 @@ footer {
   justify-content: center; }
   .test-edit-menu__add-bttn:hover {
     box-shadow: none; }
+  .test-edit-menu__add-bttn:hover > .test-edit-menu__add-bttn-wrap {
+    opacity: 1;
+    top: 100%; }
 
 .test-edit-menu__add-bttn-wrap {
-  display: none;
-  opacity: 0; }
-
-.test-edit-menu__add-bttn-test {
+  display: flex;
+  position: absolute;
+  flex-flow: column;
+  top: 70%;
+  left: 0;
   opacity: 0;
-  display: none; }
+  transition: opacity 400ms, top 200ms;
+  width: 100%;
+  background-color: white;
+  color: black;
+  box-shadow: 0 2px 4px 0 #316358; }
+
+.test-edit-menu__add-bttn-test,
+.test-edit-menu__add-bttn-path {
+  display: flex;
+  padding: 5px;
+  font-size: .8rem;
+  color: #000; }
+  .test-edit-menu__add-bttn-test:hover,
+  .test-edit-menu__add-bttn-path:hover {
+    background-color: #e5e5e5; }
 
 html {
   overflow-y: scroll; }
 
-header {
-  display: flex; }
+section {
+  margin: 5px 20px; }
 
 .test-edit__container {
   margin-left: clamp(10px, 20%, 50px); }
@@ -459,20 +487,6 @@ header {
 .test-edit__title {
   display: flex;
   flex-wrap: wrap; }
-
-.wrap {
-  flex: 1 0 auto; }
-
-.overlay {
-  background-color: #0000008f;
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1500; }
-  .overlay .block {
-    width: 500px;
-    display: flex;
-    margin: 120px auto; }
 
 .qestion__error {
   background: #ffffff;
@@ -775,11 +789,10 @@ header {
     display: flex;
     flex-direction: column; }
 
-.grid {
+.test-path-add__table {
   display: grid;
-  grid: 1fr 16px/1fr 2fr;
-  grid-row-gap: 15px;
-  grid-column-gap: 10px; }
+  grid: 1fr 1fr/1fr 2fr;
+  grid-gap: 15px 10px; }
 
 #test_name {
   outline: #b0ddff 1px solid; }
@@ -787,7 +800,8 @@ header {
     outline: #b0ddff 2px solid; }
 
 .test-update__save,
-.test-show__save {
+.test-show__save,
+.test-path__create {
   color: #fff;
   font-weight: 600;
   padding: 8px 15px;
@@ -802,7 +816,8 @@ header {
   margin-top: 20px;
   width: 80px; }
   .test-update__save:hover,
-  .test-show__save:hover {
+  .test-show__save:hover,
+  .test-path__create:hover {
     box-shadow: none; }
 
 .test-edit__content {
