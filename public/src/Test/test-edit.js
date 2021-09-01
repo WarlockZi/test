@@ -1,5 +1,4 @@
 import '../normalize.scss'
-import {validate} from "../common";
 
 import '../components/header/header'
 import '../components/footer/footer.scss'
@@ -10,13 +9,21 @@ import '../Test/test_edit_theme_2'
 import '../Admin/admin.scss'
 
 import '../components/popup.scss'
-import {$, tooltip} from '../common'
+import {$, tooltip, validate} from '../common'
+
 import {_question} from "./model/question";
 import {sortable} from "../components/sortable";
+// import "../Admin/admin_main_menu";
 
+function navigate(str) {
+    switch (true) {
+        case /\/adminsc\/test/.test(str):
+            $('.module.test').addClass('activ')
+            break;
+    }
+}
 
-// $('.module.test').addClass('activ')
-
+navigate(window.location.pathname)
 
 sortable.connect('.questions')
 

@@ -499,6 +499,7 @@ textarea:focus,
       display: none; } }
   @media (max-width: 600px) {
     .logo_square {
+      height: 70%;
       display: flex; } }
 
 .logo_vitex {
@@ -515,7 +516,8 @@ textarea:focus,
   font-size: 14px; }
   @media (max-width: 800px) {
     .logo__description {
-      font-size: 12px; } }
+      font-size: 10px;
+      width: 90px; } }
 
 /***** Всплывающие телефоны */
 .phone {
@@ -676,23 +678,27 @@ textarea:focus,
   display: flex;
   position: relative;
   height: 45px;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
   margin: auto;
   max-width: 1310px;
   justify-content: space-between; }
+  @media (max-width: 600px) {
+    .header__info {
+      padding: 0; } }
 
 .admin-header__info {
   padding: 12px 0 10px 0;
   display: flex;
   position: relative;
   height: 45px;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
   margin: auto;
   justify-content: flex-start; }
+  @media (max-width: 600px) {
+    .admin-header__info {
+      padding: 0; } }
 
 header {
   display: flex;

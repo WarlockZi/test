@@ -63,7 +63,7 @@ class Router
 				}
 			}
 		}
-		return FALSE;
+		return false;
 	}
 
 	public static function dispatch($url)

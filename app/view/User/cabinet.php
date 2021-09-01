@@ -12,7 +12,7 @@
 	<? endif; ?>
 
 	<? if (in_array('1', $user['rights'])||SU): ?>
-		<a class="list" href="/test/edit/1">Редактировать тесты</a></li>
+		<a class="list" href="/adminsc/test/edit/1">Редактировать тесты</a></li>
 	<? endif; ?>
 
 	<? if (in_array('2', $user['rights'])): ?>

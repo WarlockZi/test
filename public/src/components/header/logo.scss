@@ -24,6 +24,7 @@
     display: none;
   }
   @include _600 {
+    height: 70%;
     display: flex;
   }
 
@@ -45,6 +46,7 @@
   color: #343133;
   font-size: 14px;
   @include _800 {
-    font-size: 12px;
+    font-size: 10px;
+    width: 90px;
   }
 }

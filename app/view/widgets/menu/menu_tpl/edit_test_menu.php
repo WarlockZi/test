@@ -7,10 +7,12 @@
 
 </a>
 
-<a class="test-edit-menu__test-name" href=
+<a class="test-edit-menu__test-name <?=$cat['isTest']?'test':''?>"
+ href=
    <?= isset($cat['childs']) ? "#" : "/adminsc/test/edit/" . $cat['id'] ?>
 ><?= $cat['test_name'] ?>
 </a>
+
 <? if (isset($cat['childs'])): ?>
     <ul class="vert-menu__drop">
         <?= $this->getMenuHtml($cat['childs']); ?>

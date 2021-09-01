@@ -2,29 +2,23 @@ import {$} from '../common'
 
 function navigate(str) {
     switch (true) {
-        case /\/adminsc\/test\/edit/.test(str):
-        case /\/test\/edit/.test(str):
+        case /\/adminsc\/test/.test(str):
             $('.module.test').addClass('activ')
             break;
-        case /\/adminsc/.test(str):
-            $('.module.home').addClass('activ')
-            break;
-        case /\/adminsc\/settings/:
-        case /\/adminsc\/Sitemap/:
-        case /\/adminsc\/setings\/pics/:
-        case /\/adminsc\/settings\/prop/:
-        case /\/adminsc\/settings\/props/:
+
+        case /\/adminsc\/settings/.test(str):
+        case /\/adminsc\/Sitemap/.test(str):
+
             $('.module.settings').addClass('activ')
             break;
-        case /\/adminsc\/crm/:
-        case /\/adminsc\/crm\/users/:
+        case /\/adminsc\/crm/.test(str):
             $('.module.crm').addClass('activ')
             break;
-        case '/adminsc/catalog':
-        case '/adminsc/catalog/category':
-        case '/adminsc/catalog/product':
-        case '/adminsc/catalog/products':
+        case /\/adminsc\/catalog/.test(str):
             $('.module.catalog').addClass('activ')
+            break;
+        default:
+            $('.module.home').addClass('activ')
             break;
     }
 }

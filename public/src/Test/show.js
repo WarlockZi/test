@@ -6,3 +6,4 @@ import {_test} from './model/test'
 // $(show).on('click', _test.create)
 // }
 $(".test-update__save").on('click', _test.update)
+$(".test-path__create").on('click', _test.path_create)

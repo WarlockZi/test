@@ -53,6 +53,7 @@ abstract class Model
 	{
 		$id = $values['id'];
 		unset($values['id']);
+		unset($values['token']);
 		$par = '';
 		foreach ($values as $key => $value) {
 			if ($value) {
@@ -190,6 +191,12 @@ here;
 	function findWhere($field, $value)
 	{
 		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
+		return $this->pdo->query($sql, [$value]);
+	}
+	public
+	function findAllWhere($field, $value)
+	{
+		$sql = "SELECT * FROM {$this->table} WHERE $field = ? ";
 		return $this->pdo->query($sql, [$value]);
 	}
 

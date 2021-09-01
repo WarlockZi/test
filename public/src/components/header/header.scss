@@ -7,10 +7,15 @@
   display: flex;
   position: relative;
   height: 45px;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
   margin: auto;
+  @include _600{
+    padding: 0;
+  }
+  @include _600{
+    //padding: 12px 0 10px 0;
+  }
 }
 
 .header__info {

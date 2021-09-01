@@ -13,8 +13,8 @@
 		<a href="/user/edit">Изменить свой профиль</a>
 		<a href="/user/cabinet">Личный кабинет</a>
 		<?= (in_array('1', $user['rights'])||SU) ? // редактировать
-			'<a href="/test/edit/1">Редактировать тесты</a>
-			<a href="/freetest/edit/41">Редактировать свободный тест</a>' : ''
+			'<a href="/adminsc/test/edit/1">Редактировать тесты</a>
+			<a href="/adminsc/freetest/edit/41">Редактировать свободный тест</a>' : ''
 		?>
 
 		<?= in_array('2', $user['rights']) ? // проходить

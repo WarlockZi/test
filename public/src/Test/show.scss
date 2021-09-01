@@ -1,9 +1,8 @@
 
-.grid {
+.test-path-add__table {
   display: grid;
-  grid: 1fr 16px/1fr 2fr;
-  grid-row-gap: 15px;
-  grid-column-gap: 10px;
+  grid: 1fr 1fr/1fr 2fr;
+  grid-gap: 15px 10px;
 }
 
 #test_name{
@@ -13,7 +12,8 @@
   }
 }
 .test-update__save,
-.test-show__save{
+.test-show__save,
+.test-path__create{
   color: #fff;
   font-weight: 600;
   padding: 8px 15px;

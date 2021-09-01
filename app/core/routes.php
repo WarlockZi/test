@@ -8,8 +8,8 @@ Router::add('^.?search.?', ['controller' => 'search', 'action' => 'index']); // 
 
 Router::add('^test/(?P<alias>[0-9]+)$', ['controller' => 'Test', 'action' => 'do']);
 Router::add('^test/do$', ['controller' => 'Test', 'action' => 'do']);
-Router::add('^test/edit/(?P<id>[0-9]+)$', ['controller' => 'Test', 'action' => 'edit']);
-Router::add('^test/edit$', ['controller' => 'Test', 'action' => 'edit']);
+//Router::add('^test/edit/(?P<id>[0-9]+)$', ['controller' => 'Test', 'action' => 'edit']);
+//Router::add('^test/edit$', ['controller' => 'Test', 'action' => 'edit']);
 Router::add('^test\/results\/(?P<cache>[a-zA-Z0-9]+)$', ['controller' => 'Test', 'action' => 'Results']);
 
 
@@ -32,6 +32,7 @@ Router::add('^adminsc\/settings\/instructions\/module\/(?P<id>[0-9]+)$', ['contr
 Router::add('^adminsc\/test\/update\/(?P<id>[0-9]+)$', ['controller' => 'Test', 'action' => 'update']);
 Router::add('^adminsc\/test\/edit\/(?P<id>[0-9]+)$', ['controller' => 'Test', 'action' => 'edit']);
 Router::add('^adminsc\/test\/show$', ['controller' => 'Test', 'action' => 'show']);
+Router::add('^adminsc\/test\/pathshow$', ['controller' => 'Test', 'action' => 'pathshow']);
 
 Router::add('^adminsc\/settings$', ['controller' => 'Adm_settings']);
 Router::add('^adminsc$', ['controller' => 'Adminsc', 'action' => 'index']);
