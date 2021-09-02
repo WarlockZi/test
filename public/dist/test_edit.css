@@ -800,7 +800,7 @@ section {
     outline: #b0ddff 2px solid; }
 
 .test-update__save,
-.test-show__save,
+.test-show__create,
 .test-path__create {
   color: #fff;
   font-weight: 600;
@@ -816,7 +816,7 @@ section {
   margin-top: 20px;
   width: 80px; }
   .test-update__save:hover,
-  .test-show__save:hover,
+  .test-show__create:hover,
   .test-path__create:hover {
     box-shadow: none; }
 
@@ -1002,7 +1002,6 @@ section {
 .module {
   width: 80px;
   height: 80px;
-  margin-bottom: 5px;
   text-align: center;
   position: relative;
   display: flex;
@@ -1629,14 +1628,6 @@ input {
   font-size: 8px;
   align-items: center;
   background-color: #8a92a0; }
-  .adm-menu a {
-    padding: 0; }
-
-.blue {
-  border-bottom: 1px #123aff solid;
-  padding: 3px 6px;
-  font-weight: 600;
-  /*text-align: center;*/ }
 
 .add-prop {
   /*color: #5e5e5e;*/

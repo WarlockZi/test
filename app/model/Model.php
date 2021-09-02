@@ -31,6 +31,8 @@ abstract class Model
 
 	public function create($values=[])
 	{
+	    if (isset($values['id']))unset($values['id']);
+	    if (isset($values['token']))unset($values['token']);
 		$values = $values?$values:$this->fillable;
 		if (isset($values['id'])) unset($values['id']);
 		$fields = implode(',', array_keys($values));

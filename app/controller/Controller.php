@@ -23,8 +23,8 @@ abstract class Controller
 	protected function createToken()
 	{
 		$salt = "popiyonovacheesa";
-		$token = $_SESSION['token'] = md5($salt . microtime(true));
-		return $token;
+        return $_SESSION['token'] = md5($salt . microtime(true));
+
 	}
 
 	public function getView()
@@ -63,9 +63,8 @@ abstract class Controller
 				$this->ajax = $data;
 				return $data;
 			}
-			return false;
 		}
-
+			return false;
 	}
 
 }
