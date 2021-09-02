@@ -481,92 +481,24 @@ html {
 section {
   margin: 5px 20px; }
 
+.test-name {
+  flex: 1 0 auto;
+  text-transform: uppercase;
+  font-weight: 800;
+  margin: 0px 0 20px 15px;
+  padding: 5px 0; }
+
+.list {
+  display: flex;
+  flex-flow: column;
+  margin: 10px; }
+
 .test-edit__container {
   margin-left: clamp(10px, 20%, 50px); }
 
 .test-edit__title {
   display: flex;
   flex-wrap: wrap; }
-
-.qestion__error {
-  background: #ffffff;
-  color: red;
-  padding: 6px;
-  display: none;
-  height: 16px;
-  border: 1px red solid;
-  opacity: 0;
-  transition: opacity 1000ms; }
-
-.e-block-q label {
-  font-size: 13px; }
-
-.question__buttons {
-  display: flex;
-  justify-content: space-evenly;
-  position: sticky;
-  bottom: 10px; }
-
-.content {
-  margin: 0 5px 0 20px;
-  flex: 1; }
-
-.check_right_answer {
-  margin: 10px 0;
-  font-size: .7rem; }
-  .check_right_answer > .checkbox:checked + label:after {
-    width: 16px;
-    height: 16px;
-    left: 6px; }
-  .check_right_answer .checkbox:checked + label:before {
-    text-align: center;
-    background: #1bbc9b;
-    overflow: hidden;
-    transition: background-color 0.5s ease-out; }
-  .check_right_answer .checkbox:not(checked) + label {
-    position: relative;
-    /* будем позиционировать псевдочекбокс относительно label */
-    padding: 0 0 0 60px;
-    /* оставляем слева от label место под псевдочекбокс */
-    font-weight: normal; }
-  .check_right_answer > .checkbox:not(checked) + label:before {
-    top: -1px;
-    left: 4px;
-    width: 40px;
-    height: 20px;
-    content: '';
-    position: absolute;
-    border-radius: 13px;
-    background: #CDD1DA;
-    box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.2); }
-  .check_right_answer > .checkbox:not(checked) + label:after {
-    top: 1px;
-    width: 16px;
-    height: 16px;
-    left: 28px;
-    content: '';
-    position: absolute;
-    border-radius: 10px;
-    transition: all .2s;
-    box-shadow: 0 2px 5px black;
-    background-color: #fff; }
-  .check_right_answer .checkbox:focus + label:before {
-    box-shadow: 0 0 0 3px rgba(255, 255, 0, 0.5); }
-  .check_right_answer input {
-    display: none; }
-
-.right-sidebar {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center; }
-
-.left-sidebar {
-  display: flex;
-  flex-flow: wrap column;
-  position: relative;
-  margin-right: 15px;
-  flex: 1; }
 
 .navi {
   box-shadow: inset 0 5px rgba(0, 0, 0, 0.5);
@@ -592,171 +524,6 @@ section {
 
 .navi__item:active {
   background-color: #5e5e5e; }
-
-/*****  Редактировать тесты   ******/
-.e-block-a {
-  border: 1px #eee solid;
-  padding: 5px;
-  margin: 5px 0 10px 0;
-  position: relative;
-  min-height: 100px;
-  display: flex;
-  transition: background-color 1s;
-  background-color: #ffffff; }
-  .e-block-a:hover {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.58); }
-  .e-block-a:hover .navi {
-    display: inline-block; }
-
-.e-block-q {
-  padding: 5px 5px 10px 5px;
-  overflow: visible;
-  position: relative;
-  background-color: #1bbc9b45;
-  display: flex; }
-  .e-block-q:hover {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.58); }
-  .e-block-q:hover .navi {
-    display: inline-block; }
-
-.block {
-  flex-direction: column;
-  width: 100%;
-  box-sizing: border-box;
-  border: 3px solid #ccc;
-  margin: 10px 0;
-  background: #fafafa;
-  position: relative;
-  display: none;
-  /*Картинка*/ }
-  .block textarea {
-    font-size: .9rem;
-    padding: 10px;
-    border-radius: 4px;
-    border-color: #d8d8d8;
-    resize: vertical;
-    box-sizing: border-box;
-    overflow: hidden;
-    font-family: inherit;
-    width: 100%;
-    flex: 1 0 auto; }
-  .block .answers_show {
-    position: absolute;
-    top: 146px;
-    left: 25%;
-    cursor: pointer; }
-    .block .answers_show:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -25px;
-      display: block;
-      width: 10px;
-      height: 10px;
-      border-bottom: #1bbc9b solid 3px;
-      border-left: #1bbc9b solid 3px;
-      transform: rotate(-45deg); }
-  .block [data-toggle] {
-    display: none; }
-  .block [data-toggle]:checked + .answers {
-    transform: translateY(100%); }
-  .block .answers {
-    position: relative;
-    will-change: transform;
-    transition: all .3s;
-    transform: translateY(0);
-    transform-origin: 50% 0; }
-  .block #imq, .block #ima {
-    width: 98%;
-    vertical-align: top;
-    display: inline-block;
-    max-height: 450px; }
-  .block .pic-del {
-    text-align: center;
-    overflow: hidden;
-    transition: background-color 0.5s ease-out;
-    width: 20%;
-    z-index: 1;
-    position: absolute;
-    right: 1px;
-    bottom: 1px;
-    display: none; }
-
-.field__wrapper {
-  position: relative;
-  margin: 5px 0;
-  text-align: center;
-  display: flex;
-  justify-content: flex-start; }
-
-.field__file {
-  opacity: 0;
-  visibility: hidden;
-  position: absolute; }
-
-.field__file-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center; }
-
-.field__file-fake {
-  height: 20px;
-  width: calc(100% - 72px);
-  display: flex;
-  align-items: center;
-  border: 1px solid #c7c7c7;
-  border-radius: 0px 3px 3px 0px;
-  border-left: none;
-  font-size: .5rem;
-  background-color: #fff;
-  padding: 0 0 0 5px; }
-
-.field__file-button {
-  width: 65px;
-  height: 22px;
-  background: #1bbc9b;
-  color: #fff;
-  font-size: .5rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 3px 0 0 3px;
-  cursor: pointer; }
-
-.test-name {
-  flex: 1 0 auto;
-  text-transform: uppercase;
-  font-weight: 800;
-  margin: 0px 0 20px 15px;
-  padding: 5px 0; }
-
-.test_delete {
-  position: relative;
-  width: 35px;
-  height: 35px;
-  margin: 7px 0 10px 0;
-  color: red;
-  align-items: center;
-  justify-content: center;
-  border-radius: 15px; }
-  .test_delete svg {
-    height: 100%;
-    width: 100%; }
-  .test_delete:hover {
-    cursor: pointer;
-    box-shadow: 0 2px 20px 3px #ff2929; }
-
-.tip {
-  position: absolute;
-  display: flex;
-  background: #ff0000;
-  z-index: 2;
-  color: white;
-  padding: 11px;
-  font-weight: 800;
-  border-radius: 3px; }
 
 /*Всплывающие меню*/
 .vert-menu__drop {

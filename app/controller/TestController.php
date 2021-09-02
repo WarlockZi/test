@@ -35,6 +35,7 @@ class TestController Extends AppController
 		View::setCss('test_edit.css');
 		View::setJs('test_edit.js');
 	}
+
 	public function actionPathshow()
 	{
 		$this->layout = 'admin';
@@ -46,9 +47,9 @@ class TestController Extends AppController
 
 	public function actionUpdate()
 	{
-		if ($this->ajax){
+		if ($this->ajax) {
 			$id = App::$app->test->update($this->ajax);
-			exit(json_encode(['id'=>$id]));
+			exit(json_encode(['id' => $id]));
 		}
 		$this->layout = 'admin';
 
@@ -82,33 +83,21 @@ class TestController Extends AppController
 
 	public function actionEdit()
 	{
-		if ($this->ajax) {
-			exit();
-		}
 		$this->layout = 'admin';
 
 		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
-		if ($testId) {
-			$test = App::$app->test->findOne($testId);
-			$testDataToEdit = App::$app->test->getTestData($testId);
+		$test = App::$app->test->findOne($testId);
 
-			unset ($testDataToEdit['correct_answers']);
-			$pagination = App::$app->test->pagination($testDataToEdit, true);
-		} else {
-			$testDataToEdit = [];
-			$test['id'] = '';
-			$test['test_name'] = '';
-			$pagination = '';
-			$error = '<H1>Теста с таким номером нет.</H1>';
-		}
-		$this->set(compact('test', 'testDataToEdit', 'pagination'));
+		$testDataToEdit = App::$app->test->getTestData($testId);
+		unset ($testDataToEdit['correct_answers']);
+
+		$this->set(compact('test', 'testDataToEdit'));
 		View::setJs('test_edit.js');
 		View::setCss('test_edit.css');
 	}
 
 	public function actionResults()
 	{
-		$this->auth();
 
 		if (array_key_exists('cache', $this->route)) {
 			if ($this->route['cache']) {
@@ -121,7 +110,6 @@ class TestController Extends AppController
 
 	public function actionDelete()
 	{
-		$this->auth();
 		if (App::$app->test->delete($this->ajax['id'])) {
 			exit(json_encode(['msg' => 'ok']));
 		}
