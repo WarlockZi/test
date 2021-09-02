@@ -7,17 +7,16 @@
 
 		<select>
 			<option value='0'></option>
-			<? foreach ($rootTests as $test): ?>
-				<option value=<?= $test['id'] ?>><?= $test['test_name'] ?></option>
+			<? foreach ($rootTests as $rootTest): ?>
+				<option value=<?= $rootTest['id'] ?>><?= $rootTest['test_name'] ?></option>
 			<? endforeach; ?>
 		</select>
-		<label for="isPath">Сделать папкой</label>
-		<input id="isPath" type = "checkbox">
+
 		<label for="enable">Показыать пользователям</label>
 		<input id="enable" type = "checkbox">
 
 	</div>
-		<div class="test-show__save">Сохранить</div>
+		<div class="test-show__create">Сохранить</div>
 
 
 

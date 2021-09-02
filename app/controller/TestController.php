@@ -30,7 +30,7 @@ class TestController Extends AppController
 	public function actionShow()
 	{
 		$this->layout = 'admin';
-		$rootTests = App::$app->test->findWhere('isTest', 0);
+		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 		$this->set(compact('rootTests'));
 		View::setCss('test_edit.css');
 		View::setJs('test_edit.js');
@@ -66,7 +66,6 @@ class TestController Extends AppController
 	public function actionCreate()
 	{
 		if ($this->ajax) {
-			unset($this->ajax['token']);
 			if (!$this->ajax['isTest']) {
 				$this->ajax['parent'] = 0;
 			}

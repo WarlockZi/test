@@ -45,7 +45,17 @@ let _test = {
     return (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText;
   },
   create: async () => {
-    _test.createUpdate('/test/create');
+    let test_path = _test.serverModel();
+
+    test_path.id = 0;
+    test_path.isTest = 1;
+    let url = `/test/create`;
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)(url, test_path);
+    res = await JSON.parse(res);
+
+    if (res) {
+      window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + test_path.test_name;
+    }
   },
   update: async () => {
     let model = _test.serverModel();
