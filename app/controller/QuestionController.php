@@ -33,7 +33,7 @@ class QuestionController Extends AppController
 		$block[$id]['correct_answer'] = '';
 
 		ob_start();
-		require ROOT . '/app/view/Test/editBlockQuestion1.php';
+		require ROOT . '/app/view/Test/editBlockQuestion.php';
 		$block = ob_get_clean();
 		$testid = $this->req['testid'];
 		$data = compact("testid", "block");
