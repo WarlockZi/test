@@ -31,7 +31,8 @@ class TestController Extends AppController
 	{
 		$this->layout = 'admin';
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
-		$this->set(compact('rootTests'));
+		$test['isTest'] = 0;
+		$this->set(compact('rootTests', 'test'));
 		View::setCss('test_edit.css');
 		View::setJs('test_edit.js');
 	}
@@ -39,8 +40,10 @@ class TestController Extends AppController
 	public function actionPathshow()
 	{
 		$this->layout = 'admin';
+		$this->view = 'show';
+		$test['isTest'] = 0;
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
-		$this->set(compact('rootTests'));
+		$this->set(compact('rootTests', 'test'));
 		View::setCss('test_edit.css');
 		View::setJs('test_edit.js');
 	}

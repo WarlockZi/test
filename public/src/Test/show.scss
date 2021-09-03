@@ -11,9 +11,12 @@
     outline: #b0ddff 2px solid;
   }
 }
-.test-update__save,
+.test__save,
 .test-show__create,
-.test-path__create{
+.test-path__create,
+.test__delete,
+.test-update__delete,
+{
   color: #fff;
   font-weight: 600;
   padding: 8px 15px;

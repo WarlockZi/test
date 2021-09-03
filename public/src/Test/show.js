@@ -5,6 +5,7 @@ import {_test} from './model/test'
 // if (show){
 // $(show).on('click', _test.create)
 // }
-$(".test-update__save").on('click', _test.update)
+$(".test__save").on('click', _test.update)
+$(".test__delete").on('click', _test.delete)
 $(".test-path__create").on('click', _test.path_create)
-$(".test-show__create").on('click', _test.path_create)
+$(".test-show__create").on('click', _test.create)

@@ -26,8 +26,10 @@
 }
 
 .test-edit-menu__test-name.test{
-  background-color: #364e2f;
-
+  background-color: #3d403f;
+}
+.test-edit-menu__test-name.path{
+  background-color: rgba(88, 96, 107, 0.25);
 }
 
 .test-edit-menu {
@@ -59,9 +61,11 @@
     top: 0;
     z-index: 1;
   }
+  .path{
+    background-color: #808080;
+  }
 
   a[href="#"] {
-    background-color: #808080;
   }
 
 
