@@ -407,7 +407,10 @@ footer {
   color: #ffffff; }
 
 .test-edit-menu__test-name.test {
-  background-color: #364e2f; }
+  background-color: #3d403f; }
+
+.test-edit-menu__test-name.path {
+  background-color: rgba(88, 96, 107, 0.25); }
 
 .test-edit-menu {
   max-width: 170px; }
@@ -430,7 +433,7 @@ footer {
     opacity: 1;
     top: 0;
     z-index: 1; }
-  .test-edit-menu a[href="#"] {
+  .test-edit-menu .path {
     background-color: #808080; }
 
 .test-edit-menu__add-bttn {
@@ -566,9 +569,11 @@ section {
   #test_name:hover {
     outline: #b0ddff 2px solid; }
 
-.test-update__save,
+.test__save,
 .test-show__create,
-.test-path__create {
+.test-path__create,
+.test__delete,
+.test-update__delete {
   color: #fff;
   font-weight: 600;
   padding: 8px 15px;
@@ -582,9 +587,11 @@ section {
   justify-content: center;
   margin-top: 20px;
   width: 80px; }
-  .test-update__save:hover,
+  .test__save:hover,
   .test-show__create:hover,
-  .test-path__create:hover {
+  .test-path__create:hover,
+  .test__delete:hover,
+  .test-update__delete:hover {
     box-shadow: none; }
 
 .test-edit__content {

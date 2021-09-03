@@ -298,7 +298,7 @@ let _test = {
     res = await JSON.parse(res);
 
     if (res) {
-      window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + test_path.test_name;
+      window.location.href = `/adminsc/test/edit/${res.id - 1}`;
     }
   },
   name: () => {
@@ -314,7 +314,7 @@ let _test = {
     res = await JSON.parse(res);
 
     if (res) {
-      window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + test_path.test_name;
+      window.location.href = `/adminsc/test/edit/${res.id - 1}`;
     }
   },
   update: async () => {
@@ -329,6 +329,8 @@ let _test = {
     }
   },
   delete: async function () {
+    let serverModel = _test.serverModel();
+
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/delete', {
       id: this.id
     });

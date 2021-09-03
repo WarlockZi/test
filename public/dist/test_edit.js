@@ -134,8 +134,12 @@ let _question = {
       }
     };
   },
-  qestions: document.querySelectorAll('.questions>.question-edit'),
-  questionsCount: document.querySelectorAll('.questions>.question-edit').length,
+  qestions: () => {
+    return (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions>.question-edit').el;
+  },
+  questionsCount: () => {
+    return (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions>.question-edit').el.length;
+  },
   lastQuestion: () => {
     let questions = _question.qestions;
     return questions[questions.length - 1];
@@ -375,7 +379,7 @@ let _test = {
     res = await JSON.parse(res);
 
     if (res) {
-      window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + test_path.test_name;
+      window.location.href = `/adminsc/test/edit/${res.id - 1}`;
     }
   },
   name: () => {
@@ -391,7 +395,7 @@ let _test = {
     res = await JSON.parse(res);
 
     if (res) {
-      window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + test_path.test_name;
+      window.location.href = `/adminsc/test/edit/${res.id - 1}`;
     }
   },
   update: async () => {
@@ -406,6 +410,8 @@ let _test = {
     }
   },
   delete: async function () {
+    let serverModel = _test.serverModel();
+
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/delete', {
       id: this.id
     });
@@ -432,9 +438,10 @@ __webpack_require__.r(__webpack_exports__);
 // $(show).on('click', _test.create)
 // }
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".test-update__save").on('click', _model_test__WEBPACK_IMPORTED_MODULE_2__._test.update);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".test__save").on('click', _model_test__WEBPACK_IMPORTED_MODULE_2__._test.update);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".test__delete").on('click', _model_test__WEBPACK_IMPORTED_MODULE_2__._test.delete);
 (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".test-path__create").on('click', _model_test__WEBPACK_IMPORTED_MODULE_2__._test.path_create);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".test-show__create").on('click', _model_test__WEBPACK_IMPORTED_MODULE_2__._test.path_create);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".test-show__create").on('click', _model_test__WEBPACK_IMPORTED_MODULE_2__._test.create);
 
 /***/ }),
 

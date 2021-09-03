@@ -23,7 +23,7 @@ export let _test = {
         let res = await post(url, test_path)
         res = await JSON.parse(res)
         if (res) {
-            window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + test_path.test_name
+            window.location.href = `/adminsc/test/edit/${res.id-1}`
         }
     },
 
@@ -39,7 +39,7 @@ export let _test = {
         let res = await post(url, test_path)
         res = await JSON.parse(res)
         if (res) {
-            window.location.href = `/adminsc/test/edit/${res.id}` + '?id=' + res.id + '&name=' + test_path.test_name
+            window.location.href = `/adminsc/test/edit/${res.id-1}`
         }
     },
 
@@ -54,6 +54,7 @@ export let _test = {
     },
 
     delete: async function () {
+        let serverModel = _test.serverModel()
         let res = await post('/test/delete', {id: this.id})
         return await JSON.parse(res)
     },
