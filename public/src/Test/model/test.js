@@ -1,6 +1,7 @@
 import {$, post} from '../../common'
 
 export let _test = {
+
     serverModel: () => {
         return {
             id: +window.location.href.split('/').pop(),
@@ -55,8 +56,11 @@ export let _test = {
 
     delete: async function () {
         let serverModel = _test.serverModel()
-        let res = await post('/test/delete', {id: this.id})
-        return await JSON.parse(res)
+        let res = await post('/test/delete', {id: serverModel.id})
+        res = await JSON.parse(res)
+        if (res){
+            window.location = '/adminsc/test/edit/400'
+        }
     },
 
 }

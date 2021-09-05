@@ -332,9 +332,13 @@ let _test = {
     let serverModel = _test.serverModel();
 
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/delete', {
-      id: this.id
+      id: serverModel.id
     });
-    return await JSON.parse(res);
+    res = await JSON.parse(res);
+
+    if (res) {
+      window.location = '/adminsc/test/edit/400';
+    }
   }
 };
 

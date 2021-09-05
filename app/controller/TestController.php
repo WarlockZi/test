@@ -58,6 +58,7 @@ class TestController Extends AppController
 
 		$id = $this->route['id'];
 		$test = App::$app->test->findOne($id);
+		$test['children'] = App::$app->test->getChildren($id);
 
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 		$this->set(compact('rootTests', 'test'));
@@ -90,6 +91,9 @@ class TestController Extends AppController
 
 		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
 		$test = App::$app->test->findOne($testId);
+		if (!$test['isTest']){
+
+		}
 
 		$testDataToEdit = App::$app->test->getTestData($testId);
 		unset ($testDataToEdit['correct_answers']);

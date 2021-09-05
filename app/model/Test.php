@@ -11,10 +11,12 @@ class Test extends Model
 {
 
 	public $table = 'test';
+	public $fillable = [
+		'id'=>0,
+	];
 
 	public function testParams()
 	{
-
 		if (isset($_POST['testId']) && $_POST['testId']) {// Значит открыли существующий тест
 			$tId = $_POST['testId'];
 			$sql = 'SELECT * FROM test  WHERE id = ?';
@@ -52,265 +54,6 @@ class Test extends Model
 		}
 
 		include APP . '/view/Test/testParams.php';
-	}
-
-	public function aqPicDel()
-	{
-
-		if (isset($_POST['aid']) && $_POST['aid']) {
-			$param = [$_POST['aid']];
-			$sql = 'UPDATE answer SET pica = NULL WHERE id = ?';
-			$this->insertBySql($sql, $param);
-		}
-		if ($_POST['qid'] && isset($_POST['qid'])) {
-
-			$param = [$_POST['qid']];
-			$sql = 'UPDATE question SET picq = "" WHERE id = ?';
-			$this->insertBySql($sql, $param);
-		}
-	}
-
-	public function QPic()
-	{
-
-		$fid = $_POST['fid'];
-		$pref = $_POST['pref'];
-		$nameRu = basename($_FILES['file']['name']); // защита файловой системы - получает имя переданного файла
-
-		$sql = 'SELECT nameHash FROM pic WHERE nameRu = ?';
-		$params = [$nameRu];
-		$pic = $this->findBySql($sql, $params);
-
-		// не нашли такой картинки в таблице pic по русскому имени
-		if (empty($pic)) {
-
-			$nameHash = $fid . $pref . round(microtime(true)) . substr($nameRu, -4); // напр. 4526q1541554561.jpg
-			$to = $_SERVER['DOCUMENT_ROOT'] . "/" . PROJ . "/pic/" . $nameHash;   //"/" . $nameHash;
-			// Перемещаем из tmp папки (прописана в php.config)
-			move_uploaded_file($_FILES['file']['tmp_name'], $to);
-
-			if ($pref == "q") {// это картинка для вопроса, сохраним ее
-				$sql = 'UPDATE question SET  picq = ? WHERE id = ?';
-				$params = [$nameHash, $fid];
-				$res = $this->insertBySql($sql, $params);
-
-				$params = [$nameHash, $nameRu];
-				$sql = "INSERT INTO pic (nameHash, nameRu) VALUES (?,?)";
-				$this->insertBySql($sql, $params);
-			} elseif ($pref == "a") {
-				$sql = 'UPDATE answer SET  pica = ? WHERE id = ?';
-				$params = [$nameHash, $fid];
-				$res = $this->insertBySql($sql, $params);
-
-				$params = [$nameHash, $nameRu];
-				$sql = "INSERT INTO pic (nameHash, nameRu) VALUES (?,?)";
-				$this->insertBySql($sql, $params);
-			}
-// нашли в таблице pic картинку с таким названием хеш берем из таблицы
-		} else {
-			$nameHash = $pic[0]['nameHash'];
-
-			$to = $_SERVER['DOCUMENT_ROOT'] . "/" . PROJ . "/pic/" . $nameHash;   //"/" . $nameHash;
-
-			move_uploaded_file($_FILES['file']['tmp_name'], $to);
-
-			if ($pref == "q") {// это картинка для вопроса
-				$sql = 'UPDATE question SET  picq = ? WHERE id = ?';
-				$params = [$nameHash, $fid];
-				$res = $this->insertBySql($sql, $params);
-			} elseif ($pref == "a") {
-				$sql = 'UPDATE answer SET  pica = ? WHERE id = ?';
-				$params = [$nameHash, $fid];
-				$res = $this->insertBySql($sql, $params);
-			}
-		}
-	}
-
-	public function aUpd()
-	{
-		$aId = $_POST['aid'];
-		$aText = $_POST['atext'];
-		$rightAnswer = $_POST['right_answer'];
-		if (isset($_POST['apic'])) {
-			$aPic = $_POST['apic'];
-			if (!strpos($aPic, PROJ)) {
-				$aPic = substr($aPic, 6);
-			}
-			$aPicStr = ', pica = ?';
-		} else {
-			$aPicStr = '';
-		}
-		$sql = 'UPDATE answer SET  answer = ?, correct_answer = ?' . $aPicStr . ' WHERE id = ?';
-		$params = [$aText, $rightAnswer];
-		if (isset($_POST['apic'])) {
-			array_push($params, $aPic);
-		}
-		array_push($params, $aId);
-
-		$res = $this->insertBySql($sql, $params);
-	}
-
-	public function qUpd()
-	{
-		$qId = $_POST['qid'];
-		$qText = $_POST['qtext'];
-
-		if (isset($_POST['qpic'])) {
-			$qPic = $_POST['qpic'];
-
-			if (!strpos($qPic, PROJ)) {
-				$qPic = substr($qPic, 6);
-			}
-			$qPicStr = ', picq = ? ';
-		} else {
-			$qPicStr = '';
-		}
-		if (isset($_POST['sort'])) {
-			$sort = $_POST['sort'];
-			$sortStr = ', sort = ? ';
-		} else {
-			$sortStr = '';
-		}
-		$sql = 'UPDATE question SET  qustion = ? ' . $qPicStr . $sortStr . 'WHERE id = ?';
-		$params = [$qText];
-
-		if (isset($_POST['qpic'])) {
-			array_push($params, $qPic);
-		}
-		if (isset($_POST['sort'])) {
-			array_push($params, $sort);
-		}
-		array_push($params, $qId);
-		$res = $this->insertBySql($sql, $params);
-	}
-
-	public function tAdd()
-	{
-		$testName = $_POST['test_name'];
-		$parent = (int)$_POST['parent'];
-		$isTest = (int)$_POST['isTest'];
-		$row['sort'] = $sort = (int)$_POST['sort'];
-		$enable = (int)$_POST['enable'];
-
-		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'test'";
-		$nextTest = $this->findBySql($sql)[0];
-		$tId = $nextTest['Auto_increment'];
-
-		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'question'";
-		$next = $this->findBySql($sql)[0];
-		$row['qid'] = $qId = $next['Auto_increment'];
-
-		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'answer'";
-		$next = $this->findBySql($sql)[0];
-		$row['id'] = $aId = $next['Auto_increment'];
-
-		$params = [$tId, $testName, $parent, $isTest, $sort, $enable];
-		$sql = 'INSERT INTO test (id,test_name,parent,isTest,sort,enable) VALUES (?,?,?,?,?,?)';
-		$this->insertBySql($sql, $params);
-
-		$params = [$tId];
-		$sql = "INSERT INTO question (parent) VALUES (?)";
-		$this->insertBySql($sql, $params);
-
-		$params = [$qId];
-		$sql = "INSERT INTO answer (parent_question) VALUES (?)";
-		$this->insertBySql($sql, $params);
-
-
-		$row['answer'] = '';
-		$correctAnswer = '';
-		$picA = '';
-		$picQ = '';
-		$row['qustion'] = "";
-
-
-		ob_start();
-		require APP . '/view/Test/editBlockQuestion.php';
-		$question = ob_get_clean();
-		ob_start();
-		require APP . '/view/Test/editBlockAnswer.php';
-		$answer = ob_get_clean();
-		ob_end_clean();
-
-
-		$pagination = "<div class='pagination'><a href='#question-$qId' class='nav-active'>1</a></div>";
-		$pagination .= "<a href='#' class='pagination__add-question p-no-active'>+</a>";
-		$menuItem = "<li>
-            <div class = 'test-params icon-menu' data-testid = $tId></div>
-            <a href = '/test/edit/$tId'>$testName</a>
-        </li >";
-
-		$data = compact("pagination", "tId", "testName", "question", "answer", "menuItem");
-
-		echo $json = json_encode($data);
-	}
-
-	public function tUpd()
-	{
-		if ($_POST['testId']) {
-			$testName = $_POST['testName'];
-			$params = [$testName,
-				(int)$_POST['parentTest'],
-				(int)$_POST['isTest'],
-				(int)$_POST['sort'],
-				(int)$_POST['enable'],
-				(int)$_POST['testId']];
-			$sql = 'UPDATE test SET test_name = ?, parent = ?, isTest = ?, sort = ?, enable = ? WHERE id = ?';
-			$this->insertBySql($sql, $params);
-			if ($testName) {
-				echo $testName;
-			}
-		} else {
-			if ($_POST['test_name']) {
-				$this->tAdd();
-			} else {
-				return FALSE;
-			}
-		}
-	}
-
-	public function delete_a()
-	{
-		$aId = $_POST['a_id'];
-		$arr['table'] = 'answer';
-		$arr['field'] = 'id';
-		$arr['val'] = $aId;
-		$arr['token'] = $aId;
-		$this->delete($arr);
-	}
-
-	public
-	function delete_q_a()
-	{
-
-		$this->del('answer', $_POST['aid']);
-		$this->del('question', $_POST['qid']);
-	}
-
-	public
-	function tDel()
-	{
-		if ($_POST['tId']) {
-			$tId = (int)$_POST['tId'];
-
-			$sql = 'SELECT id FROM question WHERE parent = ?';
-			$param = [$tId];
-			$quest = $this->findBySql($sql, $param);
-
-			foreach ($quest as $qId) {
-				$id = (int)$qId['qid'];
-				$param = [$id];
-				$sql = 'DELETE FROM answer WHERE parent_question = ?';
-				$this->insertBySql($sql, $param);
-			}
-
-			$param = [$tId];
-			$sql = 'DELETE FROM question WHERE parent = ?';
-			$this->insertBySql($sql, $param);
-
-			$sql = 'DELETE FROM test WHERE id = ?';
-			$this->insertBySql($sql, $param);
-		}
 	}
 
 	static function shuffle_assoc($array)
@@ -379,33 +122,301 @@ her;
 		return $data??[];
 	}
 
-	public function pagination(array $items, $addBtn)
-	{
-		$pagination = '<div class="pagination">';
-			$i = 0;
-			foreach ($items as $id => $el) {
-				$i++;
-				$d = <<<heretext
-<div data-pagination=$id>$i</div>
-heretext;
-				$pagination .= $d;
-			}
-
-		if ($addBtn) {
-			$pagination .= "<div class='pagination__add-question'>+</div>";
-		}
-		return $pagination . '</div>';
-	}
-
 	public function getCorrectAnswers()
 	{
 		$correct_answers = $_SESSION['testData']['correct_answers'];
 		exit(json_encode($correct_answers));
 	}
 
+	public function getChildren($id)
+	{
+		$children = $this->findAllWhere('parent',$id);
+		return $children;
+	}
+
 	public function send_mail()
 	{
 		$this->send_result_mail('/results/test/', '/test/results/');
 	}
+
+
+//	public function aqPicDel()
+//	{
+//
+//		if (isset($_POST['aid']) && $_POST['aid']) {
+//			$param = [$_POST['aid']];
+//			$sql = 'UPDATE answer SET pica = NULL WHERE id = ?';
+//			$this->insertBySql($sql, $param);
+//		}
+//		if ($_POST['qid'] && isset($_POST['qid'])) {
+//
+//			$param = [$_POST['qid']];
+//			$sql = 'UPDATE question SET picq = "" WHERE id = ?';
+//			$this->insertBySql($sql, $param);
+//		}
+//	}
+
+//	public function QPic()
+//	{
+//
+//		$fid = $_POST['fid'];
+//		$pref = $_POST['pref'];
+//		$nameRu = basename($_FILES['file']['name']); // защита файловой системы - получает имя переданного файла
+//
+//		$sql = 'SELECT nameHash FROM pic WHERE nameRu = ?';
+//		$params = [$nameRu];
+//		$pic = $this->findBySql($sql, $params);
+//
+//		// не нашли такой картинки в таблице pic по русскому имени
+//		if (empty($pic)) {
+//
+//			$nameHash = $fid . $pref . round(microtime(true)) . substr($nameRu, -4); // напр. 4526q1541554561.jpg
+//			$to = $_SERVER['DOCUMENT_ROOT'] . "/" . PROJ . "/pic/" . $nameHash;   //"/" . $nameHash;
+//			// Перемещаем из tmp папки (прописана в php.config)
+//			move_uploaded_file($_FILES['file']['tmp_name'], $to);
+//
+//			if ($pref == "q") {// это картинка для вопроса, сохраним ее
+//				$sql = 'UPDATE question SET  picq = ? WHERE id = ?';
+//				$params = [$nameHash, $fid];
+//				$res = $this->insertBySql($sql, $params);
+//
+//				$params = [$nameHash, $nameRu];
+//				$sql = "INSERT INTO pic (nameHash, nameRu) VALUES (?,?)";
+//				$this->insertBySql($sql, $params);
+//			} elseif ($pref == "a") {
+//				$sql = 'UPDATE answer SET  pica = ? WHERE id = ?';
+//				$params = [$nameHash, $fid];
+//				$res = $this->insertBySql($sql, $params);
+//
+//				$params = [$nameHash, $nameRu];
+//				$sql = "INSERT INTO pic (nameHash, nameRu) VALUES (?,?)";
+//				$this->insertBySql($sql, $params);
+//			}
+//// нашли в таблице pic картинку с таким названием хеш берем из таблицы
+//		} else {
+//			$nameHash = $pic[0]['nameHash'];
+//
+//			$to = $_SERVER['DOCUMENT_ROOT'] . "/" . PROJ . "/pic/" . $nameHash;   //"/" . $nameHash;
+//
+//			move_uploaded_file($_FILES['file']['tmp_name'], $to);
+//
+//			if ($pref == "q") {// это картинка для вопроса
+//				$sql = 'UPDATE question SET  picq = ? WHERE id = ?';
+//				$params = [$nameHash, $fid];
+//				$res = $this->insertBySql($sql, $params);
+//			} elseif ($pref == "a") {
+//				$sql = 'UPDATE answer SET  pica = ? WHERE id = ?';
+//				$params = [$nameHash, $fid];
+//				$res = $this->insertBySql($sql, $params);
+//			}
+//		}
+//	}
+
+//	public function aUpd()
+//	{
+//		$aId = $_POST['aid'];
+//		$aText = $_POST['atext'];
+//		$rightAnswer = $_POST['right_answer'];
+//		if (isset($_POST['apic'])) {
+//			$aPic = $_POST['apic'];
+//			if (!strpos($aPic, PROJ)) {
+//				$aPic = substr($aPic, 6);
+//			}
+//			$aPicStr = ', pica = ?';
+//		} else {
+//			$aPicStr = '';
+//		}
+//		$sql = 'UPDATE answer SET  answer = ?, correct_answer = ?' . $aPicStr . ' WHERE id = ?';
+//		$params = [$aText, $rightAnswer];
+//		if (isset($_POST['apic'])) {
+//			array_push($params, $aPic);
+//		}
+//		array_push($params, $aId);
+//
+//		$res = $this->insertBySql($sql, $params);
+//	}
+
+//	public function qUpd()
+//	{
+//		$qId = $_POST['qid'];
+//		$qText = $_POST['qtext'];
+//
+//		if (isset($_POST['qpic'])) {
+//			$qPic = $_POST['qpic'];
+//
+//			if (!strpos($qPic, PROJ)) {
+//				$qPic = substr($qPic, 6);
+//			}
+//			$qPicStr = ', picq = ? ';
+//		} else {
+//			$qPicStr = '';
+//		}
+//		if (isset($_POST['sort'])) {
+//			$sort = $_POST['sort'];
+//			$sortStr = ', sort = ? ';
+//		} else {
+//			$sortStr = '';
+//		}
+//		$sql = 'UPDATE question SET  qustion = ? ' . $qPicStr . $sortStr . 'WHERE id = ?';
+//		$params = [$qText];
+//
+//		if (isset($_POST['qpic'])) {
+//			array_push($params, $qPic);
+//		}
+//		if (isset($_POST['sort'])) {
+//			array_push($params, $sort);
+//		}
+//		array_push($params, $qId);
+//		$res = $this->insertBySql($sql, $params);
+//	}
+
+//	public function tAdd()
+//	{
+//		$testName = $_POST['test_name'];
+//		$parent = (int)$_POST['parent'];
+//		$isTest = (int)$_POST['isTest'];
+//		$row['sort'] = $sort = (int)$_POST['sort'];
+//		$enable = (int)$_POST['enable'];
+//
+//		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'test'";
+//		$nextTest = $this->findBySql($sql)[0];
+//		$tId = $nextTest['Auto_increment'];
+//
+//		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'question'";
+//		$next = $this->findBySql($sql)[0];
+//		$row['qid'] = $qId = $next['Auto_increment'];
+//
+//		$sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'answer'";
+//		$next = $this->findBySql($sql)[0];
+//		$row['id'] = $aId = $next['Auto_increment'];
+//
+//		$params = [$tId, $testName, $parent, $isTest, $sort, $enable];
+//		$sql = 'INSERT INTO test (id,test_name,parent,isTest,sort,enable) VALUES (?,?,?,?,?,?)';
+//		$this->insertBySql($sql, $params);
+//
+//		$params = [$tId];
+//		$sql = "INSERT INTO question (parent) VALUES (?)";
+//		$this->insertBySql($sql, $params);
+//
+//		$params = [$qId];
+//		$sql = "INSERT INTO answer (parent_question) VALUES (?)";
+//		$this->insertBySql($sql, $params);
+//
+//
+//		$row['answer'] = '';
+//		$correctAnswer = '';
+//		$picA = '';
+//		$picQ = '';
+//		$row['qustion'] = "";
+//
+//
+//		ob_start();
+//		require APP . '/view/Test/editBlockQuestion.php';
+//		$question = ob_get_clean();
+//		ob_start();
+//		require APP . '/view/Test/editBlockAnswer.php';
+//		$answer = ob_get_clean();
+//		ob_end_clean();
+//
+//
+//		$pagination = "<div class='pagination'><a href='#question-$qId' class='nav-active'>1</a></div>";
+//		$pagination .= "<a href='#' class='pagination__add-question p-no-active'>+</a>";
+//		$menuItem = "<li>
+//            <div class = 'test-params icon-menu' data-testid = $tId></div>
+//            <a href = '/test/edit/$tId'>$testName</a>
+//        </li >";
+//
+//		$data = compact("pagination", "tId", "testName", "question", "answer", "menuItem");
+//
+//		echo $json = json_encode($data);
+//	}
+
+//	public function tUpd()
+//	{
+//		if ($_POST['testId']) {
+//			$testName = $_POST['testName'];
+//			$params = [$testName,
+//				(int)$_POST['parentTest'],
+//				(int)$_POST['isTest'],
+//				(int)$_POST['sort'],
+//				(int)$_POST['enable'],
+//				(int)$_POST['testId']];
+//			$sql = 'UPDATE test SET test_name = ?, parent = ?, isTest = ?, sort = ?, enable = ? WHERE id = ?';
+//			$this->insertBySql($sql, $params);
+//			if ($testName) {
+//				echo $testName;
+//			}
+//		} else {
+//			if ($_POST['test_name']) {
+//				$this->tAdd();
+//			} else {
+//				return FALSE;
+//			}
+//		}
+//	}
+
+//	public function delete_a()
+//	{
+//		$aId = $_POST['a_id'];
+//		$arr['table'] = 'answer';
+//		$arr['field'] = 'id';
+//		$arr['val'] = $aId;
+//		$arr['token'] = $aId;
+//		$this->delete($arr);
+//	}
+
+//	public
+//	function delete_q_a()
+//	{
+//
+//		$this->del('answer', $_POST['aid']);
+//		$this->del('question', $_POST['qid']);
+//	}
+
+//	public
+//	function tDel()
+//	{
+//		if ($_POST['tId']) {
+//			$tId = (int)$_POST['tId'];
+//
+//			$sql = 'SELECT id FROM question WHERE parent = ?';
+//			$param = [$tId];
+//			$quest = $this->findBySql($sql, $param);
+//
+//			foreach ($quest as $qId) {
+//				$id = (int)$qId['qid'];
+//				$param = [$id];
+//				$sql = 'DELETE FROM answer WHERE parent_question = ?';
+//				$this->insertBySql($sql, $param);
+//			}
+//
+//			$param = [$tId];
+//			$sql = 'DELETE FROM question WHERE parent = ?';
+//			$this->insertBySql($sql, $param);
+//
+//			$sql = 'DELETE FROM test WHERE id = ?';
+//			$this->insertBySql($sql, $param);
+//		}
+//	}
+
+
+
+//	public function pagination(array $items, $addBtn)
+//	{
+//		$pagination = '<div class="pagination">';
+//			$i = 0;
+//			foreach ($items as $id => $el) {
+//				$i++;
+//				$d = <<<heretext
+//<div data-pagination=$id>$i</div>
+//heretext;
+//				$pagination .= $d;
+//			}
+//
+//		if ($addBtn) {
+//			$pagination .= "<div class='pagination__add-question'>+</div>";
+//		}
+//		return $pagination . '</div>';
+//	}
 
 }

@@ -25,7 +25,8 @@
 
 				<div class="question__create-button" data-action-hover="Добавить вопрос">+</div>
 			</div>
-		</div>
+
+
 	<? else: ?>
 		<div class="test-edit__content">
 			<div class="test-edit__title">
