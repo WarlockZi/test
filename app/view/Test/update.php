@@ -22,16 +22,16 @@
 			<label for="enable">Показыать пользователям</label>
 			<input id="enable" type="checkbox" <?= $test['enable'] ? 'checked' : ''; ?>>
 
-			<div class="empty">Содержит Тесты и Папки</div>
-			<? if (isset($test['children'])): ?>
+			<? if (isset($test['children']) && $test['children']): ?>
+				<div>Содержит Тесты и Папки</div>
 				<div class="children">
 					<? foreach ($test['children'] as $child): ?>
-						<div class="test-edit__child"><?= $child['test_name'] ?></div>
+						<div class="test-edit__child">> <?= $child['test_name'] ?></div>
 					<? endforeach; ?>
 				</div>
 			<? endif; ?>
-
-			<div class="test__save">Сохранить</div>
+			<input type="hidden" isTest="<?=$test['isTest']?>">
+			<div class="<?=$test['isTest']?'test__create':'test-path__create'?>">Сохранить</div>
 			<div class="test__delete">Удалить</div>
 		</div>
 

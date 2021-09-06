@@ -256,7 +256,8 @@ let _question = {
     return (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions>.question-edit').el.length;
   },
   lastQuestion: () => {
-    let questions = _question.qestions;
+    let questions = _question.qestions();
+
     return questions[questions.length - 1];
   },
   create: async add_button => {
@@ -281,7 +282,7 @@ let _question = {
     return res.id;
   },
   createOnView: (add_button, q_id) => {
-    let questions = _question.qestions;
+    let questions = _question.qestions();
 
     let lastQuestion = _question.lastQuestion();
 
@@ -289,8 +290,7 @@ let _question = {
 
     let model = _question.getEl(clone);
 
-    model.sort.innerText = questions.length;
-    model.text.innerText = '';
+    model.sort.innerText = questions.length + 1;
     model.text.innerText = '';
     model.el.id = q_id;
     add_button.before(clone);
@@ -475,9 +475,19 @@ let _test = {
     return {
       id: +window.location.href.split('/').pop(),
       test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
-      enable: 1,
-      isTest: +!(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#isPath').checked(),
-      sort: 0,
+      enable: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#enable').el[0].checked,
+      isTest: +!(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[isTest]').el[0].getAttribute('isTest'),
+      // sort: 0,
+      parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()
+    };
+  },
+  viewModel: () => {
+    return {
+      id: +window.location.href.split('/').pop(),
+      test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
+      enable: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#enable').el[0],
+      // isTest: +!$('#isTest').el[0].checked,
+      // sort: $('#enable'),
       parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()
     };
   },
@@ -501,12 +511,12 @@ let _test = {
     return (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText;
   },
   create: async () => {
-    let test_path = _test.serverModel();
+    let test = _test.serverModel();
 
-    test_path.id = 0;
-    test_path.isTest = 1;
+    test.id = 0;
+    test.isTest = 1;
     let url = `/test/create`;
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)(url, test_path);
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)(url, test);
     res = await JSON.parse(res);
 
     if (res) {
@@ -525,15 +535,23 @@ let _test = {
     }
   },
   delete: async function () {
+    let viewModel = _test.viewModel();
+
+    viewModel.enable.checked = false;
+
     let serverModel = _test.serverModel();
 
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/delete', {
-      id: serverModel.id
+      test: serverModel
     });
     res = await JSON.parse(res);
 
-    if (res) {
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.popup)('Видимость теста скрыта. Чтобы удалить полностью - обратитесь к ГД');
+    if (res.notAdmin) {
+      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show('Видимость теста скрыта. Чтобы удалить полностью - обратитесь к ГД');
+      setTimeout(() => {
+        window.location = '/adminsc/test/edit/400';
+      }, 4000);
+    } else {
       window.location = '/adminsc/test/edit/400';
     }
   }

@@ -6,12 +6,24 @@ export let _test = {
         return {
             id: +window.location.href.split('/').pop(),
             test_name: $('#test_name').text(),
-            enable: 1,
-            isTest: +!$('#isPath').checked(),
-            sort: 0,
+            enable: +$('#enable').el[0].checked,
+            isTest: +!$('[isTest]').el[0].getAttribute('isTest'),
+            // sort: 0,
             parent: $('select').selectedIndexValue(),
         }
     },
+
+    viewModel: () => {
+        return {
+            id: +window.location.href.split('/').pop(),
+            test_name: $('#test_name').text(),
+            enable: $('#enable').el[0],
+            // isTest: +!$('#isTest').el[0].checked,
+            // sort: $('#enable'),
+            parent: $('select').selectedIndexValue(),
+        }
+    },
+
     id: (id) => {
         return id ?? $('.test-name').value()
     },
@@ -24,7 +36,7 @@ export let _test = {
         let res = await post(url, test_path)
         res = await JSON.parse(res)
         if (res) {
-            window.location.href = `/adminsc/test/edit/${res.id-1}`
+            window.location.href = `/adminsc/test/edit/${res.id - 1}`
         }
     },
 
@@ -33,14 +45,14 @@ export let _test = {
     },
 
     create: async () => {
-        let test_path = _test.serverModel()
-        test_path.id = 0
-        test_path.isTest = 1
+        let test = _test.serverModel()
+        test.id = 0
+        test.isTest = 1
         let url = `/test/create`
-        let res = await post(url, test_path)
+        let res = await post(url, test)
         res = await JSON.parse(res)
         if (res) {
-            window.location.href = `/adminsc/test/edit/${res.id-1}`
+            window.location.href = `/adminsc/test/edit/${res.id - 1}`
         }
     },
 
@@ -55,13 +67,23 @@ export let _test = {
     },
 
     delete: async function () {
+        let viewModel = _test.viewModel()
+        viewModel.enable.checked = false
         let serverModel = _test.serverModel()
-        let res = await post('/test/delete', {id: serverModel.id})
+        let res = await post('/test/delete', {
+            test: serverModel
+        })
         res = await JSON.parse(res)
-        if (res){
-            popup('Видимость теста скрыта. Чтобы удалить полностью - обратитесь к ГД')
+        if (res.notAdmin) {
+            popup.show('Видимость теста скрыта. Чтобы удалить полностью - обратитесь к ГД')
+            setTimeout(() => {
+                window.location = '/adminsc/test/edit/400'
+            }, 4000)
+        }else{
             window.location = '/adminsc/test/edit/400'
         }
+
+
     },
 
 }

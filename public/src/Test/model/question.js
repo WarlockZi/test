@@ -30,9 +30,8 @@ export let _question = {
     questionsCount: () => {
         return $('.questions>.question-edit').el.length
     },
-    lastQuestion:
-        () => {
-            let questions = _question.qestions
+    lastQuestion:() => {
+            let questions = _question.qestions()
             return questions[questions.length - 1]
         },
 
@@ -58,12 +57,11 @@ export let _question = {
 
     createOnView:
         (add_button, q_id) => {
-            let questions = _question.qestions
+            let questions = _question.qestions()
             let lastQuestion = _question.lastQuestion()
             let clone = lastQuestion.cloneNode(true)
             let model = _question.getEl(clone)
-            model.sort.innerText = questions.length
-            model.text.innerText = ''
+            model.sort.innerText = questions.length+1
             model.text.innerText = ''
             model.el.id = q_id
             add_button.before(clone)
