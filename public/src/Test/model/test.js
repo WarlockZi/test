@@ -1,4 +1,4 @@
-import {$, post} from '../../common'
+import {$, popup, post} from '../../common'
 
 export let _test = {
 
@@ -59,6 +59,7 @@ export let _test = {
         let res = await post('/test/delete', {id: serverModel.id})
         res = await JSON.parse(res)
         if (res){
+            popup('Видимость теста скрыта. Чтобы удалить полностью - обратитесь к ГД')
             window.location = '/adminsc/test/edit/400'
         }
     },

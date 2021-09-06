@@ -337,6 +337,7 @@ let _test = {
     res = await JSON.parse(res);
 
     if (res) {
+      (0,_common__WEBPACK_IMPORTED_MODULE_0__.popup)('Видимость теста скрыта. Чтобы удалить полностью - обратитесь к ГД');
       window.location = '/adminsc/test/edit/400';
     }
   }
