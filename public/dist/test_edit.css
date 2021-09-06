@@ -572,6 +572,7 @@ section {
 .test__save,
 .test-show__create,
 .test-path__create,
+.test__create,
 .test__delete,
 .test-update__delete {
   color: #fff;
@@ -590,6 +591,7 @@ section {
   .test__save:hover,
   .test-show__create:hover,
   .test-path__create:hover,
+  .test__create:hover,
   .test__delete:hover,
   .test-update__delete:hover {
     box-shadow: none; }

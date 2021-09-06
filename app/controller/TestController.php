@@ -31,7 +31,7 @@ class TestController Extends AppController
 	{
 		$this->layout = 'admin';
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
-		$test['isTest'] = 0;
+		$test['isTest'] = 1;
 		$this->set(compact('rootTests', 'test'));
 		View::setCss('test_edit.css');
 		View::setJs('test_edit.js');
@@ -89,18 +89,20 @@ class TestController Extends AppController
 	{
 		$this->layout = 'admin';
 
-		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
-		$test = App::$app->test->findOne($testId);
-		if (!$test['isTest']){
-
+		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+		$test = App::$app->test->findOne($id);
+		if ($test) {
+			if (!$test['isTest']) {
+				$test['children'] = App::$app->test->getChildren($id);
+			}
 		}
-
-		$testDataToEdit = App::$app->test->getTestData($testId);
+		$testDataToEdit = App::$app->test->getTestData($id) ?? '';
 		unset ($testDataToEdit['correct_answers']);
 
 		$this->set(compact('test', 'testDataToEdit'));
 		View::setJs('test_edit.js');
 		View::setCss('test_edit.css');
+
 	}
 
 	public function actionResults()
@@ -117,7 +119,11 @@ class TestController Extends AppController
 
 	public function actionDelete()
 	{
-		if (App::$app->test->delete($this->ajax['id'])) {
+		if (!SU) {
+			App::$app->test->update($this->ajax['test']);
+			exit(json_encode(['notAdmin' => true]));
+		}
+		if (App::$app->test->delete($this->ajax['test']['id'])) {
 			exit(json_encode(['msg' => 'ok']));
 		}
 	}

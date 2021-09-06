@@ -1,6 +1,6 @@
-<? if ($test): ?>
-	<? if ($test['isTest']): ?>
-		<div class="test-edit__content">
+<div class="test-edit__content">
+	<? if ($test): ?>
+		<? if (isset($test['isTest']) && $test['isTest']): ?>
 			<div class="test-edit__title">
 				<? if (isset($test)): ?>
 					<p class="test-name"
@@ -19,16 +19,16 @@
 					<? include ROOT . '/app/view/Test/editBlockAnswer.php' ?>
 				</div>
 
-				<? foreach ($testDataToEdit as $q_id => $block): ?>
-					<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
-				<? endforeach; ?>
-
+				<? if ($testDataToEdit): ?>
+					<? foreach ($testDataToEdit as $q_id => $block): ?>
+						<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
+					<? endforeach; ?>
+				<? endif; ?>
 				<div class="question__create-button" data-action-hover="Добавить вопрос">+</div>
 			</div>
 
 
-	<? else: ?>
-		<div class="test-edit__content">
+		<? else: ?>
 			<div class="test-edit__title">
 				<? if (isset($test)): ?>
 					<p class="test-name"
@@ -38,13 +38,11 @@
 			</div>
 			<?= include ROOT . '/app/view/Test/test-edit-children.php' ?>
 
+		<? endif; ?>
+	<? else: ?>
 
-		</div>
+		<h1>Выберите другой тест</h1>
 
 	<? endif; ?>
-<? else: ?>
 
-	<h1>Выберите другой тест</h1>
-
-<? endif; ?>
-
+</div>

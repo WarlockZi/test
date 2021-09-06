@@ -19,7 +19,8 @@
 			<input id="enable" type="checkbox">
 
 		</div>
-		<div class="test-path__create">Сохранить</div>
+		<input type="hidden" isTest="<?=$test['isTest']?>">
+		<div class="<?=$test['isTest']?'test__create':'test-path__create'?>">Сохранить</div>
 	</div>
 
 
