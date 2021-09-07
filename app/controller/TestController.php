@@ -89,7 +89,7 @@ class TestController Extends AppController
 	{
 		$this->layout = 'admin';
 
-		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+		$id = (int)$this->route['id'];
 		$test = App::$app->test->findOne($id);
 		if ($test) {
 			if (!$test['isTest']) {
