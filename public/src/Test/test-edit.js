@@ -28,7 +28,7 @@ navigate(window.location.pathname)
 sortable.connect('.questions')
 
 // при создании нового теста показать пустой вопрос
-let questions = $('.questions>.question-edit').el
+let questions =  _question.questions()
 if (!questions.length) {
     _question.showFirst()
 }
@@ -47,4 +47,6 @@ $('.question__text').on('click', function (e) {
 // check('/image/create')
 
 ///// question sort input validate
+$('.question__delete').on('click', _question.delete)
+
 $('.question__sort').on('change', validate.sort)

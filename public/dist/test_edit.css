@@ -707,7 +707,7 @@ section {
   transition: transform 0.1s; }
 
 .question__delete {
-  width: 35px;
+  width: 55px;
   cursor: pointer;
   background-color: #fff;
   display: flex;
