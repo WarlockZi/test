@@ -130,7 +130,8 @@ function MyJquery(elements) {
     }
 
     this.selectedIndexValue = function () {
-        if (this.el.length) return this.el[0].options.[this.el[0].options.selectedIndex].value
+        if (this.el.length)
+            return this.el[0].selectedOptions[0].value
     }
     this.options = function () {
         if (this.el.length) return this.el[0].options
