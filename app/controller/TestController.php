@@ -71,15 +71,11 @@ class TestController Extends AppController
 	public function actionCreate()
 	{
 		if ($this->ajax) {
-			if (!$this->ajax['isTest']) {
-				$this->ajax['parent'] = 0;
-			}
+
 			if ($id = App::$app->test->create($this->ajax)) {
 				$q_id = App::$app->question->create();
-//				$question_block = QuestionController::getQuestionBlock();
 				exit(json_encode([
 					'id' => $id,
-//					'qestion_block' => $question_block,
 				]));
 			}
 		}
