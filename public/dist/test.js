@@ -337,21 +337,18 @@ let _question = {
     addButt.before(clone);
   },
   save: async e => {
-    let question = e.target.closest('.question-edit');
+    let question = e.target.closest('.question-edit'); // let viewModel = _question.viewModel(question)
+    // if (viewModel.id) {
 
-    let viewModel = _question.viewModel(question);
-
-    if (viewModel.id) {
-      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/UpdateOrCreate', {
-        question: _question.getModelForServer(question),
-        answers: _question.getAnswers(question)
-      });
-      res = await JSON.parse(res);
-      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg);
-      return;
-    } else {
-      _question.create(e);
-    }
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/UpdateOrCreate', {
+      question: _question.getModelForServer(question),
+      answers: _question.getAnswers(question)
+    });
+    res = await JSON.parse(res);
+    _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg);
+    return; // } else {
+    //     _question.create(e)
+    // }
   },
   delete: async e => {
     if (confirm("Удалить вопрос со всеми его ответами?")) {
