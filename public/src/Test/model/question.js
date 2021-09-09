@@ -1,29 +1,39 @@
 import {$, popup, post} from "../../common"
+import {_answer} from "./answer";
 // import {_question} from "./question"
 
 export let _question = {
 
-    showFirst:
-        () => {
-            let question = _question.cloneEmptyModel()
-            if (!question) return
+    showFirst: () => {
+        let question = _question.cloneEmptyModel()
+        if (!question) return
 
-            let model = _question.viewModel(question)
-            model.sort.innerText = '1'
+        let model = _question.viewModel(question)
+        model.sort.innerText = '1'
 
-            $(question).addClass('question-edit')
-            $(question).removeClass('question__create')
-            let questionsWrapper = $('.questions').el[0]
-            questionsWrapper.prepend(question)
+        $(question).addClass('question-edit')
+        $(question).removeClass('question__create')
+        let questionsWrapper = $('.questions').el[0]
+        questionsWrapper.prepend(question)
 
-            $(model.save).on('click', _question.createOnServer)
-            $(model.del).on('click', _question.delete)
+        $(model.save).on('click', _question.save)
+        $(model.del).on('click', _question.delete)
 
-        },
+    },
 
     cloneEmptyModel: () => {
         let question = $('.questions .question__create .question-edit').el[0]
         return question.cloneNode(true)
+    },
+
+    showAnswers: (e) => {
+        let text = e.target
+        let parent = text.parentNode.parentNode
+        let answers = $(parent).find('.question__answers')
+        answers.classList.toggle('height')
+        answers.classList.toggle('scale')
+
+        text.classList.toggle('rotate')
     },
 
     viewModel: (el) => {
@@ -34,6 +44,8 @@ export let _question = {
             save: el.querySelector('.question__save'),
             text: el.querySelector('.question__text'),
             del: el.querySelector('.question__delete'),
+            createAnswerButton: el.querySelector('.answer__create-button'),
+            addButton: $($('.questions').el[0]).find('.question__create-button'),
         }
     },
 
@@ -43,7 +55,7 @@ export let _question = {
                 id: null,
                 qustion: '',
                 parent: +window.location.href.split('/').pop(),
-                sort: _question.questionsCount()+1,
+                sort: _question.questionsCount(),
             }
         }
     },
@@ -60,52 +72,71 @@ export let _question = {
     },
 
     create:
-        async (add_button) => {
-            let el = add_button.closest('.question-edit')
-            let q_id = await _question.createOnServer()
+        async (e) => {
+            // let add_button = e.target.closest('.')
+            // let el = add_button.closest('.question-edit')
+
+            let q_id = await _question.createOnServer(e)
             if (q_id) {
-                _question.createOnView(add_button, q_id)
+                _question.createOnView(q_id)
             }
         },
 
     createOnServer:
-        async () => {
-            let question = _question.serverModel()
+        async (e) => {
+            let self = this
 
+            let add_button = e.target
+            // let question_div = add_button.parentNode.parentNode
+            let question = _question.serverModel()
+            // let t = $(question_div).find('.question__text')
+            // question.question.qustion = t.innerText
+            // let answers = _question.getAnswers(question_div.parentNode)
+
+            // question.question.sort = question.question.sort
             let res = await post('/question/updateOrCreate', {question: question.question, answers: {}})
             res = await JSON.parse(res)
             return res.id
         },
 
     createOnView:
-        (add_button, q_id) => {
+        (q_id) => {
             let questions = _question.questions()
-            let lastQuestion = _question.lastQuestion()
-            let clone = lastQuestion.cloneNode(true)
+            let clone = _question.cloneEmptyModel()
             let model = _question.viewModel(clone)
 
-            $(model.save).on('click', _question.createOnServer)
+            $(model.save).on('click', _question.save)
             $(model.del).on('click', _question.delete)
 
             model.sort.innerText = questions.length + 1
             model.text.innerText = ''
+
+            $(model.createAnswerButton).on('click', _answer.create)
+            $(model.text).on('click', _question.showAnswers)
+
             model.el.id = q_id
-            add_button.before(clone)
+            let addButt = model.addButton
+            addButt.before(clone)
         },
 
 
-
     save:
-        async (save_button) => {
-            let question = save_button.closest('.question-edit')
-            let res = await post(
-                '/question/UpdateOrCreate',
-                {
-                    question: _question.getModelForServer(question),
-                    answers: _question.getAnswers(question),
-                })
-            res = await JSON.parse(res)
-            popup.show(res.msg)
+        async (e) => {
+            let question = e.target.closest('.question-edit')
+            let viewModel = _question.viewModel(question)
+            if (viewModel.id) {
+                let res = await post(
+                    '/question/UpdateOrCreate',
+                    {
+                        question: _question.getModelForServer(question),
+                        answers: _question.getAnswers(question),
+                    })
+                res = await JSON.parse(res)
+                popup.show(res.msg)
+                return
+            } else {
+                _question.create(e)
+            }
         },
 
     delete:

@@ -12,7 +12,9 @@
 			<div class="questions">
 
 				<div class="question__create">
+					<?$question__create = true;?>
 					<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
+					<?$question__create = false;?>
 				</div>
 
 				<div class="answer__create">

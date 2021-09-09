@@ -13,6 +13,7 @@ import {$, tooltip, validate} from '../common'
 
 import {_question} from "./model/question";
 import {sortable} from "../components/sortable";
+import {_answer} from "./model/answer";
 // import "../Admin/admin_main_menu";
 
 function navigate(str) {
@@ -33,20 +34,22 @@ if (!questions.length) {
     _question.showFirst()
 }
 
-// раскрытие ответов
-$('.question__text').on('click', function (e) {
-    let text = e.target
-    let parent = text.parentNode.parentNode
-    let answers = $(parent).find('.question__answers')
-    answers.classList.toggle('height')
-    answers.classList.toggle('scale')
-
-    text.classList.toggle('rotate')
-})
-
 // check('/image/create')
 
+// раскрытие ответов
+$('.question__text').on('click', _question.showAnswers)
 ///// question sort input validate
 $('.question__delete').on('click', _question.delete)
-
+$('.question__save').on('change', _question.save)
 $('.question__sort').on('change', validate.sort)
+
+
+$('.answer__delete').on('click', function () {
+    _answer.del(this)
+})
+
+$('.answer__create-button').on('click', _answer.create)
+
+$('.question__save').on('click', _question.save)
+
+$('.question__create-button').on('click', _question.create)

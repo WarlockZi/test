@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\core\Cache;
+use app\model\Model;
 use app\model\User;
 use app\model\Test;
 use app\view\View;
@@ -43,6 +44,7 @@ class TestController Extends AppController
 		$this->view = 'show';
 		$test['isTest'] = 0;
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
+//		$rootTestsTree = $this->hierachy($rootTests, 'parent');
 		$this->set(compact('rootTests', 'test'));
 		View::setCss('test_edit.css');
 		View::setJs('test_edit.js');
@@ -61,6 +63,7 @@ class TestController Extends AppController
 		$test['children'] = App::$app->test->getChildren($id);
 
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
+//		$rootTestsTree = $this->hierachy($rootTests, 'parent');
 		$this->set(compact('rootTests', 'test'));
 
 		View::setCss('test_edit.css');

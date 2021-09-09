@@ -33,7 +33,8 @@ export let _answer = {
         }
     },
 
-    async create(button) {
+    async create(e) {
+        let button = e.target
         let a_id = await createOnServer(button)
         show(a_id)
 
