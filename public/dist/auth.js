@@ -244,6 +244,8 @@ async function send(email) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
+
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.return_pass').on('click', async function (e) {
   e.preventDefault();
@@ -253,9 +255,12 @@ __webpack_require__.r(__webpack_exports__);
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/user/returnPass', {
       email: email
     });
+    res = await JSON.parse(res);
 
-    if (res === 'ok') {
-      window.location = '/user/login';
+    if (res) {
+      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg, function () {
+        window.location = '/user/login';
+      });
     }
   }
 });
@@ -429,7 +434,7 @@ function clearCache() {
 
 
 let popup = {
-  show: function (txt) {
+  show: function (txt, callback) {
     let close = this.el('div', 'popup__close');
     close.innerText = 'X';
     let popup__item = this.el('div', 'popup__item');
@@ -452,6 +457,7 @@ let popup = {
     let removeDelay = hideDelay + 950;
     setTimeout(() => {
       popup__item.remove();
+      callback();
     }, removeDelay);
   },
   close: function (e) {
@@ -925,6 +931,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./public/src/components/header/top.scss ***!
   \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/components/popup.scss":
+/*!******************************************!*\
+  !*** ./public/src/components/popup.scss ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);

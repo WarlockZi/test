@@ -14,10 +14,12 @@ section {
   flex: 1 0 auto;
   max-width: 1310px;
   margin: auto;
-  flex-wrap: wrap;
+  //flex-wrap: wrap;
 
   .content {
     margin: 0px 40px;
+    display: flex;
+    flex-flow: column;
   }
 }
 

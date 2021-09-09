@@ -96,7 +96,7 @@ class QuestionController Extends AppController
 			App::$app->answer->delete($answer['id']);
 		}
 		App::$app->question->delete($q_id);
-		exit(json_encode(['msg' => 'ok', 'q_id' => $q_id]));
+		exit(json_encode(['msg' => 'Вопрос и ответы удалены', 'q_id' => $q_id]));
 	}
 
 	public function actionImage()

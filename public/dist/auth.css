@@ -227,7 +227,7 @@
   padding: 13px;
   background: #1bbc9b;
   color: #fff;
-  font: 400 17px/17px intro, 'Proxima Nova', sans-serif; }
+  font: 600 17px/17px intro, 'Proxima Nova', sans-serif; }
   .h-cat:first-child ul {
     left: 0; }
     .h-cat:first-child ul:before {
@@ -708,6 +708,92 @@ section {
 
 .wrap .list:hover {
   background: #f6f6f6; }
+
+.popup {
+  position: fixed;
+  right: 0;
+  bottom: 80px;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end; }
+
+.popup__item {
+  position: relative;
+  width: 204px;
+  background: #1bbc9b;
+  padding: 15px;
+  color: #ffffff;
+  display: flex;
+  opacity: 0.9;
+  border-radius: 5px;
+  margin: 2px 0;
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-in-out;
+  visibility: visible !important; }
+
+.popup-hide {
+  position: relative;
+  width: 204px;
+  background: #1bbc9b;
+  padding: 15px;
+  color: #ffffff;
+  display: flex;
+  opacity: 0.9;
+  border-radius: 5px;
+  margin: 2px 0;
+  animation-name: fadeOut;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  visibility: visible; }
+
+@keyframes fadeOut {
+  0% {
+    transform: scale(1.1); }
+  80% {
+    transform: scale(0.8);
+    opacity: .5; }
+  99% {
+    transform: scale(0.7);
+    opacity: 0.1; }
+  100% {
+    opacity: 0; } }
+
+@keyframes fadeIn {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.5; }
+  80% {
+    transform: scale(1.1); }
+  100% {
+    transform: scale(1);
+    opacity: 1; } }
+
+@-webkit-keyframes fadeIn {
+  0% {
+    -webkit-transform: scale(0.7);
+    opacity: 0.5; }
+  80% {
+    -webkit-transform: scale(1.1); }
+  100% {
+    -webkit-transform: scale(1);
+    opacity: 1; } }
+
+.popup__close {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 10px;
+  height: 10px;
+  color: white;
+  background: red;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px; }
 
 .result {
   display: block;

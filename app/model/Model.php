@@ -279,9 +279,9 @@ here;
 		$tree = [];
 		$data = $this->data;
 		foreach ($data as $id => &$node) {
-			if (!$node['parent']) {
+			if (isset($node['parent']) && !$node['parent']) {
 				$tree[$id] = &$node;
-			} elseif ($node['parent']) {
+			} elseif (isset($node['parent']) && $node['parent']) {
 				$data[$node['parent']]['childs'][$id] = &$node;
 			}
 		}
