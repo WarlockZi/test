@@ -123,8 +123,8 @@ export let _question = {
     save:
         async (e) => {
             let question = e.target.closest('.question-edit')
-            let viewModel = _question.viewModel(question)
-            if (viewModel.id) {
+            // let viewModel = _question.viewModel(question)
+            // if (viewModel.id) {
                 let res = await post(
                     '/question/UpdateOrCreate',
                     {
@@ -134,9 +134,9 @@ export let _question = {
                 res = await JSON.parse(res)
                 popup.show(res.msg)
                 return
-            } else {
-                _question.create(e)
-            }
+            // } else {
+            //     _question.create(e)
+            // }
         },
 
     delete:

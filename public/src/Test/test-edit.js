@@ -36,12 +36,12 @@ if (!questions.length) {
 
 // check('/image/create')
 
-// раскрытие ответов
-$('.question__text').on('click', _question.showAnswers)
-///// question sort input validate
-$('.question__delete').on('click', _question.delete)
-$('.question__save').on('change', _question.save)
+
 $('.question__sort').on('change', validate.sort)
+$('.question__save').on('click', _question.save)
+$('.question__text').on('click', _question.showAnswers)
+$('.question__delete').on('click', _question.delete)
+$('.question__create-button').on('click', _question.create)
 
 
 $('.answer__delete').on('click', function () {
@@ -50,6 +50,4 @@ $('.answer__delete').on('click', function () {
 
 $('.answer__create-button').on('click', _answer.create)
 
-$('.question__save').on('click', _question.save)
 
-$('.question__create-button').on('click', _question.create)
