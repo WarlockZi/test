@@ -12,18 +12,20 @@
 	<div class="question-edit_row">
 
 		<div class="question__answers">
+			<? if (!$question__create): ?>
 
-			<? if (isset($block)): ?>
+				<? if (isset($block)): ?>
 
-				<? $i = 1;
-				foreach ($block as $index => $a): ?>
-					<? if ($index): ?>
-						<? include ROOT . "/app/view/Test/editBlockAnswer.php"; ?>
-					<? endif; ?>
-				<? endforeach; ?>
+					<? $i = 1;
+					foreach ($block as $index => $a): ?>
+						<? if ($index): ?>
+							<? include ROOT . "/app/view/Test/editBlockAnswer.php"; ?>
+						<? endif; ?>
+					<? endforeach; ?>
+				<? endif; ?>
+
+
 			<? endif; ?>
-
-
 			<div class="answer__create-button">+</div>
 
 		</div>

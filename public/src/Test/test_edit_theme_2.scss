@@ -4,7 +4,8 @@
 .test-edit__content {
   margin-left: 10px;
   flex-flow: column;
-  //flex: 1 0 auto;
+  display: flex;
+  flex: 1 0 auto;
 }
 
 .question__create-button {

@@ -540,6 +540,7 @@ section {
 
 .test-edit-wrapper {
   display: flex;
+  flex: 1 0 auto;
   margin: 10px;
   font-family: 'Roboto', Arial, Serif;
   /*Иконки для всплывающих менюшек*/ }
@@ -598,7 +599,9 @@ section {
 
 .test-edit__content {
   margin-left: 10px;
-  flex-flow: column; }
+  flex-flow: column;
+  display: flex;
+  flex: 1 0 auto; }
 
 .question__create-button {
   flex-basis: 12px;

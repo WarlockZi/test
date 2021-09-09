@@ -164,7 +164,8 @@ let _answer = {
     };
   },
 
-  async create(button) {
+  async create(e) {
+    let button = e.target;
     let a_id = await createOnServer(button);
     show(a_id);
 
@@ -227,6 +228,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "_question": () => (/* binding */ _question)
 /* harmony export */ });
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+/* harmony import */ var _answer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./answer */ "./public/src/Test/model/answer.js");
+
  // import {_question} from "./question"
 
 let _question = {
@@ -242,12 +245,20 @@ let _question = {
     (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(question).removeClass('question__create');
     let questionsWrapper = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions').el[0];
     questionsWrapper.prepend(question);
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(model.save).on('click', _question.createOnServer);
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(model.save).on('click', _question.save);
     (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(model.del).on('click', _question.delete);
   },
   cloneEmptyModel: () => {
     let question = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question__create .question-edit').el[0];
     return question.cloneNode(true);
+  },
+  showAnswers: e => {
+    let text = e.target;
+    let parent = text.parentNode.parentNode;
+    let answers = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(parent).find('.question__answers');
+    answers.classList.toggle('height');
+    answers.classList.toggle('scale');
+    text.classList.toggle('rotate');
   },
   viewModel: el => {
     return {
@@ -256,7 +267,9 @@ let _question = {
       sort: el.querySelector('.question__sort'),
       save: el.querySelector('.question__save'),
       text: el.querySelector('.question__text'),
-      del: el.querySelector('.question__delete')
+      del: el.querySelector('.question__delete'),
+      createAnswerButton: el.querySelector('.answer__create-button'),
+      addButton: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)((0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions').el[0]).find('.question__create-button')
     };
   },
   serverModel: () => {
@@ -265,7 +278,7 @@ let _question = {
         id: null,
         qustion: '',
         parent: +window.location.href.split('/').pop(),
-        sort: _question.questionsCount() + 1
+        sort: _question.questionsCount()
       }
     };
   },
@@ -280,16 +293,24 @@ let _question = {
 
     return questions[questions.length - 1];
   },
-  create: async add_button => {
-    let el = add_button.closest('.question-edit');
-    let q_id = await _question.createOnServer();
+  create: async e => {
+    // let add_button = e.target.closest('.')
+    // let el = add_button.closest('.question-edit')
+    let q_id = await _question.createOnServer(e);
 
     if (q_id) {
-      _question.createOnView(add_button, q_id);
+      _question.createOnView(q_id);
     }
   },
-  createOnServer: async () => {
-    let question = _question.serverModel();
+  createOnServer: async e => {
+    let self = undefined;
+    let add_button = e.target; // let question_div = add_button.parentNode.parentNode
+
+    let question = _question.serverModel(); // let t = $(question_div).find('.question__text')
+    // question.question.qustion = t.innerText
+    // let answers = _question.getAnswers(question_div.parentNode)
+    // question.question.sort = question.question.sort
+
 
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/updateOrCreate', {
       question: question.question,
@@ -298,30 +319,39 @@ let _question = {
     res = await JSON.parse(res);
     return res.id;
   },
-  createOnView: (add_button, q_id) => {
+  createOnView: q_id => {
     let questions = _question.questions();
 
-    let lastQuestion = _question.lastQuestion();
-
-    let clone = lastQuestion.cloneNode(true);
+    let clone = _question.cloneEmptyModel();
 
     let model = _question.viewModel(clone);
 
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(model.save).on('click', _question.createOnServer);
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(model.save).on('click', _question.save);
     (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(model.del).on('click', _question.delete);
     model.sort.innerText = questions.length + 1;
     model.text.innerText = '';
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(model.createAnswerButton).on('click', _answer__WEBPACK_IMPORTED_MODULE_1__._answer.create);
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(model.text).on('click', _question.showAnswers);
     model.el.id = q_id;
-    add_button.before(clone);
+    let addButt = model.addButton;
+    addButt.before(clone);
   },
-  save: async save_button => {
-    let question = save_button.closest('.question-edit');
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/UpdateOrCreate', {
-      question: _question.getModelForServer(question),
-      answers: _question.getAnswers(question)
-    });
-    res = await JSON.parse(res);
-    _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg);
+  save: async e => {
+    let question = e.target.closest('.question-edit');
+
+    let viewModel = _question.viewModel(question);
+
+    if (viewModel.id) {
+      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/UpdateOrCreate', {
+        question: _question.getModelForServer(question),
+        answers: _question.getAnswers(question)
+      });
+      res = await JSON.parse(res);
+      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg);
+      return;
+    } else {
+      _question.create(e);
+    }
   },
   delete: async e => {
     if (confirm("Удалить вопрос со всеми его ответами?")) {
