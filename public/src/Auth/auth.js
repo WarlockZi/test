@@ -2,6 +2,7 @@ import '../components/header/header';
 import '../components/header/autocomplete'
 
 import '../components/alert/alert'
+
 import '../components/forms.scss'
 
 import '../components/cookie/cookie'

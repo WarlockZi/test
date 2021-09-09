@@ -401,22 +401,22 @@ her;
 
 
 
-//	public function pagination(array $items, $addBtn)
-//	{
-//		$pagination = '<div class="pagination">';
-//			$i = 0;
-//			foreach ($items as $id => $el) {
-//				$i++;
-//				$d = <<<heretext
-//<div data-pagination=$id>$i</div>
-//heretext;
-//				$pagination .= $d;
-//			}
-//
-//		if ($addBtn) {
-//			$pagination .= "<div class='pagination__add-question'>+</div>";
-//		}
-//		return $pagination . '</div>';
-//	}
+	public function pagination(array $items, $addBtn)
+	{
+		$pagination = '<div class="pagination">';
+			$i = 0;
+			foreach ($items as $id => $el) {
+				$i++;
+				$d = <<<heretext
+<div data-pagination=$id>$i</div>
+heretext;
+				$pagination .= $d;
+			}
+
+		if ($addBtn) {
+			$pagination .= "<div class='pagination__add-question'>+</div>";
+		}
+		return $pagination . '</div>';
+	}
 
 }

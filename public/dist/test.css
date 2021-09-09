@@ -10,10 +10,11 @@ section {
   justify-content: start;
   flex: 1 0 auto;
   max-width: 1310px;
-  margin: auto;
-  flex-wrap: wrap; }
+  margin: auto; }
   .container-do-test .content {
-    margin: 0px 40px; }
+    margin: 0px 40px;
+    display: flex;
+    flex-flow: column; }
 
 .apic img {
   width: 100px;
@@ -625,7 +626,7 @@ textarea:focus,
   padding: 13px;
   background: #1bbc9b;
   color: #fff;
-  font: 400 17px/17px intro, 'Proxima Nova', sans-serif; }
+  font: 600 17px/17px intro, 'Proxima Nova', sans-serif; }
   .h-cat:first-child ul {
     left: 0; }
     .h-cat:first-child ul:before {

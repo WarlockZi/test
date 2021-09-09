@@ -1,6 +1,5 @@
 import {$, popup, post} from "../../common"
 import {_answer} from "./answer";
-// import {_question} from "./question"
 
 export let _question = {
 
@@ -10,15 +9,14 @@ export let _question = {
 
         let model = _question.viewModel(question)
         model.sort.innerText = '1'
-
-        $(question).addClass('question-edit')
-        $(question).removeClass('question__create')
-        let questionsWrapper = $('.questions').el[0]
-        questionsWrapper.prepend(question)
-
         $(model.save).on('click', _question.save)
         $(model.del).on('click', _question.delete)
 
+        $(question).addClass('question-edit')
+        $(question).removeClass('question__create')
+
+        let questions = $('.questions').el[0]
+        questions.prepend(question)
     },
 
     cloneEmptyModel: () => {
@@ -66,16 +64,9 @@ export let _question = {
     questionsCount: () => {
         return $('.questions>.question-edit').el.length
     },
-    lastQuestion: () => {
-        let questions = _question.questions()
-        return questions[questions.length - 1]
-    },
 
     create:
         async (e) => {
-            // let add_button = e.target.closest('.')
-            // let el = add_button.closest('.question-edit')
-
             let q_id = await _question.createOnServer(e)
             if (q_id) {
                 _question.createOnView(q_id)
@@ -83,17 +74,8 @@ export let _question = {
         },
 
     createOnServer:
-        async (e) => {
-            let self = this
-
-            let add_button = e.target
-            // let question_div = add_button.parentNode.parentNode
+        async () => {
             let question = _question.serverModel()
-            // let t = $(question_div).find('.question__text')
-            // question.question.qustion = t.innerText
-            // let answers = _question.getAnswers(question_div.parentNode)
-
-            // question.question.sort = question.question.sort
             let res = await post('/question/updateOrCreate', {question: question.question, answers: {}})
             res = await JSON.parse(res)
             return res.id
@@ -101,42 +83,33 @@ export let _question = {
 
     createOnView:
         (q_id) => {
-            let questions = _question.questions()
             let clone = _question.cloneEmptyModel()
-            let model = _question.viewModel(clone)
 
+            let model = _question.viewModel(clone)
             $(model.save).on('click', _question.save)
             $(model.del).on('click', _question.delete)
-
-            model.sort.innerText = questions.length + 1
-            model.text.innerText = ''
-
-            $(model.createAnswerButton).on('click', _answer.create)
             $(model.text).on('click', _question.showAnswers)
+            $(model.createAnswerButton).on('click', _answer.create)
 
+            model.sort.innerText = _question.questions().length + 1
+            model.text.innerText = ''
             model.el.id = q_id
-            let addButt = model.addButton
-            addButt.before(clone)
+
+            model.addButton.before(clone)
         },
 
 
     save:
         async (e) => {
             let question = e.target.closest('.question-edit')
-            // let viewModel = _question.viewModel(question)
-            // if (viewModel.id) {
-                let res = await post(
-                    '/question/UpdateOrCreate',
-                    {
-                        question: _question.getModelForServer(question),
-                        answers: _question.getAnswers(question),
-                    })
-                res = await JSON.parse(res)
-                popup.show(res.msg)
-                return
-            // } else {
-            //     _question.create(e)
-            // }
+            let res = await post(
+                '/question/UpdateOrCreate',
+                {
+                    question: _question.getModelForServer(question),
+                    answers: _question.getAnswers(question),
+                })
+            res = await JSON.parse(res)
+            popup.show(res.msg)
         },
 
     delete:
@@ -148,6 +121,7 @@ export let _question = {
                 let deleted = await _question.deleteFromServer(id)
                 if (deleted) {
                     _question.deleteFromView(viewModel)
+                    popup.show(deleted.msg)
                 }
             }
         },

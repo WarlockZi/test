@@ -276,7 +276,7 @@ textarea:focus,
   padding: 13px;
   background: #1bbc9b;
   color: #fff;
-  font: 400 17px/17px intro, 'Proxima Nova', sans-serif; }
+  font: 600 17px/17px intro, 'Proxima Nova', sans-serif; }
   .h-cat:first-child ul {
     left: 0; }
     .h-cat:first-child ul:before {
@@ -485,7 +485,6 @@ section {
   margin: 5px 20px; }
 
 .test-name {
-  flex: 1 0 auto;
   text-transform: uppercase;
   font-weight: 800;
   margin: 0px 0 20px 15px;

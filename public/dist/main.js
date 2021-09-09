@@ -169,7 +169,7 @@ function clearCache() {
 
 
 let popup = {
-  show: function (txt) {
+  show: function (txt, callback) {
     let close = this.el('div', 'popup__close');
     close.innerText = 'X';
     let popup__item = this.el('div', 'popup__item');
@@ -192,6 +192,7 @@ let popup = {
     let removeDelay = hideDelay + 950;
     setTimeout(() => {
       popup__item.remove();
+      callback();
     }, removeDelay);
   },
   close: function (e) {

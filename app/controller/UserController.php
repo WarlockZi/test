@@ -32,7 +32,7 @@ class UserController extends AppController
 			$user['surName'] = $data['surName'];
 			$user['name'] = $data['name'];
 			$user['email'] = $data['to'][0];
-			$user['password'] = md5($data['password'].$this->salt);
+			$user['password'] = md5($data['password'] . $this->salt);
 			$user['hash'] = $hash;
 
 			if (!App::$app->user->create($user)) {
@@ -40,13 +40,13 @@ class UserController extends AppController
 			}
 			$data['subject'] = "Регистрация VITEX";
 			$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/user/confirm?hash={$hash}";
-			$data['body']= $this->prepareBodyRegister($href, $hash);
+			$data['body'] = $this->prepareBodyRegister($href, $hash);
 			$data['altBody'] = "Подтверждение почты: <a href = '{$href}'>нажать сюда</a>>";
 
 			try {
 				Mail::send_mail($data);
 				exit('confirm');
-			} catch (\Exception $e){
+			} catch (\Exception $e) {
 				exit($e->getMessage());
 			}
 //			$overlay = $this->registerGetOverlay();
@@ -63,6 +63,7 @@ class UserController extends AppController
 		$template = ob_get_clean();
 		return $template;
 	}
+
 	private function registerGetOverlay()
 	{
 		$msg[] = "Для подтвержения регистрации перейдите по ссылке в <br><a href ='https://mail.vitexopt.ru/webmail/login/'>ПОЧТЕ</a>.<br>Письмо может попасть в папку 'Спам'";
@@ -70,10 +71,10 @@ class UserController extends AppController
 		include ROOT . '/app/view/User/alert.php';
 		return ob_get_clean();
 	}
+
 	public function actionUnsubscribe()
 	{
 		exit('unsubscribed');
-		//unsubscribe
 	}
 
 	public function actionLogout()
@@ -110,14 +111,13 @@ class UserController extends AppController
 	{
 		$this->auth();
 		if ($data = $this->ajax) {
-			$old_password = "" . md5($data['old_password']);
+			$old_password = $this->preparePassword($data['old_password']);
 			if ($user = App::$app->user->findWhere('password', $old_password)[0]) {
-				$user['password'] = "" . md5($data['new_password']);
+				$user['password'] = $this->preparePassword($data['new_password']);
 				App::$app->user->update($user);
 				exit('ok');
-			} else {
-				exit('fail');
 			}
+			exit('fail');
 		}
 
 		View::setMeta('Личный кабинет', 'Личный кабинет', '');
@@ -129,9 +129,8 @@ class UserController extends AppController
 	{
 		if ($data = $this->ajax) {
 			$_SESSION['id'] = '';
-			App::$app->user->returnPass($data['email']);
-			$_SESSION["msg"] = 'Новый пароль проверьте на почте';
-			exit('ok');
+			App::$app->user->returnPass($data['email'], $this->salt);
+			exit(json_encode(['msg' => 'Новый пароль проверьте на почте']));
 		}
 		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
 		View::setJs('auth.js');
@@ -143,7 +142,7 @@ class UserController extends AppController
 	{
 		if ($data = $this->ajax) {
 			$email = (string)$data['email'];
-			$password = (string)$data['password'].$this->salt;
+			$password = (string)$data['password'] . $this->salt;
 
 			if (!User::checkEmail($email)) {
 				$msg[] = "Неверный формат email";
@@ -156,23 +155,21 @@ class UserController extends AppController
 				exit(include ROOT . '/app/view/User/alert.php');
 			}
 
-			$user = App::$app->user->findWhere("email", $email);
+			$user = App::$app->user->findWhere("email", $email)[0];
 
-			if ($user === null) {
+			if ($user === null || !$user) {
 				exit('not_registered');
-			} elseif (!$user) {
-				exit('not_registered');
-			} elseif ($user[0]['password'] !== md5($password)) {
+			} elseif ($user['password'] !== md5($password)) {
 				exit('fail');
-			} elseif (!(int)$user[0]['confirm']) {
+			} elseif (!(int)$user['confirm']) {
 				$msg[] = 'зайдите на почту, с которой регистрировались.';
 				$msg[] = 'найдите письмо "Регистрация VITEX".';
 				$msg[] = 'перейдите по ссылке в письме.';
 				exit(include ROOT . '/app/view/User/alert.php');
 
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
-				$user[0]['rights'] = explode(",", $user[0]['rights']);
-				$this->setAuth($user[0]);
+				$user['rights'] = explode(",", $user['rights']);
+				$this->setAuth($user);
 				exit('ok');
 			}
 		}

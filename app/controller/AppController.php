@@ -43,6 +43,12 @@ class AppController extends Controller
 	}
 
 	public
+	function preparePassword(String $password)
+	{
+		return md5($password.$this->salt);
+	}
+
+	public
 	function auth()
 	{
 		if (!isset($_SESSION['id']) || !$_SESSION['id']) {
