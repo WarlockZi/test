@@ -84,10 +84,21 @@ class TestController Extends AppController
 		}
 	}
 
+	public function actionUpdateOrCreate()
+	{
+		if ($this->ajax) {
+
+			if ($id = App::$app->test->updateOrCreate($this->ajax['id'], $this->ajax)) {
+				$q_id = App::$app->question->create();
+				exit(json_encode([
+					'id' => $id,
+				]));
+			}
+		}
+	}
+
 	public function actionEdit()
 	{
-		$this->layout = 'admin';
-
 		$id = (int)$this->route['id'];
 		$test = App::$app->test->findOne($id);
 		if ($test) {
@@ -99,6 +110,7 @@ class TestController Extends AppController
 		unset ($testDataToEdit['correct_answers']);
 
 		$this->set(compact('test', 'testDataToEdit'));
+		$this->layout = 'admin';
 		View::setJs('test_edit.js');
 		View::setCss('test_edit.css');
 
@@ -188,19 +200,19 @@ class TestController Extends AppController
 
 	private function getMenu()
 	{
-		$menuTestDo = App::$app->cache->get('menuTestDo');
-		if ($menuTestDo) return $menuTestDo;
-		if (!$menuTestDo) {
-			ob_start();
-			new Menu([
-				'tpl' => ROOT . "/app/view/widgets/menu/menu_tpl/do_test_menu.php",
-				'cache' => 60,
-				'sql' => "SELECT * FROM test WHERE enable = '1'"
-			]);
-			$menuTestDo = ob_get_clean();
-			App::$app->cache->set('menuTestDo', $menuTestDo, 60 * 5);
-			return $menuTestDo;
-		}
+//		$menuTestDo = App::$app->cache->get('menuTestDo');
+//		if ($menuTestDo) return $menuTestDo;
+
+		ob_start();
+		new Menu([
+			'tpl' => ROOT . "/app/view/widgets/menu/menu_tpl/do_test_menu.php",
+			'cache' => 60,
+			'sql' => "SELECT * FROM test WHERE enable = '1'"
+		]);
+		$menuTestDo = ob_get_clean();
+
+		App::$app->cache->set('menuTestDo', $menuTestDo, 60 * 5);
+		return $menuTestDo;
 	}
 
 	public function actionGetCorrectAnswers()

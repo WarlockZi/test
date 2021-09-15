@@ -5,16 +5,15 @@ import '../components/footer/footer.scss'
 
 import './test-edit.scss'
 import './show'
-import '../Test/test_edit_theme_2'
 import '../Admin/admin.scss'
 
 import '../components/popup.scss'
-import {$, tooltip, validate} from '../common'
+import {$} from '../common'
 
+import {_test} from "./model/test";
 import {_question} from "./model/question";
-import {sortable} from "../components/sortable";
 import {_answer} from "./model/answer";
-// import "../Admin/admin_main_menu";
+import {sortable} from "../components/sortable";
 
 function navigate(str) {
     switch (true) {
@@ -26,28 +25,28 @@ function navigate(str) {
 
 navigate(window.location.pathname)
 
-sortable.connect('.questions')
-
 // при создании нового теста показать пустой вопрос
 let questions =  _question.questions()
-if (!questions.length) {
+if (!questions.length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
     _question.showFirst()
 }
+
+sortable.connect('.questions')
 
 // check('/image/create')
 
 
-$('.question__sort').on('change', validate.sort)
+$('.test__update').on('click', _test.update)
+$('.test-path__update').on('click', _test.update)
+
+// $('.question__sort').on('change', validate.sort)
 $('.question__save').on('click', _question.save)
 $('.question__text').on('click', _question.showAnswers)
 $('.question__delete').on('click', _question.delete)
 $('.question__create-button').on('click', _question.create)
 
 
-$('.answer__delete').on('click', function () {
-    _answer.del(this)
-})
-
+$('.answer__delete').on('click', _answer.del)
 $('.answer__create-button').on('click', _answer.create)
 
 

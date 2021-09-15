@@ -20,8 +20,7 @@ let _test = {
       id: +window.location.href.split('/').pop(),
       test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
       enable: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#enable').el[0].checked,
-      isTest: +!(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[isTest]').el[0].getAttribute('isTest'),
-      // sort: 0,
+      isTest: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[isTest]').el[0].getAttribute('isTest'),
       parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()
     };
   },
@@ -30,13 +29,16 @@ let _test = {
       id: +window.location.href.split('/').pop(),
       test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
       enable: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#enable').el[0],
-      // isTest: +!$('#isTest').el[0].checked,
-      // sort: $('#enable'),
       parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()
     };
   },
   id: id => {
     return id ?? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
+  },
+  children: () => {
+    let arrChildren = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.children').el;
+    if (!arrChildren[0].innerText === 'не содержит') return arrChildren.length;
+    return false;
   },
   path_create: async () => {
     let test_path = _test.serverModel();
@@ -59,7 +61,7 @@ let _test = {
 
     test.id = 0;
     test.isTest = 1;
-    let url = `/test/create`;
+    let url = `/test/updateOrCreate`;
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)(url, test);
     res = await JSON.parse(res);
 
@@ -79,6 +81,11 @@ let _test = {
     }
   },
   delete: async function () {
+    if (_test.children()) {
+      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show('Сначала удалите все тесты из папки');
+      return false;
+    }
+
     let viewModel = _test.viewModel();
 
     viewModel.enable.checked = false;

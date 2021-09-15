@@ -11,19 +11,6 @@ class AdminscController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
-//		if ($this->isAjax()) {
-//			if (isset($_POST['param'])) {
-//				$arr = json_decode($_POST['param'], true);
-//				if (!isset($arr['token']) || !$arr['token'] == $_SESSION['token']) {
-//					exit(FALSE);
-//				}
-//				$func = $arr['action'];
-//				$model = $arr['model'] ?: 'adminsc';
-//				if (App::$app->{$model}->$func($arr)) {
-//					exit('true');
-//				}
-//			}
-//		}
 		$this->auth();
 		$this->layout = 'admin';
 
@@ -55,8 +42,6 @@ class AdminscController extends AppController
 	{
 
 		$fName = $fAct = $fArt = 0;
-//      $params = [];
-//      $where = $QSA = '';
 		$params = explode('&', $_SERVER['QUERY_STRING'], 2);
 		if (count($params) > 1) {
 			$QSA = urldecode($params[1]);
@@ -117,15 +102,6 @@ class AdminscController extends AppController
 
 	public function actionIndex()
 	{
-//		$this->auth();
-
-//		if ($_POST && count($_POST) == 1) {
-//			reset($_POST);
-//			$action = key($_POST);
-//			if (isset($_POST[$action])) {
-//				$this->$action();
-//			}
-//		}
 		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
 
@@ -151,7 +127,6 @@ class AdminscController extends AppController
 
 	public function OFixPicNames()
 	{
-
 // уберем upload/iblock/ из dpic
 		$sql = "UPDATE products SET dpic = REPLACE(dpic, '/upload/iblock', '')";
 		App::$app->product->insertBySql($sql);
@@ -160,23 +135,6 @@ class AdminscController extends AppController
 		App::$app->product->insertBySql($sql);
 
 		header('settings');
-	}
-
-	public function fixProductsPath()
-	{
-
-//      $sql = "SELECT * FROM products";
-//      $products = App::$app->product->findBySql($sql);
-//      foreach ($products as $key => $value) {
-//         $durl = $value['durl'];
-//         $arr = explode('/', $durl);
-//         $name = array_pop($arr);
-//         $string =
-//            "UPDATE products SET alias = '{$name}' where durl='{$durl}'";
-//         $sql = str_replace('/', '\/', $string);
-//         App::$app->product->insertBySql($string);
-//      }
-		exit;
 	}
 
 }

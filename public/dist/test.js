@@ -190,25 +190,27 @@ let _answer = {
     }
   },
 
-  async del(del_button) {
-    await deleteFromServer(del_button);
-    deleteFromView(del_button);
+  async del(e) {
+    let del_button = e.target;
+
+    if (confirm("Удалить этот ответ?")) {
+      await deleteFromServer(del_button);
+      deleteFromView(del_button);
+    }
 
     function deleteFromView(del_button) {
       del_button.parentNode.remove();
     }
 
     async function deleteFromServer(del_button) {
-      if (confirm("Удалить этот ответ?")) {
-        let a_id = +del_button.closest('.answer').dataset['answerId'];
-        let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/answer/delete', {
-          a_id
-        });
-        res = JSON.parse(res);
+      let a_id = +del_button.closest('.answer').dataset['answerId'];
+      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/answer/delete', {
+        a_id
+      });
+      res = JSON.parse(res);
 
-        if (res.msg === 'ok') {
-          _common__WEBPACK_IMPORTED_MODULE_0__.popup.show('Ответ удален');
-        }
+      if (res.msg === 'ok') {
+        _common__WEBPACK_IMPORTED_MODULE_0__.popup.show('Ответ удален');
       }
     }
   }
@@ -232,6 +234,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let _question = {
+  sort: async function (upToQestionNumber) {
+    let questions = [..._question.questions()];
+    let questionsEls = questions.filter(function (el, i) {
+      if (i + 1 < upToQestionNumber) return el;
+    });
+    let toChange = questionsEls.map(el => {
+      return el.id;
+    });
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/sort', {
+      toChange
+    });
+    res = JSON.parse(res);
+
+    if (res.msg) {
+      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg);
+    }
+
+    questionsEls.map((el, i) => {
+      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(el).find('.question__sort').innerText = i + 1;
+    });
+  },
   showFirst: () => {
     let question = _question.cloneEmptyModel();
 
@@ -249,7 +272,7 @@ let _question = {
   },
   cloneEmptyModel: () => {
     let question = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question__create .question-edit').el[0];
-    return question.cloneNode(true);
+    if (question) return question.cloneNode(true);
   },
   showAnswers: e => {
     let text = e.target;
@@ -393,8 +416,7 @@ let _test = {
       id: +window.location.href.split('/').pop(),
       test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
       enable: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#enable').el[0].checked,
-      isTest: +!(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[isTest]').el[0].getAttribute('isTest'),
-      // sort: 0,
+      isTest: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[isTest]').el[0].getAttribute('isTest'),
       parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()
     };
   },
@@ -403,13 +425,16 @@ let _test = {
       id: +window.location.href.split('/').pop(),
       test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
       enable: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#enable').el[0],
-      // isTest: +!$('#isTest').el[0].checked,
-      // sort: $('#enable'),
       parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()
     };
   },
   id: id => {
     return id ?? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
+  },
+  children: () => {
+    let arrChildren = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.children').el;
+    if (!arrChildren[0].innerText === 'не содержит') return arrChildren.length;
+    return false;
   },
   path_create: async () => {
     let test_path = _test.serverModel();
@@ -432,7 +457,7 @@ let _test = {
 
     test.id = 0;
     test.isTest = 1;
-    let url = `/test/create`;
+    let url = `/test/updateOrCreate`;
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)(url, test);
     res = await JSON.parse(res);
 
@@ -452,6 +477,11 @@ let _test = {
     }
   },
   delete: async function () {
+    if (_test.children()) {
+      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show('Сначала удалите все тесты из папки');
+      return false;
+    }
+
     let viewModel = _test.viewModel();
 
     viewModel.enable.checked = false;

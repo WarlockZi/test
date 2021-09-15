@@ -2,6 +2,25 @@ import {$, popup, post} from "../../common"
 import {_answer} from "./answer";
 
 export let _question = {
+    sort: async function (upToQestionNumber) {
+        let questions = [..._question.questions()]
+        let questionsEls =questions.filter(function (el, i) {
+                if (i + 1 < upToQestionNumber) return el
+            }
+        )
+        let toChange = questionsEls.map((el)=>{
+            return el.id
+        })
+        let res = await post('/question/sort', {toChange})
+        res = JSON.parse(res)
+        if (res.msg) {
+            popup.show(res.msg)
+        }
+        questionsEls.map((el,i)=>{
+            $(el).find('.question__sort').innerText = i+1
+
+        })
+    },
 
     showFirst: () => {
         let question = _question.cloneEmptyModel()
@@ -21,7 +40,7 @@ export let _question = {
 
     cloneEmptyModel: () => {
         let question = $('.questions .question__create .question-edit').el[0]
-        return question.cloneNode(true)
+        if (question) return question.cloneNode(true)
     },
 
     showAnswers: (e) => {

@@ -12,11 +12,12 @@
   }
 }
 .test__save,
-.test-show__create,
+.test__update,
+.test-path__update,
 .test-path__create,
 .test__create,
 .test__delete,
-.test-update__delete,
+.test-update__delete
 {
   color: #fff;
   font-weight: 600;
@@ -29,7 +30,6 @@
   transition: box-shadow 100ms;
   display: flex;
   justify-content: center;
-  //padding: 5px;
   margin-top: 20px;
   width: 80px;
 
