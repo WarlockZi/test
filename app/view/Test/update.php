@@ -33,7 +33,7 @@
 				<? endif; ?>
 			</div>
 			<input type="hidden" isTest="<?= $test['isTest'] ?>">
-			<div class="<?= $test['isTest'] ? 'test__create' : 'test-path__create' ?>">Сохранить</div>
+			<div class="<?= $test['isTest'] ? 'test__update' : 'test-path__update' ?>">Сохранить</div>
 			<div class="test__delete">Удалить</div>
 		</div>
 

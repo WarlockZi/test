@@ -123,9 +123,6 @@ here;
 		}
 	}
 
-
-
-
 	public
 	function updateOrCreate($id, $values)
 	{
@@ -279,7 +276,7 @@ here;
 		$tree = [];
 		$data = $this->data;
 		foreach ($data as $id => &$node) {
-			if (isset($node['parent']) && !$node['parent']) {
+			if (array_key_exists('parent',$node) && !$node['parent']) {
 				$tree[$id] = &$node;
 			} elseif (isset($node['parent']) && $node['parent']) {
 				$data[$node['parent']]['childs'][$id] = &$node;

@@ -1,5 +1,6 @@
 import Sortable from 'sortablejs'
 import {$} from '../common'
+import {_question} from "../Test/model/question";
 
 export let sortable = {
 
@@ -9,8 +10,13 @@ export let sortable = {
             let sortable = Sortable.create(el, {
                 animation: 150,
                 onEnd: function (evt) {
-                    evt.oldIndex;
-                    evt.newIndex;
+                let questions = _question.questions()
+                    _question.sort(evt.newIndex)
+                    for (let i = 0; i<evt.newIndex; i++){
+
+                    }
+                    // alert(evt.oldIndex)
+                    // alert(evt.newIndex)
                 },
             })
         }

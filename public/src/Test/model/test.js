@@ -7,8 +7,7 @@ export let _test = {
             id: +window.location.href.split('/').pop(),
             test_name: $('#test_name').text(),
             enable: +$('#enable').el[0].checked,
-            isTest: +!$('[isTest]').el[0].getAttribute('isTest'),
-            // sort: 0,
+            isTest: +$('[isTest]').el[0].getAttribute('isTest'),
             parent: $('select').selectedIndexValue(),
         }
     },
@@ -18,14 +17,18 @@ export let _test = {
             id: +window.location.href.split('/').pop(),
             test_name: $('#test_name').text(),
             enable: $('#enable').el[0],
-            // isTest: +!$('#isTest').el[0].checked,
-            // sort: $('#enable'),
             parent: $('select').selectedIndexValue(),
         }
     },
 
     id: (id) => {
         return id ?? $('.test-name').value()
+    },
+    children: () => {
+        let arrChildren = $('.children').el
+        if (!arrChildren[0].innerText === 'не содержит')
+            return arrChildren.length
+        return false
     },
 
     path_create: async () => {
@@ -48,7 +51,7 @@ export let _test = {
         let test = _test.serverModel()
         test.id = 0
         test.isTest = 1
-        let url = `/test/create`
+        let url = `/test/updateOrCreate`
         let res = await post(url, test)
         res = await JSON.parse(res)
         if (res) {
@@ -67,6 +70,12 @@ export let _test = {
     },
 
     delete: async function () {
+
+        if (_test.children()) {
+            popup.show('Сначала удалите все тесты из папки')
+            return false
+        }
+
         let viewModel = _test.viewModel()
         viewModel.enable.checked = false
         let serverModel = _test.serverModel()
@@ -79,7 +88,7 @@ export let _test = {
             setTimeout(() => {
                 window.location = '/adminsc/test/edit/400'
             }, 4000)
-        }else{
+        } else {
             window.location = '/adminsc/test/edit/400'
         }
 

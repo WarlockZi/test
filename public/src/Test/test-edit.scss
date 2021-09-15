@@ -1,4 +1,241 @@
 @import "./test-edit-menu";
+@import "../var";
+
+.test-edit__content {
+  margin-left: 10px;
+  flex-flow: column;
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.question__create-button {
+  flex-basis: 12px;
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #1bbc9b;
+  padding: 7px 11px;
+  cursor: pointer;
+  border-top: 1px solid #1bbc9b;
+  margin: 0 0 10px 0;;
+  transition: box-shadow 100ms;
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.question__create {
+  display: none;
+}
+
+.question-edit {
+  background-color: #efefef;
+  display: flex;
+  flex-flow: column;
+  padding: 2px;
+}
+
+.question__text {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  min-width: 90px;
+  padding: 10px 10px 10px 30px;
+  background-color: white;
+  margin: 0 3px;
+  font-weight: 600;
+  position: relative;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    cursor: pointer;
+
+    border-right: 2px solid $color-main;
+    border-top: 2px solid $color-main;
+    width: 10px;
+    height: 10px;
+    top: 30%;
+    left: 5px;
+    position: absolute;
+    transition: transform 300ms;
+    transform: rotate(45deg);
+  }
+}
+
+.rotate {
+  &:before {
+    transform: rotate(135deg) !important;
+  }
+}
+
+.question__sort {
+  cursor: move;
+  display: flex;
+  flex-basis: 45px;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  margin-right: 3px;
+  padding: 0;
+  font-weight: 600;
+}
+
+.question__save {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  cursor: pointer;
+
+  :hover svg g {
+    fill: red;
+  }
+
+  svg {
+    width: 20px;
+    margin: 10px;
+
+    .save {
+      fill: red;
+    }
+
+    &:hover .save {
+      fill: #1bbc9b;
+    }
+  }
+
+}
+
+.questions {
+  display: flex;
+  flex-flow: column;
+}
+
+.question__image {
+  display: flex;
+  flex: 2;
+}
+
+.question-edit_row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.question__answers.height {
+  height: auto !important;
+  margin: 5px 0 0 47px;
+
+}
+
+.question__answers.scale {
+  transform: scaleY(1) !important;
+}
+
+.question__answers {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  flex: 2;
+  height: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.1s;
+}
+
+
+.question__delete {
+  width: 55px;
+  cursor: pointer;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    fill: red;
+
+  }
+}
+
+
+//*//          ANSWER   ///*
+.answer__sort {
+  padding: 5px;
+  font-size: .8rem;
+  flex-basis: 20px;
+}
+
+.answer__text {
+  padding: 5px;
+  flex: 1;
+  font-size: .8rem;
+}
+
+.answer__delete {
+  width: 35px;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.answer__delete:nth-child(odd) {
+  background: #1bbc9b3d;
+}
+
+.answer__correct {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.answer {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  overflow: hidden;
+  align-items: center;
+}
+
+.answer:nth-child(odd) {
+  background: #1bbc9b3d;
+}
+
+.answer__create-button {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-main;
+  background-color: #fff;
+  border-top: 1px solid $color-main;
+  transition: color .5s, background-color .5s;
+
+  &:hover {
+    background-color: #c8efe7;
+  }
+
+}
+
+.answer__create {
+  display: none;
+  opacity: 0;
+  align-items: center;
+  transition: opacity 1s;
+
+  &:nth-child(odd) {
+    background: #1bbc9b3d;
+  }
+}
+
+
+
 
 html {
   overflow-y: scroll
@@ -6,8 +243,6 @@ html {
 section{
   margin: 5px 20px;
 }
-
-
 
 .test-name {
   //flex: 1 0 auto;
@@ -76,9 +311,9 @@ section{
 
 .test-edit-wrapper {
   display: flex;
-  flex: 1 0 auto;
   margin: 10px;
   font-family: 'Roboto', Arial, Serif;
+  flex: 1 1 auto;
 
 
   /*Иконки для всплывающих менюшек*/

@@ -2,10 +2,10 @@
 
 namespace app\controller;
 
-use app\model\User;
-use app\model\Test;
-use app\view\View;
-use app\view\widgets\menu\Menu;
+//use app\model\User;
+//use app\model\Test;
+//use app\view\View;
+//use app\view\widgets\menu\Menu;
 use app\core\App;
 use mysql_xdevapi\Exception;
 
@@ -43,26 +43,26 @@ class QuestionController Extends AppController
 	public function actionUpdateOrCreate()
 	{
 		try {
-			$answers = $this->req['answers']??'';
-			$question = $this->req['question']??'';
-			$q_id = $this->req['question']['id']??'';
-			$sort = $this->req['question']['sort']??'';
+			$answers = $this->req['answers'] ?? '';
+			$question = $this->req['question'] ?? '';
+			$q_id = $this->req['question']['id'] ?? '';
+			$sort = $this->req['question']['sort'] ?? '';
 			$qId = App::$app->question->updateOrCreate($q_id, $question);
-			if ($qId===false) {
+			if ($qId === false) {
 				return;
-			}elseif(is_int($qId)){
-				if ($answers){
+			} elseif (is_int($qId)) {
+				if ($answers) {
 					foreach ($answers as $answer) {
 						$answer['parent_question'] = $qId;
 						App::$app->answer->updateOrCreate($answer['id'], $answer);
 					}
 				}
 				exit(json_encode([
-					'id'=>$qId,
+					'id' => $qId,
 					'msg' => 'Вопросы и ответы сохранены',
 					'paginationButton' => $pagination = "<div data-pagination = $q_id class='nav-active'>{$sort}</div>"
 				]));
-			}elseif($qId===true){
+			} elseif ($qId === true) {
 				foreach ($answers as $answer) {
 					App::$app->answer->updateOrCreate($answer['id'], $answer);
 				}
@@ -109,6 +109,13 @@ class QuestionController Extends AppController
 		}
 		App::$app->question->delete($q_id);
 		exit(json_encode(['msg' => 'ok', 'q_id' => $q_id]));
+	}
+
+	public function actionSort()
+	{
+		$q_ids = $this->ajax['toChange'];
+		App::$app->question->sort($q_ids);
+		exit(json_encode(['msg' => 'Сортировка сохранена']));
 	}
 
 }

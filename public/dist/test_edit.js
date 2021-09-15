@@ -75,25 +75,27 @@ let _answer = {
     }
   },
 
-  async del(del_button) {
-    await deleteFromServer(del_button);
-    deleteFromView(del_button);
+  async del(e) {
+    let del_button = e.target;
+
+    if (confirm("Удалить этот ответ?")) {
+      await deleteFromServer(del_button);
+      deleteFromView(del_button);
+    }
 
     function deleteFromView(del_button) {
       del_button.parentNode.remove();
     }
 
     async function deleteFromServer(del_button) {
-      if (confirm("Удалить этот ответ?")) {
-        let a_id = +del_button.closest('.answer').dataset['answerId'];
-        let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/answer/delete', {
-          a_id
-        });
-        res = JSON.parse(res);
+      let a_id = +del_button.closest('.answer').dataset['answerId'];
+      let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/answer/delete', {
+        a_id
+      });
+      res = JSON.parse(res);
 
-        if (res.msg === 'ok') {
-          _common__WEBPACK_IMPORTED_MODULE_0__.popup.show('Ответ удален');
-        }
+      if (res.msg === 'ok') {
+        _common__WEBPACK_IMPORTED_MODULE_0__.popup.show('Ответ удален');
       }
     }
   }
@@ -117,6 +119,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let _question = {
+  sort: async function (upToQestionNumber) {
+    let questions = [..._question.questions()];
+    let questionsEls = questions.filter(function (el, i) {
+      if (i + 1 < upToQestionNumber) return el;
+    });
+    let toChange = questionsEls.map(el => {
+      return el.id;
+    });
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/question/sort', {
+      toChange
+    });
+    res = JSON.parse(res);
+
+    if (res.msg) {
+      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg);
+    }
+
+    questionsEls.map((el, i) => {
+      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(el).find('.question__sort').innerText = i + 1;
+    });
+  },
   showFirst: () => {
     let question = _question.cloneEmptyModel();
 
@@ -134,7 +157,7 @@ let _question = {
   },
   cloneEmptyModel: () => {
     let question = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.questions .question__create .question-edit').el[0];
-    return question.cloneNode(true);
+    if (question) return question.cloneNode(true);
   },
   showAnswers: e => {
     let text = e.target;
@@ -278,8 +301,7 @@ let _test = {
       id: +window.location.href.split('/').pop(),
       test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
       enable: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#enable').el[0].checked,
-      isTest: +!(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[isTest]').el[0].getAttribute('isTest'),
-      // sort: 0,
+      isTest: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[isTest]').el[0].getAttribute('isTest'),
       parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()
     };
   },
@@ -288,13 +310,16 @@ let _test = {
       id: +window.location.href.split('/').pop(),
       test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
       enable: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#enable').el[0],
-      // isTest: +!$('#isTest').el[0].checked,
-      // sort: $('#enable'),
       parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()
     };
   },
   id: id => {
     return id ?? (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').value();
+  },
+  children: () => {
+    let arrChildren = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.children').el;
+    if (!arrChildren[0].innerText === 'не содержит') return arrChildren.length;
+    return false;
   },
   path_create: async () => {
     let test_path = _test.serverModel();
@@ -317,7 +342,7 @@ let _test = {
 
     test.id = 0;
     test.isTest = 1;
-    let url = `/test/create`;
+    let url = `/test/updateOrCreate`;
     let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)(url, test);
     res = await JSON.parse(res);
 
@@ -337,6 +362,11 @@ let _test = {
     }
   },
   delete: async function () {
+    if (_test.children()) {
+      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show('Сначала удалите все тесты из папки');
+      return false;
+    }
+
     let viewModel = _test.viewModel();
 
     viewModel.enable.checked = false;
@@ -382,24 +412,6 @@ __webpack_require__.r(__webpack_exports__);
 (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".test__delete").on('click', _model_test__WEBPACK_IMPORTED_MODULE_2__._test.delete);
 (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".test-path__create").on('click', _model_test__WEBPACK_IMPORTED_MODULE_2__._test.path_create);
 (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".test__create").on('click', _model_test__WEBPACK_IMPORTED_MODULE_2__._test.create);
-
-/***/ }),
-
-/***/ "./public/src/Test/test_edit_theme_2.js":
-/*!**********************************************!*\
-  !*** ./public/src/Test/test_edit_theme_2.js ***!
-  \**********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _test_edit_theme_2_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./test_edit_theme_2.scss */ "./public/src/Test/test_edit_theme_2.scss");
-/* harmony import */ var _model_answer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./model/answer */ "./public/src/Test/model/answer.js");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
-
-
-
-
 
 /***/ }),
 
@@ -757,6 +769,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sortablejs */ "./node_modules/sortablejs/modular/sortable.esm.js");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _Test_model_question__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Test/model/question */ "./public/src/Test/model/question.js");
+
 
 
 let sortable = {
@@ -767,8 +781,13 @@ let sortable = {
       let sortable = sortablejs__WEBPACK_IMPORTED_MODULE_0__.default.create(el, {
         animation: 150,
         onEnd: function (evt) {
-          evt.oldIndex;
-          evt.newIndex;
+          let questions = _Test_model_question__WEBPACK_IMPORTED_MODULE_2__._question.questions();
+
+          _Test_model_question__WEBPACK_IMPORTED_MODULE_2__._question.sort(evt.newIndex);
+
+          for (let i = 0; i < evt.newIndex; i++) {} // alert(evt.oldIndex)
+          // alert(evt.newIndex)
+
         }
       });
     }
@@ -805,18 +824,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************!*\
   !*** ./public/src/Test/test-edit.scss ***!
   \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/Test/test_edit_theme_2.scss":
-/*!************************************************!*\
-  !*** ./public/src/Test/test_edit_theme_2.scss ***!
-  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -4743,13 +4750,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
 /* harmony import */ var _test_edit_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./test-edit.scss */ "./public/src/Test/test-edit.scss");
 /* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./show */ "./public/src/Test/show.js");
-/* harmony import */ var _Test_test_edit_theme_2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Test/test_edit_theme_2 */ "./public/src/Test/test_edit_theme_2.js");
-/* harmony import */ var _Admin_admin_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Admin/admin.scss */ "./public/src/Admin/admin.scss");
-/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _Admin_admin_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Admin/admin.scss */ "./public/src/Admin/admin.scss");
+/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
 /* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
-/* harmony import */ var _components_sortable__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/sortable */ "./public/src/components/sortable.js");
-/* harmony import */ var _model_answer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./model/answer */ "./public/src/Test/model/answer.js");
+/* harmony import */ var _model_answer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./model/answer */ "./public/src/Test/model/answer.js");
+/* harmony import */ var _components_sortable__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/sortable */ "./public/src/components/sortable.js");
 
 
 
@@ -4761,35 +4768,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // import "../Admin/admin_main_menu";
+
 
 function navigate(str) {
   switch (true) {
     case /\/adminsc\/test/.test(str):
-      (0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.module.test').addClass('activ');
+      (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.module.test').addClass('activ');
       break;
   }
 }
 
-navigate(window.location.pathname);
-_components_sortable__WEBPACK_IMPORTED_MODULE_10__.sortable.connect('.questions'); // при создании нового теста показать пустой вопрос
+navigate(window.location.pathname); // при создании нового теста показать пустой вопрос
 
 let questions = _model_question__WEBPACK_IMPORTED_MODULE_9__._question.questions();
 
-if (!questions.length) {
+if (!questions.length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
   _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showFirst();
-} // check('/image/create')
+}
 
+_components_sortable__WEBPACK_IMPORTED_MODULE_11__.sortable.connect('.questions'); // check('/image/create')
 
-(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.question__sort').on('change', _common__WEBPACK_IMPORTED_MODULE_8__.validate.sort);
-(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.question__save').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.save);
-(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.question__text').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showAnswers);
-(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.question__delete').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.delete);
-(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.question__create-button').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.create);
-(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.answer__delete').on('click', function () {
-  _model_answer__WEBPACK_IMPORTED_MODULE_11__._answer.del(this);
-});
-(0,_common__WEBPACK_IMPORTED_MODULE_8__.$)('.answer__create-button').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_11__._answer.create);
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_8__._test.update);
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test-path__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_8__._test.update); // $('.question__sort').on('change', validate.sort)
+
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__save').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.save);
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__text').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showAnswers);
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__delete').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.delete);
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__create-button').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.create);
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.answer__delete').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_10__._answer.del);
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.answer__create-button').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_10__._answer.create);
 })();
 
 /******/ })()

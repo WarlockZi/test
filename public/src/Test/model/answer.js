@@ -5,7 +5,7 @@ export let _answer = {
     el: (add_button) => {
         let answers = add_button.parentNode.querySelectorAll('.answer')
         let prev_sort = 0
-        if (answers.length){
+        if (answers.length) {
             prev_sort = +$(answers[answers.length - 1]).find('.answer__sort').innerText
         }
         let el = $('.answer__create').find('.answer').cloneNode(true)
@@ -61,23 +61,24 @@ export let _answer = {
         }
     },
 
-    async del(del_button) {
-
-        await deleteFromServer(del_button)
-        deleteFromView(del_button)
+    async del(e) {
+        let del_button = e.target
+        if (confirm("Удалить этот ответ?")) {
+            await deleteFromServer(del_button)
+            deleteFromView(del_button)
+        }
 
         function deleteFromView(del_button) {
             del_button.parentNode.remove()
         }
+
         async function deleteFromServer(del_button) {
 
-            if (confirm("Удалить этот ответ?")) {
-                let a_id = +del_button.closest('.answer').dataset['answerId']
-                let res = await post('/answer/delete', {a_id})
-                res = JSON.parse(res)
-                if (res.msg === 'ok') {
-                    popup.show('Ответ удален')
-                }
+            let a_id = +del_button.closest('.answer').dataset['answerId']
+            let res = await post('/answer/delete', {a_id})
+            res = JSON.parse(res)
+            if (res.msg === 'ok') {
+                popup.show('Ответ удален')
             }
         }
     },
