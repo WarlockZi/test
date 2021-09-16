@@ -550,16 +550,7 @@ let validate = {
     let re = /^[a-zA-Z\-0-9]{6,20}$/;
     return re.test(password);
   }
-};
-
-function clearCache() {
-  async function clearCache() {
-    let response = await fetch('/adminsc/clearCache');
-    let result = await response.text();
-  }
-
-  clearCache().catch(alert);
-} // function up() {
+}; // function up() {
 //    var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
 //    if (top > 0) {
 //       window.scrollBy(0, -100);
@@ -569,7 +560,6 @@ function clearCache() {
 //       clearTimeout(t);
 //    return false;
 // }
-
 
 let popup = {
   show: function (txt, callback) {

@@ -12,6 +12,6 @@
 	<div class="breadcrumbs-adm">
 		<div>Admin</div>
 	</div>
-	<a href="/adminsc/clearCache">Очистить кэш</a>
+	<div class="clearCache">Очистить кэш</div>
 
 </div>

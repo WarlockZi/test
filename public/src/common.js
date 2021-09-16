@@ -26,14 +26,7 @@ let validate = {
 }
 
 
-function clearCache() {
-    async function clearCache() {
-        let response = await fetch('/adminsc/clearCache')
-        let result = await response.text();
-    }
 
-    clearCache().catch(alert);
-}
 // function up() {
 //    var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
 //    if (top > 0) {
