@@ -2,6 +2,34 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./public/src/Admin/model/cache.js":
+/*!*****************************************!*\
+  !*** ./public/src/Admin/model/cache.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "_cache": () => (/* binding */ _cache)
+/* harmony export */ });
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/popup.scss */ "./public/src/components/popup.scss");
+
+
+let _cache = {
+  clearedMsg: 'очищено',
+  clearCache: async function () {
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/adminsc/clearCache', {}); // res = await JSON.parse(res);
+    // res = await res.text(res)
+
+    if (res === 'Успешно') {
+      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res);
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./public/src/Test/model/test.js":
 /*!***************************************!*\
   !*** ./public/src/Test/model/test.js ***!
@@ -205,16 +233,7 @@ let validate = {
     let re = /^[a-zA-Z\-0-9]{6,20}$/;
     return re.test(password);
   }
-};
-
-function clearCache() {
-  async function clearCache() {
-    let response = await fetch('/adminsc/clearCache');
-    let result = await response.text();
-  }
-
-  clearCache().catch(alert);
-} // function up() {
+}; // function up() {
 //    var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
 //    if (top > 0) {
 //       window.scrollBy(0, -100);
@@ -224,7 +243,6 @@ function clearCache() {
 //       clearTimeout(t);
 //    return false;
 // }
-
 
 let popup = {
   show: function (txt, callback) {
@@ -551,6 +569,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/src/components/popup.scss":
+/*!******************************************!*\
+  !*** ./public/src/components/popup.scss ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./public/src/normalize.scss":
 /*!***********************************!*\
   !*** ./public/src/normalize.scss ***!
@@ -631,11 +661,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
 /* harmony import */ var _admin_catalog_menu_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./admin_catalog_menu.scss */ "./public/src/Admin/admin_catalog_menu.scss");
 /* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _model_cache__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./model/cache */ "./public/src/Admin/model/cache.js");
 
 
 
 
 
+
+
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.clearCache').on('click', _model_cache__WEBPACK_IMPORTED_MODULE_6__._cache.clearCache);
 })();
 
 /******/ })()
