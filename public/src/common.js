@@ -39,6 +39,7 @@ let validate = {
 // }
 
 let popup = {
+
     show: function (txt, callback) {
         let close = this.el('div', 'popup__close')
         close.innerText = 'X'
