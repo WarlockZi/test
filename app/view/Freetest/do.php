@@ -41,7 +41,7 @@
 				<? endforeach; ?>
 			</div>
 
-			<a class="button" id="finish-freetest" data-id="<?= $testId; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
+			<a class="test-do__finish-btn" id="finish-freetest" data-id="<?= $testId; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
 
 		</div>
 

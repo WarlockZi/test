@@ -79,11 +79,11 @@ section {
   background: linear-gradient(to bottom, white 0%, #f0f0f0 100%);
   box-shadow: 2px 5px 8px 1px #6a8784;
   cursor: pointer;
-  width: 15px;
   height: 15px;
   margin: 0 10px 0 0;
   display: block;
-  position: relative; }
+  position: relative;
+  flex: 0 0 15px; }
 
 .a label:hover {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.58); }
@@ -111,17 +111,22 @@ section {
 .greenShadow {
   box-shadow: #1bbc9b 1px 2px 0px 0px !important; }
 
-.container-do-test .menu {
+.test-do {
+  display: flex;
+  margin: 0 10px; }
+
+.test-do .menu {
   z-index: 1;
-  max-width: 300px; }
-  .container-do-test .menu > li {
+  max-width: 300px;
+  margin-right: 15px; }
+  .test-do .menu > li {
     background-color: #797979; }
-    .container-do-test .menu > li.vert-menu__list {
+    .test-do .menu > li.vert-menu__list {
       background-color: #1bbc9b; }
-      .container-do-test .menu > li.vert-menu__list:hover {
+      .test-do .menu > li.vert-menu__list:hover {
         background-color: #009979; }
 
-.container-do-test .menu a {
+.test-do .menu a {
   display: flex;
   align-items: center;
   flex: 1;
@@ -130,10 +135,10 @@ section {
   text-transform: uppercase;
   color: #ffffff; }
 
-.container-do-test .menu li .test-link a {
+.test-do .menu li .test-link a {
   text-transform: uppercase; }
 
-.container-do-test .menu li {
+.test-do .menu li {
   position: relative;
   border-bottom: 1px solid #b7b7b7;
   transition: 0.5s all;
@@ -170,7 +175,7 @@ section {
 .vert-menu__list:hover::after {
   transform: scaleX(-1); }
 
-a.button {
+.test-do__finish-btn {
   justify-content: center;
   padding: 10px;
   margin: 29px auto;
@@ -179,8 +184,9 @@ a.button {
   border-radius: 4px;
   display: flex;
   font-weight: 600;
-  box-shadow: 5px 4px 6px 1px #6a8784; }
-  a.button:hover {
+  box-shadow: 5px 4px 6px 1px #6a8784;
+  cursor: pointer; }
+  .test-do__finish-btn:hover {
     transition: box-shadow 100ms;
     box-shadow: 2px 2px 12px 0px #6a8784; }
 

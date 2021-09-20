@@ -171,6 +171,7 @@ class TestController Extends AppController
 			if (file_put_contents($fileUTF8, $data['pageCache'])) {
 				$data['to'] = [
 					'vitaliy04111979@gmail.com',
+					'vvoronik@yandex.ru'
 //					'10@vitexopt.ru',
 				];
 
