@@ -1,9 +1,5 @@
 @import "../var";
 
-section {
-  flex: 1 0 auto;
-}
-
 .site-wrapper {
   height: 100%
 }
@@ -146,16 +142,21 @@ section {
   box-shadow: #1bbc9b 1px 2px 0px 0px !important;
 }
 
-.test-do{
-  display: flex;
-  margin: 0 10px;
+
+.test-do__content{
+  margin-right: 15px;
 }
 /// MENU
 .test-do {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1310px;
+  flex: 1 0 auto;
+
   .menu {
     z-index: 1;
     max-width: 300px;
-    margin-right: 15px;
+    margin: 0 15px;
 
     & > li {
       background-color: #797979;
