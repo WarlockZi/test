@@ -28,7 +28,7 @@ __webpack_require__.r(__webpack_exports__);
 ///////////  RESULTS  TEST  Закончить тест/////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.content').on('click', async function (e) {
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-do__finish-btn').on('click', async function (e) {
   let button = e.target;
 
   if (button.id === 'btnn') {

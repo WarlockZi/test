@@ -19,7 +19,7 @@ $('[type="checkbox"]').on('click',function (e) {
 /////////////////////////////////////////////////////////////////////////////
 
 
-$('.content').on('click', async function (e) {
+$('.test-do__finish-btn').on('click', async function (e) {
     let button = e.target;
     if (button.id === 'btnn') {
         if (button.text == "ПРОЙТИ ТЕСТ ЗАНОВО") {
