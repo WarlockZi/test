@@ -155,10 +155,10 @@ class UserController extends AppController
 				exit(include ROOT . '/app/view/User/alert.php');
 			}
 
-			$user = App::$app->user->findWhere("email", $email)[0];
+			$user = App::$app->user->findWhere("email", $email);
 
 			if ($user === null || !$user) {
-				exit('not_registered');
+				exit(json_encode(['msg'=>'not_registered']));
 			} elseif ($user['password'] !== md5($password)) {
 				exit('fail');
 			} elseif (!(int)$user['confirm']) {

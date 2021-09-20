@@ -35,15 +35,16 @@ async function send(email) {
         "email": email,
         "password": $("input[type= password]").el[0].value,
     })
+    res = JSON.parse(res)
     let msg = $('.message').el[0]
-    if (res === 'fail') {
+    if (res.msg === 'fail') {
         msg.innerHTML = 'Не верный email или пароль'
         $(msg).addClass('error')
         $(msg).removeClass('success')
-    }else if(res==='ok'){
+    }else if(res.msg==='ok'){
         window.location = '/user/cabinet'
-    }  else if(res==='not_registered'){
-        msg.innerHTML = "Для регистрации перейдите в раздел <a href = '/user/register'>Регистрация</a>"
+    }  else if(res.msg==='not_registered'){
+        msg.innerHTML = "email не зарегистрирован <br> Для регистрации перейдите в раздел <a href = '/user/register'>Регистрация</a>"
         $(msg).addClass('error')
         $(msg).removeClass('success')
     }
