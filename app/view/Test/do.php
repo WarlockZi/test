@@ -2,7 +2,7 @@
 
 	<?= $menuTestDo; ?>
 
-	<div class="content">
+	<div class="test-do__content">
 
 		<? if (isset($testData) && !isset($error) && !$testData == 0):// Проверим, чтобы запрашивали конекретный тест?>
 
