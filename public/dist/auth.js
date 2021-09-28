@@ -148,6 +148,10 @@ async function send(email) {
     msg.innerHTML = 'Не верный email или пароль';
     (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(msg).addClass('error');
     (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(msg).removeClass('success');
+  } else if (res.msg === 'not confirmed') {
+    msg.innerHTML = "Зайдите на почту чтобы подтвердить регистрацию";
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(msg).addClass('error');
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(msg).removeClass('success');
   } else if (res.msg === 'ok') {
     window.location = '/user/cabinet';
   } else if (res.msg === 'not_registered') {
@@ -174,8 +178,13 @@ async function send(email) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("[name = 'reg']").on("click", async function (e) {
-  e.preventDefault();
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".forgot").on("click", async function () {
+  window.location.href = '/user/returnpass';
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".login").on("click", async function () {
+  window.location.href = '/user/login';
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".reg").on("click", async function () {
   let email = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type = email]').el[0].value;
   let password = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type = password]').el[0].value;
   let msg = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(".message").el[0];
@@ -248,21 +257,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.return_pass').on('click', async function (e) {
-  e.preventDefault();
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.returnpass').on('click', async function (e) {
+  let email = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type="email"]').el[0].value;
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/user/returnPass', {
+    email: email
+  });
+  res = await JSON.parse(res);
 
-  if (e.target.classList.contains('returnpass')) {
-    let email = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type="email"]').el[0].value;
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/user/returnPass', {
-      email: email
+  if (res) {
+    _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg, function () {
+      window.location = '/user/login';
     });
-    res = await JSON.parse(res);
-
-    if (res) {
-      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show(res.msg, function () {
-        window.location = '/user/login';
-      });
-    }
   }
 });
 

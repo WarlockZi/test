@@ -489,14 +489,36 @@ header {
   box-sizing: border-box;
   color: #757575; }
 
-.submit {
-  padding: 14px;
+.form__buttons {
+  display: flex;
+  justify-content: space-between; }
+
+.form__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 1px;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  color: #757575;
   background: rgba(0, 0, 0, 0.15);
   text-align: center;
   font-weight: 600;
+  font: 1em;
   cursor: pointer;
   max-height: 45px; }
-  .submit:hover {
+  .form__button:hover {
+    background: #a2a2a2;
+    color: #fff; }
+
+.form__button-secondary {
+  color: #949494;
+  padding: 10px 3px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer; }
+  .form__button-secondary:hover {
     background: #a2a2a2;
     color: #fff; }
 

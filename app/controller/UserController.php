@@ -102,9 +102,17 @@ class UserController extends AppController
 	public function actionCabinet()
 	{
 		$this->auth();
+
+		$userId = $_SESSION['id'];
+		if ($userId){
+			$user = App::$app->user->getUserById([$userId]);
+			$this->set(compact('user'));
+		}
+
 		View::setMeta('Личный кабинет', 'Личный кабинет', '');
 		View::setCss('cabinet.css');
 		View::setJs('cabinet.js');
+
 	}
 
 	public function actionChangePassword()
@@ -128,9 +136,7 @@ class UserController extends AppController
 	public function actionReturnPass()
 	{
 		if ($data = $this->ajax) {
-			$_SESSION['id'] = '';
-			App::$app->user->returnPass($data['email'], $this->salt);
-			exit(json_encode(['msg' => 'Новый пароль проверьте на почте']));
+			$this->returnPass($data['email'], $this->salt);
 		}
 		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
 		View::setJs('auth.js');
@@ -138,39 +144,62 @@ class UserController extends AppController
 
 	}
 
+
+	public function returnPass($email, $salt)
+	{
+		$_SESSION['id'] = '';
+		$user = App::$app->user->findWhere('email', $email)[0];
+
+		if ($user) {
+			$pass = substr(md5(rand()), 0, 7);
+			$pPlusSalt = $pass . $salt;
+			$user['password'] = md5($pPlusSalt);
+			App::$app->user->update($user);
+
+			$data['to'] = [$email];
+			$data['subject'] = 'Новый пароль';
+			$data['body'] = "Ваш новый пароль: " . $pass;
+
+			Mail::send_mail($data);
+			exit(json_encode(['msg' => 'Новый пароль проверьте на почте']));
+		} else {
+			exit(json_encode(["msg" => "Пользователя с таким e-mail нет"]));
+		}
+
+	}
+
+
 	public function actionLogin()
 	{
 		if ($data = $this->ajax) {
 			$email = (string)$data['email'];
-			$password = (string)$data['password'] . $this->salt;
+			$password = (string)$data['password'] ;
 
 			if (!User::checkEmail($email)) {
 				$msg[] = "Неверный формат email";
 				$_SESSION['error'][] = "Неверный формат email";
-				exit(include ROOT . '/app/view/User/alert.php');
 			}
 
 			if (!User::checkPassword($password)) {
 				$msg[] = "Пароль не должен быть короче 6-ти символов";
-				exit(include ROOT . '/app/view/User/alert.php');
+//				exit(include ROOT . '/app/view/User/alert.php');
 			}
 
-			$user = App::$app->user->findWhere("email", $email);
+			$user = App::$app->user->findWhere("email", $email)[0];
 
 			if ($user === null || !$user) {
-				exit(json_encode(['msg'=>'not_registered']));
-			} elseif ($user['password'] !== md5($password)) {
+				exit(json_encode(['msg' => 'not_registered']));
+			} elseif ($user['password'] !== $this->preparePassword($password)) {
 				exit('fail');
-			} elseif (!(int)$user['confirm']) {
-				$msg[] = 'зайдите на почту, с которой регистрировались.';
-				$msg[] = 'найдите письмо "Регистрация VITEX".';
-				$msg[] = 'перейдите по ссылке в письме.';
-				exit(include ROOT . '/app/view/User/alert.php');
-
+//			} elseif (!(int)$user['confirm']) {
+//				$msg[] = 'зайдите на почту, с которой регистрировались.';
+//				$msg[] = 'найдите письмо "Регистрация VITEX".';
+//				$msg[] = 'перейдите по ссылке в письме.';
+//				exit(json_encode(['msg' => 'not confirmed']));
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
 				$user['rights'] = explode(",", $user['rights']);
 				$this->setAuth($user);
-				exit('ok');
+				exit(json_encode(['msg'=>'ok']));
 			}
 		}
 		View::setJs('auth.js');

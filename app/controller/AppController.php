@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\core\App;
+use Dotenv\Store\StringStore;
 
 class AppController extends Controller
 {

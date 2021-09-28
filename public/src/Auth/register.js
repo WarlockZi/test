@@ -1,7 +1,15 @@
 import {post, $, validate} from '../common'
 
-$("[name = 'reg']").on("click",  async function (e) {
-        e.preventDefault()
+$(".forgot").on("click", async function () {
+        window.location.href = '/user/returnpass'
+    }
+)
+$(".login").on("click", async function () {
+        window.location.href = '/user/login'
+    }
+)
+
+$(".reg").on("click", async function () {
 
         let email = $('input[type = email]').el[0].value
         let password = $('input[type = password]').el[0].value
@@ -62,7 +70,8 @@ async function send(email) {
         msg.el[0].innerHTML = 'Зполните пароль'
         msg.removeClass('success')
         msg.addClass('error')
-    }else{
+
+    } else {
         msg.el[0].innerHTML = res
         msg.removeClass('success')
         msg.addClass('error')
