@@ -8,6 +8,6 @@
 		<div class = "form-title">Введите свой email</div>
 		<input class = "form-input" type="email" name="email"                
         placeholder="E-mail"  value="<?=isset($_SESSION['reg']['email'])?$_SESSION['reg']['email']:'';?>" required/>
-		<input type="submit" class = "form-input submit returnpass" value="Отправить" />
+	    <div class = "form__button returnpass" >Отправить</div>
 	</form>	
 </section>

@@ -2,7 +2,7 @@
 
 	<form class="form-container" action="#" method="post">
 
-	<div class="form-title">Регистрация на сайте</div>
+		<div class="form-title">Регистрация на сайте</div>
 
 		<div class='message'></div>
 
@@ -20,11 +20,15 @@
 
 		<input type="hidden" name="token" value=<?= $_SESSION['token'] ?>>
 
-		<input type="submit" name="reg" class="form-input submit" value="Зарегистрироваться"/>
 
-	<p>Нажимая на кнопку "Регистрация", вы принимаете условия <a href="/about/oferta">Публичной оферты</a> и
-		подтверждаете, что ознакомились с <a href="/about/oferta">Политикой</a> в отношении обработки персональных данных,
-		принимаете ее условия и подтверждаете свое согласие на обработку персональных данных. </p>
+		<div class="form__button reg">Зарегистрироваться</div>
+		<div class="form__button-secondary forgot">Забыл пароль</div>
+		<div class="form__button-secondary login">Войти</div>
+
+		<p>Нажимая на кнопку "Регистрация", вы принимаете условия <a href="/about/oferta">Публичной оферты</a> и
+			подтверждаете, что ознакомились с <a href="/about/oferta">Политикой</a> в отношении обработки персональных
+			данных,
+			принимаете ее условия и подтверждаете свое согласие на обработку персональных данных. </p>
 	</form>
 
 

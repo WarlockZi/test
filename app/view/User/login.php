@@ -9,7 +9,7 @@
 		<input name="email" class="form-input" type="email" placeholder="E-mail"
 		       value="<?= $_SESSION['reg']['email'] ?? ''; ?>"/>
 		<input name="password" class="form-input" type="password" placeholder="Пароль" autocomplete="current-password"/>
-		<div class="form-input submit" id="login">Войти</div>
+		<div class="form-input submit form__button " id="login">Войти</div>
 		<input type="hidden" name="token" value= <?= $_SESSION['token'] ?? '' ?>>
 		<ul class="bottom">
 			<li>

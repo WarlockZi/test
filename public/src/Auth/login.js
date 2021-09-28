@@ -41,6 +41,10 @@ async function send(email) {
         msg.innerHTML = 'Не верный email или пароль'
         $(msg).addClass('error')
         $(msg).removeClass('success')
+    }else if(res.msg==='not confirmed'){
+        msg.innerHTML = "Зайдите на почту чтобы подтвердить регистрацию"
+        $(msg).addClass('error')
+        $(msg).removeClass('success')
     }else if(res.msg==='ok'){
         window.location = '/user/cabinet'
     }  else if(res.msg==='not_registered'){

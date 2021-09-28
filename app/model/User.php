@@ -34,25 +34,12 @@ class User extends Model
 		}
 	}
 
-	public function returnPass($email, $salt)
+	public
+	function getUserById($id)
 	{
-		$user = $this->findWhere('email', $email)[0];
-
-		if ($user) {
-			$pass = substr(md5(rand()), 0, 7);
-			$pPlusSalt = $pass.$salt;
-			$user['password'] = md5($pPlusSalt);
-			$this->update($user);
-
-			$data['to'] = [$email];
-			$data['subject'] = 'Новый пароль';
-			$data['body'] = "Ваш новый пароль: " . $pass;
-
-			Mail::send_mail($data);
-			return true;
-		} else {
-			exit(json_encode(["msg" => "Пользователя с таким e-mail нет"]));
-		}
+		$user = App::$app->user->find($id)[0];
+		$user['rights'] = explode(',',$user['rights']);
+		return $user;
 	}
 
 	public
