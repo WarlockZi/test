@@ -143,6 +143,10 @@ class UserController extends AppController
 		View::setCss('auth.css');
 
 	}
+	private function returnPass(User $user)
+	{
+
+	}
 
 
 	public function returnPass($email, $salt)
