@@ -4,7 +4,7 @@ import "../components/popup.scss"
 $('.returnpass').on('click', async function (e) {
     let email = $('input[type="email"]').el[0].value
     let res = await post(
-        '/user/returnPass',
+        '/user/forgot-password',
         {email: email}
     )
     res = await JSON.parse(res)

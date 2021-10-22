@@ -259,7 +259,7 @@ __webpack_require__.r(__webpack_exports__);
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.returnpass').on('click', async function (e) {
   let email = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type="email"]').el[0].value;
-  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/user/returnPass', {
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/user/forgot-password', {
     email: email
   });
   res = await JSON.parse(res);
