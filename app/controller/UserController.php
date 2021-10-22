@@ -175,6 +175,7 @@ class UserController extends AppController
 
 
 	public function actionLogin()
+		//token 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
 	{
 		if ($data = $this->ajax) {
 			$email = (string)$data['email'];
