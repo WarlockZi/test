@@ -1,5 +1,6 @@
 @import "../../var";
 @import "../../mixin_media";
+@import "user_menu";
 
 @mixin top-menu{
   background: #1bbc9b;
@@ -40,72 +41,4 @@
   }
 }
 
-
-.user-menu {
-  display: flex;
-  justify-content: flex-end;
-  height: 100%;
-  min-height: 25px;
-  padding: 0 10px;
-  position: sticky;
-  top: 0;
-  z-index: 501;
-  align-items: center;
-  color: #ffffff;
-
-  &:hover {
-    background-color: #3da58f;
-  }
-
-  .user-menu__icon {
-    padding: 5px 16px;
-    display: flex;
-    width: 14px;
-    height: 14px;
-  }
-}
-
-.user-menu__FIO {
-
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  font-size: 12px;
-  cursor: pointer;
-  color: #fff;
-
-  &:before {
-    content: '☰';
-    display: block;
-    padding: 3px 8px;
-    align-self: center;
-  }
-
-  &:hover {
-    background-color: #3da58f;
-  }
-
-  &:hover > .nav {
-    display: flex;
-  }
-}
-
-.nav {
-  display: none;
-  flex-flow: column;
-  border: 1px solid #eee;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  background: #fff;
-  z-index: 501;
-  position: absolute;
-  top: 100%;
-  right: -1px;
-  width: 280px;
-  padding: 10px;
-  a{
-      padding: 5px 10px;
-      color: $color-a;
-  }
-}
 

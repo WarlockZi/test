@@ -1,40 +1,16 @@
 @charset "UTF-8";
-.top-menu {
-  background: #1bbc9b;
-  display: flex;
-  margin: 0 auto;
-  position: sticky;
-  top: 0px;
-  z-index: 1;
-  width: 100%;
-  max-width: 1310px;
-  justify-content: space-between; }
-  @media (max-width: 500px) {
-    .top-menu {
-      justify-content: end; } }
-
-.admin-top-menu {
-  background: #1bbc9b;
-  display: flex;
-  margin: 0 auto;
-  position: sticky;
-  top: 0px;
-  z-index: 1;
-  width: 100%;
-  justify-content: flex-end; }
-  @media (max-width: 500px) {
-    .admin-top-menu {
-      justify-content: end; } }
-
-.contacts {
-  align-self: center;
-  margin-left: 50px; }
-  @media (max-width: 500px) {
-    .contacts {
-      display: none; } }
-  .contacts .item {
-    padding: 0 10px;
-    color: #fff; }
+.guest-menu {
+  display: none;
+  flex-flow: column;
+  bottom: -100%;
+  background-color: #ffffff;
+  padding: 10px;
+  top: 100%;
+  right: 0;
+  position: absolute; }
+  .guest-menu a {
+    background-color: white;
+    padding: 5px 12px; }
 
 .user-menu {
   display: flex;
@@ -42,13 +18,16 @@
   height: 100%;
   min-height: 25px;
   padding: 0 10px;
-  position: sticky;
+  position: relative;
   top: 0;
+  cursor: pointer;
   z-index: 501;
   align-items: center;
   color: #ffffff; }
   .user-menu:hover {
     background-color: #3da58f; }
+    .user-menu:hover > .guest-menu {
+      display: flex; }
   .user-menu .user-menu__icon {
     padding: 5px 16px;
     display: flex;
@@ -88,6 +67,43 @@
   .nav a {
     padding: 5px 10px;
     color: #5a5a5a; }
+
+.top-menu {
+  background: #1bbc9b;
+  display: flex;
+  margin: 0 auto;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  width: 100%;
+  max-width: 1310px;
+  justify-content: space-between; }
+  @media (max-width: 500px) {
+    .top-menu {
+      justify-content: end; } }
+
+.admin-top-menu {
+  background: #1bbc9b;
+  display: flex;
+  margin: 0 auto;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  width: 100%;
+  justify-content: flex-end; }
+  @media (max-width: 500px) {
+    .admin-top-menu {
+      justify-content: end; } }
+
+.contacts {
+  align-self: center;
+  margin-left: 50px; }
+  @media (max-width: 500px) {
+    .contacts {
+      display: none; } }
+  .contacts .item {
+    padding: 0 10px;
+    color: #fff; }
 
 @charset "UTF-8";
 .logo {
@@ -138,7 +154,7 @@
   margin: 0 auto; }
   @media (max-width: 400px) {
     .phone {
-      display: none; } }
+      font: bold 12px/17px 'Proxima Nova', sans-serif; } }
 
 .phone > a {
   position: relative;
@@ -152,9 +168,12 @@
   left: -20px;
   top: -4px;
   color: #1bbc9b;
-  font-size: 27px;
   background-position: 0 -44px;
-  transform: rotate(-30deg); }
+  transform: rotate(-30deg);
+  font-size: 27px; }
+  @media (max-width: 400px) {
+    .phone > a:before {
+      font-size: 18px; } }
 
 .phone > a:after {
   content: '';
@@ -162,6 +181,10 @@
   border: 5px solid transparent;
   border-top-color: #1bbc9b;
   margin-left: 9px; }
+  @media (max-width: 500px) {
+    .phone > a:after {
+      position: absolute;
+      top: 5px; } }
 
 .phone:hover .phone__popup-inner {
   padding: 25px 30px;
@@ -233,10 +256,14 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  padding: 13px;
   background: #1bbc9b;
   color: #fff;
-  font: 600 17px/17px intro, 'Proxima Nova', sans-serif; }
+  font: 600 17px/17px intro, 'Proxima Nova', sans-serif;
+  padding: 13px; }
+  @media (max-width: 600px) {
+    .h-cat {
+      padding: 4px;
+      margin-bottom: 1px; } }
   .h-cat:first-child ul {
     left: 0; }
     .h-cat:first-child ul:before {
@@ -471,7 +498,7 @@ header {
   flex-flow: column wrap;
   padding: 35px 30px 15px 30px;
   background: #eee;
-  width: 300px;
+  width: clamp(150px, 66%, 300px);
   margin: 3% auto;
   align-items: stretch; }
   .form-container p {

@@ -134,48 +134,39 @@ class UserController extends AppController
 		View::setJs('auth.js');
 	}
 
-	public function actionReturnPass()
+	public function actionForgotPassword()
 	{
 		if ($data = $this->ajax) {
-			$this->returnPass($data['email'], $this->salt);
+			$email = $data['email'];
+
+			$_SESSION['id'] = '';
+			$user = App::$app->user->findWhere('email', $email)[0];
+
+			if ($user) {
+				$password = substr(md5(rand()), 0, 7);
+				$user['password'] = $this->preparePassword($password);
+				App::$app->user->update($user);
+
+				$data['to'] = [$email];
+				$data['subject'] = 'Новый пароль';
+				$data['body'] = "Ваш новый пароль: " . $password;
+
+				Mail::send_mail($data);
+				exit(json_encode(['msg' => 'Новый пароль проверьте на почте']));
+			} else {
+				exit(json_encode(["msg" => "Пользователя с таким e-mail нет"]));
+			}
+
 		}
 		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
 		View::setJs('auth.js');
 		View::setCss('auth.css');
-
 	}
-//	private function returnPass(User $user)
-//	{
-//
-//	}
 
-
-	public function returnPass($email, $salt)
-	{
-		$_SESSION['id'] = '';
-		$user = App::$app->user->findWhere('email', $email)[0];
-
-		if ($user) {
-			$pass = substr(md5(rand()), 0, 7);
-			$pPlusSalt = $pass . $salt;
-			$user['password'] = md5($pPlusSalt);
-			App::$app->user->update($user);
-
-			$data['to'] = [$email];
-			$data['subject'] = 'Новый пароль';
-			$data['body'] = "Ваш новый пароль: " . $pass;
-
-			Mail::send_mail($data);
-			exit(json_encode(['msg' => 'Новый пароль проверьте на почте']));
-		} else {
-			exit(json_encode(["msg" => "Пользователя с таким e-mail нет"]));
-		}
-
-	}
 
 
 	public function actionLogin()
-		//token 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
+
 	{
 		if ($data = $this->ajax) {
 			$email = (string)$data['email'];

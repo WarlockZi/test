@@ -2,7 +2,7 @@
 @import "../../mixin_media";
 
 /***** Всплывающие телефоны */
-.phone{
+.phone {
   position: relative;
   display: flex;
   align-items: center;
@@ -10,16 +10,18 @@
   padding: 0 25px;
   white-space: nowrap;
   margin: 0 auto;
-  @include _400{
-    display: none;
+  @include _400 {
+    font: bold 12px/17px 'Proxima Nova', sans-serif;
   }
 
 }
-.phone > a{
+
+.phone > a {
   position: relative;
   color: #4e4e4e;
 }
-.phone > a:before{
+
+.phone > a:before {
   content: '\1F57B';
   position: absolute;
   width: 26px;
@@ -27,11 +29,14 @@
   left: -20px;
   top: -4px;
   color: $color-main;
-  font-size: 27px;
   background-position: 0 -44px;
   transform: rotate(-30deg);
-}
+  font-size: 27px;
+  @include _400 {
+    font-size: 18px;
+  }
 
+}
 //.phone > a:after{
 //  content: '';
 //  position: absolute;
@@ -44,21 +49,25 @@
 //  transform: rotate(45deg);
 //}
 
-.phone > a:after{
+.phone > a:after {
   content: '';
   display: inline-block;
   border: 5px solid transparent;
   border-top-color: $color-main;
   margin-left: 9px;
+  @include _500{
+    position: absolute;
+    top: 5px;
+  }
 }
 
-.phone:hover .phone__popup-inner{
+.phone:hover .phone__popup-inner {
   padding: 25px 30px;
   height: auto;
   overflow: visible;
 }
 
-.phone__popup{
+.phone__popup {
   position: absolute;
   left: -15%;
   bottom: -10px;
@@ -66,7 +75,8 @@
   height: 0;
   z-index: 6;
 }
-.phone__popup-inner{
+
+.phone__popup-inner {
   width: 200px;
   background: #fff;
   box-shadow: 0 10px 25px 0 hsl(0, 0, 0);
@@ -80,7 +90,7 @@
   transition: all 0.3s;
 }
 
-.phone__popup-inner:before{
+.phone__popup-inner:before {
   content: '';
   border-bottom: 10px solid #fff;
   border-left: 11px solid transparent;
@@ -89,19 +99,23 @@
   left: 192px;
   top: -10px;
 }
-.phone__popup-head{
+
+.phone__popup-head {
   border-bottom: 1px solid #ebebeb;
   padding-bottom: 15px;
   margin-bottom: 16px;
   white-space: initial;
 }
-.phone__popup p{
+
+.phone__popup p {
   margin: 0 0 11px;
 }
-.phone__popup-phones{
+
+.phone__popup-phones {
   margin: 0;
 }
-.phone__popup-phones a{
+
+.phone__popup-phones a {
   font: bold 17px/21px 'Proxima Nova', sans-serif;
   color: #343133;
   line-height: 1.7;

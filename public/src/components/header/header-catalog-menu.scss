@@ -20,10 +20,14 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  padding: 13px;
   background: $color-main;
   color: #fff;
   font: 600 17px/17px intro, 'Proxima Nova', sans-serif;
+  padding: 13px;
+  @include _600{
+    padding: 4px;
+    margin-bottom: 1px;
+  }
 
   &:first-child ul {
     left: 0;

@@ -1,8 +1,17 @@
 <? if (!isset($user)): ?>
 
-	<a class="user-menu" href="/user/login" aria-label="login">
-			<?= include_once ROOT . '/app/view/components/icons/userIcon.php'; ?>
-	</a>
+	<div class="user-menu" aria-label="login">
+		<?= include_once ROOT . '/app/view/components/icons/userIcon.php'; ?>
+		Вход
+		<? if (!isset($user)): ?>
+			<ul class="guest-menu">
+				<a href="/user/login">Войти</a>
+				<a href="/user/register">Регистрация</a>
+				<a href="/user/forgot-password">Забыл пароль</a>
+			</ul>
+		<? endif; ?>
+	</div>
+
 
 <? else: ?>
 
@@ -12,7 +21,7 @@
 	<div class="nav">
 		<a href="/user/edit">Изменить свой профиль</a>
 		<a href="/user/cabinet">Личный кабинет</a>
-		<?= (in_array('1', $user['rights'])||SU) ? // редактировать
+		<?= (in_array('1', $user['rights']) || SU) ? // редактировать
 			'<a href="/adminsc/test/edit/1">Редактировать тесты</a>
 			<a href="/adminsc/freetest/edit/41">Редактировать свободный тест</a>' : ''
 		?>
@@ -22,7 +31,7 @@
 			<a href="/freetest/41">Свободный тест</a>' : '';
 		?>
 
-		<?= in_array('3', $user['rights'])||SU ?
+		<?= in_array('3', $user['rights']) || SU ?
 			'<a href="/adminsc">Admin</a>' : ''; // Admin
 		?>
 

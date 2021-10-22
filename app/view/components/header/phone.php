@@ -1,5 +1,5 @@
 <div class='phone'>
-	<a href="tel:+79217131767">8 (921) 713-17-67</a>
+	<a href="tel:+79815068191">8 (981) 506-81-91</a>
 	<div class="phone__popup">
 		<div class="phone__popup-inner">
 			<div class="phone__popup-head">Время работы 8:30 – 17.30 по Москве</div>
