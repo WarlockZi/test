@@ -210,6 +210,9 @@ textarea:focus,
   width: 100%;
   max-width: 1310px;
   justify-content: space-between; }
+  @media (max-width: 500px) {
+    .top-menu {
+      justify-content: end; } }
 
 .admin-top-menu {
   background: #1bbc9b;
@@ -220,6 +223,9 @@ textarea:focus,
   z-index: 1;
   width: 100%;
   justify-content: flex-end; }
+  @media (max-width: 500px) {
+    .admin-top-menu {
+      justify-content: end; } }
 
 .contacts {
   align-self: center;
@@ -416,6 +422,9 @@ textarea:focus,
   max-width: 1310px;
   width: 100%;
   margin: auto; }
+  @media (max-width: 600px) {
+    .header-catalog-menu {
+      flex-flow: column; } }
 
 .h-cat {
   cursor: pointer;

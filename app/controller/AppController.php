@@ -44,7 +44,7 @@ class AppController extends Controller
 	}
 
 	public
-	function preparePassword(String $password)
+	function preparePassword(String $password) :String
 	{
 		return md5($password.$this->salt);
 	}
