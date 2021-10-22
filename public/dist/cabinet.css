@@ -7,10 +7,14 @@
   padding: 10px;
   top: 100%;
   right: 0;
-  position: absolute; }
+  position: absolute;
+  height: max-content;
+  box-shadow: -1px 4px 20px 0px #1d7c68ab; }
   .guest-menu a {
-    background-color: white;
-    padding: 5px 12px; }
+    color: #5a5a5a;
+    padding: 5px 10px; }
+    .guest-menu a:hover {
+      background-color: #e5e5e5; }
 
 .user-menu {
   display: flex;
@@ -42,7 +46,7 @@
   font-size: 12px;
   cursor: pointer;
   color: #fff; }
-  .user-menu__FIO:before {
+  .user-menu__FIO:after {
     content: '☰';
     display: block;
     padding: 3px 8px;
@@ -67,6 +71,8 @@
   .nav a {
     padding: 5px 10px;
     color: #5a5a5a; }
+    .nav a:hover {
+      background-color: #e5e5e5; }
 
 .top-menu {
   background: #1bbc9b;
