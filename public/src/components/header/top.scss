@@ -15,10 +15,16 @@
   @include top-menu;
   max-width: 1310px;
   justify-content: space-between;
+  @include _500{
+    justify-content: end;
+  }
 }
 .admin-top-menu{
   @include top-menu;
   justify-content: flex-end;
+  @include _500{
+    justify-content: end;
+  }
 }
 
 .contacts {

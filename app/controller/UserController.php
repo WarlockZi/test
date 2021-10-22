@@ -23,16 +23,17 @@ class UserController extends AppController
 
 			if (!$data['password']) exit('empty password');
 			if (!$data['email']) exit('empty email');
-			$data['to'] = [$data['email']];
 			$user = App::$app->user->findWhere('email', $data['to'][0]);
 			if ($user) exit('mail exists');
+			$data['to'] = [$data['email']];
 
 			$hash = md5(microtime());
 			$user['rights'] = '2';
 			$user['surName'] = $data['surName'];
 			$user['name'] = $data['name'];
 			$user['email'] = $data['to'][0];
-			$user['password'] = md5($data['password'] . $this->salt);
+
+			$user['password'] = $this->preparePassword($data['password']);
 			$user['hash'] = $hash;
 
 			if (!App::$app->user->create($user)) {
@@ -143,10 +144,10 @@ class UserController extends AppController
 		View::setCss('auth.css');
 
 	}
-	private function returnPass(User $user)
-	{
-
-	}
+//	private function returnPass(User $user)
+//	{
+//
+//	}
 
 
 	public function returnPass($email, $salt)
