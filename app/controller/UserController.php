@@ -23,7 +23,7 @@ class UserController extends AppController
 
 			if (!$data['password']) exit('empty password');
 			if (!$data['email']) exit('empty email');
-			$user = App::$app->user->findWhere('email', $data['to'][0]);
+			$user = App::$app->user->findWhere('email', $data['email'][0]);
 			if ($user) exit('mail exists');
 			$data['to'] = [$data['email']];
 
