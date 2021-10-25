@@ -95,9 +95,10 @@ textarea:focus,
   background: rgba(0, 0, 0, 0.15);
   text-align: center;
   font-weight: 600;
-  font: 1em;
+  font-size: 1em;
   cursor: pointer;
-  max-height: 45px; }
+  max-height: 45px;
+  border: none; }
   .form__button:hover {
     background: #a2a2a2;
     color: #fff; }
@@ -126,6 +127,25 @@ textarea:focus,
       .bottom li a:hover {
         color: #fff;
         background-color: #a2a2a2; }
+
+.list {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  width: clamp(200px, 63%, 70%);
+  margin: 10px auto; }
+
+.list__header {
+  font-size: 2em;
+  color: #5a5a5a;
+  margin: 15px 0; }
+
+.list__item {
+  color: #5a5a5a;
+  border: 1px solid #eee;
+  padding: 10px; }
+  .list__item:hover {
+    background-color: #e7e7e7; }
 
 .search {
   position: relative;
@@ -409,7 +429,7 @@ textarea:focus,
 .phone__popup-inner {
   width: 200px;
   background: #fff;
-  box-shadow: 0 10px 25px 0 black;
+  box-shadow: 0 6px 12px #8fa39f;
   font: 15px/19px 'Proxima Nova', sans-serif;
   color: #181617;
   padding: 0 30px;

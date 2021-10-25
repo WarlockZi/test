@@ -1,6 +1,19 @@
 import './login.scss'
 import {$, post, validate} from "../common";
 
+$('.password-control').on('click', function(){
+    if ($('[name="password"]').attr('type') == 'password'){
+        $(this).addClass('view');
+        $('[name="password"]').attr('type', 'text');
+    } else {
+        $(this).removeClass('view');
+        $('[name="password"]').attr('type', 'password');
+    }
+    return false;
+});
+
+
+
 let loginBtn = $("#login").el[0]
 if (loginBtn) {
     $(loginBtn).on("click",

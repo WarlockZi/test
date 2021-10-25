@@ -1,43 +1,4 @@
-@import "../var";
-
-.icon-logout{
-  width: 10px;
-  height: 10px;
-}
-h3{
-  color: $color-a;
-}
-.list{
-  display: flex;
-  justify-content: flex-start;
-  padding: 10px;
-  border: 1px solid #eee;
-  color: $color-a;
-  &:hover{
-    background-color: $color-white-hover;
-  }
-}
-
-.wrap{
-  width: 700px;
-  margin: 10px auto;
-}
-
-
-.wrap h3{
-  margin: 5px 0;
-  font-weight: bold;
-  font-size: 120%;
-  text-align: center;
-  color: #949494;
-  margin-bottom: 20px;
-}
-.wrap .list{
-  display: flex;
-  justify-content: flex-start;
-  padding: 10px;
-  /*border: 1px solid #eee;*/
-}
-.wrap .list:hover{
-  background:#f6f6f6;
+@import "../components/forms";
+section{
+  flex: 1 0 auto;
 }

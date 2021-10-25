@@ -14,8 +14,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
 /* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
 /* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
-/* harmony import */ var _cabinet_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./cabinet.scss */ "./public/src/Auth/cabinet.scss");
-/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
+/* harmony import */ var _Auth_login_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Auth/login.scss */ "./public/src/Auth/login.scss");
+/* harmony import */ var _cabinet_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./cabinet.scss */ "./public/src/Auth/cabinet.scss");
+/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
 
 
 
@@ -23,6 +24,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.form__button').on('submit', save);
+
+function save(e) {
+  let th = this;
+  let form = formData;
+}
 
 /***/ }),
 
@@ -67,7 +75,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("[name = 'edit']").on("click", async function (e) {
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#save").on("click", async function (e) {
   e.preventDefault();
   let data = {
     // email: check_email(),
@@ -77,22 +85,12 @@ __webpack_require__.r(__webpack_exports__);
     birthDate: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "birthDate"]').el[0].value,
     phone: (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name = "phone"]').el[0].value
   };
-  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/user/edit', data); // if (res === 'ok'){
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/user/edit', data);
 
-  debugger;
-  _common__WEBPACK_IMPORTED_MODULE_1__.popup.show('Сохранено'); // }
-}); //
-// function check_email() {
-//     let email = $('input[type = email]').el[0].value
-//     if (!validate.email(email)) {
-//         let $result = $(".message").el[0];
-//         $result.innerText = "Неправильный формат почты"
-//         $($result).addClass('error')
-//         return false
-//     }
-//     return email
-// }
-// setTimeout(function () {
+  if (res === 'ok') {
+    _common__WEBPACK_IMPORTED_MODULE_1__.popup.show('Сохранено');
+  }
+}); // setTimeout(function () {
 //     let p = document.querySelector("p.result");
 //     p.parentNode.remove();
 // }, 2000);
@@ -110,6 +108,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
 
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.password-control').on('click', function () {
+  if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name="password"]').attr('type') == 'password') {
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(this).addClass('view');
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name="password"]').attr('type', 'text');
+  } else {
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(this).removeClass('view');
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name="password"]').attr('type', 'password');
+  }
+
+  return false;
+});
 let loginBtn = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#login").el[0];
 
 if (loginBtn) {
@@ -460,7 +469,10 @@ let popup = {
     let removeDelay = hideDelay + 950;
     setTimeout(() => {
       popup__item.remove();
-      callback();
+
+      if (callback) {
+        callback();
+      }
     }, removeDelay);
   },
   close: function (e) {
@@ -525,6 +537,14 @@ function MyJquery(elements) {
 
   this.value = function () {
     return this.el[0].getAttribute('value');
+  };
+
+  this.attr = function (attrName, attrVal) {
+    if (attrVal) {
+      this.el[0].setAttribute(attrName, attrVal);
+    }
+
+    return this.el[0].getAttribute(attrName);
   };
 
   this.selectedIndexValue = function () {

@@ -268,7 +268,10 @@ let popup = {
     let removeDelay = hideDelay + 950;
     setTimeout(() => {
       popup__item.remove();
-      callback();
+
+      if (callback) {
+        callback();
+      }
     }, removeDelay);
   },
   close: function (e) {
@@ -333,6 +336,14 @@ function MyJquery(elements) {
 
   this.value = function () {
     return this.el[0].getAttribute('value');
+  };
+
+  this.attr = function (attrName, attrVal) {
+    if (attrVal) {
+      this.el[0].setAttribute(attrName, attrVal);
+    }
+
+    return this.el[0].getAttribute(attrName);
   };
 
   this.selectedIndexValue = function () {

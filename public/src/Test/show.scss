@@ -5,20 +5,21 @@
   grid-gap: 15px 10px;
 }
 
-#test_name{
+#test_name {
   outline: #b0ddff 1px solid;
+
   &:hover {
     outline: #b0ddff 2px solid;
   }
 }
+
 .test__save,
 .test__update,
 .test-path__update,
 .test-path__create,
 .test__create,
 .test__delete,
-.test-update__delete
-{
+.test-update__delete {
   color: #fff;
   font-weight: 600;
   padding: 8px 15px;
@@ -33,7 +34,13 @@
   margin-top: 20px;
   width: 80px;
 
-  &:hover{
-    box-shadow:none;
+  &:hover {
+    box-shadow: none;
   }
+}
+
+.test__delete {
+  background-color: #ff2929;
+  box-shadow: 0 2px 4px 0 #aa1b1b9e;
+  justify-self: end;
 }
