@@ -105,7 +105,7 @@ class UserController extends AppController
 		$this->auth();
 
 		$userId = $_SESSION['id'];
-		if ($userId){
+		if ($userId) {
 			$user = App::$app->user->getUserById([$userId]);
 			$this->set(compact('user'));
 		}
@@ -164,13 +164,12 @@ class UserController extends AppController
 	}
 
 
-
 	public function actionLogin()
 
 	{
 		if ($data = $this->ajax) {
 			$email = (string)$data['email'];
-			$password = (string)$data['password'] ;
+			$password = (string)$data['password'];
 
 			if (!User::checkEmail($email)) {
 				$msg[] = "Неверный формат email";
@@ -196,7 +195,7 @@ class UserController extends AppController
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
 				$user['rights'] = explode(",", $user['rights']);
 				$this->setAuth($user);
-				exit(json_encode(['msg'=>'ok']));
+				exit(json_encode(['msg' => 'ok']));
 			}
 		}
 		View::setJs('auth.js');
@@ -208,19 +207,21 @@ class UserController extends AppController
 	{
 		$this->auth();
 		$user = App::$app->user->get($_SESSION['id']);
-		if ($f = $this->ajax) {
-			foreach ($f as $key => $value) {
-				if (array_key_exists($key, $user)) {
-					$user[$key] = $value;
-				}
-			}
-		}
-		$errors = false;
-		if (!App::$app->user->checkName($f['name'])) {
-			$errors[] = 'Имя не должно быть короче 2-х символов';
-		}
-		if ($errors == false) {
-			$result = App::$app->user->update($user);
+		if ($data = $this->ajax) {
+
+			$user['name'] = $data['name'];
+			$user['surName'] = $data['surName'];
+			$user['middleName'] = $data['middleName'];
+			$user['rights'] = implode(',',$user['rights']);
+
+			$date = strtotime ($data['birthDate']);
+			$user['birthDate'] = date('Y-m-d',$date);
+
+			$user['phone'] = $data['phone'];
+
+			App::$app->user->update($user);
+			exit('ok');
+
 		}
 		$this->set(compact('user'));
 

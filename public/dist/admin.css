@@ -1302,7 +1302,7 @@ textarea:focus,
 .phone__popup-inner {
   width: 200px;
   background: #fff;
-  box-shadow: 0 10px 25px 0 black;
+  box-shadow: 0 6px 12px #8fa39f;
   font: 15px/19px 'Proxima Nova', sans-serif;
   color: #181617;
   padding: 0 30px;

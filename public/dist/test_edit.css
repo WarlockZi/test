@@ -257,7 +257,7 @@ textarea:focus,
 .phone__popup-inner {
   width: 200px;
   background: #fff;
-  box-shadow: 0 10px 25px 0 black;
+  box-shadow: 0 6px 12px #8fa39f;
   font: 15px/19px 'Proxima Nova', sans-serif;
   color: #181617;
   padding: 0 30px;
@@ -640,6 +640,8 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center; }
+  .question__delete:hover {
+    background-color: #ff292917; }
   .question__delete svg {
     fill: red; }
 
@@ -820,6 +822,11 @@ section {
   .test__delete:hover,
   .test-update__delete:hover {
     box-shadow: none; }
+
+.test__delete {
+  background-color: #ff2929;
+  box-shadow: 0 2px 4px 0 #aa1b1b9e;
+  justify-self: end; }
 
 @charset "UTF-8";
 .module {

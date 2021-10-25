@@ -3,6 +3,8 @@
 	<form class="form-container" action="/user/edit" method="post">
 		<div class="form-title">Редактирование данных</div>
 
+		<div class='message'></div>
+
 		<input class="form-input" placeholder="Имя" name="name" value="<?= $user['name'] ?>"/>
 
 		<input class="form-input" placeholder="Фамилия" name="surName" value="<?= $user['surName'] ?>"/>
@@ -14,9 +16,10 @@
 
 		<input class="form-input" placeholder="Телефон" name="phone" value="<?= $user['phone'] ?>"/>
 
-<!--		<input class="form-input" placeholder="email" name="email" type="email" value="--><?//= $user['email'] ?><!--" required/>-->
 
-		<div class="form__button">Сохранить</div>
+
+		<div class="form__button" id = 'save'>Сохранить</div>
+
 		<a href="/user/changepassword" class="form__button-secondary">Изменить пароль</a>
 	</form>
 
