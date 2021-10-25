@@ -16,8 +16,8 @@
 
 <!--		<input class="form-input" placeholder="email" name="email" type="email" value="--><?//= $user['email'] ?><!--" required/>-->
 
-		<input name="edit" class="form-input submit" value="Сохранить"/>
+		<div class="form__button">Сохранить</div>
+		<a href="/user/changepassword" class="form__button-secondary">Изменить пароль</a>
 	</form>
-		<a href="/user/changepassword" class="form-input submit">Изменить пароль</a>
 
 </section>
