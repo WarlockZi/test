@@ -134,7 +134,7 @@ class UserController extends AppController
 		View::setJs('auth.js');
 	}
 
-	public function actionForgotPassword()
+	public function actionReturnpass()
 	{
 		if ($data = $this->ajax) {
 			$email = $data['email'];
