@@ -125,7 +125,7 @@ if (loginBtn) {
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(loginBtn).on("click", async function (e) {
     e.preventDefault();
     let email = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[type = email]').el[0].value;
-    let password = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[name= password]').value;
+    let pass = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[name= password]').el[0].value;
 
     if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.email(email)) {
       let $result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
@@ -134,7 +134,7 @@ if (loginBtn) {
       return false;
     }
 
-    if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.password(password)) {
+    if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.password(pass)) {
       let $result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
       $result.innerText = "Пароль может состоять из \n " + "- Большие латинские бкувы \n" + "- Маленькие латинские буквы \n" + "- Цифры \n" + "- Должен содержать не менее 6 символов";
       (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)($result).addClass('error');

@@ -134,6 +134,28 @@ class UserController extends AppController
 		View::setJs('auth.js');
 	}
 
+	private function randomPassword() {
+		$arr = [
+			'1234567890',
+			'abcdefghijklmnopqrstuvwxyz',
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+		];
+
+		$pass = array(); //remember to declare $pass as an array
+
+		$arrLength = count($arr) - 1;
+		$y = 0;
+		for ($i = 0; $i < 8; $i++) {
+			if ($y>$arrLength) $y = 0;
+			$arrChosen = $arr[$y];
+			$arrChosernLen = strlen($arrChosen) - 1;
+			$n = rand(0, $arrChosernLen);
+			$pass[] = $arrChosen[$n];
+			$y++;
+		}
+		return implode($pass); //turn the array into a string
+	}
+
 	public function actionReturnpass()
 	{
 		if ($data = $this->ajax) {
@@ -143,7 +165,7 @@ class UserController extends AppController
 			$user = App::$app->user->findWhere('email', $email)[0];
 
 			if ($user) {
-				$password = substr(md5(rand()), 0, 7);
+				$password = $this->randomPassword();
 				$user['password'] = $this->preparePassword($password);
 				App::$app->user->update($user);
 
