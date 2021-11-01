@@ -1,16 +1,16 @@
 import './login.scss'
 import {$, post, validate} from "../common";
 
-$('.password-control').on('click', function(){
+$('.password-control').on('click', toggle)
+
+function toggle(){
     if ($('[name="password"]').attr('type') == 'password'){
-        $(this).addClass('view');
         $('[name="password"]').attr('type', 'text');
     } else {
-        $(this).removeClass('view');
         $('[name="password"]').attr('type', 'password');
     }
-    return false;
-});
+    this.classList.toggle('view')
+}
 
 
 
