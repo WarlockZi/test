@@ -21,14 +21,14 @@ if (loginBtn) {
             e.preventDefault();
 
             let email = $('input[type = email]').el[0].value
-            let password = $('input[name= password]').value
+            let pass = $('input[name= password]').el[0].value
             if (!validate.email(email)) {
                 let $result = $(".message").el[0];
                 $result.innerText = "Неправильный формат почты"
                 $($result).addClass('error')
                 return false
             }
-            if (!validate.password(password)) {
+            if (!validate.password(pass)) {
                 let $result = $(".message").el[0]
                 $result.innerText = "Пароль может состоять из \n " +
                     "- Большие латинские бкувы \n" +
