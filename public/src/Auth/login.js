@@ -21,7 +21,7 @@ if (loginBtn) {
             e.preventDefault();
 
             let email = $('input[type = email]').el[0].value
-            let password = $('input[type = password]').el[0].value
+            let password = $('input[name = password]').el[0].value
             if (!validate.email(email)) {
                 let $result = $(".message").el[0];
                 $result.innerText = "Неправильный формат почты"
@@ -66,11 +66,3 @@ async function send(email) {
         $(msg).removeClass('success')
     }
 }
-
-//
-// $("body").on("click",
-//     function (e) {
-//         if (e.target.className === "messageClose") {
-//             window.location.href = "/user/cabinet";
-//         }
-//     })
