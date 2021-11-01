@@ -7,7 +7,7 @@
 			<ul class="guest-menu">
 				<a href="/user/login">Войти</a>
 				<a href="/user/register">Регистрация</a>
-				<a href="/user/forgot-password">Забыл пароль</a>
+				<a href="/user/returnpass">Забыл пароль</a>
 			</ul>
 		<? endif; ?>
 	</div>

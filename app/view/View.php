@@ -33,7 +33,7 @@ class View
 		if (is_file($file_view)) {
 			require $file_view;
 		} else {
-			echo "<br>Не найден файл вида {$this->view} ";
+			echo "<div class='content'><br>Не найден файл вида {$this->view}</div>";
 		}
 		$content = ob_get_clean();
 		ob_start();

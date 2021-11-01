@@ -125,7 +125,7 @@ if (loginBtn) {
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(loginBtn).on("click", async function (e) {
     e.preventDefault();
     let email = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[type = email]').el[0].value;
-    let password = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[type = password]').el[0].value;
+    let password = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[name = password]').el[0].value;
 
     if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.email(email)) {
       let $result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
@@ -168,13 +168,7 @@ async function send(email) {
     (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(msg).addClass('error');
     (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(msg).removeClass('success');
   }
-} //
-// $("body").on("click",
-//     function (e) {
-//         if (e.target.className === "messageClose") {
-//             window.location.href = "/user/cabinet";
-//         }
-//     })
+}
 
 /***/ }),
 
@@ -268,7 +262,7 @@ __webpack_require__.r(__webpack_exports__);
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.returnpass').on('click', async function (e) {
   let email = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('input[type="email"]').el[0].value;
-  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/user/forgot-password', {
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/user/returnpass', {
     email: email
   });
   res = await JSON.parse(res);
