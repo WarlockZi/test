@@ -108,17 +108,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.password-control').on('click', function () {
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.password-control').on('click', toggle);
+
+function toggle() {
   if ((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name="password"]').attr('type') == 'password') {
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(this).addClass('view');
     (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name="password"]').attr('type', 'text');
   } else {
-    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(this).removeClass('view');
     (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[name="password"]').attr('type', 'password');
   }
 
-  return false;
-});
+  this.classList.toggle('view');
+}
+
 let loginBtn = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#login").el[0];
 
 if (loginBtn) {
