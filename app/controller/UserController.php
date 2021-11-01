@@ -209,11 +209,6 @@ class UserController extends AppController
 				exit(json_encode(['msg' => 'not_registered']));
 			} elseif ($user['password'] !== $this->preparePassword($password)) {
 				exit('fail');
-//			} elseif (!(int)$user['confirm']) {
-//				$msg[] = 'зайдите на почту, с которой регистрировались.';
-//				$msg[] = 'найдите письмо "Регистрация VITEX".';
-//				$msg[] = 'перейдите по ссылке в письме.';
-//				exit(json_encode(['msg' => 'not confirmed']));
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
 				$user['rights'] = explode(",", $user['rights']);
 				$this->setAuth($user);
