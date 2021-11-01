@@ -123,27 +123,30 @@ function toggle() {
 let loginBtn = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#login").el[0];
 
 if (loginBtn) {
-  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(loginBtn).on("click", async function (e) {
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(loginBtn).on("click", function (e) {
     e.preventDefault();
     let email = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[type = email]').el[0].value;
     let pass = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[name= password]').el[0].value;
-
-    if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.email(email)) {
-      let $result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
-      $result.innerText = "Неправильный формат почты";
-      (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)($result).addClass('error');
-      return false;
-    }
-
-    if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.password(pass)) {
-      let $result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
-      $result.innerText = "Пароль может состоять из \n " + "- Большие латинские бкувы \n" + "- Маленькие латинские буквы \n" + "- Цифры \n" + "- Должен содержать не менее 6 символов";
-      (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)($result).addClass('error');
-      return false;
-    }
-
-    send(email);
+    if (validateEmailLogin(email, pass)) send(email, pass);
   });
+}
+
+function validateEmailLogin(email, pass) {
+  let $message = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
+
+  if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.email(email)) {
+    $message.innerText = "Неправильный формат почты";
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)($message).addClass('error');
+    return false;
+  }
+
+  if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.password(pass)) {
+    $message.innerText = "Пароль может состоять из \n " + "- Большие латинские бкувы \n" + "- Маленькие латинские буквы \n" + "- Цифры \n" + "- Должен содержать не менее 6 символов";
+    (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)($result).addClass('error');
+    return false;
+  }
+
+  return true;
 }
 
 async function send(email) {
