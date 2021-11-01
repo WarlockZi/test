@@ -148,7 +148,7 @@ if (loginBtn) {
 async function send(email) {
   let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/user/login', {
     "email": email,
-    "password": (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("input[type= password]").el[0].value
+    "password": (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[name="password"]').el[0].value
   });
   res = JSON.parse(res);
   let msg = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.message').el[0];

@@ -46,7 +46,7 @@ if (loginBtn) {
 async function send(email) {
     let res = await post('/user/login', {
         "email": email,
-        "password": $("input[type= password]").el[0].value,
+        "password": $('input[name="password"]').el[0].value,
     })
     res = JSON.parse(res)
     let msg = $('.message').el[0]
