@@ -21,7 +21,7 @@ if (loginBtn) {
             e.preventDefault();
 
             let email = $('input[type = email]').el[0].value
-            let password = $('input[name = password]').el[0].value
+            let password = $('input[name  = password]').el[0].value
             if (!validate.email(email)) {
                 let $result = $(".message").el[0];
                 $result.innerText = "Неправильный формат почты"

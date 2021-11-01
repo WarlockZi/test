@@ -125,7 +125,7 @@ if (loginBtn) {
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(loginBtn).on("click", async function (e) {
     e.preventDefault();
     let email = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[type = email]').el[0].value;
-    let password = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[name = password]').el[0].value;
+    let password = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[name  = password]').el[0].value;
 
     if (!_common__WEBPACK_IMPORTED_MODULE_1__.validate.email(email)) {
       let $result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".message").el[0];
