@@ -118,7 +118,7 @@ her;
 			}
 			$prevQuest = $q_id;
 		}
-		$_SESSION['correct_answers'] = $data['correct_answers'];
+		$_SESSION['correct_answers'] = $data['correct_answers']??null;
 
 		return $data??[];
 	}

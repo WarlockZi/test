@@ -156,8 +156,9 @@
 
   .menu {
     z-index: 1;
-    max-width: 300px;
     margin: 0 15px;
+    max-width: 170px;
+    min-width: 170px;
 
     & > li {
       background-color: #797979;
