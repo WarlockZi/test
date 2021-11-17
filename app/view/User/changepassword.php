@@ -6,13 +6,21 @@
     <form class="form-container return_pass">
 		<div class = "form-title">Сменить пароль</div>
 	    <div class='message'></div>
-		<input class = "form-input" type="email" name="old_password"
-		       placeholder="старый пароль"
-             required/>
 
-	    <input class = "form-input" type="email" name="new_password"
-	           placeholder="новый пароль"
-	           required/>
-		<input type="submit" class = "form-input submit changepassword" value="Отправить" />
+	    <div class="pass">
+		    <input type="password" name="old_password" class="form-input password" placeholder="старый пароль"
+		           current-password required/>
+		    <div class="password-control"></div>
+	    </div>
+
+
+	    <div class="pass">
+		    <input type="password" name="new_password" class="form-input password" placeholder="новый пароль"
+		           current-password required/>
+		    <div class="password-control"></div>
+	    </div>
+
+
+		<input type="submit" class = "form__button form-input submit changepassword" value="Отправить" />
 	</form>	
 </section>

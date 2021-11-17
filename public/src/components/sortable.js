@@ -15,8 +15,8 @@ export let sortable = {
                     for (let i = 0; i<evt.newIndex; i++){
 
                     }
-                    // alert(evt.oldIndex)
-                    // alert(evt.newIndex)
+                     alert(evt.oldIndex)
+                     alert(evt.newIndex)
                 },
             })
         }

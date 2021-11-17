@@ -7,10 +7,13 @@
 		<div class='message'></div>
 
 		<input type="email" name="email" class="form-input"
-		       placeholder="E-mail"/>
+		       placeholder="E-mail" required/>
 
-		<input type="password" name="password" class="form-input"
-		       placeholder="Пароль" current-password/>
+		<div class="pass">
+			<input type="password" name="password" class="form-input password" placeholder="Пароль"
+			       current-password required/>
+			<div class="password-control"></div>
+		</div>
 
 		<input type="text" name="surName" class="form-input"
 		       placeholder="Фамилия"/>
