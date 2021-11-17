@@ -256,7 +256,7 @@ class TestController Extends AppController
 			$error = '<H1>Теста с таким номером нет.</H1>';
 			$this->set(compact('error'));
 		}
-		$_SESSION['correct_answers'] = $testData['correct_answers'];
+		$_SESSION['correct_answers'] = $testData['correct_answers']??null;
 		unset($testData['correct_answers']);
 		$pagination = App::$app->test->pagination($testData, false);
 		$this->set(compact('testData', 'test', 'pagination', 'menuTestDo'));
