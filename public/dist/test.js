@@ -30,24 +30,22 @@ __webpack_require__.r(__webpack_exports__);
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-do__finish-btn').on('click', async function (e) {
   let button = e.target;
+  if (button.id !== 'btnn') return false;
 
-  if (button.id === 'btnn') {
-    if (button.text == "ПРОЙТИ ТЕСТ ЗАНОВО") {
-      location.reload();
-      return;
-    }
+  if (button.text == "ПРОЙТИ ТЕСТ ЗАНОВО") {
+    location.reload();
+    return;
+  }
 
-    let corrAnswers = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/getCorrectAnswers', {});
-    corrAnswers = JSON.parse(corrAnswers);
-    let errorCnt = colorView(corrAnswers);
-    let data = objToServer(errorCnt);
-    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/cachePageSendEmail', data);
+  let corrAnswers = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/getCorrectAnswers', {});
+  corrAnswers = JSON.parse(corrAnswers);
+  let errorCnt = colorView(corrAnswers);
+  let data = objToServer(errorCnt);
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/cachePageSendEmail', data);
 
-    if (res) {
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("#btnn").el[0].href = location.href; //"?test="+testId
-
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО"; //"?test="+testId
-    }
+  if (res) {
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("#btnn").el[0].href = location.href;
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО";
   }
 });
 

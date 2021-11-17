@@ -118,14 +118,14 @@ her;
 			}
 			$prevQuest = $q_id;
 		}
+		$_SESSION['correct_answers'] = $data['correct_answers'];
 
 		return $data??[];
 	}
 
 	public function getCorrectAnswers()
 	{
-		$correct_answers = $_SESSION['testData']['correct_answers'];
-		exit(json_encode($correct_answers));
+		exit(json_encode($_SESSION['correct_answers']));
 	}
 
 	public function getChildren($id)

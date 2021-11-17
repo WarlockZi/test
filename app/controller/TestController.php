@@ -160,6 +160,29 @@ class TestController Extends AppController
 		}
 	}
 
+	public function getMailsToSendBothResults()
+	{
+		$mails = [
+//			'vitaliy04111979@gmail.com',
+			'vvoronik@yandex.ru',
+//			'10@vitexopt.ru',
+		];
+		return $mails;
+	}
+
+	public function getMailsToSendIfRightResults($mailsTo = [], $errCount)
+	{
+		$sendIfLessOrEqualThen = 0;
+		$mails = [
+			'10@vitexopt.ru',
+		];
+
+		if ($errCount <= $sendIfLessOrEqualThen) {
+			return array_merge($mailsTo, $mails);
+		}
+		return $mailsTo;
+	}
+
 	public function actionCachePageSendEmail()
 	{
 		if ($data = $this->ajax) {
@@ -169,11 +192,8 @@ class TestController Extends AppController
 //			$fileWin = mb_convert_encoding($fileUTF8, 'cp1251');
 
 			if (file_put_contents($fileUTF8, $data['pageCache'])) {
-				$data['to'] = [
-					'vitaliy04111979@gmail.com',
-					'vvoronik@yandex.ru'
-//					'10@vitexopt.ru',
-				];
+				$data['to'] = $this->getMailsToSendBothResults();
+				$data['to'] = $this->getMailsToSendIfRightResults($data['to'],$data['errorCnt']);
 
 				$data['subject'] = $this->getSubjectTestResults($data);
 				$data['body'] = $this->prepareBodyTestResults($data, $file);
@@ -236,7 +256,7 @@ class TestController Extends AppController
 			$error = '<H1>Теста с таким номером нет.</H1>';
 			$this->set(compact('error'));
 		}
-//		$_SESSION['correct_answers'] = $testData['correct_answers'];
+		$_SESSION['correct_answers'] = $testData['correct_answers'];
 		unset($testData['correct_answers']);
 		$pagination = App::$app->test->pagination($testData, false);
 		$this->set(compact('testData', 'test', 'pagination', 'menuTestDo'));
