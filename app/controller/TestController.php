@@ -170,7 +170,7 @@ class TestController Extends AppController
 		return $mails;
 	}
 
-	public function getMailsToSendIfRightResults($mailsTo = [], $errCount)
+	public function getMailsToSendIfRightResults($mailsTo, $errCount)
 	{
 		$sendIfLessOrEqualThen = 0;
 		$mails = [
