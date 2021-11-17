@@ -50,3 +50,10 @@ $('.answer__delete').on('click', _answer.del)
 $('.answer__create-button').on('click', _answer.create)
 
 
+// $('.question__sort').on('change', validate.sort)
+$('.question__save').on('mouseenter', _question.showTip.bind(this,'save'))
+$('.question__save').on('mouseleave', _question.showTip.bind(this,'save'))
+$('.question__text').on('hover', _question.callToEdit)
+$('.question__delete').on('click', _question.showTip)
+$('.question__create-button').on('click', _question.showTip)
+

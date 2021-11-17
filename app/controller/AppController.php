@@ -19,12 +19,14 @@ class AppController extends Controller
 
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
 			$user = $this->user = App::$app->user->get($_SESSION['id']);
+			if (!$user) $_SESSION['id']='';
 
 			if ($user['email'] === $_ENV['SU_EMAIL']) {
 				define('SU', true);
 			} else {
 				define('SU', false);
 			}
+
 		}
 
 		if (strpos(strtolower($route['controller']), 'adminsc') === false) {
@@ -44,9 +46,9 @@ class AppController extends Controller
 	}
 
 	public
-	function preparePassword(String $password) :String
+	function preparePassword(String $password): String
 	{
-		return md5($password.$this->salt);
+		return md5($password . $this->salt);
 	}
 
 	public
@@ -69,12 +71,13 @@ class AppController extends Controller
 			}
 		}
 	}
+
 	public function hierachy($array, $parentName)
 	{
 		{
 			$tree = [];
-				foreach ($array as $id => &$node) {
-				if (!$node[$parentName]&&isset($node[$parentName])) {
+			foreach ($array as $id => &$node) {
+				if (!$node[$parentName] && isset($node[$parentName])) {
 					$tree[$id] = &$node;
 				} else {
 					$array[$node[$parentName]]['childs'][$id] = &$node;
