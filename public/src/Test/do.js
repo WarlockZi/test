@@ -9,9 +9,9 @@ $('.question').removeClass("flex1")
 $('.question:first-child').addClass("flex1")
 
 
-$('[type="checkbox"]').on('click',function (e) {
+$('[type="checkbox"]').on('click', function (e) {
     let a = e.target.labels[0]
-        a.classList.toggle('pushed')
+    a.classList.toggle('pushed')
 })
 
 /////////////////////////////////////////////////////////////////////////////
@@ -21,21 +21,22 @@ $('[type="checkbox"]').on('click',function (e) {
 
 $('.test-do__finish-btn').on('click', async function (e) {
     let button = e.target;
-    if (button.id === 'btnn') {
-        if (button.text == "ПРОЙТИ ТЕСТ ЗАНОВО") {
-            location.reload();
-            return;
-        }
-        let corrAnswers = await post('/test/getCorrectAnswers', {})
-        corrAnswers = JSON.parse(corrAnswers)
-        let errorCnt = colorView(corrAnswers)
-        let data = objToServer(errorCnt)
-        let res = await post('/test/cachePageSendEmail', data)
-        if (res) {
-            $("#btnn").el[0].href = location.href //"?test="+testId
-            $("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО" //"?test="+testId
-        }
+    if (button.id !== 'btnn') return false
+
+    if (button.text == "ПРОЙТИ ТЕСТ ЗАНОВО") {
+        location.reload();
+        return;
     }
+    let corrAnswers = await post('/test/getCorrectAnswers', {})
+    corrAnswers = JSON.parse(corrAnswers)
+    let errorCnt = colorView(corrAnswers)
+    let data = objToServer(errorCnt)
+    let res = await post('/test/cachePageSendEmail', data)
+    if (res) {
+        $("#btnn").el[0].href = location.href
+        $("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО"
+    }
+
 })
 
 function colorView(correctAnswers) {
