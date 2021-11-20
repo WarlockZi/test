@@ -19,22 +19,15 @@ if (DEV) {
 new App;
 
 Router::dispatch($_SERVER['QUERY_STRING']);
+exit();
 
-
-//function vitexAutoload($class)
-//{
-//	$file = ROOT . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-//	if (is_readable($file)) {
-//		require_once $file;
+// определение мобильного устройства
+//function check_mobile_device() {
+//	$mobile_agent_array = array('ipad', 'iphone', 'android', 'pocket', 'palm', 'windows ce', 'windowsce', 'cellphone', 'opera mobi', 'ipod', 'small', 'sharp', 'sonyericsson', 'symbian', 'opera mini', 'nokia', 'htc_', 'samsung', 'motorola', 'smartphone', 'blackberry', 'playstation portable', 'tablet browser');
+//	$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+//	// var_dump($agent);exit;
+//	foreach ($mobile_agent_array as $value) {
+//		if (strpos($agent, $value) !== false) return true;
 //	}
+//	return false;
 //}
-//function composerAutoload($class)
-//{
-//	require (ROOT.'/vendor/autoload.php');
-//	$file = ROOT . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-//	if (is_file($file)) {
-//		require_once $file;
-//	}
-//}
-//spl_autoload_register('composerAutoload');
-//spl_autoload_register('vitexAutoload');
