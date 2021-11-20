@@ -148,6 +148,9 @@
     .logo__description {
       font-size: 10px;
       width: 90px; } }
+  @media (max-width: 400px) {
+    .logo__description {
+      display: none; } }
 
 /***** Всплывающие телефоны */
 .phone {
