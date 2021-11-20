@@ -188,7 +188,10 @@
   width: 14px; }
   @media (max-width: 400px) {
     .phone svg {
-      font-size: 18px; } }
+      font-size: 17px;
+      width: 11px;
+      bottom: 2px;
+      left: -18px; } }
 
 .phone > a:after {
   content: '';
