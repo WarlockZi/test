@@ -1,7 +1,8 @@
 import {Test} from './Test/model/test'
+import './common.scss'
 
 let validate = {
-    sort: ()=> {
+    sort: () => {
         let error = this.nextElementSibling
         let ar = this.value.match(/\D+/)
         if (ar) {
@@ -13,18 +14,17 @@ let validate = {
             }
         }
     },
-    email: (email)=> {
+    email: (email) => {
         if (!email) return false
         let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     },
-    password: (password)=> {
+    password: (password) => {
         if (!password) return false
         let re = /^[a-zA-Z\-0-9]{6,20}$/
         return re.test(password)
     }
 }
-
 
 
 // function up() {
@@ -62,7 +62,9 @@ let popup = {
         let removeDelay = hideDelay + 950;
         setTimeout(() => {
             popup__item.remove()
-            if (callback) {callback()}
+            if (callback) {
+                callback()
+            }
         }, removeDelay)
     },
 
@@ -86,7 +88,7 @@ async function get(key) {
     return p ? p[1] : false;
 }
 
-async function post(url, data={}) {
+async function post(url, data = {}) {
     return new Promise(function (resolve, reject) {
         data.token = document.querySelector('meta[name="token"]').getAttribute('content')
         let req = new XMLHttpRequest();
@@ -111,7 +113,7 @@ function MyJquery(elements) {
     this.el = elements
     this.elType = {}.toString.call(elements)
     this.on = function (ev, f) {
-        if (!this.el)return
+        if (!this.el) return
 
         if (this.elType === "[object HTMLDivElement]") {
             this.el.addEventListener(ev, f)
@@ -125,8 +127,8 @@ function MyJquery(elements) {
     }
 
     this.attr = function (attrName, attrVal) {
-        if(attrVal){
-            this.el[0].setAttribute(attrName,attrVal)
+        if (attrVal) {
+            this.el[0].setAttribute(attrName, attrVal)
         }
         return this.el[0].getAttribute(attrName)
     }
@@ -216,6 +218,25 @@ function $(selector) {
     return new MyJquery(elements);
 }
 
+function addTooltip(args) {
+    let ar = [...args.els]
+    ar.map((el)=>{
+        el.onmouseenter = function(){
+            let tip = document.createElement('div')
+            $(tip).addClass('tip')
+            tip.innerText = args.message
+            el.append(tip)
+            let remove=()=>tip.remove()
+            tip.addEventListener('mousemove',remove.bind(tip))
+        }.bind(args)
+
+        el.onmouseleave = ()=> {
+            let tip = el.querySelector('.tip')
+            tip.remove()
+        }
+    },[args])
+}
+
 class test_delete_button {
     constructor(elem) {
         if (!elem) return
@@ -225,6 +246,7 @@ class test_delete_button {
         this._elem.onmouseleave = this.hideTooltip
         this._elem.onmousemove = this.changeTooltipPos
     }
+
     async delete() {
         if (confirm('Удалить тест?')) {
             let res = test.del()
@@ -233,6 +255,7 @@ class test_delete_button {
             }
         }
     }
+
     showToolip(e) {
         let x = e.clientX
         let y = e.clientY
@@ -244,9 +267,11 @@ class test_delete_button {
         this.tip = tip
         document.body.append(tip)
     }
+
     hideTooltip() {
         this.tip.remove()
     }
+
     changeTooltipPos(e) {
         this.tip.style.top = e.pageY + 35 + 'px'
         this.tip.style.left = e.pageX - 170 + 'px'
@@ -277,4 +302,4 @@ async function fetchW(url, Obj) {
     return prom
 }
 
-export {popup, test_delete_button, post, get, uniq, validate, $, fetchWrap, fetchW}
+export {addTooltip, popup, test_delete_button, post, get, uniq, validate, $, fetchWrap, fetchW}
