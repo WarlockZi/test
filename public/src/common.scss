@@ -1,0 +1,14 @@
+.tip {
+  position: absolute;
+  display: flex;
+  flex-basis: 50px;
+  bottom: 102%;
+  left: 0;
+  background: hsl(160deg, 2%, 25%);
+  z-index: 2;
+  color: #ffffff;
+  padding: 5px 10px;
+  font-weight: 400;
+  border-radius: 3px;
+  font-size: 10px;
+}

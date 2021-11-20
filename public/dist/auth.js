@@ -410,6 +410,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchW": () => (/* binding */ fetchW)
 /* harmony export */ });
 /* harmony import */ var _Test_model_test__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Test/model/test */ "./public/src/Test/model/test.js");
+/* harmony import */ var _common_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./common.scss */ "./public/src/common.scss");
+
 
 let validate = {
   sort: () => {
@@ -649,17 +651,25 @@ function $(selector) {
   return new MyJquery(elements);
 }
 
-function addTooltip(el, text) {
-  el.onmouseenter = function () {
-    let tip = document.createElement('div');
-    $(tip).addClass('tip');
-    tip.innerText = text;
-    el.append(tip);
-  };
+function addTooltip(args) {
+  let ar = [...args.els];
+  ar.map(el => {
+    el.onmouseenter = function () {
+      let tip = document.createElement('div');
+      $(tip).addClass('tip');
+      tip.innerText = args.message;
+      el.append(tip);
 
-  el.onmouseleave = function () {
-    let tips = $(el)[0].querySelectorAll('.tip'); // [...tips].map((tip)=>{tip.remove()})
-  };
+      let remove = () => tip.remove();
+
+      tip.addEventListener('mousemove', remove.bind(tip));
+    }.bind(args);
+
+    el.onmouseleave = () => {
+      let tip = el.querySelector('.tip');
+      tip.remove();
+    };
+  }, [args]);
 }
 
 class test_delete_button {
@@ -884,6 +894,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************!*\
   !*** ./public/src/Auth/login.scss ***!
   \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/common.scss":
+/*!********************************!*\
+  !*** ./public/src/common.scss ***!
+  \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
