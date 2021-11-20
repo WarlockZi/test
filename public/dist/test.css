@@ -584,19 +584,14 @@ textarea:focus,
   position: relative;
   color: #4e4e4e; }
 
-.phone > a:before {
-  content: '\1F57B';
+.phone svg {
   position: absolute;
-  width: 26px;
-  height: 26px;
-  left: -20px;
-  top: -4px;
+  left: -15%;
+  bottom: 3px;
   color: #1bbc9b;
-  background-position: 0 -44px;
-  transform: rotate(-30deg);
-  font-size: 27px; }
+  width: 14px; }
   @media (max-width: 400px) {
-    .phone > a:before {
+    .phone svg {
       font-size: 18px; } }
 
 .phone > a:after {
