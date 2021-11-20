@@ -12,13 +12,25 @@ main {
 .card {
   width: 50%;
   margin: 65px auto;
-  @include _600{
-    width: 95%;
-  }
-
   p {
     font-size: 1rem
   }
+  @include _300 {
+    & > h1,  & > h2{
+      font-size: 12px;
+    }
+    & > p {
+      font-size: 10px;
+    }
+  }
+
+  @include _600 {
+    width: 95%;
+    margin: 30px auto;
+  }
+
+
+
 }
 
 .site-wrapper {

@@ -6,7 +6,7 @@
   padding: 12px 0 10px 0;
   display: flex;
   position: relative;
-  height: 45px;
+  //height: 45px;
   align-items: center;
   width: 100%;
   margin: auto;
@@ -20,6 +20,7 @@
   @include header__info;
   max-width: 1310px;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 .admin-header__info{
   @include header__info;

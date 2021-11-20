@@ -351,7 +351,7 @@ textarea:focus,
   display: flex;
   margin: 0 0 0 10px;
   align-items: center;
-  height: 100%; }
+  height: 45px; }
   .logo a {
     width: 100px;
     display: block; }
@@ -557,12 +557,12 @@ textarea:focus,
   padding: 12px 0 10px 0;
   display: flex;
   position: relative;
-  height: 45px;
   align-items: center;
   width: 100%;
   margin: auto;
   max-width: 1310px;
-  justify-content: space-between; }
+  justify-content: space-between;
+  flex-wrap: wrap; }
   @media (max-width: 600px) {
     .header__info {
       padding: 0; } }
@@ -571,7 +571,6 @@ textarea:focus,
   padding: 12px 0 10px 0;
   display: flex;
   position: relative;
-  height: 45px;
   align-items: center;
   width: 100%;
   margin: auto;
@@ -660,11 +659,17 @@ main {
 .card {
   width: 50%;
   margin: 65px auto; }
-  @media (max-width: 600px) {
-    .card {
-      width: 95%; } }
   .card p {
     font-size: 1rem; }
+  @media (max-width: 300px) {
+    .card > h1, .card > h2 {
+      font-size: 12px; }
+    .card > p {
+      font-size: 10px; } }
+  @media (max-width: 600px) {
+    .card {
+      width: 95%;
+      margin: 30px auto; } }
 
 .site-wrapper {
   height: 100%; }
