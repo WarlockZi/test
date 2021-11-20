@@ -26,7 +26,10 @@
   color: #1bbc9b;
   width: 14px;
   @include _400 {
-    font-size: 18px;
+    font-size: 17px;
+    width: 11px;
+    bottom: 2px;
+    left: -18px;
   }
 }
 
