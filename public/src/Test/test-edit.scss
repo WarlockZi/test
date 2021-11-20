@@ -1,6 +1,26 @@
 @import "./test-edit-menu";
 @import "../var";
 
+@mixin test-edit__act-button{
+  position: relative;
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 15px;
+  margin: 15px 0;
+  white-space: nowrap;
+  cursor: pointer;
+  background-color: #1bbc9b !important;
+  box-shadow: 0 2px 4px 0 #316358;
+  transition: box-shadow 100ms;
+  display: flex;
+  justify-content: center;
+
+  &:hover {
+    box-shadow: none;
+  }
+
+}
+
 .test-edit__content {
   margin-left: 10px;
   flex-flow: column;
@@ -9,22 +29,7 @@
 }
 
 .question__create-button {
-  flex-basis: 12px;
-  display: flex;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: #1bbc9b;
-  padding: 7px 11px;
-  cursor: pointer;
-  border-top: 1px solid #1bbc9b;
-  margin: 0 0 10px 0;;
-  transition: box-shadow 100ms;
-
-  &:hover {
-    box-shadow: none;
-  }
+  @include test-edit__act-button;
 }
 
 .question__create {
@@ -89,6 +94,7 @@
   align-items: center;
   background-color: #ffffff;
   cursor: pointer;
+  position: relative;
 
   :hover svg g {
     fill: red;
@@ -153,6 +159,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+
   &:hover{
     background-color: #ff292917;
   }
@@ -203,24 +211,26 @@
 }
 
 .answer:nth-child(odd) {
-  background: #1bbc9b3d;
+  background: hsl(168,75%,95%);
 }
 
+
+
 .answer__create-button {
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: $color-main;
-  background-color: #fff;
-  border-top: 1px solid $color-main;
-  transition: color .5s, background-color .5s;
+  @include test-edit__act-button;
+  //cursor: pointer;
+  //font-weight: 600;
+  //font-size: 1rem;
+  //height: 30px;
+  //display: flex;
+  //align-items: center;
+  //justify-content: center;
+  //color: #ffffff;
+  //background-color: $color-main;
+  //transition: color .5s, background-color .5s;
 
   &:hover {
-    background-color: #c8efe7;
+    background-color: #19a687;
   }
 
 }
@@ -654,15 +664,5 @@ section{
 //
 //}
 
-//.tip {
-//  position: absolute;
-//  display: flex;
-//  background: #ff0000;
-//  z-index: 2;
-//  color: white;
-//  padding: 11px;
-//  font-weight: 800;
-//  border-radius: 3px;
-//}
 
 

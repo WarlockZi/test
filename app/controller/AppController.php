@@ -13,6 +13,7 @@ class AppController extends Controller
 
 	public function __construct(array $route)
 	{
+
 		parent::__construct($route);
 		$this->layout = 'vitex';
 		$this->isAjax();
@@ -26,6 +27,7 @@ class AppController extends Controller
 			} else {
 				define('SU', false);
 			}
+
 		}
 
 		if (strpos(strtolower($route['controller']), 'adminsc') === false) {
@@ -45,9 +47,9 @@ class AppController extends Controller
 	}
 
 	public
-	function preparePassword(String $password) :String
+	function preparePassword(String $password): String
 	{
-		return md5($password.$this->salt);
+		return md5($password . $this->salt);
 	}
 
 	public
@@ -70,12 +72,13 @@ class AppController extends Controller
 			}
 		}
 	}
+
 	public function hierachy($array, $parentName)
 	{
 		{
 			$tree = [];
-				foreach ($array as $id => &$node) {
-				if (!$node[$parentName]&&isset($node[$parentName])) {
+			foreach ($array as $id => &$node) {
+				if (!$node[$parentName] && isset($node[$parentName])) {
 					$tree[$id] = &$node;
 				} else {
 					$array[$node[$parentName]]['childs'][$id] = &$node;

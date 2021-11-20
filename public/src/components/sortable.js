@@ -7,16 +7,17 @@ export let sortable = {
     connect: (selector) => {
         let el = $(selector).el[0];
         if (el) {
+            debugger
             let sortable = Sortable.create(el, {
                 animation: 150,
                 onEnd: function (evt) {
-                let questions = _question.questions()
+                    let questions = _question.questions()
                     _question.sort(evt.newIndex)
-                    for (let i = 0; i<evt.newIndex; i++){
+                    for (let i = 0; i < evt.newIndex; i++) {
 
                     }
-                    // alert(evt.oldIndex)
-                    // alert(evt.newIndex)
+                  alert(evt.oldIndex)
+                  alert(evt.newIndex)
                 },
             })
         }

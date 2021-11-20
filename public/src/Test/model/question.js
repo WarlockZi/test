@@ -1,4 +1,4 @@
-import {$, popup, post} from "../../common"
+import {$, popup, post, addTooltip} from "../../common"
 import {_answer} from "./answer";
 
 export let _question = {
@@ -20,6 +20,16 @@ export let _question = {
             $(el).find('.question__sort').innerText = i+1
 
         })
+    },
+    showTip:(action, event)=>{
+        let el = event.target
+        let tip = document.createElement("div")
+
+        if (action === 'save'){
+            addTooltip(el, 'сохранить')
+        }
+
+
     },
 
     showFirst: () => {

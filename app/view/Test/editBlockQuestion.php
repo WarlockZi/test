@@ -26,7 +26,7 @@
 
 
 			<? endif; ?>
-			<div class="answer__create-button">+</div>
+			<div class="answer__create-button">Добавить вопрос</div>
 
 		</div>
 

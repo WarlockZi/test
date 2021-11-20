@@ -3,13 +3,14 @@ import {$, post, validate} from "../common";
 
 $('.password-control').on('click', toggle)
 
-function toggle() {
-    if ($('[name="password"]').attr('type') == 'password') {
-        $('[name="password"]').attr('type', 'text');
+function toggle(event) {
+    let input = event.target.parentNode.querySelector('input')
+    if (input.getAttribute('type') == 'password') {
+        input.setAttribute('type', 'text');
     } else {
-        $('[name="password"]').attr('type', 'password');
+        input.setAttribute('type', 'password');
     }
-    this.classList.toggle('view')
+    event.target.classList.toggle('view')
 }
 
 
