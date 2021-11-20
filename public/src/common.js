@@ -1,4 +1,5 @@
 import {Test} from './Test/model/test'
+import './common.scss'
 
 let validate = {
     sort: () => {
@@ -217,22 +218,23 @@ function $(selector) {
     return new MyJquery(elements);
 }
 
-function addTooltip(el, text) {
+function addTooltip(args) {
+    let ar = [...args.els]
+    ar.map((el)=>{
+        el.onmouseenter = function(){
+            let tip = document.createElement('div')
+            $(tip).addClass('tip')
+            tip.innerText = args.message
+            el.append(tip)
+            let remove=()=>tip.remove()
+            tip.addEventListener('mousemove',remove.bind(tip))
+        }.bind(args)
 
-    el.onmouseenter = function () {
-        let tip = document.createElement('div')
-        $(tip).addClass('tip')
-
-        tip.innerText = text
-        el.append(tip)
-    }
-
-    el.onmouseleave = function () {
-        let tips = $(el)[0].querySelectorAll('.tip')
-
-        // [...tips].map((tip)=>{tip.remove()})
-
-    }
+        el.onmouseleave = ()=> {
+            let tip = el.querySelector('.tip')
+            tip.remove()
+        }
+    },[args])
 }
 
 class test_delete_button {

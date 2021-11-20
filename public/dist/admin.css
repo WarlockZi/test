@@ -1,3 +1,17 @@
+.tip {
+  position: absolute;
+  display: flex;
+  flex-basis: 50px;
+  bottom: 102%;
+  left: 0;
+  background: #3e4140;
+  z-index: 2;
+  color: #ffffff;
+  padding: 5px 10px;
+  font-weight: 400;
+  border-radius: 3px;
+  font-size: 10px; }
+
 @charset "UTF-8";
 .module {
   width: 80px;
@@ -454,14 +468,6 @@ td a {
   font-weight: 600;
   color: #fff;
   text-transform: uppercase; }
-
-.menu li ul li:hover,
-.menu li ul li a:hover {
-  background: #656464; }
-
-.menu .drop {
-  background: #001a98;
-  cursor: pointer; }
 
 /*.menu > li:hover,*/
 /*.menu li:hover > li label,*/

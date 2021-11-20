@@ -1,3 +1,17 @@
+.tip {
+  position: absolute;
+  display: flex;
+  flex-basis: 50px;
+  bottom: 102%;
+  left: 0;
+  background: #3e4140;
+  z-index: 2;
+  color: #ffffff;
+  padding: 5px 10px;
+  font-weight: 400;
+  border-radius: 3px;
+  font-size: 10px; }
+
 @charset "UTF-8";
 .guest-menu {
   display: none;

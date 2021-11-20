@@ -8,7 +8,7 @@ import './show'
 import '../Admin/admin.scss'
 
 import '../components/popup.scss'
-import {$} from '../common'
+import {$, addTooltip} from '../common'
 
 import {_test} from "./model/test";
 import {_question} from "./model/question";
@@ -26,7 +26,7 @@ function navigate(str) {
 navigate(window.location.pathname)
 
 // при создании нового теста показать пустой вопрос
-let questions =  _question.questions()
+let questions = _question.questions()
 if (!questions.length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
     _question.showFirst()
 }
@@ -51,9 +51,24 @@ $('.answer__create-button').on('click', _answer.create)
 
 
 // $('.question__sort').on('change', validate.sort)
-$('.question__save').on('mouseenter', _question.showTip.bind(this,'save'))
-$('.question__save').on('mouseleave', _question.showTip.bind(this,'save'))
-$('.question__text').on('hover', _question.callToEdit)
-$('.question__delete').on('click', _question.showTip)
-$('.question__create-button').on('click', _question.showTip)
+
+addTooltip({
+    els: $('.question__save').el,
+    message: 'Сохранить вопросы и ответы'
+})
+
+addTooltip({
+    els: $('.question__delete').el,
+    message: 'Удалить вопросы и ответы'
+})
+
+
+
+addTooltip({
+    els: $('.test-edit-menu__params').el,
+    message: 'Редактировать'
+})
+// $('.question__text').on('hover', _question.callToEdit)
+// $('.question__delete').on('click', _question.showTip)
+// $('.question__create-button').on('click', _question.showTip)
 

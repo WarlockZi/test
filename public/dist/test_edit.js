@@ -443,6 +443,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchW": () => (/* binding */ fetchW)
 /* harmony export */ });
 /* harmony import */ var _Test_model_test__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Test/model/test */ "./public/src/Test/model/test.js");
+/* harmony import */ var _common_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./common.scss */ "./public/src/common.scss");
+
 
 let validate = {
   sort: () => {
@@ -682,17 +684,25 @@ function $(selector) {
   return new MyJquery(elements);
 }
 
-function addTooltip(el, text) {
-  el.onmouseenter = function () {
-    let tip = document.createElement('div');
-    $(tip).addClass('tip');
-    tip.innerText = text;
-    el.append(tip);
-  };
+function addTooltip(args) {
+  let ar = [...args.els];
+  ar.map(el => {
+    el.onmouseenter = function () {
+      let tip = document.createElement('div');
+      $(tip).addClass('tip');
+      tip.innerText = args.message;
+      el.append(tip);
 
-  el.onmouseleave = function () {
-    let tips = $(el)[0].querySelectorAll('.tip'); // [...tips].map((tip)=>{tip.remove()})
-  };
+      let remove = () => tip.remove();
+
+      tip.addEventListener('mousemove', remove.bind(tip));
+    }.bind(args);
+
+    el.onmouseleave = () => {
+      let tip = el.querySelector('.tip');
+      tip.remove();
+    };
+  }, [args]);
 }
 
 class test_delete_button {
@@ -801,6 +811,7 @@ let sortable = {
     let el = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(selector).el[0];
 
     if (el) {
+      debugger;
       let sortable = sortablejs__WEBPACK_IMPORTED_MODULE_0__.default.create(el, {
         animation: 150,
         onEnd: function (evt) {
@@ -848,6 +859,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************!*\
   !*** ./public/src/Test/test-edit.scss ***!
   \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/common.scss":
+/*!********************************!*\
+  !*** ./public/src/common.scss ***!
+  \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -4822,11 +4845,20 @@ _components_sortable__WEBPACK_IMPORTED_MODULE_11__.sortable.connect('.questions'
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.answer__delete').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_10__._answer.del);
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.answer__create-button').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_10__._answer.create); // $('.question__sort').on('change', validate.sort)
 
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__save').on('mouseenter', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showTip.bind(undefined, 'save'));
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__save').on('mouseleave', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showTip.bind(undefined, 'save'));
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__text').on('hover', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.callToEdit);
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__delete').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showTip);
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__create-button').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showTip);
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__save').el,
+  message: 'Сохранить вопросы и ответы'
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__delete').el,
+  message: 'Удалить вопросы и ответы'
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test-edit-menu__params').el,
+  message: 'Редактировать'
+}); // $('.question__text').on('hover', _question.callToEdit)
+// $('.question__delete').on('click', _question.showTip)
+// $('.question__create-button').on('click', _question.showTip)
 })();
 
 /******/ })()
