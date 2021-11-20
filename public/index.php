@@ -15,7 +15,7 @@ define('ROOT', dirname(__DIR__));
 if (DEV) {
 	ini_set('display_errors', 1);
 }
-echo $_SERVER['HTTP_USER_AGENT'];
+
 new App;
 
 Router::dispatch($_SERVER['QUERY_STRING']);
