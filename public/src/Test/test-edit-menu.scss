@@ -1,7 +1,6 @@
 @import "../var";
 
 
-
 .test-edit-menu__params {
   display: flex;
   justify-content: space-around;
@@ -26,20 +25,7 @@
   color: #ffffff;
 
 }
-.test{
-  &:hover{
-    background-color: $color-gray-max-hover;
-  }
-}
 
-.path{
-  .path{
-    background-color: #808080;
-  }
-  &:hover{
-    background-color: $color-gray-max-hover;
-  }
-}
 
 .test-edit-menu {
   max-width: 170px;
@@ -57,10 +43,19 @@
     border-bottom: 1px solid #b7b7b7;
     transition: 0.5s all;
     justify-content: flex-end;
-    background-color: $color-gray-min;
-  }
-  .vert-menu__list{
     background-color: $color-gray-max;
+
+    &:hover {
+      background-color: $color-gray-max-hover;
+    }
+  }
+
+  .vert-menu__list {
+    background-color: $color-gray-mid;
+
+    &:hover {
+      background-color: $color-gray-mid-hover;
+    }
   }
 
   .drop {
@@ -95,12 +90,14 @@
   &:hover {
     box-shadow: none;
   }
-  &:hover >.test-edit-menu__add-bttn-wrap{
+
+  &:hover > .test-edit-menu__add-bttn-wrap {
     opacity: 1;
     top: 100%;
   }
 }
-.test-edit-menu__add-bttn-wrap{
+
+.test-edit-menu__add-bttn-wrap {
   display: flex;
   position: absolute;
   flex-flow: column;
@@ -115,12 +112,13 @@
 }
 
 .test-edit-menu__add-bttn-test,
-.test-edit-menu__add-bttn-path{
+.test-edit-menu__add-bttn-path {
   display: flex;
   padding: 5px;
   font-size: .8rem;
   color: #000;
-  &:hover{
+
+  &:hover {
     background-color: $color-hover-gray;
   }
 }

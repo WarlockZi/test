@@ -48,8 +48,6 @@ $('.answer__delete').on('click', _answer.del)
 $('.answer__create-button').on('click', _answer.create)
 
 
-// $('.question__sort').on('change', validate.sort)
-
 addTooltip({
     els: $('.question__save').el,
     message: 'Сохранить вопросы и ответы'
@@ -60,7 +58,10 @@ addTooltip({
     message: 'Удалить вопросы и ответы'
 })
 
-
+addTooltip({
+    els: $('.question__show-answers').el,
+    message: 'Показать ответы'
+})
 
 addTooltip({
     els: $('.test-edit-menu__params').el,

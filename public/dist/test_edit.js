@@ -4845,8 +4845,7 @@ _components_sortable__WEBPACK_IMPORTED_MODULE_11__.sortable.connect('.questions'
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__delete').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.delete);
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__create-button').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.create);
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.answer__delete').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_10__._answer.del);
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.answer__create-button').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_10__._answer.create); // $('.question__sort').on('change', validate.sort)
-
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.answer__create-button').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_10__._answer.create);
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
   els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__save').el,
   message: 'Сохранить вопросы и ответы'
@@ -4854,6 +4853,10 @@ _components_sortable__WEBPACK_IMPORTED_MODULE_11__.sortable.connect('.questions'
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
   els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__delete').el,
   message: 'Удалить вопросы и ответы'
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__show-answers').el,
+  message: 'Показать ответы'
 });
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
   els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test-edit-menu__params').el,

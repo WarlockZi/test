@@ -446,15 +446,6 @@ footer {
   max-width: 190px;
   color: #ffffff; }
 
-.test:hover {
-  background-color: #343635; }
-
-.path .path {
-  background-color: #808080; }
-
-.path:hover {
-  background-color: #343635; }
-
 .test-edit-menu {
   max-width: 170px; }
   .test-edit-menu .menu {
@@ -468,9 +459,13 @@ footer {
     border-bottom: 1px solid #b7b7b7;
     transition: 0.5s all;
     justify-content: flex-end;
-    background-color: #808080; }
-  .test-edit-menu .vert-menu__list {
     background-color: #3d403f; }
+    .test-edit-menu li:hover {
+      background-color: #343635; }
+  .test-edit-menu .vert-menu__list {
+    background-color: #565958; }
+    .test-edit-menu .vert-menu__list:hover {
+      background-color: #4D4F4E; }
   .test-edit-menu .drop {
     background: #4e4e4e;
     cursor: pointer;
@@ -556,7 +551,8 @@ footer {
 .question__show-answers {
   position: relative;
   width: 30px;
-  background-color: white; }
+  background-color: white;
+  cursor: pointer; }
   .question__show-answers:before {
     content: '';
     display: inline-block;
@@ -581,6 +577,9 @@ footer {
   margin: 0 3px;
   font-weight: 600;
   position: relative; }
+  .question__text:hover {
+    outline: #1bbc9b 1px solid;
+    border-radius: 6px; }
 
 .rotate:before {
   transform: rotate(135deg) !important; }
