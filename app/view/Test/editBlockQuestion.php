@@ -3,6 +3,7 @@
 	<div class="question-edit_row">
 		<div class="question__sort"><?= $block[0]['sort'] ?? '' ?></div>
 		<div class="question__save"><?= include ROOT . '/app/view/components/icons/save.php' ?></div>
+		<div class="question__show-answers"></div>
 		<div class="question__text" contenteditable="true">
 			<?= $block[0]['question_text'] ?? '' ?>
 		</div>

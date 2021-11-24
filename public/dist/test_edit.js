@@ -84,7 +84,7 @@ let _answer = {
     }
 
     function deleteFromView(del_button) {
-      del_button.parentNode.remove();
+      del_button.closest('.answer').remove();
     }
 
     async function deleteFromServer(del_button) {
@@ -811,18 +811,21 @@ let sortable = {
     let el = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(selector).el[0];
 
     if (el) {
-      debugger;
       let sortable = sortablejs__WEBPACK_IMPORTED_MODULE_0__.default.create(el, {
         animation: 150,
         onEnd: function (evt) {
-          let questions = _Test_model_question__WEBPACK_IMPORTED_MODULE_2__._question.questions();
+          let oldI = evt.oldIndex;
+          let newI = evt.newIndex;
 
-          _Test_model_question__WEBPACK_IMPORTED_MODULE_2__._question.sort(evt.newIndex);
+          if (oldI > newI) {
+            let questions = _Test_model_question__WEBPACK_IMPORTED_MODULE_2__._question.questions();
 
-          for (let i = 0; i < evt.newIndex; i++) {}
+            _Test_model_question__WEBPACK_IMPORTED_MODULE_2__._question.sort(oldI);
+          } else {
+            let questions = _Test_model_question__WEBPACK_IMPORTED_MODULE_2__._question.questions();
 
-          alert(evt.oldIndex);
-          alert(evt.newIndex);
+            _Test_model_question__WEBPACK_IMPORTED_MODULE_2__._question.sort(newI);
+          }
         }
       });
     }
@@ -4833,13 +4836,12 @@ if (!questions.length && /\/adminsc\/test\/edit/.test(window.location.pathname))
   _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showFirst();
 }
 
-_components_sortable__WEBPACK_IMPORTED_MODULE_11__.sortable.connect('.questions'); // check('/image/create')
-
+_components_sortable__WEBPACK_IMPORTED_MODULE_11__.sortable.connect('.questions');
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_8__._test.update);
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test-path__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_8__._test.update); // $('.question__sort').on('change', validate.sort)
 
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__save').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.save);
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__text').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showAnswers);
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__show-answers').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showAnswers);
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__delete').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.delete);
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__create-button').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.create);
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.answer__delete').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_10__._answer.del);

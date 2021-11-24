@@ -429,14 +429,12 @@ footer {
   justify-content: space-around;
   position: relative;
   align-items: center;
-  background-color: #3d403f;
   color: #ffffff;
   padding: 7px;
   width: 16px;
   cursor: pointer; }
 
 .test-edit-menu__test-name {
-  background-color: #3d403f;
   display: flex;
   align-items: center;
   flex: 1;
@@ -469,7 +467,10 @@ footer {
     position: relative;
     border-bottom: 1px solid #b7b7b7;
     transition: 0.5s all;
-    justify-content: flex-end; }
+    justify-content: flex-end;
+    background-color: #808080; }
+  .test-edit-menu .vert-menu__list {
+    background-color: #3d403f; }
   .test-edit-menu .drop {
     background: #4e4e4e;
     cursor: pointer;
@@ -552,17 +553,11 @@ footer {
   flex-flow: column;
   padding: 2px; }
 
-.question__text {
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  min-width: 90px;
-  padding: 10px 10px 10px 30px;
-  background-color: white;
-  margin: 0 3px;
-  font-weight: 600;
-  position: relative; }
-  .question__text:before {
+.question__show-answers {
+  position: relative;
+  width: 30px;
+  background-color: white; }
+  .question__show-answers:before {
     content: '';
     display: inline-block;
     cursor: pointer;
@@ -575,6 +570,17 @@ footer {
     position: absolute;
     transition: transform 300ms;
     transform: rotate(45deg); }
+
+.question__text {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  min-width: 90px;
+  padding: 10px;
+  background-color: white;
+  margin: 0 3px;
+  font-weight: 600;
+  position: relative; }
 
 .rotate:before {
   transform: rotate(135deg) !important; }
@@ -595,7 +601,8 @@ footer {
   align-items: center;
   background-color: #ffffff;
   cursor: pointer;
-  position: relative; }
+  position: relative;
+  margin-right: 3px; }
   .question__save :hover svg g {
     fill: red; }
   .question__save svg {
@@ -623,9 +630,11 @@ footer {
   margin: 5px 0 0 47px; }
 
 .question__answers.scale {
-  transform: scaleY(1) !important; }
+  transform: scaleY(1) !important;
+  opacity: 1; }
 
 .question__answers {
+  opacity: 0;
   display: flex;
   flex-flow: column;
   width: 100%;

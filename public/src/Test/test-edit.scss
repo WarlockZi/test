@@ -1,7 +1,7 @@
 @import "./test-edit-menu";
 @import "../var";
 
-@mixin test-edit__act-button{
+@mixin test-edit__act-button {
   position: relative;
   color: #fff;
   font-weight: 600;
@@ -43,16 +43,10 @@
   padding: 2px;
 }
 
-.question__text {
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  min-width: 90px;
-  padding: 10px 10px 10px 30px;
-  background-color: white;
-  margin: 0 3px;
-  font-weight: 600;
+.question__show-answers {
   position: relative;
+  width: 30px;
+  background-color: white;
 
   &:before {
     content: '';
@@ -69,6 +63,18 @@
     transition: transform 300ms;
     transform: rotate(45deg);
   }
+}
+
+.question__text {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  min-width: 90px;
+  padding: 10px;
+  background-color: white;
+  margin: 0 3px;
+  font-weight: 600;
+  position: relative;
 }
 
 .rotate {
@@ -95,6 +101,7 @@
   background-color: #ffffff;
   cursor: pointer;
   position: relative;
+  margin-right: 3px;
 
   :hover svg g {
     fill: red;
@@ -133,14 +140,15 @@
 .question__answers.height {
   height: auto !important;
   margin: 5px 0 0 47px;
-
 }
 
 .question__answers.scale {
   transform: scaleY(1) !important;
+  opacity: 1;
 }
 
 .question__answers {
+  opacity: 0;
   display: flex;
   flex-flow: column;
   width: 100%;
@@ -161,7 +169,7 @@
   justify-content: center;
   position: relative;
 
-  &:hover{
+  &:hover {
     background-color: #ff292917;
   }
 
@@ -211,9 +219,8 @@
 }
 
 .answer:nth-child(odd) {
-  background: hsl(168,75%,95%);
+  background: hsl(168, 75%, 95%);
 }
-
 
 
 .answer__create-button {
@@ -247,12 +254,11 @@
 }
 
 
-
-
 html {
   overflow-y: scroll
 }
-section{
+
+section {
   margin: 5px 20px;
 }
 
@@ -265,13 +271,13 @@ section{
 
 }
 
-.list{
+.list {
   display: flex;
   flex-flow: column;
   margin: 10px;
 }
 
-.test-edit__container{
+.test-edit__container {
   margin-left: clamp(10px, 20%, 50px);
 }
 
