@@ -33,15 +33,13 @@ if (!questions.length && /\/adminsc\/test\/edit/.test(window.location.pathname))
 
 sortable.connect('.questions')
 
-// check('/image/create')
-
 
 $('.test__update').on('click', _test.update)
 $('.test-path__update').on('click', _test.update)
 
 // $('.question__sort').on('change', validate.sort)
 $('.question__save').on('click', _question.save)
-$('.question__text').on('click', _question.showAnswers)
+$('.question__show-answers').on('click', _question.showAnswers)
 $('.question__delete').on('click', _question.delete)
 $('.question__create-button').on('click', _question.create)
 

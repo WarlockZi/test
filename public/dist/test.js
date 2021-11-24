@@ -197,7 +197,7 @@ let _answer = {
     }
 
     function deleteFromView(del_button) {
-      del_button.parentNode.remove();
+      del_button.closest('.answer').remove();
     }
 
     async function deleteFromServer(del_button) {

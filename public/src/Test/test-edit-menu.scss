@@ -1,11 +1,12 @@
 @import "../var";
 
+
+
 .test-edit-menu__params {
   display: flex;
   justify-content: space-around;
   position: relative;
   align-items: center;
-  background-color: $color-gray-max;
   color: #ffffff;
   padding: 7px;
   width: 16px;
@@ -13,7 +14,6 @@
 }
 
 .test-edit-menu__test-name {
-  background-color: $color-gray-max;
   display: flex;
   align-items: center;
   flex: 1;
@@ -41,13 +41,6 @@
   }
 }
 
-//.test-edit-menu__test-name.test{
-//  background-color: #3d403f;
-//}
-//.test-edit-menu__test-name.path{
-//  background-color: rgba(88, 96, 107, 0.25);
-//}
-
 .test-edit-menu {
   max-width: 170px;
 
@@ -64,6 +57,10 @@
     border-bottom: 1px solid #b7b7b7;
     transition: 0.5s all;
     justify-content: flex-end;
+    background-color: $color-gray-min;
+  }
+  .vert-menu__list{
+    background-color: $color-gray-max;
   }
 
   .drop {

@@ -2,6 +2,7 @@ import {$, popup, post, addTooltip} from "../../common"
 import {_answer} from "./answer";
 
 export let _question = {
+
     sort: async function (upToQestionNumber) {
         let questions = [..._question.questions()]
         let questionsEls =questions.filter(function (el, i) {
