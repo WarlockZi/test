@@ -167,7 +167,7 @@
   margin: 0 auto;
   max-width: 1310px;
   flex: 1 0 auto;
-    width: 100%;
+  width: 100%;
   @include _400 {
   flex-wrap: wrap;
   }
@@ -175,7 +175,7 @@
 
   .menu {
     //z-index: 1;
-    margin: 0 15px;
+    margin: 0 15px 15px;
     max-width: 170px;
     min-width: 170px;
 
