@@ -87,7 +87,6 @@ function aimQElFunction(current, direction) {
 function currentQ() {
   return {
     id: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.nav-active').el[0].innerText - 1,
-    navEl: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.nav-active').el[0],
     QEl: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question.flex1').el[0],
     navLength: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-pagination]').el.length,
     QPrevc: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question.flex1').el[0].previousElementSibling,

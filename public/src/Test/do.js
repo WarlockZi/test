@@ -81,7 +81,6 @@ function aimQElFunction(current, direction) {
 function currentQ() {
     return {
         id: $('.nav-active').el[0].innerText - 1,
-        navEl: $('.nav-active').el[0],
         QEl: $('.question.flex1').el[0],
         navLength: $('[data-pagination]').el.length,
         QPrevc: $('.question.flex1').el[0].previousElementSibling,

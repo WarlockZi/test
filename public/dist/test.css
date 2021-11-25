@@ -169,7 +169,7 @@
     .test-do {
       flex-wrap: wrap; } }
   .test-do .menu {
-    margin: 0 15px;
+    margin: 0 15px 15px;
     max-width: 170px;
     min-width: 170px; }
     .test-do .menu > li {

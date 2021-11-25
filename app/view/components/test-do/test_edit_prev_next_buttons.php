@@ -1,4 +1,4 @@
 <div class="test-do__buttons">
-	<button id="prev">Назад</button>
-	<button id="next">Вперед</button>
+	<button id="prev">Предыдущий вопрос</button>
+	<button id="next">Следующий вопрос</button>
 </div>
