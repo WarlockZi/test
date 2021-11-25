@@ -1,15 +1,17 @@
 @import "../var";
 @import "../mixin";
+@import "../mixin_media";
 
-.test-do__buttons{
+.test-do__buttons {
   display: flex;
-  button{
+
+  button {
     @include test__button;
   }
 }
 
 .test-do__finish-btn {
-@include test__button;
+  @include test__button;
 }
 
 .site-wrapper {
@@ -155,17 +157,21 @@
 }
 
 
-.test-do__content{
+.test-do__content {
   margin-right: 15px;
 }
+
 /// MENU
 .test-do {
   display: flex;
   margin: 0 auto;
   max-width: 1310px;
   flex: 1 0 auto;
-  width: 100%;
+    width: 100%;
+  @include _400 {
   flex-wrap: wrap;
+  }
+
 
   .menu {
     //z-index: 1;

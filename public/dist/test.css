@@ -164,8 +164,10 @@
   margin: 0 auto;
   max-width: 1310px;
   flex: 1 0 auto;
-  width: 100%;
-  flex-wrap: wrap; }
+  width: 100%; }
+  @media (max-width: 400px) {
+    .test-do {
+      flex-wrap: wrap; } }
   .test-do .menu {
     margin: 0 15px;
     max-width: 170px;
