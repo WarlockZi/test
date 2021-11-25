@@ -9,6 +9,7 @@
     "> 1%, not dead"
   ],
   "scripts": {
+    "nrd": "npm run dev",
     "build": "webpack",
     "dev": "webpack -w",
     "serve": "webpack serve --hot --inline"

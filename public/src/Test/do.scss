@@ -1,4 +1,16 @@
 @import "../var";
+@import "../mixin";
+
+.test-do__buttons{
+  display: flex;
+  button{
+    @include test__button;
+  }
+}
+
+.test-do__finish-btn {
+@include test__button;
+}
 
 .site-wrapper {
   height: 100%
@@ -153,6 +165,7 @@
   max-width: 1310px;
   flex: 1 0 auto;
   width: 100%;
+  flex-wrap: wrap;
 
   .menu {
     //z-index: 1;
@@ -234,22 +247,6 @@
 }
 
 
-.test-do__finish-btn {
-  justify-content: center;
-  padding: 10px;
-  margin: 29px auto;
-  background-color: #1bbc9b;
-  color: #ffffff;
-  border-radius: 4px;
-  display: flex;
-  font-weight: 600;
-  box-shadow: 5px 4px 6px 1px #6a8784;
-  cursor: pointer;
 
-  &:hover {
-    transition: box-shadow 100ms;
-    box-shadow: 2px 2px 12px 0px #6a8784;
-  }
-}
 
 

@@ -24,9 +24,79 @@ __webpack_require__.r(__webpack_exports__);
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[type="checkbox"]').on('click', function (e) {
   let a = e.target.labels[0];
   a.classList.toggle('pushed');
-}); /////////////////////////////////////////////////////////////////////////////
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#prev').on('click', prevQ);
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#next').on('click', nextQ);
+
+function nextQ() {
+  let current = currentQ();
+  if (current.id > current.navLength - 2) return false;
+  let aimNavId = aimNavIdFunction(current.id, 'next');
+  let aimQEl = aimQElFunction(current, 'next');
+  pushNav(current.id, aimNavId);
+  pushQ(current.QEl, aimQEl);
+}
+
+function prevQ() {
+  let current = currentQ();
+  if (current.id < 1) return false;
+  let aimNavId = aimNavIdFunction(current.id, 'back');
+  let aimQEl = aimQElFunction(current, 'back');
+  pushNav(current.id, aimNavId);
+  pushQ(current.QEl, aimQEl);
+}
+
+function pushNav(currentId, aimNavId) {
+  let currNavEl = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-pagination]').el[currentId];
+  currNavEl.classList.toggle('nav-active');
+  let NavEl = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-pagination]').el[aimNavId];
+  NavEl.classList.toggle('nav-active');
+}
+
+function pushQ(currentEl, aimQEl) {
+  currentEl.classList.toggle('flex1');
+  aimQEl.classList.toggle('flex1');
+}
+
+function aimNavIdFunction(currentId, direction) {
+  let dir = currentId;
+
+  switch (true) {
+    case direction === 'next':
+      return dir += 1;
+      break;
+
+    case direction === 'back':
+      return dir -= 1;
+      break;
+  }
+}
+
+function aimQElFunction(current, direction) {
+  switch (true) {
+    case direction === 'next':
+      return current.QNextEl;
+      break;
+
+    case direction === 'back':
+      return current.QPrevc;
+      break;
+  }
+}
+
+function currentQ() {
+  return {
+    id: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.nav-active').el[0].innerText - 1,
+    navEl: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.nav-active').el[0],
+    QEl: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question.flex1').el[0],
+    navLength: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-pagination]').el.length,
+    QPrevc: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question.flex1').el[0].previousElementSibling,
+    QNextEl: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question.flex1').el[0].nextElementSibling
+  };
+} /////////////////////////////////////////////////////////////////////////////
 ///////////  RESULTS  TEST  Закончить тест/////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
+
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-do__finish-btn').on('click', async function (e) {
   let button = e.target;
