@@ -13,6 +13,8 @@
 			$i = 1;
 			?>
 
+		<? include ROOT.'/app/view/components/test-do/test_edit_prev_next_buttons.php'?>
+
 			<div class="test-data">
 
 				<? foreach ($testData as $id_quest => $item): ?>
