@@ -2,6 +2,82 @@ import {$, popup, post} from '../../common'
 
 export let _test = {
 
+
+    nextQ: () => {
+        let current = _test.currentQ()
+        if (current.id > current.navLength - 2) return false
+
+        let aimNavId = _test.aimNavIdFunction(current.id, 'next')
+        let aimQEl = _test.aimQElFunction(current, 'next')
+
+        _test.pushNav(current.id, aimNavId)
+        _test.pushQ(current.QEl, aimQEl)
+    },
+
+    prevQ: () => {
+        let current = _test.currentQ()
+        if (current.id < 1) return false
+
+        let aimNavId = _test.aimNavIdFunction(current.id, 'back')
+        let aimQEl = _test.aimQElFunction(current, 'back')
+
+        _test.pushNav(current.id, aimNavId)
+        _test.pushQ(current.QEl, aimQEl)
+    },
+
+    pushNav: (currentId, aimNavId) => {
+        let currNavEl = $('[data-pagination]')
+            .el[currentId]
+        currNavEl.classList.toggle('nav-active')
+
+        let NavEl = $('[data-pagination]')
+            .el[aimNavId]
+        NavEl.classList.toggle('nav-active')
+    },
+
+    pushQ: (currentEl, aimQEl) => {
+        currentEl.classList.toggle('flex1')
+        aimQEl.classList.toggle('flex1')
+    },
+
+    aimNavIdFunction: (currentId, direction) => {
+        let dir = currentId
+        switch (true) {
+            case direction === 'next':
+                return dir += 1
+                break
+            case direction === 'back':
+                return dir -= 1
+                break
+        }
+    },
+
+    aimQElFunction: (current, direction) => {
+        switch (true) {
+            case direction === 'next':
+                return current.QNextEl
+                break
+            case direction === 'back':
+                return current.QPrevc
+                break
+        }
+    },
+
+    currentQ: () => {
+        return {
+            id: $('.nav-active').el[0].innerText - 1,
+            QEl: $('.question.flex1').el[0],
+            navLength: $('[data-pagination]').el.length,
+            QPrevc: $('.question.flex1').el[0].previousElementSibling,
+            QNextEl: $('.question.flex1').el[0].nextElementSibling,
+        }
+    },
+
+
+
+
+
+
     serverModel: () => {
         return {
             id: +window.location.href.split('/').pop(),

@@ -28,6 +28,8 @@ class TestController Extends AppController
 		View::setCss('test.css');
 	}
 
+
+
 	public function actionShow()
 	{
 		$this->layout = 'admin';
@@ -118,7 +120,6 @@ class TestController Extends AppController
 
 	public function actionResults()
 	{
-
 		if (array_key_exists('cache', $this->route)) {
 			if ($this->route['cache']) {
 				$file_name = $this->route['cache'];
@@ -164,7 +165,7 @@ class TestController Extends AppController
 	{
 		$mails = [
 //			'vitaliy04111979@gmail.com',
-			'vvoronik@yandex.ru',
+//			'vvoronik@yandex.ru',
 //			'10@vitexopt.ru',
 		];
 		return $mails;
@@ -175,6 +176,7 @@ class TestController Extends AppController
 		$sendIfLessOrEqualThen = 0;
 		$mails = [
 			'10@vitexopt.ru',
+			'vvoronik@yandex.ru',
 		];
 
 		if ($errCount <= $sendIfLessOrEqualThen) {
@@ -221,8 +223,6 @@ class TestController Extends AppController
 
 	private function getMenu()
 	{
-//		$menuTestDo = App::$app->cache->get('menuTestDo');
-//		if ($menuTestDo) return $menuTestDo;
 
 		ob_start();
 		new Menu([
@@ -243,6 +243,7 @@ class TestController Extends AppController
 
 	public function actionDo()
 	{
+		$this->layout = 'crm';
 		$menuTestDo = $this->getMenu();
 		$testId = (int)$this->route['alias'];
 		$testData = App::$app->test->getTestData($testId, true);

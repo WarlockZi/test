@@ -79,7 +79,7 @@ class View
 	{
 
 //		return require_once(ROOT . '/app/view/components/Logo.php');
-		return include(ROOT . '/app/view/components/header/Logo_squared.php');
+		return include(ROOT . '/app/view/components/header/logo_squared.php');
 //		return include(ROOT . '/app/view/components/Logo_small.php');
 
 	}

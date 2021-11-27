@@ -26,7 +26,7 @@
 						<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
 					<? endforeach; ?>
 				<? endif; ?>
-				<div class="question__create-button" data-action-hover="Добавить вопрос">Добавить ответ</div>
+				<div class="question__create-button" data-action-hover="Добавить вопрос">Добавить вопрос</div>
 			</div>
 
 

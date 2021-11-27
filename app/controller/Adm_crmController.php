@@ -23,6 +23,17 @@ class Adm_crmController extends AdminscController {
       $rights = App::$app->user->findAll('user_rights');
       $this->set(compact('users', 'rights'));
    }
+   public function actionTestResults() {
+
+		$files = $this->getFiles(ROOT.'/tmp/cache/test_results');
+
+		$this->set(compact('files'));
+   }
+
+   public function actionTestResult() {
+	$files = $this->getFiles(ROOT.'/tmp/cache/test_results');
+	$this->set(compact('files'));
+}
 
    public function actionUser() {
 

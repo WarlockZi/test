@@ -23,7 +23,7 @@ abstract class Controller
 	protected function createToken()
 	{
 		$salt = "popiyonovacheesa";
-        return $_SESSION['token'] = md5($salt . microtime(true));
+		return $_SESSION['token'] = md5($salt . microtime(true));
 
 	}
 
@@ -33,7 +33,18 @@ abstract class Controller
 		$vObj->render($this->vars);
 	}
 
-	// Передача данных в View
+	protected function getFiles($absolutePath)
+	{
+		$files = [];
+		foreach (glob($absolutePath . "/*") as $file) {
+			$files[$file]['filesize'] = filesize($file);
+			$files[$file]['nameWithExt'] = basename($file);
+			$files[$file]['name'] = basename($file);
+		}
+		return $files;
+	}
+
+// Передача данных в View
 	public function set($vars)
 	{
 		$this->vars = array_merge($this->vars, $vars);
@@ -64,7 +75,7 @@ abstract class Controller
 				return $data;
 			}
 		}
-			return false;
+		return false;
 	}
 
 }
