@@ -45,7 +45,13 @@ __webpack_require__.r(__webpack_exports__);
   corrAnswers = JSON.parse(corrAnswers);
   let errorCnt = colorView(corrAnswers);
   let data = objToServer(errorCnt);
-  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/cachePageSendEmail', data);
+  let res = fetch('/test/cachePageSendEmail', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  }); // let res = await post('/test/cachePageSendEmail', data)
 
   if (res) {
     (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("#btnn").el[0].href = location.href;
@@ -103,7 +109,22 @@ function checkCorrectAnswers(correctAnser, input, label) {
     // кнопка не нажата, в correct_answers нет
     return true;
   }
-}
+} // function escapeHtml(text) {
+//     let map = {
+//         '\t': '',
+//         // '&': '&amp;',
+//         // '<': '&lt;',
+//         // '>': '&gt;',
+//         // '"': '&quot;',
+//         // "'": '\''
+//     };
+//     let test = JSON.stringify(text)
+//     // let t = test.replace(/[&<>"']/g, function(m) { return map[m]; })
+//     let t = test.replace(/(\\t)/g, '')
+//      t = test.replace(/(\\\\)/g, '\\')
+//     return t;
+// }
+
 
 function objToServer(errorCnt) {
   return {
@@ -111,6 +132,7 @@ function objToServer(errorCnt) {
     questionCnt: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').el.length,
     errorCnt: errorCnt,
     pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
+    // pageCache: document.documentElement.outerHTML,
     testId: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-test-id]').el[0].dataset.testId,
     test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText,
     userName: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.user-menu__FIO').el[0].innerText
