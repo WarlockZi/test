@@ -19,10 +19,13 @@
 </head>
 
 <body>
-<? include_once ROOT . '/app/view/components/header/top.php';?>
-<? include_once ROOT . '/app/view/components/header/header.php';?>
+<? include_once ROOT . '/app/view/components/header/top.php'; ?>
+<header>
+	<? include_once ROOT . '/app/view/components/header/logo_phone.php'; ?>
+	<? include_once ROOT . '/app/view/components/header/catalog_menu.php'; ?>
+</header>
 
-<?= $content ;?>
+<?= $content; ?>
 
 
 <footer>
@@ -50,8 +53,8 @@
 </footer>
 
 
-<?= require_once ROOT . '/app/view/components/footer/cookie.php';?>
+<?= require_once ROOT . '/app/view/components/footer/cookie.php'; ?>
 <? $this::getJS(); ?>
-<?//=require_once ROOT.'/app/view/components/ya_metrica.php';?>
+<? //=require_once ROOT.'/app/view/components/ya_metrica.php';?>
 </body>
 </html>

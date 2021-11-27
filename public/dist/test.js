@@ -13,6 +13,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _do_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./do.scss */ "./public/src/Test/do.scss");
 /* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
 /* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
+/* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
+
 
 
 
@@ -25,77 +27,10 @@ __webpack_require__.r(__webpack_exports__);
   let a = e.target.labels[0];
   a.classList.toggle('pushed');
 });
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#prev').on('click', prevQ);
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#next').on('click', nextQ);
-
-function nextQ() {
-  let current = currentQ();
-  if (current.id > current.navLength - 2) return false;
-  let aimNavId = aimNavIdFunction(current.id, 'next');
-  let aimQEl = aimQElFunction(current, 'next');
-  pushNav(current.id, aimNavId);
-  pushQ(current.QEl, aimQEl);
-}
-
-function prevQ() {
-  let current = currentQ();
-  if (current.id < 1) return false;
-  let aimNavId = aimNavIdFunction(current.id, 'back');
-  let aimQEl = aimQElFunction(current, 'back');
-  pushNav(current.id, aimNavId);
-  pushQ(current.QEl, aimQEl);
-}
-
-function pushNav(currentId, aimNavId) {
-  let currNavEl = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-pagination]').el[currentId];
-  currNavEl.classList.toggle('nav-active');
-  let NavEl = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-pagination]').el[aimNavId];
-  NavEl.classList.toggle('nav-active');
-}
-
-function pushQ(currentEl, aimQEl) {
-  currentEl.classList.toggle('flex1');
-  aimQEl.classList.toggle('flex1');
-}
-
-function aimNavIdFunction(currentId, direction) {
-  let dir = currentId;
-
-  switch (true) {
-    case direction === 'next':
-      return dir += 1;
-      break;
-
-    case direction === 'back':
-      return dir -= 1;
-      break;
-  }
-}
-
-function aimQElFunction(current, direction) {
-  switch (true) {
-    case direction === 'next':
-      return current.QNextEl;
-      break;
-
-    case direction === 'back':
-      return current.QPrevc;
-      break;
-  }
-}
-
-function currentQ() {
-  return {
-    id: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.nav-active').el[0].innerText - 1,
-    QEl: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question.flex1').el[0],
-    navLength: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-pagination]').el.length,
-    QPrevc: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question.flex1').el[0].previousElementSibling,
-    QNextEl: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question.flex1').el[0].nextElementSibling
-  };
-} /////////////////////////////////////////////////////////////////////////////
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#prev').on('click', _model_test__WEBPACK_IMPORTED_MODULE_4__._test.prevQ);
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#next').on('click', _model_test__WEBPACK_IMPORTED_MODULE_4__._test.nextQ); /////////////////////////////////////////////////////////////////////////////
 ///////////  RESULTS  TEST  Закончить тест/////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
-
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-do__finish-btn').on('click', async function (e) {
   let button = e.target;
@@ -486,6 +421,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
 let _test = {
+  nextQ: () => {
+    let current = _test.currentQ();
+
+    if (current.id > current.navLength - 2) return false;
+
+    let aimNavId = _test.aimNavIdFunction(current.id, 'next');
+
+    let aimQEl = _test.aimQElFunction(current, 'next');
+
+    _test.pushNav(current.id, aimNavId);
+
+    _test.pushQ(current.QEl, aimQEl);
+  },
+  prevQ: () => {
+    let current = _test.currentQ();
+
+    if (current.id < 1) return false;
+
+    let aimNavId = _test.aimNavIdFunction(current.id, 'back');
+
+    let aimQEl = _test.aimQElFunction(current, 'back');
+
+    _test.pushNav(current.id, aimNavId);
+
+    _test.pushQ(current.QEl, aimQEl);
+  },
+  pushNav: (currentId, aimNavId) => {
+    let currNavEl = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-pagination]').el[currentId];
+    currNavEl.classList.toggle('nav-active');
+    let NavEl = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-pagination]').el[aimNavId];
+    NavEl.classList.toggle('nav-active');
+  },
+  pushQ: (currentEl, aimQEl) => {
+    currentEl.classList.toggle('flex1');
+    aimQEl.classList.toggle('flex1');
+  },
+  aimNavIdFunction: (currentId, direction) => {
+    let dir = currentId;
+
+    switch (true) {
+      case direction === 'next':
+        return dir += 1;
+        break;
+
+      case direction === 'back':
+        return dir -= 1;
+        break;
+    }
+  },
+  aimQElFunction: (current, direction) => {
+    switch (true) {
+      case direction === 'next':
+        return current.QNextEl;
+        break;
+
+      case direction === 'back':
+        return current.QPrevc;
+        break;
+    }
+  },
+  currentQ: () => {
+    return {
+      id: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.nav-active').el[0].innerText - 1,
+      QEl: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question.flex1').el[0],
+      navLength: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-pagination]').el.length,
+      QPrevc: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question.flex1').el[0].previousElementSibling,
+      QNextEl: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question.flex1').el[0].nextElementSibling
+    };
+  },
   serverModel: () => {
     return {
       id: +window.location.href.split('/').pop(),

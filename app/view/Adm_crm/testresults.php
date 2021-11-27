@@ -7,9 +7,11 @@
 </div>
 
 <div class="adm-content">
-	<div class="breadcrumbs-adm">
-		<a href="/adminsc/index">Admin</a>
-		<div>CRM</div>
-	</div>
+
+	<? foreach ($files as $href => $file): ?>
+		<a href = '<?='/test/results/'.$file['name'];?>' class="test-result"><?= $file['name']; ?></a>
+	<br>
+	<? endforeach; ?>
+
 
 </div>

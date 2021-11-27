@@ -1,13 +1,8 @@
 <div class="adm-submenu">
   <div class="title">CRM</div>
-  <? if (in_array('3', $user['rights'])||SU): // admin ?>
-     <div class="admin-actions">
 
-       <a href  = "crm/orders">Заказы</a>
-       <a href  = 'users'>Покупатели</a>
+	<? include ROOT . '/app/view/Adm_crm/components/adm-crm_menu.php'; ?>
 
-     </div>
-  <? endif; ?>
 </div>
 
 <div class="adm-content">

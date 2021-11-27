@@ -738,6 +738,7 @@ main {
   border: 1px solid;
   padding: 15px; }
 
+@charset "UTF-8";
 html {
   height: 100%;
   overflow-x: hidden; }
@@ -747,7 +748,9 @@ body {
   flex-direction: column;
   height: 100%;
   margin: 0;
-  font-family: 'Roboto', sans-serif; }
+  font-family: 'Roboto', sans-serif;
+  /*скрыть дерганье страницы в появлении полосы прокрутки*/
+  padding: 0 calc(20px - (100vw - 100%)) 0 0; }
 
 h1, h2 {
   text-transform: uppercase;
