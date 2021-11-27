@@ -38,7 +38,16 @@ $('.test-do__finish-btn').on('click', async function (e) {
     corrAnswers = JSON.parse(corrAnswers)
     let errorCnt = colorView(corrAnswers)
     let data = objToServer(errorCnt)
-    let res = await post('/test/cachePageSendEmail', data)
+    let res = fetch('/test/cachePageSendEmail',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(data)
+        })
+
+    // let res = await post('/test/cachePageSendEmail', data)
     if (res) {
         $("#btnn").el[0].href = location.href
         $("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО"
@@ -87,12 +96,29 @@ function checkCorrectAnswers(correctAnser, input, label) {
     }
 }
 
+// function escapeHtml(text) {
+//     let map = {
+//         '\t': '',
+//         // '&': '&amp;',
+//         // '<': '&lt;',
+//         // '>': '&gt;',
+//         // '"': '&quot;',
+//         // "'": '\''
+//     };
+//     let test = JSON.stringify(text)
+//     // let t = test.replace(/[&<>"']/g, function(m) { return map[m]; })
+//     let t = test.replace(/(\\t)/g, '')
+//      t = test.replace(/(\\\\)/g, '\\')
+//     return t;
+// }
 function objToServer(errorCnt) {
+
     return ({
         token: document.querySelector('meta[name="token"]').getAttribute('content'),
         questionCnt: $('.question').el.length,
         errorCnt: errorCnt,
         pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
+        // pageCache: document.documentElement.outerHTML,
         testId: $('[data-test-id]').el[0].dataset.testId,
         test_name: $('.test-name').el[0].innerText,
         userName: $('.user-menu__FIO').el[0].innerText,

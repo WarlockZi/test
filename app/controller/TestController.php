@@ -175,8 +175,8 @@ class TestController Extends AppController
 	{
 		$sendIfLessOrEqualThen = 0;
 		$mails = [
-			'10@vitexopt.ru',
-			'vvoronik@yandex.ru',
+//			'10@vitexopt.ru',
+//			'vvoronik@yandex.ru',
 		];
 
 		if ($errCount <= $sendIfLessOrEqualThen) {

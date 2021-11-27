@@ -37,9 +37,13 @@ abstract class Controller
 	{
 		$files = [];
 		foreach (glob($absolutePath . "/*") as $file) {
-			$files[$file]['filesize'] = filesize($file);
-			$files[$file]['nameWithExt'] = basename($file);
-			$files[$file]['name'] = basename($file);
+			$path_parts = pathinfo($file);
+
+			$files[$file]['size'] = filesize($file);
+			$files[$file]['dirname'] = $path_parts['dirname'];
+			$files[$file]['basename'] = $path_parts['basename'];
+			$files[$file]['extension'] = $path_parts['extension'];
+			$files[$file]['filename'] = $path_parts['filename'];
 		}
 		return $files;
 	}
@@ -65,6 +69,7 @@ abstract class Controller
 	public function isAjax()
 	{
 		if (isset($_POST['param'])) {
+
 			$data = json_decode($_POST['param'], true);
 			if ($this->badToken($data)) return "Плохой запрос";
 

@@ -7,9 +7,10 @@
 </div>
 
 <div class="adm-content">
+	<h1>Результаты тестов</h1>
 
 	<? foreach ($files as $href => $file): ?>
-		<a href = '<?='/test/results/'.$file['name'];?>' class="test-result"><?= $file['name']; ?></a>
+		<a href = '<?='/test/results/'.$file['filename'];?>' class="test-result"><?= $file['filename']; ?></a>
 	<br>
 	<? endforeach; ?>
 
