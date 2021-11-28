@@ -38,16 +38,16 @@ $('.test-do__finish-btn').on('click', async function (e) {
     corrAnswers = JSON.parse(corrAnswers)
     let errorCnt = colorView(corrAnswers)
     let data = objToServer(errorCnt)
-    let res = fetch('/test/cachePageSendEmail',
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(data)
-        })
+    // let res = await fetch('/test/cachePageSendEmail',
+    //     {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json;charset=utf-8'
+    //         },
+    //         body: data
+    //     })
 
-    // let res = await post('/test/cachePageSendEmail', data)
+    let res = await post('/test/cachePageSendEmail', data)
     if (res) {
         $("#btnn").el[0].href = location.href
         $("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО"
