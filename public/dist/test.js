@@ -44,14 +44,16 @@ __webpack_require__.r(__webpack_exports__);
   let corrAnswers = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/getCorrectAnswers', {});
   corrAnswers = JSON.parse(corrAnswers);
   let errorCnt = colorView(corrAnswers);
-  let data = objToServer(errorCnt);
-  let res = fetch('/test/cachePageSendEmail', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
-    body: JSON.stringify(data)
-  }); // let res = await post('/test/cachePageSendEmail', data)
+  let data = objToServer(errorCnt); // let res = await fetch('/test/cachePageSendEmail',
+  //     {
+  //         method: 'POST',
+  //         headers: {
+  //             'Content-Type': 'application/json;charset=utf-8'
+  //         },
+  //         body: data
+  //     })
+
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/cachePageSendEmail', data);
 
   if (res) {
     (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("#btnn").el[0].href = location.href;
