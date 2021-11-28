@@ -339,6 +339,7 @@
   border-radius: 3px;
   outline: none; }
 
+
 .pagination {
   margin: 3px 0 3px;
   display: flex;
@@ -404,7 +405,11 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
-  padding: 0 calc(20px - (100vw - 100%)) 0 0; }
+  padding: 0 calc(25px - (100vw - 100%)) 0 0;
+  width: 100%; }
+  @media (max-width: 400px) {
+    body {
+      padding: 0; } }
 
 h1, h2 {
   text-transform: uppercase;

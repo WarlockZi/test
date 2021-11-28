@@ -14,19 +14,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
 /* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
 /* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
-/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
+/* harmony import */ var _components_accordion_accordion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/accordion/accordion */ "./public/src/components/accordion/accordion.js");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
 
 
 
 
 
- //Скрыть все вопросы
+
+
+_components_accordion_accordion__WEBPACK_IMPORTED_MODULE_5__.acc.init({
+  api: 'test-menu'
+}); //Скрыть все вопросы
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').removeClass("flex1"); //Показть первый вопрос
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question:first-child').addClass("flex1"); // Нажать первуюкнопку navigation
 
-(0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_5__.navInit)();
+(0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_6__.navInit)();
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[type="checkbox"]').on('click', function (e) {
   let a = e.target.labels[0];
   a.classList.toggle('pushed');
@@ -959,6 +964,30 @@ async function fetchW(url, Obj) {
 
 /***/ }),
 
+/***/ "./public/src/components/accordion/accordion.js":
+/*!******************************************************!*\
+  !*** ./public/src/components/accordion/accordion.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "acc": () => (/* binding */ acc)
+/* harmony export */ });
+/* harmony import */ var _accordion_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./accordion.scss */ "./public/src/components/accordion/accordion.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+
+
+let acc = {
+  init: async params => {
+    let tree = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('Tree', {
+      'table': ' Test'
+    });
+  }
+};
+
+/***/ }),
+
 /***/ "./public/src/components/cookie/cookie.js":
 /*!************************************************!*\
   !*** ./public/src/components/cookie/cookie.js ***!
@@ -1183,6 +1212,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************!*\
   !*** ./public/src/common.scss ***!
   \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/components/accordion/accordion.scss":
+/*!********************************************************!*\
+  !*** ./public/src/components/accordion/accordion.scss ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);

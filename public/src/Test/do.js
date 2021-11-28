@@ -3,9 +3,12 @@ import './do.scss'
 import '../components/header/autocomplete'
 import '../components/cookie/cookie'
 import {_test} from "./model/test"
+import {acc} from '../components/accordion/accordion'
 
 import {navInit} from '../components/test-pagination/test-pagination'
-
+acc.init({
+    api:'test-menu',
+})
 //Скрыть все вопросы
 $('.question').removeClass("flex1")
 
