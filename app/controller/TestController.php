@@ -2,15 +2,11 @@
 
 namespace app\controller;
 
-use app\core\Cache;
-use app\model\Model;
-use app\model\User;
-use app\model\Test;
 use app\view\View;
 use app\view\widgets\menu\Menu;
 use app\core\App;
-use app\model\Mail;
-use http\Env;
+
+use app\view\widgets\Tree\Tree;
 
 
 class TestController Extends AppController
@@ -27,6 +23,16 @@ class TestController Extends AppController
 		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
 		View::setJs('test.js');
 		View::setCss('test.css');
+	}
+
+    public function actionTree()
+    {
+        if ($data = $this->ajax){
+            $table = $data['table'];
+            $menu = new tree(['table'=>$table]);
+
+        }
+
 	}
 
 
