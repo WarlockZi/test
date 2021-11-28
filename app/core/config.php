@@ -13,7 +13,8 @@ $config['components'] = [
 	'question' => 'app\model\Question',
 	'answer' => 'app\model\Answer',
 	'image' => 'app\model\Image',
-	'mail' => 'app\model\Mail'
+	'mail' => 'app\model\Mail',
+	'testresult' => 'app\model\TestResult'
 	//'instructions' => 'app\model\Instructions',
 ];
 $config['Mailer_openserver'] = [

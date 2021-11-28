@@ -10,7 +10,8 @@ Router::add('^test/(?P<alias>[0-9]+)$', ['controller' => 'Test', 'action' => 'do
 Router::add('^test/do$', ['controller' => 'Test', 'action' => 'do']);
 //Router::add('^test/edit/(?P<id>[0-9]+)$', ['controller' => 'Test', 'action' => 'edit']);
 //Router::add('^test/edit$', ['controller' => 'Test', 'action' => 'edit']);
-Router::add('^test\/results\/(?P<cache>[a-zA-Z0-9]+)$', ['controller' => 'Test', 'action' => 'Results']);
+Router::add('^test\/results\/(?P<cache>[a-zA-Z0-9]+)$', ['controller' => 'Test']);
+Router::add('^test\/result\/(?P<cache>[0-9]+)$', ['controller' => 'Test' , 'action'=>'result']);
 
 
 Router::add('^question\/(?<action>[a-z]+)$', ['controller' => 'Question']);

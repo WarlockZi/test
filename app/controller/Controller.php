@@ -48,6 +48,18 @@ abstract class Controller
 		return $files;
 	}
 
+	protected function getPaths($absolutePath)
+	{
+		$paths = [];
+		foreach (scandir("{$absolutePath}/") as $path) {
+			if ($path !== '.' && $path !== '..') {
+				$paths[$path]['basename'] = $path;
+				$paths[$path]['fullpath'] = "{$absolutePath}/{$path}";
+			}
+		}
+		return $paths;
+	}
+
 // Передача данных в View
 	public function set($vars)
 	{

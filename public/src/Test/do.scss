@@ -2,6 +2,10 @@
 @import "../mixin";
 @import "../mixin_media";
 
+
+.inactive{
+  background-color:  #d8d8d8 !important;
+}
 .test-do__buttons {
   display: flex;
 

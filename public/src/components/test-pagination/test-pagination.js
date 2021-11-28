@@ -71,10 +71,18 @@ function appendBlock() {
     $('.a-del').on('click', _answer.delete())
 }
 
+function navInit() {
+    let nav_buttons = $('[data-pagination]').el
+    Array.from(nav_buttons).map((el)=>{
+        el.classList.remove('nav-active')
+    })
+    nav_buttons[0].classList.add('nav-active')
+
+}
 // function hideVisibleBlock() {
 //     $('.block.flex1').removeClass('flex1')
 // }
 
-export {showHidePaginBtn, appendBlock}
+export {showHidePaginBtn, appendBlock, navInit}
 
 

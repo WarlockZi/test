@@ -2,15 +2,17 @@ import {post, $, fetchW} from '../common'
 import './do.scss'
 import '../components/header/autocomplete'
 import '../components/cookie/cookie'
-import {_test} from "./model/test";
+import {_test} from "./model/test"
+
+import {navInit} from '../components/test-pagination/test-pagination'
 
 //Скрыть все вопросы
 $('.question').removeClass("flex1")
 
 //Показть первый вопрос
 $('.question:first-child').addClass("flex1")
-
-
+// Нажать первуюкнопку navigation
+navInit()
 $('[type="checkbox"]').on('click', function (e) {
     let a = e.target.labels[0]
     a.classList.toggle('pushed')
@@ -25,9 +27,16 @@ $('#next').on('click', _test.nextQ)
 ///////////  RESULTS  TEST  Закончить тест/////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
+// если это результат теста, деактивирукм кнопку Закончить тест
+if (window.location.pathname.match(/result/)){
+let button = $('.test-do__finish-btn').el[0]
+    button.classList.add('inactive')
+}
 
 $('.test-do__finish-btn').on('click', async function (e) {
+
     let button = e.target;
+    if (button.classList.contains('inactive')) return false
     if (button.id !== 'btnn') return false
 
     if (button.text == "ПРОЙТИ ТЕСТ ЗАНОВО") {
@@ -38,22 +47,38 @@ $('.test-do__finish-btn').on('click', async function (e) {
     corrAnswers = JSON.parse(corrAnswers)
     let errorCnt = colorView(corrAnswers)
     let data = objToServer(errorCnt)
-    // let res = await fetch('/test/cachePageSendEmail',
-    //     {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json;charset=utf-8'
-    //         },
-    //         body: data
-    //     })
-
     let res = await post('/test/cachePageSendEmail', data)
     if (res) {
         $("#btnn").el[0].href = location.href
         $("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО"
     }
-
 })
+
+function objToServer(errorCnt) {
+
+    let obj = {
+        token: document.querySelector('meta[name="token"]').getAttribute('content'),
+        questionCnt: $('.question').el.length,
+        errorCnt: errorCnt,
+        pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
+        testId: $('[data-test-id]').el[0].dataset.testId,
+        test_name: $('.test-name').el[0].innerText,
+        userName: $('.user-menu__FIO').el[0].innerText,
+    }
+
+    let  formData = new FormData();
+    formData.append('token', obj.token);
+    formData.append('questionCnt', obj.questionCnt);
+    formData.append('errorCnt', obj.errorCnt);
+    formData.append('pageCache', obj.pageCache);
+    formData.append('testId', obj.testId);
+    formData.append('test_name', obj.test_name);
+    formData.append('userName', obj.userName);
+    return formData
+
+    return obj
+}
+
 
 function colorView(correctAnswers) {
     let q = $('.question').el
@@ -94,35 +119,6 @@ function checkCorrectAnswers(correctAnser, input, label) {
     } else if (!input.checked && !correctAnser) {// кнопка не нажата, в correct_answers нет
         return true
     }
-}
-
-// function escapeHtml(text) {
-//     let map = {
-//         '\t': '',
-//         // '&': '&amp;',
-//         // '<': '&lt;',
-//         // '>': '&gt;',
-//         // '"': '&quot;',
-//         // "'": '\''
-//     };
-//     let test = JSON.stringify(text)
-//     // let t = test.replace(/[&<>"']/g, function(m) { return map[m]; })
-//     let t = test.replace(/(\\t)/g, '')
-//      t = test.replace(/(\\\\)/g, '\\')
-//     return t;
-// }
-function objToServer(errorCnt) {
-
-    return ({
-        token: document.querySelector('meta[name="token"]').getAttribute('content'),
-        questionCnt: $('.question').el.length,
-        errorCnt: errorCnt,
-        pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
-        // pageCache: document.documentElement.outerHTML,
-        testId: $('[data-test-id]').el[0].dataset.testId,
-        test_name: $('.test-name').el[0].innerText,
-        userName: $('.user-menu__FIO').el[0].innerText,
-    })
 }
 
 

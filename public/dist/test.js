@@ -14,6 +14,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
 /* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
 /* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
+
 
 
 
@@ -22,7 +24,9 @@ __webpack_require__.r(__webpack_exports__);
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').removeClass("flex1"); //Показть первый вопрос
 
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question:first-child').addClass("flex1");
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question:first-child').addClass("flex1"); // Нажать первуюкнопку navigation
+
+(0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_5__.navInit)();
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[type="checkbox"]').on('click', function (e) {
   let a = e.target.labels[0];
   a.classList.toggle('pushed');
@@ -31,9 +35,16 @@ __webpack_require__.r(__webpack_exports__);
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#next').on('click', _model_test__WEBPACK_IMPORTED_MODULE_4__._test.nextQ); /////////////////////////////////////////////////////////////////////////////
 ///////////  RESULTS  TEST  Закончить тест/////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
+// если это результат теста, деактивирукм кнопку Закончить тест
+
+if (window.location.pathname.match(/result/)) {
+  let button = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-do__finish-btn').el[0];
+  button.classList.add('inactive');
+}
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-do__finish-btn').on('click', async function (e) {
   let button = e.target;
+  if (button.classList.contains('inactive')) return false;
   if (button.id !== 'btnn') return false;
 
   if (button.text == "ПРОЙТИ ТЕСТ ЗАНОВО") {
@@ -44,15 +55,7 @@ __webpack_require__.r(__webpack_exports__);
   let corrAnswers = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/getCorrectAnswers', {});
   corrAnswers = JSON.parse(corrAnswers);
   let errorCnt = colorView(corrAnswers);
-  let data = objToServer(errorCnt); // let res = await fetch('/test/cachePageSendEmail',
-  //     {
-  //         method: 'POST',
-  //         headers: {
-  //             'Content-Type': 'application/json;charset=utf-8'
-  //         },
-  //         body: data
-  //     })
-
+  let data = objToServer(errorCnt);
   let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/cachePageSendEmail', data);
 
   if (res) {
@@ -60,6 +63,28 @@ __webpack_require__.r(__webpack_exports__);
     (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО";
   }
 });
+
+function objToServer(errorCnt) {
+  let obj = {
+    token: document.querySelector('meta[name="token"]').getAttribute('content'),
+    questionCnt: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').el.length,
+    errorCnt: errorCnt,
+    pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
+    testId: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-test-id]').el[0].dataset.testId,
+    test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText,
+    userName: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.user-menu__FIO').el[0].innerText
+  };
+  let formData = new FormData();
+  formData.append('token', obj.token);
+  formData.append('questionCnt', obj.questionCnt);
+  formData.append('errorCnt', obj.errorCnt);
+  formData.append('pageCache', obj.pageCache);
+  formData.append('testId', obj.testId);
+  formData.append('test_name', obj.test_name);
+  formData.append('userName', obj.userName);
+  return formData;
+  return obj;
+}
 
 function colorView(correctAnswers) {
   let q = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').el;
@@ -111,34 +136,6 @@ function checkCorrectAnswers(correctAnser, input, label) {
     // кнопка не нажата, в correct_answers нет
     return true;
   }
-} // function escapeHtml(text) {
-//     let map = {
-//         '\t': '',
-//         // '&': '&amp;',
-//         // '<': '&lt;',
-//         // '>': '&gt;',
-//         // '"': '&quot;',
-//         // "'": '\''
-//     };
-//     let test = JSON.stringify(text)
-//     // let t = test.replace(/[&<>"']/g, function(m) { return map[m]; })
-//     let t = test.replace(/(\\t)/g, '')
-//      t = test.replace(/(\\\\)/g, '\\')
-//     return t;
-// }
-
-
-function objToServer(errorCnt) {
-  return {
-    token: document.querySelector('meta[name="token"]').getAttribute('content'),
-    questionCnt: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').el.length,
-    errorCnt: errorCnt,
-    pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
-    // pageCache: document.documentElement.outerHTML,
-    testId: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-test-id]').el[0].dataset.testId,
-    test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText,
-    userName: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.user-menu__FIO').el[0].innerText
-  };
 }
 
 /***/ }),
@@ -1074,7 +1071,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "showHidePaginBtn": () => (/* binding */ showHidePaginBtn),
-/* harmony export */   "appendBlock": () => (/* binding */ appendBlock)
+/* harmony export */   "appendBlock": () => (/* binding */ appendBlock),
+/* harmony export */   "navInit": () => (/* binding */ navInit)
 /* harmony export */ });
 /* harmony import */ var _test_pagination_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./test-pagination.scss */ "./public/src/components/test-pagination/test-pagination.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
@@ -1152,6 +1150,14 @@ function appendBlock() {
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-add').on('click', _Test_model_answer__WEBPACK_IMPORTED_MODULE_3__._answer.create);
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.q-delete').on('click', (0,_Test_model_question__WEBPACK_IMPORTED_MODULE_2__._question)().delete());
   (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-del').on('click', _Test_model_answer__WEBPACK_IMPORTED_MODULE_3__._answer.delete());
+}
+
+function navInit() {
+  let nav_buttons = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[data-pagination]').el;
+  Array.from(nav_buttons).map(el => {
+    el.classList.remove('nav-active');
+  });
+  nav_buttons[0].classList.add('nav-active');
 } // function hideVisibleBlock() {
 //     $('.block.flex1').removeClass('flex1')
 // }
