@@ -10,6 +10,7 @@ use app\view\View;
 use app\view\widgets\menu\Menu;
 use app\core\App;
 use app\model\Mail;
+use http\Env;
 
 
 class TestController Extends AppController
@@ -27,7 +28,6 @@ class TestController Extends AppController
 		View::setJs('test.js');
 		View::setCss('test.css');
 	}
-
 
 
 	public function actionShow()
@@ -117,13 +117,25 @@ class TestController Extends AppController
 		View::setCss('test_edit.css');
 
 	}
+	public function actionResult()
+	{
+		$cache = $this->route['cache'];
+		$res = App::$app->testresult->findOne($cache);
+		$this->set(compact('res'));
+
+		exit($res['html']);
+//		$this->layout = 'admin';
+
+
+	}
 
 	public function actionResults()
 	{
 		if (array_key_exists('cache', $this->route)) {
 			if ($this->route['cache']) {
 				$file_name = $this->route['cache'];
-				$cached_page = App::$app->cache->getFromCache($file_name);
+				$dir = ROOT . '\tmp\cache\test_results\\';
+				$cached_page = App::$app->cache->getFromCache($dir, $file_name);
 				exit($cached_page);
 			}
 		}
@@ -140,81 +152,68 @@ class TestController Extends AppController
 		}
 	}
 
-	private function prepareCacheDir()
+
+	private static function getMailsToSendBothResults()
 	{
-		if (!is_dir(ROOT . '/tmp')) {
-			mkdir(ROOT . '/tmp');
-			if (!is_dir(ROOT . '/tmp/cache')) {
-				mkdir(ROOT . '/tmp/cache');
-				if (!is_dir(ROOT . '/tmp/cache/test_results')) {
-					mkdir(ROOT . '/tmp/cache/test_results');
-				}
-			}
-		} elseif (is_dir(ROOT . '/tmp')) {
-			if (!is_dir(ROOT . '/tmp/cache')) {
-				mkdir(ROOT . '/tmp/cache');
-			} elseif (is_dir(ROOT . '/tmp/cache')) {
-				if (!is_dir(ROOT . '/tmp/cache/test_results')) {
-					mkdir(ROOT . '/tmp/cache/test_results');
-				}
-			}
-		}
+		return explode(',', $_ENV['TEST_EMAIL_ALL']);
 	}
 
-	public function getMailsToSendBothResults()
-	{
-		$mails = [
-//			'vitaliy04111979@gmail.com',
-//			'vvoronik@yandex.ru',
-//			'10@vitexopt.ru',
-		];
-		return $mails;
-	}
-
-	public function getMailsToSendIfRightResults($mailsTo, $errCount)
+	private static function getMailsToSendIfRightResults($mailsTo, $errCount)
 	{
 		$sendIfLessOrEqualThen = 0;
-		$mails = [
-//			'10@vitexopt.ru',
-//			'vvoronik@yandex.ru',
-		];
+		$mails = explode(',', $_ENV['TEST_EMAIL_ONLY_CORRECT']);
 
-		if ($errCount <= $sendIfLessOrEqualThen) {
+		if ((int)$errCount <= $sendIfLessOrEqualThen) {
 			return array_merge($mailsTo, $mails);
 		}
 		return $mailsTo;
 	}
 
+
+	private static function saveResultToDB($post)
+	{
+		$testres['html'] = $_POST['pageCache'];
+		$testres['user'] = $_POST['userName'];
+		$testres['errorCnt'] = $_POST['errorCnt'];
+		$testres['questionCnt'] = $_POST['questionCnt'];
+		$testres['testid'] = $_POST['testId'];
+		$testres['testname'] = $_POST['test_name'];
+		return App::$app->testresult->create($testres);
+	}
+
+	private static function sendTestRes($post,$resid)
+	{
+		$data['to'] = self::getMailsToSendBothResults();
+		$data['to'] = self::getMailsToSendIfRightResults($data['to'], $post['errorCnt']);
+
+		$data['subject'] = self::getSubjectTestResults($post);
+		$data['body'] = self::prepareBodyTestResults($post, $resid-1);
+		$data['altBody'] = "Ссылка на страницу с результатами: тут";
+
+		App::$app->mail->send_mail($data);
+		exit(json_encode('ok'));
+	}
+
 	public function actionCachePageSendEmail()
 	{
-		if ($data = $this->ajax) {
-			$this->prepareCacheDir();
-			$file = md5(date(' d m - H i s'));
-			$fileUTF8 = ROOT . '/tmp/cache/test_results/' . $file . '.txt';
-//			$fileWin = mb_convert_encoding($fileUTF8, 'cp1251');
+		$mail = 1;
+		if (isset($_POST) && is_array($_POST)) {
 
-			if (file_put_contents($fileUTF8, $data['pageCache'])) {
-				$data['to'] = $this->getMailsToSendBothResults();
-				$data['to'] = $this->getMailsToSendIfRightResults($data['to'],$data['errorCnt']);
-
-				$data['subject'] = $this->getSubjectTestResults($data);
-				$data['body'] = $this->prepareBodyTestResults($data, $file);
-				$data['altBody'] = "Ссылка на страницу с результатами: тут";
-
-				App::$app->mail->send_mail($data);
-				exit(json_encode('ok'));
+			if ($resid = self::saveResultToDB($_POST)) {
+				if(!$mail) exit(json_encode('ok'));
+				self::sendTestRes($_POST,$resid);
 			}
 		}
 	}
 
-	private function getSubjectTestResults($data)
+	private static function getSubjectTestResults($data)
 	{
 		return $errorSubj = $data['errorCnt'] == 0 ? 'СДАН' : "не сдан: {$data['errorCnt']} ош из {$data['questionCnt']}";
 	}
 
-	private function prepareBodyTestResults($data, $file)
+	private static function prepareBodyTestResults($data, $id)
 	{
-		$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/results/' . $file;
+		$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/result/' . $id;
 		ob_start();
 		require ROOT . '/app/view/Test/email.php';
 		$template = ob_get_clean();
@@ -223,7 +222,6 @@ class TestController Extends AppController
 
 	private function getMenu()
 	{
-
 		ob_start();
 		new Menu([
 			'tpl' => ROOT . "/app/view/widgets/menu/menu_tpl/do_test_menu.php",
@@ -257,7 +255,7 @@ class TestController Extends AppController
 			$error = '<H1>Теста с таким номером нет.</H1>';
 			$this->set(compact('error'));
 		}
-		$_SESSION['correct_answers'] = $testData['correct_answers']??null;
+		$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
 		unset($testData['correct_answers']);
 		$pagination = App::$app->test->pagination($testData, false);
 		$this->set(compact('testData', 'test', 'pagination', 'menuTestDo'));

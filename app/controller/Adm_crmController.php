@@ -6,45 +6,50 @@ use app\core\App;
 use app\view\View;
 use app\controller\AdminscController;
 
-class Adm_crmController extends AdminscController {
+class Adm_crmController extends AdminscController
+{
 
-   public function __construct($route) {
-      parent::__construct($route);
+	public function __construct($route)
+	{
+		parent::__construct($route);
 
-   }
+	}
 
-   public function actionIndex() {
+	public function actionIndex()
+	{
 
-   }
+	}
 
-   public function actionUsers() {
+	public function actionUsers()
+	{
+		$users = App::$app->user->findAll('users');
+		$rights = App::$app->user->findAll('user_rights');
+		$this->set(compact('users', 'rights'));
+	}
 
-      $users = App::$app->user->findAll('users');
-      $rights = App::$app->user->findAll('user_rights');
-      $this->set(compact('users', 'rights'));
-   }
-   public function actionTestResults() {
+	public function actionTestResults()
+	{
+		$res = App::$app->testresult->findAll('testresults');
+		$this->set(compact('res'));
+	}
 
-		$files = $this->getFiles(ROOT.'/tmp/cache/test_results');
-
+	public function actionTestResult()
+	{
+		$files = $this->getFiles(ROOT . '/tmp/cache/test_results');
 		$this->set(compact('files'));
-   }
+	}
 
-   public function actionTestResult() {
-	$files = $this->getFiles(ROOT.'/tmp/cache/test_results');
-	$this->set(compact('files'));
-}
+	public function actionUser()
+	{
 
-   public function actionUser() {
+		if (!isset($_GET['id']) || !$id = $_GET['id']) {
+			header('Location: /adminsc/crm/users');
+		};
 
-      if (!isset($_GET['id']) || !$id = $_GET['id']) {
-         header('Location: /adminsc/crm/users');
-      };
+		$user = App::$app->user->get($id);
+		$rights = App::$app->user->getRights();
 
-      $user = App::$app->user->get($id);
-      $rights = App::$app->user->getRights();
-
-      $this->set(compact('user','rights'));
-   }
+		$this->set(compact('user', 'rights'));
+	}
 
 }
