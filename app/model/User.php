@@ -19,6 +19,12 @@ class User extends Model
 		parent::__construct();
 	}
 
+	public static function can($user, $right)
+	{
+		$user = App::$app->user->findOne($user['id']);
+		return in_array($right,explode(',',$user['rights']));
+	}
+
 	public function confirm($hash)
 	{
 		$sql = 'UPDATE users SET confirm= "1" WHERE hash = ?';
@@ -38,7 +44,7 @@ class User extends Model
 	function getUserById($id)
 	{
 		$user = App::$app->user->find($id)[0];
-		$user['rights'] = explode(',',$user['rights']);
+		$user['rights'] = explode(',', $user['rights']);
 		return $user;
 	}
 
