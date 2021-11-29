@@ -162,7 +162,7 @@ here;
 	}
 
 	public
-	function findAll($table, $sort = '')
+	function findAll($table='', $sort = '')
 	{
 		$sql = "SELECT * FROM " . ($table ?: $this->table) . ($sort ? " ORDER BY {$sort}" : "");
 		return $this->pdo->query($sql);

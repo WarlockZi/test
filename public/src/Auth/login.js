@@ -13,19 +13,15 @@ function toggle(event) {
     event.target.classList.toggle('view')
 }
 
+$("#login").on('click', sendData)
 
-let loginBtn = $("#login").el[0]
-if (loginBtn) {
-    $(loginBtn).on("click",
-        function (e) {
-            e.preventDefault();
-            let email = $('input[type = email]').el[0].value
-            let pass = $('input[name= password]').el[0].value
-
-            if (validateEmailLogin(email, pass)) send(email, pass)
-        }
-    )
+function sendData(e){
+        e.preventDefault();
+        let email = $('input[type = email]').el[0].value
+        let pass = $('input[name= password]').el[0].value
+        if (validateEmailLogin(email, pass)) send(email, pass)
 }
+
 
 function validateEmailLogin(email, pass) {
     let $message = $(".message").el[0];
@@ -48,10 +44,9 @@ function validateEmailLogin(email, pass) {
     return true
 }
 
-async function send(email) {
+async function send(email, password) {
     let res = await post('/user/login', {
-        "email": email,
-        "password": $('input[name="password"]').el[0].value,
+        email, password
     })
     res = JSON.parse(res)
     let msg = $('.message').el[0]

@@ -8,30 +8,21 @@ import './show'
 import '../Admin/admin.scss'
 
 import '../components/popup.scss'
-import {$, addTooltip} from '../common'
+import {$, addTooltip, navigate} from '../common'
 
 import {_test} from "./model/test";
 import {_question} from "./model/question";
 import {_answer} from "./model/answer";
 import {sortable} from "../components/sortable";
 
-function navigate(str) {
-    switch (true) {
-        case /\/adminsc\/test/.test(str):
-            $('.module.test').addClass('activ')
-            break;
-    }
-}
-
 navigate(window.location.pathname)
+sortable.connect('.questions')
 
 // при создании нового теста показать пустой вопрос
-let questions = _question.questions()
-if (!questions.length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
+if (!_question.questions().length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
     _question.showFirst()
 }
 
-sortable.connect('.questions')
 
 
 $('.test__update').on('click', _test.update)
@@ -67,7 +58,4 @@ addTooltip({
     els: $('.test-edit-menu__params').el,
     message: 'Редактировать'
 })
-// $('.question__text').on('hover', _question.callToEdit)
-// $('.question__delete').on('click', _question.showTip)
-// $('.question__create-button').on('click', _question.showTip)
 
