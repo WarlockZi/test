@@ -5,6 +5,7 @@ namespace app\controller;
 use app\view\View;
 use app\view\widgets\menu\Menu;
 use app\core\App;
+use app\model\User;
 
 use app\view\widgets\Tree\Tree;
 
@@ -25,13 +26,13 @@ class TestController Extends AppController
 		View::setCss('test.css');
 	}
 
-    public function actionTree()
-    {
-        if ($data = $this->ajax){
-            $table = $data['table'];
-            $menu = new tree(['table'=>$table]);
+	public function actionTree()
+	{
+		if ($data = $this->ajax) {
+			$table = $data['table'];
+			$menu = new tree(['table' => $table]);
 
-        }
+		}
 
 	}
 
@@ -123,6 +124,7 @@ class TestController Extends AppController
 		View::setCss('test_edit.css');
 
 	}
+
 	public function actionResult()
 	{
 		$cache = $this->route['cache'];
@@ -149,13 +151,13 @@ class TestController Extends AppController
 
 	public function actionDelete()
 	{
-		if (!SU) {
-			App::$app->test->update($this->ajax['test']);
-			exit(json_encode(['notAdmin' => true]));
+		if (User::can($this->user, 4)||SU ) {
+			if (App::$app->test->delete($this->ajax['test']['id'])) {
+				exit(json_encode(['msg' => 'ok']));
+			}
 		}
-		if (App::$app->test->delete($this->ajax['test']['id'])) {
-			exit(json_encode(['msg' => 'ok']));
-		}
+		App::$app->test->update($this->ajax['test']);
+		exit(json_encode(['notAdmin' => true]));
 	}
 
 
@@ -187,13 +189,13 @@ class TestController Extends AppController
 		return App::$app->testresult->create($testres);
 	}
 
-	private static function sendTestRes($post,$resid)
+	private static function sendTestRes($post, $resid)
 	{
 		$data['to'] = self::getMailsToSendBothResults();
 		$data['to'] = self::getMailsToSendIfRightResults($data['to'], $post['errorCnt']);
 
 		$data['subject'] = self::getSubjectTestResults($post);
-		$data['body'] = self::prepareBodyTestResults($post, $resid-1);
+		$data['body'] = self::prepareBodyTestResults($post, $resid - 1);
 		$data['altBody'] = "Ссылка на страницу с результатами: тут";
 
 		App::$app->mail->send_mail($data);
@@ -206,8 +208,8 @@ class TestController Extends AppController
 		if (isset($_POST) && is_array($_POST)) {
 
 			if ($resid = self::saveResultToDB($_POST)) {
-				if(!$mail) exit(json_encode('ok'));
-				self::sendTestRes($_POST,$resid);
+				if (!$mail) exit(json_encode('ok'));
+				self::sendTestRes($_POST, $resid);
 			}
 		}
 	}
