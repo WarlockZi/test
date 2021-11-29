@@ -122,15 +122,13 @@ function toggle(event) {
   event.target.classList.toggle('view');
 }
 
-let loginBtn = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#login").el[0];
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("#login").on('click', sendData);
 
-if (loginBtn) {
-  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(loginBtn).on("click", function (e) {
-    e.preventDefault();
-    let email = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[type = email]').el[0].value;
-    let pass = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[name= password]').el[0].value;
-    if (validateEmailLogin(email, pass)) send(email, pass);
-  });
+function sendData(e) {
+  e.preventDefault();
+  let email = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[type = email]').el[0].value;
+  let pass = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[name= password]').el[0].value;
+  if (validateEmailLogin(email, pass)) send(email, pass);
 }
 
 function validateEmailLogin(email, pass) {
@@ -151,10 +149,10 @@ function validateEmailLogin(email, pass) {
   return true;
 }
 
-async function send(email) {
+async function send(email, password) {
   let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/user/login', {
-    "email": email,
-    "password": (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('input[name="password"]').el[0].value
+    email,
+    password
   });
   res = JSON.parse(res);
   let msg = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.message').el[0];
@@ -467,6 +465,7 @@ let _test = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "navigate": () => (/* binding */ navigate),
 /* harmony export */   "addTooltip": () => (/* binding */ addTooltip),
 /* harmony export */   "popup": () => (/* binding */ popup),
 /* harmony export */   "test_delete_button": () => (/* binding */ test_delete_button),
@@ -739,6 +738,35 @@ function addTooltip(args) {
       tip.remove();
     };
   }, [args]);
+}
+
+function navigate(str) {
+  switch (true) {
+    case /\/adminsc\/test/.test(str):
+      $('.module.test').addClass('activ');
+      break;
+
+    case /\/adminsc\/settings/.test(str):
+    case /\/adminsc\/Sitemap/.test(str):
+      $('.module.settings').addClass('activ');
+      break;
+
+    case /\/adminsc\/crm/.test(str):
+      $('.module.crm').addClass('activ');
+      break;
+
+    case /\/adminsc\/catalog/.test(str):
+      $('.module.catalog').addClass('activ');
+      break;
+
+    case /\/adminsc\/test/.test(str):
+      $('.module.test').addClass('activ');
+      break;
+
+    default:
+      $('.module.home').addClass('activ');
+      break;
+  }
 }
 
 class test_delete_button {

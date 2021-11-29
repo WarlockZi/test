@@ -216,33 +216,7 @@ let _test = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
-
-function navigate(str) {
-  switch (true) {
-    case /\/adminsc\/test/.test(str):
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.module.test').addClass('activ');
-      break;
-
-    case /\/adminsc\/settings/.test(str):
-    case /\/adminsc\/Sitemap/.test(str):
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.module.settings').addClass('activ');
-      break;
-
-    case /\/adminsc\/crm/.test(str):
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.module.crm').addClass('activ');
-      break;
-
-    case /\/adminsc\/catalog/.test(str):
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.module.catalog').addClass('activ');
-      break;
-
-    default:
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.module.home').addClass('activ');
-      break;
-  }
-}
-
-navigate(window.location.pathname);
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.navigate)(window.location.pathname);
 
 /***/ }),
 
@@ -266,6 +240,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "navigate": () => (/* binding */ navigate),
 /* harmony export */   "addTooltip": () => (/* binding */ addTooltip),
 /* harmony export */   "popup": () => (/* binding */ popup),
 /* harmony export */   "test_delete_button": () => (/* binding */ test_delete_button),
@@ -538,6 +513,35 @@ function addTooltip(args) {
       tip.remove();
     };
   }, [args]);
+}
+
+function navigate(str) {
+  switch (true) {
+    case /\/adminsc\/test/.test(str):
+      $('.module.test').addClass('activ');
+      break;
+
+    case /\/adminsc\/settings/.test(str):
+    case /\/adminsc\/Sitemap/.test(str):
+      $('.module.settings').addClass('activ');
+      break;
+
+    case /\/adminsc\/crm/.test(str):
+      $('.module.crm').addClass('activ');
+      break;
+
+    case /\/adminsc\/catalog/.test(str):
+      $('.module.catalog').addClass('activ');
+      break;
+
+    case /\/adminsc\/test/.test(str):
+      $('.module.test').addClass('activ');
+      break;
+
+    default:
+      $('.module.home').addClass('activ');
+      break;
+  }
 }
 
 class test_delete_button {

@@ -500,6 +500,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "navigate": () => (/* binding */ navigate),
 /* harmony export */   "addTooltip": () => (/* binding */ addTooltip),
 /* harmony export */   "popup": () => (/* binding */ popup),
 /* harmony export */   "test_delete_button": () => (/* binding */ test_delete_button),
@@ -772,6 +773,35 @@ function addTooltip(args) {
       tip.remove();
     };
   }, [args]);
+}
+
+function navigate(str) {
+  switch (true) {
+    case /\/adminsc\/test/.test(str):
+      $('.module.test').addClass('activ');
+      break;
+
+    case /\/adminsc\/settings/.test(str):
+    case /\/adminsc\/Sitemap/.test(str):
+      $('.module.settings').addClass('activ');
+      break;
+
+    case /\/adminsc\/crm/.test(str):
+      $('.module.crm').addClass('activ');
+      break;
+
+    case /\/adminsc\/catalog/.test(str):
+      $('.module.catalog').addClass('activ');
+      break;
+
+    case /\/adminsc\/test/.test(str):
+      $('.module.test').addClass('activ');
+      break;
+
+    default:
+      $('.module.home').addClass('activ');
+      break;
+  }
 }
 
 class test_delete_button {
@@ -4888,24 +4918,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.navigate)(window.location.pathname);
+_components_sortable__WEBPACK_IMPORTED_MODULE_11__.sortable.connect('.questions'); // при создании нового теста показать пустой вопрос
 
-function navigate(str) {
-  switch (true) {
-    case /\/adminsc\/test/.test(str):
-      (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.module.test').addClass('activ');
-      break;
-  }
-}
-
-navigate(window.location.pathname); // при создании нового теста показать пустой вопрос
-
-let questions = _model_question__WEBPACK_IMPORTED_MODULE_9__._question.questions();
-
-if (!questions.length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
+if (!_model_question__WEBPACK_IMPORTED_MODULE_9__._question.questions().length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
   _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showFirst();
 }
 
-_components_sortable__WEBPACK_IMPORTED_MODULE_11__.sortable.connect('.questions');
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_8__._test.update);
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test-path__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_8__._test.update); // $('.question__sort').on('change', validate.sort)
 
@@ -4930,9 +4949,7 @@ _components_sortable__WEBPACK_IMPORTED_MODULE_11__.sortable.connect('.questions'
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
   els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test-edit-menu__params').el,
   message: 'Редактировать'
-}); // $('.question__text').on('hover', _question.callToEdit)
-// $('.question__delete').on('click', _question.showTip)
-// $('.question__create-button').on('click', _question.showTip)
+});
 })();
 
 /******/ })()

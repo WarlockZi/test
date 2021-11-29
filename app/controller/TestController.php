@@ -151,7 +151,7 @@ class TestController Extends AppController
 
 	public function actionDelete()
 	{
-		if (User::can($this->user, 4)||SU ) {
+		if (User::can($this->user, 4)||SU) {
 			if (App::$app->test->delete($this->ajax['test']['id'])) {
 				exit(json_encode(['msg' => 'ok']));
 			}

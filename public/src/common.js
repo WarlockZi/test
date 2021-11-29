@@ -220,21 +220,45 @@ function $(selector) {
 
 function addTooltip(args) {
     let ar = [...args.els]
-    ar.map((el)=>{
-        el.onmouseenter = function(){
+    ar.map((el) => {
+        el.onmouseenter = function () {
             let tip = document.createElement('div')
             $(tip).addClass('tip')
             tip.innerText = args.message
             el.append(tip)
-            let remove=()=>tip.remove()
-            tip.addEventListener('mousemove',remove.bind(tip))
+            let remove = () => tip.remove()
+            tip.addEventListener('mousemove', remove.bind(tip))
         }.bind(args)
 
-        el.onmouseleave = ()=> {
+        el.onmouseleave = () => {
             let tip = el.querySelector('.tip')
             tip.remove()
         }
-    },[args])
+    }, [args])
+}
+
+function navigate(str) {
+    switch (true) {
+        case /\/adminsc\/test/.test(str):
+            $('.module.test').addClass('activ')
+            break;
+        case /\/adminsc\/settings/.test(str):
+        case /\/adminsc\/Sitemap/.test(str):
+            $('.module.settings').addClass('activ')
+            break;
+        case /\/adminsc\/crm/.test(str):
+            $('.module.crm').addClass('activ')
+            break;
+        case /\/adminsc\/catalog/.test(str):
+            $('.module.catalog').addClass('activ')
+            break;
+        case /\/adminsc\/test/.test(str):
+            $('.module.test').addClass('activ')
+            break;
+        default:
+            $('.module.home').addClass('activ')
+            break;
+    }
 }
 
 class test_delete_button {
@@ -302,4 +326,4 @@ async function fetchW(url, Obj) {
     return prom
 }
 
-export {addTooltip, popup, test_delete_button, post, get, uniq, validate, $, fetchWrap, fetchW}
+export {navigate, addTooltip, popup, test_delete_button, post, get, uniq, validate, $, fetchWrap, fetchW}

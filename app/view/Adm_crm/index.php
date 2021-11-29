@@ -1,3 +1,4 @@
+<?use app\view\widgets\Accordion\Accordion;?>
 <div class="adm-submenu">
 
 
@@ -11,5 +12,10 @@
 		<a href="/adminsc/index">Admin</a>
 		<div>CRM</div>
 	</div>
+	<?=new Accordion([
+			'model'=>'test',
+	]);?>
+
+<!--	--><?// include ROOT . '/app/view/Adm_crm/components/accordeon.php'; ?>
 
 </div>

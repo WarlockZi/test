@@ -23,7 +23,7 @@ class UserController extends AppController
 
 			if (!$data['password']) exit('empty password');
 			if (!$data['email']) exit('empty email');
-			$user = App::$app->user->findWhere('email', $data['email'][0]);
+			$user = App::$app->user->findWhere('email', $data['email']);
 			if ($user) exit('mail exists');
 			$data['to'] = [$data['email']];
 
@@ -50,7 +50,7 @@ class UserController extends AppController
 			} catch (\Exception $e) {
 				exit($e->getMessage());
 			}
-//			$overlay = $this->registerGetOverlay();
+
 		}
 		View::setMeta('Регистрация', 'Регистрация', 'Регистрация');
 		View::setJs('auth.js');
@@ -63,14 +63,6 @@ class UserController extends AppController
 		require ROOT . '/app/view/User/email.php';
 		$template = ob_get_clean();
 		return $template;
-	}
-
-	private function registerGetOverlay()
-	{
-		$msg[] = "Для подтвержения регистрации перейдите по ссылке в <br><a href ='https://mail.vitexopt.ru/webmail/login/'>ПОЧТЕ</a>.<br>Письмо может попасть в папку 'Спам'";
-		ob_start();
-		include ROOT . '/app/view/User/alert.php';
-		return ob_get_clean();
 	}
 
 	public function actionUnsubscribe()
@@ -196,20 +188,22 @@ class UserController extends AppController
 			if (!User::checkEmail($email)) {
 				$msg[] = "Неверный формат email";
 				$_SESSION['error'][] = "Неверный формат email";
+				exit(json_encode(["msg"=>"Неверный формат email"]));
 			}
 
 			if (!User::checkPassword($password)) {
 				$msg[] = "Пароль не должен быть короче 6-ти символов";
-//				exit(include ROOT . '/app/view/User/alert.php');
+				exit(json_encode(["msg"=>"Пароль не должен быть короче 6-ти символов"]));
 			}
 
-			$user = App::$app->user->findWhere("email", $email)[0];
+			$user = App::$app->user->findWhere("email", $email);
 
 			if ($user === null || !$user) {
 				exit(json_encode(['msg' => 'not_registered']));
-			} elseif ($user['password'] !== $this->preparePassword($password)) {
+			} elseif ($user[0]['password'] !== $this->preparePassword($password)) {
 				exit('fail');
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
+				$user = $user[0];
 				$user['rights'] = explode(",", $user['rights']);
 				$this->setAuth($user);
 				exit(json_encode(['msg' => 'ok']));

@@ -2,7 +2,7 @@
 
 	<form class="form-container" action="#" method="post">
 
-		<div class="form-title">Регистрация на сайте</div>
+		<div class="form-title">Регистрация</div>
 
 		<div class='message'></div>
 
