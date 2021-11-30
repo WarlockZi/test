@@ -875,6 +875,31 @@ async function fetchW(url, Obj) {
 
 /***/ }),
 
+/***/ "./public/src/components/accordion/accordion.js":
+/*!******************************************************!*\
+  !*** ./public/src/components/accordion/accordion.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _accordion_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./accordion.scss */ "./public/src/components/accordion/accordion.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+
+
+
+let handle = e => {
+  let self = e.target;
+  let checkbox = self.previousSibling;
+  let arr = Array.from((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[type="checkbox"]'));
+  arr.map(check => {
+    if (checkbox !== check) check.checked = false;
+  });
+};
+
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle);
+
+/***/ }),
+
 /***/ "./public/src/components/header/header.js":
 /*!************************************************!*\
   !*** ./public/src/components/header/header.js ***!
@@ -973,6 +998,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************!*\
   !*** ./public/src/common.scss ***!
   \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/components/accordion/accordion.scss":
+/*!********************************************************!*\
+  !*** ./public/src/components/accordion/accordion.scss ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -4906,6 +4943,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
 /* harmony import */ var _model_answer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./model/answer */ "./public/src/Test/model/answer.js");
 /* harmony import */ var _components_sortable__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/sortable */ "./public/src/components/sortable.js");
+/* harmony import */ var _components_accordion_accordion__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/accordion/accordion */ "./public/src/components/accordion/accordion.js");
+
 
 
 

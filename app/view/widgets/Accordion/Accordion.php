@@ -3,47 +3,22 @@
 namespace app\view\widgets\Accordion;
 
 use app\model\Model;
+use app\core\DB;
 use app\core\App;
-
 
 class Accordion extends Model
 {
 	protected $data;
-	protected $model;
 	protected $tree;
-	protected $table;
-	protected $template;
 	protected $menuHTML;
+	protected $class = 'menu';
+	protected $cache = 3600;
+	protected $sql = "SELECT * FROM test";
 
 	public function __construct($options = [])
 	{
 		$this->getOptions($options);
 		$this->run();
-	}
-	protected function tree()
-	{
-		$tree = [];
-		$data = $this->data;
-		foreach ($data as $id => &$node) {
-			if (array_key_exists('parent', $node) && !$node['parent']) {
-				$tree[$id] = $node;
-			} elseif (isset($node['parent']) && $node['parent']) {
-				$tree[$node['parent']]['childs'][$id] = &$node;
-			}
-		}
-		return $tree;
-	}
-	private function getTree($table)
-	{
-		$res = App::$app->{$table}->findAll($table);
-
-		if ($res !== FALSE) {
-			$all = [];
-			foreach ($res as $key => $v) {
-				$all[$v['id']] = $v;
-			}
-			return $all;
-		}
 	}
 
 	public function getOptions($options)
@@ -57,37 +32,49 @@ class Accordion extends Model
 
 	protected function run()
 	{
-//		$this->data = $this->getTree($this->table);
-		$this->data = App::$app->{$this->model}->findAll();
-		$this->template = include __DIR__.'/template.php';
-		$this->tree = $this->tree($this->data);
-		$this->menuHTML = $this->getMenuHtml($this->tree);
+		$this->data = $this->getAssoc('test');
+		$this->tree = $this->hierachy();
+		$this->menuHTML = $this->showCat($this->tree);
 		$this->output();
 	}
 
-
-	public function getMenuHtml($tree, $tab = ' ')
+	function li($cat)
 	{
-		$str = '';
-		foreach ($tree as $id => $cat) {
-			$str .= $this->catToTemplate($cat, $tab, $id);
+		if (isset($cat['childs'])&&$cat['childs']) {
+			return
+				"<li class='has-children'>" .
+				"<input type='checkbox' name ='group-1' id={$cat['id']}>" .
+				"<label for={$cat['id']}>{$cat['test_name']}</label>";
 		}
-		return $str;
+		return "<li><a href='#' title={$cat['test_name']}>" .
+		"{$cat['test_name']} </a>";
 	}
 
-	public function catToTemplate($cat, $tab = '', $id = '')
+	function tplMenu($category)
 	{
-		ob_start();
-		require $this->tpl;
-		return ob_get_clean();
+		$menu = "{$this->li($category)}" ;
+
+		if (isset($category['childs'])) {
+			$menu .= '<ul>' . $this->showCat($category['childs']) . '</ul>';
+		}
+		$menu .= '</li>';
+
+		return $menu;
 	}
 
-	protected function output()
+	function showCat($data)
 	{
-		return $this->menuHTML;
-//		echo $this->menuHTML;
+		$string = '';
+		foreach ($data as $item) {
+			$string .= $this->tplMenu($item);
+		}
+		return $string;
 	}
 
+	public function output()
+	{
+		return "<ul class = '{$this->class}'>{$this->menuHTML}</ul>";
+//			"<link href='../../../../public/dist/test_edit.css'>";
+	}
 
 }
-

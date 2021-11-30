@@ -1,12 +1,17 @@
 import './accordion.scss'
-import {$, post} from '../../common'
+import {$} from '../../common'
 
-export let acc = {
-     init :async (params)=>{
-        let tree = await post('Tree',
-            {'table':' Test'}
-            )
-    }
+let handle = (e) => {
+    let self = e.target
+    let checkbox = self.previousSibling
+    let arr = Array.from($('[type="checkbox"]'))
+
+    arr.map((check)=>{
+        if (checkbox !== check) check.checked= false
+    })
+
 }
+$('label').on('click', handle)
+
 
 
