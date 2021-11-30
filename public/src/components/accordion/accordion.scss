@@ -1,0 +1,236 @@
+
+@import './partials/variables'; // colors, fonts etc...
+
+@import './partials/layout'; // responsive grid and media queries
+
+a {
+  color: $color-2;
+  text-decoration: none;
+}
+
+h1 {
+  text-align: center;
+  width: 90%;
+  margin: 2em auto 0;
+  font-size: 2.4rem;
+  color: shade($color-2, 50%);
+  font-weight: bold;
+
+  @include MQ(M) {
+    font-size: 3.2rem;
+  }
+}
+
+input {
+  font-family: $primary-font;
+  font-size: 10rem;
+}
+
+
+.cd-accordion-menu {
+  max-width: 250px;
+  min-width: 250px;
+  display: flex;
+  flex-flow: column;
+  align-self: start;
+
+  ul {
+    /* by default hide all sub menus */
+    display: none;
+  }
+
+  li {
+    user-select:none;
+  }
+
+  input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+  }
+
+  label, a {
+    position: relative;
+    display: block;
+    padding: $item-padding-S $item-padding-S $item-padding-S ($item-padding-S * 3) + 20px;
+    background: $color-1;
+    box-shadow: inset 0 -1px tint($color-1, 5%);
+    color: $color-3;
+    font-size: 1rem;
+
+    .no-touch &:hover {
+      background: tint($color-1, 3%);
+    }
+  }
+
+  label::before, label::after, a::after {
+    /* icons */
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 50%;
+    transform:translateY(-50%);
+  }
+
+  label {
+    cursor: pointer;
+
+    &::before, &::after {
+      background-image: url(./img/cd-icons.svg);
+      background-repeat: no-repeat;
+    }
+
+    &::before {
+      /* arrow icon */
+      left: $item-padding-S;
+      background-position: 0 0;
+      transform:translateY(-50%) rotate(-90deg);
+    }
+
+    &::after {
+      /* folder icons */
+      left: ($item-padding-S * 2) + 10px;
+      background-position: -16px 0;
+    }
+  }
+
+  a::after {
+    /* image icon */
+    left: $item-padding-S * 2;
+    background: url(./img/cd-icons.svg) no-repeat -48px 0;
+  }
+
+  input[type=checkbox]:checked + label::before {
+    /* rotate arrow */
+    transform:translateY(-50%);
+  }
+
+  input[type=checkbox]:checked + label::after {
+    background-position: -32px 0;
+  }
+
+  input[type=checkbox]:checked + label + ul,
+  input[type=checkbox]:checked + label:nth-of-type(n) + ul {
+    /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
+    display: block;
+  }
+
+  ul label,
+  ul a {
+    background: darken($color-1, 10%);
+    box-shadow: inset 0 -1px darken($color-1, 5%);
+    padding-left: ($item-padding-S * 4) + 30px;
+
+    .no-touch &:hover {
+      background: darken($color-1, 7%);
+    }
+  }
+
+  > li:last-of-type > label,
+  > li:last-of-type > a,
+  > li > ul > li:last-of-type label,
+  > li > ul > li:last-of-type a {
+    box-shadow: none;
+  }
+
+  ul label::before {
+    left: $item-padding-S * 2;
+  }
+
+  ul label::after,
+  ul a::after {
+    left: ($item-padding-S * 3) + 10px;
+  }
+
+  ul ul label,
+  ul ul a {
+    padding-left: ($item-padding-S * 5) + 40px;
+  }
+
+  ul ul label::before {
+    left: $item-padding-S * 3;
+  }
+
+  ul ul label::after,
+  ul ul a::after {
+    left: ($item-padding-S * 4) + 10px;
+  }
+
+  ul ul ul label,
+  ul ul ul a {
+    padding-left: ($item-padding-S * 6) + 30px;
+  }
+
+  ul ul ul label::before {
+    left: $item-padding-S * 4;
+  }
+
+  ul ul ul label::after,
+  ul ul ul a::after {
+    left: ($item-padding-S * 5) + 10px;
+  }
+
+  @include MQ(M) {
+    label, a {
+      padding: $item-padding-M $item-padding-M $item-padding-M ($item-padding-M * 3) + 30px;
+      font-size: 1.2rem;
+    }
+
+    label::before {
+      left: $item-padding-M;
+    }
+
+    label::after {
+      left: ($item-padding-M * 2) + 10px;
+    }
+
+    ul label,
+    ul a {
+      padding-left: ($item-padding-M * 4) + 40px;
+    }
+
+    ul label::before {
+      left: $item-padding-M * 2;
+    }
+
+    ul label::after,
+    ul a::after {
+      left: ($item-padding-M * 3) + 15px;
+    }
+
+    ul ul label,
+    ul ul a {
+      padding-left: ($item-padding-M * 5) + 40px;
+    }
+
+    ul ul label::before {
+      left: $item-padding-M * 3;
+    }
+
+    ul ul label::after,
+    ul ul a::after {
+      left: ($item-padding-M * 4) + 10px;
+    }
+
+    ul ul ul label,
+    ul ul ul a {
+      padding-left: ($item-padding-M * 6) + 100px;
+    }
+
+    ul ul ul label::before {
+      left: $item-padding-M * 4;
+    }
+
+    ul ul ul label::after,
+    ul ul ul a::after {
+      left: ($item-padding-M * 5) + 5px;
+    }
+  }
+
+  &.animated label::before {
+    /* this class is used if you're using jquery to animate the accordion */
+    transition:transform .3s;
+  }
+}
+

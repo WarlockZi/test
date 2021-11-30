@@ -10,10 +10,11 @@ import '../Admin/admin.scss'
 import '../components/popup.scss'
 import {$, addTooltip, navigate} from '../common'
 
-import {_test} from "./model/test";
-import {_question} from "./model/question";
-import {_answer} from "./model/answer";
-import {sortable} from "../components/sortable";
+import {_test} from "./model/test"
+import {_question} from "./model/question"
+import {_answer} from "./model/answer"
+import {sortable} from "../components/sortable"
+import '../components/accordion/accordion'
 
 navigate(window.location.pathname)
 sortable.connect('.questions')

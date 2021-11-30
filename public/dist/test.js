@@ -22,10 +22,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-_components_accordion_accordion__WEBPACK_IMPORTED_MODULE_5__.acc.init({
-  api: 'test-menu'
-}); //Скрыть все вопросы
+ // acc.init({
+//     api:'test-menu',
+// })
+//Скрыть все вопросы
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').removeClass("flex1"); //Показть первый вопрос
 
@@ -1001,20 +1001,21 @@ async function fetchW(url, Obj) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "acc": () => (/* binding */ acc)
-/* harmony export */ });
 /* harmony import */ var _accordion_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./accordion.scss */ "./public/src/components/accordion/accordion.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
 
-let acc = {
-  init: async params => {
-    let tree = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('Tree', {
-      'table': ' Test'
-    });
-  }
+
+let handle = e => {
+  let self = e.target;
+  let checkbox = self.previousSibling;
+  let arr = Array.from((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[type="checkbox"]'));
+  arr.map(check => {
+    if (checkbox !== check) check.checked = false;
+  });
 };
+
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle);
 
 /***/ }),
 

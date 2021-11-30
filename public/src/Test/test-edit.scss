@@ -1,5 +1,6 @@
 @import "./test-edit-menu";
 @import "../var";
+@import "../mixin_media";
 
 @mixin test-edit__act-button {
   position: relative;
@@ -337,6 +338,9 @@ section {
   margin: 10px;
   font-family: 'Roboto', Arial, Serif;
   flex: 1 1 auto;
+  @include _800{
+    flex-wrap: wrap;
+  }
 
 
   /*Иконки для всплывающих менюшек*/
