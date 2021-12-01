@@ -512,9 +512,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchWrap": () => (/* binding */ fetchWrap),
 /* harmony export */   "fetchW": () => (/* binding */ fetchW)
 /* harmony export */ });
-/* harmony import */ var _Test_model_test__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Test/model/test */ "./public/src/Test/model/test.js");
-/* harmony import */ var _common_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./common.scss */ "./public/src/common.scss");
-
+/* harmony import */ var _common_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./common.scss */ "./public/src/common.scss");
 
 let validate = {
   sort: () => {
@@ -886,17 +884,97 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
 
-
-let handle = e => {
-  let self = e.target;
-  let checkbox = self.previousSibling;
-  let arr = Array.from((0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[type="checkbox"]'));
-  arr.map(check => {
-    if (checkbox !== check) check.checked = false;
-  });
-};
-
 (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle);
+
+function handle(e) {
+  let checkbox = e.target.previousSibling;
+  let parent = checkbox.parentNode.parentNode; // if (checkbox.checked) {
+
+  let ul = checkbox.nextSibling.nextSibling;
+  slideDown(ul, 3, 2); // } else {
+
+  Array.from(parent.children).map(el => {
+    let elArr = Array.from(el.children);
+    elArr.map(ch => {
+      if (ch.type && ch.type === 'checkbox' && ch.checked) {
+        let ul = ch.nextSibling.nextSibling;
+        slideUp(ul, 3, 2, function () {
+          ch.checked = false;
+        });
+      }
+    });
+  }); // }
+}
+
+function slideDown(el, dur, step, callback) {
+  let height = el.offsetHeight;
+  let counter = height;
+  el.style.height = "auto"; // let interval = setInterval(
+  //   function () {
+  //     counter += step;
+  //     if (counter < height) {
+  //       el.style.height = counter + "px";
+  //     } else {
+  //       el.style.height = height + "px";
+  //       clearInterval(interval);
+  //       if (callback) {
+  //         callback()
+  //       }
+  //     }
+  //   }, dur);
+}
+
+function slideUp(el, dur, step, callback) {
+  let height = el.offsetHeight;
+  let counter = height;
+  let interval = setInterval(function () {
+    counter -= step;
+
+    if (counter > 0) {
+      el.style.height = counter + "px";
+    } else {
+      el.style.height = 0;
+      clearInterval(interval);
+
+      if (callback) {
+        callback();
+      }
+    }
+  }, dur);
+} //
+// var adder = height / 10; //the height is global variable
+//
+// //iteratively increase the height
+// interval = setInterval(function () {
+//     counter += adder;
+//     if (counter < height) {
+//         a.style.height = counter + "px";
+//     } else {
+//         a.style.height = height + "px";
+//         clearInterval(interval);
+//     }
+// }, duration);
+// //#3 the slideDown
+// function slideDown(a, b) {
+//
+//     var adder = height / 10; //the height is global variable
+//
+//     //iteratively increase the height
+//     interval = setInterval(function () {
+//         counter += adder;
+//         if (counter < height) {
+//             a.style.height = counter + "px";
+//         } else {
+//             a.style.height = height + "px";
+//             b.disabled = 0;
+//             b.innerHTML = "slideUp";
+//             //enable easing button
+//             ease.disabled = 0;
+//             clearInterval(interval);
+//         }
+//     }, duration);
+//
+// }
 
 /***/ }),
 

@@ -3,31 +3,7 @@
 
 @import './partials/layout'; // responsive grid and media queries
 
-a {
-  color: $color-2;
-  text-decoration: none;
-}
-
-h1 {
-  text-align: center;
-  width: 90%;
-  margin: 2em auto 0;
-  font-size: 2.4rem;
-  color: shade($color-2, 50%);
-  font-weight: bold;
-
-  @include MQ(M) {
-    font-size: 3.2rem;
-  }
-}
-
-input {
-  font-family: $primary-font;
-  font-size: 10rem;
-}
-
-
-.cd-accordion-menu {
+.accordion{
   max-width: 250px;
   min-width: 250px;
   display: flex;
@@ -51,14 +27,35 @@ input {
   label, a {
     position: relative;
     display: block;
-    padding: $item-padding-S $item-padding-S $item-padding-S ($item-padding-S * 3) + 20px;
-    background: $color-1;
+    // first level text
+    padding: $item-padding-S $item-padding-S $item-padding-S ($item-padding-S * 3) + 25px;
     box-shadow: inset 0 -1px tint($color-1, 5%);
+    //background: $color-level-1;
     color: $color-3;
     font-size: 1rem;
+    cursor: pointer;
 
-    .no-touch &:hover {
-      background: tint($color-1, 3%);
+    //&:hover {
+    //  background: tint($color-1, 3%);
+    //}
+  }
+
+  .level1{
+    background: $color-level-1;
+    &:hover {
+      background: tint($color-level-1, 3%);
+    }
+  }
+  .level2{
+    background: $color-level-2;
+    &:hover {
+      background: tint($color-level-2, 3%);
+    }
+  }
+  .level3{
+    background: $color-level-3;
+    &:hover {
+      background: tint($color-level-3, 3%);
     }
   }
 
@@ -74,8 +71,6 @@ input {
   }
 
   label {
-    cursor: pointer;
-
     &::before, &::after {
       background-image: url(./img/cd-icons.svg);
       background-repeat: no-repeat;
@@ -90,7 +85,7 @@ input {
 
     &::after {
       /* folder icons */
-      left: ($item-padding-S * 2) + 10px;
+      left: ($item-padding-S * 2) + 13px;
       background-position: -16px 0;
     }
   }
@@ -104,6 +99,7 @@ input {
   input[type=checkbox]:checked + label::before {
     /* rotate arrow */
     transform:translateY(-50%);
+    transition: transform 90ms;
   }
 
   input[type=checkbox]:checked + label::after {
@@ -114,11 +110,13 @@ input {
   input[type=checkbox]:checked + label:nth-of-type(n) + ul {
     /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
     display: block;
+    height: auto;
+    overflow: hidden;
   }
 
   ul label,
   ul a {
-    background: darken($color-1, 10%);
+    //background: darken($color-1, 10%);
     box-shadow: inset 0 -1px darken($color-1, 5%);
     padding-left: ($item-padding-S * 4) + 30px;
 
@@ -159,7 +157,7 @@ input {
 
   ul ul ul label,
   ul ul ul a {
-    padding-left: ($item-padding-S * 6) + 30px;
+    padding-left: ($item-padding-S * 6) + 40px;
   }
 
   ul ul ul label::before {
@@ -232,5 +230,7 @@ input {
     /* this class is used if you're using jquery to animate the accordion */
     transition:transform .3s;
   }
+
+
 }
 
