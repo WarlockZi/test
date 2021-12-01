@@ -1928,50 +1928,41 @@ span[contenteditable]:hover,
   justify-content: center;
   padding: 1px; }
 
-a {
-  color: #a0f6aa;
-  text-decoration: none; }
-
-h1 {
-  text-align: center;
-  width: 90%;
-  margin: 2em auto 0;
-  font-size: 2.4rem;
-  color: shade(#a0f6aa, 50%);
-  font-weight: bold; }
-  @media only screen and (min-width: 600px) {
-    h1 {
-      font-size: 3.2rem; } }
-
-input {
-  font-family: "Jaldi", sans-serif;
-  font-size: 10rem; }
-
-.cd-accordion-menu {
+.accordion {
   max-width: 250px;
   min-width: 250px;
   display: flex;
   flex-flow: column;
   align-self: start; }
-  .cd-accordion-menu ul {
+  .accordion ul {
     /* by default hide all sub menus */
     display: none; }
-  .cd-accordion-menu li {
+  .accordion li {
     user-select: none; }
-  .cd-accordion-menu input[type=checkbox] {
+  .accordion input[type=checkbox] {
     position: absolute;
     opacity: 0; }
-  .cd-accordion-menu label, .cd-accordion-menu a {
+  .accordion label, .accordion a {
     position: relative;
     display: block;
-    padding: 9px 9px 9px 47px;
-    background: #4d5158;
-    box-shadow: inset 0 -1px tint(#4d5158, 5%);
+    padding: 9px 9px 9px 52px;
+    box-shadow: inset 0 -1px #565a60;
     color: #ffffff;
-    font-size: 1rem; }
-    .no-touch .cd-accordion-menu label:hover, .no-touch .cd-accordion-menu a:hover {
-      background: tint(#4d5158, 3%); }
-  .cd-accordion-menu label::before, .cd-accordion-menu label::after, .cd-accordion-menu a::after {
+    font-size: 1rem;
+    cursor: pointer; }
+  .accordion .level1 {
+    background: #4d5158; }
+    .accordion .level1:hover {
+      background: #52565d; }
+  .accordion .level2 {
+    background: #41454b; }
+    .accordion .level2:hover {
+      background: #474b50; }
+  .accordion .level3 {
+    background: #36393e; }
+    .accordion .level3:hover {
+      background: #3c3f44; }
+  .accordion label::before, .accordion label::after, .accordion a::after {
     /* icons */
     content: '';
     display: inline-block;
@@ -1980,100 +1971,100 @@ input {
     position: absolute;
     top: 50%;
     transform: translateY(-50%); }
-  .cd-accordion-menu label {
-    cursor: pointer; }
-    .cd-accordion-menu label::before, .cd-accordion-menu label::after {
-      background-image: url(/public/dist/e8fc4c0fec5aea6367fd.svg);
-      background-repeat: no-repeat; }
-    .cd-accordion-menu label::before {
-      /* arrow icon */
-      left: 9px;
-      background-position: 0 0;
-      transform: translateY(-50%) rotate(-90deg); }
-    .cd-accordion-menu label::after {
-      /* folder icons */
-      left: 28px;
-      background-position: -16px 0; }
-  .cd-accordion-menu a::after {
+  .accordion label::before, .accordion label::after {
+    background-image: url(/public/dist/e8fc4c0fec5aea6367fd.svg);
+    background-repeat: no-repeat; }
+  .accordion label::before {
+    /* arrow icon */
+    left: 9px;
+    background-position: 0 0;
+    transform: translateY(-50%) rotate(-90deg); }
+  .accordion label::after {
+    /* folder icons */
+    left: 31px;
+    background-position: -16px 0; }
+  .accordion a::after {
     /* image icon */
     left: 18px;
     background: url(/public/dist/e8fc4c0fec5aea6367fd.svg) no-repeat -48px 0; }
-  .cd-accordion-menu input[type=checkbox]:checked + label::before {
+  .accordion input[type=checkbox]:checked + label::before {
     /* rotate arrow */
-    transform: translateY(-50%); }
-  .cd-accordion-menu input[type=checkbox]:checked + label::after {
+    transform: translateY(-50%);
+    transition: transform 90ms; }
+  .accordion input[type=checkbox]:checked + label::after {
     background-position: -32px 0; }
-  .cd-accordion-menu input[type=checkbox]:checked + label + ul,
-  .cd-accordion-menu input[type=checkbox]:checked + label:nth-of-type(n) + ul {
+  .accordion input[type=checkbox]:checked + label + ul,
+  .accordion input[type=checkbox]:checked + label:nth-of-type(n) + ul {
     /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
-    display: block; }
-  .cd-accordion-menu ul label,
-  .cd-accordion-menu ul a {
-    background: #35383d;
+    display: block;
+    height: auto;
+    overflow: hidden; }
+  .accordion ul label,
+  .accordion ul a {
     box-shadow: inset 0 -1px #41444a;
     padding-left: 66px; }
-    .no-touch .cd-accordion-menu ul label:hover, .no-touch
-    .cd-accordion-menu ul a:hover {
+    .no-touch .accordion ul label:hover, .no-touch
+    .accordion ul a:hover {
       background: #3c3f45; }
-  .cd-accordion-menu > li:last-of-type > label,
-  .cd-accordion-menu > li:last-of-type > a,
-  .cd-accordion-menu > li > ul > li:last-of-type label,
-  .cd-accordion-menu > li > ul > li:last-of-type a {
+  .accordion > li:last-of-type > label,
+  .accordion > li:last-of-type > a,
+  .accordion > li > ul > li:last-of-type label,
+  .accordion > li > ul > li:last-of-type a {
     box-shadow: none; }
-  .cd-accordion-menu ul label::before {
+  .accordion ul label::before {
     left: 18px; }
-  .cd-accordion-menu ul label::after,
-  .cd-accordion-menu ul a::after {
+  .accordion ul label::after,
+  .accordion ul a::after {
     left: 37px; }
-  .cd-accordion-menu ul ul label,
-  .cd-accordion-menu ul ul a {
+  .accordion ul ul label,
+  .accordion ul ul a {
     padding-left: 85px; }
-  .cd-accordion-menu ul ul label::before {
+  .accordion ul ul label::before {
     left: 27px; }
-  .cd-accordion-menu ul ul label::after,
-  .cd-accordion-menu ul ul a::after {
+  .accordion ul ul label::after,
+  .accordion ul ul a::after {
     left: 46px; }
-  .cd-accordion-menu ul ul ul label,
-  .cd-accordion-menu ul ul ul a {
-    padding-left: 84px; }
-  .cd-accordion-menu ul ul ul label::before {
+  .accordion ul ul ul label,
+  .accordion ul ul ul a {
+    padding-left: 94px; }
+  .accordion ul ul ul label::before {
     left: 36px; }
-  .cd-accordion-menu ul ul ul label::after,
-  .cd-accordion-menu ul ul ul a::after {
+  .accordion ul ul ul label::after,
+  .accordion ul ul ul a::after {
     left: 55px; }
   @media only screen and (min-width: 600px) {
-    .cd-accordion-menu label, .cd-accordion-menu a {
+    .accordion label, .accordion a {
       padding: 12px 12px 12px 66px;
       font-size: 1.2rem; }
-    .cd-accordion-menu label::before {
+    .accordion label::before {
       left: 12px; }
-    .cd-accordion-menu label::after {
+    .accordion label::after {
       left: 34px; }
-    .cd-accordion-menu ul label,
-    .cd-accordion-menu ul a {
+    .accordion ul label,
+    .accordion ul a {
       padding-left: 88px; }
-    .cd-accordion-menu ul label::before {
+    .accordion ul label::before {
       left: 24px; }
-    .cd-accordion-menu ul label::after,
-    .cd-accordion-menu ul a::after {
+    .accordion ul label::after,
+    .accordion ul a::after {
       left: 51px; }
-    .cd-accordion-menu ul ul label,
-    .cd-accordion-menu ul ul a {
+    .accordion ul ul label,
+    .accordion ul ul a {
       padding-left: 100px; }
-    .cd-accordion-menu ul ul label::before {
+    .accordion ul ul label::before {
       left: 36px; }
-    .cd-accordion-menu ul ul label::after,
-    .cd-accordion-menu ul ul a::after {
+    .accordion ul ul label::after,
+    .accordion ul ul a::after {
       left: 58px; }
-    .cd-accordion-menu ul ul ul label,
-    .cd-accordion-menu ul ul ul a {
+    .accordion ul ul ul label,
+    .accordion ul ul ul a {
       padding-left: 172px; }
-    .cd-accordion-menu ul ul ul label::before {
+    .accordion ul ul ul label::before {
       left: 48px; }
-    .cd-accordion-menu ul ul ul label::after,
-    .cd-accordion-menu ul ul ul a::after {
+    .accordion ul ul ul label::after,
+    .accordion ul ul ul a::after {
       left: 65px; } }
-  .cd-accordion-menu.animated label::before {
+  .accordion.animated label::before {
     /* this class is used if you're using jquery to animate the accordion */
     transition: transform .3s; }
 

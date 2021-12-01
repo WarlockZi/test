@@ -1,5 +1,6 @@
-import {Test} from './Test/model/test'
 import './common.scss'
+
+
 
 let validate = {
     sort: () => {

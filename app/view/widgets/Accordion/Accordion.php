@@ -38,35 +38,36 @@ class Accordion extends Model
 		$this->output();
 	}
 
-	function li($cat)
+	function li($item,$lev)
 	{
-		if (isset($cat['childs'])&&$cat['childs']) {
+		if (isset($item['childs']) && $item['childs']) {
 			return
-				"<li class='has-children'>" .
-				"<input type='checkbox' name ='group-1' id={$cat['id']}>" .
-				"<label for={$cat['id']}>{$cat['test_name']}</label>";
+				"<li class='has-children level{$lev} animated'>" .
+				"<input type='checkbox' name ='group-1' id={$item['id']}>" .
+				"<label for={$item['id']}>{$item['test_name']}</label>";
 		}
-		return "<li><a href='#' title={$cat['test_name']}>" .
-		"{$cat['test_name']} </a>";
+		return "<li><a class='level{$lev} animated'   href='#' title={$item['test_name']}>" .
+			"{$item['test_name']} </a>";
 	}
 
-	function tplMenu($category)
+	function tplMenu($item, $lev)
 	{
-		$menu = "{$this->li($category)}" ;
+		$menu = "{$this->li($item, $lev)}";
 
-		if (isset($category['childs'])) {
-			$menu .= '<ul>' . $this->showCat($category['childs']) . '</ul>';
+		if (isset($item['childs'])) {
+			$menu .= '<ul>' . $this->showCat($item['childs'],$lev) . '</ul>';
 		}
 		$menu .= '</li>';
 
 		return $menu;
 	}
 
-	function showCat($data)
+	function showCat($data, $lev = 0)
 	{
 		$string = '';
+		$lev++;
 		foreach ($data as $item) {
-			$string .= $this->tplMenu($item);
+			$string .= $this->tplMenu($item, $lev);
 		}
 		return $string;
 	}
