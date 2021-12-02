@@ -347,7 +347,9 @@
   align-self: start; }
   .accordion ul {
     /* by default hide all sub menus */
-    display: none; }
+    display: block;
+    height: 0;
+    overflow: hidden; }
   .accordion li {
     user-select: none; }
   .accordion input[type=checkbox] {
@@ -403,12 +405,12 @@
     transform: translateY(-50%);
     transition: transform 90ms; }
   .accordion input[type=checkbox]:checked + label::after {
+    /*change path icon*/
     background-position: -32px 0; }
   .accordion input[type=checkbox]:checked + label + ul,
   .accordion input[type=checkbox]:checked + label:nth-of-type(n) + ul {
     /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
     display: block;
-    height: auto;
     overflow: hidden; }
   .accordion ul label,
   .accordion ul a {
@@ -426,7 +428,7 @@
     left: 18px; }
   .accordion ul label::after,
   .accordion ul a::after {
-    left: 37px; }
+    left: 43px; }
   .accordion ul ul label,
   .accordion ul ul a {
     padding-left: 85px; }

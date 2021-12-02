@@ -12,7 +12,9 @@
 
   ul {
     /* by default hide all sub menus */
-    display: none;
+    display: block;
+    height: 0;
+    overflow: hidden;
   }
 
   li {
@@ -103,6 +105,7 @@
   }
 
   input[type=checkbox]:checked + label::after {
+    /*change path icon*/
     background-position: -32px 0;
   }
 
@@ -110,7 +113,7 @@
   input[type=checkbox]:checked + label:nth-of-type(n) + ul {
     /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
     display: block;
-    height: auto;
+    //height: auto;
     overflow: hidden;
   }
 
@@ -138,7 +141,7 @@
 
   ul label::after,
   ul a::after {
-    left: ($item-padding-S * 3) + 10px;
+    left: ($item-padding-S * 3) + 16px;
   }
 
   ul ul label,

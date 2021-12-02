@@ -42,11 +42,11 @@ class Accordion extends Model
 	{
 		if (isset($item['childs']) && $item['childs']) {
 			return
-				"<li class='has-children level{$lev} animated'>" .
+				"<li class='has-children level{$lev}'>" .
 				"<input type='checkbox' name ='group-1' id={$item['id']}>" .
 				"<label for={$item['id']}>{$item['test_name']}</label>";
 		}
-		return "<li><a class='level{$lev} animated'   href='#' title={$item['test_name']}>" .
+		return "<li><a class='level{$lev}' href='{$item['id']}' title={$item['test_name']}>" .
 			"{$item['test_name']} </a>";
 	}
 
@@ -75,7 +75,6 @@ class Accordion extends Model
 	public function output()
 	{
 		return "<ul class = '{$this->class}'>{$this->menuHTML}</ul>";
-//			"<link href='../../../../public/dist/test_edit.css'>";
 	}
 
 }
