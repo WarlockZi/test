@@ -1014,61 +1014,27 @@ function handle(e) {
     slideUp(ul, 0);
   } else {
     parent.style.height = "auto";
-    slideDown(ul, 0);
+    let height = slideDown(ul, 0);
+    increaseParent(parent, height);
     closeSiblings(parent);
   }
 }
 
-function slideDown(el, interval, callback) {
-  let siblings = el.children;
-  let exactSiblings = Array.from(siblings).reduce((acc, el, index) => {
-    return el.tagName === 'LI' ? acc + el.scrollHeight : null;
-  }, 0);
-  let height = exactSiblings;
-  let counter = 0;
-  let step = height / 30;
-  let int = setInterval(function () {
-    counter += step;
-
-    if (counter < height) {
-      el.style.height = counter + "px";
-    } else {
-      el.style.height = height + "px";
-      clearInterval(int);
-
-      if (callback) {
-        callback();
-      }
-    }
-  }, interval);
+function increaseParent(parent, height) {
+  if (!parent.classList.contains('accordion')) {
+    let final = height + parseInt(parent.style.maxHeight);
+    parent.style.maxHeight = final + "px";
+  }
 }
 
-function slideUp(el, interval, callback) {
-  let parent = el.parentNode.parentNode;
-  let height = el.offsetHeight;
-  let heightToDistractFromParent = height;
-  let step = height / 30;
-  let counter = height;
-  let pCounter = parent.offsetHeight;
-  let pInitHeight = parent.offsetHeight;
-  let int = setInterval(function () {
-    el.style.display = `block`;
-    counter -= step;
-    pCounter -= step;
+function slideDown(ul, interval, callback) {
+  ul.style.maxHeight = ul.scrollHeight + "px";
 
-    if (counter > 0) {
-      el.style.height = counter + "px";
-      parent.style.height = pCounter + "px";
-    } else {
-      el.style.height = 0;
-      clearInterval(int);
-      parent.style.height = pInitHeight;
+  if (callback) {
+    callback();
+  }
 
-      if (callback) {
-        callback();
-      }
-    }
-  }, interval, heightToDistractFromParent);
+  return ul.scrollHeight;
 }
 
 function closeSiblings(parent) {
@@ -1083,36 +1049,15 @@ function closeSiblings(parent) {
       }
     });
   });
-} // var adder = height / 10; //the height is global variable
-//
-// //iteratively increase the height
-// interval = setInterval(function () {
-//     counter += adder;
-//     if (counter < height) {
-//         a.style.height = counter + "px";
-//     } else {
-//         a.style.height = height + "px";
-//         clearInterval(interval);
-//     }
-// }, duration);
-// //#3 the slideDown
-// function slideDown(a, b) {
-//     var adder = height / 10; //the height is global variable
-//     //iteratively increase the height
-//     interval = setInterval(function () {
-//         counter += adder;
-//         if (counter < height) {
-//             a.style.height = counter + "px";
-//         } else {
-//             a.style.height = height + "px";
-//             b.disabled = 0;
-//             b.innerHTML = "slideUp";
-//             //enable easing button
-//             ease.disabled = 0;
-//             clearInterval(interval);
-//         }
-//     }, duration);
-// }
+}
+
+function slideUp(ul, interval, callback) {
+  ul.style.maxHeight = 0 + "px";
+
+  if (callback) {
+    callback();
+  }
+}
 
 /***/ }),
 

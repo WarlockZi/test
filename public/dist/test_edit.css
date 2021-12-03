@@ -1934,11 +1934,14 @@ span[contenteditable]:hover,
   display: flex;
   flex-flow: column;
   align-self: start; }
+  @media (max-width: 800px) {
+    .accordion {
+      max-width: 100%; } }
   .accordion ul {
     /* by default hide all sub menus */
-    display: block;
-    height: 0;
-    overflow: hidden; }
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height .1s; }
   .accordion li {
     user-select: none; }
   .accordion input[type=checkbox] {

@@ -8,12 +8,7 @@ export default function connect(selector, duration, easing)
             duration = 15,
             height, interval, counter, flag = 0;
     }
-    //GLOBAL VARIABLES
 
-
-//**************************************
-//FUNCTIONS
-//#1 this is the transition, it won't work for old IE
     function addEasing(a) {
 
         if (flag === 1) { //check flag
@@ -24,7 +19,6 @@ export default function connect(selector, duration, easing)
 
     }
 
-//#2 the slideUp
     function slideUp(a, b) {
 
         height = a.offsetHeight; //declare the value of "height" variable
@@ -57,7 +51,6 @@ export default function connect(selector, duration, easing)
 
     }
 
-//#3 the slideDown
     function slideDown(a, b) {
 
         var adder = height/10; //the height is global variable
@@ -76,14 +69,9 @@ export default function connect(selector, duration, easing)
                 clearInterval(interval);
             }
         }, duration);
-
     }
 
-//**************************************
-//BUTTONS TRIGGERS
-//#1 "slideUp/slideDown" trigger
     button.onclick = function () {
-
         var text = this.innerHTML;
 
         this.disabled = 1;
@@ -93,8 +81,6 @@ export default function connect(selector, duration, easing)
             slideDown(element, this);
         }
     };
-
-//#2 "add/remove CSS3 transition" trigger
     ease.onclick = function () {
         var text = this.innerHTML;
         if (text.match(/add/gi)){

@@ -1,10 +1,14 @@
-
+@import '../../mixin_media';
 @import './partials/variables'; // colors, fonts etc...
 
 @import './partials/layout'; // responsive grid and media queries
 
 .accordion{
   max-width: 250px;
+  @include _800{
+    max-width: 100%;
+  }
+
   min-width: 250px;
   display: flex;
   flex-flow: column;
@@ -12,9 +16,11 @@
 
   ul {
     /* by default hide all sub menus */
-    display: block;
-    height: 0;
+    //display: block;
+    //height: 0;
     overflow: hidden;
+    max-height: 0;
+    transition: max-height .1s;
   }
 
   li {
