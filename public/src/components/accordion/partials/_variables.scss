@@ -1,0 +1,22 @@
+@import './layout';
+
+// colors
+
+$color-1: #4d5158; // Abbey
+$color-2: #a0f6aa; // Gossip
+$color-3: #ffffff; // White
+
+$color-level-1: $color-1;
+$color-level-2: shade($color-level-1, 15%);
+$color-level-3: shade($color-level-1, 30%);
+$color-level-4: shade($color-level-1, 45%);
+
+
+// fonts 
+
+$primary-font: 'Jaldi', sans-serif;
+
+// this variable modifies the size of all items
+
+$item-padding-S: 9px;
+$item-padding-M: 12px;
