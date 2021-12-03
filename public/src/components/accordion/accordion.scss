@@ -40,7 +40,7 @@
     box-shadow: inset 0 -1px tint($color-1, 5%);
     //background: $color-level-1;
     color: $color-3;
-    font-size: 1rem;
+    font-size: .8rem;
     cursor: pointer;
 
     //&:hover {
@@ -181,7 +181,7 @@
   @include MQ(M) {
     label, a {
       padding: $item-padding-M $item-padding-M $item-padding-M ($item-padding-M * 3) + 30px;
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
 
     label::before {
