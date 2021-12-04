@@ -6,10 +6,11 @@
   color: #ffffff;
   border-radius: 4px;
   display: flex;
-  font-weight: 600;
+  font-weight: 800;
   box-shadow: 5px 4px 6px 1px #6a8784;
   cursor: pointer;
   border: none;
+  text-transform: uppercase;
 
   &:hover {
     transition: box-shadow 100ms;
