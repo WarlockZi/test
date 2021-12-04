@@ -160,7 +160,11 @@
   box-shadow: #1bbc9b 1px 2px 0px 0px !important; }
 
 .test-do__content {
-  margin-right: 15px; }
+  width: 700px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: clamp(10px, 100%, 7%);
+  margin-right: clamp(10px, 100%, 7%); }
 
 .test-do {
   display: flex;
@@ -934,7 +938,8 @@ textarea:focus,
   align-items: center;
   width: 100%;
   margin: auto;
-  justify-content: flex-start; }
+  justify-content: flex-start;
+  max-width: 1310px; }
   @media (max-width: 600px) {
     .admin-header__info {
       padding: 0; } }

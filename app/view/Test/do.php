@@ -13,7 +13,6 @@
 			$i = 1;
 			?>
 
-		<? include ROOT.'/app/view/components/test-do/test_edit_prev_next_buttons.php'?>
 
 			<div class="test-data">
 
@@ -58,12 +57,22 @@
 				<? endforeach; ?>
 			</div>
 
+			<? include ROOT.'/app/view/components/test-do/test_edit_prev_next_buttons.php'?>
+
+
+
 			<a class="test-do__finish-btn" id="btnn" data-id="<?= $test['id']; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
+
+
+
+
 		<? else: ?>
 
 			<?= $error ?? ''; ?>
 
 		<? endif; ?>
-	</div>
 
+
+
+	</div>
 </section>

@@ -25,6 +25,7 @@
 .admin-header__info{
   @include header__info;
   justify-content: flex-start;
+  max-width: 1310px;
 }
 
 
