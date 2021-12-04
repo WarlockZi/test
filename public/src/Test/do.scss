@@ -162,7 +162,11 @@
 
 
 .test-do__content {
-  margin-right: 15px;
+  width: 700px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left:  clamp(10px, 100%, 7%);
+  margin-right: clamp(10px, 100%, 7%);
 }
 
 /// MENU
