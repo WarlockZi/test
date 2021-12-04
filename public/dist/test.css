@@ -26,10 +26,11 @@
     color: #ffffff;
     border-radius: 4px;
     display: flex;
-    font-weight: 600;
+    font-weight: 800;
     box-shadow: 5px 4px 6px 1px #6a8784;
     cursor: pointer;
-    border: none; }
+    border: none;
+    text-transform: uppercase; }
     .test-do__buttons button:hover {
       transition: box-shadow 100ms;
       box-shadow: 2px 2px 12px 0px #6a8784; }
@@ -42,10 +43,11 @@
   color: #ffffff;
   border-radius: 4px;
   display: flex;
-  font-weight: 600;
+  font-weight: 800;
   box-shadow: 5px 4px 6px 1px #6a8784;
   cursor: pointer;
-  border: none; }
+  border: none;
+  text-transform: uppercase; }
   .test-do__finish-btn:hover {
     transition: box-shadow 100ms;
     box-shadow: 2px 2px 12px 0px #6a8784; }
@@ -509,7 +511,7 @@
     background-color: #949494;
     border: none;
     color: white;
-    padding: 4px 4px;
+    padding: 6px 6px;
     text-align: center;
     display: block;
     flex-basis: 18px;
