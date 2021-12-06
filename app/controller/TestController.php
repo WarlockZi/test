@@ -200,7 +200,6 @@ class TestController Extends AppController
 	public function actionCachePageSendEmail()
 	{
 		$mail = 1;
-		exit("Результат в базу сохранен{$_POST}");
 
 		if (isset($_POST) && is_array($_POST)) {
 
