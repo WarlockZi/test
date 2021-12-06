@@ -9,9 +9,12 @@
 	<h1>Результаты тестов</h1>
 
 	<? foreach ($res as $result): ?>
-		<div> <?= $result['user']; ?></div>
-		<a href='<?= '/test/result/' . $result['id']; ?>' class="test-result"><?= $result['testname']; ?></a>
-		</br>
+		<div class="flex1">
+			<div> <?= $result['user']; ?></div>
+			<a href='<?= '/test/result/' . $result['id']; ?>' class="test-result"><?= $result['testname']; ?></a>
+			<div> <?= $result['date']; ?></div>
+		</div>
+		<br>
 	<? endforeach; ?>
 
 </div>
