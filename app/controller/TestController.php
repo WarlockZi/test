@@ -149,7 +149,7 @@ class TestController Extends AppController
 
 	public function actionDelete()
 	{
-		if (User::can($this->user, 4)||SU) {
+		if (User::can($this->user, 4) || SU) {
 			if (App::$app->test->delete($this->ajax['test']['id'])) {
 				exit(json_encode(['msg' => 'ok']));
 			}
@@ -203,11 +203,12 @@ class TestController Extends AppController
 	public function actionCachePageSendEmail()
 	{
 		$mail = 1;
+
+		if ($_POST) exit("Результат в базу сохранен{$resid}");
 		if (isset($_POST) && is_array($_POST)) {
 
 			if ($resid = self::saveResultToDB($_POST)) {
-				if (!$resid)exit('Результат в базу не сохранен');
-				if ($resid)exit("Результат в базу сохранен{$resid}");
+				if (!$resid) exit('Результат в базу не сохранен');
 
 				if (!$mail) exit(json_encode('ok'));
 				self::sendTestRes($_POST, $resid);
