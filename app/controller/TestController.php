@@ -204,7 +204,7 @@ class TestController Extends AppController
 	{
 		$mail = 1;
 
-		if ($_POST) exit("Результат в базу сохранен{$resid}");
+		if ($_POST) exit("Результат в базу сохранен");
 		if (isset($_POST) && is_array($_POST)) {
 
 			if ($resid = self::saveResultToDB($_POST)) {
