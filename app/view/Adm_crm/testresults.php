@@ -10,9 +10,14 @@
 
 	<div class="test-reuslts__table">
 		<? foreach ($res as $result): ?>
-			<div class="item"> <?= $result['user']; ?></div>
+				<div class="item"> <?= $result['user']; ?></div>
 			<a class="item" href='<?= '/test/result/' . $result['id']; ?>'
 			   class="test-result"><?= $result['testname']; ?></a>
+			<div class="item  <?=$result['errorCnt']?'error':'suc'?>">
+				вопр - <?= $result['questionCnt']; ?>
+				ошибок - <?= $result['errorCnt']; ?>
+			</div>
+
 			<div class="item"> <?= $result['date']; ?></div>
 		<? endforeach; ?>
 	</div>

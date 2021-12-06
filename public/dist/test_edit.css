@@ -981,7 +981,7 @@ section {
 .admin-actions label {
   color: #4a4a4a;
   font-size: 16px;
-  padding: 0 0 7px 5px; }
+  padding: 3px 0 7px 5px; }
 
 .breadcrumbs-adm > div {
   text-transform: uppercase; }
@@ -1186,15 +1186,6 @@ span.close {
   .tabs > label {
     padding: 15px; } }
 
-.item {
-  padding: 7px 13px;
-  background-color: white;
-  border-right: 1px solid #ebebeb;
-  border-bottom: 1px solid #ebebeb; }
-
-/*//////////////////////////////*/
-/*/////  ADMIN FLEX TABLE  //////*/
-/*//////////////////////////////*/
 .admin-flex-table {
   padding: 10px; }
 
