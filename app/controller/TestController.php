@@ -31,9 +31,7 @@ class TestController Extends AppController
 		if ($data = $this->ajax) {
 			$table = $data['table'];
 			$menu = new tree(['table' => $table]);
-
 		}
-
 	}
 
 
@@ -208,6 +206,8 @@ class TestController Extends AppController
 		if (isset($_POST) && is_array($_POST)) {
 
 			if ($resid = self::saveResultToDB($_POST)) {
+				if (!$resid)exit('Результат в базу не сохранен');
+
 				if (!$mail) exit(json_encode('ok'));
 				self::sendTestRes($_POST, $resid);
 			}
