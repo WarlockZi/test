@@ -2,6 +2,19 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./public/src/Admin/admin_main_menu.js":
+/*!*********************************************!*\
+  !*** ./public/src/Admin/admin_main_menu.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.navigate)(window.location.pathname);
+
+/***/ }),
+
 /***/ "./public/src/Admin/model/cache.js":
 /*!*****************************************!*\
   !*** ./public/src/Admin/model/cache.js ***!
@@ -27,31 +40,6 @@ let _cache = {
     }
   }
 };
-
-/***/ }),
-
-/***/ "./public/src/admin/admin_main_menu.js":
-/*!*********************************************!*\
-  !*** ./public/src/admin/admin_main_menu.js ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.navigate)(window.location.pathname);
-
-/***/ }),
-
-/***/ "./public/src/admin/index.js":
-/*!***********************************!*\
-  !*** ./public/src/admin/index.js ***!
-  \***********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _admin_main_menu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin_main_menu */ "./public/src/admin/admin_main_menu.js");
-
 
 /***/ }),
 
@@ -597,7 +585,7 @@ var __webpack_exports__ = {};
   !*** ./public/src/Admin/admin.js ***!
   \***********************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _admin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../admin */ "./public/src/admin/index.js");
+/* harmony import */ var _admin_main_menu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin_main_menu */ "./public/src/Admin/admin_main_menu.js");
 /* harmony import */ var _admin_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admin.scss */ "./public/src/Admin/admin.scss");
 /* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
 /* harmony import */ var _admin_catalog_menu_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./admin_catalog_menu.scss */ "./public/src/Admin/admin_catalog_menu.scss");

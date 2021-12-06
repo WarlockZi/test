@@ -186,7 +186,9 @@ class TestController Extends AppController
 
 	private static function sendTestRes($post, $resid)
 	{
-		$data['to'] = self::getMailsToSendBothResults();
+		if ($_ENV('TEST_EMAIL_ALL_SEND')) {
+			$data['to'] = self::getMailsToSendBothResults();
+		}
 		$data['to'] = self::getMailsToSendIfRightResults($data['to'], $post['errorCnt']);
 
 		$data['subject'] = self::getSubjectTestResults($post);

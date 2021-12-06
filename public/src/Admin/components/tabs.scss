@@ -1,0 +1,99 @@
+
+/* Базовый контейнер табов */
+.tabs {
+  min-width: 320px;
+  width: 100%;
+  padding: 0;
+  margin: 0 auto 0 0;
+  position: relative;
+}
+
+/* Стили секций с содержанием */
+.tabs > section {
+  display: none;
+  /*padding: 15px;*/
+  background: #fff;
+  border: 1px solid #ddd;
+}
+
+.tabs > section > .flex {
+  margin: 0 0 5px;
+  line-height: 1.5;
+  color: #383838;
+  animation-duration: .5s;
+  animation-fill-mode: both;
+  animation-name: fadeIn;
+}
+
+/* Прячем чекбоксы */
+.tabs > input {
+  display: none;
+  position: absolute;
+}
+
+/* Стили переключателей вкладок (табов) */
+.tabs > label {
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 9px 7px;
+  font-weight: 600;
+  text-align: center;
+  color: #aaa;
+  border: 0 solid #ddd;
+  background: #f1f1f1;
+  border-radius: 3px 3px 0 0;
+}
+
+/* Шрифт-иконки от Font Awesome в формате Unicode */
+.tabs > label:before {
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+/* Изменения стиля переключателей вкладок при наведении */
+
+.tabs > label:hover {
+  color: #888;
+  cursor: pointer;
+}
+
+/* Стили для активной вкладки */
+.tabs > input:checked + label {
+  color: #555;
+  border-top: 1px solid #ffa500;
+  border-bottom: 1px solid #fff;
+  background: #fff;
+}
+
+/* Активация секций с помощью псевдокласса :checked */
+#tab1:checked ~ #content-tab1,
+#tab2:checked ~ #content-tab2,
+#tab3:checked ~ #content-tab3,
+#tab4:checked ~ #content-tab4 {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  min-height: 100vh;
+}
+
+#content-tab1 strong {
+  color: #4d4d4d;
+}
+
+@media screen and (max-width: 680px) {
+  .tabs > label {
+    font-size: 0;
+  }
+
+  .tabs > label:before {
+    margin: 0;
+    font-size: 18px;
+  }
+}
+
+
+@media screen and (max-width: 400px) {
+  .tabs > label {
+    padding: 15px;
+  }
+}

@@ -1,4 +1,4 @@
-import '../admin'
+import './admin_main_menu'
 import './admin.scss'
 import '../normalize.scss'
 import './admin_catalog_menu.scss'

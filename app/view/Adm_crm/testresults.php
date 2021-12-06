@@ -10,11 +10,10 @@
 
 	<? foreach ($res as $result): ?>
 		<div class="flex1">
-			<div> <?= $result['user']; ?></div>
-			<a href='<?= '/test/result/' . $result['id']; ?>' class="test-result"><?= $result['testname']; ?></a>
-			<div> <?= $result['date']; ?></div>
+			<div class="item"> <?= $result['user']; ?></div>
+			<a class="item" href='<?= '/test/result/' . $result['id']; ?>' class="test-result"><?= $result['testname']; ?></a>
+			<div class="item"> <?= $result['date']; ?></div>
 		</div>
-		<br>
 	<? endforeach; ?>
 
 </div>
