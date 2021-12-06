@@ -446,7 +446,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
-let _test = {
+const _test = {
+  markCurrentInMenu: () => {
+    let currentTestId = +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].getAttribute('value');
+    let menuItemCollection = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.accordion a').el;
+    Array.from(menuItemCollection).filter(a => {
+      if (+a.dataset.id === currentTestId) {
+        a.classList.add('current');
+      }
+    });
+  },
   nextQ: () => {
     let current = _test.currentQ();
 

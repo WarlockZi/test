@@ -303,7 +303,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
 
-let _test = {
+const _test = {
+  markCurrentInMenu: () => {
+    let currentTestId = +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].getAttribute('value');
+    let menuItemCollection = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.accordion a').el;
+    Array.from(menuItemCollection).filter(a => {
+      if (+a.dataset.id === currentTestId) {
+        a.classList.add('current');
+      }
+    });
+  },
   nextQ: () => {
     let current = _test.currentQ();
 
@@ -4999,12 +5008,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+_model_test__WEBPACK_IMPORTED_MODULE_8__._test.markCurrentInMenu();
+
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.navigate)(window.location.pathname);
 _components_sortable__WEBPACK_IMPORTED_MODULE_11__.sortable.connect('.questions'); // при создании нового теста показать пустой вопрос
 
 if (!_model_question__WEBPACK_IMPORTED_MODULE_9__._question.questions().length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
   _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showFirst();
-}
+} // подсветка текущего теста
+
 
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_8__._test.update);
 (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test-path__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_8__._test.update); // $('.question__sort').on('change', validate.sort)

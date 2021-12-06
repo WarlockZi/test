@@ -1,7 +1,16 @@
 import {$, popup, post} from '../../common'
 
-export let _test = {
+export const _test = {
 
+    markCurrentInMenu:()=>{
+        let currentTestId= + $('.test-name').el[0].getAttribute('value')
+        let menuItemCollection = $('.accordion a').el
+        Array.from(menuItemCollection).filter((a)=>{
+            if (+a.dataset.id === currentTestId) {
+                a.classList.add('current')
+            }
+        })
+    },
 
     nextQ: () => {
         let current = _test.currentQ()

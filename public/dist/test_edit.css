@@ -735,7 +735,8 @@ section {
   text-transform: uppercase;
   font-weight: 800;
   margin: 0px 0 20px 15px;
-  padding: 5px 0; }
+  padding: 5px 0;
+  color: #36393e; }
 
 .list {
   display: flex;
@@ -1799,6 +1800,9 @@ span[contenteditable]:hover,
     color: #ffffff;
     font-size: .8rem;
     cursor: pointer; }
+  .accordion .current {
+    border-left: #97ffea  4px solid;
+    color: #97ffea; }
   .accordion .level1 {
     background: #4d5158; }
     .accordion .level1:hover {

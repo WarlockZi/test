@@ -46,7 +46,7 @@ class Accordion extends Model
 				"<input type='checkbox' name ='group-1' id={$item['id']}>" .
 				"<label for={$item['id']}>{$item['test_name']}</label>";
 		}
-		return "<li><a class='level{$lev}' href='{$item['id']}' title={$item['test_name']}>" .
+		return "<li><a data-id={$item['id']} class='level{$lev}' href='{$item['id']}' title={$item['test_name']}>" .
 			"{$item['test_name']} </a>";
 	}
 

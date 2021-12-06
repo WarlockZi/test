@@ -1304,6 +1304,10 @@ header {
   margin-bottom: 20px;
   flex-flow: column; }
 
+.test-reuslts__table {
+  display: grid;
+  grid-template-columns: 120px 120px 150px; }
+
 .popup {
   position: fixed;
   right: 0;

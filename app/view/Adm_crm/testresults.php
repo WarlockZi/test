@@ -8,12 +8,12 @@
 <div class="adm-content">
 	<h1>Результаты тестов</h1>
 
-	<? foreach ($res as $result): ?>
-		<div class="flex1">
+	<div class="test-reuslts__table">
+		<? foreach ($res as $result): ?>
 			<div class="item"> <?= $result['user']; ?></div>
-			<a class="item" href='<?= '/test/result/' . $result['id']; ?>' class="test-result"><?= $result['testname']; ?></a>
+			<a class="item" href='<?= '/test/result/' . $result['id']; ?>'
+			   class="test-result"><?= $result['testname']; ?></a>
 			<div class="item"> <?= $result['date']; ?></div>
-		</div>
-	<? endforeach; ?>
-
+		<? endforeach; ?>
+	</div>
 </div>
