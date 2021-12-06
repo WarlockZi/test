@@ -207,6 +207,7 @@ class TestController Extends AppController
 
 			if ($resid = self::saveResultToDB($_POST)) {
 				if (!$resid)exit('Результат в базу не сохранен');
+				if ($resid)exit("Результат в базу сохранен{$resid}");
 
 				if (!$mail) exit(json_encode('ok'));
 				self::sendTestRes($_POST, $resid);
