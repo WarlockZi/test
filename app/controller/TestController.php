@@ -130,9 +130,6 @@ class TestController Extends AppController
 		$this->set(compact('res'));
 
 		exit($res['html']);
-//		$this->layout = 'admin';
-
-
 	}
 
 	public function actionResults()
@@ -203,8 +200,8 @@ class TestController Extends AppController
 	public function actionCachePageSendEmail()
 	{
 		$mail = 1;
+		exit("Результат в базу сохранен{$_POST}");
 
-		if ($_POST) exit("Результат в базу сохранен");
 		if (isset($_POST) && is_array($_POST)) {
 
 			if ($resid = self::saveResultToDB($_POST)) {
