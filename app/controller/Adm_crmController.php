@@ -29,7 +29,7 @@ class Adm_crmController extends AdminscController
 
 	public function actionTestResults()
 	{
-		$res = App::$app->testresult->findAll('testresults');
+		$res = App::$app->testresult->findAll('testResults');
 		$this->set(compact('res'));
 	}
 
