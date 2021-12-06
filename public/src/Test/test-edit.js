@@ -14,7 +14,10 @@ import {_test} from "./model/test"
 import {_question} from "./model/question"
 import {_answer} from "./model/answer"
 import {sortable} from "../components/sortable"
+
 import '../components/accordion/accordion'
+
+_test.markCurrentInMenu()
 
 navigate(window.location.pathname)
 sortable.connect('.questions')
@@ -24,6 +27,7 @@ if (!_question.questions().length && /\/adminsc\/test\/edit/.test(window.locatio
     _question.showFirst()
 }
 
+// подсветка текущего теста
 
 
 $('.test__update').on('click', _test.update)

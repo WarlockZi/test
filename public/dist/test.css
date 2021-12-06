@@ -372,6 +372,9 @@
     color: #ffffff;
     font-size: .8rem;
     cursor: pointer; }
+  .accordion .current {
+    border-left: #97ffea  4px solid;
+    color: #97ffea; }
   .accordion .level1 {
     background: #4d5158; }
     .accordion .level1:hover {
