@@ -38,14 +38,14 @@ class Accordion extends Model
 		$this->output();
 	}
 
-	function li($item,$lev)
+	function li($item, $lev)
 	{
 		if (isset($item['childs']) && $item['childs']) {
 			return
 				"<li class='has-children level{$lev}'>" .
 				"<input type='checkbox' name ='group-1' id={$item['id']}>" .
 				"<label for={$item['id']}>{$item['test_name']}</label>";
-		}
+				}
 		return "<li><a data-id={$item['id']} class='level{$lev}' href='{$item['id']}' title={$item['test_name']}>" .
 			"{$item['test_name']} </a>";
 	}
@@ -55,7 +55,7 @@ class Accordion extends Model
 		$menu = "{$this->li($item, $lev)}";
 
 		if (isset($item['childs'])) {
-			$menu .= '<ul>' . $this->showCat($item['childs'],$lev) . '</ul>';
+			$menu .= '<ul>' . $this->showCat($item['childs'], $lev) . '</ul>';
 		}
 		$menu .= '</li>';
 

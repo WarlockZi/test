@@ -1297,13 +1297,8 @@ header {
 
 .test-reuslts__table {
   display: grid;
-  grid-template-columns: 120px 140px 120px 150px; }
-
-.error {
-  background-color: #ff29293b; }
-
-.suc {
-  background-color: rgba(9, 255, 61, 0.23); }
+  grid-template-columns: 120px 140px 120px 150px 120px;
+  background-color: white; }
 
 .item {
   padding: 7px 13px;
@@ -1312,6 +1307,23 @@ header {
   display: flex;
   align-items: center;
   justify-content: center; }
+
+.error {
+  background-color: #ff29293b; }
+
+.suc {
+  background-color: rgba(9, 255, 61, 0.23); }
+
+.del {
+  background-color: #ff5f5f;
+  align-self: center;
+  justify-self: center;
+  cursor: pointer;
+  border-radius: 3px;
+  color: #ffffff; }
+  .del:hover {
+    background-color: #ff4d4d;
+    font-weight: 600; }
 
 .popup {
   position: fixed;

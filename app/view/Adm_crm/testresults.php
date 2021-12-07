@@ -9,16 +9,16 @@
 	<h1>Результаты тестов</h1>
 
 	<div class="test-reuslts__table">
-		<? foreach ($res as $result): ?>
-				<div class="item"> <?= $result['user']; ?></div>
-			<a class="item" href='<?= '/test/result/' . $result['id']; ?>'
-			   class="test-result"><?= $result['testname']; ?></a>
-			<div class="item  <?=$result['errorCnt']?'error':'suc'?>">
-				вопр - <?= $result['questionCnt']; ?>
-				ошибок - <?= $result['errorCnt']; ?>
+		<? foreach ($res as $i): ?>
+			<div class="item" data-row="<?=$i['id']?>"> <?= $i['user']; ?></div>
+			<a class="item"  data-row="<?=$i['id']?>" href='<?= '/test/result/' . $i['id']; ?>'
+			   class="test-result"><?= $i['testname']; ?></a>
+			<div class="item <?= $i['errorCnt'] ? 'error' : 'suc' ?>" data-row="<?=$i['id']?>">
+				вопр - <?= $i['questionCnt']; ?>
+				ошибок - <?= $i['errorCnt']; ?>
 			</div>
-
-			<div class="item"> <?= $result['date']; ?></div>
+			<div class="item" data-row="<?=$i['id']?>"> <?= $i['date']; ?></div>
+			<div class="item del" data-row="<?=$i['id']?>">удалить</div>
 		<? endforeach; ?>
 	</div>
 </div>

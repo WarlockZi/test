@@ -1,10 +1,11 @@
-@import "admin_main_menu";
+@import "components/main-menu/admin_main_menu";
 @import "components/adm-menu";
 @import "components/breadcrumbs";
 @import "components/catalog";
 @import "components/dump";
 @import "components/grid";
 @import "components/tabs";
+//@import "components/test-reuslts__table";
 
 .admin-flex-table {
     padding: 10px;
