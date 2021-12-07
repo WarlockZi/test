@@ -3,6 +3,7 @@ import {$} from '../../common'
 
 $('label').on('click', handle)
 
+
 function handle(e) {
 
   let checkbox = e.target.previousSibling

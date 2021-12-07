@@ -1,5 +1,7 @@
 <div class="test-edit__content">
+
 	<? if ($test): ?>
+
 		<? if (isset($test['isTest']) && $test['isTest']): ?>
 			<div class="test-edit__title">
 				<? if (isset($test)): ?>
@@ -39,8 +41,10 @@
 				<? endif; ?>
 			</div>
 			<?= include ROOT . '/app/view/Test/test-edit-children.php' ?>
-
 		<? endif; ?>
+
+
+
 	<? else: ?>
 
 		<h1>Выберите другой тест</h1>

@@ -171,7 +171,10 @@ class TestController Extends AppController
 		}
 		return $mailsTo;
 	}
-
+	public function actionResultdelete($post)
+	{
+		return App::$app->testresult->delete($testres);
+	}
 
 	private static function saveResultToDB($post)
 	{

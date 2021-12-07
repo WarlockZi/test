@@ -360,7 +360,16 @@
     max-height: 0;
     transition: max-height .1s; }
   .accordion li {
-    user-select: none; }
+    user-select: none;
+    position: relative; }
+    .accordion li:after {
+      content: '';
+      height: 17px;
+      width: 17px;
+      position: absolute;
+      top: 10px;
+      right: 4px;
+      background-image: url(/public/dist/dc0e4badea85cda1a878.svg); }
   .accordion input[type=checkbox] {
     position: absolute;
     opacity: 0; }

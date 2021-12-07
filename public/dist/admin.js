@@ -2,16 +2,71 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./public/src/Admin/admin_main_menu.js":
-/*!*********************************************!*\
-  !*** ./public/src/Admin/admin_main_menu.js ***!
-  \*********************************************/
+/***/ "./public/src/Admin/CRM/test_results/test_results.js":
+/*!***********************************************************!*\
+  !*** ./public/src/Admin/CRM/test_results/test_results.js ***!
+  \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common */ "./public/src/common.js");
+/* harmony import */ var _model_testResult__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../model/_testResult */ "./public/src/Admin/model/_testResult.js");
+
+
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.del').on('click', _model_testResult__WEBPACK_IMPORTED_MODULE_1__._testResult.delete);
+
+/***/ }),
+
+/***/ "./public/src/Admin/components/main-menu/admin_main_menu.js":
+/*!******************************************************************!*\
+  !*** ./public/src/Admin/components/main-menu/admin_main_menu.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common */ "./public/src/common.js");
 
 (0,_common__WEBPACK_IMPORTED_MODULE_0__.navigate)(window.location.pathname);
+
+/***/ }),
+
+/***/ "./public/src/Admin/model/_testResult.js":
+/*!***********************************************!*\
+  !*** ./public/src/Admin/model/_testResult.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "_testResult": () => (/* binding */ _testResult)
+/* harmony export */ });
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+
+const _testResult = {
+  delServer: async id => {
+    let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/resultdelete', {
+      id
+    });
+
+    if (res) {
+      _common__WEBPACK_IMPORTED_MODULE_0__.popup.show('Удалено');
+    }
+  },
+  delDom: e => {
+    let id = e.target.dataset.row;
+    Array.from((0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(`[data-row = "${id}"]`).el).map(i => {
+      i.remove();
+    });
+    return id;
+  },
+  delete: e => {
+    if (confirm("Удалить результат теста?")) {
+      let id = _testResult.delDom(e);
+
+      _testResult.delServer(id);
+    }
+  }
+};
 
 /***/ }),
 
@@ -438,6 +493,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/src/Admin/CRM/test_results/test-reuslts__table.scss":
+/*!********************************************************************!*\
+  !*** ./public/src/Admin/CRM/test_results/test-reuslts__table.scss ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./public/src/Admin/admin.scss":
 /*!*************************************!*\
   !*** ./public/src/Admin/admin.scss ***!
@@ -454,18 +521,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************!*\
   !*** ./public/src/Admin/admin_catalog_menu.scss ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/Admin/components/test-reuslts__table.scss":
-/*!**************************************************************!*\
-  !*** ./public/src/Admin/components/test-reuslts__table.scss ***!
-  \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -597,14 +652,15 @@ var __webpack_exports__ = {};
   !*** ./public/src/Admin/admin.js ***!
   \***********************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _admin_main_menu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin_main_menu */ "./public/src/Admin/admin_main_menu.js");
+/* harmony import */ var _components_main_menu_admin_main_menu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/main-menu/admin_main_menu */ "./public/src/Admin/components/main-menu/admin_main_menu.js");
 /* harmony import */ var _admin_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admin.scss */ "./public/src/Admin/admin.scss");
 /* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
 /* harmony import */ var _admin_catalog_menu_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./admin_catalog_menu.scss */ "./public/src/Admin/admin_catalog_menu.scss");
 /* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
-/* harmony import */ var _components_test_reuslts_table_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/test-reuslts__table.scss */ "./public/src/Admin/components/test-reuslts__table.scss");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _model_cache__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./model/cache */ "./public/src/Admin/model/cache.js");
+/* harmony import */ var _CRM_test_results_test_reuslts_table_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CRM/test_results/test-reuslts__table.scss */ "./public/src/Admin/CRM/test_results/test-reuslts__table.scss");
+/* harmony import */ var _CRM_test_results_test_results__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CRM/test_results/test_results */ "./public/src/Admin/CRM/test_results/test_results.js");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _model_cache__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/cache */ "./public/src/Admin/model/cache.js");
 
 
 
@@ -613,7 +669,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.clearCache').on('click', _model_cache__WEBPACK_IMPORTED_MODULE_7__._cache.clearCache);
+
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.clearCache').on('click', _model_cache__WEBPACK_IMPORTED_MODULE_8__._cache.clearCache);
 })();
 
 /******/ })()

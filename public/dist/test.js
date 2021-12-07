@@ -448,13 +448,17 @@ __webpack_require__.r(__webpack_exports__);
 
 const _test = {
   markCurrentInMenu: () => {
-    let currentTestId = +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].getAttribute('value');
-    let menuItemCollection = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.accordion a').el;
-    Array.from(menuItemCollection).filter(a => {
-      if (+a.dataset.id === currentTestId) {
-        a.classList.add('current');
-      }
-    });
+    let currentTestId = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0];
+
+    if (currentTestId) {
+      currentTestId = +currentTestId.getAttribute('value');
+      let menuItemCollection = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.accordion a').el;
+      Array.from(menuItemCollection).filter(a => {
+        if (+a.dataset.id === currentTestId) {
+          a.classList.add('current');
+        }
+      });
+    }
   },
   nextQ: () => {
     let current = _test.currentQ();
