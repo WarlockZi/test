@@ -1,7 +1,10 @@
 import './accordion.scss'
 import {$} from '../../common'
+import showCustomMenu from "./customMenu/customMenu";
 
 $('label').on('click', handle)
+
+window.oncontextmenu = showCustomMenu
 
 
 function handle(e) {
@@ -9,6 +12,7 @@ function handle(e) {
   let checkbox = e.target.previousSibling
   let parent = checkbox.closest('ul')
   let ul = checkbox.nextSibling.nextSibling
+
 
   if (checkbox.checked) {
     slideUp(ul, 0,)
@@ -22,7 +26,7 @@ function handle(e) {
 
 function increaseParent(parent, height) {
   if (!parent.classList.contains('accordion')) {
-    let final = height+ parseInt(parent.style.maxHeight)
+    let final = height + parseInt(parent.style.maxHeight)
     parent.style.maxHeight = final + "px";
   }
 }
