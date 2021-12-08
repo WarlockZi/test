@@ -1280,8 +1280,7 @@ textarea:focus,
   align-items: center;
   width: 100%;
   margin: auto;
-  justify-content: flex-start;
-  max-width: 1310px; }
+  justify-content: flex-start; }
   @media (max-width: 600px) {
     .admin-header__info {
       padding: 0; } }

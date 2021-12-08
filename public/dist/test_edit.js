@@ -895,9 +895,12 @@ async function fetchW(url, Obj) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _accordion_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./accordion.scss */ "./public/src/components/accordion/accordion.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+/* harmony import */ var _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./customMenu/customMenu */ "./public/src/components/accordion/customMenu/customMenu.js");
+
 
 
 (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle);
+window.oncontextmenu = _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default;
 
 function handle(e) {
   let checkbox = e.target.previousSibling;
@@ -951,6 +954,33 @@ function slideUp(ul, interval, callback) {
   if (callback) {
     callback();
   }
+}
+
+/***/ }),
+
+/***/ "./public/src/components/accordion/customMenu/customMenu.js":
+/*!******************************************************************!*\
+  !*** ./public/src/components/accordion/customMenu/customMenu.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ showCustomMenu)
+/* harmony export */ });
+function showCustomMenu(e) {
+  if (e.which == 3) {
+    e.target.append(render());
+  }
+
+  return false;
+}
+
+function render() {
+  let div = document.createElement('div');
+  div.classList.add('update');
+  div.innerText = 'Изменить';
+  return div;
 }
 
 /***/ }),
