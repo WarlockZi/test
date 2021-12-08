@@ -899,8 +899,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle);
-window.oncontextmenu = _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default;
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle); // window.oncontextmenu = showCustomMenu
 
 function handle(e) {
   let checkbox = e.target.previousSibling;
