@@ -354,6 +354,9 @@
   @media (max-width: 800px) {
     .accordion {
       max-width: 100%; } }
+  .accordion .test-edit__accordion {
+    display: flex;
+    flex-flow: column; }
   .accordion .update {
     position: absolute;
     background: aqua;

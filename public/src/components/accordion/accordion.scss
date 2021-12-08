@@ -8,7 +8,10 @@
   @include _800 {
     max-width: 100%;
   }
-
+  .test-edit__accordion{
+    display: flex;
+    flex-flow: column;
+  }
   .update {
     position: absolute;
     background: aqua;
