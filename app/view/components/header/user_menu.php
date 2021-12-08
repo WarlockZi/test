@@ -21,15 +21,16 @@
 	<div class="nav">
 		<a href="/user/edit">Изменить свой профиль</a>
 		<a href="/user/cabinet">Личный кабинет</a>
-		<?= (in_array('1', $user['rights']) || SU) ? // редактировать
-			'<a href="/adminsc/test/edit/1">Редактировать тесты</a>
-			<a href="/adminsc/freetest/edit/41">Редактировать свободный тест</a>' : ''
-		?>
 
-		<?= in_array('2', $user['rights']) ? // проходить
-			'<a href="/test/1">Проходить тесты</a>
-			<a href="/freetest/41">Свободный тест</a>' : '';
-		?>
+		<? if (in_array('1', $user['rights']) || SU): ?>  // проходить
+<!--			<a href="/adminsc/test/edit/1">Редактировать тесты</a>-->
+<!--			<a href="/adminsc/freetest/edit/41">Редактировать свободный тест</a>-->
+		<? endif; ?>
+
+		<? if (in_array('2', $user['rights'])): ?>  // проходить
+			<a href="/test/1">Проходить тесты</a>
+			<!--			<a href="/freetest/41">Свободный тест</a>-->
+		<? endif; ?>
 
 		<?= in_array('3', $user['rights']) || SU ?
 			'<a href="/adminsc">Admin</a>' : ''; // Admin

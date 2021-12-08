@@ -1018,7 +1018,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle); // window.oncontextmenu = showCustomMenu
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion a').on('click', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion a').on('dblclick', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion label').on('dblclick', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
 
 function handle(e) {
   let checkbox = e.target.previousSibling;
@@ -1086,17 +1089,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ showCustomMenu)
 /* harmony export */ });
-function showCustomMenu(e) {
-  if (e.which == 3) {
-    e.target.append(render());
-  }
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common */ "./public/src/common.js");
 
-  return false;
+function showCustomMenu(e) {
+  render(e); //
+  // if (e.type === 'dblclick') {
+  //   let contextmenu = $('.accordion .update').el[0]
+  //   if (contextmenu) contextmenu.remove()
+  //   e.target.append(render(e))
+  //   return false
+  // }
+  // if (e.target.tagName === 'A'&& e.type === 'click') {
+  //   e.preventDefault()
+  // }
 }
 
-function render() {
-  let div = document.createElement('div');
+function render(e) {
+  let div = document.createElement('a');
   div.classList.add('update');
+  div.href = '/adminsc/test/update/8';
   div.innerText = 'Изменить';
   return div;
 }

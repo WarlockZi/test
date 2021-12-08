@@ -47,7 +47,7 @@ class Accordion extends Model
 				"<label for={$item['id']}>{$item['test_name']}</label>".
 				"";
 				}
-		return "<li><a data-id={$item['id']} class='level{$lev}' href='{$item['id']}' title={$item['test_name']}>" .
+		return "<li><a data-id={$item['id']} class='level{$lev}' href='/adminsc/test/edit/{$item['id']}' title={$item['test_name']}>" .
 			"{$item['test_name']} </a>"
 			;
 	}
