@@ -4,7 +4,7 @@ import showCustomMenu from "./customMenu/customMenu";
 
 $('label').on('click', handle)
 
-window.oncontextmenu = showCustomMenu
+// window.oncontextmenu = showCustomMenu
 
 
 function handle(e) {
