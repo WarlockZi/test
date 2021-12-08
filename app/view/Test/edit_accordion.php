@@ -4,5 +4,5 @@ $menu = new Accordion([
 	'model' => 'test',
 	'class' => 'accordion',
 ]);
-echo $menu->output();
-?>
+echo $menu->output(); ?>
+

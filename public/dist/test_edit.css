@@ -494,7 +494,8 @@ footer {
   box-shadow: 0 2px 4px 0 #316358;
   transition: box-shadow 100ms;
   display: flex;
-  justify-content: center; }
+  justify-content: center;
+  z-index: 1; }
   .test-edit-menu__add-bttn:hover {
     box-shadow: none; }
   .test-edit-menu__add-bttn:hover > .test-edit-menu__add-bttn-wrap {
@@ -1773,6 +1774,9 @@ span[contenteditable]:hover,
   @media (max-width: 800px) {
     .accordion {
       max-width: 100%; } }
+  .accordion .test-edit__accordion {
+    display: flex;
+    flex-flow: column; }
   .accordion .update {
     position: absolute;
     background: aqua;

@@ -87,6 +87,7 @@
   transition: box-shadow 100ms;
   display: flex;
   justify-content: center;
+  z-index: 1;
 
   &:hover {
     box-shadow: none;
