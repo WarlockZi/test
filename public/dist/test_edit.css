@@ -1779,9 +1779,17 @@ span[contenteditable]:hover,
     flex-flow: column; }
   .accordion .update {
     position: absolute;
-    background: aqua;
-    top: 10px;
-    padding: 10px; }
+    background: white;
+    top: -100%;
+    color: #4d5158;
+    right: 0px;
+    padding: 10px;
+    border: 1px solid #4d5158;
+    border-radius: 5px; }
+    .accordion .update:after {
+      display: none; }
+    .accordion .update:before {
+      display: none; }
   .accordion ul {
     /* by default hide all sub menus */
     overflow: hidden;

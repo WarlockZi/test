@@ -14,9 +14,19 @@
   }
   .update {
     position: absolute;
-    background: aqua;
-    top: 10px;
+    background: white;
+    top: -100%;
+    color: #4d5158;
+    right: 0px;
     padding: 10px;
+    border: 1px solid #4d5158;
+    border-radius: 5px;
+    &:after{
+      display: none;
+    }
+    &:before{
+      display: none;
+    }
   }
 
   min-width: 250px;

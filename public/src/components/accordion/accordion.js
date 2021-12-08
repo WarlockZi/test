@@ -1,10 +1,12 @@
 import './accordion.scss'
-import {$} from '../../common'
+import {$, addTooltip} from '../../common'
 import showCustomMenu from "./customMenu/customMenu";
 
 $('label').on('click', handle)
 
-// window.oncontextmenu = showCustomMenu
+$('.accordion a').on('click', showCustomMenu)
+$('.accordion a').on('dblclick', showCustomMenu)
+$('.accordion label').on('dblclick', showCustomMenu)
 
 
 function handle(e) {
