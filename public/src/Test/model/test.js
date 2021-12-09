@@ -90,7 +90,7 @@ export const _test = {
   serverModel: () => {
     return {
       id: +window.location.href.split('/').pop(),
-      test_name: $('#test_name').text(),
+      test_name: $('#test_name').el[0].value,
       enable: +$('#enable').el[0].checked,
       isTest: +$('[isTest]').el[0].getAttribute('isTest'),
       parent: $('select').selectedIndexValue(),

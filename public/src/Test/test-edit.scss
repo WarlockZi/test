@@ -1,6 +1,7 @@
 @import "./test-edit-menu";
 @import "../var";
 @import "../mixin_media";
+@import "../components/input/input";
 
 @mixin test-edit__act-button {
   position: relative;
@@ -27,6 +28,7 @@
   flex-flow: column;
   display: flex;
   flex: 1 1 auto;
+  min-height: 100%;
 }
 
 .question__create-button {
