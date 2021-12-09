@@ -532,7 +532,7 @@ const _test = {
   serverModel: () => {
     return {
       id: +window.location.href.split('/').pop(),
-      test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').text(),
+      test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#test_name').el[0].value,
       enable: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#enable').el[0].checked,
       isTest: +(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[isTest]').el[0].getAttribute('isTest'),
       parent: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('select').selectedIndexValue()

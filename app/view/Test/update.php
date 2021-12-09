@@ -18,9 +18,24 @@
 
 	<div class="test-edit__content">
 		<div class="test-name">Изменение <?= $t ? 'теста' : 'папки' ?></div>
+
+
+		<div class="centered">
+			<div class="group">
+				<input type="text" class="field" id="test_name" value="<?= $test['test_name'] ?>" required>
+				<label for="test_name">Название</label>
+				<div class="bar"></div>
+			</div>
+		</div>
+
+
 		<div class="test-path-add__table">
-			<div>Название <?= $t ? 'теста' : 'папки' ?></div>
-			<div id="test_name" class="field" contenteditable="true"><?= $test['test_name'] ?></div>
+
+
+
+<!--			<div>Название --><?//= $t ? 'теста' : 'папки' ?><!--</div>-->
+<!--			<div id="test_name" class="field" contenteditable="true">--><?//= $test['test_name'] ?><!--</div>-->
+
 			<div>Папка</div>
 
 			<select>
