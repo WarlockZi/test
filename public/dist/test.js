@@ -1018,9 +1018,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion a').on('click', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion a').on('dblclick', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle); // $('.accordion a').on('click', showCustomMenu)
+
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion li').on('dblclick', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
 (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion label').on('dblclick', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
 
 function handle(e) {
@@ -1092,16 +1092,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common */ "./public/src/common.js");
 
 function showCustomMenu(e) {
-  render(e); //
-  // if (e.type === 'dblclick') {
-  //   let contextmenu = $('.accordion .update').el[0]
-  //   if (contextmenu) contextmenu.remove()
-  //   e.target.append(render(e))
-  //   return false
-  // }
-  // if (e.target.tagName === 'A'&& e.type === 'click') {
-  //   e.preventDefault()
-  // }
+  let li = e.target;
+  let actions = render(e);
+
+  if (e.type === 'dblclick') {
+    let contextmenu = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.accordion .update').el[0];
+    if (contextmenu) contextmenu.remove();
+    e.target.append(render(e));
+    return false;
+  }
+
+  if (e.target.tagName === 'A' && e.type === 'click') {
+    e.preventDefault();
+  }
 }
 
 function render(e) {

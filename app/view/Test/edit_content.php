@@ -8,6 +8,7 @@
 					<p class="test-name"
 					   value="<?= $_REQUEST['id'] ?? $test['id'] ?>"><?= $_REQUEST['name'] ?? $test['test_name'] ?>
 					</p>
+					<a class="test-edit__test-settings" href="/adminsc/test/update/<?= $_REQUEST['id'] ?? $test['id'] ?>">Изменить</a>
 				<? endif; ?>
 			</div>
 

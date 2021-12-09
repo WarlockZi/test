@@ -4,8 +4,8 @@ import showCustomMenu from "./customMenu/customMenu";
 
 $('label').on('click', handle)
 
-$('.accordion a').on('click', showCustomMenu)
-$('.accordion a').on('dblclick', showCustomMenu)
+// $('.accordion a').on('click', showCustomMenu)
+$('.accordion li').on('dblclick', showCustomMenu)
 $('.accordion label').on('dblclick', showCustomMenu)
 
 
