@@ -8,6 +8,7 @@
 }
 .test-do__buttons {
   display: flex;
+  gap: 10px;
 
   button {
     @include test__button;

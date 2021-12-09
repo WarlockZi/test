@@ -238,30 +238,6 @@ function addTooltip(args) {
     }, [args])
 }
 
-function navigate(str) {
-    switch (true) {
-        case /\/adminsc\/test/.test(str):
-            $('.module.test').addClass('activ')
-            break;
-        case /\/adminsc\/settings/.test(str):
-        case /\/adminsc\/Sitemap/.test(str):
-            $('.module.settings').addClass('activ')
-            break;
-        case /\/adminsc\/crm/.test(str):
-            $('.module.crm').addClass('activ')
-            break;
-        case /\/adminsc\/catalog/.test(str):
-            $('.module.catalog').addClass('activ')
-            break;
-        case /\/adminsc\/test/.test(str):
-            $('.module.test').addClass('activ')
-            break;
-        default:
-            $('.module.home').addClass('activ')
-            break;
-    }
-}
-
 class test_delete_button {
     constructor(elem) {
         if (!elem) return
@@ -327,4 +303,4 @@ async function fetchW(url, Obj) {
     return prom
 }
 
-export {navigate, addTooltip, popup, test_delete_button, post, get, uniq, validate, $, fetchWrap, fetchW}
+export {addTooltip, popup, test_delete_button, post, get, uniq, validate, $, fetchWrap, fetchW}

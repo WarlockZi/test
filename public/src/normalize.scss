@@ -13,8 +13,8 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
-  padding: 0 calc(25px - (100vw - 100%)) 0 0;
-  width: 100%;
+  padding: 0 calc(14px - (100vw - 100%)) 0 0;
+  //width: 100%;
   @include _400{
     padding: 0 ;
   }

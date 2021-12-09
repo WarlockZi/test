@@ -2,78 +2,81 @@
 
 
 
-.test-edit-menu__params {
-  display: flex;
-  justify-content: space-around;
-  position: relative;
-  align-items: center;
-  color: #ffffff;
-  padding: 7px;
-  width: 16px;
-  cursor: pointer;
-}
+//.test-edit-menu__params {
+//  display: flex;
+//  justify-content: space-around;
+//  position: relative;
+//  align-items: center;
+//  color: #ffffff;
+//  padding: 7px;
+//  width: 16px;
+//  cursor: pointer;
+//}
+//
+//.test-edit-menu__test-name {
+//  display: flex;
+//  align-items: center;
+//  flex: 1;
+//  padding: 7px 14px 7px 7px;
+//  font-size: .7rem;
+//  font-weight: bold;
+//  text-transform: uppercase;
+//  min-width: 40px;
+//  max-width: 190px;
+//  color: #ffffff;
+//
+//}
+//
+//
+//.test-edit-menu {
+//  max-width: 170px;
+//
+//  .menu {
+//    width: 100%;
+//    flex: 1;
+//    z-index: 1;
+//    align-self: flex-start;
+//  }
+//
+//  li {
+//    display: flex;
+//    position: relative;
+//    border-bottom: 1px solid #b7b7b7;
+//    transition: 0.5s all;
+//    justify-content: flex-end;
+//    background-color: $color-gray-max;
+//
+//    &:hover {
+//      background-color: $color-gray-max-hover;
+//    }
+//  }
+//
+//  .vert-menu__list {
+//    background-color: $color-gray-mid;
+//
+//    &:hover {
+//      background-color: $color-gray-mid-hover;
+//    }
+//  }
+//
+//  .drop {
+//    background: #4e4e4e;
+//    cursor: pointer;
+//    padding: 9px 0 9px 9px;
+//  }
+//
+//  .vert-menu__list:hover > .vert-menu__drop {
+//    opacity: 1;
+//    top: 0;
+//    z-index: 1;
+//  }
+//
+//
+//}
 
-.test-edit-menu__test-name {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  padding: 7px 14px 7px 7px;
-  font-size: .7rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  min-width: 40px;
-  max-width: 190px;
-  color: #ffffff;
-
-}
 
 
-.test-edit-menu {
-  max-width: 170px;
-
-  .menu {
-    width: 100%;
-    flex: 1;
-    z-index: 1;
-    align-self: flex-start;
-  }
-
-  li {
-    display: flex;
-    position: relative;
-    border-bottom: 1px solid #b7b7b7;
-    transition: 0.5s all;
-    justify-content: flex-end;
-    background-color: $color-gray-max;
-
-    &:hover {
-      background-color: $color-gray-max-hover;
-    }
-  }
-
-  .vert-menu__list {
-    background-color: $color-gray-mid;
-
-    &:hover {
-      background-color: $color-gray-mid-hover;
-    }
-  }
-
-  .drop {
-    background: #4e4e4e;
-    cursor: pointer;
-    padding: 9px 0 9px 9px;
-  }
-
-  .vert-menu__list:hover > .vert-menu__drop {
-    opacity: 1;
-    top: 0;
-    z-index: 1;
-  }
-
-
-}
-
+/// Test edit menu Add test/path button
 .test-edit-menu__add-bttn {
   position: relative;
   color: #fff;
@@ -103,14 +106,14 @@
   display: flex;
   position: absolute;
   flex-flow: column;
-  top: 70%;
+  top: -7px;
   left: 0;
   opacity: 0;
-  transition: opacity 400ms, top 200ms;
   width: 100%;
   background-color: white;
   color: black;
   box-shadow: 0 2px 4px 0 #316358;
+  transition: opacity 400ms, top 200ms;
 }
 
 .test-edit-menu__add-bttn-test,

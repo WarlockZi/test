@@ -1,25 +1,25 @@
 import {$} from "../../../common";
 
 export default function showCustomMenu(e) {
-  let li = e.target
-  let actions = render(e)
+  $remove()
+  let el = e.target
+  el.append(render(e))
+  el.addEventListener('mouseleave', $remove.bind(null, this))
 
-  if (e.type === 'dblclick') {
-    let contextmenu = $('.accordion .update').el[0]
-    if (contextmenu) contextmenu.remove()
-    e.target.append(render(e))
-    return false
-  }
-  if (e.target.tagName === 'A'&& e.type === 'click') {
-    e.preventDefault()
-  }
+}
+
+function $remove() {
+  let updates = document.querySelectorAll('.accordion .update')
+  updates.forEach(el => el.remove())
+
 
 }
 
 function render(e) {
   let div = document.createElement('a')
+  let id =  e.target.dataset.id??e.target.getAttribute('for')
   div.classList.add('update')
-  div.href = '/adminsc/test/update/8'
-  div.innerText = 'Изменить'
+  div.href = `/adminsc/test/update/${id}`
+  // div.innerText = 'Изменить'
   return div
 }

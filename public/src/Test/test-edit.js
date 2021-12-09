@@ -16,10 +16,11 @@ import {_answer} from "./model/answer"
 import {sortable} from "../components/sortable"
 
 import '../components/accordion/accordion'
+import '../Admin/components/main-menu/admin_main_menu'
 
 _test.markCurrentInMenu()
 
-navigate(window.location.pathname)
+// navigate(window.location.pathname)
 sortable.connect('.questions')
 
 // при создании нового теста показать пустой вопрос
