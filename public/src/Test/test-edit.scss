@@ -260,7 +260,6 @@ section {
 }
 
 
-
 .list {
   display: flex;
   flex-flow: column;
@@ -274,14 +273,23 @@ section {
 .test-name {
   text-transform: uppercase;
   font-weight: 800;
-  margin: 0px 0 20px 30px;
+  margin: 0;
   padding: 5px 0;
   color: #36393e;
 }
+
 .test-edit__title {
   display: flex;
   flex-wrap: wrap;
   position: relative;
+  margin: 0px 0 20px 30px;
+
+  .test-edit__test-settings {
+    padding: 7px 8px;
+    background: #1bbc9b;
+    color: white;
+    margin-left: 10px;
+  }
 }
 
 
