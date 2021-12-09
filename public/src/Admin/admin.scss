@@ -64,20 +64,20 @@ td a {
     padding: 3px 8px;
 }
 
-.work-area {
-    display: flex;
-    flex-flow: column;
-}
+//.work-area {
+//    display: flex;
+//    flex-flow: column;
+//}
 
-.work-middle {
-    padding: 5px 35px;
-    display: flex;
-    flex-flow: column;
-}
+//.work-middle {
+//    padding: 5px 35px;
+//    display: flex;
+//    flex-flow: column;
+//}
 
-.work-middle button {
-    margin: 10px 0;
-}
+//.work-middle button {
+//    margin: 10px 0;
+//}
 
 
 .right-check {
@@ -241,7 +241,7 @@ input {
     flex-flow: nowrap;
     max-width: 95vw;
     flex: 1 0 auto;
-    margin-top: -20px;
+    margin-top: 0px;
 }
 
 
@@ -249,14 +249,14 @@ input {
         padding: 0 0 0 5px;
 }*/
 
-.clear-cache {
-    display: block;
-    width: 20px;
-    height: 20px;
-    background-color: slategray;
-    border-radius: 3px;
-    margin: auto 0;
-}
+//.clear-cache {
+//    display: block;
+//    width: 20px;
+//    height: 20px;
+//    background-color: slategray;
+//    border-radius: 3px;
+//    margin: auto 0;
+//}
 
 .admin-actions label a {
     padding: 3px;
@@ -296,14 +296,7 @@ input {
     padding: 10px;
 }
 
-.adm-menu {
-    display: flex;
-    flex-flow: column;
-    width: 71px;
-    font-size: 8px;
-    align-items: center;
-    background-color: #8a92a0;
-}
+
 
 
 .add-prop {
@@ -378,18 +371,18 @@ input {
     transition: .1s;
 }
 
-.clear {
-    border-top: 1px solid #ddd;
-    font-weight: 600;
-    text-align: center;
-    padding: 3px 6px;
-    color: #6b6b6b;
-}
-
-.clear:hover {
-    color: #fff;
-    background: #4d5158;
-}
+//.clear {
+//    border-top: 1px solid #ddd;
+//    font-weight: 600;
+//    text-align: center;
+//    padding: 3px 6px;
+//    color: #6b6b6b;
+//}
+//
+//.clear:hover {
+//    color: #fff;
+//    background: #4d5158;
+//}
 
 
 

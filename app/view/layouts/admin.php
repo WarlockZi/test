@@ -15,9 +15,9 @@
 <body>
 
 		<? include_once ROOT . '/app/view/components/header/top_admin.php'; ?>
-	<header>
-		<? include_once ROOT . '/app/view/components/header/admin_header.php'; ?>
-	</header>
+<!--	<header>-->
+<!--		--><?// include_once ROOT . '/app/view/components/header/admin_header.php'; ?>
+<!--	</header>-->
 
 	<div class="adm-wrap">
 

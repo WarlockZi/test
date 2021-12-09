@@ -632,7 +632,6 @@ const _test = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "navigate": () => (/* binding */ navigate),
 /* harmony export */   "addTooltip": () => (/* binding */ addTooltip),
 /* harmony export */   "popup": () => (/* binding */ popup),
 /* harmony export */   "test_delete_button": () => (/* binding */ test_delete_button),
@@ -905,35 +904,6 @@ function addTooltip(args) {
   }, [args]);
 }
 
-function navigate(str) {
-  switch (true) {
-    case /\/adminsc\/test/.test(str):
-      $('.module.test').addClass('activ');
-      break;
-
-    case /\/adminsc\/settings/.test(str):
-    case /\/adminsc\/Sitemap/.test(str):
-      $('.module.settings').addClass('activ');
-      break;
-
-    case /\/adminsc\/crm/.test(str):
-      $('.module.crm').addClass('activ');
-      break;
-
-    case /\/adminsc\/catalog/.test(str):
-      $('.module.catalog').addClass('activ');
-      break;
-
-    case /\/adminsc\/test/.test(str):
-      $('.module.test').addClass('activ');
-      break;
-
-    default:
-      $('.module.home').addClass('activ');
-      break;
-  }
-}
-
 class test_delete_button {
   constructor(elem) {
     if (!elem) return;
@@ -1018,10 +988,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle); // $('.accordion a').on('click', showCustomMenu)
-
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion li').on('dblclick', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion label').on('dblclick', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion a').on('mouseenter', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion label').on('mouseenter', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
 
 function handle(e) {
   let checkbox = e.target.previousSibling;
@@ -1092,26 +1061,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common */ "./public/src/common.js");
 
 function showCustomMenu(e) {
-  let li = e.target;
-  let actions = render(e);
+  $remove();
+  let el = e.target;
+  el.append(render(e));
+  el.addEventListener('mouseleave', $remove.bind(null, this));
+}
 
-  if (e.type === 'dblclick') {
-    let contextmenu = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.accordion .update').el[0];
-    if (contextmenu) contextmenu.remove();
-    e.target.append(render(e));
-    return false;
-  }
-
-  if (e.target.tagName === 'A' && e.type === 'click') {
-    e.preventDefault();
-  }
+function $remove() {
+  let updates = document.querySelectorAll('.accordion .update');
+  updates.forEach(el => el.remove());
 }
 
 function render(e) {
   let div = document.createElement('a');
+  let id = e.target.dataset.id ?? e.target.getAttribute('for');
   div.classList.add('update');
-  div.href = '/adminsc/test/update/8';
-  div.innerText = 'Изменить';
+  div.href = `/adminsc/test/update/${id}`; // div.innerText = 'Изменить'
+
   return div;
 }
 

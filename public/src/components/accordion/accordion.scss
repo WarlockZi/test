@@ -14,13 +14,12 @@
   }
   .update {
     position: absolute;
-    background: white;
-    top: -100%;
-    color: #4d5158;
-    right: 0px;
-    padding: 10px;
+    top: 16%;
+    right: 0;
+    padding: 11px;
     border: 1px solid #4d5158;
     border-radius: 5px;
+    background: url("../icons/edit.svg") no-repeat;
     &:after{
       display: none;
     }
@@ -45,7 +44,7 @@
 
   li {
     user-select: none;
-    //position: relative;
+    position: relative;
     //display: flex;
 
     //.accordion__test-settings{

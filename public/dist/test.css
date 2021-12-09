@@ -17,7 +17,8 @@
   background-color: #d8d8d8 !important; }
 
 .test-do__buttons {
-  display: flex; }
+  display: flex;
+  gap: 10px; }
   .test-do__buttons button {
     justify-content: center;
     padding: 10px;
@@ -359,13 +360,12 @@
     flex-flow: column; }
   .accordion .update {
     position: absolute;
-    background: white;
-    top: -100%;
-    color: #4d5158;
-    right: 0px;
-    padding: 10px;
+    top: 16%;
+    right: 0;
+    padding: 11px;
     border: 1px solid #4d5158;
-    border-radius: 5px; }
+    border-radius: 5px;
+    background: url(/public/dist/02f2a10a38a5a9c5bd7c.svg) no-repeat; }
     .accordion .update:after {
       display: none; }
     .accordion .update:before {
@@ -376,7 +376,8 @@
     max-height: 0;
     transition: max-height .1s; }
   .accordion li {
-    user-select: none; }
+    user-select: none;
+    position: relative; }
   .accordion input[type=checkbox] {
     position: absolute;
     opacity: 0; }
@@ -573,8 +574,7 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
-  padding: 0 calc(25px - (100vw - 100%)) 0 0;
-  width: 100%; }
+  padding: 0 calc(14px - (100vw - 100%)) 0 0; }
   @media (max-width: 400px) {
     body {
       padding: 0; } }
