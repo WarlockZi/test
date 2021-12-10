@@ -29,11 +29,11 @@ abstract class Model
 		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
 	}
 
-	public function create($values=[])
+	public function create($values = [])
 	{
-	    if (isset($values['id']))unset($values['id']);
-	    if (isset($values['token']))unset($values['token']);
-		$values = $values?$values:$this->fillable;
+		if (isset($values['id'])) unset($values['id']);
+		if (isset($values['token'])) unset($values['token']);
+		$values = $values ? $values : $this->fillable;
 		if (isset($values['id'])) unset($values['id']);
 		$fields = implode(',', array_keys($values));
 		$param = array_values($values);
@@ -162,7 +162,7 @@ here;
 	}
 
 	public
-	function findAll($table='', $sort = '')
+	function findAll($table = '', $sort = '')
 	{
 		$sql = "SELECT * FROM " . ($table ?: $this->table) . ($sort ? " ORDER BY {$sort}" : "");
 		return $this->pdo->query($sql);
@@ -192,6 +192,7 @@ here;
 		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
 		return $this->pdo->query($sql, [$value]);
 	}
+
 	public
 	function findAllWhere($field, $value)
 	{
@@ -276,7 +277,7 @@ here;
 		$tree = [];
 		$data = $this->data;
 		foreach ($data as $id => &$node) {
-			if (array_key_exists('parent',$node) && !$node['parent']) {
+			if (array_key_exists('parent', $node) && !$node['parent']) {
 				$tree[$id] = &$node;
 			} elseif (isset($node['parent']) && $node['parent']) {
 				$data[$node['parent']]['childs'][$id] = &$node;

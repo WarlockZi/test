@@ -1,0 +1,23 @@
+.btnadd-user {
+  width: 205px;
+  height: 49px;
+}
+#users div[data-id] {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+#users div[data-id]:nth-child(odd) {
+  background-color: #f7f7f7;
+}
+//.confirm {
+//  text-align: center;
+//  width: 20px;
+//}
+.admin-content.btnadd-user,
+.admin-content.btnupdate-user {
+  width: 180px;
+  height: 27px;
+  margin: 24px;
+  justify-content: center;
+}

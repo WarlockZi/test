@@ -1,4 +1,4 @@
-import {post} from '../common'
+import {post} from '../../common'
 $(function () {
 
 $('#create_sitemap').on('click', function(){

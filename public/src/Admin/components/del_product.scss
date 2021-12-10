@@ -1,0 +1,20 @@
+.admin-product-edit {
+  display: flex;
+  flex-flow: column;
+  margin: 0 10px;
+}
+
+.admin-product-edit img {
+  max-height: 500px;
+  max-width: 400px;
+}
+
+td a {
+  border: 1px solid #949494;
+  padding: 3px 8px;
+}
+
+.products{
+  display: flex;
+  flex-wrap: wrap;
+}

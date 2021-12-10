@@ -1,3 +1,5 @@
+@import "../../../mixin_media";
+
 .adm-menu {
   display: flex;
   flex-flow: column;
@@ -5,6 +7,10 @@
   font-size: 8px;
   align-items: center;
   background-color: #8a92a0;
+  @include _600{
+    display: none;
+  }
+
 }
 
 .module {

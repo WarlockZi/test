@@ -190,7 +190,7 @@
 					<? else: ?>
 						<? if (isset($category['parent'])): ?> //чтобы добавить товар категория должна быть сохранена
 							<?= $ddProductButton ?>
-							<div class="products row">
+							<div class="products">
 								<? foreach ($category['children']['products'] as $product) : ?>
 									<a class="product w200" href="product?id=<?= $product['id'] ?>">
 										<div class="pic w200 h200">

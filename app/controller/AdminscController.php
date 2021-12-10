@@ -2,8 +2,9 @@
 
 namespace app\controller;
 
-use app\view\View;
 use app\core\App;
+use app\view\View;
+use app\view\widgets\Accordion\Accordion_sidebar;
 
 class AdminscController extends AppController
 {
@@ -102,6 +103,8 @@ class AdminscController extends AppController
 
 	public function actionIndex()
 	{
+
+//		$this->set(compact('sidebar'));
 		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
 

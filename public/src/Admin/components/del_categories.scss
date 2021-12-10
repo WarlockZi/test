@@ -1,0 +1,82 @@
+.column.categories {
+  align-items: flex-start;
+}
+
+.column.categories a.row span {
+  position: relative;
+  padding-left: 20px;
+}
+
+.column.categories a.row span:before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  display: block;
+  width: 0;
+  height: 0;
+  border-right: #343133 7px solid;
+  border-left: rgba(255, 255, 255, 0) 3px solid;
+  border-bottom: rgba(255, 255, 255, 0) 3px solid;
+  border-top: rgba(255, 255, 255, 0) 3px solid;
+  margin: 6px;
+}
+
+
+input[contenteditable],
+span[contenteditable],
+.category-properties select {
+  border: 1px solid transparent;
+  padding: 5px;
+  background-color: #fbfbfb;
+}
+
+input[contenteditable]:hover,
+span[contenteditable]:hover,
+.category-properties select:hover {
+  border-color: #ebf4f4;
+  box-shadow: 0 0 2px 2px #71ffff;
+  min-height: 18px;
+}
+.category-properties {
+  margin: 5px 0 5px 50px;
+}
+
+.properties {
+  padding: 5px;
+}
+
+.properties.column > select {
+  margin: 5px 0 5px 50px;
+}
+
+.cat-prop {
+  padding: 10px 0;
+  font-weight: 600;
+}
+
+
+.properties select {
+  margin: 5px 0;
+}
+
+.add-property select {
+}
+
+.add-property {
+  justify-content: flex-end;
+
+}
+
+.add-property span {
+  padding: 10px 10px 10px 0;
+}
+
+.lists {
+  height: 100%;
+  padding-top: 20px;
+  background-color: #fff;
+  display: flex;
+  flex-flow: column;
+}
+
+

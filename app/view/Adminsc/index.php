@@ -1,3 +1,4 @@
+<?//=$sidebar;?>
 <div class="adm-submenu">
 
 	<? if (in_array('4', $user['rights']) || SU):// SU ?>
@@ -7,6 +8,8 @@
 	<? endif; ?>
 
 </div>
+
+<? include ROOT.'/app/view/widgets/sidebar/sidebar.php'?>
 
 <div class="adm-content">
 	<div class="breadcrumbs-adm">
