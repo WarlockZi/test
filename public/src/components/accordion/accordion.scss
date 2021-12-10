@@ -6,7 +6,7 @@
 .test-edit__accordion {
   max-width: 250px;
   @include _800 {
-    max-width: 100%;
+    min-width: 100%;
   }
 }
 

@@ -21,14 +21,14 @@ body {
 
 }
 
-h1, h2 {
-  text-transform: uppercase;
-  color: #4e4e4e;
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  margin: 35px 0;
-}
+//h1, h2 {
+//  text-transform: uppercase;
+//  color: #4e4e4e;
+//  font-size: 1.4rem;
+//  font-weight: 600;
+//  letter-spacing: 1px;
+//  margin: 35px 0;
+//}
 
 p {
   letter-spacing: 1px;
@@ -51,13 +51,6 @@ textarea:focus,
   outline: none;
 }
 
-.column {
-  display: flex;
-  flex-flow: column;
-}
-.row{
-  display: flex
-}
 .flex1 {
   display: flex !important;
 }

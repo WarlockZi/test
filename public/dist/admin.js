@@ -483,6 +483,114 @@ async function fetchW(url, Obj) {
 
 /***/ }),
 
+/***/ "./public/src/components/accordion/accordion.js":
+/*!******************************************************!*\
+  !*** ./public/src/components/accordion/accordion.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _accordion_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./accordion.scss */ "./public/src/components/accordion/accordion.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+/* harmony import */ var _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./customMenu/customMenu */ "./public/src/components/accordion/customMenu/customMenu.js");
+
+
+
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion a').on('mouseenter', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion label').on('mouseenter', _customMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
+
+function handle(e) {
+  let checkbox = e.target.previousSibling;
+  let parent = checkbox.closest('ul');
+  let ul = checkbox.nextSibling.nextSibling;
+
+  if (checkbox.checked) {
+    slideUp(ul, 0);
+  } else {
+    parent.style.height = "auto";
+    let height = slideDown(ul, 0);
+    increaseParent(parent, height);
+    closeSiblings(parent);
+  }
+}
+
+function increaseParent(parent, height) {
+  if (!parent.classList.contains('accordion')) {
+    let final = height + parseInt(parent.style.maxHeight);
+    parent.style.maxHeight = final + "px";
+  }
+}
+
+function slideDown(ul, interval, callback) {
+  ul.style.maxHeight = ul.scrollHeight + "px";
+
+  if (callback) {
+    callback();
+  }
+
+  return ul.scrollHeight;
+}
+
+function closeSiblings(parent) {
+  Array.from(parent.children).map(el => {
+    let elArr = Array.from(el.children);
+    elArr.map(ch => {
+      if (ch.type && ch.type === 'checkbox' && ch.checked) {
+        let ul = ch.nextSibling.nextSibling;
+        slideUp(ul, 0, function () {
+          ch.checked = false;
+        });
+      }
+    });
+  });
+}
+
+function slideUp(ul, interval, callback) {
+  ul.style.maxHeight = 0 + "px";
+
+  if (callback) {
+    callback();
+  }
+}
+
+/***/ }),
+
+/***/ "./public/src/components/accordion/customMenu/customMenu.js":
+/*!******************************************************************!*\
+  !*** ./public/src/components/accordion/customMenu/customMenu.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ showCustomMenu)
+/* harmony export */ });
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common */ "./public/src/common.js");
+
+function showCustomMenu(e) {
+  $remove();
+  let el = e.target;
+  el.append(render(e));
+  el.addEventListener('mouseleave', $remove.bind(null, this));
+}
+
+function $remove() {
+  let updates = document.querySelectorAll('.accordion .update');
+  updates.forEach(el => el.remove());
+}
+
+function render(e) {
+  let div = document.createElement('a');
+  let id = e.target.dataset.id ?? e.target.getAttribute('for');
+  div.classList.add('update');
+  div.href = `/adminsc/test/update/${id}`; // div.innerText = 'Изменить'
+
+  return div;
+}
+
+/***/ }),
+
 /***/ "./public/src/components/header/header.js":
 /*!************************************************!*\
   !*** ./public/src/components/header/header.js ***!
@@ -549,6 +657,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************!*\
   !*** ./public/src/common.scss ***!
   \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/components/accordion/accordion.scss":
+/*!********************************************************!*\
+  !*** ./public/src/components/accordion/accordion.scss ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -673,9 +793,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
 /* harmony import */ var _admin_catalog_menu_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./admin_catalog_menu.scss */ "./public/src/Admin/admin_catalog_menu.scss");
 /* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
-/* harmony import */ var _CRM_test_results_test_results__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CRM/test_results/test_results */ "./public/src/Admin/CRM/test_results/test_results.js");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _model_cache__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./model/cache */ "./public/src/Admin/model/cache.js");
+/* harmony import */ var _components_accordion_accordion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/accordion/accordion */ "./public/src/components/accordion/accordion.js");
+/* harmony import */ var _CRM_test_results_test_results__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CRM/test_results/test_results */ "./public/src/Admin/CRM/test_results/test_results.js");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _model_cache__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/cache */ "./public/src/Admin/model/cache.js");
 
 
 
@@ -684,7 +805,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.clearCache').on('click', _model_cache__WEBPACK_IMPORTED_MODULE_7__._cache.clearCache);
+
+(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.clearCache').on('click', _model_cache__WEBPACK_IMPORTED_MODULE_8__._cache.clearCache);
 })();
 
 /******/ })()

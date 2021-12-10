@@ -350,7 +350,7 @@
   max-width: 250px; }
   @media (max-width: 800px) {
     .test-edit__accordion {
-      max-width: 100%; } }
+      min-width: 100%; } }
 
 .accordion {
   min-width: 250px;
@@ -582,14 +582,6 @@ body {
     body {
       padding: 0; } }
 
-h1, h2 {
-  text-transform: uppercase;
-  color: #4e4e4e;
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  margin: 35px 0; }
-
 p {
   letter-spacing: 1px; }
 
@@ -606,13 +598,6 @@ textarea,
 textarea:focus,
 .button:focus {
   outline: none; }
-
-.column {
-  display: flex;
-  flex-flow: column; }
-
-.row {
-  display: flex; }
 
 .flex1 {
   display: flex !important; }
