@@ -21,7 +21,8 @@
 
 	<div class="adm-wrap">
 
-		<? include ROOT . '/app/view/components/admin_menu/admin_menu.php'; ?>
+		<? include ROOT . '/app/view/components/admin_menu/admin_menu__accordion.php'; ?>
+<!--		--><?// include ROOT . '/app/view/components/admin_menu/admin_menu.php'; ?>
 
 		<?= $content ?>
 
