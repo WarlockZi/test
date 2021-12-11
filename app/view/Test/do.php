@@ -8,16 +8,14 @@
 
 			<div class="test-name" data-test-id=<?= $test['id'] ?>><?= $test['test_name']; ?></div>
 
-			<?=
-			$pagination;
-			$i = 1;
-			?>
+			<?= $pagination;
+			$i = 1; ?>
 
 
 			<div class="test-data">
 
 				<? foreach ($testData as $id_quest => $item): ?>
-					<div class="question" data-id="<? echo $id_quest; ?>" id="question-<?= $id_quest; ?>">
+					<div class="question" data-id="<?= $id_quest; ?>" id="question-<?= $id_quest; ?>">
 
 
 						<div class="q">
@@ -32,9 +30,7 @@
 							<? endif; ?>
 							<? unset($item[0]); ?>
 
-							<? foreach ($item
-
-							as $id_answer => $answer): ?>
+							<? foreach ($item as $id_answer => $answer): ?>
 							<? if (is_array($answer) and $id_answer !== 'correct_answer'): ?>
 						</div>
 
@@ -57,21 +53,19 @@
 				<? endforeach; ?>
 			</div>
 
-			<? include ROOT.'/app/view/components/test-do/test_edit_prev_next_buttons.php'?>
-
+			<? include ROOT . '/app/view/components/test-do/test_edit_prev_next_buttons.php' ?>
 
 
 			<a class="test-do__finish-btn" id="btnn" data-id="<?= $test['id']; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
 
 
-
-
 		<? else: ?>
+
+			<div class="info"><?= $info; ?></div>
 
 			<?= $error ?? ''; ?>
 
 		<? endif; ?>
-
 
 
 	</div>

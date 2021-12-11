@@ -1,7 +1,7 @@
 import './components/main-menu/admin_main_menu'
 import './admin.scss'
 import '../normalize.scss'
-import './admin_catalog_menu.scss'
+import './components/admin_catalog_menu.scss'
 import '../components/header/header'
 import '../components/accordion/accordion'
 

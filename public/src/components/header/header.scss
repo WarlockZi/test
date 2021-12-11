@@ -2,7 +2,8 @@
 @import "phone";
 @import "header-catalog-menu";
 
-@mixin header__info{
+
+@mixin header__info {
   padding: 12px 0 10px 0;
   display: flex;
   position: relative;
@@ -10,7 +11,7 @@
   align-items: center;
   width: 100%;
   margin: auto;
-  @include _600{
+  @include _600 {
     padding: 0;
     //flex-wrap: wrap;
   }
@@ -22,7 +23,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.admin-header__info{
+
+.admin-header__info {
   @include header__info;
   justify-content: flex-start;
   //max-width: 1310px;
@@ -39,29 +41,10 @@ header {
   flex-flow: column;
 }
 
+hr {
 
-
-@media only screen and (max-width: 400px) {
-}
-
-///* xs (<=543px) */
-@media (min-width: 401px) and (max-width: 575px) {
-}
-
-
-///* s (>=576 и <=767) */
-@media (min-width: 575px) and (max-width: 768px) {
-}
-
-///* m (>=768 и <=991) */
-@media (min-width: 768px) and (max-width: 991px) {
-}
-
-///* l (>=992 и <=1199) */
-@media (min-width: 992px) and (max-width: 1199px) {
-}
-
-
-///* xl (>=1200) */
-@media (min-width: 1200px) {
+  margin-top: 17px;
+  margin-bottom: 17px;
+  border: 0;
+  border-top: 1px solid #eee;
 }

@@ -2,7 +2,7 @@
 @import "../../mixin_media";
 
 
-.guest-menu{
+.guest-menu {
   display: none;
   flex-flow: column;
   bottom: -100%;
@@ -12,55 +12,67 @@
   right: 0;
   position: absolute;
   height: max-content;
-  box-shadow:  -1px 4px 20px 0px #1d7c68ab;
+  box-shadow: -1px 4px 20px 0px #1d7c68ab;
 
-  a{
+  a {
     color: $color-a;
     padding: 5px 10px;
 
-    &:hover{
+    &:hover {
       background-color: #e5e5e5;
     }
   }
 }
+//
+//.user-menu {
+//  display: flex;
+//  justify-content: flex-end;
+//  height: 100%;
+//  min-height: 25px;
+//  padding: 0 10px;
+//  position: relative;
+//  top: 0;
+//  cursor: pointer;
+//  z-index: 501;
+//  align-items: center;
+//  color: #ffffff;
+//
+//  &:hover {
+//    background-color: #818da2;
+//
+//    & > .guest-menu {
+//      display: flex;
+//    }
+//  }
+//
+//  .user-menu__icon {
+//    padding: 5px 16px;
+//    display: flex;
+//    width: 14px;
+//    height: 14px;
+//  }
+//}
 
 .user-menu {
-  display: flex;
-  justify-content: flex-end;
-  height: 100%;
-  min-height: 25px;
-  padding: 0 10px;
-  position: relative;
-  top: 0;
-  cursor: pointer;
-  z-index: 501;
-  align-items: center;
-  color: #ffffff;
-
-  &:hover{
-    background-color: #3da58f;
-
-    &>.guest-menu{
-      display: flex;
-    }
-  }
-
-  .user-menu__icon {
-    padding: 5px 16px;
-    display: flex;
-    width: 14px;
-    height: 14px;
-  }
-}
-
-.user-menu__FIO {
   position: relative;
   display: flex;
   align-items: center;
   padding: 0 10px;
   font-size: 12px;
   cursor: pointer;
-  color: #fff;
+  color: #2b303a;
+
+  &:hover {
+    color: #818da2;
+  }
+
+  img {
+    border: 2px solid #f5f5f5;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin: 6px;
+    width: 44px;
+  }
 
   &:after {
     content: '☰';
@@ -70,7 +82,7 @@
   }
 
   &:hover {
-    background-color: #3da58f;
+    background-color: #efefef;
   }
 
   &:hover > .nav {
@@ -90,11 +102,12 @@
   right: -1px;
   width: 280px;
   padding: 10px;
-  a{
-      padding: 5px 10px;
-      color: $color-a;
 
-    &:hover{
+  a {
+    padding: 5px 10px;
+    color: $color-a;
+
+    &:hover {
       background-color: #e5e5e5;
     }
   }

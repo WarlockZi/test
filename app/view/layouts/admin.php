@@ -31,13 +31,12 @@
 
 
 
-<div class="page-buffer"></div>
+<!--<div class="page-buffer"></div>-->
 
 </div>
 
 <footer></footer>
 
-	<!--	--><? //= include ROOT . '/app/view/components/icons/logo.php' ?>
 
 
 <? $this::getJS() ?>
