@@ -26,13 +26,13 @@ class TestController Extends AppController
 		View::setCss('test.css');
 	}
 
-	public function actionTree()
-	{
-		if ($data = $this->ajax) {
-			$table = $data['table'];
-			$menu = new tree(['table' => $table]);
-		}
-	}
+//	public function actionTree()
+//	{
+//		if ($data = $this->ajax) {
+//			$table = $data['table'];
+//			$menu = new tree(['table' => $table]);
+//		}
+//	}
 
 
 	public function actionShow()
@@ -106,17 +106,21 @@ class TestController Extends AppController
 
 	public function actionEdit()
 	{
-		$id = (int)$this->route['id'];
-		$test = App::$app->test->findOne($id);
-		if ($test) {
-			if (!$test['isTest']) {
-				$test['children'] = App::$app->test->getChildren($id);
+		$test = '';
+		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+		if ($id) {
+			$test = App::$app->test->findOne($id);
+			if ($test) {
+				if (!$test['isTest']) {
+					$test['children'] = App::$app->test->getChildren($id);
+				}
 			}
+			$testDataToEdit = App::$app->test->getTestData($id) ?? '';
+			unset ($testDataToEdit['correct_answers']);
+			$this->set(compact('testDataToEdit'));
 		}
-		$testDataToEdit = App::$app->test->getTestData($id) ?? '';
-		unset ($testDataToEdit['correct_answers']);
+		$this->set(compact('test'));
 
-		$this->set(compact('test', 'testDataToEdit'));
 		$this->layout = 'admin';
 		View::setJs('test_edit.js');
 		View::setCss('test_edit.css');
@@ -171,12 +175,13 @@ class TestController Extends AppController
 		}
 		return $mailsTo;
 	}
+
 	public function actionResultdelete($post)
 	{
-	    if ($id = $this->ajax['id']){
-		return App::$app->testresult->delete($id);
+		if ($id = $this->ajax['id']) {
+			return App::$app->testresult->delete($id);
 
-        }
+		}
 	}
 
 	private static function saveResultToDB($post)
@@ -256,24 +261,27 @@ class TestController Extends AppController
 
 	public function actionDo()
 	{
-		$this->layout = 'crm';
+		$pagination = '';
+		$testData = '';
+		$info = 'Система обучения. Выберите тест';
+		$testId = isset($this->route['alias']) ? (int)$this->route['alias'] : '';
 		$menuTestDo = $this->getMenu();
-		$testId = (int)$this->route['alias'];
-		$testData = App::$app->test->getTestData($testId, true);
-		$test = App::$app->test->findOne($testId);
-		$_SESSION['testData'] = $testData;
-		if ($testData === 0) {//  0 - это просто альтернатива FALSE это папка
-			$msg[] = 'Это папка! <a href = "/1">Перейти к тестам</a>';
-			$error = include ROOT . '/app/view/User/alert.php'; //
-			$this->set(compact('error', 'msg'));
-		} elseif ($testData === FALSE) {//Теста с таким номером нет
-			$error = '<H1>Теста с таким номером нет.</H1>';
-			$this->set(compact('error'));
+		$this->set(compact('info', 'menuTestDo'));
+		if ($testId) {
+			if (!$testData = App::$app->test->getTestData($testId, true)) {
+				$error = '<H1>Теста с таким номером нет.</H1>';
+				$this->set(compact('error'));
+			}
+			$test = App::$app->test->findOne($testId);
+			$this->set(compact('test'));
+			$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
+			unset($testData['correct_answers']);
+			$pagination = App::$app->test->pagination($testData, false);
 		}
-		$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
-		unset($testData['correct_answers']);
-		$pagination = App::$app->test->pagination($testData, false);
-		$this->set(compact('testData', 'test', 'pagination', 'menuTestDo'));
+
+		$this->set(compact('testData', 'pagination'));
+
+		$this->layout = 'crm';
 		View::setJs('test.js');
 		View::setCss('test.css');
 

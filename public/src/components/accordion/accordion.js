@@ -1,6 +1,6 @@
 import './accordion.scss'
 import {$, addTooltip} from '../../common'
-import showCustomMenu from "./customMenu/customMenu";
+import showCustomMenu from "./customContextMenu/customMenu";
 
 $('label').on('click', handle)
 
@@ -11,9 +11,9 @@ $('.accordion label').on('mouseenter', showCustomMenu)
 
 function handle(e) {
 
-  let checkbox = e.target.previousSibling
+  let checkbox = e.target.previousElementSibling
   let parent = checkbox.closest('ul')
-  let ul = checkbox.nextSibling.nextSibling
+  let ul = checkbox.nextElementSibling.nextElementSibling
 
 
   if (checkbox.checked) {
@@ -46,7 +46,7 @@ function closeSiblings(parent) {
       let elArr = Array.from(el.children)
       elArr.map((ch) => {
         if (ch.type && ch.type === 'checkbox' && ch.checked) {
-          let ul = ch.nextSibling.nextSibling
+          let ul = ch.nextElementSibling.nextElementSibling
           slideUp(ul, 0, function () {
             ch.checked = false
           })

@@ -10,6 +10,7 @@
 @import "components/admin-flex-table";
 @import "CRM/users";
 @import "components/del_product";
+@import "../components/neon";
 
 
 //.main {
@@ -34,7 +35,9 @@
 //}
 
 
-
+.accordion.sidebar{
+    max-width: 250px;
+}
 
 /*//////////////////////////////*/
 /*////////   TABLE USERS  /////////*/

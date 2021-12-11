@@ -15,19 +15,19 @@
 
 <? else: ?>
 
-<div class="user-menu__FIO">
-	<?= "{$user['surName']} {$user['name']}"; ?>
-
+<div class="user-menu">
+	<img src="/public/src/Admin/components/userPhoto.png" alt="">
+	<div class="user-menu__fio"><?= "{$user['surName']} {$user['name']}"; ?></div>
+	<hr>
 	<div class="nav">
 		<a href="/user/edit">Изменить свой профиль</a>
 		<a href="/user/cabinet">Личный кабинет</a>
 
-		<? if (in_array('1', $user['rights']) || SU): ?>  // проходить
-<!--			<a href="/adminsc/test/edit/1">Редактировать тесты</a>-->
-<!--			<a href="/adminsc/freetest/edit/41">Редактировать свободный тест</a>-->
+		<? if (in_array('1', $user['rights']) || SU): ?>
+
 		<? endif; ?>
 
-		<? if (in_array('2', $user['rights'])): ?>  // проходить
+		<? if (in_array('2', $user['rights'])): ?>
 			<a href="/test/1">Проходить тесты</a>
 			<!--			<a href="/freetest/41">Свободный тест</a>-->
 		<? endif; ?>
@@ -44,4 +44,5 @@
 			Выход
 		</a>
 	</div>
+</div>
 	<? endif; ?>
