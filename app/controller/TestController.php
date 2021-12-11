@@ -173,7 +173,10 @@ class TestController Extends AppController
 	}
 	public function actionResultdelete($post)
 	{
-		return App::$app->testresult->delete($testres);
+	    if ($id = $this->ajax['id']){
+		return App::$app->testresult->delete($id);
+
+        }
 	}
 
 	private static function saveResultToDB($post)
