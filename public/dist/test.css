@@ -344,12 +344,6 @@
   border-radius: 3px;
   outline: none; }
 
-.test-edit__accordion {
-  max-width: 250px; }
-  @media (max-width: 800px) {
-    .test-edit__accordion {
-      min-width: 100%; } }
-
 .accordion {
   min-width: 250px;
   display: flex;
@@ -412,7 +406,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%); }
-  .accordion label::before, .accordion label::after {
+  .accordion label::before {
     background-image: url(/public/dist/e8fc4c0fec5aea6367fd.svg);
     background-repeat: no-repeat; }
   .accordion label::before {
@@ -420,14 +414,6 @@
     left: 9px;
     background-position: 0 0;
     transform: translateY(-50%) rotate(-90deg); }
-  .accordion label::after {
-    /* folder icons */
-    left: 31px;
-    background-position: -16px 0; }
-  .accordion a::after {
-    /* image icon */
-    left: 18px;
-    background: url(/public/dist/e8fc4c0fec5aea6367fd.svg) no-repeat -48px 0; }
   .accordion input[type=checkbox]:checked + label::before {
     /* rotate arrow */
     transform: translateY(-50%);
@@ -508,6 +494,41 @@
   .accordion.animated label::before {
     /* this class is used if you're using jquery to animate the accordion */
     transition: transform .3s; }
+
+.test-edit__accordion {
+  max-width: 250px; }
+  @media (max-width: 800px) {
+    .test-edit__accordion {
+      min-width: 100%; } }
+
+.test-edit__accordion .accordion a::after {
+  /* image icon */
+  left: 18px;
+  background: url(/public/dist/e8fc4c0fec5aea6367fd.svg) no-repeat -48px 0; }
+
+.test-edit__accordion .accordion label::before, .test-edit__accordion .accordion label::after {
+  background-image: url(/public/dist/e8fc4c0fec5aea6367fd.svg);
+  background-repeat: no-repeat; }
+
+.test-edit__accordion .accordion label::before {
+  /* arrow icon */
+  left: 9px;
+  background-position: 0 0;
+  transform: translateY(-50%) rotate(-90deg); }
+
+.test-edit__accordion .accordion label::after {
+  /* folder icons */
+  left: 31px;
+  background-position: -16px 0; }
+
+.admin-layout__sidebar.accordion .fa {
+  margin-left: -40px;
+  padding-right: 12px; }
+
+.admin-layout__sidebar.accordion label::before {
+  /* arrow icon */
+  left: initial;
+  right: 12px; }
 
 .pagination {
   margin: 3px 0 3px;

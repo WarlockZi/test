@@ -1,15 +1,7 @@
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
 
-@import "../../components/fa/scss/fontawesome";
-//@import "../../components/fa/scss/regular";
-//@import "../../components/fa/scss/solid.scss";
-//@import "../../components/fa/scss/brands.scss";
-//@import "../../../../node_modules/@fortawesome/fontawesome-free/scss/solid";
-//@import "../../../../node_modules/@fortawesome/fontawesome-free/scss/regular";
-
-.ic:before {
-  content:'\f270';
-  width: 10px;
-  height: 10px;
-    //@extend .fa;
-    //@extend .fa-user;
-}
+@import './scss/fontawesome';
+@import './scss/regular';
