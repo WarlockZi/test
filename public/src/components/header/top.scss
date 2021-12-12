@@ -2,28 +2,26 @@
 @import "../../mixin_media";
 @import "user_menu";
 
-@mixin top-menu{
+@mixin top-menu {
   background: #fff;
   display: flex;
-  margin: 0 auto;
-  position: sticky;
-  top: 0px;
-  z-index: 1;
-  width: 100%;
+  justify-content: end;
+
 }
 
 .top-menu {
   @include top-menu;
   max-width: 1310px;
   justify-content: space-between;
-  @include _500{
+  @include _500 {
     justify-content: end;
   }
 }
-.admin-top-menu{
+
+.admin-layout__header {
   @include top-menu;
-  justify-content: flex-end;
-  @include _500{
+
+  @include _500 {
     justify-content: end;
   }
 }
@@ -31,7 +29,7 @@
 .contacts {
   align-self: center;
   margin-left: 50px;
-  @include _500{
+  @include _500 {
     display: none;
   }
 

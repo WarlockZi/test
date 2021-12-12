@@ -988,9 +988,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion a').on('mouseenter', _customContextMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion label').on('mouseenter', _customContextMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion label').on('click', handle);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-edit__accordion .accordion a').on('mouseenter', _customContextMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-edit__accordion .accordion label').on('mouseenter', _customContextMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
 
 function handle(e) {
   let checkbox = e.target.previousElementSibling;
@@ -1278,6 +1278,7 @@ function appendBlock() {
 
 function navInit() {
   let nav_buttons = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[data-pagination]').el;
+  if (!nav_buttons[0]) return false;
   Array.from(nav_buttons).map(el => {
     el.classList.remove('nav-active');
   });

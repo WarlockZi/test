@@ -25,7 +25,7 @@
   cursor: pointer;
   color: #2b303a; }
   .user-menu:hover {
-    color: #818da2; }
+    background-color: #fafafa; }
   .user-menu img {
     border: 2px solid #f5f5f5;
     border-radius: 50%;
@@ -37,8 +37,6 @@
     display: block;
     padding: 3px 8px;
     align-self: center; }
-  .user-menu:hover {
-    background-color: #efefef; }
   .user-menu:hover > .nav {
     display: flex; }
 
@@ -63,28 +61,19 @@
 .top-menu {
   background: #fff;
   display: flex;
-  margin: 0 auto;
-  position: sticky;
-  top: 0px;
-  z-index: 1;
-  width: 100%;
+  justify-content: end;
   max-width: 1310px;
   justify-content: space-between; }
   @media (max-width: 500px) {
     .top-menu {
       justify-content: end; } }
 
-.admin-top-menu {
+.admin-layout__header {
   background: #fff;
   display: flex;
-  margin: 0 auto;
-  position: sticky;
-  top: 0px;
-  z-index: 1;
-  width: 100%;
-  justify-content: flex-end; }
+  justify-content: end; }
   @media (max-width: 500px) {
-    .admin-top-menu {
+    .admin-layout__header {
       justify-content: end; } }
 
 .contacts {
@@ -118,11 +107,9 @@
       height: 70%;
       display: flex; } }
 
-.logo_vitex {
-  height: 100%; }
-  @media (max-width: 600px) {
-    .logo_vitex {
-      display: none; } }
+@media (max-width: 600px) {
+  .logo_vitex {
+    display: none; } }
 
 .logo__description {
   width: 120px;
@@ -340,10 +327,9 @@ header {
   flex-flow: column; }
 
 hr {
-  margin-top: 17px;
-  margin-bottom: 17px;
+  margin: 17px 0;
   border: 0;
-  border-top: 1px solid #eee; }
+  border-top: 1px solid #ecedef; }
 
 .search {
   position: relative;

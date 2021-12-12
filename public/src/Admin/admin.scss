@@ -1,4 +1,4 @@
-@import "components/main-menu/admin_main_menu";
+//@import "components/main-menu/admin_main_menu";
 @import "components/sub-menu/adm-menu";
 @import "components/breadcrumbs";
 @import "components/sub-menu/catalog";
@@ -11,138 +11,133 @@
 @import "CRM/users";
 @import "components/del_product";
 @import "../components/neon";
+@import "../components/fa/fa";
+@import '../normalize.scss';
+//@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+//@import '~@fortawesome/fontawesome-free/css/all.css';
+$color-admin-sidebar:#4d5158;
 
-
-//.main {
-//    display: flex;
-//}
-
-
-
-//.work-area {
-//    display: flex;
-//    flex-flow: column;
-//}
-
-//.work-middle {
-//    padding: 5px 35px;
-//    display: flex;
-//    flex-flow: column;
-//}
-
-//.work-middle button {
-//    margin: 10px 0;
-//}
-
-
-.accordion.sidebar{
-    max-width: 250px;
+.admin-layout__container {
+  display: flex;
+  flex-flow: wrap;
+  flex: 1 0 auto;
+  margin-top: 0px;
+  @include _600 {
+    margin: 0 auto;
+  }
+}
+.admin-layout__content{
+  display: flex;
+  flex-flow:column;
+  flex:1 1 auto;
+  padding: 20px;
 }
 
-/*//////////////////////////////*/
-/*////////   TABLE USERS  /////////*/
-/*//////////////////////////////*/
+.admin-layout__sidebar.accordion {
+  max-width: 250px;
+  background: $color-admin-sidebar;
+  @include _800{
+    max-width: 100%;
+    flex: 1;
+  }
 
+  &>*{
+    border-bottom: 1px solid #5B626E;
+  }
+
+  .logo_vitex {
+    background: $color-admin-sidebar;
+    padding: 28px 38px;
+    @include _800{
+      padding: 28px 38px;
+      height: 28px;
+      align-self: start;
+      border-bottom: none;
+    }
+
+    #i {
+      fill: white;
+    }
+
+    #t {
+      fill: white;
+    }
+  }
+  .admin-layout__sidebar-tail {
+    flex: 1 0 auto;
+  }
+}
+
+
+
+.icon::before {
+  //@extend .-fast-backward;
+  display: block;
+  content: '\f17b';
+  font-family: 'Font Awesome 5 Free', 'Font Awesome 5 Brands';
+  font-weight: 900;
+  width: 100px;
+  height: 100px;
+}
 
 .buttons {
-    display: inline-block;
-    white-space: nowrap;
-    text-align: center;
-    line-height: 20px;
-    background: #eeeeee;
-    background: linear-gradient(top, #eeeeee 0%, #eeeeee 100%);
-    border: 1px solid #a1a1a1;
-    color: #333;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
-    border-radius: .2em;
-    box-shadow: 0 0 1px 1px rgba(255, 255, 255, .8) inset, 0 1px 0 rgba(0, 0, 0, .3);
+  display: inline-block;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 20px;
+  background: #eeeeee;
+  background: linear-gradient(top, #eeeeee 0%, #eeeeee 100%);
+  border: 1px solid #a1a1a1;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+  border-radius: .2em;
+  box-shadow: 0 0 1px 1px rgba(255, 255, 255, .8) inset, 0 1px 0 rgba(0, 0, 0, .3);
 }
 
 .buttons:hover {
-    background: #ffffff;
-    background: linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  background: #ffffff;
+  background: linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
 }
 
 .buttons:active {
-    box-shadow: 0 0 4px 2px rgba(0, 0, 0, .3) inset;
-    position: relative;
-    top: 1px;
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, .3) inset;
+  position: relative;
+  top: 1px;
 }
 
-//
-//.type {
-//    width: 200px;
-//}
-//
-//.edit {
-//    width: 90px;
-//}
-//
-//.phone {
-//    width: 105px;
-//}
-//
-//.filter {
-//    padding: 30px;
-//}
 
 
-
-
-/*//////////////////////////////*/
-/*////////   COMMON   /////////*/
-/*//////////////////////////////*/
-
-
-//input {
-//    border: none;
-//    margin: 0;
-//}
-
-.adm-wrap {
-    display: flex;
-    flex-flow: nowrap;
-    max-width: 95vw;
-    flex: 1 0 auto;
-    margin-top: 0px;
-    @include _600{
-        margin: 0 auto;
-    }
-}
 
 .adm-content {
-    flex: 1;
-    background-color: #ebf4f4;
-    margin: 0 5px;
+  flex: 1;
+  background-color: #ebf4f4;
+  margin: 0 5px;
 }
 
 .adm-save-cansel {
-    position: fixed;
-    bottom: 0;
-    margin-bottom: 20px;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 20px;
 }
 
 .adm-save-cansel button {
-    padding: 10px;
+  padding: 10px;
 }
-
-
-
 
 
 .separator {
-    background-color: #ebf4f4;
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-around;
-    padding: 3px;
-    color: #646464;
+  background-color: #ebf4f4;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 3px;
+  color: #646464;
 }
 
 .separator.btns {
-    position: sticky;
-    bottom: 0;
-    /*z-index: 1;*/
+  position: sticky;
+  bottom: 0;
+  /*z-index: 1;*/
 }
 
 
@@ -194,9 +189,6 @@
 //}
 
 
-
-
-
 /*//////////////////////*/
 /*//////  END  MENU  ////////*/
 /*//////////////////////*/
@@ -244,7 +236,6 @@
 //}
 
 
-
 //.ref-row > * {
 //    padding-left: 7px;
 //    min-width: 15px;
@@ -252,4 +243,51 @@
 //    border-right: 1px #ddd solid;
 //}
 
+//.main {
+//    display: flex;
+//}
 
+
+//.work-area {
+//    display: flex;
+//    flex-flow: column;
+//}
+
+//.work-middle {
+//    padding: 5px 35px;
+//    display: flex;
+//    flex-flow: column;
+//}
+
+//.work-middle button {
+//    margin: 10px 0;
+//}
+
+
+//
+//.type {
+//    width: 200px;
+//}
+//
+//.edit {
+//    width: 90px;
+//}
+//
+//.phone {
+//    width: 105px;
+//}
+//
+//.filter {
+//    padding: 30px;
+//}
+
+
+/*//////////////////////////////*/
+/*////////   COMMON   /////////*/
+/*//////////////////////////////*/
+
+
+//input {
+//    border: none;
+//    margin: 0;
+//}

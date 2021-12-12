@@ -11,6 +11,10 @@
 }
 
 .accordion {
+  min-width: 250px;
+  display: flex;
+  flex-flow: column;
+
 
   @include _800 {
     max-width: 100%;
@@ -34,11 +38,6 @@
       display: none;
     }
   }
-
-  min-width: 250px;
-  display: flex;
-  flex-flow: column;
-  align-self: start;
 
   ul {
     /* by default hide all sub menus */

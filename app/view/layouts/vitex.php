@@ -19,10 +19,10 @@
 </head>
 
 <body>
-<? include_once ROOT . '/app/view/components/header/top.php'; ?>
+<?// include ROOT . '/app/view/components/header/top.php'; ?>
 <header>
-	<? include_once ROOT . '/app/view/components/header/logo_phone.php'; ?>
-	<? include_once ROOT . '/app/view/components/header/catalog_menu.php'; ?>
+	<? include ROOT . '/app/view/components/header/logo_phone.php'; ?>
+	<? include ROOT . '/app/view/components/header/catalog_menu.php'; ?>
 </header>
 
 <?= $content; ?>
