@@ -3,12 +3,16 @@
     <?include ROOT.'/app/view/components/header/logo_VITEX_white.php'?>
 
 
-    <a data-id="8" class="level1 neon" href="/adminsc">Главная</a>
-    <i class="fa fa-house-user"></i>
+    <a class="sidebar__main neon" href="/adminsc">
+        <i class="fa fa-house-user"></i>Главная
+    </a>
+
 
 	<li class="has-children level1">
 		<input type="checkbox" id="crm">
-		<label for="crm">CRM</label>
+		<label for="crm">
+            <i class="fa fa-handshake"></i>CRM
+        </label>
 		<ul>
 				<a data-id="1" class="level2 neon" href="/adminsc/crm/orders">
                     Заказы</a>
@@ -19,7 +23,9 @@
 
 	<li class="has-children level1">
 		<input type="checkbox" id="settings">
-		<label for="settings">Настройки</label>
+		<label for="settings">
+            <i class="fa fa-wrench"></i>Настройки
+        </label>
 
 		<ul>
 				<a data-id="2" class="level2 neon" href  = '/adminsc/Sitemap'>Создать SiteMap</a>
@@ -30,7 +36,9 @@
 	</li>
 	<li class="has-children level1">
 		<input type="checkbox" id="test">
-		<label for="test">Тесты</label>
+		<label for="test">
+            <i class="fa fa-book"></i>Тесты
+        </label>
 		<ul>
 				<a class="level2 neon" href="/test/do">Проходить тесты
 <!--				<span class="sub">dd</span>-->

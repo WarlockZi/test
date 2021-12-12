@@ -57,26 +57,7 @@ class TestController Extends AppController
 		View::setJs('test_edit.js');
 	}
 
-	public function actionUpdate()
-	{
-		if ($this->ajax) {
-			$id = App::$app->test->update($this->ajax);
-			exit(json_encode(['id' => $id]));
-		}
-		$this->layout = 'admin';
 
-		$id = $this->route['id'];
-		$test = App::$app->test->findOne($id);
-		$test['children'] = App::$app->test->getChildren($id);
-
-		$rootTests = App::$app->test->findAllWhere('isTest', 0);
-//		$rootTestsTree = $this->hierachy($rootTests, 'parent');
-		$this->set(compact('rootTests', 'test'));
-
-		View::setCss('test_edit.css');
-		View::setJs('test_edit.js');
-
-	}
 
 	public function actionCreate()
 	{
@@ -264,7 +245,25 @@ class TestController Extends AppController
 		View::setJs('admin.js');
 		View::setCss('admin.css');
 	}
+    public function actionUpdate()
+    {
+        if ($this->ajax) {
+            $id = App::$app->test->update($this->ajax);
+            exit(json_encode(['id' => $id]));
+        }
+        $this->layout = 'admin';
 
+        $id = $this->route['id'];
+        $test = App::$app->test->findOne($id);
+        $test['children'] = App::$app->test->getChildren($id);
+
+        $rootTests = App::$app->test->findAllWhere('isTest', 0);
+//		$rootTestsTree = $this->hierachy($rootTests, 'parent');
+        $this->set(compact('rootTests', 'test'));
+
+        View::setCss('admin.css');
+        View::setJs('admin.js');
+    }
     public function actionEdit()
     {
         $test = '';
@@ -285,6 +284,5 @@ class TestController Extends AppController
         $this->layout = 'admin';
         View::setJs('admin.js');
         View::setCss('admin.css');
-
     }
 }
