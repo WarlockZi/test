@@ -1,4 +1,4 @@
-<div class="admin-top-menu">
+<div class="admin-layout__header">
 
 <!--	<a title="Whatsapp" href="whatsapp://send?phone=79814362309"><img src="/pic/WhatsApp.jpg" alt="Написать в Whatsapp" /></a>-->
 

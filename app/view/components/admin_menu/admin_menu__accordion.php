@@ -1,12 +1,17 @@
-<ul class="accordion sidebar">
-		<a data-id="8" class="level1 neon" href="/adminsc">Главная</a>
+<ul class="admin-layout__sidebar accordion">
 
+    <?include ROOT.'/app/view/components/header/logo_VITEX_white.php'?>
+
+
+    <a data-id="8" class="level1 neon" href="/adminsc">Главная</a>
+    <i class="fa fa-house-user"></i>
 
 	<li class="has-children level1">
 		<input type="checkbox" id="crm">
 		<label for="crm">CRM</label>
 		<ul>
-				<a data-id="1" class="level2 neon" href="/adminsc/crm/orders">Заказы</a>
+				<a data-id="1" class="level2 neon" href="/adminsc/crm/orders">
+                    Заказы</a>
 				<a data-id="1" class="level2 neon" href="/adminsc/crm/users">Пользователи</a>
 				<a data-id="1" class="level2 neon" href="/adminsc/crm">crm</a>
 		</ul>
@@ -35,4 +40,7 @@
 				<a data-id="10" class="level2" href="/adminsc/crm/testresults">Результаты тестов </a>
 		</ul>
 	</li>
+    <li class="admin-layout__sidebar-tail"></li>
+
+
 </ul>

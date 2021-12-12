@@ -124,24 +124,21 @@
   .a input {
     position: absolute;
     left: -9999px; }
-
-.a label {
-  border: 1px solid #BBBBBB;
-  background: linear-gradient(to bottom, white 0%, #f0f0f0 100%);
-  box-shadow: 2px 5px 8px 1px #6a8784;
-  cursor: pointer;
-  height: 15px;
-  margin: 0 10px 0 0;
-  display: block;
-  position: relative;
-  flex: 0 0 15px; }
-
-.a label:hover {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.58); }
-
-.pushed {
-  background: #949494 !important;
-  box-shadow: 0 0 0px 0px #fff !important; }
+  .a label {
+    border: 1px solid #BBBBBB;
+    background: linear-gradient(to bottom, white 0%, #f0f0f0 100%);
+    box-shadow: 2px 5px 8px 1px #6a8784;
+    cursor: pointer;
+    height: 15px;
+    margin: 0 10px 0 0;
+    display: block;
+    position: relative;
+    flex: 0 0 15px; }
+  .a label:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.58); }
+  .a .pushed {
+    background: #949494 !important;
+    box-shadow: 0 0 0px 0px #fff !important; }
 
 .done::before {
   content: '';
@@ -163,11 +160,12 @@
   box-shadow: #1bbc9b 1px 2px 0px 0px !important; }
 
 .test-do__content {
-  width: 700px;
+  width: 320px;
   margin-top: 0;
   margin-bottom: 0;
   margin-left: clamp(10px, 100%, 7%);
-  margin-right: clamp(10px, 100%, 7%); }
+  margin-right: clamp(10px, 100%, 7%);
+  flex: 1; }
 
 .test-do {
   display: flex;
@@ -179,7 +177,7 @@
     .test-do {
       flex-wrap: wrap; } }
   .test-do .menu {
-    margin: 0 15px 15px;
+    margin: 0 5px 5px;
     max-width: 170px;
     min-width: 170px; }
     .test-do .menu > li {
@@ -355,8 +353,7 @@
 .accordion {
   min-width: 250px;
   display: flex;
-  flex-flow: column;
-  align-self: start; }
+  flex-flow: column; }
   @media (max-width: 800px) {
     .accordion {
       max-width: 100%; } }
@@ -368,7 +365,7 @@
     padding: 8px;
     border: 1px solid #4d5158;
     border-radius: 5px;
-    background: url(/public/dist/02f2a10a38a5a9c5bd7c.svg) no-repeat; }
+    background: url(/public/dist/9062eace577a7f6ff2e1.svg) no-repeat; }
     .accordion .update:after {
       display: none; }
     .accordion .update:before {
@@ -632,7 +629,7 @@ textarea:focus,
   cursor: pointer;
   color: #2b303a; }
   .user-menu:hover {
-    color: #818da2; }
+    background-color: #fafafa; }
   .user-menu img {
     border: 2px solid #f5f5f5;
     border-radius: 50%;
@@ -644,8 +641,6 @@ textarea:focus,
     display: block;
     padding: 3px 8px;
     align-self: center; }
-  .user-menu:hover {
-    background-color: #efefef; }
   .user-menu:hover > .nav {
     display: flex; }
 
@@ -670,28 +665,19 @@ textarea:focus,
 .top-menu {
   background: #fff;
   display: flex;
-  margin: 0 auto;
-  position: sticky;
-  top: 0px;
-  z-index: 1;
-  width: 100%;
+  justify-content: end;
   max-width: 1310px;
   justify-content: space-between; }
   @media (max-width: 500px) {
     .top-menu {
       justify-content: end; } }
 
-.admin-top-menu {
+.admin-layout__header {
   background: #fff;
   display: flex;
-  margin: 0 auto;
-  position: sticky;
-  top: 0px;
-  z-index: 1;
-  width: 100%;
-  justify-content: flex-end; }
+  justify-content: end; }
   @media (max-width: 500px) {
-    .admin-top-menu {
+    .admin-layout__header {
       justify-content: end; } }
 
 .contacts {
@@ -725,11 +711,9 @@ textarea:focus,
       height: 70%;
       display: flex; } }
 
-.logo_vitex {
-  height: 100%; }
-  @media (max-width: 600px) {
-    .logo_vitex {
-      display: none; } }
+@media (max-width: 600px) {
+  .logo_vitex {
+    display: none; } }
 
 .logo__description {
   width: 120px;
@@ -947,10 +931,9 @@ header {
   flex-flow: column; }
 
 hr {
-  margin-top: 17px;
-  margin-bottom: 17px;
+  margin: 17px 0;
   border: 0;
-  border-top: 1px solid #eee; }
+  border-top: 1px solid #ecedef; }
 
 footer {
   flex-flow: column;
