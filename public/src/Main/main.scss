@@ -1,4 +1,7 @@
 @import "../mixin_media.scss";
+@import '../normalize.scss';
+@import '../components/footer/footer.scss';
+@import '../components/forms.scss';
 
 main {
   display: flex;
@@ -12,6 +15,12 @@ main {
 .card {
   width: 50%;
   margin: 65px auto;
+
+  h1, h2, p{
+    color: #4e4e4e;
+  }
+
+  
   p {
     font-size: 1rem
   }
@@ -33,42 +42,42 @@ main {
 
 }
 
-.site-wrapper {
-  height: 100%;
-}
-
-.contact p,
-.contact H3 {
-  margin: 0;
-  padding: 0;
-}
-
-.d-content {
-  max-width: 800px;
-  margin: auto;
-}
-
-.art {
-  margin: 10px 0;
-  padding: 1.14rem 1.14rem;
-  font: normal 19px Verdana, Arial, sans;
-  color: #555;
-  text-align: right;
-}
-
-.card-left .row {
-  justify-content: space-between;
-}
-
-
-.site {
-  position: relative;
-}
-
-.site .wrap {
-  margin: 0 auto;
-  padding: 30px 10px;
-  margin-bottom: 9px;
-  max-width: 1310px;
-  box-sizing: border-box;
-}
+//.site-wrapper {
+//  height: 100%;
+//}
+//
+//.contact p,
+//.contact H3 {
+//  margin: 0;
+//  padding: 0;
+//}
+//
+//.d-content {
+//  max-width: 800px;
+//  margin: auto;
+//}
+//
+//.art {
+//  margin: 10px 0;
+//  padding: 1.14rem 1.14rem;
+//  font: normal 19px Verdana, Arial, sans;
+//  color: #555;
+//  text-align: right;
+//}
+//
+//.card-left .row {
+//  justify-content: space-between;
+//}
+//
+//
+//.site {
+//  position: relative;
+//}
+//
+//.site .wrap {
+//  margin: 0 auto;
+//  padding: 30px 10px;
+//  margin-bottom: 9px;
+//  max-width: 1310px;
+//  box-sizing: border-box;
+//}

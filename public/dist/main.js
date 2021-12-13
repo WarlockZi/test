@@ -442,16 +442,15 @@ async function autocomplete(input) {
 
 /***/ }),
 
-/***/ "./public/src/components/header/header.js":
-/*!************************************************!*\
-  !*** ./public/src/components/header/header.js ***!
-  \************************************************/
+/***/ "./public/src/components/header/header-adm.js":
+/*!****************************************************!*\
+  !*** ./public/src/components/header/header-adm.js ***!
+  \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
-/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
-
+/* harmony import */ var _user_menu_admin_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user_menu_admin.scss */ "./public/src/components/header/user_menu_admin.scss");
+// import './top.scss'
 
 
 /***/ }),
@@ -492,30 +491,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/footer/footer.scss":
-/*!**************************************************!*\
-  !*** ./public/src/components/footer/footer.scss ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/forms.scss":
-/*!******************************************!*\
-  !*** ./public/src/components/forms.scss ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./public/src/components/header/autocomplete.scss":
 /*!********************************************************!*\
   !*** ./public/src/components/header/autocomplete.scss ***!
@@ -528,34 +503,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/header.scss":
-/*!**************************************************!*\
-  !*** ./public/src/components/header/header.scss ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/header/top.scss":
-/*!***********************************************!*\
-  !*** ./public/src/components/header/top.scss ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/normalize.scss":
-/*!***********************************!*\
-  !*** ./public/src/normalize.scss ***!
-  \***********************************/
+/***/ "./public/src/components/header/user_menu_admin.scss":
+/*!***********************************************************!*\
+  !*** ./public/src/components/header/user_menu_admin.scss ***!
+  \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -627,16 +578,10 @@ var __webpack_exports__ = {};
   !*** ./public/src/Main/main.js ***!
   \*********************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
-/* harmony import */ var _components_forms_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/forms.scss */ "./public/src/components/forms.scss");
-/* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
-/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
-/* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
-/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
-/* harmony import */ var _main_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./main.scss */ "./public/src/Main/main.scss");
-
-
-
+/* harmony import */ var _main_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.scss */ "./public/src/Main/main.scss");
+/* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
+/* harmony import */ var _components_header_header_adm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/header-adm */ "./public/src/components/header/header-adm.js");
+/* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
 
 
 

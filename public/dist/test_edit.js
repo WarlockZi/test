@@ -47,6 +47,149 @@ navigate(window.location.pathname);
 
 /***/ }),
 
+/***/ "./public/src/Test/do.js":
+/*!*******************************!*\
+  !*** ./public/src/Test/do.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _do_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./do.scss */ "./public/src/Test/do.scss");
+/* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
+/* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
+/* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
+/* harmony import */ var _components_accordion_accordion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/accordion/accordion */ "./public/src/components/accordion/accordion.js");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
+
+
+
+
+
+
+ // acc.init({
+//     api:'test-menu',
+// })
+//Скрыть все вопросы
+
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').removeClass("flex1"); //Показть первый вопрос
+
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question:first-child').addClass("flex1"); // Нажать первуюкнопку navigation
+
+(0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_6__.navInit)();
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[type="checkbox"]').on('click', function (e) {
+  let a = e.target.labels[0];
+  a.classList.toggle('pushed');
+});
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#prev').on('click', _model_test__WEBPACK_IMPORTED_MODULE_4__._test.prevQ);
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#next').on('click', _model_test__WEBPACK_IMPORTED_MODULE_4__._test.nextQ); /////////////////////////////////////////////////////////////////////////////
+///////////  RESULTS  TEST  Закончить тест/////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+// если это результат теста, деактивирукм кнопку Закончить тест
+
+if (window.location.pathname.match(/result/)) {
+  let button = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-do__finish-btn').el[0];
+  button.classList.add('inactive');
+}
+
+(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-do__finish-btn').on('click', async function (e) {
+  let button = e.target;
+  if (button.classList.contains('inactive')) return false;
+  if (button.id !== 'btnn') return false;
+
+  if (button.text == "ПРОЙТИ ТЕСТ ЗАНОВО") {
+    location.reload();
+    return;
+  }
+
+  let corrAnswers = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/getCorrectAnswers', {});
+  corrAnswers = JSON.parse(corrAnswers);
+  let errorCnt = colorView(corrAnswers);
+  let data = objToServer(errorCnt);
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/cachePageSendEmail', data);
+
+  if (res) {
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("#btnn").el[0].href = location.href;
+    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО";
+  }
+});
+
+function objToServer(errorCnt) {
+  let obj = {
+    token: document.querySelector('meta[name="token"]').getAttribute('content'),
+    questionCnt: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').el.length,
+    errorCnt: errorCnt,
+    pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
+    testId: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-test-id]').el[0].dataset.testId,
+    test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText,
+    userName: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.user-menu__FIO').el[0].innerText
+  };
+  let formData = new FormData();
+  formData.append('token', obj.token);
+  formData.append('questionCnt', obj.questionCnt);
+  formData.append('errorCnt', obj.errorCnt);
+  formData.append('pageCache', obj.pageCache);
+  formData.append('testId', obj.testId);
+  formData.append('test_name', obj.test_name);
+  formData.append('userName', obj.userName);
+  return formData;
+  return obj;
+}
+
+function colorView(correctAnswers) {
+  let q = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').el;
+  Array.from(q).map((question, i) => {
+    let answers = question.querySelectorAll('.a'),
+        errors = [];
+    Array.from(answers).map(answer => {
+      let input = answer.getElementsByTagName('input')[0],
+          answerId = input.id.replace("answer-", ""),
+          // id question
+      label = answer.getElementsByTagName('label')[0],
+          // Чтобы прикрепить зеленый значек к этому элементу
+      correctAnser = correctAnswers.indexOf(answerId) !== -1;
+
+      if (!checkCorrectAnswers(correctAnser, input, label)) {
+        errors.push(true);
+      }
+    });
+    let questId = +question.dataset['id'],
+        // id question
+    paginItem = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.pagination [data-pagination="' + questId + '"]').el[0];
+
+    if (errors.length) {
+      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(paginItem).addClass('redShadow');
+    } else {
+      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(paginItem).addClass('greenShadow');
+    }
+  });
+  return (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.redShadow').el.length;
+}
+
+function checkCorrectAnswers(correctAnser, input, label) {
+  if (input.checked && correctAnser) {
+    // checkbox нажат. а в correct answer нету. в correct_answers есть, его всегда подсвечиваем зеленым
+    label.classList.add('done'); //green check зеленый значек
+
+    return true;
+  } else if (input.checked && !correctAnser) {
+    // checkbox нажат,и есть в correct answer. в correct_answers нет, кнопка не нажата
+    return false;
+  } else if (!input.checked && correctAnser) {
+    // кнопка не нажата, в correct_answers есть
+    label.classList.add('done'); //green check зеленый значек
+
+    label.classList.add('done'); // green check зеленый значек
+
+    return false;
+  } else if (!input.checked && !correctAnser) {
+    // кнопка не нажата, в correct_answers нет
+    return true;
+  }
+}
+
+/***/ }),
+
 /***/ "./public/src/Test/model/answer.js":
 /*!*****************************************!*\
   !*** ./public/src/Test/model/answer.js ***!
@@ -550,6 +693,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/src/Test/test.js":
+/*!*********************************!*\
+  !*** ./public/src/Test/test.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _do__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./do */ "./public/src/Test/do.js");
+/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
+/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
+/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
+
+
+
+
+
+
+/***/ }),
+
 /***/ "./public/src/common.js":
 /*!******************************!*\
   !*** ./public/src/common.js ***!
@@ -914,9 +1077,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('label').on('click', handle);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion a').on('mouseenter', _customContextMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion label').on('mouseenter', _customContextMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.accordion label').on('click', handle);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-edit__accordion .accordion a').on('mouseenter', _customContextMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-edit__accordion .accordion label').on('mouseenter', _customContextMenu_customMenu__WEBPACK_IMPORTED_MODULE_2__.default);
 
 function handle(e) {
   let checkbox = e.target.previousElementSibling;
@@ -1009,6 +1172,95 @@ function render(e) {
 
 /***/ }),
 
+/***/ "./public/src/components/cookie/cookie.js":
+/*!************************************************!*\
+  !*** ./public/src/components/cookie/cookie.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _cookie_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cookie.scss */ "./public/src/components/cookie/cookie.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+
+
+check_cookie('cn');
+
+function check_cookie(cookie_name) {
+  if (getCookie(cookie_name)) (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cookie-notice').css('bottom', '-100%');else (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cookie-notice').css('bottom', "0");
+}
+
+function getCookie(cookie_name) {
+  return document.cookie.match('(^|;)?' + cookie_name + '=([^;]*)');
+}
+
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cn-accept-cookie').on('click', clicked);
+
+function clicked() {
+  setCookie();
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cookie-notice').css('bottom', '-100%');
+}
+
+function setCookie() {
+  const date = new Date(),
+        minute = 60 * 1000,
+        day = minute * 60 * 24;
+  let days = 1;
+  date.setTime(date.getTime() + days * day);
+  document.cookie = "cn=1; expires=" + date + "path=/; SameSite=lax";
+}
+
+/***/ }),
+
+/***/ "./public/src/components/header/autocomplete.js":
+/*!******************************************************!*\
+  !*** ./public/src/components/header/autocomplete.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _autocomplete_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./autocomplete.scss */ "./public/src/components/header/autocomplete.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+
+
+[...(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".search input").el].map(input => {
+  if (input) {
+    input.addEventListener('input', function () {
+      autocomplete(input);
+    });
+  }
+});
+
+async function autocomplete(input) {
+  let search = input.parentNode;
+  let result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(search).find('.search__result');
+
+  if (input.value.length < 1) {
+    if (result) result.innerHTML = '';
+    return;
+  }
+
+  let data = await fetch('/search?q=' + input.value);
+  data = await data.json(data);
+
+  if (result.childNodes.length !== 0) {
+    result.innerHTML = '';
+  }
+
+  data.map(e => {
+    let a = document.createElement("a");
+    a.href = e.alias;
+    a.innerHTML = `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name;
+    result.appendChild(a);
+  });
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('body').on('click', function (e) {
+    if (result && e.target !== result) {
+      result.innerHTML = '';
+    }
+  });
+}
+
+/***/ }),
+
 /***/ "./public/src/components/header/header.js":
 /*!************************************************!*\
   !*** ./public/src/components/header/header.js ***!
@@ -1016,9 +1268,8 @@ function render(e) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
-/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
-
+/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
+// import './top.scss'
 
 
 /***/ }),
@@ -1067,14 +1318,108 @@ let sortable = {
 
 /***/ }),
 
-/***/ "./public/src/Admin/admin.scss":
-/*!*************************************!*\
-  !*** ./public/src/Admin/admin.scss ***!
-  \*************************************/
+/***/ "./public/src/components/test-pagination/test-pagination.js":
+/*!******************************************************************!*\
+  !*** ./public/src/components/test-pagination/test-pagination.js ***!
+  \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "showHidePaginBtn": () => (/* binding */ showHidePaginBtn),
+/* harmony export */   "appendBlock": () => (/* binding */ appendBlock),
+/* harmony export */   "navInit": () => (/* binding */ navInit)
+/* harmony export */ });
+/* harmony import */ var _test_pagination_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./test-pagination.scss */ "./public/src/components/test-pagination/test-pagination.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+/* harmony import */ var _Test_model_question__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Test/model/question */ "./public/src/Test/model/question.js");
+/* harmony import */ var _Test_model_answer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Test/model/answer */ "./public/src/Test/model/answer.js");
+
+
+
+ // Показать первую кнопку
+
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[data-pagination]:first-child').addClass('nav-active');
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-edit__content').addClass('flex1'); //// add question
+
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.pagination').on('click', function (e) {
+  if (e.target.classList.contains('add-question')) {
+    show();
+    return;
+  } //// paginate
+
+
+  if (e.target.getAttribute('data-pagination')) {
+    paginate(e.target);
+    return;
+  }
+});
+
+function paginate(self) {
+  /// get clicked button Return if clicked is active
+  if (self.classList.contains('nav-active')) return;
+  let active_btn = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.pagination .nav-active').el[0]; //// change active button
+
+  active_btn.classList.remove('nav-active');
+  self.classList.add('nav-active'); //// hide the card
+
+  let id_to_hide = active_btn.dataset['pagination'];
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(`#question-${id_to_hide}`).removeClass('flex1'); //// show the card
+
+  let id_to_show = self.dataset['pagination'];
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(`#question-${id_to_show}`).addClass('flex1');
+} //// добавление вопроса
+
+
+async function show(e) {
+  let testid = +(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.test-name').value();
+  let questCount = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)("[data-pagination]").count();
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_1__.post)('/question/show', {
+    testid,
+    questCount
+  });
+  res = JSON.parse(res);
+  let Block = res.block;
+  let blocks = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks').el[0];
+  blocks.insertAdjacentHTML('afterBegin', Block);
+  let newBlock = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks .block:first-child').el[0];
+  document.querySelector('.flex1').classList.remove('flex1');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newBlock).addClass('flex1');
+  let save_button = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(newBlock).find('.question__save');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(save_button).on('click', (0,_Test_model_question__WEBPACK_IMPORTED_MODULE_2__._question)().save);
+}
+
+function showHidePaginBtn(pagItem) {
+  let activePaginBtn = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.pagination .nav-active').el[0];
+
+  if (activePaginBtn) {
+    activePaginBtn.classList.remove('nav-active');
+  }
+
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.add-question').el[0].insertAdjacentHTML('beforeBegin', pagItem);
+}
+
+function appendBlock() {
+  let block = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.overlay').find('.block');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.blocks').append(block);
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(block).addClass('flex1');
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-add').on('click', _Test_model_answer__WEBPACK_IMPORTED_MODULE_3__._answer.create);
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.q-delete').on('click', (0,_Test_model_question__WEBPACK_IMPORTED_MODULE_2__._question)().delete());
+  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.a-del').on('click', _Test_model_answer__WEBPACK_IMPORTED_MODULE_3__._answer.delete());
+}
+
+function navInit() {
+  let nav_buttons = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('[data-pagination]').el;
+  if (!nav_buttons[0]) return false;
+  Array.from(nav_buttons).map(el => {
+    el.classList.remove('nav-active');
+  });
+  nav_buttons[0].classList.add('nav-active');
+} // function hideVisibleBlock() {
+//     $('.block.flex1').removeClass('flex1')
+// }
+
+
 
 
 /***/ }),
@@ -1083,6 +1428,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************************!*\
   !*** ./public/src/Admin/components/main-menu/admin_main_menu.scss ***!
   \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/Test/do.scss":
+/*!*********************************!*\
+  !*** ./public/src/Test/do.scss ***!
+  \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1139,10 +1496,34 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/src/components/cookie/cookie.scss":
+/*!**************************************************!*\
+  !*** ./public/src/components/cookie/cookie.scss ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./public/src/components/footer/footer.scss":
 /*!**************************************************!*\
   !*** ./public/src/components/footer/footer.scss ***!
   \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./public/src/components/header/autocomplete.scss":
+/*!********************************************************!*\
+  !*** ./public/src/components/header/autocomplete.scss ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1163,10 +1544,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/top.scss":
-/*!***********************************************!*\
-  !*** ./public/src/components/header/top.scss ***!
-  \***********************************************/
+/***/ "./public/src/components/popup.scss":
+/*!******************************************!*\
+  !*** ./public/src/components/popup.scss ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1175,10 +1556,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/popup.scss":
-/*!******************************************!*\
-  !*** ./public/src/components/popup.scss ***!
-  \******************************************/
+/***/ "./public/src/components/test-pagination/test-pagination.scss":
+/*!********************************************************************!*\
+  !*** ./public/src/components/test-pagination/test-pagination.scss ***!
+  \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -5056,8 +5437,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
 /* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
 /* harmony import */ var _test_edit_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./test-edit.scss */ "./public/src/Test/test-edit.scss");
-/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./show */ "./public/src/Test/show.js");
-/* harmony import */ var _Admin_admin_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Admin/admin.scss */ "./public/src/Admin/admin.scss");
+/* harmony import */ var _test__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./test */ "./public/src/Test/test.js");
+/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./show */ "./public/src/Test/show.js");
 /* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 /* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
@@ -5071,6 +5452,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // import '../Admin/admin.scss'
 
 
 

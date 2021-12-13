@@ -353,109 +353,6 @@ async function fetchW(url, Obj) {
 
 /***/ }),
 
-/***/ "./public/src/components/cookie/cookie.js":
-/*!************************************************!*\
-  !*** ./public/src/components/cookie/cookie.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _cookie_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cookie.scss */ "./public/src/components/cookie/cookie.scss");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
-
-
-check_cookie('cn');
-
-function check_cookie(cookie_name) {
-  if (getCookie(cookie_name)) (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cookie-notice').css('bottom', '-100%');else (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cookie-notice').css('bottom', "0");
-}
-
-function getCookie(cookie_name) {
-  return document.cookie.match('(^|;)?' + cookie_name + '=([^;]*)');
-}
-
-(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cn-accept-cookie').on('click', clicked);
-
-function clicked() {
-  setCookie();
-  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('#cookie-notice').css('bottom', '-100%');
-}
-
-function setCookie() {
-  const date = new Date(),
-        minute = 60 * 1000,
-        day = minute * 60 * 24;
-  let days = 1;
-  date.setTime(date.getTime() + days * day);
-  document.cookie = "cn=1; expires=" + date + "path=/; SameSite=lax";
-}
-
-/***/ }),
-
-/***/ "./public/src/components/header/autocomplete.js":
-/*!******************************************************!*\
-  !*** ./public/src/components/header/autocomplete.js ***!
-  \******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _autocomplete_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./autocomplete.scss */ "./public/src/components/header/autocomplete.scss");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
-
-
-[...(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(".search input").el].map(input => {
-  if (input) {
-    input.addEventListener('input', function () {
-      autocomplete(input);
-    });
-  }
-});
-
-async function autocomplete(input) {
-  let search = input.parentNode;
-  let result = (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)(search).find('.search__result');
-
-  if (input.value.length < 1) {
-    if (result) result.innerHTML = '';
-    return;
-  }
-
-  let data = await fetch('/search?q=' + input.value);
-  data = await data.json(data);
-
-  if (result.childNodes.length !== 0) {
-    result.innerHTML = '';
-  }
-
-  data.map(e => {
-    let a = document.createElement("a");
-    a.href = e.alias;
-    a.innerHTML = `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name;
-    result.appendChild(a);
-  });
-  (0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('body').on('click', function (e) {
-    if (result && e.target !== result) {
-      result.innerHTML = '';
-    }
-  });
-}
-
-/***/ }),
-
-/***/ "./public/src/components/header/header.js":
-/*!************************************************!*\
-  !*** ./public/src/components/header/header.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _top_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./top.scss */ "./public/src/components/header/top.scss");
-/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
-
-
-
-/***/ }),
-
 /***/ "./public/src/Auth/cabinet.scss":
 /*!**************************************!*\
   !*** ./public/src/Auth/cabinet.scss ***!
@@ -468,94 +365,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/Auth/login.scss":
-/*!************************************!*\
-  !*** ./public/src/Auth/login.scss ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./public/src/common.scss":
 /*!********************************!*\
   !*** ./public/src/common.scss ***!
   \********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/cookie/cookie.scss":
-/*!**************************************************!*\
-  !*** ./public/src/components/cookie/cookie.scss ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/footer/footer.scss":
-/*!**************************************************!*\
-  !*** ./public/src/components/footer/footer.scss ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/header/autocomplete.scss":
-/*!********************************************************!*\
-  !*** ./public/src/components/header/autocomplete.scss ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/header/header.scss":
-/*!**************************************************!*\
-  !*** ./public/src/components/header/header.scss ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/header/top.scss":
-/*!***********************************************!*\
-  !*** ./public/src/components/header/top.scss ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/normalize.scss":
-/*!***********************************!*\
-  !*** ./public/src/normalize.scss ***!
-  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -627,23 +440,11 @@ var __webpack_exports__ = {};
   !*** ./public/src/Auth/cabinet.js ***!
   \************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
-/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
-/* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
-/* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
-/* harmony import */ var _Auth_login_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Auth/login.scss */ "./public/src/Auth/login.scss");
-/* harmony import */ var _cabinet_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./cabinet.scss */ "./public/src/Auth/cabinet.scss");
-/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
+/* harmony import */ var _cabinet_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cabinet.scss */ "./public/src/Auth/cabinet.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 
 
-
-
-
-
-
-
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.form__button').on('submit', save);
+(0,_common__WEBPACK_IMPORTED_MODULE_1__.$)('.form__button').on('submit', save);
 
 function save(e) {
   let th = this;

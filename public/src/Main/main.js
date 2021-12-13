@@ -1,12 +1,10 @@
-import '../normalize.scss'
-import '../components/forms.scss'
+import './main.scss'
+
 
 import '../components/header/autocomplete'
-import '../components/header/header'
+import '../components/header/header-adm'
 
 import '../components/cookie/cookie'
-import '../components/footer/footer.scss'
 
-import './main.scss'
 
 

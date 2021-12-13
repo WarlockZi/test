@@ -1,3 +1,4 @@
+
 @import "../../var";
 
 $main-color: #F44336;
@@ -10,7 +11,7 @@ $color-input: #323030;
 
 
 .centered {
-  height: $width/5;
+  height: $width*0.2;
   margin: 0 10px;
   top: 0;
   bottom: 0;
@@ -20,14 +21,14 @@ $color-input: #323030;
 
 .group {
   width: 100%;
-  height: $width/5;
+  height: calc($width/15);
   overflow: hidden;
   position: relative;
 
   input {
     display: block;
     width: 100%;
-    padding-top: $width/15;
+    padding-top: calc($width/15);
     border: none;
     border-radius: 0; // For iOS
     color: $color-input;
@@ -47,7 +48,7 @@ $color-input: #323030;
       // border-bottom-color: $secondary-color;
       ~ label {
         top: 0;
-        font: 700 $width/25 Arial, Serif;
+        font: 700 ($width, 25) Arial, Serif;
         color: $secondary-color;
       }
 
@@ -84,9 +85,9 @@ $color-input: #323030;
 
   label {
     position: absolute;
-    top: $width/15;
+    top: calc($width/15);
     color: $color-label;
-    font: 400 $width/15 Arial, Serif;
+    font: 400 calc($width/15) Arial, Serif;
     cursor: text;
     transition: .25s ease;
   }

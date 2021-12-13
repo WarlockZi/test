@@ -10,7 +10,7 @@
   padding: 0 25px;
   white-space: nowrap;
   margin: 0 auto;
-  @include _400 {
+  @include _500 {
     font: bold 12px/17px 'Proxima Nova', sans-serif;
   }
 }
@@ -21,7 +21,7 @@
 }
 .phone svg {
   position: absolute;
-  left: -15%;
+  left: -20px;
   bottom: 3px;
   color: #1bbc9b;
   width: 14px;

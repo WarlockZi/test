@@ -3,14 +3,11 @@
 // colors, fonts etc...
 @import './partials/layout'; // responsive grid and media queries
 
-.test-edit__accordion {
-  max-width: 250px;
-  @include _800 {
-    min-width: 100%;
-  }
-}
-
 .accordion {
+  min-width: 250px;
+  display: flex;
+  flex-flow: column;
+
 
   @include _800 {
     max-width: 100%;
@@ -34,11 +31,6 @@
       display: none;
     }
   }
-
-  min-width: 250px;
-  display: flex;
-  flex-flow: column;
-  align-self: start;
 
   ul {
     /* by default hide all sub menus */
@@ -108,7 +100,7 @@
   }
 
   label {
-    &::before, &::after {
+    &::before {
       background-image: url(./img/cd-icons.svg);
       background-repeat: no-repeat;
     }
@@ -120,18 +112,8 @@
       transform: translateY(-50%) rotate(-90deg);
     }
 
-    &::after {
-      /* folder icons */
-      left: ($item-padding-S * 2) + 13px;
-      background-position: -16px 0;
-    }
   }
 
-  a::after {
-    /* image icon */
-    left: $item-padding-S * 2;
-    background: url(./img/cd-icons.svg) no-repeat -48px 0;
-  }
 
   input[type=checkbox]:checked + label::before {
     /* rotate arrow */
@@ -269,6 +251,56 @@
     transition: transform .3s;
   }
 
-
 }
 
+.test-edit__accordion {
+  max-width: 250px;
+  @include _800 {
+    min-width: 100%;
+  }
+}
+
+.test-edit__accordion .accordion {
+
+  a::after {
+    /* image icon */
+    left: $item-padding-S * 2;
+    background: url(./img/cd-icons.svg) no-repeat -48px 0;
+  }
+
+  label {
+    &::before, &::after {
+      background-image: url(./img/cd-icons.svg);
+      background-repeat: no-repeat;
+    }
+
+    &::before {
+      /* arrow icon */
+      left: $item-padding-S;
+      background-position: 0 0;
+      transform: translateY(-50%) rotate(-90deg);
+    }
+
+    &::after {
+      /* folder icons */
+      left: ($item-padding-S * 2) + 13px;
+      background-position: -16px 0;
+    }
+  }
+}
+
+.admin-layout__sidebar.accordion {
+
+  .fa {
+    margin-left: -40px;
+    padding-right: 12px;
+  }
+
+  label {
+    &::before {
+      /* arrow icon */
+      left: initial;
+      right: 12px;
+    }
+  }
+}

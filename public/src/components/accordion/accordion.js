@@ -2,10 +2,10 @@ import './accordion.scss'
 import {$, addTooltip} from '../../common'
 import showCustomMenu from "./customContextMenu/customMenu";
 
-$('label').on('click', handle)
+$('.accordion label').on('click', handle)
 
-$('.accordion a').on('mouseenter', showCustomMenu)
-$('.accordion label').on('mouseenter', showCustomMenu)
+$('.test-edit__accordion .accordion a').on('mouseenter', showCustomMenu)
+$('.test-edit__accordion .accordion label').on('mouseenter', showCustomMenu)
 
 
 
