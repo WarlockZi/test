@@ -50,7 +50,7 @@ const config = {
                 }
             },
 
-            {test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i, type: 'asset/resource',},
+            {test: /\.(?:ico|gif|png|jpg|jpeg|svg|ttf|otf|eot|svg|woff(2)?)$/i, type: 'asset/resource',},
             // {test: /\.svg/, type: 'asset/inline'},
             {test: /\.(sa|sc|c)ss$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader',]},
         ]
