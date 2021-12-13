@@ -103,8 +103,8 @@ class UserController extends AppController
 		}
 
 		View::setMeta('Личный кабинет', 'Личный кабинет', '');
-		View::setCss('cabinet.css');
-		View::setJs('cabinet.js');
+		View::setCss('auth.css');
+		View::setJs('auth.js');
 
 	}
 

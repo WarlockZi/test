@@ -3,6 +3,17 @@
 @import "../mixin_media";
 @import "../components/input/input";
 
+
+.test-edit-wrapper {
+  display: flex;
+  margin: 10px 10px 10px 0;
+  font-family: 'Roboto', Arial, Serif;
+  flex: 1 1 auto;
+  @include _800 {
+    flex-wrap: wrap;
+  }
+}
+
 @mixin test-edit__act-button {
   position: relative;
   color: #fff;
@@ -29,6 +40,7 @@
   display: flex;
   flex: 1 1 auto;
   min-height: 100%;
+  width: 200px;
 }
 
 .question__create-button {
@@ -253,13 +265,13 @@
 }
 
 
-html {
-  overflow-y: scroll
-}
-
-section {
-  margin: 5px 20px;
-}
+//html {
+//  overflow-y: scroll
+//}
+//
+//section {
+//  margin: 5px 20px;
+//}
 
 
 .list {
@@ -283,7 +295,7 @@ section {
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  margin: 0px 0 20px 30px;
+  margin: 0px 0 20px 2px;
 
   .test-edit__test-settings {
     padding: 7px 8px;
@@ -294,80 +306,73 @@ section {
 }
 
 
-//* менюшка в редакторе тестов добавить/удалить ответ*/
-.navi {
-  box-shadow: inset 0 5px rgba(0, 0, 0, 0.5);
-  position: absolute;
-  right: 0;
-  display: none;
-  z-index: 2;
-}
-
-.navi__item {
-  color: #000000;
-  display: block;
-  font-weight: 800;
-  font-size: .5rem;
-  text-align: center;
-  text-transform: uppercase;
-  background-color: #bcbcbc;
-  transition: background-color 0.1s linear, color .1s linear;
-  white-space: nowrap;
-  line-height: 17px;
-  padding: 5px;
-  margin: 0;
-  cursor: pointer;
-}
-
-.navi__item:active {
-  background-color: #5e5e5e;
-}
-
-/*Всплывающие меню*/
-.vert-menu__drop {
-  position: absolute;
-  width: 100%;
-  left: 100%;
-  top: -9999em;
-  opacity: 0;
-  border-left: 1px solid transparent;
-  transition: 0.5s opacity;
-}
-
-.test-edit-wrapper {
-  display: flex;
-  margin: 10px;
-  font-family: 'Roboto', Arial, Serif;
-  flex: 1 1 auto;
-  @include _800 {
-    flex-wrap: wrap;
-  }
+////* менюшка в редакторе тестов добавить/удалить ответ*/
+//.navi {
+//  box-shadow: inset 0 5px rgba(0, 0, 0, 0.5);
+//  position: absolute;
+//  right: 0;
+//  display: none;
+//  z-index: 2;
+//}
+//
+//.navi__item {
+//  color: #000000;
+//  display: block;
+//  font-weight: 800;
+//  font-size: .5rem;
+//  text-align: center;
+//  text-transform: uppercase;
+//  background-color: #bcbcbc;
+//  transition: background-color 0.1s linear, color .1s linear;
+//  white-space: nowrap;
+//  line-height: 17px;
+//  padding: 5px;
+//  margin: 0;
+//  cursor: pointer;
+//}
+//
+//.navi__item:active {
+//  background-color: #5e5e5e;
+//}
+//
+///*Всплывающие меню*/
+//.vert-menu__drop {
+//  position: absolute;
+//  width: 100%;
+//  left: 100%;
+//  top: -9999em;
+//  opacity: 0;
+//  border-left: 1px solid transparent;
+//  transition: 0.5s opacity;
+//}
 
 
-  /*Иконки для всплывающих менюшек*/
-  .vert-menu__list::after {
-    content: " ";
-    position: absolute;
-    border: .4rem solid;
-    border-color: transparent transparent transparent #eee;
-    transition: 0.5s;
-    align-self: center;
-  }
+  //
+  //
+  ///*Иконки для всплывающих менюшек*/
+  //.vert-menu__list::after {
+  //  content: " ";
+  //  position: absolute;
+  //  border: .4rem solid;
+  //  border-color: transparent transparent transparent #eee;
+  //  transition: 0.5s;
+  //  align-self: center;
+  //}
+  //
+  //.vert-menu__list:hover::after {
+  //  transform: scaleX(-1);
+  //}
+  //
+  //.menu .vert-menu__list:hover > .vert-menu__drop {
+  //  opacity: 1;
+  //  top: 0;
+  //  z-index: 1;
+  //  display: flex;
+  //  flex-direction: column;
+  //}
 
-  .vert-menu__list:hover::after {
-    transform: scaleX(-1);
-  }
-
-  .menu .vert-menu__list:hover > .vert-menu__drop {
-    opacity: 1;
-    top: 0;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-  }
 
 
-}
 
 ////.wrap {
 ////  flex: 1 0 auto;

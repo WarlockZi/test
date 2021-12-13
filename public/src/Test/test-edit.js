@@ -4,8 +4,9 @@ import '../components/header/header'
 import '../components/footer/footer.scss'
 
 import './test-edit.scss'
+import './test'
 import './show'
-import '../Admin/admin.scss'
+// import '../Admin/admin.scss'
 
 import '../components/popup.scss'
 import {$, addTooltip, navigate} from '../common'

@@ -24,9 +24,10 @@
 .search input {
   flex: 1;
   padding: 0 0 0 12px;
-  border: hsl(0, 0, 31%) 1px solid;
+  border: hsl(0, 0%, 31%) 1px solid;
   border-radius: 2px;
 }
+
 
 .search__result {
   position: absolute;

@@ -27,5 +27,5 @@
 			</svg>
 here;?>
 
-<div class="logo__description">Медицинские расходные <br>материалы оптом</div>
+	<?include ROOT.'/app/view/components/header/description.php'?>
 

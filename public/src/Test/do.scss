@@ -115,29 +115,28 @@
     position: absolute;
     left: -9999px;
   }
+  label {
+    border: 1px solid #BBBBBB;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(240, 240, 240, 1) 100%);
+    box-shadow: 2px 5px 8px 1px #6a8784;
+    cursor: pointer;
+    height: 15px;
+    margin: 0 10px 0 0;
+    display: block;
+    position: relative;
+    flex: 0 0 15px
+  }
+  label:hover {
+     box-shadow: 0 3px 6px rgba(0, 0, 0, .58);
+   }
+  .pushed {
+      background: #949494 !important;
+      box-shadow: 0 0 0px 0px #fff !important;
+    }
 }
 
 
-.a label {
-  border: 1px solid #BBBBBB;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(240, 240, 240, 1) 100%);
-  box-shadow: 2px 5px 8px 1px #6a8784;
-  cursor: pointer;
-  height: 15px;
-  margin: 0 10px 0 0;
-  display: block;
-  position: relative;
-  flex: 0 0 15px
-}
 
-.a label:hover {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, .58);
-}
-
-.pushed {
-  background: #949494 !important;
-  box-shadow: 0 0 0px 0px #fff !important;
-}
 
 .done::before {
   content: '';
@@ -163,11 +162,12 @@
 
 
 .test-do__content {
-  width: 700px;
+  width: 320px;
   margin-top: 0;
   margin-bottom: 0;
   margin-left:  clamp(10px, 100%, 7%);
   margin-right: clamp(10px, 100%, 7%);
+  flex: 1;
 }
 
 /// MENU
@@ -184,7 +184,7 @@
 
   .menu {
     //z-index: 1;
-    margin: 0 15px 15px;
+    margin: 0 5px 5px;
     max-width: 170px;
     min-width: 170px;
 
