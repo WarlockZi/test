@@ -1,27 +1,25 @@
 @import "../../var";
 @import "../../mixin_media";
 
+@import "logo";
+@import "phone";
+//@import "user_menu";
+@import "header-catalog-menu";
 
-.guest-menu {
-  position: absolute;
-  display: none;
-  flex-flow: column;
 
-  background-color: #ffffff;
-  padding: 10px;
-  top: 105%;
-  right: -1px;
-  height: max-content;
-  box-shadow: -1px 4px 20px 0px #1d7c68ab;
-  z-index: 1;
 
-  a {
-    color: $color-a;
-    padding: 5px 10px;
+.admin-layout__header {
+  background: #fff;
+  display: flex;
+  justify-content: end;
+  max-width: 1310px;
 
-    &:hover {
-      background-color: #e5e5e5;
-    }
+  @include _500 {
+    justify-content: end;
+  }
+
+  @include _500 {
+    justify-content: end;
   }
 }
 

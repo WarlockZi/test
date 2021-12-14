@@ -1,6 +1,8 @@
 @import "logo";
 @import "phone";
 @import "header-catalog-menu";
+@import "user_menu";
+
 
 
 @mixin header__info {
@@ -24,12 +26,17 @@
   flex-wrap: wrap;
 }
 
-.admin-header__info {
+//.admin-header__info {
+//  @include header__info;
+//  justify-content: flex-start;
+//  //max-width: 1310px;
+//}
+
+.header {
   @include header__info;
   justify-content: flex-start;
   //max-width: 1310px;
 }
-
 
 header {
   display: flex;
@@ -40,9 +47,9 @@ header {
   margin-bottom: 20px;
   flex-flow: column;
 }
-
-hr {
-  margin: 10px 0;
-  border: 0;
-  border-top: 1px solid #ecedef;
-}
+//
+//hr {
+//  margin: 10px 0;
+//  border: 0;
+//  border-top: 1px solid #ecedef;
+//}

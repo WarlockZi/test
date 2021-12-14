@@ -1,4 +1,4 @@
-//@import "components/main-menu/admin_main_menu";
+
 @import "components/sub-menu/adm-menu";
 @import "components/breadcrumbs";
 @import "components/sub-menu/catalog";
@@ -11,11 +11,9 @@
 @import "CRM/users";
 @import "components/del_product";
 @import "../components/neon";
-@import "../components/fa/fa";
+//@import "../components/fa/fa";
 @import '../normalize.scss';
-//@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-//@import '~@fortawesome/fontawesome-free/css/all.min.css';
-//@import '~@fortawesome/fontawesome-free/css/fontawesome.min.css';
+
 $color-admin-sidebar:#4d5158;
 
 .admin-layout__container {

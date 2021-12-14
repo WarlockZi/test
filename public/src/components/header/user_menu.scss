@@ -1,32 +1,7 @@
 @import "../../var";
 @import "../../mixin_media";
 
-
-.guest-menu {
-  position: absolute;
-  display: none;
-  flex-flow: column;
-
-  background-color: #ffffff;
-  padding: 10px;
-  top: 105%;
-  right: -1px;
-  height: max-content;
-  box-shadow: -1px 4px 20px 0px #1d7c68ab;
-  z-index: 1;
-
-  a {
-    color: $color-a;
-    padding: 5px 10px;
-
-    &:hover {
-      background-color: #e5e5e5;
-    }
-  }
-}
-
-
-.user-menu {
+@mixin user-menu{
   position: relative;
   display: flex;
   align-items: center;
@@ -37,16 +12,15 @@
   border: 1px solid grey;
   border-radius: 4px;
   margin-right: 10px;
+}
 
-  @include _500{
+.user-menu {
+
+  @include user-menu;
+
+  @include _500 {
     padding: 5px 10px;
     margin: 5px 10px;
-  }
-
-  .user-menu__icon {
-    width: 14px;
-    height: 15px;
-    padding: 0 5px 3px;
   }
 
   &:hover {
@@ -67,32 +41,67 @@
   //  padding: 3px 8px;
   //  align-self: center;
   //}
+  .user-menu__menu {
+    display: none;
+    flex-flow: column;
+    border: 1px solid #eee;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background: #fff;
+    z-index: 501;
+    position: absolute;
+    top: 100%;
+    right: -1px;
+    width: 280px;
+    padding: 10px;
 
-  &:hover > .guest-menu {
+    a {
+      padding: 5px 10px;
+      color: $color-a;
+
+      &:hover {
+        background-color: #e5e5e5;
+      }
+    }
+  }
+  &:hover > .user-menu__menu {
     display: flex;
   }
 }
 
-.nav {
-  display: none;
-  flex-flow: column;
-  border: 1px solid #eee;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  background: #fff;
-  z-index: 501;
-  position: absolute;
-  top: 100%;
-  right: -1px;
-  width: 280px;
-  padding: 10px;
+.guest-menu {
+  @include user-menu;
 
-  a {
-    padding: 5px 10px;
-    color: $color-a;
+  .guest-menu__menu {
+    position: absolute;
+    display: none;
+    flex-flow: column;
 
-    &:hover {
-      background-color: #e5e5e5;
+    background-color: #ffffff;
+    padding: 10px;
+    top: 103%;
+    right: -1px;
+    height: max-content;
+    box-shadow: 0px 11px 16px 0px #1d7c6840;
+    z-index: 1;
+
+    a {
+      color: $color-a;
+      padding: 5px 10px;
+
+      &:hover {
+        background-color: #e5e5e5;
+      }
     }
   }
+  .user-menu__icon {
+    width: 14px;
+    height: 15px;
+    padding: 0 5px 3px;
+  }
+  &:hover > .guest-menu__menu{
+    display: flex;
+  }
 }
+
+
 

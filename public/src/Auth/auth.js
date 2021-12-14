@@ -1,4 +1,4 @@
-import '../components/header/header-adm';
+import '../components/header/header';
 import '../components/header/autocomplete'
 
 import '../components/alert/alert'
