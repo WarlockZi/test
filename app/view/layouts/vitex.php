@@ -21,7 +21,7 @@
 <body>
 <?// include ROOT . '/app/view/components/header/top.php'; ?>
 <header>
-	<? include ROOT . '/app/view/components/header/logo_phone.php'; ?>
+	<? include ROOT . '/app/view/components/header/header.php'; ?>
 	<? include ROOT . '/app/view/components/header/catalog_menu.php'; ?>
 </header>
 

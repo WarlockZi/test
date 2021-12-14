@@ -1,7 +1,8 @@
 @import "logo";
 @import "phone";
-@import "header-catalog-menu";
+//@import "header-catalog-menu";
 @import "user_menu_admin";
+
 
 
 @mixin header__info {
@@ -25,7 +26,7 @@
   flex-wrap: wrap;
 }
 
-.admin-header__info {
+.header {
   @include header__info;
   justify-content: flex-start;
   //max-width: 1310px;

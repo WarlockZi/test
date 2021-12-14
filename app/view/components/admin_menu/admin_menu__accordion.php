@@ -1,6 +1,6 @@
 <ul class="admin-layout__sidebar accordion">
 
-    <?include ROOT.'/app/view/components/header/logo_VITEX_white.php'?>
+    <? include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
 
 
     <a class="sidebar__main neon" href="/adminsc">
@@ -41,13 +41,17 @@
         </label>
 		<ul>
 				<a class="level2 neon" href="/test/do">Проходить тесты
-<!--				<span class="sub">dd</span>-->
-<!--				<span class="sub">ss</span>-->
 				</a>
 				<a class="level2 neon" href="/adminsc/test/edit">Редактировать тесты</a>
 				<a data-id="10" class="level2" href="/adminsc/crm/testresults">Результаты тестов </a>
 		</ul>
 	</li>
+
+
+	<a class="sidebar__main neon" href="/">
+		<i class="fa fa-house-user"></i>На сайт
+	</a>
+
     <li class="admin-layout__sidebar-tail"></li>
 
 

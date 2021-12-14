@@ -5,6 +5,7 @@
   margin: 0 0 0 10px;
   align-items: center;
   height: 30px;
+  //flex: 1;
 
   a {
     width: 100px;
@@ -29,7 +30,7 @@
 }
 
 .logo_vitex {
-  //height: 100%;
+  height: 33px;
   //#v{  fill: red;}
   @include _600 {
     display: none;

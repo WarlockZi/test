@@ -1180,7 +1180,6 @@ async function autocomplete(input) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
-// import './top.scss'
 
 
 /***/ }),

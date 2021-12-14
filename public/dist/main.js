@@ -442,15 +442,14 @@ async function autocomplete(input) {
 
 /***/ }),
 
-/***/ "./public/src/components/header/header-adm.js":
-/*!****************************************************!*\
-  !*** ./public/src/components/header/header-adm.js ***!
-  \****************************************************/
+/***/ "./public/src/components/header/header.js":
+/*!************************************************!*\
+  !*** ./public/src/components/header/header.js ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _user_menu_admin_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user_menu_admin.scss */ "./public/src/components/header/user_menu_admin.scss");
-// import './top.scss'
+/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
 
 
 /***/ }),
@@ -503,10 +502,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/src/components/header/user_menu_admin.scss":
-/*!***********************************************************!*\
-  !*** ./public/src/components/header/user_menu_admin.scss ***!
-  \***********************************************************/
+/***/ "./public/src/components/header/header.scss":
+/*!**************************************************!*\
+  !*** ./public/src/components/header/header.scss ***!
+  \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -580,7 +579,7 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.scss */ "./public/src/Main/main.scss");
 /* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
-/* harmony import */ var _components_header_header_adm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/header-adm */ "./public/src/components/header/header-adm.js");
+/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
 /* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
 
 
