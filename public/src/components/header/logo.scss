@@ -22,18 +22,18 @@
     display: none;
   }
   @include _600 {
-    height: 70%;
-    display: flex;
+    display: none;
   }
-
 
 }
 
-.logo_vitex {
-  height: 33px;
-  //#v{  fill: red;}
-  @include _600 {
-    display: none;
+.header {
+
+  .logo_vitex {
+    height: 33px;
+    //@include _600 {
+    //  display: none;
+    //}
   }
 }
 
@@ -45,6 +45,7 @@
   font-size: 12px;
 
   @include _800 {
+    display: none;
     font-size: 10px;
     width: 90px;
   }

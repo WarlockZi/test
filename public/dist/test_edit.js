@@ -54,12 +54,12 @@ navigate(window.location.pathname);
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _do_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./do.scss */ "./public/src/Test/do.scss");
-/* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
+/* harmony import */ var _do_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./do.scss */ "./public/src/Test/do.scss");
+/* harmony import */ var _components_header_autocomplete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/header/autocomplete */ "./public/src/components/header/autocomplete.js");
+/* harmony import */ var _components_accordion_accordion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/accordion/accordion */ "./public/src/components/accordion/accordion.js");
 /* harmony import */ var _components_cookie_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/cookie/cookie */ "./public/src/components/cookie/cookie.js");
 /* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
-/* harmony import */ var _components_accordion_accordion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/accordion/accordion */ "./public/src/components/accordion/accordion.js");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
 /* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
 
 
@@ -72,27 +72,27 @@ __webpack_require__.r(__webpack_exports__);
 // })
 //Скрыть все вопросы
 
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').removeClass("flex1"); //Показть первый вопрос
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.question').removeClass("flex1"); //Показть первый вопрос
 
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question:first-child').addClass("flex1"); // Нажать первуюкнопку navigation
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.question:first-child').addClass("flex1"); // Нажать первуюкнопку navigation
 
 (0,_components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_6__.navInit)();
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[type="checkbox"]').on('click', function (e) {
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('[type="checkbox"]').on('click', function (e) {
   let a = e.target.labels[0];
   a.classList.toggle('pushed');
 });
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#prev').on('click', _model_test__WEBPACK_IMPORTED_MODULE_4__._test.prevQ);
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('#next').on('click', _model_test__WEBPACK_IMPORTED_MODULE_4__._test.nextQ); /////////////////////////////////////////////////////////////////////////////
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('#prev').on('click', _model_test__WEBPACK_IMPORTED_MODULE_4__._test.prevQ);
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('#next').on('click', _model_test__WEBPACK_IMPORTED_MODULE_4__._test.nextQ); /////////////////////////////////////////////////////////////////////////////
 ///////////  RESULTS  TEST  Закончить тест/////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 // если это результат теста, деактивирукм кнопку Закончить тест
 
 if (window.location.pathname.match(/result/)) {
-  let button = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-do__finish-btn').el[0];
+  let button = (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.test-do__finish-btn').el[0];
   button.classList.add('inactive');
 }
 
-(0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-do__finish-btn').on('click', async function (e) {
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.test-do__finish-btn').on('click', async function (e) {
   let button = e.target;
   if (button.classList.contains('inactive')) return false;
   if (button.id !== 'btnn') return false;
@@ -102,27 +102,27 @@ if (window.location.pathname.match(/result/)) {
     return;
   }
 
-  let corrAnswers = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/getCorrectAnswers', {});
+  let corrAnswers = await (0,_common__WEBPACK_IMPORTED_MODULE_5__.post)('/test/getCorrectAnswers', {});
   corrAnswers = JSON.parse(corrAnswers);
   let errorCnt = colorView(corrAnswers);
   let data = objToServer(errorCnt);
-  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_0__.post)('/test/cachePageSendEmail', data);
+  let res = await (0,_common__WEBPACK_IMPORTED_MODULE_5__.post)('/test/cachePageSendEmail', data);
 
   if (res) {
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("#btnn").el[0].href = location.href;
-    (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО";
+    (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)("#btnn").el[0].href = location.href;
+    (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО";
   }
 });
 
 function objToServer(errorCnt) {
   let obj = {
     token: document.querySelector('meta[name="token"]').getAttribute('content'),
-    questionCnt: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').el.length,
+    questionCnt: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.question').el.length,
     errorCnt: errorCnt,
     pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
-    testId: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('[data-test-id]').el[0].dataset.testId,
-    test_name: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.test-name').el[0].innerText,
-    userName: (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.user-menu__FIO').el[0].innerText
+    testId: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('[data-test-id]').el[0].dataset.testId,
+    test_name: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.test-name').el[0].innerText,
+    userName: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.user-menu__FIO').el[0].innerText
   };
   let formData = new FormData();
   formData.append('token', obj.token);
@@ -137,7 +137,7 @@ function objToServer(errorCnt) {
 }
 
 function colorView(correctAnswers) {
-  let q = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.question').el;
+  let q = (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.question').el;
   Array.from(q).map((question, i) => {
     let answers = question.querySelectorAll('.a'),
         errors = [];
@@ -155,15 +155,15 @@ function colorView(correctAnswers) {
     });
     let questId = +question.dataset['id'],
         // id question
-    paginItem = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.pagination [data-pagination="' + questId + '"]').el[0];
+    paginItem = (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.pagination [data-pagination="' + questId + '"]').el[0];
 
     if (errors.length) {
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(paginItem).addClass('redShadow');
+      (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)(paginItem).addClass('redShadow');
     } else {
-      (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)(paginItem).addClass('greenShadow');
+      (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)(paginItem).addClass('greenShadow');
     }
   });
-  return (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.redShadow').el.length;
+  return (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.redShadow').el.length;
 }
 
 function checkCorrectAnswers(correctAnser, input, label) {
@@ -701,15 +701,11 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _do__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./do */ "./public/src/Test/do.js");
-/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
-/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
-/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
-/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
+/* harmony import */ var _components_test_pagination_test_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/test-pagination/test-pagination */ "./public/src/components/test-pagination/test-pagination.js");
+ // import '../normalize.scss'
 
-
-
-
-
+ // import '../components/header/header'
+// import '../components/footer/footer.scss'
 
 /***/ }),
 
@@ -1261,18 +1257,6 @@ async function autocomplete(input) {
 
 /***/ }),
 
-/***/ "./public/src/components/header/header.js":
-/*!************************************************!*\
-  !*** ./public/src/components/header/header.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
-
-
-/***/ }),
-
 /***/ "./public/src/components/sortable.js":
 /*!*******************************************!*\
   !*** ./public/src/components/sortable.js ***!
@@ -1523,18 +1507,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************!*\
   !*** ./public/src/components/header/autocomplete.scss ***!
   \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/components/header/header.scss":
-/*!**************************************************!*\
-  !*** ./public/src/components/header/header.scss ***!
-  \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -5433,20 +5405,19 @@ var __webpack_exports__ = {};
   \**************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
-/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/header/header */ "./public/src/components/header/header.js");
-/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
-/* harmony import */ var _test_edit_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./test-edit.scss */ "./public/src/Test/test-edit.scss");
-/* harmony import */ var _test__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./test */ "./public/src/Test/test.js");
-/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./show */ "./public/src/Test/show.js");
-/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
-/* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
-/* harmony import */ var _model_answer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./model/answer */ "./public/src/Test/model/answer.js");
-/* harmony import */ var _components_sortable__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/sortable */ "./public/src/components/sortable.js");
-/* harmony import */ var _components_accordion_accordion__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/accordion/accordion */ "./public/src/components/accordion/accordion.js");
-/* harmony import */ var _Admin_components_main_menu_admin_main_menu__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Admin/components/main-menu/admin_main_menu */ "./public/src/Admin/components/main-menu/admin_main_menu.js");
-
+/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
+/* harmony import */ var _test_edit_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./test-edit.scss */ "./public/src/Test/test-edit.scss");
+/* harmony import */ var _test__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./test */ "./public/src/Test/test.js");
+/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./show */ "./public/src/Test/show.js");
+/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
+/* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
+/* harmony import */ var _model_answer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./model/answer */ "./public/src/Test/model/answer.js");
+/* harmony import */ var _components_sortable__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/sortable */ "./public/src/components/sortable.js");
+/* harmony import */ var _components_accordion_accordion__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/accordion/accordion */ "./public/src/components/accordion/accordion.js");
+/* harmony import */ var _Admin_components_main_menu_admin_main_menu__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Admin/components/main-menu/admin_main_menu */ "./public/src/Admin/components/main-menu/admin_main_menu.js");
+ // import '../components/header/header'
 
 
 
@@ -5462,39 +5433,39 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-_model_test__WEBPACK_IMPORTED_MODULE_8__._test.markCurrentInMenu(); // navigate(window.location.pathname)
+_model_test__WEBPACK_IMPORTED_MODULE_7__._test.markCurrentInMenu(); // navigate(window.location.pathname)
 
 
-_components_sortable__WEBPACK_IMPORTED_MODULE_11__.sortable.connect('.questions'); // при создании нового теста показать пустой вопрос
+_components_sortable__WEBPACK_IMPORTED_MODULE_10__.sortable.connect('.questions'); // при создании нового теста показать пустой вопрос
 
-if (!_model_question__WEBPACK_IMPORTED_MODULE_9__._question.questions().length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
-  _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showFirst();
+if (!_model_question__WEBPACK_IMPORTED_MODULE_8__._question.questions().length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
+  _model_question__WEBPACK_IMPORTED_MODULE_8__._question.showFirst();
 } // подсветка текущего теста
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_8__._test.update);
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test-path__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_8__._test.update); // $('.question__sort').on('change', validate.sort)
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.test__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_7__._test.update);
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.test-path__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_7__._test.update); // $('.question__sort').on('change', validate.sort)
 
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__save').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.save);
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__show-answers').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.showAnswers);
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__delete').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.delete);
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__create-button').on('click', _model_question__WEBPACK_IMPORTED_MODULE_9__._question.create);
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.answer__delete').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_10__._answer.del);
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.answer__create-button').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_10__._answer.create);
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
-  els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__save').el,
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__save').on('click', _model_question__WEBPACK_IMPORTED_MODULE_8__._question.save);
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__show-answers').on('click', _model_question__WEBPACK_IMPORTED_MODULE_8__._question.showAnswers);
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__delete').on('click', _model_question__WEBPACK_IMPORTED_MODULE_8__._question.delete);
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__create-button').on('click', _model_question__WEBPACK_IMPORTED_MODULE_8__._question.create);
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.answer__delete').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_9__._answer.del);
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.answer__create-button').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_9__._answer.create);
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__save').el,
   message: 'Сохранить вопросы и ответы'
 });
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
-  els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__delete').el,
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__delete').el,
   message: 'Удалить вопросы и ответы'
 });
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
-  els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.question__show-answers').el,
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__show-answers').el,
   message: 'Показать ответы'
 });
-(0,_common__WEBPACK_IMPORTED_MODULE_7__.addTooltip)({
-  els: (0,_common__WEBPACK_IMPORTED_MODULE_7__.$)('.test-edit-menu__params').el,
+(0,_common__WEBPACK_IMPORTED_MODULE_6__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.test-edit-menu__params').el,
   message: 'Редактировать'
 });
 })();

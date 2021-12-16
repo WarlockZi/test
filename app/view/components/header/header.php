@@ -15,6 +15,7 @@
 
 <!--	--><?// include ROOT . '/app/view/components/header/search.php';?>
 	<? include ROOT . '/app/view/components/header/phone.php'; ?>
+	<? include ROOT . '/app/view/components/header/location.php'; ?>
 
 	<?include ROOT.'/app/view/components/header/user_menu.php'?>
 

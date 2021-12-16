@@ -1,6 +1,6 @@
 import '../normalize.scss'
 
-import '../components/header/header'
+// import '../components/header/header'
 import '../components/footer/footer.scss'
 
 import './test-edit.scss'
@@ -23,6 +23,7 @@ _test.markCurrentInMenu()
 
 // navigate(window.location.pathname)
 sortable.connect('.questions')
+
 
 // при создании нового теста показать пустой вопрос
 if (!_question.questions().length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {

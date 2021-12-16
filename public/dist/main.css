@@ -200,6 +200,45 @@ main {
   flex-flow: column;
 }
 
+.banner {
+  display: flex;
+  flex-flow: column;
+  align-items: start;
+}
+.banner .banner-text {
+  align-items: flex-start;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  margin: 12% 0 12% 30px;
+  color: #2a2a2a;
+  max-width: 35%;
+}
+.banner.gloves {
+  background: url(/public/dist/5bd99bdcb1b5c3bdd9aa.jpg) no-repeat;
+  background-position: center right;
+  background-size: cover;
+}
+.banner.boot-cover {
+  background: url(/public/dist/106d4ffe3378d45e076f.jpg) no-repeat;
+  background-position: center left;
+  background-size: cover;
+  align-items: flex-end;
+}
+.banner h1 {
+  font-size: xx-large;
+  text-shadow: 0px 0px 8px #ffffff, 0 0 12px #ffffff;
+}
+.banner p {
+  background: rgba(255, 255, 255, 0.5);
+}
+.banner .CTA {
+  padding: 15px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid #1bbc9b;
+}
+
 .card {
   width: 50%;
   margin: 65px auto;
@@ -209,6 +248,7 @@ main {
 }
 .card p {
   font-size: 1rem;
+  line-height: 2rem;
 }
 @media (max-width: 300px) {
   .card > h1, .card > h2 {
@@ -346,18 +386,12 @@ main {
 }
 @media (max-width: 600px) {
   .logo_square {
-    height: 70%;
-    display: flex;
+    display: none;
   }
 }
 
-.logo_vitex {
+.header .logo_vitex {
   height: 33px;
-}
-@media (max-width: 600px) {
-  .logo_vitex {
-    display: none;
-  }
 }
 
 .logo__description {
@@ -369,6 +403,7 @@ main {
 }
 @media (max-width: 800px) {
   .logo__description {
+    display: none;
     font-size: 10px;
     width: 90px;
   }
@@ -379,6 +414,21 @@ main {
   }
 }
 
+.location {
+  font-size: 12px;
+  padding: 0 15px;
+  max-width: 105px;
+  position: relative;
+}
+.location svg {
+  position: absolute;
+  left: -8px;
+  top: 30%;
+  width: 15px;
+  height: 15px;
+  stroke: #1bbc9b;
+}
+
 /***** Всплывающие телефоны */
 .phone {
   position: relative;
@@ -387,17 +437,11 @@ main {
   font: bold 17px/21px "Proxima Nova", sans-serif;
   padding: 0 25px;
   white-space: nowrap;
-  margin: 0 auto;
 }
 @media (max-width: 500px) {
   .phone {
     font: bold 12px/17px "Proxima Nova", sans-serif;
   }
-}
-
-.phone > a {
-  position: relative;
-  color: #4e4e4e;
 }
 
 .phone svg {
@@ -416,8 +460,15 @@ main {
   }
 }
 
+.phone > a {
+  position: relative;
+  color: #4e4e4e;
+}
 .phone > a:after {
   content: "";
+  position: absolute;
+  left: -25px;
+  top: 30%;
   display: inline-block;
   border: 5px solid transparent;
   border-top-color: #1bbc9b;
@@ -491,18 +542,40 @@ main {
 }
 
 .header-catalog-menu {
+  position: sticky;
+  top: 0;
+  background: rgba(27, 188, 155, 0.85);
+  min-height: 40px;
   display: flex;
-  position: relative;
-  max-width: 1310px;
-  width: 100%;
-  margin: auto;
-}
-@media (max-width: 600px) {
-  .header-catalog-menu {
-    flex-flow: column;
-  }
 }
 
+.header-catalog-menu__wrap {
+  max-width: 1310px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: end;
+}
+
+.utils {
+  display: flex;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+.utils svg {
+  stroke: white;
+  stroke-width: 3px;
+  width: 17px;
+  height: 17px;
+  padding: 0 15px;
+}
+.utils .search {
+  position: initial;
+  height: initial;
+  margin: initial;
+  display: initial;
+}
 .h-cat {
   cursor: pointer;
   text-transform: uppercase;
@@ -511,15 +584,12 @@ main {
   align-items: center;
   justify-content: center;
   flex: 1;
-  background: #1bbc9b;
   color: #fff;
   font: 600 17px/17px intro, "Proxima Nova", sans-serif;
-  padding: 13px;
 }
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .h-cat {
-    padding: 4px;
-    margin-bottom: 1px;
+    display: none;
   }
 }
 .h-cat:first-child ul {
@@ -584,12 +654,9 @@ main {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 15px;
   font-size: 17px;
   cursor: pointer;
   color: #2b303a;
-  border: 1px solid grey;
-  border-radius: 4px;
   margin-right: 10px;
 }
 @media (max-width: 500px) {
@@ -636,13 +703,17 @@ main {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 15px;
   font-size: 17px;
   cursor: pointer;
   color: #2b303a;
+  margin-right: 10px;
   border: 1px solid grey;
   border-radius: 4px;
-  margin-right: 10px;
+  padding: 5px 15px;
+}
+.guest-menu svg {
+  width: 17px;
+  padding-right: 10px;
 }
 .guest-menu .guest-menu__menu {
   position: absolute;
@@ -672,13 +743,35 @@ main {
   display: flex;
 }
 
-.header__info {
-  padding: 12px 0 10px 0;
+header {
+  display: flex;
+  flex: 0 0 auto;
+  background: #fff;
+  width: 100%;
+  height: 80px;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
   display: flex;
   position: relative;
   align-items: center;
+  margin: 10px 20px;
+  justify-content: space-between;
+  max-width: 1310px;
   width: 100%;
-  margin: auto;
+}
+@media (max-width: 600px) {
+  .header {
+    padding: 0;
+  }
+}
+
+.header__info {
+  display: flex;
+  position: relative;
+  align-items: center;
   max-width: 1310px;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -687,31 +780,6 @@ main {
   .header__info {
     padding: 0;
   }
-}
-
-.header {
-  padding: 12px 0 10px 0;
-  display: flex;
-  position: relative;
-  align-items: center;
-  width: 100%;
-  margin: auto;
-  justify-content: flex-start;
-}
-@media (max-width: 600px) {
-  .header {
-    padding: 0;
-  }
-}
-
-header {
-  display: flex;
-  flex: 0 0 auto;
-  background: #fff;
-  width: 100%;
-  box-shadow: 0px 6px 10px 0px #d2d2d2;
-  margin-bottom: 20px;
-  flex-flow: column;
 }
 #cookie-notice {
   color: white;

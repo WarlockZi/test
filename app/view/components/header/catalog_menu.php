@@ -1,27 +1,42 @@
 <div class="header-catalog-menu">
-	<? foreach ($list as $mainItem): ?>
-		<div class='h-cat'><?= $mainItem['name']; ?>
+	<div class="header-catalog-menu__wrap">
+		<? foreach ($list as $mainItem): ?>
+			<div class='h-cat'><?= $mainItem['name']; ?>
+				<ul>
+					<? if (isset($mainItem['childs'])): ?>
+						<? foreach ($mainItem['childs'] as $item): ?>
+							<li>
+								<a href="/<?= $item['alias'] ?>"><?= $item['name'] ?></a>
+							</li>
+						<? endforeach; ?>
+					<? endif; ?>
+				</ul>
+
+			</div>
+		<? endforeach; ?>
+
+
+		<div class='h-cat'>Акции
 			<ul>
-				<? if (isset($mainItem['childs'])): ?>
-					<? foreach ($mainItem['childs'] as $item): ?>
-						<li>
-							<a href="/<?= $item['alias'] ?>"><?= $item['name'] ?></a>
-						</li>
-					<? endforeach; ?>
-				<? endif; ?>
+				<li>
+					<a href="/rasprodazha">распродажа</a>
+				</li>
+
 			</ul>
-
 		</div>
-	<? endforeach; ?>
 
+		<div class='utils'>
+			<div class="search">
+				<? include ICONS . '/feather/search.svg' ?>
+			</div>
 
-	<div class='h-cat'>Акции
-		<ul>
-			<li>
-				<a href="/rasprodazha">распродажа</a>
-			</li>
+			<a href="/cart">
+				<? include ICONS . '/feather/shopping-cart.svg' ?>
+			</a>
 
-		</ul>
+			<div class="gamburger">
+				<? include ICONS . '/feather/menu.svg' ?>
+			</div>
+		</div>
 	</div>
-
 </div>

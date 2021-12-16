@@ -1,10 +1,11 @@
 @import '../../mixin_media';
 @import './partials/variables';
+@import "../../Admin/layout/sidebar/sidebar";
 // colors, fonts etc...
 @import './partials/layout'; // responsive grid and media queries
 
 .accordion {
-  min-width: 250px;
+  min-width: 200px;
   display: flex;
   flex-flow: column;
 
@@ -14,6 +15,7 @@
   }
 
   .update {
+    content: 'F19B9';
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -22,6 +24,7 @@
     border: 1px solid #4d5158;
     border-radius: 5px;
     background: url("../icons/edit.svg") no-repeat;
+
 
     &:after {
       display: none;
@@ -254,7 +257,7 @@
 }
 
 .test-edit__accordion {
-  max-width: 250px;
+  max-width: 200px;
   @include _800 {
     min-width: 100%;
   }
@@ -291,10 +294,6 @@
 
 .admin-layout__sidebar.accordion {
 
-  .fa {
-    margin-left: -40px;
-    padding-right: 12px;
-  }
 
   label {
     &::before {

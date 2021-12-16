@@ -1,6 +1,5 @@
 @import "../mixin_media.scss";
 @import '../normalize.scss';
-
 @import '../components/footer/footer.scss';
 @import '../components/forms.scss';
 
@@ -14,20 +13,70 @@ main {
   flex-flow: column;
 }
 
+.banner {
+  display: flex;
+  flex-flow: column;
+  align-items: start;
+
+  .banner-text {
+    align-items: flex-start;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    margin: 12% 0 12% 30px;
+    color: #2a2a2a;
+    max-width: clamp(29%, 38%, 35%);
+  }
+
+  &.gloves {
+    background: url("/pic/site.jpg") no-repeat;
+    background-position: center right;
+    background-size: cover;
+  }
+
+  &.boot-cover {
+    background: url("/pic/site-bootcover-824.jpg") no-repeat;
+    background-position: center left;
+    background-size: cover;
+    align-items: flex-end;
+
+  }
+
+
+  h1 {
+    font-size: xx-large;
+    text-shadow: 0px 0px 8px #ffffff, 0 0 12px #ffffff;
+  }
+
+  p {
+    background: rgba(255, 255, 255, .5);
+  }
+
+  .CTA {
+    padding: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid $color-main;
+  }
+
+}
+
 .card {
   width: 50%;
   margin: 65px auto;
 
-  h1, h2, p{
+  h1, h2, p {
     color: #4e4e4e;
   }
 
-  
+
   p {
-    font-size: 1rem
+    font-size: 1rem;
+    line-height: 2rem;
   }
+
   @include _300 {
-    & > h1,  & > h2{
+    & > h1, & > h2 {
       font-size: 12px;
     }
     & > p {
@@ -40,46 +89,4 @@ main {
     margin: 30px auto;
   }
 
-
-
 }
-
-//.site-wrapper {
-//  height: 100%;
-//}
-//
-//.contact p,
-//.contact H3 {
-//  margin: 0;
-//  padding: 0;
-//}
-//
-//.d-content {
-//  max-width: 800px;
-//  margin: auto;
-//}
-//
-//.art {
-//  margin: 10px 0;
-//  padding: 1.14rem 1.14rem;
-//  font: normal 19px Verdana, Arial, sans;
-//  color: #555;
-//  text-align: right;
-//}
-//
-//.card-left .row {
-//  justify-content: space-between;
-//}
-//
-//
-//.site {
-//  position: relative;
-//}
-//
-//.site .wrap {
-//  margin: 0 auto;
-//  padding: 30px 10px;
-//  margin-bottom: 9px;
-//  max-width: 1310px;
-//  box-sizing: border-box;
-//}

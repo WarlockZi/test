@@ -1,6 +1,20 @@
-.sidebar__main{
-  svg{
-    position: absolute;
-    left: 20px;
-  }
+.admin-layout__sidebar {
+    svg{
+      position: absolute;
+      left: 20px;
+      width: 15px;
+      height: 15px;
+
+      #house,
+      #settings
+      {
+        stroke: white;
+      }
+
+      #house
+      {
+        fill: white;
+      }
+    }
+
 }

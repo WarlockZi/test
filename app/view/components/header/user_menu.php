@@ -1,7 +1,7 @@
 <? if (!isset($user)): ?>
 
     <div class="guest-menu" aria-label="login">
-        <?= include ROOT . '/app/view/components/icons/userIcon.php'; ?>
+        <? include ROOT . '/public/src/components/icons/user.svg'; ?>
         Вход
         <? if (!isset($user)): ?>
             <ul class="guest-menu__menu">

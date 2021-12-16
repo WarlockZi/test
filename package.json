@@ -40,6 +40,7 @@
     "webpack-dev-server": "^4.6.0"
   },
   "dependencies": {
+    "@mdi/font": "^6.5.95",
     "font-awesome-v5-icons": "^1.1.2",
     "sass": "^1.45.0",
     "sortablejs": "^1.14.0"

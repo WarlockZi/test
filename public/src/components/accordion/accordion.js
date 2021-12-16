@@ -1,5 +1,5 @@
 import './accordion.scss'
-import {$, addTooltip} from '../../common'
+import {$} from '../../common'
 import showCustomMenu from "./customContextMenu/customMenu";
 
 $('.accordion label').on('click', handle)
