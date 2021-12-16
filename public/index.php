@@ -12,6 +12,7 @@ require_once "../vendor/autoload.php";
 error_reporting(E_ALL);
 define('DEV', $_ENV['MODE'] === 'dev'); //0-не выводить ошибки
 define('ROOT', dirname(__DIR__));
+define('ICONS', ROOT.'/app/view/components/icons');
 if (DEV) {
 	ini_set('display_errors', 1);
 }

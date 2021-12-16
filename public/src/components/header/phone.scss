@@ -9,16 +9,11 @@
   font: bold 17px/21px 'Proxima Nova', sans-serif;
   padding: 0 25px;
   white-space: nowrap;
-  margin: 0 auto;
   @include _500 {
     font: bold 12px/17px 'Proxima Nova', sans-serif;
   }
 }
 
-.phone > a {
-  position: relative;
-  color: #4e4e4e;
-}
 .phone svg {
   position: absolute;
   left: -20px;
@@ -33,101 +28,84 @@
   }
 }
 
-//.phone > a:before {
-//  content: '\1F57B';
-//  position: absolute;
-//  width: 26px;
-//  height: 26px;
-//  left: -20px;
-//  top: -4px;
-//  color: $color-main;
-//  background-position: 0 -44px;
-//  transform: rotate(-30deg);
-//  font-size: 27px;
-//
-//}
-//.phone > a:after{
-//  content: '';
-//  position: absolute;
-//  width: 8px;
-//  height: 8px;
-//  right: -20px;
-//  top: 3px;
-//  border-bottom: 3px solid $color-main;
-//  border-right: 3px solid $color-main;
-//  transform: rotate(45deg);
-//}
+.phone > a {
+  position: relative;
+  color: #4e4e4e;
 
-.phone > a:after {
-  content: '';
-  display: inline-block;
-  border: 5px solid transparent;
-  border-top-color: $color-main;
-  margin-left: 9px;
-  @include _500{
+  &:after {
+    content: '';
     position: absolute;
-    top: 5px;
+    left: -25px;
+    top: 30%;
+    display: inline-block;
+    border: 5px solid transparent;
+    border-top-color: $color-main;
+    margin-left: 9px;
+    @include _500 {
+      position: absolute;
+      top: 5px;
+    }
   }
 }
 
-.phone:hover .phone__popup-inner {
-  padding: 25px 30px;
-  height: auto;
-  overflow: visible;
-}
+  .phone:hover .phone__popup-inner {
+    padding: 25px 30px;
+    height: auto;
+    overflow: visible;
+  }
 
-.phone__popup {
-  position: absolute;
-  left: -15%;
-  bottom: -10px;
-  padding-top: 0;
-  height: 0;
-  z-index: 6;
-}
+  .phone__popup {
+    position: absolute;
+    left: -15%;
+    bottom: -10px;
+    padding-top: 0;
+    height: 0;
+    z-index: 6;
+  }
 
-.phone__popup-inner {
-  width: 200px;
-  background: #fff;
-  box-shadow: 0 6px 12px hsl(168,10%,60%);
-  font: 15px/19px 'Proxima Nova', sans-serif;
-  color: #181617;
-  padding: 0 30px;
-  height: 0;
-  overflow: hidden;
-  border-radius: 2px;
-  position: relative;
-  transition: all 0.3s;
-}
+  .phone__popup-inner {
+    width: 200px;
+    background: #fff;
+    box-shadow: 0 6px 12px hsl(168, 10%, 60%);
+    font: 15px/19px 'Proxima Nova', sans-serif;
+    color: #181617;
+    padding: 0 30px;
+    height: 0;
+    overflow: hidden;
+    border-radius: 2px;
+    position: relative;
+    transition: all 0.3s;
+  }
 
-.phone__popup-inner:before {
-  content: '';
-  border-bottom: 10px solid #fff;
-  border-left: 11px solid transparent;
-  border-right: 11px solid transparent;
-  position: absolute;
-  left: 192px;
-  top: -10px;
-}
+  .phone__popup-inner:before {
+    content: '';
+    border-bottom: 10px solid #fff;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    position: absolute;
+    left: 192px;
+    top: -10px;
+  }
 
-.phone__popup-head {
-  border-bottom: 1px solid #ebebeb;
-  padding-bottom: 15px;
-  margin-bottom: 16px;
-  white-space: initial;
-}
+  .phone__popup-head {
+    border-bottom: 1px solid #ebebeb;
+    padding-bottom: 15px;
+    margin-bottom: 16px;
+    white-space: initial;
+  }
 
-.phone__popup p {
-  margin: 0 0 11px;
-}
+  .phone__popup p {
+    margin: 0 0 11px;
+  }
 
-.phone__popup-phones {
-  margin: 0;
-}
+  .phone__popup-phones {
+    margin: 0;
+  }
 
-.phone__popup-phones a {
-  font: bold 17px/21px 'Proxima Nova', sans-serif;
-  color: #343133;
-  line-height: 1.7;
-}
+  .phone__popup-phones a {
+    font: bold 17px/21px 'Proxima Nova', sans-serif;
+    color: #343133;
+    line-height: 1.7;
+  }
 
 

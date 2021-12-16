@@ -1,6 +1,6 @@
 <div class='phone'>
 	<a href="tel:+79815068191">
-		<?= include ROOT . '/app/view/components/icons/phone.php' ?>
+<!--		--><?//= include ROOT . '/app/view/components/icons/phone.php' ?>
 		8 (981) 506-81-91</a>
 	<div class="phone__popup">
 		<div class="phone__popup-inner">

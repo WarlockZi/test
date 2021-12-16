@@ -1,0 +1,18 @@
+@import "../../mixin_media";
+@import "../../var";
+
+.location{
+  font-size: 12px;
+  padding: 0 15px;
+  max-width: 105px;
+  position: relative;
+
+  svg{
+    position: absolute;
+    left: -8px;
+    top: 30%;
+    width: 15px;
+    height: 15px;
+    stroke: $color-main;
+  }
+}

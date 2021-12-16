@@ -1,17 +1,48 @@
 @import "../../var";
 @import "../../mixin_media";
 
-.header-catalog-menu {
+.header-catalog-menu{
+  position: sticky;
+  top: 0;
+  background: rgba(27, 188, 155, 0.85);
+  min-height: 40px;
   display: flex;
-  position: relative;
+}
+.header-catalog-menu__wrap {
   max-width: 1310px;
   width: 100%;
-  margin:auto;
-  @include _600{
-    flex-flow: column;
-  }
+  margin:0 auto;
+  display: flex;
+  justify-content: end;
 }
 
+.utils{
+  display: flex;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+
+  svg{
+    stroke: white;
+    stroke-width: 3px;
+    width: 17px;
+    height: 17px;
+    padding: 0 15px;
+  }
+
+  .search{
+    position: initial;
+    height: initial;
+    margin: initial;
+    display: initial;
+  }
+  .cart{
+
+  }
+  .menu{
+
+  }
+}
 .h-cat {
   cursor: pointer;
   text-transform: uppercase;
@@ -20,13 +51,12 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  background: $color-main;
   color: #fff;
   font: 600 17px/17px intro, 'Proxima Nova', sans-serif;
-  padding: 13px;
-  @include _600{
-    padding: 4px;
-    margin-bottom: 1px;
+  //padding: 13px;
+
+  @include _800{
+    display: none;
   }
 
   &:first-child ul {

@@ -1,55 +1,47 @@
 @import "logo";
+@import "location";
 @import "phone";
 @import "header-catalog-menu";
 @import "user_menu";
-
-
-
-@mixin header__info {
-  padding: 12px 0 10px 0;
-  display: flex;
-  position: relative;
-  //height: 45px;
-  align-items: center;
-  width: 100%;
-  margin: auto;
-  @include _600 {
-    padding: 0;
-    //flex-wrap: wrap;
-  }
-}
-
-.header__info {
-  @include header__info;
-  max-width: 1310px;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-//.admin-header__info {
-//  @include header__info;
-//  justify-content: flex-start;
-//  //max-width: 1310px;
-//}
-
-.header {
-  @include header__info;
-  justify-content: flex-start;
-  //max-width: 1310px;
-}
 
 header {
   display: flex;
   flex: 0 0 auto;
   background: #fff;
   width: 100%;
-  box-shadow: 0px 6px 10px 0px #d2d2d2;
-  margin-bottom: 20px;
-  flex-flow: column;
+  height: 80px;
+  align-items: center;
+  justify-content: center;
 }
-//
-//hr {
-//  margin: 10px 0;
-//  border: 0;
-//  border-top: 1px solid #ecedef;
-//}
+
+.header {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin: 10px 20px;
+  justify-content: space-between;
+  max-width: 1310px;
+  width: 100%;
+  @include _600 {
+    padding: 0;
+  }
+}
+
+.header__info {
+  display: flex;
+  position: relative;
+  align-items: center;
+  max-width: 1310px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  @include _600 {
+    padding: 0;
+  }
+}
+
+
+
+
+
+
+

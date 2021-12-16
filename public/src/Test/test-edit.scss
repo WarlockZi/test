@@ -284,18 +284,21 @@
   margin-left: clamp(10px, 20%, 50px);
 }
 
-.test-name {
-  text-transform: uppercase;
-  font-weight: 800;
-  margin-bottom: 2rem ;
-  color: #36393e;
-}
+
 
 .test-edit__title {
   display: flex;
   flex-wrap: wrap;
   position: relative;
   margin: 0px 0 20px 2px;
+
+  .test-name {
+    text-transform: uppercase;
+    font-weight: 800;
+    margin: 0 10px 2rem 0;
+    color: #36393e;
+    font-size: 1rem;
+  }
 
   .test-edit__test-settings {
     padding: 7px 8px;

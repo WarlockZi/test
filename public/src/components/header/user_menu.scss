@@ -5,12 +5,9 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 15px;
   font-size: 17px;
   cursor: pointer;
   color: #2b303a;
-  border: 1px solid grey;
-  border-radius: 4px;
   margin-right: 10px;
 }
 
@@ -37,10 +34,8 @@
 
   //&:after {
   //  content: '☰';
-  //  display: block;
-  //  padding: 3px 8px;
-  //  align-self: center;
   //}
+
   .user-menu__menu {
     display: none;
     flex-flow: column;
@@ -70,6 +65,14 @@
 
 .guest-menu {
   @include user-menu;
+  border: 1px solid grey;
+  border-radius: 4px;
+  padding: 5px 15px;
+
+  svg{
+    width: 17px;
+    padding-right: 10px;
+  }
 
   .guest-menu__menu {
     position: absolute;

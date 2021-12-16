@@ -1,11 +1,12 @@
-import {post, $, fetchW} from '../common'
 import './do.scss'
 import '../components/header/autocomplete'
-import '../components/cookie/cookie'
-import {_test} from "./model/test"
 import '../components/accordion/accordion'
+import '../components/cookie/cookie'
 
+import {_test} from "./model/test"
+import {post, $, fetchW} from '../common'
 import {navInit} from '../components/test-pagination/test-pagination'
+
 // acc.init({
 //     api:'test-menu',
 // })

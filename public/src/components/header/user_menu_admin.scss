@@ -1,13 +1,6 @@
 @import "../../var";
 @import "../../mixin_media";
 
-@import "logo";
-@import "phone";
-//@import "user_menu";
-@import "header-catalog-menu";
-
-
-
 .admin-layout__header {
   background: #fff;
   display: flex;
@@ -28,12 +21,9 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 15px;
   font-size: 17px;
   cursor: pointer;
   color: #2b303a;
-  border: 1px solid grey;
-  border-radius: 4px;
   margin-right: 10px;
 
   @include _500{
@@ -66,12 +56,12 @@
   //  align-self: center;
   //}
 
-  &:hover > .guest-menu {
+  &:hover > .user-menu__menu {
     display: flex;
   }
 }
 
-.nav {
+.user-menu__menu {
   display: none;
   flex-flow: column;
   border: 1px solid #eee;
