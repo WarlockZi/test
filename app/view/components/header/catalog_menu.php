@@ -38,5 +38,7 @@
 				<? include ICONS . '/feather/menu.svg' ?>
 			</div>
 		</div>
+
 	</div>
+
 </div>

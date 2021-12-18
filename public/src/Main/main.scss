@@ -3,6 +3,7 @@
 @import '../components/footer/footer.scss';
 @import '../components/forms.scss';
 
+$color-title: #2a2a2a;
 
 main {
   display: flex;
@@ -18,18 +19,8 @@ main {
   flex-flow: column;
   align-items: start;
 
-  .banner-text {
-    align-items: flex-start;
-    display: flex;
-    flex-flow: column;
-    justify-content: space-between;
-    margin: 12% 0 12% 30px;
-    color: #2a2a2a;
-    max-width: clamp(29%, 38%, 35%);
-  }
-
   &.gloves {
-    background: url("/pic/site.jpg") no-repeat;
+    background: url("/pic/site-gloves.jpg") no-repeat;
     background-position: center right;
     background-size: cover;
   }
@@ -39,27 +30,196 @@ main {
     background-position: center left;
     background-size: cover;
     align-items: flex-end;
-
   }
 
+  &.endosirynge {
+    background: url("/pic/site-endosirynge-green.jpg") no-repeat;
+    background-position: center right;
+    background-size: cover;
+  }
+
+
+  .banner__container {
+    background: rgba(255, 255, 255, .3);
+
+    &.right {
+      padding: 12% 10px 3% 80px;
+      //max-width: 24%;
+      margin-left: 21%;
+      @include _600 {
+        margin-left: 0%;
+        //max-width: 100%;
+
+      }
+    }
+
+    &.left {
+      padding: 8% 80px 3% 10px;
+      margin-right: 21%;
+      @include _600 {
+        margin-right: 0;
+
+      }
+    }
+
+    @include _900 {
+      padding: 12% 40px 8% 40px;
+    }
+    @include _600 {
+      padding: 8% 15px 6% 15px;
+    }
+    @include _300 {
+      padding: 5% 20px 3% 20px;
+    }
+  }
+
+  .banner__text {
+    align-items: flex-start;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    color: $color-title;
+    margin-bottom: 8%;
+    margin-top: 3%;
+    max-width: 35%;
+    @include _1000 {
+      max-width: 50%;
+    }
+
+    @include _900 {
+    }
+    @include _600 {
+      max-width: 55%;
+    }
+    @include _300 {
+      max-width: 85%;
+    }
+
+  }
 
   h1 {
     font-size: xx-large;
-    text-shadow: 0px 0px 8px #ffffff, 0 0 12px #ffffff;
+    margin: 0 0 35px;
+    @include _600 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    @include _300 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
   }
 
   p {
-    background: rgba(255, 255, 255, .5);
+    margin: 0;
+    line-height: 25px;
+    @include _600 {
+      font-size: 12px;
+      line-height: 17px;
+    }
+    @include _300 {
+      font-size: 10px;
+      line-height: 10px;
+    }
+
   }
 
-  .CTA {
+  .banner__CTA {
+    margin-top: 10px;
     padding: 15px;
     text-transform: uppercase;
     cursor: pointer;
     border: 1px solid $color-main;
+    background: rgba(255, 255, 255, .3);
+    transition: background 500ms, color 300ms;
+
+    &:hover {
+      background: $color-main;
+      color: #ffffff;
+
+    }
+
+    &.right {
+      align-self: flex-end;
+    }
+
+    &.left {
+      align-self: flex-start;
+    }
+
+    @include _600 {
+      padding: 10px;
+      font-size: 11px;
+    }
+    @include _300 {
+      padding: 7px;
+      font-size: 10px;
+    }
+
   }
 
 }
+
+.advantages {
+  display: flex;
+  justify-content: center;
+
+  .advantages__wrap {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 70%;
+
+
+    .advantages__title {
+      font-size: xx-large;
+      font-weight: 600;
+      margin: 65px 0;
+      color: $color-title;
+
+    }
+
+    .advantage__cards-wrap {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .delivery {
+      svg {
+
+      }
+    }
+
+    .assortiment {
+      svg {
+
+      }
+    }
+
+    .certificates {
+      svg {
+
+      }
+    }
+
+    .result {
+      svg {
+
+      }
+
+    }
+
+    .advantage__card {
+      flex: 1 0 50%;
+      padding: 40px;
+      box-sizing: border-box;
+      border: green 1px solid;
+    }
+
+
+  }
+}
+
 
 .card {
   width: 50%;

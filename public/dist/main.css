@@ -205,15 +205,6 @@ main {
   flex-flow: column;
   align-items: start;
 }
-.banner .banner-text {
-  align-items: flex-start;
-  display: flex;
-  flex-flow: column;
-  justify-content: space-between;
-  margin: 12% 0 12% 30px;
-  color: #2a2a2a;
-  max-width: 35%;
-}
 .banner.gloves {
   background: url(/public/dist/5bd99bdcb1b5c3bdd9aa.jpg) no-repeat;
   background-position: center right;
@@ -225,18 +216,161 @@ main {
   background-size: cover;
   align-items: flex-end;
 }
+.banner.endosirynge {
+  background: url(/public/dist/5a92014c31bf06ae62d7.jpg) no-repeat;
+  background-position: center right;
+  background-size: cover;
+}
+.banner .banner__container {
+  background: rgba(255, 255, 255, 0.3);
+}
+.banner .banner__container.right {
+  padding: 12% 10px 3% 80px;
+  margin-left: 21%;
+}
+@media (max-width: 600px) {
+  .banner .banner__container.right {
+    margin-left: 0%;
+  }
+}
+.banner .banner__container.left {
+  padding: 8% 80px 3% 10px;
+  margin-right: 21%;
+}
+@media (max-width: 600px) {
+  .banner .banner__container.left {
+    margin-right: 0;
+  }
+}
+@media (max-width: 900px) {
+  .banner .banner__container {
+    padding: 12% 40px 8% 40px;
+  }
+}
+@media (max-width: 600px) {
+  .banner .banner__container {
+    padding: 8% 15px 6% 15px;
+  }
+}
+@media (max-width: 300px) {
+  .banner .banner__container {
+    padding: 5% 20px 3% 20px;
+  }
+}
+.banner .banner__text {
+  align-items: flex-start;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  color: #2a2a2a;
+  margin-bottom: 8%;
+  margin-top: 3%;
+  max-width: 35%;
+}
+@media (max-width: 1000px) {
+  .banner .banner__text {
+    max-width: 50%;
+  }
+}
+@media (max-width: 600px) {
+  .banner .banner__text {
+    max-width: 55%;
+  }
+}
+@media (max-width: 300px) {
+  .banner .banner__text {
+    max-width: 85%;
+  }
+}
 .banner h1 {
   font-size: xx-large;
-  text-shadow: 0px 0px 8px #ffffff, 0 0 12px #ffffff;
+  margin: 0 0 35px;
+}
+@media (max-width: 600px) {
+  .banner h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 300px) {
+  .banner h1 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
 }
 .banner p {
-  background: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  line-height: 25px;
 }
-.banner .CTA {
+@media (max-width: 600px) {
+  .banner p {
+    font-size: 12px;
+    line-height: 17px;
+  }
+}
+@media (max-width: 300px) {
+  .banner p {
+    font-size: 10px;
+    line-height: 10px;
+  }
+}
+.banner .banner__CTA {
+  margin-top: 10px;
   padding: 15px;
   text-transform: uppercase;
   cursor: pointer;
   border: 1px solid #1bbc9b;
+  background: rgba(255, 255, 255, 0.3);
+  transition: background 500ms, color 300ms;
+}
+.banner .banner__CTA:hover {
+  background: #1bbc9b;
+  color: #ffffff;
+}
+.banner .banner__CTA.right {
+  align-self: flex-end;
+}
+.banner .banner__CTA.left {
+  align-self: flex-start;
+}
+@media (max-width: 600px) {
+  .banner .banner__CTA {
+    padding: 10px;
+    font-size: 11px;
+  }
+}
+@media (max-width: 300px) {
+  .banner .banner__CTA {
+    padding: 7px;
+    font-size: 10px;
+  }
+}
+
+.advantages {
+  display: flex;
+  justify-content: center;
+}
+.advantages .advantages__wrap {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  width: 70%;
+}
+.advantages .advantages__wrap .advantages__title {
+  font-size: xx-large;
+  font-weight: 600;
+  margin: 65px 0;
+  color: #2a2a2a;
+}
+.advantages .advantages__wrap .advantage__cards-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.advantages .advantages__wrap .advantage__card {
+  flex: 1 0 50%;
+  padding: 40px;
+  box-sizing: border-box;
+  border: green 1px solid;
 }
 
 .card {
