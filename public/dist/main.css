@@ -1,4 +1,8 @@
 @charset "UTF-8";
+:root {
+  --color-main: #6ca3fe;
+}
+
 html {
   height: 100%;
   overflow-x: hidden;
@@ -217,7 +221,7 @@ main {
   align-items: flex-end;
 }
 .banner.endosirynge {
-  background: url(/public/dist/5a92014c31bf06ae62d7.jpg) no-repeat;
+  background: url(/public/dist/979bb92f7d8db38389cc.jpg) no-repeat;
   background-position: center right;
   background-size: cover;
 }
@@ -319,12 +323,12 @@ main {
   padding: 15px;
   text-transform: uppercase;
   cursor: pointer;
-  border: 1px solid #1bbc9b;
+  border: 1px solid var(--color-main);
   background: rgba(255, 255, 255, 0.3);
   transition: background 500ms, color 300ms;
 }
 .banner .banner__CTA:hover {
-  background: #1bbc9b;
+  background: var(--color-main);
   color: #ffffff;
 }
 .banner .banner__CTA.right {
@@ -363,14 +367,40 @@ main {
   color: #2a2a2a;
 }
 .advantages .advantages__wrap .advantage__cards-wrap {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template: 50% 50%/50% 50%;
+  justify-items: center;
 }
 .advantages .advantages__wrap .advantage__card {
-  flex: 1 0 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  min-width: 50%;
+  flex: 1 0;
   padding: 40px;
   box-sizing: border-box;
-  border: green 1px solid;
+  font-size: 22px;
+  font-weight: 600;
+  height: 300px;
+}
+.advantages .advantages__wrap p {
+  font-weight: initial;
+  font-size: 1rem;
+}
+.advantages .delivery svg,
+.advantages .assortiment svg,
+.advantages .certificates svg,
+.advantages .result svg {
+  position: absolute;
+  top: -54px;
+  right: 14%;
+  width: 169px;
+  height: 208px;
+  filter: blur(6px);
+  stroke: #528df9;
+  opacity: 0.3;
+  z-index: -1;
 }
 
 .card {
@@ -397,6 +427,31 @@ main {
     width: 95%;
     margin: 30px auto;
   }
+}
+
+.workflow {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  font-size: xx-large;
+  font-weight: 600;
+  margin-bottom: 65px;
+  color: #2a2a2a;
+}
+.workflow .workflow__title {
+  margin: 50px 0;
+}
+.workflow .workflow__wrap {
+  display: flex;
+  flex-flow: column;
+  align-items: start;
+  padding-left: 160px;
+}
+.workflow .workflow__wrap .step {
+  font-size: large;
+  font-weight: 400;
+  padding: 20px 0;
 }
 .search {
   position: relative;
@@ -560,7 +615,7 @@ main {
   top: 30%;
   width: 15px;
   height: 15px;
-  stroke: #1bbc9b;
+  stroke: var(--color-main);
 }
 
 /***** Всплывающие телефоны */
@@ -605,7 +660,7 @@ main {
   top: 30%;
   display: inline-block;
   border: 5px solid transparent;
-  border-top-color: #1bbc9b;
+  border-top-color: var(--color-main);
   margin-left: 9px;
 }
 @media (max-width: 500px) {
@@ -678,7 +733,7 @@ main {
 .header-catalog-menu {
   position: sticky;
   top: 0;
-  background: rgba(27, 188, 155, 0.85);
+  background: var(--color-main);
   min-height: 40px;
   display: flex;
 }
@@ -734,9 +789,6 @@ main {
 }
 .h-cat:last-child ul {
   right: 0;
-}
-.h-cat:hover {
-  background-color: #009979;
 }
 .h-cat:hover ul {
   height: auto;

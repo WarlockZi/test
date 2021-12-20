@@ -1,28 +1,31 @@
 @import "../../var";
+@import "../accordion/partials/_layout.scss";
 @import "../../mixin_media";
 
-.header-catalog-menu{
+.header-catalog-menu {
   position: sticky;
   top: 0;
-  background: rgba(27, 188, 155, 0.85);
+  //background: rgba(27, 188, 155, 0.85);
+  background: var(--color-main);
   min-height: 40px;
   display: flex;
 }
+
 .header-catalog-menu__wrap {
   max-width: 1310px;
   width: 100%;
-  margin:0 auto;
+  margin: 0 auto;
   display: flex;
   justify-content: end;
 }
 
-.utils{
+.utils {
   display: flex;
   padding: 0 20px;
   align-items: center;
   justify-content: space-between;
 
-  svg{
+  svg {
     stroke: white;
     stroke-width: 3px;
     width: 17px;
@@ -30,19 +33,23 @@
     padding: 0 15px;
   }
 
-  .search{
+  .search {
     position: initial;
     height: initial;
     margin: initial;
     display: initial;
   }
-  .cart{
+
+  .cart {
 
   }
-  .menu{
+
+  .menu {
 
   }
 }
+
+
 .h-cat {
   cursor: pointer;
   text-transform: uppercase;
@@ -55,7 +62,7 @@
   font: 600 17px/17px intro, 'Proxima Nova', sans-serif;
   //padding: 13px;
 
-  @include _800{
+  @include _800 {
     display: none;
   }
 
@@ -71,8 +78,13 @@
     right: 0;
   }
 
+
   &:hover {
-    background-color: $color-main-hover;
+    //background-color: var(--color-main);
+    //background-color: shade(var(--color-main), 60%);
+    //background-color: darken(var(--color-main), 60);
+
+    //$color-main-hover
 
     ul {
       height: auto;

@@ -1,7 +1,14 @@
+:root {
+  --color-main: #{#6ca3fe};
+}
+
+
 @import "../mixin_media.scss";
+@import "../var.scss";
 @import '../normalize.scss';
 @import '../components/footer/footer.scss';
 @import '../components/forms.scss';
+
 
 $color-title: #2a2a2a;
 
@@ -33,7 +40,7 @@ main {
   }
 
   &.endosirynge {
-    background: url("/pic/site-endosirynge-green.jpg") no-repeat;
+    background: url("/pic/site-syringe-gradientt.jpg") no-repeat;
     background-position: center right;
     background-size: cover;
   }
@@ -129,12 +136,12 @@ main {
     padding: 15px;
     text-transform: uppercase;
     cursor: pointer;
-    border: 1px solid $color-main;
+    border: 1px solid var(--color-main);
     background: rgba(255, 255, 255, .3);
     transition: background 500ms, color 300ms;
 
     &:hover {
-      background: $color-main;
+      background: var(--color-main);
       color: #ffffff;
 
     }
@@ -180,44 +187,48 @@ main {
     }
 
     .advantage__cards-wrap {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .delivery {
-      svg {
-
-      }
-    }
-
-    .assortiment {
-      svg {
-
-      }
-    }
-
-    .certificates {
-      svg {
-
-      }
-    }
-
-    .result {
-      svg {
-
-      }
-
+      display: grid;
+      grid-template: 50% 50% / 50% 50%;
+      justify-items: center;
     }
 
     .advantage__card {
-      flex: 1 0 50%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      flex-flow: column;
+      min-width: 50%;
+      flex: 1 0;
       padding: 40px;
       box-sizing: border-box;
-      border: green 1px solid;
+      font-size: 22px;
+      font-weight: 600;
+      height: 300px;
     }
 
-
+    p {
+      font-weight: initial;
+      font-size: 1rem;
+    }
   }
+
+  .delivery,
+  .assortiment,
+  .certificates,
+  .result {
+    svg {
+      position: absolute;
+      top: -54px;
+      right: 14%;
+      width: 169px;
+      height: 208px;
+      filter: blur(6px);
+      stroke: #528df9;
+      opacity: 0.3;
+      z-index: -1;
+    }
+  }
+
 }
 
 
@@ -248,5 +259,34 @@ main {
     width: 95%;
     margin: 30px auto;
   }
+}
+
+.workflow {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  font-size: xx-large;
+  font-weight: 600;
+  margin-bottom: 65px;
+  color: #2a2a2a;
+
+  .workflow__title {
+    margin: 50px 0;
+  }
+
+  .workflow__wrap {
+    display: flex;
+    flex-flow: column;
+    align-items: start;
+    padding-left: 160px;
+
+    .step {
+      font-size: large;
+      font-weight: 400;
+      padding: 20px 0;
+    }
+  }
+
 
 }

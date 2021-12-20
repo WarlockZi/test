@@ -21,14 +21,14 @@ $color-input: #323030;
 
 .group {
   width: 100%;
-  height: calc($width/15);
+  height: 40px;
   overflow: hidden;
   position: relative;
 
   input {
     display: block;
     width: 100%;
-    padding-top: calc($width/15);
+    padding-top: 20px;
     border: none;
     border-radius: 0; // For iOS
     color: $color-input;

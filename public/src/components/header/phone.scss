@@ -39,7 +39,7 @@
     top: 30%;
     display: inline-block;
     border: 5px solid transparent;
-    border-top-color: $color-main;
+    border-top-color: var(--color-main);
     margin-left: 9px;
     @include _500 {
       position: absolute;

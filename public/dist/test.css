@@ -200,10 +200,10 @@
   background-color: #797979;
 }
 .test-do .menu > li.vert-menu__list {
-  background-color: #1bbc9b;
+  background-color: var(--color-main);
 }
 .test-do .menu > li.vert-menu__list:hover {
-  background-color: #009979;
+  background-color: shade(#6CA3FE, 60%);
 }
 .test-do .menu a {
   display: flex;
