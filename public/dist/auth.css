@@ -61,7 +61,7 @@
   top: 30%;
   width: 15px;
   height: 15px;
-  stroke: #1bbc9b;
+  stroke: var(--color-main);
 }
 
 /***** Всплывающие телефоны */
@@ -106,7 +106,7 @@
   top: 30%;
   display: inline-block;
   border: 5px solid transparent;
-  border-top-color: #1bbc9b;
+  border-top-color: var(--color-main);
   margin-left: 9px;
 }
 @media (max-width: 500px) {
@@ -179,7 +179,7 @@
 .header-catalog-menu {
   position: sticky;
   top: 0;
-  background: rgba(27, 188, 155, 0.85);
+  background: var(--color-main);
   min-height: 40px;
   display: flex;
 }
@@ -235,9 +235,6 @@
 }
 .h-cat:last-child ul {
   right: 0;
-}
-.h-cat:hover {
-  background-color: #009979;
 }
 .h-cat:hover ul {
   height: auto;
@@ -825,7 +822,7 @@ main {
 }
 .message a {
   padding: 0;
-  color: #009979;
+  color: shade(#6CA3FE, 60%);
   font-weight: 600;
 }
 
@@ -987,7 +984,7 @@ section {
 .popup__item {
   position: relative;
   width: 204px;
-  background: #1bbc9b;
+  background: var(--color-main);
   padding: 15px;
   color: #ffffff;
   display: flex;
@@ -1003,7 +1000,7 @@ section {
 .popup-hide {
   position: relative;
   width: 204px;
-  background: #1bbc9b;
+  background: var(--color-main);
   padding: 15px;
   color: #ffffff;
   display: flex;

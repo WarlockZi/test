@@ -42,32 +42,49 @@
 	<div class="advantages__wrap">
 		<div class="advantages__title">Почему выбирают нас</div>
 		<div class="advantage__cards-wrap">
-<!--			.delivery -->
-<!--			.assortiment -->
-<!--			.certificates -->
-<!--			.result-->
-			<div class="advantage__card">
-				Оптимальный ассортимент
+
+			<div class="advantage__card assortiment">
+				<? include ICONS . '/feather/check-square.svg'; ?>
+				Ассортимент
+
+				<p>Легко сориентироваться. Ничего лишнего.</p>
+
 			</div>
 
-			<div class="advantage__card">
+			<div class="advantage__card delivery">
+				<? include ICONS . '/feather/truck.svg'; ?>
 				Доставка
+				<p>Согласуем с Вами сроки поставки.</p>
+
 			</div>
 
-			<div class="advantage__card">
+			<div class="advantage__card result">
+				<? include ICONS . '/feather/package.svg'; ?>
+
 				Наличие
+				<p>Обеспечиваем достаточное количество товара на складе.</p>
 			</div>
 
-			<div class="advantage__card">
-				Наличие
+			<div class="advantage__card certificates">
+				<? include ICONS . '/feather/layers.svg'; ?>
+				Сертификаты
+				<p>С каждой поставкой предоставляем сертификаты.</p>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="how-we-work">Как мы работаем
-
-
+<div class="workflow">
+	<div class="workflow__title">Как мы работаем</div>
+	<div class="workflow__wrap">
+		<div class="step">Делаете заказ на сайте или звоните менеджеру</div>
+		<div class="step">Мы отправляем Вам счет</div>
+		<div class="step">Вы его оплачиваете</div>
+		<div class="step">Мы оформляем документы</div>
+		<div class="step">Отправляем на транспортную компанию товар</div>
+		<div class="step">Транспортная компания доставляет к двери Вашей организации</div>
+		<div class="step">Вы принимаете товар. Подписываете документы. Отправляете их нам</div>
+	</div>
 </div>
 
 <!--	<div class="info">-->
