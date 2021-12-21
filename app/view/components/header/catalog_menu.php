@@ -1,5 +1,48 @@
 <div class="header-catalog-menu">
 	<div class="header-catalog-menu__wrap">
+
+		<? $list = [
+			0 => [
+				'name' => "Перчатки",
+				'childs' => [
+					0 => [
+						'alias' => 'Нитриловые',
+						'name' => 'Нитрил'
+					]
+				]
+			],
+			1 => [
+				'name' => "Бахилы",
+				'childs' => [
+					0 => [
+						'alias' => 'Прочные',
+						'name' => 'Двойные'
+					]
+				]
+			],
+			2 => [
+				'name' => "Шприцы",
+				'childs' => [
+					0 => [
+						'alias' => 'Эндошприц',
+						'name' => 'Эндошприц'
+					]
+				]
+			],
+			3 => [
+				'name' => "Маски",
+				'childs' => [
+					0 => [
+						'alias' => 'Трехслойные',
+						'name' => 'Трехслойные'
+					]
+				]
+			],
+
+
+		] ?>
+
+
 		<? foreach ($list as $mainItem): ?>
 			<div class='h-cat'><?= $mainItem['name']; ?>
 				<ul>

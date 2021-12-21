@@ -9,14 +9,13 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  height: 100%;
   margin: 0;
   font-family: 'Roboto', sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
   padding: 0 calc(14px - (100vw - 100%)) 0 0;
-  //width: 100%;
-  @include _400{
-    padding: 0 ;
+
+  @include _400 {
+    padding: 0;
   }
 
 }
@@ -54,5 +53,16 @@ textarea:focus,
 .flex1 {
   display: flex !important;
 }
-.none
-{ display: none;}
+
+.column {
+  display: flex;
+  flex-flow: column;
+
+  a {
+    padding: 5px;
+  }
+}
+
+.none {
+  display: none;
+}

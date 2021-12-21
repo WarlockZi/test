@@ -30,11 +30,6 @@ class AppController extends Controller
 
 		}
 
-		if (strpos(strtolower($route['controller']), 'adminsc') === false) {
-			$l = App::$app->category->getAssocCategory(['active' => 'true']);
-			$list = App::$app->category->categoriesTree($l);
-			$this->set(compact('list'));
-		}
 	}
 
 

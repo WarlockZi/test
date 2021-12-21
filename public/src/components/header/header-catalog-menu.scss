@@ -5,10 +5,11 @@
 .header-catalog-menu {
   position: sticky;
   top: 0;
-  //background: rgba(27, 188, 155, 0.85);
   background: var(--color-main);
   min-height: 40px;
   display: flex;
+  opacity: .92;
+  z-index: 1;
 }
 
 .header-catalog-menu__wrap {
