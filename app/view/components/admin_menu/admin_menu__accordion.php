@@ -4,7 +4,7 @@
 
 
 	<a class="house neon" href="/adminsc">
-		<? include ROOT . '/public/src/components/icons/house.svg' ?>
+		<? include ICONS . '/admin-menu/grid.svg';?>
 		Главная
 	</a>
 
@@ -12,6 +12,7 @@
 	<li class="has-children level1">
 		<input type="checkbox" id="crm">
 		<label for="crm">
+			<? include ICONS . '/admin-menu/user-check.svg';?>
 			CRM
 		</label>
 		<ul>
@@ -25,7 +26,7 @@
 	<li class="has-children level1">
 		<input type="checkbox" id="settings">
 		<label for="settings">
-		<? include ROOT . '/public/src/components/icons/settings-streamline.svg' ?>
+			<? include ICONS . '/admin-menu/settings-streamline.svg';?>
 			Настройки
 		</label>
 
@@ -39,7 +40,8 @@
 	<li class="has-children level1">
 		<input type="checkbox" id="test">
 		<label for="test">
-			<i class="fa fa-book"></i>Тесты
+			<? include ICONS . '/admin-menu/target.svg';?>
+			Тесты
 		</label>
 		<ul>
 			<a class="level2 neon" href="/test/do">Проходить тесты
@@ -51,7 +53,8 @@
 
 
 	<a class="sidebar__main neon" href="/">
-		<i class="fa fa-house-user"></i>На сайт
+		<? include ICONS . '/admin-menu/house.svg' ?>
+		На сайт
 	</a>
 
 	<li class="admin-layout__sidebar-tail"></li>

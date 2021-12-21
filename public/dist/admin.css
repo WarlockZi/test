@@ -444,7 +444,6 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  height: 100%;
   margin: 0;
   font-family: "Roboto", sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
@@ -479,6 +478,14 @@ textarea:focus,
 
 .flex1 {
   display: flex !important;
+}
+
+.column {
+  display: flex;
+  flex-flow: column;
+}
+.column a {
+  padding: 5px;
 }
 
 .none {
@@ -1749,7 +1756,6 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  height: 100%;
   margin: 0;
   font-family: "Roboto", sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
@@ -1786,6 +1792,14 @@ textarea:focus,
   display: flex !important;
 }
 
+.column {
+  display: flex;
+  flex-flow: column;
+}
+.column a {
+  padding: 5px;
+}
+
 .none {
   display: none;
 }
@@ -1819,7 +1833,7 @@ footer p {
   color: #fff;
   font-weight: 600;
   padding: 8px 15px;
-  margin: 15px 0;
+  margin: 15px 0 30px;
   white-space: nowrap;
   cursor: pointer;
   background-color: #1bbc9b !important;
@@ -1957,6 +1971,9 @@ footer p {
   flex: 1 1 auto;
   min-height: 100%;
   width: 200px;
+}
+.test-edit__content h1 {
+  margin: 0;
 }
 
 .question__create-button {

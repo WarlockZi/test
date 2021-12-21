@@ -1,8 +1,4 @@
 @charset "UTF-8";
-:root {
-  --color-main: #6ca3fe;
-}
-
 html {
   height: 100%;
   overflow-x: hidden;
@@ -11,7 +7,6 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  height: 100%;
   margin: 0;
   font-family: "Roboto", sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
@@ -46,6 +41,14 @@ textarea:focus,
 
 .flex1 {
   display: flex !important;
+}
+
+.column {
+  display: flex;
+  flex-flow: column;
+}
+.column a {
+  padding: 5px;
 }
 
 .none {
@@ -195,6 +198,10 @@ footer p {
   background-color: #e7e7e7;
 }
 
+:root {
+  --color-main: #6ca3fe;
+}
+
 main {
   display: flex;
   flex: 1 0 auto;
@@ -208,6 +215,7 @@ main {
   display: flex;
   flex-flow: column;
   align-items: start;
+  min-height: 47vw;
 }
 .banner.gloves {
   background: url(/public/dist/5bd99bdcb1b5c3bdd9aa.jpg) no-repeat;
@@ -383,6 +391,7 @@ main {
   font-size: 22px;
   font-weight: 600;
   height: 300px;
+  color: #2a2a2a;
 }
 .advantages .advantages__wrap p {
   font-weight: initial;
@@ -398,7 +407,7 @@ main {
   width: 169px;
   height: 208px;
   filter: blur(6px);
-  stroke: #528df9;
+  stroke: var(--color-main);
   opacity: 0.3;
   z-index: -1;
 }
@@ -452,6 +461,30 @@ main {
   font-size: large;
   font-weight: 400;
   padding: 20px 0;
+  position: relative;
+}
+.workflow .workflow__wrap .step:after {
+  content: "";
+  position: absolute;
+  left: -33px;
+  top: 22px;
+  width: 15px;
+  height: 15px;
+  border-radius: 10px;
+  background-color: var(--color-main);
+}
+.workflow .workflow__wrap .step:before {
+  content: "";
+  position: absolute;
+  left: -27px;
+  top: 44px;
+  width: 3px;
+  height: 54%;
+  background-color: var(--color-main);
+}
+.workflow .workflow__wrap .step:last-of-type:before {
+  content: "";
+  width: 0;
 }
 .search {
   position: relative;
@@ -736,6 +769,8 @@ main {
   background: var(--color-main);
   min-height: 40px;
   display: flex;
+  opacity: 0.92;
+  z-index: 1;
 }
 
 .header-catalog-menu__wrap {
@@ -896,6 +931,7 @@ main {
   border: 1px solid grey;
   border-radius: 4px;
   padding: 5px 15px;
+  z-index: 2;
 }
 .guest-menu svg {
   width: 17px;
