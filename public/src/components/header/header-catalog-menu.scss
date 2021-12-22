@@ -81,11 +81,11 @@
 
 
   &:hover {
+    //$c:var(--color-main);
     //background-color: var(--color-main);
-    //background-color: shade(var(--color-main), 60%);
-    //background-color: darken(var(--color-main), 60);
+    //background-color: shade(, 60%);
+    background-color: darken(#6ca3fe, 10%);
 
-    //$color-main-hover
 
     ul {
       height: auto;

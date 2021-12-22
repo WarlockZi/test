@@ -5,7 +5,7 @@
 @import '../components/forms.scss';
 
 :root {
-  --color-main: #{#6ca3fe};
+  --color-main: #6ca3fe;
 }
 
 
@@ -188,7 +188,7 @@ main {
     .advantage__cards-wrap {
       display: grid;
       grid-template: 50% 50% / 50% 50%;
-      justify-items: center;
+      justify-items: start;
     }
 
     .advantage__card {

@@ -6,6 +6,7 @@ html {
 
 body {
   display: flex;
+  min-height: 100%;
   flex-direction: column;
   margin: 0;
   font-family: "Roboto", sans-serif;
@@ -377,7 +378,7 @@ main {
 .advantages .advantages__wrap .advantage__cards-wrap {
   display: grid;
   grid-template: 50% 50%/50% 50%;
-  justify-items: center;
+  justify-items: start;
 }
 .advantages .advantages__wrap .advantage__card {
   position: relative;
@@ -824,6 +825,9 @@ main {
 }
 .h-cat:last-child ul {
   right: 0;
+}
+.h-cat:hover {
+  background-color: #3983fe;
 }
 .h-cat:hover ul {
   height: auto;

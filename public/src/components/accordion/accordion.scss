@@ -194,7 +194,7 @@
 
   @include MQ(M) {
     label, a {
-      padding: $item-padding-M $item-padding-M $item-padding-M ($item-padding-M * 3) + 30px;
+      padding: $item-padding-M $item-padding-M $item-padding-M ($item-padding-M * 3) + 20px;
       font-size: 1rem;
     }
 
@@ -208,7 +208,7 @@
 
     ul label,
     ul a {
-      padding-left: ($item-padding-M * 4) + 40px;
+      padding-left: ($item-padding-M * 4) + 20px;
     }
 
     ul label::before {

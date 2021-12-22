@@ -190,7 +190,8 @@ here;
 	function findWhere($field, $value)
 	{
 		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
-		return $this->pdo->query($sql, [$value]);
+		$item = $this->pdo->query($sql, [$value]);
+		return $item[0];
 	}
 
 	public
