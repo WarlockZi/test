@@ -23,8 +23,11 @@ footer{
 .footer_menu{
   display: flex;
   justify-content: space-around;
-  max-width: 1310px;
+  max-width: 700px;
   margin: 0 auto;
+  border-bottom: 1px solid #7a7a7a;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 

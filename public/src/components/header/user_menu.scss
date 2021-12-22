@@ -1,7 +1,7 @@
 @import "../../var";
 @import "../../mixin_media";
 
-@mixin user-menu{
+@mixin user-menu {
   position: relative;
   display: flex;
   align-items: center;
@@ -9,6 +9,10 @@
   cursor: pointer;
   color: #2b303a;
   margin-right: 10px;
+  @include _500 {
+    font-size: 12px;
+    padding: 3px 10px;
+  }
 }
 
 .user-menu {
@@ -58,6 +62,7 @@
       }
     }
   }
+
   &:hover > .user-menu__menu {
     display: flex;
   }
@@ -70,7 +75,7 @@
   padding: 5px 15px;
   z-index: 2;
 
-  svg{
+  svg {
     width: 17px;
     padding-right: 10px;
   }
@@ -97,12 +102,14 @@
       }
     }
   }
+
   .user-menu__icon {
     width: 14px;
     height: 15px;
     padding: 0 5px 3px;
   }
-  &:hover > .guest-menu__menu{
+
+  &:hover > .guest-menu__menu {
     display: flex;
   }
 }

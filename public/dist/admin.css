@@ -766,6 +766,11 @@ textarea:focus,
 .header .logo_vitex {
   height: 33px;
 }
+@media (max-width: 600px) {
+  .header .logo_vitex {
+    height: 25px;
+  }
+}
 
 .logo__description {
   width: 120px;
@@ -1796,8 +1801,11 @@ footer p {
 .footer_menu {
   display: flex;
   justify-content: space-around;
-  max-width: 1310px;
+  max-width: 700px;
   margin: 0 auto;
+  border-bottom: 1px solid #7a7a7a;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 .test-edit-menu__add-bttn {
   position: relative;

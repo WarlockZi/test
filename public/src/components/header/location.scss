@@ -6,6 +6,9 @@
   padding: 0 15px;
   max-width: 105px;
   position: relative;
+  @include _800{
+    display: none;
+  }
 
   svg{
     position: absolute;
