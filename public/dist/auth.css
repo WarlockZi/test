@@ -28,6 +28,11 @@
 .header .logo_vitex {
   height: 33px;
 }
+@media (max-width: 600px) {
+  .header .logo_vitex {
+    height: 25px;
+  }
+}
 
 .logo__description {
   width: 120px;
@@ -54,6 +59,11 @@
   padding: 0 15px;
   max-width: 105px;
   position: relative;
+}
+@media (max-width: 800px) {
+  .location {
+    display: none;
+  }
 }
 .location svg {
   position: absolute;
@@ -214,6 +224,8 @@
   display: initial;
 }
 .h-cat {
+  background-color: rgba(34, 117, 255, 0);
+  position: relative;
   cursor: pointer;
   text-transform: uppercase;
   transition: 0.5s;
@@ -239,7 +251,7 @@
   right: 0;
 }
 .h-cat:hover {
-  background-color: #3983fe;
+  background-color: rgba(34, 117, 255, 0.5);
 }
 .h-cat:hover ul {
   height: auto;
@@ -298,6 +310,12 @@
 }
 @media (max-width: 500px) {
   .user-menu {
+    font-size: 12px;
+    padding: 3px 10px;
+  }
+}
+@media (max-width: 500px) {
+  .user-menu {
     padding: 5px 10px;
     margin: 5px 10px;
   }
@@ -348,6 +366,12 @@
   border-radius: 4px;
   padding: 5px 15px;
   z-index: 2;
+}
+@media (max-width: 500px) {
+  .guest-menu {
+    font-size: 12px;
+    padding: 3px 10px;
+  }
 }
 .guest-menu svg {
   width: 17px;
@@ -779,8 +803,11 @@ footer p {
 .footer_menu {
   display: flex;
   justify-content: space-around;
-  max-width: 1310px;
+  max-width: 700px;
   margin: 0 auto;
+  border-bottom: 1px solid #7a7a7a;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 [required]:before {
   content: "ss";

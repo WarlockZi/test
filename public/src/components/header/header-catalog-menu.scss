@@ -52,6 +52,8 @@
 
 
 .h-cat {
+  background-color: rgba(#2275ff, 0);
+  position: relative;
   cursor: pointer;
   text-transform: uppercase;
   transition: .5s;
@@ -61,7 +63,7 @@
   flex: 1;
   color: #fff;
   font: 600 17px/17px intro, 'Proxima Nova', sans-serif;
-  //padding: 13px;
+
 
   @include _800 {
     display: none;
@@ -81,11 +83,7 @@
 
 
   &:hover {
-    //$c:var(--color-main);
-    //background-color: var(--color-main);
-    //background-color: shade(, 60%);
-    background-color: darken(#6ca3fe, 10%);
-
+    background-color: rgba(#2275ff, .5);
 
     ul {
       height: auto;

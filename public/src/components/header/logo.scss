@@ -31,9 +31,9 @@
 
   .logo_vitex {
     height: 33px;
-    //@include _600 {
-    //  display: none;
-    //}
+    @include _600 {
+      height: 25px;
+    }
   }
 }
 
