@@ -45,30 +45,6 @@
   box-shadow: 2px 2px 12px 0px #6a8784;
 }
 
-.site-wrapper {
-  height: 100%;
-}
-
-.container-do-test {
-  display: flex;
-  justify-content: start;
-  flex: 1 0 auto;
-  max-width: 1310px;
-  margin: auto;
-}
-.container-do-test .content {
-  margin: 0px 40px;
-  display: flex;
-  flex-flow: column;
-}
-.container-do-test .content .test-name {
-  color: #5e5e5e;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 1.5rem;
-  margin: 7px 0 20px 0;
-}
-
 .apic img {
   width: 100px;
   height: 100px;
@@ -196,14 +172,27 @@
   max-width: 170px;
   min-width: 170px;
 }
-.test-do .menu > li {
-  background-color: #797979;
-}
 .test-do .menu > li.vert-menu__list {
   background-color: var(--color-main);
 }
 .test-do .menu > li.vert-menu__list:hover {
   background-color: shade(#6CA3FE, 60%);
+}
+.test-do .menu > li.vert-menu__list:hover > .vert-menu__drop {
+  opacity: 1;
+  top: 0;
+  z-index: 1;
+}
+.test-do .menu > li.vert-menu__list:after {
+  content: " ";
+  position: absolute;
+  border: 0.6vw solid;
+  border-color: transparent transparent transparent #eee;
+  transition: 0.5s;
+  align-self: center;
+}
+.test-do .menu > li.vert-menu__list:hover::after {
+  transform: scaleX(-1);
 }
 .test-do .menu a {
   display: flex;
@@ -214,14 +203,15 @@
   text-transform: uppercase;
   color: #ffffff;
 }
-.test-do .menu li .test-link a {
-  text-transform: uppercase;
-}
 .test-do .menu li {
   position: relative;
   border-bottom: 1px solid #b7b7b7;
   transition: 0.5s all;
   justify-content: flex-end;
+  background-color: #797979;
+}
+.test-do .menu li .test-link a {
+  text-transform: uppercase;
 }
 
 /*Всплывающие меню*/
@@ -234,30 +224,9 @@
   border-left: 1px solid transparent;
   transition: 0.5s opacity;
 }
-
 .vert-menu__drop li a {
   background-color: #797979;
   width: 100%;
-}
-
-.vert-menu__list:hover > .vert-menu__drop {
-  opacity: 1;
-  top: 0;
-  z-index: 1;
-}
-
-/*Иконки для всплывающих менюшек*/
-.vert-menu__list::after {
-  content: " ";
-  position: absolute;
-  border: 0.6vw solid;
-  border-color: transparent transparent transparent #eee;
-  transition: 0.5s;
-  align-self: center;
-}
-
-.vert-menu__list:hover::after {
-  transform: scaleX(-1);
 }
 .search {
   position: relative;
@@ -361,8 +330,8 @@
 .admin-layout__sidebar svg {
   position: absolute;
   left: 20px;
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
 }
 .admin-layout__sidebar svg #house,
 .admin-layout__sidebar svg #settings {
@@ -524,7 +493,7 @@
 }
 @media only screen and (min-width: 600px) {
   .accordion label, .accordion a {
-    padding: 12px 12px 12px 66px;
+    padding: 12px 12px 12px 56px;
     font-size: 1rem;
   }
   .accordion label::before {
@@ -535,7 +504,7 @@
   }
   .accordion ul label,
 .accordion ul a {
-    padding-left: 88px;
+    padding-left: 68px;
   }
   .accordion ul label::before {
     left: 24px;

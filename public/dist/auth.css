@@ -238,6 +238,9 @@
 .h-cat:last-child ul {
   right: 0;
 }
+.h-cat:hover {
+  background-color: #3983fe;
+}
 .h-cat:hover ul {
   height: auto;
   padding: 30px 25px 15px 25px;
@@ -807,14 +810,6 @@ footer p {
   background: url(/public/dist/0286c7e3036ba0978b3f.svg) 0 0 no-repeat;
 }
 
-.site-wrapper {
-  width: 100%;
-  display: flex;
-  flex-basis: 100%;
-  height: 100%;
-  flex-flow: column;
-}
-
 section,
 main {
   flex: 1 0 auto;
@@ -1108,6 +1103,7 @@ html {
 
 body {
   display: flex;
+  min-height: 100%;
   flex-direction: column;
   margin: 0;
   font-family: "Roboto", sans-serif;

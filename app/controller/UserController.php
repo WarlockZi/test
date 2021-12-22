@@ -126,7 +126,8 @@ class UserController extends AppController
 		View::setJs('auth.js');
 	}
 
-	private function randomPassword() {
+	private function randomPassword()
+	{
 		$arr = [
 			'1234567890',
 			'abcdefghijklmnopqrstuvwxyz',
@@ -138,7 +139,7 @@ class UserController extends AppController
 		$arrLength = count($arr) - 1;
 		$y = 0;
 		for ($i = 0; $i < 8; $i++) {
-			if ($y>$arrLength) $y = 0;
+			if ($y > $arrLength) $y = 0;
 			$arrChosen = $arr[$y];
 			$arrChosernLen = strlen($arrChosen) - 1;
 			$n = rand(0, $arrChosernLen);
@@ -188,22 +189,21 @@ class UserController extends AppController
 			if (!User::checkEmail($email)) {
 				$msg[] = "Неверный формат email";
 				$_SESSION['error'][] = "Неверный формат email";
-				exit(json_encode(["msg"=>"Неверный формат email"]));
+				exit(json_encode(["msg" => "Неверный формат email"]));
 			}
 
 			if (!User::checkPassword($password)) {
 				$msg[] = "Пароль не должен быть короче 6-ти символов";
-				exit(json_encode(["msg"=>"Пароль не должен быть короче 6-ти символов"]));
+				exit(json_encode(["msg" => "Пароль не должен быть короче 6-ти символов"]));
 			}
 
 			$user = App::$app->user->findWhere("email", $email);
 
 			if ($user === null || !$user) {
 				exit(json_encode(['msg' => 'not_registered']));
-			} elseif ($user[0]['password'] !== $this->preparePassword($password)) {
+			} elseif ($user['password'] !== $this->preparePassword($password)) {
 				exit('fail');
 			} else {// Если данные правильные, запоминаем пользователя (в сессию)
-				$user = $user[0];
 				$user['rights'] = explode(",", $user['rights']);
 				$this->setAuth($user);
 				exit(json_encode(['msg' => 'ok']));
@@ -223,10 +223,10 @@ class UserController extends AppController
 			$user['name'] = $data['name'];
 			$user['surName'] = $data['surName'];
 			$user['middleName'] = $data['middleName'];
-			$user['rights'] = implode(',',$user['rights']);
+			$user['rights'] = implode(',', $user['rights']);
 
-			$date = strtotime ($data['birthDate']);
-			$user['birthDate'] = date('Y-m-d',$date);
+			$date = strtotime($data['birthDate']);
+			$user['birthDate'] = date('Y-m-d', $date);
 
 			$user['phone'] = $data['phone'];
 

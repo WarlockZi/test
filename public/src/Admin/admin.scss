@@ -32,7 +32,7 @@ $color-admin-sidebar: #4d5158;
 }
 
 .admin-layout__sidebar.accordion {
-  max-width: 250px;
+  max-width: 210px;
   background: $color-admin-sidebar;
   @include _800 {
     max-width: 100%;
