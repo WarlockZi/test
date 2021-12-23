@@ -6,7 +6,7 @@
 
 		<? if (isset($testData) && !isset($error) && !$testData == 0):// Проверим, чтобы запрашивали конекретный тест?>
 
-			<div class="test-name" data-test-id=<?= $test['id'] ?>><?= $test['test_name']; ?></div>
+			<div class="test-name" data-test-id=<?= $test['id'] ?>>TECT  :  <?= $test['test_name']; ?></div>
 
 			<?= $pagination;
 			$i = 1; ?>

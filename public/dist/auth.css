@@ -787,6 +787,7 @@ footer {
   background: url(/public/dist/6a2d04cb970344ebca0b.png) repeat;
   padding: 10px;
   min-height: 110px;
+  color: #9b9b9b;
 }
 footer a {
   color: #ffffff;
@@ -798,6 +799,7 @@ footer p {
 .footer_legal {
   display: flex;
   justify-content: space-between;
+  gap: 100px;
 }
 
 .footer_menu {
@@ -808,6 +810,14 @@ footer p {
   border-bottom: 1px solid #7a7a7a;
   padding-top: 30px;
   padding-bottom: 30px;
+}
+.footer_menu .column {
+  display: flex;
+  flex-flow: column;
+}
+.footer_menu .column a {
+  width: 100px;
+  padding: 5px;
 }
 [required]:before {
   content: "ss";
@@ -1123,6 +1133,12 @@ section {
   position: absolute;
 }
 @charset "UTF-8";
+@font-face {
+  font-family: "RobotoMedium";
+  font-style: normal;
+  font-weight: 500;
+  src: url(/public/dist/ae21b6337d29f98802e6.woff) format("woff"), url(/public/dist/f88c528958c82e12d6a9.ttf) format("truetype");
+}
 html {
   height: 100%;
   overflow-x: hidden;
@@ -1133,9 +1149,12 @@ body {
   min-height: 100%;
   flex-direction: column;
   margin: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "RobotoMedium", sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
-  padding: 0 calc(14px - (100vw - 100%)) 0 0;
+  padding: 0 calc(18px - (100vw - 100%)) 0 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 @media (max-width: 400px) {
   body {
@@ -1166,14 +1185,6 @@ textarea:focus,
 
 .flex1 {
   display: flex !important;
-}
-
-.column {
-  display: flex;
-  flex-flow: column;
-}
-.column a {
-  padding: 5px;
 }
 
 .none {

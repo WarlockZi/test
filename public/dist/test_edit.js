@@ -122,7 +122,7 @@ function objToServer(errorCnt) {
     pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
     testId: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('[data-test-id]').el[0].dataset.testId,
     test_name: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.test-name').el[0].innerText,
-    userName: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.user-menu__FIO').el[0].innerText
+    userName: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.user-menu__fio').el[0].innerText
   };
   let formData = new FormData();
   formData.append('token', obj.token);
@@ -1531,18 +1531,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************************!*\
   !*** ./public/src/components/test-pagination/test-pagination.scss ***!
   \********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./public/src/normalize.scss":
-/*!***********************************!*\
-  !*** ./public/src/normalize.scss ***!
-  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -5404,21 +5392,20 @@ var __webpack_exports__ = {};
   !*** ./public/src/Test/test-edit.js ***!
   \**************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _normalize_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../normalize.scss */ "./public/src/normalize.scss");
-/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
-/* harmony import */ var _test_edit_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./test-edit.scss */ "./public/src/Test/test-edit.scss");
-/* harmony import */ var _test__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./test */ "./public/src/Test/test.js");
-/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./show */ "./public/src/Test/show.js");
-/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
-/* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
-/* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
-/* harmony import */ var _model_answer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./model/answer */ "./public/src/Test/model/answer.js");
-/* harmony import */ var _components_sortable__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/sortable */ "./public/src/components/sortable.js");
-/* harmony import */ var _components_accordion_accordion__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/accordion/accordion */ "./public/src/components/accordion/accordion.js");
-/* harmony import */ var _Admin_components_main_menu_admin_main_menu__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Admin/components/main-menu/admin_main_menu */ "./public/src/Admin/components/main-menu/admin_main_menu.js");
- // import '../components/header/header'
-
+/* harmony import */ var _components_footer_footer_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/footer/footer.scss */ "./public/src/components/footer/footer.scss");
+/* harmony import */ var _test_edit_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./test-edit.scss */ "./public/src/Test/test-edit.scss");
+/* harmony import */ var _test__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./test */ "./public/src/Test/test.js");
+/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./show */ "./public/src/Test/show.js");
+/* harmony import */ var _components_popup_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/popup.scss */ "./public/src/components/popup.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../common */ "./public/src/common.js");
+/* harmony import */ var _model_test__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./model/test */ "./public/src/Test/model/test.js");
+/* harmony import */ var _model_question__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./model/question */ "./public/src/Test/model/question.js");
+/* harmony import */ var _model_answer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/answer */ "./public/src/Test/model/answer.js");
+/* harmony import */ var _components_sortable__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/sortable */ "./public/src/components/sortable.js");
+/* harmony import */ var _components_accordion_accordion__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/accordion/accordion */ "./public/src/components/accordion/accordion.js");
+/* harmony import */ var _Admin_components_main_menu_admin_main_menu__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Admin/components/main-menu/admin_main_menu */ "./public/src/Admin/components/main-menu/admin_main_menu.js");
+// import '../normalize.scss'
+// import '../components/header/header'
 
 
 
@@ -5433,39 +5420,39 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-_model_test__WEBPACK_IMPORTED_MODULE_7__._test.markCurrentInMenu(); // navigate(window.location.pathname)
+_model_test__WEBPACK_IMPORTED_MODULE_6__._test.markCurrentInMenu(); // navigate(window.location.pathname)
 
 
-_components_sortable__WEBPACK_IMPORTED_MODULE_10__.sortable.connect('.questions'); // при создании нового теста показать пустой вопрос
+_components_sortable__WEBPACK_IMPORTED_MODULE_9__.sortable.connect('.questions'); // при создании нового теста показать пустой вопрос
 
-if (!_model_question__WEBPACK_IMPORTED_MODULE_8__._question.questions().length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
-  _model_question__WEBPACK_IMPORTED_MODULE_8__._question.showFirst();
+if (!_model_question__WEBPACK_IMPORTED_MODULE_7__._question.questions().length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
+  _model_question__WEBPACK_IMPORTED_MODULE_7__._question.showFirst();
 } // подсветка текущего теста
 
 
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.test__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_7__._test.update);
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.test-path__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_7__._test.update); // $('.question__sort').on('change', validate.sort)
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.test__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_6__._test.update);
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.test-path__update').on('click', _model_test__WEBPACK_IMPORTED_MODULE_6__._test.update); // $('.question__sort').on('change', validate.sort)
 
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__save').on('click', _model_question__WEBPACK_IMPORTED_MODULE_8__._question.save);
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__show-answers').on('click', _model_question__WEBPACK_IMPORTED_MODULE_8__._question.showAnswers);
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__delete').on('click', _model_question__WEBPACK_IMPORTED_MODULE_8__._question.delete);
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__create-button').on('click', _model_question__WEBPACK_IMPORTED_MODULE_8__._question.create);
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.answer__delete').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_9__._answer.del);
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.answer__create-button').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_9__._answer.create);
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.addTooltip)({
-  els: (0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__save').el,
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.question__save').on('click', _model_question__WEBPACK_IMPORTED_MODULE_7__._question.save);
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.question__show-answers').on('click', _model_question__WEBPACK_IMPORTED_MODULE_7__._question.showAnswers);
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.question__delete').on('click', _model_question__WEBPACK_IMPORTED_MODULE_7__._question.delete);
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.question__create-button').on('click', _model_question__WEBPACK_IMPORTED_MODULE_7__._question.create);
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.answer__delete').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_8__._answer.del);
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.answer__create-button').on('click', _model_answer__WEBPACK_IMPORTED_MODULE_8__._answer.create);
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.question__save').el,
   message: 'Сохранить вопросы и ответы'
 });
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.addTooltip)({
-  els: (0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__delete').el,
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.question__delete').el,
   message: 'Удалить вопросы и ответы'
 });
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.addTooltip)({
-  els: (0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.question__show-answers').el,
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.question__show-answers').el,
   message: 'Показать ответы'
 });
-(0,_common__WEBPACK_IMPORTED_MODULE_6__.addTooltip)({
-  els: (0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.test-edit-menu__params').el,
+(0,_common__WEBPACK_IMPORTED_MODULE_5__.addTooltip)({
+  els: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.test-edit-menu__params').el,
   message: 'Редактировать'
 });
 })();

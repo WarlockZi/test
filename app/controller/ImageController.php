@@ -11,7 +11,7 @@ class ImageController Extends AppController
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->auth();
+		$this->autorize();
 	}
 
 	private function checkSize($size)

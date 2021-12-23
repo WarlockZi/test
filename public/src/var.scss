@@ -1,26 +1,30 @@
 //$color-main: #1bbc9b;
 
+$color-main-green: #1bbc9b;
 
 $color-main: var(--color-main);
 
 $color-main-hover: shade(#6CA3FE, 60%);
 //$color-main-hover:#009979;
 
+$dark-grey-hover: #343635;
 
-$color-white-hover:#e7e7e7;
+$color-white-hover: #e7e7e7;
 $color-hover-gray: #e5e5e5;
 
-$color-red:#e30000;
+$color-red: #e30000;
 
-$color-a:#5a5a5a;
+$color-a: #5a5a5a;
 
 $color-title: #2a2a2a;
 
-$color-gray-min:#808080;
+$color-gray-min: #808080;
 $color-gray-min-hover: #6E6E6E;
 
-$color-gray-mid:#565958;
+$color-gray-mid: #565958;
 $color-gray-mid-hover: #4D4F4E;
 
-$color-gray-max:#3d403f;
-$color-gray-max-hover: #343635;
+$color-gray-max: #3d403f;
+$color-gray-max-hover: $dark-grey-hover;
+
+$color-text: $dark-grey-hover;

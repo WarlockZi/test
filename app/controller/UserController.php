@@ -94,7 +94,7 @@ class UserController extends AppController
 
 	public function actionCabinet()
 	{
-		$this->auth();
+		$this->autorize();
 
 		$userId = $_SESSION['id'];
 		if ($userId) {
@@ -110,7 +110,7 @@ class UserController extends AppController
 
 	public function actionChangePassword()
 	{
-		$this->auth();
+		$this->autorize();
 		if ($data = $this->ajax) {
 			$old_password = $this->preparePassword($data['old_password']);
 			if ($user = App::$app->user->findWhere('password', $old_password)[0]) {
@@ -216,7 +216,7 @@ class UserController extends AppController
 
 	public function actionEdit()
 	{
-		$this->auth();
+		$this->autorize();
 		$user = App::$app->user->get($_SESSION['id']);
 		if ($data = $this->ajax) {
 
@@ -243,7 +243,7 @@ class UserController extends AppController
 
 	public function actionContacts()
 	{
-		$this->auth();
+		$this->autorize();
 		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
 	}
 

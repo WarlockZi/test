@@ -13,6 +13,8 @@ class MainController Extends AppController
 
 		parent::__construct($route);
 
+		$this->auth();
+
 		$sale = App::$app->cache->get('sale');
 		if (!$sale) {
 			$sale = App::$app->product->getSale();
@@ -37,6 +39,7 @@ class MainController Extends AppController
 //				$this->set(compact('user'));
 //			}
 //		}
+
 			View::setMeta('Нитриловые перчатки оптом', 'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.', 'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
 	}
 

@@ -16,7 +16,7 @@ class QuestionController Extends AppController
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->auth();
+		$this->autorize();
 		$this->req = json_decode($_POST['param'], true);
 	}
 

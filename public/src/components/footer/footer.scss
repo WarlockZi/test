@@ -1,26 +1,27 @@
-footer{
+footer {
   flex-flow: column;
   flex: 0 0 auto;
   background: url("/pic/header-big.png") repeat;
   padding: 10px;
   min-height: 110px;
-  //margin-top: 20px;
+  color: #9b9b9b;
+
   a {
     color: #ffffff;
   }
-    p{
-  font-size: 10px;
-}
+
+  p {
+    font-size: 10px;
+  }
 }
 
-
-.footer_legal{
+.footer_legal {
   display: flex;
   justify-content: space-between;
+  gap: 100px;
 }
 
-
-.footer_menu{
+.footer_menu {
   display: flex;
   justify-content: space-around;
   max-width: 700px;
@@ -28,6 +29,19 @@ footer{
   border-bottom: 1px solid #7a7a7a;
   padding-top: 30px;
   padding-bottom: 30px;
+
+  .column {
+    display: flex;
+    flex-flow: column;
+
+    a {
+      width: 100px;
+      padding: 5px;
+    }
+  }
+
 }
+
+
 
 

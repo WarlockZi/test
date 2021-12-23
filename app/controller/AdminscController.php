@@ -12,7 +12,7 @@ class AdminscController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
-		$this->auth();
+		$this->autorize();
 		$this->layout = 'admin';
 
 		View::setJs('admin.js');

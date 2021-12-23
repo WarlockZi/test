@@ -77,7 +77,7 @@ function objToServer(errorCnt) {
     pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
     testId: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('[data-test-id]').el[0].dataset.testId,
     test_name: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.test-name').el[0].innerText,
-    userName: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.user-menu__FIO').el[0].innerText
+    userName: (0,_common__WEBPACK_IMPORTED_MODULE_5__.$)('.user-menu__fio').el[0].innerText
   };
   let formData = new FormData();
   formData.append('token', obj.token);
