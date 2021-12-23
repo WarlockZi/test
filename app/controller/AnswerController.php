@@ -11,7 +11,7 @@ class AnswerController Extends AppController
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->auth();
+		$this->autorize();
 	}
 
 	public function actionCreate()

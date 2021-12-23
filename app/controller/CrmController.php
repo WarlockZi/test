@@ -12,7 +12,7 @@ class CrmController extends AdminscController{
 
    public function actionIndex() {
 
-      $this->auth();
+      $this->autorize();
 
       $this->vars['js'] = $this->getJSCSS('.js');
       $this->vars['css'] = $this->getJSCSS('.css');

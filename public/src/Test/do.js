@@ -67,7 +67,7 @@ function objToServer(errorCnt) {
         pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
         testId: $('[data-test-id]').el[0].dataset.testId,
         test_name: $('.test-name').el[0].innerText,
-        userName: $('.user-menu__FIO').el[0].innerText,
+        userName: $('.user-menu__fio').el[0].innerText,
     }
 
     let  formData = new FormData();

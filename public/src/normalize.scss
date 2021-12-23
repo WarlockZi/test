@@ -1,5 +1,16 @@
 @import "mixin_media";
 
+@font-face {
+  font-family: "RobotoMedium";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/public/src/font/RobotoMedium/RobotoMedium.woff") format("woff"),
+  url("/public/src/font/RobotoMedium/RobotoMedium.ttf") format("truetype");
+}
+
+//@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
 html {
   height: 100%;
   overflow-x: hidden;
@@ -11,9 +22,12 @@ body {
   min-height: 100%;
   flex-direction: column;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "RobotoMedium", sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
-  padding: 0 calc(14px - (100vw - 100%)) 0 0;
+  padding: 0 calc(18px - (100vw - 100%)) 0 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 
   @include _400 {
     padding: 0;
@@ -21,14 +35,6 @@ body {
 
 }
 
-//h1, h2 {
-//  text-transform: uppercase;
-//  color: #4e4e4e;
-//  font-size: 1.4rem;
-//  font-weight: 600;
-//  letter-spacing: 1px;
-//  margin: 35px 0;
-//}
 
 p {
   letter-spacing: 1px;
@@ -53,15 +59,6 @@ textarea:focus,
 
 .flex1 {
   display: flex !important;
-}
-
-.column {
-  display: flex;
-  flex-flow: column;
-
-  a {
-    padding: 5px;
-  }
 }
 
 .none {

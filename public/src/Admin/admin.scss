@@ -1,3 +1,4 @@
+
 @import "components/sub-menu/adm-menu";
 @import "components/breadcrumbs";
 @import "components/sub-menu/catalog";
@@ -12,7 +13,15 @@
 @import "../components/neon";
 @import '../normalize.scss';
 
+
+
+
+
 $color-admin-sidebar: #4d5158;
+
+:root {
+  --color-main: #6ca3fe;
+}
 
 .admin-layout__container {
   display: flex;

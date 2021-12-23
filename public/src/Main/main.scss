@@ -10,6 +10,7 @@
 
 
 
+
 main {
   display: flex;
   flex: 1 0 auto;
@@ -50,21 +51,17 @@ main {
 
     &.right {
       padding: 12% 10px 3% 80px;
-      //max-width: 24%;
-      margin-left: 21%;
+      margin-left: 0;
       @include _600 {
-        margin-left: 0%;
-        //max-width: 100%;
-
+        margin-left: 0;
       }
     }
 
     &.left {
       padding: 8% 80px 3% 10px;
-      margin-right: 21%;
+      margin-right: 0;
       @include _600 {
         margin-right: 0;
-
       }
     }
 
@@ -298,6 +295,7 @@ main {
         background-color: var(--color-main);
       }
 
+
       &:before {
         content: "";
         position: absolute;
@@ -314,5 +312,6 @@ main {
       width: 0;
     }
   }
+
 
 }

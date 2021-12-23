@@ -1,4 +1,4 @@
-import '../normalize.scss'
+// import '../normalize.scss'
 
 // import '../components/header/header'
 import '../components/footer/footer.scss'

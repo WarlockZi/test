@@ -16,7 +16,7 @@ class FreetestController extends AppController
 	{
 
 		//Если пользователь не авторизовался отправим на форму авторизации
-		$this->auth();
+		$this->autorize();
 
 		$Freetest = new Freetest;
 		// Загрузка картинок drag-n-drop
@@ -66,7 +66,7 @@ class FreetestController extends AppController
 				exit();
 			}
 		}
-		$this->auth();
+		$this->autorize();
 		View::setMeta('Свободный тест', 'Свободный тест', 'Свободный тест');
 	}
 
@@ -92,7 +92,7 @@ class FreetestController extends AppController
 	public function actionDo()
 	{
 
-		$this->auth();
+		$this->autorize();
 		View::setMeta('Свободный тест', 'Свободный тест', 'Свободный тест');
 
 		if ($this->isAjax()) {
