@@ -21,7 +21,8 @@ footer p {
 
 .footer_menu {
   display: flex;
-  justify-content: space-around;
+  gap: 15px;
+  justify-content: center;
   max-width: 700px;
   margin: 0 auto;
   border-bottom: 1px solid #7a7a7a;
@@ -31,6 +32,11 @@ footer p {
 .footer_menu .column {
   display: flex;
   flex-flow: column;
+}
+@media (max-width: 500px) {
+  .footer_menu .column {
+    font-size: 10px;
+  }
 }
 .footer_menu .column a {
   width: 100px;
@@ -806,7 +812,7 @@ footer p {
   padding: 8px;
   border: 1px solid #4d5158;
   border-radius: 5px;
-  background: url(/public/dist/02f2a10a38a5a9c5bd7c.svg) no-repeat;
+  background: url(/public/dist/9062eace577a7f6ff2e1.svg) no-repeat;
 }
 .accordion .update:after {
   display: none;
