@@ -1,3 +1,4 @@
+@import "./public/src/mixin_media";
 footer {
   flex-flow: column;
   flex: 0 0 auto;
@@ -23,7 +24,8 @@ footer {
 
 .footer_menu {
   display: flex;
-  justify-content: space-around;
+  gap: 15px;
+  justify-content: center;
   max-width: 700px;
   margin: 0 auto;
   border-bottom: 1px solid #7a7a7a;
@@ -33,6 +35,9 @@ footer {
   .column {
     display: flex;
     flex-flow: column;
+    @include _500{
+      font-size: 10px;
+    }
 
     a {
       width: 100px;

@@ -61,6 +61,10 @@
     padding-top: 0;
     height: 0;
     z-index: 6;
+    @include _600{
+      right: 0;
+      left: initial;
+    }
   }
 
   .phone__popup-inner {
