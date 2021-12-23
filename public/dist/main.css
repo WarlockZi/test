@@ -22,7 +22,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   body {
     padding: 0;
   }
@@ -80,7 +80,8 @@ footer p {
 
 .footer_menu {
   display: flex;
-  justify-content: space-around;
+  gap: 15px;
+  justify-content: center;
   max-width: 700px;
   margin: 0 auto;
   border-bottom: 1px solid #7a7a7a;
@@ -90,6 +91,11 @@ footer p {
 .footer_menu .column {
   display: flex;
   flex-flow: column;
+}
+@media (max-width: 500px) {
+  .footer_menu .column {
+    font-size: 10px;
+  }
 }
 .footer_menu .column a {
   width: 100px;
@@ -249,11 +255,12 @@ main {
   background-size: cover;
 }
 .banner .banner__container {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.3);
 }
 .banner .banner__container.right {
-  padding: 12% 10px 3% 80px;
+  padding: 5% 10px 3% 17px;
   margin-left: 0;
+  color: white;
 }
 @media (max-width: 600px) {
   .banner .banner__container.right {
@@ -261,8 +268,9 @@ main {
   }
 }
 .banner .banner__container.left {
-  padding: 8% 80px 3% 10px;
+  padding: 5% 17px 3% 10px;
   margin-right: 0;
+  color: white;
 }
 @media (max-width: 600px) {
   .banner .banner__container.left {
@@ -346,13 +354,14 @@ main {
   padding: 15px;
   text-transform: uppercase;
   cursor: pointer;
-  border: 1px solid var(--color-main);
-  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid var(--color-main);
+  background: rgba(0, 0, 0, 0.3);
   transition: background 500ms, color 300ms;
+  color: #ffffff;
+  font-weight: 600;
 }
 .banner .banner__CTA:hover {
   background: var(--color-main);
-  color: #ffffff;
 }
 .banner .banner__CTA.right {
   align-self: flex-end;
@@ -383,6 +392,11 @@ main {
   align-items: center;
   width: 70%;
 }
+@media (max-width: 500px) {
+  .advantages .advantages__wrap {
+    width: 100%;
+  }
+}
 .advantages .advantages__wrap .advantages__title {
   font-size: xx-large;
   font-weight: 600;
@@ -407,6 +421,11 @@ main {
   font-weight: 600;
   height: 300px;
   color: #2a2a2a;
+}
+@media (max-width: 600px) {
+  .advantages .advantages__wrap .advantage__card {
+    padding: 17px;
+  }
 }
 .advantages .advantages__wrap p {
   font-weight: initial;
@@ -472,6 +491,11 @@ main {
   align-items: start;
   padding-left: 160px;
 }
+@media (max-width: 600px) {
+  .workflow .workflow__wrap {
+    padding: 72px;
+  }
+}
 .workflow .workflow__wrap .step {
   font-size: large;
   font-weight: 400;
@@ -494,7 +518,7 @@ main {
   left: -27px;
   top: 44px;
   width: 3px;
-  height: 54%;
+  height: 88%;
   background-color: var(--color-main);
 }
 .workflow .workflow__wrap .step:last-of-type:before {
@@ -742,6 +766,12 @@ main {
   height: 0;
   z-index: 6;
 }
+@media (max-width: 600px) {
+  .phone__popup {
+    right: 0;
+    left: initial;
+  }
+}
 
 .phone__popup-inner {
   width: 200px;
@@ -913,13 +943,8 @@ main {
 @media (max-width: 500px) {
   .user-menu {
     font-size: 12px;
+    display: none;
     padding: 3px 10px;
-  }
-}
-@media (max-width: 500px) {
-  .user-menu {
-    padding: 5px 10px;
-    margin: 5px 10px;
   }
 }
 .user-menu:hover {
@@ -972,6 +997,7 @@ main {
 @media (max-width: 500px) {
   .guest-menu {
     font-size: 12px;
+    display: none;
     padding: 3px 10px;
   }
 }

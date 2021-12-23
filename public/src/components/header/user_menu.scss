@@ -11,6 +11,7 @@
   margin-right: 10px;
   @include _500 {
     font-size: 12px;
+    display: none;
     padding: 3px 10px;
   }
 }
@@ -18,11 +19,6 @@
 .user-menu {
 
   @include user-menu;
-
-  @include _500 {
-    padding: 5px 10px;
-    margin: 5px 10px;
-  }
 
   &:hover {
     background-color: #f0f0f0;
@@ -52,6 +48,7 @@
     right: -1px;
     width: 280px;
     padding: 10px;
+
 
     a {
       padding: 5px 10px;

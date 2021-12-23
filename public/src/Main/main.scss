@@ -9,8 +9,6 @@
 }
 
 
-
-
 main {
   display: flex;
   flex: 1 0 auto;
@@ -47,19 +45,21 @@ main {
 
 
   .banner__container {
-    background: rgba(255, 255, 255, .3);
+    background: rgba(0, 0, 0, .3);
 
     &.right {
-      padding: 12% 10px 3% 80px;
+      padding: 5% 10px 3% 17px;
       margin-left: 0;
+      color: white;
       @include _600 {
         margin-left: 0;
       }
     }
 
     &.left {
-      padding: 8% 80px 3% 10px;
+      padding: 5% 17px 3% 10px;
       margin-right: 0;
+      color: white;
       @include _600 {
         margin-right: 0;
       }
@@ -132,14 +132,14 @@ main {
     padding: 15px;
     text-transform: uppercase;
     cursor: pointer;
-    border: 1px solid var(--color-main);
-    background: rgba(255, 255, 255, .3);
+    border: 2px solid var(--color-main);
+    background: rgba(0, 0, 0, .3);
     transition: background 500ms, color 300ms;
+    color: #ffffff;
+    font-weight: 600;
 
     &:hover {
       background: var(--color-main);
-      color: #ffffff;
-
     }
 
     &.right {
@@ -172,6 +172,9 @@ main {
     flex-flow: column;
     align-items: center;
     width: 70%;
+    @include _500 {
+      width: 100%;
+    }
 
 
     .advantages__title {
@@ -201,6 +204,9 @@ main {
       font-weight: 600;
       height: 300px;
       color: $color-title;
+      @include _600{
+        padding: 17px;
+      }
     }
 
     p {
@@ -277,6 +283,9 @@ main {
     flex-flow: column;
     align-items: start;
     padding-left: 160px;
+    @include _600{
+      padding: 72px;
+    }
 
     .step {
       font-size: large;
@@ -302,7 +311,7 @@ main {
         left: -27px;
         top: 44px;
         width: 3px;
-        height: 54%;
+        height: 88%;
         background-color: var(--color-main);
       }
     }
