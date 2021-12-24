@@ -1,12 +1,13 @@
 // import '../normalize.scss'
-
 // import '../components/header/header'
+// import '../Admin/admin.scss'
+
+import {CustomSelect} from "../components/select/select";
 import '../components/footer/footer.scss'
 
 import './test-edit.scss'
 import './test'
 import './show'
-// import '../Admin/admin.scss'
 
 import '../components/popup.scss'
 import {$, addTooltip, navigate} from '../common'
@@ -18,6 +19,20 @@ import {sortable} from "../components/sortable"
 
 import '../components/accordion/accordion'
 import '../Admin/components/main-menu/admin_main_menu'
+
+let select = $('.select').el[0]
+
+if (select) {
+    new CustomSelect('.select', {
+        name: 'service_id-btn',
+        defaultValue: 'Ford',
+        options: [['volkswagen', 'Volkswagen'], ['ford', 'Ford'], ['toyota', 'Toyota'], ['nissan', 'Nissan']],
+        onSelected(item) {
+            console.log(`Выбранное значение: ${item.textContent}`);
+        },
+    });
+}
+
 
 _test.markCurrentInMenu()
 
