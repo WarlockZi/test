@@ -25,10 +25,10 @@ $color-admin-sidebar: #4d5158;
 
 .admin-layout__container {
   display: flex;
-  flex-flow: wrap;
   flex: 1 0 auto;
   margin-top: 0px;
   @include _600 {
+  flex-wrap: wrap;
     margin: 0 auto;
   }
 }
@@ -41,7 +41,7 @@ $color-admin-sidebar: #4d5158;
 }
 
 .admin-layout__sidebar.accordion {
-  max-width: 210px;
+  max-width: 200px;
   background: $color-admin-sidebar;
   @include _800 {
     max-width: 100%;

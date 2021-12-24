@@ -140,9 +140,11 @@ her;
 	}
 
 
-	public function pagination(array $items, $addBtn)
+	public function pagination(array $items, $addBtn, $test)
 	{
-		$pagination = '<div class="pagination">';
+		$pagination = "<div class='pagination__wrap'>";
+		$pagination .= "<div class='test-name' data-test-id={$test['id']}>TECT :{$test['test_name']}</div>";
+		$pagination .= '<div class="pagination">';
 			$i = 0;
 			foreach ($items as $id => $el) {
 				$i++;
@@ -155,7 +157,7 @@ heretext;
 		if ($addBtn) {
 			$pagination .= "<div class='pagination__add-question'>+</div>";
 		}
-		return $pagination . '</div>';
+		return $pagination . '</div></div>';
 	}
 
 }

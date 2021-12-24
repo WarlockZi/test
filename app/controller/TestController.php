@@ -236,7 +236,7 @@ class TestController Extends AppController
 			$this->set(compact('test'));
 			$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
 			unset($testData['correct_answers']);
-			$pagination = App::$app->test->pagination($testData, false);
+			$pagination = App::$app->test->pagination($testData, false, $test);
 		}
 
 		$this->set(compact('testData', 'pagination'));

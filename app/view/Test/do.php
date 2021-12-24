@@ -1,15 +1,17 @@
 <section class="test-do">
+	<div class="test-do__navigation">
 
-	<?= $menuTestDo; ?>
+		<?= $menuTestDo; ?>
+
+
+		<?= $pagination;
+		$i = 1; ?>
+	</div>
+
 
 	<div class="test-do__content">
 
 		<? if (isset($testData) && !isset($error) && !$testData == 0):// Проверим, чтобы запрашивали конекретный тест?>
-
-			<div class="test-name" data-test-id=<?= $test['id'] ?>>TECT  :  <?= $test['test_name']; ?></div>
-
-			<?= $pagination;
-			$i = 1; ?>
 
 
 			<div class="test-data">
@@ -30,7 +32,9 @@
 							<? endif; ?>
 							<? unset($item[0]); ?>
 
-							<? foreach ($item as $id_answer => $answer): ?>
+							<? foreach ($item
+
+							as $id_answer => $answer): ?>
 							<? if (is_array($answer) and $id_answer !== 'correct_answer'): ?>
 						</div>
 

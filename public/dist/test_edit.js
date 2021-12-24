@@ -5633,9 +5633,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let select = (0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.select').el[0];
 
-if (select) {
+if ((0,_common__WEBPACK_IMPORTED_MODULE_6__.$)('.select').el[0]) {
   new _components_select_select__WEBPACK_IMPORTED_MODULE_0__.CustomSelect('.select', {
     name: 'service_id-btn',
     defaultValue: 'Ford',
