@@ -24,8 +24,19 @@
 			<div class="group">
 				<input type="text" class="field" id="test_name" value="<?= $test['test_name'] ?>" required>
 				<label for="test_name">Название</label>
-				<div class="bar"></div>
+<!--				<div class="bar"></div>-->
 			</div>
+		</div>
+
+		<div class="select">
+<!--			<button type="button" class="select__toggle" name="car" value="" data-select="toggle" data-index="-1">Выберите из списка</button>-->
+<!--			<div class="select__dropdown">-->
+<!--				<ul class="elect__options">-->
+<!--					<li class="elect__option" data-select="option" data-value="volkswagen" data-index="0">Volkswagen</li>-->
+<!--					<li class="elect__option elect__option_selected" data-select="option" data-value="ford" data-index="1">Ford</li>-->
+<!--					<li class="elect__option" data-select="option" data-value="toyota" data-index="2">Toyota</li>-->
+<!--				</ul>-->
+<!--			</div>-->
 		</div>
 
 
@@ -36,7 +47,7 @@
 <!--			<div>Название --><?//= $t ? 'теста' : 'папки' ?><!--</div>-->
 <!--			<div id="test_name" class="field" contenteditable="true">--><?//= $test['test_name'] ?><!--</div>-->
 
-			<div>Папка</div>
+			<div class="test-path-add__th">Папка</div>
 
 			<select>
 				<option value='0'></option>
@@ -48,10 +59,10 @@
 				<? endforeach; ?>
 			</select>
 
-			<label for="enable">Показыать пользователям</label>
+			<label class="test-path-add__th"for="enable">Показыать пользователям</label>
 			<input id="enable" type="checkbox" <?= $test['enable'] ? 'checked' : ''; ?>>
 
-			<div>Содержит Тесты и Папки</div>
+			<div class="test-path-add__th">Содержит Тесты и Папки</div>
 			<div class="children">
 				<? if (isset($test['children']) && $test['children']): ?>
 					<? foreach ($test['children'] as $child): ?>
