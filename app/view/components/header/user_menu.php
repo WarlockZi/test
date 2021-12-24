@@ -27,10 +27,6 @@
 
             <? endif; ?>
 
-            <? if (in_array('2', $user['rights'])): ?>
-                <a href="/test/1">Проходить тесты</a>
-                <!--			<a href="/freetest/41">Свободный тест</a>-->
-            <? endif; ?>
 
             <?= in_array('3', $user['rights']) || SU ?
                 '<a href="/adminsc">Admin</a>' : ''; // Admin

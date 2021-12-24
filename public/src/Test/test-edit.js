@@ -20,9 +20,8 @@ import {sortable} from "../components/sortable"
 import '../components/accordion/accordion'
 import '../Admin/components/main-menu/admin_main_menu'
 
-let select = $('.select').el[0]
 
-if (select) {
+if ($('.select').el[0]) {
     new CustomSelect('.select', {
         name: 'service_id-btn',
         defaultValue: 'Ford',
@@ -41,7 +40,8 @@ sortable.connect('.questions')
 
 
 // при создании нового теста показать пустой вопрос
-if (!_question.questions().length && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
+if (!_question.questions().length
+  && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
     _question.showFirst()
 }
 
