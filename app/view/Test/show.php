@@ -4,9 +4,9 @@
 	<div class="test-edit__content">
 		<div class="test-name">Добавление <?=$test['isTest']?'теста':'папки'?></div>
 		<div class="test-path-add__table">
-			<div>Название  <?=$test['isTest']?'теста':'папки'?></div>
+			<div class="test-path-add__th">Название  <?=$test['isTest']?'теста':'папки'?></div>
 			<div id="test_name" class="field" contenteditable="true"></div>
-			<div>Прикрепить к группе</div>
+			<div class="test-path-add__th">Прикрепить к группе</div>
 
 			<select>
 				<option value='0'></option>
@@ -15,7 +15,7 @@
 				<? endforeach; ?>
 			</select>
 
-			<label for="enable">Показыать пользователям</label>
+			<label class="test-path-add__th" for="enable">Показыать пользователям</label>
 			<input id="enable" type="checkbox">
 
 		</div>
