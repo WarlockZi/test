@@ -3,15 +3,20 @@
   display: grid;
   grid: 1fr 1fr/1fr 2fr;
   grid-gap: 15px 10px;
-}
 
-#test_name {
-  outline: #b0ddff 1px solid;
-
-  &:hover {
-    outline: #b0ddff 2px solid;
+  .test-path-add__th{
+    justify-self: end;
+    text-align: end;
   }
 }
+
+//#test_name {
+//  //outline: #b0ddff 1px solid;
+//
+//  &:hover {
+//    //outline: #b0ddff 2px solid;
+//  }
+//}
 
 .test__save,
 .test__update,
