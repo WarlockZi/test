@@ -449,8 +449,16 @@ async function autocomplete(input) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common */ "./public/src/common.js");
+/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.scss */ "./public/src/components/header/header.scss");
 
+
+let mobileMenu = (0,_common__WEBPACK_IMPORTED_MODULE_0__.$)('.gamburger').on('click', mobile);
+
+function mobile(e) {
+  let mm = e.target.closest('.utils').querySelector('.mobile-menu');
+  mm.classList.toggle('show');
+}
 
 /***/ }),
 

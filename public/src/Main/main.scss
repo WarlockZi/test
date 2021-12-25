@@ -103,6 +103,7 @@ main {
   h1 {
     font-size: xx-large;
     margin: 0 0 35px;
+    letter-spacing: 3px;
     @include _600 {
       font-size: 22px;
       margin-bottom: 20px;
@@ -110,6 +111,7 @@ main {
     @include _300 {
       font-size: 18px;
       margin-bottom: 10px;
+      letter-spacing: 1px;
     }
   }
 
@@ -137,6 +139,7 @@ main {
     transition: background 500ms, color 300ms;
     color: #ffffff;
     font-weight: 600;
+    letter-spacing: 2px;
 
     &:hover {
       background: var(--color-main);
@@ -194,11 +197,10 @@ main {
     .advantage__card {
       position: relative;
       display: flex;
-      justify-content: center;
       flex-flow: column;
       min-width: 50%;
       flex: 1 0;
-      padding: 40px;
+      padding: 60px 40px 40px;
       box-sizing: border-box;
       font-size: 22px;
       font-weight: 600;

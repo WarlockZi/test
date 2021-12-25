@@ -320,6 +320,7 @@ main {
 .banner h1 {
   font-size: xx-large;
   margin: 0 0 35px;
+  letter-spacing: 3px;
 }
 @media (max-width: 600px) {
   .banner h1 {
@@ -331,6 +332,7 @@ main {
   .banner h1 {
     font-size: 18px;
     margin-bottom: 10px;
+    letter-spacing: 1px;
   }
 }
 .banner p {
@@ -359,6 +361,7 @@ main {
   transition: background 500ms, color 300ms;
   color: #ffffff;
   font-weight: 600;
+  letter-spacing: 2px;
 }
 .banner .banner__CTA:hover {
   background: var(--color-main);
@@ -411,11 +414,10 @@ main {
 .advantages .advantages__wrap .advantage__card {
   position: relative;
   display: flex;
-  justify-content: center;
   flex-flow: column;
   min-width: 50%;
   flex: 1 0;
-  padding: 40px;
+  padding: 60px 40px 40px;
   box-sizing: border-box;
   font-size: 22px;
   font-weight: 600;
@@ -835,6 +837,32 @@ main {
   display: flex;
   justify-content: end;
 }
+.header-catalog-menu__wrap .mobile-menu {
+  position: absolute;
+  top: 100%;
+  right: -150%;
+  width: 100%;
+  height: 100vh;
+  background: #78aafe;
+  transition: right 500ms ease-out;
+}
+.header-catalog-menu__wrap .mobile-menu.show {
+  right: 0;
+}
+.header-catalog-menu__wrap .mobile-menu .mobile-menu__wrap {
+  display: flex;
+  flex-flow: column;
+  margin: 20px;
+  text-align: end;
+}
+.header-catalog-menu__wrap .mobile-menu .mobile-menu__wrap .mobile-menu__item {
+  color: #ffffff;
+  padding: 10px;
+  cursor: pointer;
+}
+.header-catalog-menu__wrap .mobile-menu .mobile-menu__wrap .mobile-menu__item:hover {
+  background-color: #0070ff;
+}
 
 .utils {
   display: flex;
@@ -849,11 +877,20 @@ main {
   height: 17px;
   padding: 0 15px;
 }
-.utils .search {
+.utils .search,
+.utils .gamburger,
+.utils .cart {
   position: initial;
-  height: initial;
+  height: 100%;
   margin: initial;
-  display: initial;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+}
+.utils .search:hover,
+.utils .gamburger:hover,
+.utils .cart:hover {
+  background-color: #0070ff;
 }
 .h-cat {
   background-color: rgba(34, 117, 255, 0);

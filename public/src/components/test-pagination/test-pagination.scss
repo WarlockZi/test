@@ -1,8 +1,6 @@
 .pagination {
-  margin: 3px 0 3px;
   display: flex;
   flex-wrap: wrap;
-  //font-weight: 600;
 
   a {
     text-align: center;
@@ -32,8 +30,6 @@
 
     &:hover {
       background: #6e6e6e;
-      //box-shadow: 0 6px 11px 0 rgba(0, 0, 0, 0.24),
-      //0 6px 5px 0 rgba(0, 0, 0, 0.19);
     }
   }
 
