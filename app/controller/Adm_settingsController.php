@@ -30,7 +30,11 @@ class Adm_settingsController extends AdminscController {
    public function actionDump() {
 
    }
+	public function actionCache() {
 
+
+
+	}
    public function actionDumpWWW() {
 
       if ($this->isAjax()) {

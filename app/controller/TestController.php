@@ -58,7 +58,6 @@ class TestController Extends AppController
 	}
 
 
-
 	public function actionCreate()
 	{
 		if ($this->ajax) {
@@ -84,7 +83,6 @@ class TestController Extends AppController
 			}
 		}
 	}
-
 
 
 	public function actionResult()
@@ -223,10 +221,12 @@ class TestController Extends AppController
 	{
 		$pagination = '';
 		$testData = '';
-		$info = 'Система обучения. Выберите тест';
 		$testId = isset($this->route['alias']) ? (int)$this->route['alias'] : '';
 		$menuTestDo = $this->getMenu();
-		$this->set(compact('info', 'menuTestDo'));
+		$this->set(compact('menuTestDo'));
+		if (!$testId) {
+			$pagination = "<div class='info'><- Выберите тест</div>";
+		}
 		if ($testId) {
 			if (!$testData = App::$app->test->getTestData($testId, true)) {
 				$error = '<H1>Теста с таким номером нет.</H1>';
@@ -245,44 +245,46 @@ class TestController Extends AppController
 		View::setJs('admin.js');
 		View::setCss('admin.css');
 	}
-    public function actionUpdate()
-    {
-        if ($this->ajax) {
-            $id = App::$app->test->update($this->ajax);
-            exit(json_encode(['id' => $id]));
-        }
-        $this->layout = 'admin';
 
-        $id = $this->route['id'];
-        $test = App::$app->test->findOne($id);
-        $test['children'] = App::$app->test->getChildren($id);
+	public function actionUpdate()
+	{
+		if ($this->ajax) {
+			$id = App::$app->test->update($this->ajax);
+			exit(json_encode(['id' => $id]));
+		}
+		$this->layout = 'admin';
 
-        $rootTests = App::$app->test->findAllWhere('isTest', 0);
+		$id = $this->route['id'];
+		$test = App::$app->test->findOne($id);
+		$test['children'] = App::$app->test->getChildren($id);
+
+		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 //		$rootTestsTree = $this->hierachy($rootTests, 'parent');
-        $this->set(compact('rootTests', 'test'));
+		$this->set(compact('rootTests', 'test'));
 
-        View::setCss('admin.css');
-        View::setJs('admin.js');
-    }
-    public function actionEdit()
-    {
-        $test = '';
-        $id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
-        if ($id) {
-            $test = App::$app->test->findOne($id);
-            if ($test) {
-                if (!$test['isTest']) {
-                    $test['children'] = App::$app->test->getChildren($id);
-                }
-            }
-            $testDataToEdit = App::$app->test->getTestData($id) ?? '';
-            unset ($testDataToEdit['correct_answers']);
-            $this->set(compact('testDataToEdit'));
-        }
-        $this->set(compact('test'));
+		View::setCss('admin.css');
+		View::setJs('admin.js');
+	}
 
-        $this->layout = 'admin';
-        View::setJs('admin.js');
-        View::setCss('admin.css');
-    }
+	public function actionEdit()
+	{
+		$test = '';
+		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+		if ($id) {
+			$test = App::$app->test->findOne($id);
+			if ($test) {
+				if (!$test['isTest']) {
+					$test['children'] = App::$app->test->getChildren($id);
+				}
+			}
+			$testDataToEdit = App::$app->test->getTestData($id) ?? '';
+			unset ($testDataToEdit['correct_answers']);
+			$this->set(compact('testDataToEdit'));
+		}
+		$this->set(compact('test'));
+
+		$this->layout = 'admin';
+		View::setJs('admin.js');
+		View::setCss('admin.css');
+	}
 }

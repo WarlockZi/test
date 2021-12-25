@@ -73,12 +73,30 @@
 				<? include ICONS . '/feather/search.svg' ?>
 			</div>
 
-			<a href="/cart">
+			<a class="cart" href="/cart">
 				<? include ICONS . '/feather/shopping-cart.svg' ?>
 			</a>
 
 			<div class="gamburger">
 				<? include ICONS . '/feather/menu.svg' ?>
+
+			</div>
+
+			<div class="mobile-menu">
+				<div class="mobile-menu__wrap">
+					<a class="mobile-menu__item" href="/about/contacts">Контакты</a>
+					<a class="mobile-menu__item">О компании</a>
+
+					<hr>
+					<a class="mobile-menu__item">Акции</a>
+
+					<hr>
+					<a class="mobile-menu__item">Перчатки</a>
+					<a class="mobile-menu__item">Бахилы</a>
+					<a class="mobile-menu__item">Шприцы</a>
+					<a class="mobile-menu__item">Маски</a>
+
+				</div>
 			</div>
 		</div>
 
