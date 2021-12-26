@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
+<!--    <link rel="stylesheet" href="http:localhost:3000/public/dist/admin.css" type="text/css">-->
     <? $this::getCSS() ?>
     <!--<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>-->
 </head>

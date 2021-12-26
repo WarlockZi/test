@@ -6,6 +6,7 @@
   padding: 0 15px;
   max-width: 105px;
   position: relative;
+  flex: 1;
   @include _800{
     display: none;
   }

@@ -26,10 +26,11 @@ body {
   margin: 0;
   font-family: "RobotoMedium", sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
-  padding: 0 calc(18px - (100vw - 100%)) 0 0;
+  padding: 0 calc(0px - (100vw - 100%)) 0 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 
   @include _500 {
     padding: 0;

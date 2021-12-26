@@ -5,30 +5,30 @@ namespace app\controller;
 use app\view\View;
 use app\core\App;
 
-class MainController Extends AppController
+class MainController extends AppController
 {
 
-	public function __construct($route)
-	{
+    public function __construct($route)
+    {
 
-		parent::__construct($route);
+        parent::__construct($route);
 
-		$this->auth();
+        $this->auth();
 
-		$sale = App::$app->cache->get('sale');
-		if (!$sale) {
-			$sale = App::$app->product->getSale();
-			App::$app->cache->set('sale', $sale, 30);
-		}
+        $sale = App::$app->cache->get('sale');
+        if (!$sale) {
+            $sale = App::$app->product->getSale();
+            App::$app->cache->set('sale', $sale, 30);
+        }
 
-		$this->set(compact('sale'));
-			View::setCss('main.css');
-			View::setJs('main.js');
+        $this->set(compact('sale'));
+        View::setCss('main.css');
+        View::setJs('main.js');
 
-	}
+    }
 
-	public function actionIndex()
-	{
+    public function actionIndex()
+    {
 //		if (isset($_SESSION['id'])) {
 //			$user = App::$app->user->get($_SESSION['id']);
 //			if ($user === false) {
@@ -40,43 +40,43 @@ class MainController Extends AppController
 //			}
 //		}
 
-			View::setMeta('Нитриловые перчатки оптом', 'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.', 'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
-	}
+        View::setMeta('Нитриловые перчатки оптом', 'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.', 'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
+    }
 
-	public function actionPoliticaconf()
-	{
-	}
+    public function actionPoliticaconf()
+    {
+    }
 
-	public function actionDiscount()
-	{
-	}
+    public function actionDiscount()
+    {
+    }
 
-	public function actionDelivery()
-	{
-	}
+    public function actionDelivery()
+    {
+    }
 
-	public function actionPayment()
-	{
-	}
+    public function actionPayment()
+    {
+    }
 
-	public function actionContacts()
-	{
-	}
+    public function actionContacts()
+    {
+    }
 
-	public function actionOferta()
-	{
-	}
+    public function actionOferta()
+    {
+    }
 
-	public function actionAbout()
-	{
-	}
+    public function actionAbout()
+    {
+    }
 
-	public function actionReturn_change()
-	{
-	}
+    public function actionReturn_change()
+    {
+    }
 
-	public function actionArticles()
-	{
-	}
+    public function actionArticles()
+    {
+    }
 
 }

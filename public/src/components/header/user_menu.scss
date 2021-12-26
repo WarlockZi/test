@@ -9,6 +9,7 @@
   cursor: pointer;
   color: #2b303a;
   margin-right: 10px;
+  flex: 0 1 auto;
   @include _500 {
     font-size: 12px;
     display: none;
@@ -28,7 +29,7 @@
     border: 2px solid #f5f5f5;
     border-radius: 50%;
     vertical-align: middle;
-    margin: 6px;
+    margin-right: 6px;
     width: 44px;
   }
 

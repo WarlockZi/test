@@ -1,7 +1,7 @@
 <ul class="admin-layout__sidebar accordion">
-
+    <a class="admin-sidebar__logo" href="/">
 	<? include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
-
+    </a>
 
 	<a class="house neon" href="/adminsc">
 		<? include ICONS . '/admin-menu/grid.svg'; ?>
