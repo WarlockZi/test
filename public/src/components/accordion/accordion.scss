@@ -58,7 +58,7 @@
     // first level text
     padding: $item-padding-S $item-padding-S $item-padding-S ($item-padding-S * 3) + 25px;
     color: $color-3;
-    font-size: .8rem;
+    font-size: .7rem;
     cursor: pointer;
   }
 
@@ -195,7 +195,7 @@
   @include MQ(M) {
     label, a {
       padding: $item-padding-M $item-padding-M $item-padding-M ($item-padding-M * 3) + 20px;
-      font-size: 1rem;
+      font-size: .8rem;
     }
 
     label::before {

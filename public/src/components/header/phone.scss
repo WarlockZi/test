@@ -6,9 +6,12 @@
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   font: bold 17px/21px 'Proxima Nova', sans-serif;
   padding: 0 25px;
   white-space: nowrap;
+  flex: 1;
+
   @include _500 {
     font: bold 12px/17px 'Proxima Nova', sans-serif;
   }

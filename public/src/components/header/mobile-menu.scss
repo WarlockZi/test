@@ -1,28 +1,40 @@
+@import "../../mixin_media";
+
 @mixin mobile-menu {
 
   .mobile-menu {
     position: absolute;
     top: 100%;
     right: -150%;
-    width: 100%;
-    height: 100vh;
+    width: 250px;
+    //min-height: 100vh;
     background: #78aafe;
     transition: right 500ms ease-out;
+
+    @include _500 {
+      width: 100%;
+    }
 
     &.show {
       right: 0;
     }
-    .mobile-menu__wrap{
+
+    .mobile-menu__wrap {
       display: flex;
       flex-flow: column;
       margin: 20px;
       text-align: end;
 
-      .mobile-menu__item{
+      @include _500 {
+        text-align: center;
+      }
+
+      .mobile-menu__item {
         color: #ffffff;
-        padding: 10px;
+        padding: 10px 50px 10px;
         cursor: pointer;
-        &:hover{
+
+        &:hover {
           background-color: #0070ff;
         }
       }

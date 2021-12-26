@@ -12,7 +12,7 @@
     "nrd": "npm run dev",
     "build": "webpack",
     "dev": "webpack -w",
-    "serve": "webpack serve --hot --inline"
+    "serve": "webpack serve"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

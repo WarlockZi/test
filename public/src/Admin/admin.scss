@@ -13,10 +13,6 @@
 @import "../components/neon";
 @import '../normalize.scss';
 
-
-
-
-
 $color-admin-sidebar: #4d5158;
 
 :root {
@@ -27,9 +23,10 @@ $color-admin-sidebar: #4d5158;
   display: flex;
   flex: 1 0 auto;
   margin-top: 0px;
+
   @include _600 {
   flex-wrap: wrap;
-    margin: 0 auto;
+
   }
 }
 
@@ -40,6 +37,11 @@ $color-admin-sidebar: #4d5158;
   padding: 20px;
 }
 
+.admin-layout__sidebar {
+  .admin-sidebar__logo{
+    padding: 0;
+  }
+}
 .admin-layout__sidebar.accordion {
   max-width: 200px;
   background: $color-admin-sidebar;

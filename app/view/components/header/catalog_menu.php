@@ -71,6 +71,7 @@
 		<div class='utils'>
 			<div class="search">
 				<? include ICONS . '/feather/search.svg' ?>
+                <div class="search__button"></div>
 			</div>
 
 			<a class="cart" href="/cart">
