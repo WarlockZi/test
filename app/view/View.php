@@ -72,7 +72,7 @@ class View
 	{
 		$cache = true;
 		$time = ($cache) ? '': "?" . time() ;
-		self::$jsCss['css'][] = "<link href='/public/dist/{$file}{$time}' type='text/css' rel='stylesheet'>";
+		self::$jsCss['css'][] = "<link href='http://localhost:4000/dist/{$file}{$time}' type='text/css' rel='stylesheet'>";
 	}
 
 	public static function getSearch()
