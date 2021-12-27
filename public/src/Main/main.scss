@@ -18,6 +18,8 @@ main {
   flex-flow: column;
 }
 
+
+
 .banner {
   display: flex;
   flex-flow: column;
@@ -44,6 +46,7 @@ main {
   }
 
 
+
   .banner__container {
     background: rgba(0, 0, 0, .3);
 
@@ -64,6 +67,7 @@ main {
         margin-right: 0;
       }
     }
+
 
     @include _900 {
       padding: 12% 40px 8% 40px;
@@ -153,6 +157,7 @@ main {
       align-self: flex-start;
     }
 
+
     @include _600 {
       padding: 10px;
       font-size: 11px;
@@ -161,6 +166,8 @@ main {
       padding: 7px;
       font-size: 10px;
     }
+
+
 
   }
 

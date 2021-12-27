@@ -68,7 +68,8 @@
   }
 
   .level1 {
-    background: $color-level-1;
+    background: red;
+
 
     &:hover {
       background: tint($color-level-1, 3%);

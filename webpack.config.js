@@ -1,49 +1,36 @@
-const env = require('dotenv').config().parsed
-
-const path = require('path')
+// Generated using webpack-cli https://github.com/webpack/webpack-cli
+const path = require("path");
 const src = path.resolve(__dirname, 'public/src')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const {CleanWebpackPlugin} = require('clean-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const isProduction = false;
 
 const config = {
-
+  entry: {
+    admin: path.resolve(src, 'Admin/admin.js'),
+    // adminCategory: path.resolve(src, 'Adm_catalog/adm_category.js'),
+    cabinet: path.resolve(src, 'Auth/cabinet.js'),
+    auth: path.resolve(src, 'Auth/auth.js'),
+    // freeTest: path.resolve(src, 'Freetest/free-test.js'),
+    test: path.resolve(src, 'Test/test.js'),
+    test_edit: path.resolve(src, 'Test/test-edit.js'),
+    main: path.resolve(src, 'Main/main.js'),
+  },
   output: {
-    path: path.join(__dirname, 'public/dist/'),
-    filename: "[name].js",
-    publicPath: '/public/dist/',
-    // chunkFilename: '[name].js'
+    path: path.resolve(__dirname, "public/dist"),
   },
   devServer: {
-    port: 3000,// http://[devServer.host]:[devServer.port]/[output.publicPath]/[output.filename]
-    open: 'http://localhost:3000/public/dist',
-    static:  {
-      directory:path.join(__dirname, 'public/dist/'),
-      publicPath: '/public/dist/',
-    },
-    watchFiles: {
-      paths: ['src/**/*', 'public/**/*'],
-      options: {
-        usePolling: false,
-      },
-    },
-
-    compress: true,
-    // liveReload: true,
-    hot: true,
+    open: true,
+    host: "localhost",
+    port:4000,
+    liveReload: false,
   },
+
+
   plugins: [
-    new MiniCssExtractPlugin,
-    // new HtmlWebpackPlugin({
-    //     filename: 'out.html',
-    //     template: src + '/template.html',
-    // }),
-    new CleanWebpackPlugin(),
+
+    new MiniCssExtractPlugin(),
   ],
-  // optimization: {
-  //     runtimeChunk: 'single',
-  // },
 
   module: {
     rules: [
@@ -72,44 +59,10 @@ const config = {
 };
 
 module.exports = () => {
-
-  let isDev = env.MODE === 'dev'
-  config.cache = !isDev
-  config.mode = isDev ? 'development' : 'production'
-  // config.mode = 'production'
-  // config.devtool = false
-  config.devtool = isDev ? 'source-map' : false
-  config.target = isDev ? "web" : "browserslist"
-
-  config.entry = {
-    admin: path.resolve(src, 'Admin/admin.js'),
-    // adminCategory: path.resolve(src, 'Adm_catalog/adm_category.js'),
-    cabinet: path.resolve(src, 'Auth/cabinet.js'),
-    auth: path.resolve(src, 'Auth/auth.js'),
-    // freeTest: path.resolve(src, 'Freetest/free-test.js'),
-    test: path.resolve(src, 'Test/test.js'),
-    test_edit: path.resolve(src, 'Test/test-edit.js'),
-    main: path.resolve(src, 'Main/main.js'),
+  if (isProduction) {
+    config.mode = "production";
+  } else {
+    config.mode = "development";
   }
-
-  // config.optimization = isDev ?  {
-  //     runtimeChunk: 'single',
-  //     splitChunks: {
-  //         cacheGroups: {
-  //             vendor: {
-  //                 test: /[\\/]node_modules[\\/]/,
-  //                 name: 'vendors',
-  //                 chunks: 'all',
-  //             },
-  //         },
-  //     },
-
-
-  // }:''
-  console.log(config.devtool)
-  console.log(config.mode)
-  // console.log(env)
-  return config
-
-}
-
+  return config;
+};
