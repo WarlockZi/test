@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const isProduction = false;
 
 const config = {
+
   entry: {
     admin: path.resolve(src, 'Admin/admin.js'),
     // adminCategory: path.resolve(src, 'Adm_catalog/adm_category.js'),
@@ -16,19 +17,36 @@ const config = {
     test_edit: path.resolve(src, 'Test/test-edit.js'),
     main: path.resolve(src, 'Main/main.js'),
   },
+
   output: {
+    // assetModuleFilename: 'assets/[hash][ext][query]',
     path: path.resolve(__dirname, "public/dist"),
   },
+
+
+
   devServer: {
-    open: true,
+    // open: true,
     host: "localhost",
     port:4000,
-    liveReload: false,
+    // hot:true,
+    // liveReload: true,
+    watchFiles: {
+      paths: ['public/src/**/*.*', 'public/**/*'],
+      // options: {
+      //   usePolling: true,
+      // },
+
+    },
   },
 
+  // optimization:{
+  //   splitChunks:{
+  //     chunks: 'all'  // создаёт отдельные вендор файлы в которые кидает весь лишний код, при этом наш бандел файл перестаёт весить полтора мегобайта :).
+  //   }
+  // },
 
   plugins: [
-
     new MiniCssExtractPlugin(),
   ],
 
