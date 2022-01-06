@@ -65,20 +65,25 @@ class View
 	public static function setJs($file)
 	{
 		$cache = true;
-		$hostHot = 'http://localhost:4000/';
-		$hostStatic = '/public/dist/';
+		$host = $_ENV['MODE']==='development'
+			?'http://localhost:4000/'
+			:'/public/dist/';
+//		$hostHot = 'http://localhost:4000/';
+//		$hostStatic = '/public/dist/';
 		$time = ($cache) ? '' : "?" . time();
-		$str = "<script src='{$hostStatic}{$file}{$time}'></script>";
+		$str = "<script src='{$host}{$file}{$time}'></script>";
 		self::$jsCss['js'][] = $str;
 	}
 
 	public static function setCss($file)
 	{
 		$cache = true;
-		$hostHot = 'http://localhost:4000/';
-		$hostStatic = '/public/dist/';
+		$host = $_ENV['MODE']==='development'
+			?'http://localhost:4000/'
+			:'/public/dist/';
+
 		$time = ($cache) ? '' : "?" . time();
-		self::$jsCss['css'][] = "<link href='{$hostStatic}{$file}{$time}' rel='stylesheet' type='text/css'>";
+		self::$jsCss['css'][] = "<link href='{$host}{$file}{$time}' rel='stylesheet' type='text/css'>";
 	}
 
 	public static function getSearch()

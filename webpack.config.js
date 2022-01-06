@@ -30,22 +30,16 @@ const config = {
     // open: true,
     host: "localhost",
     port:4000,
-    // hot:true,
-    // liveReload: true,
+    // http2: true,
     watchFiles: {
-      paths: ['public/src/**/*.*', 'public/**/*'],
-      // options: {
-      //   usePolling: true,
-      // },
-
+      paths: ['public/src/**/*.*'],
     },
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    }
   },
-
-  // optimization:{
-  //   splitChunks:{
-  //     chunks: 'all'  // создаёт отдельные вендор файлы в которые кидает весь лишний код, при этом наш бандел файл перестаёт весить полтора мегобайта :).
-  //   }
-  // },
 
   plugins: [
     new MiniCssExtractPlugin(),
@@ -53,19 +47,14 @@ const config = {
 
   module: {
     rules: [
-      // {test: /\.js$/, loader: 'babel-loader', exclude: '/node_modules/'},
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
-          options: {
-            // presets: ['@babel/preset-env'],
-            // plugins: ['@babel/plugin-transform-runtime']
-          }
+
         }
       },
-
 
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|svg|woff|woff2|eot|ttf|otf)$/i,

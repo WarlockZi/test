@@ -736,11 +736,11 @@ window.onload = function () {
                   overlay.addEventListener("click", function () {
                      overlay.autocomplete.display = 'none';
                      box.autocomplete.display = 'none';
-                  });
+                  },true);
                   clos.addEventListener("click", function () {
                      overlay.autocomplete.display = 'none';
                      box.autocomplete.display = 'none';
-                  });
+                  },true);
 
                }
                else if (xhr.responseText == 'squash') {
@@ -763,7 +763,7 @@ window.onload = function () {
 //                }
 
 
-      });
+      },true);
    }
 ///////////////////////////    REGISTER     /////////////////////
 
@@ -802,11 +802,11 @@ window.onload = function () {
                overlay.addEventListener("click", function () {
                   overlay.autocomplete.display = 'none';
                   box.autocomplete.display = 'none';
-               });
+               },true);
                clos.addEventListener("click", function () {
                   overlay.autocomplete.display = 'none';
                   box.autocomplete.display = 'none';
-               });
+               },true);
             }
          }
          else {

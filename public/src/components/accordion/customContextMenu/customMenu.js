@@ -4,7 +4,7 @@ export default function showCustomMenu(e) {
   $remove()
   let el = e.target
   el.append(render(e))
-  el.addEventListener('mouseleave', $remove.bind(null, this))
+  el.addEventListener('mouseleave', $remove.bind(null, this),true)
 
 }
 

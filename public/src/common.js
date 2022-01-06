@@ -53,7 +53,7 @@ let popup = {
             popup = this.el('div', 'popup')
         }
         popup.append(popup__item)
-        popup.addEventListener('click', this.close)
+        popup.addEventListener('click', this.close,true)
         document.body.append(popup)
         let hideDelay = 5000;
         setTimeout(() => {
@@ -117,10 +117,10 @@ function MyJquery(elements) {
         if (!this.el) return
 
         if (this.elType === "[object HTMLDivElement]") {
-            this.el.addEventListener(ev, f)
+            this.el.addEventListener(ev, f,true)
         }
         if (this.elType === "[object NodeList]") {
-            elements.forEach((s) => s.addEventListener(ev, f))
+            elements.forEach((s) => s.addEventListener(ev, f,true))
         }
     }
     this.value = function () {
@@ -228,7 +228,7 @@ function addTooltip(args) {
             tip.innerText = args.message
             el.append(tip)
             let remove = () => tip.remove()
-            tip.addEventListener('mousemove', remove.bind(tip))
+            tip.addEventListener('mousemove', remove.bind(tip),true)
         }.bind(args)
 
         el.onmouseleave = () => {
