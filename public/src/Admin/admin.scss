@@ -12,11 +12,12 @@
 @import "components/del_product";
 @import "../components/neon";
 @import '../normalize.scss';
+@import '../var.scss';
 
 $color-admin-sidebar: #4d5158;
 
 :root {
-  --color-main: #6ca3fe;
+  --color-main: $color-main;
 }
 
 .admin-layout__container {

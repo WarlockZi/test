@@ -2,6 +2,8 @@
 
 namespace app\view;
 
+use http\Env;
+
 class View
 {
 
@@ -53,8 +55,8 @@ class View
 
 	public static function toFile($page_cache)
 	{
-		$file = ROOT.'/public/src/template.html';
-		if (is_readable($file)){
+		$file = ROOT . '/public/src/template.html';
+		if (is_readable($file)) {
 			file_put_contents($file, $page_cache);
 		}
 
@@ -63,24 +65,26 @@ class View
 	public static function setJs($file)
 	{
 		$cache = true;
-		$time = ($cache) ? '': "?" . time() ;
-		$str = "<script src=''http://localhost:4000/{$file}{$time}'></script>";
+		$hostHot = 'http://localhost:4000/';
+		$hostStatic = '/public/dist/';
+		$time = ($cache) ? '' : "?" . time();
+		$str = "<script src='{$hostStatic}{$file}{$time}'></script>";
 		self::$jsCss['js'][] = $str;
 	}
 
 	public static function setCss($file)
 	{
 		$cache = true;
-		$time = ($cache) ? '': "?" . time() ;
-		self::$jsCss['css'][] = "<link rel='stylesheet' href='http://localhost:4000/{$file}{$time}' type='text/css' >";
+		$hostHot = 'http://localhost:4000/';
+		$hostStatic = '/public/dist/';
+		$time = ($cache) ? '' : "?" . time();
+		self::$jsCss['css'][] = "<link href='{$hostStatic}{$file}{$time}' rel='stylesheet' type='text/css'>";
 	}
 
 	public static function getSearch()
 	{
 
-//		return require_once(ROOT . '/app/view/components/Logo.php');
 		return include(ROOT . '/app/view/components/header/logo_squared.php');
-//		return include(ROOT . '/app/view/components/Logo_small.php');
 
 	}
 

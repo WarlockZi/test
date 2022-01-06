@@ -11,8 +11,8 @@
   margin: 15px 0 30px;
   white-space: nowrap;
   cursor: pointer;
-  background-color: #1bbc9b !important;
-  box-shadow: 0 2px 4px 0 #316358;
+  background-color: $color-main !important;
+  box-shadow: 0 2px 4px 0 $color-main;
   transition: box-shadow 100ms;
   display: flex;
   justify-content: center;

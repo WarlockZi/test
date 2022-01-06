@@ -26,6 +26,7 @@ const config = {
 
 
   devServer: {
+    allowedHosts: "all",
     // open: true,
     host: "localhost",
     port:4000,
