@@ -21,7 +21,7 @@ $(function () {
 //      debugger;
       Obj.values.piece = document.querySelector('#piece').innerText;
       post(Obj.url, Obj);
-   });
+   },true);
 // изменение  / добавление названия значения 
    $('.property-block').on('input', 'span[contenteditable]', function () {
 

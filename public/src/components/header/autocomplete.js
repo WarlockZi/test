@@ -5,7 +5,7 @@ import {$} from '../../common'
     if (input) {
         input.addEventListener('input', function () {
             autocomplete(input)
-        })
+        }, true)
     }
 })
 

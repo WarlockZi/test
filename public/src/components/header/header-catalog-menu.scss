@@ -6,7 +6,7 @@
 .header-catalog-menu {
   position: sticky;
   top: 0;
-  background: var(--color-main);
+  background: $color-main;
   min-height: 40px;
   display: flex;
   opacity: .92;

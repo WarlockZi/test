@@ -31,13 +31,13 @@ window.onload = function () {
          document.querySelector(link).fadeIn(100);
       }
       return false;
-   });
+   },true);
 
 
 //////////////////////  ADD KEY Кнопка добавить ключевик ///////////////
    document.querySelector('.content').addEventListener('click', '.button_key', function () {
       document.querySelector('<input class = "input_key" type="text">').insertBefore(document.querySelector(this));
-   })
+   },true)
 
 ///////////////////////   При изменении KEY_WORDS   ///////////////
    document.querySelector('.content').addEventListener('change', '.input_key', function () {
@@ -52,7 +52,7 @@ window.onload = function () {
          }
       }
       $.post("/freetest/edit", {"action": 'addKey', "qid": qid, "str": str});
-   });
+   },true);
 //////////////////////////////// Параметры Freetest///////////////
 
 // Открываем панель параметров freeтеста
@@ -72,7 +72,7 @@ window.onload = function () {
             document.querySelector('.testParamsBorder').fadeIn(100);
          }
       });
-   });
+   },true);
 // Удалить freeтест
    document.querySelector('body').addEventListener('click', '#freetestParamsDEL', function () {
 
@@ -98,13 +98,13 @@ window.onload = function () {
             alert('Тест не удалился.');
          }
       });
-   });
+   },true);
 // Кнопка "Отмена"  - не сохранять параметры freeтеста
    document.querySelector('body').addEventListener('click', '#saveTestParmsCansel, .overlay', function () {
       document.querySelector('.testParamsBorder').add('.overlay').fadeOut(300, function () {
          document.querySelector(this).remove();
       });
-   });
+   },true);
 // Кнопака "ОК"  - сохранить параметры freeтеста/Добавить новый freeтест
    document.querySelector('body').addEventListener('click', '#saveFreetestParamsOK', function () {
       var testId = +document.querySelector('.testId').text(),
@@ -181,7 +181,7 @@ window.onload = function () {
             return;
          }
       }
-   });
+   },true);
 // freeтест Удалить ВОПРОС
    document.querySelector('body').addEventListener('click', '.delete-question', function () {
       var qId = +document.querySelector(this).data('id');
@@ -212,7 +212,7 @@ window.onload = function () {
             window.alert("Вопрос не удален");
          }
       });
-   });
+   },true);
 
 
 

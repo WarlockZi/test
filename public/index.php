@@ -10,7 +10,7 @@ require_once "../vendor/autoload.php";
 (Dotenv\Dotenv::createImmutable(dirname(__DIR__)))->load();
 
 error_reporting(E_ALL);
-define('DEV', $_ENV['MODE'] === 'dev'); //0-не выводить ошибки
+define('DEV', $_ENV['MODE'] === 'development'); //0-не выводить ошибки
 define('ROOT', dirname(__DIR__));
 define('ICONS', ROOT.'/app/view/components/icons');
 if (DEV) {

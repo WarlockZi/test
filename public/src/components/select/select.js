@@ -17,7 +17,7 @@ export class CustomSelect {
       this._elRoot.innerHTML = CustomSelect.template(this._params);
     }
     this._elToggle = this._elRoot.querySelector(SELECTOR_DATA_TOGGLE);
-    this._elRoot.addEventListener('click', this._onClick.bind(this));
+    this._elRoot.addEventListener('click', this._onClick.bind(this),true);
   }
   _onClick(e) {
     const target = e.target;
@@ -149,4 +149,4 @@ document.addEventListener('click', (e) => {
       select.classList.remove(CLASS_NAME_ACTIVE);
     });
   }
-});
+},true);
