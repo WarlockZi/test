@@ -14,9 +14,9 @@
 			<div class="questions">
 
 				<div class="question__create">
-					<?$question__create = true;?>
+					<? $question__create = true; ?>
 					<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
-					<?$question__create = false;?>
+					<? $question__create = false; ?>
 				</div>
 
 				<div class="answer__create">
@@ -43,6 +43,20 @@
 			<?= include ROOT . '/app/view/Test/test-edit-children.php' ?>
 		<? endif; ?>
 
+		<div class="rules">
+			<BR>
+			<BR>
+			<BR>
+			<h1 style = "color:red">Правила написания тестов</h1>
+			<p>
+				Одна глава инструкции - один тест
+			</p>
+			<p>
+				Правильный ответ по объему должен быть примерно
+				равным неправильным. Чтобы не было понятно,
+				что это правильный ответ
+			</p>
+		</div>
 
 
 	<? else: ?>

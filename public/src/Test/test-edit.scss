@@ -23,11 +23,12 @@
   margin: 15px 0;
   white-space: nowrap;
   cursor: pointer;
-  background-color: #1bbc9b !important;
-  box-shadow: 0 2px 4px 0 #316358;
+  background-color: $color-main !important;
+  box-shadow: 0 2px 4px 0 $color-main;
   transition: box-shadow 100ms;
   display: flex;
   justify-content: center;
+
 
   &:hover {
     box-shadow: none;
@@ -104,9 +105,14 @@
   margin: 0 3px;
   font-weight: 600;
   position: relative;
+  font-size: 0.8rem;
+
+  &:focus-visible {
+    outline: none !important;
+  }
 
   &:hover {
-    outline: #1bbc9b 1px solid;
+    outline: $color-main 1px solid;
     border-radius: 6px;
   }
 }
@@ -150,7 +156,7 @@
     }
 
     &:hover .save {
-      fill: #1bbc9b;
+      fill: $color-main;
     }
   }
 

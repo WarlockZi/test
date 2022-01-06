@@ -2,10 +2,9 @@
 
 $color-main-green: #1bbc9b;
 
-$color-main: var(--color-main);
+$color-main: #6ca3fe;
 
-$color-main-hover: shade(#6CA3FE, 60%);
-//$color-main-hover:#009979;
+$color-main-hover: shade($color-main, 60%);
 
 $dark-grey-hover: #343635;
 

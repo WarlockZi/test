@@ -1,3 +1,4 @@
+@import '../../var';
 @import '../../mixin_media';
 @import './partials/variables';
 @import "../../Admin/layout/sidebar/sidebar";
@@ -61,14 +62,14 @@
     font-size: .7rem;
     cursor: pointer;
   }
-
+  //$color-main: green;
   .current {
-    border-left: #97ffea 4px solid;
-    color: #97ffea;
+    border-left: 4px solid lighten($color-main, 10%) ;
+    color: lighten($color-main, 10%);
   }
 
   .level1 {
-    background: violet;
+    background:$color-level-1;
 
 
     &:hover {
