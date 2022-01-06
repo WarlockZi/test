@@ -22,7 +22,8 @@ $color-admin-sidebar: #4d5158;
 .admin-layout__container {
   display: flex;
   flex: 1 0 auto;
-  margin-top: 0px;
+  margin-top: 0;
+
 
   @include _600 {
   flex-wrap: wrap;
