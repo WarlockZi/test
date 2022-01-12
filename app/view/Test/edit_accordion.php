@@ -2,7 +2,7 @@
 
 $menu = new Accordion([
 	'model' => 'test',
-	'class' => 'accordion',
+	'class' => 'accordion test-edit',
 ]);
 echo $menu->output(); ?>
 
