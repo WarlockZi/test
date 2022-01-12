@@ -53,7 +53,7 @@
 			<a class="level2 neon" href="/test/do">Проходить тесты</a>
 			<? if (in_array('3', $user['rights'])): // admin ?>
 				<a class="level2 neon" href="/adminsc/test/edit">Редактировать тесты</a>
-				<a data-id="10" class="level2" href="/adminsc/crm/testresults">Результаты тестов </a>
+				<a data-id="10" class="level2 neon" href="/adminsc/crm/testresults">Результаты тестов </a>
 			<? endif; ?>
 		</ul>
 	</li>
