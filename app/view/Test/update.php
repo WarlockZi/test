@@ -1,6 +1,5 @@
 <div class="test-edit-wrapper">
 	<? $t = $test['isTest'] ? true : false ?>
-	<!--	--><? // include ROOT . '/app/view/Test/edit_menu.php' ?>
 
 	<div class='test-edit__accordion'>
 		<!--	--><? // include ROOT . '/app/view/Test/edit_menu.php' ?>
@@ -22,7 +21,7 @@
 
 		<div class="centered">
 			<div class="group">
-				<input type="text" class="field" id="test_name" value="<?= $test['test_name'] ?>" required>
+				<input type="text" class="field" id="test_name" value="<?= htmlspecialchars($test['test_name'])?>" required>
 				<label for="test_name">Название</label>
 				<!--				<div class="bar"></div>-->
 			</div>
