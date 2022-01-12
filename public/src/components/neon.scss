@@ -1,9 +1,10 @@
+@import "../var";
 .neon:hover {
   color: #fff;
   text-shadow: /* White glow */
-          0 0 9px #7eae3c,
+          0 0 9px $color-main,
             /* Green glow */
           //0 0 5px #0fa,
-          0 0 17px #0fa
+          0 0 17px $color-main
 
 }

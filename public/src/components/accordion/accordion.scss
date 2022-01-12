@@ -16,15 +16,16 @@
   }
 
   .update {
-    content: 'F19B9';
     position: absolute;
-    top: 50%;
+    top: 20px;
     transform: translateY(-50%);
     right: 0;
     padding: 8px;
-    border: 1px solid #4d5158;
-    border-radius: 5px;
-    background: url("../icons/edit.svg") no-repeat;
+    //background: url("../icons/edit.svg") no-repeat;
+
+    & svg:hover{
+      stroke: $color-main;
+    }
 
 
     &:after {

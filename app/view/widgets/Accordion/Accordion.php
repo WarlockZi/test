@@ -38,18 +38,27 @@ class Accordion extends Model
 		$this->output();
 	}
 
+	protected function icon($name)
+	{
+		return file_get_contents(ROOT . "/public/src/components/icons/{$name}.svg");
+	}
+
 	function li($item, $lev)
 	{
 		if (isset($item['childs']) && $item['childs']) {
 			return
 				"<li class='has-children level{$lev}'>" .
 				"<input type='checkbox' name ='group-1' id={$item['id']}>" .
-				"<label for={$item['id']}>{$item['test_name']}</label>".
-				"";
-				}
+				"<label for={$item['id']}>{$item['test_name']}</label>" .
+				"<a class='update' href='/adminsc/test/update/{$item['id']}'>" .
+				"{$this->icon('edit')}" .
+				"</a>";
+		}
 		return "<li><a data-id={$item['id']} class='level{$lev}' href='/adminsc/test/edit/{$item['id']}' title={$item['test_name']}>" .
-			"{$item['test_name']} </a>"
-			;
+			"{$item['test_name']} </a>" .
+			"<a class='update' href='/adminsc/test/update/{$item['id']}'>" .
+			"{$this->icon('edit')}" .
+			"</a>";
 	}
 
 	function tplMenu($item, $lev)

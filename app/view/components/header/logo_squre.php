@@ -14,6 +14,7 @@
 		<use xlink:href="#d"  width="100%" height="100%" fill="#8d8d8d" />
 		<use xlink:href="#g" width="100%" height="100%" fill="#8d8d8d"/>
 		<use xlink:href="#red"  width="100%" height="100%" fill="#ff2929" />
+
 	</g>
 </svg>
 

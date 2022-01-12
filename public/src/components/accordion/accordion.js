@@ -4,8 +4,8 @@ import showCustomMenu from "./customContextMenu/customMenu";
 
 $('.accordion label').on('click', handle)
 
-$('.test-edit__accordion .accordion a').on('mouseenter', showCustomMenu)
-$('.test-edit__accordion .accordion label').on('mouseenter', showCustomMenu)
+// $('.test-edit__accordion .accordion a').on('mouseenter', showCustomMenu)
+// $('.test-edit__accordion .accordion label').on('mouseenter', showCustomMenu)
 
 
 
@@ -13,7 +13,7 @@ function handle(e) {
 
   let checkbox = e.target.previousElementSibling
   let parent = checkbox.closest('ul')
-  let ul = checkbox.nextElementSibling.nextElementSibling
+  let ul = $(checkbox.parentNode).find('ul')
 
 
   if (checkbox.checked) {
@@ -22,6 +22,7 @@ function handle(e) {
     parent.style.height = "auto"
     let height = slideDown(ul, 0)
     increaseParent(parent, height)
+    // debugger
     closeSiblings(parent)
   }
 }
@@ -46,7 +47,7 @@ function closeSiblings(parent) {
       let elArr = Array.from(el.children)
       elArr.map((ch) => {
         if (ch.type && ch.type === 'checkbox' && ch.checked) {
-          let ul = ch.nextElementSibling.nextElementSibling
+          let ul =  $(ch.parentNode).find('ul')
           slideUp(ul, 0, function () {
             ch.checked = false
           })

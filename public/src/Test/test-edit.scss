@@ -143,8 +143,12 @@
   position: relative;
   margin-right: 3px;
 
-  :hover svg g {
-    fill: red;
+  &:hover{
+    background-color: $color-success;
+
+    svg .save{
+      fill: white;
+    }
   }
 
   svg {
@@ -152,12 +156,9 @@
     margin: 10px;
 
     .save {
-      fill: red;
+      fill: $color-success;
     }
 
-    &:hover .save {
-      fill: $color-main;
-    }
   }
 
 }
@@ -203,19 +204,23 @@
 .question__delete {
   width: 55px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 
-  &:hover {
-    background-color: #ff292917;
-  }
-
   svg {
     fill: red;
   }
+  &:hover {
+    background-color: red;
+    svg {
+      fill: white;
+    }
+  }
+
+
 }
 
 
@@ -259,7 +264,7 @@
 }
 
 .answer:nth-child(odd) {
-  background: hsl(168, 75%, 95%);
+  background: lighten($color-main, 20%);
 }
 
 
