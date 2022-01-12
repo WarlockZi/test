@@ -22,7 +22,7 @@ import {sortable} from "../components/sortable"
 import '../components/accordion/accordion'
 import '../Admin/components/main-menu/admin_main_menu'
 
-
+// debugger
 if ($('.select').el[0]) {
     new CustomSelect('.select', {
         name: 'service_id-btn',

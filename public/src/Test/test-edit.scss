@@ -13,6 +13,10 @@
   @include _800 {
     flex-wrap: wrap;
   }
+  .accordion.test-edit{
+    width: 200px;
+  }
+
 }
 
 @mixin test-edit__act-button {
@@ -37,7 +41,7 @@
 }
 
 .test-edit__content {
-  margin-left: 10px;
+  padding-left: 20px;
   flex-flow: column;
   display: flex;
   flex: 1 1 auto;
