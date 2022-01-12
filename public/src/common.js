@@ -187,7 +187,7 @@ function MyJquery(elements) {
         this.el[0].appendChild(el)
     }
     this.find = function (selector) {
-        if (["[object HTMLDivElement]", "[object HTMLInputElement]"].includes(this.elType)) {
+        if (["[object HTMLDivElement]", "[object HTMLInputElement]","[object HTMLLIElement]"].includes(this.elType)) {
             return this.el.querySelector(selector)
         }
         if (["[object NodeList]", "[object Array]"].includes(this.elType)) {

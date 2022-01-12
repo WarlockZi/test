@@ -6,8 +6,10 @@ import {CustomSelect} from "../components/select/select";
 import '../components/footer/footer.scss'
 
 import './test-edit.scss'
+import './test-edit-menu.scss'
 import './test'
 import './show'
+import '../Admin/admin'
 
 import '../components/popup.scss'
 import {$, addTooltip, navigate} from '../common'
@@ -33,6 +35,7 @@ if ($('.select').el[0]) {
 }
 
 
+// подсветка текущего теста
 _test.markCurrentInMenu()
 
 // navigate(window.location.pathname)
@@ -45,7 +48,6 @@ if (!_question.questions().length
     _question.showFirst()
 }
 
-// подсветка текущего теста
 
 
 $('.test__update').on('click', _test.update)

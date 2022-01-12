@@ -1,5 +1,5 @@
 @import "../var";
-@import "../mixin";
+
 @import "../mixin_media";
 
 .test-do {
@@ -181,6 +181,26 @@
 // finish test button
 .inactive {
   background-color: #d8d8d8 !important;
+}
+
+@mixin test__button{
+  justify-content: center;
+  padding: 10px;
+  margin: 29px auto;
+  background-color: $color-main;
+  color: #ffffff;
+  border-radius: 4px;
+  display: flex;
+  font-weight: 800;
+  //box-shadow: 5px 4px 6px 1px #6a8784;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+
+  &:hover {
+    transition: box-shadow 100ms;
+    box-shadow: 2px 2px 12px 0px #6a8784;
+  }
 }
 
 .test-do__buttons {
