@@ -2,14 +2,25 @@ import './accordion.scss'
 import {$} from '../../common'
 import showCustomMenu from "./customContextMenu/customMenu";
 
-$('.accordion label').on('click', handle)
+$('.accordion label').on('click', handleToggle)
+
+window.onload = function () {
+let checkboxes = $('.admin-layout__sidebar.accordion input[type=checkbox]').el
+  if (checkboxes){
+    [...checkboxes].filter(ch=>{
+      ch.checked = false
+    })
+  }
+}
+
+
+
 
 // $('.test-edit__accordion .accordion a').on('mouseenter', showCustomMenu)
 // $('.test-edit__accordion .accordion label').on('mouseenter', showCustomMenu)
 
 
-
-function handle(e) {
+function handleToggle(e) {
 
   let checkbox = e.target.previousElementSibling
   let parent = checkbox.closest('ul')
@@ -20,26 +31,30 @@ function handle(e) {
     slideUp(ul, 0,)
   } else {
     parent.style.height = "auto"
-    let height = slideDown(ul, 0)
-    increaseParent(parent, height)
+    slideDown(ul)
+    let ulHeight = getUlHeight(ul)
+    increaseParent(parent, ulHeight)
     // debugger
     closeSiblings(parent)
   }
 }
 
-function increaseParent(parent, height) {
+function increaseParent(parent, ulHeight) {
   if (!parent.classList.contains('accordion')) {
-    let final = height + parseInt(parent.style.maxHeight)
-    parent.style.maxHeight = final + "px";
+    let parentHeight = parseInt(parent.style.maxHeight) + ulHeight
+    parent.style.maxHeight = parentHeight + "px";
   }
 }
 
-function slideDown(ul, interval, callback) {
+function getUlHeight(ul) {
+  return ul.scrollHeight
+}
+
+function slideDown(ul, callback) {
   ul.style.maxHeight = ul.scrollHeight + "px";
   if (callback) {
     callback()
   }
-  return ul.scrollHeight
 }
 
 function closeSiblings(parent) {
@@ -47,7 +62,7 @@ function closeSiblings(parent) {
       let elArr = Array.from(el.children)
       elArr.map((ch) => {
         if (ch.type && ch.type === 'checkbox' && ch.checked) {
-          let ul =  $(ch.parentNode).find('ul')
+          let ul = $(ch.parentNode).find('ul')
           slideUp(ul, 0, function () {
             ch.checked = false
           })

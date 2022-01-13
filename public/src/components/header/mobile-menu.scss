@@ -1,6 +1,9 @@
 @import "../../mixin_media";
 
 @mixin mobile-menu {
+  * {
+  user-select: none;
+  }
 
   .mobile-menu {
     position: absolute;
@@ -10,6 +13,7 @@
     //min-height: 100vh;
     background: #78aafe;
     transition: right 500ms ease-out;
+
 
     @include _500 {
       width: 100%;
@@ -33,6 +37,7 @@
         color: #ffffff;
         padding: 10px 50px 10px;
         cursor: pointer;
+
 
         &:hover {
           background-color: #0070ff;

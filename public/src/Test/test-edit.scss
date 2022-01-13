@@ -59,6 +59,12 @@
     margin: 0;
   }
 
+  .rules{
+    h1{
+      color: $color-warning;
+    }
+  }
+
 }
 
 .question__create-button {
@@ -215,10 +221,10 @@
   position: relative;
 
   svg {
-    fill: red;
+    fill: $color-warning;
   }
   &:hover {
-    background-color: red;
+    background-color: $color-warning;
     svg {
       fill: white;
     }

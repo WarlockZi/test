@@ -77,10 +77,14 @@ class View
 
 	public static function setCss($file)
 	{
+		$hostHot = 'http://localhost:4000/';
+		$hostHot = '/public/dist/';
+		$hostStatic = '/public/dist/';
 		$cache = true;
+//		exit($_ENV['MODE']);
 		$host = $_ENV['MODE']==='development'
-			?'http://localhost:4000/'
-			:'/public/dist/';
+			?$hostStatic
+			:$hostStatic;
 
 		$time = ($cache) ? '' : "?" . time();
 		self::$jsCss['css'][] = "<link href='{$host}{$file}{$time}' rel='stylesheet' type='text/css'>";
