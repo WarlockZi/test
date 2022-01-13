@@ -1,6 +1,6 @@
 <?
 $isTest = (bool)isset($cat['childs']);
-$gamburger = include ROOT . '/app/view/components/icons/gamburger.php';
+$gamburger = include ROOT . '/app/view/components/icons/gamburger.svg';
 ?>
 <li <?= $isTest ? 'class="vert-menu__list"' : ''; ?>>
 
