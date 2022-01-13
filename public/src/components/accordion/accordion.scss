@@ -23,7 +23,7 @@
     padding: 8px 3px 8px;
     //background: url("../icons/edit.svg") no-repeat;
 
-    & svg:hover{
+    & svg:hover {
       stroke: $color-main;
     }
 
@@ -58,19 +58,20 @@
     position: relative;
     display: block;
     // first level text
-    padding: $item-padding-S $item-padding-S $item-padding-S ($item-padding-S * 3) + 25px;
+    padding: $item-padding-S $item-padding-S+16px $item-padding-S ($item-padding-S * 3) + 25px;
     color: $color-3;
     font-size: .7rem;
     cursor: pointer;
   }
+
   //$color-main: green;
   .current {
-    border-left: 4px solid lighten($color-main, 10%) ;
+    border-left: 4px solid lighten($color-main, 10%);
     color: lighten($color-main, 10%);
   }
 
   .level1 {
-    background:$color-level-1;
+    background: $color-level-1;
 
 
     &:hover {
@@ -260,7 +261,13 @@
 }
 
 .test-edit__accordion {
-  max-width: 200px;
+  max-width: 0px;
+  transition: max-width 1s;
+
+  &.open {
+    max-width: 200px;
+  }
+
   @include _800 {
     min-width: 100%;
   }

@@ -11,7 +11,8 @@ $('.test-do__menu-slider').on('click', toggleMenu)
 
 function toggleMenu(e){
     let toggler = e.target
-    let menu = $(toggler.closest('.nmenu')).find('.menu')
+    let togglerParent = toggler.closest('.test-do__menu-slider')
+    let menu = $(togglerParent).find('.menu')
     menu.classList.toggle('menu-open')
 }
 

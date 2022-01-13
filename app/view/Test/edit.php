@@ -1,7 +1,7 @@
 <div class="test-edit-wrapper">
 
 	<div class='test-edit__accordion'>
-		<!--	--><? // include ROOT . '/app/view/Test/edit_menu.php' ?>
+
 		<? include ROOT . '/app/view/Test/edit_accordion.php' ?>
 
 		<div class='test-edit-menu__add-bttn' href="/adminsc/test/show">Добавить

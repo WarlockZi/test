@@ -38,7 +38,7 @@ class AnswerController Extends AppController
 			App::$app->answer->create([]);
 		}
 		$index = 1;
-		$answer = include ROOT . '/app/view/Test/editBlockAnswer.php';
+		$answer = include ROOT . '/app/view/Test/edit_BlockAnswer.php';
 	}
 
 }
