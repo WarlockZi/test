@@ -7,9 +7,14 @@ import {_test} from "./model/test"
 import {post, $, fetchW} from '../common'
 import {navInit} from '../components/test-pagination/test-pagination'
 
-// acc.init({
-//     api:'test-menu',
-// })
+$('.test-do__menu-slider').on('click', toggleMenu)
+
+function toggleMenu(e){
+    let toggler = e.target
+    let menu = $(toggler.closest('.nmenu')).find('.menu')
+    menu.classList.toggle('menu-open')
+}
+
 //Скрыть все вопросы
 $('.question').removeClass("flex1")
 

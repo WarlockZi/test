@@ -1,6 +1,6 @@
 <ul class="cd-accordion-menu">
 	<? $isPath = (bool)isset($cat['childs']);
-	$gamburger = include ROOT . '/app/view/components/icons/gamburger.php'; ?>
+	$gamburger = include ROOT . '/app/view/components/icons/gamburger.svg'; ?>
 
 	<li <?= $isPath ? 'class="has-children"' : ''; ?>>
 		<input type="checkbox" name="group-1" id="group-1" checked>

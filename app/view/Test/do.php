@@ -1,7 +1,10 @@
 <section class="test-do">
 	<div class="test-do__navigation">
 
-		<?= $menuTestDo; ?>
+		<div class="test-do__menu-slider">
+			<? include ROOT. '\app\view\components\icons\gamburger.svg'?>
+			<?= $menuTestDo; ?>
+		</div>
 
 
 		<?= $pagination;
@@ -10,6 +13,7 @@
 
 
 	<div class="test-do__content">
+
 
 		<? if (isset($testData) && !isset($error) && $testData):// Проверим, чтобы запрашивали конекретный тест?>
 

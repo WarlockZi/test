@@ -34,10 +34,25 @@
     }
   }
 
+.test-do__menu-slider{
+  position: absolute;
+  height: 0;
+  overflow: hidden;
+  transition: height 1s;
+
+  svg{
+    stroke: #ccc;
+  }
+}
 
   .menu {
     max-width: 170px;
     min-width: 170px;
+
+    .menu-open{
+      height: auto;
+    }
+
 
     .children {
       background-color: $color-main;

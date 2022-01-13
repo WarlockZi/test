@@ -77,13 +77,13 @@ class View
 
 	public static function setCss($file)
 	{
+//		$hostHot = '/public/dist/';
 		$hostHot = 'http://localhost:4000/';
-		$hostHot = '/public/dist/';
 		$hostStatic = '/public/dist/';
 		$cache = true;
-//		exit($_ENV['MODE']);
+
 		$host = $_ENV['MODE']==='development'
-			?$hostStatic
+			?$hostHot
 			:$hostStatic;
 
 		$time = ($cache) ? '' : "?" . time();
