@@ -1,8 +1,8 @@
 <div class="test-edit-wrapper">
 	<? $t = $test['isTest'] ? true : false ?>
 
+
 	<div class='test-edit__accordion'>
-		<!--	--><? // include ROOT . '/app/view/Test/edit_menu.php' ?>
 		<? include ROOT . '/app/view/Test/edit_accordion.php' ?>
 
 		<div class='test-edit-menu__add-bttn' href="/adminsc/test/show">Добавить
@@ -16,6 +16,9 @@
 
 
 	<div class="test-edit__content">
+
+		<div class="test-edit__menu-toggle">Выбрать тест</div>
+
 		<div class="test-name">Изменение <?= $t ? 'теста' : 'папки' ?></div>
 
 
@@ -23,7 +26,6 @@
 			<div class="group">
 				<input type="text" class="field" id="test_name" value="<?= htmlspecialchars($test['test_name'])?>" required>
 				<label for="test_name">Название</label>
-				<!--				<div class="bar"></div>-->
 			</div>
 		</div>
 
@@ -41,10 +43,6 @@
 
 		<div class="test-path-add__table">
 
-
-			<!--			<div>Название --><? //= $t ? 'теста' : 'папки' ?><!--</div>-->
-			<!--			<div id="test_name" class="field" contenteditable="true">-->
-			<? //= $test['test_name'] ?><!--</div>-->
 
 			<div class="test-update__group">
 				<div class="test-path-add__th">Папка</div>

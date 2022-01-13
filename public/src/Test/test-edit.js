@@ -22,7 +22,7 @@ import {sortable} from "../components/sortable"
 import '../components/accordion/accordion'
 import '../Admin/components/main-menu/admin_main_menu'
 
-// debugger
+// закрыть открытые чекбоксы
 if ($('.select').el[0]) {
     new CustomSelect('.select', {
         name: 'service_id-btn',
@@ -32,6 +32,19 @@ if ($('.select').el[0]) {
             console.log(`Выбранное значение: ${item.textContent}`);
         },
     });
+}
+
+
+let toggleButton = $('.test-edit__menu-toggle').el[0]
+
+if (toggleButton){
+    $(toggleButton).on('click', (e)=>{
+        let toggleButton = e.target
+        let wraper = toggleButton.closest('.test-edit-wrapper')
+        let menu = $(wraper).find('.test-edit__accordion')
+        menu.classList.toggle('open')
+    })
+
 }
 
 

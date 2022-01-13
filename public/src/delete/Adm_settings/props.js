@@ -6,7 +6,7 @@ $(function () {
          url: '/adminsc',
          model: 'prop',
          table: 'props',
-         action: action ? action : 'update',
+         action: action ? action : 'edit_update.php',
          pkey: 'id',
          pkeyVal: 'nul',
          values: {}
@@ -17,7 +17,7 @@ $(function () {
 // изменение названия свойства / добавление
    $('.property-block').on('input', '.property-name', function () {
 
-      var Obj = new obj(this, 'update');
+      var Obj = new obj(this, 'edit_update.php');
       Obj.pkeyVal = this.getAttribute('data-id');
       Obj.values.name = this.value.trim();
       
@@ -37,7 +37,7 @@ $(function () {
    });
 // изменение селекта
    $('select.type').on('change', function () {
-      var Obj = new obj(this, 'update');
+      var Obj = new obj(this, 'edit_update.php');
       Obj.pkeyVal = this.getAttribute('data-id');
       Obj.values.type = this[this.selectedIndex].value;
       post(Obj.url, Obj);
@@ -45,7 +45,7 @@ $(function () {
  // изменение сортировки
    $('.property-block').on('input','.sort', function () {
 //      debugger;
-      var Obj = new obj(this, 'update');
+      var Obj = new obj(this, 'edit_update.php');
       Obj.pkeyVal = this.getAttribute('data-id');
       Obj.values.sort = this.innerHTML;
       post(Obj.url, Obj);
@@ -85,7 +85,7 @@ $(function () {
       var data = {
          token: $('#token').val(),
          model: 'prop',
-         action: 'update',
+         action: 'edit_update.php',
          table: 'props',
          pkey: 'id',
          pkeyVal: id,

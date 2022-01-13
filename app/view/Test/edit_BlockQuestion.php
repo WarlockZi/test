@@ -20,7 +20,7 @@
 					<? $i = 1;
 					foreach ($block as $index => $a): ?>
 						<? if ($index): ?>
-							<? include ROOT . "/app/view/Test/editBlockAnswer.php"; ?>
+							<? include ROOT . "/app/view/Test/edit_BlockAnswer.php"; ?>
 						<? endif; ?>
 					<? endforeach; ?>
 				<? endif; ?>
