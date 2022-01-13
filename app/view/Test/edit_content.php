@@ -1,6 +1,10 @@
 <div class="test-edit__content">
 
+
 	<? if ($test): ?>
+
+		<div class="test-edit__menu-toggle">Выбрать тест</div>
+
 
 		<? if (isset($test['isTest']) && $test['isTest']): ?>
 			<div class="test-edit__title">
@@ -15,17 +19,17 @@
 
 				<div class="question__create">
 					<? $question__create = true; ?>
-					<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
+					<? include ROOT . '/app/view/Test/edit_BlockQuestion.php' ?>
 					<? $question__create = false; ?>
 				</div>
 
 				<div class="answer__create">
-					<? include ROOT . '/app/view/Test/editBlockAnswer.php' ?>
+					<? include ROOT . '/app/view/Test/edit_BlockAnswer.php' ?>
 				</div>
 
 				<? if ($testDataToEdit): ?>
 					<? foreach ($testDataToEdit as $q_id => $block): ?>
-						<? include ROOT . '/app/view/Test/editBlockQuestion.php' ?>
+						<? include ROOT . '/app/view/Test/edit_BlockQuestion.php' ?>
 					<? endforeach; ?>
 				<? endif; ?>
 				<div class="question__create-button" data-action-hover="Добавить вопрос">Добавить вопрос</div>
@@ -40,7 +44,7 @@
 					</p>
 				<? endif; ?>
 			</div>
-			<?= include ROOT . '/app/view/Test/test-edit-children.php' ?>
+			<?= include ROOT . '/app/view/Test/edit_children.php' ?>
 		<? endif; ?>
 
 		<div class="rules">
@@ -69,6 +73,7 @@
 
 	<? else: ?>
 
+		<div class="test-edit__menu-toggle">Выбрать тест</div>
 		<h1>Выберите тест</h1>
 
 	<? endif; ?>

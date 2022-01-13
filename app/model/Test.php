@@ -142,15 +142,12 @@ her;
 
 	public function pagination(array $items, $addBtn, $test)
 	{
-		$pagination = "<div class='pagination__wrap'>";
-		$pagination .= "<div class='test-name' data-test-id={$test['id']}>TECT :{$test['test_name']}</div>";
-		$pagination .= '<div class="pagination">';
+
+		$pagination = '<div class="pagination">';
 			$i = 0;
 			foreach ($items as $id => $el) {
 				$i++;
-				$d = <<<heretext
-<div data-pagination=$id>$i</div>
-heretext;
+				$d = "<div data-pagination={$id}>{$i}</div>";
 				$pagination .= $d;
 			}
 

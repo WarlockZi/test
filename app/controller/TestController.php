@@ -194,7 +194,7 @@ class TestController Extends AppController
 	{
 		$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/test/result/' . $id;
 		ob_start();
-		require ROOT . '/app/view/Test/email.php';
+		require ROOT . '/app/view/Test/do_email.php';
 		$template = ob_get_clean();
 		return $template;
 	}
@@ -225,19 +225,18 @@ class TestController Extends AppController
 		$testId = isset($this->route['alias']) ? (int)$this->route['alias'] : '';
 		$menuTestDo = $this->getMenu();
 		$this->set(compact('menuTestDo'));
-		if (!$testId) {
-			$pagination = "<div class='info'><- Выберите тест</div>";
-		}
+
 		if ($testId) {
 			if (!$testData = App::$app->test->getTestData($testId, true)) {
 				$error = '<H1>Теста с таким номером нет.</H1>';
 				$this->set(compact('error'));
+			}else{
+				$test = App::$app->test->findOne($testId);
+				$this->set(compact('test'));
+				$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
+				unset($testData['correct_answers']);
+				$pagination = App::$app->test->pagination($testData, false, $test);
 			}
-			$test = App::$app->test->findOne($testId);
-			$this->set(compact('test'));
-			$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
-			unset($testData['correct_answers']);
-			$pagination = App::$app->test->pagination($testData, false, $test);
 		}
 
 		$this->set(compact('testData', 'pagination'));
@@ -254,6 +253,7 @@ class TestController Extends AppController
 			exit(json_encode(['id' => $id]));
 		}
 		$this->layout = 'admin';
+		$this->view = 'edit_update';
 
 		$id = $this->route['id'];
 		$test = App::$app->test->findOne($id);

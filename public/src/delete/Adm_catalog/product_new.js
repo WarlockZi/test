@@ -6,7 +6,7 @@ $(function () {
          url: '/adminsc',
          model: 'product',
          table: 'product',
-         action: action ? action : 'update',
+         action: action ? action : 'edit_update.php',
          pkey: 'id',
          pkeyVal: 'nul',
          values: {}
