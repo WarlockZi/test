@@ -6,7 +6,7 @@ $(function () {
          url: '/adminsc',
          model: 'category',
          table: 'category',
-         action: action ? action : 'update',
+         action: action ? action : 'edit_update.php',
          pkey: 'id',
          pkeyVal: 'nul',
          values: {}
@@ -16,7 +16,7 @@ $(function () {
 // изменение  / добавление названия значения 
    $('.category-update-btn').on('click', function () {
 
-      var Obj = new obj('update');
+      var Obj = new obj('edit_update.php');
       Obj.pkeyVal = $('#id').text();
 
       Obj.values.name = $('#name').text();
@@ -55,7 +55,7 @@ $(function () {
       $('.properties.column option[value= ' + val + ']').not($(this).find('option:selected')).remove();
       $(clone).insertBefore($('.add-property'));
 
-      var Obj = new obj('update');
+      var Obj = new obj('edit_update.php');
       Obj.pkeyVal = $('#id').text();
       var props = $('.properties select option:selected');
 //      debugger;
@@ -77,7 +77,7 @@ $(function () {
 
 // редактирование текущего  селекта
    $('.properties.column').on('change', 'select', function () {
-      var Obj = new obj('update');
+      var Obj = new obj('edit_update.php');
       Obj.pkeyVal = $('#id').text();
       var props = $('.properties select option:selected');
       debugger;

@@ -1,5 +1,4 @@
 @import "../var";
-
 @import "../mixin_media";
 
 .test-do {
@@ -17,7 +16,7 @@
   .test-do__navigation {
     display: flex;
 
-    .info{
+    .info {
       margin: 0 20px;
     }
 
@@ -34,24 +33,41 @@
     }
   }
 
-.test-do__menu-slider{
-  position: absolute;
-  height: 0;
-  overflow: hidden;
-  transition: height 1s;
+  .test-do__menu-slider {
+    position: relative;
+    transition: transform 1s;
+    margin: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: $color-main;
+    color: white;
+    cursor: pointer;
 
-  svg{
-    stroke: #ccc;
+    &:hover {
+      background-color: white;
+      color: $color-main;
+    }
+
+
   }
-}
+
+  .menu.menu-open {
+    transform: scale(1);
+    display: block;
+  }
 
   .menu {
     max-width: 170px;
     min-width: 170px;
-
-    .menu-open{
-      height: auto;
-    }
+    transform: scale(0);
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 100%;
 
 
     .children {
@@ -118,7 +134,7 @@
 }
 
 .test-do__content {
-  width: 50%;
+  width: 90%;
   margin: 0 auto;
   flex: 1;
 
@@ -198,7 +214,7 @@
   background-color: #d8d8d8 !important;
 }
 
-@mixin test__button{
+@mixin test__button {
   justify-content: center;
   padding: 10px;
   margin: 29px auto;

@@ -4,16 +4,21 @@
 @import "../components/input/input";
 
 
+.test-edit.accordion {
+  width: 250px;
+}
 
 .test-edit-wrapper {
   display: flex;
   margin: 10px 10px 10px 0;
   font-family: 'Roboto', Arial, Serif;
   flex: 1 1 auto;
+
   @include _800 {
     flex-wrap: wrap;
   }
-  .accordion.test-edit{
+
+  .accordion.test-edit {
     width: 200px;
   }
 
@@ -46,21 +51,45 @@
   display: flex;
   flex: 1 1 auto;
   min-height: 100%;
-  width: 200px;
+  top: 0;
+  left: 0px;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1;
 
-  .test-name{
+  .test-edit__menu-toggle {
+    position: relative;
+    transition: transform 1s;
+    margin-bottom: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: $color-main;
+    color: white;
+
+    &:hover {
+      background-color: white;
+      color: $color-main;
+    }
+  }
+
+  .test-name {
     font-weight: 600;
     font-size: 22px;
     color: $color-gray-max;
     margin-bottom: 20px;
   }
 
-  h1{
+  h1 {
     margin: 0;
   }
 
-  .rules{
-    h1{
+  .rules {
+    h1 {
       color: $color-warning;
     }
   }
@@ -153,10 +182,10 @@
   position: relative;
   margin-right: 3px;
 
-  &:hover{
+  &:hover {
     background-color: $color-success;
 
-    svg .save{
+    svg .save {
       fill: white;
     }
   }
@@ -223,8 +252,10 @@
   svg {
     fill: $color-warning;
   }
+
   &:hover {
     background-color: $color-warning;
+
     svg {
       fill: white;
     }
@@ -308,7 +339,6 @@
 .test-edit__container {
   margin-left: clamp(10px, 20%, 50px);
 }
-
 
 
 .test-edit__title {

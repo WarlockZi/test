@@ -6,7 +6,7 @@ $(function () {
          url: '/adminsc',
          model: 'prop',
          table: 'props',
-         action: action ? action : 'update',
+         action: action ? action : 'edit_update.php',
          pkey: 'id',
          pkeyVal: 'nul',
          values: {}

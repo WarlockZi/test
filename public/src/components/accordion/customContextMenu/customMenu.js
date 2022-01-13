@@ -9,7 +9,7 @@ export default function showCustomMenu(e) {
 }
 
 function $remove() {
-  let updates = document.querySelectorAll('.accordion .update')
+  let updates = document.querySelectorAll('.accordion .edit_update.php')
   updates.forEach(el => el.remove())
 
 
@@ -18,7 +18,7 @@ function $remove() {
 function render(e) {
   let div = document.createElement('a')
   let id =  e.target.dataset.id??e.target.getAttribute('for')
-  div.classList.add('update')
+  div.classList.add('edit_update.php')
   div.href = `/adminsc/test/update/${id}`
   // div.innerText = 'Изменить'
   return div
