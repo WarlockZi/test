@@ -74,7 +74,7 @@
 	<? else: ?>
 
 		<div class="test-edit__menu-toggle">Выбрать тест</div>
-		<h1>Выберите тест</h1>
+<!--		<h1>Выберите тест</h1>-->
 
 	<? endif; ?>
 

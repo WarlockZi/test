@@ -9,6 +9,14 @@ import '../Test/do'
 import '../Test/test-edit'
 
 import {$} from '../common'
-import   {_cache} from "./model/cache";
+import {_cache} from "./model/cache";
 
 $('.clearCache').on('click', _cache.clearCache)
+
+// $('.breadcrumbs-adm').on('click', api)
+//
+// async function api(e) {
+//   let res = await fetch('http://127.0.0.1:8000/api/v1/tests-tree')
+//   e.target.innerHTML = res
+// }
+
