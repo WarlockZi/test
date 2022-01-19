@@ -15,7 +15,7 @@
 			<? if ($pagination): ?>
 				<?= $pagination; ?>
 			<? else: ?>
-				<div class='info'><- Выберите тест</div>
+<!--				<div class='info'><- Выберите тест</div>-->
 			<? endif; ?>
 			<? endif; ?>
 

@@ -103,8 +103,14 @@ class AdminscController extends AppController
 
 	public function actionIndex()
 	{
+//		$start = microtime(true);
+////		$url = 'http://127.0.0.1:8000/api/v1/tests-tree';
+////		$result = file_get_contents ($url);
+//		$finish = microtime(true);
+//		echo 'старт - '.$start;
+//		echo 'финиш - '.$finish;
+//		echo 'время - '.($finish-$start);
 
-//		$this->set(compact('sidebar'));
 		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
 
