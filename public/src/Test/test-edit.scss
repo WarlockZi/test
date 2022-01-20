@@ -1,4 +1,4 @@
-@import "./test-edit-menu";
+//@import "./test-edit-menu";
 @import "../var";
 @import "../mixin_media";
 @import "../components/input/input";
@@ -19,7 +19,7 @@
   }
 
   .accordion.test-edit {
-    width: 200px;
+    width: 0px;
   }
 
 }
@@ -60,7 +60,7 @@
   .test-edit__menu-toggle {
     position: relative;
     transition: transform 1s;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     padding: 10px;
     display: flex;
     align-items: center;
@@ -345,7 +345,7 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  margin: 0px 0 20px 2px;
+  margin: 0px 0 0px 2px;
 
   .test-name {
     text-transform: uppercase;

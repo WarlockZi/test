@@ -38,6 +38,7 @@ class TestController Extends AppController
 	public function actionShow()
 	{
 		$this->layout = 'admin';
+		$this->view = 'edit_show';
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 		$test['isTest'] = 1;
 		$this->set(compact('rootTests', 'test'));
@@ -48,7 +49,7 @@ class TestController Extends AppController
 	public function actionPathshow()
 	{
 		$this->layout = 'admin';
-		$this->view = 'show';
+		$this->view = 'edit_show';
 		$test['isTest'] = 0;
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 //		$rootTestsTree = $this->hierachy($rootTests, 'parent');
