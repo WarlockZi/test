@@ -2,8 +2,6 @@
 
 namespace app\view;
 
-use http\Env;
-
 class View
 {
 

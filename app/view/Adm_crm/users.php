@@ -5,11 +5,11 @@
 <!--</div>-->
 
 <div class="adm-content">
-  <div class="breadcrumbs-adm">
-    <a href  = "/adminsc">Admin</a>
-    <a href  = "/adminsc/crm">CRM</a>
-    <div>Users</div>
-  </div>
+<!--  <div class="breadcrumbs-adm">-->
+<!--    <a href  = "/adminsc">Admin</a>-->
+<!--    <a href  = "/adminsc/crm">CRM</a>-->
+<!--    <div>Users</div>-->
+<!--  </div>-->
 
   <div class="content-90">
     <div class="grid">

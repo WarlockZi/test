@@ -33,7 +33,7 @@ function setCookie() {
         minute = 60 * 1000,
         day = minute * 60 * 24;
 
-    let days = 1;
+    let days = 3;
     date.setTime(date.getTime() + (days * day))
     document.cookie = "cn=1; expires=" + date + "path=/; SameSite=lax";
 }
