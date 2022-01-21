@@ -1,7 +1,3 @@
-// import '../normalize.scss'
-// import '../components/header/header'
-// import '../Admin/admin.scss'
-
 import {CustomSelect} from "../components/select/select";
 import '../components/footer/footer.scss'
 
@@ -21,6 +17,11 @@ import {sortable} from "../components/sortable"
 
 import '../components/accordion/accordion'
 import '../Admin/components/main-menu/admin_main_menu'
+
+if ($("[data-question-parent-id]")){
+debugger
+    $(".select__wrap select").on('change', _question.changeParent)
+}
 
 // закрыть открытые чекбоксы
 if ($('.select').el[0]) {
@@ -82,6 +83,10 @@ addTooltip({
     message: 'Сохранить вопросы и ответы'
 })
 
+addTooltip({
+    els: $('.question__menu').el,
+    message: 'Переложить в другой тест'
+})
 addTooltip({
     els: $('.question__delete').el,
     message: 'Удалить вопросы и ответы'

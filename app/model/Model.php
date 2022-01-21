@@ -167,7 +167,12 @@ here;
 		$sql = "SELECT * FROM " . ($table ?: $this->table) . ($sort ? " ORDER BY {$sort}" : "");
 		return $this->pdo->query($sql);
 	}
-
+	public
+	function all($table = '', $sort = '')
+	{
+		$sql = "SELECT * FROM " . ($table ?: $this->table) . ($sort ? " ORDER BY {$sort}" : "");
+		return $this->pdo->query($sql);
+	}
 	public
 	function findOne($id, $field = '')
 	{

@@ -73,9 +73,27 @@ class QuestionController Extends AppController
 		} catch (Exception $exception) {
 			exit($exception->getMessage());
 		};
-
-
 	}
+
+
+
+
+
+	public function actionChangeParent()
+	{
+		if ($ids = $this->ajax) {
+			$id = $ids['id'];
+			$testId = $ids['test_id'];
+			$q = App::$app->question->findOne($id);
+			$q['parent'] = $testId;
+			App::$app->question->update($id, $q);
+			exit(json_encode(['msg' => 'Saved']));
+		}
+	}
+
+
+
+
 
 	public function actionUpdate()
 	{

@@ -197,9 +197,31 @@
     .save {
       fill: $color-success;
     }
-
   }
+}
 
+
+.question__menu{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  background-color: white;
+  margin-right: 3px;
+  overflow: hidden;
+
+  .select__wrap {
+    max-height: 0;
+    display: none;
+  }
+  &:hover > .select__wrap{
+    display: flex;
+    max-height:fit-content;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
 }
 
 .questions {
