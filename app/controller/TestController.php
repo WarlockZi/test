@@ -282,6 +282,8 @@ class TestController Extends AppController
 			$testDataToEdit = App::$app->test->getTestData($id) ?? '';
 			unset ($testDataToEdit['correct_answers']);
 			$this->set(compact('testDataToEdit'));
+			$tests = App::$app->test->findAllWhere('isTest', '1');
+			$this->set(compact('tests'));
 		}
 		$this->set(compact('test'));
 
