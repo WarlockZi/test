@@ -221,6 +221,7 @@ class UserController extends AppController
 		if ($data = $this->ajax) {
 
 			$user['name'] = $data['name'];
+			$user['sex'] = $data['sex'];
 			$user['surName'] = $data['surName'];
 			$user['middleName'] = $data['middleName'];
 			$user['rights'] = implode(',', $user['rights']);

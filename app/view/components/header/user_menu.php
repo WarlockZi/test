@@ -16,7 +16,11 @@
 <? else: ?>
 
     <div class="user-menu">
-        <img src="/public/src/Admin/components/userPhoto.png" alt="">
+        <img src="
+        <?=$user['sex']==='f'
+	        ?'/pic/ava_female.jpg'
+	        :'/public/src/Admin/components/userPhoto.png';?>
+        " alt="">
         <div class="user-menu__fio"><?= "{$user['surName']} {$user['name']}"; ?></div>
 <!--        <hr>-->
         <div class="user-menu__menu">

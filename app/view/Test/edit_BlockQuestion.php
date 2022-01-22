@@ -6,7 +6,7 @@
 		
 		<div class="question__menu">
 			<div class="select__wrap">
-				<select name="" id="">
+				<select >
 					<?= include ROOT . '/app/view/Test/edit_question-parent.php'; ?>
 				</select>
 			</div>	

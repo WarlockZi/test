@@ -27,9 +27,15 @@ export let _question = {
   changeParent: async function (e) {
     let sel = e.target
     let opt = sel.options[sel.selectedIndex]
-    let test_id = opt.dataset['question-parent-id']
     let id = sel.closest('.question-edit').id
+    let test_id = opt.dataset['questionParentId']
+    let test_name = opt.value
     let res = await post('/question/changeParent',{id, test_id})
+    res = JSON.parse(res)
+    if (res.msg !=='ok') throw (e);
+    let question = sel.closest('.question-edit')
+    question.remove()
+    popup.show('Перемещен в '+test_name)
     // debugger
   },
 

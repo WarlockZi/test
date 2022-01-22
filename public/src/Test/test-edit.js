@@ -8,7 +8,7 @@ import './show'
 import '../Admin/admin'
 
 import '../components/popup.scss'
-import {$, addTooltip, navigate} from '../common'
+import {$, addTooltip, navigate, dropDown} from '../common'
 
 import {_test} from "./model/test"
 import {_question} from "./model/question"
@@ -19,9 +19,12 @@ import '../components/accordion/accordion'
 import '../Admin/components/main-menu/admin_main_menu'
 
 if ($("[data-question-parent-id]")){
-debugger
     $(".select__wrap select").on('change', _question.changeParent)
+    // debugger
+    // const selWrap = $('.select__wrap select').on('click', dropDown.bind(this))
 }
+
+
 
 // закрыть открытые чекбоксы
 if ($('.select').el[0]) {
@@ -100,5 +103,11 @@ addTooltip({
 addTooltip({
     els: $('.test-edit-menu__params').el,
     message: 'Редактировать'
+})
+
+    debugger
+addTooltip({
+    els: $('.question__menu').el,
+    message: 'Перенести в другой тест'
 })
 

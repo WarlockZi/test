@@ -16,9 +16,17 @@
 
 		<input class="form-input" placeholder="Телефон" name="phone" value="<?= $user['phone'] ?>"/>
 
+		<div class="radio-wrap">
+			<label for="male">Муж</label>
+			<input <?= $user['sex'] === 'm' ? 'checked' : ''; ?>
+					type=radio id='male' class="form-input" placeholder="Пол" name="sex" value="m"/>
+			<label for="female">Жен</label>
+			<input <?= $user['sex'] === 'f' ? 'checked' : ''; ?>
+					type=radio id='female' class="form-input" placeholder="Пол" name="sex" value="f"/>
+		</div>
 
 
-		<div class="form__button" id = 'save'>Сохранить</div>
+		<div class="form__button" id='save'>Сохранить</div>
 
 		<a href="/user/changepassword" class="form__button-secondary">Изменить пароль</a>
 	</form>

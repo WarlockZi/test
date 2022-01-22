@@ -51,3 +51,19 @@
     @content;
   }
 }
+
+@mixin _chevron($top:30%){
+
+  content: '';
+  display: inline-block;
+  cursor: pointer;
+  border-right: 2px solid $color-main;
+  border-top: 2px solid $color-main;
+  width: 10px;
+  height: 10px;
+  top: $top;
+  left: 5px;
+  position: absolute;
+  transition: transform 300ms;
+  transform: rotate(45deg);
+}

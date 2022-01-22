@@ -118,19 +118,7 @@
   cursor: pointer;
 
   &:before {
-    content: '';
-    display: inline-block;
-    cursor: pointer;
-
-    border-right: 2px solid $color-main;
-    border-top: 2px solid $color-main;
-    width: 10px;
-    height: 10px;
-    top: 30%;
-    left: 5px;
-    position: absolute;
-    transition: transform 300ms;
-    transform: rotate(45deg);
+    @include _chevron()
   }
 }
 
@@ -206,21 +194,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 25px;
+  width: 20px;
   background-color: white;
   margin-right: 3px;
-  overflow: hidden;
+  //overflow: hidden;
 
   .select__wrap {
-    max-height: 0;
-    display: none;
-  }
-  &:hover > .select__wrap{
     display: flex;
     max-height:fit-content;
     position: absolute;
-    bottom: 0;
+    top: 23%;
     left: 0;
+
+    select{
+      width: 20px;
+
+    }
+    //&:after{
+    //  @include _chevron(-20px)
+    //}
+  }
+  &:hover > .select__wrap{
+
   }
 }
 
