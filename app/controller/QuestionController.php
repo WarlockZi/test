@@ -86,8 +86,8 @@ class QuestionController Extends AppController
 			$testId = $ids['test_id'];
 			$q = App::$app->question->findOne($id);
 			$q['parent'] = $testId;
-			App::$app->question->update($id, $q);
-			exit(json_encode(['msg' => 'Saved']));
+			App::$app->question->update($q);
+			exit(json_encode(['msg' => 'ok']));
 		}
 	}
 

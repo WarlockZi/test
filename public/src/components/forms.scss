@@ -1,5 +1,14 @@
 @import "../var";
 
+
+.radio-wrap{
+  display: flex;
+  align-items: center;
+  .form-input {
+    flex: 0 1 80px;
+  }
+}
+
 .form-container {
   display: flex;
   flex-flow: column wrap;

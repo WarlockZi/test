@@ -1,5 +1,22 @@
 import './common.scss'
 
+export const dropDown = function (elementId) {
+    var dropdown = document.getElementById(elementId);
+    try {
+        showDropdown(dropdown);
+    } catch(e) {
+
+    }
+    return false;
+};
+
+const showDropdown = function (element) {
+    var event;
+    event = document.createEvent('MouseEvents');
+    event.initMouseEvent('mousedown', true, true, window);
+    element.dispatchEvent(event);
+};
+
 
 
 let validate = {
@@ -101,8 +118,8 @@ async function post(url, data = {}) {
             req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             req.send('param=' + JSON.stringify(data));
         }
-        req.onerror = function () {
-            reject(Error("Network Error"));
+        req.onerror = function (e) {
+            reject(Error("Network Error"+e));
         };
         req.onload = async function () {
             resolve(req.response);
