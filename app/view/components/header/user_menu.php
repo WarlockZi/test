@@ -32,7 +32,7 @@
             <? endif; ?>
 
 
-            <?= in_array('3', $user['rights']) || SU ?
+            <?= in_array('employee', $user['rights']) || SU ? //3===employee
                 '<a href="/adminsc">Admin</a>' : ''; // Admin
             ?>
 
