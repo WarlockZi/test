@@ -15,7 +15,7 @@
 <!--			<a class="list__item" href="/test/1">Проходить тесты</a>-->
 <!--			<a class="list__item" href="/freetest/1">Проходить свободные тесты</a>-->
 <!--		--><?// endif; ?>
-		<? if (in_array('3', $user['rights']) || SU): ?>
+		<? if (in_array('employee', $user['rights']) || SU): ?>
 			<a class="list__item" href="/adminsc">Admin</a>
 		<? endif; ?>
 	</div>
