@@ -105,7 +105,7 @@ addTooltip({
     message: 'Редактировать'
 })
 
-    debugger
+    // debugger
 addTooltip({
     els: $('.question__menu').el,
     message: 'Перенести в другой тест'
