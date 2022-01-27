@@ -1,40 +1,36 @@
-<!--<div class="adm-submenu">-->
-<!--  <div class="title">CRM</div>-->
-<!---->
-<!--	--><?// include ROOT . '/app/view/Adm_crm/components/adm-crm_menu.php'; ?>
-<!--</div>-->
-
 <div class="adm-content">
-<!--  <div class="breadcrumbs-adm">-->
-<!--    <a href  = "/adminsc">Admin</a>-->
-<!--    <a href  = "/adminsc/crm">CRM</a>-->
-<!--    <div>Users</div>-->
-<!--  </div>-->
+	<div class="user-table">
+		<div class="user head">
+			<div class="id">ID</div>
+			<div class="fio">фио</div>
+			<div class="email">email</div>
+			<div class="confirmed">co</div>
+			<div>Save</div>
+			<div>Delete</div>
+		</div>
 
-  <div class="content-90">
-    <div class="grid">
+		<? foreach ($users as $use): ?>
+			<div class="user">
+				<div class="id"><?= $use['id'] ?></div>
+				<a class="fio"
+				   href="/adminsc/crm/user?id=<?= $use['id']; ?>"><?= $use['surName']; ?> <?= $use['name']; ?> <?= $use['middleName']; ?></a>
+				<div class="email" contenteditable><?= $use['email']; ?></div>
+				<div class="confirmed" contenteditable><?= $use['confirm']; ?></div>
+				<div class="save">Save</div>
+				<div class="del">Delete</div>
+			</div>
 
-      <span><strong>fio</strong></span>
-      <span><strong>con</strong></span>
-      <span><strong>email</strong></span>
+		<? endforeach; ?>
 
-
-
-
-      <? foreach ($users as $use): ?>
-
-         <span><a href="/adminsc/crm/user?id=<?= $use['id']; ?>"><?= $use['surName']; ?> <?= $use['name']; ?> <?= $use['middleName']; ?>    </a></span>
-         <span><?= $use['confirm']; ?></span>
-         <span><?= $use['email']; ?></span>
-
-      <? endforeach; ?>
-
-    </div>
-
-
-    <button class = "btnadd-user">Создать нового</button>
-  </div>
-
+		<div class="user">
+			<div class="id"></div>
+			<div class="fio" contenteditable></div>
+			<div class="email" contenteditable></div>
+			<div class="confirmed" contenteditable></div>
+			<div class="save">Save</div>
+			<div class="del">Delete</div>
+		</div>
+	</div>
 
 
 </div>

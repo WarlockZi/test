@@ -72,7 +72,7 @@ function appendBlock() {
 }
 
 function navInit() {
-    let nav_buttons = $('[data-pagination]').el
+    let nav_buttons = $('[data-pagination]')
     if (!nav_buttons[0]) return false
     Array.from(nav_buttons).map((el)=>{
         el.classList.remove('nav-active')

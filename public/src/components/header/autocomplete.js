@@ -1,7 +1,7 @@
 import './autocomplete.scss';
 import {$} from '../../common'
 
-[...$(".search input").el].map((input) => {
+[...$(".search input")].map((input) => {
     if (input) {
         input.addEventListener('input', function () {
             autocomplete(input)

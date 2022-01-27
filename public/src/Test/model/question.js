@@ -99,16 +99,27 @@ export let _question = {
         id: null,
         qustion: '',
         parent: +window.location.href.split('/').pop(),
-        sort: _question.questionsCount(),
+        sort: _question.lastSort(),
       }
     }
   },
 
   questions: () => {
-    return $('.questions>.question-edit').el
+    let qs = $('.questions>.question-edit')
+    // debugger
+    return $('.questions>.question-edit')
+    // return $('.questions>.question-edit').el
   },
+
   questionsCount: () => {
     return $('.questions>.question-edit').el.length
+  },
+
+  lastSort: () => {
+    let qs = _question.questions()
+    let length = qs.length-1
+    let last =  +_question.viewModel(qs[length]).sort.innerText
+    return last+1
   },
 
   create:
@@ -124,6 +135,7 @@ export let _question = {
       let question = _question.serverModel()
       let res = await post('/question/updateOrCreate', {question: question.question, answers: {}})
       res = await JSON.parse(res)
+
       return res.id
     },
 
@@ -137,7 +149,7 @@ export let _question = {
       $(model.text).on('click', _question.showAnswers)
       $(model.createAnswerButton).on('click', _answer.create)
 
-      model.sort.innerText = _question.questions().length + 1
+      model.sort.innerText = _question.lastSort()
       model.text.innerText = ''
       model.el.id = q_id
 
