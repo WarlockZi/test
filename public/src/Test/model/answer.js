@@ -11,11 +11,14 @@ export let _answer = {
         let el = $('.answer__create').find('.answer').cloneNode(true)
         el.classList.add('answer')
         el.classList.remove('answer__create')
+        // let delBtn = $(el).find('.answer__delete')
+        // $(delBtn).on('click', _answer.del)
         return {
             el: el,
             id: 'new',
             q_id: +add_button.closest('.question-edit').id,
             previous_sort: prev_sort,
+            answerCnt: answers.length,
             sort: $(el).find('.answer__sort'),
             checked: $(el).find('input'),
             text: $(el).find('.answer__text'),
@@ -35,6 +38,7 @@ export let _answer = {
 
     async create(e) {
         let button = e.target
+        // debugger
         let a_id = await createOnServer(button)
         show(a_id)
 
@@ -53,7 +57,7 @@ export let _answer = {
             el.checked.checked = false
             el.el.dataset['answerId'] = a_id
             el.text.innerText = ''
-            el.sort.innerText = el.previous_sort + 1
+            el.sort.innerText = el.answerCnt + 1
 
             el.el.style.display = 'flex'
             button.before(el.el)
@@ -62,9 +66,9 @@ export let _answer = {
     },
 
     async del(e) {
-        let del_button = e.target
+        let del_button = (e.type === "click")?e.target:e
         if (confirm("Удалить этот ответ?")) {
-            await deleteFromServer(del_button)
+            let res = await deleteFromServer(del_button)
             deleteFromView(del_button)
         }
 

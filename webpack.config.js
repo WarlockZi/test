@@ -24,12 +24,11 @@ const config = {
   },
 
 
-
   devServer: {
     allowedHosts: "all",
     // open: true,
     host: "localhost",
-    port:4000,
+    port: 4000,
     // http2: true,
     watchFiles: {
       paths: ['public/src/**/*.*'],
@@ -69,8 +68,10 @@ const config = {
 module.exports = () => {
   if (isProduction) {
     config.mode = "production";
+    config.devtool = "none"
   } else {
     config.mode = "development";
+    config.devtool = "eval-source-map"
   }
   return config;
 };

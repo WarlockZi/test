@@ -8,7 +8,7 @@
 		Главная
 	</a>
 
-	<? if (in_array('3', $user['rights'])): // admin ?>
+	<? if (in_array('crm', $user['rights'])): // admin ?>
 		<li class="has-children level1">
 			<input type="checkbox" id="crm">
 			<label for="crm">
@@ -16,8 +16,8 @@
 				CRM
 			</label>
 			<ul>
-				<a data-id="1" class="level2 neon" href="/adminsc/crm/orders">
-					Заказы</a>
+				<a data-id="1" class="level2 neon" href="/adminsc/crm/orders">Заказы</a>
+<!--				<a data-id="1" class="level2 neon" href="/adminsc/crm/rights">Права</a>-->
 				<a data-id="1" class="level2 neon" href="/adminsc/crm/users">Пользователи</a>
 				<a data-id="1" class="level2 neon" href="/adminsc/crm">crm</a>
 			</ul>
@@ -25,7 +25,7 @@
 	<? endif; ?>
 
 
-	<? if (in_array('3', $user['rights'])): // admin ?>
+	<? if (in_array('settings', $user['rights'])): // admin ?>
 		<li class="has-children level1">
 			<input type="checkbox" id="settings">
 			<label for="settings">
@@ -50,9 +50,13 @@
 			Тесты
 		</label>
 		<ul>
+			<? if (in_array('test-do__read', $user['rights'])): // admin ?>
 			<a class="level2 neon" href="/test/do">Проходить тесты</a>
-			<? if (in_array('3', $user['rights'])): // admin ?>
+			<? endif; ?>
+			<? if (in_array('test-edit__read', $user['rights'])): // admin ?>
 				<a class="level2 neon" href="/adminsc/test/edit">Редактировать тесты</a>
+			<? endif; ?>
+			<? if (in_array('test-results__read', $user['rights'])): // admin ?>
 				<a data-id="10" class="level2 neon" href="/adminsc/crm/testresults">Результаты тестов </a>
 			<? endif; ?>
 		</ul>

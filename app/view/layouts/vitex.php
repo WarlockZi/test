@@ -53,7 +53,7 @@
 </footer>
 
 
-<?= include ROOT . '/app/view/components/footer/cookie.php'; ?>
+<? include ROOT . '/app/view/components/footer/cookie.php'; ?>
 <? $this::getJS(); ?>
 <? //=require_once ROOT.'/app/view/components/ya_metrica.php';?>
 </body>
