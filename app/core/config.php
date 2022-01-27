@@ -1,20 +1,21 @@
 <?php
 
 $config['components'] = [
-	'cache' => 'app\core\Cache',
-	'main' => 'app\model\Main',
-	'prop' => 'app\model\Prop',
-	'user' => 'app\model\User',
-	'test' => 'app\model\Test',
-	'freetest' => 'app\model\Freetest',
-	'product' => 'app\model\Product',
-	'category' => 'app\model\Category',
-	'adminsc' => 'app\model\Adminsc',
-	'question' => 'app\model\Question',
 	'answer' => 'app\model\Answer',
+	'adminsc' => 'app\model\Adminsc',
+	'cache' => 'app\core\Cache',
+	'category' => 'app\model\Category',
+	'freetest' => 'app\model\Freetest',
 	'image' => 'app\model\Image',
+	'prop' => 'app\model\Prop',
+	'product' => 'app\model\Product',
+	'main' => 'app\model\Main',
 	'mail' => 'app\model\Mail',
-	'testresult' => 'app\model\TestResult'
+	'question' => 'app\model\Question',
+	'right' => 'app\model\Right',
+	'test' => 'app\model\Test',
+	'testresult' => 'app\model\TestResult',
+	'user' => 'app\model\User',
 	//'instructions' => 'app\model\Instructions',
 ];
 $config['Mailer_openserver'] = [

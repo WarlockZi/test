@@ -1,0 +1,45 @@
+@import "../../var";
+
+.rights-table{
+  display: flex;
+  flex-flow: column;
+  .right.head>*{
+    background-color: #5B626E;
+    color: #fff;
+  }
+  
+  .right{
+    display: flex;
+
+    .name, .description{
+      flex: 1;
+    }
+
+    .save{
+      background-color: #00cc00;
+      color: #fff;
+      height: 100%;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+
+    .del{
+      background-color: $color-warning;
+      color: #fff;
+      height: 100%;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+
+    &>*{
+      background-color: #fff;
+      margin: 2px;
+      min-height: 10px;
+      min-width: 20px;
+      padding: 5px 10px;
+    }
+  }
+
+}

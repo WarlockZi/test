@@ -80,7 +80,7 @@ export const _test = {
     return {
       id: $('.nav-active').el[0].innerText - 1,
       QEl: $('.question.flex1').el[0],
-      navLength: $('[data-pagination]').el.length,
+      navLength: $('[data-pagination]').length,
       QPrevc: $('.question.flex1').el[0].previousElementSibling,
       QNextEl: $('.question.flex1').el[0].nextElementSibling,
     }

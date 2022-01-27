@@ -81,7 +81,10 @@ $('.answer__delete').on('click', _answer.del)
 $('.answer__create-button').on('click', _answer.create)
 
 
-addTooltip({
+  let els = $('.question__save').el
+// debugger
+addTooltip(
+  {
     els: $('.question__save').el,
     message: 'Сохранить вопросы и ответы'
 })

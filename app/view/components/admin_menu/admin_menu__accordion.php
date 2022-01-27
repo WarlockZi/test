@@ -39,6 +39,7 @@
 				<a data-id="6" class="level2 neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
 				<a data-id="9" class="level2 neon" href='/adminsc/settings/pics'>Картинки</a>
 				<a data-id="10" class="level2 neon" href='/adminsc/settings/cache'>Очистить кэш</a>
+				<a data-id="10" class="level2 neon" href='/adminsc/settings/rights'>Права</a>
 			</ul>
 		</li>
 	<? endif; ?>

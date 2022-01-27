@@ -8,6 +8,9 @@ import './CRM/test_results/test_results'
 import '../Test/do'
 import '../Test/test-edit'
 
+import './Settings/rights'
+import './Settings/users'
+
 import {$} from '../common'
 import {_cache} from "./model/cache";
 

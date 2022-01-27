@@ -1,26 +1,6 @@
 <div class="wrap-admin">
 
 
-  <div class="breadcrumbs-adm">
-    <a href  = "index">Admin</a>
-    <div>CRM</div>
-  </div>
-
-
-  <? if (in_array('3', $user['rights'])): // admin ?>
-     <div class="admin-actions">
-       <a href  = "<?= PROJ ?>/adminsc/products">Товары</a>
-       <a href  = "<?= PROJ ?>/adminsc/categories">Категории</a>
-       <a href  = "<?= PROJ ?>/adminsc/orders">Заказы</a>
-       <a href  = '<?= PROJ ?>/adminsc/users'>Пользователи</a>
-       <a href  = '<?= PROJ ?>/adminsc/prodtypes'>Типы товаров</a>
-       <a href  = '<?= PROJ ?>/adminsc/Sitemap'>Создать SiteMap</a>
-
-
-     </div>
-  <? endif; ?>
-
-
   <? if (in_array('4', $user['rights'])):// SU ?>
      <input class = "list" type="button" name="scr" id="scr" value = "выгрузить ">
      <form method="post" action= '<?= PROJ ?>/Adminsc/FileImport'>
