@@ -10,6 +10,7 @@ $color-main-hover: shade($color-main, 60%);
 $color-success: #54bb99;
 
 $color-warning: #bd5151;
+$color-blue: #5199BD;
 $color-red: #e30000;
 
 $dark-grey-hover: #343635;
@@ -17,6 +18,12 @@ $dark-grey-hover: #343635;
 $color-white-hover: #e7e7e7;
 $color-hover-gray: #e5e5e5;
 
+$color-gray1: #f8f8f8;
+$color-gray2: darken($color-gray1,3%);
+$color-gray3: darken($color-gray1,6%);
+$color-gray4: darken($color-gray1,9%);
+$color-gray5: darken($color-gray1,12%);
+$color-admin-sidebar: #4d5158;
 
 $color-a: #5a5a5a;
 

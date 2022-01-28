@@ -12,22 +12,23 @@
 					<div class="group">
 						<input type="text" class="field" id="test_name" value="" required>
 						<label for="test_name">Название <?= $test['isTest'] ? 'теста' : 'папки' ?></label>
-						<!--				<div class="bar"></div>-->
 					</div>
 				</div>
 
-			<div class="test-update__group">
-				<div class="test-path-add__th">Прикрепить к группе</div>
-				<select>
-					<option value='0'></option>
-					<? foreach ($rootTests as $rootTest): ?>
-						<option value=<?= $rootTest['id'] ?>><?= $rootTest['test_name'] ?></option>
-					<? endforeach; ?>
-				</select>
-			</div>
+<!--			<div class="test-update__group">-->
+<!--				<div class="test-path-add__th">Прикрепить к группе</div>-->
+<!--				<select>-->
+<!--					<option value='0'></option>-->
+<!--					--><?// foreach ($rootTests as $rootTest): ?>
+<!--						<option value=--><?//= $rootTest['id'] ?><!--<?//= $rootTest['test_name'] ?>-</option>-->
+<!--					--><?// endforeach; ?>
+<!--				</select>-->
+<!--			</div>-->
+			<div class="select"></div>
+
 
 			<div class="test-update__group">
-				<label class="test-path-add__th" for="enable">Показыать пользователям</label>
+				<label class="test-path-add__th" for="enable">Показывать пользователям</label>
 				<input id="enable" type="checkbox">
 			</div>
 

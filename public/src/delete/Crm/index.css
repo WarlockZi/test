@@ -80,6 +80,7 @@
 	border-top: 1px solid #009933;
 	border-bottom: 1px solid #fff;
 	background: #fff;
+
 }
 /* Активация секций с помощью псевдокласса :checked */
 #tab1:checked~#content-tab1, #tab2:checked~#content-tab2, #tab3:checked~#content-tab3, #tab4:checked~#content-tab4 {

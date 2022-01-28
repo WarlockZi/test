@@ -8,7 +8,7 @@ import './show'
 import '../Admin/admin'
 
 import '../components/popup.scss'
-import {$, addTooltip, navigate, dropDown} from '../common'
+import {$, post, addTooltip, navigate, dropDown} from '../common'
 
 import {_test} from "./model/test"
 import {_question} from "./model/question"
@@ -17,25 +17,31 @@ import {sortable} from "../components/sortable"
 
 import '../components/accordion/accordion'
 import '../Admin/components/main-menu/admin_main_menu'
+import showCustomMenu from "../components/accordion/customContextMenu/customMenu";
 
 if ($("[data-question-parent-id]")){
     $(".select__wrap select").on('change', _question.changeParent)
-    // debugger
-    // const selWrap = $('.select__wrap select').on('click', dropDown.bind(this))
 }
 
 
+// custom select
+async function showCustomSelect(){
+    let res = await post('/test/paths',{})
+    let options = await JSON.parse(res)
+    // options= [['volkswagen', 'Volkswagen'], ['ford', 'Ford'], ['toyota', 'Toyota'], ['nissan', 'Nissan']]
+    options = options.map((i)=>{return [i['id'],i['test_name']] })
 
-// закрыть открытые чекбоксы
-if ($('.select').el[0]) {
     new CustomSelect('.select', {
         name: 'service_id-btn',
-        defaultValue: 'Ford',
-        options: [['volkswagen', 'Volkswagen'], ['ford', 'Ford'], ['toyota', 'Toyota'], ['nissan', 'Nissan']],
+        defaultValue: 22,
+        options: options,
         onSelected(item) {
             console.log(`Выбранное значение: ${item.textContent}`);
         },
     });
+}
+if ($('.select').el[0]) {
+    showCustomSelect()
 }
 
 
@@ -64,7 +70,6 @@ if (!_question.questions().length
   && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
     _question.showFirst()
 }
-
 
 
 $('.test__update').on('click', _test.update)

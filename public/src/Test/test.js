@@ -1,6 +1,6 @@
 import './do'
 
-import '../normalize.scss'
+// import '../normalize.scss'
 import '../components/test-pagination/test-pagination'
 
 import '../components/header/header'

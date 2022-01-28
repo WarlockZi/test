@@ -93,7 +93,7 @@ export const _test = {
       test_name: $('#test_name').el[0].value,
       enable: +$('#enable').el[0].checked,
       isTest: +$('[isTest]').el[0].getAttribute('isTest'),
-      parent: $('select').selectedIndexValue(),
+      parent: $('.select').selectedIndexValue(),
     }
   },
 
@@ -110,9 +110,9 @@ export const _test = {
     return id ?? $('.test-name').value()
   },
   children: () => {
-    let arrChildren = $('.children').el
-    if (!arrChildren[0].innerText === 'не содержит')
-      return arrChildren.length
+    let childrenLenght = $('.children').length
+    if (childrenLenght)
+      return childrenLenght
     return false
   },
 
@@ -156,6 +156,7 @@ export const _test = {
 
   delete: async function () {
 
+      debugger
     if (_test.children()) {
       popup.show('Сначала удалите все тесты из папки')
       return false

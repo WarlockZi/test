@@ -76,7 +76,6 @@ export let _question = {
     let answers = $(parent).find('.question__answers')
     answers.classList.toggle('height')
     answers.classList.toggle('scale')
-
     text.classList.toggle('rotate')
   },
 

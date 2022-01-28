@@ -22,7 +22,7 @@
 
 		<? endforeach; ?>
 
-		<div class="user">
+		<div class="user new">
 			<div class="id"></div>
 			<div class="fio" contenteditable></div>
 			<div class="email" contenteditable></div>

@@ -17,10 +17,16 @@
     display: flex;
     gap: 10px;
   }
+  .children{
+    .test-edit__child {
+      font-size: .7rem;
+    }
+  }
 
   .test-path-add__th{
     justify-self: end;
     text-align: end;
+
   }
 }
 

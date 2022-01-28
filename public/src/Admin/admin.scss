@@ -16,11 +16,8 @@
 
 
 
-$color-admin-sidebar: #4d5158;
 
-:root {
-  --color-main: $color-main;
-}
+
 
 .admin-layout__container {
   display: flex;
@@ -118,7 +115,7 @@ $color-admin-sidebar: #4d5158;
 
 .adm-content {
   flex: 1;
-  background-color: #ebf4f4;
+  background-color: $color-gray1;
   margin: 0 5px;
 }
 
