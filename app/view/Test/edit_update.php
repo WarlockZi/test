@@ -23,36 +23,16 @@
 			</div>
 		</div>
 
-		<div class="select">
-			<!--			<button type="button" class="select__toggle" name="car" value="" data-select="toggle" data-index="-1">Выберите из списка</button>-->
-			<!--			<div class="select__dropdown">-->
-			<!--				<ul class="elect__options">-->
-			<!--					<li class="elect__option" data-select="option" data-value="volkswagen" data-index="0">Volkswagen</li>-->
-			<!--					<li class="elect__option elect__option_selected" data-select="option" data-value="ford" data-index="1">Ford</li>-->
-			<!--					<li class="elect__option" data-select="option" data-value="toyota" data-index="2">Toyota</li>-->
-			<!--				</ul>-->
-			<!--			</div>-->
-		</div>
+		<div class="select"></div>
 
 
 		<div class="test-path-add__table">
 
 
-			<div class="test-update__group">
-				<div class="test-path-add__th">Папка</div>
-				<select>
-					<option value='0'></option>
-					<? foreach ($rootTests as $rootTest): ?>
-						<option value=<?= $rootTest['id'] ?>
-							<?= $rootTest['id'] === $test['parent'] ? 'selected' : ''; ?>>
-							<?= $rootTest['test_name'] ?>
-						</option>
-					<? endforeach; ?>
-				</select>
-			</div>
+
 
 			<div class="test-update__group">
-				<label class="test-path-add__th" for="enable">Показыать пользователям</label>
+				<label class="test-path-add__th" for="enable">Показывать пользователям</label>
 				<input id="enable" type="checkbox" <?= $test['enable'] ? 'checked' : ''; ?>>
 			</div>
 
@@ -61,7 +41,7 @@
 				<div class="children">
 					<? if (isset($test['children']) && $test['children']): ?>
 						<? foreach ($test['children'] as $child): ?>
-							<div class="test-edit__child">> <?= $child['test_name'] ?></div>
+							<div class="test-edit__child">- <?= $child['test_name'] ?></div>
 						<? endforeach; ?>
 					<? else: ?>
 						<div>не содержит</div>

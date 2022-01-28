@@ -3,7 +3,7 @@
   position: relative;
   width: 100%;
   margin: 20px 0;
-  display: none;
+  //display: none;
 
 
   label{
@@ -22,7 +22,7 @@
 
 .select__toggle {
   display: flex;
-  border: 0;
+  //border: 0;
   cursor: pointer;
   align-items: center;
   width: 100%;
@@ -31,7 +31,9 @@
   line-height: 1.4;
   user-select: none;
   justify-content: space-between;
-  background: azure;
+  background: $color-gray1;
+  border: 1px solid $color-gray2;
+  border-radius: 3px;
 }
 
 .select__toggle::after {
@@ -79,7 +81,8 @@
 }
 
 .select__option {
-  padding: 0.375rem 0.75rem;
+  padding: 0.15rem 0.75rem;
+  font-size: 12px;
 }
 
 .select__option_selected {

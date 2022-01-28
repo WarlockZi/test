@@ -231,7 +231,7 @@ class TestController Extends AppController
 			if (!$testData = App::$app->test->getTestData($testId, true)) {
 				$error = '<H1>Теста с таким номером нет.</H1>';
 				$this->set(compact('error'));
-			}else{
+			} else {
 				$test = App::$app->test->findOne($testId);
 				$this->set(compact('test'));
 				$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
@@ -268,6 +268,16 @@ class TestController Extends AppController
 		View::setJs('admin.js');
 	}
 
+	public function actionPaths()
+	{
+		exit(json_encode(App::$app->test->findAllWhere('isTest', '0')));
+	}
+
+	public function actionTests()
+	{
+		exit(json_encode(App::$app->test->findAllWhere('isTest', '1')));
+	}
+
 	public function actionEdit()
 	{
 		$test = '';
@@ -282,7 +292,7 @@ class TestController Extends AppController
 			$testDataToEdit = App::$app->test->getTestData($id) ?? '';
 			unset ($testDataToEdit['correct_answers']);
 			$this->set(compact('testDataToEdit'));
-			$tests = App::$app->test->findAllWhere('isTest', '1');
+			$tests = $this->actionPaths();
 			$this->set(compact('tests'));
 		}
 		$this->set(compact('test'));

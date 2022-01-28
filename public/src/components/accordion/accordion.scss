@@ -198,7 +198,7 @@
 
   @include MQ(M) {
     label, a {
-      padding: $item-padding-M $item-padding-M $item-padding-M ($item-padding-M * 3) + 20px;
+      padding: $item-padding-M $item-padding-M+10 $item-padding-M ($item-padding-M * 3) + 20px;
       font-size: .8rem;
     }
 

@@ -1,16 +1,6 @@
-<div class="adm-submenu">
-  <div class="title">CRM</div>
-
-	<? include ROOT . '/app/view/Adm_crm/components/adm-crm_menu.php'; ?>
-
-</div>
-
 <div class="adm-content">
   <div class="breadcrumbs-adm">
-    <a href  = "/adminsc">Admin</a>
-    <a href  = "/adminsc/crm">CRM</a>
-    <a href  = "/adminsc/crm/users">Users</a>
-    <div>User</div>
+    <a href  = "/adminsc/crm/users">Список пользователей</a>
   </div>
 
   <div class="wrap-admin">
@@ -93,11 +83,9 @@
               <strong></strong>
             </div>
           </div>
-
-
-
-
         </section>
+
+
 
         <section id="content-tab2">
 

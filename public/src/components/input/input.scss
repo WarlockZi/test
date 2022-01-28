@@ -31,8 +31,8 @@ $color-input: #323030;
     border-radius: 4px;
     color: #323030;
     transition: 0.3s ease;
-    background: #ecf1f7;
-    border: 1px solid #e4eef9;
+    background: $color-gray1;
+    border: 1px solid $color-gray2;
     box-sizing: border-box;
 
     &:valid {

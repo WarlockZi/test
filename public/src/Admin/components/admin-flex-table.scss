@@ -1,10 +1,20 @@
+@import "../../var";
 
 .admin-flex-table {
   padding: 10px;
+
+  * {
+    box-sizing: border-box;
+
+    &:focus-visible {
+      outline: $color-blue 1px solid;
+    }
+  }
 }
 
 .admin-flex-table .row {
   padding: 5px;
+  display: flex;
 }
 
 .admin-flex-table .row strong {

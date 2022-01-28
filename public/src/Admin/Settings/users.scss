@@ -1,44 +1,60 @@
 @import "../../var";
 
-.user-table{
+.user-table {
   display: flex;
   flex-flow: column;
-  .user.head>*{
+
+  * {
+    box-sizing: border-box;
+
+    &:focus-visible {
+      outline: $color-blue 1px solid;
+    }
+  }
+
+
+  .user.head > * {
     background-color: #5B626E;
     color: #fff;
   }
 
-  .user{
+  .user.new > * {
+    border: 1px solid $color-blue;
+  }
+
+  .user {
     display: flex;
 
-    .fio, .email{
+    .fio, .email {
       flex: 1;
     }
 
-    .save{
+    .save {
       background-color: #00cc00;
       color: #fff;
       height: 100%;
-      &:hover{
+
+      &:hover {
         cursor: pointer;
       }
     }
 
-    .del{
+    .del {
       background-color: $color-warning;
       color: #fff;
       height: 100%;
-      &:hover{
+
+      &:hover {
         cursor: pointer;
       }
     }
 
-    &>*{
+    & > * {
       background-color: #fff;
       margin: 2px;
       min-height: 10px;
-      min-width: 30px;
-      padding: 5px 10px;
+      min-width: 40px;
+      padding: 5px 5px;
     }
   }
 
