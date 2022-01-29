@@ -87,15 +87,6 @@ export const _test = {
   },
 
 
-  serverModel: () => {
-    return {
-      id: +window.location.href.split('/').pop(),
-      test_name: $('#test_name').el[0].value,
-      enable: +$('#enable').el[0].checked,
-      isTest: +$('[isTest]').el[0].getAttribute('isTest'),
-      parent: $('.select').selectedIndexValue(),
-    }
-  },
 
   viewModel: () => {
     return {
@@ -143,8 +134,19 @@ export const _test = {
       window.location.href = `/adminsc/test/edit/${res.id - 1}`
     }
   },
+  serverModel: () => {
+
+    return {
+      id: +window.location.href.split('/').pop(),
+      test_name: $('#test_name').el[0].value,
+      enable: +$('#enable').el[0].checked,
+      isTest: +$('[isTest]').el[0].getAttribute('isTest'),
+      parent: $('.select button')[0].value,
+    }
+  },
 
   update: async () => {
+      // debugger
     let model = _test.serverModel()
     let url = `/adminsc/test/update/${model.id}`
     let res = await post(url, model)
@@ -156,7 +158,6 @@ export const _test = {
 
   delete: async function () {
 
-      debugger
     if (_test.children()) {
       popup.show('Сначала удалите все тесты из папки')
       return false

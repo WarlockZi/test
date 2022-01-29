@@ -1,34 +1,34 @@
 @import "../var";
-
-.test-path-add__table {
+.test-update__group{
+  margin-bottom: 10px;
   display: flex;
   flex-flow: column;
   align-items: flex-start;
-  gap: 25px;
-
-  .test-update__group{
-    margin-bottom: 10px;
-    display: flex;
-    flex-flow: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .test-update__buttons{
-    display: flex;
-    gap: 10px;
-  }
-  .children{
-    .test-edit__child {
-      font-size: .7rem;
-    }
-  }
-
-  .test-path-add__th{
-    justify-self: end;
-    text-align: end;
-
+  gap: 10px;
+}
+.test-update__buttons{
+  display: flex;
+  gap: 10px;
+}
+.children{
+  .test-edit__child {
+    font-size: .7rem;
   }
 }
+
+.test-path-add__th{
+  justify-self: end;
+  text-align: end;
+
+}
+//.test-path-add__table {
+//  display: flex;
+//  flex-flow: column;
+//  align-items: flex-start;
+//  gap: 25px;
+//
+//
+//}
 
 //#test_name {
 //  //outline: #b0ddff 1px solid;

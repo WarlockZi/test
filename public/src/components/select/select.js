@@ -72,6 +72,7 @@ export class CustomSelect {
   hide() {
     this._elRoot.classList.remove(CLASS_NAME_ACTIVE);
   }
+
   toggle() {
     if (this._elRoot.classList.contains(CLASS_NAME_ACTIVE)) {
       this.hide();
@@ -120,6 +121,7 @@ CustomSelect.template = params => {
   options.forEach((option, index) => {
     let selectedClass = '';
     if (option[0] === targetValue) {
+      debugger
       selectedClass = ' select__option_selected';
       selectedIndex = index;
       selectedValue = option[0];

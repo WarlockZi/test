@@ -39,9 +39,13 @@ class TestController Extends AppController
 	{
 		$this->layout = 'admin';
 		$this->view = 'edit_show';
-		$rootTests = App::$app->test->findAllWhere('isTest', 0);
+
+		$paths = $this->paths();
+		$this->set(compact('paths'));
+
+//		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 		$test['isTest'] = 1;
-		$this->set(compact('rootTests', 'test'));
+		$this->set(compact('test'));
 		View::setCss('test_edit.css');
 		View::setJs('test_edit.js');
 	}
@@ -259,18 +263,22 @@ class TestController Extends AppController
 		$id = $this->route['id'];
 		$test = App::$app->test->findOne($id);
 		$test['children'] = App::$app->test->getChildren($id);
+		$this->set(compact( 'test'));
 
-		$rootTests = App::$app->test->findAllWhere('isTest', 0);
-//		$rootTestsTree = $this->hierachy($rootTests, 'parent');
-		$this->set(compact('rootTests', 'test'));
+		$paths = $this->paths();
+		$this->set(compact('paths'));
 
 		View::setCss('admin.css');
 		View::setJs('admin.js');
 	}
 
+	private function paths(){
+		return App::$app->test->findAllWhere('isTest', '0');
+	}
+
 	public function actionPaths()
 	{
-		exit(json_encode(App::$app->test->findAllWhere('isTest', '0')));
+		exit(json_encode($this->paths()));
 	}
 
 	public function actionTests()
@@ -292,8 +300,7 @@ class TestController Extends AppController
 			$testDataToEdit = App::$app->test->getTestData($id) ?? '';
 			unset ($testDataToEdit['correct_answers']);
 			$this->set(compact('testDataToEdit'));
-			$tests = $this->actionPaths();
-			$this->set(compact('tests'));
+
 		}
 		$this->set(compact('test'));
 
