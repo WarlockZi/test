@@ -18,45 +18,57 @@
 
 		<div class="centered">
 			<div class="group">
-				<input type="text" class="field" id="test_name" value="<?= htmlspecialchars($test['test_name'])?>" required>
+				<input type="text" class="field" id="test_name" value="<?= htmlspecialchars($test['test_name']) ?>"
+				       required>
 				<label for="test_name">Название</label>
 			</div>
 		</div>
 
-		<div class="select"></div>
+		<select data-custom-path>
+			<option value="-1"></option>
+			<? foreach ($paths as $path): ?>
+				<option
+						value="<?= $path['id'] ?>"
+					<?= $test['parent'] === $path['id'] ? 'selected' : ''; ?>
+				>
+					<?= $path['test_name'] ?>
+				</option>
+			<? endforeach; ?>
+		</select>
+
+		<select data-custom-activ>
+			<option value="-1"></option>
+			<option value="1"
+				<?= $test['enable'] ? 'selected' : ''; ?>
+			>да
+			</option>
+			<option value="0"
+				<?= $test['enable'] ? 'selected' : ''; ?>
+			>нет
+			</option>
+		</select>
 
 
-		<div class="test-path-add__table">
+<!--		<div class="test-update__group">-->
+<!--			<div class="test-path-add__th">Содержит Тесты и Папки</div>-->
+<!--			<div class="children">-->
+<!--				--><?// if (isset($test['children']) && $test['children']): ?>
+<!--					--><?// foreach ($test['children'] as $child): ?>
+<!--						<div class="test-edit__child">- --><?//= $child['test_name'] ?><!--</div>-->
+<!--					--><?// endforeach; ?>
+<!--				--><?// else: ?>
+<!--					<div>не содержит</div>-->
+<!--				--><?// endif; ?>
+<!--			</div>-->
+<!--		</div>-->
 
+		<input type="hidden" isTest="<?= $test['isTest'] ?>">
 
-
-
-			<div class="test-update__group">
-				<label class="test-path-add__th" for="enable">Показывать пользователям</label>
-				<input id="enable" type="checkbox" <?= $test['enable'] ? 'checked' : ''; ?>>
-			</div>
-
-			<div class="test-update__group">
-				<div class="test-path-add__th">Содержит Тесты и Папки</div>
-				<div class="children">
-					<? if (isset($test['children']) && $test['children']): ?>
-						<? foreach ($test['children'] as $child): ?>
-							<div class="test-edit__child">- <?= $child['test_name'] ?></div>
-						<? endforeach; ?>
-					<? else: ?>
-						<div>не содержит</div>
-					<? endif; ?>
-				</div>
-			</div>
-
-			<input type="hidden" isTest="<?= $test['isTest'] ?>">
-
-			<div class="test-update__buttons">
-				<div class="<?= $test['isTest'] ? 'test__update' : 'test-path__update' ?>">Сохранить</div>
-				<div class="test__delete">Удалить</div>
-			</div>
+		<div class="test-update__buttons">
+			<div class="<?= $test['isTest'] ? 'test__update' : 'test-path__update' ?>">Сохранить</div>
+			<div class="test__delete">Удалить</div>
 		</div>
-
 	</div>
+
 </div>
 
