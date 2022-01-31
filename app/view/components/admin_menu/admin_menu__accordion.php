@@ -66,7 +66,7 @@
 
 	<a class="sidebar__main neon" href="/">
 		<? include ICONS . '/admin-menu/house.svg' ?>
-		На сайт
+		Планирование
 	</a>
 
 	<li class="admin-layout__sidebar-tail"></li>

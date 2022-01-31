@@ -24,20 +24,20 @@
 			</div>
 		</div>
 
-		<select data-custom-path>
+		<select data-custom-parent>
 			<option value="-1"></option>
-			<? foreach ($paths as $path): ?>
+			<? foreach ($paths as $parent): ?>
 				<option
-						value="<?= $path['id'] ?>"
-					<?= $test['parent'] === $path['id'] ? 'selected' : ''; ?>
+						value="<?= $parent['id'] ?>"
+					<?= $test['parent'] === $parent['id'] ? 'selected' : ''; ?>
 				>
-					<?= $path['test_name'] ?>
+					<?= $parent['test_name'] ?>
 				</option>
 			<? endforeach; ?>
 		</select>
 
-		<select data-custom-activ>
-			<option value="-1"></option>
+		<select data-custom-enable>
+			<option value="-1"> </option>
 			<option value="1"
 				<?= $test['enable'] ? 'selected' : ''; ?>
 			>да
