@@ -13,9 +13,11 @@ export default class WDSSelect {
     this.title = props.title
     this.options = getFormattedOptions(this.element.querySelectorAll("option"))
     this.customElement = document.createElement("div")
+    this.customElement.classList.add(props.class)
     this.labelElement = document.createElement("span")
     this.titleElement = document.createElement("div")
     this.optionsCustomElement = document.createElement("ul")
+    // this.selectedOption= this.element.selectedOptions[0]
     setupCustomElement(this)
     this.element.style.display = "none"
     this.element.after(this.customElement)
@@ -54,6 +56,7 @@ export default class WDSSelect {
 
 function setupCustomElement(select) {
   select.customElement.classList.add("custom-select-container")
+  // select.customElement.classList.add(select.element.dataset.customPath)
   select.customElement.tabIndex = 0
 
   select.titleElement.classList.add("custom-select-title")
@@ -65,17 +68,23 @@ function setupCustomElement(select) {
   select.customElement.append(select.labelElement)
 
   select.optionsCustomElement.classList.add("custom-select-options")
-  setOption(getEmptyOption())
+  // setOption(getEmptyOption())
   select.options.forEach(option => {
     setOption(option)
   })
 
   function setOption(option){
     const optionElement = document.createElement("li")
+    // debugger
     optionElement.classList.add("custom-select-option")
     optionElement.classList.toggle("selected", option.selected)
     optionElement.innerText = option.label
     optionElement.dataset.value = option.value
+    // if(option.selected){
+    //   select.selectValue(option.value)
+    //   select.optionsCustomElement.classList.remove("show")
+    //
+    // }
     optionElement.addEventListener("click", () => {
       select.selectValue(option.value)
       select.optionsCustomElement.classList.remove("show")
@@ -135,6 +144,7 @@ function setupCustomElement(select) {
     }
   })
 }
+
 function getEmptyOption() {
     return {
       value: 0,

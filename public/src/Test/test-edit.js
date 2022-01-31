@@ -20,16 +20,24 @@ import showCustomMenu from "../components/accordion/customContextMenu/customMenu
 
 import WDSSelect from "../components/select/WDSSelect"
 
+let sel_1 =  $("[data-custom-parent]")[0]
+if (sel_1) {
+  new WDSSelect({
+    element: sel_1,
+    title: 'Папка',
+    class: 'parent'
+  })
+}
 
-new WDSSelect({
-  element: $("[data-custom-path]")[0],
-  title: 'Папка'
-})
+let sel_2 =  $("[data-custom-enable]")[0]
+if (sel_2) {
+  new WDSSelect({
+    element: sel_2,
+    title: 'Показывать пользователям',
+    class: 'enable'
+  })
+}
 
-new WDSSelect({
-  element: $("[data-custom-activ]")[0],
-  title: 'Показывать пользователям'
-})
 
 if ($("[data-question-parent-id]")) {
   $(".select__wrap select").on('change', _question.changeParent)
