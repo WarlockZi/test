@@ -7,4 +7,6 @@
 			</div>
 		<? endforeach; ?>
 	</div>
+<?else:?>
+В данной папке нет тестов
 <? endif; ?>

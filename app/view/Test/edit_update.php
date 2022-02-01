@@ -25,11 +25,13 @@
 		</div>
 
 		<select data-custom-parent>
-			<option value="-1"></option>
+			<option value="0"></option>
 			<? foreach ($paths as $parent): ?>
 				<option
 						value="<?= $parent['id'] ?>"
-					<?= $test['parent'] === $parent['id'] ? 'selected' : ''; ?>
+					<?= $test['parent'] === $parent['id']
+						? "selected"
+						: ""; ?>
 				>
 					<?= $parent['test_name'] ?>
 				</option>
@@ -37,30 +39,30 @@
 		</select>
 
 		<select data-custom-enable>
-			<option value="-1"> </option>
+			<option value="0"></option>
 			<option value="1"
-				<?= $test['enable'] ? 'selected' : ''; ?>
+				<?= $test['enable'] ? "selected" : ""; ?>
 			>да
 			</option>
 			<option value="0"
-				<?= $test['enable'] ? 'selected' : ''; ?>
+				<?= $test['enable'] ? "" : "selected"; ?>
 			>нет
 			</option>
 		</select>
 
 
-<!--		<div class="test-update__group">-->
-<!--			<div class="test-path-add__th">Содержит Тесты и Папки</div>-->
-<!--			<div class="children">-->
-<!--				--><?// if (isset($test['children']) && $test['children']): ?>
-<!--					--><?// foreach ($test['children'] as $child): ?>
-<!--						<div class="test-edit__child">- --><?//= $child['test_name'] ?><!--</div>-->
-<!--					--><?// endforeach; ?>
-<!--				--><?// else: ?>
-<!--					<div>не содержит</div>-->
-<!--				--><?// endif; ?>
-<!--			</div>-->
-<!--		</div>-->
+		<!--		<div class="test-update__group">-->
+		<!--			<div class="test-path-add__th">Содержит Тесты и Папки</div>-->
+		<!--			<div class="children">-->
+		<!--				--><? // if (isset($test['children']) && $test['children']): ?>
+		<!--					--><? // foreach ($test['children'] as $child): ?>
+		<!--						<div class="test-edit__child">- --><? //= $child['test_name'] ?><!--</div>-->
+		<!--					--><? // endforeach; ?>
+		<!--				--><? // else: ?>
+		<!--					<div>не содержит</div>-->
+		<!--				--><? // endif; ?>
+		<!--			</div>-->
+		<!--		</div>-->
 
 		<input type="hidden" isTest="<?= $test['isTest'] ?>">
 
