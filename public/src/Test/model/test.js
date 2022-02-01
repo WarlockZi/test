@@ -134,10 +134,12 @@ export const _test = {
     }
   },
 
-  selectedValueCustomSelect(className){
-    let select = $(`.custom-select-container${className}`)[0]
-    let selected = $(select).find('.custom-select-option.selected')
-    return +selected.dataset.value
+  selectedValueCustomSelect(className) {
+    let select = $(`[data-custom-${className}]`)[0]
+    let selected = [...select.options].filter((opt)=>opt.selected)
+    if (selected) {
+      return +selected[0].value
+    }
   },
 
   serverModel: () => {
@@ -145,8 +147,8 @@ export const _test = {
       id: +window.location.href.split('/').pop(),
       test_name: $('#test_name').el[0].value,
       isTest: +$('[isTest]').el[0].getAttribute('isTest'),
-      enable: _test.selectedValueCustomSelect('.enable'),
-      parent: _test.selectedValueCustomSelect('.parent'),
+      enable: _test.selectedValueCustomSelect('enable'),
+      parent: _test.selectedValueCustomSelect('parent'),
     }
   },
 

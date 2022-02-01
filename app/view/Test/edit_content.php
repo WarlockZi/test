@@ -45,7 +45,7 @@
 					</p>
 				<? endif; ?>
 			</div>
-			<?= include ROOT . '/app/view/Test/edit_children.php' ?>
+			<? include ROOT . '/app/view/Test/edit_children.php' ?>
 		<? endif; ?>
 
 		<div class="rules">
