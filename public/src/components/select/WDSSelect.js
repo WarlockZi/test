@@ -1,26 +1,19 @@
-// import Select from "./select.js"
-//
-// const selectElements = document.querySelectorAll("[data-custom]")
-//
-// selectElements.forEach(selectElement => {
-//   new Select(selectElement)
-// })
 import './WDSSelect.scss'
 
 export default class WDSSelect {
   constructor(props) {
+    if (!props.element) return false
     this.element = props.element
     this.title = props.title
     this.options = getFormattedOptions(this.element.querySelectorAll("option"))
-    this.customElement = document.createElement("div")
-    this.customElement.classList.add(props.class)
-    this.labelElement = document.createElement("span")
+    this.sel = document.createElement("div")
+    this.sel.classList.add(props.class)
+    this.label = document.createElement("span")
     this.titleElement = document.createElement("div")
-    this.optionsCustomElement = document.createElement("ul")
-    // this.selectedOption= this.element.selectedOptions[0]
-    setupCustomElement(this)
+    this.ul = document.createElement("ul")
+    setup(this)
     this.element.style.display = "none"
-    this.element.after(this.customElement)
+    this.element.after(this.sel)
   }
 
   get selectedOption() {
@@ -42,11 +35,11 @@ export default class WDSSelect {
     newSelectedOption.selected = true
     newSelectedOption.element.selected = true
 
-    this.labelElement.innerText = newSelectedOption.label
-    this.optionsCustomElement
+    this.label.innerText = newSelectedOption.label
+    this.ul
       .querySelector(`[data-value="${prevSelectedOption.value}"]`)
       .classList.remove("selected")
-    const newCustomElement = this.optionsCustomElement.querySelector(
+    const newCustomElement = this.ul.querySelector(
       `[data-value="${newSelectedOption.value}"]`
     )
     newCustomElement.classList.add("selected")
@@ -54,60 +47,52 @@ export default class WDSSelect {
   }
 }
 
-function setupCustomElement(select) {
-  select.customElement.classList.add("custom-select-container")
-  // select.customElement.classList.add(select.element.dataset.customPath)
-  select.customElement.tabIndex = 0
+function setup(select) {
+  select.sel.classList.add("custom-select-container")
+  select.sel.tabIndex = 0
 
   select.titleElement.classList.add("custom-select-title")
   select.titleElement.innerText = select.title
-  select.customElement.append(select.titleElement)
+  select.sel.append(select.titleElement)
   // debugger
-  select.labelElement.classList.add("custom-select-value")
-  select.labelElement.innerText = select.selectedOption.label
-  select.customElement.append(select.labelElement)
+  select.label.classList.add("custom-select-value")
+  select.label.innerText = select.selectedOption.label
+  select.sel.append(select.label)
 
-  select.optionsCustomElement.classList.add("custom-select-options")
-  // setOption(getEmptyOption())
+  select.ul.classList.add("custom-select-options")
   select.options.forEach(option => {
     setOption(option)
   })
 
   function setOption(option){
-    const optionElement = document.createElement("li")
-    // debugger
-    optionElement.classList.add("custom-select-option")
-    optionElement.classList.toggle("selected", option.selected)
-    optionElement.innerText = option.label
-    optionElement.dataset.value = option.value
-    // if(option.selected){
-    //   select.selectValue(option.value)
-    //   select.optionsCustomElement.classList.remove("show")
-    //
-    // }
-    optionElement.addEventListener("click", () => {
+    const li = document.createElement("li")
+    li.classList.add("custom-select-option")
+    li.classList.toggle("selected", option.selected)
+    li.innerText = option.label
+    li.dataset.value = option.value
+    li.addEventListener("click", () => {
       select.selectValue(option.value)
-      select.optionsCustomElement.classList.remove("show")
+      select.ul.classList.remove("show")
     })
-    select.optionsCustomElement.append(optionElement)
+    select.ul.append(li)
   }
 
-  select.customElement.append(select.optionsCustomElement)
+  select.sel.append(select.ul)
 
-  select.labelElement.addEventListener("click", () => {
-    select.optionsCustomElement.classList.toggle("show")
+  select.label.addEventListener("click", () => {
+    select.ul.classList.toggle("show")
   })
 
-  select.customElement.addEventListener("blur", () => {
-    select.optionsCustomElement.classList.remove("show")
+  select.sel.addEventListener("blur", () => {
+    select.ul.classList.remove("show")
   })
 
   let debounceTimeout
   let searchTerm = ""
-  select.customElement.addEventListener("keydown", e => {
+  select.sel.addEventListener("keydown", e => {
     switch (e.code) {
       case "Space":
-        select.optionsCustomElement.classList.toggle("show")
+        select.ul.classList.toggle("show")
         break
       case "ArrowUp": {
         const prevOption = select.options[select.selectedOptionIndex - 1]
@@ -125,7 +110,7 @@ function setupCustomElement(select) {
       }
       case "Enter":
       case "Escape":
-        select.optionsCustomElement.classList.remove("show")
+        select.ul.classList.remove("show")
         break
       default: {
         clearTimeout(debounceTimeout)
@@ -145,21 +130,13 @@ function setupCustomElement(select) {
   })
 }
 
-function getEmptyOption() {
+function getFormattedOptions(options) {
+  return [...options].map(option => {
     return {
-      value: 0,
-      label: '',
-      selected: false,
-      element: ()=>document.createElement('li'),
-    }
-}
-function getFormattedOptions(optionElements) {
-  return [...optionElements].map(optionElement => {
-    return {
-      value: optionElement.value,
-      label: optionElement.label,
-      selected: optionElement.selected,
-      element: optionElement,
+      value: option.value,
+      label: option.label,
+      selected: option.selected,
+      element: option,
     }
   })
 }

@@ -152,15 +152,15 @@ export const _test = {
     }
   },
 
-  update: async () => {
-    // debugger
-    let model = _test.serverModel()
+  update: async (parent, enable) => {
+    debugger
+    let model = _test.serverModel(parent, enable)
     let url = `/adminsc/test/update/${model.id}`
     let res = await post(url, model)
     res = await JSON.parse(res)
-    if (res) {
-      window.location.href = `/adminsc/test/edit/${model.id}`
-    }
+    // if (res) {
+    //   window.location.href = `/adminsc/test/edit/${model.id}`
+    // }
   },
 
   delete: async function () {

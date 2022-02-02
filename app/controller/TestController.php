@@ -26,15 +26,6 @@ class TestController Extends AppController
 		View::setCss('test.css');
 	}
 
-//	public function actionTree()
-//	{
-//		if ($data = $this->ajax) {
-//			$table = $data['table'];
-//			$menu = new tree(['table' => $table]);
-//		}
-//	}
-
-
 	public function actionShow()
 	{
 		$this->layout = 'admin';
@@ -43,7 +34,6 @@ class TestController Extends AppController
 		$paths = $this->paths();
 		$this->set(compact('paths'));
 
-//		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 		$test['isTest'] = 1;
 		$this->set(compact('test'));
 		View::setCss('test_edit.css');
@@ -56,7 +46,6 @@ class TestController Extends AppController
 		$this->view = 'edit_show';
 		$test['isTest'] = 0;
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
-//		$rootTestsTree = $this->hierachy($rootTests, 'parent');
 		$this->set(compact('rootTests', 'test'));
 		View::setCss('test_edit.css');
 		View::setJs('test_edit.js');

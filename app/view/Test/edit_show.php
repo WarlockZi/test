@@ -16,25 +16,20 @@
 			</div>
 
 			<select data-custom-parent>
-				<option value="-1"></option>
-				<? foreach ($paths as $path): ?>
-					<option value="<?= $path['id'] ?>">
-						<?= $path['test_name'] ?>
+				<option value="0" selected>-</option>
+				<? foreach ($paths as $parent): ?>
+					<option value="<?= $parent['id'] ?>">
+						<?= $parent['test_name'] ?>
 					</option>
 				<? endforeach; ?>
 			</select>
 
 			<select data-custom-enable>
-				<option value="-1"></option>
+				<option value="-1" selected>-</option>
 				<option value="1">да</option>
 				<option value="0">нет</option>
 			</select>
 
-
-			<!--			<div class="test-update__group">-->
-			<!--				<label class="test-path-add__th" for="enable">Показывать пользователям</label>-->
-			<!--				<input id="enable" type="checkbox">-->
-			<!--			</div>-->
 
 		</div>
 
