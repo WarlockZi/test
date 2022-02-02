@@ -20,39 +20,35 @@ import showCustomMenu from "../components/accordion/customContextMenu/customMenu
 
 import WDSSelect from "../components/select/WDSSelect"
 
-let sel_1 =  $("[data-custom-parent]")[0]
-if (sel_1) {
-  new WDSSelect({
-    element: sel_1,
-    title: 'Папка',
-    class: 'parent'
-  })
-}
 
-let sel_2 =  $("[data-custom-enable]")[0]
-if (sel_2) {
-  new WDSSelect({
-    element: sel_2,
-    title: 'Показывать пользователям',
-    class: 'enable'
-  })
-}
+let parentSelect = new WDSSelect({
+  element: $("[data-custom-parent]")[0],
+  title: 'Папка',
+  class: 'parent'
+})
+
+
+let enableSelect = new WDSSelect({
+  element: $("[data-custom-enable]")[0],
+  title: 'Показывать пользователям',
+  class: 'enable'
+})
 
 
 if ($("[data-question-parent-id]")) {
   $(".select__wrap select").on('change', _question.changeParent)
 }
 
-let toggleButton = $('.test-edit__menu-toggle').el[0]
+// Show test list accordion
+let showTestList = $('.test-edit__menu-toggle').el[0]
 
-if (toggleButton) {
-  $(toggleButton).on('click', (e) => {
-    let toggleButton = e.target
-    let wraper = toggleButton.closest('.test-edit-wrapper')
+if (showTestList) {
+  $(showTestList).on('click', (e) => {
+    let showTestList = e.target
+    let wraper = showTestList.closest('.test-edit-wrapper')
     let menu = $(wraper).find('.test-edit__accordion')
     menu.classList.toggle('open')
   })
-
 }
 
 
@@ -70,7 +66,7 @@ if (!_question.questions().length
 }
 
 
-$('.test__update').on('click', _test.update)
+$('.test__update').on('click', _test.update.bind(null, parentSelect.selectedOption, enableSelect.selectedOption))
 $('.test-path__update').on('click', _test.update)
 
 // $('.question__sort').on('change', validate.sort)
@@ -84,13 +80,10 @@ $('.answer__delete').on('click', _answer.del)
 $('.answer__create-button').on('click', _answer.create)
 
 
-let els = $('.question__save').el
-// debugger
-addTooltip(
-  {
-    els: $('.question__save').el,
-    message: 'Сохранить вопросы и ответы'
-  })
+addTooltip({
+  els: $('.question__save').el,
+  message: 'Сохранить вопросы и ответы'
+})
 
 addTooltip({
   els: $('.question__menu').el,
@@ -111,7 +104,6 @@ addTooltip({
   message: 'Редактировать'
 })
 
-// debugger
 addTooltip({
   els: $('.question__menu').el,
   message: 'Перенести в другой тест'
