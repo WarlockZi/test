@@ -252,7 +252,7 @@ class TestController Extends AppController
 		$id = $this->route['id'];
 		$test = App::$app->test->findOne($id);
 		$test['children'] = App::$app->test->getChildren($id);
-		$this->set(compact( 'test'));
+		$this->set(compact('test'));
 
 		$paths = $this->paths();
 		$this->set(compact('paths'));
@@ -261,18 +261,25 @@ class TestController Extends AppController
 		View::setJs('admin.js');
 	}
 
-	private function paths(){
-		return App::$app->test->findAllWhere('isTest', '0');
-	}
 
 	public function actionPaths()
 	{
 		exit(json_encode($this->paths()));
 	}
 
+	private function paths()
+	{
+		return App::$app->test->findAllWhere('isTest', '0');
+	}
+
 	public function actionTests()
 	{
-		exit(json_encode(App::$app->test->findAllWhere('isTest', '1')));
+		exit(json_encode($this->Tests()));
+	}
+
+	private function Tests()
+	{
+		return App::$app->test->findAllWhere('isTest', '1');
 	}
 
 	public function actionEdit()
@@ -286,6 +293,9 @@ class TestController Extends AppController
 					$test['children'] = App::$app->test->getChildren($id);
 				}
 			}
+			$tests = $this->Tests();
+			$this->set(compact('tests'));
+
 			$testDataToEdit = App::$app->test->getTestData($id) ?? '';
 			unset ($testDataToEdit['correct_answers']);
 			$this->set(compact('testDataToEdit'));

@@ -1,15 +1,16 @@
-import {popup, post} from "../../common";
+import {$, popup, post} from "../../common";
 import "../../components/popup.scss";
 
 
-export let _cache = {
-    clearedMsg: 'очищено',
+let _cache = {
     clearCache: async function () {
         let res = await post('/adminsc/clearCache', {})
-        // res = await JSON.parse(res);
-        // res = await res.text(res)
         if (res==='Успешно') {
             popup.show(res)
         }
     }
+}
+
+export default function cache() {
+    $('.clearCache').on('click', _cache.clearCache)
 }

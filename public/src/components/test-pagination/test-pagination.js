@@ -5,7 +5,7 @@ import {_answer} from "../../Test/model/answer";
 
 // Показать первую кнопку
 $('[data-pagination]:first-child').addClass('nav-active')
-$('.test-edit__content').addClass('flex1')
+// $('.test-edit__content').addClass('flex1')
 
 //// add question
 $('.pagination').on('click', function (e) {
@@ -80,9 +80,6 @@ function navInit() {
     nav_buttons[0].classList.add('nav-active')
 
 }
-// function hideVisibleBlock() {
-//     $('.block.flex1').removeClass('flex1')
-// }
 
 export {showHidePaginBtn, appendBlock, navInit}
 
