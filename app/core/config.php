@@ -16,6 +16,7 @@ $config['components'] = [
 	'test' => 'app\model\Test',
 	'testresult' => 'app\model\TestResult',
 	'user' => 'app\model\User',
+	'planning' => 'app\model\Planning',
 	//'instructions' => 'app\model\Instructions',
 ];
 $config['Mailer_openserver'] = [

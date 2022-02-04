@@ -7,7 +7,7 @@ import './show'
 import '../Admin/admin'
 
 import '../components/popup.scss'
-import {$, post, addTooltip, navigate, dropDown} from '../common'
+import {$, addTooltip} from '../common'
 
 import {_test} from "./model/test"
 import {_question} from "./model/question"
@@ -19,11 +19,12 @@ import '../Admin/components/main-menu/admin_main_menu'
 import showCustomMenu from "../components/accordion/customContextMenu/customMenu";
 
 import WDSSelect from "../components/select/WDSSelect"
-debugger
 
-// window.onload = function () {
-//   switch (window.location.pathname) {
-//     case '/adminsc/test/edit':
+export default function testEdit() {
+
+
+  switch (true) {
+    case /\/adminsc\/test\/edit/.test(window.location.pathname):
 
 
       let parentSelect = new WDSSelect({
@@ -60,7 +61,8 @@ debugger
 // подсветка текущего теста
       _test.markCurrentInMenu()
 
-// navigate(window.location.pathname)
+      // navigate(window.location.pathname)
+
       sortable.connect('.questions')
 
 
@@ -114,9 +116,8 @@ debugger
         message: 'Перенести в другой тест'
       })
 
+      break;
+  }
+}
 
-//
-//       break;
-//   }
-// }
 

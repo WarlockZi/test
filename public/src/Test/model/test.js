@@ -12,7 +12,6 @@ export const _test = {
           a.classList.add('current')
         }
       })
-
     }
   },
 
