@@ -1,7 +1,7 @@
 <ul class="admin-layout__sidebar accordion">
-    <a class="admin-sidebar__logo" href="/">
-	<? include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
-    </a>
+	<a class="admin-sidebar__logo" href="/">
+		<? include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
+	</a>
 
 	<a class="house neon" href="/adminsc">
 		<? include ICONS . '/admin-menu/grid.svg'; ?>
@@ -17,7 +17,7 @@
 			</label>
 			<ul>
 				<a data-id="1" class="level2 neon" href="/adminsc/crm/orders">Заказы</a>
-<!--				<a data-id="1" class="level2 neon" href="/adminsc/crm/rights">Права</a>-->
+				<!--				<a data-id="1" class="level2 neon" href="/adminsc/crm/rights">Права</a>-->
 				<a data-id="1" class="level2 neon" href="/adminsc/crm/users">Пользователи</a>
 				<a data-id="1" class="level2 neon" href="/adminsc/crm">crm</a>
 			</ul>
@@ -34,12 +34,12 @@
 			</label>
 
 			<ul>
-				<a data-id="2" class="level2 neon" href='/adminsc/Sitemap'>Создать SiteMap</a>
-				<a data-id="3" class="level2 neon" href='/adminsc/settings/dump'>Dump</a>
-				<a data-id="6" class="level2 neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
-				<a data-id="9" class="level2 neon" href='/adminsc/settings/pics'>Картинки</a>
-				<a data-id="10" class="level2 neon" href='/adminsc/settings/cache'>Очистить кэш</a>
-				<a data-id="10" class="level2 neon" href='/adminsc/settings/rights'>Права</a>
+				<a class="level2 neon" href='/adminsc/Sitemap'>Создать SiteMap</a>
+				<a class="level2 neon" href='/adminsc/settings/dump'>Dump</a>
+				<a class="level2 neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
+				<a class="level2 neon" href='/adminsc/settings/pics'>Картинки</a>
+				<a class="level2 neon" href='/adminsc/settings/cache'>Очистить кэш</a>
+				<a class="level2 neon" href='/adminsc/settings/rights'>Права</a>
 			</ul>
 		</li>
 	<? endif; ?>
@@ -52,19 +52,19 @@
 		</label>
 		<ul>
 			<? if (in_array('test-do__read', $user['rights'])): // admin ?>
-			<a class="level2 neon" href="/test/do">Проходить тесты</a>
+				<a class="level2 neon" href="/test/do">Проходить тесты</a>
 			<? endif; ?>
 			<? if (in_array('test-edit__read', $user['rights'])): // admin ?>
 				<a class="level2 neon" href="/adminsc/test/edit">Редактировать тесты</a>
 			<? endif; ?>
 			<? if (in_array('test-results__read', $user['rights'])): // admin ?>
-				<a data-id="10" class="level2 neon" href="/adminsc/crm/testresults">Результаты тестов </a>
+				<a class="level2 neon" href="/adminsc/crm/testresults">Результаты тестов </a>
 			<? endif; ?>
 		</ul>
 	</li>
 
 
-	<a class="sidebar__main neon" href="/">
+	<a class="sidebar__main neon" href="/adminsc/planning">
 		<? include ICONS . '/admin-menu/house.svg' ?>
 		Планирование
 	</a>

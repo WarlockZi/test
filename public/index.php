@@ -16,7 +16,6 @@ define('ICONS', ROOT.'/app/view/components/icons');
 if (DEV) {
 	ini_set('display_errors', 1);
 }
-
 new App;
 
 Router::dispatch($_SERVER['QUERY_STRING']);

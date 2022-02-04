@@ -10,6 +10,7 @@ class App {
 
   public function __construct() {
 	//exit(__FILE__);
+//	  self::$app->bind();
     self::$app = Registry::instance();
 
   }
