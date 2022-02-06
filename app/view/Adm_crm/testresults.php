@@ -2,7 +2,7 @@
 <div class="adm-content">
 	<h1>Результаты тестов</h1>
 
-	<div class="test-reuslts__table">
+	<div class="test-results__table">
 		<? foreach ($res as $i): ?>
 			<div class="item" data-row="<?= $i['id'] ?>"> <?= $i['user']; ?></div>
 			<a class="item" data-row="<?= $i['id'] ?>" href='<?= '/test/result/' . $i['id']; ?>'

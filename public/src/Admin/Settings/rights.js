@@ -1,6 +1,8 @@
 import './rights.scss';
 import {$, popup, post} from '../../common';
 
+export default function init(){
+
 $('.rights-table .right')
   .on('click', function (e) {
 
@@ -68,3 +70,4 @@ $('.rights-table .right')
     }
 
   })
+}
