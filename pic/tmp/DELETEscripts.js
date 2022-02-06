@@ -2,11 +2,6 @@
 window.onload = function () {
 
 
-   var controller = 'test';
-   if (window.location.pathname.indexOf('freetest') + 1) {
-      controller = 'freetest';
-   }
-
 
 /////////////////////////////////////////////////////////////////////////////
 ///////////  RESULTS  TEST  Закончить тест/////////////////////////////
@@ -852,11 +847,7 @@ window.onload = function () {
 
 
    function edit(action, id, question_id, test_id, test_name) {
-      var controller = 'test';
-//        debugger;
-      if (window.location.pathname.indexOf('freetest') + 1) {
-         controller = 'freetest';
-      }
+
       if (action == "save_q") {
          var qpic = $('#imq[data-id = "' + question_id + '"]').attr('src'),
          text = $.trim($('textarea[name = "' + question_id + 'q"]').val()),
@@ -1066,10 +1057,7 @@ window.onload = function () {
 // now post a new XHR request
          if (tests.formdata) {
             var xhr = new XMLHttpRequest(),
-            controller = 'test';
-            if (window.location.pathname.indexOf('freetest') + 1) {
-               controller = 'freetest';
-            }
+
             xhr.open('POST', `${PROJ}/${controller}/edit`, true);
             xhr.send(formData);
             xhr.onreadystatechange = function () {
@@ -1101,11 +1089,7 @@ function up() {
 }
 
 function edit(action, id, question_id, test_id, test_name) {
-   var controller = 'test';
-//        debugger;
-   if (window.location.pathname.indexOf('freetest') + 1) {
-      controller = 'freetest';
-   }
+
    if (action == "save_q") {
       var qpic = $('#imq[data-id = "' + question_id + '"]').attr('src'),
       text = $.trim($('textarea[name = "' + question_id + 'q"]').val()),

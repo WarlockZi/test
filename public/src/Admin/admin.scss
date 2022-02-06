@@ -14,11 +14,6 @@
 @import '../var.scss';
 
 
-
-
-
-
-
 .admin-layout__container {
   display: flex;
   flex: 1 0 auto;
@@ -26,7 +21,22 @@
 
 
   @include _600 {
-  flex-wrap: wrap;
+    flex-wrap: wrap;
+
+
+    .separator {
+      background-color: #ebf4f4;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 3px;
+      color: #646464;
+    }
+
+    .separator.btns {
+      position: sticky;
+      bottom: 0;
+    }
 
   }
 }
@@ -37,14 +47,17 @@
   flex: 1 1 auto;
   padding: 20px;
 
-  *{user-select: none;}
+  * {
+    user-select: none;
+  }
 }
 
 .admin-layout__sidebar {
-  .admin-sidebar__logo{
+  .admin-sidebar__logo {
     padding: 0;
   }
 }
+
 .admin-layout__sidebar.accordion {
   max-width: 200px;
   background: $color-admin-sidebar;
@@ -129,17 +142,3 @@
   padding: 10px;
 }
 
-
-.separator {
-  background-color: #ebf4f4;
-  margin: 10px 0;
-  display: flex;
-  justify-content: space-around;
-  padding: 3px;
-  color: #646464;
-}
-
-.separator.btns {
-  position: sticky;
-  bottom: 0;
-}
