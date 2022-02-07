@@ -1,4 +1,6 @@
-<section class="planning">
+<section class="planning-create">
+
+	Ежедневные
 
 	<div class="planning-table">
 		<div class="num head">№</div>

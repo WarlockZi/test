@@ -8,12 +8,9 @@ import testResults from '../Test/test_results/test_results'
 import testEdit from '../Test/test-edit'
 import testDo from '../Test/do'
 import settings from './Settings/settings'
+import rights from './Rights/rights'
 import planning from './Planning/planning'
 
-// import '../Test/do'
-// import '../Test/test-edit'
-// import './Settings/rights'
-// import './Settings/users'
 
 import "./model/cache";
 
@@ -25,7 +22,10 @@ navigate(window.location.pathname)
 function navigate(str) {
   switch (true) {
     case /\/adminsc\/settings/.test(str):
-
+    case /\/adminsc\/rights/.test(str):
+      rights()
+      $("[href='/adminsc/settings']").addClass('current')
+      break;
     case /\/adminsc\/Sitemap/.test(str):
       settings()
       $("[href='/adminsc/settings']").addClass('current')

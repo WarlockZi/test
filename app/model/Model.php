@@ -54,6 +54,7 @@ abstract class Model
 	function update($values)
 	{
 		$id = $values['id'];
+		if (!$id) exit('empty or undefined id');
 		unset($values['id']);
 		unset($values['token']);
 		$par = '';
