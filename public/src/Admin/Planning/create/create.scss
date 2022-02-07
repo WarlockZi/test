@@ -1,12 +1,12 @@
-
-.planning {
+.planning-create {
   display: flex;
+  flex-flow: column;
 }
 
-.planning-table {
+.planning-create__table {
   flex: 2;
   display: grid;
-  grid-template-columns: 15px 50px 50px 30px 30px 1fr;
+  grid-template-columns: 15px 1fr 60px 60px;
   gap: 3px;
   font-size: 10px;
   align-items: center;

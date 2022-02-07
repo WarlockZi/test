@@ -132,9 +132,4 @@ class View
 		self::$meta['keywords'] = $keywords;
 	}
 
-	public static function e($str)
-	{
-		return htmlspecialchars($str, ENT_QUOTES, 'utf-8');
-	}
-
 }

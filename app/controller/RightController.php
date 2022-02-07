@@ -17,8 +17,17 @@ class RightController Extends AppController
 	{
 		parent::__construct($route);
 		$this->autorize();
+		$this->layout = 'admin';
+		View::setCss('admin.css');
+		View::setJs('admin.js');
 	}
 
+	public function actionIndex()
+	{
+		$this->view = 'create';
+		$rights = App::$app->right->all();
+		$this->set(compact('rights'));
+	}
 
 	public function actionShow()
 	{
@@ -27,8 +36,6 @@ class RightController Extends AppController
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 		$test['isTest'] = 1;
 		$this->set(compact('rootTests', 'test'));
-		View::setCss('test_edit.css');
-		View::setJs('test_edit.js');
 	}
 
 
@@ -87,9 +94,5 @@ class RightController Extends AppController
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 //		$rootTestsTree = $this->hierachy($rootTests, 'parent');
 		$this->set(compact('rootTests', 'test'));
-
-		View::setCss('admin.css');
-		View::setJs('admin.js');
 	}
-
 }

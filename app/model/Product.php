@@ -2,7 +2,6 @@
 
 namespace app\model;
 
-use app\model\Model;
 use app\core\App;
 
 

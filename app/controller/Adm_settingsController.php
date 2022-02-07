@@ -15,11 +15,7 @@ class Adm_settingsController extends AdminscController {
    public function actionIndex() {
 
    }
-   public function actionRights() {
-		$rights = App::$app->right->all();
-      $this->set(compact('rights'));
 
-   }
 
    public function actionDumpSQL() {
 

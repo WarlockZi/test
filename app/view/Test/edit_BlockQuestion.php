@@ -2,7 +2,7 @@
 
 	<div class="question-edit_row">
 		<div class="question__sort"><?= $block[0]['sort'] ?? '' ?></div>
-		<div class="question__save"><?= include ROOT . '/app/view/components/icons/save.php' ?></div>
+		<div class="question__save"><? include ICONS.'/save.php' ?></div>
 		
 		<div class="question__menu">
 			<div class="select__wrap">
@@ -16,7 +16,7 @@
 		<div class="question__text" contenteditable="true">
 			<?= $block[0]['question_text'] ?? '' ?>
 		</div>
-		<div class="question__delete"><?= include ROOT . '/app/view/components/icons/trashIcon.php'; ?></div>
+		<div class="question__delete"><? include ICONS. '/trashIcon.php'; ?></div>
 	</div>
 
 	<div class="question-edit_row">
