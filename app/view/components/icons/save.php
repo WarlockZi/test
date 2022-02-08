@@ -1,11 +1,11 @@
 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
      viewBox="0 0 512 512"
-     width="30px"
+     width="20px"
+     fill="#000"
      preserveAspectRatio="xMidYMid meet">
 
 	<g class="save"
 	   transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
-	   fill="#000000"
 	   stroke="none">
 		<path d="M78 5099 c-23 -12 -46 -35 -58 -59 -20 -39 -20 -54 -20 -2480 0
 -2427 0 -2441 20 -2480 13 -26 34 -47 60 -60 39 -20 53 -20 2480 -20 2427 0

@@ -14,7 +14,7 @@
 			<div class="item" data-row="<?= $i['id'] ?>"> <?= $i['date']; ?></div>
 
 			<div class="item del-btn <?= (in_array('test-results__del', $user['rights'])) ? 'del' : ''; ?>" data-row="<?= $i['id'] ?>">
-				удалить
+				<? include TRASH;?>
 			</div>
 		<? endforeach; ?>
 	</div>
