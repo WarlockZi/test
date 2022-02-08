@@ -1,60 +1,67 @@
 @import "../../var";
 
-.rights-table{
+.rights-table {
   display: grid;
-  grid-template-columns: 50px 1fr 1fr 70px 70px;
+  grid-template-columns: 50px 1fr 1fr 40px 40px;
   flex-flow: column;
   background-color: $color-gray2;
   gap: 2px;
 
-  &>*{
+  [data-id='new'] {
+    border-top: 1px solid #979797;
+  }
+
+  & > * {
     background-color: #fff;
-    margin: 2px;
     min-height: 10px;
     min-width: 20px;
     padding: 5px 10px;
-    &:focus-visible{
+
+    &:focus-visible {
       outline: 1px solid $color-main;
     }
   }
 
-  .head{
+  .head {
     background-color: #5B626E;
     color: #fff;
   }
 
-  //.right.head>*{
-  //  background-color: #5B626E;
-  //  color: #fff;
-  //}
-
-  .right.new>*{
+  .right.new > * {
     border: 1px solid $color-gray4;
   }
 
-  .name, .description{
+  .name, .description {
     flex: 1;
   }
 
-  .save{
+  .save {
     background-color: #00cc00;
-    color: #fff;
-    //height: 100%;
-    &:hover{
+
+    &:hover {
+      background-color: darken(#00cc00, 3%);
       cursor: pointer;
+
+      svg .save {
+        fill: #fff;
+      }
     }
   }
 
-  .del{
+  .del {
     background-color: $color-warning;
-    color: #fff;
-    //height: 100%;
-    &:hover{
+
+    &:hover {
+      background-color: darken($color-warning, 3%);
       cursor: pointer;
+
+      svg {
+        fill: #fff;
+      }
     }
   }
 
-  .right{
+  .right {
     display: flex;
   }
 

@@ -181,7 +181,7 @@ class TestController Extends AppController
 
 	private static function getSubjectTestResults($data)
 	{
-		return $errorSubj = $data['errorCnt'] == 0 ? 'СДАН' : "не сдан: {$data['errorCnt']} ош из {$data['questionCnt']}";
+		return $errorSubj = "{$data['user']}:{$data['errorCnt']} ош из {$data['questionCnt']}";
 	}
 
 	private static function prepareBodyTestResults($data, $id)

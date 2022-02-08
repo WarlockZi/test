@@ -4,12 +4,13 @@ import {$, popup, post} from '../../common';
 export default function rights() {
 
   $('.rights-table')
-    .on('click', function (e) {
-
+    .on('click', ['.save'], function (e) {
+      // if (!['id', 'name', 'description', 'save', 'del'].includes(e.target.classList[0])) return false
       let el = e.target
-      let dataId = el.dataset.id??'new'
+      let dataId = el.dataset.id ?? 'new'
       let fields = $(`[data-id='${dataId}']`)
       let right = {}
+
       right.right = {}
       fields.map((f) => {
         if (f.classList.contains('id')) {
@@ -23,34 +24,41 @@ export default function rights() {
           right.right.description = f.innerText
         } else if (f.classList.contains('save')) {
           right.save = f
+          $(f).on('click', save.bind(null, right))
         } else if (f.classList.contains('del')) {
           right.del = f
+          $(f).on('click', del.bind(null, right))
         }
       })
 
-
-      if (el.classList.contains('del')) {
+      function del(right) {
         if (right.id) {
           del(right.id)
         }
+      }
 
-      } else if (el.classList.contains('save')) {
+      function save(right) {
         if (right.right.id != 'new') {
           update(right.right)
         } else {
-          create(right.right)
+          if (!right.right.name || !right.right.description) return false
+          right = right.right
+          create(right)
         }
       }
 
       async function update(right) {
-        let res = post('/right/update', right)
+        let res = await post('/right/update', right)
+        if (await JSON.parse(res).updated) {
+          popup.show('Обновлено')
+        }
       }
 
-      async function create(e) {
-        let res = await createOnServer()
+      async function create(right) {
+        let res = await createOnServer(right)
       }
 
-      async function createOnServer() {
+      async function createOnServer(right) {
         let res = await post('/right/create', right)
         res = await JSON.parse(res)
         if (res.id) {
@@ -62,7 +70,6 @@ export default function rights() {
         }
       }
 
-
       async function delServer(id) {
         let res = await post('/right/delete', {id})
         res = await JSON.parse(res)
@@ -73,7 +80,6 @@ export default function rights() {
 
       function delDom(e) {
         $right.remove()
-
       }
 
       function del(id) {
@@ -83,7 +89,5 @@ export default function rights() {
           delServer(id)
         }
       }
-
     })
 }
-
