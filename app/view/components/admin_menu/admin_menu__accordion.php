@@ -5,7 +5,6 @@
 
 	<a class="house neon" href="/adminsc">
 		<? include ICONS . '/admin-menu/house.svg' ?>
-
 		Главная
 	</a>
 
@@ -18,7 +17,6 @@
 			</label>
 			<ul>
 				<a data-id="1" class=" neon" href="/adminsc/crm/orders">Заказы</a>
-				<!--				<a data-id="1" class=" neon" href="/adminsc/crm/rights">Права</a>-->
 				<a data-id="1" class=" neon" href="/adminsc/crm/users">Пользователи</a>
 				<a data-id="1" class=" neon" href="/adminsc/crm">crm</a>
 			</ul>

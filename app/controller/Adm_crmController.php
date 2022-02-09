@@ -23,7 +23,7 @@ class Adm_crmController extends AdminscController
 	public function actionUsers()
 	{
 		$users = App::$app->user->findAll('users');
-		$rights = App::$app->user->findAll('user_rights');
+		$rights = App::$app->right->findAll();
 		$this->set(compact('users', 'rights'));
 	}
 
@@ -47,7 +47,7 @@ class Adm_crmController extends AdminscController
 		};
 
 		$user = App::$app->user->get($id);
-		$rights = App::$app->user->getRights();
+		$rights = App::$app->right->findAll();;
 
 		$this->set(compact('user', 'rights'));
 	}

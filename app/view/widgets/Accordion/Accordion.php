@@ -14,6 +14,9 @@ class Accordion extends Model
 	protected $class = 'menu';
 	protected $cache = 3600;
 	protected $sql = "SELECT * FROM test";
+	protected $label_after = '';
+	protected $link = '/adminsc/test/';
+
 
 	public function __construct($options = [])
 	{
@@ -38,9 +41,19 @@ class Accordion extends Model
 		$this->output();
 	}
 
-	protected function icon($name)
+	protected function icon()
 	{
-		return file_get_contents(ROOT . "/public/src/components/icons/{$name}.svg");
+		return $this->label_after ? file_get_contents($this->label_after) : '';
+	}
+
+	protected function lable_after($item)
+	{
+		if ($this->label_after) {
+			return "<a class='update' href='{$this->link}{$item['id']}'>" .
+				"{$this->icon()}" .
+				"</a>";
+		}
+		return '';
 	}
 
 	function li($item, $lev)
@@ -50,15 +63,15 @@ class Accordion extends Model
 				"<li class='has-children level{$lev}'>" .
 				"<input type='checkbox' name ='group-1' id={$item['id']}>" .
 				"<label for={$item['id']}>{$item['test_name']}</label>" .
-				"<a class='update' href='/adminsc/test/update/{$item['id']}'>" .
-				"{$this->icon('edit')}" .
-				"</a>";
+				$this->lable_after($item);
 		}
-		return "<li><a data-id={$item['id']} class='level{$lev}' href='/adminsc/test/edit/{$item['id']}' title={$item['test_name']}>" .
+		return "<li>" .
+			"<a data-id={$item['id']} " .
+			"class='level{$lev}' " .
+			"href='{$this->link}{$item['id']}' " .
+			"title={$item['test_name']}>" .
 			"{$item['test_name']} </a>" .
-			"<a class='update' href='/adminsc/test/update/{$item['id']}'>" .
-			"{$this->icon('edit')}" .
-			"</a>";
+			$this->lable_after($item);
 	}
 
 	function tplMenu($item, $lev)
