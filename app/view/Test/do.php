@@ -1,27 +1,28 @@
 <section class="test-do">
 
-	<div class="test-do__menu-slider">Выбрать тест
-<!--		--><?// include ROOT . '\app\view\components\icons\gamburger.svg' ?>
-		<?= $menuTestDo; ?>
+	<div class="test-edit__accordion">
+		<? include ROOT . '/app/view/components/test-do/test_do_accordion.php'; ?>
 	</div>
 
-	<div class="test-do__navigation">
-		<? $i = 1; ?>
-
-		<? if (isset($test)): ?>
-				<div class='pagination__wrap'>
-			<div class='test-name' data-test-id=<?= $test['id']; ?>>TECT : <?= $test['test_name']; ?></div>
-
-			<? if ($pagination): ?>
-				<?= $pagination; ?>
-			<? else: ?>
-<!--				<div class='info'><- Выберите тест</div>-->
-			<? endif; ?>
-			<? endif; ?>
-
-		</div>
 
 		<div class="test-do__content">
+
+			<div class="test-edit__menu-toggle">Выбрать тест</div>
+
+			<div class="test-do__navigation">
+				<? $i = 1; ?>
+
+				<? if (isset($test)): ?>
+				<div class='pagination__wrap'>
+					<div class='test-name' data-test-id=<?= $test['id']; ?>>TECT : <?= $test['test_name']; ?></div>
+
+					<? if ($pagination): ?>
+						<?= $pagination; ?>
+
+					<? endif; ?>
+					<? endif; ?>
+
+				</div>
 
 
 			<? if (isset($testData) && !isset($error) && $testData):// Проверим, чтобы запрашивали конекретный тест?>

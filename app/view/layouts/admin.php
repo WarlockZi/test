@@ -29,9 +29,6 @@
 </div>
 
 
-<!--<footer></footer>-->
-
-
 <? $this::getJS() ?>
 
 

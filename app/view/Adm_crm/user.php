@@ -92,10 +92,8 @@
           <div class = 'admin-flex-table column'>
               <? foreach ($rights as $right): ?>
                <div class="row">
-                 <strong><?=
-                     $right['name'];?>
-                      </strong>
-                 <input class ="right" data-id ='<?= $right['id'] ?>' type="checkbox" <?= in_array($right['id'], $user['rights']) ? 'checked' : '' ?>>
+                 <strong><?=$right['name'];?></strong>
+                 <input class ="right" data-id ='<?= $right['id']?>' type="checkbox" <?= in_array($right['name'], $user['rights']) ? 'checked' : '' ?>>
                </div>
             <? endforeach; ?>
           </div>

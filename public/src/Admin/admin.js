@@ -50,6 +50,7 @@ function navigate(str) {
       break;
 
     case /\/adminsc\/test\/edit/.test(str):
+    case /\/adminsc\/test\/update/.test(str):
       testEdit()
       $("[href='/adminsc/test/edit']").addClass('current')
       break;
