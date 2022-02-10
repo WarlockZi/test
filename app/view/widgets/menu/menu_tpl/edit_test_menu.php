@@ -5,7 +5,7 @@ $gamburger = include ROOT . '/app/view/components/icons/gamburger.svg';
 <li <?= $isTest ? 'class="vert-menu__list"' : ''; ?>>
 
 <a class="test-edit-menu__params <?=$isTest?'path':'test'?>"
-   href="/adminsc/test/update/<?=$cat['id'];?>"
+   href="/adminsc/test/edit/<?=$cat['id'];?>"
    data-testid="<?=$cat['id'];?>">
 	<?= $gamburger ?>
 </a>

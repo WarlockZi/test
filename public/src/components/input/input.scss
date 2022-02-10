@@ -1,16 +1,10 @@
 @import "../../var";
 
-$main-color: #F44336;
-$secondary-color: white;
-$main-color: #d9e2f0;
+$color-auto-fill: #d9e2f0;
 $secondary-color: #7f7f7f;
-$width: 550px; // Change Me
-$color-label: #7f7f7f;
 $color-input: #323030;
 
-
 .centered {
-  //height: $width*0.2;
   margin: 10px 0px;
   top: 0;
   bottom: 0;
@@ -27,7 +21,7 @@ $color-input: #323030;
   input {
     display: block;
     width: 100%;
-    padding: 20px 12px 6px 12px;
+    padding: $padding-input-with-label;
     color: #323030;
     transition: 0.3s ease;
     background: $color-gray1;
@@ -35,7 +29,6 @@ $color-input: #323030;
     box-sizing: border-box;
 
     &:valid {
-      //border-bottom-color: rgba(white, .5);
 
       ~ label {
         top: 0;
@@ -44,52 +37,19 @@ $color-input: #323030;
       }
     }
 
-    &:focus {
-      outline: none;
-      // border-bottom-color: $secondary-color;
-
-      ~ label {
-        top: -3px;
-        font: $font-label-focus;
-        color: $secondary-color;
-      }
-
-      ~ .bar:before {
-        transform: translateX(0);
-      }
-    }
-
     // Stop Chrome's hideous pale yellow background on auto-fill
     &:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0px 1000px $main-color inset;
+      -webkit-box-shadow: 0 0 0px 1000px $color-auto-fill inset;
       -webkit-text-fill-color: $color-input;
       // border-bottom-color: rgba(white, .5);
     }
   }
 
-  //.bar {
-  //  background: $color-main;
-  //  content: '';
-  //  width: 100%;
-  //  height: 1px;
-  //  transition: .3s ease;
-  //  position: relative;
-  //
-  //  &:before {
-  //    content: '';
-  //    position: absolute;
-  //    width: 100%;
-  //    height: 1px;
-  //    background: $secondary-color;
-  //    transform: translateX(-100%);
-  //  }
-  //}
-
   label {
     position: absolute;
-    top: 8px;
-    color: $color-label;
-    font: 400 22px Arial, Serif;
+    top: 0px;
+    color: $color-main;
+    font: 400 14px Arial, Serif;
     cursor: text;
     transition: .25s ease;
   }

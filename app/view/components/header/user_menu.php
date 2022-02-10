@@ -39,7 +39,7 @@
 
             <a href="/user/logout" aria-label="logout">
 				<span class="icon-logout">
-					<?= include ROOT . "/app/view/components/icons/auth/logout2.php" ?>
+					<? include ROOT . "/app/view/components/icons/auth/logout2.php" ?>
 				</span>
                 Выход
             </a>

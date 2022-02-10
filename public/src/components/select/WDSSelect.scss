@@ -37,7 +37,7 @@
   align-items: center;
   justify-content: space-between;
   border: 1px solid $color-gray2;
-  padding:   1.2rem 0.5rem 0.25rem;
+  padding:  $padding-input-with-label;
   cursor: pointer;
   user-select: none;
   font-size: .8rem;

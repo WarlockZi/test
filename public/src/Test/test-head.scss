@@ -1,0 +1,12 @@
+@import "../mixin_media";
+
+.test-head {
+  display: flex;
+  margin-bottom: 50px;
+}
+
+.page-name {
+  display: flex;
+  align-items: center;
+  @include _h1;
+}

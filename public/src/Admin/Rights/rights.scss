@@ -6,6 +6,7 @@
   flex-flow: column;
   background-color: $color-gray2;
   gap: 2px;
+  margin-top: 10px;
 
   [data-id='new'] {
     border-top: 1px solid #979797;
@@ -36,23 +37,34 @@
   }
 
   .save {
-    background-color: #00cc00;
+    display: flex;
+    align-items: center;
+    svg .save {
+      fill: $color-success;
+      //pointer-events: none; // это чтобы не срабатывал клик на svg
+    }
 
     &:hover {
-      background-color: darken(#00cc00, 3%);
+      background-color: $color-success;
       cursor: pointer;
 
       svg .save {
-        fill: #fff;
+        fill: #ffffff;
       }
     }
   }
 
   .del {
-    background-color: $color-warning;
+    display: flex;
+    align-items: center;
+
+    svg {
+      fill: $color-warning;
+      //pointer-events: none; // это чтобы не срабатывал клик на svg
+    }
 
     &:hover {
-      background-color: darken($color-warning, 3%);
+      background-color: $color-warning;
       cursor: pointer;
 
       svg {

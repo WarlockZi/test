@@ -15,6 +15,7 @@ define('ROOT', dirname(__DIR__));
 define('ICONS', ROOT.'/app/view/components/icons');
 define('TRASH', ROOT.'/app/view/components/icons/trashIcon.php');
 define('SAVE', ROOT.'/app/view/components/icons/save.php');
+define('COMPONENTS', ROOT.'/app/view/components');
 
 if (DEV) {
 	ini_set('display_errors', 1);

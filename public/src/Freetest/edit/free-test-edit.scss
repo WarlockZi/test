@@ -431,17 +431,8 @@ box-shadow: 0 2px 4px 0 #607F7C;
   width: 100%;
 }
 
-.a{
-  min-height: 50px;
-  padding: 3px 20px;
-
-}
 
 
-.a input {
-  position: absolute;
-  left: -9999px;
-}
 .a label {
   position: relative;
   overflow: visible;
@@ -454,9 +445,7 @@ box-shadow: 0 2px 4px 0 #607F7C;
   width: 60%;
   color: #4d4d4d;
 }
-.a label:hover {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, .58);
-}
+
 
 .a input:checked + label {
   background: white;
@@ -943,14 +932,12 @@ color: #fff;
 h2,
 .test-variants,
 .sidebar p a,
-.pagination a,
-.q
-
+.pagination a
 {
 color: #628A7D;
 }
 
-.a,
+
 .input:-webkit-autofill
 {
 color: #949494;
@@ -961,9 +948,7 @@ color: #949494;
 }
 
 
-.q-text,
-.num,
-.test-name
+.q-text
 {
 color: #5e5e5e;
 font-weight: 600;
@@ -1082,7 +1067,7 @@ display:none;
 @media (min-width: 1200px) {
 .wrap{
 }
-.q,
+
 .menu a,
 textarea,
 .pagination a,
@@ -1109,10 +1094,7 @@ textarea{
   width: 1.1vw;
   padding: .1vw .3vw;
 }
-.button,
-.test-name{
-  font-size: 1vw;
-}
+
 .user-button .icon-menu:before {
   padding: .2vw;
 }

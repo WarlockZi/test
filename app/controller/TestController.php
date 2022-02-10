@@ -31,6 +31,9 @@ class TestController Extends AppController
 		$this->layout = 'admin';
 		$this->view = 'edit_show';
 
+		$page_name = 'Создание теста';
+		$this->set(compact('page_name'));
+
 		$paths = $this->paths();
 		$this->set(compact('paths'));
 
@@ -44,11 +47,13 @@ class TestController Extends AppController
 	{
 		$this->layout = 'admin';
 		$this->view = 'edit_show';
+		$page_name = 'Создание папки';
+		$this->set(compact('page_name'));
 		$test['isTest'] = 0;
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 		$this->set(compact('rootTests', 'test'));
-		View::setCss('test_edit.css');
-		View::setJs('test_edit.js');
+		View::setCss('admin.css');
+		View::setJs('admin.js');
 	}
 
 
@@ -216,6 +221,8 @@ class TestController Extends AppController
 	{
 		$pagination = '';
 		$testData = '';
+		$page_name = 'Прохождение тестов';
+		$this->set(compact('page_name'));
 		$testId = isset($this->route['alias']) ? (int)$this->route['alias'] : '';
 		$menuTestDo = $this->getMenu();
 		$this->set(compact('menuTestDo'));
@@ -285,6 +292,9 @@ class TestController Extends AppController
 	public function actionEdit()
 	{
 		$test = '';
+		$page_name = 'Редактирование тестов';
+		$this->set(compact('page_name'));
+
 		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
 		if ($id) {
 			$test = App::$app->test->findOne($id);

@@ -1,4 +1,6 @@
 @import "../var";
+//@import "./test-head";
+
 .test-update__group{
   margin-bottom: 10px;
   display: flex;
@@ -21,22 +23,12 @@
   text-align: end;
 
 }
-//.test-path-add__table {
-//  display: flex;
-//  flex-flow: column;
-//  align-items: flex-start;
-//  gap: 25px;
-//
-//
-//}
 
-//#test_name {
-//  //outline: #b0ddff 1px solid;
-//
-//  &:hover {
-//    //outline: #b0ddff 2px solid;
-//  }
-//}
+.test-path-add__table {
+  display: flex;
+  flex-flow: column;
+}
+
 
 .test__save,
 .test__update,

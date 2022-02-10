@@ -1,6 +1,7 @@
 
 <div class="adm-content">
-	<h1>Результаты тестов</h1>
+
+	<div class="page-name">Результаты тестов</div>
 
 	<div class="test-results__table">
 		<? foreach ($res as $i): ?>
