@@ -6,6 +6,6 @@
 	]);
 	?>
 
-	<? include ROOT . '/app/view/Test/add-test__button.php' ?>
+	<? include ROOT . '/app/view/Test/edit__add-test-button.php' ?>
 
 

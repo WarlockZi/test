@@ -1,5 +1,7 @@
 <div class="adm-content">
 
+	<div class="page-name">Права</div>
+
 	<div class="rights-table">
 
 		<div class="id head">ID</div>

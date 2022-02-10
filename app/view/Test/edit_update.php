@@ -5,13 +5,15 @@
 	<div class='test-edit__accordion'>
 		<? include ROOT . '/app/view/Test/edit_accordion.php' ?>
 
-		<? include ROOT . '/app/view/Test/add-test__button.php' ?>
+		<? include ROOT . '/app/view/Test/edit__add-test-button.php' ?>
 	</div>
 
 
 	<div class="test-edit__content">
 
-		<div class="test-edit__menu-toggle">Выбрать тест</div>
+		<? include ROOT . '/app/view/Test/test-head.php'; ?>
+<!--		--><?// include COMPONENTS."/test/menu_toggle.php";?>
+
 
 		<div class="test-name">Изменение <?= $t ? 'теста' : 'папки' ?></div>
 

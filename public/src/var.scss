@@ -8,9 +8,9 @@ $color-main: #6ca3fe;
 $color-main-hover: shade($color-main, 60%);
 
 $color-success: #54bb99;
-
-$color-warning: #bd5151;
 $color-blue: #5199BD;
+$color-warning: #bd5151;
+
 $color-red: #e30000;
 
 $dark-grey-hover: #343635;
@@ -28,6 +28,7 @@ $color-admin-sidebar: #4d5158;
 $color-a: #5a5a5a;
 
 $color-title: #2a2a2a;
+$color-h: lighten($color-title, 10%);
 
 $color-gray-min: #808080;
 $color-gray-min-hover: #6E6E6E;
@@ -45,6 +46,10 @@ $font-label-focus: 400 16px Arial, Serif;
 
 $font-label-Roboto: 14px "Roboto", sans-serif;
 $font-label-Roboto-focus: 16px "Roboto", sans-serif;
+
+$padding-input-with-label: 1.2rem .5rem .25rem;
+
+
 
 $m:'20px';
 $m:'40px';

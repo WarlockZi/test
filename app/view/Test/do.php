@@ -1,28 +1,27 @@
 <section class="test-do">
 
 	<div class="test-edit__accordion">
-		<? include ROOT . '/app/view/components/test-do/test_do_accordion.php'; ?>
+		<? include ROOT . '/app/view/components/test/test_do_accordion.php'; ?>
 	</div>
 
 
-		<div class="test-do__content">
+	<div class="test-do__content">
 
-			<div class="test-edit__menu-toggle">Выбрать тест</div>
+		<? include ROOT . '/app/view/Test/test-head.php'; ?>
 
-			<div class="test-do__navigation">
-				<? $i = 1; ?>
 
-				<? if (isset($test)): ?>
-				<div class='pagination__wrap'>
-					<div class='test-name' data-test-id=<?= $test['id']; ?>>TECT : <?= $test['test_name']; ?></div>
+		<div class="test-do__navigation">
+			<? $i = 1; ?>
 
-					<? if ($pagination): ?>
-						<?= $pagination; ?>
+			<? if (isset($test)): ?>
+			<div class='pagination__wrap'>
+				<div class='test-name' data-test-id=<?= $test['id']; ?>><?= $test['test_name']; ?></div>
 
-					<? endif; ?>
-					<? endif; ?>
+				<?= $pagination ?? '' ?>
 
-				</div>
+				<? endif; ?>
+
+			</div>
 
 
 			<? if (isset($testData) && !isset($error) && $testData):// Проверим, чтобы запрашивали конекретный тест?>
@@ -71,7 +70,7 @@
 					<? endforeach; ?>
 				</div>
 
-				<? include ROOT . '/app/view/components/test-do/test_edit_prev_next_buttons.php' ?>
+				<? include ROOT . '/app/view/components/test/test_edit_prev_next_buttons.php' ?>
 
 
 				<a class="test-do__finish-btn" id="btnn" data-id="<?= $test['id']; ?>">ЗАКОНЧИТЬ ТЕСТ</a>

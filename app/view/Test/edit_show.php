@@ -4,7 +4,7 @@
 
 
 	<div class="test-edit__content">
-		<div class="test-name">Добавление <?= $test['isTest'] ? 'теста' : 'папки' ?></div>
+		<div class="page-name">Добавление <?= $test['isTest'] ? 'теста' : 'папки' ?></div>
 
 		<div class="test-path-add__table">
 

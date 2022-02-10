@@ -1,0 +1,19 @@
+.test-edit__menu-toggle {
+  position: relative;
+  transition: transform 1s;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: $color-main;
+  color: white;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: white;
+    color: $color-main;
+  }
+}
