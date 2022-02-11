@@ -1,5 +1,5 @@
 import './admin.scss'
-import './components/main-menu/admin_main_menu'
+// import '../delete/main-menu/admin_main_menu'
 
 import '../components/header/header-adm'
 import '../components/accordion/accordion'
@@ -10,6 +10,7 @@ import testDo from '../Test/do'
 import settings from './Settings/settings'
 import rights from './Rights/rights'
 import planning from './Planning/planning'
+import user from './CRM/user'
 
 
 import "./model/cache";
@@ -34,6 +35,10 @@ function navigate(str) {
     case /\/adminsc\/crm\/testresults/.test(str):
       testResults()
       $("[href='/adminsc/crm/testresults']").addClass('current')
+      break;
+
+    case /\/adminsc\/crm\/user/.test(str):
+      user()
       break;
 
     case /\/adminsc\/crm/.test(str):

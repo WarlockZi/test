@@ -8,7 +8,7 @@
 		Главная
 	</a>
 
-	<? if (in_array('crm', $user['rights'])): // admin ?>
+	<? if (in_array('gate_crm', $user['rights'])): // admin ?>
 		<li class="has-children ">
 			<input type="checkbox" id="crm">
 			<label for="crm">
@@ -24,7 +24,7 @@
 	<? endif; ?>
 
 
-	<? if (in_array('settings', $user['rights'])): // admin ?>
+	<? if (in_array('gate_settings', $user['rights'])): // admin ?>
 		<li class="has-children ">
 			<input type="checkbox" id="settings">
 			<label for="settings">
@@ -50,13 +50,13 @@
 			Тесты
 		</label>
 		<ul>
-			<? if (in_array('test-do__read', $user['rights'])): // admin ?>
+			<? if (in_array('test-do_read', $user['rights'])): // admin ?>
 				<a class=" neon" href="/test/do">Проходить тесты</a>
 			<? endif; ?>
-			<? if (in_array('test-edit__read', $user['rights'])): // admin ?>
+			<? if (in_array('test-edit_read', $user['rights'])): // admin ?>
 				<a class=" neon" href="/adminsc/test/edit">Редактировать тесты</a>
 			<? endif; ?>
-			<? if (in_array('test-results__read', $user['rights'])): // admin ?>
+			<? if (in_array('test-results_read', $user['rights'])): // admin ?>
 				<a class=" neon" href="/adminsc/crm/testresults">Результаты тестов </a>
 			<? endif; ?>
 		</ul>
@@ -69,13 +69,13 @@
 			Планирование
 		</label>
 		<ul>
-			<? if (in_array('test-do__read', $user['rights'])): // admin ?>
+			<? if (in_array('test-do_read', $user['rights'])): // admin ?>
 				<a class=" neon" href="/adminsc/planning/create">Создать задачи</a>
 			<? endif; ?>
-			<? if (in_array('test-edit__read', $user['rights'])): // admin ?>
+			<? if (in_array('test-edit_read', $user['rights'])): // admin ?>
 				<a class=" neon" href="/adminsc/planning/list">Посмотреть планировки</a>
 			<? endif; ?>
-			<? if (in_array('test-results__read', $user['rights'])): // admin ?>
+			<? if (in_array('test-results_read', $user['rights'])): // admin ?>
 				<a class=" neon" href="/adminsc/planning/user">Спланироваться</a>
 			<? endif; ?>
 		</ul>

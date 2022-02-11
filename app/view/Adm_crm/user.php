@@ -79,6 +79,21 @@
                 <input type = 'date' id="bday" min="2016-08-14" max="2020-08-20" value = "<?= $date_format ?>" >
               </span>
             </div>
+
+	          <div class = 'row'>
+		          <strong>пол</strong>
+		          <div class="radio-wrap">
+			          <label for="male">Муж</label>
+			          <input <?= $user['sex'] === 'm' ? 'checked' : ''; ?>
+					          type=radio id='male' class="form-input" placeholder="Пол" name="sex" value="m"/>
+			          <label for="female">Жен</label>
+			          <input <?= $user['sex'] === 'f' ? 'checked' : ''; ?>
+					          type=radio id='female' class="form-input" placeholder="Пол" name="sex" value="f"/>
+		          </div>
+
+	          </div>
+
+
             <div class = 'row'>
               <strong></strong>
             </div>

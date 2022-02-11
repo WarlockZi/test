@@ -67,11 +67,11 @@
   }
 
   & > * {
-    border-bottom: 1px solid #5B626E;
+    border-bottom: 1px solid $color-grey-logo;
   }
 
   .logo_vitex {
-    background: $color-admin-sidebar;
+    background: 5b626e;
     padding: 25px 38px;
     position: relative;
     left: inherit;

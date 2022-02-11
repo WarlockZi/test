@@ -22,34 +22,31 @@ class User extends Model
 	public static function can($user, $right)
 	{
 		$user = App::$app->user->findOne($user['id']);
-		return in_array($right,explode(',',$user['rights']));
+		return in_array($right, explode(',', $user['rights']));
 	}
 
 	public function confirm($hash)
 	{
 		$sql = 'UPDATE users SET confirm= "1" WHERE hash = ?';
-		$params = [$hash];
 
-		if ($this->insertBySql($sql, $params)) {
+		if ($this->insertBySql($sql, [$hash])) {
 			$_SESSION['id'] = $this->autoincrement() - 1;
-			$this->user = App::$app->user->get($_SESSION['id']);
+			$this->user = App::$app->user->findOne($_SESSION['id']);
 
 			return "Вы успешно подтвердили свой E-mail.";
-		} else {
-			return "Не верный код подтверждения регистрации";
 		}
+		return "Не верный код подтверждения регистрации";
+
 	}
 
-	public
-	function getUserById($id)
+	public function findOne($id,$field ='')
 	{
-		$user = App::$app->user->find($id)[0];
+		$user = parent::findOne($id);
 		$user['rights'] = explode(',', $user['rights']);
 		return $user;
 	}
 
-	public
-	function getUserByEmail($email, $password)
+	public function getUserByEmail($email, $password)
 	{
 		$password = md5($password);
 
@@ -70,8 +67,7 @@ class User extends Model
 		return false;
 	}
 
-	public
-	function checkName($name)
+	public function checkName($name)
 	{
 		if (strlen($name) >= 2) {
 			return true;
@@ -79,8 +75,7 @@ class User extends Model
 		return false;
 	}
 
-	public
-	function checkPhone($phone)
+	public function checkPhone($phone)
 	{
 		if (strlen($phone) >= 10) {
 			return true;
@@ -89,8 +84,7 @@ class User extends Model
 	}
 
 
-	public
-	static function checkPassword($password)
+	public static function checkPassword($password)
 	{
 		if (strlen($password) >= 6) {
 			return true;
@@ -98,8 +92,7 @@ class User extends Model
 		return false;
 	}
 
-	public
-	static function checkEmail($email)
+	public static function checkEmail($email)
 	{
 		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			return true;
@@ -108,8 +101,7 @@ class User extends Model
 	}
 
 
-	public
-	function checkEmailExists($email)
+	public function checkEmailExists($email)
 	{
 		$res = $this->findOne($email, 'email');
 		if ($res) {
@@ -119,29 +111,26 @@ class User extends Model
 	}
 
 
-	public
-	function get($id)
-	{
-		$res = $this->findOne($id, 'id');
-		if ($res) {
-			$res['rights'] = explode(",", $res['rights']);
-			return $res;
-		}
-		return false;
-	}
+//	public function get($id)
+//	{
+//		$res = $this->findOne($id, 'id');
+//		if ($res) {
+//			$res['rights'] = explode(",", $res['rights']);
+//			return $res;
+//		}
+//		return false;
+//	}
 
-	public
-	function getRights()
-	{
-		$res = $this->findAll('user_rights');
-		if ($res) {
-			return $res;
-		}
-		return false;
-	}
+//	public function getRights()
+//	{
+//		$res = $this->findAll('user_rights');
+//		if ($res) {
+//			return $res;
+//		}
+//		return false;
+//	}
 
-	public
-	function getUserByHash($hash)
+	public function getUserByHash($hash)
 	{
 		$sql = "SELECT * FROM {$this->table} WHERE hash = ?";
 

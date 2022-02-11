@@ -13,14 +13,14 @@ import {_test} from "./model/test"
 import {_question} from "./model/question"
 import {_answer} from "./model/answer"
 import {sortable} from "../components/sortable"
-
-// import '../components/accordion/accordion'
-import '../Admin/components/main-menu/admin_main_menu'
+import WDSSelect from "../components/select/WDSSelect"
+import {accordion_show} from "./accordion_show";
 import showCustomMenu from "../components/accordion/customContextMenu/customMenu";
 
-import WDSSelect from "../components/select/WDSSelect"
+// import '../components/accordion/accordion'
+// import '../delete/main-menu/admin_main_menu'
 
-import {accordion_show} from "./accordion_show";
+
 
 export default function testEdit() {
 
