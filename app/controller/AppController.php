@@ -19,7 +19,7 @@ class AppController extends Controller
 		$this->isAjax();
 
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
-			$user = $this->user = App::$app->user->get($_SESSION['id']);
+			$user = $this->user = App::$app->user->findOne($_SESSION['id']);
 			if (!$user) $_SESSION['id']='';
 
 			if ($user['email'] === $_ENV['SU_EMAIL']) {
@@ -53,7 +53,7 @@ class AppController extends Controller
 			$_SESSION['back_url'] = $_SERVER['QUERY_STRING'];
 			exit();
 		} else {
-			$user = $this->user = App::$app->user->get($_SESSION['id']);
+			$user = $this->user = App::$app->user->findOne($_SESSION['id']);
 
 			if ($this->user === false) {
 				$errors[] = 'Неправильные данные для входа на сайт';
@@ -69,7 +69,7 @@ class AppController extends Controller
 	function auth(){
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
 
-			$user = $this->user = App::$app->user->get($_SESSION['id']);
+			$user = $this->user = App::$app->user->findOne($_SESSION['id']);
 
 			if ($this->user === false) {
 				$errors[] = 'Неправильные данные для входа на сайт';

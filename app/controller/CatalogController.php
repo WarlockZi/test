@@ -33,7 +33,7 @@ class CatalogController extends AppController {
 
       if (isset($_SESSION['id']) && $_SESSION['id']) {
          $id = $_SESSION['id'];
-         $user = App::$app->user->get($id);
+         $user = App::$app->user->findOne($id);
       }
       $canonical = $product['alias'];
       View::setMeta($product['title'], $product['description'], $product['keywords']);
@@ -46,7 +46,7 @@ class CatalogController extends AppController {
    public function actionCategory($category) {
 
       if (isset($_SESSION['id']) && $_SESSION['id']) {
-         $user = App::$app->user->get($_SESSION['id']);
+         $user = App::$app->user->findOne($_SESSION['id']);
 			$this->set(compact('user'));
       }
 

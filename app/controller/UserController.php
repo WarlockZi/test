@@ -96,9 +96,9 @@ class UserController extends AppController
 	{
 		$this->autorize();
 
-		$userId = $_SESSION['id'];
-		if ($userId) {
-			$user = App::$app->user->getUserById([$userId]);
+		if ($_SESSION['id']) {
+			$user = App::$app->user->findOne($_SESSION['id']);
+//			$user = App::$app->user->getUserById([$userId]);
 			$this->set(compact('user'));
 		}
 
@@ -217,7 +217,7 @@ class UserController extends AppController
 	public function actionEdit()
 	{
 		$this->autorize();
-		$user = App::$app->user->get($_SESSION['id']);
+		$user = App::$app->user->findOne($_SESSION['id']);
 		if ($data = $this->ajax) {
 
 			$user['name'] = $data['name'];
@@ -246,6 +246,32 @@ class UserController extends AppController
 	{
 		$this->autorize();
 		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
+	}
+
+	public function actionUpdate()
+	{
+		$this->autorize();
+		if ($data = $this->ajax) {
+			$user['id'] = $data['id'];
+			$user['confirm'] = $data['confirm'];
+			$user['email'] = $data['email'];
+			$user['surName'] = $data['surName'];
+			$user['name'] = $data['name'];
+			$user['middleName'] = $data['middleName'];
+			$user['sex'] = $data['sex'];
+
+			$date = strtotime($data['birthDate']);
+			$user['birthDate'] = date('Y-m-d', $date);
+
+			$user['phone'] = $data['phone'];
+			$user['rights'] = $data['rights'];
+
+
+			$user['phone'] = $data['phone'];
+
+			App::$app->user->update($user);
+			exit('ok');
+		}
 	}
 
 

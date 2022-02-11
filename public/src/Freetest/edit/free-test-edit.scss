@@ -405,8 +405,6 @@ box-shadow: 0 2px 4px 0 #607F7C;
 
 
 .num{
-  float: left;
-  clear: left;
   padding-right: 10px;
 }
 
@@ -441,7 +439,7 @@ box-shadow: 0 2px 4px 0 #607F7C;
   padding: 5px 10px;
   border: 1px solid #BBBBBB;
   background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(240, 240, 240,1) 100%);
-  box-shadow: 15px 11px 20px 2px #6a8784;
+  box-shadow: 1px 2px 4px 0px #6a8784;
   width: 60%;
   color: #4d4d4d;
 }
