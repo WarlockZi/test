@@ -141,7 +141,7 @@ class TestController Extends AppController
 		}
 	}
 
-	private static function saveResultToDB($post)
+	private static function saveResultToDB()
 	{
 		$testres['html'] = $_POST['pageCache'];
 		$testres['user'] = $_POST['userName'];
@@ -219,6 +219,8 @@ class TestController Extends AppController
 
 	public function actionDo()
 	{
+
+		$user = User::can('rest');
 		$pagination = '';
 		$testData = '';
 		$page_name = 'Прохождение тестов';
@@ -281,10 +283,10 @@ class TestController Extends AppController
 
 	public function actionTests()
 	{
-		exit(json_encode($this->Tests()));
+		exit(json_encode($this->isTest()));
 	}
 
-	private function Tests()
+	private function isTest()
 	{
 		return App::$app->test->findAllWhere('isTest', '1');
 	}
@@ -303,7 +305,7 @@ class TestController Extends AppController
 					$test['children'] = App::$app->test->getChildren($id);
 				}
 			}
-			$tests = $this->Tests();
+			$tests = $this->isTest();
 			$this->set(compact('tests'));
 
 			$testDataToEdit = App::$app->test->getTestData($id) ?? '';
