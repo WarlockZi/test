@@ -21,8 +21,8 @@ class User extends Model
 
 	public static function can($user, $right)
 	{
-		$user = App::$app->user->findOne($user['id']);
-		return in_array($right, explode(',', $user['rights']));
+//		$user = App::$app->user->findOne($user['id']);
+		return in_array($right, $user['rights']);
 	}
 
 	public function confirm($hash)

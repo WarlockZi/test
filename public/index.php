@@ -6,6 +6,7 @@ use app\core\App;
 session_start();
 
 require_once "../vendor/autoload.php";
+require_once "../engine/bootstrap.php";
 
 (Dotenv\Dotenv::createImmutable(dirname(__DIR__)))->load();
 

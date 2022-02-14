@@ -2,7 +2,9 @@
   "autoload": {
     "psr-4": {
       "Dotenv\\": "vendor/vlucas/phpdotenv/src",
-      "app\\": "app"
+      "app\\": "app",
+      "Engine\\": "engine",
+      "Engine\\DI\\": "engine/DI"
     }
   },
   "classmap": [

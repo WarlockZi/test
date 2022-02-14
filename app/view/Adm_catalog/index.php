@@ -17,7 +17,6 @@
 <div class="adm-content">
 
   <div class="breadcrumbs-adm">
-    <a href  = "/adminsc/index">Admin</a>
     <div>Каталог</div>
   </div>
 <section>

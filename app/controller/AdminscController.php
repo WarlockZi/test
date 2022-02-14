@@ -106,37 +106,6 @@ class AdminscController extends AppController
 
 		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
-
-	public function OreplaceUnderlinesDashesInURLS()
-	{
-
-		$sql = "UPDATE products "
-			. "SET durl = REPLACE(durl, '_','-')";
-		App::$app->product->insertBySql($sql, $params);
-
-		$sql = "UPDATE category "
-			. "SET name = REPLACE(name, '_','-')";
-
-		App::$app->product->insertBySql($sql, $params);
-
-		$sql = "UPDATE products "
-			. "SET durl = REPLACE(durl, '/catalog','')";
-
-		App::$app->product->insertBySql($sql, $params);
-
-		exit;
-	}
-
-	public function OFixPicNames()
-	{
-// уберем upload/iblock/ из dpic
-		$sql = "UPDATE products SET dpic = REPLACE(dpic, '/upload/iblock', '')";
-		App::$app->product->insertBySql($sql);
-// уберем upload/iblock/ из preview_pic
-		$sql = "UPDATE products SET preview_pic = REPLACE(preview_pic, '/upload/iblock', '')";
-		App::$app->product->insertBySql($sql);
-
-		header('settings');
-	}
-
 }
+
+

@@ -13,7 +13,6 @@
 </div>
 <div class="adm-content">
   <div class="breadcrumbs-adm">
-    <a href  = "/adminsc/index">Admin  ></a>
     <a href  = "/adminsc/catalog">Каталог  ></a>
 
     <? if (isset($category['parents'])): ?>

@@ -13,5 +13,7 @@ return array(
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src/PhpOption'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'GrahamCampbell\\ResultType\\' => array($vendorDir . '/graham-campbell/result-type/src'),
+    'Engine\\DI\\' => array($baseDir . '/engine/DI'),
+    'Engine\\' => array($baseDir . '/engine'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src', $vendorDir . '/vlucas/phpdotenv/src'),
 );
