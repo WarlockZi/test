@@ -25,17 +25,6 @@
 <!--        <hr>-->
         <div class="user-menu__menu">
             <a href="/user/edit">Изменить свой профиль</a>
-            <a href="/user/cabinet">Личный кабинет</a>
-
-            <? if (in_array('1', $user['rights']) || SU): ?>
-
-            <? endif; ?>
-
-
-            <?= in_array('employee', $user['rights']) || SU ? //3===employee
-                '<a href="/adminsc">Admin</a>' : ''; // Admin
-            ?>
-
 
             <a href="/user/logout" aria-label="logout">
 				<span class="icon-logout">

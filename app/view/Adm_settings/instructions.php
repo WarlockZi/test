@@ -2,7 +2,6 @@
 
 
   <div class="breadcrumbs-adm">
-    <a href  = "/adminsc">Admin</a>
     <a href  = "/adminsc/settings">Настройки</a>
     <div>Инструкции</div>
   </div>

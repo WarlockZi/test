@@ -52,7 +52,6 @@ class UserController extends AppController
 			}
 
 		}
-		View::setMeta('Регистрация', 'Регистрация', 'Регистрация');
 		View::setJs('auth.js');
 		View::setCss('auth.css');
 	}
@@ -96,16 +95,17 @@ class UserController extends AppController
 	{
 		$this->autorize();
 
-		if ($_SESSION['id']) {
-			$user = App::$app->user->findOne($_SESSION['id']);
-//			$user = App::$app->user->getUserById([$userId]);
-			$this->set(compact('user'));
+		if (!User::can($this->user, 'gate_admin')) {
+			if ($_SESSION['id']) {
+				$user = App::$app->user->findOne($_SESSION['id']);
+				$this->set(compact('user'));
+			}
+
+			View::setCss('auth.css');
+			View::setJs('auth.js');
+		} else {
+			header("Location:/adminsc");
 		}
-
-		View::setMeta('Личный кабинет', 'Личный кабинет', '');
-		View::setCss('auth.css');
-		View::setJs('auth.js');
-
 	}
 
 	public function actionChangePassword()
@@ -121,7 +121,6 @@ class UserController extends AppController
 			exit('fail');
 		}
 
-		View::setMeta('Личный кабинет', 'Личный кабинет', '');
 		View::setCss('auth.css');
 		View::setJs('auth.js');
 	}
@@ -180,7 +179,6 @@ class UserController extends AppController
 
 
 	public function actionLogin()
-
 	{
 		if ($data = $this->ajax) {
 			$email = (string)$data['email'];
@@ -188,7 +186,6 @@ class UserController extends AppController
 
 			if (!User::checkEmail($email)) {
 				$msg[] = "Неверный формат email";
-				$_SESSION['error'][] = "Неверный формат email";
 				exit(json_encode(["msg" => "Неверный формат email"]));
 			}
 
@@ -203,11 +200,11 @@ class UserController extends AppController
 				exit(json_encode(['msg' => 'not_registered']));
 			} elseif ($user['password'] !== $this->preparePassword($password)) {
 				exit('fail');
-			} else {// Если данные правильные, запоминаем пользователя (в сессию)
-				$user['rights'] = explode(",", $user['rights']);
-				$this->setAuth($user);
-				exit(json_encode(['msg' => 'ok']));
-			}
+			} // Если данные правильные, запоминаем пользователя (в сессию)
+			$user['rights'] = explode(",", $user['rights']);
+			$this->setAuth($user);
+			exit(json_encode(['msg' => 'ok']));
+
 		}
 		View::setJs('auth.js');
 		View::setCss('auth.css');

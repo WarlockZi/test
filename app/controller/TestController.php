@@ -219,34 +219,36 @@ class TestController Extends AppController
 
 	public function actionDo()
 	{
+		if (User::can($this->user, 'test-do_read')) {
 
-		$user = User::can('rest');
-		$pagination = '';
-		$testData = '';
-		$page_name = 'Прохождение тестов';
-		$this->set(compact('page_name'));
-		$testId = isset($this->route['alias']) ? (int)$this->route['alias'] : '';
-		$menuTestDo = $this->getMenu();
-		$this->set(compact('menuTestDo'));
+			$pagination = '';
+			$testData = '';
+			$page_name = 'Прохождение тестов';
+			$this->set(compact('page_name'));
+			$testId = isset($this->route['alias']) ? (int)$this->route['alias'] : '';
+			$menuTestDo = $this->getMenu();
+			$this->set(compact('menuTestDo'));
 
-		if ($testId) {
-			if (!$testData = App::$app->test->getTestData($testId, true)) {
-				$error = '<H1>Теста с таким номером нет.</H1>';
-				$this->set(compact('error'));
-			} else {
-				$test = App::$app->test->findOne($testId);
-				$this->set(compact('test'));
-				$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
-				unset($testData['correct_answers']);
-				$pagination = App::$app->test->pagination($testData, false, $test);
+			if ($testId) {
+				if (!$testData = App::$app->test->getTestData($testId, true)) {
+					$error = '<H1>Теста с таким номером нет.</H1>';
+					$this->set(compact('error'));
+				} else {
+					$test = App::$app->test->findOne($testId);
+					$this->set(compact('test'));
+					$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
+					unset($testData['correct_answers']);
+					$pagination = App::$app->test->pagination($testData, false, $test);
+				}
 			}
+
+			$this->set(compact('testData', 'pagination'));
+
+			$this->layout = 'admin';
+			View::setJs('admin.js');
+			View::setCss('admin.css');
 		}
-
-		$this->set(compact('testData', 'pagination'));
-
-		$this->layout = 'admin';
-		View::setJs('admin.js');
-		View::setCss('admin.css');
+		header('Location:/user/cabinet');
 	}
 
 	public function actionUpdate()
