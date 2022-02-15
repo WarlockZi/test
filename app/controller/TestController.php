@@ -261,6 +261,8 @@ class TestController Extends AppController
 		}
 		$this->layout = 'admin';
 		$this->view = 'edit_update';
+		$page_name = 'Редактирование тестов';
+		$this->set(compact('page_name'));
 
 		$id = $this->route['id'];
 		$test = App::$app->test->findOne($id);

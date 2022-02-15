@@ -4,6 +4,7 @@
   padding: 10px;
   display: flex;
   align-items: center;
+  justify-content: center;
   align-self: flex-start;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -11,6 +12,7 @@
   background-color: $color-main;
   color: white;
   margin-right: 10px;
+  min-width: 102px;
 
   &:hover {
     background-color: white;

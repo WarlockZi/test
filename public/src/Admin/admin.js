@@ -7,6 +7,7 @@ import '../components/accordion/accordion'
 import testResults from '../Test/test_results/test_results'
 import testEdit from '../Test/test-edit'
 import testDo from '../Test/do'
+import testUpdate from '../Test/test-update'
 import settings from './Settings/settings'
 import rights from './Rights/rights'
 import planning from './Planning/planning'
@@ -54,9 +55,12 @@ function navigate(str) {
       $("[href='/adminsc/planning']").addClass('current')
       break;
 
-    case /\/adminsc\/test\/edit/.test(str):
     case /\/adminsc\/test\/update/.test(str):
+      testUpdate()
+      break;
+
     // case /\/adminsc\/test\/pathshow/.test(str):
+    case /\/adminsc\/test\/edit/.test(str):
     case /\/adminsc\/test\/show/.test(str):
       testEdit()
       $("[href='/adminsc/test/edit']").addClass('current')

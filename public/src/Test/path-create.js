@@ -1,4 +1,4 @@
-import './show.scss'
+import './test-update.scss'
 import {$} from '../common'
 import {_test} from './model/test'
 

@@ -24,7 +24,7 @@
   display: inline-block;
   position: relative;
   margin: 10px 0px;
-  width: 200px;
+  min-width: 200px;
   background-color: $color-gray1;
 
   &:focus-visible{
