@@ -1,4 +1,5 @@
 @import "../../var";
+@import "../../mixin_media";
 
 .custom-select-container,
 .custom-select-value,
@@ -11,10 +12,9 @@
   position: absolute;
   top: 0;
   left: 0px;
-  font: 400 14px Arial, Serif;
-  color: #6ca3fe;
-  //margin: 10px 0px;
-  //width: 200px;
+
+  @include _h4;
+
 
   &:focus-visible{
     outline: 1px solid $color-gray5;

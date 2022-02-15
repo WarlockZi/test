@@ -334,6 +334,11 @@
   margin-left: clamp(10px, 20%, 50px);
 }
 
+.test-name {
+  margin: $marginY-element;
+  @include _h2;
+
+}
 
 .test-edit__title {
   display: flex;
@@ -341,13 +346,7 @@
   position: relative;
   margin: 0px 0 0px 2px;
 
-  .test-name {
-    text-transform: uppercase;
-    font-weight: 800;
-    margin: 0 10px 2rem 0;
-    color: #36393e;
-    font-size: 1rem;
-  }
+
 
   .test-edit__test-settings {
     padding: 7px 8px;
