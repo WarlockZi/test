@@ -5,13 +5,13 @@ $gamburger = include ROOT . '/app/view/components/icons/gamburger.svg';
 <li <?= $isTest ? 'class="vert-menu__list"' : ''; ?>>
 
 <a class="test-edit-menu__params <?=$isTest?'path':'test'?>"
-   href="/adminsc/test/edit/<?=$cat['id'];?>"
+   href="/adminsc/test/update/<?=$cat['id'];?>"
    data-testid="<?=$cat['id'];?>">
 	<?= $gamburger ?>
 </a>
 
 <a class="test-edit-menu__test-name <?=$isTest?'path':'test'?>"
- href=<?= isset($cat['childs']) ? "#" : "/adminsc/test/edit/" . $cat['id'] ?>
+ href=<?= isset($cat['childs']) ? "#" : "/adminsc/test/update/" . $cat['id'] ?>
 >
 	<?= $cat['test_name'] ?>
 </a>

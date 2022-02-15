@@ -16,6 +16,7 @@ class Accordion extends Model
 	protected $sql = "SELECT * FROM test";
 	protected $label_after = '';
 	protected $link = '/adminsc/test/';
+	protected $link_label_after = '/adminsc/test/update/';
 
 
 	public function __construct($options = [])
@@ -49,7 +50,7 @@ class Accordion extends Model
 	protected function lable_after($item)
 	{
 		if ($this->label_after) {
-			return "<a class='update' href='{$this->link}{$item['id']}'>" .
+			return "<a class='update' href='{$this->link_label_after}{$item['id']}'>" .
 				"{$this->icon()}" .
 				"</a>";
 		}

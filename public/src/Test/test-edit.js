@@ -3,7 +3,7 @@ import '../components/footer/footer.scss'
 import './test-edit.scss'
 import './test-edit-menu.scss'
 import './test'
-import './show'
+import './test-update'
 import '../Admin/admin'
 
 import '../components/popup.scss'

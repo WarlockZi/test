@@ -13,13 +13,6 @@
     display: flex;
     flex-flow: column;
 
-    .test-name {
-      color: #5e5e5e;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 1.5rem;
-      margin: 7px 0 20px 0;
-    }
   }
 }
 
@@ -33,12 +26,6 @@ a:hover,
   cursor: pointer;
 }
 
-.test-name{
-  font-size: 2rem;
-  width: 100%;
-  text-transform: uppercase;
-  margin-top: 22px;
-}
 
 .question{
   display: none;

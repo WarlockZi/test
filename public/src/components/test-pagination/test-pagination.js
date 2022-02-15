@@ -10,6 +10,7 @@ $('[data-pagination]:first-child').addClass('nav-active')
 //// add question
 $('.pagination').on('click', function (e) {
     if (e.target.classList.contains('add-question')) {
+        debugger
         show()
         return
     }
