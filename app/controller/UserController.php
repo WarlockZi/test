@@ -249,24 +249,22 @@ class UserController extends AppController
 	{
 		$this->autorize();
 		if ($data = $this->ajax) {
-			$user['id'] = $data['id'];
-			$user['confirm'] = $data['confirm'];
-			$user['email'] = $data['email'];
-			$user['surName'] = $data['surName'];
-			$user['name'] = $data['name'];
-			$user['middleName'] = $data['middleName'];
-			$user['sex'] = $data['sex'];
-
 			$date = strtotime($data['birthDate']);
-			$user['birthDate'] = date('Y-m-d', $date);
+			$data['birthDate'] = date('Y-m-d', $date);
+//			$user['birthDate'] =
+//
+//			$user['id'] = $data['id'];
+//			$user['confirm'] = $data['confirm'];
+//			$user['email'] = $data['email'];
+//			$user['surName'] = $data['surName'];
+//			$user['name'] = $data['name'];
+//			$user['middleName'] = $data['middleName'];
+//			$user['sex'] = $data['sex'];
+//			$user['phone'] = $data['phone'];
+//			$user['rights'] = $data['rights'];
+//			$user['phone'] = $data['phone'];
 
-			$user['phone'] = $data['phone'];
-			$user['rights'] = $data['rights'];
-
-
-			$user['phone'] = $data['phone'];
-
-			App::$app->user->update($user);
+			App::$app->user->update($data);
 			exit('ok');
 		}
 	}
