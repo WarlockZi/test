@@ -25,6 +25,10 @@
 <!--        <hr>-->
         <div class="user-menu__menu">
             <a href="/user/edit">Изменить свой профиль</a>
+	        <?=in_array('gate_admin', $user['rights'])?
+            "<a href='/adminsc'>Admin</a>"
+	        :""
+	        ;?>
 
             <a href="/user/logout" aria-label="logout">
 				<span class="icon-logout">

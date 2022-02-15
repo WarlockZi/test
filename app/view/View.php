@@ -17,7 +17,6 @@ class View
 		if ($layout === false) {
 			$this->layout = false;
 		} else {
-
 			$this->layout = $layout ?: ''; //LAYOUT;
 		}
 		$this->view = $view;

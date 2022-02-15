@@ -247,8 +247,10 @@ class TestController Extends AppController
 			$this->layout = 'admin';
 			View::setJs('admin.js');
 			View::setCss('admin.css');
-		}
+		}else{
 		header('Location:/user/cabinet');
+
+		}
 	}
 
 	public function actionUpdate()
