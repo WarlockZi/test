@@ -3,8 +3,6 @@
 namespace app\view\widgets\Accordion;
 
 use app\model\Model;
-use app\core\DB;
-use app\core\App;
 
 class Accordion extends Model
 {
