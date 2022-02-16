@@ -44,7 +44,7 @@ export let _question = {
     let el = event.target
     let tip = document.createElement("div")
 
-    if (action === 'save') {
+    if (action === 'save.svg') {
       addTooltip(el, 'сохранить')
     }
   },

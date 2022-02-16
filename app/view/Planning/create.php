@@ -11,10 +11,10 @@
 		<div class="num">1</div>
 		<div class="function" contenteditable="">Отгрузка</div>
 		<div class="Save">
-			<?include ICONS.'/save.php'?>
+			<? include ICONS . '/save.svg' ?>
 		</div>
 		<div class="Delete">
-			<?include ICONS.'/trashIcon.php'?>
+			<? include ICONS . '/trashIcon.svg' ?>
 
 		</div>
 	</div>
