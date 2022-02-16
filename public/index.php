@@ -14,8 +14,9 @@ error_reporting(E_ALL);
 define('DEV', $_ENV['MODE'] === 'development'); //0-не выводить ошибки
 define('ROOT', dirname(__DIR__));
 define('ICONS', ROOT.'/app/view/components/icons');
-define('TRASH', ROOT.'/app/view/components/icons/trashIcon.php');
-define('SAVE', ROOT.'/app/view/components/icons/save.php');
+define('TRASH', ROOT.'/app/view/components/icons/trashIcon.svg');
+define('SAVE', ROOT.'/app/view/components/icons/save.svg');
+define('EDIT', ROOT.'/app/view/components/icons/edit.svg');
 define('COMPONENTS', ROOT.'/app/view/components');
 
 if (DEV) {

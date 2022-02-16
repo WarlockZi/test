@@ -15,10 +15,6 @@ import {_answer} from "./model/answer"
 import {sortable} from "../components/sortable"
 import WDSSelect from "../components/select/WDSSelect"
 import {accordion_show} from "./accordion_show";
-import showCustomMenu from "../components/accordion/customContextMenu/customMenu";
-
-// import '../components/accordion/accordion'
-// import '../delete/main-menu/admin_main_menu'
 
 
 

@@ -1,8 +1,9 @@
 import './admin.scss'
-// import '../delete/main-menu/admin_main_menu'
 
 import '../components/header/header-adm'
 import '../components/accordion/accordion'
+import "./model/cache";
+import {$} from "../common";
 
 import testResults from '../Test/test_results/test_results'
 import testEdit from '../Test/test-edit'
@@ -12,12 +13,7 @@ import settings from './Settings/settings'
 import rights from './Rights/rights'
 import planning from './Planning/planning'
 import user from './CRM/user'
-
-
-import "./model/cache";
-
-import {$} from "../common";
-
+import users from './CRM/users'
 
 navigate(window.location.pathname)
 
@@ -38,8 +34,12 @@ function navigate(str) {
       $("[href='/adminsc/crm/testresults']").addClass('current')
       break;
 
-    case /\/adminsc\/crm\/user/.test(str):
+    case /\/adminsc\/crm\/user$/.test(str):
       user()
+      break;
+
+    case /\/adminsc\/crm\/users/.test(str):
+      users()
       break;
 
     case /\/adminsc\/crm/.test(str):
@@ -72,7 +72,7 @@ function navigate(str) {
       break;
 
     default:
-      $("[href='/']").addClass('current')
+      $("[href='/house']").addClass('current')
       break;
   }
 }

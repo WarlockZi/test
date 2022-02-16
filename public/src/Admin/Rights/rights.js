@@ -7,7 +7,7 @@ export default function rights() {
 
   function handle(e) {
     if (e.target.closest('.del')) del(e.target.closest('.del'))
-    if (e.target.closest('.save')) save(e.target.closest('.save'))
+    if (e.target.closest('.save.svg')) save(e.target.closest('.save.svg'))
 
     function model(el) {
       let dataId = el.dataset.id ?? 'new'
@@ -26,7 +26,7 @@ export default function rights() {
         } else if (f.classList.contains('description')) {
           model.description = f
           model.toServ.description = f.innerText.trim()
-        } else if (f.classList.contains('save')) {
+        } else if (f.classList.contains('save.svg')) {
           model.save = f
         } else if (f.classList.contains('del')) {
           model.del = f

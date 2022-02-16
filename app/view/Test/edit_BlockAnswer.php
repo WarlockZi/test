@@ -5,7 +5,7 @@
 <div class="answer__text" contenteditable="true">
 	<?= isset($a)?$a['answer_text']:''; ?>
 </div>
-<div class="answer__delete"><? include ICONS.'/trashIcon.php'; ?></div>
+<div class="answer__delete"><? include ICONS . '/trashIcon.svg'; ?></div>
 
 </div>
 
