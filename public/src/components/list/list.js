@@ -1,13 +1,13 @@
 import './list.scss';
 import {$} from '../../common';
 
-export default function list(selector){
+export default function list(selector) {
 
-  const table = $('table.list')[0]
-  // const table = $(selector)[0]
-  const headers = $('th')
-  const tableBody = $('tbody')[0]
-  const rows = $('tbody tr')
+  const table = $('table.custom-list ')[0]
+  const headers = table.querySelectorAll('th')
+  const inputs = table.querySelectorAll('th input')
+  const tableBody = table.querySelectorAll('tbody')[0]
+  const rows = table.querySelectorAll('tbody tr')
 
   // Направление сортировки
   const directions = Array.from(headers).map(function (header) {
@@ -26,6 +26,21 @@ export default function list(selector){
         return content
     }
   };
+  const search = function (index, input) {
+
+    [].forEach.call(rows, function (row) {
+
+      const value = input.value
+      const str = row.querySelectorAll('td')[index].innerText
+      const regexp = new RegExp(`${value}`, 'g')
+
+      if (!str.match(regexp)) {
+        row.classList.add('none')
+      }
+
+    }).bind(input);
+  };
+
 
   const sortColumn = function (index) {
     // Получить текущее направление
@@ -67,10 +82,23 @@ export default function list(selector){
     });
   };
 
+  // [].forEach.call(inputs, function (input, index) {
+  //   input.addEventListener('change', function (e) {
+  //     search(index,input)
+  //   })
+  // });
+
   [].forEach.call(headers, function (header, index) {
-    header.addEventListener('click', function () {
-      sortColumn(index)
+    header.addEventListener('click', function (e) {
+      if (!e.target.tagName.toLowerCase() === 'input') sortColumn(index)
     })
+    const input = header.querySelector('input')
+    if (input){
+      input.addEventListener('change', function () {
+          search(index,input)
+      })
+    }
+
   })
 
 }

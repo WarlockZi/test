@@ -1,0 +1,43 @@
+@import "../../var";
+
+.custom-list {
+  text-align: left;
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    padding: 2px 5px;
+    background-color: #5b626e;
+    color: #fff;
+    font-weight: normal;
+    border-right: 1px solid $color-gray4;
+    box-sizing: border-box;
+
+    &.edit,
+    &.del {
+      text-align: center;
+
+      svg {
+        stroke: white;
+        stroke-width: 2px;
+      }
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  td {
+    box-sizing: border-box;
+    border-bottom: 1px solid $color-gray4;
+    background-color: #ffffff;
+    padding: 2px 5px;
+
+    &.edit,
+    &.del {
+      text-align: center;
+    }
+
+  }
+}
