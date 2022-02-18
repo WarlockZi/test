@@ -23,8 +23,12 @@
     padding: 8px 3px 8px;
     //background: url("../icons/edit.svg") no-repeat;
 
-    & svg:hover {
-      stroke: $color-main;
+    & svg {
+      stroke: #ffffff;
+
+      &:hover {
+        stroke: $color-main;
+      }
     }
 
 
@@ -162,39 +166,41 @@
   ul label::before {
     left: $item-padding-S * 2;
   }
+
   ul label::after,
   ul a::after {
     left: ($item-padding-S * 3) + 16px;
   }
 
 
-
   ul ul label,
   ul ul a {
     padding-left: ($item-padding-S * 5) + 40px;
   }
+
   ul ul label::before {
     left: $item-padding-S * 3;
   }
+
   ul ul label::after,
   ul ul a::after {
     left: ($item-padding-S * 4) + 40px;
   }
 
 
-
   ul ul ul label,
   ul ul ul a {
     padding-left: ($item-padding-S * 6) + 10px;
   }
+
   ul ul ul label::before {
     left: $item-padding-S * 4;
   }
+
   ul ul ul label::after,
   ul ul ul a::after {
     left: ($item-padding-S * 5) + 10px;
   }
-
 
 
   @include MQ(M) {

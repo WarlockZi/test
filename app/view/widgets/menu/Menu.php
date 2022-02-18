@@ -3,8 +3,6 @@
 namespace app\view\widgets\menu;
 
 use app\model\Model;
-use app\core\DB;
-use app\core\App;
 
 class Menu extends Model {
 
