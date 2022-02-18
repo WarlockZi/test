@@ -64,10 +64,6 @@ class UserController extends AppController
 		return $template;
 	}
 
-	public function actionUnsubscribe()
-	{
-		exit('unsubscribed');
-	}
 
 	public function actionLogout()
 	{
@@ -81,12 +77,8 @@ class UserController extends AppController
 	public function actionConfirm()
 	{
 		$hash = $_GET['hash'];
-		if (!$hash) {
-			header('Location:/');
-		}
-		if (!App::$app->user->confirm($hash)) {
-			exit('Не удалось подтвердить почту');
-		};
+		if (!$hash) header('Location:/');
+		if (!App::$app->user->confirm($hash)) exit('Не удалось подтвердить почту');
 		header('Location:/user/cabinet');
 		exit();
 	}
@@ -251,18 +243,6 @@ class UserController extends AppController
 		if ($data = $this->ajax) {
 			$date = strtotime($data['birthDate']);
 			$data['birthDate'] = date('Y-m-d', $date);
-//			$user['birthDate'] =
-//
-//			$user['id'] = $data['id'];
-//			$user['confirm'] = $data['confirm'];
-//			$user['email'] = $data['email'];
-//			$user['surName'] = $data['surName'];
-//			$user['name'] = $data['name'];
-//			$user['middleName'] = $data['middleName'];
-//			$user['sex'] = $data['sex'];
-//			$user['phone'] = $data['phone'];
-//			$user['rights'] = $data['rights'];
-//			$user['phone'] = $data['phone'];
 
 			App::$app->user->update($data);
 			exit('ok');

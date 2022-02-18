@@ -3,11 +3,12 @@ import {$} from '../../common';
 
 export default function list(selector) {
 
-  const table = $('table.custom-list ')[0]
-  const headers = table.querySelectorAll('th')
-  const inputs = table.querySelectorAll('th input')
+  const table = $('.custom-list')[0]
+  const headers = table.querySelectorAll('.head')
+  const inputs = table.querySelectorAll('.head input')
   const tableBody = table.querySelectorAll('tbody')[0]
-  const rows = table.querySelectorAll('tbody tr')
+  const rows = table.querySelectorAll('td')
+  const rowsa = table.querySelectorAll('[row]')
 
   // Направление сортировки
   const directions = Array.from(headers).map(function (header) {
@@ -15,7 +16,7 @@ export default function list(selector) {
   });
 
   // Преобразовать содержимое данной ячейки в заданном столбце
-  const transform = function (index, content) {
+  function transform(index, content) {
     // Получить тип данных столбца
     const type = headers[index].getAttribute('data-type')
     switch (type) {
@@ -26,23 +27,32 @@ export default function list(selector) {
         return content
     }
   };
-  const search = function (index, input) {
+
+  function showAllRows() {
+    [].forEach.call(rows, (row) => {
+      row.classList.remove('none')
+    })
+  }
+
+  function search(index, input) {
+    showAllRows()
+    const value = input.value;
+
+    [].forEach.call(inputs, (inp) => {
+      if (inp !== input) inp.value = ''
+    });
 
     [].forEach.call(rows, function (row) {
-
-      const value = input.value
       const str = row.querySelectorAll('td')[index].innerText
-      const regexp = new RegExp(`${value}`, 'g')
-
+      const regexp = new RegExp(`${value}`, 'gi')
       if (!str.match(regexp)) {
         row.classList.add('none')
       }
-
-    }).bind(input);
+    });
   };
 
 
-  const sortColumn = function (index) {
+  function sortColumn(index) {
     // Получить текущее направление
     const direction = directions[index] || 'asc'
 
@@ -82,22 +92,21 @@ export default function list(selector) {
     });
   };
 
-  // [].forEach.call(inputs, function (input, index) {
-  //   input.addEventListener('change', function (e) {
-  //     search(index,input)
-  //   })
-  // });
 
   [].forEach.call(headers, function (header, index) {
     header.addEventListener('click', function (e) {
-      if (!e.target.tagName.toLowerCase() === 'input') sortColumn(index)
+      if (e.target.matches('th')) {
+        sortColumn(index)
+      }
     })
     const input = header.querySelector('input')
-    if (input){
-      input.addEventListener('change', function () {
-          search(index,input)
+    if (input) {
+      input.addEventListener('keyup', function (e) {
+        e.stopPropagation()
+        search(index, input)
       })
     }
+
 
   })
 
