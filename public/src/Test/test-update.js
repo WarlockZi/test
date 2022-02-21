@@ -2,11 +2,11 @@ import './test-update.scss'
 import {$} from '../common'
 import {_test} from './model/test'
 import WDSSelect from "../components/select/WDSSelect"
-import {accordion_show} from "./accordion_show";
+import accordionShow from "./accordion-show";
 
 export default function testUpdate() {
 
-  accordion_show()
+  accordionShow()
 
   let parentSelect = new WDSSelect({
     element: $("[data-custom-parent]")[0],

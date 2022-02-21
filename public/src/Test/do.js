@@ -7,20 +7,11 @@ import '../components/cookie/cookie'
 import {_test} from "./model/test"
 import {post, $, fetchW} from '../common'
 import {navInit} from '../components/test-pagination/test-pagination'
-import {accordion_show} from "./accordion_show";
+import accordionShow from "./accordion-show";
 
 export default function testDo() {
 
-  accordion_show()
-
-  // $('.test-do__menu-slider').on('click', toggleMenu)
-
-  // function toggleMenu(e) {
-  //   let toggler = e.target
-  //   let togglerParent = toggler.closest('.test-do__menu-slider')
-  //   let menu = $(togglerParent).find('.menu')
-  //   menu.classList.toggle('menu-open')
-  // }
+  accordionShow()
 
 //Скрыть все вопросы
   $('.question').removeClass("flex1")

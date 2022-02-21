@@ -90,7 +90,7 @@ export const _test = {
     return {
       id: +window.location.href.split('/').pop(),
       test_name: $('#test_name').text(),
-      enable: $('#enable').el[0],
+      enable: $('#enable')[0],
       parent: $('select').selectedIndexValue(),
     }
   },
@@ -170,7 +170,7 @@ export const _test = {
     }
 
     let viewModel = _test.viewModel()
-    viewModel.enable.checked = false
+    // viewModel.enable.checked = false
     let serverModel = _test.serverModel()
     let res = await post('/test/delete', {
       test: serverModel
