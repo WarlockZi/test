@@ -49,6 +49,10 @@ class TestController Extends AppController
 		$this->view = 'edit_show';
 		$page_name = 'Создание папки';
 		$this->set(compact('page_name'));
+
+		$paths = $this->paths();
+		$this->set(compact('paths'));
+
 		$test['isTest'] = 0;
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 		$this->set(compact('rootTests', 'test'));

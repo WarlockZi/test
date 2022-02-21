@@ -15,6 +15,7 @@
 				],
 				'fio' => [
 					'className' => 'fio',
+					'concat'=>['surName','name','middleName',],
 					'name' => 'фио',
 					'width' => '1fr',
 					'sort' => true,

@@ -35,9 +35,7 @@ class CustomList
 
 	protected function run()
 	{
-
 		$this->gridTemplate();
-//		$this->head();
 
 		return $this->template();
 	}
@@ -46,35 +44,43 @@ class CustomList
 	{
 		foreach ($this->columns as $k => $v) {
 			$this->grid .= ' ' . $v['width'] ?? ' 1fr';
+//			if (isset($v['concat'])) {
+//				$v['concat'] = $this->concatArray($v['concat']);
+//
+//			}
 		}
 		$this->grid .= $this->editCol ? ' 50px' : '';
 		$this->grid .= $this->delCol ? ' 50px' : '';
 	}
 
-//	protected function head()
+	protected function concatArray(array $column, array $model): string
+	{
+		foreach ($column['concat'] as $v){
+		$initValue = '';
+			$initValue .= $model[$v].' ';
+		}
+		return trim($initValue);
+	}
+
+//	protected function edit()
+//	{
+//
+/*		return "<th class='edit'><?i nclude EDIT?></th>";*/
+//	}
+//
+//	protected function del()
 //	{
 //		ob_start();
-//		return ob_get_contents();
-//	}
-	protected function edit()
-	{
-//		ob_start();
-//		include EDIT;
+//		include TRASH;
 //		$svg = ob_get_contents();
-		return "<th class='edit'><?include EDIT?></th>";
-	}
-	protected function del()
-	{
-		ob_start();
-		include TRASH;
-		$svg = ob_get_contents();
-		return "<th class='del'>{$svg}</th>";
-	}
+//		return "<th class='del'>{$svg}</th>";
+//	}
+
 	protected function template()
 	{
 		ob_start();
-		include ROOT . '/app/view/components/CustomList/template.php';
-		$t= ob_get_contents();
+		include ROOT . '/app/view/components/CustomList/CustomListTemplate.php';
+		$t = ob_get_contents();
 		return $t;
 	}
 

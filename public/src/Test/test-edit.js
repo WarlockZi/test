@@ -14,13 +14,11 @@ import {_question} from "./model/question"
 import {_answer} from "./model/answer"
 import {sortable} from "../components/sortable"
 import WDSSelect from "../components/select/WDSSelect"
-import {accordion_show} from "./accordion_show";
-
-
+import accordionShow from "./accordion-show";
 
 export default function testEdit() {
 
-  accordion_show()
+  accordionShow()
 
   let parentSelect = new WDSSelect({
     element: $("[data-custom-parent]")[0],

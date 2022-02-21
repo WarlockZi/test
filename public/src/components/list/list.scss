@@ -5,6 +5,29 @@
   width: 100%;
   border-collapse: collapse;
 
+  .edit:hover {
+    background-color: $color-main;
+
+    svg {
+      stroke: #ffffff;
+    }
+  }
+
+  .del:hover {
+    background-color: $color-warning;
+
+    svg {
+      stroke: #ffffff;
+    }
+  }
+
+  .edit,
+  .del {
+    justify-content: center;
+    display: flex;
+    cursor: pointer;
+  }
+
   .head {
     padding: 2px 5px;
     background-color: #5b626e;
@@ -16,7 +39,10 @@
     input {
       position: relative;
       margin: 0 10px;
-      width: 20px;
+      width: 40px;
+      padding-left: 5px;
+      border-radius: 2px;
+      border: none;
       transition: width 300ms ease-in-out;
 
       &:focus {
@@ -34,6 +60,11 @@
     &.del {
       text-align: center;
 
+      &:hover{
+        background-color: #5b626e;
+
+      }
+
       svg {
         stroke: white;
         stroke-width: 2px;
@@ -45,34 +76,4 @@
     }
   }
 
-  td {
-    box-sizing: border-box;
-    border-bottom: 1px solid $color-gray4;
-    background-color: #ffffff;
-    padding: 2px 5px;
-
-    &.edit:hover {
-      background-color: $color-main;
-
-      svg {
-        stroke: #ffffff;
-      }
-    }
-
-    &.del:hover {
-      background-color: $color-warning;
-
-      svg {
-        stroke: #ffffff;
-      }
-    }
-
-    &.edit,
-    &.del {
-      text-align: center;
-      width: 40px;
-      cursor: pointer;
-    }
-
-  }
 }

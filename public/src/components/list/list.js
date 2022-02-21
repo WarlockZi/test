@@ -6,7 +6,7 @@ export default function list(selector) {
   const table = $('.custom-list')[0]
   const headers = table.querySelectorAll('.head')
   const inputs = table.querySelectorAll('.head input')
-  const tableBody = table.querySelectorAll('tbody')[0]
+  const tableBody = table.querySelectorAll('(not).head')[0]
   const rows = table.querySelectorAll('td')
   const rowsa = table.querySelectorAll('[row]')
 
