@@ -197,7 +197,7 @@ here;
 	{
 		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
 		$item = $this->pdo->query($sql, [$value]);
-		return $item[0];
+		return $item[0]??null;
 	}
 
 	public

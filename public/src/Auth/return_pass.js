@@ -4,13 +4,13 @@ import "../components/popup.scss"
 $('.returnpass').on('click', async function (e) {
     let email = $('input[type="email"]').el[0].value
     let res = await post(
-        '/user/returnpass',
+        '/auth/returnpass',
         {email: email}
     )
     res = await JSON.parse(res)
     if (res) {
         popup.show(res.msg, function () {
-            window.location = '/user/login'
+            window.location = '/auth/login'
         })
     }
 

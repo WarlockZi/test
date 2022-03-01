@@ -2,8 +2,7 @@
 
 namespace app\model;
 
-use app\core\App;
-use  \PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class Mail
 {

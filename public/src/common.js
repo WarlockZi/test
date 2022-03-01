@@ -141,10 +141,6 @@ class ElementCollection extends Array  {
         })})
     }
   }
-  // on = function (ev, f) {
-  //   if (!this.length) return
-  //     this.forEach((s) => s.addEventListener(ev, f, true))
-  // }
 
   value = function () {
     return this[0].getAttribute('value')
@@ -199,14 +195,12 @@ class ElementCollection extends Array  {
   append = function (el) {
     this[0].appendChild(el)
   }
-  find = function (selector) {
-    // if (["[object HTMLDivElement]", "[object HTMLInputElement]", "[object HTMLLIElement]"].includes(elType)) {
-    //   return this.querySelector(selector)
-    // }
-    // if (["[object NodeList]", "[object Array]"].includes(elType)) {
-      return this[0].querySelector(selector)
 
+  find = function (selector) {
+      return this[0].querySelector(selector)
   }
+
+
   css = function (attr, val) {
     if (!val) {
       return this[0].style[attr]

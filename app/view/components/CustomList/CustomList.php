@@ -6,13 +6,14 @@ namespace app\view\components\CustomList;
 
 class CustomList
 {
-	private $model = [];
-	private $tableClassName = '';
 	private $columns = [];
-	private $searchStr = ' <input type="text">';
 	private $editCol = false;
 	private $delCol = false;
 	private $grid = 'grid-template-columns:';
+	private $models = [];
+	private $modelName = '';
+	private $tableClassName = '';
+	private $searchStr = ' <input type="text">';
 	private $template = '';
 	private $header = '';
 
@@ -20,6 +21,7 @@ class CustomList
 	public function __construct($options)
 	{
 		$this->getOptions($options);
+//		$this->prepareColumns();
 		$this->run();
 
 	}
@@ -42,39 +44,28 @@ class CustomList
 
 	protected function gridTemplate(): void
 	{
-		foreach ($this->columns as $k => $v) {
-			$this->grid .= ' ' . $v['width'] ?? ' 1fr';
-//			if (isset($v['concat'])) {
-//				$v['concat'] = $this->concatArray($v['concat']);
-//
-//			}
+		foreach ($this->columns as $colName => $data) {
+			$this->grid .= ' ' . $data['width'] ?? ' 1fr';
+
 		}
 		$this->grid .= $this->editCol ? ' 50px' : '';
 		$this->grid .= $this->delCol ? ' 50px' : '';
 	}
 
-	protected function concatArray(array $column, array $model): string
+	protected function prepareData(array $column, array $model): string
 	{
-		foreach ($column['concat'] as $v){
-		$initValue = '';
-			$initValue .= $model[$v].' ';
+
+		if (isset($column['concat'])) {
+			$initValue = '';
+			foreach ($column['concat'] as $v) {
+				$initValue .= trim($model[$v]) . ' ';
+			}
+			return trim($initValue);
 		}
-		return trim($initValue);
+
+		return $model[$column['field']];
 	}
 
-//	protected function edit()
-//	{
-//
-/*		return "<th class='edit'><?i nclude EDIT?></th>";*/
-//	}
-//
-//	protected function del()
-//	{
-//		ob_start();
-//		include TRASH;
-//		$svg = ob_get_contents();
-//		return "<th class='del'>{$svg}</th>";
-//	}
 
 	protected function template()
 	{

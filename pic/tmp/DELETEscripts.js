@@ -714,7 +714,7 @@ window.onload = function () {
          formData.append('email', email);
          formData.append('password', password);
          formData.append('token', token);
-         xhr.open('POST', PROJ + '/user/login', true);
+         xhr.open('POST', '/auth/login', true);
          xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
          xhr.send(formData);
          xhr.onreadystatechange = function () {
@@ -748,7 +748,7 @@ window.onload = function () {
 
             }
             else {
-               window.location.href = PROJ + "/user/cabinet";
+               window.location.href = "/auth/cabinet";
             }
 
 
@@ -780,7 +780,7 @@ window.onload = function () {
       formData.append('name', name);
       formData.append('secName', secName);
       formData.append('token', token);
-      xhr.open('POST', PROJ + '/user/register', true);
+      xhr.open('POST', '/auth/register', true);
       xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
       xhr.send(formData);
       xhr.onreadystatechange = function (res) {

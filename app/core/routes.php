@@ -2,6 +2,8 @@
 
 use app\core\Router;
 
+//Router::add('^adminsc\/user\/?(?<action>[a-z0-9]+)\/?(?<id>[0-9]+)$', ['controller' => 'User']);
+Router::add('^adminsc\/user\/?(?<action>[a-zA-Z]+)?\/?(?<id>[0-9]+)?$', ['controller' => 'User']);
 Router::add('^.?search.?', ['controller' => 'search', 'action' => 'index']); // fw/ -> main/index
 
 //Router::add('^/(?P<action>[a-z]+)/(?P<alias>[0-9]+)$', ['controller' => 'Test']);
@@ -17,7 +19,7 @@ Router::add('^test\/result\/(?P<cache>[0-9]+)$', ['controller' => 'Test' , 'acti
 Router::add('^question\/(?<action>[a-z]+)$', ['controller' => 'Question']);
 Router::add('^answer\/(?<action>[a-z]+)$', ['controller' => 'Answer']);
 
-Router::add('^user\/?(?<action>[a-z0-9]+)$', ['controller' => 'User']);
+Router::add('^auth\/?(?<action>[a-z0-9]+)\/?(?<id>[0-9]+)$', ['controller' => 'Auth']);
 
 Router::add('^adminsc\/product\/edit\/(?P<id>[0-9]+)$', ['controller' => 'Adminsc', 'action' => 'ProductEdit']);
 

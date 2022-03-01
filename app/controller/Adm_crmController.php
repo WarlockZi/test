@@ -20,12 +20,6 @@ class Adm_crmController extends AdminscController
 
 	}
 
-	public function actionUsers()
-	{
-		$users = App::$app->user->findAll('users');
-//		$rights = App::$app->right->findAll();
-		$this->set(compact('users'));
-	}
 
 	public function actionTestResults()
 	{
@@ -39,17 +33,6 @@ class Adm_crmController extends AdminscController
 		$this->set(compact('files'));
 	}
 
-	public function actionUser()
-	{
 
-		if (!isset($_GET['id']) || !$id = $_GET['id']) {
-			header('Location: /adminsc/crm/users');
-		};
-
-		$user = App::$app->user->findOne($id);
-		$rights = App::$app->right->findAll();;
-
-		$this->set(compact('user', 'rights'));
-	}
 
 }
