@@ -252,7 +252,7 @@ class TestController Extends AppController
 			View::setJs('admin.js');
 			View::setCss('admin.css');
 		}else{
-		header('Location:/user/cabinet');
+		header('Location:/auth/cabinet');
 
 		}
 	}

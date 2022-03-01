@@ -49,7 +49,7 @@ class AppController extends Controller
 	function autorize()
 	{
 		if (!isset($_SESSION['id']) || !$_SESSION['id']) {
-			header("Location:/user/login");
+			header("Location:/auth/login");
 			$_SESSION['back_url'] = $_SERVER['QUERY_STRING'];
 			exit();
 		} else {

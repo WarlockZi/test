@@ -20,7 +20,7 @@
 .admin-flex-table .row strong {
   padding-right: 5px;
   display: flex;
-  flex: 1;
+  flex-basis: 250px;
   justify-content: flex-end;
   font-size: 14px;
   align-items: center;
@@ -30,7 +30,11 @@
 .admin-flex-table .row span,
 .admin-flex-table .row select,
 .admin-flex-table .row input {
-  flex: 3;
+  flex-basis: 250px;
   justify-content: flex-start;
   min-height: 18px;
+}
+
+.separator{
+  margin-top: 20px;
 }

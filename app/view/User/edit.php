@@ -28,7 +28,7 @@
 
 		<div class="form__button" id='save'>Сохранить</div>
 
-		<a href="/user/changepassword" class="form__button-secondary">Изменить пароль</a>
+		<a href="/auth/changepassword" class="form__button-secondary">Изменить пароль</a>
 	</form>
 
 </section>

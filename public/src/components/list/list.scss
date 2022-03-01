@@ -5,6 +5,10 @@
   width: 100%;
   border-collapse: collapse;
 
+  > * {
+    padding: 5px 3px;
+  }
+
   .edit:hover {
     background-color: $color-main;
 
@@ -17,7 +21,7 @@
     background-color: $color-warning;
 
     svg {
-      stroke: #ffffff;
+      fill: #ffffff;
     }
   }
 
@@ -60,16 +64,20 @@
     &.del {
       text-align: center;
 
-      &:hover{
+      &:hover {
         background-color: #5b626e;
-
-      }
-
-      svg {
-        stroke: white;
-        stroke-width: 2px;
       }
     }
+
+    &.edit svg {
+      stroke: white;
+      stroke-width: 2px;
+    }
+
+    &.del svg {
+      fill: white;
+    }
+
 
     &:last-child {
       border-right: none;

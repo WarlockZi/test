@@ -21,6 +21,6 @@
 	    </div>
 
 
-		<input type="submit" class = "form__button form-input submit changepassword" value="Отправить" />
+		<input type="button" class = "form__button form-input submit changepassword" value="Отправить" />
 	</form>	
 </section>

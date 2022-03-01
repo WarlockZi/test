@@ -16,7 +16,7 @@
 		<div class="question__text" contenteditable="true">
 			<?= $block[0]['question_text'] ?? '' ?>
 		</div>
-		<div class="question__delete"><? include ICONS . '/trashIcon.svg'; ?></div>
+		<div class="question__delete"><? include TRASH; ?></div>
 	</div>
 
 	<div class="question-edit_row">

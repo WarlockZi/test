@@ -1,7 +1,8 @@
 import {$, post} from '../common'
 
-$('.changepassword').on('click', async function () {
-    let res = await post('/user/changepassword', {
+$('.changepassword').on('click', async function (e) {
+    e.preventDefault
+    let res = await post('/auth/changepassword', {
         'old_password':$('[name="old_password"]').el[0].value,
         'new_password':$('[name="new_password"]').el[0].value
     })

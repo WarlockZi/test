@@ -5,9 +5,9 @@
         Вход
         <? if (!isset($user)): ?>
             <ul class="guest-menu__menu">
-                <a href="/user/login">Войти</a>
-                <a href="/user/register">Регистрация</a>
-                <a href="/user/returnpass">Забыл пароль</a>
+                <a href="/auth/login">Войти</a>
+                <a href="/auth/register">Регистрация</a>
+                <a href="/auth/returnpass">Забыл пароль</a>
             </ul>
         <? endif; ?>
     </div>
@@ -30,9 +30,9 @@
 	        :""
 	        ;?>
 
-            <a href="/user/logout" aria-label="logout">
+            <a href="/auth/logout" aria-label="logout">
 				<span class="icon-logout">
-					<? include ROOT . "/app/view/components/icons/auth/logout2.php" ?>
+					<? include ICONS."/auth/logout2.php" ?>
 				</span>
                 Выход
             </a>

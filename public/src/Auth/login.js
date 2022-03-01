@@ -45,7 +45,7 @@ function validateEmailLogin(email, pass) {
 }
 
 async function send(email, password) {
-    let res = await post('/user/login', {
+    let res = await post('/auth/login', {
         email, password
     })
     res = JSON.parse(res)
@@ -59,9 +59,9 @@ async function send(email, password) {
         $(msg).addClass('error')
         $(msg).removeClass('success')
     } else if (res.msg === 'ok') {
-        window.location = '/user/cabinet'
+        window.location = '/auth/cabinet'
     } else if (res.msg === 'not_registered') {
-        msg.innerHTML = "email не зарегистрирован <br> Для регистрации перейдите в раздел <a href = '/user/register'>Регистрация</a>"
+        msg.innerHTML = "email не зарегистрирован <br> Для регистрации перейдите в раздел <a href = '/auth/register'>Регистрация</a>"
         $(msg).addClass('error')
         $(msg).removeClass('success')
     }
