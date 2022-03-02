@@ -68,7 +68,7 @@ class RightController Extends AppController
 
 	public function actionDelete()
 	{
-		if (User::can($this->user, 4) || SU) {
+		if (User::can($this->user, 4) || defined(SU)) {
 			if (App::$app->right->delete($this->ajax['id'])) {
 				exit(json_encode(['msg' => 'ok']));
 			}

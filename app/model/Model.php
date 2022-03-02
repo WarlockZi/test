@@ -139,7 +139,7 @@ here;
 	public
 	function firstOrCreate($field, $val, $row)
 	{
-		$found = App::$app->{$this->model}->findWhere($field, $val);
+		$found = App::$app->{$this->model}->findOneWhere($field, $val);
 		if (!$found) {
 			App::$app->{$this->model}->create($row);
 			return true;
@@ -193,7 +193,7 @@ here;
 
 
 	public
-	function findWhere($field, $value)
+	function findOneWhere($field, $value)
 	{
 		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
 		$item = $this->pdo->query($sql, [$value]);

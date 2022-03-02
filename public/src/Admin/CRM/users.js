@@ -28,17 +28,7 @@ export default function users() {
     };
     var param = JSON.stringify(data);
 
-    debugger;
-    $.ajax({
-      url: '/adminsc/users',
-      method: 'post',
-      data: param,
-      success: function (data) {
-      }
-    }).fail(function (err) {
-      alert('сервер ответил ошибкой' + err)
-    });
-//      post('/adminsc/users', data);
+
   }
   ;
 

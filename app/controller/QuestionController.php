@@ -121,7 +121,7 @@ class QuestionController Extends AppController
 	{
 		$q_id = $this->ajax['q_id'];
 
-		$answers = App::$app->answer->findWhere('parent_question', $q_id);
+		$answers = App::$app->answer->findOneWhere('parent_question', $q_id);
 		foreach ($answers as $answer) {
 			App::$app->answer->delete($answer['id']);
 		}

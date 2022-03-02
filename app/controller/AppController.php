@@ -18,18 +18,17 @@ class AppController extends Controller
 		$this->layout = 'vitex';
 		$this->isAjax();
 
-		if (isset($_SESSION['id']) && $_SESSION['id']) {
-			$user = $this->user = App::$app->user->findOne($_SESSION['id']);
-			if (!$user) $_SESSION['id']='';
 
-			if ($user['email'] === $_ENV['SU_EMAIL']) {
-				define('SU', true);
-			} else {
-				define('SU', false);
-			}
-		}
 	}
 
+	public
+	function exitWith(string $msg): void
+	{
+		if ($msg){
+			exit(json_encode(['msg' => $msg]));
+		}
+		exit();
+	}
 
 	public
 	function setAuth($user)
@@ -48,6 +47,7 @@ class AppController extends Controller
 	public
 	function autorize()
 	{
+
 		if (!isset($_SESSION['id']) || !$_SESSION['id']) {
 			header("Location:/auth/login");
 			$_SESSION['back_url'] = $_SERVER['QUERY_STRING'];
@@ -56,11 +56,15 @@ class AppController extends Controller
 			$user = $this->user = App::$app->user->findOne($_SESSION['id']);
 
 			if ($this->user === false) {
+				$_SESSION['id']='';
 				$errors[] = 'Неправильные данные для входа на сайт';
 				header("Location:/user/login");
 			} elseif ($this->user['confirm'] !== "1") {
 				$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
 			} else {
+				if ($user['email'] === $_ENV['SU_EMAIL']) {
+					define('SU', true);
+				}
 				$this->set(compact('user'));
 			}
 		}

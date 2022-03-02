@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\model\Mail;
 use app\view\View;
 use app\view\widgets\menu\Menu;
 use app\core\App;
@@ -111,7 +112,7 @@ class TestController Extends AppController
 
 	public function actionDelete()
 	{
-		if (User::can($this->user, 4) || SU) {
+		if (User::can($this->user, 4) || defined(SU)) {
 			if (App::$app->test->delete($this->ajax['test']['id'])) {
 				exit(json_encode(['msg' => 'ok']));
 			}
@@ -169,7 +170,7 @@ class TestController Extends AppController
 		$data['body'] = self::prepareBodyTestResults($post, $resid - 1);
 		$data['altBody'] = "Ссылка на страницу с результатами: тут";
 
-		App::$app->mail->send_mail($data);
+		Mail::send_mail($data);;
 		exit(json_encode('ok'));
 	}
 

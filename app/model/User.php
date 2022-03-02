@@ -25,47 +25,34 @@ class User extends Model
 		return in_array($right, $user['rights']);
 	}
 
-	public function confirm($hash)
+	public function findOne($id, $field = '')
 	{
-		$sql = 'UPDATE users SET confirm= "1" WHERE hash = ?';
-
-		if ($this->insertBySql($sql, [$hash])) {
-			$_SESSION['id'] = $this->autoincrement() - 1;
-			$this->user = App::$app->user->findOne($_SESSION['id']);
-
-			return "Вы успешно подтвердили свой E-mail.";
+		if ($user = parent::findOne($id)) {
+			$user['rights'] = explode(',', $user['rights']);
 		}
-		return "Не верный код подтверждения регистрации";
-
+		return $user??null;
 	}
 
-	public function findOne($id,$field ='')
-	{
-		$user = parent::findOne($id);
-		$user['rights'] = explode(',', $user['rights']);
-		return $user;
-	}
-
-	public function getUserByEmail($email, $password)
-	{
-		$password = md5($password);
-
-		$sql = "SELECT * FROM {$this->table} WHERE email = ? AND password = ?";
-		try {
-			$user = $this->findBySql($sql, [$email, $password]);
-		} catch (Exception $exc) {
-			echo $exc->getTraceAsString();
-		}
-		if ($user) {
-			$user = $user[0];
-			if ($user['confirm'] == 1) {
-				return $user;
-			} elseif ($user['confirm'] == 0) {
-				return NULL;
-			}
-		}
-		return false;
-	}
+//	public function getUserByEmail($email, $password)
+//	{
+//		$password = md5($password);
+//
+//		$sql = "SELECT * FROM {$this->table} WHERE email = ? AND password = ?";
+//		try {
+//			$user = $this->findBySql($sql, [$email, $password]);
+//		} catch (Exception $exc) {
+//			echo $exc->getTraceAsString();
+//		}
+//		if ($user) {
+//			$user = $user[0];
+//			if ($user['confirm'] == 1) {
+//				return $user;
+//			} elseif ($user['confirm'] == 0) {
+//				return NULL;
+//			}
+//		}
+//		return false;
+//	}
 
 	public function checkName($name)
 	{
@@ -130,17 +117,17 @@ class User extends Model
 //		return false;
 //	}
 
-	public function getUserByHash($hash)
-	{
-		$sql = "SELECT * FROM {$this->table} WHERE hash = ?";
-
-		if (isset($this->findBySql($sql, [$hash])[0])) {
-			$user = $this->findBySql($sql, [$hash])[0];
-			$user['rights'] = explode(',', $user['rights']);
-			if ($user) {
-				return $user;
-			}
-		}
-		return false;
-	}
+//	public function findByHash($hash)
+//	{
+//		$sql = "SELECT * FROM {$this->table} WHERE hash = ?";
+//
+//		if (isset($this->findBySql($sql, [$hash])[0])) {
+//			$user = $this->findBySql($sql, [$hash])[0];
+//			$user['rights'] = explode(',', $user['rights']);
+//			if ($user) {
+//				return $user;
+//			}
+//		}
+//		return false;
+//	}
 }
