@@ -38,7 +38,7 @@ function navigate(str) {
       user()
       break;
 
-    case /\/adminsc\/user\/users/.test(str):
+    case /\/adminsc\/user\/list/.test(str):
       users()
       break;
 

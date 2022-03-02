@@ -50,7 +50,7 @@ async function send(email, password) {
     })
     res = JSON.parse(res)
     let msg = $('.message').el[0]
-    if (res.msg === 'fail') {
+    if (res.msg === 'wrong pass') {
         msg.innerHTML = 'Не верный email или пароль'
         $(msg).addClass('error')
         $(msg).removeClass('success')

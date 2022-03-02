@@ -19,7 +19,7 @@ class Question extends Model
 
 	public function sort($q_ids){
 		foreach ( $q_ids as $sort =>$id) {
-			$question = $this->findWhere('id',$id);
+			$question = $this->findOneWhere('id',$id);
 			$question['sort']=$sort+1;
 			$this->update($question);
 		}

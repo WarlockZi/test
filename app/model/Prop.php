@@ -11,13 +11,13 @@ class Prop extends Model {
 
    public static function getPropsVals($props = array()) {
       foreach ($props as $k => $v) {
-         $props[$k]['vals'] = App::$app->product->findWhere($v, 'parent', 'props');
+         $props[$k]['vals'] = App::$app->product->findOneWhere($v, 'parent', 'props');
       };
       return $props;
    }
 
    public static function getVals($id) {
-      return App::$app->product->findWhere($id, 'parent', 'props');
+      return App::$app->product->findOneWhere($id, 'parent', 'props');
    }
 
    public static function getAll() {
@@ -28,7 +28,7 @@ class Prop extends Model {
    public static function getAllWithVals() {
       $props = self::getAll();
       foreach ($props as $key => $value) {
-         $props[$key]['vals'] = App::$app->product->findWhere($value['id'], 'parent', 'vals');
+         $props[$key]['vals'] = App::$app->product->findOneWhere($value['id'], 'parent', 'vals');
       }
       return $props;
    }

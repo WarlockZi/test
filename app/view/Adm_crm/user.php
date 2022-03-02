@@ -1,6 +1,6 @@
 <div class="adm-content">
   <div class="breadcrumbs-adm">
-    <a href  = "/adminsc/user/users">Список пользователей</a>
+    <a href  = "/adminsc/user/list">Список пользователей</a>
   </div>
 
   <div class="wrap-admin">

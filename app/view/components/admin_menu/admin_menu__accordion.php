@@ -9,7 +9,6 @@
 	</a>
 
 	<? if (array_intersect(['gate_admin', 'role_rop'], $user['rights'])): // admin ?>
-	  <!--	--><? // if (in_array('gate_crm', $user['rights'])): // admin ?>
 	  <li class="has-children ">
 		  <input type="checkbox" id="crm">
 		  <label for="crm">
@@ -18,7 +17,7 @@
 		  </label>
 		  <ul>
 			  <a data-id="1" class=" neon" href="/adminsc/crm/orders">Заказы</a>
-			  <a data-id="1" class=" neon" href="/adminsc/user/users">Пользователи</a>
+			  <a data-id="1" class=" neon" href="/adminsc/user/list">Пользователи</a>
 			  <a data-id="1" class=" neon" href="/adminsc/crm">crm</a>
 		  </ul>
 	  </li>
@@ -53,7 +52,7 @@
 			Тесты
 		</label>
 		<ul>
-				<? if (in_array('test-do_read', $user['rights'])): // admin ?>
+				<? if (array_intersect(['test-do_read', 'role_employee'], $user['rights'])): // admin ?>
 			  <a class=" neon" href="/test/do">Проходить тесты</a>
 				<? endif; ?>
 				<? if (in_array('test-edit_read', $user['rights'])): // admin ?>
