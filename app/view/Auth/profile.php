@@ -5,6 +5,8 @@
 
 		<div class='message'></div>
 
+		<div class='email form-input'><?= $user['email'] ?></div>
+
 		<input class="form-input" placeholder="Имя" name="name" value="<?= $user['name'] ?>"/>
 
 		<input class="form-input" placeholder="Фамилия" name="surName" value="<?= $user['surName'] ?>"/>

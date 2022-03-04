@@ -8,7 +8,7 @@
 		Главная
 	</a>
 
-	<? if (array_intersect(['gate_admin', 'role_rop'], $user['rights'])): // admin ?>
+	<? if (array_intersect(['gate_admin', 'role_rop'], $user['rights'])||defined('SU')): // admin ?>
 	  <li class="has-children ">
 		  <input type="checkbox" id="crm">
 		  <label for="crm">
@@ -24,7 +24,7 @@
 	<? endif; ?>
 
 
-	<? if (array_intersect(['gate_settings', 'role_rop'], $user['rights'])): // admin ?>
+	<? if (array_intersect(['gate_settings', 'role_rop','su'], $user['rights'])||defined('SU')): // admin ?>
 	  <li class="has-children ">
 		  <input type="checkbox" id="settings">
 		  <label for="settings">
@@ -33,7 +33,7 @@
 		  </label>
 
 		  <ul>
-					<? if (array_intersect(['gate_admin'], $user['rights'])): // admin ?>
+					<? if (array_intersect(['gate_admin'], $user['rights'])||defined('SU')): // admin ?>
 				 <a class=" neon" href='/adminsc/Sitemap'>Создать SiteMap</a>
 				 <a class=" neon" href='/adminsc/settings/dump'>Dump</a>
 				 <a class=" neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>

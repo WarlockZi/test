@@ -1,6 +1,6 @@
 <section>
     <div class="wrap">
-            <a class="list" href="/user/edit" >Изменить свой профиль</a>
+            <a class="list" href="/auth/profile" >Изменить свой профиль</a>
 
             <? if (in_array('2', $user['rights'])): ?>
                 <a class="list" href="/test/1">Проходить закрытые тесты</a>

@@ -26,7 +26,7 @@
 				<a class="register" href="/user/register">Регистрация</a>
 			</li>
 			<li>
-				<a class="forgot" href="/user/returnpass">Забыли пароль</a>
+				<a class="forgot" href="/auth/returnpass">Забыли пароль</a>
 			</li>
 		</ul>
 	</form>

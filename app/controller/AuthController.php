@@ -13,6 +13,8 @@ class AuthController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
+		View::setJs('auth.js');
+		View::setCss('auth.css');
 	}
 
 	public function actionRegister()
@@ -43,10 +45,7 @@ class AuthController extends AppController
 			} catch (\Exception $e) {
 				exit($e->getMessage());
 			}
-
 		}
-		View::setJs('auth.js');
-		View::setCss('auth.css');
 	}
 
 	private function prepareBodyRegister($href, $hash)
@@ -57,7 +56,6 @@ class AuthController extends AppController
 		return $template;
 	}
 
-
 	public function actionLogout()
 	{
 		if (isset($_COOKIE[session_name()])) {  // session_name() - получаем название текущей сессии
@@ -67,19 +65,13 @@ class AuthController extends AppController
 		header("Location: /");
 	}
 
-	private function confirm($user)
-	{
-
-		return null;
-	}
-
 	public function actionConfirm()
 	{
 		$hash = $_GET['hash'];
 		if (!$hash) header('Location:/');
 		$user = App::$app->user->findOneWhere('hash', $hash);
 		if ($user) {
-			$user['confirm']="1";
+			$user['confirm'] = "1";
 			if (App::$app->user->update($user)) {
 				$this->setAuth($user);
 				header('Location:/auth/cabinet');
@@ -90,13 +82,18 @@ class AuthController extends AppController
 		exit();
 	}
 
+	public function actionProfile()
+	{
+		$this->autorize();
+
+	}
 
 	public function actionCabinet()
 	{
 		$this->autorize();
 
 		if (User::can($this->user, 'role_employee')) {
-			header("Location:/adminsc");
+			header("Location:/adminsc/cabinet");
 		} else {
 			View::setCss('auth.css');
 			View::setJs('auth.js');
@@ -116,9 +113,6 @@ class AuthController extends AppController
 			}
 			exit('fail');
 		}
-
-		View::setCss('auth.css');
-		View::setJs('auth.js');
 	}
 
 	private function randomPassword()
@@ -165,17 +159,16 @@ class AuthController extends AppController
 			} else {
 				$this->exitWith("Пользователя с таким e-mail нет");
 			}
-
 		}
 		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
-		View::setJs('auth.js');
-		View::setCss('auth.css');
+
 	}
 
 
 	public function actionLogin()
 	{
 		if ($data = $this->ajax) {
+
 			$email = (string)$data['email'];
 			$password = (string)$data['password'];
 
@@ -195,12 +188,12 @@ class AuthController extends AppController
 			if ($user['password'] !== $this->preparePassword($password)) $this->exitWith('wrong pass');// Если данные правильные, запоминаем пользователя (в сессию)
 			$user['rights'] = explode(",", $user['rights']);
 			$this->setAuth($user);
-			$this->exitWith('ok');
-
+			if (User::can($user, 'role_employee')) {
+				$this->exitWith('employee');
+			}else{
+				$this->exitWith('user');
+			}
 		}
-		View::setJs('auth.js');
-		View::setCss('auth.css');
-
 	}
 
 

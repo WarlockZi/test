@@ -33,8 +33,8 @@
             <div class = 'row'>
               <strong>подтвержден :</strong>
               <select name="conf" id="conf" value = 1>
-                <option value="0" <?= $user['confirm'] == '0' ? 'selected' : ''; ?>>0</option>
-                <option value="1" <?= $user['confirm'] == '1' ? 'selected' : ''; ?>>1</option>
+                <option value="0" <?= $user['confirm'] === '0' ? 'selected' : ''; ?>>0</option>
+                <option value="1" <?= $user['confirm'] === '1' ? 'selected' : ''; ?>>1</option>
               </select>
             </div>
             <div class = 'row'>
