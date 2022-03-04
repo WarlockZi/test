@@ -5,9 +5,9 @@ export default function rights() {
 
   $('.rights-table').on('click', handle)
 
-  function handle(e) {
-    if (e.target.closest('.del')) del(e.target.closest('.del'))
-    if (e.target.closest('.save.svg')) save(e.target.closest('.save.svg'))
+  function handle({target}) {
+    if (target.closest('.del')) del(target.closest('.del'))
+    if (target.closest('.save')) save(target.closest('.save'))
 
     function model(el) {
       let dataId = el.dataset.id ?? 'new'
@@ -111,15 +111,13 @@ export default function rights() {
       model.empty.del.dataset.id = id
     }
 
-
-
     async function create(model) {
       let res = await post('/right/create', model.toServ)
       res = await JSON.parse(res)
 
       if (res.id) {
 
-        assignNewValuesOnClone(model, res.id)
+        assignNewValuesOnClone(model, res.id-1)
         createOnDom(model)
         clearModel(model)
 

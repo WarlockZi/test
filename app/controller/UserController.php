@@ -15,6 +15,9 @@ class UserController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
+		$this->layout = 'admin';
+		View::setJs('admin.js');
+		View::setCss('admin.css');
 	}
 
 	public function actionList()
@@ -22,9 +25,6 @@ class UserController extends AppController
 		$this->auth();
 		$users = App::$app->user->findAll('users');
 		$this->set(compact('users'));
-		$this->layout = 'admin';
-		View::setJs('admin.js');
-		View::setCss('admin.css');
 	}
 
 	public function actionShow()
@@ -42,6 +42,22 @@ class UserController extends AppController
 	public function actionEdit()
 	{
 		$this->autorize();
+
+		if (array_intersect(['role_employee'], $this->user['rights']) || defined('SU')) {
+			if (isset($this->route['id'])) {
+				$user = App::$app->user->findOne($this->route['id']);
+				$this->set(compact('user'));
+			}
+			$this->view = 'adminEdit';
+
+
+			$rights = App::$app->right->findAll();;
+			$this->set(compact('rights'));
+		} else {
+			$this->layout = 'vitex';
+			$this->view = 'edit';
+
+		}
 		if ($user = $this->ajax) {
 			$user['id'] = $_SESSION['id'];
 			App::$app->user->update($user);
@@ -64,7 +80,11 @@ class UserController extends AppController
 			exit('ok');
 		}
 	}
-
+	public function actionCabinet()
+	{
+		$this->autorize();
+		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
+	}
 	public function actionContacts()
 	{
 		$this->autorize();

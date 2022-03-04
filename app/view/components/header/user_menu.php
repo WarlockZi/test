@@ -24,7 +24,7 @@
         <div class="user-menu__fio"><?= "{$user['surName']} {$user['name']}"; ?></div>
 <!--        <hr>-->
         <div class="user-menu__menu">
-            <a href="/user/edit">Изменить свой профиль</a>
+            <a href="/auth/profile">Изменить свой профиль</a>
 	        <?=in_array('gate_admin', $user['rights'])?
             "<a href='/adminsc'>Admin</a>"
 	        :""

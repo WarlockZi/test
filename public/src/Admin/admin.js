@@ -34,7 +34,7 @@ function navigate(str) {
       $("[href='/adminsc/crm/testresults']").addClass('current')
       break;
 
-    case /\/adminsc\/crm\/user$/.test(str):
+    case /\/adminsc\/user/.test(str):
       user()
       break;
 

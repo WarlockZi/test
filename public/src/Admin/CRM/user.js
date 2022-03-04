@@ -1,4 +1,4 @@
-import {$, post} from '../../common'
+import {$, popup, post} from '../../common'
 
 export default function user() {
 
@@ -37,6 +37,11 @@ export default function user() {
     }
 
     let res = await post('/user/update', model)
+
+    if(res === 'ok'){
+      popup.show('Сохранено')
+    }
+
 
 
   }
