@@ -1,16 +1,20 @@
+@import "../../var";
+
 .breadcrumbs-adm > div {
   text-transform: uppercase;
 }
 
-.breadcrumbs-adm div,
-.breadcrumbs-adm a {
-  padding: 3px 6px;
-  font-size: 0.7rem;
-  color: #7e98ba;
-  font-weight: 600;
-  margin-left: 5px;
-}
 
 .breadcrumbs-adm {
+  display: flex;
   margin: 5px 0;
+  a, div {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    color: $color-main;
+    font-weight: 600;
+    border: $color-main 1px solid;
+
+  }
+
 }

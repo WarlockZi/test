@@ -2,9 +2,6 @@
 
 namespace app\core;
 
-use app\core\Registry;
-use app\model\User;
-
 class App {
 
 
