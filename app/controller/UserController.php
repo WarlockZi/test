@@ -2,11 +2,8 @@
 
 namespace app\controller;
 
-use app\view\View;
-use app\model\Mail;
 use app\core\App;
-
-use app\model\User;
+use app\view\View;
 
 
 class UserController extends AppController

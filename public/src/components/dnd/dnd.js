@@ -110,11 +110,6 @@ export function check(url) {
         let res = await fetch(url,{
             method:'POST',
             body:formData})
-        // let res = await post(url, formData)
-
-        // if (res) {
-        //     alert(res)
-        // }
     }
 
 

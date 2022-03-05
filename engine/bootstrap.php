@@ -8,7 +8,14 @@ use Engine\DI\DI;
 try {
 	$di = new DI();
 
-	$di->set('test', 'test');
+//	$di->set('test', 'test');
+	$services = require __DIR__ . '/Config/Service.php';
+
+	foreach ( $services as $service) {
+		$provider = new $service($di);
+		$provider->init();
+
+	}
 
 	$cms = new Cms($di);
 	$cms->run();
