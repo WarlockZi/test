@@ -13,12 +13,9 @@ class AppController extends Controller
 
 	public function __construct(array $route)
 	{
-
 		parent::__construct($route);
 		$this->layout = 'vitex';
 		$this->isAjax();
-
-
 	}
 
 	public
@@ -53,7 +50,7 @@ class AppController extends Controller
 			$_SESSION['back_url'] = $_SERVER['QUERY_STRING'];
 			exit();
 		} else {
-			$user = $this->user = App::$app->user->findOne($_SESSION['id']);
+			$this->user = App::$app->user->findOne($_SESSION['id']);
 
 			if ($this->user === false) {
 				$_SESSION['id']='';
@@ -62,10 +59,10 @@ class AppController extends Controller
 			} elseif ($this->user['confirm'] !== "1") {
 				$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
 			} else {
-				if ($user['email'] === $_ENV['SU_EMAIL']) {
+				if ($this->user['email'] === $_ENV['SU_EMAIL']) {
 					define('SU', true);
 				}
-				$this->set(compact('user'));
+//				$this->set(array('user'=>$this->user));
 			}
 		}
 	}

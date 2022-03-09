@@ -18,6 +18,7 @@ import users from './CRM/users'
 navigate(window.location.pathname)
 
 function navigate(str) {
+  debugger
   switch (true) {
     case /\/adminsc\/settings/.test(str):
     case /\/adminsc\/rights/.test(str):

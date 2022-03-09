@@ -1,6 +1,9 @@
 import {$, popup, post} from '../../common'
+import list from '@/components/list/list'
 
 export default function user() {
+
+  list()
 
   $('#user-update-btn').on('click', save)
 

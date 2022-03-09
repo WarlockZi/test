@@ -8,11 +8,13 @@ class View
 	public $route;
 	public $layout;
 	public $view;
+	public $user;
 	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
 	public static $jsCss = ['js' => [], 'css' => []];
 
-	function __construct($route, $layout = '', $view = '')
+	function __construct($route, $layout = '', $view = '', $user='')
 	{
+		$this->user = $user;
 		$this->route = $route;
 		if ($layout === false) {
 			$this->layout = false;
@@ -27,6 +29,7 @@ class View
 		if (is_array($vars)) {
 			extract($vars);
 		}
+
 		$file_view = ROOT . "/app/view/{$this->route['controller']}/{$this->view}.php";
 		ob_start();
 		if (is_file($file_view)) {
@@ -36,6 +39,7 @@ class View
 		}
 		$content = ob_get_clean();
 		ob_start();
+
 		if ($this->layout !== FALSE) {
 			$file_layout = ROOT . "/app/view/layouts/{$this->layout}.php";
 			if (is_file($file_layout)) {

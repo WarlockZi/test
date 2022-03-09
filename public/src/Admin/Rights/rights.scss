@@ -54,7 +54,7 @@
     }
   }
 
-  .del {
+  .del:not([data-id="new"]) {
     display: flex;
     align-items: center;
 

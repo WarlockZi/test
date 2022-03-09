@@ -8,8 +8,8 @@
 		Главная
 	</a>
 
-	<? if (array_intersect(['gate_admin', 'role_rop'], $user['rights'])||defined('SU')): // admin ?>
-	  <li class="has-children ">
+	<? if (array_intersect(['gate_admin', 'role_rop'], $this->user['rights'])||defined('SU')): // admin ?>
+	  <li>
 		  <input type="checkbox" id="crm">
 		  <label for="crm">
 					<? include ICONS . '/admin-menu/user-check.svg'; ?>
@@ -24,8 +24,8 @@
 	<? endif; ?>
 
 
-	<? if (array_intersect(['gate_settings', 'role_rop','su'], $user['rights'])||defined('SU')): // admin ?>
-	  <li class="has-children ">
+	<? if (array_intersect(['gate_settings', 'role_rop','su'], $this->user['rights'])||defined('SU')): // admin ?>
+	  <li>
 		  <input type="checkbox" id="settings">
 		  <label for="settings">
 					<? include ICONS . '/admin-menu/settings-streamline.svg'; ?>
@@ -33,7 +33,7 @@
 		  </label>
 
 		  <ul>
-					<? if (array_intersect(['gate_admin'], $user['rights'])||defined('SU')): // admin ?>
+					<? if (array_intersect(['gate_admin'], $this->user['rights'])||defined('SU')): // admin ?>
 				 <a class=" neon" href='/adminsc/Sitemap'>Создать SiteMap</a>
 				 <a class=" neon" href='/adminsc/settings/dump'>Dump</a>
 				 <a class=" neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
@@ -45,39 +45,39 @@
 	  </li>
 	<? endif; ?>
 
-	<li class="has-children ">
+	<li>
 		<input type="checkbox" id="test">
 		<label for="test">
 				<? include ICONS . '/admin-menu/star.svg'; ?>
 			Тесты
 		</label>
 		<ul>
-				<? if (array_intersect(['test-do_read', 'role_employee'], $user['rights'])): // admin ?>
+				<? if (array_intersect(['test-do_read', 'role_employee'], $this->user['rights'])): // admin ?>
 			  <a class=" neon" href="/test/do">Проходить тесты</a>
 				<? endif; ?>
-				<? if (in_array('test-edit_read', $user['rights'])): // admin ?>
+				<? if (in_array('test-edit_read', $this->user['rights'])): // admin ?>
 			  <a class=" neon" href="/adminsc/test/edit">Редактировать тесты</a>
 				<? endif; ?>
-				<? if (in_array('test-results_read', $user['rights'])): // admin ?>
+				<? if (in_array('test-results_read', $this->user['rights'])): // admin ?>
 			  <a class=" neon" href="/adminsc/crm/testresults">Результаты тестов </a>
 				<? endif; ?>
 		</ul>
 	</li>
 
-	<li class="has-children">
+	<li>
 		<input type="checkbox" id="planning">
 		<label for="planning">
 				<? include ICONS . '/admin-menu/target.svg'; ?>
 			Планирование
 		</label>
 		<ul>
-				<? if (in_array('test-do_read', $user['rights'])): // admin ?>
+				<? if (in_array('test-do_read', $this->user['rights'])||defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/planning/create">Создать задачи</a>
 				<? endif; ?>
-				<? if (in_array('test-edit_read', $user['rights'])): // admin ?>
+				<? if (in_array('test-edit_read', $this->user['rights'])||defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/planning/list">Посмотреть планировки</a>
 				<? endif; ?>
-				<? if (in_array('test-results_read', $user['rights'])): // admin ?>
+				<? if (in_array('test-results_read', $this->user['rights'])||defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/planning/user">Спланироваться</a>
 				<? endif; ?>
 		</ul>

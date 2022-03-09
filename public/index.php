@@ -7,7 +7,7 @@ use \Engine\DI\DI;
 session_start();
 
 require_once "../vendor/autoload.php";
-require_once "../engine/bootstrap.php"; // container
+//require_once "../engine/bootstrap.php"; // container
 
 (Dotenv\Dotenv::createImmutable(dirname(__DIR__)))->load();
 
@@ -24,7 +24,7 @@ if (DEV) {
 	ini_set('display_errors', 1);
 }
 new App;
-DI::test();
+//DI::test();
 Router::dispatch($_SERVER['QUERY_STRING']);
 exit();
 

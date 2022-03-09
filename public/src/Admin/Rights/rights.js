@@ -1,7 +1,9 @@
 import './rights.scss';
 import {$, popup, post} from '../../common';
-
+import list from '@components/list/list'
 export default function rights() {
+
+  list()
 
   $('.rights-table').on('click', handle)
 
