@@ -1,9 +1,9 @@
-<? if (!isset($user)): ?>
+<? if (!isset($this->user)): ?>
 
     <div class="guest-menu" aria-label="login">
         <? include ROOT . '/public/src/components/icons/user.svg'; ?>
         Вход
-        <? if (!isset($user)): ?>
+        <? if (!isset($this->user)): ?>
             <ul class="guest-menu__menu">
                 <a href="/auth/login">Войти</a>
                 <a href="/auth/register">Регистрация</a>
@@ -17,15 +17,15 @@
 
     <div class="user-menu">
         <img src="
-        <?=$user['sex']==='f'
+        <?=$this->user['sex']==='f'
 	        ?'/pic/ava_female.jpg'
-	        :'/public/src/Admin/components/userPhoto.png';?>
+	        :'/pic/ava_male.png';?>
         " alt="">
-        <div class="user-menu__fio"><?= "{$user['surName']} {$user['name']}"; ?></div>
+        <div class="user-menu__fio"><?= "{$this->user['surName']} {$this->user['name']}"; ?></div>
 <!--        <hr>-->
         <div class="user-menu__menu">
             <a href="/auth/profile">Изменить свой профиль</a>
-	        <?=in_array('gate_admin', $user['rights'])?
+	        <?=in_array('gate_admin', $this->user['rights'])?
             "<a href='/adminsc'>Admin</a>"
 	        :""
 	        ;?>

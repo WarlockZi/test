@@ -47,13 +47,11 @@ class UserController extends AppController
 			}
 			$this->view = 'adminEdit';
 
-
 			$rights = App::$app->right->findAll();;
 			$this->set(compact('rights'));
 		} else {
 			$this->layout = 'vitex';
 			$this->view = 'edit';
-
 		}
 		if ($user = $this->ajax) {
 			$user['id'] = $_SESSION['id'];

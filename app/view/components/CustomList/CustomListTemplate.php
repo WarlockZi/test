@@ -6,7 +6,12 @@
 		<?
 		$search = $i['search'] ? $this->searchStr : '';
 		?>
-	  <div class="head <?= $i['className'] ?? '' ?>"><?= $i['name'] ?> <?= $search ?></div>
+	  <div class="head
+	  <?= $i['className'] ?? '' ?>"
+	       data-type="<?=$i['data-type']?>"
+	  >
+			 <?= $i['name'] ?> <?= $search ?>
+	  </div>
 	<? endforeach; ?>
 
 	<div class='head edit'><? include EDIT ?></div>
@@ -18,7 +23,7 @@
 		<? foreach ($this->columns as $column): ?>
 
 		  <div class="<?= $column['className']; ?>"
-		       data-id="<?= $model['id']; ?>"><?= $this->prepareData($column, $model);  ?></div>
+		       data-id="<?= $model['id']; ?>"><?= $this->prepareData($column, $model); ?></div>
 
 		<? endforeach; ?>
 

@@ -7,6 +7,7 @@ use app\view\View;
 abstract class Controller
 {
 	public $route;
+//	public $user;
 	public $view;
 	public $layout;
 	public $vars = [];
@@ -29,7 +30,7 @@ abstract class Controller
 
 	public function getView()
 	{
-		$vObj = new View($this->route, $this->layout, $this->view);
+		$vObj = new View($this->route, $this->layout, $this->view, $this->user);
 		$vObj->render($this->vars);
 	}
 

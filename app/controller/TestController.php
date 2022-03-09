@@ -224,7 +224,7 @@ class TestController Extends AppController
 
 	public function actionDo()
 	{
-		if (User::can($this->user, 'test-do_read')) {
+//		if (User::can($this->user, 'test-do_read')) {
 
 			$pagination = '';
 			$testData = '';
@@ -252,10 +252,10 @@ class TestController Extends AppController
 			$this->layout = 'admin';
 			View::setJs('admin.js');
 			View::setCss('admin.css');
-		}else{
-		header('Location:/auth/cabinet');
+//		}else{
+//		header('Location:/auth/cabinet');
 
-		}
+//		}
 	}
 
 	public function actionUpdate()

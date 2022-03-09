@@ -16,12 +16,12 @@ class CustomList
 	private $searchStr = ' <input type="text">';
 	private $template = '';
 	private $header = '';
+	public $html = '';
 
 
 	public function __construct($options)
 	{
 		$this->getOptions($options);
-//		$this->prepareColumns();
 		$this->run();
 
 	}
@@ -71,7 +71,8 @@ class CustomList
 	{
 		ob_start();
 		include ROOT . '/app/view/components/CustomList/CustomListTemplate.php';
-		$t = ob_get_contents();
+		$t = ob_get_clean();
+		$this->html = $t;
 		return $t;
 	}
 

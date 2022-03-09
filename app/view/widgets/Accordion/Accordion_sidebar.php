@@ -39,7 +39,7 @@ class Accordion_sidebar
 	{
 		if (is_array($item)) {
 			return
-				"<li class='has-children level{$lev}'>" .
+				"<li level{$lev}'>" .
 				"<input type='checkbox' name ='group-1' id={$i}>" .
 				"<label for={$i}>{$i}</label>" .
 				"";

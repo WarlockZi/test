@@ -2,12 +2,10 @@
 
 namespace app\controller;
 
-use app\view\View;
-use app\view\widgets\menu\Menu;
 use app\core\App;
 use app\model\User;
-
-use app\view\widgets\Tree\Tree;
+use app\view\components\CustomList\CustomList;
+use app\view\View;
 
 
 class RightController Extends AppController
@@ -25,8 +23,56 @@ class RightController Extends AppController
 	public function actionIndex()
 	{
 		$this->view = 'create';
+
 		$rights = App::$app->right->all();
 		$this->set(compact('rights'));
+
+		$rights_table = $this->rigtsTable($rights)->html;
+		$this->set(compact('rights_table'));
+
+	}
+
+	private function rigtsTable($rights)
+	{
+		return new CustomList(
+			[
+				'models' => $rights,
+				'modelName' => "right",
+				'tableClassName' => 'rights',
+				'columns' => [
+					'id' => [
+						'className' => 'id',
+						'field' => 'id',
+						'name' => 'ID',
+						'width' => '50px',
+						'data-type'=>'number',
+						'sort' => true,
+						'search' => false,
+					],
+
+					'name' => [
+						'className' => 'name',
+						'field' => 'name',
+						'name' => 'Наименование',
+						'width' => '1fr',
+						'data-type'=>'string',
+						'sort' => true,
+						'search' => true,
+					],
+					'description' => [
+						'className' => 'description',
+						'field' => 'description',
+						'name' => 'Описание',
+						'width' => '1fr',
+						'data-type'=>'string',
+						'sort' => true,
+						'search' => true,
+					],
+				],
+				'editCol' => true,
+				'delCol' => true,
+			]
+		);
 	}
 
 	public function actionShow()
@@ -63,7 +109,6 @@ class RightController Extends AppController
 			}
 		}
 	}
-
 
 
 	public function actionDelete()

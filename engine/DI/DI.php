@@ -19,6 +19,10 @@ class DI
 	{
 		return isset($this->container[$key])? $this->container[$key]:null;
 	}
+	static function __callStatic($name, array $params){
+		return;
+
+	}
 
 
 }
