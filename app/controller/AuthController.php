@@ -85,6 +85,12 @@ class AuthController extends AppController
 	public function actionProfile()
 	{
 		$this->autorize();
+		if (User::can($this->user, 'role_employee')) {
+			header("Location:/adminsc/profile");
+		} else {
+			View::setCss('auth.css');
+			View::setJs('auth.js');
+		}
 
 	}
 

@@ -20,7 +20,7 @@ class RightController Extends AppController
 		View::setJs('admin.js');
 	}
 
-	public function actionIndex()
+	public function actionList()
 	{
 		$this->view = 'create';
 
@@ -113,13 +113,15 @@ class RightController Extends AppController
 
 	public function actionDelete()
 	{
-		if (User::can($this->user, 4) || defined(SU)) {
+		if (User::can($this->user, 'right_delete') || defined(SU)) {
 			if (App::$app->right->delete($this->ajax['id'])) {
 				exit(json_encode(['msg' => 'ok']));
 			}
 		}
-		App::$app->test->update($this->ajax['test']);
-		exit(json_encode(['notAdmin' => true]));
+
+		header('Location:/adminsc/right/list');
+//		App::$app->test->update($this->ajax['test']);
+//		exit(json_encode(['notAdmin' => true]));
 	}
 
 

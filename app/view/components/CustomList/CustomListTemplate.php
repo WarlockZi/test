@@ -35,7 +35,7 @@
 	  </div>
 
 	  <div class="del" data-id="<?= $model['id']; ?>">
-		  <a href="/adminsc/user/delete/<?= $model['id']; ?>">
+		  <a href="/adminsc/<?= $this->modelName; ?>/delete/<?= $model['id']; ?>">
 					<? include TRASH ?>
 		  </a>
 	  </div>

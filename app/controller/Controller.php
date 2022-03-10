@@ -7,7 +7,6 @@ use app\view\View;
 abstract class Controller
 {
 	public $route;
-//	public $user;
 	public $view;
 	public $layout;
 	public $vars = [];

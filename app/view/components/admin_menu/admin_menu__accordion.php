@@ -39,7 +39,7 @@
 				 <a class=" neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
 				 <a class=" neon" href='/adminsc/settings/pics'>Картинки</a>
 				 <a class=" neon" href='/adminsc/settings/cache'>Очистить кэш</a>
-				 <a class=" neon" href='/adminsc/rights'>Права</a>
+				 <a class=" neon" href='/adminsc/right/list'>Права</a>
 					<? endif; ?>
 		  </ul>
 	  </li>
@@ -71,13 +71,13 @@
 			Планирование
 		</label>
 		<ul>
-				<? if (in_array('test-do_read', $this->user['rights'])||defined('SU')): // admin ?>
+				<? if (in_array('role_employee', $this->user['rights'])||defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/planning/create">Создать задачи</a>
 				<? endif; ?>
-				<? if (in_array('test-edit_read', $this->user['rights'])||defined('SU')): // admin ?>
+				<? if (in_array('role_employee', $this->user['rights'])||defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/planning/list">Посмотреть планировки</a>
 				<? endif; ?>
-				<? if (in_array('test-results_read', $this->user['rights'])||defined('SU')): // admin ?>
+				<? if (in_array('role_employee', $this->user['rights'])||defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/planning/user">Спланироваться</a>
 				<? endif; ?>
 		</ul>

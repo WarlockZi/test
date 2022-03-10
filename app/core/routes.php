@@ -31,7 +31,7 @@ Router::add('^adminsc\/crm$', ['controller' => 'Adm_crm']);
 Router::add('^adminsc\/catalog\/(?P<action>[0-9a-z]+)$', ['controller' => 'Adm_catalog']);
 Router::add('^adminsc\/catalog$', ['controller' => 'Adm_catalog']);
 
-Router::add('^adminsc\/rights\/?(?P<action>[0-9a-z]+)?$', ['controller' => 'Right']);
+Router::add('^adminsc\/right\/?(?P<action>[0-9a-z]+)?\/?(?P<id>[0-9]+)?$', ['controller' => 'Right']);
 //Router::add('^adminsc\/rights(\/)?(?P<action>[0-9a-z]+)$', ['controller' => 'Right']);
 
 Router::add('^adminsc\/settings\/(?P<action>[0-9a-z]+)$', ['controller' => 'Adm_settings']);
