@@ -10,13 +10,13 @@ class CustomList
 	private $editCol = false;
 	private $delCol = false;
 	private $grid = 'grid-template-columns:';
+	public $html = '';
 	private $models = [];
 	private $modelName = '';
 	private $tableClassName = '';
 	private $searchStr = ' <input type="text">';
 	private $template = '';
 	private $header = '';
-	public $html = '';
 
 
 	public function __construct($options)

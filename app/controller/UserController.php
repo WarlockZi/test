@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\core\App;
+use app\view\components\CustomList\CustomList;
 use app\view\View;
 
 
@@ -20,8 +21,64 @@ class UserController extends AppController
 	public function actionList()
 	{
 		$this->auth();
+
 		$users = App::$app->user->findAll('users');
 		$this->set(compact('users'));
+
+		$users_table = $this->usersTable($users)->html;
+		$this->set(compact('users_table'));
+	}
+
+	private function usersTable($users)
+	{
+		return new CustomList(
+			[
+				'models' => $users,
+				'modelName' => "user",
+				'tableClassName' => 'users',
+				'columns' => [
+					'id' => [
+						'className' => 'id',
+						'field' => 'id',
+						'name' => 'ID',
+						'width' => '50px',
+						'data-type'=>'number',
+						'sort' => true,
+						'search' => false,
+					],
+					'name' => [
+						'className' => 'name',
+						'field' => 'name',
+						'name' => 'ФИО',
+						'concat'=>['name','surName', 'middleName'],
+						'width' => '1fr',
+						'data-type'=>'string',
+						'sort' => true,
+						'search' => true,
+					],
+					'email' => [
+						'className' => 'email',
+						'field' => 'email',
+						'name' => 'email',
+						'width' => '1fr',
+						'data-type'=>'string',
+						'sort' => true,
+						'search' => true,
+					],
+					'conf' => [
+						'className' => 'conf',
+						'field' => 'confirm',
+						'name' => 'conf',
+						'width' => '1fr',
+						'data-type'=>'string',
+						'sort' => true,
+						'search' => false,
+					],
+				],
+				'editCol' => true,
+				'delCol' => true,
+			]
+		);
 	}
 
 	public function actionShow()
