@@ -2,9 +2,7 @@
 
 namespace app\core;
 
-use app\model\User;
 use app\controller\СatalogController;
-use app\model\Category;
 
 class Router
 {
@@ -93,16 +91,6 @@ class Router
 		}
 	}
 
-	public static function getRoutes()
-	{
-		return self::$routes;
-	}
-
-	public static function getRoute()
-	{
-		return self::$route;
-	}
-
 	protected static function upperCamelCase($name)
 	{
 		$name = str_replace(' ', '', ucwords(str_replace('-', ' ', $name)));
@@ -122,10 +110,8 @@ class Router
 	{
 		if ($url) {
 			$params = explode('&', $url, 2);
-
-			if (strpos($params[0], '=') === FALSE) {
-
-				return trim(str_replace("XDEBUG_SESSION_START=netbeans-xdebug", "", $params[0]), '/');
+			if (!strpos($params[0], '=')) {
+				return trim($params[0], '/');
 			} else {
 				return '';
 			}

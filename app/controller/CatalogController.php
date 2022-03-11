@@ -6,56 +6,53 @@ use app\core\App;
 use \app\model\Prop;
 use app\view\View;
 
-class CatalogController extends AppController {
+class CatalogController extends AppController
+{
 
-   public function __construct($route) {
-      parent::__construct($route);
-      View::setCss('main.css');
-      View::setJs('main.js');
+	public function __construct($route)
+	{
+		parent::__construct($route);
+		View::setCss('main.css');
+		View::setJs('main.js');
 
-   }
+	}
 
-   public function actionIndex() {
+	public function actionIndex()
+	{
 
-      $cats_id = App::$app->category->getInitCategories();
-      View::setMeta('Каталог спецодежды', 'Каталог спецодежды', 'Каталог спецодежды');
-      $this->set(compact('cats_id'));
-   }
+		$cats_id = App::$app->category->getInitCategories();
+		View::setMeta('Каталог спецодежды', 'Каталог спецодежды', 'Каталог спецодежды');
+		$this->set(compact('cats_id'));
+	}
 
-   public function actionProduct($product) {
+	public function actionProduct($product)
+	{
 
-      header('Cache-Control: private, max-age=8400');
-      header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
-      $this->view = 'product';
+		header('Cache-Control: private, max-age=8400');
+		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
+		$this->view = 'product';
 
-//      $parents = $product['parents'];
-      $breadcrumbs = App::$app->product->getBreadcrumbs($product, $product['parents'], 'product');
+		$breadcrumbs = App::$app->product->getBreadcrumbs($product, $product['parents'], 'product');
 
-      if (isset($_SESSION['id']) && $_SESSION['id']) {
-         $id = $_SESSION['id'];
-         $user = App::$app->user->findOne($id);
-      }
-      $canonical = $product['alias'];
-      View::setMeta($product['title'], $product['description'], $product['keywords']);
-//      'user', , 'categories', 'tov'
-      $this->set(compact('canonical', 'breadcrumbs', 'product'));
+		View::setMeta($product['title'], $product['description'], $product['keywords']);
+		$this->set(compact('breadcrumbs', 'product'));
 
 		View::setCss('vitex.css');
-   }
+	}
 
-   public function actionCategory($category) {
+	public function actionCategory($category)
+	{
 
-      if (isset($_SESSION['id']) && $_SESSION['id']) {
-         $user = App::$app->user->findOne($_SESSION['id']);
+		if (isset($_SESSION['id']) && $_SESSION['id']) {
+			$user = App::$app->user->findOne($_SESSION['id']);
 			$this->set(compact('user'));
-      }
+		}
 
-      $breadcrumbs = App::$app->product->getBreadcrumbs($category, $category['parents'], 'category');
-      $canonical = $category['alias'];
-      View::setMeta($category['title'], $category['keywords'], $category['description']);
-      $this->set(compact( 'breadcrumbs', 'category', 'canonical'));
-//      $this->view = 'category';
+		$breadcrumbs = App::$app->product->getBreadcrumbs($category, $category['parents'], 'category');
+		$canonical = $category['alias'];
+		View::setMeta($category['title'], $category['keywords'], $category['description']);
+		$this->set(compact('breadcrumbs', 'category', 'canonical'));
 		View::setCss('vitex.css');
-   }
+	}
 
 }

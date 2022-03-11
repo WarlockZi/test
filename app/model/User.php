@@ -97,37 +97,4 @@ class User extends Model
 		return false;
 	}
 
-
-//	public function get($id)
-//	{
-//		$res = $this->findOne($id, 'id');
-//		if ($res) {
-//			$res['rights'] = explode(",", $res['rights']);
-//			return $res;
-//		}
-//		return false;
-//	}
-
-//	public function getRights()
-//	{
-//		$res = $this->findAll('user_rights');
-//		if ($res) {
-//			return $res;
-//		}
-//		return false;
-//	}
-
-//	public function findByHash($hash)
-//	{
-//		$sql = "SELECT * FROM {$this->table} WHERE hash = ?";
-//
-//		if (isset($this->findBySql($sql, [$hash])[0])) {
-//			$user = $this->findBySql($sql, [$hash])[0];
-//			$user['rights'] = explode(',', $user['rights']);
-//			if ($user) {
-//				return $user;
-//			}
-//		}
-//		return false;
-//	}
 }
