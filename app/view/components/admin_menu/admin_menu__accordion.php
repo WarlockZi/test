@@ -1,3 +1,4 @@
+
 <ul class="admin-layout__sidebar accordion">
 	<a class="admin-sidebar__logo" href="/">
 		 <? include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
@@ -52,13 +53,13 @@
 			Тесты
 		</label>
 		<ul>
-				<? if (array_intersect(['test-do_read', 'role_employee'], $this->user['rights'])): // admin ?>
+				<? if (array_intersect(['role_employee'], $this->user['rights'])): // admin ?>
 			  <a class=" neon" href="/test/do">Проходить тесты</a>
 				<? endif; ?>
-				<? if (in_array('test-edit_read', $this->user['rights'])): // admin ?>
+				<? if (array_intersect(['test-edit_read'], $this->user['rights'])): // admin ?>
 			  <a class=" neon" href="/adminsc/test/edit">Редактировать тесты</a>
 				<? endif; ?>
-				<? if (in_array('test-results_read', $this->user['rights'])): // admin ?>
+				<? if (array_intersect(['test-results_read'], $this->user['rights'])): // admin ?>
 			  <a class=" neon" href="/adminsc/crm/testresults">Результаты тестов </a>
 				<? endif; ?>
 		</ul>
