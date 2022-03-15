@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\model\Test;
 use app\view\View;
 
 abstract class Controller
@@ -16,6 +17,7 @@ abstract class Controller
 	function __construct($route)
 	{
 		$this->route = $route;
+		Test::removeDirectory();
 		$this->view = $route['action'];
 		$this->token = !empty($_SESSION['token']) ? $_SESSION['token'] : $this->createToken();
 	}
@@ -24,7 +26,6 @@ abstract class Controller
 	{
 		$salt = "popiyonovacheesa";
 		return $_SESSION['token'] = md5($salt . microtime(true));
-
 	}
 
 	public function getView()
