@@ -17,7 +17,11 @@ abstract class Controller
 	function __construct($route)
 	{
 		$this->route = $route;
+<<<<<<< HEAD
 //		Test::removeDirectory();
+=======
+		Test::removeDirectory();
+>>>>>>> 0fab95dc1444ac164d3583926726711d63cca3ea
 		$this->view = $route['action'];
 		$this->token = !empty($_SESSION['token']) ? $_SESSION['token'] : $this->createToken();
 	}
