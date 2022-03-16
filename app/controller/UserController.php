@@ -16,11 +16,12 @@ class UserController extends AppController
 		$this->layout = 'admin';
 		View::setJs('admin.js');
 		View::setCss('admin.css');
+		$this->autorize();
 	}
 
 	public function actionList()
 	{
-		$this->auth();
+//		$this->auth();
 
 		$users = App::$app->user->findAll('users');
 		$this->set(compact('users'));
@@ -95,7 +96,7 @@ class UserController extends AppController
 
 	public function actionEdit()
 	{
-		$this->autorize();
+//		$this->autorize();
 
 		if (array_intersect(['role_employee'], $this->user['rights']) || defined('SU')) {
 			if (isset($this->route['id'])) {
@@ -123,7 +124,7 @@ class UserController extends AppController
 
 	public function actionUpdate()
 	{
-		$this->autorize();
+//		$this->autorize();
 		if ($data = $this->ajax) {
 			$date = strtotime($data['birthDate']);
 			$data['birthDate'] = date('Y-m-d', $date);
@@ -134,12 +135,12 @@ class UserController extends AppController
 	}
 	public function actionCabinet()
 	{
-		$this->autorize();
+//		$this->autorize();
 		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
 	}
 	public function actionContacts()
 	{
-		$this->autorize();
+//		$this->autorize();
 		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
 	}
 

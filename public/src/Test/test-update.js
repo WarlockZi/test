@@ -5,7 +5,7 @@ import WDSSelect from "../components/select/WDSSelect"
 import accordionShow from "./accordion-show";
 
 export default function testUpdate() {
-
+debugger
   accordionShow()
 
   let parentSelect = new WDSSelect({

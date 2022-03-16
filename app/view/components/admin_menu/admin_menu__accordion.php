@@ -53,13 +53,13 @@
 			Тесты
 		</label>
 		<ul>
-				<? if (array_intersect(['role_employee'], $this->user['rights'])): // admin ?>
+				<? if (array_intersect(['role_employee'], $this->user['rights'])||defined('SU')): // admin ?>
 			  <a class=" neon" href="/test/do">Проходить тесты</a>
 				<? endif; ?>
-				<? if (array_intersect(['test-edit_read'], $this->user['rights'])): // admin ?>
+				<? if (array_intersect(['test-edit_read'], $this->user['rights'])||defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/test/edit">Редактировать тесты</a>
 				<? endif; ?>
-				<? if (array_intersect(['test-results_read'], $this->user['rights'])): // admin ?>
+				<? if (array_intersect(['test-results_read'], $this->user['rights'])||defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/crm/testresults">Результаты тестов </a>
 				<? endif; ?>
 		</ul>

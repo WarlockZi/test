@@ -1,6 +1,6 @@
 import './common.scss'
 
-export const dropDown = function (elementId) {
+function dropDown (elementId) {
   var dropdown = document.getElementById(elementId);
   try {
     showDropdown(dropdown);
@@ -10,7 +10,7 @@ export const dropDown = function (elementId) {
   return false;
 };
 
-const showDropdown = function (element) {
+function showDropdown(element) {
   var event;
   event = document.createEvent('MouseEvents');
   event.initMouseEvent('mousedown', true, true, window);
@@ -295,28 +295,12 @@ class test_delete_button {
   }
 }
 
-async function fetchWrap(Obj, file) {
-  let data = new FormData;
-  data.append('ajax', true);
-  data.append('param', JSON.stringify(Obj));
-  file ? data.append('file', file) : '';
-  let prom = await fetch(`/adminsc`, {
-    body: data,
-    method: 'post'
-  });
-  return prom.text();
-}
 
-async function fetchW(url, Obj) {
-  let prom = await fetch(url, {
-    body: 'param=' + JSON.stringify(Obj),
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest',
-    }
-  });
-  return prom
-}
 
-export {addTooltip, popup, test_delete_button, post, get, uniq, validate, $, fetchWrap, fetchW}
+
+export {dropDown,
+  addTooltip,
+  popup,
+  test_delete_button,
+  post, get, uniq,
+  validate, $}

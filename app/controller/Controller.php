@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\model\Test;
 use app\view\View;
 
 abstract class Controller

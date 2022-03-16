@@ -15,10 +15,12 @@ import planning from './Planning/planning'
 import user from './CRM/user'
 import users from './CRM/users'
 
+// let p = $('.page-name')[0]
 navigate(window.location.pathname)
 
+
 function navigate(str) {
-  debugger
+  // debugger
   switch (true) {
     case /\/adminsc\/settings/.test(str):
     case /\/adminsc\/rights/.test(str):
@@ -60,14 +62,13 @@ function navigate(str) {
       testUpdate()
       break;
 
-
-
     case /\/adminsc\/test\/pathshow/.test(str):
     case /\/adminsc\/test\/edit/.test(str):
     case /\/adminsc\/test\/show/.test(str):
+      debugger
       testEdit()
       $("[href='/adminsc/test/edit']").addClass('current')
-
+      break;
 
     case /\/test/.test(str)||/\/test\/result/.test(str):
       testDo()

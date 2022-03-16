@@ -1,12 +1,13 @@
+import './test-edit.scss'
 import '../components/footer/footer.scss'
 
-import './test-edit.scss'
 import './test-edit-menu.scss'
-import './test'
+import '../components/popup.scss'
+
+// import './test'
 import './test-update'
 import '../Admin/admin'
 
-import '../components/popup.scss'
 import {$, addTooltip} from '../common'
 
 import {_test} from "./model/test"
@@ -19,7 +20,6 @@ import accordionShow from "./accordion-show";
 export default function testEdit() {
 
   // accordionShow()
-
   let parentSelect = new WDSSelect({
     element: $("[data-custom-parent]")[0],
     title: 'Папка',
@@ -52,7 +52,6 @@ export default function testEdit() {
     _question.showFirst()
   }
 
-
   // $('.test__update').on('click', _test.update.bind(null, parentSelect.selectedOption, enableSelect.selectedOption))
   $('.test-path__update').on('click', _test.update)
 
@@ -65,6 +64,7 @@ export default function testEdit() {
 
   $('.answer__delete').on('click', _answer.del)
   $('.answer__create-button').on('click', _answer.create)
+
 
 
   addTooltip({

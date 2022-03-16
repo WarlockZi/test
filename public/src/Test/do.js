@@ -1,11 +1,9 @@
 import './do.scss'
-import '../components/header/autocomplete'
-import '../components/accordion/accordion'
-import '../components/cookie/cookie'
+
 
 
 import {_test} from "./model/test"
-import {post, $, fetchW} from '../common'
+import {post, $} from '../common'
 import {navInit} from '../components/test-pagination/test-pagination'
 import accordionShow from "./accordion-show";
 

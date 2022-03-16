@@ -1,6 +1,7 @@
 import './WDSSelect.scss'
 
 export default class WDSSelect {
+
   constructor(props) {
 
     if (!props.element) return false
