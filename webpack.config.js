@@ -14,7 +14,7 @@ const config = {
     auth: path.resolve(src, 'Auth/auth.js'),
     // freeTest: path.resolve(src, 'Freetest/free-test.js'),
     test: path.resolve(src, 'Test/test.js'),
-    test_edit: path.resolve(src, 'Test/test-edit.js'),
+    // test_edit: path.resolve(src, 'Test/test-edit.js'),
     main: path.resolve(src, 'Main/main.js'),
   },
 

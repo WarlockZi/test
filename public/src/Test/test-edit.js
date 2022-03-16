@@ -19,7 +19,8 @@ import accordionShow from "./accordion-show";
 
 export default function testEdit() {
 
-  // accordionShow()
+  accordionShow()
+
   let parentSelect = new WDSSelect({
     element: $("[data-custom-parent]")[0],
     title: 'Папка',
