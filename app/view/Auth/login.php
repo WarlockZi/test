@@ -23,7 +23,7 @@
 
 		<ul class="bottom">
 			<li>
-				<a class="register" href="/user/register">Регистрация</a>
+				<a class="register" href="/auth/register">Регистрация</a>
 			</li>
 			<li>
 				<a class="forgot" href="/auth/returnpass">Забыли пароль</a>

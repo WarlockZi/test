@@ -9,9 +9,9 @@ Disallow: /catalog/
 Disallow: /about/
 Disallow: /search/
 
-Disallow: /user/login
-Disallow: /user/register
-Disallow: /user/forgot
+Disallow: /auth/login
+Disallow: /auth/register
+Disallow: /auth/forgot
 Disallow: /404
 
 Disallow: /*?
