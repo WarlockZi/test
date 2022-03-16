@@ -8,7 +8,7 @@
 		?>
 	  <div class="head
 	  <?= $i['className'] ?? '' ?>"
-	       data-type="<?=$i['data-type']?>"
+	       data-type="<?= $i['data-type'] ?>"
 	  >
 			 <?= $i['name'] ?> <?= $search ?>
 	  </div>
@@ -44,3 +44,6 @@
 
 
 </div>
+<? if ($this->addButton): ?>
+	<div class="add-model <?=$this->modelName; ?>">+</div>
+<? endif; ?>

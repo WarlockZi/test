@@ -10,10 +10,10 @@ const config = {
   entry: {
     admin: path.resolve(src, 'Admin/admin.js'),
     // adminCategory: path.resolve(src, 'Adm_catalog/adm_category.js'),
-    cabinet: path.resolve(src, 'Auth/cabinet.js'),
+    // cabinet: path.resolve(src, 'Auth/cabinet.js'),
     auth: path.resolve(src, 'Auth/auth.js'),
     // freeTest: path.resolve(src, 'Freetest/free-test.js'),
-    test: path.resolve(src, 'Test/test.js'),
+    // test: path.resolve(src, 'Test/test.js'),
     // test_edit: path.resolve(src, 'Test/test-edit.js'),
     main: path.resolve(src, 'Main/main.js'),
   },
