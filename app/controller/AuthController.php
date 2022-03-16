@@ -94,17 +94,17 @@ class AuthController extends AppController
 
 	}
 
-	public function actionCabinet()
-	{
-		$this->autorize();
-
-		if (User::can($this->user, 'role_employee')) {
-			header("Location:/adminsc/cabinet");
-		} else {
-			View::setCss('auth.css');
-			View::setJs('auth.js');
-		}
-	}
+//	public function actionCabinet()
+//	{
+//		$this->autorize();
+//
+//		if (User::can($this->user, 'role_employee')) {
+//			header("Location:/adminsc/cabinet");
+//		} else {
+//			View::setCss('auth.css');
+//			View::setJs('auth.js');
+//		}
+//	}
 
 	public function actionChangePassword()
 	{
