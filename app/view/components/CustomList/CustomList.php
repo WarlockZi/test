@@ -7,9 +7,10 @@ namespace app\view\components\CustomList;
 class CustomList
 {
 	private $columns = [];
-	private $editCol = false;
-	private $delCol = false;
 	private $grid = 'grid-template-columns:';
+	private $delCol = false;
+	private $editCol = false;
+	public $addButton = false;
 	public $html = '';
 	private $models = [];
 	private $modelName = '';
