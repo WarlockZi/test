@@ -70,14 +70,16 @@ class UserController extends AppController
 						'className' => 'conf',
 						'field' => 'confirm',
 						'name' => 'conf',
-						'width' => '1fr',
+						'width' => '50px',
 						'data-type'=>'string',
 						'sort' => true,
 						'search' => false,
 					],
 				],
-				'editCol' => true,
+
+				'editCol' =>  true,
 				'delCol' => true,
+				'addButton'=> true,
 			]
 		);
 	}

@@ -267,6 +267,7 @@
 .test-edit__accordion {
   max-width: 0px;
   transition: max-width 1s;
+  margin-bottom: 25px;
 
   &.open {
     max-width: 200px;

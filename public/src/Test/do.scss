@@ -10,7 +10,10 @@
   max-width: 1310px;
   flex: 1 0 auto;
   width: 100%;
-  flex-flow: column;
+  @include _800 {
+    flex-flow: column;
+
+  }
 
 
   @include _400 {
