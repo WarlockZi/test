@@ -2,14 +2,12 @@
 
 namespace app\model;
 
-use app\core\DB;
 use app\core\App;
+use app\core\DB;
 use mysql_xdevapi\Exception;
-use PHPMailer\PHPMailer\PHPMailer;
 
 abstract class Model
 {
-
 	protected $pdo;
 	protected $sql;
 	protected $table;
@@ -168,12 +166,14 @@ here;
 		$sql = "SELECT * FROM " . ($table ?: $this->table) . ($sort ? " ORDER BY {$sort}" : "");
 		return $this->pdo->query($sql);
 	}
+
 	public
 	function all($table = '', $sort = '')
 	{
 		$sql = "SELECT * FROM " . ($table ?: $this->table) . ($sort ? " ORDER BY {$sort}" : "");
 		return $this->pdo->query($sql);
 	}
+
 	public
 	function findOne($id, $field = '')
 	{
@@ -192,13 +192,25 @@ here;
 	}
 
 
-	public
-	function findOneWhere($field, $value)
+
+
+
+
+	public static function findOneWhere($field, $value)
+	{
+		return (new static())->findOneWhere1($field, $value);
+	}
+
+	private function findOneWhere1($field, $value)
 	{
 		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
 		$item = $this->pdo->query($sql, [$value]);
-		return $item[0]??null;
+		return $item[0] ?? null;
 	}
+
+
+
+
 
 	public
 	function findAllWhere($field, $value)

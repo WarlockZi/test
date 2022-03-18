@@ -135,11 +135,7 @@ class UserController extends AppController
 			exit('ok');
 		}
 	}
-	public function actionCabinet()
-	{
-//		$this->autorize();
-		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
-	}
+
 	public function actionContacts()
 	{
 //		$this->autorize();

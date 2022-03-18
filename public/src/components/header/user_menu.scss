@@ -33,10 +33,11 @@
     width: 44px;
   }
 
-  .user-menu__credit-wrap {
+  &.user-menu__credit-wrap {
     display: flex;
     flex-flow: column;
-    .user-menu__email{
+
+    &.user-menu__email{
       font-size: .7rem;
     }
 

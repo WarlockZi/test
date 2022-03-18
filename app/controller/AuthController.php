@@ -87,24 +87,17 @@ class AuthController extends AppController
 		$this->autorize();
 		if (User::can($this->user, 'role_employee')) {
 			header("Location:/adminsc/profile");
-		} else {
-			View::setCss('auth.css');
-			View::setJs('auth.js');
 		}
 
 	}
 
-//	public function actionCabinet()
-//	{
-//		$this->autorize();
-//
-//		if (User::can($this->user, 'role_employee')) {
-//			header("Location:/adminsc/cabinet");
-//		} else {
-//			View::setCss('auth.css');
-//			View::setJs('auth.js');
-//		}
-//	}
+	public function actionCabinet()
+	{
+		$this->autorize();
+		if (User::can($this->user, 'role_employee')) {
+			header("Location:/adminsc/cabinet");
+		}
+	}
 
 	public function actionChangePassword()
 	{
@@ -188,11 +181,10 @@ class AuthController extends AppController
 				$this->exitWith("Пароль не должен быть короче 6-ти символов");
 			}
 
-			$user = App::$app->user->findOneWhere("email", $email);
+			$user = User::findOneWhere("email", $email);
 
 			if (!$user) $this->exitWith('not_registered');
 			if ($user['password'] !== $this->preparePassword($password)) $this->exitWith('wrong pass');// Если данные правильные, запоминаем пользователя (в сессию)
-			$user['rights'] = explode(",", $user['rights']);
 			$this->setAuth($user);
 			if (User::can($user, 'role_employee')) {
 				$this->exitWith('employee');

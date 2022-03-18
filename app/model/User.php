@@ -13,6 +13,7 @@ class User extends Model
 {
 
 	public $table = 'users';
+//	public static $db;
 
 	public function __construct()
 	{
@@ -22,7 +23,7 @@ class User extends Model
 	public static function can($user, $right)
 	{
 //		$user = App::$app->user->findOne($user['id']);
-		return in_array($right, $user['rights']);
+		return in_array($right, $user['rights'])??null;
 	}
 
 	public function findOne($id, $field = '')
@@ -33,26 +34,26 @@ class User extends Model
 		return $user??null;
 	}
 
-//	public function getUserByEmail($email, $password)
-//	{
-//		$password = md5($password);
-//
-//		$sql = "SELECT * FROM {$this->table} WHERE email = ? AND password = ?";
-//		try {
-//			$user = $this->findBySql($sql, [$email, $password]);
-//		} catch (Exception $exc) {
-//			echo $exc->getTraceAsString();
-//		}
-//		if ($user) {
-//			$user = $user[0];
-//			if ($user['confirm'] == 1) {
-//				return $user;
-//			} elseif ($user['confirm'] == 0) {
-//				return NULL;
-//			}
-//		}
-//		return false;
-//	}
+	public static function  findOneWhere($field = '',$value = '')
+	{
+		if ($user = parent::findOneWhere($field, $value)) {
+			$user['rights'] = explode(',', $user['rights']);
+		}
+		return $user??null;
+	}
+
+
+	public static function query()
+	{
+		return (new static)->newQuery();
+	}
+
+	public function newQuery()
+	{
+		return $this->registerGlobalScopes($this->newQueryWithoutScopes());
+	}
+
+
 
 	public function checkName($name)
 	{
