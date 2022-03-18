@@ -18,13 +18,16 @@ class TestController Extends AppController
 	{
 		parent::__construct($route);
 		$this->autorize();
+		$this->layout = 'admin';
+		View::setJs('admin.js');
+		View::setCss('admin.css');
 	}
 
 	public function actionIndex()
 	{
 		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
-		View::setJs('test.js');
-		View::setCss('test.css');
+//		View::setJs('admin.js');
+//		View::setCss('admin.css');
 	}
 
 	public function actionShow()
@@ -40,8 +43,8 @@ class TestController Extends AppController
 
 		$test['isTest'] = 1;
 		$this->set(compact('test'));
-		View::setCss('test_edit.css');
-		View::setJs('test_edit.js');
+//		View::setCss('admin.css');
+//		View::setJs('admin.js');
 	}
 
 	public function actionPathshow()
@@ -57,8 +60,8 @@ class TestController Extends AppController
 		$test['isTest'] = 0;
 		$rootTests = App::$app->test->findAllWhere('isTest', 0);
 		$this->set(compact('rootTests', 'test'));
-		View::setCss('admin.css');
-		View::setJs('admin.js');
+//		View::setCss('admin.css');
+//		View::setJs('admin.js');
 	}
 
 
@@ -249,9 +252,9 @@ class TestController Extends AppController
 
 			$this->set(compact('testData', 'pagination'));
 
-			$this->layout = 'admin';
-			View::setJs('admin.js');
-			View::setCss('admin.css');
+//			$this->layout = 'admin';
+//			View::setJs('admin.js');
+//			View::setCss('admin.css');
 //		}else{
 //		header('Location:/auth/cabinet');
 
@@ -277,8 +280,8 @@ class TestController Extends AppController
 		$paths = $this->paths();
 		$this->set(compact('paths'));
 
-		View::setCss('admin.css');
-		View::setJs('admin.js');
+//		View::setCss('admin.css');
+//		View::setJs('admin.js');
 	}
 
 
@@ -326,8 +329,5 @@ class TestController Extends AppController
 		}
 		$this->set(compact('test'));
 
-		$this->layout = 'admin';
-		View::setJs('admin.js');
-		View::setCss('admin.css');
 	}
 }
