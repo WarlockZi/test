@@ -23,7 +23,7 @@ function navigate(str) {
   // debugger
   switch (true) {
     case /\/adminsc\/settings/.test(str):
-    case /\/adminsc\/rights/.test(str):
+    case /\/adminsc\/right\/list/.test(str):
       rights()
       $("[href='/adminsc/settings']").addClass('current')
       break;
