@@ -7,5 +7,4 @@
 /node_modules/
 /.idea/
 /composer.phar
-/public/build
 /.env
