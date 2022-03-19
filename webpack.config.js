@@ -26,7 +26,7 @@ const config = {
 
   devServer: {
     allowedHosts: "all",
-    // open: true,
+    // open: true,http://localhost:4000/public/dist/main.css
     host: "localhost",
     port: 4000,
     // http2: true,

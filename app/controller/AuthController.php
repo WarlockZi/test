@@ -30,9 +30,7 @@ class AuthController extends AppController
 			$user['password'] = $this->preparePassword($user['password']);
 			$user['hash'] = $hash;
 
-			if (!App::$app->user->create($user)) {
-				exit('registration failed');
-			}
+
 			$data['subject'] = "Регистрация VITEX";
 			$data['to'] = [$user['email']];
 			$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/auth/confirm?hash={$hash}";
@@ -41,6 +39,9 @@ class AuthController extends AppController
 
 			try {
 				$sent = Mail::send_mail($data);
+        if (!App::$app->user->create($user)) {
+          exit('registration failed');
+        }
 				exit('confirm');
 			} catch (\Exception $e) {
 				exit($e->getMessage());
