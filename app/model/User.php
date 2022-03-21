@@ -34,25 +34,13 @@ class User extends Model
 		return $user??null;
 	}
 
-	public static function  findOneWhere($field = '',$value = '')
+	public static function findOneWhere($field = '',$value = '')
 	{
 		if ($user = parent::findOneWhere($field, $value)) {
 			$user['rights'] = explode(',', $user['rights']);
 		}
 		return $user??null;
 	}
-
-
-	public static function query()
-	{
-		return (new static)->newQuery();
-	}
-
-	public function newQuery()
-	{
-		return $this->registerGlobalScopes($this->newQueryWithoutScopes());
-	}
-
 
 
 	public function checkName($name)
@@ -91,7 +79,7 @@ class User extends Model
 
 	public function checkEmailExists($email)
 	{
-		$res = $this->findOne($email, 'email');
+		$res = $this->findOneWhere('email',$email);
 		if ($res) {
 			return true;
 		}

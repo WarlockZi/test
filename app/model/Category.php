@@ -130,7 +130,7 @@ class Category extends Model
 				http_response_code(404);
 				exit(include '../../public/404.html');
 			}
-			$category = $this->findOne($arr[0], 'alias');
+			$category = $this->findOneWhere($arr[0], 'alias');
 			if ($category && is_array($category)) {
 				$category['parents'] = $this->getCategoryParents($category['parent']);
 				$category['children'] = $this->getCategoryChildren($category['id']);
@@ -144,7 +144,7 @@ class Category extends Model
 	public function getCategory($id)
 	{
 
-		$category = $this->findOne($id);
+		$category = $this->findOneWere('id',$id);
 
 		if ($category && is_array($category)) {
 			$category['props'] = explode(',', $category['props']);

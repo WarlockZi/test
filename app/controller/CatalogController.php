@@ -107,7 +107,7 @@ class CatalogController extends AppController
 	{
 
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
-			$user = App::$app->user->findOne($_SESSION['id']);
+			$user = User::findOneWhere($_SESSION['id']);
 			$this->set(compact('user'));
 		}
 

@@ -19,26 +19,26 @@ class Router
 	public static function matchRoute($url)
 	{
 // если это категория
-		if ($url && $category = App::$app->category->isCategory($url)) {
-			$route['controller'] = 'Catalog';
-			$route['action'] = 'category';
-
-			self::$route = $route;
-			self::$aCategoryOrProduct = $category;
-			return true;
-
-// это продукт
-		} elseif ($url && $product = App::$app->product->isProduct($url)) {
-
-			$route['controller'] = 'Catalog';
-			$route['action'] = 'product';
-
-			self::$route = $route;
-			self::$aCategoryOrProduct = $product;
-			return true;
-
-// это страница не продукт и не категория
-		} else {
+//		if ($url && $category = App::$app->category->isCategory($url)) {
+//			$route['controller'] = 'Catalog';
+//			$route['action'] = 'category';
+//
+//			self::$route = $route;
+//			self::$aCategoryOrProduct = $category;
+//			return true;
+//
+//// это продукт
+//		} elseif ($url && $product = App::$app->product->isProduct($url)) {
+//
+//			$route['controller'] = 'Catalog';
+//			$route['action'] = 'product';
+//
+//			self::$route = $route;
+//			self::$aCategoryOrProduct = $product;
+//			return true;
+//
+//// это страница не продукт и не категория
+//		} else {
 
 			foreach (self::$routes as $pattern => $route) {
 
@@ -60,8 +60,8 @@ class Router
 					return true;
 				}
 			}
-		}
-		return false;
+//		}
+//		return false;
 	}
 
 	public static function dispatch($url)

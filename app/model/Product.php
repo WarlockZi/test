@@ -176,7 +176,7 @@ class Product extends Model
 	public function isProduct($url)
 	{
 
-		if ($product = $this->findOne($url, 'alias')) {
+		if ($product = $this->findOneWhere($url, 'alias')) {
 			$product['parents'][] = $this->getProductParents($product['parent']);
 			while ($last = end($product['parents'])['parent']) {
 				$product['parents'][] = $this->getProductParents($last);

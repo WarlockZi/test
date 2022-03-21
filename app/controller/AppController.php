@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\core\App;
+use app\model\User;
 use Dotenv\Store\StringStore;
 
 class AppController extends Controller
@@ -46,7 +47,7 @@ class AppController extends Controller
 			$_SESSION['back_url'] = $_SERVER['QUERY_STRING'];
 			exit();
 		} else {
-			$this->user = App::$app->user->findOne($_SESSION['id']);
+			$this->user = User::findOneWhere('id',$_SESSION['id']);
 
 			if ($this->user === false) {
 				$_SESSION['id'] = '';
@@ -67,7 +68,7 @@ class AppController extends Controller
 	{
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
 
-			$user = $this->user = App::$app->user->findOne($_SESSION['id']);
+			$user = $this->user = User::findOneWhere('id',$_SESSION['id']);
 
 			if ($this->user === false) {
 				$errors[] = 'Неправильные данные для входа на сайт';

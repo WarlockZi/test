@@ -30,7 +30,6 @@ class Accordion_sidebar
 	protected function run()
 	{
 		$this->tree = $this->getAssoc();
-//		$this->tree = $this->hierachy();
 		$this->menuHTML = $this->showCat(0,$this->tree);
 		$this->output();
 	}
