@@ -3,8 +3,10 @@
 namespace app\controller;
 
 use app\core\App;
+use app\model\Right;
 use app\view\components\CustomList\CustomList;
 use app\view\View;
+use app\model\User;
 
 
 class UserController extends AppController
@@ -21,9 +23,7 @@ class UserController extends AppController
 
 	public function actionList()
 	{
-//		$this->auth();
-
-		$users = App::$app->user->findAll('users');
+		$users = User::findAll();
 		$this->set(compact('users'));
 
 		$users_table = $this->usersTable($users)->html;
@@ -90,8 +90,8 @@ class UserController extends AppController
 			header('Location: /adminsc/user/list');
 		};
 
-		$user = App::$app->user->findOne($id);
-		$rights = App::$app->right->findAll();;
+		$user = User::findOneWhere('id',$id);
+		$rights = Right::findAll();;
 
 		$this->set(compact('user', 'rights'));
 	}
@@ -102,7 +102,7 @@ class UserController extends AppController
 
 		if (array_intersect(['role_employee'], $this->user['rights']) || defined('SU')) {
 			if (isset($this->route['id'])) {
-				$user = App::$app->user->findOne($this->route['id']);
+				$user = User::findOneWhere('id',$this->route['id']);
 				$this->set(compact('user'));
 			}
 			$this->view = 'adminEdit';

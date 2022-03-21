@@ -11,23 +11,6 @@ class Adminsc extends Model {
 
    }
 
-   public function where($fName = '', $fAct = '', $fArt = '', $prop = []) {
-      $where = ' WHERE ';
-      $and = '';
-      if ($fName) {
-         $where .= " name LIKE ? ";
-         $and = ' and ';
-      }
-//      if ($fAct) {
-      $where .= $and . ' act = ?';
-      $and = ' and ';
-//      }
-      if ($fArt) {
-         $where .= $and . " art LIKE ?";
-      }
-      return $where;
-   }
-
    public function params($fName = '', $fAct = '', $fArt = '', $prop = []) {
       $params = [];
 
@@ -44,25 +27,5 @@ class Adminsc extends Model {
       return $params;
    }
 
-
-
-   public function addUser() {
-
-// Следующий id вопроса
-      $sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'users'";
-      $next = $this->findBySql($sql)[0];
-      $uId = $next['Auto_increment'];
-
-      $us = App::$app->user->findAll();
-      $rightTypes = App::$app->user->getRightTypes();
-
-      ob_start();
-      require APP . '/view/Adminsc/newUser.php';
-      $answer = ob_get_clean();
-
-      compact('answer');
-
-      echo $answer;
-   }
 
 }

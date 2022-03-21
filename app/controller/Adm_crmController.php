@@ -1,10 +1,7 @@
 <?php
 
 namespace app\controller;
-
-use app\core\App;
-use app\view\View;
-use app\controller\AdminscController;
+use app\model\TestResult;
 
 class Adm_crmController extends AdminscController
 {
@@ -23,7 +20,7 @@ class Adm_crmController extends AdminscController
 
 	public function actionTestResults()
 	{
-		$res = App::$app->testresult->findAll('testResults');
+		$res = TestResult::findAll('testResults');
 		$this->set(compact('res'));
 	}
 

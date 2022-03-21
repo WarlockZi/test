@@ -2,9 +2,6 @@
 
 namespace app\model;
 
-use app\core\App;
-use app\model\Model;
-
 
 class TestResult extends Model
 {

@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\core\App;
+use app\model\Product;
 use app\view\View;
 use app\controller\AdminscController;
 
@@ -47,7 +48,7 @@ class Adm_settingsController extends AdminscController {
    public function actionModule() {
 
       $id = $this->route['id'];
-      $module = App::$app->instructions->findOne($id);
+      $module = Instructions::findOneWhere('id',$id);
       $this->vars['module'] = $module;
    }
 
@@ -80,7 +81,7 @@ class Adm_settingsController extends AdminscController {
 
    public function actionProps() {
 
-      $catProps = App::$app->product->findAll('props', "`sort`");
+      $catProps = Product::findAll('props', "`sort`");
       foreach ($catProps as $k => $v) {
          $catProps[$k]['val'] = explode(',', $catProps[$k]['val']);
       };
@@ -92,7 +93,7 @@ class Adm_settingsController extends AdminscController {
       if (isset($_GET['id']) && $_GET['id']) {
          $id = $_GET['id'];
       }
-      $prop = App::$app->prop->findOne($id);
+      $prop = Prop::findOneWhere('id',$id);
       $prop['val'] = $prop['val']?explode(',', $prop['val']):[];
 
       $this->vars['prop'] = $prop;

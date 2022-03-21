@@ -19,14 +19,6 @@ abstract class Model
 		$this->pdo = DB::instance();
 	}
 
-	public
-	function autoincrement()
-	{
-		$params = [$this->table];
-		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";
-		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
-	}
-
 	public function create($values = [])
 	{
 		if (isset($values['id'])) unset($values['id']);
@@ -47,9 +39,7 @@ abstract class Model
 		}
 	}
 
-
-	public
-	function update($values)
+	public function update($values)
 	{
 		$id = $values['id'];
 		if (!$id) exit('empty or undefined id');
@@ -122,8 +112,15 @@ here;
 		}
 	}
 
-	public
-	function updateOrCreate($id, $values)
+
+	public function find($id = [])
+	{
+		$id = implode(',', array_map('intval', $id));
+		$sql = "SELECT * FROM {$this->table} WHERE id IN (?)";
+		return $this->pdo->query($sql, [$id]);
+	}
+
+	public function updateOrCreate($id, $values)
 	{
 		if ($this->find([$id])) {
 			$this->update($values);
@@ -134,8 +131,7 @@ here;
 		}
 	}
 
-	public
-	function firstOrCreate($field, $val, $row)
+	public function firstOrCreate($field, $val, $row)
 	{
 		$found = App::$app->{$this->model}->findOneWhere($field, $val);
 		if (!$found) {
@@ -145,92 +141,37 @@ here;
 		return $found;
 	}
 
-
-	function multi_implode($glue, $array)
+	public static function findAll($table = '', $sort = '')
 	{
-		$_array = array();
-		foreach ($array as $val)
-			$_array[] = is_array($val) ? $this->multi_implode($glue, $val) : $val;
-		return implode($glue, $_array);
+		$model = new static();
+		$sql = "SELECT * FROM " . ($table ?: $model->table) . ($sort ? " ORDER BY {$sort}" : "");
+		return $model->pdo->query($sql);
 	}
 
-	public
-	function clean_data($str)
+	public static function findAllWhere($field, $value)
 	{
-		return strip_tags(trim($str));
+		$model = new static();
+		$sql = "SELECT * FROM {$model->table} WHERE $field = ? ";
+		return $model->pdo->query($sql, [$value]);
 	}
-
-	public
-	function findAll($table = '', $sort = '')
-	{
-		$sql = "SELECT * FROM " . ($table ?: $this->table) . ($sort ? " ORDER BY {$sort}" : "");
-		return $this->pdo->query($sql);
-	}
-
-	public
-	function all($table = '', $sort = '')
-	{
-		$sql = "SELECT * FROM " . ($table ?: $this->table) . ($sort ? " ORDER BY {$sort}" : "");
-		return $this->pdo->query($sql);
-	}
-
-	public
-	function findOne($id, $field = '')
-	{
-		$field = $field ?: $this->pk;
-		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
-		$result = $this->pdo->query($sql, [$id]);
-		return $result ? $result[0] : FALSE;
-	}
-
-	public
-	function find($id = [])
-	{
-		$id = implode(',', array_map('intval', $id));
-		$sql = "SELECT * FROM {$this->table} WHERE id IN (?)";
-		return $this->pdo->query($sql, [$id]);
-	}
-
-
-
-
-
 
 	public static function findOneWhere($field, $value)
 	{
-		return (new static())->findOneWhere1($field, $value);
-	}
-
-	private function findOneWhere1($field, $value)
-	{
-		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
-		$item = $this->pdo->query($sql, [$value]);
+		$model = new static();
+		$sql = "SELECT * FROM {$model->table} WHERE $field = ? LIMIT 1";
+		$item = $model->pdo->query($sql, [$value]);
 		return $item[0] ?? null;
 	}
 
-
-
-
-
-	public
-	function findAllWhere($field, $value)
-	{
-		$sql = "SELECT * FROM {$this->table} WHERE $field = ? ";
-		return $this->pdo->query($sql, [$value]);
-	}
-
-	public
-	function findBySql($sql, $params = [])
+	public function findBySql($sql, $params = [])
 	{
 		return $this->pdo->query($sql, $params);
 	}
 
-	public
-	function insertBySql($sql, $params = [])
+	public function insertBySql($sql, $params = [])
 	{
 		return $this->pdo->execute($sql, $params);
 	}
-
 
 	static function removeDirectory($dir)
 	{
@@ -242,8 +183,7 @@ here;
 		return rmdir($dir);
 	}
 
-	public
-	function getBreadcrumbs($category, $parents, $type)
+	public function getBreadcrumbs($category, $parents, $type)
 	{
 		if ($type == 'category') {
 // в parents массив из адресной строки - надо получить aliases
@@ -275,11 +215,10 @@ here;
 		}
 	}
 
-	public
-	function getAssoc($table)
+	public function getAssoc()
 	{
-		$params = array();
-		$res = App::$app->{$table}->findBySql($this->sql, $params);
+
+		$res = $this->findBySql($this->sql, []);
 
 		if ($res !== FALSE) {
 			$all = [];
@@ -290,8 +229,7 @@ here;
 		}
 	}
 
-	protected
-	function hierachy()
+	protected function hierachy()
 	{
 		$tree = [];
 		$data = $this->data;
@@ -303,6 +241,26 @@ here;
 			}
 		}
 		return $tree;
+	}
+
+	function multi_implode($glue, $array)
+	{
+		$_array = array();
+		foreach ($array as $val)
+			$_array[] = is_array($val) ? $this->multi_implode($glue, $val) : $val;
+		return implode($glue, $_array);
+	}
+
+	public function clean_data($str)
+	{
+		return strip_tags(trim($str));
+	}
+
+	public function autoincrement()
+	{
+		$params = [$this->table];
+		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";
+		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
 	}
 
 }

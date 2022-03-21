@@ -7,6 +7,7 @@ use app\model\Model;
 class Accordion extends Model
 {
 	protected $data;
+	protected $model;
 	protected $tree;
 	protected $menuHTML;
 	protected $class = 'menu';
@@ -19,6 +20,7 @@ class Accordion extends Model
 
 	public function __construct($options = [])
 	{
+		parent::__construct();
 		$this->getOptions($options);
 		$this->run();
 	}

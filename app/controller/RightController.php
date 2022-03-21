@@ -3,9 +3,11 @@
 namespace app\controller;
 
 use app\core\App;
+use app\model\Right;
+use app\model\Test;
 use app\model\User;
-use app\view\components\CustomList\CustomList;
 use app\view\View;
+use app\view\components\CustomList\CustomList;
 
 
 class RightController Extends AppController
@@ -24,7 +26,7 @@ class RightController Extends AppController
 	{
 		$this->view = 'create';
 
-		$rights = App::$app->right->all();
+		$rights = Right::findAll();
 		$this->set(compact('rights'));
 
 		$rights_table = $this->rigtsTable($rights)->html;
@@ -55,6 +57,7 @@ class RightController Extends AppController
 						'field' => 'name',
 						'name' => 'Наименование',
 						'width' => '1fr',
+						'contenteditable'=>'contenteditable',
 						'data-type'=>'string',
 						'sort' => true,
 						'search' => true,
@@ -64,6 +67,7 @@ class RightController Extends AppController
 						'field' => 'description',
 						'name' => 'Описание',
 						'width' => '1fr',
+						'contenteditable'=>'contenteditable',
 						'data-type'=>'string',
 						'sort' => true,
 						'search' => true,
@@ -79,7 +83,7 @@ class RightController Extends AppController
 	{
 		$this->layout = 'admin';
 		$this->view = 'edit_show';
-		$rootTests = App::$app->test->findAllWhere('isTest', 0);
+		$rootTests = Test::findAllWhere('isTest', 0);
 		$test['isTest'] = 1;
 		$this->set(compact('rootTests', 'test'));
 	}
@@ -135,10 +139,10 @@ class RightController Extends AppController
 		$this->view = 'edit_update';
 
 		$id = $this->route['id'];
-		$test = App::$app->test->findOne($id);
-		$test['children'] = App::$app->test->getChildren($id);
+		$test =Test::findOneWhere('id',$id);
+		$test['children'] = Test::findAllWhere('parent',$id);
 
-		$rootTests = App::$app->test->findAllWhere('isTest', 0);
+		$rootTests = Test::findAllWhere('isTest', 0);
 //		$rootTestsTree = $this->hierachy($rootTests, 'parent');
 		$this->set(compact('rootTests', 'test'));
 	}

@@ -23,7 +23,9 @@
 		<? foreach ($this->columns as $column): ?>
 
 		  <div class="<?= $column['className']; ?>"
-		       data-id="<?= $model['id']; ?>"><?= $this->prepareData($column, $model); ?></div>
+		       data-id="<?= $model['id']; ?>"
+		       <?= $column['contenteditable']??''; ?>
+		  ><?= $this->prepareData($column, $model); ?></div>
 
 		<? endforeach; ?>
 

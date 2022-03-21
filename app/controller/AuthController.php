@@ -23,7 +23,7 @@ class AuthController extends AppController
 
 			if (!$user['password']) exit('empty password');
 			if (!$user['email']) exit('empty email');
-			$found = App::$app->user->findOneWhere('email', $user['email']);
+			$found = User::findOneWhere('email', $user['email']);
 			if ($found) exit('mail exists');
 
 			$hash = md5(microtime());
@@ -69,7 +69,7 @@ class AuthController extends AppController
 	{
 		$hash = $_GET['hash'];
 		if (!$hash) header('Location:/');
-		$user = App::$app->user->findOneWhere('hash', $hash);
+		$user = User::findOneWhere('hash', $hash);
 		if ($user) {
 			$user['confirm'] = "1";
 			if (App::$app->user->update($user)) {
@@ -105,7 +105,7 @@ class AuthController extends AppController
 		if ($data = $this->ajax) {
 			$old_password = $this->preparePassword($data['old_password']);
 
-			if ($user = App::$app->user->findOneWhere('password', $old_password)) {
+			if ($user = User::findOneWhere('password', $old_password)) {
 				$user['password'] = $this->preparePassword($data['new_password']);
 				App::$app->user->update($user);
 				exit('ok');
@@ -142,7 +142,7 @@ class AuthController extends AppController
 		if ($data = $this->ajax) {
 
 			$_SESSION['id'] = '';
-			$user = App::$app->user->findOneWhere('email', $data['email']);
+			$user = User::findOneWhere('email', $data['email']);
 
 			if ($user) {
 				$password = $this->randomPassword();

@@ -3,6 +3,8 @@
 namespace app\controller;
 
 use app\model\Mail;
+use app\model\Test;
+use app\model\TestResult;
 use app\view\View;
 use app\view\widgets\menu\Menu;
 use app\core\App;
@@ -58,7 +60,7 @@ class TestController Extends AppController
 		$this->set(compact('paths'));
 
 		$test['isTest'] = 0;
-		$rootTests = App::$app->test->findAllWhere('isTest', 0);
+		$rootTests = Test::findAllWhere('isTest', 0);
 		$this->set(compact('rootTests', 'test'));
 //		View::setCss('admin.css');
 //		View::setJs('admin.js');
@@ -95,7 +97,7 @@ class TestController Extends AppController
 	public function actionResult()
 	{
 		$cache = $this->route['cache'];
-		$res = App::$app->testresult->findOne($cache);
+		$res = TestResult::findOneWhere('cache',$cache);
 		$this->set(compact('res'));
 
 		exit($res['html']);
@@ -242,7 +244,7 @@ class TestController Extends AppController
 					$error = '<H1>Теста с таким номером нет.</H1>';
 					$this->set(compact('error'));
 				} else {
-					$test = App::$app->test->findOne($testId);
+					$test = Test::findOneWhere('id',$testId);
 					$this->set(compact('test'));
 					$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
 					unset($testData['correct_answers']);
@@ -273,8 +275,8 @@ class TestController Extends AppController
 		$this->set(compact('page_name'));
 
 		$id = $this->route['id'];
-		$test = App::$app->test->findOne($id);
-		$test['children'] = App::$app->test->getChildren($id);
+		$test =Test::findOneWhere('id',$id);
+		$test['children'] = Test::findAllWhere('parent',$id);;
 		$this->set(compact('test'));
 
 		$paths = $this->paths();
@@ -292,7 +294,7 @@ class TestController Extends AppController
 
 	private function paths()
 	{
-		return App::$app->test->findAllWhere('isTest', '0');
+		return Test::findAllWhere('isTest', '0');
 	}
 
 	public function actionTests()
@@ -302,7 +304,7 @@ class TestController Extends AppController
 
 	private function isTest()
 	{
-		return App::$app->test->findAllWhere('isTest', '1');
+		return Test::findAllWhere('isTest', '1');
 	}
 
 	public function actionEdit()
@@ -313,10 +315,10 @@ class TestController Extends AppController
 
 		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
 		if ($id) {
-			$test = App::$app->test->findOne($id);
+			$test = Test::findOneWhere('id',$id);
 			if ($test) {
 				if (!$test['isTest']) {
-					$test['children'] = App::$app->test->getChildren($id);
+					$test['children'] = Test::findAllWhere('parent',$id);;
 				}
 			}
 			$tests = $this->isTest();

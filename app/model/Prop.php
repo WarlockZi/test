@@ -4,6 +4,7 @@ namespace app\model;
 
 use app\core\App;
 use app\model\Model;
+use Engine\Service\Database\Provider;
 
 class Prop extends Model {
 
@@ -11,24 +12,24 @@ class Prop extends Model {
 
    public static function getPropsVals($props = array()) {
       foreach ($props as $k => $v) {
-         $props[$k]['vals'] = App::$app->product->findOneWhere($v, 'parent', 'props');
+         $props[$k]['vals'] = Product::findOneWhere($v, 'parent', 'props');
       };
       return $props;
    }
 
    public static function getVals($id) {
-      return App::$app->product->findOneWhere($id, 'parent', 'props');
+      return Product::findOneWhere($id, 'parent', 'props');
    }
 
    public static function getAll() {
 
-      return App::$app->product->findAll('props');
+      return Product::findAll('props');
    }
 
    public static function getAllWithVals() {
       $props = self::getAll();
       foreach ($props as $key => $value) {
-         $props[$key]['vals'] = App::$app->product->findOneWhere($value['id'], 'parent', 'vals');
+         $props[$key]['vals'] = Product::findOneWhere($value['id'], 'parent', 'vals');
       }
       return $props;
    }

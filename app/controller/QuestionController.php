@@ -7,6 +7,8 @@ namespace app\controller;
 //use app\view\View;
 //use app\view\widgets\menu\Menu;
 use app\core\App;
+use app\model\Answer;
+use app\model\Question;
 use mysql_xdevapi\Exception;
 
 class QuestionController Extends AppController
@@ -84,7 +86,7 @@ class QuestionController Extends AppController
 		if ($ids = $this->ajax) {
 			$id = $ids['id'];
 			$testId = $ids['test_id'];
-			$q = App::$app->question->findOne($id);
+			$q = Question::findOneWhere('id',$id);
 			$q['parent'] = $testId;
 			App::$app->question->update($q);
 			exit(json_encode(['msg' => 'ok']));
@@ -109,7 +111,7 @@ class QuestionController Extends AppController
 	{
 		$q_id = $this->ajax['q_id'];
 
-		$answers = App::$app->answer->findAllWhere('parent_question', $q_id);
+		$answers = Answer::findAllWhere('parent_question', $q_id);
 		foreach ($answers as $answer) {
 			App::$app->answer->delete($answer['id']);
 		}
@@ -121,7 +123,7 @@ class QuestionController Extends AppController
 	{
 		$q_id = $this->ajax['q_id'];
 
-		$answers = App::$app->answer->findOneWhere('parent_question', $q_id);
+		$answers = Answer::findOneWhere('parent_question', $q_id);
 		foreach ($answers as $answer) {
 			App::$app->answer->delete($answer['id']);
 		}
