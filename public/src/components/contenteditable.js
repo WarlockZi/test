@@ -12,14 +12,11 @@ export default function contenteditable() {
 
 
 
+
+
   function handleInput(e) {
   }
-
-  const debouncedHandle = debounce(handleInput, 250);
-
-// Передаём новую debounced-функцию в addEventListener:
-  searchInput.addEventListener("input", debouncedHandle);
-
+  searchInput.addEventListener("input", handleInput);
 
   function debounce(callee, timeoutMs) {
     return function perform(...args) {
