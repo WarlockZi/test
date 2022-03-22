@@ -158,9 +158,9 @@ export const _test = {
     let url = `/adminsc/test/update/${model.id}`
     let res = await post(url, model)
     res = await JSON.parse(res)
-    // if (res) {
-    //   window.location.href = `/adminsc/test/edit/${model.id}`
-    // }
+    if (res) {
+      window.location.href = `/adminsc/test/edit/${model.id}`
+    }
   },
 
   delete: async function () {

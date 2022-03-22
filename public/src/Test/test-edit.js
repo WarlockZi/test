@@ -53,7 +53,6 @@ export default function testEdit() {
     _question.showFirst()
   }
 
-  // $('.test__update').on('click', _test.update.bind(null, parentSelect.selectedOption, enableSelect.selectedOption))
   $('.test-path__update').on('click', _test.update)
 
 // $('.question__sort').on('change', validate.sort)
