@@ -2,6 +2,7 @@ import './list.scss';
 import {$} from '../../common';
 
 export default function list(selector) {
+  // debugger;
 
   $('html').ready(function () {
     const table = $('.custom-list')[0]
