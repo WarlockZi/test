@@ -1,4 +1,4 @@
-<div class="custom-list <?= $this->tableClassName ?>"
+<div class="custom-list" data-model="<?= $this->tableClassName ?>"
      style="display: grid;<?= $this->grid ?>">
 
 

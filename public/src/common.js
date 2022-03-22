@@ -196,8 +196,15 @@ class ElementCollection extends Array  {
     this[0].appendChild(el)
   }
 
-  find = function (selector) {
-      return this[0].querySelector(selector)
+  find = function (item) {
+    if (typeof item === 'string'){
+      return this[0].querySelector(item)
+    }else{
+      let filtered =  this[0].filter((el)=>{
+        return el === item
+      })
+      return filtered[0]
+    }
   }
 
 
