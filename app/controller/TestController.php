@@ -97,7 +97,7 @@ class TestController Extends AppController
 	public function actionResult()
 	{
 		$cache = $this->route['cache'];
-		$res = TestResult::findOneWhere('cache',$cache);
+		$res = TestResult::findOneWhere('cache', $cache);
 		$this->set(compact('res'));
 
 		exit($res['html']);
@@ -229,22 +229,25 @@ class TestController Extends AppController
 
 	public function actionDo()
 	{
-//		if (User::can($this->user, 'test-do_read')) {
+		$su = defined('SU');
+		if (User::can($this->user, 'test-do_read') || $su) {
 
 			$pagination = '';
 			$testData = '';
 			$page_name = 'Прохождение тестов';
+
 			$this->set(compact('page_name'));
 			$testId = isset($this->route['alias']) ? (int)$this->route['alias'] : '';
-			$menuTestDo = $this->getMenu();
-			$this->set(compact('menuTestDo'));
+
+//			$menuTestDo = $this->getMenu();
+//			$this->set(compact('menuTestDo'));
 
 			if ($testId) {
 				if (!$testData = App::$app->test->getTestData($testId, true)) {
 					$error = '<H1>Теста с таким номером нет.</H1>';
 					$this->set(compact('error'));
 				} else {
-					$test = Test::findOneWhere('id',$testId);
+					$test = Test::findOneWhere('id', $testId);
 					$this->set(compact('test'));
 					$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
 					unset($testData['correct_answers']);
@@ -254,13 +257,11 @@ class TestController Extends AppController
 
 			$this->set(compact('testData', 'pagination'));
 
-//			$this->layout = 'admin';
-//			View::setJs('admin.js');
-//			View::setCss('admin.css');
-//		}else{
-//		header('Location:/auth/cabinet');
+		} else {
 
-//		}
+			header('Location:/');
+
+		}
 	}
 
 	public function actionUpdate()
@@ -275,8 +276,8 @@ class TestController Extends AppController
 		$this->set(compact('page_name'));
 
 		$id = $this->route['id'];
-		$test =Test::findOneWhere('id',$id);
-		$test['children'] = Test::findAllWhere('parent',$id);;
+		$test = Test::findOneWhere('id', $id);
+		$test['children'] = Test::findAllWhere('parent', $id);;
 		$this->set(compact('test'));
 
 		$paths = $this->paths();
@@ -315,10 +316,10 @@ class TestController Extends AppController
 
 		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
 		if ($id) {
-			$test = Test::findOneWhere('id',$id);
+			$test = Test::findOneWhere('id', $id);
 			if ($test) {
 				if (!$test['isTest']) {
-					$test['children'] = Test::findAllWhere('parent',$id);;
+					$test['children'] = Test::findAllWhere('parent', $id);;
 				}
 			}
 			$tests = $this->isTest();

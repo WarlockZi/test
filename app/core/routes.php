@@ -8,7 +8,7 @@ Router::add('^.?search.?', ['controller' => 'search', 'action' => 'index']); // 
 
 //Router::add('^/(?P<action>[a-z]+)/(?P<alias>[0-9]+)$', ['controller' => 'Test']);
 
-Router::add('^test/(?P<alias>[0-9]+)$', ['controller' => 'Test', 'action' => 'do']);
+Router::add('^test\/(?P<alias>[0-9]+)$', ['controller' => 'Test', 'action' => 'do']);
 Router::add('^test/do$', ['controller' => 'Test', 'action' => 'do']);
 //Router::add('^test/edit/(?P<id>[0-9]+)$', ['controller' => 'Test', 'action' => 'edit']);
 //Router::add('^test/edit$', ['controller' => 'Test', 'action' => 'edit']);

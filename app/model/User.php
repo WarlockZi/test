@@ -13,7 +13,6 @@ class User extends Model
 {
 
 	public $table = 'users';
-//	public static $db;
 
 	public function __construct()
 	{
@@ -22,7 +21,6 @@ class User extends Model
 
 	public static function can($user, $right)
 	{
-//		$user = App::$app->user->findOne($user['id']);
 		return in_array($right, $user['rights'])??null;
 	}
 
