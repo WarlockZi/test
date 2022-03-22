@@ -122,15 +122,15 @@ export const _test = {
   },
 
   create: async () => {
-    debugger
     let test = _test.serverModel()
     test.id = 0
     test.isTest = 1
     let url = `/test/updateOrCreate`
     let res = await post(url, test)
     res = await JSON.parse(res)
+    debugger
     if (res) {
-      window.location.href = `/adminsc/test/edit/${res.id - 1}`
+      window.location.href = `/adminsc/test/edit/${res.id}`
     }
   },
 

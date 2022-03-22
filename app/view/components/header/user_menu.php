@@ -28,13 +28,12 @@
 		<!--        <hr>-->
 		<div class="user-menu__menu">
 			<a href="/auth/profile">Изменить свой профиль</a>
+				<? if (array_intersect(['role_employee'], $this->user['rights']) || defined('SU')): ?>
+			  <a class="list__item" href="/adminsc">Admin</a>
+				<? endif; ?>
 
 			<a href="/auth/logout" aria-label="logout">
-				<span class="icon-logout">
-					<? include ICONS . "/auth/logout2.php" ?>
-				</span>
-				Выход
-			</a>
+					<? include ICONS . "/auth/logout2.php" ?>Выход</a>
 		</div>
 	</div>
 <? endif; ?>
