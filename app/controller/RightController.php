@@ -75,6 +75,7 @@ class RightController Extends AppController
 				],
 				'editCol' => true,
 				'delCol' => true,
+				'addButton'=> true,
 			]
 		);
 	}
