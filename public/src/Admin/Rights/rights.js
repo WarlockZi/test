@@ -4,7 +4,7 @@ import list from '@components/list/list'
 import contenteditable from '../../components/contenteditable'
 
 export default function rights() {
-  debugger
+  // debugger
   contenteditable()
 
   list()
