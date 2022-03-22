@@ -20,7 +20,7 @@ debugger
     title: 'Показывать пользователям',
     class: 'enable'
   })
-
+  $('.test__update').on('click', _test.update.bind(null, parentSelect.selectedOption, enableSelect.selectedOption))
   $(".test__save").on('click', _test.update)
   $(".test__delete").on('click', _test.delete)
   $(".test-path__create").on('click', _test.path_create)
