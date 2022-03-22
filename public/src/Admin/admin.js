@@ -24,6 +24,7 @@ function navigate(str) {
   switch (true) {
     case /\/adminsc\/settings/.test(str):
     case /\/adminsc\/right\/list/.test(str):
+      // debugger
       rights()
       $("[href='/adminsc/settings']").addClass('current')
       break;
@@ -59,18 +60,18 @@ function navigate(str) {
       break;
 
     case /\/adminsc\/test\/update/.test(str):
+    case /\/adminsc\/test\/show/.test(str):
       testUpdate()
       break;
 
     case /\/adminsc\/test\/pathshow/.test(str):
     case /\/adminsc\/test\/edit/.test(str):
-    case /\/adminsc\/test\/show/.test(str):
       // debugger
       testEdit()
       $("[href='/adminsc/test/edit']").addClass('current')
       break;
 
-    case /\/test/.test(str)||/\/test\/result/.test(str):
+    case /\/test/.test(str) || /\/test\/result/.test(str):
       testDo()
       $("[href='/test/do']").addClass('current')
       break;

@@ -56,6 +56,7 @@
   .admin-sidebar__logo {
     padding: 0;
     background-color: $color-admin-sidebar;
+
   }
 }
 
@@ -72,11 +73,12 @@
   }
 
   .logo_vitex {
-    background: 5b626e;
+    width: -webkit-fill-available;
+    //background: #5b626e;
     padding: 25px 38px;
     position: relative;
     left: inherit;
-    width: inherit;
+    //width: inherit;
     height: inherit;
     @include _800 {
       position: relative;

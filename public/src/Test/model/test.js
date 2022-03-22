@@ -122,6 +122,7 @@ export const _test = {
   },
 
   create: async () => {
+    debugger
     let test = _test.serverModel()
     test.id = 0
     test.isTest = 1
