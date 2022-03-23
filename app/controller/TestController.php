@@ -119,10 +119,10 @@ class TestController Extends AppController
 	{
 		if (User::can($this->user, 4) || defined(SU)) {
 			if (App::$app->test->delete($this->ajax['test']['id'])) {
-				exit(json_encode(['msg' => 'ok']));
+				$this->exitWith('ok');
 			}
 		}
-		App::$app->test->update($this->ajax['test']);
+		Test::update($this->ajax['test']);
 		exit(json_encode(['notAdmin' => true]));
 	}
 
@@ -267,7 +267,7 @@ class TestController Extends AppController
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
-			$id = App::$app->test->update($this->ajax);
+			$id = Test::update($this->ajax);
 			exit(json_encode(['id' => $id]));
 		}
 		$this->layout = 'admin';

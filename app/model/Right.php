@@ -9,7 +9,7 @@ class Right extends Model {
 
    protected $table = 'rights';
 
-   private $fillable = [
+   protected $fillable = [
    	'name' => '',
    	'description' => '',
 	];

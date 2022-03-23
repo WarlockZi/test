@@ -77,9 +77,9 @@ class UserController extends AppController
 					],
 				],
 
-				'editCol' =>  true,
-				'delCol' => true,
-				'addButton'=> true,
+				'editCol' =>  'redirect',
+				'delCol' => 'ajax',
+				'addButton'=> 'ajax',//'redirect'
 			]
 		);
 	}
@@ -115,7 +115,7 @@ class UserController extends AppController
 		}
 		if ($user = $this->ajax) {
 			$user['id'] = $_SESSION['id'];
-			App::$app->user->update($user);
+			User::update($user);
 			exit('ok');
 		}
 
@@ -131,7 +131,7 @@ class UserController extends AppController
 			$date = strtotime($data['birthDate']);
 			$data['birthDate'] = date('Y-m-d', $date);
 
-			App::$app->user->update($data);
+			User::update($data);
 			exit('ok');
 		}
 	}

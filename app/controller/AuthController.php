@@ -73,7 +73,7 @@ class AuthController extends AppController
 		$user = User::findOneWhere('hash', $hash);
 		if ($user) {
 			$user['confirm'] = "1";
-			if (App::$app->user->update($user)) {
+			if (User::update($user)) {
 				$this->setAuth($user);
 				header('Location:/auth/cabinet');
 				$this->exitWith('"Вы успешно подтвердили свой E-mail."');
@@ -108,7 +108,7 @@ class AuthController extends AppController
 
 			if ($user = User::findOneWhere('password', $old_password)) {
 				$user['password'] = $this->preparePassword($data['new_password']);
-				App::$app->user->update($user);
+				User::update($user);
 				exit('ok');
 			}
 			exit('fail');
@@ -148,7 +148,7 @@ class AuthController extends AppController
 			if ($user) {
 				$password = $this->randomPassword();
 				$user['password'] = $this->preparePassword($password);
-				App::$app->user->update($user);
+				User::update($user);
 
 				$data['to'] = [$data['email']];
 				$data['subject'] = 'Новый пароль';
