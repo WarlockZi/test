@@ -1,22 +1,34 @@
-import {$} from '../common'
+import {$, popup, post} from '../common'
 
 export default function contenteditable() {
+  let customList = $('.custom-list')[0]
   let contenteditable = $('[contenteditable]')
-  let model = $('.custom-list')[0]
-  let debounceTimer
 
-  if (model && contenteditable) {
-    $(model).on('keyup', handle.bind(model, contenteditable))
+  const debouncedHandle =
+    debounce(handleInput.bind(null, customList, contenteditable), 1000);
+
+  if (customList && contenteditable) {
+    $(customList).on('keyup', debouncedHandle)
   }
 
-
-
-
-
-
-  function handleInput(e) {
+  function handleInput(customList, contenteditable, e) {
+    let el = e.target
+    let modelName = customList.dataset['model']
+    let model = serverModel(el, modelName)
+    let isContEditable = $(contenteditable).find(el)
+    if (isContEditable) {
+      save(model)
+    }
   }
-  searchInput.addEventListener("input", handleInput);
+
+  async function save(model) {
+    let url = `/adminsc/${model.modelName}/update`
+    let res = await post(url, model.model)
+    res = JSON.parse(res)
+    if (res.msg === 'updated') {
+      popup.show('Сохранено!')
+    }
+  }
 
   function debounce(callee, timeoutMs) {
     return function perform(...args) {
@@ -29,42 +41,16 @@ export default function contenteditable() {
     };
   }
 
-
-
-
-
-
-
-  function handle(e) {
-    if (['NumpadEnter', 'Enter'].includes(e.code)) {
-      save()
-    } else {
-
-      let text = e.target
-
-      // inputed(e.target, contenteditable)
-      // debugger
-      if (debounceTimer) {
-        clearTimeout(debounceTimer)
-      }
-      debounceTimer = setTimeout(inputed.bind(model, contenteditable), 3000)
-
+  function serverModel(el, modelName) {
+    let field = el.className
+    return {
+      model: {
+        token: $(),
+        id: el.dataset.id,
+        [field]: el.innerText
+      },
+      modelName
     }
-  }
-
-  function inputed(target, contenteditable) {
-
-
-    let el = $(contenteditable).find(target)
-    if (el) {
-      save()
-      // alert(el.innerText)
-    }
-  }
-
-  function save() {
-    alert('dd')
-
   }
 }
 

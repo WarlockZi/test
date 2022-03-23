@@ -16,15 +16,13 @@ class CustomList
 	private $modelName = '';
 	private $tableClassName = '';
 	private $searchStr = ' <input type="text">';
-	private $template = '';
-	private $header = '';
-
+//	private $template = '';
+//	private $header = '';
 
 	public function __construct($options)
 	{
 		$this->getOptions($options);
 		$this->run();
-
 	}
 
 	protected function getOptions($options)
@@ -38,19 +36,24 @@ class CustomList
 
 	protected function run()
 	{
-		$this->gridTemplate();
+		$this->prepareGgridHeader();
 
 		return $this->template();
 	}
 
-	protected function gridTemplate(): void
+	protected function prepareGgridHeader(): void
 	{
 		foreach ($this->columns as $colName => $data) {
 			$this->grid .= ' ' . $data['width'] ?? ' 1fr';
 
 		}
-		$this->grid .= $this->editCol ? ' 50px' : '';
-		$this->grid .= $this->delCol ? ' 50px' : '';
+		if ($this->editCol) {
+			$this->grid .= $this->editCol ? ' 50px' : '';
+		}
+
+		if ($this->delCol) {
+			$this->grid .= $this->delCol ? ' 50px' : '';
+		}
 	}
 
 	protected function prepareData(array $column, array $model): string

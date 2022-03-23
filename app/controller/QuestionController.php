@@ -2,10 +2,6 @@
 
 namespace app\controller;
 
-//use app\model\User;
-//use app\model\Test;
-//use app\view\View;
-//use app\view\widgets\menu\Menu;
 use app\core\App;
 use app\model\Answer;
 use app\model\Question;
@@ -88,7 +84,7 @@ class QuestionController Extends AppController
 			$testId = $ids['test_id'];
 			$q = Question::findOneWhere('id',$id);
 			$q['parent'] = $testId;
-			App::$app->question->update($q);
+			Question::update($q);
 			exit(json_encode(['msg' => 'ok']));
 		}
 	}

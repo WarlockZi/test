@@ -21,6 +21,7 @@ abstract class Model
 
 	public function create($values = [])
 	{
+		return 54;
 		if (isset($values['id'])) unset($values['id']);
 		if (isset($values['token'])) unset($values['token']);
 		$values = $values ? $values : $this->fillable;
@@ -39,7 +40,7 @@ abstract class Model
 		}
 	}
 
-	public function update($values)
+	public static function update($values)
 	{
 		$id = $values['id'];
 		if (!$id) exit('empty or undefined id');
@@ -56,9 +57,10 @@ abstract class Model
 		$par = trim($par, ' '); // first trim last space
 		$par = trim($par, ',');
 
-		$sql = "UPDATE `{$this->table}` SET {$par} WHERE id = ?";
+		$model = new static();
+		$sql = "UPDATE `{$model->table}` SET {$par} WHERE id = ?";
 
-		if ($this->insertBySql($sql, [$id])) {
+		if ($model->insertBySql($sql, [$id])) {
 			return true;
 		}
 		return 'Видимо, ошибка в запросе!';

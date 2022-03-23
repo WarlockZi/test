@@ -73,9 +73,9 @@ class RightController Extends AppController
 						'search' => true,
 					],
 				],
-				'editCol' => true,
-				'delCol' => true,
-				'addButton'=> true,
+				'editCol' => false,
+				'delCol' => 'ajax',
+				'addButton'=> 'ajax',//'redirect'
 			]
 		);
 	}
@@ -94,7 +94,7 @@ class RightController Extends AppController
 	{
 		if ($this->ajax) {
 			if ($id = App::$app->right->create($this->ajax)) {
-				$q_id = App::$app->question->create();
+//				$q_id = App::$app->question->create();
 				exit(json_encode([
 					'id' => $id,
 				]));
@@ -118,23 +118,24 @@ class RightController Extends AppController
 
 	public function actionDelete()
 	{
+		$id = $this->ajax['id']??$_POST['id'];
 		if (User::can($this->user, 'right_delete') || defined(SU)) {
-			if (App::$app->right->delete($this->ajax['id'])) {
-				exit(json_encode(['msg' => 'ok']));
+			if (App::$app->right->delete()) {
+				$this->exitWith('ok');
 			}
 		}
-
+//		$this->exitWith('no right_delete');
 		header('Location:/adminsc/right/list');
-//		App::$app->test->update($this->ajax['test']);
-//		exit(json_encode(['notAdmin' => true]));
+
 	}
 
 
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
-			$updated = App::$app->right->update($this->ajax);
-			exit(json_encode(['updated' => $updated]));
+			$updated = Right::update($this->ajax);
+			$this->exitWith('updated' );
+
 		}
 		$this->layout = 'admin';
 		$this->view = 'edit_update';

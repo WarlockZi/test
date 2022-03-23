@@ -1,5 +1,5 @@
 import './list.scss';
-import {$} from '../../common';
+import {$, post, popup} from '../../common';
 
 export default function list(selector) {
   // debugger;
@@ -8,8 +8,13 @@ export default function list(selector) {
     const table = $('.custom-list')[0]
     const headers = table.querySelectorAll('.head')
     const inputs = table.querySelectorAll('.head input')
-    const tableBody = table.querySelectorAll('[data-id]')
+    // const tableBody = table.querySelectorAll('[data-id]')
     const ids = $(table)[0].querySelectorAll('.id:not(.head')
+    const delButtons = $(table)[0].querySelectorAll('.del')
+
+    const modelName = table.dataset['model']
+    const addModelButton = $(`.add-model[data-model="${modelName}"]`)[0]
+    // const delModelButton = $(`.del`)
     const rows = []
     for (let i = 0; i < ids.length; i++) {
       let id = ids[i].dataset.id
@@ -17,7 +22,52 @@ export default function list(selector) {
       rows.push(row)
     }
 
-    // const rows = table.querySelectorAll('td')
+    if (addModelButton) {
+      $(addModelButton).on('click', modelCreate.bind(null, modelName))
+    }
+
+    [].forEach.call(delButtons,function (el) {
+      // debugger
+      $(el).on('click', modelDel.bind(el))
+    })
+
+    async function modelDel(e){
+      debugger
+
+      let self = this
+    }
+
+    // async function modelDel(modelName) {
+    //   let res = await post(`/adminsc/${modelName}/create`, {id:})
+    //   res = JSON.parse(res)
+    //   if (res.id) {
+    //     newRow(res.id - 1)
+    //     popup.show('Создано')
+    //   }
+    // }
+
+    async function modelCreate(modelName) {
+      let res = await post(`/adminsc/${modelName}/create`, {})
+      res = JSON.parse(res)
+      if (res.id) {
+        newRow(res.id - 1)
+        popup.show('Создано')
+      }
+    }
+
+    function newRow(id) {
+      let newRow = [...rows[0]];
+      [].forEach.call(newRow, function (el) {
+        if (['id'].includes(el.className)){
+          el.innerText = id
+          el.dataset['id']= id
+        }else if(!['del','edit','save'].includes(el.className)){
+          el.innerText = ''
+          el.dataset['id']= id
+        }
+        table.appendChild(el.cloneNode(true))
+      });
+    }
 
     // Направление сортировки
     const directions = Array.from(headers).map(function (header) {
@@ -40,7 +90,7 @@ export default function list(selector) {
     function showAllRows() {
       [].forEach.call(rows, (row) => {
         [].forEach.call(row, el => {
-          el.style.display ='flex'
+          el.style.display = 'flex'
         })
       })
     }
@@ -58,12 +108,11 @@ export default function list(selector) {
         const regexp = new RegExp(`${value}`, 'gi')
         if (!str.match(regexp)) {
           [].forEach.call(row, el => {
-            el.style.display ='none'
+            el.style.display = 'none'
           })
         }
       });
     };
-
 
     function sortColumn(index) {
       // Получить текущее направление
@@ -111,7 +160,6 @@ export default function list(selector) {
       });
     };
 
-
     [].forEach.call(headers, function (header, index) {
       const className = header.className
       header.addEventListener('click', function (e) {
@@ -126,8 +174,6 @@ export default function list(selector) {
           search(index, input)
         })
       }
-
-
     })
 
   })
