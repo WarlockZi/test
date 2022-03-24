@@ -17,13 +17,13 @@ class AnswerController Extends AppController
 	public function actionCreate()
 	{
 		$d = 0;
-		$id = App::$app->answer->create($this->ajax)-1;
+		$id = Answer::create($this->ajax)-1;
 		exit(json_encode(['id'=>$id, 'msg'=>'ok']));
 	}
 
 	public function actionDelete()
 	{
-		if (App::$app->answer->delete($this->ajax['a_id'])) {
+		if (Answer::delete($this->ajax['a_id'])) {
 			exit(json_encode(['msg' => 'ok']));
 		}
 
@@ -35,7 +35,7 @@ class AnswerController Extends AppController
 			$a_id = App::$app->answer->autoincrement();
 			$q_id = $this->ajax['q_id'];
 
-			App::$app->answer->create([]);
+			Answer::create([]);
 		}
 		$index = 1;
 		$answer = include ROOT . '/app/view/Test/edit_BlockAnswer.php';

@@ -109,9 +109,9 @@ class QuestionController Extends AppController
 
 		$answers = Answer::findAllWhere('parent_question', $q_id);
 		foreach ($answers as $answer) {
-			App::$app->answer->delete($answer['id']);
+			Answer::delete($answer['id']);
 		}
-		App::$app->question->delete($q_id);
+		Question::delete($q_id);
 		exit(json_encode(['msg' => 'Вопрос и ответы удалены', 'q_id' => $q_id]));
 	}
 
@@ -121,9 +121,9 @@ class QuestionController Extends AppController
 
 		$answers = Answer::findOneWhere('parent_question', $q_id);
 		foreach ($answers as $answer) {
-			App::$app->answer->delete($answer['id']);
+			Answer::delete($answer['id']);
 		}
-		App::$app->question->delete($q_id);
+		Question::delete($q_id);
 		exit(json_encode(['msg' => 'ok', 'q_id' => $q_id]));
 	}
 

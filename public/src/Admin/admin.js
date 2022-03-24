@@ -24,12 +24,10 @@ function navigate(str) {
   switch (true) {
     case /\/adminsc\/settings/.test(str):
     case /\/adminsc\/right\/list/.test(str):
+    case /\/adminsc\/post\/list/.test(str):
+    case /\/adminsc\/todo\/list/.test(str):
       // debugger
       rights()
-      $("[href='/adminsc/settings']").addClass('current')
-      break;
-    case /\/adminsc\/Sitemap/.test(str):
-      settings()
       $("[href='/adminsc/settings']").addClass('current')
       break;
 
@@ -74,6 +72,11 @@ function navigate(str) {
     case /\/test/.test(str) || /\/test\/result/.test(str):
       testDo()
       $("[href='/test/do']").addClass('current')
+      break;
+
+    case /\/adminsc\/Sitemap/.test(str):
+      settings()
+      $("[href='/adminsc/settings']").addClass('current')
       break;
 
     default:

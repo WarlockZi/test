@@ -9,16 +9,17 @@ export default function contenteditable() {
 
   if (customList && contenteditable) {
     $(customList).on('keyup', debouncedHandle)
+    $(customList).on('blur', handleInput.bind(null, customList, contenteditable))
   }
 
   function handleInput(customList, contenteditable, e) {
     let el = e.target
     let modelName = customList.dataset['model']
-    let model = serverModel(el, modelName)
-    let isContEditable = $(contenteditable).find(el)
-    if (isContEditable) {
+    let model = makeServerModel(el, modelName)
+    // let isContEditable = $(contenteditable).find(el)
+    // if (isContEditable) {
       save(model)
-    }
+    // }
   }
 
   async function save(model) {
@@ -41,8 +42,8 @@ export default function contenteditable() {
     };
   }
 
-  function serverModel(el, modelName) {
-    let field = el.className
+  function makeServerModel(el, modelName) {
+    let field = el.dataset['field']
     return {
       model: {
         token: $(),
