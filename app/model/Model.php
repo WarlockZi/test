@@ -19,22 +19,23 @@ abstract class Model
 		$this->pdo = DB::instance();
 	}
 
-	public function create($values = [])
+	public static function create($values = [])
 	{
-		return 54;
+		$model = new static();
+
 		if (isset($values['id'])) unset($values['id']);
 		if (isset($values['token'])) unset($values['token']);
-		$values = $values ? $values : $this->fillable;
+		$values = $values ? $values : $model->fillable;
 		if (isset($values['id'])) unset($values['id']);
 		$fields = implode(',', array_keys($values));
 		$param = array_values($values);
 		$questionMarks = array_fill(0, count($values), '?');
 		$strQMarks = implode(',', array_values($questionMarks));
 
-		$sql = "INSERT INTO {$this->table} ({$fields}) VALUES ({$strQMarks})";
+		$sql = "INSERT INTO {$model->table} ({$fields}) VALUES ({$strQMarks})";
 		try {
-			$this->insertBySql($sql, $param);
-			return $this->autoincrement();
+			$model->insertBySql($sql, $param);
+			return $model->autoincrement();
 		} catch (Exception $e) {
 			exit('Пользователь не создан' . $e->getMessage());
 		}
@@ -66,11 +67,12 @@ abstract class Model
 		return 'Видимо, ошибка в запросе!';
 	}
 
-	public function delete($id)
+	public static function delete($id)
 	{
+		$model = new static();
 		$param = [$id];
-		$sql = "DELETE FROM {$this->table} WHERE  id = ?";
-		return $this->insertBySql($sql, $param);
+		$sql = "DELETE FROM {$model->table} WHERE  id = ?";
+		return $model->insertBySql($sql, $param);
 	}
 
 

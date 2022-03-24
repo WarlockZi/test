@@ -1,4 +1,3 @@
-
 <ul class="admin-layout__sidebar accordion">
 	<a class="admin-sidebar__logo" href="/">
 		 <? include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
@@ -9,7 +8,7 @@
 		Главная
 	</a>
 
-	<? if (array_intersect(['gate_admin', 'role_rop'], $this->user['rights'])||defined('SU')): // admin ?>
+	<? if (array_intersect(['gate_admin', 'role_rop'], $this->user['rights']) || defined('SU')): // admin ?>
 	  <li>
 		  <input type="checkbox" id="crm">
 		  <label for="crm">
@@ -25,7 +24,7 @@
 	<? endif; ?>
 
 
-	<? if (array_intersect(['gate_settings', 'role_rop','su'], $this->user['rights'])||defined('SU')): // admin ?>
+	<? if (array_intersect(['role_admin', 'role_rop'], $this->user['rights']) || defined('SU')): // admin ?>
 	  <li>
 		  <input type="checkbox" id="settings">
 		  <label for="settings">
@@ -34,13 +33,9 @@
 		  </label>
 
 		  <ul>
-					<? if (array_intersect(['gate_admin'], $this->user['rights'])||defined('SU')): // admin ?>
-				 <a class=" neon" href='/adminsc/Sitemap'>Создать SiteMap</a>
-				 <a class=" neon" href='/adminsc/settings/dump'>Dump</a>
-				 <a class=" neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
-				 <a class=" neon" href='/adminsc/settings/pics'>Картинки</a>
-				 <a class=" neon" href='/adminsc/settings/cache'>Очистить кэш</a>
+					<? if (array_intersect(['gate_admin'], $this->user['rights']) || defined('SU')): // admin ?>
 				 <a class=" neon" href='/adminsc/right/list'>Права</a>
+				 <a class=" neon" href='/adminsc/post/list'>Должности</a>
 					<? endif; ?>
 		  </ul>
 	  </li>
@@ -53,13 +48,13 @@
 			Тесты
 		</label>
 		<ul>
-				<? if (array_intersect(['role_employee'], $this->user['rights'])||defined('SU')): // admin ?>
+				<? if (array_intersect(['role_employee'], $this->user['rights']) || defined('SU')): // admin ?>
 			  <a class=" neon" href="/test/do">Проходить тесты</a>
 				<? endif; ?>
-				<? if (array_intersect(['test-edit_read'], $this->user['rights'])||defined('SU')): // admin ?>
+				<? if (array_intersect(['test-edit_read'], $this->user['rights']) || defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/test/edit">Редактировать тесты</a>
 				<? endif; ?>
-				<? if (array_intersect(['test-results_read'], $this->user['rights'])||defined('SU')): // admin ?>
+				<? if (array_intersect(['test-results_read'], $this->user['rights']) || defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/crm/testresults">Результаты тестов </a>
 				<? endif; ?>
 		</ul>
@@ -72,14 +67,17 @@
 			Планирование
 		</label>
 		<ul>
-				<? if (in_array('role_employee', $this->user['rights'])||defined('SU')): // admin ?>
+				<? if (in_array('role_employee', $this->user['rights']) || defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/planning/create">Создать задачи</a>
 				<? endif; ?>
-				<? if (in_array('role_employee', $this->user['rights'])||defined('SU')): // admin ?>
+				<? if (in_array('role_employee', $this->user['rights']) || defined('SU')): // admin ?>
 			  <a class=" neon" href="/adminsc/planning/list">Посмотреть планировки</a>
 				<? endif; ?>
-				<? if (in_array('role_employee', $this->user['rights'])||defined('SU')): // admin ?>
-			  <a class=" neon" href="/adminsc/planning/user">Спланироваться</a>
+				<? if (in_array('role_employee', $this->user['rights']) || defined('SU')): // admin ?>
+			  <a class=" neon" href="/adminsc/planning/plan">Спланироваться</a>
+				<? endif; ?>
+				<? if (in_array('role_employee', $this->user['rights']) || defined('SU')): // admin ?>
+			  <a class=" neon" href="/adminsc/cicles/">Циклограмма</a>
 				<? endif; ?>
 		</ul>
 	</li>
@@ -88,6 +86,21 @@
 		 <? include ICONS . '/admin-menu/grid.svg'; ?>
 		Страт задачи
 	</a>
+
+	<li>
+		<input type="checkbox" id="su">
+		<label for="su">
+				<? include ICONS . '/admin-menu/aperture.svg'; ?>
+			SU
+		</label>
+		<ul>
+			<a class=" neon" href='/adminsc/Sitemap'>Создать SiteMap</a>
+			<a class=" neon" href='/adminsc/settings/dump'>Dump</a>
+			<a class=" neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
+			<a class=" neon" href='/adminsc/settings/pics'>Картинки</a>
+			<a class=" neon" href='/adminsc/settings/cache'>Очистить кэш</a>
+		</ul>
+	</li>
 
 	<li class="admin-layout__sidebar-tail"></li>
 

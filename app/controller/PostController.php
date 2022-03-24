@@ -2,22 +2,21 @@
 
 namespace app\controller;
 
-use app\model\Right;
+use app\model\Post;
 use app\model\User;
 use app\view\View;
 use app\view\components\CustomList\CustomList;
 
 
-class RightController Extends AppController
+class PostController Extends AppController
 {
-	protected $model = Right::class;
-	protected $modelName = 'right';
-	protected $tableName = 'rights';
+	protected $model = Post::class;
+	protected $modelName = 'post';
+	protected $tableName = 'posts';
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-//		$rights = $this->model::findAll();
 		$this->autorize();
 		$this->layout = 'admin';
 		View::setCss('admin.css');
@@ -29,10 +28,13 @@ class RightController Extends AppController
 		$this->view = 'list';
 
 		$items = $this->model::findAll();
-//		$this->set(compact('items'));
+		if (!$items) {
+			$id = Post::create();
+			$items = $this->model::findAll();
+		}
+
 		$table = $this->getTable($items)->html;
 		$this->set(compact('table'));
-
 	}
 
 	private function getTable($items)
@@ -48,7 +50,7 @@ class RightController Extends AppController
 						'field' => 'id',
 						'name' => 'ID',
 						'width' => '50px',
-						'data-type'=>'number',
+						'data-type' => 'number',
 						'sort' => true,
 						'search' => false,
 					],
@@ -58,27 +60,27 @@ class RightController Extends AppController
 						'field' => 'name',
 						'name' => 'Наименование',
 						'width' => '1fr',
-						'contenteditable'=>'contenteditable',
-						'data-type'=>'string',
+						'contenteditable' => 'contenteditable',
+						'data-type' => 'string',
 						'sort' => true,
 						'search' => true,
 					],
-					'description' => [
-						'className' => 'description',
-						'field' => 'description',
-						'name' => 'Описание',
+					'full_name' => [
+						'className' => 'fullname',
+						'field' => 'full_name',
+						'name' => 'Полное наименование',
 						'width' => '1fr',
-						'contenteditable'=>'contenteditable',
-						'data-type'=>'string',
+						'contenteditable' => 'contenteditable',
+						'data-type' => 'string',
 						'sort' => true,
 						'search' => true,
 					],
 				],
-				'editCol' => false,
-//				'editCol' => 'ajax',
+//				'editCol' => false,
+				'editCol' => 'redirect',
 //				'delCol' => false,
 				'delCol' => 'ajax',
-				'addButton'=> 'ajax',//'redirect'
+				'addButton' => 'ajax',//'redirect'
 			]
 		);
 	}
@@ -108,7 +110,7 @@ class RightController Extends AppController
 
 	public function actionDelete()
 	{
-		$id = $this->ajax['id']??$_POST['id'];
+		$id = $this->ajax['id'] ?? $_POST['id'];
 		if (User::can($this->user, 'right_delete') || defined(SU)) {
 			if ($this->model::delete($id)) {
 				$this->exitWith("ok");
@@ -117,14 +119,24 @@ class RightController Extends AppController
 		header('Location:/adminsc/right/list');
 	}
 
+	public function actionEdit()
+	{
+		if ($this->ajax) {
+			$updated = $this->model::update($this->ajax);
+			$this->exitWith('updated');
+		}
+		$this->layout = 'admin';
+		$this->view = 'edit';
+
+	}
 
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
 			$updated = $this->model::update($this->ajax);
-			$this->exitWith('updated' );
+			$this->exitWith('updated');
 		}
-		$this->layout = 'admin';
+
 		$this->view = 'edit_update';
 
 	}

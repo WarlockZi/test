@@ -9,11 +9,11 @@
 		 <? foreach ($this->columns as $i): ?>
 			 <?
 			 $search = $i['search'] ? $this->searchStr : '';
+			 $sort = $i['sort'] ? 'data-sort' : '';
 			 ?>
-		  <div class="head
-	  <?= $i['className'] ?? '' ?>"
+		  <div class="head <?= $i['className'] ?? '' ?>"
 		       data-type="<?= $i['data-type'] ?>"
-		  >
+					<?= $sort ?>>
 					<?= $i['name'] ?> <?= $search ?>
 		  </div>
 		 <? endforeach; ?>
@@ -32,38 +32,21 @@
 			 <? foreach ($this->columns as $column): ?>
 
 			  <div class="<?= $column['className']; ?>"
+			       data-field="<?= $column['field']; ?>"
 			       data-id="<?= $model['id']; ?>"
 						 <?= $column['contenteditable'] ?? ''; ?>
 			  ><?= $this->prepareData($column, $model); ?></div>
 
 			 <? endforeach; ?>
 
-			 <? if ($this->editCol == 'ajax'): ?>
-			  <div class="edit" data-id="<?= $model['id']; ?>">
-				  <div data-id="<?= $model['id']; ?>">
-								<? include EDIT; ?>
-				  </div>
-			  </div>
-			 <? elseif ($this->editCol == 'redirect'): ?>
-			  <div class="edit" data-id="<?= $model['id']; ?>">
-				  <a href="/adminsc/<?= $this->modelName; ?>/edit/<?= $model['id']; ?>">
-								<? include EDIT; ?>
-				  </a>
-			  </div>
+			 <? if ($this->editCol): ?>
+				 <? include ROOT . '/app/view/components/CustomList/edit.php'; ?>
 			 <? endif; ?>
 
-		  <div class="del" data-id="<?= $model['id']; ?>">
-					<? if ($this->delCol == 'ajax'): ?>
-				 <div data-id="<?= $model['id']; ?>">
-							 <? include TRASH; ?>
-				 </div>
-					<? elseif ($this->delCol == 'redirect'): ?>
-				 <a href="/adminsc/<?= $this->modelName; ?>/delete/<?= $model['id']; ?>">
-							 <? include TRASH ?>
-				 </a>
-					<? endif; ?>
+			 <? if ($this->delCol): ?>
+				 <? include ROOT . '/app/view/components/CustomList/del.php'; ?>
+			 <? endif; ?>
 
-		  </div>
 
 		 <? endforeach; ?>
 
@@ -77,7 +60,8 @@
 	<? elseif ($this->addButton === 'redirect'): ?>
 	  <a href="/adminsc/{$this->modelName}/create"
 	     class="add-model"
-	     data-model="<?= $this->modelName; ?>">+</a>
+	     data-model="<?= $this->modelName; ?>">+
+	  </a>
 	<? endif; ?>
 
 

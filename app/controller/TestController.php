@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\model\Mail;
+use app\model\Question;
 use app\model\Test;
 use app\model\TestResult;
 use app\view\View;
@@ -71,8 +72,8 @@ class TestController Extends AppController
 	{
 		if ($this->ajax) {
 
-			if ($id = App::$app->test->create($this->ajax)) {
-				$q_id = App::$app->question->create();
+			if ($id = Test::create($this->ajax)) {
+				$q_id = Question::create();
 				exit(json_encode([
 					'id' => $id,
 				]));
@@ -85,7 +86,7 @@ class TestController Extends AppController
 		if ($this->ajax) {
 
 			if ($id = App::$app->test->updateOrCreate($this->ajax['id'], $this->ajax)) {
-				$q_id = App::$app->question->create();
+				$q_id = Question::create();
 				exit(json_encode([
 					'id' => $id,
 				]));
@@ -118,7 +119,7 @@ class TestController Extends AppController
 	public function actionDelete()
 	{
 		if (User::can($this->user, 4) || defined(SU)) {
-			if (App::$app->test->delete($this->ajax['test']['id'])) {
+			if (Test::delete($this->ajax['test']['id'])) {
 				$this->exitWith('ok');
 			}
 		}
@@ -146,7 +147,7 @@ class TestController Extends AppController
 	public function actionResultdelete($post)
 	{
 		if ($id = $this->ajax['id']) {
-			return App::$app->testresult->delete($id);
+			return TestResult::delete($id);
 
 		}
 	}
@@ -159,7 +160,7 @@ class TestController Extends AppController
 		$testres['questionCnt'] = $_POST['questionCnt'];
 		$testres['testid'] = $_POST['testId'];
 		$testres['testname'] = $_POST['test_name'];
-		return App::$app->testresult->create($testres);
+		return TestResult::create($testres);
 	}
 
 	private static function sendTestRes($post, $resid)

@@ -61,6 +61,7 @@ Router::add('^freetest/results/(?P<cache>[a-zA-Z0-9]{32})$', ['controller' => 'F
 
 //Router::add("^(?<cat1>[a-z]+)\/?((?<cat2>[a-z]+)\/?)((?<cat3>[a-z]+)\/?)((?<cat4>[a-z]+)\/?)?$");// fw/sapogi/letnie -> category/categpry
 
-Router::add('^(?P<controller>[a-z-]+)/?(?P<action>[a-z-]+)?$'); // fw/test/do -> controller/action
-
 Router::add('^$', ['controller' => 'main', 'action' => 'index']); // fw/ -> main/index
+
+Router::add('^adminsc\/(?P<controller>[a-z-]+)\/?(?P<action>[a-z-]+)\/?(?P<id>[0-9]+)?$'); // fw/test/do -> controller/action
+Router::add('^(?P<controller>[a-z-]+)\/?(?P<action>[a-z-]+)?$'); // fw/test/do -> controller/action

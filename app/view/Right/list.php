@@ -2,7 +2,7 @@
 
 	<div class="page-name">Права</div>
 
-	<?=$rights_table;?>
+	<?=$table;?>
 
 
 </div>

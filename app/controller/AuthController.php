@@ -39,7 +39,7 @@ class AuthController extends AppController
 
 			try {
 				$sent = Mail::send_mail($data);
-        if (!App::$app->user->create($user)) {
+        if (!User::create($user)) {
           exit('registration failed');
         }
 				exit('confirm');

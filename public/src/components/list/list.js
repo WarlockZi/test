@@ -7,10 +7,11 @@ export default function list(selector) {
   $('html').ready(function () {
     const table = $('.custom-list')[0]
     const headers = table.querySelectorAll('.head')
+    const sortables = table.querySelectorAll('[data-sort]')
     const inputs = table.querySelectorAll('.head input')
-    // const tableBody = table.querySelectorAll('[data-id]')
+
     const ids = $(table)[0].querySelectorAll('.id:not(.head')
-    const delButtons = $(table)[0].querySelectorAll('.del')
+    const delButtons = $(table)[0].querySelectorAll('.del:not(.head)')
 
     const modelName = table.dataset['model']
     const addModelButton = $(`.add-model[data-model="${modelName}"]`)[0]
@@ -26,25 +27,30 @@ export default function list(selector) {
       $(addModelButton).on('click', modelCreate.bind(null, modelName))
     }
 
-    [].forEach.call(delButtons,function (el) {
+    [].forEach.call(delButtons, function (el) {
       // debugger
       $(el).on('click', modelDel.bind(el))
     })
 
-    async function modelDel(e){
-      debugger
+    async function modelDel(e) {
+      // debugger
+      let id = this.dataset['id']
+      let model = this.dataset['model']
+      let res = await post(`/adminsc/${model}/delete`, {id})
+      res = JSON.parse(res)
+      if (res.msg === 'ok') {
 
-      let self = this
+        delView(id)
+        popup.show(`id : ${id} удалено`)
+      }
     }
 
-    // async function modelDel(modelName) {
-    //   let res = await post(`/adminsc/${modelName}/create`, {id:})
-    //   res = JSON.parse(res)
-    //   if (res.id) {
-    //     newRow(res.id - 1)
-    //     popup.show('Создано')
-    //   }
-    // }
+    function delView(id) {
+      let arr = $(`[data-id='${id}']`);
+      [].forEach.call(arr, function (el) {
+        el.remove()
+      })
+    }
 
     async function modelCreate(modelName) {
       let res = await post(`/adminsc/${modelName}/create`, {})
@@ -56,28 +62,29 @@ export default function list(selector) {
     }
 
     function newRow(id) {
-      let newRow = [...rows[0]];
-      [].forEach.call(newRow, function (el) {
-        if (['id'].includes(el.className)){
-          el.innerText = id
-          el.dataset['id']= id
-        }else if(!['del','edit','save'].includes(el.className)){
-          el.innerText = ''
-          el.dataset['id']= id
+      let Row = [...rows[0]];
+      [].forEach.call(Row, function (el) {
+        let newEl = el.cloneNode(true)
+        table.appendChild(newEl)
+        if (['id'].includes(newEl.className)) {
+          newEl.innerText = id
+          newEl.dataset['id'] = id
+        } else if (!['del', 'edit', 'save'].includes(newEl.className)) {
+          newEl.innerText = ''
+          newEl.dataset['id'] = id
         }
-        table.appendChild(el.cloneNode(true))
       });
     }
 
     // Направление сортировки
-    const directions = Array.from(headers).map(function (header) {
+    const directions = Array.from(sortables).map(function (sortable) {
       return ''
     });
 
     // Преобразовать содержимое данной ячейки в заданном столбце
     function transform(index, content) {
       // Получить тип данных столбца
-      const type = headers[index].getAttribute('data-type')
+      const type = sortables[index].getAttribute('data-type')
       switch (type) {
         case 'number':
           return parseFloat(content)
@@ -159,8 +166,8 @@ export default function list(selector) {
         })
       });
     };
-
-    [].forEach.call(headers, function (header, index) {
+    // навешивает событие только на sortables
+    [].forEach.call(sortables, function (header, index) {
       const className = header.className
       header.addEventListener('click', function (e) {
         if (e.target.classList.contains('head')) {

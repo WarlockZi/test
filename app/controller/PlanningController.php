@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\core\App;
+use app\model\Answer;
 use app\view\View;
 
 class PlanningController Extends AppController
@@ -32,7 +33,7 @@ class PlanningController Extends AppController
 
 	public function actionDelete()
 	{
-		if (App::$app->answer->delete($this->ajax['a_id'])) {
+		if (Answer::delete($this->ajax['a_id'])) {
 			exit(json_encode(['msg' => 'ok']));
 		}
 

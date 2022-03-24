@@ -56,7 +56,7 @@ class CustomList
 		}
 	}
 
-	protected function prepareData(array $column, array $model): string
+	protected function prepareData(array $column, array $model)
 	{
 
 		if (isset($column['concat'])) {

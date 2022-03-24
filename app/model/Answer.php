@@ -17,21 +17,13 @@ class Answer extends Model
 		'pica'=>''
 	];
 
-//	public function show($id, $q_id)//qAdd()
-//	{
-//		$params = [$q_id];
-//		$sql = "INSERT INTO {$this->table} (parent_question) VALUES (?)";
-//		$this->insertBySql($sql, $params);
-//		$answer = $this->fillable;
-//
-//		exit(include ROOT. '/app/view/Test/editBlockAnswer.php');
-//	}
-	public function delete($id)
+
+	public static function delete($id)
 	{
 		return parent::delete($id);
 
 	}
-	public function create($value=[])
+	public static function create($value=[])
 	{
 		return parent::create($value);
 	}

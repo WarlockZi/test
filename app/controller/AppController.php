@@ -10,7 +10,7 @@ class AppController extends Controller
 {
 	protected $ajax;
 	protected $user;
-	protected $salt = "popiyonovacheesa";
+//	protected $salt = "popiyonovacheesa";
 
 	public function __construct(array $route)
 	{

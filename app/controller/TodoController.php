@@ -2,22 +2,21 @@
 
 namespace app\controller;
 
-use app\model\Right;
+use app\model\Todo;
 use app\model\User;
 use app\view\View;
 use app\view\components\CustomList\CustomList;
 
 
-class RightController Extends AppController
+class TodoController Extends AppController
 {
-	protected $model = Right::class;
-	protected $modelName = 'right';
-	protected $tableName = 'rights';
+	protected $model = Todo::class;
+	protected $modelName = 'todo';
+	protected $tableName = 'todos';
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-//		$rights = $this->model::findAll();
 		$this->autorize();
 		$this->layout = 'admin';
 		View::setCss('admin.css');
@@ -26,13 +25,12 @@ class RightController Extends AppController
 
 	public function actionList()
 	{
-		$this->view = 'list';
+		$this->view = 'create';
 
 		$items = $this->model::findAll();
-//		$this->set(compact('items'));
+//		$this->set(compact(`items`));
 		$table = $this->getTable($items)->html;
 		$this->set(compact('table'));
-
 	}
 
 	private function getTable($items)

@@ -75,7 +75,7 @@ class ImageController Extends AppController
 
 	public function actionDelete()
 	{
-		App::$app->answer->delete($this->ajax['a_id']);
+		Answer::delete($this->ajax['a_id']);
 		exit(json_encode(['msg' => 'ok']));
 	}
 
