@@ -122,7 +122,7 @@ class RightController Extends AppController
 	{
 		if ($this->ajax) {
 			$updated = $this->model::update($this->ajax);
-			$this->exitWith('updated' );
+			$this->exitWith('ok' );
 		}
 		$this->layout = 'admin';
 		$this->view = 'edit_update';

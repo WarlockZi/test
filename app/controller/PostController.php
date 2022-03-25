@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\model\Post;
 use app\model\User;
+use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use app\view\View;
 use app\view\components\CustomList\CustomList;
 
@@ -85,10 +86,61 @@ class PostController Extends AppController
 		);
 	}
 
-	public function actionShow()
+	private function getItem($item)
 	{
+		return new CustomCatalogItem(
+			[
+				'item' => $item,
+				'modelName' => $this->modelName,
+				'tableClassName' => $this->tableName,
+				'fields' => [
+					'id' => [
+						'className' => 'id',
+						'field' => 'id',
+						'name' => 'ID',
+						'contenteditable' => '',
+						'width' => '50px',
+						'data-type' => 'number',
+					],
+					'name' => [
+						'className' => 'name',
+						'field' => 'name',
+						'name' => 'Наименование',
+						'width' => '1fr',
+						'contenteditable' => 'contenteditable',
+						'data-type' => 'string',
+					],
+					'full_name' => [
+						'className' => 'fullname',
+						'field' => 'full_name',
+						'name' => 'Полное наименование',
+						'width' => '1fr',
+						'contenteditable' => 'contenteditable',
+						'data-type' => 'string',
+					],
+				],
+
+				'delCol' => 'ajax',
+				'toListBttn' => true,
+				'save' => 'ajax',//'redirect'
+			]
+		);
 	}
 
+	public function actionEdit()
+	{
+		if ($this->ajax) {
+			$this->model::update($this->ajax);
+			$this->exitWith('ok');
+		}
+
+		$post = $this->model::findOneWhere('id',$this->route['id']);
+		$item = $this->getItem($post)->html;
+		$this->set(compact('item'));
+
+		$this->view = 'edit';
+
+	}
 
 	public function actionCreate()
 	{
@@ -101,13 +153,6 @@ class PostController Extends AppController
 		}
 	}
 
-	public function actionUpdateOrCreate()
-	{
-		if ($this->ajax) {
-		}
-	}
-
-
 	public function actionDelete()
 	{
 		$id = $this->ajax['id'] ?? $_POST['id'];
@@ -119,25 +164,29 @@ class PostController Extends AppController
 		header('Location:/adminsc/right/list');
 	}
 
-	public function actionEdit()
+	public function actionShow()
 	{
-		if ($this->ajax) {
-			$updated = $this->model::update($this->ajax);
-			$this->exitWith('updated');
-		}
-		$this->layout = 'admin';
-		$this->view = 'edit';
-
 	}
 
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
-			$updated = $this->model::update($this->ajax);
-			$this->exitWith('updated');
+			if (User::can($this->user,'post_update')){
+				$this->model::update($this->ajax);
+				$this->exitWith('ok');
+
+			}
 		}
 
-		$this->view = 'edit_update';
-
 	}
+//	public function actionUpdate()
+//	{
+//		if ($this->ajax) {
+//			$updated = $this->model::update($this->ajax);
+//			$this->exitWith('updated');
+//		}
+//
+//		$this->view = 'update';
+//
+//	}
 }

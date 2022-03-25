@@ -26,7 +26,7 @@ export default function contenteditable() {
     let url = `/adminsc/${model.modelName}/update`
     let res = await post(url, model.model)
     res = JSON.parse(res)
-    if (res.msg === 'updated') {
+    if (res.msg === 'ok') {
       popup.show('Сохранено!')
     }
   }

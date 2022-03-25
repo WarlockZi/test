@@ -1,0 +1,65 @@
+@import "../../var";
+@import "../../mixin_media";
+
+
+.custom-catalog-item__wrapper {
+
+  .custom-catalog-item__buttons {
+    display: flex;
+    justify-content: flex-end;
+
+    .save, .to-list {
+      padding: 10px 15px;
+      $border-radius: 3%;
+      @include _button($border-radius);
+
+      &:hover {
+        svg {
+          fill: $color-main;
+        }
+      }
+
+      svg {
+        fill: #ffffff;
+      }
+    }
+
+  }
+}
+
+.custom-catalog-item {
+  display: flex;
+  flex-flow: column;
+
+  .row {
+    display: flex;
+    padding: 5px 0;
+
+    .field {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0 5px;
+      min-width: 200px;
+      font-weight: 600;
+    }
+
+    .value {
+      padding: 0 5px;
+    }
+
+    [contenteditable] {
+      background-color: $color-gray2;
+      padding: 3px 5px;
+
+      &:hover {
+        background-color: $color-gray4;
+
+      }
+
+      &:focus-visible {
+        border-bottom: none;
+      }
+    }
+  }
+
+}

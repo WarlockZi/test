@@ -29,10 +29,10 @@
 		<!--  TABLE  -->
 		 <? foreach ($this->models as $model): ?>
 
-			 <? foreach ($this->columns as $column): ?>
+			 <? foreach ($this->columns as $field=>$column): ?>
 
 			  <div class="<?= $column['className']; ?>"
-			       data-field="<?= $column['field']; ?>"
+			       data-field="<?= $field; ?>"
 			       data-id="<?= $model['id']; ?>"
 						 <?= $column['contenteditable'] ?? ''; ?>
 			  ><?= $this->prepareData($column, $model); ?></div>
@@ -53,6 +53,8 @@
 	</div>
 
 	<!--  ADD BUTTON  -->
+	<div class="custom-list__buttons">
+
 	<? if ($this->addButton === 'ajax'): ?>
 	  <div class="add-model"
 	       data-model="<?= $this->modelName; ?>">+
@@ -63,6 +65,7 @@
 	     data-model="<?= $this->modelName; ?>">+
 	  </a>
 	<? endif; ?>
+	</div>
 
 
 </div>

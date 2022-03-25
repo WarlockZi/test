@@ -123,10 +123,21 @@ class UserController extends AppController
 		View::setJs('auth.js');
 		View::setCss('auth.css');
 	}
+	public function actionCreate()
+	{
+		if ($data = $this->ajax) {
+			$date = strtotime($data['birthDate']);
+			$data['birthDate'] = date('Y-m-d', $date);
+
+			User::update($data);
+			exit('ok');
+		}
+	}
+
 
 	public function actionUpdate()
 	{
-//		$this->autorize();
+
 		if ($data = $this->ajax) {
 			$date = strtotime($data['birthDate']);
 			$data['birthDate'] = date('Y-m-d', $date);

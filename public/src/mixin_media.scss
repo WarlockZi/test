@@ -7,54 +7,75 @@
 @import "var";
 
 @mixin _1200 {
-  @media (max-width: 1200px){
+  @media (max-width: 1200px) {
     @content;
   }
 }
 
 @mixin _1000 {
-  @media (max-width: 1000px){
+  @media (max-width: 1000px) {
     @content;
   }
 }
 
 @mixin _900 {
-  @media (max-width: 900px){
+  @media (max-width: 900px) {
     @content;
   }
 }
 
 @mixin _800 {
-  @media (max-width: 800px){
+  @media (max-width: 800px) {
     @content;
   }
 }
 
 @mixin _600 {
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     @content;
   }
 }
 
 @mixin _500 {
-  @media (max-width: 500px){
+  @media (max-width: 500px) {
     @content;
   }
 }
 
-@mixin _400{
-  @media (max-width: 400px){
-    @content;
-  }
-}
-@mixin _300{
-  @media (max-width: 300px){
+@mixin _400 {
+  @media (max-width: 400px) {
     @content;
   }
 }
 
-@mixin _chevron($top:30%){
+@mixin _300 {
+  @media (max-width: 300px) {
+    @content;
+  }
+}
 
+
+@mixin _button($border-radius:1%) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $color-main;
+  border-radius: $border-radius;
+  color: white;
+  align-self: end;
+  margin: 10px 0 0 10px;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 1px solid $color-main;
+
+  &:hover {
+    color: $color-main;
+    background: #ffffff;
+  }
+}
+
+
+@mixin _chevron($top:30%) {
   content: '';
   display: inline-block;
   cursor: pointer;
@@ -69,24 +90,25 @@
   transform: rotate(45deg);
 }
 
-@mixin _h1{
+@mixin _h1 {
   font-size: 1.8rem;
   font-weight: 600;
   color: $color-grey-logo;
 }
-@mixin _h2{
+
+@mixin _h2 {
   font-size: 1.5rem;
   font-weight: 600;
   color: $color-grey-logo;
 }
 
-@mixin _h3{
+@mixin _h3 {
   font-size: 1.2rem;
   font-weight: 600;
   color: $color-grey-logo;
 }
 
-@mixin _h4{
+@mixin _h4 {
   font-size: 0.9rem;
   font-weight: 600;
   color: $color-grey-logo;

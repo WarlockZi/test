@@ -4,6 +4,7 @@ import '../components/header/header-adm'
 import '../components/accordion/accordion'
 import "./model/cache";
 import {$} from "../common";
+import catalogItem from "../components/catalog-item/catalog-item";
 
 import testResults from '../Test/test_results/test_results'
 import testEdit from '../Test/test-edit'
@@ -17,10 +18,10 @@ import users from './CRM/users'
 
 // let p = $('.page-name')[0]
 navigate(window.location.pathname)
-
+  debugger
+catalogItem()
 
 function navigate(str) {
-  // debugger
   switch (true) {
     case /\/adminsc\/settings/.test(str):
     case /\/adminsc\/right\/list/.test(str):

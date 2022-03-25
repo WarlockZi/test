@@ -67,8 +67,12 @@
     flex: 1;
   }
 
-  & > * {
+  label, a {
     border-bottom: 1px solid $color-grey-logo;
+  }
+
+  ul a {
+    background: darken($color-admin-sidebar,5%);
   }
 
 
@@ -88,13 +92,13 @@
       border-bottom: none;
     }
 
-    #i {
-      fill: white;
-    }
-
-    #t {
-      fill: white;
-    }
+    //#i {
+    //  fill: white;
+    //}
+    //
+    //#t {
+    //  fill: white;
+    //}
   }
 
   .admin-layout__sidebar-tail {
