@@ -6,16 +6,16 @@ namespace app\view\components\CustomList;
 
 class CustomList
 {
+	public $html = '';
+	public $addButton = false;
 	private $columns = [];
 	private $grid = 'grid-template-columns:';
 	private $delCol = false;
 	private $editCol = false;
-	public $addButton = false;
-	public $html = '';
-	private $models = [];
-	private $modelName = '';
-	private $tableClassName = '';
 	private $searchStr = ' <input type="text">';
+	private $tableClassName = '';
+	private $modelName = '';
+	private $models = [];
 //	private $template = '';
 //	private $header = '';
 

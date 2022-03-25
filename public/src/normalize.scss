@@ -62,3 +62,7 @@ textarea:focus,
 .none {
   display: none;
 }
+
+[contenteditable]:focus-visible{
+  outline: none;
+}

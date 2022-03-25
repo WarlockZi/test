@@ -119,8 +119,8 @@ class TodoController Extends AppController
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
-			$updated = $this->model::update($this->ajax);
-			$this->exitWith('updated' );
+			$this->model::update($this->ajax);
+			$this->exitWith('ok' );
 		}
 		$this->layout = 'admin';
 		$this->view = 'edit_update';

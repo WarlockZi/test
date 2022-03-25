@@ -117,7 +117,20 @@ here;
 	}
 
 
-	public function find($id = [])
+
+
+	public function firstOrCreate($field, $val, $row)
+	{
+		$found = App::$app->{$this->model}->findOneWhere($field, $val);
+		if (!$found) {
+			App::$app->{$this->model}->create($row);
+			return true;
+		}
+		return $found;
+	}
+
+
+	protected function find($id = [])
 	{
 		$id = implode(',', array_map('intval', $id));
 		$sql = "SELECT * FROM {$this->table} WHERE id IN (?)";
@@ -135,15 +148,6 @@ here;
 		}
 	}
 
-	public function firstOrCreate($field, $val, $row)
-	{
-		$found = App::$app->{$this->model}->findOneWhere($field, $val);
-		if (!$found) {
-			App::$app->{$this->model}->create($row);
-			return true;
-		}
-		return $found;
-	}
 
 	public static function findAll($table = '', $sort = '')
 	{

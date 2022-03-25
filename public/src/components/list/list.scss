@@ -1,4 +1,5 @@
 @import "../../var";
+@import "../../mixin_media";
 
 .custom-list {
 
@@ -85,26 +86,17 @@
 
 }
 
-.add-model {
+.custom-list__buttons {
   display: flex;
-  justify-self: end;
-  justify-content: center;
-  font-size: 2rem;
-  align-items: center;
-  background: $color-main;
-  width: 50px;
-  height: 50px;
-  border-radius: 75%;
-  color: white;
-  align-self: end;
-  margin: 10px 0 0 auto;
-  cursor: pointer;
+  justify-content: flex-end;
 
-  &:hover
-  {
-    border: 1px solid $color-main;
-    color: $color-main;
-    background: #ffffff;
+  .add-model {
+    justify-self: end;
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
 
+    $border-radius: 75%;
+    @include _button($border-radius);
   }
 }
