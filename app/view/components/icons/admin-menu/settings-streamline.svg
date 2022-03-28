@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="24px"
+     stroke="#000"
+     viewBox="0 0 10 10">
 
     <g transform="matrix(0.7142857142857143,0,0,0.7142857142857143,0,0)">
         <path id = "settings"
