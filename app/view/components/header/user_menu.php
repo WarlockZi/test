@@ -18,8 +18,8 @@
 	<div class="user-menu">
 		<img src="
         <?= $this->user['sex'] === 'f'
-				? '/pic/ava_female.jpg'
-				: '/pic/ava_male.png'; ?>
+				? $this->getImg('/pic/ava_female.jpg')
+				: $this->getImg('/pic/ava_male.png'); ?>
         " alt="">
 		<div class="user-menu__credit-wrap">
 			<div class="user-menu__fio"><?= "{$this->user['surName']} {$this->user['name']}"; ?></div>
