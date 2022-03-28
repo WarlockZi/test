@@ -16,7 +16,6 @@ class AnswerController Extends AppController
 
 	public function actionCreate()
 	{
-		$d = 0;
 		$id = Answer::create($this->ajax)-1;
 		exit(json_encode(['id'=>$id, 'msg'=>'ok']));
 	}

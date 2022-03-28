@@ -64,7 +64,7 @@ let popup = {
 
     popup__item.innerText = txt
     popup__item.append(close)
-    let popup = $('.popup').el[0]
+    let popup = $('.popup')[0]
     if (!popup) {
       popup = this.el('div', 'popup')
     }
@@ -128,8 +128,8 @@ async function post(url, data = {}) {
 
 class ElementCollection extends Array  {
 
-  el = this
-  elType = function(){return {}.toString.call(this)}
+  // el = this
+  // elType = function(){return {}.toString.call(this)}
 
   on(event, cbOrSelector, cb) {
     if (typeof cbOrSelector === 'function') {
@@ -137,22 +137,19 @@ class ElementCollection extends Array  {
     }else{
       this.forEach(elem=>{
         elem.addEventListener(event, e =>{
-          if (e.target.matches(cbOrSelector)) cb(e)
+          if (e.target===cbOrSelector) cb(e)
         })})
     }
   }
-
   value = function () {
     return this[0].getAttribute('value')
   }
-
   attr = function (attrName, attrVal) {
     if (attrVal) {
       this[0].setAttribute(attrName, attrVal)
     }
     return this[0].getAttribute(attrName)
   }
-
   selectedIndexValue = function () {
     if (this.length)
       return this[0].selectedOptions[0].value
@@ -169,7 +166,6 @@ class ElementCollection extends Array  {
   checked = function () {
     if (this.length) return this[0].checked
   }
-
   getWithStyle = function (attr, val) {
     let arr = []
     this.forEach((s) => {
@@ -195,7 +191,6 @@ class ElementCollection extends Array  {
   append = function (el) {
     this[0].appendChild(el)
   }
-
   find = function (item) {
     if (typeof item === 'string'){
       return this[0].querySelector(item)
@@ -206,8 +201,11 @@ class ElementCollection extends Array  {
       return filtered[0]
     }
   }
-
-
+  findAll = function (item) {
+    if (typeof item === 'string'){
+      return this[0].querySelectorAll(item)
+    }
+  }
   css = function (attr, val) {
     if (!val) {
       return this[0].style[attr]
@@ -216,7 +214,6 @@ class ElementCollection extends Array  {
         s.style[attr] = val
       })
   }
-
   ready(cb) {
     const isReady = this.some(e => {
       return e.readyState != null && e.readyState != 'loading'

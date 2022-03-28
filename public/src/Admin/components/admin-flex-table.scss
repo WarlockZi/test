@@ -10,30 +10,44 @@
       outline: $color-blue 1px solid;
     }
   }
+
+  .row {
+    padding: 5px;
+    display: flex;
+
+    div,
+    span,
+    select,
+    input {
+      flex-basis: 125px;
+      justify-content: flex-start;
+      min-height: 18px;
+    }
+
+    strong {
+      padding-right: 5px;
+      display: flex;
+      flex-basis: 150px;
+      justify-content: flex-end;
+      font-size: 14px;
+    }
+  }
+
+  [contenteditable] {
+    background-color: white;
+    padding: 4px 6px;
+  }
+
 }
 
-.admin-flex-table .row {
-  padding: 5px;
-  display: flex;
-}
-
-.admin-flex-table .row strong {
-  padding-right: 5px;
-  display: flex;
-  flex-basis: 150px;
-  justify-content: flex-end;
-  font-size: 14px;
-}
-
-.admin-flex-table .row div,
-.admin-flex-table .row span,
-.admin-flex-table .row select,
-.admin-flex-table .row input {
-  flex-basis: 120px;
-  justify-content: flex-start;
-  min-height: 18px;
-}
-
-.separator{
+.separator {
   margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+
+  .button{
+    @include _button();
+    padding: 8px;
+    font-weight: 400;
+  }
 }

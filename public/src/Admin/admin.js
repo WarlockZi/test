@@ -13,8 +13,8 @@ import testUpdate from '../Test/test-update'
 import settings from './Settings/settings'
 import rights from './Rights/rights'
 import planning from './Planning/planning'
-import user from './CRM/user'
-import users from './CRM/users'
+import user from './CRM/user/user'
+import users from './CRM/user/users'
 
 // let p = $('.page-name')[0]
 navigate(window.location.pathname)
