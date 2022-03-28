@@ -93,9 +93,15 @@ class View
 
 	public static function getSearch()
 	{
-
 		return include(ROOT . '/app/view/components/header/logo_squared.php');
-
+	}
+	public function getImg($path)
+	{
+	  if (is_readable(ROOT .$path)){
+		   return $path;
+    }else{
+	     return '/pic/srvc/nophoto-min.jpg';
+    }
 	}
 
 	public static function getCSS()

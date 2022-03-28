@@ -10,7 +10,7 @@ class AppController extends Controller
 {
 	protected $ajax;
 	protected $user;
-//	protected $salt = "popiyonovacheesa";
+	protected $salt = "popiyonovacheesa";
 
 	public function __construct(array $route)
 	{
@@ -29,9 +29,9 @@ class AppController extends Controller
 
 	public function setAuth($user)
 	{
-		if (!isset($_SESSION['id']) || !$_SESSION['id']) {
+//		if (!isset($_SESSION['id']) || !$_SESSION['id']) {
 			$_SESSION['id'] = (int)$user['id'];
-		}
+//		}
 	}
 
 	public function preparePassword(String $password): String
