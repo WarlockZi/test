@@ -17,6 +17,7 @@
   width: clamp(150px, 66%, 300px);
   margin: 3% auto;
   align-items: stretch;
+  word-break: break-word;
 
   p {
     font-size: 0.6rem;
