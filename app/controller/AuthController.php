@@ -38,10 +38,10 @@ class AuthController extends AppController
 			$data['altBody'] = "Подтверждение почты: <a href = '{$href}'>нажать сюда</a>>";
 
 			try {
-				$sent = Mail::send_mail($data);
         if (!User::create($user)) {
           exit('registration failed');
         }
+				$sent = Mail::send_mail($data);
 				exit('confirm');
 			} catch (\Exception $e) {
 				exit($e->getMessage());
