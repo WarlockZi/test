@@ -123,10 +123,8 @@
 
       </div>
       <div class="separator btns">
-        <button id="user-update-btn">Сохранить
-        </button>
-        <button id="user-create-btn">Добавить пользователя
-        </button>
+        <div class="button"  id="user-update-btn">Сохранить</div>
+        <div class="button" id="user-create-btn">Добавить пользователя</div>
       </div>
     </div>
 

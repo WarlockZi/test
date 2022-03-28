@@ -4,13 +4,17 @@ namespace app\controller;
 
 use app\core\App;
 use app\model\Right;
+use app\model\User;
 use app\view\components\CustomList\CustomList;
 use app\view\View;
-use app\model\User;
 
 
 class UserController extends AppController
 {
+	protected $model = User::class;
+	protected $modelName = 'user';
+	protected $tableName = 'users';
+
 
 	public function __construct($route)
 	{
@@ -43,7 +47,7 @@ class UserController extends AppController
 						'field' => 'id',
 						'name' => 'ID',
 						'width' => '50px',
-						'data-type'=>'number',
+						'data-type' => 'number',
 						'sort' => true,
 						'search' => false,
 					],
@@ -51,9 +55,9 @@ class UserController extends AppController
 						'className' => 'name',
 						'field' => 'name',
 						'name' => 'ФИО',
-						'concat'=>['name','surName', 'middleName'],
+						'concat' => ['name', 'surName', 'middleName'],
 						'width' => '1fr',
-						'data-type'=>'string',
+						'data-type' => 'string',
 						'sort' => true,
 						'search' => true,
 					],
@@ -62,7 +66,7 @@ class UserController extends AppController
 						'field' => 'email',
 						'name' => 'email',
 						'width' => '1fr',
-						'data-type'=>'string',
+						'data-type' => 'string',
 						'sort' => true,
 						'search' => true,
 					],
@@ -71,15 +75,15 @@ class UserController extends AppController
 						'field' => 'confirm',
 						'name' => 'conf',
 						'width' => '50px',
-						'data-type'=>'string',
+						'data-type' => 'string',
 						'sort' => true,
 						'search' => false,
 					],
 				],
 
-				'editCol' =>  'redirect',
+				'editCol' => true,
 				'delCol' => 'ajax',
-				'addButton'=> 'ajax',//'redirect'
+				'addButton' => 'ajax',//'redirect'
 			]
 		);
 	}
@@ -90,7 +94,7 @@ class UserController extends AppController
 			header('Location: /adminsc/user/list');
 		};
 
-		$user = User::findOneWhere('id',$id);
+		$user = User::findOneWhere('id', $id);
 		$rights = Right::findAll();;
 
 		$this->set(compact('user', 'rights'));
@@ -98,14 +102,13 @@ class UserController extends AppController
 
 	public function actionEdit()
 	{
-//		$this->autorize();
+		$this->view = 'adminEdit';
 
-		if (array_intersect(['role_employee'], $this->user['rights']) || defined('SU')) {
+		if (User::can($this->user, ['role_employee']) || defined('SU')) {
 			if (isset($this->route['id'])) {
-				$user = User::findOneWhere('id',$this->route['id']);
+				$user = User::findOneWhere('id', $this->route['id']);
 				$this->set(compact('user'));
 			}
-			$this->view = 'adminEdit';
 
 			$rights = App::$app->right->findAll();;
 			$this->set(compact('rights'));
@@ -119,25 +122,36 @@ class UserController extends AppController
 			exit('ok');
 		}
 
-		View::setMeta('Профиль', 'Профиль', 'Профиль');
-		View::setJs('auth.js');
-		View::setCss('auth.css');
+//		View::setMeta('Профиль', 'Профиль', 'Профиль');
+//		View::setJs('auth.js');
+//		View::setCss('auth.css');
 	}
+
 	public function actionCreate()
 	{
-		if ($data = $this->ajax) {
-			$date = strtotime($data['birthDate']);
-			$data['birthDate'] = date('Y-m-d', $date);
-
-			User::update($data);
-			exit('ok');
+		if ($this->ajax) {
+			if ($id = $this->model::create($this->ajax)) {
+				exit(json_encode([
+					'id' => $id,
+				]));
+			}
+//			$date = strtotime($data['birthDate']);
+//			$data['birthDate'] = date('Y-m-d', $date);
 		}
 	}
 
+	public function actionDelete()
+	{
+		if ($data = $this->ajax) {
+			if (User::can($this->user, 'user_delete')) {
+				User::delete($data['id']);
+				$this->exitWith('ok');
+			}
+		}
+	}
 
 	public function actionUpdate()
 	{
-
 		if ($data = $this->ajax) {
 			$date = strtotime($data['birthDate']);
 			$data['birthDate'] = date('Y-m-d', $date);
@@ -149,7 +163,6 @@ class UserController extends AppController
 
 	public function actionContacts()
 	{
-//		$this->autorize();
 		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
 	}
 

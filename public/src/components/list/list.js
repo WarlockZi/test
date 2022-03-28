@@ -1,45 +1,73 @@
 import './list.scss';
 import {$, post, popup} from '../../common';
 
-export default function list(selector) {
+export default function list() {
   // debugger;
 
   $('html').ready(function () {
     const table = $('.custom-list')[0]
+    const customList__wrapper = table.closest('.custom-list__wrapper')
     const headers = table.querySelectorAll('.head')
     const sortables = table.querySelectorAll('[data-sort]')
-    const inputs = table.querySelectorAll('.head input')
-
+    const inputs = $(table).findAll('.head input')
     const ids = $(table)[0].querySelectorAll('.id:not(.head')
-    const delButtons = $(table)[0].querySelectorAll('.del:not(.head)')
-
     const modelName = table.dataset['model']
-    const addModelButton = $(`.add-model[data-model="${modelName}"]`)[0]
-    // const delModelButton = $(`.del`)
     const rows = []
-    for (let i = 0; i < ids.length; i++) {
-      let id = ids[i].dataset.id
-      let row = $(table)[0].querySelectorAll(`[data-id='${id}']`)
-      rows.push(row)
+
+
+    $(customList__wrapper).on('click', handleClick.bind(this));
+    $(customList__wrapper).on('keyup', handleKeyUp.bind(this));
+
+    function handleKeyUp({target}) {
+
+      /// search
+      if (target.closest('.head')) {
+        let header = target.closest('.head')
+        let index = [].findIndex.call(headers, (el, i, inputs) => {
+          return el === header
+        })
+        search(index, target)
+      }
     }
 
-    if (addModelButton) {
-      $(addModelButton).on('click', modelCreate.bind(null, modelName))
+    function handleClick({target}) {
+
+      /// create
+      if (target.className === 'add-model') {
+        modelCreate(modelName)
+
+        /// delete
+      } else if (
+        target.className === '.del:not(.head)' ||
+        target.closest('.del:not(.head)')) {
+        modelDel(target.closest('.del:not(.head)'))
+
+        /// edit
+      } else if (target.className === '.edit:not(.head)' ||
+        target.closest('.edit:not(.head)')) {
+        let id = target.closest('.edit:not(.head)').dataset['id']
+        window.location = `/adminsc/${modelName}/edit/${id}`;
+
+        /// sort
+      } else if (target.classList.contains('head')) {
+        let header = target.closest('.head')
+        let index = [].findIndex.call(headers, (el, i, inputs) => {
+          return el === header
+        })
+
+        sortColumn(index)
+
+      }
     }
 
-    [].forEach.call(delButtons, function (el) {
+    // DELETE
+    async function modelDel(el) {
       // debugger
-      $(el).on('click', modelDel.bind(el))
-    })
-
-    async function modelDel(e) {
-      // debugger
-      let id = this.dataset['id']
-      let model = this.dataset['model']
+      let id = el.dataset['id']
+      let model = modelName
       let res = await post(`/adminsc/${model}/delete`, {id})
       res = JSON.parse(res)
       if (res.msg === 'ok') {
-
         delView(id)
         popup.show(`id : ${id} удалено`)
       }
@@ -52,7 +80,9 @@ export default function list(selector) {
       })
     }
 
-    async function modelCreate(modelName) {
+
+    // CREATE
+    async function modelCreate(modelName, e) {
       let res = await post(`/adminsc/${modelName}/create`, {})
       res = JSON.parse(res)
       if (res.id) {
@@ -68,32 +98,15 @@ export default function list(selector) {
         table.appendChild(newEl)
         if (['id'].includes(newEl.className)) {
           newEl.innerText = id
-          newEl.dataset['id'] = id
         } else if (!['del', 'edit', 'save'].includes(newEl.className)) {
           newEl.innerText = ''
-          newEl.dataset['id'] = id
         }
+        newEl.dataset['id'] = id
+
       });
     }
 
-    // Направление сортировки
-    const directions = Array.from(sortables).map(function (sortable) {
-      return ''
-    });
-
-    // Преобразовать содержимое данной ячейки в заданном столбце
-    function transform(index, content) {
-      // Получить тип данных столбца
-      const type = sortables[index].getAttribute('data-type')
-      switch (type) {
-        case 'number':
-          return parseFloat(content)
-        case 'string':
-        default:
-          return content
-      }
-    };
-
+    /// SEARCH
     function showAllRows() {
       [].forEach.call(rows, (row) => {
         [].forEach.call(row, el => {
@@ -121,6 +134,7 @@ export default function list(selector) {
       });
     };
 
+    // SORT
     function sortColumn(index) {
       // Получить текущее направление
       const direction = directions[index] || 'asc'
@@ -166,22 +180,31 @@ export default function list(selector) {
         })
       });
     };
-    // навешивает событие только на sortables
-    [].forEach.call(sortables, function (header, index) {
-      const className = header.className
-      header.addEventListener('click', function (e) {
-        if (e.target.classList.contains('head')) {
-          sortColumn(index)
-        }
-      })
-      const input = header.querySelector('input')
-      if (input) {
-        input.addEventListener('keyup', function (e) {
-          e.stopPropagation()
-          search(index, input)
-        })
-      }
-    })
 
+    /// get table rows array
+    for (let i = 0; i < ids.length; i++) {
+      let id = ids[i].dataset.id
+      let row = $(table)[0].querySelectorAll(`[data-id='${id}']`)
+      rows.push(row)
+    }
+
+    // Направление сортировки
+    const directions = Array.from(sortables).map(function (sortable) {
+      return ''
+    });
+
+    // Преобразовать содержимое данной ячейки в заданном столбце
+    function transform(index, content) {
+      // Получить тип данных столбца
+      const type = sortables[index].getAttribute('data-type')
+      switch (type) {
+        case 'number':
+          return parseFloat(content)
+        case 'string':
+        default:
+          return content
+      }
+    };
   })
+
 }

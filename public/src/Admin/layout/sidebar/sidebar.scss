@@ -5,8 +5,14 @@
       width: 18px;
       height: 18px;
 
+      &.feather-grid
+      {
+        stroke: white;
+      }
+
       #house,
-      #settings
+      #settings,
+      .feather-grid
       {
         stroke: white;
       }

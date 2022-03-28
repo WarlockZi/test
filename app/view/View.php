@@ -91,10 +91,11 @@ class View
 		self::$jsCss['css'][] = "<link href='{$host}{$file}{$time}' rel='stylesheet' type='text/css'>";
 	}
 
-	public static function getSearch()
-	{
-		return include(ROOT . '/app/view/components/header/logo_squared.php');
-	}
+//	public static function getSearch()
+//	{
+//		return include(ROOT . '/app/view/components/header/logo_squared.php');
+//	}
+
 	public function getImg($path)
 	{
 	  if (is_readable(ROOT .$path)){

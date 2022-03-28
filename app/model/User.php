@@ -13,6 +13,12 @@ class User extends Model
 {
 
 	public $table = 'users';
+	protected $fillable = [
+		'name' => '',
+		'confirm' => '0',
+		'password' => 'gfasdf41(D{%',
+	];
+
 
 	public function __construct()
 	{

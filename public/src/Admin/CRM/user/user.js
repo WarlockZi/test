@@ -1,4 +1,4 @@
-import {$, popup, post} from '../../common'
+import {$, popup, post} from '../../../common'
 import list from '@/components/list/list'
 
 export default function user() {
@@ -16,7 +16,7 @@ export default function user() {
 
     function sex() {
       const f = $('[name="sex"]:checked')[0]
-      const s = $('[name="sex"]').el
+      const s = $('[name="sex"]')
       for (let f of s) {
         if (f.checked) {
           return f.value

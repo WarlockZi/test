@@ -77,8 +77,8 @@ class PostController Extends AppController
 						'search' => true,
 					],
 				],
-//				'editCol' => false,
-				'editCol' => 'redirect',
+
+				'editCol' => true,
 //				'delCol' => false,
 				'delCol' => 'ajax',
 				'addButton' => 'ajax',//'redirect'

@@ -73,7 +73,6 @@ class TodoController Extends AppController
 					],
 				],
 				'editCol' => false,
-//				'editCol' => 'ajax',
 //				'delCol' => false,
 				'delCol' => 'ajax',
 				'addButton'=> 'ajax',//'redirect'
