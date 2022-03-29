@@ -3,7 +3,7 @@ import {$, popup, post} from '../../common'
 export const _test = {
 
   markCurrentInMenu: () => {
-    let currentTestId = $('.test-name').el[0]
+    let currentTestId = $('.test-name')[0]
     if (currentTestId) {
       currentTestId = +currentTestId.getAttribute('value')
       let menuItemCollection = $('.accordion a').el
@@ -77,11 +77,11 @@ export const _test = {
 
   currentQ: () => {
     return {
-      id: $('.nav-active').el[0].innerText - 1,
-      QEl: $('.question.flex1').el[0],
+      id: $('.nav-active')[0].innerText - 1,
+      QEl: $('.question.flex1')[0],
       navLength: $('[data-pagination]').length,
-      QPrevc: $('.question.flex1').el[0].previousElementSibling,
-      QNextEl: $('.question.flex1').el[0].nextElementSibling,
+      QPrevc: $('.question.flex1')[0].previousElementSibling,
+      QNextEl: $('.question.flex1')[0].nextElementSibling,
     }
   },
 
@@ -118,7 +118,7 @@ export const _test = {
   },
 
   name: () => {
-    return $('.test-name').el[0].innerText
+    return $('.test-name')[0].innerText
   },
 
   create: async () => {
@@ -145,8 +145,8 @@ export const _test = {
   serverModel: () => {
     return {
       id: +window.location.href.split('/').pop(),
-      test_name: $('#test_name').el[0].value,
-      isTest: +$('[isTest]').el[0].getAttribute('isTest'),
+      test_name: $('#test_name')[0].value,
+      isTest: +$('[isTest]')[0].getAttribute('isTest'),
       enable: _test.selectedValueCustomSelect('enable'),
       parent: _test.selectedValueCustomSelect('parent'),
     }

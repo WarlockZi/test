@@ -38,9 +38,9 @@ class AuthController extends AppController
 			$data['altBody'] = "Подтверждение почты: <a href = '{$href}'>нажать сюда</a>>";
 
 			try {
-        if (!User::create($user)) {
-          exit('registration failed');
-        }
+				if (!User::create($user)) {
+					exit('registration failed');
+				}
 				$sent = Mail::send_mail($data);
 				exit('confirm');
 			} catch (\Exception $e) {
@@ -75,7 +75,7 @@ class AuthController extends AppController
 			$user['confirm'] = "1";
 			if (User::update($user)) {
 				$this->setAuth($user);
-				header('Location:/auth/cabinet');
+				header('Location:/auth/profile');
 				$this->exitWith('"Вы успешно подтвердили свой E-mail."');
 			}
 		}
@@ -87,18 +87,21 @@ class AuthController extends AppController
 	{
 		$this->autorize();
 		if (User::can($this->user, 'role_employee')) {
-			header("Location:/adminsc/profile");
-		}
-
-	}
-
-	public function actionCabinet()
-	{
-		$this->autorize();
-		if (User::can($this->user, 'role_employee')) {
-			header("Location:/adminsc/cabinet");
+			$this->layout = 'admin';
+			View::setJs('admin.js');
+			View::setCss('admin.css');
+		} else {
+			header("Location:/auth/profile");
 		}
 	}
+
+//	public function actionCabinet()
+//	{
+//		$this->autorize();
+//		if (User::can($this->user, 'role_employee')) {
+//			header("Location:/adminsc/cabinet");
+//		}
+//	}
 
 	public function actionChangePassword()
 	{
@@ -189,7 +192,7 @@ class AuthController extends AppController
 			$this->setAuth($user);
 			if (User::can($user, 'role_employee')) {
 				$this->exitWith('employee');
-			}else{
+			} else {
 				$this->exitWith('user');
 			}
 		}

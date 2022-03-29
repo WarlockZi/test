@@ -261,7 +261,7 @@ function addTooltip(args) {
 class test_delete_button {
   constructor(elem) {
     if (!elem) return
-    this._elem = $(elem).el[0];
+    this._elem = $(elem)[0];
     this._elem.onclick = this.delete
     this._elem.onmouseenter = this.showToolip
     this._elem.onmouseleave = this.hideTooltip

@@ -76,7 +76,6 @@ class Accordion_sidebar
 
 	private function getAssoc()
 	{
-
 		return [
 			"Главный" => [
 				"Каталог",

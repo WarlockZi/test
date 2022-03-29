@@ -17,14 +17,14 @@ $("#login").on('click', sendData)
 
 function sendData(e) {
   e.preventDefault();
-  let email = $('input[type = email]').el[0].value
-  let pass = $('input[name= password]').el[0].value
+  let email = $('input[type = email]')[0].value
+  let pass = $('input[name= password]')[0].value
   if (validateEmailLogin(email, pass)) send(email, pass)
 }
 
 
 function validateEmailLogin(email, pass) {
-  let $message = $(".message").el[0];
+  let $message = $(".message")[0];
 
   if (!validate.email(email)) {
     $message.innerText = "Неправильный формат почты"
@@ -49,7 +49,7 @@ async function send(email, password) {
     email, password
   })
   res = JSON.parse(res)
-  let msg = $('.message').el[0]
+  let msg = $('.message')[0]
   if (res.msg === 'wrong pass') {
     msg.innerHTML = 'Не верный email или пароль'
     $(msg).addClass('error')
@@ -65,6 +65,6 @@ async function send(email, password) {
   } else if (res.msg === 'employee') {
     window.location = '/adminsc'
   }else if (res.msg === 'user') {
-    window.location = '/auth/cabinet'
+    window.location = '/auth/profile'
   }
 }

@@ -16,11 +16,11 @@ $("#save").on("click", async function (e) {
 
     let data = {
       // email: check_email(),
-      name: $('[name = "name"]').el[0].value,
-      surName: $('[name = "surName"]').el[0].value,
-      middleName: $('[name = "middleName"]').el[0].value,
-      birthDate: $('[name = "birthDate"]').el[0].value,
-      phone: $('[name = "phone"]').el[0].value,
+      name: $('[name = "name"]')[0].value,
+      surName: $('[name = "surName"]')[0].value,
+      middleName: $('[name = "middleName"]')[0].value,
+      birthDate: $('[name = "birthDate"]')[0].value,
+      phone: $('[name = "phone"]')[0].value,
       sex: sex()
     }
 

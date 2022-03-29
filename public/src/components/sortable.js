@@ -5,7 +5,7 @@ import {_question} from "../Test/model/question";
 export let sortable = {
 
     connect: (selector) => {
-        let el = $(selector).el[0];
+        let el = $(selector)[0];
         if (el) {
             let sortable = Sortable.create(el, {
                 animation: 150,
