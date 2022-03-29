@@ -33,7 +33,7 @@ export default function testDo() {
 /////////////////////////////////////////////////////////////////////////////
 
 // если это результат теста, деактивирукм кнопку Закончить тест
-  let button = $('.test-do__finish-btn').el[0]
+  let button = $('.test-do__finish-btn')[0]
   if (button) {
     if (window.location.pathname.match('^/test/result/.?')) {
       button.classList.add('inactive')
@@ -56,8 +56,8 @@ export default function testDo() {
     let data = objToServer(errorCnt)
     let res = await post('/test/cachePageSendEmail', data)
     if (res) {
-      $("#btnn").el[0].href = location.href
-      $("#btnn").el[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО"
+      $("#btnn")[0].href = location.href
+      $("#btnn")[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО"
     }
   })
 
@@ -68,9 +68,9 @@ export default function testDo() {
       questionCnt: $('.question').el.length,
       errorCnt: errorCnt,
       pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
-      testId: $('[data-test-id]').el[0].dataset.testId,
-      test_name: $('.test-name').el[0].innerText,
-      userName: $('.user-menu__fio').el[0].innerText,
+      testId: $('[data-test-id]')[0].dataset.testId,
+      test_name: $('.test-name')[0].innerText,
+      userName: $('.user-menu__fio')[0].innerText,
     }
 
     let formData = new FormData();
@@ -103,7 +103,7 @@ export default function testDo() {
       })
 
       let questId = +question.dataset['id'], // id question
-        paginItem = $('.pagination [data-pagination="' + questId + '"]').el[0]
+        paginItem = $('.pagination [data-pagination="' + questId + '"]')[0]
       if (errors.length) {
         $(paginItem).addClass('redShadow')
       } else {

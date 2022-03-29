@@ -117,8 +117,6 @@ here;
 	}
 
 
-
-
 	public function firstOrCreate($field, $val, $row)
 	{
 		$found = App::$app->{$this->model}->findOneWhere($field, $val);
@@ -223,11 +221,10 @@ here;
 		}
 	}
 
+
 	public function getAssoc()
 	{
-
 		$res = $this->findBySql($this->sql, []);
-
 		if ($res !== FALSE) {
 			$all = [];
 			foreach ($res as $key => $v) {
@@ -237,15 +234,36 @@ here;
 		}
 	}
 
-	protected function hierachy()
+	public function hierachy($parent = 'parent')
 	{
 		$tree = [];
 		$data = $this->data;
 		foreach ($data as $id => &$node) {
-			if (array_key_exists('parent', $node) && !$node['parent']) {
+			if (array_key_exists($parent, $node) && !$node[$parent]) {
 				$tree[$id] = &$node;
-			} elseif (isset($node['parent']) && $node['parent']) {
-				$data[$node['parent']]['childs'][$id] = &$node;
+			} elseif (isset($node[$parent]) && $node[$parent]) {
+				$data[$node[$parent]]['childs'][$id] = &$node;
+			}
+		}
+		return $tree;
+	}
+
+	public function getAssoc2(array $models)
+	{
+		foreach ($models as $key => $v) {
+			$all[$v['id']] = $v;
+		}
+		return $all;
+	}
+
+	public function tree($parent = 'parent')
+	{
+		$data = $this->getAssoc2($this->data);
+		foreach ($data as $id => &$node) {
+			if (isset($node[$parent]) && !$node[$parent]) {
+				$tree[$id] = &$node;
+			} elseif (isset($node[$parent]) && $node[$parent]) {
+				$data[$node[$parent]]['childs'][$id] = &$node;
 			}
 		}
 		return $tree;
@@ -259,12 +277,14 @@ here;
 		return implode($glue, $_array);
 	}
 
-	public function clean_data($str)
+	public
+	function clean_data($str)
 	{
 		return strip_tags(trim($str));
 	}
 
-	public function autoincrement()
+	public
+	function autoincrement()
 	{
 		$params = [$this->table];
 		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";

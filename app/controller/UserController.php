@@ -129,7 +129,8 @@ class UserController extends AppController
 
 	public function actionCreate()
 	{
-		if ($this->ajax) {
+		if ($user=$this->ajax) {
+			$user['password'] = $this->preparePassword('gfasdf41(D{%)');
 			if ($id = $this->model::create($this->ajax)) {
 				exit(json_encode([
 					'id' => $id,

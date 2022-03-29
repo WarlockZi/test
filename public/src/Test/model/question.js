@@ -61,12 +61,12 @@ export let _question = {
     $(question).addClass('question-edit')
     $(question).removeClass('question__create')
 
-    let questions = $('.questions').el[0]
+    let questions = $('.questions')[0]
     questions.prepend(question)
   },
 
   cloneEmptyModel: () => {
-    let question = $('.questions .question__create .question-edit').el[0]
+    let question = $('.questions .question__create .question-edit')[0]
     if (question) return question.cloneNode(true)
   },
 
@@ -88,7 +88,7 @@ export let _question = {
       text: el.querySelector('.question__text'),
       del: el.querySelector('.question__delete'),
       createAnswerButton: el.querySelector('.answer__create-button'),
-      addButton: $($('.questions').el[0]).find('.question__create-button'),
+      addButton: $($('.questions')[0]).find('.question__create-button'),
     }
   },
 
@@ -198,7 +198,7 @@ export let _question = {
     (question) => {
       return {
         id: +question.id,
-        parent: +$('.test-name').el[0].getAttribute('value'),
+        parent: +$('.test-name')[0].getAttribute('value'),
         picq: '',
         qustion: $(question).find('.question__text').innerText,
         sort: +$(question).find('.question__sort').innerText,

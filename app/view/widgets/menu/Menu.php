@@ -34,7 +34,6 @@ class Menu extends Model
 
 	protected function run()
 	{
-
 		$this->data = $this->getAssoc('test');
 		$this->tree = $this->hierachy();
 		$this->menuHTML = $this->getMenuHtml($this->tree);
@@ -53,7 +52,6 @@ class Menu extends Model
 
 	public function catToTemplate($cat, $tab = '', $id = '')
 	{
-
 		ob_start();
 		require $this->tpl;
 		return ob_get_clean();

@@ -3,9 +3,11 @@
 namespace app\controller;
 
 use app\model\Mail;
+use app\model\Model;
 use app\model\Question;
 use app\model\Test;
 use app\model\TestResult;
+use app\view\components\CustomListTree\CustomListTree;
 use app\view\View;
 use app\view\widgets\menu\Menu;
 use app\core\App;
@@ -46,8 +48,6 @@ class TestController Extends AppController
 
 		$test['isTest'] = 1;
 		$this->set(compact('test'));
-//		View::setCss('admin.css');
-//		View::setJs('admin.js');
 	}
 
 	public function actionPathshow()
@@ -63,8 +63,6 @@ class TestController Extends AppController
 		$test['isTest'] = 0;
 		$rootTests = Test::findAllWhere('isTest', 0);
 		$this->set(compact('rootTests', 'test'));
-//		View::setCss('admin.css');
-//		View::setJs('admin.js');
 	}
 
 
@@ -265,6 +263,12 @@ class TestController Extends AppController
 		}
 	}
 
+	private function pathsTree(Model $model)
+	{
+		$model->data = $model->findAll();
+		return $model->tree('parent');
+	}
+
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
@@ -282,6 +286,14 @@ class TestController Extends AppController
 		$this->set(compact('test'));
 
 		$paths = $this->paths();
+		$this->set(compact('paths'));
+
+		$pathsTree = $this->pathsTree(new Test);
+		$select = CustomListTree::run([
+			'separator' => '',
+			'initialOption' => false,
+			'tree' => $pathsTree,
+		]);
 		$this->set(compact('paths'));
 
 //		View::setCss('admin.css');

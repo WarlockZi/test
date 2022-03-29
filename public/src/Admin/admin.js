@@ -18,7 +18,7 @@ import users from './CRM/user/users'
 
 // let p = $('.page-name')[0]
 navigate(window.location.pathname)
-  debugger
+  // debugger
 catalogItem()
 
 function navigate(str) {

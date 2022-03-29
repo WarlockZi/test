@@ -24,7 +24,7 @@ $('.pagination').on('click', function (e) {
 function paginate(self) {
 /// get clicked button Return if clicked is active
     if (self.classList.contains('nav-active')) return
-    let active_btn = $('.pagination .nav-active').el[0]
+    let active_btn = $('.pagination .nav-active')[0]
 //// change active button
     active_btn.classList.remove('nav-active')
     self.classList.add('nav-active')
@@ -46,9 +46,9 @@ async function show(e) {
         {testid, questCount})
     res = JSON.parse(res)
     let Block = res.block
-    let blocks = $('.blocks').el[0]
+    let blocks = $('.blocks')[0]
     blocks.insertAdjacentHTML('afterBegin', Block)
-    let newBlock = $('.blocks .block:first-child').el[0]
+    let newBlock = $('.blocks .block:first-child')[0]
     document.querySelector('.flex1').classList.remove('flex1')
     $(newBlock).addClass('flex1')
     let save_button = $(newBlock).find('.question__save')
@@ -56,11 +56,11 @@ async function show(e) {
 }
 
 function showHidePaginBtn(pagItem) {
-    let activePaginBtn = $('.pagination .nav-active').el[0]
+    let activePaginBtn = $('.pagination .nav-active')[0]
     if (activePaginBtn) {
         activePaginBtn.classList.remove('nav-active')
     }
-    $('.add-question').el[0].insertAdjacentHTML('beforeBegin', pagItem)
+    $('.add-question')[0].insertAdjacentHTML('beforeBegin', pagItem)
 }
 
 function appendBlock() {
