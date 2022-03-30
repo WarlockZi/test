@@ -3,12 +3,17 @@
 
 
 .custom-catalog-item__wrapper {
+  padding:  20px 10px;
+  background-color: $color-gray2;
+  @include _2200{
+    width: 500px;
+  }
 
   .custom-catalog-item__buttons {
     display: flex;
     justify-content: flex-end;
 
-    .save, .to-list {
+    .save, .to-list, .del {
       padding: 10px 15px;
       $border-radius: 3%;
       @include _button($border-radius);
@@ -16,6 +21,19 @@
       &:hover {
         svg {
           fill: $color-main;
+        }
+      }
+
+      svg {
+        fill: #ffffff;
+      }
+    }
+    .del{
+      background-color: $color-warning;
+      border: 1px solid $color-warning;
+      &:hover {
+        svg {
+          fill: $color-warning;
         }
       }
 
@@ -48,11 +66,12 @@
     }
 
     [contenteditable] {
-      background-color: $color-gray2;
+      background-color: white;
       padding: 3px 5px;
+      box-sizing: border-box;
 
       &:hover {
-        background-color: $color-gray4;
+        border: 1px solid $color-gray4;
 
       }
 

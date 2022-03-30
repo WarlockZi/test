@@ -5,6 +5,11 @@
 //   }
 //}
 @import "var";
+@mixin _2200 {
+  @media (max-width: 2200px) {
+    @content;
+  }
+}
 
 @mixin _1200 {
   @media (max-width: 1200px) {

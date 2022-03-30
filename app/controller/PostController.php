@@ -120,9 +120,9 @@ class PostController Extends AppController
 					],
 				],
 
-				'delCol' => 'ajax',
+				'delBttn' => 'ajax',
 				'toListBttn' => true,
-				'save' => 'ajax',//'redirect'
+				'saveBttn' => 'ajax',//'redirect'
 			]
 		);
 	}
