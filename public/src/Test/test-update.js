@@ -8,19 +8,24 @@ export default function testUpdate() {
 // debugger
   accordionShow()
 
-  let parentSelect = new WDSSelect({
-    element: $("[data-custom-parent]")[0],
+  // let parentSelect = new WDSSelect({
+  //   element: $("[data-custom-parent]")[0],
+  //   title: 'Лежит в папке',
+  //   class: 'parent'
+  // })
+
+  let parentsSelect = new WDSSelect({
+    element: $("[data-custom-parents]")[0],
     title: 'Лежит в папке',
     class: 'parent'
   })
-
 
   let enableSelect = new WDSSelect({
     element: $("[data-custom-enable]")[0],
     title: 'Показывать пользователям',
     class: 'enable'
   })
-  $('.test__update').on('click', _test.update.bind(null, parentSelect.selectedOption, enableSelect.selectedOption))
+  $('.test__update').on('click', _test.update.bind(null, parentsSelect.selectedOption, enableSelect.selectedOption))
   $(".test__save").on('click', _test.update)
   $(".test__delete").on('click', _test.delete)
   $(".test-path__create").on('click', _test.path_create)
