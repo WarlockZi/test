@@ -2,18 +2,16 @@
 
 namespace app\controller;
 
+use app\core\App;
 use app\model\Mail;
 use app\model\Model;
 use app\model\Question;
 use app\model\Test;
 use app\model\TestResult;
-use app\view\components\CustomListTree\CustomListTree;
+use app\model\User;
+use app\view\components\CustomSelect\CustomSelect;
 use app\view\View;
 use app\view\widgets\menu\Menu;
-use app\core\App;
-use app\model\User;
-
-use app\view\widgets\Tree\Tree;
 
 
 class TestController Extends AppController
@@ -265,7 +263,7 @@ class TestController Extends AppController
 
 	private function pathsTree(Model $model)
 	{
-		$model->data = $model->findAll();
+		$model->data = $model->findAllWhere('isTest', '0');
 		return $model->tree('parent');
 	}
 
@@ -289,12 +287,20 @@ class TestController Extends AppController
 		$this->set(compact('paths'));
 
 		$pathsTree = $this->pathsTree(new Test);
-		$select = CustomListTree::run([
-			'separator' => '',
-			'initialOption' => false,
+		$select = CustomSelect::run([
+			'selectClassName'=>'custom-select-container',
+			'title'=>'Лежит в папке аа',
+			'js'=>'data-custom-parents',
+			'field'=>'parent',
+			'tab' => '&nbsp;&nbsp;&nbsp;',
+			'initialTab' => false,
+			'initialOption' => true,
+			'initialOptionValue' => '---',
 			'tree' => $pathsTree,
+			'tpl' => ROOT.'/app/view/components/CustomSelect/tpl.php',
 		]);
-		$this->set(compact('paths'));
+
+		$this->set(compact('select'));
 
 //		View::setCss('admin.css');
 //		View::setJs('admin.js');

@@ -6,7 +6,8 @@ export default class WDSSelect {
 
     if (!props.element) return false
     this.element = props.element
-    this.title = props.title
+    // debugger
+    this.title = this.element.dataset['title']
     this.options = getFormattedOptions(this.element.querySelectorAll("option"))
     this.sel = document.createElement("div")
     this.sel.classList.add(props.class)
@@ -16,6 +17,10 @@ export default class WDSSelect {
     setup(this)
     this.element.style.display = "none"
     this.element.after(this.sel)
+    select.titleElement.classList.add("custom-select-title")
+    select.titleElement.innerText = select.title
+    select.sel.before(select.titleElement)
+    this.element.before(this.sel)
   }
 
   get selectedOption() {
@@ -53,9 +58,6 @@ function setup(select) {
   select.sel.classList.add("custom-select-container")
   select.sel.tabIndex = 0
 
-  select.titleElement.classList.add("custom-select-title")
-  select.titleElement.innerText = select.title
-  select.sel.append(select.titleElement)
   // debugger
   select.label.classList.add("custom-select-value")
   select.label.innerText = select.selectedOption.label

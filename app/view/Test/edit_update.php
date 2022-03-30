@@ -26,19 +26,19 @@
 			</div>
 		</div>
 
-		<select data-custom-parent>
-			<option value="0">-</option>
-			<? foreach ($paths as $parent): ?>
-				<option
-						value="<?= $parent['id'] ?>"
-					<?= $test['parent'] === $parent['id']
-						? "selected"
-						: ""; ?>
-				>
-					<?= $parent['test_name'] ?>
-				</option>
-			<? endforeach; ?>
-		</select>
+<!--		<select data-custom-parent>-->
+<!--			<option value="0">-</option>-->
+<!--			--><?// foreach ($paths as $parent): ?>
+<!--				<option-->
+<!--						value="--><?//= $parent['id'] ?><!--"-->
+<!--					--><?//= $test['parent'] === $parent['id']
+//						? "selected"
+//						: ""; ?>
+<!--				>-->
+<!--					--><?//= $parent['test_name'] ?>
+<!--				</option>-->
+<!--			--><?// endforeach; ?>
+<!--		</select>-->
 
 		<select data-custom-enable>
 			<option value="-1">-</option>
@@ -51,6 +51,8 @@
 			>нет
 			</option>
 		</select>
+
+		<?=$select;?>
 
 
 		<input type="hidden" isTest="<?= $test['isTest'] ?>">

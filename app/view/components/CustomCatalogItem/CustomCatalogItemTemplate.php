@@ -22,12 +22,21 @@
 
 	<!--  BUTTONS  -->
 	<div class="custom-catalog-item__buttons">
+
+		 <? if ($this->delBttn === 'ajax'): ?>
+		  <div class="del"
+		       data-model="<?= $this->modelName; ?>">
+					<? include TRASH ?>
+		  </div>
+		 <? endif; ?>
+
 		 <? if ($this->saveBttn === 'ajax'): ?>
 		  <div class="save"
 		       data-model="<?= $this->modelName; ?>">
 					<? include SAVE ?>
 		  </div>
 		 <? endif; ?>
+
 		 <? if ($this->toListBttn): ?>
 		  <a href="/adminsc/<?= $this->modelName; ?>/list"
 		     class="to-list"
@@ -35,6 +44,7 @@
 					К списку
 		  </a>
 		 <? endif; ?>
+
 	</div>
 
 

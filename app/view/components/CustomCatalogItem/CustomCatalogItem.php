@@ -17,7 +17,7 @@ class CustomCatalogItem
 
 	private $saveBttn = 'ajax';
 	private $toListBttn = false;
-	private $deleteBttn = true;
+	private $delBttn = true;
 
 	public function __construct($options)
 	{
