@@ -3,15 +3,16 @@
 
 
 .custom-catalog-item__wrapper {
-  padding:  20px 10px;
+  padding: 20px 10px;
   background-color: $color-gray2;
-  @include _2200{
+  @include _2200 {
     width: 500px;
   }
 
   .custom-catalog-item__buttons {
     display: flex;
     justify-content: flex-end;
+    margin: 20px;
 
     .save, .to-list, .del {
       padding: 10px 15px;
@@ -25,12 +26,15 @@
       }
 
       svg {
+        transition: fill 500ms;
         fill: #ffffff;
       }
     }
-    .del{
+
+    .del {
       background-color: $color-warning;
       border: 1px solid $color-warning;
+
       &:hover {
         svg {
           fill: $color-warning;
@@ -52,6 +56,7 @@
   .row {
     display: flex;
     padding: 5px 0;
+    align-items: center;
 
     .field {
       display: flex;
@@ -67,17 +72,16 @@
 
     [contenteditable] {
       background-color: white;
-      padding: 3px 5px;
+      padding: 5px 7px;
       box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid transparent;
+      margin: 0 5px;
 
       &:hover {
-        border: 1px solid $color-gray4;
-
+        border: 1px solid darken($color-gray4, 10%);
       }
 
-      &:focus-visible {
-        border-bottom: none;
-      }
     }
   }
 

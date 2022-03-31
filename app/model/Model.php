@@ -41,7 +41,7 @@ abstract class Model
 		}
 	}
 
-	public static function update($values)
+	public static function update($values = [])
 	{
 		$id = $values['id'];
 		if (!$id) exit('empty or undefined id');
@@ -154,11 +154,35 @@ here;
 		return $model->pdo->query($sql);
 	}
 
+	private function prepareQuerry($array)
+	{
+		$fields = implode(',', array_keys($array));
+		$params = array_values($array);
+//		$questionMarks = array_fill(0, count($array), '?');
+//		$strQMarks = implode(',', array_values($questionMarks));
+
+		$str = "{$fields[0]}={$params[0]}";
+		foreach ($fields as $field) {
+			$str .= "AND {$fields[0]}={$params[0]}";
+		}
+		return $str;
+	}
+
 	public static function findAllWhere($field, $value)
 	{
 		$model = new static();
+
+		if (is_array($field)) {
+			$querry = $model->prepareQuerry($field);
+			$sql = "SELECT * FROM {$model->table} ({$fields}) VALUES ({$strQMarks})";
+			$sql = "SELECT * FROM {$model->table} WHERE {$querry}";
+			return $model->pdo->query($sql, []);
+
+		}
+
 		$sql = "SELECT * FROM {$model->table} WHERE $field = ? ";
 		return $model->pdo->query($sql, [$value]);
+
 	}
 
 	public static function findOneWhere($field, $value)

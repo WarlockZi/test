@@ -7,19 +7,38 @@ export default function list() {
   $('html').ready(function () {
     const table = $('.custom-list')[0]
     const customList__wrapper = table.closest('.custom-list__wrapper')
+    const contenteditable = $('[contenteditable]')
     const headers = table.querySelectorAll('.head')
     const sortables = table.querySelectorAll('[data-sort]')
     const inputs = $(table).findAll('.head input')
     const ids = $(table)[0].querySelectorAll('.id:not(.head')
-    const modelName = table.dataset['model']
+    const modelName = customList__wrapper.dataset['model']
     const rows = []
 
+    // const debouncedHandle = debounce(handleInput.bind(null, table, contenteditable), 1000);
+    // $(table).on('blur', handleInput.bind(null, table, contenteditable))
 
     $(customList__wrapper).on('click', handleClick.bind(this));
     $(customList__wrapper).on('keyup', handleKeyUp.bind(this));
 
+    // $(customList__wrapper).on('keyup', debouncedHandle);
+    function handleInput(table, contenteditable, target) {
+      if (!target.hasAttribute('contenteditable')) return false
+      let modelName = table.closest('.custom-list__wrapper').dataset['model']
+      let model = makeServerModel(target, modelName)
+      save(model)
+    }
+    function debounce(callee, timeoutMs) {
+      return function perform(...args) {
+        let previousCall = this.lastCall;
+        this.lastCall = Date.now();
+        if (previousCall && this.lastCall - previousCall <= timeoutMs) {
+          clearTimeout(this.lastCallTimer);
+        }
+        this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs);
+      };
+    }
     function handleKeyUp({target}) {
-
       /// search
       if (target.closest('.head')) {
         let header = target.closest('.head')
@@ -27,6 +46,17 @@ export default function list() {
           return el === header
         })
         search(index, target)
+
+        // contenteditable
+      } else if (target.hasAttribute('contenteditable')) {
+
+        debounce(handleInput.bind(null, table, contenteditable,target),500)
+        // clearTimeout(debounceTimeout)
+        // const handle = handleInput.bind(null, table, contenteditable,target)
+        // debounceTimeout = setTimeout((e) => {
+        //   handle().bind(null, table, contenteditable,target)
+        // }, 500)
+        // debounce(handleInput.bind(null, table, contenteditable), 1000);
       }
     }
 
@@ -54,10 +84,10 @@ export default function list() {
         let index = [].findIndex.call(headers, (el, i, inputs) => {
           return el === header
         })
-
         sortColumn(index)
-
       }
+
+
     }
 
     // DELETE
@@ -205,6 +235,29 @@ export default function list() {
           return content
       }
     };
+
+
+    async function save(model) {
+      let url = `/adminsc/${model.modelName}/update`
+      let res = await post(url, model.model)
+      res = JSON.parse(res)
+      if (res.msg === 'ok') {
+        popup.show('Сохранено!')
+      }
+    }
+
+    function makeServerModel(el, modelName) {
+      let field = el.dataset['field']
+      return {
+        model: {
+          token: $(),
+          id: el.dataset.id,
+          [field]: el.innerText
+        },
+        modelName
+      }
+    }
+
   })
 
 }

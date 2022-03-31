@@ -60,7 +60,7 @@
 }
 
 
-@mixin _button($border-radius:1%) {
+@mixin _button($border-radius:1%,$border-color:$color-main) {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,7 +71,8 @@
   margin: 10px 0 0 10px;
   cursor: pointer;
   box-sizing: border-box;
-  border: 1px solid $color-main;
+  border: 1px solid $border-color;
+  transition: background-color, color 500ms;
 
   &:hover {
     color: $color-main;
