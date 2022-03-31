@@ -1,8 +1,9 @@
-<div class="custom-list__wrapper">
+<div class="custom-list__wrapper"
+     data-model="<?= $this->modelName ?>"
+     data-table="<?= $this->tableClassName ?>"
+>
 
 	<div class="custom-list"
-	     data-table="<?= $this->tableClassName ?>"
-	     data-model="<?= $this->modelName ?>"
 	     style="display: grid;<?= $this->grid ?>">
 
 		<!--  HEADER  -->
@@ -56,13 +57,10 @@
 	<div class="custom-list__buttons">
 
 	<? if ($this->addButton === 'ajax'): ?>
-	  <div class="add-model"
-	       data-model="<?= $this->modelName; ?>">+
-	  </div>
+	  <div class="add-model">+</div>
 	<? elseif ($this->addButton === 'redirect'): ?>
 	  <a href="/adminsc/{$this->modelName}/create"
-	     class="add-model"
-	     data-model="<?= $this->modelName; ?>">+
+	     class="add-model">+
 	  </a>
 	<? endif; ?>
 	</div>

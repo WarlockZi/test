@@ -25,12 +25,19 @@ class TodoController Extends AppController
 
 	public function actionList()
 	{
-		$this->view = 'create';
+//		$this->view = 'list';
 
-		$items = $this->model::findAll();
-//		$this->set(compact(`items`));
-		$table = $this->getTable($items)->html;
-		$this->set(compact('table'));
+		$items = $this->model::findAllWhere(['type'=>'daily','user_id'=>'22']);
+		$daily = $this->getTable($items)->html;
+		$this->set(compact('daily'));
+
+		$items = $this->model::findAllWhereOrCreate('type','weekly');
+		$weekly = $this->getTable($items)->html;
+		$this->set(compact('weekly'));
+
+		$items = $this->model::findAllWhereOrCreate('type','yearly');
+		$yearly = $this->getTable($items)->html;
+		$this->set(compact('yearly'));
 	}
 
 	private function getTable($items)
@@ -71,6 +78,16 @@ class TodoController Extends AppController
 						'sort' => true,
 						'search' => true,
 					],
+					'post_id' => [
+						'className' => 'post_id',
+						'field' => 'post_id',
+						'name' => 'Должность',
+						'width' => '1fr',
+						'contenteditable'=>'contenteditable',
+						'data-type'=>'string',
+						'sort' => true,
+						'search' => true,
+					],
 				],
 				'editCol' => false,
 //				'delCol' => false,
@@ -82,6 +99,9 @@ class TodoController Extends AppController
 
 	public function actionShow()
 	{
+		$todos=Todo::findAll();
+		$table = $this->getTable($todos);
+		$this->set(compact('table'));
 	}
 
 

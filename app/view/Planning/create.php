@@ -2,6 +2,8 @@
 
 	Ежедневные
 
+	<?=$daily;?>
+
 	<div class="planning-create__table">
 		<div class="num head">№</div>
 		<div class="function head">Задача</div>
