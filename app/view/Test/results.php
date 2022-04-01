@@ -14,7 +14,7 @@
 			</div>
 			<div class="item" data-row="<?= $i['id'] ?>"> <?= $i['date']; ?></div>
 
-			<div class="item del-btn <?= (in_array('test-results__del', $this->user['rights'])) ? 'del' : ''; ?>" data-row="<?= $i['id'] ?>">
+			<div class="item del-btn <?= (in_array('test-results_del', $this->user['rights'])) ? 'del' : ''; ?>" data-row="<?= $i['id'] ?>">
 				<? include TRASH;?>
 			</div>
 		<? endforeach; ?>

@@ -29,8 +29,6 @@ class TestController Extends AppController
 	public function actionIndex()
 	{
 		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
-//		View::setJs('admin.js');
-//		View::setCss('admin.css');
 	}
 
 	public function actionShow()
@@ -93,23 +91,15 @@ class TestController Extends AppController
 
 	public function actionResult()
 	{
-		$cache = $this->route['cache'];
-		$res = TestResult::findOneWhere('cache', $cache);
-		$this->set(compact('res'));
-
+		$id = $this->route['id'];
+		$res = TestResult::findOneWhere('id', $id);
 		exit($res['html']);
 	}
 
 	public function actionResults()
 	{
-		if (array_key_exists('cache', $this->route)) {
-			if ($this->route['cache']) {
-				$file_name = $this->route['cache'];
-				$dir = ROOT . '\tmp\cache\test_results\\';
-				$cached_page = App::$app->cache->getFromCache($dir, $file_name);
-				exit($cached_page);
-			}
-		}
+		$res = TestResult::findAll('testResults');
+		$this->set(compact('res'));
 	}
 
 	public function actionDelete()
@@ -144,7 +134,6 @@ class TestController Extends AppController
 	{
 		if ($id = $this->ajax['id']) {
 			return TestResult::delete($id);
-
 		}
 	}
 
@@ -235,10 +224,6 @@ class TestController Extends AppController
 
 			$this->set(compact('page_name'));
 			$testId = isset($this->route['alias']) ? (int)$this->route['alias'] : '';
-
-//			$menuTestDo = $this->getMenu();
-//			$this->set(compact('menuTestDo'));
-
 			if ($testId) {
 				if (!$testData = App::$app->test->getTestData($testId, true)) {
 					$error = '<H1>Теста с таким номером нет.</H1>';
@@ -251,13 +236,9 @@ class TestController Extends AppController
 					$pagination = App::$app->test->pagination($testData, false, $test);
 				}
 			}
-
 			$this->set(compact('testData', 'pagination'));
-
 		} else {
-
 			header('Location:/');
-
 		}
 	}
 
@@ -301,9 +282,6 @@ class TestController Extends AppController
 		]);
 
 		$this->set(compact('select'));
-
-//		View::setCss('admin.css');
-//		View::setJs('admin.js');
 	}
 
 
