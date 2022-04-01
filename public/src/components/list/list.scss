@@ -38,10 +38,14 @@
     font-weight: normal;
     border-right: 1px solid $color-gray4;
     box-sizing: border-box;
+    display: flex;
+    flex-flow: column;
+    cursor: pointer;
 
     input {
+      cursor: text;
       position: relative;
-      margin: 0 10px;
+      margin: 0;
       width: 40px;
       padding-left: 5px;
       border-radius: 2px;
@@ -63,6 +67,7 @@
     &.del {
       text-align: center;
       cursor: initial;
+      align-items: center;
 
       &:hover {
         background-color: #5b626e;

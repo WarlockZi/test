@@ -65,7 +65,7 @@ export default function testDo() {
 
     let obj = {
       token: document.querySelector('meta[name="token"]').getAttribute('content'),
-      questionCnt: $('.question').el.length,
+      questionCnt: $('.question').length,
       errorCnt: errorCnt,
       pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
       testId: $('[data-test-id]')[0].dataset.testId,
@@ -88,7 +88,7 @@ export default function testDo() {
 
 
   function colorView(correctAnswers) {
-    let q = $('.question').el
+    let q = $('.question')
     Array.from(q).map((question, i) => {
       let answers = question.querySelectorAll('.a'),
         errors = []
@@ -110,7 +110,7 @@ export default function testDo() {
         $(paginItem).addClass('greenShadow')
       }
     })
-    return $('.redShadow').el.length
+    return $('.redShadow').length
   }
 
   function checkCorrectAnswers(correctAnser, input, label) {

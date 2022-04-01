@@ -16,10 +16,14 @@ import planning from './Planning/planning'
 import user from './CRM/user/user'
 import users from './CRM/user/users'
 
+import list from '@components/list/list'
+
 // let p = $('.page-name')[0]
 navigate(window.location.pathname)
   // debugger
 catalogItem()
+
+list()
 
 function navigate(str) {
   switch (true) {
@@ -27,12 +31,12 @@ function navigate(str) {
     case /\/adminsc\/right\/list/.test(str):
     case /\/adminsc\/post\/list/.test(str):
     case /\/adminsc\/todo\/list/.test(str):
-      // debugger
       rights()
       $("[href='/adminsc/settings']").addClass('current')
       break;
 
-    case /\/adminsc\/crm\/testresults/.test(str):
+    case /\/adminsc\/test\/results/.test(str):
+      debugger
       testResults()
       $("[href='/adminsc/crm/testresults']").addClass('current')
       break;
