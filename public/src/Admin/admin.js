@@ -20,12 +20,12 @@ import list from '@components/list/list'
 
 // let p = $('.page-name')[0]
 navigate(window.location.pathname)
-  // debugger
+// debugger
 catalogItem()
-
 list()
 
 function navigate(str) {
+  // debugger
   switch (true) {
     case /\/adminsc\/settings/.test(str):
     case /\/adminsc\/right\/list/.test(str):
@@ -35,8 +35,13 @@ function navigate(str) {
       $("[href='/adminsc/settings']").addClass('current')
       break;
 
+    case /\/adminsc\/[a-zA-Z0-9]+\/edit/.test(str):
+
+      list()
+
+
     case /\/adminsc\/test\/results/.test(str):
-      debugger
+      // debugger
       testResults()
       $("[href='/adminsc/crm/testresults']").addClass('current')
       break;

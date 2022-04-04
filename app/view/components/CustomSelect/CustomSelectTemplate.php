@@ -1,8 +1,9 @@
 <select
-  <?= $model->js; ?>
-  data-title="<?=$model->title??'';?>"
-  data-value=""
-  class="<?= $model->selectClassName; ?>"
+  custom-select
+  data-field="<?= $model->field; ?>"
+  <?=$model->title?"data-title=".$model->title:'';?>
+  <?=$model->selectClassName?"class=".$model->selectClassName:'';?>
+>
 
 	<? if ($model->initialOption): ?>
 	  <option value=""><?= $model->initialOptionValue; ?></option>
@@ -11,7 +12,7 @@
 	<? foreach ($model->tree as $k => $v): ?>
 
 	  <option value="<?= $v['id'] ?>">
-			 <?= $model->initialTab ? $model->tab : ''; ?><?= $v['test_name'] ?>
+			 <?= $v[$model->nameFieldName] ?>
 	  </option>
 		<? $level = 0; ?>
 		<? if (isset($v['childs'])): ?>

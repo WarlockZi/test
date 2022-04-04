@@ -6,15 +6,18 @@ namespace app\view\components\CustomSelect;
 
 class CustomSelect
 {
-	private $title = 'Название поля';
-	private $selectClassName = 'custom-select-container';
-	private $js = 'data-select';
+	private $title = '';
+	private $selectClassName = '';
+	private $field = 'field';
 	private $tab = '.';
 	private $initialOption = false;
 	private $initialOptionValue = '--';
-	private $initialTab = false;
+	private $nameFieldName = 'name';
+	private $type = 'string';
 	private $tree = [];
-	private $tpl = '/app/view/components/CustomSelect/tpl.php';
+	private $pathToTpl = ROOT.'/app/view/components/CustomSelect/';
+	private $tpl = 'tpl.php';
+	private $finalTpl;
 
 	public function __construct($options)
 	{
@@ -28,6 +31,7 @@ class CustomSelect
 				$this->$k = $v;
 			}
 		}
+		$this->finalTpl=$this->pathToTpl.$this->tpl;
 	}
 
 	public function getChilds($tree,$level)
@@ -42,7 +46,7 @@ class CustomSelect
 	public function getOption($item,$level)
 	{
 		ob_start();
-		require $this->tpl;
+		require $this->finalTpl;
 		return ob_get_clean();
 	}
 
@@ -53,7 +57,7 @@ class CustomSelect
 		ob_start();
 		include ROOT . '/app/view/components/CustomSelect/CustomSelectTemplate.php';
 		$t = ob_get_clean();
-		$model->html = $t;
+//		$model->html = $t;
 		return $t;
 	}
 

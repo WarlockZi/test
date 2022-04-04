@@ -1,7 +1,7 @@
 @import "../../var";
 @import "../../mixin_media";
 
-.custom-select-container,
+.custom-select,
 .custom-select-value,
 .custom-select-options,
 .custom-select-option {
@@ -20,7 +20,7 @@
     outline: 1px solid $color-gray5;
   }
 }
-.custom-select-container {
+.custom-select{
   display: inline-block;
   position: relative;
   margin: 10px 0px;
@@ -43,7 +43,7 @@
   font-size: .8rem;
 }
 
-.custom-select-container:focus > .custom-select-value {
+.custom-select:focus > .custom-select-value {
   //border-width: 2px;
   outline: none;
 }

@@ -5,7 +5,6 @@ import WDSSelect from "../components/select/WDSSelect"
 import accordionShow from "./accordion-show";
 
 export default function testUpdate() {
-// debugger
   accordionShow()
 
   // let parentSelect = new WDSSelect({
@@ -14,17 +13,19 @@ export default function testUpdate() {
   //   class: 'parent'
   // })
 
-  let parentsSelect = new WDSSelect({
-    element: $("[data-custom-parents]")[0],
-    title: 'Лежит в папке',
-    class: 'parent'
+  // debugger
+  let enableSelect = new WDSSelect({
+    title: 'Показывать пользователям',
+    class: 'enable',
+    field: 'enable',
   })
 
-  let enableSelect = new WDSSelect({
-    element: $("[data-custom-enable]")[0],
-    title: 'Показывать пользователям',
-    class: 'enable'
+  let parentsSelect = new WDSSelect({
+    title: 'Лежит в папке',
+    class: 'parent',
+    field: 'parent',
   })
+
   $('.test__update').on('click', _test.update.bind(null, parentsSelect.selectedOption, enableSelect.selectedOption))
   $(".test__save").on('click', _test.update)
   $(".test__delete").on('click', _test.delete)
