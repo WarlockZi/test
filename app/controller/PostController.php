@@ -5,6 +5,7 @@ namespace app\controller;
 use app\model\Post;
 use app\model\User;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
+use app\view\components\CustomSelect\CustomSelect;
 use app\view\View;
 use app\view\components\CustomList\CustomList;
 
@@ -86,7 +87,7 @@ class PostController Extends AppController
 		);
 	}
 
-	private function getItem($item)
+	private function getItem($item, $chiefs = [], $subordinates = [])
 	{
 		return new CustomCatalogItem(
 			[
@@ -118,6 +119,23 @@ class PostController Extends AppController
 						'contenteditable' => 'contenteditable',
 						'data-type' => 'string',
 					],
+					'cheif' => [
+						'className' => 'cheif',
+						'field' => 'cheif',
+						'name' => 'Подчиняется',
+						'width' => '1fr',
+						'contenteditable' => false,
+						'data-type' => 'select',
+						'select' => $chiefs,
+					],
+					'subourdinate' => [
+						'className' => 'fullname',
+						'field' => '$subordinate',
+						'name' => 'Управляет',
+						'width' => '1fr',
+						'data-type' => 'select',
+						'select' => $subordinates,
+					],
 				],
 
 				'delBttn' => 'ajax',
@@ -133,15 +151,44 @@ class PostController Extends AppController
 			$this->model::update($this->ajax);
 			$this->exitWith('ok');
 		}
+		$id = $this->route['id'];
+		$chiefs = $this->getSelectCheifs(Post::cheifs($id));
+//		$this->set(compact('chiefs'));
+		$subordinates = $this->getSelectSubordinate(Post::subordinates($id));
+//		$this->set(compact('subordinates'));
 
-		$post = $this->model::findOneWhere('id',$this->route['id']);
-		$item = $this->getItem($post)->html;
+		$post = $this->model::findOneWhere('id', $id);
+		$item = $this->getItem($post,$chiefs,$subordinates)->html;
 		$this->set(compact('item'));
 
 		$this->view = 'edit';
 
 	}
 
+	private function getSelectCheifs($array)
+	{
+		return CustomSelect::run([
+//			'title' => 'Подчиняется',
+//			'selectClassName' => 'custom-select',
+			'field'=> 'cheif',
+			'tab'=> '.',
+			'initialOption' => true,
+			'initialOptionValue' => '--',
+			'tree' => $array,
+		]);
+	}
+	private function getSelectSubordinate($array)
+	{
+		return CustomSelect::run([
+//			'title' => 'Управляет',
+//			'selectClassName' => 'custom-select',
+			'field'=> 'subordinate',
+			'tab'=> '.',
+			'initialOption' => true,
+			'initialOptionValue' => '--',
+			'tree' => $array,
+		]);
+	}
 	public function actionCreate()
 	{
 		if ($this->ajax) {
@@ -171,22 +218,11 @@ class PostController Extends AppController
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
-			if (User::can($this->user,'post_update')){
+			if (User::can($this->user, 'post_update')) {
 				$this->model::update($this->ajax);
 				$this->exitWith('ok');
-
 			}
 		}
-
 	}
-//	public function actionUpdate()
-//	{
-//		if ($this->ajax) {
-//			$updated = $this->model::update($this->ajax);
-//			$this->exitWith('updated');
-//		}
-//
-//		$this->view = 'update';
-//
-//	}
+
 }

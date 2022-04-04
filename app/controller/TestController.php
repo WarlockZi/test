@@ -269,16 +269,15 @@ class TestController Extends AppController
 
 		$pathsTree = $this->pathsTree(new Test);
 		$select = CustomSelect::run([
-			'selectClassName'=>'custom-select-container',
+
+			'selectClassName'=>'custom-select',
 			'title'=>'Лежит в папке аа',
-			'js'=>'data-custom-parents',
 			'field'=>'parent',
 			'tab' => '&nbsp;&nbsp;&nbsp;',
-			'initialTab' => false,
 			'initialOption' => true,
 			'initialOptionValue' => '---',
+			'nameFieldName' => 'test_name',
 			'tree' => $pathsTree,
-			'tpl' => ROOT.'/app/view/components/CustomSelect/tpl.php',
 		]);
 
 		$this->set(compact('select'));

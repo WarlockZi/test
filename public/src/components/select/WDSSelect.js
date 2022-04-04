@@ -1,26 +1,25 @@
 import './WDSSelect.scss'
+import './customSelect.scss'
+import {$} from "../../common";
 
 export default class WDSSelect {
 
   constructor(props) {
 
-    if (!props.element) return false
-    this.element = props.element
-    // debugger
-    this.title = this.element.dataset['title']
+    let el = $(`[custom-select][data-field='${props.field}']`)[0]
+    if (!el) return false
+    this.element = el
+
+    this.title = this.element.dataset['title'] ?? ''
     this.options = getFormattedOptions(this.element.querySelectorAll("option"))
     this.sel = document.createElement("div")
     this.sel.classList.add(props.class)
     this.label = document.createElement("span")
-    this.titleElement = document.createElement("div")
+
     this.ul = document.createElement("ul")
     setup(this)
     this.element.style.display = "none"
     this.element.after(this.sel)
-    select.titleElement.classList.add("custom-select-title")
-    select.titleElement.innerText = select.title
-    select.sel.before(select.titleElement)
-    this.element.before(this.sel)
   }
 
   get selectedOption() {
@@ -50,12 +49,22 @@ export default class WDSSelect {
       `[data-value="${newSelectedOption.value}"]`
     )
     newCustomElement.classList.add("selected")
-    newCustomElement.scrollIntoView({ block: "nearest" })
+    newCustomElement.scrollIntoView({block: "nearest"})
   }
 }
 
 function setup(select) {
-  select.sel.classList.add("custom-select-container")
+
+  if (this.title) {
+    this.titleElement = document.createElement("div")
+    this.titleElement.classList.add("custom-select-title")
+    this.titleElement.innerText = this.title
+    select.sel.append(select.titleElement)
+  }
+
+  select.sel.classList.add("custom-select")
+
+  select.sel.classList.add("custom-select")
   select.sel.tabIndex = 0
 
   // debugger
@@ -68,7 +77,7 @@ function setup(select) {
     setOption(option)
   })
 
-  function setOption(option){
+  function setOption(option) {
     const li = document.createElement("li")
     li.classList.add("custom-select-option")
     li.classList.toggle("selected", option.selected)

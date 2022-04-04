@@ -10,10 +10,15 @@
 		  <div class="row">
 			  <div class="field"><?= $value['name'] ?></div>
 			  :
-			  <div class="value"
-						 <?= $value['contenteditable']; ?>>
-						 <?= $this->item[$field] ?>
-			  </div>
+					<? if ($value['data-type']==='string'): ?>
+				 <div class="value"
+							 <?= $value['contenteditable']; ?>>
+							 <?= $this->item[$field] ?>
+				 </div>
+					<? elseif ($value['data-type']==='select'): ?>
+					<?=$value['select'];?>
+					<? endif; ?>
+
 		  </div>
 
 		 <? endforeach; ?>
@@ -41,7 +46,7 @@
 		  <a href="/adminsc/<?= $this->modelName; ?>/list"
 		     class="to-list"
 		     data-model="<?= $this->modelName; ?>">
-					К списку
+			  К списку
 		  </a>
 		 <? endif; ?>
 

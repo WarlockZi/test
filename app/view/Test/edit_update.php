@@ -40,7 +40,7 @@
 <!--			--><?// endforeach; ?>
 <!--		</select>-->
 
-		<select data-custom-enable>
+		<select custom-select data-field ='enable'>
 			<option value="-1">-</option>
 			<option value="1"
 				<?= $test['enable'] ? "selected" : ""; ?>

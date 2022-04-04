@@ -75,6 +75,13 @@ abstract class Model
 		return $model->insertBySql($sql, $param);
 	}
 
+	public function hasMany($model, $var = [])
+	{
+
+		$this->findAllWhere('id', $var);
+
+	}
+
 
 	public function morphOne($type, $typeId, $id)
 	{
@@ -96,24 +103,41 @@ abstract class Model
 		}
 	}
 
-
-	public function morphTo($type, $typeId, $id)
+	private function makeMorphTableName(string $name1, string $name2): string
 	{
-		$morphTable = $this->model . '_morph';
-		$firstId = $this->model . '_id';
-		$secodId = 'type_id';
-		$param = [$id, $typeId];
+		$arr = [$name1, $name2];
+		sort($arr);
+		return $arr[0] . '_' . $arr[1];
+	}
 
-		$sql1 = <<<here
-SELECT * FROM $morphTable WHERE $firstId=? AND type="$type" AND $secodId=?
-here;
+	private function makeFieldName(string $name): string
+	{
+		return $name . '_id';
+	}
 
-		if (!$this->findBySql($sql1, $param)) {
-			$sql = <<<here
-INSERT INTO $morphTable SET $firstId = ?, type="$type", $secodId= ? 
-here;
-			$this->insertBySql($sql, $param);
+	public function morphTo($table, $type, $id)
+	{
+
+		$morphTable = $this->makeMorphTableName($this->model, $table);
+		$field = $this->makeFieldName($this->model);
+		$param = [$id];
+
+		$sql = "SELECT * FROM $morphTable WHERE $field=? AND type='$type'";
+		$res = $this->findBySql($sql, $param);
+		$arr = [];
+		foreach ($res as $item) {
+			$m = $this->findOneWhere('id',$item['type_id']);
+
+			$arr[]=$m ;
 		}
+		return $arr;
+
+//		if (!) {
+//			$sql = <<<here
+//INSERT INTO $morphTable SET $firstId = ?, type="$type", $secodId= ?
+//here;
+//			$this->insertBySql($sql, $param);
+//		}
 	}
 
 
