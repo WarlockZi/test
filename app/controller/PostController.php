@@ -5,9 +5,10 @@ namespace app\controller;
 use app\model\Post;
 use app\model\User;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
-use app\view\components\CustomSelect\CustomSelect;
-use app\view\View;
 use app\view\components\CustomList\CustomList;
+use app\view\components\CustomSelect\CustomSelect;
+use app\view\components\CustomMultiSelect\CustomMultiSelect;
+use app\view\View;
 
 
 class PostController Extends AppController
@@ -87,7 +88,7 @@ class PostController Extends AppController
 		);
 	}
 
-	private function getItem($item, $chiefs = [], $subordinates = [])
+	private function getItem($item, $chiefs, $subordinates,$subordinates1)
 	{
 		return new CustomCatalogItem(
 			[
@@ -136,6 +137,14 @@ class PostController Extends AppController
 						'data-type' => 'select',
 						'select' => $subordinates,
 					],
+					'subourdinate1' => [
+						'className' => 'fullname',
+						'field' => '$subordinate',
+						'name' => 'Управляет',
+						'width' => '1fr',
+						'data-type' => 'multiselect',
+						'select' => $subordinates1,
+					],
 				],
 
 				'delBttn' => 'ajax',
@@ -155,10 +164,12 @@ class PostController Extends AppController
 		$chiefs = $this->getSelectCheifs(Post::cheifs($id));
 //		$this->set(compact('chiefs'));
 		$subordinates = $this->getSelectSubordinate(Post::subordinates($id));
-//		$this->set(compact('subordinates'));
+
+		$subordinates1 = $this->getMultiselectSubordinate(Post::subordinates($id));
+
 
 		$post = $this->model::findOneWhere('id', $id);
-		$item = $this->getItem($post,$chiefs,$subordinates)->html;
+		$item = $this->getItem($post,$chiefs,$subordinates,$subordinates1)->html;
 		$this->set(compact('item'));
 
 		$this->view = 'edit';
@@ -168,8 +179,6 @@ class PostController Extends AppController
 	private function getSelectCheifs($array)
 	{
 		return CustomSelect::run([
-//			'title' => 'Подчиняется',
-//			'selectClassName' => 'custom-select',
 			'field'=> 'cheif',
 			'tab'=> '.',
 			'initialOption' => true,
@@ -180,8 +189,6 @@ class PostController Extends AppController
 	private function getSelectSubordinate($array)
 	{
 		return CustomSelect::run([
-//			'title' => 'Управляет',
-//			'selectClassName' => 'custom-select',
 			'field'=> 'subordinate',
 			'tab'=> '.',
 			'initialOption' => true,
@@ -189,6 +196,18 @@ class PostController Extends AppController
 			'tree' => $array,
 		]);
 	}
+
+	private function getMultiselectSubordinate($array)
+	{
+		return CustomMultiSelect::run([
+			'field'=> 'subordinate',
+			'tab'=> '.',
+			'initialOption' => true,
+			'initialOptionValue' => '--',
+			'tree' => $array,
+		]);
+	}
+
 	public function actionCreate()
 	{
 		if ($this->ajax) {

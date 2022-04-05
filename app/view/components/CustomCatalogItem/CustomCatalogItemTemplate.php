@@ -6,17 +6,18 @@
 	>
 
 		<!--  TABLE  -->
-		 <? foreach ($this->fields as $field => $value): ?>
+		 <? foreach ($this->fields as $fieldName => $data): ?>
 		  <div class="row">
-			  <div class="field"><?= $value['name'] ?></div>
+			  <div class="field"><?= $data['name'] ?></div>
 			  :
-					<? if ($value['data-type']==='string'): ?>
+
+					<? if (in_array($data['data-type'],['string','number'])): ?>
 				 <div class="value"
-							 <?= $value['contenteditable']; ?>>
-							 <?= $this->item[$field] ?>
+							 <?= $data['contenteditable']; ?>>
+							 <?= $this->item[$fieldName] ?>
 				 </div>
-					<? elseif ($value['data-type']==='select'): ?>
-					<?=$value['select'];?>
+					<? elseif (in_array($data['data-type'],['select','multiselect'])): ?>
+						<?= $data['select']; ?>
 					<? endif; ?>
 
 		  </div>

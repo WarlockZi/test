@@ -11,9 +11,12 @@ export default class WDSSelect {
     this.element = el
 
     this.title = this.element.dataset['title'] ?? ''
+    this.field = props.field
     this.options = getFormattedOptions(this.element.querySelectorAll("option"))
+
     this.sel = document.createElement("div")
     this.sel.classList.add(props.class)
+
     this.label = document.createElement("span")
 
     this.ul = document.createElement("ul")
@@ -55,16 +58,15 @@ export default class WDSSelect {
 
 function setup(select) {
 
-  if (this.title) {
-    this.titleElement = document.createElement("div")
-    this.titleElement.classList.add("custom-select-title")
-    this.titleElement.innerText = this.title
+  if (select.title) {
+    select.titleElement = document.createElement("div")
+    select.titleElement.classList.add("custom-select-title")
+    select.titleElement.innerText = select.title
     select.sel.append(select.titleElement)
   }
 
   select.sel.classList.add("custom-select")
-
-  select.sel.classList.add("custom-select")
+  select.sel.dataset['field'] = select.field
   select.sel.tabIndex = 0
 
   // debugger

@@ -25,7 +25,7 @@ export default function testUpdate() {
     class: 'parent',
     field: 'parent',
   })
-
+debugger
   $('.test__update').on('click', _test.update.bind(null, parentsSelect.selectedOption, enableSelect.selectedOption))
   $(".test__save").on('click', _test.update)
   $(".test__delete").on('click', _test.delete)
