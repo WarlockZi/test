@@ -35,9 +35,9 @@ function navigate(str) {
       $("[href='/adminsc/settings']").addClass('current')
       break;
 
-    case /\/adminsc\/[a-zA-Z0-9]+\/edit/.test(str):
-
-      list()
+    // case /\/adminsc\/[a-zA-Z0-9]+\/edit/.test(str):
+    //
+    //   list()
 
 
     case /\/adminsc\/test\/results/.test(str):

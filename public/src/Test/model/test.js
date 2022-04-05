@@ -135,7 +135,7 @@ export const _test = {
   },
 
   selectedValueCustomSelect(className) {
-    let select = $(`[data-custom-${className}]`)[0]
+    let select = $(`[data-field=${className}]`)[0]
     let selected = [...select.options].filter((opt)=>opt.selected)
     if (selected) {
       return +selected[0].value
@@ -171,11 +171,9 @@ export const _test = {
     }
 
     let viewModel = _test.viewModel()
-    // viewModel.enable.checked = false
-    let serverModel = _test.serverModel()
-    let res = await post('/test/delete', {
-      test: serverModel
-    })
+
+    let test = _test.serverModel()
+    let res = await post('/test/delete', {test})
     res = await JSON.parse(res)
     if (res.notAdmin) {
       popup.show('Видимость теста скрыта. Чтобы удалить полностью - обратитесь к ГД')
