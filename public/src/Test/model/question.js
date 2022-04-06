@@ -169,9 +169,9 @@ export let _question = {
     },
 
   delete:
-    async (e) => {
+    async (target) => {
       if (confirm("Удалить вопрос со всеми его ответами?")) {
-        let viewModel = _question.viewModel(e.target.closest('.question-edit'))
+        let viewModel = _question.viewModel(target.closest('.question-edit'))
         let id = viewModel.id
 
         let deleted = await _question.deleteFromServer(id)

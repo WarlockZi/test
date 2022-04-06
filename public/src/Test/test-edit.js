@@ -29,25 +29,6 @@ export default function testEdit() {
     new WDSSelect(select)
   });
 
-  // let parentSelect = new WDSSelect({
-  //   element: $("[data-custom-parent]")[0],
-  //   title: 'Папка',
-  //   class: 'parent'
-  // })
-  //
-  //
-  // let enableSelect = new WDSSelect({
-  //   element: $("[data-custom-enable]")[0],
-  //   title: 'Показывать пользователям',
-  //   class: 'enable'
-  // })
-
-
-  if ($("[data-question-parent-id]")) {
-    $(".question-edit__parent-select select").on('change', _question.changeParent)
-  }
-
-
   sortable.connect('.questions')
 
 
@@ -57,12 +38,16 @@ export default function testEdit() {
     _question.showFirst()
   }
 
+  if ($("[data-question-parent-id]")) {
+    $(".question-edit__parent-select select").on('change', _question.changeParent)
+  }
+
   debugger
   let testEditWrapper = $('.test-edit-wrapper')[0]
   if (testEditWrapper) {
-    $(testEditWrapper).on('click', function ({target}) {
-      testEditActions(target)
-    })
+    testEditWrapper.addEventListener('click',
+      ({target})=> {testEditActions(target)}
+      )
   }
 //   $('.test-path__update').on('click',)
 // // $('.question__sort').on('change', validate.sort)
