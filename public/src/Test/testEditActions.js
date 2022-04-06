@@ -6,6 +6,7 @@ import {$} from "../common";
 export default function  testEditActions (target) {
   // debugger
   // debugger
+  // let t =target.closest('.question__save')
   switch (true) {
     case target.classList.contains('test-path__update'): {
       _test.update()
@@ -23,7 +24,7 @@ export default function  testEditActions (target) {
       _test.delete()
       break;
     }
-    case target.classList.contains('.test-path__create'): {
+    case target.classList.contains('test-path__create'): {
       _test.path_create()
       break;
     }
@@ -32,18 +33,19 @@ export default function  testEditActions (target) {
       break;
     }
 
-    case target.closest('.question__save').classList.contains('question__save'): {
+    case !!target.closest('.question__save'): {
       _question.save(target)
       break;
     }
-    case target.classList.contains('question__show-answers'): {
+    case !!target.closest('.question__show-answers'): {
       _question.showAnswers(target)
       break;
     }
-    case target.classList.contains('question__delete'): {
-      _question.delete()
+    case !!target.closest('.question__delete'): {
+      _question.delete(target)
       break;
     }
+
     case target.classList.contains('question__create-button'): {
       _question.create()
       break;
@@ -56,5 +58,6 @@ export default function  testEditActions (target) {
       _answer.create()
       break;
     }
+    default:
   }
 }
