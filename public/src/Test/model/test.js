@@ -2,19 +2,6 @@ import {$, popup, post} from '../../common'
 
 export const _test = {
 
-  markCurrentInMenu: () => {
-    let currentTestId = $('.test-name')[0]
-    if (currentTestId) {
-      currentTestId = +currentTestId.getAttribute('value')
-      let menuItemCollection = $('.accordion a').el
-      Array.from(menuItemCollection).filter((a) => {
-        if (+a.dataset.id === currentTestId) {
-          a.classList.add('current')
-        }
-      })
-    }
-  },
-
   nextQ: () => {
     let current = _test.currentQ()
     if (current.id > current.navLength - 2) return false
@@ -170,10 +157,8 @@ export const _test = {
       return false
     }
 
-    let viewModel = _test.viewModel()
-
     let test = _test.serverModel()
-    let res = await post('/test/delete', {test})
+    let res = await post('/adminsc/test/delete', {test})
     res = await JSON.parse(res)
     if (res.notAdmin) {
       popup.show('Видимость теста скрыта. Чтобы удалить полностью - обратитесь к ГД')
@@ -183,7 +168,6 @@ export const _test = {
     } else {
       window.location = '/adminsc/test/edit/400'
     }
-
 
   },
 

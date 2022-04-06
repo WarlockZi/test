@@ -12,10 +12,8 @@
 	<div class="test-edit__content">
 
 		<? include ROOT . '/app/view/Test/test-head.php'; ?>
-<!--		--><?// include COMPONENTS."/test/menu_toggle.php";?>
 
-
-		<div class="test-name">Изменение <?= $t ? 'теста' : 'папки' ?></div>
+		<div class="test-name" data-testId="<?=$test['id']?>">Изменение <?= $t ? 'теста' : 'папки' ?></div>
 
 
 		<div class="centered">
@@ -26,33 +24,10 @@
 			</div>
 		</div>
 
-<!--		<select data-custom-parent>-->
-<!--			<option value="0">-</option>-->
-<!--			--><?// foreach ($paths as $parent): ?>
-<!--				<option-->
-<!--						value="--><?//= $parent['id'] ?><!--"-->
-<!--					--><?//= $test['parent'] === $parent['id']
-//						? "selected"
-//						: ""; ?>
-<!--				>-->
-<!--					--><?//= $parent['test_name'] ?>
-<!--				</option>-->
-<!--			--><?// endforeach; ?>
-<!--		</select>-->
 
-		<select custom-select data-field ='enable'>
-			<option value="-1">-</option>
-			<option value="1"
-				<?= $test['enable'] ? "selected" : ""; ?>
-			>да
-			</option>
-			<option value="0"
-				<?= $test['enable'] ? "" : "selected"; ?>
-			>нет
-			</option>
-		</select>
+		<?=$enableSelect?>
 
-		<?=$select;?>
+		<?=$parentSelect;?>
 
 
 		<input type="hidden" isTest="<?= $test['isTest'] ?>">

@@ -1,8 +1,9 @@
 <select
 		multiple="true"
 		custom-select
+		title="<?= $model->title ? $model->title : ''; ?>"
 		data-field="<?= $model->field; ?>"
-	<?= $model->title ? "data-title=" . $model->title : ''; ?>
+
 	<?= $model->selectClassName ? "class=" . $model->selectClassName : ''; ?>
 >
 

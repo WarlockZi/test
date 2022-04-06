@@ -1,7 +1,7 @@
 <select
   custom-select
   data-field="<?= $model->field; ?>"
-  <?=$model->title?"data-title=".$model->title:'';?>
+  title="<?=$model->title?$model->title:'';?>"
   <?=$model->selectClassName?"class=".$model->selectClassName:'';?>
 >
 
@@ -11,8 +11,8 @@
 
 	<? foreach ($model->tree as $k => $v): ?>
 
-	  <option value="<?= $v['id'] ?>">
-			 <?= $v[$model->nameFieldName] ?>
+	  <option value="<?= $v['id']??$k; ?>">
+			 <?= $v[$model->nameFieldName]??$v ?>
 	  </option>
 		<? $level = 0; ?>
 		<? if (isset($v['childs'])): ?>

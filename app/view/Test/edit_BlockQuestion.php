@@ -4,13 +4,13 @@
 		<div class="question__sort"><?= $block[0]['sort'] ?? '' ?></div>
 		<div class="question__save"><? include ICONS . '/save.svg' ?></div>
 		
-		<div class="question__menu">
-			<div class="select__wrap">
+<!--		<div class="question__menu">-->
+			<div class="question-edit__parent-select">
 				<select >
 					<?= include ROOT . '/app/view/Test/edit_question-parent.php'; ?>
 				</select>
 			</div>	
-		</div>
+<!--		</div>-->
 		
 		<div class="question__show-answers"></div>
 		<div class="question__text" contenteditable="true">

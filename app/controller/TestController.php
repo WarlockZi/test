@@ -104,11 +104,13 @@ class TestController Extends AppController
 
 	public function actionDelete()
 	{
+
 		if (User::can($this->user, 4) || defined(SU)) {
 			if (Test::delete($this->ajax['test']['id'])) {
 				$this->exitWith('ok');
 			}
 		}
+		$this->ajax['test']['enable']=0;
 		Test::update($this->ajax['test']);
 		exit(json_encode(['notAdmin' => true]));
 	}
@@ -267,11 +269,23 @@ class TestController Extends AppController
 		$paths = $this->paths();
 		$this->set(compact('paths'));
 
-		$pathsTree = $this->pathsTree(new Test);
-		$select = CustomSelect::run([
+		$enableSelect = CustomSelect::run([
+			'selectClassName'=>'',
+			'title'=>'Показывать пользователям',
+			'field'=>'parent',
+			'tab' => '&nbsp;&nbsp;&nbsp;',
+			'initialOption' => true,
+			'initialOptionValue' => '---',
+			'nameFieldName' => 'test_name',
+			'tree' => [0=>'да',1=>'нет'],
+		]);
+		$this->set(compact('enableSelect'));
 
-			'selectClassName'=>'custom-select',
-			'title'=>'Лежит в папке аа',
+
+		$pathsTree = $this->pathsTree(new Test);
+				$parentSelect = CustomSelect::run([
+			'selectClassName'=>'',
+			'title'=>'Лежит в папке',
 			'field'=>'parent',
 			'tab' => '&nbsp;&nbsp;&nbsp;',
 			'initialOption' => true,
@@ -279,8 +293,7 @@ class TestController Extends AppController
 			'nameFieldName' => 'test_name',
 			'tree' => $pathsTree,
 		]);
-
-		$this->set(compact('select'));
+		$this->set(compact('parentSelect'));
 	}
 
 

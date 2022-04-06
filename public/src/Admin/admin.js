@@ -24,6 +24,9 @@ navigate(window.location.pathname)
 catalogItem()
 list()
 
+  // debugger
+testEdit()
+
 function navigate(str) {
   // debugger
   switch (true) {
@@ -67,15 +70,15 @@ function navigate(str) {
       $("[href='/adminsc/planning']").addClass('current')
       break;
 
-    case /\/adminsc\/test\/update/.test(str):
-    case /\/adminsc\/test\/show/.test(str):
-      testUpdate()
-      break;
+    // case /\/adminsc\/test\/update/.test(str):
+    // case /\/adminsc\/test\/show/.test(str):
+    //   testUpdate()
+    //   break;
 
     case /\/adminsc\/test\/pathshow/.test(str):
     case /\/adminsc\/test\/edit/.test(str):
       // debugger
-      testEdit()
+      // testEdit()
       $("[href='/adminsc/test/edit']").addClass('current')
       break;
 

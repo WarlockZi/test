@@ -5,11 +5,11 @@ import './do.scss'
 import {_test} from "./model/test"
 import {post, $} from '../common'
 import {navInit} from '../components/test-pagination/test-pagination'
-import accordionShow from "./accordion-show";
+// import accordionShow from "./accordion-show";
 
 export default function testDo() {
 
-  accordionShow()
+  // accordionShow()
 
 //Скрыть все вопросы
   $('.question').removeClass("flex1")

@@ -24,16 +24,16 @@ export let _question = {
   },
 
 
-  changeParent: async function (e) {
-    let sel = e.target
-    let opt = sel.options[sel.selectedIndex]
-    let id = sel.closest('.question-edit').id
+  changeParent: async function ({target}) {
+    debugger
+     let opt = target.options[target.selectedIndex]
+    let id = target.closest('.question-edit').id
     let test_id = opt.dataset['questionParentId']
     let test_name = opt.value
-    let res = await post('/question/changeParent',{id, test_id})
+    let res = await post('/adminsc/question/changeParent',{id, test_id})
     res = JSON.parse(res)
     if (res.msg !=='ok') throw (e);
-    let question = sel.closest('.question-edit')
+    let question = target.closest('.question-edit')
     question.remove()
     popup.show('Перемещен в '+test_name)
     // debugger
@@ -70,13 +70,12 @@ export let _question = {
     if (question) return question.cloneNode(true)
   },
 
-  showAnswers: (e) => {
-    let text = e.target
-    let parent = text.parentNode.parentNode
+  showAnswers: (target) => {
+    let parent = target.parentNode.parentNode
     let answers = $(parent).find('.question__answers')
     answers.classList.toggle('height')
     answers.classList.toggle('scale')
-    text.classList.toggle('rotate')
+    target.classList.toggle('rotate')
   },
 
   viewModel: (el) => {
@@ -157,8 +156,8 @@ export let _question = {
 
 
   save:
-    async (e) => {
-      let question = e.target.closest('.question-edit')
+    async (target) => {
+      let question = target.closest('.question-edit')
       let res = await post(
         '/question/UpdateOrCreate',
         {
