@@ -166,22 +166,13 @@
 }
 
 
-.question__menu{
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  background-color: white;
-  margin-right: 3px;
-  //overflow: hidden;
+.question-edit__parent-select{
 
-  .select__wrap {
     display: flex;
     max-height:fit-content;
-    position: absolute;
-    top: 23%;
-    left: 0;
+    //position: absolute;
+    //top: 23%;
+    //left: 0;
 
     select{
       width: 20px;
@@ -190,10 +181,7 @@
     //&:after{
     //  @include _chevron(-20px)
     //}
-  }
-  &:hover > .select__wrap{
 
-  }
 }
 
 .questions {

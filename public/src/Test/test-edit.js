@@ -22,30 +22,30 @@ import testEditActions from "./testEditActions";
 
 export default function testEdit() {
 
-
   accordionShow()
+// debugger
+  let customSelects = $('[custom-select]');
+  [].forEach.call(customSelects, function (select) {
+    new WDSSelect(select)
+  });
 
-  let parentSelect = new WDSSelect({
-    element: $("[data-custom-parent]")[0],
-    title: 'Папка',
-    class: 'parent'
-  })
-
-
-  let enableSelect = new WDSSelect({
-    element: $("[data-custom-enable]")[0],
-    title: 'Показывать пользователям',
-    class: 'enable'
-  })
+  // let parentSelect = new WDSSelect({
+  //   element: $("[data-custom-parent]")[0],
+  //   title: 'Папка',
+  //   class: 'parent'
+  // })
+  //
+  //
+  // let enableSelect = new WDSSelect({
+  //   element: $("[data-custom-enable]")[0],
+  //   title: 'Показывать пользователям',
+  //   class: 'enable'
+  // })
 
 
   if ($("[data-question-parent-id]")) {
-    $(".select__wrap select").on('change', _question.changeParent)
+    $(".question-edit__parent-select select").on('change', _question.changeParent)
   }
-
-
-// подсветка текущего теста
-  _test.markCurrentInMenu()
 
 
   sortable.connect('.questions')
@@ -57,41 +57,11 @@ export default function testEdit() {
     _question.showFirst()
   }
 
+  debugger
   let testEditWrapper = $('.test-edit-wrapper')[0]
   if (testEditWrapper) {
     $(testEditWrapper).on('click', function ({target}) {
-  debugger
-      switch (true) {
-        case [target.classList].includes('test-path__update'): {
-          _test.update()
-          break;
-        }
-        case [target.classList].includes('question__save'): {
-          _question.save()
-          break;
-        }
-        case [target.classList].includes('question__show-answers'): {
-          _question.showAnswers()
-          break;
-        }
-        case [target.classList].includes('question__delete'): {
-          _question.delete()
-          break;
-        }
-        case [target.classList].includes('question__create-button'): {
-          _question.create()
-          break;
-        }
-        case [target.classList].includes('answer__delete'): {
-          _answer.del()
-          break;
-        }
-        case [target.classList].includes('answer__create-button'): {
-          _answer.create()
-          break;
-        }
-      }
-
+      testEditActions(target)
     })
   }
 //   $('.test-path__update').on('click',)

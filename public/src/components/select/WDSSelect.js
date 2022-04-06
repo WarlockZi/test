@@ -4,25 +4,23 @@ import {$} from "../../common";
 
 export default class WDSSelect {
 
-  constructor(props) {
+  constructor(el) {
 
-    let el = $(`[custom-select][data-field='${props.field}']`)[0]
     if (!el) return false
-    this.element = el
 
-    this.title = this.element.dataset['title'] ?? ''
-    this.field = props.field
-    this.options = getFormattedOptions(this.element.querySelectorAll("option"))
+    this.title = el.title ?? ''
+    this.field = el.dataset['field']
+    this.options = getFormattedOptions(el.querySelectorAll("option"))
 
     this.sel = document.createElement("div")
-    this.sel.classList.add(props.class)
+    if (el.className) this.sel.classList.add(el.className)
 
     this.label = document.createElement("span")
 
     this.ul = document.createElement("ul")
     setup(this)
-    this.element.style.display = "none"
-    this.element.after(this.sel)
+    el.style.display = "none"
+    el.after(this.sel)
   }
 
   get selectedOption() {
@@ -65,7 +63,7 @@ function setup(select) {
     select.sel.append(select.titleElement)
   }
 
-  select.sel.classList.add("custom-select")
+  // select.sel.classList.add("custom-select")
   select.sel.dataset['field'] = select.field
   select.sel.tabIndex = 0
 
