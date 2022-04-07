@@ -3,6 +3,7 @@ import '../components/footer/footer.scss'
 
 import './test-edit-menu.scss'
 import '../components/popup.scss'
+import tooltips from '../components/tooltip/tooltip'
 
 // import './test'
 import './test-update'
@@ -11,10 +12,8 @@ import '../Admin/admin'
 
 import {$, addTooltip} from '../common'
 
-import {_test} from "./model/test"
 import {_question} from "./model/question"
-import {_answer} from "./model/answer"
-import {sortable} from "../components/sortable"
+import sortable from "../components/sortable"
 import WDSSelect from "../components/select/WDSSelect"
 import accordionShow from "./accordion-show";
 
@@ -22,15 +21,15 @@ import testEditActions from "./testEditActions";
 
 export default function testEdit() {
 
+  tooltips()
+  sortable('.questions')
   accordionShow()
+
 // debugger
   let customSelects = $('[custom-select]');
   [].forEach.call(customSelects, function (select) {
     new WDSSelect(select)
   });
-
-  sortable.connect('.questions')
-
 
 // при создании нового теста показать пустой вопрос
   if (!_question.questions().length
@@ -38,26 +37,20 @@ export default function testEdit() {
     _question.showFirst()
   }
 
-  if ($("[data-question-parent-id]")) {
-    $(".question-edit__parent-select select").on('change', _question.changeParent)
-  }
-
-  debugger
+  // debugger
   let testEditWrapper = $('.test-edit-wrapper')[0]
   if (testEditWrapper) {
     testEditWrapper.addEventListener('click',
-      ({target})=> {testEditActions(target)}
-      )
+      ({target}) => {
+        testEditActions(target, 'click')
+      }
+    )
+    testEditWrapper.addEventListener('change',
+      ({target}) => {
+        testEditActions(target, 'change')
+      }
+    )
   }
-//   $('.test-path__update').on('click',)
-// // $('.question__sort').on('change', validate.sort)
-//   $('.question__save').on('click', _question.save)
-//   $('.question__show-answers').on('click', _question.showAnswers)
-//   $('.question__delete').on('click', _question.delete)
-//   $('.question__create-button').on('click', _question.create)
-  // $('.answer__delete').on('click', _answer.del)
-  // $('.answer__create-button').on('click', _answer.create)
-
 
   addTooltip({
     els: $('.question__save'),

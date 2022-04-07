@@ -2,7 +2,8 @@
 
 	<div class="question-edit_row">
 		<div class="question__sort"><?= $block[0]['sort'] ?? '' ?></div>
-		<div class="question__save"><? include ICONS . '/save.svg' ?></div>
+		<div class="question__save"
+		     data-tooltip="Eflajf; jfkdl; afjkd jafk;jda"><? include ICONS . '/save.svg' ?></div>
 		
 <!--		<div class="question__menu">-->
 			<div class="question-edit__parent-select">

@@ -1,6 +1,6 @@
 import './common.scss'
 
-function dropDown (elementId) {
+function dropDown(elementId) {
   var dropdown = document.getElementById(elementId);
   try {
     showDropdown(dropdown);
@@ -126,7 +126,7 @@ async function post(url, data = {}) {
   });
 }
 
-class ElementCollection extends Array  {
+class ElementCollection extends Array {
 
   // el = this
   // elType = function(){return {}.toString.call(this)}
@@ -134,13 +134,15 @@ class ElementCollection extends Array  {
   on(event, cbOrSelector, cb) {
     if (typeof cbOrSelector === 'function') {
       this.forEach(e => e.addEventListener(event, cbOrSelector))
-    }else{
-      this.forEach(elem=>{
-        elem.addEventListener(event, e =>{
-          if (e.target===cbOrSelector) cb(e)
-        })})
+    } else {
+      this.forEach(elem => {
+        elem.addEventListener(event, e => {
+          if (e.target === cbOrSelector) cb(e)
+        })
+      })
     }
   }
+
   value = function () {
     return this[0].getAttribute('value')
   }
@@ -176,14 +178,14 @@ class ElementCollection extends Array  {
     return arr
   }
   addClass = function (className) {
-      this.forEach((s) => {
-        s.classList.add(className)
-      })
+    this.forEach((s) => {
+      s.classList.add(className)
+    })
   }
   removeClass = function (className) {
-      this.forEach((s) => {
-        s.classList.remove(className)
-      })
+    this.forEach((s) => {
+      s.classList.remove(className)
+    })
   }
   hasClass = function (className) {
     if (this.classList.contains(className)) return true
@@ -192,17 +194,17 @@ class ElementCollection extends Array  {
     this[0].appendChild(el)
   }
   find = function (item) {
-    if (typeof item === 'string'){
+    if (typeof item === 'string') {
       return this[0].querySelector(item)
-    }else{
-      let filtered =  this[0].filter((el)=>{
+    } else {
+      let filtered = this[0].filter((el) => {
         return el === item
       })
       return filtered[0]
     }
   }
   findAll = function (item) {
-    if (typeof item === 'string'){
+    if (typeof item === 'string') {
       return this[0].querySelectorAll(item)
     }
   }
@@ -210,10 +212,11 @@ class ElementCollection extends Array  {
     if (!val) {
       return this[0].style[attr]
     }
-      this.forEach((s) => {
-        s.style[attr] = val
-      })
+    this.forEach((s) => {
+      s.style[attr] = val
+    })
   }
+
   ready(cb) {
     const isReady = this.some(e => {
       return e.readyState != null && e.readyState != 'loading'
@@ -237,15 +240,14 @@ function $(selector) {
 }
 
 
-
-
 function addTooltip(args) {
-  let ar = [...args.els]
-  ar.map((el) => {
+  // let ar = [...args.els];
+  [].forEach.call(args, (el) => {
     el.onmouseenter = function () {
       let tip = document.createElement('div')
-      $(tip).addClass('tip')
+      tip.classList.add('tip')
       tip.innerText = args.message
+
       el.append(tip)
       let remove = () => tip.remove()
       tip.addEventListener('mousemove', remove.bind(tip), true)
@@ -255,7 +257,13 @@ function addTooltip(args) {
       let tip = el.querySelector('.tip')
       tip.remove()
     }
-  }, [args])
+  })
+
+  // ar.map((el) => {
+  //
+  //
+  // }, [args])
+
 }
 
 class test_delete_button {
@@ -300,11 +308,11 @@ class test_delete_button {
 }
 
 
-
-
-export {dropDown,
+export {
+  dropDown,
   addTooltip,
   popup,
   test_delete_button,
   post, get, uniq,
-  validate, $}
+  validate, $
+}

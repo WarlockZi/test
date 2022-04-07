@@ -121,10 +121,6 @@ class UserController extends AppController
 			User::update($user);
 			exit('ok');
 		}
-
-//		View::setMeta('Профиль', 'Профиль', 'Профиль');
-//		View::setJs('auth.js');
-//		View::setCss('auth.css');
 	}
 
 	public function actionCreate()

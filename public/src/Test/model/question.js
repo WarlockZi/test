@@ -24,18 +24,18 @@ export let _question = {
   },
 
 
-  changeParent: async function ({target}) {
+  changeParent: async function (target) {
     debugger
-     let opt = target.options[target.selectedIndex]
+    let opt = target.options[target.selectedIndex]
     let id = target.closest('.question-edit').id
     let test_id = opt.dataset['questionParentId']
     let test_name = opt.value
-    let res = await post('/adminsc/question/changeParent',{id, test_id})
+    let res = await post('/adminsc/question/changeParent', {id, test_id})
     res = JSON.parse(res)
-    if (res.msg !=='ok') throw (e);
+    if (res.msg !== 'ok') throw (e);
     let question = target.closest('.question-edit')
     question.remove()
-    popup.show('Перемещен в '+test_name)
+    popup.show('Перемещен в ' + test_name)
     // debugger
   },
 
@@ -71,8 +71,8 @@ export let _question = {
   },
 
   showAnswers: (target) => {
-    let parent = target.parentNode.parentNode
-    let answers = $(parent).find('.question__answers')
+    let row = target.closest('.question-edit')
+    let answers = $(row).find('.question__answers')
     answers.classList.toggle('height')
     answers.classList.toggle('scale')
     target.classList.toggle('rotate')
@@ -115,9 +115,9 @@ export let _question = {
 
   lastSort: () => {
     let qs = _question.questions()
-    let length = qs.length-1
-    let last =  +_question.viewModel(qs[length]).sort.innerText
-    return last+1
+    let length = qs.length - 1
+    let last = +_question.viewModel(qs[length]).sort.innerText
+    return last + 1
   },
 
   create:
@@ -142,10 +142,10 @@ export let _question = {
       let clone = _question.cloneEmptyModel()
 
       let model = _question.viewModel(clone)
-      $(model.save).on('click', _question.save)
-      $(model.del).on('click', _question.delete)
-      $(model.text).on('click', _question.showAnswers)
-      $(model.createAnswerButton).on('click', _answer.create)
+      // $(model.save).on('click', _question.save)
+      // $(model.del).on('click', _question.delete)
+      // $(model.text).on('click', _question.showAnswers)
+      // $(model.createAnswerButton).on('click', _answer.create)
 
       model.sort.innerText = _question.lastSort()
       model.text.innerText = ''

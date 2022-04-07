@@ -160,15 +160,13 @@ class PostController Extends AppController
 			$this->model::update($this->ajax);
 			$this->exitWith('ok');
 		}
-		$id = $this->route['id'];
-		$chiefs = $this->getSelectCheifs(Post::cheifs($id));
-//		$this->set(compact('chiefs'));
-		$subordinates = $this->getSelectSubordinate(Post::subordinates($id));
 
+		$id = $this->route['id'];
+		$post = $this->model::findOneWhere('id', $id);
+		$chiefs = $this->getSelectCheifs(Post::cheifs($id));
+		$subordinates = $this->getSelectSubordinate(Post::subordinates($id));
 		$subordinates1 = $this->getMultiselectSubordinate(Post::subordinates($id));
 
-
-		$post = $this->model::findOneWhere('id', $id);
 		$item = $this->getItem($post,$chiefs,$subordinates,$subordinates1)->html;
 		$this->set(compact('item'));
 

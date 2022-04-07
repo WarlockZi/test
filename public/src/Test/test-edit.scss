@@ -2,7 +2,6 @@
 @import "../var";
 @import "../mixin_media";
 @import "../components/input/input";
-
 @import "./test-head";
 
 
@@ -14,6 +13,7 @@
   display: flex;
   font-family: 'Roboto', Arial, Serif;
   flex: 1 1 auto;
+  flex-flow: column;
 
   @include _800 {
     flex-wrap: wrap;
@@ -45,7 +45,9 @@
   }
 
 }
-
+.test-edit__cont{
+  display: flex;
+}
 .test-edit__content {
   padding-left: 20px;
   flex-flow: column;
@@ -66,7 +68,8 @@
     h1 {
       color: $color-warning;
     }
-    p{
+
+    p {
       margin: 8px 0;
     }
   }
@@ -93,6 +96,7 @@
   width: 30px;
   background-color: white;
   cursor: pointer;
+  margin-left: 2px;
 
   &:before {
     @include _chevron()
@@ -166,21 +170,22 @@
 }
 
 
-.question-edit__parent-select{
+.question-edit__parent-select {
+  display: flex;
+  max-height: fit-content;
+  background-color: #ffffff;
 
-    display: flex;
-    max-height:fit-content;
-    //position: absolute;
-    //top: 23%;
-    //left: 0;
+  select {
+    width: 25px;
+    height: 25px;
+    margin: auto;
+  }
 
-    select{
-      width: 20px;
 
-    }
-    //&:after{
-    //  @include _chevron(-20px)
-    //}
+
+//&:after{
+//  @include _chevron(-20px)
+//}
 
 }
 
@@ -333,7 +338,6 @@
   flex-wrap: wrap;
   position: relative;
   margin: 0px 0 0px 2px;
-
 
 
   .test-edit__test-settings {

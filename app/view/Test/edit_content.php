@@ -1,7 +1,7 @@
 <div class="test-edit__content">
 
 
-	<? include ROOT . '/app/view/Test/test-head.php'; ?>
+
 	<? if ($test): ?>
 
 		<!--		--><? // include COMPONENTS."/test/menu_toggle.php";?>
