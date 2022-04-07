@@ -9,6 +9,7 @@ use app\model\Question;
 use app\model\Test;
 use app\model\TestResult;
 use app\model\User;
+use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use app\view\components\CustomSelect\CustomSelect;
 use app\view\View;
 use app\view\widgets\menu\Menu;
@@ -30,6 +31,37 @@ class TestController Extends AppController
 	{
 		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
 	}
+
+
+	public function actionUpdate()
+	{
+		if ($this->ajax) {
+			$id = Test::update($this->ajax);
+			exit(json_encode(['id' => $id]));
+		}
+
+		$this->view = 'edit_update';
+
+		$page_name = 'Редактирование тестов';
+		$this->set(compact('page_name'));
+
+		$id = $this->route['id'];
+		$test = Test::findOneWhere('id', $id);
+		$test['children'] = Test::findAllWhere('parent', $id);;
+		$this->set(compact('test'));
+
+		$paths = $this->paths();
+		$this->set(compact('paths'));
+
+		$tree = [0 => 'да', 1 => 'нет'];
+		$enableSelect = $this->getEnableCustomSelect($tree);
+		$this->set(compact('enableSelect'));
+
+		$pathsTree = $this->pathsTree(new Test);
+		$parentSelect = $this->getParentCustomSelect($pathsTree);
+		$this->set(compact('parentSelect'));
+	}
+
 
 	public function actionShow()
 	{
@@ -110,7 +142,7 @@ class TestController Extends AppController
 				$this->exitWith('ok');
 			}
 		}
-		$this->ajax['test']['enable']=0;
+		$this->ajax['test']['enable'] = 0;
 		Test::update($this->ajax['test']);
 		exit(json_encode(['notAdmin' => true]));
 	}
@@ -250,52 +282,6 @@ class TestController Extends AppController
 		return $model->tree('parent');
 	}
 
-	public function actionUpdate()
-	{
-		if ($this->ajax) {
-			$id = Test::update($this->ajax);
-			exit(json_encode(['id' => $id]));
-		}
-		$this->layout = 'admin';
-		$this->view = 'edit_update';
-		$page_name = 'Редактирование тестов';
-		$this->set(compact('page_name'));
-
-		$id = $this->route['id'];
-		$test = Test::findOneWhere('id', $id);
-		$test['children'] = Test::findAllWhere('parent', $id);;
-		$this->set(compact('test'));
-
-		$paths = $this->paths();
-		$this->set(compact('paths'));
-
-		$enableSelect = CustomSelect::run([
-			'selectClassName'=>'',
-			'title'=>'Показывать пользователям',
-			'field'=>'parent',
-			'tab' => '&nbsp;&nbsp;&nbsp;',
-			'initialOption' => true,
-			'initialOptionValue' => '---',
-			'nameFieldName' => 'test_name',
-			'tree' => [0=>'да',1=>'нет'],
-		]);
-		$this->set(compact('enableSelect'));
-
-
-		$pathsTree = $this->pathsTree(new Test);
-				$parentSelect = CustomSelect::run([
-			'selectClassName'=>'',
-			'title'=>'Лежит в папке',
-			'field'=>'parent',
-			'tab' => '&nbsp;&nbsp;&nbsp;',
-			'initialOption' => true,
-			'initialOptionValue' => '---',
-			'nameFieldName' => 'test_name',
-			'tree' => $pathsTree,
-		]);
-		$this->set(compact('parentSelect'));
-	}
-
 
 	public function actionPaths()
 	{
@@ -340,6 +326,102 @@ class TestController Extends AppController
 
 		}
 		$this->set(compact('test'));
-
 	}
+
+
+	private function getEnableCustomSelect($tree)
+	{
+		return CustomSelect::run([
+			'selectClassName' => 'custom-select',
+			'title' => 'Показывать пользователям',
+			'field' => 'parent',
+			'tab' => '&nbsp;&nbsp;&nbsp;',
+			'initialOption' => true,
+			'initialOptionValue' => '---',
+			'nameFieldName' => 'test_name',
+			'tree' => [0 => 'да', 1 => 'нет'],
+		]);
+	}
+
+	private function getParentCustomSelect($tree)
+	{
+		return CustomSelect::run([
+			'selectClassName' => 'custom-select',
+			'title' => 'Лежит в папке',
+			'field' => 'parent',
+			'tab' => '&nbsp;&nbsp;&nbsp;',
+			'initialOption' => true,
+			'initialOptionValue' => '---',
+			'nameFieldName' => 'test_name',
+			'tree' => $tree,
+		]);
+	}
+
+
+	private function getItem($item, $chiefs, $subordinates,$subordinates1)
+	{
+		return new CustomCatalogItem(
+			[
+				'item' => $item,
+				'modelName' => $this->modelName,
+				'tableClassName' => $this->tableName,
+				'fields' => [
+					'id' => [
+						'className' => 'id',
+						'field' => 'id',
+						'name' => 'ID',
+						'contenteditable' => '',
+						'width' => '50px',
+						'data-type' => 'number',
+					],
+					'name' => [
+						'className' => 'name',
+						'field' => 'name',
+						'name' => 'Наименование',
+						'width' => '1fr',
+						'contenteditable' => 'contenteditable',
+						'data-type' => 'string',
+					],
+					'full_name' => [
+						'className' => 'fullname',
+						'field' => 'full_name',
+						'name' => 'Полное наименование',
+						'width' => '1fr',
+						'contenteditable' => 'contenteditable',
+						'data-type' => 'string',
+					],
+					'cheif' => [
+						'className' => 'cheif',
+						'field' => 'cheif',
+						'name' => 'Подчиняется',
+						'width' => '1fr',
+						'contenteditable' => false,
+						'data-type' => 'select',
+						'select' => $chiefs,
+					],
+					'subourdinate' => [
+						'className' => 'fullname',
+						'field' => '$subordinate',
+						'name' => 'Управляет',
+						'width' => '1fr',
+						'data-type' => 'select',
+						'select' => $subordinates,
+					],
+					'subourdinate1' => [
+						'className' => 'fullname',
+						'field' => '$subordinate',
+						'name' => 'Управляет',
+						'width' => '1fr',
+						'data-type' => 'multiselect',
+						'select' => $subordinates1,
+					],
+				],
+
+				'delBttn' => 'ajax',
+				'toListBttn' => true,
+				'saveBttn' => 'ajax',//'redirect'
+			]
+		);
+	}
+
 }
