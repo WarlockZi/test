@@ -9,9 +9,10 @@ export default function tooltips() {
   function showTip({target}) {
 // debugger
     // если у нас есть подсказка...
-    let tooltipHtml = target.dataset.tooltip
-    if (!tooltipHtml) return;
+    if (!target.dataset||!target.dataset.tooltip) return;
+    // if (!) return;
 
+    let tooltipHtml = target.dataset.tooltip
     // ...создадим элемент для подсказки
     let tooltipElem = document.createElement('div');
     tooltipElem.className = 'tooltip';

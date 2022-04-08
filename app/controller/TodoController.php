@@ -22,21 +22,27 @@ class TodoController Extends AppController
 		View::setCss('admin.css');
 		View::setJs('admin.js');
 	}
+	public function index()
+	{
+		$daily = Todo::findAllWhere('type', 'daily');
+		$daily = getTable($daily);
+
+	}
 
 	public function actionList()
 	{
 //		$this->view = 'list';
-
-		$items = $this->model::findAllWhere(['type'=>'daily','user_id'=>'22']);
+		$user_id = $this->user['id'];
+		$items = $this->model::findAllWhere(['type'=>'daily','user_id'=>$user_id]);
 		$daily = $this->getTable($items)->html;
 		$this->set(compact('daily'));
 
-		$items = $this->model::findAllWhereOrCreate('type','weekly');
-		$weekly = $this->getTable($items)->html;
+//		$items = $this->model::findAllWhereOrCreate('type','weekly');
+		$weekly = '';
 		$this->set(compact('weekly'));
-
-		$items = $this->model::findAllWhereOrCreate('type','yearly');
-		$yearly = $this->getTable($items)->html;
+//
+//		$items = $this->model::findAllWhereOrCreate('type','yearly');
+		$yearly = '';
 		$this->set(compact('yearly'));
 	}
 
@@ -108,6 +114,9 @@ class TodoController Extends AppController
 	public function actionCreate()
 	{
 		if ($this->ajax) {
+			$this->ajax['user_id'] = $this->user['id'];
+			$this->ajax['post_id'] = $this->user['post_id'];
+			$post=52;
 			if ($id = $this->model::create($this->ajax)) {
 				exit(json_encode([
 					'id' => $id,

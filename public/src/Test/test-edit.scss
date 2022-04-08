@@ -1,4 +1,3 @@
-//@import "./test-edit-menu";
 @import "../var";
 @import "../mixin_media";
 @import "../components/input/input";
@@ -7,6 +6,10 @@
 
 .test-edit.accordion {
   max-width: 250px;
+  @include _800{
+    max-width: 100%;
+  }
+
 }
 
 .test-edit-wrapper {
@@ -20,7 +23,10 @@
   }
 
   .accordion.test-edit {
-    width: 0px;
+    width: 0;
+    @include _600{
+      width: 100%;
+    }
   }
 
 }
@@ -47,6 +53,9 @@
 }
 .test-edit__cont{
   display: flex;
+  @include _800{
+    flex-flow: column;
+  }
 }
 .test-edit__content {
   padding-left: 20px;
@@ -162,6 +171,7 @@
   svg {
     width: 20px;
     margin: 10px;
+    pointer-events: none;
 
     .save {
       fill: $color-success;
@@ -179,6 +189,10 @@
     width: 25px;
     height: 25px;
     margin: auto;
+    border: none;
+    &:focus-visible{
+      outline: none;
+    }
   }
 
 
@@ -238,6 +252,7 @@
 
   svg {
     fill: $color-warning;
+    pointer-events: none;
   }
 
   &:hover {

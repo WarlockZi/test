@@ -241,7 +241,7 @@ function $(selector) {
 
 
 function addTooltip(args) {
-  // let ar = [...args.els];
+
   [].forEach.call(args, (el) => {
     el.onmouseenter = function () {
       let tip = document.createElement('div')
@@ -258,53 +258,6 @@ function addTooltip(args) {
       tip.remove()
     }
   })
-
-  // ar.map((el) => {
-  //
-  //
-  // }, [args])
-
-}
-
-class test_delete_button {
-  constructor(elem) {
-    if (!elem) return
-    this._elem = $(elem)[0];
-    this._elem.onclick = this.delete
-    this._elem.onmouseenter = this.showToolip
-    this._elem.onmouseleave = this.hideTooltip
-    this._elem.onmousemove = this.changeTooltipPos
-  }
-
-  async delete() {
-    if (confirm('Удалить тест?')) {
-      let res = test.del()
-      if (res.msg === 'ok') {
-        window.location = '/test/edit'
-      }
-    }
-  }
-
-  showToolip(e) {
-    let x = e.clientX
-    let y = e.clientY
-    let tip = document.createElement('div')
-    $(tip).addClass('tip')
-    tip.style.top = y + 70 + 'px'
-    tip.style.left = x - 170 + 'px'
-    tip.innerText = this.getAttribute('tip')
-    this.tip = tip
-    document.body.append(tip)
-  }
-
-  hideTooltip() {
-    this.tip.remove()
-  }
-
-  changeTooltipPos(e) {
-    this.tip.style.top = e.pageY + 35 + 'px'
-    this.tip.style.left = e.pageX - 170 + 'px'
-  }
 }
 
 
@@ -312,7 +265,6 @@ export {
   dropDown,
   addTooltip,
   popup,
-  test_delete_button,
   post, get, uniq,
   validate, $
 }

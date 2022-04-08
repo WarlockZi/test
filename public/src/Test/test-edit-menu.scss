@@ -1,5 +1,5 @@
 @import "../var";
-
+@import "../mixin_media";
 
 
 /// Test edit menu Add test/path button
@@ -18,6 +18,9 @@
   display: flex;
   justify-content: center;
   z-index: 1;
+  @include _600{
+    max-width: 100%;
+  }
 
   &:hover {
     box-shadow: none;
