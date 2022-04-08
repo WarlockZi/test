@@ -31,18 +31,17 @@ class TodoController Extends AppController
 
 	public function actionList()
 	{
-//		$this->view = 'list';
 		$user_id = $this->user['id'];
-		$items = $this->model::findAllWhere(['type'=>'daily','user_id'=>$user_id]);
+		$items = $this->model::findAllWhere(['type'=>'день','user_id'=>$user_id]);
 		$daily = $this->getTable($items)->html;
 		$this->set(compact('daily'));
 
-//		$items = $this->model::findAllWhereOrCreate('type','weekly');
-		$weekly = '';
+		$items = $this->model::findAllWhere(['type'=>'месяц','user_id'=>$user_id]);
+		$weekly = $this->getTable($items)->html;
 		$this->set(compact('weekly'));
-//
-//		$items = $this->model::findAllWhereOrCreate('type','yearly');
-		$yearly = '';
+
+		$items = $this->model::findAllWhere(['type'=>'год','user_id'=>$user_id]);
+		$yearly = $this->getTable($items)->html;
 		$this->set(compact('yearly'));
 	}
 

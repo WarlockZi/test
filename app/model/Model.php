@@ -180,15 +180,11 @@ abstract class Model
 
 	private function prepareQuerry($array)
 	{
-		$fields = implode(',', array_keys($array));
 		$filds = array_keys($array);
 		$params = array_values($array);
-//		$questionMarks = array_fill(0, count($array), '?');
-//		$strQMarks = implode(',', array_values($questionMarks));
 
 		$str = "{$filds[0]}='{$params[0]}'";
 		array_shift($array);
-//		$str = "";
 		foreach ($array as $k=>$v) {
 			$s = $k."='".$v."'";
 			$str .= " AND ".$s;
@@ -202,15 +198,11 @@ abstract class Model
 
 		if (is_array($fieldOrArray)) {
 			$querry = $model->prepareQuerry($fieldOrArray);
-//			$sql = "SELECT * FROM {$model->table} ({$fields}) VALUES ({$strQMarks})";
 			$sql = "SELECT * FROM {$model->table} WHERE {$querry}";
 			return $model->pdo->query($sql, []);
-
 		}
-
 		$sql = "SELECT * FROM {$model->table} WHERE $field = ? ";
 		return $model->pdo->query($sql, [$value]);
-
 	}
 
 	public static function findOneWhere($field, $value)
