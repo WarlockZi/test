@@ -5,12 +5,11 @@ import './test-edit-menu.scss'
 import '../components/popup.scss'
 import tooltips from '../components/tooltip/tooltip'
 
-// import './test'
 import './test-update'
 import './path-create'
 import '../Admin/admin'
 
-import {$, addTooltip} from '../common'
+import {$} from '../common'
 
 import {_question} from "./model/question"
 import sortable from "../components/sortable"
@@ -51,36 +50,10 @@ export default function testEdit() {
       }
     )
   }
-
-  addTooltip({
-    els: $('.question__save'),
-    message: 'Сохранить вопросы и ответы'
-  })
-
-  addTooltip({
-    els: $('.question__menu'),
-    message: 'Переложить в другой тест'
-  })
-  addTooltip({
-    els: $('.question__delete'),
-    message: 'Удалить вопросы и ответы'
-  })
-
-  addTooltip({
-    els: $('.question__show-answers'),
-    message: 'Показать ответы'
-  })
-
-  addTooltip({
-    els: $('.test-edit-menu__params'),
-    message: 'Редактировать'
-  })
-
-  addTooltip({
-    els: $('.question__menu'),
-    message: 'Перенести в другой тест'
-  })
-
+  // addTooltip({
+  //   els: $('.question__delete'),
+  //   message: 'Удалить вопросы и ответы'
+  // })
 }
 
 

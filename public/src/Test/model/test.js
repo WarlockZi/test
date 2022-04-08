@@ -25,12 +25,10 @@ export const _test = {
   },
 
   pushNav: (currentId, aimNavId) => {
-    let currNavEl = $('[data-pagination]')
-      .el[currentId]
+    let currNavEl = $('[data-pagination]')[currentId]
     currNavEl.classList.toggle('nav-active')
 
-    let NavEl = $('[data-pagination]')
-      .el[aimNavId]
+    let NavEl = $('[data-pagination]')[aimNavId]
     NavEl.classList.toggle('nav-active')
   },
 

@@ -36,6 +36,7 @@
 					<? if (array_intersect(['gate_admin'], $this->user['rights']) || defined('SU')): // admin ?>
 				 <a class=" neon" href='/adminsc/right/list'>Права</a>
 				 <a class=" neon" href='/adminsc/post/list'>Должности</a>
+				 <a class=" neon" href='/adminsc/todo/list'>Задачи</a>
 					<? endif; ?>
 		  </ul>
 	  </li>

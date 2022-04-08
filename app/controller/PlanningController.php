@@ -25,13 +25,12 @@ class PlanningController Extends AppController
 	public function actionIndex()
 	{
 
-
 	}
+
 	public function actionCreate()
 	{
 
-		$todos = Todo::findAllWhere('type', 'daily');
-		$daily = getTable($todos);
+
 
 
 	}

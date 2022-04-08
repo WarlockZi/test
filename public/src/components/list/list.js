@@ -102,7 +102,7 @@ export default function list() {
       res = JSON.parse(res)
       if (res.id) {
         newRow(res.id - 1)
-        popup.show('Создано')
+        // popup.show('Создано')
       }
     }
 
