@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\core\App;
 use app\model\Answer;
 use app\model\Todo;
 use app\view\components\CustomList\CustomList;
@@ -10,6 +9,9 @@ use app\view\View;
 
 class PlanningController Extends AppController
 {
+	protected $model = Todo::class;
+	protected $modelName = 'todo';
+	protected $tableName = 'todos';
 
 	public function __construct(array $route)
 	{
@@ -29,10 +31,9 @@ class PlanningController Extends AppController
 
 	public function actionCreate()
 	{
-
-
-
-
+		$items = Todo::findAllWhere(['type'=>'день', 'user_id'=>$this->user['id']]);
+		$daily = $this->getTable($items)->html;
+		$this->set(compact('daily'));
 	}
 
 	private function getTable($items)

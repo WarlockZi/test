@@ -15,6 +15,8 @@ class CustomList
 	private $searchStr = ' <input type="text">';
 	private $tableClassName = '';
 	private $modelName = '';
+	private $field = '';
+	private $filter = '';
 	private $models = [];
 //	private $template = '';
 //	private $header = '';

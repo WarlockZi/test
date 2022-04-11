@@ -1,11 +1,16 @@
 @import "../../var";
 @import "../../mixin_media";
 
-.custom-select,
+
 .custom-select-value,
 .custom-select-options,
 .custom-select-option {
   box-sizing: border-box;
+}
+
+.custom-select{
+  position: relative;
+  background-color: white;
 }
 .custom-select-title{
   display: inline-block;

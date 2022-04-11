@@ -63,7 +63,7 @@ function setup(select) {
     select.sel.append(select.titleElement)
   }
 
-  // select.sel.classList.add("custom-select")
+  select.sel.classList.add("custom-select")
   select.sel.dataset['field'] = select.field
   select.sel.tabIndex = 0
 

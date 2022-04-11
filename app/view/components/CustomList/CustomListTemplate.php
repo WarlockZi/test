@@ -1,6 +1,7 @@
 <div class="custom-list__wrapper"
      data-model="<?= $this->modelName ?>"
      data-table="<?= $this->tableClassName ?>"
+     data-filter="<?= $this->filter ?>"
 >
 
 	<div class="custom-list"

@@ -11,7 +11,8 @@
 
 	<? foreach ($model->tree as $k => $v): ?>
 
-	  <option value="<?= $v['id']??$k; ?>">
+	  <option value="<?= $v['id']??$k; ?>"
+	  <?=$model->selected===$k?'selected':'';?>>
 			 <?= $v[$model->nameFieldName]??$v ?>
 	  </option>
 		<? $level = 0; ?>

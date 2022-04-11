@@ -3,6 +3,7 @@
 	<div class="custom-catalog-item"
 	     data-table="<?= $this->tableClassName ?>"
 	     data-model="<?= $this->modelName ?>"
+
 	>
 
 		<!--  TABLE  -->
@@ -30,23 +31,20 @@
 	<div class="custom-catalog-item__buttons">
 
 		 <? if ($this->delBttn === 'ajax'): ?>
-		  <div class="del"
-		       data-model="<?= $this->modelName; ?>">
+		  <div class="del">
 					<? include TRASH ?>
 		  </div>
 		 <? endif; ?>
 
 		 <? if ($this->saveBttn === 'ajax'): ?>
-		  <div class="save"
-		       data-model="<?= $this->modelName; ?>">
+		  <div class="save">
 					<? include SAVE ?>
 		  </div>
 		 <? endif; ?>
 
 		 <? if ($this->toListBttn): ?>
 		  <a href="/adminsc/<?= $this->modelName; ?>/list"
-		     class="to-list"
-		     data-model="<?= $this->modelName; ?>">
+		     class="to-list">
 			  К списку
 		  </a>
 		 <? endif; ?>

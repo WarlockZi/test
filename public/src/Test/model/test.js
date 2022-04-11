@@ -81,7 +81,7 @@ export const _test = {
   },
 
   id: (id) => {
-    return id ?? $('.test-name').value()
+    return id ?? $('.test-name')[0].dataset.testid
   },
   children: () => {
     let childrenLenght = $('.children').length
@@ -155,8 +155,8 @@ export const _test = {
       return false
     }
 
-    let test = _test.serverModel()
-    let res = await post('/adminsc/test/delete', {test})
+    let id = _test.id()
+    let res = await post('/adminsc/test/delete', {id})
     res = await JSON.parse(res)
     if (res.notAdmin) {
       popup.show('Видимость теста скрыта. Чтобы удалить полностью - обратитесь к ГД')
