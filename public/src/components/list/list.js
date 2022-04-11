@@ -2,7 +2,7 @@ import './list.scss';
 import {$, post, popup} from '../../common';
 
 export default function list() {
-  debugger;
+  // debugger;
   $('html').ready(function () {
 
     const tables = $('.custom-list__wrapper')
