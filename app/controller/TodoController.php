@@ -32,7 +32,7 @@ class TodoController Extends AppController
 	public function actionList()
 	{
 		$user_id = $this->user['id'];
-		$items = $this->model::findAllWhere(['type'=>'день','user_id'=>$user_id]);
+		$items = $this->model::findAllWhere(['user_id'=>$user_id]);
 		$daily = $this->getTable($items)->html;
 		$this->set(compact('daily'));
 
@@ -44,6 +44,59 @@ class TodoController Extends AppController
 		$yearly = $this->getTable($items)->html;
 		$this->set(compact('yearly'));
 	}
+
+	public function actionShow()
+	{
+		$todos=Todo::findAll();
+		$table = $this->getTable($todos);
+		$this->set(compact('table'));
+	}
+
+
+	public function actionCreate()
+	{
+		if ($this->ajax) {
+			$this->ajax['user_id'] = $this->user['id'];
+			$this->ajax['post_id'] = $this->user['post_id'];
+
+			if ($id = $this->model::create($this->ajax)) {
+				exit(json_encode([
+					'id' => $id,
+				]));
+			}
+		}
+	}
+
+	public function actionUpdateOrCreate()
+	{
+		if ($this->ajax) {
+		}
+	}
+
+
+	public function actionDelete()
+	{
+		$id = $this->ajax['id']??$_POST['id'];
+		if (User::can($this->user, 'right_delete') || defined(SU)) {
+			if ($this->model::delete($id)) {
+				$this->exitWith("ok");
+			}
+		}
+		header('Location:/adminsc/right/list');
+	}
+
+
+	public function actionUpdate()
+	{
+		if ($this->ajax) {
+			$this->model::update($this->ajax);
+			$this->exitWith('ok' );
+		}
+		$this->layout = 'admin';
+		$this->view = 'edit_update';
+
+	}
+
 
 	private function getTable($items)
 	{
@@ -83,6 +136,7 @@ class TodoController Extends AppController
 						'sort' => true,
 						'search' => true,
 					],
+
 					'post_id' => [
 						'className' => 'post_id',
 						'field' => 'post_id',
@@ -93,6 +147,19 @@ class TodoController Extends AppController
 						'sort' => true,
 						'search' => true,
 					],
+
+					'type' => [
+						'className' => 'type',
+						'field' => 'type',
+						'name' => 'Цикличность',
+						'width' => '150px',
+						'contenteditable'=>'contenteditable',
+						'data-type'=>'string',
+						'sort' => true,
+						'search' => true,
+					],
+
+
 				],
 				'editCol' => false,
 //				'delCol' => false,
@@ -102,55 +169,4 @@ class TodoController Extends AppController
 		);
 	}
 
-	public function actionShow()
-	{
-		$todos=Todo::findAll();
-		$table = $this->getTable($todos);
-		$this->set(compact('table'));
-	}
-
-
-	public function actionCreate()
-	{
-		if ($this->ajax) {
-			$this->ajax['user_id'] = $this->user['id'];
-			$this->ajax['post_id'] = $this->user['post_id'];
-			$post=52;
-			if ($id = $this->model::create($this->ajax)) {
-				exit(json_encode([
-					'id' => $id,
-				]));
-			}
-		}
-	}
-
-	public function actionUpdateOrCreate()
-	{
-		if ($this->ajax) {
-		}
-	}
-
-
-	public function actionDelete()
-	{
-		$id = $this->ajax['id']??$_POST['id'];
-		if (User::can($this->user, 'right_delete') || defined(SU)) {
-			if ($this->model::delete($id)) {
-				$this->exitWith("ok");
-			}
-		}
-		header('Location:/adminsc/right/list');
-	}
-
-
-	public function actionUpdate()
-	{
-		if ($this->ajax) {
-			$this->model::update($this->ajax);
-			$this->exitWith('ok' );
-		}
-		$this->layout = 'admin';
-		$this->view = 'edit_update';
-
-	}
 }

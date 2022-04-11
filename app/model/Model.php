@@ -25,11 +25,17 @@ abstract class Model
 
 		if (isset($values['id'])) unset($values['id']);
 		if (isset($values['token'])) unset($values['token']);
-		$values = $values ? $values : $model->fillable;
-		if (isset($values['id'])) unset($values['id']);
-		$fields = implode(',', array_keys($values));
-		$param = array_values($values);
-		$questionMarks = array_fill(0, count($values), '?');
+
+		$fillable = $model->fillable;
+		foreach ($values as $k => $v) {
+			if (array_key_exists($k, $model->fillable)) {
+				$fillable[$k] = $v;
+			}
+		}
+
+		$fields = implode(',', array_keys($fillable));
+		$param = array_values($fillable);
+		$questionMarks = array_fill(0, count($fillable), '?');
 		$strQMarks = implode(',', array_values($questionMarks));
 
 		$sql = "INSERT INTO {$model->table} ({$fields}) VALUES ({$strQMarks})";
@@ -37,7 +43,7 @@ abstract class Model
 			$model->insertBySql($sql, $param);
 			return $model->autoincrement();
 		} catch (Exception $e) {
-			exit('Пользователь не создан' . $e->getMessage());
+			exit('Не создан' . $e->getMessage());
 		}
 	}
 
@@ -201,7 +207,7 @@ abstract class Model
 			$sql = "SELECT * FROM {$model->table} WHERE {$querry}";
 			return $model->pdo->query($sql, []);
 		}
-		$sql = "SELECT * FROM {$model->table} WHERE $field = ? ";
+		$sql = "SELECT * FROM {$model->table} WHERE $fieldOrArray = ? ";
 		return $model->pdo->query($sql, [$value]);
 	}
 

@@ -54,18 +54,18 @@ class TestController Extends AppController
 		$this->set(compact('paths'));
 
 		$tree = [0 => 'да', 1 => 'нет'];
-		$enableSelect = $this->getEnableCustomSelect($tree);
+		$enableSelect = $this->getEnableCustomSelect($tree,$test['enable']);
 		$this->set(compact('enableSelect'));
 
 		$pathsTree = $this->pathsTree(new Test);
-		$parentSelect = $this->getParentCustomSelect($pathsTree);
+		$parentSelect = $this->getParentCustomSelect($pathsTree,$test['parent']);
 		$this->set(compact('parentSelect'));
 	}
 
 
 	public function actionShow()
 	{
-		$this->layout = 'admin';
+
 		$this->view = 'edit_show';
 
 		$page_name = 'Создание теста';
@@ -137,12 +137,13 @@ class TestController Extends AppController
 	public function actionDelete()
 	{
 
-		if (User::can($this->user, 4) || defined(SU)) {
-			if (Test::delete($this->ajax['test']['id'])) {
+		if (User::can($this->user, 'test_delete') || defined('SU')) {
+			if (Test::delete($this->ajax['id'])) {
 				$this->exitWith('ok');
 			}
 		}
 		$this->ajax['test']['enable'] = 0;
+		$this->ajax['test']['id'] = $this->ajax['id'];
 		Test::update($this->ajax['test']);
 		exit(json_encode(['notAdmin' => true]));
 	}
@@ -329,21 +330,22 @@ class TestController Extends AppController
 	}
 
 
-	private function getEnableCustomSelect($tree)
+	private function getEnableCustomSelect($tree,$selected)
 	{
 		return CustomSelect::run([
 			'selectClassName' => 'custom-select',
 			'title' => 'Показывать пользователям',
-			'field' => 'parent',
+			'field' => 'enable',
 			'tab' => '&nbsp;&nbsp;&nbsp;',
 			'initialOption' => true,
 			'initialOptionValue' => '---',
 			'nameFieldName' => 'test_name',
 			'tree' => [0 => 'да', 1 => 'нет'],
+			'selected'=>$selected,
 		]);
 	}
 
-	private function getParentCustomSelect($tree)
+	private function getParentCustomSelect($tree,$selected)
 	{
 		return CustomSelect::run([
 			'selectClassName' => 'custom-select',
@@ -354,6 +356,7 @@ class TestController Extends AppController
 			'initialOptionValue' => '---',
 			'nameFieldName' => 'test_name',
 			'tree' => $tree,
+			'selected'=>$selected
 		]);
 	}
 

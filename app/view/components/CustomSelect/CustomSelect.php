@@ -13,6 +13,7 @@ class CustomSelect
 	private $initialOption = false;
 	private $initialOptionValue = '--';
 	private $nameFieldName = 'name';
+	private $selected = '';
 	private $type = 'string';
 	private $tree = [];
 	private $pathToTpl = ROOT.'/app/view/components/CustomSelect/';
