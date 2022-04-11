@@ -27,7 +27,7 @@ class User extends Model
 
 	public static function can($user, $right)
 	{
-		return in_array($right, $user['rights'])??null;
+		return (in_array($right, $user['rights'])||defined('SU'))??null;
 	}
 
 	public function findOne($id, $field = '')

@@ -128,18 +128,24 @@ export const _test = {
   },
 
   serverModel: () => {
-    return {
+
+    let model = {
       id: +window.location.href.split('/').pop(),
       test_name: $('#test_name')[0].value,
       isTest: +$('[isTest]')[0].getAttribute('isTest'),
-      enable: _test.selectedValueCustomSelect('enable'),
-      parent: _test.selectedValueCustomSelect('parent'),
+      // enable: _test.selectedValueCustomSelect('enable'),
+      // parent: _test.selectedValueCustomSelect('parent'),
     }
+    // debugger
+    let fields = $('.custom-select');
+    [].forEach.call(fields,function (field){
+      model[field.dataset['field']]=field.dataset['id']
+    })
+    return model
   },
 
-  update: async (parent, enable) => {
-    debugger
-    let model = _test.serverModel(parent, enable)
+  update: async () => {
+    let model = _test.serverModel()
     let url = `/adminsc/test/update/${model.id}`
     let res = await post(url, model)
     res = await JSON.parse(res)

@@ -27,7 +27,7 @@ export default function testEditActions(target, type) {
         break;
       }
       case target.classList.contains('test__create'): {
-        test.create()
+        _test.create()
         break;
       }
 
