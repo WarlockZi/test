@@ -98,8 +98,8 @@
   .add-model {
     justify-self: end;
     font-size: 2rem;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 
     $border-radius: 75%;
     @include _button($border-radius);
