@@ -5,22 +5,17 @@ export default function list() {
   // debugger;
   $('html').ready(function () {
 
-    const table = $('.custom-list')[0]
-    if (!table)return false
-    const customList__wrapper = table.closest('.custom-list__wrapper')
-    const contenteditable = $('[contenteditable]')
-    const headers = table.querySelectorAll('.head')
-    const sortables = table.querySelectorAll('[data-sort]')
-    const inputs = $(table).findAll('.head input')
-    const ids = $(table)[0].querySelectorAll('.id:not(.head')
-    const modelName = customList__wrapper.dataset['model']
-    const rows = []
+    const tables = $('.custom-list__wrapper')
+    if (!tables)return false;
 
-    $(customList__wrapper).on('click', handleClick.bind(this));
-    $(customList__wrapper).on('keyup', handleKeyUp.bind(this));
+    [].forEach.call(tables,function (table){
+      $(table).on('click', handleClick.bind(table));
+      $(table).on('keyup', handleKeyUp.bind(table));
+    });
 
-    /// DEBOUNCE
     const debounce = (fn, time = 700) => {
+
+
       let timeout;
       return function () {
         const functionCall = () => fn.apply(this, arguments);
@@ -29,15 +24,12 @@ export default function list() {
       }
     }
     let debouncedInput = debounce(handleInput)
-
-
     function handleKeyUp({target}) {
-
       // contenteditable
       if (target.hasAttribute('contenteditable')) {
         debouncedInput(table, contenteditable, target)
-
        /// search
+
       } else if (target.closest('.head')) {
         let header = target.closest('.head')
         let index = [].findIndex.call(headers, (el, i, inputs) => {
@@ -46,11 +38,22 @@ export default function list() {
         search(index, target)
       }
     }
-
     function handleClick({target}) {
 
+      // debugger
+      const customList__wrapper = table.closest('.custom-list__wrapper')
+      const contenteditable = $('[contenteditable]')
+      const headers = table.querySelectorAll('.head')
+      const sortables = table.querySelectorAll('[data-sort]')
+      const inputs = $(table).findAll('.head input')
+      const ids = $(table)[0].querySelectorAll('.id:not(.head)')
+      const modelName = customList__wrapper.dataset['model']
+      const rows = [];
+
+      /// DEBOUNCE
+
       /// create
-      if (target.className === 'add-model') {
+      if (target.classList.contains('add-model')) {
         modelCreate(modelName)
 
         /// delete
@@ -95,9 +98,8 @@ export default function list() {
       })
     }
 
-
     // CREATE
-    async function modelCreate(modelName, e) {
+    async function modelCreate(modelName) {
       let res = await post(`/adminsc/${modelName}/create`, {})
       res = JSON.parse(res)
       if (res.id) {

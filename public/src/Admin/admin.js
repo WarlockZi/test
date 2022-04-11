@@ -6,10 +6,10 @@ import "./model/cache";
 import {$} from "../common";
 import catalogItem from "../components/catalog-item/catalog-item";
 
+import './todo/todo'
 import testResults from '../Test/test_results/test_results'
 import testEdit from '../Test/test-edit'
 import testDo from '../Test/do'
-import testUpdate from '../Test/test-update'
 import settings from './Settings/settings'
 import rights from './Rights/rights'
 import planning from './Planning/planning'

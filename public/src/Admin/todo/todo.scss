@@ -1,0 +1,7 @@
+@import "../../var";
+@import '../../mixin_media';
+
+.todo__type{
+  @include _h3;
+  margin: 10px 0;
+}

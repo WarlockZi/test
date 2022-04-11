@@ -114,8 +114,7 @@ class TodoController Extends AppController
 	{
 		if ($this->ajax) {
 			$this->ajax['user_id'] = $this->user['id'];
-			$this->ajax['post_id'] = $this->user['post_id'];
-			$post=52;
+//			$this->ajax['post_id'] = $this->user['post_id'];
 			if ($id = $this->model::create($this->ajax)) {
 				exit(json_encode([
 					'id' => $id,
@@ -134,12 +133,12 @@ class TodoController Extends AppController
 	public function actionDelete()
 	{
 		$id = $this->ajax['id']??$_POST['id'];
-		if (User::can($this->user, 'right_delete') || defined(SU)) {
+		if (User::can($this->user, 'todo_delete') || defined(SU)) {
 			if ($this->model::delete($id)) {
 				$this->exitWith("ok");
 			}
 		}
-		header('Location:/adminsc/right/list');
+		header('Location:/adminsc/todo/list');
 	}
 
 
