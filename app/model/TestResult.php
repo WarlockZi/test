@@ -10,9 +10,11 @@ class TestResult extends Model
 	protected $fillable = [
 		'html'=>'',
 		'user'=>null,
-		'date'=>'',
+//		'date'=>'',
 		'errorCnt'=>null,
-		'questionCnt'=>null
+		'questionCnt'=>null,
+		'testid'=>'',
+		'testname'=>'',
 	];
 
 	public function sort($q_ids){

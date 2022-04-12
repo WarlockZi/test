@@ -43,10 +43,10 @@ function navigate(str) {
     //   list()
 
 
-    case /\/adminsc\/test\/results/.test(str):
+    case /\/adminsc\/testresult\/results/.test(str):
       // debugger
       testResults()
-      $("[href='/adminsc/crm/testresults']").addClass('current')
+      $("[href='/adminsc/test/results']").addClass('current')
       break;
 
     case /\/adminsc\/user/.test(str):

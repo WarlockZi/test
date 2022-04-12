@@ -1,15 +1,11 @@
 import './do.scss'
 
-
-
 import {_test} from "./model/test"
 import {post, $} from '../common'
 import {navInit} from '../components/test-pagination/test-pagination'
-// import accordionShow from "./accordion-show";
+
 
 export default function testDo() {
-
-  // accordionShow()
 
 //Скрыть все вопросы
   $('.question').removeClass("flex1")
@@ -54,7 +50,7 @@ export default function testDo() {
     corrAnswers = JSON.parse(corrAnswers)
     let errorCnt = colorView(corrAnswers)
     let data = objToServer(errorCnt)
-    let res = await post('/test/cachePageSendEmail', data)
+    let res = await post('/adminsc/testresult/cachePageSendEmail', data)
     if (res) {
       $("#btnn")[0].href = location.href
       $("#btnn")[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО"
@@ -62,28 +58,15 @@ export default function testDo() {
   })
 
   function objToServer(errorCnt) {
-
-    let obj = {
+    return {
       token: document.querySelector('meta[name="token"]').getAttribute('content'),
       questionCnt: $('.question').length,
       errorCnt: errorCnt,
-      pageCache: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
-      testId: $('[data-test-id]')[0].dataset.testId,
-      test_name: $('.test-name')[0].innerText,
-      userName: $('.user-menu__fio')[0].innerText,
+      html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
+      testid: $('[data-test-id]')[0].dataset.testId,
+      testname: $('.test-name')[0].innerText,
+      user: $('.user-menu__fio')[0].innerText,
     }
-
-    let formData = new FormData();
-    formData.append('token', obj.token);
-    formData.append('questionCnt', obj.questionCnt);
-    formData.append('errorCnt', obj.errorCnt);
-    formData.append('pageCache', obj.pageCache);
-    formData.append('testId', obj.testId);
-    formData.append('test_name', obj.test_name);
-    formData.append('userName', obj.userName);
-    return formData
-
-    return obj
   }
 
 

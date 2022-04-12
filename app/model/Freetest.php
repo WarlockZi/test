@@ -279,11 +279,11 @@ class Freetest extends Model {
       return $pagination;
    }
 
-   public function send_mail_Freetest() {
-
-      $this->send_result_mail('/results/freetest/', '/freetest/results/');
-
-   }
+//   public function send_mail_Freetest() {
+//
+//      $this->send_result_mail('/results/freetest/', '/freetest/results/');
+//
+//   }
 
    public function resultFreetest() {
 

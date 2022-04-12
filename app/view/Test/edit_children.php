@@ -8,5 +8,7 @@
 		<? endforeach; ?>
 	</div>
 <? else: ?>
+<div class="no-test">
 	В данной папке нет тестов
+</div>
 <? endif; ?>

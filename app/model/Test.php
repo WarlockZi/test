@@ -2,10 +2,6 @@
 
 namespace app\model;
 
-use app\model\Model;
-use app\core\App;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 class Test extends Model
 {
@@ -19,46 +15,7 @@ class Test extends Model
 		'isTest'=>1,
 	];
 
-	public function testParams()
-	{
-		if (isset($_POST['testId']) && $_POST['testId']) {// Значит открыли существующий тест
-			$tId = $_POST['testId'];
-			$sql = 'SELECT * FROM test  WHERE id = ?';
-			$param = [$tId];
-			$test = $this->findBySql($sql, $param)[0];
-			$testList = $this->findAll();
-			unset($testList[$tId - 1]);
-			$selected = '';
-			if ($test['isTest'] == 1) {
-				$selected = 'selected';
-			}
-			$checked = 0;
-			if ($test['enable'] == 1) {
-				$checked = 'checked';
-			}
-			$depOptions = '<option value = "0">Не принадлежит</option>';
-			foreach ($testList as $testDep) {
-				if ($testDep['id'] == $test['parent']) {
-					$depOptions .= '<option value = ' . $testDep['id'] . ' selected >' . $testDep['test_name'] . '</option>';
-				} else {
-					$depOptions .= '<option value = ' . $testDep['id'] . '>' . $testDep['test_name'] . '</option>';
-				}
-			}
-		} else {
-			$test['id'] = 0;
-			$test['test_name'] = '';
-			$test['sort'] = 0;
-			$selected = '';
-			$checked = 0;
-			$testList = $this->findAll();
-			$depOptions = '<option value = "0">Не принадлежит</option>';
-			foreach ($testList as $testDep) {
-				$depOptions .= '<option value = ' . $testDep['id'] . '>' . $testDep['test_name'] . '</option>';
-			}
-		}
 
-		include APP . '/view/Test/testParams.php';
-	}
 
 	static function shuffle_assoc($array)
 	{
@@ -138,10 +95,10 @@ her;
 		return $children;
 	}
 
-	public function send_mail()
-	{
-		$this->send_result_mail('/results/test/', '/test/results/');
-	}
+//	public function send_mail()
+//	{
+//		$this->send_result_mail('/adminsc/testresult/result/', '/adminsc/testresult/results/');
+//	}
 
 
 	public function pagination(array $items, $addBtn, $test)
