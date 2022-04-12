@@ -59,18 +59,19 @@ class Accordion extends Model
 
 	function li($item, $lev)
 	{
-		if (isset($item['childs']) && $item['childs']) {
+		if (isset($item['childs']) && $item['childs'] && !$item['isTest']) {
 			return
 				"<li class='has-children level{$lev}'>" .
 				"<input type='checkbox' name ='group-1' id={$item['id']}>" .
 				"<label for={$item['id']}>{$item['test_name']}</label>" .
 				$this->lable_after($item);
 		}
+		$isTest = $item['isTest'] ? '' : 'data-istest';
 		return "<li>" .
 			"<a data-id={$item['id']} " .
 			"class='level{$lev}' " .
 			"href='{$this->link}{$item['id']}' " .
-			"title={$item['test_name']}>" .
+			"title={$item['test_name']} {$isTest}>" .
 			"{$item['test_name']} </a>" .
 			$this->lable_after($item);
 	}

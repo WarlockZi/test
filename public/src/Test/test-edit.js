@@ -6,7 +6,7 @@ import '../components/popup.scss'
 import tooltips from '../components/tooltip/tooltip'
 
 import './test-update'
-import './path-create'
+// import './path-create'
 import '../Admin/admin'
 
 import {$} from '../common'
