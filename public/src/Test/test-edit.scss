@@ -68,6 +68,9 @@
   z-index: 1;
   margin-right: 6vw;
 
+  .no-test{
+    margin: 10px 0;
+  }
 
   h1 {
     margin: 0;
@@ -343,9 +346,8 @@
 }
 
 .test-name {
-  margin: $marginY-element;
+  margin: 0;
   @include _h2;
-
 }
 
 .test-edit__title {

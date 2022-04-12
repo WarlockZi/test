@@ -6,7 +6,7 @@
 	<div class="test-results__table">
 		<? foreach ($res as $i): ?>
 			<div class="item" data-row="<?= $i['id'] ?>"> <?= $i['user']; ?></div>
-			<a class="item" data-row="<?= $i['id'] ?>" href='<?= '/test/result/' . $i['id']; ?>'
+			<a class="item" data-row="<?= $i['id'] ?>" href='<?= '/adminsc/testresult/result/' . $i['id']; ?>'
 			   class="test-result"><?= $i['testname']; ?></a>
 			<div class="item <?= $i['errorCnt'] ? 'error' : 'suc' ?>" data-row="<?= $i['id'] ?>">
 				вопр - <?= $i['questionCnt']; ?>

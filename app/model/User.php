@@ -25,9 +25,12 @@ class User extends Model
 		parent::__construct();
 	}
 
-	public static function can($user, $right)
+	public static function can($user, $rights)
 	{
-		return (in_array($right, $user['rights'])||defined('SU'))??null;
+		if (is_string($rights)){
+			$rights = compact('rights');
+		}
+		return (array_intersect($rights, $user['rights'])||defined('SU'))??null;
 	}
 
 	public function findOne($id, $field = '')
