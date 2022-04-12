@@ -51,6 +51,10 @@
   li {
     user-select: none;
     position: relative;
+
+    a[data-istest]:after{
+      background: url(./img/cd-icons.svg) no-repeat -16px 0;
+    }
   }
 
   input[type=checkbox] {
@@ -84,7 +88,7 @@
   }
 
   .level2 {
-    background: $color-level-2;
+    background-color: $color-level-2;
 
     &:hover {
       background: tint($color-level-2, 3%);

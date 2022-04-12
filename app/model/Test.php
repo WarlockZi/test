@@ -13,6 +13,10 @@ class Test extends Model
 	public $table = 'test';
 	public $fillable = [
 		'id'=>0,
+		'test_name'=>'...',
+		'enable'=>0,
+		'parent'=>0,
+		'isTest'=>1,
 	];
 
 	public function testParams()

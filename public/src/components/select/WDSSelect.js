@@ -66,7 +66,7 @@ function setup(select) {
 
   select.sel.classList.add("custom-select")
   select.sel.dataset['field'] = select.field
-  debugger
+  // debugger
   select.sel.dataset['id'] = select.selectedOption.value
   select.sel.tabIndex = 0
 
