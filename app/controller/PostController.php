@@ -163,9 +163,10 @@ class PostController Extends AppController
 
 		$id = $this->route['id'];
 		$post = $this->model::findOneWhere('id', $id);
+
 		$chiefs = $this->getSelectCheifs(Post::cheifs($id));
 		$subordinates = $this->getSelectSubordinate(Post::subordinates($id));
-		$subordinates1 = $this->getMultiselectSubordinate(Post::subordinates($id));
+		$subordinates1 = $this->getMultiselect(Post::subordinates($id));
 
 		$item = $this->getItem($post,$chiefs,$subordinates,$subordinates1)->html;
 		$this->set(compact('item'));
@@ -173,12 +174,26 @@ class PostController Extends AppController
 		$this->view = 'edit';
 
 	}
-
+	private function getMultiselect($array)
+	{
+		return CustomMultiSelect::run([
+			'className'=> 'type1',
+			'field'=> 'cheif',
+			'tab'=> '.',
+			'fieldName'=> 'name',
+			'initialOption' => true,
+			'initialOptionValue' => '--',
+			'tree' => $array,
+			'selected' => ['6','5'],
+		]);
+	}
 	private function getSelectCheifs($array)
 	{
 		return CustomSelect::run([
+			'className'=> 'type1',
 			'field'=> 'cheif',
 			'tab'=> '.',
+			'fieldName'=> 'name',
 			'initialOption' => true,
 			'initialOptionValue' => '--',
 			'tree' => $array,
@@ -187,7 +202,10 @@ class PostController Extends AppController
 	private function getSelectSubordinate($array)
 	{
 		return CustomSelect::run([
+			'className'=> 'type1',
+//			'title'=> 'cheif',
 			'field'=> 'subordinate',
+			'fieldName'=> 'name',
 			'tab'=> '.',
 			'initialOption' => true,
 			'initialOptionValue' => '--',
@@ -199,9 +217,10 @@ class PostController Extends AppController
 	{
 		return CustomMultiSelect::run([
 			'field'=> 'subordinate',
+			'className'=> 'type1',
 			'tab'=> '.',
-			'initialOption' => true,
-			'initialOptionValue' => '--',
+//			'initialOption' => true,
+//			'initialOptionValue' => '--',
 			'tree' => $array,
 		]);
 	}

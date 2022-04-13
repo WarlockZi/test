@@ -6,18 +6,15 @@ namespace app\view\components\CustomMultiSelect;
 
 class CustomMultiSelect
 {
-	private $title = '';
-	private $selectClassName = '';
-	private $field = 'field';
+	private $field = '';
+	private $className = '';
 	private $tab = '.';
-	private $initialOption = false;
-	private $initialOptionValue = '--';
-	private $nameFieldName = 'name';
-	private $type = 'string';
 	private $tree = [];
-	private $pathToTpl = ROOT.'/app/view/components/CustomMultiSelect/';
-	private $tpl = 'tpl.php';
-	private $finalTpl;
+	private $title = '';
+	private $fieldName = 'name';
+	private $selected = [];
+
+	private $tpl = ROOT.'/app/view/components/CustomMultiSelect/tpl.php';
 
 	public function __construct($options)
 	{
@@ -31,7 +28,7 @@ class CustomMultiSelect
 				$this->$k = $v;
 			}
 		}
-		$this->finalTpl=$this->pathToTpl.$this->tpl;
+//		$this->finalTpl=$this->pathToTpl.$this->tpl;
 	}
 
 	public function getChilds($tree,$level)
@@ -46,7 +43,7 @@ class CustomMultiSelect
 	public function getOption($item,$level)
 	{
 		ob_start();
-		require $this->finalTpl;
+		require $this->tpl;
 		return ob_get_clean();
 	}
 
@@ -57,7 +54,7 @@ class CustomMultiSelect
 		ob_start();
 		include ROOT . '/app/view/components/CustomMultiSelect/CustomMultiSelectTemplate.php';
 		$t = ob_get_clean();
-//		$model->html = $t;
+
 		return $t;
 	}
 

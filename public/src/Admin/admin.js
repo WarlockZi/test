@@ -93,7 +93,7 @@ function navigate(str) {
       break;
 
     default:
-      $("[href='/house']").addClass('current')
+      $("[href='/adminsc']").addClass('current')
       break;
   }
 }

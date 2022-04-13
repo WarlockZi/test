@@ -1,6 +1,16 @@
 @import "../../var";
 @import "../../mixin_media";
 
+.custom-select.type1 {
+  background-color: #fff;
+  margin: 0 5px;
+  .custom-select-value {
+    padding: 0.5rem 0.5rem 0.25rem;
+    font-size: 1rem;
+  }
+
+}
+
 
 .custom-select-value,
 .custom-select-options,
@@ -8,11 +18,12 @@
   box-sizing: border-box;
 }
 
-.custom-select{
+.custom-select {
   position: relative;
   background-color: white;
 }
-.custom-select-title{
+
+.custom-select-title {
   display: inline-block;
   position: absolute;
   //top: 0;
@@ -21,18 +32,19 @@
   @include _h4;
 
 
-  &:focus-visible{
+  &:focus-visible {
     outline: 1px solid $color-gray5;
   }
 }
-.custom-select{
+
+.custom-select {
   display: inline-block;
   position: relative;
   margin: 10px 0px;
   min-width: 200px;
   background-color: $color-gray1;
 
-  &:focus-visible{
+  &:focus-visible {
     outline: 1px solid $color-gray5;
   }
 }
@@ -42,7 +54,7 @@
   align-items: center;
   justify-content: space-between;
   border: 1px solid $color-gray2;
-  padding:  $padding-input-with-label;
+  padding: $padding-input-with-label;
   cursor: pointer;
   user-select: none;
   font-size: .8rem;
