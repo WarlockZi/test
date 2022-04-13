@@ -1,8 +1,8 @@
 <select
   custom-select
   data-field="<?= $model->field; ?>"
-  title="<?=$model->title?$model->title:'';?>"
-  <?=$model->selectClassName?"class=".$model->selectClassName:'';?>
+  <?=$model->title?"title='{$model->title}'":'';?>
+  <?=$model->className?"class={$model->className}":'';?>
 >
 
 	<? if ($model->initialOption): ?>
@@ -13,7 +13,7 @@
 
 	  <option value="<?= $v['id']??$k; ?>"
 	  <?=(int)$model->selected==$k?'selected':'';?>>
-			 <?= $v[$model->nameFieldName]??$v ?>
+			 <?= $v[$model->fieldName]??$v ?>
 	  </option>
 		<? $level = 0; ?>
 		<? if (isset($v['childs'])): ?>

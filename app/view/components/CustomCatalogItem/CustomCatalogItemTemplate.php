@@ -14,7 +14,9 @@
 
 					<? if (in_array($data['data-type'],['string','number'])): ?>
 				 <div class="value"
-							 <?= $data['contenteditable']; ?>>
+							 <?= $data['contenteditable']; ?>
+							 <?= "data-field={$data['field']}"; ?>
+				 >
 							 <?= $this->item[$fieldName] ?>
 				 </div>
 					<? elseif (in_array($data['data-type'],['select','multiselect'])): ?>

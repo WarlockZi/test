@@ -6,16 +6,17 @@ namespace app\view\components\CustomSelect;
 
 class CustomSelect
 {
-	private $title = '';
-	private $selectClassName = '';
 	private $field = 'field';
+	private $className = '';
 	private $tab = '.';
+	private $tree = [];
+	private $title = '';
+
 	private $initialOption = false;
 	private $initialOptionValue = '--';
-	private $nameFieldName = 'name';
+	private $fieldName = '';
 	private $selected = '';
 	private $type = 'string';
-	private $tree = [];
 	private $pathToTpl = ROOT.'/app/view/components/CustomSelect/';
 	private $tpl = 'tpl.php';
 	private $finalTpl;
@@ -58,7 +59,6 @@ class CustomSelect
 		ob_start();
 		include ROOT . '/app/view/components/CustomSelect/CustomSelectTemplate.php';
 		$t = ob_get_clean();
-//		$model->html = $t;
 		return $t;
 	}
 
