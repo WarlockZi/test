@@ -1,12 +1,11 @@
 import './WDSSelect.scss'
 import './customSelect.scss'
-import {$} from "../../common";
-
 export default class WDSSelect {
 
   constructor(el) {
 
     if (!el) return false
+    if (el.multiple) return false
 
     this.title = el.title ?? ''
     this.field = el.dataset['field']

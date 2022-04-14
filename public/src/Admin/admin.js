@@ -9,7 +9,6 @@ import catalogItem from "../components/catalog-item/catalog-item";
 import testResults from '../Test/test_results/test_results'
 import testEdit from '../Test/test-edit'
 import testDo from '../Test/do'
-import testUpdate from '../Test/test-update'
 import settings from './Settings/settings'
 import rights from './Rights/rights'
 import planning from './Planning/planning'
@@ -17,12 +16,17 @@ import user from './CRM/user/user'
 import users from './CRM/user/users'
 
 import list from '@components/list/list'
+import chip from '@components/chip/chip'
+import multiselect from '@components/multiselect/multiselect'
 
 // let p = $('.page-name')[0]
 navigate(window.location.pathname)
 // debugger
 catalogItem()
 list()
+chip()
+multiselect()
+
 
   // debugger
 testEdit()
