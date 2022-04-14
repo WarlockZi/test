@@ -11,15 +11,17 @@
   max-width: 180px;
   background-image: url(/pic/submenu-bg.png);
   border-right: 1px solid #ddd;
+
+  .title {
+    font-weight: 600;
+    font-size: 25px;
+    color: #343436;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 10px;
+  }
 }
 
-.title {
-  font-weight: 600;
-  font-size: 25px;
-  color: #343436;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  padding: 10px;
-}
+
 
 .admin-actions a {
   color: #4a4a4a;

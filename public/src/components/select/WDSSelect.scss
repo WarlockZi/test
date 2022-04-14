@@ -1,9 +1,15 @@
 @import "../../var";
 @import "../../mixin_media";
 
+[custom-select]{
+  display: none;
+}
+
 .custom-select.type1 {
   background-color: #fff;
   margin: 0 5px;
+  flex: 1 0 auto;
+
   .custom-select-value {
     padding: 0.5rem 0.5rem 0.25rem;
     font-size: 1rem;
@@ -26,8 +32,6 @@
 .custom-select-title {
   display: inline-block;
   position: absolute;
-  //top: 0;
-  //left: 0px;
 
   @include _h4;
 
@@ -61,7 +65,6 @@
 }
 
 .custom-select:focus > .custom-select-value {
-  //border-width: 2px;
   outline: none;
 }
 
