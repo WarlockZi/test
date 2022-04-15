@@ -62,7 +62,7 @@ class FreetestController extends AppController
 		// Обработка результатов теста
 		if ($this->isAjax()) {
 			if ($_POST['action'] == 'result') {
-				$Test->result();
+//				$Test->result();
 				exit();
 			}
 		}

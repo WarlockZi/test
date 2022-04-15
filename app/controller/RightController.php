@@ -17,7 +17,7 @@ class RightController Extends AppController
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-//		$rights = $this->model::findAll();
+
 		$this->autorize();
 		$this->layout = 'admin';
 		View::setCss('admin.css');
@@ -29,7 +29,7 @@ class RightController Extends AppController
 		$this->view = 'list';
 
 		$items = $this->model::findAll();
-//		$this->set(compact('items'));
+
 		$table = $this->getTable($items)->html;
 		$this->set(compact('table'));
 

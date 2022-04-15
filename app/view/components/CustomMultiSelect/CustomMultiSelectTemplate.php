@@ -48,6 +48,8 @@
 				<? foreach ($model->tree as $k => $v): ?>
 			  <label for="<?= $v[$model->fieldName] ?>"
 			         data-id="<?= $v['id']; ?>"
+						 <?= in_array($v['id'],$model->selected)
+						   ?"class='selected'":''; ?>
 			  ><?= $v[$model->fieldName] ?></label>
 				<? endforeach; ?>
 		</li>
