@@ -7,6 +7,8 @@ $color-main: #6ca3fe;
 
 $color-main-hover: shade($color-main, 60%);
 
+$color-main-selected: lighten($color-main,22%);;
+
 $color-success: #54bb99;
 $color-blue: #5199BD;
 $color-warning: #bd5151;

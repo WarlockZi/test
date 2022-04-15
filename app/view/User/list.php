@@ -1,7 +1,7 @@
 <div class="adm-content">
 
-<?=$users_table;?>
-
+	<div class="page-title">Пользователи</div>
+	<?= $users_table; ?>
 
 
 </div>

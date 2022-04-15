@@ -8,7 +8,7 @@ use Engine\DI\DI;
 try {
 	$di = new DI();
 
-//	$di->set('test', 'test');
+	$di->set('user', 'test');
 	$services = require __DIR__ . '/Config/Service.php';
 
 	foreach ( $services as $service) {

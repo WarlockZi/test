@@ -76,6 +76,11 @@ abstract class Model
 	public static function delete($id)
 	{
 		$model = new static();
+//		$rightName = $model->model.'_delete';
+
+//		if (!User::can($this->user, $rightName)){
+//			throw new Exception('Нет права '.$rightName);
+//		}
 		$param = [$id];
 		$sql = "DELETE FROM {$model->table} WHERE  id = ?";
 		return $model->insertBySql($sql, $param);
@@ -83,9 +88,7 @@ abstract class Model
 
 	public function hasMany($model, $var = [])
 	{
-
 		$this->findAllWhere('id', $var);
-
 	}
 
 
@@ -137,13 +140,6 @@ abstract class Model
 			$arr[]=$m ;
 		}
 		return $arr;
-
-//		if (!) {
-//			$sql = <<<here
-//INSERT INTO $morphTable SET $firstId = ?, type="$type", $secodId= ?
-//here;
-//			$this->insertBySql($sql, $param);
-//		}
 	}
 
 

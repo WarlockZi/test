@@ -12,7 +12,7 @@
   .custom-catalog-item__buttons {
     display: flex;
     justify-content: flex-end;
-    margin: 20px;
+    margin: 20px 0;
 
     .save, .to-list, .del {
       padding: 10px 15px;
@@ -75,7 +75,6 @@
       background-color: white;
       padding: 5px 7px;
       box-sizing: border-box;
-      border-radius: 5px;
       border: 1px solid transparent;
       margin: 0 5px;
       flex: 1 0 auto;

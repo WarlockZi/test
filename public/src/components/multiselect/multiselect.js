@@ -19,16 +19,20 @@ export default function multiselect() {
       }
 
       function handleClick({target}) {
-
+// открыть выбор элементов
         if (target.closest('.wrap') && target.tagName.toLowerCase() === 'svg') {
           let multiselect = target.closest('.multiselect')
           let ul = multiselect.querySelector('ul')
           ul.classList.toggle('show')
 
+// нажатие по крестику чипа
         } else if (['del'].includes(target.className)) {
+          let id = target.closest('.chip').dataset.id
+          toggleBackground(id)
           let chip = target.closest('.chip')
           chip.remove()
 
+// выбор элемента, проверка существования чипа и его добавление
         } else if (target.tagName.toLowerCase() === 'label') {
           let id = target.dataset.id;
           let m = target.closest('.multiselect')
@@ -36,11 +40,20 @@ export default function multiselect() {
           let exist = [].some.call(chips, (chip) => {
             return chip.dataset.id === id
           })
+
+          let wrap = $(m).find('.chip-wrap')
           if (!exist) {
-            let wrap = $(m).find('.chip-wrap')
+            target.classList.toggle('selected')
             let chip = createChip(id)
             wrap.append(chip)
+          } else {
+            target.classList.toggle('selected')
+            wrap.querySelector(`[data-id='${id}']`).remove()
           }
+        }
+        function toggleBackground(id) {
+          let multi = target.closest('.multiselect')
+          $(multi).find(`label[data-id='${id}']`).classList.remove('selected')
         }
 
         function createChip(id) {

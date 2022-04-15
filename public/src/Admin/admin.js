@@ -16,15 +16,12 @@ import user from './CRM/user/user'
 import users from './CRM/user/users'
 
 import list from '@components/list/list'
-import chip from '@components/chip/chip'
 import multiselect from '@components/multiselect/multiselect'
 
-// let p = $('.page-name')[0]
 navigate(window.location.pathname)
 // debugger
 catalogItem()
 list()
-chip()
 multiselect()
 
 

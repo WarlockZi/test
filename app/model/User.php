@@ -13,6 +13,8 @@ class User extends Model
 {
 
 	public $table = 'users';
+	public $model = 'user';
+
 	protected $fillable = [
 		'name' => '',
 		'confirm' => '0',
