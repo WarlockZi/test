@@ -1,5 +1,5 @@
-import {$} from '../../../common'
-import list from '../../../components/list/list'
+import {$} from '../../common'
+import list from '../../components/list/list'
 
 export default function users() {
 

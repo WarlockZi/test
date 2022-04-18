@@ -1,15 +1,6 @@
 @import "../var";
 
 
-.radio-wrap{
-  display: flex;
-  align-items: center;
-  .form-input {
-    flex: 0 1 80px;
-    margin: 0;
-  }
-}
-
 .form-container {
   display: flex;
   flex-flow: column wrap;
@@ -47,7 +38,8 @@
   box-sizing: border-box;
   color: #757575;
 }
-.form__buttons{
+
+.form__buttons {
   display: flex;
   justify-content: space-between;
 }
@@ -91,14 +83,17 @@
 .bottom {
   display: flex;
   align-items: center;
+
   li {
     flex: 1;
     text-align: center;
     display: flex;
+
     a {
       color: #949494;
       flex-basis: 100%;
       padding: 10px 3px;
+
       &:hover {
         color: #fff;
         background-color: #a2a2a2;
@@ -107,7 +102,7 @@
   }
 }
 
-.list{
+.list {
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
@@ -115,18 +110,18 @@
   margin: 10px auto;
 }
 
-.list__header{
+.list__header {
   font-size: 2em;
   color: $color-a;
   margin: 15px 0;
 }
 
-.list__item{
+.list__item {
   color: $color-a;
   border: 1px solid #eee;
   padding: 10px;
 
-  &:hover{
+  &:hover {
     background-color: $color-white-hover;
   }
 }

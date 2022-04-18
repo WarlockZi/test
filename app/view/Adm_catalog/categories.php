@@ -13,8 +13,5 @@
 
 
 <div class="adm-content">
-  <div class="breadcrumbs-adm">
-    <a href  = "/adminsc/catalog">Каталог</a>
-    <div>Категории товаров</div>
-  </div>
+
 </div>

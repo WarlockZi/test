@@ -11,7 +11,6 @@ use app\view\View;
 
 class User extends Model
 {
-
 	public $table = 'users';
 	public $model = 'user';
 
