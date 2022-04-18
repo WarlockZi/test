@@ -14,7 +14,7 @@
 			 $sort = $i['sort'] ? 'data-sort' : '';
 			 ?>
 		  <div class="head <?= $i['className'] ?? '' ?>"
-		       data-type="<?= $i['data-type'] ?>"
+		       data-type="<?= $i['data-type']??'string' ?>"
 					<?= $sort ?>>
 					<?= $i['name'] ?> <?= $search ?>
 		  </div>
@@ -41,13 +41,13 @@
 
 			 <? endforeach; ?>
 
-			 <? if ($this->editCol): ?>
+<!--			 --><?// if ($this->editCol): ?>
 				 <? include ROOT . '/app/view/components/CustomList/edit.php'; ?>
-			 <? endif; ?>
+<!--			 --><?// endif; ?>
 
-			 <? if ($this->delCol): ?>
+<!--			 --><?// if ($this->delCol): ?>
 				 <? include ROOT . '/app/view/components/CustomList/del.php'; ?>
-			 <? endif; ?>
+<!--			 --><?// endif; ?>
 
 
 		 <? endforeach; ?>
@@ -60,7 +60,7 @@
 	<? if ($this->addButton === 'ajax'): ?>
 	  <div class="add-model">+</div>
 	<? elseif ($this->addButton === 'redirect'): ?>
-	  <a href="/adminsc/{$this->modelName}/create"
+	  <a href="/adminsc/<?=$this->modelName?>/create"
 	     class="add-model">+
 	  </a>
 	<? endif; ?>

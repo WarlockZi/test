@@ -1,11 +1,5 @@
 <div class="wrap-admin">
 
-
-  <div class="breadcrumbs-adm">
-    <a href  = "index">Настройки</a>
-    <div>Картинки</div>
-  </div>
-
   <div class="pic row">
       <? if (in_array('3', $user['rights'])): // admin ?>
          <? foreach ($pics as $key => $value): ?>

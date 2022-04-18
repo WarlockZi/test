@@ -12,11 +12,22 @@ abstract class Model
 	protected $sql;
 	protected $table;
 	protected $model;
+
+	protected $user;
+
 	protected $pk = 'id'; // Конвенция Первичный ключ по умолчанию будет 'id', но можно его переопределить
 
 	public function __construct()
 	{
 		$this->pdo = DB::instance();
+		$this->user = $this->auth();
+	}
+
+	protected function auth()
+	{
+			$sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
+			$user =$this->pdo->query($sql, [$_SESSION['id']])[0];
+			return $user['rights']=explode(',',$user['rights']);
 	}
 
 	public static function create($values = [])
@@ -90,6 +101,7 @@ abstract class Model
 	{
 		$this->findAllWhere('id', $var);
 	}
+
 
 
 	public function morphOne($type, $typeId, $id)

@@ -1,7 +1,5 @@
 <div class="adm-content">
-  <div class="breadcrumbs-adm">
-    <div>Настройки</div>
-  </div>
+
 
 
          <!--           <div id="vk_post_2083688_2227"></div><script type="text/javascript">
