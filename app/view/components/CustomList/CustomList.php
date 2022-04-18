@@ -18,8 +18,7 @@ class CustomList
 	private $field = '';
 	private $filter = '';
 	private $models = [];
-//	private $template = '';
-//	private $header = '';
+
 
 	public function __construct($options)
 	{

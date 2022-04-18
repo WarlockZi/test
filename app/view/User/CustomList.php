@@ -1,11 +1,14 @@
 <?php
 
 use app\view\components\CustomList\CustomList;
-new CustomList(
+
+ob_start();
+$t = new CustomList(
 	[
 		'models' => $users,
 		'modelName' => "user",
 		'tableClassName' => 'users',
+		'addButton'=>'ajax',
 		'columns' => [
 			'id' => [
 				'className' => 'id',
@@ -45,6 +48,9 @@ new CustomList(
 		'delCol' => true,
 	]
 );
+
+
+return $t->html;
 
 
 

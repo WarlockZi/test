@@ -71,6 +71,7 @@ module.exports = () => {
   } else {
     config.mode = "development";
     config.devtool = "eval-source-map"
+    // console.log('dev tool = '+config.devtool)
   }
   return config;
 };

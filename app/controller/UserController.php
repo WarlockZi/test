@@ -30,62 +30,8 @@ class UserController extends AppController
 		$users = User::findAll();
 		$this->set(compact('users'));
 
-		$users_table = $this->usersTable($users)->html;
+		$users_table = include ROOT.'/app/view/User/CustomList.php';
 		$this->set(compact('users_table'));
-	}
-
-	private function usersTable($users)
-	{
-		return new CustomList(
-			[
-				'models' => $users,
-				'modelName' => "user",
-				'tableClassName' => 'users',
-				'columns' => [
-					'id' => [
-						'className' => 'id',
-						'field' => 'id',
-						'name' => 'ID',
-						'width' => '50px',
-						'data-type' => 'number',
-						'sort' => true,
-						'search' => false,
-					],
-					'name' => [
-						'className' => 'name',
-						'field' => 'name',
-						'name' => 'ФИО',
-						'concat' => ['name', 'surName', 'middleName'],
-						'width' => '1fr',
-						'data-type' => 'string',
-						'sort' => true,
-						'search' => true,
-					],
-					'email' => [
-						'className' => 'email',
-						'field' => 'email',
-						'name' => 'email',
-						'width' => '1fr',
-						'data-type' => 'string',
-						'sort' => true,
-						'search' => true,
-					],
-					'conf' => [
-						'className' => 'conf',
-						'field' => 'confirm',
-						'name' => 'conf',
-						'width' => '50px',
-						'data-type' => 'string',
-						'sort' => true,
-						'search' => false,
-					],
-				],
-
-				'editCol' => true,
-				'delCol' => 'ajax',
-				'addButton' => 'ajax',//'redirect'
-			]
-		);
 	}
 
 	public function actionShow()
@@ -132,8 +78,6 @@ class UserController extends AppController
 					'id' => $id,
 				]));
 			}
-//			$date = strtotime($data['birthDate']);
-//			$data['birthDate'] = date('Y-m-d', $date);
 		}
 	}
 
@@ -158,9 +102,6 @@ class UserController extends AppController
 		}
 	}
 
-	public function actionContacts()
-	{
-		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
-	}
+
 
 }

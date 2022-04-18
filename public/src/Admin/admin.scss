@@ -7,7 +7,7 @@
 @import "../mixin_media";
 @import "components/props";
 @import "components/admin-flex-table";
-@import "CRM/user/users";
+@import "user/users";
 @import "components/del_product";
 @import "../components/neon";
 @import '../normalize.scss';
@@ -22,7 +22,6 @@
 
   @include _600 {
     flex-wrap: wrap;
-
 
     .separator {
       background-color: #ebf4f4;
@@ -64,7 +63,8 @@
   background: $color-admin-sidebar;
   @include _800 {
     max-width: 100%;
-    flex: 1;
+    //flex: 1;
+    width: 200px;
   }
 
   label, a {
@@ -95,7 +95,6 @@
     //#i {
     //  fill: white;
     //}
-    //
     //#t {
     //  fill: white;
     //}
@@ -135,17 +134,8 @@
 
 .adm-content {
   flex: 1;
-  //background-color: $color-gray1;
   margin: 0 5px;
+
 }
 
-.adm-save-cansel {
-  position: fixed;
-  bottom: 0;
-  margin-bottom: 20px;
-}
-
-.adm-save-cansel button {
-  padding: 10px;
-}
 

@@ -1,7 +1,5 @@
 <div class="adm-content">
-	<div class="breadcrumbs-adm">
-		<a href="/adminsc/user/list">Список пользователей</a>
-	</div>
+
 
 	<section class="wrap-admin">
 		<section class="work-area">
@@ -11,11 +9,6 @@
 				<label for="tab1" title="Подробно">Основное</label>
 				<input id="tab2" type="radio" name="tabs">
 				<label for="tab2" title="Права">Права</label>
-				<input id="tab3" type="radio" name="tabs">
-				<label for="tab3" title="Сео">Сео</label>
-				<input id="tab4" type="radio" name="tabs">
-				<label for="tab4" title="Картинки">Еще</label>
-
 
 				<section id="content-tab1" class="column">
 
@@ -116,17 +109,13 @@
 					</div>
 				</section>
 
-				<section id="content-tab3">
-				</section>
-
-				<section id="content-tab4">
-				</section>
 
 			</div>
 
 			<div class="separator btns">
 				<div class="button" id="user-update-btn">Сохранить</div>
 				<div class="button" id="user-create-btn">Добавить пользователя</div>
+				<a href="/adminsc/user/list" class="button" >К списку пользователей</a>
 			</div>
 </div>
 
