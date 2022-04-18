@@ -1,9 +1,6 @@
 <div class="wrap-admin">
 
 
-  <div class="breadcrumbs-adm">
-    <div>Site Map</div>
-  </div>
 
   <div class="work-area">
 

@@ -1,10 +1,7 @@
 <div class="wrap-admin">
 
 
-  <div class="breadcrumbs-adm">
-    <a href  = "index">Настройки</a>
-    <div>Резервное копирование</div>
-  </div>
+
 
 
   <? if (in_array('3', $user['rights'])): // admin ?>

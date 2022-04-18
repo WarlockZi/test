@@ -15,6 +15,23 @@
     padding: 5px;
     display: flex;
 
+      div.radio-wrap {
+        display: flex;
+        align-items: center;
+
+        label {
+          margin-left: 5px;
+          &:hover{
+            background-color: #cccccc;
+          }
+        }
+
+        input {
+          flex: 0 1 80px;
+          margin-right: 5px;
+        }
+      }
+
     div,
     span,
     select,
@@ -35,7 +52,7 @@
 
   [contenteditable] {
     background-color: white;
-    padding: 4px 6px;
+    padding: 2px 6px;
   }
 
 }

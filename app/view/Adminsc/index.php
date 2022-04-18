@@ -1,7 +1,5 @@
 <div class="adm-content">
-	<div class="breadcrumbs-adm">
-		<div>Admin</div>
-	</div>
+
 
 
 </div>

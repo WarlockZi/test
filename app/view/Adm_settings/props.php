@@ -1,15 +1,6 @@
-<div class="adm-submenu">
-
-
-
-</div>
-
 
 <div class="adm-content">
-  <div class="breadcrumbs-adm">
-    <a href  = "/adminsc/settings">Настройки</a>
-    <div>Настройка свойств</div>
-  </div>
+
 
   <div class="column">
 

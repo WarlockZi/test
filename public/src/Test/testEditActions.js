@@ -47,8 +47,8 @@ export default function testEditActions(target, type) {
         _question.create()
         break;
       }
-      case target.classList.contains('answer__delete'): {
-        _answer.del()
+      case !!target.closest('.answer__delete'): {
+        _answer.del(target)
         break;
       }
       case target.classList.contains('answer__create-button'): {
