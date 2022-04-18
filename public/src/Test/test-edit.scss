@@ -94,6 +94,7 @@
   display: flex;
   flex-flow: column;
 
+
   .question__create {
     display: none;
   }
@@ -105,11 +106,17 @@
     transition: opacity 1s;
   }
 
+
+  .question-edit:last-child {
+    padding: 3px;
+  }
+
   .question-edit {
     background-color: #efefef;
     display: flex;
     flex-flow: column;
     padding: 2px;
+
 
     .question-edit_row {
       display: flex;
@@ -152,6 +159,7 @@
             font-size: .8rem;
             flex-basis: 20px;
           }
+
           .answer__correct {
             margin: 0 5px;
             cursor: pointer;
@@ -171,7 +179,6 @@
             align-items: center;
             justify-content: center;
           }
-
 
 
         }
@@ -268,7 +275,6 @@
     cursor: pointer;
     margin-left: 2px;
 
-
     &:before {
       @include _chevron()
     }
@@ -333,7 +339,6 @@
     margin: 8px 0;
   }
 }
-
 
 
 //.list {
