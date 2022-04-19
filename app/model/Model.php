@@ -14,21 +14,30 @@ abstract class Model
 	protected $model;
 
 	protected $user;
+	protected $items;
 
-	protected $pk = 'id'; // Конвенция Первичный ключ по умолчанию будет 'id', но можно его переопределить
 
 	public function __construct()
 	{
 		$this->pdo = DB::instance();
-		$this->user = $this->auth();
 	}
 
-	protected function auth()
+	protected function auth():void
 	{
 			$sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
 			$user =$this->pdo->query($sql, [$_SESSION['id']])[0];
-			return $user['rights']=explode(',',$user['rights']);
+			$user['rights']=explode(',',$user['rights']);
+			$this->user= $user;
 	}
+
+//	public static function with($child = ""):void
+//	{
+////		$model = new static();
+////			$sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
+////			$user =$this->pdo->query($sql, [$_SESSION['id']])[0];
+////			$user['rights']=explode(',',$user['rights']);
+////			$this->user= $user;
+//	}
 
 	public static function create($values = [])
 	{
@@ -87,22 +96,16 @@ abstract class Model
 	public static function delete($id)
 	{
 		$model = new static();
-//		$rightName = $model->model.'_delete';
+		$model->auth();
+		$rightName = $model->model.'_delete';
 
-//		if (!User::can($this->user, $rightName)){
-//			throw new Exception('Нет права '.$rightName);
-//		}
+		if (!User::can($model->user, $rightName)){
+			throw new Exception('Нет права '.$rightName);
+		}
 		$param = [$id];
 		$sql = "DELETE FROM {$model->table} WHERE  id = ?";
 		return $model->insertBySql($sql, $param);
 	}
-
-	public function hasMany($model, $var = [])
-	{
-		$this->findAllWhere('id', $var);
-	}
-
-
 
 	public function morphOne($type, $typeId, $id)
 	{
@@ -138,7 +141,6 @@ abstract class Model
 
 	public function morphTo($table, $type, $id)
 	{
-
 		$morphTable = $this->makeMorphTableName($this->model, $table);
 		$field = $this->makeFieldName($this->model);
 		$param = [$id];
@@ -227,6 +229,13 @@ abstract class Model
 		return $item[0] ?? null;
 	}
 
+	public static function findOneWhereModel($field, $value)
+	{
+		$model = new static();
+		$sql = "SELECT * FROM {$model->table} WHERE $field = ? LIMIT 1";
+		$model->items = $model->pdo->query($sql, [$value]);
+		return $model;
+	}
 	public function findBySql($sql, $params = [])
 	{
 		return $this->pdo->query($sql, $params);
@@ -335,14 +344,7 @@ abstract class Model
 		return implode($glue, $_array);
 	}
 
-	public
-	function clean_data($str)
-	{
-		return strip_tags(trim($str));
-	}
-
-	public
-	function autoincrement()
+	public function autoincrement()
 	{
 		$params = [$this->table];
 		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";

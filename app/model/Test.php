@@ -7,14 +7,22 @@ class Test extends Model
 {
 
 	public $table = 'test';
+	public $model = 'test';
+
 	public $fillable = [
-		'id'=>0,
-		'test_name'=>'...',
-		'enable'=>0,
-		'parent'=>0,
-		'isTest'=>1,
+		'id' => 0,
+		'test_name' => '...',
+		'enable' => 0,
+		'parent' => 0,
+		'isTest' => 1,
 	];
 
+	public $hasMany = [];
+
+	public function questions(){
+		$id = $this->items[0]['id'];
+		return Question::findAllWhere('parent', $id);
+	}
 
 
 	static function shuffle_assoc($array)
@@ -27,8 +35,12 @@ class Test extends Model
 		return $new;
 	}
 
-	public function getTestData($testId, bool $shuffle = false)
+
+
+	public static function getTestData($testId, bool $shuffle = false)
 	{
+		$model = new self();
+
 		$sql =
 			<<<her
 SELECT i.path, i.name,
@@ -54,7 +66,7 @@ her;
 
 		// +0 для сортировки чисел, чтобы не было 2>10 // AND test.enable = :testEnable
 		$params = [$testId];
-		$result = $this->findBySql($sql, $params);
+		$result = $model->findBySql($sql, $params);
 
 		$data = [];
 		$prevQuest = 0;
@@ -79,9 +91,9 @@ her;
 			}
 			$prevQuest = $q_id;
 		}
-		$_SESSION['correct_answers'] = $data['correct_answers']??null;
+		$_SESSION['correct_answers'] = $data['correct_answers'] ?? null;
 
-		return $data??[];
+		return $data ?? [];
 	}
 
 	public function getCorrectAnswers()
@@ -91,26 +103,19 @@ her;
 
 	public function getChildren($id)
 	{
-		$children = $this->findAllWhere('parent',$id);
+		$children = $this->findAllWhere('parent', $id);
 		return $children;
 	}
 
-//	public function send_mail()
-//	{
-//		$this->send_result_mail('/adminsc/testresult/result/', '/adminsc/testresult/results/');
-//	}
-
-
-	public function pagination(array $items, $addBtn, $test)
+	public static function pagination(array $items, $addBtn)
 	{
-
 		$pagination = '<div class="pagination">';
-			$i = 0;
-			foreach ($items as $id => $el) {
-				$i++;
-				$d = "<div data-pagination={$id}>{$i}</div>";
-				$pagination .= $d;
-			}
+		$i = 0;
+		foreach ($items as $id => $el) {
+			$i++;
+			$d = "<div data-pagination={$id}>{$i}</div>";
+			$pagination .= $d;
+		}
 
 		if ($addBtn) {
 			$pagination .= "<div class='pagination__add-question'>+</div>";

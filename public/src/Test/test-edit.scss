@@ -4,12 +4,10 @@
 @import "./test-head";
 
 
-.test-edit.accordion {
-  max-width: 250px;
-  @include _800 {
-    max-width: 100%;
-  }
-}
+//.accordion.test-edit {
+//  max-width: 250px;
+//
+//}
 
 .test-edit-wrapper {
   display: flex;
@@ -26,28 +24,44 @@
     @include _600 {
       width: 100%;
     }
+    @include _800 {
+      max-width: 100%;
+    }
   }
 
 }
 
 @mixin test-edit__act-button {
-  position: relative;
-  color: #fff;
-  font-weight: 600;
-  padding: 8px 15px;
-  margin: 15px 0;
-  white-space: nowrap;
-  cursor: pointer;
-  background-color: $color-main !important;
-  box-shadow: 0 2px 4px 0 $color-main;
-  transition: box-shadow 100ms;
-  display: flex;
-  justify-content: center;
+    justify-self: end;
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+
+    $border-radius: 75%;
+    @include _button($border-radius);
 
   &:hover {
     box-shadow: none;
   }
 }
+//}@mixin test-edit__act-button {
+//  position: relative;
+//  color: #fff;
+//  font-weight: 600;
+//  padding: 8px 15px;
+//  margin: 15px 0;
+//  white-space: nowrap;
+//  cursor: pointer;
+//  background-color: $color-main !important;
+//  box-shadow: 0 2px 4px 0 $color-main;
+//  transition: box-shadow 100ms;
+//  display: flex;
+//  justify-content: center;
+//
+//  &:hover {
+//    box-shadow: none;
+//  }
+//}
 
 .test-edit__cont {
   display: flex;
@@ -71,7 +85,7 @@
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    margin: 0px 0 0px 2px;
+    margin: 0px 0 10px 2px;
 
     .test-name {
       margin: 0;
@@ -83,9 +97,9 @@
     margin: 10px 0;
   }
 
-  h1 {
-    margin: 0;
-  }
+  //h1 {
+  //  margin: 0;
+  //}
 
 }
 
@@ -93,7 +107,6 @@
 .questions {
   display: flex;
   flex-flow: column;
-
 
   .question__create {
     display: none;
@@ -105,7 +118,6 @@
     align-items: center;
     transition: opacity 1s;
   }
-
 
   .question-edit:last-child {
     padding: 3px;
@@ -179,8 +191,6 @@
             align-items: center;
             justify-content: center;
           }
-
-
         }
 
         .answer__create-button {
@@ -189,9 +199,7 @@
           &:hover {
             background-color: #19a687;
           }
-
         }
-
       }
 
 
@@ -260,6 +268,7 @@
 
   .question__create-button {
     @include test-edit__act-button;
+    //@include test-edit__act-button;
   }
 
   .rotate {
