@@ -45,7 +45,7 @@ class QuestionController Extends AppController
 			$question = $this->req['question'] ?? '';
 			$q_id = $this->req['question']['id'] ?? '';
 			$sort = $this->req['question']['sort'] ?? '';
-			$qId = App::$app->question->updateOrCreate($q_id, $question);
+			$qId = Question::updateOrCreate($q_id, $question);
 			if ($qId === false) {
 				return;
 			} elseif (is_int($qId)) {
@@ -62,7 +62,7 @@ class QuestionController Extends AppController
 				]));
 			} elseif ($qId === true) {
 				foreach ($answers as $answer) {
-					App::$app->answer->updateOrCreate($answer['id'], $answer);
+					Answer::updateOrCreate($answer['id'], $answer);
 				}
 				exit(json_encode([
 					'msg' => 'Вопросы и ответы сохранены']));
