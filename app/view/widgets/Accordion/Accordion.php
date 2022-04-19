@@ -70,7 +70,7 @@ class Accordion extends Model
 		return "<li>" .
 			"<a data-id={$item['id']} " .
 			"class='level{$lev}' " .
-			"href='/adminsc{$this->link}do/{$item['id']}' " .
+			"href='{$this->link}{$item['id']}' " .
 			"title={$item['test_name']} {$isTest}>" .
 			"{$item['test_name']} </a>" .
 			$this->lable_after($item);

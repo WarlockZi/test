@@ -16,11 +16,11 @@ class MainController extends AppController
 
 		$this->auth();
 
-		$sale = Cache::get('sale');
-		if (!$sale) {
+//		$sale = Cache::get('sale');
+//		if (!$sale) {
 			$sale = Product::getSale();
-			Cache::set('sale', $sale, 30);
-		}
+//			Cache::set('sale', $sale, 30);
+//		}
 
 		$this->set(compact('sale'));
 		View::setCss('main.css');

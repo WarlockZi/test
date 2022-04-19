@@ -141,15 +141,16 @@ class TestController extends AppController
       $page_name = 'Прохождение тестов';
       $this->set(compact('page_name'));
 
-      $testId = (int)$this->route['id'] ?? 0;
+
+      $testId = isset($this->route['id'])?(int)$this->route['id']: 0 ;
       if ($testId) {
         if (!$testData = Test::getTestData($testId, true)) {
           $error = '<H1>Теста с таким номером нет.</H1>';
           $this->set(compact('error'));
         } else {
           $test = Test::findOneWhere('id', $testId);
-          $tests = Test::findOneWhereModel('id', $testId);
-          $qs = $tests->questions();
+//          $tests = Test::findOneWhereModel('id', $testId);
+//          $qs = $tests->questions();
           $this->set(compact('test'));
           $_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
           unset($testData['correct_answers']);
