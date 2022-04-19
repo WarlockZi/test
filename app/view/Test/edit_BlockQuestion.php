@@ -44,7 +44,8 @@
 
 
 				<? endif; ?>
-			<div class="answer__create-button">Добавить ответ</div>
+			<div class="answer__create-button"
+			data-tooltip="Добавить ответ">+</div>
 
 		</div>
 
