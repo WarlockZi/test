@@ -8,7 +8,7 @@ use app\model\TestResult;
 use app\view\View;
 
 
-class TestResultController extends AppController
+class TestresultController extends AppController
 {
 	public function __construct(array $route)
 	{
