@@ -139,19 +139,21 @@ class TestController extends AppController
       $pagination = '';
       $testData = '';
       $page_name = 'Прохождение тестов';
-
       $this->set(compact('page_name'));
-      $testId = isset($this->route['alias']) ? (int)$this->route['alias'] : '';
+
+      $testId = (int)$this->route['id'] ?? 0;
       if ($testId) {
-        if (!$testData = App::$app->test->getTestData($testId, true)) {
+        if (!$testData = Test::getTestData($testId, true)) {
           $error = '<H1>Теста с таким номером нет.</H1>';
           $this->set(compact('error'));
         } else {
           $test = Test::findOneWhere('id', $testId);
+          $tests = Test::findOneWhereModel('id', $testId);
+          $qs = $tests->questions();
           $this->set(compact('test'));
           $_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
           unset($testData['correct_answers']);
-          $pagination = App::$app->test->pagination($testData, false, $test);
+          $pagination = Test::pagination($testData, false, $test);
         }
       }
       $this->set(compact('testData', 'pagination'));
@@ -183,7 +185,7 @@ class TestController extends AppController
       $tests = $this->tests();
       $this->set(compact('tests'));
 
-      $testDataToEdit = App::$app->test->getTestData($id) ?? '';
+      $testDataToEdit = Test::getTestData($id) ?? '';
       unset ($testDataToEdit['correct_answers']);
       $this->set(compact('testDataToEdit'));
 

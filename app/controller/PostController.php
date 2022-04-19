@@ -166,7 +166,7 @@ class PostController Extends AppController
 
 		$chiefs = $this->getSelectCheifs(Post::cheifs($id));
 		$subordinates = $this->getSelectSubordinate(Post::subordinates($id));
-		$subordinates1 = $this->getMultiselect(Post::subordinates($id));
+		$subordinates1 = $this->getMultiselect(Post::findAll());
 
 		$item = $this->getItem($post,$chiefs,$subordinates,$subordinates1)->html;
 		$this->set(compact('item'));

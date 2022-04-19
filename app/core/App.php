@@ -6,10 +6,13 @@ class App {
 
 
   public static $app;
+  public static $DI;
 
-  public function __construct() {
+  public function __construct($di) {
 
-    self::$app = Registry::instance();
+  	self::$DI = $di;
+
+//    self::$app = Registry::instance();
 
   }
 

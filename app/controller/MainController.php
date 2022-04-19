@@ -3,7 +3,8 @@
 namespace app\controller;
 
 use app\view\View;
-use app\core\App;
+use app\model\Product;
+use app\core\Cache;
 
 class MainController extends AppController
 {
@@ -15,10 +16,10 @@ class MainController extends AppController
 
 		$this->auth();
 
-		$sale = App::$app->cache->get('sale');
+		$sale = Cache::get('sale');
 		if (!$sale) {
-			$sale = App::$app->product->getSale();
-			App::$app->cache->set('sale', $sale, 30);
+			$sale = Product::getSale();
+			Cache::set('sale', $sale, 30);
 		}
 
 		$this->set(compact('sale'));

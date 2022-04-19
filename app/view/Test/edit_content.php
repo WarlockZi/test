@@ -34,7 +34,10 @@
 						<? include ROOT . '/app/view/Test/edit_BlockQuestion.php' ?>
 					<? endforeach; ?>
 				<? endif; ?>
-				<div class="question__create-button" data-action-hover="Добавить вопрос">Добавить вопрос</div>
+				<div class="question__create-button"
+				     data-tooltip="Добавить вопрос">
+					+
+				</div>
 			</div>
 
 

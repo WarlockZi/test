@@ -9,6 +9,7 @@ class Product extends Model
 {
 
 	public $table = 'products';
+	public $model = 'product';
 
 	protected function createImgPaths($alias, $fname,  $ext, $isOnly, $rate = 800)
 	{
@@ -159,11 +160,12 @@ class Product extends Model
 		}
 	}
 
-	public function getSale()
+	public static function getSale()
 	{
+		$model = new static;
 		$sql = 'SELECT * FROM products WHERE sale = ?';
 		$params = [1];
-		$products = $this->findBySql($sql, $params);
+		$products = $model->findBySql($sql, $params);
 		return $products;
 	}
 

@@ -7,9 +7,10 @@ use \Engine\DI\DI;
 session_start();
 
 require_once "../vendor/autoload.php";
-//require_once "../engine/bootstrap.php"; // container
 
 (Dotenv\Dotenv::createImmutable(dirname(__DIR__)))->load();
+
+require_once "../engine/bootstrap.php"; // container
 
 error_reporting(E_ALL);
 define('DEV', $_ENV['MODE'] === 'development'); //0-не выводить ошибки
@@ -23,7 +24,7 @@ define('COMPONENTS', ROOT.'/app/view/components');
 if (DEV) {
 	ini_set('display_errors', 1);
 }
-new App;
+new App(new DI);
 //DI::test();
 Router::dispatch($_SERVER['QUERY_STRING']);
 exit();

@@ -29,7 +29,7 @@ class Cache
 //	}
 
 
-	public function get($key, $path = '')
+	public static function get($key, $path = '')
 	{
 		$file = ROOT . '/tmp/cache/' . $path . md5($key) . '.txt';
 		if (is_readable($file)) {
@@ -41,7 +41,7 @@ class Cache
 		return false;
 	}
 
-	private function mkdir_r($dirName, $rights = 0755)
+	private static function mkdir_r($dirName, $rights = 0755)
 	{
 		str_contains('/', $dirName) ?
 			$dirs = explode('/', $dirName) :
@@ -59,11 +59,11 @@ class Cache
 		return $dir;
 	}
 
-	public function set($key, $data, $seconds = 3600)
+	public static function set($key, $data, $seconds = 3600)
 	{
 		$content['data'] = $data;
 		$content['end_time'] = time() + $seconds;
-		$dir = $this->mkdir_r('\tmp\cache');
+		$dir = self::mkdir_r('\tmp\cache');
 		$file = $dir . DIRECTORY_SEPARATOR . md5($key) . '.txt';
 
 		if (file_put_contents($file, serialize($content))) {
@@ -73,7 +73,7 @@ class Cache
 	}
 
 
-	public function delete($key)
+	public static function delete($key)
 	{
 		$file = ROOT . '/' . md5($key) . '.txt';
 		if (file_exists($file)) {

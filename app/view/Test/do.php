@@ -30,7 +30,7 @@
 				<div class="test-data">
 
 					<? foreach ($testData as $id_quest => $item): ?>
-						<div class="question" data-id="<?= $id_quest; ?>" id="question-<?= $id_quest; ?>">
+						<div class="question" data-id="<?= $id_quest; ?>">
 
 
 							<div class="q">
@@ -53,8 +53,9 @@
 
 							<div class="a">
 								<input type="checkbox" id="answer-<?= $id_answer ?>">
-								<label for="answer-<?= $id_answer ?>"></label>
-								<div><?= $answer['answer_text'] ?></div>
+								<label for="answer-<?= $id_answer ?>">
+								  <?= $answer['answer_text'] ?>
+								</label>
 
 								<? if ($answer['answer_pic']): ?>
 									<div class="apic">
