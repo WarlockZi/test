@@ -175,13 +175,14 @@ abstract class Model
 		return $this->pdo->query($sql, [$id]);
 	}
 
-	public function updateOrCreate($id, $values)
+	public static function updateOrCreate($id, $values)
 	{
-		if ($this->find([$id])) {
-			$this->update($values);
+		$model = new static();
+		if ($model->find([$id])) {
+			$model->update($values);
 			return true;
 		} else {
-			$autoincrement = $this->create($values) - 1;
+			$autoincrement = $model->create($values) - 1;
 			return $autoincrement;
 		}
 	}
