@@ -20,7 +20,7 @@ class Tree extends Model {
    }
     private function getTree($table)
     {
-        $res = App::$app->{$table}->findAll($table);
+        $res = $table::findAll($table);
 
         if ($res !== FALSE) {
             $all = [];

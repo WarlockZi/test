@@ -3,6 +3,7 @@
 namespace app\model;
 
 use app\core\App;
+use app\core\Cache;
 use app\model\Model;
 
 class Category extends Model
@@ -37,7 +38,7 @@ class Category extends Model
 			foreach ($res as $key => $v) {
 				$params = [$v['id']];
 				$sql = 'SELECT * FROM products WHERE parent = ?';
-				$res = App::$app->product->findBySql($sql, $params);
+				$res = Product::findBySql($sql, $params);
 				$all[$v['id']] = $v;
 				$all[$v['id']]['products'] = $res;
 			}
@@ -164,18 +165,19 @@ class Category extends Model
 		return $category;
 	}
 
-	public function getInitCategories($fromCache = 0)
+	public static function getInitCategories($fromCache = 0)
 	{
+		$model = new static();
 		if ($fromCache) {
-			$list = App::$app->cache->get('list');
+			$list = Cache::get('list');
 			if (!$list) {
-				$list = $this->getInitCategories();
-				App::$app->cache->set('list', $list, 30);
+				$list = $model->getInitCategories();
+				Cache::set('list', $list, 30);
 			}
 		}
 
 		$sql = 'SELECT * FROM category WHERE parent = 0 AND act = 1';
-		$arr = $this->findBySql($sql);
+		$arr = $model->findBySql($sql);
 		return $arr;
 	}
 

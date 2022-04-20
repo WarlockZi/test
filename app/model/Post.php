@@ -17,15 +17,23 @@ class Post extends Model
 	public static function cheifs($id)
 	{
 		$model = new static();
-		$cheifs = $model->morphTo('post','cheif',$id);
+		$cheifs = $model->morphTo('post', 'cheif', $id);
 		return $cheifs;
 	}
 
 	public static function subordinates($id)
 	{
 		$model = new static();
-		$subordinates = $model->morphTo('post','subordinate',$id);
+		$subordinates = $model->morphTo('post', 'subordinate', $id);
 		return $subordinates;
+	}
+
+	public static function findOneWhere($field, $value)
+	{
+		$post = parent::findOneWhere($field, $value);
+		$post['chief'] = explode(',', $post['chief']);
+		$post['subordinate'] = explode(',', $post['subordinate']);
+		return $post;
 	}
 
 }

@@ -96,7 +96,7 @@ her;
 		return $data ?? [];
 	}
 
-	public function getCorrectAnswers()
+	public static function getCorrectAnswers()
 	{
 		exit(json_encode($_SESSION['correct_answers']));
 	}

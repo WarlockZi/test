@@ -1,11 +1,15 @@
-<div class="multiselect" tabindex="0">
+<div class="multiselect"
+     tabindex="0"
+     data-field="<?= $model->field; ?>"
+>
 	<div class="wrap">
 		<div class="chip-wrap">
 				<? foreach ($model->tree as $k => $v): ?>
-
-			  <div class="chip" data-id="<?= $v['id']; ?>"><?= $v[$model->fieldName] ?>
-				  <div class="del">Х</div>
-			  </div>
+					<? if (in_array($v['id'], $model->selected)): ?>
+				  <div class="chip" data-id="<?= $v['id']; ?>"><?= $v[$model->fieldName] ?>
+					  <div class="del">Х</div>
+				  </div>
+					<? endif; ?>
 
 				<? endforeach; ?>
 		</div>
@@ -20,7 +24,6 @@
 				data-field="<?= $model->field; ?>"
 				<?= $model->title ? "title='{$model->title}'" : ''; ?>
 				<?= $model->className ? "class={$model->className}" : ''; ?>
-
 		>
 
 				<? foreach ($model->tree as $k => $v): ?>
@@ -48,8 +51,8 @@
 				<? foreach ($model->tree as $k => $v): ?>
 			  <label for="<?= $v[$model->fieldName] ?>"
 			         data-id="<?= $v['id']; ?>"
-						 <?= in_array($v['id'],$model->selected)
-						   ?"class='selected'":''; ?>
+						 <?= in_array($v['id'], $model->selected)
+							 ? "class='selected'" : ''; ?>
 			  ><?= $v[$model->fieldName] ?></label>
 				<? endforeach; ?>
 		</li>

@@ -28,7 +28,6 @@ class CustomMultiSelect
 				$this->$k = $v;
 			}
 		}
-//		$this->finalTpl=$this->pathToTpl.$this->tpl;
 	}
 
 	public function getChilds($tree,$level)
@@ -53,9 +52,8 @@ class CustomMultiSelect
 		$model = new self($options);
 		ob_start();
 		include ROOT . '/app/view/components/CustomMultiSelect/CustomMultiSelectTemplate.php';
-		$t = ob_get_clean();
 
-		return $t;
+		return ob_get_clean();
 	}
 
 

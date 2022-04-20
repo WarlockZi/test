@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\core\App;
+use app\model\Product;
 use \app\model\Prop;
 use app\view\View;
 
@@ -20,7 +21,7 @@ class CatalogController extends AppController
 	public function actionIndex()
 	{
 
-		$cats_id = App::$app->category->getInitCategories();
+		$cats_id = Category::getInitCategories();
 		View::setMeta('Каталог спецодежды', 'Каталог спецодежды', 'Каталог спецодежды');
 		$this->set(compact('cats_id'));
 	}
@@ -32,7 +33,7 @@ class CatalogController extends AppController
 		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
 		$this->view = 'product';
 
-		$breadcrumbs = App::$app->product->getBreadcrumbs($product, $product['parents'], 'product');
+		$breadcrumbs = Product::getBreadcrumbs($product, $product['parents'], 'product');
 
 		View::setMeta($product['title'], $product['description'], $product['keywords']);
 		$this->set(compact('breadcrumbs', 'product'));

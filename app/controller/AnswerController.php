@@ -31,7 +31,7 @@ class AnswerController Extends AppController
 	public function actionShow()
 	{
 		if ($this->ajax) {
-			$a_id = App::$app->answer->autoincrement();
+			$a_id = Answer::autoincrement();
 			$q_id = $this->ajax['q_id'];
 
 			Answer::create([]);
