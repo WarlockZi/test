@@ -41,8 +41,8 @@
     }
   }
 
-  ul {
     /* by default hide all sub menus */
+  ul {
     max-height: 0;
     overflow: hidden;
     transition: max-height .1s;
@@ -52,7 +52,7 @@
     user-select: none;
     position: relative;
 
-    a[data-istest]:after{
+    a[data-istest]:after {
       background: url(./img/cd-icons.svg) no-repeat -16px 0;
     }
   }
@@ -72,7 +72,6 @@
     cursor: pointer;
   }
 
-  //$color-main: green;
   .current {
     border-left: 4px solid lighten($color-main, 10%);
     color: lighten($color-main, 10%);
@@ -103,8 +102,8 @@
     }
   }
 
-  label::before, label::after, a::after {
     /* icons */
+  label::before, label::after, a::after {
     content: '';
     display: inline-block;
     width: 16px;
@@ -120,24 +119,24 @@
       background-repeat: no-repeat;
     }
 
+    /* arrow icon */
     &::before {
-      /* arrow icon */
       left: $item-padding-S;
-      background-position: 0 0;
+      background-position: 1px 0;
       transform: translateY(-50%) rotate(-90deg);
     }
 
   }
 
 
+  /* rotate arrow */
   input[type=checkbox]:checked + label::before {
-    /* rotate arrow */
     transform: translateY(-50%);
     transition: transform 90ms;
   }
 
+  /*change path icon*/
   input[type=checkbox]:checked + label::after {
-    /*change path icon*/
     background-position: -32px 0;
   }
 
@@ -145,13 +144,11 @@
   input[type=checkbox]:checked + label:nth-of-type(n) + ul {
     /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
     display: block;
-    //height: auto;
     overflow: hidden;
   }
 
   ul label,
   ul a {
-    //background: darken($color-1, 10%);
     box-shadow: inset 0 -1px darken($color-1, 5%);
     padding-left: ($item-padding-S * 4) + 30px;
 
@@ -314,9 +311,9 @@
 .admin-layout__sidebar.accordion {
 
 
+  /* arrow icon */
   label {
     &::before {
-      /* arrow icon */
       left: initial;
       right: 12px;
     }

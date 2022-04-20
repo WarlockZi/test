@@ -97,11 +97,11 @@ class FreetestController extends AppController
 
 		if ($this->isAjax()) {
 			$func = json_decode($_POST['param'])->action;
-			App::$app->freetest->$func();
+			Freetest::$func();
 			exit();
 		}
 		$testId = $this->getTestId();
-		$testData = App::$app->freetest->getFreetestData($testId);
+		$testData = Freetest::getFreetestData($testId);
 		View::setJS('freeTest.js');
 		View::setCss('freeTest.css');
 

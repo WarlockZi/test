@@ -81,17 +81,17 @@ select[custom-select][multiple] {
     left: 0;
     background-color: white;
     box-shadow: #445e8882 1px 3px 3px 0px;
-    max-height: 80px;
+    max-height: 200px;
     overflow: auto;
     width: 100%;
     margin: 0;
-
+    z-index: 1;
 
     .inner {
       padding: 5px;
       display: flex;
       flex-flow: column;
-      width: 90%;
+      flex: 1 0;
       overflow-x: hidden;
       overflow-y: auto;
       margin-left: 5px;

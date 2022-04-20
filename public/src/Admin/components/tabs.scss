@@ -23,13 +23,13 @@
     padding: 9px 7px;
     font-weight: 600;
     text-align: center;
-    color: #aaa;
+    color: #959595;
     border: 1px solid $color-gray4;
-    border-bottom: 1px solid transparent;
-    background: #f1f1f1;
+    border-bottom: 1px solid #dddddd;
+    background: $color-gray4;
     border-radius: 3px 3px 0 0;
 
-    @include _400{
+    @include _400 {
       font-size: 10px;
     }
   }
@@ -78,6 +78,14 @@
     display: none;
     background: #fff;
     border: 1px solid #ddd;
+
+    select {
+      border: 1px solid #e1e1e1;
+    }
+
+    input[type='date']{
+      border: 1px solid #e1e1e1;
+    }
   }
 
 }

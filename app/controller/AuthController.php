@@ -4,11 +4,16 @@ namespace app\controller;
 
 use app\core\App;
 use app\model\Mail;
+use app\model\Post;
 use app\model\User;
+use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use app\view\View;
 
 class AuthController extends AppController
 {
+	protected $model = User::class;
+	protected $modelName = 'user';
+	protected $tableName = 'users';
 
 	public function __construct($route)
 	{
@@ -86,22 +91,83 @@ class AuthController extends AppController
 	public function actionProfile()
 	{
 		$this->autorize();
+
+		$item = User::findOneWhere('id', $_SESSION['id']);
+		$posts = Post::findAll();
+		$user = $this->getItem($item, $posts);
+
+		$this->set(compact('user'));
+
 		if (User::can($this->user, 'role_employee')) {
 			$this->layout = 'admin';
 			View::setJs('admin.js');
 			View::setCss('admin.css');
 		} else {
-			header("Location:/auth/profile");
+			$this->layout = 'vitex';
+			View::setJs('auth.js');
+			View::setCss('auth.css');
+
 		}
 	}
 
-//	public function actionCabinet()
-//	{
-//		$this->autorize();
-//		if (User::can($this->user, 'role_employee')) {
-//			header("Location:/adminsc/cabinet");
-//		}
-//	}
+	private function getItem($item, $posts)
+	{
+			$item = new CustomCatalogItem(
+			[
+				'item' => $item,
+				'modelName' => $this->modelName,
+				'tableClassName' => $this->tableName,
+				'fields' => [
+					'id' => [
+						'className' => 'id',
+						'field' => 'id',
+						'name' => 'ID',
+						'contenteditable' => '',
+						'width' => '50px',
+						'data-type' => 'number',
+					],
+					'name' => [
+						'className' => 'name',
+						'field' => 'name',
+						'name' => 'Наименование',
+						'width' => '1fr',
+						'contenteditable' => 'contenteditable',
+						'data-type' => 'string',
+					],
+					'surname' => [
+						'className' => 'surname',
+						'field' => 'surName',
+						'name' => 'Фамилия',
+						'width' => '1fr',
+						'contenteditable' => 'contenteditable',
+						'data-type' => 'string',
+					],
+					'email' => [
+						'className' => 'email',
+						'field' => 'email',
+						'name' => 'email',
+						'width' => '1fr',
+						'contenteditable' => false,
+						'data-type' => 'string',
+					],
+
+					'post' => [
+						'className' => 'post',
+						'field' => 'post_id',
+						'name' => 'Должности',
+						'width' => '1fr',
+						'data-type' => 'multiselect',
+						'select' => $posts,
+					],
+				],
+
+				'delBttn' => 'ajax',
+				'toListBttn' => true,
+				'saveBttn' => 'ajax',//'redirect'
+			]
+		);
+		return $item->html;
+	}
 
 	public function actionChangePassword()
 	{

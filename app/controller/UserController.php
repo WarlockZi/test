@@ -50,7 +50,7 @@ class UserController extends AppController
 	{
 		$this->view = 'adminEdit';
 
-		if (User::can($this->user, ['role_employee']) || defined('SU')) {
+		if (User::can($this->user, ['role_employee']) ) {
 			if (isset($this->route['id'])) {
 				$user = User::findOneWhere('id', $this->route['id']);
 				$this->set(compact('user'));
@@ -58,10 +58,11 @@ class UserController extends AppController
 
 			$rights = Right::findAll();;
 			$this->set(compact('rights'));
-		} else {
-			$this->layout = 'vitex';
-			$this->view = 'edit';
 		}
+//		else {
+//			$this->layout = 'vitex';
+//			$this->view = 'edit';
+//		}
 		if ($user = $this->ajax) {
 			$user['id'] = $_SESSION['id'];
 			User::update($user);

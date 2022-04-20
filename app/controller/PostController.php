@@ -88,7 +88,7 @@ class PostController Extends AppController
 		);
 	}
 
-	private function getItem($item, $chiefs, $subordinates,$subordinates1)
+	private function getItem($item, $chiefs, $subordinates)
 	{
 		return new CustomCatalogItem(
 			[
@@ -126,7 +126,7 @@ class PostController Extends AppController
 						'name' => 'Подчиняется',
 						'width' => '1fr',
 						'contenteditable' => false,
-						'data-type' => 'select',
+						'data-type' => 'multiselect',
 						'select' => $chiefs,
 					],
 					'subourdinate' => [
@@ -134,16 +134,8 @@ class PostController Extends AppController
 						'field' => '$subordinate',
 						'name' => 'Управляет',
 						'width' => '1fr',
-						'data-type' => 'select',
-						'select' => $subordinates,
-					],
-					'subourdinate1' => [
-						'className' => 'fullname',
-						'field' => '$subordinate',
-						'name' => 'Управляет',
-						'width' => '1fr',
 						'data-type' => 'multiselect',
-						'select' => $subordinates1,
+						'select' => $subordinates,
 					],
 				],
 
@@ -164,64 +156,41 @@ class PostController Extends AppController
 		$id = $this->route['id'];
 		$post = $this->model::findOneWhere('id', $id);
 
-		$chiefs = $this->getSelectCheifs(Post::cheifs($id));
-		$subordinates = $this->getSelectSubordinate(Post::subordinates($id));
-		$subordinates1 = $this->getMultiselect(Post::findAll());
+		$chiefs = $this->getMultiselectCheifs(Post::findAll(),$post['chief']);
+		$subordinates = $this->getMultiselectSubordinates(Post::findAll(),$post['subordinate']);
 
-		$item = $this->getItem($post,$chiefs,$subordinates,$subordinates1)->html;
+		$item = $this->getItem($post, $chiefs, $subordinates)->html;
 		$this->set(compact('item'));
 
 		$this->view = 'edit';
 
 	}
-	private function getMultiselect($array)
+
+	private function getMultiselectCheifs($array,$selected)
 	{
 		return CustomMultiSelect::run([
-			'className'=> 'type1',
-			'field'=> 'cheif',
-			'tab'=> '.',
-			'fieldName'=> 'name',
+			'className' => 'type1',
+			'field' => 'cheif',
+			'tab' => '.',
+			'fieldName' => 'name',
 			'initialOption' => true,
 			'initialOptionValue' => '--',
 			'tree' => $array,
-			'selected' => ['6','5'],
-		]);
-	}
-	private function getSelectCheifs($array)
-	{
-		return CustomSelect::run([
-			'className'=> 'type1',
-			'field'=> 'cheif',
-			'tab'=> '.',
-			'fieldName'=> 'name',
-			'initialOption' => true,
-			'initialOptionValue' => '--',
-			'tree' => $array,
-		]);
-	}
-	private function getSelectSubordinate($array)
-	{
-		return CustomSelect::run([
-			'className'=> 'type1',
-//			'title'=> 'cheif',
-			'field'=> 'subordinate',
-			'fieldName'=> 'name',
-			'tab'=> '.',
-			'initialOption' => true,
-			'initialOptionValue' => '--',
-			'tree' => $array,
+			'selected' => $selected,
 		]);
 	}
 
-	private function getMultiselectSubordinate($array)
+	private function getMultiselectSubordinates($array,$selected)
 	{
 		return CustomMultiSelect::run([
-			'field'=> 'subordinate',
-			'className'=> 'type1',
-			'tab'=> '.',
-//			'initialOption' => true,
-//			'initialOptionValue' => '--',
+			'className' => 'type1',
+			'field' => 'subordinate',
+			'tab' => '.',
+			'fieldName' => 'name',
+			'initialOption' => true,
+			'initialOptionValue' => '--',
 			'tree' => $array,
+			'selected' => $selected,
 		]);
 	}
 
@@ -240,9 +209,9 @@ class PostController Extends AppController
 	{
 		$id = $this->ajax['id'] ?? $_POST['id'];
 
-			if ($this->model::delete($id)) {
-				$this->exitWith("ok");
-			}
+		if ($this->model::delete($id)) {
+			$this->exitWith("ok");
+		}
 
 		header('Location:/adminsc/post/list');
 	}
@@ -260,5 +229,46 @@ class PostController Extends AppController
 			}
 		}
 	}
+
+
+
+//	private function getSelectCheifs($array)
+//	{
+//		return CustomSelect::run([
+//			'className' => 'type1',
+//			'field' => 'cheif',
+//			'tab' => '.',
+//			'fieldName' => 'name',
+//			'initialOption' => true,
+//			'initialOptionValue' => '--',
+//			'tree' => $array,
+//		]);
+//	}
+
+//	private function getSelectSubordinate($array)
+//	{
+//		return CustomSelect::run([
+//			'className' => 'type1',
+////			'title'=> 'cheif',
+//			'field' => 'subordinate',
+//			'fieldName' => 'name',
+//			'tab' => '.',
+//			'initialOption' => true,
+//			'initialOptionValue' => '--',
+//			'tree' => $array,
+//		]);
+//	}
+
+//	private function getMultiselectSubordinate($array)
+//	{
+//		return CustomMultiSelect::run([
+//			'field' => 'subordinate',
+//			'className' => 'type1',
+//			'tab' => '.',
+////			'initialOption' => true,
+////			'initialOptionValue' => '--',
+//			'tree' => $array,
+//		]);
+//	}
 
 }

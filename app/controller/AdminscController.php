@@ -15,19 +15,19 @@ class AdminscController extends AppController
 		parent::__construct($route);
 		$this->autorize();
 		$this->layout = 'admin';
-		if (User::can($this->user, ['role_employee'])) {
-			View::setJs('admin.js');
-			View::setCss('admin.css');
-		} else {
+//		if (User::can($this->user, ['role_employee'])) {
+//			View::setJs('admin.js');
+//			View::setCss('admin.css');
+//		} else {
 			header('Location:/auth/profile');
-		}
+//		}
 	}
 
-	public function actionProfile()
-	{
-		View::setJs('auth.js');
-		View::setCss('auth.css');
-	}
+//	public function actionProfile()
+//	{
+//		View::setJs('auth.js');
+//		View::setCss('auth.css');
+//	}
 
 	public function actionClearCache()
 	{

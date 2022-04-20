@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\core\App;
 use app\model\Answer;
+use app\model\Image;
 
 class ImageController Extends AppController
 {
@@ -57,14 +58,14 @@ class ImageController Extends AppController
 			$field = 'hash';
 			$val = $img['hash'];
 
-			$found = App::$app->image->firstOrCreate($field, $val, $img);
+			$found = Image::firstOrCreate($field, $val, $img);
 			if (is_array($found)) {
 				$id = $found[0]['id'];
 			} else {
-				$id = App::$app->image->autoincrement() - 1;
+				$id = Image::autoincrement() - 1;
 				$this->move_uploaded_file($file['name'], $img['path'], $file['tmp_name']);
 			}
-			App::$app->image->morphOne($type, $typeId, $id);
+			Image::morphOne($type, $typeId, $id);
 
 			exit(json_encode([
 				'msg' => 'ok',

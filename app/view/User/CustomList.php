@@ -2,7 +2,7 @@
 
 use app\view\components\CustomList\CustomList;
 
-ob_start();
+
 $t = new CustomList(
 	[
 		'models' => $users,

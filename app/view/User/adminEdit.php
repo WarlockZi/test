@@ -113,9 +113,11 @@
 			</div>
 
 			<div class="separator btns">
-				<div class="button" id="user-update-btn">Сохранить</div>
-				<div class="button" id="user-create-btn">Добавить пользователя</div>
 				<a href="/adminsc/user/list" class="button" >К списку пользователей</a>
+				<div class="button" id="user-update-btn">
+					<? include SAVE;?>
+				</div>
+				<div class="button add-model" id="user-create-btn">+</div>
 			</div>
 </div>
 

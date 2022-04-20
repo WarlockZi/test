@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\core\App;
 use app\model\Model;
 use app\model\Question;
 use app\model\Test;
@@ -108,7 +107,7 @@ class TestController extends AppController
   {
     if ($this->ajax) {
 
-      if ($id = App::$app->test->updateOrCreate($this->ajax['id'], $this->ajax)) {
+      if ($id = Test::updateOrCreate($this->ajax['id'], $this->ajax)) {
         $q_id = Question::create(['parent'=>$id-1]);
         exit(json_encode([
           'id' => $id,
@@ -140,7 +139,6 @@ class TestController extends AppController
       $testData = '';
       $page_name = 'Прохождение тестов';
       $this->set(compact('page_name'));
-
 
       $testId = isset($this->route['id'])?(int)$this->route['id']: 0 ;
       if ($testId) {
@@ -320,7 +318,7 @@ class TestController extends AppController
 
 	public function actionGetCorrectAnswers()
 	{
-		App::$app->test->getCorrectAnswers();
+		Test::getCorrectAnswers();
 	}
 
 }
