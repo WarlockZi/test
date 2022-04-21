@@ -45,14 +45,14 @@ class QuestionController Extends AppController
 			$question = $this->req['question'] ?? '';
 			$q_id = $this->req['question']['id'] ?? '';
 			$sort = $this->req['question']['sort'] ?? '';
-			$qId = Question::updateOrCreate($q_id, $question);
+			$qId = Question::updateOrCreate($question);
 			if ($qId === false) {
 				return;
 			} elseif (is_int($qId)) {
 				if ($answers) {
 					foreach ($answers as $answer) {
 						$answer['parent_question'] = $qId;
-						App::$app->answer->updateOrCreate($answer['id'], $answer);
+						Answer::updateOrCreate($answer);
 					}
 				}
 				exit(json_encode([
@@ -62,7 +62,7 @@ class QuestionController Extends AppController
 				]));
 			} elseif ($qId === true) {
 				foreach ($answers as $answer) {
-					Answer::updateOrCreate($answer['id'], $answer);
+					Answer::updateOrCreate($answer);
 				}
 				exit(json_encode([
 					'msg' => 'Вопросы и ответы сохранены']));
@@ -95,10 +95,10 @@ class QuestionController Extends AppController
 
 	public function actionUpdate()
 	{
-		App::$app->question->updateOrCreate($this->req['question']['id'], $this->req['question']);
+		Question::updateOrCreate($this->req['question']);
 
 		foreach ($this->req['answers'] as $answer) {
-			App::$app->answer->updateOrCreate($answer['id'], $answer);
+			Answer::updateOrCreate($answer);
 		}
 		exit(json_encode(['msg' => 'Saved']));
 	}

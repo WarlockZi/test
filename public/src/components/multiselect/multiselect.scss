@@ -1,10 +1,7 @@
 @import "../../var";
 
-select[custom-select][multiple] {
-  display: none;
-}
 
-.multiselect {
+[multi-select] {
   position: relative;
   display: flex;
   flex-flow: column;
@@ -117,8 +114,10 @@ select[custom-select][multiple] {
         }
       }
     }
+  }
 
-
+  select {
+    display: none;
   }
 
   .show {
