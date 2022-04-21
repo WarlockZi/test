@@ -65,6 +65,6 @@ async function send(email, password) {
   } else if (res.msg === 'employee') {
     window.location = '/adminsc'
   }else if (res.msg === 'user') {
-    window.location = '/auth/profile'
+    window.location = '/adminsc'
   }
 }

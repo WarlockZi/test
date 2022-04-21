@@ -90,7 +90,7 @@ class PostController Extends AppController
 
 	private function getItem($item, $chiefs, $subordinates)
 	{
-		return new CustomCatalogItem(
+		$item = new CustomCatalogItem(
 			[
 				'item' => $item,
 				'modelName' => $this->modelName,
@@ -144,6 +144,7 @@ class PostController Extends AppController
 				'saveBttn' => 'ajax',//'redirect'
 			]
 		);
+		return $item->html;
 	}
 
 	public function actionEdit()
@@ -156,17 +157,17 @@ class PostController Extends AppController
 		$id = $this->route['id'];
 		$post = $this->model::findOneWhere('id', $id);
 
-		$chiefs = $this->getMultiselectCheifs(Post::findAll(),$post['chief']);
-		$subordinates = $this->getMultiselectSubordinates(Post::findAll(),$post['subordinate']);
+		$chiefs = $this->getMultiselectCheifs(Post::findAll(), $post['chief']);
+		$subordinates = $this->getMultiselectSubordinates(Post::findAll(), $post['subordinate']);
 
-		$item = $this->getItem($post, $chiefs, $subordinates)->html;
+		$item = $this->getItem($post, $chiefs, $subordinates);
 		$this->set(compact('item'));
 
 		$this->view = 'edit';
 
 	}
 
-	private function getMultiselectCheifs($array,$selected)
+	private function getMultiselectCheifs($array, $selected)
 	{
 		return CustomMultiSelect::run([
 			'className' => 'type1',
@@ -180,7 +181,7 @@ class PostController Extends AppController
 		]);
 	}
 
-	private function getMultiselectSubordinates($array,$selected)
+	private function getMultiselectSubordinates($array, $selected)
 	{
 		return CustomMultiSelect::run([
 			'className' => 'type1',
@@ -219,15 +220,17 @@ class PostController Extends AppController
 	public function actionShow()
 	{
 	}
+
 	public function actionUpdateOrCreate()
 	{
 		if ($this->ajax) {
 //			if (User::can($this->user, 'post_update')) {
-				$this->model::updateorcreate($this->ajax);
-				$this->exitWith('ok');
+			$this->model::updateorcreate($this->ajax);
+			$this->exitWith('ok');
 //			}
 		}
 	}
+
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
