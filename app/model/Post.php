@@ -17,7 +17,7 @@ class Post extends Model
 	public static function cheifs($id)
 	{
 		$model = new static();
-		$cheifs = $model->morphTo('post', 'cheif', $id);
+		$cheifs = $model->morphTo('post', 'chief', $id);
 		return $cheifs;
 	}
 
@@ -31,8 +31,10 @@ class Post extends Model
 	public static function findOneWhere($field, $value)
 	{
 		$post = parent::findOneWhere($field, $value);
-		$post['chief'] = explode(',', $post['chief']);
-		$post['subordinate'] = explode(',', $post['subordinate']);
+		if ($post) {
+			$post['chief'] = explode(',', $post['chief']);
+			$post['subordinate'] = explode(',', $post['subordinate']);
+		}
 		return $post;
 	}
 

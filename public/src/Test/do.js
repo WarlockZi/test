@@ -51,7 +51,7 @@ export default function testDo() {
     let errorCnt = colorView(corrAnswers)
     let data = objToServer(errorCnt)
     let res = await post('/adminsc/testresult/cachePageSendEmail', data)
-    if (res) {
+    if (res==='ok') {
       $("#btnn")[0].href = location.href
       $("#btnn")[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО"
     }
