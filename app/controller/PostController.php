@@ -120,9 +120,9 @@ class PostController Extends AppController
 						'contenteditable' => 'contenteditable',
 						'data-type' => 'string',
 					],
-					'cheif' => [
-						'className' => 'cheif',
-						'field' => 'cheif',
+					'chief' => [
+						'className' => 'chief',
+						'field' => 'chief',
 						'name' => 'Подчиняется',
 						'width' => '1fr',
 						'contenteditable' => false,
@@ -156,11 +156,14 @@ class PostController Extends AppController
 
 		$id = $this->route['id'];
 		$post = $this->model::findOneWhere('id', $id);
+		if (!$post) {
+			$item = 'Элемент отсутствует';
+		} else {
+			$chiefs = $this->getMultiselectCheifs(Post::findAll(), $post['chief']);
+			$subordinates = $this->getMultiselectSubordinates(Post::findAll(), $post['subordinate']);
+			$item = $this->getItem($post, $chiefs, $subordinates);
+		}
 
-		$chiefs = $this->getMultiselectCheifs(Post::findAll(), $post['chief']);
-		$subordinates = $this->getMultiselectSubordinates(Post::findAll(), $post['subordinate']);
-
-		$item = $this->getItem($post, $chiefs, $subordinates);
 		$this->set(compact('item'));
 
 		$this->view = 'edit';
@@ -171,7 +174,7 @@ class PostController Extends AppController
 	{
 		return CustomMultiSelect::run([
 			'className' => 'type1',
-			'field' => 'cheif',
+			'field' => 'chief',
 			'tab' => '.',
 			'fieldName' => 'name',
 			'initialOption' => true,
@@ -223,9 +226,10 @@ class PostController Extends AppController
 
 	public function actionUpdateOrCreate()
 	{
+//		return;
 		if ($this->ajax) {
 //			if (User::can($this->user, 'post_update')) {
-			$this->model::updateorcreate($this->ajax);
+			$this->model::updateorcreate($this->ajax['model']);
 			$this->exitWith('ok');
 //			}
 		}
@@ -247,7 +251,7 @@ class PostController Extends AppController
 //	{
 //		return CustomSelect::run([
 //			'className' => 'type1',
-//			'field' => 'cheif',
+//			'field' => 'chief',
 //			'tab' => '.',
 //			'fieldName' => 'name',
 //			'initialOption' => true,
@@ -260,7 +264,7 @@ class PostController Extends AppController
 //	{
 //		return CustomSelect::run([
 //			'className' => 'type1',
-////			'title'=> 'cheif',
+////			'title'=> 'chief',
 //			'field' => 'subordinate',
 //			'fieldName' => 'name',
 //			'tab' => '.',

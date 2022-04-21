@@ -156,9 +156,6 @@ class TestController extends AppController
         }
       }
       $this->set(compact('testData', 'pagination'));
-//    } else {
-//      header('Location:/');
-//    }
   }
 
   public function actionEdit()
@@ -256,9 +253,9 @@ class TestController extends AppController
             'contenteditable' => 'contenteditable',
             'data-type' => 'string',
           ],
-          'cheif' => [
-            'className' => 'cheif',
-            'field' => 'cheif',
+          'chief' => [
+            'className' => 'chief',
+            'field' => 'chief',
             'name' => 'Подчиняется',
             'width' => '1fr',
             'contenteditable' => false,

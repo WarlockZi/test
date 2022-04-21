@@ -93,12 +93,6 @@ class AuthController extends AppController
 	{
 		$this->autorize();
 
-//		$user = User::findOneWhere('id', $_SESSION['id']);
-//		$posts = Post::findAll();
-//		$multi = $this->getMultiselectPosts($posts, $user['post_id']);
-//		$item = $this->getItem($user, $multi);
-//		$this->set(compact('item'));
-
 		$user = User::findOneWhere('id', $_SESSION['id']);
 //		$posts = Post::findAll();
 //		$multi = $this->getMultiselectPosts($posts, $user['post_id']);

@@ -2,7 +2,6 @@
 
 namespace app\model;
 
-use app\core\App;
 use app\core\DB;
 use Engine\DI\DI;
 use mysql_xdevapi\Exception;
@@ -23,10 +22,15 @@ abstract class Model
 		$this->pdo = DB::instance();
 	}
 
-	protected function auth(): void
+	protected function auth($ext): void
 	{
 		$user = User::findOneWhere('id',$_SESSION['id']);
 		$this->user = $user;
+		$rightName = $this->model . '_'.$ext;
+
+		if (!User::can($this->user, $rightName)) {
+			throw new Exception('Нет права ' . $rightName);
+		}
 	}
 
 //	public static function with($child = ""):void
@@ -41,7 +45,7 @@ abstract class Model
 	public static function create($values = [])
 	{
 		$model = new static();
-		$model->auth();
+		$model->auth('create');
 
 		if (isset($values['id'])) unset($values['id']);
 		if (isset($values['token'])) unset($values['token']);
@@ -70,7 +74,7 @@ abstract class Model
 	public static function update($values = [])
 	{
 		$model = new static();
-		$model->auth();
+		$model->auth('update');
 
 		$id = $values['id'];
 		if (!$id) exit('empty or undefined id');
@@ -99,12 +103,8 @@ abstract class Model
 	public static function delete($id)
 	{
 		$model = new static();
-		$model->auth();
-		$rightName = $model->model . '_delete';
+		$model->auth('delete');
 
-		if (!User::can($model->user, $rightName)) {
-			throw new Exception('Нет права ' . $rightName);
-		}
 		$param = [$id];
 		$sql = "DELETE FROM {$model->table} WHERE  id = ?";
 		return $model->insertBySql($sql, $param);
@@ -163,7 +163,7 @@ abstract class Model
 	public function firstOrCreate($field, $val, $row)
 	{
 		$model = new static();
-		$model->auth();
+		$model->auth('create');
 
 		$found = $model::findOneWhere($field, $val);
 		if (!$found) {

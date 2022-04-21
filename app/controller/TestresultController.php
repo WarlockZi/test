@@ -70,8 +70,8 @@ class TestresultController extends AppController
 		$data['body'] = self::prepareBodyTestResults($post, $resid - 1);
 		$data['altBody'] = "Ссылка на страницу с результатами: тут";
 
-		Mail::send_mail($data);;
-		exit(json_encode('ok'));
+		$sent = Mail::send_mail($data);
+		exit('ok');
 	}
 
 	public function actionCachePageSendEmail()

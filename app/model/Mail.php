@@ -9,7 +9,7 @@ class Mail
 {
 	protected static function setMailer(){
 		$mail = new PHPMailer(true);
-    $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;
+//    $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;
 		$mail->isSMTP();
 		$mail->SMTPAuth = (bool)$_ENV['SMTP_AUTH'];
 		$mail->Port = (int)$_ENV['SMTP_PORT'];

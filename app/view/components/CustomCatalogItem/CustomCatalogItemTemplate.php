@@ -3,6 +3,7 @@
 	<div class="custom-catalog-item"
 	     data-table="<?= $this->tableClassName ?>"
 	     data-model="<?= $this->modelName ?>"
+	     data-id="<?= $this->item['id'] ?>"
 
 	>
 
