@@ -14,9 +14,9 @@ class UserProvider extends AbstractProvider
 
 	public function init()
 	{
-		if ($_SESSION['id']) {
-			$user = User::findAllWhere('id', $_SESSION['id']);
-			$this->di->set($this->serviceName, $user);
-		}
+//		if ($_SESSION['id']) {
+//			$user = User::findAllWhere('id', $_SESSION['id']);
+//			$this->di->set($this->serviceName, $user);
+//		}
 	}
 }

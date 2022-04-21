@@ -93,13 +93,18 @@ class AuthController extends AppController
 	{
 		$this->autorize();
 
+//		$user = User::findOneWhere('id', $_SESSION['id']);
+//		$posts = Post::findAll();
+//		$multi = $this->getMultiselectPosts($posts, $user['post_id']);
+//		$item = $this->getItem($user, $multi);
+//		$this->set(compact('item'));
+
 		$user = User::findOneWhere('id', $_SESSION['id']);
-		$posts = Post::findAll();
-		$multi = $this->getMultiselectPosts($posts, $user['post_id']);
-		$item = $this->getItem($user, $multi);
-
-
-		$this->set(compact('item'));
+//		$posts = Post::findAll();
+//		$multi = $this->getMultiselectPosts($posts, $user['post_id']);
+//		$item = $this->getItem($user, $multi);
+		$this->set(compact('user'));
+		$this->view = 'profile1';
 
 		if (User::can($this->user, 'role_employee'))
 		{
@@ -145,7 +150,7 @@ private function getItem($item, $posts)
 				'name' => [
 					'className' => 'name',
 //						'field' => 'name',
-					'name' => 'Наименование',
+					'name' => 'Имя',
 					'width' => '1fr',
 					'contenteditable' => 'contenteditable',
 					'data-type' => 'string',

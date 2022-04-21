@@ -5,7 +5,7 @@ $("#save").on("click", async function (e) {
     e.preventDefault()
 
     function sex() {
-      const s = $('[name="sex"]').el
+      const s = $('[name="sex"]')
       for (let f of s) {
         if (f.checked) {
           return f.value
