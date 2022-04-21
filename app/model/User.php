@@ -46,6 +46,7 @@ class User extends Model
 	{
 		if ($user = parent::findOneWhere($field, $value)) {
 			$user['rights'] = explode(',', $user['rights']);
+			$user['post_id'] = explode(',', $user['post_id']);
 		}
 		return $user??null;
 	}

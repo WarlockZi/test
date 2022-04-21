@@ -15,7 +15,7 @@
 					<? if (in_array($data['data-type'],['string','number'])): ?>
 				 <div class="value"
 							 <?= $data['contenteditable']; ?>
-							 <?= "data-field={$data['field']}"; ?>
+							 <?= "data-field={$fieldName}"; ?>
 				 >
 							 <?= $this->item[$fieldName] ?>
 				 </div>

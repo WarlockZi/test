@@ -3,7 +3,7 @@ import {$, post, popup} from '../../common';
 
 export default function list() {
   // debugger;
-  $('html').ready(function () {
+  // $('html').ready(function () {
 
     const tables = $('.custom-list__wrapper')
     if (tables) {
@@ -251,5 +251,5 @@ export default function list() {
 
       })
     }
-  })
+  // })
 }

@@ -29,9 +29,7 @@ class AppController extends Controller
 
 	public function setAuth($user)
 	{
-//		if (!isset($_SESSION['id']) || !$_SESSION['id']) {
 			$_SESSION['id'] = (int)$user['id'];
-//		}
 	}
 
 	public function preparePassword(String $password): String
@@ -59,7 +57,6 @@ class AppController extends Controller
 				if ($this->user['email'] === $_ENV['SU_EMAIL']) {
 					define('SU', true);
 				}
-//				$this->set(array('user'=>$this->user));
 			}
 		}
 	}

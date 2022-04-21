@@ -1,5 +1,5 @@
-<section>
+<section class="profile__wrapper">
 
-<?=$user;?>
+<?=$item;?>
 
 </section>
