@@ -4,6 +4,7 @@ namespace app\model;
 
 use app\core\App;
 use app\core\DB;
+use Engine\DI\DI;
 use mysql_xdevapi\Exception;
 
 abstract class Model
@@ -22,12 +23,10 @@ abstract class Model
 		$this->pdo = DB::instance();
 	}
 
-	protected function auth():void
+	protected function auth(): void
 	{
-			$sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
-			$user =$this->pdo->query($sql, [$_SESSION['id']])[0];
-			$user['rights']=explode(',',$user['rights']);
-			$this->user= $user;
+		$user = User::findOneWhere('id',$_SESSION['id']);
+		$this->user = $user;
 	}
 
 //	public static function with($child = ""):void
@@ -42,6 +41,7 @@ abstract class Model
 	public static function create($values = [])
 	{
 		$model = new static();
+		$model->auth();
 
 		if (isset($values['id'])) unset($values['id']);
 		if (isset($values['token'])) unset($values['token']);
@@ -69,6 +69,9 @@ abstract class Model
 
 	public static function update($values = [])
 	{
+		$model = new static();
+		$model->auth();
+
 		$id = $values['id'];
 		if (!$id) exit('empty or undefined id');
 		unset($values['id']);
@@ -97,10 +100,10 @@ abstract class Model
 	{
 		$model = new static();
 		$model->auth();
-		$rightName = $model->model.'_delete';
+		$rightName = $model->model . '_delete';
 
-		if (!User::can($model->user, $rightName)){
-			throw new Exception('Нет права '.$rightName);
+		if (!User::can($model->user, $rightName)) {
+			throw new Exception('Нет права ' . $rightName);
 		}
 		$param = [$id];
 		$sql = "DELETE FROM {$model->table} WHERE  id = ?";
@@ -149,9 +152,9 @@ abstract class Model
 		$res = $this->findBySql($sql, $param);
 		$arr = [];
 		foreach ($res as $item) {
-			$m = $this->findOneWhere('id',$item['type_id']);
+			$m = $this->findOneWhere('id', $item['type_id']);
 
-			$arr[]=$m ;
+			$arr[] = $m;
 		}
 		return $arr;
 	}
@@ -159,32 +162,36 @@ abstract class Model
 
 	public function firstOrCreate($field, $val, $row)
 	{
-		$found = App::$app->{$this->model}->findOneWhere($field, $val);
+		$model = new static();
+		$model->auth();
+
+		$found = $model::findOneWhere($field, $val);
 		if (!$found) {
-			App::$app->{$this->model}->create($row);
+			$model::create($row);
 			return true;
 		}
 		return $found;
 	}
 
 
+	public static function updateOrCreate($values)
+	{
+		$model = new static();
+		$id = $values['id']??'';
+		if ($id) {
+			$model::update($values);
+			return true;
+		} else {
+			$autoincrement = $model::create($values) - 1;
+			return $autoincrement;
+		}
+	}
+
 	protected function find($id = [])
 	{
 		$id = implode(',', array_map('intval', $id));
 		$sql = "SELECT * FROM {$this->table} WHERE id IN (?)";
 		return $this->pdo->query($sql, [$id]);
-	}
-
-	public static function updateOrCreate($id, $values)
-	{
-		$model = new static();
-		if ($model->find([$id])) {
-			$model->update($values);
-			return true;
-		} else {
-			$autoincrement = $model->create($values) - 1;
-			return $autoincrement;
-		}
 	}
 
 
@@ -202,14 +209,14 @@ abstract class Model
 
 		$str = "{$filds[0]}='{$params[0]}'";
 		array_shift($array);
-		foreach ($array as $k=>$v) {
-			$s = $k."='".$v."'";
-			$str .= " AND ".$s;
+		foreach ($array as $k => $v) {
+			$s = $k . "='" . $v . "'";
+			$str .= " AND " . $s;
 		}
 		return $str;
 	}
 
-	public static function findAllWhere($fieldOrArray, $value='')
+	public static function findAllWhere($fieldOrArray, $value = '')
 	{
 		$model = new static();
 
@@ -237,6 +244,7 @@ abstract class Model
 		$model->items = $model->pdo->query($sql, [$value]);
 		return $model;
 	}
+
 	public function findBySql($sql, $params = [])
 	{
 		return $this->pdo->query($sql, $params);

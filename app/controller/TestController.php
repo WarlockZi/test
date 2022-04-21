@@ -107,7 +107,7 @@ class TestController extends AppController
   {
     if ($this->ajax) {
 
-      if ($id = Test::updateOrCreate($this->ajax['id'], $this->ajax)) {
+      if ($id = Test::updateOrCreate($this->ajax)) {
         $q_id = Question::create(['parent'=>$id-1]);
         exit(json_encode([
           'id' => $id,

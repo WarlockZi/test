@@ -71,22 +71,18 @@ export default function testDo() {
 
 
   function colorView(correctAnswers) {
-    let q = $('.question')
-    Array.from(q).map((question, i) => {
-      let answers = question.querySelectorAll('.a'),
-        errors = []
-      Array.from(answers).map((answer) => {
-        let input = answer.getElementsByTagName('input')[0],
-          answerId = input.id.replace("answer-", ""), // id question
-          label = answer.getElementsByTagName('label')[0], // Чтобы прикрепить зеленый значек к этому элементу
-          correctAnser = correctAnswers.indexOf(answerId) !== -1
-        if (!checkCorrectAnswers(correctAnser, input, label)) {
-          errors.push(true)
-        }
+    let q = $('.question');
+    [].map.call(q, function (question) {
+      let answers = question.querySelectorAll('.a')
+      let errors = [];
+      [].map.call(answers, function (answer) {
+        let input = $(answer).find('input')
+        let id = answer.dataset.id
+        checkCorrectAnswers(errors, id, correctAnswers, input, answer)
       })
 
-      let questId = +question.dataset['id'], // id question
-        paginItem = $('.pagination [data-pagination="' + questId + '"]')[0]
+      let id = question.dataset['id'] // id question
+      let paginItem = $(`.pagination [data-pagination='${+id}']`)[0]
       if (errors.length) {
         $(paginItem).addClass('redShadow')
       } else {
@@ -96,18 +92,17 @@ export default function testDo() {
     return $('.redShadow').length
   }
 
-  function checkCorrectAnswers(correctAnser, input, label) {
+  function checkCorrectAnswers(errors, id, correctAnswers, input, answer) {
+    let correctAnser = correctAnswers.indexOf(id) !== -1
+
     if (input.checked && correctAnser) {// checkbox нажат. а в correct answer нету. в correct_answers есть, его всегда подсвечиваем зеленым
-      label.classList.add('done'); //green check зеленый значек
-      return true
+      answer.classList.add('done'); //green check зеленый значек
     } else if (input.checked && !correctAnser) {// checkbox нажат,и есть в correct answer. в correct_answers нет, кнопка не нажата
-      return false
+      errors.push(true)
     } else if (!input.checked && correctAnser) {// кнопка не нажата, в correct_answers есть
-      label.classList.add('done'); //green check зеленый значек
-      label.classList.add('done');// green check зеленый значек
-      return false
+      answer.classList.add('done'); //green check зеленый значек
+      errors.push(true)
     } else if (!input.checked && !correctAnser) {// кнопка не нажата, в correct_answers нет
-      return true
     }
   }
 

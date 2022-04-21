@@ -142,11 +142,6 @@ export let _question = {
       let clone = _question.cloneEmptyModel()
 
       let model = _question.viewModel(clone)
-      // $(model.save).on('click', _question.save)
-      // $(model.del).on('click', _question.delete)
-      // $(model.text).on('click', _question.showAnswers)
-      // $(model.createAnswerButton).on('click', _answer.create)
-
       model.sort.innerText = _question.lastSort()
       model.text.innerText = ''
       model.el.id = q_id

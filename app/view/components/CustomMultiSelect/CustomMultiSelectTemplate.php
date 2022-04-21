@@ -1,6 +1,9 @@
-<div class="multiselect"
-     tabindex="0"
+<div multi-select
+<?= $model->className ? "class='{$model->className}'" :""; ?>"
      data-field="<?= $model->field; ?>"
+	<?= $model->title ? "title='{$model->title}'" : ''; ?>
+     tabindex="0"
+
 >
 	<div class="wrap">
 		<div class="chip-wrap">
@@ -18,21 +21,25 @@
 				<? include ICONS . '/ArrowDropDownIcon.svg' ?>
 		</div>
 
-		<select
-				multiple="true"
-				custom-select
-				data-field="<?= $model->field; ?>"
-				<?= $model->title ? "title='{$model->title}'" : ''; ?>
-				<?= $model->className ? "class={$model->className}" : ''; ?>
-		>
+		<ul>
+			<li class="inner">
+					 <? foreach ($model->tree as $k => $v): ?>
+				  <label for="<?= $v[$model->fieldName] ?>"
+				         data-id="<?= $v['id']; ?>"
+								<?= in_array($v['id'], $model->selected)
+									? "class='selected'" : ''; ?>
+				  ><?= $v[$model->fieldName] ?></label>
+					 <? endforeach; ?>
+			</li>
+		</ul>
+
+		<select multiple="true" >
 
 				<? foreach ($model->tree as $k => $v): ?>
-
 			  <option
 					  value="<?= $v['id'] ?>"
 						 <?= in_array($v['id'], $model->selected) ? 'selected' : ''; ?>
-			  >
-						 <?= $v[$model->fieldName] ?>
+			  ><?= $v[$model->fieldName] ?>
 			  </option>
 					<? $level = 0; ?>
 					<? if (isset($v['childs'])): ?>
@@ -45,18 +52,4 @@
 		</select>
 
 	</div>
-
-	<ul>
-		<li class="inner">
-				<? foreach ($model->tree as $k => $v): ?>
-			  <label for="<?= $v[$model->fieldName] ?>"
-			         data-id="<?= $v['id']; ?>"
-						 <?= in_array($v['id'], $model->selected)
-							 ? "class='selected'" : ''; ?>
-			  ><?= $v[$model->fieldName] ?></label>
-				<? endforeach; ?>
-		</li>
-	</ul>
-
-
 </div>

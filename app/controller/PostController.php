@@ -219,7 +219,15 @@ class PostController Extends AppController
 	public function actionShow()
 	{
 	}
-
+	public function actionUpdateOrCreate()
+	{
+		if ($this->ajax) {
+//			if (User::can($this->user, 'post_update')) {
+				$this->model::updateorcreate($this->ajax);
+				$this->exitWith('ok');
+//			}
+		}
+	}
 	public function actionUpdate()
 	{
 		if ($this->ajax) {

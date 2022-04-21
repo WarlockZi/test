@@ -51,7 +51,9 @@
 								<? if (is_array($answer) and $id_answer !== 'correct_answer'): ?>
 							</div>
 
-							<div class="a">
+							<div class="a"
+							     data-id = <?= $id_answer; ?>
+							>
 								<input type="checkbox" id="answer-<?= $id_answer ?>">
 								<label for="answer-<?= $id_answer ?>">
 								  <?= $answer['answer_text'] ?>

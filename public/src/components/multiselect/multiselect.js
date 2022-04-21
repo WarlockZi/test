@@ -3,10 +3,26 @@ import {$} from '../../common'
 
 export default function multiselect() {
 
-  let PHPmultiselect = $('.multiselect')
-  if (PHPmultiselect) {
+  function getSelected(){
+    if (multi){
+      let selected = [].map.call(multi, function (select) {
+        let chips = select.querySelectorAll('.chip-wrap');
+        let objs = [].map.call(chips, function (chip) {
+          return chip.dataset.id;
+        })
+        let obj = {}
+        obj.field =  select.dataset.field
+        obj.ids = objs
+        return obj
+      })
+    }
+    debugger
+  }
 
-    [].forEach.call(PHPmultiselect, function (select) {
+  let multi = $('[multi-select] ')
+  if (multi) {
+
+    [].forEach.call(multi, function (select) {
 
       select.addEventListener('click', handleClick, false)
       select.addEventListener('blur', handleBlur, false)
@@ -19,10 +35,11 @@ export default function multiselect() {
       }
 
       function handleClick({target}) {
+        let multi = target.closest('[multi-select]')
 // открыть выбор элементов
         if (target.closest('.wrap') && target.tagName.toLowerCase() === 'svg') {
-          let multiselect = target.closest('.multiselect')
-          let ul = multiselect.querySelector('ul')
+          // let multiselect = target.closest('[multi-select] ')
+          let ul = multi.querySelector('ul')
           ul.classList.toggle('show')
 
 // нажатие по крестику чипа
@@ -35,13 +52,13 @@ export default function multiselect() {
 // выбор элемента, проверка существования чипа и его добавление
         } else if (target.tagName.toLowerCase() === 'label') {
           let id = target.dataset.id;
-          let m = target.closest('.multiselect')
-          let chips = m.querySelectorAll('.chip');
+          // let m = target.closest('[multi-select] ')
+          let chips = multi.querySelectorAll('.chip');
           let exist = [].some.call(chips, (chip) => {
             return chip.dataset.id === id
           })
 
-          let wrap = $(m).find('.chip-wrap')
+          let wrap = $(multi).find('.chip-wrap')
           if (!exist) {
             target.classList.toggle('selected')
             let chip = createChip(id)
@@ -52,7 +69,7 @@ export default function multiselect() {
           }
         }
         function toggleBackground(id) {
-          let multi = target.closest('.multiselect')
+          // let multi = target.closest('[multi-select] ')
           $(multi).find(`label[data-id='${id}']`).classList.remove('selected')
         }
 
