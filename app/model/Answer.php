@@ -10,6 +10,7 @@ class Answer extends Model
 {
 	protected $table = 'answer';
 	protected $model = 'answer';
+
 	protected $fillable = [
 		'parent_question'=>null,
 		'answer'=>'',

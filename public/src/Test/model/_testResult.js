@@ -10,18 +10,16 @@ export const _testResult = {
     }
   },
 
-  delDom: ({target}) => {
-    let id = target.closest('.del').dataset['row'];
+  delDom: (id) => {
     [].map.call($(`[data-row = "${id}"]`), function (i) {
         i.remove()
       }
     )
-    return id
   },
 
-  delete: (e) => {
+  delete: (id) => {
     if (confirm("Удалить результат теста?")) {
-      let id = _testResult.delDom(e)
+      _testResult.delDom(id)
       _testResult.delServer(id)
     }
   },

@@ -26,6 +26,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow: hidden;
+  user-select: none;
 
   @include _500 {
     padding: 0;

@@ -1,9 +1,6 @@
 @import "../../mixin_media";
 
 @mixin mobile-menu {
-  * {
-  user-select: none;
-  }
 
   .mobile-menu {
     position: absolute;

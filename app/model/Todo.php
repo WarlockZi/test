@@ -6,6 +6,7 @@ class Todo extends Model
 {
 
 	protected $table = 'todos';
+	protected $model = 'todo';
 
 	protected $fillable = [
 		'name' => 'Название',

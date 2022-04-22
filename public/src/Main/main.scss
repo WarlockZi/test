@@ -9,6 +9,23 @@
 }
 
 
+.cart{
+  margin: 40px  auto;
+}
+
+.about {
+  max-width: 800px;
+  margin: 40px auto;
+
+  ol li {
+  list-style: circle;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+}
+
 main {
   display: flex;
   flex: 1 0 auto;
@@ -43,7 +60,6 @@ main {
     background-position: center right;
     background-size: cover;
   }
-
 
 
   .banner__container {
@@ -167,7 +183,6 @@ main {
     }
 
 
-
   }
 
 }
@@ -212,7 +227,7 @@ main {
       font-weight: 600;
       height: 300px;
       color: $color-title;
-      @include _600{
+      @include _600 {
         padding: 17px;
       }
     }
@@ -291,7 +306,7 @@ main {
     flex-flow: column;
     align-items: start;
     padding-left: 160px;
-    @include _600{
+    @include _600 {
       padding: 72px;
     }
 
