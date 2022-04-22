@@ -20,13 +20,11 @@ import catalogItem from '@components/catalog-item/catalog-item'
 
 $(document).ready(function () {
   navigate(window.location.pathname)
-// debugger
 
   list()
   multiselect()
   catalogItem()
 
-  // debugger
   testEdit()
 
   function navigate(str) {
@@ -41,7 +39,6 @@ $(document).ready(function () {
         break;
 
       case /\/adminsc\/testresult\/results/.test(str):
-        // debugger
         testResults()
         $("[href='/adminsc/test/results']").addClass('current')
         break;
