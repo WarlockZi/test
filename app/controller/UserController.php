@@ -57,13 +57,9 @@ class UserController extends AppController
 			}
 
 			$rights = Right::findAll();
-			var_dump($rights);
+//			var_dump($rights);
 			$this->set(compact('rights'));
 		}
-//		else {
-//			$this->layout = 'vitex';
-//			$this->view = 'edit';
-//		}
 		if ($user = $this->ajax) {
 			$user['id'] = $_SESSION['id'];
 			User::update($user);
