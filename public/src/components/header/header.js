@@ -1,7 +1,7 @@
 import {$} from '../../common'
 import './header.scss'
 
-debugger
+// debugger
 let gumburger = $('.gamburger')[0]
 if (gumburger) {
   let mobileMenu = $('.gamburger').on('click', mobile)

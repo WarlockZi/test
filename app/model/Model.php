@@ -4,7 +4,7 @@ namespace app\model;
 
 use app\core\DB;
 use Engine\DI\DI;
-use mysql_xdevapi\Exception;
+
 
 abstract class Model
 {
@@ -29,7 +29,7 @@ abstract class Model
 		$rightName = $this->model . '_'.$ext;
 
 		if (!User::can($this->user, $rightName)) {
-			throw new Exception('Нет права ' . $rightName);
+			throw new \Exception('Нет права ' . $rightName);
 		}
 	}
 

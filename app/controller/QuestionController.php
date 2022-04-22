@@ -5,7 +5,7 @@ namespace app\controller;
 use app\core\App;
 use app\model\Answer;
 use app\model\Question;
-use mysql_xdevapi\Exception;
+
 
 class QuestionController Extends AppController
 {
