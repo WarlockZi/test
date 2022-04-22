@@ -6,6 +6,7 @@ namespace app\model;
 class TestResult extends Model
 {
 	public $table = 'testResults';
+	public $model = 'testResult';
 
 	protected $fillable = [
 		'html'=>'',

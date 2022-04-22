@@ -18,7 +18,7 @@
 			  CRM
 		  </label>
 		  <ul>
-			  <a class="neon" href="/adminsc/crm/orders">Заказы</a>
+			  <a class="neon" href="/adminsc/order/list">Заказы</a>
 			  <a class="neon" href="/adminsc/user/list">Пользователи</a>
 			  <a class="neon" href="/adminsc/crm">crm</a>
 		  </ul>

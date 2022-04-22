@@ -10,6 +10,7 @@ class Planning extends Model
 {
 	protected $table = 'planning';
 	protected $model = 'planning';
+
 	protected $fillable = [
 		'employee'=>null,
 		'plan'=>'',

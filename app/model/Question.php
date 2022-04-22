@@ -9,6 +9,7 @@ use app\model\Model;
 class Question extends Model
 {
 	public $table = 'question';
+	public $model = 'question';
 
 	protected $fillable = [
 		'qustion'=>'',

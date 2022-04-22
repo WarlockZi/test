@@ -56,7 +56,9 @@ class AdminscController extends AppController
 	}
 
 
+	public function createSiteMap() {
 
+	}
 	public function actionDumpSQL()
 	{
 	}

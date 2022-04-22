@@ -56,7 +56,8 @@ class UserController extends AppController
 				$this->set(compact('user'));
 			}
 
-			$rights = Right::findAll();;
+			$rights = Right::findAll();
+			var_dump($rights);
 			$this->set(compact('rights'));
 		}
 //		else {

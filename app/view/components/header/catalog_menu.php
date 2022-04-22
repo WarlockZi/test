@@ -62,7 +62,7 @@
 		<div class='h-cat'>Акции
 			<ul>
 				<li>
-					<a href="/rasprodazha">распродажа</a>
+					Акций нет. Но скоро будут
 				</li>
 
 			</ul>
@@ -86,7 +86,7 @@
 			<div class="mobile-menu">
 				<div class="mobile-menu__wrap">
 					<a class="mobile-menu__item" href="/about/contacts">Контакты</a>
-					<a class="mobile-menu__item">О компании</a>
+					<a href="/main/about" class="mobile-menu__item">О компании</a>
 
 					<hr>
 					<a class="mobile-menu__item">Акции</a>
