@@ -8,7 +8,7 @@ export default function user() {
   }
 
   async function handleClick({target}) {
-    if (!!target.closest('.save')) {
+    if (!!target.closest('#save')) {
 
       let wrapper = $('.user-item')[0]
       let data = getModel(wrapper)

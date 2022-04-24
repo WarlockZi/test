@@ -27,12 +27,5 @@ $config['Mailer_openserver'] = [
 	'smtp_pass' => "LoopLoop35",
 ];
 
-$config['Mailer'] = [
-//	'smtp_pass' => "tExtile2002",
-	'smtp_pass' => "2021(Li)ya",
-	'smtp_host' => "ssl://smtp.yandex.ru",
-	'from_name' => 'Виталий Викторович', // from (от) имя
-	'from_email' => 'vvoronik@yandex.ru', // from (от) email адрес
-];
 
 return $config;

@@ -37,20 +37,24 @@ $(".reg").on("click", async function () {
           return false
         }
       }
-      let res = await send(email,password)
+      let data = getData(email,password)
+      let res = await send(data)
     }
   }
 )
 
 
-async function send(email,password) {
-  let data = {
+function getData(email,password) {
+ return  {
     "email": email,
     "password": password,
     "surName": $("[name='surName']")[0].value,
     "name": $("[name='name']")[0].value,
-    "token": $('meta[name="token"]')[0].getAttribute('content'),
+    // "token": $('meta[name="token"]')[0].getAttribute('content'),
   }
+}
+async function send(data) {
+
   let res = await post('/auth/register', data)
   let msg = $('.message')
 

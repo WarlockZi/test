@@ -26,9 +26,6 @@ class AdminscController extends AppController
 		}
 	}
 
-//	public function actionProfile()
-//	{
-//	}
 
 	public function actionClearCache()
 	{

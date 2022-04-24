@@ -28,7 +28,7 @@ $(document).ready(function () {
   testEdit()
 
   function navigate(str) {
-    // debugger
+    debugger
     switch (true) {
       case /\/adminsc\/settings/.test(str):
       case /\/adminsc\/right\/list/.test(str):
@@ -43,7 +43,7 @@ $(document).ready(function () {
         $("[href='/adminsc/test/results']").addClass('current')
         break;
 
-      case /\/adminsc\/user/.test(str):
+      case /\/adminsc\/auth/.test(str):
         user()
         break;
 

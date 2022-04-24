@@ -2,6 +2,7 @@
 
 namespace app\model;
 
+use Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
@@ -11,6 +12,13 @@ class Mail
 		$mail = new PHPMailer(true);
 //    $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;
 		$mail->isSMTP();
+    $mail->SMTPOptions = array(
+      'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+      )
+    );
 		$mail->SMTPAuth = (bool)$_ENV['SMTP_AUTH'];
 		$mail->Port = (int)$_ENV['SMTP_PORT'];
 		$mail->Username = $_ENV['SMTP_USERNAME'];
@@ -29,6 +37,7 @@ class Mail
 			foreach ($data['to'] as $address) {
 				$mail->addAddress($address);
 			}
+//				$mail->addAddress('vvoronik@yandex.ru');
 			$mail->addCustomHeader("List-Unsubscribe","<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$address}>");
 			$mail->isHTML(true);
 			$mail->Subject = $data['subject']??'';

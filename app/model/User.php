@@ -16,7 +16,9 @@ class User extends Model
 
 	protected $fillable = [
 		'name' => '',
+		'email' => '',
 		'confirm' => '0',
+		'rights' => '',
 		'password' => 'gfasdf41(D{%',
 	];
 

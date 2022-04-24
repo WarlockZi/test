@@ -5,6 +5,8 @@
 
 		<div class='message'></div>
 
+<div class="profile__grid">
+
 		<div>emial</div>
 		<div class='email form-input'><?= $this->user['email'] ?></div>
 
@@ -35,6 +37,7 @@
 					type=radio id='female' class="form-input sex" placeholder="Пол" name="sex" value="f"/>
 			</label>
 		</div>
+</div>
 
 
 		<div class="form__button" id='save'>Сохранить</div>

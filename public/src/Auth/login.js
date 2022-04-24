@@ -15,8 +15,7 @@ function viewPassword(event) {
 
 $("#login").on('click', sendData)
 
-function sendData(e) {
-  e.preventDefault();
+function sendData() {
   let email = $('input[type = email]')[0].value
   let pass = $('input[name= password]')[0].value
   if (validateEmailLogin(email, pass)) send(email, pass)
@@ -65,6 +64,10 @@ async function send(email, password) {
   } else if (res.msg === 'employee') {
     window.location = '/adminsc'
   }else if (res.msg === 'user') {
-    window.location = '/adminsc'
+     window.location = '/auth/cabinet'
+  }else{
+    msg.innerText = res.msg
+    $(msg).addClass('error')
+    $(msg).removeClass('success')
   }
 }
