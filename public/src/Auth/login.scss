@@ -1,6 +1,5 @@
 @import "../var";
 
-
 [required]:before{
   content: 'ss';
   display: inline-block;
@@ -35,7 +34,7 @@
 //  flex-flow: column;
 //}
 
-section,
+
 main {
   flex: 1 0 auto;
 }

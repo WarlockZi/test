@@ -44,7 +44,8 @@ class AuthController extends AppController
 			$data['altBody'] = "Подтверждение почты: <a href = '{$href}'>нажать сюда</a>>";
 
 			try {
-				if (!User::create($user)) {
+			  $user['rights']='user_update';
+				if (!$id =User::create($user,'register')) {
 					exit('registration failed');
 				}
 				$sent = Mail::send_mail($data);
@@ -62,7 +63,12 @@ class AuthController extends AppController
 		$template = ob_get_clean();
 		return $template;
 	}
+  public function actionCabinet()
+  {
+    $this->auth();
 
+
+  }
 	public function actionLogout()
 	{
 		if (isset($_COOKIE[session_name()])) {  // session_name() - получаем название текущей сессии
@@ -81,7 +87,7 @@ class AuthController extends AppController
 			$user['confirm'] = "1";
 			if (User::update($user)) {
 				$this->setAuth($user);
-				header('Location:/auth/profile');
+				header('Location:auth/profile');
 				$this->exitWith('"Вы успешно подтвердили свой E-mail."');
 			}
 		}
@@ -224,8 +230,7 @@ function randomPassword()
 	return implode($pass); //turn the array into a string
 }
 
-public
-function actionReturnpass()
+public function actionReturnpass()
 {
 	if ($data = $this->ajax) {
 
@@ -252,29 +257,23 @@ function actionReturnpass()
 }
 
 
-public
-function actionLogin()
+public function actionLogin()
 {
 	if ($data = $this->ajax) {
 
 		$email = (string)$data['email'];
 		$password = (string)$data['password'];
 
-		if (!User::checkEmail($email)) {
-			$msg[] = "Неверный формат email";
-			$this->exitWith("Неверный формат email");
-		}
-
-		if (!User::checkPassword($password)) {
-			$msg[] = "Пароль не должен быть короче 6-ти символов";
-			$this->exitWith("Пароль не должен быть короче 6-ти символов");
-		}
+		if (!User::checkEmail($email)) $this->exitWith("Неверный формат email");
+		if (!User::checkPassword($password)) $this->exitWith("Пароль не должен быть короче 6-ти символов");
 
 		$user = User::findOneWhere("email", $email);
 
-		if (!$user) $this->exitWith('not_registered');
+		if (!$user) $this->exitWith('Пользователь не зарегистрирован');
+		if (!$user['confirm']) $this->exitWith('Перейдите по ссылке в отарвленном письме на зарегистрированную почту');
 		if ($user['password'] !== $this->preparePassword($password)) $this->exitWith('wrong pass');// Если данные правильные, запоминаем пользователя (в сессию)
 		$this->setAuth($user);
+		$this->user = $user;
 		if (User::can($user, 'role_employee')) {
 			$this->exitWith('employee');
 		} else {

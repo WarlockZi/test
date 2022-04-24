@@ -22,13 +22,15 @@ abstract class Model
 		$this->pdo = DB::instance();
 	}
 
-	protected function auth($ext): void
+	protected function auth($ext,$action=''): void
 	{
-		$user = User::findOneWhere('id',$_SESSION['id']);
+		$user = User::findOneWhere('id',$_SESSION['id']??null);
+		if (!$user){
+			throw new \Exception('Нет пользователя ');
+    }
 		$this->user = $user;
 		$rightName = $this->model . '_'.$ext;
-
-		if (!User::can($this->user, $rightName)) {
+    if(!User::can($this->user, $rightName)) {
 			throw new \Exception('Нет права ' . $rightName);
 		}
 	}
@@ -42,10 +44,10 @@ abstract class Model
 ////			$this->user= $user;
 //	}
 
-	public static function create($values = [])
+	public static function create($values = [],$register=false)
 	{
 		$model = new static();
-		$model->auth('create');
+		if (!$register) $model->auth('create');
 
 		if (isset($values['id'])) unset($values['id']);
 		if (isset($values['token'])) unset($values['token']);

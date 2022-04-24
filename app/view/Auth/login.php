@@ -1,7 +1,7 @@
 <main>
 
-	<form method="post" class="form-container">
-		<h1 class="form-title">Вход на сайт</h1>
+	<div class="auth" data-auth="login">
+		<h1 class="title">Вход на сайт</h1>
 		<div class='message'></div>
 
 		<? if (isset($_SESSION['msg'])): ?>
@@ -9,7 +9,7 @@
 				unset($_SESSION['msg']) ?></div>
 		<? endif; ?>
 
-		<input name="email" class="form-input" type="email" placeholder="E-mail"
+		<input type="email" placeholder="E-mail"
 		       value="<?= $_SESSION['reg']['email'] ?? ''; ?>"/>
 
 		<div class="pass">
@@ -17,17 +17,11 @@
 			       autocomplete="current-password"/>
 			<div class="password-control"></div>
 		</div>
-		<div class="form-input submit form__button " id="login">Войти</div>
+		<div class="submit__button" >Войти</div>
 
-		<input type="hidden" name="token" value= <?= $_SESSION['token'] ?? '' ?>>
-
-		<ul class="bottom">
-			<li>
-				<a class="register" href="/auth/register">Регистрация</a>
-			</li>
-			<li>
-				<a class="forgot" href="/auth/returnpass">Забыли пароль</a>
-			</li>
-		</ul>
-	</form>
+		<div class="bottom">
+				<a href="/auth/register">Регистрация</a>
+				<a href="/auth/returnpass">Забыли пароль</a>
+		</div>
+	</div>
 </main>
