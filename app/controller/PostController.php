@@ -29,123 +29,21 @@ class PostController Extends AppController
 	public function actionList()
 	{
 		$this->view = 'list';
-
 		$items = $this->model::findAll();
 		if (!$items) {
 			$id = Post::create();
 			$items = $this->model::findAll();
 		}
 
-		$table = $this->getTable($items)->html;
+		$table = $this->getList($items);
 		$this->set(compact('table'));
 	}
 
-	private function getTable($items)
+	private function getList($items)
 	{
-		return new CustomList(
-			[
-				'models' => $items,
-				'modelName' => $this->modelName,
-				'tableClassName' => $this->tableName,
-				'columns' => [
-					'id' => [
-						'className' => 'id',
-						'field' => 'id',
-						'name' => 'ID',
-						'width' => '50px',
-						'data-type' => 'number',
-						'sort' => true,
-						'search' => false,
-					],
-
-					'name' => [
-						'className' => 'name',
-						'field' => 'name',
-						'name' => 'Наименование',
-						'width' => '1fr',
-						'contenteditable' => 'contenteditable',
-						'data-type' => 'string',
-						'sort' => true,
-						'search' => true,
-					],
-					'full_name' => [
-						'className' => 'fullname',
-						'field' => 'full_name',
-						'name' => 'Полное наименование',
-						'width' => '1fr',
-						'contenteditable' => 'contenteditable',
-						'data-type' => 'string',
-						'sort' => true,
-						'search' => true,
-					],
-				],
-
-				'editCol' => true,
-//				'delCol' => false,
-				'delCol' => 'ajax',
-				'addButton' => 'ajax',//'redirect'
-			]
-		);
+		return include ROOT . '/app/view/Post/getList.php';
 	}
 
-	private function getItem($item, $chiefs, $subordinates)
-	{
-		$item = new CustomCatalogItem(
-			[
-				'item' => $item,
-				'modelName' => $this->modelName,
-				'tableClassName' => $this->tableName,
-				'fields' => [
-					'id' => [
-						'className' => 'id',
-						'field' => 'id',
-						'name' => 'ID',
-						'contenteditable' => '',
-						'width' => '50px',
-						'data-type' => 'number',
-					],
-					'name' => [
-						'className' => 'name',
-						'field' => 'name',
-						'name' => 'Наименование',
-						'width' => '1fr',
-						'contenteditable' => 'contenteditable',
-						'data-type' => 'string',
-					],
-					'full_name' => [
-						'className' => 'fullname',
-						'field' => 'full_name',
-						'name' => 'Полное наименование',
-						'width' => '1fr',
-						'contenteditable' => 'contenteditable',
-						'data-type' => 'string',
-					],
-					'chief' => [
-						'className' => 'chief',
-						'field' => 'chief',
-						'name' => 'Подчиняется',
-						'width' => '1fr',
-						'contenteditable' => false,
-						'data-type' => 'multiselect',
-						'select' => $chiefs,
-					],
-					'subourdinate' => [
-						'className' => 'fullname',
-						'field' => '$subordinate',
-						'name' => 'Управляет',
-						'width' => '1fr',
-						'data-type' => 'multiselect',
-						'select' => $subordinates,
-					],
-				],
-
-				'delBttn' => 'ajax',
-				'toListBttn' => true,
-				'saveBttn' => 'ajax',//'redirect'
-			]
-		);
-		return $item->html;
-	}
 
 	public function actionEdit()
 	{
@@ -163,39 +61,23 @@ class PostController Extends AppController
 			$subordinates = $this->getMultiselectSubordinates(Post::findAll(), $post['subordinate']);
 			$item = $this->getItem($post, $chiefs, $subordinates);
 		}
-
 		$this->set(compact('item'));
-
 		$this->view = 'edit';
-
 	}
 
-	private function getMultiselectCheifs($array, $selected)
+	private function getItem($item, $chiefs, $subordinates)
 	{
-		return CustomMultiSelect::run([
-			'className' => 'type1',
-			'field' => 'chief',
-			'tab' => '.',
-			'fieldName' => 'name',
-			'initialOption' => true,
-			'initialOptionValue' => '--',
-			'tree' => $array,
-			'selected' => $selected,
-		]);
+		return include ROOT . '/app/view/Post/getItem.php';
 	}
 
-	private function getMultiselectSubordinates($array, $selected)
+	protected function getMultiselectCheifs($array, $selected)
 	{
-		return CustomMultiSelect::run([
-			'className' => 'type1',
-			'field' => 'subordinate',
-			'tab' => '.',
-			'fieldName' => 'name',
-			'initialOption' => true,
-			'initialOptionValue' => '--',
-			'tree' => $array,
-			'selected' => $selected,
-		]);
+		return include ROOT . '/app/view/Post/getMultiselectCheifs.php';
+	}
+
+	protected function getMultiselectSubordinates($array, $selected)
+	{
+		return include ROOT . '/app/view/Post/getMultiselectCheifs.php';
 	}
 
 	public function actionCreate()
@@ -220,18 +102,11 @@ class PostController Extends AppController
 		header('Location:/adminsc/post/list');
 	}
 
-	public function actionShow()
-	{
-	}
-
 	public function actionUpdateOrCreate()
 	{
-//		return;
 		if ($this->ajax) {
-//			if (User::can($this->user, 'post_update')) {
 			$this->model::updateorcreate($this->ajax['model']);
 			$this->exitWith('ok');
-//			}
 		}
 	}
 
@@ -245,45 +120,9 @@ class PostController Extends AppController
 		}
 	}
 
+	public function actionShow()
+	{
+	}
 
-
-//	private function getSelectCheifs($array)
-//	{
-//		return CustomSelect::run([
-//			'className' => 'type1',
-//			'field' => 'chief',
-//			'tab' => '.',
-//			'fieldName' => 'name',
-//			'initialOption' => true,
-//			'initialOptionValue' => '--',
-//			'tree' => $array,
-//		]);
-//	}
-
-//	private function getSelectSubordinate($array)
-//	{
-//		return CustomSelect::run([
-//			'className' => 'type1',
-////			'title'=> 'chief',
-//			'field' => 'subordinate',
-//			'fieldName' => 'name',
-//			'tab' => '.',
-//			'initialOption' => true,
-//			'initialOptionValue' => '--',
-//			'tree' => $array,
-//		]);
-//	}
-
-//	private function getMultiselectSubordinate($array)
-//	{
-//		return CustomMultiSelect::run([
-//			'field' => 'subordinate',
-//			'className' => 'type1',
-//			'tab' => '.',
-////			'initialOption' => true,
-////			'initialOptionValue' => '--',
-//			'tree' => $array,
-//		]);
-//	}
 
 }

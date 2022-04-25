@@ -28,7 +28,7 @@ $(document).ready(function () {
   testEdit()
 
   function navigate(str) {
-    debugger
+    // debugger
     switch (true) {
       case /\/adminsc\/settings/.test(str):
       case /\/adminsc\/right\/list/.test(str):

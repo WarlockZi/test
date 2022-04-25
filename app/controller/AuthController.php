@@ -76,6 +76,7 @@ class AuthController extends AppController
 		}
 		unset($_SESSION);
 		header("Location: /");
+		exit();
 	}
 
 	public function actionConfirm()
@@ -119,7 +120,7 @@ class AuthController extends AppController
 
 	private function getMultiselectPosts($array, $selected=[])
 	{
-		return CustomMultiSelect::run([
+		return new CustomMultiSelect([
 			'className' => 'type1',
 			'field' => 'post_id',
 			'tab' => '.',
@@ -270,8 +271,8 @@ public function actionLogin()
 		$user = User::findOneWhere("email", $email);
 
 		if (!$user) $this->exitWith('Пользователь не зарегистрирован');
-		if (!$user['confirm']) $this->exitWith('Перейдите по ссылке в отарвленном письме на зарегистрированную почту');
-		if ($user['password'] !== $this->preparePassword($password)) $this->exitWith('wrong pass');// Если данные правильные, запоминаем пользователя (в сессию)
+		if (!$user['confirm']) $this->exitWith('Зайдите на почту чтобы подтвердить регистрацию');
+		if ($user['password'] !== $this->preparePassword($password)) $this->exitWith('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
 		$this->setAuth($user);
 		$this->user = $user;
 		if (User::can($user, 'role_employee')) {

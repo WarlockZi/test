@@ -1,4 +1,4 @@
-<section>
+<main>
 
 	<form class="form-container" action="/user/edit" method="post">
 		<div class="form-title">Редактировать профиль</div>
@@ -31,4 +31,8 @@
 		<a href="/auth/changepassword" class="form__button-secondary">Изменить пароль</a>
 	</form>
 
-</section>
+	<?=$item;?>
+
+
+
+</main>

@@ -1,23 +1,23 @@
 <select
   custom-select
-  data-field="<?= $model->field; ?>"
-  <?=$model->title?"title='{$model->title}'":'';?>
-  <?=$model->className?"class={$model->className}":'';?>
+  data-field="<?= $this->field; ?>"
+  <?=$this->title?"title='{$this->title}'":'';?>
+  <?=$this->className?"class={$this->className}":'';?>
 >
 
-	<? if ($model->initialOption): ?>
-	  <option value=""><?= $model->initialOptionValue; ?></option>
+	<? if ($this->initialOption): ?>
+	  <option value=""><?= $this->initialOptionValue; ?></option>
 	<? endif; ?>
 
-	<? foreach ($model->tree as $k => $v): ?>
+	<? foreach ($this->tree as $k => $v): ?>
 
 	  <option value="<?= $v['id']??$k; ?>"
-	  <?=(int)$model->selected==$k?'selected':'';?>>
-			 <?= $v[$model->fieldName]??$v ?>
+	  <?=(int)$this->selected==$k?'selected':'';?>>
+			 <?= $v[$this->fieldName]??$v ?>
 	  </option>
 		<? $level = 0; ?>
 		<? if (isset($v['childs'])): ?>
-			<?= $model->getChilds($v['childs'], $level); ?>
+			<?= $this->getChilds($v['childs'], $level); ?>
 		<? endif ?>
 
 	<? endforeach; ?>

@@ -13,12 +13,13 @@ class CustomMultiSelect
 	private $title = '';
 	private $fieldName = 'name';
 	private $selected = [];
-
+	public $html = '';
 	private $tpl = ROOT.'/app/view/components/CustomMultiSelect/tpl.php';
 
 	public function __construct($options)
 	{
 		$this->getOptions($options);
+		$this->run();
 	}
 
 	protected function getOptions($options)
@@ -47,13 +48,14 @@ class CustomMultiSelect
 	}
 
 
-	public static function run($options)
+	public function run()
 	{
-		$model = new self($options);
+//		$model = new self($options);
 		ob_start();
 		include ROOT . '/app/view/components/CustomMultiSelect/CustomMultiSelectTemplate.php';
-
-		return ob_get_clean();
+		$html = ob_get_clean();
+		$this->html = $html;
+//		return ;
 	}
 
 

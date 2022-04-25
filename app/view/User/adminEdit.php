@@ -114,14 +114,18 @@
 
 		<div class="separator btns">
 			<a href="/adminsc/user/list" class="button">К списку пользователей</a>
-			<div class="button save" >
+			<div class="button save">
 					 <? include SAVE; ?>
 			</div>
-			<div class="button add-model"">+</div>
+			<div class="button add-model"
+			">+
 		</div>
-
-
 	</div>
+
+
+</div>
+
+<?= $item; ?>
 
 
 </div>

@@ -192,7 +192,7 @@ class TestController extends AppController
 
   private function getEnableCustomSelect($tree, $selected)
   {
-    return CustomSelect::run([
+    return new CustomSelect([
       'selectClassName' => 'custom-select',
       'title' => 'Показывать пользователям',
       'field' => 'enable',
@@ -207,7 +207,7 @@ class TestController extends AppController
 
   private function getParentCustomSelect($tree, $selected)
   {
-    return CustomSelect::run([
+    return new CustomSelect([
       'selectClassName' => 'custom-select',
       'title' => 'Лежит в папке',
       'field' => 'parent',

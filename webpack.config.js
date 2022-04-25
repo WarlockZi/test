@@ -2,8 +2,10 @@
 const path = require("path");
 const src = path.resolve(__dirname, 'public/src')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const webpack = require("webpack");
 const isProduction = false;
+require('dotenv').config();
+const email = process.env.SU_EMAIL
 
 const config = {
 
@@ -41,6 +43,9 @@ const config = {
 
   plugins: [
     new MiniCssExtractPlugin(),
+    new webpack.DefinePlugin({
+      "process.env.SU_EMAIL": JSON.stringify(email)
+    })
   ],
 
   module: {
