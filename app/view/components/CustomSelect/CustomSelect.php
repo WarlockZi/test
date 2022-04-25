@@ -20,10 +20,12 @@ class CustomSelect
 	private $pathToTpl = ROOT.'/app/view/components/CustomSelect/';
 	private $tpl = 'tpl.php';
 	private $finalTpl;
+	public $html;
 
 	public function __construct($options)
 	{
 		$this->getOptions($options);
+		$this->run();
 	}
 
 	protected function getOptions($options)
@@ -53,12 +55,13 @@ class CustomSelect
 	}
 
 
-	public static function run($options)
+	public function run()
 	{
-		$model = new self($options);
+//		$model = new self();
 		ob_start();
 		include ROOT . '/app/view/components/CustomSelect/CustomSelectTemplate.php';
 		$t = ob_get_clean();
+		$this->html = $t;
 		return $t;
 	}
 

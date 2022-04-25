@@ -1,53 +1,44 @@
 import {post, $, validate} from '../common'
 
+let registerForm = $("[data-auth='register']")[0]
+if (registerForm) {
+  $(registerForm).on('click', sendData.bind(this))
+}
 
-$(".reg").on("click", async function () {
+let email = $('input[type = email]')[0]
+let password = $('input[name = password]')[0]
+let msg = $(".message")[0];
 
-    let email = $('input[type = email]')[0].value
-    let password = $('input[name = password]')[0].value
-    let msg = $(".message")[0];
-    if (!email || !password) {
-      msg.innerText = "Заполните email и пароль"
-      $(msg).addClass('error')
-      return false
-    }
-    if (email) {
-      if (!validate.email(email)) {
-        msg.innerText = "Неправильный формат почты"
-        $(msg).addClass('error')
-        return false
-      }
-      if (password) {
-        if (!validate.password(password)) {
-          msg.innerText = "Пароль может состоять из \n " +
-            "- больших латинских букв \n" +
-            "- маленьких латинских букв \n" +
-            "- цифр \n" +
-            "- должен содержать не менее 6 символов"
+function sendData() {
+  if (validateData()) parseRegisterResponse()
+}
 
-          $(msg).addClass('error')
-          return false
-        }
-      }
-      let data = getData(email,password)
-      let res = await send(data)
-    }
+function validateData() {
+  let error = validate.email(email.value)
+  if (error) {
+    msg.innerText = msg.innerText + error
+    $(msg).addClass('error')
+    return false
   }
-)
+  error = validate.password(pass.value)
+  if (error) {
+    msg.innerText = msg.innerText + error
+    $(msg).addClass('error')
+    return false
+  }
+  return true
+}
 
-
-function getData(email,password) {
- return  {
-    "email": email,
-    "password": password,
+async function parseRegisterResponse()
+{
+  let data = {
+    "email": email.value,
+    "password": password.value,
     "surName": $("[name='surName']")[0].value,
     "name": $("[name='name']")[0].value,
   }
-}
-async function send(data) {
 
   let res = await post('/auth/register', data)
-  let msg = $('.message')
 
   if (res === 'confirm') {
     msg.removeClass('error')
@@ -61,17 +52,16 @@ async function send(data) {
     msg[0].innerHTML = 'Эта почта уже зарегистрирована'
     msg.removeClass('success')
     msg.addClass('error')
-  } else if (res === 'empty password') {
-    msg[0].innerHTML = 'Зполните пароль'
-    msg.removeClass('success')
-    msg.addClass('error')
 
   } else {
     msg[0].innerHTML = res
     msg.removeClass('success')
     msg.addClass('error')
   }
+
 }
+
+
 
 
 

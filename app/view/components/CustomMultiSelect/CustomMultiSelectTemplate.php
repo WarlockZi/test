@@ -1,15 +1,15 @@
 <div multi-select
-<?= $model->className ? "class='{$model->className}'" :""; ?>"
-     data-field="<?= $model->field; ?>"
-	<?= $model->title ? "title='{$model->title}'" : ''; ?>
+<?= $this->className ? "class='{$this->className}'" :""; ?>"
+     data-field="<?= $this->field; ?>"
+	<?= $this->title ? "title='{$this->title}'" : ''; ?>
      tabindex="0"
 
 >
 	<div class="wrap">
 		<div class="chip-wrap">
-				<? foreach ($model->tree as $k => $v): ?>
-					<? if (in_array($v['id'], $model->selected)): ?>
-				  <div class="chip" data-id="<?= $v['id']; ?>"><?= $v[$model->fieldName] ?>
+				<? foreach ($this->tree as $k => $v): ?>
+					<? if (in_array($v['id'], $this->selected)): ?>
+				  <div class="chip" data-id="<?= $v['id']; ?>"><?= $v[$this->fieldName] ?>
 					  <div class="del">Х</div>
 				  </div>
 					<? endif; ?>
@@ -23,27 +23,27 @@
 
 		<ul>
 			<li class="inner">
-					 <? foreach ($model->tree as $k => $v): ?>
-				  <label for="<?= $v[$model->fieldName] ?>"
+					 <? foreach ($this->tree as $k => $v): ?>
+				  <label for="<?= $v[$this->fieldName] ?>"
 				         data-id="<?= $v['id']; ?>"
-								<?= in_array($v['id'], $model->selected)
+								<?= in_array($v['id'], $this->selected)
 									? "class='selected'" : ''; ?>
-				  ><?= $v[$model->fieldName] ?></label>
+				  ><?= $v[$this->fieldName] ?></label>
 					 <? endforeach; ?>
 			</li>
 		</ul>
 
 		<select multiple="true" >
 
-				<? foreach ($model->tree as $k => $v): ?>
+				<? foreach ($this->tree as $k => $v): ?>
 			  <option
 					  value="<?= $v['id'] ?>"
-						 <?= in_array($v['id'], $model->selected) ? 'selected' : ''; ?>
-			  ><?= $v[$model->fieldName] ?>
+						 <?= in_array($v['id'], $this->selected) ? 'selected' : ''; ?>
+			  ><?= $v[$this->fieldName] ?>
 			  </option>
 					<? $level = 0; ?>
 					<? if (isset($v['childs'])): ?>
-						<?= $model->getChilds($v['childs'], $level); ?>
+						<?= $this->getChilds($v['childs'], $level); ?>
 					<? endif ?>
 
 				<? endforeach; ?>

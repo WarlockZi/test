@@ -1,4 +1,5 @@
 import {$, popup, post} from '../../common'
+import getSex from '../../Auth/getSex'
 
 export default function user() {
 
@@ -40,15 +41,6 @@ export default function user() {
     return '0'
   }
 
-  function sex() {
-    const s = $('[name="sex"]')
-    for (let f of s) {
-      if (f.checked) {
-        return f.value
-      }
-    }
-    return 'm'
-  }
 
   function getModel(target) {
     return {
@@ -62,7 +54,7 @@ export default function user() {
       hired: $(target).find('#hired').innerText,
       fired: $(target).find('#fired').innerText,
       confirm: confirm(),
-      sex: sex(),
+      sex: getSex(),
       rights:rights()
     }
   }

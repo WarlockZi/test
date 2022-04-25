@@ -30,7 +30,7 @@ class UserController extends AppController
 		$users = User::findAll();
 		$this->set(compact('users'));
 
-		$users_table = include ROOT.'/app/view/User/CustomList.php';
+		$users_table = include ROOT . '/app/view/User/getList.php';
 		$this->set(compact('users_table'));
 	}
 
@@ -55,10 +55,13 @@ class UserController extends AppController
 				$user = User::findOneWhere('id', $this->route['id']);
 				$this->set(compact('user'));
 			}
-
 			$rights = Right::findAll();
-//			var_dump($rights);
 			$this->set(compact('rights'));
+
+			$item = $user;
+			$item = include ROOT . '/app/view/User/getItem.php';
+			$this->set(compact('item'));
+
 		}
 		if ($user = $this->ajax) {
 			$user['id'] = $_SESSION['id'];

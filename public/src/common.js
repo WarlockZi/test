@@ -33,13 +33,22 @@ let validate = {
   },
   email: (email) => {
     if (!email) return false
+    let text = "Неправильный формат почты"
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    let res = re.test(String(email).toLowerCase())
+    if (!res) return text
+    return false
   },
   password: (password) => {
     if (!password) return false
-    let re = /^[a-zA-Z\-0-9]{6,20}$/
-    return re.test(password)
+    let text = "Пароль может состоять из \n " +
+      "- Большие латинские бкувы \n" +
+      "- Маленькие латинские буквы \n" +
+      "- Цифры \n" +
+      "- Должен содержать не менее 6 символов"
+    let res = /^[a-zA-Z\-0-9]{6,20}$/.test(password)
+    if (!res) return text
+    return false
   }
 }
 
