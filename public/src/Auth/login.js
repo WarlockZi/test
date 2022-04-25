@@ -1,17 +1,7 @@
 import './login.scss'
 import {$, post, validate} from "../common";
 
-$('.password-control').on('click', viewPassword)
 
-function viewPassword(event) {
-  let input = event.target.parentNode.querySelector('input')
-  if (input.getAttribute('type') == 'password') {
-    input.setAttribute('type', 'text');
-  } else {
-    input.setAttribute('type', 'password');
-  }
-  event.target.classList.toggle('view')
-}
 
 $("#login").on('click', sendData)
 

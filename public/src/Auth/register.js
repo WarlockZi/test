@@ -1,13 +1,5 @@
 import {post, $, validate} from '../common'
 
-$(".forgot").on("click", async function () {
-    window.location.href = '/auth/returnpass'
-  }
-)
-$(".login").on("click", async function () {
-    window.location.href = '/auth/login'
-  }
-)
 
 $(".reg").on("click", async function () {
 
@@ -50,7 +42,6 @@ function getData(email,password) {
     "password": password,
     "surName": $("[name='surName']")[0].value,
     "name": $("[name='name']")[0].value,
-    // "token": $('meta[name="token"]')[0].getAttribute('content'),
   }
 }
 async function send(data) {
