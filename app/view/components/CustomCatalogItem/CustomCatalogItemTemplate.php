@@ -22,6 +22,9 @@
 				 </div>
 					<? elseif (in_array($data['data-type'],['select','multiselect'])): ?>
 						<?= $data['select']; ?>
+					<? elseif (in_array($data['data-type'],['radio'])): ?>
+						<?= $data['html']; ?>
+
 					<? endif; ?>
 
 		  </div>

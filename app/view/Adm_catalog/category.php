@@ -58,30 +58,6 @@
 					<?=$addCategoryButton?>
 				<? endif; ?>
 
-				<section id="content-tab1" class="admin-flex-table">
-					<? if ($category): ?>
-						<div class="row">
-							<strong>id :</strong>
-							<span id='id'><?= $category['id'] ?: ''; ?></span>
-						</div>
-						<div class="row">
-							<strong>Наименование :</strong>
-							<span contenteditable id='name'><?= $category['name'] ?: ''; ?></span>
-						</div>
-
-						<div class="row">
-							<strong>Описание :</strong>
-							<span contenteditable id='text'
-							      class="column"><?= htmlspecialchars($category['text'] ?: ''); ?></span>
-						</div>
-					<? else: ?>
-						<div class="row">
-							Такой категории пока что не существует!
-							<!--							<span id='id'>--><? //= $category['id'] ?: ''; ?><!--</span>-->
-						</div>
-					<? endif; ?>
-
-				</section>
 
 				<? ?>
 				<section id="content-tab2">
@@ -147,32 +123,6 @@
 
 						</div>
 
-					</div>
-
-
-				</section>
-
-				<section id="content-tab3" class="admin-flex-table">
-
-					<div class="row">
-						<strong>title :</strong>
-						<span contenteditable id='title'><?= $category['title'] ?: ''; ?></span>
-					</div>
-					<div class="row">
-						<strong>url :</strong>
-						<span contenteditable id='alias'><?= $category['alias'] ?: ''; ?></span>
-					</div>
-					<div class="row">
-						<strong>key words :</strong>
-						<span contenteditable id='keywords'><?= $category['keywords'] ?: ''; ?></span>
-					</div>
-					<div class="row">
-						<strong>description :</strong>
-						<span contenteditable id='description'><?= $category['description'] ?: ''; ?></span>
-					</div>
-					<div class="row">
-						<strong>семантическое ядро :</strong>
-						<span contenteditable id='core'><?= $category['core'] ?: ''; ?></span>
 					</div>
 
 

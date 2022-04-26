@@ -1,22 +1,55 @@
-.btnadd-user {
-  padding: 10px;
-}
-#users div[data-id] {
-  justify-content: flex-start;
-  align-items: flex-start;
+.user-rights-table{
+  display: flex;
+  flex-flow:column;
+  padding: 20px 10px;
+
+  .row{
+    display: flex;
+    padding: 5px 0;
+    border-bottom: 1px solid #fdfdfd;
+    &:last-child{
+      border-bottom:none;
+    }
+
+    &:hover{
+      background-color: #f2f2f2;
+    }
+
+    .name{
+      display: flex;
+      flex:0 0 150px;
+      justify-content: right;
+    }
+    .right{
+      display: flex;
+      flex:0 0 50px
+    }
+    .description{
+      display: flex;
+      flex:1 0 150px
+    }
+
+  }
 }
 
-#users div[data-id]:nth-child(odd) {
-  background-color: #f7f7f7;
-}
-//.confirm {
-//  text-align: center;
-//  width: 20px;
+//.btnadd-user {
+//  padding: 10px;
 //}
-.admin-content.btnadd-user,
-.admin-content.btnupdate-user {
-  width: 180px;
-  height: 27px;
-  margin: 24px;
-  justify-content: center;
-}
+//#users div[data-id] {
+//  justify-content: flex-start;
+//  align-items: flex-start;
+//}
+//
+//#users div[data-id]:nth-child(odd) {
+//  background-color: #f7f7f7;
+//}
+
+
+//.admin-content.btnadd-user,
+//.admin-content.btnupdate-user {
+//  width: 180px;
+//  height: 27px;
+//  margin: 24px;
+//  justify-content: center;
+//}
+

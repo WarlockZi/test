@@ -1,0 +1,16 @@
+@import "../../var";
+
+.custom-radio {
+  margin: $margin-form;
+  background: #fff;
+  padding: 6px 0;
+
+  label {
+  padding: 6px ;
+  }
+
+  label:hover {
+    background-color: #cccccc;
+  }
+
+}

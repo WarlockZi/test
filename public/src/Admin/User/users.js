@@ -1,3 +1,5 @@
+import './users.scss'
+
 import {$} from '../../common'
 import list from '../../components/list/list'
 

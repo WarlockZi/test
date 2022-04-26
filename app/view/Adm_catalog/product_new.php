@@ -90,50 +90,6 @@
             }
             ?>
 
-            <div class="admin-flex-table">
-                <? foreach ($category['props'] as $Pprop): ?>
-                 <div class="row category-properties">
-                     <? foreach ($props as $prop): ?>
-                        <? if ($Pprop == $prop['id']): ?>
-                         <strong><?= $prop['name'] ?></strong>
-
-                         <? if ($prop['type'] == 'string') : ?>
-                         <input data-type = 'text' data-id="<?= $prop['id']; ?>" contenteditable type="text">
-
-
-                         <? elseif ($prop['type'] == 'select'): ?>
-                            <? $val = explode(',', $prop['val']); ?>
-                            <select data-type = 'select' data-id="<?= $prop['id']; ?>">
-                              <option value=""></option>
-                              <? foreach ($val as $i => $p): ?>
-
-                                 <option value="<?= $i; ?>"><?= $p; ?></option>
-
-                              <? endforeach; ?>
-                            </select>
-
-
-                         <? elseif ($prop['type'] == 'multi'): ?>
-                            <? $val = explode(',', $prop['val']); ?>
-                            <select data-type = 'multi-select' data-id="<?= $prop['id']; ?>" multiple title = "для выбора нескольких значений зажмите 'CTRL'" name="" id="">
-                                <? foreach ($val as $i => $p): ?>
-                                   <? $multi = isset($product['props']) ? explode(',', $product['props'][$Pprop]) : []; ?>
-                                   <? if ($multi): ?>
-                                    <option value="<?= $i; ?>" <?= is_array($product['props']) && array_key_exists($Pprop, $product['props']) && (array_key_exists($i, $multi)) ? 'selected' : '' ?>><?= $p; ?></option>
-                                 <? else: ?>
-                                    <option value="<?= $i; ?>"><?= $p; ?></option>
-                                 <? endif; ?>
-                              <? endforeach; ?>
-                            </select>
-
-                         <? endif; ?>
-
-                      <? endif; ?>
-                   <? endforeach; ?>
-                 </div>
-              <? endforeach; ?>
-            </div>
-
 
             <div class="add-property row" >
 
@@ -145,29 +101,6 @@
         </section>
 
         <section id="content-tab3">
-
-          <div class="admin-flex-table">
-            <div class="row">
-              <strong>название вкладки :</strong>
-              <span contenteditable id = 'title'></span>
-            </div>
-            <div class = 'row'>
-              <strong>url :</strong>
-              <span contenteditable id = 'alias'></span>
-            </div>
-            <div class="row">
-              <strong>ключевые слова :</strong>
-              <span contenteditable id = 'keywords'></span>
-            </div>
-            <div class="row">
-              <strong>сниппет для поисковиков :</strong>
-              <span contenteditable id = 'description'></span>
-            </div>
-            <div class="row">
-              <strong>семантическое ядро :</strong>
-              <span contenteditable id = 'core'></span>
-            </div>
-          </div>
 
 
         </section>
