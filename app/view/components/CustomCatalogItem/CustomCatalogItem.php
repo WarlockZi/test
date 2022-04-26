@@ -16,7 +16,7 @@ class CustomCatalogItem
 	private $modelName = '';
 	private $tableClassName = '';
 
-	private $saveBttn = 'ajax';
+	private $saveBttn = false;
 	private $toListBttn = false;
 	private $delBttn = true;
 

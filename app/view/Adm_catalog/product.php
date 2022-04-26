@@ -163,30 +163,6 @@
 
 				<section id="content-tab3">
 
-					<div class="admin-flex-table">
-						<div class="row">
-							<strong>название вкладки :</strong>
-							<span contenteditable id='title'><?= $product['title'] ?: ''; ?></span>
-						</div>
-						<div class='row'>
-							<strong>url :</strong>
-							<span contenteditable id='alias'><?= $product['alias'] ?: ''; ?></span>
-						</div>
-						<div class="row">
-							<strong>ключевые слова :</strong>
-							<span contenteditable id='keywords'><?= $product['keywords'] ?: ''; ?></span>
-						</div>
-						<div class="row">
-							<strong>сниппет для поисковиков :</strong>
-							<span contenteditable id='description'><?= $product['description'] ?: ''; ?></span>
-						</div>
-						<div class="row">
-							<strong>семантическое ядро :</strong>
-							<span contenteditable id='core'><?= $product['core'] ?: ''; ?></span>
-						</div>
-					</div>
-
-
 				</section>
 
 				<section id="content-tab4">

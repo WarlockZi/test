@@ -50,13 +50,14 @@ class UserController extends AppController
 	{
 		$this->view = 'adminEdit';
 
-		if (User::can($this->user, ['role_employee']) ) {
+		if (User::can($this->user, ['role_employee'])) {
 			if (isset($this->route['id'])) {
 				$user = User::findOneWhere('id', $this->route['id']);
 				$this->set(compact('user'));
 			}
 			$rights = Right::findAll();
 			$this->set(compact('rights'));
+			if (!$user) return;
 
 			$item = $user;
 			$item = include ROOT . '/app/view/User/getItem.php';
@@ -72,7 +73,7 @@ class UserController extends AppController
 
 	public function actionCreate()
 	{
-		if ($user=$this->ajax) {
+		if ($user = $this->ajax) {
 			$user['password'] = $this->preparePassword('gfasdf41(D{%)');
 			if ($id = $this->model::create($this->ajax)) {
 				exit(json_encode([
@@ -102,7 +103,6 @@ class UserController extends AppController
 			exit('ok');
 		}
 	}
-
 
 
 }

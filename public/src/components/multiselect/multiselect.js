@@ -16,7 +16,7 @@ export default function multiselect() {
         return obj
       })
     }
-    debugger
+    // debugger
   }
 
   let multi = $('[multi-select] ')
@@ -37,7 +37,7 @@ export default function multiselect() {
       function handleClick({target}) {
         let multi = target.closest('[multi-select]')
 // открыть выбор элементов
-        if (target.closest('.wrap') && target.tagName.toLowerCase() === 'svg') {
+        if (target.closest('.arrow')||['chip-wrap'].includes(target.className))  {
           // let multiselect = target.closest('[multi-select] ')
           let ul = multi.querySelector('ul')
           ul.classList.toggle('show')

@@ -19,14 +19,14 @@
   /* Стили переключателей вкладок (табов) */
   & > label {
     display: inline-block;
-    margin: 0 0 -1px;
+    margin: 0 0 -2px;
     padding: 9px 7px;
-    font-weight: 600;
+    //font-weight: 600;
     text-align: center;
-    color: #959595;
+    color: #fff;
     border: 1px solid $color-gray4;
-    border-bottom: 1px solid #dddddd;
-    background: $color-gray4;
+    border-bottom: none;
+    background: $color-admin-sidebar;
     border-radius: 3px 3px 0 0;
 
     @include _400 {
@@ -51,8 +51,8 @@
   & > input:checked + label {
     color: #555;
     border-top: 2px solid $color-main;
-    border-bottom: 1px solid #f1f1f1;
-    background-color: #f1f1f1;
+    border-bottom: 1px solid $color-gray3;
+    background-color: $color-gray3;
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
   }
@@ -66,7 +66,7 @@
     flex-direction: column;
     padding: 15px;
     min-height: 100px;
-    background-color: #f3f3f3;
+    background-color: $color-gray3;
   }
 
   #content-tab1 strong {

@@ -1,15 +1,16 @@
 @import "components/sub-menu/adm-menu";
-@import "components/breadcrumbs";
+//@import "components/breadcrumbs";
 @import "components/sub-menu/catalog";
 @import "components/dump";
 @import "components/grid";
 @import "components/tabs";
-@import "../mixin_media";
 @import "components/props";
-@import "components/admin-flex-table";
-@import "user/users";
-@import "components/del_product";
+//@import "components/admin-flex-table";
+//@import "user/users";
+//@import "components/del_product";
+
 @import "../components/neon";
+@import "../mixin_media";
 @import '../normalize.scss';
 @import '../var.scss';
 
@@ -46,7 +47,29 @@
   flex: 1 1 auto;
   padding: 20px;
 
+  .to-list{
+    padding: 10px 15px;
+    $border-radius: 3%;
+    @include _button($border-radius);
+
+    &:hover {
+      svg {
+        fill: $color-main;
+      }
+    }
+
+    svg {
+      transition: fill 500ms;
+      fill: #ffffff;
+    }
+  }
+
 }
+
+
+
+
+
 
 .admin-layout__sidebar {
   .admin-sidebar__logo {

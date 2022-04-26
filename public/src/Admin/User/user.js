@@ -1,3 +1,5 @@
+import './users.scss'
+
 import {$, popup, post} from '../../common'
 import getSex from '../../Auth/getSex'
 

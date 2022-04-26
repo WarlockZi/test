@@ -4,7 +4,8 @@
 
 .custom-catalog-item__wrapper {
   padding: 20px 10px;
-  background-color: $color-gray2;
+  background-color: $color-gray3;
+
   @include _2200 {
     width: 500px;
   }
@@ -14,7 +15,7 @@
     justify-content: flex-end;
     margin: 20px 0;
 
-    .save, .to-list, .del {
+    .save, .del {
       padding: 10px 15px;
       $border-radius: 3%;
       @include _button($border-radius);
@@ -46,6 +47,7 @@
       }
     }
 
+
   }
 }
 
@@ -67,20 +69,20 @@
     }
 
     .value {
-      padding: 0 7px;
-      margin: 0 5px;
+      padding: $padding-form;
+      margin: $margin-form;
     }
 
     [contenteditable] {
       background-color: white;
-      padding: 5px 7px;
+      padding: $padding-form;
       box-sizing: border-box;
       border: 1px solid transparent;
-      margin: 0 5px;
+      margin: $margin-form;
       flex: 1 0 auto;
 
       &:hover {
-        border: 1px solid darken($color-gray4, 10%);
+        border: $border-field-hover;
       }
 
     }

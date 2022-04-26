@@ -1,6 +1,7 @@
 <?php
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use \app\view\components\CustomSelect\CustomSelect;
+use \app\view\components\CustomRadio\CustomRadio;
 use \app\view\components\CustomMultiSelect\CustomMultiSelect;
 
 
@@ -16,6 +17,18 @@ $confirm = new CustomSelect([
 	'selected' => ['0'],
 ]);
 $confirm = $confirm->html;
+
+$sex = new CustomRadio([
+//		private $fieldName = '';
+
+	'className' => 'custom-radio',
+	'title' => '',
+	'field' => 'sex',
+	'nameFieldName' => 'test_name',
+	'tree' => ['m'=>'М','f'=>'Ж'],
+	'selected' => 'm',
+]);
+$sex = $sex->html;
 
 $rights = new CustomMultiSelect([
 	'selectClassName' => 'custom-select',
@@ -42,48 +55,84 @@ $t = new CustomCatalogItem([
 					'field' => 'id',
 					'name' => 'ID',
 					'contenteditable' => '',
-					'width' => '50px',
 					'data-type' => 'number',
 				],
-				'name' => [
-					'className' => 'name',
-					'field' => 'name',
-					'name' => 'Наименование',
-					'width' => '1fr',
-					'contenteditable' => 'contenteditable',
-					'data-type' => 'string',
-				],
 				'surName' => [
-					'className' => 'fullname',
-					'field' => 'full_name',
-					'name' => 'Полное наименование',
-					'width' => '1fr',
+					'className' => 'surName',
+					'field' => 'surName',
+					'name' => 'Фамилия',
 					'contenteditable' => 'contenteditable',
 					'data-type' => 'string',
 				],
+
 				'Подтвержден' => [
-					'className' => 'confirm',
-					'field' => 'confirm',
-					'name' => 'confirm',
-					'width' => '50px',
+//					'field' => 'confirm',
+					'name' => 'Подтвержден',
 					'contenteditable' => false,
 					'data-type' => 'select',
 					'select' => $confirm,
 				],
-				'rights' => [
-					'className' => 'rights',
-					'field' => 'rights',
-					'name' => 'Права',
-					'width' => '1fr',
-					'data-type' => 'select',
-					'select' => $rights,
+				'name' => [
+					'className' => 'name',
+					'field' => 'name',
+					'name' => 'Имя',
+					'contenteditable' => 'contenteditable',
+					'data-type' => 'string',
 				],
+				'middleName' => [
+					'className' => 'middleName',
+					'field' => 'middleName',
+					'name' => 'Отчестово',
+					'contenteditable' => 'contenteditable',
+					'data-type' => 'string',
+				],
+
+				'email' => [
+					'className' => 'email',
+					'field' => 'email',
+					'name' => 'email',
+					'contenteditable' => false,
+					'data-type' => 'string',
+				],
+
+				'phone' => [
+					'className' => 'phone',
+					'field' => 'phone',
+					'name' => 'Рабочий сотовый',
+					'contenteditable' => 'contenteditable',
+					'data-type' => 'string',
+				],
+
+				'birthDate' => [
+					'className' => 'bday',
+					'field' => 'birthDate',
+					'name' => 'День рождения',
+					'contenteditable' => true,
+					'data-type' => 'date',
+				],
+
+				'sex' => [
+					'className' => 'sex',
+					'field' => 'sex',
+					'name' => 'Пол',
+					'contenteditable' => false,
+					'data-type' => 'radio',
+					'html'=>$sex,
+				],
+//				'rights' => [
+//					'className' => 'rights',
+//					'field' => 'rights',
+//					'name' => 'Права',
+//					'width' => '1fr',
+//					'data-type' => 'select',
+//					'select' => $rights,
+//				],
 
 			],
 
 			'delBttn' => 'ajax',
 			'toListBttn' => true,
-			'saveBttn' => 'ajax',//'redirect'
+//			'saveBttn' => 'ajax',//'redirect'
 
 
 

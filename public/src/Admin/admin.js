@@ -14,6 +14,7 @@ import planning from './Planning/planning'
 import user from './user/user'
 import users from './user/users'
 
+import radio from '@components/radio/radio'
 import list from '@components/list/list'
 import multiselect from '@components/multiselect/multiselect'
 import catalogItem from '@components/catalog-item/catalog-item'

@@ -22,21 +22,6 @@
 }
 
 
-input[contenteditable],
-span[contenteditable],
-.category-properties select {
-  border: 1px solid transparent;
-  padding: 5px;
-  background-color: #fbfbfb;
-}
-
-input[contenteditable]:hover,
-span[contenteditable]:hover,
-.category-properties select:hover {
-  border-color: #ebf4f4;
-  box-shadow: 0 0 2px 2px #71ffff;
-  min-height: 18px;
-}
 .category-properties {
   margin: 5px 0 5px 50px;
 }
