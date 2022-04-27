@@ -18,6 +18,7 @@ import radio from '@components/radio/radio'
 import list from '@components/list/list'
 import multiselect from '@components/multiselect/multiselect'
 import catalogItem from '@components/catalog-item/catalog-item'
+import catalogDate from '@components/custom-date/custom-date'
 
 $(document).ready(function () {
   navigate(window.location.pathname)

@@ -1,54 +1,57 @@
 @import "../../var";
 @import "../../mixin_media";
 
+.custom-catalog-item__buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0;
+  position: absolute;
+  top: -35px;
+  right: 0;
+  gap: 0;
+
+  .save, .del {
+    padding: 10px 15px;
+    $border-radius: 3%;
+    @include _button($border-radius);
+
+    &:hover {
+      svg {
+        fill: $color-main;
+      }
+    }
+
+    svg {
+      transition: fill 500ms;
+      fill: #ffffff;
+    }
+  }
+
+  .del {
+    background-color: $color-warning;
+    border: 1px solid $color-warning;
+
+    &:hover {
+      svg {
+        fill: $color-warning;
+      }
+    }
+
+    svg {
+      fill: #ffffff;
+    }
+  }
+}
 
 .custom-catalog-item__wrapper {
   padding: 20px 10px;
   background-color: $color-gray3;
 
   @include _2200 {
-    width: 500px;
+    //width: 500px;
   }
 
-  .custom-catalog-item__buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin: 20px 0;
 
-    .save, .del {
-      padding: 10px 15px;
-      $border-radius: 3%;
-      @include _button($border-radius);
-
-      &:hover {
-        svg {
-          fill: $color-main;
-        }
-      }
-
-      svg {
-        transition: fill 500ms;
-        fill: #ffffff;
-      }
-    }
-
-    .del {
-      background-color: $color-warning;
-      border: 1px solid $color-warning;
-
-      &:hover {
-        svg {
-          fill: $color-warning;
-        }
-      }
-
-      svg {
-        fill: #ffffff;
-      }
-    }
-
-
-  }
 }
 
 .custom-catalog-item {
