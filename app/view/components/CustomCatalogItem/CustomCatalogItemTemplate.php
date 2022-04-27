@@ -13,18 +13,20 @@
 			  <div class="field"><?= $data['name'] ?></div>
 			  :
 
-					<? if (in_array($data['data-type'],['string','number'])): ?>
+					<? if (in_array($data['data-type'], ['string', 'number'])): ?>
 				 <div class="value"
 							 <?= $data['contenteditable']; ?>
-							 <?= "data-field={$fieldName}"; ?>
-				 >
+							 <?= "data-field={$fieldName}"; ?>>
 							 <?= $this->item[$fieldName] ?>
 				 </div>
-					<? elseif (in_array($data['data-type'],['select','multiselect'])): ?>
+					<? elseif (in_array($data['data-type'], ['select', 'multiselect'])): ?>
 						<?= $data['select']; ?>
-					<? elseif (in_array($data['data-type'],['radio'])): ?>
+
+					<? elseif (in_array($data['data-type'], ['radio'])): ?>
 						<?= $data['html']; ?>
 
+					<? elseif (in_array($data['data-type'], ['date'])): ?>
+						<?= $data['html']; ?>
 					<? endif; ?>
 
 		  </div>
@@ -36,13 +38,13 @@
 	<!--  BUTTONS  -->
 	<div class="custom-catalog-item__buttons">
 
-		 <? if ($this->delBttn === 'ajax'): ?>
+		 <? if ($this->delBttn): ?>
 		  <div class="del">
 					<? include TRASH ?>
 		  </div>
 		 <? endif; ?>
 
-		 <? if ($this->saveBttn === 'ajax'): ?>
+		 <? if ($this->saveBttn): ?>
 		  <div class="save">
 					<? include SAVE ?>
 		  </div>

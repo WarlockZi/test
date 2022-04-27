@@ -1,7 +1,6 @@
 @import "../../var";
 @import "../../mixin_media";
 
-/* Базовый контейнер табов */
 .tabs {
   min-width: 320px;
   width: 100%;
@@ -10,18 +9,15 @@
   position: relative;
 
 
-  /* Прячем чекбоксы */
   & > input {
     display: none;
     position: absolute;
   }
 
-  /* Стили переключателей вкладок (табов) */
   & > label {
     display: inline-block;
     margin: 0 0 -2px;
     padding: 9px 7px;
-    //font-weight: 600;
     text-align: center;
     color: #fff;
     border: 1px solid $color-gray4;
@@ -34,20 +30,16 @@
     }
   }
 
-  /* Шрифт-иконки от Font Awesome в формате Unicode */
   & > label:before {
     font-weight: normal;
     margin-right: 10px;
   }
-
-  /* Изменения стиля переключателей вкладок при наведении */
 
   & > label:hover {
     color: #888;
     cursor: pointer;
   }
 
-  /* Стили для активной вкладки */
   & > input:checked + label {
     color: #555;
     border-top: 2px solid $color-main;
@@ -57,7 +49,6 @@
     border-right: 1px solid #ddd;
   }
 
-  /* Активация секций с помощью псевдокласса :checked */
   #tab1:checked ~ #content-tab1,
   #tab2:checked ~ #content-tab2,
   #tab3:checked ~ #content-tab3,
@@ -69,23 +60,19 @@
     background-color: $color-gray3;
   }
 
-  #content-tab1 strong {
-    color: #4d4d4d;
-  }
-
-  /* Стили секций с содержанием */
+  //#content-tab1 strong {
+  //  color: #4d4d4d;
+  //}
+  //
   & > section {
     display: none;
     background: #fff;
     border: 1px solid #ddd;
 
-    select {
-      border: 1px solid #e1e1e1;
-    }
+    //select {
+    //  border: 1px solid #e1e1e1;
+    //}
 
-    input[type='date']{
-      border: 1px solid #e1e1e1;
-    }
   }
 
 }

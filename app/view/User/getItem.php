@@ -2,6 +2,7 @@
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use \app\view\components\CustomSelect\CustomSelect;
 use \app\view\components\CustomRadio\CustomRadio;
+use \app\view\components\CustomDate\CustomDate;
 use \app\view\components\CustomMultiSelect\CustomMultiSelect;
 
 
@@ -19,8 +20,6 @@ $confirm = new CustomSelect([
 $confirm = $confirm->html;
 
 $sex = new CustomRadio([
-//		private $fieldName = '';
-
 	'className' => 'custom-radio',
 	'title' => '',
 	'field' => 'sex',
@@ -29,6 +28,34 @@ $sex = new CustomRadio([
 	'selected' => 'm',
 ]);
 $sex = $sex->html;
+
+$birthDate = new CustomDate([
+	'className' => 'bdate',
+	'title' => '',
+	'field' => 'birthDate',
+	'min' => '1965-01-01',
+	'max' => '2005-01-01',
+	'value' => $user['birthDate'],
+]);
+$birthDate = $birthDate->html;
+
+$hired = new CustomDate([
+	'className' => 'hired',
+	'field' => 'hired',
+	'min' => '1965-01-01',
+	'max' => '2005-01-01',
+	'value' => $user['hired'],
+]);
+$hired = $hired->html;
+
+$fired = new CustomDate([
+	'className' => 'fired',
+	'field' => 'fired',
+	'min' => '1965-01-01',
+	'max' => '2005-01-01',
+	'value' => $user['fired'],
+]);
+$fired = $fired->html;
 
 $rights = new CustomMultiSelect([
 	'selectClassName' => 'custom-select',
@@ -109,7 +136,27 @@ $t = new CustomCatalogItem([
 					'name' => 'День рождения',
 					'contenteditable' => true,
 					'data-type' => 'date',
+					'html'=>$birthDate,
 				],
+
+				'hired' => [
+					'className' => 'fired',
+					'field' => 'hired',
+					'name' => 'Принят в штат',
+					'contenteditable' => true,
+					'data-type' => 'date',
+					'html'=>$hired,
+				],
+
+				'fired' => [
+					'className' => 'fired',
+					'field' => 'fired',
+					'name' => 'Уволен',
+					'contenteditable' => true,
+					'data-type' => 'date',
+					'html'=>$fired,
+				],
+
 
 				'sex' => [
 					'className' => 'sex',
@@ -130,8 +177,8 @@ $t = new CustomCatalogItem([
 
 			],
 
-			'delBttn' => 'ajax',
-			'toListBttn' => true,
+			'delBttn' => false,
+			'toListBttn' => false,
 //			'saveBttn' => 'ajax',//'redirect'
 
 

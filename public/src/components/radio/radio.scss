@@ -3,7 +3,11 @@
 .custom-radio {
   margin: $margin-form;
   background: #fff;
-  padding: 6px 0;
+  //padding: 6px 0;
+  min-width: 127px;
+  display: flex;
+  justify-content: space-between;
+
 
   label {
   padding: 6px ;
