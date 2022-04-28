@@ -14,6 +14,7 @@ class CustomCatalogItem
 	private $models = [];
 	private $modelName = '';
 	private $tableClassName = '';
+	private $tabs = '';
 
 	private $saveBttn = false;
 	private $toListBttn = false;
@@ -36,12 +37,14 @@ class CustomCatalogItem
 
 	protected function run()
 	{
-		return $this->template();
+		ob_start();
+		include ROOT . '/app/view/components/CustomCatalogItem/CustomCatalogItemTemplate.php';
+		$this->html = ob_get_clean();
+//		return $t;
 	}
 
 	protected function prepareData(array $column, array $model)
 	{
-
 		if (isset($column['concat'])) {
 			$initValue = '';
 			foreach ($column['concat'] as $v) {
@@ -51,16 +54,6 @@ class CustomCatalogItem
 		}
 
 		return $model[$column['field']];
-	}
-
-
-	protected function template()
-	{
-		ob_start();
-		include ROOT . '/app/view/components/CustomCatalogItem/CustomCatalogItemTemplate.php';
-		$t = ob_get_clean();
-		$this->html = $t;
-		return $t;
 	}
 
 }

@@ -24,6 +24,14 @@ export default function catalogItem() {
       if (res.msg === 'ok') {
         window.location.href = `/adminsc/${modelName}/list`
       }
+    }else if((target.classList.contains('tab'))){
+      let visibleSection = $(`section.show`)[0]
+      visibleSection.classList.toggle('show')
+      let section = $(`section[data-id='${target.dataset.id}']`)[0]
+      section.classList.toggle('show')
+      let activeTab = $(`.tab.active`)[0]
+      activeTab.classList.toggle('active')
+      target.classList.toggle('active')
     }
   }
 
