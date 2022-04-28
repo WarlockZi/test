@@ -4,11 +4,8 @@
 .custom-catalog-item__buttons {
   display: flex;
   justify-content: flex-end;
-  margin: 20px 0;
-  position: absolute;
-  top: -35px;
-  right: 0;
-  gap: 0;
+  gap: 10px;
+  flex: 1 0;
 
   .save, .del {
     padding: 10px 15px;
@@ -45,18 +42,17 @@
 
 .custom-catalog-item__wrapper {
   padding: 20px 10px;
-  background-color: $color-gray3;
-
-  @include _2200 {
-    //width: 500px;
-  }
-
-
+  width: 460px;
 }
 
 .custom-catalog-item {
   display: flex;
   flex-flow: column;
+  padding: 15px;
+  background-color: #e9e9e9;
+  position: relative;
+  flex: 1 0 auto;
+
 
   .row {
     display: flex;

@@ -57,7 +57,7 @@ class UserController extends AppController
 			}
 			$rights = Right::findAll();
 			$this->set(compact('rights'));
-			if (!$user) return;
+//			if (!$user) return;
 
 			$item = $user;
 			$item = include ROOT . '/app/view/User/getItem.php';
