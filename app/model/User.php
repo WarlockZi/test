@@ -15,11 +15,17 @@ class User extends Model
 	public $model = 'user';
 
 	protected $fillable = [
-		'name' => '',
 		'email' => '',
+		'password' => 'gfasdf41(D{%',
+		'name' => '',
+		'surName' => '',
+		'middleName' => '',
 		'confirm' => '0',
 		'rights' => '',
-		'password' => 'gfasdf41(D{%',
+		'birthDate'=>'',
+		'hired'=>'',
+		'fired'=>'',
+		'sex'=>'',
 	];
 
 
@@ -28,7 +34,7 @@ class User extends Model
 		parent::__construct();
 	}
 
-	public static function can($user, $rights)
+	public static function can($user, $rights=[])
 	{
 		if (is_string($rights)){
 			$rights = compact('rights');

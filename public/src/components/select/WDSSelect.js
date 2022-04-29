@@ -43,6 +43,7 @@ export default class WDSSelect {
 
     this.label.innerText = newSelectedOption.label
     this.label.closest('.custom-select').dataset['id'] = newSelectedOption.value
+    this.label.closest('.custom-select').dataset['value'] = newSelectedOption.value
     this.ul
       .querySelector(`[data-value="${prevSelectedOption.value}"]`)
       .classList.remove("selected")
@@ -67,6 +68,7 @@ function setup(select) {
   select.sel.dataset['field'] = select.field
   // debugger
   select.sel.dataset['id'] = select.selectedOption.value
+  select.sel.dataset['value'] = select.selectedOption.value
   select.sel.tabIndex = 0
 
   // debugger

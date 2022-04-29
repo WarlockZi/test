@@ -11,13 +11,13 @@ if ($item) {
 	$confirm = new CustomSelect([
 		'selectClassName' => 'custom-select',
 		'title' => '',
-		'field' => 'enable',
+		'field' => 'confirm',
 		'tab' => '&nbsp;&nbsp;&nbsp;',
-		'initialOption' => true,
-		'initialOptionValue' => '---',
+//		'initialOption' => true,
+//		'initialOptionValue' => '---',
 		'nameFieldName' => 'test_name',
-		'tree' => [0 => 'да', 1 => 'нет'],
-		'selected' => ['0'],
+		'tree' => [1 => 'да', 0 => 'нет'],
+		'selected' => [$item['confirm']??0],
 	]);
 	$confirm = $confirm->html;
 
@@ -27,7 +27,7 @@ if ($item) {
 		'field' => 'sex',
 		'nameFieldName' => 'test_name',
 		'tree' => ['m' => 'М', 'f' => 'Ж'],
-		'selected' => 'm',
+		'selected' => $item['sex'],
 	]);
 	$sex = $sex->html;
 
@@ -81,6 +81,7 @@ if ($item) {
 		'item' => $item,
 		'modelName' => $this->modelName,
 		'tableClassName' => $this->tableName,
+		'pageTitle' => 'Редактировать пользователя: '.$item['surName'],
 
 		'tabs' => [
 			'Права' => $rights
@@ -107,7 +108,7 @@ if ($item) {
 				'name' => 'Подтвержден',
 				'contenteditable' => false,
 				'data-type' => 'select',
-				'select' => $confirm,
+				'html' => $confirm,
 			],
 			'name' => [
 				'className' => 'name',
