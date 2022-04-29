@@ -3,17 +3,17 @@
 @import "components/sub-menu/catalog";
 @import "components/dump";
 @import "components/grid";
-@import "components/tabs";
 @import "components/props";
 //@import "components/admin-flex-table";
 //@import "user/users";
 //@import "components/del_product";
 
 @import "../components/neon";
-@import "../mixin_media";
 @import '../normalize.scss';
+@import "../mixin_media";
 @import '../var.scss';
 
+@include chips;
 
 .admin-layout__container {
   display: flex;

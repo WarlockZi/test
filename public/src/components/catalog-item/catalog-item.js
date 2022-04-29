@@ -12,7 +12,7 @@ export default function catalogItem() {
     let modelName = item.dataset.model
     if (target.closest('.save')) {
       let model = getModel()
-      let res = await post(`/adminsc/${modelName}/updateorcreate`, {model})
+      let res = await post(`/adminsc/${modelName}/update`, {...model})
       res = JSON.parse(res)
       if (res.msg === 'ok') {
         popup.show('Сохранено')
@@ -46,7 +46,13 @@ export default function catalogItem() {
           return chip.dataset.id
         })
         obj[field.dataset.field] = ids.toString()
-      } else {
+      } else if (field.classList.contains('custom-select')){
+        obj[field.dataset.field] = field.dataset.value
+      } else if (field.hasAttribute('custom-radio')){
+        obj[field.dataset.field] = field.dataset.value
+      } else if (field.hasAttribute('tab')){
+        obj[field.dataset.field] = field.dataset.value
+      }else {
         obj[field.dataset.field] = field.innerText
       }
     }, obj)

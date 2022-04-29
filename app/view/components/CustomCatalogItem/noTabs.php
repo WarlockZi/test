@@ -1,28 +1,13 @@
+<div class="custom-catalog-item__header">
 
+	<div class="page-title"><?= $this->pageTitle ?></div>
+	<div class="buttons__wrapper">
 
-	<!--  BUTTONS  -->
-	<div class="custom-catalog-item__buttons">
-
-		 <? if ($this->delBttn): ?>
-		  <div class="del">
-					<? include TRASH ?>
-		  </div>
-		 <? endif; ?>
-
-		 <? if ($this->saveBttn): ?>
-		  <div class="save">
-					<? include SAVE ?>
-		  </div>
-		 <? endif; ?>
-
-		 <? if ($this->toListBttn): ?>
-		  <a href="/adminsc/<?= $this->modelName; ?>/list"
-		     class="to-list">
-			  К списку
-		  </a>
-		 <? endif; ?>
-
+	<?include ROOT.'/app/view/components/CustomCatalogItem/buttons.php'?>
 	</div>
+
+</div>
+
 	<div class="custom-catalog-item"
 	     data-table="<?= $this->tableClassName ?>"
 	     data-model="<?= $this->modelName ?>"
@@ -41,7 +26,7 @@
 						<?= $this->item[$fieldName] ?>>
 			 </div>
 			 <? elseif (in_array($data['data-type'], ['select', 'multiselect'])): ?>
-				 <?= $data['select']; ?>
+				 <?= $data['html']; ?>
 
 			 <? elseif (in_array($data['data-type'], ['radio'])): ?>
 				 <?= $data['html']; ?>

@@ -38,7 +38,7 @@ $item = new CustomCatalogItem(
 				'width' => '1fr',
 				'contenteditable' => false,
 				'data-type' => 'multiselect',
-				'select' => $chiefs,
+				'html' => $chiefs,
 			],
 			'subourdinate' => [
 				'className' => 'fullname',
@@ -46,7 +46,7 @@ $item = new CustomCatalogItem(
 				'name' => 'Управляет',
 				'width' => '1fr',
 				'data-type' => 'multiselect',
-				'select' => $subordinates,
+				'html' => $subordinates,
 			],
 		],
 

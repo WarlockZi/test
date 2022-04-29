@@ -6,7 +6,10 @@
 >
 
 	<? if ($this->initialOption): ?>
-	  <option value=""><?= $this->initialOptionValue; ?></option>
+	  <option
+			  value=""
+			 <?=!$this->selected?'selected':'';?>
+	  ><?= $this->initialOptionValue; ?></option>
 	<? endif; ?>
 
 	<? foreach ($this->tree as $k => $v): ?>

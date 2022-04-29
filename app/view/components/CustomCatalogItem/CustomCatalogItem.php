@@ -8,6 +8,7 @@ class CustomCatalogItem
 {
 	private $item = [];
 	private $fields = [];
+	private $pageTitle = '';
 
 	public $html = '';
 

@@ -22,7 +22,7 @@ import catalogDate from '@components/custom-date/custom-date'
 
 $(document).ready(function () {
   navigate(window.location.pathname)
-
+  radio()
   list()
   multiselect()
   catalogItem()

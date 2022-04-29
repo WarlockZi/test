@@ -6,7 +6,7 @@ namespace app\view\components\CustomSelect;
 
 class CustomSelect
 {
-	private $field = 'field';
+	private $field = '';
 	private $className = '';
 	private $tab = '.';
 	private $tree = [];
