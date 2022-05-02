@@ -6,15 +6,15 @@ namespace app\view\components\CustomCatalogItem;
 
 class CustomCatalogItem
 {
-	private $item = [];
-	private $fields = [];
-	private $pageTitle = '';
+	public $item = [];
+	public $fields = [];
+	public $pageTitle = '';
 
 	public $html = '';
 
-	private $models = [];
-	private $modelName = '';
-	private $tableClassName = '';
+	public $models = [];
+	public $modelName = '';
+	public $tableClassName = '';
 	private $tabs = '';
 
 	private $saveBttn = false;

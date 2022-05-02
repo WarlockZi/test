@@ -5,11 +5,11 @@ section{
 
 .profile__grid{
   display: grid;
-  grid-template: auto/1fr 1.5fr;
   align-items: center;
   justify-items: right;
   gap: 10px;
-  margin-bottom: 20px;
+  margin: 20px auto;
+  width: 600px;
 
   div{
     color: hsl(0deg 0% 45%);
