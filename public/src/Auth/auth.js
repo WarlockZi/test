@@ -19,8 +19,11 @@ import '../normalize.scss'
 import list from '@components/list/list'
 import multiselect from '@components/multiselect/multiselect'
 import catalogItem from '@components/catalog-item/catalog-item'
+import customDate from '@components/date/date'
+import radio from '@components/radio/radio'
 import showPassword from "../components/showPassword/showPassword";
 
+radio()
 list()
 multiselect()
 catalogItem()

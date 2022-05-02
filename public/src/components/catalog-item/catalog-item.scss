@@ -64,7 +64,7 @@
         gap: 10px;
         flex: 1 0;
 
-        .save, .del {
+        .save, .del, .to-list{
           padding: 10px 15px;
           $border-radius: 3%;
           @include _button($border-radius);
