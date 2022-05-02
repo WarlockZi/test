@@ -13,17 +13,17 @@
     gap: 5px;
     flex-flow: column;
 
-    .page-title{
-      margin: 15px 0;
-      @include _h3;
-
-    }
-
-    .buttons__wrapper{
+    .tabs__wrapper {
       display: flex;
+      gap: 10px;
+
+      .page-title {
+        margin: 15px 0;
+        @include _h3;
+      }
 
       .tab {
-        display: inline-block;
+        //display: inline-block;
         margin: 0 0 -2px;
         padding: 9px 7px;
         text-align: center;
@@ -33,6 +33,8 @@
         background: $color-admin-sidebar;
         border-radius: 3px 3px 0 0;
         cursor: pointer;
+        display: flex;
+        align-items: center;
 
         @include _400 {
           font-size: 10px;
@@ -58,78 +60,88 @@
         }
       }
 
-      .custom-catalog-item__buttons {
+    }
+
+  }
+
+  .custom-catalog-item__content{
+    background-color: #e9e9e9;
+
+    section {
+      display: none;
+
+      &.show {
         display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        flex: 1 0;
+      }
 
-        .save, .del, .to-list{
-          padding: 10px 15px;
-          $border-radius: 3%;
-          @include _button($border-radius);
+      .content {
+        background-color: $color-gray3;
+        display: flex;
+        flex-flow: column;
+        padding: 20px 10px;
+
+        .row {
+          display: flex;
+          padding: 5px 0;
+          border-bottom: 1px solid #fdfdfd;
+
+          &:last-child {
+            border-bottom: none;
+          }
 
           &:hover {
-            svg {
-              fill: $color-main;
-            }
-          }
-
-          svg {
-            transition: fill 500ms;
-            fill: #ffffff;
-          }
-        }
-
-        .del {
-          background-color: $color-warning;
-          border: 1px solid $color-warning;
-
-          &:hover {
-            svg {
-              fill: $color-warning;
-            }
-          }
-
-          svg {
-            fill: #ffffff;
+            background-color: #f2f2f2;
           }
         }
       }
 
     }
 
-  }
-
-  section {
-    display: none;
-
-    &.show {
+    .custom-catalog-item__buttons {
       display: flex;
-    }
+      justify-content: flex-end;
+      gap: 10px;
+      flex: 1 0;
+      margin: 0 20px 20px;
 
-    .content {
-      background-color: $color-gray3;
-      display: flex;
-      flex-flow: column;
-      padding: 20px 10px;
-
-      .row {
-        display: flex;
-        padding: 5px 0;
-        border-bottom: 1px solid #fdfdfd;
-
-        &:last-child {
-          border-bottom: none;
-        }
+      .save, .del, .to-list {
+        padding: 10px 15px;
+        $border-radius: 3%;
+        @include _button($border-radius);
 
         &:hover {
-          background-color: #f2f2f2;
+          svg {
+            fill: $color-main;
+          }
+        }
+
+        svg {
+          transition: fill 500ms;
+          fill: #ffffff;
+        }
+      }
+
+      .del {
+        background-color: $color-warning;
+        border: 1px solid $color-warning;
+
+        &:hover {
+          svg {
+            fill: $color-warning;
+          }
+        }
+
+        svg {
+          fill: #ffffff;
         }
       }
     }
 
+    .buttons__wrapper {
+      display: flex;
+    }
   }
+
 }
 
 
@@ -137,7 +149,6 @@
   display: flex;
   flex-flow: column;
   padding: 15px;
-  background-color: #e9e9e9;
   position: relative;
   flex: 1 0 auto;
 

@@ -21,11 +21,11 @@ class User extends Model
 		'surName' => '',
 		'middleName' => '',
 		'confirm' => '0',
-		'rights' => '',
-		'birthDate'=>'',
-		'hired'=>'',
-		'fired'=>'',
-		'sex'=>'',
+		'rights' => 'user_update',
+//		'birthDate'=>'1970-01-02',
+//		'hired'=>date('Y/m/d'),
+//		'fired'=>'',
+		'sex'=>'f',
 	];
 
 
