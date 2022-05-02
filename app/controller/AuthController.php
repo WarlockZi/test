@@ -19,6 +19,9 @@ class AuthController extends AppController
   public function __construct($route)
   {
     parent::__construct($route);
+    if ($this->route){
+
+		}
     View::setJs('auth.js');
     View::setCss('auth.css');
   }
@@ -112,7 +115,7 @@ class AuthController extends AppController
     $this->set(compact('item'));
     if (User::can($this->user, 'role_employee')) {
       $this->layout = 'admin';
-//			$posts=;
+
       View::setJs('admin.js');
       View::setCss('admin.css');
     } else {

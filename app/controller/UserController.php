@@ -57,7 +57,6 @@ class UserController extends AppController
 			}
 			$rights = Right::findAll();
 			$this->set(compact('rights'));
-//			if (!$user) return;
 
 			$item = $user;
 			$item = include ROOT . '/app/view/User/getItem.php';
@@ -100,7 +99,7 @@ class UserController extends AppController
 			$data['birthDate'] = date('Y-m-d', $date);
 
 			User::update($data);
-			exit('ok');
+			$this->exitWith('ok');
 		}
 	}
 

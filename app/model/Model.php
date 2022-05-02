@@ -31,7 +31,7 @@ abstract class Model
 		$this->user = $user;
 		$rightName = $this->model . '_'.$ext;
     if(!User::can($this->user, $rightName)) {
-			throw new \Exception('Нет права ' . $rightName);
+			exit(json_encode(['error'=>'Нет права ' . $rightName]));
 		}
 	}
 

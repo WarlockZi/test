@@ -2,17 +2,16 @@
 
 	<div class="page-title"><?= $this->pageTitle ?></div>
 	<div class="buttons__wrapper">
-
-	<?include ROOT.'/app/view/components/CustomCatalogItem/buttons.php'?>
+		 <? include ROOT . '/app/view/components/CustomCatalogItem/buttons.php' ?>
 	</div>
 
 </div>
 
-	<div class="custom-catalog-item"
-	     data-table="<?= $this->tableClassName ?>"
-	     data-model="<?= $this->modelName ?>"
-	     data-id="<?= $this->item['id'] ?>"
-	>
+<div class="custom-catalog-item"
+     data-table="<?= $this->tableClassName ?>"
+     data-model="<?= $this->modelName ?>"
+     data-id="<?= $this->item['id'] ?>"
+>
 	<!--  TABLE  -->
 	<? foreach ($this->fields as $fieldName => $data): ?>
 	  <div class="row">
@@ -22,8 +21,8 @@
 			 <? if (in_array($data['data-type'], ['string', 'number'])): ?>
 			 <div class="value"
 						<?= $data['contenteditable']; ?>
-						<?= "data-field={$fieldName}"; ?>
-						<?= $this->item[$fieldName] ?>>
+						<?= "data-field={$fieldName}"; ?>>
+						<?= $this->item[$fieldName] ?>
 			 </div>
 			 <? elseif (in_array($data['data-type'], ['select', 'multiselect'])): ?>
 				 <?= $data['html']; ?>

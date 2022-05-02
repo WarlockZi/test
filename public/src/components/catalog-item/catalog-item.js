@@ -16,6 +16,8 @@ export default function catalogItem() {
       res = JSON.parse(res)
       if (res.msg === 'ok') {
         popup.show('Сохранено')
+      }else if(res.error){
+        popup.show(res.error)
       }
     } else if (target.closest('.del')) {
       let id = item.dataset.id
