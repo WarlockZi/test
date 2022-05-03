@@ -74,10 +74,9 @@ class RightController Extends AppController
 						'search' => true,
 					],
 				],
-				'editCol' => false,
-//				'delCol' => false,
-				'delCol' => 'ajax',
-				'addButton'=> 'ajax',//'redirect'
+				'editCol' => true,
+				'delCol' => true,
+				'addButton'=> true
 			]
 		);
 	}
@@ -117,6 +116,29 @@ class RightController Extends AppController
 	}
 
 
+  public function actionEdit()
+  {
+//    $this->view = 'adminEdit';
+
+    if (User::can($this->user, ['role_employee'])) {
+      if (isset($this->route['id'])) {
+        $user = User::findOneWhere('id', $this->route['id']);
+        $this->set(compact('user'));
+      }
+      $rights = Right::findAll();
+      $this->set(compact('rights'));
+
+      $item = $user;
+      $item = include ROOT . '/app/view/User/getItem.php';
+      $this->set(compact('item'));
+
+    }
+    if ($user = $this->ajax) {
+      $user['id'] = $_SESSION['id'];
+      User::update($user);
+      exit('ok');
+    }
+  }
 	public function actionUpdate()
 	{
 		if ($this->ajax) {

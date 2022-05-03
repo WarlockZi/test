@@ -1,13 +1,11 @@
 <div class="custom-catalog-item__header">
 
 	<div class="page-title"><?= $this->pageTitle ?></div>
-	<div class="buttons__wrapper">
-		 <? include ROOT . '/app/view/components/CustomCatalogItem/buttons.php' ?>
-	</div>
+
 
 </div>
 
-<div class="custom-catalog-item"
+<div class="custom-catalog-item__content"
      data-table="<?= $this->tableClassName ?>"
      data-model="<?= $this->modelName ?>"
      data-id="<?= $this->item['id'] ?>"
@@ -37,6 +35,9 @@
 	  </div>
 
 	<? endforeach; ?>
+	<div class="buttons__wrapper">
+    <? include ROOT . '/app/view/components/CustomCatalogItem/buttons.php' ?>
+	</div>
 
 </div>
 
