@@ -12,8 +12,8 @@ use app\view\View;
 class UserController extends AppController
 {
 	protected $model = User::class;
-	protected $modelName = 'user';
-	protected $tableName = 'users';
+	public $modelName = 'user';
+	public $tableName = 'users';
 
 
 	public function __construct($route)

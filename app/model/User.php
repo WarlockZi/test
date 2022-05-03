@@ -36,7 +36,7 @@ class User extends Model
 
 	public static function can($user, $rights=[])
 	{
-		if (is_string($rights)){
+		if (is_string($rights)&&$rights){
 			$rights = compact('rights');
 		}
 		return (array_intersect($rights, $user['rights'])||defined('SU'))??null;

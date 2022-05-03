@@ -4,14 +4,13 @@ use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use \app\view\components\CustomSelect\CustomSelect;
 use \app\view\components\CustomRadio\CustomRadio;
 use \app\view\components\CustomDate\CustomDate;
-use \app\view\components\CustomMultiSelect\CustomMultiSelect;
 use \app\model\User;
 
 if ($item) {
-	if (User::can($this->user, 'role_employee')) {
+	if (User::can($user, 'role_employee')) {
 		return getEmployeeHtml($item, $this);
 	} else {
-		return getUserHtml($item, $this);
+		return getGuestHtml($item, $this);
 	}
 } else {
 	ob_start();
@@ -50,7 +49,7 @@ function getBirhtdate($user)
 	return $birthDate->html;
 }
 
-function getHired($user)
+function getHiredHtml($user)
 {
 	$hired = new CustomDate([
 		'className' => 'hired',
@@ -62,7 +61,7 @@ function getHired($user)
 	return $hired->html;
 }
 
-function getFired($user)
+function getFiredHtml($user)
 {
 	$fired = new CustomDate([
 		'className' => 'fired',
@@ -74,15 +73,56 @@ function getFired($user)
 	return $fired->html;
 }
 
-function getConfirm()
+function getConfirmRow($item)
+{
+	$html = getConfirmHtml($item);
+	return [
+		'Подтвержден' => [
+			'name' => 'Подтвержден',
+			'contenteditable' => false,
+			'data-type' => 'select',
+			'html' => $html,
+		]
+	];
+}
+
+function getHiredRow($item)
+{
+	$html = getHiredHtml($item);
+	return [
+		'hired' => [
+			'className' => 'fired',
+			'field' => 'hired',
+			'name' => 'Принят в штат',
+			'contenteditable' => true,
+			'data-type' => 'date',
+			'html' => $html,
+		]
+	];
+}
+
+function getFiredRow($item)
+{
+	$html = getFiredHtml($item);
+	return [
+		'fired' => [
+			'className' => 'fired',
+			'field' => 'fired',
+			'name' => 'Уволен',
+			'contenteditable' => true,
+			'data-type' => 'date',
+			'html' => $html,
+		],
+	];
+}
+
+function getConfirmHtml($item)
 {
 	$confirm = new CustomSelect([
 		'selectClassName' => 'custom-select',
 		'title' => '',
 		'field' => 'confirm',
 		'tab' => '&nbsp;&nbsp;&nbsp;',
-//		'initialOption' => true,
-//		'initialOptionValue' => '---',
 		'nameFieldName' => 'test_name',
 		'tree' => [1 => 'да', 0 => 'нет'],
 		'selected' => [$item['confirm'] ?? 0],
@@ -92,25 +132,11 @@ function getConfirm()
 
 function getRights($user)
 {
-//$rights = new CustomMultiSelect([
-//	'selectClassName' => 'custom-select',
-//	'title' => '',
-//	'field' => 'rights',
-//	'tab' => '&nbsp;&nbsp;&nbsp;',
-//	'initialOption' => true,
-//	'initialOptionValue' => '---',
-//	'nameFieldName' => 'name',
-//	'fieldName' => 'name',
-//	'tree' => $rights,
-//	'selected' => $user['rights'],
-//]);
-//$rights = $rights->html;
-
 	$rights = \app\model\Right::findAll();
 	return include ROOT . '/app/view/User/getRightsTab.php';
 }
 
-function getUserHtml($item, $self)
+function getGuestHtml($item, $self)
 {
 	$t = new CustomCatalogItem([
 		'item' => $item,
@@ -119,6 +145,13 @@ function getUserHtml($item, $self)
 		'pageTitle' => 'Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'],
 
 		'fields' => [
+			'id' => [
+				'className' => 'id',
+				'field' => 'id',
+				'name' => 'ID',
+				'contenteditable' => '',
+				'data-type' => 'number',
+			],
 			'email' => [
 				'className' => 'email',
 				'field' => 'email',
@@ -174,17 +207,9 @@ function getUserHtml($item, $self)
 				'data-type' => 'radio',
 				'html' => getSex($item),
 			],
-//				'rights' => [
-//					'className' => 'rights',
-//					'field' => 'rights',
-//					'name' => 'Права',
-//					'width' => '1fr',
-//					'data-type' => 'select',
-//					'select' => $rights,
-//				],
 		],
-		'delBttn' => true,
-		'toListBttn' => true,
+		'delBttn' => false,
+		'toListBttn' => false,
 		'saveBttn' => true
 	]);
 	return $t->html;
@@ -192,15 +217,25 @@ function getUserHtml($item, $self)
 
 function getEmployeeHtml($item, $self)
 {
-	$t = new CustomCatalogItem([
+	$options = employeeOptions($item, $self);
+	$t = new CustomCatalogItem($options);
+	return $t->html;
+}
 
+
+function employeeOptions($item, $self)
+{
+	$options = [
 		'item' => $item,
 		'modelName' => $self->modelName,
 		'tableClassName' => $self->tableName,
 		'pageTitle' => 'Редактировать пользователя: ' . $item['surName'],
 
 		'tabs' => [
-			'Права' => getRights($item)
+			['title' => 'Права',
+				'html' => getRights($item),
+				'field' => 'rights'
+			]
 		],
 
 		'fields' => [
@@ -227,13 +262,6 @@ function getEmployeeHtml($item, $self)
 				'contenteditable' => 'contenteditable',
 				'data-type' => 'string',
 			],
-
-			'Подтвержден' => [
-				'name' => 'Подтвержден',
-				'contenteditable' => false,
-				'data-type' => 'select',
-				'html' => getConfirm($item),
-			],
 			'name' => [
 				'className' => 'name',
 				'field' => 'name',
@@ -248,8 +276,6 @@ function getEmployeeHtml($item, $self)
 				'contenteditable' => 'contenteditable',
 				'data-type' => 'string',
 			],
-
-
 			'phone' => [
 				'className' => 'phone',
 				'field' => 'phone',
@@ -257,7 +283,6 @@ function getEmployeeHtml($item, $self)
 				'contenteditable' => 'contenteditable',
 				'data-type' => 'string',
 			],
-
 			'birthDate' => [
 				'className' => 'bday',
 				'field' => 'birthDate',
@@ -266,25 +291,6 @@ function getEmployeeHtml($item, $self)
 				'data-type' => 'date',
 				'html' => getBirhtdate($item),
 			],
-
-			'hired' => [
-				'className' => 'fired',
-				'field' => 'hired',
-				'name' => 'Принят в штат',
-				'contenteditable' => true,
-				'data-type' => 'date',
-				'html' => getHired($item),
-			],
-
-			'fired' => [
-				'className' => 'fired',
-				'field' => 'fired',
-				'name' => 'Уволен',
-				'contenteditable' => true,
-				'data-type' => 'date',
-				'html' => getFired($item),
-			],
-
 			'sex' => [
 				'className' => 'sex',
 				'field' => 'sex',
@@ -293,18 +299,20 @@ function getEmployeeHtml($item, $self)
 				'data-type' => 'radio',
 				'html' => getSex($item),
 			],
-//				'rights' => [
-//					'className' => 'rights',
-//					'field' => 'rights',
-//					'name' => 'Права',
-//					'width' => '1fr',
-//					'data-type' => 'select',
-//					'select' => $rights,
-//				],
+
 		],
 		'delBttn' => true,
 		'toListBttn' => true,
 		'saveBttn' => true
-	]);
-	return $t->html;
+	];
+
+	if (User::can($item, ['role_admin'])) {
+		$options['fields'] = $options['fields'] + getConfirmRow($item);
+		$options['fields'] = $options['fields'] + getHiredRow($item);
+		$options['fields'] = $options['fields'] + getFiredRow($item);
+	}
+
+	return $options;
 }
+
+

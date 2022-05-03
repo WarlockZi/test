@@ -54,6 +54,8 @@ export default function catalogItem() {
         obj[field.dataset.field] = field.dataset.value
       } else if (field.hasAttribute('tab')){
         obj[field.dataset.field] = field.dataset.value
+      } else if (field.type === 'date'){
+        obj[field.dataset.field] = field.value
       }else {
         obj[field.dataset.field] = field.innerText
       }

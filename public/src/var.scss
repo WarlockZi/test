@@ -5,6 +5,8 @@ $color-main-green: #1bbc9b;
 //$color-main: #6ca3fe;
 $color-main: #6ca3fe;
 
+$color-contenteditable: lighten($color-main, 27%);
+
 $color-main-hover: shade($color-main, 60%);
 
 $color-main-selected: lighten($color-main,22%);;

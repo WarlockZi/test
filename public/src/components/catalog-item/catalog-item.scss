@@ -22,7 +22,7 @@
   flex-flow: column;
 
   .page-title {
-    margin: 15px 0;
+    margin: 0 0 15px 0 ;
     @include _h3;
   }
 
@@ -67,9 +67,7 @@
         border-right: 1px solid #ddd;
       }
     }
-
   }
-
 }
 
 .custom-catalog-item__content {
@@ -120,6 +118,7 @@
       background-color: $color-gray3;
       display: flex;
       flex-flow: column;
+      
       //padding: 20px 10px;
 
       .row {
@@ -145,7 +144,7 @@
       justify-content: flex-end;
       gap: 10px;
       flex: 1 0;
-      margin: 20px 0;
+      margin: 40px 0 0;
 
       .save, .del, .to-list {
         padding: 10px 15px;

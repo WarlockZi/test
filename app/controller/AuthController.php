@@ -113,8 +113,11 @@ class AuthController extends AppController
     $item = $user;
     $item = include ROOT . '/app/view/User/getItem.php';;
     $this->set(compact('item'));
-    if (User::can($this->user, 'role_employee')) {
+    if (User::can($user, 'role_employee')) {
       $this->layout = 'admin';
+
+      View::unsetJs('auth.js');
+      View::unsetCss('auth.css');
 
       View::setJs('admin.js');
       View::setCss('admin.css');

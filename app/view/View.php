@@ -12,7 +12,7 @@ class View
 	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
 	public static $jsCss = ['js' => [], 'css' => []];
 
-	function __construct($route, $layout = '', $view = '', $user='')
+	function __construct($route, $layout = '', $view = '', $user = '')
 	{
 		$this->user = $user;
 		$this->route = $route;
@@ -60,17 +60,55 @@ class View
 		if (is_readable($file)) {
 			file_put_contents($file, $page_cache);
 		}
+	}
 
+	public static function unsetJs($name = '')
+	{
+		if ($name) {
+			$js = self::getJsStr($name);
+			$k = array_search($js, self::$jsCss['js']);
+			if ($k !== false) {
+				unset(self::$jsCss['js'][$k]);
+			}
+		}
+	}
+
+	public static function unsetCss($name = '')
+	{
+		if ($name) {
+			$css = self::getCssStr($name);
+			$k = array_search($css, self::$jsCss['css']);
+			if ($k !== false) {
+				unset(self::$jsCss['css'][$k]);
+			}
+		}
+	}
+
+	public static function getHost()
+	{
+		return $_ENV['MODE'] === 'development'
+			? 'http://localhost:4000/'
+			: '/public/dist/';
+	}
+
+	public static function getCssStr($name)
+	{
+		$host = self::getHost();
+		return
+			"<link href='{$host}{$name}' rel='stylesheet' type='text/css'>";
+	}
+
+	public static function getJsStr($name)
+	{
+		$host = self::getHost();
+		return "<script src='{$host}{$name}'></script>";
 	}
 
 	public static function setJs($file)
 	{
 		$cache = true;
-		$host = $_ENV['MODE']==='development'
-			?'http://localhost:4000/'
-			:'/public/dist/';
-//		$hostHot = 'http://localhost:4000/';
-//		$hostStatic = '/public/dist/';
+		$host = self::getHost();
+
 		$time = ($cache) ? '' : "?" . time();
 		$str = "<script src='{$host}{$file}{$time}'></script>";
 		self::$jsCss['js'][] = $str;
@@ -78,14 +116,8 @@ class View
 
 	public static function setCss($file)
 	{
-//		$hostHot = '/public/dist/';
-		$hostHot = 'http://localhost:4000/';
-		$hostStatic = '/public/dist/';
 		$cache = true;
-
-		$host = $_ENV['MODE']==='development'
-			?$hostHot
-			:$hostStatic;
+		$host = self::getHost();
 
 		$time = ($cache) ? '' : "?" . time();
 		self::$jsCss['css'][] = "<link href='{$host}{$file}{$time}' rel='stylesheet' type='text/css'>";
@@ -98,11 +130,11 @@ class View
 
 	public function getImg($path)
 	{
-	  if (is_readable(ROOT .$path)){
-		   return $path;
-    }else{
-	     return '/pic/srvc/nophoto-min.jpg';
-    }
+		if (is_readable(ROOT . $path)) {
+			return $path;
+		} else {
+			return '/pic/srvc/nophoto-min.jpg';
+		}
 	}
 
 	public static function getCSS()

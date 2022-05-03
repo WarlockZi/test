@@ -3,6 +3,12 @@
 
 .custom-list {
 
+  [contenteditable]:hover{
+    background-color: $color-contenteditable;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
   > * {
     padding: 5px 3px;
     border-bottom: $color-gray4 solid 1px;
