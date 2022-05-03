@@ -8,7 +8,7 @@ export default function catalogItem() {
   }
 
   async function handleClick({target}) {
-    let item = $(customCatalogItem).find('.custom-catalog-item')
+    let item = customCatalogItem
     let modelName = item.dataset.model
     if (target.closest('.save')) {
       let model = getModel()
