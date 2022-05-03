@@ -45,7 +45,7 @@ $(document).ready(function () {
         $("[href='/adminsc/test/results']").addClass('current')
         break;
 
-      case /\/adminsc\/auth/.test(str):
+      case /\/auth\/profile/.test(str):
         user()
         break;
 

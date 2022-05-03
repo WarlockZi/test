@@ -30,12 +30,12 @@ class RightController Extends AppController
 
 		$items = $this->model::findAll();
 
-		$table = $this->getTable($items)->html;
-		$this->set(compact('table'));
+		$list = $this->getList($items)->html;
+		$this->set(compact('list'));
 
 	}
 
-	private function getTable($items)
+	private function getList($items)
 	{
 		return new CustomList(
 			[
@@ -74,7 +74,7 @@ class RightController Extends AppController
 						'search' => true,
 					],
 				],
-				'editCol' => true,
+				'editCol' => false,
 				'delCol' => true,
 				'addButton'=> true
 			]

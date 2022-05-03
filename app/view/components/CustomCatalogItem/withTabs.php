@@ -10,12 +10,12 @@
 <div class="custom-catalog-item__content">
 	<!--CONTENT-->
 	<section class="show" data-id="1">
+
 		<!--  TABLE  -->
     <? foreach ($this->fields as $fieldName => $data): ?>
 			<div class="row">
 				<div class="field"><?= $data['name'] ?></div>
 				:
-
         <? if (in_array($data['data-type'], ['string', 'number'])): ?>
 					<div class="value"
             <?= $data['contenteditable']; ?>
@@ -38,8 +38,11 @@
 
   <? $n = 2; ?>
   <? foreach ($this->tabs as $k => $tab): ?>
-		<section tab data-field="" data-id=<?= $n ?>>
-      <?= $tab; ?>
+		<section
+				tab
+				data-field="<?=$tab['field'];?>"
+				data-id=<?= $n ?>>
+				<?=$tab['html'];?>
 		</section>
     <? $n++; ?>
   <? endforeach; ?>

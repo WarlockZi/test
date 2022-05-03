@@ -5,7 +5,7 @@ import getSex from '../../Auth/getSex'
 
 export default function user() {
 
-  let item = $('.user-item')[0]
+  let item = $('[data-model="user"]')[0]
   if (item) {
     $(item).on('click', handleClick)
   }
@@ -20,16 +20,25 @@ export default function user() {
       if (res === 'ok') {
         popup.show('Сохранено')
       }
+    } else if (target.classList.contains('right')) {
+      let rights = $('input.right:checked')
+      let str = '';
+      [].map.call(rights, function (right) {
+        let s = right.previousElementSibling.innerText
+        str+=s+','
+      })
+        let tab = target.closest('[tab]')
+        tab.dataset.value = str
     }
   }
 
-  function rights(){
+  function rights() {
     let right = $('.right:checked')
     let rights = '';
-    [].map.call(right,(r)=>{
-      let str = r.previousElementSibling.innerText+','
-      rights+=str
-    },rights)
+    [].map.call(right, (r) => {
+      let str = r.previousElementSibling.innerText + ','
+      rights += str
+    }, rights)
     return rights
   }
 
@@ -57,7 +66,7 @@ export default function user() {
       fired: $(target).find('#fired').innerText,
       confirm: confirm(),
       sex: getSex(),
-      rights:rights()
+      rights: rights()
     }
   }
 }
