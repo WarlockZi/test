@@ -98,6 +98,12 @@ class AuthController extends AppController
     header('Location:/auth/login');
     exit();
   }
+  public function actionNoconfirm()
+  {
+
+  	$errorss = 4;
+
+  }
 
   public function actionProfile()
   {

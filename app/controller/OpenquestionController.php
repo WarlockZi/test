@@ -3,11 +3,11 @@
 namespace app\controller;
 
 use app\core\App;
-use app\model\Answer;
-use app\model\Question;
+use app\model\Openanswer;
+use app\model\Openquestion;
 
 
-class QuestionController Extends AppController
+class OpenquestionController Extends AppController
 {
 	private $req;
 

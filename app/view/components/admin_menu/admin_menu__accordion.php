@@ -51,13 +51,18 @@
 			Тесты
 		</label>
 		<ul>
-				<? if (User::can($this->user, ['role_employee'])): // admin ?>
-			  <a class="neon" href="/adminsc/test/do">Проходить тесты</a>
+
+				<? if (User::can($this->user, ['role_employee'])):  ?>
+			  <a class="neon" href="/adminsc/test/do">Проходить открытые тесты</a>
+			  <a class="neon" href="/adminsc/opentest/do">Проходить тесты</a>
 				<? endif; ?>
-				<? if (User::can($this->user, ['test-edit_read'])): // admin ?>
+				<? if (User::can($this->user, ['opentest-edit_read'])): ?>
+			  <a class="neon" href="/adminsc/opentest/edit">Редактировать открытые тесты</a>
+				<? endif; ?>
+				<? if (User::can($this->user, ['test-edit_read'])):  ?>
 			  <a class="neon" href="/adminsc/test/edit">Редактировать тесты</a>
 				<? endif; ?>
-				<? if (User::can($this->user, ['test-results_read'])): // admin ?>
+				<? if (User::can($this->user, ['test-results_read'])): ?>
 			  <a class="neon" href="/adminsc/testresult/results">Результаты тестов </a>
 				<? endif; ?>
 		</ul>

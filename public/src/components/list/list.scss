@@ -4,14 +4,14 @@
 .custom-list {
 
   [contenteditable]:hover{
-    background-color: $color-contenteditable;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
 
   > * {
+    border: 1px solid transparent;
     padding: 5px 3px;
-    border-bottom: $color-gray4 solid 1px;
+    border-bottom: solid 1px $color-gray4;
   }
 
   .edit:hover {

@@ -22,16 +22,16 @@ abstract class Model
 		$this->pdo = DB::instance();
 	}
 
-	protected function auth($ext,$action=''): void
+	protected function auth($ext, $action = ''): void
 	{
-		$user = User::findOneWhere('id',$_SESSION['id']??null);
-		if (!$user){
+		$user = User::findOneWhere('id', $_SESSION['id'] ?? null);
+		if (!$user) {
 			throw new \Exception('Нет пользователя ');
-    }
+		}
 		$this->user = $user;
-		$rightName = $this->model . '_'.$ext;
-    if(!User::can($this->user, $rightName)) {
-			exit(json_encode(['error'=>'Нет права ' . $rightName]));
+		$rightName = $this->model . '_' . $ext;
+		if (!User::can($this->user, $rightName)) {
+			exit(json_encode(['error' => 'Нет права ' . $rightName]));
 		}
 	}
 
@@ -44,7 +44,7 @@ abstract class Model
 ////			$this->user= $user;
 //	}
 
-	public static function create($values = [],$register=false)
+	public static function create($values = [], $register = false)
 	{
 		$model = new static();
 		if (!$register) $model->auth('create');
@@ -93,7 +93,7 @@ abstract class Model
 		$par = trim($par, ' '); // first trim last space
 		$par = trim($par, ',');
 
-		$model = new static();
+//		$model = new static();
 		$sql = "UPDATE `{$model->table}` SET {$par} WHERE id = ?";
 
 		if ($model->insertBySql($sql, [$id])) {
@@ -179,7 +179,7 @@ abstract class Model
 	public static function updateOrCreate($values)
 	{
 		$model = new static();
-		$id = $values['id']??'';
+		$id = $values['id'] ?? '';
 		if ($id) {
 			$model::update($values);
 			return true;
@@ -189,11 +189,14 @@ abstract class Model
 		}
 	}
 
-	protected function find($id = [])
+	public static function find($id = [])
 	{
-		$id = implode(',', array_map('intval', $id));
-		$sql = "SELECT * FROM {$this->table} WHERE id IN (?)";
-		return $this->pdo->query($sql, [$id]);
+		$model = new static();
+		if (is_array($id)) {
+			$id = implode(',', array_map('intval', $id));
+		}
+		$sql = "SELECT * FROM {$model->table} WHERE id IN (?)";
+		return $model->pdo->query($sql, [$id]);
 	}
 
 
