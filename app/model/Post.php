@@ -10,8 +10,8 @@ class Post extends Model
 
 	protected $fillable = [
 		'name' => '',
-		'chief' => [],
-		'subordinate' => [],
+		'chief' => '',
+		'subordinate' => '',
 	];
 
 	public static function cheifs($id)

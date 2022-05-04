@@ -11,6 +11,8 @@ class Accordion extends Model
 	protected $tree;
 	protected $menuHTML;
 	protected $class = 'menu';
+	protected $nameFieldName = 'test_name';
+	protected $parentFieldName = 'parent';
 	protected $cache = 3600;
 	protected $sql = "SELECT * FROM test";
 	protected $label_after = '';
@@ -37,7 +39,7 @@ class Accordion extends Model
 	protected function run()
 	{
 		$this->data = $this->getAssoc('test');
-		$this->tree = $this->hierachy();
+		$this->tree = $this->hierachy($this->parentFieldName);
 		$this->menuHTML = $this->showCat($this->tree);
 		$this->output();
 	}
@@ -63,7 +65,7 @@ class Accordion extends Model
 			return
 				"<li class='has-children level{$lev}'>" .
 				"<input type='checkbox' name ='group-1' id={$item['id']}>" .
-				"<label for={$item['id']}>{$item['test_name']}</label>" .
+				"<label for={$item['id']}>{$item[$this->nameFieldName]}</label>" .
 				$this->lable_after($item);
 		}
 		$isTest = $item['isTest'] ? '' : 'data-istest';
@@ -71,8 +73,8 @@ class Accordion extends Model
 			"<a data-id={$item['id']} " .
 			"class='level{$lev}' " .
 			"href='{$this->link}{$item['id']}' " .
-			"title={$item['test_name']} {$isTest}>" .
-			"{$item['test_name']} </a>" .
+			"title={$item[$this->nameFieldName]} {$isTest}>" .
+			"{$item[$this->nameFieldName]} </a>" .
 			$this->lable_after($item);
 	}
 

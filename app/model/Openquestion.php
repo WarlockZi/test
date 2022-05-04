@@ -2,18 +2,15 @@
 
 namespace app\model;
 
-use app\core\App;
-use app\model\Model;
 
-
-class Question extends Model
+class Openquestion extends Model
 {
-	public $table = 'question';
-	public $model = 'question';
+	public $table = 'openquestions';
+	public $model = 'openquestion';
 
 	protected $fillable = [
 		'qustion'=>'',
-		'parent'=>null,
+		'opentest_id'=>null,
 		'picq'=>'',
 		'sort'=>'100'
 	];

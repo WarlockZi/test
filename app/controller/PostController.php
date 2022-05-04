@@ -77,7 +77,7 @@ class PostController Extends AppController
 
 	protected function getMultiselectSubordinates($array, $selected)
 	{
-		return include ROOT . '/app/view/Post/getMultiselectCheifs.php';
+		return include ROOT . '/app/view/Post/getMultiselectSubordinates.php';
 	}
 
 	public function actionCreate()

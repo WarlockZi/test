@@ -1,9 +1,13 @@
 @import "../components/forms";
-//section{
-//  margin: 36px auto;
-//}
 
-.profile__grid{
+.noconfirm {
+  margin: 50px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile__grid {
   display: grid;
   align-items: center;
   justify-items: right;
@@ -11,7 +15,7 @@
   margin: 20px auto;
   width: 600px;
 
-  div{
+  div {
     color: hsl(0deg 0% 45%);
   }
 }

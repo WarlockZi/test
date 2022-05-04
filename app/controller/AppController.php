@@ -56,6 +56,8 @@ class AppController extends Controller
         header("Location:/user/login");
       } elseif (!$user['confirm'] == "1") {
         $errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
+        header("Location:/auth/noconfirm");
+
       } else {
         if ($user['email'] === $_ENV['SU_EMAIL']) {
           define('SU', true);

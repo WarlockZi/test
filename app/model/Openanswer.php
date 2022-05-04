@@ -2,19 +2,16 @@
 
 namespace app\model;
 
-use app\core\App;
-use app\model\Model;
 
-
-class Answer extends Model
+class Openanswer extends Model
 {
-	protected $table = 'answer';
-	protected $model = 'answer';
+	protected $table = 'openanswers';
+	protected $model = 'openanswer';
 
 	protected $fillable = [
-		'parent_question'=>null,
+		'openquestion_id'=>null,
 		'answer'=>'',
-		'correct_answer'=>'0',
+		'is_correct'=>'0',
 		'pica'=>''
 	];
 

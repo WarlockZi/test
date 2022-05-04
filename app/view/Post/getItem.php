@@ -42,7 +42,7 @@ $item = new CustomCatalogItem(
 			],
 			'subourdinate' => [
 				'className' => 'fullname',
-				'field' => '$subordinate',
+				'field' => 'subordinate',
 				'name' => 'Управляет',
 				'width' => '1fr',
 				'data-type' => 'multiselect',
