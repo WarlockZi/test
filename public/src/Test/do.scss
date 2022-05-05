@@ -136,6 +136,38 @@
     width: 100%;
     border: 1px #ccc solid;
     padding: 15px;
+
+
+    .question {
+      display: none;
+      //width: 100%;
+      flex-direction: column;
+
+      &.show {
+        display: flex;
+      }
+
+      .q {
+        display: flex;
+        flex-wrap: wrap;
+        min-height: 50px;
+        margin-bottom: 0;
+        //width: 100%;
+        @include _h3;
+
+
+        .q-text {
+          width: 60%;
+          margin-bottom: 10px;
+          flex: 1 0 auto;
+        }
+
+        .num {
+          padding-right: 10px;
+        }
+      }
+    }
+
   }
 }
 
@@ -281,32 +313,6 @@
   }
 }
 
-
-.question {
-  display: none;
-  //width: 100%;
-  flex-direction: column;
-
-  .q {
-    display: flex;
-    flex-wrap: wrap;
-    min-height: 50px;
-    margin-bottom: 0;
-    //width: 100%;
-    @include _h3;
-
-
-    .q-text {
-      width: 60%;
-      margin-bottom: 10px;
-      flex: 1 0 auto;
-    }
-
-    .num {
-      padding-right: 10px;
-    }
-  }
-}
 
 
 

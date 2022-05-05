@@ -1,0 +1,30 @@
+.opentest_wrap {
+  display: flex;
+  flex-flow: column;
+
+  .question {
+    display: none;
+    margin-bottom: 10px;
+
+    &.show {
+      display: flex;
+    }
+
+    .question_wrap {
+
+      .head {
+        display: flex;
+        padding: 5px;
+
+        .sort {
+          //padding: 3px;
+          margin-right: 10px;
+        }
+
+        .text {
+        }
+      }
+    }
+
+  }
+}

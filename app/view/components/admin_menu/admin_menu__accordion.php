@@ -53,8 +53,8 @@
 		<ul>
 
 				<? if (User::can($this->user, ['role_employee'])):  ?>
-			  <a class="neon" href="/adminsc/test/do">Проходить открытые тесты</a>
-			  <a class="neon" href="/adminsc/opentest/do">Проходить тесты</a>
+			  <a class="neon" href="/adminsc/test/do">Проходить тесты</a>
+			  <a class="neon" href="/adminsc/opentest/do">Проходить открытые тесты</a>
 				<? endif; ?>
 				<? if (User::can($this->user, ['opentest-edit_read'])): ?>
 			  <a class="neon" href="/adminsc/opentest/edit">Редактировать открытые тесты</a>

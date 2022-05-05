@@ -15,16 +15,16 @@ function handleClick({target}) {
 /// get clicked button Return if clicked is active
     if (target.classList.contains('nav-active')) return
 
-    let active_btn = $('.pagination .nav-active')[0]
+    let active_btn = $('.pagination .active')[0]
 //// change active button
-    active_btn.classList.remove('nav-active')
-    target.classList.add('nav-active')
+    active_btn.classList.remove('active')
+    target.classList.add('active')
 
     let id_to_hide = active_btn.dataset['pagination']
-    $(`.question[data-id="${id_to_hide}"]`).removeClass('flex1')
+    $(`.question[data-id="${id_to_hide}"]`).removeClass('show')
 
     let id_to_show = target.dataset['pagination']
-    $(`.question[data-id="${id_to_show}"]`).addClass('flex1')
+    $(`.question[data-id="${id_to_show}"]`).addClass('show')
 }
 
 // //// добавление вопроса
