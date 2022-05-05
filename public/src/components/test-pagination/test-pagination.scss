@@ -1,3 +1,4 @@
+@import "../../var";
 .pagination {
   display: flex;
   flex-wrap: wrap;
@@ -33,29 +34,26 @@
     }
   }
 
-  .nav-active {
+  .active {
     background-color: #6e6e6e; /* Green */
   }
 }
 
-$add-color: #1bbc9b;
-$add-color_hover: #19ad8e;
-
 
 .pagination__add-question {
-  background-color: $add-color;
+  background-color: $color-main;
   border: none;
   color: white;
   padding: 0 6px;
   text-align: center;
   font-size: 1rem;
-  box-shadow: 0 2px 4px 0 $add-color;
+  box-shadow: 0 2px 4px 0 $color-main;
   margin: 0 3px 4px 0;
   line-height: 19px;
   cursor: pointer;
 
   &:hover {
-    background-color: $add-color_hover;
+    background-color: $color-main-hover;
 
   }
 

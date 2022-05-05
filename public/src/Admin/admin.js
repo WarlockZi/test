@@ -13,6 +13,7 @@ import rights from './Rights/rights'
 import planning from './Planning/planning'
 import user from './user/user'
 import users from './user/users'
+import '../Test/open_test'
 
 import radio from '@components/radio/radio'
 import list from '@components/list/list'
