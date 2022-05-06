@@ -9,11 +9,11 @@ class TestResult extends Model
 	public $model = 'testResult';
 
 	protected $fillable = [
-		'html'=>'',
 		'user'=>null,
 //		'date'=>'',
 		'errorCnt'=>null,
 		'questionCnt'=>null,
+		'html'=>'',
 		'testid'=>'',
 		'testname'=>'',
 	];

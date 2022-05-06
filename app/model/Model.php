@@ -9,7 +9,7 @@ use Engine\DI\DI;
 abstract class Model
 {
 	protected $pdo;
-	protected $sql;
+//	protected $sql;
 	protected $table;
 	protected $model;
 

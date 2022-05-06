@@ -2,7 +2,7 @@
 
 $menu = new Accordion([
 	'model' => 'test',
-	'class' => 'accordion test-edit',
+	'class' => 'accordion test-edit  accordion_wrap',
 	'label_after' => ICONS . "/edit.svg",
 	'link' => '/adminsc/test/edit/',
 	'$link_label_after' => '/adminsc/test/update/',

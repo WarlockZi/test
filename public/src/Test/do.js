@@ -59,7 +59,7 @@ export default function testDo() {
 
   function objToServer(errorCnt) {
     return {
-      token: document.querySelector('meta[name="token"]').getAttribute('content'),
+      // token: document.querySelector('meta[name="token"]').getAttribute('content'),
       questionCnt: $('.question').length,
       errorCnt: errorCnt,
       html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,

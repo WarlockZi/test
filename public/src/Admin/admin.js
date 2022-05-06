@@ -5,14 +5,15 @@ import '../components/accordion/accordion'
 import "./model/cache";
 import {$} from "../common";
 
-import testResults from '../Test/test_results/test_results'
+// import testResults from '../Test/test_results/test_results'
+import opentestEdit from '../Test/opentest-edit'
 import testEdit from '../Test/test-edit'
 import testDo from '../Test/do'
-import settings from './Settings/settings'
-import rights from './Rights/rights'
-import planning from './Planning/planning'
-import user from './user/user'
-import users from './user/users'
+// import settings from './Settings/settings'
+// import rights from './Rights/rights'
+// import planning from './Planning/planning'
+// import user from './user/user'
+// import users from './user/users'
 import '../Test/open_test'
 
 import radio from '@components/radio/radio'
@@ -20,15 +21,21 @@ import list from '@components/list/list'
 import multiselect from '@components/multiselect/multiselect'
 import catalogItem from '@components/catalog-item/catalog-item'
 import catalogDate from '@components/date/date'
+import tooltips from "../components/tooltip/tooltip";
+import accordionShow from "../Test/accordion-show";
 
 $(document).ready(function () {
   navigate(window.location.pathname)
-  radio()
-  list()
-  multiselect()
-  catalogItem()
+  // radio()
+  // list()
+  // multiselect()
+  // catalogItem()
+  // tooltips()
+
+  accordionShow()
 
   testEdit()
+  opentestEdit()
 
   function navigate(str) {
     // debugger

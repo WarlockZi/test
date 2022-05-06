@@ -10,7 +10,6 @@ export default function tooltips() {
 // debugger
     // если у нас есть подсказка...
     if (!target.dataset||!target.dataset.tooltip) return;
-    // if (!) return;
 
     let tooltipHtml = target.dataset.tooltip
     // ...создадим элемент для подсказки
