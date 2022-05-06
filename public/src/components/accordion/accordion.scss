@@ -265,7 +265,8 @@
 
 }
 
-.test-edit__accordion {
+.accordion_wrap {
+  //display: none;
   max-width: 0px;
   transition: max-width 1s;
   margin-bottom: 25px;
@@ -279,7 +280,7 @@
   }
 }
 
-.test-edit__accordion .accordion {
+.accordion_wrap .accordion {
 
   a::after {
     /* image icon */

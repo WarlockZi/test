@@ -3,7 +3,6 @@ import '../components/footer/footer.scss'
 
 import './test-edit-menu.scss'
 import '../components/popup.scss'
-import tooltips from '../components/tooltip/tooltip'
 
 import './test-update'
 // import './path-create'
@@ -19,41 +18,42 @@ import accordionShow from "./accordion-show";
 import testEditActions from "./testEditActions";
 
 export default function testEdit() {
+  let testEdit = $('.test-edit-wrapper')
+  if (testEdit) {
 
-  tooltips()
-  sortable('.questions')
-  accordionShow()
+    sortable('.test-edit-wrapper.questions')
 
-// debugger
-  let customSelects = $('[custom-select]');
-  [].forEach.call(customSelects, function (select) {
-    new WDSSelect(select)
-  });
+
+    // debugger
+    let customSelects = $('[custom-select]');
+    [].forEach.call(customSelects, function (select) {
+      new WDSSelect(select)
+    });
 
 // при создании нового теста показать пустой вопрос
-  if (!_question.questions().length
-    && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
-    _question.showFirst()
-  }
+    if (!_question.questions().length
+      && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
+      _question.showFirst()
+    }
 
-  // debugger
-  let testEditWrapper = $('.test-edit-wrapper')[0]
-  if (testEditWrapper) {
-    testEditWrapper.addEventListener('click',
-      ({target}) => {
-        testEditActions(target, 'click')
-      }
-    )
-    testEditWrapper.addEventListener('change',
-      ({target}) => {
-        testEditActions(target, 'change')
-      }
-    )
+    // debugger
+    let testEditWrapper = $('.test-edit-wrapper')[0]
+    if (testEditWrapper) {
+      testEditWrapper.addEventListener('click',
+        ({target}) => {
+          testEditActions(target, 'click')
+        }
+      )
+      testEditWrapper.addEventListener('change',
+        ({target}) => {
+          testEditActions(target, 'change')
+        }
+      )
+    }
+
   }
-  // addTooltip({
-  //   els: $('.question__delete'),
-  //   message: 'Удалить вопросы и ответы'
-  // })
 }
+
+
 
 

@@ -1,5 +1,23 @@
 import './common.scss'
 
+const debounce = (fn, time = 700) => {
+  let timeout;
+  return function () {
+    const functionCall = () => fn.apply(this, arguments);
+    clearTimeout(timeout);
+    timeout = setTimeout(functionCall, time);
+  }
+}
+
+function IsJsonString(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
 function dropDown(elementId) {
   var dropdown = document.getElementById(elementId);
   try {
@@ -108,6 +126,7 @@ let popup = {
 
 const uniq = (array) => Array.from(new Set(array));
 
+
 async function get(key) {
   let p = window.location.search;
   p = p.match(new RegExp(key + '=([^&=]+)'));
@@ -130,7 +149,15 @@ async function post(url, data = {}) {
       reject(Error("Network Error" + e));
     };
     req.onload = async function () {
-      resolve(req.response);
+      if (IsJsonString(req.response)) {
+        resolve(req.response);
+      }else {
+        let e = $('.error')[0]
+        if (e) {
+          e.innerHTML = req.response
+        }
+
+      }
     };
   });
 }
@@ -274,6 +301,9 @@ export {
   dropDown,
   addTooltip,
   popup,
+  debounce,
+  IsJsonString,
+
   post, get, uniq,
   validate, $
 }

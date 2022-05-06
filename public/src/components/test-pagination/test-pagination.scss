@@ -1,4 +1,5 @@
 @import "../../var";
+
 .pagination {
   display: flex;
   flex-wrap: wrap;
@@ -33,9 +34,11 @@
       background: #6e6e6e;
     }
   }
-
   .active {
-    background-color: #6e6e6e; /* Green */
+    background-color: #6e6e6e;
+  }
+  .filled {
+    background-color: $color-gray-max;
   }
 }
 

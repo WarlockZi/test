@@ -6,10 +6,10 @@ use app\model\Model;
 
 class Accordion extends Model
 {
-	protected $data;
 	protected $model;
+	protected $data;
 	protected $tree;
-	protected $menuHTML;
+	protected $html;
 	protected $class = 'menu';
 	protected $nameFieldName = 'test_name';
 	protected $parentFieldName = 'parent';
@@ -38,9 +38,9 @@ class Accordion extends Model
 
 	protected function run()
 	{
-		$this->data = $this->getAssoc('test');
+		$this->data = $this->getAssoc();
 		$this->tree = $this->hierachy($this->parentFieldName);
-		$this->menuHTML = $this->showCat($this->tree);
+		$this->html = $this->showCat($this->tree);
 		$this->output();
 	}
 
@@ -61,14 +61,14 @@ class Accordion extends Model
 
 	function li($item, $lev)
 	{
-		if (isset($item['childs']) && $item['childs'] && !$item['isTest']) {
+		if (!$item['isTest']) {
 			return
 				"<li class='has-children level{$lev}'>" .
 				"<input type='checkbox' name ='group-1' id={$item['id']}>" .
 				"<label for={$item['id']}>{$item[$this->nameFieldName]}</label>" .
 				$this->lable_after($item);
 		}
-		$isTest = $item['isTest'] ? '' : 'data-istest';
+		$isTest = $item['isTest']==='1' ? '' : 'data-istest';
 		return "<li>" .
 			"<a data-id={$item['id']} " .
 			"class='level{$lev}' " .
@@ -102,7 +102,7 @@ class Accordion extends Model
 
 	public function output()
 	{
-		return "<ul class = '{$this->class}'>{$this->menuHTML}</ul>";
+		return "<ul class = '{$this->class}'>{$this->html}</ul>";
 	}
 
 }

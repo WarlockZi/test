@@ -1,6 +1,7 @@
 .opentest_wrap {
   display: flex;
   flex-flow: column;
+  margin: 0 10px 0 0;
 
   .question {
     display: none;
@@ -11,6 +12,11 @@
     }
 
     .question_wrap {
+      width: 100%;
+
+      .answer textarea {
+        width: 100%;
+      }
 
       .head {
         display: flex;

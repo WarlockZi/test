@@ -79,7 +79,6 @@ class TestresultController extends AppController
 		if ($this->ajax) {
 			if ($resid = TestResult::create($this->ajax)) {
 				if (!$resid) exit('Результат в базу не сохранен');
-//				if (!$mail) exit(json_encode('ok'));
 				self::sendTestRes($this->ajax, $resid-1);
 			}
 		}
@@ -98,22 +97,5 @@ class TestresultController extends AppController
 		$template = ob_get_clean();
 		return $template;
 	}
-
-
-
-
-//  private function getMenu()
-//  {
-//    ob_start();
-//    new Menu([
-//      'tpl' => ROOT . "/app/view/widgets/menu/menu_tpl/do_test_menu.php",
-//      'cache' => 60,
-//      'sql' => "SELECT * FROM test WHERE enable = '1'"
-//    ]);
-//    $menuTestDo = ob_get_clean();
-//
-//    App::$app->cache->set('menuTestDo', $menuTestDo, 60 * 5);
-//    return $menuTestDo;
-//  }
 
 }
