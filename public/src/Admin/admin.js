@@ -5,15 +5,14 @@ import '../components/accordion/accordion'
 import "./model/cache";
 import {$} from "../common";
 
-// import testResults from '../Test/test_results/test_results'
+import testResults from '../Test/test_results/test_results'
 import opentestEdit from '../Test/opentest-edit'
 import testEdit from '../Test/test-edit'
 import testDo from '../Test/do'
-// import settings from './Settings/settings'
-// import rights from './Rights/rights'
-// import planning from './Planning/planning'
-// import user from './user/user'
-// import users from './user/users'
+import settings from './Settings/settings'
+import rights from './Rights/rights'
+import planning from './Planning/planning'
+import user from './user/user'
 import '../Test/open_test'
 
 import radio from '@components/radio/radio'
@@ -26,11 +25,11 @@ import accordionShow from "../Test/accordion-show";
 
 $(document).ready(function () {
   navigate(window.location.pathname)
-  // radio()
-  // list()
-  // multiselect()
-  // catalogItem()
-  // tooltips()
+  radio()
+  list()
+  multiselect()
+  catalogItem()
+  tooltips()
 
   accordionShow()
 
@@ -55,10 +54,6 @@ $(document).ready(function () {
 
       case /\/auth\/profile/.test(str):
         user()
-        break;
-
-      case /\/adminsc\/user\/list/.test(str):
-        users()
         break;
 
       case /\/adminsc\/crm/.test(str):

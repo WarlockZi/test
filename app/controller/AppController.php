@@ -10,7 +10,6 @@ class AppController extends Controller
 {
   protected $ajax;
   protected $user;
-  protected $salt = "popiyonovacheesa";
 
   public function __construct(array $route)
   {
@@ -34,7 +33,8 @@ class AppController extends Controller
 
   public function preparePassword(string $password): string
   {
-    return md5($password . $this->salt);
+    $salt = "popiyonovacheesa";
+    return md5($password . $salt);
   }
 
   public function autorize()
