@@ -41,13 +41,9 @@
 
 			 <? endforeach; ?>
 
-<!--			 --><?// if ($this->editCol): ?>
 				 <? include ROOT . '/app/view/components/CustomList/edit.php'; ?>
-<!--			 --><?// endif; ?>
 
-<!--			 --><?// if ($this->delCol): ?>
 				 <? include ROOT . '/app/view/components/CustomList/del.php'; ?>
-<!--			 --><?// endif; ?>
 
 
 		 <? endforeach; ?>
