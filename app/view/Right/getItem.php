@@ -30,7 +30,7 @@ function getSex($item)
 		'className' => 'custom-radio',
 		'title' => '',
 		'field' => 'sex',
-		'nameFieldName' => 'test_name',
+		'optionName' => 'test_name',
 		'tree' => ['m' => 'М', 'f' => 'Ж'],
 		'selected' => $item['sex'],
 	]);
@@ -81,9 +81,6 @@ function getConfirm()
 		'title' => '',
 		'field' => 'confirm',
 		'tab' => '&nbsp;&nbsp;&nbsp;',
-//		'initialOption' => true,
-//		'initialOptionValue' => '---',
-		'nameFieldName' => 'test_name',
 		'tree' => [1 => 'да', 0 => 'нет'],
 		'selected' => [$item['confirm'] ?? 0],
 	]);

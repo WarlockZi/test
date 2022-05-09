@@ -16,7 +16,7 @@
 
 	  <option value="<?= $v['id']??$k; ?>"
 	  <?=(int)$this->selected==$k?'selected':'';?>>
-			 <?= $v[$this->fieldName]??$v ?>
+			 <?= is_string($v)?$v:$v[$this->optionName]; ?>
 	  </option>
 		<? $level = 0; ?>
 		<? if (isset($v['childs'])): ?>

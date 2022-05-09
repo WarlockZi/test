@@ -11,7 +11,7 @@ class CustomMultiSelect
 	private $tab = '.';
 	private $tree = [];
 	private $title = '';
-	private $fieldName = 'name';
+	private $optionName = 'name';
 	private $selected = [];
 	public $html = '';
 	private $tpl = ROOT.'/app/view/components/CustomMultiSelect/tpl.php';

@@ -14,8 +14,8 @@ class CustomSelect
 
 	private $initialOption = false;
 	private $initialOptionValue = '--';
-	private $fieldName = '';
-	private $selected = '';
+	private $optionName = '';
+	private $selected = [];
 	private $type = 'string';
 	private $pathToTpl = ROOT.'/app/view/components/CustomSelect/';
 	private $tpl = 'tpl.php';
