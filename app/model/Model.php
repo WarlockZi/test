@@ -341,7 +341,7 @@ abstract class Model
 	{
 		$data = $this->getAssoc2($this->data);
 		foreach ($data as $id => &$node) {
-			if (isset($node[$parent]) && !$node[$parent]) {
+			if ((isset($node[$parent])||$node[$parent]===null) && !$node[$parent]) {
 				$tree[$id] = &$node;
 			} elseif (isset($node[$parent]) && $node[$parent]) {
 				$data[$node[$parent]]['childs'][$id] = &$node;

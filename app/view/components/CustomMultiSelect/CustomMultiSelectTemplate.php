@@ -9,7 +9,7 @@
 		<div class="chip-wrap">
 				<? foreach ($this->tree as $k => $v): ?>
 					<? if (in_array($v['id'], $this->selected)): ?>
-				  <div class="chip" data-id="<?= $v['id']; ?>"><?= $v[$this->fieldName] ?>
+				  <div class="chip" data-id="<?= $v['id']; ?>"><?= $v[$this->optionName] ?>
 					  <div class="del">Х</div>
 				  </div>
 					<? endif; ?>
@@ -24,11 +24,11 @@
 		<ul>
 			<li class="inner">
 					 <? foreach ($this->tree as $k => $v): ?>
-				  <label for="<?= $v[$this->fieldName] ?>"
+				  <label for="<?= $v[$this->optionName] ?>"
 				         data-id="<?= $v['id']; ?>"
 								<?= in_array($v['id'], $this->selected)
 									? "class='selected'" : ''; ?>
-				  ><?= $v[$this->fieldName] ?></label>
+				  ><?= $v[$this->optionName] ?></label>
 					 <? endforeach; ?>
 			</li>
 		</ul>
@@ -39,7 +39,7 @@
 			  <option
 					  value="<?= $v['id'] ?>"
 						 <?= in_array($v['id'], $this->selected) ? 'selected' : ''; ?>
-			  ><?= $v[$this->fieldName] ?>
+			  ><?= $v[$this->optionName] ?>
 			  </option>
 					<? $level = 0; ?>
 					<? if (isset($v['childs'])): ?>
