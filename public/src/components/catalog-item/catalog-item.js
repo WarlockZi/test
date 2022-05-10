@@ -12,7 +12,7 @@ export default function catalogItem() {
     let modelName = item.dataset.model
     if (target.closest('.save')) {
       let model = getModel()
-      let res = await post(`/adminsc/${modelName}/update`, {...model})
+      let res = await post(`/adminsc/${modelName}/updateorcreate`, {...model})
       res = JSON.parse(res)
       if (res.msg === 'ok') {
         popup.show('Сохранено')
@@ -60,6 +60,10 @@ export default function catalogItem() {
         obj[field.dataset.field] = field.innerText
       }
     }, obj)
+    let isTest = $('[data-isTest]')[0]
+    if (isTest){
+      obj.isTest = +isTest.dataset.isTest
+    }
     return obj
   }
 }
