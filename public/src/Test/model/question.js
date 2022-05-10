@@ -103,8 +103,6 @@ export let _question = {
   },
 
   questions: () => {
-    let qs = $('.questions>.question-edit')
-    // debugger
     return $('.questions>.question-edit')
     // return $('.questions>.question-edit').el
   },
