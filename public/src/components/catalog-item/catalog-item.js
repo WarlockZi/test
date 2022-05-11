@@ -48,7 +48,7 @@ export default function catalogItem() {
           return chip.dataset.id
         })
         obj[field.dataset.field] = ids.toString()
-      } else if (field.classList.contains('custom-select')){
+      } else if (field.hasAttribute('custom-select')){
         obj[field.dataset.field] = field.dataset.value
       } else if (field.hasAttribute('custom-radio')){
         obj[field.dataset.field] = field.dataset.value
@@ -62,7 +62,7 @@ export default function catalogItem() {
     }, obj)
     let isTest = $('[data-isTest]')[0]
     if (isTest){
-      obj.isTest = +isTest.dataset.isTest
+      obj.isTest = +isTest.dataset.istest
     }
     return obj
   }

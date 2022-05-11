@@ -7,9 +7,9 @@
 
 	<? if ($this->initialOption): ?>
 	  <option
-			  value=""
+			  value="<?= $this->initialOptionValue; ?>"
 			 <?=!$this->selected?'selected':'';?>
-	  ><?= $this->initialOptionValue; ?></option>
+	  ><?= $this->initialOptionLabel; ?></option>
 	<? endif; ?>
 
 	<? foreach ($this->tree as $k => $v): ?>

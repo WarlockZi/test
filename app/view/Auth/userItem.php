@@ -11,7 +11,8 @@ private function getMultiselectPosts($array, $selected = [])
     'tab' => '.',
     'optionName' => 'name',
     'initialOption' => true,
-    'initialOptionValue' => '--',
+    'initialOptionLabel' => '--',
+    'initialOptionValue' => 0,
     'tree' => $array,
     'selected' => $selected,
   ]);

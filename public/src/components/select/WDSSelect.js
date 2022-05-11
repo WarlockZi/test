@@ -1,5 +1,6 @@
 import './WDSSelect.scss'
 import './customSelect.scss'
+
 export default class WDSSelect {
 
   constructor(el) {
@@ -15,11 +16,14 @@ export default class WDSSelect {
     if (el.className) this.sel.classList.add(el.className)
 
     this.label = document.createElement("span")
+    this.arrow = document.createElement("div")
+    this.space = document.createElement("div")
 
     this.ul = document.createElement("ul")
     setup(this)
-    el.style.display = "none"
     el.after(this.sel)
+    // el.style.display = "none"
+    el.remove()
   }
 
   get selectedOption() {
@@ -31,24 +35,24 @@ export default class WDSSelect {
   }
 
   selectValue(value) {
-    const newSelectedOption = this.options.find(option => {
+    const next = this.options.find(option => {
       return option.value === value
     })
-    const prevSelectedOption = this.selectedOption
-    prevSelectedOption.selected = false
-    prevSelectedOption.element.selected = false
+    const prev = this.selectedOption
+    prev.selected = false
+    // prev.element.selected = false
 
-    newSelectedOption.selected = true
-    newSelectedOption.element.selected = true
+    next.selected = true
+    // next.element.selected = true
 
-    this.label.innerText = newSelectedOption.label
-    this.label.closest('.custom-select').dataset['id'] = newSelectedOption.value
-    this.label.closest('.custom-select').dataset['value'] = newSelectedOption.value
+    this.space.innerText = next.label
+    this.label.closest('[custom-select]').dataset['id'] = next.value
+    this.label.closest('[custom-select]').dataset['value'] = next.value
     this.ul
-      .querySelector(`[data-value="${prevSelectedOption.value}"]`)
+      .querySelector(`[data-value="${prev.value}"]`)
       .classList.remove("selected")
     const newCustomElement = this.ul.querySelector(
-      `[data-value="${newSelectedOption.value}"]`
+      `[data-value="${next.value}"]`
     )
     newCustomElement.classList.add("selected")
     newCustomElement.scrollIntoView({block: "nearest"})
@@ -59,31 +63,36 @@ function setup(select) {
 
   if (select.title) {
     select.titleElement = document.createElement("div")
-    select.titleElement.classList.add("custom-select-title")
+    select.titleElement.classList.add("title")
     select.titleElement.innerText = select.title
     select.sel.append(select.titleElement)
   }
 
-  select.sel.classList.add("custom-select")
+  // select.sel.classList.add("custom-select")
+  select.sel.setAttribute("custom-select",'')
   select.sel.dataset['field'] = select.field
-  // debugger
   select.sel.dataset['id'] = select.selectedOption.value
   select.sel.dataset['value'] = select.selectedOption.value
   select.sel.tabIndex = 0
 
-  // debugger
-  select.label.classList.add("custom-select-value")
-  select.label.innerText = select.selectedOption.label
+  // select.label.classList.add("value")
   select.sel.append(select.label)
 
-  select.ul.classList.add("custom-select-options")
+  select.space.classList.add("space")
+  select.space.innerText = select.selectedOption.label
+  select.label.append(select.space)
+
+  select.arrow.classList.add("arrow")
+  select.label.append(select.arrow)
+
+  select.ul.classList.add("options")
   select.options.forEach(option => {
     setOption(option)
   })
 
   function setOption(option) {
     const li = document.createElement("li")
-    li.classList.add("custom-select-option")
+    li.classList.add("option")
     li.classList.toggle("selected", option.selected)
     li.innerText = option.label
     li.dataset.value = option.value

@@ -45,7 +45,7 @@ class OpenquestionController Extends AppController
 			$question = $this->req['question'] ?? '';
 			$q_id = $this->req['question']['id'] ?? '';
 			$sort = $this->req['question']['sort'] ?? '';
-			$qId = Question::updateOrCreate($question);
+			$qId = Openquestion::updateOrCreate($question);
 			if ($qId === false) {
 				return;
 			} elseif (is_int($qId)) {
@@ -91,8 +91,6 @@ class OpenquestionController Extends AppController
 
 
 
-
-
 	public function actionUpdate()
 	{
 		Question::updateOrCreate($this->req['question']);
@@ -130,7 +128,7 @@ class OpenquestionController Extends AppController
 	public function actionSort()
 	{
 		$q_ids = $this->ajax['toChange'];
-		Question::sort($q_ids);
+		Openquestion::sort($q_ids);
 		exit(json_encode(['msg' => 'Сортировка сохранена']));
 	}
 

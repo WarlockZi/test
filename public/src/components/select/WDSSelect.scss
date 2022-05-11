@@ -2,7 +2,7 @@
 @import "../../mixin_media";
 
 /// CLASS = TYPE 1
-.custom-select.type1 {
+[custom-select] .type1 {
   background-color: #fff;
   margin: 0 5px;
   flex: 1 0 auto;
@@ -11,7 +11,7 @@
     background-color: #cccccc;
   }
 
-  .custom-select-value {
+  .value {
     padding: 0.5rem 0.5rem 0.25rem;
     font-size: 1rem;
   }
@@ -20,31 +20,32 @@
 
 /// COMMON
 
-[custom-select] {
-  display: none;
-}
-
-.custom-select-value,
-.custom-select-options,
-.custom-select-option {
+.value,
+.options,
+.option {
   box-sizing: border-box;
 }
 
 
-.custom-select {
+[custom-select] {
   position: relative;
   background-color: white;
   display: inline-block;
   margin: $margin-form;
-  min-width: 200px;
+  min-width: 219px;
   flex: 1 0 auto;
+  border: 1px solid transparent;
+
+  &:hover {
+    border: $border-field-hover;
+  }
 
   &:focus-visible {
     outline: 1px solid $color-gray5;
   }
 
   // TITLE
-  .custom-select-title {
+  .title {
     display: inline-block;
     position: absolute;
 
@@ -56,20 +57,20 @@
   }
 
   // VALUE
-  .custom-select:focus > .custom-select-value {
+  .custom-select:focus > .value {
     outline: none;
   }
 
-  .custom-select-value {
+  span {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid transparent;
-    padding: $padding-form;
+    //padding: $padding-form;
     cursor: pointer;
     user-select: none;
     font-size: 1rem;
-    &:after {
+
+    .arrow {
       content: '';
       display: inline-block;
       border: 4px solid transparent;
@@ -77,18 +78,20 @@
       margin-left: 12px;
       margin-top: 4px;
     }
-    &:hover{
-      border: $border-field-hover;
+
+    .space {
+      min-height: 21px;
     }
 
   }
 
 
-
   // OPTIONS
-  .custom-select-options {
+  .options {
     display: none;
     position: absolute;
+    left: 0px;
+    top: 102%;
     padding: 0;
     margin: 0;
     width: 100%;
@@ -103,7 +106,7 @@
     }
 
     // OPTION
-    .custom-select-option {
+    .option {
       padding: .25rem .5rem;
       cursor: pointer;
       min-height: 25px;

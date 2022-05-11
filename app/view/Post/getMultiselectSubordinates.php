@@ -7,7 +7,8 @@ $posts = 	 new CustomMultiSelect([
 	'tab' => '.',
 	'optionName' => 'name',
 	'initialOption' => true,
-	'initialOptionValue' => '--',
+	'initialOptionValue' => 0,
+	'initialOptionLabel' => '--',
 	'tree' => $array,
 	'selected' => $selected,
 ]);

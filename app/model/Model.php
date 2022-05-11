@@ -55,7 +55,11 @@ abstract class Model
 		$fillable = $model->fillable;
 		foreach ($values as $k => $v) {
 			if (array_key_exists($k, $model->fillable)) {
-				$fillable[$k] = $v;
+				if (is_numeric($fillable[$k])) {
+					$fillable[$k] = (int)$v;
+				} elseif (is_numeric($fillable[$k])) {
+					$fillable[$k] = (string)$v;
+				}
 			}
 		}
 
@@ -341,7 +345,7 @@ abstract class Model
 	{
 		$data = $this->getAssoc2($this->data);
 		foreach ($data as $id => &$node) {
-			if ((isset($node[$parent])||$node[$parent]===null) && !$node[$parent]) {
+			if ((isset($node[$parent]) || $node[$parent] === null) && !$node[$parent]) {
 				$tree[$id] = &$node;
 			} elseif (isset($node[$parent]) && $node[$parent]) {
 				$data[$node[$parent]]['childs'][$id] = &$node;

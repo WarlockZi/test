@@ -39,7 +39,7 @@ function getOptions($item, $self)
 			'enable' => [
 				'className' => 'enable',
 				'field' => 'enable',
-				'name' => 'Показыать пользователю',
+				'name' => 'Показывать пользователю',
 				'contenteditable' => 'select',
 				'html' => getEbabled($item),
 				'data-type' => 'select',
@@ -106,13 +106,13 @@ function getRights($user)
 	return include ROOT . '/app/view/User/getRightsTab.php';
 }
 
-function noElement()
+function noElement($self)
 {
 	ob_start();
 	?>
 	<div class="no-element">
 		Элемент не найден
-		<a class="to-list" href="/adminsc/<?= $this->model; ?>/list">К списку</a>
+		<a class="to-list" href="/adminsc/<?= $self->model; ?>">Вернуться</a>
 	</div>
 	<?
 	return ob_get_clean();
@@ -121,7 +121,7 @@ function noElement()
 if ($item) {
 	return getHtml($item, $this);
 } else {
-	return noElement();
+	return noElement($this);
 }
 
 
