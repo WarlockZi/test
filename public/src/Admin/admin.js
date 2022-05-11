@@ -6,7 +6,7 @@ import "./model/cache";
 import {$} from "../common";
 
 import testResults from '../Test/test_results/test_results'
-import opentestEdit from '../Test/opentest-edit'
+import '../Test/opentest-edit'
 import testEdit from '../Test/test-edit'
 import testDo from '../Test/do'
 import settings from './Settings/settings'
@@ -34,7 +34,7 @@ $(document).ready(function () {
   accordionShow()
 
   testEdit()
-  opentestEdit()
+  // opentestEdit()
 
   function navigate(str) {
     // debugger

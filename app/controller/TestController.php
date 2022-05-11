@@ -31,6 +31,7 @@ class TestController extends AppController
 	}
 
 
+
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
@@ -45,7 +46,7 @@ class TestController extends AppController
 
 		$id = $this->route['id'];
 		$test = Test::findOneWhere('id', $id);
-		$test['children'] = Test::findAllWhere('parent', $id);;
+//		$test['children'] = Test::findAllWhere('parent', $id);;
 		$this->set(compact('test'));
 
 		$item = $test;
@@ -204,7 +205,8 @@ class TestController extends AppController
 			'field' => 'enable',
 			'tab' => '&nbsp;&nbsp;&nbsp;',
 			'initialOption' => true,
-			'initialOptionValue' => '---',
+			'initialOptionValue' => 0,
+			'initialOptionLabel' => '--',
 			'optionName' => 'test_name',
 			'tree' => [0 => 'да', 1 => 'нет'],
 			'selected' => $selected,
@@ -219,7 +221,8 @@ class TestController extends AppController
 			'field' => 'parent',
 			'tab' => '&nbsp;&nbsp;&nbsp;',
 			'initialOption' => true,
-			'initialOptionValue' => '---',
+			'initialOptionValue' => 0,
+			'initialOptionLabel' => '--',
 			'optionName' => 'test_name',
 			'tree' => $tree,
 			'selected' => $selected

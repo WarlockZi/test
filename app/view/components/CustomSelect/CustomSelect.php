@@ -13,7 +13,8 @@ class CustomSelect
 	private $title = '';
 
 	private $initialOption = false;
-	private $initialOptionValue = '--';
+	private $initialOptionValue = 0;
+	private $initialOptionLabel = '';
 	private $optionName = '';
 	private $selected = [];
 	private $type = 'string';

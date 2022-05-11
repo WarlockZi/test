@@ -85,12 +85,9 @@
       justify-content: flex-end;
       padding: 0 5px;
       min-width: 200px;
-      font-weight: 600;
-    }
-
-    .value {
-      padding: $padding-form;
-      margin: $margin-form;
+      font-weight: 400;
+      text-align: end;
+      flex: 0 0;
     }
 
     [contenteditable] {
@@ -104,6 +101,12 @@
       &:hover {
         border: $border-field-hover;
       }
+    }
+
+    .value {
+      padding: $padding-form;
+      margin: $margin-form;
+      flex: 1 0 220px;
     }
   }
 
