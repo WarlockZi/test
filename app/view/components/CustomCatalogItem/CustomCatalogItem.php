@@ -41,20 +41,6 @@ class CustomCatalogItem
 		ob_start();
 		include ROOT . '/app/view/components/CustomCatalogItem/CustomCatalogItemTemplate.php';
 		$this->html = ob_get_clean();
-//		return $t;
-	}
-
-	protected function prepareData(array $column, array $model)
-	{
-		if (isset($column['concat'])) {
-			$initValue = '';
-			foreach ($column['concat'] as $v) {
-				$initValue .= trim($model[$v]) . ' ';
-			}
-			return trim($initValue);
-		}
-
-		return $model[$column['field']];
 	}
 
 }

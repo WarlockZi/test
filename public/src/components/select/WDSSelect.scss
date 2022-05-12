@@ -30,8 +30,8 @@
 [custom-select] {
   position: relative;
   background-color: white;
-  display: inline-block;
-  margin: $margin-form;
+  //display: inline-block;
+  //margin: $margin-form;
   min-width: 219px;
   flex: 1 0 auto;
   border: 1px solid transparent;
@@ -69,6 +69,7 @@
     cursor: pointer;
     user-select: none;
     font-size: 1rem;
+    padding: 6px;
 
     .arrow {
       content: '';
@@ -106,7 +107,7 @@
     }
 
     // OPTION
-    .option {
+    li {
       padding: .25rem .5rem;
       cursor: pointer;
       min-height: 25px;

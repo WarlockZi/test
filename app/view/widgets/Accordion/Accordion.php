@@ -6,7 +6,7 @@ use app\model\Model;
 
 class Accordion extends Model
 {
-	protected $model;
+	public $model;
 	protected $data;
 	protected $tree;
 	protected $html;

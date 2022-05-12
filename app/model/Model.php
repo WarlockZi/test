@@ -10,8 +10,8 @@ abstract class Model
 {
 	protected $pdo;
 //	protected $sql;
-	protected $table;
-	protected $model;
+	public $table;
+	public $model;
 
 	protected $user;
 	protected $items;
@@ -35,13 +35,15 @@ abstract class Model
 		}
 	}
 
-//	public static function with($child = ""):void
+//	public static function with($child = ""): self
 //	{
-////		$model = new static();
-////			$sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
-////			$user =$this->pdo->query($sql, [$_SESSION['id']])[0];
-////			$user['rights']=explode(',',$user['rights']);
-////			$this->user= $user;
+//		if ($child){
+//		$model = new static();
+//		$model::findAll();
+//
+//		$child::findAllWhere('id',);
+//		}
+//		return $model;
 //	}
 
 	public static function create($values = [], $register = false)
@@ -191,6 +193,19 @@ abstract class Model
 			$autoincrement = $model::create($values) - 1;
 			return $autoincrement;
 		}
+	}
+
+	public static function load($id)
+	{
+		$model = new static();
+		$fields = $model::find($id)[0];
+		$model->fillable['id'] = $id;
+		foreach ($model->fillable as $k => $v) {
+			if (array_key_exists($k, $fields)) {
+				$model->fillable[$k] = $fields[$k];
+			}
+		}
+		return $model;
 	}
 
 	public static function find($id = [])

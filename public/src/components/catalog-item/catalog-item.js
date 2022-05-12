@@ -2,7 +2,7 @@ import './catalog-item.scss';
 import {$, post, popup} from '../../common';
 
 export default function catalogItem() {
-  let customCatalogItem = $('.custom-catalog-item__wrapper')[0]
+  let customCatalogItem = $('.item_wrap')[0]
   if (customCatalogItem) {
     $(customCatalogItem).on('click', handleClick)
   }

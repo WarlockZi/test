@@ -1,11 +1,11 @@
 <select
   custom-select
-  data-field="<?= $this->field; ?>"
+  <?= isset($this->field)?"data-field='{$this->field}'":''; ?>
+  <?=$this->class?"class={$this->class}":'';?>
   <?=$this->title?"title='{$this->title}'":'';?>
-  <?=$this->className?"class={$this->className}":'';?>
 >
 
-	<? if ($this->initialOption): ?>
+	<? if (isset($this->initialOptionLabel)): ?>
 	  <option
 			  value="<?= $this->initialOptionValue; ?>"
 			 <?=!$this->selected?'selected':'';?>
