@@ -1,14 +1,14 @@
-<div class="custom-catalog-item__header">
+<div class="item_header">
 
-	<div class="tabs__wrapper">
+	<div class="tabs_wrap">
     <? include ROOT . '/app/view/components/CustomCatalogItem/tabs.php' ?>
 		<div class="page-title"><?= $this->pageTitle ?></div>
 	</div>
 </div>
 
 
-<div class="custom-catalog-item__content">
-	<!--CONTENT-->
+<div class="item_content">
+
 	<section class="show" data-id="1">
 
 		<!--  TABLE  -->
@@ -47,7 +47,7 @@
     <? $n++; ?>
   <? endforeach; ?>
 
-	<div class="buttons__wrapper">
+	<div class="buttons_wrap">
     <? include ROOT . '/app/view/components/CustomCatalogItem/buttons.php' ?>
 	</div>
 

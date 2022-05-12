@@ -92,7 +92,7 @@ function setup(select) {
 
   function setOption(option) {
     const li = document.createElement("li")
-    li.classList.add("option")
+    // li.classList.add("option")
     li.classList.toggle("selected", option.selected)
     li.innerText = option.label
     li.dataset.value = option.value

@@ -7,16 +7,15 @@ namespace app\view\components\CustomSelect;
 class CustomSelect
 {
 	private $field = '';
-	private $className = '';
+	private $class = '';
 	private $tab = '.';
-	private $tree = [];
 	private $title = '';
-
-	private $initialOption = false;
-	private $initialOptionValue = 0;
-	private $initialOptionLabel = '';
-	private $optionName = '';
+	private $tree = [];
 	private $selected = [];
+
+	private $initialOptionValue = 0;
+	private $initialOptionLabel = null;
+	private $optionName = '';
 	private $type = 'string';
 	private $pathToTpl = ROOT.'/app/view/components/CustomSelect/';
 	private $tpl = 'tpl.php';
@@ -58,13 +57,11 @@ class CustomSelect
 
 	public function run()
 	{
-//		$model = new self();
 		ob_start();
 		include ROOT . '/app/view/components/CustomSelect/CustomSelectTemplate.php';
 		$t = ob_get_clean();
 		$this->html = $t;
 		return $t;
 	}
-
 
 }

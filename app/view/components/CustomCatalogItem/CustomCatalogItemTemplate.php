@@ -1,4 +1,4 @@
-<div class="custom-catalog-item__wrapper"
+<div class="item_wrap"
 		 data-model="<?= $this->modelName ?>"
 		 data-table="<?= $this->tableClassName ?>"
 		 data-id="<?= $this->item['id'] ?>"
