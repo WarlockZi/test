@@ -89,13 +89,15 @@
       text-align: end;
       flex: 0 0;
     }
+    .text:not([contenteditable]){
+      margin: $margin-form;
+    }
 
-    [contenteditable] {
+    .text[contenteditable] {
       background-color: white;
       padding: $padding-form;
       box-sizing: border-box;
       border: 1px solid transparent;
-      margin: $margin-form;
       flex: 1 0 auto;
 
       &:hover {
@@ -107,6 +109,14 @@
       //padding: $padding-form;
       margin: $margin-form;
       flex: 1 0 220px;
+      position: relative;
+
+      .error{
+        position: absolute;
+        top: -7%;
+        font-size: .7rem;
+        color: brown;
+      }
     }
   }
 

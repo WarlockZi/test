@@ -59,7 +59,7 @@ abstract class Model
 			if (array_key_exists($k, $model->fillable)) {
 				if (is_numeric($fillable[$k])) {
 					$fillable[$k] = (int)$v;
-				} elseif (is_numeric($fillable[$k])) {
+				} elseif (is_string($fillable[$k])) {
 					$fillable[$k] = (string)$v;
 				}
 			}
@@ -190,22 +190,27 @@ abstract class Model
 			$model::update($values);
 			return true;
 		} else {
-			$autoincrement = $model::create($values) - 1;
-			return $autoincrement;
+			$id = $model::create($values) - 1;
+			return $id;
 		}
 	}
 
 	public static function load($id)
 	{
 		$model = new static();
-		$fields = $model::find($id)[0];
-		$model->fillable['id'] = $id;
-		foreach ($model->fillable as $k => $v) {
-			if (array_key_exists($k, $fields)) {
-				$model->fillable[$k] = $fields[$k];
+		$fields = $model::find($id);
+		if ($fields) {
+			$fields = $fields[0];
+
+			$model->fillable['id'] = $id;
+			foreach ($model->fillable as $k => $v) {
+				if (array_key_exists($k, $fields)) {
+					$model->fillable[$k] = $fields[$k];
+				}
 			}
+			return $model;
 		}
-		return $model;
+		return false;
 	}
 
 	public static function find($id = [])

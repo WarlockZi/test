@@ -12,17 +12,24 @@
 >
 	<!--  TABLE  -->
 	<? foreach ($this->fields as $fieldName => $data): ?>
+		<? $contenteditable = (isset($data['contenteditable']) && $data['contenteditable']) ? 'contenteditable' : ''; ?>
+		<? $required = (isset($data['required']) && $data['required']) ? 'required' : ''; ?>
 	  <div class="row">
 		  <div class="field"><?= $fieldName ?></div>
 		  :
-
 		  <div class="value"
-					<?= isset($data['contenteditable'])?'contenteditable':''; ?>
-					<?= "data-field={$data['field']}"; ?>>
-					<? if (array_key_exists('html',$data)): ?>
-						<?= $data['html']; ?>
+					<? if (array_key_exists('html', $data)): ?>
+		  >
+					<?= $data['html']; ?>
 					<? else: ?>
-					<?= $this->item[$data['field']] ?>
+				 >
+				 <div class="text"
+							 <?= "data-field={$data['field']}"; ?>
+							 <?= $contenteditable; ?>
+							 <?= $required; ?>
+				 >
+							 <?= $this->item[$data['field']] ?>
+				 </div>
 					<? endif; ?>
 		  </div>
 
