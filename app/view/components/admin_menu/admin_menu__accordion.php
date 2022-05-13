@@ -1,5 +1,5 @@
 <? use \app\model\User; ?>
-<ul class="admin-layout__sidebar accordion">
+<ul accordion class="admin-layout__sidebar">
 
 	<a class="admin-sidebar__logo" href="/">
 		 <? include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>

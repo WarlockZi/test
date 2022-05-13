@@ -4,11 +4,6 @@
 @import "./test-head";
 
 
-//.accordion.test-edit {
-//  max-width: 250px;
-//
-//}
-
 .test-edit-wrapper {
   display: flex;
   font-family: 'Roboto', Arial, Serif;
@@ -19,7 +14,7 @@
     flex-wrap: wrap;
   }
 
-  .accordion.test-edit {
+  [accordion].test-edit {
     width: 0;
     @include _600 {
       width: 100%;

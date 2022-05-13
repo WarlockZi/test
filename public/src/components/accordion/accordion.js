@@ -1,35 +1,40 @@
 import './accordion.scss'
 import {$} from '../../common'
 
+let accordions = $('[accordion]')
+if (accordions) {
 
-$('.accordion label').on('click', handleToggle)
-
-window.onload = function () {
-// debugger
-let checkboxes = $('.admin-layout__sidebar.accordion input[type=checkbox]').el
-  if (checkboxes){
-    [...checkboxes].filter(ch=>{
+  let checkboxes = $(`[accordion] [type='checkbox']`)
+  if (checkboxes) {
+    [...checkboxes].filter(ch => {
       ch.checked = false
     })
   }
+
+  [].forEach.call(accordions, function (acc) {
+  // debugger
+    $(acc).on('click', handleToggle)
+  })
 }
 
-function handleToggle(e) {
 
-  let checkbox = e.target.previousElementSibling
-  let parent = checkbox.closest('ul')
-  let ul = $(checkbox.parentNode).find('ul')
+function handleToggle({target}) {
+
+  let accordion = target.closest('[accordion]')
+  let li = target.closest('li')
+  let checkbox = $(li).find(`[type='checkbox']`)
+  let ul = $(li).find('ul')
 
 
   if (checkbox.checked) {
     slideUp(ul, 0,)
   } else {
-    parent.style.height = "auto"
+    accordion.style.height = "auto"
     slideDown(ul)
     let ulHeight = ul.scrollHeight
-    increaseParent(parent, ulHeight)
+    increaseParent(accordion, ulHeight)
     // debugger
-    closeSiblings(parent)
+    closeSiblings(accordion)
   }
 }
 
@@ -39,7 +44,6 @@ function increaseParent(parent, ulHeight) {
     parent.style.maxHeight = parentHeight + "px";
   }
 }
-
 
 
 function slideDown(ul, callback) {

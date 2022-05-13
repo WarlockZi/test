@@ -10,7 +10,7 @@ class Accordion extends Model
 	protected $data;
 	protected $tree;
 	protected $html;
-	protected $class = 'menu';
+	protected $class = 'accordion';
 	protected $nameFieldName = 'test_name';
 	protected $parentFieldName = 'parent';
 	protected $cache = 3600;
@@ -74,7 +74,9 @@ class Accordion extends Model
 			"class='level{$lev}' " .
 			"href='{$this->link}{$item['id']}' " .
 			"title={$item[$this->nameFieldName]} {$isTest}>" .
+//			"title={$item[$this->nameFieldName]} {$isTest}>" .
 			"{$item[$this->nameFieldName]} </a>" .
+//			"{$item[$this->nameFieldName]} </a>" .
 			$this->lable_after($item);
 	}
 
@@ -83,7 +85,7 @@ class Accordion extends Model
 		$menu = "{$this->li($item, $lev)}";
 
 		if (isset($item['childs'])) {
-			$menu .= '<ul>' . $this->showCat($item['childs'], $lev) . '</ul>';
+			$menu .= "<ul>" . $this->showCat($item['childs'], $lev) . '</ul>';
 		}
 		$menu .= '</li>';
 
@@ -102,7 +104,7 @@ class Accordion extends Model
 
 	public function output()
 	{
-		return "<ul class = '{$this->class}'>{$this->html}</ul>";
+		return "<ul accordion class = '{$this->class}'>{$this->html}</ul>";
 	}
 
 }

@@ -1,12 +1,9 @@
 @import "components/sub-menu/adm-menu";
-//@import "components/breadcrumbs";
 @import "components/sub-menu/catalog";
+
 @import "components/dump";
 @import "components/grid";
 @import "components/props";
-//@import "components/admin-flex-table";
-//@import "user/users";
-//@import "components/del_product";
 
 @import "../components/neon";
 @import '../normalize.scss';
@@ -78,12 +75,12 @@
   }
 }
 
-.admin-layout__sidebar.accordion {
+.admin-layout__sidebar {
   max-width: 200px;
   background: $color-admin-sidebar;
+
   @include _800 {
     max-width: 100%;
-    //flex: 1;
     width: 200px;
   }
 
@@ -97,12 +94,10 @@
 
 
   svg.logo_vitex {
-    //background: #5b626e;
     padding: 25px 38px;
     position: relative;
     left: inherit;
     width: -webkit-fill-available;
-    //width: inherit;
     height: inherit;
     @include _800 {
       position: relative;

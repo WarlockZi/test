@@ -4,17 +4,37 @@ import {$, post, popup} from '../../common';
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
   if (customCatalogItem) {
-    $(customCatalogItem).on('click', handleClick)
+    $(customCatalogItem).on('click', handleClick.bind(this))
   }
 
+  function checkRequired() {
+    let required = $('[required]');
+    let errCount = 0;
+    [].forEach.call(required, function (el) {
+      if (!el.innerText){
+        el.style.borderColor = 'red'
+        if ($(el).find('.error'))return
+        let error = document.createElement('div')
+        error.innerText='Заполните поле'
+        error.classList.add('error')
+        el.closest('.value').appendChild(error)
+        errCount++
+      }
+    })
+    return errCount
+  }
   async function handleClick({target}) {
+
     let item = customCatalogItem
     let modelName = item.dataset.model
     if (target.closest('.save')) {
+      if (checkRequired()) return false
       let model = getModel()
       let res = await post(`/adminsc/${modelName}/updateorcreate`, {...model})
       res = JSON.parse(res)
-      if (res.msg === 'ok') {
+      if (res.id) {
+        // window.location = '/adminsc/opentest/edit'
+
         popup.show('Сохранено')
       }else if(res.error){
         popup.show(res.error)
@@ -24,7 +44,7 @@ export default function catalogItem() {
       let res = await post(`/adminsc/${modelName}/delete`, {id})
       res = JSON.parse(res)
       if (res.msg === 'ok') {
-        window.location.href = `/adminsc/${modelName}/list`
+        window.location.href = `/adminsc/${modelName}`
       }
     }else if((target.classList.contains('tab'))){
       let visibleSection = $(`section.show`)[0]

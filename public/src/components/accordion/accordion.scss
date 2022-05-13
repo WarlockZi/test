@@ -5,7 +5,7 @@
 // colors, fonts etc...
 @import './partials/layout'; // responsive grid and media queries
 
-.accordion {
+[accordion] {
   min-width: 200px;
   display: flex;
   flex-flow: column;
@@ -79,6 +79,7 @@
 
   .level1 {
     background: $color-level-1;
+    min-height: 12px;
 
 
     &:hover {
@@ -280,7 +281,7 @@
   }
 }
 
-.accordion_wrap .accordion {
+.accordion_wrap [accordion] {
 
   a::after {
     /* image icon */
