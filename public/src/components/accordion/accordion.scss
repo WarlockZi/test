@@ -209,6 +209,7 @@
     label, a {
       padding: $item-padding-M $item-padding-M+10 $item-padding-M ($item-padding-M * 3) + 20px;
       font-size: .8rem;
+      min-height: 10px;
     }
 
     label::before {
@@ -311,7 +312,6 @@
 }
 
 .admin-layout__sidebar.accordion {
-
 
   /* arrow icon */
   label {
