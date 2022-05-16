@@ -29,7 +29,7 @@ function getSex($item)
 		'className' => 'custom-radio',
 		'title' => '',
 		'field' => 'sex',
-		'optionName' => 'test_name',
+		'optionName' => 'name',
 		'tree' => ['m' => 'М', 'f' => 'Ж'],
 		'selected' => $item['sex'],
 	]);

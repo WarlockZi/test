@@ -92,7 +92,7 @@ class Freetest extends Model {
 
    public function tAdd() {
 
-      $testName = $_POST['test_name'];
+      $testName = $_POST['name'];
       $parentTest = (int) $_POST['parentTest'];
       $isTest = (int) $_POST['isTest'];
       $row['sort'] = $sort = (int) $_POST['sort'];
@@ -167,13 +167,13 @@ class Freetest extends Model {
              (int) $_POST['sort'],
              (int) $_POST['enable'],
              (int) $_POST['testId']];
-         $sql = 'UPDATE test SET test_name = ?, parentTest = ?, isTest = ?, sort = ?, enable = ? WHERE id = ?';
+         $sql = 'UPDATE test SET name = ?, parentTest = ?, isTest = ?, sort = ?, enable = ? WHERE id = ?';
          $this->insertBySql($sql, $params);
          if ($testName) { // чтобы поменять название в спске и названии
             echo $testName;
          }
       } else {// Это новый тест
-         if ($_POST['test_name']) {// Ообязательно заполняем имя теста
+         if ($_POST['name']) {// Ообязательно заполняем имя теста
             $this->tAdd();
          } else {
             return FALSE;
@@ -206,7 +206,7 @@ class Freetest extends Model {
          foreach ($testList as $testDep) {
             // Проставим от какого теста зависит
             if ($testDep['id'] == $test['parentTest']) {
-               $depOptions .= '<option value = ' . $testDep['id'] . ' selected >' . $testDep['test_name'] . '</option>';
+               $depOptions .= '<option value = ' . $testDep['id'] . ' selected >' . $testDep['name'] . '</option>';
             } else {
                $depOptions .= '<option value = ' . $testDep['id'] . '>' . $testDep['name'] . '</option>';
             }
@@ -234,7 +234,7 @@ class Freetest extends Model {
    public function pagination($test_data) {
 
 
-      unset($test_data['test_name']);
+      unset($test_data['name']);
       unset($test_data['testId']);
       unset($test_data['correct_answers']);
 

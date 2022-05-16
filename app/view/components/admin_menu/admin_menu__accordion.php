@@ -12,7 +12,7 @@
 
 	<? if (User::can($this->user, ['gate_admin', 'role_rop'])): // admin ?>
 	  <li>
-		  <input type="checkbox" id="crm">
+
 		  <label for="crm">
 					<? include ICONS . '/admin-menu/user-check.svg'; ?>
 			  CRM
@@ -28,7 +28,7 @@
 
 	<? if (User::can($this->user, ['role_admin', 'role_rop'])): // admin ?>
 	  <li>
-		  <input type="checkbox" id="settings">
+
 		  <label for="settings">
 					<? include ICONS . '/admin-menu/settings-streamline.svg'; ?>
 			  Настройки
@@ -45,7 +45,6 @@
 	<? endif; ?>
 
 	<li>
-		<input type="checkbox" id="test">
 		<label for="test">
 				<? include ICONS . '/admin-menu/star.svg'; ?>
 			Тесты
@@ -80,7 +79,7 @@
 	</li>
 
 	<li>
-		<input type="checkbox" id="planning">
+
 		<label for="planning">
 				<? include ICONS . '/admin-menu/target.svg'; ?>
 			Планирование
@@ -102,7 +101,7 @@
 
 	<? if (User::can($this->user, 'su')): ?>
 	  <li>
-		  <input type="checkbox" id="su">
+
 		  <label for="su">
 					<? include ICONS . '/admin-menu/aperture.svg'; ?>
 			  SU

@@ -207,7 +207,7 @@ class TestController extends AppController
 			'initialOption' => true,
 			'initialOptionValue' => 0,
 			'initialOptionLabel' => '--',
-			'optionName' => 'test_name',
+			'optionName' => 'name',
 			'tree' => [0 => 'да', 1 => 'нет'],
 			'selected' => $selected,
 		]);
@@ -223,7 +223,7 @@ class TestController extends AppController
 			'initialOption' => true,
 			'initialOptionValue' => 0,
 			'initialOptionLabel' => '--',
-			'optionName' => 'test_name',
+			'optionName' => 'name',
 			'tree' => $tree,
 			'selected' => $selected
 		]);

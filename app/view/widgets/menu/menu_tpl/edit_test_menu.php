@@ -13,7 +13,7 @@ $gamburger = include ROOT . '/app/view/components/icons/gamburger.svg';
 <a class="test-edit-menu__test-name <?=$isTest?'path':'test'?>"
  href=<?= isset($cat['childs']) ? "#" : "/adminsc/test/update/" . $cat['id'] ?>
 >
-	<?= $cat['test_name'] ?>
+	<?= $cat['name'] ?>
 </a>
 
 <? if ($isTest): ?>

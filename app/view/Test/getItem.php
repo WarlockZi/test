@@ -9,7 +9,7 @@ function getOptions($item, $self)
 		'item' => $item,
 		'modelName' => $self->model,
 		'tableClassName' => $self->table,
-		'pageTitle' => 'Редактировать тест: ' . $item['test_name'],
+		'pageTitle' => 'Редактировать тест: ' . $item['name'],
 
 //    'tabs' => [
 //      ['title' => 'Права',
@@ -28,9 +28,9 @@ function getOptions($item, $self)
 			],
 
 
-			'test_name' => [
+			'name' => [
 				'className' => 'name',
-				'field' => 'test_name',
+				'field' => 'name',
 				'name' => 'Название теста',
 				'contenteditable' => 'contenteditable',
 				'data-type' => 'string',
@@ -91,7 +91,7 @@ function getParent($item)
 		'className' => 'custom-select',
 		'title' => '',
 		'field' => 'parent',
-		'optionName' => 'test_name',
+		'optionName' => 'name',
 		'initialOption'=>true,
 		'tree' => $tree,
 		'selected' => $item['parent'],

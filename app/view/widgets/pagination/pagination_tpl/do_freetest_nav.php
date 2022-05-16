@@ -1,7 +1,7 @@
 <?= isset($cat['childs']) ? '<li class = "vert-menu__list">' : '<li>'?>
     <a href=
     <?= isset($cat['childs']) ? "#" : PROJ."/" . $cat['id'] ?>
-       ><?= $cat['test_name'] ?>
+       ><?= $cat['name'] ?>
     </a>
 <? if (isset($cat['childs'])): ?>
     <ul class = "vert-menu__drop">

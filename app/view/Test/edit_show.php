@@ -13,8 +13,8 @@
 
 				<div class="centered">
 					<div class="group">
-						<input type="text" class="field" id="test_name" value="" required>
-						<label for="test_name">Название <?= $test['isTest'] ? 'теста' : 'папки' ?></label>
+						<input type="text" class="field" id="name" value="" required>
+						<label for="name">Название <?= $test['isTest'] ? 'теста' : 'папки' ?></label>
 					</div>
 				</div>
 
@@ -23,7 +23,7 @@
 					<option value="0" selected>-</option>
 							<? foreach ($paths as $parent): ?>
 					  <option value="<?= $parent['id'] ?>">
-									 <?= $parent['test_name'] ?>
+									 <?= $parent['name'] ?>
 					  </option>
 							<? endforeach; ?>
 				</select>
