@@ -20,9 +20,9 @@
 <!---->
 <!--			<div class="centered">-->
 <!--				<div class="group">-->
-<!--					<input type="text" class="field" id="test_name" value="--><?//= htmlspecialchars($test['test_name']) ?><!--"-->
+<!--					<input type="text" class="field" id="name" value="--><?//= htmlspecialchars($test['name']) ?><!--"-->
 <!--					       required>-->
-<!--					<label for="test_name">Название</label>-->
+<!--					<label for="name">Название</label>-->
 <!--				</div>-->
 <!--			</div>-->
 <!---->

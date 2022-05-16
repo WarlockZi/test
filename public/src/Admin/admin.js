@@ -24,6 +24,7 @@ import tooltips from "../components/tooltip/tooltip";
 import accordionShow from "../Test/accordion-show";
 
 $(document).ready(function () {
+
   navigate(window.location.pathname)
   radio()
   list()
@@ -34,6 +35,7 @@ $(document).ready(function () {
   accordionShow()
 
   testEdit()
+
   // opentestEdit()
 
   function navigate(str) {

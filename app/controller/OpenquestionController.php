@@ -128,6 +128,7 @@ class OpenquestionController Extends AppController
 	public function actionSort()
 	{
 		$q_ids = $this->ajax['toChange'];
+		if (!$q_ids) $this->exitWith('ok');
 		Openquestion::sort($q_ids);
 		exit(json_encode(['msg' => 'Сортировка сохранена']));
 	}

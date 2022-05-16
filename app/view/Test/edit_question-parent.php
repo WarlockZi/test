@@ -2,6 +2,6 @@
 <?$selected = $t['id']===$test['id']?'selected':''?>
 
 	<option data-question-parent-id="<?=$t['id'];?> <?=$selected;?>">
-		<?=$t['test_name'];?>
+		<?=$t['name'];?>
 	</option>
 <?endforeach;?>

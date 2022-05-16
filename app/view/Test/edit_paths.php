@@ -5,7 +5,7 @@
 		<? foreach ($rootTests as $rootTest): ?>
 			<option value=<?= $rootTest['id'] ?>
 				<?= $rootTest['id'] === $test['parent'] ? 'selected' : ''; ?>>
-				<?= $rootTest['test_name'] ?>
+				<?= $rootTest['name'] ?>
 			</option>
 		<? endforeach; ?>
 	</select>

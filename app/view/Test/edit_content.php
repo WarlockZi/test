@@ -10,7 +10,7 @@
 			<div class="test-edit__title">
 				<? if (isset($test)): ?>
 					<p class="test-name"
-					   value="<?= $_REQUEST['id'] ?? $test['id'] ?>"><?= $_REQUEST['name'] ?? $test['test_name'] ?>
+					   value="<?= $_REQUEST['id'] ?? $test['id'] ?>"><?= $_REQUEST['name'] ?? $test['name'] ?>
 					</p>
 				<? endif; ?>
 			</div>
@@ -45,7 +45,7 @@
 			<div class="test-edit__title">
 				<? if (isset($test)): ?>
 					<p class="test-name"
-					   value="<?= $_REQUEST['id'] ?? $test['id'] ?>"><?= $_REQUEST['name'] ?? $test['test_name'] ?>
+					   value="<?= $_REQUEST['id'] ?? $test['id'] ?>"><?= $_REQUEST['name'] ?? $test['name'] ?>
 					</p>
 				<? endif; ?>
 			</div>

@@ -10,10 +10,16 @@
   display: flex;
   flex-flow: column;
 
-
   @include _800 {
     max-width: 100%;
   }
+
+  //li.open{
+  //  .arrow{
+  //    transform: rotate(-90deg);
+  //  }
+  //
+  //}
 
   .update {
     position: absolute;
@@ -31,31 +37,33 @@
       }
     }
 
-
     &:after {
       display: none;
     }
 
-    &:before {
-      display: none;
-    }
   }
 
-    /* by default hide all sub menus */
+  /* by default hide all sub menus */
   ul {
     max-height: 0;
     overflow: hidden;
     transition: max-height .1s;
   }
 
+
   li {
     user-select: none;
     position: relative;
 
+    &.rotate > label .arrow {
+      transform: rotate(0deg);
+    }
+
     a[data-istest]:after {
-      background: url(./img/cd-icons.svg) no-repeat -16px 0;
+      background: url(./img/cd-icons.svg) no-repeat -48px 0;
     }
   }
+
 
   input[type=checkbox] {
     position: absolute;
@@ -103,8 +111,8 @@
     }
   }
 
-    /* icons */
-  label::before, label::after, a::after {
+  /* icons */
+  label::after, a::after {
     content: '';
     display: inline-block;
     width: 16px;
@@ -114,48 +122,47 @@
     transform: translateY(-50%);
   }
 
+
+
   label {
-    &::before {
+    display: flex;
+    align-items: center;
+
+    .arrow {
+      width: 16px;
+      height: 16px;
+
       background-image: url(./img/cd-icons.svg);
       background-repeat: no-repeat;
-    }
-
-    /* arrow icon */
-    &::before {
-      left: $item-padding-S;
       background-position: 1px 0;
-      transform: translateY(-50%) rotate(-90deg);
+      transform: rotate(-90deg);
+      transition: transform 200ms;
     }
-
   }
 
-
-  /* rotate arrow */
-  input[type=checkbox]:checked + label::before {
-    transform: translateY(-50%);
-    transition: transform 90ms;
-  }
-
-  /*change path icon*/
-  input[type=checkbox]:checked + label::after {
-    background-position: -32px 0;
-  }
-
-  input[type=checkbox]:checked + label + ul,
-  input[type=checkbox]:checked + label:nth-of-type(n) + ul {
-    /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
-    display: block;
-    overflow: hidden;
-  }
+  //
+  ///* rotate arrow */
+  //input[type=checkbox]:checked + label::before {
+  //  transform: translateY(-50%);
+  //  transition: transform 90ms;
+  //}
+  //
+  ///*change path icon*/
+  //input[type=checkbox]:checked + label::after {
+  //  background-position: -32px 0;
+  //}
+  //
+  //input[type=checkbox]:checked + label + ul,
+  //input[type=checkbox]:checked + label:nth-of-type(n) + ul {
+  //  /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
+  //  display: block;
+  //  overflow: hidden;
+  //}
 
   ul label,
   ul a {
     box-shadow: inset 0 -1px darken($color-1, 5%);
     padding-left: ($item-padding-S * 4) + 30px;
-
-    .no-touch &:hover {
-      background: darken($color-1, 7%);
-    }
   }
 
   > li:last-of-type > label,
@@ -268,49 +275,50 @@
 }
 
 .accordion_wrap {
-  //display: none;
   max-width: 0px;
   transition: max-width 1s;
   margin-bottom: 25px;
+
+  @include _800 {
+    min-width: 100%;
+  }
 
   &.open {
     max-width: 200px;
   }
 
-  @include _800 {
-    min-width: 100%;
+  [accordion] {
+
+    a::after {
+      /* image icon */
+      left: $item-padding-S * 2;
+      background: url(./img/cd-icons.svg) no-repeat -48px 0;
+    }
+
+    label {
+      &::before, &::after {
+        background-image: url(./img/cd-icons.svg);
+        background-repeat: no-repeat;
+      }
+
+      &::before {
+        /* arrow icon */
+        left: $item-padding-S;
+        background-position: 0 0;
+        transform: translateY(-50%) rotate(-90deg);
+      }
+
+      &::after {
+        /* folder icons */
+        left: ($item-padding-S * 2) + 13px;
+        background-position: -16px 0;
+      }
+    }
   }
+
 }
 
-.accordion_wrap [accordion] {
-
-  a::after {
-    /* image icon */
-    left: $item-padding-S * 2;
-    background: url(./img/cd-icons.svg) no-repeat -48px 0;
-  }
-
-  label {
-    &::before, &::after {
-      background-image: url(./img/cd-icons.svg);
-      background-repeat: no-repeat;
-    }
-
-    &::before {
-      /* arrow icon */
-      left: $item-padding-S;
-      background-position: 0 0;
-      transform: translateY(-50%) rotate(-90deg);
-    }
-
-    &::after {
-      /* folder icons */
-      left: ($item-padding-S * 2) + 13px;
-      background-position: -16px 0;
-    }
-  }
-}
-
+.accordion_wrap
 .admin-layout__sidebar.accordion {
 
   /* arrow icon */

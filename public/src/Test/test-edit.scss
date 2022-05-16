@@ -279,6 +279,7 @@
     background-color: white;
     cursor: pointer;
     margin-left: 2px;
+    flex: 0 1 35px;
 
     &:before {
       @include _chevron()

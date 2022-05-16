@@ -3,7 +3,7 @@
 		<? foreach ($path_children as $child): ?>
 			<div class="path-child__row">
 				<?= include ROOT . '/app/view/components/icons/path.php' ?>
-				<div><?= $child['test_name'] ?></div>
+				<div><?= $child['name'] ?></div>
 			</div>
 		<? endforeach; ?>
 	</div>

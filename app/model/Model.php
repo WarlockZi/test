@@ -332,7 +332,7 @@ abstract class Model
 		$res = $this->findBySql($this->sql, []);
 		if ($res !== FALSE) {
 			$all = [];
-			foreach ($res as $key => $v) {
+			foreach ($arr as $key => $v) {
 				$all[$v['id']] = $v;
 			}
 			return $all;
@@ -352,9 +352,22 @@ abstract class Model
 		}
 		return $tree;
 	}
+	public function hierachy2(array $models, string $parent = 'parent')
+	{
+		$tree = [];
+		foreach ($models as $id => &$node) {
+			if (array_key_exists($parent, $node) && !$node[$parent]) {
+				$tree[$id] = &$node;
+			} elseif (isset($node[$parent]) && $node[$parent]) {
+				$models[$node[$parent]]['childs'][$id] = &$node;
+			}
+		}
+		return $tree;
+	}
 
 	public function getAssoc2(array $models)
 	{
+		$all = [];
 		foreach ($models as $key => $v) {
 			$all[$v['id']] = $v;
 		}

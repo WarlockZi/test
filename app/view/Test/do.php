@@ -16,7 +16,7 @@
 
 				<? if (isset($test)): ?>
 			<div class='pagination__wrap'>
-				<div class='test-name' data-test-id=<?= $test['id']; ?>><?= $test['test_name']; ?></div>
+				<div class='test-name' data-test-id=<?= $test['id']; ?>><?= $test['name']; ?></div>
 
 					 <?= $pagination ?? '' ?>
 

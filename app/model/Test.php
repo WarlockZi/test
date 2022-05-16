@@ -11,7 +11,7 @@ class Test extends Model
 
 	public $fillable = [
 		'id' => 0,
-		'test_name' => '...',
+		'name' => '...',
 		'enable' => 0,
 		'parent' => 0,
 		'isTest' => 1,
