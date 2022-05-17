@@ -5,8 +5,8 @@ namespace app\model;
 class Todo extends Model
 {
 
-	protected $table = 'todos';
-	protected $model = 'todo';
+	public  $table = 'todos';
+	public  $model = 'todo';
 
 	protected $fillable = [
 		'name' => 'Название',

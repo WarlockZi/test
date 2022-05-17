@@ -10,39 +10,47 @@ if (accordions) {
       ch.checked = false
     })
   }
-
-  $('[accordion]').on('click', dd)
+  $('[accordion]').on('click', handle)
 }
 
-function cc({target}) {
-  alert('dd')
-}
-
-function dd({target}) {
-  if (!target.closest('li')) return
-  let accordion = target.closest('[accordion]')
+function handle({target}) {
   let li = target.closest('li')
-  li.classList.toggle('rotate')
-  // let checkbox = $(li).find(`[type='checkbox']`)
+  if (!li) return
+  // li.classList.toggle('rotate')
+
+  let accordion = li.closest('[accordion]')
   let ul = $(li).find('ul')
   if (!ul) return;
-  // let arrow = $(li).find('.arrow')
-
-  ul.classList.toggle('open')
-  if (!ul.classList.contains('open')) {
-    // arrow.style.transform = 'rotate(270deg)'
-    slideUp(ul, 0,)
+  if (ul.classList.contains('open')) {
+    slideUp(ul,li)
   } else {
-    if (!ul)return
-    // arrow.style.transform = 'rotate(0deg)'
-    accordion.style.height = "auto"
-    slideDown(ul)
-    // let ulHeight = ul.scrollHeight
-    // increaseParent(accordion, ulHeight)
-    // debugger
+    if (!ul) return
     closeSiblings(accordion)
+    // accordion.style.height = "auto"
+    slideDown(ul,li)
   }
 }
+
+function closeSiblings(accordion) {
+  let ul = $(accordion).find('.open')
+  if (ul) {
+  let li = ul.closest('li')
+    slideUp(ul,li)
+  }
+}
+
+function slideDown(ul, li) {
+  ul.style.maxHeight = ul.scrollHeight + "px";
+  ul.classList.toggle('open')
+  li.classList.toggle('rotate')
+}
+
+function slideUp(ul,li) {
+  ul.style.maxHeight = 0 + "px";
+  ul.classList.toggle('open')
+  li.classList.toggle('rotate')
+}
+
 
 function increaseParent(parent, ulHeight) {
   if (!parent.classList.contains('accordion')) {
@@ -50,33 +58,3 @@ function increaseParent(parent, ulHeight) {
     parent.style.maxHeight = parentHeight + "px";
   }
 }
-
-function closeSiblings(parent) {
-  Array.from(parent.children).map((el) => {
-
-      [].map.call(el.children,(ch) => {
-        if (ch.type && ch.type === 'checkbox' && ch.checked) {
-          let ul = $(ch.parentNode).find('ul')
-          slideUp(ul, 0, function () {
-            ch.checked = false
-          })
-        }
-      })
-    }
-  )
-}
-
-function slideDown(ul, callback) {
-  ul.style.maxHeight = ul.scrollHeight + "px";
-  if (callback) {
-    callback()
-  }
-}
-
-function slideUp(ul, interval, callback) {
-  ul.style.maxHeight = 0 + "px";
-  if (callback) {
-    callback()
-  }
-}
-

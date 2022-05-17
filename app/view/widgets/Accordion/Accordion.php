@@ -7,12 +7,12 @@ use app\model\Model;
 class Accordion extends Model
 {
 	public $models=[];
-	protected $data;
-	protected $tree;
-	protected $html;
-	protected $class = 'accordion';
-
 	protected $parentFieldName = '';
+//	protected $data;
+//	protected $tree;
+	protected $html;
+	protected $class = '';
+
 	protected $label_after = '';
 	protected $link = '/adminsc/test/';
 	protected $link_label_after = '/adminsc/test/update/';
@@ -59,16 +59,21 @@ class Accordion extends Model
 	function li($item, $lev)
 	{
 		ob_start();
+//		$isTest = $item['isTest'] === '1' ? 'data-istest' : '';
 		include ROOT."/app/view/widgets/Accordion/li.php";
 		return ob_get_clean();
 	}
 
 	function tplMenu($item, $lev)
 	{
-		$menu = "{$this->li($item, $lev)}";
+		$childs = isset($item['childs']);
+		$class = $childs?"class='childs'":'' ;
 
-		if (isset($item['childs'])) {
-			$menu .= "<ul>" . $this->showCat($item['childs'], $lev) . '</ul>';
+		$menu = "<li {$class}>";
+		$menu .= "{$this->li($item, $lev)}";
+
+		if ($childs) {
+			$menu .= "<ul  class='level-{$lev}'>" . $this->showCat($item['childs'], $lev) . '</ul>';
 		}
 		$menu .= '</li>';
 

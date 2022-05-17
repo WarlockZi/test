@@ -1,7 +1,6 @@
 @import '../../var';
 @import '../../mixin_media';
 @import './partials/variables';
-@import "../../Admin/layout/sidebar/sidebar";
 // colors, fonts etc...
 @import './partials/layout'; // responsive grid and media queries
 
@@ -9,17 +8,90 @@
   min-width: 200px;
   display: flex;
   flex-flow: column;
+  background: darken($color-level-0,5%);
 
   @include _800 {
     max-width: 100%;
   }
 
-  //li.open{
-  //  .arrow{
-  //    transform: rotate(-90deg);
-  //  }
-  //
-  //}
+  /* by default hide all sub menus */
+  ul {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .1s;
+  }
+
+
+  li {
+    user-select: none;
+    position: relative;
+
+
+    &.rotate > .label > .arrow {
+      transform: rotate(0deg);
+    }
+
+    a { // isTest
+      display: flex;
+
+      .img {
+        width: 16px;
+        height: 16px;
+        background: url(./img/cd-icons.svg) no-repeat -48px 0;
+        margin: 0 5px;
+        flex: 0 0 16px;
+      }
+    }
+  }
+
+
+  &>li>.label, &>li>a {
+    display: flex;
+    align-items: center;
+    padding: 12px 22px 12px 12px;
+    color: $color-3;
+    font-size: .7rem;
+    cursor: pointer;
+
+    &:hover {
+      background: tint($color-level-0, 3%);
+    }
+
+  }
+
+  .current {
+    border-left: 4px solid lighten($color-main, 10%);
+    color: lighten($color-main, 10%);
+  }
+
+  .level-1 {
+    background: $color-level-2;
+
+    >li :hover {
+      background: tint($color-level-2, 3%);
+    }
+
+    .label{
+      padding: 12px 12px 12px 24px;
+    }
+  }
+
+  .level-2 {
+    background-color: $color-level-2;
+
+    &:hover {
+      background: tint($color-level-2, 3%);
+    }
+  }
+
+  .level-3 {
+    background: $color-level-3;
+
+    &:hover {
+      background: tint($color-level-3, 3%);
+    }
+  }
+
 
   .update {
     position: absolute;
@@ -43,126 +115,26 @@
 
   }
 
-  /* by default hide all sub menus */
-  ul {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .1s;
-  }
 
-
-  li {
-    user-select: none;
-    position: relative;
-
-    &.rotate > label .arrow {
-      transform: rotate(0deg);
-    }
-
-    a[data-istest]:after {
-      background: url(./img/cd-icons.svg) no-repeat -48px 0;
-    }
-  }
-
-
-  input[type=checkbox] {
-    position: absolute;
-    opacity: 0;
-  }
-
-  label, a {
-    position: relative;
-    display: block;
-    // first level text
-    padding: $item-padding-S $item-padding-S+16px $item-padding-S ($item-padding-S * 3) + 25px;
-    color: $color-3;
-    font-size: .7rem;
-    cursor: pointer;
-  }
-
-  .current {
-    border-left: 4px solid lighten($color-main, 10%);
-    color: lighten($color-main, 10%);
-  }
-
-  .level1 {
-    background: $color-level-1;
-    min-height: 12px;
-
-
-    &:hover {
-      background: tint($color-level-1, 3%);
-    }
-  }
-
-  .level2 {
-    background-color: $color-level-2;
-
-    &:hover {
-      background: tint($color-level-2, 3%);
-    }
-  }
-
-  .level3 {
-    background: $color-level-3;
-
-    &:hover {
-      background: tint($color-level-3, 3%);
-    }
-  }
-
-  /* icons */
-  label::after, a::after {
-    content: '';
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-
-
-  label {
+  .label {
     display: flex;
     align-items: center;
 
     .arrow {
-      width: 16px;
+      flex: 0 0 17px;
       height: 16px;
+      background: url(./img/cd-icons.svg) no-repeat 1px 0;
 
-      background-image: url(./img/cd-icons.svg);
-      background-repeat: no-repeat;
-      background-position: 1px 0;
       transform: rotate(-90deg);
       transition: transform 200ms;
     }
-  }
 
-  //
-  ///* rotate arrow */
-  //input[type=checkbox]:checked + label::before {
-  //  transform: translateY(-50%);
-  //  transition: transform 90ms;
-  //}
-  //
-  ///*change path icon*/
-  //input[type=checkbox]:checked + label::after {
-  //  background-position: -32px 0;
-  //}
-  //
-  //input[type=checkbox]:checked + label + ul,
-  //input[type=checkbox]:checked + label:nth-of-type(n) + ul {
-  //  /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
-  //  display: block;
-  //  overflow: hidden;
-  //}
-
-  ul label,
-  ul a {
-    box-shadow: inset 0 -1px darken($color-1, 5%);
-    padding-left: ($item-padding-S * 4) + 30px;
+    .img {
+      width: 16px;
+      height: 16px;
+      background: url(./img/cd-icons.svg) no-repeat -16px 0;
+      margin: 0 5px;
+    }
   }
 
   > li:last-of-type > label,
@@ -172,107 +144,55 @@
     box-shadow: none;
   }
 
-  ul label::before {
-    left: $item-padding-S * 2;
-  }
-
-  ul label::after,
-  ul a::after {
-    left: ($item-padding-S * 3) + 16px;
-  }
-
-
   ul ul label,
   ul ul a {
     padding-left: ($item-padding-S * 5) + 40px;
   }
-
-  ul ul label::before {
-    left: $item-padding-S * 3;
-  }
-
-  ul ul label::after,
-  ul ul a::after {
-    left: ($item-padding-S * 4) + 40px;
-  }
-
 
   ul ul ul label,
   ul ul ul a {
     padding-left: ($item-padding-S * 6) + 10px;
   }
 
-  ul ul ul label::before {
-    left: $item-padding-S * 4;
-  }
-
-  ul ul ul label::after,
-  ul ul ul a::after {
-    left: ($item-padding-S * 5) + 10px;
-  }
-
 
   @include MQ(M) {
-    label, a {
-      padding: $item-padding-M $item-padding-M+10 $item-padding-M ($item-padding-M * 3) + 20px;
+    .label {
+      padding: $item-padding-M $item-padding-M+10 $item-padding-M $item-padding-M;
       font-size: .8rem;
       min-height: 10px;
     }
 
-    label::before {
-      left: $item-padding-M;
+    a {
+      padding: $item-padding-M $item-padding-M+14 $item-padding-M 29px;
+      font-size: .8rem;
+      min-height: 10px;
     }
 
-    label::after {
-      left: ($item-padding-M * 2) + 10px;
+    ul {
+      label {
+        padding-left: ($item-padding-M ) + 10px;
+
+      }
+
+      a {
+        padding-left: ($item-padding-M ) + 25px;
+      }
     }
 
-    ul label,
-    ul a {
-      padding-left: ($item-padding-M * 4) + 20px;
-    }
-    ul label::before {
-      left: $item-padding-M * 2;
-    }
-    ul label::after,
-    ul a::after {
-      left: ($item-padding-M * 3) + 15px;
-    }
 
     ul ul label,
     ul ul a {
       padding-left: ($item-padding-M * 5) + 14px;
     }
-    ul ul label::before {
-      left: $item-padding-M * 3;
-    }
-    ul ul label::after,
-    ul ul a::after {
-      left: ($item-padding-M * 4) + 10px;
-    }
-
 
     ul ul ul label,
     ul ul ul a {
       padding-left: ($item-padding-M * 3) + 40px;
     }
-
-    ul ul ul label::before {
-      left: $item-padding-M * 4;
-    }
-
-    ul ul ul label::after,
-    ul ul ul a::after {
-      left: ($item-padding-M * 5) + 5px;
-    }
-  }
-
-  &.animated label::before {
-    /* this class is used if you're using jquery to animate the accordion */
-    transition: transform .3s;
   }
 
 }
+
 
 .accordion_wrap {
   max-width: 0px;
@@ -286,40 +206,29 @@
   &.open {
     max-width: 200px;
   }
-
-  [accordion] {
-
-    a::after {
-      /* image icon */
-      left: $item-padding-S * 2;
-      background: url(./img/cd-icons.svg) no-repeat -48px 0;
-    }
-
-    label {
-      &::before, &::after {
-        background-image: url(./img/cd-icons.svg);
-        background-repeat: no-repeat;
-      }
-
-      &::before {
-        /* arrow icon */
-        left: $item-padding-S;
-        background-position: 0 0;
-        transform: translateY(-50%) rotate(-90deg);
-      }
-
-      &::after {
-        /* folder icons */
-        left: ($item-padding-S * 2) + 13px;
-        background-position: -16px 0;
-      }
-    }
-  }
-
 }
 
-.accordion_wrap
-.admin-layout__sidebar.accordion {
+.accordion_wrap,
+.admin-layout__sidebar {
+  svg {
+    margin: 0 9px;
+    height: 18px;
+    flex: 0 0 18px;
+
+    &.feather-grid {
+      stroke: white;
+    }
+
+    #house,
+    #settings,
+    .feather-grid {
+      stroke: white;
+    }
+
+    #house {
+      fill: white;
+    }
+  }
 
   /* arrow icon */
   label {
