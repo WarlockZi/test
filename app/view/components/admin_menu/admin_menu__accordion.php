@@ -13,11 +13,14 @@
 	<? if (User::can($this->user, ['gate_admin', 'role_rop'])): // admin ?>
 	  <li>
 
-		  <label for="crm">
+		  <div class="label">
+
+			  <div class="arrow"></div>
 					<? include ICONS . '/admin-menu/user-check.svg'; ?>
 			  CRM
-		  </label>
-		  <ul>
+
+		  </div>
+		  <ul class="level-1">
 			  <a class="neon" href="/adminsc/order/list">Заказы</a>
 			  <a class="neon" href="/adminsc/user/list">Пользователи</a>
 			  <a class="neon" href="/adminsc/crm">crm</a>
@@ -29,12 +32,13 @@
 	<? if (User::can($this->user, ['role_admin', 'role_rop'])): // admin ?>
 	  <li>
 
-		  <label for="settings">
+		  <div class="label">
+			  <span class="arrow"></span>
 					<? include ICONS . '/admin-menu/settings-streamline.svg'; ?>
 			  Настройки
-		  </label>
+		  </div>
 
-		  <ul>
+		  <ul class="level-1">
 					<? if (User::can($this->user, ['gate_admin'])): // admin ?>
 				 <a class="neon" href='/adminsc/right/list'>Права</a>
 				 <a class="neon" href='/adminsc/post/list'>Должности</a>
@@ -45,11 +49,12 @@
 	<? endif; ?>
 
 	<li>
-		<label for="test">
+		<div class="label">
+			<span class="arrow"></span>
 				<? include ICONS . '/admin-menu/star.svg'; ?>
 			Тесты
-		</label>
-		<ul>
+		</div>
+		<ul class="level-1">
 
 				<? if (User::can($this->user, ['role_employee'])): ?>
 			  <a class="neon" href="/adminsc/test/do">Проходить тесты</a>
@@ -79,12 +84,12 @@
 	</li>
 
 	<li>
-
-		<label for="planning">
+		<div class="label">
+			<span class="arrow"></span>
 				<? include ICONS . '/admin-menu/target.svg'; ?>
 			Планирование
-		</label>
-		<ul>
+		</div>
+		<ul class="level-1">
 				<? if (User::can($this->user, 'role_employee')): // admin ?>
 			  <a class="neon" href="/adminsc/planning/create">Создать задачи</a>
 			  <a class="neon" href="/adminsc/planning/list">Посмотреть планировки</a>
@@ -96,17 +101,20 @@
 
 	<a class="neon" href="/adminsc/planning">
 		 <? include ICONS . '/admin-menu/grid.svg'; ?>
+		<span>
 		Страт задачи
+		</span>
 	</a>
 
 	<? if (User::can($this->user, 'su')): ?>
 	  <li>
 
-		  <label for="su">
+		  <div class="label">
+			  <span class="arrow"></span>
 					<? include ICONS . '/admin-menu/aperture.svg'; ?>
 			  SU
-		  </label>
-		  <ul>
+		  </div>
+		  <ul class="level-1">
 			  <a class="neon" href='/adminsc/Sitemap'>Создать SiteMap</a>
 			  <a class="neon" href='/adminsc/settings/dump'>Dump</a>
 			  <a class="neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>

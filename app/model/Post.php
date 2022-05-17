@@ -5,8 +5,8 @@ namespace app\model;
 class Post extends Model
 {
 
-	protected $table = 'posts';
-	protected $model = 'post';
+	public  $table = 'posts';
+	public  $model = 'post';
 
 	protected $fillable = [
 		'name' => '',

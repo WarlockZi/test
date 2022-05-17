@@ -1,10 +1,8 @@
 @import "components/sub-menu/adm-menu";
 @import "components/sub-menu/catalog";
-
 @import "components/dump";
 @import "components/grid";
 @import "components/props";
-
 @import "../components/neon";
 @import '../normalize.scss';
 @import "../mixin_media";
@@ -20,21 +18,6 @@
 
   @include _600 {
     flex-wrap: wrap;
-
-    .separator {
-      background-color: #ebf4f4;
-      margin: 10px 0;
-      display: flex;
-      justify-content: space-around;
-      padding: 3px;
-      color: #646464;
-    }
-
-    .separator.btns {
-      position: sticky;
-      bottom: 0;
-    }
-
   }
 }
 
@@ -43,114 +26,64 @@
   flex-flow: column;
   flex: 1 1 auto;
   padding: 20px;
-
-  .to-list{
-    padding: 10px 15px;
-    $border-radius: 3%;
-    @include _button($border-radius);
-
-    &:hover {
-      svg {
-        fill: $color-main;
-      }
-    }
-
-    svg {
-      transition: fill 500ms;
-      fill: #ffffff;
-    }
-  }
-
 }
 
-
-
-
-
-
-.admin-layout__sidebar {
-  .admin-sidebar__logo {
-    padding: 0;
-    background-color: $color-admin-sidebar;
-  }
-}
 
 .admin-layout__sidebar {
   max-width: 200px;
-  background: $color-admin-sidebar;
+  background: darken($color-admin-sidebar, 5%);
+  width: 180px;
 
   @include _800 {
     max-width: 100%;
-    width: 200px;
-  }
-
-  label, a {
-    border-bottom: 1px solid $color-grey-logo;
-  }
-
-  ul a {
-    background: darken($color-admin-sidebar,5%);
+    width: 150px;
   }
 
 
-  svg.logo_vitex {
-    padding: 25px 38px;
-    position: relative;
-    left: inherit;
-    width: -webkit-fill-available;
-    height: inherit;
-    @include _800 {
+  .admin-sidebar__logo {
+    padding: 0;
+    background-color: darken($color-admin-sidebar, 5%);
+    justify-content: center;
+
+    svg.logo_vitex {
       position: relative;
-      padding: 28px 38px;
-      height: 28px;
       align-self: start;
       border-bottom: none;
-    }
+      height: 89px;
+      flex: 0 0 155px;
 
-    //#i {
-    //  fill: white;
-    //}
-    //#t {
-    //  fill: white;
-    //}
+      @include _800 {
+        position: relative;
+        align-self: start;
+        border-bottom: none;
+        height: 89px;
+        flex: 0 0 130px;
+      }
+      //#i {
+      //  fill: white;
+      //}
+    }
   }
+
+  li, a {
+    border-bottom: lighten($color-admin-sidebar, 5%) 1px solid;
+    border-top: darken($color-admin-sidebar, 5%) 1px solid;
+  }
+
+  .level-1 {
+    background-color: lighten($color-admin-sidebar, 15%);
+
+    li, a {
+      border-bottom: lighten($color-admin-sidebar, 5%) 1px solid;
+      border-top: #393939 1px solid;
+    }
+  }
+
 
   .admin-layout__sidebar-tail {
     flex: 1 0 auto;
   }
 }
 
-
-.buttons {
-  display: inline-block;
-  white-space: nowrap;
-  text-align: center;
-  line-height: 20px;
-  background: #eeeeee;
-  background: linear-gradient(top, #eeeeee 0%, #eeeeee 100%);
-  border: 1px solid #a1a1a1;
-  color: #333;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
-  border-radius: .2em;
-  box-shadow: 0 0 1px 1px rgba(255, 255, 255, .8) inset, 0 1px 0 rgba(0, 0, 0, .3);
-
-  &:hover {
-    background: #ffffff;
-    background: linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
-  }
-
-  &:active {
-    box-shadow: 0 0 4px 2px rgba(0, 0, 0, .3) inset;
-    position: relative;
-    top: 1px;
-  }
-}
-
-
-.adm-content {
-  flex: 1;
-  margin: 0 5px;
-
-}
 
 

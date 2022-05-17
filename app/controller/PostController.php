@@ -13,9 +13,9 @@ use app\view\View;
 
 class PostController Extends AppController
 {
-	protected $model = Post::class;
-	protected $modelName = 'post';
-	protected $tableName = 'posts';
+	public  $model = Post::class;
+	public  $modelName = 'post';
+	public  $tableName = 'posts';
 
 	public function __construct(array $route)
 	{

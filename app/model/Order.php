@@ -5,8 +5,8 @@ namespace app\model;
 class Order extends Model
 {
 
-	protected $table = 'orders';
-	protected $model = 'order';
+	public $table = 'orders';
+	public  $model = 'order';
 
 	protected $fillable = [
 		'name' => '',

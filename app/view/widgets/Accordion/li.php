@@ -1,25 +1,24 @@
 <? if (!$item['isTest']): ?>
 
-<li class='has-children level<?= $lev; ?>'>
 
-	<label>
-		<span class="arrow"></span>
-	  <?= $item['name']; ?>
-	</label>
+	<div class="label" >
+		<div class="arrow"></div>
+		<div class="img"></div>
+		 <?= $item['name']; ?>
+		 <?= $this->lable_after($item); ?>
+	</div>
 
-	<?= $this->lable_after($item); ?>
 
-	<? else: ?>
+<? else: ?>
 
-	<?$isTest = $item['isTest'] === '1' ? 'data-istest' : ''; ?>
-<li>
+
 	<a data-id=<?= $item['id'] ?>
-	   class='level<?= $lev; ?>'
 	   href='<?= $this->link; ?><?= $item['id']; ?>'
-		 <?= $isTest; ?>
-	   title=<?= $item['name']; ?>>
+	>
+		<span class="img"></span>
+		 <?= $item['name']; ?>
 
-		 <?= $item['name']; ?></a>
+	</a>
 	<?= $this->lable_after($item); ?>
 
-	<? endif; ?>
+<? endif; ?>

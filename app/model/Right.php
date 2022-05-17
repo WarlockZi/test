@@ -5,8 +5,8 @@ namespace app\model;
 
 class Right extends Model {
 
-   protected $table = 'rights';
-   protected $model = 'right';
+	public  $table = 'rights';
+	public  $model = 'right';
 
    protected $fillable = [
    	'name' => '',
