@@ -14,7 +14,7 @@ export default function accordionShow() {
   }
 
 
-  let button = $('.test-edit__menu-toggle')[0]
+  let button = $('.accordion-open')[0]
   if (button) {
     $(button).on('click', function () {
       let menu = $('.accordion_wrap')[0]

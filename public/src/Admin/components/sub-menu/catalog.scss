@@ -80,29 +80,8 @@ span.close {
   display: flex;
 }
 
-.val-item {
-  display: flex;
-}
 
-.val-item .value {
-  padding-left: 10px;
-}
 
-/*.prop{
-    display:flex;
-    flex-flow:column;
-    justify-content: space-between;
-    position: relative;
-    flex:1;
-}*/
-.val {
-  padding: 10px;
-  flex: 1;
-}
-
-.value:focus {
-  border-bottom: 1px #ddd solid;
-}
 .prop-name {
   display: flex;
   border-bottom: 1px solid #d8d8d8;

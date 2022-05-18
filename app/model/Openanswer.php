@@ -5,8 +5,8 @@ namespace app\model;
 
 class Openanswer extends Model
 {
-	protected $table = 'openanswers';
-	protected $model = 'openanswer';
+	public $table = 'openanswers';
+	public  $model = 'openanswer';
 
 	protected $fillable = [
 		'openquestion_id'=>null,

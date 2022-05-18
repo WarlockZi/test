@@ -57,11 +57,9 @@ abstract class Model
 		$fillable = $model->fillable;
 		foreach ($values as $k => $v) {
 			if (array_key_exists($k, $model->fillable)) {
-				if (is_numeric($fillable[$k])) {
-					$fillable[$k] = (int)$v;
-				} elseif (is_string($fillable[$k])) {
-					$fillable[$k] = (string)$v;
-				}
+
+					$fillable[$k] = $v;
+
 			}
 		}
 

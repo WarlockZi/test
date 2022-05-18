@@ -78,6 +78,7 @@
 
   .test-edit__title {
     display: flex;
+    flex-flow: column;
     flex-wrap: wrap;
     position: relative;
     margin: 0px 0 10px 2px;

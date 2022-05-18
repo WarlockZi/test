@@ -1,1 +1,1 @@
-<div class="test-edit__menu-toggle">Выбрать тест</div>
+<div class="accordion-open" >Выбрать тест</div>

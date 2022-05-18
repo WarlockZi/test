@@ -9,13 +9,11 @@
 		<? if (isset($test['isTest']) && $test['isTest']): ?>
 			<div class="test-edit__title">
 				<? if (isset($test)): ?>
-					<p class="test-name"
-					   value="<?= $_REQUEST['id'] ?? $test['id'] ?>"><?= $_REQUEST['name'] ?? $test['name'] ?>
-					</p>
+					<p class="test-name"><?= $test['name'] ?></p>
 				<? endif; ?>
 			</div>
 
-			<div class="questions">
+			<div class="questions" data-test-id="<?$test['id'] ?>">
 
 				<div class="question__create">
 					<? $question__create = true; ?>

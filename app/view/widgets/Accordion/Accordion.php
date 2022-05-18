@@ -2,25 +2,28 @@
 
 namespace app\view\widgets\Accordion;
 
-use app\model\Model;
+//use app\model\Model;
 
-class Accordion extends Model
+class Accordion
 {
-	public $models=[];
+	public $models = [];
+	public $model;
 	protected $parentFieldName = '';
-//	protected $data;
-//	protected $tree;
+
 	protected $html;
 	protected $class = '';
 
 	protected $label_after = '';
-	protected $link = '/adminsc/test/';
-	protected $link_label_after = '/adminsc/test/update/';
+	protected $link_label_after = ''; // /adminsc/test/update/
+	protected $link = '';
 
 	public function __construct($options = [])
 	{
-		parent::__construct();
+//		parent::__construct();
 		$this->getOptions($options);
+		if (!$this->link) {
+			$this->link = "/adminsc/{$this->model->model}/update/";
+		}
 		$this->run();
 	}
 
@@ -35,8 +38,8 @@ class Accordion extends Model
 
 	protected function run()
 	{
-		$models = $this->getAssoc2($this->models);
-		$this->tree = $this->hierachy2($models, $this->parentFieldName);
+		$models = $this->model->getAssoc2($this->models);
+		$this->tree = $this->model->hierachy2($models, $this->parentFieldName);
 		$this->html = $this->showCat($this->tree);
 		$this->output();
 	}
@@ -48,7 +51,7 @@ class Accordion extends Model
 
 	protected function lable_after($item)
 	{
-		if ($this->label_after) {
+		if ($this->link_label_after) {
 			return "<a class='update' href='{$this->link_label_after}{$item['id']}'>" .
 				"{$this->icon()}" .
 				"</a>";
@@ -60,14 +63,14 @@ class Accordion extends Model
 	{
 		ob_start();
 //		$isTest = $item['isTest'] === '1' ? 'data-istest' : '';
-		include ROOT."/app/view/widgets/Accordion/li.php";
+		include ROOT . "/app/view/widgets/Accordion/li.php";
 		return ob_get_clean();
 	}
 
 	function tplMenu($item, $lev)
 	{
 		$childs = isset($item['childs']);
-		$class = $childs?"class='childs'":'' ;
+		$class = $childs ? "class='childs'" : '';
 
 		$menu = "<li {$class}>";
 		$menu .= "{$this->li($item, $lev)}";
@@ -92,7 +95,7 @@ class Accordion extends Model
 
 	public function output()
 	{
-		return "<ul accordion class = '{$this->class}'>{$this->html}</ul>";
+		return "<div accordion class = '{$this->class}'>{$this->html}</div>";
 	}
 
 }

@@ -20,10 +20,11 @@ export default function sortable(containerSelector,elSelector, model) {
         }
 
         async function sort(upToQestionNumber) {
-          let questionsEls = els.filter(function (el, i) {
-              if (i + 1 < upToQestionNumber) return el
+          let questionsEls = [].map.call(els, function (el,i) {
+              if (i-1 < upToQestionNumber) return el
             }
           )
+
           let toChange = questionsEls.map((el) => {
             return el.id
           })

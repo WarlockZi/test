@@ -105,11 +105,13 @@ class OpenquestionController Extends AppController
 	{
 		$q_id = $this->ajax['q_id'];
 
-		$answers = Answer::findAllWhere('parent_question', $q_id);
-		foreach ($answers as $answer) {
-			Answer::delete($answer['id']);
+		$answers = Openanswer::findAllWhere('openquestion_id', $q_id);
+		if ($answers ){
+			foreach ($answers as $answer) {
+				Openanswer::delete($answer['id']);
+			}
 		}
-		Question::delete($q_id);
+		Openquestion::delete($q_id);
 		exit(json_encode(['msg' => 'Вопрос и ответы удалены', 'q_id' => $q_id]));
 	}
 

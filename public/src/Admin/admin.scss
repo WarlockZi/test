@@ -15,7 +15,6 @@
   flex: 1 0 auto;
   margin-top: 0;
 
-
   @include _600 {
     flex-wrap: wrap;
   }
@@ -29,61 +28,6 @@
 }
 
 
-.admin-layout__sidebar {
-  max-width: 200px;
-  background: darken($color-admin-sidebar, 5%);
-  width: 180px;
-
-  @include _800 {
-    max-width: 100%;
-    width: 150px;
-  }
-
-
-  .admin-sidebar__logo {
-    padding: 0;
-    background-color: darken($color-admin-sidebar, 5%);
-    justify-content: center;
-
-    svg.logo_vitex {
-      position: relative;
-      align-self: start;
-      border-bottom: none;
-      height: 89px;
-      flex: 0 0 155px;
-
-      @include _800 {
-        position: relative;
-        align-self: start;
-        border-bottom: none;
-        height: 89px;
-        flex: 0 0 130px;
-      }
-      //#i {
-      //  fill: white;
-      //}
-    }
-  }
-
-  li, a {
-    border-bottom: lighten($color-admin-sidebar, 5%) 1px solid;
-    border-top: darken($color-admin-sidebar, 5%) 1px solid;
-  }
-
-  .level-1 {
-    background-color: lighten($color-admin-sidebar, 15%);
-
-    li, a {
-      border-bottom: lighten($color-admin-sidebar, 5%) 1px solid;
-      border-top: #393939 1px solid;
-    }
-  }
-
-
-  .admin-layout__sidebar-tail {
-    flex: 1 0 auto;
-  }
-}
 
 
 
