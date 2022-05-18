@@ -5,13 +5,19 @@
 @import './partials/layout'; // responsive grid and media queries
 
 [accordion] {
-  min-width: 200px;
+  min-width: 160px;
   display: flex;
   flex-flow: column;
-  background: darken($color-level-0,5%);
+  background: darken($color-level-0, 5%);
 
-  @include _800 {
-    max-width: 100%;
+
+  a {
+    padding: $item-padding-M $item-padding-M+14 $item-padding-M 29px;
+    font-size: .8rem;
+    min-height: 10px;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
   }
 
   /* by default hide all sub menus */
@@ -25,7 +31,7 @@
   li {
     user-select: none;
     position: relative;
-
+    cursor: pointer;
 
     &.rotate > .label > .arrow {
       transform: rotate(0deg);
@@ -44,14 +50,19 @@
     }
   }
 
+  .label {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-right: 12px;
+    color: #ffffff;
+  }
 
-  &>li>.label, &>li>a {
+  & > li > .label, & > li > a {
     display: flex;
     align-items: center;
     padding: 12px 22px 12px 12px;
     color: $color-3;
     font-size: .7rem;
-    cursor: pointer;
 
     &:hover {
       background: tint($color-level-0, 3%);
@@ -64,23 +75,32 @@
     color: lighten($color-main, 10%);
   }
 
+
   .level-1 {
     background: $color-level-2;
 
-    >li :hover {
-      background: tint($color-level-2, 3%);
-    }
 
-    .label{
-      padding: 12px 12px 12px 24px;
+    .label {
+      padding-left: 24px;
+
+      &:hover {
+        background-color: tint($color-level-2, 3%);
+
+      }
     }
   }
 
-  .level-2 {
-    background-color: $color-level-2;
 
-    &:hover {
-      background: tint($color-level-2, 3%);
+  .level-2 {
+    background-color: $color-level-3;
+
+    .label {
+      padding-left: 36px;
+
+      &:hover {
+        background-color: tint($color-level-3, 3%);
+
+      }
     }
   }
 
@@ -166,19 +186,20 @@
       padding: $item-padding-M $item-padding-M+14 $item-padding-M 29px;
       font-size: .8rem;
       min-height: 10px;
+      display: flex;
+      align-items: center;
+      color: #ffffff;
     }
 
     ul {
       label {
         padding-left: ($item-padding-M ) + 10px;
-
       }
 
       a {
         padding-left: ($item-padding-M ) + 25px;
       }
     }
-
 
     ul ul label,
     ul ul a {
@@ -208,26 +229,23 @@
   }
 }
 
-.accordion_wrap,
+
 .admin-layout__sidebar {
-  svg {
+  display: flex;
+  flex-flow: column;
+  max-width: 160px;
+  background: darken($color-admin-sidebar, 5%);
+
+  @include _800 {
+    flex: 1 0 140px;
+    width: 100%;
+
+  }
+
+  [accordion] svg {
     margin: 0 9px;
-    height: 18px;
-    flex: 0 0 18px;
-
-    &.feather-grid {
-      stroke: white;
-    }
-
-    #house,
-    #settings,
-    .feather-grid {
-      stroke: white;
-    }
-
-    #house {
-      fill: white;
-    }
+    height: 15px;
+    flex: 0 0 15px;
   }
 
   /* arrow icon */
@@ -237,4 +255,34 @@
       right: 12px;
     }
   }
+
+  .admin-sidebar__logo {
+    display: flex;
+    padding: 0;
+    background-color: darken($color-admin-sidebar, 5%);
+    justify-content: center;
+
+    .logo_vitex {
+      position: relative;
+      align-self: start;
+      border-bottom: none;
+      height: 89px;
+      width: 120px;
+
+      @include _800 {
+        width: 110px;
+      }
+    }
+  }
+
+  li, a {
+    border-bottom: lighten($color-admin-sidebar, 5%) 1px solid;
+    border-top: darken($color-admin-sidebar, 5%) 1px solid;
+  }
+
+
+  .admin-layout__sidebar-tail {
+    flex: 1 0 auto;
+  }
+
 }

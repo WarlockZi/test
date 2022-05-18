@@ -8,8 +8,8 @@ use app\model\Model;
 
 class Answer extends Model
 {
-	protected $table = 'answer';
-	protected $model = 'answer';
+	public $table = 'answer';
+	public  $model = 'answer';
 
 	protected $fillable = [
 		'parent_question'=>null,

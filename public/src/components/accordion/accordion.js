@@ -16,41 +16,51 @@ if (accordions) {
 function handle({target}) {
   let li = target.closest('li')
   if (!li) return
-  // li.classList.toggle('rotate')
 
   let accordion = li.closest('[accordion]')
   let ul = $(li).find('ul')
-  if (!ul) return;
-  if (ul.classList.contains('open')) {
-    slideUp(ul,li)
+  if (!ul) {
+    rotateArrow(li)
   } else {
-    if (!ul) return
-    closeSiblings(accordion)
-    // accordion.style.height = "auto"
-    slideDown(ul,li)
+    if (ul.classList.contains('open')) {
+      slideUp(ul, li)
+    } else {
+      // accordion.style.height = "auto"
+      if (!ul) return
+      let parent = li.closest('ul')
+      closeSiblings(parent)
+      slideDown(ul, li, parent)
+    }
   }
 }
 
-function closeSiblings(accordion) {
-  let ul = $(accordion).find('.open')
-  if (ul) {
-  let li = ul.closest('li')
-    slideUp(ul,li)
+function closeSiblings(parent) {
+  if (!parent) return
+  let open = $(parent).find('li>ul.open')
+  if (open) {
+    let li = open.closest('li')
+    slideUp(open, li)
   }
 }
 
-function slideDown(ul, li) {
+function slideDown(ul, li, parent) {
+  if (parent) {
+    parent.style.maxHeight = ul.scrollHeight + parent.scrollHeight + "px";
+  }
   ul.style.maxHeight = ul.scrollHeight + "px";
   ul.classList.toggle('open')
   li.classList.toggle('rotate')
 }
 
-function slideUp(ul,li) {
+function slideUp(ul, li) {
   ul.style.maxHeight = 0 + "px";
   ul.classList.toggle('open')
   li.classList.toggle('rotate')
 }
 
+function rotateArrow(li) {
+  li.classList.toggle('rotate')
+}
 
 function increaseParent(parent, ulHeight) {
   if (!parent.classList.contains('accordion')) {
