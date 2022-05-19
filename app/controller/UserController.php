@@ -36,14 +36,15 @@ class UserController extends AppController
 
 	public function actionShow()
 	{
-//		if (!isset($_GET['id']) || !$id = $_GET['id']) {
-//			header('Location: /adminsc/user/list');
-//		};
-
-		$item = new User;
 		$rights = Right::findAll();
+		$this->set(compact('rights'));
 
-		$this->set(compact('user', 'rights'));
+		$user =new User();
+		$item = $user;
+		$item = include ROOT . '/app/view/User/getItem.php';
+		$this->set(compact('item'));
+		$this->set(compact('rights'));
+
 	}
 
 	public function actionEdit()
