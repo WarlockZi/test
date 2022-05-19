@@ -126,7 +126,7 @@
     padding: 2px;
 
 
-    .question-edit_row {
+    .row {
       display: flex;
       justify-content: space-between;
 
@@ -200,7 +200,7 @@
       }
 
 
-      .question__sort {
+      .sort {
         cursor: move;
         display: flex;
         flex-basis: 45px;

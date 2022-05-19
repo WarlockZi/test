@@ -36,12 +36,12 @@ class UserController extends AppController
 
 	public function actionShow()
 	{
-		if (!isset($_GET['id']) || !$id = $_GET['id']) {
-			header('Location: /adminsc/user/list');
-		};
+//		if (!isset($_GET['id']) || !$id = $_GET['id']) {
+//			header('Location: /adminsc/user/list');
+//		};
 
-		$user = User::findOneWhere('id', $id);
-		$rights = Right::findAll();;
+		$item = new User;
+		$rights = Right::findAll();
 
 		$this->set(compact('user', 'rights'));
 	}

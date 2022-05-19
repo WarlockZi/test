@@ -78,6 +78,7 @@ export default function list() {
       // DELETE
       async function modelDel(el) {
         // debugger
+        if (!confirm('Удалить пользователя?')) return
         let id = el.dataset['id']
         let res = await post(`/adminsc/${modelName}/delete`, {id})
         res = JSON.parse(res)
@@ -100,7 +101,8 @@ export default function list() {
         let res = await post(`/adminsc/${modelName}/create`, {})
         res = JSON.parse(res)
         if (res.id) {
-          newRow(res.id - 1)
+          window.location.href = `/adminsc/${modelName}/show`
+          // newRow(res.id - 1)
         }
       }
 

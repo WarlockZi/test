@@ -47,8 +47,8 @@
     <? $n++; ?>
   <? endforeach; ?>
 
-	<div class="buttons_wrap">
+<!--	<div class="buttons_wrap">-->
     <? include ROOT . '/app/view/components/CustomCatalogItem/buttons.php' ?>
-	</div>
+<!--	</div>-->
 
 </div>

@@ -64,7 +64,7 @@ export let _question = {
     return {
       id: +el.id,
       el: el,
-      sort: el.querySelector('.question__sort'),
+      sort: el.querySelector('.sort'),
       save: el.querySelector('.question__save'),
       text: el.querySelector('.question__text'),
       del: el.querySelector('.question__delete'),
@@ -175,7 +175,7 @@ export let _question = {
         parent: +$('.test-name')[0].getAttribute('value'),
         picq: '',
         qustion: $(question).find('.question__text').innerText,
-        sort: +$(question).find('.question__sort').innerText,
+        sort: +$(question).find('.sort').innerText,
       }
     },
   getAnswers:
