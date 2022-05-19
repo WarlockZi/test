@@ -1,12 +1,12 @@
 import Sortable from 'sortablejs'
 import {$, popup, post} from '../common'
 
-export default function sortable(containerSelector,elSelector, model) {
+export default function sortable(containerSelector, elSelector, model) {
 
   let container = $(containerSelector)[0];
-  let els = $(elSelector);
   // debugger
   if (container) {
+    // let els = $(elSelector);
     let sortable = Sortable.create(container, {
       animation: 150,
       onEnd: function (evt) {
@@ -20,8 +20,9 @@ export default function sortable(containerSelector,elSelector, model) {
         }
 
         async function sort(upToQestionNumber) {
-          let questionsEls = [].map.call(els, function (el,i) {
-              if (i-1 < upToQestionNumber) return el
+          let els = $(elSelector);
+          let questionsEls = [].map.call(els, function (el, i) {
+              if (i - 1 < upToQestionNumber) return el
             }
           )
 
@@ -34,7 +35,7 @@ export default function sortable(containerSelector,elSelector, model) {
             popup.show(res.msg)
           }
           questionsEls.map((el, i) => {
-            $(el).find('.question__sort').innerText = i + 1
+            $(el).find('.sort').innerText = i + 1
           })
         }
       },

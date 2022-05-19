@@ -10,32 +10,16 @@ use app\model\Openquestion;
 class OpenquestionController Extends AppController
 {
 	private $req;
+	private $model = 'Openquestion';
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
 		$this->autorize();
-		$this->req = json_decode($_POST['param'], true);
 	}
 
 	public function actionShow()
 	{
-		$id = App::$app->answer->autoincrement();
-		$q_id = App::$app->question->autoincrement();
-
-		$sort = $this->req['questCount'] + 1;
-		$block[0]['question_text'] = '';
-		$block[0]['question_pic'] = '/srvc/nophoto-min.jpg';
-		$block[0]['sort'] = $sort;
-		$block[$id]['answer_text'] = '';
-		$block[$id]['correct_answer'] = '';
-
-		ob_start();
-		require ROOT . '/app/view/Test/edit_BlockQuestion.php';
-		$block = ob_get_clean();
-		$testid = $this->req['testid'];
-		$data = compact("testid", "block");
-		exit($json = json_encode($data));
 	}
 
 	public function actionUpdateOrCreate()
@@ -45,14 +29,14 @@ class OpenquestionController Extends AppController
 			$question = $this->req['question'] ?? '';
 			$q_id = $this->req['question']['id'] ?? '';
 			$sort = $this->req['question']['sort'] ?? '';
-			$qId = Openquestion::updateOrCreate($question);
+			$qId = $this->model::updateOrCreate($question);
 			if ($qId === false) {
 				return;
 			} elseif (is_int($qId)) {
 				if ($answers) {
 					foreach ($answers as $answer) {
 						$answer['parent_question'] = $qId;
-						Answer::updateOrCreate($answer);
+						Openanswer::updateOrCreate($answer);
 					}
 				}
 				exit(json_encode([
@@ -62,7 +46,7 @@ class OpenquestionController Extends AppController
 				]));
 			} elseif ($qId === true) {
 				foreach ($answers as $answer) {
-					Answer::updateOrCreate($answer);
+					Openanswer::updateOrCreate($answer);
 				}
 				exit(json_encode([
 					'msg' => 'Вопросы и ответы сохранены']));
@@ -73,30 +57,25 @@ class OpenquestionController Extends AppController
 		};
 	}
 
-
-
-
-
 	public function actionChangeParent()
 	{
 		if ($ids = $this->ajax) {
 			$id = $ids['id'];
 			$testId = $ids['test_id'];
-			$q = Question::findOneWhere('id',$id);
+			$q = $this->model::where('id',$id)
+				->get();
 			$q['parent'] = $testId;
-			Question::update($q);
+			$this->model::update($q);
 			exit(json_encode(['msg' => 'ok']));
 		}
 	}
 
-
-
-	public function actionUpdate()
+public function actionUpdate()
 	{
-		Question::updateOrCreate($this->req['question']);
+		$this->model::updateOrCreate($this->req['question']);
 
 		foreach ($this->req['answers'] as $answer) {
-			Answer::updateOrCreate($answer);
+			Openanswer::updateOrCreate($answer);
 		}
 		exit(json_encode(['msg' => 'Saved']));
 	}
@@ -111,27 +90,16 @@ class OpenquestionController Extends AppController
 				Openanswer::delete($answer['id']);
 			}
 		}
-		Openquestion::delete($q_id);
+		$this->model::delete($q_id);
 		exit(json_encode(['msg' => 'Вопрос и ответы удалены', 'q_id' => $q_id]));
 	}
 
-	public function actionImage()
-	{
-		$q_id = $this->ajax['q_id'];
-
-		$answers = Answer::findOneWhere('parent_question', $q_id);
-		foreach ($answers as $answer) {
-			Answer::delete($answer['id']);
-		}
-		Question::delete($q_id);
-		exit(json_encode(['msg' => 'ok', 'q_id' => $q_id]));
-	}
 
 	public function actionSort()
 	{
-		$q_ids = $this->ajax['toChange'];
-		if (!$q_ids) $this->exitWith('ok');
-		Openquestion::sort($q_ids);
+		$ids = $this->ajax['toChange'];
+		if (!$ids) $this->exitWith('ok');
+		$this->model::sort($ids);
 		exit(json_encode(['msg' => 'Сортировка сохранена']));
 	}
 

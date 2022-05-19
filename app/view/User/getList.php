@@ -8,7 +8,6 @@ $t = new CustomList(
 		'models' => $users,
 		'modelName' => "user",
 		'tableClassName' => 'users',
-		'addButton'=>'ajax',
 		'columns' => [
 			'id' => [
 				'className' => 'id',
@@ -46,6 +45,7 @@ $t = new CustomList(
 		],
 		'editCol' => true,
 		'delCol' => true,
+		'addButton'=>'redirect',
 	]
 );
 

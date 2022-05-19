@@ -1,7 +1,7 @@
 <div class="question-edit" id="<?= $q_id ?? '' ?>">
 
-	<div class="question-edit_row">
-		<div class="question__sort"><?= $block[0]['sort'] ?? '' ?></div>
+	<div class="row">
+		<div class="sort"><?= $block[0]['sort'] ?? '' ?></div>
 		<div class="question__save"
 		     data-tooltip="Сохранить этот вопрос ответами">
 		  <? include ICONS . '/save.svg' ?>
@@ -27,7 +27,7 @@
 		</div>
 	</div>
 
-	<div class="question-edit_row">
+	<div class="row">
 
 		<div class="question__answers">
 				<? if (!$question__create): ?>

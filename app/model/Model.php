@@ -57,9 +57,7 @@ abstract class Model
 		$fillable = $model->fillable;
 		foreach ($values as $k => $v) {
 			if (array_key_exists($k, $model->fillable)) {
-
-					$fillable[$k] = $v;
-
+				$fillable[$k] = $v;
 			}
 		}
 
@@ -263,13 +261,42 @@ abstract class Model
 		$item = $model->pdo->query($sql, [$value]);
 		return $item[0] ?? null;
 	}
+//	public static function modelFindOneWhere($field, $value)
+//	{
+//		$model = new static();
+//		$sql = "SELECT * FROM {$model->table} WHERE $field = ? LIMIT 1";
+//		$item = $model->pdo->query($sql, [$value]);
+//		$model['fields'] = $model->pdo->query($sql, [$value]);
+//		return $model ?? null;
+//	}
 
-	public static function findOneWhereModel($field, $value)
+	public function orderBy($field='')
+	{
+		$this->orderBy =" ORDER BY {$field}" ?? '';
+		return $this;
+	}
+
+	public function pluck($fields = [])
+	{
+		$this->pluck = $fields ?? '*';
+		return $this;
+	}
+
+	public static function where($field,$equals,$value)
 	{
 		$model = new static();
-		$sql = "SELECT * FROM {$model->table} WHERE $field = ? LIMIT 1";
-		$model->items = $model->pdo->query($sql, [$value]);
+		$model->where = " WHERE {$field} {$equals} {$field}" ?? '';
 		return $model;
+	}
+
+	public final function get()
+	{
+		$pluck = $this->pluck??'*';
+		$where = $this->where??'';
+		$orderBy = $this->orderBy??'';
+		$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
+		$this->fields = $this->pdo->query($sql, []);
+		return $this->fields;
 	}
 
 	public function findBySql($sql, $params = [])
@@ -350,6 +377,7 @@ abstract class Model
 		}
 		return $tree;
 	}
+
 	public function hierachy2(array $models, string $parent = 'parent')
 	{
 		$tree = [];

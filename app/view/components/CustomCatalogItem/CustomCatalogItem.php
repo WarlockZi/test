@@ -4,15 +4,15 @@
 namespace app\view\components\CustomCatalogItem;
 
 
+use app\model\Model;
+
 class CustomCatalogItem
 {
-	public $item = [];
-	public $fields = [];
 	public $pageTitle = '';
+	public $item = null;
+	public $fields = [];
 
-	public $html = '';
-
-	public $models = [];
+//	public $models = [];
 	public $modelName = '';
 	public $tableClassName = '';
 	private $tabs = '';
@@ -20,6 +20,8 @@ class CustomCatalogItem
 	private $saveBttn = false;
 	private $toListBttn = false;
 	private $delBttn = true;
+
+	public $html = '';
 
 	public function __construct($options)
 	{

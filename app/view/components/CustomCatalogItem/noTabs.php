@@ -5,12 +5,8 @@
 	<? endif; ?>
 
 </div>
+<div class="item_content">
 
-<div class="item_content"
-     data-table="<?= $this->tableClassName ?>"
-     data-model="<?= $this->modelName ?>"
-     data-id="<?= $this->item['id'] ?>"
->
 	<!--  TABLE  -->
 	<? foreach ($this->fields as $fieldName => $data): ?>
 		<? $contenteditable = (isset($data['contenteditable']) && $data['contenteditable']) ? 'contenteditable' : ''; ?>
@@ -38,9 +34,9 @@
 	  </div>
 
 	<? endforeach; ?>
-	<div class="buttons_wrap">
+<!--	<div class="buttons_wrap">-->
 		 <? include ROOT . '/app/view/components/CustomCatalogItem/buttons.php' ?>
-	</div>
+<!--	</div>-->
 
 </div>
 

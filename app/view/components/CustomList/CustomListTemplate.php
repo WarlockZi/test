@@ -14,7 +14,7 @@
 			 $sort = $i['sort'] ? 'data-sort' : '';
 			 ?>
 		  <div class="head <?= $i['className'] ?? '' ?>"
-		       data-type="<?= $i['data-type']??'string' ?>"
+		       data-type="<?= $i['data-type'] ?? 'string' ?>"
 					<?= $sort ?>>
 					<?= $i['name'] ?> <?= $search ?>
 		  </div>
@@ -31,7 +31,7 @@
 		<!--  TABLE  -->
 		 <? foreach ($this->models as $model): ?>
 
-			 <? foreach ($this->columns as $field=>$column): ?>
+			 <? foreach ($this->columns as $field => $column): ?>
 
 			  <div class="<?= $column['className']; ?>"
 			       data-field="<?= $field; ?>"
@@ -41,9 +41,9 @@
 
 			 <? endforeach; ?>
 
-				 <? include ROOT . '/app/view/components/CustomList/edit.php'; ?>
+			 <? include ROOT . '/app/view/components/CustomList/edit.php'; ?>
 
-				 <? include ROOT . '/app/view/components/CustomList/del.php'; ?>
+			 <? include ROOT . '/app/view/components/CustomList/del.php'; ?>
 
 
 		 <? endforeach; ?>
@@ -53,13 +53,7 @@
 	<!--  ADD BUTTON  -->
 	<div class="custom-list__buttons">
 
-	<? if ($this->addButton === 'ajax'): ?>
-	  <div class="add-model">+</div>
-	<? elseif ($this->addButton === 'redirect'): ?>
-	  <a href="/adminsc/<?=$this->modelName?>/create"
-	     class="add-model">+
-	  </a>
-	<? endif; ?>
+			 <? include ROOT . '/app/view/components/CustomList/add.php'; ?>
 	</div>
 
 
