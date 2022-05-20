@@ -12,7 +12,6 @@ class CustomCatalogItem
 	public $item = null;
 	public $fields = [];
 
-//	public $models = [];
 	public $modelName = '';
 	public $tableClassName = '';
 	private $tabs = '';

@@ -7,7 +7,7 @@ use \app\view\components\CustomDate\CustomDate;
 use \app\model\User;
 
 if ($item) {
-	if (User::can($user, 'role_employee')) {
+	if (User::can($this->user, ['role_employee'])) {
 		return getEmployeeHtml($item, $this);
 	} else {
 		return getGuestHtml($item, $this);

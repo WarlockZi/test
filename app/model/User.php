@@ -34,7 +34,7 @@ class User extends Model
 		parent::__construct();
 	}
 
-	public static function can($user, $rights=[])
+	public static function can(array $user, $rights=[])
 	{
 		if (is_string($rights)&&$rights){
 			$rights = compact('rights');

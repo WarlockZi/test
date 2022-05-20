@@ -5,7 +5,7 @@
 @import './partials/layout'; // responsive grid and media queries
 
 [accordion] {
-  min-width: 160px;
+  //min-width: 160px;
   display: flex;
   flex-flow: column;
   background: darken($color-level-0, 5%);
@@ -220,6 +220,10 @@
   max-width: 0px;
   transition: max-width 1s;
   margin-bottom: 25px;
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
+  flex: 0 0 150px;
 
   @include _800 {
     min-width: 100%;
@@ -227,6 +231,7 @@
 
   &.open {
     max-width: 200px;
+    //min-width: 160px;
   }
 }
 
