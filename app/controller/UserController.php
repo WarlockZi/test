@@ -2,10 +2,8 @@
 
 namespace app\controller;
 
-use app\core\App;
 use app\model\Right;
 use app\model\User;
-use app\view\components\CustomList\CustomList;
 use app\view\View;
 
 
@@ -39,8 +37,8 @@ class UserController extends AppController
 		$rights = Right::findAll();
 		$this->set(compact('rights'));
 
-		$user =new User();
-		$item = $user;
+//		$user =new User();
+		$item = new User();
 		$item = include ROOT . '/app/view/User/getItem.php';
 		$this->set(compact('item'));
 		$this->set(compact('rights'));

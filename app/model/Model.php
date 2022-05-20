@@ -35,16 +35,6 @@ abstract class Model
 		}
 	}
 
-//	public static function with($child = ""): self
-//	{
-//		if ($child){
-//		$model = new static();
-//		$model::findAll();
-//
-//		$child::findAllWhere('id',);
-//		}
-//		return $model;
-//	}
 
 	public static function create($values = [], $register = false)
 	{
@@ -209,6 +199,22 @@ abstract class Model
 		return false;
 	}
 
+	private function fillModel(array $fields): void
+	{
+		foreach ($fields as $k => $v) {
+			$this->fillable[$k] = $v;
+		}
+	}
+
+	public static function findOneModel($id = '')
+	{
+		$model = new static();
+		$sql = "SELECT * FROM {$model->table} WHERE id IN (?)";
+		$fields = $model->pdo->query($sql, [$id])[0] ?? [];
+		$model->fillModel($fields);
+		return $model;
+	}
+
 	public static function find($id = [])
 	{
 		$model = new static();
@@ -270,9 +276,9 @@ abstract class Model
 //		return $model ?? null;
 //	}
 
-	public function orderBy($field='')
+	public function orderBy($field = '')
 	{
-		$this->orderBy =" ORDER BY {$field}" ?? '';
+		$this->orderBy = " ORDER BY {$field}" ?? '';
 		return $this;
 	}
 
@@ -282,18 +288,54 @@ abstract class Model
 		return $this;
 	}
 
-	public static function where($field,$equals,$value)
+	public static function where($field, $operator, $value)
 	{
 		$model = new static();
-		$model->where = " WHERE {$field} {$equals} {$field}" ?? '';
+		$model->where = " WHERE {$field} {$operator} {$value}" ?? '';
 		return $model;
+	}
+
+	public function withWhere($field, $operator, $value)
+	{
+		$this->where = " WHERE {$field} {$operator} {$value}" ?? '';
+		return $this;
+	}
+
+	public static function with($child = ""): self
+	{
+		if ($child) {
+			$model = new static();
+			$model->hasMany[$child] = [];
+			$model->with = "SELECT * FROM {$child} WHERE {$model->model}_id IN ";
+		}
+		return $model;
+	}
+
+	public final function getWith()
+	{
+		$pluck = $this->pluck ?? '*';
+		$where = $this->where ?? '';
+		$orderBy = $this->orderBy ?? '';
+		$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
+		$this->fields = $this->pdo->query($sql, []);
+		$ids = [];
+		foreach ($this->fields as $k => $v) {
+			array_push($ids, $v['id']);
+		}
+		$ids = '('.implode(',', $ids).')';
+		$with = $this->with . $ids ?? '*';
+		$this->hasMany = $this->pdo->query($with, []);
 	}
 
 	public final function get()
 	{
-		$pluck = $this->pluck??'*';
-		$where = $this->where??'';
-		$orderBy = $this->orderBy??'';
+		if ($this->with) {
+			$this->getWith();
+			return $this;
+		}
+		$pluck = $this->pluck ?? '*';
+		$where = $this->where ?? '';
+		$orderBy = $this->orderBy ?? '';
 		$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
 		$this->fields = $this->pdo->query($sql, []);
 		return $this->fields;
