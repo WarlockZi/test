@@ -12,14 +12,14 @@ class CustomSelect
 	private $title = '';
 	private $tree = [];
 	private $selected = [];
+	private $exclude = [];
 
 	private $initialOptionValue = 0;
 	private $initialOptionLabel = null;
 	private $optionName = '';
 	private $type = 'string';
-	private $pathToTpl = ROOT.'/app/view/components/CustomSelect/';
-	private $tpl = 'tpl.php';
-	private $finalTpl;
+
+	private $finalTpl = ROOT.'/app/view/components/CustomSelect/tpl.php';
 	public $html;
 
 	public function __construct($options)
@@ -35,7 +35,6 @@ class CustomSelect
 				$this->$k = $v;
 			}
 		}
-		$this->finalTpl=$this->pathToTpl.$this->tpl;
 	}
 
 	public function getChilds($tree,$level)
