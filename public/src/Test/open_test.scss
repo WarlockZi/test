@@ -1,10 +1,27 @@
 .opentest-edit-wrapper {
-  .no-element{
-    .error{
+
+  .question-edit__parent-select {
+    [custom-select] {
+      .space,
+      .options li {
+        display: flex;
+        font-size: .5rem;
+        align-items: center;
+      }
+    }
+  }
+
+  .test-edit {
+    width: 150px;
+  }
+
+  .no-element {
+    .error {
       margin: 40px 0;
     }
   }
 }
+
 .opentest_wrap {
   display: flex;
   flex-flow: column;

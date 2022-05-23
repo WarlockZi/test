@@ -295,44 +295,12 @@ abstract class Model
 		return $model;
 	}
 
-	public function withWhere($field, $operator, $value)
-	{
-		$this->where = " WHERE {$field} {$operator} {$value}" ?? '';
-		return $this;
-	}
-
-	public static function with($child = ""): self
-	{
-		if ($child) {
-			$model = new static();
-			$model->hasMany[$child] = [];
-			$model->with = "SELECT * FROM {$child} WHERE {$model->model}_id IN ";
-		}
-		return $model;
-	}
-
-	public final function getWith()
-	{
-		$pluck = $this->pluck ?? '*';
-		$where = $this->where ?? '';
-		$orderBy = $this->orderBy ?? '';
-		$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
-		$this->fields = $this->pdo->query($sql, []);
-		$ids = [];
-		foreach ($this->fields as $k => $v) {
-			array_push($ids, $v['id']);
-		}
-		$ids = '('.implode(',', $ids).')';
-		$with = $this->with . $ids ?? '*';
-		$this->hasMany = $this->pdo->query($with, []);
-	}
-
 	public final function get()
 	{
-		if ($this->with) {
-			$this->getWith();
-			return $this;
-		}
+//		if ($this->with) {
+//			$this->getWith();
+//			return $this;
+//		}
 		$pluck = $this->pluck ?? '*';
 		$where = $this->where ?? '';
 		$orderBy = $this->orderBy ?? '';
@@ -469,5 +437,43 @@ abstract class Model
 		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";
 		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
 	}
+
+
+
+
+//	public function withWhere($field, $operator, $value)
+//	{
+//		$this->where = " WHERE {$field} {$operator} {$value}" ?? '';
+//		return $this;
+//	}
+
+//	public static function with($child): self
+//	{
+//		if ($child) {
+//			$model = new static();
+//			$model->hasMany[$child] = [];
+//			$model->hasMany[$child]['table'] = $child;
+//			$model->with = "SELECT * FROM {$child} WHERE {$model->model}_id IN ";
+//		}
+//		return $model;
+//	}
+
+//	public final function getWith()
+//	{
+//		foreach ($this->hasMany as $child => $items) {
+//			$pluck = $this->pluck ?? '*';
+//			$where = $this->where ?? '';
+//			$orderBy = $this->orderBy ?? '';
+//			$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
+//			$this->fields = $this->pdo->query($sql, []);
+//			$ids = [];
+//			foreach ($this->fields as $k => $v) {
+//				array_push($ids, $v['id']);
+//			}
+//			$ids = '(' . implode(',', $ids) . ')';
+//			$with = $this->with . $ids ?? '*';
+//			$this->hasMany[$child]['items'] = $this->pdo->query($with, []);
+//		}
+//	}
 
 }

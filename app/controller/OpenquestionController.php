@@ -2,15 +2,14 @@
 
 namespace app\controller;
 
-use app\core\App;
 use app\model\Openanswer;
 use app\model\Openquestion;
 
 
 class OpenquestionController Extends AppController
 {
-	private $req;
-	private $model = 'Openquestion';
+//	private $req;
+	private $model = Openquestion::class;
 
 	public function __construct(array $route)
 	{
@@ -25,31 +24,33 @@ class OpenquestionController Extends AppController
 	public function actionUpdateOrCreate()
 	{
 		try {
-			$answers = $this->req['answers'] ?? '';
-			$question = $this->req['question'] ?? '';
-			$q_id = $this->req['question']['id'] ?? '';
-			$sort = $this->req['question']['sort'] ?? '';
-			$qId = $this->model::updateOrCreate($question);
-			if ($qId === false) {
-				return;
-			} elseif (is_int($qId)) {
-				if ($answers) {
+			if ($this->ajax) {
+				$answers = $this->ajax['answers'] ?? '';
+				$question = $this->ajax['question'] ?? '';
+				$q_id = $question['id'] ?? '';
+				$sort = $question['sort'] ?? '';
+				$qId = $this->model::updateOrCreate($question);
+				if ($qId === false) {
+					return;
+				} elseif (is_int($qId)) {
+					if ($answers) {
+						foreach ($answers as $answer) {
+							$answer['parent_question'] = $qId;
+							Openanswer::updateOrCreate($answer);
+						}
+					}
+					exit(json_encode([
+						'id' => $qId,
+						'msg' => 'Вопросы и ответы сохранены',
+						'paginationButton' => $pagination = "<div data-pagination = $q_id class='nav-active'>{$sort}</div>"
+					]));
+				} elseif ($qId === true) {
 					foreach ($answers as $answer) {
-						$answer['parent_question'] = $qId;
 						Openanswer::updateOrCreate($answer);
 					}
+					exit(json_encode([
+						'msg' => 'Вопросы и ответы сохранены']));
 				}
-				exit(json_encode([
-					'id' => $qId,
-					'msg' => 'Вопросы и ответы сохранены',
-					'paginationButton' => $pagination = "<div data-pagination = $q_id class='nav-active'>{$sort}</div>"
-				]));
-			} elseif ($qId === true) {
-				foreach ($answers as $answer) {
-					Openanswer::updateOrCreate($answer);
-				}
-				exit(json_encode([
-					'msg' => 'Вопросы и ответы сохранены']));
 			}
 
 		} catch (Exception $exception) {
@@ -62,7 +63,7 @@ class OpenquestionController Extends AppController
 		if ($ids = $this->ajax) {
 			$id = $ids['id'];
 			$testId = $ids['test_id'];
-			$q = $this->model::where('id',$id)
+			$q = $this->model::where('id', $id)
 				->get();
 			$q['parent'] = $testId;
 			$this->model::update($q);
@@ -70,7 +71,7 @@ class OpenquestionController Extends AppController
 		}
 	}
 
-public function actionUpdate()
+	public function actionUpdate()
 	{
 		$this->model::updateOrCreate($this->req['question']);
 
@@ -85,7 +86,7 @@ public function actionUpdate()
 		$q_id = $this->ajax['q_id'];
 
 		$answers = Openanswer::findAllWhere('openquestion_id', $q_id);
-		if ($answers ){
+		if ($answers) {
 			foreach ($answers as $answer) {
 				Openanswer::delete($answer['id']);
 			}

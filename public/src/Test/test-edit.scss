@@ -103,6 +103,8 @@
 .questions {
   display: flex;
   flex-flow: column;
+  margin: 10px 0
+;
 
   .question__create {
     display: none;
@@ -119,12 +121,15 @@
     padding: 3px;
   }
 
+  .question-edit:first-child{
+      padding-top: 1px;
+  }
+
   .question-edit {
     background-color: #efefef;
     display: flex;
     flex-flow: column;
-    padding: 2px;
-
+    padding: 0 1px 1px 1px;
 
     .row {
       display: flex;
@@ -207,7 +212,7 @@
         align-items: center;
         justify-content: center;
         background-color: #fff;
-        margin-right: 3px;
+        margin-right: 1px;
         padding: 0;
         font-weight: 600;
       }
@@ -218,7 +223,7 @@
         background-color: #ffffff;
         cursor: pointer;
         position: relative;
-        margin-right: 3px;
+        margin-right: 1px;
 
         &:hover {
           background-color: $color-success;
@@ -264,6 +269,7 @@
   }
 
   .question__create-button {
+    margin: 10px 0;
     @include test-edit__act-button;
     //@include test-edit__act-button;
   }
@@ -279,7 +285,7 @@
     width: 30px;
     background-color: white;
     cursor: pointer;
-    margin-left: 2px;
+    margin-left: 1px;
     flex: 0 1 35px;
 
     &:before {
@@ -294,7 +300,7 @@
     min-width: 90px;
     padding: 10px;
     background-color: white;
-    margin: 0 3px;
+    margin: 0 1px;
     font-weight: 600;
     position: relative;
     font-size: 0.8rem;

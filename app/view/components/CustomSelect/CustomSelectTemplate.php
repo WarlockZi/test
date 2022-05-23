@@ -4,7 +4,7 @@
   <?=$this->class?"class={$this->class}":'';?>
   <?=$this->title?"title='{$this->title}'":'';?>
 >
-
+<!-- INITIAL VALUE-->
 	<? if (isset($this->initialOptionLabel)): ?>
 	  <option
 			  value="<?= $this->initialOptionValue; ?>"
@@ -12,6 +12,7 @@
 	  ><?= $this->initialOptionLabel; ?></option>
 	<? endif; ?>
 
+	<!-- VALUES -->
 	<? foreach ($this->tree as $k => $v): ?>
 
 	  <option value="<?= $v['id']??$k; ?>"
