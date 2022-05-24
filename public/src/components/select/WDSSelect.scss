@@ -66,7 +66,7 @@
     //padding: $padding-form;
     cursor: pointer;
     user-select: none;
-    font-size: 1rem;
+    font-size: $font-size;
     padding: 6px;
 
     .arrow {
@@ -79,7 +79,7 @@
     }
 
     .space {
-      min-height: 21px;
+      min-height: 12px;
     }
 
   }
@@ -106,10 +106,10 @@
 
     // OPTION
     li {
-      padding: .25rem .5rem;
+      padding: 0.15rem 0.3rem;
       cursor: pointer;
-      min-height: 25px;
-      font-size: 1rem;
+      min-height: 8px;
+      font-size: .5rem;
       border: 1px solid transparent;
 
       &:hover {

@@ -8,7 +8,7 @@ class CustomSelect
 {
 	private $field = '';
 	private $class = '';
-	private $tab = '.';
+	private $tab = '- ';
 	private $title = '';
 	private $tree = [];
 	private $selected = [];
@@ -16,10 +16,10 @@ class CustomSelect
 
 	private $initialOptionValue = 0;
 	private $initialOptionLabel = null;
-	private $optionName = '';
+	private $optionName = 'name';
 	private $type = 'string';
 
-	private $finalTpl = ROOT.'/app/view/components/CustomSelect/tpl.php';
+	private $finalTpl = ROOT . '/app/view/components/CustomSelect/tpl.php';
 	public $html;
 
 	public function __construct($options)
@@ -37,16 +37,16 @@ class CustomSelect
 		}
 	}
 
-	public function getChilds($tree,$level)
+	public function getChilds($tree, $level)
 	{
 		$str = '';
 		foreach ($tree as $id => $item) {
-			$str .= $this->getOption($item,$level+1);
+			$str .= $this->getOption($item, $level + 1);
 		}
 		return $str;
 	}
 
-	public function getOption($item,$level)
+	public function getOption($item, $level)
 	{
 		ob_start();
 		require $this->finalTpl;
@@ -58,9 +58,35 @@ class CustomSelect
 	{
 		ob_start();
 		include ROOT . '/app/view/components/CustomSelect/CustomSelectTemplate.php';
-		$t = ob_get_clean();
-		$this->html = $t;
-		return $t;
+		$this->html = ob_get_clean();
+	}
+
+	private function tpl($tpl,$v,$k)
+	{
+		$value = $v['id'] ?? $k;
+		$selected = (int)$this->selected == $k ? 'selected' : '';
+		$name = is_string($v) ? $v : $v[$this->optionName];
+
+		$tpl = "<option value='{$value}' $selected>{$name}</option>";
+
+		if (isset($v['childs'])) {
+			$tpl .= $this->getChilds($v['childs'], 0);
+		}
+		return $tpl;
+	}
+
+	private function values()
+	{
+		$tpl = '';
+		foreach ($this->tree as $k => $v) {
+
+			if ($this->exclude && !in_array($v['id'], $this->exclude)) {
+				$tpl .=$this->tpl($tpl,$v,$k);
+			} else {
+				$tpl .=$this->tpl($tpl,$v,$k);
+			}
+		}
+		return $tpl;
 	}
 
 }

@@ -409,7 +409,17 @@ abstract class Model
 		}
 		return $all;
 	}
-
+	public static function tree2(array $data, string $parent = 'parent')
+	{
+		foreach ($data as $id => &$node) {
+			if (!isset($node[$parent])) {
+				$tree[$id] = &$node;
+			} elseif (isset($node[$parent]) && $node[$parent]) {
+				$data[$node[$parent]]['childs'][$id] = &$node;
+			}
+		}
+		return $tree;
+	}
 	public function tree($parent = 'parent')
 	{
 		$data = $this->getAssoc2($this->data);
