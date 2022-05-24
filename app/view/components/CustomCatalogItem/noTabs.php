@@ -15,14 +15,10 @@
 		  <div class="field"><?= $fieldName ?></div>
 		  :
 			 <? include ROOT . '/app/view/components/CustomCatalogItem/value.php' ?>
-
-
 	  </div>
 
 	<? endforeach; ?>
-<!--	<div class="buttons_wrap">-->
-		 <? include ROOT . '/app/view/components/CustomCatalogItem/buttons.php' ?>
-<!--	</div>-->
+	<? include ROOT . '/app/view/components/CustomCatalogItem/buttons.php' ?>
 
 </div>
 
