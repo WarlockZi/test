@@ -28,10 +28,12 @@
 
 
 [custom-select] {
+  display: flex;
+  flex: 1 0 auto;
+  align-items: center;
   position: relative;
   background-color: white;
   min-width: 20px;
-  flex: 1 0 auto;
   border: 1px solid transparent;
 
   &:hover {

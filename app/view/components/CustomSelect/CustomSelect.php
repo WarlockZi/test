@@ -42,6 +42,9 @@ class CustomSelect
 		$str = '';
 		foreach ($tree as $id => $item) {
 			$str .= $this->getOption($item, $level + 1);
+			if (isset($item['childs'])) {
+				$str .= $this->getChilds($item['childs'], $level + 1);
+			}
 		}
 		return $str;
 	}
@@ -49,7 +52,7 @@ class CustomSelect
 	public function getOption($item, $level)
 	{
 		ob_start();
-		require $this->finalTpl;
+		include $this->finalTpl;
 		return ob_get_clean();
 	}
 
@@ -61,10 +64,10 @@ class CustomSelect
 		$this->html = ob_get_clean();
 	}
 
-	private function tpl($tpl,$v,$k)
+	private function tpl($tpl, $v, $k)
 	{
 		$value = $v['id'] ?? $k;
-		$selected = (int)$this->selected == $k ? 'selected' : '';
+		$selected = (int)$this->selected === (int)$k ? 'selected' : '';
 		$name = is_string($v) ? $v : $v[$this->optionName];
 
 		$tpl = "<option value='{$value}' $selected>{$name}</option>";
@@ -80,10 +83,12 @@ class CustomSelect
 		$tpl = '';
 		foreach ($this->tree as $k => $v) {
 
-			if ($this->exclude && !in_array($v['id'], $this->exclude)) {
-				$tpl .=$this->tpl($tpl,$v,$k);
+			if ($this->exclude) {
+				if ($v['id'] !== $this->exclude) {
+					$tpl .= $this->tpl($tpl, $v, $k);
+				}
 			} else {
-				$tpl .=$this->tpl($tpl,$v,$k);
+				$tpl .= $this->tpl($tpl, $v, $k);
 			}
 		}
 		return $tpl;
