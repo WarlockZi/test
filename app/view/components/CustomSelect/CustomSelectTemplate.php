@@ -4,7 +4,7 @@
 	<?= $this->class ? "class={$this->class}" : ''; ?>
 	<?= $this->title ? "title='{$this->title}'" : ''; ?>
 >
-	<!-- INITIAL VALUE-->
+	<!-- INITIAL OPTIONS-->
 	<? if (isset($this->initialOptionLabel)): ?>
 	  <option
 			  value="<?= $this->initialOptionValue; ?>"
@@ -12,7 +12,7 @@
 	  ><?= $this->initialOptionLabel; ?></option>
 	<? endif; ?>
 
-	<!-- VALUES -->
+	<!-- OPTIONS -->
 		<?= $this->values(); ?>
 
 

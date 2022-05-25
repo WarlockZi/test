@@ -18,6 +18,7 @@
     display: flex;
     align-items: center;
     color: #ffffff;
+    position: relative;
   }
 
   /* by default hide all sub menus */
@@ -71,7 +72,18 @@
   }
 
   .current {
-    border-left: 4px solid lighten($color-main, 10%);
+    &:before {
+      content: '';
+      position: absolute;
+      display: block;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background-color: lighten($color-main, 10%);
+
+    }
+
+    //border-left: 4px solid lighten($color-main, 10%);
     color: lighten($color-main, 10%);
   }
 
@@ -242,6 +254,13 @@
   flex-flow: column;
   max-width: 160px;
   background: darken($color-admin-sidebar, 5%);
+  width: 62px;
+  transition: width .5s;
+  overflow: hidden;
+
+  &:hover {
+    width: 100%;
+  }
 
   @include _800 {
     flex: 1 0 140px;
@@ -249,10 +268,18 @@
 
   }
 
-  [accordion] svg {
-    margin: 0 9px;
-    height: 15px;
-    flex: 0 0 15px;
+  [accordion] {
+
+    svg {
+      margin: 0 9px;
+      height: 15px;
+      flex: 0 0 15px;
+    }
+
+    .label {
+      padding-right: 6px!important;
+    }
+
   }
 
   /* arrow icon */
@@ -284,11 +311,12 @@
 
   li, a {
     border-bottom: lighten($color-admin-sidebar, 5%) 1px solid;
-    border-top: darken($color-admin-sidebar, 5%) 1px solid;
+    border-top: darken($color-admin-sidebar, 7%) 1px solid;
   }
 
 
   .admin-layout__sidebar-tail {
+    border-bottom: none;
     flex: 1 0 auto;
   }
 

@@ -19,7 +19,6 @@ class Accordion
 
 	public function __construct($options = [])
 	{
-//		parent::__construct();
 		$this->getOptions($options);
 		if (!$this->link) {
 			$this->link = "/adminsc/{$this->model->model}/update/";

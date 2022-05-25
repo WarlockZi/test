@@ -3,6 +3,7 @@
 $models = \app\model\Test::findAllWhere('enable', '1');
 
 $menu = new Accordion([
+	'model' => new \app\model\Test,
 	'models' => $models,
 	'parentFieldName' => 'parent',
 	'class' => 'test-edit',
