@@ -3,6 +3,19 @@
 @import "../components/input/input";
 @import "./test-head";
 
+.opentest-edit-wrapper {
+
+  .question__create-button {
+    margin: 10px;
+    align-self: self-end;
+  }
+
+  .answer__create-button {
+    margin: 10px;
+    background-color: coral;
+  }
+}
+
 
 .test-edit-wrapper {
   display: flex;
@@ -15,7 +28,7 @@
   }
 
   [accordion].test-edit {
-    width: 0;
+    //width: 0;
     @include _600 {
       width: 100%;
     }
@@ -27,36 +40,18 @@
 }
 
 @mixin test-edit__act-button {
-    justify-self: end;
-    font-size: 2rem;
-    width: 50px;
-    height: 50px;
+  justify-self: end;
+  font-size: 1rem;
+  width: 20px;
+  height: 20px;
 
-    $border-radius: 75%;
-    @include _button($border-radius);
+  $border-radius: 75%;
+  @include _button($border-radius);
 
   &:hover {
     box-shadow: none;
   }
 }
-//}@mixin test-edit__act-button {
-//  position: relative;
-//  color: #fff;
-//  font-weight: 600;
-//  padding: 8px 15px;
-//  margin: 15px 0;
-//  white-space: nowrap;
-//  cursor: pointer;
-//  background-color: $color-main !important;
-//  box-shadow: 0 2px 4px 0 $color-main;
-//  transition: box-shadow 100ms;
-//  display: flex;
-//  justify-content: center;
-//
-//  &:hover {
-//    box-shadow: none;
-//  }
-//}
 
 .test-edit__cont {
   display: flex;
@@ -91,19 +86,13 @@
   .no-test {
     margin: 10px 0;
   }
-
-  //h1 {
-  //  margin: 0;
-  //}
-
 }
 
 
 .questions {
   display: flex;
   flex-flow: column;
-  margin: 10px 0
-;
+  margin: 10px 0;
 
   .question__create {
     display: none;
@@ -120,12 +109,12 @@
     padding: 3px;
   }
 
-  .question-edit:first-child{
-      padding-top: 1px;
+  .question-edit:first-child {
+    padding-top: 1px;
   }
 
   .question-edit {
-    background-color: #efefef;
+    //background-color: #efefef;
     display: flex;
     flex-flow: column;
     padding: 0 1px 1px 1px;
@@ -148,7 +137,7 @@
 
         &.height {
           height: auto !important;
-          margin: 5px 0 0 47px;
+          margin: 5px 0 10px 47px;
         }
 
         &.scale {
@@ -162,58 +151,81 @@
           background-color: #fff;
           overflow: hidden;
           align-items: center;
+          border: 1px solid $color-gray2;
 
           &:nth-child(odd) {
             background: lighten($color-main, 25%);
           }
 
-          .answer__sort {
+          .sort {
             padding: 5px;
             font-size: .8rem;
             flex-basis: 20px;
+            color: darken($color-main,39%);
           }
 
-          .answer__correct {
+          .correct {
             margin: 0 5px;
             cursor: pointer;
           }
 
-          .answer__text {
+          .text {
             padding: 5px;
             flex: 1;
             font-size: .8rem;
+            border: 1px solid transparent;
+            color: darken($color-main,39%);
+
+            &:hover {
+              border: 1px solid $color-gray4;
+            }
           }
 
-          .answer__delete {
+          .delete {
             width: 35px;
             height: 100%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+
+            svg {
+              fill: $color-warning;
+              pointer-events: none;
+            }
+
+            &:hover {
+              background-color: $color-warning;
+
+              svg {
+                fill: white;
+              }
+            }
           }
         }
 
         .answer__create-button {
           @include test-edit__act-button;
+          margin: 3px 8px;
 
-          &:hover {
-            //background-color: #19a687;
-          }
         }
       }
 
 
-      .sort {
+      & > .sort {
         cursor: move;
         display: flex;
         flex-basis: 45px;
         align-items: center;
         justify-content: center;
         background-color: #fff;
-        margin-right: 1px;
+        //margin-right: 1px;
         padding: 0;
         font-weight: 600;
+        border-top: 1px solid $color-gray2;
+        border-bottom: 1px solid $color-gray2;
+        border-left: 1px solid $color-gray2;
+        color: darken($color-success,25%);
       }
 
       .question__save {
@@ -223,6 +235,9 @@
         cursor: pointer;
         position: relative;
         margin-right: 1px;
+        border-top: 1px solid $color-gray2;
+        border-bottom: 1px solid $color-gray2;
+        border-left: 1px solid $color-gray2;
 
         &:hover {
           background-color: $color-success;
@@ -248,6 +263,9 @@
       display: flex;
       max-height: fit-content;
       background-color: #ffffff;
+      border-top: 1px solid $color-gray2;
+      border-bottom: 1px solid $color-gray2;
+      border-left: 1px solid $color-gray2;
 
       select {
         width: 18px;
@@ -268,8 +286,29 @@
   }
 
   .question__create-button {
+    position: fixed;
+    bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 10px 0;
-    @include test-edit__act-button;
+    border-radius: 3%;
+    padding: 5px 10px;
+    border: 1px solid $color-success;
+    background-color: white;
+    color: $color-success;
+    cursor: pointer;
+    align-self: self-end;
+
+    &:hover {
+      border: 1px solid white;
+      background-color: $color-success;
+      color: white;
+
+    }
+
+
+    //@include test-edit__act-button;
     //@include test-edit__act-button;
   }
 
@@ -284,11 +323,16 @@
     width: 30px;
     background-color: white;
     cursor: pointer;
-    margin-left: 1px;
+    //margin-left: 1px;
     flex: 0 1 35px;
+    border-top: 1px solid $color-gray2;
+    border-bottom: 1px solid $color-gray2;
+    border-left: 1px solid $color-gray2;
 
     &:before {
-      @include _chevron()
+      @include _chevron();
+      border-right: 2px solid #1bbc9b;
+      border-top: 2px solid #1bbc9b;
     }
   }
 
@@ -299,17 +343,21 @@
     min-width: 90px;
     padding: 10px;
     background-color: white;
-    margin: 0 1px;
+    //margin: 0 1px;
     font-weight: 600;
     position: relative;
     font-size: 0.8rem;
+    color: darken($color-success,25%);
+    border-top: 1px solid $color-gray2;
+    border-bottom: 1px solid $color-gray2;
+    border-left: 1px solid $color-gray2;
 
     &:focus-visible {
       outline: none !important;
     }
 
     &:hover {
-      outline: $color-main 1px solid;
+      border: $color-success 1px solid;
       border-radius: 6px;
     }
   }
@@ -322,6 +370,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    border: 1px solid $color-gray2;
 
     svg {
       fill: $color-warning;
@@ -339,7 +388,6 @@
 
   }
 
-
 }
 
 .rules {
@@ -351,14 +399,6 @@
     margin: 8px 0;
   }
 }
-
-
-//.list {
-//  display: flex;
-//  flex-flow: column;
-//  margin: 10px;
-//}
-
 
 
 

@@ -172,7 +172,7 @@ export let _question = {
     (question) => {
       return {
         id: +question.id,
-        parent: +$('.test-name')[0].getAttribute('value'),
+        parent: +$('.questions')[0].dataset.testId,
         picq: '',
         qustion: $(question).find('.question__text').innerText,
         sort: +$(question).find('.sort').innerText,
@@ -184,7 +184,7 @@ export let _question = {
       return [...answerBlocks].map((a) => {
         return {
           id: +a.dataset['answerId'],
-          answer: a.querySelector('.answer__text').innerText,
+          answer: a.querySelector('.text').innerText,
           correct_answer: +a.querySelector('[type="checkbox"]').checked,
           parent_question: +question.id,
           pica: '',

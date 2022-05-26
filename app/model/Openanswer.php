@@ -12,7 +12,7 @@ class Openanswer extends Model
 		'openquestion_id'=>null,
 		'answer'=>'',
 		'is_correct'=>'0',
-		'pica'=>''
+		'pic'=>''
 	];
 
 

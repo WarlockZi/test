@@ -232,7 +232,6 @@
   max-width: 0px;
   transition: max-width 1s;
   margin-bottom: 25px;
-  //margin-right: 10px;
   display: flex;
   flex-flow: column;
   overflow: hidden;
@@ -254,8 +253,9 @@
   flex-flow: column;
   max-width: 160px;
   background: darken($color-admin-sidebar, 5%);
+  min-width: 62px;
   width: 62px;
-  transition: width .5s;
+  transition: width .4s;
   overflow: hidden;
 
   &:hover {

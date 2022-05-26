@@ -13,10 +13,10 @@ class CustomSelect
 	private $tree = [];
 	private $selected = [];
 	private $exclude = [];
+	private $optionName = 'name';
 
 	private $initialOptionValue = 0;
 	private $initialOptionLabel = null;
-	private $optionName = 'name';
 	private $type = 'string';
 
 	private $finalTpl = ROOT . '/app/view/components/CustomSelect/tpl.php';
@@ -57,7 +57,7 @@ class CustomSelect
 	}
 
 
-	public function run()
+	private function run()
 	{
 		ob_start();
 		include ROOT . '/app/view/components/CustomSelect/CustomSelectTemplate.php';

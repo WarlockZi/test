@@ -3,7 +3,7 @@
 
 
 /// Test edit menu Add test/path button
-.test-edit-menu__add-bttn {
+.test-add {
   content: 'Добавить';
   position: relative;
   color: #fff;
@@ -18,6 +18,7 @@
   display: flex;
   justify-content: center;
   z-index: 1;
+  width: 119px;
   @include _600{
     max-width: 100%;
   }
@@ -26,13 +27,13 @@
     box-shadow: none;
   }
 
-  &:hover > .test-edit-menu__add-bttn-wrap {
+  &:hover > .test-add-wrap {
     opacity: 1;
     top: 100%;
   }
 }
 
-.test-edit-menu__add-bttn-wrap {
+.test-add-wrap {
   display: flex;
   position: absolute;
   flex-flow: column;
@@ -46,8 +47,8 @@
   transition: opacity 400ms, top 200ms;
 }
 
-.test-edit-menu__add-bttn-test,
-.test-edit-menu__add-bttn-path {
+.test-add-test,
+.test-add-path {
   display: flex;
   padding: 5px;
   font-size: .8rem;

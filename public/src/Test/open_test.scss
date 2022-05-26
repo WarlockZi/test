@@ -1,4 +1,26 @@
+@import "../var";
+
 .opentest-edit-wrapper {
+
+  .question__create-button {
+    margin: 10px;
+    //width: 30px;
+    //height: 30px;
+    background-color: $color-success;
+    border: 1px solid $color-success;
+      color: white;
+
+    &:hover {
+      background-color: #ffffff;
+      border: 1px solid $color-success;
+      color: $color-success;
+    }
+  }
+
+  .answer__create-button {
+    margin: 10px;
+    background-color: coral;
+  }
 
   .question-edit__parent-select {
     [custom-select] {

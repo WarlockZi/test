@@ -63,10 +63,10 @@ class OpenquestionController Extends AppController
 		if ($ids = $this->ajax) {
 			$id = $ids['id'];
 			$testId = $ids['test_id'];
-			$q = $this->model::where('id', $id)
+			$q = $this->model::where('id', '=',$id)
 				->get();
-			$q['parent'] = $testId;
-			$this->model::update($q);
+			$q[0]['opentest_id'] = $testId;
+			$this->model::update($q[0]);
 			exit(json_encode(['msg' => 'ok']));
 		}
 	}

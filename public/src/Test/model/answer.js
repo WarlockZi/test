@@ -6,7 +6,7 @@ export let _answer = {
     let answers = add_button.parentNode.querySelectorAll('.answer')
     let prev_sort = 0
     if (answers.length) {
-      prev_sort = +$(answers[answers.length - 1]).find('.answer__sort').innerText
+      prev_sort = +$(answers[answers.length - 1]).find('.sort').innerText
     }
     let el = $('.answer__create').find('.answer').cloneNode(true)
     el.classList.add('answer')
@@ -17,10 +17,10 @@ export let _answer = {
       q_id: +add_button.closest('.question-edit').id,
       previous_sort: prev_sort,
       answerCnt: answers.length,
-      sort: $(el).find('.answer__sort'),
+      sort: $(el).find('.sort'),
       checked: $(el).find('input'),
-      text: $(el).find('.answer__text'),
-      delete: $($(el).find('.answer__delete')).on('click', function () {
+      text: $(el).find('.text'),
+      delete: $($(el).find('.delete')).on('click', function () {
         _answer.del(this)
       })
     }
@@ -63,7 +63,7 @@ export let _answer = {
   },
 
   async del(target) {
-    let del_button = target.closest('.answer__delete')
+    let del_button = target.closest('.delete')
     if (!del_button) return false
     if (confirm("Удалить этот ответ?")) {
       let res = await deleteFromServer(del_button)
