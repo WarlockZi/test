@@ -47,7 +47,7 @@ export default function testEditActions(target, type) {
         _question.create()
         break;
       }
-      case !!target.closest('.answer__delete'): {
+      case !!target.closest('.delete'): {
         _answer.del(target)
         break;
       }

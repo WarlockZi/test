@@ -13,7 +13,7 @@
 				<? endif; ?>
 			</div>
 
-			<div class="questions" data-test-id="<?$test['id'] ?>">
+			<div class="questions" data-test-id="<?=$test['id'] ?>">
 
 				<div class="question__create">
 					<? $question__create = true; ?>
@@ -33,8 +33,8 @@
 					<? endforeach; ?>
 				<? endif; ?>
 				<div class="question__create-button"
-				     data-tooltip="Добавить вопрос">
-					+
+				     >
+					+ Добавить вопрос
 				</div>
 			</div>
 
