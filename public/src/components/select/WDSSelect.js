@@ -70,7 +70,7 @@ function setup(select) {
 
   // select.sel.classList.add("custom-select")
   select.sel.setAttribute("custom-select",'')
-  select.sel.dataset['field'] = select.field
+  if(select.field)select.sel.dataset['field'] = select.field
   select.sel.dataset['id'] = select.selectedOption.value
   select.sel.dataset['value'] = select.selectedOption.value
   select.sel.tabIndex = 0
@@ -92,10 +92,9 @@ function setup(select) {
 
   function setOption(option) {
     const li = document.createElement("li")
-    // li.classList.add("option")
-    li.classList.toggle("selected", option.selected)
     li.innerText = option.label
     li.dataset.value = option.value
+    li.classList.toggle("selected", option.selected)
     li.addEventListener("click", () => {
       select.selectValue(option.value)
       select.ul.classList.remove("show")
