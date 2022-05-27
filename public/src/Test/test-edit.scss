@@ -137,7 +137,7 @@
 
         &.height {
           height: auto !important;
-          margin: 5px 0 10px 47px;
+          margin: 5px 56px 10px 47px;
         }
 
         &.scale {
@@ -190,6 +190,7 @@
             justify-content: center;
 
             svg {
+              width: 15px;
               fill: $color-warning;
               pointer-events: none;
             }
