@@ -25,29 +25,15 @@ class OpenquestionController Extends AppController
 	{
 		try {
 			if ($this->ajax) {
-				$answers = $this->ajax['answers'] ?? '';
-				$question = $this->ajax['question'] ?? '';
-				$q_id = $question['id'] ?? '';
-				$sort = $question['sort'] ?? '';
-				$qId = $this->model::updateOrCreate($question);
+				$qId = $this->model::updateOrCreate($this->ajax);
 				if ($qId === false) {
 					return;
 				} elseif (is_int($qId)) {
-					if ($answers) {
-						foreach ($answers as $answer) {
-							$answer['parent_question'] = $qId;
-							Openanswer::updateOrCreate($answer);
-						}
-					}
 					exit(json_encode([
 						'id' => $qId,
 						'msg' => 'Вопросы и ответы сохранены',
-						'paginationButton' => $pagination = "<div data-pagination = $q_id class='nav-active'>{$sort}</div>"
 					]));
 				} elseif ($qId === true) {
-					foreach ($answers as $answer) {
-						Openanswer::updateOrCreate($answer);
-					}
 					exit(json_encode([
 						'msg' => 'Вопросы и ответы сохранены']));
 				}
@@ -83,7 +69,7 @@ class OpenquestionController Extends AppController
 
 	public function actionDelete()
 	{
-		$q_id = $this->ajax['q_id'];
+		$q_id = $this->ajax['id'];
 
 		$answers = Openanswer::findAllWhere('openquestion_id', $q_id);
 		if ($answers) {
