@@ -1,5 +1,5 @@
 <? use \app\model\User; ?>
-<div class="admin-layout__sidebar">
+<div class="admin_sidebar">
 	<a class="admin-sidebar__logo" href="/">
 
 <!--		 --><?// include ROOT . '/app/view/components/header/logo_squre.php' ?>
@@ -128,7 +128,7 @@
 		  </li>
 		 <? endif; ?>
 
-		<li class="admin-layout__sidebar-tail"></li>
+		<li class="admin_sidebar-tail"></li>
 
 
 	</div>

@@ -24,7 +24,7 @@ class OpenanswerController Extends AppController
 				if (is_int($res)) {
 					$a['id'] = $res;
 					$a['answer'] = '';
-					$i = $this->ajax['sort'];
+					$i = $this->ajax['sort']??1;
 
 					ob_start();
 					include ROOT . '/app/view/Opentest/edit_BlockAnswer.php';

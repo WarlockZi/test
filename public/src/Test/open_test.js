@@ -5,8 +5,8 @@ let openTest = $('.opentest_wrap')[0]
 if (openTest) {
   $(openTest).on('click', handleClick)
 
-  let debouncedInput = debounce(handleKeyup)
-  $(openTest).on('keyup', debouncedInput)
+  // let debouncedInput = debounce(handleKeyup)
+  $(openTest).on('keyup', handleKeyup)
 }
 
 function handleKeyup({target}) {
@@ -23,6 +23,7 @@ function handleKeyup({target}) {
 }
 
 async function handleClick({target}) {
+  let testid = target.dataset.id
   let activeQuestion = $('.question.show')[0]
   let paginations = $('[data-pagination]')
   let activePagination = $('[data-pagination].active')[0]
@@ -44,10 +45,12 @@ async function handleClick({target}) {
     toggleQuestion(aimPagination, activeQuestion)
     toggleNav(aimPagination, activePagination)
   } else if (target.id === 'finish') {
+
+    let answers = await getAnswers(testid)
+
     let obj = {
       questionCnt: paginations.length,
       html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
-      testid: target.dataset.id,
       testname: $('.test-name')[0].innerText,
       username: $('.user-menu__fio')[0].innerText,
     }
@@ -62,6 +65,11 @@ async function handleClick({target}) {
   }
 }
 
+async function getAnswers(id) {
+  let res = await post('/adminsc/opentestresult/getanswers', {id})
+  res = JSON.parse(res)
+  return res.msg
+}
 
 function toggleNav(aimPagination, activePagination) {
   activePagination.classList.toggle('active')

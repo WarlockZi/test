@@ -94,6 +94,7 @@ abstract class Model
 		return 'Видимо, ошибка в запросе!';
 	}
 
+
 	public static function delete($id)
 	{
 		$model = new static();
@@ -267,14 +268,7 @@ abstract class Model
 		$item = $model->pdo->query($sql, [$value]);
 		return $item[0] ?? null;
 	}
-//	public static function modelFindOneWhere($field, $value)
-//	{
-//		$model = new static();
-//		$sql = "SELECT * FROM {$model->table} WHERE $field = ? LIMIT 1";
-//		$item = $model->pdo->query($sql, [$value]);
-//		$model['fields'] = $model->pdo->query($sql, [$value]);
-//		return $model ?? null;
-//	}
+
 
 	public function orderBy($field = '')
 	{
@@ -297,10 +291,10 @@ abstract class Model
 
 	public final function get()
 	{
-//		if ($this->with) {
-//			$this->getWith();
-//			return $this;
-//		}
+		if ($this->hasMany) {
+			$this->getWith();
+			return $this;
+		}
 		$pluck = $this->pluck ?? '*';
 		$where = $this->where ?? '';
 		$orderBy = $this->orderBy ?? '';
@@ -309,15 +303,69 @@ abstract class Model
 		return $this->fields;
 	}
 
-	public function findBySql($sql, $params = [])
+	public function with($child): self
 	{
-		return $this->pdo->query($sql, $params);
+		$name = 'app\model\\'.ucfirst($child);
+		$model = new $name;
+		if ($child) {
+			$this->hasMany[$name]['model'] = $model->model;
+			$this->hasMany[$name]['table'] = $model->table;
+			$this->with = "SELECT * FROM {$model->table} WHERE {$this->model}_id IN ";
+		}
+		return $this;
+	}
+	public function hasMany(string $class)
+	{
+		if ($this->hasMany[$class]){
+			return $this->hasMany[$class]['items'];
+		}
 	}
 
-	public function insertBySql($sql, $params = [])
+	public final function getWith()
 	{
-		return $this->pdo->execute($sql, $params);
+		foreach ($this->hasMany as &$hasManyItem) {
+			$childTable = ucfirst($hasManyItem['model']);
+
+			$pluck = $this->pluck ?? '*';
+			$where = $this->where ?? '';
+			$orderBy = $this->orderBy ?? '';
+			$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
+			$this->items = $this->pdo->query($sql, []);
+
+			$ids = [];
+			foreach ($this->items as $i => $item) {
+				array_push($ids, $item['id']);
+			}
+			$ids = implode(',', $ids);
+			$sql = $this->with . '(' . $ids . ')';
+			$hasManyItem['items'] = $this->pdo->query($sql, []);
+			foreach ($this->items as &$item) {
+				foreach ($hasManyItem['items'] as $child) {
+					$identifier = $this->model . '_id';
+					if ($item['id'] === $child[$identifier]) {
+						$item[$childTable][] = $child;
+					}
+				}
+			}
+		}
+
+
+//		foreach ($this->hasMany as $child => $items) {
+//			$pluck = $this->pluck ?? '*';
+//			$where = $this->where ?? '';
+//			$orderBy = $this->orderBy ?? '';
+//			$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
+//			$this->fields = $this->pdo->query($sql, []);
+//			$ids = [];
+//			foreach ($this->fields as $k => $v) {
+//				array_push($ids, $v['id']);
+//			}
+//			$ids = '(' . implode(',', $ids) . ')';
+//			$with = $this->with . $ids ?? '*';
+//			$this->hasMany[$child]['items'] = $this->pdo->query($with, []);
+//		}
 	}
+
 
 	static function removeDirectory($dir)
 	{
@@ -329,38 +377,23 @@ abstract class Model
 		return rmdir($dir);
 	}
 
-	public function getBreadcrumbs($category, $parents, $type)
-	{
-		if ($type == 'category') {
-// в parents массив из адресной строки - надо получить aliases
-			foreach ($parents as $key) {
-				$params = [$key['name']];
-				$sql = 'SELECT * FROM category WHERE name = ?';
-//если это категория, а ее не нашли вернем 404  ошибку
-				if ($arrParents[] = $this->findBySql($sql, $params)[0]) {
 
-				} else {
-					http_response_code(404);
-					include '../public/404.html';
-					exit();
-				}
-			}
-		}
-		$breadcrumbs = "<a href = '/'>Главная</a>";
-		if ($type == 'category') {
-			foreach ($parents as $parent) {
-				$breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
-			}
-			return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
-		} else {
-			$parents = array_reverse($parents);
-			foreach ($parents as $parent) {
-				$breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
-			}
-			return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
-		}
+	public function autoincrement()
+	{
+		$params = [$this->table];
+		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";
+		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
 	}
 
+	public function findBySql($sql, $params = [])
+	{
+		return $this->pdo->query($sql, $params);
+	}
+
+	public function insertBySql($sql, $params = [])
+	{
+		return $this->pdo->execute($sql, $params);
+	}
 
 	public function getAssoc()
 	{
@@ -409,6 +442,7 @@ abstract class Model
 		}
 		return $all;
 	}
+
 	public static function tree2(array $data, string $parent = 'parent')
 	{
 		foreach ($data as $id => &$node) {
@@ -420,6 +454,7 @@ abstract class Model
 		}
 		return $tree;
 	}
+
 	public function tree($parent = 'parent')
 	{
 		$data = $this->getAssoc2($this->data);
@@ -441,14 +476,37 @@ abstract class Model
 		return implode($glue, $_array);
 	}
 
-	public function autoincrement()
-	{
-		$params = [$this->table];
-		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";
-		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
-	}
-
-
+//	public function getBreadcrumbs($category, $parents, $type)
+//	{
+//		if ($type == 'category') {
+//// в parents массив из адресной строки - надо получить aliases
+//			foreach ($parents as $key) {
+//				$params = [$key['name']];
+//				$sql = 'SELECT * FROM category WHERE name = ?';
+////если это категория, а ее не нашли вернем 404  ошибку
+//				if ($arrParents[] = $this->findBySql($sql, $params)[0]) {
+//
+//				} else {
+//					http_response_code(404);
+//					include '../public/404.html';
+//					exit();
+//				}
+//			}
+//		}
+//		$breadcrumbs = "<a href = '/'>Главная</a>";
+//		if ($type == 'category') {
+//			foreach ($parents as $parent) {
+//				$breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
+//			}
+//			return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
+//		} else {
+//			$parents = array_reverse($parents);
+//			foreach ($parents as $parent) {
+//				$breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
+//			}
+//			return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
+//		}
+//	}
 
 
 //	public function withWhere($field, $operator, $value)
@@ -468,22 +526,5 @@ abstract class Model
 //		return $model;
 //	}
 
-//	public final function getWith()
-//	{
-//		foreach ($this->hasMany as $child => $items) {
-//			$pluck = $this->pluck ?? '*';
-//			$where = $this->where ?? '';
-//			$orderBy = $this->orderBy ?? '';
-//			$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
-//			$this->fields = $this->pdo->query($sql, []);
-//			$ids = [];
-//			foreach ($this->fields as $k => $v) {
-//				array_push($ids, $v['id']);
-//			}
-//			$ids = '(' . implode(',', $ids) . ')';
-//			$with = $this->with . $ids ?? '*';
-//			$this->hasMany[$child]['items'] = $this->pdo->query($with, []);
-//		}
-//	}
 
 }
