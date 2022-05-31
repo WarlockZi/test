@@ -154,7 +154,7 @@
           border: 1px solid $color-gray2;
 
           &:nth-child(odd) {
-            background: lighten($color-main, 25%);
+            background: lighten($color-main, 27%);
           }
 
           .sort {
@@ -287,7 +287,7 @@
   }
 
   .question__create-button {
-    position: fixed;
+    //position: fixed;
     bottom: 10px;
     display: flex;
     align-items: center;

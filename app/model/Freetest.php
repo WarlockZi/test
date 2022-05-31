@@ -9,39 +9,24 @@ class Freetest extends Model {
 
    public $table = 'freetest';
 
-   public function qDel() {
-      $param = [(int) $_POST['qId']];
-      $sql = 'DELETE FROM freetest_quest WHERE id = ?';
-      $res1 = $this->insertBySql($sql, $param);
-      exit($_POST['qId']);
-   }
 
    public function qAdd() {
-
       $row[] = $tId = $_POST['testid'];
       $row['sort'] = $sort = $_POST['questQnt'];
       $row['question'] = '';
       $row['key_words'] = [];
-      $picQ = '';
-      $textQuestion = '';
-
       $sql = "SHOW TABLE STATUS FROM vitex_test LIKE 'freetest_quest'";
       $next = $this->findBySql($sql)[0];
       $row['qid'] = $qId = $next['Auto_increment'];
 
-
       $params = [$tId, $sort];
       $sql = "INSERT INTO freetest_quest (parent,sort) VALUES (?,?)";
-      $this->insertBySql($sql, $params);
-
 
       ob_start();
       require APP . '/view/Freetest/editBlockQuestion.php';
       $question = ob_get_clean();
 
       $block = $question;
-      $pagination = "<a href='#question-$qId' class='nav-active'>$sort</a>";
-
       $data = compact("pagination", "tId", "block");
       echo $json = json_encode($data);
    }
@@ -108,7 +93,6 @@ class Freetest extends Model {
       $next = $this->findBySql($sql)[0];
       $row['qid'] = $qId = $next['Auto_increment'];
 
-/////////////////////////////
       $params = [$tId, $testName, $parentTest, $isTest, $sort, $enable];
       $sql = 'INSERT INTO freetest (id,name,parentTest,isTest,sort,enable) VALUES (?,?,?,?,?,?)';
       $this->insertBySql($sql, $params);
@@ -126,13 +110,6 @@ class Freetest extends Model {
       $question = ob_get_clean();
       ob_end_clean();
 
-
-      $pagination = "<div class='pagination'><a href='#question-$qId' class='nav-active'>1</a></div>";
-      $pagination .= "<a href='#' class='add-question'>+</a>";
-      $menuItem = "<li>
-            <div class = 'test-params icon-menu' data-testid = $tId></div>
-            <a href = '/freetest/edit/$tId'>$testName</a>
-        </li >";
 
       $data = compact("pagination", "tId", "testName", "question", "menuItem");
       echo $json = json_encode($data);
@@ -157,16 +134,11 @@ class Freetest extends Model {
    }
 
    public function tUpd() {
-
-
       if ($_POST['testId']) {// Это существующий тест
          $testName = $_POST['testName'];
          $params = [$testName,
-             (int) $_POST['parentTest'],
-             (int) $_POST['isTest'],
-             (int) $_POST['sort'],
-             (int) $_POST['enable'],
-             (int) $_POST['testId']];
+             (int) $_POST['parentTest']];
+
          $sql = 'UPDATE test SET name = ?, parentTest = ?, isTest = ?, sort = ?, enable = ? WHERE id = ?';
          $this->insertBySql($sql, $params);
          if ($testName) { // чтобы поменять название в спске и названии
@@ -185,15 +157,11 @@ class Freetest extends Model {
 
       if (isset($_POST['testId']) && $_POST['testId']) {// Значит открыли существующий тест
          $tId = $_POST['testId'];
-         // Получим запрашиваемый тест
          $sql = 'SELECT * FROM freetest  WHERE id = ?';
          $param = [$tId];
          $test = $this->findBySql($sql, $param)[0];
-         // Заполняем список enable "ненулевых" тестов
          $testList = $this->findAll();
-         // Удаляем из списка ссылку на самого себя(тест)
          unset($testList[$tId - 1]);
-         // если это тест, делаем активным тест, иначе по умолчанию будет папка
          $selected = '';
          if ($test['isTest'] == 1) {
             $selected = 'selected';
@@ -204,7 +172,6 @@ class Freetest extends Model {
          }
          $depOptions = '<option value = "0">Не принадлежит</option>';
          foreach ($testList as $testDep) {
-            // Проставим от какого теста зависит
             if ($testDep['id'] == $test['parentTest']) {
                $depOptions .= '<option value = ' . $testDep['id'] . ' selected >' . $testDep['name'] . '</option>';
             } else {
@@ -227,62 +194,9 @@ class Freetest extends Model {
       include APP . '/view/Freetest/freetestParams.php';
    }
 
-   /**
-    * Возвращает навигацию <br/>
-    * @return array <p>Массив вопросов</p>
-    */
-   public function pagination($test_data) {
-
-
-      unset($test_data['name']);
-      unset($test_data['testId']);
-      unset($test_data['correct_answers']);
-
-      $keys = array_keys($test_data);
-
-      $pagination = '<div class="pagination">';
-      $i = 0;
-      foreach ($test_data as $index=>$item)
-//      for ($i = 1; $i <= $count_questions; $i++) {
-
-         $key = array_shift($keys);
-         if ($i == 1) {
-            $pagination .= '<a href="#question-' . $key . '" class="nav-active"><div>' . $i . '</div></a>';
-         } else {
-            $pagination .= '<a href="#question-' . $key . '" class = "p-no-active" ><div>' . $i . '</div></a>';
-         }
-//      }
-
-      $pagination .= '</div>';
-
-      return $pagination;
-   }
-
-   public function paginationEdit($test_data, $testId) {
-
-      $params = [$testId];
-      $sql = "SELECT `id`, `sort`, `parent` FROM `freetest_quest` WHERE `parent` = ? ORDER BY `sort`";
-      $questionIds = $this->findBySql($sql, $params);
-
-      $pagination = '<div class="pagination">';
-      $i = 1;
-      foreach ($questionIds as $val => $qid) {
-         if ($i == 1) {
-            $pagination .= '<a href="#question-' . $qid['id'] . '" class="nav-active">' . $i . '</a>';
-         } else {
-            $pagination .= '<a href="#question-' . $qid['id'] . '" class = "p-no-active" >' . $i . '</a>';
-         }
-         $i++;
-      }
-      $pagination .= "<a href='#' class='add-question'>+</a>";
-      $pagination .= '</div>';
-      return $pagination;
-   }
 
 //   public function send_mail_Freetest() {
-//
 //      $this->send_result_mail('/results/freetest/', '/freetest/results/');
-//
 //   }
 
    public function resultFreetest() {
@@ -291,68 +205,6 @@ class Freetest extends Model {
       exit(json_encode($correct_answers));
    }
 
-   public function getFreetestData($testId) {
-
-      $sql = '
-        SELECT q.id, q.picq, q.question, q.key_words, q.sort, q.parent, freetest.name  
-        FROM freetest_quest q
-        LEFT JOIN freetest
-        ON freetest.id = q.parent
-        WHERE q.parent = ?
-        ORDER by q.sort
-        ';
-
-      $params = [$testId];
-      $res = $this->findBySql($sql, $params);
-
-      if (!$res) {//Если не нашли тест по номеру вернем FALSE
-         return FALSE;
-      }
-      $key_words = [];
-      $i = 0;
-      foreach ($res as $qid => $question) {
-         $key_words[$question['id']] = $question['key_words'];
-      }
-      $res['key_words'] = $key_words;
-
-      return $res;
-   }
-
-   public function getFreeTestDataToEdit($testId) {
-
-      $sql = '
-      SELECT q.id AS qid, q.question, q.picq, q.parent, q.key_words, q.sort, freetest.enable, freetest.name
-        FROM freetest_quest q
-        LEFT JOIN freetest
-        ON freetest.id = q.parent
-        WHERE q.parent = ?
-        ORDER by q.sort
-        ';
-
-      $params = [$testId];
-      $res = $this->findBySql($sql, $params);
-
-      if (!$res) {//Если не нашли тест по номеру вернем FALSE
-         return FALSE;
-      }
-      foreach ($res as $key => $value) {
-         $res[$key]['key_words'] = explode(',', $res[$key]['key_words']);
-      }
-
-      return $res;
-   }
-
-   public function addKey() {
-
-      $str = $_POST['str'];
-      $qid = (int) $_POST['qid'];
-
-      $Test = new Test;
-
-      $sql = "UPDATE freetest_quest SET key_words = ? where id = ?";
-      $params = [$str, $qid];
-      $Test->insertBySql($sql, $params);
-   }
 
    public function QPic() {
 
@@ -366,14 +218,13 @@ class Freetest extends Model {
       // не нашли такой картинки в таблице pic по русскому имени
       if (empty($pic)) {
 
-         $nameHash = $fid . $pref . round(microtime(true)) . substr($nameRu, -4); // напр. 4526q1541554561.jpg
+         $nameHash = $fid .  round(microtime(true)) . substr($nameRu, -4); // напр. 4526q1541554561.jpg
          $to = $_SERVER['DOCUMENT_ROOT'] . "/" . "pic/" . $nameHash;   //"/" . $nameHash;
          // Перемещаем из tmp папки (прописана в php.config)
          move_uploaded_file($_FILES['file']['tmp_name'], $to);
 
          $sql = 'UPDATE freetest_quest SET  picq = ? WHERE id = ?';
          $params = [$nameHash, $fid];
-         $res = $this->insertBySql($sql, $params);
 
          $params = [$nameHash, $nameRu];
          $sql = "INSERT INTO pic (nameHash, nameRu) VALUES (?,?)";

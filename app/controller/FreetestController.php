@@ -14,8 +14,6 @@ class FreetestController extends AppController
 
 	public function actionEdit()
 	{
-
-		//Если пользователь не авторизовался отправим на форму авторизации
 		$this->autorize();
 
 		$Freetest = new Freetest;
@@ -44,7 +42,6 @@ class FreetestController extends AppController
 		View::setCss('freeTest.css');
 		View::setJs('freeTest.js');
 
-
 		if ($freeTestDataToEdit === FALSE) {//Вообще не нашли такого теста с номером
 			$error = '<H1>Теста с таким номером нет.</H1>';
 			$this->set(compact('error'));
@@ -59,10 +56,8 @@ class FreetestController extends AppController
 
 	public function actionIndex()
 	{
-		// Обработка результатов теста
 		if ($this->isAjax()) {
 			if ($_POST['action'] == 'result') {
-//				$Test->result();
 				exit();
 			}
 		}
@@ -85,13 +80,11 @@ class FreetestController extends AppController
 
 	public function actionResults()
 	{
-
 		$this->getFromCache('/results/freetest/');
 	}
 
 	public function actionDo()
 	{
-
 		$this->autorize();
 		View::setMeta('Свободный тест', 'Свободный тест', 'Свободный тест');
 

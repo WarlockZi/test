@@ -248,7 +248,7 @@
 }
 
 
-.admin-layout__sidebar {
+.admin_sidebar {
   display: flex;
   flex-flow: column;
   max-width: 160px;
@@ -265,10 +265,19 @@
   @include _800 {
     flex: 1 0 140px;
     width: 100%;
-
   }
-
+  @include _600 {
+    flex: 1 0 140px;
+    width: 100%;
+    max-width: initial;
+  }
   [accordion] {
+    a, li .label{
+      @include _600{
+        padding-bottom: 6px;
+        padding-top: 6px;
+      }
+    }
 
     svg {
       margin: 0 9px;
@@ -305,6 +314,7 @@
 
       @include _800 {
         width: 110px;
+        height: 50px;
       }
     }
   }
@@ -315,7 +325,7 @@
   }
 
 
-  .admin-layout__sidebar-tail {
+  .admin_sidebar-tail {
     border-bottom: none;
     flex: 1 0 auto;
   }

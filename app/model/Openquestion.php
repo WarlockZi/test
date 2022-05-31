@@ -23,5 +23,7 @@ class Openquestion extends Model
 			$model->update($question);
 		}
 	}
-
+	public function answers(){
+		return $this->hasMany(Openanswer::class);
+	}
 }
