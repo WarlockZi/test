@@ -61,7 +61,10 @@
     .question_wrap {
       width: 100%;
 
-      .answer textarea {
+      .answer .textarea {
+        padding: 10px;
+        min-height: 40px;
+        border: 1px solid lightblue;
         width: 100%;
       }
 
