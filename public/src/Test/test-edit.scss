@@ -10,10 +10,6 @@
     align-self: self-end;
   }
 
-  .answer__create-button {
-    margin: 10px;
-    background-color: coral;
-  }
 }
 
 
@@ -152,6 +148,12 @@
           overflow: hidden;
           align-items: center;
           border: 1px solid $color-gray2;
+
+          .textarea{
+            min-height: 10px;
+            border: 1px solid crimson;
+
+          }
 
           &:nth-child(odd) {
             background: lighten($color-main, 27%);

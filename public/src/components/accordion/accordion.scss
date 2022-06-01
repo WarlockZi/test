@@ -249,31 +249,42 @@
 
 
 .admin_sidebar {
+  position: relative;;
   display: flex;
   flex-flow: column;
-  max-width: 160px;
   background: darken($color-admin-sidebar, 5%);
-  min-width: 62px;
-  width: 62px;
   transition: width .4s;
   overflow: hidden;
+  max-width: 160px;
+  min-width: 62px;
+
+  @include _800 {
+    max-width: 160px;
+    width: 62px;
+  }
+  @include _600 {
+    max-width: 100%;
+    width: 100%;
+  }
+  @include _400 {
+    height: fit-content;
+  }
 
   &:hover {
     width: 100%;
   }
 
-  @include _800 {
-    flex: 1 0 140px;
-    width: 100%;
-  }
-  @include _600 {
-    flex: 1 0 140px;
-    width: 100%;
-    max-width: initial;
-  }
   [accordion] {
-    a, li .label{
-      @include _600{
+    @include _600 {
+      height: 0;
+    }
+
+    &.show {
+      height: auto;
+    }
+
+    a, li .label {
+      @include _600 {
         padding-bottom: 6px;
         padding-top: 6px;
       }
@@ -286,9 +297,22 @@
     }
 
     .label {
-      padding-right: 6px!important;
+      padding-right: 6px !important;
     }
 
+  }
+
+  svg#burger {
+    display: none;
+    @include _600 {
+      display: block;
+      //content: '';
+      position: absolute;
+      right: 10px;
+      top: 18px;
+      width: 20px;
+      height: 20px;
+    }
   }
 
   /* arrow icon */
@@ -299,7 +323,7 @@
     }
   }
 
-  .admin-sidebar__logo {
+  .logo {
     display: flex;
     padding: 0;
     background-color: darken($color-admin-sidebar, 5%);

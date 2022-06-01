@@ -18,6 +18,13 @@ class AppController extends Controller
     $this->isAjax();
   }
 
+	public function exitJson(array $arr=[]): void
+	{
+		if ($arr) {
+			exit(json_encode($arr));
+		}
+	}
+
   public function exitWith(string $msg): void
   {
     if ($msg) {

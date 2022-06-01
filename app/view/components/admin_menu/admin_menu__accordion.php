@@ -1,13 +1,12 @@
 <? use \app\model\User; ?>
 <div class="admin_sidebar">
-	<a class="admin-sidebar__logo" href="/">
 
+	<a class="logo" href="/">
 <!--		 --><?// include ROOT . '/app/view/components/header/logo_squre.php' ?>
 		 <? include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
-
 	</a>
-	<div accordion>
 
+	<div accordion>
 
 		<a class="house neon" href="/adminsc">
 				<? include ICONS . '/admin-menu/house.svg' ?>
@@ -132,4 +131,6 @@
 
 
 	</div>
+
+	<? include ICONS . '/gamburger.svg' ?>
 </div>

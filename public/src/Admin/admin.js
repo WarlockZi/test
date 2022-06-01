@@ -2,6 +2,7 @@ import './admin.scss'
 
 import '../components/header/header-adm'
 import '../components/accordion/accordion'
+import '../components/admin_sidebar'
 import "./model/cache";
 import {$} from "../common";
 
@@ -31,6 +32,7 @@ $(document).ready(function () {
   multiselect()
   catalogItem()
   tooltips()
+
 
   accordionShow()
 

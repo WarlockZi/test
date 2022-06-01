@@ -14,7 +14,7 @@ abstract class Model
 	public $model;
 
 	protected $user;
-	protected $items;
+	public $items;
 
 
 	public function __construct()
@@ -291,7 +291,7 @@ abstract class Model
 
 	public final function get()
 	{
-		if ($this->hasMany) {
+		if (property_exists($this,'hasMany')) {
 			$this->getWith();
 			return $this;
 		}
