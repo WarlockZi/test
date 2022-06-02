@@ -155,7 +155,7 @@
     .arrow {
       flex: 0 0 17px;
       height: 16px;
-      background: url(./img/cd-icons.svg) no-repeat 1px 0;
+      background: url(./img/cd-icons.svg) no-repeat 2px 0;
 
       transform: rotate(-90deg);
       transition: transform 200ms;
@@ -234,9 +234,9 @@
   display: flex;
   flex-flow: column;
   overflow: hidden;
-  flex: 0 0 auto;
+  flex: 0 1 238px;
 
-  @include _800 {
+  @include _1000 {
     max-width: 0;
   }
 
