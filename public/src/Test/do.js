@@ -14,7 +14,7 @@ export default function testDo() {
   $('.question:first-child').addClass("flex1")
 // Нажать первуюкнопку navigation
   navInit()
-  $('.test-do__content [type="checkbox"]').on('click', function (e) {
+  $('.test-do [type="checkbox"]').on('click', function (e) {
     let a = e.target.labels[0]
     a.classList.toggle('pushed')
   })

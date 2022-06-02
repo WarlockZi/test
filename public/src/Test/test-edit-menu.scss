@@ -9,7 +9,7 @@
   color: #fff;
   font-weight: 600;
   padding: 8px 15px;
-  margin: 15px 10px 55px 1px;
+  margin: 10px 0 0;
   white-space: nowrap;
   cursor: pointer;
   background-color: $color-main !important;
@@ -18,7 +18,7 @@
   display: flex;
   justify-content: center;
   z-index: 1;
-  width: 119px;
+  min-width: 77px;
   @include _600{
     max-width: 100%;
   }

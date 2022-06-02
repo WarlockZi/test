@@ -6,21 +6,16 @@
 
 .test-do {
   display: flex;
-  margin: 0 auto;
   max-width: 1310px;
   flex: 1 0 auto;
   width: 100%;
-  @include _800 {
-    flex-flow: column;
-
-  }
 
 
   @include _400 {
     flex-wrap: wrap;
   }
 
-  .test-do__navigation {
+  .navigation {
     display: flex;
     margin-bottom: 20px;
 
@@ -118,7 +113,7 @@
 }
 
 
-.test-do__content {
+.test-do {
   padding-left: 20px;
   flex-flow: column;
   display: flex;
@@ -128,6 +123,10 @@
   background-color: #fff;
   z-index: 1;
   margin-right: 6vw;
+
+  .content{
+    display: inline-flex;
+  }
 
 
   .test-data {
