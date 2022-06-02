@@ -229,7 +229,6 @@
 
 
 .accordion_wrap {
-  max-width: 0px;
   transition: max-width 1s;
   margin-bottom: 25px;
   display: flex;
@@ -238,12 +237,11 @@
   flex: 0 0 auto;
 
   @include _800 {
-    min-width: 100%;
+    max-width: 0;
   }
 
   &.open {
     max-width: 200px;
-    //min-width: 160px;
   }
 }
 
@@ -304,14 +302,22 @@
 
   svg#burger {
     display: none;
+    border: 1px solid transparent;
+
+    &:hover {
+      border: 1px solid white;
+      border-radius: 5px;
+    }
+
     @include _600 {
       display: block;
-      //content: '';
       position: absolute;
       right: 10px;
-      top: 18px;
+      top: 8px;
       width: 20px;
       height: 20px;
+      padding: 10px;
+      cursor: pointer;
     }
   }
 

@@ -18,7 +18,7 @@
 		<div class="question__show-answers"
 		     data-tooltip="Показать ответы">
 		</div>
-		<div class="question__text" contenteditable="true">
+		<div class="text" contenteditable="true">
 				<?= $block[0]['question_text'] ?? '' ?>
 		</div>
 		<div class="question__delete"

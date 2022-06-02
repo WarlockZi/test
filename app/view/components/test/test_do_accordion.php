@@ -2,6 +2,7 @@
 
 $menu = new Accordion([
 
+	'model' => new \app\model\Test,
 	'models' => \app\model\Test::findAllWhere('enable', 1),
 	'class' => 'test-edit',
 	'label_after' => "",
@@ -9,4 +10,7 @@ $menu = new Accordion([
 	'parentFieldName'=>'parent',
 
 ]);
-echo $menu->output(); ?>
+echo "<div class='accordion_wrap'>".
+	$menu->output().
+	"</div>";
+; ?>

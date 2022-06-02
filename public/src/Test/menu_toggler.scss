@@ -2,10 +2,10 @@
 
 
 .accordion-open {
+    display: none;
   position: relative;
   transition: transform 1s;
   padding: 10px;
-  display: flex;
   align-items: center;
   justify-content: center;
   align-self: flex-start;
@@ -18,7 +18,7 @@
   min-width: 103px;
 
   @include _800{
-    display: none;
+  display: flex;
   }
 
 

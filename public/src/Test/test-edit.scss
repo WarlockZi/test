@@ -52,7 +52,7 @@
 .test-edit__cont {
   display: flex;
   @include _800 {
-    flex-flow: column;
+    //flex-flow: column;
   }
 }
 
@@ -113,7 +113,31 @@
     //background-color: #efefef;
     display: flex;
     flex-flow: column;
-    //padding: 0 1px 1px 1px;
+    .text {
+      display: flex;
+      flex: 1;
+      flex-wrap: wrap;
+      min-width: 90px;
+      padding: 10px;
+      background-color: white;
+      //margin: 0 1px;
+      font-weight: 600;
+      position: relative;
+      font-size: 0.8rem;
+      color: darken($color-success, 25%);
+      border-top: 1px solid $color-gray2;
+      border-bottom: 1px solid $color-gray2;
+      border-left: 1px solid $color-gray2;
+
+      &:focus-visible {
+        outline: none !important;
+      }
+
+      &:hover {
+        border: $color-success 1px solid;
+        border-radius: 6px;
+      }
+    }
 
     .row {
       display: flex;
@@ -149,7 +173,7 @@
           align-items: center;
           border: 1px solid $color-gray2;
 
-          .textarea{
+          .textarea {
             min-height: 10px;
             border: 1px solid crimson;
 
@@ -163,7 +187,7 @@
             padding: 5px;
             font-size: .8rem;
             flex-basis: 20px;
-            color: darken($color-main,39%);
+            color: darken($color-main, 39%);
           }
 
           .correct {
@@ -176,7 +200,7 @@
             flex: 1;
             font-size: .8rem;
             border: 1px solid transparent;
-            color: darken($color-main,39%);
+            color: darken($color-main, 39%);
 
             &:hover {
               border: 1px solid $color-gray4;
@@ -214,7 +238,6 @@
         }
       }
 
-
       & > .sort {
         cursor: move;
         display: flex;
@@ -228,7 +251,7 @@
         border-top: 1px solid $color-gray2;
         border-bottom: 1px solid $color-gray2;
         border-left: 1px solid $color-gray2;
-        color: darken($color-success,25%);
+        color: darken($color-success, 25%);
       }
 
       .question__save {
@@ -327,7 +350,7 @@
     background-color: white;
     cursor: pointer;
     //margin-left: 1px;
-    flex: 0 1 35px;
+    min-width: 35px;
     border-top: 1px solid $color-gray2;
     border-bottom: 1px solid $color-gray2;
     border-left: 1px solid $color-gray2;
@@ -337,33 +360,9 @@
       border-right: 2px solid #1bbc9b;
       border-top: 2px solid #1bbc9b;
     }
+
   }
 
-  .text {
-    display: flex;
-    flex: 1;
-    flex-wrap: wrap;
-    min-width: 90px;
-    padding: 10px;
-    background-color: white;
-    //margin: 0 1px;
-    font-weight: 600;
-    position: relative;
-    font-size: 0.8rem;
-    color: darken($color-success,25%);
-    border-top: 1px solid $color-gray2;
-    border-bottom: 1px solid $color-gray2;
-    border-left: 1px solid $color-gray2;
-
-    &:focus-visible {
-      outline: none !important;
-    }
-
-    &:hover {
-      border: $color-success 1px solid;
-      border-radius: 6px;
-    }
-  }
 
   .question__delete {
     width: 55px;
