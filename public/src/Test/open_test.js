@@ -38,7 +38,9 @@ async function handleClick({target}) {
   async function finish() {
     let questions = await getAnswers(testid)
     parseAnswers(questions)
-    let obj = cachePage()
+    let conuntRightAnswers = countRightAnswers()
+    let obj = cachePage(conuntRightAnswers)
+    if (1) return
     let res = await post('/adminsc/opentestresult/finish', obj)
     if (IsJsonString(res)) {
       res = JSON.parse(res)
@@ -48,14 +50,27 @@ async function handleClick({target}) {
     }
   }
 
-  function cachePage() {
+  function cachePage(rightAnswers) {
     return {
-      testId: testid,
+      testId: +testid,
       questionCnt: paginations.length,
+      rightAnswers,
       html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
       testname: $('.test-name')[0].innerText,
       username: $('.user-menu__fio')[0].innerText,
     }
+  }
+
+  function countRightAnswers() {
+    // let questions = $('.question')
+    // questions.forEach((q)=>{
+    //
+    // })
+    let answers = $('.textarea')
+    return answers.reduce((acc, curent, i, array) => {
+      if ($(curent).find('span')) return ++acc
+      return acc
+    }, 0)
   }
 
   function paginate() {
@@ -84,20 +99,20 @@ async function handleClick({target}) {
 function parseAnswers(questions) {
   questions.forEach((q) => {
     let q_id = q.id
-    let q_el = $(`question[data-id='${q_id}']`)
-    let userA = q_el.querySelector('.textarea')
-    q.answers.forEach((a) => {
-      highlight(a, userAnswer, true)
-
-    }).bind(userA)
+    let q_el = $(`.question[data-id='${q_id}']`)[0]
+    let textarea = $(q_el).find('.textarea')
+    // let els = $('.textarea')
+    // els.forEach((el) => {
+    //   let userA = el.innerText
+    //   if (userA) {
+        q.Openanswer.forEach((a) => {
+          highlight(a.answer, textarea, true)
+        })
+      // }
+    // })
 
   })
 
-
-  // let userAnswers = $('.textarea')
-  // userAnswers.map((userAnswer) => {
-  //   let a = answers[0].answer
-  // })
 }
 
 
@@ -121,7 +136,7 @@ function toggleQuestion(aimPaginationId, activeQuestion) {
 
 function highlight(word, el, addEventLis) {
   hiliter(word, el, addEventLis);
-  placeCaretAtEnd(document.getElementById("textBox"));
+  placeCaretAtEnd(el);
 }
 
 function placeCaretAtEnd(el) {

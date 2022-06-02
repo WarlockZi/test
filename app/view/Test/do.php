@@ -3,7 +3,7 @@
 
 
 
-	<div class="test-do__content">
+<!--	<div class="test-do__content">-->
 
 		 <? include ROOT . '/app/view/Test/test-head.php'; ?>
 
@@ -13,7 +13,7 @@
 
 			<div class="column">
 
-				<div class="test-do__navigation">
+				<div class="navigation">
 							<? $i = 1; ?>
 
 							<? if (isset($test)): ?>
@@ -94,11 +94,11 @@
 			</div>
 
 
-		</div>
+<!--		</div>-->
 
 
 
-	</div>
+<!--	</div>-->
 
 
 </section>
