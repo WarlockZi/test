@@ -101,20 +101,32 @@ function parseAnswers(questions) {
     let q_id = q.id
     let q_el = $(`.question[data-id='${q_id}']`)[0]
     let textarea = $(q_el).find('.textarea')
-    // let els = $('.textarea')
-    // els.forEach((el) => {
-    //   let userA = el.innerText
-    //   if (userA) {
-        q.Openanswer.forEach((a) => {
-          highlight(a.answer, textarea, true)
-        })
-      // }
-    // })
-
+    if (!q.Openanswer) return
+    let word = ''
+    q.Openanswer.forEach((a) => {
+      word += `(${a.answer}).?`
+    })
+    highlight(`${word}`, textarea, true)
   })
-
 }
 
+function hiliter(word, element, addEventLis) {
+  let text = element.innerHTML
+  let rgxp = new RegExp(word, 'g');
+  let arr = rgxp.exec(text)
+  delete arr[0]
+  arr.forEach((w) => {
+    let r = new RegExp(w, 'g')
+    let repl = `<span style='color:red;'>` + w + '</span>';
+    element.innerHTML = element.innerHTML.replace(r, repl);
+  })
+
+  addEventLis && element.addEventListener("input", function remove() {
+    removeHighlight();
+    highlight(false);
+    element.removeEventListener("input", remove);
+  });
+}
 
 async function getAnswers(id) {
   let res = await post('/adminsc/opentestresult/getanswers', {id})
@@ -157,16 +169,6 @@ function placeCaretAtEnd(el) {
   }
 }
 
-function hiliter(word, element, addEventLis) {
-  var rgxp = new RegExp(word, 'g');
-  var repl = '<span style="color:red;">' + word + '</span>';
-  element.innerHTML = element.innerHTML.replace(rgxp, repl);
-  addEventLis && element.addEventListener("input", function remove() {
-    removeHighlight();
-    highlight(false);
-    element.removeEventListener("input", remove);
-  });
-}
 
 function removeHighlight(e) {
   let element = document.getElementById("textBox");
