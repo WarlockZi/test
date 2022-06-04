@@ -13,7 +13,7 @@ import {$} from '../common'
 import {_question} from "./model/question"
 import sortable from "../components/sortable"
 import WDSSelect from "../components/select/WDSSelect"
-import accordionShow from "./accordion-show";
+import accordionShow from "../components/accordion-show";
 
 import testEditActions from "./testEditActions";
 
