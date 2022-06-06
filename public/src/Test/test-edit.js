@@ -5,7 +5,7 @@ import './test-edit-menu.scss'
 import '../components/popup.scss'
 
 import './test-update'
-// import './path-create'
+
 import '../Admin/admin'
 
 import {$} from '../common'
@@ -15,42 +15,64 @@ import sortable from "../components/sortable"
 import WDSSelect from "../components/select/WDSSelect"
 import accordionShow from "../components/accordion-show";
 
-import testEditActions from "./testEditActions";
+import {_test} from "./model/test";
+import {_answer} from "./model/answer";
 
 export default function testEdit() {
-  let testEdit = $('.test-edit-wrapper')
+
+  let testEdit = $('.test-edit-wrapper')[0]
+
   if (testEdit) {
 
     sortable('.test-edit-wrapper.questions')
 
+    customSelect()
 
-    // debugger
-    let customSelects = $('[custom-select]');
-    [].forEach.call(customSelects, function (select) {
-      new WDSSelect(select)
-    });
+    $(testEdit).on('change', handleKeyup)
+    $(testEdit).on('click', handleClick)
 
-// при создании нового теста показать пустой вопрос
-    if (!_question.questions().length
-      && /\/adminsc\/test\/edit/.test(window.location.pathname)) {
-      _question.showFirst()
-    }
+  }
+}
 
-    // debugger
-    let testEditWrapper = $('.test-edit-wrapper')[0]
-    if (testEditWrapper) {
-      testEditWrapper.addEventListener('click',
-        ({target}) => {
-          testEditActions(target, 'click')
-        }
-      )
-      testEditWrapper.addEventListener('change',
-        ({target}) => {
-          testEditActions(target, 'change')
-        }
-      )
-    }
+function customSelect() {
+  let customSelects = $('[custom-select]');
+  [].forEach.call(customSelects, function (select) {
+    new WDSSelect(select)
+  });
+}
 
+function handleClick({target}) {
+
+  if (target.classList.contains('test-path__update')) {
+    _test.update()
+  } else if (target.classList.contains('test__update')) {
+    _test.update()
+  } else if (target.classList.contains('test__save')) {
+    _test.update()
+  } else if (target.classList.contains('test__delete')) {
+    _test.delete()
+  } else if (target.classList.contains('test-path__create')) {
+    _test.path_create()
+  } else if (target.classList.contains('test__create')) {
+    _test.create()
+  } else if (!!target.closest('.question__save')) {
+    _question.save(target)
+  } else if (!!target.closest('.question__show-answers')) {
+    _question.showAnswers(target)
+  } else if (!!target.closest('.question__delete')) {
+    _question.delete(target)
+  } else if (target.classList.contains('question__create-button')) {
+    _question.create()
+  } else if (!!target.closest('.delete')) {
+    _answer.del(target)
+  } else if (target.classList.contains('answer__create-button')) {
+    _answer.create(target)
+  }
+}
+
+function handleKeyup({target}) {
+  if (!!target.closest('.question-edit__parent-select')) {
+    _question.changeParent(target)
   }
 }
 

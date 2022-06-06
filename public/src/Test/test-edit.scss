@@ -113,6 +113,8 @@
     //background-color: #efefef;
     display: flex;
     flex-flow: column;
+    background: aliceblue;
+
     .text {
       display: flex;
       flex: 1;
@@ -153,7 +155,7 @@
         transform: scaleY(0);
         transform-origin: top;
         transition: transform 0.1s;
-
+        //border: 1px solid #6ca3fead;
 
         &.height {
           height: auto !important;
@@ -172,15 +174,11 @@
           overflow: hidden;
           align-items: center;
           border: 1px solid $color-gray2;
+            //background: lighten($color-main, 27%);
 
           .textarea {
             min-height: 10px;
             border: 1px solid crimson;
-
-          }
-
-          &:nth-child(odd) {
-            background: lighten($color-main, 27%);
           }
 
           .sort {
