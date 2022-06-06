@@ -6,6 +6,7 @@ import '../components/accordion-show';
 let openTest = $('.opentest_wrap')[0]
 if (openTest) {
   $(openTest).on('click', handleClick)
+
   $(openTest).on('keyup', handleKeyup)
 }
 
@@ -33,6 +34,8 @@ async function handleClick({target}) {
     nextQuest()
   } else if (target.dataset.pagination) {
     paginate()
+  } else if (target.classList.contains('led')) {
+    blink(target)
   } else if (target.id === 'finish') {
     finish()
   }
@@ -53,6 +56,7 @@ async function handleClick({target}) {
       }
     }
   }
+
   function cachePage(rightAnswers) {
     return {
       testId: +testid,
@@ -85,6 +89,7 @@ async function handleClick({target}) {
     toggleNav(aimPagination, activePagination)
   }
 }
+
 
 function correctCount(questions) {
   let correct = 0

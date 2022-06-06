@@ -4,6 +4,9 @@
 // colors, fonts etc...
 @import './partials/layout'; // responsive grid and media queries
 
+$width-full: 160px;
+$width-short: 62px;
+
 @mixin accordion {
   [accordion] {
     display: flex;
@@ -249,13 +252,13 @@
   background: darken($color-admin-sidebar, 5%);
   transition: width .4s;
   overflow: hidden;
-  max-width: 160px;
-  min-width: 62px;
-  width: 62px;
+  max-width: $width-full;
+  min-width: $width-short;
+  width: $width-short;
 
   @include _800 {
-    max-width: 160px;
-    width: 62px;
+    max-width: $width-full;
+    width: $width-short;
   }
   @include _600 {
     max-width: 100%;
@@ -267,6 +270,16 @@
 
   &:hover {
     width: 100%;
+  }
+
+  .logo {
+    display: flex;
+    justify-content: center;
+
+    .logo_vitex {
+      width: 110px;
+      height: 85px;
+    }
   }
 
 
@@ -288,11 +301,15 @@
       @include _600 {
         padding-bottom: 6px;
         padding-top: 6px;
+        max-width: $width-full;
+        min-width: $width-full;
       }
 
       @include _1000 {
         padding-bottom: 6px;
         padding-top: 6px;
+        max-width: $width-full;
+        min-width: $width-full;
       }
     }
 
@@ -340,21 +357,7 @@
     }
   }
 
-  .logo {
-    display: flex;
-    padding: 0;
-    background-color: darken($color-admin-sidebar, 5%);
-    justify-content: center;
 
-    .logo_vitex {
-      position: relative;
-      align-self: start;
-      border-bottom: none;
-      width: 110px;
-      height: 50px;
-
-    }
-  }
 
   li, a {
     border-bottom: lighten($color-admin-sidebar, 5%) 1px solid;

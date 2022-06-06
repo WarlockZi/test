@@ -31,21 +31,21 @@ export let _question = {
     }
   },
 
-  showFirst: () => {
-    let question = _question.cloneEmptyModel()
-    if (!question) return
-
-    let model = _question.viewModel(question)
-    model.sort.innerText = '1'
-    $(model.save).on('click', _question.save)
-    $(model.del).on('click', _question.delete)
-
-    $(question).addClass('question-edit')
-    $(question).removeClass('question__create')
-
-    let questions = $('.questions')[0]
-    questions.prepend(question)
-  },
+  // showFirst: () => {
+  //   let question = _question.cloneEmptyModel()
+  //   if (!question) return
+  //
+  //   let model = _question.viewModel(question)
+  //   model.sort.innerText = '1'
+  //   $(model.save).on('click', _question.save)
+  //   $(model.del).on('click', _question.delete)
+  //
+  //   $(question).addClass('question-edit')
+  //   $(question).removeClass('question__create')
+  //
+  //   let questions = $('.questions')[0]
+  //   questions.prepend(question)
+  // },
 
   cloneEmptyModel: () => {
     let question = $('.questions .question__create .question-edit')[0]

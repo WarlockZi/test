@@ -5,6 +5,20 @@
 //   }
 //}
 @import "var";
+
+@function color($color,$sat,$light,$opacity) {
+  @if $color == red {
+    @return hsl(0deg, $sat, $light, $opacity);
+  } @else if $color==green {
+    @return hsl(120deg, $sat, $light, $opacity);
+  } @else if $color==blue {
+    @return hsl(200deg, $sat, $light, $opacity);
+  } @else if $color==black {
+    @return hsl(0, 0, $light, $opacity);
+  }
+}
+
+
 @mixin _2200 {
   @media (max-width: 2200px) {
     @content;
