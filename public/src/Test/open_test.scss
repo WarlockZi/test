@@ -4,11 +4,9 @@
 
   .question__create-button {
     margin: 10px;
-    //width: 30px;
-    //height: 30px;
     background-color: $color-success;
     border: 1px solid $color-success;
-      color: white;
+    color: white;
 
     &:hover {
       background-color: #ffffff;
@@ -34,7 +32,7 @@
   }
 
   .test-edit {
-    width: 150px;
+    width: 160px;
     margin-right: 10px;
   }
 
@@ -65,7 +63,6 @@
         padding: 10px;
         min-height: 40px;
         border: 1px solid lightblue;
-        //width: 100%;
       }
 
       .head {
@@ -73,7 +70,6 @@
         padding: 5px;
 
         .sort {
-          //padding: 3px;
           margin-right: 10px;
         }
 

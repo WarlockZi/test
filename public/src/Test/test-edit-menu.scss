@@ -19,6 +19,8 @@
   justify-content: center;
   z-index: 1;
   min-width: 77px;
+  margin-bottom: 100px;
+
   @include _600{
     max-width: 100%;
   }

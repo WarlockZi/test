@@ -7,7 +7,11 @@
 $width-full: 160px;
 $width-short: 62px;
 
+$font-size-path: .7rem;
+$font-size-item: .5rem;
+
 @mixin accordion {
+
   [accordion] {
     display: flex;
     flex-flow: column;
@@ -15,7 +19,6 @@ $width-short: 62px;
 
     a {
       padding: $item-padding-M $item-padding-M+14 $item-padding-M 29px;
-      //font-size: .8rem;
       min-height: 10px;
       display: flex;
       align-items: center;
@@ -63,7 +66,7 @@ $width-short: 62px;
       align-items: center;
       padding: 12px 22px 12px 12px;
       color: $color-3;
-      font-size: .7rem;
+      font-size: $font-size-path;
 
       &:hover {
         background: tint($color-level-0, 3%);
@@ -185,7 +188,7 @@ $width-short: 62px;
     @include MQ(M) {
       .label {
         padding: $item-padding-M $item-padding-M+10 $item-padding-M $item-padding-M;
-        font-size: .8rem;
+        font-size: $font-size-path;
         min-height: 10px;
       }
 
@@ -222,7 +225,6 @@ $width-short: 62px;
 }
 
 
-
 .accordion_wrap {
   transition: max-width 1s;
   margin-bottom: 25px;
@@ -238,10 +240,17 @@ $width-short: 62px;
   }
 
   &.open {
-    max-width: 200px;
+    max-width: $width-full;
   }
 
   @include accordion;
+
+  .level-1 li:hover {
+    background-color: tint($color-level-2, 3%);
+  }
+  .level-2 li:hover {
+    background-color: tint($color-level-3, 3%);
+  }
 }
 
 
@@ -281,8 +290,6 @@ $width-short: 62px;
       height: 85px;
     }
   }
-
-
 
 
   @include accordion;
@@ -326,8 +333,6 @@ $width-short: 62px;
   }
 
 
-
-
   svg#burger {
     display: none;
     border: 1px solid transparent;
@@ -356,7 +361,6 @@ $width-short: 62px;
       right: 12px;
     }
   }
-
 
 
   li, a {
