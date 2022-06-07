@@ -17,7 +17,7 @@ function handle({target}) {
   let li = target.closest('li')
   if (!li) return
 
-  let accordion = li.closest('[accordion]')
+  // let accordion = li.closest('[accordion]')
   let ul = $(li).find('ul')
   if (!ul) {
     rotateArrow(li)
