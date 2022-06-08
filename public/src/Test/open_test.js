@@ -51,17 +51,33 @@ async function handleClick({target}) {
         popup.show(res.msg)
         let canv = document.createElement("canvas")
         canv.id = 'c'
-
-        // $()
       }
     }
   }
-
+  function replaceNbsps(str) {
+    var re = new RegExp('&nbsp;?', "g");
+    return str.replace(re, " ");
+  }
+  function replaceNs(str) {
+    var re = new RegExp('\\n?', "g");
+    return str.replace(re, "");
+  }
+  function replaceTs(str) {
+    var re = new RegExp('\\t?', "g");
+    return str.replace(re, "");
+  }
   function cachePage(rightAnswers) {
+    let t = $('.test')[0].outerHTML
+
+    t = replaceNbsps(t)
+    t = replaceNs(t)
+    t = replaceTs(t)
+
     return {
       testId: +testid,
       questionCnt: paginations.length,
-      html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
+      html: t,
+      // html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
       testname: $('.test-name')[0].innerText,
       username: $('.user-menu__fio')[0].innerText,
       rightAnswers,
