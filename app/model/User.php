@@ -20,12 +20,14 @@ class User extends Model
 		'name' => '',
 		'surName' => '',
 		'middleName' => '',
+		'hash' => '',
 		'confirm' => '0',
 		'rights' => 'user_update',
+		'post_id' => 0,
 //		'birthDate'=>'1970-01-02',
 //		'hired'=>date('Y/m/d'),
 //		'fired'=>'',
-		'sex'=>'f',
+		'sex' => 'f',
 	];
 
 
@@ -34,12 +36,12 @@ class User extends Model
 		parent::__construct();
 	}
 
-	public static function can(array $user, $rights=[])
+	public static function can(array $user, $rights = [])
 	{
-		if (is_string($rights)&&$rights){
+		if (is_string($rights) && $rights) {
 			$rights = compact('rights');
 		}
-		return (array_intersect($rights, $user['rights'])||defined('SU'))??null;
+		return (array_intersect($rights, $user['rights']) || defined('SU')) ?? null;
 	}
 
 	public function findOne($id, $field = '')
@@ -47,16 +49,19 @@ class User extends Model
 		if ($user = parent::findOne($id)) {
 			$user['rights'] = explode(',', $user['rights']);
 		}
-		return $user??null;
+		return $user ?? null;
 	}
 
-	public static function findOneWhere($field = '',$value = '')
+	public static function findOneWhere($field = '', $value = '')
 	{
 		if ($user = parent::findOneWhere($field, $value)) {
 			$user['rights'] = explode(',', $user['rights']);
-			$user['post_id'] = explode(',', $user['post_id']);
+			$post_id = is_array($user['post_id'])
+				? explode(',', $user['post_id'])
+				: Null;
+			$user['post_id'] = $post_id;
 		}
-		return $user??null;
+		return $user ?? null;
 	}
 
 
@@ -96,7 +101,7 @@ class User extends Model
 
 	public function checkEmailExists($email)
 	{
-		$res = $this->findOneWhere('email',$email);
+		$res = $this->findOneWhere('email', $email);
 		if ($res) {
 			return true;
 		}

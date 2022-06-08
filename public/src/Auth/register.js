@@ -33,6 +33,7 @@ function validateData() {
 }
 
 async function parseRegisterResponse() {
+  let msg = $('.message')[0]
   let data = {
     "email": email.value,
     "password": password.value,
@@ -41,8 +42,9 @@ async function parseRegisterResponse() {
   }
 
   let res = await post('/auth/register', data)
+  res = JSON.parse(res)
 
-  if (res === 'confirm') {
+  if (res.msg === 'confirmed') {
     msg.classList.remove('error')
     msg.classList.add('success')
     msg.innerHTML =
@@ -50,13 +52,13 @@ async function parseRegisterResponse() {
       '-Для подтверждения регистрации зайдите на почту, ' +
       '<bold>email</bold>.<br> ' +
       '-Перейдите по ссылке в письме.'
-  } else if (res === 'mail exists') {
+  } else if (res.msg === 'mail exists') {
     msg.innerHTML = 'Эта почта уже зарегистрирована'
     msg.classList.remove('success')
     msg.classList.add('error')
 
   } else {
-    msg.innerHTML = res
+    msg.innerHTML = res.msg
     msg.classList.remove('success')
     msg.classList.add('error')
   }

@@ -22,7 +22,7 @@ abstract class Model
 		$this->pdo = DB::instance();
 	}
 
-	protected function auth($ext, $action = ''): void
+	protected function auth($ext): void
 	{
 		$user = User::findOneWhere('id', $_SESSION['id'] ?? null);
 		if (!$user) {
@@ -77,6 +77,9 @@ abstract class Model
 		$par = '';
 		foreach ($values as $key => $value) {
 			if ($value) {
+				if (is_array($value)) {
+					$value = implode(',', $value);
+				}
 				$par .= $key . " = '" . $value . "', ";
 			} else {
 				$par .= $key . " = NULL, ";
@@ -85,7 +88,6 @@ abstract class Model
 		$par = trim($par, ' '); // first trim last space
 		$par = trim($par, ',');
 
-//		$model = new static();
 		$sql = "UPDATE `{$model->table}` SET {$par} WHERE id = ?";
 
 		if ($model->insertBySql($sql, [$id])) {
@@ -291,7 +293,7 @@ abstract class Model
 
 	public final function get()
 	{
-		if (property_exists($this,'hasMany')) {
+		if (property_exists($this, 'hasMany')) {
 			$this->getWith();
 			return $this;
 		}
@@ -305,7 +307,7 @@ abstract class Model
 
 	public function with($child): self
 	{
-		$name = 'app\model\\'.ucfirst($child);
+		$name = 'app\model\\' . ucfirst($child);
 		$model = new $name;
 		if ($child) {
 			$this->hasMany[$name]['model'] = $model->model;
@@ -314,9 +316,10 @@ abstract class Model
 		}
 		return $this;
 	}
+
 	public function hasMany(string $class)
 	{
-		if ($this->hasMany[$class]){
+		if ($this->hasMany[$class]) {
 			return $this->hasMany[$class]['items'];
 		}
 	}
