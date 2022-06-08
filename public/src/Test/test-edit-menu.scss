@@ -1,8 +1,6 @@
 @import "../var";
 @import "../mixin_media";
 
-
-/// Test edit menu Add test/path button
 .test-add {
   content: 'Добавить';
   position: relative;
@@ -20,6 +18,7 @@
   z-index: 1;
   min-width: 77px;
   margin-bottom: 100px;
+  font-size: .8rem;
 
   @include _600{
     max-width: 100%;
