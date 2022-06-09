@@ -295,7 +295,7 @@ $font-size-item: .5rem;
   @include accordion;
 
   [accordion] {
-    font-size: .55rem;
+    font-size: .75rem;
     @include _600 {
       height: 0;
     }
