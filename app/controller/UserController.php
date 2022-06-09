@@ -37,7 +37,6 @@ class UserController extends AppController
 		$rights = Right::findAll();
 		$this->set(compact('rights'));
 
-//		$user =new User();
 		$item = new User();
 		$item = include ROOT . '/app/view/User/getItem.php';
 		$this->set(compact('item'));
@@ -87,6 +86,19 @@ class UserController extends AppController
 			if (User::can($this->user, 'user_delete')) {
 				User::delete($data['id']);
 				$this->exitWith('ok');
+			}
+		}
+	}
+
+	public function actionUpdateOrCreate()
+	{
+		if ($this->ajax) {
+			if ($id = User::updateOrCreate($this->ajax)) {
+				if (is_bool($id)) {
+					$this->exitWith($id);
+				}else{
+					$this->exitJson(['id'=>$id]);
+				}
 			}
 		}
 	}
