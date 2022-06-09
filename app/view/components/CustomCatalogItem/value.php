@@ -4,6 +4,9 @@
 	<?= $data['html']; ?>
 	<? else: ?>
 	  >
+		<? $contenteditable = (isset($data['contenteditable']) && $data['contenteditable']) ? 'contenteditable' : ''; ?>
+		<? $required = (isset($data['required']) && $data['required']) ? 'required' : ''; ?>
+
 	  <div class="text"
 			 <?= "data-field={$data['field']}"; ?>
 			 <?= $contenteditable; ?>

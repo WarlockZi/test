@@ -76,7 +76,7 @@ class RightController Extends AppController
 				],
 				'editCol' => false,
 				'delCol' => true,
-				'addButton'=> true
+				'addButton'=> 'ajax'
 			]
 		);
 	}
