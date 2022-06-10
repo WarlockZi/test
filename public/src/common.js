@@ -150,8 +150,10 @@ async function post(url, data = {}) {
     };
     req.onload = async function () {
       if (IsJsonString(req.response)) {
+        let res = JSON.parse(req.response)
+        if (res.msg) popup.show(res.msg)
         resolve(req.response);
-      }else {
+      } else {
         let e = $('.error')[0]
         if (e) {
           e.innerHTML = req.response

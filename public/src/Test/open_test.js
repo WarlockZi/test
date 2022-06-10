@@ -48,7 +48,7 @@ async function handleClick({target}) {
     if (IsJsonString(res)) {
       res = JSON.parse(res)
       if (res.msg === 'ok') {
-        popup.show(res.msg)
+        // popup.show(res.msg)
         let canv = document.createElement("canvas")
         canv.id = 'c'
       }

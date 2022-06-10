@@ -30,10 +30,10 @@ export default function sortable(containerSelector, elSelector, model) {
             return el.id
           })
           let res = await post(`/adminsc/${model}/sort`, {toChange})
-          res = JSON.parse(res)
-          if (res.msg) {
-            popup.show(res.msg)
-          }
+          // res = JSON.parse(res)
+          // if (res.msg) {
+          //   popup.show(res.msg)
+          // }
           questionsEls.map((el, i) => {
             $(el).find('.sort').innerText = i + 1
           })

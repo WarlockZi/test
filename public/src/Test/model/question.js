@@ -140,7 +140,7 @@ export let _question = {
           answers: _question.getAnswers(question),
         })
       res = await JSON.parse(res)
-      popup.show(res.msg)
+      // popup.show(res.msg)
     },
 
   delete:
@@ -152,7 +152,7 @@ export let _question = {
         let deleted = await _question.deleteFromServer(id)
         if (deleted) {
           _question.deleteFromView(viewModel)
-          popup.show(deleted.msg)
+          // popup.show(deleted.msg)
         }
       }
     },

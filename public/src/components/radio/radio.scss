@@ -1,12 +1,11 @@
 @import "../../var";
 
 .custom-radio {
-  margin: $margin-form;
+  //margin: $margin-form;
   background: #fff;
-  //padding: 6px 0;
   min-width: 127px;
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
 
 
   label {

@@ -2,9 +2,10 @@
 
 [custom-date] {
   padding: $padding-form;
-  margin: $margin-form;
+  //margin: $margin-form;
   font-size: $font-size-form;
   border: 1px solid transparent;
+  font-family: inherit;
 
   &:hover {
     border: $border-field-hover;
