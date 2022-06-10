@@ -28,6 +28,7 @@
 	  <section
 			  tab
 			  data-field="<?= $tab['field']; ?>"
+			  data-type="inputs"
 			  data-id=<?= $n ?>>
 			 <?= $tab['html']; ?>
 	  </section>

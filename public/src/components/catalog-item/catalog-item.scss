@@ -164,6 +164,7 @@
       .save, .del, .to-list {
         padding: 10px 15px;
         $border-radius: 3%;
+        line-height: 1.2rem;
         @include _button($border-radius);
 
         &:hover {

@@ -61,9 +61,9 @@ async function parseLoginResponse() {
     msg.innerHTML = res.msg
     $(msg).addClass('error')
     $(msg).removeClass('success')
-  } else if (res.msg === 'employee') {
+  } else if (res.role === 'employee') {
     window.location = '/adminsc'
-  } else if (res.msg === 'user') {
+  } else if (res.role === 'user') {
     window.location = '/auth/cabinet'
   } else {
     msg.innerText = res.msg

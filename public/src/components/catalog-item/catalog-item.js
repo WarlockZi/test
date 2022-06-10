@@ -16,9 +16,10 @@ export default function catalogItem() {
     } else if (target.closest('.del')) {
       del(item)
     } else if ((target.classList.contains('tab'))) {
-      handleTab(target,modelName)
+      handleTab(target, modelName)
     }
   }
+
   async function handleTab(target) {
     let visibleSection = $(`section.show`)[0]
     visibleSection.classList.toggle('show')
@@ -28,7 +29,8 @@ export default function catalogItem() {
     activeTab.classList.toggle('active')
     target.classList.toggle('active')
   }
-  async function del(item,modelName) {
+
+  async function del(item, modelName) {
     let id = item.dataset.id
     let res = await post(`/adminsc/${modelName}/delete`, {id})
     res = JSON.parse(res)
@@ -42,12 +44,8 @@ export default function catalogItem() {
     let model = getModel()
     let res = await post(`/adminsc/${modelName}/updateorcreate`, {...model})
     res = JSON.parse(res)
-    if (res.id) {
-      popup.show('Создан')
-    } else if (res.error) {
+    if (res.error) {
       popup.show(res.error)
-    } else {
-      popup.show('Сохранено')
     }
   }
 
@@ -81,6 +79,8 @@ export default function catalogItem() {
         obj[field.dataset.field] = ids.toString()
       } else if (field.hasAttribute('custom-select')) {
         obj[field.dataset.field] = field.dataset.value
+      } else if (field.dataset.type === 'inputs') {
+        obj[field.dataset.field] = getInputs(field)
       } else if (field.hasAttribute('custom-radio')) {
         obj[field.dataset.field] = field.dataset.value
       } else if (field.hasAttribute('tab')) {
@@ -96,5 +96,18 @@ export default function catalogItem() {
       obj.isTest = +isTest.dataset.istest
     }
     return obj
+  }
+
+  function getInputs(field) {
+    let inputs = field.querySelectorAll('input')
+    let names = []
+    inputs.forEach((inp) => {
+      if (!inp.checked) return
+      let name = inp.parentNode.querySelector('.name').innerText
+      if (!name) return
+      names.push(name)
+    })
+    return names.join(',')
+
   }
 }

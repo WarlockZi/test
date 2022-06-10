@@ -15,9 +15,6 @@ $("#save").on("click", async function (e) {
     }
 
     let res = await post('/user/edit', data)
-    if (res === 'ok') {
-      popup.show('Сохранено')
-    }
 
   }
 )

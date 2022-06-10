@@ -217,9 +217,9 @@ class AuthController extends AppController
 			$this->setAuth($user);
 			$this->user = $user;
 			if (User::can($user, 'role_employee')) {
-				$this->exitWith('employee');
+				$this->exitJson(['role'=>'employee']);
 			} else {
-				$this->exitWith('user');
+				$this->exitJson(['role'=>'user']);
 			}
 		}
 	}
