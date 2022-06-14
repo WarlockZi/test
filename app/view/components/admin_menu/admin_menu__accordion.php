@@ -80,7 +80,7 @@
 					 <? endif; ?>
 
 					 <? if (User::can($this->user, ['test-results_read'])): ?>
-				  <a class="neon" href="/adminsc/opentestresult/results">Результаты открытых тестов </a>
+				  <a class="neon" href="/adminsc/opentestresult">Результаты открытых тестов </a>
 					 <? endif; ?>
 
 			</ul>

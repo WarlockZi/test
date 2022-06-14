@@ -2,8 +2,6 @@
 
 namespace app\model;
 
-use app\model\Model;
-
 
 class Freetest extends Model {
 
@@ -194,10 +192,6 @@ class Freetest extends Model {
       include APP . '/view/Freetest/freetestParams.php';
    }
 
-
-//   public function send_mail_Freetest() {
-//      $this->send_result_mail('/results/freetest/', '/freetest/results/');
-//   }
 
    public function resultFreetest() {
 
