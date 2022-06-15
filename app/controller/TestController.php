@@ -139,9 +139,6 @@ class TestController extends AppController
 
 	public function actionDo()
 	{
-
-//    if (User::can($this->user, 'test-do_read')) {
-
 		$pagination = '';
 		$testData = '';
 		$page_name = 'Прохождение тестов';
