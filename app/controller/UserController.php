@@ -64,7 +64,7 @@ class UserController extends AppController
 		if ($user = $this->ajax) {
 			$user['id'] = $_SESSION['id'];
 			User::update($user);
-			$this->exitWith('Сохранено');
+			$this->exitWithPopup('Сохранено');
 		}
 	}
 
@@ -85,9 +85,9 @@ class UserController extends AppController
 		if ($data = $this->ajax) {
 			if (User::can($this->user, 'user_delete')) {
 				User::delete($data['id']);
-				$this->exitWith('ok');
+				$this->exitWithPopup('ok');
 			}else{
-				$this->exitWith('Не хватает прав');
+				$this->exitWithPopup('Не хватает прав');
 			}
 		}
 	}
@@ -97,7 +97,7 @@ class UserController extends AppController
 		if ($this->ajax) {
 			if ($id = User::updateOrCreate($this->ajax)) {
 				if (is_bool($id)) {
-					$this->exitJson(['msg'=>'Сохранено']);
+					$this->exitWithPopup('Сохранено');
 				}else{
 					$this->exitJson(['id'=>$id,'msg'=>'Создан']);
 				}
@@ -112,7 +112,7 @@ class UserController extends AppController
 			$data['birthDate'] = date('Y-m-d', $date);
 
 			User::update($data);
-			$this->exitWith('ok');
+			$this->exitWithPopup('ok');
 		}
 	}
 

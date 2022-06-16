@@ -9,7 +9,7 @@ const debounce = (fn, time = 700) => {
   }
 }
 
-function IsJsonString(str) {
+function IsJson(str) {
   try {
     JSON.parse(str);
   } catch (e) {
@@ -134,34 +134,52 @@ async function get(key) {
 }
 
 async function post(url, data = {}) {
-  return new Promise(function (resolve, reject) {
-    data.token = document.querySelector('meta[name="token"]').getAttribute('content')
-    let req = new XMLHttpRequest();
-    req.open('POST', url, true);
-    req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    if (data instanceof FormData) {
-      req.send(data);
-    } else {
-      req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      req.send('param=' + JSON.stringify(data));
-    }
-    req.onerror = function (e) {
-      reject(Error("Network Error" + e));
-    };
-    req.onload = async function () {
-      if (IsJsonString(req.response)) {
-        let res = JSON.parse(req.response)
-        if (res.msg) popup.show(res.msg)
-        resolve(req.response);
-      } else {
-        let e = $('.error')[0]
-        if (e) {
-          e.innerHTML = req.response
-        }
 
+  return new Promise(async function (resolve, reject) {
+      data.token = document.querySelector('meta[name="token"]').getAttribute('content')
+      let req = new XMLHttpRequest();
+      req.open('POST', url, true);
+      req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+      if (data instanceof FormData) {
+        req.send(data);
+      } else {
+        req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        req.send('param=' + JSON.stringify(data));
       }
-    };
-  });
+      req.onerror = function (e) {
+        reject(Error("Network Error" + e));
+      };
+      req.onload = function () {
+        let res = JSON.parse(req.response)
+        let msg = $('.message')[0]
+        if (res.popup) {
+          popup.show(res.popup)
+        } else if (res.msg) {
+          if (msg) {
+            msg.innerHTML = res.msg
+            msg.innerHTML = res.msg
+            $(msg).removeClass('success')
+            $(msg).removeClass('error')
+          }
+        } else if (res.success) {
+          if (msg) {
+            msg.innerHTML = res.msg
+            $(msg).addClass('error')
+            $(msg).removeClass('success')
+          }
+        } else if (res.error) {
+          if (msg) {
+            msg.innerHTML = ''
+            msg.innerHTML = res.error
+            $(msg).removeClass('success')
+            $(msg).addClass('error')
+          }
+        }
+        resolve(res);
+      }
+    }
+  )
+
 }
 
 class ElementCollection extends Array {
@@ -304,7 +322,7 @@ export {
   addTooltip,
   popup,
   debounce,
-  IsJsonString,
+  IsJson,
 
   post, get, uniq,
   validate, $

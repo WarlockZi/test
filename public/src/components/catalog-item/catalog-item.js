@@ -43,10 +43,10 @@ export default function catalogItem() {
     if (checkRequired()) return false
     let model = getModel()
     let res = await post(`/adminsc/${modelName}/updateorcreate`, {...model})
-    res = JSON.parse(res)
-    if (res.error) {
-      popup.show(res.error)
-    }
+    // res = JSON.parse(res)
+    // if (res.error) {
+    //   popup.show(res.error)
+    // }
   }
 
   function checkRequired() {

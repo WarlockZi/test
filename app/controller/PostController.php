@@ -49,7 +49,7 @@ class PostController Extends AppController
 	{
 		if ($this->ajax) {
 			$this->model::update($this->ajax);
-			$this->exitWith('ok');
+			$this->exitWithPopup('ok');
 		}
 
 		$id = $this->route['id'];
@@ -96,7 +96,7 @@ class PostController Extends AppController
 		$id = $this->ajax['id'] ?? $_POST['id'];
 
 		if ($this->model::delete($id)) {
-			$this->exitWith("ok");
+			$this->exitWithPopup("ok");
 		}
 
 		header('Location:/adminsc/post/list');
@@ -106,7 +106,7 @@ class PostController Extends AppController
 	{
 		if ($this->ajax) {
 			$this->model::updateorcreate($this->ajax['model']);
-			$this->exitWith('ok');
+			$this->exitWithPopup('ok');
 		}
 	}
 
@@ -115,7 +115,7 @@ class PostController Extends AppController
 		if ($this->ajax) {
 			if (User::can($this->user, 'post_update')) {
 				$this->model::update($this->ajax);
-				$this->exitWith('ok');
+				$this->exitWithPopup('ok');
 			}
 		}
 	}

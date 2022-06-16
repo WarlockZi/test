@@ -21,18 +21,39 @@ class AppController extends Controller
 	public function exitJson(array $arr=[]): void
 	{
 		if ($arr) {
-			exit(json_encode($arr));
+			exit(json_encode(['arr'=>$arr]));
 		}
 	}
 
-  public function exitWith(string $msg): void
+  public function exitWithPopup(string $msg): void
   {
     if ($msg) {
-      exit(json_encode(['msg' => $msg]));
+      exit(json_encode(['popup' => $msg]));
     }
     exit();
   }
 
+	public function exitWithMsg(string $msg): void
+	{
+		if ($msg) {
+			exit(json_encode(['msg' => $msg]));
+		}
+		exit();
+	}
+	public function exitWithSuccess(string $msg): void
+	{
+		if ($msg) {
+			exit(json_encode(['success' => $msg]));
+		}
+		exit();
+	}
+	public function exitWithError(string $msg): void
+	{
+		if ($msg) {
+			exit(json_encode(['error' => $msg]));
+		}
+		exit();
+	}
   public function setAuth($user)
   {
     $_SESSION['id'] = (int)$user['id'];
@@ -55,7 +76,7 @@ class AppController extends Controller
       $user = User::findOneWhere('id', $_SESSION['id']);
       if (!$user) {
         header("Location:/auth/login");
-        $this->exitWith("Пользователь не найден");
+        $this->exitWithPopup("Пользователь не найден");
       }
       if ($user === false) {
         $_SESSION['id'] = '';

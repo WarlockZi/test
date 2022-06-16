@@ -24,11 +24,11 @@
 		<ul>
 			<li class="inner">
 					 <? foreach ($this->tree as $k => $v): ?>
-				  <label for="<?= $v[$this->optionName] ?>"
+				  <label for="<?= $v[$this->optionLabel] ?>"
 				         data-id="<?= $v['id']; ?>"
 								<?= in_array($v['id'], $this->selected)
 									? "class='selected'" : ''; ?>
-				  ><?= $v[$this->optionName] ?></label>
+				  ><?= $v[$this->optionLabel] ?></label>
 					 <? endforeach; ?>
 			</li>
 		</ul>

@@ -30,7 +30,7 @@ class AuthController extends AppController
 			if (!$user['email']) exit('empty email');
 
 			$found = User::findOneWhere('email', $user['email']);
-			if ($found) $this->exitWith('mail exists');
+			if ($found) $this->exitWithPopup('mail exists');
 
 			$hash = md5(microtime());
 			$user['password'] = $this->preparePassword($user['password']);
@@ -48,7 +48,7 @@ class AuthController extends AppController
 					exit('registration failed');
 				}
 				$sent = Mail::send_mail($data);
-				$this->exitWith('confirmed');
+				$this->exitWithPopup('confirmed');
 			} catch (\Exception $e) {
 				exit($e->getMessage());
 			}
@@ -93,7 +93,7 @@ class AuthController extends AppController
 			$this->setAuth($user);
 			if (User::update($user)) {
 				header('Location:/auth/success');
-				$this->exitWith('"Вы успешно подтвердили свой E-mail."');
+				$this->exitWithPopup('"Вы успешно подтвердили свой E-mail."');
 			}
 		}
 		header('Location:/auth/login');
@@ -189,9 +189,9 @@ class AuthController extends AppController
 				$data['body'] = "Ваш новый пароль: " . $password;
 
 				Mail::send_mail($data);
-				$this->exitWith('Новый пароль проверьте на почте');
+				$this->exitWithPopup('Новый пароль проверьте на почте');
 			} else {
-				$this->exitWith("Пользователя с таким e-mail нет");
+				$this->exitWithPopup("Пользователя с таким e-mail нет");
 			}
 		}
 		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
@@ -206,14 +206,15 @@ class AuthController extends AppController
 			$email = (string)$data['email'];
 			$password = (string)$data['password'];
 
-			if (!User::checkEmail($email)) $this->exitWith("Неверный формат email");
-			if (!User::checkPassword($password)) $this->exitWith("Пароль не должен быть короче 6-ти символов");
+			if (!User::checkEmail($email)) $this->exitWithError("Неверный формат email");
+			if (!User::checkPassword($password)) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
 
 			$user = User::findOneWhere("email", $email);
 
-			if (!$user) $this->exitWith('Пользователь не зарегистрирован');
-			if (!$user['confirm']) $this->exitWith('Зайдите на почту чтобы подтвердить регистрацию');
-			if ($user['password'] !== $this->preparePassword($password)) $this->exitWith('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
+			if (!$user) $this->exitWithError('Пользователь не зарегистрирован');
+			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
+			if ($user['password'] !== $this->preparePassword($password))
+				$this->exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
 			$this->setAuth($user);
 			$this->user = $user;
 			if (User::can($user, 'role_employee')) {
