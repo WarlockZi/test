@@ -1,9 +1,7 @@
 <div class="item_header">
 
-	<div class="tabs_wrap">
-		 <? include ROOT . '/app/view/components/CustomCatalogItem/tabs.php' ?>
-		<div class="page-title"><?= $this->pageTitle ?></div>
-	</div>
+	<div class="page-title"><?= $this->pageTitle ?></div>
+	<? include ROOT . '/app/view/components/CustomCatalogItem/tabs.php' ?>
 </div>
 
 

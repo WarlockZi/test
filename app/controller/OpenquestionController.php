@@ -85,7 +85,7 @@ class OpenquestionController Extends AppController
 	public function actionSort()
 	{
 		$ids = $this->ajax['toChange'];
-		if (!$ids) $this->exitWith('ok');
+		if (!$ids) $this->exitWithPopup('ok');
 		$this->model::sort($ids);
 		exit(json_encode(['msg' => 'Сортировка сохранена']));
 	}

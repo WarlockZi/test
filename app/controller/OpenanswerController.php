@@ -31,7 +31,7 @@ class OpenanswerController Extends AppController
 					$html = ob_get_clean();
 					exit(json_encode(['id' => $res, 'html' => $html]));
 				}
-				$this->exitWith('ok');
+				$this->exitWithPopup('ok');
 			}
 		} catch (Exception $exception) {
 			exit($exception->getMessage());
@@ -43,7 +43,7 @@ class OpenanswerController Extends AppController
 	{
 		$id = $this->ajax['id'];
 		if (Openanswer::delete($id)) {
-			$this->exitWith('ok');
+			$this->exitWithPopup('ok');
 		}
 	}
 

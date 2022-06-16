@@ -109,6 +109,24 @@
 		</span>
 		</a>
 
+
+		<li>
+			<div class="label">
+				<span class="arrow"></span>
+					 <? include ICONS . '/admin-menu/chart.svg'; ?>
+				Пользователь
+			</div>
+			<ul class="level-1">
+					 <? if (User::can($this->user, 'role_employee')): // admin ?>
+				  <a class="neon" href="/auth/returnpass">Сменить пароль</a>
+				  <a class="neon" href="/auth/profile">Изменить свой профиль</a>
+
+					 <? endif; ?>
+			</ul>
+		</li>
+
+
+
 		 <? if (User::can($this->user, 'su')): ?>
 		  <li>
 

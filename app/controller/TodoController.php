@@ -79,7 +79,7 @@ class TodoController Extends AppController
 		$id = $this->ajax['id']??$_POST['id'];
 		if (User::can($this->user, 'right_delete') || defined(SU)) {
 			if ($this->model::delete($id)) {
-				$this->exitWith("ok");
+				$this->exitWithPopup("ok");
 			}
 		}
 		header('Location:/adminsc/right/list');
@@ -90,7 +90,7 @@ class TodoController Extends AppController
 	{
 		if ($this->ajax) {
 			$this->model::update($this->ajax);
-			$this->exitWith('ok' );
+			$this->exitWithPopup('ok' );
 		}
 		$this->layout = 'admin';
 		$this->view = 'edit_update';

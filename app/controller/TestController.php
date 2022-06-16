@@ -128,7 +128,7 @@ class TestController extends AppController
 
 		if (User::can($this->user, 'test_delete') || defined('SU')) {
 			if (Test::delete($this->ajax['id'])) {
-				$this->exitWith('ok');
+				$this->exitWithPopup('ok');
 			}
 		}
 		$this->ajax['test']['enable'] = 0;

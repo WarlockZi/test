@@ -1,5 +1,5 @@
 import './open_test.scss'
-import {$, popup, post, debounce, IsJsonString} from "../common";
+import {$, popup, post, debounce, IsJson} from "../common";
 
 import '../components/accordion-show';
 
@@ -45,7 +45,7 @@ async function handleClick({target}) {
     let correctAnswers = correctCount(questions)
     let obj = cachePage(correctAnswers)
     let res = await post('/adminsc/opentestresult/finish', obj)
-    if (IsJsonString(res)) {
+    if (IsJson(res)) {
       res = JSON.parse(res)
       if (res.msg === 'ok') {
         // popup.show(res.msg)
