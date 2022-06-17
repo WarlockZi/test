@@ -39,15 +39,16 @@ export default function testDo() {
   $('.test-do__finish-btn').on('click', async function (e) {
 
     let button = e.target;
-    if (button.classList.contains('inactive')) return false
     if (button.id !== 'btnn') return false
 
-    button.classList.add('inactive')
-
-    if (button.text == "ПРОЙТИ ТЕСТ ЗАНОВО") {
+    if (button.text === "ПРОЙТИ ТЕСТ ЗАНОВО") {
       location.reload();
       return;
     }
+    button.text = "ПРОЙТИ ТЕСТ ЗАНОВО"
+
+    button.classList.add('inactive')
+
     let corrAnswers = await post('/test/getCorrectAnswers', {})
     let errorCnt = colorView(corrAnswers)
 
@@ -71,9 +72,7 @@ export default function testDo() {
     return str.replace(re, "");
   }
   function cachePage(rightAnswers) {
-
     let t = $('.test-do')[0]
-
     t = t.outerHTML
     t = replaceNbsps(t)
     t = replaceNs(t)

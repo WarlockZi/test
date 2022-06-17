@@ -85,7 +85,7 @@ function getParent($item)
 	$r = new \app\model\Test();
 	$s = $r::findAllWhere('isTest', '0');
 	$r->data = $s;
-	$tree = $r->tree('parent');
+	$tree = $r->tree($s);
 
 	$parent = new \app\view\components\CustomSelect\CustomSelect([
 		'className' => 'custom-select',
