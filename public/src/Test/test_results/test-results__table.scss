@@ -1,3 +1,18 @@
+@import "../../mixin_media";
+
+.testresult{
+  display: flex;
+  flex-flow: column;
+
+  .to-list{
+    @include _button();
+    align-self: flex-start;
+    padding: 10px;
+    margin-left: 20px ;
+    margin-bottom: 20px ;
+  }
+}
+
 .test-results__table {
   display: grid;
   grid-template-columns: 130px auto 100px 120px 50px;

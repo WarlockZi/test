@@ -139,7 +139,7 @@ abstract class Model
 		return $name . '_id';
 	}
 
-	public function morphTo($table, $type, $id):array
+	public function morphTo($table, $type, $id): array
 	{
 		$morphTable = $this->makeMorphTableName($this->model, $table);
 		$field = $this->makeFieldName($this->model);
@@ -209,7 +209,7 @@ abstract class Model
 		}
 	}
 
-	public static function findOneModel($id = ''):array
+	public static function findOneModel($id = ''): array
 	{
 		$model = new static();
 		$sql = "SELECT * FROM {$model->table} WHERE id IN (?)";
@@ -335,18 +335,21 @@ abstract class Model
 			$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
 			$this->items = $this->pdo->query($sql, []);
 
-			$ids = [];
-			foreach ($this->items as $i => $item) {
-				array_push($ids, $item['id']);
-			}
-			$ids = implode(',', $ids);
-			$sql = $this->with . '(' . $ids . ')';
-			$hasManyItem['items'] = $this->pdo->query($sql, []);
-			foreach ($this->items as &$item) {
-				foreach ($hasManyItem['items'] as $child) {
-					$identifier = $this->model . '_id';
-					if ($item['id'] === $child[$identifier]) {
-						$item[$childTable][] = $child;
+			if ($this->items) {
+
+				$ids = [];
+				foreach ($this->items as $i => $item) {
+					array_push($ids, $item['id']);
+				}
+				$ids = implode(',', $ids);
+				$sql = $this->with . '(' . $ids . ')';
+				$hasManyItem['items'] = $this->pdo->query($sql, []);
+				foreach ($this->items as &$item) {
+					foreach ($hasManyItem['items'] as $child) {
+						$identifier = $this->model . '_id';
+						if ($item['id'] === $child[$identifier]) {
+							$item[$childTable][] = $child;
+						}
 					}
 				}
 			}

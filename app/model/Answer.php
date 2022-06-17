@@ -12,7 +12,7 @@ class Answer extends Model
 	public  $model = 'answer';
 
 	protected $fillable = [
-		'parent_question'=>null,
+		'question_id'=>null,
 		'answer'=>'',
 		'correct_answer'=>'0',
 		'pica'=>''
