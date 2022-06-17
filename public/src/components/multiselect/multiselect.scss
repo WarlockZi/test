@@ -6,7 +6,6 @@
   display: flex;
   flex-flow: column;
   width: 100%;
-  margin: $margin-form;
   border: 1px solid transparent;
 
   &:hover {
@@ -44,7 +43,7 @@
   ul {
     display: none;
     position: absolute;
-    top: 100%;
+    top: 104%;
     left: 0;
     background-color: white;
     box-shadow: #445e8882 1px 3px 3px 0px;

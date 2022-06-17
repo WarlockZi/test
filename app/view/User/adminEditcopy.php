@@ -19,7 +19,7 @@
 
 			  </section>
 
-			  <div class="custom-catalog-item__buttons">
+			  <div class="item_buttons">
 				  <div class="del button"><?include TRASH?></div>
 				  <div class="save button"><?include SAVE?></div>
 				  <a href="/adminsc/user/list" class="to-list">К списку</a>

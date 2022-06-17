@@ -6,7 +6,7 @@ import '../components/admin_sidebar'
 import "./model/cache";
 import {$} from "../common";
 
-import testResults from '../Test/test_results/test_results'
+import '../Test/test_results/test_results'
 import '../Test/opentest-edit'
 import testEdit from '../Test/test-edit'
 import testDo from '../Test/do'
@@ -33,7 +33,6 @@ $(document).ready(function () {
   catalogItem()
   tooltips()
 
-
   accordionShow()
 
   testEdit()
@@ -52,7 +51,6 @@ $(document).ready(function () {
         break;
 
       case /\/adminsc\/testresult\/results/.test(str):
-        testResults()
         $("[href='/adminsc/test/results']").addClass('current')
         break;
 

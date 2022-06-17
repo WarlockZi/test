@@ -7,7 +7,7 @@
 
 		 <? include ROOT . '/app/view/components/test/test_do_accordion.php'; ?>
 
-		<div class="column">
+		<div class="content">
 
 			<div class="navigation">
 					 <? $i = 1; ?>

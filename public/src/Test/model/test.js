@@ -26,15 +26,15 @@ export const _test = {
 
   pushNav: (currentId, aimNavId) => {
     let currNavEl = $('[data-pagination]')[currentId]
-    currNavEl.classList.toggle('nav-active')
+    currNavEl.classList.toggle('active')
 
     let NavEl = $('[data-pagination]')[aimNavId]
-    NavEl.classList.toggle('nav-active')
+    NavEl.classList.toggle('active')
   },
 
   pushQ: (currentEl, aimQEl) => {
-    currentEl.classList.toggle('flex1')
-    aimQEl.classList.toggle('flex1')
+    currentEl.classList.toggle('show')
+    aimQEl.classList.toggle('show')
   },
 
   aimNavIdFunction: (currentId, direction) => {
@@ -55,18 +55,18 @@ export const _test = {
         return current.QNextEl
         break
       case direction === 'back':
-        return current.QPrevc
+        return current.QPrevEl
         break
     }
   },
 
   currentQ: () => {
     return {
-      id: $('.nav-active')[0].innerText - 1,
-      QEl: $('.question.flex1')[0],
+      id: $('.active')[0].innerText - 1,
+      QEl: $('.question.show')[0],
       navLength: $('[data-pagination]').length,
-      QPrevc: $('.question.flex1')[0].previousElementSibling,
-      QNextEl: $('.question.flex1')[0].nextElementSibling,
+      QPrevEl: $('.question.show')[0].previousElementSibling,
+      QNextEl: $('.question.show')[0].nextElementSibling,
     }
   },
 

@@ -18,8 +18,7 @@ class TestresultController extends AppController
 		View::setJs('admin.js');
 		View::setCss('admin.css');
 	}
-
-	public function actionResults()
+	public function actionIndex()
 	{
 		$res = TestResult::findAll('testResults');
 		$this->set(compact('res'));
@@ -29,7 +28,8 @@ class TestresultController extends AppController
 	{
 		$id = $this->route['id'];
 		$res = TestResult::findOneWhere('id', $id);
-		exit($res['html']);
+		$testHtml= $res['html'] ;
+		$this->set(compact('testHtml'));
 	}
 
 

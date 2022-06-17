@@ -112,18 +112,4 @@ class AppController extends Controller
   }
 
 
-//  public function hierachy($array, $parentName)
-//  {
-//    {
-//      $tree = [];
-//      foreach ($array as $id => &$node) {
-//        if (!$node[$parentName] && isset($node[$parentName])) {
-//          $tree[$id] = &$node;
-//        } else {
-//          $array[$node[$parentName]]['childs'][$id] = &$node;
-//        }
-//      }
-//      return $tree;
-//    }
-//  }
 }

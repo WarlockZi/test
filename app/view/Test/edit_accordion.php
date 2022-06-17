@@ -9,7 +9,7 @@ $menu = new Accordion([
 	'class' => 'test-edit',
 	'label_after' => ICONS . "/edit.svg",
 	'link' => '/adminsc/test/edit/',
-	'$link_label_after' => '/adminsc/test/update/',
+	'link_label_after' => '/adminsc/test/update/',
 
 ]);
 echo $menu->output(); ?>

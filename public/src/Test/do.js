@@ -8,10 +8,10 @@ import {navInit} from '../components/test-pagination/test-pagination'
 export default function testDo() {
 
 //Скрыть все вопросы
-  $('.question').removeClass("flex1")
+  $('.question').removeClass("show")
 
 //Показть первый вопрос
-  $('.question:first-child').addClass("flex1")
+  $('.question:first-child').addClass("show")
 // Нажать первуюкнопку navigation
   navInit()
   $('.test-do [type="checkbox"]').on('click', function (e) {
@@ -42,27 +42,50 @@ export default function testDo() {
     if (button.classList.contains('inactive')) return false
     if (button.id !== 'btnn') return false
 
+    button.classList.add('inactive')
+
     if (button.text == "ПРОЙТИ ТЕСТ ЗАНОВО") {
       location.reload();
       return;
     }
     let corrAnswers = await post('/test/getCorrectAnswers', {})
-    corrAnswers = JSON.parse(corrAnswers)
     let errorCnt = colorView(corrAnswers)
+
     let data = objToServer(errorCnt)
-    let res = await post('/adminsc/testresult/cachePageSendEmail', data)
+    let res = await post('/adminsc/testresult/cachePageSendEmail', {...data})
     if (res==='ok') {
       $("#btnn")[0].href = location.href
       $("#btnn")[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО"
     }
   })
+  function replaceNbsps(str) {
+    var re = new RegExp('&nbsp;?', "g");
+    return str.replace(re, " ");
+  }
+  function replaceNs(str) {
+    var re = new RegExp('\\n?', "g");
+    return str.replace(re, "");
+  }
+  function replaceTs(str) {
+    var re = new RegExp('\\t?', "g");
+    return str.replace(re, "");
+  }
+  function cachePage(rightAnswers) {
+
+    let t = $('.test-do')[0]
+
+    t = t.outerHTML
+    t = replaceNbsps(t)
+    t = replaceNs(t)
+    t = replaceTs(t)
+    return t
+  }
 
   function objToServer(errorCnt) {
     return {
-      // token: document.querySelector('meta[name="token"]').getAttribute('content'),
       questionCnt: $('.question').length,
       errorCnt: errorCnt,
-      html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
+      html: cachePage(),
       testid: $('[data-test-id]')[0].dataset.testId,
       testname: $('.test-name')[0].innerText,
       user: $('.user-menu__fio')[0].innerText,
