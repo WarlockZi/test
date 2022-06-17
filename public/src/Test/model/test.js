@@ -121,25 +121,24 @@ export const _test = {
 
   selectedValueCustomSelect(className) {
     let select = $(`[data-field=${className}]`)[0]
-    let selected = [...select.options].filter((opt)=>opt.selected)
+    let selected = [...select.options].filter((opt) => opt.selected)
     if (selected) {
       return +selected[0].value
     }
   },
 
   serverModel: () => {
-
+    let id = !!+window.location.href.split('/').pop()
+    id = id?id:0
     let model = {
-      id: +window.location.href.split('/').pop(),
-      test_name: $('#test_name')[0].value,
+      id,
+      test_name: $('#name.field')[0].value,
       isTest: +$('[isTest]')[0].getAttribute('isTest'),
-      // enable: _test.selectedValueCustomSelect('enable'),
-      // parent: _test.selectedValueCustomSelect('parent'),
     }
     // debugger
-    let fields = $('.custom-select');
-    [].forEach.call(fields,function (field){
-      model[field.dataset['field']]=field.dataset['id']
+    let fields = $('[custom-select]');
+    [].forEach.call(fields, function (field) {
+      model[field.dataset['field']] = field.dataset['id']
     })
     return model
   },

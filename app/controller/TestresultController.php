@@ -57,7 +57,7 @@ class TestresultController extends AppController
 	}
 
 
-	private static function sendTestRes($post, $resid)
+	private function sendTestRes($post, $resid)
 	{
 		if ($_ENV['TEST_EMAIL_ALL_SEND']) {
 			exit(json_encode('mail not sent'));
@@ -71,7 +71,7 @@ class TestresultController extends AppController
 		$data['altBody'] = "Ссылка на страницу с результатами: тут";
 
 		$sent = Mail::send_mail($data);
-		exit('ok');
+		$this->exitWithPopup('Результат сохранен');
 	}
 
 	public function actionCachePageSendEmail()
@@ -79,7 +79,7 @@ class TestresultController extends AppController
 		if ($this->ajax) {
 			if ($resid = TestResult::create($this->ajax)) {
 				if (!$resid) exit('Результат в базу не сохранен');
-				self::sendTestRes($this->ajax, $resid-1);
+				$this->sendTestRes($this->ajax, $resid-1);
 			}
 		}
 	}

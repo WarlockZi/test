@@ -1,5 +1,8 @@
-<a href="/adminsc/testresult"
-	 class = 'accordion-open'>
-	К списку результатов
-</a>
-<?=$testHtml;?>
+<div class="testresult">
+
+	<a href="/adminsc/testresult"
+	   class='to-list'>
+		К списку результатов
+	</a>
+	<?= $testHtml; ?>
+</div>

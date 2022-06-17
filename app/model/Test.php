@@ -48,7 +48,7 @@ SELECT i.path, i.name,
        q.qustion, q.sort, a.answer, a.correct_answer, q.id as q_id, a.id as a_id
 FROM question q
 LEFT JOIN answer a
-	ON a.parent_question=q.id 
+	ON a.question_id=q.id 
     
 left join image_morph im
    on im.type='answer' and im.type_id=a.id
@@ -107,7 +107,7 @@ her;
 		return $children;
 	}
 
-	public static function pagination(array $items, $addBtn)
+	public static function pagination(array $items)
 	{
 		$pagination = '<div class="pagination">';
 		$i = 0;
@@ -117,10 +117,7 @@ her;
 			$pagination .= $d;
 		}
 
-		if ($addBtn) {
-			$pagination .= "<div class='pagination__add-question'>+</div>";
-		}
-		return $pagination . '</div></div>';
+		return $pagination . '</div>';
 	}
 
 }

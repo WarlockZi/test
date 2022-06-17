@@ -51,7 +51,7 @@ class QuestionController Extends AppController
 			} elseif (is_int($qId)) {
 				if ($answers) {
 					foreach ($answers as $answer) {
-						$answer['parent_question'] = $qId;
+						$answer['question_id'] = $qId;
 						Answer::updateOrCreate($answer);
 					}
 				}
@@ -107,7 +107,7 @@ class QuestionController Extends AppController
 	{
 		$q_id = $this->ajax['q_id'];
 
-		$answers = Answer::findAllWhere('parent_question', $q_id);
+		$answers = Answer::findAllWhere('question_id', $q_id);
 		foreach ($answers as $answer) {
 			Answer::delete($answer['id']);
 		}
@@ -119,7 +119,7 @@ class QuestionController Extends AppController
 	{
 		$q_id = $this->ajax['q_id'];
 
-		$answers = Answer::findOneWhere('parent_question', $q_id);
+		$answers = Answer::findOneWhere('question_id', $q_id);
 		foreach ($answers as $answer) {
 			Answer::delete($answer['id']);
 		}

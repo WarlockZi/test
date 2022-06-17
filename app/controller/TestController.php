@@ -31,7 +31,6 @@ class TestController extends AppController
 	}
 
 
-
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
@@ -125,27 +124,43 @@ class TestController extends AppController
 		exit(json_encode(['notAdmin' => true]));
 	}
 
-	public function actionDo()
+	function shuffle_assoc($array)
 	{
-		$pagination = '';
-		$testData = '';
-		$page_name = 'Прохождение тестов';
-		$this->set(compact('page_name'));
+		$keys = array_keys($array);
+		shuffle($keys);
+		foreach ($keys as $key) {
+			$new[$key] = $array[$key];
+		}
+		return $new;
+	}
 
-		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
-		if ($testId) {
-			if (!$testData = Test::getTestData($testId, true)) {
-				$error = '<H1>Теста с таким номером нет.</H1>';
-				$this->set(compact('error'));
-			} else {
-				$test = Test::findOneWhere('id', $testId);
-				$this->set(compact('test'));
-				$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
-				unset($testData['correct_answers']);
-				$pagination = Test::pagination($testData, false, $test);
+	private function shuffleAnswers(array &$arr): void
+	{
+		foreach ($arr as $index => &$question) {
+			if (isset($question['Answer'])) {
+				$new = $this->shuffle_assoc($question['Answer']);
+				$question['Answer'] = $new;
 			}
 		}
-		$this->set(compact('testData', 'pagination'));
+	}
+
+	public function actionDo()
+	{
+		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+		$test = Test::findOneWhere('id', $testId) ?? '';
+		if ($test) {
+			$questions
+				= Question::where('parent', '=', $testId)
+				->with('answer')
+				->get();
+			if ($questions->items) {
+				$this->shuffleAnswers($questions->items);
+			}
+			$testData = $questions->items ?? '';
+			$pagination = Test::pagination($testData, false, $test) ?? '';
+			$this->set(compact('testData', 'pagination'));
+		}
+		$this->set(compact('test'));
 	}
 
 	public function actionEdit()
