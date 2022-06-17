@@ -105,7 +105,7 @@ class PostController Extends AppController
 	public function actionUpdateOrCreate()
 	{
 		if ($this->ajax) {
-			$this->model::updateorcreate($this->ajax['model']);
+			$this->model::updateorcreate($this->ajax);
 			$this->exitWithPopup('ok');
 		}
 	}

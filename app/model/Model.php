@@ -139,7 +139,7 @@ abstract class Model
 		return $name . '_id';
 	}
 
-	public function morphTo($table, $type, $id)
+	public function morphTo($table, $type, $id):array
 	{
 		$morphTable = $this->makeMorphTableName($this->model, $table);
 		$field = $this->makeFieldName($this->model);
@@ -171,7 +171,7 @@ abstract class Model
 	}
 
 
-	public static function updateOrCreate($values)
+	public static function updateOrCreate(array $values)
 	{
 		$model = new static();
 		$id = $values['id'] ?? '';
@@ -209,7 +209,7 @@ abstract class Model
 		}
 	}
 
-	public static function findOneModel($id = '')
+	public static function findOneModel($id = ''):array
 	{
 		$model = new static();
 		$sql = "SELECT * FROM {$model->table} WHERE id IN (?)";
@@ -398,33 +398,17 @@ abstract class Model
 		return $this->pdo->execute($sql, $params);
 	}
 
-	public function getAssoc()
+
+	public function idKeys(array $models)
 	{
-		$res = $this->findBySql($this->sql, []);
-		if ($res !== FALSE) {
-			$all = [];
-			foreach ($arr as $key => $v) {
-				$all[$v['id']] = $v;
-			}
-			return $all;
+		$all = [];
+		foreach ($models as $key => $v) {
+			$all[$v['id']] = $v;
 		}
+		return $all;
 	}
 
-	public function hierachy($parent = 'parent')
-	{
-		$tree = [];
-		$data = $this->data;
-		foreach ($data as $id => &$node) {
-			if (array_key_exists($parent, $node) && !$node[$parent]) {
-				$tree[$id] = &$node;
-			} elseif (isset($node[$parent]) && $node[$parent]) {
-				$data[$node[$parent]]['childs'][$id] = &$node;
-			}
-		}
-		return $tree;
-	}
-
-	public function hierachy2(array $models, string $parent = 'parent')
+	public function tree(array $models, string $parent = 'parent')
 	{
 		$tree = [];
 		foreach ($models as $id => &$node) {
@@ -437,30 +421,10 @@ abstract class Model
 		return $tree;
 	}
 
-	public function getAssoc2(array $models)
-	{
-		$all = [];
-		foreach ($models as $key => $v) {
-			$all[$v['id']] = $v;
-		}
-		return $all;
-	}
 
-	public static function tree2(array $data, string $parent = 'parent')
+	public function tree2(string $parent = 'parent')
 	{
-		foreach ($data as $id => &$node) {
-			if (!isset($node[$parent])) {
-				$tree[$id] = &$node;
-			} elseif (isset($node[$parent]) && $node[$parent]) {
-				$data[$node[$parent]]['childs'][$id] = &$node;
-			}
-		}
-		return $tree;
-	}
-
-	public function tree($parent = 'parent')
-	{
-		$data = $this->getAssoc2($this->data);
+		$data = $this->idKeys($this->data);
 		foreach ($data as $id => &$node) {
 			if ((isset($node[$parent]) || $node[$parent] === null) && !$node[$parent]) {
 				$tree[$id] = &$node;
@@ -478,56 +442,5 @@ abstract class Model
 			$_array[] = is_array($val) ? $this->multi_implode($glue, $val) : $val;
 		return implode($glue, $_array);
 	}
-
-//	public function getBreadcrumbs($category, $parents, $type)
-//	{
-//		if ($type == 'category') {
-//// в parents массив из адресной строки - надо получить aliases
-//			foreach ($parents as $key) {
-//				$params = [$key['name']];
-//				$sql = 'SELECT * FROM category WHERE name = ?';
-////если это категория, а ее не нашли вернем 404  ошибку
-//				if ($arrParents[] = $this->findBySql($sql, $params)[0]) {
-//
-//				} else {
-//					http_response_code(404);
-//					include '../public/404.html';
-//					exit();
-//				}
-//			}
-//		}
-//		$breadcrumbs = "<a href = '/'>Главная</a>";
-//		if ($type == 'category') {
-//			foreach ($parents as $parent) {
-//				$breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
-//			}
-//			return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
-//		} else {
-//			$parents = array_reverse($parents);
-//			foreach ($parents as $parent) {
-//				$breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
-//			}
-//			return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
-//		}
-//	}
-
-
-//	public function withWhere($field, $operator, $value)
-//	{
-//		$this->where = " WHERE {$field} {$operator} {$value}" ?? '';
-//		return $this;
-//	}
-
-//	public static function with($child): self
-//	{
-//		if ($child) {
-//			$model = new static();
-//			$model->hasMany[$child] = [];
-//			$model->hasMany[$child]['table'] = $child;
-//			$model->with = "SELECT * FROM {$child} WHERE {$model->model}_id IN ";
-//		}
-//		return $model;
-//	}
-
 
 }

@@ -9,7 +9,7 @@
 		<div class="chip-wrap">
 				<? foreach ($this->tree as $k => $v): ?>
 					<? if (in_array($v['id'], $this->selected)): ?>
-				  <div class="chip" data-id="<?= $v['id']; ?>"><?= $v[$this->optionName] ?>
+				  <div class="chip" data-id="<?= $v['id']; ?>"><?= $v[$this->optionLabel] ?>
 					  <div class="del">Х</div>
 				  </div>
 					<? endif; ?>

@@ -13,8 +13,9 @@ export default function catalogItem() {
     let modelName = item.dataset.model
     if (target.closest('.save')) {
       save(modelName)
-    } else if (target.closest('.del')) {
-      del(item)
+    } else if (target.closest('.del')
+      &&target.closest('.del').dataset.model) {
+      del(item,target.closest('.del').dataset.model)
     } else if ((target.classList.contains('tab'))) {
       handleTab(target, modelName)
     }
@@ -43,10 +44,6 @@ export default function catalogItem() {
     if (checkRequired()) return false
     let model = getModel()
     let res = await post(`/adminsc/${modelName}/updateorcreate`, {...model})
-    // res = JSON.parse(res)
-    // if (res.error) {
-    //   popup.show(res.error)
-    // }
   }
 
   function checkRequired() {

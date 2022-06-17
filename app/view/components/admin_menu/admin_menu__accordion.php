@@ -68,7 +68,7 @@
 					 <? endif; ?>
 
 					 <? if (User::can($this->user, ['test-results_read'])): ?>
-				  <a class="neon" href="/adminsc/testresult/results">Результаты тестов </a>
+				  <a class="neon" href="/adminsc/testresult">Результаты тестов </a>
 					 <? endif; ?>
 
 					 <? if (User::can($this->user, ['role_employee'])): ?>

@@ -4,15 +4,83 @@
 @import "./test-head";
 
 
+@mixin test__button {
+  justify-content: center;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: $color-main;
+  color: #ffffff;
+  border-radius: 4px;
+  display: flex;
+  font-weight: 800;
+  //box-shadow: 5px 4px 6px 1px #6a8784;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+
+  &:hover {
+    transition: box-shadow 100ms;
+    box-shadow: 2px 2px 12px 0px #6a8784;
+  }
+}
+
 .test-do {
   display: flex;
   max-width: 1310px;
-  flex: 1 0 auto;
   width: 100%;
-
+  padding-left: 20px;
+  flex-flow: column;
+  flex: 1 1 auto;
+  min-height: 100%;
+  background-color: #fff;
+  z-index: 1;
+  margin-right: 6vw;
 
   @include _400 {
     flex-wrap: wrap;
+  }
+
+  .content{
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    margin-right: 20px;
+  }
+
+  .test-data {
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px #ccc solid;
+    padding: 15px;
+
+    .question {
+      display: none;
+      flex-direction: column;
+
+      &.show {
+        display: flex;
+      }
+
+      .q {
+        display: flex;
+        flex-wrap: wrap;
+        min-height: 50px;
+        margin-bottom: 0;
+        //width: 100%;
+        @include _h3;
+
+        .q-text {
+          width: 60%;
+          margin-bottom: 10px;
+          flex: 1 0 auto;
+        }
+
+        .num {
+          padding-right: 10px;
+        }
+      }
+    }
   }
 
   .navigation {
@@ -30,6 +98,16 @@
     .test-name {
       @include _h2;
       margin-bottom: 20px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+
+    button {
+      @include test__button;
     }
   }
 
@@ -113,62 +191,7 @@
 }
 
 
-.test-do {
-  padding-left: 20px;
-  flex-flow: column;
-  display: flex;
-  flex: 1 1 auto;
-  min-height: 100%;
-  width: 100%;
-  background-color: #fff;
-  z-index: 1;
-  margin-right: 6vw;
 
-  .content{
-    display: inline-flex;
-  }
-
-
-  .test-data {
-    margin-bottom: 20px;
-    box-sizing: border-box;
-    width: 100%;
-    border: 1px #ccc solid;
-    padding: 15px;
-
-
-    .question {
-      display: none;
-      //width: 100%;
-      flex-direction: column;
-
-      &.show {
-        display: flex;
-      }
-
-      .q {
-        display: flex;
-        flex-wrap: wrap;
-        min-height: 50px;
-        margin-bottom: 0;
-        //width: 100%;
-        @include _h3;
-
-
-        .q-text {
-          width: 60%;
-          margin-bottom: 10px;
-          flex: 1 0 auto;
-        }
-
-        .num {
-          padding-right: 10px;
-        }
-      }
-    }
-
-  }
-}
 
 .a {
   position: relative;
@@ -262,35 +285,8 @@
   background-color: #d8d8d8 !important;
 }
 
-@mixin test__button {
-  justify-content: center;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: $color-main;
-  color: #ffffff;
-  border-radius: 4px;
-  display: flex;
-  font-weight: 800;
-  //box-shadow: 5px 4px 6px 1px #6a8784;
-  cursor: pointer;
-  border: none;
-  text-transform: uppercase;
 
-  &:hover {
-    transition: box-shadow 100ms;
-    box-shadow: 2px 2px 12px 0px #6a8784;
-  }
-}
 
-.test-do__buttons {
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
-
-  button {
-    @include test__button;
-  }
-}
 
 .test-do__finish-btn {
   @include test__button;

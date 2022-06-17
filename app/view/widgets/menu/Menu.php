@@ -7,13 +7,13 @@ use app\model\Model;
 class Menu extends Model
 {
 
+	protected $models = [];
 	protected $tpl;
-	protected $data;
+//	protected $data;
 	protected $tree;
-	protected $menuHTML;
+	protected $html;
 	protected $class = 'menu';
 	protected $cache = 3600;
-	protected $sql = "SELECT * FROM test";
 
 	public function __construct($options = [])
 	{
@@ -34,8 +34,7 @@ class Menu extends Model
 
 	protected function run()
 	{
-		$this->data = $this->getAssoc('test');
-		$this->tree = $this->hierachy();
+		$this->tree = $this->tree($this->models);
 		$this->menuHTML = $this->getMenuHtml($this->tree);
 		$this->output();
 	}

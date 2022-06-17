@@ -1,8 +1,10 @@
 <!--  BUTTONS  -->
-<div class="custom-catalog-item__buttons">
+<div class="item_buttons">
 
 	<? if ($this->delBttn): ?>
-	  <div class="del">
+	  <div class="del"
+	       data-model="<?=$this->modelName;?>"
+	       data-id="<?=$this->item['id'];?>">
 			 <? include TRASH ?>
 	  </div>
 	<? endif; ?>

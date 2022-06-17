@@ -46,23 +46,11 @@ class TestController extends AppController
 
 		$id = $this->route['id'];
 		$test = Test::findOneWhere('id', $id);
-//		$test['children'] = Test::findAllWhere('parent', $id);;
 		$this->set(compact('test'));
 
 		$item = $test;
 		$item = include ROOT . '/app/view/Test/getItem.php';;
 		$this->set(compact('item'));
-
-//    $paths = $this->paths();
-//    $this->set(compact('paths'));
-//
-//    $tree = [0 => 'да', 1 => 'нет'];
-//    $enableSelect = $this->getEnableCustomSelect($tree, $test['enable'])->html;
-//    $this->set(compact('enableSelect'));
-//
-//    $pathsTree = $this->pathsTree(new Test);
-//    $parentSelect = $this->getParentCustomSelect($pathsTree, $test['parent'])->html;
-//    $this->set(compact('parentSelect'));
 	}
 
 
@@ -151,8 +139,6 @@ class TestController extends AppController
 				$this->set(compact('error'));
 			} else {
 				$test = Test::findOneWhere('id', $testId);
-//          $tests = Test::findOneWhereModel('id', $testId);
-//          $qs = $tests->questions();
 				$this->set(compact('test'));
 				$_SESSION['correct_answers'] = $testData['correct_answers'] ?? null;
 				unset($testData['correct_answers']);
@@ -313,11 +299,6 @@ class TestController extends AppController
 		return Test::findAllWhere('isTest', '1');
 	}
 
-	private function pathsTree(Model $model)
-	{
-		$model->data = $this->paths();
-		return $model->tree('parent');
-	}
 
 	public function actionGetCorrectAnswers()
 	{

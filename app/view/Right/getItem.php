@@ -89,20 +89,6 @@ function getConfirm()
 
 function getRights($user)
 {
-//$rights = new CustomMultiSelect([
-//	'selectClassName' => 'custom-select',
-//	'title' => '',
-//	'field' => 'rights',
-//	'tab' => '&nbsp;&nbsp;&nbsp;',
-//	'initialOption' => true,
-//	'initialOptionValue' => '---',
-//	'nameFieldName' => 'name',
-//	'fieldName' => 'name',
-//	'tree' => $rights,
-//	'selected' => $user['rights'],
-//]);
-//$rights = $rights->html;
-
 	$rights = \app\model\Right::findAll();
 	return include ROOT . '/app/view/User/getRightsTab.php';
 }

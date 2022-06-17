@@ -37,8 +37,8 @@ class Accordion
 
 	protected function run()
 	{
-		$models = $this->model->getAssoc2($this->models);
-		$this->tree = $this->model->hierachy2($models, $this->parentFieldName);
+		$models = $this->model->idKeys($this->models);
+		$this->tree = $this->model->tree($models, $this->parentFieldName);
 		$this->html = $this->showCat($this->tree);
 		$this->output();
 	}
