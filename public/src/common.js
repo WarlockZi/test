@@ -18,6 +18,32 @@ function IsJson(str) {
   return true;
 }
 
+
+
+function replaceNbsps(str) {
+  var re = new RegExp('&nbsp;?', "g");
+  return str.replace(re, " ");
+}
+
+function replaceNs(str) {
+  var re = new RegExp('\\n?', "g");
+  return str.replace(re, "");
+}
+
+function replaceTs(str) {
+  var re = new RegExp('\\t?', "g");
+  return str.replace(re, "");
+}
+
+function cachePage(className) {
+  let t = $(className)[0].outerHTML
+  t = replaceNbsps(t)
+  t = replaceNs(t)
+  t = replaceTs(t)
+  return t
+}
+
+
 function dropDown(elementId) {
   var dropdown = document.getElementById(elementId);
   try {
@@ -318,12 +344,12 @@ function addTooltip(args) {
 
 
 export {
+  cachePage,
   dropDown,
   addTooltip,
   popup,
   debounce,
   IsJson,
-
   post, get, uniq,
   validate, $
 }

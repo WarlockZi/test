@@ -1,5 +1,5 @@
 import './open_test.scss'
-import {$, popup, post, debounce, IsJson} from "../common";
+import {$, popup, post, cachePage, IsJson} from "../common";
 
 import '../components/accordion-show';
 
@@ -43,7 +43,7 @@ async function handleClick({target}) {
   async function finish() {
     let questions = await getAnswers(testid)
     let correctAnswers = correctCount(questions)
-    let obj = cachePage(correctAnswers)
+    let obj = objToServ(correctAnswers)
     let res = await post('/adminsc/opentestresult/finish', obj)
     if (IsJson(res)) {
       res = JSON.parse(res)
@@ -54,35 +54,20 @@ async function handleClick({target}) {
       }
     }
   }
-  function replaceNbsps(str) {
-    var re = new RegExp('&nbsp;?', "g");
-    return str.replace(re, " ");
-  }
-  function replaceNs(str) {
-    var re = new RegExp('\\n?', "g");
-    return str.replace(re, "");
-  }
-  function replaceTs(str) {
-    var re = new RegExp('\\t?', "g");
-    return str.replace(re, "");
-  }
-  function cachePage(rightAnswers) {
-    let t = $('.test')[0].outerHTML
 
-    t = replaceNbsps(t)
-    t = replaceNs(t)
-    t = replaceTs(t)
-
-    return {
-      testId: +testid,
-      questionCnt: paginations.length,
-      html: t,
-      // html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
-      testname: $('.test-name')[0].innerText,
-      username: $('.user-menu__fio')[0].innerText,
-      rightAnswers,
-    }
+function objToServ(rightAnswers) {
+  return {
+    testId: +testid,
+    questionCnt: paginations.length,
+    html: cachePage('.test'),
+    testname: $('.test-name')[0].innerText,
+    username: $('.user-menu__fio')[0].innerText,
+    rightAnswers,
+    // html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
   }
+
+}
+
 
   function paginate() {
     if (target === activePagination) return false

@@ -29,14 +29,16 @@ class TestresultController extends AppController
 		$id = $this->route['id'];
 		$res = TestResult::findOneWhere('id', $id);
 		$testHtml= $res['html'] ;
-		$this->set(compact('testHtml'));
+		$this->set(compact('testHtml', 'res'));
 	}
 
-
-	private static function getMailsToSendBothResults()
+	public function actionDelete($post)
 	{
-		return explode(',', $_ENV['TEST_EMAIL_ALL']);
+		if ($id = $this->ajax['id']) {
+			return TestResult::delete($id);
+		}
 	}
+
 
 	private static function getMailsToSendIfRightResults($mailsTo, $errCount)
 	{
@@ -49,31 +51,6 @@ class TestresultController extends AppController
 		return $mailsTo;
 	}
 
-	public function actionDelete($post)
-	{
-		if ($id = $this->ajax['id']) {
-			return TestResult::delete($id);
-		}
-	}
-
-
-	private function sendTestRes($post, $resid)
-	{
-		if ($_ENV['TEST_EMAIL_ALL_SEND']) {
-			exit(json_encode('mail not sent'));
-		}
-		$data['to'] = self::getMailsToSendBothResults();
-
-		$data['to'] = self::getMailsToSendIfRightResults($data['to'], $post['errorCnt']);
-
-		$data['subject'] = self::getSubjectTestResults($post);
-		$data['body'] = self::prepareBodyTestResults($post, $resid - 1);
-		$data['altBody'] = "Ссылка на страницу с результатами: тут";
-
-		$sent = Mail::send_mail($data);
-		$this->exitWithPopup('Результат сохранен');
-	}
-
 	public function actionCachePageSendEmail()
 	{
 		if ($this->ajax) {
@@ -84,9 +61,21 @@ class TestresultController extends AppController
 		}
 	}
 
-	private static function getSubjectTestResults($data)
+	private function sendTestRes($post, $resid)
 	{
-		return "{$data['user']}:{$data['errorCnt']} ош из {$data['questionCnt']}";
+		if ($_ENV['TEST_EMAIL_ALL_SEND']) {
+			exit(json_encode('mail not sent'));
+		}
+		$data['to'] = explode(',', $_ENV['TEST_EMAIL_ALL']);
+
+		$data['to'] = self::getMailsToSendIfRightResults($data['to'], $post['errorCnt']);
+
+		$data['subject'] = "{$post['user']}:{$post['errorCnt']} ош из {$post['questionCnt']}";
+		$data['body'] = self::prepareBodyTestResults($post, $resid - 1);
+		$data['altBody'] = "Ссылка на страницу с результатами: тут";
+
+		$sent = Mail::send_mail($data);
+		$this->exitWithPopup('Результат сохранен');
 	}
 
 	private static function prepareBodyTestResults($data, $id)

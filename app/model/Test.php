@@ -96,10 +96,6 @@ her;
 		return $data ?? [];
 	}
 
-	public static function getCorrectAnswers()
-	{
-		exit(json_encode($_SESSION['correct_answers']));
-	}
 
 	public function getChildren($id)
 	{
@@ -113,7 +109,7 @@ her;
 		$i = 0;
 		foreach ($items as $id => $el) {
 			$i++;
-			$d = "<div data-pagination={$id}>{$i}</div>";
+			$d = "<div data-pagination={$el['id']}>{$i}</div>";
 			$pagination .= $d;
 		}
 

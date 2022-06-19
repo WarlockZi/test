@@ -28,7 +28,7 @@ export let _answer = {
   getModelForServer(el) {
     return {
       answer: '',
-      parent_question: el.q_id,
+      question_id: el.q_id,
       correct_answer: 0,
       pica: ''
     }
@@ -43,7 +43,7 @@ export let _answer = {
       let newEl = _answer.getModelForServer(_answer.el(button))
 
       let res = await post('/answer/create', newEl)
-      res = JSON.parse(res)
+      // res = JSON.parse(res)
 
       return res.id
     }

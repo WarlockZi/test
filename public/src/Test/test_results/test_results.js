@@ -12,7 +12,13 @@ function handleClick({target}) {
     let id = target.closest('.del-btn').dataset.row
     _testResult.delete(id)
   }
-
 }
 
 
+let testResult = $('.testresult')[0]
+if (testResult) {
+  $('.accordion_wrap')[0].remove()
+  $('.page-name')[0].remove()
+  $('.test-name')[0].remove()
+  $('.test-do__finish-btn')[0].remove()
+}

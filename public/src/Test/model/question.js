@@ -139,7 +139,7 @@ export let _question = {
           question: _question.getModelForServer(question),
           answers: _question.getAnswers(question),
         })
-      res = await JSON.parse(res)
+      // res = await JSON.parse(res)
       // popup.show(res.msg)
     },
 
@@ -174,7 +174,7 @@ export let _question = {
         id: +question.id,
         parent: +$('.questions')[0].dataset.testId,
         picq: '',
-        qustion: $(question).find('.question__text').innerText,
+        qustion: $(question).find('.text').innerText,
         sort: +$(question).find('.sort').innerText,
       }
     },
@@ -186,7 +186,7 @@ export let _question = {
           id: +a.dataset['answerId'],
           answer: a.querySelector('.text').innerText,
           correct_answer: +a.querySelector('[type="checkbox"]').checked,
-          parent_question: +question.id,
+          question_id: +question.id,
           pica: '',
         }
       }, question)

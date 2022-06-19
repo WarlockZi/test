@@ -58,14 +58,12 @@ class QuestionController Extends AppController
 				exit(json_encode([
 					'id' => $qId,
 					'msg' => 'Вопросы и ответы сохранены',
-					'paginationButton' => $pagination = "<div data-pagination = $q_id class='nav-active'>{$sort}</div>"
 				]));
 			} elseif ($qId === true) {
 				foreach ($answers as $answer) {
 					Answer::updateOrCreate($answer);
 				}
-				exit(json_encode([
-					'msg' => 'Вопросы и ответы сохранены']));
+				$this->exitWithPopup('Вопросы и ответы сохранены');
 			}
 
 		} catch (Exception $exception) {

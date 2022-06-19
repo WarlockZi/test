@@ -1,15 +1,24 @@
 @import "../../mixin_media";
 
-.testresult{
+.testresult {
   display: flex;
   flex-flow: column;
 
-  .to-list{
-    @include _button();
-    align-self: flex-start;
-    padding: 10px;
-    margin-left: 20px ;
-    margin-bottom: 20px ;
+  .head {
+    display: flex;
+    flex-flow: column;
+    padding: 20px;
+    p{
+      margin: 5px 0;
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+    .to-list {
+      @include _button();
+      align-self: flex-start;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
   }
 }
 
