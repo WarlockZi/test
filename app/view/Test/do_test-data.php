@@ -3,7 +3,7 @@
 	<? foreach ($testData
 
 							as $id_quest => $item): ?>
-	  <div class="question" data-id="<?= $id_quest; ?>">
+	  <div class="question" data-id="<?= $item['id']; ?>">
 
 		  <div class="q">
 			  <div class="num"><?= $id_quest + 1; ?></div>

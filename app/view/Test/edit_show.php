@@ -18,7 +18,7 @@
 					</div>
 				</div>
 
-
+				<p>Лежит в папке</p>
 				<select custom-select data-field="parent">
 					<option value="0" selected>-</option>
 							<? foreach ($paths as $parent): ?>
@@ -29,6 +29,7 @@
 				</select>
 
 
+				<p>Показывать пользователям</p>
 				<select custom-select data-field="enable">
 					<option value="-1" selected>-</option>
 					<option value="1">да</option>

@@ -4,19 +4,17 @@ import {$} from "../../common";
 let pagination = $('.pagination')[0]
 
 if (pagination) {
+  navInit()
   $(pagination).on('click', handleClick)
 }
 
-
 function handleClick({target}) {
-  // debugger
+
   if (!target.dataset.pagination) return;
 
-/// get clicked button Return if clicked is active
   if (target.classList.contains('active')) return
 
   let active_btn = $('.pagination .active')[0]
-//// change active button
   active_btn.classList.remove('active')
   target.classList.add('active')
 
@@ -36,6 +34,6 @@ function navInit() {
   nav_buttons[0].classList.add('active')
 }
 
-export {navInit}
+// export {navInit}
 
 

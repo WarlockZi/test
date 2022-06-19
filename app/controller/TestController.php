@@ -144,7 +144,26 @@ class TestController extends AppController
 		}
 	}
 
-	public function actionDo()
+	private function cacheCorrectAnswers(array $arr): void
+	{
+		foreach ($arr as $q) {
+			if (isset($q['Answer'])) {
+				foreach ($q['Answer'] as $answer) {
+					if ($answer['correct_answer']) {
+						$correctAnswers[] = $answer['id'];
+					}
+				}
+			}
+		}
+		$_SESSION['correct_answers'] = $correctAnswers;
+	}
+
+	public function actionGetCorrectAnswers()
+	{
+		$this->exitJson(($_SESSION['correct_answers']));
+	}
+
+	public function actionDo(): void
 	{
 		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
 		$test = Test::findOneWhere('id', $testId) ?? '';
@@ -155,6 +174,7 @@ class TestController extends AppController
 				->get();
 			if ($questions->items) {
 				$this->shuffleAnswers($questions->items);
+				$this->cacheCorrectAnswers($questions->items);
 			}
 			$testData = $questions->items ?? '';
 			$pagination = Test::pagination($testData, false, $test) ?? '';
@@ -314,10 +334,5 @@ class TestController extends AppController
 		return Test::findAllWhere('isTest', '1');
 	}
 
-
-	public function actionGetCorrectAnswers()
-	{
-		Test::getCorrectAnswers();
-	}
 
 }
