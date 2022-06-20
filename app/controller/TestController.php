@@ -30,7 +30,6 @@ class TestController extends AppController
 		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
 	}
 
-
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
@@ -55,7 +54,6 @@ class TestController extends AppController
 
 	public function actionShow()
 	{
-
 		$this->view = 'edit_show';
 
 		$page_name = 'Создание теста';
@@ -84,35 +82,22 @@ class TestController extends AppController
 	}
 
 
-	public function actionCreate()
-	{
-		if ($this->ajax) {
-
-			if ($id = Test::create($this->ajax)) {
-				$q_id = Question::create();
-				exit(json_encode([
-					'id' => $id,
-				]));
-			}
-		}
-	}
-
 	public function actionUpdateOrCreate()
 	{
 		if ($this->ajax) {
 
 			if ($id = Test::updateOrCreate($this->ajax)) {
 				$q_id = Question::create(['parent' => $id - 1]);
-				exit(json_encode([
-					'id' => $id,
-				]));
+				if (Question::where('parent', '=', $id - 1)) {
+
+					$this->exitJson(['id' => $id]);
+				}
 			}
 		}
 	}
 
 	public function actionDelete()
 	{
-
 		if (User::can($this->user, 'test_delete') || defined('SU')) {
 			if (Test::delete($this->ajax['id'])) {
 				$this->exitWithPopup('ok');
@@ -124,39 +109,6 @@ class TestController extends AppController
 		exit(json_encode(['notAdmin' => true]));
 	}
 
-	function shuffle_assoc($array)
-	{
-		$keys = array_keys($array);
-		shuffle($keys);
-		foreach ($keys as $key) {
-			$new[$key] = $array[$key];
-		}
-		return $new;
-	}
-
-	private function shuffleAnswers(array &$arr): void
-	{
-		foreach ($arr as $index => &$question) {
-			if (isset($question['Answer'])) {
-				$new = $this->shuffle_assoc($question['Answer']);
-				$question['Answer'] = $new;
-			}
-		}
-	}
-
-	private function cacheCorrectAnswers(array $arr): void
-	{
-		foreach ($arr as $q) {
-			if (isset($q['Answer'])) {
-				foreach ($q['Answer'] as $answer) {
-					if ($answer['correct_answer']) {
-						$correctAnswers[] = $answer['id'];
-					}
-				}
-			}
-		}
-		$_SESSION['correct_answers'] = $correctAnswers;
-	}
 
 	public function actionGetCorrectAnswers()
 	{
@@ -165,6 +117,9 @@ class TestController extends AppController
 
 	public function actionDo(): void
 	{
+		$page_name = 'Прохождение тестов';
+		$this->set(compact('page_name'));
+
 		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
 		$test = Test::findOneWhere('id', $testId) ?? '';
 		if ($test) {
@@ -185,7 +140,7 @@ class TestController extends AppController
 
 	public function actionEdit()
 	{
-		$test = '';
+
 		$page_name = 'Редактирование тестов';
 		$this->set(compact('page_name'));
 
@@ -202,6 +157,7 @@ class TestController extends AppController
 				if (!$test['isTest']) {
 					$test['children'] = Test::findAllWhere('parent', $id);;
 				}
+				$this->set(compact('test'));
 			}
 			$tests = $this->tests();
 			$this->set(compact('tests'));
@@ -211,7 +167,6 @@ class TestController extends AppController
 			$this->set(compact('testDataToEdit'));
 
 		}
-		$this->set(compact('test'));
 	}
 
 
@@ -314,6 +269,40 @@ class TestController extends AppController
 		);
 	}
 
+	function shuffle_assoc($array)
+	{
+		$keys = array_keys($array);
+		shuffle($keys);
+		foreach ($keys as $key) {
+			$new[$key] = $array[$key];
+		}
+		return $new;
+	}
+
+	private function shuffleAnswers(array &$arr): void
+	{
+		foreach ($arr as $index => &$question) {
+			if (isset($question['Answer'])) {
+				$new = $this->shuffle_assoc($question['Answer']);
+				$question['Answer'] = $new;
+			}
+		}
+	}
+
+	private function cacheCorrectAnswers(array $arr): void
+	{
+		foreach ($arr as $q) {
+			if (isset($q['Answer'])) {
+				foreach ($q['Answer'] as $answer) {
+					if ($answer['correct_answer']) {
+						$correctAnswers[] = $answer['id'];
+					}
+				}
+			}
+		}
+		$_SESSION['correct_answers'] = $correctAnswers??'';
+	}
+
 	public function actionPaths()
 	{
 		exit(json_encode($this->paths()));
@@ -335,4 +324,16 @@ class TestController extends AppController
 	}
 
 
+//	public function actionCreate()
+//	{
+//		if ($this->ajax) {
+//
+//			if ($id = Test::create($this->ajax)) {
+//				$q_id = Question::create();
+//				exit(json_encode([
+//					'id' => $id,
+//				]));
+//			}
+//		}
+//	}
 }

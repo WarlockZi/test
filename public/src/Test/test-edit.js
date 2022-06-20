@@ -13,7 +13,6 @@ import {$} from '../common'
 import {_question} from "./model/question"
 import sortable from "../components/sortable"
 import WDSSelect from "../components/select/WDSSelect"
-import accordionShow from "../components/accordion-show";
 
 import {_test} from "./model/test";
 import {_answer} from "./model/answer";
@@ -64,10 +63,23 @@ function handleClick({target}) {
   } else if (target.classList.contains('question__create-button')) {
     _question.create()
   } else if (!!target.closest('.delete')) {
-    _answer.del(target)
+    del()
   } else if (target.classList.contains('answer__create-button')) {
     _answer.create(target)
   }
+}
+
+async function del(target,callback='') {
+  let model = target.dataset.model
+  let id = target.dataset.id
+
+  if (confirm('Удалить?')){
+    let res = await post(`/adminsc/${model}/delete`,{id})
+    if (res && callback){
+      callback()
+    }
+  }
+
 }
 
 function handleKeyup({target}) {

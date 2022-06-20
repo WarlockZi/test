@@ -2,8 +2,7 @@
 
 	<? include ROOT . '/app/view/Test/test-head.php'; ?>
 
-	<div class="test-edit__cont">
-
+	<div class="content">
 		 <? include ROOT . '/app/view/components/test/test_do_accordion.php'; ?>
 
 		 <? if ($test): ?>

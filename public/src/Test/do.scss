@@ -42,7 +42,7 @@
 
   .content{
     display: flex;
-    flex-flow: column;
+    //flex-flow: column;
     width: 100%;
     margin-right: 20px;
   }
@@ -86,6 +86,7 @@
   .navigation {
     display: flex;
     margin-bottom: 20px;
+    flex-flow: column;
 
     .info {
       margin: 0 20px;

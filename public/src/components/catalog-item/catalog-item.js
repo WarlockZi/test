@@ -1,5 +1,5 @@
 import './catalog-item.scss';
-import {$, post, popup} from '../../common';
+import {$, post,trimStr} from '../../common';
 
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
@@ -14,8 +14,8 @@ export default function catalogItem() {
     if (target.closest('.save')) {
       save(modelName)
     } else if (target.closest('.del')
-      &&target.closest('.del').dataset.model) {
-      del(item,target.closest('.del').dataset.model)
+      && target.closest('.del').dataset.model) {
+      del(item, target.closest('.del').dataset.model)
     } else if ((target.classList.contains('tab'))) {
       handleTab(target, modelName)
     }
@@ -34,9 +34,8 @@ export default function catalogItem() {
   async function del(item, modelName) {
     let id = item.dataset.id
     let res = await post(`/adminsc/${modelName}/delete`, {id})
-    res = JSON.parse(res)
-    if (res.msg === 'ok') {
-      window.location.href = `/adminsc/${modelName}`
+    if (res) {
+      window.location.href = `/adminsc/${modelName}/edit`
     }
   }
 
@@ -66,6 +65,11 @@ export default function catalogItem() {
   function getModel() {
     let fields = $('[data-field]');
     let obj = {};
+
+    function r(str) {
+      return str.replace(/^ +| +$|( ) +/g, "$1")
+    }
+
     // debugger;
     [].map.call(fields, (field) => {
       if (field.hasAttribute('multi-select')) {
@@ -85,7 +89,7 @@ export default function catalogItem() {
       } else if (field.type === 'date') {
         obj[field.dataset.field] = field.value
       } else {
-        obj[field.dataset.field] = field.innerText
+        obj[field.dataset.field] = r(trimStr(field.innerText))
       }
     }, obj)
     let isTest = $('[data-isTest]')[0]

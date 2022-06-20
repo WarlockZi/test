@@ -17,18 +17,21 @@
 			 </div>
 			 <? endif; ?>
 
-			 <? foreach ($item["Answer"] as $index => $answer): ?>
-			 <div class="a" data-id=<?= $answer['id']; ?>>
-				 <input type="checkbox" id="answer-<?= $answer['id'] ?>">
-				 <label for="answer-<?= $answer['id'] ?>"><?= $answer['answer'] ?></label>
+			 <? if (isset($item["Answer"])) : ?>
+				 <? foreach ($item["Answer"] as $index => $answer): ?>
+				 <div class="a" data-id=<?= $answer['id']; ?>>
+					 <input type="checkbox" id="answer-<?= $answer['id'] ?>">
+					 <label for="answer-<?= $answer['id'] ?>"><?= $answer['answer'] ?></label>
 
-						<? if ($answer['pica']): ?>
-					<div class="apic">
-						<img src="<?= '/pic/' . $answer['pica'] ?>" alt="">
-					</div>
-						<? endif; ?>
-			 </div>
-			 <? endforeach; ?>
+							 <? if ($answer['pica']): ?>
+						<div class="apic">
+							<img src="<?= '/pic/' . $answer['pica'] ?>" alt="">
+						</div>
+							 <? endif; ?>
+				 </div>
+				 <? endforeach; ?>
+			 <? endif; ?>
+
 	  </div>
 	<? endforeach; ?>
 

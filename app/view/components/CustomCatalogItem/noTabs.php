@@ -1,8 +1,8 @@
 <div class="item_header">
 
-	<? if ($this->pageTitle): ?>
-	  <div class="page-title"><?= $this->pageTitle ?></div>
-	<? endif; ?>
+
+	  <div class="page-title"><?= $this->pageTitle??''; ?></div>
+
 
 </div>
 <div class="item_content">

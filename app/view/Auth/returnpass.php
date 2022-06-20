@@ -4,8 +4,8 @@
   <? unset($_SESSION['msg']) ?>
 
 	<form class="auth" data-auth="returnpass">
-		<div class='message'></div>
 		<div class="title">Введите свой email</div>
+		<div class='message'></div>
 		<input data-field="email"
 					 type="email" name="email"
 					 placeholder="E-mail"

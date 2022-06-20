@@ -36,13 +36,15 @@ function replaceTs(str) {
 }
 
 function cachePage(className) {
-  let t = $(className)[0].outerHTML
-  t = replaceNbsps(t)
-  t = replaceNs(t)
-  t = replaceTs(t)
-  return t
+  let html = $(className)[0].outerHTML
+  return trimStr(html)
 }
-
+function trimStr(str) {
+  str = replaceNbsps(str)
+  str = replaceNs(str)
+  str = replaceTs(str)
+  return str
+}
 
 function dropDown(elementId) {
   var dropdown = document.getElementById(elementId);
@@ -189,9 +191,9 @@ async function post(url, data = {}) {
           }
         } else if (res.success) {
           if (msg) {
-            msg.innerHTML = res.msg
-            $(msg).addClass('error')
-            $(msg).removeClass('success')
+            msg.innerHTML = res.success
+            $(msg).addClass('success')
+            $(msg).removeClass('error')
           }
         } else if (res.error) {
           if (msg) {
@@ -345,6 +347,7 @@ function addTooltip(args) {
 
 export {
   cachePage,
+  trimStr,
   dropDown,
   addTooltip,
   popup,

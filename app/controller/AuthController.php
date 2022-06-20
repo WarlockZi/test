@@ -55,58 +55,6 @@ class AuthController extends AppController
 		}
 	}
 
-	private function prepareBodyRegister($href, $hash)
-	{
-		ob_start();
-		require ROOT . '/app/view/Auth/email.php';
-		return ob_get_clean();
-	}
-
-	public function actionSuccess()
-	{
-		$this->auth();
-	}
-
-	public function actionCabinet()
-	{
-		$this->auth();
-	}
-
-	public function actionLogout()
-	{
-		if (isset($_COOKIE[session_name()])) {  // session_name() - получаем название текущей сессии
-			setcookie(session_name(), '', time() - 86400, '/');
-		}
-		unset($_SESSION);
-		header("Location: /");
-		exit();
-	}
-
-	public function actionConfirm()
-	{
-		$hash = $_GET['hash'];
-		if (!$hash) header('Location:/');
-		$user = User::findOneWhere('hash', $hash);
-		if ($user) {
-			$user['confirm'] = "1";
-			$user['post_id'] = NULL;
-			$this->setAuth($user);
-			if (User::update($user)) {
-				header('Location:/auth/success');
-				$this->exitWithPopup('"Вы успешно подтвердили свой E-mail."');
-			}
-		}
-		header('Location:/auth/login');
-		exit();
-	}
-
-	public function actionNoconfirm()
-	{
-
-		$errorss = 4;
-
-	}
-
 	public function actionProfile()
 	{
 		$this->autorize();
@@ -131,44 +79,19 @@ class AuthController extends AppController
 		}
 	}
 
-	public
-	function actionChangePassword()
+	public function actionChangePassword()
 	{
 		$this->autorize();
 		if ($data = $this->ajax) {
 			$old_password = $this->preparePassword($data['old_password']);
 
 			if ($user = User::findOneWhere('password', $old_password)) {
-				$user['password'] = $this->preparePassword($data['new_password']);
-				User::update($user);
-				exit('ok');
+				$newPassword = $this->preparePassword($data['new_password']);
+				$res = User::update(['id'=>$user['id'],'password'=>$newPassword]);
+				if (res) $this->exitWithMsg('ok');
 			}
-			exit('fail');
+			$this->exitWithMsg('fail');
 		}
-	}
-
-	private
-	function randomPassword()
-	{
-		$arr = [
-			'1234567890',
-			'abcdefghijklmnopqrstuvwxyz',
-			'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-		];
-
-		$pass = array(); //remember to declare $pass as an array
-
-		$arrLength = count($arr) - 1;
-		$y = 0;
-		for ($i = 0; $i < 8; $i++) {
-			if ($y > $arrLength) $y = 0;
-			$arrChosen = $arr[$y];
-			$arrChosernLen = strlen($arrChosen) - 1;
-			$n = rand(0, $arrChosernLen);
-			$pass[] = $arrChosen[$n];
-			$y++;
-		}
-		return implode($pass); //turn the array into a string
 	}
 
 	public function actionReturnpass()
@@ -181,23 +104,21 @@ class AuthController extends AppController
 			if ($user) {
 				$this->setAuth($user);
 				$password = $this->randomPassword();
-				$user['password'] = $this->preparePassword($password);
-				User::update($user);
+				$newPassword = $this->preparePassword($password);
+				User::update(['id'=>$user['id'],'password'=>$newPassword]);
 
 				$data['to'] = [$data['email']];
 				$data['subject'] = 'Новый пароль';
 				$data['body'] = "Ваш новый пароль: " . $password;
 
 				Mail::send_mail($data);
-				$this->exitWithPopup('Новый пароль проверьте на почте');
+				$this->exitWithSuccess('Новый пароль проверьте на почте');
 			} else {
-				$this->exitWithPopup("Пользователя с таким e-mail нет");
+				$this->exitWithError("Пользователя с таким e-mail нет");
 			}
 		}
 		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
-
 	}
-
 
 	public function actionLogin()
 	{
@@ -225,5 +146,79 @@ class AuthController extends AppController
 		}
 	}
 
+	public function actionLogout()
+	{
+		if (isset($_COOKIE[session_name()])) {  // session_name() - получаем название текущей сессии
+			setcookie(session_name(), '', time() - 86400, '/');
+		}
+		unset($_SESSION);
+		header("Location: /");
+		exit();
+	}
+
+	private function randomPassword()
+	{
+		$arr = [
+			'1234567890',
+			'abcdefghijklmnopqrstuvwxyz',
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+		];
+
+		$pass = array(); //remember to declare $pass as an array
+
+		$arrLength = count($arr) - 1;
+		$y = 0;
+		for ($i = 0; $i < 8; $i++) {
+			if ($y > $arrLength) $y = 0;
+			$arrChosen = $arr[$y];
+			$arrChosernLen = strlen($arrChosen) - 1;
+			$n = rand(0, $arrChosernLen);
+			$pass[] = $arrChosen[$n];
+			$y++;
+		}
+		return implode($pass); //turn the array into a string
+	}
+
+
+	public function actionConfirm()
+	{
+		$hash = $_GET['hash'];
+		if (!$hash) header('Location:/');
+		$user = User::findOneWhere('hash', $hash);
+		if ($user) {
+			$user['confirm'] = "1";
+			$user['post_id'] = NULL;
+			$this->setAuth($user);
+			if (User::update($user)) {
+				header('Location:/auth/success');
+				$this->exitWithPopup('"Вы успешно подтвердили свой E-mail."');
+			}
+		}
+		header('Location:/auth/login');
+		exit();
+	}
+
+	public function actionNoconfirm()
+	{
+		$errorss = 4;
+	}
+
+
+	private function prepareBodyRegister($href, $hash)
+	{
+		ob_start();
+		require ROOT . '/app/view/Auth/email.php';
+		return ob_get_clean();
+	}
+
+	public function actionSuccess()
+	{
+		$this->auth();
+	}
+
+	public function actionCabinet()
+	{
+		$this->auth();
+	}
 
 }
