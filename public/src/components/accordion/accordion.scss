@@ -16,6 +16,7 @@ $font-size-item: .5rem;
     display: flex;
     flex-flow: column;
     background: darken($color-level-0, 5%);
+    width: 170px;
 
     a {
       padding: $item-padding-M $item-padding-M+14 $item-padding-M 29px;
@@ -234,6 +235,7 @@ $font-size-item: .5rem;
   flex: 0 1 238px;
   margin-right: 30px;
   font-size: .75rem;
+  width: 170px;
 
   @include _1000 {
     max-width: 0;

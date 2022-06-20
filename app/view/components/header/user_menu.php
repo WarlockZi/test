@@ -21,12 +21,13 @@
 				? $this->getImg('/pic/ava_female.jpg')
 				: $this->getImg('/pic/ava_male.png'); ?>
         " alt="">
-		<div class="user-menu__credit-wrap">
-			<div class="user-menu__fio"><?= "{$this->user['surName']} {$this->user['name']}"; ?></div>
-			<div class="user-menu__email"><?= $this->user['email']; ?></div>
+
+		<div class="credits">
+			<div class="fio"><?= "{$this->user['surName']} {$this->user['name']}"; ?></div>
+			<div class="email"><?= $this->user['email']; ?></div>
 		</div>
-		<!--        <hr>-->
-		<div class="user-menu__menu">
+
+		<div class="menu">
 			<a href="/auth/profile">Изменить свой профиль</a>
 				<? if (array_intersect(['role_employee'], $this->user['rights']) || defined('SU')): ?>
 			  <a class="list__item" href="/adminsc">Admin</a>

@@ -6,7 +6,7 @@ export const _test = {
   viewModel: () => {
     return {
       id: +window.location.href.split('/').pop(),
-      test_name: $('#test_name').text(),
+      name: $('#test_name').text(),
       enable: $('#enable')[0],
       parent: $('select').selectedIndexValue(),
     }
@@ -47,7 +47,7 @@ export const _test = {
     // res = await JSON.parse(res)
     debugger
     if (res) {
-      window.location.href = `/adminsc/test/edit/${res.id}`
+      window.location.href = `/adminsc/test/edit/${res.arr.id}`
     }
   },
 
@@ -57,7 +57,7 @@ export const _test = {
     id = id ? id : 0
     let model = {
       id,
-      test_name: $('#name.field')[0].value,
+      name: $('#name.field')[0].value,
       isTest: +$('[isTest]')[0].getAttribute('isTest'),
     }
     // debugger

@@ -1,13 +1,19 @@
 import './open_test.scss'
-import {$, popup, post, cachePage, IsJson} from "../common";
+import {$, post, cachePage, IsJson} from "../common";
 
 import '../components/accordion-show';
 
 let openTest = $('.opentest_wrap')[0]
 if (openTest) {
+  showFirstQuest()
   $(openTest).on('click', handleClick)
 
   $(openTest).on('keyup', handleKeyup)
+}
+
+
+function showFirstQuest() {
+  let q = $('.question')[0].classList.add('show')
 }
 
 function handleKeyup({target}) {

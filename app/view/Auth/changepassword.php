@@ -1,10 +1,10 @@
-<section>
+<main>
 
     <?=$_SESSION['msg']??'';?>
     <?unset($_SESSION['msg'])?>
 	
-    <form class="form-container return_pass">
-		<div class = "form-title">Сменить пароль</div>
+    <form class="auth return_pass">
+		<div class = "title">Сменить пароль</div>
 	    <div class='message'></div>
 
 	    <div class="pass">
@@ -23,4 +23,4 @@
 
 		<input type="button" class = "form__button form-input submit changepassword" value="Отправить" />
 	</form>	
-</section>
+</main>

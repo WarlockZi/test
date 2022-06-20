@@ -1,10 +1,9 @@
-<div class="content">
+<div class="test">
 
 	<div class="navigation">
-		<div class='pagination__wrap'>
+
 			<div class='test-name' data-test-id=<?= $test['id']; ?>><?= $test['name']; ?></div>
 				<?= $pagination; ?>
-		</div>
 	</div>
 
 

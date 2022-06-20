@@ -1,6 +1,6 @@
 <? use app\view\widgets\Accordion\Accordion;
 
-$models = \app\model\Test::findAllWhere('enable', '1');
+$models = \app\model\Test::findAll();
 
 $menu = new Accordion([
 	'model' => new \app\model\Test,

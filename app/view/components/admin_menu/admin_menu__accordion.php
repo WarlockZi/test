@@ -118,7 +118,8 @@
 			</div>
 			<ul class="level-1">
 					 <? if (User::can($this->user, 'role_employee')): // admin ?>
-				  <a class="neon" href="/auth/returnpass">Сменить пароль</a>
+				  <a class="neon" href="/auth/returnpass">Забыл пароль</a>
+				  <a class="neon" href="/auth/changepassword">Сменить пароль</a>
 				  <a class="neon" href="/auth/profile">Изменить свой профиль</a>
 
 					 <? endif; ?>
