@@ -229,7 +229,8 @@ function getTabs($item)
 			'field' => 'rights'
 		];
 	}
-	return ['title' => 'Права'];
+	return ['title' => 'Права',
+	  'html'=>'Нужны права администратора'];
 }
 
 function employeeOptions($item, $self)
