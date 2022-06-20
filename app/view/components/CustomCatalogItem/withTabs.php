@@ -20,21 +20,19 @@
 		 <? endforeach; ?>
 	</section>
 
-
 	<? $n = 2; ?>
 	<? foreach ($this->tabs as $k => $tab): ?>
 	  <section
-			  tab
-			  data-field="<?= $tab['field']; ?>"
+			 <?= isset($tab['field']) ? "data-field={$tab['field']}": ''; ?>
 			  data-type="inputs"
 			  data-id=<?= $n ?>>
-			 <?= $tab['html']; ?>
+			 <?= $tab['html'] ?? ''; ?>
+
 	  </section>
 		<? $n++; ?>
 	<? endforeach; ?>
 
-	<!--	<div class="buttons_wrap">-->
 	<? include ROOT . '/app/view/components/CustomCatalogItem/buttons.php' ?>
-	<!--	</div>-->
+
 
 </div>
