@@ -20,10 +20,11 @@ function finishBtnInit() {
 }
 
 function handleClick({target}) {
-  let currQuest = $('.question.show')[0]
-  let id = +currQuest.dataset.id
-  let navs = $('[data-pagination]')
-  let navIndex = navs.findIndex(el=>el.classList.contains('active'))
+  if (target.classList.contains('accordion-open')) return
+  let currQuest = $('.question.show')[0]??''
+  let id = +currQuest?.dataset.id??''
+  let navs = $('[data-pagination]')??''
+  let navIndex = navs.findIndex(el=>el.classList.contains('active'))??''
 
   if (target.type === "checkbox") {
     let a = target.labels[0]

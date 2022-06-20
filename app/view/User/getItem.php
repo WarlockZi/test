@@ -221,21 +221,27 @@ function getEmployeeHtml($item, $self)
 	return $t->html;
 }
 
+function getTabs($item)
+{
+	if (in_array('role_admin',$item['rights'])) {
+		return ['title' => 'Права',
+			'html' => getRights($item),
+			'field' => 'rights'
+		];
+	}
+	return ['title' => 'Права'];
+}
 
 function employeeOptions($item, $self)
 {
+
 	$options = [
 		'item' => $item,
 		'modelName' => $self->modelName,
 		'tableClassName' => $self->tableName,
 		'pageTitle' => 'Редактировать пользователя: ' . $item['surName'],
 
-		'tabs' => [
-			['title' => 'Права',
-				'html' => getRights($item),
-				'field' => 'rights'
-			]
-		],
+		'tabs' => [getTabs($item)],
 
 		'fields' => [
 			'id' => [
