@@ -147,25 +147,29 @@ class TestController extends AppController
 		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
 		if ($id) {
 			$test = Test::findOneWhere('id', $id);
+
 			if ($test) {
-				$questions = Question::findAllWhere('parent', $id);
-				if (!$questions) {
-					$id = Question::create(['parent' => $id]);
-					$question = Question::findOneWhere('id', $id - 1);
-					$this->set(compact('question'));
-				}
-				if (!$test['isTest']) {
+				if ($test['isTest']) {
+					$questions
+						= Question::where('parent', '=', $id)
+						->with('answer')
+						->get();
+					if (!$questions) {
+						$id = Question::create(['parent' => $id]);
+						$question = Question::findOneWhere('id', $id - 1);
+						$this->set(compact('question'));
+
+						$tests = Test::findAllWhere('isTest', '1');
+						$this->set(compact('tests'));
+					}
+				} else {
 					$test['children'] = Test::findAllWhere('parent', $id);;
 				}
+
 				$this->set(compact('test'));
+				$questions = $questions->items ?? '';
+				$this->set(compact('questions'));
 			}
-			$tests = $this->tests();
-			$this->set(compact('tests'));
-
-			$testDataToEdit = Test::getTestData($id) ?? '';
-			unset ($testDataToEdit['correct_answers']);
-			$this->set(compact('testDataToEdit'));
-
 		}
 	}
 
@@ -300,7 +304,7 @@ class TestController extends AppController
 				}
 			}
 		}
-		$_SESSION['correct_answers'] = $correctAnswers??'';
+		$_SESSION['correct_answers'] = $correctAnswers ?? '';
 	}
 
 	public function actionPaths()
@@ -315,13 +319,10 @@ class TestController extends AppController
 
 	public function actionTests()
 	{
-		exit(json_encode($this->tests()));
+		$this->exitJson(Test::findAllWhere('isTest', '1'));
 	}
 
-	private function tests()
-	{
-		return Test::findAllWhere('isTest', '1');
-	}
+
 
 
 //	public function actionCreate()

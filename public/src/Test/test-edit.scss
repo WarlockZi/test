@@ -66,6 +66,14 @@
   z-index: 1;
   margin-right: 6vw;
 
+  .list{
+    display: flex;
+    flex-flow: column;
+    .path-child__row{
+      display: flex;
+    }
+  }
+
   .test-edit__title {
     display: flex;
     flex-flow: column;

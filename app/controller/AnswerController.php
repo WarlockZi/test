@@ -16,16 +16,19 @@ class AnswerController Extends AppController
 
 	public function actionCreate()
 	{
-		$id = Answer::create($this->ajax)-1;
-		exit(json_encode(['id'=>$id, 'msg'=>'ok']));
+		$id = Answer::create($this->ajax) - 1;
+		exit(json_encode(['id' => $id, 'msg' => 'ok']));
 	}
 
 	public function actionDelete()
 	{
-		if (Answer::delete($this->ajax['a_id'])) {
-			exit(json_encode(['msg' => 'ok']));
+		if ($this->ajax['id']) {
+			if (Answer::delete($this->ajax['id'])) {
+				$this->exitWithPopup('Ответ удален');
+			}
+		}else{
+			$this->exitWithMsg('No id');
 		}
-
 	}
 
 	public function actionShow()
