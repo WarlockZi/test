@@ -8,7 +8,7 @@ import './test-update'
 
 import '../Admin/admin'
 
-import {$} from '../common'
+import {$, post} from '../common'
 
 import {_question} from "./model/question"
 import sortable from "../components/sortable"
@@ -22,6 +22,7 @@ export default function testEdit() {
   let testEdit = $('.test-edit-wrapper')[0]
 
   if (testEdit) {
+
 
     sortable('.test-edit-wrapper.questions')
 
@@ -58,25 +59,23 @@ function handleClick({target}) {
     _question.save(target)
   } else if (!!target.closest('.question__show-answers')) {
     _question.showAnswers(target)
-  } else if (!!target.closest('.question__delete')) {
-    _question.delete(target)
   } else if (target.classList.contains('question__create-button')) {
     _question.create()
   } else if (!!target.closest('.delete')) {
-    del()
+    del(target)
   } else if (target.classList.contains('answer__create-button')) {
     _answer.create(target)
   }
 }
 
-async function del(target,callback='') {
+async function del(target) {
   let model = target.dataset.model
-  let id = target.dataset.id
+  let id = +target.dataset.id
 
-  if (confirm('Удалить?')){
-    let res = await post(`/adminsc/${model}/delete`,{id})
-    if (res && callback){
-      callback()
+  if (confirm('Удалить?')) {
+    let res = await post(`/adminsc/${model}/delete`, {id})
+    if (res) {
+      target.remove()
     }
   }
 
@@ -89,5 +88,30 @@ function handleKeyup({target}) {
 }
 
 
+async function create(e) {
+  let q_id = await createOnServer(e)
+  if (q_id) {
+    createOnView(q_id)
+  }
+}
+
+async function createOnServer() {
+  let question = _question.serverModel()
+  let res = await post('/question/updateOrCreate', {question: question.question, answers: {}})
+  res = await JSON.parse(res)
+
+  return res.id
+}
+
+async function createOnView(q_id) {
+  let clone = _question.cloneEmptyModel()
+
+  let model = _question.viewModel(clone)
+  model.sort.innerText = _question.lastSort()
+  model.text.innerText = ''
+  model.el.id = q_id
+
+  model.addButton.before(clone)
+}
 
 

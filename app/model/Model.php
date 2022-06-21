@@ -9,7 +9,6 @@ use Engine\DI\DI;
 abstract class Model
 {
 	protected $pdo;
-//	protected $sql;
 	public $table;
 	public $model;
 
@@ -293,7 +292,8 @@ abstract class Model
 
 	public final function get()
 	{
-		if (property_exists($this, 'hasMany')) {
+		if (property_exists($this, 'hasMany')
+			&&($this->hasMany)) {
 			$this->getWith();
 			return $this;
 		}

@@ -59,7 +59,7 @@ class Cache
 		return $dir;
 	}
 
-	public static function set($key, $data, $seconds = 3600)
+	public static function set(string $key, $data, int $seconds = 3600)
 	{
 		$content['data'] = $data;
 		$content['end_time'] = time() + $seconds;

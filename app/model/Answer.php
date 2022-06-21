@@ -18,11 +18,13 @@ class Answer extends Model
 		'pica'=>''
 	];
 
-
+	public function empty()
+	{
+		return $this->fillable;
+	}
 	public static function delete($id)
 	{
 		return parent::delete($id);
-
 	}
 	public static function create($value=[],$register=false)
 	{

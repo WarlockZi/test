@@ -100,35 +100,6 @@ export let _question = {
     return last + 1
   },
 
-  create:
-    async (e) => {
-      let q_id = await _question.createOnServer(e)
-      if (q_id) {
-        _question.createOnView(q_id)
-      }
-    },
-
-  createOnServer:
-    async () => {
-      let question = _question.serverModel()
-      let res = await post('/question/updateOrCreate', {question: question.question, answers: {}})
-      res = await JSON.parse(res)
-
-      return res.id
-    },
-
-  createOnView:
-    (q_id) => {
-      let clone = _question.cloneEmptyModel()
-
-      let model = _question.viewModel(clone)
-      model.sort.innerText = _question.lastSort()
-      model.text.innerText = ''
-      model.el.id = q_id
-
-      model.addButton.before(clone)
-    },
-
 
   save:
     async (target) => {
@@ -141,20 +112,6 @@ export let _question = {
         })
       // res = await JSON.parse(res)
       // popup.show(res.msg)
-    },
-
-  delete:
-    async (target) => {
-      if (confirm("Удалить вопрос со всеми его ответами?")) {
-        let viewModel = _question.viewModel(target.closest('.question-edit'))
-        let id = viewModel.id
-
-        let deleted = await _question.deleteFromServer(id)
-        if (deleted) {
-          _question.deleteFromView(viewModel)
-          // popup.show(deleted.msg)
-        }
-      }
     },
 
   deleteFromView:

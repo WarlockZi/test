@@ -17,7 +17,10 @@ class Question extends Model
 		'picq'=>'',
 		'sort'=>'100'
 	];
-
+	public function empty()
+	{
+		return $this->fillable;
+	}
 	public static function sort($q_ids){
 		$model = new static();
 		foreach ( $q_ids as $sort =>$id) {
