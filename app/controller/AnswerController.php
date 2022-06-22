@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\core\App;
 use app\model\Answer;
 
 class AnswerController Extends AppController
@@ -14,10 +13,20 @@ class AnswerController Extends AppController
 		$this->autorize();
 	}
 
-	public function actionCreate()
+//	public function actionCreate()
+//	{
+//		$id = Answer::create($this->ajax) - 1;
+//		exit(json_encode(['id' => $id, 'msg' => 'ok']));
+//	}
+
+	public function actionUpdateOrCreate()
 	{
-		$id = Answer::create($this->ajax) - 1;
-		exit(json_encode(['id' => $id, 'msg' => 'ok']));
+		$id = Answer::updateOrCreate($this->ajax) - 1;
+		if ($id) {
+			$this->exitJson(['popup'=>'ok','id'=>$id]);
+		}else{
+			$this->exitWithError('Ответ не записан');
+		}
 	}
 
 	public function actionDelete()
@@ -26,7 +35,7 @@ class AnswerController Extends AppController
 			if (Answer::delete($this->ajax['id'])) {
 				$this->exitWithPopup('Ответ удален');
 			}
-		}else{
+		} else {
 			$this->exitWithMsg('No id');
 		}
 	}

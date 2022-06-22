@@ -140,7 +140,6 @@ class TestController extends AppController
 
 	public function actionEdit()
 	{
-
 		$page_name = 'Редактирование тестов';
 		$this->set(compact('page_name'));
 
@@ -153,6 +152,7 @@ class TestController extends AppController
 					$questions
 						= Question::where('parent', '=', $id)
 						->with('answer')
+						->orderBy('sort')
 						->get();
 					if (!$questions) {
 						$id = Question::create(['parent' => $id]);
