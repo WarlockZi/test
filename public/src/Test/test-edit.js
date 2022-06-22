@@ -8,37 +8,29 @@ import './test-update'
 
 import '../Admin/admin'
 
-import {$, post} from '../common'
+import {$, debounce, popup, post, trimStr} from '../common'
 
 import {_question} from "./model/question"
-import sortable from "../components/sortable"
-import WDSSelect from "../components/select/WDSSelect"
-
 import {_test} from "./model/test";
 import {_answer} from "./model/answer";
 
+import sortable from "../components/sortable"
+import WDSSelect from "../components/select/WDSSelect"
+
+
 export default function testEdit() {
 
-  let testEdit = $('.test-edit-wrapper')[0]
-
+  let testEdit = $('.questions')[0]
   if (testEdit) {
 
+    sortable('.test-edit-wrapper .questions',
+      '.questions>.question-edit',
+      'question')
+    // customSelect()
 
-    sortable('.test-edit-wrapper.questions')
-
-    customSelect()
-
-    $(testEdit).on('change', handleKeyup)
+    $(testEdit).on('keyup', handleKeyup)
     $(testEdit).on('click', handleClick)
-
   }
-}
-
-function customSelect() {
-  let customSelects = $('[custom-select]');
-  [].forEach.call(customSelects, function (select) {
-    new WDSSelect(select)
-  });
 }
 
 function handleClick({target}) {
@@ -60,58 +52,46 @@ function handleClick({target}) {
   } else if (!!target.closest('.question__show-answers')) {
     _question.showAnswers(target)
   } else if (target.classList.contains('question__create-button')) {
-    _question.create()
+    _question.questionCreate(target)
+  } else if (!!target.closest('.question__delete')) {
+    _question.del(target)
   } else if (!!target.closest('.delete')) {
-    del(target)
+    _answer.del(target)
   } else if (target.classList.contains('answer__create-button')) {
-    _answer.create(target)
+    _answer.answerCreate(target)
   }
 }
 
-async function del(target) {
-  let model = target.dataset.model
-  let id = +target.dataset.id
+async function handleKeyup({target}) {
 
-  if (confirm('Удалить?')) {
-    let res = await post(`/adminsc/${model}/delete`, {id})
-    if (res) {
-      target.remove()
+  if (target.classList.contains('text')) {
+    let answer = target.closest('.answer')
+    if (answer) {
+      let debounced = debounce(_answer.saveAnswer)
+      debounced(answer)
+    } else {
+      let debounced = debounce(_question.saveQuestion)
+      let id = target.closest('.question-edit').id
+      let question = target.innerText
+      // let res = await post('/adminsc/openquestion/updateOrCreate',
+      //   {id, question})
+      debounced(target)
+
     }
   }
 
-}
-
-function handleKeyup({target}) {
   if (!!target.closest('.question-edit__parent-select')) {
     _question.changeParent(target)
   }
 }
 
 
-async function create(e) {
-  let q_id = await createOnServer(e)
-  if (q_id) {
-    createOnView(q_id)
-  }
-}
+// function customSelect() {
+//   let customSelects = $('[custom-select]');
+//   [].forEach.call(customSelects, function (select) {
+//     new WDSSelect(select)
+//   });
+// }
 
-async function createOnServer() {
-  let question = _question.serverModel()
-  let res = await post('/question/updateOrCreate', {question: question.question, answers: {}})
-  res = await JSON.parse(res)
-
-  return res.id
-}
-
-async function createOnView(q_id) {
-  let clone = _question.cloneEmptyModel()
-
-  let model = _question.viewModel(clone)
-  model.sort.innerText = _question.lastSort()
-  model.text.innerText = ''
-  model.el.id = q_id
-
-  model.addButton.before(clone)
-}
 
 

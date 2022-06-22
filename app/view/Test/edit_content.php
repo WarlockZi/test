@@ -20,7 +20,7 @@
 			  <div class="answer__create">
 						 <? $a = new \app\model\Answer(); ?>
 						 <? $a = $a->empty(); ?>
-						 <? $a['id'] = -1; ?>
+						 <? $a['id'] = 0; ?>
 						 <? include ROOT . '/app/view/Test/edit_BlockAnswer.php' ?>
 			  </div>
 
