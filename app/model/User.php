@@ -38,6 +38,7 @@ class User extends Model
 
 	public static function can(array $user, $rights = [])
 	{
+	  echo 'super'.defined('SU');
 		if (is_string($rights) && $rights) {
 			$rights = compact('rights');
 		}
