@@ -1,4 +1,4 @@
-import {$, popup, post, trimStr} from '../../common'
+import {$, post, trimStr, popup} from '../../common'
 
 class answer {
   constructor() {
@@ -7,7 +7,7 @@ class answer {
   async saveAnswer(target) {
     let q_id = target.closest('.question-edit').dataset.id
     let el = target.closest('.answer')
-    let answer = this.getAnswerModel(el,q_id)
+    let answer = this.getAnswerModel(el, q_id)
     let res = await post('/adminsc/answer/updateOrCreate', answer)
   }
 
@@ -32,11 +32,14 @@ class answer {
     let res = await post(`/adminsc/answer/updateOrCreate`, answerModel)
     if (res) {
       if (res.arr.popup) popup.show(res.arr.popup)
-      let sort = question.querySelectorAll('.answer').length + 1
-      clone.querySelector('.sort').innerText = sort
-      clone.querySelector('.delete').dataset.id =
-        clone.dataset.id = res.arr.id
-      target.before(clone)
+      if (res.arr.id ) {
+        let sort = question.querySelectorAll('.answer').length + 1
+        clone.querySelector('.sort').innerText = sort
+        clone.querySelector('.delete').dataset.id =
+          clone.dataset.id = res.arr.id
+        target.before(clone)
+      }
+
     }
   }
 

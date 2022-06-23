@@ -5,9 +5,6 @@ import "../../components/popup.scss";
 let _cache = {
     clearCache: async function () {
         let res = await post('/adminsc/clearCache', {})
-        if (res==='Успешно') {
-            popup.show(res)
-        }
     }
 }
 

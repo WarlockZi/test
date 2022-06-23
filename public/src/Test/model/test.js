@@ -25,7 +25,6 @@ export const _test = {
     test_path.isTest = 0
     let url = `/test/create`
     let res = await post(url, test_path)
-    res = await JSON.parse(res)
     if (res) {
       window.location.href = `/adminsc/test/edit/${res.id - 1}`
     }
@@ -44,7 +43,6 @@ export const _test = {
     test.isTest = 1
     let url = `/test/updateOrCreate`
     let res = await post(url, test)
-    // res = await JSON.parse(res)
     debugger
     if (res) {
       window.location.href = `/adminsc/test/edit/${res.arr.id}`
@@ -72,7 +70,6 @@ export const _test = {
     let model = _test.serverModel()
     let url = `/adminsc/test/update/${model.id}`
     let res = await post(url, model)
-    res = await JSON.parse(res)
     if (res) {
       window.location.href = `/adminsc/test/edit/${model.id}`
     }
@@ -87,7 +84,6 @@ export const _test = {
 
     let id = _test.id()
     let res = await post('/adminsc/test/delete', {id})
-    res = await JSON.parse(res)
     if (res.notAdmin) {
       popup.show('Видимость теста скрыта. Чтобы удалить полностью - обратитесь к ГД')
       setTimeout(() => {

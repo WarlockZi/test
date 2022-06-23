@@ -17,9 +17,7 @@ export default function user() {
       let data = getModel(wrapper)
 
       let res = await post('/adminsc/user/update', data)
-      if (res === 'ok') {
-        popup.show('Сохранено')
-      }
+
     } else if (target.classList.contains('right')) {
       let rights = $('input.right:checked')
       let str = '';

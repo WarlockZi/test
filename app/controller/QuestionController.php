@@ -25,7 +25,7 @@ class QuestionController Extends AppController
 				if ($qId === false) {
 					$this->exitWithPopup('Ощибка');
 				} elseif (is_int($qId)) {
-					$this->exitWithPopup('Вопрос сохранен');
+					$this->exitJson(['id'=>$qId]);
 				} elseif ($qId === true) {
 					$this->exitWithPopup('Вопрос сохранен');
 				}

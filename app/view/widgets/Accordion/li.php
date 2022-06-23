@@ -8,7 +8,7 @@
 	</div>
 
 <? else: ?>
-
+;
 	<a href='<?= $this->link; ?><?= $item['id']; ?>'>
 		<span class="img"></span>
 		 <?= $item['name']; ?>

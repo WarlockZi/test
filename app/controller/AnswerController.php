@@ -17,8 +17,10 @@ class AnswerController Extends AppController
 	{
 		if ($this->ajax){
 			$id = Answer::updateOrCreate($this->ajax);
-			if ($id) {
-				$this->exitJson(['popup'=>'Сохранен','id'=>$id]);
+			if (is_numeric($id)) {
+        $this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
+      }elseif(is_bool($id)){
+			  $this->exitWithPopup('Сохранено');
 			}else{
 				$this->exitWithError('Ответ не сохранен');
 			}

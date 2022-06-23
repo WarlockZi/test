@@ -12,7 +12,7 @@
 			  <div class="question__create">
 						 <? $question = new \app\model\Question(); ?>
 						 <? $question = $question->empty(); ?>
-						 <? $question['id'] = -1; ?>
+						 <? $question['id'] = 0; ?>
 						 <? include ROOT . '/app/view/Test/edit_BlockQuestion.php' ?>
 						 <? $i = 1; ?>
 			  </div>

@@ -79,7 +79,7 @@
 				  <a class="neon" href="/adminsc/opentest/edit">Редактировать открытые тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($this->user, ['test-results_read'])): ?>
+					 <? if (User::can($this->user, ['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/opentestresult">Результаты открытых тестов </a>
 					 <? endif; ?>
 
