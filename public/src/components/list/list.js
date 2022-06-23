@@ -1,9 +1,7 @@
 import './list.scss';
-import {$, post, popup} from '../../common';
+import {$, post, debounce} from '../../common';
 
 export default function list() {
-  // debugger;
-
   const tables = $('.custom-list__wrapper')
   if (tables) {
     [].forEach.call(tables, function (table) {
@@ -19,17 +17,7 @@ export default function list() {
       $(table).on('click', handleClick.bind(this));
       $(table).on('keyup', handleKeyUp.bind(this));
 
-      /// DEBOUNCE
-      const debounce = (fn, time = 700) => {
-        let timeout;
-        return function () {
-          const functionCall = () => fn.apply(this, arguments);
-          clearTimeout(timeout);
-          timeout = setTimeout(functionCall, time);
-        }
-      }
       let debouncedInput = debounce(handleInput)
-
 
       function handleKeyUp({target}) {
 
@@ -77,14 +65,11 @@ export default function list() {
 
       // DELETE
       async function modelDel(el) {
-        // debugger
-        if (!confirm('Удалить пользователя?')) return
+        if (!confirm('Удалить?')) return
         let id = el.dataset['id']
         let res = await post(`/adminsc/${modelName}/delete`, {id})
-        res = JSON.parse(res)
-        if (res.msg === 'ok') {
+        if (res) {
           delView(id)
-          popup.show(`id : ${id} удалено`)
         }
       }
 
@@ -99,10 +84,9 @@ export default function list() {
       // CREATE
       async function modelCreate(modelName, e) {
         let res = await post(`/adminsc/${modelName}/create`, {})
-        res = JSON.parse(res)
-        if (res.id) {
-          window.location.href = `/adminsc/${modelName}/show`
-          // newRow(res.id - 1)
+        if (res.arr.id) {
+          newRow(res.arr.id)
+          // window.location.href = `/adminsc/${modelName}/show`
         }
       }
 
@@ -232,7 +216,6 @@ export default function list() {
       async function save(model) {
         let url = `/adminsc/${model.modelName}/update`
         let res = await post(url, model.model)
-        res = JSON.parse(res)
         if (res.msg === 'ok') {
           popup.show('Сохранено!')
         }
