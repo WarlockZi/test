@@ -13,19 +13,15 @@ class AnswerController Extends AppController
 		$this->autorize();
 	}
 
-//	public function actionCreate()
-//	{
-//		$id = Answer::create($this->ajax) - 1;
-//		exit(json_encode(['id' => $id, 'msg' => 'ok']));
-//	}
-
 	public function actionUpdateOrCreate()
 	{
-		$id = Answer::updateOrCreate($this->ajax) - 1;
-		if ($id) {
-			$this->exitJson(['popup'=>'ok','id'=>$id]);
-		}else{
-			$this->exitWithError('Ответ не записан');
+		if ($this->ajax){
+			$id = Answer::updateOrCreate($this->ajax);
+			if ($id) {
+				$this->exitJson(['popup'=>'Сохранен','id'=>$id]);
+			}else{
+				$this->exitWithError('Ответ не сохранен');
+			}
 		}
 	}
 

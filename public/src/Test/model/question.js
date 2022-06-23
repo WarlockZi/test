@@ -1,8 +1,9 @@
-import {$, popup, post, addTooltip} from "../../common"
+import {$, popup, post, trimStr} from "../../common"
 import {_answer} from "./answer";
 
 class question {
-  constructor() {
+
+  constructor(el) {
     this.sort = document.querySelectorAll('.questions>.question-edit').length + 1 ?? 0
   }
 
@@ -22,15 +23,12 @@ class question {
 
   getQuestionModel(el) {
     return {
-      question: {
-        id: el.dataset.id,
-        qustion: el.querySelector('text'),
-        parent: +window.location.href.split('/').pop(),
-        sort: this.sort,
-      }
+      id: el.id,
+      qustion: trimStr(el.querySelector('.text').innerText),
+      parent: +window.location.href.split('/').pop(),
+      sort: el.querySelector('.sort').innerText,
     }
   }
-
 
   async changeParent(target) {
     debugger
@@ -43,10 +41,10 @@ class question {
     question.remove()
   }
 
-  cloneEmptyModel() {
-    let question = $('.questions .question__create .question-edit')[0]
-    if (question) return question.cloneNode(true)
-  }
+  // cloneEmptyModel() {
+  //   let question = $('.questions .question__create .question-edit')[0]
+  //   if (question) return question.cloneNode(true)
+  // }
 
   showAnswers(target) {
     let row = target.closest('.question-edit')
@@ -74,27 +72,23 @@ class question {
   }
 
   async saveQuestion(target) {
-    let question = target.closest('.question-edit')
-    let res = await post(
-      '/adminsc/question/UpdateOrCreate',
-      {
-        question: this.getModelForServer(question),
-        answers: this.getAnswers(question),
-      })
+    let el = target.closest('.question-edit')
+    let question = _question.getQuestionModel(el)
+    let res = await post('/adminsc/question/UpdateOrCreate', question)
   }
 
-  getAnswers(question) {
-    let answerBlocks = question.querySelectorAll('.answer')
-    return [...answerBlocks].map((a) => {
-      return {
-        id: +a.dataset['answerId'],
-        answer: a.querySelector('.text').innerText,
-        correct_answer: +a.querySelector('[type="checkbox"]').checked,
-        question_id: +question.id,
-        pica: '',
-      }
-    }, question)
-  }
+  // getAnswers(question) {
+  //   let answers = question.querySelectorAll('.answer')
+  //   return [...answers].map((a) => {
+  //     return {
+  //       id: +a.dataset['answerId'],
+  //       answer: a.querySelector('.text').innerText,
+  //       correct_answer: +a.querySelector('[type="checkbox"]').checked,
+  //       question_id: +question.id,
+  //       pica: '',
+  //     }
+  //   }, question)
+  // }
 }
 
-export let _question = new question()
+export let _question = new question

@@ -88,7 +88,7 @@ $('.test-do__finish-btn').on('click', async function (e) {
   let errorCnt = colorView(corrAnswers)
 
   let data = objToServer(errorCnt)
-  let res = await post('/adminsc/testresult/cachePageSendEmail', {...data})
+  let res = await post('/adminsc/testresult/create', {...data})
   if (res === 'ok') {
     $("#btnn")[0].href = location.href
     $("#btnn")[0].text = "ПРОЙТИ ТЕСТ ЗАНОВО"
@@ -103,7 +103,7 @@ function objToServer(errorCnt) {
     html: cachePage('.test-do'),
     testid: $('[data-test-id]')[0].dataset.testId,
     testname: $('.test-name')[0].innerText,
-    user: $('.user-menu__fio')[0].innerText,
+    user: $('.user-menu .fio')[0].innerText,
   }
 }
 

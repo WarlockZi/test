@@ -35,7 +35,11 @@ class TestresultController extends AppController
 	public function actionDelete($post)
 	{
 		if ($id = $this->ajax['id']) {
-			return TestResult::delete($id);
+			if (TestResult::delete($id)){
+				$this->exitWithPopup('Удалено');
+			}else{
+				$this->exitWithPopup('Ошибка');
+			}
 		}
 	}
 
@@ -51,12 +55,14 @@ class TestresultController extends AppController
 		return $mailsTo;
 	}
 
-	public function actionCachePageSendEmail()
+	public function actionCreate()
 	{
 		if ($this->ajax) {
 			if ($resid = TestResult::create($this->ajax)) {
-				if (!$resid) exit('Результат в базу не сохранен');
 				$this->sendTestRes($this->ajax, $resid-1);
+				$this->exitWithPopup('Результат сохранен');
+			}else{
+				$this->exitWithPopup('Результат в базу не сохранен');
 			}
 		}
 	}

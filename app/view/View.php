@@ -40,7 +40,7 @@ class View
 		$content = ob_get_clean();
 		ob_start();
 
-		if ($this->layout !== FALSE) {
+		if ($this->layout !== false) {
 			$file_layout = ROOT . "/app/view/layouts/{$this->layout}.php";
 			if (is_file($file_layout)) {
 				require $file_layout;
@@ -122,11 +122,6 @@ class View
 		$time = ($cache) ? '' : "?" . time();
 		self::$jsCss['css'][] = "<link href='{$host}{$file}{$time}' rel='stylesheet' type='text/css'>";
 	}
-
-//	public static function getSearch()
-//	{
-//		return include(ROOT . '/app/view/components/header/logo_squared.php');
-//	}
 
 	public function getImg($path)
 	{

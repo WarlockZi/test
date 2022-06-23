@@ -5,9 +5,6 @@ export const _testResult = {
 
   delServer: async (id) => {
     let res = await post('/adminsc/testresult/delete', {id})
-    if (res) {
-      popup.show('Удалено')
-    }
   },
 
   delDom: (id) => {
