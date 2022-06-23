@@ -23,6 +23,19 @@ class RightController Extends AppController
 		View::setCss('admin.css');
 		View::setJs('admin.js');
 	}
+  public function actionUpdateOrCreate()
+  {
+    if ($this->ajax) {
+      if ($id = Right::updateOrCreate($this->ajax)) {
+        if (is_bool($id)) {
+          $this->exitWithPopup('Сохранено');
+        }else{
+          $this->exitJson(['id'=>$id,'msg'=>'Создан']);
+        }
+      }
+    }
+  }
+
 
 	public function actionList()
 	{
@@ -89,17 +102,12 @@ class RightController Extends AppController
 	public function actionCreate()
 	{
 		if ($this->ajax) {
-			if ($id = $this->model::create($this->ajax)) {
+			if ($id = $this->model::create($this->ajax)-1) {
 				$this->exitJson(['id'=>$id]);
 			}
 		}
 	}
 
-	public function actionUpdateOrCreate()
-	{
-		if ($this->ajax) {
-		}
-	}
 
 
 	public function actionDelete()
@@ -114,29 +122,7 @@ class RightController Extends AppController
 	}
 
 
-  public function actionEdit()
-  {
-//    $this->view = 'adminEdit';
 
-    if (User::can($this->user, ['role_employee'])) {
-      if (isset($this->route['id'])) {
-        $user = User::findOneWhere('id', $this->route['id']);
-        $this->set(compact('user'));
-      }
-      $rights = Right::findAll();
-      $this->set(compact('rights'));
-
-      $item = $user;
-      $item = include ROOT . '/app/view/User/getItem.php';
-      $this->set(compact('item'));
-
-    }
-    if ($user = $this->ajax) {
-      $user['id'] = $_SESSION['id'];
-      User::update($user);
-      exit('ok');
-    }
-  }
 	public function actionUpdate()
 	{
 		if ($this->ajax) {

@@ -214,20 +214,16 @@ export default function list() {
       }
 
       async function save(model) {
-        let url = `/adminsc/${model.modelName}/update`
+        let url = `/adminsc/${model.modelName}/updateOrCreate`
         let res = await post(url, model.model)
-        if (res.msg === 'ok') {
-          popup.show('Сохранено!')
-        }
       }
 
-      function makeServerModel(el, modelName) {
-        let field = el.dataset['field']
+      function makeServerModel(target, modelName) {
+        let field = target.dataset['field']
         return {
           model: {
-            token: $(),
-            id: el.dataset.id,
-            [field]: el.innerText
+            id: target.dataset.id,
+            [field]: target.innerText
           },
           modelName
         }
