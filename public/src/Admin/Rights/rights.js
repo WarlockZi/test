@@ -60,10 +60,6 @@ export default function rights() {
 
     async function delServer(model) {
       let res = await post('/right/delete', {id: model.toServ.id})
-      res = await JSON.parse(res)
-      if (res.msg === 'ok') {
-        popup.show('Удалено')
-      }
     }
 
     function delDom(model) {
@@ -87,9 +83,6 @@ export default function rights() {
 
     async function update(toServ) {
       let res = await post('/right/update', toServ)
-      if (await JSON.parse(res).updated) {
-        popup.show('Обновлено')
-      }
     }
 
     function clearModel(model){
@@ -119,9 +112,8 @@ export default function rights() {
 
     async function create(model) {
       let res = await post('/right/create', model.toServ)
-      res = await JSON.parse(res)
 
-      if (res.id) {
+      if (res.arr.id) {
 
         assignNewValuesOnClone(model, res.id-1)
         createOnDom(model)

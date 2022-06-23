@@ -9,7 +9,7 @@ $('.changepassword').on('click', async function (e) {
   let msg = $('.message')[0]
 
   let res = await post('/auth/changepassword', data)
-  if (res === 'ok') {
+  if (res) {
     msg.innerText = 'Пароль сменен'
     $(msg).addClass('success')
     $(msg).removeClass('error')

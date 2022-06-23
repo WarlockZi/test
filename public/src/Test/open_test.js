@@ -51,28 +51,25 @@ async function handleClick({target}) {
     let correctAnswers = correctCount(questions)
     let obj = objToServ(correctAnswers)
     let res = await post('/adminsc/opentestresult/finish', obj)
-    if (IsJson(res)) {
-      res = JSON.parse(res)
-      if (res.msg === 'ok') {
-        // popup.show(res.msg)
-        let canv = document.createElement("canvas")
-        canv.id = 'c'
-      }
+    if (res.msg === 'ok') {
+      let canv = document.createElement("canvas")
+      canv.id = 'c'
+
     }
   }
 
-function objToServ(rightAnswers) {
-  return {
-    testId: +testid,
-    questionCnt: paginations.length,
-    html: cachePage('.test'),
-    testname: $('.test-name')[0].innerText,
-    username: $('.user-menu__fio')[0].innerText,
-    rightAnswers,
-    // html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
-  }
+  function objToServ(rightAnswers) {
+    return {
+      testId: +testid,
+      questionCnt: paginations.length,
+      html: cachePage('.test'),
+      testname: $('.test-name')[0].innerText,
+      username: $('.user-menu__fio')[0].innerText,
+      rightAnswers,
+      // html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
+    }
 
-}
+  }
 
 
   function paginate() {
@@ -132,9 +129,7 @@ function hiliter(word, element, addEventLis) {
 }
 
 async function getAnswers(id) {
-  let res = await post('/adminsc/opentestresult/getanswers', {id})
-  res = JSON.parse(res)
-  return res
+  return await post('/adminsc/opentestresult/getanswers', {id})
 }
 
 function toggleNav(aimPagination, activePagination) {

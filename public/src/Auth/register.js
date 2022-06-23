@@ -42,7 +42,6 @@ async function parseRegisterResponse() {
   }
 
   let res = await post('/auth/register', data)
-  res = JSON.parse(res)
 
   if (res.msg === 'confirmed') {
     msg.classList.remove('error')

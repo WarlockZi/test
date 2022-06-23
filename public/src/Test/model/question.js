@@ -13,7 +13,6 @@ class question {
     let questionModel = this.getQuestionModel(clone)
     let res = await post(`/adminsc/question/updateOrCreate`, questionModel)
     if (res) {
-      if (res.arr.popup) popup.show(res.arr.popup)
       clone.querySelector('.sort').innerText = this.sort
       clone.querySelector('.question__delete').dataset.id =
         clone.dataset.id = res.arr.id

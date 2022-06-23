@@ -2,13 +2,10 @@ import './test-edit.scss'
 import '../components/footer/footer.scss'
 
 import './test-edit-menu.scss'
-import '../components/popup.scss'
 
 import './test-update'
 
-import '../Admin/admin'
-
-import {$, debounce, popup, post, trimStr} from '../common'
+import {$, debounce} from '../common'
 
 import {_question} from "./model/question"
 import {_test} from "./model/test";
@@ -20,7 +17,7 @@ import WDSSelect from "../components/select/WDSSelect"
 
 export default function testEdit() {
 
-  let testEdit = $('.questions')[0]
+  let testEdit = $('.test-edit-wrapper')[0]
   if (testEdit) {
 
     sortable('.test-edit-wrapper .questions',
