@@ -223,7 +223,7 @@ function getEmployeeHtml($item, $self)
 
 function getTabs($item)
 {
-	if (in_array('role_admin',$item['rights'])) {
+	if (User::can($item, ['role_employee','role_admin'])) {
 		return ['title' => 'Права',
 			'html' => getRights($item),
 			'field' => 'rights'
