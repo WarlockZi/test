@@ -1,4 +1,4 @@
-import {post} from '../../common'
+import {post} from '../../../common'
 
 //   show first card
     let showedCard = document.querySelector('.test-data .question:first-child ').getAttribute('data-id');
