@@ -90,9 +90,7 @@ class RightController Extends AppController
 	{
 		if ($this->ajax) {
 			if ($id = $this->model::create($this->ajax)) {
-				exit(json_encode([
-					'id' => $id,
-				]));
+				$this->exitJson(['id'=>$id]);
 			}
 		}
 	}
