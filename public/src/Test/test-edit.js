@@ -28,7 +28,8 @@ export default function testEdit() {
       'question')
     // customSelect()
 
-    $(testEdit).on('keyup', handleKeyup)
+    $(testEdit).on('keyup', debouncedHandleKeyup)
+    $(testEdit).on('change', handleChange)
     $(testEdit).on('click', handleClick)
   }
 }
@@ -47,8 +48,6 @@ function handleClick({target}) {
     _test.path_create()
   } else if (target.classList.contains('test__create')) {
     _test.create()
-  } else if (!!target.closest('.question__save')) {
-    _question.save(target)
   } else if (!!target.closest('.question__show-answers')) {
     _question.showAnswers(target)
   } else if (target.classList.contains('question__create-button')) {
@@ -59,39 +58,30 @@ function handleClick({target}) {
     _answer.del(target)
   } else if (target.classList.contains('answer__create-button')) {
     _answer.answerCreate(target)
+  } else if (target.classList.contains('correct')) {
+    _answer.saveAnswer(target)
   }
 }
 
-async function handleKeyup({target}) {
+let debouncedHandleKeyup = debounce(handleKeyup)
 
+async function handleKeyup({target}) {
   if (target.classList.contains('text')) {
     let answer = target.closest('.answer')
     if (answer) {
-      let debounced = debounce(_answer.saveAnswer)
-      debounced(answer)
+      _answer.saveAnswer(target)
     } else {
-      let debounced = debounce(_question.saveQuestion)
-      let id = target.closest('.question-edit').id
-      let question = target.innerText
-      // let res = await post('/adminsc/openquestion/updateOrCreate',
-      //   {id, question})
-      debounced(target)
-
+      _question.saveQuestion(target)
     }
   }
+}
 
+async function handleChange({target}) {
   if (!!target.closest('.question-edit__parent-select')) {
     _question.changeParent(target)
   }
 }
 
-
-// function customSelect() {
-//   let customSelects = $('[custom-select]');
-//   [].forEach.call(customSelects, function (select) {
-//     new WDSSelect(select)
-//   });
-// }
 
 
 

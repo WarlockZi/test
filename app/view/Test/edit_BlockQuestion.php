@@ -4,10 +4,10 @@
 
 		<div class="sort"><?= $question['sort'] ?? '' ?></div>
 
-		<div class="question__save"
-		     data-tooltip="Сохранить этот вопрос ответами">
-				<? include ICONS . '/save.svg' ?>
-		</div>
+<!--		<div class="question__save"-->
+<!--		     data-tooltip="Сохранить этот вопрос ответами">-->
+<!--				--><?// include ICONS . '/save.svg' ?>
+<!--		</div>-->
 
 		<div class="question-edit__parent-select" data-tooltip="Переместить этот вопрос с ответами в другой тест">
 				<?= \app\view\Test\TestView::isTestSelector($test['id']); ?>

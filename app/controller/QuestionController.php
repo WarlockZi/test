@@ -20,21 +20,14 @@ class QuestionController Extends AppController
 	{
 		if ($this->ajax) {
 			try {
-				$answers = $this->ajax['answers'] ?? '';
-				$question = $this->ajax['question'] ?? '';
+				$question = $this->ajax;
 				$qId = Question::updateOrCreate($question);
 				if ($qId === false) {
 					$this->exitWithPopup('Ощибка');
 				} elseif (is_int($qId)) {
-					$this->exitJson(['id' => $qId, 'msg' => 'Вопросы и ответы сохранены']);
+					$this->exitWithPopup('Вопрос сохранен');
 				} elseif ($qId === true) {
-					if ($answers) {
-
-						foreach ($answers as $answer) {
-							Answer::updateOrCreate($answer);
-						}
-					}
-					$this->exitJson(['id' => $qId, 'msg' => 'Вопросы и ответы сохранены']);
+					$this->exitWithPopup('Вопрос сохранен');
 				}
 
 			} catch (Exception $exception) {
