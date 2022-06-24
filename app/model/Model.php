@@ -354,22 +354,6 @@ abstract class Model
 				}
 			}
 		}
-
-
-//		foreach ($this->hasMany as $child => $items) {
-//			$pluck = $this->pluck ?? '*';
-//			$where = $this->where ?? '';
-//			$orderBy = $this->orderBy ?? '';
-//			$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
-//			$this->fields = $this->pdo->query($sql, []);
-//			$ids = [];
-//			foreach ($this->fields as $k => $v) {
-//				array_push($ids, $v['id']);
-//			}
-//			$ids = '(' . implode(',', $ids) . ')';
-//			$with = $this->with . $ids ?? '*';
-//			$this->hasMany[$child]['items'] = $this->pdo->query($with, []);
-//		}
 	}
 
 
@@ -425,19 +409,6 @@ abstract class Model
 	}
 
 
-	public function tree2(string $parent = 'parent')
-	{
-		$data = $this->idKeys($this->data);
-		foreach ($data as $id => &$node) {
-			if ((isset($node[$parent]) || $node[$parent] === null) && !$node[$parent]) {
-				$tree[$id] = &$node;
-			} elseif (isset($node[$parent]) && $node[$parent]) {
-				$data[$node[$parent]]['childs'][$id] = &$node;
-			}
-		}
-		return $tree;
-	}
-
 	function multi_implode($glue, $array)
 	{
 		$_array = array();
@@ -445,5 +416,18 @@ abstract class Model
 			$_array[] = is_array($val) ? $this->multi_implode($glue, $val) : $val;
 		return implode($glue, $_array);
 	}
+
+//	public function tree2(string $parent = 'parent')
+//	{
+//		$data = $this->idKeys($this->data);
+//		foreach ($data as $id => &$node) {
+//			if ((isset($node[$parent]) || $node[$parent] === null) && !$node[$parent]) {
+//				$tree[$id] = &$node;
+//			} elseif (isset($node[$parent]) && $node[$parent]) {
+//				$data[$node[$parent]]['childs'][$id] = &$node;
+//			}
+//		}
+//		return $tree;
+//	}
 
 }

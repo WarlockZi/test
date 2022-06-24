@@ -15,13 +15,7 @@ class MainController extends AppController
 		parent::__construct($route);
 
 		$this->auth();
-
-//		$sale = Cache::get('sale');
-//		if (!$sale) {
 			$sale = Product::getSale();
-//			Cache::set('sale', $sale, 30);
-//		}
-
 		$this->set(compact('sale'));
 		View::setCss('main.css');
 		View::setJs('main.js');
@@ -35,6 +29,10 @@ class MainController extends AppController
 
 	public function actionPoliticaconf()
 	{
+	}
+	public function actionRequisites()
+	{
+//		$this->view = '';
 	}
 
 	public function actionDiscount()
