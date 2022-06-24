@@ -12,8 +12,9 @@
 		<? $contenteditable = (isset($data['contenteditable']) && $data['contenteditable']) ? 'contenteditable' : ''; ?>
 		<? $required = (isset($data['required']) && $data['required']) ? 'required' : ''; ?>
 	  <div class="row">
-		  <div class="field"><?=
-		    $data['name'] ?></div>
+		  <div class="field">
+<!--		    --><?//=$data['name'] ?>
+		    <?=$fieldName;?></div>
 		  :
 			 <? include ROOT . '/app/view/components/CustomCatalogItem/value.php' ?>
 	  </div>
