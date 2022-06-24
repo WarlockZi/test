@@ -47,6 +47,9 @@
     vertical-align: middle;
     margin: 0 6px;
     width: 44px;
+    @include _600{
+      width: 30px;
+    }
   }
 
   .credits{
@@ -55,6 +58,9 @@
     flex: 0 0 200px;
     .fio{
       font-size: 1rem;
+      @include _600{
+        font-size: .8rem;
+      }
     }
     .email{
       font-size: .7rem;

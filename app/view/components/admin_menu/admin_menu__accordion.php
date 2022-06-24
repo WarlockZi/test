@@ -63,11 +63,11 @@
 				  <a class="neon" href="/adminsc/test/do">Проходить тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($this->user, ['test-edit_read'])): ?>
+					 <? if (User::can($this->user, ['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/test/edit">Редактировать тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($this->user, ['test-results_read'])): ?>
+					 <? if (User::can($this->user, ['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/testresult">Результаты тестов </a>
 					 <? endif; ?>
 
@@ -75,7 +75,7 @@
 				  <a class="neon" href="/adminsc/opentest/do">Проходить открытые тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($this->user, ['opentest-edit_read'])): ?>
+					 <? if (User::can($this->user, ['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/opentest/edit">Редактировать открытые тесты</a>
 					 <? endif; ?>
 

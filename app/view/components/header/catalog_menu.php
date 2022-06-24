@@ -29,16 +29,6 @@
 					]
 				]
 			],
-			3 => [
-				'name' => "Маски",
-				'childs' => [
-					0 => [
-						'alias' => 'Трехслойные',
-						'name' => 'Трехслойные'
-					]
-				]
-			],
-
 
 		] ?>
 
@@ -84,18 +74,18 @@
 			</div>
 
 			<div class="mobile-menu">
-				<div class="mobile-menu__wrap">
-					<a class="mobile-menu__item" href="/about/contacts">Контакты</a>
-					<a href="/main/about" class="mobile-menu__item">О компании</a>
+				<div class="wrap">
+					<a href="/about/contacts">Контакты</a>
+					<a href="/about/requisites">Реквизиты</a>
+					<a href="/main/about">О компании</a>
 
 					<hr>
-					<a class="mobile-menu__item">Акции</a>
+					<a href="">Акции</a>
 
 					<hr>
-					<a class="mobile-menu__item">Перчатки</a>
-					<a class="mobile-menu__item">Бахилы</a>
-					<a class="mobile-menu__item">Шприцы</a>
-					<a class="mobile-menu__item">Маски</a>
+					<a href="">Перчатки</a>
+					<a href="">Бахилы</a>
+					<a href="">Шприцы</a>
 
 				</div>
 			</div>

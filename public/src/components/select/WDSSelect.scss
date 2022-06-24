@@ -35,7 +35,7 @@
   background-color: white;
   //min-width: 20px;
   border: 1px solid transparent;
-  padding: 5px;
+  //padding: 5px;
   min-width: 100%;
   max-width: 200px;
 
@@ -73,6 +73,8 @@
     user-select: none;
     font-size: $font-size;
     padding: 6px;
+    width: 100%;
+
 
     .arrow {
       content: '';

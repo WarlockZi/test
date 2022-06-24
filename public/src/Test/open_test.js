@@ -40,21 +40,24 @@ async function handleClick({target}) {
     nextQuest()
   } else if (target.dataset.pagination) {
     paginate()
-  } else if (target.classList.contains('led')) {
-    blink(target)
+  // } else if (target.classList.contains('led')) {
+  //   blink(target)
   } else if (target.id === 'finish') {
-    finish()
+    finish(target)
   }
 
-  async function finish() {
+  async function finish(target) {
+    if (target.innerText === "ПРОЙТИ ТЕСТ ЗАНОВО") {
+      location.reload();
+      return;
+    }
     let questions = await getAnswers(testid)
-    let correctAnswers = correctCount(questions)
+    let correctAnswers = correctCount(questions.arr)
     let obj = objToServ(correctAnswers)
     let res = await post('/adminsc/opentestresult/finish', obj)
-    if (res.msg === 'ok') {
-      let canv = document.createElement("canvas")
-      canv.id = 'c'
-
+    if (res) {
+      target.innerText = "ПРОЙТИ ТЕСТ ЗАНОВО"
+      target.classList.add('inactive')
     }
   }
 
@@ -64,7 +67,7 @@ async function handleClick({target}) {
       questionCnt: paginations.length,
       html: cachePage('.test'),
       testname: $('.test-name')[0].innerText,
-      username: $('.user-menu__fio')[0].innerText,
+      username: $('.user-menu .fio')[0].innerText,
       rightAnswers,
       // html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
     }
@@ -96,8 +99,8 @@ async function handleClick({target}) {
 
 
 function correctCount(questions) {
-  let correct = 0
-  questions.forEach((q) => {
+  let correct = 0;
+  [].forEach.call(questions,(q) => {
     let q_id = q.id
     let q_el = $(`.question[data-id='${q_id}']`)[0]
     let textarea = $(q_el).find('.textarea')
@@ -128,8 +131,8 @@ function hiliter(word, element, addEventLis) {
 
 }
 
-async function getAnswers(id) {
-  return await post('/adminsc/opentestresult/getanswers', {id})
+function getAnswers(id) {
+  return post('/adminsc/opentestresult/getanswers', {id})
 }
 
 function toggleNav(aimPagination, activePagination) {

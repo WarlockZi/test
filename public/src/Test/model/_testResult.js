@@ -1,10 +1,14 @@
-import {$, post, popup} from "../../common";
+import {$, post} from "../../common";
 
 export const _testResult = {
 
 
   delServer: async (id) => {
-    let res = await post('/adminsc/testresult/delete', {id})
+    if ($('.opentest')) {
+      let res = await post('/adminsc/opentestresult/delete', {id})
+    } else {
+      let res = await post('/adminsc/testresult/delete', {id})
+    }
   },
 
   delDom: (id) => {
