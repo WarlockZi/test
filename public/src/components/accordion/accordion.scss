@@ -292,6 +292,9 @@ $font-size-item: .5rem;
     .logo_vitex {
       width: 110px;
       height: 85px;
+      @include _600{
+        height: 50px;
+      }
     }
   }
 

@@ -1,5 +1,6 @@
 import './catalog-item.scss';
 import {$, post,trimStr} from '../../common';
+import WDSSelect from "../select/WDSSelect";
 
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
@@ -42,7 +43,7 @@ export default function catalogItem() {
   async function save(modelName) {
     if (checkRequired()) return false
     let model = getModel()
-    let res = await post(`/adminsc/${modelName}/updateorcreate`, {...model})
+    let res = await post(`/adminsc/${modelName}/updateorcreate`, model)
   }
 
   function checkRequired() {
@@ -66,10 +67,6 @@ export default function catalogItem() {
     let fields = $('[data-field]');
     let obj = {};
 
-    function r(str) {
-      return str.replace(/^ +| +$|( ) +/g, "$1")
-    }
-
     // debugger;
     [].map.call(fields, (field) => {
       if (field.hasAttribute('multi-select')) {
@@ -89,7 +86,7 @@ export default function catalogItem() {
       } else if (field.type === 'date') {
         obj[field.dataset.field] = field.value
       } else {
-        obj[field.dataset.field] = r(trimStr(field.innerText))
+        obj[field.dataset.field] = trimStr(field.innerText)
       }
     }, obj)
     let isTest = $('[data-isTest]')[0]

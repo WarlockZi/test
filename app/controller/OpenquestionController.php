@@ -8,7 +8,6 @@ use app\model\Openquestion;
 
 class OpenquestionController Extends AppController
 {
-//	private $req;
 	private $model = Openquestion::class;
 
 	public function __construct(array $route)
@@ -23,25 +22,22 @@ class OpenquestionController Extends AppController
 
 	public function actionUpdateOrCreate()
 	{
-		try {
-			if ($this->ajax) {
-				$qId = $this->model::updateOrCreate($this->ajax);
-				if ($qId === false) {
-					return;
-				} elseif (is_int($qId)) {
-					exit(json_encode([
-						'id' => $qId,
-						'msg' => 'Вопросы и ответы сохранены',
-					]));
-				} elseif ($qId === true) {
-					exit(json_encode([
-						'msg' => 'Вопросы и ответы сохранены']));
-				}
-			}
 
-		} catch (Exception $exception) {
-			exit($exception->getMessage());
-		};
+		if ($this->ajax) {
+			$qId = $this->model::updateOrCreate($this->ajax);
+			if ($qId === false) {
+				return;
+			} elseif (is_int($qId)) {
+				$this->exitJson([
+					'id' => $qId,
+					'msg' => 'Вопросы и ответы сохранены',
+				]);
+			} elseif ($qId === true) {
+				exit(json_encode([
+					'msg' => 'Вопросы и ответы сохранены']));
+			}
+		}
+
 	}
 
 	public function actionChangeParent()
@@ -49,7 +45,7 @@ class OpenquestionController Extends AppController
 		if ($ids = $this->ajax) {
 			$id = $ids['id'];
 			$testId = $ids['test_id'];
-			$q = $this->model::where('id', '=',$id)
+			$q = $this->model::where('id', '=', $id)
 				->get();
 			$q[0]['opentest_id'] = $testId;
 			$this->model::update($q[0]);

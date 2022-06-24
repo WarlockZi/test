@@ -18,24 +18,21 @@ class OpenanswerController Extends AppController
 
 	public function actionUpdateOrCreate()
 	{
-		try {
-			if ($this->ajax) {
-				$res = $this->model::updateOrCreate($this->ajax);
-				if (is_int($res)) {
-					$a['id'] = $res;
-					$a['answer'] = '';
-					$i = $this->ajax['sort']??1;
+		if ($this->ajax) {
+			$res = $this->model::updateOrCreate($this->ajax);
+			if (is_int($res)) {
+				$a['id'] = $res;
+				$a['answer'] = '';
+				$i = $this->ajax['sort'] ?? 1;
 
-					ob_start();
-					include ROOT . '/app/view/Opentest/edit_BlockAnswer.php';
-					$html = ob_get_clean();
-					exit(json_encode(['id' => $res, 'html' => $html]));
-				}
-				$this->exitWithPopup('ok');
+				ob_start();
+				include ROOT . '/app/view/Opentest/edit_BlockAnswer.php';
+				$html = ob_get_clean();
+				$this->exitJson(['id' => $res, 'html' => $html]);
 			}
-		} catch (Exception $exception) {
-			exit($exception->getMessage());
-		};
+			$this->exitWithPopup('ok');
+		}
+
 	}
 
 

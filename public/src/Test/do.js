@@ -70,9 +70,9 @@ function showFirstQuest() {
   $('.question:first-child').addClass("show")
 }
 
-$('.test-do__finish-btn').on('click', async function (e) {
+$('.test-do__finish-btn').on('click', async function ({target}) {
 
-  let button = e.target;
+  let button = target;
   if (button.id !== 'btnn') return false
 
   if (button.text === "ПРОЙТИ ТЕСТ ЗАНОВО") {

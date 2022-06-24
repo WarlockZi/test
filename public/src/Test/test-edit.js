@@ -23,7 +23,6 @@ export default function testEdit() {
     sortable('.test-edit-wrapper .questions',
       '.questions>.question-edit',
       'question')
-    // customSelect()
 
     $(testEdit).on('keyup', debouncedHandleKeyup)
     $(testEdit).on('change', handleChange)

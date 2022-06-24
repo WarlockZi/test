@@ -10,7 +10,6 @@
     background: #78aafe;
     transition: right 500ms ease-out;
 
-
     @include _500 {
       width: 100%;
     }
@@ -23,7 +22,7 @@
       width: 100%;
     }
 
-    .mobile-menu__wrap {
+    .wrap {
       display: flex;
       flex-flow: column;
       margin: 20px;
@@ -33,11 +32,10 @@
         text-align: center;
       }
 
-      .mobile-menu__item {
+      a {
         color: #ffffff;
         padding: 10px 50px 10px;
         cursor: pointer;
-
 
         &:hover {
           background-color: #0070ff;
