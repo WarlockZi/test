@@ -7,7 +7,7 @@
 	<? endif; ?>
 </div>
 
-<? if (isset($test['children'])): ?>
+<? if (isset($test['children'])&&$test['children']): ?>
 	<div class="list">
 		 <? foreach ($test['children'] as $child): ?>
 		  <div class="path-child__row">

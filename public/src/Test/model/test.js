@@ -23,10 +23,10 @@ export const _test = {
     let test_path = _test.serverModel()
     test_path.id = 0
     test_path.isTest = 0
-    let url = `/test/create`
+    let url = `/adminsc/test/updateOrCreate`
     let res = await post(url, test_path)
     if (res) {
-      window.location.href = `/adminsc/test/edit/${res.id - 1}`
+      window.location.href = `/adminsc/test/edit/${res.arr.id }`
     }
   },
 

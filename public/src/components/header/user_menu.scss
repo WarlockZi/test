@@ -11,8 +11,6 @@
   padding: 2px 10px;
   flex: 0 1 auto;
   @include _500 {
-    font-size: 12px;
-    display: none;
     padding: 3px 10px;
   }
 }
@@ -31,15 +29,24 @@
     vertical-align: middle;
     margin-right: 6px;
     width: 44px;
+    @include _500{
+      display: none;
+    }
   }
 
-  .credits{
+  .credits {
     display: flex;
     flex-flow: column;
-    .fio{
+
+    .fio {
       font-size: 1rem;
+      @include _500 {
+        font-size: .5rem;
+        padding-left: 0;
+      }
     }
-    .email{
+
+    .email {
       font-size: .7rem;
     }
   }
