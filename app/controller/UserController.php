@@ -32,6 +32,16 @@ class UserController extends AppController
 		$this->set(compact('users_table'));
 	}
 
+	public function actionChange()
+	{
+		$this->view = 'list';
+		$users = User::findAll();
+		$this->set(compact('users'));
+
+		$users_table = include ROOT . '/app/view/User/getList.php';
+		$this->set(compact('users_table'));
+	}
+
 	public function actionShow()
 	{
 		$rights = Right::findAll();

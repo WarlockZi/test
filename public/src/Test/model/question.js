@@ -4,7 +4,7 @@ import {_answer} from "./answer";
 class question {
 
   constructor(el) {
-    this.sort = document.querySelectorAll('.questions>.question-edit').length + 1 ?? 0
+    this.sort = document.querySelectorAll('.questions>.question-edit').length+1  ?? 0
   }
 
   async questionCreate(target) {
@@ -22,7 +22,7 @@ class question {
 
   getQuestionModel(el) {
     return {
-      id: el.id,
+      id: el.dataset.id,
       qustion: trimStr(el.querySelector('.text').innerText),
       parent: +window.location.href.split('/').pop(),
       sort: el.querySelector('.sort').innerText,
@@ -39,11 +39,6 @@ class question {
     let question = target.closest('.question-edit')
     question.remove()
   }
-
-  // cloneEmptyModel() {
-  //   let question = $('.questions .question__create .question-edit')[0]
-  //   if (question) return question.cloneNode(true)
-  // }
 
   showAnswers(target) {
     let row = target.closest('.question-edit')

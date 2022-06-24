@@ -1,19 +1,5 @@
 @import "../../mixin_media";
 
-//.logo {
-//  display: flex;
-//  margin: 0 0 0 10px;
-//  align-items: center;
-//  height: 30px;
-//  flex: 1 0 auto;
-//
-//  a {
-//    width: 100px;
-//    display: block;
-//  }
-//
-//}
-
 .logo_square {
   height: 33px;
   margin-right: 5px;
@@ -33,6 +19,9 @@
     height: 33px;
     @include _600 {
       height: 25px;
+    }
+    @include _500{
+      width: 50px;
     }
   }
 }
