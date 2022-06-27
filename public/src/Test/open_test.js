@@ -1,9 +1,9 @@
 import './open_test.scss'
-import {$, post, cachePage, IsJson} from "../common";
+import {$, post, cachePage} from "../common";
 
 import '../components/accordion-show';
 
-let openTest = $('.opentest_wrap')[0]
+let openTest = $('.opentest-do')[0]
 if (openTest) {
   showFirstQuest()
   $(openTest).on('click', handleClick)
@@ -13,6 +13,7 @@ if (openTest) {
 function showFirstQuest() {
   $('.question')[0].classList.add('show')
 }
+
 
 function handleKeyup({target}) {
   if (target.classList.contains('textarea')) {
@@ -28,19 +29,8 @@ function handleKeyup({target}) {
 async function handleClick({target}) {
   let testid = target.dataset.id
   let activeQuestion = $('.question.show')[0]
-  let paginations = $('[data-pagination]')
-  let activePagination = $('[data-pagination].active')[0]
-  let i = paginations.indexOf(activePagination)
 
-  if (target.id === 'prev') {
-    prevQuest()
-  } else if (target.id === 'next') {
-    nextQuest()
-  } else if (target.dataset.pagination) {
-    paginate()
-  // } else if (target.classList.contains('led')) {
-  //   blink(target)
-  } else if (target.id === 'finish') {
+  if (target.id === 'finish') {
     finish(target)
   }
 
@@ -60,6 +50,7 @@ async function handleClick({target}) {
   }
 
   function objToServ(rightAnswers) {
+    $('.buttons')[0].remove()
     return {
       testId: +testid,
       questionCnt: paginations.length,
@@ -70,26 +61,6 @@ async function handleClick({target}) {
     }
   }
 
-  function paginate() {
-    if (target === activePagination) return false
-    let aimPagination = target
-    toggleQuestion(aimPagination, activeQuestion)
-    toggleNav(aimPagination, activePagination)
-  }
-
-  function prevQuest() {
-    if (i < 1) return false
-    let aimPagination = paginations[i - 1]
-    toggleQuestion(aimPagination, activeQuestion)
-    toggleNav(aimPagination, activePagination)
-  }
-
-  function nextQuest() {
-    if (i > paginations.length - 2) return false
-    let aimPagination = paginations[i + 1]
-    toggleQuestion(aimPagination, activeQuestion)
-    toggleNav(aimPagination, activePagination)
-  }
 }
 
 function correctCount(questions) {
@@ -125,16 +96,13 @@ function hiliter(word, element, addEventLis) {
   return correct
 }
 
-function toggleNav(aimPagination, activePagination) {
-  activePagination.classList.toggle('active')
-  aimPagination.classList.toggle('active')
-}
-
-function toggleQuestion(aimPaginationId, activeQuestion) {
-  let aimQuestionId = aimPaginationId.dataset.pagination
-  let aimQuestion = $(`.question[data-id='${aimQuestionId}']`)[0]
-  aimQuestion.classList.toggle('show')
-  activeQuestion.classList.toggle('show')
-}
-
+// function paginate() {
+//   new Pagination({
+//     paginateItemClass:'pagination',
+//     paginateItemActive:'active',
+//     objecClass:'question',
+//     nextButtonId:'next',
+//     prevButtonId:'prev',
+//   })
+// }
 

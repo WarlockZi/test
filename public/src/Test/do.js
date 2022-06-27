@@ -67,7 +67,7 @@ async function finishTest(target) {
   target.innerText = "ПРОЙТИ ТЕСТ ЗАНОВО"
   target.classList.add('inactive')
 
-  let corrAnswers = await post('/test/getCorrectAnswers', {})
+  let corrAnswers = await post('/adminsc/test/getCorrectAnswers', {})
   colorView(corrAnswers.arr)
   let errorCnt = $('.redShadow').length
 
