@@ -1,7 +1,7 @@
 import {post} from '../../../common'
 
 //   show first card
-    let showedCard = document.querySelector('.test-data .question:first-child ').getAttribute('data-id');
+    let showedCard = document.querySelector(' .question:first-child ').getAttribute('data-id');
     document.querySelector(`.question[data-id="${showedCard}"`).style.display = "flex"
 
     document.querySelector('.content #finish-freetest').addEventListener('click', function (event) {

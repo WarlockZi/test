@@ -7,13 +7,11 @@ let openTest = $('.opentest_wrap')[0]
 if (openTest) {
   showFirstQuest()
   $(openTest).on('click', handleClick)
-
   $(openTest).on('keyup', handleKeyup)
 }
 
-
 function showFirstQuest() {
-  let q = $('.question')[0].classList.add('show')
+  $('.question')[0].classList.add('show')
 }
 
 function handleKeyup({target}) {
@@ -51,7 +49,7 @@ async function handleClick({target}) {
       location.reload();
       return;
     }
-    let questions = await getAnswers(testid)
+    let questions = await post('/adminsc/opentestresult/getanswers', testid)
     let correctAnswers = correctCount(questions.arr)
     let obj = objToServ(correctAnswers)
     let res = await post('/adminsc/opentestresult/finish', obj)
@@ -69,11 +67,8 @@ async function handleClick({target}) {
       testname: $('.test-name')[0].innerText,
       username: $('.user-menu .fio')[0].innerText,
       rightAnswers,
-      // html: `<!DOCTYPE ${document.doctype.name}>` + document.documentElement.outerHTML,
     }
-
   }
-
 
   function paginate() {
     if (target === activePagination) return false
@@ -97,7 +92,6 @@ async function handleClick({target}) {
   }
 }
 
-
 function correctCount(questions) {
   let correct = 0;
   [].forEach.call(questions,(q) => {
@@ -109,7 +103,8 @@ function correctCount(questions) {
     q.Openanswer.forEach((a) => {
       word += `(${a.answer})?`
     })
-    correct += highlight(`${word}`, textarea, true)
+    correct += hiliter(`${word}`, textarea, true)
+
   })
   return correct
 }
@@ -128,11 +123,6 @@ function hiliter(word, element, addEventLis) {
     element.innerHTML = element.innerHTML.replace(r, repl);
   })
   return correct
-
-}
-
-function getAnswers(id) {
-  return post('/adminsc/opentestresult/getanswers', {id})
 }
 
 function toggleNav(aimPagination, activePagination) {
@@ -147,7 +137,4 @@ function toggleQuestion(aimPaginationId, activeQuestion) {
   activeQuestion.classList.toggle('show')
 }
 
-function highlight(word, el, addEventLis) {
-  return hiliter(word, el, addEventLis);
-}
 

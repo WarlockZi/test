@@ -39,6 +39,6 @@
 </div>
 <? include ROOT . '/app/view/components/test/test_edit_prev_next_buttons.php' ?>
 
-<a class="test-do__finish-btn" id="btnn" data-id="<?= $test['id']; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
+<a class="test-do__finish-btn" data-id="<?= $test['id']; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
 </div>
 
