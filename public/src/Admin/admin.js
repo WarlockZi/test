@@ -23,8 +23,20 @@ import catalogItem from '@components/catalog-item/catalog-item'
 import catalogDate from '@components/date/date'
 import tooltips from "../components/tooltip/tooltip";
 import accordionShow from "../components/accordion-show";
+import Pagination from "../Test/test-pagination/test-pagination";
+
+debugger
 
 $(document).ready(function () {
+
+  new Pagination({
+    'pClass':'[data-pagination]',
+    'pActiveClass':'active',
+    'pageClass':'question',
+    'pageActiveClass':'show',
+    'prevBttnEl':$('#prev')[0],
+    'nextBttnEl':$('#next')[0],
+  })
 
   navigate(window.location.pathname)
   radio()

@@ -17,9 +17,14 @@ const config = {
     // test: path.resolve(src, 'Test/test.js'),
     // test_edit: path.resolve(src, 'Test/test-edit.js'),
     main: path.resolve(src, 'Main/main.js'),
-  },
 
+  },
+  // optimization: {
+  //   runtimeChunk: 'single',
+  // },
   output: {
+    // filename:[name].js,
+    // chunkFilename:[name].js,
     // assetModuleFilename: 'assets/[hash][ext][query]',
     path: path.resolve(__dirname, "public/dist"),
   },
