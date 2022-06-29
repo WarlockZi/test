@@ -46,81 +46,6 @@ function trimStr(str) {
   return str
 }
 
-// export class Pagination {
-//
-//   constructor({
-//                 paginateItemClass = 'pagination',
-//                 paginateItemActive = 'active',
-//                 objecClass = 'question',
-//                 nextButtonId = 'next',
-//                 prevButtonId = 'prev',
-//               }
-//   ) {
-//     this.paginateItemClass = paginateItemClass
-//     this.paginateItemActive = paginateItemActive
-//     this.objecClass = objecClass
-//     this.nextButtonId = nextButtonId
-//     this.prevButtonId = prevButtonId
-//
-//     this.paginations = $(`[data-${this.paginateItemClass}]`)
-//     this.activePagination = $(`[data-${this.paginateItemClass}].${paginateItemActive}`)[0]
-//     this.i = this.paginations.indexOf(this.activePagination)
-//     $(`[data-${this.paginateItemClass}]`).on('click', this.pagClick)
-//   }
-//
-//   pagClick({target}) {
-//     if (target === this.activePagination) return false
-//     let aimPagination = target
-//     this.toggleQuestion(aimPagination, activeQuestion)
-//     this.toggleNav(aimPagination, activePagination)
-//   }
-//
-//   toggleNav(aimPagination, activePagination) {
-//     activePagination.classList.toggle('active')
-//     aimPagination.classList.toggle('active')
-//   }
-//
-//   toggleQuestion(aimPaginationId, activeQuestion) {
-//     let aimQuestionId = aimPaginationId.dataset.pagination
-//     let aimQuestion = $(`.question[data-id='${aimQuestionId}']`)[0]
-//     aimQuestion.classList.toggle('show')
-//     activeQuestion.classList.toggle('show')
-//   }
-//
-//   prevQuest() {
-//     if (i < 1) return false
-//     let aimPagination = paginations[i - 1]
-//     toggleQuestion(aimPagination, activeQuestion)
-//     toggleNav(aimPagination, activePagination)
-//   }
-//
-//   nextQuest() {
-//     if (i > paginations.length - 2) return false
-//     let aimPagination = paginations[i + 1]
-//     toggleQuestion(aimPagination, activeQuestion)
-//     toggleNav(aimPagination, activePagination)
-//   }
-//
-// }
-
-function dropDown(elementId) {
-  var dropdown = document.getElementById(elementId);
-  try {
-    showDropdown(dropdown);
-  } catch (e) {
-
-  }
-  return false;
-};
-
-function showDropdown(element) {
-  var event;
-  event = document.createEvent('MouseEvents');
-  event.initMouseEvent('mousedown', true, true, window);
-  element.dispatchEvent(event);
-};
-
-
 let validate = {
   sort: () => {
     let error = this.nextElementSibling
@@ -405,7 +330,6 @@ function addTooltip(args) {
 export {
   cachePage,
   trimStr,
-  dropDown,
   addTooltip,
   popup,
   debounce,

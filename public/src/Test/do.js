@@ -1,5 +1,5 @@
 import './do.scss'
-import './test-pagination/test-pagination'
+// import './test-pagination/test-pagination'
 
 import {post, $, cachePage} from '../common'
 

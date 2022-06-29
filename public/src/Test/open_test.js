@@ -3,6 +3,7 @@ import {$, post, cachePage} from "../common";
 
 import '../components/accordion-show';
 
+
 let openTest = $('.opentest-do')[0]
 if (openTest) {
   showFirstQuest()
@@ -11,7 +12,8 @@ if (openTest) {
 }
 
 function showFirstQuest() {
-  $('.question')[0].classList.add('show')
+  let firstQuest = $('.question')[0]
+  if (firstQuest)firstQuest.classList.add('show')
 }
 
 
@@ -74,13 +76,13 @@ function correctCount(questions) {
     q.Openanswer.forEach((a) => {
       word += `(${a.answer})?`
     })
-    correct += hiliter(`${word}`, textarea, true)
+    correct += hiliter(`${word}`, textarea)
 
   })
   return correct
 }
 
-function hiliter(word, element, addEventLis) {
+function hiliter(word, element) {
   let text = element.innerHTML
   let rgxp = new RegExp(word, 'g');
   let arr = text.match(rgxp)

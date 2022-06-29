@@ -16,8 +16,6 @@ class AdminscController extends AppController
 		parent::__construct($route);
 		$this->autorize();
 		$this->layout = 'admin';
-//		View::setJs('admin.js');
-//		View::setCss('admin.css');
 		if (User::can($this->user, ['role_employee'])) {
 			View::setJs('admin.js');
 			View::setCss('admin.css');
