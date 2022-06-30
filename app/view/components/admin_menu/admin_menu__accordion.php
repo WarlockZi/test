@@ -14,7 +14,7 @@
 		</a>
 
 		 <? if (User::can($this->user, ['gate_admin', 'role_rop'])): // admin ?>
-		  <li>
+		  <li crm>
 
 			  <div class="label">
 
@@ -33,7 +33,7 @@
 
 
 		 <? if (User::can($this->user, ['role_admin', 'role_rop'])): // admin ?>
-		  <li>
+		  <li settings>
 
 			  <div class="label">
 				  <span class="arrow"></span>
@@ -51,7 +51,7 @@
 		  </li>
 		 <? endif; ?>
 
-		<li>
+		<li test>
 			<div class="label">
 				<span class="arrow"></span>
 					 <? include ICONS . '/admin-menu/star.svg'; ?>
@@ -86,7 +86,7 @@
 			</ul>
 		</li>
 
-		<li>
+		<li plan>
 			<div class="label">
 				<span class="arrow"></span>
 					 <? include ICONS . '/admin-menu/target.svg'; ?>
@@ -102,7 +102,7 @@
 			</ul>
 		</li>
 
-		<a class="neon" href="/adminsc/planning">
+		<a strat class="neon" href="/adminsc/planning">
 				<? include ICONS . '/admin-menu/grid.svg'; ?>
 			<span>
 		Страт задачи
@@ -110,7 +110,7 @@
 		</a>
 
 
-		<li>
+		<li user>
 			<div class="label">
 				<span class="arrow"></span>
 					 <? include ICONS . '/admin-menu/chart.svg'; ?>
@@ -129,7 +129,7 @@
 
 
 		 <? if (User::can($this->user, 'su')): ?>
-		  <li>
+		  <li su>
 
 			  <div class="label">
 				  <span class="arrow"></span>

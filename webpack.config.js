@@ -1,27 +1,22 @@
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
 const path = require("path");
 const src = path.resolve(__dirname, 'public/src')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 const isProduction = false;
-require('dotenv').config();
-const email = process.env.SU_EMAIL
+const env = require('dotenv').config().parsed;
+
+const devMode = env.MODE === 'production'
 
 const config = {
 
   entry: {
     admin: path.resolve(src, 'Admin/admin.js'),
-    // adminCategory: path.resolve(src, 'Adm_catalog/adm_category.js'),
     auth: path.resolve(src, 'Auth/auth.js'),
-    // freeTest: path.resolve(src, 'Freetest/free-test.js'),
     // test: path.resolve(src, 'Test/test.js'),
     // test_edit: path.resolve(src, 'Test/test-edit.js'),
     main: path.resolve(src, 'Main/main.js'),
 
   },
-  // optimization: {
-  //   runtimeChunk: 'single',
-  // },
   output: {
     // filename:[name].js,
     // chunkFilename:[name].js,
@@ -32,10 +27,8 @@ const config = {
 
   devServer: {
     allowedHosts: "all",
-    // open: true,http://localhost:4000/public/dist/main.css
     host: "localhost",
     port: 4000,
-    // http2: true,
     watchFiles: {
       paths: ['public/src/**/*.*'],
     },
@@ -47,10 +40,12 @@ const config = {
   },
 
   plugins: [
-    new MiniCssExtractPlugin(),
-    new webpack.DefinePlugin({
-      "process.env.SU_EMAIL": JSON.stringify(email)
-    })
+    new MiniCssExtractPlugin(
+    //   {
+    //   filename: devMode ? "dist/[name].css" : "[name].[contenthash].css",
+    //   chunkFilename: devMode ? "[id].css" : "[id].[contenthash].css",
+    // }
+    ),
   ],
 
   module: {
@@ -60,7 +55,6 @@ const config = {
         exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
-
         }
       },
 
@@ -69,7 +63,18 @@ const config = {
         type: 'asset/resource',
       },
       // {test: /\.svg/, type: 'asset/inline'},
-      {test: /\.(sa|sc|c)ss$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader',]},
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+            },
+          },
+          'css-loader',
+          'sass-loader',
+        ]
+      },
     ]
   },
 };
@@ -80,7 +85,10 @@ module.exports = () => {
     config.devtool = "none"
   } else {
     config.mode = "development";
-    config.devtool = "eval-source-map"
+    // config.devtool = "eval-source-map"
+    // config.devtool = "eval"
+    // config.devtool = "eval-cheap-source-map"
+    config.devtool = "eval-cheap-module-source-map"
     // console.log('dev tool = '+config.devtool)
   }
   return config;
