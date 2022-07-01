@@ -6,6 +6,7 @@ export default class Pagination {
 
 
   constructor(props) {
+
     this.pClass = props.pClass ?? ''
     this.pActiveClass = props.pActiveClass ?? ''
     this.pageClass = props.pageClass ?? ''
@@ -27,6 +28,7 @@ export default class Pagination {
       }
     }
   }
+
 
   navInit() {
     [].map.call(this.paginations, (nav) => {
