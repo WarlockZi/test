@@ -8,21 +8,30 @@ const env = require('dotenv').config().parsed;
 const devMode = env.MODE === 'production'
 
 const config = {
+  target: ["web", "es5"],
 
   entry: {
-    admin: path.resolve(src, 'Admin/admin.js'),
-    auth: path.resolve(src, 'Auth/auth.js'),
+    admin: {
+      import: path.resolve(src, 'Admin/admin.js'),
+      dependOn: 'common',
+      // filename:'pages/[name][ext]'
+    },
+    common: path.resolve(src, 'common.js'),
+    // admin: path.resolve(src, 'Admin/admin.js'),
+    // auth: path.resolve(src, 'Auth/auth.js'),
     // test: path.resolve(src, 'Test/test.js'),
     // test_edit: path.resolve(src, 'Test/test-edit.js'),
     main: path.resolve(src, 'Main/main.js'),
 
   },
   output: {
-    // filename:[name].js,
-    // chunkFilename:[name].js,
-    // assetModuleFilename: 'assets/[hash][ext][query]',
     path: path.resolve(__dirname, "public/dist"),
   },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'all'
+  //   }
+  // },
 
 
   devServer: {
@@ -41,10 +50,10 @@ const config = {
 
   plugins: [
     new MiniCssExtractPlugin(
-    //   {
-    //   filename: devMode ? "dist/[name].css" : "[name].[contenthash].css",
-    //   chunkFilename: devMode ? "[id].css" : "[id].[contenthash].css",
-    // }
+      //   {
+      //   filename: devMode ? "dist/[name].css" : "[name].[contenthash].css",
+      //   chunkFilename: devMode ? "[id].css" : "[id].[contenthash].css",
+      // }
     ),
   ],
 
@@ -68,8 +77,7 @@ const config = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-            },
+            options: {},
           },
           'css-loader',
           'sass-loader',
@@ -88,7 +96,7 @@ module.exports = () => {
     // config.devtool = "eval-source-map"
     // config.devtool = "eval"
     // config.devtool = "eval-cheap-source-map"
-    config.devtool = "eval-cheap-module-source-map"
+    config.devtool = "source-map"
     // console.log('dev tool = '+config.devtool)
   }
   return config;

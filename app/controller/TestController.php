@@ -140,6 +140,8 @@ class TestController extends AppController
 
 	public function actionEdit()
 	{
+
+//		View::setCss('common.css');
 		$page_name = 'Редактирование тестов';
 		$this->set(compact('page_name'));
 
