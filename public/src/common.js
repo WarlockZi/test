@@ -163,7 +163,10 @@ async function post(url, data = {}) {
       req.onload = function () {
         let res = JSON.parse(req.response)
         let msg = $('.message')[0]
+
         if (res.popup||res.arr.popup) {
+
+
           popup.show(res.popup??res?.arr.popup)
         } else if (res.msg) {
           if (msg) {
