@@ -4,8 +4,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 const isProduction = false;
 
-const env =  require('dotenv').config();
-const email = env.parsed.SU_EMAIL
+require('dotenv').config().parsed;
+const env = process.env
 
 
 const config = {
@@ -65,6 +65,9 @@ const config = {
       //   chunkFilename: devMode ? "[id].css" : "[id].[contenthash].css",
       // }
     ),
+    new webpack.DefinePlugin({
+      'process.env.SU_EMAIL': JSON.stringify(env.SU_EMAIL)
+    }),
   ],
 
   module: {
