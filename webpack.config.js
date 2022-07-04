@@ -4,8 +4,8 @@ const src = path.resolve(__dirname, 'public/src')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 const isProduction = false;
-require('dotenv').config();
-const email = process.env.SU_EMAIL
+const env =  require('dotenv').config();
+const email = env.parsed.SU_EMAIL
 
 const config = {
 
@@ -80,7 +80,7 @@ module.exports = () => {
     config.devtool = "none"
   } else {
     config.mode = "development";
-    config.devtool = "eval-source-map"
+    config.devtool = "source-map"
     // console.log('dev tool = '+config.devtool)
   }
   return config;

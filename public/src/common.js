@@ -1,3 +1,4 @@
+import './Admin/admin.scss'
 import './common.scss'
 
 const debounce = (fn, time = 700) => {
@@ -162,8 +163,8 @@ async function post(url, data = {}) {
       req.onload = function () {
         let res = JSON.parse(req.response)
         let msg = $('.message')[0]
-        if (res.popup) {
-          popup.show(res.popup)
+        if (res.popup||res.arr.popup) {
+          popup.show(res.popup??res?.arr.popup)
         } else if (res.msg) {
           if (msg) {
             msg.innerHTML = res.msg
@@ -177,6 +178,7 @@ async function post(url, data = {}) {
             $(msg).addClass('success')
             $(msg).removeClass('error')
           }
+
         } else if (res.error) {
           if (msg) {
             msg.innerHTML = ''
@@ -274,6 +276,8 @@ class ElementCollection extends Array {
       return this[0].querySelectorAll(item)
     }
   }
+
+
   css = function (attr, val) {
     if (!val) {
       return this[0].style[attr]
@@ -282,7 +286,6 @@ class ElementCollection extends Array {
       s.style[attr] = val
     })
   }
-
   ready(cb) {
     const isReady = this.some(e => {
       return e.readyState != null && e.readyState != 'loading'

@@ -1,4 +1,5 @@
 import './admin.scss'
+import './Videoinstructions/videoinstructions'
 
 import '../components/header/header-adm'
 import '../components/accordion/accordion'
@@ -25,17 +26,20 @@ import tooltips from "../components/tooltip/tooltip";
 import accordionShow from "../components/accordion-show";
 import Pagination from "../Test/test-pagination/test-pagination";
 
-debugger
+// debugger
+
+
 
 $(document).ready(function () {
 
+
   new Pagination({
-    'pClass':'[data-pagination]',
-    'pActiveClass':'active',
-    'pageClass':'question',
-    'pageActiveClass':'show',
-    'prevBttnEl':$('#prev')[0],
-    'nextBttnEl':$('#next')[0],
+    'pClass': '[data-pagination]',
+    'pActiveClass': 'active',
+    'pageClass': 'question',
+    'pageActiveClass': 'show',
+    'prevBttnEl': $('#prev')[0],
+    'nextBttnEl': $('#next')[0],
   })
 
   navigate(window.location.pathname)
@@ -55,26 +59,23 @@ $(document).ready(function () {
       || /\/adminsc\/post\/list/.test(str) ||
       /\/adminsc\/todo\/list/.test(str)) {
       rights()
-      $("[href='/adminsc/settings']").addClass('current')
-    } else if (/\/adminsc\/testresult\/results/.test(str)) {
-      $("[href='/adminsc/test/results']").addClass('current')
-    } else if (/\/adminsc\/testresult\/results/.test(str)) {
-      $("[href='/adminsc/test/results']").addClass('current')
+      $("[settings]").addClass('current')
+
+
     } else if (/\/auth\/profile/.test(str)) {
       user()
     } else if (/\/adminsc\/crm/.test(str)) {
-      $("[href='/adminsc/crm']").addClass('current')
-    } else if (/\/adminsc\/catalog/.test(str)) {
-      $("[href='/adminsc/catalog']").addClass('current')
-    } else if (/\/adminsc\/planning/.test(str)) {
-      $("[href='/adminsc/planning']").addClass('current')
-    } else if (/\/adminsc\/test\/pathshow/.test(str)
-      || /\/adminsc\/test\/edit/.test(str)) {
-      $("[href='/adminsc/test/edit']").addClass('current')
-    } else if (/\/test/.test(str) || /\/test\/result/.test(str)) {
-      $("[href='/test/do']").addClass('current')
-    } else if (/\/adminsc\/Sitemap/.test(str)) {
-      $("[href='/adminsc/settings']").addClass('current')
+      $("[crm]").addClass('current')
+
+
+    } else if ( /\/adminsc\/planning/.test(str)) {
+      $("[plan]").addClass('current')
+    } else if (
+      /\/test/.test(str)
+      || /\/opentest/.test(str)
+      || /\/adminsc\/opentest/.test(str)
+      || /\/adminsc\/test/.test(str)) {
+      $("[test]").addClass('current')
     } else {
       $("[href='/adminsc']").addClass('current')
     }

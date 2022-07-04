@@ -1,0 +1,24 @@
+.column{
+
+  justify-content: center;
+  gap: 5px;
+
+  a{
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    color: #4e4e4e;
+    border: #818da2 1px solid;
+    border-radius: 10px;
+    background-color: #cccccc;
+
+    &:hover{
+      background-color: darken(#cccccc, 10%);
+    }
+    svg{
+      color: red;
+      padding: 0 5px;
+    }
+
+  }
+}

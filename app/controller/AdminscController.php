@@ -47,13 +47,16 @@ class AdminscController extends AppController
 
 	public function actionIndex()
 	{
+//		View::setJs('common.js');
 		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
 
 
-	public function createSiteMap() {
+	public function createSiteMap()
+	{
 
 	}
+
 	public function actionDumpSQL()
 	{
 	}

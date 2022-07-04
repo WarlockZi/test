@@ -1,14 +1,14 @@
-@import "components/sub-menu/adm-menu";
-@import "components/sub-menu/catalog";
+//@import "components/sub-menu/adm-menu";
+//@import "components/sub-menu/catalog";
 @import "components/dump";
 @import "components/grid";
-@import "components/props";
 @import "../components/neon";
 @import '../normalize.scss';
 @import "../mixin_media";
 @import '../var.scss';
 
 @include chips;
+
 
 .admin-layout__container {
   display: flex;

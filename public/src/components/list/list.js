@@ -86,7 +86,6 @@ export default function list() {
         let res = await post(`/adminsc/${modelName}/create`, {})
         if (res.arr.id) {
           newRow(res.arr.id)
-          // window.location.href = `/adminsc/${modelName}/show`
         }
       }
 
