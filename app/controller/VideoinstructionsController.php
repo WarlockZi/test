@@ -5,7 +5,7 @@ namespace app\controller;
 use app\model\Video;
 use app\view\View;
 
-class VideoInstructionsController Extends AppController
+class VideoinstructionsController Extends AppController
 {
 
 	public function __construct(array $route)
