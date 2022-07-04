@@ -56,7 +56,7 @@
 
 			  <div class="label">
 				  <span class="arrow"></span>
-						 <? include ICONS . './youtube.svg'; ?>
+						 <? include ICONS . '/youtube.svg'; ?>
 				  Видео
 			  </div>
 
