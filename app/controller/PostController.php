@@ -84,9 +84,10 @@ class PostController Extends AppController
 	{
 		if ($this->ajax) {
 			if ($id = $this->model::create($this->ajax)) {
-				exit(json_encode([
+				$this->exitJson([
+					'popup'=>'создан',
 					'id' => $id,
-				]));
+				]);
 			}
 		}
 	}

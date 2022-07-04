@@ -1,5 +1,6 @@
 import './login.scss'
 import {$, post, validate} from "../common";
+// import 'dotenv/config'
 
 let loginForm = $("[data-auth='login']")[0]
 if (loginForm) {
@@ -25,7 +26,8 @@ function validateData() {
     $(msg).addClass('error')
     return false
   }
-  let su = process.env.SU_EMAIL === email.value
+  let suemail = process.env.SU_EMAIL
+  let su = suemail === email.value
   if (!su) {
     error = validate.password(pass.value)
     if (error) {
