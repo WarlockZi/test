@@ -164,10 +164,10 @@ async function post(url, data = {}) {
         let res = JSON.parse(req.response)
         let msg = $('.message')[0]
 
-        if (res.popup||res.arr.popup) {
+        if (res.popup||res?.arr?.popup) {
 
 
-          popup.show(res.popup??res?.arr.popup)
+          popup.show(res.popup??res?.arr?.popup)
         } else if (res.msg) {
           if (msg) {
             msg.innerHTML = res.msg

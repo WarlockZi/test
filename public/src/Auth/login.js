@@ -1,6 +1,6 @@
 import './login.scss'
 import {$, post, validate} from "../common";
-// import 'dotenv/config'
+
 
 let loginForm = $("[data-auth='login']")[0]
 if (loginForm) {
