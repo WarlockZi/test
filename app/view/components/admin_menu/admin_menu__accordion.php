@@ -51,6 +51,21 @@
 		  </li>
 		 <? endif; ?>
 
+	  <? if (User::can($this->user, ['role_employee'])): // admin ?>
+		  <li video>
+
+			  <div class="label">
+				  <span class="arrow"></span>
+						 <? include ICONS . './youtube.svg'; ?>
+				  Видео
+			  </div>
+
+			  <ul class="level-1">
+					 <a class="neon" href='/adminsc/videoinstructions'>Инструкции</a>
+			  </ul>
+		  </li>
+		 <? endif; ?>
+
 		<li test>
 			<div class="label">
 				<span class="arrow"></span>

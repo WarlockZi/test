@@ -11,9 +11,13 @@ const config = {
   target: ["web", "es5"],
 
   entry: {
+    // admin: {
+    //   import: path.resolve(src, 'Admin/admin.js'),
+    //   dependOn: 'common',
+    // },
     admin: {
       import: path.resolve(src, 'Admin/admin.js'),
-      dependOn: 'common',
+      // dependOn: 'common',
       // filename:'pages/[name][ext]'
     },
     common: path.resolve(src, 'common.js'),
@@ -26,18 +30,23 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, "public/dist"),
+    clean: true,
   },
   // optimization: {
   //   splitChunks: {
   //     chunks: 'all'
-  //   }
+  //   },
+  //   runtimeChunk: 'single',
   // },
 
 
   devServer: {
+
     allowedHosts: "all",
     host: "localhost",
     port: 4000,
+    hot: true,
+
     watchFiles: {
       paths: ['public/src/**/*.*'],
     },
@@ -88,6 +97,7 @@ const config = {
 };
 
 module.exports = () => {
+  console.log('isProduction:',isProduction)
   if (isProduction) {
     config.mode = "production";
     config.devtool = "none"
