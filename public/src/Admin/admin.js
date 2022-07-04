@@ -1,4 +1,5 @@
 import './admin.scss'
+import './Videoinstructions/videoinstructions'
 
 import '../components/header/header-adm'
 import '../components/accordion/accordion'
@@ -27,7 +28,10 @@ import Pagination from "../Test/test-pagination/test-pagination";
 
 // debugger
 
+
+
 $(document).ready(function () {
+
 
   new Pagination({
     'pClass': '[data-pagination]',

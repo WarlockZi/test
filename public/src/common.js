@@ -1,3 +1,4 @@
+import './Admin/admin.scss'
 import './common.scss'
 
 const debounce = (fn, time = 700) => {
