@@ -22,7 +22,7 @@ const config = {
     },
     common: path.resolve(src, 'common.js'),
     // admin: path.resolve(src, 'Admin/admin.js'),
-    // auth: path.resolve(src, 'Auth/auth.js'),
+    auth: path.resolve(src, 'Auth/auth.js'),
     // test: path.resolve(src, 'Test/test.js'),
     // test_edit: path.resolve(src, 'Test/test-edit.js'),
     main: path.resolve(src, 'Main/main.js'),
