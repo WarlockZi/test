@@ -9,11 +9,11 @@ class Todo extends Model
 	public  $model = 'todo';
 
 	protected $fillable = [
-		'name' => 'Название',
+		'name' => '',
 		'post_id' => null,
 		'user_id' => null,
 		'type' => 'день',
-		'description' => 'Описание',
+		'description' => '',
 	];
 
 }

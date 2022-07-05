@@ -81,7 +81,7 @@ export default function list() {
       }
 
 
-      // CREATE
+      // UPDATE OR CREATE
       async function modelCreate(modelName, e) {
         let res = await post(`/adminsc/${modelName}/create`, {})
         if (res.arr.id) {

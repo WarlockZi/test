@@ -60,9 +60,9 @@ class TodoController Extends AppController
 			$this->ajax['post_id'] = $this->user['post_id'];
 
 			if ($id = $this->model::create($this->ajax)) {
-				exit(json_encode([
+				$this->exitJson([
 					'id' => $id,
-				]));
+				]);
 			}
 		}
 	}
