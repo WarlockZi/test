@@ -119,22 +119,21 @@
   }
 }
 
-@mixin _button($border-radius:1%,$border-color:$color-main) {
+@mixin _button($border-radius:1px,$color:$color-main) {
   display: flex;
+  padding: 3px;
   justify-content: center;
   align-items: center;
-  background: $color-main;
+  background: $color;
   border-radius: $border-radius;
   color: white;
-  align-self: end;
-  //margin: 10px 0 0 10px;
   cursor: pointer;
   box-sizing: border-box;
-  border: 1px solid $border-color;
+  border: 1px solid $color;
   transition: background-color, color 500ms;
 
   &:hover {
-    color: $color-main;
+    color: $color;
     background: #ffffff;
   }
 }

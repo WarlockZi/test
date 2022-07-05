@@ -43,6 +43,7 @@
 
   $border-radius: 75%;
   @include _button($border-radius);
+  align-self: end;
 
   &:hover {
     box-shadow: none;

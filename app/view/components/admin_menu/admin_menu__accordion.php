@@ -61,7 +61,9 @@
 			  </div>
 
 			  <ul class="level-1">
-					 <a class="neon" href='/adminsc/videoinstructions'>Инструкции</a>
+					 <a class="neon" href='/adminsc/videoinstruction'>Инструкции</a>
+					 <a class="neon" href='/adminsc/videoinstruction/edit'>Редактировать инструкции</a>
+
 			  </ul>
 		  </li>
 		 <? endif; ?>

@@ -270,11 +270,22 @@ abstract class Model
 		return $item[0] ?? null;
 	}
 
-
-	public function orderBy($field = '')
+	public function groupBy($field = '')
 	{
-		$this->orderBy = " ORDER BY {$field}" ?? '';
+		$this->groupBy = " GROUP BY {$field}" ?? '';
 		return $this;
+	}
+
+	public function orderBy($field)
+	{
+		if (is_array($field)) {
+			$str = implode(', ', $field);
+			$this->orderBy = " ORDER BY {$str}" ?? '';
+			return $this;
+		} elseif (is_string($field)) {
+			$this->orderBy = " ORDER BY {$field}" ?? '';
+			return $this;
+		}
 	}
 
 	public function pluck($fields = [])
@@ -293,14 +304,15 @@ abstract class Model
 	public final function get()
 	{
 		if (property_exists($this, 'hasMany')
-			&&($this->hasMany)) {
+			&& ($this->hasMany)) {
 			$this->getWith();
 			return $this;
 		}
 		$pluck = $this->pluck ?? '*';
 		$where = $this->where ?? '';
 		$orderBy = $this->orderBy ?? '';
-		$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
+		$groupBy = $this->groupBy ?? '';
+		$sql = "SELECT {$pluck} FROM {$this->table} {$where}{$groupBy} {$orderBy} ";
 		$this->fields = $this->pdo->query($sql, []);
 		return $this->fields;
 	}

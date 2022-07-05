@@ -164,6 +164,7 @@
         $border-radius: 3%;
         line-height: 1.2rem;
         @include _button($border-radius);
+        align-self: end;
 
         &:hover {
           svg {
