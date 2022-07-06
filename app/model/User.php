@@ -41,7 +41,11 @@ class User extends Model
 		if (is_string($rights) && $rights) {
 			$rights = compact('rights');
 		}
-		return (array_intersect($rights, $user['rights']) || defined('SU')) ?? null;
+		return (
+			array_intersect($rights, $user['rights'])
+			|| defined('SU')
+			|| array_intersect(['role_admin'], $user['rights']))
+			?? null;
 	}
 
 	public function findOne($id, $field = '')
