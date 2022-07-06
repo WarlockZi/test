@@ -36,7 +36,7 @@ class User extends Model
 		parent::__construct();
 	}
 
-	public static function can(array $user, $rights = [])
+	public static function can(array $user, $rights=[]):bool
 	{
 		if (is_string($rights) && $rights) {
 			$rights = compact('rights');
@@ -45,7 +45,7 @@ class User extends Model
 			array_intersect($rights, $user['rights'])
 			|| defined('SU')
 			|| array_intersect(['role_admin'], $user['rights']))
-			?? null;
+			?? false;
 	}
 
 	public function findOne($id, $field = '')
