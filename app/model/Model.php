@@ -294,12 +294,28 @@ abstract class Model
 		return $this;
 	}
 
+	public function limit(int $limit)
+	{
+		$this->limit = " LIMIT {$limit}" ?? '';
+		return $this;
+	}
+
 	public static function where($field, $operator, $value)
 	{
 		$model = new static();
 		$model->where = " WHERE {$field} {$operator} {$value}" ?? '';
 		return $model;
 	}
+
+//	public function __get($property)
+//	{
+//		if (property_exists($this, $property)) {
+//			return $this->property;
+//		} elseif (method_exists(static::class, $property)) {
+////			$s = new static ;
+//			return $this->property();
+//		}
+//	}
 
 	public final function get()
 	{
@@ -312,7 +328,8 @@ abstract class Model
 		$where = $this->where ?? '';
 		$orderBy = $this->orderBy ?? '';
 		$groupBy = $this->groupBy ?? '';
-		$sql = "SELECT {$pluck} FROM {$this->table} {$where}{$groupBy} {$orderBy} ";
+		$limit = $this->limit ?? '';
+		$sql = "SELECT {$pluck} FROM {$this->table} {$where}{$groupBy} {$orderBy} {$limit}";
 		$this->fields = $this->pdo->query($sql, []);
 		return $this->fields;
 	}
@@ -334,6 +351,15 @@ abstract class Model
 		if ($this->hasMany[$class]) {
 			return $this->hasMany[$class]['items'];
 		}
+	}
+
+	public function hasOne(string $class)
+	{
+		$instance = new $class;
+		$field = $instance->model . '_id';
+		return $instance::where($field, '=', $this->fillable[$field])
+			->limit(1)
+			->get();
 	}
 
 	public final function getWith()

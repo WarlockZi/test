@@ -27,6 +27,7 @@ if (DEV) {
 new App(new DI);
 //DI::test();
 Router::dispatch($_SERVER['QUERY_STRING']);
+
 exit();
 
 // определение мобильного устройства

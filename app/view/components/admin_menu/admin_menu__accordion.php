@@ -2,7 +2,7 @@
 <div class="admin_sidebar">
 
 	<a class="logo" href="/">
-<!--		 --><?// include ROOT . '/app/view/components/header/logo_squre.php' ?>
+		<!--		 --><? // include ROOT . '/app/view/components/header/logo_squre.php' ?>
 		 <? include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
 	</a>
 
@@ -19,7 +19,8 @@
 			  <div class="label">
 
 				  <div class="arrow"></div>
-						 <? include ICONS . '/admin-menu/user-check.svg'; ?>
+						 <? include ICONS . '/admin-menu/chart.svg'; ?>
+
 				  CRM
 
 			  </div>
@@ -51,7 +52,7 @@
 		  </li>
 		 <? endif; ?>
 
-	  <? if (User::can($this->user, ['role_employee'])): // admin ?>
+		 <? if (User::can($this->user, ['role_employee'])): // admin ?>
 		  <li video>
 
 			  <div class="label">
@@ -61,8 +62,8 @@
 			  </div>
 
 			  <ul class="level-1">
-					 <a class="neon" href='/adminsc/videoinstruction'>Инструкции</a>
-					 <a class="neon" href='/adminsc/videoinstruction/edit'>Редактировать инструкции</a>
+				  <a class="neon" href='/adminsc/videoinstruction'>Инструкции</a>
+				  <a class="neon" href='/adminsc/videoinstruction/edit'>Редактировать инструкции</a>
 
 			  </ul>
 		  </li>
@@ -126,11 +127,25 @@
 		</span>
 		</a>
 
+		<li catalog>
+			<div class="label">
+				<span class="arrow"></span>
+					 <? include ICONS . '/feather/shopping-cart.svg'; ?>
+				Каталог
+			</div>
+			<ul class="level-1">
+					 <? if (User::can($this->user, 'role_admin')): // admin ?>
+				  <a class="neon" href="/adminsc/catalog/categories">Категории</a>
+				  <a class="neon" href="/adminsc/catalog/products">Товары</a>
+
+					 <? endif; ?>
+			</ul>
+		</li>
 
 		<li user>
 			<div class="label">
 				<span class="arrow"></span>
-					 <? include ICONS . '/admin-menu/chart.svg'; ?>
+					 <? include ICONS . '/admin-menu/user-check.svg'; ?>
 				Пользователь
 			</div>
 			<ul class="level-1">
@@ -142,7 +157,6 @@
 					 <? endif; ?>
 			</ul>
 		</li>
-
 
 
 		 <? if (User::can($this->user, 'su')): ?>

@@ -2,11 +2,9 @@ const path = require("path");
 const src = path.resolve(__dirname, 'public/src')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
-const isProduction = false;
 
 require('dotenv').config().parsed;
 const env = process.env
-
 
 const config = {
   target: ["web", "es5"],
@@ -31,9 +29,18 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, "public/dist"),
-    filename:'[name].js',
+    filename: '[name].js',
+    asyncChunks: true,
     clean: true,
   },
+  // optimization: {
+  //   runtimeChunk: 'single',
+  //   // splitChunks:{
+  //   //   chunks:'all',
+  //   // }
+  // },
+
+
   // optimization: {
   //   runtimeChunk: 'single',
   //   splitChunks: {
@@ -85,6 +92,9 @@ const config = {
   ],
 
   module: {
+    // noParse: [
+    //   /[\/\\]node_modules\.js$/
+    // ],
     rules: [
       {
         test: /\.js$/,
@@ -114,15 +124,12 @@ const config = {
   },
 };
 
-module.exports = () => {
-  console.log('isProduction:',isProduction)
-  if (isProduction) {
-    config.mode = "production";
-    config.devtool = "none"
+module.exports = (env, argv) => {
+  console.log('mode:', argv.mode)
+  if (argv.mode ==='production') {
+    config.devtool = "nosources-source-map"
   } else {
-    config.mode = "development";
     config.devtool = "source-map"
-    // console.log('dev tool = '+config.devtool)
   }
   return config;
 };

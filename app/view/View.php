@@ -51,6 +51,7 @@ class View
 		$page_cache = ob_get_clean();
 //		self::toFile($page_cache);
 		echo $page_cache;
+
 	}
 
 

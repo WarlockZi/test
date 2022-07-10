@@ -17,8 +17,10 @@ class AdminscController extends AppController
 		$this->autorize();
 		$this->layout = 'admin';
 		if (User::can($this->user, ['role_employee'])) {
+			View::setJs('common.js');
 			View::setJs('admin.js');
 			View::setCss('admin.css');
+			View::setJs('vendors.js');
 		} else {
 			header('Location:/auth/profile');
 		}
@@ -47,7 +49,6 @@ class AdminscController extends AppController
 
 	public function actionIndex()
 	{
-//		View::setJs('common.js');
 		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
 

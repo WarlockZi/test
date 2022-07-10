@@ -11,9 +11,9 @@
   ],
   "scripts": {
     "nrd": "npm run dev",
-    "build": "webpack --mode=production --node-env=production",
+    "build": "webpack --mode production",
     "dev": "webpack -w",
-    "serve": "webpack serve",
+    "serve": "webpack serve --mode development",
     "watch": "webpack --watch"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "sass-loader": "^12.4.0",
     "style-loader": "^2.0.0",
     "webpack": "^5.65.0",
-    "webpack-cli": "^4.9.1",
+    "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.7.1"
   },
   "dependencies": {
