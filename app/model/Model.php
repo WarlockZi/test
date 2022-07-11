@@ -186,7 +186,7 @@ abstract class Model
 	public static function load($id)
 	{
 		$model = new static();
-		$fields = $model::find($id);
+		$fields = $model::findOneWhere('id',$id);
 		if ($fields) {
 			$fields = $fields[0];
 

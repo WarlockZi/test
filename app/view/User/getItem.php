@@ -230,7 +230,7 @@ function getTabs($item)
 		];
 	}
 	return ['title' => 'Права',
-	  'html'=>'Нужны права администратора'];
+		'html' => 'Нужны права администратора'];
 }
 
 function employeeOptions($item, $self)
@@ -313,9 +313,10 @@ function employeeOptions($item, $self)
 	];
 
 	if (User::can($item, ['role_admin'])) {
-		$options['fields'] = $options['fields'] + getConfirmRow($item);
-		$options['fields'] = $options['fields'] + getHiredRow($item);
-		$options['fields'] = $options['fields'] + getFiredRow($item);
+		$options['fields']= $options['fields']
+			+ getConfirmRow($item)
+			+ getHiredRow($item)
+			+ getFiredRow($item);
 	}
 
 	return $options;

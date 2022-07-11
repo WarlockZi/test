@@ -25,7 +25,7 @@ class QuestionController Extends AppController
 				if ($qId === false) {
 					$this->exitWithPopup('Ощибка');
 				} elseif (is_int($qId)) {
-					$this->exitJson(['id'=>$qId]);
+					$this->exitJson(['id' => $qId]);
 				} elseif ($qId === true) {
 					$this->exitWithPopup('Вопрос сохранен');
 				}
@@ -43,8 +43,9 @@ class QuestionController Extends AppController
 			$testId = $ids['test_id'];
 			$q = Question::findOneWhere('id', $id);
 			$q['parent'] = $testId;
-			Question::update($q);
-			$this->exitWithMsg('ok');
+			Question::update($q)
+				?$this->exitWithPopup('ok')
+				:$this->exitWithError('Ошибка при переносе вопроса');
 		}
 	}
 

@@ -20,16 +20,20 @@ class CategoryController Extends AppController
 		View::setCss('admin.css');
 		View::setJs('admin.js');
 	}
+	public function actionIndex()
+	{
+		$id = $this->route['id'];
+		$category = Category::findOneModel('id', $id);
+		$this->set(compact('category'));
+	}
 
 	public function actionEdit()
 	{
-
 			$id = $this->route['id'];
-			$category = Category::findOneWhere('id', $id);
+			$category = Category::findOneModel($id);
 //			$categry['parent'] = $categry->parent();
 //			$categry['products'] = $categry->products();
 			$this->set(compact('category'));
-
 	}
 
 	public function actionUpdateOrCreate()

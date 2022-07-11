@@ -11,7 +11,7 @@ class CustomSelect
 	private $tab = '- ';
 	private $title = '';
 	private $tree = [];
-	private $selected = [];
+	private $selected = 0;
 	private $exclude = [];
 	private $optionName = 'name';
 
@@ -67,7 +67,8 @@ class CustomSelect
 	private function tpl($tpl, $v, $k)
 	{
 		$value = $v['id'] ?? $k;
-		$selected = (int)$this->selected === (int)$k ? 'selected' : '';
+		$selected = (int)$this->selected === (int)$v['id']
+			? 'selected' : '';
 		$name = is_string($v) ? $v : $v[$this->optionName];
 
 		$tpl = "<option value='{$value}' $selected>{$name}</option>";

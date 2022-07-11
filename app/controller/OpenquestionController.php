@@ -22,68 +22,72 @@ class OpenquestionController Extends AppController
 
 	public function actionUpdateOrCreate()
 	{
-
 		if ($this->ajax) {
 			$qId = $this->model::updateOrCreate($this->ajax);
 			if ($qId === false) {
-				return;
+				$this->exitWithError('Ошибка openquest');
 			} elseif (is_int($qId)) {
 				$this->exitJson([
 					'id' => $qId,
-					'msg' => 'Вопросы и ответы сохранены',
+					'popup' => 'Вопросы и ответы сохранены'
 				]);
-			} elseif ($qId === true) {
-				exit(json_encode([
-					'msg' => 'Вопросы и ответы сохранены']));
-			}
-		}
-
-	}
-
-	public function actionChangeParent()
-	{
-		if ($ids = $this->ajax) {
-			$id = $ids['id'];
-			$testId = $ids['test_id'];
-			$q = $this->model::where('id', '=', $id)
-				->get();
-			$q[0]['opentest_id'] = $testId;
-			$this->model::update($q[0]);
-			exit(json_encode(['msg' => 'ok']));
+		} elseif ($qId === true) {
+			$this->exitWithPopup('Вопросы и ответы сохранены');
 		}
 	}
 
-	public function actionUpdate()
-	{
-		$this->model::updateOrCreate($this->req['question']);
+}
 
-		foreach ($this->req['answers'] as $answer) {
-			Openanswer::updateOrCreate($answer);
+public
+function actionChangeParent()
+{
+	if ($ids = $this->ajax) {
+		$id = $ids['id'];
+		$testId = $ids['test_id'];
+		$q = $this->model::where('id', '=', $id)
+			->get();
+		$q[0]['opentest_id'] = $testId;
+		$this->model::update($q[0]);
+		$this->exitJson([
+			'msg' => 'ok',
+		]);
+	}
+}
+
+public
+function actionUpdate()
+{
+	$this->model::updateOrCreate($this->req['question']);
+
+	foreach ($this->req['answers'] as $answer) {
+		Openanswer::updateOrCreate($answer);
+	}
+	exit(json_encode(['msg' => 'Saved']));
+}
+
+public
+function actionDelete()
+{
+	$q_id = $this->ajax['id'];
+
+	$answers = Openanswer::findAllWhere('openquestion_id', $q_id);
+	if ($answers) {
+		foreach ($answers as $answer) {
+			Openanswer::delete($answer['id']);
 		}
-		exit(json_encode(['msg' => 'Saved']));
 	}
-
-	public function actionDelete()
-	{
-		$q_id = $this->ajax['id'];
-
-		$answers = Openanswer::findAllWhere('openquestion_id', $q_id);
-		if ($answers) {
-			foreach ($answers as $answer) {
-				Openanswer::delete($answer['id']);
-			}
-		}
-		$this->model::delete($q_id);
-		exit(json_encode(['msg' => 'Вопрос и ответы удалены', 'q_id' => $q_id]));
-	}
+	$this->model::delete($q_id);
+	exit(json_encode(['msg' => 'Вопрос и ответы удалены', 'q_id' => $q_id]));
+}
 
 
-	public function actionSort()
-	{
-		$ids = $this->ajax['toChange'];
-		if (!$ids) $this->exitWithPopup('ok');
-		$this->model::sort($ids);
-		exit(json_encode(['msg' => 'Сортировка сохранена']));
-	}
+public
+function actionSort()
+{
+	$ids = $this->ajax['toChange'];
+	if (!$ids) $this->exitWithPopup('ok');
+	$this->model::sort($ids);
+	exit(json_encode(['msg' => 'Сортировка сохранена']));
+}
 
 }
