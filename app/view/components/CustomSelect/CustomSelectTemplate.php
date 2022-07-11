@@ -8,13 +8,11 @@
 	<? if (isset($this->initialOptionLabel)): ?>
 	  <option
 			  value="<?= $this->initialOptionValue; ?>"
-			 <?= !$this->selected ? 'selected' : ''; ?>
 	  ><?= $this->initialOptionLabel; ?></option>
 	<? endif; ?>
 
 	<!-- OPTIONS -->
 		<?= $this->values(); ?>
-
 
 </select>
 

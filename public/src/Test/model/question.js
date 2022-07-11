@@ -4,7 +4,7 @@ import {_answer} from "./answer";
 class question {
 
   constructor(el) {
-    this.sort = document.querySelectorAll('.questions>.question-edit').length+1  ?? 0
+    this.sort = document.querySelectorAll('.questions>.question-edit').length + 1 ?? 0
   }
 
   async questionCreate(target) {
@@ -30,14 +30,16 @@ class question {
   }
 
   async changeParent(target) {
-    debugger
-    let opt = target.options[target.selectedIndex]
-    let id = target.closest('.question-edit').id
-    let test_id = opt.dataset['questionParentId']
-    let test_name = opt.value
-    let res = await post('/adminsc/question/changeParent', {id, test_id})
+
     let question = target.closest('.question-edit')
-    question.remove()
+    let id = question.dataset.id
+    let opt = target.options[target.selectedIndex]
+    let test_id = opt.dataset['questionParentId']
+
+    let res = await post('/adminsc/question/changeParent', {id, test_id})
+    if (res) {
+      question.remove()
+    }
   }
 
   showAnswers(target) {

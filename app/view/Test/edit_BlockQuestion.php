@@ -6,7 +6,7 @@
 
 
 		<div class="question-edit__parent-select" data-tooltip="Переместить этот вопрос с ответами в другой тест">
-				<?= \app\view\Test\TestView::isTestSelector($test['id']); ?>
+				<?= \app\view\Test\TestView::questionParentSelector($test['id']); ?>
 		</div>
 
 		<div class="question__show-answers"

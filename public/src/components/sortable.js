@@ -25,7 +25,7 @@ export default function sortable(containerSelector, elSelector, model) {
           )
 
           let toChange = questionsEls.map((el) => {
-            return el.id
+            return el.dataset.id
           })
           let res = await post(`/adminsc/${model}/sort`, {toChange})
           questionsEls.map((el, i) => {

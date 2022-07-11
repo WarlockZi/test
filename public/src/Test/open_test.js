@@ -62,7 +62,6 @@ async function handleClick({target}) {
       rightAnswers,
     }
   }
-
 }
 
 function correctCount(questions) {
