@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\model\Right;
 use app\model\Videoinstruction;
 use app\view\Videoinstruction\VideoinstructionView;
 use app\view\View;
@@ -67,6 +66,5 @@ class VideoinstructionController Extends AppController
 		$VideoinstructionsView = VideoinstructionView::list();
 		$this->set(compact('VideoinstructionsView'));
 	}
-
 
 }
