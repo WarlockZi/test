@@ -135,8 +135,8 @@
 			</div>
 			<ul class="level-1">
 					 <? if (User::can($this->user, 'role_admin')): // admin ?>
-				  <a class="neon" href="/adminsc/catalog/categories">Категории</a>
-				  <a class="neon" href="/adminsc/catalog/products">Товары</a>
+				  <a class="neon" href="/adminsc/category">Категории</a>
+				  <a class="neon" href="/adminsc/product">Товары</a>
 
 					 <? endif; ?>
 			</ul>

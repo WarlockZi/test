@@ -1,4 +1,4 @@
-<? if (!$item['isTest']): ?>
+<? if (!isset($item['isTest'])): ?>
 
 	<div class="label" >
 		<div class="arrow"></div>

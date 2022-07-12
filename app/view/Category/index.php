@@ -2,6 +2,12 @@
 
 	<div class="page-name">Категория</div>
 
-	<?=$category;?>
+	<? foreach ($categories as $category): ?>
+	  <div class="name">
+			 название - <?= $category['name'] ?>
+	  </div>
+
+	<? endforeach; ?>
+	<?=$accordion;?>
 
 </div>
