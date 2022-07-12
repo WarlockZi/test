@@ -4,7 +4,9 @@ namespace app\controller;
 
 
 use app\model\Category;
+use app\model\Model;
 use app\view\View;
+use app\view\widgets\Accordion\Accordion;
 
 class CategoryController Extends AppController
 {
@@ -20,20 +22,29 @@ class CategoryController Extends AppController
 		View::setCss('admin.css');
 		View::setJs('admin.js');
 	}
+
 	public function actionIndex()
 	{
-		$id = $this->route['id'];
-		$category = Category::findOneModel('id', $id);
-		$this->set(compact('category'));
+		$categories = Category::findAll();
+
+		$accordion = new Accordion([
+			'models' => $categories,
+			'model' => new Category(),
+			'parentFieldName' => 'category_id',
+//			'link'=>'adminsc/category/update',
+		]);
+
+		$this->set(compact('categories'));
+		$this->set(compact('accordion'));
 	}
 
 	public function actionEdit()
 	{
-			$id = $this->route['id'];
-			$category = Category::findOneModel($id);
+		$id = $this->route['id'];
+		$category = Category::findOneModel($id);
 //			$categry['parent'] = $categry->parent();
 //			$categry['products'] = $categry->products();
-			$this->set(compact('category'));
+		$this->set(compact('category'));
 	}
 
 	public function actionUpdateOrCreate()

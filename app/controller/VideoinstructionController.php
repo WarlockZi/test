@@ -55,6 +55,11 @@ class VideoinstructionController Extends AppController
 
 	public function actionDelete()
 	{
+		$id = $this->ajax['id'] ?? $_POST['id'];
+		if ($this->model::delete($id)) {
+			$this->exitWithPopup("ok");
+		}
+
 	}
 
 	public function actionEdit()

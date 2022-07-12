@@ -433,7 +433,7 @@ abstract class Model
 		return $all;
 	}
 
-	public function tree(array $models, string $parent = 'parent')
+	public function tree(array $models, string $parent = 'parent'):array
 	{
 		$tree = [];
 		foreach ($models as $id => &$node) {
