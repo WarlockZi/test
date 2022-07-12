@@ -6,9 +6,9 @@ namespace app\view\widgets\Accordion;
 
 class Accordion
 {
+	public $models = [];
 	public $model;
-	public $models;
-	protected $parentFieldName;
+	protected $parentFieldName = '';
 
 	protected $html;
 	protected $class = '';
@@ -61,6 +61,7 @@ class Accordion
 	function li($item, $lev)
 	{
 		ob_start();
+//		$isTest = $item['isTest'] === '1' ? 'data-istest' : '';
 		include ROOT . "/app/view/widgets/Accordion/li.php";
 		return ob_get_clean();
 	}
