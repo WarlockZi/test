@@ -5,7 +5,7 @@ namespace app\model;
 class Category extends Model
 {
 
-	public $table = 'category';
+	public $table = 'categories';
 	public $model = 'category';
 
 	protected $fillable = [

@@ -1,29 +1,31 @@
-import {post, $, validate} from '../common'
+import {post, $, validate, trimStr} from '../common'
 
 let registerForm = $("[data-auth='register']")[0]
 if (registerForm) {
-  $(registerForm).on('click', sendData.bind(this))
+  $(registerForm).on('click', sendData)
 }
 
-let email = $('input[type = email]')[0]
-let password = $('input[name = password]')[0]
-let msg = $(".message")[0];
 
 function sendData({target}) {
-  if (target.classList.contains('submit__button')) {
-    if (validateData()) parseRegisterResponse()
+  let email = trimStr($('input[type = email]')[0].value)
+  let password = trimStr($('input[name = password]')[0].value)
 
+  if (target.classList.contains('submit__button')) {
+    if (validateData(email,password))
+      parseRegisterResponse(email,password)
   }
 }
 
-function validateData() {
-  let error = validate.email(email.value)
+function validateData(email,password) {
+
+
+  let error = validate.email(email)
   if (error) {
     msg.innerText = msg.innerText + error
     $(msg).addClass('error')
     return false
   }
-  error = validate.password(password.value)
+  error = validate.password(password)
   if (error) {
     msg.innerText = msg.innerText + error
     $(msg).addClass('error')
@@ -32,11 +34,11 @@ function validateData() {
   return true
 }
 
-async function parseRegisterResponse() {
-  let msg = $('.message')[0]
+async function parseRegisterResponse(email,password) {
+  let msg = $(".message")[0];
   let data = {
-    "email": email.value,
-    "password": password.value,
+    email,
+    password,
     "surName": $("[name='surName']")[0].value,
     "name": $("[name='name']")[0].value,
   }

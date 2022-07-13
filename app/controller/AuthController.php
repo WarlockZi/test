@@ -30,7 +30,7 @@ class AuthController extends AppController
 			if (!$user['email']) exit('empty email');
 
 			$found = User::findOneWhere('email', $user['email']);
-			if ($found) $this->exitWithPopup('mail exists');
+			if ($found) $this->exitWithMsg('mail exists');
 
 			$hash = md5(microtime());
 			$user['password'] = $this->preparePassword($user['password']);
@@ -48,7 +48,7 @@ class AuthController extends AppController
 					exit('registration failed');
 				}
 				$sent = Mail::send_mail($data);
-				$this->exitWithPopup('confirmed');
+				$this->exitWithMsg('confirmed');
 			} catch (\Exception $e) {
 				exit($e->getMessage());
 			}

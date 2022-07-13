@@ -73,7 +73,7 @@
   }
 }
 
-@mixin chips{
+@mixin chips {
   .chip-wrap {
     display: flex;
     background: white;
@@ -96,8 +96,8 @@
       font-family: sans-serif;
       color: #41444a;
 
-      &:hover{
-        background-color: darken(#e9e9e9,5%);
+      &:hover {
+        background-color: darken(#e9e9e9, 5%);
       }
 
       .del {
@@ -118,23 +118,82 @@
     }
   }
 }
+@mixin ul {
+  display: flex;
+  flex-flow: column;
+  margin-left: 10px;
+  //background-color: darkslategray;
+}
+@mixin tree {
 
-@mixin _button($border-radius:1px,$color:$color-main) {
+  $padding: 5px;
+
+
+  li a {
+    display: flex;
+    flex-flow: column;
+    padding: $padding;
+    color: darkslategray;
+  }
+
+  ul {
+    display: flex;
+    flex-flow: column;
+
+    //background-color: darkslategray;
+
+    li a {
+      display: flex;
+      flex-flow: column;
+      padding: $padding;
+      //background-color: #bc5900;
+      color: darkslategray;
+    }
+
+    a {
+      color: darkslategray;
+      padding: $padding;
+    }
+
+    ul.level-1 {
+      @include ul;
+
+      ul.level-2 {
+        @include ul;
+
+        ul.level-3 {
+          @include ul;
+
+          ul.level-4 {
+            @include ul;
+
+          }
+        }
+
+      }
+    }
+
+
+  }
+}
+
+@mixin _button($border-radius:1px, $color:$color-white, $background:$color-main) {
   display: flex;
   padding: 3px;
   justify-content: center;
   align-items: center;
-  background: $color;
+  background: $background;
   border-radius: $border-radius;
-  color: white;
+  border-color: $background;
+  color: $color;
   cursor: pointer;
   box-sizing: border-box;
-  border: 1px solid $color;
-  transition: background-color, color 500ms;
+  border: 1px solid ;
+  transition: background 500ms, color 500ms;
 
   &:hover {
-    color: $color;
-    background: #ffffff;
+    color: $background;
+    background: $color;
   }
 }
 

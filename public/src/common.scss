@@ -1,3 +1,6 @@
+@import "var";
+@import "mixin_media";
+
 .tip {
   position: absolute;
   display: flex;
@@ -13,7 +16,25 @@
   font-size: 10px;
 }
 
-.column{
+.column {
   display: flex;
   flex-flow: column;
 }
+
+.button.button-outlined.button-success {
+   @include _button(3px,$color-success,$color-white)
+}
+
+.button.button-outlined {
+   @include _button(3px,$color-main,$color-white)
+}
+.button.button-filled.button-success {
+  @include _button(3px,$color-white,$color-success)
+}
+
+.button.button-filled {
+  @include _button(3px,$color-white,$color-main)
+}
+
+
+

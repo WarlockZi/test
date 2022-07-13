@@ -47,19 +47,21 @@ class Router
 			$controller = 'app\controller\\' . self::$route['controller'] . 'Controller';
 
 			if (class_exists($controller)) {
-				$cObj = new $controller(self::$route);
+				$controller = new $controller(self::$route);
 				$action = 'action' . self::upperCamelCase(self::$route['action']); // . 'Action'; //Action для того, чтобы пользователь не мог обращаться к функции(хотя можно написать protected)
-				if (method_exists($cObj, $action)) {
-					$cObj->$action(self::$aCategoryOrProduct); // Выполним метод
-					$cObj->getView(); // Подключим вид
+				if (method_exists($controller, $action)) {
+					$controller->$action(self::$aCategoryOrProduct); // Выполним метод
+					$controller->getView(); // Подключим вид
 				} else {
-					echo "<br><b>$action</b> не найден...  ";
+					http_response_code(404);
+					include ROOT . '/public/404.html';
+					exit("<br><b>$action</b> не найден...  ");
 				}
 
 			} else {
 				http_response_code(404);
 				include ROOT . '/public/404.html';
-				echo "<br>Класс <b>".self::$route['controller']."</b> не найден";
+				exit("<br>Класс <b>".self::$route['controller']."</b> не найден");
 			}
 		}
 	}
