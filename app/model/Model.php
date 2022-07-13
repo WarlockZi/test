@@ -204,11 +204,11 @@ abstract class Model
 	private function fillModel(array $fields): void
 	{
 		foreach ($fields as $k => $v) {
-			$this->fillable[$k] = $v;
+			$this->fields[$k] = $v;
 		}
 	}
 
-	public static function findOneModel($id = ''): array
+	public static function findOneModel($id = ''): Model
 	{
 		$model = new static();
 		$sql = "SELECT * FROM {$model->table} WHERE id IN (?)";
@@ -440,7 +440,7 @@ abstract class Model
 			if (array_key_exists($parent, $node) && !$node[$parent]) {
 				$tree[$id] = &$node;
 			} elseif (isset($node[$parent]) && $node[$parent]) {
-				$models[$node[$parent]]['childs'][$id] = &$node;
+				$models[(int)$node[$parent]]['childs'][$id] = &$node;
 			}
 		}
 		return $tree;

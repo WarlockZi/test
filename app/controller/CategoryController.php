@@ -3,10 +3,12 @@
 namespace app\controller;
 
 
+use app\model\Product;
+use app\view\components\Tree\Tree;
 use app\model\Category;
-use app\model\Model;
+
 use app\view\View;
-use app\view\widgets\Accordion\Accordion;
+
 
 class CategoryController Extends AppController
 {
@@ -27,12 +29,14 @@ class CategoryController Extends AppController
 	{
 		$categories = Category::findAll();
 
-		$accordion = new Accordion([
-			'models' => $categories,
-			'model' => new Category(),
-			'parentFieldName' => 'category_id',
+		$accordion = new Tree([
+			'items' => $categories,
+			'model' => Category::class,
+			'parent' => 'category_id',
+			'template' => 'category',
 //			'link'=>'adminsc/category/update',
 		]);
+		$accordion = $accordion->output();
 
 		$this->set(compact('categories'));
 		$this->set(compact('accordion'));
@@ -42,9 +46,16 @@ class CategoryController Extends AppController
 	{
 		$id = $this->route['id'];
 		$category = Category::findOneModel($id);
+		$category = $category->fields ;
+		$cat = Category::where('id','=',$id)
+			->with('product')
+			->get();
+		$products = $cat->hasMany[Product::class]['items'];
 //			$categry['parent'] = $categry->parent();
 //			$categry['products'] = $categry->products();
 		$this->set(compact('category'));
+		$this->set(compact('cat'));
+		$this->set(compact('products'));
 	}
 
 	public function actionUpdateOrCreate()

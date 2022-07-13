@@ -1,8 +1,6 @@
 <div class="test-data">
 
-	<? foreach ($testData
-
-							as $id_quest => $item): ?>
+	<? foreach ($testData  as $id_quest => $item): ?>
 	  <div class="question" data-id="<?= $item['id']; ?>">
 
 		  <div class="q">

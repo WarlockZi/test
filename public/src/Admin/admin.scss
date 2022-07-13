@@ -1,11 +1,11 @@
+@import '../var.scss';
+@import "../mixin_media";
+@import '../normalize.scss';
 //@import "components/sub-menu/adm-menu";
 //@import "components/sub-menu/catalog";
-@import "components/dump";
-@import "components/grid";
+@import "../components/del/dump";
+@import "../components/del/grid";
 @import "../components/neon";
-@import '../normalize.scss';
-@import "../mixin_media";
-@import '../var.scss';
 
 @include chips;
 

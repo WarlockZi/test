@@ -128,6 +128,33 @@ class Image extends Model
 		imagedestroy($this->image);
 	}
 
+	protected function createImgPaths($alias, $fname,  $ext, $isOnly, $rate = 800)
+	{
+		$ext = $ext ?: 'jpg';
+		$p['filename'] = $rate ? "{$fname}-{$rate}.{$ext}" : "{$fname}.{$ext}";
+		$p['group'] = $_SERVER['DOCUMENT_ROOT'] . "/pic/{$alias}/";
+		$p['to'] = $p['group'] . $p['filename'];
+		$p['rel'] = "{$alias}/{$fname}";
+		return $p;
+	}
+
+	public function uploadIMG($alias, $sub, $isOnly, $file)
+	{
+		$arr = extract($this->getImgParams());
+		$fname = substr($file['name'], 0, strlen($file['name']) - 4);
+		foreach ($sizes as $size) {
+			if (!$size) {
+				$ps = $this->createImgPaths($alias, $fname, null, null, $isOnly);
+				move_uploaded_file($file['tmp_name'], $ps['to']);
+			} else {
+				$pX = $this->createImgPaths($alias, $fname, $size, $toExt, $isOnly);
+				$new_image = new picture($ps['to']);
+				$new_image->autoimageresize($size, $size);
+				$new_image->imagesave($toExt, $pX['to'], $quality, 0777);
+			}
+		}
+		return $pX['rel'];
+	}
 	private function fotoimage()
 	{
 		switch ($this->image_type) {

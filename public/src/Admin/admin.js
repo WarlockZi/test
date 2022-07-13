@@ -16,6 +16,7 @@ import rights from './Rights/rights'
 import './Planning/planning'
 import user from './user/user'
 import '../Test/open_test'
+import './Category/category'
 
 import radio from '@components/radio/radio'
 import list from '@components/list/list'
