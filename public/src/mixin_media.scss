@@ -128,7 +128,6 @@
 
   $padding: 5px;
 
-
   li a {
     display: flex;
     flex-flow: column;
@@ -166,14 +165,10 @@
 
           ul.level-4 {
             @include ul;
-
           }
         }
-
       }
     }
-
-
   }
 }
 
@@ -188,12 +183,12 @@
   color: $color;
   cursor: pointer;
   box-sizing: border-box;
-  border: 1px solid ;
+  border: 1px solid $background;
   transition: background 500ms, color 500ms;
 
   &:hover {
     color: $background;
-    background: $color;
+    background: transparent;
   }
 }
 

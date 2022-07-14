@@ -3,6 +3,9 @@
 use app\core\App;
 use app\core\Router;
 use \Engine\DI\DI;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Container\Container;
 
 session_start();
 
@@ -21,10 +24,35 @@ define('SAVE', ICONS.'/save.svg');
 define('EDIT', ICONS.'/edit.svg');
 define('COMPONENTS', ROOT.'/app/view/components');
 
+
+$capsule = new Capsule;
+$capsule->addConnection([
+	'driver'    => 'mysql',
+	'host'      => 'localhost',
+	'database'  => $_ENV['DB_DB'],
+	'username'  => $_ENV['DB_USER'],
+	'password'  => $_ENV['DB_PASSWORD'],
+	'charset'   => 'utf8',
+	'collation' => 'utf8_unicode_ci',
+	'prefix'    => '',
+]);
+
+// Set the event dispatcher used by Eloquent models... (optional)
+
+$capsule->setEventDispatcher(new Dispatcher(new Container));
+
+// Make this Capsule instance available globally via static methods... (optional)
+$capsule->setAsGlobal();
+
+// Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
+$capsule->bootEloquent();
+
+
 if (DEV) {
 	ini_set('display_errors', 1);
 }
 new App(new DI);
+//new App();
 //DI::test();
 Router::dispatch($_SERVER['QUERY_STRING']);
 
