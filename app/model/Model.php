@@ -423,30 +423,6 @@ abstract class Model
 		return $this->pdo->execute($sql, $params);
 	}
 
-
-	public function idKeys(array $models)
-	{
-		$all = [];
-		foreach ($models as $key => $v) {
-			$all[$v['id']] = $v;
-		}
-		return $all;
-	}
-
-	public function tree(array $models, string $parent = 'parent'):array
-	{
-		$tree = [];
-		foreach ($models as $id => &$node) {
-			if (array_key_exists($parent, $node) && !$node[$parent]) {
-				$tree[$id] = &$node;
-			} elseif (isset($node[$parent]) && $node[$parent]) {
-				$models[(int)$node[$parent]]['childs'][$id] = &$node;
-			}
-		}
-		return $tree;
-	}
-
-
 	function multi_implode($glue, $array)
 	{
 		$_array = array();
@@ -455,17 +431,5 @@ abstract class Model
 		return implode($glue, $_array);
 	}
 
-//	public function tree2(string $parent = 'parent')
-//	{
-//		$data = $this->idKeys($this->data);
-//		foreach ($data as $id => &$node) {
-//			if ((isset($node[$parent]) || $node[$parent] === null) && !$node[$parent]) {
-//				$tree[$id] = &$node;
-//			} elseif (isset($node[$parent]) && $node[$parent]) {
-//				$data[$node[$parent]]['childs'][$id] = &$node;
-//			}
-//		}
-//		return $tree;
-//	}
 
 }

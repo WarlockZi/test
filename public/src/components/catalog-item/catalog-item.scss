@@ -2,7 +2,6 @@
 @import "../../mixin_media";
 
 
-
 .profile {
   min-width: 400px;
   margin: 30px 0;
@@ -23,7 +22,7 @@
   flex-flow: column;
 
   .page-title {
-    margin: 0 0 15px 0 ;
+    margin: 0 0 15px 0;
     @include _h3;
   }
 
@@ -89,7 +88,8 @@
       text-align: end;
       flex: 0 0;
     }
-    .text:not([contenteditable]){
+
+    .text:not([contenteditable]) {
       margin: $margin-form;
     }
 
@@ -111,7 +111,7 @@
       flex: 1 0 160px;
       position: relative;
 
-      .error{
+      .error {
         position: absolute;
         top: -7%;
         font-size: .7rem;
@@ -127,11 +127,12 @@
     &.show {
       display: flex;
     }
+
     .content {
       background-color: $color-gray3;
       display: flex;
       flex-flow: column;
-      
+
       //padding: 20px 10px;
 
       .row {
@@ -150,48 +151,47 @@
     }
 
   }
-  //.buttons_wrap {
-  //  display: flex;
-    .item_buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      flex: 1 0;
-      margin: 40px 0 0;
 
-      .save, .del, .to-list {
-        padding: 10px 15px;
-        $border-radius: 3%;
-        line-height: 1.2rem;
-        @include _button($border-radius);
-        align-self: end;
+  .item_buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex: 1 0;
+    margin: 40px 0 0;
 
-        &:hover {
-          svg {
-            fill: $color-main;
-          }
-        }
+    .save, .del, .to-list {
+      padding: 10px 15px;
+      $border-radius: 3%;
+      line-height: 1.2rem;
+      @include _button($border-radius);
+      align-self: end;
 
+      &:hover {
         svg {
-          transition: fill 500ms;
-          fill: #ffffff;
+          fill: $color-main;
         }
       }
 
-      .del {
-        background-color: $color-warning;
-        border: 1px solid $color-warning;
-
-        &:hover {
-          svg {
-            fill: $color-warning;
-          }
-        }
-
-        svg {
-          fill: #ffffff;
-        }
+      svg {
+        transition: fill 500ms;
+        fill: #ffffff;
       }
     }
-  //}
+
+    .del {
+      background-color: $color-warning;
+      border: 1px solid $color-warning;
+
+      &:hover {
+        svg {
+          fill: $color-warning;
+        }
+      }
+
+      svg {
+        fill: #ffffff;
+      }
+    }
+  }
+
 }

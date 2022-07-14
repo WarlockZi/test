@@ -2,7 +2,10 @@
 
 namespace app\model;
 
-class Category extends Model
+
+use Illuminate\Support\Facades\DB;
+
+class Category extends \Illuminate\Database\Eloquent\Model
 {
 
 	public $table = 'categories';

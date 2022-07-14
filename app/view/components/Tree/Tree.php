@@ -36,10 +36,32 @@ class Tree
 	public function run()
 	{
 		$model = new $this->model;
-		$models = $model->idKeys($this->items);
-		$tree = $model->tree($models, $this->parent);
+		$models = self::idKeys($this->items);
+		$tree = self::tree($models, $this->parent);
 		$this->html = $this->showCat($tree);
 		$this->output();
+	}
+
+	public function tree(array $items, string $parent = 'parent'):array
+	{
+		$tree = [];
+		foreach ($items as $id => &$node) {
+			if (array_key_exists($parent, $node) && !$node[$parent]) {
+				$tree[$id] = &$node;
+			} elseif (isset($node[$parent]) && $node[$parent]) {
+				$items[(int)$node[$parent]]['childs'][$id] = &$node;
+			}
+		}
+		return $tree;
+	}
+
+	public function idKeys(array $items)
+	{
+		$all = [];
+		foreach ($items as $key => $v) {
+			$all[$v['id']] = $v;
+		}
+		return $all;
 	}
 
 	function ul($item, $level)

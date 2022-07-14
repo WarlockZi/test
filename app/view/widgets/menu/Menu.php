@@ -3,6 +3,7 @@
 namespace app\view\widgets\menu;
 
 use app\model\Model;
+use app\view\components\Tree\Tree;
 
 class Menu extends Model
 {
@@ -34,7 +35,7 @@ class Menu extends Model
 
 	protected function run()
 	{
-		$this->tree = $this->tree($this->models);
+		$this->tree = Tree::tree($this->models);
 		$this->menuHTML = $this->getMenuHtml($this->tree);
 		$this->output();
 	}

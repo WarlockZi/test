@@ -27,7 +27,9 @@ class CategoryController Extends AppController
 
 	public function actionIndex()
 	{
-		$categories = Category::findAll();
+//		$categories = Category::findAll();
+//		$categories = Category::all();
+		$categories = Category::all()->toarray();
 
 		$accordion = new Tree([
 			'items' => $categories,

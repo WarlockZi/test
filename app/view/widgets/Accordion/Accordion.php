@@ -4,6 +4,8 @@ namespace app\view\widgets\Accordion;
 
 //use app\model\Model;
 
+use app\view\components\Tree\Tree;
+
 class Accordion
 {
 	public $models = [];
@@ -37,8 +39,8 @@ class Accordion
 
 	protected function run()
 	{
-		$models = $this->model->idKeys($this->models);
-		$this->tree = $this->model->tree($models, $this->parentFieldName);
+		$models = Tree::idKeys($this->models);
+		$this->tree = Tree::tree($models, $this->parentFieldName);
 		$this->html = $this->showCat($this->tree);
 		$this->output();
 	}
