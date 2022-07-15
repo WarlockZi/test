@@ -5,7 +5,6 @@ namespace app\view\components\Tree;
 
 class Tree
 {
-	private $model = '';
 	private $items = [];
 	private $parent = '';
 	private $template = '';
@@ -28,21 +27,20 @@ class Tree
 				$this->$k = $v;
 			}
 		}
-			$templ = $this->template;
-			$this->liTemplate = ROOT . "/app/view/components/Tree/{$templ}/{$templ}Li.php";
-			$this->ulTemplate = ROOT . "/app/view/components/Tree/{$templ}/{$templ}Ul.php";
+		$templ = $this->template;
+		$this->liTemplate = ROOT . "/app/view/components/Tree/{$templ}/{$templ}Li.php";
+		$this->ulTemplate = ROOT . "/app/view/components/Tree/{$templ}/{$templ}Ul.php";
 	}
 
 	public function run()
 	{
-		$model = new $this->model;
 		$models = self::idKeys($this->items);
 		$tree = self::tree($models, $this->parent);
 		$this->html = $this->showCat($tree);
 		$this->output();
 	}
 
-	public function tree(array $items, string $parent = 'parent'):array
+	public static function tree(array $items, string $parent = 'parent'): array
 	{
 		$tree = [];
 		foreach ($items as $id => &$node) {
@@ -55,7 +53,7 @@ class Tree
 		return $tree;
 	}
 
-	public function idKeys(array $items)
+	public static function idKeys(array $items)
 	{
 		$all = [];
 		foreach ($items as $key => $v) {
@@ -86,8 +84,8 @@ class Tree
 
 		$menu = "<{$tag} {$class}>";
 		$menu .= $ul
-			?$this->ul($item, $level)
-			:$this->li($item, $level);
+			? $this->ul($item, $level)
+			: $this->li($item, $level);
 
 		if ($ul) {
 			$menu .=
@@ -109,26 +107,25 @@ class Tree
 		return $string;
 	}
 
-
-
-
-
 	private function buildLi($item, $level)
 	{
 		$this->html .= $this->liDecortor($item, $level);
 	}
+
 	private function liDecortor($item, $level)
 	{
 		$level++;
 		$content = $this->getLiContent($item, $level);
 		return "<li class='level-{$level}'>{$content}</li>";
 	}
+
 	private function getLiContent($item, $level)
 	{
 		ob_start();
 		include $this->liTemplate;
 		return ob_get_clean();
 	}
+
 	public function buildHtml($tree)
 	{
 		foreach ($tree as $index => $item)
@@ -138,24 +135,20 @@ class Tree
 				$this->buildLi($item, 0);
 			}
 	}
+
 	private function buildUl($item, $level)
 	{
 		$level++;
 		$content = $this->getUlContent($item, $level);
 		$this->html .= "<ul class='level-{$level}>{$content}</ul>";
 	}
+
 	private function getUlContent($item, $level)
 	{
 		ob_start();
 		include $this->ulTemplate;
 		return ob_get_clean();
 	}
-
-
-
-
-
-
 
 	public function output()
 	{
