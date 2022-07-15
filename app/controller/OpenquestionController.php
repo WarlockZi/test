@@ -38,8 +38,7 @@ class OpenquestionController Extends AppController
 
 	}
 
-	public
-	function actionChangeParent()
+	public function actionChangeParent()
 	{
 		if ($ids = $this->ajax) {
 			$id = $ids['id'];
