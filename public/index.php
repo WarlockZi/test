@@ -21,7 +21,7 @@ define('TRASH', ICONS.'/trashIcon.svg');
 define('SAVE', ICONS.'/save.svg');
 define('EDIT', ICONS.'/edit.svg');
 define('COMPONENTS', ROOT.'/app/view/components');
-
+exit('dd');
 //require_once './Eloquent.php';
 
 
