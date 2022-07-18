@@ -3,9 +3,7 @@
 use app\core\App;
 use app\core\Router;
 use \Engine\DI\DI;
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Container\Container;
+
 
 session_start();
 
@@ -13,7 +11,7 @@ require_once "../vendor/autoload.php";
 
 (Dotenv\Dotenv::createImmutable(dirname(__DIR__)))->load();
 
-require_once "../engine/bootstrap.php"; // container
+//require_once "../engine/bootstrap.php"; // container
 
 error_reporting(E_ALL);
 define('DEV', $_ENV['MODE'] === 'development'); //0-не выводить ошибки
@@ -24,28 +22,7 @@ define('SAVE', ICONS.'/save.svg');
 define('EDIT', ICONS.'/edit.svg');
 define('COMPONENTS', ROOT.'/app/view/components');
 
-
-$capsule = new Capsule;
-$capsule->addConnection([
-	'driver'    => 'mysql',
-	'host'      => 'localhost',
-	'database'  => $_ENV['DB_DB'],
-	'username'  => $_ENV['DB_USER'],
-	'password'  => $_ENV['DB_PASSWORD'],
-	'charset'   => 'utf8',
-	'collation' => 'utf8_unicode_ci',
-	'prefix'    => '',
-]);
-
-// Set the event dispatcher used by Eloquent models... (optional)
-
-$capsule->setEventDispatcher(new Dispatcher(new Container));
-
-// Make this Capsule instance available globally via static methods... (optional)
-$capsule->setAsGlobal();
-
-// Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
-$capsule->bootEloquent();
+require_once './Eloquent.php';
 
 
 if (DEV) {

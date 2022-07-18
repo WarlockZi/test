@@ -118,12 +118,14 @@
     }
   }
 }
+
 @mixin ul {
   display: flex;
   flex-flow: column;
   margin-left: 10px;
   //background-color: darkslategray;
 }
+
 @mixin tree {
 
   $padding: 5px;
@@ -172,23 +174,26 @@
   }
 }
 
-@mixin _button($border-radius:1px, $color:$color-white, $background:$color-main) {
+@mixin _button(
+  $border-radius:1px,
+  $color:$color-white,
+  $background:$color-main,
+$border-color:$color-main) {
   display: flex;
   padding: 3px;
   justify-content: center;
   align-items: center;
   background: $background;
   border-radius: $border-radius;
-  border-color: $background;
   color: $color;
   cursor: pointer;
   box-sizing: border-box;
-  border: 1px solid $background;
+  border: 1px solid $border-color;
   transition: background 500ms, color 500ms;
 
   &:hover {
     color: $background;
-    background: transparent;
+    background: $color;
   }
 }
 

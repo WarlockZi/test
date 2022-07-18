@@ -16,11 +16,7 @@
 <? else: ?>
 
 	<div class="user-menu">
-		<img src="
-        <?= $this->user['sex'] === 'f'
-				? $this->getImg('/pic/ava_female.jpg')
-				: $this->getImg('/pic/ava_male.png'); ?>
-        " alt="">
+		<img src="<?= \app\model\User::avatar($this->user);?>" alt="">
 
 		<div class="credits">
 			<div class="fio"><?= "{$this->user['surName']} {$this->user['name']}"; ?></div>

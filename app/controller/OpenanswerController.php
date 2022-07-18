@@ -31,7 +31,6 @@ class OpenanswerController Extends AppController
 			}
 			$this->exitWithPopup('ok');
 		}
-
 	}
 
 

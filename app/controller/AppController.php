@@ -98,18 +98,13 @@ class AppController extends Controller
   public function auth()
   {
     if (isset($_SESSION['id']) && $_SESSION['id']) {
-
       $user = $this->user = User::findOneWhere('id', $_SESSION['id']);
-
       if ($this->user === false) {
         $errors[] = 'Неправильные данные для входа на сайт';
-//			} elseif ($this->user['confirm'] !== "1") {
-//				$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
       } else {
         $this->set(compact('user'));
       }
     }
   }
-
 
 }

@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\controller\AppController;
 
 class CrmController extends AdminscController{
 
@@ -11,11 +10,6 @@ class CrmController extends AdminscController{
    }
 
    public function actionIndex() {
-
-//      $this->autorize();
-
-//      $this->vars['js'] = $this->getJSCSS('.js');
-//      $this->vars['css'] = $this->getJSCSS('.css');
 
    }
 

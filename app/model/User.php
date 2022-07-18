@@ -30,21 +30,31 @@ class User extends Model
 		'sex' => 'f',
 	];
 
+	public static function avatar(array $user): string
+	{
+		if (isset($user['avatar'])){
+			return $user['avatar'];
+		}
+
+		return $user['sex'] === 'f'
+			? View::getImg('/pic/ava_female.jpg')
+			: View::getImg('/pic/ava_male.png');
+	}
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public static function can(array $user, $rights=[]):bool
+	public static function can(array $user, $rights = []): bool
 	{
 		if (is_string($rights) && $rights) {
 			$rights = compact('rights');
 		}
 		return (
-			array_intersect($rights, $user['rights'])
-			|| defined('SU')
-			|| array_intersect(['role_admin'], $user['rights']))
+				array_intersect($rights, $user['rights'])
+				|| defined('SU')
+				|| array_intersect(['role_admin'], $user['rights']))
 			?? false;
 	}
 

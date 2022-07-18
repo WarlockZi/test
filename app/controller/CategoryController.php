@@ -3,7 +3,9 @@
 namespace app\controller;
 
 
+use app\model\MyCategory;
 use app\model\Product;
+use app\view\Category\CategoryView;
 use app\view\components\Tree\Tree;
 use app\model\Category;
 
@@ -27,9 +29,7 @@ class CategoryController Extends AppController
 
 	public function actionIndex()
 	{
-//		$categories = Category::findAll();
-//		$categories = Category::all();
-		$categories = Category::all()->toarray();
+		$categories = Category::all()->toArray();
 
 		$accordion = new Tree([
 			'items' => $categories,
@@ -47,17 +47,22 @@ class CategoryController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route['id'];
-		$category = Category::findOneModel($id);
-		$category = $category->fields ;
-		$cat = Category::where('id','=',$id)
-			->with('product')
-			->get();
-		$products = $cat->hasMany[Product::class]['items'];
-//			$categry['parent'] = $categry->parent();
-//			$categry['products'] = $categry->products();
+		$category = Category::with('products')
+			->where('id', '=', $id)
+			->get()[0];
+//			->toArray();
+		$category = CategoryView::edit($category);
+//		$cat = MyCategory::where('id', '=', $id)
+//			->with('product')
+//			->get();
+////		$products = $cat->hasMany[Product::class]['items'];
+//		$products = $cat::product($cat);
+//		$categry['parent'] = $category->parent();
+//		$categry['products'] = $category->products();
+//		$this->set(compact('cat'));
+//		$this->set(compact('products'));
+
 		$this->set(compact('category'));
-		$this->set(compact('cat'));
-		$this->set(compact('products'));
 	}
 
 	public function actionUpdateOrCreate()
