@@ -124,7 +124,7 @@ class View
 		self::$jsCss['css'][] = "<link href='{$host}{$file}{$time}' rel='stylesheet' type='text/css'>";
 	}
 
-	public function getImg($path)
+	public static function getImg($path)
 	{
 		if (is_readable(ROOT . $path)) {
 			return $path;

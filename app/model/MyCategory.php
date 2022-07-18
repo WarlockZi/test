@@ -3,9 +3,7 @@
 namespace app\model;
 
 
-use Illuminate\Support\Facades\DB;
-
-class Category extends \Illuminate\Database\Eloquent\Model
+class MyCategory extends Model
 {
 
 	public $table = 'categories';
@@ -24,12 +22,17 @@ class Category extends \Illuminate\Database\Eloquent\Model
 		return $this->hasOne(Category::class);
 	}
 
-	public function children(){
-		return $this->hasMany(Category::class, 'category_id');
-	}
 
-	public function products()
+//	public function products()
+//	{
+//		return $this->hasMany(Product::class);
+//	}
+
+	public static function __callStatic($name, $args)
 	{
-		return $this->hasMany(Product::class);
+		$class = 'app\model\\'.ucfirst($name);
+
+		return $args[0]->hasMany[$class]['items'];
+
 	}
 }

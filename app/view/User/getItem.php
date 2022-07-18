@@ -78,7 +78,7 @@ function getConfirmRow($item)
 	$html = getConfirmHtml($item);
 	return [
 		'Подтвержден' => [
-			'name' => 'Подтвержден',
+			'field' => 'Подтвержден',
 			'contenteditable' => false,
 			'data-type' => 'select',
 			'html' => $html,

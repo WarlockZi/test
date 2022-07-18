@@ -16,8 +16,17 @@ export default function list() {
 
       $(table).on('click', handleClick.bind(this));
       $(table).on('keyup', handleKeyUp.bind(this));
+      $(table).on('paste', handlePaste.bind(this));
 
       let debouncedInput = debounce(handleInput)
+
+
+      function handlePaste(e){
+        let clip = e.clipboardData.getData('text/plain')
+        e.target.innerText = clip
+        handleInput(table,contenteditable,e.target)
+        e.target.innerText = ''
+      }
 
       function handleKeyUp({target}) {
 
@@ -50,8 +59,7 @@ export default function list() {
           /// edit
         } else if (target.className === '.edit:not(.head)' ||
           target.closest('.edit:not(.head)')) {
-          let id = target.closest('.edit:not(.head)').dataset['id']
-          window.location = `/adminsc/${modelName}/edit/${id}`;
+          edit(target,modelName)
 
           /// sort
         } else if (target.classList.contains('head')) {
@@ -61,6 +69,11 @@ export default function list() {
           })
           sortColumn(index)
         }
+      }
+      function edit(target,modelName){
+        let id = target.closest('.edit:not(.head)').dataset['id']
+        window.location = `/adminsc/${modelName}/edit/${id}`;
+
       }
 
       // DELETE

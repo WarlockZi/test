@@ -26,7 +26,7 @@
 }
 
 .button.button-outlined {
-   @include _button(3px,$color-main,$color-white)
+   @include _button(3px,$color-main,$color-white,$color-main)
 }
 .button.button-filled.button-success {
   @include _button(3px,$color-white,$color-success)

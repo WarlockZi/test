@@ -4,8 +4,6 @@
 namespace app\view\components\CustomCatalogItem;
 
 
-use app\model\Model;
-
 class CustomCatalogItem
 {
 	public $pageTitle = '';

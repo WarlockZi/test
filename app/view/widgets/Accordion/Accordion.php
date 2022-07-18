@@ -2,7 +2,6 @@
 
 namespace app\view\widgets\Accordion;
 
-//use app\model\Model;
 
 use app\view\components\Tree\Tree;
 

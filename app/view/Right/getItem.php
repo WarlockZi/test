@@ -212,7 +212,7 @@ function getEmployeeHtml($item, $self)
 			],
 
 			'Подтвержден' => [
-				'name' => 'Подтвержден',
+				'field' => 'Подтвержден',
 				'contenteditable' => false,
 				'data-type' => 'select',
 				'html' => getConfirm($item),

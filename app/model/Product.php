@@ -2,16 +2,18 @@
 
 namespace app\model;
 
-use app\core\App;
 
 
-class Product extends Model
+class Product extends \Illuminate\Database\Eloquent\Model
 {
 
 	public $table = 'products';
 	public $model = 'product';
 
-
+	public function category()
+	{
+		return $this->belongsTo(Category::class);
+}
 
 
 }
