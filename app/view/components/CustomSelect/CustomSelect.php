@@ -67,7 +67,7 @@ class CustomSelect
 	private function tpl($tpl, $v, $k)
 	{
 		$value = $v['id'] ?? $k;
-		$selected = (int)$this->selected === (int)$v['id']
+		$selected = (int)$this->selected[0] === (int)$k
 			? 'selected' : '';
 		$name = is_string($v) ? $v : $v[$this->optionName];
 
