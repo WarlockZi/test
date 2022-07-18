@@ -22,7 +22,7 @@ define('SAVE', ICONS.'/save.svg');
 define('EDIT', ICONS.'/edit.svg');
 define('COMPONENTS', ROOT.'/app/view/components');
 
-require_once './Eloquent.php';
+//require_once './Eloquent.php';
 
 
 if (DEV) {
