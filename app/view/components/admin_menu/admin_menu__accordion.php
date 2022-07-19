@@ -44,6 +44,7 @@
 
 			  <ul class="level-1">
 						 <? if (User::can($this->user, ['gate_admin'])): // admin ?>
+					 <a class="neon" href='/adminsc/property/list'>Свойства</a>
 					 <a class="neon" href='/adminsc/right/list'>Права</a>
 					 <a class="neon" href='/adminsc/post/list'>Должности</a>
 					 <a class="neon" href='/adminsc/todo/list'>Задачи</a>
