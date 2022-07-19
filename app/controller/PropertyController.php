@@ -3,20 +3,20 @@
 namespace app\controller;
 
 
-use app\model\MyCategory;
-use app\model\Product;
+use app\model\Property;
 use app\view\Category\CategoryView;
+use app\view\Property\PropertyView;
 use app\view\components\Tree\Tree;
 use app\model\Category;
 
 use app\view\View;
 
 
-class CategoryController Extends AppController
+class PropertyController Extends AppController
 {
 
-	private $model = 'category';
-	private $table = 'categories';
+	private $model = 'property';
+	private $table = 'properties';
 
 	public function __construct(array $route)
 	{
@@ -29,48 +29,22 @@ class CategoryController Extends AppController
 
 	public function actionIndex()
 	{
-		$categories = Category::all()->toArray();
+		$properties = Property::all()->toArray();
 
-		$accordion = new Tree([
-			'items' => $categories,
-			'model' => Category::class,
-			'parent' => 'category_id',
-			'template' => 'category',
-//			'link'=>'adminsc/category/update',
-		]);
-		$accordion = $accordion->output();
-
-		$this->set(compact('categories'));
-		$this->set(compact('accordion'));
+		$this->set(compact('properties'));
 	}
 
 	public function actionEdit()
 	{
 		$id = $this->route['id'];
 
-		$category = Category::with('products',
-			'parent.parent.parent.parent.parent'
-		)
-			->where('id', '=', $id)
-			->get()[0];
-		$arr = $category->toArray();
 
-		$category = Category::with('products','parent_rec')
+		$category = Property::with('products','parent_rec')
 			->where('id', '=', $id)
 			->get()[0];
-//		$category = $category->toArray();
 
 
 		$category = CategoryView::edit($category);
-//		$cat = MyCategory::where('id', '=', $id)
-//			->with('product')
-//			->get();
-////		$products = $cat->hasMany[Product::class]['items'];
-//		$products = $cat::product($cat);
-//		$categry['parent'] = $category->parent();
-//		$categry['products'] = $category->products();
-//		$this->set(compact('cat'));
-//		$this->set(compact('products'));
 
 		$this->set(compact('category'));
 	}

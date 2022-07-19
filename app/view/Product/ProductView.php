@@ -2,15 +2,12 @@
 namespace app\view\Product;
 
 use app\model\Category;
-use app\model\Product;
 
 class ProductView
 {
 
 	public function __construct()
 	{
-
-
 
 	}
 

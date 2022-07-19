@@ -13,7 +13,7 @@ require_once "../vendor/autoload.php";
 
 //require_once "../engine/bootstrap.php"; // container
 
-//exit('dd');
+
 error_reporting(E_ALL);
 define('DEV', $_ENV['MODE'] === 'development'); //0-не выводить ошибки
 define('ROOT', dirname(__DIR__));

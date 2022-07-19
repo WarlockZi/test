@@ -15,16 +15,46 @@ class Category extends \Illuminate\Database\Eloquent\Model
 		'name' => '',
 		'description' => '',
 		'category_id' => 0,
-		'sort'=>1,
-		'img'=>'',
+		'sort' => 1,
+		'img' => '',
 	];
+
+	public function oneParent()
+	{
+		return $this->belongsTo(Category::class);
+
+	}
+
+
+	public function getParentsAttribute()
+	{
+		$parents = collect([]);
+
+		$parent = $this->parent();
+
+		while(!is_null($parent)) {
+			$parents->push($parent);
+			$parent = $parent->parent();
+		}
+
+		return $parents;
+	}
+
+
+
+
+	public function parent_rec()
+	{
+		return $this->parent()->with('parent_rec');
+	}
 
 	public function parent()
 	{
-		return $this->hasOne(Category::class);
+		return $this->belongsTo(Category::class,'category_id');
 	}
 
-	public function children(){
+	public function children()
+	{
 		return $this->hasMany(Category::class, 'category_id');
 	}
 

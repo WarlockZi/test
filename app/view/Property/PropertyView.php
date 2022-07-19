@@ -1,37 +1,43 @@
 <?php
 
 
-namespace app\view\Category;
+namespace app\view\Property;
 
 
 use app\model\Category;
 use app\model\MyCategory;
 use app\model\Product;
+use app\model\Property;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use app\view\Product\ProductView;
 
-class CategoryView
+class PropertyView
 {
 
 	private $model;
 	public $html;
 
-	public function __construct(Category $category)
+	public function __construct(Property $model)
 	{
-		if ($category) {
-			$this->model = $category;
+		if ($model) {
+			$this->model = $model;
 			$this->getHtml();
 		} else {
 			$this->noElement();
 		}
 	}
 
-	public static function edit(Category $model): string
+	public static function edit(Property $model): string
 	{
 		$view = new self($model);
 		return $view->html;
 	}
 
+	public static function index($model): string
+	{
+		$view = new self($model);
+		return $view->html;
+	}
 
 	public static function show(Model $model)
 	{
@@ -82,9 +88,9 @@ class CategoryView
 
 	private function getOptions()
 	{
-		$cat = $this->model->toArray();
+		$model = $this->model->toArray();
 		return [
-			'item' => $cat,
+			'item' => $model,
 			'modelName' => $this->model->model,
 			'tableClassName' => $this->model->table,
 			'pageTitle' => '',
