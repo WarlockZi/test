@@ -2,6 +2,7 @@
      data-model="<?= $this->modelName ?>"
      data-table="<?= $this->tableClassName ?>"
      data-filter="<?= $this->filter ?>"
+     data-parent="<?= $this->parent??'' ?>"
 >
 
 	<div class="custom-list"
@@ -13,8 +14,9 @@
 			 $search = $i['search'] ? $this->searchStr : '';
 			 $sort = $i['sort'] ? 'data-sort' : '';
 			 ?>
-		  <div class="head <?= $i['className'] ?? '' ?>"
-		       data-type="<?= $i['data-type'] ?? 'string' ?>"
+		  <div
+				  class="head <?= $i['className'] ?? '' ?>"
+				  data-type="<?= $i['data-type'] ?? 'string' ?>"
 					<?= $sort ?>>
 					<?= $i['name'] ?> <?= $search ?>
 		  </div>
@@ -29,21 +31,25 @@
 
 
 		<!--  TABLE  -->
+		<!--		 Empty row-->
+		 <?= $this->emptyRow($this->columns); ?>
+
+		<!--		 Data rows-->
 		 <? foreach ($this->models as $model): ?>
 
 			 <? foreach ($this->columns as $field => $column): ?>
 
-			  <div class="<?= $column['className']; ?>"
-			       data-field="<?= $field; ?>"
-			       data-id="<?= $model['id']; ?>"
+			  <div
+					  class="<?= $column['className']; ?>"
+					  data-field="<?= $field; ?>"
+					  data-id="<?= $model['id']; ?>"
 						 <?= $column['contenteditable'] ?? ''; ?>
 			  ><?= $this->prepareData($column, $model); ?></div>
 
 			 <? endforeach; ?>
 
-			 <? include ROOT . '/app/view/components/CustomList/edit.php'; ?>
-
-			 <? include ROOT . '/app/view/components/CustomList/del.php'; ?>
+			 <?= $this->getEditButton($model, $field, $column); ?>
+			 <?= $this->getDelButton($model, $field, $column); ?>
 
 
 		 <? endforeach; ?>
@@ -53,7 +59,7 @@
 	<!--  ADD BUTTON  -->
 	<div class="custom-list__buttons">
 
-			 <? include ROOT . '/app/view/components/CustomList/add.php'; ?>
+		 <? include ROOT . '/app/view/components/CustomList/add.php'; ?>
 	</div>
 
 

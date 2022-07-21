@@ -12,7 +12,7 @@ class CustomList
 	private $grid = 'grid-template-columns:';
 	private $delCol = false;
 	private $editCol = false;
-	private $searchStr = ' <input type="text">';
+	private $searchStr = '<input type="text">';
 	private $tableClassName = '';
 	private $modelName = '';
 	private $field = '';
@@ -23,6 +23,7 @@ class CustomList
 	public function __construct($options)
 	{
 		$this->getOptions($options);
+		$this->searchStr = $this->getSearchString();
 		$this->run();
 	}
 
@@ -57,6 +58,47 @@ class CustomList
 		}
 	}
 
+	protected function getSearchString()
+	{
+		return '<input type="text">';
+	}
+
+	protected function getEditButton($model, $field, $column)
+	{
+		include ROOT . '/app/view/components/CustomList/edit.php';
+		return $edit;
+	}
+
+	protected function getDelButton($model, $field, $column)
+	{
+		include ROOT . '/app/view/components/CustomList/del.php';
+		return $del;
+
+	}
+
+	protected function emptyRow(array $columns)
+	{
+		$str = '';
+		$model['id'] = 0;
+		$hidden = 'hidden';
+		foreach ($columns as $field => $column) {
+			$contenteditable = $column['contenteditable'] ?? '';
+
+			$str .= "<div {$hidden} class='{$column['className']}' " .
+				"data-field='{$field}' " .
+				"data-id='0' " .
+				"{$contenteditable}" .
+				"></div>";
+		}
+		include ROOT . '/app/view/components/CustomList/edit.php';
+		$str .= $edit;
+
+		include ROOT . '/app/view/components/CustomList/del.php';
+		$str .= $del;
+
+		return $str;
+	}
+
 	protected function prepareData(array $column, array $model)
 	{
 
@@ -76,9 +118,8 @@ class CustomList
 	{
 		ob_start();
 		include ROOT . '/app/view/components/CustomList/CustomListTemplate.php';
-		$t = ob_get_clean();
-		$this->html = $t;
-		return $t;
+		$this->html = ob_get_clean();
+		return $this->html ;
 	}
 
 }

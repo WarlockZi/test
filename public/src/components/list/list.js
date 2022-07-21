@@ -8,6 +8,7 @@ export default function list() {
 
       const contenteditable = $('[contenteditable]')
       const headers = table.querySelectorAll('.head')
+      const hidden = table.querySelectorAll('[hidden]')
       const sortables = table.querySelectorAll('[data-sort]')
       const inputs = $(table).findAll('.head input')
       const ids = $(table)[0].querySelectorAll('.id:not(.head')
@@ -96,12 +97,28 @@ export default function list() {
 
       // UPDATE OR CREATE
       async function modelCreate(modelName, e) {
-        let res = await post(`/adminsc/${modelName}/create`, {})
+        let res = await post(`/adminsc/${modelName}/updateOrCreate`, {})
         if (res.arr.id) {
-          newRow(res.arr.id)
+          newrow(res.arr.id)
         }
       }
+      function newrow(id) {
+        let Row = [...hidden];
+        [].forEach.call(Row, function (el) {
+          let newEl = el.cloneNode(true)
+          newEl.removeAttribute('hidden')
+          // newEl.contentEditable.remove('head')
+          let tableContent = $(table).find('.custom-list')
+          tableContent.appendChild(newEl)
+          if (['id'].includes(newEl.className)) {
+            newEl.innerText = id
+          } else if (!['del', 'edit', 'save'].includes(newEl.className)) {
+            newEl.innerText = ''
+          }
+          newEl.dataset['id'] = id
 
+        });
+      }
       function newRow(id) {
         let Row = [...rows[0]];
         [].forEach.call(Row, function (el) {
@@ -208,6 +225,7 @@ export default function list() {
       // Преобразовать содержимое данной ячейки в заданном столбце
       function transform(index, content) {
         // Получить тип данных столбца
+        if (!sortables[index]) return
         const type = sortables[index].getAttribute('data-type')
         switch (type) {
           case 'number':

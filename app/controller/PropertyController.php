@@ -15,7 +15,7 @@ use app\view\View;
 class PropertyController Extends AppController
 {
 
-	private $model = 'property';
+	private $model = Property::class;
 	private $table = 'properties';
 
 	public function __construct(array $route)
@@ -29,9 +29,8 @@ class PropertyController Extends AppController
 
 	public function actionIndex()
 	{
-		$properties = Property::all()->toArray();
-
-		$this->set(compact('properties'));
+		$list = PropertyView::list(Property::class);
+		$this->set(compact('list'));
 	}
 
 	public function actionEdit()
@@ -39,14 +38,10 @@ class PropertyController Extends AppController
 		$id = $this->route['id'];
 
 
-		$category = Property::with('products','parent_rec')
-			->where('id', '=', $id)
-			->get()[0];
 
+		$arr = PropertyView::edit(Property::class, $id);
 
-		$category = CategoryView::edit($category);
-
-		$this->set(compact('category'));
+		$this->set(compact('arr'));
 	}
 
 	public function actionUpdateOrCreate()

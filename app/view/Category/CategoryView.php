@@ -32,6 +32,19 @@ class CategoryView
 		return $view->html;
 	}
 
+//	public static function list(Category $models): string
+//	{
+//		$view = new self($models);
+//		$table = $view->getList($models);
+//		$view->set(compact('table'));
+//
+//		return $view->html;
+//	}
+//
+//	private function getList($items)
+//	{
+//		return include ROOT . '/app/view/Category/list.php';
+//	}
 
 	public static function show(Model $model)
 	{
@@ -138,7 +151,7 @@ class CategoryView
 
 	public static function getParents(array $cat, &$str = '')
 	{
-		if ($cat['parent_rec']!==null) {
+		if ($cat['parent_rec'] !== null) {
 			$str .= '<div>' . $cat['parent_rec']['name'] . '</div>';
 			self::getParents($cat['parent_rec'], $str);
 		}
