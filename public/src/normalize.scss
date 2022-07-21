@@ -59,9 +59,12 @@ textarea:focus,
 .flex1 {
   display: flex !important;
 }
+[hidden] {
+  display: none !important;
+}
 
 .none {
-  display: none;
+  display: none !important;
 }
 
 [contenteditable]:focus-visible{

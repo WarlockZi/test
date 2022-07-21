@@ -3,20 +3,15 @@
 namespace app\controller;
 
 
-use app\model\MyCategory;
-use app\model\Product;
-use app\view\Category\CategoryView;
-use app\view\components\Tree\Tree;
-use app\model\Category;
-
 use app\view\View;
 
 
-class CategoryController Extends AppController
+class ValController Extends AppController
 {
 
-	private $model = 'category';
-	private $table = 'categories';
+	private $modelName = 'val';
+	private $model = '\app\model\val';
+	private $table = 'vals';
 
 	public function __construct(array $route)
 	{

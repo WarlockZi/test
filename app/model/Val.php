@@ -4,11 +4,11 @@
 namespace app\model;
 
 
-class Property extends Model
+class Val extends Model
 {
 
-	public $table = 'properties';
-	public $model = 'property';
+	public $table = 'vals';
+	public $model = 'val';
 
 	protected $fillable = [
 		'name' => '',

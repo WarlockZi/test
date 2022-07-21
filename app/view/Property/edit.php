@@ -2,17 +2,14 @@
 
 	<div>
 
-	<a class="button button-outlined" href="/adminsc/category">Все категории</a>
+		<a class="button button-outlined" href="/adminsc/property">Все свойства</a>
 	</div>
 
-	<?=$category;?>
+		<?= $arr[0]; ?>
+<!--		--><?//= $arr[1]; ?>
+<!--	--><?// foreach ($property as $propert): ?>
+<!--		--><?//= $propert['name']; ?>
+<!--	--><?// endforeach; ?>
 
-<!--	<div class="page-name">Категория: --><?//= $category['name']; ?><!--</div>-->
-<!--	<div class="products">-->
-<!--		--><?//foreach ($category['products'] as $i=>$product):?>
-<!--		<div class="prod">--><?//=$product['name']?><!--</div>-->
-<!--		--><?//endforeach;?>
-<!---->
-<!--	</div>-->
 
 </div>

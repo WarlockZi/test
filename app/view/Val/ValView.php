@@ -1,43 +1,36 @@
 <?php
 
 
-namespace app\view\Property;
+namespace app\view\Val;
 
 
-use app\model\Category;
-use app\model\Property;
-use app\model\Val;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use app\view\components\CustomList\CustomList;
-use app\view\Product\ProductView;
-use app\view\Val\ValView;
 
 
-class PropertyView
+class ValView
 {
 
 	private $items;
-	private $modelName = 'property';
-	private $tableName = 'properties';
+	private $model = '\app\model\Val';
+	private $modelName = 'val';
+	private $parent = 'property_id';
+	private $tableName = 'vals';
 	public $html;
 
-	public function __construct(string $class)
+	public function __construct()
 	{
-		$this->model = new $class;
+		$this->model = new $this->model;
 	}
 
 	public static function edit(string $model, $id)
 	{
 		$view = new self($model);
+		$vals = ValView::list;
 
-		$item = $model::where('id','=',$id)->get()[0];
-		$view->getItem($item);
-		$item = $view->html;
-
-		$vals = ValView::list(Val::class,$id);
-
-		return [$item,$vals];
+		return $view->html;
 	}
+
 
 	public static function index($model): string
 	{
@@ -45,36 +38,30 @@ class PropertyView
 		return $view->html;
 	}
 
-	public static function list(string $class): string
+
+	public static function belongToProperty($model, $id): string
+	{
+		$view = new self($model);
+		$items = $view->model::where('property_id', '=', $id)->get();
+		$view->getHtml($items);
+		return $view->html;
+	}
+
+	public static function list(string $class, $id): string
 	{
 		$view = new self($class);
-		$list = $view->getList($view->items)->html;
+		$items = $view->model::where('property_id', '=', $id)->get();
+		$list = $view->getList($items)->html;
 
 		return $list;
 	}
 
-	public static function selector(int $selected, int $exclude = -1): string
-	{
-		$cats = Category::all()->toArray();
-		$parent_select = '<select>';
-		$parent_select .= "<option value=0>---</option>";
-		foreach ($cats as $t) {
-			if ((int)$t['id'] !== $exclude) {
-				$selectedStr = (int)$t['id'] === $selected ? 'selected' : '';
-				$parent_select .= "<option value={$t['id']} {$selectedStr}>{$t['name']}</option>";
-			}
-		}
-		$parent_select .= "</select>";
 
-		return $parent_select;
-	}
-
-
-
-	private function getItem($item): void
+	private function getHtml($item): void
 	{
 		$options = $this->getOptions($item);
-		$t = new CustomCatalogItem($options);
+//		$t = new CustomCatalogItem($options);
+		$t = new CustomList($options);
 		$this->html = $t->html;
 	}
 
@@ -83,6 +70,7 @@ class PropertyView
 		return new CustomList(
 			[
 				'models' => $items,
+				'parent' => $this->parent,
 				'modelName' => $this->modelName,
 				'tableClassName' => $this->tableName,
 				'columns' => [
@@ -116,8 +104,18 @@ class PropertyView
 						'sort' => true,
 						'search' => true,
 					],
+					'property_id' => [
+						'className' => 'description',
+						'field' => 'property_id',
+						'name' => 'родитель',
+						'width' => '50px',
+						'contenteditable' => '',
+						'data-type' => 'string',
+						'sort' => false,
+						'search' => false,
+					],
 				],
-				'editCol' => true,
+				'editCol' => false,
 				'delCol' => true,
 				'addButton' => 'ajax'
 			]
@@ -132,23 +130,18 @@ class PropertyView
 			'modelName' => $this->model->model,
 			'tableClassName' => $this->model->table,
 			'pageTitle' => '',
-			'tabs' => [
-				['title' => 'Значения',
-					'html' => ValView::list(Val::class,$item['id']),
-					'field' => 'products'
-				],
-			],
+
 			'fields' => [
 				'ID' => [
 					'field' => 'id',
 					'contenteditable' => false,
 				],
-				'Папка' => [
-					'field' => 'id',
-					'contenteditable' => false,
-				],
-				'Имя' => [
+				'Наименование' => [
 					'field' => 'name',
+					'contenteditable' => true,
+				],
+				'Тип' => [
+					'field' => 'ензу',
 					'contenteditable' => true,
 					'required' => true,
 				],
