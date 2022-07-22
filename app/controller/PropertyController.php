@@ -4,11 +4,7 @@ namespace app\controller;
 
 
 use app\model\Property;
-use app\view\Category\CategoryView;
 use app\view\Property\PropertyView;
-use app\view\components\Tree\Tree;
-use app\model\Category;
-
 use app\view\View;
 
 
@@ -29,7 +25,7 @@ class PropertyController Extends AppController
 
 	public function actionIndex()
 	{
-		$list = PropertyView::list(Property::class);
+		$list = PropertyView::list()->all()->get();
 		$this->set(compact('list'));
 	}
 
@@ -37,9 +33,7 @@ class PropertyController Extends AppController
 	{
 		$id = $this->route['id'];
 
-
-
-		$arr = PropertyView::edit(Property::class, $id);
+		$arr = PropertyView::edit($id);
 
 		$this->set(compact('arr'));
 	}

@@ -4,75 +4,65 @@
 namespace app\view\Val;
 
 
-use app\view\components\CustomCatalogItem\CustomCatalogItem;
+use app\model\Property;
+use app\model\Val;
 use app\view\components\CustomList\CustomList;
+use app\view\components\MyList\MyList;
+use app\view\MyView;
 
 
-class ValView
+class ValView extends MyView
 {
-
-	private $items;
-	private $model = '\app\model\Val';
-	private $modelName = 'val';
-	private $parent = 'property_id';
-	private $tableName = 'vals';
+	static $modelName = Val::class;
+	public $model = '';
 	public $html;
 
 	public function __construct()
 	{
-		$this->model = new $this->model;
+		parent::__construct();
+		$this->model = new self::$modelName;
 	}
 
-	public static function edit(string $model, $id)
+	public static function listBelongsTo($model,$id)
 	{
-		$view = new self($model);
-		$vals = ValView::list;
+		$valView = new static();
+		$items = Val::where($model->model.'_id', '=',$id)
+			->get();
+		return MyList::create(self::$modelName)
+			->column([
+					'field' => 'id',
+					'name' => 'ID',
+					'type' => 'number',
+					'sort' => true,
+					'search' => false,
+					'width' => '50px',
+					'contenteditable' => false,
+				]
+			)->column([
+				'field' => 'name',
+				'name' => 'Значение',
+				'type' => 'string',
+				'sort' => true,
+				'search' => true,
+				'width' => '1fr',
+				'contenteditable' => true,
+			])->addButton('ajax')
+			->del()
+//			->edit()
+			->items($items)
+			->parent($model,$id)
+			->get();
 
-		return $view->html;
 	}
 
-
-	public static function index($model): string
-	{
-		$view = new self($model);
-		return $view->html;
-	}
-
-
-	public static function belongToProperty($model, $id): string
-	{
-		$view = new self($model);
-		$items = $view->model::where('property_id', '=', $id)->get();
-		$view->getHtml($items);
-		return $view->html;
-	}
-
-	public static function list(string $class, $id): string
-	{
-		$view = new self($class);
-		$items = $view->model::where('property_id', '=', $id)->get();
-		$list = $view->getList($items)->html;
-
-		return $list;
-	}
-
-
-	private function getHtml($item): void
-	{
-		$options = $this->getOptions($item);
-//		$t = new CustomCatalogItem($options);
-		$t = new CustomList($options);
-		$this->html = $t->html;
-	}
-
-	private function getList(array $items)
+	protected function getList()
 	{
 		return new CustomList(
 			[
-				'models' => $items,
-				'parent' => $this->parent,
-				'modelName' => $this->modelName,
-				'tableClassName' => $this->tableName,
+				'models' => $this->items,
+				'parent' => $this->model->model,
+				'modelName' => $this->model->model,
+				'tableClassName' => $this->model->table,
 				'columns' => [
 					'id' => [
 						'className' => 'id',
@@ -121,58 +111,5 @@ class ValView
 			]
 		);
 	}
-
-	private function getOptions($item)
-	{
-
-		return [
-			'item' => $item,
-			'modelName' => $this->model->model,
-			'tableClassName' => $this->model->table,
-			'pageTitle' => '',
-
-			'fields' => [
-				'ID' => [
-					'field' => 'id',
-					'contenteditable' => false,
-				],
-				'Наименование' => [
-					'field' => 'name',
-					'contenteditable' => true,
-				],
-				'Тип' => [
-					'field' => 'ензу',
-					'contenteditable' => true,
-					'required' => true,
-				],
-
-
-			],
-			'delBttn' => true,
-			'saveBttn' => true,
-
-		];
-	}
-
-	private static function noElement()
-	{
-		ob_start();
-		?>
-	  <div class="no-element">
-		  <div class="error">Категория не найдена</div>
-	  </div>
-		<?
-		return ob_get_clean();
-	}
-
-	public static function getParents(array $cat, &$str = '')
-	{
-		if ($cat['parent_rec'] !== null) {
-			$str .= '<div>' . $cat['parent_rec']['name'] . '</div>';
-			self::getParents($cat['parent_rec'], $str);
-		}
-		return $str;
-	}
-
 
 }
