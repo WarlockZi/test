@@ -18,6 +18,8 @@ class CustomList
 	private $field = '';
 	private $filter = '';
 	private $models = [];
+	private $parent = '';
+	private $parentId = null;
 
 
 	public function __construct($options)

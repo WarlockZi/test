@@ -4,39 +4,34 @@
 namespace app\view\Property;
 
 
-use app\model\Category;
 use app\model\Property;
-use app\model\Val;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use app\view\components\CustomList\CustomList;
-use app\view\Product\ProductView;
+use app\view\MyView;
 use app\view\Val\ValView;
 
 
-class PropertyView
+class PropertyView extends MyView
 {
 
-	private $items;
-	private $modelName = 'property';
-	private $tableName = 'properties';
+	public $model = Property::class;
 	public $html;
 
-	public function __construct(string $class)
+	public function __construct()
 	{
-		$this->model = new $class;
+		parent::__construct();
+		$this->model = new $this->model;
 	}
 
-	public static function edit(string $model, $id)
+	public static function edit($id)
 	{
-		$view = new self($model);
+		$view = new self();
 
-		$item = $model::where('id','=',$id)->get()[0];
+		$item = $view->model::where('id', '=', $id)->get()[0];
 		$view->getItem($item);
 		$item = $view->html;
 
-		$vals = ValView::list(Val::class,$id);
-
-		return [$item,$vals];
+		return [$item];
 	}
 
 	public static function index($model): string
@@ -45,46 +40,28 @@ class PropertyView
 		return $view->html;
 	}
 
-	public static function list(string $class): string
-	{
-		$view = new self($class);
-		$list = $view->getList($view->items)->html;
-
-		return $list;
-	}
 
 	public static function selector(int $selected, int $exclude = -1): string
 	{
-		$cats = Category::all()->toArray();
-		$parent_select = '<select>';
-		$parent_select .= "<option value=0>---</option>";
-		foreach ($cats as $t) {
-			if ((int)$t['id'] !== $exclude) {
-				$selectedStr = (int)$t['id'] === $selected ? 'selected' : '';
-				$parent_select .= "<option value={$t['id']} {$selectedStr}>{$t['name']}</option>";
-			}
-		}
-		$parent_select .= "</select>";
 
-		return $parent_select;
 	}
-
 
 
 	private function getItem($item): void
 	{
 		$options = $this->getOptions($item);
+
 		$t = new CustomCatalogItem($options);
 		$this->html = $t->html;
 	}
 
-	private function getList(array $items)
+	protected function getList()
 	{
 		return new CustomList(
 			[
-				'models' => $items,
-				'modelName' => $this->modelName,
-				'tableClassName' => $this->tableName,
+				'models' => $this->items,
+				'modelName' => $this->model->model,
+				'tableClassName' => $this->model->table,
 				'columns' => [
 					'id' => [
 						'className' => 'id',
@@ -134,16 +111,11 @@ class PropertyView
 			'pageTitle' => '',
 			'tabs' => [
 				['title' => 'Значения',
-					'html' => ValView::list(Val::class,$item['id']),
-					'field' => 'products'
+					'html' => ValView::listBelongsTo($this->model,$item['id']),
 				],
 			],
 			'fields' => [
 				'ID' => [
-					'field' => 'id',
-					'contenteditable' => false,
-				],
-				'Папка' => [
 					'field' => 'id',
 					'contenteditable' => false,
 				],

@@ -22,10 +22,10 @@ export default function list() {
       let debouncedInput = debounce(handleInput)
 
 
-      function handlePaste(e){
+      function handlePaste(e) {
         let clip = e.clipboardData.getData('text/plain')
         e.target.innerText = clip
-        handleInput(table,contenteditable,e.target)
+        handleInput(table, contenteditable, e.target)
         e.target.innerText = ''
       }
 
@@ -60,7 +60,7 @@ export default function list() {
           /// edit
         } else if (target.className === '.edit:not(.head)' ||
           target.closest('.edit:not(.head)')) {
-          edit(target,modelName)
+          edit(target, modelName)
 
           /// sort
         } else if (target.classList.contains('head')) {
@@ -71,7 +71,8 @@ export default function list() {
           sortColumn(index)
         }
       }
-      function edit(target,modelName){
+
+      function edit(target, modelName) {
         let id = target.closest('.edit:not(.head)').dataset['id']
         window.location = `/adminsc/${modelName}/edit/${id}`;
 
@@ -102,6 +103,7 @@ export default function list() {
           newrow(res.arr.id)
         }
       }
+
       function newrow(id) {
         let Row = [...hidden];
         [].forEach.call(Row, function (el) {
@@ -119,21 +121,7 @@ export default function list() {
 
         });
       }
-      function newRow(id) {
-        let Row = [...rows[0]];
-        [].forEach.call(Row, function (el) {
-          let newEl = el.cloneNode(true)
-          let tableContent = $(table).find('.custom-list')
-          tableContent.appendChild(newEl)
-          if (['id'].includes(newEl.className)) {
-            newEl.innerText = id
-          } else if (!['del', 'edit', 'save'].includes(newEl.className)) {
-            newEl.innerText = ''
-          }
-          newEl.dataset['id'] = id
 
-        });
-      }
 
       /// SEARCH
       function showAllRows() {
@@ -250,14 +238,21 @@ export default function list() {
 
       function makeServerModel(target, modelName) {
         let field = target.dataset['field']
-        return {
+        let parent = table.dataset.parent + '_id'
+        let parentId = table.dataset.parentId
+        let obj = {
           model: {
             id: target.dataset.id,
             [field]: target.innerText
           },
           modelName
         }
+        if (parent) {
+          obj.model[parent]=parentId
+        }
+        return obj
       }
+
 
     })
   }
