@@ -63,7 +63,7 @@ class VideoinstructionController Extends AppController
 
 	public function actionEdit()
 	{
-		$VideoinstructionsView = VideoinstructionView::list();
+		$VideoinstructionsView = VideoinstructionView::listAll();
 		$this->set(compact('VideoinstructionsView'));
 	}
 

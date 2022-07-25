@@ -4,10 +4,10 @@
 namespace app\view\Val;
 
 
-use app\model\Property;
 use app\model\Val;
 use app\view\components\CustomList\CustomList;
 use app\view\components\MyList\MyList;
+use app\view\Interfaces\IList;
 use app\view\MyView;
 
 
@@ -23,12 +23,11 @@ class ValView extends MyView
 		$this->model = new self::$modelName;
 	}
 
-	public static function listBelongsTo($model,$id)
+	public static function listBelongsTo($model, $id)
 	{
-		$valView = new static();
-		$items = Val::where($model->model.'_id', '=',$id)
+		$items = Val::where($model->model . '_id', '=', $id)
 			->get();
-		return MyList::create(self::$modelName)
+		return MyList::build(self::$modelName)
 			->column([
 					'field' => 'id',
 					'name' => 'ID',
@@ -50,12 +49,12 @@ class ValView extends MyView
 			->del()
 //			->edit()
 			->items($items)
-			->parent($model,$id)
+			->parent($model, $id)
 			->get();
 
 	}
 
-	protected function getList()
+	public function getList()
 	{
 		return new CustomList(
 			[

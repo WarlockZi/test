@@ -25,16 +25,14 @@ class PropertyController Extends AppController
 
 	public function actionIndex()
 	{
-		$list = PropertyView::list()->all()->get();
+		$list = PropertyView::listAll();
 		$this->set(compact('list'));
 	}
 
 	public function actionEdit()
 	{
 		$id = $this->route['id'];
-
 		$arr = PropertyView::edit($id);
-
 		$this->set(compact('arr'));
 	}
 
@@ -61,17 +59,6 @@ class PropertyController Extends AppController
 		} else {
 			$this->exitWithMsg('No id');
 		}
-	}
-
-	public function actionShow()
-	{
-		if ($this->ajax) {
-			$a_id = $this->model::autoincrement();
-			$q_id = $this->ajax['q_id'];
-
-			$this->model::create([]);
-		}
-
 	}
 
 }

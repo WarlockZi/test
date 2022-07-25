@@ -3,11 +3,7 @@
 namespace app\controller;
 
 use app\model\Post;
-use app\model\User;
-use app\view\components\CustomCatalogItem\CustomCatalogItem;
-use app\view\components\CustomList\CustomList;
-use app\view\components\CustomSelect\CustomSelect;
-use app\view\components\CustomMultiSelect\CustomMultiSelect;
+use app\view\Post\PostView;
 use app\view\View;
 
 
@@ -26,22 +22,10 @@ class PostController Extends AppController
 		View::setJs('admin.js');
 	}
 
-	public function actionList()
+	public function actionIndex()
 	{
-		$this->view = 'list';
-		$items = $this->model::findAll();
-		if (!$items) {
-			$id = Post::create();
-			$items = $this->model::findAll();
-		}
-
-		$table = $this->getList($items);
-		$this->set(compact('table'));
-	}
-
-	private function getList($items)
-	{
-		return include ROOT . '/app/view/Post/getList.php';
+		$list = PostView::listAll();
+		$this->set(compact('list'));
 	}
 
 
@@ -80,17 +64,6 @@ class PostController Extends AppController
 		return include ROOT . '/app/view/Post/getMultiselectSubordinates.php';
 	}
 
-	public function actionCreate()
-	{
-		if ($this->ajax) {
-			if ($id = $this->model::create($this->ajax)) {
-				$this->exitJson([
-					'popup'=>'создан',
-					'id' => $id,
-				]);
-			}
-		}
-	}
 
 	public function actionDelete()
 	{
@@ -106,23 +79,14 @@ class PostController Extends AppController
 	public function actionUpdateOrCreate()
 	{
 		if ($this->ajax) {
-			$this->model::updateorcreate($this->ajax);
-			$this->exitWithPopup('ok');
-		}
-	}
-
-	public function actionUpdate()
-	{
-		if ($this->ajax) {
-			if (User::can($this->user, 'post_update')) {
-				$this->model::update($this->ajax);
-				$this->exitWithPopup('ok');
+			if ($id = Post::updateOrCreate($this->ajax)) {
+				if (is_bool($id)) {
+					$this->exitWithPopup('Сохранено');
+				}else{
+					$this->exitJson(['id'=>$id,'msg'=>'Создан']);
+				}
 			}
 		}
-	}
-
-	public function actionShow()
-	{
 	}
 
 

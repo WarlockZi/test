@@ -65,10 +65,12 @@ export default function list() {
           /// sort
         } else if (target.classList.contains('head')) {
           let header = target.closest('.head')
-          let index = [].findIndex.call(headers, (el, i, inputs) => {
-            return el === header
-          })
-          sortColumn(index)
+          if (header.hasAttribute('data-sort')){
+            let index = [].findIndex.call(sortables, (el, i, inputs) => {
+              return el === header
+            })
+            sortColumn(index)
+          }
         }
       }
 

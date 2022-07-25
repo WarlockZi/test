@@ -2,7 +2,7 @@
 <? if ($this->delCol == 'ajax'): ?>
 	<div <?= $hidden ?? ''; ?>
 			class="del"
-			data-model="<?= $this->modelName; ?>"
+			data-model="<?= $this->model->model; ?>"
 			data-id="<?= $model['id']; ?>">
 		 <? include TRASH; ?>
 	</div>
@@ -10,7 +10,7 @@
 	<div <?= $hidden ?? ''; ?>
 			class="del"
 			data-id="<?= $model['id']; ?>">
-		<a href="/adminsc/<?= $this->modelName; ?>/delete/<?= $model['id']; ?>">
+		<a href="/adminsc/<?= $this->model; ?>/delete/<?= $model['id']; ?>">
 				<? include TRASH; ?>
 		</a>
 	</div>

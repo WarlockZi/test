@@ -2,7 +2,7 @@
 	<? if (\app\model\User::can($this->user)): ?>
 	  <div class="chip-wrap">
 		  <a href="/adminsc/user/list" class="chip">Пользователи</a>
-		  <a href="/adminsc/post/list" class="chip">Должности</a>
+		  <a href="/adminsc/post" class="chip">Должности</a>
 		  <a href="/adminsc/test/edit" class="chip">Тесты</a>
 		  <a href="/adminsc/opentest/edit" class="chip">Откр Тесты</a>
 		  <a href="/adminsc/todo/list" class="chip">Функции</a>

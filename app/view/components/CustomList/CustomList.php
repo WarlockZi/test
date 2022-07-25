@@ -14,7 +14,7 @@ class CustomList
 	private $editCol = false;
 	private $searchStr = '<input type="text">';
 	private $tableClassName = '';
-	private $modelName = '';
+	private $model = '';
 	private $field = '';
 	private $filter = '';
 	private $models = [];

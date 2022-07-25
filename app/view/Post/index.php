@@ -2,7 +2,7 @@
 
 	<div class="page-name">Должности</div>
 
-	<?=$table;?>
+	<?=$list;?>
 
 
 </div>

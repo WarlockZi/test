@@ -20,19 +20,18 @@ class MyList
 
 	public $html = '';
 
-	public function __construct()
-	{
-
-	}
-
 	public function parent($model, $id)
 	{
 		$this->parent = $model;
 		$this->parentId = $id;
 		return $this;
 	}
-
-	public static function create(string $modelName)
+	public function all()
+	{
+		$this->items = $this->model::findAll();
+		return $this;
+	}
+	public static function build(string $modelName)
 	{
 		$view = new static();
 		$view->model = new $modelName;
@@ -53,12 +52,13 @@ class MyList
 	protected function getColumn(){
 		return
 		[
-			'name' => 'Поле',
-			'type' => 'string',
+			'field' => '',
 			'class' => '',
+			'name' => '',
+			'type' => 'string',
 			'sort' => false,
 			'search' => false,
-			'width' => '50px',
+			'width' => '20px',
 			'hidden' => false,
 			'contenteditable' => true
 		];
@@ -83,17 +83,17 @@ class MyList
 		return $this;
 	}
 
+	public function edit()
+	{
+		$this->editCol = true;
+		return $this;
+	}
 	public function addButton(string $ajaxOrRedirect)
 	{
 		$this->addButton = $ajaxOrRedirect;
 		return $this;
 	}
 
-	public function edit()
-	{
-		$this->editCol = true;
-		return $this;
-	}
 
 	public function items(array $items)
 	{

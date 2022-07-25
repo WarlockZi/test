@@ -1,7 +1,7 @@
 <? ob_start(); ?>
 <? if ($this->editCol): ?>
 	<a <?= $hidden ?? ''; ?>
-			href="/adminsc/<?= $this->modelName; ?>/edit/<?= $model['id']; ?>"
+			href="/adminsc/<?= $this->model->model; ?>/edit/<?= $model['id']; ?>"
 			class="edit"
 			data-id="<?= $model['id']; ?>"
 	>

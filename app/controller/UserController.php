@@ -4,6 +4,9 @@ namespace app\controller;
 
 use app\model\Right;
 use app\model\User;
+use app\view\components\ColumnBuilders\ListColumnBuilder;
+use app\view\components\MyList\MyList;
+use app\view\User\UserView;
 use app\view\View;
 
 
@@ -25,11 +28,9 @@ class UserController extends AppController
 
 	public function actionList()
 	{
-		$users = User::findAll();
-		$this->set(compact('users'));
 
-		$users_table = include ROOT . '/app/view/User/getList.php';
-		$this->set(compact('users_table'));
+		$list = UserView::listAll();
+		$this->set(compact('list'));
 	}
 
 	public function actionChange()
@@ -96,7 +97,7 @@ class UserController extends AppController
 			if (User::can($this->user, 'user_delete')) {
 				User::delete($data['id']);
 				$this->exitWithPopup('ok');
-			}else{
+			} else {
 				$this->exitWithPopup('Не хватает прав');
 			}
 		}
@@ -108,8 +109,8 @@ class UserController extends AppController
 			if ($id = User::updateOrCreate($this->ajax)) {
 				if (is_bool($id)) {
 					$this->exitWithPopup('Сохранено');
-				}else{
-					$this->exitJson(['id'=>$id,'msg'=>'Создан']);
+				} else {
+					$this->exitJson(['id' => $id, 'msg' => 'Создан']);
 				}
 			}
 		}
