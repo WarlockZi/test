@@ -1,4 +1,4 @@
-<div class="videoinstruction">
+<div class="videoinstructions">
 
 	<div class="page-name">Видео инструкции</div>
 	<div class="column">

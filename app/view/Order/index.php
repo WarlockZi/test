@@ -2,7 +2,7 @@
 
 	<div class="page-name">Заказы</div>
 
-	<?=$table;?>
+	<?=$list;?>
 
 
 </div>

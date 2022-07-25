@@ -15,7 +15,6 @@ abstract class Model
 	protected $user;
 	public $items;
 
-
 	public function __construct()
 	{
 		$this->pdo = DB::instance();
@@ -33,7 +32,6 @@ abstract class Model
 			exit(json_encode(['error' => 'Нет права ' . $rightName]));
 		}
 	}
-
 
 	public static function create($values = [], $register = false)
 	{
@@ -307,15 +305,6 @@ abstract class Model
 		return $model;
 	}
 
-//	public function __get($property)
-//	{
-//		if (property_exists($this, $property)) {
-//			return $this->property;
-//		} elseif (method_exists(static::class, $property)) {
-////			$s = new static ;
-//			return $this->property();
-//		}
-//	}
 
 	public final function get()
 	{
@@ -331,6 +320,7 @@ abstract class Model
 		$limit = $this->limit ?? '';
 		$sql = "SELECT {$pluck} FROM {$this->table} {$where}{$groupBy} {$orderBy} {$limit}";
 		$this->fields = $this->pdo->query($sql, []);
+		$this->items = $this->fields;
 		return $this->fields;
 	}
 

@@ -1,9 +1,8 @@
 <div class="custom-list__wrapper"
-     data-model="<?= $this->model->model ?>"
-     data-table="<?= $this->tableClassName ?>"
-     data-filter="<?= $this->filter ?>"
-     <?= isset($this->parent)?'data-parent='.$this->parent:'' ?>"
-     <?= isset($this->parentId)?'data-parent-id='.$this->parentId:'' ?>"
+     data-model="<?= $this->model->model; ?>"
+     data-table="<?= $this->tableClassName; ?>"
+     <?= isset($this->parent)?'data-parent='.$this->parent:''; ?>"
+     <?= isset($this->parentId)?'data-parent-id='.$this->parentId:''; ?>"
 >
 
 	<div class="custom-list"

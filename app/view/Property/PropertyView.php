@@ -1,27 +1,39 @@
 <?php
 
-
 namespace app\view\Property;
 
-
 use app\model\Property;
+use app\view\components\ColumnBuilders\ListColumnBuilder;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
-use app\view\components\CustomList\CustomList;
+use app\view\components\MyList\MyList;
 use app\view\MyView;
 use app\view\Val\ValView;
 
-
 class PropertyView extends MyView
 {
-
 	public $model = Property::class;
 	public $html;
 
-	public function __construct()
+	public static function listAll()
 	{
-		parent::__construct();
-		$this->model = new $this->model;
+		$view = new self;
+		return MyList::build($view->model)
+			->all()
+			->column(
+				ListColumnBuilder::build('id')
+					->get())
+			->column(
+				ListColumnBuilder::build('name')
+					->get()
+			)->column(
+				ListColumnBuilder::build('description')
+					->get()
+			)
+			->edit()
+			->addButton('ajax')
+			->get();
 	}
+
 
 	public static function edit($id)
 	{
@@ -34,74 +46,20 @@ class PropertyView extends MyView
 		return [$item];
 	}
 
-	public static function index($model): string
-	{
-		$view = new self($model);
-		return $view->html;
-	}
-
-
-	public static function selector(int $selected, int $exclude = -1): string
-	{
-
-	}
-
 
 	private function getItem($item): void
 	{
+
+		$view = new static();
+		$this->model = new $view->model;
 		$options = $this->getOptions($item);
 
 		$t = new CustomCatalogItem($options);
 		$this->html = $t->html;
 	}
 
-	protected function getList()
-	{
-		return new CustomList(
-			[
-				'models' => $this->items,
-				'modelName' => $this->model->model,
-				'tableClassName' => $this->model->table,
-				'columns' => [
-					'id' => [
-						'className' => 'id',
-						'field' => 'id',
-						'name' => 'ID',
-						'width' => '50px',
-						'data-type' => 'number',
-						'sort' => true,
-						'search' => false,
-					],
 
-					'name' => [
-						'className' => 'name',
-						'field' => 'name',
-						'name' => 'Наименование',
-						'width' => '1fr',
-						'contenteditable' => 'contenteditable',
-						'data-type' => 'string',
-						'sort' => true,
-						'search' => true,
-					],
-					'description' => [
-						'className' => 'description',
-						'field' => 'description',
-						'name' => 'Описание',
-						'width' => '1fr',
-						'contenteditable' => 'contenteditable',
-						'data-type' => 'string',
-						'sort' => true,
-						'search' => true,
-					],
-				],
-				'editCol' => true,
-				'delCol' => true,
-				'addButton' => 'ajax'
-			]
-		);
-	}
-
-	private function getOptions($item)
+	private function getOptions(array $item)
 	{
 
 		return [
@@ -111,7 +69,7 @@ class PropertyView extends MyView
 			'pageTitle' => '',
 			'tabs' => [
 				['title' => 'Значения',
-					'html' => ValView::listBelongsTo($this->model,$item['id']),
+					'html' => ValView::listBelongsTo($this->model, $item['id']),
 				],
 			],
 			'fields' => [
@@ -125,33 +83,11 @@ class PropertyView extends MyView
 					'required' => true,
 				],
 
-
 			],
 			'delBttn' => true,
 			'saveBttn' => true,
 
 		];
 	}
-
-	private static function noElement()
-	{
-		ob_start();
-		?>
-	  <div class="no-element">
-		  <div class="error">Категория не найдена</div>
-	  </div>
-		<?
-		return ob_get_clean();
-	}
-
-	public static function getParents(array $cat, &$str = '')
-	{
-		if ($cat['parent_rec'] !== null) {
-			$str .= '<div>' . $cat['parent_rec']['name'] . '</div>';
-			self::getParents($cat['parent_rec'], $str);
-		}
-		return $str;
-	}
-
 
 }
