@@ -1,121 +1,132 @@
 @import "../../var";
 @import "../../mixin_media";
 
-.custom-list {
-
-  [contenteditable]:hover{
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.custom-list__wrapper {
+  @include _600 {
+    width: 90vw;
+    overflow-x: auto;
   }
 
-  > * {
-    border: 1px solid transparent;
-    padding: 5px 3px;
-    border-bottom: solid 1px $color-gray4;
-    font-size: $font-size-table;
-  }
 
-  .edit:hover {
-    background-color: $color-main;
+  .custom-list {
 
-    svg {
-      stroke: #ffffff;
+    [contenteditable]:hover {
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
-  }
 
-  .del:hover {
-    background-color: $color-warning;
-
-    svg {
-      fill: #ffffff;
+    > * {
+      border: 1px solid transparent;
+      padding: 5px 3px;
+      border-bottom: solid 1px $color-gray4;
+      font-size: $font-size-table;
     }
-  }
 
-  .edit,
-  .del {
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    cursor: pointer;
-  }
-
-  .head {
-    padding: 2px 5px;
-    background-color: #5b626e;
-    color: #fff;
-    font-weight: normal;
-    border-right: 1px solid $color-gray4;
-    box-sizing: border-box;
-    display: flex;
-    flex-flow: column;
-    cursor: pointer;
-
-    input {
-      cursor: text;
-      position: relative;
-      margin: 0;
-      width: 1px;
-      background-image: url("/pic/svg/search.svg");
-      background-repeat: no-repeat;
-      background-position: 3px 3px,center ;
-      background-size: 12px ;
-      padding-left: 17px;
-      border-radius: 10px;
-      border: none;
-      transition: width 300ms ease-in-out;
-
-      &:focus {
-        width: 50%;
-      }
+    .edit:hover {
+      background-color: $color-main;
 
       svg {
-        position: absolute;
-        right: 0;
-        top: 0;
+        stroke: #ffffff;
       }
     }
 
-    &.edit,
-    &.del {
-      text-align: center;
-      cursor: initial;
+    .del:hover {
+      background-color: $color-warning;
+
+      svg {
+        fill: #ffffff;
+      }
+    }
+
+    .edit,
+    .del {
+      justify-content: center;
       align-items: center;
+      display: flex;
+      cursor: pointer;
+    }
 
-      &:hover {
-        background-color: #5b626e;
+    .head {
+      padding: 2px 5px;
+      background-color: #5b626e;
+      color: #fff;
+      font-weight: normal;
+      border-right: 1px solid $color-gray4;
+      box-sizing: border-box;
+      display: flex;
+      flex-flow: column;
+      cursor: pointer;
+
+      input {
+        cursor: text;
+        position: relative;
+        margin: 0;
+        width: 1px;
+        background-image: url("/pic/svg/search.svg");
+        background-repeat: no-repeat;
+        background-position: 3px 3px, center;
+        background-size: 12px;
+        padding-left: 17px;
+        border-radius: 10px;
+        border: none;
+        transition: width 300ms ease-in-out;
+
+        &:focus {
+          width: 50%;
+        }
+
+        svg {
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      }
+
+      &.edit,
+      &.del {
+        text-align: center;
+        cursor: initial;
+        align-items: center;
+
+        &:hover {
+          background-color: #5b626e;
+        }
+      }
+
+      &.edit svg {
+        stroke: white;
+        stroke-width: 2px;
+      }
+
+      &.del svg {
+        fill: white;
+      }
+
+
+      &:last-child {
+        border-right: none;
       }
     }
 
-    &.edit svg {
-      stroke: white;
-      stroke-width: 2px;
-    }
+  }
 
-    &.del svg {
-      fill: white;
-    }
+  .custom-list__buttons {
+    display: flex;
+    justify-content: flex-end;
 
+    .add-model {
+      justify-self: end;
+      font-size: 2rem;
+      width: 40px;
+      height: 40px;
+      margin: 20px 0;
 
-    &:last-child {
-      border-right: none;
+      $border-radius: 10%;
+      @include _button($border-radius);
+      align-self: end;
     }
   }
 
-}
 
-.custom-list__buttons {
-  display: flex;
-  justify-content: flex-end;
 
-  .add-model {
-    justify-self: end;
-    font-size: 2rem;
-    width: 40px;
-    height: 40px;
-    margin: 20px 0;
-
-    $border-radius: 10%;
-    @include _button($border-radius);
-    align-self: end;
-  }
 }

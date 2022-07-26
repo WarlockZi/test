@@ -5,7 +5,7 @@ namespace app\view\User;
 
 
 use app\model\User;
-use app\view\components\ColumnBuilders\ListColumnBuilder;
+use app\view\components\Builders\ListColumnBuilder;
 use app\view\components\MyList\MyList;
 use app\view\MyView;
 

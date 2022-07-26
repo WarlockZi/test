@@ -295,6 +295,10 @@ $font-size-item: .5rem;
       @include _600{
         height: 50px;
       }
+      @include _300{
+        height: 50px;
+        width: 60px;
+      }
     }
   }
 

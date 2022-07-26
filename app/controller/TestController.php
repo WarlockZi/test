@@ -6,8 +6,12 @@ use app\model\Model;
 use app\model\Question;
 use app\model\Test;
 use app\model\User;
+use app\view\components\Builders\ItemFieldBuilder;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use app\view\components\CustomSelect\CustomSelect;
+use app\view\components\MyItem\MyItem;
+use app\view\components\MySelect\MySelect;
+use app\view\Test\TestView;
 use app\view\View;
 
 
@@ -34,7 +38,7 @@ class TestController extends AppController
 	{
 		if ($this->ajax) {
 			$id = Test::update($this->ajax);
-			exit(json_encode(['id' => $id]));
+			$this->exitJson(['id' => $id]);
 		}
 
 		$this->view = 'edit_update';
@@ -47,7 +51,36 @@ class TestController extends AppController
 		$this->set(compact('test'));
 
 		$item = $test;
-		$item = include ROOT . '/app/view/Test/getItem.php';;
+		$item = MyItem::build(Test::class, $id)
+			->del()
+			->save()
+			->field(
+				ItemFieldBuilder::build('id')
+					->name('ID')
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('name')
+					->name('Наименование')
+					->contenteditable(true)
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('enable')
+					->name('Показывать')
+					->type('select')
+					->html(TestView::enabled($item))
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('parent')
+					->name('Принадлежит')
+					->html(TestView::belongsTo($item))
+					->type('select')
+					->get()
+			)
+			->get();
+//		$item = include ROOT . '/app/view/Test/getItem.php';;
 		$this->set(compact('item'));
 	}
 
@@ -267,7 +300,6 @@ class TestController extends AppController
 						'select' => $subordinates1,
 					],
 				],
-
 				'delBttn' => 'ajax',
 				'toListBttn' => true,
 				'saveBttn' => 'ajax',//'redirect'

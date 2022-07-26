@@ -3,7 +3,7 @@
 namespace app\view\Property;
 
 use app\model\Property;
-use app\view\components\ColumnBuilders\ListColumnBuilder;
+use app\view\components\Builders\ListColumnBuilder;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use app\view\components\MyList\MyList;
 use app\view\MyView;
