@@ -42,6 +42,7 @@ class Tree
 
 	public static function tree(array $items, string $parent = 'parent'): array
 	{
+		$items = self::idKeys($items);
 		$tree = [];
 		foreach ($items as $id => &$node) {
 			if (array_key_exists($parent, $node) && !$node[$parent]) {

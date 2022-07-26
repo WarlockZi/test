@@ -26,11 +26,13 @@ class MyList
 		$this->parentId = $id;
 		return $this;
 	}
+
 	public function all()
 	{
 		$this->items = $this->model::findAll();
 		return $this;
 	}
+
 	public static function build(string $modelName)
 	{
 		$view = new static();
@@ -43,37 +45,16 @@ class MyList
 		$this->tableClassName = $class;
 		return $this;
 	}
+
 	public function get()
 	{
 		$this->run();
 		return $this->html;
 	}
 
-	protected function getColumn(){
-		return
-		[
-			'field' => '',
-			'class' => '',
-			'name' => '',
-			'type' => 'string',
-			'sort' => false,
-			'search' => false,
-			'width' => '20px',
-			'hidden' => false,
-			'contenteditable' => true
-		];
-	}
-
 	public function column(array $a)
-		{
-			$col[$a['field']]= $this->getColumn();
-			foreach ($col[$a['field']] as $k=>$v) {
-				if (array_key_exists($k,$a)){
-					$col[$a['field']][$k]=$a[$k];
-				}
-			}
-			$this->columns[$a['field']]=$col[$a['field']];
-
+	{
+		$this->columns[$a['field']] = $a;
 		return $this;
 	}
 
@@ -88,6 +69,7 @@ class MyList
 		$this->editCol = true;
 		return $this;
 	}
+
 	public function addButton(string $ajaxOrRedirect)
 	{
 		$this->addButton = $ajaxOrRedirect;
@@ -156,9 +138,9 @@ class MyList
 		$model['id'] = 0;
 
 		foreach ($columns as $field => $column) {
-			$contenteditable = $column['contenteditable'] ?'contenteditable': '';
+			$contenteditable = $column['contenteditable'] ? 'contenteditable' : '';
 			$hidden = 'hidden';
-			$class = $column['class']?$column['class']:$field;
+			$class = $column['class'] ? $column['class'] : $field;
 
 			$str .= "<div {$hidden} class='{$class}' " .
 				"data-field='{$field}' " .
