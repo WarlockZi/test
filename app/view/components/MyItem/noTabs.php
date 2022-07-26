@@ -8,7 +8,7 @@
 	<? foreach ($this->fields as $data): ?>
 	  <div class="row">
 		  <div class="field">
-		    <?=$data['field'];?></div>
+		    <?=$data['name'];?></div>
 		  :
 			 <? include ROOT . '/app/view/components/MyItem/value.php' ?>
 	  </div>
