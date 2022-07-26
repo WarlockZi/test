@@ -38,8 +38,8 @@ class Accordion
 
 	protected function run()
 	{
-		$models = Tree::idKeys($this->models);
-		$this->tree = Tree::tree($models, $this->parentFieldName);
+//		$models = Tree::idKeys($this->models);
+		$this->tree = Tree::tree($this->models, $this->parentFieldName);
 		$this->html = $this->showCat($this->tree);
 		$this->output();
 	}

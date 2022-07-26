@@ -9,11 +9,10 @@
 
   @include _500 {
     justify-content: end;
+    flex-flow: column;
+    flex-direction: column-reverse;
   }
 
-  @include _500 {
-    justify-content: end;
-  }
 }
 
 

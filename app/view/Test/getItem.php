@@ -67,37 +67,37 @@ function getOptions($item, $self)
 	return $options;
 }
 
-function getEbabled($item)
-{
-	$enable = new \app\view\components\CustomSelect\CustomSelect([
-		'className' => 'custom-select',
-		'title' => '',
-		'field' => 'enable',
+//function getEbabled($item)
+//{
+//	$enable = new \app\view\components\CustomSelect\CustomSelect([
+//		'className' => 'custom-select',
+//		'title' => '',
+//		'field' => 'enable',
+////		'optionName' => 'name',
+//		'tree' => ['0' => 'не показывать', '1' => 'показывать'],
+//		'selected' => $item['enable'],
+//	]);
+//	return $enable->html;
+//}
+//
+//function getParent($item)
+//{
+//	$r = new \app\model\Test();
+//	$s = $r::findAllWhere('isTest', '0');
+//	$r->data = $s;
+//	$tree = \app\view\components\Tree\Tree::tree($s);
+//
+//	$parent = new \app\view\components\CustomSelect\CustomSelect([
+//		'className' => 'custom-select',
+//		'title' => '',
+//		'field' => 'parent',
 //		'optionName' => 'name',
-		'tree' => ['0' => 'не показывать', '1' => 'показывать'],
-		'selected' => $item['enable'],
-	]);
-	return $enable->html;
-}
-
-function getParent($item)
-{
-	$r = new \app\model\Test();
-	$s = $r::findAllWhere('isTest', '0');
-	$r->data = $s;
-	$tree = \app\view\components\Tree\Tree::tree($s);
-
-	$parent = new \app\view\components\CustomSelect\CustomSelect([
-		'className' => 'custom-select',
-		'title' => '',
-		'field' => 'parent',
-		'optionName' => 'name',
-		'initialOption'=>true,
-		'tree' => $tree,
-		'selected' => $item['parent'],
-	]);
-	return $parent->html;
-}
+//		'initialOption'=>true,
+//		'tree' => $tree,
+//		'selected' => $item['parent'],
+//	]);
+//	return $parent->html;
+//}
 
 
 function getRights($user)
