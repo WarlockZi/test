@@ -11,7 +11,7 @@ class ProductView
 
 	}
 
-	public static function belongToCategory(Category $category)
+	public static function belongToCategory($category)
 	{
 
 		$arr = $category->toArray();

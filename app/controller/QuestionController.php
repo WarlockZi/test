@@ -2,9 +2,11 @@
 
 namespace app\controller;
 
-use app\core\App;
 use app\model\Answer;
 use app\model\Question;
+use app\model\Test;
+use app\view\Test\TestView;
+use app\view\View;
 
 
 class QuestionController Extends AppController
@@ -14,6 +16,9 @@ class QuestionController Extends AppController
 	{
 		parent::__construct($route);
 		$this->autorize();
+		$this->layout = 'admin';
+		View::setJs('admin.js');
+		View::setCss('admin.css');
 	}
 
 	public function actionUpdateOrCreate()
@@ -44,8 +49,8 @@ class QuestionController Extends AppController
 			$q = Question::findOneWhere('id', $id);
 			$q['parent'] = $testId;
 			Question::update($q)
-				?$this->exitWithPopup('ok')
-				:$this->exitWithError('Ошибка при переносе вопроса');
+				? $this->exitWithPopup('ok')
+				: $this->exitWithError('Ошибка при переносе вопроса');
 		}
 	}
 
@@ -91,4 +96,39 @@ class QuestionController Extends AppController
 		$this->exitWithPopup('Сортировка сохранена');
 	}
 
+	public function actionEdit()
+	{
+
+		$page_name = 'Редактирование тестов';
+		$this->set(compact('page_name'));
+
+		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+		if ($id) {
+			$test = Test::findOneWhere('id', $id);
+
+			if ($test) {
+				if ($test['isTest']) {
+					$questions
+						= Question::where('parent', '=', $id)
+						->with('answer')
+						->orderBy('sort')
+						->get();
+					if (!$questions) {
+						$id = Question::create(['parent' => $id]);
+						$question = Question::findOneWhere('id', $id - 1);
+						$this->set(compact('question'));
+
+						$tests = Test::findAllWhere('isTest', '1');
+						$this->set(compact('tests'));
+					}
+				} else {
+					$test['children'] = Test::findAllWhere('parent', $id);;
+				}
+
+				$this->set(compact('test'));
+				$questions = $questions->items ?? '';
+				$this->set(compact('questions'));
+			}
+		}
+	}
 }

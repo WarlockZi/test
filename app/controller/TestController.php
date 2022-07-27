@@ -2,15 +2,9 @@
 
 namespace app\controller;
 
-use app\model\Model;
 use app\model\Question;
 use app\model\Test;
 use app\model\User;
-use app\view\components\Builders\ItemFieldBuilder;
-use app\view\components\CustomCatalogItem\CustomCatalogItem;
-use app\view\components\CustomSelect\CustomSelect;
-use app\view\components\MyItem\MyItem;
-use app\view\components\MySelect\MySelect;
 use app\view\Test\TestView;
 use app\view\View;
 
@@ -19,6 +13,7 @@ class TestController extends AppController
 {
 	public $table = 'test';
 	public $model = 'test';
+	public $modelName = Test::class;
 
 	public function __construct(array $route)
 	{
@@ -33,57 +28,6 @@ class TestController extends AppController
 	{
 		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
 	}
-
-	public function actionUpdate()
-	{
-		if ($this->ajax) {
-			$id = Test::update($this->ajax);
-			$this->exitJson(['id' => $id]);
-		}
-
-		$this->view = 'edit_update';
-
-		$page_name = 'Редактирование тестов';
-		$this->set(compact('page_name'));
-
-		$id = $this->route['id'];
-		$test = Test::findOneWhere('id', $id);
-		$this->set(compact('test'));
-
-		$item = $test;
-		$item = MyItem::build(Test::class, $id)
-			->del()
-			->save()
-			->field(
-				ItemFieldBuilder::build('id')
-					->name('ID')
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('name')
-					->name('Наименование')
-					->contenteditable(true)
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('enable')
-					->name('Показывать')
-					->type('select')
-					->html(TestView::enabled($item))
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('parent')
-					->name('Принадлежит')
-					->html(TestView::belongsTo($item))
-					->type('select')
-					->get()
-			)
-			->get();
-//		$item = include ROOT . '/app/view/Test/getItem.php';;
-		$this->set(compact('item'));
-	}
-
 
 	public function actionShow()
 	{
@@ -171,141 +115,43 @@ class TestController extends AppController
 		$this->set(compact('test'));
 	}
 
+//	public function actionUpdate()
+//	{
+//		if ($this->ajax) {
+//			$id = Test::update($this->ajax);
+//			$this->exitJson(['id' => $id]);
+//		}
+//
+//		$this->view = 'edit_update';
+//
+//		$page_name = 'Редактирование тестов';
+//		$this->set(compact('page_name'));
+//
+//		$id = $this->route['id'];
+//
+//		$item = TestView::item($this->modelName, $id);
+//		$this->set(compact('item'));
+//	}
+
+
 	public function actionEdit()
 	{
 
-//		View::setCss('common.css');
+		if ($this->ajax) {
+			$id = Test::update($this->ajax);
+			$this->exitJson(['id' => $id]);
+		}
+
 		$page_name = 'Редактирование тестов';
 		$this->set(compact('page_name'));
 
-		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
-		if ($id) {
-			$test = Test::findOneWhere('id', $id);
+		$id = $this->route['id'];
 
-			if ($test) {
-				if ($test['isTest']) {
-					$questions
-						= Question::where('parent', '=', $id)
-						->with('answer')
-						->orderBy('sort')
-						->get();
-					if (!$questions) {
-						$id = Question::create(['parent' => $id]);
-						$question = Question::findOneWhere('id', $id - 1);
-						$this->set(compact('question'));
+		$item = TestView::item($id);
+		$this->set(compact('item'));
 
-						$tests = Test::findAllWhere('isTest', '1');
-						$this->set(compact('tests'));
-					}
-				} else {
-					$test['children'] = Test::findAllWhere('parent', $id);;
-				}
-
-				$this->set(compact('test'));
-				$questions = $questions->items ?? '';
-				$this->set(compact('questions'));
-			}
-		}
 	}
 
-
-	private function getEnableCustomSelect($tree, $selected)
-	{
-		return new CustomSelect([
-			'selectClassName' => 'custom-select',
-			'title' => 'Показывать пользователям',
-			'field' => 'enable',
-			'tab' => '&nbsp;&nbsp;&nbsp;',
-			'initialOption' => true,
-			'initialOptionValue' => 0,
-			'initialOptionLabel' => '--',
-			'optionName' => 'name',
-			'tree' => [0 => 'да', 1 => 'нет'],
-			'selected' => $selected,
-		]);
-	}
-
-	private function getParentCustomSelect($tree, $selected)
-	{
-		return new CustomSelect([
-			'selectClassName' => 'custom-select',
-			'title' => 'Лежит в папке',
-			'field' => 'parent',
-			'tab' => '&nbsp;&nbsp;&nbsp;',
-			'initialOption' => true,
-			'initialOptionValue' => 0,
-			'initialOptionLabel' => '--',
-			'optionName' => 'name',
-			'tree' => $tree,
-			'selected' => $selected
-		]);
-	}
-
-
-	private function getItem($item, $chiefs, $subordinates, $subordinates1)
-	{
-		return new CustomCatalogItem(
-			[
-				'item' => $item,
-				'modelName' => $this->modelName,
-				'tableClassName' => $this->tableName,
-				'fields' => [
-					'id' => [
-						'className' => 'id',
-						'field' => 'id',
-						'name' => 'ID',
-						'contenteditable' => '',
-						'width' => '50px',
-						'data-type' => 'number',
-					],
-					'name' => [
-						'className' => 'name',
-						'field' => 'name',
-						'name' => 'Наименование',
-						'width' => '1fr',
-						'contenteditable' => 'contenteditable',
-						'data-type' => 'string',
-					],
-					'full_name' => [
-						'className' => 'fullname',
-						'field' => 'full_name',
-						'name' => 'Полное наименование',
-						'width' => '1fr',
-						'contenteditable' => 'contenteditable',
-						'data-type' => 'string',
-					],
-					'chief' => [
-						'className' => 'chief',
-						'field' => 'chief',
-						'name' => 'Подчиняется',
-						'width' => '1fr',
-						'contenteditable' => false,
-						'data-type' => 'select',
-						'select' => $chiefs,
-					],
-					'subourdinate' => [
-						'className' => 'fullname',
-						'field' => '$subordinate',
-						'name' => 'Управляет',
-						'width' => '1fr',
-						'data-type' => 'select',
-						'select' => $subordinates,
-					],
-					'subourdinate1' => [
-						'className' => 'fullname',
-						'field' => '$subordinate',
-						'name' => 'Управляет',
-						'width' => '1fr',
-						'data-type' => 'multiselect',
-						'select' => $subordinates1,
-					],
-				],
-				'delBttn' => 'ajax',
-				'toListBttn' => true,
-				'saveBttn' => 'ajax',//'redirect'
-			]
-		);
-	}
 
 	function shuffle_assoc($array)
 	{
@@ -327,7 +173,7 @@ class TestController extends AppController
 		}
 	}
 
-	private function cacheCorrectAnswers(array $arr): void
+	private function getCorrectAnswers(array $arr): array
 	{
 		foreach ($arr as $q) {
 			if (isset($q['Answer'])) {
@@ -338,6 +184,12 @@ class TestController extends AppController
 				}
 			}
 		}
+		return $correctAnswers;
+	}
+
+	private function cacheCorrectAnswers(array $arr): void
+	{
+		$correctAnswers = $this->getCorrectAnswers($arr);
 		$_SESSION['correct_answers'] = $correctAnswers ?? '';
 	}
 
@@ -356,19 +208,4 @@ class TestController extends AppController
 		$this->exitJson(Test::findAllWhere('isTest', '1'));
 	}
 
-
-
-
-//	public function actionCreate()
-//	{
-//		if ($this->ajax) {
-//
-//			if ($id = Test::create($this->ajax)) {
-//				$q_id = Question::create();
-//				exit(json_encode([
-//					'id' => $id,
-//				]));
-//			}
-//		}
-//	}
 }

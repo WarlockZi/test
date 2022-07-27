@@ -30,7 +30,7 @@
 				<? if (isset($question['Answer'])): ?>
 						<? $i = 1;
 						foreach ($question['Answer'] as $index => $a): ?>
-								<? include ROOT . "/app/view/Test/edit_BlockAnswer.php"; ?>
+								<? include ROOT . "/app/view/Question/edit_BlockAnswer.php"; ?>
 						<? endforeach; ?>
 				<? endif; ?>
 

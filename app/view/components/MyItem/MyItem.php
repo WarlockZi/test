@@ -69,20 +69,4 @@ class MyItem
 		return ob_get_clean();
 	}
 
-
-
-//	protected function getEditButton($model, $field, $column)
-//	{
-//		include ROOT . '/app/view/components/MyItem/edit.php';
-//		return $edit;
-//	}
-//
-//	protected function getDelButton($model, $field, $column)
-//	{
-//		include ROOT . '/app/view/components/MyItem/del.php';
-//		return $del;
-//
-//	}
-
-
 }

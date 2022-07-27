@@ -1,50 +1,40 @@
 <?php
 
-
 namespace app\view\Category;
-
-
 use app\model\Category;
-use app\model\MyCategory;
-use app\model\Product;
+use app\model\Illuminate\Category as IlluminateCategory;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use app\view\Product\ProductView;
 
 class CategoryView
 {
-
 	private $model;
 	public $html;
 
-	public function __construct(Category $category)
+	public function __construct()
 	{
-		if ($category) {
-			$this->model = $category;
-			$this->getHtml();
-		} else {
-			$this->noElement();
-		}
 	}
 
-	public static function edit(Category $model): string
+	public static function edit(IlluminateCategory $model): string
 	{
 		$view = new self($model);
+		$view->getHtml();
 		return $view->html;
 	}
 
-//	public static function list(Category $models): string
-//	{
-//		$view = new self($models);
-//		$table = $view->getList($models);
-//		$view->set(compact('table'));
-//
-//		return $view->html;
-//	}
-//
-//	private function getList($items)
-//	{
-//		return include ROOT . '/app/view/Category/list.php';
-//	}
+	public static function list($models): string
+	{
+		$view = new self($models);
+		$table = $view->getList($models);
+		$view->set(compact('table'));
+
+		return $view->html;
+	}
+
+	private function getList($items)
+	{
+		return include ROOT . '/app/view/Category/list.php';
+	}
 
 	public static function show(Model $model)
 	{
