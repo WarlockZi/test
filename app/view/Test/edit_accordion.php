@@ -8,7 +8,7 @@ $menu = new Accordion([
 	'parentFieldName' => 'parent',
 	'class' => 'test-edit',
 	'label_after' => ICONS . "/edit.svg",
-	'link' => '/adminsc/test/edit/',
+	'link' => '/adminsc/question/edit/',
 	'link_label_after' => '/adminsc/test/update/',
 
 ]);

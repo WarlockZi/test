@@ -124,15 +124,6 @@ class View
 		self::$jsCss['css'][] = "<link href='{$host}{$file}{$time}' rel='stylesheet' type='text/css'>";
 	}
 
-	public static function getImg($path)
-	{
-		if (is_readable(ROOT . $path)) {
-			return $path;
-		} else {
-			return '/pic/srvc/nophoto-min.jpg';
-		}
-	}
-
 	public static function getCSS()
 	{
 		$css = '';

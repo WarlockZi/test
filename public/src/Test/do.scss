@@ -24,7 +24,7 @@
   }
 }
 
-.test-do, .opentest-do{
+.test-do, .opentest-do {
   display: flex;
   max-width: 1310px;
   width: 100%;
@@ -40,17 +40,18 @@
     flex-wrap: wrap;
   }
 
-  .content{
+  .content {
     display: flex;
     //flex-flow: column;
     width: 100%;
     margin-right: 20px;
   }
 
-  .test{
+  .test {
     min-width: 520px;
     max-width: 600px;
   }
+
   .test-data {
     margin-bottom: 20px;
     box-sizing: border-box;
@@ -83,6 +84,14 @@
         .num {
           padding-right: 10px;
         }
+
+        .qpic {
+          img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+          }
+        }
       }
     }
   }
@@ -101,7 +110,7 @@
     }
 
     .test-name {
-      @include _h2;
+      @include _h3;
       margin-bottom: 20px;
     }
   }
@@ -196,8 +205,6 @@
 }
 
 
-
-
 .a {
   position: relative;
   display: flex;
@@ -216,6 +223,14 @@
     margin-top: -1em;
     transform: rotate(45deg);
     width: 0.5em;
+  }
+
+  .apic {
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
   }
 
   input {
@@ -269,7 +284,8 @@
 
   .pushed {
     background: #FAFCFF !important;
-    &:before{
+
+    &:before {
       border-color: #0b76ef;
       background-color: $color-main;
       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
@@ -295,27 +311,12 @@
 }
 
 
-
-
 .test-do__finish-btn {
   @include test__button;
 }
 
 
-.apic {
-  img {
-    width: 100px;
-    height: 100px;
-  }
-}
 
-.qpic {
-  img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-  }
-}
 
 
 

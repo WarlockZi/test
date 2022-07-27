@@ -17,11 +17,11 @@ require_once "../vendor/autoload.php";
 error_reporting(E_ALL);
 define('DEV', $_ENV['MODE'] === 'development'); //0-не выводить ошибки
 define('ROOT', dirname(__DIR__));
-define('ICONS', ROOT.'/app/view/components/icons');
-define('TRASH', ICONS.'/trashIcon.svg');
-define('SAVE', ICONS.'/save.svg');
-define('EDIT', ICONS.'/edit.svg');
-define('COMPONENTS', ROOT.'/app/view/components');
+define('ICONS', ROOT . '/app/view/components/icons');
+define('TRASH', ICONS . '/trashIcon.svg');
+define('SAVE', ICONS . '/save.svg');
+define('EDIT', ICONS . '/edit.svg');
+define('COMPONENTS', ROOT . '/app/view/components');
 require_once './Eloquent.php';
 
 
@@ -31,7 +31,14 @@ if (DEV) {
 new App(new DI);
 //new App();
 //DI::test();
-Router::dispatch($_SERVER['QUERY_STRING']);
+
+
+try {
+	Router::dispatch($_SERVER['QUERY_STRING']);
+	$d = 1;
+} catch (Exception $e) {
+	exit($e);
+};
 
 exit();
 

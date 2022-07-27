@@ -1,9 +1,11 @@
 <?php
 
-namespace app\model;
+namespace app\model\Illuminate;
 
 
-class Category extends \app\model\Model
+use Illuminate\Support\Facades\DB;
+
+class Category extends \Illuminate\Database\Eloquent\Model
 {
 
 	public $table = 'categories';
@@ -37,6 +39,8 @@ class Category extends \app\model\Model
 
 		return $parents;
 	}
+
+
 
 
 	public function parent_rec()

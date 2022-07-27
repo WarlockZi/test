@@ -37,8 +37,8 @@ class User extends Model
 		}
 
 		return $user['sex'] === 'f'
-			? View::getImg('/pic/ava_female.jpg')
-			: View::getImg('/pic/ava_male.png');
+			? Image::getImg('/pic/ava_female.jpg')
+			: Image::getImg('/pic/ava_male.png');
 	}
 
 	public function __construct()

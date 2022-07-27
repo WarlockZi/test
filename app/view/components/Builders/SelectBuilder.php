@@ -13,7 +13,7 @@ class SelectBuilder
 	private $field = '';
 	private $selected = '';
 	private $excluded = '';
-	private $initialOptionValue = '';
+	private $initialOptionValue = 0;
 	private $initialOptionLabel = '';
 	private $initialOption = false;
 
@@ -47,7 +47,7 @@ class SelectBuilder
 		return $this;
 	}
 
-	public function initialOptionLabel(string $initialOptionLabel, $initialOptionValue)
+	public function initialOptionLabel(string $initialOptionLabel, int $initialOptionValue)
 	{
 		$this->initialOption = true;
 		$this->initialOptionLabel = $initialOptionLabel;

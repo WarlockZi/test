@@ -13,7 +13,7 @@
 						 <? $question = new \app\model\Question(); ?>
 						 <? $question = $question->empty(); ?>
 						 <? $question['id'] = 0; ?>
-						 <? include ROOT . '/app/view/Test/edit_BlockQuestion.php' ?>
+						 <? include ROOT . '/app/view/Question/edit_BlockQuestion.php' ?>
 						 <? $i = 1; ?>
 			  </div>
 
@@ -21,12 +21,12 @@
 						 <? $a = new \app\model\Answer(); ?>
 						 <? $a = $a->empty(); ?>
 						 <? $a['id'] = 0; ?>
-						 <? include ROOT . '/app/view/Test/edit_BlockAnswer.php' ?>
+						 <? include ROOT . '/app/view/Question/edit_BlockAnswer.php' ?>
 			  </div>
 
 					<? if ($questions): ?>
 						<? foreach ($questions as $q_id => $question): ?>
-							<? include ROOT . '/app/view/Test/edit_BlockQuestion.php' ?>
+							<? include ROOT . '/app/view/Question/edit_BlockQuestion.php' ?>
 						<? endforeach; ?>
 					<? else: ?>
 				 <h3>Вопросов нет</h3>

@@ -5,7 +5,14 @@ import WDSSelect from "../select/WDSSelect";
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
   if (customCatalogItem) {
-    $(customCatalogItem).on('click', handleClick.bind(this))
+    $(customCatalogItem).on('click', handleClick)
+    let selects = $('[custom-select]')
+    if(selects){
+      [].map.call(selects,function (select) {
+        new WDSSelect(select)
+      })
+    }
+
   }
 
   async function handleClick({target}) {

@@ -3,12 +3,10 @@
 namespace app\controller;
 
 
-use app\model\MyCategory;
-use app\model\Product;
+use app\model\Illuminate\Category as IlluminateCategory;
+use app\model\Category as Category;
 use app\view\Category\CategoryView;
 use app\view\components\Tree\Tree;
-use app\model\Category;
-
 use app\view\View;
 
 
@@ -29,7 +27,7 @@ class CategoryController Extends AppController
 
 	public function actionIndex()
 	{
-		$categories = Category::all()->toArray();
+		$categories = IlluminateCategory::all()->toArray();
 
 		$accordion = new Tree([
 			'items' => $categories,
@@ -48,7 +46,7 @@ class CategoryController Extends AppController
 	{
 		$id = $this->route['id'];
 
-		$category = Category::with('products','parent_rec')
+		$category = IlluminateCategory::with('products','parent_rec')
 			->where('id', '=', $id)
 			->get()[0];
 

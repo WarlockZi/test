@@ -1,17 +1,18 @@
 <div class="test-data">
 
-	<? foreach ($testData  as $id_quest => $item): ?>
+	<? foreach ($testData as $id_quest => $item): ?>
 	  <div class="question" data-id="<?= $item['id']; ?>">
 
 		  <div class="q">
 			  <div class="num"><?= $id_quest + 1; ?></div>
 			  <div class="q-text"><?= $item['qustion'] ?></div>
+
 		  </div>
 
 			 <? if ($item['picq']): ?>
 			 <div class="qpic">
 				 <img class="test-qpic"
-				      src="<?= '/pic/' . $item['picq']; ?>">
+				 src="<?= \app\model\Image::getImg('/pic/' . $item['picq']); ?>">
 			 </div>
 			 <? endif; ?>
 
@@ -23,7 +24,7 @@
 
 							 <? if ($answer['pica']): ?>
 						<div class="apic">
-							<img src="<?= '/pic/' . $answer['pica'] ?>" alt="">
+							<img src="<?= \app\model\Image::getImg('/pic/' . $answer['pica']) ?>" alt="">
 						</div>
 							 <? endif; ?>
 				 </div>
