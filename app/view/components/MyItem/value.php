@@ -7,6 +7,7 @@
 
 	  <div class="text"
 			 <?= "data-field={$data['field']}"; ?>
+			 <?= "data-model={$this->model}"; ?>
 			 <?= $data['contenteditable']; ?>
 			 <?= $data['required']; ?>
 	  >

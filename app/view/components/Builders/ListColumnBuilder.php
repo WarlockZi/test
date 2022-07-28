@@ -39,14 +39,14 @@ class ListColumnBuilder
 		$this->type = $type;
 		return $this;
 	}
-	public function sort(string $sort)
+	public function sort()
 	{
-		$this->sort = $sort;
+		$this->sort = true;
 		return $this;
 	}
-	public function search(string $search)
+	public function search()
 	{
-		$this->search = $search;
+		$this->search = true;
 		return $this;
 	}
 	public function width(string $width)
@@ -59,9 +59,9 @@ class ListColumnBuilder
 		$this->hidden = $hidden;
 		return $this;
 	}
-	public function contenteditable(bool $contenteditable)
+	public function contenteditable()
 	{
-		$this->contenteditable = $contenteditable;
+		$this->contenteditable = true;
 		return $this;
 	}
 	public function get()

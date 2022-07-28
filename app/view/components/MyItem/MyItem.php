@@ -8,7 +8,9 @@ class MyItem
 	private $model = '';
 	private $item = [];
 
+	private $pageName = '';
 	private $class = '';
+	private $href = '';
 	private $del = false;
 	private $save = false;
 	public $toList = false;
@@ -33,6 +35,12 @@ class MyItem
 		return $this;
 	}
 
+	public function pageTitle(string $pageTitle)
+	{
+		$this->pageTitle = $pageTitle;
+		return $this;
+	}
+
 	public function del()
 	{
 		$this->del = true;
@@ -45,9 +53,12 @@ class MyItem
 		return $this;
 	}
 
-	public function toList()
+	public function toList(string $href = '')
 	{
 		$this->toList = true;
+		if ($href) {
+			$this->href = '/' . $href;
+		}
 		return $this;
 	}
 
@@ -62,6 +73,7 @@ class MyItem
 		$this->tabs[] = $tab;
 		return $this;
 	}
+
 	public function get()
 	{
 		ob_start();

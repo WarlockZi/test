@@ -49,7 +49,7 @@ export default function catalogItem() {
 
   async function save(modelName) {
     if (checkRequired()) return false
-    let model = getModel()
+    let model = getModel(modelName)
     let res = await post(`/adminsc/${modelName}/updateorcreate`, model)
   }
 
@@ -70,8 +70,8 @@ export default function catalogItem() {
     return errCount
   }
 
-  function getModel() {
-    let fields = $('[data-field]');
+  function getModel(modelName) {
+    let fields = $(`[data-field][data-model='${modelName}']`);
     let obj = {};
 
     // debugger;

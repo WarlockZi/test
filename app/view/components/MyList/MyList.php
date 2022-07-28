@@ -20,7 +20,7 @@ class MyList
 
 	public $html = '';
 
-	public function parent($model, $id)
+	public function parent(string $model, $id)
 	{
 		$this->parent = $model;
 		$this->parentId = $id;

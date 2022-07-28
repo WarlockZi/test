@@ -1,7 +1,7 @@
 <div class="item_header">
 
 	<div class="page-title"><?= $this->pageTitle ?></div>
-	<? include ROOT . '/app/view/components/CustomCatalogItem/tabs.php' ?>
+	<? include ROOT . '/app/view/components/MyItem/tabs.php' ?>
 </div>
 
 
@@ -14,7 +14,7 @@
 		  <div class="row">
 			  <div class="field"><?= $data['field'] ?></div>
 			  :
-					<? include ROOT . '/app/view/components/CustomCatalogItem/value.php' ?>
+					<? include ROOT . '/app/view/components/MyItem/value.php' ?>
 
 		  </div>
 		 <? endforeach; ?>
@@ -24,6 +24,7 @@
 	<? foreach ($this->tabs as $k => $tab): ?>
 	  <section
 			 <?= isset($tab['field']) ? "data-field={$tab['field']}": ''; ?>
+			  data-model=<?=$this->model?>
 			  data-type="inputs"
 			  data-id=<?= $n ?>>
 			 <?= $tab['html'] ?? ''; ?>
@@ -32,7 +33,7 @@
 		<? $n++; ?>
 	<? endforeach; ?>
 
-	<? include ROOT . '/app/view/components/CustomCatalogItem/buttons.php' ?>
+	<? include ROOT . '/app/view/components/MyItem/buttons.php' ?>
 
 
 </div>
