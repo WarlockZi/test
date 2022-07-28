@@ -5,6 +5,7 @@ namespace app\view\Val;
 
 
 use app\model\Val;
+use app\view\components\Builders\ListColumnBuilder;
 use app\view\components\CustomList\CustomList;
 use app\view\components\MyList\MyList;
 use app\view\Interfaces\IList;
@@ -28,28 +29,25 @@ class ValView extends MyView
 		$items = Val::where($model->model . '_id', '=', $id)
 			->get();
 		return MyList::build(self::$modelName)
-			->column([
-					'field' => 'id',
-					'name' => 'ID',
-					'type' => 'number',
-					'sort' => true,
-					'search' => false,
-					'width' => '50px',
-					'contenteditable' => false,
-				]
-			)->column([
-				'field' => 'name',
-				'name' => 'Значение',
-				'type' => 'string',
-				'sort' => true,
-				'search' => true,
-				'width' => '1fr',
-				'contenteditable' => true,
-			])->addButton('ajax')
+			->column(
+				ListColumnBuilder::build('id')
+					->name('ID')
+					->type('number')
+					->sort()
+					->width('50px')
+					->get()
+			)->column(
+				ListColumnBuilder::build('name')
+					->name('Наименование')
+					->sort()
+					->search()
+					->width('1fr')
+					->contenteditable()
+					->get()
+			)->addButton('ajax')
 			->del()
-//			->edit()
 			->items($items)
-			->parent($model, $id)
+			->parent($model->model, $id)
 			->get();
 
 	}

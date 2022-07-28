@@ -13,6 +13,8 @@ export default function list() {
       const inputs = $(table).findAll('.head input')
       const ids = $(table)[0].querySelectorAll('.id:not(.head')
       const modelName = table.dataset['model']
+      const parent = table.dataset.parent??null
+      const parentId = table.dataset.parentId??null
       const rows = []
 
       $(table).on('click', handleClick.bind(this));
@@ -49,7 +51,7 @@ export default function list() {
 
         /// create
         if (target.className === 'add-model') {
-          modelCreate(modelName)
+          modelCreate(modelName, parent,parentId)
 
           /// delete
         } else if (
@@ -99,8 +101,15 @@ export default function list() {
 
 
       // UPDATE OR CREATE
-      async function modelCreate(modelName, e) {
-        let res = await post(`/adminsc/${modelName}/updateOrCreate`, {})
+      async function modelCreate(modelName, parent,parentId) {
+        let data = {}
+        if (parent){
+          let parentName = parent+'_id'
+          data = {
+            [parentName]:+parentId
+          }
+        }
+        let res = await post(`/adminsc/${modelName}/updateOrCreate`, data)
         if (res.arr.id) {
           newrow(res.arr.id)
         }

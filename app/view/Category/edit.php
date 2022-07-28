@@ -2,7 +2,7 @@
 
 	<div>
 
-	<a class="button button-outlined" href="/adminsc/category">Все категории</a>
+	<a class="button button-outlined mb10" href="/adminsc/category">Все категории</a>
 	</div>
 
 	<?=$category;?>

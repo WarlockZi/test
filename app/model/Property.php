@@ -12,9 +12,16 @@ class Property extends Model
 
 	protected $fillable = [
 		'name' => '',
-		'value'=>'',
-		'description'=>'',
-		'type'=>'',
+		'value' => '',
+		'description' => '',
+		'category_id'=>null,
+		'propertable_type' => null,
+		'propertable_id' => null,
 	];
+
+//	public function category()
+//	{
+//		return $this->belongsTo(\app\model\Illuminate\Category::class);
+//	}
 
 }

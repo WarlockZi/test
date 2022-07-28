@@ -1,6 +1,6 @@
 <div class="custom-list__wrapper"
      data-model="<?= $this->model->model ?>"
-	<?= $this->parent ? "data-parent='{$this->parent->model}'" : ''; ?>
+	<?= $this->parent ? "data-parent='{$this->parent}'" : ''; ?>
 	<?= $this->parentId ? "data-parent-id={$this->parentId}" : ''; ?>
 >
 
@@ -41,6 +41,7 @@
 			  <div
 					  class="<?= $column['class'] ? $column['class'] : $field; ?>"
 					  data-field="<?= $field; ?>"
+					  data-model="<?= $this->model->model; ?>"
 					  data-id="<?= $model['id']; ?>"
 						 <?= $column['contenteditable'] ? 'contenteditable' : ''; ?>
 			  ><?= $model[$field]; ?></div>
@@ -49,7 +50,6 @@
 
 			 <?= $this->getEditButton($model, $field, $column); ?>
 			 <?= $this->getDelButton($model, $field, $column); ?>
-
 
 		 <? endforeach; ?>
 

@@ -16,7 +16,7 @@
 	<? endif; ?>
 
 	<? if ($this->toList): ?>
-	  <a href="/adminsc/<?= $this->model; ?>/list"
+	  <a href="/adminsc/<?= $this->model.'/'.$this->href; ?>"
 	     class="to-list">
 		  К списку
 	  </a>

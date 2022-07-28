@@ -252,6 +252,7 @@ $font-size-item: .5rem;
   .level-1 li:hover {
     background-color: tint($color-level-2, 3%);
   }
+
   .level-2 li:hover {
     background-color: tint($color-level-3, 3%);
   }
@@ -283,19 +284,28 @@ $font-size-item: .5rem;
 
   &:hover {
     width: 100%;
+
+    > .logo > svg {
+      left: 100px;
+    }
   }
 
   .logo {
+    position: relative;
     display: flex;
     justify-content: center;
+
+    svg {
+      position: absolute;
+    }
 
     .logo_vitex {
       width: 110px;
       height: 85px;
-      @include _600{
+      @include _600 {
         height: 50px;
       }
-      @include _300{
+      @include _300 {
         height: 50px;
         width: 60px;
       }
@@ -307,6 +317,8 @@ $font-size-item: .5rem;
 
   [accordion] {
     font-size: .75rem;
+    margin-top: 87px;
+
     @include _600 {
       height: 0;
     }

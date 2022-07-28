@@ -1,25 +1,101 @@
 <?php
 
 namespace app\view\Category;
+
 use app\model\Category;
 use app\model\Illuminate\Category as IlluminateCategory;
+use app\model\Product;
+use app\model\Property;
+use app\view\components\Builders\Item\ItemFieldBuilder;
+use app\view\components\Builders\Item\ItemTabBuilder;
+use app\view\components\Builders\ListColumnBuilder;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
+use app\view\components\MyItem\MyItem;
+use app\view\components\MyList\MyList;
 use app\view\Product\ProductView;
 
 class CategoryView
 {
-	private $model;
+	private $model = IlluminateCategory::class;
+	private $modelName = 'category';
 	public $html;
 
 	public function __construct()
 	{
 	}
 
-	public static function edit(IlluminateCategory $model): string
+	public static function edit($id): string
 	{
-		$view = new self($model);
-		$view->getHtml();
-		return $view->html;
+		$view = new self();
+
+		$category = IlluminateCategory::with('products', 'parent_rec', 'properties')
+			->where('id', '=', $id)
+			->get()[0];
+		$category = $category->toArray();
+		$products = $category['products'] ?? [];
+
+		$properties = Property::where('category_id', '=', $id)
+				->get() ?? [];
+
+		return MyItem::build($view->model, $id)
+			->pageTitle('Редактировать категорию :  '.$category['name'])
+			->field(
+				ItemFieldBuilder::build('id')
+					->name('ID')
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('name')
+					->contenteditable()
+					->required()
+					->get()
+			)
+			->tab(
+				ItemTabBuilder::build()
+					->tabTitle('Товары')
+					->html(
+						MyList::build(Product::class)
+							->column(
+								ListColumnBuilder::build('id')
+									->get()
+							)
+							->column(
+								ListColumnBuilder::build('name')
+									->get()
+							)
+							->items($products)
+							->edit()
+							->get()
+					)
+					->get()
+			)
+			->tab(
+				ItemTabBuilder::build()
+					->tabTitle('Свойства')
+					->html(
+						MyList::build(Property::class)
+							->column(
+								ListColumnBuilder::build('id')
+								  ->width('40px')
+									->get()
+							)
+							->column(
+								ListColumnBuilder::build('name')
+									->get()
+							)
+							->items($properties)
+							->parent($view->modelName, $id)
+							->edit()
+							->addButton('ajax')
+							->get()
+					)
+					->get()
+			)
+			->del()
+			->save()
+			->toList()
+			->get();
+
 	}
 
 	public static function list($models): string
@@ -85,7 +161,8 @@ class CategoryView
 
 	private function getOptions()
 	{
-		$cat = $this->model->toArray();
+		$cat = new $this->model;
+		$cat = $cat->all()->toArray();
 		return [
 			'item' => $cat,
 			'modelName' => $this->model->model,

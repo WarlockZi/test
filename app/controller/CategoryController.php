@@ -14,6 +14,7 @@ class CategoryController Extends AppController
 {
 
 	private $model = 'category';
+	private $modelName = \app\model\Category::class;
 	private $table = 'categories';
 
 	public function __construct(array $route)
@@ -46,12 +47,12 @@ class CategoryController Extends AppController
 	{
 		$id = $this->route['id'];
 
-		$category = IlluminateCategory::with('products','parent_rec')
-			->where('id', '=', $id)
-			->get()[0];
+//		$category = IlluminateCategory::with('products','parent_rec')
+//			->where('id', '=', $id)
+//			->get()[0];
 
-		$category = CategoryView::edit($category);
-		$categoryList = CategoryView::list($category);
+		$category = CategoryView::edit($id);
+//		$categoryList = CategoryView::list($category);
 
 
 		$this->set(compact('category'));
@@ -60,7 +61,7 @@ class CategoryController Extends AppController
 	public function actionUpdateOrCreate()
 	{
 		if ($this->ajax) {
-			$id = $this->model::updateOrCreate($this->ajax);
+			$id = $this->modelName::updateOrCreate($this->ajax);
 			if (is_numeric($id)) {
 				$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
 			} elseif (is_bool($id)) {
