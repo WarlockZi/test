@@ -30,7 +30,7 @@
 				<? endif; ?>
 
 			<a href="/auth/logout" aria-label="logout">
-					<? include ICONS . "/auth/logout2.php" ?>Выход</a>
+					<? include ICONS . "/auth/logout2.svg" ?>Выход</a>
 		</div>
 	</div>
 <? endif; ?>

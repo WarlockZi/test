@@ -2,9 +2,7 @@
 
 namespace app\controller;
 
-use app\core\App;
 use app\model\User;
-use Dotenv\Store\StringStore;
 
 class AppController extends Controller
 {
@@ -17,6 +15,32 @@ class AppController extends Controller
     $this->layout = 'vitex';
     $this->isAjax();
   }
+
+
+
+	public function actionDelete()
+	{
+		if ($this->ajax['id']) {
+			if ($this->model::delete($this->ajax['id'])) {
+				$this->exitWithPopup('Удален');
+			}
+		} else {
+			$this->exitWithMsg('No id');
+		}
+	}
+	public function actionUpdateOrCreate()
+	{
+		if ($this->ajax){
+			$id = $this->model::updateOrCreate($this->ajax);
+			if (is_numeric($id)) {
+				$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
+			}elseif(is_bool($id)){
+				$this->exitWithPopup('Сохранено');
+			}else{
+				$this->exitWithError('Ответ не сохранен');
+			}
+		}
+	}
 
 	public function exitJson(array $arr=[]): void
 	{

@@ -32,8 +32,8 @@ class PropertyController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route['id'];
-		$arr = PropertyView::edit($id);
-		$this->set(compact('arr'));
+		$item = PropertyView::edit($id);
+		$this->set(compact('item'));
 	}
 
 	public function actionUpdateOrCreate()

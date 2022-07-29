@@ -1,21 +1,22 @@
 @import "../../mixin_media";
 
-.logo_square {
-  height: 33px;
-  margin-right: 5px;
-
-  @include _800 {
-    display: none;
-  }
-  @include _600 {
-    display: none;
-  }
-
-}
+//.logo_square {
+//  height: 33px;
+//  margin-right: 5px;
+//
+//  @include _800 {
+//    display: none;
+//  }
+//  @include _600 {
+//    display: none;
+//  }
+//
+//}
 
 .header {
 
   .logo_vitex {
+
     height: 33px;
     @include _600 {
       height: 25px;

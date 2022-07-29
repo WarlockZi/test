@@ -2,6 +2,8 @@
 @import "../../mixin_media";
 
 .custom-list__wrapper {
+  background-color: #fff;
+
   @include _600 {
     width: 90vw;
     overflow-x: auto;
@@ -23,7 +25,7 @@
     }
 
     .edit:hover {
-      background-color: $color-main;
+      background-color: lighten($color-main,20%);
 
       svg {
         stroke: #ffffff;
@@ -31,7 +33,7 @@
     }
 
     .del:hover {
-      background-color: $color-warning;
+      background-color: lighten($color-warning,20%);
 
       svg {
         fill: #ffffff;
@@ -44,6 +46,19 @@
       align-items: center;
       display: flex;
       cursor: pointer;
+    }
+
+    .del:not(.head) {
+      background-image: url("/pic/icons/trashIcon.svg");
+      background-size: 47px 19px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .edit:not(.head) {
+      background-image: url("/pic/icons/edit.svg");
+      background-size: 47px 19px;
+      background-repeat: no-repeat;
+      background-position: center;
     }
 
     .head {
@@ -93,9 +108,16 @@
         }
       }
 
-      &.edit svg {
-        stroke: white;
-        stroke-width: 2px;
+      &.edit {
+        //background-image: url("/pic/icons/edit.svg");
+        //background-position: center;
+        //background-repeat: no-repeat;
+        //background-size: 20px;
+        svg {
+          stroke: white;
+          stroke-width: 2px;
+        }
+
       }
 
       &.del svg {
@@ -126,7 +148,6 @@
       align-self: end;
     }
   }
-
 
 
 }

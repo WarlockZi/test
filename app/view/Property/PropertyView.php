@@ -3,21 +3,24 @@
 namespace app\view\Property;
 
 use app\model\Property;
+use app\model\Val;
+use app\view\components\Builders\Item\ItemFieldBuilder;
+use app\view\components\Builders\Item\ItemTabBuilder;
 use app\view\components\Builders\ListColumnBuilder;
-use app\view\components\CustomCatalogItem\CustomCatalogItem;
+use app\view\components\MyItem\MyItem;
 use app\view\components\MyList\MyList;
 use app\view\MyView;
-use app\view\Val\ValView;
 
 class PropertyView extends MyView
 {
-	public $model = Property::class;
+	public $modelName = Property::class;
+	public $model = 'property';
 	public $html;
 
 	public static function listAll()
 	{
 		$view = new self;
-		return MyList::build($view->model)
+		return MyList::build($view->modelName)
 			->all()
 			->column(
 				ListColumnBuilder::build('id')
@@ -30,6 +33,7 @@ class PropertyView extends MyView
 					->get()
 			)
 			->edit()
+			->del()
 			->addButton('ajax')
 			->get();
 	}
@@ -38,56 +42,52 @@ class PropertyView extends MyView
 	public static function edit($id)
 	{
 		$view = new self();
+		return MyItem::build($view->modelName, $id)
+			->field(
+				ItemFieldBuilder::build('id')
+					->name('ID')
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('name')
+					->name('Наименование')
+					->contenteditable()
+					->get()
+			)
+			->tab(
+				ItemTabBuilder::build()
+					->tabTitle('Значения')
+					->html(
+						MyList::build(Val::class)
+							->items(Val::findAllWhere('property_id', $id))
+							->parent($view->model, $id)
+							->column(
+								ListColumnBuilder::build('id')
+									->name('ID')
+									->width('40px')
+									->get()
+							)
+							->column(
+								ListColumnBuilder::build('name')
+									->name('Наименование')
+									->contenteditable()
+									->width('1fr')
+									->get()
+							)
+							->del()
+							->addButton('ajax')
+							->get()
+					)
+					->get()
+			)
+			->pageTitle('Свойство')
+			->del()
+			->save()
+			->toList()
+			->get();
 
-		$item = $view->model::where('id', '=', $id)->get()[0];
-		$view->getItem($item);
-		$item = $view->html;
-
-		return [$item];
 	}
 
 
-	private function getItem($item): void
-	{
-
-		$view = new static();
-		$this->model = new $view->model;
-		$options = $this->getOptions($item);
-
-		$t = new CustomCatalogItem($options);
-		$this->html = $t->html;
-	}
-
-
-	private function getOptions(array $item)
-	{
-
-		return [
-			'item' => $item,
-			'modelName' => $this->model->model,
-			'tableClassName' => $this->model->table,
-			'pageTitle' => '',
-			'tabs' => [
-				['title' => 'Значения',
-					'html' => ValView::listBelongsTo($this->model, $item['id']),
-				],
-			],
-			'fields' => [
-				'ID' => [
-					'field' => 'id',
-					'contenteditable' => false,
-				],
-				'Имя' => [
-					'field' => 'name',
-					'contenteditable' => true,
-					'required' => true,
-				],
-
-			],
-			'delBttn' => true,
-			'saveBttn' => true,
-
-		];
-	}
 
 }

@@ -8,7 +8,7 @@ class MyItem
 	private $model = '';
 	private $item = [];
 
-	private $pageName = '';
+	private $pageTitle = '';
 	private $class = '';
 	private $href = '';
 	private $del = false;
@@ -37,7 +37,7 @@ class MyItem
 
 	public function pageTitle(string $pageTitle)
 	{
-		$this->pageTitle = $pageTitle;
+		$this->pageTitle = $pageTitle??'';
 		return $this;
 	}
 

@@ -4,6 +4,8 @@
 	<a class="logo" href="/">
 		<!--		 --><? // include ROOT . '/app/view/components/header/logo_squre.php' ?>
 		 <? include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
+<!--		 --><?// include ROOT . '/app/view/components/header/logo_squre.php' ?>
+		<span class="logo_square"></span>
 	</a>
 
 	<div accordion>

@@ -282,11 +282,29 @@ $font-size-item: .5rem;
     height: fit-content;
   }
 
+  .logo_vitex {
+    transition: left 500ms;
+    left: -130px;
+  }
+  .logo_square {
+    position: absolute;
+    background-image: url("/pic/icons/logo_square.svg");
+    background-size: 30px, 30px;
+    transition: left 500ms;
+    left: 15px;
+    top: 30px;
+    width: 30px;
+    height: 30px;
+  }
+
   &:hover {
     width: 100%;
 
-    > .logo > svg {
-      left: 100px;
+    .logo_vitex {
+      left: 30px;
+    }
+    .logo_square {
+      left: -70px;
     }
   }
 

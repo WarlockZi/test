@@ -83,15 +83,6 @@ class MyList
 		return $this;
 	}
 
-	protected function getOptions($options)
-	{
-		foreach ($options as $k => $v) {
-			if (property_exists($this, $k)) {
-				$this->$k = $v;
-			}
-		}
-	}
-
 	protected function run()
 	{
 		$this->prepareGgridHeader();
