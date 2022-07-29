@@ -12,7 +12,7 @@
 		<!--  TABLE  -->
 		 <? foreach ($this->fields as $fieldName => $data): ?>
 		  <div class="row">
-			  <div class="field"><?= $data['field'] ?></div>
+			  <div class="field"><?= $data['name'] ?></div>
 			  :
 					<? include ROOT . '/app/view/components/MyItem/value.php' ?>
 

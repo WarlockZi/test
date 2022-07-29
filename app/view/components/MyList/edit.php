@@ -6,7 +6,7 @@
 			data-id="<?= $model['id']; ?>"
 	>
 
-		 <? include EDIT; ?>
+<!--		 --><?// include EDIT; ?>
 
 	</a>
 <? endif; ?>

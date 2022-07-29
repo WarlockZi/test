@@ -65,6 +65,7 @@ class CategoryView
 							)
 							->items($products)
 							->edit()
+							->del()
 							->get()
 					)
 					->get()

@@ -22,10 +22,14 @@
 		 <? endforeach; ?>
 
 		 <? if ($this->editCol): ?>
-		  <div class='head edit'><? include EDIT ?></div>
+		  <div class='head edit'>
+		    <? include EDIT ?>
+		  </div>
 		 <? endif; ?>
 		 <? if ($this->delCol): ?>
-		  <div class='head del'><? include TRASH ?></div>
+		  <div class='head del'>
+		    <? include TRASH ?>
+		  </div>
 		 <? endif; ?>
 
 

@@ -1,3 +1,5 @@
+<!--Перенесено в components/icons-->
+
 <svg class="logo_square"
      viewBox="0 0 26 26"
      version="1.1"
