@@ -17,9 +17,7 @@ class PostController Extends AppController
 	{
 		parent::__construct($route);
 		$this->autorize();
-		$this->layout = 'admin';
-		View::setCss('admin.css');
-		View::setJs('admin.js');
+
 	}
 
 	public function actionIndex()

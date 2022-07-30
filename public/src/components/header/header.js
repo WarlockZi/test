@@ -4,7 +4,7 @@ import './header.scss'
 // debugger
 let gumburger = $('.gamburger')[0]
 if (gumburger) {
-  let mobileMenu = $('.gamburger').on('click', mobile)
+  $('.gamburger').on('click', mobile)
 
 }
 

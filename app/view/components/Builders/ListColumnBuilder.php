@@ -15,6 +15,7 @@ class ListColumnBuilder
 	private $search=false;
 	private $width='auto';
 	private $hidden=false;
+	private $link=false;
 	private $contenteditable=false;
 
 	public static function build(string $field)
@@ -70,6 +71,7 @@ class ListColumnBuilder
 		[
 			'field' => $this->field,
 			'class' => $this->class,
+			'link' => $this->link,
 			'name' => $this->name?$this->name:$this->field,
 			'type' => $this->type,
 			'sort' => $this->sort,

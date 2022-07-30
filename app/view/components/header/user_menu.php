@@ -16,7 +16,7 @@
 <? else: ?>
 
 	<div class="user-menu">
-		<img src="<?= \app\model\User::avatar($this->user);?>" alt="">
+		<img src="<?= \app\model\User::avatar($this->user); ?>" alt="">
 
 		<div class="credits">
 			<div class="fio"><?= "{$this->user['surName']} {$this->user['name']}"; ?></div>
@@ -25,12 +25,12 @@
 
 		<div class="menu">
 			<a href="/auth/profile">Изменить свой профиль</a>
-				<? if (array_intersect(['role_employee'], $this->user['rights']) || defined('SU')): ?>
+				<? if (app\model\User::can($this->user,['role_employee'])): ?>
 			  <a class="list__item" href="/adminsc">Admin</a>
 				<? endif; ?>
 
 			<a href="/auth/logout" aria-label="logout">
-					<? include ICONS . "/auth/logout2.svg" ?>Выход</a>
+					 <? include ICONS . "/auth/logout2.svg" ?>Выход</a>
 		</div>
 	</div>
 <? endif; ?>

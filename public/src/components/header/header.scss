@@ -25,19 +25,25 @@ header {
   @include _600 {
     padding: 0;
   }
-}
 
-.header__info {
-  display: flex;
-  position: relative;
-  align-items: center;
-  max-width: 1310px;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  @include _600 {
-    padding: 0;
+  .logo{
+    .logo_square{
+      height: 33px;
+    }
   }
 }
+
+//.header__info {
+//  display: flex;
+//  position: relative;
+//  align-items: center;
+//  justify-content: space-between;
+//  max-width: 1310px;
+//  flex-wrap: wrap;
+//  @include _600 {
+//    padding: 0;
+//  }
+//}
 
 
 

@@ -10,21 +10,13 @@ const config = {
   target: ["web", "es5"],
 
   entry: {
-    // admin: {
-    //   import: path.resolve(src, 'Admin/admin.js'),
-    //   dependOn: 'common',
-    // },
-    admin: {
-      import: path.resolve(src, 'Admin/admin.js'),
-      // dependOn: 'common',
-      // filename:'pages/[name][ext]'
-    },
-    common: path.resolve(src, 'common.js'),
-    // admin: path.resolve(src, 'Admin/admin.js'),
+
+    admin: path.resolve(src, 'Admin/admin.js'),
     auth: path.resolve(src, 'Auth/auth.js'),
-    // test: path.resolve(src, 'Test/test.js'),
-    // test_edit: path.resolve(src, 'Test/test-edit.js'),
     main: path.resolve(src, 'Main/main.js'),
+    cookie: path.resolve(src, 'components/cookie/cookie.js'),
+    mainHeader: path.resolve(src, 'components/header/header.js'),
+    common: path.resolve(src, 'common.js'),
 
   },
   output: {
