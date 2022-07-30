@@ -38,7 +38,7 @@ class CategoryView
 				->get() ?? [];
 
 		return MyItem::build($view->model, $id)
-			->pageTitle('Редактировать категорию :  '.$category['name'])
+			->pageTitle('Редактировать категорию :  ' . $category['name'])
 			->field(
 				ItemFieldBuilder::build('id')
 					->name('ID')
@@ -63,6 +63,11 @@ class CategoryView
 								ListColumnBuilder::build('name')
 									->get()
 							)
+							->column(
+								ListColumnBuilder::build('slug')
+									->link()
+									->get()
+							)
 							->items($products)
 							->edit()
 							->del()
@@ -77,7 +82,7 @@ class CategoryView
 						MyList::build(Property::class)
 							->column(
 								ListColumnBuilder::build('id')
-								  ->width('40px')
+									->width('40px')
 									->get()
 							)
 							->column(

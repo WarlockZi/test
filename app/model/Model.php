@@ -301,7 +301,7 @@ abstract class Model
 	public static function where($field, $operator, $value)
 	{
 		$model = new static();
-		$model->where = " WHERE {$field} {$operator} {$value}" ?? '';
+		$model->where = " WHERE {$field}{$operator}'{$value}'" ?? '';
 		return $model;
 	}
 
