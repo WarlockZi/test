@@ -5,8 +5,9 @@ namespace app\view\Videoinstruction;
 
 
 use app\model\Videoinstruction;
-use app\view\components\Builders\ListColumnBuilder;
-use app\view\components\MyList\MyList;
+
+use app\view\components\Builders\ListBuilder\ListColumnBuilder;
+use app\view\components\Builders\ListBuilder\MyList;
 use app\view\MyView;
 
 class VideoinstructionView extends MyView

@@ -12,7 +12,7 @@ export default function rights() {
   $('.rights-table').on('click', handle)
 
   function handle({target}) {
-    if (target.closest('.del')) del(target.closest('.del'))
+    if (target.closest('.view.components.Builders.ListBuilder.del')) del(target.closest('.view.components.Builders.ListBuilder.del'))
     if (target.closest('.save')) save(target.closest('.save'))
 
     function model(el) {
@@ -34,7 +34,7 @@ export default function rights() {
           model.toServ.description = f.innerText.trim()
         } else if (f.classList.contains('save.svg')) {
           model.save = f
-        } else if (f.classList.contains('del')) {
+        } else if (f.classList.contains('view.components.Builders.ListBuilder.del')) {
           model.del = f
         }
       })

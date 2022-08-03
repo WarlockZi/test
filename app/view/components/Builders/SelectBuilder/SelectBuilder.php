@@ -1,10 +1,12 @@
 <?php
 
 
-namespace app\view\components\Builders;
+namespace app\view\components\Builders\SelectBuilder;
 
 
-class SelectBuilder
+use app\view\components\Builders\Builder;
+
+class SelectBuilder extends Builder
 {
 	private $item = '';
 	private $class = '';
@@ -20,7 +22,7 @@ class SelectBuilder
 	private $tree = [];
 	private $tab = '&npbsp';
 
-	private $finalTpl = ROOT . '/app/view/components/MySelect/tpl.php';
+	private $finalTpl = ROOT . '/app/view/components/Builders/SelectBuilder/tpl.php';
 
 	public static function build(array $item)
 	{
@@ -141,11 +143,14 @@ class SelectBuilder
 		return $tpl;
 	}
 
+
+
 	public function get()
 	{
 		ob_start();
-		include ROOT . '/app/view/components/Builders/SelectBuilderTemplate.php';
-		return ob_get_clean();
+		include ROOT . '/app/view/components/Builders/SelectBuilder/SelectBuilderTemplate.php';
+		$result = ob_get_clean();
+		return $this->clean($result);
 	}
 
 }

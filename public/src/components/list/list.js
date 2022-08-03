@@ -1,7 +1,7 @@
 import './list.scss';
 import {$, post, debounce} from '../../common';
 
-export default function list() {
+// export default function list() {
   const tables = $('.custom-list__wrapper')
   if (tables) {
     [].forEach.call(tables, function (table) {
@@ -125,7 +125,7 @@ export default function list() {
           tableContent.appendChild(newEl)
           if (['id'].includes(newEl.className)) {
             newEl.innerText = id
-          } else if (!['del', 'edit', 'save'].includes(newEl.className)) {
+          } else if (!['view.components.Builders.ListBuilder.del', 'edit', 'save'].includes(newEl.className)) {
             newEl.innerText = ''
           }
           newEl.dataset['id'] = id
@@ -267,5 +267,5 @@ export default function list() {
 
     })
   }
-  // })
-}
+
+// }

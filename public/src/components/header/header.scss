@@ -1,5 +1,3 @@
-@import "logo";
-@import "location";
 @import "phone";
 @import "header-catalog-menu";
 @import "user_menu";
@@ -11,39 +9,56 @@ header {
   width: 100%;
   align-items: center;
   justify-content: center;
-}
 
 
-.header {
-  display: flex;
-  position: relative;
-  align-items: center;
-  margin: 10px 20px;
-  justify-content: space-between;
-  max-width: 1310px;
-  width: 100%;
-  @include _600 {
-    padding: 0;
-  }
-
-  .logo{
-    .logo_square{
-      height: 33px;
+  .header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    margin: 10px 20px;
+    justify-content: space-between;
+    max-width: 1310px;
+    width: 100%;
+    @include _600 {
+      padding: 0;
     }
+
+    .logo_vitex {
+
+      height: 33px;
+      @include _600 {
+        height: 25px;
+      }
+      @include _500{
+        width: 50px;
+      }
+    }
+    .location{
+      font-size: 12px;
+      padding: 0 15px;
+      max-width: 105px;
+      position: relative;
+      flex: 1;
+      @include _800{
+        display: none;
+      }
+
+      svg{
+        position: absolute;
+        left: -8px;
+        top: 30%;
+        width: 15px;
+        height: 15px;
+        stroke: var(--color-main);
+      }
+    }
+
   }
+
+
 }
 
-//.header__info {
-//  display: flex;
-//  position: relative;
-//  align-items: center;
-//  justify-content: space-between;
-//  max-width: 1310px;
-//  flex-wrap: wrap;
-//  @include _600 {
-//    padding: 0;
-//  }
-//}
+
 
 
 

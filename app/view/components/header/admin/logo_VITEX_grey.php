@@ -1,4 +1,4 @@
-<?php $color = "#ffffff"; ?>
+<?php $color = "#41444a"; ?>
 <svg
 		viewBox="125 0 480 110"
 		class="logo_vitex"

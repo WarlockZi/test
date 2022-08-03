@@ -12,7 +12,7 @@
 
 		<div class="test-edit__content">
 
-			<?=$item?>
+			<?=$item??'';?>
 
 		</div>
 	</div>

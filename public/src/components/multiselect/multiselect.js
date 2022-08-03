@@ -43,7 +43,7 @@ export default function multiselect() {
           ul.classList.toggle('show')
 
 // нажатие по крестику чипа
-        } else if (['del'].includes(target.className)) {
+        } else if (['view.components.Builders.ListBuilder.del'].includes(target.className)) {
           let id = target.closest('.chip').dataset.id
           toggleBackground(id)
           let chip = target.closest('.chip')
@@ -80,7 +80,7 @@ export default function multiselect() {
           chip.dataset['id'] = id
 
           let del = document.createElement('div')
-          del.classList.add('del')
+          del.classList.add('view.components.Builders.ListBuilder.del')
           del.innerText = 'X'
 
           chip.append(del)

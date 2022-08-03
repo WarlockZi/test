@@ -17,6 +17,7 @@ const config = {
     cookie: path.resolve(src, 'components/cookie/cookie.js'),
     mainHeader: path.resolve(src, 'components/header/header.js'),
     common: path.resolve(src, 'common.js'),
+    list: path.resolve(src, 'components/list/list.js'),
 
   },
   output: {
@@ -59,6 +60,7 @@ const config = {
   devServer: {
     allowedHosts: "all",
     host: "localhost",
+    // https: true,
     port: 4000,
     hot: true,
     watchFiles: {

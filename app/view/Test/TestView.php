@@ -3,9 +3,9 @@
 namespace app\view\Test;
 
 use app\model\Test;
-use app\view\components\Builders\Item\ItemFieldBuilder;
-use app\view\components\Builders\SelectBuilder;
-use app\view\components\MyItem\MyItem;
+use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
+use app\view\components\Builders\ItemBuilder\ItemBuilder;
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Tree\Tree;
 
 class TestView
@@ -17,7 +17,7 @@ class TestView
 		$view =new self();
 		$item = new $view->model;
 		$item = $item::find($id)[0];
-		return MyItem::build($view->model, $id)
+		return ItemBuilder::build($view->model, $id)
 			->del()
 			->save()
 			->field(

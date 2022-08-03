@@ -13,8 +13,6 @@ class CatalogController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
-		View::setCss('main.css');
-		View::setJs('main.js');
 
 	}
 

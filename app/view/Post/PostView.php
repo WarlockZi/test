@@ -5,8 +5,9 @@ namespace app\view\Post;
 
 
 use app\model\Post;
-use app\view\components\Builders\ListColumnBuilder;
-use app\view\components\MyList\MyList;
+
+use app\view\components\Builders\ListBuilder\ListColumnBuilder;
+use app\view\components\Builders\ListBuilder\MyList;
 use app\view\MyView;
 
 

@@ -33,6 +33,8 @@ class AppController extends Controller
 		View::setCss('common.css');
 		View::setJs('cookie.js');
 		View::setCss('cookie.css');
+		View::setJs('list.js');
+		View::setCss('list.css');
 	}
 
 	protected function setAdminAssets()
@@ -40,12 +42,10 @@ class AppController extends Controller
 		$this->layout = 'admin';
 		View::setJs('admin.js');
 		View::setCss('admin.css');
-//		View::setJs('mainHeader.js');
-//		View::setCss('mainHeader.css');
+//		View::setJs('list.js');
+//		View::setCss('list.css');
 //		View::setJs('common.js');
 //		View::setCss('common.css');
-//		View::setJs('cookie.js');
-//		View::setCss('cookie.css');
 	}
 
 	public function actionDelete()

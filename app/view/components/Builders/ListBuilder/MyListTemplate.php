@@ -61,7 +61,7 @@
 
 	<!--  ADD BUTTON  -->
 	<div class="custom-list__buttons">
-		 <? include ROOT . '/app/view/components/MyList/add.php'; ?>
+		 <? include ROOT . '/app/view/components/Builders/ListBuilder/add.php'; ?>
 	</div>
 
 

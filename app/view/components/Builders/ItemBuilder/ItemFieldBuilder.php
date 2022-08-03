@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\view\components\Builders\Item;
+namespace app\view\components\Builders\ItemBuilder;
 
 
 class ItemFieldBuilder

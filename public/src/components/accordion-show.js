@@ -22,4 +22,13 @@ export default function accordionShow() {
     })
   }
 
+  let admin_sidebar_gumburger = $('#burger')[0]
+  if (admin_sidebar_gumburger) {
+    $(admin_sidebar_gumburger).on('click', function () {
+      let admin_sidebar = $('.admin_sidebar')[0]
+      admin_sidebar.classList.toggle('open')
+    })
+  }
+
+
 }
