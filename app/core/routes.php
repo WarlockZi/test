@@ -2,16 +2,16 @@
 
 use app\core\Router;
 
-Router::add('^auth\/?(?<action>[a-z0-9]+)\/?(?<id>[0-9]+)$', ['controller' => 'Auth']);
-Router::add('^product\/(?<slug>[a-z0-9-]+)\/?(?<extra>[a-z0-9-]+)?$', ['controller' => 'Product']);
+Router::add("^auth\/?(?<action>[a-z0-9]+)?\/?(?<id>[0-9]+)?$", ['controller' => 'Auth']);
+Router::add("^product\/(?<slug>[a-z0-9-]+)?\/?(?<extra>[a-z0-9-]+)?$", ['controller' => 'Product']);
+Router::add("^category\/(?<slug>[a-z0-9-]+)\/?(?<extra>[a-z0-9-]+)?$", ['controller' => 'Category']);
 
-Router::add('^about\/(?P<action>[a-z0-9_]+)$', ['controller' => 'main']);
-Router::add('^service\/(?P<action>[a-z0-9-]+)$', ['controller' => 'main']);
+Router::add("^about\/(?P<action>[a-z0-9_]+)$", ['controller' => 'main']);
 
-Router::add('^.?search.?', ['controller' => 'search', 'action' => 'index']); // fw/ -> main/index
+Router::add("^.?search.?", ['controller' => 'search', 'action' => 'index']);
 
-Router::add('^(?P<admin>adminsc)\/?(?P<controller>[a-z-]+)\/?(?P<action>[a-z-]+)?\/?(?P<id>[0-9]+)?$'); // fw/test/do -> controller/action
-Router::add('^(?P<controller>[a-z-]+)\/?(?P<action>[a-z-]+)?$'); // fw/test/do -> controller/action
-Router::add('^$', ['controller' => 'main', 'action' => 'index']); // fw/ -> main/index
+Router::add("^(?P<admin>adminsc)?\/?(?P<controller>[a-z-]+)\/?(?P<action>[a-z-]+)?\/?(?P<id>[0-9]+)?$");
+//Router::add('^(?P<controller>[a-z-]+)\/?(?P<action>[a-z-]+)?$');
+Router::add("^$", ['controller' => 'main', 'action' => 'index']);
 
 

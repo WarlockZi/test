@@ -3,7 +3,6 @@
 namespace app\model\Illuminate;
 
 
-
 class Product extends \Illuminate\Database\Eloquent\Model
 {
 
@@ -13,7 +12,12 @@ class Product extends \Illuminate\Database\Eloquent\Model
 	public function category()
 	{
 		return $this->belongsTo(Category::class);
-}
+	}
+
+	public function properties()
+	{
+		return $this->morphTo(Property::class);
+	}
 
 
 }

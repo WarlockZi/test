@@ -4,10 +4,7 @@ namespace app\controller;
 
 use app\model\Right;
 use app\model\User;
-use app\view\components\Builders\ListColumnBuilder;
-use app\view\components\MyList\MyList;
 use app\view\User\UserView;
-use app\view\View;
 
 
 class UserController extends AppController
@@ -20,15 +17,11 @@ class UserController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
-		$this->layout = 'admin';
-		View::setJs('admin.js');
-		View::setCss('admin.css');
-		$this->autorize();
+
 	}
 
 	public function actionList()
 	{
-
 		$list = UserView::listAll();
 		$this->set(compact('list'));
 	}
@@ -39,21 +32,10 @@ class UserController extends AppController
 		$users = User::findAll();
 		$this->set(compact('users'));
 
-		$users_table = include ROOT . '/app/view/User/getList.php';
+		$users_table = include ROOT . '/app/view/User/del___getList.php';
 		$this->set(compact('users_table'));
 	}
 
-	public function actionShow()
-	{
-		$rights = Right::findAll();
-		$this->set(compact('rights'));
-
-		$item = new User();
-		$item = include ROOT . '/app/view/User/getItem.php';
-		$this->set(compact('item'));
-		$this->set(compact('rights'));
-
-	}
 
 	public function actionEdit()
 	{
@@ -74,22 +56,11 @@ class UserController extends AppController
 		}
 		if ($user = $this->ajax) {
 			$user['id'] = $_SESSION['id'];
-			User::update($user);
+			User::updateOrCreate($user);
 			$this->exitWithPopup('Сохранено');
 		}
 	}
 
-	public function actionCreate()
-	{
-		if ($user = $this->ajax) {
-			$user['password'] = $this->preparePassword('gfasdf41(D{%)');
-			if ($id = $this->model::create($this->ajax)) {
-				exit(json_encode([
-					'id' => $id,
-				]));
-			}
-		}
-	}
 
 	public function actionDelete()
 	{
@@ -115,17 +86,41 @@ class UserController extends AppController
 			}
 		}
 	}
+//
+//	public function actionUpdate()
+//	{
+//		if ($data = $this->ajax) {
+//			$date = strtotime($data['birthDate']);
+//			$data['birthDate'] = date('Y-m-d', $date);
+//
+//			User::update($data);
+//			$this->exitWithPopup('ok');
+//		}
+//	}
 
-	public function actionUpdate()
-	{
-		if ($data = $this->ajax) {
-			$date = strtotime($data['birthDate']);
-			$data['birthDate'] = date('Y-m-d', $date);
-
-			User::update($data);
-			$this->exitWithPopup('ok');
-		}
-	}
-
+//
+//
+//	public function actionCreate()
+//	{
+//		if ($user = $this->ajax) {
+//			$user['password'] = $this->preparePassword('gfasdf41(D{%)');
+//			if ($id = $this->model::create($this->ajax)) {
+//				exit(json_encode([
+//					'id' => $id,
+//				]));
+//			}
+//		}
+//	}
+//	public function actionShow()
+//	{
+//		$rights = Right::findAll();
+//		$this->set(compact('rights'));
+//
+//		$item = new User();
+//		$item = include ROOT . '/app/view/User/getItem.php';
+//		$this->set(compact('item'));
+//		$this->set(compact('rights'));
+//
+//	}
 
 }

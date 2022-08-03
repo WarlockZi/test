@@ -1,25 +1,24 @@
 <?php
 
 
-namespace app\view\Order;
+namespace app\view\Planning;
 
 
-use app\model\Order;
-
+use app\model\Todo;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
-use app\view\MyView;
 
 
-abstract class OrderView extends MyView
+class PlanningView
 {
 
-	public $model = Order::class;
-	public $html;
+	public $modelName = Todo::class;
 
-	public static function listAll(): string
+	public static function listItems(array $items): string
 	{
-		return MyList::build(Order::class)
+		$view = new self;
+		return MyList::build($view->modelName)
+			->items($items)
 			->column(
 				ListColumnBuilder::build('id')
 					->name('ID')
@@ -27,7 +26,9 @@ abstract class OrderView extends MyView
 			->column(
 				ListColumnBuilder::build('name')
 					->name('Наименование')
-					->search(true)
+					->sort()
+					->contenteditable()
+					->search()
 					->width('1fr')
 					->get())
 			->all()

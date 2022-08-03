@@ -1,46 +1,8 @@
 @import "../../mixin_media";
 
-//.logo_square {
-//  height: 33px;
-//  margin-right: 5px;
-//
-//  @include _800 {
-//    display: none;
-//  }
-//  @include _600 {
-//    display: none;
-//  }
-//
-//}
 
 .header {
 
-  .logo_vitex {
 
-    height: 33px;
-    @include _600 {
-      height: 25px;
-    }
-    @include _500{
-      width: 50px;
-    }
-  }
 }
 
-.logo__description {
-  width: 120px;
-  margin: 0 10px 0 20px;
-  display: inline-block;
-  color: #343133;
-  font-size: 12px;
-
-  @include _800 {
-    display: none;
-    font-size: 10px;
-    width: 90px;
-  }
-
-  @include _400 {
-    display: none;
-  }
-}

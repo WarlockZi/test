@@ -2,7 +2,7 @@
 
 
 .accordion-open {
-    display: none;
+  display: none;
   position: relative;
   transition: transform 1s;
   padding: 10px;
@@ -17,8 +17,8 @@
   margin-right: 25px;
   min-width: 103px;
 
-  @include _1000{
-  display: flex;
+  @include _1000 {
+    display: flex;
   }
 
 

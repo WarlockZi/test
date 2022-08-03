@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\view\components\Builders;
+namespace app\view\components\Builders\ListBuilder;
 
 
 class ListColumnBuilder

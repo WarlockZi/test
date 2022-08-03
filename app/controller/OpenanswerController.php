@@ -13,7 +13,7 @@ class OpenanswerController Extends AppController
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->autorize();
+
 	}
 
 	public function actionUpdateOrCreate()

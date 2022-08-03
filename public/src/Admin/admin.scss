@@ -1,16 +1,13 @@
 @import '../var.scss';
 @import "../mixin_media";
 @import '../normalize.scss';
-//@import "components/sub-menu/adm-menu";
-//@import "components/sub-menu/catalog";
-@import "../components/del/dump";
-@import "../components/del/grid";
 @import "../components/neon";
 
 @include chips;
 
 
 .admin-layout__container {
+  position: relative;
   display: flex;
   flex: 1 0 auto;
   margin-top: 0;
@@ -59,18 +56,21 @@
       }
     }
   }
+  .admin-layout__content {
+    display: flex;
+    flex-flow: column;
+    flex: 1 1 auto;
+    padding: 20px;
+    margin-left: 45px;
+    @include _600{
+      margin-left: 0;
+    }
+
+  }
 
 }
 
-.admin-layout__content {
-  display: flex;
-  flex-flow: column;
-  flex: 1 1 auto;
-  padding: 20px;
-  //@include _600 {
-  //  overflow-x: scroll;
-  //}
-}
+
 
 
 

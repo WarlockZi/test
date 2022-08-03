@@ -8,8 +8,8 @@ use app\model\Model;
 
 class Planning extends Model
 {
-	protected $table = 'planning';
-	protected $model = 'planning';
+	public $table = 'planning';
+	public $model = 'planning';
 
 	protected $fillable = [
 		'employee'=>null,
@@ -22,9 +22,9 @@ class Planning extends Model
 		return parent::delete($id);
 
 	}
-	public static function create($value=[])
-	{
-		return parent::create($value);
-	}
+//	public static function create($value=[])
+//	{
+//		return parent::create($value);
+//	}
 
 }

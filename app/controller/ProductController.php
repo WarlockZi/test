@@ -14,9 +14,7 @@ class ProductController Extends AppController
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->layout = 'vitex';
-//		View::setCss('admin.css');
-//		View::setJs('admin.js');
+
 
 	}
 
@@ -24,17 +22,16 @@ class ProductController Extends AppController
 	{
 		if (isset($this->route['slug'])) {
 			$slug = $this->route['slug'];
-			$model = new $this->modelName;
-			$items = $model::where('slug','=', $slug)->get();
-			$list = ProductView::listItems($items);
-
-		} else {
-			$list = ProductView::listAll();
-
+			$card = ProductView::card($slug);
+			$this->set(compact('card'));
 		}
+	}
 
-
+	public function actionList()
+	{
+		$list = ProductView::listAll();
 		$this->set(compact('list'));
+
 	}
 
 	public function actionEdit()
@@ -43,7 +40,6 @@ class ProductController Extends AppController
 		$item = ProductView::edit($id);
 		$this->set(compact('item'));
 	}
-
 
 
 }

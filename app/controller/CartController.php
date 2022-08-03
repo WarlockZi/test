@@ -12,13 +12,6 @@ class CartController extends AppController {
 
    public function actionIndex() {
 
-
-       $this->layout = 'vitex';
-       View::setCss('main.css');
-       View::setJs('main.js');
-
-//      $this->autorize();
-
    }
 
 }

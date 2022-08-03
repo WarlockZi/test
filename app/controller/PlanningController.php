@@ -5,23 +5,16 @@ namespace app\controller;
 use app\model\Answer;
 use app\model\Todo;
 use app\view\components\CustomList\CustomList;
-use app\view\View;
+use app\view\Planning\PlanningView;
 
 class PlanningController Extends AppController
 {
-	protected $model = Todo::class;
-	protected $modelName = 'todo';
-	protected $tableName = 'todos';
+	protected $modelName = Todo::class;
+	protected $model = 'todo';
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-
-		$this->layout = 'admin';
-		View::setCss('admin.css');
-		View::setJs('admin.js');
-
-		$this->autorize();
 	}
 
 	public function actionIndex()
@@ -32,7 +25,7 @@ class PlanningController Extends AppController
 	public function actionCreate()
 	{
 		$items = Todo::findAllWhere(['type'=>'день', 'user_id'=>$this->user['id']]);
-		$daily = $this->getTable($items)->html;
+		$daily = PlanningView::listItems($items);
 		$this->set(compact('daily'));
 	}
 
@@ -86,7 +79,7 @@ class PlanningController Extends AppController
 	public function actionDelete()
 	{
 		if (Answer::delete($this->ajax['a_id'])) {
-			exit(json_encode(['msg' => 'ok']));
+			$this->exitWithPopup( 'ok');
 		}
 
 	}

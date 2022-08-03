@@ -13,14 +13,7 @@ class AdminscController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
-		$this->autorize();
-		$this->layout = 'admin';
-		if (User::can($this->user, ['role_employee'])) {
-			View::setJs('common.js');
-			View::setJs('admin.js');
-			View::setCss('admin.css');
-			View::setJs('vendors.js');
-		} else {
+		if (!User::can($this->user, ['role_employee'])) {
 			header('Location:/auth/profile');
 		}
 	}

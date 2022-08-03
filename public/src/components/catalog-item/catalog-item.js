@@ -21,9 +21,9 @@ export default function catalogItem() {
     let modelName = item.dataset.model
     if (target.closest('.save')) {
       save(modelName)
-    } else if (target.closest('.del')
-      && target.closest('.del').dataset.model) {
-      del(item, target.closest('.del').dataset.model)
+    } else if (target.closest('.view.components.Builders.ListBuilder.del')
+      && target.closest('.view.components.Builders.ListBuilder.del').dataset.model) {
+      del(item, target.closest('.view.components.Builders.ListBuilder.del').dataset.model)
     } else if ((target.classList.contains('tab'))) {
       handleTab(target, modelName)
     }

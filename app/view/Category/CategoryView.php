@@ -6,12 +6,12 @@ use app\model\Category;
 use app\model\Illuminate\Category as IlluminateCategory;
 use app\model\Product;
 use app\model\Property;
-use app\view\components\Builders\Item\ItemFieldBuilder;
-use app\view\components\Builders\Item\ItemTabBuilder;
-use app\view\components\Builders\ListColumnBuilder;
+use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
+use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
+use app\view\components\Builders\ListBuilder\ListColumnBuilder;
+use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
-use app\view\components\MyItem\MyItem;
-use app\view\components\MyList\MyList;
+use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\Product\ProductView;
 
 class CategoryView
@@ -37,7 +37,7 @@ class CategoryView
 		$properties = Property::where('category_id', '=', $id)
 				->get() ?? [];
 
-		return MyItem::build($view->model, $id)
+		return ItemBuilder::build($view->model, $id)
 			->pageTitle('Редактировать категорию :  ' . $category['name'])
 			->field(
 				ItemFieldBuilder::build('id')
@@ -65,7 +65,7 @@ class CategoryView
 							)
 							->column(
 								ListColumnBuilder::build('slug')
-									->link()
+//									->link()
 									->get()
 							)
 							->items($products)
@@ -118,12 +118,12 @@ class CategoryView
 		return include ROOT . '/app/view/Category/list.php';
 	}
 
-	public static function show(Model $model)
-	{
-		$view = new self($model);
-		$view->getHtml($model->fillable, $model);
-		return $view->html;
-	}
+//	public static function show(Model $model)
+//	{
+//		$view = new self($model);
+//		$view->getHtml($model->fillable, $model);
+//		return $view->html;
+//	}
 
 	public static function selector(int $selected, int $exclude = -1): string
 	{
@@ -157,79 +157,69 @@ class CategoryView
 //		return $parent_select;
 //	}
 
-	private function getHtml(): void
-	{
-		$options = $this->getOptions();
-		$t = new CustomCatalogItem($options);
-		$this->html = $t->html;
-	}
+//	private function getHtml(): void
+//	{
+//		$options = $this->getOptions();
+//		$t = new CustomCatalogItem($options);
+//		$this->html = $t->html;
+//	}
+
+//
+//	private function getOptions()
+//	{
+//		$cat = new $this->model;
+//		$cat = $cat->all()->toArray();
+//		return [
+//			'item' => $cat,
+//			'modelName' => $this->model->model,
+//			'tableClassName' => $this->model->table,
+//			'pageTitle' => '',
+//			'tabs' => [
+//				['title' => 'Товары',
+//					'html' => ProductView::belongToCategory($this->model),
+//					'field' => 'products'
+//				],
+//				['title' => 'Родительские категории',
+//					'html' => self::getParents($cat),
+//					'field' => 'ParentProps'
+//				],
+//				['title' => 'Родительские свойства',
+//					'html' => self::getParents($cat),
+//					'field' => 'ParentProps'
+//				]
+//			],
+//			'fields' => [
+//				'ID' => [
+//					'field' => 'id',
+//					'contenteditable' => false,
+//				],
+//				'Папка' => [
+//					'field' => 'id',
+//					'contenteditable' => false,
+//				],
+//				'Имя' => [
+//					'field' => 'name',
+//					'contenteditable' => true,
+//					'required' => true,
+//				],
+//
+//
+//			],
+//			'delBttn' => true,
+//			'saveBttn' => true,
+//
+//		];
+//	}
 
 
-	private function getOptions()
-	{
-		$cat = new $this->model;
-		$cat = $cat->all()->toArray();
-		return [
-			'item' => $cat,
-			'modelName' => $this->model->model,
-			'tableClassName' => $this->model->table,
-			'pageTitle' => '',
-			'tabs' => [
-				['title' => 'Товары',
-					'html' => ProductView::belongToCategory($this->model),
-					'field' => 'products'
-				],
-				['title' => 'Родительские категории',
-					'html' => self::getParents($cat),
-					'field' => 'ParentProps'
-				],
-				['title' => 'Родительские свойства',
-					'html' => self::getParents($cat),
-					'field' => 'ParentProps'
-				]
-			],
-			'fields' => [
-				'ID' => [
-					'field' => 'id',
-					'contenteditable' => false,
-				],
-				'Папка' => [
-					'field' => 'id',
-					'contenteditable' => false,
-				],
-				'Имя' => [
-					'field' => 'name',
-					'contenteditable' => true,
-					'required' => true,
-				],
-
-
-			],
-			'delBttn' => true,
-			'saveBttn' => true,
-
-		];
-	}
-
-	private function noElement()
-	{
-		ob_start();
-		?>
-	  <div class="no-element">
-		  <div class="error">Категория не найдена</div>
-	  </div>
-		<?
-		return ob_get_clean();
-	}
-
-	public static function getParents(array $cat, &$str = '')
-	{
-		if ($cat['parent_rec'] !== null) {
-			$str .= '<div>' . $cat['parent_rec']['name'] . '</div>';
-			self::getParents($cat['parent_rec'], $str);
-		}
-		return $str;
-	}
+//	public static function getParents(array $cat, &$str = '')
+//	{
+//		if ($cat['parent_rec'] !== null) {
+//			$str .= '<div>' . $cat['parent_rec']['name'] . '</div>';
+//			self::getParents($cat['parent_rec'], $str);
+//		}
+//		return $str;
+//	}
 
 
 }

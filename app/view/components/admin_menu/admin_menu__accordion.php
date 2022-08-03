@@ -1,12 +1,11 @@
 <? use \app\model\User; ?>
 <div class="admin_sidebar">
 
-	<a class="logo" href="/">
-		<!--		 --><? // include ROOT . '/app/view/components/header/logo_squre.php' ?>
-		 <? include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
-<!--		 --><?// include ROOT . '/app/view/components/header/logo_squre.php' ?>
-		<span class="logo_square"></span>
-	</a>
+	<? include ICONS . '/gamburger.svg' ?>
+<!--	<a class="logo" href="/">-->
+<!--		 --><?// include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
+<!--		<span class="logo_square"></span>-->
+<!--	</a>-->
 
 	<div accordion>
 
@@ -139,7 +138,7 @@
 			<ul class="level-1">
 					 <? if (User::can($this->user, 'role_admin')): // admin ?>
 				  <a class="neon" href="/adminsc/category">Категории</a>
-				  <a class="neon" href="/adminsc/product">Товары</a>
+				  <a class="neon" href="/adminsc/product/list">Товары</a>
 
 					 <? endif; ?>
 			</ul>
@@ -185,5 +184,5 @@
 
 	</div>
 
-	<? include ICONS . '/gamburger.svg' ?>
+
 </div>

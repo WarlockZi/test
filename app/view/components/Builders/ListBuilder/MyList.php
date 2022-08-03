@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\view\components\MyList;
+namespace app\view\components\Builders\ListBuilder;
 
 
 class MyList
@@ -112,13 +112,13 @@ class MyList
 
 	protected function getEditButton($model, $field, $column)
 	{
-		include ROOT . '/app/view/components/MyList/edit.php';
+		include ROOT . '/app/view/components/Builders/ListBuilder/edit.php';
 		return $edit;
 	}
 
 	protected function getDelButton($model, $field, $column)
 	{
-		include ROOT . '/app/view/components/MyList/del.php';
+		include ROOT . '/app/view/components/Builders/ListBuilder/del.php';
 		return $del;
 
 	}
@@ -139,10 +139,10 @@ class MyList
 				"{$contenteditable}" .
 				"></div>";
 		}
-		include ROOT . '/app/view/components/MyList/edit.php';
+		include ROOT . '/app/view/components/Builders/ListBuilder/edit.php';
 		$str .= $edit;
 
-		include ROOT . '/app/view/components/MyList/del.php';
+		include ROOT . '/app/view/components/Builders/ListBuilder/del.php';
 		$str .= $del;
 
 		return $str;
@@ -152,7 +152,7 @@ class MyList
 	protected function template()
 	{
 		ob_start();
-		include ROOT . '/app/view/components/MyList/MyListTemplate.php';
+		include ROOT . '/app/view/components/Builders/ListBuilder/MyListTemplate.php';
 		$this->html = ob_get_clean();
 		return $this->html;
 	}

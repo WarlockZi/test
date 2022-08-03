@@ -5,18 +5,16 @@ namespace app\controller;
 
 use app\model\Mail;
 use app\model\TestResult;
-use app\view\View;
 
 
 class TestresultController extends AppController
 {
+	public $model = TestResult::class;
+
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->autorize();
-		$this->layout = 'admin';
-		View::setJs('admin.js');
-		View::setCss('admin.css');
+
 	}
 	public function actionIndex()
 	{
@@ -30,17 +28,6 @@ class TestresultController extends AppController
 		$res = TestResult::findOneWhere('id', $id);
 		$testHtml= $res['html'] ;
 		$this->set(compact('testHtml', 'res'));
-	}
-
-	public function actionDelete($post)
-	{
-		if ($id = $this->ajax['id']) {
-			if (TestResult::delete($id)){
-				$this->exitWithPopup('Удалено');
-			}else{
-				$this->exitWithPopup('Ошибка');
-			}
-		}
 	}
 
 

@@ -11,15 +11,10 @@ class MainController extends AppController
 
 	public function __construct($route)
 	{
-
 		parent::__construct($route);
-
 		$this->auth();
 		$sale = Product::where('sale','=', 1)->get();
 		$this->set(compact('sale'));
-		View::setCss('main.css');
-		View::setJs('main.js');
-
 	}
 
 	public function actionIndex()

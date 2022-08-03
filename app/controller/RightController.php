@@ -5,7 +5,7 @@ namespace app\controller;
 use app\model\Right;
 use app\model\User;
 use app\view\Right\RightView;
-use app\view\View;
+//use app\view\View;
 
 
 class RightController Extends AppController
@@ -18,10 +18,6 @@ class RightController Extends AppController
 	{
 		parent::__construct($route);
 
-		$this->autorize();
-		$this->layout = 'admin';
-		View::setCss('admin.css');
-		View::setJs('admin.js');
 	}
   public function actionUpdateOrCreate()
   {

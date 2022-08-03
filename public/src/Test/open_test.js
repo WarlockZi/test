@@ -29,7 +29,7 @@ function handleKeyup({target}) {
 }
 
 async function handleClick({target}) {
-  let testid = target.dataset.id
+  let id = target.dataset.id
   let activeQuestion = $('.question.show')[0]
 
   if (target.id === 'finish') {
@@ -41,7 +41,7 @@ async function handleClick({target}) {
       location.reload();
       return;
     }
-    let questions = await post('/adminsc/opentestresult/getanswers', testid)
+    let questions = await post('/adminsc/opentestresult/getanswers', {id})
     let correctAnswers = correctCount(questions.arr)
     let obj = objToServ(correctAnswers)
     let res = await post('/adminsc/opentestresult/finish', obj)
@@ -54,8 +54,8 @@ async function handleClick({target}) {
   function objToServ(rightAnswers) {
     $('.buttons')[0].remove()
     return {
-      testId: +testid,
-      questionCnt: paginations.length,
+      id,
+      questionCnt: $('[data-pagination]').length,
       html: cachePage('.test'),
       testname: $('.test-name')[0].innerText,
       username: $('.user-menu .fio')[0].innerText,
@@ -75,13 +75,20 @@ function correctCount(questions) {
     q.Openanswer.forEach((a) => {
       word += `(${a.answer})?`
     })
-    correct += hiliter(`${word}`, textarea)
+    correct += hilite(`${word}`, textarea,q_id)
+
 
   })
   return correct
 }
+function hilitePagination(id) {
+  let pagination = $(`[data-pagination="${id}"]`)
+  if (pagination){
+    pagination.css('backgroundColor','green')
+  }
+}
 
-function hiliter(word, element) {
+function hilite(word, element,q_id) {
   let text = element.innerHTML
   let rgxp = new RegExp(word, 'g');
   let arr = text.match(rgxp)
@@ -91,19 +98,12 @@ function hiliter(word, element) {
     if (!w) return
     correct = 1
     let r = new RegExp(w, 'g')
-    let repl = `<span style='color:red;'>` + w + '</span>';
+    let repl = `<span style='color:limegreen;'>` + w + '</span>';
     element.innerHTML = element.innerHTML.replace(r, repl);
+    hilitePagination(q_id)
   })
   return correct
 }
 
-// function paginate() {
-//   new Pagination({
-//     paginateItemClass:'pagination',
-//     paginateItemActive:'active',
-//     objecClass:'question',
-//     nextButtonId:'next',
-//     prevButtonId:'prev',
-//   })
-// }
+
 

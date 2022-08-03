@@ -18,10 +18,7 @@ class TestController extends AppController
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->autorize();
-		$this->layout = 'admin';
-		View::setJs('admin.js');
-		View::setCss('admin.css');
+
 	}
 
 	public function actionIndex()
@@ -145,11 +142,11 @@ class TestController extends AppController
 		$page_name = 'Редактирование тестов';
 		$this->set(compact('page_name'));
 
-		$id = $this->route['id'];
-
-		$item = TestView::item($id);
-		$this->set(compact('item'));
-
+		if (isset($this->route['id'])) {
+			$id = $this->route['id'];
+			$item = TestView::item($id);
+			$this->set(compact('item'));
+		}
 	}
 
 

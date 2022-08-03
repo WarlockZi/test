@@ -4,11 +4,12 @@ namespace app\view\Property;
 
 use app\model\Property;
 use app\model\Val;
-use app\view\components\Builders\Item\ItemFieldBuilder;
-use app\view\components\Builders\Item\ItemTabBuilder;
-use app\view\components\Builders\ListColumnBuilder;
-use app\view\components\MyItem\MyItem;
-use app\view\components\MyList\MyList;
+
+use app\view\components\Builders\ItemBuilder\ItemBuilder;
+use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
+use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
+use app\view\components\Builders\ListBuilder\ListColumnBuilder;
+use app\view\components\Builders\ListBuilder\MyList;
 use app\view\MyView;
 
 class PropertyView extends MyView
@@ -42,7 +43,7 @@ class PropertyView extends MyView
 	public static function edit($id)
 	{
 		$view = new self();
-		return MyItem::build($view->modelName, $id)
+		return ItemBuilder::build($view->modelName, $id)
 			->field(
 				ItemFieldBuilder::build('id')
 					->name('ID')

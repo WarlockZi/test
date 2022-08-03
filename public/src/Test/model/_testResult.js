@@ -4,7 +4,8 @@ export const _testResult = {
 
 
   delServer: async (id) => {
-    if ($('.opentest')) {
+    let opentest = $('.opentest')[0]
+    if (opentest) {
       let res = await post('/adminsc/opentestresult/delete', {id})
     } else {
       let res = await post('/adminsc/testresult/delete', {id})
@@ -20,8 +21,8 @@ export const _testResult = {
 
   delete: (id) => {
     if (confirm("Удалить результат теста?")) {
-      _testResult.delDom(id)
       _testResult.delServer(id)
+      _testResult.delDom(id)
     }
   },
 

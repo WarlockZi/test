@@ -8,9 +8,9 @@ use app\view\View;
 
 class AuthController extends AppController
 {
-	protected $model = User::class;
-	public $modelName = 'user';
-	public $tableName = 'users';
+//	protected $model = User::class;
+//	public $modelName = 'user';
+//	public $tableName = 'users';
 
 	public function __construct($route)
 	{
@@ -144,6 +144,9 @@ class AuthController extends AppController
 				$this->exitJson(['role'=>'user']);
 			}
 		}
+
+		$this->view = 'login';
+		$this->layout= 'vitex';
 	}
 
 	public function actionLogout()

@@ -1,9 +1,11 @@
 <?php
 
 
-namespace app\view\components\MyItem;
+namespace app\view\components\Builders\ItemBuilder;
 
-class MyItem
+use app\view\components\Builders\Builder;
+
+class ItemBuilder extends Builder
 {
 	private $model = '';
 	private $item = [];
@@ -77,8 +79,9 @@ class MyItem
 	public function get()
 	{
 		ob_start();
-		include ROOT . '/app/view/components/MyItem/MyItemTemplate.php';
-		return ob_get_clean();
+		include ROOT . '/app/view/components/Builders/ItemBuilder/ItemTemplate.php';
+		$result = ob_get_clean();
+		return $this->clean($result);
 	}
 
 }

@@ -10,11 +10,11 @@
 		  <div class="field">
 		    <?=$data['name'];?></div>
 		  :
-			 <? include ROOT . '/app/view/components/MyItem/value.php' ?>
+			 <? include ROOT . '/app/view/components/Builders/ItemBuilder/value.php' ?>
 	  </div>
 
 	<? endforeach; ?>
-	<? include ROOT . '/app/view/components/MyItem/buttons.php' ?>
+	<? include ROOT . '/app/view/components/Builders/ItemBuilder/buttons.php' ?>
 
 </div>
 

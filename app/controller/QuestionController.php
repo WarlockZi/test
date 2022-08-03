@@ -15,10 +15,7 @@ class QuestionController Extends AppController
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->autorize();
-		$this->layout = 'admin';
-		View::setJs('admin.js');
-		View::setCss('admin.css');
+
 	}
 
 	public function actionUpdateOrCreate()
