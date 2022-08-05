@@ -1,7 +1,5 @@
-<div class="item_wrap"
-		 data-model="<?= $this->model; ?>"
-		 data-id="<?= $this->item['id']; ?>"
->
+<div class="item_wrap" <?= $this->model; ?> <?= $this->id; ?>>
+
 		 <? if ($this->tabs){
 		 	include ROOT . '/app/view/components/Builders/ItemBuilder/withTabs.php';
 		 }else{

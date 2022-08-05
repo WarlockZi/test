@@ -1,17 +1,18 @@
-<div class="value"
-	<? if ($data['html']): ?>
->
-	<?= $data['html']; ?>
+<div class="value">
+
+	<? if ($field['html']): ?>
+		<?= $field['html']; ?>
+
 	<? else: ?>
-	  >
 
 	  <div class="text"
-			 <?= "data-field={$data['field']}"; ?>
-			 <?= "data-model={$this->model}"; ?>
-			 <?= $data['contenteditable']; ?>
-			 <?= $data['required']; ?>
+			 <?= $this->model; ?>
+			 <?= $field['datafield']; ?>
+			 <?= $field['contenteditable']; ?>
+			 <?= $field['required']; ?>
 	  >
-			 <?= $this->item[$data['field']] ?>
+			 <?= $this->item[$field['field']] ?>
 	  </div>
+
 	<? endif; ?>
 </div>

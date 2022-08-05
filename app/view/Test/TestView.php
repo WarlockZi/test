@@ -50,26 +50,23 @@ class TestView
 
 	public static function enabled($item)
 	{
-		return SelectBuilder::build($item)
+		return SelectBuilder::build(['0' => 'не показывать', '1' => 'показывать'])
 			->class('custom-select')
 			->field('enable')
 			->selected($item['enable'])
-			->tree(['0' => 'не показывать', '1' => 'показывать'])
 			->get();
 	}
 
-	public static function belongsTo($item)
+	public static function belongsTo(array $item)
 	{
-
-		$s = Test::findAllWhere('isTest', '0');
-		$tree = Tree::tree($s);
-		return SelectBuilder::build($item)
+		$tests = Test::findAllWhere('isTest', '0');
+		$tree = Tree::tree($tests);
+		return SelectBuilder::build($tree)
 			->class('custom-select')
 			->field('parent')
 			->initialOptionLabel('',0)
 			->selected($item['parent'])
 			->excluded($item['id'])
-			->tree($tree)
 			->tab('&nbsp&nbsp')
 			->get();
 	}

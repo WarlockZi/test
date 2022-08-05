@@ -4,10 +4,12 @@
 namespace app\view\components\Builders\ItemBuilder;
 
 use app\view\components\Builders\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class ItemBuilder extends Builder
 {
 	private $model = '';
+	private $id = 0;
 	private $item = [];
 
 	private $pageTitle = '';
@@ -22,12 +24,11 @@ class ItemBuilder extends Builder
 
 	public $html = '';
 
-	public static function build(string $modelName, $id)
+	public static function build(Model $item, string $model)
 	{
 		$view = new static();
-		$item = new $modelName;
-		$view->model = $item->model;
-		$view->item = $item::where("id", '=', $id)->get()[0];
+		$view->model = "data-model='{$model}'";
+		$view->item = $item->toArray();
 		return $view;
 	}
 

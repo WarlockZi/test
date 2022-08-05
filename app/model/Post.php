@@ -5,8 +5,8 @@ namespace app\model;
 class Post extends Model
 {
 
-	public  $table = 'posts';
 	public  $model = 'post';
+	public  $table = 'posts';
 
 	protected $fillable = [
 		'name' => '',
@@ -14,10 +14,21 @@ class Post extends Model
 		'subordinate' => '',
 	];
 
+//	public function __construct()
+//	{
+//	}
+
 	public static function cheifs($id)
 	{
 		$model = new static();
 		$cheifs = $model->morphTo('post', 'chief', $id);
+		return $cheifs;
+	}
+
+	public static function cheif($id)
+	{
+		$model = new static();
+		$cheifs = $model->belongsTo('post', 'chief', $id);
 		return $cheifs;
 	}
 

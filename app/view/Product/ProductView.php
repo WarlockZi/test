@@ -30,7 +30,10 @@ class ProductView
 			->get()[0];
 		$product = $product->toArray();
 
-		return ItemBuilder::build($view->illuminateModel, $id)
+		$product = IlluminateProduct::find($id);
+			$cat = $product->with('category.parent_rec')->get();
+
+		return ItemBuilder::build($product)
 			->pageTitle('Редактировать товар :  ' . $product['name'])
 			->field(
 				ItemFieldBuilder::build('id')
