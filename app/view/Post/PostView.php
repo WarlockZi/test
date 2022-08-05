@@ -5,9 +5,12 @@ namespace app\view\Post;
 
 
 use app\model\Post;
-
+use app\view\components\Builders\ItemBuilder\ItemBuilder;
+use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\MultiSelectBuilder\MultiSelectBuilder;
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\MyView;
 
 
@@ -15,7 +18,73 @@ class PostView extends MyView
 {
 
 	public $model = Post::class;
+	public $illuminateModel = \app\model\illuminate\Post::class;
 	public $html;
+
+	public static function item($id): string
+	{
+		$view = new self();
+		$posts = $view->illuminateModel::all()->toArray();
+		$post = $view->illuminateModel::with('subordinates','chief')
+				->find($id);
+
+		return ItemBuilder::build($view->model, $id)
+			->pageTitle('Должность : ' . $post->name)
+			->del()
+			->save()
+			->toList()
+			->field(
+				ItemFieldBuilder::build('id')
+					->name('ID')
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('name')
+					->name('Наименование')
+					->contenteditable()
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('cheif')
+					->name('Руководитель')
+					->html(PostView::cheifSelect($posts,$post))
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('subordinates')
+					->name('Подчиненные')
+					->html(PostView::subordinatesMultiSelect($posts,$post))
+					->get()
+			)
+			->get();
+	}
+
+
+	public static function cheifSelect($posts,$post): string
+	{
+		return SelectBuilder::build($posts)
+			->model('post')
+			->field('chief')
+			->initialOptionLabel('', 0)
+			->selected($post['chief']['id']??null)
+			->excluded($post->id)
+			->tab('&nbsp&nbsp')
+			->get();
+	}
+
+	public static function subordinatesMultiSelect($posts,$post): string
+	{
+		$ids = $post->subordinates()->pluck('id')->toArray();
+
+		return MultiSelectBuilder::build($posts)
+			->field('subordinate')
+			->model('post')
+			->initialOption(0, '')
+			->selected($ids)
+			->excluded($post->id)
+			->tab('&nbsp&nbsp')
+			->get();
+	}
 
 	public static function listAll(): string
 	{
@@ -26,20 +95,19 @@ class PostView extends MyView
 					->name('ID')
 					->get()
 			)
-
 			->column(
 				ListColumnBuilder::build('name')
 					->name('Наименование')
-					->contenteditable(true)
-					->search(true)
+					->contenteditable()
+					->search()
 					->width('1fr')
 					->get()
 			)
 			->column(
 				ListColumnBuilder::build('full_name')
 					->name('Полное наим')
-					->contenteditable(true)
-					->search(true)
+					->contenteditable()
+					->search()
 					->width('1fr')
 					->get()
 			)

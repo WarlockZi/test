@@ -10,6 +10,7 @@ export default class WDSSelect {
 
     this.title = el.title ?? ''
     this.field = el.dataset['field']
+    this.model = el.dataset['model']
     this.options = getFormattedOptions(el.querySelectorAll("option"))
 
     this.sel = document.createElement("div")
@@ -66,9 +67,12 @@ function setup(select) {
     select.sel.append(select.titleElement)
   }
 
-  select.sel.setAttribute("custom-select",'')
-  if(select.field)select.sel.dataset['field'] = select.field
-  select.sel.dataset['id'] = select.selectedOption.value
+  select.sel.setAttribute("custom-select", '')
+  if (select.field) {
+    select.sel.dataset['field'] = select.field
+    select.sel.dataset['model'] = select.model
+
+  }
   select.sel.dataset['value'] = select.selectedOption.value
   select.sel.tabIndex = 0
 

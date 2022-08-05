@@ -4,15 +4,14 @@
 	<? include ROOT . '/app/view/components/Builders/ItemBuilder/tabs.php' ?>
 </div>
 
-
 <div class="item_content">
 
-	<section class="show" data-id="1">
+	<section class="show" data-tab="1">
 
 		<!--  TABLE  -->
-		 <? foreach ($this->fields as $fieldName => $data): ?>
+		 <? foreach ($this->fields as $fieldName => $field): ?>
 		  <div class="row">
-			  <div class="field"><?= $data['name'] ?></div>
+			  <div class="field"><?= $field['name'] ?></div>
 			  :
 					<? include ROOT . '/app/view/components/Builders/ItemBuilder/value.php' ?>
 
@@ -23,10 +22,9 @@
 	<? $n = 2; ?>
 	<? foreach ($this->tabs as $k => $tab): ?>
 	  <section
+			  <?=$this->model?>
+			  data-tab=<?= $n ?>>
 			 <?= isset($tab['field']) ? "data-field={$tab['field']}": ''; ?>
-			  data-model=<?=$this->model?>
-			  data-type="inputs"
-			  data-id=<?= $n ?>>
 			 <?= $tab['html'] ?? ''; ?>
 
 	  </section>

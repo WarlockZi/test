@@ -8,38 +8,48 @@ use app\view\components\Builders\Builder;
 
 class SelectBuilder extends Builder
 {
-	private $item = '';
+	private $tree = [];
 	private $class = '';
 	private $title = '';
-	private $nameOptionByField = 'name';
 	private $field = '';
+	private $model = '';
 	private $selected = '';
 	private $excluded = '';
+	private $nameOptionByField = 'name';
 	private $initialOptionValue = 0;
 	private $initialOptionLabel = '';
 	private $initialOption = false;
 
-	private $tree = [];
 	private $tab = '&npbsp';
 
-	private $finalTpl = ROOT . '/app/view/components/Builders/SelectBuilder/tpl.php';
 
-	public static function build(array $item)
+	public static function build(array $tree)
 	{
 		$select = new static();
-		$select->item = $item;
+		$select->tree = $tree;
 		return $select;
 	}
 
 	public function class(string $class)
 	{
-		$this->class = $class;
+		$this->class = "class='{$class}'";
+		return $this;
+	}
+	public function model(string $model)
+	{
+		$this->model = "data-model='{$model}'";
 		return $this;
 	}
 
 	public function field(string $field)
 	{
-		$this->field = $field;
+		$this->field = "data-field='{$field}'" ;
+		return $this;
+	}
+
+	public function title(string $title)
+	{
+		$this->title = "title='{$title}'";
 		return $this;
 	}
 
@@ -63,12 +73,6 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
-	public function title(string $title)
-	{
-		$this->title = $title;
-		return $this;
-	}
-
 	public function nameOptionByField(string $nameOptionByField)
 	{
 		$this->nameOptionByField = $nameOptionByField;
@@ -81,16 +85,39 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
-	public function tree(array $tree)
-	{
-		$this->tree = $tree;
-		return $this;
-	}
-
 	public function tab($tab)
 	{
 		$this->tab = $tab;
 		return $this;
+	}
+
+	private function isExcluded()
+	{
+		$tpl = '';
+		foreach ($this->tree as $k => $v) {
+
+			if ($this->excluded) {
+				if ((int)$v['id'] !== (int)$this->excluded) {
+					$tpl .= $this->isSelected($tpl, $v, $k);
+				}
+			} else {
+				$tpl .= $this->isSelected($tpl, $v, $k);
+			}
+		}
+		return $tpl;
+	}
+	private function isSelected($tpl, $v, $k)
+	{
+		$value = $v['id'] ?? $k;
+		$selected = (int)$this->selected === (int)$v['id']? 'selected' : '';
+		$name = is_string($v) ? $v : $v[$this->nameOptionByField];
+
+		$tpl = "<option value='{$value}' $selected>{$name}</option>";
+
+		if (isset($v['childs'])) {
+			$tpl .= $this->getChilds($v['childs'], 0);
+		}
+		return $tpl;
 	}
 
 	public function getChilds($tree, $level)
@@ -105,46 +132,6 @@ class SelectBuilder extends Builder
 		return $str;
 	}
 
-	public function getOption($item, $level)
-	{
-		ob_start();
-		include $this->finalTpl;
-		return ob_get_clean();
-	}
-
-	private function tpl($tpl, $v, $k)
-	{
-		$value = $v['id'] ?? $k;
-		$selected = (int)$this->selected === (int)$k
-			? 'selected' : '';
-		$name = is_string($v) ? $v : $v[$this->nameOptionByField];
-
-		$tpl = "<option value='{$value}' $selected>{$name}</option>";
-
-		if (isset($v['childs'])) {
-			$tpl .= $this->getChilds($v['childs'], 0);
-		}
-		return $tpl;
-	}
-
-	private function options()
-	{
-		$tpl = '';
-		foreach ($this->tree as $k => $v) {
-
-			if ($this->excluded) {
-				if ($v['id'] !== $this->excluded) {
-					$tpl .= $this->tpl($tpl, $v, $k);
-				}
-			} else {
-				$tpl .= $this->tpl($tpl, $v, $k);
-			}
-		}
-		return $tpl;
-	}
-
-
-
 	public function get()
 	{
 		ob_start();
@@ -152,5 +139,12 @@ class SelectBuilder extends Builder
 		$result = ob_get_clean();
 		return $this->clean($result);
 	}
+
+//	public function getOption($item, $level)
+//	{
+//		ob_start();
+//		include $this->finalTpl;
+//		return ob_get_clean();
+//	}
 
 }

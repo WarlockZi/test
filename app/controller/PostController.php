@@ -32,18 +32,10 @@ class PostController Extends AppController
 			$this->model::update($this->ajax);
 			$this->exitWithPopup('ok');
 		}
-
 		$id = $this->route['id'];
-		$post = $this->model::findOneWhere('id', $id);
-		if (!$post) {
-			$item = 'Элемент отсутствует';
-		} else {
-			$chiefs = $this->getMultiselectCheifs(Post::findAll(), $post['chief']);
-			$subordinates = $this->getMultiselectSubordinates(Post::findAll(), $post['subordinate']);
-			$item = $this->getItem($post, $chiefs, $subordinates);
-		}
+
+		$item = PostView::item($id);
 		$this->set(compact('item'));
-		$this->view = 'edit';
 	}
 
 	private function getItem($item, $chiefs, $subordinates)
@@ -73,18 +65,18 @@ class PostController Extends AppController
 		header('Location:/adminsc/post/list');
 	}
 
-	public function actionUpdateOrCreate()
-	{
-		if ($this->ajax) {
-			if ($id = Post::updateOrCreate($this->ajax)) {
-				if (is_bool($id)) {
-					$this->exitWithPopup('Сохранено');
-				}else{
-					$this->exitJson(['id'=>$id,'msg'=>'Создан']);
-				}
-			}
-		}
-	}
+//	public function actionUpdateOrCreate()
+//	{
+//		if ($this->ajax) {
+//			if ($id = Post::updateOrCreate($this->ajax)) {
+//				if (is_bool($id)) {
+//					$this->exitWithPopup('Сохранено');
+//				}else{
+//					$this->exitJson(['id'=>$id,'msg'=>'Создан']);
+//				}
+//			}
+//		}
+//	}
 
 
 }

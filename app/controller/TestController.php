@@ -112,28 +112,8 @@ class TestController extends AppController
 		$this->set(compact('test'));
 	}
 
-//	public function actionUpdate()
-//	{
-//		if ($this->ajax) {
-//			$id = Test::update($this->ajax);
-//			$this->exitJson(['id' => $id]);
-//		}
-//
-//		$this->view = 'edit_update';
-//
-//		$page_name = 'Редактирование тестов';
-//		$this->set(compact('page_name'));
-//
-//		$id = $this->route['id'];
-//
-//		$item = TestView::item($this->modelName, $id);
-//		$this->set(compact('item'));
-//	}
-
-
 	public function actionEdit()
 	{
-
 		if ($this->ajax) {
 			$id = Test::update($this->ajax);
 			$this->exitJson(['id' => $id]);
