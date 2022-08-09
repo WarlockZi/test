@@ -2,8 +2,8 @@
 
 namespace app\view\Product;
 
-use app\model\Product;
 use app\model\Illuminate\Product as IlluminateProduct;
+use app\model\Product;
 use app\model\Property;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
@@ -14,34 +14,26 @@ use app\view\components\Builders\ListBuilder\MyList;
 class ProductView
 {
 
-	public $modelName = Product::class;
 	public $illuminateModel = IlluminateProduct::class;
-	public $model = Product::class;
+	public $modelName = Product::class;
+	public $model = 'product';
 
-	public function __construct()
-	{
-
-	}
 	public static function edit($id): string
 	{
 		$view = new self();
-		$product = IlluminateProduct::with('category.parent_rec')
-			->where('id', '=', $id)
-			->get()[0];
-		$product = $product->toArray();
-
 		$product = IlluminateProduct::find($id);
-			$cat = $product->with('category.parent_rec')->get();
+		$properties = $product->properties->toArray();
 
-		return ItemBuilder::build($product)
+
+		return ItemBuilder::build($product, 'product')
 			->pageTitle('Редактировать товар :  ' . $product['name'])
 			->field(
-				ItemFieldBuilder::build('id')
+				ItemFieldBuilder::build('id', $product)
 					->name('ID')
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('name')
+				ItemFieldBuilder::build('name', $product)
 					->name('Наименование')
 					->contenteditable()
 					->required()
@@ -59,11 +51,14 @@ class ProductView
 							)
 							->column(
 								ListColumnBuilder::build('name')
+									->search()
+									->sort()
 									->get()
 							)
-							->items($properties??[])
-							->parent($view->modelName, $id)
+							->items($properties ?? [])
+							->morph($view->model, $id)
 							->edit()
+							->del()
 							->addButton('ajax')
 							->get()
 					)
@@ -145,7 +140,7 @@ class ProductView
 	public static function card($slug)
 	{
 		$product = IlluminateProduct::
-		with('properties','category','category.parent_rec')
+		with('properties', 'category', 'category.parent_rec')
 			->where('slug', '=', $slug)
 			->get()
 			->toArray()[0];
@@ -153,11 +148,12 @@ class ProductView
 		return $product;
 	}
 
-	protected static function getNavigationStr(array $arr,$str=''){
-		$str = '/'.$arr['alias'];
-		while ($arr['parent_rec']){
-			$str.="/".$arr['parent_rec'];
-			self::getNavigationStr($arr['parent_rec'],$str);
+	protected static function getNavigationStr(array $arr, $str = '')
+	{
+		$str = '/' . $arr['alias'];
+		while ($arr['parent_rec']) {
+			$str .= "/" . $arr['parent_rec'];
+			self::getNavigationStr($arr['parent_rec'], $str);
 		}
 		return $str;
 	}

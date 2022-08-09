@@ -15,8 +15,8 @@ class Property extends Model
 		'value' => '',
 		'description' => '',
 		'category_id'=>null,
-		'propertable_type' => null,
-		'propertable_id' => null,
+		'morph_type' => null,
+		'morph_id' => null,
 	];
 
 //	public function category()

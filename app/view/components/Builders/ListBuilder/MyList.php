@@ -6,24 +6,42 @@ namespace app\view\components\Builders\ListBuilder;
 
 class MyList
 {
-	private $grid = 'grid-template-columns:';
+	private $grid = "style='display: grid; grid-template-columns:";
 
 	private $model = '';
-	public $addButton = false;
+	private $dataModel = '';
+	private $addButton = false;
 	private $tableClassName = '';
 	private $columns = [];
 	private $items = [];
-	private $delCol = false;
-	private $editCol = false;
+	private $headEditCol = '';
+	private $headDelCol = '';
 	private $parent = '';
 	private $parentId = null;
+	private $morph = '';
+	private $morphId = null;
 
-	public $html = '';
+//	public $html = '';
+
+	public static function build(string $modelName)
+	{
+		$view = new static();
+		$view->model = new $modelName;
+		$view->dataModel = "data-model='{$view->model->model}'";
+		return $view;
+	}
 
 	public function parent(string $model, $id)
 	{
-		$this->parent = $model;
-		$this->parentId = $id;
+		$this->parent = "data-parent=" . $model;
+		$this->parentId = "data-parentId=" . $id;
+		return $this;
+	}
+
+	public function morph(string $model, $id)
+	{
+		$this->morph = "data-morph=" . $model;
+		$this->morphId = "data-morphId=" . $id;
 		return $this;
 	}
 
@@ -33,12 +51,6 @@ class MyList
 		return $this;
 	}
 
-	public static function build(string $modelName)
-	{
-		$view = new static();
-		$view->model = new $modelName;
-		return $view;
-	}
 
 	public function tableClass(string $class)
 	{
@@ -58,15 +70,18 @@ class MyList
 		return $this;
 	}
 
+
 	public function del()
 	{
-		$this->delCol = true;
+		$TRASH = file_get_contents(TRASH);
+		$this->headDelCol = "<div class='head del'>{$TRASH}</div>";
 		return $this;
 	}
 
 	public function edit()
 	{
-		$this->editCol = true;
+		$EDIT = file_get_contents(EDIT);
+		$this->headEditCol = "<div class='head edit'>{$EDIT}</div>";
 		return $this;
 	}
 
@@ -83,6 +98,44 @@ class MyList
 		return $this;
 	}
 
+	protected function getEditButton(int $itemId)
+	{
+		if ($this->headEditCol) {
+			$hidden = $itemId?'':'hidden';
+			$str = "<div {$hidden} class='edit'  $this->dataModel " .
+				"data-id='{$itemId}'></div>";
+			return $str;
+		}
+	}
+
+	protected function getDelButton(int $itemId)
+	{
+		if ($this->headDelCol) {
+			$hidden = $itemId?'':'hidden';
+			$str =  "<div {$hidden} class='del' $this->dataModel " .
+				"data-id='{$itemId}'></div>";
+			return $str;
+		}
+	}
+
+	protected function emptyRow()
+	{
+		$str = '';
+
+		foreach ($this->columns as $field => $column) {
+
+			$str .= "<div hidden {$column['class']} " .
+				$column['dataField'] .
+				"data-id='0' " .
+				"{$column['contenteditable']}" .
+				"></div>";
+		}
+		$str .= $this->getEditButton(0);
+		$str .= $this->getDelButton(0);
+
+		return $str;
+	}
+
 	protected function run()
 	{
 		$this->prepareGgridHeader();
@@ -96,56 +149,14 @@ class MyList
 			$this->grid .= ' ' . $data['width'] ?? ' 1fr';
 
 		}
-		if ($this->editCol) {
-			$this->grid .= $this->editCol ? ' 50px' : '';
+		if ($this->headEditCol) {
+			$this->grid .= ' 50px';
 		}
 
-		if ($this->delCol) {
-			$this->grid .= $this->delCol ? ' 50px' : '';
+		if ($this->headDelCol) {
+			$this->grid .= ' 50px';
 		}
-	}
-
-	protected function getSearchString()
-	{
-		return '<input type="text">';
-	}
-
-	protected function getEditButton($model, $field, $column)
-	{
-		include ROOT . '/app/view/components/Builders/ListBuilder/edit.php';
-		return $edit;
-	}
-
-	protected function getDelButton($model, $field, $column)
-	{
-		include ROOT . '/app/view/components/Builders/ListBuilder/del.php';
-		return $del;
-
-	}
-
-	protected function emptyRow(array $columns)
-	{
-		$str = '';
-		$model['id'] = 0;
-
-		foreach ($columns as $field => $column) {
-			$contenteditable = $column['contenteditable'] ? 'contenteditable' : '';
-			$hidden = 'hidden';
-			$class = $column['class'] ? $column['class'] : $field;
-
-			$str .= "<div {$hidden} class='{$class}' " .
-				"data-field='{$field}' " .
-				"data-id='0' " .
-				"{$contenteditable}" .
-				"></div>";
-		}
-		include ROOT . '/app/view/components/Builders/ListBuilder/edit.php';
-		$str .= $edit;
-
-		include ROOT . '/app/view/components/Builders/ListBuilder/del.php';
-		$str .= $del;
-
-		return $str;
+		$this->grid .= "'";
 	}
 
 

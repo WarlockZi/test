@@ -3,16 +3,18 @@
 namespace app\controller;
 
 
+use app\model\Illuminate\Product;
 use app\model\Property;
 use app\view\Property\PropertyView;
-use app\view\View;
+use \app\model\Illuminate\Property as IlluminateProperty;
 
 
 class PropertyController Extends AppController
 {
 
-	private $model = Property::class;
-	private $table = 'properties';
+	public $illuminateModel = IlluminateProperty::class;
+	public $model = Property::class;
+	public $table = 'properties';
 
 	public function __construct(array $route)
 	{
@@ -36,14 +38,16 @@ class PropertyController Extends AppController
 	public function actionUpdateOrCreate()
 	{
 		if ($this->ajax) {
-			$id = $this->model::updateOrCreate($this->ajax);
-			if (is_numeric($id)) {
-				$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
-			} elseif (is_bool($id)) {
-				$this->exitWithPopup('Сохранено');
+			$model = 'app\model\Illuminate\\' . ucfirst($this->ajax['morph_type']);
+			$product = $model::find($this->ajax['morph_id']);
+			if ($mod = $product->properties()->create()) {
+				$this->exitJson(['popup' => 'Сохранен', 'id' => $mod->id]);
 			} else {
-				$this->exitWithError('Ответ не сохранен');
+				$this->exitWithPopup('Сохранено');
 			}
+			$this->exitWithError('Ответ не сохранен');
+
+
 		}
 	}
 

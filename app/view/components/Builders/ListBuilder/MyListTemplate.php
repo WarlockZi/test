@@ -1,59 +1,50 @@
 <div class="custom-list__wrapper"
-     data-model="<?= $this->model->model ?>"
-	<?= $this->parent ? "data-parent='{$this->parent}'" : ''; ?>
-	<?= $this->parentId ? "data-parent-id={$this->parentId}" : ''; ?>
+	<?= $this->dataModel; ?>
+	<?= $this->morph; ?>
+	<?= $this->morphId; ?>
+	<?= $this->parent; ?>
+	<?= $this->parentId; ?>
 >
 
 	<div class="custom-list"
-	     style="display: grid;<?= $this->grid ?>">
+		 <?= $this->grid ?>>
 
 		<!--  HEADER  -->
 		 <? foreach ($this->columns as $i): ?>
-			 <?
-			 $search = $i['search'] ? $this->getSearchString() : '';
-			 $sort = $i['sort'] ? 'data-sort' : '';
-			 ?>
 		  <div
-				  class="head <?= $i['className'] ?? '' ?>"
-				  data-type="<?= $i['data-type'] ?? 'string' ?>"
-					<?= $sort ?>>
-					<?= $i['name'] ?> <?= $search ?>
+				  class="head <?= $i['class']; ?>"
+				  data-type="<?= $i['type']; ?>"
+					<?= $i['sort']; ?>>
+					<?= $i['name']; ?>
+					<?= $i['search']; ?>
 		  </div>
 		 <? endforeach; ?>
 
-		 <? if ($this->editCol): ?>
-		  <div class='head edit'>
-		    <? include EDIT ?>
-		  </div>
-		 <? endif; ?>
-		 <? if ($this->delCol): ?>
-		  <div class='head del'>
-		    <? include TRASH ?>
-		  </div>
-		 <? endif; ?>
+		 <?= ($this->headEditCol); ?>
 
+		 <?= ($this->headDelCol); ?>
 
 		<!--  TABLE  -->
 		<!--		 Empty row-->
-		 <?= $this->emptyRow($this->columns); ?>
+		 <?= $this->emptyRow(); ?>
 
 		<!--		 Data rows-->
-		 <? foreach ($this->items as $model): ?>
+		 <? foreach ($this->items as $item): ?>
 
-			 <? foreach ($this->columns as $field => $column): ?>
+			 <? foreach ($this->columns as $field => $data): ?>
 
 			  <div
-					  class="<?= $column['class'] ? $column['class'] : $field; ?>"
-					  data-field="<?= $field; ?>"
-					  data-model="<?= $this->model->model; ?>"
-					  data-id="<?= $model['id']; ?>"
-						 <?= $column['contenteditable'] ? 'contenteditable' : ''; ?>
-			  ><?= $model[$field]; ?></div>
+						 <?= $this->dataModel; ?>
+					  data-id="<?= $item['id']; ?>"
+						 <?= $data['dataField']; ?>
+						 <?= $data['class']; ?>
+						 <?= $data['contenteditable'] ? 'contenteditable' : ''; ?>
+			  ><?= $item[$field]; ?></div>
 
 			 <? endforeach; ?>
 
-			 <?= $this->getEditButton($model, $field, $column); ?>
-			 <?= $this->getDelButton($model, $field, $column); ?>
+			 <?= $this->getEditButton($item['id']); ?>
+			 <?= $this->getDelButton($item['id']); ?>
 
 		 <? endforeach; ?>
 
