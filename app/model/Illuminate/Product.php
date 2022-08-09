@@ -16,7 +16,7 @@ class Product extends \Illuminate\Database\Eloquent\Model
 
 	public function properties()
 	{
-		return $this->morphTo(Property::class);
+		return $this->morphToMany(Property::class, 'propertable');
 	}
 
 

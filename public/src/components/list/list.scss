@@ -22,6 +22,7 @@
       padding: 5px 3px;
       border-bottom: solid 1px $color-gray4;
       font-size: $font-size-table;
+      min-height: .875rem;
     }
 
     .edit:hover {
@@ -53,12 +54,14 @@
       background-size: 47px 19px;
       background-repeat: no-repeat;
       background-position: center;
+      min-height: .7rem;
     }
     .edit:not(.head) {
       background-image: url("/pic/icons/edit.svg");
       background-size: 47px 19px;
       background-repeat: no-repeat;
       background-position: center;
+      min-height: .7rem;
     }
 
     .head {

@@ -8,26 +8,28 @@ class ListColumnBuilder
 {
 
 	private $field='id';
+	private $dataField='id';
 	private $class='';
 	private $name='';
 	private $type='string';
-	private $sort=false;
-	private $search=false;
+	private $sort='';
+	private $search='';
 	private $width='auto';
-	private $hidden=false;
+	private $hidden='';
 	private $link=false;
-	private $contenteditable=false;
+	private $contenteditable='';
 
 	public static function build(string $field)
 	{
 		$column = new static();
 		$column->field = $field;
+		$column->dataField = "data-field='{$field}'";
 		return $column;
 	}
 
 	public function class(string $class)
 	{
-		$this->class = $class;
+		$this->class = "class='{$class}'";
 		return $this;
 	}
 	public function name(string $name)
@@ -42,12 +44,12 @@ class ListColumnBuilder
 	}
 	public function sort()
 	{
-		$this->sort = true;
+		$this->sort = 'data-sort';
 		return $this;
 	}
 	public function search()
 	{
-		$this->search = true;
+		$this->search = '<input type="text">';
 		return $this;
 	}
 	public function width(string $width)
@@ -55,14 +57,14 @@ class ListColumnBuilder
 		$this->width = $width;
 		return $this;
 	}
-	public function hidden(string $hidden)
+	public function hidden()
 	{
-		$this->hidden = $hidden;
+		$this->hidden = 'hidden';
 		return $this;
 	}
 	public function contenteditable()
 	{
-		$this->contenteditable = true;
+		$this->contenteditable = 'contenteditable';
 		return $this;
 	}
 	public function get()
@@ -70,6 +72,7 @@ class ListColumnBuilder
 		return
 		[
 			'field' => $this->field,
+			'dataField' => $this->dataField,
 			'class' => $this->class,
 			'link' => $this->link,
 			'name' => $this->name?$this->name:$this->field,

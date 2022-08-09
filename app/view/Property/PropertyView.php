@@ -20,8 +20,6 @@ class PropertyView extends MyView
 	public $model = 'property';
 	public $html;
 
-
-
 	public static function listAll()
 	{
 		$view = new self;
@@ -48,7 +46,7 @@ class PropertyView extends MyView
 	{
 		$view = new self();
 		$item = $view->illuminateModelName::find($id);
-		return ItemBuilder::build($item, 'property')
+		return ItemBuilder::build($item, 'property',$item)
 			->field(
 				ItemFieldBuilder::build('id',$item)
 					->name('ID')
@@ -60,12 +58,7 @@ class PropertyView extends MyView
 					->contenteditable()
 					->get()
 			)
-			->field(
-				ItemFieldBuilder::build('propertable_type',$item)
-					->name('Принадлежит')
-					->link('/property/edit')
-					->get()
-			)
+
 			->tab(
 				ItemTabBuilder::build()
 					->tabTitle('Значения')
