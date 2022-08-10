@@ -1,12 +1,9 @@
 <?php
 
-namespace app\model;
-
-use app\core\App;
-use app\model\Model;
+namespace app\model\Illuminate;
 
 
-class Answer extends Model
+class Answer extends \Illuminate\Database\Eloquent\Model
 {
 	public $table = 'answer';
 	public  $model = 'answer';

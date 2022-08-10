@@ -11,6 +11,7 @@ use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\MultiSelectBuilder\MultiSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
+use app\view\components\CustomMultiSelect\CustomMultiSelect;
 use app\view\MyView;
 
 
@@ -65,7 +66,7 @@ class PostView extends MyView
 		return SelectBuilder::build($posts)
 			->model('post')
 			->field('chief')
-			->initialOptionLabel('', 0)
+			->initialOption('', 0)
 			->selected($post['chief']['id']??null)
 			->excluded($post->id)
 			->tab('&nbsp&nbsp')
@@ -84,6 +85,20 @@ class PostView extends MyView
 			->excluded($post->id)
 			->tab('&nbsp&nbsp')
 			->get();
+	}
+
+	public function getMultiSelectPosts($array, $selected = []){
+		return new CustomMultiSelect([
+			'className' => 'type1',
+			'field' => 'post_id',
+			'tab' => '.',
+			'optionName' => 'name',
+			'initialOption' => true,
+			'initialOptionLabel' => '--',
+			'initialOptionValue' => 0,
+			'tree' => $array,
+			'selected' => $selected,
+		]);
 	}
 
 	public static function listAll(): string

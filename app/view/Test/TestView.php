@@ -3,6 +3,7 @@
 namespace app\view\Test;
 
 use app\model\Test;
+use app\model\Illuminate\Test as illuminateTest;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
@@ -11,37 +12,41 @@ use app\view\components\Tree\Tree;
 class TestView
 {
 	protected $model = Test::class;
+	protected $illuminateModel = \app\model\Illuminate\Test::class;
 
 	public static function item($id)
 	{
 		$view =new self();
-		$item = new $view->model;
-		$item = $item::find($id)[0];
-		return ItemBuilder::build($view->model, $id)
+//		$item = new $view->model;
+//		$item = $item::find($id)[0];
+		$item = $view->illuminateModel::find($id);
+		$itemArr = $item->toArray();
+		$parents = $item->parents;
+		return ItemBuilder::build($item, 'test')
 			->del()
 			->save()
 			->field(
-				ItemFieldBuilder::build('id')
+				ItemFieldBuilder::build('id', $item)
 					->name('ID')
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('name')
+				ItemFieldBuilder::build('name', $item)
 					->name('Наименование')
 					->contenteditable()
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('enable')
+				ItemFieldBuilder::build('enable', $item)
 					->name('Показывать')
 					->type('select')
-					->html(TestView::enabled($item))
+					->html(TestView::enabled($itemArr))
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('parent')
+				ItemFieldBuilder::build('parent', $item)
 					->name('Принадлежит')
-					->html(TestView::belongsTo($item))
+					->html(TestView::belongsTo($itemArr))
 					->type('select')
 					->get()
 			)
@@ -50,7 +55,8 @@ class TestView
 
 	public static function enabled($item)
 	{
-		return SelectBuilder::build(['0' => 'не показывать', '1' => 'показывать'])
+		return SelectBuilder::build()
+			->array(['не показывать','показывать'])
 			->class('custom-select')
 			->field('enable')
 			->selected($item['enable'])
@@ -59,16 +65,18 @@ class TestView
 
 	public static function belongsTo(array $item)
 	{
-		$tests = Test::findAllWhere('isTest', '0');
+		$tests = illuminateTest::where('isTest', '0')->get()->toArray();
 		$tree = Tree::tree($tests);
-		return SelectBuilder::build($tree)
+		$f = SelectBuilder::build()
+			->tree($tree)
 			->class('custom-select')
 			->field('parent')
-			->initialOptionLabel('',0)
+			->initialOption('',0)
 			->selected($item['parent'])
 			->excluded($item['id'])
 			->tab('&nbsp&nbsp')
 			->get();
+		return $f;
 	}
 
 	public static function questionParentSelector(int $selected, int $exclude = -1)

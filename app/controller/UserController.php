@@ -2,16 +2,16 @@
 
 namespace app\controller;
 
-use app\model\Right;
+use app\model\illuminate\User as illuminateUser;
 use app\model\User;
 use app\view\User\UserView;
 
 
 class UserController extends AppController
 {
+	protected $illuminateModel = illuminateUser::class;
 	protected $model = User::class;
 	public $modelName = 'user';
-	public $tableName = 'users';
 
 
 	public function __construct($route)
@@ -39,21 +39,26 @@ class UserController extends AppController
 
 	public function actionEdit()
 	{
-		$this->view = 'adminEdit';
+		$user = $this->illuminateModel::find($this->route['id']);
 
-		if (User::can($this->user, ['role_employee'])) {
-			if (isset($this->route['id'])) {
-				$user = User::findOneWhere('id', $this->route['id']);
-				$this->set(compact('user'));
+		if (!$user) {
+			$item = UserView::noElement();
+		} else {
+			if (User::can($this->user, ['role_employee'])) {
+				if (User::can($this->user, ['role_admin'])) {
+					$userr = $user->toArray();
+					$userr['rights'] = explode(',', $userr['rights']);
+					$tab = UserView::getAdminTab($userr);
+					$item = UserView::admin($user, $tab);
+				} else {
+					$item = UserView::employee($user);
+				}
+			} else {
+				$item = UserView::guest($user);
 			}
-			$rights = Right::findAll();
-			$this->set(compact('rights'));
-
-			$item = $user;
-			$item = include ROOT . '/app/view/User/getItem.php';
-			$this->set(compact('item'));
-
 		}
+		$this->set(compact('item'));
+
 		if ($user = $this->ajax) {
 			$user['id'] = $_SESSION['id'];
 			User::updateOrCreate($user);

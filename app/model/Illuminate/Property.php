@@ -28,6 +28,8 @@ class Property extends Model
 	{
 		return $this->morphedByMany(Product::class, 'propertable');
 	}
+
+
 //	public function category(){
 //		return $this->belongsTo(Category::class);
 //	}

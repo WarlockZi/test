@@ -122,14 +122,7 @@ class ProductView
 					->width('1fr')
 					->get()
 			)
-//			->column(
-//				ListColumnBuilder::build('title')
-//					->name('Полное наим')
-//					->contenteditable()
-//					->search()
-//					->width('1fr')
-//					->get()
-//			)
+
 			->all()
 			->edit()
 			->del()

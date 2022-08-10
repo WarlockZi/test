@@ -26,7 +26,7 @@
     }
 
     .edit:hover {
-      background-color: lighten($color-main,20%);
+      background-color: lighten($color-main, 20%);
 
       svg {
         stroke: #ffffff;
@@ -34,33 +34,47 @@
     }
 
     .del:hover {
-      background-color: lighten($color-warning,20%);
+      background-color: lighten($color-warning, 20%);
 
       svg {
         fill: #ffffff;
       }
     }
 
-    .edit,
-    .del {
+    @mixin headEdit {
       justify-content: center;
       align-items: center;
       display: flex;
       cursor: pointer;
     }
 
+    @mixin delEditBcgrnd {
+      background-size: 47px 19px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .edit {
+      @include headEdit;
+      @include delEditBcgrnd;
+      background-image: url("/pic/icons/editWhite.svg");
+    }
+
+    .del {
+      @include headEdit;
+      @include delEditBcgrnd;
+      background-image: url("/pic/icons/trashWhite.svg");
+    }
+
     .del:not(.head) {
       background-image: url("/pic/icons/trashIcon.svg");
-      background-size: 47px 19px;
-      background-repeat: no-repeat;
-      background-position: center;
+      @include delEditBcgrnd;
       min-height: .7rem;
     }
+
     .edit:not(.head) {
       background-image: url("/pic/icons/edit.svg");
-      background-size: 47px 19px;
-      background-repeat: no-repeat;
-      background-position: center;
+      @include delEditBcgrnd;
       min-height: .7rem;
     }
 

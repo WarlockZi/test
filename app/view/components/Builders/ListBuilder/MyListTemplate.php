@@ -10,50 +10,50 @@
 		 <?= $this->grid ?>>
 
 		<!--  HEADER  -->
-		 <? foreach ($this->columns as $i): ?>
+		 <? foreach ($this->columns as $c): ?>
+		<div
+				class="head <?= $c->class; ?>"
+		 <?= $c->type; ?>
+		 <?= $c->sort; ?>>
+		 <?= $c->name; ?>
+		 <?= $c->search; ?>
+	</div>
+	<? endforeach; ?>
+
+	<?= ($this->headEditCol); ?>
+
+	<?= ($this->headDelCol); ?>
+
+	<!--  TABLE  -->
+	<!--		 Empty row-->
+	<?= $this->emptyRow(); ?>
+
+	<!--		 Data rows-->
+	<? foreach ($this->items as $item): ?>
+
+		<? foreach ($this->columns as $field => $c): ?>
+
 		  <div
-				  class="head <?= $i['class']; ?>"
-				  data-type="<?= $i['type']; ?>"
-					<?= $i['sort']; ?>>
-					<?= $i['name']; ?>
-					<?= $i['search']; ?>
-		  </div>
-		 <? endforeach; ?>
+					<?= $this->dataModel; ?>
+				  data-id="<?= $item['id']; ?>"
+					<?= $c->dataField; ?>
+					<?= $c->class; ?>
+					<?= $c->contenteditable; ?>
+		  ><?= $item[$field]; ?></div>
 
-		 <?= ($this->headEditCol); ?>
+		<? endforeach; ?>
 
-		 <?= ($this->headDelCol); ?>
+		<?= $this->getEditButton($item['id']); ?>
+		<?= $this->getDelButton($item['id']); ?>
 
-		<!--  TABLE  -->
-		<!--		 Empty row-->
-		 <?= $this->emptyRow(); ?>
+	<? endforeach; ?>
 
-		<!--		 Data rows-->
-		 <? foreach ($this->items as $item): ?>
+</div>
 
-			 <? foreach ($this->columns as $field => $data): ?>
-
-			  <div
-						 <?= $this->dataModel; ?>
-					  data-id="<?= $item['id']; ?>"
-						 <?= $data['dataField']; ?>
-						 <?= $data['class']; ?>
-						 <?= $data['contenteditable'] ? 'contenteditable' : ''; ?>
-			  ><?= $item[$field]; ?></div>
-
-			 <? endforeach; ?>
-
-			 <?= $this->getEditButton($item['id']); ?>
-			 <?= $this->getDelButton($item['id']); ?>
-
-		 <? endforeach; ?>
-
-	</div>
-
-	<!--  ADD BUTTON  -->
-	<div class="custom-list__buttons">
-		 <? include ROOT . '/app/view/components/Builders/ListBuilder/add.php'; ?>
-	</div>
+<!--  ADD BUTTON  -->
+<div class="custom-list__buttons">
+	<? include ROOT . '/app/view/components/Builders/ListBuilder/add.php'; ?>
+</div>
 
 
 </div>

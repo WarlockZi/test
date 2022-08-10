@@ -11,7 +11,7 @@
 		<!--  TABLE  -->
 		 <? foreach ($this->fields as $fieldName => $field): ?>
 		  <div class="row">
-			  <div class="field"><?= $field['name'] ?></div>
+			  <div class="field"><?= $field->name ?></div>
 			  :
 					<? include ROOT . '/app/view/components/Builders/ItemBuilder/value.php' ?>
 
