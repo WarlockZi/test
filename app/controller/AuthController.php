@@ -4,13 +4,12 @@ namespace app\controller;
 
 use app\model\Mail;
 use app\model\User;
+use app\model\Illuminate\User as IlluminateUser;
+use app\view\User\UserView;
 use app\view\View;
 
 class AuthController extends AppController
 {
-//	protected $model = User::class;
-//	public $modelName = 'user';
-//	public $tableName = 'users';
 
 	public function __construct($route)
 	{
@@ -58,15 +57,12 @@ class AuthController extends AppController
 	public function actionProfile()
 	{
 		$this->autorize();
-
-		$user = User::findOneWhere('id', $_SESSION['id']);
-		$this->set(compact('user'));
 		$this->view = 'profile1';
 
-		$item = $user;
-		$item = include ROOT . '/app/view/User/getItem.php';;
-		$this->set(compact('item'));
-		if (User::can($user, 'role_employee')) {
+		$user = IlluminateUser::find($_SESSION['id']);
+
+		if (User::can($user->toArray(), 'role_employee')) {
+			$item = UserView::employee($user);;
 			$this->layout = 'admin';
 
 			View::unsetJs('auth.js');
@@ -75,8 +71,10 @@ class AuthController extends AppController
 			View::setJs('admin.js');
 			View::setCss('admin.css');
 		} else {
+			$item = UserView::guest($user);;
 			$this->layout = 'vitex';
 		}
+		$this->set(compact('item'));
 	}
 
 	public function actionChangePassword()
@@ -87,7 +85,7 @@ class AuthController extends AppController
 
 			if ($user = User::findOneWhere('password', $old_password)) {
 				$newPassword = $this->preparePassword($data['new_password']);
-				$res = User::update(['id'=>$user['id'],'password'=>$newPassword]);
+				$res = User::update(['id' => $user['id'], 'password' => $newPassword]);
 				if (res) $this->exitWithMsg('ok');
 			}
 			$this->exitWithMsg('fail');
@@ -105,7 +103,7 @@ class AuthController extends AppController
 				$this->setAuth($user);
 				$password = $this->randomPassword();
 				$newPassword = $this->preparePassword($password);
-				User::update(['id'=>$user['id'],'password'=>$newPassword]);
+				User::update(['id' => $user['id'], 'password' => $newPassword]);
 
 				$data['to'] = [$data['email']];
 				$data['subject'] = 'Новый пароль';
@@ -139,14 +137,14 @@ class AuthController extends AppController
 			$this->setAuth($user);
 			$this->user = $user;
 			if (User::can($user, 'role_employee')) {
-				$this->exitJson(['role'=>'employee']);
+				$this->exitJson(['role' => 'employee']);
 			} else {
-				$this->exitJson(['role'=>'user']);
+				$this->exitJson(['role' => 'user']);
 			}
 		}
 
 		$this->view = 'login';
-		$this->layout= 'vitex';
+		$this->layout = 'vitex';
 	}
 
 	public function actionLogout()

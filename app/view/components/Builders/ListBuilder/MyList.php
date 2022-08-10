@@ -21,8 +21,6 @@ class MyList
 	private $morph = '';
 	private $morphId = null;
 
-//	public $html = '';
-
 	public static function build(string $modelName)
 	{
 		$view = new static();
@@ -51,7 +49,6 @@ class MyList
 		return $this;
 	}
 
-
 	public function tableClass(string $class)
 	{
 		$this->tableClassName = $class;
@@ -64,24 +61,9 @@ class MyList
 		return $this->html;
 	}
 
-	public function column(array $a)
+	public function column(ListColumnBuilder $a)
 	{
-		$this->columns[$a['field']] = $a;
-		return $this;
-	}
-
-
-	public function del()
-	{
-		$TRASH = file_get_contents(TRASH);
-		$this->headDelCol = "<div class='head del'>{$TRASH}</div>";
-		return $this;
-	}
-
-	public function edit()
-	{
-		$EDIT = file_get_contents(EDIT);
-		$this->headEditCol = "<div class='head edit'>{$EDIT}</div>";
+		$this->columns[$a->field] = $a;
 		return $this;
 	}
 
@@ -91,17 +73,29 @@ class MyList
 		return $this;
 	}
 
-
 	public function items(array $items)
 	{
 		$this->items = $items;
 		return $this;
 	}
 
+	public function del()
+	{
+//		$TRASH = file_get_contents(TRASH);
+		$this->headDelCol = "<div class='head del'></div>";
+		return $this;
+	}
+
+	public function edit()
+	{
+//		$EDIT = file_get_contents(EDIT);
+		$this->headEditCol = "<div class='head edit'></div>";
+		return $this;
+	}
 	protected function getEditButton(int $itemId)
 	{
 		if ($this->headEditCol) {
-			$hidden = $itemId?'':'hidden';
+			$hidden = $itemId ? '' : 'hidden';
 			$str = "<div {$hidden} class='edit'  $this->dataModel " .
 				"data-id='{$itemId}'></div>";
 			return $str;
@@ -111,8 +105,8 @@ class MyList
 	protected function getDelButton(int $itemId)
 	{
 		if ($this->headDelCol) {
-			$hidden = $itemId?'':'hidden';
-			$str =  "<div {$hidden} class='del' $this->dataModel " .
+			$hidden = $itemId ? '' : 'hidden';
+			$str = "<div {$hidden} class='del' $this->dataModel " .
 				"data-id='{$itemId}'></div>";
 			return $str;
 		}
@@ -124,10 +118,10 @@ class MyList
 
 		foreach ($this->columns as $field => $column) {
 
-			$str .= "<div hidden {$column['class']} " .
-				$column['dataField'] .
+			$str .= "<div hidden {$column->class} " .
+				$column->dataField .
 				"data-id='0' " .
-				"{$column['contenteditable']}" .
+				"{$column->contenteditable}" .
 				"></div>";
 		}
 		$str .= $this->getEditButton(0);
@@ -138,27 +132,24 @@ class MyList
 
 	protected function run()
 	{
-		$this->prepareGgridHeader();
+		$this->prepareGridHeader();
 
 		return $this->template();
 	}
 
-	protected function prepareGgridHeader(): void
+	protected function prepareGridHeader(): void
 	{
-		foreach ($this->columns as $colName => $data) {
-			$this->grid .= ' ' . $data['width'] ?? ' 1fr';
-
+		foreach ($this->columns as $colName => $column) {
+			$this->grid .= ' ' . $column->width;
 		}
 		if ($this->headEditCol) {
 			$this->grid .= ' 50px';
 		}
-
 		if ($this->headDelCol) {
 			$this->grid .= ' 50px';
 		}
 		$this->grid .= "'";
 	}
-
 
 	protected function template()
 	{
@@ -167,5 +158,4 @@ class MyList
 		$this->html = ob_get_clean();
 		return $this->html;
 	}
-
 }

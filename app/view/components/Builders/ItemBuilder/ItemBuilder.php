@@ -29,6 +29,7 @@ class ItemBuilder extends Builder
 		$view = new static();
 		$view->model = "data-model='{$model}'";
 		$view->item = $item->toArray();
+		$view->id = "data-id='{$view->item['id']}'";
 		return $view;
 	}
 
@@ -65,13 +66,13 @@ class ItemBuilder extends Builder
 		return $this;
 	}
 
-	public function field($field)
+	public function field(ItemFieldBuilder $field)
 	{
 		$this->fields[] = $field;
 		return $this;
 	}
 
-	public function tab($tab)
+	public function tab(array $tab)
 	{
 		$this->tabs[] = $tab;
 		return $this;

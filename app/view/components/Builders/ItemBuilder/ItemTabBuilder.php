@@ -10,10 +10,6 @@ class ItemTabBuilder
 	protected $html;
 	protected $tabTitle;
 
-	public function __construct()
-	{
-	}
-
 	public static function build()
 	{
 		$view = new self();

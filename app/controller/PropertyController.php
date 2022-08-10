@@ -35,21 +35,19 @@ class PropertyController Extends AppController
 		$this->set(compact('item'));
 	}
 
-	public function actionUpdateOrCreate()
-	{
-		if ($this->ajax) {
-			$model = 'app\model\Illuminate\\' . ucfirst($this->ajax['morph_type']);
-			$product = $model::find($this->ajax['morph_id']);
-			if ($mod = $product->properties()->create()) {
-				$this->exitJson(['popup' => 'Сохранен', 'id' => $mod->id]);
-			} else {
-				$this->exitWithPopup('Сохранено');
-			}
-			$this->exitWithError('Ответ не сохранен');
-
-
-		}
-	}
+//	public function actionUpdateOrCreate()
+//	{
+//		if ($this->ajax) {
+//			$model = 'app\model\Illuminate\\' . ucfirst($this->ajax['morph_type']);
+//			$product = $model::find($this->ajax['morph_id']);
+//			if ($mod = $product->properties()->create()) {
+//				$this->exitJson(['popup' => 'Сохранен', 'id' => $mod->id]);
+//			} else {
+//				$this->exitWithPopup('Сохранено');
+//			}
+//			$this->exitWithError('Ответ не сохранен');
+//		}
+//	}
 
 	public function actionDelete()
 	{

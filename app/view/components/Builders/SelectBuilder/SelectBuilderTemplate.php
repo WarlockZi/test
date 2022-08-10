@@ -5,17 +5,13 @@
 	<?= $this->field; ?>
 	<?= $this->model; ?>
 >
-	<!-- INITIAL OPTIONS-->
-	<? if ($this->initialOption): ?>
-	  <option
-			  value="<?= $this->initialOptionValue; ?>">
-			 <?= $this->initialOptionLabel; ?>
-	  </option>
+	<?= $this->initialOption; ?>
+
+	<? if ($this->tree): ?>
+		<?= $this->getTree($this->tree); ?>
+	<? else: ?>
+		<?= $this->getArray(); ?>
 	<? endif; ?>
-
-	<!-- OPTIONS -->
-	<?= $this->isExcluded(); ?>
-
 </select>
 
 

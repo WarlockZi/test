@@ -7,17 +7,17 @@ namespace app\view\components\Builders\ListBuilder;
 class ListColumnBuilder
 {
 
-	private $field='id';
-	private $dataField='id';
-	private $class='';
-	private $name='';
-	private $type='string';
-	private $sort='';
-	private $search='';
-	private $width='auto';
-	private $hidden='';
-	private $link=false;
-	private $contenteditable='';
+	public $field='id';
+	public $dataField='id';
+	public $class='';
+	public $name='';
+	public $type="data-type='string'";
+	public $sort='';
+	public $search='';
+	public $width='auto';
+	public $hidden='';
+	public $contenteditable='';
+	public $link=false;
 
 	public static function build(string $field)
 	{
@@ -39,7 +39,7 @@ class ListColumnBuilder
 	}
 	public function type(string $type)
 	{
-		$this->type = $type;
+		$this->type = "data-type='{$type}'";
 		return $this;
 	}
 	public function sort()
@@ -69,20 +69,7 @@ class ListColumnBuilder
 	}
 	public function get()
 	{
-		return
-		[
-			'field' => $this->field,
-			'dataField' => $this->dataField,
-			'class' => $this->class,
-			'link' => $this->link,
-			'name' => $this->name?$this->name:$this->field,
-			'type' => $this->type,
-			'sort' => $this->sort,
-			'search' => $this->search,
-			'width' => $this->width,
-			'hidden' => $this->hidden,
-			'contenteditable' => $this->contenteditable
-		];
+		return $this;
 	}
 
 

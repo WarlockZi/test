@@ -9,17 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 class ItemFieldBuilder
 {
 
-	private $field='';
-	private $datafield='';
-	private $class='';
-	private $name='';
-	private $link='';
-	private $type='string';
-	private $html='';
+	public $field = '';
+	public $datafield = '';
+	public $class = '';
+	public $name = '';
+	public $link = '';
+	public $type = 'string';
+	public $html = '';
 
-	private $hidden='';
-	private $required='';
-	private $contenteditable='';
+	public $hidden = '';
+	public $required = '';
+	public $contenteditable = '';
 
 	public static function build(string $fieldName, Model $item)
 	{
@@ -34,6 +34,7 @@ class ItemFieldBuilder
 		$this->class = $class;
 		return $this;
 	}
+
 	public function name(string $name)
 	{
 		$this->name = $name;
@@ -63,11 +64,13 @@ class ItemFieldBuilder
 		$this->required = 'required';
 		return $this;
 	}
+
 	public function hidden()
 	{
 		$this->hidden = 'hidden';
 		return $this;
 	}
+
 	public function contenteditable()
 	{
 		$this->contenteditable = 'contenteditable';
@@ -76,21 +79,21 @@ class ItemFieldBuilder
 
 	public function get()
 	{
-		return
-		[
-			'field' => $this->field,
-			'datafield' => $this->datafield,
-			'class' => $this->class,
-			'name' => $this->name?$this->name:$this->field,
-			'type' => $this->type,
-			'link' => $this->link,
-			'hidden' => $this->hidden,
-			'required' => $this->required,
-			'contenteditable' => $this->contenteditable,
-			'html' => $this->html,
-		];
+		$this->name ? $this->name : $this->field;
+		return $this;
+//		[
+//			'field' => $this->field,
+//			'datafield' => $this->datafield,
+//			'class' => $this->class,
+//			'name' => $this->name?$this->name:$this->field,
+//			'type' => $this->type,
+//			'link' => $this->link,
+//			'hidden' => $this->hidden,
+//			'required' => $this->required,
+//			'contenteditable' => $this->contenteditable,
+//			'html' => $this->html,
+//		];
 	}
-
 
 
 }

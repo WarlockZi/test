@@ -45,8 +45,10 @@ class PropertyView extends MyView
 	public static function edit($id)
 	{
 		$view = new self();
+//		$item = $view->illuminateModelName::with('categories','products')->find($id);
 		$item = $view->illuminateModelName::find($id);
-		return ItemBuilder::build($item, 'property',$item)
+		return ItemBuilder::build($item, 'property')
+			->pageTitle('Свойство')
 			->field(
 				ItemFieldBuilder::build('id',$item)
 					->name('ID')
@@ -85,7 +87,6 @@ class PropertyView extends MyView
 					)
 					->get()
 			)
-			->pageTitle('Свойство')
 			->del()
 			->save()
 			->toList()
