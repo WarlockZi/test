@@ -8,7 +8,7 @@
 	<?= $this->initialOption; ?>
 
 	<? if ($this->tree): ?>
-		<?= $this->getTree($this->tree); ?>
+		<?= $this->getTree2($this->tree); ?>
 	<? else: ?>
 		<?= $this->getArray(); ?>
 	<? endif; ?>

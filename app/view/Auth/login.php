@@ -4,13 +4,7 @@
 		<h1 class="title">Вход на сайт</h1>
 		<div class='message'></div>
 
-		<? if (isset($_SESSION['msg'])): ?>
-			<div class="login_return_pass"><?= $_SESSION['msg'];
-				unset($_SESSION['msg']) ?></div>
-		<? endif; ?>
-
-		<input type="email" placeholder="E-mail"
-		       value="<?= $_SESSION['reg']['email'] ?? ''; ?>"/>
+		<input type="email" placeholder="E-mail" autocomplete="email"/>
 
 		<div class="pass">
 			<input name="password" class="form-input password" type="password" placeholder="Пароль"

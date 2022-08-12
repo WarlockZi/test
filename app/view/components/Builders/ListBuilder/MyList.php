@@ -9,6 +9,7 @@ class MyList
 	private $grid = "style='display: grid; grid-template-columns:";
 
 	private $model = '';
+	private $pageTitle = '';
 	private $dataModel = '';
 	private $addButton = false;
 	private $tableClassName = '';
@@ -35,6 +36,11 @@ class MyList
 		$this->parentId = "data-parentId=" . $id;
 		return $this;
 	}
+	public function pageTitle(string $pageTitle)
+	{
+		$this->pageTitle = $pageTitle;
+		return $this;
+	}
 
 	public function morph(string $model, $id)
 	{
@@ -53,12 +59,6 @@ class MyList
 	{
 		$this->tableClassName = $class;
 		return $this;
-	}
-
-	public function get()
-	{
-		$this->run();
-		return $this->html;
 	}
 
 	public function column(ListColumnBuilder $a)
@@ -81,14 +81,13 @@ class MyList
 
 	public function del()
 	{
-//		$TRASH = file_get_contents(TRASH);
+
 		$this->headDelCol = "<div class='head del'></div>";
 		return $this;
 	}
 
 	public function edit()
 	{
-//		$EDIT = file_get_contents(EDIT);
 		$this->headEditCol = "<div class='head edit'></div>";
 		return $this;
 	}
@@ -115,7 +114,6 @@ class MyList
 	protected function emptyRow()
 	{
 		$str = '';
-
 		foreach ($this->columns as $field => $column) {
 
 			$str .= "<div hidden {$column->class} " .
@@ -128,13 +126,6 @@ class MyList
 		$str .= $this->getDelButton(0);
 
 		return $str;
-	}
-
-	protected function run()
-	{
-		$this->prepareGridHeader();
-
-		return $this->template();
 	}
 
 	protected function prepareGridHeader(): void
@@ -156,6 +147,13 @@ class MyList
 		ob_start();
 		include ROOT . '/app/view/components/Builders/ListBuilder/MyListTemplate.php';
 		$this->html = ob_get_clean();
+	}
+
+	public function get()
+	{
+		$this->prepareGridHeader();
+		$this->template();
+
 		return $this->html;
 	}
 }

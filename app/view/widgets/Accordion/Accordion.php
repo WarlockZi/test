@@ -12,6 +12,7 @@ class Accordion
 	protected $parentFieldName = '';
 
 	protected $html;
+	protected $tree;
 	protected $class = '';
 
 	protected $label_after = '';
@@ -38,7 +39,6 @@ class Accordion
 
 	protected function run()
 	{
-//		$models = Tree::idKeys($this->models);
 		$this->tree = Tree::tree($this->models, $this->parentFieldName);
 		$this->html = $this->showCat($this->tree);
 		$this->output();

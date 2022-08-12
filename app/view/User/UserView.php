@@ -12,6 +12,7 @@ use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 
 
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use app\view\components\CustomDate\CustomDate;
 use app\view\components\CustomRadio\CustomRadio;
@@ -28,108 +29,85 @@ abstract class UserView extends MyView
 
 	public static function getAdminTab($user)
 	{
-		return ItemTabBuilder::build()
-			->tabTitle("Права")
+		if (is_string($user['rights'])){
+			$user['rights'] = explode(',',$user['rights']);
+		}
+		return ItemTabBuilder::build("Права")
 			->html(self::getRights($user))
-			->get();
-	}
-
-	public static function admin($item, $tab)
-	{
-		return ItemBuilder::build($item, 'user')
-			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
-			->toList()
-			->save()
-			->del()
-			->tab($tab)
-			->field(
-				ItemFieldBuilder::build('id', $item)
-					->name('ID')
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('email', $item)
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('surName', $item)
-					->name('Фамилия')
-					->contenteditable()
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('name', $item)
-					->name('Имя')
-					->contenteditable()
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('middleName', $item)
-					->name('Отчество')
-					->contenteditable()
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('phone', $item)
-					->name('Телефон')
-					->contenteditable()
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('birthDate', $item)
-					->name('Дата рождения')
-					->html(
-						self::getBirhtdate($item)
-					)
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('birthDate', $item)
-					->name('Дата рождения')
-					->html(
-						self::getBirhtdate($item)
-					)
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('sex', $item)
-					->name('Пол')
-					->html(
-						self::getSex($item)
-					)
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('confirmed', $item)
-					->name('Подтвержден')
-					->html(
-						self::getConfirmHtml($item)
-					)
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('hered', $item)
-					->name('Принят')
-					->html(
-						self::getHiredHtml($item)
-					)
-					->get()
-			)->field(
-				ItemFieldBuilder::build('fired', $item)
-					->name('Уволен')
-					->html(
-						self::getFiredHtml($item)
-					)
-					->get()
-			)
+			->field('rights')
 			->get();
 	}
 
 	public static function guest($item)
 	{
+		$userArr = $item->toArray();
+		return ItemBuilder::build($item, 'user')
+			->pageTitle('Редактировать пользователя: ' . $item->fi())
+			->save()
+			->field(
+				ItemFieldBuilder::build('id', $item)
+					->name('ID')
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('email', $item)
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('surName', $item)
+					->name('Фамилия')
+					->contenteditable()
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('name', $item)
+					->name('Имя')
+					->contenteditable()
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('middleName', $item)
+					->name('Отчество')
+					->contenteditable()
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('phone', $item)
+					->name('Телефон')
+					->contenteditable()
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('birthDate', $item)
+					->name('Дата рождения')
+					->html(
+						self::getBirhtdate($userArr)
+					)
+					->get()
+			)
+
+			->field(
+				ItemFieldBuilder::build('sex', $item)
+					->name('Пол')
+					->html(
+						self::getSex($userArr)
+					)
+					->get()
+			)
+			->get();
+	}
+
+	public static function employee($item)
+	{
+		$userArr = $item->toArray();
+		$userArr['rights'] = explode(',', $userArr['rights']);
 
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
+			->toList()
+			->save()
+			->del()
+
 			->field(
 				ItemFieldBuilder::build('id', $item)
 					->name('ID')
@@ -183,107 +161,101 @@ abstract class UserView extends MyView
 				ItemFieldBuilder::build('sex', $item)
 					->name('Пол')
 					->html(
-						self::getSex($item)
+						self::getSex($userArr)
 					)
 					->get()
 			)
+			->get();
+	}
+
+	public static function admin($item)
+	{
+		$userArr = $item->toArray();
+		return ItemBuilder::build($item, 'user')
+			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
+			->toList()
+			->save()
+			->del()
+			->tab(UserView::getAdminTab($userArr))
+			->field(
+				ItemFieldBuilder::build('id', $item)
+					->name('ID')
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('email', $item)
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('surName', $item)
+					->name('Фамилия')
+					->contenteditable()
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('name', $item)
+					->name('Имя')
+					->contenteditable()
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('middleName', $item)
+					->name('Отчество')
+					->contenteditable()
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('phone', $item)
+					->name('Телефон')
+					->contenteditable()
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('birthDate', $item)
+					->name('Дата рождения')
+					->html(
+						self::getBirhtdate($item)
+					)
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('birthDate', $item)
+					->name('Дата рождения')
+					->html(
+						self::getBirhtdate($item)
+					)
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('sex', $item)
+					->name('Пол')
+					->html(
+						self::getSex($userArr)
+					)
+					->get()
+			)
+			->field(ItemFieldBuilder::build('hired', $item)
+				->name('Принят')
+				->html(
+					self::getHiredHtml($item)
+				)
+				->get())
+			->field(ItemFieldBuilder::build('fired', $item)
+				->name('Уволен')
+				->html(
+					self::getFiredHtml($item)
+				)
+				->get())
 			->field(
 				ItemFieldBuilder::build('confirmed', $item)
 					->name('Подтвержден')
 					->html(
 						self::getConfirmHtml($item)
 					)
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('hered', $item)
-					->name('Принят')
-					->html(
-						self::getHiredHtml($item)
-					)
-					->get()
-			)->field(
-				ItemFieldBuilder::build('fired', $item)
-					->name('Уволен')
-					->html(
-						self::getFiredHtml($item)
-					)
-					->get()
-			)
+					->get())
 			->get();
 
 	}
-
-
-	public static function employee($item)
-	{
-		{
-			return ItemBuilder::build($item, 'user')
-				->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
-				->toList()
-				->save()
-				->del()
-				->field(
-					ItemFieldBuilder::build('id', $item)
-						->name('ID')
-						->get()
-				)
-				->field(
-					ItemFieldBuilder::build('email', $item)
-						->get()
-				)
-				->field(
-					ItemFieldBuilder::build('surName', $item)
-						->name('Фамилия')
-						->contenteditable()
-						->get()
-				)
-				->field(
-					ItemFieldBuilder::build('name', $item)
-						->name('Имя')
-						->contenteditable()
-						->get()
-				)
-				->field(
-					ItemFieldBuilder::build('middleName', $item)
-						->name('Отчество')
-						->contenteditable()
-						->get()
-				)
-				->field(
-					ItemFieldBuilder::build('phone', $item)
-						->name('Телефон')
-						->contenteditable()
-						->get()
-				)
-				->field(
-					ItemFieldBuilder::build('birthDate', $item)
-						->name('Дата рождения')
-						->html(
-							self::getBirhtdate($item)
-						)
-						->get()
-				)
-				->field(
-					ItemFieldBuilder::build('birthDate', $item)
-						->name('Дата рождения')
-						->html(
-							self::getBirhtdate($item)
-						)
-						->get()
-				)
-				->field(
-					ItemFieldBuilder::build('sex', $item)
-						->name('Пол')
-						->html(
-							self::getSex($item)
-						)
-						->get()
-				)
-				->get();
-		}
-	}
-
 
 	public static function listAll(): string
 	{
@@ -295,13 +267,13 @@ abstract class UserView extends MyView
 			->column(
 				ListColumnBuilder::build('name')
 					->name('Имя')
-					->search(true)
+					->search()
 					->width('1fr')
 					->get())
 			->column(
 				ListColumnBuilder::build('surName')
 					->name('Фамилия')
-					->search(true)
+					->search()
 					->width('1fr')
 					->get())
 			->column(
@@ -321,17 +293,15 @@ abstract class UserView extends MyView
 	}
 
 
-	public static function getSex($item)
+	public static function getSex(array $item)
 	{
-		$sex = new CustomRadio([
-			'className' => 'custom-radio',
-			'title' => '',
-			'field' => 'sex',
-			'optionName' => 'name',
-			'tree' => ['m' => 'М', 'f' => 'Ж'],
-			'selected' => $item['sex'],
-		]);
-		return $sex->html;
+		return SelectBuilder::build()
+			->model('user')
+			->field('sex')
+			->nameOptionByField('name')
+			->array(['m' => 'М', 'f' => 'Ж'])
+			->selected($item['sex'])
+			->get();
 	}
 
 	public static function getBirhtdate($user)
@@ -416,15 +386,22 @@ abstract class UserView extends MyView
 
 	public static function getConfirmHtml($item)
 	{
-		$confirm = new CustomSelect([
-			'selectClassName' => 'custom-select',
-			'title' => '',
-			'field' => 'confirm',
-			'tab' => '&nbsp;&nbsp;&nbsp;',
-			'tree' => [1 => 'да', 0 => 'нет'],
-			'selected' => [$item['confirm'] ?? 0],
-		]);
-		return $confirm->html;
+//		$confirm = new CustomSelect([
+//			'selectClassName' => 'custom-select',
+//			'title' => '',
+//			'field' => 'confirm',
+//			'tab' => '&nbsp;&nbsp;&nbsp;',
+//			'tree' => [1 => 'да', 0 => 'нет'],
+//			'selected' => [$item['confirm'] ?? 0],
+//		]);
+
+		return SelectBuilder::build()
+			->model('user')
+			->field('confirm')
+			->nameOptionByField('name')
+			->array([1 => 'да', 0 => 'нет'])
+			->selected($item['confirm'] ?? 0)
+			->get();
 	}
 
 	public static function noElement()

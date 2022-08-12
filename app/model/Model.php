@@ -22,11 +22,11 @@ abstract class Model
 
 	protected function auth($ext): void
 	{
-		$user = User::findOneWhere('id', $_SESSION['id'] ?? null);
+		$user = \app\model\illuminate\User::find($_SESSION['id']);
 		if (!$user) {
 			throw new \Exception('Нет пользователя ');
 		}
-		$this->user = $user;
+		$this->user = $user->toArray();
 		$rightName = $this->model . '_' . $ext;
 		if (!User::can($this->user, $rightName)) {
 			exit(json_encode(['error' => 'Нет права ' . $rightName]));
@@ -73,16 +73,14 @@ abstract class Model
 		unset($values['token']);
 		$par = '';
 		foreach ($values as $key => $value) {
-			if ($value) {
-				if (is_array($value)) {
-					$value = implode(',', $value);
-				}
-				$par .= $key . " = '" . $value . "', ";
-			} else {
-				$par .= $key . " = NULL, ";
+			$value = $value ?? null;
+			if (is_array($value)) {
+				$value = implode(',', $value);
 			}
+			$value = trim($value);
+			$par .= "{$key}='{$value}', ";
 		}
-		$par = trim($par, ' '); // first trim last space
+		$par = trim($par); // first trim last space
 		$par = trim($par, ',');
 
 		$sql = "UPDATE `{$model->table}` SET {$par} WHERE id = ?";
@@ -184,7 +182,7 @@ abstract class Model
 	public static function load($id)
 	{
 		$model = new static();
-		$fields = $model::findOneWhere('id',$id);
+		$fields = $model::findOneWhere('id', $id);
 		if ($fields) {
 			$fields = $fields[0];
 

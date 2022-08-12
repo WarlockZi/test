@@ -3,8 +3,10 @@
 namespace app\view\Right;
 
 use app\model\Right;
-use app\view\components\Builders\ListColumnBuilder;
-use app\view\components\MyList\MyList;
+
+
+use app\view\components\Builders\ListBuilder\ListColumnBuilder;
+use app\view\components\Builders\ListBuilder\MyList;
 use app\view\MyView;
 
 class RightView extends MyView

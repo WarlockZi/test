@@ -34,7 +34,8 @@ new App(new DI);
 
 
 try {
-	Router::dispatch($_SERVER['QUERY_STRING']);
+	Router::dispatch($_SERVER['REQUEST_URI']);
+//	Router::dispatch($_SERVER['QUERY_STRING']);
 } catch (Exception $e) {
 	exit($e);
 };

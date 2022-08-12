@@ -27,12 +27,20 @@ class PropertyView extends MyView
 			->all()
 			->column(
 				ListColumnBuilder::build('id')
+					->width('50px')
+					->name('Id')
 					->get())
 			->column(
 				ListColumnBuilder::build('name')
+					->name('Название')
+					->search()
+					->sort()
+					->contenteditable()
 					->get()
 			)->column(
 				ListColumnBuilder::build('description')
+					->contenteditable()
+					->name('Описание')
 					->get()
 			)
 			->edit()
@@ -46,7 +54,7 @@ class PropertyView extends MyView
 	{
 		$view = new self();
 //		$item = $view->illuminateModelName::with('categories','products')->find($id);
-		$item = $view->illuminateModelName::find($id);
+		$item = $view->illuminateModelName::with('categories','products')->find($id);
 		return ItemBuilder::build($item, 'property')
 			->pageTitle('Свойство')
 			->field(
@@ -62,8 +70,7 @@ class PropertyView extends MyView
 			)
 
 			->tab(
-				ItemTabBuilder::build()
-					->tabTitle('Значения')
+				ItemTabBuilder::build('Значения')
 					->html(
 						MyList::build(Val::class)
 							->items(Val::findAllWhere('property_id', $id))

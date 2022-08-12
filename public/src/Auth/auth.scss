@@ -1,6 +1,5 @@
 @import "../var";
 
-
 .auth {
   display: flex;
   flex-flow: column wrap;
@@ -12,17 +11,49 @@
   word-break: break-word;
   min-width: 300px;
 
-  .message{
-
-  }
 
   .title {
     font-weight: bold;
     font-size: 120%;
     text-align: center;
-    color: #949494;
+    color: $color-gray-max;
     margin-bottom: 20px;
   }
+
+  .message {
+    font-size: .9rem;
+    margin-bottom: 15px;
+
+    a {
+      padding: 0;
+      color: $color-main-hover;
+      font-weight: 600;
+    }
+  }
+
+  .pass {
+    position: relative;
+  }
+
+  .error {
+    border: 3px solid #c14000;
+    border-radius: 3px;
+    padding: 10px;
+    color: #c14000;
+    //display: none;
+  }
+
+  .success {
+    color: #1bbc9b;
+    font-weight: 600;
+    background-color: #ffffff;
+    border: 1px solid;
+    padding: 15px;
+  }
+  label {
+    color: dimgrey;
+  }
+
 
   input {
     background: #f7f7f7;
@@ -32,14 +63,14 @@
     border-top: 0;
     border-right: 0;
     flex: 1;
-    margin: 10px 0;
+    margin: 5px 0 10px;
     padding: 12px;
     width: 100%;
     box-sizing: border-box;
     color: #757575;
   }
 
-  .submit__button{
+  .submit__button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -118,47 +149,19 @@
   p {
     font-size: 0.6rem;
   }
-}
 
 
-
-
-.form__buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.form__button {
-
-}
-
-
-
-.list {
-  display: flex;
-  flex-flow: column;
-  justify-content: flex-start;
-  width: clamp(250px, 340px, 350px);
-  margin: 40px auto;
-
-  .list__header {
-    font-size: 2em;
-    color: $color-a;
-    margin: 15px 0;
+  [required]:before {
+    content: 'ss';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    color: red;
+    position: absolute;
+    right: -100%;
   }
 
-  .list__item {
-    color: $color-a;
-    border: 1px solid #eee;
-    padding: 10px;
 
-    &:hover {
-      background-color: $color-white-hover;
-    }
-  }
+
 }
-
-
-
-
 

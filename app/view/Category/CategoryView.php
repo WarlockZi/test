@@ -51,8 +51,7 @@ class CategoryView
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build()
-					->tabTitle('Товары')
+				ItemTabBuilder::build('Товары')
 					->html(
 						MyList::build(Product::class)
 							->column(
@@ -76,8 +75,7 @@ class CategoryView
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build()
-					->tabTitle('Свойства')
+				ItemTabBuilder::build('Свойства')
 					->html(
 						MyList::build(Property::class)
 							->column(

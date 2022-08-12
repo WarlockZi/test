@@ -5,7 +5,7 @@ namespace app\controller;
 use app\model\Right;
 use app\model\User;
 use app\view\Right\RightView;
-//use app\view\View;
+
 
 
 class RightController Extends AppController

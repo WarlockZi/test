@@ -8,6 +8,7 @@ use app\view\components\Builders\Builder;
 
 class SelectBuilder extends Builder
 {
+	private $tree2 = [];
 	private $tree = [];
 	private $array = [];
 	private $class = '';
@@ -19,7 +20,9 @@ class SelectBuilder extends Builder
 	private $nameOptionByField = 'name';
 	private $initialOption = '';
 
-	private $tab = '&npbsp';
+//	private $tab = '&npbsp';
+	private $tab = '&nbsp;';
+
 
 
 	public static function build()
@@ -29,6 +32,12 @@ class SelectBuilder extends Builder
 	}
 
 	public function tree($tree)
+	{
+		$this->tree = $tree;
+		return $this;
+	}
+
+	public function tree2($tree)
 	{
 		$this->tree = $tree;
 		return $this;
@@ -80,7 +89,7 @@ class SelectBuilder extends Builder
 
 	public function selected($selected)
 	{
-		$this->selected = (int)$selected;
+		$this->selected = $selected;
 		return $this;
 	}
 
@@ -100,10 +109,27 @@ class SelectBuilder extends Builder
 	{
 		$tpl = '';
 		foreach ($this->array as $index => $item) {
-			$selected = (int)$this->selected === $index ? 'selected' : '';
+			$selected = $this->selected === $index ? 'selected' : '';
 			$tpl .= "<option value='{$index}' $selected>{$item}</option>";
 		}
 		return $tpl;
+	}
+	protected function getTree2($data,$level = 0){
+		$string = '';
+		foreach($data as $item){
+			$string .= $this->addItem($item,$level);
+		}
+		return $string;
+	}
+
+	private function addItem($item, $level)
+	{
+		$tab = str_repeat($this->tab,$level);
+		$menu = "<option value='{$item['id']}'>{$tab}{$item['name']}</option>" ;
+		if(isset($item['childs'])){
+			$menu .= "{$this->getTree2($item['childs'],$level+1)}";
+		}
+		return $menu;
 	}
 
 	private function getTree($tree, $level = 0, $str = '')

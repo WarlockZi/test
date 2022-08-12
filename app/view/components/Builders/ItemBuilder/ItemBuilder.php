@@ -66,13 +66,13 @@ class ItemBuilder extends Builder
 		return $this;
 	}
 
-	public function field(ItemFieldBuilder $field)
+	public function field($field)
 	{
 		$this->fields[] = $field;
 		return $this;
 	}
 
-	public function tab(array $tab)
+	public function tab($tab)
 	{
 		$this->tabs[] = $tab;
 		return $this;

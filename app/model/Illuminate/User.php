@@ -26,6 +26,13 @@ class User extends Model
 	public function rights(){
 		return $this->hasMany(Right::class);
 	}
+	public function fio(){
+		return "{$this->surName} {$this->name} {$this->middleName}";
+	}
+	public function fi(){
+		return "{$this->surName} {$this->name}";
+
+	}
 
 
 }

@@ -42,10 +42,10 @@ class AppController extends Controller
 		$this->layout = 'admin';
 		View::setJs('admin.js');
 		View::setCss('admin.css');
-//		View::setJs('list.js');
-//		View::setCss('list.css');
-//		View::setJs('common.js');
-//		View::setCss('common.css');
+		View::setJs('list.js');
+		View::setCss('list.css');
+		View::setJs('common.js');
+		View::setCss('common.css');
 	}
 
 	public function actionDelete()
@@ -130,7 +130,7 @@ class AppController extends Controller
 			$_SESSION['back_url'] = $_SERVER['QUERY_STRING'];
 			exit();
 		} else {
-			$user = User::findOneWhere('id', $_SESSION['id']);
+			$user = \app\model\illuminate\User::find($_SESSION['id'])->toArray();
 			if (!$user) {
 				header("Location:/auth/login");
 				$this->exitWithPopup("Пользователь не найден");
@@ -155,7 +155,7 @@ class AppController extends Controller
 	public function auth()
 	{
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
-			$user = $this->user = User::findOneWhere('id', $_SESSION['id']);
+			$user = $this->user = \app\model\illuminate\User::find($_SESSION['id'])->toArray();
 			if ($this->user === false) {
 				$errors[] = 'Неправильные данные для входа на сайт';
 			} else {

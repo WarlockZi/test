@@ -8,6 +8,9 @@ export default function user() {
   let item = $('[data-model="user"]')[0]
   if (item) {
     $(item).on('click', handleClick)
+    setRights()
+    let rights = $(`[data-field='rights']`)[0]
+    $(rights).on('click', setRights)
   }
 
   async function handleClick({target}) {
@@ -23,11 +26,17 @@ export default function user() {
       let str = '';
       [].map.call(rights, function (right) {
         let s = right.previousElementSibling.innerText
-        str+=s+','
+        str += s + ','
       })
-        let tab = target.closest('[tab]')
-        tab.dataset.value = str
+      let tab = target.closest('[data-tab]')
+      tab.dataset.value = str
     }
+  }
+
+  function setRights() {
+    let str = rights().replace(/,$/, "")
+    let tab = $(`[data-field='rights']`)[0]
+    tab.dataset.value = str
   }
 
   function rights() {

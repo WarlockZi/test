@@ -9,6 +9,12 @@
     overflow-x: auto;
   }
 
+  .list-title {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
 
   .custom-list {
 
@@ -88,6 +94,15 @@
       display: flex;
       flex-flow: column;
       cursor: pointer;
+      position: relative;
+
+      .icon {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        right: 10px;
+        background: url("/pic/icons/upDown.svg") 0 0/15px 15px no-repeat;
+      }
 
       input {
         cursor: text;

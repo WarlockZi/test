@@ -7,6 +7,7 @@ use app\model\User;
 use app\model\Illuminate\User as IlluminateUser;
 use app\view\User\UserView;
 use app\view\View;
+use MongoDB\Driver\Exception\CommandException;
 
 class AuthController extends AppController
 {
@@ -28,7 +29,7 @@ class AuthController extends AppController
 			if (!$user['password']) exit('empty password');
 			if (!$user['email']) exit('empty email');
 
-			$found = User::findOneWhere('email', $user['email']);
+			$found = IlluminateUser::first('email', $user['email'])->toArray();
 			if ($found) $this->exitWithMsg('mail exists');
 
 			$hash = md5(microtime());
@@ -60,10 +61,15 @@ class AuthController extends AppController
 		$this->view = 'profile1';
 
 		$user = IlluminateUser::find($_SESSION['id']);
+		$userArr = IlluminateUser::find($_SESSION['id'])->toArray();
 
-		if (User::can($user->toArray(), 'role_employee')) {
-			$item = UserView::employee($user);;
+		if (User::can($userArr, 'role_employee')) {
 			$this->layout = 'admin';
+			if (User::can($userArr, 'role_admin')) {
+				$item = UserView::admin($user);
+			} else {
+				$item = UserView::employee($user);
+			}
 
 			View::unsetJs('auth.js');
 			View::unsetCss('auth.css');
@@ -74,30 +80,50 @@ class AuthController extends AppController
 			$item = UserView::guest($user);;
 			$this->layout = 'vitex';
 		}
+
 		$this->set(compact('item'));
 	}
 
-	public function actionChangePassword()
+	public
+	function actionChangePassword()
 	{
 		$this->autorize();
 		if ($data = $this->ajax) {
+			if (!$data['old_password'] || !$data['new_password'])
+				$this->exitWithError('Заполните старый и новый пароль');
+
 			$old_password = $this->preparePassword($data['old_password']);
 
-			if ($user = User::findOneWhere('password', $old_password)) {
+			$user = IlluminateUser::where('password', $old_password)
+				->get()->toArray();
+
+			if ($user) {
+				$user = $user[0];
 				$newPassword = $this->preparePassword($data['new_password']);
 				$res = User::update(['id' => $user['id'], 'password' => $newPassword]);
-				if (res) $this->exitWithMsg('ok');
+				if ($res) {
+
+					$this->exitWithSuccess('Пароль поменeн');
+				} else {
+					$this->exitWithMsg('Что-то пошло не так (');
+				}
+			} else {
+
+				$this->exitWithError('Не правильный старый пароль (');
 			}
-			$this->exitWithMsg('fail');
 		}
 	}
 
-	public function actionReturnpass()
+	public
+	function actionReturnpass()
 	{
 		if ($data = $this->ajax) {
 
 			$_SESSION['id'] = '';
-			$user = User::findOneWhere('email', $data['email']);
+			$user = IlluminateUser::where('email', $data['email'])
+				->select('id', 'password', 'email')
+				->get()[0]
+				->toArray();
 
 			if ($user) {
 				$this->setAuth($user);
@@ -118,7 +144,8 @@ class AuthController extends AppController
 		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
 	}
 
-	public function actionLogin()
+	public
+	function actionLogin()
 	{
 		if ($data = $this->ajax) {
 
@@ -128,7 +155,8 @@ class AuthController extends AppController
 			if (!User::checkEmail($email)) $this->exitWithError("Неверный формат email");
 			if (!User::checkPassword($password)) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
 
-			$user = User::findOneWhere("email", $email);
+			$user = IlluminateUser::where('email', $email)->get()[0]
+				->toArray();
 
 			if (!$user) $this->exitWithError('Пользователь не зарегистрирован');
 			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
@@ -147,7 +175,8 @@ class AuthController extends AppController
 		$this->layout = 'vitex';
 	}
 
-	public function actionLogout()
+	public
+	function actionLogout()
 	{
 		if (isset($_COOKIE[session_name()])) {  // session_name() - получаем название текущей сессии
 			setcookie(session_name(), '', time() - 86400, '/');
@@ -157,7 +186,8 @@ class AuthController extends AppController
 		exit();
 	}
 
-	private function randomPassword()
+	private
+	function randomPassword()
 	{
 		$arr = [
 			'1234567890',
@@ -181,11 +211,12 @@ class AuthController extends AppController
 	}
 
 
-	public function actionConfirm()
+	public
+	function actionConfirm()
 	{
 		$hash = $_GET['hash'];
 		if (!$hash) header('Location:/');
-		$user = User::findOneWhere('hash', $hash);
+		$user = IlluminateUser::where('hash', $hash)->get()[0]->toArray();
 		if ($user) {
 			$user['confirm'] = "1";
 			$user['post_id'] = NULL;
@@ -199,25 +230,29 @@ class AuthController extends AppController
 		exit();
 	}
 
-	public function actionNoconfirm()
+	public
+	function actionNoconfirm()
 	{
 		$errorss = 4;
 	}
 
 
-	private function prepareBodyRegister($href, $hash)
+	private
+	function prepareBodyRegister($href, $hash)
 	{
 		ob_start();
 		require ROOT . '/app/view/Auth/email.php';
 		return ob_get_clean();
 	}
 
-	public function actionSuccess()
+	public
+	function actionSuccess()
 	{
 		$this->auth();
 	}
 
-	public function actionCabinet()
+	public
+	function actionCabinet()
 	{
 		$this->auth();
 	}

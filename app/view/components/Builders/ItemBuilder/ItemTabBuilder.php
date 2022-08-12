@@ -4,37 +4,36 @@
 namespace app\view\components\Builders\ItemBuilder;
 
 
-class ItemTabBuilder
-{
-	protected $model;
-	protected $html;
-	protected $tabTitle;
+use app\view\components\Builders\Builder;
 
-	public static function build()
+class ItemTabBuilder extends Builder
+{
+	public $model='';
+	public $html='';
+	public $tabTitle='';
+	public $field='';
+
+	public static function build(string $title)
 	{
 		$view = new self();
+		$view->tabTitle = $title;
 		return $view;
-	}
-
-	public function tabTitle(string $tabTitle)
-	{
-		$this->tabTitle = $tabTitle;
-		return $this;
 	}
 
 	public function html(string $html)
 	{
-		$this->html = $html;
+		$this->html = $this->clean($html);
+		return $this;
+	}
+	public function field(string $field)
+	{
+		$this->field = "data-field='{$field}'";
 		return $this;
 	}
 
 	public function get()
 	{
-		return [
-			'title'=>$this->tabTitle,
-			'html'=>$this->html,
-		];
-
+		return $this;
 	}
 
 }

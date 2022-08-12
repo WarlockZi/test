@@ -11,13 +11,21 @@ if (tables) {
     const hidden = table.querySelectorAll('[hidden]')
     const sortables = table.querySelectorAll('[data-sort]')
     const inputs = $(table).findAll('.head input')
-    const ids = $(table)[0].querySelectorAll('.id:not(.head')
+    const ids = getIds()
     const modelName = table.dataset['model']
     const parent = table.dataset.parent ?? null
     const parentId = table.dataset.parentId ?? null
     const morph = table.dataset.morph ?? null
     const morphId = table.dataset.morphid ?? null
     const rows = []
+
+    function getIds() {
+      let els = $(table)[0].querySelectorAll('[data-id]');
+      return [].filter.call(els, function (el) {
+        return el.dataset.id !== '0'
+      })
+
+    }
 
     $(table).on('click', handleClick.bind(this));
     $(table).on('keyup', handleKeyUp.bind(this));
@@ -69,7 +77,8 @@ if (tables) {
         edit(target, modelName)
 
         /// sort
-      } else if (target.classList.contains('head')) {
+      } else if (target.classList.contains('head') ||
+        target.classList.contains('icon')) {
         let header = target.closest('.head')
         if (header.hasAttribute('data-sort')) {
           let index = [].findIndex.call(sortables, (el, i, inputs) => {
@@ -175,6 +184,14 @@ if (tables) {
 
     // SORT
     function sortColumn(index) {
+
+      /// get table rows array
+      for (let i = 0; i < ids.length; i++) {
+        let id = ids[i].dataset.id
+        let row = $(table)[0].querySelectorAll(`[data-id='${id}']`)
+        rows.push(row)
+      }
+
       // Получить текущее направление
       const direction = directions[index] || 'asc'
 
@@ -219,13 +236,6 @@ if (tables) {
         })
       });
     };
-
-    /// get table rows array
-    for (let i = 0; i < ids.length; i++) {
-      let id = ids[i].dataset.id
-      let row = $(table)[0].querySelectorAll(`[data-id='${id}']`)
-      rows.push(row)
-    }
 
     // Направление сортировки
     const directions = Array.from(sortables).map(function (sortable) {

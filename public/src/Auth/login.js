@@ -1,4 +1,3 @@
-import './login.scss'
 import {$, post, validate} from "../common";
 
 
