@@ -40,8 +40,7 @@ class ProductView
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build()
-					->tabTitle('Свойства')
+				ItemTabBuilder::build('Свойства')
 					->html(
 						MyList::build(Property::class)
 							->column(
@@ -109,6 +108,7 @@ class ProductView
 	{
 		$view = new self;
 		return MyList::build($view->modelName)
+			->pageTitle('Товары')
 			->column(
 				ListColumnBuilder::build('id')
 					->name('ID')

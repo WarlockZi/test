@@ -78,7 +78,10 @@ export default function catalogItem() {
     // debugger;
     [].map.call(fields, (field) => {
       if (field.closest('[data-parent]'))return obj
-      if (field.hasAttribute('multi-select')) {
+      if (field.hasAttribute('data-value')) {
+        obj[field.dataset.field] = field.dataset.value
+      }
+      else if (field.hasAttribute('multi-select')) {
         let chips = field.querySelectorAll('.chip');
         let ids = [].map.call(chips, (chip) => {
           return chip.dataset.id

@@ -45,7 +45,7 @@ export default class WDSSelect {
     next.selected = true
 
     this.space.innerText = next.label
-    this.label.closest('[custom-select]').dataset['id'] = next.value
+    // this.label.closest('[custom-select]').dataset['id'] = next.value
     this.label.closest('[custom-select]').dataset['value'] = next.value
     this.ul
       .querySelector(`[data-value="${prev.value}"]`)
@@ -69,8 +69,8 @@ function setup(select) {
 
   select.sel.setAttribute("custom-select", '')
   if (select.field) {
-    select.sel.dataset['field'] = select.field
     select.sel.dataset['model'] = select.model
+    select.sel.dataset['field'] = select.field
 
   }
   select.sel.dataset['value'] = select.selectedOption.value

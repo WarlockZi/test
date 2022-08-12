@@ -8,7 +8,9 @@
 	<? foreach ($this->tabs as $k => $tab): ?>
 	  <div data-tab-id="<?= $n; ?>"
 	       class="tab"
-	       data-tooltip="<?= $tab['title']; ?>"><?= $tab['title']; ?></div>
+	       data-tooltip="<?= $tab->tabTitle; ?>">
+	    <?= $tab->tabTitle; ?>
+	  </div>
 		<? $n++; ?>
 	<? endforeach; ?>
 </div>

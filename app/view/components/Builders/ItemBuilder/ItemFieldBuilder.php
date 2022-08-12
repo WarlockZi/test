@@ -81,18 +81,6 @@ class ItemFieldBuilder
 	{
 		$this->name ? $this->name : $this->field;
 		return $this;
-//		[
-//			'field' => $this->field,
-//			'datafield' => $this->datafield,
-//			'class' => $this->class,
-//			'name' => $this->name?$this->name:$this->field,
-//			'type' => $this->type,
-//			'link' => $this->link,
-//			'hidden' => $this->hidden,
-//			'required' => $this->required,
-//			'contenteditable' => $this->contenteditable,
-//			'html' => $this->html,
-//		];
 	}
 
 

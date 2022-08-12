@@ -1,11 +1,10 @@
-import '../components/header/header';
+import '../components/header/header'
 import '../components/header/autocomplete'
 
-import '../components/forms.scss'
 import '../components/showPassword/showPassword'
 
 import '../components/cookie/cookie'
-import '../components/footer/footer.scss'
+
 
 import './changepassword'
 import './login'
@@ -13,6 +12,7 @@ import './register'
 import './profile'
 import './return_pass'
 import './edit'
+import './auth.scss'
 
 // import '../normalize.scss'
 

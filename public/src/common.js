@@ -35,18 +35,24 @@ function replaceTs(str) {
   return str.replace(re, "");
 }
 
-function cachePage(className) {
-  let html = $(className)[0].outerHTML
-  return trimStr(html)
+function replaceSpace(str) {
+  var re = new RegExp('\s', "g");
+  return str.replace(re, "");
 }
+
 
 function trimStr(str) {
   str = replaceNbsps(str)
   str = replaceNs(str)
   str = replaceTs(str)
+  str = replaceSpace(str)
   return str
 }
 
+function cachePage(className) {
+  let html = $(className)[0].outerHTML
+  return trimStr(html)
+}
 let validate = {
   sort: () => {
     let error = this.nextElementSibling

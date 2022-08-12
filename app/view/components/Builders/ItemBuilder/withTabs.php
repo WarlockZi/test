@@ -23,9 +23,9 @@
 	<? foreach ($this->tabs as $k => $tab): ?>
 	  <section
 			  <?=$this->model?>
+			 <?= $tab->field; ?>
 			  data-tab=<?= $n ?>>
-			 <?= isset($tab['field']) ? "data-field={$tab['field']}": ''; ?>
-			 <?= $tab['html'] ?? ''; ?>
+			 <?= $tab->html; ?>
 
 	  </section>
 		<? $n++; ?>

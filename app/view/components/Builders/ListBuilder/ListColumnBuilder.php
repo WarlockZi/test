@@ -13,6 +13,7 @@ class ListColumnBuilder
 	public $name='';
 	public $type="data-type='string'";
 	public $sort='';
+	public $sortIcon='';
 	public $search='';
 	public $width='auto';
 	public $hidden='';
@@ -45,6 +46,7 @@ class ListColumnBuilder
 	public function sort()
 	{
 		$this->sort = 'data-sort';
+		$this->sortIcon = '<div class="icon"></div>';
 		return $this;
 	}
 	public function search()
@@ -71,8 +73,5 @@ class ListColumnBuilder
 	{
 		return $this;
 	}
-
-
-
 
 }

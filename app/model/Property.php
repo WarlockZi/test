@@ -19,6 +19,8 @@ class Property extends Model
 		'morph_id' => null,
 	];
 
+
+
 //	public function category()
 //	{
 //		return $this->belongsTo(\app\model\Illuminate\Category::class);
