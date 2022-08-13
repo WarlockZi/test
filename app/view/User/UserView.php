@@ -10,13 +10,8 @@ use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
-
-
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\CustomCatalogItem\CustomCatalogItem;
 use app\view\components\CustomDate\CustomDate;
-use app\view\components\CustomRadio\CustomRadio;
-use app\view\components\CustomSelect\CustomSelect;
 use app\view\MyView;
 
 
@@ -386,15 +381,6 @@ abstract class UserView extends MyView
 
 	public static function getConfirmHtml($item)
 	{
-//		$confirm = new CustomSelect([
-//			'selectClassName' => 'custom-select',
-//			'title' => '',
-//			'field' => 'confirm',
-//			'tab' => '&nbsp;&nbsp;&nbsp;',
-//			'tree' => [1 => 'да', 0 => 'нет'],
-//			'selected' => [$item['confirm'] ?? 0],
-//		]);
-
 		return SelectBuilder::build()
 			->model('user')
 			->field('confirm')
