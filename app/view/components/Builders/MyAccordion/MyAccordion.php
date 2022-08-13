@@ -15,68 +15,127 @@ class MyAccordion extends Builder
 	public $labelBefore;
 	public $link;
 	public $parentFieldName;
-	public $nameFieldName;
+	public $nameFieldName = 'name';
 	public $html;
+	public $signOfParent;
+	public $signOfChild;
 
-	public static function build(array $tree){
+	public static function build(array $tree)
+	{
 		$accordion = new self();
 		$accordion->tree = $tree;
 		return $accordion;
 	}
 
-	public function model($model){
+	public function model($model)
+	{
 		$this->model = $model;
 		return $this;
 	}
-	public function class($class){
+
+	public function class($class)
+	{
 		$this->class = $class;
 		return $this;
 	}
-	public function labelAfter($labelAfter){
-		$this->labelAfter = $labelAfter;
-		return $this;
-	}
-	public function labelBefore($labelBefore){
-		$this->labelBefore = $labelBefore;
-		return $this;
-	}
-	public function link($link){
+
+	public function link($link)
+	{
 		$this->link = $link;
 		return $this;
 	}
 
-	public function parentFieldName($parentFieldName){
+	public function signOfChild($signOfChild)
+	{
+		$this->signOfChild = $signOfChild;
+		return $this;
+	}
+
+	public function signOfParent($signOfParent)
+	{
+		$this->signOfParent = $signOfParent;
+		return $this;
+	}
+
+	public function parentFieldName($parentFieldName)
+	{
 		$this->parentFieldName = $parentFieldName;
 		return $this;
 	}
-	public function nameFieldName($nameFieldName){
+
+	public function nameFieldName($nameFieldName)
+	{
 		$this->nameFieldName = $nameFieldName;
 		return $this;
 	}
 
-	public function get(){
+	public function get()
+	{
 		$this->showCat($this->tree);
 		$html = $this->make();
 
 		return $html;
 	}
 
-	protected function icon()
+	public function first($arrowBefore)
 	{
-		return $this->label_after ? file_get_contents($this->label_after) : '';
+		$this->arrowBefore = $arrowBefore;
+		return $this;
+	}
+
+	public function second($labelBefore)
+	{
+		$this->labelBefore = $labelBefore;
+		return $this;
+	}
+
+	public function labelMiddleHtml($labelMiddleHtml)
+	{
+		$this->labelMiddleHtml = $labelMiddleHtml;
+		return $this;
+	}
+
+	public function labelAfter($labelAfter)
+	{
+		$this->labelAfter = file_get_contents($labelAfter);
+		return $this;
+	}
+
+	public function labelAfterLink(string $labelAfterLink)
+	{
+		$this->labelAfter =
+			"<a href='$this->labelAfterLink'>$this->labelAfter</a>";
+		return $this;
+	}
+
+	protected function makeString()
+	{
+		"<li>" .
+		"{$this->first}" .
+		"{$this->second}" .
+		"{$this->main}" .
+		"{$this->after}" .
+		"<ul>".
+
+		"</ul>".
+		"</li>";
+
 	}
 
 	protected function lable_after($item)
 	{
 		if ($this->link_label_after) {
-			return "<a class='update' href='{$this->link_label_after}{$item['id']}'>" .
-				"{$this->icon()}" .
+			return "<a class='update' 
+href='{$this->link_label_after}{$item['id']}'>" .
+				"{$this->labelAfter}" .
 				"</a>";
 		}
-		return '';
+
 	}
-	private function make(){
-		return "<div accordion class = '{$this->class}'>{$this->html}</div>";
+
+	private function make()
+	{
+		return "<div accordion class='{$this->class}'>{$this->html}</div>";
 	}
 
 
@@ -113,14 +172,13 @@ class MyAccordion extends Builder
 		}
 		return $string;
 	}
+}
 
 
-
-	//		'model' => new \app\model\Opentest,
+//		'model' => new \app\model\Opentest,
 //	'models' => \app\model\Opentest::findAllWhere('enable', '1'),
 //	'class' => 'opentest-edit',
 //	'label_after' => "",
 //	'link' => "/adminsc/opentest/do/",
 //	'parentFieldName' => "opentest_id",
 //	'nameFieldName' => "name",
-}
