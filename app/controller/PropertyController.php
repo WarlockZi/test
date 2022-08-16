@@ -3,7 +3,9 @@
 namespace app\controller;
 
 
+use app\model\Illuminate\Product;
 use app\model\Illuminate\Property as IlluminateProperty;
+use app\model\IlluminateModelDecorator;
 use app\model\Property;
 use app\view\Property\PropertyView;
 
@@ -31,6 +33,12 @@ class PropertyController Extends AppController
 		$id = $this->route['id'];
 		$item = PropertyView::edit($id);
 		$this->set(compact('item'));
+	}
+
+	public function actionUpdateOrCreate()
+	{
+
+		IlluminateModelDecorator::updateOrCreate(IlluminateProperty::class,$this->ajax);
 	}
 
 

@@ -21,8 +21,10 @@ class ProductView
 	public static function edit($id): string
 	{
 		$view = new self();
-		$product = IlluminateProduct::find($id);
-		$properties = $product->properties->toArray();
+		$product = IlluminateProduct::with('category')
+			->find($id);
+		$properties = $product->category->properties->toArray();
+		$categoryId = $product->category->id;
 
 
 		return ItemBuilder::build($product, 'product')
@@ -55,7 +57,7 @@ class ProductView
 									->get()
 							)
 							->items($properties ?? [])
-							->morph($view->model, $id)
+							->morph('category', $categoryId)
 							->edit()
 							->del()
 							->addButton('ajax')

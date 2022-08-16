@@ -2,7 +2,8 @@
 
 namespace app\controller;
 
-use app\model\Product;
+use app\model\Illuminate\Product;
+use app\model\IlluminateModelDecorator;
 use app\view\Product\ProductView;
 
 class ProductController Extends AppController
@@ -23,6 +24,11 @@ class ProductController Extends AppController
 			$card = ProductView::card($slug);
 			$this->set(compact('card'));
 		}
+	}
+
+	public function actionUpdateOrCreate()
+	{
+		IlluminateModelDecorator::updateOrCreate(Product::class,$this->ajax);
 	}
 
 	public function actionList()

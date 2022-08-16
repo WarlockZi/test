@@ -14,7 +14,7 @@ if (tables) {
     const ids = getIds()
     const modelName = table.dataset['model']
     const parent = table.dataset.parent ?? null
-    const parentId = table.dataset.parentId ?? null
+    const parentId = table.dataset.parentid ?? null
     const morph = table.dataset.morph ?? null
     const morphId = table.dataset.morphid ?? null
     const rows = []
@@ -62,7 +62,7 @@ if (tables) {
 
       /// create
       if (target.className === 'add-model') {
-        modelCreate(modelName, parent, parentId, morph, morphId,)
+        modelCreate(modelName, parent, parentId, morph, morphId,0)
 
         /// delete
       } else if (
@@ -114,7 +114,7 @@ if (tables) {
 
 
     // UPDATE OR CREATE
-    async function modelCreate(modelName, parent, parentId, morph, morphId) {
+    async function modelCreate(modelName, parent, parentId, morph, morphId,id=0) {
       let data = {}
       if (parent) {
         let parentName = parent + '_id'
@@ -129,6 +129,7 @@ if (tables) {
 
         }
       }
+      data.id = id
       let res = await post(`/adminsc/${modelName}/updateOrCreate`, data)
       if (res.arr.id) {
         newrow(res.arr.id)

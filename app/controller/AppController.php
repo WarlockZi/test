@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\model\User;
 use app\view\View;
+use Illuminate\Database\Eloquent\Model;
 
 class AppController extends Controller
 {
@@ -62,14 +63,25 @@ class AppController extends Controller
 	public function actionUpdateOrCreate()
 	{
 		if ($this->ajax) {
-			$id = $this->model::updateOrCreate($this->ajax);
-			if (is_numeric($id)) {
-				$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
-			} elseif (is_bool($id)) {
-				$this->exitWithPopup('Сохранено');
+			if (new $this->model instanceof Model) {
+				if (isset($this->ajax['token'])) {
+					unset ($this->ajax['token']);
+				}
+				$prod = $this->model::updateOrCreate($this->ajax);
+				$id = $prod->id;
+				$this->exitWithSuccess($id);
+
 			} else {
-				$this->exitWithError('Ответ не сохранен');
+				$id = $this->model::updateOrCreate($this->ajax);
+				if (is_numeric($id)) {
+					$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
+				} elseif (is_bool($id)) {
+					$this->exitWithPopup('Сохранено');
+				} else {
+					$this->exitWithError('Ответ не сохранен');
+				}
 			}
+
 		}
 	}
 

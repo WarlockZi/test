@@ -3,6 +3,7 @@
 
 .custom-list__wrapper {
   background-color: #fff;
+  padding-bottom: 10px;
 
   @include _600 {
     width: 90vw;
@@ -95,6 +96,7 @@
       flex-flow: column;
       cursor: pointer;
       position: relative;
+      min-height: 27px;
 
       .icon {
         position: absolute;

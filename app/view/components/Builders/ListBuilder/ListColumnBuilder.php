@@ -8,7 +8,7 @@ class ListColumnBuilder
 {
 
 	public $field='id';
-	public $dataField='id';
+	public $dataField="data-field=";
 	public $class='';
 	public $name='';
 	public $type="data-type='string'";
@@ -71,6 +71,7 @@ class ListColumnBuilder
 	}
 	public function get()
 	{
+		$this->name = $this->name ?$this->name : $this->field;
 		return $this;
 	}
 

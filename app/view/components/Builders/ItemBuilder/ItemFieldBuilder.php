@@ -79,7 +79,7 @@ class ItemFieldBuilder
 
 	public function get()
 	{
-		$this->name ? $this->name : $this->field;
+		$this->name = $this->name ?$this->name : $this->field;
 		return $this;
 	}
 
