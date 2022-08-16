@@ -3,47 +3,22 @@
 namespace app\model\Illuminate;
 
 
-use Illuminate\Support\Facades\DB;
-
 class Category extends \Illuminate\Database\Eloquent\Model
 {
-
-	public $table = 'categories';
-	public $model = 'category';
 
 	protected $fillable = [
 		'name' => '',
 		'description' => '',
-		'category_id' => 0,
 		'sort' => 1,
 		'img' => '',
+		'category_id' => 0,
 	];
 
-	public function oneParent()
-	{
-		return $this->belongsTo(Category::class);
-
-	}
-
-
-	public function getParentsAttribute()
-	{
-		$parents = collect([]);
-
-		$parent = $this->parent();
-
-		while(!is_null($parent)) {
-			$parents->push($parent);
-			$parent = $parent->parent();
-		}
-
-		return $parents;
-	}
 
 
 	public function properties()
 	{
-		return $this->morphTo(Property::class);
+		return $this->morphToMany(Property::class,'propertable');
 	}
 
 	public function parent_rec()

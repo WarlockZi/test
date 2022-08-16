@@ -13,11 +13,6 @@ class Order extends Model
 		'customer_id' => 1,
 	];
 
-//	public function __construct()
-//	{
-//		parent::__construct();
-//		$this->fillable['date'] = mktime(0, 0, 0, 7, 1, 2000);
-//	}
 
 	public static function cheifs($id)
 	{

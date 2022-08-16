@@ -5,6 +5,7 @@ import '../components/header/header-adm'
 import '../components/accordion/accordion'
 import '../components/admin_sidebar'
 import "./model/cache";
+import "../components/date/date";
 import {$} from "../common";
 
 import '../Test/test_results/test_results'

@@ -3,7 +3,7 @@
 namespace app\view\widgets\menu;
 
 use app\model\Model;
-use app\view\components\Tree\Tree;
+//use app\view\components\Tree\Tree;
 
 class Menu extends Model
 {

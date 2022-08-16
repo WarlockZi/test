@@ -53,7 +53,6 @@ class PropertyView extends MyView
 	public static function edit($id)
 	{
 		$view = new self();
-//		$item = $view->illuminateModelName::with('categories','products')->find($id);
 		$item = $view->illuminateModelName::with('categories','products')->find($id);
 		return ItemBuilder::build($item, 'property')
 			->pageTitle('Свойство')

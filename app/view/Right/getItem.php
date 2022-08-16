@@ -1,11 +1,9 @@
 <?php
 
+use app\model\User;
 use app\view\components\CustomCatalogItem\CustomCatalogItem;
-use \app\view\components\CustomSelect\CustomSelect;
-use \app\view\components\CustomRadio\CustomRadio;
-use \app\view\components\CustomDate\CustomDate;
-use \app\view\components\CustomMultiSelect\CustomMultiSelect;
-use \app\model\User;
+use app\view\components\CustomRadio\CustomRadio;
+use app\view\components\CustomSelect\CustomSelect;
 
 if ($item) {
 	if (User::can($this->user, 'role_employee')) {
@@ -37,42 +35,7 @@ function getSex($item)
 	return $sex->html;
 }
 
-function getBirhtdate($user)
-{
-	$birthDate = new CustomDate([
-		'className' => 'bdate',
-		'title' => '',
-		'field' => 'birthDate',
-		'min' => '1965-01-01',
-		'max' => date('Y-m-d'),
-		'value' => $user['birthDate'],
-	]);
-	return $birthDate->html;
-}
 
-function getHired($user)
-{
-	$hired = new CustomDate([
-		'className' => 'hired',
-		'field' => 'hired',
-		'min' => '1965-01-01',
-		'max' => '2025-01-01',
-		'value' => $user['hired'],
-	]);
-	return $hired->html;
-}
-
-function getFired($user)
-{
-	$fired = new CustomDate([
-		'className' => 'fired',
-		'field' => 'fired',
-		'min' => '1965-01-01',
-		'max' => '2025-01-01',
-		'value' => $user['fired'],
-	]);
-	return $fired->html;
-}
 
 function getConfirm()
 {

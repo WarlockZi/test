@@ -23,22 +23,6 @@ class Category extends \app\model\Model
 
 	}
 
-
-	public function getParentsAttribute()
-	{
-		$parents = collect([]);
-
-		$parent = $this->parent();
-
-		while(!is_null($parent)) {
-			$parents->push($parent);
-			$parent = $parent->parent();
-		}
-
-		return $parents;
-	}
-
-
 	public function parent_rec()
 	{
 		return $this->parent()->with('parent_rec');

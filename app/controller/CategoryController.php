@@ -3,11 +3,11 @@
 namespace app\controller;
 
 
-use app\model\Illuminate\Category as IlluminateCategory;
 use app\model\Category as Category;
+use app\model\Illuminate\Category as IlluminateCategory;
 use app\view\Category\CategoryView;
 use app\view\components\Tree\Tree;
-use app\view\View;
+use Illuminate\Database\Eloquent\Model;
 
 
 class CategoryController Extends AppController
@@ -25,14 +25,14 @@ class CategoryController Extends AppController
 	{
 		$categories = IlluminateCategory::all()->toArray();
 
-		$accordion = new Tree([
-			'items' => $categories,
-			'model' => Category::class,
-			'parent' => 'category_id',
-			'template' => 'category',
-//			'link'=>'adminsc/category/update',
-		]);
-		$accordion = $accordion->output();
+		$accordion = Tree::buildTree(
+			[
+				'items' => $categories,
+				'model' => Category::class,
+				'parent' => 'category_id',
+				'template' => 'category',
+			]
+		);
 
 		$this->set(compact('categories'));
 		$this->set(compact('accordion'));

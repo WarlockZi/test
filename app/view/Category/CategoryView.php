@@ -6,13 +6,11 @@ use app\model\Category;
 use app\model\Illuminate\Category as IlluminateCategory;
 use app\model\Product;
 use app\model\Property;
+use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
-use app\view\components\CustomCatalogItem\CustomCatalogItem;
-use app\view\components\Builders\ItemBuilder\ItemBuilder;
-use app\view\Product\ProductView;
 
 class CategoryView
 {
@@ -28,24 +26,20 @@ class CategoryView
 	{
 		$view = new self();
 
-		$category = IlluminateCategory::with('products', 'parent_rec', 'properties')
-			->where('id', '=', $id)
-			->get()[0];
-		$category = $category->toArray();
-		$products = $category['products'] ?? [];
+		$illumCategory = IlluminateCategory::with('products', 'parent_rec', 'properties')
+			->find($id);
+		$category = $illumCategory->toArray();
 
-		$properties = Property::where('category_id', '=', $id)
-				->get() ?? [];
-
-		return ItemBuilder::build($view->model, $id)
+		return ItemBuilder::build($illumCategory, 'category')
 			->pageTitle('Редактировать категорию :  ' . $category['name'])
 			->field(
-				ItemFieldBuilder::build('id')
+				ItemFieldBuilder::build('id', $illumCategory)
 					->name('ID')
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('name')
+				ItemFieldBuilder::build('name', $illumCategory)
+					->name('Наименование')
 					->contenteditable()
 					->required()
 					->get()
@@ -54,22 +48,26 @@ class CategoryView
 				ItemTabBuilder::build('Товары')
 					->html(
 						MyList::build(Product::class)
+							->parent('category',$id)
+							->addButton('ajax')
+							->edit()
+							->del()
+							->items($category['products'] ?? [])
 							->column(
 								ListColumnBuilder::build('id')
+									->width("40px")
 									->get()
 							)
 							->column(
 								ListColumnBuilder::build('name')
+									->name("Название")
 									->get()
 							)
 							->column(
 								ListColumnBuilder::build('slug')
-//									->link()
+									->name("Назв. на сайте")
 									->get()
 							)
-							->items($products)
-							->edit()
-							->del()
 							->get()
 					)
 					->get()
@@ -85,9 +83,10 @@ class CategoryView
 							)
 							->column(
 								ListColumnBuilder::build('name')
+									->name("Назввание")
 									->get()
 							)
-							->items($properties)
+							->items($illumCategory->properties ?? [])
 							->parent($view->modelName, $id)
 							->edit()
 							->addButton('ajax')
@@ -99,7 +98,6 @@ class CategoryView
 			->save()
 			->toList()
 			->get();
-
 	}
 
 	public static function list($models): string
@@ -115,13 +113,6 @@ class CategoryView
 	{
 		return include ROOT . '/app/view/Category/list.php';
 	}
-
-//	public static function show(Model $model)
-//	{
-//		$view = new self($model);
-//		$view->getHtml($model->fillable, $model);
-//		return $view->html;
-//	}
 
 	public static function selector(int $selected, int $exclude = -1): string
 	{

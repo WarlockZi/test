@@ -15,36 +15,26 @@ class Tree
 
 	public  $html = '';
 
-	public function __construct(array $options = [])
+	public static function build(array $items)
 	{
-		$this->getOptions($options);
-		$this->run();
+		$tree = new self();
+		$tree->items = $items;
+		return $tree;
+	}
+	public function model(string $model)
+	{
+		$this->model = $model;
+		$this->liTemplate = ROOT . "/app/view/components/MyTree/{$model}/{$model}Li.php";
+		$this->ulTemplate = ROOT . "/app/view/components/MyTree/{$model}/{$model}Ul.php";
+		return $this;
 	}
 
-	public static function buildTree(array $options)
-	{
-		$tree = new self($options);
-		return $tree->html;
-	}
 
-	public function getOptions(array $options)
-	{
-		foreach ($options as $k => $v) {
-			if (property_exists($this, $k)) {
-				$this->$k = $v;
-			}
-		}
-		$templ = $this->template;
-		$this->liTemplate = ROOT . "/app/view/components/Tree/{$templ}/{$templ}Li.php";
-		$this->ulTemplate = ROOT . "/app/view/components/Tree/{$templ}/{$templ}Ul.php";
-	}
-
-	public function run()
+	public function get()
 	{
 		$models = self::idKeys($this->items);
 		$tree = self::tree($models, $this->parent);
-		$this->html = $this->showCat($tree);
-		$this->output();
+		return $this->showCat($tree);
 	}
 
 	public static function tree(array $items, string $parent = 'parent'): array
@@ -158,8 +148,4 @@ class Tree
 		return ob_get_clean();
 	}
 
-	public function output()
-	{
-		return $this->html;
-	}
 }

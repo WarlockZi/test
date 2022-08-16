@@ -5,13 +5,13 @@ namespace app\view\User;
 
 
 use app\model\User;
+use app\view\components\Builders\Date\DateBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\CustomDate\CustomDate;
 use app\view\MyView;
 
 
@@ -24,8 +24,8 @@ abstract class UserView extends MyView
 
 	public static function getAdminTab($user)
 	{
-		if (is_string($user['rights'])){
-			$user['rights'] = explode(',',$user['rights']);
+		if (is_string($user['rights'])) {
+			$user['rights'] = explode(',', $user['rights']);
 		}
 		return ItemTabBuilder::build("Права")
 			->html(self::getRights($user))
@@ -80,7 +80,6 @@ abstract class UserView extends MyView
 					)
 					->get()
 			)
-
 			->field(
 				ItemFieldBuilder::build('sex', $item)
 					->name('Пол')
@@ -102,7 +101,6 @@ abstract class UserView extends MyView
 			->toList()
 			->save()
 			->del()
-
 			->field(
 				ItemFieldBuilder::build('id', $item)
 					->name('ID')
@@ -214,14 +212,6 @@ abstract class UserView extends MyView
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('birthDate', $item)
-					->name('Дата рождения')
-					->html(
-						self::getBirhtdate($item)
-					)
-					->get()
-			)
-			->field(
 				ItemFieldBuilder::build('sex', $item)
 					->name('Пол')
 					->html(
@@ -301,83 +291,32 @@ abstract class UserView extends MyView
 
 	public static function getBirhtdate($user)
 	{
-		$birthDate = new CustomDate([
-			'className' => 'bdate',
-			'title' => '',
-			'field' => 'birthDate',
-			'min' => '1965-01-01',
-			'max' => date('Y-m-d'),
-			'value' => $user['birthDate'],
-		]);
-		return $birthDate->html;
+		return DateBuilder::build($user['birthDate'])
+			->model('user')
+			->field('birthDate')
+			->get();
 	}
 
 	public static function getHiredHtml($user)
 	{
-		$hired = new CustomDate([
-			'className' => 'hired',
-			'field' => 'hired',
-			'min' => '1965-01-01',
-			'max' => '2025-01-01',
-			'value' => $user['hired'],
-		]);
-		return $hired->html;
+		return DateBuilder::build($user['hired'])
+			->model('user')
+			->field('hired')
+			->min('1965-01-01')
+			->max('2025-01-01')
+			->get();
 	}
 
 	public static function getFiredHtml($user)
 	{
-		$fired = new CustomDate([
-			'className' => 'fired',
-			'field' => 'fired',
-			'min' => '1965-01-01',
-			'max' => '2025-01-01',
-			'value' => $user['fired'],
-		]);
-		return $fired->html;
+		return DateBuilder::build($user['fired'])
+			->model('user')
+			->field('fired')
+			->min('1965-01-01')
+			->max('2025-01-01')
+			->get();
 	}
 
-	public static function getConfirmRow($item)
-	{
-		$html = self::getConfirmHtml($item);
-		return [
-			'Подтвержден' => [
-				'field' => 'Подтвержден',
-				'contenteditable' => false,
-				'data-type' => 'select',
-				'html' => $html,
-			]
-		];
-	}
-
-	public static function getHiredRow($item)
-	{
-		$html = self::getHiredHtml($item);
-		return [
-			'hired' => [
-				'className' => 'fired',
-				'field' => 'hired',
-				'name' => 'Принят в штат',
-				'contenteditable' => true,
-				'data-type' => 'date',
-				'html' => $html,
-			]
-		];
-	}
-
-	public static function getFiredRow($item)
-	{
-		$html = self::getFiredHtml($item);
-		return [
-			'fired' => [
-				'className' => 'fired',
-				'field' => 'fired',
-				'name' => 'Уволен',
-				'contenteditable' => true,
-				'data-type' => 'date',
-				'html' => $html,
-			],
-		];
-	}
 
 	public static function getConfirmHtml($item)
 	{
