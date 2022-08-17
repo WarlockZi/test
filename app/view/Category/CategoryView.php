@@ -73,9 +73,16 @@ class CategoryView
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Свойства')
+				ItemTabBuilder::build('Св-ва категории')
 					->html(
 						MyList::build(Property::class)
+
+							->items($illumCategory->properties->toArray() ?? [])
+							->parent($view->modelName, $id)
+							->edit()
+							->del()
+							->addButton('ajax')
+
 							->column(
 								ListColumnBuilder::build('id')
 									->width('40px')
@@ -86,17 +93,13 @@ class CategoryView
 									->name("Назввание")
 									->get()
 							)
-							->items($illumCategory->properties ?? [])
-							->parent($view->modelName, $id)
-							->edit()
-							->addButton('ajax')
 							->get()
 					)
 					->get()
 			)
 			->del()
 			->save()
-			->toList()
+			->toList('','К списку категорий')
 			->get();
 	}
 
@@ -129,86 +132,6 @@ class CategoryView
 
 		return $parent_select;
 	}
-
-//	public static function selectWithSelectedExcluded(int $selected, int $exclude = -1): string
-//	{
-//		$tests = Opentest::where('isTest', '=', '1')->get();
-//		$parent_select = '<select>';
-//		$parent_select .= "<option value=0>---</option>";
-//		foreach ($tests as $t) {
-//			if ((int)$t['id'] !== $exclude) {
-//				$selectedStr = (int)$t['id'] === $selected ? 'selected' : '';
-//				$parent_select .= "<option value={$t['id']} {$selectedStr}>{$t['name']}</option>";
-//			}
-//		}
-//		$parent_select .= "</select>";
-//
-//		return $parent_select;
-//	}
-
-//	private function getHtml(): void
-//	{
-//		$options = $this->getOptions();
-//		$t = new CustomCatalogItem($options);
-//		$this->html = $t->html;
-//	}
-
-//
-//	private function getOptions()
-//	{
-//		$cat = new $this->model;
-//		$cat = $cat->all()->toArray();
-//		return [
-//			'item' => $cat,
-//			'modelName' => $this->model->model,
-//			'tableClassName' => $this->model->table,
-//			'pageTitle' => '',
-//			'tabs' => [
-//				['title' => 'Товары',
-//					'html' => ProductView::belongToCategory($this->model),
-//					'field' => 'products'
-//				],
-//				['title' => 'Родительские категории',
-//					'html' => self::getParents($cat),
-//					'field' => 'ParentProps'
-//				],
-//				['title' => 'Родительские свойства',
-//					'html' => self::getParents($cat),
-//					'field' => 'ParentProps'
-//				]
-//			],
-//			'fields' => [
-//				'ID' => [
-//					'field' => 'id',
-//					'contenteditable' => false,
-//				],
-//				'Папка' => [
-//					'field' => 'id',
-//					'contenteditable' => false,
-//				],
-//				'Имя' => [
-//					'field' => 'name',
-//					'contenteditable' => true,
-//					'required' => true,
-//				],
-//
-//
-//			],
-//			'delBttn' => true,
-//			'saveBttn' => true,
-//
-//		];
-//	}
-
-
-//	public static function getParents(array $cat, &$str = '')
-//	{
-//		if ($cat['parent_rec'] !== null) {
-//			$str .= '<div>' . $cat['parent_rec']['name'] . '</div>';
-//			self::getParents($cat['parent_rec'], $str);
-//		}
-//		return $str;
-//	}
 
 
 }

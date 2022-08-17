@@ -55,7 +55,7 @@ class ItemFieldBuilder
 
 	public function html(string $html)
 	{
-		$this->html = $html;
+		$this->field = $html;
 		return $this;
 	}
 

@@ -42,7 +42,7 @@ class ProductView
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Свойства')
+				ItemTabBuilder::build('Свойства товара')
 					->html(
 						MyList::build(Property::class)
 							->column(
@@ -52,14 +52,22 @@ class ProductView
 							)
 							->column(
 								ListColumnBuilder::build('name')
+									->name('Свойство')
 									->search()
 									->sort()
 									->get()
 							)
+							->column(
+								ListColumnBuilder::build('')
+									->name('Значения')
+									->html('')
+								->get()
+							)
+
 							->items($properties ?? [])
 							->morph('category', $categoryId)
-							->edit()
-							->del()
+//							->edit()
+//							->del()
 							->addButton('ajax')
 							->get()
 					)
