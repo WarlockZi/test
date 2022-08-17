@@ -19,7 +19,7 @@
 	<? if ($this->toList): ?>
 	  <a href="/adminsc/<?= $this->model.$this->href; ?>"
 	     class="to-list">
-		  К списку
+		  <?=$this->toListText?>
 	  </a>
 	<? endif; ?>
 

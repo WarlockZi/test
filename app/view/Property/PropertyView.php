@@ -18,7 +18,8 @@ class PropertyView extends MyView
 	public $modelName = Property::class;
 	public $illuminateModelName = IlluminateProperty::class;
 	public $model = 'property';
-	public $html;
+
+//	public $html;
 
 	public static function listAll()
 	{
@@ -53,26 +54,25 @@ class PropertyView extends MyView
 	public static function edit($id)
 	{
 		$view = new self();
-		$item = $view->illuminateModelName::with('categories','products')->find($id);
+		$item = $view->illuminateModelName::with('categories', 'products','vals')->find($id);
 		return ItemBuilder::build($item, 'property')
 			->pageTitle('Свойство')
 			->field(
-				ItemFieldBuilder::build('id',$item)
+				ItemFieldBuilder::build('id', $item)
 					->name('ID')
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('name',$item)
+				ItemFieldBuilder::build('name', $item)
 					->name('Наименование')
 					->contenteditable()
 					->get()
 			)
-
 			->tab(
 				ItemTabBuilder::build('Значения')
 					->html(
 						MyList::build(Val::class)
-							->items(Val::findAllWhere('property_id', $id))
+							->items($item->vals->toArray())
 							->parent($view->model, $id)
 							->column(
 								ListColumnBuilder::build('id')
@@ -93,6 +93,13 @@ class PropertyView extends MyView
 					)
 					->get()
 			)
+			->tab(
+				ItemTabBuilder::build('Принадлежит')
+					->html(
+						self::getMorphs($item)
+					)
+					->get()
+			)
 			->del()
 			->save()
 			->toList()
@@ -100,6 +107,20 @@ class PropertyView extends MyView
 
 	}
 
+	protected static function getMorphs($item)
+	{
+		$categories = $item->categories->toArray();
+		$products = $item->products->toArray();
+		$categoriesHtml = '';
+		foreach ($categories as $category){
+			$categoriesHtml .= "<a href='/adminsc/category/edit/{$category['id']}'>Категория {$category['name']}</a>";
+		}
+		$productsHtml = '';
+		foreach ($products as $product){
+			$productsHtml .= "<a href='/adminsc/product/edit/{$product['id']}'>Товар {$product['name']}</a>";
+		}
 
+		return $categoriesHtml. $productsHtml;
+	}
 
 }

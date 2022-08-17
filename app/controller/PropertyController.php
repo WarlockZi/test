@@ -3,6 +3,7 @@
 namespace app\controller;
 
 
+use app\model\Illuminate\IlluminateModelMorphDecorator;
 use app\model\Illuminate\Product;
 use app\model\Illuminate\Property as IlluminateProperty;
 use app\model\IlluminateModelDecorator;
@@ -38,7 +39,7 @@ class PropertyController Extends AppController
 	public function actionUpdateOrCreate()
 	{
 
-		IlluminateModelDecorator::updateOrCreate(IlluminateProperty::class,$this->ajax);
+		IlluminateModelMorphDecorator::updateOrCreate(IlluminateProperty::class,$this->ajax);
 	}
 
 

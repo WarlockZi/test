@@ -18,6 +18,7 @@ class ItemBuilder extends Builder
 	private $del = false;
 	private $save = false;
 	public $toList = false;
+	public $toListText = 'К списку';
 
 	private $fields = [];
 	private $tabs = [];
@@ -57,12 +58,13 @@ class ItemBuilder extends Builder
 		return $this;
 	}
 
-	public function toList(string $href = '')
+	public function toList(string $href = '', string $text='')
 	{
 		$this->toList = true;
 		if ($href) {
 			$this->href = '/' . $href;
 		}
+		$this->toListText = $text?$text:$this->toListText;
 		return $this;
 	}
 

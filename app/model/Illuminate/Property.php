@@ -33,5 +33,9 @@ class Property extends Model
 		return $this->morphedByMany(Product::class, 'propertable');
 	}
 
+	public function vals(){
+		return $this->hasMany(Val::class);
+	}
+
 
 }

@@ -3,11 +3,12 @@
 namespace app\controller;
 
 
-use app\model\Illuminate\Category;
-use app\view\components\Tree\Tree;
+use app\model\Val;
 
 class ValController Extends AppController
 {
+
+	public $model = Val::class;
 
 	public function __construct(array $route)
 	{
