@@ -1,6 +1,10 @@
-<main>
+<div class="adm-content">
 
-	<div class="navigation"><?=$item?></div>
+	<?= $breadcrumbs; ?>
+
+	<?= $product ?>
+
+</div>
 
 
-</main>
+

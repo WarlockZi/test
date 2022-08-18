@@ -22,6 +22,10 @@ class Product extends \Illuminate\Database\Eloquent\Model
 		return $this->morphToMany(Property::class, 'propertable');
 	}
 
+	public function categories(){
+		return $this->belongsTo(Category::class)->with('category_rec');
+	}
+
 
 }
 

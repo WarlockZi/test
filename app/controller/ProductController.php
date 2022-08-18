@@ -2,8 +2,9 @@
 
 namespace app\controller;
 
+use app\model\Illuminate\IlluminateModelDecorator;
 use app\model\Illuminate\Product;
-use app\model\IlluminateModelDecorator;
+use app\view\Category\CategoryView;
 use app\view\Product\ProductView;
 
 class ProductController Extends AppController
@@ -41,8 +42,10 @@ class ProductController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route['id'];
-		$item = ProductView::edit($id);
-		$this->set(compact('item'));
+		$product = ProductView::edit($id);
+		$catId =Product::find($id)->category->id;
+		$breadcrumbs = CategoryView::breadcrumbs($catId);
+		$this->set(compact('product','breadcrumbs'));
 	}
 
 

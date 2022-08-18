@@ -21,9 +21,9 @@ class Category extends \Illuminate\Database\Eloquent\Model
 		return $this->morphToMany(Property::class,'propertable');
 	}
 
-	public function parent_rec()
+	public function category_recursive()
 	{
-		return $this->parent()->with('parent_rec');
+		return $this->parent()->with('category_recursive');
 	}
 
 	public function parent()

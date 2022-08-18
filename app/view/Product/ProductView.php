@@ -2,6 +2,7 @@
 
 namespace app\view\Product;
 
+use app\model\Illuminate\Category as IlluminateCategory;
 use app\model\Illuminate\Product as IlluminateProduct;
 use app\model\Product;
 use app\model\Property;
@@ -10,6 +11,7 @@ use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 
 class ProductView
 {
@@ -20,15 +22,11 @@ class ProductView
 
 	public static function edit($id): string
 	{
-		$view = new self();
-		$product = IlluminateProduct::with('category')
+		$product = IlluminateProduct::with('category.properties', 'category.category_recursive.properties')
 			->find($id);
-		$properties = $product->category->properties->toArray();
-		$categoryId = $product->category->id;
-
 
 		return ItemBuilder::build($product, 'product')
-			->pageTitle('Редактировать товар :  ' . $product['name'])
+			->pageTitle('Товар :  ' . $product['name'])
 			->field(
 				ItemFieldBuilder::build('id', $product)
 					->name('ID')
@@ -44,32 +42,7 @@ class ProductView
 			->tab(
 				ItemTabBuilder::build('Свойства товара')
 					->html(
-						MyList::build(Property::class)
-							->column(
-								ListColumnBuilder::build('id')
-									->width('40px')
-									->get()
-							)
-							->column(
-								ListColumnBuilder::build('name')
-									->name('Свойство')
-									->search()
-									->sort()
-									->get()
-							)
-							->column(
-								ListColumnBuilder::build('')
-									->name('Значения')
-									->html('')
-								->get()
-							)
-
-							->items($properties ?? [])
-							->morph('category', $categoryId)
-//							->edit()
-//							->del()
-							->addButton('ajax')
-							->get()
+						self::getProperties($product)
 					)
 					->get()
 			)
@@ -77,6 +50,50 @@ class ProductView
 			->save()
 			->toList()
 			->get();
+	}
+
+	public static function getProperties($product): string
+	{
+		$properties = $product->category->properties;
+
+		$str = "{$product->category->name}<br>";
+		foreach ($properties as $property) {
+			$vals = self::prepareVals($property->vals->toArray());
+			$str .= "{$property->name}: " .
+				SelectBuilder::build()
+					->array($vals)
+					->initialOption('', 0)
+					->get();
+		}
+		$recProps = self::getProperyRecursiveProps($product);
+		return $str;
+	}
+
+	protected static function prepareVals($vals)
+	{
+		$arr = [];
+		foreach ($vals as $val) {
+			$arr[$val['id']] = $val['name'];
+		}
+		return $arr;
+	}
+
+	protected static function hasCat($cat)
+	{
+		return $cat['category_recursive'];
+	}
+
+	protected static function getProperyRecursiveProps($product)
+	{
+		$parents = $product->category->category_recursive
+			->toArray();
+
+		while (self::hasCat($parents)) {
+
+			$arr[] = $parents['properties'];
+			$parents = $parents['category_recursive'];
+		}
+		return $arr;
 	}
 
 
@@ -132,7 +149,6 @@ class ProductView
 					->width('1fr')
 					->get()
 			)
-
 			->all()
 			->edit()
 			->del()
@@ -143,20 +159,20 @@ class ProductView
 	public static function card($slug)
 	{
 		$product = IlluminateProduct::
-		with('properties', 'category', 'category.parent_rec')
+		with('properties', 'category', 'category.category_recursive')
 			->where('slug', '=', $slug)
 			->get()
 			->toArray()[0];
-		$product['nav'] = self::getNavigationStr($product['category']['parent_rec']);
+		$product['nav'] = self::getNavigationStr($product['category']['category_recursive']);
 		return $product;
 	}
 
 	protected static function getNavigationStr(array $arr, $str = '')
 	{
 		$str = '/' . $arr['alias'];
-		while ($arr['parent_rec']) {
-			$str .= "/" . $arr['parent_rec'];
-			self::getNavigationStr($arr['parent_rec'], $str);
+		while ($arr['category_recursive']) {
+			$str .= "/" . $arr['category_recursive'];
+			self::getNavigationStr($arr['category_recursive'], $str);
 		}
 		return $str;
 	}
