@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\model;
+namespace app\model\Illuminate;
 
 
 class IlluminateModelDecorator extends \Illuminate\Database\Eloquent\Model
@@ -17,13 +17,13 @@ class IlluminateModelDecorator extends \Illuminate\Database\Eloquent\Model
 			if ($attributes['id']) {
 				$item = $model::where('id',$attributes['id'])
 					->update($attributes);
-				exit(['poppup'=>'ok']);
+				exit(json_encode(['popup'=>'ok']));
 			} else {
 				unset($attributes['id']);
 				$item = $model::create($attributes)->toArray();
 			}
 		}
-		exit($item['id']);
+		exit(json_encode($item['id']));
 	}
 
 

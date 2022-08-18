@@ -22,16 +22,46 @@ class CategoryView
 	{
 	}
 
+	protected static function getBreadcrumb(array $category)
+	{
+		return "<a href='/adminsc/category/edit/{$category['id']}'>{$category['name']}</a>";
+	}
+
+	protected static function hasCat($cat)
+	{
+		return $cat['category_recursive'];
+	}
+
+	public static function breadcrumbs($id)
+	{
+		$parents = IlluminateCategory::with('category_recursive')
+			->find($id)->toArray();
+
+		$arr = [];
+		$finalCategory = "<div>{$parents['name']}</div>";
+		while (self::hasCat($parents)) {
+			$id = $parents['category_recursive']['id'];
+			$name = $parents['category_recursive']['name'];
+			array_push($arr,
+				"<a href=/adminsc/category/edit/{$id}>{$name}</a>");
+			$parents = $parents['category_recursive'];
+		}
+		$arr = array_reverse($arr);
+		array_push($arr,$finalCategory);
+		$breadcrumbs = implode('&nbsp;>&nbsp;',$arr);
+		return "<div class='breadcrumbs'>{$breadcrumbs}</div>";
+	}
+
 	public static function edit($id): string
 	{
 		$view = new self();
 
-		$illumCategory = IlluminateCategory::with('products', 'parent_rec', 'properties')
+		$illumCategory = IlluminateCategory::with('products', 'category_recursive', 'properties','children')
 			->find($id);
 		$category = $illumCategory->toArray();
 
 		return ItemBuilder::build($illumCategory, 'category')
-			->pageTitle('Редактировать категорию :  ' . $category['name'])
+			->pageTitle('Категория :  ' . $category['name'])
 			->field(
 				ItemFieldBuilder::build('id', $illumCategory)
 					->name('ID')
@@ -45,10 +75,10 @@ class CategoryView
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Товары')
+				ItemTabBuilder::build('Товары категории')
 					->html(
 						MyList::build(Product::class)
-							->parent('category',$id)
+							->parent('category', $id)
 							->addButton('ajax')
 							->edit()
 							->del()
@@ -76,13 +106,12 @@ class CategoryView
 				ItemTabBuilder::build('Св-ва категории')
 					->html(
 						MyList::build(Property::class)
-
 							->items($illumCategory->properties->toArray() ?? [])
-							->parent($view->modelName, $id)
+							->morph('category', $id)
+//							->parent($view->modelName, $id)
 							->edit()
 							->del()
 							->addButton('ajax')
-
 							->column(
 								ListColumnBuilder::build('id')
 									->width('40px')
@@ -91,6 +120,31 @@ class CategoryView
 							->column(
 								ListColumnBuilder::build('name')
 									->name("Назввание")
+									->contenteditable()
+									->get()
+							)
+							->get()
+					)
+					->get()
+			)
+			->tab(
+				ItemTabBuilder::build('Подкатегории')
+					->html(
+//						MyList::build(IlluminateCategory::class)
+						MyList::build(IlluminateCategory::class)
+							->edit()
+							->del()
+							->addButton('ajax')
+							->items($category['children'] ?? [])
+							->column(
+								ListColumnBuilder::build('id')
+									->width('40px')
+									->get()
+							)
+							->column(
+								ListColumnBuilder::build('name')
+									->name("Назввание")
+									->contenteditable()
 									->get()
 							)
 							->get()
@@ -99,7 +153,7 @@ class CategoryView
 			)
 			->del()
 			->save()
-			->toList('','К списку категорий')
+			->toList('', 'К списку категорий')
 			->get();
 	}
 

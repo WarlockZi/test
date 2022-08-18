@@ -1,0 +1,12 @@
+@import "../var";
+
+.breadcrumbs {
+  display: flex;
+  margin: 15px 0;
+  color: $color-a;
+  font-size: .7rem;
+
+  a {
+    color: inherit;
+  }
+}

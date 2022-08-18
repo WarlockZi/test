@@ -16,7 +16,7 @@ class IlluminateModelMorphDecorator
 			if ($attributes['id']) {
 				$item = $model::where('id', $attributes['id'])
 					->update($attributes);
-				exit(['poppup' => 'ok']);
+				exit(json_encode(['popup' => 'ok']));
 
 			} else {
 
@@ -33,8 +33,10 @@ class IlluminateModelMorphDecorator
 						'propertable_id' => $morph_id,
 					]);
 
-					exit($item['id']);
-
+					exit(json_encode([
+						'popup'=>'ok',
+						'id'=>$item['id']
+					]));
 				}
 			}
 		}
