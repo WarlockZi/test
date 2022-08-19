@@ -20,7 +20,7 @@ class Property extends Model
 
 	public function propertable()
 	{
-		return $this->morphTo();
+		return $this->morphTo()->with(Val::class);
 	}
 
 	public function categories()
@@ -33,7 +33,8 @@ class Property extends Model
 		return $this->morphedByMany(Product::class, 'propertable');
 	}
 
-	public function vals(){
+	public function vals()
+	{
 		return $this->hasMany(Val::class);
 	}
 

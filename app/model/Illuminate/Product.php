@@ -9,8 +9,13 @@ class Product extends \Illuminate\Database\Eloquent\Model
 	protected $fillable = [
 		'name' => '',
 		'description' => '',
-		'category_id'=> 0,
+		'category_id' => 0,
 	];
+
+	public function categoryCategoryRecPropsVals()
+	{
+		return $this->belongsTo(Category::class)->with('category_recursive.properties.vals');
+	}
 
 	public function category()
 	{
@@ -22,7 +27,8 @@ class Product extends \Illuminate\Database\Eloquent\Model
 		return $this->morphToMany(Property::class, 'propertable');
 	}
 
-	public function categories(){
+	public function categories()
+	{
 		return $this->belongsTo(Category::class)->with('category_rec');
 	}
 

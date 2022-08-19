@@ -14,8 +14,26 @@
   padding: 0;
   font-size: $font-size;
 
-  @include _800{
+  @include _800 {
     max-width: 100%;
+  }
+
+  &[data-model='product'] {
+
+    .property {
+      display: flex;
+      margin-bottom: 5px;
+
+      .name {
+        display: flex;
+        width: 200px;
+      }
+
+      [custom-select] {
+        min-width: 200px;
+
+      }
+    }
   }
 }
 
@@ -32,7 +50,7 @@
 
   .tabs_wrap {
     display: flex;
-    gap: 10px;
+    gap: 5px;
 
     .tab {
       margin: 0 0 0;

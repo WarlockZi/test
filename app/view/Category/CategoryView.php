@@ -35,6 +35,7 @@ class CategoryView
 	public static function breadcrumbs($id)
 	{
 		$parents = IlluminateCategory::with('category_recursive')
+
 			->find($id)->toArray();
 
 		$arr = [];

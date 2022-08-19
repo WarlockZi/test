@@ -2,10 +2,8 @@
 
 namespace app\view\Product;
 
-use app\model\Illuminate\Category as IlluminateCategory;
 use app\model\Illuminate\Product as IlluminateProduct;
 use app\model\Product;
-use app\model\Property;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
@@ -22,7 +20,7 @@ class ProductView
 
 	public static function edit($id): string
 	{
-		$product = IlluminateProduct::with('category.properties', 'category.category_recursive.properties')
+		$product = IlluminateProduct::with('category.properties.vals', 'category.category_recursive.properties.vals')
 			->find($id);
 
 		return ItemBuilder::build($product, 'product')
@@ -54,18 +52,22 @@ class ProductView
 
 	public static function getProperties($product): string
 	{
-		$properties = $product->category->properties;
+//		$properties = $product->category->properties;
 
-		$str = "{$product->category->name}<br>";
-		foreach ($properties as $property) {
-			$vals = self::prepareVals($property->vals->toArray());
-			$str .= "{$property->name}: " .
-				SelectBuilder::build()
+		$str = "";
+		$recProps = self::getProperyRecursiveProps($product);
+		foreach ($recProps as $category) {
+			$str .= "{$category['category']}<br><br>";
+			foreach ($category['properties'] as $property) {
+				$str .= "<div class='property'><div class='name'>{$property['name']}</div><br>";
+				$vals = self::prepareVals($property['vals']);
+				$str .= SelectBuilder::build()
 					->array($vals)
 					->initialOption('', 0)
 					->get();
+				$str .= "</div>";
+			}
 		}
-		$recProps = self::getProperyRecursiveProps($product);
 		return $str;
 	}
 
@@ -78,56 +80,24 @@ class ProductView
 		return $arr;
 	}
 
-	protected static function hasCat($cat)
+	protected static function hasCat($category)
 	{
-		return $cat['category_recursive'];
+		return $category['category_recursive'];
 	}
 
 	protected static function getProperyRecursiveProps($product)
 	{
-		$parents = $product->category->category_recursive
-			->toArray();
-
-		while (self::hasCat($parents)) {
-
-			$arr[] = $parents['properties'];
-			$parents = $parents['category_recursive'];
+		$parents = $product->category;
+		$arr[$parents['id']]['category'] = $parents->name;
+		$arr[$parents['id']]['properties'] = $parents->properties->toArray();
+		$arr[$parents->category_recursive['id']]['category'] = $parents->category_recursive->name;
+		$arr[$parents->category_recursive['id']]['properties'] = $parents->category_recursive->properties->toArray();
+		while (self::hasCat($parents->category_recursive)) {
+			$parents = $parents->category_recursive;
+			$arr[$parents->category_recursive->id]['category'] = $parents->category_recursive->name;
+			$arr[$parents->category_recursive->id]['properties'] = $parents->category_recursive->properties->toArray();
 		}
 		return $arr;
-	}
-
-
-	public static function listItems(array $items): string
-	{
-		$view = new self;
-
-		return MyList::build($view->modelName)
-			->column(
-				ListColumnBuilder::build('id')
-					->name('ID')
-					->get()
-			)
-			->column(
-				ListColumnBuilder::build('name')
-					->name('Наименование')
-					->contenteditable()
-					->search()
-					->width('1fr')
-					->get()
-			)
-			->column(
-				ListColumnBuilder::build('title')
-					->name('Полное наим')
-					->contenteditable()
-					->search()
-					->width('1fr')
-					->get()
-			)
-			->items($items)
-			->edit()
-			->del()
-			->addButton('ajax')
-			->get();
 	}
 
 
@@ -186,5 +156,40 @@ class ProductView
 		}
 		return $str;
 	}
+
+	//
+//	public static function listItems(array $items): string
+//	{
+//		$view = new self;
+//
+//		return MyList::build($view->modelName)
+//			->column(
+//				ListColumnBuilder::build('id')
+//					->name('ID')
+//					->get()
+//			)
+//			->column(
+//				ListColumnBuilder::build('name')
+//					->name('Наименование')
+//					->contenteditable()
+//					->search()
+//					->width('1fr')
+//					->get()
+//			)
+//			->column(
+//				ListColumnBuilder::build('title')
+//					->name('Полное наим')
+//					->contenteditable()
+//					->search()
+//					->width('1fr')
+//					->get()
+//			)
+//			->items($items)
+//			->edit()
+//			->del()
+//			->addButton('ajax')
+//			->get();
+//	}
+
 
 }
