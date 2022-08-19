@@ -5,6 +5,7 @@ namespace app\controller;
 
 use app\model\Illuminate\IlluminateModelMorphDecorator;
 use app\model\Illuminate\Product;
+use app\model\Illuminate\Propertable;
 use app\model\Illuminate\Property as IlluminateProperty;
 use app\model\IlluminateModelDecorator;
 use app\model\Property;
@@ -31,17 +32,24 @@ class PropertyController Extends AppController
 
 	public function actionEdit()
 	{
-		$id = $this->route['id'];
-		$item = PropertyView::edit($id);
-		$this->set(compact('item'));
+		if (isset($this->route['id'])) {
+			$item = PropertyView::edit($this->route['id']);
+			$this->set(compact('item'));
+		} else {
+			header('Location: /adminsc/property');
+		}
 	}
 
 	public function actionUpdateOrCreate()
 	{
 
-		IlluminateModelMorphDecorator::updateOrCreate(IlluminateProperty::class,$this->ajax);
+		IlluminateModelMorphDecorator::updateOrCreate(IlluminateProperty::class, $this->ajax);
 	}
 
-
+	public function actionDelete()
+	{
+		Propertable::where('property_id',$this->ajax['id'])->delete();
+		parent::actionDelete();
+	}
 
 }

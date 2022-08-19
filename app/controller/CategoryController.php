@@ -7,7 +7,6 @@ use app\model\Category as Category;
 use app\model\Illuminate\Category as IlluminateCategory;
 use app\view\Category\CategoryView;
 use app\view\components\Tree\Tree;
-use Illuminate\Database\Eloquent\Model;
 
 
 class CategoryController Extends AppController

@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\model\User;
 use app\view\View;
 use Illuminate\Database\Eloquent\Model;
 

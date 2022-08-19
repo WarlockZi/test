@@ -33,10 +33,10 @@ class IlluminateModelMorphDecorator
 						'propertable_id' => $morph_id,
 					]);
 
-					exit(json_encode([
+					exit(json_encode(['arr'=>[
 						'popup'=>'ok',
 						'id'=>$item['id']
-					]));
+					]]));
 				}
 			}
 		}
