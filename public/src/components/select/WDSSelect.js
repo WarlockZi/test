@@ -68,10 +68,9 @@ function setup(select) {
   }
 
   select.sel.setAttribute("custom-select", '')
+  select.sel.dataset['model'] = select.model
   if (select.field) {
-    select.sel.dataset['model'] = select.model
     select.sel.dataset['field'] = select.field
-
   }
   select.sel.dataset['value'] = select.selectedOption.value
   select.sel.tabIndex = 0

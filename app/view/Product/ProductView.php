@@ -52,17 +52,16 @@ class ProductView
 
 	public static function getProperties($product): string
 	{
-//		$properties = $product->category->properties;
-
 		$str = "";
 		$recProps = self::getProperyRecursiveProps($product);
 		foreach ($recProps as $category) {
-			$str .= "{$category['category']}<br><br>";
+			$str .= "<div class='category'>{$category['category']}</div><br>";
 			foreach ($category['properties'] as $property) {
 				$str .= "<div class='property'><div class='name'>{$property['name']}</div><br>";
 				$vals = self::prepareVals($property['vals']);
 				$str .= SelectBuilder::build()
 					->array($vals)
+					->model('property')
 					->initialOption('', 0)
 					->get();
 				$str .= "</div>";

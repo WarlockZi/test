@@ -32,14 +32,20 @@ class CategoryView
 		return $cat['category_recursive'];
 	}
 
-	public static function breadcrumbs($id)
+	protected static function getLast(bool $isLink, $parents):string
+	{
+		return $isLink
+			?"<a href='/adminsc/category/edit/{$parents['id']}'>{$parents['name']}</a>"
+			:"<div>{$parents['name']}</div>";
+	}
+
+	public static function breadcrumbs(int $id, bool $lastIsALink=false):string
 	{
 		$parents = IlluminateCategory::with('category_recursive')
-
 			->find($id)->toArray();
 
 		$arr = [];
-		$finalCategory = "<div>{$parents['name']}</div>";
+		$finalCategory = self::getLast($lastIsALink,$parents);
 		while (self::hasCat($parents)) {
 			$id = $parents['category_recursive']['id'];
 			$name = $parents['category_recursive']['name'];
