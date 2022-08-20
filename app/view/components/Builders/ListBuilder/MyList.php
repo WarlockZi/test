@@ -26,7 +26,7 @@ class MyList
 	{
 		$view = new static();
 		$view->model = new $modelName;
-		$model = class_basename($view->model);
+		$model = strtolower(class_basename($view->model));
 		$view->dataModel = "data-model='{$model}'";
 		return $view;
 	}

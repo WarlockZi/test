@@ -19,6 +19,11 @@
   }
 
   &[data-model='product'] {
+    .category{
+      margin-top: 15px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
 
     .property {
       display: flex;

@@ -14,6 +14,7 @@ import testEdit from '../Test/test-edit'
 import '../Test/do'
 import './Settings/settings'
 import rights from './Rights/rights'
+import product from './Product/product'
 import './Planning/planning'
 import user from './user/user'
 import '../Test/open_test'
@@ -48,6 +49,7 @@ $(document).ready(function () {
   accordionShow()
 
   testEdit()
+  product()
 
   function navigate(str) {
     if (/\/adminsc\/settings/.test(str)
