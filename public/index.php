@@ -4,7 +4,6 @@ use app\core\App;
 use app\core\Router;
 use \Engine\DI\DI;
 
-
 session_start();
 
 require_once "../vendor/autoload.php";
@@ -12,7 +11,6 @@ require_once "../vendor/autoload.php";
 (Dotenv\Dotenv::createImmutable(dirname(__DIR__)))->load();
 
 //require_once "../engine/bootstrap.php"; // container
-
 
 error_reporting(E_ALL);
 define('DEV', $_ENV['MODE'] === 'development'); //0-не выводить ошибки
@@ -24,14 +22,12 @@ define('EDIT', ICONS . '/edit.svg');
 define('COMPONENTS', ROOT . '/app/view/components');
 require_once './Eloquent.php';
 
-
 if (DEV) {
 	ini_set('display_errors', 1);
 }
 new App(new DI);
 //new App();
 //DI::test();
-
 
 try {
 	Router::dispatch($_SERVER['REQUEST_URI']);

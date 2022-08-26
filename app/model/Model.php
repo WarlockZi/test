@@ -152,7 +152,7 @@ abstract class Model
 	}
 
 
-	public function firstOrCreate($field, $val, $row)
+	public function firstOrCreate(string $field, $val, array $row)
 	{
 		$model = new static();
 		$model->auth('create');

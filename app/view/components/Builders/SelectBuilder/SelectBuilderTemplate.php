@@ -4,14 +4,12 @@
 	<?= $this->class; ?>
 	<?= $this->field; ?>
 	<?= $this->model; ?>
+	<?= $this->modelId; ?>
 >
 	<?= $this->initialOption; ?>
 
-	<? if ($this->tree): ?>
-		<?= $this->getTree2($this->tree); ?>
-	<? else: ?>
-		<?= $this->getArray(); ?>
-	<? endif; ?>
+	<?=$this->options?>
+
 </select>
 
 

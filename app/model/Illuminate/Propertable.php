@@ -13,11 +13,8 @@ class Propertable extends Model
 	protected $fillable = [
 		'property_id',
 		'propertable_type',
-		'propertable_id'
+		'propertable_id',
+		'val_id',
 	];
-
-
-
-
 
 }

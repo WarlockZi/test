@@ -1,0 +1,83 @@
+@import "../../var";
+
+.image_main, .detail_images {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+
+
+  .add_main_image, .add_detail_image {
+    display: flex;
+    align-items: center;
+    min-height: 100px;
+    min-width: 100px;
+    width: 100px;
+    height: 100px;
+    border-radius: 5%;
+    align-self: center;
+    margin: 15px auto;
+
+    &.hover {
+      border: $color-gray2 1px solid;
+    }
+
+    .text {
+      justify-content: center;
+      align-self: center;
+      text-align: center;
+    }
+
+  }
+
+  .images {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .image {
+      position: relative;
+
+      .del{
+        position: absolute;
+        height: 10px;
+        width: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: red;
+        color: #ffffff;
+        right: 12px;
+        bottom: 12px;
+        text-transform: capitalize;
+        padding: 1px;
+        border-radius: 2px;
+      }
+
+      img {
+        object-fit: contain;
+        width: 100px;
+        height: 100px;
+
+        min-height: 100px;
+        min-width: 100px;
+        margin: 5px;
+        padding: 10px;
+        border: 1px #eaeaea solid;
+      }
+    }
+  }
+}
+
+
+@keyframes ants {
+  to {
+    background-position: 100% 100%
+  }
+}
+
+.ants {
+  border: 1px solid transparent;
+  background: linear-gradient(white, white) padding-box,
+  repeating-linear-gradient(-45deg, black 0, black 25%, transparent 0, transparent 50%) 0 / .6em .6em;
+  animation: ants 12s linear infinite;
+}

@@ -4,7 +4,6 @@ namespace app\controller;
 
 
 use app\model\Illuminate\IlluminateModelMorphDecorator;
-use app\model\Illuminate\Product;
 use app\model\Illuminate\Propertable;
 use app\model\Illuminate\Property as IlluminateProperty;
 use app\model\IlluminateModelDecorator;

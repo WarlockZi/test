@@ -5,7 +5,6 @@ namespace app\model;
 
 class Image extends Model
 {
-	public $table = 'images';
 	public $model = 'image';
 
 	private $image_file;
@@ -24,8 +23,6 @@ class Image extends Model
 		'relatedTo' => ''
 	];
 
-
-
 	public function __construct($image_file = '')
 	{
 		if (!$image_file) return;
@@ -37,48 +34,32 @@ class Image extends Model
 		$this->fotoimage();
 	}
 
-	public static function getImg($path)
-	{
-		if (is_readable(ROOT . $path)) {
-			return $path;
-		} else {
-			return '/pic/srvc/nophoto-min.jpg';
-		}
-	}
 
 	public function imagesave($image_type = 'jpeg', $image_file = NULL, $image_compress = 100, $image_permiss = '')
 	{
 		if ($image_file == NULL) {
-			switch ($image_type) {
-				case 'gif':
-					header("Content-type: image/gif");
-					break;
-				case 'jpeg':
-					header("Content-type: image/jpeg");
-					break;
-				case 'png':
-					header("Content-type: image/png");
-					break;
-				case 'webp':
-					header("Content-type: image/webp");
-					break;
+			if ($image_type === 'gif') {
+				header("Content-type: image/gif");
+			} elseif ($image_type === 'jpeg') {
+				header("Content-type: image/jpeg");
+			} elseif ($image_type === 'png') {
+				header("Content-type: image/png");
+			} elseif ($image_type === 'webp') {
+				header("Content-type: image/webp");
 			}
 		}
-		switch ($image_type) {
-			case 'gif':
-				imagegif($this->image, $image_file);
-				break;
-			case 'jpeg':
-				imagejpeg($this->image, $image_file, $image_compress);
-				break;
-			case 'png':
-				imagepng($this->image, $image_file);
-				break;
-			case 'webp':
-				imagewebp($this->image, $image_file);
-				break;
+
+		if ($image_type === 'gif') {
+			imagegif($this->image, $image_file);
+		} elseif ($image_type === 'jpeg') {
+			imagejpeg($this->image, $image_file, $image_compress);
+		} elseif ($image_type === 'png') {
+			imagepng($this->image, $image_file);
+		} elseif ($image_type === 'webp') {
+			imagewebp($this->image, $image_file);
 		}
-		if ($image_permiss != '') {
+
+		if ($image_permiss) {
 			chmod($image_file, $image_permiss);
 		}
 		imagedestroy($this->image);
@@ -94,23 +75,25 @@ class Image extends Model
 		return $p;
 	}
 
-//	public function uploadIMG($alias, $sub, $isOnly, $file,$sizes)
-//	{
-//		$arr = extract($this->getImgParams());
-//		$fname = substr($file['name'], 0, strlen($file['name']) - 4);
-//		foreach ($sizes as $size) {
-//			if (!$size) {
-//				$ps = $this->createImgPaths($alias, $fname, null, null, $isOnly);
-//				move_uploaded_file($file['tmp_name'], $ps['to']);
-//			} else {
-//				$pX = $this->createImgPaths($alias, $fname, $size, $toExt, $isOnly);
-//				$new_image = new picture($ps['to']);
-//				$new_image->autoimageresize($size, $size);
-//				$new_image->imagesave($toExt, $pX['to'], $quality, 0777);
-//			}
-//		}
-//		return $pX['rel'];
-//	}
+
+	public function uploadIMG($alias, $sub, $isOnly, $file, $sizes)
+	{
+		$arr = extract($this->getImgParams());
+		$fname = substr($file['name'], 0, strlen($file['name']) - 4);
+		foreach ($sizes as $size) {
+			if (!$size) {
+				$ps = $this->createImgPaths($alias, $fname, null, null, $isOnly);
+				move_uploaded_file($file['tmp_name'], $ps['to']);
+			} else {
+				$toExt = $quality = $ps = '';
+				$pX = $this->createImgPaths($alias, $fname, $size, $toExt, $isOnly);
+				$new_image = new picture($ps['to']);
+				$new_image->autoimageresize($size, $size);
+				$new_image->imagesave($toExt, $pX['to'], $quality, 0777);
+			}
+		}
+		return $pX['rel'];
+	}
 
 	private function fotoimage()
 	{
@@ -122,6 +105,7 @@ class Image extends Model
 			$this->image = imagecreatefrompng($this->image_file);
 		}
 	}
+
 
 	public function autoresize($new_w, $new_h)
 	{
@@ -176,62 +160,27 @@ class Image extends Model
 
 	protected function setImageType($image_info)
 	{
-		switch ($image_info) {
-			case 1:
-				$this->image_type = 'gif';
-				break; //1: IMAGETYPE_GIF
-			case 2:
-				$this->image_type = 'jpeg';
-				break; //2: IMAGETYPE_JPEG
-			case 3:
-				$this->image_type = 'png';
-				break; //3: IMAGETYPE_PNG
-			case 4:
-				$this->image_type = 'swf';
-				break; //4: IMAGETYPE_SWF
-			case 5:
-				$this->image_type = 'psd';
-				break; //5: IMAGETYPE_PSD
-			case 6:
-				$this->image_type = 'bmp';
-				break; //6: IMAGETYPE_BMP
-			case 7:
-				$this->image_type = 'tiffi';
-				break; //7: IMAGETYPE_TIFF_II (порядок байт intel)
-			case 8:
-				$this->image_type = 'tiffm';
-				break; //8: IMAGETYPE_TIFF_MM (порядок байт motorola)
-			case 9:
-				$this->image_type = 'jpc';
-				break; //9: IMAGETYPE_JPC
-			case 10:
-				$this->image_type = 'jp2';
-				break; //10: IMAGETYPE_JP2
-			case 11:
-				$this->image_type = 'jpx';
-				break; //11: IMAGETYPE_JPX
-			case 12:
-				$this->image_type = 'jb2';
-				break; //12: IMAGETYPE_JB2
-			case 13:
-				$this->image_type = 'swc';
-				break; //13: IMAGETYPE_SWC
-			case 14:
-				$this->image_type = 'iff';
-				break; //14: IMAGETYPE_IFF
-			case 15:
-				$this->image_type = 'wbmp';
-				break; //15: IMAGETYPE_WBMP
-			case 16:
-				$this->image_type = 'xbm';
-				break; //16: IMAGETYPE_XBM
-			case 17:
-				$this->image_type = 'ico';
-				break; //17: IMAGETYPE_ICO
-			default:
-				$this->image_type = '';
-				break;
-		}
+		$types = [
+			1 => 'gif',
+			2 => 'jpeg',
+			3 => 'png',
+			4 => 'swf',
+			5 => 'psd',
+			6 => 'bmp',
+			7 => 'tiffi',
+			8 => 'tiffm',
+			9 => 'jpc',
+			10 => 'jp2',
+			11 => 'jpx',
+			12 => 'jb2',
+			13 => 'swc',
+			14 => 'iff',
+			15 => 'wbmp',
+			16 => 'xbm',
+			17 => 'ico',
+		];
+
+		$this->image_type = $types[$image_info] ?? null;
 	}
 
 }
