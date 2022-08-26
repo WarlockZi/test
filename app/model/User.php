@@ -6,6 +6,7 @@ use app\model\Mail;
 use app\core\App;
 use app\core\DB;
 use app\model\Model;
+use app\Repository\ImageRepository;
 use app\view\View;
 
 
@@ -37,8 +38,8 @@ class User extends Model
 		}
 
 		return $user['sex'] === 'f'
-			? Image::getImg('/pic/ava_female.jpg')
-			: Image::getImg('/pic/ava_male.png');
+			? ImageRepository::getImg('/pic/ava_female.jpg')
+			: ImageRepository::getImg('/pic/ava_male.png');
 	}
 
 	public function __construct()

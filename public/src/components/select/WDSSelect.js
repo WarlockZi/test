@@ -9,8 +9,9 @@ export default class WDSSelect {
     if (el.multiple) return false
 
     this.title = el.title ?? ''
-    this.field = el.dataset['field']
-    this.model = el.dataset['model']
+    this.field = el.dataset.field
+    this.model = el.dataset.model
+    this.modelId = el.dataset.id
     this.options = getFormattedOptions(el.querySelectorAll("option"))
 
     this.sel = document.createElement("div")
@@ -68,7 +69,8 @@ function setup(select) {
   }
 
   select.sel.setAttribute("custom-select", '')
-  select.sel.dataset['model'] = select.model
+  select.sel.dataset.model = select.model
+  select.sel.dataset.modelId = select.modelId
   if (select.field) {
     select.sel.dataset['field'] = select.field
   }

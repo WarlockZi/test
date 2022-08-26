@@ -11,6 +11,7 @@ use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
+use Illuminate\Database\Eloquent\Model;
 
 class CategoryView
 {
@@ -39,9 +40,10 @@ class CategoryView
 			:"<div>{$parents['name']}</div>";
 	}
 
-	public static function breadcrumbs(int $id, bool $lastIsALink=false):string
+	public static function breadcrumbs(Model $category, bool $lastIsALink=false):string
 	{
-		$parents = IlluminateCategory::with('category_recursive')
+		$id = $category->id;
+		$parents = IlluminateCategory::with('category_recursive.properties.vals')
 			->find($id)->toArray();
 
 		$arr = [];

@@ -3,13 +3,17 @@
 namespace app\view\Product;
 
 use app\model\Illuminate\Product as IlluminateProduct;
+use app\model\Illuminate\Propertable;
+use app\model\Image;
 use app\model\Product;
+use app\Repository\ImageRepository;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
+use Illuminate\Database\Eloquent\Model;
 
 class ProductView
 {
@@ -18,10 +22,10 @@ class ProductView
 	public $modelName = Product::class;
 	public $model = 'product';
 
-	public static function edit($id): string
+	public static function edit(Model $product): string
 	{
-		$product = IlluminateProduct::with('category.properties.vals', 'category.category_recursive.properties.vals')
-			->find($id);
+
+		$p = $product->toArray();
 
 		return ItemBuilder::build($product, 'product')
 			->pageTitle('Товар :  ' . $product['name'])
@@ -44,29 +48,84 @@ class ProductView
 					)
 					->get()
 			)
+			->tab(
+				ItemTabBuilder::build('Основная картинка')
+					->html(
+						self::getMainImage($product)
+					)
+					->get()
+			)
+			->tab(
+				ItemTabBuilder::build('Подробные картинки')
+					->html(
+						self::getDetailImages($product)
+					)
+					->get()
+			)
 			->del()
 			->save()
 			->toList()
 			->get();
 	}
 
-	public static function getProperties($product): string
+	protected static function getSelectedProperties($product)
+	{
+		return Propertable::where(
+			['propertable_type' => \app\model\Illuminate\Product::class,
+				'propertable_id' => $product->id]
+		)
+			->select('val_id', 'property_id')
+			->get()
+			->keyBy('property_id')
+			->map(function ($v, $k) {
+				return $v->val_id;
+			})
+			->toArray();
+	}
+
+	protected static function getProperties($product): string
 	{
 		$str = "";
 		$recProps = self::getProperyRecursiveProps($product);
+		$productVals = self::getSelectedProperties($product);
+
 		foreach ($recProps as $category) {
 			$str .= "<div class='category'>{$category['category']}</div><br>";
 			foreach ($category['properties'] as $property) {
+				$selected = array_key_exists($property['id'], $productVals)
+					? $productVals[$property['id']]
+					: 0;
 				$str .= "<div class='property'><div class='name'>{$property['name']}</div><br>";
 				$vals = self::prepareVals($property['vals']);
 				$str .= SelectBuilder::build()
 					->array($vals)
 					->model('property')
+					->modelId($property['id'])
+					->selected($selected)
 					->initialOption('', 0)
 					->get();
 				$str .= "</div>";
 			}
 		}
+		return $str;
+	}
+
+	protected static function getDetailImages($product): string
+	{
+		$str = include ROOT . '/app/view/Product/detail_images.php';
+		return $str;
+	}
+
+	protected static function getMainImage($product): string
+	{
+		$src = ImageRepository::getImg();
+		$img = $product->mainImage;
+		if ($img) {
+			$hash = $img->hash;
+			$ext = ImageRepository::getExt($img->type);
+			$src = ImageRepository::getImg("\pic\product\\{$hash}.{$ext}") ?? '';
+		}
+		$str = include ROOT . '/app/view/Product/main_image.php';
 		return $str;
 	}
 
@@ -155,40 +214,6 @@ class ProductView
 		}
 		return $str;
 	}
-
-	//
-//	public static function listItems(array $items): string
-//	{
-//		$view = new self;
-//
-//		return MyList::build($view->modelName)
-//			->column(
-//				ListColumnBuilder::build('id')
-//					->name('ID')
-//					->get()
-//			)
-//			->column(
-//				ListColumnBuilder::build('name')
-//					->name('Наименование')
-//					->contenteditable()
-//					->search()
-//					->width('1fr')
-//					->get()
-//			)
-//			->column(
-//				ListColumnBuilder::build('title')
-//					->name('Полное наим')
-//					->contenteditable()
-//					->search()
-//					->width('1fr')
-//					->get()
-//			)
-//			->items($items)
-//			->edit()
-//			->del()
-//			->addButton('ajax')
-//			->get();
-//	}
 
 
 }
