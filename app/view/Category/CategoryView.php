@@ -40,9 +40,9 @@ class CategoryView
 			:"<div>{$parents['name']}</div>";
 	}
 
-	public static function breadcrumbs(Model $category, bool $lastIsALink=false):string
+	public static function breadcrumbs(int $id, bool $lastIsALink=false):string
 	{
-		$id = $category->id;
+//		$id = $category->id;
 		$parents = IlluminateCategory::with('category_recursive.properties.vals')
 			->find($id)->toArray();
 

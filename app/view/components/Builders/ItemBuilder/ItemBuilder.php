@@ -9,14 +9,16 @@ use Illuminate\Database\Eloquent\Model;
 class ItemBuilder extends Builder
 {
 	private $model = '';
+	private $dataModel = '';
 	private $id = 0;
 	private $item = [];
 
 	private $pageTitle = '';
 	private $class = '';
-	private $href = '';
 	private $del = false;
 	private $save = false;
+
+	public $toListHref = '';
 	public $toList = false;
 	public $toListText = 'К списку';
 
@@ -28,7 +30,8 @@ class ItemBuilder extends Builder
 	public static function build(Model $item, string $model)
 	{
 		$view = new static();
-		$view->model = "data-model='{$model}'";
+		$view->dataModel = "data-model='{$model}'";
+		$view->model = $model;
 		$view->item = $item->toArray();
 		$view->id = "data-id='{$view->item['id']}'";
 		return $view;
@@ -62,7 +65,7 @@ class ItemBuilder extends Builder
 	{
 		$this->toList = true;
 		if ($href) {
-			$this->href = '/' . $href;
+			$this->toListHref = '/' . $href;
 		}
 		$this->toListText = $text?$text:$this->toListText;
 		return $this;

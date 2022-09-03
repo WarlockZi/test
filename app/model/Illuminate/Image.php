@@ -36,41 +36,15 @@ class Image extends Model
 		return $this->belongsTo(Image::class,);
 	}
 
+	public function tags()
+	{
+		return $this->morphToMany(Tag::class, 'taggable');
+	}
+
+	public function bigPack($query)
+	{
+		return $query->where('tag')->name === 'ddf';
+	}
 
 
-//	public function imageables()
-//	{
-//		return $this->morphTo();
-//	}
-
-//	public function imageables()
-//	{
-//		return $this->morphedByMany();
-//	}
-
-//	public function product()
-//	{
-//		return $this->belongsTo(Product::class);
-//	}
-
-//	public function productsMorph()
-//	{
-//		return $this->belongsToMany(Product::class, 'imageable');
-//	}
-
-//	public function create(){
-//		parent::create();
-//		$fname = substr($file['name'], 0, strlen($file['name']) - 4);
-//		foreach ($sizes as $size) {
-//			if (!$size) {
-//				$ps = $this->createImgPaths($alias, $fname, null, null, $isOnly);
-//				move_uploaded_file($file['tmp_name'], $ps['to']);
-//			} else {
-//				$pX = $this->createImgPaths($alias, $fname, $size, $toExt, $isOnly);
-//				$new_image = new picture($ps['to']);
-//				$new_image->autoimageresize($size, $size);
-//				$new_image->imagesave($toExt, $pX['to'], $quality, 0777);
-//			}
-//		}
-//	}
 }

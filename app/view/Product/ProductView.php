@@ -41,6 +41,12 @@ class ProductView
 					->required()
 					->get()
 			)
+			->field(
+				ItemFieldBuilder::build('dtxt', $product)
+					->name('Описание')
+					->html(self::getDescription($product))
+					->get()
+			)
 			->tab(
 				ItemTabBuilder::build('Свойства товара')
 					->html(
@@ -48,6 +54,13 @@ class ProductView
 					)
 					->get()
 			)
+//			->tab(
+//				ItemTabBuilder::build('Описание')
+//					->html(
+//						self::getDescription($product)
+//					)
+//					->get()
+//			)
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
@@ -56,15 +69,29 @@ class ProductView
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Подробные картинки')
+				ItemTabBuilder::build('Детальные картинки')
 					->html(
 						self::getDetailImages($product)
 					)
 					->get()
 			)
+			->tab(
+				ItemTabBuilder::build('Внутритарная упаковка')
+					->html(
+						self::getSmallPackImages($product)
+					)
+					->get()
+			)
+			->tab(
+				ItemTabBuilder::build('Транспортная упаковка')
+					->html(
+						self::getBigPackImages($product)
+					)
+					->get()
+			)
 			->del()
 			->save()
-			->toList()
+			->toList('list')
 			->get();
 	}
 
@@ -115,18 +142,35 @@ class ProductView
 		$str = include ROOT . '/app/view/Product/detail_images.php';
 		return $str;
 	}
+	protected static function getDescription($product): string
+	{
+		$str = include ROOT . '/app/view/Product/description.php';
+		return $str;
+	}
+
+	protected static function getSmallPackImages($product): string
+	{
+		$str = include ROOT . '/app/view/Product/small_pack_images.php';
+		return $str;
+	}
+
+	protected static function getBigPackImages($product): string
+	{
+		$str = include ROOT . '/app/view/Product/big_pack_images.php';
+		return $str;
+	}
 
 	protected static function getMainImage($product): string
 	{
-		$src = ImageRepository::getImg();
 		$img = $product->mainImage;
 		if ($img) {
 			$hash = $img->hash;
 			$ext = ImageRepository::getExt($img->type);
 			$src = ImageRepository::getImg("\pic\product\\{$hash}.{$ext}") ?? '';
+		} else {
+			$src = ImageRepository::getImg();
 		}
-		$str = include ROOT . '/app/view/Product/main_image.php';
-		return $str;
+		return include ROOT . '/app/view/Product/main_image.php';
 	}
 
 	protected static function prepareVals($vals)
@@ -159,7 +203,7 @@ class ProductView
 	}
 
 
-	public static function listAll(): string
+	public static function list($items): string
 	{
 		$view = new self;
 		return MyList::build($view->modelName)
@@ -177,7 +221,7 @@ class ProductView
 					->width('1fr')
 					->get()
 			)
-			->all()
+			->items($items)
 			->edit()
 			->del()
 			->addButton('ajax')

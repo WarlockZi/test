@@ -13,7 +13,7 @@
 	<div class="images">
 		<div class="image">
 			<img src="<?= $src ?? ''; ?>" alt="" data-tooltip="Перетащить картику">
-			<div class="del" data-id="<?=$img->id??''?>" data-tag="delMainImg">x</div>
+			<div class="del" data-id="<?=$img->id??''?>" data-tag="delMainImage">x</div>
 		</div>
 
 	</div>

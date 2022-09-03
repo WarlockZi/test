@@ -17,7 +17,7 @@ if (tables) {
     const parentId = table.dataset.parentid ?? null
     const morph = table.dataset.morph ?? null
     const morphId = table.dataset.morphid ?? null
-    const rows = []
+    const rows = fillRows()
 
     function getIds() {
       let els = $(table)[0].querySelectorAll('[data-id]');
@@ -183,15 +183,21 @@ if (tables) {
       });
     };
 
-    // SORT
-    function sortColumn(index) {
-
+    function fillRows() {
       /// get table rows array
+      let rows = []
       for (let i = 0; i < ids.length; i++) {
         let id = ids[i].dataset.id
         let row = $(table)[0].querySelectorAll(`[data-id='${id}']`)
         rows.push(row)
       }
+      return rows
+    }
+
+    // SORT
+    function sortColumn(index) {
+
+      let rows = fillRows()
 
       // Получить текущее направление
       const direction = directions[index] || 'asc'

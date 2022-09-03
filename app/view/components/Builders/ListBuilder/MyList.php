@@ -37,6 +37,7 @@ class MyList
 		$this->parentId = "data-parentId=" . $id;
 		return $this;
 	}
+
 	public function pageTitle(string $pageTitle)
 	{
 		$this->pageTitle = $pageTitle;
@@ -92,6 +93,7 @@ class MyList
 		$this->headEditCol = "<div class='head edit'></div>";
 		return $this;
 	}
+
 	protected function getEditButton(int $itemId)
 	{
 		if ($this->headEditCol) {
@@ -141,6 +143,17 @@ class MyList
 			$this->grid .= ' 50px';
 		}
 		$this->grid .= "'";
+	}
+
+	protected function getData($column, $item,$field)
+	{
+		if ($column->function) {
+			$func = $column->function;
+			$f = $column->functionClass::$func($item);
+			return $f;
+		} else {
+			return $item[$field];
+		}
 	}
 
 	protected function template()

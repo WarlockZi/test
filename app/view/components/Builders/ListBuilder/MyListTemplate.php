@@ -43,7 +43,7 @@
 						 <?= $c->dataField; ?>
 						 <?= $c->class; ?>
 						 <?= $c->contenteditable; ?>
-			  ><?= $item[$field]; ?></div>
+			  ><?= $this->getData($c, $item, $field); ?></div>
 
 			 <? endforeach; ?>
 
