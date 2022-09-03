@@ -50,12 +50,20 @@ class AppController extends Controller
 
 	public function actionDelete()
 	{
-		if ($this->ajax['id']) {
-			if ($this->model::delete($this->ajax['id'])) {
+		$id = $this->ajax['id'];
+
+		if (!$id) $this->exitWithMsg('No id');
+		$model = new $this->model;
+		if ( $model instanceof Model){
+			$item = $model->find((int) $id);
+			if ($item){
+				$destroy = $item->delete();
+				$this->exitJson(['id'=>$id, 'popup'=>'Ok']);
+			}
+		}else{
+			if ($model::delete($id)) {
 				$this->exitWithPopup('Удален');
 			}
-		} else {
-			$this->exitWithMsg('No id');
 		}
 	}
 
@@ -66,9 +74,9 @@ class AppController extends Controller
 				if (isset($this->ajax['token'])) {
 					unset ($this->ajax['token']);
 				}
-				$prod = $this->model::updateOrCreate($this->ajax);
+				$prod = $this->model::updateOrCreate(['id' => $this->ajax['id']], $this->ajax);
 				$id = $prod->id;
-				$this->exitWithSuccess($id);
+				$this->exitJson(['id'=>$id]);
 
 			} else {
 				$id = $this->model::updateOrCreate($this->ajax);

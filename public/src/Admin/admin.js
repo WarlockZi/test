@@ -6,6 +6,7 @@ import '../components/accordion/accordion'
 import '../components/admin_sidebar'
 import "./model/cache";
 import "../components/date/date";
+import tiny from "../components/tyny/tiny";
 import {$} from "../common";
 
 import '../Test/test_results/test_results'
@@ -30,7 +31,6 @@ import Pagination from "../Test/test-pagination/test-pagination";
 
 $(document).ready(function () {
 
-
   new Pagination({
     'pClass': '[data-pagination]',
     'pActiveClass': 'active',
@@ -45,6 +45,7 @@ $(document).ready(function () {
   multiselect()
   catalogItem()
   tooltips()
+  tiny()
 
   accordionShow()
 

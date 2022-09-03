@@ -1,12 +1,20 @@
 @import "../../var";
 
-.image_main, .detail_images {
+.image_main,
+.detail_images,
+.small_pack_images,
+.big_pack_images
+{
   display: flex;
   flex-direction: column;
   background-color: white;
 
 
-  .add_main_image, .add_detail_image {
+  .add_main_image,
+  .add_detail_image,
+  .add_big_pack_image,
+  .add_small_pack_images
+  {
     display: flex;
     align-items: center;
     min-height: 100px;
@@ -51,6 +59,7 @@
         text-transform: capitalize;
         padding: 1px;
         border-radius: 2px;
+        cursor: pointer;
       }
 
       img {

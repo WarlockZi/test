@@ -18,7 +18,7 @@
 					$src = \app\Repository\ImageRepository::getImg($path);
 					?>
 			  <img class="" src="<?= $src ?>" alt="">
-			  <div class="del" data-id="<?=$img->id??''?>" data-tag="delDetailImg">x</div>
+			  <div class="del" data-id="<?=$img->id??''?>" data-tag="delDetailImage">x</div>
 		  </div>
 		 <? endforeach; ?>
 	</div>

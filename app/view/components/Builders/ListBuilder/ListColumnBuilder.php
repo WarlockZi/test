@@ -20,6 +20,8 @@ class ListColumnBuilder
 	public $contenteditable = '';
 	public $link = false;
 	public $html = '';
+	public $function = '';
+	public $functionClass = '';
 
 	public static function build(string $field)
 	{
@@ -54,19 +56,26 @@ class ListColumnBuilder
 		return $this;
 	}
 
-	public function html(string $html)
+	public function html($html)
 	{
 		$this->html = $html;
 		return $this;
 	}
 
-	public function search()
+	public function search(): self
 	{
 		$this->search = '<input type="text">';
 		return $this;
 	}
 
-	public function width(string $width)
+	public function function (string $class, string $function): self
+	{
+		$this->function = $function;
+		$this->functionClass = $class;
+		return $this;
+	}
+
+	public function width(string $width): self
 	{
 		$this->width = $width;
 		return $this;
@@ -78,13 +87,13 @@ class ListColumnBuilder
 		return $this;
 	}
 
-	public function contenteditable()
+	public function contenteditable(): self
 	{
 		$this->contenteditable = 'contenteditable';
 		return $this;
 	}
 
-	public function get()
+	public function get(): self
 	{
 		$this->name = $this->name ? $this->name : $this->field;
 		return $this;

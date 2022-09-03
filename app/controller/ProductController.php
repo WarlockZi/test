@@ -6,7 +6,8 @@ use app\model\Illuminate\IlluminateModelDecorator;
 use app\model\Illuminate\Image;
 use app\model\Illuminate\Product;
 use app\model\Illuminate\Propertable;
-use app\Repository\ProductRepository;
+use app\model\illuminate\Tag;
+use app\Repository\ImageRepository;
 use app\view\Category\CategoryView;
 use app\view\Product\ProductView;
 
@@ -20,12 +21,13 @@ class ProductController Extends AppController
 		$prod = Product::
 		with('category.properties.vals')
 			->with('category.category_recursive')
-//			->with('category.category_recursive.properties.vals')
-			->with('mainImage')
 			->with('detailImages')
+			->with('smallPackImages')
+			->with('bigPackImages')
+			->with('mainImage')
 			->find($id);
 		$product = ProductView::edit($prod);
-		$breadcrumbs = CategoryView::breadcrumbs($prod->category, true);
+		$breadcrumbs = CategoryView::breadcrumbs($prod->category->id, true);
 		$this->set(compact('product', 'breadcrumbs'));
 	}
 
@@ -38,53 +40,125 @@ class ProductController Extends AppController
 		}
 	}
 
-	public function actionDelMainImg(){
-		if ($this->ajax){
+
+///................ DEL IMAGE
+	public function actionDelMainImage()
+	{
+		if ($this->ajax) {
 			$product = Product::find($this->ajax['productId']);
 			$product->main_img = null;
 			$product->save();
 			$this->exitWithPopup('ok');
 		}
 	}
-	public function actionDelDetailImg(){
-		if ($this->ajax){
+
+	protected function detachTagFromImage($tagName, $imgId)
+	{
+		$tag = Tag::first('name', $tagName);
+		$image = Image::find($imgId);
+		$image->tags()->detach($tag->id);
+	}
+
+	public function actionDelDetailImage()
+	{
+		if ($this->ajax) {
 			$imgId = $this->ajax['id'];
 			$product = Product::find($this->ajax['productId']);
-			$product->detailImages()->detach($imgId);
-//			$product->save();
+//			$product->detailImages()->detach($imgId);
+
+			$this->detachTagFromImage('Детальная картинка товара', $imgId);
+
 			$this->exitWithPopup('ok');
 		}
 	}
 
-	public function actionImageDetail()
+	public function actionDelSmallPackImage()
 	{
-//		ProductRepository::clear();
-		if ($_FILES) {
-			foreach ($_FILES as $file) {
-				$image = ProductRepository::prepareImage($file);
-				$product = Product::find($_POST['imageable_id']);
-				$product->detailImages()->sync($image, false);
-			}
-			$this->exitJson(['msg' => 'ok',]);
+		if ($this->ajax) {
+			$imgId = $this->ajax['id'];
+			$product = Product::find($this->ajax['productId']);
+//			$product->smallPackImages()->detach($imgId);
+
+			$this->detachTagFromImage('Внутритарная упаковка', $imgId);
+
+			$this->exitWithPopup('ok');
+		}
+	}
+
+	public function actionDelBigPackImage()
+	{
+		if ($this->ajax) {
+			$imgId = $this->ajax['id'];
+//			$product = Product::find($this->ajax['productId']);
+//			$product->bigPackImages()->detach($imgId);
+			$this->detachTagFromImage('Транспортная упаковка', $imgId);
+			$this->exitWithPopup('ok');
 		}
 	}
 
 
-
-	public function actionImageMain()
+///................. ADD IMAGE
+	public function actionAddMainImage()
 	{
 //		ProductRepository::clear();
 		if ($_FILES) {
-			$image = ProductRepository::prepareImage($_FILES[0]);
-
+			$image = ImageRepository::saveIfNotExistReturnModel($_FILES[0]);
 			$product = Product::find($_POST['imageable_id']);
 			$product->main_img = $image->id;
 			$product->save();
-
-			$this->exitJson(['msg' => 'ok',]);
+//			header('Content-Type: application/json; charset=utf-8');
+			$this->exitJson(['msg' => 'ok', 'id' => $image->id]);
 		}
-
 	}
+
+	protected function addImage(string $tagName)
+	{
+		if ($_FILES) {
+			foreach ($_FILES as $file) {
+				$image = ImageRepository::saveIfNotExistReturnModel($file);
+				$product = Product::find($_POST['imageable_id']);
+				$tag = Tag::where('name', $tagName)->first();
+				$images = $product->detailImages;
+				if (!$images->contains($image))
+					$product->detailImages()->sync($image, false);
+				if (!$image->tags->contains($tag)) {
+					$image->tags()->sync($tag, false);
+					$this->exitJson(['msg' => 'ok', 'id' => $image->id]);
+				} else {
+					$this->exitJson(['popup' => 'уже есть такая картинка', 'id' => 0]);
+				}
+			}
+		}
+	}
+
+	public function actionAddDetailImages()
+	{
+//		ProductRepository::clear();
+		$this->addImage('Детальная картинка товара');
+	}
+
+	public function actionAddSmallPackImage()
+	{
+//		ProductRepository::clear();
+		$this->addImage('Внутритарная упаковка');
+	}
+
+	public function actionAddBigPackImage()
+	{
+//		ProductRepository::clear();
+		$this->addImage('Транспортная упаковка');
+	}
+
+	public function actionAddDescription()
+	{
+		if ($this->ajax) {
+			$product= Product::find($this->ajax['id']);
+			$product->dtxt = $this->ajax['description'];
+			$product->save();
+			$this->exitWithPopup('ok');
+		}
+	}
+
 
 	public function actionUpdateOrCreate()
 	{
@@ -103,7 +177,8 @@ class ProductController Extends AppController
 
 	public function actionList()
 	{
-		$list = ProductView::listAll();
+		$items = Product::all()->take(10);
+		$list = ProductView::list($items->toArray());
 		$this->set(compact('list'));
 
 	}

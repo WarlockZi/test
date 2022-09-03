@@ -13,7 +13,7 @@ $font-size-item: .5rem;
   [accordion] {
     display: flex;
     flex-flow: column;
-    background: darken($color-level-0, 5%);
+    //background: darken($color-level-0, 5%);
     width: 170px;
 
     a {
@@ -262,7 +262,7 @@ $width-full: 170px;
   position: absolute;;
   display: flex;
   flex-flow: column;
-  background: darken($color-admin-sidebar, 5%);
+  background: $color-admin-sidebar;
   transition: max-width .4s, min-width .4s;
   overflow: hidden;
   max-width: $width-short;

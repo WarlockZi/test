@@ -17,7 +17,7 @@
 	<? endif; ?>
 
 	<? if ($this->toList): ?>
-	  <a href="/adminsc/<?= $this->model.$this->href; ?>"
+	  <a href="/adminsc/<?= $this->model.$this->toListHref; ?>"
 	     class="to-list">
 		  <?=$this->toListText?>
 	  </a>

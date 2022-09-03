@@ -22,7 +22,7 @@
 	<? $n = 2; ?>
 	<? foreach ($this->tabs as $k => $tab): ?>
 	  <section
-			  <?=$this->model?>
+			  <?=$this->dataModel?>
 			 <?= $tab->field; ?>
 			  data-tab=<?= $n ?>>
 			 <?= $tab->html; ?>

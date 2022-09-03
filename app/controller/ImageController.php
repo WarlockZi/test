@@ -4,9 +4,11 @@ namespace app\controller;
 
 use app\model\Illuminate\Image;
 use app\Repository\ImageRepository;
+use app\view\Image\ImageView;
 
 class ImageController Extends AppController
 {
+	public $model = Image::class;
 
 	public function __construct(array $route)
 	{
@@ -35,29 +37,23 @@ class ImageController Extends AppController
 		};
 	}
 
-	public function actionCreate()
+	public function actionIndex()
 	{
+		$list = ImageView::list();
+		$this->set(compact('list'));
 	}
 
-
-	public static function move_uploaded_file($img, $file)
-	{
-		$fileExt = $fileExt = ImageRepository::getExt($file['type']);
-
-		$s = DIRECTORY_SEPARATOR;
-
-		$to = ROOT . $s . "pic" . $s . $img['path'];
-
-		$full = $to . $s . $img['hash'] . ".{$fileExt}";
-
-		if (!is_dir($to)) {
-			mkdir($to);
-		}
-
-		if (!is_readable($full)) {
-			move_uploaded_file($file['tmp_name'], $full);
-		}
-	}
-
-
+//	public static function move_uploaded_file($img, $file)
+//	{
+//		$fileExt = $fileExt = ImageRepository::getExt($file['type']);
+//		$s = DIRECTORY_SEPARATOR;
+//		$to = ROOT . $s . "pic" . $s . $img['path'];
+//		$full = $to . $s . $img['hash'] . ".{$fileExt}";
+//		if (!is_dir($to)) {
+//			mkdir($to);
+//		}
+//		if (!is_readable($full)) {
+//			move_uploaded_file($file['tmp_name'], $full);
+//		}
+//	}
 }

@@ -19,7 +19,7 @@ class Product extends Model
 		return $this->hasOne(Image::class,
 			'id',
 			'main_img',
-		);
+			);
 	}
 
 	public function detailImages()
@@ -27,7 +27,29 @@ class Product extends Model
 		return $this->morphToMany(
 			Image::class,
 			'imageable',
-			);
+			)->whereHas('tags', function ($q) {
+			$q->where('name', 'Детальная картинка товара');
+		});
+	}
+
+	public function smallPackImages()
+	{
+		return $this->morphToMany(
+			Image::class,
+			'imageable',
+			)->whereHas('tags', function ($q) {
+			$q->where('name', 'Внутритарная упаковка');
+		});
+	}
+
+	public function bigPackImages()
+	{
+		return $this->morphToMany(
+			Image::class,
+			'imageable',
+			)->whereHas('tags', function ($q) {
+			$q->where('name', 'Транспортная упаковка');
+		});
 	}
 
 	public function categoryCategoryRecPropsVals()
@@ -41,7 +63,6 @@ class Product extends Model
 	}
 
 
-
 	public function category()
 	{
 		return $this->belongsTo(Category::class);
@@ -51,7 +72,6 @@ class Product extends Model
 	{
 		return $this->belongsTo(Category::class)->with('category_rec');
 	}
-
 
 
 }
