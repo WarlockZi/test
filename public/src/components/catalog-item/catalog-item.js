@@ -1,5 +1,5 @@
 import './catalog-item.scss';
-import {$, post,trimStr} from '../../common';
+import {$, post, trimStr} from '../../common';
 import WDSSelect from "../select/WDSSelect";
 
 export default function catalogItem() {
@@ -7,8 +7,8 @@ export default function catalogItem() {
   if (customCatalogItem) {
     $(customCatalogItem).on('click', handleClick)
     let selects = $('[custom-select]')
-    if(selects){
-      [].map.call(selects,function (select) {
+    if (selects) {
+      [].map.call(selects, function (select) {
         new WDSSelect(select)
       })
     }
@@ -77,36 +77,38 @@ export default function catalogItem() {
 
     // debugger;
     [].map.call(fields, (field) => {
-      if (field.closest('[data-parent]'))return obj
-      if (field.hasAttribute('data-value')) {
-        obj[field.dataset.field] = field.dataset.value
+        if (field.closest('[data-parent]')) return obj
+        if (
+          field.hasAttribute('data-value') ||
+          field.hasAttribute('custom-select') ||
+          field.hasAttribute('custom-radio') ||
+          field.hasAttribute('tab')
+        ) {
+          obj[field.dataset.field] = field.dataset.value
+        } else if (field.hasAttribute('multi-select')) {
+          let chips = field.querySelectorAll('.chip');
+          let ids = [].map.call(chips, (chip) => {
+            return chip.dataset.id
+          })
+          obj[field.dataset.field] = ids.toString()
+        } else if (field.dataset.type === 'inputs') {
+          obj[field.dataset.field] = getInputs(field)
+        } else if (field.type === 'date') {
+          obj[field.dataset.field] = field.value
+        } else {
+          obj[field.dataset.field] = trimStr(field.innerText)
+        }
       }
-      else if (field.hasAttribute('multi-select')) {
-        let chips = field.querySelectorAll('.chip');
-        let ids = [].map.call(chips, (chip) => {
-          return chip.dataset.id
-        })
-        obj[field.dataset.field] = ids.toString()
-      } else if (field.hasAttribute('custom-select')) {
-        obj[field.dataset.field] = field.dataset.value
-      } else if (field.dataset.type === 'inputs') {
-        obj[field.dataset.field] = getInputs(field)
-      } else if (field.hasAttribute('custom-radio')) {
-        obj[field.dataset.field] = field.dataset.value
-      } else if (field.hasAttribute('tab')) {
-        obj[field.dataset.field] = field.dataset.value
-      } else if (field.type === 'date') {
-        obj[field.dataset.field] = field.value
-      } else {
-        obj[field.dataset.field] = trimStr(field.innerText)
-      }
-    }, obj)
+      ,
+      obj
+    )
     let isTest = $('[data-isTest]')[0]
     if (isTest) {
       obj.isTest = +isTest.dataset.istest
     }
     return obj
   }
+
 
   function getInputs(field) {
     let inputs = field.querySelectorAll('input')
