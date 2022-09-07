@@ -3,7 +3,7 @@
 namespace app\view\widgets\Accordion;
 
 
-use app\view\components\Tree\Tree;
+use app\view\components\MyTree;
 
 class Accordion
 {
@@ -39,7 +39,7 @@ class Accordion
 
 	protected function run()
 	{
-		$this->tree = Tree::tree($this->models, $this->parentFieldName);
+		$this->tree = MyTree\Tree::tree($this->models, $this->parentFieldName);
 		$this->html = $this->showCat($this->tree);
 		$this->output();
 	}

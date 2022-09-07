@@ -12,7 +12,7 @@
 			 <? if ($item['picq']): ?>
 			 <div class="qpic">
 				 <img class="test-qpic"
-				 src="<?= \app\model\Image::getImg('/pic/' . $item['picq']); ?>">
+				 src="<?= \app\Repository\ImageRepository::getImg('/pic/' . $item['picq']); ?>">
 			 </div>
 			 <? endif; ?>
 
@@ -24,7 +24,7 @@
 
 							 <? if ($answer['pica']): ?>
 						<div class="apic">
-							<img src="<?= \app\model\Image::getImg('/pic/' . $answer['pica']) ?>" alt="">
+							<img src="<?= \app\Repository\ImageRepository::getImg('/pic/' . $answer['pica']) ?>" alt="">
 						</div>
 							 <? endif; ?>
 				 </div>

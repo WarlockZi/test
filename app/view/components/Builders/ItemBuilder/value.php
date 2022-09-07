@@ -1,12 +1,13 @@
 <div class="value">
 
 	<? if ($field->html): ?>
+
 		<?= $field->html; ?>
 
 	<? else: ?>
 
 	  <div class="text"
-			 <?= $this->model; ?>
+			 <?= $this->dataModel; ?>
 			 <?= $field->datafield; ?>
 			 <?= $field->contenteditable; ?>
 			 <?= $field->required; ?>

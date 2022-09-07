@@ -1,19 +1,19 @@
 <?php
 
 
-namespace app\view\components\Tree;
+namespace app\view\components\MyTree;
 
 class Tree
 {
 	public $items = [];
-	public  $model = '';
-	public  $parent = '';
-	public  $template = '';
+	public $model = '';
+	public $parent = '';
+	public $template = '';
 
-	public  $liTemplate = '';
-	public  $ulTemplate = '';
+	public $liTemplate = '';
+	public $ulTemplate = '';
 
-	public  $html = '';
+	public $html = '';
 
 	public static function build(array $items)
 	{
@@ -21,6 +21,7 @@ class Tree
 		$tree->items = $items;
 		return $tree;
 	}
+
 	public function model(string $model)
 	{
 		$this->model = $model;
@@ -49,6 +50,7 @@ class Tree
 			}
 		}
 		return $tree;
+
 	}
 
 	public static function idKeys(array $items)

@@ -3,7 +3,7 @@
 
 namespace app\view\components\Tree;
 
-class Tree
+class Trees
 {
 	public $items = [];
 	public  $model = '';

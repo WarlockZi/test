@@ -102,10 +102,10 @@ export default function catalogItem() {
       ,
       obj
     )
-    let isTest = $('[data-isTest]')[0]
-    if (isTest) {
-      obj.isTest = +isTest.dataset.istest
-    }
+    // let isTest = $('[data-isTest]')[0]
+    // if (isTest) {
+    //   obj.isTest = +isTest.dataset.istest
+    // }
     return obj
   }
 

@@ -39,6 +39,9 @@ function replaceSpace(str) {
   var re = new RegExp('\s', "g");
   return str.replace(re, "");
 }
+function replaceBackSpace(str) {
+  return str.trim();
+}
 
 
 function trimStr(str) {
@@ -46,6 +49,7 @@ function trimStr(str) {
   str = replaceNs(str)
   str = replaceTs(str)
   str = replaceSpace(str)
+  str = replaceBackSpace(str)
   return str
 }
 

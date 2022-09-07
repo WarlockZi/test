@@ -8,7 +8,7 @@
 		 <? if ($test): ?>
 			 <? include ROOT . '/app/view/Test/do_content.php'; ?>
 		 <? else: ?>
-		  <h2>Выберите тест</h2>
+		  <h2></h2>
 		 <? endif; ?>
 
 </section>

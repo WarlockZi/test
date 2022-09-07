@@ -1,1 +1,1 @@
-<div class="accordion-open" >Выбрать тест</div>
+<div class="accordion-open">Выбрать тест</div>

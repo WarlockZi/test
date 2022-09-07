@@ -9,13 +9,14 @@
   align-items: center;
   justify-content: center;
   align-self: flex-start;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  //border-radius: 4px;
   cursor: pointer;
   background-color: $color-main;
   color: white;
   margin-right: 25px;
-  min-width: 103px;
+  //min-width: 103px;
+  width: 150px;
+  border: 1px solid transparent;
 
   @include _1000 {
     display: flex;
@@ -23,6 +24,7 @@
 
 
   &:hover {
+    border: 1px solid $color-main;
     background-color: white;
     color: $color-main;
   }

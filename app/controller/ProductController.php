@@ -25,6 +25,8 @@ class ProductController Extends AppController
 			->with('smallPackImages')
 			->with('bigPackImages')
 			->with('mainImage')
+			->with('mainUnit')
+			->with('secondaryUnit')
 			->find($id);
 		$product = ProductView::edit($prod);
 		$breadcrumbs = CategoryView::breadcrumbs($prod->category->id, true);
