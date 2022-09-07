@@ -132,7 +132,10 @@ class SelectBuilder extends Builder
 	private function addItem($item, $level)
 	{
 		$tab = str_repeat($this->tab, $level);
-		$menu = "<option value='{$item['id']}'>{$tab}{$item['name']}</option>";
+		$selected = (int)$item['id'] === (int)$this->selected
+			? 'selected'
+			: '';
+		$menu = "<option value='{$item['id']}' {$selected}>{$tab}{$item['name']}</option>";
 		if (isset($item['childs'])) {
 			$menu .= "{$this->getTree2($item['childs'],$level+1)}";
 		}

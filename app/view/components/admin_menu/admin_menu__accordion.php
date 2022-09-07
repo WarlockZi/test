@@ -48,6 +48,7 @@
 					 <a class="neon" href='/adminsc/property'>Свойства</a>
 					 <a class="neon" href='/adminsc/right/list'>Права</a>
 					 <a class="neon" href='/adminsc/tag'>Tэги</a>
+					 <a class="neon" href='/adminsc/unit'>Ед. измерен.</a>
 					 <a class="neon" href='/adminsc/image'>Картинки</a>
 					 <a class="neon" href='/adminsc/post'>Должности</a>
 					 <a class="neon" href='/adminsc/todo/list'>Задачи</a>

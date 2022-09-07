@@ -1,9 +1,7 @@
 import './do.scss'
-// import './test-pagination/test-pagination'
-
 import {post, $, cachePage} from '../common'
 
-let testDo = $('.test-do')[0]
+let testDo = $('.test-do .content')[0]
 if (testDo) {
   showFirstQuest()
   finishBtnInit()
@@ -11,7 +9,7 @@ if (testDo) {
 }
 
 function handleClick({target}) {
-  if (target.classList.contains('accordion-open')) return
+  // if (target.classList.contains('accordion-open')) return
   let currQuest = $('.question.show')[0] ?? ''
   let id = +currQuest?.dataset.id ?? ''
   let navs = $('[data-pagination]') ?? ''

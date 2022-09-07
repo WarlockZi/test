@@ -22,6 +22,21 @@ class Product extends Model
 			);
 	}
 
+	public function mainUnit()
+	{
+		return $this->hasOne(Unit::class,
+			'id',
+			'main_unit',
+			);
+	}
+	public function secondaryUnit()
+	{
+		return $this->hasOne(Unit::class,
+			'id',
+			'secondary_unit',
+			);
+	}
+
 	public function detailImages()
 	{
 		return $this->morphToMany(
