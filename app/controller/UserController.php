@@ -19,7 +19,7 @@ class UserController extends AppController
 		parent::__construct($route);
 	}
 
-	public function actionList()
+	public function actionIndex()
 	{
 		$list = UserView::listAll();
 		$this->set(compact('list'));

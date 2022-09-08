@@ -13,9 +13,12 @@ import {_answer} from "./model/answer";
 
 import sortable from "../components/sortable"
 import WDSSelect from "../components/select/WDSSelect"
+import pagination from "../components/pagination/pagination";
 
 
 export default function testEdit() {
+
+  pagination()
 
   let testEdit = $('.test-edit-wrapper')[0]
   if (testEdit) {

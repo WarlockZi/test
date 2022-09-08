@@ -31,14 +31,7 @@ import Pagination from "../Test/test-pagination/test-pagination";
 
 $(document).ready(function () {
 
-  new Pagination({
-    'pClass': '[data-pagination]',
-    'pActiveClass': 'active',
-    'pageClass': 'question',
-    'pageActiveClass': 'show',
-    'prevBttnEl': $('#prev')[0],
-    'nextBttnEl': $('#next')[0],
-  })
+
 
   navigate(window.location.pathname)
   radio()

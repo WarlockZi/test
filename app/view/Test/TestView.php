@@ -81,7 +81,6 @@ class TestView
 
 	public static function questionParentSelector(int $selected, int $exclude = -1)
 	{
-
 		$tests = \app\model\Test::where('isTest', '=', '1')->get();
 		$parent_select = '<select>';
 		foreach ($tests as $t) {

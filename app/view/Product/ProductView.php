@@ -4,7 +4,7 @@ namespace app\view\Product;
 
 use app\model\Illuminate\Product as IlluminateProduct;
 use app\model\Illuminate\Propertable;
-use app\model\Image;
+use app\model\Illuminate\Unit;
 use app\model\Product;
 use app\Repository\ImageRepository;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
@@ -24,7 +24,6 @@ class ProductView
 
 	public static function edit(Model $product): string
 	{
-
 		$p = $product->toArray();
 
 		return ItemBuilder::build($product, 'product')
@@ -35,6 +34,13 @@ class ProductView
 					->get()
 			)
 			->field(
+				ItemFieldBuilder::build('art', $product)
+					->name('Артикул')
+					->contenteditable()
+					->required()
+					->get()
+			)
+			->field(
 				ItemFieldBuilder::build('name', $product)
 					->name('Наименование')
 					->contenteditable()
@@ -42,9 +48,15 @@ class ProductView
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('dtxt', $product)
-					->name('Описание')
-					->html(self::getDescription($product))
+				ItemFieldBuilder::build('baseUnit', $product)
+					->name('Базовая ед')
+					->html(self::getBaseUnit($product))
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('mainUnit', $product)
+					->name('Основная ед')
+					->html(self::getMainUnit($product))
 					->get()
 			)
 			->tab(
@@ -54,13 +66,20 @@ class ProductView
 					)
 					->get()
 			)
-//			->tab(
-//				ItemTabBuilder::build('Описание')
-//					->html(
-//						self::getDescription($product)
-//					)
-//					->get()
-//			)
+			->tab(
+				ItemTabBuilder::build('Описание')
+					->html(
+						self::getDescription($product)
+					)
+					->get()
+			)
+			->tab(
+				ItemTabBuilder::build('Seo')
+					->html(
+						self::getSeo($product)
+					)
+					->get()
+			)
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
@@ -142,6 +161,7 @@ class ProductView
 		$str = include ROOT . '/app/view/Product/detail_images.php';
 		return $str;
 	}
+
 	protected static function getDescription($product): string
 	{
 		$str = include ROOT . '/app/view/Product/description.php';
@@ -171,6 +191,32 @@ class ProductView
 			$src = ImageRepository::getImg();
 		}
 		return include ROOT . '/app/view/Product/main_image.php';
+	}
+
+	protected static function getMainUnit(Model $product): string
+	{
+		$f = SelectBuilder::build()
+			->array(Unit::select())
+			->model('product')
+			->field('main_unit')
+			->initialOption('', 0)
+			->selected($product->main_unit)
+			->get();
+
+		return include ROOT . '/app/view/Product/main_unit.php';
+	}
+
+	protected static function getBaseUnit(Model $product): string
+	{
+		$f = SelectBuilder::build()
+			->array(Unit::select())
+			->model('product')
+			->field('base_unit')
+			->initialOption('', 0)
+			->selected($product->base_unit)
+			->get();
+
+		return include ROOT . '/app/view/Product/main_unit.php';
 	}
 
 	protected static function prepareVals($vals)

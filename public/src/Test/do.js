@@ -1,5 +1,8 @@
 import './do.scss'
 import {post, $, cachePage} from '../common'
+import pagination from "../components/pagination/pagination";
+
+pagination()
 
 let testDo = $('.test-do .content')[0]
 if (testDo) {

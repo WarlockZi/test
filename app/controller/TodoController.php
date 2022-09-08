@@ -79,7 +79,7 @@ class TodoController Extends AppController
 				$this->exitWithPopup("ok");
 			}
 		}
-		header('Location:/adminsc/right/list');
+		header('Location:/adminsc/right');
 	}
 
 

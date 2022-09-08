@@ -2,16 +2,18 @@
 @import "user_menu";
 
 
-.admin-layout__header {
+.admin-layout_header {
   background: #fff;
   display: flex;
   justify-content: end;
   max-width: 1310px;
+  border-bottom: 1px solid $color-gray2;
+  padding: 15px 0 15px 15px;
 
   .logo {
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    //padding-left: 20px;
     .logo_vitex {
       max-width: 140px;
       margin: 0 10px;

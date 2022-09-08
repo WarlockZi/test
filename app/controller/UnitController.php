@@ -14,7 +14,7 @@ class UnitController extends AppController
 
 	public function actionIndex()
 	{
-		$u = Unit::all()->toArray();
+//		$u = Unit::all()->toArray();
 		$units = MyList::build(Unit::class)
 			->pageTitle('Единицы измерения')
 			->addButton('ajax')

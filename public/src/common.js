@@ -320,6 +320,25 @@ function $(selector) {
     return new ElementCollection(selector)
   }
 }
+export function fragmentDate(date, order, y, m, d, glue) {
+  let o = new Date(date)
+
+  let monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  let dayNames = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"];
+
+  let yyyy = o.getFullYear()
+  let mm = o.getMonth()+1
+  let dd = o.getDate()
+  let M = monthNames[o.getMonth()]
+  let D = o.getDay()
+  let wd = dayNames[o.getDay()]
+
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+  return {yyyy,mm,dd,M,D,wd}
+}
 
 
 function addTooltip(args) {

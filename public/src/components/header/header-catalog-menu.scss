@@ -97,17 +97,18 @@
 
     ul {
       height: auto;
-      padding: 30px 25px 15px 25px;
+      padding: 30px 0px;
       max-height: fit-content;
       background-color: white;
       top: 100%;
       box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
       overflow: visible;
       cursor: text;
+      width: 100%;
 
       li {
         cursor: pointer;
-        padding: 10px 5px;
+        margin: 10px 25px;
         border-bottom: #f0f0f0 1px solid;
         transition: .3s;
 
