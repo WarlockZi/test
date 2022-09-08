@@ -18,7 +18,6 @@
 <body>
 <? include_once ROOT . '/app/view/components/header/top_crm.php';?>
 <? include_once ROOT . '/app/view/components/header/header-adm.php'; ?>
-<hr>
 
 		<?= $content ?>
 

@@ -39,7 +39,7 @@ export default function product() {
 
 
 //// Property set
-  let property = $(`[data-model='product'] [custom-select]`)
+  let property = $(`[data-model='product'] [custom-select][data-model="property"]`)
   if (property) {
     [].map.call(property, function (prop) {
 

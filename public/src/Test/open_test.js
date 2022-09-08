@@ -2,7 +2,9 @@ import './open_test.scss'
 import {$, post, cachePage} from "../common";
 
 import '../components/accordion-show';
+import pagination from "../components/pagination/pagination";
 
+pagination()
 
 let openTest = $('.opentest-do')[0]
 if (openTest) {

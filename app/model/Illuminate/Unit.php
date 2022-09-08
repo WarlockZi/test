@@ -15,6 +15,12 @@ class Unit extends Model
 			'main_unit');
 	}
 
+	public static function select(){
+		return self::all()
+			->pluck('name', 'id')
+			->toArray();
+	}
+
 
 }
 

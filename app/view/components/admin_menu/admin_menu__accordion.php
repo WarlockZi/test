@@ -27,7 +27,7 @@
 			  </div>
 			  <ul class="level-1">
 				  <a class="neon" href="/adminsc/order">Заказы</a>
-				  <a class="neon" href="/adminsc/user/list">Пользователи</a>
+				  <a class="neon" href="/adminsc/user">Пользователи</a>
 				  <a class="neon" href="/adminsc/crm">crm</a>
 			  </ul>
 		  </li>
@@ -46,12 +46,12 @@
 			  <ul class="level-1">
 						 <? if (User::can($this->user, ['gate_admin'])): // admin ?>
 					 <a class="neon" href='/adminsc/property'>Свойства</a>
-					 <a class="neon" href='/adminsc/right/list'>Права</a>
+					 <a class="neon" href='/adminsc/right'>Права</a>
 					 <a class="neon" href='/adminsc/tag'>Tэги</a>
 					 <a class="neon" href='/adminsc/unit'>Ед. измерен.</a>
 					 <a class="neon" href='/adminsc/image'>Картинки</a>
 					 <a class="neon" href='/adminsc/post'>Должности</a>
-					 <a class="neon" href='/adminsc/todo/list'>Задачи</a>
+					 <a class="neon" href='/adminsc/todo'>Задачи</a>
 						 <? endif; ?>
 			  </ul>
 		  </li>

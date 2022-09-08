@@ -22,7 +22,7 @@
     <div class="admin-layout__content">
 
         <? include ROOT . '/app/view/components/header/admin/top_admin.php'; ?>
-        <hr>
+
         <?= $content ?>
 
     </div>

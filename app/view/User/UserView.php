@@ -134,14 +134,7 @@ abstract class UserView extends MyView
 					->contenteditable()
 					->get()
 			)
-			->field(
-				ItemFieldBuilder::build('birthDate', $item)
-					->name('Дата рождения')
-					->html(
-						self::getBirhtdate($item)
-					)
-					->get()
-			)
+
 			->field(
 				ItemFieldBuilder::build('birthDate', $item)
 					->name('Дата рождения')
@@ -333,7 +326,7 @@ abstract class UserView extends MyView
 	{
 		return
 			"<div class='no-element'>Элемент не найден" .
-			"<a class='to-list' href='/adminsc/user/list\'>К списку</a>" .
+			"<a class='to-list' href='/adminsc/user'>К списку</a>" .
 			"</div>";
 	}
 

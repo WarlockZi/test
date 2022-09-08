@@ -1,0 +1,13 @@
+import {$} from "../../common";
+import Pagination from "../../Test/test-pagination/test-pagination";
+
+export default function () {
+  return new Pagination({
+    'pClass': '[data-pagination]',
+    'pActiveClass': 'active',
+    'pageClass': 'question',
+    'pageActiveClass': 'show',
+    'prevBttnEl': $('#prev')[0],
+    'nextBttnEl': $('#next')[0],
+  })
+}

@@ -32,7 +32,7 @@ class RightController Extends AppController
     }
   }
 
-	public function actionList()
+	public function actionIndex()
 	{
 		$list = RightView::listAll();
 		$this->set(compact('list'));
@@ -46,7 +46,7 @@ class RightController Extends AppController
 				$this->exitWithPopup("ok");
 			}
 		}
-		header('Location:/adminsc/right/list');
+		header('Location:/adminsc/right');
 	}
 
 }
