@@ -149,7 +149,7 @@ class AppController extends Controller
 			$_SESSION['back_url'] = $_SERVER['QUERY_STRING'];
 			exit();
 		} else {
-			$user = \app\model\illuminate\User::find($_SESSION['id'])->toArray();
+			$user = \app\model\Illuminate\User::find($_SESSION['id'])->toArray();
 			if (!$user) {
 				header("Location:/auth/login");
 				$this->exitWithPopup("Пользователь не найден");
@@ -174,7 +174,7 @@ class AppController extends Controller
 	public function auth()
 	{
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
-			$user = $this->user = \app\model\illuminate\User::find($_SESSION['id'])->toArray();
+			$user = $this->user = \app\model\Illuminate\User::find($_SESSION['id'])->toArray();
 			if ($this->user === false) {
 				$errors[] = 'Неправильные данные для входа на сайт';
 			} else {
