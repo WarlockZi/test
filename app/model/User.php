@@ -2,12 +2,7 @@
 
 namespace app\model;
 
-use app\model\Mail;
-use app\core\App;
-use app\core\DB;
-use app\model\Model;
 use app\Repository\ImageRepository;
-use app\view\View;
 
 
 class User extends Model
