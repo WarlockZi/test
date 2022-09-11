@@ -6,7 +6,7 @@ namespace app\controller;
 use app\model\Category as Category;
 use app\model\Illuminate\Category as IlluminateCategory;
 use app\view\Category\CategoryView;
-use app\view\components\Tree\Tree;
+use app\view\components\MyTree\Tree;
 
 
 class CategoryController Extends AppController
@@ -24,14 +24,10 @@ class CategoryController Extends AppController
 	{
 		$categories = IlluminateCategory::all()->toArray();
 
-		$accordion = Tree::buildTree(
-			[
-				'items' => $categories,
-				'model' => Category::class,
-				'parent' => 'category_id',
-				'template' => 'category',
-			]
-		);
+		$accordion = Tree::build($categories)
+			->parent('category_id')
+			->model('category')
+			->get();
 
 		$this->set(compact('categories'));
 		$this->set(compact('accordion'));
@@ -42,7 +38,7 @@ class CategoryController Extends AppController
 		$id = $this->route['id'];
 		$breadcrumbs = CategoryView::breadcrumbs($id);
 		$category = CategoryView::edit($id);
-		$this->set(compact('category','breadcrumbs'));
+		$this->set(compact('category', 'breadcrumbs'));
 	}
 
 	public function actionUpdateOrCreate()

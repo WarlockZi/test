@@ -11,9 +11,7 @@
 			 <?= $field->datafield; ?>
 			 <?= $field->contenteditable; ?>
 			 <?= $field->required; ?>
-	  >
-			 <?= $this->item[$field->field] ?>
-	  </div>
+	  ><?= $this->item[$field->field] ?></div>
 
 	<? endif; ?>
 </div>

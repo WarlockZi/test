@@ -13,7 +13,7 @@ class question {
     let questionModel = this.getQuestionModel(clone)
     let res = await post(`/adminsc/question/updateOrCreate`, questionModel)
     if (res) {
-      clone.querySelector('.sort').innerText = this.sort
+      clone.querySelector('.sort').innerText = $('.question-edit').length
       clone.querySelector('.question__delete').dataset.id =
         clone.dataset.id = res.arr.id
       target.before(clone)
@@ -22,10 +22,10 @@ class question {
 
   getQuestionModel(el) {
     return {
-      id: el.dataset.id,
+      id: +el.dataset.id,
       qustion: trimStr(el.querySelector('.text').innerText),
-      parent: +window.location.href.split('/').pop(),
-      sort: el.querySelector('.sort').innerText,
+      test_id: +window.location.href.split('/').pop(),
+      sort: +$('.question-edit').length,
     }
   }
 

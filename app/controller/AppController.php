@@ -22,45 +22,19 @@ class AppController extends Controller
 		$this->isAjax();
 	}
 
-	protected function setMainAssets()
-	{
-		$this->layout = 'vitex';
-		View::setJs('main.js');
-		View::setCss('main.css');
-		View::setJs('mainHeader.js');
-		View::setCss('mainHeader.css');
-		View::setJs('common.js');
-		View::setCss('common.css');
-		View::setJs('cookie.js');
-		View::setCss('cookie.css');
-		View::setJs('list.js');
-		View::setCss('list.css');
-	}
-
-	protected function setAdminAssets()
-	{
-		$this->layout = 'admin';
-		View::setJs('admin.js');
-		View::setCss('admin.css');
-		View::setJs('list.js');
-		View::setCss('list.css');
-		View::setJs('common.js');
-		View::setCss('common.css');
-	}
-
 	public function actionDelete()
 	{
 		$id = $this->ajax['id'];
 
 		if (!$id) $this->exitWithMsg('No id');
 		$model = new $this->model;
-		if ( $model instanceof Model){
-			$item = $model->find((int) $id);
-			if ($item){
+		if ($model instanceof Model) {
+			$item = $model->find((int)$id);
+			if ($item) {
 				$destroy = $item->delete();
-				$this->exitJson(['id'=>$id, 'popup'=>'Ok']);
+				$this->exitJson(['id' => $id, 'popup' => 'Ok']);
 			}
-		}else{
+		} else {
 			if ($model::delete($id)) {
 				$this->exitWithPopup('Удален');
 			}
@@ -70,15 +44,18 @@ class AppController extends Controller
 	public function actionUpdateOrCreate()
 	{
 		if ($this->ajax) {
-			if (new $this->model instanceof Model) {
-				if (isset($this->ajax['token'])) {
-					unset ($this->ajax['token']);
+			if (new $this->model instanceof Model) {//Eloquent
+				$model = $this->model::updateOrCreate(
+					['id' => $this->ajax['id']],
+					$this->ajax
+				);
+				if ($model->wasRecentlyCreated) {
+					$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
+				} else {
+					$this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);
 				}
-				$prod = $this->model::updateOrCreate(['id' => $this->ajax['id']], $this->ajax);
-				$id = $prod->id;
-				$this->exitJson(['id'=>$id]);
 
-			} else {
+			} else {// Self made
 				$id = $this->model::updateOrCreate($this->ajax);
 				if (is_numeric($id)) {
 					$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
@@ -182,5 +159,32 @@ class AppController extends Controller
 			}
 		}
 	}
+
+	protected function setMainAssets()
+	{
+		$this->layout = 'vitex';
+		View::setJs('main.js');
+		View::setCss('main.css');
+		View::setJs('mainHeader.js');
+		View::setCss('mainHeader.css');
+		View::setJs('common.js');
+		View::setCss('common.css');
+		View::setJs('cookie.js');
+		View::setCss('cookie.css');
+		View::setJs('list.js');
+		View::setCss('list.css');
+	}
+
+	protected function setAdminAssets()
+	{
+		$this->layout = 'admin';
+		View::setJs('admin.js');
+		View::setCss('admin.css');
+		View::setJs('list.js');
+		View::setCss('list.css');
+		View::setJs('common.js');
+		View::setCss('common.css');
+	}
+
 
 }

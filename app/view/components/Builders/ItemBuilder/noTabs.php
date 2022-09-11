@@ -8,12 +8,7 @@
 
 	<!--  TABLE  -->
 	<? foreach ($this->fields as $field): ?>
-	  <div class="row" <?=$field->hidden;?>>
-		  <div class="field"><?= $field->name; ?></div>
-		  :
-			 <? include ROOT . '/app/view/components/Builders/ItemBuilder/value.php' ?>
-	  </div>
-
+		<? include ROOT . '/app/view/components/Builders/ItemBuilder/row.php' ?>
 	<? endforeach; ?>
 	<? include ROOT . '/app/view/components/Builders/ItemBuilder/buttons.php' ?>
 

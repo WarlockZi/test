@@ -2,8 +2,8 @@
 
 $menu = new Accordion([
 
-	'model' => new \app\model\Test,
-	'models' => \app\model\Test::findAllWhere('enable', 1),
+	'model' => \app\model\Illuminate\Test::class,
+	'models' => \app\model\Illuminate\Test::where('enable', 1)->get()->toArray(),
 	'class' => 'test-edit',
 	'label_after' => "",
 	'link' => "/adminsc/test/do/",

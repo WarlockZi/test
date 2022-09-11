@@ -6,36 +6,39 @@ use app\model\Answer;
 
 class AnswerController Extends AppController
 {
+	public $model = \app\model\Illuminate\Answer::class;
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
 	}
 
-	public function actionUpdateOrCreate()
-	{
-		if ($this->ajax){
-			$id = Answer::updateOrCreate($this->ajax);
-			if (is_numeric($id)) {
-        $this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
-      }elseif(is_bool($id)){
-			  $this->exitWithPopup('Сохранено');
-			}else{
-				$this->exitWithError('Ответ не сохранен');
-			}
-		}
-	}
+//	public function actionUpdateOrCreate()
+//	{
+//		if ($this->ajax)
+//
+//			$answer = Answer::updateOrCreate(['id'=>$this->ajax['id']],$this->ajax);
+//			if ($answer->wasRecentlyCreated) {
+//        $this->exitJson(['popup' => 'Создан', 'id' => $id]);
+//			}else{
+//				$this->exitWithError('Ответ не сохранен');
+//			}
+//
+//	}
 
-	public function actionDelete()
-	{
-		if ($this->ajax['id']) {
-			if (Answer::delete($this->ajax['id'])) {
-				$this->exitWithPopup('Ответ удален');
-			}
-		} else {
-			$this->exitWithMsg('No id');
-		}
-	}
+//	public function actionDelete()
+//	{
+//		$id =
+//
+//		if ($this->ajax['id']) {
+//
+//			if (Answer::find()delete($this->ajax['id'])) {
+//				$this->exitWithPopup('Ответ удален');
+//			}
+//		} else {
+//			$this->exitWithMsg('No id');
+//		}
+//	}
 
 	public function actionShow()
 	{

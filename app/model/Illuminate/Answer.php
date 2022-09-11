@@ -3,25 +3,22 @@
 namespace app\model\Illuminate;
 
 
-class Answer extends \Illuminate\Database\Eloquent\Model
+use Illuminate\Database\Eloquent\Model;
+
+class Answer extends Model
 {
-	public $table = 'answer';
-	public  $model = 'answer';
+	public $timestamps = false;
 
-	public $fillable = [
-		'question_id'=>null,
-		'answer'=>'',
-		'correct_answer'=>'0',
-		'pica'=>''
-	];
+	protected $fillable = [
+		'question_id','answer','correct_answer','pica','sort'];
 
-	public static function delete($id)
-	{
-		return parent::delete($id);
-	}
-	public static function create($value=[],$register=false)
-	{
-		return parent::create($value);
-	}
+//	public static function delete($id)
+//	{
+//		return parent::delete($id);
+//	}
+//	public static function create($value=[],$register=false)
+//	{
+//		return parent::create($value);
+//	}
 
 }

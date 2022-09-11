@@ -7,7 +7,7 @@ use app\model\Illuminate\Test as illuminateTest;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Tree\Tree;
+use app\view\components\MyTree\Tree;
 
 class TestView
 {
@@ -17,34 +17,34 @@ class TestView
 	public static function item($id)
 	{
 		$view =new self();
-//		$item = new $view->model;
-//		$item = $item::find($id)[0];
-		$item = $view->illuminateModel::find($id);
-		$itemArr = $item->toArray();
-		$parents = $item->parents;
-		return ItemBuilder::build($item, 'test')
+		$test = $view->illuminateModel::find($id);
+		$itemArr = $test->toArray();
+		$parents = $test->parents;
+		$isTest = $test->isTest?'теста':'папки';
+		return ItemBuilder::build($test, 'test')
+			->pageTitle("Редактирование {$isTest} - {$test['name']}")
 			->del()
 			->save()
 			->field(
-				ItemFieldBuilder::build('id', $item)
+				ItemFieldBuilder::build('id', $test)
 					->name('ID')
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('name', $item)
+				ItemFieldBuilder::build('name', $test)
 					->name('Наименование')
 					->contenteditable()
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('enable', $item)
+				ItemFieldBuilder::build('enable', $test)
 					->name('Показывать')
 					->type('select')
 					->html(TestView::enabled($itemArr))
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('parent', $item)
+				ItemFieldBuilder::build('parent', $test)
 					->name('Принадлежит')
 					->html(TestView::belongsTo($itemArr))
 					->type('select')
@@ -67,7 +67,7 @@ class TestView
 	{
 		$tests = illuminateTest::where('isTest', '0')->get()->toArray();
 		$tree = Tree::tree($tests);
-		$f = SelectBuilder::build()
+		return SelectBuilder::build()
 			->tree($tree)
 			->class('custom-select')
 			->field('parent')
@@ -76,12 +76,14 @@ class TestView
 			->excluded($item['id'])
 			->tab('&nbsp&nbsp')
 			->get();
-		return $f;
+
 	}
 
 	public static function questionParentSelector(int $selected, int $exclude = -1)
 	{
-		$tests = \app\model\Test::where('isTest', '=', '1')->get();
+		$tests =
+			\app\model\Illuminate\Test::where('isTest', '1')
+			->get()->toArray();
 		$parent_select = '<select>';
 		foreach ($tests as $t) {
 			$selectedStr = (int)$t['id'] === $selected ? 'selected' : '';

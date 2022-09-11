@@ -176,7 +176,6 @@
 				  <a class="neon" href='/adminsc/Sitemap'>Создать SiteMap</a>
 				  <a class="neon" href='/adminsc/settings/dump'>Dump</a>
 				  <a class="neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
-				  <a class="neon" href='/adminsc/settings/pics'>Картинки</a>
 				  <a class="neon" href='/adminsc/settings/cache'>Очистить кэш</a>
 			  </ul>
 		  </li>

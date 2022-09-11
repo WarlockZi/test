@@ -162,6 +162,24 @@ class ProductView
 		return $str;
 	}
 
+	protected static function getSeo($product): string
+	{
+		return "<div class='show'>".
+		ItemFieldBuilder::build('description', $product)
+			->name('Description')
+			->contenteditable()
+			->get()->toHtml('product').
+			ItemFieldBuilder::build('title',$product)
+			->name('Title' )
+			->contenteditable()
+			->get()->toHtml('product').
+			ItemFieldBuilder::build('keywords',$product)
+			->name('Key words' )
+			->contenteditable()
+			->get()->toHtml('product').
+		"</div>";
+	}
+
 	protected static function getDescription($product): string
 	{
 		$str = include ROOT . '/app/view/Product/description.php';

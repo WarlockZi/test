@@ -3,76 +3,80 @@
 namespace app\controller;
 
 use app\model\Answer;
-use app\model\Question;
-use app\model\Test;
-use app\view\Test\TestView;
-use app\view\View;
+use app\model\Illuminate\Question;
+use app\model\Illuminate\Test;
+use app\model\Question as oldQest;
 
 
 class QuestionController Extends AppController
 {
+	public $model = Question::class;
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-
 	}
 
-	public function actionUpdateOrCreate()
+	public function actionEdit()
 	{
-		if ($this->ajax) {
-			try {
-				$question = $this->ajax;
-				$qId = Question::updateOrCreate($question);
-				if ($qId === false) {
-					$this->exitWithPopup('Ощибка');
-				} elseif (is_int($qId)) {
-					$this->exitJson(['id' => $qId]);
-				} elseif ($qId === true) {
-					$this->exitWithPopup('Вопрос сохранен');
-				}
+		$page_name = 'Редактирование тестов';
+		$this->set(compact('page_name'));
 
-			} catch (Exception $exception) {
-				exit($exception->getMessage());
-			};
+		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+		if ($id) {
+//			$test = Test::find($id);
+
+//			if ($test) {
+//				if ($test->isTest) {
+			$test
+				= Test::with('questions.answers')
+				->orderBy('sort')
+				->find($id)->toArray();
+//					if (!$questions) {
+//						$id = oldQest::create(['parent' => $id]);
+//						$question = oldQest::findOneWhere('id', $id - 1);
+//						$this->set(compact('question'));
+//
+//						$tests = oldTest::findAllWhere('isTest', '1');
+//						$this->set(compact('tests'));
+////					}
+//				} else {
+//					$test['children'] = Test::findAllWhere('parent', $id);;
+//				}
+			$parentSelector = \app\view\Test\TestView::questionParentSelector($test['id']);
+
+			$this->set(compact('test'));
+			$this->set(compact('parentSelector'));
+
 		}
 	}
+
 
 	public function actionChangeParent()
 	{
 		if ($ids = $this->ajax) {
 			$id = $ids['id'];
 			$testId = $ids['test_id'];
-			$q = Question::findOneWhere('id', $id);
+			$q = oldQest::findOneWhere('id', $id);
 			$q['parent'] = $testId;
-			Question::update($q)
+			oldQest::update($q)
 				? $this->exitWithPopup('ok')
 				: $this->exitWithError('Ошибка при переносе вопроса');
 		}
 	}
 
 
-	public function actionUpdate()
-	{
-		Question::updateOrCreate($this->ajax['question']);
-
-		foreach ($this->ajax['answers'] as $answer) {
-			Answer::updateOrCreate($answer);
-		}
-		exit(json_encode(['msg' => 'Saved']));
-	}
-
-	public function actionDelete()
-	{
-		$q_id = $this->ajax['id'];
-
-		$answers = Answer::findAllWhere('question_id', $q_id);
-		foreach ($answers as $answer) {
-			Answer::delete($answer['id']);
-		}
-		Question::delete($q_id);
-		$this->exitWithPopup('Вопрос и ответы удалены');
-	}
+//	public function actionDelete()
+//	{
+//		$q_id = $this->ajax['id'];
+//
+//		$answers = Answer::findAllWhere('question_id', $q_id);
+//		foreach ($answers as $answer) {
+//			Answer::delete($answer['id']);
+//		}
+//		oldQest::delete($q_id);
+//		$this->exitWithPopup('Вопрос и ответы удалены');
+//	}
 
 	public function actionImage()
 	{
@@ -82,7 +86,7 @@ class QuestionController Extends AppController
 		foreach ($answers as $answer) {
 			Answer::delete($answer['id']);
 		}
-		Question::delete($q_id);
+		oldQest::delete($q_id);
 		exit(json_encode(['msg' => 'ok', 'q_id' => $q_id]));
 	}
 
@@ -93,39 +97,4 @@ class QuestionController Extends AppController
 		$this->exitWithPopup('Сортировка сохранена');
 	}
 
-	public function actionEdit()
-	{
-
-		$page_name = 'Редактирование тестов';
-		$this->set(compact('page_name'));
-
-		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
-		if ($id) {
-			$test = Test::findOneWhere('id', $id);
-
-			if ($test) {
-				if ($test['isTest']) {
-					$questions
-						= Question::where('parent', '=', $id)
-						->with('answer')
-						->orderBy('sort')
-						->get();
-					if (!$questions) {
-						$id = Question::create(['parent' => $id]);
-						$question = Question::findOneWhere('id', $id - 1);
-						$this->set(compact('question'));
-
-						$tests = Test::findAllWhere('isTest', '1');
-						$this->set(compact('tests'));
-					}
-				} else {
-					$test['children'] = Test::findAllWhere('parent', $id);;
-				}
-
-				$this->set(compact('test'));
-				$questions = $questions->items ?? '';
-				$this->set(compact('questions'));
-			}
-		}
-	}
 }
