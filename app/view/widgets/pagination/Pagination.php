@@ -14,7 +14,7 @@ class Pagination extends Model
 	protected $tpl;
 	protected $class = 'pagination';
 	protected $cache = 3600;
-	protected $sql = "SELECT * FROM test";
+	protected $sql = "SELECT * FROM tests";
 
 	public function __construct($options = [])
 	{

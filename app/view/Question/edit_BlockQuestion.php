@@ -4,9 +4,8 @@
 
 		<div class="sort"><?= $question['sort'] ?? '' ?></div>
 
-
 		<div class="question-edit__parent-select" data-tooltip="Переместить этот вопрос с ответами в другой тест">
-				<?= \app\view\Test\TestView::questionParentSelector($test['id']); ?>
+			<?=$parentSelector;?>
 		</div>
 
 		<div class="question__show-answers"
@@ -27,10 +26,9 @@
 	<div class="row">
 
 		<div class="question__answers">
-				<? if (isset($question['Answer'])): ?>
-						<? $i = 1;
-						foreach ($question['Answer'] as $index => $a): ?>
-								<? include ROOT . "/app/view/Question/edit_BlockAnswer.php"; ?>
+				<? if (isset($question['answers'])): ?>
+						<? foreach ($question['answers'] as $i=>$a): ?>
+								<? \app\Repository\AnswerRepository::getAnswer($i, $a);?>
 						<? endforeach; ?>
 				<? endif; ?>
 

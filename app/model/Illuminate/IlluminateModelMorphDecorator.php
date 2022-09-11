@@ -8,9 +8,9 @@ class IlluminateModelMorphDecorator
 {
 	public static function updateOrCreate($model, array $attributes)
 	{
-		if (isset($attributes['token'])) {
-			unset($attributes['token']);
-		}
+//		if (isset($attributes['token'])) {
+//			unset($attributes['token']);
+//		}
 		if (isset($attributes['id'])) {
 
 			if ($attributes['id']) {

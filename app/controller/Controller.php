@@ -82,14 +82,15 @@ abstract class Controller
 	{
 		if (isset($_POST['param'])) {
 
-			$data = json_decode($_POST['param'], true);
-			if ($this->badToken($data)) return "Плохой запрос";
+			$req = json_decode($_POST['param'], true);
+			if ($this->badToken($req)) return "Плохой запрос";
 
 			if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
 				&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])
 				=== 'xmlhttprequest') {
-				$this->ajax = $data;
-				return $data;
+				unset($req['token']);
+				$this->ajax = $req;
+				return $req;
 			}
 		}
 		return false;

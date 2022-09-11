@@ -29,12 +29,16 @@ class Tree
 		$this->ulTemplate = ROOT . "/app/view/components/MyTree/{$model}/{$model}Ul.php";
 		return $this;
 	}
+	public function parent(string $parent)
+	{
+		$this->parent = $parent;
+		return $this;
+	}
 
 
 	public function get()
 	{
-		$models = self::idKeys($this->items);
-		$tree = self::tree($models, $this->parent);
+		$tree = self::tree($this->items, $this->parent);
 		return $this->showCat($tree);
 	}
 

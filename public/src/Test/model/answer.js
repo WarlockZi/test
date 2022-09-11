@@ -26,7 +26,7 @@ class answer {
   async answerCreate(target) {
     let answer = $('.answer__create .answer')[0]
     let question = target.closest('.question-edit')
-    let q_id = +question.id
+    let q_id = +question.dataset.id
     let clone = answer.cloneNode(true)
     let answerModel = this.getAnswerModel(clone, q_id)
     let res = await post(`/adminsc/answer/updateOrCreate`, answerModel)

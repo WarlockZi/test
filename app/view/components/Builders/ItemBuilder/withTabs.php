@@ -9,20 +9,15 @@
 	<section class="show" data-tab="1">
 
 		<!--  TABLE  -->
-		 <? foreach ($this->fields as $fieldName => $field): ?>
-		  <div class="row">
-			  <div class="field"><?= $field->name ?></div>
-			  :
-					<? include ROOT . '/app/view/components/Builders/ItemBuilder/value.php' ?>
-
-		  </div>
+		 <? foreach ($this->fields as $field): ?>
+				 <?include ROOT.'/app/view/components/Builders/ItemBuilder/row.php'?>
 		 <? endforeach; ?>
 	</section>
 
 	<? $n = 2; ?>
 	<? foreach ($this->tabs as $k => $tab): ?>
 	  <section
-			  <?=$this->dataModel?>
+			 <?= $this->dataModel ?>
 			 <?= $tab->field; ?>
 			  data-tab=<?= $n ?>>
 			 <?= $tab->html; ?>

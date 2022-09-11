@@ -2,27 +2,27 @@
 
 namespace app\controller;
 
-use app\model\Todo;
-use app\model\User;
-use app\view\View;
+use app\model\Illuminate\Todo;
+
 use app\view\components\CustomList\CustomList;
+use app\view\Todo\TodoView;
 
 
 class TodoController Extends AppController
 {
-	protected $model = Todo::class;
+	public $model = Todo::class;
 	protected $modelName = 'todo';
-	protected $tableName = 'todos';
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
 
 	}
-	public function index()
+	public function actionIndex()
 	{
-		$daily = Todo::findAllWhere('type', 'daily');
-		$daily = getTable($daily);
+		$daily = Todo::where('type', 'daily')->get()->toArray();
+		$daily = TodoView::daily($daily);
+		$this->set(compact('daily'));
 
 	}
 
@@ -64,25 +64,6 @@ class TodoController Extends AppController
 		}
 	}
 
-	public function actionUpdateOrCreate()
-	{
-		if ($this->ajax) {
-		}
-	}
-
-
-	public function actionDelete()
-	{
-		$id = $this->ajax['id']??$_POST['id'];
-		if (User::can($this->user, 'right_delete') || defined(SU)) {
-			if ($this->model::delete($id)) {
-				$this->exitWithPopup("ok");
-			}
-		}
-		header('Location:/adminsc/right');
-	}
-
-
 	public function actionUpdate()
 	{
 		if ($this->ajax) {
@@ -91,78 +72,12 @@ class TodoController Extends AppController
 		}
 		$this->layout = 'admin';
 		$this->view = 'edit_update';
-
 	}
-
 
 	private function getTable($items)
 	{
 		return new CustomList(
-			[
-				'models' => $items,
-				'modelName' => $this->modelName,
-				'tableClassName' => $this->tableName,
-				'columns' => [
-					'id' => [
-						'className' => 'id',
-						'field' => 'id',
-						'name' => 'ID',
-						'width' => '50px',
-						'data-type'=>'number',
-						'sort' => true,
-						'search' => false,
-					],
 
-					'name' => [
-						'className' => 'name',
-						'field' => 'name',
-						'name' => 'Наименование',
-						'width' => '1fr',
-						'contenteditable'=>'contenteditable',
-						'data-type'=>'string',
-						'sort' => true,
-						'search' => true,
-					],
-					'description' => [
-						'className' => 'description',
-						'field' => 'description',
-						'name' => 'Описание',
-						'width' => '1fr',
-						'contenteditable'=>'contenteditable',
-						'data-type'=>'string',
-						'sort' => true,
-						'search' => true,
-					],
-
-					'post_id' => [
-						'className' => 'post_id',
-						'field' => 'post_id',
-						'name' => 'Должность',
-						'width' => '1fr',
-						'contenteditable'=>'contenteditable',
-						'data-type'=>'string',
-						'sort' => true,
-						'search' => true,
-					],
-
-					'type' => [
-						'className' => 'type',
-						'field' => 'type',
-						'name' => 'Цикличность',
-						'width' => '150px',
-						'contenteditable'=>'contenteditable',
-						'data-type'=>'string',
-						'sort' => true,
-						'search' => true,
-					],
-
-
-				],
-				'editCol' => false,
-//				'delCol' => false,
-				'delCol' => 'ajax',
-				'addButton'=> 'ajax',//'redirect'
-			]
 		);
 	}
 

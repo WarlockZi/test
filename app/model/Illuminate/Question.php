@@ -5,23 +5,29 @@ namespace app\model\Illuminate;
 
 class Question extends \Illuminate\Database\Eloquent\Model
 {
-	public $table = 'question';
-	public $model = 'question';
+	public $timestamps = false;
 
-	public $fillable = [
-		'qustion'=>'',
-		'parent'=>null,
-		'picq'=>'',
-		'sort'=>'100'
-	];
+	protected $fillable = [
+		'qustion', 'test_id', 'picq', 'sort'];
 
-	public static function sort($q_ids){
+	public static function sort($q_ids)
+	{
 		$model = new static();
-		foreach ( $q_ids as $sort =>$id) {
-			$question = $model->findOneWhere('id',$id);
-			$question['sort']=$sort+1;
-			$model->update($question);
+		foreach ($q_ids as $sort => $id) {
+			$question = $model->find($id);
+			$question->sort = $sort + 1;
+			$question->save();
 		}
+	}
+
+	public function answers()
+	{
+		return $this->hasMany(Answer::class);
+	}
+
+	public function test()
+	{
+		return $this->belongsTo(Test::class);
 	}
 
 }

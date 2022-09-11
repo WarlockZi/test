@@ -1,10 +1,8 @@
 <? use app\view\widgets\Accordion\Accordion;
 
-$models = \app\model\Test::findAll();
-
 $menu = new Accordion([
-	'model' => new \app\model\Test,
-	'models' => $models,
+	'model' => \app\model\Illuminate\Test::class,
+	'models' => \app\model\Illuminate\Test::all()->toArray(),
 	'parentFieldName' => 'parent',
 	'class' => 'test-edit',
 	'label_after' => ICONS . "/edit.svg",

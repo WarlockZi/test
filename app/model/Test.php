@@ -29,18 +29,7 @@ class Test extends Model
 		return $children;
 	}
 
-	public static function pagination(array $items)
-	{
-		$pagination = '<div class="pagination">';
-		$i = 0;
-		foreach ($items as $id => $el) {
-			$i++;
-			$d = "<div data-pagination={$el['id']}>{$i}</div>";
-			$pagination .= $d;
-		}
 
-		return $pagination . '</div>';
-	}
 
 
 

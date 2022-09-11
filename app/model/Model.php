@@ -39,7 +39,7 @@ abstract class Model
 		if (!$register) $model->auth('create');
 
 		if (isset($values['id'])) unset($values['id']);
-		if (isset($values['token'])) unset($values['token']);
+//		if (isset($values['token'])) unset($values['token']);
 
 		$fillable = $model->fillable;
 		foreach ($values as $k => $v) {
@@ -70,7 +70,7 @@ abstract class Model
 		$id = $values['id'];
 		if (!$id) exit('empty or undefined id');
 		unset($values['id']);
-		unset($values['token']);
+//		unset($values['token']);
 		$par = '';
 		foreach ($values as $key => $value) {
 			$value = $value ?? null;

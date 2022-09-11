@@ -10,6 +10,7 @@ class ItemFieldBuilder
 {
 
 	public $field = '';
+	public $item = '';
 	public $datafield = '';
 	public $class = '';
 	public $name = '';
@@ -26,6 +27,7 @@ class ItemFieldBuilder
 		$field = new static();
 		$field->datafield = "data-field={$fieldName}";
 		$field->field = $fieldName;
+		$field->item = $item;
 		return $field;
 	}
 
@@ -79,8 +81,18 @@ class ItemFieldBuilder
 
 	public function get()
 	{
-		$this->name = $this->name ?$this->name : $this->field;
+		$this->name = $this->name ? $this->name : $this->field;
 		return $this;
+	}
+
+	public function toHtml(string $model): string
+	{
+		$this->dataModel = "data-model={$model}";
+		$field = $this;
+		ob_start();
+		include ROOT . '/app/view/components/Builders/ItemBuilder/row.php';
+		return ob_get_clean();
+
 	}
 
 

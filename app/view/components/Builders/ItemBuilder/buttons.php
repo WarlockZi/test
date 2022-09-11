@@ -11,7 +11,9 @@
 
 
 	<? if ($this->save): ?>
-	  <div class="save">
+	  <div class="save"
+	       data-model="<?=$this->model;?>"
+	       data-id="<?=$this->item['id'];?>">
 			 <? include SAVE ?>
 	  </div>
 	<? endif; ?>
