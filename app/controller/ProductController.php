@@ -8,7 +8,9 @@ use app\model\Illuminate\Product;
 use app\model\Illuminate\Propertable;
 use app\model\illuminate\Tag;
 use app\Repository\ImageRepository;
+use app\Repository\ProductRepository;
 use app\view\Category\CategoryView;
+use app\view\Product\ProductCardView;
 use app\view\Product\ProductView;
 
 
@@ -18,16 +20,8 @@ class ProductController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route['id'];
-		$prod = Product::
-		with('category.properties.vals')
-			->with('category.category_recursive')
-			->with('detailImages')
-			->with('smallPackImages')
-			->with('bigPackImages')
-			->with('mainImage')
-			->with('mainUnit')
-			->with('secondaryUnit')
-			->find($id);
+		$prod = ProductRepository::getEdit($id);
+
 		$product = ProductView::edit($prod);
 		$breadcrumbs = CategoryView::breadcrumbs($prod->category->id, true);
 		$this->set(compact('product', 'breadcrumbs'));
@@ -35,9 +29,10 @@ class ProductController Extends AppController
 
 	public function actionIndex()
 	{
+		$this->view='card';
 		if (isset($this->route['slug'])) {
 			$slug = $this->route['slug'];
-			$card = ProductView::card($slug);
+			$card = ProductCardView::getCard($slug);
 			$this->set(compact('card'));
 		}
 	}
