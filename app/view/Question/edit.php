@@ -1,6 +1,7 @@
+<div class="adm-content">
 <div class="test-edit-wrapper">
 
-	<? include ROOT . '/app/view/Test/test-head.php'; ?>
+	<? include ROOT . '/app/view/Test/test_head.php'; ?>
 
 	<div class="test-edit__cont">
 
@@ -10,4 +11,5 @@
 		</div>
 		 <? include ROOT . '/app/view/Question/edit_content.php' ?>
 	</div>
+</div>
 </div>

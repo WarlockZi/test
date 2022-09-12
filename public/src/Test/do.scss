@@ -26,15 +26,16 @@
 
 .test-do, .opentest-do {
   display: flex;
-  max-width: 1310px;
-  width: 100%;
-  //padding-left: 20px;
   flex-flow: column;
   flex: 1 1 auto;
+  margin-right: 6vw;
+  //margin-top: 100px;
+  max-width: 1310px;
+  width: 100%;
   min-height: 100%;
   background-color: #fff;
-  z-index: 1;
-  margin-right: 6vw;
+  //margin-left: 20px;
+  //z-index: 1;
 
   @include _400 {
     flex-wrap: wrap;

@@ -2,22 +2,27 @@
 
 namespace app\controller;
 
+use app\model\User;
+use app\view\Header\Header;
 use app\view\View;
 use Illuminate\Database\Eloquent\Model;
 
 class AppController extends Controller
 {
 	protected $ajax;
-	protected $user;
+	public $user;
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
+
 		if (isset($route['admin'])) {
 			$this->setAdminAssets();
 			$this->autorize();
+			Header::getAdninHeader($this);
 		} else {
 			$this->setMainAssets();
+			Header::getVitexHeader($this);
 		}
 		$this->isAjax();
 	}

@@ -16,8 +16,8 @@
 			 </div>
 			 <? endif; ?>
 
-			 <? if (isset($item["Answer"])) : ?>
-				 <? foreach ($item["Answer"] as $index => $answer): ?>
+			 <? if (isset($item["answers"])) : ?>
+				 <? foreach ($item["answers"] as $index => $answer): ?>
 				 <div class="a" data-id=<?= $answer['id']; ?>>
 					 <input type="checkbox" id="answer-<?= $answer['id'] ?>">
 					 <label for="answer-<?= $answer['id'] ?>"><?= $answer['answer'] ?></label>
@@ -36,7 +36,7 @@
 
 
 </div>
-<? include ROOT . '/app/view/components/test/test_edit_prev_next_buttons.php' ?>
+<? include ROOT . '/app/view/Test/test_edit_prev_next_buttons.php' ?>
 
 <a class="test-do__finish-btn" data-id="<?= $test['id']; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
 </div>

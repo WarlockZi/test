@@ -72,8 +72,10 @@
   justify-content: center;
   flex: 1;
   color: #fff;
-  font: 600 17px/17px intro, 'Proxima Nova', sans-serif;
-
+  font: 600 14px/20px intro, "Proxima Nova", sans-serif;
+  text-align: center;
+  padding: 10px;
+  letter-spacing: 1px;
 
   @include _800 {
     display: none;

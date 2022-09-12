@@ -19,42 +19,21 @@
 </head>
 
 <body>
-<? // include ROOT . '/app/view/components/header/top.php'; ?>
-<header>
-	<? include ROOT . '/app/view/components/header/header.php'; ?>
-</header>
-<? include ROOT . '/app/view/components/header/catalog_menu.php'; ?>
+
+<?=$header;?>
+<?// include ROOT . '/app/view/components/header/vitex_header.php'; ?>
+
+<?=$headerMenu;?>
+<?// include ROOT . '/app/view/components/header/catalog_menu.php'; ?>
 
 <?= $content; ?>
 
-
-<footer>
-
-	<div class="footer_menu">
-		<div class="column">
-			<a href="/about/contacts" nofollow noindex>Контакты</a>
-			<a href="/about/requisites" nofollow noindex>Реквизиты</a>
-		</div>
-		<div class="column">
-			<a href="#">Новости</a>
-		</div>
-		<div class="column">
-			<a href="/about/return_change" nofollow noindex>Возврат и обмен</a>
-			<a href="/about/politicaconf" nofollow noindex>Политика конфиденциальности</a>
-			<a href="/about/oferta" nofollow noindex>Оферта</a>
-		</div>
-
-	</div>
-	<div class="footer_legal">
-		<p>© <? echo date('Y') ?> Витекс. Цены, указанные на сайте, не являются публичной офертой, определяемой
-			положением Статьи 437 (2) ГК РФ и зависят от объема заказа. ИНН:352507425251</p>
-		<p>Created by VORONIKLAB</p>
-	</div>
-</footer>
-
+<? include ROOT . '/app/view/components/footer/footer.php'; ?>
 
 <? include ROOT . '/app/view/components/footer/cookie.php'; ?>
+
 <? $this::getJS(); ?>
 <? //=require_once ROOT.'/app/view/components/ya_metrica.php';?>
+
 </body>
 </html>

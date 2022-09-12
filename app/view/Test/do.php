@@ -1,14 +1,17 @@
-<section class="test-do">
+<div class="adm-content">
 
-	<? include ROOT . '/app/view/Test/test-head.php'; ?>
+	<section class="test-do">
 
-	<div class="content">
-		 <? include ROOT . '/app/view/components/test/test_do_accordion.php'; ?>
+		 <? include ROOT . '/app/view/Test/test_head.php'; ?>
 
-		 <? if ($test): ?>
-			 <? include ROOT . '/app/view/Test/do_content.php'; ?>
-		 <? else: ?>
-		  <h2></h2>
-		 <? endif; ?>
+		<div class="content">
+				<? include ROOT . '/app/view/Test/test_do_accordion.php'; ?>
 
-</section>
+				<? if ($test): ?>
+					<? include ROOT . '/app/view/Test/do_content.php'; ?>
+				<? else: ?>
+			  <h2></h2>
+				<? endif; ?>
+
+	</section>
+</div>
