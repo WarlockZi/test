@@ -8,7 +8,7 @@ Router::add("^category\/(?<slug>[a-z0-9-]+)\/?(?<extra>[a-z0-9-]+)?$", ['control
 
 Router::add("^about\/(?P<action>[a-z0-9_]+)$", ['controller' => 'main']);
 
-Router::add("^bibin$", ['controller' => 'bibin']);
+Router::add("^product\/(?P<slug>)$", ['controller' => 'product']);
 
 Router::add("^.?search.?", ['controller' => 'search', 'action' => 'index']);
 
