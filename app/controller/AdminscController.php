@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\core\App;
 use app\model\User;
+use app\view\Header\Header;
 use app\view\View;
 
 
@@ -16,6 +17,7 @@ class AdminscController extends AppController
 		if (!User::can($this->user, ['role_employee'])) {
 			header('Location:/auth/profile');
 		}
+		Header::getAdninHeader($this);
 	}
 
 

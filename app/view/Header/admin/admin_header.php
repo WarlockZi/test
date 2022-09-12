@@ -1,9 +1,9 @@
 <div class="admin-layout_header">
 	<a href='/' class="logo" aria-label='На главную'>
-	<? include ROOT . '/app/view/components/header/admin/logo_VITEX_grey.php' ?>
+	<? include ROOT . '/app/view/Header/admin/logo_VITEX_grey.php' ?>
 	</a>
 
-	<? if (\app\model\User::can($this->user)): ?>
+	<? if (\app\model\User::can($controller->user)): ?>
 	  <div class="chip-wrap">
 		  <a href="/adminsc/user" class="chip">Пользователи</a>
 		  <a href="/adminsc/post" class="chip">Должности</a>
@@ -13,5 +13,5 @@
 	  </div>
 	<? endif; ?>
 	<!--	<a title="Whatsapp" href="whatsapp://send?phone=79814362309"><img src="/pic/WhatsApp.jpg" alt="Написать в Whatsapp" /></a>-->
-	<? include ROOT . '/app/view/components/header/user_menu.php' ?>
+	<? include ROOT . '/app/view/Header/user_menu.php' ?>
 </div>

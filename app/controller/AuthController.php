@@ -2,12 +2,12 @@
 
 namespace app\controller;
 
+use app\model\Illuminate\User as IlluminateUser;
 use app\model\Mail;
 use app\model\User;
-use app\model\Illuminate\User as IlluminateUser;
+use app\view\Header\Header;
 use app\view\User\UserView;
 use app\view\View;
-use MongoDB\Driver\Exception\CommandException;
 
 class AuthController extends AppController
 {
@@ -15,9 +15,6 @@ class AuthController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
-		if ($this->route) {
-
-		}
 		View::setJs('auth.js');
 		View::setCss('auth.css');
 	}
@@ -64,6 +61,7 @@ class AuthController extends AppController
 		$userArr = IlluminateUser::find($_SESSION['id'])->toArray();
 
 		if (User::can($userArr, 'role_employee')) {
+			Header::getAdninHeader($this);
 			$this->layout = 'admin';
 			if (User::can($userArr, 'role_admin')) {
 				$item = UserView::admin($user);
@@ -84,8 +82,7 @@ class AuthController extends AppController
 		$this->set(compact('item'));
 	}
 
-	public
-	function actionChangePassword()
+	public  function actionChangePassword()
 	{
 		$this->autorize();
 		if ($data = $this->ajax) {
@@ -114,8 +111,7 @@ class AuthController extends AppController
 		}
 	}
 
-	public
-	function actionReturnpass()
+	public function actionReturnpass()
 	{
 		if ($data = $this->ajax) {
 
@@ -144,8 +140,7 @@ class AuthController extends AppController
 		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
 	}
 
-	public
-	function actionLogin()
+	public function actionLogin()
 	{
 		if ($data = $this->ajax) {
 
@@ -175,8 +170,7 @@ class AuthController extends AppController
 		$this->layout = 'vitex';
 	}
 
-	public
-	function actionLogout()
+	public function actionLogout()
 	{
 		if (isset($_COOKIE[session_name()])) {  // session_name() - получаем название текущей сессии
 			setcookie(session_name(), '', time() - 86400, '/');
@@ -186,8 +180,7 @@ class AuthController extends AppController
 		exit();
 	}
 
-	private
-	function randomPassword()
+	private function randomPassword()
 	{
 		$arr = [
 			'1234567890',
@@ -211,8 +204,7 @@ class AuthController extends AppController
 	}
 
 
-	public
-	function actionConfirm()
+	public function actionConfirm()
 	{
 		$hash = $_GET['hash'];
 		if (!$hash) header('Location:/');
@@ -230,31 +222,26 @@ class AuthController extends AppController
 		exit();
 	}
 
-	public
-	function actionNoconfirm()
-	{
-		$errorss = 4;
-	}
 
-
-	private
-	function prepareBodyRegister($href, $hash)
+	private function prepareBodyRegister($href, $hash)
 	{
 		ob_start();
 		require ROOT . '/app/view/Auth/email.php';
 		return ob_get_clean();
 	}
 
-	public
-	function actionSuccess()
+	public function actionSuccess()
 	{
 		$this->auth();
 	}
 
-	public
-	function actionCabinet()
+	public function actionCabinet()
 	{
 		$this->auth();
 	}
 
+	public function actionNoconfirm()
+	{
+		$errorss = 4;
+	}
 }

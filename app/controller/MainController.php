@@ -2,9 +2,10 @@
 
 namespace app\controller;
 
-use app\view\View;
+use app\model\Illuminate\Category;
 use app\model\Product;
-use app\core\Cache;
+use app\view\Header\Header;
+use app\view\View;
 
 class MainController extends AppController
 {
@@ -13,12 +14,13 @@ class MainController extends AppController
 	{
 		parent::__construct($route);
 		$this->auth();
-		$sale = Product::where('sale','=', 1)->get();
+		$sale = Product::where('sale', '=', 1)->get();
 		$this->set(compact('sale'));
 	}
 
 	public function actionIndex()
 	{
+//		Header::getVitexHeader($this);
 		View::setMeta('Нитриловые перчатки оптом', 'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.', 'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
 	}
 

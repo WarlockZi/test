@@ -5,14 +5,14 @@
   .mobile-menu {
     position: absolute;
     top: 100%;
-    right: -150%;
+    right: -250px;
     width: 250px;
     background: #78aafe;
-    transition: right 500ms ease-out;
+    transition: right 200ms ease-out;
 
-    @include _500 {
-      width: 100%;
-    }
+    //@include _500 {
+    //  width: 100%;
+    //}
 
     &.show {
       right: 0;

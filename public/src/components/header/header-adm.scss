@@ -9,15 +9,20 @@
   max-width: 1310px;
   border-bottom: 1px solid $color-gray2;
   padding: 15px 2px 15px 15px;
+  max-height: 52px;
+  position: absolute;
+  top: 0;
+  left: 62px;
 
   .logo {
     display: flex;
     align-items: center;
-    //padding-left: 20px;
+
     .logo_vitex {
       max-width: 140px;
       margin: 0 10px;
     }
+
   }
 
   @include _600 {

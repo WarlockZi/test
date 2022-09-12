@@ -1,21 +1,25 @@
-<div class="test-edit-wrapper">
+<div class="adm-content">
 
-	<? include ROOT . '/app/view/Test/test-head.php'; ?>
 
-	<div class="test-edit__cont">
+	<div class="test-edit-wrapper">
 
-		<div class='accordion_wrap'>
-				<? include ROOT . '/app/view/Test/edit_accordion.php' ?>
+		 <? include ROOT . '/app/view/Test/test_head.php'; ?>
 
-				<? include ROOT . '/app/view/Test/edit_add-test-button.php' ?>
+		<div class="test-edit__cont">
+
+			<div class='accordion_wrap'>
+					 <? include ROOT . '/app/view/Test/edit_accordion.php' ?>
+
+					 <? include ROOT . '/app/view/Test/edit_add-test-button.php' ?>
+			</div>
+
+			<div class="test-edit__content">
+
+					 <?= $item ?? ''; ?>
+
+			</div>
 		</div>
 
-		<div class="test-edit__content">
-
-			<?=$item??'';?>
-
-		</div>
 	</div>
 
 </div>
-

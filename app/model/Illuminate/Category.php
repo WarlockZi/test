@@ -14,7 +14,10 @@ class Category extends \Illuminate\Database\Eloquent\Model
 		'category_id' => 0,
 	];
 
-
+	public static function showFrontCategories()
+	{
+		return static ::where('show_front',1)->get(['name'])->toArray();
+	}
 
 	public function properties()
 	{

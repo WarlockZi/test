@@ -1,4 +1,3 @@
-
 <div class="test-edit__title">
 	<p class="test-name">Название теста - <?= $test['name'] ?></p>
 </div>
@@ -15,7 +14,7 @@
 
 	<? if ($test['questions']): ?>
 		<? foreach ($test['questions'] as $question): ?>
-			<?= \app\Repository\QuestionRepository::getQuestion($question,$parentSelector); ?>
+			<?= \app\Repository\QuestionRepository::getQuestion($question, $parentSelector); ?>
 		<? endforeach; ?>
 	<? else: ?>
 	  <h3>Вопросов нет</h3>
@@ -25,3 +24,4 @@
 		+ Добавить вопрос
 	</div>
 </div>
+

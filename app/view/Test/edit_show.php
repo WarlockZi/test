@@ -1,3 +1,4 @@
+<div class="adm-content">
 <div class="test-edit-wrapper">
 
 	<div class="page-name">Добавление <?= $test['isTest'] ? 'теста' : 'папки' ?></div>
@@ -46,4 +47,5 @@
 	</div>
 
 
+</div>
 </div>
