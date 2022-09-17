@@ -12,6 +12,7 @@ use app\Repository\ProductRepository;
 use app\view\Category\CategoryView;
 use app\view\Product\ProductCardView;
 use app\view\Product\ProductView;
+use Illuminate\Contracts\View\View;
 
 
 class ProductController Extends AppController
@@ -32,8 +33,10 @@ class ProductController Extends AppController
 		$this->view='card';
 		if (isset($this->route['slug'])) {
 			$slug = $this->route['slug'];
-			$card = ProductCardView::getCard($slug);
-			$this->set(compact('card'));
+			$product = ProductCardView::getCard($slug);
+			$this->set(compact('product'));
+//			\app\view\View::setCss('produ');
+//			\app\view\View::setJss();
 		}
 	}
 
@@ -74,8 +77,6 @@ class ProductController Extends AppController
 		if ($this->ajax) {
 			$imgId = $this->ajax['id'];
 			$product = Product::find($this->ajax['productId']);
-//			$product->smallPackImages()->detach($imgId);
-
 			$this->detachTagFromImage('Внутритарная упаковка', $imgId);
 
 			$this->exitWithPopup('ok');
@@ -86,8 +87,6 @@ class ProductController Extends AppController
 	{
 		if ($this->ajax) {
 			$imgId = $this->ajax['id'];
-//			$product = Product::find($this->ajax['productId']);
-//			$product->bigPackImages()->detach($imgId);
 			$this->detachTagFromImage('Транспортная упаковка', $imgId);
 			$this->exitWithPopup('ok');
 		}
@@ -103,7 +102,6 @@ class ProductController Extends AppController
 			$product = Product::find($_POST['imageable_id']);
 			$product->main_img = $image->id;
 			$product->save();
-//			header('Content-Type: application/json; charset=utf-8');
 			$this->exitJson(['msg' => 'ok', 'id' => $image->id]);
 		}
 	}

@@ -15,7 +15,6 @@ class Product extends Model
 		'main_unit', 'base_unit'
 	];
 
-
 	public function mainImage()
 	{
 		return $this->hasOne(Image::class,
@@ -82,12 +81,28 @@ class Product extends Model
 
 	public function category()
 	{
-		return $this->belongsTo(Category::class);
+		return $this->belongsTo(Category::class)
+			->with('cat');
 	}
 
 	public function categories()
 	{
 		return $this->belongsTo(Category::class)->with('category_rec');
+	}
+
+	public function cat(){
+		return $this->belongsTo(Category::class)
+			->with('cat');
+	}
+	public function parents()
+	{
+		$collection = collect([]);
+		$cat = $this->cat;
+		while ($cat) {
+			$collection->push($cat);
+			$cat = $cat->cat;
+		}
+		return $collection;
 	}
 
 
