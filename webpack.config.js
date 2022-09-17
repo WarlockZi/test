@@ -18,6 +18,7 @@ const config = {
     mainHeader: path.resolve(src, 'components/header/header.js'),
     common: path.resolve(src, 'common.js'),
     list: path.resolve(src, 'components/list/list.js'),
+    product: path.resolve(src, 'Product/card.js'),
 
   },
   output: {

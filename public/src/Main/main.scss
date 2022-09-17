@@ -257,34 +257,34 @@ main {
 }
 
 
-.card {
-  width: 50%;
-  margin: 65px auto;
-
-  h1, h2, p {
-    color: #4e4e4e;
-  }
-
-
-  p {
-    font-size: 1rem;
-    line-height: 2rem;
-  }
-
-  @include _300 {
-    & > h1, & > h2 {
-      font-size: 12px;
-    }
-    & > p {
-      font-size: 10px;
-    }
-  }
-
-  @include _600 {
-    width: 95%;
-    margin: 30px auto;
-  }
-}
+//.card {
+//  width: 50%;
+//  margin: 65px auto;
+//
+//  h1, h2, p {
+//    color: #4e4e4e;
+//  }
+//
+//
+//  p {
+//    font-size: 1rem;
+//    line-height: 2rem;
+//  }
+//
+//  @include _300 {
+//    & > h1, & > h2 {
+//      font-size: 12px;
+//    }
+//    & > p {
+//      font-size: 10px;
+//    }
+//  }
+//
+//  @include _600 {
+//    width: 95%;
+//    margin: 30px auto;
+//  }
+//}
 
 .workflow {
   display: flex;

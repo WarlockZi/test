@@ -16,12 +16,12 @@ class Category extends \Illuminate\Database\Eloquent\Model
 
 	public static function showFrontCategories()
 	{
-		return static ::where('show_front',1)->get(['name'])->toArray();
+		return static::where('show_front', 1)->get(['name'])->toArray();
 	}
 
 	public function properties()
 	{
-		return $this->morphToMany(Property::class,'propertable');
+		return $this->morphToMany(Property::class, 'propertable');
 	}
 
 	public function category_recursive()
@@ -29,9 +29,14 @@ class Category extends \Illuminate\Database\Eloquent\Model
 		return $this->parent()->with('category_recursive');
 	}
 
+	public function category()
+	{
+		return $this->parent()->with('category_recursive');
+	}
+
 	public function parent()
 	{
-		return $this->belongsTo(Category::class,'category_id')
+		return $this->belongsTo(Category::class, 'category_id')
 			->with('properties.vals');
 	}
 
@@ -44,4 +49,17 @@ class Category extends \Illuminate\Database\Eloquent\Model
 	{
 		return $this->hasMany(Product::class);
 	}
+
+
+	public function cat()
+	{
+		return $this->belongsTo(Category::class);
+	}
+
+	public function parents()
+	{
+		return $this->cat()->with('parents');
+
+	}
+
 }

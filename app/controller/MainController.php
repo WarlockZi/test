@@ -2,9 +2,6 @@
 
 namespace app\controller;
 
-use app\model\Illuminate\Category;
-use app\model\Product;
-use app\view\Header\Header;
 use app\view\View;
 
 class MainController extends AppController
@@ -14,8 +11,8 @@ class MainController extends AppController
 	{
 		parent::__construct($route);
 		$this->auth();
-		$sale = Product::where('sale', '=', 1)->get();
-		$this->set(compact('sale'));
+//		$sale = Product::where('sale', '=', 1)->get();
+//		$this->set(compact('sale'));
 	}
 
 	public function actionIndex()

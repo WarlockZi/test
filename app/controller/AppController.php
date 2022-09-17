@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\model\User;
 use app\view\Header\Header;
 use app\view\View;
 use Illuminate\Database\Eloquent\Model;
@@ -143,7 +142,6 @@ class AppController extends Controller
 			} elseif (!$user['confirm'] == "1") {
 				$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
 				header("Location:/auth/noconfirm");
-
 			} else {
 				if ($user['email'] === $_ENV['SU_EMAIL']) {
 					define('SU', true);
@@ -176,8 +174,12 @@ class AppController extends Controller
 		View::setCss('common.css');
 		View::setJs('cookie.js');
 		View::setCss('cookie.css');
+
 		View::setJs('list.js');
 		View::setCss('list.css');
+
+		View::setCss('product.css');
+//		View::setJs('list.css');
 	}
 
 	protected function setAdminAssets()

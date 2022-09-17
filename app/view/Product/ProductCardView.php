@@ -12,8 +12,7 @@ class ProductCardView
 
 	public static function getCard($slug)
 	{
-		return ProductRepository::getCard($slug)[0];
-
+		return ProductRepository::getCard($slug);
 	}
 
 }

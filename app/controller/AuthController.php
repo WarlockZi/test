@@ -82,7 +82,7 @@ class AuthController extends AppController
 		$this->set(compact('item'));
 	}
 
-	public  function actionChangePassword()
+	public function actionChangePassword()
 	{
 		$this->autorize();
 		if ($data = $this->ajax) {
@@ -233,6 +233,17 @@ class AuthController extends AppController
 	public function actionSuccess()
 	{
 		$this->auth();
+	}
+
+	public static function user()
+	{
+		if (isset($_SESSION['id']) && $_SESSION['id']) {
+			$user = \app\model\Illuminate\User::find($_SESSION['id'])->toArray();
+			if (!$user) {
+				exit(json_encode(['popup' => 'Неправильные данные для входа на сайт']));
+			}
+			return $user;
+		}
 	}
 
 	public function actionCabinet()
