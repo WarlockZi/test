@@ -2,6 +2,22 @@
 <div class="admin_sidebar">
 
 	<? include ICONS . '/gamburger.svg' ?>
+	<a href='/' class="logo" aria-label='На главную'>
+		 <? include ROOT . '/app/view/Header/admin/logo_VITEX_grey.php' ?>
+	</a>
+
+	<? if (\app\model\User::can($controller->user)): ?>
+		<? include ROOT . '/app/view/Header/admin/chips.php' ?>
+	<? endif; ?>
+
+	<!--	<a title="Whatsapp" href="whatsapp://send?phone=79814362309"><img src="/pic/WhatsApp.jpg" alt="Написать в Whatsapp" /></a>-->
+	<? include ROOT . '/app/view/Header/user_menu.php' ?>
+
+
+<!--	--><?//=$logo;?>
+<!--	--><?//=$chips;?>
+<!--	--><?//=$user_menu;?>
+
 <!--	<a class="logo" href="/">-->
 <!--		 --><?// include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
 <!--		<span class="logo_square"></span>-->
@@ -158,6 +174,7 @@
 				  <a class="neon" href="/auth/returnpass">Забыл пароль</a>
 				  <a class="neon" href="/auth/changepassword">Сменить пароль</a>
 				  <a class="neon" href="/auth/profile">Изменить свой профиль</a>
+				  <a class="neon" href="/auth/logout">Выйти</a>
 
 					 <? endif; ?>
 			</ul>

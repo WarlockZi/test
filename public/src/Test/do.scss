@@ -211,6 +211,7 @@
   display: flex;
   align-items: center;
   @include _h4;
+  font-weight: initial;
 
   &.done:before {
     content: '';
