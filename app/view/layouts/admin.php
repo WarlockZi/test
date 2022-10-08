@@ -17,7 +17,8 @@
 
 <div class="admin-layout__container">
 
-	<? include ROOT . '/app/view/components/admin_menu/admin_menu__accordion.php'; ?>
+
+  <?= $adminMenu; ?>
 
   <?= $adminHeader; ?>
 
