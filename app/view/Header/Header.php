@@ -29,9 +29,9 @@ class Header
 		$headerMenu = self::getMenu($controller,$frontCategories);
 		$header = self::getHeader($controller);
 		$controller->set(compact(
-			'header',
 			'frontCategories',
-			'headerMenu'
+			'headerMenu',
+			'header',
 		));
 	}
 
