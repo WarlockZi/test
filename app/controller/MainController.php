@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\view\Header\Header;
 use app\view\View;
 
 class MainController extends AppController
