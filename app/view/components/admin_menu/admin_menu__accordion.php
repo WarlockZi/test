@@ -1,27 +1,23 @@
-<? use \app\model\User; ?>
+<? use \app\model\User;
+$user = $controller->user;
+?>
 <div class="admin_sidebar">
 
-	<? include ICONS . '/gamburger.svg' ?>
-	<a href='/' class="logo" aria-label='На главную'>
-		 <? include ROOT . '/app/view/Header/admin/logo_VITEX_grey.php' ?>
-	</a>
+	<div class="admin_sidebar_header">
+    <? include ICONS . '/gamburger.svg' ?>
 
-	<? if (\app\model\User::can($controller->user)): ?>
-		<? include ROOT . '/app/view/Header/admin/chips.php' ?>
-	<? endif; ?>
+    <?include ROOT.'/app/view/Header/logo.php'?>
 
-	<!--	<a title="Whatsapp" href="whatsapp://send?phone=79814362309"><img src="/pic/WhatsApp.jpg" alt="Написать в Whatsapp" /></a>-->
-	<? include ROOT . '/app/view/Header/user_menu.php' ?>
+    <? if (\app\model\User::can($user)): ?>
+      <? include ROOT . '/app/view/Header/admin/chips.php' ?>
+    <? endif; ?>
+
+		<!--	<a title="Whatsapp" href="whatsapp://send?phone=79814362309"><img src="/pic/WhatsApp.jpg" alt="Написать в Whatsapp" /></a>-->
+    <? include ROOT . '/app/view/Header/user_menu.php' ?>
+
+	</div>
 
 
-<!--	--><?//=$logo;?>
-<!--	--><?//=$chips;?>
-<!--	--><?//=$user_menu;?>
-
-<!--	<a class="logo" href="/">-->
-<!--		 --><?// include ROOT . '/app/view/components/header/admin/logo_VITEX_white.php' ?>
-<!--		<span class="logo_square"></span>-->
-<!--	</a>-->
 
 	<div accordion>
 
@@ -30,7 +26,7 @@
 			Главная
 		</a>
 
-		 <? if (User::can($this->user, ['gate_admin', 'role_rop'])): // admin ?>
+		 <? if (User::can($user, ['gate_admin', 'role_rop'])): // admin ?>
 		  <li crm>
 
 			  <div class="label">
@@ -50,7 +46,7 @@
 		 <? endif; ?>
 
 
-		 <? if (User::can($this->user, ['role_admin', 'role_rop'])): // admin ?>
+		 <? if (User::can($user, ['role_admin', 'role_rop'])): // admin ?>
 		  <li settings>
 
 			  <div class="label">
@@ -60,7 +56,7 @@
 			  </div>
 
 			  <ul class="level-1">
-						 <? if (User::can($this->user, ['gate_admin'])): // admin ?>
+						 <? if (User::can($user, ['gate_admin'])): // admin ?>
 					 <a class="neon" href='/adminsc/property'>Свойства</a>
 					 <a class="neon" href='/adminsc/right'>Права</a>
 					 <a class="neon" href='/adminsc/tag'>Tэги</a>
@@ -73,7 +69,7 @@
 		  </li>
 		 <? endif; ?>
 
-		 <? if (User::can($this->user, ['role_employee'])): // admin ?>
+		 <? if (User::can($user, ['role_employee'])): // admin ?>
 		  <li video>
 
 			  <div class="label">
@@ -98,27 +94,27 @@
 			</div>
 			<ul class="level-1">
 
-					 <? if (User::can($this->user, ['role_employee'])): ?>
+					 <? if (User::can($user, ['role_employee'])): ?>
 				  <a class="neon" href="/adminsc/test/do">Проходить тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($this->user, ['role_admin'])): ?>
+					 <? if (User::can($user, ['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/test/edit">Редактировать тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($this->user, ['role_admin'])): ?>
+					 <? if (User::can($user, ['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/testresult">Результаты тестов </a>
 					 <? endif; ?>
 
-					 <? if (User::can($this->user, ['role_employee'])): ?>
+					 <? if (User::can($user, ['role_employee'])): ?>
 				  <a class="neon" href="/adminsc/opentest/do">Проходить открытые тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($this->user, ['role_admin'])): ?>
+					 <? if (User::can($user, ['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/opentest/edit">Редактировать открытые тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($this->user, ['role_admin'])): ?>
+					 <? if (User::can($user, ['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/opentestresult">Результаты открытых тестов </a>
 					 <? endif; ?>
 
@@ -132,7 +128,7 @@
 				Планирование
 			</div>
 			<ul class="level-1">
-					 <? if (User::can($this->user, 'role_employee')): // admin ?>
+					 <? if (User::can($user, 'role_employee')): // admin ?>
 				  <a class="neon" href="/adminsc/planning/create">Создать задачи</a>
 				  <a class="neon" href="/adminsc/planning/list">Посмотреть планировки</a>
 				  <a class="neon" href="/adminsc/planning/plan">Спланироваться</a>
@@ -155,7 +151,7 @@
 				Каталог
 			</div>
 			<ul class="level-1">
-					 <? if (User::can($this->user, 'role_admin')): // admin ?>
+					 <? if (User::can($user, 'role_admin')): // admin ?>
 				  <a class="neon" href="/adminsc/category">Категории</a>
 				  <a class="neon" href="/adminsc/product/list">Товары</a>
 
@@ -170,7 +166,7 @@
 				Пользователь
 			</div>
 			<ul class="level-1">
-					 <? if (User::can($this->user, 'role_employee')): // admin ?>
+					 <? if (User::can($user, 'role_employee')): // admin ?>
 				  <a class="neon" href="/auth/returnpass">Забыл пароль</a>
 				  <a class="neon" href="/auth/changepassword">Сменить пароль</a>
 				  <a class="neon" href="/auth/profile">Изменить свой профиль</a>
@@ -181,7 +177,7 @@
 		</li>
 
 
-		 <? if (User::can($this->user, 'su')): ?>
+		 <? if (User::can($user, 'su')): ?>
 		  <li su>
 
 			  <div class="label">
