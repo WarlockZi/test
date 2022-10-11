@@ -81,7 +81,7 @@
 @mixin chips {
   .chip-wrap {
     display: flex;
-    background: white;
+    //background: white;
     padding: $padding-form;
     gap: 3px;
     flex: 1 1 auto;

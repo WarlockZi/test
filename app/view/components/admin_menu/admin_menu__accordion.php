@@ -1,22 +1,15 @@
 <? use \app\model\User;
+
 $user = $controller->user;
 ?>
 <div class="admin_sidebar">
 
+	<? include ICONS . '/gamburger.svg' ?>
 	<div class="admin_sidebar_header">
-    <? include ICONS . '/gamburger.svg' ?>
 
-    <?include ROOT.'/app/view/Header/logo.php'?>
-
-    <? if (\app\model\User::can($user)): ?>
-      <? include ROOT . '/app/view/Header/admin/chips.php' ?>
-    <? endif; ?>
-
-		<!--	<a title="Whatsapp" href="whatsapp://send?phone=79814362309"><img src="/pic/WhatsApp.jpg" alt="Написать в Whatsapp" /></a>-->
-    <? include ROOT . '/app/view/Header/user_menu.php' ?>
+		 <? include ROOT . '/app/view/Header/user_menu.php' ?>
 
 	</div>
-
 
 
 	<div accordion>
