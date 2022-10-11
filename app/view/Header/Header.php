@@ -51,6 +51,13 @@ class Header
 		return ob_get_clean();
 	}
 
+	public static function getLogo(Controller $controller)
+	{
+		ob_start();
+		include ROOT . '/app/view/Header/logo.php';
+		return ob_get_clean();
+	}
+
 
 	public static function getAdninHeader(Controller $controller)
 	{
@@ -67,12 +74,6 @@ class Header
 		return ob_get_clean();
 	}
 
-	public static function getLogo(Controller $controller)
-	{
-		ob_start();
-		include ROOT . '/app/view/components/admin_menu/admin_menu__accordion.php';
-		return ob_get_clean();
-	}
 
 	public static function getUserMenu(Controller $controller)
 	{
