@@ -18,7 +18,9 @@ abstract class Controller
 		$this->route = $route;
 
 		$this->view = $route['action'];
-		$this->token = !empty($_SESSION['token']) ? $_SESSION['token'] : $this->createToken();
+		$this->token = !empty($_SESSION['token'])
+      ? $_SESSION['token']
+      : $this->createToken();
 	}
 
 	protected function createToken()
