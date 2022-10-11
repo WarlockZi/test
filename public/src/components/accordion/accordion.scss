@@ -302,6 +302,22 @@ $width-full: 170px;
     height: fit-content;
   }
 
+  .admin_sidebar_header {
+    display: none;
+
+    @include _600 {
+      display: flex;
+      justify-content: end;
+
+      .user-menu {
+        padding: 10px;
+
+        .credits {
+          color: #ffffff;
+        }
+      }
+    }
+  }
 
   &.open {
     max-width: $width-half;
