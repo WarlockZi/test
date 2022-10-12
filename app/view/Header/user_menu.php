@@ -33,4 +33,5 @@
 					 <? include ICONS . "/auth/logout2.svg"; ?>Выход</a>
 		</div>
 	</div>
+
 <? endif; ?>

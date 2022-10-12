@@ -4,10 +4,10 @@ $user = $controller->user;
 ?>
 <div class="admin_sidebar">
 
-	<? include ICONS . '/gamburger.svg' ?>
 	<div class="admin_sidebar_header">
+	<? include ICONS . '/gamburger.svg' ?>
 
-		 <? include ROOT . '/app/view/Header/user_menu.php' ?>
+		 <? include ROOT . '/app/view/Header/user_credits.php' ?>
 
 	</div>
 

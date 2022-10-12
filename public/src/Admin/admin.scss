@@ -19,8 +19,9 @@
 
   .adm-content {
     padding: 100px 30px;
+
     @include _600 {
-      padding: 160px 30px;
+      padding: 85px 30px;
     }
   }
 

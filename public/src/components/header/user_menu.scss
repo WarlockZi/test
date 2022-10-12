@@ -9,7 +9,8 @@
   font-size: 17px;
   cursor: pointer;
   color: #2b303a;
-  padding: 2px 20px 2px 10px;
+  padding: 3px 3px 3px 3px;
+  flex: 1 1 350px;
 
   //.user-menu__icon {
   //  width: 14px;
@@ -27,25 +28,28 @@
     vertical-align: middle;
     margin: 0 6px;
     width: 44px;
-    @include _600{
+    @include _600 {
       width: 30px;
     }
   }
 
-  .credits{
+  .credits {
     display: flex;
     flex-flow: column;
     flex: 0 0 200px;
-    .fio{
+
+    .fio {
       font-size: .8rem;
-      @include _600{
+      @include _600 {
         font-size: .7rem;
       }
     }
-    .email{
+
+    .email {
       font-size: .6rem;
     }
   }
+
   //&:after {
   //  content: '☰';
   //  display: block;
@@ -126,6 +130,7 @@
       }
     }
   }
+
   //
   //.user-menu__icon {
   //  width: 14px;
@@ -136,8 +141,24 @@
   &:hover > .guest-menu__menu {
     display: flex;
   }
+
 }
 
+.user-credits {
+  display: none;
+
+  @include _600 {
+    display: flex;
+  }
+
+  .user-menu {
+
+
+    &:hover {
+      background: initial;
+    }
+  }
+}
 
 
 
