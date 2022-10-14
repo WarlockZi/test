@@ -26,7 +26,7 @@ class AuthController extends AppController
 			if (!$user['password']) exit('empty password');
 			if (!$user['email']) exit('empty email');
 
-			$found = IlluminateUser::first('email', $user['email'])->toArray();
+			$found = IlluminateUser::where('email', $user['email'])->first();
 			if ($found) $this->exitWithMsg('mail exists');
 
 			$hash = md5(microtime());
