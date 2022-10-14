@@ -20,6 +20,7 @@ function validateData(email,password) {
 
 
   let error = validate.email(email)
+  let msg = $('.message')[0]
   if (error) {
     msg.innerText = msg.innerText + error
     $(msg).addClass('error')
