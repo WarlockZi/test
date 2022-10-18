@@ -1,3 +1,5 @@
+// import {f} from "../com";
+
 import './admin.scss'
 import './Videoinstructions/videoinstructions'
 
@@ -31,7 +33,7 @@ import Pagination from "../Test/test-pagination/test-pagination";
 
 $(document).ready(function () {
 
-
+f()
 
   navigate(window.location.pathname)
   radio()

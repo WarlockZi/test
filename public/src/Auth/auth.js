@@ -4,7 +4,7 @@ import '../components/header/autocomplete'
 import '../components/showPassword/showPassword'
 
 import '../components/cookie/cookie'
-
+// import {post, $, cachePage} from '../common'
 
 import './changepassword'
 import './login'
