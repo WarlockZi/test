@@ -1,5 +1,5 @@
-import './Admin/admin.scss'
 import './common.scss'
+import './Admin/admin.scss'
 
 const debounce = (fn, time = 700) => {
   let timeout;
@@ -145,9 +145,6 @@ let popup = {
   }
 }
 
-const uniq = (array) => Array.from(new Set(array));
-
-
 async function get(key) {
   let p = window.location.search;
   p = p.match(new RegExp(key + '=([^&=]+)'));
@@ -208,9 +205,6 @@ async function post(url, data = {}) {
 }
 
 class ElementCollection extends Array {
-
-  // el = this
-  // elType = function(){return {}.toString.call(this)}
 
   on(event, cbOrSelector, cb) {
     if (typeof cbOrSelector === 'function') {
@@ -309,7 +303,6 @@ class ElementCollection extends Array {
       document.addEventListener('DOMContentLoaded', cb)
     }
   }
-
 }
 
 
@@ -340,7 +333,6 @@ export function fragmentDate(date, order, y, m, d, glue) {
   return {yyyy,mm,dd,M,D,wd}
 }
 
-
 function addTooltip(args) {
 
   [].forEach.call(args, (el) => {
@@ -369,6 +361,6 @@ export {
   popup,
   debounce,
   IsJson,
-  post, get, uniq,
+  post, get,
   validate, $
 }

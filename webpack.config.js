@@ -10,13 +10,20 @@ const config = {
   target: ["web", "es5"],
 
   entry: {
+    // auth:{
+    //   // vendor: path.resolve(src, 'common.js'),
+    //   // file
+    // },
 
     admin: path.resolve(src, 'Admin/admin.js'),
     auth: path.resolve(src, 'Auth/auth.js'),
     main: path.resolve(src, 'Main/main.js'),
     cookie: path.resolve(src, 'components/cookie/cookie.js'),
     mainHeader: path.resolve(src, 'components/header/header.js'),
-    common: path.resolve(src, 'common.js'),
+    // commond: path.resolve(src, 'commond.js'),
+    // common: path.resolve(src, 'common.js'),
+    // b: path.resolve(src, 'b.js'),
+    // tom: path.resolve(src, 'tom.js'),
     list: path.resolve(src, 'components/list/list.js'),
     product: path.resolve(src, 'Product/card.js'),
 
@@ -84,6 +91,10 @@ const config = {
     new webpack.DefinePlugin({
       'process.env.SU_EMAIL': JSON.stringify(env.SU_EMAIL)
     }),
+    new webpack.ProvidePlugin({
+      $: path.resolve(path.join(__dirname, 'src/common')),
+    }),
+
   ],
 
   module: {
