@@ -10,13 +10,7 @@
   cursor: pointer;
   color: #2b303a;
   padding: 3px 3px 3px 3px;
-  flex: 1 1 350px;
-
-  //.user-menu__icon {
-  //  width: 14px;
-  //  height: 15px;
-  //  padding: 0 5px 3px;
-  //}
+  flex: 0 1 auto;
 
   &:hover {
     background-color: #f0f0f0;
@@ -131,17 +125,9 @@
     }
   }
 
-  //
-  //.user-menu__icon {
-  //  width: 14px;
-  //  height: 15px;
-  //  padding: 0 5px 3px;
-  //}
-
   &:hover > .guest-menu__menu {
     display: flex;
   }
-
 }
 
 .user-credits {
@@ -152,7 +138,6 @@
   }
 
   .user-menu {
-
 
     &:hover {
       background: initial;

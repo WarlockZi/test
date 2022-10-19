@@ -1,14 +1,14 @@
 import {$} from '../../common'
 import './header.scss'
 
-// debugger
+debugger
 let gumburger = $('.gamburger')[0]
 if (gumburger) {
-  $('.gamburger').on('click', mobile)
+  $('.gamburger').on('click', opentMobilePanel)
 
 }
 
-function mobile(e) {
+function opentMobilePanel(e) {
   let mm = e.target.closest('.utils').querySelector('.mobile-menu')
   mm.classList.toggle('show')
 }
