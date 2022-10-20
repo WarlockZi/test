@@ -21,7 +21,7 @@ const config = {
     cookie: path.resolve(src, 'components/cookie/cookie.js'),
     mainHeader: path.resolve(src, 'components/header/header.js'),
     // commond: path.resolve(src, 'commond.js'),
-    // common: path.resolve(src, 'common.js'),
+    common: path.resolve(src, 'common.js'),
     // b: path.resolve(src, 'b.js'),
     // tom: path.resolve(src, 'tom.js'),
     list: path.resolve(src, 'components/list/list.js'),
