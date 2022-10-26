@@ -62,7 +62,6 @@ abstract class Controller
 		return $paths;
 	}
 
-// Передача данных в View
 	public function set($vars)
 	{
 		$this->vars = array_merge($this->vars, $vars);
