@@ -24,18 +24,16 @@ class View
 		$this->view = $view;
 	}
 
-	public function render($vars)
+	public function render(array $vars = [])
 	{
-		if (is_array($vars)) {
-			extract($vars);
-		}
+		extract($vars);
 
 		$file_view = ROOT . "/app/view/{$this->route['controller']}/{$this->view}.php";
 		ob_start();
 		if (is_file($file_view)) {
 			require $file_view;
 		} else {
-			echo "<div class='content'><br>Не найден файл вида {$this->view}</div>";
+			echo "<main class='content'><br>Не найден файл вида {$this->view}</main>";
 		}
 		$content = ob_get_clean();
 		ob_start();

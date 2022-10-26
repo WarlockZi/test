@@ -2,7 +2,9 @@
 
 namespace app\core;
 
+use app\controller\AppController;
 use app\controller\СatalogController;
+use app\view\View;
 
 class Router
 {
@@ -37,42 +39,44 @@ class Router
 		}
 	}
 
+	protected static function get404($error, $errorData)
+	{
+		http_response_code(404);
+		$route = ['controller' => '404', 'action' => 'index'];
+		$controller = new AppController($route);
+		$errorText = 'bad - ' . $error . ' = ' . $errorData;
+		$controller->set(compact('errorText'));
+		$controller->getView();
+		exit();
+	}
+
 	public static function dispatch($url)
 	{
 		require_once ROOT . '/app/core/routes.php';
 
 		$url = self::removeQuryString($url);
-		if (self::matchRoute($url)) {
 
-			$controller = 'app\controller\\' . self::$route['controller'] . 'Controller';
+		if (!self::matchRoute($url)) self::get404('url', $url);
+		$controller = 'app\controller\\' . self::$route['controller'] . 'Controller';
 
-			if (class_exists($controller)) {
-				$controller = new $controller(self::$route);
-				$action = 'action' . self::upperCamelCase(self::$route['action']); // . 'Action'; //Action для того, чтобы пользователь не мог обращаться к функции(хотя можно написать protected)
-				if (method_exists($controller, $action)) {
-					$controller->$action(self::$aCategoryOrProduct); // Выполним метод
-					$controller->getView(); // Подключим вид
-				} else {
-					http_response_code(404);
-					include ROOT . '/public/404.html';
-					exit("<br><b>$action</b> не найден...  ");
-				}
+		if (!class_exists($controller)) self::get404('controller', $controller);
+		$controller = new $controller(self::$route);
+		$action = 'action' . self::upperCamelCase(self::$route['action']); // . 'Action'; //Action для того, чтобы пользователь не мог обращаться к функции(хотя можно написать protected)
 
-			} else {
-				http_response_code(404);
-				include ROOT . '/public/404.html';
-				exit("<br>Класс <b>".self::$route['controller']."</b> не найден");
-			}
-		}
+		if (!method_exists($controller, $action)) self::get404('action', $action);
+		$controller->$action(self::$aCategoryOrProduct); // Выполним метод
+		$controller->getView(); // Подключим вид
 	}
 
-	protected static function upperCamelCase($name)
+	protected
+	static function upperCamelCase($name)
 	{
 		$name = str_replace(' ', '', ucwords(str_replace('-', ' ', $name)));
 		return $name;
 	}
 
-	protected static function lowerCamelCase($name)
+	protected
+	static function lowerCamelCase($name)
 	{
 		$name = str_replace('-', ' ', $name);
 		$name = ucwords($name);
@@ -81,7 +85,8 @@ class Router
 		return $name;
 	}
 
-	protected static function removeQuryString($url)
+	protected
+	static function removeQuryString($url)
 	{
 		if ($url) {
 			$params = explode('&', $url, 2);
