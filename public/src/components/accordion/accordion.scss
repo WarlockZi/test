@@ -36,6 +36,10 @@ $font-size-item: .5rem;
       position: relative;
       cursor: pointer;
 
+      &:hover {
+        background: tint($color-level-0, 3%);
+      }
+
       &.rotate > .label > .arrow {
         transform: rotate(0deg);
       }
@@ -66,11 +70,6 @@ $font-size-item: .5rem;
       padding: 12px 22px 12px 12px;
       color: $color-3;
       font-size: $font-size-path;
-
-      &:hover {
-        background: tint($color-level-0, 3%);
-      }
-
     }
 
     .current {
@@ -332,19 +331,16 @@ $width-full: 170px;
 
   [accordion] {
     font-size: .75rem;
-    //margin-top: 82px;
     transition: height .4s;
     width: 100%;
 
     @include _600 {
-      margin-top: 5px;
       height: 0;
     }
 
     &.show {
       height: auto;
     }
-
 
     a, li .label {
       @include _600 {
@@ -378,15 +374,6 @@ $width-full: 170px;
     padding: 23px 19px;
     cursor: pointer;
     display: flex;
-
-    &:hover {
-      //background: dimgrey;
-    }
-
-    //@include _600 {
-    //  right: 10px;
-    //  top: 20px;
-    //}
   }
 
   /* arrow icon */
@@ -397,16 +384,13 @@ $width-full: 170px;
     }
   }
 
-
   li, a {
     border-bottom: lighten($color-admin-sidebar, 5%) 1px solid;
     border-top: darken($color-admin-sidebar, 7%) 1px solid;
   }
 
-
   .admin_sidebar-tail {
     border-bottom: none;
     flex: 1 0 auto;
   }
-
 }
