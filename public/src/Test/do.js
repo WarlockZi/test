@@ -14,6 +14,7 @@ if (testDo) {
 function handleClick({target}) {
   // if (target.classList.contains('accordion-open')) return
   let currQuest = $('.question.show')[0] ?? ''
+  if (!currQuest) return
   let id = +currQuest?.dataset.id ?? ''
   let navs = $('[data-pagination]') ?? ''
   let navIndex = navs.findIndex(el => el.classList.contains('active')) ?? ''

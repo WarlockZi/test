@@ -189,8 +189,8 @@ class AppController extends Controller
 		View::setCss('admin.css');
 		View::setJs('list.js');
 		View::setCss('list.css');
-//		View::setJs('common.js');
-//		View::setCss('common.css');
+		View::setJs('common.js');
+		View::setCss('common.css');
 	}
 
 

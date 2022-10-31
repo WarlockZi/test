@@ -7,10 +7,10 @@ $menu = new Accordion([
 	'class' => 'test-edit',
 	'label_after' => "",
 	'link' => "/adminsc/test/do/",
-	'parentFieldName'=>'test_id',
+	'parentFieldName'=>'parent',
 
 ]);
-echo "<div class='accordion_wrap'>".
-	$menu->output().
-	"</div>";
-; ?>
+?>
+<div class='accordion_wrap'>
+	<?=$menu->html??'';?>
+</div>
