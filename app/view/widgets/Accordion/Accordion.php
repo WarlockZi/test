@@ -11,7 +11,7 @@ class Accordion
 	public $model;
 	protected $parentFieldName = '';
 
-	protected $html;
+	public $html;
 	protected $tree;
 	protected $class = '';
 
@@ -93,9 +93,9 @@ class Accordion
 		return $string;
 	}
 
-	public function output()
+	public function output():void
 	{
-		return "<div accordion class = '{$this->class}'>{$this->html}</div>";
+		$this->html = "<div accordion class = '{$this->class}'>{$this->html}</div>";
 	}
 
 }

@@ -5,18 +5,25 @@
 .admin-layout_header {
   background: #fff;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   max-width: 1310px;
-  border-bottom: 1px solid $color-gray2;
-  padding: 15px 2px 15px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 15px 0px 15px 0px;
   max-height: 52px;
   position: absolute;
   top: 0;
-  left: 62px;
+  //left: 62px;
+  //margin: 0 62px;
+  min-width: 100%;
+
+  @include _600 {
+    display: none;
+  }
 
   .logo {
     display: flex;
     align-items: center;
+    padding-left: 77px;
 
     .logo_vitex {
       max-width: 140px;
@@ -25,14 +32,7 @@
 
   }
 
-  @include _600 {
-    display: none;
-    left: 0px;
-    margin-top: 120px;
-    justify-content: end;
-    flex-flow: column;
-    flex-direction: column-reverse;
-  }
+
 
 }
 
