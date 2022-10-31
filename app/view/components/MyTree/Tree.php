@@ -47,14 +47,14 @@ class Tree
 		$items = self::idKeys($items);
 		$tree = [];
 		foreach ($items as $id => &$node) {
-			if (!(bool)$node[$parent]) {
+			if (isset($node[$parent])&&!(bool)$node[$parent]) {
+			  if (count($node)>1)
 				$tree[$id] = &$node;
 			} elseif (isset($node[$parent]) && $node[$parent]) {
 				$items[(int)$node[$parent]]['childs'][$id] = &$node;
 			}
 		}
 		return $tree;
-
 	}
 
 	public static function idKeys(array $items)
