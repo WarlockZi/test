@@ -7,7 +7,7 @@ $menu = new Accordion([
 	'class' => 'test-edit',
 	'label_after' => "",
 	'link' => "/adminsc/test/do/",
-	'parentFieldName'=>'parent',
+	'parentFieldName'=>'test_id',
 
 ]);
 echo "<div class='accordion_wrap'>".

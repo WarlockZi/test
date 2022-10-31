@@ -60,19 +60,19 @@ class TestController extends AppController
 		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
 	}
 
-	public function actionShow()
-	{
-		$this->view = 'edit_show';
-
-		$page_name = 'Создание теста';
-		$this->set(compact('page_name'));
-
-		$paths = $this->paths();
-		$this->set(compact('paths'));
-
-		$test['isTest'] = 1;
-		$this->set(compact('test'));
-	}
+//	public function actionShow()
+//	{
+//		$this->view = 'edit_show';
+//
+//		$page_name = 'Создание теста';
+//		$this->set(compact('page_name'));
+//
+//		$paths = $this->paths();
+//		$this->set(compact('paths'));
+//
+//		$test['isTest'] = 1;
+//		$this->set(compact('test'));
+//	}
 
 	public function actionPathshow()
 	{
@@ -88,35 +88,6 @@ class TestController extends AppController
 		$rootTests = Test::where('isTest', 0)->get()->toArray();
 		$this->set(compact('rootTests', 'test'));
 	}
-
-
-//	public function actionUpdateOrCreate()
-//	{
-//		if ($this->ajax) {
-//
-//			if ($id = Test::updateOrCreate($this->ajax)) {
-//				$q_id = Question::create(['parent' => $id - 1]);
-//				if (Question::where('parent', '=', $id - 1)) {
-//
-//					$this->exitJson(['id' => $id]);
-//				}
-//			}
-//		}
-//	}
-
-//	public function actionDelete()
-//	{
-//		if (User::can($this->user, 'test_delete') || defined('SU')) {
-//			if (Test::delete($this->ajax['id'])) {
-//				$this->exitWithPopup('ok');
-//			}
-//		}
-//		$this->ajax['test']['enable'] = 0;
-//		$this->ajax['test']['id'] = $this->ajax['id'];
-//		Test::update($this->ajax['test']);
-//		exit(json_encode(['notAdmin' => true]));
-//	}
-
 
 	public function actionGetCorrectAnswers()
 	{
