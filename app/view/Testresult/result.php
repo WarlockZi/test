@@ -11,6 +11,9 @@
 			<p>Дата - <?= $res['date'] ?></p>
 			<p>Название теста - <?= $res['testname'] ?></p>
 		</div>
+
 		 <?= $testHtml; ?>
+
 	</div>
+
 </div>

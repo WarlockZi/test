@@ -5,10 +5,11 @@
 				<h1>Контактная информация</h1>
 
 				<h3>Юридический / Почтовый адрес:</h3>
-				<p>160010, г. Вологда, ул. Залинейная, дом 26, скл 4</p>
+				<?$adress = \app\controller\Address::postCodeDecorator(\app\controller\Address::$factAddress);?>
+				<p><?=$adress?></p>
 
 				<h3>Пункт выдачи заказов:</h3>
-				<p>160010, г. Вологда, ул. Залинейная, дом 26, скл 4</p>
+				<p><?=$adress?></p>
 				<div class="table" rel="nofollow">
 					<!--<div nofollow noindex class="mail row">-->
 					<h3>Email:</h3>
