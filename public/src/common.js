@@ -48,7 +48,7 @@ function trimStr(str) {
   str = replaceNbsps(str)
   str = replaceNs(str)
   str = replaceTs(str)
-  str = replaceSpace(str)
+  // str = replaceSpace(str)
   str = replaceBackSpace(str)
   return str
 }
