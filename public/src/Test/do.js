@@ -85,7 +85,7 @@ function objToServer(errorCnt) {
   return {
     questionCnt: $('.question').length,
     errorCnt: errorCnt,
-    html: cachePage('.test-do'),
+    html: cachePage('.test-do .content'),
     testid: $('[data-test-id]')[0].dataset.testId,
     testname: $('.test-name')[0].innerText,
     user: $('.user-menu .fio')[0].innerText,
@@ -124,7 +124,7 @@ function colorQuestions(question, correctAnswers) {
 }
 
 function checkCorrectAnswers(id, correctAnswers, input, answer) {
-  let correctAnser = correctAnswers.indexOf(id) !== -1
+  let correctAnser = correctAnswers.indexOf(+id) !== -1
   let checked = input.checked
   let error = false
 

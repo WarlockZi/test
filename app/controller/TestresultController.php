@@ -45,7 +45,7 @@ class TestresultController extends AppController
 	public function actionCreate()
 	{
 		if ($this->ajax) {
-			if ($resid = TestResult::create($this->ajax)) {
+			if ($resid = TestResult::create($this->ajax,false,false)) {
 				$this->sendTestRes($this->ajax, $resid-1);
 				$this->exitWithPopup('Результат сохранен');
 			}else{
