@@ -1,4 +1,5 @@
 <div class='location'>
 	<? include ICONS . '/feather/map-pin.svg';?>
-	Вологда, Залинейная 26, скл 4
+	 <?$adress =\app\controller\Address::getFactAddress();?>
+	 <?= $adress ?>
 </div>
