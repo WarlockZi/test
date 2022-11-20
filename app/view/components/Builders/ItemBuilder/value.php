@@ -1,17 +1,18 @@
 <div class="value">
 
-	<? if ($field->html): ?>
+  <? if ($field->html): ?>
 
-		<?= $field->html; ?>
+    <?= $field->html; ?>
 
-	<? else: ?>
+  <? else: ?>
 
-	  <div class="text"
-			 <?= $this->dataModel; ?>
-			 <?= $field->datafield; ?>
-			 <?= $field->contenteditable; ?>
-			 <?= $field->required; ?>
-	  ><?= $this->item[$field->field] ?></div>
+		<div class="<?= $field->type; ?>"
+      <?= $this->dataModel; ?>
+      <?= $field->datafield; ?>
+      <?= $field->contenteditable; ?>
+      <?= $field->required; ?>
+		><?= $this->item[$field->field] ?></div>
 
-	<? endif; ?>
+
+  <? endif; ?>
 </div>

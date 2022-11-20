@@ -15,7 +15,7 @@ class ItemFieldBuilder
 	public $class = '';
 	public $name = '';
 	public $link = '';
-	public $type = 'string';
+	public $type = 'text';
 	public $html = '';
 
 	public $hidden = '';
