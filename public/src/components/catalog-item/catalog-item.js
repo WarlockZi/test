@@ -15,17 +15,28 @@ export default function catalogItem() {
   }
 
   async function handleClick({target}) {
-
-    let item = customCatalogItem
-    let modelName = item.dataset.model
+    let itemId = +customCatalogItem.dataset.id
+    let modelName = customCatalogItem.dataset.model
     if (target.closest('.save')) {
       save(modelName)
     } else if (target.closest('.del')
       && target.closest('.del').dataset.model) {
-      del(item, target.closest('.del').dataset.model)
+      del(itemId, target.closest('.del').dataset.model)
     } else if ((target.classList.contains('tab'))) {
       handleTab(target, modelName)
+    } else if ((target.classList.contains('checkbox'))) {
+      handleCheckbox(target, modelName, itemId)
     }
+  }
+
+  async function handleCheckbox(target, modelName, id) {
+    target.classList.toggle('checked')
+
+    let field = target.dataset.field
+    let value = +target.classList.contains('checked')
+    let data = {[field]: value, id}
+    let res = await post(`/adminsc/${modelName}/updateOrCreate`, data)
+
   }
 
   async function handleTab(target) {
@@ -39,8 +50,7 @@ export default function catalogItem() {
     target.classList.toggle('active')
   }
 
-  async function del(item, modelName) {
-    let id = item.dataset.id
+  async function del(id, modelName) {
     let res = await post(`/adminsc/${modelName}/delete`, {id})
     if (res) {
       window.location.href = `/adminsc/${modelName}/edit`

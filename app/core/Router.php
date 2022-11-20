@@ -68,15 +68,13 @@ class Router
 		$controller->getView(); // Подключим вид
 	}
 
-	protected
-	static function upperCamelCase($name)
+	protected static function upperCamelCase($name)
 	{
 		$name = str_replace(' ', '', ucwords(str_replace('-', ' ', $name)));
 		return $name;
 	}
 
-	protected
-	static function lowerCamelCase($name)
+	protected static function lowerCamelCase($name)
 	{
 		$name = str_replace('-', ' ', $name);
 		$name = ucwords($name);
@@ -85,8 +83,7 @@ class Router
 		return $name;
 	}
 
-	protected
-	static function removeQuryString($url)
+	protected static function removeQuryString($url)
 	{
 		if ($url) {
 			$params = explode('&', $url, 2);

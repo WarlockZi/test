@@ -6,12 +6,15 @@
 
   <? else: ?>
 
-		<div class="<?= $field->type; ?>"
+		<div class="<?= $field->type; ?> <?= $field->typeModificator; ?>"
       <?= $this->dataModel; ?>
       <?= $field->datafield; ?>
       <?= $field->contenteditable; ?>
       <?= $field->required; ?>
-		><?= $this->item[$field->field] ?></div>
+		>
+		  <?= $field->value; ?>
+<!--		  --><?//= $this->item[$field->field] ?>
+		</div>
 
 
   <? endif; ?>
