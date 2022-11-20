@@ -16,8 +16,10 @@ class ItemFieldBuilder
 	public $name = '';
 	public $link = '';
 	public $type = 'text';
+	public $typeModificator = '';
 	public $html = '';
 
+	public $value = '';
 	public $hidden = '';
 	public $required = '';
 	public $contenteditable = '';
@@ -82,6 +84,14 @@ class ItemFieldBuilder
 	public function get()
 	{
 		$this->name = $this->name ? $this->name : $this->field;
+		if ($this->type === 'checkbox') {
+			$this->value = '';
+			$val = (int)$this->item[$this->field];
+			$this->typeModificator = $val === 1?'checked':'' ;
+
+		} else {
+			$this->value = $this->item[$this->field];
+		}
 		return $this;
 	}
 
@@ -89,6 +99,7 @@ class ItemFieldBuilder
 	{
 		$this->dataModel = "data-model={$model}";
 		$field = $this;
+//		if (type === 'checkbox') $this->field = '';
 		ob_start();
 		include ROOT . '/app/view/components/Builders/ItemBuilder/row.php';
 		return ob_get_clean();
