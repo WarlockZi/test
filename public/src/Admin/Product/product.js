@@ -120,7 +120,6 @@ export default function product() {
     let id = await sendToServer(0, files[0], url)
     if (id) {
       appendTo.querySelector('.image').remove()
-      // appendTo.querySelector('.del').remove()
       previewfile(files[0], appendTo, id, tag)
     }
   }

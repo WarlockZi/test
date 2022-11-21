@@ -84,25 +84,26 @@ class ItemFieldBuilder
 	public function get()
 	{
 		$this->name = $this->name ? $this->name : $this->field;
+		$this->setValue();
+
+		return $this;
+	}
+
+	protected function setValue():void {
 		if ($this->type === 'checkbox') {
 			$this->value = '';
 			$val = (int)$this->item[$this->field];
 			$this->typeModificator = $val === 1?'checked':'' ;
 		}
-//		else if($this->type ==='img'){
-//
-//    }
 		else {
 			$this->value = $this->item[$this->field];
 		}
-		return $this;
 	}
 
 	public function toHtml(string $model): string
 	{
 		$this->dataModel = "data-model={$model}";
 		$field = $this;
-//		if (type === 'checkbox') $this->field = '';
 		ob_start();
 		include ROOT . '/app/view/components/Builders/ItemBuilder/row.php';
 		return ob_get_clean();

@@ -1,10 +1,15 @@
 import './catalog-item.scss';
 import {$, post, trimStr} from '../../common';
 import WDSSelect from "../select/WDSSelect";
+import {dnd1} from "../dnd/dnd";
 
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
   if (customCatalogItem) {
+
+    dnd1('.item_wrap .value .image', handleSingleImage)
+
+
     $(customCatalogItem).on('click', handleClick)
     let selects = $('[custom-select]')
     if (selects) {
@@ -13,6 +18,26 @@ export default function catalogItem() {
       })
     }
   }
+
+  function handleSingleImage() {
+    let appendTo = '.image'
+    let model = customCatalogItem.dataset.model
+    let url =
+      `/adminsc/${model}/createOrUpdate/${customCatalogItem.dataset.id}`
+    let tag = model
+    let files = '.a'
+    handleImage(appendTo, url, tag, files)
+  }
+
+
+  async function handleImage(appendTo, url, tag, files) {
+    let id = await sendToServer(0, files[0], url)
+    if (id) {
+      appendTo.querySelector('.image').remove()
+      previewfile(files[0], appendTo, id, tag)
+    }
+  }
+
 
   async function handleClick({target}) {
     let itemId = +customCatalogItem.dataset.id

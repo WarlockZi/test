@@ -148,7 +148,7 @@
         border-radius: 2px;
         border: #e0e0e0 1px solid;
 
-        &.checked:after{
+        &.checked:after {
           content: '';
           display: flex;
           align-items: center;
@@ -163,7 +163,7 @@
           border: #c7c7c7 1px solid;
         }
 
-        &:hover:after{
+        &:hover:after {
           content: '';
           display: flex;
           align-items: center;
@@ -172,6 +172,17 @@
           border-right: 3px solid transparent;
           border-top: 3px solid transparent;
           transform: rotate(308deg);
+        }
+      }
+
+      .image {
+        width: 100px;
+        height: 100px;
+        background-color: #fff;
+        border: #f0f0f0 1px solid;
+
+        &:hover {
+          border: #c8c8c8 1px solid;
         }
       }
 

@@ -207,6 +207,7 @@ class AuthController extends AppController
 	public function actionConfirm()
 	{
 		$hash = $_GET['hash'];
+		exit($hash);
 		if (!$hash) header('Location:/');
 		$user = IlluminateUser::where('hash', $hash)->get()[0]->toArray();
 		if ($user) {
