@@ -27,7 +27,6 @@ class Router
 						$route[$k] = $v;
 					}
 				}
-
 				if (!isset($route['action'])) {
 					$route['action'] = 'index';
 				}
@@ -37,6 +36,7 @@ class Router
 				return true;
 			}
 		}
+		return false;
 	}
 
 	protected static function get404($error, $errorData)
