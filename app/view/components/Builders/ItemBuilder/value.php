@@ -13,7 +13,7 @@
       <?= $field->required; ?>
 		>
 		  <?= $field->value; ?>
-<!--		  --><?//= $this->item[$field->field] ?>
+
 		</div>
 
 
