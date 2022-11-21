@@ -98,6 +98,12 @@ class CategoryView
           ->type('checkbox')
           ->get()
       )
+      ->field(
+        ItemFieldBuilder::build('image_main', $illumCategory)
+          ->name('Основная картинка')
+//          ->morph('image')
+          ->get()
+      )
       ->tab(
         ItemTabBuilder::build('Товары категории')
           ->html(

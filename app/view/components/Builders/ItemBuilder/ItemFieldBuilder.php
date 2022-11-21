@@ -88,8 +88,11 @@ class ItemFieldBuilder
 			$this->value = '';
 			$val = (int)$this->item[$this->field];
 			$this->typeModificator = $val === 1?'checked':'' ;
-
-		} else {
+		}
+//		else if($this->type ==='img'){
+//
+//    }
+		else {
 			$this->value = $this->item[$this->field];
 		}
 		return $this;
