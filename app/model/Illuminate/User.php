@@ -22,6 +22,7 @@ class User extends Model
 //		'fired'=>'',
 		'sex' => 'f',
 	];
+	public $timestamps = false;
 
 	public function rights(){
 		return $this->hasMany(Right::class);

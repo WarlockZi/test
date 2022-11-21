@@ -35,7 +35,7 @@ class AuthController extends AppController
 
 			$data['subject'] = "Регистрация VITEX";
 			$data['to'] = [$user['email']];
-			$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/auth/confirm?hash={$hash}";
+			$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/auth/confirm/{$hash}";
 			$data['body'] = $this->prepareBodyRegister($href, $hash);
 			$data['altBody'] = "Подтверждение почты: <a href = '{$href}'>нажать сюда</a>";
 
@@ -206,13 +206,12 @@ class AuthController extends AppController
 
 	public function actionConfirm()
 	{
-		$hash = $_GET['hash'];
-		exit($hash);
+		$hash = $this->route['id'];
+
 		if (!$hash) header('Location:/');
 		$user = IlluminateUser::where('hash', $hash)->get()[0]->toArray();
 		if ($user) {
 			$user['confirm'] = "1";
-			$user['post_id'] = NULL;
 			$this->setAuth($user);
 			if (User::update($user)) {
 				header('Location:/auth/success');
