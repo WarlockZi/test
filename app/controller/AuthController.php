@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\model\Illuminate\Test;
 use app\model\Illuminate\User as IlluminateUser;
 use app\model\Mail;
 use app\model\User;

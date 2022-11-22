@@ -20,15 +20,15 @@ class User extends Model
 		'confirm' => '0',
 		'rights' => 'user_update',
 		'post_id' => 0,
-    'birthDate'=>'1970-01-02',
-    'hired'=>'1970-01-02',
-    'fired'=>'1970-01-02',
+		'birthDate' => '1970-01-02',
+		'hired' => '1970-01-02',
+		'fired' => '1970-01-02',
 		'sex' => 'f',
 	];
 
 	public static function avatar(array $user): string
 	{
-		if (isset($user['avatar'])){
+		if (isset($user['avatar'])) {
 			return $user['avatar'];
 		}
 
@@ -44,17 +44,36 @@ class User extends Model
 
 	public static function can(array $user, $rights = []): bool
 	{
-		if (is_string($user['rights'])){
-			$user['rights'] = explode(',',$user['rights']);
+		if (is_string($user['rights'])) {
+			$user['rights'] = explode(',', $user['rights']);
 		}
 		if (is_string($rights) && $rights) {
 			$rights = compact('rights');
 		}
-		return (
-				array_intersect($rights, $user['rights'])
-				|| defined('SU')
-				|| array_intersect(['role_admin'], $user['rights']))
-			?? false;
+		$has = self::hasRights($user, $rights);
+		$su = self::isSu();
+		$admin = self::isAdmin($user);
+//		echo "has ".$has."<br>su ".$su."<br>admin ".$admin."<br>";
+
+		return ($has || $su || $admin);
+	}
+
+	public static function isAdmin(array $user): bool
+	{
+		if (is_string($user['rights'])) {
+			$user['rights'] = explode(',', $user['rights']);
+		}
+		return !!array_intersect(['role_admin'], $user['rights']);
+	}
+
+	public static function isSu(): bool
+	{
+		return defined('SU');
+	}
+
+	public static function hasRights(array $user, array $rights): bool
+	{
+		return !!array_intersect($user['rights'], $rights);
 	}
 
 	public function findOne($id, $field = '')
