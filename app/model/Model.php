@@ -117,7 +117,7 @@ here;
 	{
 		$db = $_ENV["DB_DB"];
 		$params = [$db, $this->table];
-		$sql = "SHOW TABLE STATUS FROM ? LIKE ?";
+		$sql = "SHOW TABLE STATUS FROM ? LIKE '?'";
 		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
 
 	}
