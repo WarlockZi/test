@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\model\Illuminate\Test;
 use app\model\Illuminate\User as IlluminateUser;
 use app\model\Mail;
 use app\model\User;
@@ -239,7 +240,8 @@ class AuthController extends AppController
 	{
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
 //			var_dump(IlluminateUser::find($_SESSION['id']));
-			var_dump(IlluminateUser::find($_SESSION['id']));
+//			var_dump(IlluminateUser::find($_SESSION['id']));
+			var_dump($_SESSION['id']);
 			$user = IlluminateUser::find($_SESSION['id'])->toArray();
 			if (!$user) {
 				exit(json_encode(['popup' => 'Неправильные данные для входа на сайт']));
