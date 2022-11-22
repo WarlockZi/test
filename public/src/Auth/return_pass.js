@@ -1,15 +1,15 @@
-import {$, post} from "../common"
+import {$, post, popup} from "../common"
+import "../components/popup.scss"
 
-$('.return_pass').on('click', async function (e) {
-    e.preventDefault();
-    if (e.target.classList.contains('returnpass')){
-        let email = $('input[type="email"]').el[0].value
-        let res = await post(
-            '/user/returnPass',
-            {email:email}
-            )
-        if (res==='ok') {
-            window.location = '/user/login'
+let returnpass = $(`[data-auth="returnpass"]`)[0]
+if (returnpass){
+    $('.submit__button').on('click', async function (e) {
+        let email = $('input[type="email"]')[0].value
+        let res = await post('/auth/returnpass',{email})
+
+        if (res) {
+                window.location = '/auth/login'
         }
-    }
-})
+
+    })
+}

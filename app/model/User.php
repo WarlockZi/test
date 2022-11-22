@@ -2,81 +2,98 @@
 
 namespace app\model;
 
-use app\model\Mail;
-use app\core\App;
-use app\core\DB;
-use app\model\Model;
-use app\view\View;
+use app\Repository\ImageRepository;
 
 
 class User extends Model
 {
-
 	public $table = 'users';
+	public $model = 'user';
+
+	protected $fillable = [
+		'email' => '',
+		'password' => 'gfasdf41(D{%',
+		'name' => '',
+		'surName' => '',
+		'middleName' => '',
+		'hash' => '',
+		'confirm' => '0',
+		'rights' => 'user_update',
+		'post_id' => 0,
+		'birthDate' => '1970-01-02',
+		'hired' => '1970-01-02',
+		'fired' => '1970-01-02',
+		'sex' => 'f',
+	];
+
+	public static function avatar(array $user): string
+	{
+		if (isset($user['avatar'])) {
+			return $user['avatar'];
+		}
+
+		return $user['sex'] === 'f'
+			? ImageRepository::getImg('/pic/ava_female.jpg')
+			: ImageRepository::getImg('/pic/ava_male.png');
+	}
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function confirm($hash)
+	public static function can(array $user, $rights = []): bool
 	{
-		$sql = 'UPDATE users SET confirm= "1" WHERE hash = ?';
-		$params = [$hash];
-
-		if ($this->insertBySql($sql, $params)) {
-			$_SESSION['id'] = $this->autoincrement() - 1;
-			$this->user = App::$app->user->get($_SESSION['id']);
-
-			return "Вы успешно подтвердили свой E-mail.";
-		} else {
-			return "Не верный код подтверждения регистрации";
+		if (is_string($user['rights'])) {
+			$user['rights'] = explode(',', $user['rights']);
 		}
+
+		$has = self::hasRights($user, $rights);
+		$su = self::isSu();
+
+		return ($has || $su);
 	}
 
-	public function returnPass($email)
+	public static function isAdmin(array $user): bool
 	{
-		$user = $this->findWhere('email', $email )[0];
-
-		if ($user) {
-			$pass = substr(md5(rand()), 0, 7);
-			$user['password']=md5($pass);
-			$this->update($user);
-
-				$subject = 'Новый пароль';
-				$body = "Ваш новый пароль: " . $pass;
-				Mail::send_mail($subject, $body,[$email]);
-//			}
-		} else {
-			exit(json_encode(["smg" => "Пользователя с таким e-mail нет"]));
+		if (is_string($user['rights'])) {
+			$user['rights'] = explode(',', $user['rights']);
 		}
-
+		return !!array_intersect(['role_admin'], $user['rights']);
 	}
 
-	public
-	function getUserByEmail($email, $password)
+	public static function isSu(): bool
 	{
-		$password = md5($password);
-
-		$sql = "SELECT * FROM {$this->table} WHERE email = ? AND password = ?";
-		try {
-			$user = $this->findBySql($sql, [$email, $password]);
-		} catch (Exception $exc) {
-			echo $exc->getTraceAsString();
-		}
-		if ($user) {
-			$user = $user[0];
-			if ($user['confirm'] == 1) {
-				return $user;
-			} elseif ($user['confirm'] == 0) {
-				return NULL;
-			}
-		}
-		return false;
+		return defined('SU');
 	}
 
-	public
-	function checkName($name)
+	public static function hasRights(array $user, array $rights): bool
+	{
+		return !!array_intersect($user['rights'], $rights);
+	}
+
+	public function findOne($id, $field = '')
+	{
+		if ($user = parent::findOne($id)) {
+			$user['rights'] = explode(',', $user['rights']);
+		}
+		return $user ?? null;
+	}
+
+	public static function findOneWhere($field = '', $value = '')
+	{
+		if ($user = parent::findOneWhere($field, $value)) {
+			$user['rights'] = explode(',', $user['rights']);
+			$post_id = is_array($user['post_id'])
+				? explode(',', $user['post_id'])
+				: Null;
+			$user['post_id'] = $post_id;
+		}
+		return $user ?? null;
+	}
+
+
+	public function checkName($name)
 	{
 		if (strlen($name) >= 2) {
 			return true;
@@ -84,8 +101,7 @@ class User extends Model
 		return false;
 	}
 
-	public
-	function checkPhone($phone)
+	public function checkPhone($phone)
 	{
 		if (strlen($phone) >= 10) {
 			return true;
@@ -94,8 +110,7 @@ class User extends Model
 	}
 
 
-	public
-	static function checkPassword($password)
+	public static function checkPassword($password)
 	{
 		if (strlen($password) >= 6) {
 			return true;
@@ -103,8 +118,7 @@ class User extends Model
 		return false;
 	}
 
-	public
-	static function checkEmail($email)
+	public static function checkEmail($email)
 	{
 		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			return true;
@@ -113,50 +127,13 @@ class User extends Model
 	}
 
 
-	public
-	function checkEmailExists($email)
+	public function checkEmailExists($email)
 	{
-		$res = $this->findOne($email, 'email');
+		$res = $this->findOneWhere('email', $email);
 		if ($res) {
 			return true;
 		}
 		return false;
 	}
 
-
-	public
-	function get($id)
-	{
-		$res = $this->findOne($id, 'id');
-		if ($res) {
-			$res['rights'] = explode(",", $res['rights']);
-			return $res;
-		}
-		return false;
-	}
-
-	public
-	function getRights()
-	{
-		$res = $this->findAll('user_rights');
-		if ($res) {
-			return $res;
-		}
-		return false;
-	}
-
-	public
-	function getUserByHash($hash)
-	{
-		$sql = "SELECT * FROM {$this->table} WHERE hash = ?";
-
-		if (isset($this->findBySql($sql, [$hash])[0])) {
-			$user = $this->findBySql($sql, [$hash])[0];
-			$user['rights'] = explode(',', $user['rights']);
-			if ($user) {
-				return $user;
-			}
-		}
-		return false;
-	}
 }

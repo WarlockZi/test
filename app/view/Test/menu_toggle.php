@@ -1,0 +1,1 @@
+<div class="accordion-open">Выбрать тест</div>

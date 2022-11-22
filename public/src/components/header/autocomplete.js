@@ -1,45 +1,41 @@
 import './autocomplete.scss';
 import {$} from '../../common'
 
-let inp = $('#autocomplete').el[0]
-if (inp){
-    inp.addEventListener('input', function () {
-        autocomplete(this.value)
-    })
-}
+[...$(".search input")].map((input) => {
+    if (input) {
+        input.addEventListener('input', function () {
+            autocomplete(input)
+        }, true)
+    }
+})
 
 
-async function fetchJson(Input) {
-    let response = await fetch('/search?q=' + Input);
-    return await response.json();
-}
+async function autocomplete(input) {
+    let search = input.parentNode
+    let result = $(search).find('.search__result')
 
-
-async function autocomplete(val) {
-    if (val.length < 1) {
-        result.innerHTML = '';
+    if (input.value.length < 1) {
+        if (result) result.innerHTML = ''
         return
     }
 
-    var data = await fetchJson(val);
-    debugger;
+    let data = await fetch('/search?q=' + input.value)
+    data = await data.json(data)
 
-    var res = '<ul>';
-    data.forEach(e => {
-        res += '<li>' +
-            `<a href = '${e.alias}'>` +
-            `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` +
-            e.name +
-            '</a></li>';
+    if (result.childNodes.length!==0) {
+        result.innerHTML = ''
+    }
+
+    data.map(e => {
+        let a = document.createElement("a")
+        a.href = e.alias
+        a.innerHTML = `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name
+        result.appendChild(a)
     });
-    res += '</ul>';
-    var result = document.querySelector('.result-search');
-    result.innerHTML = res;
 
-    document.querySelector('body').addEventListener('click', function (e) {
-        const search = document.querySelector('.result-search ul');
-        if (document.querySelector('.result-search ul') && e.target !== search) {
-            search.remove();
+    $('body').on('click', function (e) {
+        if (result && e.target !== result) {
+            result.innerHTML = '';
         }
     });
 }

@@ -1,58 +1,56 @@
-import './login.scss'
 import {$, post, validate} from "../common";
 
-let loginBtn = $("#login").el[0]
-if (loginBtn) {
-    $(loginBtn).on("click",
-        async function (e) {
-            e.preventDefault();
 
-            let email = $('input[type = email]').el[0].value
-            let password = $('input[type = password]').el[0].value
-            if (!validate.email(email)) {
-                let $result = $(".message").el[0];
-                $result.innerText = "Неправильный формат почты"
-                $($result).addClass('error')
-                return false
-            }
-            if (!validate.password(password)) {
-                let $result = $(".message").el[0]
-                $result.innerText = "Пароль может состоять из \n " +
-                    "- Большие латинские бкувы \n" +
-                    "- Мальенькие латинские буквы \n" +
-                    "- Цифры \n" +
-                    "- должен содержать не менее 6 символов"
-
-                $($result).addClass('error')
-                return false
-            }
-            send(email)
-        })
+let loginForm = $("[data-auth='login']")[0]
+if (loginForm) {
+  $(loginForm).on('click', sendData.bind(this))
 }
 
-async function send(email) {
-    let res = await post('/user/login', {
-        "email": email,
-        "password": $("input[type= password]").el[0].value,
-    })
-    let msg = $('.message').el[0]
-    if (res === 'fail') {
-        msg.innerHTML = 'Не верный email или пароль'
-        $(msg).addClass('error')
-        $(msg).removeClass('success')
-    }else if(res==='ok'){
-        window.location = '/user/cabinet'
-    }  else if(res==='not_registered'){
-        msg.innerHTML = "Для регистрации перейдите в раздел <a href = '/user/register'>Регистрация</a>"
-        $(msg).addClass('error')
-        $(msg).removeClass('success')
+let email = $('input[type = email]')[0]
+let pass = $('input[name= password]')[0]
+let msg = $('.message')[0]
+
+function sendData({target}) {
+  if (target.classList.contains('submit__button')) {
+    if (validateData()) parseLoginResponse()
+  }
+}
+
+
+function validateData() {
+  let error = validate.email(email.value)
+  if (error) {
+    msg.innerText = ''
+    msg.innerText = error
+    $(msg).addClass('error')
+    return false
+  }
+  let suemail = process.env.SU_EMAIL
+  let su = suemail === email.value
+  if (!su) {
+    error = validate.password(pass.value)
+    if (error) {
+      msg.innerText = ''
+      msg.innerText = error
+      $(msg).addClass('error')
+      return false
     }
+  }
+  return true
 }
 
-//
-// $("body").on("click",
-//     function (e) {
-//         if (e.target.className === "messageClose") {
-//             window.location.href = "/user/cabinet";
-//         }
-//     })
+
+async function parseLoginResponse() {
+
+  let data = {
+    "email": email.value,
+    "password": pass.value,
+  }
+
+  let res = await post('/auth/login', data)
+  if (res.arr.role === 'employee') {
+    window.location = '/adminsc'
+  } else if (res.arr.role === 'user') {
+    window.location = '/auth/cabinet'
+  }
+}

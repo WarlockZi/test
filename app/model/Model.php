@@ -3,73 +3,104 @@
 namespace app\model;
 
 use app\core\DB;
-use app\core\App;
-use mysql_xdevapi\Exception;
-use PHPMailer\PHPMailer\PHPMailer;
+use Engine\DI\DI;
+
 
 abstract class Model
 {
-
 	protected $pdo;
-	protected $sql;
-	protected $table;
-	protected $model;
-	protected $pk = 'id'; // Конвенция Первичный ключ по умолчанию будет 'id', но можно его переопределить
+	public $table;
+	public $model;
+
+	protected $user;
+	public $items;
 
 	public function __construct()
 	{
 		$this->pdo = DB::instance();
 	}
 
-	public function create($values)
+	protected function auth($ext): void
 	{
-		if (isset($values['id'])) unset($values['id']);
-		$fields = implode(',', array_keys($values));
-		$param = array_values($values);
-		$questionMarks = array_fill(0, count($values), '?');
-		$strQMarks = implode(',', array_values($questionMarks));
-
-		$sql = "INSERT INTO {$this->table} ({$fields}) VALUES ({$strQMarks})";
-		try {
-			$this->insertBySql($sql, $param);
-			return $this->autoincrement();
-		} catch (Exception $e) {
-			exit('Пользователь не создан' . $e->getMessage());
+		$user = \app\model\illuminate\User::find($_SESSION['id']);
+		if (!$user) {
+			throw new \Exception('Нет пользователя ');
+		}
+		$this->user = $user->toArray();
+		$rightName = $this->model . '_' . $ext;
+		if (!User::can($this->user, [$rightName])) {
+			exit(json_encode(['error' => 'Нет права ' . $rightName]));
 		}
 	}
 
-
-	public
-	function update($values)
+	public static function create($values = [], $register = false, $needsAuth = true)
 	{
-		$id = $values['id'];
-		unset($values['id']);
-		$par = '';
-		foreach ($values as $key => $value) {
-			if ($value) {
-				$par .= $key . " = '" . $value . "', ";
-			} else {
-				$par .= $key . " = NULL, ";
+		$model = new static();
+		if ($needsAuth && !$register) $model->auth('create');
+
+		if (isset($values['id'])) unset($values['id']);
+//		if (isset($values['token'])) unset($values['token']);
+
+		$fillable = $model->fillable;
+		foreach ($values as $k => $v) {
+			if (array_key_exists($k, $model->fillable)) {
+				$fillable[$k] = $v;
 			}
 		}
-		$par = trim($par, ' '); // first trim last space
+
+		$fields = implode(',', array_keys($fillable));
+		$param = array_values($fillable);
+		$questionMarks = array_fill(0, count($fillable), '?');
+		$strQMarks = implode(',', array_values($questionMarks));
+
+		$sql = "INSERT INTO {$model->table} ({$fields}) VALUES ({$strQMarks})";
+		try {
+			$model->insertBySql($sql, $param);
+			return $model->autoincrement();
+		} catch (Exception $e) {
+			exit('Не создан' . $e->getMessage());
+		}
+	}
+
+	public static function update($values = [])
+	{
+		$model = new static();
+		$model->auth('update');
+
+		$id = $values['id'];
+		if (!$id) exit('empty or undefined id');
+		unset($values['id']);
+		$fillable = $model->fillable;
+		$par = '';
+		foreach ($values as $key => $value) {
+			$value = $value ?? null;
+			if (is_array($value)) {
+				$value = implode(',', $value);
+			}
+			$value = trim($value);
+			$par .= "{$key}='{$value}', ";
+		}
+		$par = trim($par); // first trim last space
 		$par = trim($par, ',');
 
-		$sql = "UPDATE `{$this->table}` SET {$par} WHERE id = ?";
+		$sql = "UPDATE `{$model->table}` SET {$par} WHERE id = ?";
 
-		if ($this->insertBySql($sql, [$id])) {
+		if ($model->insertBySql($sql, [$id])) {
 			return true;
 		}
 		return 'Видимо, ошибка в запросе!';
 	}
 
-	public function delete($id)
-	{
-		$param = [$id];
-		$sql = "DELETE FROM {$this->table} WHERE  id = ?";
-		return $this->insertBySql($sql, $param);
-	}
 
+	public static function delete($id)
+	{
+		$model = new static();
+		$model->auth('delete');
+
+		$param = [$id];
+		$sql = "DELETE FROM {$model->table} WHERE  id = ?";
+		return $model->insertBySql($sql, $param);
+	}
 
 	public function morphOne($type, $typeId, $id)
 	{
@@ -77,7 +108,6 @@ abstract class Model
 		$firstId = $this->model . '_id';
 		$secodId = 'type_id';
 		$param = [$typeId];
-
 
 		$sql1 = "SELECT * FROM $morphTable WHERE type='{$type}' AND $secodId=?";
 		$found = $this->findBySql($sql1, $param);
@@ -92,117 +122,272 @@ abstract class Model
 		}
 	}
 
-
-	public function morphTo($type, $typeId, $id)
+	private function makeMorphTableName(string $name1, string $name2): string
 	{
-		$morphTable = $this->model . '_morph';
-		$firstId = $this->model . '_id';
-		$secodId = 'type_id';
-		$param = [$id, $typeId];
-
-		$sql1 = <<<here
-SELECT * FROM $morphTable WHERE $firstId=? AND type="$type" AND $secodId=?
-here;
-
-		if (!$this->findBySql($sql1, $param)) {
-			$sql = <<<here
-INSERT INTO $morphTable SET $firstId = ?, type="$type", $secodId= ? 
-here;
-			$this->insertBySql($sql, $param);
-		}
+		$arr = [$name1, $name2];
+		sort($arr);
+		return $arr[0] . '_' . $arr[1];
 	}
 
-	public
-	function autoincrement()
+	private function makeFieldName(string $name): string
 	{
+		return $name . '_id';
+	}
+
+	public function morphTo($table, $type, $id): array
+	{
+		$morphTable = $this->makeMorphTableName($this->model, $table);
+		$field = $this->makeFieldName($this->model);
+		$param = [$id];
+
+		$sql = "SELECT * FROM $morphTable WHERE $field=? AND type='$type'";
+		$res = $this->findBySql($sql, $param);
+		$arr = [];
+		foreach ($res as $item) {
+			$m = $this->findOneWhere('id', $item['type_id']);
+
+			$arr[] = $m;
+		}
+		return $arr;
+	}
+
+
+	public function firstOrCreate(string $field, $val, array $row)
+	{
+
+//<<<<<<< HEAD
 		$db = $_ENV["DB_DB"];
 		$params = [$db, $this->table];
 		$sql = "SHOW TABLE STATUS FROM ? LIKE '?'";
 		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
+//=======
+//		$model = new static();
+//		$model->auth('create');
+//>>>>>>> origin/master
 
-	}
-
-
-	public
-	function updateOrCreate($id, $values)
-	{
-		if ($this->find([$id])) {
-			$this->update($values);
-			return true;
-		} else {
-			$autoincrement = $this->create($values) - 1;
-			return $autoincrement;
-		}
-	}
-
-	public
-	function firstOrCreate($field, $val, $row)
-	{
-		$found = App::$app->{$this->model}->findWhere($field, $val);
+		$found = $model::findOneWhere($field, $val);
 		if (!$found) {
-			App::$app->{$this->model}->create($row);
+			$model::create($row);
 			return true;
 		}
 		return $found;
 	}
 
 
-	function multi_implode($glue, $array)
+	public static function updateOrCreate(array $values)
 	{
-		$_array = array();
-		foreach ($array as $val)
-			$_array[] = is_array($val) ? $this->multi_implode($glue, $val) : $val;
-		return implode($glue, $_array);
+		$model = new static();
+		$id = $values['id'] ?? '';
+		if ($id) {
+			$model::update($values);
+			return true;
+		} else {
+			$id = $model::create($values) - 1;
+			return $id;
+		}
 	}
 
-	public
-	function clean_data($str)
+	public static function load($id)
 	{
-		return strip_tags(trim($str));
+		$model = new static();
+		$fields = $model::findOneWhere('id', $id);
+		if ($fields) {
+			$fields = $fields[0];
+
+			$model->fillable['id'] = $id;
+			foreach ($model->fillable as $k => $v) {
+				if (array_key_exists($k, $fields)) {
+					$model->fillable[$k] = $fields[$k];
+				}
+			}
+			return $model;
+		}
+		return false;
 	}
 
-	public
-	function findAll($table, $sort = '')
+	private function fillModel(array $fields): void
 	{
-		$sql = "SELECT * FROM " . ($table ?: $this->table) . ($sort ? " ORDER BY {$sort}" : "");
-		return $this->pdo->query($sql);
+		foreach ($fields as $k => $v) {
+			$this->fields[$k] = $v;
+		}
 	}
 
-	public
-	function findOne($id, $field = '')
+	public static function findOneModel($id = ''): Model
 	{
-		$field = $field ?: $this->pk;
-		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
-		$result = $this->pdo->query($sql, [$id]);
-		return $result ? $result[0] : FALSE;
+		$model = new static();
+		$sql = "SELECT * FROM {$model->table} WHERE id IN (?)";
+		$fields = $model->pdo->query($sql, [$id])[0] ?? [];
+		$model->fillModel($fields);
+		return $model;
 	}
 
-	public
-	function find($id = [])
+	public static function find($id = [])
 	{
-		$id = implode(',', array_map('intval', $id));
-		$sql = "SELECT * FROM {$this->table} WHERE id IN (?)";
-		return $this->pdo->query($sql, [$id]);
+		$model = new static();
+		if (is_array($id)) {
+			$id = implode(',', array_map('intval', $id));
+		}
+		$sql = "SELECT * FROM {$model->table} WHERE id IN (?)";
+		return $model->pdo->query($sql, [$id]);
 	}
 
 
-	public
-	function findWhere($field, $value)
+	public static function findAll($table = '', $sort = '')
 	{
-		$sql = "SELECT * FROM {$this->table} WHERE $field = ? LIMIT 1";
-		return $this->pdo->query($sql, [$value]);
+		$model = new static();
+		$sql = "SELECT * FROM " . ($table ?: $model->table) . ($sort ? " ORDER BY {$sort}" : "");
+		return $model->pdo->query($sql);
 	}
 
-	public
-	function findBySql($sql, $params = [])
+	private function prepareQuerry($array)
 	{
-		return $this->pdo->query($sql, $params);
+		$filds = array_keys($array);
+		$params = array_values($array);
+
+		$str = "{$filds[0]}='{$params[0]}'";
+		array_shift($array);
+		foreach ($array as $k => $v) {
+			$s = $k . "='" . $v . "'";
+			$str .= " AND " . $s;
+		}
+		return $str;
 	}
 
-	public
-	function insertBySql($sql, $params = [])
+	public static function findAllWhere($fieldOrArray, $value = '')
 	{
-		return $this->pdo->execute($sql, $params);
+		$model = new static();
+
+		if (is_array($fieldOrArray)) {
+			$querry = $model->prepareQuerry($fieldOrArray);
+			$sql = "SELECT * FROM {$model->table} WHERE {$querry}";
+			return $model->pdo->query($sql, []);
+		}
+		$sql = "SELECT * FROM {$model->table} WHERE $fieldOrArray = ? ";
+		return $model->pdo->query($sql, [$value]);
+	}
+
+	public static function findOneWhere($field, $value)
+	{
+		$model = new static();
+		$sql = "SELECT * FROM {$model->table} WHERE $field = ? LIMIT 1";
+		$item = $model->pdo->query($sql, [$value]);
+		return $item[0] ?? null;
+	}
+
+	public function groupBy($field = '')
+	{
+		$this->groupBy = " GROUP BY {$field}" ?? '';
+		return $this;
+	}
+
+	public function orderBy($field)
+	{
+		if (is_array($field)) {
+			$str = implode(', ', $field);
+			$this->orderBy = " ORDER BY {$str}" ?? '';
+			return $this;
+		} elseif (is_string($field)) {
+			$this->orderBy = " ORDER BY {$field}" ?? '';
+			return $this;
+		}
+	}
+
+	public function pluck($fields = [])
+	{
+		$this->pluck = $fields ?? '*';
+		return $this;
+	}
+
+	public function limit(int $limit)
+	{
+		$this->limit = " LIMIT {$limit}" ?? '';
+		return $this;
+	}
+
+	public static function where($field, $operator, $value)
+	{
+		$model = new static();
+		$model->where = " WHERE {$field}{$operator}'{$value}'" ?? '';
+		return $model;
+	}
+
+
+	public final function get()
+	{
+		if (property_exists($this, 'hasMany')
+			&& ($this->hasMany)) {
+			$this->getWith();
+			return $this;
+		}
+		$pluck = $this->pluck ?? '*';
+		$where = $this->where ?? '';
+		$orderBy = $this->orderBy ?? '';
+		$groupBy = $this->groupBy ?? '';
+		$limit = $this->limit ?? '';
+		$sql = "SELECT {$pluck} FROM {$this->table} {$where}{$groupBy} {$orderBy} {$limit}";
+		$this->fields = $this->pdo->query($sql, []);
+		$this->items = $this->fields;
+		return $this->fields;
+	}
+
+	public function with($child): self
+	{
+		$name = 'app\model\\' . ucfirst($child);
+		$model = new $name;
+		if ($child) {
+			$this->hasMany[$name]['model'] = $model->model;
+			$this->hasMany[$name]['table'] = $model->table;
+			$this->with = "SELECT * FROM {$model->table} WHERE {$this->model}_id IN ";
+		}
+		return $this;
+	}
+
+	public function hasMany(string $class)
+	{
+		if ($this->hasMany[$class]) {
+			return $this->hasMany[$class]['items'];
+		}
+	}
+
+	public function hasOne(string $class)
+	{
+		$instance = new $class;
+		$field = $instance->model . '_id';
+		return $instance::where($field, '=', $this->fillable[$field])
+			->limit(1)
+			->get();
+	}
+
+	public final function getWith()
+	{
+		foreach ($this->hasMany as &$hasManyItem) {
+			$childTable = ucfirst($hasManyItem['model']);
+
+			$pluck = $this->pluck ?? '*';
+			$where = $this->where ?? '';
+			$orderBy = $this->orderBy ?? '';
+			$sql = "SELECT {$pluck} FROM {$this->table} {$where} {$orderBy}";
+			$this->items = $this->pdo->query($sql, []);
+
+			if ($this->items) {
+
+				$ids = [];
+				foreach ($this->items as $i => $item) {
+					array_push($ids, $item['id']);
+				}
+				$ids = implode(',', $ids);
+				$sql = $this->with . '(' . $ids . ')';
+				$hasManyItem['items'] = $this->pdo->query($sql, []);
+				foreach ($this->items as &$item) {
+					foreach ($hasManyItem['items'] as $child) {
+						$identifier = $this->model . '_id';
+						if ($item['id'] === $child[$identifier]) {
+							$item[$childTable][] = $child;
+						}
+					}
+				}
+			}
+		}
 	}
 
 
@@ -216,67 +401,31 @@ here;
 		return rmdir($dir);
 	}
 
-	public
-	function getBreadcrumbs($category, $parents, $type)
-	{
-		if ($type == 'category') {
-// в parents массив из адресной строки - надо получить aliases
-			foreach ($parents as $key) {
-				$params = [$key['name']];
-				$sql = 'SELECT * FROM category WHERE name = ?';
-//если это категория, а ее не нашли вернем 404  ошибку
-				if ($arrParents[] = $this->findBySql($sql, $params)[0]) {
 
-				} else {
-					http_response_code(404);
-					include '../public/404.html';
-					exit();
-				}
-			}
-		}
-		$breadcrumbs = "<a href = '/'>Главная</a>";
-		if ($type == 'category') {
-			foreach ($parents as $parent) {
-				$breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
-			}
-			return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
-		} else {
-			$parents = array_reverse($parents);
-			foreach ($parents as $parent) {
-				$breadcrumbs .= "<a  data-id = {$parent['id']} href = '/{$parent['alias']}'>{$parent['name']}</a>";
-			}
-			return $breadcrumbs . "<span data-id = {$category['id']}>{$category['name']}</span>";
-		}
+	public function autoincrement()
+	{
+		$params = [$this->table];
+		$sql = "SHOW TABLE STATUS FROM {$_ENV["DB_DB"]} LIKE ?";
+		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
 	}
 
-	public
-	function getAssoc($table)
+	public function findBySql($sql, $params = [])
 	{
-		$params = array();
-		$res = App::$app->{$table}->findBySql($this->sql, $params);
-
-		if ($res !== FALSE) {
-			$all = [];
-			foreach ($res as $key => $v) {
-				$all[$v['id']] = $v;
-			}
-			return $all;
-		}
+		return $this->pdo->query($sql, $params);
 	}
 
-	protected
-	function hierachy()
+	public function insertBySql($sql, $params = [])
 	{
-		$tree = [];
-		$data = $this->data;
-		foreach ($data as $id => &$node) {
-			if (isset($node['parent']) && !$node['parent']) {
-				$tree[$id] = &$node;
-			} elseif (isset($node['parent']) && $node['parent']) {
-				$data[$node['parent']]['childs'][$id] = &$node;
-			}
-		}
-		return $tree;
+		return $this->pdo->execute($sql, $params);
 	}
+
+	function multi_implode($glue, $array)
+	{
+		$_array = array();
+		foreach ($array as $val)
+			$_array[] = is_array($val) ? $this->multi_implode($glue, $val) : $val;
+		return implode($glue, $_array);
+	}
+
 
 }

@@ -1,5 +1,12 @@
-import './top.scss'
-import './middle.scss'
-import './header-menu.sass'
-import './header.sass'
-import "./header-panel.sass"
+import {$} from '../../common'
+import './header.scss'
+
+let gumburger = $('.gamburger')[0]
+if (gumburger) {
+  $('.gamburger').on('click', opentMobilePanel)
+}
+
+function opentMobilePanel(e) {
+  let mm = e.target.closest('.utils').querySelector('.mobile-menu')
+  mm.classList.toggle('show')
+}

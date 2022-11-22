@@ -19,7 +19,7 @@ class SearchController extends AppController
 		$escaped_req = addslashes('%' . $q . '%');
 		$sql = "SELECT alias, name, preview_pic FROM products WHERE name LIKE ? AND `act`= 'Y' LIMIT 10";
 		$params = [$escaped_req];
-		$arr = App::$app->product->findBySql($sql, $params);
+		$arr = Product::findBySql($sql, $params);
 		$arr = array_slice($arr,0,10);
 		$json = json_encode($arr);
 		header('Content-Type: application/json');

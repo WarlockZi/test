@@ -1,0 +1,16 @@
+{
+  "plugins": ["@babel/syntax-dynamic-import",
+    ["babel-plugin-root-import", {
+      "rootPathSuffix": "./public/src",
+      "rootPathPrefix": "@"
+    }]
+  ],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false
+      }
+    ]
+  ]
+}

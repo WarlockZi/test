@@ -5,7 +5,6 @@ import {$} from '../../common'
 $("body").on("click", function (e) {
         if (e.target.className === "messageClose") {
             // alert(e.target.className)
-            window.location.href = "/user/cabinet";
         }
     }
 )

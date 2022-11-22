@@ -1,71 +1,73 @@
-import {post, $, validate} from '../common'
+import {post, $, validate, trimStr} from '../common'
 
-$("[name = 'reg']").on("click", async function (e) {
-        e.preventDefault()
-
-        let email = $('input[type = email]').el[0].value
-        let password = $('input[type = password]').el[0].value
-        if (email) {
-            if (!validate.email(email)) {
-                let $result = $(".message").el[0];
-                $result.innerText = "Неправильный формат почты"
-                $($result).addClass('error')
-                return false
-            }
-            if (password) {
-                if (!validate.password(password)) {
-                    let msg = $(".message").el[0]
-                    msg.innerText = "Пароль может состоять из \n " +
-                        "- больших латинских букв \n" +
-                        "- маленьких латинских букв \n" +
-                        "- цифр \n" +
-                        "- должен содержать не менее 6 символов"
-
-                    $(msg).addClass('error')
-                    return false
-                }
-            }
-            send(email)
-        }
-    }
-)
-
-
-async function send(email) {
-    let data = {
-        "email": email,
-        "password": $("input[type= password]").el[0].value,
-        "surName": $("[name='surName']").el[0].value,
-        "name": $("[name='name']").el[0].value,
-        "token": $('meta[name="token"]').el[0].getAttribute('content'),
-    }
-    let res = await post('/user/register', data)
-    let msg = $('.message')
-
-    if (res === 'confirm') {
-        msg.removeClass('error')
-        msg.addClass('success')
-        msg.el[0].innerHTML =
-            'Пользователь зарегистрирован.<br>' +
-            'Для подтверждения регистрации зайдите на почту, ' +
-            'с которой производилась регистрация.<br> ' +
-            'Перейдите по ссылке в письме.'
-        // window.location='/user/cabinet'
-    } else if (res === 'mail exists') {
-        msg.el[0].innerHTML = 'Эта почта уже зарегистрирована'
-        msg.removeClass('success')
-        msg.addClass('error')
-    } else if (res === 'empty password') {
-        msg.el[0].innerHTML = 'Зполните пароль'
-        msg.removeClass('success')
-        msg.addClass('error')
-    }
-    // else if(res==='confirm'){
-    //     msg.el[0].innerHTML = "Для подтвержения регистрации перейдите по ссылке в письме. <br>Письмо может попасть в папку СПАМ"
-    //     msg.removeClass('error')
-    //     msg.addClass('success')
-    // }
+let registerForm = $("[data-auth='register']")[0]
+if (registerForm) {
+  $(registerForm).on('click', sendData)
 }
+
+
+function sendData({target}) {
+  let email = trimStr($('input[type = email]')[0].value)
+  let password = trimStr($('input[name = password]')[0].value)
+
+  if (target.classList.contains('submit__button')) {
+    if (validateData(email,password))
+      parseRegisterResponse(email,password)
+  }
+}
+
+function validateData(email,password) {
+
+
+  let error = validate.email(email)
+  let msg = $('.message')[0]
+  if (error) {
+    msg.innerText = msg.innerText + error
+    $(msg).addClass('error')
+    return false
+  }
+  error = validate.password(password)
+  if (error) {
+    msg.innerText = msg.innerText + error
+    $(msg).addClass('error')
+    return false
+  }
+  return true
+}
+
+async function parseRegisterResponse(email,password) {
+  let msg = $(".message")[0];
+  let data = {
+    email,
+    password,
+    "surName": $("[name='surName']")[0].value,
+    "name": $("[name='name']")[0].value,
+  }
+
+  let res = await post('/auth/register', data)
+
+  if (res.msg === 'confirmed') {
+    msg.classList.remove('error')
+    msg.classList.add('success')
+    msg.innerHTML =
+      '-Пользователь зарегистрирован.<br>' +
+      '-Для подтверждения регистрации зайдите на почту, ' +
+      '<bold>email</bold>.<br> ' +
+      '-Перейдите по ссылке в письме.'
+  } else if (res.msg === 'mail exists') {
+    msg.innerHTML = 'Эта почта уже зарегистрирована'
+    msg.classList.remove('success')
+    msg.classList.add('error')
+
+  } else {
+    msg.innerHTML = res.msg
+    msg.classList.remove('success')
+    msg.classList.add('error')
+  }
+
+}
+
+
 
 
 

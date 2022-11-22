@@ -1,29 +1,5 @@
-<div class="adm-submenu">
-
-  <div class="title">Настройки</div>
-
-  <? if (in_array('3', $user['rights'])): // admin ?>
-     <div class="admin-actions">
-
-       <a href  = '/adminsc/Sitemap'>Создать SiteMap</a>
-       <a href  = #>Права пользователей</a>
-       <a href  = #>Должности пользователей</a>
-       <a href  = '/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
-       <a href  = '/adminsc/settings/instructions'>Инструкции</a>
-       <a href  = '/adminsc/settings/dump'>Dump</a>
-       <a href  = '/adminsc/settings/pics'>Картинки</a>
-       <a href  = '/adminsc/settings/game'>Игра</a>
-
-     </div>
-  <? endif; ?>
-
-</div>
-
 <div class="adm-content">
-  <div class="breadcrumbs-adm">
-    <a href  = "index">Admin</a>
-    <div>Настройки</div>
-  </div>
+
 
 
          <!--           <div id="vk_post_2083688_2227"></div><script type="text/javascript">

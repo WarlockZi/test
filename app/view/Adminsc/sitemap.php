@@ -1,10 +1,6 @@
 <div class="wrap-admin">
 
 
-  <div class="breadcrumbs-adm">
-    <a href  = "index">Admin</a>
-    <div>Site Map</div>
-  </div>
 
   <div class="work-area">
 

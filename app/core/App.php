@@ -2,15 +2,17 @@
 
 namespace app\core;
 
-use app\core\Registry;
-
 class App {
 
-  public static $app;
 
-  public function __construct() {
-	//exit(__FILE__);
-    self::$app = Registry::instance();
+  public static $app;
+  public static $DI;
+
+  public function __construct($di) {
+
+  	self::$DI = $di;
+
+//    self::$app = Registry::instance();
 
   }
 
