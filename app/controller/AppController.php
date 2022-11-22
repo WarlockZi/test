@@ -131,10 +131,6 @@ class AppController extends Controller
 			exit();
 		} else {
 			$user = \app\model\Illuminate\User::find($_SESSION['id'])->toArray();
-//			if (!$user) {
-//				header("Location:/auth/login");
-//				$this->exitWithPopup("Пользователь не найден");
-//			}
 			if ($user === false) {
 				$_SESSION['id'] = '';
 				$errors[] = 'Неправильные данные для входа на сайт';
@@ -153,13 +149,11 @@ class AppController extends Controller
 
 	public function auth()
 	{
-		if (isset($_SESSION['id']) && $_SESSION['id']) {
-			$user = $this->user = AuthController::user();
-			if ($this->user === false) {
-				$errors[] = 'Неправильные данные для входа на сайт';
-			} else {
-				$this->set(compact('user'));
-			}
+		$user = $this->user = AuthController::user();
+		if ($this->user === false) {
+			$errors[] = 'Неправильные данные для входа на сайт';
+		} else {
+			$this->set(compact('user'));
 		}
 	}
 
