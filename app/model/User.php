@@ -47,15 +47,11 @@ class User extends Model
 		if (is_string($user['rights'])) {
 			$user['rights'] = explode(',', $user['rights']);
 		}
-		if (is_string($rights) && $rights) {
-			$rights = compact('rights');
-		}
+
 		$has = self::hasRights($user, $rights);
 		$su = self::isSu();
-		$admin = self::isAdmin($user);
-//		echo "has ".$has."<br>su ".$su."<br>admin ".$admin."<br>";
 
-		return ($has || $su || $admin);
+		return ($has || $su);
 	}
 
 	public static function isAdmin(array $user): bool

@@ -5,7 +5,7 @@ $user = $controller->user;
 <div class="admin_sidebar">
 
 	<div class="admin_sidebar_header">
-	<? include ICONS . '/gamburger.svg' ?>
+		 <? include ICONS . '/gamburger.svg' ?>
 
 		 <? include ROOT . '/app/view/Header/user_credits.php' ?>
 
@@ -73,8 +73,9 @@ $user = $controller->user;
 
 			  <ul class="level-1">
 				  <a class="neon" href='/adminsc/videoinstruction'>Инструкции</a>
-				  <a class="neon" href='/adminsc/videoinstruction/edit'>Редактировать инструкции</a>
-
+						 <? if (User::can($controller->user, ['role_admin'])): ?>
+					 <a class="neon" href='/adminsc/videoinstruction/edit'>Редактировать инструкции</a>
+						 <? endif; ?>
 			  </ul>
 		  </li>
 		 <? endif; ?>
@@ -121,7 +122,7 @@ $user = $controller->user;
 				Планирование
 			</div>
 			<ul class="level-1">
-					 <? if (User::can($user, 'role_employee')): // admin ?>
+					 <? if (User::can($user, ['role_employee'])): // admin ?>
 				  <a class="neon" href="/adminsc/planning/create">Создать задачи</a>
 				  <a class="neon" href="/adminsc/planning/list">Посмотреть планировки</a>
 				  <a class="neon" href="/adminsc/planning/plan">Спланироваться</a>
@@ -144,7 +145,7 @@ $user = $controller->user;
 				Каталог
 			</div>
 			<ul class="level-1">
-					 <? if (User::can($user, 'role_admin')): // admin ?>
+					 <? if (User::can($user, ['role_admin'])): // admin ?>
 				  <a class="neon" href="/adminsc/category">Категории</a>
 				  <a class="neon" href="/adminsc/product/list">Товары</a>
 
@@ -159,7 +160,7 @@ $user = $controller->user;
 				Пользователь
 			</div>
 			<ul class="level-1">
-					 <? if (User::can($user, 'role_employee')): // admin ?>
+					 <? if (User::can($user, ['role_employee'])): // admin ?>
 				  <a class="neon" href="/auth/returnpass">Забыл пароль</a>
 				  <a class="neon" href="/auth/changepassword">Сменить пароль</a>
 				  <a class="neon" href="/auth/profile">Изменить свой профиль</a>
@@ -170,7 +171,7 @@ $user = $controller->user;
 		</li>
 
 
-		 <? if (User::can($user, 'su')): ?>
+		 <? if (User::can($user)): ?>
 		  <li su>
 
 			  <div class="label">

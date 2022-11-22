@@ -28,7 +28,7 @@ abstract class Model
 		}
 		$this->user = $user->toArray();
 		$rightName = $this->model . '_' . $ext;
-		if (!User::can($this->user, $rightName)) {
+		if (!User::can($this->user, [$rightName])) {
 			exit(json_encode(['error' => 'Нет права ' . $rightName]));
 		}
 	}

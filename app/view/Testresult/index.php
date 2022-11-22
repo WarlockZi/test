@@ -14,7 +14,7 @@
 			</div>
 			<div class="item" data-row="<?= $i['id'] ?>"> <?= $i['date']; ?></div>
 
-			<div class="item del-btn <?= \app\model\User::can($this->user, 'test-results_del' ) ? 'del' : ''; ?>"
+			<div class="item del-btn <?= \app\model\User::can($this->user, ['test-results_del'] ) ? 'del' : ''; ?>"
 			     data-row="<?= $i['id'] ?>">
 				<? include TRASH;?>
 			</div>

@@ -45,13 +45,15 @@ class ItemBuilder extends Builder
 
 	public function pageTitle(string $pageTitle)
 	{
-		$this->pageTitle = $pageTitle??'';
+		$this->pageTitle = $pageTitle ?? '';
 		return $this;
 	}
 
-	public function del()
+	public function del(bool $isAdmin = true)
 	{
-		$this->del = true;
+		if ($isAdmin) {
+			$this->del = true;
+		}
 		return $this;
 	}
 
@@ -61,13 +63,15 @@ class ItemBuilder extends Builder
 		return $this;
 	}
 
-	public function toList(string $href = '', string $text='')
+	public function toList(string $href = '', string $text = '', bool $isAdmin = true)
 	{
-		$this->toList = true;
-		if ($href) {
-			$this->toListHref = '/' . $href;
+		if ($isAdmin) {
+			$this->toList = true;
+			if ($href) {
+				$this->toListHref = '/' . $href;
+			}
+			$this->toListText = $text ? $text : $this->toListText;
 		}
-		$this->toListText = $text?$text:$this->toListText;
 		return $this;
 	}
 

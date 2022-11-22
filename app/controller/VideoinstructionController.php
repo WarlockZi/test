@@ -2,6 +2,8 @@
 
 namespace app\controller;
 
+use app\core\Auth;
+use app\model\User;
 use app\model\Videoinstruction;
 use app\view\Videoinstruction\VideoinstructionView;
 use app\view\View;
@@ -18,22 +20,22 @@ class VideoinstructionController Extends AppController
 
 	public function actionIndex()
 	{
-		$videos = Videoinstruction::where('id','>',0)
-			->orderBy(['tag','sort'])
+		$videos = Videoinstruction::where('id', '>', 0)
+			->orderBy(['tag', 'sort'])
 			->get();
 		$this->set(compact('videos'));
 	}
 
-	public function actionCreate()
-	{
-		if ($this->ajax) {
-			if ($id = $this->model::create($this->ajax)) {
-				$this->exitJson([
-					'id' => $id-1,
-				]);
-			}
-		}
-	}
+//	public function actionCreate()
+//	{
+//		if ($this->ajax) {
+//			if ($id = $this->model::create($this->ajax)) {
+//				$this->exitJson([
+//					'id' => $id-1,
+//				]);
+//			}
+//		}
+//	}
 
 	public function actionUpdateOrCreate()
 	{
@@ -41,8 +43,8 @@ class VideoinstructionController Extends AppController
 			if ($id = $this->model::updateOrCreate($this->ajax)) {
 				if (is_bool($id)) {
 					$this->exitWithPopup('Сохранено');
-				}else{
-					$this->exitJson(['id'=>$id,'msg'=>'Создан']);
+				} else {
+					$this->exitJson(['id' => $id, 'msg' => 'Создан']);
 				}
 			}
 		}
@@ -55,13 +57,12 @@ class VideoinstructionController Extends AppController
 		if ($this->model::delete($id)) {
 			$this->exitWithPopup("ok");
 		}
-
 	}
 
 	public function actionEdit()
 	{
+		Auth::checkAuthorized($this->user, ['role_admin']);
 		$VideoinstructionsView = VideoinstructionView::listAll();
 		$this->set(compact('VideoinstructionsView'));
 	}
-
 }

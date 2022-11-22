@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\core\Auth;
 use app\model\Illuminate\User as IlluminateUser;
 use app\model\Mail;
 use app\model\User;
@@ -54,16 +55,16 @@ class AuthController extends AppController
 
 	public function actionProfile()
 	{
-		$this->autorize();
+		Auth::autorize();
 		$this->view = 'profile1';
 
 		$user = IlluminateUser::find($_SESSION['id']);
 		$userArr = IlluminateUser::find($_SESSION['id'])->toArray();
 
-		if (User::can($userArr, 'role_employee')) {
+		if (User::can($userArr, ['role_employee'])) {
 			Header::getAdninHeader($this);
 			$this->layout = 'admin';
-			if (User::can($userArr, 'role_admin')) {
+			if (User::can($userArr, ['role_admin'])) {
 				$item = UserView::admin($user);
 			} else {
 				$item = UserView::employee($user);
@@ -84,7 +85,7 @@ class AuthController extends AppController
 
 	public function actionChangePassword()
 	{
-		$this->autorize();
+		Auth::autorize();
 		if ($data = $this->ajax) {
 			if (!$data['old_password'] || !$data['new_password'])
 				$this->exitWithError('Заполните старый и новый пароль');
@@ -122,7 +123,7 @@ class AuthController extends AppController
 				->toArray();
 
 			if ($user) {
-				$this->setAuth($user);
+				Auth::setAuth($user);
 				$password = $this->randomPassword();
 				$newPassword = $this->preparePassword($password);
 				User::update(['id' => $user['id'], 'password' => $newPassword]);
@@ -157,9 +158,9 @@ class AuthController extends AppController
 			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
 			if ($user['password'] !== $this->preparePassword($password))
 				$this->exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
-			$this->setAuth($user);
+			Auth::setAuth($user);
 			$this->user = $user;
-			if (User::can($user, 'role_employee')) {
+			if (User::can($user, ['role_employee'])) {
 				$this->exitJson(['role' => 'employee']);
 			} else {
 				$this->exitJson(['role' => 'user']);
@@ -212,7 +213,7 @@ class AuthController extends AppController
 		$user = IlluminateUser::where('hash', $hash)->get()[0]->toArray();
 		if ($user) {
 			$user['confirm'] = "1";
-			$this->setAuth($user);
+			Auth::setAuth($user);
 			if (User::update($user)) {
 				header('Location:/auth/success');
 				$this->exitWithPopup('"Вы успешно подтвердили свой E-mail."');
@@ -232,7 +233,7 @@ class AuthController extends AppController
 
 	public function actionSuccess()
 	{
-		$this->auth();
+		Auth::auth();
 	}
 
 	public static function user()
@@ -249,11 +250,17 @@ class AuthController extends AppController
 
 	public function actionCabinet()
 	{
-		$this->auth();
+		Auth::auth();
 	}
 
 	public function actionNoconfirm()
 	{
 		$errorss = 4;
 	}
+
+	public function actionUnautherized()
+	{
+		$view = 'unautherized';
+	}
+
 }
