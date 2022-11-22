@@ -239,7 +239,7 @@ class AuthController extends AppController
 	{
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
 //			var_dump(IlluminateUser::find($_SESSION['id']));
-			var_dump(IlluminateUser::find($_SESSION['id'])->toArray());
+			var_dump(IlluminateUser::find($_SESSION['id']));
 			$user = IlluminateUser::find($_SESSION['id'])->toArray();
 			if (!$user) {
 				exit(json_encode(['popup' => 'Неправильные данные для входа на сайт']));
