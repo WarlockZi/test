@@ -70,7 +70,7 @@ abstract class Model
 		$id = $values['id'];
 		if (!$id) exit('empty or undefined id');
 		unset($values['id']);
-//		unset($values['token']);
+    $fillable = $model->fillable;
 		$par = '';
 		foreach ($values as $key => $value) {
 			$value = $value ?? null;
