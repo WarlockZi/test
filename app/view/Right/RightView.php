@@ -44,4 +44,9 @@ class RightView extends MyView
 			->get();
 	}
 
+  public static function getCheckList(array $configRights, array $rights, array $user)
+  {
+    return include ROOT . '/app/view/User/getRightsTab.php';
+	}
+
 }
