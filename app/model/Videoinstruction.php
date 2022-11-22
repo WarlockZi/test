@@ -24,7 +24,7 @@ class Videoinstruction extends Model
 	{
 		return parent::delete($id);
 	}
-	public static function create($value=[],$register=false)
+	public static function create($value=[],$register=false,$needsAuth=true)
 	{
 		return parent::create($value);
 	}
