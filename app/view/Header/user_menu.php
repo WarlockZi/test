@@ -1,5 +1,5 @@
 <? $user = \app\controller\AuthController::user(); ?>
-<? if (!isset($user)): ?>
+<? if (!$user): ?>
 
 	<div class="guest-menu" aria-label="login">
 		 <? include ROOT . '/public/src/components/icons/user.svg'; ?>
@@ -16,7 +16,7 @@
 <? else: ?>
 
 	<div class="user-menu">
-		<img src="<?= \app\model\User::avatar($user); ?>" alt="">
+		<img src="<?= \app\model\User::avatar($user)??''; ?>" alt="">
 
 		<div class="credits">
 			<div class="fio"><?= "{$user['surName']} {$user['name']}"; ?></div>
