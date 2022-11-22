@@ -34,8 +34,8 @@ class UserController extends AppController
 
   public function actionEdit()
   {
-    $user = $this->illuminateModel::find($this->route['id']);
-    $item = UserView::getViewByRole($user);
+		$item = $this->illuminateModel::find($this->route['id']);
+    $item = UserView::getViewByRole($item, $this->user);
 
     $this->set(compact('item'));
 

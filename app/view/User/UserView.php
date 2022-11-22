@@ -24,17 +24,18 @@ abstract class UserView extends MyView
   public $model;
   public $html;
 
-  public static function getViewByRole(Model $user)
+  public static function getViewByRole(Model $userToEdit, $thisUser)
   {
-    if (!$user) {
+    if (!$userToEdit) {
       return UserView::noElement();
     } else {
-      $userArr = $user->toArray();
-      if (User::can($userArr, ['role_employee'])) {
-        if (User::can($userArr, 'role_admin')) return UserView::admin($user);
-        return UserView::employee($user);
+      if (User::can($thisUser, ['role_employee'])) {
+        if (User::can($thisUser, 'role_admin')) {
+        	return UserView::admin($userToEdit);
+				}
+        return UserView::employee($userToEdit);
       } else {
-        return UserView::guest($user);
+        return UserView::guest($userToEdit);
       }
     }
   }
