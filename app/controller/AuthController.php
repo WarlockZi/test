@@ -238,7 +238,7 @@ class AuthController extends AppController
 	public static function user()
 	{
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
-			$user = IlluminateUser::find($_SESSION['id'])->toArray();
+			$user = IlluminateUser::find($_SESSION['id']);
 			if (!$user) {
 				exit(json_encode(['popup' => 'Неправильные данные для входа на сайт']));
 			}
