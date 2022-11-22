@@ -2,7 +2,9 @@
   "autoload": {
     "psr-4": {
       "Dotenv\\": "vendor/vlucas/phpdotenv/src",
-      "app\\": "app"
+      "app\\": "app",
+      "Engine\\": "engine",
+      "Engine\\DI\\": "engine/DI"
     }
   },
   "classmap": [
@@ -11,6 +13,8 @@
   ],
   "require": {
     "phpmailer/phpmailer": "^6.4",
-    "vlucas/phpdotenv": "^5.3"
+    "vlucas/phpdotenv": "^5.3",
+    "illuminate/events": "^8.83",
+    "illuminate/database": "^8.83"
   }
 }

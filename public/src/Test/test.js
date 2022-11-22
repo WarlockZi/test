@@ -1,9 +1,10 @@
 import './do'
-import './edit'
-import '../normalize.scss'
-import '../components/test-pagination/test-pagination'
-import '../Admin/admin.scss'
-import '../components/header/header'
+import '../components/header/autocomplete'
+
+import '../components/cookie/cookie'
+
+// import './test-pagination/test-pagination'
+
 import '../components/footer/footer.scss'
 
-import './show'
+

@@ -2,39 +2,54 @@
 
 namespace app\controller;
 
-use app\core\App;
 use app\model\Answer;
 
 class AnswerController Extends AppController
 {
+	public $model = \app\model\Illuminate\Answer::class;
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->auth();
 	}
 
-	public function actionCreate()
-	{
-		App::$app->answer->create('answer', $_POST['answer']);
-	}
+//	public function actionUpdateOrCreate()
+//	{
+//		if ($this->ajax)
+//
+//			$answer = Answer::updateOrCreate(['id'=>$this->ajax['id']],$this->ajax);
+//			if ($answer->wasRecentlyCreated) {
+//        $this->exitJson(['popup' => 'Создан', 'id' => $id]);
+//			}else{
+//				$this->exitWithError('Ответ не сохранен');
+//			}
+//
+//	}
 
-	public function actionDelete()
-	{
-		if (App::$app->answer->delete($this->ajax['a_id'])) {
-			exit(json_encode(['msg' => 'ok']));
-		}
-
-	}
+//	public function actionDelete()
+//	{
+//		$id =
+//
+//		if ($this->ajax['id']) {
+//
+//			if (Answer::find()delete($this->ajax['id'])) {
+//				$this->exitWithPopup('Ответ удален');
+//			}
+//		} else {
+//			$this->exitWithMsg('No id');
+//		}
+//	}
 
 	public function actionShow()
 	{
 		if ($this->ajax) {
-			$a_id = App::$app->answer->autoincrement();
+			$a_id = Answer::autoincrement();
 			$q_id = $this->ajax['q_id'];
 
-			App::$app->answer->show($a_id, $q_id);
+			Answer::create([]);
 		}
+		$index = 1;
+		$answer = include ROOT . '/app/view/Test/edit_BlockAnswer.php';
 	}
 
 }

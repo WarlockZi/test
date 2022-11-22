@@ -1,0 +1,25 @@
+<!--  BUTTONS  -->
+<div class="item_buttons">
+
+	<? if ($this->delBttn): ?>
+	  <div class="del"
+	       data-model="<?=$this->modelName;?>"
+	       data-id="<?=$this->item['id'];?>">
+			 <? include TRASH ?>
+	  </div>
+	<? endif; ?>
+
+	<? if ($this->saveBttn): ?>
+	  <div class="save">
+			 <? include SAVE ?>
+	  </div>
+	<? endif; ?>
+
+	<? if ($this->toListBttn): ?>
+	  <a href="/adminsc/<?= $this->modelName; ?>/list"
+	     class="to-list">
+		  К списку
+	  </a>
+	<? endif; ?>
+
+</div>

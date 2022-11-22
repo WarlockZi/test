@@ -1,0 +1,72 @@
+@import "phone";
+@import "header-catalog-menu";
+@import "user_menu";
+
+header {
+  display: flex;
+  background: #fff;
+  flex: 0 0 auto;
+
+  align-items: center;
+
+  justify-content: space-between;
+  padding: 10px 20px;
+  @include _600 {
+    padding: 0;
+  }
+
+  .logo {
+    @include _600{
+     padding: 10px 15px;
+    }
+
+    .logo_vitex {
+      height: 33px;
+
+      @include _600 {
+        height: 25px;
+      }
+      @include _500 {
+        //width: 50px;
+      }
+    }
+
+    .logo_square {
+      height: 33px;
+
+      @include _700 {
+        display: none;
+      }
+    }
+  }
+
+  .location {
+    font-size: 12px;
+    padding: 0 15px;
+    max-width: 105px;
+    position: relative;
+    flex: 1;
+    @include _800 {
+      display: none;
+    }
+
+    svg {
+      position: absolute;
+      left: -8px;
+      top: 30%;
+      width: 15px;
+      height: 15px;
+      stroke: var(--color-main);
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+

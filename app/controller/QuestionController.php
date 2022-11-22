@@ -2,109 +2,99 @@
 
 namespace app\controller;
 
-use app\model\User;
-use app\model\Test;
-use app\view\View;
-use app\view\widgets\menu\Menu;
-use app\core\App;
-use mysql_xdevapi\Exception;
+use app\model\Answer;
+use app\model\Illuminate\Question;
+use app\model\Illuminate\Test;
+use app\model\Question as oldQest;
+
 
 class QuestionController Extends AppController
 {
-	private $req;
+	public $model = Question::class;
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->auth();
-		$this->req = json_decode($_POST['param'], true);
 	}
 
-	public function actionShow()
+	public function actionEdit()
 	{
-		$id = App::$app->answer->autoincrement();
-		$q_id = App::$app->question->autoincrement();
+		$page_name = 'Редактирование тестов';
+		$this->set(compact('page_name'));
 
-		$sort = $this->req['questQnt'] + 1;
-		$block[0]['question_text'] = '';
-		$block[0]['question_pic'] = '/srvc/nophoto-min.jpg';
-		$block[0]['sort'] = $sort;
-		$block[$id]['answer_text'] = '';
-		$block[$id]['correct_answer'] = '';
+		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+		if ($id) {
+//			$test = Test::find($id);
 
-		ob_start();
-		require ROOT . '/app/view/Test/editBlockQuestion.php';
-		$block = ob_get_clean();
-		$block = '<div class = "overlay">' . $block . '</div>';
+//			if ($test) {
+//				if ($test->isTest) {
+			$test
+				= Test::with('questions.answers')
+				->orderBy('sort')
+				->find($id)->toArray();
+//					if (!$questions) {
+//						$id = oldQest::create(['parent' => $id]);
+//						$question = oldQest::findOneWhere('id', $id - 1);
+//						$this->set(compact('question'));
+//
+//						$tests = oldTest::findAllWhere('isTest', '1');
+//						$this->set(compact('tests'));
+////					}
+//				} else {
+//					$test['children'] = Test::findAllWhere('parent', $id);;
+//				}
+			$parentSelector = \app\view\Test\TestView::questionParentSelector($test['id']);
 
-		$testid = $this->req['testid'];
-		$data = compact("testid", "block");
-		exit($json = json_encode($data));
-	}
+			$this->set(compact('test'));
+			$this->set(compact('parentSelector'));
 
-	public function actionCreateOrUpdate()
-	{
-		try {
-			$answers = $this->req['answers'];
-			$q_id = $this->req['question']['id'];
-			$sort = $this->req['question']['sort'];
-			$qId = App::$app->question->updateOrCreate($q_id, $this->req['question']);
-			if ($qId===false) {
-				return;
-			}elseif(is_int($qId)){
-				foreach ($answers as $answer) {
-					$answer['parent_question'] = $qId;
-					App::$app->answer->updateOrCreate($answer['id'], $answer);
-				}
-				exit(json_encode([
-					'msg' => 'Вопросы и ответы сохранены',
-					'paginationButton' => $pagination = "<div data-pagination = $q_id class='nav-active'>{$sort}</div>"
-				]));
-			}elseif($qId===true){
-				foreach ($answers as $answer) {
-					App::$app->answer->updateOrCreate($answer['id'], $answer);
-				}
-			}
-
-		} catch (Exception $exception) {
-			exit($exception->getMessage());
-		};
-
-
-	}
-
-	public function actionUpdate()
-	{
-		App::$app->question->updateOrCreate($this->req['question']['id'], $this->req['question']);
-
-		foreach ($this->req['answers'] as $answer) {
-			App::$app->answer->updateOrCreate($answer['id'], $answer);
 		}
-		exit(json_encode(['msg' => 'Saved']));
 	}
 
-	public function actionDelete()
+
+	public function actionChangeParent()
 	{
-		$q_id = $this->ajax['q_id'];
-
-		$answers = App::$app->answer->findWhere('parent_question', $q_id);
-		foreach ($answers as $answer) {
-			App::$app->answer->delete($answer['id']);
+		if ($ids = $this->ajax) {
+			$id = $ids['id'];
+			$testId = $ids['test_id'];
+			$q = oldQest::findOneWhere('id', $id);
+			$q['parent'] = $testId;
+			oldQest::update($q)
+				? $this->exitWithPopup('ok')
+				: $this->exitWithError('Ошибка при переносе вопроса');
 		}
-		App::$app->question->delete($q_id);
-		exit(json_encode(['msg' => 'ok', 'q_id' => $q_id]));
 	}
+
+
+//	public function actionDelete()
+//	{
+//		$q_id = $this->ajax['id'];
+//
+//		$answers = Answer::findAllWhere('question_id', $q_id);
+//		foreach ($answers as $answer) {
+//			Answer::delete($answer['id']);
+//		}
+//		oldQest::delete($q_id);
+//		$this->exitWithPopup('Вопрос и ответы удалены');
+//	}
 
 	public function actionImage()
 	{
 		$q_id = $this->ajax['q_id'];
 
-		$answers = App::$app->answer->findWhere('parent_question', $q_id);
+		$answers = Answer::findOneWhere('question_id', $q_id);
 		foreach ($answers as $answer) {
-			App::$app->answer->delete($answer['id']);
+			Answer::delete($answer['id']);
 		}
-		App::$app->question->delete($q_id);
+		oldQest::delete($q_id);
 		exit(json_encode(['msg' => 'ok', 'q_id' => $q_id]));
+	}
+
+	public function actionSort()
+	{
+		$q_ids = $this->ajax['toChange'];
+		Question::sort($q_ids);
+		$this->exitWithPopup('Сортировка сохранена');
 	}
 
 }

@@ -2,182 +2,152 @@
 
 namespace app\controller;
 
-use app\core\Cache;
+use app\model\Illuminate\Test;
+use app\model\Illuminate\Question;
 use app\model\User;
-use app\model\Test;
+use app\view\Test\TestView;
 use app\view\View;
-use app\view\widgets\menu\Menu;
-use app\core\App;
 
-class TestController Extends AppController
+
+class TestController extends AppController
 {
+
+	public $model = Test::class;
+//	public $modelName = 'test';
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->auth();
-		View::setCss('test.css');
-		View::setJs('test.js');
-
 	}
 
-	public function actionIndex()
+	public function actionDo(): void
 	{
-		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
-		View::setJs('test.js');
-		View::setCss('test.css');
-	}
+		$page_name = 'Прохождение тестов';
+		$this->set(compact('page_name'));
 
-	public function actionCreate()
-	{
-		if ($this->ajax) {
-			unset($this->ajax['token']);
-			if (!$this->ajax['isTest']) {
-				$this->ajax['parent'] = 0;
+		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+		$test = Test::find($testId);
+		if ($test) {
+			$questions
+				= Question::where('test_id',$testId)
+				->with('answers')
+				->get()->toArray();
+			if ($questions) {
+				$this->shuffleAnswers($questions);
+				$this->cacheCorrectAnswers($questions);
 			}
-			$id = App::$app->test->create($this->ajax);
-			exit(json_encode(['id' => $id]));
+			$testData = $questions;
+			$pagination = Test::pagination($testData, false, $test) ?? '';
+			$this->set(compact('testData', 'pagination'));
 		}
+		$this->set(compact('test'));
 	}
 
 	public function actionEdit()
 	{
 		if ($this->ajax) {
-			exit();
+			$id = Test::update($this->ajax);
+			$this->exitJson(['id' => $id]);
 		}
+		if (isset($this->route['id'])) {
+			$id = $this->route['id'];
+			$item = TestView::item($id);
+			$this->set(compact('item'));
+		}
+	}
+	public function actionIndex()
+	{
+		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
+	}
+
+//	public function actionShow()
+//	{
+//		$this->view = 'edit_show';
+//
+//		$page_name = 'Создание теста';
+//		$this->set(compact('page_name'));
+//
+//		$paths = $this->paths();
+//		$this->set(compact('paths'));
+//
+//		$test['isTest'] = 1;
+//		$this->set(compact('test'));
+//	}
+
+	public function actionPathshow()
+	{
 		$this->layout = 'admin';
+		$this->view = 'edit_show';
+		$page_name = 'Создание папки';
+		$this->set(compact('page_name'));
 
-		$testId = (int)$this->route['id'];
+		$paths = $this->paths();
+		$this->set(compact('paths'));
 
-		$test = App::$app->test->findOne($testId);
-		$testDataToEdit = App::$app->test->getTestData($testId);
-
-		unset ($testDataToEdit['correct_answers']);
-		if (!$test) {//Вообще не нашли такого теста с номером
-			$error = '<H1>Теста с таким номером нет.</H1>';
-		}
-
-		$pagination = App::$app->test->pagination($testDataToEdit, true);
-		$this->set(compact('test', 'testDataToEdit', 'pagination', 'testId'));
-
-	}
-
-	public function actionResults()
-	{
-		$this->auth();
-
-		if (array_key_exists('cache', $this->route)) {
-			if ($this->route['cache']) {
-				$file_name = $this->route['cache'];
-				$cached_page = App::$app->cache->getFromCache($file_name);
-				exit($cached_page);
-			}
-		}
-	}
-
-	public function actionDelete()
-	{
-		$this->auth();
-		if (App::$app->test->delete($this->ajax['id'])) {
-			exit(json_encode(['msg' => 'ok']));
-		}
-	}
-
-	private function prepareCacheDir()
-	{
-		if (!is_dir(ROOT . '/tmp')) {
-			mkdir(ROOT . '/tmp');
-			if (!is_dir(ROOT . '/tmp/cache')) {
-				mkdir(ROOT . '/tmp/cache');
-				if (!is_dir(ROOT . '/tmp/cache/test_results')) {
-					mkdir(ROOT . '/tmp/cache/test_results');
-				}
-			}
-		} elseif (is_dir(ROOT . '/tmp')) {
-			if (!is_dir(ROOT . '/tmp/cache')) {
-				mkdir(ROOT . '/tmp/cache');
-			} elseif (is_dir(ROOT . '/tmp/cache')) {
-				if (!is_dir(ROOT . '/tmp/cache/test_results')) {
-					mkdir(ROOT . '/tmp/cache/test_results');
-				}
-			}
-		}
-	}
-
-	public function actionCachePageSendEmail()
-	{
-		$post = json_decode($_POST['param']);
-		$this->prepareCacheDir();
-		$file = md5(date(' d m - H i s'));
-		$fileUTF8 = ROOT . '/tmp/cache/test_results/' . $file . '.txt';
-//		$fileWin = mb_convert_encoding($fileUTF8, 'cp1251');
-
-		if (file_put_contents($fileUTF8, $post->pageCache))
-			$to = [
-				'vvoronik@yandex.ru',
-				'vitaliy04111979@gmail.com',
-				'sno_dir@vitexopt.ru',
-			];
-		$subject = Mail::prepareSubjectTestResults();
-		$body = Mail::prepareBodyTestResults(
-			$file,
-			$post->userName,
-			$post->test_name,
-			$post->questionCnt,
-			(int)$post->errorCnt
-		);
-		App::$app->mail->mail_test_result($to, $subject, $body);
-		exit(json_encode('ok'));
-	}
-
-	private function getMenu()
-	{
-		$menuTestDo = App::$app->cache->get('menuTestDo');
-		if ($menuTestDo) return $menuTestDo;
-		if (!$menuTestDo) {
-			ob_start();
-			new Menu([
-				'tpl' => ROOT . "/app/view/widgets/menu/menu_tpl/do_test_menu.php",
-				'cache' => 60,
-				'sql' => "SELECT * FROM test WHERE enable = '1'"
-			]);
-			$menuTestDo = ob_get_clean();
-			App::$app->cache->set('menuTestDo', $menuTestDo, 60 * 5);
-			return $menuTestDo;
-		}
+		$test['isTest'] = 0;
+		$rootTests = Test::where('isTest', 0)->get()->toArray();
+		$this->set(compact('rootTests', 'test'));
 	}
 
 	public function actionGetCorrectAnswers()
 	{
-		App::$app->test->getCorrectAnswers();
+		$this->exitJson(($_SESSION['correct_answers']));
 	}
 
-	public function actionShow()
+	function shuffle_assoc($array)
 	{
-		$this->layout = 'admin';
-		$rootTests = App::$app->test->findWhere('isTest', 0);
-		$this->set(compact('rootTests'));
-
-	}
-
-	public function actionDo()
-	{
-		$menuTestDo = $this->getMenu();
-		$testId = (int)$this->route['alias'];
-		$testData = App::$app->test->getTestData($testId, true);
-		$test = App::$app->test->findOne($testId);
-		$_SESSION['testData'] = $testData;
-		if ($testData === 0) {//  0 - это просто альтернатива FALSE это папка
-			$msg[] = 'Это папка! <a href = "/1">Перейти к тестам</a>';
-			$error = include ROOT . '/app/view/User/alert.php'; //
-			$this->set(compact('error', 'msg'));
-		} elseif ($testData === FALSE) {//Теста с таким номером нет
-			$error = '<H1>Теста с таким номером нет.</H1>';
-			$this->set(compact('error'));
+		$keys = array_keys($array);
+		shuffle($keys);
+		foreach ($keys as $key) {
+			$new[$key] = $array[$key];
 		}
-//		$_SESSION['correct_answers'] = $testData['correct_answers'];
-		unset($testData['correct_answers']);
-		$pagination = App::$app->test->pagination($testData, false);
-		$this->set(compact('testData', 'test', 'pagination', 'menuTestDo'));
+		return $new;
 	}
+
+	private function shuffleAnswers(array &$arr): void
+	{
+		foreach ($arr as $index => &$question) {
+			if (isset($question['answers'])&& count($question['answers'])) {
+				$new = $this->shuffle_assoc($question['answers']);
+				$question['answers'] = $new;
+			}
+		}
+	}
+
+	private function getCorrectAnswers(array $arr): array
+	{
+		$correctAnswers =[];
+		foreach ($arr as $q) {
+			if (isset($q['answers'])) {
+				foreach ($q['answers'] as $answer) {
+					if ($answer['correct_answer']) {
+						$correctAnswers[] = $answer['id'];
+					}
+				}
+			}
+		}
+		return $correctAnswers;
+	}
+
+	private function cacheCorrectAnswers(array $arr): void
+	{
+		$correctAnswers = $this->getCorrectAnswers($arr);
+		$_SESSION['correct_answers'] = $correctAnswers ?? '';
+	}
+
+	public function actionPaths()
+	{
+		exit(json_encode($this->paths()));
+	}
+
+	private function paths()
+	{
+		return Test::where('isTest', '0')->get()->toArray();
+	}
+
+	public function actionTests()
+	{
+		$this->exitJson(Test::where('isTest', '1')->get()->toArray());
+	}
+
 }

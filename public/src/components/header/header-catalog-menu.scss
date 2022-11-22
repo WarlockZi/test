@@ -1,15 +1,69 @@
 @import "../../var";
+@import "../accordion/partials/_layout.scss";
+@import "../../mixin_media";
+@import "./mobile-menu";
 
 .header-catalog-menu {
+  position: sticky;
+  top: 0;
+  background: $color-main;
+  min-height: 40px;
   display: flex;
-  position: relative;
-  background-color: #000;
-  max-width: 1310px;
-  width: 100%;
-  margin:auto;
+  opacity: .92;
+  z-index: 1;
 }
 
+.header-catalog-menu__wrap {
+  max-width: 1310px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: end;
+
+  @include mobile-menu();
+
+
+}
+
+.utils {
+  display: flex;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+
+  svg {
+    stroke: white;
+    stroke-width: 3px;
+    width: 17px;
+    height: 17px;
+    padding: 0 15px;
+  }
+
+  .search,
+  .gamburger,
+  .cart {
+    position: initial;
+    height: 100%;
+    margin: initial;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+
+    &:hover {
+      background-color: #0070ff;
+    }
+  }
+
+  .menu {
+
+  }
+
+}
+
+
 .h-cat {
+  background-color: rgba(#2275ff, 0);
+  position: relative;
   cursor: pointer;
   text-transform: uppercase;
   transition: .5s;
@@ -17,10 +71,15 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  padding: 13px;
-  background: $color-main;
   color: #fff;
-  font: 400 17px/17px intro, 'Proxima Nova', sans-serif;
+  font: 600 14px/20px intro, "Proxima Nova", sans-serif;
+  text-align: center;
+  padding: 10px;
+  letter-spacing: 1px;
+
+  @include _800 {
+    display: none;
+  }
 
   &:first-child ul {
     left: 0;
@@ -34,22 +93,24 @@
     right: 0;
   }
 
+
   &:hover {
-    background-color: $color-main-hover;
+    background-color: rgba(#2275ff, .5);
 
     ul {
       height: auto;
-      padding: 30px 25px 15px 25px;
+      padding: 30px 0px;
       max-height: fit-content;
       background-color: white;
       top: 100%;
       box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
       overflow: visible;
       cursor: text;
+      width: 100%;
 
       li {
         cursor: pointer;
-        padding: 10px 5px;
+        margin: 10px 25px;
         border-bottom: #f0f0f0 1px solid;
         transition: .3s;
 
@@ -74,8 +135,7 @@
     z-index: 2;
 
     li {
-      //padding: 0 0;
-      //transition: .3s;
+
       a {
         font: 600 14px/17px 'Proxima Nova', sans-serif;
       }

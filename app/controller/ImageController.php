@@ -2,22 +2,24 @@
 
 namespace app\controller;
 
-use app\core\App;
-use app\model\Answer;
+use app\model\Illuminate\Image;
+use app\Repository\ImageRepository;
+use app\view\Image\ImageView;
 
 class ImageController Extends AppController
 {
+	public $model = Image::class;
 
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-		$this->auth();
+
 	}
 
 	private function checkSize($size)
 	{
 		if ($size > 1000000) {
-			exit(json_encode(['msg' => 'file is too big']));
+			$this->exitWithPopup('Файл слишком большой');
 		}
 	}
 
@@ -31,70 +33,27 @@ class ImageController Extends AppController
 		];
 
 		if (!in_array($type, $types)) {
-			exit(json_encode(['msg' => 'accepted: png, jpg, jpeg, gif']));
+			$this->exitWithPopup('Файл должен быть png, jpg, jpeg, gif');
 		};
 	}
 
-	public function actionCreate()
+	public function actionIndex()
 	{
-		// Загрузка картинок drag-n-drop
-		if ($_FILES) {
-			$file = $_FILES['file'];
-			$this->checkSize($file['size']);
-			$this->checkType($file['type']);
-
-			$type = $_POST['type'];
-			$typeId = $_POST['typeId'];
-
-			$img = [
-				'hash' => hash_file('md5', $file['tmp_name']),
-				'path' => date('y-m-d'),
-				'name' => $file['name'],
-				'size' => $file['size'],
-				'type' => $file['type'],
-			];
-
-			$field = 'hash';
-			$val = $img['hash'];
-
-			$found = App::$app->image->firstOrCreate($field, $val, $img);
-			if (is_array($found)) {
-				$id = $found[0]['id'];
-			} else {
-				$id = App::$app->image->autoincrement() - 1;
-				$this->move_uploaded_file($file['name'], $img['path'], $file['tmp_name']);
-			}
-			App::$app->image->morphOne($type, $typeId, $id);
-
-			exit(json_encode([
-				'msg' => 'ok',
-			]));
-		}
-
+		$list = ImageView::list();
+		$this->set(compact('list'));
 	}
 
-	public function actionDelete()
-	{
-		App::$app->answer->delete($this->ajax['a_id']);
-		exit(json_encode(['msg' => 'ok']));
-	}
-
-	public function actionShow()
-	{
-	}
-
-	protected function move_uploaded_file($fileName, $imgPath, $fileTmpName)
-	{
-		$f = '\\' . $fileName;
-		$to = ROOT . "\\pic\\" . $imgPath;
-		if (!is_dir($to)) {
-			mkdir($to);
-		}
-		$to .= $f;
-		if (!is_readable($to)) {
-			move_uploaded_file($fileTmpName, $to);
-		}
-	}
-
-
+//	public static function move_uploaded_file($img, $file)
+//	{
+//		$fileExt = $fileExt = ImageRepository::getExt($file['type']);
+//		$s = DIRECTORY_SEPARATOR;
+//		$to = ROOT . $s . "pic" . $s . $img['path'];
+//		$full = $to . $s . $img['hash'] . ".{$fileExt}";
+//		if (!is_dir($to)) {
+//			mkdir($to);
+//		}
+//		if (!is_readable($full)) {
+//			move_uploaded_file($file['tmp_name'], $full);
+//		}
+//	}
 }

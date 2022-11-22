@@ -1,0 +1,23 @@
+.content {
+  .row {
+    .name {
+      display: flex;
+      flex: 0 0 150px;
+      justify-content: right;
+      cursor: pointer;
+    }
+
+    .right {
+      display: flex;
+      flex: 0 0 50px;
+      cursor: pointer;
+    }
+
+    .description {
+      display: flex;
+      flex: 1 0 150px;
+      cursor: pointer;
+    }
+  }
+}
+

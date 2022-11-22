@@ -1,4 +1,71 @@
-$color-main: #1bbc9b;
-$color-main-hover:#009979;
-$color-a:#5a5a5a;
-$color-white-hover:#e7e7e7
+//$color-main: #1bbc9b1//;
+
+$color-success: #54bb99;
+$color-main-green: #1bbc9b;
+
+//$color-main: #6ca3fe;
+$color-main: #6ca3fe;
+$color-contenteditable: lighten($color-main, 27%);
+$color-main-hover: shade($color-main, 60%);
+$color-main-selected: lighten($color-main,22%);;
+
+$color-white: #ffffff;
+$color-blue: #5199BD;
+$color-warning: #bd5151;
+$color-red: #e30000;
+
+$color-white-hover: #e7e7e7;
+$color-hover-gray: #e5e5e5;
+
+$color-gray1: #f8f8f8;
+$color-gray2: darken($color-gray1,3%);
+$color-gray3: darken($color-gray1,6%);
+$color-gray4: darken($color-gray1,9%);
+$color-gray5: darken($color-gray1,12%);
+
+
+$color-title: #2a2a2a;
+$color-h: lighten($color-title, 10%);
+$dark-grey-hover: #343635;
+
+$color-admin-sidebar: #4d5158;// Abbey
+
+$color-a: #5a5a5a;
+
+$color-grey-logo: #41444a;
+$color-gray-min: #808080;
+$color-gray-min-hover: #6E6E6E;
+
+$color-gray-mid: #565958;
+$color-gray-mid-hover: #4D4F4E;
+
+$color-gray-max: #3d403f;
+$color-gray-max-hover: $dark-grey-hover;
+
+$color-text: $dark-grey-hover;
+
+
+
+$font-label: 400 14px Arial, Serif;
+$font-label-focus: 400 16px Arial, Serif;
+
+$font-label-Roboto: 14px "Roboto", sans-serif;
+$font-label-Roboto-focus: 16px "Roboto", sans-serif;
+
+$padding-input-with-label: 1.2rem .5rem .25rem;
+
+$marginY-element: 10px 0;
+
+$m:'20px';
+$m:'40px';
+
+$padding-form: 6px;
+$font-size-form: .7rem;
+$margin-form: 0px 5px;
+$border-option-hover-form:1px solid lighten($color-main, 6%);
+$border-field-hover:1px solid darken($color-gray4, 10%);
+$background-option-selected-form:lighten($color-main, 6%);
+$color-option-selected-form: white;
+
+$font-size-table: 0.7rem;
+$font-size:0.7rem;

@@ -1,0 +1,396 @@
+@import '../../var';
+@import '../../mixin_media';
+@import './partials/variables';
+// colors, fonts etc...
+@import './partials/layout'; // responsive grid and media queries
+
+
+$font-size-path: .7rem;
+$font-size-item: .5rem;
+
+@mixin accordion {
+
+  [accordion] {
+    display: flex;
+    flex-flow: column;
+    background: #4d5158;
+    width: 170px;
+
+    a {
+      padding: $item-padding-M 100% $item-padding-M 29px;
+      min-height: 10px;
+      display: flex;
+      align-items: center;
+      color: #ffffff;
+      position: relative;
+    }
+
+    ul {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .1s;
+    }
+
+    li {
+      user-select: none;
+      position: relative;
+      cursor: pointer;
+
+      &:hover {
+        background: tint($color-level-0, 3%);
+      }
+
+      &.rotate > .label > .arrow {
+        transform: rotate(0deg);
+      }
+
+      a { // isTest
+        display: flex;
+
+        .img {
+          width: 16px;
+          height: 16px;
+          background: url(./img/cd-icons.svg) no-repeat -48px 0;
+          margin: 0 5px;
+          flex: 0 0 16px;
+        }
+      }
+    }
+
+    .label {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      padding-right: 12px;
+      color: #ffffff;
+    }
+
+    & > li > .label, & > li > a {
+      display: flex;
+      align-items: center;
+      padding: 12px 22px 12px 12px;
+      color: $color-3;
+      font-size: $font-size-path;
+    }
+
+    .current {
+      &:before {
+        content: '';
+        position: absolute;
+        display: block;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background-color: lighten($color-main, 10%);
+
+      }
+
+      color: lighten($color-main, 10%);
+    }
+
+
+    .level-1 {
+      background: $color-level-2;
+
+      .label {
+        padding-left: 24px;
+
+        &:hover {
+          background-color: tint($color-level-2, 3%);
+        }
+      }
+    }
+
+
+    .level-2 {
+      background-color: $color-level-3;
+
+      .label {
+        padding-left: 36px;
+
+        &:hover {
+          background-color: tint($color-level-3, 3%);
+        }
+      }
+    }
+
+    .level-3 {
+      background: $color-level-3;
+
+      &:hover {
+        background: tint($color-level-3, 3%);
+      }
+    }
+
+
+    .update {
+      position: absolute;
+      top: 20px;
+      transform: translateY(-50%);
+      right: 0;
+      padding: 8px 3px 8px;
+
+      & svg {
+        stroke: #ffffff;
+
+        &:hover {
+          stroke: $color-main;
+        }
+      }
+
+      &:after {
+        display: none;
+      }
+    }
+
+
+    .label {
+      display: flex;
+      align-items: center;
+
+      .arrow {
+        flex: 0 0 17px;
+        height: 16px;
+        background: url(./img/cd-icons.svg) no-repeat 2px 0;
+
+        transform: rotate(-90deg);
+        transition: transform 200ms;
+      }
+
+      .img {
+        width: 16px;
+        height: 16px;
+        background: url(./img/cd-icons.svg) no-repeat -16px 0;
+        margin: 0 5px;
+        flex: 0 0 16px;
+      }
+    }
+
+    > li:last-of-type > label,
+    > li:last-of-type > a,
+    > li > ul > li:last-of-type label,
+    > li > ul > li:last-of-type a {
+      box-shadow: none;
+    }
+
+    ul ul label,
+    ul ul a {
+      padding-left: ($item-padding-S * 5) + 40px;
+    }
+
+    ul ul ul label,
+    ul ul ul a {
+      padding-left: ($item-padding-S * 6) + 10px;
+    }
+
+
+    @include MQ(M) {
+      .label {
+        padding: $item-padding-M $item-padding-M+10 $item-padding-M $item-padding-M;
+        font-size: $font-size-path;
+        min-height: 10px;
+      }
+
+      a {
+        padding: $item-padding-M $item-padding-M+14 $item-padding-M 29px;
+        //font-size: .8rem;
+        min-height: 10px;
+        display: flex;
+        align-items: center;
+        color: #ffffff;
+      }
+
+      ul {
+        label {
+          padding-left: ($item-padding-M ) + 10px;
+        }
+
+        a {
+          padding-left: ($item-padding-M ) + 25px;
+        }
+      }
+
+      ul ul label,
+      ul ul a {
+        padding-left: 52px;
+      }
+
+      ul ul ul label,
+      ul ul ul a {
+        padding-left: ($item-padding-M * 3) + 40px;
+      }
+    }
+  }
+}
+
+$width-short: 62px;
+$width-half: 170px;
+$width-full: 170px;
+
+.accordion_wrap {
+  transition: max-width 1s, min-width 1s, margin-right 1s;
+  margin-bottom: 25px;
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
+  //margin-right: 30px;
+  font-size: .75rem;
+  min-width: 170px;
+  //margin-left: 20px;
+  margin-right: 20px;
+
+  @include _1000 {
+    margin-right: 0px;
+    max-width: 0;
+    min-width: 0;
+  }
+
+  &.open {
+    margin-right: 20px;
+    max-width: $width-full;
+    min-width: $width-full;
+  }
+
+  @include accordion;
+  width: auto;
+
+  .level-1 li:hover {
+    background-color: tint($color-level-2, 3%);
+  }
+
+  .level-2 li:hover {
+    background-color: tint($color-level-3, 3%);
+  }
+}
+
+.admin_sidebar {
+  position: fixed;
+  display: flex;
+  flex-flow: column;
+  background: $color-admin-sidebar;
+  transition: max-width .4s, min-width .4s;
+  overflow: hidden;
+  max-width: $width-short;
+  min-width: $width-short;
+  height: 100%;
+  z-index: 2;
+
+  &:hover {
+    max-width: $width-half;
+    min-width: $width-half;
+  }
+
+  @include _800 {
+    max-width: $width-short;
+    min-width: $width-short;
+    &:hover {
+      max-width: $width-half;
+      min-width: $width-half;
+    }
+  }
+  @include _600 {
+    max-width: 100%;
+    min-width: 100%;
+    height: 60px;
+    &:hover {
+      max-width: 100%;
+      min-width: 100%;
+    }
+  }
+  @include _400 {
+    //height: fit-content;
+  }
+
+  .admin_sidebar_header {
+    //display: none;
+
+    @include _600 {
+      display: flex;
+      justify-content: space-between;
+
+      .user-menu {
+        padding: 10px;
+
+        .credits {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  &.open {
+    max-width: $width-half;
+    min-width: $width-half;
+    @include _600 {
+      height: fit-content;
+      max-width: 100%;
+      min-width: 100%;
+    }
+  }
+
+  @include accordion;
+
+  [accordion] {
+    font-size: .75rem;
+    transition: height .4s;
+    width: 100%;
+
+    @include _600 {
+      height: 0;
+    }
+
+    &.show {
+      height: auto;
+    }
+
+    a, li .label {
+      @include _600 {
+        padding-bottom: 6px;
+        padding-top: 6px;
+        max-width: $width-full;
+        min-width: $width-full;
+      }
+
+      @include _1000 {
+        padding-bottom: 6px;
+        padding-top: 6px;
+        max-width: $width-full;
+        min-width: $width-full;
+      }
+    }
+
+    svg {
+      margin: 0 9px;
+      height: 15px;
+      flex: 0 0 15px;
+    }
+
+    .label {
+      padding-right: 6px !important;
+    }
+  }
+
+  #burger {
+    width: 25px;
+    padding: 23px 19px;
+    cursor: pointer;
+    display: flex;
+  }
+
+  /* arrow icon */
+  label {
+    &::before {
+      left: initial;
+      right: 12px;
+    }
+  }
+
+  li, a {
+    border-bottom: lighten($color-admin-sidebar, 5%) 1px solid;
+    border-top: darken($color-admin-sidebar, 7%) 1px solid;
+  }
+
+  .admin_sidebar-tail {
+    border-bottom: none;
+    flex: 1 0 auto;
+  }
+}

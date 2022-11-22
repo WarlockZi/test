@@ -1,0 +1,24 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background-color: white;
+  font-size: .7rem;
+}
+
+.grid > span,
+.grid5 > span {
+  padding: 8px 4px;
+  display: flex;
+}
+
+.grid5 {
+  display: grid;
+  grid-template-columns: 40px 40px 1fr 1fr 80px;
+}
+
+.grid-head {
+  font-weight: 600;
+  background-color: #ccc;
+  text-shadow: 2px 1px 1px white;
+  border-left: #e1e1e1 1px solid;
+}

@@ -1,25 +1,39 @@
+@import "mixin_media";
+
+@font-face {
+  font-family: "RobotoMedium";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/public/src/font/RobotoMedium/RobotoMedium.woff") format("woff"),
+  url("/public/src/font/RobotoMedium/RobotoMedium.ttf") format("truetype");
+}
 
 html {
   height: 100%;
-  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 
 body {
   display: flex;
+  min-height: 100%;
   flex-direction: column;
-  height: 100%;
   margin: 0;
-  font-family: 'Roboto', sans-serif
+  font-family: "RobotoMedium", sans-serif;
+  /*скрыть дерганье страницы в появлении полосы прокрутки*/
+  padding: 0 calc(0px - (100vw - 100%)) 0 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+  user-select: none;
+
+  @include _500 {
+    padding: 0;
+  }
+
 }
 
-h1, h2 {
-  text-transform: uppercase;
-  color: #4e4e4e;
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
 
 p {
   letter-spacing: 1px;
@@ -42,16 +56,17 @@ textarea:focus,
   outline: none;
 }
 
-.column {
-  display: flex;
-  flex-flow: column;
-}
-.row{
-  display: flex
-}
 .flex1 {
-  display: flex;
-  flex: 1;
+  display: flex !important;
 }
-.none
-{ display: none;}
+[hidden] {
+  display: none !important;
+}
+
+.none {
+  display: none !important;
+}
+
+[contenteditable]:focus-visible{
+  outline: none;
+}

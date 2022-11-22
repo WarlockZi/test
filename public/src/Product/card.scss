@@ -1,0 +1,14 @@
+.card{
+  display: flex;
+  padding: 20px;
+  flex-flow: column;
+
+  .left_column{
+    display: flex;
+    flex: 1 1 50%;
+  }
+  .right_column{
+    display: flex;
+    flex:1 1 50%;
+  }
+}

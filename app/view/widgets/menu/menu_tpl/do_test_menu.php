@@ -1,10 +1,10 @@
-<?= isset($cat['childs']) ? '<li class = "vert-menu__list">' : '<li>'?>
+<?= isset($cat['childs']) ? '<li class = "children">' : '<li>'?>
     <a href=
     <?= isset($cat['childs']) ? "#" : "/test/" . $cat['id'] ?>
-       ><?= $cat['test_name'] ?>
+       ><?= $cat['name'] ?>
     </a>
 <? if (isset($cat['childs'])): ?>
-    <ul class = "vert-menu__drop">
+    <ul>
         <?= $this->getMenuHtml($cat['childs']); ?>
     </ul>
 <? endif ?>
