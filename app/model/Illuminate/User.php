@@ -17,9 +17,9 @@ class User extends Model
 		'confirm' => '0',
 		'rights' => 'user_update',
 		'post_id' => 0,
-//		'birthDate'=>'1970-01-02',
-//		'hired'=>date('Y/m/d'),
-//		'fired'=>'',
+		'birthDate'=>'1970-01-02',
+		'hired'=>'1970-01-02',
+		'fired'=>'1970-01-02',
 		'sex' => 'f',
 	];
 	public $timestamps = false;

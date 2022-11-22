@@ -126,9 +126,10 @@ export default function catalogItem() {
           })
           obj[field.dataset.field] = ids.toString()
         } else if (field.dataset.type === 'inputs') {
+      debugger
           obj[field.dataset.field] = getInputs(field)
         } else if (field.type === 'date') {
-          obj[field.dataset.field] = field.value
+          obj[field.dataset.field] = field.value?field.value:'1970-01-02'
         } else {
           obj[field.dataset.field] = trimStr(field.innerText)
         }
@@ -136,7 +137,6 @@ export default function catalogItem() {
       ,
       obj
     )
-
     return obj
   }
 
@@ -148,9 +148,10 @@ export default function catalogItem() {
       if (!inp.checked) return
       let name = inp.parentNode.querySelector('.name').innerText
       if (!name) return
+
       names.push(name)
     })
-    return names.join(',')
+    return names.join()
 
   }
 }

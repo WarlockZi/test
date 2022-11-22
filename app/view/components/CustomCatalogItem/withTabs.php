@@ -24,7 +24,7 @@
 	<? foreach ($this->tabs as $k => $tab): ?>
 	  <section
 			 <?= isset($tab['field']) ? "data-field={$tab['field']}": ''; ?>
-			  data-type="inputs"
+<!--			  data-type="inputs"-->
 			  data-id=<?= $n ?>>
 			 <?= $tab['html'] ?? ''; ?>
 
