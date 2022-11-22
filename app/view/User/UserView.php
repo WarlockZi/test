@@ -28,7 +28,7 @@ abstract class UserView extends MyView
 	{
 		if ($userToEdit) {
 			if (User::can($thisUser, ['role_employee'])) {
-				if (User::can($thisUser, 'role_admin')) {
+				if (User::can($thisUser, ['role_admin'])) {
 					return UserView::admin($userToEdit);
 				}
 				return UserView::employee($userToEdit);
@@ -115,9 +115,9 @@ abstract class UserView extends MyView
 
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
-			->toList()
+			->toList('','',false)
 			->save()
-			->del()
+			->del(false)
 			->field(
 				ItemFieldBuilder::build('id', $item)
 					->name('ID')

@@ -41,7 +41,7 @@ class RightController Extends AppController
 	public function actionDelete()
 	{
 		$id = $this->ajax['id']??$_POST['id'];
-		if (User::can($this->user, 'right_delete') || defined(SU)) {
+		if (User::can($this->user, ['right_delete']) || defined(SU)) {
 			if ($this->model::delete($id)) {
 				$this->exitWithPopup("ok");
 			}

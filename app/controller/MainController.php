@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\core\Auth;
 use app\view\Header\Header;
 use app\view\View;
 
@@ -11,7 +12,7 @@ class MainController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
-		$this->auth();
+		Auth::auth();
 //		$sale = Product::where('sale', '=', 1)->get();
 //		$this->set(compact('sale'));
 	}
