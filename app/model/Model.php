@@ -33,10 +33,10 @@ abstract class Model
 		}
 	}
 
-	public static function create($values = [], $register = false, $needsAuth=true)
+	public static function create($values = [], $register = false, $needsAuth = true)
 	{
 		$model = new static();
-		if ($needsAuth&&!$register)$model->auth('create');
+		if ($needsAuth && !$register) $model->auth('create');
 
 		if (isset($values['id'])) unset($values['id']);
 //		if (isset($values['token'])) unset($values['token']);
@@ -70,7 +70,7 @@ abstract class Model
 		$id = $values['id'];
 		if (!$id) exit('empty or undefined id');
 		unset($values['id']);
-    $fillable = $model->fillable;
+		$fillable = $model->fillable;
 		$par = '';
 		foreach ($values as $key => $value) {
 			$value = $value ?? null;
