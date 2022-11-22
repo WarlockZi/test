@@ -154,7 +154,7 @@ class AppController extends Controller
 	public function auth()
 	{
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
-			$user = $this->user = \app\model\Illuminate\User::find($_SESSION['id'])->toArray();
+			$user = $this->user = AuthController::user();
 			if ($this->user === false) {
 				$errors[] = 'Неправильные данные для входа на сайт';
 			} else {
