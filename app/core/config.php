@@ -1,5 +1,6 @@
 <?php
 
+
 $config['components'] = [
 	'answer' => 'app\model\Answer',
 	'adminsc' => 'app\model\Adminsc',
