@@ -26,6 +26,11 @@ class User extends Model
 		'sex' => 'f',
 	];
 
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
 	public static function avatar(array $user): string
 	{
 		if (isset($user['avatar'])) {
@@ -37,10 +42,7 @@ class User extends Model
 			: ImageRepository::getImg('/pic/ava_male.png');
 	}
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+
 
 	public static function can(array $user, $rights = []): bool
 	{
@@ -110,7 +112,7 @@ class User extends Model
 	}
 
 
-	public static function checkPassword($password)
+	public static function checkPassword(string $password)
 	{
 		if (strlen($password) >= 6) {
 			return true;
@@ -127,10 +129,9 @@ class User extends Model
 	}
 
 
-	public function checkEmailExists($email)
+	public function checkEmailExists($email):bool
 	{
-		$res = $this->findOneWhere('email', $email);
-		if ($res) {
+		if ($this->findOneWhere('email', $email)) {
 			return true;
 		}
 		return false;

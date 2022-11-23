@@ -34,11 +34,8 @@ class AuthController extends AppController
 			$user['password'] = $this->preparePassword($user['password']);
 			$user['hash'] = $hash;
 
-			$data['subject'] = "Регистрация VITEX";
-			$data['to'] = [$user['email']];
-			$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/auth/confirm/{$hash}";
-			$data['body'] = $this->prepareBodyRegister($href, $hash);
-			$data['altBody'] = "Подтверждение почты: <a href = '{$href}'>нажать сюда</a>";
+
+			$data = Mail::mailConfirmFactory($hash, $user);
 
 			try {
 				$user['rights'] = 'user_update';
@@ -55,7 +52,7 @@ class AuthController extends AppController
 
 	public function actionProfile()
 	{
-		Auth::autorize();
+		Auth::autorize($this);
 		$this->view = 'profile1';
 
 		$user = IlluminateUser::find($_SESSION['id']);
@@ -85,7 +82,7 @@ class AuthController extends AppController
 
 	public function actionChangePassword()
 	{
-		Auth::autorize();
+		Auth::autorize($this);
 		if ($data = $this->ajax) {
 			if (!$data['old_password'] || !$data['new_password'])
 				$this->exitWithError('Заполните старый и новый пароль');
@@ -123,7 +120,7 @@ class AuthController extends AppController
 				->toArray();
 
 			if ($user) {
-				Auth::setAuth($user);
+				Auth::setAuth((int)$user['id']);
 				$password = $this->randomPassword();
 				$newPassword = $this->preparePassword($password);
 				User::update(['id' => $user['id'], 'password' => $newPassword]);
@@ -145,20 +142,17 @@ class AuthController extends AppController
 	{
 		if ($data = $this->ajax) {
 
-			$email = (string)$data['email'];
-			$password = (string)$data['password'];
+			if (!User::checkEmail($data['email'])) $this->exitWithError("Неверный формат email");
+			if (!User::checkPassword($data['password'])) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
 
-			if (!User::checkEmail($email)) $this->exitWithError("Неверный формат email");
-			if (!User::checkPassword($password)) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
-
-			$user = IlluminateUser::where('email', $email)->get()[0]
+			$user = IlluminateUser::where('email', $data['email'])->get()[0]
 				->toArray();
 
 			if (!$user) $this->exitWithError('Пользователь не зарегистрирован');
 			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
-			if ($user['password'] !== $this->preparePassword($password))
+			if ($user['password'] !== $this->preparePassword($data['password']))
 				$this->exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
-			Auth::setAuth($user);
+			Auth::setAuth((int)$user['id']);
 			$this->user = $user;
 			if (User::can($user, ['role_employee'])) {
 				$this->exitJson(['role' => 'employee']);
@@ -181,7 +175,7 @@ class AuthController extends AppController
 		exit();
 	}
 
-	private function randomPassword()
+	private function randomPassword(): string
 	{
 		$arr = [
 			'1234567890',
@@ -189,7 +183,7 @@ class AuthController extends AppController
 			'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 		];
 
-		$pass = array(); //remember to declare $pass as an array
+		$pass = array();
 
 		$arrLength = count($arr) - 1;
 		$y = 0;
@@ -201,7 +195,7 @@ class AuthController extends AppController
 			$pass[] = $arrChosen[$n];
 			$y++;
 		}
-		return implode($pass); //turn the array into a string
+		return implode($pass);
 	}
 
 
@@ -223,17 +217,9 @@ class AuthController extends AppController
 		exit();
 	}
 
-
-	private function prepareBodyRegister($href, $hash)
-	{
-		ob_start();
-		require ROOT . '/app/view/Auth/email.php';
-		return ob_get_clean();
-	}
-
 	public function actionSuccess()
 	{
-		Auth::auth();
+		Auth::autorize($this);
 	}
 
 	public static function user()
@@ -250,7 +236,7 @@ class AuthController extends AppController
 
 	public function actionCabinet()
 	{
-		Auth::auth();
+		Auth::autorize($this);
 	}
 
 	public function actionNoconfirm()

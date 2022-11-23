@@ -18,7 +18,7 @@ class AppController extends Controller
 
 		if (isset($route['admin'])) {
 			$this->setAdminAssets();
-			Auth::autorize();
+			Auth::autorize($this);
 			Header::getAdninHeader($this);
 		} else {
 			$this->setMainAssets();
@@ -27,52 +27,52 @@ class AppController extends Controller
 		$this->isAjax();
 	}
 
-//	public function actionDelete()
-//	{
-//		$id = $this->ajax['id'];
-//
-//		if (!$id) $this->exitWithMsg('No id');
-//		$model = new $this->model;
-//		if ($model instanceof Model) {
-//			$item = $model->find((int)$id);
-//			if ($item) {
-//				$destroy = $item->delete();
-//				$this->exitJson(['id' => $id, 'popup' => 'Ok']);
-//			}
-//		} else {
-//			if ($model::delete($id)) {
-//				$this->exitWithPopup('Удален');
-//			}
-//		}
-//	}
-//
-//	public function actionUpdateOrCreate()
-//	{
-//		if ($this->ajax) {
-//			if (new $this->model instanceof Model) {//Eloquent
-//				$model = $this->model::updateOrCreate(
-//					['id' => $this->ajax['id']],
-//					$this->ajax
-//				);
-//				if ($model->wasRecentlyCreated) {
-//					$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
-//				} else {
-//					$this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);
-//				}
-//
-//			} else {// Self made
-//				$id = $this->model::updateOrCreate($this->ajax);
-//				if (is_numeric($id)) {
-//					$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
-//				} elseif (is_bool($id)) {
-//					$this->exitWithPopup('Сохранено');
-//				} else {
-//					$this->exitWithError('Ответ не сохранен');
-//				}
-//			}
-//
-//		}
-//	}
+	public function actionDelete()
+	{
+		$id = $this->ajax['id'];
+
+		if (!$id) $this->exitWithMsg('No id');
+		$model = new $this->model;
+		if ($model instanceof Model) {
+			$item = $model->find((int)$id);
+			if ($item) {
+				$destroy = $item->delete();
+				$this->exitJson(['id' => $id, 'popup' => 'Ok']);
+			}
+		} else {
+			if ($model::delete($id)) {
+				$this->exitWithPopup('Удален');
+			}
+		}
+	}
+
+	public function actionUpdateOrCreate()
+	{
+		if ($this->ajax) {
+			if (new $this->model instanceof Model) {//Eloquent
+				$model = $this->model::updateOrCreate(
+					['id' => $this->ajax['id']],
+					$this->ajax
+				);
+				if ($model->wasRecentlyCreated) {
+					$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
+				} else {
+					$this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);
+				}
+
+			} else {
+				$id = $this->model::updateOrCreate($this->ajax);
+				if (is_numeric($id)) {
+					$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
+				} elseif (is_bool($id)) {
+					$this->exitWithPopup('Сохранено');
+				} else {
+					$this->exitWithError('Ответ не сохранен');
+				}
+			}
+
+		}
+	}
 
 	public function exitJson(array $arr = []): void
 	{
