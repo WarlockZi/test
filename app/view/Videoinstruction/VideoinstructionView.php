@@ -25,14 +25,14 @@ class VideoinstructionView extends MyView
 				ListColumnBuilder::build('sort')
 					->width('50px')
 					->name('№')
-					->sort(true)
-					->contenteditable(true)
+					->sort()
+					->contenteditable()
 					->get()
 			)
 			->column(
 				ListColumnBuilder::build('name')
 					->width('auto')
-					->contenteditable(true)
+					->contenteditable()
 					->name('Название')
 					->get()
 
@@ -57,7 +57,7 @@ class VideoinstructionView extends MyView
 					->name('Польз')
 					->get()
 			)
-			->edit()
+			->del()
 			->addButton('ajax')
 			->get();
 	}

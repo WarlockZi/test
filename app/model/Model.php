@@ -24,7 +24,7 @@ abstract class Model
 	{
 		$user = \app\model\illuminate\User::find($_SESSION['id']);
 		if (!$user) {
-			throw new \Exception('Нет пользователя ');
+			exit(json_encode(['error' => 'Нет пользователя']));
 		}
 		$this->user = $user->toArray();
 		$rightName = $this->model . '_' . $ext;

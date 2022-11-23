@@ -70,8 +70,8 @@ class ListColumnBuilder
 
 	public function function (string $class, string $function): self
 	{
-		$this->function = $function;
 		$this->functionClass = $class;
+		$this->function = $function;
 		return $this;
 	}
 

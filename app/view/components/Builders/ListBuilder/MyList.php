@@ -69,15 +69,15 @@ class MyList
 		return $this;
 	}
 
-	public function addButton(string $ajaxOrRedirect)
-	{
-		$this->addButton = $ajaxOrRedirect;
-		return $this;
-	}
-
 	public function items(array $items)
 	{
 		$this->items = $items;
+		return $this;
+	}
+
+	public function addButton(string $ajaxOrRedirect)
+	{
+		$this->addButton = $ajaxOrRedirect;
 		return $this;
 	}
 
@@ -149,8 +149,7 @@ class MyList
 	{
 		if ($column->function) {
 			$func = $column->function;
-			$f = $column->functionClass::$func($item);
-			return $f;
+			return $column->functionClass::$func($item);
 		} else {
 			return $item[$field];
 		}

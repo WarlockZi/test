@@ -1,5 +1,5 @@
 import './catalog-item.scss';
-import {$, post, trimStr} from '../../common';
+import {$, popup, post, trimStr} from '../../common';
 import WDSSelect from "../select/WDSSelect";
 import {dnd1} from "../dnd/dnd";
 
@@ -19,13 +19,13 @@ export default function catalogItem() {
     }
   }
 
-  function handleSingleImage() {
+  function handleSingleImage(files) {
     let appendTo = '.image'
     let model = customCatalogItem.dataset.model
     let url =
       `/adminsc/${model}/createOrUpdate/${customCatalogItem.dataset.id}`
     let tag = model
-    let files = '.a'
+    // let files = '.a'
     handleImage(appendTo, url, tag, files)
   }
 
@@ -38,6 +38,21 @@ export default function catalogItem() {
     }
   }
 
+  async function sendToServer(i, file, url) {
+    let formData = new FormData()
+    formData.append(i, file, file['name'])
+    formData.append('imageable_id', productId)
+    let res = await fetch(url, {
+      method: 'POST',
+      body: formData
+    })
+    let json = await res.json()
+    let id = await json.arr.id
+    if (json.arr.popup) {
+      popup.show(json.arr.popup)
+    }
+    return id
+  }
 
   async function handleClick({target}) {
     let itemId = +customCatalogItem.dataset.id

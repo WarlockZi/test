@@ -59,12 +59,19 @@ class CategoryController Extends AppController
 	{
 		if ($this->ajax['id']) {
 			if ($this->model::delete($this->ajax['id'])) {
-				$this->exitWithPopup('Категория удален');
+				$this->exitWithPopup('Категория удаленa');
 			}
 		} else {
 			$this->exitWithMsg('No id');
 		}
 	}
 
+	public function actionSetMainImage()
+	{
+		if ($this->ajax) {
+			$this->exitWithPopup('dd');
+
+		}
+	}
 
 }

@@ -10,5 +10,5 @@ $menu = new Accordion([
 	'link_label_after' => '/adminsc/test/edit/',
 
 ]);
-echo $menu->output(); ?>
+echo $menu->html; ?>
 
