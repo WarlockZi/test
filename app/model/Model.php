@@ -154,8 +154,16 @@ abstract class Model
 
 	public function firstOrCreate(string $field, $val, array $row)
 	{
-		$model = new static();
-		$model->auth('create');
+
+//<<<<<<< HEAD
+		$db = $_ENV["DB_DB"];
+		$params = [$db, $this->table];
+		$sql = "SHOW TABLE STATUS FROM ? LIKE '?'";
+		return (int)$this->pdo->query($sql, $params)[0]['Auto_increment'];
+//=======
+//		$model = new static();
+//		$model->auth('create');
+//>>>>>>> origin/master
 
 		$found = $model::findOneWhere($field, $val);
 		if (!$found) {
