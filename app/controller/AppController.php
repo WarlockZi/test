@@ -7,10 +7,12 @@ use app\view\Header\Header;
 use app\view\View;
 use Illuminate\Database\Eloquent\Model;
 
-class AppController extends Controller
+abstract class AppController extends Controller
 {
 	protected $ajax;
 	public $user;
+	public $modelName;
+	public $model;
 
 	public function __construct(array $route)
 	{

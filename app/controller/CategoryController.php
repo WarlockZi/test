@@ -3,8 +3,11 @@
 namespace app\controller;
 
 
-use app\model\Category as Category;
-use app\model\Illuminate\Category as IlluminateCategory;
+
+use app\model\Illuminate\Category;
+use app\model\Illuminate\Product;
+use app\model\Illuminate\Tag;
+use app\Repository\ImageRepository;
 use app\view\Category\CategoryView;
 use app\view\components\MyTree\Tree;
 
@@ -12,8 +15,8 @@ use app\view\components\MyTree\Tree;
 class CategoryController Extends AppController
 {
 
-	private $model = 'category';
-	private $modelName = \app\model\Category::class;
+	public $model = \app\model\Category::class;
+	public $modelName = 'category';
 
 	public function __construct(array $route)
 	{
@@ -22,7 +25,7 @@ class CategoryController Extends AppController
 
 	public function actionIndex()
 	{
-		$categories = IlluminateCategory::all()->toArray();
+		$categories = Category::all()->toArray();
 
 		$accordion = Tree::build($categories)
 			->parent('category_id')
@@ -41,30 +44,63 @@ class CategoryController Extends AppController
 		$this->set(compact('category', 'breadcrumbs'));
 	}
 
-	public function actionUpdateOrCreate()
+
+	///................. ADD IMAGE
+	public function actionAddMainImage()
 	{
-		if ($this->ajax) {
-			$id = $this->modelName::updateOrCreate($this->ajax);
-			if (is_numeric($id)) {
-				$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
-			} elseif (is_bool($id)) {
-				$this->exitWithPopup('Сохранено');
-			} else {
-				$this->exitWithError('Ответ не сохранен');
-			}
+//		ProductRepository::clear();
+		if ($_FILES) {
+			$image = ImageRepository::saveIfNotExistReturnModel($_FILES[0]);
+			$product = Product::find($_POST['imageable_id']);
+			$product->main_img = $image->id;
+			$product->save();
+			$this->exitJson(['msg' => 'ok', 'id' => $image->id]);
 		}
 	}
 
-	public function actionDelete()
+	protected function addImage(string $tagName)
 	{
-		if ($this->ajax['id']) {
-			if ($this->model::delete($this->ajax['id'])) {
-				$this->exitWithPopup('Категория удаленa');
+		if ($_FILES) {
+			foreach ($_FILES as $file) {
+				$image = ImageRepository::saveIfNotExistReturnModel($file);
+				$product = Product::find($_POST['imageable_id']);
+				$tag = Tag::where('name', $tagName)->first();
+				$images = $product->detailImages;
+				if (!$images->contains($image))
+					$product->detailImages()->sync($image, false);
+				if (!$image->tags->contains($tag)) {
+					$image->tags()->sync($tag, false);
+					$this->exitJson(['msg' => 'ok', 'id' => $image->id]);
+				} else {
+					$this->exitJson(['popup' => 'уже есть такая картинка', 'id' => 0]);
+				}
 			}
-		} else {
-			$this->exitWithMsg('No id');
 		}
 	}
+//	public function actionUpdateOrCreate()
+//	{
+//		if ($this->ajax) {
+//			$id = $this->modelName::updateOrCreate($this->ajax);
+//			if (is_numeric($id)) {
+//				$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
+//			} elseif (is_bool($id)) {
+//				$this->exitWithPopup('Сохранено');
+//			} else {
+//				$this->exitWithError('Ответ не сохранен');
+//			}
+//		}
+//	}
+
+//	public function actionDelete()
+//	{
+//		if ($this->ajax['id']) {
+//			if ($this->model::delete($this->ajax['id'])) {
+//				$this->exitWithPopup('Категория удаленa');
+//			}
+//		} else {
+//			$this->exitWithMsg('No id');
+//		}
+//	}
 
 	public function actionSetMainImage()
 	{
