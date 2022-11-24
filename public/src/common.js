@@ -53,6 +53,23 @@ function trimStr(str) {
   return str
 }
 
+function setMorph(data) {
+  if (!data.model) return
+  if (!data.id) return
+  if (!data.morph) return
+  let url = getMorphUrl(data.model,data.id)
+
+
+}
+function getMorphUrl(model,id) {
+  return `/adminsc/${model}/createOrUpdate/${id}`
+}
+
+function getFieldUrl(model,id) {
+  return `/adminsc/${model}/createOrUpdate/${id}`
+}
+
+
 function cachePage(className) {
   let html = $(className)[0].outerHTML
   return trimStr(html)
