@@ -58,7 +58,7 @@ class CategoryController Extends AppController
 		}
 	}
 
-	protected function addImage(string $tagName)
+	protected function actionAddImage(string $tagName)
 	{
 		if ($_FILES) {
 			foreach ($_FILES as $file) {
