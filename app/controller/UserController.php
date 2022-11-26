@@ -11,7 +11,7 @@ use app\view\User\UserView;
 class UserController extends AppController
 {
 	protected $illuminateModel = illuminateUser::class;
-	protected $model = User::class;
+	public $model = User::class;
 	public $modelName = 'user';
 
 
