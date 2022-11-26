@@ -2,6 +2,7 @@ import './catalog-item.scss';
 import {$, popup, post, trimStr} from '../../common';
 import WDSSelect from "../select/WDSSelect";
 import {dnd1} from "../dnd/dnd";
+import Image from "../../Admin/Image/Image";
 
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
@@ -9,6 +10,8 @@ export default function catalogItem() {
 
     let model = customCatalogItem.dataset.model
     let id = +customCatalogItem.dataset.id
+
+    let mainImg = new Image('mainImagge', 4, 'category', 5)
 
     // setSingleImage({model, id, })
     // setMorph({model, id, })
