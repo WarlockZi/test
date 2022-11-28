@@ -2,7 +2,6 @@ import './catalog-item.scss';
 import {$, popup, post, trimStr} from '../../common';
 import WDSSelect from "../select/WDSSelect";
 import {dnd1} from "../dnd/dnd";
-import Image from "../../Admin/Image/Image";
 
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
@@ -11,13 +10,12 @@ export default function catalogItem() {
     let model = customCatalogItem.dataset.model
     let id = +customCatalogItem.dataset.id
 
-    let mainImg = new Image('mainImagge', 4, 'category', 5)
 
     // setSingleImage({model, id, })
     // setMorph({model, id, })
 
 
-    dnd1('.item_wrap .value .image', handleSingleImage)
+    // dnd1('.item_wrap .value .image', handleSingleImage)
 
 
     $(customCatalogItem).on('click', handleClick)
@@ -29,24 +27,24 @@ export default function catalogItem() {
     }
   }
 
-  function handleSingleImage(files) {
-    let appendTo = '.image'
-    let model = customCatalogItem.dataset.model
-    let url =
-      `/adminsc/${model}/createOrUpdate/${customCatalogItem.dataset.id}`
-    let tag = model
-    // let files = '.a'
-    handleImage(appendTo, url, tag, files)
-  }
-
-
-  async function handleImage(appendTo, url, tag, files) {
-    let id = await sendToServer(0, files[0], url)
-    if (id) {
-      appendTo.querySelector('.image').remove()
-      previewfile(files[0], appendTo, id, tag)
-    }
-  }
+  // function handleSingleImage(files) {
+  //   let appendTo = '.image'
+  //   let model = customCatalogItem.dataset.model
+  //   let url =
+  //     `/adminsc/${model}/createOrUpdate/${customCatalogItem.dataset.id}`
+  //   let tag = model
+  //   // let files = '.a'
+  //   handleImage(appendTo, url, tag, files)
+  // }
+  //
+  //
+  // async function handleImage(appendTo, url, tag, files) {
+  //   let id = await sendToServer(0, files[0], url)
+  //   if (id) {
+  //     appendTo.querySelector('.image').remove()
+  //     previewfile(files[0], appendTo, id, tag)
+  //   }
+  // }
 
   async function sendToServer(i, file, url) {
     let formData = new FormData()

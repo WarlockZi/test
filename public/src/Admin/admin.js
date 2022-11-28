@@ -19,7 +19,7 @@ import product from './Product/product'
 import './Planning/planning'
 import user from './user/user'
 import '../Test/open_test'
-import './Category/category'
+import './Category/category1'
 
 import radio from '@components/radio/radio'
 import multiselect from '@components/multiselect/multiselect'

@@ -176,13 +176,19 @@
       }
 
       .image {
-        width: 100px;
+        width: 200px;
         height: 100px;
         background-color: #fff;
-        border: #f0f0f0 1px solid;
+        border: #f0f0f0 2px solid;
+        object-fit: contain;
 
         &:hover {
           border: #c8c8c8 1px solid;
+        }
+
+        img{
+          width: auto;
+          height: 100%;
         }
       }
 

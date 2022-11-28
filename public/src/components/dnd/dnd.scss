@@ -1,3 +1,9 @@
+@import "../../var";
+
+.dndhover{
+  border: 2px dashed $color-main !important;
+}
+
 .holder {
   position: relative;
   border: 4px dashed #ccc;
