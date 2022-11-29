@@ -11,7 +11,7 @@ use app\view\Todo\TodoView;
 class TodoController Extends AppController
 {
 	public $model = Todo::class;
-	protected $modelName = 'todo';
+	public $modelName = 'todo';
 
 	public function __construct(array $route)
 	{

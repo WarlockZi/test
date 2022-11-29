@@ -283,7 +283,7 @@ abstract class UserView extends MyView
 	public static function getRights($user)
 	{
 		$configRights = Config::getConfigRights();
-		$rights = \app\model\Right::findAll();
+		$rights = \app\model\Illuminate\Right::all()->toArray();
 		return RightView::getCheckList($configRights, $rights, $user);
 	}
 

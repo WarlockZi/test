@@ -6,7 +6,7 @@ export default class Morph {
 
 
   constructor(morph, morphed, file) {
-    // if (!morph_id) throw new Error('add morph_id')
+
     if (!morph.type) throw new Error('add morph_type')
     if (!morphed.id) throw new Error('add morphed_id')
     if (!morphed.type) throw new Error('add morphed_type')
@@ -19,8 +19,8 @@ export default class Morph {
     this.data = {morphed_type, morphed_id, morph_type, file}
   }
 
-  async addMorphed() {
-    return await post(this.morph.url, this.data);
+  async appendManyImages(appendTo) {
+    //TODO
   }
 
   appendOneImage(appendTo) {
@@ -28,6 +28,9 @@ export default class Morph {
     if (!img) {
       let img = document.createElement('img')
       img.src = '/pic/ava_male.png'
+      img.onleave = false
+      img.onenter = false
+      img.ondrop = false
       appendTo.appendChild(img)
     } else {
       img.src = '/pic/ava_male.png'

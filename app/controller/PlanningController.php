@@ -9,8 +9,8 @@ use app\view\Planning\PlanningView;
 
 class PlanningController Extends AppController
 {
-	protected $modelName = Todo::class;
-	protected $model = 'todo';
+	public $modelName = Todo::class;
+	public $model = 'todo';
 
 	public function __construct(array $route)
 	{
@@ -81,12 +81,6 @@ class PlanningController Extends AppController
 		if (Answer::delete($this->ajax['a_id'])) {
 			$this->exitWithPopup( 'ok');
 		}
-
-	}
-
-	public function actionShow()
-	{
-
 
 	}
 

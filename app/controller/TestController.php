@@ -4,7 +4,6 @@ namespace app\controller;
 
 use app\model\Illuminate\Test;
 use app\model\Illuminate\Question;
-use app\model\User;
 use app\view\Test\TestView;
 use app\view\View;
 
@@ -13,7 +12,6 @@ class TestController extends AppController
 {
 
 	public $model = Test::class;
-//	public $modelName = 'test';
 
 	public function __construct(array $route)
 	{

@@ -9,7 +9,7 @@ class Openanswer extends Model
 	public  $model = 'openanswer';
 
 	protected $fillable = [
-		'openquestion_id'=>null,
+		'openquestion_id'=>0,
 		'answer'=>'',
 		'is_correct'=>'0',
 		'pic'=>''

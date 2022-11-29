@@ -10,7 +10,7 @@ use app\view\View;
 
 class VideoinstructionController Extends AppController
 {
-	protected $model = Videoinstruction::class;
+	public $model = Videoinstruction::class;
 
 	public function __construct(array $route)
 	{

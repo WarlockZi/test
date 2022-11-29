@@ -5,7 +5,7 @@ namespace app\view\Category;
 use app\model\Category;
 use app\model\Illuminate\Category as IlluminateCategory;
 use app\model\Product;
-use app\model\Property;
+use app\model\Illuminate\Property;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;

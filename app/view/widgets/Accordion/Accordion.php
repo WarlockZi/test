@@ -4,6 +4,7 @@ namespace app\view\widgets\Accordion;
 
 
 use app\view\components\MyTree;
+use http\Env\Request;
 
 class Accordion
 {
@@ -96,6 +97,10 @@ class Accordion
 	public function output():void
 	{
 		$this->html = "<div accordion class = '{$this->class}'>{$this->html}</div>";
+	}
+
+	public function getHtml(){
+		return $this->html;
 	}
 
 }

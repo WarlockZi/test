@@ -11,7 +11,7 @@ class Router
 
 	protected static $routes = [];
 	protected static $route = [];
-	protected static $aCategoryOrProduct = [];
+//	protected static $aCategoryOrProduct = [];
 
 	public static function add($regexp, $route = [])
 	{
@@ -64,7 +64,7 @@ class Router
 		$action = 'action' . self::upperCamelCase(self::$route['action']); // . 'Action'; //Action для того, чтобы пользователь не мог обращаться к функции(хотя можно написать protected)
 
 		if (!method_exists($controller, $action)) self::get404('action', $action);
-		$controller->$action(self::$aCategoryOrProduct); // Выполним метод
+		$controller->$action(); // Выполним метод
 		$controller->getView(); // Подключим вид
 	}
 

@@ -10,11 +10,6 @@ export default function catalogItem() {
     let model = customCatalogItem.dataset.model
     let id = +customCatalogItem.dataset.id
 
-
-    // setSingleImage({model, id, })
-    // setMorph({model, id, })
-
-
     // dnd1('.item_wrap .value .image', handleSingleImage)
 
 

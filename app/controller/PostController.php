@@ -2,14 +2,14 @@
 
 namespace app\controller;
 
-use app\model\Post;
+use app\model\PostDelete;
 use app\view\Post\PostView;
 use app\view\View;
 
 
 class PostController Extends AppController
 {
-	public  $model = Post::class;
+	public  $model = PostDelete::class;
 	public  $modelName = 'post';
 	public  $tableName = 'posts';
 

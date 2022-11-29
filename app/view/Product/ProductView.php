@@ -2,10 +2,10 @@
 
 namespace app\view\Product;
 
-use app\model\Illuminate\Product as IlluminateProduct;
+//use app\model\Illuminate\Product as IlluminateProduct;
 use app\model\Illuminate\Propertable;
 use app\model\Illuminate\Unit;
-use app\model\Product;
+use app\model\Illuminate\Product;
 use app\Repository\ImageRepository;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductView
 {
 
-	public $illuminateModel = IlluminateProduct::class;
+//	public $illuminateModel = IlluminateProduct::class;
 	public $modelName = Product::class;
 	public $model = 'product';
 

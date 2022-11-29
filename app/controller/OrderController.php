@@ -2,16 +2,15 @@
 
 namespace app\controller;
 
-use app\model\Order;
+
 use app\view\Order\OrderView;
-use app\view\View;
 
 
 class OrderController Extends AppController
 {
-	protected $modelName = 'order';
-	protected $model = Order::class;
-	protected $table = 'orders';
+	public $modelName = 'order';
+	public $model = Order::class;
+	public $table = 'orders';
 
 	public function __construct(array $route)
 	{

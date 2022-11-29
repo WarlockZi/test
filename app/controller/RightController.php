@@ -10,9 +10,9 @@ use app\view\Right\RightView;
 
 class RightController Extends AppController
 {
-	protected $model = Right::class;
-	protected $modelName = 'right';
-	protected $tableName = 'rights';
+	public $model = Right::class;
+	public $modelName = 'right';
+	public $tableName = 'rights';
 
 	public function __construct(array $route)
 	{

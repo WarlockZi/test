@@ -2,9 +2,7 @@
 
 namespace app\view\Right;
 
-use app\model\Right;
-
-
+use app\model\Illuminate\Right;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\MyView;

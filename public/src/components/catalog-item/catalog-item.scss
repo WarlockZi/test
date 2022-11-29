@@ -179,16 +179,16 @@
         width: 200px;
         height: 100px;
         background-color: #fff;
-        border: #f0f0f0 2px solid;
-        object-fit: contain;
+        border: #f0f0f0 1px solid;
 
         &:hover {
           border: #c8c8c8 1px solid;
         }
 
-        img{
-          width: auto;
+        img {
+          width: 100%;
           height: 100%;
+          object-fit: contain;
         }
       }
 

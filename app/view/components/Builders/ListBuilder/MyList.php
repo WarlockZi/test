@@ -53,7 +53,7 @@ class MyList
 
 	public function all()
 	{
-		$this->items = $this->model::findAll();
+		$this->items = $this->model::all();
 		return $this;
 	}
 

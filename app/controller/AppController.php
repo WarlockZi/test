@@ -7,7 +7,7 @@ use app\view\Header\Header;
 use app\view\View;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class AppController extends Controller
+class AppController extends Controller
 {
 	protected $ajax;
 	public $user;
