@@ -1,34 +1,25 @@
 <?php
 
-namespace app\model;
+namespace app\model\Illuminate;
 
-class Post extends Model
+use Illuminate\Database\Eloquent\Model;
+
+class Order extends Model
 {
 
-	public  $model = 'post';
-	public  $table = 'posts';
+	public $table = 'orders';
+	public  $model = 'order';
 
 	protected $fillable = [
 		'name' => '',
-		'chief' => '',
-		'subordinate' => '',
+		'customer_id' => 1,
 	];
 
-//	public function __construct()
-//	{
-//	}
 
 	public static function cheifs($id)
 	{
 		$model = new static();
 		$cheifs = $model->morphTo('post', 'chief', $id);
-		return $cheifs;
-	}
-
-	public static function cheif($id)
-	{
-		$model = new static();
-		$cheifs = $model->belongsTo('post', 'chief', $id);
 		return $cheifs;
 	}
 

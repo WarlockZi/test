@@ -1,7 +1,9 @@
 <?php
 
-namespace app\model;
+namespace app\model\Illuminate;
 
+
+use Illuminate\Database\Eloquent\Model;
 
 class Videoinstruction extends Model
 {
@@ -11,8 +13,8 @@ class Videoinstruction extends Model
 	protected $fillable = [
 		'name'=>'',
 		'link'=>'',
-		'user_id'=>null,
-		'sort'=>null,
+		'user_id'=>0,
+		'sort'=>0,
 		'tag'=>'',
 	];
 
@@ -20,13 +22,10 @@ class Videoinstruction extends Model
 	{
 		return $this->fillable;
 	}
-	public static function delete($id)
-	{
-		return parent::delete($id);
-	}
-	public static function create($value=[],$register=false,$needsAuth=true)
-	{
-		return parent::create($value);
-	}
+
+//	public static function create($value=[],$register=false,$needsAuth=true)
+//	{
+//		return parent::create($value);
+//	}
 
 }

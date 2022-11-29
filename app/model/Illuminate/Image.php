@@ -31,6 +31,11 @@ class Image extends Model
 		return $this->morphedByMany(Product::class,'imageable');
 	}
 
+//	public function categories()
+//	{
+//		return $this->morphedByMany(Category::class,'imageable');
+//	}
+
 	public function product()
 	{
 		return $this->belongsTo(Image::class,);

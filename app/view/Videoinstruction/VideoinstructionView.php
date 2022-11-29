@@ -4,7 +4,7 @@
 namespace app\view\Videoinstruction;
 
 
-use app\model\Videoinstruction;
+use app\model\Illuminate\Videoinstruction;
 
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;

@@ -1,8 +1,11 @@
 import './dnd.scss'
+import {$} from '../../common'
+
 export default class DragNDrop {
-  constructor(el, cb, allFiles = true, hoverSelector) {
-    debugger
+  constructor(sel, cb, allFiles = true, hoverSelector) {
+    // debugger
     this.hoverSelector = hoverSelector ?? 'dndhover'
+    let el = $(sel)
 
     el.ondragenter = function (hoverSelector, e) {
       e.preventDefault()
@@ -21,14 +24,15 @@ export default class DragNDrop {
       return false;
     }
 
-    el.ondrop = function (e) {
+    el.ondrop = function (hoverSelector, e) {
       e.preventDefault()
-      if (!allFiles) {
-        cb(e.dataTransfer.files[0])
-      } else {
+      e.target.classList.toggle(hoverSelector)
+      if (allFiles) {
         cb(e.dataTransfer.files)
+      } else {
+        cb(e.dataTransfer.files[0])
       }
-    }
+    }.bind(null, this.hoverSelector)
   }
 
 }

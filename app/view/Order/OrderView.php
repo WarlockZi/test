@@ -4,7 +4,7 @@
 namespace app\view\Order;
 
 
-use app\model\Order;
+use app\model\Illuminate\Order;
 
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;

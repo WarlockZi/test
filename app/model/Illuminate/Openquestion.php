@@ -9,7 +9,7 @@ class Openquestion extends Model
 {
 	protected $fillable = [
 		'question'=>'',
-		'opentest_id'=>null,
+		'opentest_id'=>0,
 		'pic'=>'',
 		'sort'=>'100'
 	];

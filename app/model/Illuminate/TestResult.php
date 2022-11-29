@@ -1,7 +1,9 @@
 <?php
 
-namespace app\model;
+namespace app\model\Illuminate;
 
+
+use Illuminate\Database\Eloquent\Model;
 
 class TestResult extends Model
 {
@@ -9,10 +11,10 @@ class TestResult extends Model
 	public $model = 'testResult';
 
 	protected $fillable = [
-		'user'=>null,
+		'user'=>0,
 //		'date'=>'',
-		'errorCnt'=>null,
-		'questionCnt'=>null,
+		'errorCnt'=>0,
+		'questionCnt'=>0,
 		'html'=>'',
 		'testid'=>'',
 		'testname'=>'',

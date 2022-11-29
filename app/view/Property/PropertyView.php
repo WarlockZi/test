@@ -2,10 +2,9 @@
 
 namespace app\view\Property;
 
-use \app\model\Illuminate\Property as IlluminateProperty;
-use app\model\Property;
+//use \app\model\Illuminate\Property as IlluminateProperty;
+use app\model\Illuminate\Property;
 use app\model\Val;
-
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
@@ -16,10 +15,7 @@ use app\view\MyView;
 class PropertyView extends MyView
 {
 	public $modelName = Property::class;
-	public $illuminateModelName = IlluminateProperty::class;
 	public $model = 'property';
-
-//	public $html;
 
 	public static function listAll()
 	{
@@ -54,7 +50,7 @@ class PropertyView extends MyView
 	public static function edit($id)
 	{
 		$view = new self();
-		$item = $view->illuminateModelName::with('categories', 'products','vals')->find($id);
+		$item = $view->modelName::with('categories', 'products','vals')->find($id);
 		return ItemBuilder::build($item, 'property')
 			->pageTitle('Свойство')
 			->field(

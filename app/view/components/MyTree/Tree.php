@@ -47,7 +47,7 @@ class Tree
 		$items = self::idKeys($items);
 		$tree = [];
 		foreach ($items as $id => &$node) {
-			if (isset($node[$parent])&&!(bool)$node[$parent]) {
+			if ((isset($node[$parent])&&!(bool)$node[$parent])||$node[$parent]===null) {
 			  if (count($node)>1)
 				$tree[$id] = &$node;
 			} elseif (isset($node[$parent]) && $node[$parent]) {

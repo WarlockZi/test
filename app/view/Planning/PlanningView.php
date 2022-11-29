@@ -4,7 +4,7 @@
 namespace app\view\Planning;
 
 
-use app\model\Todo;
+use app\model\Illuminate\Todo;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 

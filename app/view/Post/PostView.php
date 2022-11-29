@@ -4,7 +4,7 @@
 namespace app\view\Post;
 
 
-use app\model\Post;
+use app\model\Illuminate\Post;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
@@ -19,40 +19,39 @@ class PostView extends MyView
 {
 
 	public $model = Post::class;
-	public $illuminateModel = \app\model\illuminate\Post::class;
 	public $html;
 
 	public static function item($id): string
 	{
 		$view = new self();
-		$posts = $view->illuminateModel::all()->toArray();
-		$post = $view->illuminateModel::with('subordinates','chief')
+		$posts = $view->model::all()->toArray();
+		$post = $view->model::with('subordinates','chief')
 				->find($id);
 
-		return ItemBuilder::build($view->model, $id)
+		return ItemBuilder::build($post, 'post')
 			->pageTitle('Должность : ' . $post->name)
 			->del()
 			->save()
 			->toList()
 			->field(
-				ItemFieldBuilder::build('id')
+				ItemFieldBuilder::build('id',$post)
 					->name('ID')
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('name')
+				ItemFieldBuilder::build('name',$post)
 					->name('Наименование')
 					->contenteditable()
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('cheif')
+				ItemFieldBuilder::build('cheif',$post)
 					->name('Руководитель')
 					->html(PostView::cheifSelect($posts,$post))
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('subordinates')
+				ItemFieldBuilder::build('subordinates',$post)
 					->name('Подчиненные')
 					->html(PostView::subordinatesMultiSelect($posts,$post))
 					->get()

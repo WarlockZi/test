@@ -3,8 +3,8 @@
 
 namespace app\controller;
 
+use app\model\Illuminate\TestResult;
 use app\model\Mail;
-use app\model\TestResult;
 
 
 class TestresultController extends AppController
@@ -14,11 +14,11 @@ class TestresultController extends AppController
 	public function __construct(array $route)
 	{
 		parent::__construct($route);
-
 	}
+
 	public function actionIndex()
 	{
-		$res = TestResult::findAll('testResults');
+		$res = TestResult::all()->toArray();
 		$this->set(compact('res'));
 	}
 
