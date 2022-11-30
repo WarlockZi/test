@@ -4,7 +4,6 @@
 namespace app\Repository;
 
 
-use app\controller\ImageController;
 use app\model\Illuminate\Image;
 use Illuminate\Database\Eloquent\Model;
 

@@ -129,12 +129,5 @@ class User extends Model
 	}
 
 
-	public function checkEmailExists($email):bool
-	{
-		if ($this->findOneWhere('email', $email)) {
-			return true;
-		}
-		return false;
-	}
 
 }

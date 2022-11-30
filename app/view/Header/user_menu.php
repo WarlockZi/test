@@ -1,4 +1,6 @@
-<? $user = \app\controller\AuthController::user(); ?>
+<? use \app\model\Illuminate\User;
+
+$user = \app\controller\AuthController::user(); ?>
 <? if (!$user): ?>
 
 	<div class="guest-menu" aria-label="login">
@@ -16,7 +18,7 @@
 <? else: ?>
 
 	<div class="user-menu">
-		<img src="<?= \app\model\User::avatar($user)??''; ?>" alt="">
+		<img src="<?= User::avatar($user)??''; ?>" alt="">
 
 		<div class="credits">
 			<div class="fio"><?= "{$user['surName']} {$user['name']}"; ?></div>
@@ -25,7 +27,7 @@
 
 		<div class="menu">
 			<a href="/auth/profile">Изменить свой профиль</a>
-				<? if (app\model\User::can($user, ['role_employee'])): ?>
+				<? if (User::can($user, ['role_employee'])): ?>
 			  <a class="list__item" href="/adminsc">Admin</a>
 				<? endif; ?>
 

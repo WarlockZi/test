@@ -4,8 +4,8 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\model\Illuminate\User as IlluminateUser;
-use app\model\Mail;
-use app\model\User;
+use app\core\Mail;
+use app\model\Illuminate\User;
 use app\view\Header\Header;
 use app\view\User\UserView;
 use app\view\View;
@@ -34,19 +34,19 @@ class AuthController extends AppController
 			$user['password'] = $this->preparePassword($user['password']);
 			$user['hash'] = $hash;
 
-
 			$data = Mail::mailConfirmFactory($hash, $user);
+			$user['rights'] = 'user_update';
 
+			if (!$id = User::create($user, 'register')) {
+				exit('registration failed');
+			}
 			try {
-				$user['rights'] = 'user_update';
-				if (!$id = User::create($user, 'register')) {
-					exit('registration failed');
-				}
 				$sent = Mail::send_mail($data);
-				$this->exitWithMsg('confirmed');
 			} catch (\Exception $e) {
 				exit($e->getMessage());
 			}
+			$this->exitWithMsg('confirmed');
+
 		}
 	}
 
@@ -95,7 +95,8 @@ class AuthController extends AppController
 			if ($user) {
 				$user = $user[0];
 				$newPassword = $this->preparePassword($data['new_password']);
-				$res = User::update(['id' => $user['id'], 'password' => $newPassword]);
+				$res = User::where('id', $user['id'])
+					->update(['password' => $newPassword]);
 				if ($res) {
 
 					$this->exitWithSuccess('Пароль поменeн');
@@ -123,7 +124,8 @@ class AuthController extends AppController
 				Auth::setAuth((int)$user['id']);
 				$password = $this->randomPassword();
 				$newPassword = $this->preparePassword($password);
-				User::update(['id' => $user['id'], 'password' => $newPassword]);
+				User::where('id', $user['id'])
+					->update(['password' => $newPassword]);
 
 				$data['to'] = [$data['email']];
 				$data['subject'] = 'Новый пароль';

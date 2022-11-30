@@ -1,6 +1,6 @@
 <?php
 
-namespace app\model;
+namespace app\core;
 
 use Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -11,7 +11,7 @@ class Mail
 	protected static function setMailer()
 	{
 		$mail = new PHPMailer(true);
-//    $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;
+    $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;
 		$mail->isSMTP();
 		$mail->SMTPOptions = array(
 			'ssl' => array(
@@ -20,10 +20,10 @@ class Mail
 				'allow_self_signed' => true
 			)
 		);
-		$mail->SMTPAuth = (bool)$_ENV['SMTP_AUTH'];
 		$mail->Port = (int)$_ENV['SMTP_PORT'];
 		$mail->Username = $_ENV['SMTP_USERNAME'];
 		$mail->Password = $_ENV['SMTP_PASS'];
+		$mail->SMTPAuth = (bool)$_ENV['SMTP_AUTH'];
 		$mail->SMTPSecure = (bool)$_ENV['SMTP_SMTPSECURE'];
 		$mail->Host = $_ENV['SMTP_HOST'];
 		$mail->setFrom($_ENV['SMTP_FROM_EMAIL'], $_ENV['SMTP_FROM_NAME']);
@@ -44,8 +44,7 @@ class Mail
 			$mail->Subject = $data['subject'] ?? '';
 			$mail->Body = $data['body'] ?? '';
 			$mail->AltBody = $data['altBody'] ?? '';
-			$mail->send();
-			return true;
+			$res = $mail->send();
 		} catch (Exception $e) {
 			echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
 		}
@@ -62,12 +61,18 @@ class Mail
 		$data['to'] = [$user['email']];
 		$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/auth/confirm/{$hash}";
 
-		ob_start();
-		require ROOT . '/app/view/Auth/email.php';
-		$data['body'] = ob_get_clean();
+
+		$data['body'] = self::getConfirmBody($hash, $href);
 
 		$data['altBody'] = "Подтверждение почты: <a href = '{$href}'>нажать сюда</a>";
 		return $data;
+	}
+
+	private static function getConfirmBody(string $hash, string $href):string
+	{
+		ob_start();
+		require ROOT . '/app/view/Auth/email.php';
+		return ob_get_clean();
 	}
 
 }

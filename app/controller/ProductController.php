@@ -12,7 +12,6 @@ use app\Repository\ProductRepository;
 use app\view\Category\CategoryView;
 use app\view\Product\ProductCardView;
 use app\view\Product\ProductView;
-use Illuminate\Contracts\View\View;
 
 
 class ProductController Extends AppController

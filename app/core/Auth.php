@@ -4,8 +4,8 @@
 namespace app\core;
 
 use app\controller\AppController;
-use app\model\Illuminate\User as IlluminateUser;
-use app\model\User;
+//use app\model\Illuminate\User as IlluminateUser;
+use app\model\Illuminate\User;
 
 class Auth extends AppController
 {
@@ -35,7 +35,7 @@ class Auth extends AppController
 			exit();
 		}
 
-		$user = IlluminateUser::find($_SESSION['id'])->toArray();
+		$user = User::find($_SESSION['id'])->toArray();
 
 		if ($user === false) {
 			$_SESSION['id'] = '';

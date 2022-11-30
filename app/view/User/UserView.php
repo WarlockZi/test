@@ -4,8 +4,12 @@
 namespace app\view\User;
 
 
-use app\config\Config;
+use app\model\Illuminate\Right;
 use app\model\User;
+use app\view\MyView;
+use app\config\Config;
+use app\view\Right\RightView;
+use Illuminate\Database\Eloquent\Model;
 use app\view\components\Builders\Date\DateBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
@@ -13,9 +17,6 @@ use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\MyView;
-use app\view\Right\RightView;
-use Illuminate\Database\Eloquent\Model;
 
 
 abstract class UserView extends MyView
@@ -283,7 +284,7 @@ abstract class UserView extends MyView
 	public static function getRights($user)
 	{
 		$configRights = Config::getConfigRights();
-		$rights = \app\model\Illuminate\Right::all()->toArray();
+		$rights = Right::all()->toArray();
 		return RightView::getCheckList($configRights, $rights, $user);
 	}
 
