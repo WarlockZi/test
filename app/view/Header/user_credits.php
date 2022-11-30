@@ -1,7 +1,14 @@
-<? $user = \app\controller\AuthController::user(); ?>
+<?
+
+use app\model\Illuminate\User;
+
+$user = \app\controller\AuthController::user();
+
+?>
+
 <div class="user-credits">
 	<div class="user-menu">
-		<img src="<?= \app\model\User::avatar($user); ?>" alt="">
+		<img src="<?= User::avatar($user); ?>" alt="">
 
 		<div class="credits">
 			<div class="fio"><?= "{$user['surName']} {$user['name']}"; ?></div>

@@ -39,7 +39,6 @@ abstract class Model
 		if ($needsAuth && !$register) $model->auth('create');
 
 		if (isset($values['id'])) unset($values['id']);
-//		if (isset($values['token'])) unset($values['token']);
 
 		$fillable = $model->fillable;
 		foreach ($values as $k => $v) {

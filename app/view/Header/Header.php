@@ -47,7 +47,7 @@ class Header
 	public static function getAdminMenu(Controller $controller)
 	{
 		ob_start();
-		include ROOT . '/app/view/components/admin_menu/admin_menu__accordion.php';
+		include ROOT . '/app/view/Header/admin/admin_menu__accordion.php';
 		return ob_get_clean();
 	}
 

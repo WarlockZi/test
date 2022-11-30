@@ -3,10 +3,8 @@
 namespace app\controller;
 
 use app\core\Auth;
-use app\model\User;
-use app\model\Videoinstruction;
+use app\model\Illuminate\Videoinstruction;
 use app\view\Videoinstruction\VideoinstructionView;
-use app\view\View;
 
 class VideoinstructionController Extends AppController
 {
@@ -21,7 +19,9 @@ class VideoinstructionController Extends AppController
 	public function actionIndex()
 	{
 		$videos = Videoinstruction::where('id', '>', 0)
-			->orderBy(['tag', 'sort'])
+//			->orderBy(['tag', 'sort'])
+			->orderBy('tag')
+			->orderBy('sort')
 			->get();
 		$this->set(compact('videos'));
 	}
