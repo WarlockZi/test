@@ -4,7 +4,7 @@
 namespace app\view\Post;
 
 
-use app\model\Illuminate\Post;
+use app\model\Post;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;

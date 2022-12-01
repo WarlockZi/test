@@ -4,9 +4,9 @@ namespace app\controller;
 
 
 
-use app\model\Illuminate\Category;
-use app\model\Illuminate\Product;
-use app\model\Illuminate\Tag;
+use app\model\Category;
+use app\model\Product;
+use app\model\Tag;
 use app\Repository\ImageRepository;
 use app\view\Category\CategoryView;
 use app\view\components\MyTree\Tree;

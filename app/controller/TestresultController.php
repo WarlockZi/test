@@ -3,8 +3,8 @@
 
 namespace app\controller;
 
-use app\model\Illuminate\TestResult;
-use app\model\Mail;
+use app\model\TestResult;
+use app\core\Mail;
 
 
 class TestresultController extends AppController

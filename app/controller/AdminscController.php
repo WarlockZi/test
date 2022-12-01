@@ -3,7 +3,7 @@
 namespace app\controller;
 
 use app\core\App;
-use app\model\Illuminate\User;
+use app\model\User;
 use app\view\Header\Header;
 use app\view\View;
 

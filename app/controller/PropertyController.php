@@ -3,9 +3,8 @@
 namespace app\controller;
 
 
-use app\model\Illuminate\IlluminateModelMorphDecorator;
-use app\model\Illuminate\Propertable;
-use app\model\Illuminate\Property as IlluminateProperty;
+use app\model\IlluminateModelMorphDecorator;
+use app\model\Propertable;
 use app\model\IlluminateModelDecorator;
 use app\model\Property;
 use app\view\Property\PropertyView;

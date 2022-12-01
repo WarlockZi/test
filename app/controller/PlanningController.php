@@ -24,7 +24,9 @@ class PlanningController Extends AppController
 
 	public function actionCreate()
 	{
-		$items = Todo::findAllWhere(['type'=>'день', 'user_id'=>$this->user['id']]);
+		$items = Todo::where('type', 'день')->
+		where('user_id', $this->user['id'])->
+		get()->toArray();
 		$daily = PlanningView::listItems($items);
 		$this->set(compact('daily'));
 	}
@@ -42,7 +44,7 @@ class PlanningController Extends AppController
 						'field' => 'id',
 						'name' => 'ID',
 						'width' => '50px',
-						'data-type'=>'number',
+						'data-type' => 'number',
 						'sort' => true,
 						'search' => false,
 					],
@@ -52,8 +54,8 @@ class PlanningController Extends AppController
 						'field' => 'name',
 						'name' => 'Наименование',
 						'width' => '1fr',
-						'contenteditable'=>'contenteditable',
-						'data-type'=>'string',
+						'contenteditable' => 'contenteditable',
+						'data-type' => 'string',
 						'sort' => true,
 						'search' => true,
 					],
@@ -62,8 +64,8 @@ class PlanningController Extends AppController
 						'field' => 'description',
 						'name' => 'Описание',
 						'width' => '1fr',
-						'contenteditable'=>'contenteditable',
-						'data-type'=>'string',
+						'contenteditable' => 'contenteditable',
+						'data-type' => 'string',
 						'sort' => true,
 						'search' => true,
 					],
@@ -71,7 +73,7 @@ class PlanningController Extends AppController
 				'editCol' => false,
 //				'delCol' => false,
 				'delCol' => 'ajax',
-				'addButton'=> 'ajax',//'redirect'
+				'addButton' => 'ajax',//'redirect'
 			]
 		);
 	}
@@ -79,7 +81,7 @@ class PlanningController Extends AppController
 	public function actionDelete()
 	{
 		if (Answer::delete($this->ajax['a_id'])) {
-			$this->exitWithPopup( 'ok');
+			$this->exitWithPopup('ok');
 		}
 
 	}

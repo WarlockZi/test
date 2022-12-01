@@ -3,9 +3,9 @@
 namespace app\view\Product;
 
 //use app\model\Illuminate\Product as IlluminateProduct;
-use app\model\Illuminate\Propertable;
-use app\model\Illuminate\Unit;
-use app\model\Illuminate\Product;
+use app\model\Propertable;
+use app\model\Unit;
+use app\model\Product;
 use app\Repository\ImageRepository;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;

@@ -4,7 +4,7 @@
 namespace app\Repository;
 
 
-use app\model\Illuminate\Image;
+use app\model\Image;
 use Illuminate\Database\Eloquent\Model;
 
 class ImageRepository

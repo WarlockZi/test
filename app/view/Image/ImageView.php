@@ -4,7 +4,7 @@
 namespace app\view\Image;
 
 
-use app\model\Illuminate\Image;
+use app\model\Image;
 use app\Repository\ImageRepository;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;

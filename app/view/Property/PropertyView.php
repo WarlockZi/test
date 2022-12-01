@@ -2,8 +2,7 @@
 
 namespace app\view\Property;
 
-//use \app\model\Illuminate\Property as IlluminateProperty;
-use app\model\Illuminate\Property;
+use app\model\Property;
 use app\model\Val;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;

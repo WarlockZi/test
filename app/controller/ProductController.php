@@ -2,11 +2,11 @@
 
 namespace app\controller;
 
-use app\model\Illuminate\IlluminateModelDecorator;
-use app\model\Illuminate\Image;
-use app\model\Illuminate\Product;
-use app\model\Illuminate\Propertable;
-use app\model\illuminate\Tag;
+use app\model\IlluminateModelDecorator;
+use app\model\Image;
+use app\model\Product;
+use app\model\Propertable;
+use app\model\Tag;
 use app\Repository\ImageRepository;
 use app\Repository\ProductRepository;
 use app\view\Category\CategoryView;

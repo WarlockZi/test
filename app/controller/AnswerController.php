@@ -6,7 +6,7 @@ use app\model\Answer;
 
 class AnswerController Extends AppController
 {
-	public $model = \app\model\Illuminate\Answer::class;
+	public $model = Answer::class;
 
 	public function __construct(array $route)
 	{

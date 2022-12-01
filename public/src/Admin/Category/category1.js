@@ -1,5 +1,5 @@
 import './category.scss'
-import {$} from "../../common";
+import {$, post} from "../../common";
 import Imageable from '../Image/Imageable';
 import Category from '../Category/Category';
 
@@ -13,15 +13,14 @@ let deltag = `delMainImage`
 
 // Вороник Виталий Викторович
 // 4751
-
+debugger
 let sel = "[data-field='image_main']"
 new DragNDrop(sel, addMainImg, true, null)
 
 async function addMainImg(file) {
-
   let catId = $('.item_wrap')[0].dataset.id
   let morph = await new Morph(new Imageable, new Category(catId), {file})
+  let res = await post(morph?.data?.url, morph?.data)
   let appendTo = ".image[data-model='category']"
   let appendOneImage = morph.appendOneImage(appendTo)
-
 }

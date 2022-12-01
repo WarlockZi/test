@@ -4,7 +4,7 @@
 namespace app\view\User;
 
 
-use app\model\Illuminate\Right;
+use app\model\Right;
 use app\model\User;
 use app\view\MyView;
 use app\config\Config;

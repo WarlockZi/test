@@ -2,7 +2,7 @@
 
 namespace app\controller;
 
-use app\model\Illuminate\Todo;
+use app\model\Todo;
 
 use app\view\components\CustomList\CustomList;
 use app\view\Todo\TodoView;

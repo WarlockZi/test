@@ -6,7 +6,7 @@ namespace app\Repository;
 
 use app\controller\Controller;
 use app\controller\FS;
-use app\model\Illuminate\Product;
+use app\model\Product;
 
 class ProductRepository extends Controller
 {

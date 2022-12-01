@@ -4,7 +4,7 @@
 namespace app\Repository;
 
 
-use app\model\Illuminate\Answer;
+use app\model\Answer;
 
 class AnswerRepository
 {

@@ -4,7 +4,7 @@
 namespace app\controller;
 
 
-use app\model\Illuminate\Tag;
+use app\model\Tag;
 use app\view\Tag\TagView;
 
 class TagController extends AppController

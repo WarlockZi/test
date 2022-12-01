@@ -3,9 +3,8 @@
 namespace app\controller;
 
 use app\core\Auth;
-use app\model\Illuminate\User as IlluminateUser;
 use app\core\Mail;
-use app\model\Illuminate\User;
+use app\model\User;
 use app\view\Header\Header;
 use app\view\User\UserView;
 use app\view\View;
@@ -27,15 +26,15 @@ class AuthController extends AppController
 			if (!$user['password']) exit('empty password');
 			if (!$user['email']) exit('empty email');
 
-			$found = IlluminateUser::where('email', $user['email'])->first();
+			$found = User::where('email', $user['email'])->first();
 			if ($found) $this->exitWithMsg('mail exists');
 
 			$hash = md5(microtime());
 			$user['password'] = $this->preparePassword($user['password']);
 			$user['hash'] = $hash;
-
-			$data = Mail::mailConfirmFactory($hash, $user);
 			$user['rights'] = 'user_update';
+
+			$data = Mail::mailConfirmFactory($user);
 
 			if (!$id = User::create($user, 'register')) {
 				exit('registration failed');
@@ -55,8 +54,8 @@ class AuthController extends AppController
 		Auth::autorize($this);
 		$this->view = 'profile1';
 
-		$user = IlluminateUser::find($_SESSION['id']);
-		$userArr = IlluminateUser::find($_SESSION['id'])->toArray();
+		$user = User::find($_SESSION['id']);
+		$userArr = User::find($_SESSION['id'])->toArray();
 
 		if (User::can($userArr, ['role_employee'])) {
 			Header::getAdninHeader($this);
@@ -89,7 +88,7 @@ class AuthController extends AppController
 
 			$old_password = $this->preparePassword($data['old_password']);
 
-			$user = IlluminateUser::where('password', $old_password)
+			$user = User::where('password', $old_password)
 				->get()->toArray();
 
 			if ($user) {
@@ -115,7 +114,7 @@ class AuthController extends AppController
 		if ($data = $this->ajax) {
 
 			$_SESSION['id'] = '';
-			$user = IlluminateUser::where('email', $data['email'])
+			$user = User::where('email', $data['email'])
 				->select('id', 'password', 'email')
 				->get()[0]
 				->toArray();
@@ -147,7 +146,7 @@ class AuthController extends AppController
 			if (!User::checkEmail($data['email'])) $this->exitWithError("Неверный формат email");
 			if (!User::checkPassword($data['password'])) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
 
-			$user = IlluminateUser::where('email', $data['email'])->get()[0]
+			$user = User::where('email', $data['email'])->get()[0]
 				->toArray();
 
 			if (!$user) $this->exitWithError('Пользователь не зарегистрирован');
@@ -228,7 +227,7 @@ class AuthController extends AppController
 	{
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
 			$id = $_SESSION['id'];
-			$user = IlluminateUser::find($id);
+			$user = User::find($id);
 			if (!$user) {
 				return false;
 			}

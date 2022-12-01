@@ -1,8 +1,11 @@
-<section class="planning-create">
+<div class="adm-content">
 
-	Ежедневные
+	<section class="planning-create">
 
-	<?=$daily;?>
+		Ежедневные
+
+		 <?= $daily; ?>
 
 
-</section>
+	</section>
+</div>

@@ -3,7 +3,7 @@
 namespace app\controller;
 
 use app\core\Auth;
-use app\model\Illuminate\Videoinstruction;
+use app\model\Videoinstruction;
 use app\view\Videoinstruction\VideoinstructionView;
 
 class VideoinstructionController Extends AppController
