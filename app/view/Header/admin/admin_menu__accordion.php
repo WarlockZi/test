@@ -1,4 +1,4 @@
-<? use \app\model\Illuminate\User;
+<? use \app\model\User;
 
 $user = $controller->user;
 ?>

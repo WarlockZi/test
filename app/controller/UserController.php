@@ -3,14 +3,12 @@
 namespace app\controller;
 
 use app\core\Auth;
-use app\model\illuminate\User as illuminateUser;
 use app\model\User;
 use app\view\User\UserView;
 
 
 class UserController extends AppController
 {
-	protected $illuminateModel = illuminateUser::class;
 	public $model = User::class;
 	public $modelName = 'user';
 
@@ -37,7 +35,7 @@ class UserController extends AppController
 
 	public function actionEdit()
 	{
-		$item = $this->illuminateModel::find($this->route['id']);
+		$item = $this->model::find($this->route['id']);
 		$item = UserView::getViewByRole($item, $this->user);
 
 		$this->set(compact('item'));

@@ -4,7 +4,7 @@
 namespace app\view\Tag;
 
 
-use app\model\illuminate\Tag;
+use app\model\Tag;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 

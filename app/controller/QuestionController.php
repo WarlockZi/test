@@ -3,8 +3,8 @@
 namespace app\controller;
 
 use app\model\Answer;
-use app\model\Illuminate\Question;
-use app\model\Illuminate\Test;
+use app\model\Question;
+use app\model\Test;
 use app\model\Question as oldQest;
 
 

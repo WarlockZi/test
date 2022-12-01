@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\model\Illuminate;
+namespace app\model;
 
 
 class IlluminateModelDecorator extends \Illuminate\Database\Eloquent\Model

@@ -4,7 +4,7 @@
 namespace app\controller;
 
 
-use app\model\Illuminate\Unit;
+use app\model\Unit;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 

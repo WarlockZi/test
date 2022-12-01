@@ -5,7 +5,7 @@ namespace app\view\Header;
 
 
 use app\controller\Controller;
-use app\model\Illuminate\Category;
+use app\model\Category;
 
 class Header
 {

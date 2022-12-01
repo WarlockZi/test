@@ -11,7 +11,7 @@ class Mail
 	protected static function setMailer()
 	{
 		$mail = new PHPMailer(true);
-    $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;
+//    $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;
 		$mail->isSMTP();
 		$mail->SMTPOptions = array(
 			'ssl' => array(
@@ -55,14 +55,14 @@ class Mail
 		return "=?utf-8?b?" . base64_encode($str) . "?=";
 	}
 
-	public static function mailConfirmFactory(string $hash, array $user): array
+	public static function mailConfirmFactory(array $user): array
 	{
 		$data['subject'] = "Регистрация VITEX";
 		$data['to'] = [$user['email']];
 		$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/auth/confirm/{$hash}";
 
 
-		$data['body'] = self::getConfirmBody($hash, $href);
+		$data['body'] = self::getConfirmBody($user['hash'], $href);
 
 		$data['altBody'] = "Подтверждение почты: <a href = '{$href}'>нажать сюда</a>";
 		return $data;

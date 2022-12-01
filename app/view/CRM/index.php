@@ -1,23 +1,23 @@
-<div class="wrap-admin">
+<div class="adm-content">
 
 
-  <? if (in_array('4', $user['rights'])):// SU ?>
+  <? if (\app\model\User::can($this->user)):// SU ?>
      <input class = "list" type="button" name="scr" id="scr" value = "выгрузить ">
-     <form method="post" action= '<?= PROJ ?>/Adminsc/FileImport'>
+     <form method="post" action= '/Adminsc/FileImport'>
        <input class = "list" type="submit" name = 'scrImport' value = "загрузить ">
      </form>
 
-     <form method="post" action= '<?= PROJ ?>/Adminsc/ProductsActivity'>
+     <form method="post" action= '/Adminsc/ProductsActivity'>
        <input class = "list" type="submit" name = 'ProductsActivity' value = "actionProductsActivity ">
      </form>
 
-     <a class = "list" href  = '<?= PROJ ?>/adminsc/galery'>Картинки</a>
+     <a class = "list" href  = '/adminsc/galery'>Картинки</a>
 
 
-     <form method="post" action= '<?= PROJ ?>/Adminsc'>
+     <form method="post" action= '/Adminsc'>
        <input class = "list" type="submit" name = 'cat' value = "Формируем категории">
      </form>
-     <form method="post" action= '<?= PROJ ?>/Adminsc'>
+     <form method="post" action= '/Adminsc'>
        <input class = "list" type="submit" name = 'translitCat' value = "Категории транслит">
      </form>
    <!--           <div id="vk_post_2083688_2227"></div><script type="text/javascript">

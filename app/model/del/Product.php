@@ -16,7 +16,7 @@ class Product extends \app\model\Model
 
 	public function properties()
 	{
-		return $this->morphToMany(\app\model\Illuminate\Property::class);
+		return $this->morphToMany(\app\model\Property::class);
 	}
 
 

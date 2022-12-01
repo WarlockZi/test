@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\model\Illuminate;
+namespace app\model;
 
 
 class IlluminateModelMorphDecorator
@@ -25,7 +25,7 @@ class IlluminateModelMorphDecorator
 				if (isset($attributes['morph_type'])
 					&& isset($attributes['morph_id'])) {
 					$morph_type = $attributes['morph_type'];
-					$morph_type = "app\\model\\Illuminate\\" . ucfirst($morph_type);
+					$morph_type = "app\\model\\" . ucfirst($morph_type);
 					$morph_id = $attributes['morph_id'];
 					$propertable = Propertable::create([
 						'property_id' => $item['id'],

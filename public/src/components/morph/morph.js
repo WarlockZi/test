@@ -1,7 +1,7 @@
 import {$, post} from "../../common";
 
 export default class Morph {
-  morph = {};
+
   data = {};
 
 
@@ -15,8 +15,10 @@ export default class Morph {
     let morphed_type = morphed.type
     let morphed_id = morphed.id
 
-    this.morph = morph
-    this.data = {morphed_type, morphed_id, morph_type, file}
+    // let morph = new morph
+
+    // this.morph = morph
+    this.data = {morphed, morph, file}
   }
 
   async appendManyImages(appendTo) {
@@ -25,13 +27,14 @@ export default class Morph {
 
   appendOneImage(appendTo) {
     let img = $(appendTo)[0].querySelector('img')
+    let holder = $(appendTo)[0]
     if (!img) {
       let img = document.createElement('img')
       img.src = '/pic/ava_male.png'
       img.onleave = false
       img.onenter = false
       img.ondrop = false
-      appendTo.appendChild(img)
+      holder.appendChild(img)
     } else {
       img.src = '/pic/ava_male.png'
     }

@@ -1,9 +1,11 @@
 <?php
 
-namespace app\model\Illuminate;
+namespace app\model;
 
 
-class Category extends \Illuminate\Database\Eloquent\Model
+use Illuminate\Database\Eloquent\Model;
+
+class Category extends Model
 {
 
 	protected $fillable = [

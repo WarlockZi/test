@@ -3,7 +3,6 @@
 namespace app\view\Test;
 
 use app\model\Test;
-use app\model\Illuminate\Test as illuminateTest;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
@@ -12,7 +11,6 @@ use app\view\components\MyTree\Tree;
 class TestView
 {
 	protected $model = Test::class;
-	protected $illuminateModel = \app\model\Illuminate\Test::class;
 
 	public static function item($id)
 	{
@@ -82,7 +80,7 @@ class TestView
 	public static function questionParentSelector(int $selected, int $exclude = -1)
 	{
 		$tests =
-			\app\model\Illuminate\Test::where('isTest', '1')
+			\app\model\Test::where('isTest', '1')
 			->get()->toArray();
 		$parent_select = '<select>';
 		foreach ($tests as $t) {

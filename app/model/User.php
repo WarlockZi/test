@@ -1,6 +1,6 @@
 <?
 
-namespace app\model\Illuminate;
+namespace app\model;
 
 
 use app\Repository\ImageRepository;

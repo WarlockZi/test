@@ -4,8 +4,7 @@
 namespace app\core;
 
 use app\controller\AppController;
-//use app\model\Illuminate\User as IlluminateUser;
-use app\model\Illuminate\User;
+use app\model\User;
 
 class Auth extends AppController
 {

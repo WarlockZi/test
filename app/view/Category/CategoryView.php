@@ -3,19 +3,17 @@
 namespace app\view\Category;
 
 use app\model\Category;
-use app\model\Illuminate\Category as IlluminateCategory;
 use app\model\Product;
-use app\model\Illuminate\Property;
+use app\model\Property;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
-use Illuminate\Database\Eloquent\Model;
 
 class CategoryView
 {
-	private $model = IlluminateCategory::class;
+	private $model = Category::class;
 	private $modelName = 'category';
 	public $html;
 
@@ -50,7 +48,7 @@ class CategoryView
 	public static function breadcrumbs(int $id, bool $lastIsALink = false): string
 	{
 
-		$parents = IlluminateCategory::with('category_recursive.properties.vals')
+		$parents = Category::with('category_recursive.properties.vals')
 			->find($id)->toArray();
 
 		$arr = [];
@@ -74,7 +72,7 @@ class CategoryView
 	{
 		$view = new self();
 
-		$illumCategory = IlluminateCategory::with('products', 'category_recursive', 'properties', 'children')
+		$illumCategory = Category::with('products', 'category_recursive', 'properties', 'children')
 			->find($id);
 		$category = $illumCategory->toArray();
 
@@ -161,8 +159,8 @@ class CategoryView
 			->tab(
 				ItemTabBuilder::build('Подкатегории')
 					->html(
-//						MyList::build(IlluminateCategory::class)
-						MyList::build(IlluminateCategory::class)
+//						MyList::build(Category::class)
+						MyList::build(Category::class)
 							->edit()
 							->del()
 							->addButton('ajax')

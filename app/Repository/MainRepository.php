@@ -4,7 +4,7 @@
 namespace app\Repository;
 
 
-use app\model\Illuminate\Category;
+use app\model\Category;
 
 class MainRepository
 {

@@ -2,8 +2,7 @@
 
 namespace app\controller;
 
-use app\model\Illuminate\Image;
-use app\Repository\ImageRepository;
+use app\model\Image;
 use app\view\Image\ImageView;
 
 class ImageController Extends AppController
@@ -41,6 +40,27 @@ class ImageController Extends AppController
 	{
 		$list = ImageView::list();
 		$this->set(compact('list'));
+	}
+
+	private static function checkRequiredArgs(array $args, Controller $context):void{
+
+			if (isset($args['morphed_type']))
+				$context->exitWithPopup('Нет смежной таблицы');
+			if (isset($args['morphed_id']))
+				$context->exitWithPopup('Нет id из смежной таблицы');
+			if (isset($args['morph_id']))
+				$context->exitWithPopup('Нет id картинки');
+	}
+
+	public function actionAddMorph(){
+		if ($this->ajax){
+			self::checkRequiredArgs($this->ajax, $this);
+			$im = Image::find($this->ajax['morph_id']);
+			$morphed = $this->ajax['morphed_type'];
+			$morphed_id = $this->ajax['morphed_id'];
+			$model = $morphed::find($morphed_id);
+			$im->sync($model);
+		}
 	}
 
 //	public static function move_uploaded_file($img, $file)

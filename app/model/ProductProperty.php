@@ -1,10 +1,9 @@
 <?php
 
 
-namespace app\model\Illuminate;
+namespace app\model;
 
 
-use app\model\Val;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductProperty extends Model

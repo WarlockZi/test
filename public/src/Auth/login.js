@@ -48,9 +48,9 @@ async function parseLoginResponse() {
   }
 
   let res = await post('/auth/login', data)
-  if (res.arr.role === 'employee') {
+  if (res?.arr?.role === 'employee') {
     window.location = '/adminsc'
-  } else if (res.arr.role === 'user') {
+  } else if (res?.arr?.role === 'user') {
     window.location = '/auth/cabinet'
   }
 }
