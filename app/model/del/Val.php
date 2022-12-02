@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\model;
+namespace app\model\del;
 
 
 class Val extends Model

@@ -1,6 +1,6 @@
 <?
 
-namespace app\model;
+namespace app\model\del;
 
 use app\Repository\ImageRepository;
 

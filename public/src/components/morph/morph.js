@@ -1,24 +1,47 @@
-import {$, post} from "../../common";
+import {$} from "../../common";
 
 export default class Morph {
 
-  data = {};
 
-
-  constructor(morph, morphed, file) {
+  constructor(morph, morphed, files) {
 
     if (!morph.type) throw new Error('add morph_type')
     if (!morphed.id) throw new Error('add morphed_id')
     if (!morphed.type) throw new Error('add morphed_type')
 
-    let morph_type = morph.type
-    let morphed_type = morphed.type
-    let morphed_id = morphed.id
+    this.data = {}
+    this.data.morph = morph
+    this.data.morphed = morphed
+    // this.data.url = morph.url
+    this.data = this.addMultipleFiles(files, this.data)
+    // this.data.morphed = morphed
+  }
 
-    // let morph = new morph
+  addMultipleFiles(files, data) {
+    let formData = new FormData
+    for (let i = 0; i < files.length; i++) {
+      formData.append(files[i].name, files[i])
+    }
+    return this.obj2FormData(data, formData)
+  }
 
-    // this.morph = morph
-    this.data = {morphed, morph, file}
+  obj2FormData(obj, formData = new FormData()) {
+    this.formData = formData;
+    this.createFormData = function (obj, subKeyStr = '') {
+      for (let i in obj) {
+        let value = obj[i];
+        let subKeyStrTrans = subKeyStr ? subKeyStr + '[' + i + ']' : i;
+
+        if (typeof (value) === 'string' || typeof (value) === 'number') {
+
+          this.formData.append(subKeyStrTrans, value);
+        } else if (typeof (value) === 'object') {
+          this.createFormData(value, subKeyStrTrans);
+        }
+      }
+    }
+    this.createFormData(obj);
+    return this.formData;
   }
 
   async appendManyImages(appendTo) {
