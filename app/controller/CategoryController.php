@@ -3,7 +3,6 @@
 namespace app\controller;
 
 
-
 use app\model\Category;
 use app\model\Product;
 use app\model\Tag;
@@ -58,25 +57,7 @@ class CategoryController Extends AppController
 		}
 	}
 
-	protected function actionAddImage(string $tagName)
-	{
-		if ($_FILES) {
-			foreach ($_FILES as $file) {
-				$image = ImageRepository::saveIfNotExistReturnModel($file);
-				$product = Product::find($_POST['imageable_id']);
-				$tag = Tag::where('name', $tagName)->first();
-				$images = $product->detailImages;
-				if (!$images->contains($image))
-					$product->detailImages()->sync($image, false);
-				if (!$image->tags->contains($tag)) {
-					$image->tags()->sync($tag, false);
-					$this->exitJson(['msg' => 'ok', 'id' => $image->id]);
-				} else {
-					$this->exitJson(['popup' => 'уже есть такая картинка', 'id' => 0]);
-				}
-			}
-		}
-	}
+
 //	public function actionUpdateOrCreate()
 //	{
 //		if ($this->ajax) {

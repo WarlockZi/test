@@ -5,10 +5,10 @@ namespace app\Repository;
 
 
 use app\model\Image;
-use Illuminate\Database\Eloquent\Model;
 
 class ImageRepository
 {
+	public static $picPath = '/pic/';
 
 	public static function makeModelFromFILES(array $file): array
 	{
@@ -27,7 +27,14 @@ class ImageRepository
 			'jpg', 'jpeg', 'png', 'webp', 'gif'
 		];
 	}
-	public static function saveIfNotExistReturnModel($file):Model
+
+	public static function existsInPath(string $path, string $hash, string $ext)
+	{
+		$file = self::$picPath . $path . DIRECTORY_SEPARATOR . $hash . '.' . $ext;
+		return is_readable($file);
+	}
+
+	public static function saveIfNotExistReturnModel($file): bool
 	{
 		self::fileValidate($file, 100000,);
 		$img = self::makeModelFromFILES($file);
@@ -56,7 +63,7 @@ class ImageRepository
 			exit(json_encode(['popup' => 'Файл должен быть png, jpg, jpeg, gif']));
 	}
 
-		public static function move_uploaded_file($img, $file)
+	public static function move_uploaded_file($img, $file)
 	{
 		$fileExt = $fileExt = ImageRepository::getExt($file['type']);
 		$s = DIRECTORY_SEPARATOR;
@@ -99,7 +106,8 @@ class ImageRepository
 		}
 	}
 
-	public static function imageProductList($file){
+	public static function imageProductList($file)
+	{
 		return "<div style='width: 30px;height: 30px;'><img src='$file' style='width: 100%;height: 100%;object-fit: contain'></div>";
 	}
 
@@ -108,11 +116,11 @@ class ImageRepository
 		$image = Image::find($image['id']);
 		$names = $image->tags
 			->pluck('name')
-			->map(function ($name){
+			->map(function ($name) {
 				return "<div class='chip'>{$name}</div>";
 			})
 			->toArray();
-		$f = implode('',$names);
+		$f = implode('', $names);
 		return "<div class='chip-wrap'>{$f}</div>";
 	}
 
@@ -125,7 +133,7 @@ class ImageRepository
 			"image/jpeg" => "jpeg",
 			"image/webp" => "webp",
 		];
-		return $types[$image_type];
+		return $types[$image_type] ?? null;
 	}
 
 

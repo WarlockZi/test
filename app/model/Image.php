@@ -2,7 +2,6 @@
 
 namespace app\model;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
@@ -31,11 +30,6 @@ class Image extends Model
 		return $this->morphedByMany(Product::class,'imageable');
 	}
 
-//	public function categories()
-//	{
-//		return $this->morphedByMany(Category::class,'imageable');
-//	}
-
 	public function product()
 	{
 		return $this->belongsTo(Image::class,);
@@ -49,6 +43,10 @@ class Image extends Model
 	public function bigPack($query)
 	{
 		return $query->where('tag')->name === 'ddf';
+	}
+
+	public function category(){
+		return $this->morphedByMany(Category::class,'imageable');
 	}
 
 

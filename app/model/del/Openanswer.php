@@ -1,6 +1,6 @@
 <?php
 
-namespace app\model;
+namespace app\model\del;
 
 
 class Openanswer extends Model

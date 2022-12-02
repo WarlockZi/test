@@ -13,14 +13,16 @@ let deltag = `delMainImage`
 
 // Вороник Виталий Викторович
 // 4751
-debugger
+// debugger
 let sel = "[data-field='image_main']"
 new DragNDrop(sel, addMainImg, true, null)
 
-async function addMainImg(file) {
+async function addMainImg(files) {
   let catId = $('.item_wrap')[0].dataset.id
-  let morph = await new Morph(new Imageable, new Category(catId), {file})
-  let res = await post(morph?.data?.url, morph?.data)
+  let morph = await new Morph(new Imageable, new Category(catId), files)
+  url = `/adminsc/image/addMorph`
+
+  let res = await post(url, morph?.data)
   let appendTo = ".image[data-model='category']"
   let appendOneImage = morph.appendOneImage(appendTo)
 }

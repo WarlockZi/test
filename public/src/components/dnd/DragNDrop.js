@@ -27,6 +27,7 @@ export default class DragNDrop {
       el.ondrop = function (hoverSelector, e) {
         e.preventDefault()
         e.target.classList.toggle(hoverSelector)
+          // debugger
         if (allFiles) {
           cb(e.dataTransfer.files)
         } else {
