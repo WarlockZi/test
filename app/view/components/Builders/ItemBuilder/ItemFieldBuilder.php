@@ -16,6 +16,7 @@ class ItemFieldBuilder
 	public $name = '';
 	public $link = '';
 	public $type = 'text';
+	public $src = '';
 	public $typeModificator = '';
 	public $html = '';
 
@@ -80,6 +81,11 @@ class ItemFieldBuilder
 		$this->contenteditable = 'contenteditable';
 		return $this;
 	}
+	public function src($src)
+	{
+		$this->src = $src;
+		return $this;
+	}
 
 	public function get()
 	{
@@ -89,13 +95,17 @@ class ItemFieldBuilder
 		return $this;
 	}
 
-	protected function setValue():void {
+	protected function setValue(): void
+	{
 		if ($this->type === 'checkbox') {
 			$this->value = '';
 			$val = (int)$this->item[$this->field];
-			$this->typeModificator = $val === 1?'checked':'' ;
-		}
-		else {
+			$this->typeModificator = $val === 1 ? 'checked' : '';
+
+		} elseif ($this->type === 'image') {
+			$this->value = "<img src='{$this->src}'>";
+
+		} else {
 			$this->value = $this->item[$this->field];
 		}
 	}

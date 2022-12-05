@@ -1,21 +1,20 @@
 <div class="value">
 
-  <? if ($field->html): ?>
+	<? if ($field->html): ?>
 
-    <?= $field->html; ?>
+		<?= $field->html; ?>
 
-  <? else: ?>
+	<? else: ?>
 
-		<div class="<?= $field->type; ?> <?= $field->typeModificator; ?>"
-      <?= $this->dataModel; ?>
-      <?= $field->datafield; ?>
-      <?= $field->contenteditable; ?>
-      <?= $field->required; ?>
-		>
-		  <?= $field->value; ?>
+	  <div class="<?= $field->type; ?> <?= $field->typeModificator; ?>"
+			 <?= $this->dataModel; ?>
+			 <?= $field->datafield; ?>
+			 <?= $field->contenteditable; ?>
+			 <?= $field->required; ?>
+	  >
+			 <?= $field->value; ?>
 
-		</div>
+	  </div>
 
-
-  <? endif; ?>
+	<? endif; ?>
 </div>

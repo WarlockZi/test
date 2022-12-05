@@ -2,6 +2,7 @@
 
 namespace app\model;
 
+use app\Repository\ImageRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
@@ -16,9 +17,13 @@ class Image extends Model
 		'tag',
 		'size',
 		'type',
-		'imageable_type',
-		'imageable_id'
+		'fullpath',
 	];
+
+	public function getPath(){
+		$ext = ImageRepository::getExt($this->type);
+		return "/pic/{$this->path}/{$this->hash}.{$ext}";
+	}
 
 	public function productMainImage()
 	{

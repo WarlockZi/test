@@ -3,8 +3,10 @@
 namespace app\view\Category;
 
 use app\model\Category;
+use app\model\Image;
 use app\model\Product;
 use app\model\Property;
+use app\Repository\ImageRepository;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
@@ -72,7 +74,12 @@ class CategoryView
 	{
 		$view = new self();
 
-		$illumCategory = Category::with('products', 'category_recursive', 'properties', 'children')
+		$illumCategory = Category::with(
+			'products',
+			'category_recursive',
+			'properties',
+			'children',
+			'mainImage')
 			->find($id);
 		$category = $illumCategory->toArray();
 
@@ -101,6 +108,8 @@ class CategoryView
 					->name('Основная картинка')
 //          ->morph('image')
 					->type('image')
+					->src(
+						ImageRepository::getImagePath($illumCategory->mainImage[0]['pivot']['image_id']))
 					->get()
 			)
 			->tab(

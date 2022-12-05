@@ -4,11 +4,22 @@
 namespace app\Repository;
 
 
+use app\controller\FS;
 use app\model\Image;
 
 class ImageRepository
 {
 	public static $picPath = '/pic/';
+	public static $size = 1000000;
+	public static $types = [
+		"image/png" => "png",
+		"image/jpg" => "jpg",
+		"image/jpeg" => "jpeg",
+		"image/gif" => "gif",
+		"image/webp" => "webp",
+	];
+
+	public static $model = Image::class;
 
 	public static function makeModelFromFILES(array $file): array
 	{
@@ -16,8 +27,6 @@ class ImageRepository
 			'name' => $file['name'],
 			'type' => $file['type'],
 			'size' => $file['size'],
-			'hash' => hash_file('md5', $file['tmp_name']),
-			'path' => 'product',
 		];
 	}
 
@@ -28,16 +37,21 @@ class ImageRepository
 		];
 	}
 
+	public static function getImagePath($id)
+	{
+		$image = Image::find($id);
+		return $image->getPath();
+	}
+
 	public static function existsInPath(string $path, string $hash, string $ext)
 	{
 		$file = self::$picPath . $path . DIRECTORY_SEPARATOR . $hash . '.' . $ext;
 		return is_readable($file);
 	}
 
-	public static function saveIfNotExistReturnModel($file): bool
+	public static function saveIfNotExist($file, $path = 'product'): bool
 	{
-		self::fileValidate($file, 100000,);
-		$img = self::makeModelFromFILES($file);
+		$img = self::makeModelFromFILES($file, $path);
 
 		$image = Image::firstOrCreate(
 			['hash' => $img['hash']],
@@ -46,31 +60,39 @@ class ImageRepository
 		if ($image->wasRecentlyCreated) {
 			self::move_uploaded_file($img, $file);
 		}
+//		$image[]=;
 		return $image;
 	}
 
-	protected static function fileValidate($file, int $size = 100)
+	protected static function validateSize(int $size)
 	{
-		if ($file['size'] > $size) exit(json_encode(['popup' => "Файл больше {$size}"]));
-		$types = [
-			"image/png",
-			"image/jpg",
-			"image/jpeg",
-			"image/gif",
-			"image/webp",
-		];
-		if (!in_array($file['type'], $types))
+		$validSize = self::$size;
+		if ($size > self::$size) exit(json_encode(['popup' => "Файл больше {$validSize}"]));
+	}
+
+	protected static function validateType(string $type)
+	{
+		try {
+			return self::getExt($type);
+		} catch (\Exception $e) {
 			exit(json_encode(['popup' => 'Файл должен быть png, jpg, jpeg, gif']));
+		}
+	}
+
+	public static function fileValidate($file)
+	{
+		self::validateSize($file['size']);
+		self::validateType($file['type']);
 	}
 
 	public static function move_uploaded_file($img, $file)
 	{
 		$fileExt = $fileExt = ImageRepository::getExt($file['type']);
-		$s = DIRECTORY_SEPARATOR;
-		$to = ROOT . $s . "pic" . $s . $img['path'];
-		$full = $to . $s . $img['hash'] . ".{$fileExt}";
-		if (!is_dir($to)) {
-			mkdir($to);
+		$path = FS::getPath('pic', $img['path']);
+
+		$full = "{$path}{$img['hash']}.{$fileExt}";
+		if (!is_dir($path)) {
+			mkdir($path);
 		}
 		if (!is_readable($full)) {
 			move_uploaded_file($file['tmp_name'], $full);
@@ -124,16 +146,10 @@ class ImageRepository
 		return "<div class='chip-wrap'>{$f}</div>";
 	}
 
-	public static function getExt($image_type)
+	public static function getExt($type)
 	{
-		$types = [
-			"image/png" => "png",
-			"image/gif" => "gif",
-			"image/jpg" => "jpg",
-			"image/jpeg" => "jpeg",
-			"image/webp" => "webp",
-		];
-		return $types[$image_type] ?? null;
+		$types = self::$types;
+		return $types[$type] ?? null;
 	}
 
 
