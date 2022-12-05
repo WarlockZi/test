@@ -49,7 +49,7 @@ class CategoryController Extends AppController
 	{
 //		ProductRepository::clear();
 		if ($_FILES) {
-			$image = ImageRepository::saveIfNotExistReturnModel($_FILES[0]);
+			$image = ImageRepository::saveIfNotExistReturnModel($_FILES[0], 'ctegory');
 			$product = Product::find($_POST['imageable_id']);
 			$product->main_img = $image->id;
 			$product->save();

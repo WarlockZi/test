@@ -42,27 +42,28 @@ class ImageController Extends AppController
 
 		[$morphed, $morph] = self::checkRequiredArgs($_POST, $this);
 		foreach ($_FILES as $file) {
-			$image = ImageRepository::makeModelFromFILES($file);
-			$image['path'] = $_POST['morphed']['type'];
+			ImageRepository::fileValidate($file);
+			$hash = hash_file('md5', $file['tmp_name']);
+//			$image['hash'] = hash_file('md5', $file['tmp_name']);
+//			$image['path'] = $_POST['morphed']['type'];
+//			$image['size'] = $file['size'];
 			$ext = ImageRepository::getExt($file['type']);
 			if (!$ext) continue;
-
 //			if (ImageRepository::existsInPath($morphed['type'], $image['hash'], $ext)) continue;
 
-			ImageRepository::move_uploaded_file($image, $file);
-
-			$im = Image::where('hash', $image['hash'])
-				->where('size',$image['size'])
+			$im = Image::where('hash', $hash)
+				->where('size', $file['size'])
 				->first();
-			$model = $modelNameSpace . ucfirst($morphed['type']);
-			$id = (int)$morphed['id'];
-			$model = $model::find($id);
-			$im->sync($model);
+			if (!$im) {
+				ImageRepository::saveIfNotExist($file);
+			}
+			$modelName = $modelNameSpace . ucfirst($morphed['type']);
+			$model = $modelName::find((int)$morphed['id']);
+			$function = $morphed['type'];
+			$im->$function()->sync($model);
+			exit();
 		}
-
-
 	}
-
 
 	private
 	function checkSize($size)
