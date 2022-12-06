@@ -109,7 +109,7 @@ class CategoryView
 //          ->morph('image')
 					->type('image')
 					->src(
-						ImageRepository::getImagePath($illumCategory->mainImage[0]['pivot']['image_id']))
+						ImageRepository::getImagePath($illumCategory))
 					->get()
 			)
 			->tab(

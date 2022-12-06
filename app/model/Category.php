@@ -18,7 +18,7 @@ class Category extends Model
 
 	public function mainImage()
 	{
-		return $this->morphToOne(Image::class,
+		return $this->morphTo(Image::class,
 			'imageable',
 );
 	}
