@@ -51,7 +51,8 @@ class Image extends Model
 	}
 
 	public function category(){
-		return $this->morphedByMany(Category::class,'imageable');
+		return $this->morphedByMany(Category::class,'imageable')
+			->withPivot('slug');
 	}
 
 

@@ -12,9 +12,7 @@ export default class Morph {
     this.data = {}
     this.data.morph = morph
     this.data.morphed = morphed
-    // this.data.url = morph.url
     this.data = this.addMultipleFiles(files, this.data)
-    // this.data.morphed = morphed
   }
 
   addMultipleFiles(files, data) {
@@ -48,7 +46,7 @@ export default class Morph {
     //TODO
   }
 
-  appendOneImage(appendTo) {
+  appendOneImage(appendTo, src) {
     let img = $(appendTo)[0].querySelector('img')
     let holder = $(appendTo)[0]
     if (!img) {
@@ -59,7 +57,7 @@ export default class Morph {
       img.ondrop = false
       holder.appendChild(img)
     } else {
-      img.src = '/pic/ava_male.png'
+      img.src = src ?? '/pic/ava_male.png'
     }
   }
 }

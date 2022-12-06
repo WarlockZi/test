@@ -106,10 +106,11 @@ class CategoryView
 			->field(
 				ItemFieldBuilder::build('image_main', $illumCategory)
 					->name('Основная картинка')
-//          ->morph('image')
+          ->morph('mainImage')
+          ->slug('Detail')
 					->type('image')
-					->src(
-						ImageRepository::getImagePath($illumCategory->mainImage[0]['pivot']['image_id']))
+//					->src(
+//						ImageRepository::getImagePath($illumCategory->mainImage[0]['pivot']['image_id']))
 					->get()
 			)
 			->tab(

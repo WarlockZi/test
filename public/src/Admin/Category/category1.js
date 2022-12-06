@@ -19,10 +19,11 @@ new DragNDrop(sel, addMainImg, true, null)
 
 async function addMainImg(files) {
   let catId = $('.item_wrap')[0].dataset.id
-  let morph = await new Morph(new Imageable, new Category(catId), files)
+  let slugNameId = 1
+  let morph = await new Morph(new Imageable, new Category(catId,slugNameId), files)
   url = `/adminsc/image/addMorph`
 
-  let res = await post(url, morph?.data)
+  let src = await post(url, morph?.data)
   let appendTo = ".image[data-model='category']"
-  let appendOneImage = morph.appendOneImage(appendTo)
+  let appendOneImage = morph.appendOneImage(appendTo,src?.arr[0])
 }

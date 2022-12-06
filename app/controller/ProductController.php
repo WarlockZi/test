@@ -34,8 +34,6 @@ class ProductController Extends AppController
 			$slug = $this->route['slug'];
 			$product = ProductCardView::getCard($slug);
 			$this->set(compact('product'));
-//			\app\view\View::setCss('produ');
-//			\app\view\View::setJss();
 		}
 	}
 
