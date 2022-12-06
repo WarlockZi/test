@@ -37,10 +37,12 @@ class ImageRepository
 		];
 	}
 
-	public static function getImagePath($id)
+	public static function getImagePath(int $id)
 	{
-		$image = Image::find($id);
-		return $image->getPath();
+		if ($image = Image::find($id)) {
+			return $image->getPath();
+		}
+		return self::getImg();
 	}
 
 	public static function existsInPath(string $path, string $hash, string $ext)
@@ -49,41 +51,29 @@ class ImageRepository
 		return is_readable($file);
 	}
 
-	public static function saveIfNotExist($file, $path = 'product'): bool
+
+	public static function saveToFile(array $image, $file)
 	{
-		$img = self::makeModelFromFILES($file, $path);
-
-		$image = Image::firstOrCreate(
-			['hash' => $img['hash']],
-			$img);
-
-		if ($image->wasRecentlyCreated) {
-			self::move_uploaded_file($img, $file);
-		}
-//		$image[]=;
+		self::move_uploaded_file($image, $file);
 		return $image;
 	}
 
-	protected static function validateSize(int $size)
+	public static function validateSize(int $size)
 	{
 		$validSize = self::$size;
 		if ($size > self::$size) exit(json_encode(['popup' => "Файл больше {$validSize}"]));
 	}
 
-	protected static function validateType(string $type)
+	public static function validateType(string $type)
 	{
-		try {
-			return self::getExt($type);
-		} catch (\Exception $e) {
+		$ext = self::getExt($type);
+		if ($ext) {
+			return $ext;
+		} else {
 			exit(json_encode(['popup' => 'Файл должен быть png, jpg, jpeg, gif']));
 		}
 	}
 
-	public static function fileValidate($file)
-	{
-		self::validateSize($file['size']);
-		self::validateType($file['type']);
-	}
 
 	public static function move_uploaded_file($img, $file)
 	{
