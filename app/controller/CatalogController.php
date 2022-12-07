@@ -13,12 +13,10 @@ class CatalogController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
-
 	}
 
 	public function actionIndex()
 	{
-
 		$cats_id = Category::getInitCategories();
 		View::setMeta('Каталог спецодежды', 'Каталог спецодежды', 'Каталог спецодежды');
 		$this->set(compact('cats_id'));
@@ -26,7 +24,6 @@ class CatalogController extends AppController
 
 	public function actionProduct($product)
 	{
-
 		header('Cache-Control: private, max-age=8400');
 		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
 		$this->view = 'product';
@@ -39,7 +36,6 @@ class CatalogController extends AppController
 		View::setCss('vitex.css');
 	}
 
-
 	public function actionCategory($category)
 	{
 		$breadcrumbs = App::$app->product->getBreadcrumbs($category, $category['parents'], 'category');
@@ -48,5 +44,4 @@ class CatalogController extends AppController
 		$this->set(compact('breadcrumbs', 'category', 'canonical'));
 		View::setCss('vitex.css');
 	}
-
 }

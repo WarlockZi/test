@@ -18,7 +18,7 @@ export default class Morph {
   addMultipleFiles(files, data) {
     let formData = new FormData
     for (let i = 0; i < files.length; i++) {
-      formData.append(files[i].name, files[i])
+      formData.append(i, files[i])
     }
     return this.obj2FormData(data, formData)
   }

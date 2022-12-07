@@ -164,20 +164,20 @@ class ProductView
 
 	protected static function getSeo($product): string
 	{
-		return "<div class='show'>".
-		ItemFieldBuilder::build('description', $product)
-			->name('Description')
-			->contenteditable()
-			->get()->toHtml('product').
-			ItemFieldBuilder::build('title',$product)
-			->name('Title' )
-			->contenteditable()
-			->get()->toHtml('product').
-			ItemFieldBuilder::build('keywords',$product)
-			->name('Key words' )
-			->contenteditable()
-			->get()->toHtml('product').
-		"</div>";
+		return "<div class='show'>" .
+			ItemFieldBuilder::build('description', $product)
+				->name('Description')
+				->contenteditable()
+				->get()->toHtml('product') .
+			ItemFieldBuilder::build('title', $product)
+				->name('Title')
+				->contenteditable()
+				->get()->toHtml('product') .
+			ItemFieldBuilder::build('keywords', $product)
+				->name('Key words')
+				->contenteditable()
+				->get()->toHtml('product') .
+			"</div>";
 	}
 
 	protected static function getDescription($product): string
@@ -200,14 +200,8 @@ class ProductView
 
 	protected static function getMainImage($product): string
 	{
-		$img = $product->mainImage;
-		if ($img) {
-			$hash = $img->hash;
-			$ext = ImageRepository::getExt($img->type);
-			$src = ImageRepository::getImg("\pic\product\\{$hash}.{$ext}") ?? '';
-		} else {
-			$src = ImageRepository::getImg();
-		}
+		$img = $product->mainImage[0];
+		$src = ImageRepository::getImg("\pic\catalog\\{$img->hash}.{$img->type}") ?? '';
 		return include ROOT . '/app/view/Product/main_image.php';
 	}
 
