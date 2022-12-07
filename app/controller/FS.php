@@ -28,6 +28,33 @@ class FS
 		}
 		return $str;
 	}
+	public static function getAbsolutePath(...$args)
+	{
+		$s = DIRECTORY_SEPARATOR;
+		$dir = ROOT ;
+		foreach ($args as $arg) {
+			$dir .= $s.$arg ;
+		}
+		return $dir;
+	}
+	public static function getAbsoluteFilePath($path, $image)
+	{
+		$s = DIRECTORY_SEPARATOR;
+		return $path.$s.$image->hash.'.'.$image->type;
+	}
+	public static function getOrCreateAbsolutePath(...$args)
+	{
+		$s = DIRECTORY_SEPARATOR;
+		$dir = ROOT ;
+		foreach ($args as $arg) {
+			$dir .= $s.$arg ;
+			if (!is_dir($dir)){
+				$res = mkdir($dir,0777);
+			}
+		}
+		return $dir;
+	}
+
 
 
 	function platformSlashes($path)

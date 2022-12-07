@@ -12,7 +12,7 @@
 		<? foreach ($product->bigPackImages as $img): ?>
 			<div class="image">
 				<?
-				$ext = \app\Repository\ImageRepository::getExt($img->type);
+				$ext = \app\Repository\ImageRepository::getFileExt($img->type);
 				$path = "/pic/product/{$img->hash}.{$ext}";
 				$src = \app\Repository\ImageRepository::getImg($path);
 				?>

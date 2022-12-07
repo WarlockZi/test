@@ -114,8 +114,8 @@ class ItemFieldBuilder
 		} elseif ($this->type === 'image') {
 			$slug = " data-slug='{$this->slug}'" ?? '';
 			$morph = $this->morph;
-			$imageId = $this->item->$morph[0]->id??0;
-			$src = ImageRepository::getImagePath($imageId) ?? '';
+			$image = $this->item->$morph[0]??0;
+			$src = $image->getFullPath() ?? '';
 			$this->value = "<img src='{$src}'{$slug}>";
 
 		} else {

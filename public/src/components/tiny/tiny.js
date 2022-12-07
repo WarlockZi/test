@@ -5,7 +5,7 @@ export default function tyny() {
   let tiny = $('[tiny]')
   if (tiny) {
     let script = document.createElement('script')
-    script.src = "https://cdn.tiny.cloud/1/vmwh6wx8yqbbpeqrkm691ltxy7bx3x90ez9iqlop0mt9uqwl/tinymce/6/tinymce.min.js"
+    script.src = "https://cdn.tiny.cloud/1/fef1zc16ulh6r70vce70c4f8hng6ykvt49jri0mw4ldmih1e/tinymce/6/tinymce.min.js"
     script.onload = function () {
       tinymce.init({
         // toolbar_items_size: 'small',

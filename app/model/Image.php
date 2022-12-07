@@ -2,13 +2,13 @@
 
 namespace app\model;
 
-use app\Repository\ImageRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
 
 	public $timestamps = false;
+	public $imagePath = 'pic';
 
 	protected $fillable = [
 		'hash',
@@ -20,9 +20,12 @@ class Image extends Model
 		'fullpath',
 	];
 
+	public function getFullPath(){
+		return '/'.$this->imagePath.'/'.$this->path.'/'.$this->hash.'.'.$this->type;
+	}
+
 	public function getPath(){
-		$ext = ImageRepository::getExt($this->type);
-		return "/pic/{$this->path}/{$this->hash}.{$ext}";
+		return '/'.$this->imagePath.'/'.$this->path.'/';
 	}
 
 	public function productMainImage()

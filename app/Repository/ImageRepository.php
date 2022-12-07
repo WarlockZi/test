@@ -4,8 +4,10 @@
 namespace app\Repository;
 
 
+use app\controller\Controller;
 use app\controller\FS;
 use app\model\Image;
+use Illuminate\Database\Eloquent\Model;
 
 class ImageRepository
 {
@@ -37,7 +39,21 @@ class ImageRepository
 		];
 	}
 
-	public static function getImagePath(int $id)
+
+	public static function sync(Model $image, array $morphed, bool $withoutDetaching): void
+	{
+		$modelNameSpace = 'app\\model\\';
+		$modelName = $modelNameSpace . ucfirst($morphed['type']);
+		$model = $modelName::find($morphed['id']);
+		if ($withoutDetaching) {
+			$model->mainImage()->syncWithoutDetaching([$image->id => ['slug' => $morphed['slugName']]]);
+		} else {
+			$model->mainImage()->sync([$image->id => ['slug' => $morphed['slugName']]]);
+		}
+//			$im->$morphed['type']()->sync([$model->id=>['slug'=>$slugName]]);
+	}
+
+	public static function getImagePath(int $id): string
 	{
 		if ($image = Image::find($id)) {
 			return $image->getPath();
@@ -52,42 +68,45 @@ class ImageRepository
 	}
 
 
-	public static function saveToFile(array $image, $file)
+	public static function saveToFile(Model $image, $file)
 	{
-		self::move_uploaded_file($image, $file);
-		return $image;
-	}
-
-	public static function validateSize(int $size)
-	{
-		$validSize = self::$size;
-		if ($size > self::$size) exit(json_encode(['popup' => "Файл больше {$validSize}"]));
-	}
-
-	public static function validateType(string $type)
-	{
-		$ext = self::getExt($type);
-		if ($ext) {
-			return $ext;
-		} else {
-			exit(json_encode(['popup' => 'Файл должен быть png, jpg, jpeg, gif']));
-		}
-	}
-
-
-	public static function move_uploaded_file($img, $file)
-	{
-		$fileExt = $fileExt = ImageRepository::getExt($file['type']);
-		$path = FS::getPath('pic', $img['path']);
-
-		$full = "{$path}{$img['hash']}.{$fileExt}";
-		if (!is_dir($path)) {
-			mkdir($path);
-		}
+		$dir = FS::getOrCreateAbsolutePath($image->imagePath, $image->path);
+		$full = FS::getAbsoluteFilePath($dir, $image);
 		if (!is_readable($full)) {
 			move_uploaded_file($file['tmp_name'], $full);
+			return true;
 		}
+		return false;
 	}
+
+	public static function firstOrCreate(array $file, array $morphed)
+	{
+		$hash = hash_file('md5', $file['tmp_name']);
+		return
+			Image::firstOrCreate([
+				'hash' => $hash,
+				'size' => $file['size'],
+				'path' => $morphed['imagePath'],
+			], [
+				'hash' => $hash,
+				'name' => $file['name'],
+				'path' => $morphed['imagePath'],
+				'type' => ImageRepository::getFileExt($file['type']),
+			]);
+	}
+
+	public static function validateSize(int $size, array $file)
+	{
+		$validSize = self::$size;
+		if ($size > self::$size) exit(json_encode(['popup' => "Файл {$file} больше {$validSize}"]));
+	}
+
+	public static function validateType(string $type,array $file)
+	{
+		$ext = self::getFileExt($type);
+		if (!$ext) exit(json_encode(['popup' => "Файл {$file} должен быть png, jpg, jpeg, gif"]));
+	}
+
 
 	public static function delAll()
 	{
@@ -136,7 +155,7 @@ class ImageRepository
 		return "<div class='chip-wrap'>{$f}</div>";
 	}
 
-	public static function getExt($type)
+	public static function getFileExt($type)
 	{
 		$types = self::$types;
 		return $types[$type] ?? null;

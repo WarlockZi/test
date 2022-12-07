@@ -21,75 +21,45 @@ class ImageController Extends AppController
 		$this->set(compact('list'));
 	}
 
-	private static function checkRequiredArgs(array $args, Controller $context): array
-	{
-		if (isset($args['morphed_type']))
-			$context->exitWithPopup('Нет смежной таблицы');
-		if (isset($args['morphed_id']))
-			$context->exitWithPopup('Нет id из смежной таблицы');
-		if (isset($args['morph_id']))
-			$context->exitWithPopup('Нет id картинки');
-		return [$args['morphed'], $args['morph'], $args['morphed']['slugName']];
-	}
 
-	public function actionAddMorph()
+	public function actionAddMorphMany()
 	{
-		$modelNameSpace = 'app\\model\\';
-
 		if (!$_POST) $this->exitWithPopup('нет данных');
 		if (!$_FILES) $this->exitWithPopup('нет файлов');
+		$morphed = $_POST['morphed'];
 
-		[$morphed, $morph, $slugName] = self::checkRequiredArgs($_POST, $this);
 		foreach ($_FILES as $file) {
-			ImageRepository::validateSize($file['size']);
-			ImageRepository::validateType($file['type']);
+			ImageRepository::validateSize((int)$file['size'], file);
+			ImageRepository::validateType($file['type'], file);
 
-			$hash = hash_file('md5', $file['tmp_name']);
-
-			$im = Image::firstOrCreate([
-				'hash'=>$hash,
-				'size'=>$file['size'],
-				'path'=>$morphed['imagePath'],
-			],[
-				'hash'=>$hash,
-				'name'=>$file['name'],
-				'path'=>$morphed['imagePath'],
-				'type'=>ImageRepository::getExt($file['type']),
-			]);
-
+			$im = ImageRepository::firstOrCreate($file, $morphed);
 			if ($im->wasRecentlyCreated) {
-				ImageRepository::saveToFile($im->toArray());
+				if (ImageRepository::saveToFile($im, $file))
+					ImageRepository::sync($im, $morphed, false);
 			}
-			$modelName = $modelNameSpace . ucfirst($morphed['type']);
-			$model = $modelName::find((int)$morphed['id']);
-
-			$model->mainImage()->sync([$im->id=>['slug'=>$slugName]]);
-//			$im->$morphed['type']()->sync([$model->id=>['slug'=>$slugName]]);
-			$src = ImageRepository::getImagePath($im->id);
-			$this->exitJson([$src]);
+			$this->exitJson([$im->getFullPath()]);
 		}
+
 	}
 
-	private
-	function checkSize($size)
+	public function actionAddMorphOne()
 	{
-		if ($size > 1000000) {
-			$this->exitWithPopup('Файл слишком большой');
+		if (!$_POST) $this->exitWithPopup('нет данных');
+		if (!$_FILES) $this->exitWithPopup('нет файлов');
+		$morphed = $_POST['morphed'];
+
+		if (count($_FILES) > 1) $this->exitWithPopup('Можно только один файл');
+		$file = $_FILES[0];
+
+		ImageRepository::validateSize((int)$file['size'], $file);
+		ImageRepository::validateType($file['type'], $file);
+
+		$im = ImageRepository::firstOrCreate($file, $morphed);
+		if ($im->wasRecentlyCreated) {
+			ImageRepository::saveToFile($im, $file);
 		}
+		ImageRepository::sync($im, $morphed, false);
+		$this->exitJson([$im->getFullPath()]);
 	}
 
-	private
-	function checkType($type)
-	{
-		$types = [
-			"image/png",
-			"image/jpg",
-			"image/jpeg",
-			"image/gif",
-		];
-
-		if (!in_array($type, $types)) {
-			$this->exitWithPopup('Файл должен быть png, jpg, jpeg, gif');
-		};
-	}
 }
