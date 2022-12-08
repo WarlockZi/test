@@ -41,12 +41,16 @@ class Product extends Model
 
 	public function detailImages()
 	{
+//		return $this->morphToMany(
+//			Image::class,
+//			'imageable',
+//			)->whereHas('tags', function ($q) {
+//			$q->where('name', 'Детальная картинка товара');
+//		});
 		return $this->morphToMany(
 			Image::class,
 			'imageable',
-			)->whereHas('tags', function ($q) {
-			$q->where('name', 'Детальная картинка товара');
-		});
+			)->where('slug', '=', 'Detail');
 	}
 
 	public function smallPackImages()
