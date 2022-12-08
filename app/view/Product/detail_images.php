@@ -1,8 +1,4 @@
-<? ob_start();
-
-use \app\Repository\ImageRepository;
-
-?>
+<? use \app\Repository\ImageRepository;?>
 
 <div class="detail_images">
 	<div class="add_detail_image  ants">
@@ -13,7 +9,7 @@ use \app\Repository\ImageRepository;
 	<div class="images">
 
 
-		 <? foreach ($product->detailImages as $img): ?>
+		 <? foreach ($this->many as $img): ?>
 		  <div class="image">
 					<?
 					$path = "/{$img->imagePath}/{$img->path}/{$img->hash}.{$img->type}";
@@ -26,4 +22,3 @@ use \app\Repository\ImageRepository;
 	</div>
 </div>
 
-<? return ob_get_clean(); ?>

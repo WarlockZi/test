@@ -61,21 +61,16 @@ class ProductController Extends AppController
 		if ($this->ajax) {
 			$imgId = $this->ajax['id'];
 			$product = Product::find($this->ajax['productId']);
-//			$product->detailImages()->detach($imgId);
-
 			$this->detachTagFromImage('Детальная картинка товара', $imgId);
-
 			$this->exitWithPopup('ok');
 		}
 	}
-
 	public function actionDelSmallPackImage()
 	{
 		if ($this->ajax) {
 			$imgId = $this->ajax['id'];
 			$product = Product::find($this->ajax['productId']);
 			$this->detachTagFromImage('Внутритарная упаковка', $imgId);
-
 			$this->exitWithPopup('ok');
 		}
 	}
