@@ -23,10 +23,27 @@ export default function product() {
     let catId = $('.item_wrap')[0].dataset.id
     let slugNameId = 1
     let imagable = new Imageable()
-    let morph = await new Morph(imagable, new Product(catId,slugNameId), files)
+    let morph = await new Morph(imagable, new Product(catId, slugNameId), files)
 
     let src = await post(imagable.urlOne, morph?.data)
-    let appendOneImage = morph.appendOneImage(appendTo,src?.arr[0])
+    let appendOneImage = morph.appendOneImage(appendTo, src?.arr[0])
+  }
+
+
+//// Morph many
+  sel = ".add_detail_image"
+  new DragNDrop(sel, addDetail, true, null)
+
+  async function addDetail(files) {
+    let appendTo = ".detail_images .images"
+    let catId = $('.item_wrap')[0].dataset.id
+    let slugNameId = 1
+    let imagable = new Imageable()
+    let morph = await new Morph(imagable, new Product(catId, slugNameId), files)
+
+    let srcArr = await post(imagable.urlMany, morph?.data)
+    let appendManyImages = morph.appendManyImages(appendTo, srcArr?.arr)
+    // let appendOneImage = morph.appendOneImage(appendTo,src?.arr[0])
   }
 
 //// description set tiny
@@ -47,7 +64,6 @@ export default function product() {
   //     }
   //   }, 1000);
   // }
-
 
 
 //// Property set

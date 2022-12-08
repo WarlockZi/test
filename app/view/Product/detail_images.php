@@ -1,4 +1,7 @@
 <? ob_start();
+
+use \app\Repository\ImageRepository;
+
 ?>
 
 <div class="detail_images">
@@ -13,12 +16,11 @@
 		 <? foreach ($product->detailImages as $img): ?>
 		  <div class="image">
 					<?
-					$ext = \app\Repository\ImageRepository::getFileExt($img->type);
-					$path = "/pic/product/{$img->hash}.{$ext}";
-					$src = \app\Repository\ImageRepository::getImg($path);
+					$path = "/{$img->imagePath}/{$img->path}/{$img->hash}.{$img->type}";
+					$src = ImageRepository::getImg($path);
 					?>
 			  <img class="" src="<?= $src ?>" alt="">
-			  <div class="del" data-id="<?=$img->id??''?>" data-tag="delDetailImage">x</div>
+			  <div class="detach" data-id="<?= $img->id ?? '' ?>" data-tag="delDetailImage">x</div>
 		  </div>
 		 <? endforeach; ?>
 	</div>

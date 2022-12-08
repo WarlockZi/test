@@ -151,7 +151,6 @@ class ProductController Extends AppController
 		}
 	}
 
-
 	public function actionUpdateOrCreate()
 	{
 		IlluminateModelDecorator::updateOrCreate(Product::class, $this->ajax);

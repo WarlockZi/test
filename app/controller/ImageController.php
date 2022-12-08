@@ -27,19 +27,23 @@ class ImageController Extends AppController
 		if (!$_POST) $this->exitWithPopup('нет данных');
 		if (!$_FILES) $this->exitWithPopup('нет файлов');
 		$morphed = $_POST['morphed'];
+		$srcArr = [];
 
 		foreach ($_FILES as $file) {
-			ImageRepository::validateSize((int)$file['size'], file);
-			ImageRepository::validateType($file['type'], file);
+			ImageRepository::validateSize((int)$file['size'], $file);
+			ImageRepository::validateType($file['type'], $file);
 
 			$im = ImageRepository::firstOrCreate($file, $morphed);
 			if ($im->wasRecentlyCreated) {
-				if (ImageRepository::saveToFile($im, $file))
-					ImageRepository::sync($im, $morphed, false);
+				ImageRepository::saveToFile($im, $file);
 			}
-			$this->exitJson([$im->getFullPath()]);
+			$function = 'detailImages';
+			ImageRepository::sync($im, $morphed, $function,true);
+			$imageArr['src'] = $im->getFullPath();
+			$imageArr['id'] = $im->id;
+			$srcArr[] = $imageArr;
 		}
-
+		$this->exitJson($srcArr);
 	}
 
 	public function actionAddMorphOne()
@@ -58,7 +62,8 @@ class ImageController Extends AppController
 		if ($im->wasRecentlyCreated) {
 			ImageRepository::saveToFile($im, $file);
 		}
-		ImageRepository::sync($im, $morphed, false);
+		$function = 'mainImage';
+		ImageRepository::sync($im, $morphed, $function,false);
 		$this->exitJson([$im->getFullPath()]);
 	}
 

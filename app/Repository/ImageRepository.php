@@ -4,7 +4,6 @@
 namespace app\Repository;
 
 
-use app\controller\Controller;
 use app\controller\FS;
 use app\model\Image;
 use Illuminate\Database\Eloquent\Model;
@@ -23,14 +22,6 @@ class ImageRepository
 
 	public static $model = Image::class;
 
-	public static function makeModelFromFILES(array $file): array
-	{
-		return [
-			'name' => $file['name'],
-			'type' => $file['type'],
-			'size' => $file['size'],
-		];
-	}
 
 	public static function acceptedTypes()
 	{
@@ -40,15 +31,15 @@ class ImageRepository
 	}
 
 
-	public static function sync(Model $image, array $morphed, bool $withoutDetaching): void
+	public static function sync(Model $image, array $morphed, string $function,bool $withoutDetaching): void
 	{
 		$modelNameSpace = 'app\\model\\';
 		$modelName = $modelNameSpace . ucfirst($morphed['type']);
 		$model = $modelName::find($morphed['id']);
 		if ($withoutDetaching) {
-			$model->mainImage()->syncWithoutDetaching([$image->id => ['slug' => $morphed['slugName']]]);
+			$model->$function()->syncWithoutDetaching([$image->id => ['slug' => $morphed['slugName']]]);
 		} else {
-			$model->mainImage()->sync([$image->id => ['slug' => $morphed['slugName']]]);
+			$model->$function()->sync([$image->id => ['slug' => $morphed['slugName']]]);
 		}
 //			$im->$morphed['type']()->sync([$model->id=>['slug'=>$slugName]]);
 	}
@@ -98,7 +89,7 @@ class ImageRepository
 	public static function validateSize(int $size, array $file)
 	{
 		$validSize = self::$size;
-		if ($size > self::$size) exit(json_encode(['popup' => "Файл {$file} больше {$validSize}"]));
+		if ($size > $validSize) exit(json_encode(['popup' => "Файл {$file} больше {$validSize}"]));
 	}
 
 	public static function validateType(string $type,array $file)

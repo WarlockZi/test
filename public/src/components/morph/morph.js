@@ -42,10 +42,6 @@ export default class Morph {
     return this.formData;
   }
 
-  async appendManyImages(appendTo) {
-    //TODO
-  }
-
   appendOneImage(appendTo, src) {
     let img = $(appendTo)[0].querySelector('img')
     let holder = $(appendTo)[0]
@@ -59,5 +55,34 @@ export default class Morph {
     } else {
       img.src = src ?? '/pic/ava_male.png'
     }
+  }
+
+  appendManyImages(appendTo, srcArr) {
+    let img = $(appendTo)[0].querySelector('img')
+    // let holder = $(appendTo)[0]
+    srcArr.forEach((image) => {
+      // let img = $(appendTo)[0].querySelector('img')
+      let holder = $(appendTo)[0]
+
+      let img = document.createElement('img')
+      img.src = image.src
+      img.onleave = false
+      img.onenter = false
+      img.ondrop = false
+
+      let del = document.createElement('div')
+      del.classList.add('detach')
+      del.dataset.id = image.id
+      // del.dataset.tag = tag
+      del.innerText = 'x'
+
+      let im = document.createElement('div')
+      im.classList.add('image')
+      im.appendChild(img)
+      im.appendChild(del)
+      holder.appendChild(im)
+
+      // holder.appendChild(img)
+    }).bind(appendTo)
   }
 }
