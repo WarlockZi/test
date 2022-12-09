@@ -1,10 +1,11 @@
-<? use \app\Repository\ImageRepository;?>
+<? use \app\Repository\ImageRepository;
+use \app\controller\FS;?>
 
 <div class="detail_images">
-	<div class="add_detail_image  ants">
-		<div class="text" data-tooltip="Перетащить картику">
-			Перетащите картинку в квадрат
-		</div>
+	<div class="add_detail_image" data-tooltip="Перетащить картику">
+<!--		<div class="text" >-->
+			<? include FS::getAbsoluteFilePath(ICONS,'plus.svg')?>
+<!--		</div>-->
 	</div>
 	<div class="images">
 

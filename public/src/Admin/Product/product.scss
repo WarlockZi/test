@@ -1,32 +1,131 @@
 @import "../../var";
 
+.morph {
+
+  display: flex;
+  align-items: center;
+  background-color: white;
+
+  .items {
+
+    flex-wrap: wrap;
+    display: flex;
+    margin: 5px;
+
+    .holder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100px;
+      min-width: 100px;
+      width: 130px;
+      height: 130px;
+      margin: 5px;
+      border-radius: 3%;
+      background-color: $color-gray1;
+      border: $color-gray3 1px solid;
+
+      &:hover {
+        background-color: $color-gray0;
+        border: $color-gray5 1px solid;
+      }
+
+      svg {
+        path {
+          fill: $color-gray6;
+        }
+      }
+
+      .text {
+        justify-content: center;
+        align-self: center;
+        text-align: center;
+      }
+    }
+
+    .wrap {
+      position: relative;
+      width: 132px;
+      height: 132px;
+      margin: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      border: 1px solid $color-gray2;
+
+      .del, .detach {
+        position: absolute;
+        height: 10px;
+        width: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: red;
+        color: #ffffff;
+        right: 12px;
+        bottom: 12px;
+        text-transform: capitalize;
+        padding: 1px;
+        border-radius: 2px;
+        cursor: pointer;
+      }
+
+      .item {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          object-fit: contain;
+          width: 100px;
+          height: 100px;
+
+          min-height: 100px;
+          min-width: 100px;
+          margin: 5px;
+          padding: 10px;
+
+        }
+      }
+    }
+  }
+}
+
 .image_main,
 .detail_images,
 .small_pack_images,
-.big_pack_images
-{
+.big_pack_images {
   display: flex;
-  flex-direction: column;
   background-color: white;
-
 
   .add_main_image,
   .add_detail_image,
   .add_big_pack_image,
-  .add_small_pack_images
-  {
+  .add_small_pack_images {
     display: flex;
     align-items: center;
+    justify-content: center;
     min-height: 100px;
     min-width: 100px;
-    width: 100px;
-    height: 100px;
+    width: 122px;
+    height: 122px;
     border-radius: 5%;
-    align-self: center;
-    margin: 15px auto;
+    margin: 5px;
+    background-color: $color-gray1;
+    border: $color-gray3 1px solid;
 
-    &.hover {
-      border: $color-gray2 1px solid;
+    &:hover {
+      background-color: $color-gray0;
+      border: $color-gray5 1px solid;
+    }
+
+    svg {
+      path {
+        fill: $color-gray6;
+      }
     }
 
     .text {
@@ -45,7 +144,7 @@
     .image {
       position: relative;
 
-      .del, .detach{
+      .del, .detach {
         position: absolute;
         height: 10px;
         width: 10px;

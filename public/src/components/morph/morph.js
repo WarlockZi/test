@@ -59,9 +59,7 @@ export default class Morph {
 
   appendManyImages(appendTo, srcArr) {
     let img = $(appendTo)[0].querySelector('img')
-    // let holder = $(appendTo)[0]
     srcArr.forEach((image) => {
-      // let img = $(appendTo)[0].querySelector('img')
       let holder = $(appendTo)[0]
 
       let img = document.createElement('img')
@@ -76,13 +74,19 @@ export default class Morph {
       // del.dataset.tag = tag
       del.innerText = 'x'
 
-      let im = document.createElement('div')
-      im.classList.add('image')
-      im.appendChild(img)
-      im.appendChild(del)
+      let item = document.createElement('div')
+      item.classList.add('item')
+      item.appendChild(img)
+      item.appendChild(del)
+
+      let wrap = document.createElement('div')
+      wrap.classList.add('wrap')
+
+      wrap.appendChild(im)
+
       holder.appendChild(im)
 
-      // holder.appendChild(img)
+
     }).bind(appendTo)
   }
 }

@@ -26,22 +26,25 @@ class FS
 		foreach ($args as $arg) {
 			$str .= $arg . $s;
 		}
-		return $str;
+		return self::platformSlashes($str);
 	}
-	public static function getAbsolutePath(...$args)
-	{
-		$s = DIRECTORY_SEPARATOR;
-		$dir = ROOT ;
-		foreach ($args as $arg) {
-			$dir .= $s.$arg ;
-		}
-		return $dir;
+
+	public static function platformSlashes($path) {
+		return str_replace('/', DIRECTORY_SEPARATOR, $path);
 	}
-	public static function getAbsoluteFilePath($path, $image)
+
+	public static function getAbsoluteImagePath($path, Image $image)
 	{
 		$s = DIRECTORY_SEPARATOR;
 		return $path.$s.$image->hash.'.'.$image->type;
 	}
+	public static function getAbsoluteFilePath($path, string $file)
+	{
+		$s = DIRECTORY_SEPARATOR;
+		$path = FS::platformSlashes($path);
+		return $path.$s.$file;
+	}
+
 	public static function getOrCreateAbsolutePath(...$args)
 	{
 		$s = DIRECTORY_SEPARATOR;
@@ -57,11 +60,11 @@ class FS
 
 
 
-	function platformSlashes($path)
-	{
-		$str = str_replace('\\', DIRECTORY_SEPARATOR, $path);
-		return str_replace('/', DIRECTORY_SEPARATOR, $str);
-	}
+//	function platformSlashes($path)
+//	{
+//		$str = str_replace('\\', DIRECTORY_SEPARATOR, $path);
+//		return str_replace('/', DIRECTORY_SEPARATOR, $str);
+//	}
 
 
 }
