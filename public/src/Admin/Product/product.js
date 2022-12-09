@@ -32,10 +32,12 @@ export default function product() {
 
 //// Morph many
   sel = ".add_detail_image"
+  sel = ".holder"
   new DragNDrop(sel, addDetail, true, null)
 
   async function addDetail(files) {
-    let appendTo = ".detail_images .images"
+    let appendTo = ".items"
+    // let appendTo = ".detail_images .images"
     let catId = $('.item_wrap')[0].dataset.id
     let slugNameId = 1
     let imagable = new Imageable()

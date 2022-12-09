@@ -2,7 +2,9 @@
 
 namespace app\view\Product;
 
-//use app\model\Illuminate\Product as IlluminateProduct;
+use app\Builders\MorphBuilder\MorphBuilder;
+use app\controller\FS;
+use app\model\Image;
 use app\model\Propertable;
 use app\model\Unit;
 use app\model\Product;
@@ -18,7 +20,6 @@ use Illuminate\Database\Eloquent\Model;
 class ProductView
 {
 
-//	public $illuminateModel = IlluminateProduct::class;
 	public $modelName = Product::class;
 	public $model = 'product';
 
@@ -90,7 +91,7 @@ class ProductView
 			->tab(
 				ItemTabBuilder::build('Детальные картинки')
 					->html(
-						self::getDetailImages($product)
+						self::getDetailImages($product, Image::class)
 					)
 					->get()
 			)
@@ -158,8 +159,18 @@ class ProductView
 
 	protected static function getDetailImages($product): string
 	{
-		$str = include ROOT . '/app/view/Product/detail_images.php';
-		return $str;
+		ob_start();
+		include FS::getAbsoluteFilePath(ICONS, 'plus.svg');
+		$dndContent = ob_get_clean();
+
+		$morph = \app\view\Builders\MorphBuilder::build($product, 'Image')
+			->many($product->detailImages)
+			->template('many.php')
+//			->addAction('many_dnd_plus.php')
+			->detach('detach', 'detailImage')
+			->dnd('detail_image','many_dnd_plus.php','holder', 'detailImage','Перетащите файл сюда',$dndContent)
+			->get();
+		return $morph;
 	}
 
 	protected static function getSeo($product): string

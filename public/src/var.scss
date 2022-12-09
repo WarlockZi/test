@@ -17,11 +17,14 @@ $color-red: #e30000;
 $color-white-hover: #e7e7e7;
 $color-hover-gray: #e5e5e5;
 
+$color-gray0: lighten(#f8f8f8,3%);
 $color-gray1: #f8f8f8;
 $color-gray2: darken($color-gray1,3%);
 $color-gray3: darken($color-gray1,6%);
 $color-gray4: darken($color-gray1,9%);
 $color-gray5: darken($color-gray1,12%);
+$color-gray6: darken($color-gray1,16%);
+$color-gray6: darken($color-gray1,20%);
 
 
 $color-title: #2a2a2a;
