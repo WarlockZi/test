@@ -13,9 +13,9 @@ class MorphBuilder
 	protected $many;
 	protected $morphed;
 	protected $morph;
+	protected $slug;
 
 	protected $dndClass;
-	protected $dndSlug;
 	protected $dndToolTip;
 	protected $dndContent;
 
@@ -26,11 +26,12 @@ class MorphBuilder
 	protected $template;
 	protected $morphPath = '';
 
-	public static function build(Model $morphed, string $morph)
+	public static function build(Model $morphed, string $morph, string $slug)
 	{
 		$self = new static;
 		$self->morphed = $morphed;
 		$self->morph = $morph;
+		$self->slug = "data-slug='{$slug}'";
 		$self->morphPath = FS::platformSlashes(
 			FS::getPath('app', 'view', $self->morph, 'morph')
 		);
@@ -69,15 +70,17 @@ class MorphBuilder
 		string $action,
 		string $template,
 		string $class,
-		string $slug,
+		string $appendTo,
 		string $toolTip,
 		string $content)
 	{
 		$this->dndAction = $action ? "data-dnd='{$action}'" : "";
 		$this->dndClass = $class ? "class='{$class}'" : "";
-		$this->dndSlug = $slug ? "data-slug='{$slug}'" : "";
+//		$this->dndSlug = $slug ? "data-slug='{$slug}'" : "";
 		$this->dndToolTip = $toolTip ? "data-tooltip='{$toolTip}'" : "";
+		$this->dndAppendTo = "data-appendto='{$appendTo}'";
 		$this->dndContent = $content ? $content : "";
+
 		ob_start();
 		include $this->morphPath . $template;
 		$this->addAction = ob_get_clean();

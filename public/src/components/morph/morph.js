@@ -1,19 +1,33 @@
-import {$} from "../../common";
+import {$, post} from "../../common";
 
 export default class Morph {
 
-
   constructor(morph, morphed, files) {
 
-    if (!morph.type) throw new Error('add morph_type')
-    if (!morphed.id) throw new Error('add morphed_id')
-    if (!morphed.type) throw new Error('add morphed_type')
+    if (!morph) throw new Error('add morph')
+    if (!morphed) throw new Error('add morphed')
 
     this.data = {}
     this.data.morph = morph
     this.data.morphed = morphed
     this.data = this.addMultipleFiles(files, this.data)
   }
+
+   static async detach(target){
+    let container = target.closest('.wrap')
+    let morphedType = target.closest('.item_wrap').dataset.model
+    let morphedId = target.closest('.item_wrap').dataset.id
+    let slug = target.closest('.morph').dataset.slug
+    let morphType = target.closest('.morph').dataset.type
+    let morphId = target.dataset.id
+    let url = `/adminsc/${morphType}/detach`
+    let data = {morphedType,morphedId,morphId,slug}
+    let res = await post(url,data)
+    if (res.success){
+      container.remove()
+    }
+  }
+
 
   addMultipleFiles(files, data) {
     let formData = new FormData

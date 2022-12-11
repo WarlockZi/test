@@ -3,6 +3,7 @@ import {$, post, popup} from '../../common'
 import {dnd, dnd1} from '../../components/dnd/dnd'
 import DragNDrop from "../../components/dnd/DragNDrop";
 import Imageable from "../Image/Imageable";
+import Image from "../Image/Image";
 import Morph from "../../components/morph/morph";
 import Category from "../Category/Category";
 import Product from "./Product1";
@@ -13,6 +14,29 @@ export default function product() {
   if (!product) return false
 
   let productId = $('.item_wrap')[0].dataset.id
+
+  let morphs = $('.morph')
+  let prod = new Product()
+  let im = new Image()
+  let mor = new Morph(prod,im, {})
+  // debugger
+
+  morphs.forEach((m)=>{
+    let mType = m.dataset.type
+    // let pType = mor.type
+    // let pId = mor.id
+
+    $(m).on('click', function ({target}) {
+      if (target.classList.contains('detach')){
+        let mor = Morph.detach(target)
+      }
+    })
+    // let detaches = $('.detach').on('click',function ({target}) {
+    //     //   target.a
+    //     // })
+  })
+
+  let m = new Morph(prod)
 
 //// morph one
   let sel = ".add_main_image"
