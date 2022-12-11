@@ -5,7 +5,7 @@ use \app\Repository\ImageRepository;
 ?>
 
 
-<div class="morph" data-type="image">
+<div class="morph" data-type="<?= $this->morph; ?>" <?= $this->slug; ?>>
 
 	<div class="items">
 

@@ -21,6 +21,25 @@ class ImageController Extends AppController
 		$this->set(compact('list'));
 	}
 
+	public function actionDetach()
+	{
+		if ($post = $this->ajax) {
+			$slug = $post['slug'];
+			$morphedClass = '\app\model\\' . ucfirst($post['morphedType']);
+			$morphed = $morphedClass::find($post['morphedId']);
+			$table = $morphed->getTable();
+			if ($this->model
+				::find($post['morphId'])
+				->$table()
+				->where('id', $post['morphedId'])
+				->wherePivot('slug', $slug)
+				->detach()
+			) {
+				$this->exitWithSuccess('ok');
+			}
+		}
+	}
+
 
 	public function actionAddMorphMany()
 	{
@@ -38,7 +57,7 @@ class ImageController Extends AppController
 				ImageRepository::saveToFile($im, $file);
 			}
 			$function = 'detailImages';
-			ImageRepository::sync($im, $morphed, $function,true);
+			ImageRepository::sync($im, $morphed, $function, true);
 			$imageArr['src'] = $im->getFullPath();
 			$imageArr['id'] = $im->id;
 			$srcArr[] = $imageArr;
@@ -63,7 +82,7 @@ class ImageController Extends AppController
 			ImageRepository::saveToFile($im, $file);
 		}
 		$function = 'mainImage';
-		ImageRepository::sync($im, $morphed, $function,false);
+		ImageRepository::sync($im, $morphed, $function, false);
 		$this->exitJson([$im->getFullPath()]);
 	}
 
