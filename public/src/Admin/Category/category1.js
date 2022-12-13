@@ -6,8 +6,8 @@ import Category from '../Category/Category';
 import Morph from "../../components/morph/morph";
 import DragNDrop from "../../components/dnd/DragNDrop";
 
-let sel = "[data-field='image_main']"
-new DragNDrop(sel, addMainImg, true, null)
+// let sel = "[data-field='image_main']"
+// new DragNDrop(sel, addMainImg, true, null)
 
 async function addMainImg(files) {
   let catId = $('.item_wrap')[0].dataset.id

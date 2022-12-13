@@ -13,9 +13,11 @@ class MorphBuilder
 	protected $many;
 	protected $morphed;
 	protected $morph;
+	protected $morphModel;
 	protected $slug;
+	protected $class;
 
-	protected $dndClass;
+	protected $oneOrMany;
 	protected $dndToolTip;
 	protected $dndContent;
 
@@ -26,21 +28,31 @@ class MorphBuilder
 	protected $template;
 	protected $morphPath = '';
 
-	public static function build(Model $morphed, string $morph, string $slug)
+	public static function build(Model $morphed, string $morph, string $slug, string $class)
 	{
 		$self = new static;
 		$self->morphed = $morphed;
 		$self->morph = $morph;
+		$self->morphModel = "data-model={$morph}";
 		$self->slug = "data-slug='{$slug}'";
 		$self->morphPath = FS::platformSlashes(
 			FS::getPath('app', 'view', $self->morph, 'morph')
 		);
+		$self->class = "class ='{$class}'";
 		return $self;
 	}
 
 	public function one($one)
 	{
 		$this->one = $one;
+		$this->oneOrMany = "data-morph='one'";
+		return $this;
+	}
+
+	public function many($many)
+	{
+		$this->many = $many->all();
+		$this->oneOrMany = "data-morph='many'";
 		return $this;
 	}
 
@@ -51,32 +63,22 @@ class MorphBuilder
 //		$this->addAction = ob_get_clean();
 //		return $this;
 //	}
-
-	public function many($many)
-	{
-		$this->many = $many->all();
-		return $this;
-	}
-
-	public function detach(string $class, string $slug)
+	public function detach(string $class)
 	{
 		$this->detachClass = $class ? "class='{$class}'" : "";
-		$this->detachSlug = $slug ? "data-slug='{$slug}'" : "";
+//		$this->detachSlug = $slug ? "data-slug='{$slug}'" : "";
 		$this->detach = $this->morphPath . 'detach.php';
 		return $this;
 	}
 
 	public function dnd(
-		string $action,
 		string $template,
 		string $class,
 		string $appendTo,
 		string $toolTip,
 		string $content)
 	{
-		$this->dndAction = $action ? "data-dnd='{$action}'" : "";
 		$this->dndClass = $class ? "class='{$class}'" : "";
-//		$this->dndSlug = $slug ? "data-slug='{$slug}'" : "";
 		$this->dndToolTip = $toolTip ? "data-tooltip='{$toolTip}'" : "";
 		$this->dndAppendTo = "data-appendto='{$appendTo}'";
 		$this->dndContent = $content ? $content : "";

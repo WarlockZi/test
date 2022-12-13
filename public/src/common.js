@@ -1,6 +1,30 @@
 import './common.scss'
 import './Admin/admin.scss'
 
+
+export function objAndData2FormData(obj, files, formData = new FormData) {
+  // self = {}
+  self.formData = formData;
+  for (let i = 0; i < files.length; i++) {
+    self.formData.append(i, files[i])
+  }
+  self.createFormData = function (obj, subKeyStr = '') {
+    for (let i in obj) {
+      let value = obj[i];
+      let subKeyStrTrans = subKeyStr ? subKeyStr + '[' + i + ']' : i;
+
+      if (typeof (value) === 'string' || typeof (value) === 'number') {
+        self.formData.append(subKeyStrTrans, value);
+      } else if (typeof (value) === 'object') {
+        self.createFormData(value, subKeyStrTrans);
+      }
+    }
+  }
+  self.createFormData(obj);
+  return self.formData;
+}
+
+
 const debounce = (fn, time = 700) => {
   let timeout;
   return function () {
@@ -39,6 +63,7 @@ function replaceSpace(str) {
   var re = new RegExp('\s', "g");
   return str.replace(re, "");
 }
+
 function replaceBackSpace(str) {
   return str.trim();
 }
@@ -57,15 +82,16 @@ function setMorph(data) {
   if (!data.model) return
   if (!data.id) return
   if (!data.morph) return
-  let url = getMorphUrl(data.model,data.id)
+  let url = getMorphUrl(data.model, data.id)
 
 
 }
-function getMorphUrl(model,id) {
+
+function getMorphUrl(model, id) {
   return `/adminsc/${model}/createOrUpdate/${id}`
 }
 
-function getFieldUrl(model,id) {
+function getFieldUrl(model, id) {
   return `/adminsc/${model}/createOrUpdate/${id}`
 }
 
@@ -74,6 +100,7 @@ function cachePage(className) {
   let html = $(className)[0].outerHTML
   return trimStr(html)
 }
+
 let validate = {
   sort: () => {
     let error = this.nextElementSibling
@@ -188,10 +215,10 @@ async function post(url, data = {}) {
         let res = JSON.parse(req.response)
         let msg = $('.message')[0]
 
-        if (res.popup||res?.arr?.popup) {
+        if (res.popup || res?.arr?.popup) {
 
 
-          popup.show(res.popup??res?.arr?.popup)
+          popup.show(res.popup ?? res?.arr?.popup)
         } else if (res.msg) {
           if (msg) {
             msg.innerHTML = res.msg
@@ -310,6 +337,7 @@ class ElementCollection extends Array {
       s.style[attr] = val
     })
   }
+
   ready(cb) {
     const isReady = this.some(e => {
       return e.readyState != null && e.readyState != 'loading'
@@ -330,6 +358,7 @@ function $(selector) {
     return new ElementCollection(selector)
   }
 }
+
 export function fragmentDate(date, order, y, m, d, glue) {
   let o = new Date(date)
 
@@ -339,7 +368,7 @@ export function fragmentDate(date, order, y, m, d, glue) {
   let dayNames = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"];
 
   let yyyy = o.getFullYear()
-  let mm = o.getMonth()+1
+  let mm = o.getMonth() + 1
   let dd = o.getDate()
   let M = monthNames[o.getMonth()]
   let D = o.getDay()
@@ -347,7 +376,7 @@ export function fragmentDate(date, order, y, m, d, glue) {
 
   if (dd < 10) dd = '0' + dd;
   if (mm < 10) mm = '0' + mm;
-  return {yyyy,mm,dd,M,D,wd}
+  return {yyyy, mm, dd, M, D, wd}
 }
 
 function addTooltip(args) {

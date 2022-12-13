@@ -163,12 +163,21 @@ class ProductView
 		include FS::getAbsoluteFilePath(ICONS, 'plus.svg');
 		$dndContent = ob_get_clean();
 
-		$morph = \app\view\Builders\MorphBuilder::build($product, 'Image', 'detail')
+		$morph = \app\view\Builders\MorphBuilder::build(
+			$product,
+			'Image',
+			'detail',
+			'dnd')
 			->many($product->detailImages)
 			->template('many.php')
 //			->addAction('many_dnd_plus.php')
-			->detach('detach', 'detailImage')
-			->dnd('detail_image','many_dnd_plus.php','holder', 'items','Перетащите файл сюда',$dndContent)
+			->detach('detach')
+			->dnd(
+				'many_dnd_plus.php',
+				'holder',
+				'dnd',
+				'Перетащите файл сюда',
+				$dndContent)
 			->get();
 		return $morph;
 	}
