@@ -41,11 +41,12 @@ class ImageController Extends AppController
 	}
 
 
-	public function actionAddMorphMany()
+	public function actionAttachMany()
 	{
 		if (!$_POST) $this->exitWithPopup('нет данных');
 		if (!$_FILES) $this->exitWithPopup('нет файлов');
 		$morphed = $_POST['morphed'];
+		$morph = $_POST['morph'];
 		$srcArr = [];
 
 		foreach ($_FILES as $file) {
@@ -56,7 +57,8 @@ class ImageController Extends AppController
 			if ($im->wasRecentlyCreated) {
 				ImageRepository::saveToFile($im, $file);
 			}
-			$function = 'detailImages';
+//			$function = 'detailImages';
+			$function = $morphed.$morph.'s';
 			ImageRepository::sync($im, $morphed, $function, true);
 			$imageArr['src'] = $im->getFullPath();
 			$imageArr['id'] = $im->id;
@@ -65,7 +67,7 @@ class ImageController Extends AppController
 		$this->exitJson($srcArr);
 	}
 
-	public function actionAddMorphOne()
+	public function actionAttachOne()
 	{
 		if (!$_POST) $this->exitWithPopup('нет данных');
 		if (!$_FILES) $this->exitWithPopup('нет файлов');

@@ -6,7 +6,7 @@
 
 <div class="item_content">
 
-	<section class="show" data-tab="1">
+	<section data-tab="1" class="show">
 
 		<!--  TABLE  -->
 		 <? foreach ($this->fields as $field): ?>
@@ -17,7 +17,7 @@
 	<? $n = 2; ?>
 	<? foreach ($this->tabs as $k => $tab): ?>
 	  <section
-			 <?= $this->dataModel ?>
+
 			 <?= $tab->field; ?>
 			  data-tab=<?= $n ?>>
 			 <?= $tab->html; ?>

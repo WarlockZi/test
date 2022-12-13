@@ -1,12 +1,14 @@
 import './product.scss'
 import {$, post, popup} from '../../common'
-import {dnd, dnd1} from '../../components/dnd/dnd'
+// import dnd1 from '../../components/dnd/dnd'
 import DragNDrop from "../../components/dnd/DragNDrop";
 import Imageable from "../Image/Imageable";
 import Image from "../Image/Image";
 import Morph from "../../components/morph/morph";
 import Category from "../Category/Category";
 import Product from "./Product1";
+import DragNDropOne from "../../components/dnd/DragNDropOne";
+import DragNDropMany from "../../components/dnd/DragNDropMany";
 
 export default function product() {
 
@@ -14,29 +16,14 @@ export default function product() {
   if (!product) return false
 
   let productId = $('.item_wrap')[0].dataset.id
+  let morphs = $('[data-morph]')
 
-  let morphs = $('.morph')
-  let prod = new Product()
-  let im = new Image()
-  let mor = new Morph(prod,im, {})
-  // debugger
+  morphs.forEach((morphEl) => {
+    // debugger
+    let m = new Morph(morphEl, product, productId)
 
-  morphs.forEach((m)=>{
-    let mType = m.dataset.type
-    // let pType = mor.type
-    // let pId = mor.id
+  }).bind(product, productId)
 
-    $(m).on('click', function ({target}) {
-      if (target.classList.contains('detach')){
-        let mor = Morph.detach(target)
-      }
-    })
-    // let detaches = $('.detach').on('click',function ({target}) {
-    //     //   target.a
-    //     // })
-  })
-
-  let m = new Morph(prod)
 
 //// morph one
   let sel = ".add_main_image"
@@ -57,7 +44,8 @@ export default function product() {
 //// Morph many
   sel = ".add_detail_image"
   sel = ".holder"
-  new DragNDrop(sel, addDetail, true, null)
+
+  // new DragNDrop(sel, addDetail, true, null)
 
   async function addDetail(files) {
     let appendTo = ".items"
