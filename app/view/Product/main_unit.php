@@ -1,6 +1,4 @@
-<? ob_start();
-
-?>
+<? ob_start();?>
 
 <div class="image_unit">
 	<?= $f; ?>

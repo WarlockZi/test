@@ -17,10 +17,11 @@ class Product extends Model
 
 	public function mainImage()
 	{
-		return $this->hasOne(Image::class,
-			'id',
-			'main_img',
-			);
+		return $this->morphToMany(Image::class, 'imageable');
+//		return $this->hasOne(Image::class,
+//			'id',
+//			'main_img',
+//			);
 	}
 
 	public function mainUnit()
@@ -43,9 +44,7 @@ class Product extends Model
 		return $this->morphToMany(
 			Image::class,
 			'imageable',
-			)->whereHas('tags', function ($q) {
-			$q->where('name', 'Детальная картинка товара');
-		});
+			)->where('slug', '=', 'detail');
 	}
 
 	public function smallPackImages()

@@ -18,9 +18,13 @@ class Category extends Model
 
 	public function mainImage()
 	{
-		return $this->morphTo(Image::class,
-			'imageable',
-);
+		return $this->morphToMany(Image::class,
+			'imageable')
+			->wherePivot('slug', '=','detail');
+//		function ($q){
+//				$q->where('name', 'Детальная картинка товара');
+//			})
+			;
 	}
 
 	public static function showFrontCategories()

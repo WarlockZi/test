@@ -1,7 +1,8 @@
 export default class Imageable {
   tag = '';
   type = 'image';
-  url = `/adminsc/image/addMorph`
+  urlOne = `/adminsc/image/addMorphOne`
+  urlMany = `/adminsc/image/addMorphMany`
 
   constructor(tag) {
     this.tag = tag

@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\ItemBuilder;
 
 
+use app\Repository\ImageRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class ItemFieldBuilder
@@ -16,7 +17,8 @@ class ItemFieldBuilder
 	public $name = '';
 	public $link = '';
 	public $type = 'text';
-	public $src = '';
+	public $morph = '';
+	public $slug = '';
 	public $typeModificator = '';
 	public $html = '';
 
@@ -81,9 +83,16 @@ class ItemFieldBuilder
 		$this->contenteditable = 'contenteditable';
 		return $this;
 	}
-	public function src($src)
+
+	public function morph($morph)
 	{
-		$this->src = $src;
+		$this->morph = $morph;
+		return $this;
+	}
+
+	public function slug($slug)
+	{
+		$this->slug = $slug;
 		return $this;
 	}
 
@@ -103,7 +112,11 @@ class ItemFieldBuilder
 			$this->typeModificator = $val === 1 ? 'checked' : '';
 
 		} elseif ($this->type === 'image') {
-			$this->value = "<img src='{$this->src}'>";
+			$slug = " data-slug='{$this->slug}'" ?? '';
+			$morph = $this->morph;
+			$image = $this->item->$morph[0]??0;
+			$src = $image->getFullPath() ?? '';
+			$this->value = "<img src='{$src}'{$slug}>";
 
 		} else {
 			$this->value = $this->item[$this->field];
