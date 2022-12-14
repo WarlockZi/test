@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="32"
+     height="32">
+    <path
+            fill="#4e4e50"
+            d="M32 12H20V0h-8v12H0v8h12v12h8V20h12z"/>
+</svg>

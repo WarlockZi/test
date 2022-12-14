@@ -34,8 +34,6 @@ class ProductController Extends AppController
 			$slug = $this->route['slug'];
 			$product = ProductCardView::getCard($slug);
 			$this->set(compact('product'));
-//			\app\view\View::setCss('produ');
-//			\app\view\View::setJss();
 		}
 	}
 
@@ -63,21 +61,16 @@ class ProductController Extends AppController
 		if ($this->ajax) {
 			$imgId = $this->ajax['id'];
 			$product = Product::find($this->ajax['productId']);
-//			$product->detailImages()->detach($imgId);
-
 			$this->detachTagFromImage('Детальная картинка товара', $imgId);
-
 			$this->exitWithPopup('ok');
 		}
 	}
-
 	public function actionDelSmallPackImage()
 	{
 		if ($this->ajax) {
 			$imgId = $this->ajax['id'];
 			$product = Product::find($this->ajax['productId']);
 			$this->detachTagFromImage('Внутритарная упаковка', $imgId);
-
 			$this->exitWithPopup('ok');
 		}
 	}
@@ -152,7 +145,6 @@ class ProductController Extends AppController
 			$this->exitWithPopup('ok');
 		}
 	}
-
 
 	public function actionUpdateOrCreate()
 	{

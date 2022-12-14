@@ -32,7 +32,6 @@ class ProductRepository extends Controller
 
 	protected static function getParentCategories($categories)
 	{
-
 		$categoriesArr = [];
 		$categoriesArr[] = $categories;
 		while (isset($categories['category_recursive'])) {
@@ -49,8 +48,7 @@ class ProductRepository extends Controller
 		return self::getProduct('id', $id);
 	}
 
-	protected
-	static function getProduct(string $where, $val)
+	protected static function getProduct(string $where, $val)
 	{
 		return Product::
 		with('category.properties.vals')
@@ -66,5 +64,7 @@ class ProductRepository extends Controller
 //			->with('parents')
 			->where($where, $val)->first();
 	}
+
+
 
 }

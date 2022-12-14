@@ -1,26 +1,38 @@
-import {$} from "../../common";
+import {$, post} from "../../common";
 
 export default class Morph {
 
-
   constructor(morph, morphed, files) {
 
-    if (!morph.type) throw new Error('add morph_type')
-    if (!morphed.id) throw new Error('add morphed_id')
-    if (!morphed.type) throw new Error('add morphed_type')
+    if (!morph) throw new Error('add morph')
+    if (!morphed) throw new Error('add morphed')
 
     this.data = {}
     this.data.morph = morph
     this.data.morphed = morphed
-    // this.data.url = morph.url
     this.data = this.addMultipleFiles(files, this.data)
-    // this.data.morphed = morphed
   }
+
+   static async detach(target){
+    let container = target.closest('.wrap')
+    let morphedType = target.closest('.item_wrap').dataset.model
+    let morphedId = target.closest('.item_wrap').dataset.id
+    let slug = target.closest('.morph').dataset.slug
+    let morphType = target.closest('.morph').dataset.type
+    let morphId = target.dataset.id
+    let url = `/adminsc/${morphType}/detach`
+    let data = {morphedType,morphedId,morphId,slug}
+    let res = await post(url,data)
+    if (res.success){
+      container.remove()
+    }
+  }
+
 
   addMultipleFiles(files, data) {
     let formData = new FormData
     for (let i = 0; i < files.length; i++) {
-      formData.append(files[i].name, files[i])
+      formData.append(i, files[i])
     }
     return this.obj2FormData(data, formData)
   }
@@ -44,11 +56,7 @@ export default class Morph {
     return this.formData;
   }
 
-  async appendManyImages(appendTo) {
-    //TODO
-  }
-
-  appendOneImage(appendTo) {
+  appendOneImage(appendTo, src) {
     let img = $(appendTo)[0].querySelector('img')
     let holder = $(appendTo)[0]
     if (!img) {
@@ -59,7 +67,40 @@ export default class Morph {
       img.ondrop = false
       holder.appendChild(img)
     } else {
-      img.src = '/pic/ava_male.png'
+      img.src = src ?? '/pic/ava_male.png'
     }
+  }
+
+  appendManyImages(appendTo, srcArr) {
+    let img = $(appendTo)[0].querySelector('img')
+    srcArr.forEach((image) => {
+      let holder = $(appendTo)[0]
+
+      let img = document.createElement('img')
+      img.src = image.src
+      img.onleave = false
+      img.onenter = false
+      img.ondrop = false
+
+      let del = document.createElement('div')
+      del.classList.add('detach')
+      del.dataset.id = image.id
+      // del.dataset.tag = tag
+      del.innerText = 'x'
+
+      let item = document.createElement('div')
+      item.classList.add('item')
+      item.appendChild(img)
+      item.appendChild(del)
+
+      let wrap = document.createElement('div')
+      wrap.classList.add('wrap')
+
+      wrap.appendChild(im)
+
+      holder.appendChild(im)
+
+
+    }).bind(appendTo)
   }
 }

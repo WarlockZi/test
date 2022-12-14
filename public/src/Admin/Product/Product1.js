@@ -1,7 +1,7 @@
-export default class Category {
+export default class Product {
   id = 0;
   imagePath = 'catalog';
-  type = 'category';
+  type = 'product';
   slugName;
   slugNames = new Map([
     [1,"Detail"],

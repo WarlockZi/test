@@ -6,23 +6,16 @@ import Category from '../Category/Category';
 import Morph from "../../components/morph/morph";
 import DragNDrop from "../../components/dnd/DragNDrop";
 
-let url = '/adminsc/category/addMainImage'
-let tag = `category`
-let deltag = `delMainImage`
-
-
-// Вороник Виталий Викторович
-// 4751
-// debugger
 let sel = "[data-field='image_main']"
 new DragNDrop(sel, addMainImg, true, null)
 
 async function addMainImg(files) {
   let catId = $('.item_wrap')[0].dataset.id
-  let morph = await new Morph(new Imageable, new Category(catId), files)
-  url = `/adminsc/image/addMorph`
+  let slugNameId = 1
+  let imagable = new Imageable()
+  let morph = await new Morph(imagable, new Category(catId,slugNameId), files)
 
-  let res = await post(url, morph?.data)
+  let src = await post(imagable.urlOne, morph?.data)
   let appendTo = ".image[data-model='category']"
-  let appendOneImage = morph.appendOneImage(appendTo)
+  let appendOneImage = morph.appendOneImage(appendTo,src?.arr[0])
 }

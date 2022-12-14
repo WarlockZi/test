@@ -1,6 +1,12 @@
 import './product.scss'
 import {$, post, popup} from '../../common'
 import {dnd, dnd1} from '../../components/dnd/dnd'
+import DragNDrop from "../../components/dnd/DragNDrop";
+import Imageable from "../Image/Imageable";
+import Image from "../Image/Image";
+import Morph from "../../components/morph/morph";
+import Category from "../Category/Category";
+import Product from "./Product1";
 
 export default function product() {
 
@@ -9,33 +15,81 @@ export default function product() {
 
   let productId = $('.item_wrap')[0].dataset.id
 
-//// description set tiny
+  let morphs = $('.morph')
+  let prod = new Product()
+  let im = new Image()
+  let mor = new Morph(prod,im, {})
+  // debugger
 
-  // // let form = $('#mytextarea')[0]
-  //
-  // let dtxt = $('.dtxt')[0]
-  // let text = dtxt.innerHTML
-  // // tinymce.get('mytextarea').setContent(text)
-  // tinymce.activeEditor.setContent(text)
-  // dtxt.remove()
+  morphs.forEach((m)=>{
+    let mType = m.dataset.type
+    // let pType = mor.type
+    // let pId = mor.id
 
-  let form = $('#producttiny')[0]
-  form.onsubmit = function () {
-    tinymce.activeEditor.setProgressState(true)
-    tinymce.triggerSave();
-    setTimeout(async () => {
-      let description = tinymce.activeEditor.getContent();
-      let res = await post('/adminsc/product/adddescription',
-        {
-          description,
-          'id':productId
-        })
-      if (res) {
-        tinymce.activeEditor.setProgressState(false, 1000);
+    $(m).on('click', function ({target}) {
+      if (target.classList.contains('detach')){
+        let mor = Morph.detach(target)
       }
-    }, 1000);
+    })
+    // let detaches = $('.detach').on('click',function ({target}) {
+    //     //   target.a
+    //     // })
+  })
+
+  let m = new Morph(prod)
+
+//// morph one
+  let sel = ".add_main_image"
+  new DragNDrop(sel, addMainImg, true, null)
+
+  async function addMainImg(files) {
+    let appendTo = ".images .image"
+    let catId = $('.item_wrap')[0].dataset.id
+    let slugNameId = 1
+    let imagable = new Imageable()
+    let morph = await new Morph(imagable, new Product(catId, slugNameId), files)
+
+    let src = await post(imagable.urlOne, morph?.data)
+    let appendOneImage = morph.appendOneImage(appendTo, src?.arr[0])
   }
 
+
+//// Morph many
+  sel = ".add_detail_image"
+  sel = ".holder"
+  new DragNDrop(sel, addDetail, true, null)
+
+  async function addDetail(files) {
+    let appendTo = ".items"
+    // let appendTo = ".detail_images .images"
+    let catId = $('.item_wrap')[0].dataset.id
+    let slugNameId = 1
+    let imagable = new Imageable()
+    let morph = await new Morph(imagable, new Product(catId, slugNameId), files)
+
+    let srcArr = await post(imagable.urlMany, morph?.data)
+    let appendManyImages = morph.appendManyImages(appendTo, srcArr?.arr)
+    // let appendOneImage = morph.appendOneImage(appendTo,src?.arr[0])
+  }
+
+//// description set tiny
+
+  // let form = $('#producttiny')[0]
+  // form.onsubmit = function () {
+  //   tinymce.activeEditor.setProgressState(true)
+  //   tinymce.triggerSave();
+  //   setTimeout(async () => {
+  //     let description = tinymce.activeEditor.getContent();
+  //     let res = await post('/adminsc/product/adddescription',
+  //       {
+  //         description,
+  //         'id':productId
+  //       })
+  //     if (res) {
+  //       tinymce.activeEditor.setProgressState(false, 1000);
+  //     }
+  //   }, 1000);
+  // }
 
 
 //// Property set
@@ -136,33 +190,33 @@ export default function product() {
     }
   }
 
-  let appendTo = $('.image_main .images')[0]
-  let url = '/adminsc/product/addMainImage'
-  let tag = `delMainImage`
-  dnd1('.add_main_image',
-    handleMainImage.bind(null, appendTo, url, tag)
-  )
-
-  appendTo = $('.detail_images .images')[0]
-  url = `/adminsc/product/addDetailImages`;
-  tag = `delDetailImage`;
-  dnd1('.add_detail_image',
-    handleMultipleImages.bind(null, appendTo, url, tag)
-  )
-
-  appendTo = $('.small_pack_images .images')[0]
-  url = `/adminsc/product/addSmallPackImage`;
-  tag = `delSmallPackImages`;
-  dnd1('.add_small_pack_images',
-    handleMultipleImages.bind(null, appendTo, url, tag)
-  )
-
-  appendTo = $('.big_pack_images .images')[0]
-  url = `/adminsc/product/addBigPackImage`;
-  tag = `delBigPackImages`;
-  dnd1('.add_big_pack_image',
-    handleMultipleImages.bind(null, appendTo, url, tag)
-  )
+  // let appendTo = $('.image_main .images')[0]
+  // let url = '/adminsc/product/addMainImage'
+  // let tag = `delMainImage`
+  // dnd1('.add_main_image',
+  //   handleMainImage.bind(null, appendTo, url, tag)
+  // )
+  //
+  // appendTo = $('.detail_images .images')[0]
+  // url = `/adminsc/product/addDetailImages`;
+  // tag = `delDetailImage`;
+  // dnd1('.add_detail_image',
+  //   handleMultipleImages.bind(null, appendTo, url, tag)
+  // )
+  //
+  // appendTo = $('.small_pack_images .images')[0]
+  // url = `/adminsc/product/addSmallPackImage`;
+  // tag = `delSmallPackImages`;
+  // dnd1('.add_small_pack_images',
+  //   handleMultipleImages.bind(null, appendTo, url, tag)
+  // )
+  //
+  // appendTo = $('.big_pack_images .images')[0]
+  // url = `/adminsc/product/addBigPackImage`;
+  // tag = `delBigPackImages`;
+  // dnd1('.add_big_pack_image',
+  //   handleMultipleImages.bind(null, appendTo, url, tag)
+  // )
 
 
   function validateType(file) {

@@ -6,57 +6,84 @@ use app\model\Image;
 use app\Repository\ImageRepository;
 use app\view\Image\ImageView;
 
-class ImageController extends AppController
+class ImageController Extends AppController
 {
-  public $model = Image::class;
+	public $model = Image::class;
 
-  public function __construct(array $route)
-  {
-    parent::__construct($route);
-  }
+	public function __construct(array $route)
+	{
+		parent::__construct($route);
+	}
 
-  public function actionIndex()
-  {
-    $list = ImageView::list();
-    $this->set(compact('list'));
-  }
+	public function actionIndex()
+	{
+		$list = ImageView::list();
+		$this->set(compact('list'));
+	}
 
-  private static function checkRequiredArgs(array $args, Controller $context): array
-  {
-    if (isset($args['morphed_type']))
-      $context->exitWithPopup('Нет смежной таблицы');
-    if (isset($args['morphed_id']))
-      $context->exitWithPopup('Нет id из смежной таблицы');
-    if (isset($args['morph_id']))
-      $context->exitWithPopup('Нет id картинки');
-    return [$args['morphed'], $args['morph']];
-  }
+	public function actionDetach()
+	{
+		if ($post = $this->ajax) {
+			$slug = $post['slug'];
+			$morphedClass = '\app\model\\' . ucfirst($post['morphedType']);
+			$morphed = $morphedClass::find($post['morphedId']);
+			$table = $morphed->getTable();
+			if ($this->model
+				::find($post['morphId'])
+				->$table()
+				->where('id', $post['morphedId'])
+				->wherePivot('slug', $slug)
+				->detach()
+			) {
+				$this->exitWithSuccess('ok');
+			}
+		}
+	}
 
-  public function actionAddMorph()
-  {
-    if (!$_POST) $this->exitWithPopup('нет данных');
-    if (!$_FILES) $this->exitWithPopup('нет файлов');
-    [$morphed, $morph] = self::checkRequiredArgs($_POST, $this);
 
-    foreach ($_FILES as $file) {
-      ImageRepository::fileValidate($file);
-      $hash = hash_file('md5', $file['tmp_name']);
-      $ext = ImageRepository::getExt($file['type']);
-      if (!$ext) continue;
+	public function actionAddMorphMany()
+	{
+		if (!$_POST) $this->exitWithPopup('нет данных');
+		if (!$_FILES) $this->exitWithPopup('нет файлов');
+		$morphed = $_POST['morphed'];
+		$srcArr = [];
 
-      $im = Image::where('hash', $hash)
-        ->where('size', $file['size'])
-        ->first();
-      if (!$im) {
-        ImageRepository::saveIfNotExist($file, $morphed['type']);
-      }
-      $modelNameSpace = 'app\\model\\';
-      $modelName = $modelNameSpace . ucfirst($morphed['type']);
-      $model = $modelName::find($morphed['id']);
-      $function = $morphed['type'];
-      $im->$function()->sync($model);
-    }
-    exit();
-  }
+		foreach ($_FILES as $file) {
+			ImageRepository::validateSize((int)$file['size'], $file);
+			ImageRepository::validateType($file['type'], $file);
+
+			$im = ImageRepository::firstOrCreate($file, $morphed);
+			if ($im->wasRecentlyCreated) {
+				ImageRepository::saveToFile($im, $file);
+			}
+			$function = 'detailImages';
+			ImageRepository::sync($im, $morphed, $function, true);
+			$imageArr['src'] = $im->getFullPath();
+			$imageArr['id'] = $im->id;
+			$srcArr[] = $imageArr;
+		}
+		$this->exitJson($srcArr);
+	}
+
+	public function actionAddMorphOne()
+	{
+		if (!$_POST) $this->exitWithPopup('нет данных');
+		if (!$_FILES) $this->exitWithPopup('нет файлов');
+		$morphed = $_POST['morphed'];
+
+		if (count($_FILES) > 1) $this->exitWithPopup('Можно только один файл');
+		$file = $_FILES[0];
+
+		ImageRepository::validateSize((int)$file['size'], $file);
+		ImageRepository::validateType($file['type'], $file);
+
+		$im = ImageRepository::firstOrCreate($file, $morphed);
+		if ($im->wasRecentlyCreated) {
+			ImageRepository::saveToFile($im, $file);
+		}
+		$function = 'mainImage';
+		ImageRepository::sync($im, $morphed, $function, false);
+		$this->exitJson([$im->getFullPath()]);
+	}
 
 }
