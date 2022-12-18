@@ -1,6 +1,11 @@
 @import "var";
 @import "mixin_media";
 
+select{
+  border:1px solid transparent;
+  padding: 3px;
+}
+
 
 .mb5{
   margin-bottom: 5px;

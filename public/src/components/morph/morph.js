@@ -18,7 +18,7 @@ export default class Morph {
     if (dndContainer) {
       this.oneOrMany = morphEl.dataset.morph
       // debugger
-      let dndCallback = this.dndCallback.bind(this)
+      let dndCallback = Morph.dndCallback.bind(this)
 
       if (this.oneOrMany === 'many') {
         new DragNDropMany(dndContainer, dndCallback)

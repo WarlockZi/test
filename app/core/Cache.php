@@ -4,31 +4,6 @@ namespace app\core;
 
 class Cache
 {
-//
-//	public function getFromCache($folderName, $file_name)
-//	{
-//		$fileName = "{$file_name}";
-//		// открываем текущую папку
-//		$dir = opendir($folderName);
-//		// перебираем папку
-//		while (($file = readdir($dir)) !== false){ // перебираем пока есть файлы
-//			if($file != "." && $file != ".."){ // если это не папка
-//				if(is_file($folderName."/".$file)){ // если файл проверяем имя
-//					// если имя файла нужное, то вернем путь до него
-//					if($file == $fileName) return $folderName."/".$file ;
-//				}
-//				// если папка, то рекурсивно вызываем search_file
-//				if(is_dir($folderName."/".$file)) return $this->getFromCache($folderName."/".$file, $fileName);
-//			}
-//		}
-//		// закрываем папку
-//		$res = "{$folderName}\\{$fileName}.txt" ;
-//		closedir($dir);
-//		return $res;
-//
-//	}
-
-
 	public static function get($key, $path = '')
 	{
 		$file = ROOT . '/tmp/cache/' . $path . md5($key) . '.txt';

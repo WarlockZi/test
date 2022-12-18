@@ -6,7 +6,6 @@ namespace app\controller;
 
 class FS
 {
-
 	public static function delFilesFromPath(string $path, string $ext = ''): array
 	{
 		$ext = $ext ?? '*';
@@ -29,30 +28,65 @@ class FS
 		return self::platformSlashes($str);
 	}
 
-	public static function platformSlashes($path) {
+	public static function platformSlashes($path)
+	{
 		return str_replace('/', DIRECTORY_SEPARATOR, $path);
 	}
 
 	public static function getAbsoluteImagePath($path, Image $image)
 	{
 		$s = DIRECTORY_SEPARATOR;
-		return $path.$s.$image->hash.'.'.$image->type;
+		return $path . $s . $image->hash . '.' . $image->type;
 	}
+
 	public static function getAbsoluteFilePath($path, string $file)
 	{
 		$s = DIRECTORY_SEPARATOR;
 		$path = FS::platformSlashes($path);
-		return $path.$s.$file;
+		return $path . $s . $file;
 	}
 
 	public static function getOrCreateAbsolutePath(...$args)
 	{
 		$s = DIRECTORY_SEPARATOR;
-		$dir = ROOT ;
+		$dir = ROOT;
 		foreach ($args as $arg) {
-			$dir .= $s.$arg ;
-			if (!is_dir($dir)){
-				$res = mkdir($dir,0777);
+			$dir .= $s . $arg;
+			if (!is_dir($dir)) {
+				$res = mkdir($dir, 0777);
+			}
+		}
+		return $dir;
+	}
+
+	public static function parsePathToString(string $fullPath)
+	{
+		$s = DIRECTORY_SEPARATOR;
+		$str = '';
+		$arr = explode('/', $fullPath);
+		for ($i = 0; $i < count($arr); $i++) {
+			if ($arr[$i]) {
+				if ($arr[$i + 1]) {
+					$str .= $arr[$i] . $s;
+				} else {
+					$str .= $arr[$i];
+				}
+			}
+		}
+		return $str;
+	}
+
+	public static function getAbsolutePath(...$args)
+	{
+		$s = DIRECTORY_SEPARATOR;
+		$dir = ROOT;
+		foreach ($args as $arg) {
+			if (str_contains($arg, '/')) {
+				$arg = self::parsePathToString($arg);
+			}
+			$dir .= $s . $arg;
+			if (!is_dir($dir)) {
+				$res = mkdir($dir, 0777);
 			}
 		}
 		return $dir;

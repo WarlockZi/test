@@ -33,15 +33,14 @@
   align-items: center;
   position: relative;
   background-color: white;
-  //min-width: 20px;
-  border: 1px solid transparent;
+  //border: 1px solid #ccc;
   //padding: 5px;
   min-width: 100%;
   max-width: 200px;
 
-  &:hover {
-    border: $border-field-hover;
-  }
+  //&:hover {
+  //  border: $border-field-hover;
+  //}
 
   &:focus-visible {
     outline: 1px solid $color-gray5;

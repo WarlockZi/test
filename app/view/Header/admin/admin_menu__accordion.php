@@ -1,11 +1,13 @@
 <? use \app\model\User;
+use \app\core\Icon;
 
 $user = $controller->user;
 ?>
 <div class="admin_sidebar">
 
 	<div class="admin_sidebar_header">
-		 <? include ICONS . '/gamburger.svg' ?>
+
+		 <?= Icon::gamburger() ?>
 
 		 <? include ROOT . '/app/view/Header/user_credits.php' ?>
 
@@ -15,7 +17,8 @@ $user = $controller->user;
 	<div accordion>
 
 		<a class="house neon" href="/adminsc">
-				<? include ICONS . '/admin-menu/house.svg' ?>
+		 <?= Icon::house('admin-menu') ?>
+
 			Главная
 		</a>
 
@@ -25,7 +28,7 @@ $user = $controller->user;
 			  <div class="label">
 
 				  <div class="arrow"></div>
-						 <? include ICONS . '/admin-menu/chart.svg'; ?>
+						 <?= Icon::chart('admin-menu') ?>
 
 				  CRM
 
@@ -44,7 +47,8 @@ $user = $controller->user;
 
 			  <div class="label">
 				  <span class="arrow"></span>
-						 <? include ICONS . '/admin-menu/settings-streamline.svg'; ?>
+<!--						 --><?// include ICONS . '/admin-menu/settings-streamline.svg'; ?>
+						 <?= Icon::settingsStreamline('admin-menu') ?>
 				  Настройки
 			  </div>
 
@@ -67,7 +71,7 @@ $user = $controller->user;
 
 			  <div class="label">
 				  <span class="arrow"></span>
-						 <? include ICONS . '/youtube.svg'; ?>
+						 <?= Icon::youtube() ?>
 				  Видео
 			  </div>
 
@@ -83,8 +87,8 @@ $user = $controller->user;
 		<li test>
 			<div class="label">
 				<span class="arrow"></span>
-					 <? include ICONS . '/admin-menu/star.svg'; ?>
-				Тесты
+					 <?= Icon::star('admin-menu') ?>
+							Тесты
 			</div>
 			<ul class="level-1">
 
@@ -118,7 +122,7 @@ $user = $controller->user;
 		<li plan>
 			<div class="label">
 				<span class="arrow"></span>
-					 <? include ICONS . '/admin-menu/target.svg'; ?>
+					 <?= Icon::target('admin-menu') ?>
 				Планирование
 			</div>
 			<ul class="level-1">
@@ -132,7 +136,7 @@ $user = $controller->user;
 		</li>
 
 		<a strat class="neon" href="/adminsc/planning">
-				<? include ICONS . '/admin-menu/grid.svg'; ?>
+				<?= Icon::grid('admin-menu') ?>
 			<span>
 		Страт задачи
 		</span>
@@ -141,7 +145,8 @@ $user = $controller->user;
 		<li catalog>
 			<div class="label">
 				<span class="arrow"></span>
-					 <? include ICONS . '/feather/shopping-cart.svg'; ?>
+					 <?= Icon::shoppingCart('feather') ?>
+
 				Каталог
 			</div>
 			<ul class="level-1">
@@ -156,7 +161,7 @@ $user = $controller->user;
 		<li user>
 			<div class="label">
 				<span class="arrow"></span>
-					 <? include ICONS . '/admin-menu/user-check.svg'; ?>
+					 <?= Icon::userCheck('admin-menu') ?>
 				Пользователь
 			</div>
 			<ul class="level-1">
@@ -176,7 +181,7 @@ $user = $controller->user;
 
 			  <div class="label">
 				  <span class="arrow"></span>
-						 <? include ICONS . '/admin-menu/aperture.svg'; ?>
+						 <?= Icon::aperture('admin-menu') ?>
 				  SU
 			  </div>
 			  <ul class="level-1">

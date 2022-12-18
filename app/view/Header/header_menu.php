@@ -33,7 +33,7 @@
 			</div>
 
 			<a class="cart" href="/cart">
-				<? include ICONS . '/feather/shopping-cart.svg' ?>
+				<? include ICONS . '/feather/shoppingCart.svg' ?>
 			</a>
 
 			<div class="gamburger">

@@ -22,12 +22,12 @@ export default function product() {
     // debugger
     let m = new Morph(morphEl, product, productId)
 
-  }).bind(product, productId)
+  })
 
 
 //// morph one
-  let sel = ".add_main_image"
-  new DragNDrop(sel, addMainImg, true, null)
+  let el = $(".add_main_image")[0]
+  new DragNDrop(el, addMainImg, true, null)
 
   async function addMainImg(files) {
     let appendTo = ".images .image"
@@ -42,8 +42,8 @@ export default function product() {
 
 
 //// Morph many
-  sel = ".add_detail_image"
-  sel = ".holder"
+//   sel = ".add_detail_image"
+//   sel = ".holder"
 
   // new DragNDrop(sel, addDetail, true, null)
 
