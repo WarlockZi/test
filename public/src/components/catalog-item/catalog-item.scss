@@ -127,12 +127,7 @@
       background-color: white;
       padding: $padding-form;
       box-sizing: border-box;
-      border: 1px solid transparent;
       flex: 1 0 auto;
-
-      &:hover {
-        border: $border-field-hover;
-      }
     }
 
     .value {
@@ -140,6 +135,11 @@
       margin: $margin-form;
       flex: 1 0 160px;
       position: relative;
+      border: 1px solid transparent;
+
+      &:hover {
+        border: $border-field-hover;
+      }
 
       .checkbox {
         background: white;

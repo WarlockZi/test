@@ -5,6 +5,7 @@ namespace app\view\Header;
 
 
 use app\controller\Controller;
+use app\core\Cache;
 use app\model\Category;
 
 class Header
@@ -46,9 +47,16 @@ class Header
 
 	public static function getAdminMenu(Controller $controller)
 	{
-		ob_start();
-		include ROOT . '/app/view/Header/admin/admin_menu__accordion.php';
-		return ob_get_clean();
+		$cache = Cache::get('admin_sidebar');
+		if ($cache){
+			return $cache;
+		}else{
+			ob_start();
+			include ROOT . '/app/view/Header/admin/admin_menu__accordion.php';
+			$res = ob_get_clean();
+			Cache::set('admin_sidebar',$res);
+			return $res;
+		}
 	}
 
 	public static function getLogo(Controller $controller)
