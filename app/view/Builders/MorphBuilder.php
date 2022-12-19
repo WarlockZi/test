@@ -76,12 +76,15 @@ class MorphBuilder
 		string $class,
 		string $appendTo,
 		string $toolTip,
-		string $content)
+		string $content,
+		string $path
+	)
 	{
 		$this->dndClass = $class ? "class='{$class}'" : "";
 		$this->dndToolTip = $toolTip ? "data-tooltip='{$toolTip}'" : "";
 		$this->dndAppendTo = "data-appendto='{$appendTo}'";
 		$this->dndContent = $content ? $content : "";
+		$this->dndPath = "data-path='{$path}'";
 
 		ob_start();
 		include $this->morphPath . $template;

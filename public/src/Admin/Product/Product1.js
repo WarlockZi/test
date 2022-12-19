@@ -1,6 +1,6 @@
 export default class Product {
 
-  type = 'product';
+  imagePath = 'catalog';
 
   constructor(id, slugNameId) {
     this.id = id

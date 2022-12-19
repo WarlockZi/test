@@ -10,6 +10,10 @@
   text-align: center;
   font-size: 1rem;
 
+  svg {
+    pointer-events: none;
+  }
+
   img{
     &:hover{
       position: absolute;

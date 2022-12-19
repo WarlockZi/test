@@ -45,16 +45,18 @@ class ImageRepository
 
   }
 
-  public static function sync(Model $image, array $morphed, string $function, bool $withoutDetaching): void
+  public static function sync(Model $image, array $morphed, string $slug, bool $withoutDetaching): array
   {
+		$function = $slug.ucfirst($image->getTable());
     $modelNameSpace = 'app\\model\\';
     $modelName = $modelNameSpace . ucfirst($morphed['type']);
     $model = $modelName::find($morphed['id']);
     if ($withoutDetaching) {
-      $model->$function()->syncWithoutDetaching([$image->id => ['slug' => $morphed['slugName']]]);
+      $res = $model->$function()->syncWithoutDetaching([$image->id => ['slug' => $image->slug]]);
     } else {
-      $model->$function()->sync([$image->id => ['slug' => $morphed['slugName']]]);
+			$res = $model->$function()->sync([$image->id => ['slug' => $image->slug]]);
     }
+    return $res;
 //			$im->$morphed['type']()->sync([$model->id=>['slug'=>$slugName]]);
   }
 
@@ -84,18 +86,18 @@ class ImageRepository
     return false;
   }
 
-  public static function firstOrCreate(array $file, array $morphed)
+  public static function firstOrCreate(array $file, array $morph)
   {
     $hash = hash_file('md5', $file['tmp_name']);
     return
       Image::firstOrCreate([
         'hash' => $hash,
         'size' => $file['size'],
-        'path' => $morphed['imagePath'],
+        'path' => $morph['path'],
       ], [
         'hash' => $hash,
         'name' => $file['name'],
-        'path' => $morphed['imagePath'],
+        'path' => $morph['path'],
         'type' => ImageRepository::getFileExt($file['type']),
       ]);
   }

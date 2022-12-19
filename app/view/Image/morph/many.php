@@ -8,6 +8,7 @@ use \app\Repository\ImageRepository;
 	<?= $this->morphModel; ?>
 	<?= $this->slug; ?>
 	<?= $this->class; ?>
+	<?= $this->dndPath; ?>
 >
 	<?= $this->addAction; ?>
 

@@ -4,6 +4,8 @@
 namespace app\controller;
 
 
+use app\model\Image;
+
 class FS
 {
 	public static function delFilesFromPath(string $path, string $ext = ''): array

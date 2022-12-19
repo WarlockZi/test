@@ -53,13 +53,13 @@ class ImageController Extends AppController
 			ImageRepository::validateSize((int)$file['size'], $file);
 			ImageRepository::validateType($file['type'], $file);
 
-			$im = ImageRepository::firstOrCreate($file, $morphed);
+			$im = ImageRepository::firstOrCreate($file, $morph);
 			if ($im->wasRecentlyCreated) {
 				ImageRepository::saveToFile($im, $file);
 			}
 //			$function = 'detailImages';
-			$function = $morphed.$morph.'s';
-			ImageRepository::sync($im, $morphed, $function, true);
+
+			ImageRepository::sync($im, $morphed, $morph['slug'], true);
 			$imageArr['src'] = $im->getFullPath();
 			$imageArr['id'] = $im->id;
 			$srcArr[] = $imageArr;

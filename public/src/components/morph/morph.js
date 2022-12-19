@@ -5,13 +5,13 @@ import DragNDropOne from "../dnd/DragNDropOne";
 
 export default class Morph {
 
-  constructor(morphEl, morphedEl, morphed_id) {
+  constructor(morphEl, morphedEl, imagePath='') {
     if (!morphEl) throw new Error('add right element')
     if (!morphedEl) throw new Error('add morphed')
-    if (!morphed_id) throw new Error('add morphed_id')
 
     this.morphEl = morphEl
     this.morphedEl = morphedEl
+    this.imagePath = imagePath
 
     // this.data = this.addMultipleFiles(this.data, files )
     let dndContainer = $(`[data-dnd]`)[0]
@@ -34,26 +34,28 @@ export default class Morph {
 
   static prepareData(morphEl,morphedEl){
     let data  = {}
-    data.morph.model = morphEl.dataset.model
-    data.morphed.model = morphedEl.dataset.model
+    data.morph  = {}
+    data.morphed  = {}
 
-    let container = target.closest('.wrap')
-    let morphedType = target.closest('.item_wrap').dataset.model
-    let morphedId = target.closest('.item_wrap').dataset.id
-    let slug = target.closest('.morph').dataset.slug
-    let morphType = target.closest('.morph').dataset.type
-    let morphId = target.dataset.id
+    data.morphed.type = morphedEl.dataset.model
+    data.morphed.id = morphedEl.dataset.id
+
+    data.morph.type = morphEl.dataset.model
+    data.morph.path = morphEl.dataset.path
+    data.morph.slug = morphEl.dataset.slug
+
     return data
   }
 
   static async dndCallback(files) {
-    debugger
-    let url = `/adminsc/${morphModel}/attach${this.oneOrMany}`
+    // debugger
+    let url = `/adminsc/${this.morphEl.dataset.model}/attach${this.oneOrMany}`
 
     let data = Morph.prepareData(this.morphEl, this.morphedEl)
     data = objAndData2FormData(data, files)
 
     let res = await post(url, data)
+    return  res
 
   }
 
@@ -88,7 +90,7 @@ export default class Morph {
   }
 
 
-  appendOneImage(appendTo, src) {
+  static appendOneImage(appendTo, src) {
     let img = $(appendTo)[0].querySelector('img')
     let holder = $(appendTo)[0]
     if (!img) {
@@ -103,7 +105,7 @@ export default class Morph {
     }
   }
 
-  appendManyImages(appendTo, srcArr) {
+  static appendManyImages(appendTo, srcArr) {
     let img = $(appendTo)[0].querySelector('img')
     srcArr.forEach((image) => {
       let holder = $(appendTo)[0]

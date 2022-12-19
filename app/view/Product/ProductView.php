@@ -167,7 +167,8 @@ class ProductView
 			$product,
 			'Image',
 			'detail',
-			'dnd')
+			'dnd',
+			)
 			->many($product->detailImages)
 			->template('many.php')
 //			->addAction('many_dnd_plus.php')
@@ -177,7 +178,9 @@ class ProductView
 				'holder',
 				'dnd',
 				'Перетащите файл сюда',
-				$dndContent)
+				$dndContent,
+			'catalog',
+				)
 			->get();
 		return $morph;
 	}
