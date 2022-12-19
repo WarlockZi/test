@@ -1,14 +1,11 @@
 import './product.scss'
-import {$, post, popup} from '../../common'
-// import dnd1 from '../../components/dnd/dnd'
+import {$, popup, post} from '../../common'
+
 import DragNDrop from "../../components/dnd/DragNDrop";
 import Imageable from "../Image/Imageable";
 import Image from "../Image/Image";
 import Morph from "../../components/morph/morph";
-import Category from "../Category/Category";
 import Product from "./Product1";
-import DragNDropOne from "../../components/dnd/DragNDropOne";
-import DragNDropMany from "../../components/dnd/DragNDropMany";
 
 export default function product() {
 
@@ -20,8 +17,7 @@ export default function product() {
 
   morphs.forEach((morphEl) => {
     // debugger
-    let m = new Morph(morphEl, product, productId)
-
+    let m = new Morph(morphEl, product, 'catalog')
   })
 
 

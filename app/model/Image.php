@@ -21,7 +21,17 @@ class Image extends Model
 	];
 
 	public function getFullPath(){
-		return '/'.$this->imagePath.'/'.$this->path.'/'.$this->hash.'.'.$this->type;
+		$ext = $this->getExt();
+		$path = $this->path?$this->path.'/':'';
+		return '/'.$this->imagePath.'/'.$path.$this->hash.'.'.$ext;
+	}
+
+	public function getExt(){
+		$name = $this->name;
+		$pos = strpos($name,'.');
+		$res = substr($name,$pos+1, strlen($name));
+
+		return $res;
 	}
 
 	public function getPath(){

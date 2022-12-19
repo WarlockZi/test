@@ -10,6 +10,7 @@ use app\model\Product;
 
 class ProductRepository extends Controller
 {
+	public static $ProductRepository;
 
 	public static function clear()
 	{
