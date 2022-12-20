@@ -47,16 +47,22 @@ class Header
 
 	public static function getAdminMenu(Controller $controller)
 	{
-		$cache = Cache::get('admin_sidebar');
-		if ($cache){
-			return $cache;
-		}else{
+//		$cache = Cache::get('admin_sidebar');
+//		if ($cache){
+//			return $cache;
+//		}else{
+//			ob_start();
+//			include ROOT . '/app/view/Header/admin/admin_menu__accordion.php';
+//			$res = ob_get_clean();
+//			Cache::set('admin_sidebar',$res);
+//			return $res;
+//		}
+
 			ob_start();
 			include ROOT . '/app/view/Header/admin/admin_menu__accordion.php';
 			$res = ob_get_clean();
-			Cache::set('admin_sidebar',$res);
 			return $res;
-		}
+
 	}
 
 	public static function getLogo(Controller $controller)

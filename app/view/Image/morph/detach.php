@@ -1,6 +1,6 @@
 <div
+		data-detach
 		<?=$this->detachClass;?>
-		<?=$this->detachSlug;?>
 		data-id="<?= $item->id; ?>"
 >
 	x

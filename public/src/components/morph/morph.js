@@ -5,15 +5,16 @@ import DragNDropOne from "../dnd/DragNDropOne";
 
 export default class Morph {
 
-  constructor(morphEl, morphedEl, imagePath='') {
+  constructor(morphEl, morphedEl) {
     if (!morphEl) throw new Error('add right element')
     if (!morphedEl) throw new Error('add morphed')
 
     this.morphEl = morphEl
     this.morphedEl = morphedEl
-    this.imagePath = imagePath
 
-    // this.data = this.addMultipleFiles(this.data, files )
+    this.imagePath = Morph.setImagePath(morphedEl)
+    this.appendTo = Morph.setAppendTo(morphedEl)
+
     let dndContainer = $(`[data-dnd]`)[0]
     if (dndContainer) {
       this.oneOrMany = morphEl.dataset.morph
@@ -27,22 +28,38 @@ export default class Morph {
       }
     }
 
-    $(this.morphEl).on('click', '.detach', function ({target}) {
+    $(this.morphEl).on('click', '[data-detach]', function ({target}) {
       let mor = Morph.detach(target)
     })
   }
 
-  static prepareData(morphEl,morphedEl){
-    let data  = {}
-    data.morph  = {}
-    data.morphed  = {}
+  static setImagePath(morphedEl){
+    let imagePath = $(morphedEl).find('[data-path]')
+    if (imagePath) {
+      return imagePath.dataset.path
+    }
+    return ''
+  }
+
+  static setAppendTo(morphedEl){
+    let appendTo = $(morphedEl).find('[data-appendto]')
+    if (appendTo) {
+      return '.'+appendTo.dataset.appendto
+    }
+    return ''
+  }
+
+  static prepareData(morphEl, morphedEl) {
+    let data = {}
+    data.morph = {}
+    data.morphed = {}
 
     data.morphed.type = morphedEl.dataset.model
     data.morphed.id = morphedEl.dataset.id
 
     data.morph.type = morphEl.dataset.model
-    data.morph.path = morphEl.dataset.path
     data.morph.slug = morphEl.dataset.slug
+    data.morph.path = morphEl.dataset.path
 
     return data
   }
@@ -55,16 +72,29 @@ export default class Morph {
     data = objAndData2FormData(data, files)
 
     let res = await post(url, data)
-    return  res
 
+    Morph.appendTo(this,res.arr)
+
+  }
+
+  static appendTo(self,srcs){
+
+    if (self.appendTo){
+      let el = self.morphEl.closest(self.appendTo)
+      if (self.oneOrMany==='many'){
+        Morph.appendManyImages(el,srcs)
+      }else{
+        Morph.appendOneImage(el,srcs)
+      }
+    }
   }
 
   static async detach(target) {
     let container = target.closest('.wrap')
     let morphedType = target.closest('.item_wrap').dataset.model
     let morphedId = target.closest('.item_wrap').dataset.id
-    let slug = target.closest('.morph').dataset.slug
-    let morphType = target.closest('.morph').dataset.type
+    let slug = target.closest('[data-morph]').dataset.slug
+    let morphType = target.closest('[data-morph]').dataset.model
     let morphId = target.dataset.id
     let url = `/adminsc/${morphType}/detach`
     let data = {morphedType, morphedId, morphId, slug}
@@ -125,8 +155,8 @@ export default class Morph {
       item.appendChild(del)
       let wrap = document.createElement('div')
       wrap.classList.add('wrap')
-      wrap.appendChild(im)
-      holder.appendChild(im)
+      wrap.appendChild(img)
+      holder.appendChild(img)
     }).bind(appendTo)
   }
 }

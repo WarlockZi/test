@@ -59,8 +59,7 @@ class Mail
 	{
 		$data['subject'] = "Регистрация VITEX";
 		$data['to'] = [$user['email']];
-		$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/auth/confirm/{$hash}";
-
+		$href = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/auth/confirm/{$user['hash']}";
 
 		$data['body'] = self::getConfirmBody($user['hash'], $href);
 

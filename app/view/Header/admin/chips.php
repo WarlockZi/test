@@ -4,4 +4,5 @@
 	<a href="/adminsc/test/edit" class="chip">Тесты</a>
 	<a href="/adminsc/opentest/edit" class="chip">Откр Тесты</a>
 	<a href="/adminsc/todo" class="chip">Функции</a>
+	<a href="/adminsc/adminsc/clearCache" class="chip">Очистить кеш</a>
 </div>

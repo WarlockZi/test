@@ -22,21 +22,23 @@ class AuthController extends AppController
 	public function actionRegister()
 	{
 		if ($user = $this->ajax) {
-
 			if (!$user['password']) exit('empty password');
 			if (!$user['email']) exit('empty email');
 
 			$found = User::where('email', $user['email'])->first();
 			if ($found) $this->exitWithMsg('mail exists');
 
-			$hash = md5(microtime());
 			$user['password'] = $this->preparePassword($user['password']);
-			$user['hash'] = $hash;
+			$user['hash'] = md5(microtime());
 			$user['rights'] = 'user_update';
+			$user['sex'] = 'm';
 
 			$data = Mail::mailConfirmFactory($user);
 
-			if (!$id = User::create($user, 'register')) {
+			$user = User::create($user);
+			$user->save();
+
+			if (!$user) {
 				exit('registration failed');
 			}
 			try {
@@ -205,11 +207,11 @@ class AuthController extends AppController
 		$hash = $this->route['id'];
 
 		if (!$hash) header('Location:/');
-		$user = IlluminateUser::where('hash', $hash)->get()[0]->toArray();
+		$user = User::where('hash', $hash)->first();
 		if ($user) {
 			$user['confirm'] = "1";
 			Auth::setAuth($user);
-			if (User::update($user)) {
+			if ($user->update()) {
 				header('Location:/auth/success');
 				$this->exitWithPopup('"Вы успешно подтвердили свой E-mail."');
 			}
@@ -226,8 +228,7 @@ class AuthController extends AppController
 	public static function user()
 	{
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
-			$id = $_SESSION['id'];
-			$user = User::find($id);
+			$user = User::where('id',$_SESSION['id'])->first();
 			if (!$user) {
 				return false;
 			}

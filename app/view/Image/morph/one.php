@@ -4,29 +4,28 @@ use \app\Repository\ImageRepository;
 
 ?>
 
+<div <?= $this->oneOrMany; ?>
+	<?= $this->morphModel; ?>
+	<?= $this->slug; ?>
+	<?= $this->class; ?>
+	<?= $this->dndPath; ?>
+>
+	<?= $this->addAction; ?>
 
-<div class="morph" data-type="<?= $this->morph; ?>" <?= $this->slug; ?>>
-
-	<div class="items">
-
-		 <?= $this->addAction; ?>
-
-		 <? foreach ($this->many as $item): ?>
-		  <div class="wrap">
-			  <div class="item">
-						 <?
-						 $path = "/{$item->imagePath}/{$item->path}/{$item->hash}.{$item->type}";
-						 $src = ImageRepository::getImg($path);
-						 ?>
-				  <img class="" src="<?= $src ?>" alt="">
-			  </div>
-
-		 <?= $this->detachAction; ?>
-
-
+	<? if (count($this->one)): ?>
+		<? $item = $this->one[0] ?>
+	  <div class="wrap">
+		  <div class="item">
+					<?
+					$path = "/{$item->imagePath}/{$item->path}/{$item->hash}.{$item->type}";
+					$src = ImageRepository::getImg($path);
+					?>
+			  <img class="" src="<?= $src ?>" alt="">
 		  </div>
-		 <? endforeach; ?>
-	</div>
+			 <? include $this->detach; ?>
+	  </div>
+
+	<? endif; ?>
 
 </div>
 

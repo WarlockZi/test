@@ -8,21 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-	public $timestamps = false;
+	public $timestamps = true;
 	protected $fillable = [
-		'email' => '',
-		'password' => 'gfasdf41(D{%',
-		'name' => '',
-		'surName' => '',
-		'middleName' => '',
-		'hash' => '',
-		'confirm' => '0',
-		'rights' => 'user_update',
-		'post_id' => 0,
-		'birthDate' => '1970-01-02',
-		'hired' => '1970-01-02',
-		'fired' => '1970-01-02',
-		'sex' => 'f',
+		'email','password',
+		'name',
+		'surName',
+		'middleName',
+		'hash',
+		'confirm',
+		'rights',
+		'post_id',
+		'birthDate',
+		'hired',
+		'fired',
+		'sex',
 	];
 
 	public function rights()
@@ -39,6 +38,7 @@ class User extends Model
 	{
 		return "{$this->surName} {$this->name}";
 	}
+
 	public static function avatar(array $user): string
 	{
 		if (isset($user['avatar'])) {

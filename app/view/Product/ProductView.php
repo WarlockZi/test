@@ -2,13 +2,14 @@
 
 namespace app\view\Product;
 
-use app\Builders\MorphBuilder\MorphBuilder;
 use app\controller\FS;
+use app\core\Icon;
 use app\model\Image;
 use app\model\Propertable;
 use app\model\Unit;
 use app\model\Product;
 use app\Repository\ImageRepository;
+use app\view\Builders\MorphBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
@@ -118,7 +119,7 @@ class ProductView
 	protected static function getSelectedProperties($product)
 	{
 		return Propertable::where(
-			['propertable_type' => \app\model\Illuminate\Product::class,
+			['propertable_type' => Product::class,
 				'propertable_id' => $product->id]
 		)
 			->select('val_id', 'property_id')
@@ -159,11 +160,7 @@ class ProductView
 
 	protected static function getDetailImages($product): string
 	{
-		ob_start();
-		include FS::getAbsoluteFilePath(ICONS, 'plus.svg');
-		$dndContent = ob_get_clean();
-
-		$morph = \app\view\Builders\MorphBuilder::build(
+		return MorphBuilder::build(
 			$product,
 			'Image',
 			'detail',
@@ -171,18 +168,16 @@ class ProductView
 			)
 			->many($product->detailImages)
 			->template('many.php')
-//			->addAction('many_dnd_plus.php')
 			->detach('detach')
 			->dnd(
 				'many_dnd_plus.php',
 				'holder',
 				'dnd',
 				'Перетащите файл сюда',
-				$dndContent,
+				Icon::plus(),
 			'catalog',
 				)
 			->get();
-		return $morph;
 	}
 
 	protected static function getSeo($product): string
@@ -223,9 +218,27 @@ class ProductView
 
 	protected static function getMainImage($product): string
 	{
-		$img = $product->mainImage[0];
-		$src = ImageRepository::getImg("\pic\catalog\\{$img->hash}.{$img->type}") ?? '';
-		return include ROOT . '/app/view/Product/main_image.php';
+		return MorphBuilder::build(
+		$product,
+		'Image',
+		'main',
+		'dnd',
+		)
+		->one($product->mainImage)
+		->template('one.php')
+		->detach('detach')
+		->dnd(
+			'many_dnd_plus.php',
+			'holder',
+			'dnd',
+			'Перетащите файл сюда',
+			Icon::plus(),
+			'catalog',
+			)
+		->get();
+//		$img = $product->mainImage[0];
+//		$src = ImageRepository::getImg("\pic\catalog\\{$img->hash}.{$img->type}") ?? '';
+//		return include ROOT . '/app/view/Product/main_image.php';
 	}
 
 	protected static function getMainUnit(Model $product): string
