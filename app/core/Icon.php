@@ -14,11 +14,15 @@ class Icon
 
 	public static function __callStatic($name, $arguments)
 	{
+		$arg = count($arguments)?
+			$arguments[0].DIRECTORY_SEPARATOR:
+			'';
 		$ext = '.svg';
 		$path = FS::getAbsolutePath(
 			self::$commonPicPath,
 			self::$commonIconPath,
-			$arguments[0]??'');
+			$arg
+			);
 		$file = FS::getAbsoluteFilePath($path,$name.$ext);
 
 		ob_start();

@@ -254,10 +254,9 @@ class ElementCollection extends Array {
     if (typeof cbOrSelector === 'function') {
       this.forEach(e => e.addEventListener(event, cbOrSelector))
     } else {
-      this.forEach(elem => {
-        elem.addEventListener(event, e => {
-          if (e.target === cbOrSelector) cb(e)
-        })
+      let elems = this[0].querySelectorAll(cbOrSelector)
+      elems.forEach(elem => {
+        elem.addEventListener(event, cb)
       })
     }
   }

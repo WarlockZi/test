@@ -52,9 +52,9 @@ class ImageRepository
     $modelName = $modelNameSpace . ucfirst($morphed['type']);
     $model = $modelName::find($morphed['id']);
     if ($withoutDetaching) {
-      $res = $model->$function()->syncWithoutDetaching([$image->id => ['slug' => $image->slug]]);
+      $res = $model->$function()->syncWithoutDetaching([$image->id => ['slug' => $slug]]);
     } else {
-			$res = $model->$function()->sync([$image->id => ['slug' => $image->slug]]);
+			$res = $model->$function()->sync([$image->id => ['slug' => $slug]]);
     }
     return $res;
 //			$im->$morphed['type']()->sync([$model->id=>['slug'=>$slugName]]);

@@ -45,7 +45,7 @@ class FS
 	{
 		$s = DIRECTORY_SEPARATOR;
 		$path = FS::platformSlashes($path);
-		return $path . $s . $file;
+		return $path  . $file;
 	}
 
 	public static function getOrCreateAbsolutePath(...$args)
