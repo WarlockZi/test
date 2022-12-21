@@ -22,11 +22,9 @@ export default class DragNDrop {
       e.preventDefault()
       e.target.classList.toggle(hoverSelector)
       // debugger
-      if (allFiles) {
+
         cb(e.dataTransfer.files)
-      } else {
-        cb(e.dataTransfer.files[0])
-      }
+
     }.bind(null, hoverSelector)
   }
 

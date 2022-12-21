@@ -27,10 +27,6 @@ class Image extends Model
 	}
 
 	public function getExt(){
-//		$name = $this->name;
-//		$pos = strpos($name,'.');
-//		$res = substr($name,$pos+1, strlen($name));
-//		return $res;
 		return $this->type;
 	}
 

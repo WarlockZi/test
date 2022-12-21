@@ -2,13 +2,11 @@
 
 namespace app\view\Product;
 
-use app\controller\FS;
 use app\core\Icon;
 use app\model\Image;
+use app\model\Product;
 use app\model\Propertable;
 use app\model\Unit;
-use app\model\Product;
-use app\Repository\ImageRepository;
 use app\view\Builders\MorphBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
@@ -92,7 +90,7 @@ class ProductView
 			->tab(
 				ItemTabBuilder::build('Детальные картинки')
 					->html(
-						self::getDetailImages($product, Image::class)
+						self::getDetailImages($product)
 					)
 					->get()
 			)
@@ -158,27 +156,6 @@ class ProductView
 		return $str;
 	}
 
-	protected static function getDetailImages($product): string
-	{
-		return MorphBuilder::build(
-			$product,
-			'Image',
-			'detail',
-			'dnd',
-			)
-			->many($product->detailImages)
-			->template('many.php')
-			->detach('detach')
-			->dnd(
-				'many_dnd_plus.php',
-				'holder',
-				'dnd',
-				'Перетащите файл сюда',
-				Icon::plus(),
-			'catalog',
-				)
-			->get();
-	}
 
 	protected static function getSeo($product): string
 	{
@@ -204,18 +181,70 @@ class ProductView
 		return $str;
 	}
 
+
 	protected static function getSmallPackImages($product): string
 	{
-		$str = include ROOT . '/app/view/Product/small_pack_images.php';
-		return $str;
+		return MorphBuilder::build(
+			$product,
+			'Image',
+			'smallpack',
+			'dnd',
+			)
+			->many($product->smallpackImages)
+			->template('many.php')
+			->detach('detach')
+			->dnd(
+				'many_dnd_plus.php',
+				'holder',
+				'dnd',
+				'Перетащите файл сюда',
+				Icon::plus(),
+				'catalog',
+				)
+			->get();
 	}
-
 	protected static function getBigPackImages($product): string
 	{
-		$str = include ROOT . '/app/view/Product/big_pack_images.php';
-		return $str;
+		return MorphBuilder::build(
+			$product,
+			'Image',
+			'bigpack',
+			'dnd',
+			)
+			->many($product->bigpackImages)
+			->template('many.php')
+			->detach('detach')
+			->dnd(
+				'many_dnd_plus.php',
+				'holder',
+				'dnd',
+				'Перетащите файл сюда',
+				Icon::plus(),
+				'catalog',
+				)
+			->get();
 	}
-
+	protected static function getDetailImages($product): string
+	{
+		return MorphBuilder::build(
+			$product,
+			'Image',
+			'detail',
+			'dnd',
+			)
+			->many($product->detailImages)
+			->template('many.php')
+			->detach('detach')
+			->dnd(
+				'many_dnd_plus.php',
+				'holder',
+				'dnd',
+				'Перетащите файл сюда',
+				Icon::plus(),
+				'catalog',
+				)
+			->get();
+	}
 	protected static function getMainImage($product): string
 	{
 		return MorphBuilder::build(
@@ -224,7 +253,7 @@ class ProductView
 		'main',
 		'dnd',
 		)
-		->one($product->mainImage)
+		->one($product->mainImages)
 		->template('one.php')
 		->detach('detach')
 		->dnd(
@@ -236,9 +265,6 @@ class ProductView
 			'catalog',
 			)
 		->get();
-//		$img = $product->mainImage[0];
-//		$src = ImageRepository::getImg("\pic\catalog\\{$img->hash}.{$img->type}") ?? '';
-//		return include ROOT . '/app/view/Product/main_image.php';
 	}
 
 	protected static function getMainUnit(Model $product): string
