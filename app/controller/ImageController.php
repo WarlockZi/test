@@ -53,7 +53,7 @@ class ImageController Extends AppController
 			ImageRepository::validateSize((int)$file['size'], $file);
 			ImageRepository::validateType($file['type'], $file);
 
-			$im = ImageRepository::firstOrCreate($file, $morph);
+			$im = ImageRepository::firstOrCreate($file, $morphed, $morph);
 			if ($im->wasRecentlyCreated) {
 				ImageRepository::saveToFile($im, $file);
 			}
@@ -72,6 +72,7 @@ class ImageController Extends AppController
 		if (!$_POST) $this->exitWithPopup('нет данных');
 		if (!$_FILES) $this->exitWithPopup('нет файлов');
 		$morphed = $_POST['morphed'];
+		$morph = $_POST['morph'];
 
 		if (count($_FILES) > 1) $this->exitWithPopup('Можно только один файл');
 		$file = $_FILES[0];
@@ -79,12 +80,12 @@ class ImageController Extends AppController
 		ImageRepository::validateSize((int)$file['size'], $file);
 		ImageRepository::validateType($file['type'], $file);
 
-		$im = ImageRepository::firstOrCreate($file, $morphed);
+		$im = ImageRepository::firstOrCreate($file, $morphed, $morph);
 		if ($im->wasRecentlyCreated) {
 			ImageRepository::saveToFile($im, $file);
 		}
-		$function = 'mainImage';
-		ImageRepository::sync($im, $morphed, $function, false);
+
+		ImageRepository::sync($im, $morphed, $morph['slug'], false);
 		$this->exitJson([$im->getFullPath()]);
 	}
 

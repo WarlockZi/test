@@ -6,16 +6,13 @@ import DragNDropOne from "../dnd/DragNDropOne";
 export default class Morph {
 
   constructor(morphEl, morphedEl) {
-    if (!morphEl) throw new Error('add right element')
-    if (!morphedEl) throw new Error('add morphed')
-
     this.morphEl = morphEl
     this.morphedEl = morphedEl
 
     this.imagePath = Morph.setImagePath(morphedEl)
     this.appendTo = Morph.setAppendTo(morphedEl)
 
-    let dndContainer = $(`[data-dnd]`)[0]
+    let dndContainer = morphEl.querySelector(`[data-dnd]`)
     if (dndContainer) {
       this.oneOrMany = morphEl.dataset.morph
       // debugger
@@ -28,8 +25,8 @@ export default class Morph {
       }
     }
 
-    $(this.morphEl).on('click', '[data-detach]', function ({target}) {
-      let mor = Morph.detach(target)
+    $(this.morphEl).on('click',function ({target}) {
+      if (target.classList.contains('detach')) Morph.detach(target)
     })
   }
 
@@ -141,22 +138,18 @@ export default class Morph {
       let holder = $(appendTo)[0]
       let img = document.createElement('img')
       img.src = image.src
-      img.onleave = false
-      img.onenter = false
-      img.ondrop = false
       let del = document.createElement('div')
       del.classList.add('detach')
       del.dataset.id = image.id
-      // del.dataset.tag = tag
       del.innerText = 'x'
       let item = document.createElement('div')
       item.classList.add('item')
       item.appendChild(img)
-      item.appendChild(del)
       let wrap = document.createElement('div')
       wrap.classList.add('wrap')
-      wrap.appendChild(img)
-      holder.appendChild(img)
-    }).bind(appendTo)
+      wrap.appendChild(item)
+      wrap.appendChild(del)
+      holder.appendChild(wrap)
+    })
   }
 }

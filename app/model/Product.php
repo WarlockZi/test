@@ -19,14 +19,39 @@ class Product extends Model
 		'base_unit'
 	];
 
-	public function mainImage()
+	public function detailImages()
 	{
-		return $this->morphToMany(Image::class, 'imageable');
-//		return $this->hasOne(Image::class,
-//			'id',
-//			'main_img',
-//			);
+		return $this->morphToMany(
+			Image::class,
+			'imageable',
+			)->where('slug', '=', 'detail');
 	}
+
+	public function mainImages()
+	{
+		return $this->morphToMany(
+			Image::class,
+			'imageable',
+			)->where('slug', '=', 'main');
+	}
+
+	public function smallPackImages()
+	{
+		return $this->morphToMany(
+			Image::class,
+			'imageable',
+			)->where('slug', '=', 'smallpack');
+	}
+
+
+	public function bigPackImages()
+	{
+		return $this->morphToMany(
+			Image::class,
+			'imageable',
+			)->where('slug', '=', 'bigpack');
+	}
+
 
 	public function mainUnit()
 	{
@@ -43,33 +68,6 @@ class Product extends Model
 			);
 	}
 
-	public function detailImages()
-	{
-		return $this->morphToMany(
-			Image::class,
-			'imageable',
-			)->where('slug', '=', 'detail');
-	}
-
-	public function smallPackImages()
-	{
-		return $this->morphToMany(
-			Image::class,
-			'imageable',
-			)->whereHas('tags', function ($q) {
-			$q->where('name', 'Внутритарная упаковка');
-		});
-	}
-
-	public function bigPackImages()
-	{
-		return $this->morphToMany(
-			Image::class,
-			'imageable',
-			)->whereHas('tags', function ($q) {
-			$q->where('name', 'Транспортная упаковка');
-		});
-	}
 
 	public function categoryCategoryRecPropsVals()
 	{
@@ -109,6 +107,15 @@ class Product extends Model
 	}
 
 
+//	public function smallPackImages()
+//	{
+//		return $this->morphToMany(
+//			Image::class,
+//			'imageable',
+//			)->whereHas('tags', function ($q) {
+//			$q->where('name', 'Внутритарная упаковка');
+//		});
+//	}
 }
 
 

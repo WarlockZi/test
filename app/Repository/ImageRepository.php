@@ -45,19 +45,17 @@ class ImageRepository
 
   }
 
-  public static function sync(Model $image, array $morphed, string $slug, bool $withoutDetaching): array
+  public static function sync(Model $image, array $morphed, string $slug, bool $withoutDetaching): void
   {
 		$function = $slug.ucfirst($image->getTable());
-    $modelNameSpace = 'app\\model\\';
-    $modelName = $modelNameSpace . ucfirst($morphed['type']);
+    $modelName = 'app\\model\\' . ucfirst($morphed['type']);
     $model = $modelName::find($morphed['id']);
-    if ($withoutDetaching) {
+    if ($withoutDetaching) { //many
       $res = $model->$function()->syncWithoutDetaching([$image->id => ['slug' => $slug]]);
-    } else {
-			$res = $model->$function()->sync([$image->id => ['slug' => $slug]]);
+    } else { //one
+    	$model->$function()->newPivotStatement()->where('slug',$slug)->delete();
+			$model->$function()->syncWithoutDetaching([$image->id => ['slug' => $slug]]);
     }
-    return $res;
-//			$im->$morphed['type']()->sync([$model->id=>['slug'=>$slugName]]);
   }
 
   public static function getImagePath(int $id): string
@@ -86,7 +84,7 @@ class ImageRepository
     return false;
   }
 
-  public static function firstOrCreate(array $file, array $morph)
+  public static function firstOrCreate(array $file, array $morphed, array $morph)
   {
     $hash = hash_file('md5', $file['tmp_name']);
     return

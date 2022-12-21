@@ -54,15 +54,12 @@ class ProductRepository extends Controller
 		return Product::
 		with('category.properties.vals')
 			->with('category.category_recursive','category.parents')
+			->with('mainImages')
 			->with('detailImages')
-			->with('smallPackImages')
-			->with('bigPackImages')
-			->with('mainImage')
+			->with('smallpackImages')
+			->with('bigpackImages')
 			->with('mainUnit')
 			->with('secondaryUnit')
-//			->with('cat')
-//			->with('categories')
-//			->with('parents')
 			->where($where, $val)->first();
 	}
 
