@@ -16,16 +16,17 @@ class Category extends Model
 		'category_id' => 0,
 	];
 
-	public function mainImage()
+	public function mainImages()
 	{
-		return $this->morphToMany(Image::class,
-			'imageable')
-			->wherePivot('slug', '=','detail');
-//		function ($q){
-//				$q->where('name', 'Детальная картинка товара');
-//			})
-			;
+//		return $this->morphToMany(Image::class,
+//			'imageable')
+//			->wherePivot('slug', '=','detail');
+		return $this->morphToMany(
+			Image::class,
+			'imageable',
+			)->where('slug', '=', 'main');
 	}
+
 
 	public static function showFrontCategories()
 	{

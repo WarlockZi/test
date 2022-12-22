@@ -12,7 +12,7 @@ use \app\Repository\ImageRepository;
 >
 	<?= $this->addAction; ?>
 
-	<? if (count($this->one)): ?>
+	<? if (isset($this->one[0])): ?>
 		<? $item = $this->one[0] ?>
 	  <div class="wrap">
 		  <div class="item">

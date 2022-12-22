@@ -2,11 +2,13 @@
 
 namespace app\view\Category;
 
+use app\core\Icon;
 use app\model\Category;
 use app\model\Image;
 use app\model\Product;
 use app\model\Property;
 use app\Repository\ImageRepository;
+use app\view\Builders\MorphBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
@@ -79,7 +81,7 @@ class CategoryView
 			'category_recursive',
 			'properties',
 			'children',
-			'mainImage')
+			'mainImages')
 			->find($id);
 		$category = $illumCategory->toArray();
 
@@ -103,15 +105,33 @@ class CategoryView
 					->type('checkbox')
 					->get()
 			)
-			->field(
-				ItemFieldBuilder::build('image_main', $illumCategory)
-					->name('Основная картинка')
-          ->morph('mainImage')
-          ->slug('Detail')
-					->type('image')
-//					->src(
-//						ImageRepository::getImagePath($illumCategory->mainImage[0]['pivot']['image_id']))
+
+			->tab(
+				ItemTabBuilder::build('Основная картинка')
+					->html(
+
+
+						MorphBuilder::build(
+							$illumCategory,
+							'Image',
+							'main',
+							'dnd'
+						)
+							->one($illumCategory->mainImages)
+							->template('one.php')
+							->detach('detach')
+							->dnd(
+								'one_dnd_plus.php',
+								'holder',
+								'dnd',
+								'',
+								Icon::plus(),
+								'catalog',
+								)
+							->get()
+					)
 					->get()
+
 			)
 			->tab(
 				ItemTabBuilder::build('Товары категории')

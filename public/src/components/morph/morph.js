@@ -25,12 +25,12 @@ export default class Morph {
       }
     }
 
-    $(this.morphEl).on('click',function ({target}) {
+    $(this.morphEl).on('click', function ({target}) {
       if (target.classList.contains('detach')) Morph.detach(target)
     })
   }
 
-  static setImagePath(morphedEl){
+  static setImagePath(morphedEl) {
     let imagePath = $(morphedEl).find('[data-path]')
     if (imagePath) {
       return imagePath.dataset.path
@@ -38,10 +38,10 @@ export default class Morph {
     return ''
   }
 
-  static setAppendTo(morphedEl){
+  static setAppendTo(morphedEl) {
     let appendTo = $(morphedEl).find('[data-appendto]')
     if (appendTo) {
-      return '.'+appendTo.dataset.appendto
+      return '.' + appendTo.dataset.appendto
     }
     return ''
   }
@@ -69,19 +69,21 @@ export default class Morph {
     data = objAndData2FormData(data, files)
 
     let res = await post(url, data)
-
-    Morph.appendTo(this,res.arr)
+    if (res.arr) {
+      Morph.appendTo(this, res.arr)
+    }
 
   }
 
-  static appendTo(self,srcs){
+  static appendTo(self, srcs) {
 
-    if (self.appendTo){
+    if (self.appendTo) {
       let el = self.morphEl.closest(self.appendTo)
-      if (self.oneOrMany==='many'){
-        Morph.appendManyImages(el,srcs)
-      }else{
-        Morph.appendOneImage(el,srcs)
+      // debugger
+      if (self.oneOrMany === 'many') {
+        Morph.appendManyImages(el, srcs)
+      } else {
+        Morph.appendOneImage(el, srcs)
       }
     }
   }
@@ -117,39 +119,41 @@ export default class Morph {
   }
 
 
-  static appendOneImage(appendTo, src) {
+  static appendOneImage(appendTo, image) {
     let img = $(appendTo)[0].querySelector('img')
-    let holder = $(appendTo)[0]
     if (!img) {
-      let img = document.createElement('img')
-      img.src = '/pic/ava_male.png'
-      img.onleave = false
-      img.onenter = false
-      img.ondrop = false
-      holder.appendChild(img)
+      // let holder = $(appendTo)[0]
+      // let img = document.createElement('img')
+      // img.src = image?.src
+      // holder.appendChild(img)
+      Morph.renderImage(appendTo,image)
     } else {
-      img.src = src ?? '/pic/ava_male.png'
+      img.src = image?.src
     }
   }
 
   static appendManyImages(appendTo, srcArr) {
-    let img = $(appendTo)[0].querySelector('img')
+
     srcArr.forEach((image) => {
-      let holder = $(appendTo)[0]
-      let img = document.createElement('img')
-      img.src = image.src
-      let del = document.createElement('div')
-      del.classList.add('detach')
-      del.dataset.id = image.id
-      del.innerText = 'x'
-      let item = document.createElement('div')
-      item.classList.add('item')
-      item.appendChild(img)
-      let wrap = document.createElement('div')
-      wrap.classList.add('wrap')
-      wrap.appendChild(item)
-      wrap.appendChild(del)
-      holder.appendChild(wrap)
+      Morph.renderImage(appendTo,image)
     })
+  }
+
+  static renderImage(appendTo, image) {
+    let holder = $(appendTo)[0]
+    let img = document.createElement('img')
+    img.src = image.src
+    let del = document.createElement('div')
+    del.classList.add('detach')
+    del.dataset.id = image.id
+    del.innerText = 'x'
+    let item = document.createElement('div')
+    item.classList.add('item')
+    item.appendChild(img)
+    let wrap = document.createElement('div')
+    wrap.classList.add('wrap')
+    wrap.appendChild(item)
+    wrap.appendChild(del)
+    holder.appendChild(wrap)
   }
 }
