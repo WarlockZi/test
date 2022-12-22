@@ -27,16 +27,17 @@ class ImageController Extends AppController
 			$slug = $post['slug'];
 			$morphedClass = '\app\model\\' . ucfirst($post['morphedType']);
 			$morphed = $morphedClass::find($post['morphedId']);
-			$table = $morphed->getTable();
-			if ($this->model
-				::find($post['morphId'])
-				->$table()
-				->where('id', $post['morphedId'])
+			$morphId = $post['morphId'];
+			$relation = $morphed->getTable();
+			$morphedId = $morphed->id;
+
+			Image::find($morphId)
+				->$relation()
 				->wherePivot('slug', $slug)
-				->detach()
-			) {
+				->detach($morphedId);
+
 				$this->exitWithSuccess('ok');
-			}
+
 		}
 	}
 
@@ -48,6 +49,7 @@ class ImageController Extends AppController
 		$morphed = $_POST['morphed'];
 		$morph = $_POST['morph'];
 		$srcArr = [];
+		$arrImages = [];
 
 		foreach ($_FILES as $file) {
 			ImageRepository::validateSize((int)$file['size'], $file);
@@ -57,14 +59,14 @@ class ImageController Extends AppController
 			if ($im->wasRecentlyCreated) {
 				ImageRepository::saveToFile($im, $file);
 			}
-//			$function = 'detailImages';
-
-			ImageRepository::sync($im, $morphed, $morph['slug'], true);
-			$imageArr['src'] = $im->getFullPath();
-			$imageArr['id'] = $im->id;
-			$srcArr[] = $imageArr;
+			$arrImages[] = $im;
+			$arrImages = collect($arrImages);
+			$srcArr[] = ImageRepository::sync($arrImages, $morphed, $morph['slug'], false);
 		}
-		$this->exitJson($srcArr);
+		if ($srcArr[0]) {
+			$this->exitJson($srcArr);
+		}
+		$this->exitWithPopup("Уже есть");
 	}
 
 	public function actionAttachOne()
@@ -73,6 +75,7 @@ class ImageController Extends AppController
 		if (!$_FILES) $this->exitWithPopup('нет файлов');
 		$morphed = $_POST['morphed'];
 		$morph = $_POST['morph'];
+		$srcArr = [];
 
 		if (count($_FILES) > 1) $this->exitWithPopup('Можно только один файл');
 		$file = $_FILES[0];
@@ -80,13 +83,17 @@ class ImageController Extends AppController
 		ImageRepository::validateSize((int)$file['size'], $file);
 		ImageRepository::validateType($file['type'], $file);
 
-		$im = ImageRepository::firstOrCreate($file, $morphed, $morph);
-		if ($im->wasRecentlyCreated) {
-			ImageRepository::saveToFile($im, $file);
+		$image = ImageRepository::firstOrCreate($file, $morphed, $morph);
+		if ($image->wasRecentlyCreated) {
+			ImageRepository::saveToFile($image, $file);
 		}
 
-		ImageRepository::sync($im, $morphed, $morph['slug'], false);
-		$this->exitJson([$im->getFullPath()]);
+		$res = ImageRepository::sync($image, $morphed, $morph['slug'], false);
+		if ($res) {
+			$this->exitJson($res);
+		}
+		$this->exitWithPopup("Уже есть");
+
 	}
 
 }

@@ -1,6 +1,6 @@
 <div
 		data-dnd
-	<?= $this->dndOneOrMany; ?>
+	<?= $this->dndClass; ?>
 	<?= $this->dndAppendTo; ?>
 	<?= $this->dndToolTip; ?>
 >

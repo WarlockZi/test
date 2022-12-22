@@ -15,7 +15,8 @@ import testEdit from '../Test/test-edit'
 import '../Test/do'
 import './Settings/settings'
 import rights from './Rights/rights'
-import product from './Product/product'
+import product from './Category/category1'
+import category from './Product/product'
 import './Planning/planning'
 import user from './user/user'
 import '../Test/open_test'
@@ -42,6 +43,7 @@ $(document).ready(function () {
 
   testEdit()
   product()
+  category()
 
   function navigate(str) {
     if (/\/adminsc\/settings/.test(str)
