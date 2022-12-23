@@ -24,20 +24,16 @@ class ImageController Extends AppController
 	public function actionDetach()
 	{
 		if ($post = $this->ajax) {
-			$slug = $post['slug'];
 			$morphedClass = '\app\model\\' . ucfirst($post['morphedType']);
 			$morphed = $morphedClass::find($post['morphedId']);
-			$morphId = $post['morphId'];
 			$relation = $morphed->getTable();
-			$morphedId = $morphed->id;
 
-			Image::find($morphId)
+			Image::find($post['morphId'])
 				->$relation()
-				->wherePivot('slug', $slug)
-				->detach($morphedId);
+				->wherePivot('slug', $post['slug'])
+				->detach($morphed->id);
 
-				$this->exitWithSuccess('ok');
-
+			$this->exitWithSuccess('ok');
 		}
 	}
 
@@ -48,23 +44,22 @@ class ImageController Extends AppController
 		if (!$_FILES) $this->exitWithPopup('нет файлов');
 		$morphed = $_POST['morphed'];
 		$morph = $_POST['morph'];
-		$srcArr = [];
-		$arrImages = [];
+		$images = [];
 
 		foreach ($_FILES as $file) {
-			ImageRepository::validateSize((int)$file['size'], $file);
-			ImageRepository::validateType($file['type'], $file);
+			ImageRepository::validateSize($file);
+			ImageRepository::validateType($file);
 
-			$im = ImageRepository::firstOrCreate($file, $morphed, $morph);
-			if ($im->wasRecentlyCreated) {
-				ImageRepository::saveToFile($im, $file);
+			$image = ImageRepository::firstOrCreate($file, $morph);
+			if ($image->wasRecentlyCreated) {
+				ImageRepository::saveToFile($image, $file);
 			}
-			$arrImages[] = $im;
-			$arrImages = collect($arrImages);
-			$srcArr[] = ImageRepository::sync($arrImages, $morphed, $morph['slug'], false);
+			$images[] = $image;
 		}
-		if ($srcArr[0]) {
-			$this->exitJson($srcArr);
+
+		$srcs = ImageRepository::sync($images, $morphed, $morph['slug'], 'many',false);
+		if ($srcs) {
+			$this->exitJson($srcs);
 		}
 		$this->exitWithPopup("Уже есть");
 	}
@@ -75,24 +70,23 @@ class ImageController Extends AppController
 		if (!$_FILES) $this->exitWithPopup('нет файлов');
 		$morphed = $_POST['morphed'];
 		$morph = $_POST['morph'];
-		$srcArr = [];
 
 		if (count($_FILES) > 1) $this->exitWithPopup('Можно только один файл');
 		$file = $_FILES[0];
 
-		ImageRepository::validateSize((int)$file['size'], $file);
-		ImageRepository::validateType($file['type'], $file);
+		ImageRepository::validateSize($file);
+		ImageRepository::validateType($file);
 
-		$image = ImageRepository::firstOrCreate($file, $morphed, $morph);
+		$image = ImageRepository::firstOrCreate($file, $morph);
 		if ($image->wasRecentlyCreated) {
 			ImageRepository::saveToFile($image, $file);
 		}
 
-		$res = ImageRepository::sync($image, $morphed, $morph['slug'], false);
+		$res = ImageRepository::sync(array($image), $morphed, $morph['slug'], 'one', true);
 		if ($res) {
 			$this->exitJson($res);
 		}
-		$this->exitWithPopup("Уже есть");
+		$this->exitWithPopup("Уже есть такая картинка");
 
 	}
 

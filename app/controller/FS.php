@@ -38,7 +38,7 @@ class FS
 	public static function getAbsoluteImagePath($path, Image $image)
 	{
 		$s = DIRECTORY_SEPARATOR;
-		return $path . $s . $image->hash . '.' . $image->type;
+		return $path . $image->hash . '.' . $image->type;
 	}
 
 	public static function getAbsoluteFilePath($path, string $file)

@@ -46,39 +46,20 @@ class ImageRepository
 		return $imageArr;
 	}
 
-	public static function sync($morph, array $morphed, string $slug)
+	public static function sync(array $morph, array $morphed, string $slug, string $oneOrMany, bool $detach)
 	{
-		$modelName = 'app\\model\\' . ucfirst($morphed['type']);
-		$model = $modelName::find($morphed['id']);
-		if ($morph instanceof Collection) { //many
-			$function = $slug . ucfirst($morph[0]->getTable());
-			$attached = [];
-			foreach ($morph as $item) {
-				$res = $model->$function()
-					->wherePivot('slug', $slug)
-					->wherePivot('image_id', $item->id)
-					->exists();
-				if (!$res) {
-					$res = $model->$function()->wherePivot('slug', $slug)->attach([$item->id => ['slug' => $slug]]);
-					$attached = ImageRepository::getSrcMorph($item);
-				}
-			}
-			return $attached ? $attached : null;
-
+		if ($oneOrMany==='many'){
+			return $res = MorphRepository::attachMany($morph, $morphed, $slug, $detach);
+//			if ($res){
+//				return ImageRepository::getSrcMorph($morph,$res);
+//			}
 		} else { //one
-			$function = $slug . ucfirst($morph->getTable());
 
-			$res = $model->$function()
-				->wherePivot('slug', $slug)
-				->exists();
-			if ($res) {
-				$res = $model->$function()->wherePivot('slug', $slug)->detach();
+			$res = MorphRepository::attachOne($morph, $morphed, $slug, $detach);
+			if ($res['attached']){
+				return ImageRepository::getSrcMorph($morph[0]);
 			}
-			$res = $model->$function()->attach([$morph->id => ['slug' => $slug]]);
-			$attached = ImageRepository::getSrcMorph($morph);
-			return $attached;
 		}
-
 	}
 
 	public static function getImagePath(int $id): string
@@ -107,7 +88,7 @@ class ImageRepository
 		return false;
 	}
 
-	public static function firstOrCreate(array $file, array $morphed, array $morph)
+	public static function firstOrCreate(array $file,array $morph)
 	{
 		$hash = hash_file('md5', $file['tmp_name']);
 		return
@@ -123,16 +104,17 @@ class ImageRepository
 			]);
 	}
 
-	public static function validateSize(int $size, array $file)
+	public static function validateSize(array $file)
 	{
 		$validSize = self::$size;
-		if ($size > $validSize) exit(json_encode(['popup' => "Файл {$file} больше {$validSize}"]));
+		if ($file['size'] > $validSize) exit(json_encode(['popup' => "Файл {$file} больше {$validSize}"]));
 	}
 
-	public static function validateType(string $type, array $file)
+	public static function validateType(array $file)
 	{
-		$ext = self::getFileExt($type);
-		if (!$ext) exit(json_encode(['popup' => "Файл {$file} должен быть png, jpg, jpeg, gif"]));
+		$ext = self::getFileExt($file['type']);
+		$types = implode(',',self::$acceptedTypes);
+		if (!$ext) exit(json_encode(['popup' => "Файл {$file} должен быть {$types}"]));
 	}
 
 

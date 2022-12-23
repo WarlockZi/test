@@ -6,7 +6,7 @@ import '../components/accordion/accordion'
 import '../components/admin_sidebar'
 import "./model/cache";
 import "../components/date/date";
-import tiny from "../components/tiny/tiny";
+// import tiny from "../components/tiny/tiny";
 import {$} from "../common";
 
 import '../Test/test_results/test_results'
@@ -28,6 +28,7 @@ import catalogItem from '@components/catalog-item/catalog-item'
 import tooltips from "../components/tooltip/tooltip";
 import accordionShow from "../components/accordion-show";
 import Pagination from "../Test/test-pagination/test-pagination";
+import quill from "../components/quill/quill";
 
 
 $(document).ready(function () {
@@ -37,8 +38,8 @@ $(document).ready(function () {
   multiselect()
   catalogItem()
   tooltips()
-  tiny()
-
+  // tiny()
+  quill()
   accordionShow()
 
   testEdit()
