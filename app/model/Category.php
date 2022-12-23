@@ -18,9 +18,6 @@ class Category extends Model
 
 	public function mainImages()
 	{
-//		return $this->morphToMany(Image::class,
-//			'imageable')
-//			->wherePivot('slug', '=','detail');
 		return $this->morphToMany(
 			Image::class,
 			'imageable',

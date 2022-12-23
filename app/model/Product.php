@@ -35,7 +35,7 @@ class Product extends Model
 			)->where('slug', '=', 'main');
 	}
 
-	public function smallPackImages()
+	public function smallpackImages()
 	{
 		return $this->morphToMany(
 			Image::class,
