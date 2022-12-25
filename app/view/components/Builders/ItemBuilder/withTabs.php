@@ -1,6 +1,6 @@
 <div class="item_header">
 
-	<div class="page-title"><?= $this->pageTitle ?></div>
+
 	<? include ROOT . '/app/view/components/Builders/ItemBuilder/tabs.php' ?>
 </div>
 

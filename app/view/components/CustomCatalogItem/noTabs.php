@@ -1,4 +1,5 @@
 <div class="item_header">
+
 	  <div class="page-title"><?= $this->pageTitle??''; ?></div>
 </div>
 
