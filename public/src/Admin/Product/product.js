@@ -1,11 +1,6 @@
 import './product.scss'
 import {$, popup, post} from '../../common'
-
-import DragNDrop from "../../components/dnd/DragNDrop";
-import Imageable from "../Image/Imageable";
-import Image from "../Image/Image";
 import Morph from "../../components/morph/morph";
-import Product from "./Product1";
 
 export default function product() {
 
@@ -21,7 +16,39 @@ export default function product() {
 
   })
 
+//// Property set
+  let property = $(`[data-model='product'] [custom-select][data-model="property"]`)
+  if (property) {
+    [].map.call(property, function (prop) {
 
+      let observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          let propertable_id = $('.item_wrap')[0].dataset.id
+          let property_id = mutation.target.dataset.modelId
+          let val_id = mutation.target.dataset.value
+          post('/adminsc/product/setProperty',
+            {propertable_id, property_id, val_id})
+
+        });
+      });
+
+      observer.observe(
+        prop, {attributes: true,}
+      );
+    })
+  }
+
+  function validateType(file) {
+    if ([
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/webp',
+      'image/gif'
+    ].includes(file.type)) return true
+    popup.show(`Тип файлa ${file['name']} должен быть jpg, jpeg, png, webp, gif`)
+    return false
+  }
 //// morph one
 //   let el = $(".add_main_image")[0]
 //   new DragNDrop(el, addMainImg, true, null)
@@ -77,27 +104,6 @@ export default function product() {
   // }
 
 
-//// Property set
-  let property = $(`[data-model='product'] [custom-select][data-model="property"]`)
-  if (property) {
-    [].map.call(property, function (prop) {
-
-      let observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-          let propertable_id = $('.item_wrap')[0].dataset.id
-          let property_id = mutation.target.dataset.modelId
-          let val_id = mutation.target.dataset.value
-          post('/adminsc/product/setProperty',
-            {propertable_id, property_id, val_id})
-
-        });
-      });
-
-      observer.observe(
-        prop, {attributes: true,}
-      );
-    })
-  }
 
 // /// Image delete
 //   let images = $('.images');
@@ -204,16 +210,6 @@ export default function product() {
   // )
 
 
-  function validateType(file) {
-    if ([
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/webp',
-      'image/gif'
-    ].includes(file.type)) return true
-    popup.show(`Тип файлa ${file['name']} должен быть jpg, jpeg, png, webp, gif`)
-    return false
-  }
+
 
 }

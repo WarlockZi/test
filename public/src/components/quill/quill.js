@@ -41,9 +41,9 @@ export default function quill() {
 
     quill.setContents(JSON.parse(text));
 
-    quill.on('text-change', function (delta, oldDelta, source) {
-      console.log(delta, oldDelta, source)
-    })
+    // quill.on('text-change', function (delta, oldDelta, source) {
+    //   console.log(delta, oldDelta, source)
+    // })
 
     textarea.style.background = '#fff'
 
