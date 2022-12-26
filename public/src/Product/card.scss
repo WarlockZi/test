@@ -1,14 +1,24 @@
-.card{
+.card {
   display: flex;
   padding: 20px;
   flex-flow: column;
 
-  .left_column{
+  .left_column {
     display: flex;
     flex: 1 1 50%;
   }
-  .right_column{
+
+  .right_column {
     display: flex;
-    flex:1 1 50%;
+    flex: 1 1 50%;
   }
+
+  .pic {
+    img {
+      width: 400px;
+      height: 400px;
+      object-fit: contain;
+    }
+  }
+
 }

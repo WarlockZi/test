@@ -1,8 +1,10 @@
+<? use \app\Repository\ImageRepository; ?>
+
 <main class="main">
 	<div class="card">
 		<div class="breadcrumbs">
 				<? foreach ($product['parentCategories'] as $breadcrumb): ?>
-					<a href="/category/<?= $breadcrumb['slug'] ?>"><?= $breadcrumb['name'] ?></a> >
+			  <a href="/category/<?= $breadcrumb['slug'] ?>"><?= $breadcrumb['name'] ?></a> >
 				<? endforeach; ?>
 		</div>
 		<div class="card">
@@ -32,7 +34,7 @@
 							<? endif; ?>
 
 					<img title="<?= $product['name']; ?>"
-					     src="/pic/product/<?= $product['main_image']['hash'] . '.jpeg'; ?>"
+					     src="<?= ImageRepository::getSrcMorph($product->mainImages[0])['src'] ?>"
 					     alt="<?= $product['name']; ?>">
 
 					<div class="horiz-thumbs">
@@ -49,9 +51,10 @@
 
 					<div class="prod-info-wrap">
 						<div class="info-tag">Информация о товаре</div>
-						<div class="dtxt">
+						<div id="dtxt">
 										<?= $product['dtxt'] ?>
 						</div>
+
 					</div>
 					<h3 class="may-also-like-wrap">
 						<span>Вам также может понравится</span>

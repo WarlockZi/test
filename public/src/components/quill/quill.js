@@ -6,6 +6,7 @@ export default function quill() {
 
     let selector = '#mytextarea'
     let textarea = $(selector)[0]
+    if (!textarea) return false
     let text = textarea.innerText
 
     var toolbarOptions = [
