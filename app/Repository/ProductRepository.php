@@ -20,7 +20,8 @@ class ProductRepository extends Controller
 
 	public static function getCard($slug)
 	{
-		$product = self::getProduct('slug', $slug)->toArray();
+//		$product = self::getProduct('slug', $slug)->toArray();
+		$product = self::getProduct('slug', $slug);
 		$product['parentCategories'] = self::getParentCategories($product['category']);
 		return $product;
 	}
