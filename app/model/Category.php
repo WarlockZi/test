@@ -24,10 +24,12 @@ class Category extends Model
 			)->where('slug', '=', 'main');
 	}
 
-
 	public static function showFrontCategories()
 	{
-		return static::where('show_front', 1)->get(['name'])->toArray();
+		return static::where('show_front', 1)
+			->with('children')
+			->get()
+			->toArray();
 	}
 
 	public function properties()
@@ -61,7 +63,6 @@ class Category extends Model
 		return $this->hasMany(Product::class);
 	}
 
-
 	public function cat()
 	{
 		return $this->belongsTo(Category::class);
@@ -70,7 +71,9 @@ class Category extends Model
 	public function parents()
 	{
 		return $this->cat()->with('parents');
-
 	}
-
+	public function childrenRecursive()
+	{
+		return $this->children()->with('childrenRecursive');
+	}
 }

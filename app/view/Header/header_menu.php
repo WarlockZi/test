@@ -4,10 +4,10 @@
 		<? foreach ($frontCategories as $mainItem): ?>
 			<div class='h-cat'><?= $mainItem['name']; ?>
 				<ul>
-					<? if (isset($mainItem['childs'])): ?>
-						<? foreach ($mainItem['childs'] as $item): ?>
+					<? if (isset($mainItem['children'])): ?>
+						<? foreach ($mainItem['children'] as $item): ?>
 							<li>
-								<a href="/<?= $item['slug'] ?>"><?= $item['name'] ?></a>
+								<a href="/category/<?= $item['slug'] ?>"><?= $item['name'] ?></a>
 							</li>
 						<? endforeach; ?>
 					<? endif; ?>
