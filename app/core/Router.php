@@ -8,10 +8,8 @@ use app\view\View;
 
 class Router
 {
-
 	protected static $routes = [];
 	protected static $route = [];
-//	protected static $aCategoryOrProduct = [];
 
 	public static function add($regexp, $route = [])
 	{
@@ -50,6 +48,14 @@ class Router
 		exit();
 	}
 
+	protected static function getNameSpace($route)
+	{
+		if (isset($route['admin']) && $route['admin']) {
+		return 'app\controller\admin\\';
+		}
+			return 'app\controller\\';
+	}
+
 	public static function dispatch($url)
 	{
 		require_once ROOT . '/app/core/routes.php';
@@ -57,7 +63,8 @@ class Router
 		$url = self::removeQuryString($url);
 
 		if (!self::matchRoute($url)) self::get404('url', $url);
-		$controller = 'app\controller\\' . self::$route['controller'] . 'Controller';
+		$nameSpace = self::getNameSpace(self::$route);
+		$controller = $nameSpace . self::$route['controller'] . 'Controller';
 
 		if (!class_exists($controller)) self::get404('controller', $controller);
 		$controller = new $controller(self::$route);

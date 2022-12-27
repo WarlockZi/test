@@ -27,10 +27,8 @@
 <body>
 
 <?=$header;?>
-<?// include ROOT . '/app/view/components/header/vitex_header.php'; ?>
 
 <?=$headerMenu;?>
-<?// include ROOT . '/app/view/components/header/catalog_menu.php'; ?>
 
 <?= $content; ?>
 
@@ -41,7 +39,6 @@
 <? $this::getJS(); ?>
 <? //=require_once ROOT.'/app/view/components/ya_metrica.php';?>
 
-<!-- Include the Quill library -->
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 </body>

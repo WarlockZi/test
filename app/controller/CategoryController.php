@@ -4,9 +4,7 @@ namespace app\controller;
 
 
 use app\model\Category;
-use app\model\Product;
-use app\model\Tag;
-use app\Repository\ImageRepository;
+use app\view\Accordion\AccordionBuilder;
 use app\view\Category\CategoryView;
 use app\view\components\MyTree\Tree;
 
@@ -24,6 +22,26 @@ class CategoryController Extends AppController
 
 	public function actionIndex()
 	{
+		$categories = Category::where('category_id', 0)
+			->with('childrenRecursive')
+			->get();
+		$accordion = '';
+		if (isset($this->route['slug'])) {
+			$slug = $this->route['slug'];
+
+			if ($categories) {
+				$accordion = AccordionBuilder::build($categories, 'childrenRecursive')
+					->get();
+			}
+
+		}
+//		$this->set(compact('categories'));
+		$this->set(compact('accordion'));
+
+	}
+
+	protected function adminIndex()
+	{
 		$categories = Category::all()->toArray();
 
 		$accordion = Tree::build($categories)
@@ -33,7 +51,27 @@ class CategoryController Extends AppController
 
 		$this->set(compact('categories'));
 		$this->set(compact('accordion'));
+
 	}
+
+//	public function actionIndex()
+//	{
+//		$slug = $this->route['slug'];
+//
+//		$categories = Category::where('slug',$slug)
+//			->with('children')
+//			->first()
+//			->toArray();
+//
+//		$accordion = Tree::build($categories)
+//			->parent('category_id')
+//			->model('category')
+//			->get();
+//
+//		$this->set(compact('categories'));
+//		$this->set(compact('accordion'));
+//	}
+
 
 	public function actionEdit()
 	{
@@ -45,17 +83,17 @@ class CategoryController Extends AppController
 
 
 	///................. ADD IMAGE
-	public function actionAddMainImage()
-	{
-//		ProductRepository::clear();
-		if ($_FILES) {
-			$image = ImageRepository::saveIfNotExistReturnModel($_FILES[0], 'ctegory');
-			$product = Product::find($_POST['imageable_id']);
-			$product->main_img = $image->id;
-			$product->save();
-			$this->exitJson(['msg' => 'ok', 'id' => $image->id]);
-		}
-	}
+//	public function actionAddMainImage()
+//	{
+////		ProductRepository::clear();
+//		if ($_FILES) {
+//			$image = ImageRepository::saveIfNotExistReturnModel($_FILES[0], 'ctegory');
+//			$product = Product::find($_POST['imageable_id']);
+//			$product->main_img = $image->id;
+//			$product->save();
+//			$this->exitJson(['msg' => 'ok', 'id' => $image->id]);
+//		}
+//	}
 
 
 //	public function actionUpdateOrCreate()
@@ -82,13 +120,13 @@ class CategoryController Extends AppController
 //			$this->exitWithMsg('No id');
 //		}
 //	}
-
-	public function actionSetMainImage()
-	{
-		if ($this->ajax) {
-			$this->exitWithPopup('dd');
-
-		}
-	}
+//
+//	public function actionSetMainImage()
+//	{
+//		if ($this->ajax) {
+//			$this->exitWithPopup('dd');
+//
+//		}
+//	}
 
 }
