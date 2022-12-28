@@ -3,13 +3,42 @@
 @import '../normalize.scss';
 @import '../components/footer/footer.scss';
 @import '../components/list.scss';
+@import "../components/breadcrumbs";
+
+
+.vitex-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 25px;
+
+  h1 {
+    @include _h1
+  }
+  h2 {
+    @include _h2
+  }
+  h3 {
+    @include _h3
+  }
+  h4 {
+    @include _h4
+  }
+
+@import "../Category/category";
+
+
+}
+
 
 :root {
   --color-main: #6ca3fe;
 }
 
-.cart{
-  margin: 40px  auto;
+.cart {
+  margin: 40px auto;
 }
 
 .about {
@@ -17,7 +46,7 @@
   margin: 40px auto;
 
   ol li {
-  list-style: circle;
+    list-style: circle;
   }
 
   p {

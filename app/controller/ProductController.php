@@ -9,7 +9,6 @@ use app\model\Propertable;
 use app\model\Tag;
 use app\Repository\ProductRepository;
 use app\view\Category\CategoryView;
-use app\view\Product\ProductCardView;
 use app\view\Product\ProductView;
 
 
@@ -31,8 +30,10 @@ class ProductController Extends AppController
 		$this->view='card';
 		if (isset($this->route['slug'])) {
 			$slug = $this->route['slug'];
-			$product = ProductCardView::getCard($slug);
+			$product = ProductRepository::getCard($slug);
+			$breadcrumbs = ProductRepository::getBreadcrumbs($product);
 			$this->set(compact('product'));
+			$this->set(compact('breadcrumbs'));
 		}
 	}
 

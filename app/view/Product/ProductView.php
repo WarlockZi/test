@@ -304,7 +304,7 @@ class ProductView
 
 	protected static function hasCat($category)
 	{
-		return $category['category_recursive'];
+		return $category['parentRecursive'];
 	}
 
 	protected static function getProperyRecursiveProps($product)
@@ -312,12 +312,12 @@ class ProductView
 		$parents = $product->category;
 		$arr[$parents['id']]['category'] = $parents->name;
 		$arr[$parents['id']]['properties'] = $parents->properties->toArray();
-		$arr[$parents->category_recursive['id']]['category'] = $parents->category_recursive->name;
-		$arr[$parents->category_recursive['id']]['properties'] = $parents->category_recursive->properties->toArray();
-		while (self::hasCat($parents->category_recursive)) {
-			$parents = $parents->category_recursive;
-			$arr[$parents->category_recursive->id]['category'] = $parents->category_recursive->name;
-			$arr[$parents->category_recursive->id]['properties'] = $parents->category_recursive->properties->toArray();
+		$arr[$parents->parentRecursive['id']]['category'] = $parents->parentRecursive->name;
+		$arr[$parents->parentRecursive['id']]['properties'] = $parents->parentRecursive->properties->toArray();
+		while (self::hasCat($parents->parentRecursive)) {
+			$parents = $parents->parentRecursive;
+			$arr[$parents->parentRecursive->id]['category'] = $parents->parentRecursive->name;
+			$arr[$parents->parentRecursive->id]['properties'] = $parents->parentRecursive->properties->toArray();
 		}
 		return $arr;
 	}
@@ -351,20 +351,20 @@ class ProductView
 	public static function card($slug)
 	{
 		$product = IlluminateProduct::
-		with('properties', 'category', 'category.category_recursive')
+		with('properties', 'category', 'category.parentRecursive')
 			->where('slug', '=', $slug)
 			->get()
 			->toArray()[0];
-		$product['nav'] = self::getNavigationStr($product['category']['category_recursive']);
+		$product['nav'] = self::getNavigationStr($product['category']['parentRecursive']);
 		return $product;
 	}
 
 	protected static function getNavigationStr(array $arr, $str = '')
 	{
 		$str = '/' . $arr['alias'];
-		while ($arr['category_recursive']) {
-			$str .= "/" . $arr['category_recursive'];
-			self::getNavigationStr($arr['category_recursive'], $str);
+		while ($arr['parentRecursive']) {
+			$str .= "/" . $arr['parentRecursive'];
+			self::getNavigationStr($arr['parentRecursive'], $str);
 		}
 		return $str;
 	}

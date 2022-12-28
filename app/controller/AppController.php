@@ -128,8 +128,8 @@ class AppController extends Controller
 		View::setCss('main.css');
 		View::setJs('mainHeader.js');
 		View::setCss('mainHeader.css');
-//		View::setJs('common.js');
-//		View::setCss('common.css');
+//		View::setJs('breadcrumbs.js');
+//		View::setCss('breadcrumbs.css');
 		View::setJs('cookie.js');
 		View::setCss('cookie.css');
 

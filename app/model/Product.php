@@ -27,6 +27,11 @@ class Product extends Model
 			)->where('slug', '=', 'detail');
 	}
 
+	public function parentCategoryRecursive(){
+
+		return $this->category()->with('parentRecursive');
+	}
+
 	public function mainImages()
 	{
 		return $this->morphToMany(
@@ -71,7 +76,7 @@ class Product extends Model
 
 	public function categoryCategoryRecPropsVals()
 	{
-		return $this->belongsTo(Category::class)->with('category_recursive.properties.vals');
+		return $this->belongsTo(Category::class)->with('parentRecursive.properties.vals');
 	}
 
 	public function properties()

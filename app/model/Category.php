@@ -37,14 +37,14 @@ class Category extends Model
 		return $this->morphToMany(Property::class, 'propertable');
 	}
 
-	public function category_recursive()
+	public function parentRecursive()
 	{
-		return $this->parent()->with('category_recursive');
+		return $this->parent()->with('parentRecursive');
 	}
 
 	public function category()
 	{
-		return $this->parent()->with('category_recursive');
+		return $this->parent()->with('parentRecursive');
 	}
 
 	public function parent()
@@ -75,5 +75,16 @@ class Category extends Model
 	public function childrenRecursive()
 	{
 		return $this->children()->with('childrenRecursive');
+	}
+	public function parentBreadcrumbs()
+	{
+		if (isset($this->parentRecursive)){
+			$name = '';
+			foreach ($this->parentRecursive as $parent){
+				$name.=$parent->name;
+			}
+
+		return $this->children()->with('childrenRecursive');
+		}
 	}
 }
