@@ -1,23 +1,32 @@
-.card {
+.product-card {
   display: flex;
-  padding: 20px;
-  flex-flow: column;
+  //padding: 20px;
+  //flex-flow: column;
+
+  .row{
+    display: flex;
+  }
 
   .left_column {
     display: flex;
+    flex-direction: column;
     flex: 1 1 50%;
   }
 
   .right_column {
     display: flex;
+    flex-direction: column;
     flex: 1 1 50%;
   }
 
-  .pic {
+  .main-image {
+    margin: 10px 0;
     img {
       width: 400px;
       height: 400px;
       object-fit: contain;
+      border: 1px solid #ccc;
+      padding: 10px;
     }
   }
 

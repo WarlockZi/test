@@ -25,14 +25,14 @@ class CategoryView
 	{
 	}
 
-	protected static function getBreadcrumb(array $category)
+	public static function getBreadcrumb(array $category)
 	{
 		return "<a href='/adminsc/category/edit/{$category['id']}'>{$category['name']}</a>";
 	}
 
 	protected static function hasCat($cat)
 	{
-		return $cat['category_recursive'];
+		return $cat['parent_recursive'];
 	}
 
 	protected static function getLastCategory(bool $isLink, $parents): string
@@ -49,22 +49,25 @@ class CategoryView
 			: "<div>{$title}</div>";
 	}
 
-	public static function breadcrumbs(int $id, bool $lastIsALink = false): string
+	public static function breadcrumbs(int $id, bool $lastIsALink = false, bool $admin = true): string
 	{
+		$prefix = $admin ? '/adminsc' : '';
 
-		$parents = Category::with('category_recursive.properties.vals')
-			->find($id)->toArray();
+		$parents =
+			Category::with('parentRecursive.properties.vals')
+				->find($id)->toArray();
 
 		$arr = [];
 		$finalCategory = self::getLastCategory($lastIsALink, $parents);
 		while (self::hasCat($parents)) {
-			$id = $parents['category_recursive']['id'];
-			$name = $parents['category_recursive']['name'];
+			$id = $parents['parent_recursive']['id'];
+			$slug = $prefix ? "/edit/{$id}" : "/{$parents['parent_recursive']['slug']}";
+			$name = $parents['parent_recursive']['name'];
 			array_push($arr,
-				"<a href=/adminsc/category/edit/{$id}>{$name}</a>");
-			$parents = $parents['category_recursive'];
+				"<a href={$admin}/category{$slug}>{$name}</a>");
+			$parents = $parents['parent_recursive'];
 		}
-		$initCategory = self::getInitCategory(true, 'Категории', '/adminsc/category');
+		$initCategory = self::getInitCategory(true, 'Категории', "{$prefix}/category");
 		array_push($arr, $initCategory);
 		$arr = array_reverse($arr);
 		array_push($arr, $finalCategory);
@@ -78,7 +81,7 @@ class CategoryView
 
 		$illumCategory = Category::with(
 			'products',
-			'category_recursive',
+			'parentRecursive',
 			'properties',
 			'children',
 			'mainImages')
@@ -105,7 +108,6 @@ class CategoryView
 					->type('checkbox')
 					->get()
 			)
-
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(

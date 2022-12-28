@@ -22,20 +22,32 @@ class CategoryController Extends AppController
 
 	public function actionIndex()
 	{
-		$categories = Category::where('category_id', 0)
-			->with('childrenRecursive')
-			->get();
 		$accordion = '';
 		if (isset($this->route['slug'])) {
+			$this->view = 'category';
 			$slug = $this->route['slug'];
 
-			if ($categories) {
-				$accordion = AccordionBuilder::build($categories, 'childrenRecursive')
-					->get();
-			}
+			$category = Category::where('slug', $slug)
+				->with('childrenRecursive')
+				->with('parentRecursive')
+				->with('products')
+				->with('products.mainImages')
+				->get()->first();
+			$this->set(compact('category'));
+
+			$breadcrumbs = CategoryView::breadcrumbs($category->id, false,false);
+			$this->set(compact('breadcrumbs'));
+
+		} else {
+
+			$categories = Category::where('category_id', 0)
+				->with('childrenRecursive')
+				->get();
+			$this->set(compact('categories'));
+			$this->view = 'categories';
 
 		}
-//		$this->set(compact('categories'));
+
 		$this->set(compact('accordion'));
 
 	}

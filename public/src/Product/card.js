@@ -4,15 +4,16 @@ import {$} from '../common'
 
 window.onload = function () {
 
-  let selector = '#dtxt'
+  let quillSelector = '#dtxt'
+  if (!$(quillSelector)[0]) return false
 
-  let text = JSON.parse($(selector)[0].innerText)
+  let text = JSON.parse($(quillSelector)[0].innerText)
   var options = {
     placeholder: 'Compose an epic...',
     // theme: 'bubble'
     // theme: 'snow'
   };
-  var q = new Quill(selector, options);
+  var q = new Quill(quillSelector, options);
   q.setContents(text)
   q.enable(false)
 

@@ -219,25 +219,30 @@ $border-color:$color-main) {
 }
 
 @mixin _h1 {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: $color-grey-logo;
+  margin: 5px 0;
 }
 
 @mixin _h2 {
-  font-size: 1.5rem;
+  font-size: 1.0rem;
   font-weight: 600;
   color: $color-grey-logo;
+  margin: 5px 0;
 }
 
 @mixin _h3 {
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: $color-grey-logo;
+  margin: 5px 0;
 }
 
 @mixin _h4 {
-  font-size: 0.9rem;
+  font-size: 0.6rem;
   font-weight: 600;
   color: $color-grey-logo;
+  margin: 0;
+  margin-bottom: 5px;
 }
