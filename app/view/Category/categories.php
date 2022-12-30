@@ -1,4 +1,4 @@
-<div class="vitex-content">
+<main class="vitex-content">
 
 	<h1 class="page-name">Категории</h1>
 
@@ -24,4 +24,4 @@
 	  </div>
 	<? endif; ?>
 
-</div>
+</main>

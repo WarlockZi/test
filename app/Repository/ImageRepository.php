@@ -6,9 +6,9 @@ namespace app\Repository;
 
 use app\controller\FS;
 use app\model\Image;
+use app\model\Product;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 class ImageRepository
 {
@@ -39,6 +39,20 @@ class ImageRepository
 		return ImageRepository::getImg($field->getFullPath());
 	}
 
+	public static function getProductMainImage(Product $product): string
+	{
+		if ($product->mainImages->count()) {
+			$image = $product->mainImages[0];
+			$src = ImageRepository::getSrcMorph($image)['src'];
+			$name = $product['name'];
+			return "<img title = '{$name}'" .
+				"src = '{$src}' alt = '{$name}'>";
+		} else {
+			$src = ImageRepository::getImg();
+			return "<img src = {$src}>";
+		}
+	}
+
 	public static function getSrcMorph(Image $image): array
 	{
 		$imageArr['src'] = $image->getFullPath();
@@ -48,15 +62,11 @@ class ImageRepository
 
 	public static function sync(array $morph, array $morphed, string $slug, string $oneOrMany, bool $detach)
 	{
-		if ($oneOrMany==='many'){
+		if ($oneOrMany === 'many') {
 			return $res = MorphRepository::attachMany($morph, $morphed, $slug, $detach);
-//			if ($res){
-//				return ImageRepository::getSrcMorph($morph,$res);
-//			}
 		} else { //one
-
 			$res = MorphRepository::attachOne($morph, $morphed, $slug, $detach);
-			if ($res['attached']){
+			if ($res['attached']) {
 				return ImageRepository::getSrcMorph($morph[0]);
 			}
 		}
@@ -88,7 +98,7 @@ class ImageRepository
 		return false;
 	}
 
-	public static function firstOrCreate(array $file,array $morph)
+	public static function firstOrCreate(array $file, array $morph)
 	{
 		$hash = hash_file('md5', $file['tmp_name']);
 		return
@@ -113,7 +123,7 @@ class ImageRepository
 	public static function validateType(array $file)
 	{
 		$ext = self::getFileExt($file['type']);
-		$types = implode(',',self::$acceptedTypes);
+		$types = implode(',', self::$acceptedTypes);
 		if (!$ext) exit(json_encode(['popup' => "Файл {$file} должен быть {$types}"]));
 	}
 

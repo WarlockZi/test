@@ -1,4 +1,4 @@
-<div class="vitex-content">
+<main class="vitex-content">
 
 	<div class="category-tree">
 		 <?= $accordion ?? ''; ?>
@@ -6,7 +6,7 @@
 
 	<?= $breadcrumbs ?? '' ?>
 
-	<h3>Категория - <span><?= $category->name ?? '' ?></span></h3>
+	<h1>Категория - <span><?= $category->name ?? '' ?></span></h1>
 
 
 	<? if (isset($category) && $category): ?>
@@ -58,4 +58,4 @@
 	  </div>
 	<? endif; ?>
 
-</div>
+</main>

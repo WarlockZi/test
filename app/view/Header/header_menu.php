@@ -1,20 +1,25 @@
+<?
+
+use \app\core\Icon;
+
+?>
 <div class="header-catalog-menu">
 	<div class="header-catalog-menu__wrap">
 
-		<? foreach ($frontCategories as $mainItem): ?>
-			<div class='h-cat'><?= $mainItem['name']; ?>
-				<ul>
-					<? if (isset($mainItem['children'])): ?>
-						<? foreach ($mainItem['children'] as $item): ?>
-							<li>
-								<a href="/category/<?= $item['slug'] ?>"><?= $item['name'] ?></a>
-							</li>
-						<? endforeach; ?>
-					<? endif; ?>
-				</ul>
+		 <? foreach ($frontCategories as $mainItem): ?>
+		  <div class='h-cat'><?= $mainItem['name']; ?>
+			  <ul>
+						 <? if (isset($mainItem['children'])): ?>
+							 <? foreach ($mainItem['children'] as $item): ?>
+						 <li>
+							 <a href="/category/<?= $item['slug'] ?>"><?= $item['name'] ?></a>
+						 </li>
+							 <? endforeach; ?>
+						 <? endif; ?>
+			  </ul>
 
-			</div>
-		<? endforeach; ?>
+		  </div>
+		 <? endforeach; ?>
 
 
 		<div class='h-cat'>Акции
@@ -28,16 +33,16 @@
 
 		<div class='utils'>
 			<div class="search">
-				<? include ICONS . '/feather/search.svg' ?>
-                <div class="search__button"></div>
+					 <?= Icon::search('feather'); ?>
+				<div class="search__button"></div>
 			</div>
 
 			<a class="cart" href="/cart">
-				<? include ICONS . '/feather/shoppingCart.svg' ?>
+					 <?= Icon::shoppingCart('feather'); ?>
 			</a>
 
 			<div class="gamburger">
-				<? include ICONS . '/feather/menu.svg' ?>
+					 <?= Icon::menu('feather') ?>
 
 			</div>
 

@@ -7,6 +7,9 @@ namespace app\view\Header;
 use app\controller\Controller;
 use app\core\Cache;
 use app\model\Category;
+use app\core\Icon;
+
+
 
 class Header
 {
@@ -18,8 +21,10 @@ class Header
 		return ob_get_clean();
 	}
 
-	public static function getHeader(Controller $controller)
+	public static function getHeader(Controller $controller, $headerMenu)
 	{
+		$index = ($controller->route['action'] === "index" && $controller->route['controller'] == "Main");
+		$logo = Icon::logo_squre1().Icon::logo_vitex1();
 		ob_start();
 		include ROOT . '/app/view/Header/vitex_header.php';
 		return ob_get_clean();
@@ -29,9 +34,8 @@ class Header
 	{
 		$frontCategories = Category::showFrontCategories();
 		$headerMenu = self::getMenu($controller, $frontCategories);
-		$header = self::getHeader($controller);
+		$header = self::getHeader($controller,$headerMenu);
 		$controller->set(compact(
-			'frontCategories',
 			'headerMenu',
 			'header',
 			));
@@ -64,14 +68,6 @@ class Header
 			return $res;
 
 	}
-
-	public static function getLogo(Controller $controller)
-	{
-		ob_start();
-		include ROOT . '/app/view/Header/logo.php';
-		return ob_get_clean();
-	}
-
 
 	public static function getAdninHeader(Controller $controller)
 	{

@@ -56,6 +56,8 @@ $user = $controller->user;
 						 <? if (User::can($user, ['gate_admin'])): // admin ?>
 					 <a class="neon" href='/adminsc/property'>Свойства</a>
 					 <a class="neon" href='/adminsc/right'>Права</a>
+					 <a class="neon" href='/adminsc/country'>Страны</a>
+					 <a class="neon" href='/adminsc/supplier'>Производители</a>
 					 <a class="neon" href='/adminsc/tag'>Tэги</a>
 					 <a class="neon" href='/adminsc/unit'>Ед. измерен.</a>
 					 <a class="neon" href='/adminsc/image'>Картинки</a>

@@ -73,7 +73,6 @@ class Product extends Model
 			);
 	}
 
-
 	public function categoryCategoryRecPropsVals()
 	{
 		return $this->belongsTo(Category::class)->with('parentRecursive.properties.vals');
@@ -83,7 +82,6 @@ class Product extends Model
 	{
 		return $this->morphToMany(Property::class, 'propertable');
 	}
-
 
 	public function category()
 	{
@@ -96,20 +94,21 @@ class Product extends Model
 		return $this->belongsTo(Category::class)->with('category_rec');
 	}
 
-	public function cat(){
-		return $this->belongsTo(Category::class)
-			->with('cat');
-	}
-	public function parents()
-	{
-		$collection = collect([]);
-		$cat = $this->cat;
-		while ($cat) {
-			$collection->push($cat);
-			$cat = $cat->cat;
-		}
-		return $collection;
-	}
+//	public function cat(){
+//		return $this->belongsTo(Category::class)
+//			->with('cat');
+//	}
+//
+//	public function parents()
+//	{
+//		$collection = collect([]);
+//		$cat = $this->cat;
+//		while ($cat) {
+//			$collection->push($cat);
+//			$cat = $cat->cat;
+//		}
+//		return $collection;
+//	}
 
 
 //	public function smallPackImages()
