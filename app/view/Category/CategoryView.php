@@ -4,10 +4,8 @@ namespace app\view\Category;
 
 use app\core\Icon;
 use app\model\Category;
-use app\model\Image;
 use app\model\Product;
 use app\model\Property;
-use app\Repository\ImageRepository;
 use app\view\Builders\MorphBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
@@ -38,18 +36,21 @@ class CategoryView
 	protected static function getLastCategory(bool $isLink, $parents): string
 	{
 		return $isLink
-			? "<a href='/adminsc/category/edit/{$parents['id']}'>{$parents['name']}</a>"
-			: "<div>{$parents['name']}</div>";
+			? "<li><a href='/adminsc/category/edit/{$parents['id']}'>{$parents['name']}</a></li>"
+			: "<li><div>{$parents['name']}</div></li>";
 	}
 
 	protected static function getInitCategory(bool $isLink, $title, $href): string
 	{
 		return $isLink
-			? "<a href='{$href}'>{$title}</a>"
-			: "<div>{$title}</div>";
+			? "<li><a href='{$href}'>{$title}</a></li>"
+			: "<li><div>{$title}</div></li>";
 	}
 
-	public static function breadcrumbs(int $id, bool $lastIsALink = false, bool $admin = true): string
+	public static function breadcrumbs(int $id,
+																		 bool $lastIsALink = false,
+																		 bool $admin = true,
+																		 string $class = 'breadcrumbs-1'): string
 	{
 		$prefix = $admin ? '/adminsc' : '';
 
@@ -64,15 +65,16 @@ class CategoryView
 			$slug = $prefix ? "/edit/{$id}" : "/{$parents['parent_recursive']['slug']}";
 			$name = $parents['parent_recursive']['name'];
 			array_push($arr,
-				"<a href={$admin}/category{$slug}>{$name}</a>");
+				"<li><a href={$prefix}/category{$slug}>{$name}</a></li>");
 			$parents = $parents['parent_recursive'];
 		}
 		$initCategory = self::getInitCategory(true, 'Категории', "{$prefix}/category");
 		array_push($arr, $initCategory);
 		$arr = array_reverse($arr);
 		array_push($arr, $finalCategory);
-		$breadcrumbs = implode('&nbsp;>&nbsp;', $arr);
-		return "<div class='breadcrumbs'>{$breadcrumbs}</div>";
+//		$breadcrumbs = implode('&nbsp;>&nbsp;', $arr);
+		$breadcrumbs = implode('', $arr);
+		return "<nav class='{$class}'>{$breadcrumbs}</nav>";
 	}
 
 	public static function edit($id): string

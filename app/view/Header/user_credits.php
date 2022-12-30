@@ -1,8 +1,9 @@
 <?
 
 use app\model\User;
+use \app\controller\AuthController;
 
-$user = \app\controller\AuthController::user();
+$user = AuthController::user();
 
 ?>
 

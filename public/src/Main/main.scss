@@ -4,6 +4,7 @@
 @import '../components/footer/footer.scss';
 @import '../components/list.scss';
 @import "../components/breadcrumbs";
+@import "../Product/card";
 
 
 .vitex-content {
@@ -13,6 +14,8 @@
   margin: 0 auto;
   max-width: 800px;
   padding: 25px;
+  background-color: white;
+  min-width: 900px;
 
   h1 {
     @include _h1

@@ -4,7 +4,7 @@ import {$} from '../common'
 
 window.onload = function () {
 
-  let quillSelector = '#dtxt'
+  let quillSelector = '.detail-text'
   if (!$(quillSelector)[0]) return false
 
   let text = JSON.parse($(quillSelector)[0].innerText)

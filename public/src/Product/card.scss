@@ -1,10 +1,57 @@
+@import "../mixin_media";
+@import "../var";
+
 .product-card {
   display: flex;
-  //padding: 20px;
-  //flex-flow: column;
+  flex-direction: column;
 
-  .row{
+  .properties {
+    font-size: .9rem;
+    flex: 1 0 60%;
+    margin-left: 20px;
+
+    .property {
+      width: 50%;
+      color: $textSecondary;
+      position: relative;
+      box-sizing: border-box;
+      display: block;
+      margin-bottom: 8px;
+      word-break: break-word;
+
+      &:before {
+        border-bottom: 1px dotted $textSecondary;
+        bottom: 0.2em;
+        content: "";
+        display: block;
+        left: 0;
+        position: absolute;
+        width: 100%;
+      }
+      span{
+        align-items: flex-start;
+        background: $color-white;
+        display: inline;
+        padding-right: 3px;
+        position: relative;
+      }
+    }
+
+    .value {
+      color: $textPrimary;
+      width: 50%;
+      padding: 0 10px 0 3px;
+      position: relative;
+      box-sizing: border-box;
+      display: block;
+      margin-bottom: 8px;
+      word-break: break-word;
+    }
+  }
+
+  .row {
     display: flex;
+    margin-bottom: 10px;
   }
 
   .left_column {
@@ -20,14 +67,30 @@
   }
 
   .main-image {
-    margin: 10px 0;
+    //margin: 10px 0;
     img {
-      width: 400px;
-      height: 400px;
+      width: 200px;
+      height: 200px;
       object-fit: contain;
       border: 1px solid #ccc;
       padding: 10px;
     }
   }
 
+  @include info-tag;
+
+  .note {
+    font-size: .6rem;
+    font-style: italic;
+  }
+
+  h3 {
+    @include _h3;
+    padding: 10px;
+    color: #ffffff;
+    font-weight: normal;
+  }
 }
+
+
+

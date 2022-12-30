@@ -5,7 +5,7 @@ namespace app\controller;
 
 use app\model\Category;
 use app\view\Accordion\AccordionBuilder;
-use app\view\Category\CategoryView;
+use app\view\Category\CountryView;
 use app\view\components\MyTree\Tree;
 
 
@@ -35,7 +35,7 @@ class CategoryController Extends AppController
 				->get()->first();
 			$this->set(compact('category'));
 
-			$breadcrumbs = CategoryView::breadcrumbs($category->id, false,false);
+			$breadcrumbs = CountryView::breadcrumbs($category->id, false,false);
 			$this->set(compact('breadcrumbs'));
 
 		} else {
@@ -88,8 +88,8 @@ class CategoryController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route['id'];
-		$breadcrumbs = CategoryView::breadcrumbs($id);
-		$category = CategoryView::edit($id);
+		$breadcrumbs = CountryView::breadcrumbs($id);
+		$category = CountryView::edit($id);
 		$this->set(compact('category', 'breadcrumbs'));
 	}
 

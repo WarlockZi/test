@@ -9,7 +9,7 @@ use app\model\Product;
 use app\model\Propertable;
 use app\model\Tag;
 use app\Repository\ProductRepository;
-use app\view\Category\CategoryView;
+use app\view\Category\CountryView;
 use app\view\Product\ProductCardView;
 use app\view\Product\ProductView;
 
@@ -20,10 +20,10 @@ class ProductController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route['id'];
-		$prod = ProductRepository::getEdit($id);
+		$prod = ProductRepository::getProduct('id',$id);
 
 		$product = ProductView::edit($prod);
-		$breadcrumbs = CategoryView::breadcrumbs($prod->category->id, true);
+		$breadcrumbs = CountryView::breadcrumbs($prod->category->id, true);
 		$this->set(compact('product', 'breadcrumbs'));
 	}
 

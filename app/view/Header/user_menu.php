@@ -1,24 +1,28 @@
-<? use \app\model\User;
+<?
 
-$user = \app\controller\AuthController::user(); ?>
+use \app\model\User;
+use \app\controller\AuthController;
+use \app\core\Icon;
+
+$user = AuthController::user(); ?>
 <? if (!$user): ?>
 
 	<div class="guest-menu" aria-label="login">
-		 <? include ROOT . '/public/src/components/icons/user.svg'; ?>
+		 <?= Icon::user(); ?>
 		Вход
 
-		  <ul class="guest-menu__menu">
-			  <a href="/auth/login">Войти</a>
-			  <a href="/auth/register">Регистрация</a>
-			  <a href="/auth/returnpass">Забыл пароль</a>
-		  </ul>
+		<ul class="guest-menu__menu">
+			<a href="/auth/login">Войти</a>
+			<a href="/auth/register">Регистрация</a>
+			<a href="/auth/returnpass">Забыл пароль</a>
+		</ul>
 
 	</div>
 
 <? else: ?>
 
 	<div class="user-menu">
-		<img src="<?= User::avatar($user)??''; ?>" alt="">
+		<img src="<?= User::avatar($user) ?? ''; ?>" alt="">
 
 		<div class="credits">
 			<div class="fio"><?= "{$user['surName']} {$user['name']}"; ?></div>
@@ -32,7 +36,7 @@ $user = \app\controller\AuthController::user(); ?>
 				<? endif; ?>
 
 			<a href="/auth/logout" aria-label="logout">
-					 <? include ICONS . "/auth/logout2.svg"; ?>Выход</a>
+					 <?= Icon::logout2(); ?>Выход</a>
 		</div>
 	</div>
 

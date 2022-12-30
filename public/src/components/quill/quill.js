@@ -3,13 +3,11 @@ import {post, $} from '../../common'
 export default function quill() {
 
   window.onload = function () {
-
     let selector = '#mytextarea'
     let textarea = $(selector)[0]
     if (!textarea) return false
-    let text = textarea.innerText
 
-    var toolbarOptions = [
+    let  toolbarOptions = [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       ['blockquote'],
 
@@ -29,7 +27,7 @@ export default function quill() {
       ['clean']                                         // remove formatting button
     ];
 
-    var options = {
+    let options = {
       modules: {
         toolbar: toolbarOptions
       },
@@ -38,13 +36,16 @@ export default function quill() {
       theme: 'snow'
     };
 
-    var quill = new Quill(selector, options);
+    let text = textarea.innerText.trim()
 
-    quill.setContents(JSON.parse(text));
+    let quill = new Quill(selector, options);
 
-    // quill.on('text-change', function (delta, oldDelta, source) {
-    //   console.log(delta, oldDelta, source)
-    // })
+    try {
+      const json = JSON.parse(text);
+      quill.setContents(json)
+    } catch (e) {
+        quill.insertText(0, text)
+    }
 
     textarea.style.background = '#fff'
 

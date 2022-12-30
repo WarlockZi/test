@@ -1,4 +1,5 @@
 @import "mixin_media";
+@import "var";
 
 @font-face {
   font-family: "RobotoMedium";
@@ -27,6 +28,7 @@ body {
   text-rendering: optimizeLegibility;
   overflow: hidden;
   user-select: none;
+  background-color: $color-gray1;
 
   @include _500 {
     padding: 0;
@@ -38,6 +40,7 @@ body {
 p {
   letter-spacing: 1px;
   margin: 5px 0;
+  font-size: .7rem;
 }
 
 a {
