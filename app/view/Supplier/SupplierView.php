@@ -2,8 +2,10 @@
 
 namespace app\view\Supplier;
 
+use app\model\Country;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 
 class SupplierView
 {
@@ -12,13 +14,14 @@ class SupplierView
 	{
 	}
 
-	public static function list(string $className)
+	public static function list(string $modelName)
 	{
-		$items = $modelName::all();
+		$items = $modelName::with('country')
+			->get();
 		return MyList::build($modelName)
 			->pageTitle('Поставщики')
 			->addButton('ajax')
-			->items($items->toArray())
+			->items($items)
 			->column(
 				ListColumnBuilder::build('id')
 					->width('50px')
@@ -33,16 +36,31 @@ class SupplierView
 			)
 			->column(
 				ListColumnBuilder::build('country_id')
-					->name('Страна')
-					->search()
-					->contenteditable()
+					->html(SupplierView::countrySelector($items))
 					->get()
 			)
 			->del()
 			->get();
-
-
 	}
 
+	protected static function countrySelector($supplier){
+		$county =  SelectBuilder::build()
+			->field('country_id')
+			->model('country')
+			->nameOptionByField('name')
+			->initialOption('',0)
+			->tree(Country::all()->toArray())
+			->selected($supplier[0]['country_id'] ?? 0)
+			->get();
+		return $county;
+	}
+
+	protected function countryColumn(){
+		return ListColumnBuilder::build('country_id')
+			->name('Страна')
+			->search()
+			->contenteditable()
+			->get();
+	}
 
 }

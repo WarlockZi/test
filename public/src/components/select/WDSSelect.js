@@ -4,6 +4,7 @@ import './customSelect.scss'
 export default class WDSSelect {
 
   constructor(el) {
+    debugger
 
     if (!el) return false
     if (el.multiple) return false
@@ -23,6 +24,7 @@ export default class WDSSelect {
 
     this.ul = document.createElement("ul")
     setup(this)
+    debugger
     el.after(this.sel)
     // el.style.display = "none"
     el.remove()

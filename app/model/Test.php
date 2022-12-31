@@ -14,7 +14,7 @@ class Test extends Model
 		'id','name','enable','parent','isTest',
 	];
 
-	public $hasMany = [];
+//	public $hasMany = [];
 
 	public function questions()
 	{
