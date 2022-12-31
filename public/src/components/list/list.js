@@ -3,6 +3,7 @@ import {$, post, debounce} from '../../common';
 
 // export default function list() {
 const tables = $('.custom-list__wrapper')
+
 if (tables) {
   [].forEach.call(tables, function (table) {
 
@@ -24,15 +25,14 @@ if (tables) {
       return [].filter.call(els, function (el) {
         return el.dataset.id !== '0'
       })
-
     }
 
     $(table).on('click', handleClick.bind(this));
     $(table).on('keyup', handleKeyUp.bind(this));
     $(table).on('paste', handlePaste.bind(this));
+    // $(table).on('change', handleCahnge.bind(this));
 
     let debouncedInput = debounce(handleInput)
-
 
     function handlePaste(e) {
       let clip = e.clipboardData.getData('text/plain')
@@ -57,12 +57,19 @@ if (tables) {
       }
     }
 
+    // function handleCahnge({target}) {
+    //   if (target.hasAttribute('custom-select')) {
+    //     // debugger
+    //     let a = 1
+    //   }
+    // }
+
     function handleClick(e) {
       let target = e.target
 
       /// create
       if (target.className === 'add-model') {
-        modelCreate(modelName, parent, parentId, morph, morphId,0)
+        modelCreate(modelName, parent, parentId, morph, morphId, 0)
 
         /// delete
       } else if (
@@ -87,6 +94,7 @@ if (tables) {
           sortColumn(index)
         }
       }
+
     }
 
     function edit(target, modelName) {
@@ -114,7 +122,7 @@ if (tables) {
 
 
     // UPDATE OR CREATE
-    async function modelCreate(modelName, parent, parentId, morph, morphId,id=0) {
+    async function modelCreate(modelName, parent, parentId, morph, morphId, id = 0) {
       let data = {}
       if (parent) {
         let parentName = parent + '_id'

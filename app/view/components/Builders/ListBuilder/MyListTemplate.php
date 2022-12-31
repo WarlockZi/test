@@ -37,13 +37,18 @@
 
 			 <? foreach ($this->columns as $field => $c): ?>
 
-			  <div
-						 <?= $this->dataModel; ?>
-					  data-id="<?= $item['id']; ?>"
-						 <?= $c->dataField; ?>
-						 <?= $c->class; ?>
-						 <?= $c->contenteditable; ?>
-			  ><?= $this->getData($c, $item, $field); ?></div>
+				 <? if ($c->html): ?>
+					 <?= $c->html ?>
+				 <? else: ?>
+
+				  <div
+								<?= $this->dataModel; ?>
+						  data-id="<?= $item['id']; ?>"
+								<?= $c->dataField; ?>
+								<?= $c->class; ?>
+								<?= $c->contenteditable; ?>
+				  ><?= $this->getData($c, $item, $field); ?></div>
+				 <? endif; ?>
 
 			 <? endforeach; ?>
 
