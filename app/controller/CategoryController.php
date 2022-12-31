@@ -5,6 +5,7 @@ namespace app\controller;
 
 use app\model\Category;
 use app\view\Accordion\AccordionBuilder;
+use app\view\Category\CategoryView;
 use app\view\Category\CountryView;
 use app\view\components\MyTree\Tree;
 
@@ -25,9 +26,9 @@ class CategoryController Extends AppController
 		$accordion = '';
 		if (isset($this->route['slug'])) {
 			$this->view = 'category';
-			$slug = $this->route['slug'];
+      $alias = $this->route['slug'];
 
-			$category = Category::where('slug', $slug)
+			$category = Category::where('alias', $alias)
 				->with('childrenRecursive')
 				->with('parentRecursive')
 				->with('products')
@@ -35,7 +36,7 @@ class CategoryController Extends AppController
 				->get()->first();
 			$this->set(compact('category'));
 
-			$breadcrumbs = CountryView::breadcrumbs($category->id, false,false);
+			$breadcrumbs = CategoryView::breadcrumbs($category->id, false,false);
 			$this->set(compact('breadcrumbs'));
 
 		} else {
@@ -52,20 +53,7 @@ class CategoryController Extends AppController
 
 	}
 
-	protected function adminIndex()
-	{
-		$categories = Category::all()->toArray();
-
-		$accordion = Tree::build($categories)
-			->parent('category_id')
-			->model('category')
-			->get();
-
-		$this->set(compact('categories'));
-		$this->set(compact('accordion'));
-
-	}
-
+//
 //	public function actionIndex()
 //	{
 //		$slug = $this->route['slug'];
@@ -92,53 +80,5 @@ class CategoryController Extends AppController
 		$category = CountryView::edit($id);
 		$this->set(compact('category', 'breadcrumbs'));
 	}
-
-
-	///................. ADD IMAGE
-//	public function actionAddMainImage()
-//	{
-////		ProductRepository::clear();
-//		if ($_FILES) {
-//			$image = ImageRepository::saveIfNotExistReturnModel($_FILES[0], 'ctegory');
-//			$product = Product::find($_POST['imageable_id']);
-//			$product->main_img = $image->id;
-//			$product->save();
-//			$this->exitJson(['msg' => 'ok', 'id' => $image->id]);
-//		}
-//	}
-
-
-//	public function actionUpdateOrCreate()
-//	{
-//		if ($this->ajax) {
-//			$id = $this->modelName::updateOrCreate($this->ajax);
-//			if (is_numeric($id)) {
-//				$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
-//			} elseif (is_bool($id)) {
-//				$this->exitWithPopup('Сохранено');
-//			} else {
-//				$this->exitWithError('Ответ не сохранен');
-//			}
-//		}
-//	}
-
-//	public function actionDelete()
-//	{
-//		if ($this->ajax['id']) {
-//			if ($this->model::delete($this->ajax['id'])) {
-//				$this->exitWithPopup('Категория удаленa');
-//			}
-//		} else {
-//			$this->exitWithMsg('No id');
-//		}
-//	}
-//
-//	public function actionSetMainImage()
-//	{
-//		if ($this->ajax) {
-//			$this->exitWithPopup('dd');
-//
-//		}
-//	}
 
 }

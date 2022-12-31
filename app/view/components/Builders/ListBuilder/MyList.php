@@ -4,6 +4,8 @@
 namespace app\view\components\Builders\ListBuilder;
 
 
+use Illuminate\Database\Eloquent\Collection;
+
 class MyList
 {
 	private $grid = "style='display: grid; grid-template-columns:";
@@ -69,7 +71,7 @@ class MyList
 		return $this;
 	}
 
-	public function items(array $items)
+	public function items(Collection $items)
 	{
 		$this->items = $items;
 		return $this;

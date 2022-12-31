@@ -17,7 +17,7 @@ class ImageView extends MyView
 	public $model = Image::class;
 
 
-	public static function list(): string
+	public static function list(string $className): string
 	{
 		$view = new self;
 		$items = Image::all()->toArray();

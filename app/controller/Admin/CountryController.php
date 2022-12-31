@@ -4,7 +4,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\model\Country;
-use app\view\Country\SupplierView;
+use app\view\Country\CountryView;
 
 class CountryController Extends AppController
 {
@@ -17,8 +17,8 @@ class CountryController Extends AppController
 
 	public function actionIndex()
 	{
-		$countries = Country::all();
-		$countries = SupplierView::list($countries);
+
+		$countries = CountryView::list($this->model);
 		$this->set(compact('countries'));
 	}
 
