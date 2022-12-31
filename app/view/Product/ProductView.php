@@ -323,7 +323,7 @@ class ProductView
 	}
 
 
-	public static function list($items): string
+	public static function list(string $className): string
 	{
 		$view = new self;
 		return MyList::build($view->modelName)

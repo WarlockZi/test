@@ -4,14 +4,10 @@
 
 	<? if (isset($categories) && $categories): ?>
 
-	  <div class="category-tree">
-			 <?= $accordion ?? ''; ?>
-	  </div>
-
 	  <div class="category-wrap">
 			 <? foreach ($categories as $category): ?>
 
-			 <a class="category-card" href="/category/<?=$category->slug?>">
+			 <a class="category-card" href="/category/<?=$category->alias;?>">
 						<?= $category->name ?>
 			 </a>
 

@@ -12,7 +12,7 @@ class SupplierView
 	{
 	}
 
-	public static function list($modelName)
+	public static function list(string $className)
 	{
 		$items = $modelName::all();
 		return MyList::build($modelName)

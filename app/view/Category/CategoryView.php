@@ -62,7 +62,7 @@ class CategoryView
 		$finalCategory = self::getLastCategory($lastIsALink, $parents);
 		while (self::hasCat($parents)) {
 			$id = $parents['parent_recursive']['id'];
-			$slug = $prefix ? "/edit/{$id}" : "/{$parents['parent_recursive']['slug']}";
+			$slug = $prefix ? "/edit/{$id}" : "/{$parents['parent_recursive']['alias']}";
 			$name = $parents['parent_recursive']['name'];
 			array_push($arr,
 				"<li><a href={$prefix}/category{$slug}>{$name}</a></li>");
@@ -113,7 +113,6 @@ class CategoryView
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
-
 
 						MorphBuilder::build(
 							$illumCategory,

@@ -1,9 +1,5 @@
 <main class="vitex-content">
 
-	<div class="category-tree">
-		 <?= $accordion ?? ''; ?>
-	</div>
-
 	<?= $breadcrumbs ?? '' ?>
 
 	<h1>Категория - <span><?= $category->name ?? '' ?></span></h1>
@@ -19,7 +15,7 @@
 
 		  <div class="category-child-wrap">
 					<? foreach ($category['childrenRecursive'] as $child): ?>
-				 <a class="category-card" href="/category/<?= $child->slug ?>">
+				 <a class="category-card" href="/category/<?= $child->alias ?>">
 							 <?= $child->name ?>
 				 </a>
 					<? endforeach; ?>

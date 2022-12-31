@@ -13,12 +13,13 @@ class CountryView
 	{
 	}
 
-	public static function list($tags)
+	public static function list(string $className)
 	{
-		return MyList::build(Country::class)
+    $countries = $className::all();
+		return MyList::build($className)
 			->pageTitle('Страны')
 			->addButton('ajax')
-			->items($tags->toArray())
+			->all()
 			->column(
 				ListColumnBuilder::build('id')
 					->width('50px')

@@ -5,14 +5,13 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\model\Category;
-use app\view\Category\CountryView;
+use app\view\Category\CategoryView;
 use app\view\components\MyTree\Tree;
 
 
 class CategoryController Extends AppController
 {
-
-	public $model = \app\model\Category::class;
+	public $model = Category::class;
 	public $modelName = 'category';
 
 	public function __construct(array $route)
@@ -36,8 +35,8 @@ class CategoryController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route['id'];
-		$breadcrumbs = CountryView::breadcrumbs($id);
-		$category = CountryView::edit($id);
+		$breadcrumbs = CategoryView::breadcrumbs($id);
+		$category = CategoryView::edit($id);
 		$this->set(compact('category', 'breadcrumbs'));
 	}
 

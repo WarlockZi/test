@@ -3,22 +3,19 @@
 
 namespace app\view\Tag;
 
-
-use app\model\Tag;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 
 class TagView
 {
 
-	public static function list($tags)
+	public static function list(string $className)
 	{
-		return MyList::build(Tag::class)
+		return MyList::build($className)
 			->pageTitle('Тэги')
 			->del()
 			->addButton('ajax')
-
-			->items($tags->toArray())
+			->all()
 			->column(
 				ListColumnBuilder::build('id')
 					->get()
