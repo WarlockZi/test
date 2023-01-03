@@ -28,9 +28,9 @@ if (tables) {
 
     async function customSelectChange({target}) {
       let model = target.closest('.custom-list__wrapper').dataset.model
-      let modelId = target.closest('[data-model]').dataset.id
+      let modelId = target.previousElementSibling.dataset.id
       let url = `/adminsc/${model}/updateOrCreate`
-      let field = target.closest('[data-field]').dataset.field
+      let field = target.dataset.field
       let selected = target.options.selectedIndex
       let id = target.options[selected].value
       let data = {[field]:id, id:modelId}

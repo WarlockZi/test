@@ -49,7 +49,6 @@ class ListColumnBuilder
 		string $nameOptionByField,
 		string $initialOption,
 		string $initialOptionValue,
-		string $selected,
 		string $tree = ''
 	)
 	{
@@ -71,14 +70,12 @@ class ListColumnBuilder
 		string $nameOptionByField,
 		string $initialOption,
 		string $initialOptionValue,
-		string $selected,
 		string $tree = ''
 	)
 	{
 		$items = $modelName::all();
 		$this->select = ListSelectBuilder::build()
 			->array($items)
-			->selected()
 			->get();
 	}
 
