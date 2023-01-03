@@ -36,7 +36,11 @@ class SupplierView
 			)
 			->column(
 				ListColumnBuilder::build('country_id')
-					->html(SupplierView::countrySelector($items))
+					->select(
+						Country::class,'name',
+						'', 0
+					)
+//					->html(SupplierView::countrySelector($items))
 					->get()
 			)
 			->del()
@@ -45,12 +49,13 @@ class SupplierView
 
 	protected static function countrySelector($supplier){
 		$county =  SelectBuilder::build()
-			->field('country_id')
-			->model('country')
+//			->field('country_id')
+//			->model('supplier')
+//			->modelId($supplier[0]->id)
 			->nameOptionByField('name')
 			->initialOption('',0)
 			->tree(Country::all()->toArray())
-			->selected($supplier[0]['country_id'] ?? 0)
+//			->selected($supplier[0]['country_id'] ?? 0)
 			->get();
 		return $county;
 	}

@@ -4,6 +4,8 @@
 namespace app\view\components\Builders\ListBuilder;
 
 
+use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
+
 class ListColumnBuilder
 {
 
@@ -23,6 +25,11 @@ class ListColumnBuilder
 	public $function = '';
 	public $functionClass = '';
 
+	public $select = false;
+	public $nameOptionByField = 'name';
+	public $initialOption;
+	public $initialOptionValue;
+
 	public static function build(string $field)
 	{
 		$column = new static();
@@ -35,6 +42,44 @@ class ListColumnBuilder
 	{
 		$this->class = "class='{$class}'";
 		return $this;
+	}
+
+	public function select(
+		string $modelName,
+		string $nameOptionByField,
+		string $initialOption,
+		string $initialOptionValue,
+		string $selected,
+		string $tree = ''
+	)
+	{
+		$this->select = true;
+		$this->nameOptionByField = $nameOptionByField;
+		$this->initialOption = $initialOption;
+		$this->initialOptionValue = $initialOptionValue;
+
+		$this->getSelect($modelName,
+			$nameOptionByField,
+			$initialOption,
+			$initialOptionValue,
+			$tree = '');
+		return $this;
+	}
+
+	private function getSelect(
+		string $modelName,
+		string $nameOptionByField,
+		string $initialOption,
+		string $initialOptionValue,
+		string $selected,
+		string $tree = ''
+	)
+	{
+		$items = $modelName::all();
+		$this->select = ListSelectBuilder::build()
+			->array($items)
+			->selected()
+			->get();
 	}
 
 	public function name(string $name)

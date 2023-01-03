@@ -20,6 +20,23 @@ if (tables) {
     const morphId = table.dataset.morphid ?? null
     const rows = fillRows()
 
+    const WSSelects = $('[custom-select]');
+
+    [].forEach.call(WSSelects, (select) => {
+      select.onchange = customSelectChange
+    })
+
+    async function customSelectChange({target}) {
+      let model = target.closest('.custom-list__wrapper').dataset.model
+      let modelId = target.closest('[data-model]').dataset.id
+      let url = `/adminsc/${model}/updateOrCreate`
+      let field = target.closest('[data-field]').dataset.field
+      let selected = target.options.selectedIndex
+      let id = target.options[selected].value
+      let data = {[field]:id, id:modelId}
+      let res = await post(url,data)
+    }
+
     function getIds() {
       let els = $(table)[0].querySelectorAll('[data-id]');
       return [].filter.call(els, function (el) {
