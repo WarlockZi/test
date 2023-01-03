@@ -5,8 +5,9 @@ namespace app\view\components\Builders\SelectBuilder;
 
 
 use app\view\components\Builders\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
-class SelectBuilder extends Builder
+class ListSelectBuilder extends Builder
 {
 	private $tree2 = [];
 	private $tree = [];
@@ -42,7 +43,7 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
-	public function array(array $array)
+	public function array(Collection $array)
 	{
 		$this->array = $array;
 		return $this;
@@ -115,7 +116,7 @@ class SelectBuilder extends Builder
 		$tpl = '';
 		foreach ($this->array as $index => $item) {
 			$selected = $this->selected === $index ? 'selected' : '';
-			$tpl .= "<option value='{$index}' $selected>{$item}</option>";
+			$tpl .= "<option value='{$item['id']}' $selected>{$item['name']}</option>";
 		}
 		return $tpl;
 	}
