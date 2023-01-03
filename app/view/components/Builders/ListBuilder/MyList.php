@@ -154,7 +154,7 @@ class MyList
 			$func = $column->function;
 			return $column->functionClass::$func($item);
 		}else if($column->select){
-			return $column->select->get($field);
+			return $column->select;
 		} else {
 			return $item[$field];
 		}
