@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\ListBuilder;
 
 
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use Illuminate\Database\Eloquent\Collection;
 
 class MyList
@@ -147,11 +148,13 @@ class MyList
 		$this->grid .= "'";
 	}
 
-	protected function getData($column, $item,$field)
+	protected function getData($column, $item, $field)
 	{
 		if ($column->function) {
 			$func = $column->function;
 			return $column->functionClass::$func($item);
+		}else if($column->select){
+			return $column->select;
 		} else {
 			return $item[$field];
 		}

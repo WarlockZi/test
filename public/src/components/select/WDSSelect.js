@@ -39,6 +39,7 @@ export default class WDSSelect {
   }
 
   selectValue(value) {
+    debugger
     const next = this.options.find(option => {
       return option.value === value
     })

@@ -6,7 +6,8 @@ namespace app\view\components\Builders;
 
 class Builder
 {
-	protected function clean(string $res){
+	protected function clean(string $res):string
+	{
 		$regex[0] = "/\r\r+?/";
 		$regex[1] = "/\n\n+?/";
 		$res = preg_replace($regex,"",$res);
