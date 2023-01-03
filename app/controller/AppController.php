@@ -51,28 +51,16 @@ class AppController extends Controller
 	public function actionUpdateOrCreate()
 	{
 		if ($this->ajax) {
-			if (new $this->model instanceof Model) {//Eloquent
-				$model = $this->model::updateOrCreate(
-					['id' => $this->ajax['id']],
-					$this->ajax
-				);
-				if ($model->wasRecentlyCreated) {
-					$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
-				} else {
-					$this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);
-				}
 
+			$model = $this->model::updateOrCreate(
+				['id' => $this->ajax['id']],
+				$this->ajax
+			);
+			if ($model->wasRecentlyCreated) {
+				$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
 			} else {
-				$id = $this->model::updateOrCreate($this->ajax);
-				if (is_numeric($id)) {
-					$this->exitJson(['popup' => 'Сохранен', 'id' => $id]);
-				} elseif (is_bool($id)) {
-					$this->exitWithPopup('Сохранено');
-				} else {
-					$this->exitWithError('Ответ не сохранен');
-				}
+				$this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);
 			}
-
 		}
 	}
 

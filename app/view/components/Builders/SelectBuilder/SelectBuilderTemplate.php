@@ -1,10 +1,10 @@
 <select
 		custom-select
 	<?= $this->title; ?>
-	<?= $this->class; ?>
-	<?= $this->field; ?>
 	<?= $this->model; ?>
+	<?= $this->field; ?>
 	<?= $this->modelId; ?>
+	<?= $this->class; ?>
 >
 	<?= $this->initialOption; ?>
 
