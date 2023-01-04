@@ -14,6 +14,7 @@ use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductView
@@ -323,7 +324,7 @@ class ProductView
 	}
 
 
-	public static function list(string $className): string
+	public static function list(Collection $items): string
 	{
 		$view = new self;
 		return MyList::build($view->modelName)

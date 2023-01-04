@@ -9,6 +9,7 @@ use app\model\Product;
 use app\model\Propertable;
 use app\model\Tag;
 use app\Repository\ProductRepository;
+use app\view\Category\CategoryView;
 use app\view\Category\CountryView;
 use app\view\Product\ProductCardView;
 use app\view\Product\ProductView;
@@ -23,7 +24,7 @@ class ProductController Extends AppController
 		$prod = ProductRepository::getProduct('id',$id);
 
 		$product = ProductView::edit($prod);
-		$breadcrumbs = CountryView::breadcrumbs($prod->category->id, true);
+		$breadcrumbs = CategoryView::breadcrumbs($prod->category->id, true);
 		$this->set(compact('product', 'breadcrumbs'));
 	}
 
@@ -73,7 +74,7 @@ class ProductController Extends AppController
 	public function actionList()
 	{
 		$items = Product::all()->take(10);
-		$list = ProductView::list($items->toArray());
+		$list = ProductView::list($items);
 		$this->set(compact('list'));
 
 	}

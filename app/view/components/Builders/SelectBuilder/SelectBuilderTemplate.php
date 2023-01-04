@@ -8,7 +8,7 @@
 >
 	<?= $this->initialOption; ?>
 
-	<?=$this->options?>
+	<?= $this->options; ?>
 
 </select>
 

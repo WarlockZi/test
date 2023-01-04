@@ -27,14 +27,16 @@ if (tables) {
     })
 
     async function customSelectChange({target}) {
-      let model = target.closest('.custom-list__wrapper').dataset.model
-      let modelId = target.previousElementSibling.dataset.id
+      let wrapper = target.closest('[data-model]')
+      let model = wrapper.dataset.model
+      let modelId = wrapper.dataset.id
+      let field = wrapper.dataset.field
+
       let url = `/adminsc/${model}/updateOrCreate`
-      let field = target.dataset.field
       let selected = target.options.selectedIndex
       let id = target.options[selected].value
-      let data = {[field]:id, id:modelId}
-      let res = await post(url,data)
+      let data = {[field]: id, id: modelId}
+      let res = await post(url, data)
     }
 
     function getIds() {
@@ -162,8 +164,7 @@ if (tables) {
     }
 
     function newrow(id) {
-      let Row = [...hidden];
-      [].forEach.call(Row, function (el) {
+      [].forEach.call(hidden, function (el) {
         let newEl = el.cloneNode(true)
         newEl.removeAttribute('hidden')
         // newEl.contentEditable.remove('head')
@@ -171,7 +172,12 @@ if (tables) {
         tableContent.appendChild(newEl)
         if (['id'].includes(newEl.dataset.field)) {
           newEl.innerText = id
-        } else if (!['del', 'edit', 'save'].includes(newEl.className)) {
+        } else if (
+          !(
+            ['del', 'edit', 'save'].includes(newEl.className) ||
+            newEl.hasChildNodes('select')
+          )
+        ) {
           newEl.innerText = ''
         }
         newEl.dataset['id'] = id

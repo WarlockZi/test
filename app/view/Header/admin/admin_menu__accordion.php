@@ -95,7 +95,7 @@ $user = $controller->user;
 			<ul class="level-1">
 
 					 <? if (User::can($user, ['role_employee'])): ?>
-				  <a class="neon" href="/adminsc/test/do">Проходить тесты</a>
+				  <a class="neon" href="/test/do">Проходить тесты</a>
 					 <? endif; ?>
 
 					 <? if (User::can($user, ['role_admin'])): ?>
@@ -107,7 +107,7 @@ $user = $controller->user;
 					 <? endif; ?>
 
 					 <? if (User::can($user, ['role_employee'])): ?>
-				  <a class="neon" href="/adminsc/opentest/do">Проходить открытые тесты</a>
+				  <a class="neon" href="/opentest/do">Проходить открытые тесты</a>
 					 <? endif; ?>
 
 					 <? if (User::can($user, ['role_admin'])): ?>

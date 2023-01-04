@@ -4,10 +4,8 @@ namespace app\controller;
 
 
 use app\model\Category;
-use app\view\Accordion\AccordionBuilder;
 use app\view\Category\CategoryView;
 use app\view\Category\CountryView;
-use app\view\components\MyTree\Tree;
 
 
 class CategoryController Extends AppController
@@ -26,7 +24,7 @@ class CategoryController Extends AppController
 		$accordion = '';
 		if (isset($this->route['slug'])) {
 			$this->view = 'category';
-      $alias = $this->route['slug'];
+			$alias = $this->route['slug'];
 
 			$category = Category::where('alias', $alias)
 				->with('childrenRecursive')
@@ -36,7 +34,7 @@ class CategoryController Extends AppController
 				->get()->first();
 			$this->set(compact('category'));
 
-			$breadcrumbs = CategoryView::breadcrumbs($category->id, false,false);
+			$breadcrumbs = CategoryView::breadcrumbs($category->id, false, false);
 			$this->set(compact('breadcrumbs'));
 
 		} else {

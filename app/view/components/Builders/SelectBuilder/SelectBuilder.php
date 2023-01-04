@@ -174,7 +174,8 @@ class SelectBuilder extends Builder
 	public function get()
 	{
 		if ($this->tree) {
-			$this->options = $this->getTree2($this->tree);
+//			$this->options = $this->getTree2($this->tree);
+			$this->options = TreeBuilder::build($this->tree)->get();
 		} else {
 			$this->options = $this->getArray();
 		}

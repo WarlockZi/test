@@ -6,7 +6,8 @@ $menu = new Accordion([
 	'models' => \app\model\Test::where('enable', 1)->get()->toArray(),
 	'class' => 'test-edit',
 	'label_after' => "",
-	'link' => "/adminsc/test/do/",
+//	'link' => "/adminsc/test/do/",
+	'link' => "/test/do/",
 	'parentFieldName'=>'parent',
 
 ]);
