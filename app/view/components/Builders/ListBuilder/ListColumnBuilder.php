@@ -10,10 +10,10 @@ class ListColumnBuilder
 {
 
 	public $field = 'id';
-	public $dataField = "data-field=";
+	public $dataField;
 	public $class = '';
 	public $name = '';
-	public $type = "data-type='string'";
+	public $type;
 	public $sort = '';
 	public $sortIcon = '';
 	public $search = '';
@@ -26,9 +26,9 @@ class ListColumnBuilder
 	public $functionClass = '';
 
 	public $select = false;
-	public $nameOptionByField = 'name';
-	public $initialOption;
-	public $initialOptionValue;
+	public $nameOptionByField;
+	public $initialOption = '';
+	public $initialOptionValue = 0;
 
 	public static function build(string $field)
 	{
@@ -46,10 +46,10 @@ class ListColumnBuilder
 
 	public function select(
 		string $modelName,
-		string $nameOptionByField,
-		string $initialOption,
-		string $initialOptionValue,
-		string $tree = ''
+		string $nameOptionByField='name',
+		bool $tree = false,
+		string $initialOption = '',
+		int $initialOptionValue = 0
 	)
 	{
 		$this->select = true;
@@ -57,27 +57,15 @@ class ListColumnBuilder
 		$this->initialOption = $initialOption;
 		$this->initialOptionValue = $initialOptionValue;
 
-		$this->getSelect($modelName,
-			$nameOptionByField,
-			$initialOption,
-			$initialOptionValue,
-			$tree = '');
+		$items = $modelName::all();
+		$this->select = ListSelectBuilder::build()
+			->collection($items)
+			->initialOption('',0)
+		;
 		return $this;
 	}
 
-	private function getSelect(
-		string $modelName,
-		string $nameOptionByField,
-		string $initialOption,
-		string $initialOptionValue,
-		string $tree = ''
-	)
-	{
-		$items = $modelName::all();
-		$this->select = ListSelectBuilder::build()
-			->array($items)
-			->get();
-	}
+
 
 	public function name(string $name)
 	{

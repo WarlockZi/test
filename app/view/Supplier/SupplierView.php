@@ -5,7 +5,6 @@ namespace app\view\Supplier;
 use app\model\Country;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
-use app\view\components\Builders\SelectBuilder\SelectBuilder;
 
 class SupplierView
 {
@@ -36,36 +35,13 @@ class SupplierView
 			)
 			->column(
 				ListColumnBuilder::build('country_id')
-					->select(
-						Country::class,'name',
-						'', 0
-					)
-//					->html(SupplierView::countrySelector($items))
+					->select(Country::class)
+					->name('Страна')
 					->get()
 			)
 			->del()
 			->get();
 	}
 
-	protected static function countrySelector($supplier){
-		$county =  SelectBuilder::build()
-//			->field('country_id')
-//			->model('supplier')
-//			->modelId($supplier[0]->id)
-			->nameOptionByField('name')
-			->initialOption('',0)
-			->tree(Country::all()->toArray())
-//			->selected($supplier[0]['country_id'] ?? 0)
-			->get();
-		return $county;
-	}
-
-	protected function countryColumn(){
-		return ListColumnBuilder::build('country_id')
-			->name('Страна')
-			->search()
-			->contenteditable()
-			->get();
-	}
 
 }

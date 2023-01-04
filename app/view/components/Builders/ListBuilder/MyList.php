@@ -126,7 +126,7 @@ class MyList
 				$column->dataField .
 				"data-id='0' " .
 				"{$column->contenteditable}" .
-				"></div>";
+				">{$this->getEmpty($column)}</div>";
 		}
 		$str .= $this->getEditButton(0);
 		$str .= $this->getDelButton(0);
@@ -148,13 +148,22 @@ class MyList
 		$this->grid .= "'";
 	}
 
+	protected function getEmpty($column)
+	{
+		if($column->select){
+			return $column->select->getEmpty();
+		} else {
+			return '';
+		}
+	}
+
 	protected function getData($column, $item, $field)
 	{
 		if ($column->function) {
 			$func = $column->function;
 			return $column->functionClass::$func($item);
 		}else if($column->select){
-			return $column->select;
+			return $column->select->get($item->$field??0);
 		} else {
 			return $item[$field];
 		}

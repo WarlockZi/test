@@ -6,22 +6,25 @@ namespace app\view\components\Builders\SelectBuilder;
 
 use app\view\components\Builders\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class ListSelectBuilder extends Builder
 {
-	private $tree2 = [];
-	private $tree = [];
-	private $array = [];
-	private $options = [];
-	private $class = '';
-	private $title = '';
-	private $field = '';
-	private $model = '';
-	private $modelId = '';
+	private $tree;
+	private $collection ;
+	private $options;
+	private $class;
+	private $title;
+
+	private $field;
+	private $model;
+	private $modelId;
+
 	private $selected = false;
 	private $excluded = false;
 	private $nameOptionByField = 'name';
-	private $initialOption = '';
+	private $initialOption;
+	private $initialOptionValue;
 
 	private $tab = '&nbsp;';
 
@@ -31,39 +34,15 @@ class ListSelectBuilder extends Builder
 		return $select;
 	}
 
-	public function tree($tree)
+	public function collection(Collection $collection)
 	{
-		$this->tree = $tree;
-		return $this;
-	}
-
-	public function tree2($tree)
-	{
-		$this->tree = $tree;
-		return $this;
-	}
-
-	public function array(Collection $array)
-	{
-		$this->array = $array;
+		$this->collection = $collection;
 		return $this;
 	}
 
 	public function class(string $class)
 	{
 		$this->class = "class='{$class}'";
-		return $this;
-	}
-
-	public function model(string $model)
-	{
-		$this->model = "data-model='{$model}'";
-		return $this;
-	}
-
-	public function modelId($modelId)
-	{
-		$this->modelId = "data-id='{$modelId}'";
 		return $this;
 	}
 
@@ -111,74 +90,34 @@ class ListSelectBuilder extends Builder
 		return $this;
 	}
 
-	private function getArray()
+	private function getOptions()
 	{
 		$tpl = '';
-		foreach ($this->array as $index => $item) {
-			$selected = $this->selected === $index ? 'selected' : '';
+		foreach ($this->collection as $item) {
+			$selected = $this->selected === $item->id ? 'selected' : '';
 			$tpl .= "<option value='{$item['id']}' $selected>{$item['name']}</option>";
 		}
 		return $tpl;
 	}
-
-	protected function getTree2($data, $level = 0)
+	public function getEmpty()
 	{
-		$string = '';
-		foreach ($data as $item) {
-			$string .= $this->addItem($item, $level);
+		$this->selected = 0;
+		$this->options = $this->getOptions();
+
+		if ($this->excluded !== false) {
+			unset($this->tree[$this->excluded]);
 		}
-		return $string;
+
+		ob_start();
+		include ROOT . '/app/view/components/Builders/SelectBuilder/SelectBuilderTemplate.php';
+		$result = ob_get_clean();
+		return $this->clean($result);
 	}
 
-	private function addItem($item, $level)
+	public function get(int $id=0)
 	{
-		$tab = str_repeat($this->tab, $level);
-		$selected = (int)$item['id'] === (int)$this->selected
-			? 'selected'
-			: '';
-		$menu = "<option value='{$item['id']}' {$selected}>{$tab}{$item['name']}</option>";
-		if (isset($item['childs'])) {
-			$menu .= "{$this->getTree2($item['childs'],$level+1)}";
-		}
-		return $menu;
-	}
-
-	private function getTree($tree, $level = 0, $str = '')
-	{
-		foreach ($tree as $k => $item) {
-			$selected = (int)$this->selected === (int)$item['id'] ? 'selected' : '';
-			$tab = str_repeat($this->tab, $level);
-
-			$str .= "<option value='{$item['id']}' $selected>{$tab}{$item[$this->nameOptionByField]}</option>";
-
-			if (isset($item['childs'])) {
-				$str .= $this->getChilds($item['childs'], $level + 1, $str);
-			}
-		}
-		return $str;
-	}
-
-	protected function getChilds(array $tree, $level, $str)
-	{
-		foreach ($tree as $id => $item) {
-			$selected = (int)$this->selected === (int)$item['id'] ? 'selected' : '';
-			$tab = str_repeat($this->tab, $level);
-			$str .= "<option value='{$item['id']}' $selected>{$tab}{$item[$this->nameOptionByField]}</option>";
-
-			if (isset($item['childs'])) {
-				$str .= $this->getChilds($item['childs'], $level + 1, $str);
-			}
-		}
-		return $str;
-	}
-
-	public function get()
-	{
-		if ($this->tree) {
-			$this->options = $this->getTree2($this->tree);
-		} else {
-			$this->options = $this->getArray();
-		}
+		$this->selected = $id;
+		$this->options = $this->getOptions();
 
 		if ($this->excluded !== false) {
 			unset($this->tree[$this->excluded]);

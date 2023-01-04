@@ -81,31 +81,31 @@ class CategoryView
 	{
 		$view = new self();
 
-		$illumCategory = Category::with(
+		$category = Category::with(
 			'products',
 			'parentRecursive',
 			'properties',
 			'children',
 			'mainImages')
 			->find($id);
-		$category = $illumCategory->toArray();
+//		$category = $illumCategory->toArray();
 
-		return ItemBuilder::build($illumCategory, 'category')
-			->pageTitle('Категория :  ' . $category['name'])
+		return ItemBuilder::build($category, 'category')
+			->pageTitle('Категория :  ' . $category->name)
 			->field(
-				ItemFieldBuilder::build('id', $illumCategory)
+				ItemFieldBuilder::build('id', $category)
 					->name('ID')
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('name', $illumCategory)
+				ItemFieldBuilder::build('name', $category)
 					->name('Наименование')
 					->contenteditable()
 					->required()
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('show_front', $illumCategory)
+				ItemFieldBuilder::build('show_front', $category)
 					->name('Показывать на главоной')
 					->type('checkbox')
 					->get()
@@ -115,12 +115,12 @@ class CategoryView
 					->html(
 
 						MorphBuilder::build(
-							$illumCategory,
+							$category,
 							'Image',
 							'main',
 							'dnd'
 						)
-							->one($illumCategory->mainImages)
+							->one($category->mainImages)
 							->template('one.php')
 							->detach('detach')
 							->dnd(
@@ -168,7 +168,7 @@ class CategoryView
 				ItemTabBuilder::build('Св-ва категории')
 					->html(
 						MyList::build(Property::class)
-							->items($illumCategory->properties->toArray() ?? [])
+							->items($category->properties?? [])
 							->morph('category', $id)
 //							->parent($view->modelName, $id)
 							->edit()
