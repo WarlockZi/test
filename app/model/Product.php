@@ -16,7 +16,8 @@ class Product extends Model
 		'category_id',
 		'image_id',
 		'main_unit',
-		'base_unit'
+		'base_unit',
+		'manufacturer_id'
 	];
 
 	public function detailImages()
@@ -66,9 +67,9 @@ class Product extends Model
 			);
 	}
 
-	public function manufacturers()
+	public function manufacturer()
 	{
-		return $this->belongsTo(manufacturer::class);
+		return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
 	}
 
 	public function secondaryUnit()

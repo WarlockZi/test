@@ -124,7 +124,7 @@ class ListSelectBuilder extends Builder
 
 	public function get(int $id=0)
 	{
-		$this->selected = $id;
+//		$this->selected = $id;
 		$this->options = $this->getOptions();
 
 		if ($this->excluded !== false) {
