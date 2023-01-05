@@ -24,9 +24,9 @@ class CategoryController Extends AppController
 		$accordion = '';
 		if (isset($this->route['slug'])) {
 			$this->view = 'category';
-			$alias = $this->route['slug'];
+			$slug = $this->route['slug'];
 
-			$category = Category::where('alias', $alias)
+			$category = Category::where('slug', $slug)
 				->with('childrenRecursive')
 				->with('parentRecursive')
 				->with('products')

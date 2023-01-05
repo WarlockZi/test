@@ -3,20 +3,20 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\model\IlluminateModelDecorator;
+//use app\model\IlluminateModelDecorator;
 use app\model\Image;
 use app\model\Product;
 use app\model\Propertable;
 use app\model\Tag;
 use app\Repository\ProductRepository;
 use app\view\Category\CategoryView;
-use app\view\Category\CountryView;
-use app\view\Product\ProductCardView;
 use app\view\Product\ProductView;
 
 
 class ProductController Extends AppController
 {
+
+	public $model = Product::class;
 
 	public function actionEdit()
 	{
@@ -56,10 +56,10 @@ class ProductController Extends AppController
 		}
 	}
 
-	public function actionUpdateOrCreate()
-	{
-		IlluminateModelDecorator::updateOrCreate(Product::class, $this->ajax);
-	}
+//	public function actionUpdateOrCreate()
+//	{
+//		$this->actionUpdateOrCreate($this->ajax);
+//	}
 
 	public function actionSetProperty()
 	{

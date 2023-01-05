@@ -9,6 +9,7 @@ use app\Repository\ImageRepository;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\MyView;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class ImageView extends MyView
@@ -17,10 +18,10 @@ class ImageView extends MyView
 	public $model = Image::class;
 
 
-	public static function list(string $className): string
+	public static function list(Collection $items): string
 	{
 		$view = new self;
-		$items = Image::all()->toArray();
+//		$items = Image::all()->toArray();
 		return MyList::build($view->model)
 			->items($items)
 			->pageTitle('Картинки')

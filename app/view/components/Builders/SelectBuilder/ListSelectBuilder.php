@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\SelectBuilder;
 
 
+use app\controller\AppController;
 use app\view\components\Builders\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -39,6 +40,14 @@ class ListSelectBuilder extends Builder
 		$this->collection = $collection;
 		return $this;
 	}
+	public function item(Model $item)
+	{
+		$model = AppController::shortClassName($item);
+		$id = $item->id;
+		$this->model = "data-model='{$model}''";
+		$this->modelId = "data-model-id='".$id."'";
+		return $this;
+	}
 
 	public function class(string $class)
 	{
@@ -57,7 +66,6 @@ class ListSelectBuilder extends Builder
 		$this->title = "title='{$title}'";
 		return $this;
 	}
-
 
 	public function initialOption(string $initialOptionLabel, int $initialOptionValue)
 	{
@@ -126,7 +134,7 @@ class ListSelectBuilder extends Builder
 		ob_start();
 		include ROOT . '/app/view/components/Builders/SelectBuilder/SelectBuilderTemplate.php';
 		$result = ob_get_clean();
-		return $this->clean($result);
+		return $result;
 	}
 
 }

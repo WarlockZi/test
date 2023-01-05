@@ -5,7 +5,7 @@ namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Supplier extends Model
+class Manufacturer extends Model
 {
 	public $timestamps = false;
 

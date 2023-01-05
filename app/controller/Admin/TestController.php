@@ -1,7 +1,8 @@
 <?php
 
-namespace app\controller;
+namespace app\controller\Admin;
 
+use app\controller\AppController;
 use app\model\Test;
 use app\model\Question;
 use app\view\Test\TestView;

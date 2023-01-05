@@ -62,17 +62,17 @@ nav.breadcrumbs-1 {
       }
 
       &:hover {
-        background-color: #BFE2FF;
-        color: #000;
+        background-color: $color-main-lighten10;
+        //color: #000;
       }
 
       &:hover:before {
-        border-color: #BFE2FF;
+        border-color: $color-main-lighten10;
         border-left-color: transparent;
       }
 
       &:hover:after {
-        border-left-color: #BFE2FF;
+        border-left-color: $color-main-lighten10;
       }
     }
 
@@ -87,6 +87,20 @@ nav.breadcrumbs-1 {
       &:after {
         border-left-color: $color-main-hover;
       }
+
+      &:hover{
+        background-color: $color-main-lighten10;
+      }
+
+      &:hover:before{
+        border-color: $color-main-lighten10;
+        border-left-color: transparent;
+      }
+
+      &:hover:after{
+        border-left-color:$color-main-lighten10;
+      }
+
     }
 
     &:first-child a {

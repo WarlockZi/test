@@ -1,7 +1,8 @@
 <?php
 
-namespace app\controller;
+namespace app\controller\Admin;
 
+use app\controller\AppController;
 use app\model\Image;
 use app\Repository\ImageRepository;
 use app\view\Image\ImageView;
@@ -17,7 +18,7 @@ class ImageController Extends AppController
 
 	public function actionIndex()
 	{
-		$list = ImageView::list();
+		$list = ImageView::list(Image::all());
 		$this->set(compact('list'));
 	}
 

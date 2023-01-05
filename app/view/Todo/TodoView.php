@@ -14,7 +14,7 @@ class TodoView
 
 	public static function daily()
 	{
-		$dailyTodos = Todo::where('type', 'daily')->get()->toArray();
+		$dailyTodos = Todo::where('type', 'daily')->get();
 
 		return MyList::build(Todo::class)
 			->items($dailyTodos)

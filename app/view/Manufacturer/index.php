@@ -1,5 +1,5 @@
 <div class="adm-content">
 
-	<?= $suppliers ?? ''; ?>
+	<?= $manufacturers ?? ''; ?>
 
 </div>

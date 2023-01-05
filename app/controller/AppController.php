@@ -29,6 +29,11 @@ class AppController extends Controller
 		$this->isAjax();
 	}
 
+	public static function shortClassName($object)
+	{
+		return lcfirst((new \ReflectionClass($object))->getShortName());
+	}
+
 	public function actionDelete()
 	{
 		$id = $this->ajax['id'];
