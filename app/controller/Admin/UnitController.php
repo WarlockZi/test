@@ -1,9 +1,10 @@
 <?php
 
 
-namespace app\controller;
+namespace app\controller\Admin;
 
 
+use app\controller\AppController;
 use app\model\Unit;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
@@ -19,7 +20,7 @@ class UnitController extends AppController
 			->pageTitle('Единицы измерения')
 			->addButton('ajax')
 			->del()
-			->items(Unit::all()->toArray())
+			->items(Unit::all())
 			->column(
 				ListColumnBuilder::build('id')
 					->width('50px')

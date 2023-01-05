@@ -15,7 +15,7 @@
 
 		  <div class="category-child-wrap">
 					<? foreach ($category['childrenRecursive'] as $child): ?>
-				 <a class="category-card" href="/category/<?= $child->alias ?>">
+				 <a class="category-card" href="/category/<?= $child->slug ?>">
 							 <?= $child->name ?>
 				 </a>
 					<? endforeach; ?>

@@ -1,7 +1,8 @@
 <?php
 
-namespace app\controller;
+namespace app\controller\Admin;
 
+use app\controller\AppController;
 use app\model\Right;
 use app\model\User;
 use app\view\Right\RightView;

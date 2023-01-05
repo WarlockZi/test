@@ -43,15 +43,13 @@ class ProductRepository extends Controller
 		return "<nav class='{$class}'>{$str}</nav>";
 	}
 
-	public
-	static function clear()
+	public static function clear()
 	{
 		$deleted = FS::delFilesFromPath("\pic\product\\");
 		ImageRepository::delAll();
 	}
 
-	public
-	static function getCard($slug)
+	public static function getCard($slug)
 	{
 		$product = self::getProduct('slug', $slug);
 //		$product['parentCategories'] = self::getParentCategories($product['category']);
@@ -59,8 +57,7 @@ class ProductRepository extends Controller
 		return $product;
 	}
 
-	protected
-	static function flatten_array(array $demo_array)
+	protected static function flatten_array(array $demo_array)
 	{
 		$new_array = array();
 		array_walk_recursive($demo_array, function ($array) use (&$new_array) {
@@ -69,8 +66,7 @@ class ProductRepository extends Controller
 		return $new_array;
 	}
 
-	protected
-	static function getParentCategories($categories)
+	protected static function getParentCategories($categories)
 	{
 		$categoriesArr = [];
 		$categoriesArr[] = $categories;
@@ -83,13 +79,13 @@ class ProductRepository extends Controller
 		return array_reverse($categoriesArr);
 	}
 
-	public
-	static function getProduct(string $where, $val)
+	public static function getProduct(string $where, $val)
 	{
 		return Product::
 		with('category.properties.vals')
 			->with('category.parentRecursive', 'category.parents')
 			->with('mainImages')
+			->with('manufacturers.countries')
 			->with('detailImages')
 			->with('smallpackImages')
 			->with('bigpackImages')

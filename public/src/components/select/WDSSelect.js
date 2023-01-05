@@ -4,7 +4,7 @@ import './customSelect.scss'
 export default class WDSSelect {
 
   constructor(el) {
-    debugger
+    // debugger
 
     if (!el) return false
     if (el.multiple) return false
@@ -24,7 +24,7 @@ export default class WDSSelect {
 
     this.ul = document.createElement("ul")
     setup(this)
-    debugger
+    // debugger
     el.after(this.sel)
     // el.style.display = "none"
     el.remove()
@@ -39,7 +39,7 @@ export default class WDSSelect {
   }
 
   selectValue(value) {
-    debugger
+    // debugger
     const next = this.options.find(option => {
       return option.value === value
     })

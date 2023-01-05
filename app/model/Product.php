@@ -65,6 +65,12 @@ class Product extends Model
 			'main_unit',
 			);
 	}
+
+	public function manufacturers()
+	{
+		return $this->belongsTo(manufacturer::class);
+	}
+
 	public function secondaryUnit()
 	{
 		return $this->hasOne(Unit::class,

@@ -7,7 +7,7 @@
 	  <div class="category-wrap">
 			 <? foreach ($categories as $category): ?>
 
-			 <a class="category-card" href="/category/<?=$category->alias;?>">
+			 <a class="category-card" href="/category/<?=$category->slug;?>">
 						<?= $category->name ?>
 			 </a>
 

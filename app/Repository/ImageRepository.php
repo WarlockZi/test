@@ -146,7 +146,7 @@ class ImageRepository
 		}
 	}
 
-	public static function getImgByHash(array $image)
+	public static function getImgByHash(Model $image)
 	{
 		$picPath = "/pic/{$image['path']}/{$image['hash']}";
 		foreach (self::$acceptedTypes as $acceptedType) {
@@ -162,7 +162,7 @@ class ImageRepository
 		return "<div style='width: 30px;height: 30px;'><img src='$file' style='width: 100%;height: 100%;object-fit: contain'></div>";
 	}
 
-	public static function getImgTags(array $image)
+	public static function getImgTags(Model $image)
 	{
 		$image = Image::find($image['id']);
 		$names = $image->tags

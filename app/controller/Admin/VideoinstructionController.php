@@ -1,7 +1,8 @@
 <?php
 
-namespace app\controller;
+namespace app\controller\Admin;
 
+use app\controller\AppController;
 use app\core\Auth;
 use app\model\Videoinstruction;
 use app\view\Videoinstruction\VideoinstructionView;

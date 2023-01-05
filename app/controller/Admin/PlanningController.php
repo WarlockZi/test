@@ -1,7 +1,8 @@
 <?php
 
-namespace app\controller;
+namespace app\controller\Admin;
 
+use app\controller\AppController;
 use app\model\Answer;
 use app\model\Todo;
 use app\view\components\CustomList\CustomList;
@@ -26,8 +27,8 @@ class PlanningController Extends AppController
 	{
 		$items = Todo::where('type', 'день')->
 		where('user_id', $this->user['id'])->
-		get()->toArray();
-		$daily = PlanningView::listItems($items);
+		get();
+		$daily = PlanningView::list($items);
 		$this->set(compact('daily'));
 	}
 

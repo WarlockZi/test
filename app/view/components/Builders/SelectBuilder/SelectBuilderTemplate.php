@@ -2,8 +2,8 @@
 		custom-select
 	<?= $this->title; ?>
 	<?= $this->model; ?>
-	<?= $this->field; ?>
 	<?= $this->modelId; ?>
+	<?= $this->field; ?>
 	<?= $this->class; ?>
 >
 	<?= $this->initialOption; ?>

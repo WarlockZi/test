@@ -1,8 +1,9 @@
 <?php
 
 
-namespace app\controller;
+namespace app\controller\Admin;
 
+use app\controller\AppController;
 use app\model\TestResult;
 use app\core\Mail;
 

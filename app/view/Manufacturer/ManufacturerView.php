@@ -1,12 +1,12 @@
 <?php
 
-namespace app\view\Supplier;
+namespace app\view\Manufacturer;
 
 use app\model\Country;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 
-class SupplierView
+class ManufacturerView
 {
 
 	public function __construct()

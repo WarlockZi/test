@@ -4,6 +4,7 @@ namespace app\view\Product;
 
 use app\core\Icon;
 use app\model\Image;
+use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Propertable;
 use app\model\Unit;
@@ -13,6 +14,7 @@ use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -25,8 +27,6 @@ class ProductView
 
 	public static function edit(Model $product): string
 	{
-		$p = $product->toArray();
-
 		return ItemBuilder::build($product, 'product')
 			->pageTitle('Товар :  ' . $product['name'])
 			->field(
@@ -60,6 +60,13 @@ class ProductView
 					->html(self::getMainUnit($product))
 					->get()
 			)
+			->field(
+				ItemFieldBuilder::build('manufacturer', $product)
+					->name('Производитель')
+					->html(self::getManufacturer($product))
+					->get()
+			)
+
 			->tab(
 				ItemTabBuilder::build('Свойства товара')
 					->html(
@@ -279,6 +286,18 @@ class ProductView
 			->get();
 
 		return include ROOT . '/app/view/Product/main_unit.php';
+	}
+	protected static function getManufacturer(Model $product): string
+	{
+		$f = ListSelectBuilder::build()
+			->collection(Manufacturer::all())
+			->item($product)
+			->field('manufacturer_id')
+			->initialOption('', 0)
+			->selected($product->manufacturer)
+			->get();
+
+		return include ROOT . '/app/view/Product/manufacturer.php';
 	}
 
 	protected static function getBaseUnit(Model $product): string

@@ -1,15 +1,15 @@
 <?php
 
-namespace app\controller;
+namespace app\controller\Admin;
 
-use app\model\PostDelete;
+use app\controller\AppController;
+use app\model\Post;
 use app\view\Post\PostView;
-use app\view\View;
 
 
 class PostController Extends AppController
 {
-	public  $model = PostDelete::class;
+	public  $model = Post::class;
 	public  $modelName = 'post';
 	public  $tableName = 'posts';
 
