@@ -294,7 +294,7 @@ class ProductView
 			->item($product)
 			->field('manufacturer_id')
 			->initialOption('', 0)
-			->selected($product->manufacturer)
+			->selected($product->manufacturer->id)
 			->get();
 
 		return include ROOT . '/app/view/Product/manufacturer.php';

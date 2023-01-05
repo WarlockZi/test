@@ -62,7 +62,7 @@ class SelectBuilder extends Builder
 
 	public function modelId($modelId)
 	{
-		$this->modelId = "data-id='{$modelId}'";
+		$this->modelId = "data-model-id='{$modelId}'";
 		return $this;
 	}
 

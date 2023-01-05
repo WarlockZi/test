@@ -12,7 +12,7 @@ export default class WDSSelect {
     this.title = el.title ?? ''
     this.field = el.dataset.field
     this.model = el.dataset.model
-    this.modelId = el.dataset.id
+    this.modelId = el.dataset.modelId
     this.options = getFormattedOptions(el.querySelectorAll("option"))
 
     this.sel = document.createElement("div")

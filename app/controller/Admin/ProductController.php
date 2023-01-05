@@ -28,15 +28,15 @@ class ProductController Extends AppController
 		$this->set(compact('product', 'breadcrumbs'));
 	}
 
-	public function actionIndex()
-	{
-		$this->view='card';
-		if (isset($this->route['slug'])) {
-			$slug = $this->route['slug'];
-			$product = ProductCardView::getCard($slug);
-			$this->set(compact('product'));
-		}
-	}
+//	public function actionIndex()
+//	{
+//		$this->view='card';
+//		if (isset($this->route['slug'])) {
+//			$slug = $this->route['slug'];
+//			$product = ProductCardView::getCard($slug);
+//			$this->set(compact('product'));
+//		}
+//	}
 
 
 	protected function detachTagFromImage($tagName, $imgId)
