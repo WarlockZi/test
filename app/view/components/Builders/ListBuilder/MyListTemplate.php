@@ -2,6 +2,8 @@
 	<?= $this->dataModel; ?>
 	<?= $this->morph; ?>
 	<?= $this->morphId; ?>
+	<?= $this->morphOneOrMany; ?>
+	<?= $this->morphDetach; ?>
 	<?= $this->parent; ?>
 	<?= $this->parentId; ?>
 >

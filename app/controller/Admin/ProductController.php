@@ -8,6 +8,7 @@ use app\model\Image;
 use app\model\Product;
 use app\model\Propertable;
 use app\model\Tag;
+use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
 use app\view\Category\CategoryView;
 use app\view\Product\ProductView;
@@ -24,7 +25,7 @@ class ProductController Extends AppController
 		$prod = ProductRepository::getProduct('id',$id);
 
 		$product = ProductView::edit($prod);
-		$breadcrumbs = CategoryView::breadcrumbs($prod->category->id, true);
+		$breadcrumbs = BreadcrumbsRepository::breadcrumbs($prod->category->id, true);
 		$this->set(compact('product', 'breadcrumbs'));
 	}
 

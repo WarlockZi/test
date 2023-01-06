@@ -3,6 +3,8 @@
 namespace app\controller;
 
 use app\core\Auth;
+use app\Repository\ListMorphRepository;
+use app\Repository\MorphRepository;
 use app\view\Header\Header;
 use app\view\View;
 use Illuminate\Database\Eloquent\Model;
@@ -53,6 +55,21 @@ class AppController extends Controller
 		}
 	}
 
+	protected static function attachMorph(array $response, array $morph)
+	{
+		if ($response['morph_oneormany'] === 'one') {
+			if ($response['morph_detach'] === 'true') {
+				ListMorphRepository::attachOneDetach($response,$morph);
+			}
+			ListMorphRepository::attachOneNoDetach($response,$morph);
+		} else {
+			if ($response['morph_detach'] === 'true') {
+				ListMorphRepository::attachOneDetach($response,$morph);
+			}
+			ListMorphRepository::attachOneNoDetach($response,$morph);
+		}
+	}
+
 	public function actionUpdateOrCreate()
 	{
 		if ($this->ajax) {
@@ -61,6 +78,13 @@ class AppController extends Controller
 				['id' => $this->ajax['id']],
 				$this->ajax
 			);
+
+			if (isset($this->ajax['morph_type'])) {
+				$morph['morph'] = self::shortClassName($model);
+				$morph['morphId'] = $model->id;
+				self::attachMorph($this->ajax,$morph);
+			}
+
 			if ($model->wasRecentlyCreated) {
 				$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
 			} else {

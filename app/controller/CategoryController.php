@@ -4,14 +4,14 @@ namespace app\controller;
 
 
 use app\model\Category;
+use app\Repository\BreadcrumbsRepository;
 use app\view\Category\CategoryView;
-use app\view\Category\CountryView;
 
 
 class CategoryController Extends AppController
 {
 
-	public $model = \app\model\Category::class;
+	public $model = Category::class;
 	public $modelName = 'category';
 
 	public function __construct(array $route)
@@ -34,49 +34,17 @@ class CategoryController Extends AppController
 				->get()->first();
 			$this->set(compact('category'));
 
-			$breadcrumbs = CategoryView::breadcrumbs($category->id, false, false);
+			$breadcrumbs = BreadcrumbsRepository::breadcrumbs($category->id, false, false);
 			$this->set(compact('breadcrumbs'));
 
 		} else {
-
 			$categories = Category::where('category_id', 0)
 				->with('childrenRecursive')
 				->get();
 			$this->set(compact('categories'));
 			$this->view = 'categories';
-
 		}
-
 		$this->set(compact('accordion'));
-
-	}
-
-//
-//	public function actionIndex()
-//	{
-//		$slug = $this->route['slug'];
-//
-//		$categories = Category::where('slug',$slug)
-//			->with('children')
-//			->first()
-//			->toArray();
-//
-//		$accordion = Tree::build($categories)
-//			->parent('category_id')
-//			->model('category')
-//			->get();
-//
-//		$this->set(compact('categories'));
-//		$this->set(compact('accordion'));
-//	}
-
-
-	public function actionEdit()
-	{
-		$id = $this->route['id'];
-		$breadcrumbs = CountryView::breadcrumbs($id);
-		$category = CountryView::edit($id);
-		$this->set(compact('category', 'breadcrumbs'));
 	}
 
 }

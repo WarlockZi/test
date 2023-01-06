@@ -1,3 +1,0 @@
-<? ob_start();?>
-	<?= $f; ?>
-<? return ob_get_clean(); ?>

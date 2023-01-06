@@ -4,42 +4,42 @@
 namespace app\Repository;
 
 
-class MorphRepository
+class ListMorphRepository
 {
 
-	public static function attachOne(array $morph, array $morphed, string $slug, bool $detach)
+	public static function attachOneNoDetach(array $morph, array $morphed=[], string $slug='')
+	{
+		$modelName = 'app\\model\\' . ucfirst($morphed['morph']);
+		$modeld = $modelName::first();
+		$function = lcfirst($modeld->getTable());
+
+		$modelName = 'app\\model\\' . ucfirst($morph['morph_type']);
+		$model = $modelName::with($function)->find($morph['morph_id']);
+
+
+		return $model->properties()->syncWithoutDetaching($morphed['morphId']);
+//		return $model->$function()->syncWithoutDetach($morphed['morphId']);
+	}
+
+	public static function attachOneDetach(array $morph, array $morphed=[], string $slug = '')
 	{
 		$modelName = 'app\\model\\' . ucfirst($morphed['type']);
 		$model = $modelName::find($morphed['id']);
-
-		$function = $slug . ucfirst($morph[0]->getTable());
-
-		if ($detach) {
+		if ($slug) {
+			$function = $slug . ucfirst($morph[0]->getTable());
 			return $model->$function()
-				->wherePivot('slug',$slug)
+				->wherePivot('slug', $slug)
 				->sync([$morph[0]->id => ['slug' => $slug]]);
-		} else {
-			return $model->$function()->syncWithoutDetach([$morph[0]->id => ['slug' => $slug]]);
 		}
+		$function = ucfirst($morph[0]->getTable());
+		return $model->$function()
+			->wherePivot('slug', $slug)
+			->sync([$morph[0]->id => ['slug' => $slug]]);
+
+
 	}
 
-	public static function attachOneNoDetach(array $morph, array $morphed, string $slug, bool $detach)
-	{
-		$modelName = 'app\\model\\' . ucfirst($morphed['type']);
-		$model = $modelName::find($morphed['id']);
-
-		$function = $slug . ucfirst($morph[0]->getTable());
-
-		if ($detach) {
-			return $model->$function()
-				->wherePivot('slug',$slug)
-				->sync([$morph[0]->id => ['slug' => $slug]]);
-		} else {
-			return $model->$function()->syncWithoutDetach([$morph[0]->id => ['slug' => $slug]]);
-		}
-	}
-
-	public static function attachMany(array $morphs, array $morphed, string $slug, bool $detach)
+	public static function attachManyDetach(array $morphs, array $morphed, string $slug)
 	{
 		$modelName = 'app\\model\\' . ucfirst($morphed['type']);
 		$model = $modelName::find($morphed['id']);

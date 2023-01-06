@@ -2,6 +2,8 @@
 
 namespace app\view;
 
+use Illuminate\Database\Eloquent\Model;
+
 class View
 {
 
@@ -152,11 +154,11 @@ class View
                <meta name = "keywords" content = "' . self::$meta['keywords'] . '">';
 	}
 
-	public static function setMeta($title = '', $description = '', $keywords = '')
+	public static function setMeta(Model $item)
 	{
-		self::$meta['title'] = $title;
-		self::$meta['desc'] = $description;
-		self::$meta['keywords'] = $keywords;
+		self::$meta['title'] = $item->title ?? $item->name;
+		self::$meta['desc'] = $item->description ? $item->description : $item->name;
+		self::$meta['keywords'] = $item->keywords ? $item->keywords : $item->name;
 	}
 
 }

@@ -1,112 +1,130 @@
-<? use \app\Repository\ImageRepository; ?>
+<?
+use \app\Repository\ImageRepository;
+use \app\view\Product\ProductView;
+?>
 
-<main class="vitex-content">
+<? if ($product): ?>
 
-	<div class="product-card">
+	<main class="vitex-content">
 
-		 <?= $breadcrumbs ?>
-		<h1><?= $product['name']; ?></h1>
+		<div class="product-card">
+
+				<?= $breadcrumbs ?>
+			<h1><?= $product['name']; ?></h1>
 
 
-		<div class="row">
+			<div class="row">
 
-			<div class="main-image">
-					 <?= ImageRepository::getProductMainImage($product); ?>
-			</div>
+				<div class="main-image">
+							<?= ImageRepository::getProductMainImage($product); ?>
+				</div>
 
-			<div class="properties">
+				<div class="properties">
 
-				<div class="row">
-					<div class="property">
+					<div class="row">
+						<div class="property">
 						<span>
 						Артикул
 						</span>
+						</div>
+						<div class="value"><?= $product->art; ?></div>
 					</div>
-					<div class="value"><?= $product['art']; ?></div>
-				</div>
 
-				<div class="row">
-					<div class="property">
+					<div class="row">
+						<div class="property">
 						<span>
-						Артикул
+						Страна
 						</span>
+						</div>
+						<div class="value"><?= $product->manufacturer->country->name ?? 'Неизвестна'; ?></div>
 					</div>
-					<div class="value"><?= $product['art']; ?></div>
+
+					<div class="row">
+						<div class="property">
+						<span>
+						Производитель
+						</span>
+						</div>
+						<div class="value"><?= $product->manufacturer->name ?? 'Неизвестен'; ?></div>
+					</div>
+
 				</div>
+			</div>
+
+			<div class="row">
+					 <?= ProductView::getCardDetailImages($product); ?>
+			</div>
+
+
+			<div class="info-wrap">
+				<h3 class="info-tag">Информация о товаре</h3>
+				<p class="detail-text">
+							<?= $product['dtxt'] ?>
+				</p>
+			</div>
+
+
+			<div class="may-also-like-wrap">
+				<h3 class="info-tag">Вам также может понравится</h3>
+				<div class="may-also-like-title">
+
+					<div class="thumb-big"></div>
+					<div class="thumb-big"></div>
+					<div class="thumb-big"></div>
+					<div class="thumb-big"></div>
+
+				</div>
+			</div>
+
+			<div class="cust-questions-wrap">
+				<h3 class="info-tag">Вопросы покупателей</h3>
+				<div class="info">
+					<p>Есть вопросы по данному продукту? Задайте их здесь. </p>
+					<p>Вы получите уведомление на указанный email, когда ответ будет готов. </p>
+				</div>
+			</div>
+
+			<div class="cust-questions-wrap">
+				<h3 class="info-tag">Оставьте свой отзыв</h3>
+				<ol>
+					<li><span class="info">Вам понравился продукт</span></li>
+					<li><span class="info">Напишите свой отзыв</span></li>
+					<li><span class="info">Расскажите нам немного о себе</span>
+						<input type="text">
+						<input type="text">
+						<input type="text">
+					</li>
+
+
+				</ol>
 
 			</div>
-		</div>
 
-
-		<div class="info-wrap">
-			<h3 class="info-tag">Информация о товаре</h3>
-			<p class="detail-text">
-					 <?= $product['dtxt'] ?>
-			</p>
-		</div>
-
-
-		<div class="may-also-like-wrap">
-			<h3 class="info-tag">Вам также может понравится</h3>
-			<div class="may-also-like-title">
-
-				<div class="thumb-big"></div>
-				<div class="thumb-big"></div>
-				<div class="thumb-big"></div>
-				<div class="thumb-big"></div>
-
+			<div class="note">
+				Внимание: предоставляя отзыв вы подтверждаете и гарантируете, что вам исполнилось 18 лет. Ваш отзыв
+				будет рассмотрен в течение 5 дней.
 			</div>
-		</div>
 
-		<div class="cust-questions-wrap">
-			<h3 class="info-tag">Вопросы покупателей</h3>
-			<div class="info">
-				<p>Есть вопросы по данному продукту? Задайте их здесь. </p>
-				<p>Вы получите уведомление на указанный email, когда ответ будет готов. </p>
+
+			<h3 class="info-tag">Рейтинг</h3>
+			<div class="star-rating">
+				<div class="star-rating__wrap">
+					<input id="star-rating-5" type="radio" value="5">
+					<label class="star" for="star-rating-5"></label>
+					<input id="star-rating-4" type="radio" value="4">
+					<label class="star" for="star-rating-4"></label>
+					<input id="star-rating-3" type="radio" value="3">
+					<label class="star" for="star-rating-3"></label>
+					<input id="star-rating-2" type="radio" value="2">
+					<label class="star" for="star-rating-2"></label>
+					<input id="star-rating-1" type="radio" value="1">
+					<label class="star" for="star-rating-1"></label>
+				</div>
 			</div>
-		</div>
 
-		<div class="cust-questions-wrap">
-			<h3 class="info-tag">Оставьте свой отзыв</h3>
-			<ol>
-				<li><span class="info">Вам понравился продукт</span></li>
-				<li><span class="info">Напишите свой отзыв</span></li>
-				<li><span class="info">Расскажите нам немного о себе</span>
-					<input type="text">
-					<input type="text">
-					<input type="text">
-				</li>
+			<h3 class="info-tag">Отзывы</h3>
 
-
-			</ol>
-
-		</div>
-
-		<div class="note">
-			Внимание: предоставляя отзыв вы подтверждаете и гарантируете, что вам исполнилось 18 лет. Ваш отзыв
-			будет рассмотрен в течение 5 дней.
-		</div>
-
-
-		<h3 class="info-tag">Рейтинг</h3>
-		<div class="star-rating">
-			<div class="star-rating__wrap">
-				<input id="star-rating-5" type="radio" value="5">
-				<label class="star" for="star-rating-5"></label>
-				<input id="star-rating-4" type="radio" value="4">
-				<label class="star" for="star-rating-4"></label>
-				<input id="star-rating-3" type="radio" value="3">
-				<label class="star" for="star-rating-3"></label>
-				<input id="star-rating-2" type="radio" value="2">
-				<label class="star" for="star-rating-2"></label>
-				<input id="star-rating-1" type="radio" value="1">
-				<label class="star" for="star-rating-1"></label>
-			</div>
-		</div>
-
-		<h3 class="info-tag">Отзывы</h3>
-
-		<span class="share">
+			<span class="share">
             <span class="share-title">Поделиться</span>
             <svg viewBox="-200 -150 2100 2100" class="f" fill="#fff" preserveAspectRatio="xMidYMid meet" height="100"
                  width="1000" role="img" aria-labelledby="title"><title>Facebook</title><path
@@ -114,15 +132,14 @@
 			            fill="#fff"></path></svg>
           </span>
 
-		<div class="also-viewed">
+			<div class="also-viewed">
+			</div>
 		</div>
-	</div>
 
-	</div>
+		</div>
 
-</main>
+	</main>
 
-
-
-
-
+<? else: ?>
+	<div>Такого товара нет</div>
+<? endif; ?>
