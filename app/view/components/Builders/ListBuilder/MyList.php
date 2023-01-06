@@ -24,6 +24,8 @@ class MyList
 	private $parentId = null;
 	private $morph = '';
 	private $morphId = null;
+	private $morphDetach;
+	private $morphOneOrMany;
 
 	public static function build(string $modelName)
 	{
@@ -47,10 +49,13 @@ class MyList
 		return $this;
 	}
 
-	public function morph(string $model, $id)
+	public function morph(string $model, int $id, string $oneOrMany = 'one', bool $detach = false)
 	{
-		$this->morph = "data-morph=" . $model;
-		$this->morphId = "data-morphId=" . $id;
+		$this->morph = "data-morph={$model}";
+		$this->morphId = "data-morphId={$id}";
+		$this->morphOneOrMany = "data-morphOneOrMany={$oneOrMany}";
+		$detach = $detach?'true':'false';
+		$this->morphDetach = "data-morphDetach={$detach}";
 		return $this;
 	}
 
@@ -150,7 +155,7 @@ class MyList
 
 	protected function getEmpty($column)
 	{
-		if($column->select){
+		if ($column->select) {
 			return $column->select->getEmpty();
 		} else {
 			return '';
@@ -162,8 +167,8 @@ class MyList
 		if ($column->function) {
 			$func = $column->function;
 			return $column->functionClass::$func($item);
-		}else if($column->select){
-			return $column->select->get($item->$field??0);
+		} else if ($column->select) {
+			return $column->select->get($item->$field ?? 0);
 		} else {
 			return $item[$field];
 		}

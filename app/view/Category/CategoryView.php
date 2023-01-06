@@ -15,67 +15,7 @@ use app\view\components\Builders\ListBuilder\MyList;
 
 class CategoryView
 {
-	private $model = Category::class;
-	private $modelName = 'category';
 	public $html;
-
-	public function __construct()
-	{
-	}
-
-	public static function getBreadcrumb(array $category)
-	{
-		return "<a href='/adminsc/category/edit/{$category['id']}'>{$category['name']}</a>";
-	}
-
-	protected static function hasCat($cat)
-	{
-		return $cat['parent_recursive'];
-	}
-
-	protected static function getLastCategory(bool $isLink, $parents): string
-	{
-		return $isLink
-			? "<li><a href='/adminsc/category/edit/{$parents['id']}'>{$parents['name']}</a></li>"
-			: "<li><div>{$parents['name']}</div></li>";
-	}
-
-	protected static function getInitCategory(bool $isLink, $title, $href): string
-	{
-		return $isLink
-			? "<li><a href='{$href}'>{$title}</a></li>"
-			: "<li><div>{$title}</div></li>";
-	}
-
-	public static function breadcrumbs(int $id,
-																		 bool $lastIsALink = false,
-																		 bool $admin = true,
-																		 string $class = 'breadcrumbs-1'): string
-	{
-		$prefix = $admin ? '/adminsc' : '';
-
-		$parents =
-			Category::with('parentRecursive.properties.vals')
-				->find($id)->toArray();
-
-		$arr = [];
-		$finalCategory = self::getLastCategory($lastIsALink, $parents);
-		while (self::hasCat($parents)) {
-			$id = $parents['parent_recursive']['id'];
-			$slug = $prefix ? "/edit/{$id}" : "/{$parents['parent_recursive']['slug']}";
-			$name = $parents['parent_recursive']['name'];
-			array_push($arr,
-				"<li><a href={$prefix}/category{$slug}>{$name}</a></li>");
-			$parents = $parents['parent_recursive'];
-		}
-		$initCategory = self::getInitCategory(true, 'Категории', "{$prefix}/category");
-		array_push($arr, $initCategory);
-		$arr = array_reverse($arr);
-		array_push($arr, $finalCategory);
-//		$breadcrumbs = implode('&nbsp;>&nbsp;', $arr);
-		$breadcrumbs = implode('', $arr);
-		return "<nav class='{$class}'>{$breadcrumbs}</nav>";
-	}
 
 	public static function edit($id): string
 	{
@@ -88,7 +28,6 @@ class CategoryView
 			'children',
 			'mainImages')
 			->find($id);
-//		$category = $illumCategory->toArray();
 
 		return ItemBuilder::build($category, 'category')
 			->pageTitle('Категория :  ' . $category->name)
@@ -169,7 +108,7 @@ class CategoryView
 					->html(
 						MyList::build(Property::class)
 							->items($category->properties?? [])
-							->morph('category', $id)
+							->morph('category', $id,'one',false)
 //							->parent($view->modelName, $id)
 							->edit()
 							->del()
@@ -249,5 +188,8 @@ class CategoryView
 		return $parent_select;
 	}
 
-
+//	public static function getBreadcrumb(array $category)
+//	{
+//		return "<a href='/adminsc/category/edit/{$category['id']}'>{$category['name']}</a>";
+//	}
 }

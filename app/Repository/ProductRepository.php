@@ -12,37 +12,6 @@ class ProductRepository extends Controller
 {
 	public static $ProductRepository;
 
-	public static function getBreadcrumbs(Product $product,
-																				bool $linkLast = false,
-																				bool $admn = false,
-																				string $class = 'breadcrumbs-1'
-	)
-	{
-		$cats = [];
-		$cats[] = $product->parentCategoryRecursive;
-		$cat[0] = $product->parentCategoryRecursive;
-		while ($cat[0]->parentRecursive) {
-			array_push($cats, $cat[0]->parentRecursive);
-			$cat[0] = $cat[0]->parentRecursive;
-		}
-
-		$str = '';
-		$prefix = $admn ? '/admin' : '/category/';
-		if (!$linkLast){
-			$lastLink = array_splice($cats, 0,1);
-			$str = "<li><div>{$lastLink[0]->name}</div></li>";
-		}
-
-		foreach ($cats as $ind => $cat) {
-
-			$slug = $admn ? "edit/{$cat->id}" : "{$cat->slug}";
-			$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a></li>" . $str;
-		}
-
-		$str = "<li><a href='/category'>Категории</a></li>" . $str;
-		return "<nav class='{$class}'>{$str}</nav>";
-	}
-
 	public static function clear()
 	{
 		$deleted = FS::delFilesFromPath("\pic\product\\");

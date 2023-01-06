@@ -1,4 +1,6 @@
-<? ob_start();
+<?
+use \app\Repository\ImageRepository;
+ob_start();
 ?>
 
 <div class="small_pack_images">
@@ -13,9 +15,9 @@
 		<? foreach ($product->smallPackImages as $img): ?>
 			<div class="image">
 				<?
-				$ext = \app\Repository\ImageRepository::getFileExt($img->type);
+				$ext = ImageRepository::getFileExt($img->type);
 				$path = "/pic/product/{$img->hash}.{$ext}";
-				$src = \app\Repository\ImageRepository::getImg($path);
+				$src = ImageRepository::getImg($path);
 				?>
 				<img class="" src="<?= $src ?>" alt="">
 				<div class="del" data-id="<?=$img->id??''?>" data-tag="delSmallPackImage">x</div>

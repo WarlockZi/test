@@ -4,9 +4,7 @@ namespace app\controller\Admin;
 
 
 use app\controller\AppController;
-use app\model\IlluminateModelMorphDecorator;
 use app\model\Propertable;
-use app\model\IlluminateModelDecorator;
 use app\model\Property;
 use app\view\Property\PropertyView;
 
@@ -14,9 +12,7 @@ use app\view\Property\PropertyView;
 class PropertyController Extends AppController
 {
 
-	public $illuminateModel = IlluminateProperty::class;
 	public $model = Property::class;
-	public $table = 'properties';
 
 	public function __construct(array $route)
 	{
@@ -37,12 +33,6 @@ class PropertyController Extends AppController
 		} else {
 			header('Location: /adminsc/property');
 		}
-	}
-
-	public function actionUpdateOrCreate()
-	{
-
-		IlluminateModelMorphDecorator::updateOrCreate(IlluminateProperty::class, $this->ajax);
 	}
 
 	public function actionDelete()

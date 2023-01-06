@@ -25,6 +25,11 @@ class ProductView
 	public $modelName = Product::class;
 	public $model = 'product';
 
+	public static function getCardDetailImages(Model $product){
+
+
+	}
+
 	public static function edit(Model $product): string
 	{
 		return ItemBuilder::build($product, 'product')
@@ -63,10 +68,17 @@ class ProductView
 			->field(
 				ItemFieldBuilder::build('manufacturer', $product)
 					->name('Производитель')
-					->html(self::getManufacturer($product))
+					->html(
+						ListSelectBuilder::build()
+							->collection(Manufacturer::all())
+							->item($product)
+							->field('manufacturer_id')
+							->initialOption('', 0)
+							->selected($product->manufacturer->id ?? 0)
+							->get()
+					)
 					->get()
 			)
-
 			->tab(
 				ItemTabBuilder::build('Свойства товара')
 					->html(
@@ -211,6 +223,7 @@ class ProductView
 				)
 			->get();
 	}
+
 	protected static function getBigPackImages($product): string
 	{
 		return MorphBuilder::build(
@@ -232,6 +245,7 @@ class ProductView
 				)
 			->get();
 	}
+
 	protected static function getDetailImages($product): string
 	{
 		return MorphBuilder::build(
@@ -253,26 +267,27 @@ class ProductView
 				)
 			->get();
 	}
+
 	protected static function getMainImage($product): string
 	{
 		return MorphBuilder::build(
-		$product,
-		'Image',
-		'main',
-		'dnd',
-		)
-		->one($product->mainImages)
-		->template('one.php')
-		->detach('detach')
-		->dnd(
-			'many_dnd_plus.php',
-			'holder',
+			$product,
+			'Image',
+			'main',
 			'dnd',
-			'Перетащите файл сюда',
-			Icon::plus(),
-			'catalog',
 			)
-		->get();
+			->one($product->mainImages)
+			->template('one.php')
+			->detach('detach')
+			->dnd(
+				'many_dnd_plus.php',
+				'holder',
+				'dnd',
+				'Перетащите файл сюда',
+				Icon::plus(),
+				'catalog',
+				)
+			->get();
 	}
 
 	protected static function getMainUnit(Model $product): string
@@ -287,18 +302,7 @@ class ProductView
 
 		return include ROOT . '/app/view/Product/main_unit.php';
 	}
-	protected static function getManufacturer(Model $product): string
-	{
-		$f = ListSelectBuilder::build()
-			->collection(Manufacturer::all())
-			->item($product)
-			->field('manufacturer_id')
-			->initialOption('', 0)
-			->selected($product->manufacturer->id)
-			->get();
 
-		return include ROOT . '/app/view/Product/manufacturer.php';
-	}
 
 	protected static function getBaseUnit(Model $product): string
 	{
@@ -368,26 +372,6 @@ class ProductView
 			->get();
 	}
 
-	public static function card($slug)
-	{
-		$product = IlluminateProduct::
-		with('properties', 'category', 'category.parentRecursive')
-			->where('slug', '=', $slug)
-			->get()
-			->toArray()[0];
-		$product['nav'] = self::getNavigationStr($product['category']['parentRecursive']);
-		return $product;
-	}
-
-	protected static function getNavigationStr(array $arr, $str = '')
-	{
-		$str = '/' . $arr['alias'];
-		while ($arr['parentRecursive']) {
-			$str .= "/" . $arr['parentRecursive'];
-			self::getNavigationStr($arr['parentRecursive'], $str);
-		}
-		return $str;
-	}
 
 	public static function belongToCategory($category)
 	{
@@ -400,4 +384,24 @@ class ProductView
 	}
 
 
+//	public static function card($slug)
+//	{
+//		$product = IlluminateProduct::
+//		with('properties', 'category', 'category.parentRecursive')
+//			->where('slug', '=', $slug)
+//			->get()
+//			->toArray()[0];
+//		$product['nav'] = self::getNavigationStr($product['category']['parentRecursive']);
+//		return $product;
+//	}
+
+//	protected static function getNavigationStr(array $arr, $str = '')
+//	{
+//		$str = '/' . $arr['alias'];
+//		while ($arr['parentRecursive']) {
+//			$str .= "/" . $arr['parentRecursive'];
+//			self::getNavigationStr($arr['parentRecursive'], $str);
+//		}
+//		return $str;
+//	}
 }

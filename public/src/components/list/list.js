@@ -13,11 +13,14 @@ if (tables) {
     const sortables = table.querySelectorAll('[data-sort]')
     const inputs = $(table).findAll('.head input')
     const ids = getIds()
-    const modelName = table.dataset['model']
+    const modelName = table.dataset.model??null
+    const modelId = table.dataset.id??null
     const parent = table.dataset.parent ?? null
     const parentId = table.dataset.parentid ?? null
     const morph = table.dataset.morph ?? null
     const morphId = table.dataset.morphid ?? null
+    const morphoneormany = table.dataset.morphoneormany ?? null
+    const morphdetach = table.dataset.morphdetach ?? null
     const rows = fillRows()
 
     const WSSelects = $('[custom-select]');
@@ -76,19 +79,12 @@ if (tables) {
       }
     }
 
-    // function handleCahnge({target}) {
-    //   if (target.hasAttribute('custom-select')) {
-    //     // debugger
-    //     let a = 1
-    //   }
-    // }
-
     function handleClick(e) {
       let target = e.target
 
       /// create
       if (target.className === 'add-model') {
-        modelCreate(modelName, parent, parentId, morph, morphId, 0)
+        modelCreate(modelName, parent, parentId, morph, morphId, modelId,morphoneormany,morphdetach)
 
         /// delete
       } else if (
@@ -141,7 +137,7 @@ if (tables) {
 
 
     // UPDATE OR CREATE
-    async function modelCreate(modelName, parent, parentId, morph, morphId, id = 0) {
+    async function modelCreate(modelName, parent, parentId, morph, morphId, id ,morphoneormany,morphdetach) {
       let data = {}
       if (parent) {
         let parentName = parent + '_id'
@@ -153,6 +149,8 @@ if (tables) {
         data = {
           'morph_type': morph,
           'morph_id': morphId,
+          'morph_oneormany': morphoneormany,
+          'morph_detach': morphdetach,
 
         }
       }
