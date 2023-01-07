@@ -23,9 +23,9 @@ class RightView extends MyView
 			->column(
 				ListColumnBuilder::build('name')
 					->name('Право')
-					->search(true)
-					->contenteditable(true)
-					->sort(true)
+					->search()
+					->contenteditable()
+					->sort()
 					->width('1fr')
 					->get())
 			->column(

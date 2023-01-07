@@ -13,14 +13,18 @@ if (tables) {
     const sortables = table.querySelectorAll('[data-sort]')
     const inputs = $(table).findAll('.head input')
     const ids = getIds()
-    const modelName = table.dataset.model??null
-    const modelId = table.dataset.id??null
-    const parent = table.dataset.parent ?? null
-    const parentId = table.dataset.parentid ?? null
+
+    const modelName = table.dataset.model ?? null
+    const modelId = table.dataset.id ?? null
+
+    const belongsTo = table.dataset.belongsTo ?? null
+    const belongsToId = table.dataset.belongsToId ?? null
+
     const morph = table.dataset.morph ?? null
     const morphId = table.dataset.morphid ?? null
     const morphoneormany = table.dataset.morphoneormany ?? null
     const morphdetach = table.dataset.morphdetach ?? null
+
     const rows = fillRows()
 
     const WSSelects = $('[custom-select]');
@@ -30,6 +34,8 @@ if (tables) {
     })
 
     async function customSelectChange({target}) {
+
+      // modelUpdate(this)
       let wrapper = target.closest('[data-model]')
       let model = wrapper.dataset.model
       let modelId = wrapper.dataset.id
@@ -84,7 +90,9 @@ if (tables) {
 
       /// create
       if (target.className === 'add-model') {
-        modelCreate(modelName, parent, parentId, morph, morphId, modelId,morphoneormany,morphdetach)
+        // debugger
+        modelCreate(modelName, modelId, belongsTo, belongsToId, morph, morphId, morphoneormany, morphdetach)
+        // modelCreate(this)
 
         /// delete
       } else if (
@@ -137,29 +145,55 @@ if (tables) {
 
 
     // UPDATE OR CREATE
-    async function modelCreate(modelName, parent, parentId, morph, morphId, id ,morphoneormany,morphdetach) {
+    function modelUpdate() {
+
+    }
+
+    async function modelCreate(modelName, modelId, belongsTo, belongsToId, morph, morphId, morphoneormany, morphdetach) {
+      // debugger
       let data = {}
-      if (parent) {
-        let parentName = parent + '_id'
-        data = {
-          [parentName]: +parentId
-        }
+      if (belongsTo) {
+        let parentName = belongsTo + '_id'
+        data[parentName] = +belongsToId
       }
       if (morph) {
-        data = {
-          'morph_type': morph,
-          'morph_id': morphId,
-          'morph_oneormany': morphoneormany,
-          'morph_detach': morphdetach,
-
-        }
+        data.morph_type = morph
+        data.morph_id = morphId
+        data.morph_oneormany = morphoneormany
+        data.morph_detach = morphdetach
       }
-      data.id = id
+
+      data.id = 0
       let res = await post(`/adminsc/${modelName}/updateOrCreate`, data)
       if (res.arr.id) {
         newrow(res.arr.id)
       }
     }
+
+
+// async function modelCreate(modelName, parent, parentId, morph, morphId, id, morphoneormany, morphdetach) {
+//   let data = {}
+//   if (parent) {
+//     let parentName = parent + '_id'
+//     data = {
+//       [parentName]: +parentId
+//     }
+//   }
+//   if (morph) {
+//     data = {
+//       'morph_type': morph,
+//       'morph_id': morphId,
+//       'morph_oneormany': morphoneormany,
+//       'morph_detach': morphdetach,
+//
+//     }
+//   }
+//   data.id = id
+//   let res = await post(`/adminsc/${modelName}/updateOrCreate`, data)
+//   if (res.arr.id) {
+//     newrow(res.arr.id)
+//   }
+// }
 
     function newrow(id) {
       [].forEach.call(hidden, function (el) {
@@ -184,7 +218,7 @@ if (tables) {
     }
 
 
-    /// SEARCH
+/// SEARCH
     function showAllRows() {
       [].forEach.call(rows, (row) => {
         [].forEach.call(row, el => {
@@ -223,7 +257,7 @@ if (tables) {
       return rows
     }
 
-    // SORT
+// SORT
     function sortColumn(index) {
 
       let rows = fillRows()
@@ -273,12 +307,12 @@ if (tables) {
       });
     };
 
-    // Направление сортировки
+// Направление сортировки
     const directions = Array.from(sortables).map(function (sortable) {
       return ''
     });
 
-    // Преобразовать содержимое данной ячейки в заданном столбце
+// Преобразовать содержимое данной ячейки в заданном столбце
     function transform(index, content) {
       // Получить тип данных столбца
       if (!sortables[index]) return
@@ -292,7 +326,7 @@ if (tables) {
       }
     };
 
-    /// INPUT
+/// INPUT
     function handleInput(table, contenteditable, target) {
       if (!target.hasAttribute('contenteditable')) return false
       let model = makeServerModel(target, modelName)
@@ -304,10 +338,13 @@ if (tables) {
       let res = await post(url, model.model)
     }
 
+
     function makeServerModel(target, modelName) {
-      let field = target.dataset['field']
-      let parent = table.dataset.parent + '_id'
-      let parentId = table.dataset.parentid
+      let model = target.dataset.model
+      let id = target.dataset.id
+      let field = target.dataset.field
+      let belongsTo = target.dataset.belongsTo ?? null
+      let belongsId = target.dataset.belongsToId ?? null
       let obj = {
         model: {
           id: target.dataset.id,
@@ -315,9 +352,7 @@ if (tables) {
         },
         modelName
       }
-      if (parent) {
-        obj.model[parent] = parentId
-      }
+
       return obj
     }
 

@@ -4,10 +4,10 @@
 	<?= $this->morphId; ?>
 	<?= $this->morphOneOrMany; ?>
 	<?= $this->morphDetach; ?>
-	<?= $this->parent; ?>
-	<?= $this->parentId; ?>
+	<?= $this->belongsTo; ?>
+	<?= $this->belongsToId; ?>
 >
-	<div class="list-title"><?= $this->pageTitle; ?></div>
+	<?= $this->pageTitle; ?>
 
 	<div class="custom-list"
 		 <?= $this->grid ?>

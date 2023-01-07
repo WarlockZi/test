@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Val extends Model
 {
+	public $timestamps = false;
 
 	protected $fillable = [
-		'name' => '',
-		'value'=>'',
-		'description'=>'',
-		'type'=>'',
-		'property_id'=>'',
+		'name',
+		'value',
+		'description',
+		'type',
+		'property_id',
 	];
 
 	public function property()

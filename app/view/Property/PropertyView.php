@@ -51,7 +51,7 @@ class PropertyView extends MyView
 		$view = new self();
 		$item = $view->modelName::with('categories', 'products','vals')->find($id);
 		return ItemBuilder::build($item, 'property')
-			->pageTitle('Свойство')
+			->pageTitle('Свойство : '.$item->name)
 			->field(
 				ItemFieldBuilder::build('id', $item)
 					->name('ID')
@@ -67,8 +67,8 @@ class PropertyView extends MyView
 				ItemTabBuilder::build('Значения')
 					->html(
 						MyList::build(Val::class)
-							->items($item->vals->toArray())
-							->parent($view->model, $id)
+							->items($item->vals)
+							->belongsTo($view->model, $id)
 							->column(
 								ListColumnBuilder::build('id')
 									->name('ID')

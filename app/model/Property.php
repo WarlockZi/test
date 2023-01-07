@@ -12,9 +12,9 @@ class Property extends Model
 	public $timestamps = false;
 
 	protected $fillable = [
-		'name' => '',
-		'value' => '',
-		'description' => '',
+		'name',
+		'value',
+		'description',
 	];
 
 

@@ -27,7 +27,7 @@ abstract class OrderView extends MyView
 			->column(
 				ListColumnBuilder::build('name')
 					->name('Наименование')
-					->search(true)
+					->search()
 					->width('1fr')
 					->get())
 			->all()
