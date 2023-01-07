@@ -56,17 +56,9 @@ class MorphBuilder
 		return $this;
 	}
 
-//	public function addAction(string $template): self
-//	{
-//		ob_start();
-//		include $this->morphPath . $template;
-//		$this->addAction = ob_get_clean();
-//		return $this;
-//	}
 	public function detach(string $class)
 	{
 		$this->detachClass = $class ? "class='{$class}'" : "";
-//		$this->detachSlug = $slug ? "data-slug='{$slug}'" : "";
 		$this->detach = $this->morphPath . 'detach.php';
 		return $this;
 	}

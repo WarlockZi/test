@@ -79,7 +79,7 @@ class CategoryView
 				ItemTabBuilder::build('Товары категории')
 					->html(
 						MyList::build(Product::class)
-							->parent('category', $id)
+							->belongsTo('category', $id)
 							->addButton('ajax')
 							->edit()
 							->del()

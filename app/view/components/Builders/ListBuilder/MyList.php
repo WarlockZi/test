@@ -11,18 +11,18 @@ class MyList
 {
 	private $grid = "style='display: grid; grid-template-columns:";
 
-	private $model = '';
-	private $pageTitle = '';
-	private $dataModel = '';
+	private $model;
+	private $pageTitle;
+	private $dataModel;
 	private $addButton = false;
-	private $tableClassName = '';
+	private $tableClassName;
 	private $columns = [];
 	private $items = [];
-	private $headEditCol = '';
-	private $headDelCol = '';
-	private $parent = '';
-	private $parentId = null;
-	private $morph = '';
+	private $headEditCol;
+	private $headDelCol;
+	private $belongsTo;
+	private $belongsToId;
+	private $morph;
 	private $morphId = null;
 	private $morphDetach;
 	private $morphOneOrMany;
@@ -36,16 +36,16 @@ class MyList
 		return $view;
 	}
 
-	public function parent(string $model, $id)
+	public function belongsTo(string $model, $id)
 	{
-		$this->parent = "data-parent=" . $model;
-		$this->parentId = "data-parentId=" . $id;
+		$this->belongsTo = "data-belongs-to=" . $model;
+		$this->belongsToId = "data-belongs-to-id=" . $id;
 		return $this;
 	}
 
 	public function pageTitle(string $pageTitle)
 	{
-		$this->pageTitle = $pageTitle;
+		$this->pageTitle = 	"<div class='list-title'>{$pageTitle}</div>";
 		return $this;
 	}
 

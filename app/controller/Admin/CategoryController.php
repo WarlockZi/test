@@ -20,18 +20,18 @@ class CategoryController Extends AppController
 		parent::__construct($route);
 	}
 
-//	public function actionIndex()
-//	{
-//		$categories = Category::all()->toArray();
-//
-//		$accordion = Tree::build($categories)
-//			->parent('category_id')
-//			->model('category')
-//			->get();
-//
-//		$this->set(compact('categories'));
-//		$this->set(compact('accordion'));
-//	}
+	public function actionIndex()
+	{
+		$categories = Category::all()->toArray();
+
+		$accordion = Tree::build($categories)
+			->parent('category_id')
+			->model('category')
+			->get();
+
+		$this->set(compact('categories'));
+		$this->set(compact('accordion'));
+	}
 
 	public function actionEdit()
 	{

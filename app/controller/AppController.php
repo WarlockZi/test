@@ -79,13 +79,12 @@ class AppController extends Controller
 				$this->ajax
 			);
 
-			if (isset($this->ajax['morph_type'])) {
-				$morph['morph'] = self::shortClassName($model);
-				$morph['morphId'] = $model->id;
-				self::attachMorph($this->ajax,$morph);
-			}
-
 			if ($model->wasRecentlyCreated) {
+				if (isset($this->ajax['morph_type'])) {
+					$morph['morph'] = self::shortClassName($model);
+					$morph['morphId'] = $model->id;
+					self::attachMorph($this->ajax,$morph);
+				}
 				$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
 			} else {
 				$this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);
