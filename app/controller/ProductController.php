@@ -19,7 +19,7 @@ class ProductController Extends AppController
 			$this->set(compact('product'));
 			$this->set(compact('breadcrumbs'));
 		}
-		View::setMeta($product);
+		View::setItemMeta($product);
 	}
 
 }

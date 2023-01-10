@@ -4,20 +4,23 @@
 namespace app\Repository;
 
 
+
+use Illuminate\Database\Eloquent\Model;
+
 class MorphRepository
 {
 
-	public static function attachOne(array $morph, array $morphed, string $slug, bool $detach)
+	public static function attachOne(Model $morph, array $morphed, string $slug, bool $detach)
 	{
 		$modelName = 'app\\model\\' . ucfirst($morphed['type']);
 		$model = $modelName::find($morphed['id']);
 
-		$function = $slug . ucfirst($morph[0]->getTable());
+		$function = $slug . ucfirst($morph->getTable());
 
 		if ($detach) {
 			return $model->$function()
 				->wherePivot('slug',$slug)
-				->sync([$morph[0]->id => ['slug' => $slug]]);
+				->sync([$morph->id => ['slug' => $slug]]);
 		} else {
 			return $model->$function()->syncWithoutDetach([$morph[0]->id => ['slug' => $slug]]);
 		}

@@ -12,13 +12,16 @@ export default function category() {
   let category = $(`.item_wrap[data-model='category']`)[0]
   if (!category) return false
 
-  let morphs = $('[data-morph]')
+  // let morphs = $('[data-morph-model]')
+  let dnds = $('[data-dnd]')
 
-  morphs.forEach((morphEl) => {
-
-    // debugger
-    let m = new Morph(morphEl, category)
-
+  // debugger
+  dnds.forEach((dnd) => {
+    if (dnd.parentNode.dataset.morphModel) {
+      let m = new Morph(dnd, category)
+    } else if (dnd.parentNode.dataset.belongsTo) {
+      let m = new BelongsTo(dnd, category)
+    }
   })
 }
 // let sel = "[data-field='image_main']"

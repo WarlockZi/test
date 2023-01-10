@@ -5,10 +5,10 @@ export default class DragNDrop {
   constructor(el, cb, hoverSelector = 'dndhover', allFiles = true) {
     // let sel = el.classList[0]
 
+      // debugger
     el.ondragenter = el.ondragleave = function (hoverSelector, e) {
       e.preventDefault()
       e.target.classList.toggle(hoverSelector)
-      // debugger
       return false
     }.bind(null, hoverSelector)
 
