@@ -5,85 +5,91 @@ namespace app\view\components\Builders\Dnd;
 
 
 use app\view\components\Builders\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class DndBuilder extends Builder
 {
 
-	private $belongsToModel;
-	private $belongsToId;
+	private $belongsTo_model;
+	private $belongsTo_id;
 
-	private $morphModel;
-	private $morphId;
-	private $morphDetach;
-	private $morphOneOrMany;
+	private $morphed;
+	private $morphed_relation;
 
-	private $slug;
+	private $morph_model;
+	private $morph_id;
+	private $morph_detach;
+	private $morph_one_or_many;
+	private $morph_slug;
+	private $morph_class;
+
 	private $path;
-
 	private $class;
 
-	public static function build(string $slug, string $path)
+	private $title;
+
+
+	public static function build(string $path, string $class, string $tooltip='')
 	{
 		$dnd = new static();
-		$dnd->slug = $slug;
-		$dnd->path = $path;
+		$dnd->path = "data-path='{$path}'";
+		$dnd->class = "class ='{$class}'";
+		$dnd->tooltip = $tooltip;
 
 		return $dnd;
 	}
 
 	public function morph(
-		string $morphModel,
-		int $morphId,
-		bool $morphDetach,
-		string $morphOneOrMany
+		Model $morphed,
+		string $morphed_relation,
+		string $morph_model,
+		int $morph_id,
+		bool $morph_detach,
+		string $morph_one_or_many,
+		string $morph_slug,
+		string $morph_class
 	)
 	{
-		$this->morphModel = $morphModel;
-		$this->morphId = $morphId;
-		$this->morphDetach = $morphDetach;
-		$this->morphOneOrMany = $morphOneOrMany;
+		$this->morphed = $morphed;
+		$this->morphed_relation = $morphed_relation;
+
+		$this->morph_model = "data-morph-model='{$morph_model}'";
+		$this->morph_id = "data-morph-id='{$morph_id}'";
+		$this->morph_detach = $morph_detach;
+
+		if ($morph_one_or_many = 'one') {
+			$this->morph_one_or_many = "data-morph-oneormany='one'";
+		} else {
+			$this->morph_one_or_many = "data-morph-oneormany='many'";
+		}
+
+		$this->morph_slug = "data-morph-slug='{$morph_slug}'";
+		$this->morph_class = "class='{$morph_class}'";
 
 		return $this;
 	}
 
 	public function belongsTo(
-		string $belongsToModel,
-		int $belongsToId
+		string $belongsTo_model,
+		int $belongsTo_id
 	)
 	{
-		$this->belongsToModel = $belongsToModel;
-		$this->belongsToId = $belongsToId;
+		$this->belongsTo_model = $belongsTo_model;
+		$this->belongsTo_id = $belongsTo_id;
 		return $this;
 	}
-
-	public function class(string $class)
-	{
-		$this->class = "class='{$class}'";
-		return $this;
-	}
-
 
 	public function title(string $title)
 	{
-		$this->title = "title='{$title}'";
+		$this->title = $title ? "<div class='page-title'>{$title}</div>" : '';
 		return $this;
 	}
 
 
 	public function get()
 	{
-		if ($this->tree) {
-			$this->options = TreeBuilder::build($this->tree)->get();
-		} else {
-			$this->options = $this->getArray();
-		}
-
-		if ($this->excluded !== false) {
-			unset($this->tree[$this->excluded]);
-		}
-
 		ob_start();
-		include ROOT . '/app/view/components/Builders/SelectBuilder/SelectBuilderTemplate.php';
+		include ROOT . '/app/view/components/Builders/Dnd/DndBuilderTemplate.php';
 		$result = ob_get_clean();
 		return $this->clean($result);
 	}

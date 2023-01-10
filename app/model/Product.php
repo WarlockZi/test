@@ -101,6 +101,11 @@ class Product extends Model
 		return $this->belongsTo(Category::class)->with('category_rec');
 	}
 
+	public function values()
+	{
+		return $this->morphToMany(Val::class, 'valuables')->with(Property::class);
+	}
+
 //	public function cat(){
 //		return $this->belongsTo(Category::class)
 //			->with('cat');

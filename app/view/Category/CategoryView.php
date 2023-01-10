@@ -7,6 +7,7 @@ use app\model\Category;
 use app\model\Product;
 use app\model\Property;
 use app\view\Builders\MorphBuilder;
+use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
@@ -52,25 +53,7 @@ class CategoryView
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
-
-						MorphBuilder::build(
-							$category,
-							'Image',
-							'main',
-							'dnd'
-						)
-							->one($category->mainImages)
-							->template('one.php')
-							->detach('detach')
-							->dnd(
-								'one_dnd_plus.php',
-								'holder',
-								'dnd',
-								'',
-								Icon::plus(),
-								'catalog',
-								)
-							->get()
+						self::getMainImage($category)
 					)
 					->get()
 
@@ -170,6 +153,22 @@ class CategoryView
 	private function getList($items)
 	{
 		return include ROOT . '/app/view/Category/list.php';
+	}
+
+	private static function getMainImage($category)
+	{
+		return DndBuilder::build('catalog', 'dnd')
+			->morph($category, 'mainImages','image',0,
+				true,'one',
+				'main', 'holder')
+			->get();
+
+//		return MorphBuilder::build($category,'Image','main','dnd')
+//			->one($category->mainImages)
+//			->template('one.php')
+//			->detach('detach')
+//			->dnd('one_dnd_plus.php','holder','dnd','',Icon::plus(),'catalog',)
+//			->get();
 	}
 
 	public static function selector(int $selected, int $exclude = -1): string

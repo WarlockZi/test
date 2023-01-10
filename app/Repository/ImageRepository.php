@@ -53,21 +53,35 @@ class ImageRepository
 		}
 	}
 
-	public static function getSrcMorph(Image $image): array
+	public static function getSrcMorph(Model $image): array
 	{
 		$imageArr['src'] = $image->getFullPath();
 		$imageArr['id'] = $image->id;
 		return $imageArr;
 	}
 
-	public static function sync(array $morph, array $morphed, string $slug, string $oneOrMany, bool $detach)
+	public static function getMorphOneImage(Model $image, $relation): string
+	{
+		$item =
+		$del = "<div data-detach='' class='detach' data-id={$image->id}>x</div>";
+		$im = "<div class='item'><img src='{$image->getFullPath()}' alt=''>{$del}</div>";
+		return "<div class='wrap'>{$im}</div>";
+	}
+
+	public static function getMorphManyImages(Model $image): string
+	{
+		$del = "<div data-detach='' class='detach' data-id={$image->id}>x</div>";
+		return "<div class='item'><img src='{$image->getFullPath()}' alt=''>{$del}</div>";
+	}
+
+	public static function sync(Model $morph, array $morphed, string $slug, string $oneOrMany, bool $detach)
 	{
 		if ($oneOrMany === 'many') {
 			return $res = MorphRepository::attachMany($morph, $morphed, $slug, $detach);
 		} else { //one
 			$res = MorphRepository::attachOne($morph, $morphed, $slug, $detach);
 			if ($res['attached']) {
-				return ImageRepository::getSrcMorph($morph[0]);
+				return ImageRepository::getSrcMorph($morph);
 			}
 		}
 	}

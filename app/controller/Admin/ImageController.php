@@ -83,7 +83,7 @@ class ImageController Extends AppController
 			ImageRepository::saveToFile($image, $file);
 		}
 
-		$res = ImageRepository::sync(array($image), $morphed, $morph['slug'], 'one', true);
+		$res = ImageRepository::sync($image, $morphed, $morph['slug'], 'one', true);
 		if ($res) {
 			$this->exitJson($res);
 		}

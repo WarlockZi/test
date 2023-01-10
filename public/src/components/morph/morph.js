@@ -5,28 +5,32 @@ import DragNDropOne from "../dnd/DragNDropOne";
 
 export default class Morph {
 
-  constructor(morphEl, morphedEl) {
-    this.morphEl = morphEl
-    this.morphedEl = morphedEl
+  constructor(dnd, morphedEl) {
+    ///image
+    // debugger
+    let morphEl = dnd.parentNode
+    this.morphModel = morphEl.dataset.morphModel
+    this.morphId = morphEl.dataset.morphId
+    this.slug = morphEl.dataset.morphSlug ?? ''
+    this.oneOrMany = morphEl.dataset.morphOneormany
 
-    this.imagePath = Morph.setImagePath(morphedEl)
-    this.appendTo = Morph.setAppendTo(morphedEl)
+    ///category
+    this.morphedModel = morphedEl.dataset.model
+    this.morphedId = morphedEl.dataset.id
 
-    let dndContainer = morphEl.querySelector(`[data-dnd]`)
-    if (dndContainer) {
-      this.oneOrMany = morphEl.dataset.morph
-      // debugger
-      let dndCallback = Morph.dndCallback.bind(this)
+    this.path = dnd.dataset.path ?? ''
+    this.append = morphEl
 
-      if (this.oneOrMany === 'many') {
-        new DragNDropMany(dndContainer, dndCallback)
-      } else {
-        new DragNDropOne(dndContainer, dndCallback)
-      }
+    let dndCallback = Morph.dndCallback.bind(this)
+
+    if (this.oneOrMany === 'many') {
+      new DragNDropMany(dnd, dndCallback)
+    } else {
+      new DragNDropOne(dnd, dndCallback)
     }
 
-    $(this.morphEl).on('click', function ({target}) {
-      if (target.classList.contains('detach')) Morph.detach(target)
+    $(morphEl).on('click', function ({target}) {
+      if (target.hasAttribute('data-detach')) Morph.detach(target)
     })
   }
 
@@ -38,34 +42,27 @@ export default class Morph {
     return ''
   }
 
-  static setAppendTo(morphedEl) {
-    let appendTo = $(morphedEl).find('[data-appendto]')
-    if (appendTo) {
-      return '.' + appendTo.dataset.appendto
-    }
-    return ''
-  }
-
-  static prepareData(morphEl, morphedEl) {
+  static prepareData(context) {
     let data = {}
     data.morph = {}
     data.morphed = {}
 
-    data.morphed.type = morphedEl.dataset.model
-    data.morphed.id = morphedEl.dataset.id
+    // debugger
+    data.morph.type = context.morphModel
+    data.morph.id = context.morphId
+    data.morph.slug = context.slug
+    data.morph.path = context.path
 
-    data.morph.type = morphEl.dataset.model
-    data.morph.slug = morphEl.dataset.slug
-    data.morph.path = morphEl.dataset.path
+    data.morphed.type = context.morphedModel
+    data.morphed.id = context.morphedId
 
     return data
   }
 
   static async dndCallback(files) {
-    // debugger
-    let url = `/adminsc/${this.morphEl.dataset.model}/attach${this.oneOrMany}`
+    let url = `/adminsc/${this.morphModel}/attach${this.oneOrMany}`
 
-    let data = Morph.prepareData(this.morphEl, this.morphedEl)
+    let data = Morph.prepareData(this)
     data = objAndData2FormData(data, files)
 
     let res = await post(url, data)
@@ -92,8 +89,8 @@ export default class Morph {
     let container = target.closest('.wrap')
     let morphedType = target.closest('.item_wrap').dataset.model
     let morphedId = target.closest('.item_wrap').dataset.id
-    let slug = target.closest('[data-morph]').dataset.slug
-    let morphType = target.closest('[data-morph]').dataset.model
+    let slug = target.closest('[data-morph-model]').dataset.morphSlug
+    let morphType = target.closest('[data-morph-model]').dataset.morphModel
     let morphId = target.dataset.id
     let url = `/adminsc/${morphType}/detach`
     let data = {morphedType, morphedId, morphId, slug}
@@ -122,11 +119,7 @@ export default class Morph {
   static appendOneImage(appendTo, image) {
     let img = $(appendTo)[0].querySelector('img')
     if (!img) {
-      // let holder = $(appendTo)[0]
-      // let img = document.createElement('img')
-      // img.src = image?.src
-      // holder.appendChild(img)
-      Morph.renderImage(appendTo,image)
+      Morph.renderImage(appendTo, image)
     } else {
       img.src = image?.src
     }
@@ -135,7 +128,7 @@ export default class Morph {
   static appendManyImages(appendTo, srcArr) {
 
     srcArr.forEach((image) => {
-      Morph.renderImage(appendTo,image)
+      Morph.renderImage(appendTo, image)
     })
   }
 

@@ -154,11 +154,17 @@ class View
                <meta name = "keywords" content = "' . self::$meta['keywords'] . '">';
 	}
 
-	public static function setMeta(Model $item)
+	public static function setItemMeta(Model $item)
 	{
 		self::$meta['title'] = $item->title ?? $item->name;
 		self::$meta['desc'] = $item->description ? $item->description : $item->name;
 		self::$meta['keywords'] = $item->keywords ? $item->keywords : $item->name;
 	}
 
+	public static function setMeta(string $title, string $desc, string $keywords)
+	{
+		self::$meta['title'] = $title ? $title : 'Медицинкские перчатки';
+		self::$meta['desc'] = $desc ? $desc : 'Медицинкские перчатки';
+		self::$meta['keywords'] = $keywords ? $keywords : 'Медицинкские перчатки';
+	}
 }
