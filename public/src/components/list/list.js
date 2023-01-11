@@ -63,8 +63,7 @@ if (tables) {
     let debouncedInput = debounce(handleInput)
 
     function handlePaste(e) {
-      let clip = e.clipboardData.getData('text/plain')
-      e.target.innerText = clip
+      e.target.innerText = e.clipboardData.getData('text/plain')
       handleInput(table, contenteditable, e.target)
       e.target.innerText = ''
     }
@@ -150,7 +149,7 @@ if (tables) {
     }
 
     async function modelCreate(modelName, modelId, belongsTo, belongsToId, morph, morphId, morphoneormany, morphdetach) {
-      // debugger
+      debugger
       let data = {}
       if (belongsTo) {
         let parentName = belongsTo + '_id'
@@ -170,30 +169,6 @@ if (tables) {
       }
     }
 
-
-// async function modelCreate(modelName, parent, parentId, morph, morphId, id, morphoneormany, morphdetach) {
-//   let data = {}
-//   if (parent) {
-//     let parentName = parent + '_id'
-//     data = {
-//       [parentName]: +parentId
-//     }
-//   }
-//   if (morph) {
-//     data = {
-//       'morph_type': morph,
-//       'morph_id': morphId,
-//       'morph_oneormany': morphoneormany,
-//       'morph_detach': morphdetach,
-//
-//     }
-//   }
-//   data.id = id
-//   let res = await post(`/adminsc/${modelName}/updateOrCreate`, data)
-//   if (res.arr.id) {
-//     newrow(res.arr.id)
-//   }
-// }
 
     function newrow(id) {
       [].forEach.call(hidden, function (el) {
@@ -352,12 +327,8 @@ if (tables) {
         },
         modelName
       }
-
       return obj
     }
 
-
   })
 }
-
-// }
