@@ -30,6 +30,7 @@ export default class Morph {
     }
 
     $(morphEl).on('click', function ({target}) {
+      // debugger
       if (target.hasAttribute('data-detach')) Morph.detach(target)
     })
   }
@@ -74,8 +75,8 @@ export default class Morph {
 
   static appendTo(self, srcs) {
 
-    if (self.appendTo) {
-      let el = self.morphEl.closest(self.appendTo)
+    if (self.append) {
+      let el = self.append
       // debugger
       if (self.oneOrMany === 'many') {
         Morph.appendManyImages(el, srcs)
@@ -137,6 +138,7 @@ export default class Morph {
     let img = document.createElement('img')
     img.src = image.src
     let del = document.createElement('div')
+    del.setAttribute('data-detach','')
     del.classList.add('detach')
     del.dataset.id = image.id
     del.innerText = 'x'

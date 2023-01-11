@@ -3,7 +3,6 @@
 namespace app\view\Product;
 
 use app\core\Icon;
-use app\model\Image;
 use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Propertable;
@@ -25,9 +24,21 @@ class ProductView
 	public $modelName = Product::class;
 	public $model = 'product';
 
-	public static function getCardDetailImages(Model $product){
+	public static function getCardDetailImage($image)
+	{
+		$im = "<img class = 'detail-image' src='{$image->getFullPath($image)}' alt=''></img>";
+		return "<div class='detail-image-wrap'>{$im}</div>";
+	}
 
-
+	public static function getCardImages(string $title, Collection $collection)
+	{
+		ob_start();
+		$detail_image = '';
+		foreach ($collection as $image) {
+			$detail_image .= self::getCardDetailImage($image);
+		}
+		include ROOT . '/app/view/Product/detail_images.php';
+		return ob_get_clean();
 	}
 
 	public static function edit(Model $product): string
@@ -155,14 +166,17 @@ class ProductView
 		$recProps = self::getProperyRecursiveProps($product);
 		$productVals = self::getSelectedProperties($product);
 
-		foreach ($recProps as $category) {
-			$str .= "<div class='category'>{$category['category']}</div><br>";
-			foreach ($category['properties'] as $property) {
-				$selected = array_key_exists($property['id'], $productVals)
-					? $productVals[$property['id']]
+		$currentCategory = $product->category;
+
+		while ($currentCategory->parentRecursive) {
+			$category = $currentCategory->parentRecursive;
+			$str .= "<div class='category'>{$category->name}</div><br>";
+			foreach ($category->properties as $property) {
+				$selected = array_key_exists($property->id, $productVals)
+					? $productVals[$property->id]
 					: 0;
-				$str .= "<div class='property'><div class='name'>{$property['name']}</div><br>";
-				$vals = self::prepareVals($property['vals']);
+				$str .= "<div class='property'><div class='name'>{$property->name}</div><br>";
+				$vals = self::prepareVals($property->vals);
 				$str .= SelectBuilder::build()
 					->array($vals)
 					->model('property')
@@ -172,6 +186,7 @@ class ProductView
 					->get();
 				$str .= "</div>";
 			}
+			$currentCategory = $category->parentRecursive;
 		}
 		return $str;
 	}
