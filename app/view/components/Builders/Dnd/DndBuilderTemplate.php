@@ -21,9 +21,7 @@
 		 <?= \app\core\Icon::plus() ?>
 	</div>
 
-	<div class="wrap">
-		 <?= \app\Repository\ImageRepository::getMorphOneImage($this->morphed, $this->morphed_relation); ?>
-	</div>
+	<?= \app\Repository\ImageRepository::getMorphOneImage($this->morphed, $this->morphed_relation); ?>
 
 
 </div>

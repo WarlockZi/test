@@ -1,6 +1,8 @@
 <?
+
 use \app\Repository\ImageRepository;
 use \app\view\Product\ProductView;
+
 ?>
 
 <? if ($product): ?>
@@ -52,9 +54,19 @@ use \app\view\Product\ProductView;
 			</div>
 
 			<div class="row">
-					 <?= ProductView::getCardDetailImages($product); ?>
+					 <?= ProductView::getCardImages('Датальные картинки товара',
+						 $product->detailImages); ?>
 			</div>
 
+			<div class="row">
+					 <?= ProductView::getCardImages('Вид внутритранспортной упоковки',
+						 $product->smallpackImages); ?>
+			</div>
+
+			<div class="row">
+					 <?= ProductView::getCardImages('Вид транспортной упоковки',
+						 $product->bigpackImages); ?>
+			</div>
 
 			<div class="info-wrap">
 				<h3 class="info-tag">Информация о товаре</h3>

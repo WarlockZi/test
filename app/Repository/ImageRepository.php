@@ -60,12 +60,18 @@ class ImageRepository
 		return $imageArr;
 	}
 
-	public static function getMorphOneImage(Model $image, $relation): string
+
+
+	public static function getMorphOneImage(Model $model, $relation): string
 	{
-		$item =
-		$del = "<div data-detach='' class='detach' data-id={$image->id}>x</div>";
-		$im = "<div class='item'><img src='{$image->getFullPath()}' alt=''>{$del}</div>";
-		return "<div class='wrap'>{$im}</div>";
+		$items = $model->$relation;
+		if ($items->count()) {
+			$del = "<div data-detach='' class='detach' data-id={$items[0]->id}>x</div>";
+			$im = "<div class='item'><img src='{$items[0]->getFullPath()}' alt=''>{$del}</div>";
+			return "<div class='wrap'>{$im}</div>";
+		}
+		return '';
+
 	}
 
 	public static function getMorphManyImages(Model $image): string

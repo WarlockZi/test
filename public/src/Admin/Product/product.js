@@ -7,19 +7,15 @@ export default function product() {
   let product = $(`.item_wrap[data-model='product']`)[0]
   if (!product) return false
 
-  let morphs = $('[data-morph-model]')
+  // let morphs = $('[data-morph-model]')
   let dnds = $('[data-dnd]')
 
-    debugger
+  debugger
   dnds.forEach((dnd) => {
-    if (dnd.parentNode.dataset.morphModel){
-
+    if (dnd.parentNode.dataset.morphModel) {
+      let m = new Morph(dnd.parentNode, product)
     } else if (dnd.parentNode.dataset.belongsTo) {
-
     }
-
-    let m = new Morph(dnds.parentNode, product)
-
   })
 
 //// Property set
