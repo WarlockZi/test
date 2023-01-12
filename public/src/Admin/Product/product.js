@@ -10,11 +10,21 @@ export default function product() {
   // let morphs = $('[data-morph-model]')
   let dnds = $('[data-dnd]')
 
-  debugger
+  // debugger
   dnds.forEach((dnd) => {
     if (dnd.parentNode.dataset.morphModel) {
       let m = new Morph(dnd.parentNode, product)
     } else if (dnd.parentNode.dataset.belongsTo) {
+    }
+  })
+
+  let customSelects = $('[custom-select]')
+
+  customSelects.forEach((sel)=>{
+    if (sel.dataset.morphModel){
+      let m = 1
+    } else{
+      let m = 1
     }
   })
 

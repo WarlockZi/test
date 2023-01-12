@@ -21,6 +21,15 @@ class ListSelectBuilder extends Builder
 	private $model;
 	private $modelId;
 
+	private $morphModel;
+	private $morphId;
+	private $morphSlug;
+	private $morphOneOrMany;
+	private $morphDetach;
+
+	private $belongsToModel;
+	private $belongsToId;
+
 	private $selected = false;
 	private $excluded = false;
 	private $nameOptionByField = 'name';

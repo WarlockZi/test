@@ -6,16 +6,31 @@ export default class WDSSelect {
   constructor(el) {
     // debugger
 
-    if (!el) return false
-    if (el.multiple) return false
+    if (!el) return
+    if (el.multiple) return
 
     this.title = el.title ?? ''
     this.field = el.dataset.field
     this.model = el.dataset.model
     this.modelId = el.dataset.modelId
+
     this.options = getFormattedOptions(el.querySelectorAll("option"))
 
     this.sel = document.createElement("div")
+    this.sel.setAttribute("custom-select", '')
+    // debugger
+    if (el.dataset.morphModel) {
+      this.sel.dataset.morphModel = el.dataset.morphModel
+      this.sel.dataset.morphId = el.dataset.morphId
+      this.sel.dataset.morphSlug = el.dataset.morphSlug ?? ''
+      this.sel.dataset.morphDetach = el.dataset.morphDetach ?? ''
+      this.sel.dataset.morphOneormany = el.dataset.morphOneormany ?? ''
+    }
+    if (el.dataset.model) {
+      this.sel.dataset.model = el.dataset.model
+      this.sel.dataset.id = el.dataset.modelId
+    }
+
     if (el.className) this.sel.classList.add(el.className)
 
     this.label = document.createElement("span")
@@ -24,7 +39,6 @@ export default class WDSSelect {
 
     this.ul = document.createElement("ul")
     setup(this)
-    // debugger
     el.after(this.sel)
     // el.style.display = "none"
     el.remove()
@@ -71,9 +85,6 @@ function setup(select) {
     select.sel.append(select.titleElement)
   }
 
-  select.sel.setAttribute("custom-select", '')
-  select.sel.dataset.model = select.model
-  select.sel.dataset.modelId = select.modelId
   if (select.field) {
     select.sel.dataset['field'] = select.field
   }
@@ -94,14 +105,40 @@ function setup(select) {
     setOption(option)
   })
 
+  function getMorph(sel) {
+    return {
+      morph: {
+        model: sel.dataset.morphModel,
+        id: sel.dataset.morphId
+      },
+      morphed:{
+        model:sel.dataset.morphedModel,
+        id:sel.value,
+        slug:sel.dataset.slug,
+        oneOrMany:sel.dataset.oneOrMany,
+        detach:sel.dataset.detach,
+      }
+    }
+  }
+
+  function sendToServer(target) {
+    let sel = target.closest('[custom-select]')
+    if (sel.dataset.morphModel) {
+
+
+    }
+
+  }
+
   function setOption(option) {
     const li = document.createElement("li")
     li.innerText = option.label
     li.dataset.value = option.value
     li.classList.toggle("selected", option.selected)
-    li.addEventListener("click", () => {
+    li.addEventListener("click", ({target}) => {
       select.selectValue(option.value)
       select.ul.classList.remove("show")
+      sendToServer(target)
     })
     select.ul.append(li)
   }

@@ -104,7 +104,8 @@ class Product extends Model
 
 	public function values()
 	{
-		return $this->morphToMany(Val::class, 'valuables')->with(Property::class);
+		return $this->morphToMany(Val::class, 'valuable');
+//		return $this->morphToMany(Val::class, 'valuables')->with(Property::class);
 	}
 
 //	public function cat(){
