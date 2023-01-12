@@ -54,6 +54,7 @@ class ProductRepository extends Controller
 		with('category.properties.vals')
 			->with('category.parentRecursive', 'category.parents')
 			->with('mainImages')
+			->with('values')
 			->with('manufacturer.country')
 			->with('detailImages')
 			->with('smallpackImages')

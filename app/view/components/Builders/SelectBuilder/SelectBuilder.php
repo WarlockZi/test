@@ -5,22 +5,37 @@ namespace app\view\components\Builders\SelectBuilder;
 
 
 use app\view\components\Builders\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class SelectBuilder extends Builder
 {
 	private $tree2 = [];
 	private $tree = [];
-	private $array = [];
+
+	private $array;
+	private $collection;
+
 	private $options = [];
-	private $class = '';
-	private $title = '';
-	private $field = '';
-	private $model = '';
-	private $modelId = '';
+	private $class;
+	private $title;
+	private $field;
+
+	private $model;
+	private $modelId;
+
+	private $morphModel;
+	private $morphId;
+	private $morphSlug;
+	private $morphOneOrMany;
+	private $morphDetach;
+
+	private $belongsToModel;
+	private $belongsToId;
+
 	private $selected = false;
 	private $excluded = false;
 	private $nameOptionByField = 'name';
-	private $initialOption = '';
+	private $initialOption;
 
 	private $tab = '&nbsp;';
 
@@ -48,6 +63,12 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
+	public function collection(Collection $collection)
+	{
+		$this->collection = $collection;
+		return $this;
+	}
+
 	public function class(string $class)
 	{
 		$this->class = "class='{$class}'";
@@ -63,6 +84,28 @@ class SelectBuilder extends Builder
 	public function modelId($modelId)
 	{
 		$this->modelId = "data-model-id='{$modelId}'";
+		return $this;
+	}
+
+	public function morph(string $model,
+												int $id,
+												string $slug = '',
+												string $oneOrMany = 'one',
+												bool $detach = false)
+	{
+		$this->morphModel = "data-morph-model='{$model}'";
+		$this->morphId = "data-morph-id='{$id}'";
+		$this->morphSlug = $slug ? "data-morph-slug='{$slug}'" : "";
+		$this->morphOneOrMany = "data-morph-oneOrMany='{$oneOrMany}'";
+		$detach = $detach ? 'true' : 'false';
+		$this->morphDetach = $detach ? "data-morph-detach='{$detach}'" : "";
+		return $this;
+	}
+
+	public function belongsTo(string $model, int $id)
+	{
+		$this->belongsToModel = "data-belongsTo-Model='{$model}'";
+		$this->belongsToId = "data-belongsTo-id='{$id}'";
 		return $this;
 	}
 
@@ -110,14 +153,24 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
-	private function getArray()
+	private function getArray(): void
 	{
 		$tpl = '';
 		foreach ($this->array as $index => $item) {
 			$selected = $this->selected === $index ? 'selected' : '';
 			$tpl .= "<option value='{$index}' $selected>{$item}</option>";
 		}
-		return $tpl;
+		$this->options = $tpl;
+	}
+
+	private function getCollection(): void
+	{
+		$tpl = '';
+		foreach ($this->collection as $item) {
+			$selected = $this->selected === $item->id ? 'selected' : '';
+			$tpl .= "<option value='{$item->id}' $selected>{$item->name}</option>";
+		}
+		$this->options = $tpl;
 	}
 
 	protected function getTree2($data, $level = 0)
@@ -142,20 +195,20 @@ class SelectBuilder extends Builder
 		return $menu;
 	}
 
-	private function getTree($tree, $level = 0, $str = '')
-	{
-		foreach ($tree as $k => $item) {
-			$selected = (int)$this->selected === (int)$item['id'] ? 'selected' : '';
-			$tab = str_repeat($this->tab, $level);
-
-			$str .= "<option value='{$item['id']}' $selected>{$tab}{$item[$this->nameOptionByField]}</option>";
-
-			if (isset($item['childs'])) {
-				$str .= $this->getChilds($item['childs'], $level + 1, $str);
-			}
-		}
-		return $str;
-	}
+//	private function getTree($tree, $level = 0, $str = '')
+//	{
+//		foreach ($tree as $k => $item) {
+//			$selected = (int)$this->selected === (int)$item['id'] ? 'selected' : '';
+//			$tab = str_repeat($this->tab, $level);
+//
+//			$str .= "<option value='{$item['id']}' $selected>{$tab}{$item[$this->nameOptionByField]}</option>";
+//
+//			if (isset($item['childs'])) {
+//				$str .= $this->getChilds($item['childs'], $level + 1, $str);
+//			}
+//		}
+//		return $str;
+//	}
 
 	protected function getChilds(array $tree, $level, $str)
 	{
@@ -174,10 +227,11 @@ class SelectBuilder extends Builder
 	public function get()
 	{
 		if ($this->tree) {
-//			$this->options = $this->getTree2($this->tree);
 			$this->options = TreeBuilder::build($this->tree)->get();
+		} elseif ($this->array) {
+			$this->getArray();
 		} else {
-			$this->options = $this->getArray();
+			$this->getCollection();
 		}
 
 		if ($this->excluded !== false) {

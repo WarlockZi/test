@@ -145,47 +145,36 @@ class ProductView
 			->get();
 	}
 
-	protected static function getSelectedProperties($product)
+	protected static function getSelect(Model $category, Product $product): string
 	{
-		return Propertable::where(
-			['propertable_type' => Product::class,
-				'propertable_id' => $product->id]
-		)
-			->select('val_id', 'property_id')
-			->get()
-			->keyBy('property_id')
-			->map(function ($v, $k) {
-				return $v->val_id;
-			})
-			->toArray();
+		$str = "<div class='category'>{$category->name}</div><br>";
+		foreach ($category->properties as $property) {
+			$int = $property->vals->intersect($product->values);
+			$selected = $int ? $int[0]->id : 0;
+			$propName = "<div class='name'>{$property->name}</div>";
+			$select = SelectBuilder::build()
+				->collection($property->vals)
+//				->model('property')
+//				->modelId($property['id'])
+				->morph('product', $product->id, '', 'one', true)
+				->selected($selected)
+				->initialOption('', 0)
+				->get();
+			$str .= "<div class='property'>{$propName}<br>{$select}</div>";
+		}
+		return $str;
 	}
 
 	protected static function getProperties($product): string
 	{
 		$str = "";
-		$recProps = self::getProperyRecursiveProps($product);
-		$productVals = self::getSelectedProperties($product);
-
 		$currentCategory = $product->category;
 
-		while ($currentCategory->parentRecursive) {
+		$str .= self::getSelect($product->category, $product);
+
+		while ($currentCategory) {
 			$category = $currentCategory->parentRecursive;
-			$str .= "<div class='category'>{$category->name}</div><br>";
-			foreach ($category->properties as $property) {
-				$selected = array_key_exists($property->id, $productVals)
-					? $productVals[$property->id]
-					: 0;
-				$str .= "<div class='property'><div class='name'>{$property->name}</div><br>";
-				$vals = self::prepareVals($property->vals);
-				$str .= SelectBuilder::build()
-					->array($vals)
-					->model('property')
-					->modelId($property['id'])
-					->selected($selected)
-					->initialOption('', 0)
-					->get();
-				$str .= "</div>";
-			}
+			$str .= self::getSelect($category, $product);
 			$currentCategory = $category->parentRecursive;
 		}
 		return $str;
@@ -332,33 +321,18 @@ class ProductView
 		return include ROOT . '/app/view/Product/main_unit.php';
 	}
 
-	protected static function prepareVals($vals)
-	{
-		$arr = [];
-		foreach ($vals as $val) {
-			$arr[$val['id']] = $val['name'];
-		}
-		return $arr;
-	}
+//	protected static function prepareVals($vals)
+//	{
+//		$arr = [];
+//		foreach ($vals as $val) {
+//			$arr[$val['id']] = $val['name'];
+//		}
+//		return $arr;
+//	}
 
 	protected static function hasCat($category)
 	{
 		return $category['parentRecursive'];
-	}
-
-	protected static function getProperyRecursiveProps($product)
-	{
-		$parents = $product->category;
-		$arr[$parents['id']]['category'] = $parents->name;
-		$arr[$parents['id']]['properties'] = $parents->properties->toArray();
-		$arr[$parents->parentRecursive['id']]['category'] = $parents->parentRecursive->name;
-		$arr[$parents->parentRecursive['id']]['properties'] = $parents->parentRecursive->properties->toArray();
-		while (self::hasCat($parents->parentRecursive)) {
-			$parents = $parents->parentRecursive;
-			$arr[$parents->parentRecursive->id]['category'] = $parents->parentRecursive->name;
-			$arr[$parents->parentRecursive->id]['properties'] = $parents->parentRecursive->properties->toArray();
-		}
-		return $arr;
 	}
 
 
