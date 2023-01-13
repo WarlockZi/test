@@ -36,7 +36,8 @@ class CategoryController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route['id'];
-		$breadcrumbs = BreadcrumbsRepository::breadcrumbs($id);
+		$category = Category::find($id);
+		$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category,false);
 		$category = CategoryView::edit($id);
 		$this->set(compact('category', 'breadcrumbs'));
 	}

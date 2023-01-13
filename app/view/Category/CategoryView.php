@@ -2,11 +2,9 @@
 
 namespace app\view\Category;
 
-use app\core\Icon;
 use app\model\Category;
 use app\model\Product;
 use app\model\Property;
-use app\view\Builders\MorphBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
@@ -20,7 +18,6 @@ class CategoryView
 
 	public static function edit($id): string
 	{
-		$view = new self();
 
 		$category = Category::with(
 			'products',
@@ -91,8 +88,7 @@ class CategoryView
 					->html(
 						MyList::build(Property::class)
 							->items($category->properties?? [])
-							->morph('category', $id,'one',false)
-//							->parent($view->modelName, $id)
+							->morph('category', $id,'many',false)
 							->edit()
 							->del()
 							->addButton('ajax')
@@ -114,7 +110,6 @@ class CategoryView
 			->tab(
 				ItemTabBuilder::build('Подкатегории')
 					->html(
-//						MyList::build(Category::class)
 						MyList::build(Category::class)
 							->edit()
 							->del()
@@ -143,17 +138,13 @@ class CategoryView
 
 	public static function list($models): string
 	{
-		$view = new self($models);
-		$table = $view->getList($models);
+		$view = new self();
+		$table = include ROOT . '/app/view/Category/list.php';
 		$view->set(compact('table'));
 
 		return $view->html;
 	}
 
-	private function getList($items)
-	{
-		return include ROOT . '/app/view/Category/list.php';
-	}
 
 	private static function getMainImage($category)
 	{
@@ -162,13 +153,6 @@ class CategoryView
 				true,'one',
 				'main', 'holder')
 			->get();
-
-//		return MorphBuilder::build($category,'Image','main','dnd')
-//			->one($category->mainImages)
-//			->template('one.php')
-//			->detach('detach')
-//			->dnd('one_dnd_plus.php','holder','dnd','',Icon::plus(),'catalog',)
-//			->get();
 	}
 
 	public static function selector(int $selected, int $exclude = -1): string
