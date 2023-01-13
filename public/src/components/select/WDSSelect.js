@@ -121,13 +121,13 @@ function setup(select) {
     }
   }
 
-  function sendToServer(target) {
+  async function sendToServer(target) {
     let sel = target.closest('[custom-select]')
     if (sel.dataset.morphModel) {
-
-
+      let data = getMorph()
+      let url =  `/adminsc/${data.morph.model}/attachOne`
+      let res = await (url, data)
     }
-
   }
 
   function setOption(option) {

@@ -29,11 +29,6 @@ class Product extends Model
 			)->where('slug', '=', 'detail');
 	}
 
-	public function parentCategoryRecursive(){
-
-		return $this->category()->with('parentRecursive');
-	}
-
 	public function mainImages()
 	{
 		return $this->morphToMany(
@@ -102,38 +97,16 @@ class Product extends Model
 		return $this->belongsTo(Category::class)->with('category_rec');
 	}
 
+	public function parentCategoryRecursive(){
+		return $this->category()->with('parentRecursive');
+	}
+
 	public function values()
 	{
 		return $this->morphToMany(Val::class, 'valuable');
 //		return $this->morphToMany(Val::class, 'valuables')->with(Property::class);
 	}
 
-//	public function cat(){
-//		return $this->belongsTo(Category::class)
-//			->with('cat');
-//	}
-//
-//	public function parents()
-//	{
-//		$collection = collect([]);
-//		$cat = $this->cat;
-//		while ($cat) {
-//			$collection->push($cat);
-//			$cat = $cat->cat;
-//		}
-//		return $collection;
-//	}
-
-
-//	public function smallPackImages()
-//	{
-//		return $this->morphToMany(
-//			Image::class,
-//			'imageable',
-//			)->whereHas('tags', function ($q) {
-//			$q->where('name', 'Внутритарная упаковка');
-//		});
-//	}
 }
 
 

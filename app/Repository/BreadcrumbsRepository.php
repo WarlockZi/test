@@ -21,7 +21,7 @@ class BreadcrumbsRepository
 			->find($id);
 
 		$arr = [];
-		$finalCategory = self::getLastCategory($lastIsALink, $parents);
+		$finalCategory = self::lastCategory($lastIsALink, $parents);
 		while ($parents->parent_recursive) {
 			$id = $parents->parent_recursive->id;
 			$slug = $prefix ? "/edit/{$id}" : "/{$parents->parent_recursive->slug}";
@@ -30,13 +30,21 @@ class BreadcrumbsRepository
 				"<li><a href={$prefix}/category{$slug}>{$name}</a></li>");
 			$parents = $parents->parent_recursive;
 		}
-		$initCategory = self::getInitCategory(true, 'Категории', "{$prefix}/category");
+		$initCategory = self::initCategory(true, 'Категории', "{$prefix}/category");
 		array_push($arr, $initCategory);
 		$arr = array_reverse($arr);
 		array_push($arr, $finalCategory);
 //		$breadcrumbs = implode('&nbsp;>&nbsp;', $arr);
 		$breadcrumbs = implode('', $arr);
 		return "<nav class='{$class}'>{$breadcrumbs}</nav>";
+	}
+
+	public static function getCategoryBreadcrumbs(Category $category,
+																								bool $linkLast = false,
+																								bool $admn = false,
+																								string $class = 'breadcrumbs-1')
+	{
+
 	}
 
 	public static function getBreadcrumbs(Product $product,
@@ -53,15 +61,10 @@ class BreadcrumbsRepository
 			$cat[0] = $cat[0]->parentRecursive;
 		}
 
-		$str = '';
+		$str = self::lastLink($linkLast);
+
 		$prefix = $admn ? '/admin' : '/category/';
-		if (!$linkLast){
-			$lastLink = array_splice($cats, 0,1);
-			$str = "<li><div>{$lastLink[0]->name}</div></li>";
-		}
-
-		foreach ($cats as $ind => $cat) {
-
+		foreach ($cats as $cat) {
 			$slug = $admn ? "edit/{$cat->id}" : "{$cat->slug}";
 			$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a></li>" . $str;
 		}
@@ -70,15 +73,23 @@ class BreadcrumbsRepository
 		return "<nav class='{$class}'>{$str}</nav>";
 	}
 
+	protected static function lastLink($linkLast): string
+	{
+		if (!$linkLast) {
+			$lastLink = array_splice($cats, 0, 1);
+			return "<li><div>{$lastLink[0]->name}</div></li>";
+		}
+		return '';
+	}
 
-	protected static function getLastCategory(bool $isLink, $parents): string
+	protected static function lastCategory(bool $isLink, $parents): string
 	{
 		return $isLink
 			? "<li><a href='/adminsc/category/edit/{$parents['id']}'>{$parents['name']}</a></li>"
 			: "<li><div>{$parents['name']}</div></li>";
 	}
 
-	protected static function getInitCategory(bool $isLink, $title, $href): string
+	protected static function initCategory(bool $isLink, $title, $href): string
 	{
 		return $isLink
 			? "<li><a href='{$href}'>{$title}</a></li>"

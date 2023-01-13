@@ -8,13 +8,13 @@ use app\controller\Controller;
 use app\core\Cache;
 use app\model\Category;
 use app\core\Icon;
-
+use mysql_xdevapi\Collection;
 
 
 class Header
 {
 
-	public static function getMenu(Controller $controller, array $frontCategories)
+	public static function getMenu(Controller $controller, Collection $frontCategories)
 	{
 		ob_start();
 		include ROOT . '/app/view/Header/header_menu.php';
@@ -32,7 +32,7 @@ class Header
 
 	public static function getVitexHeader(Controller $controller)
 	{
-		$frontCategories = Category::showFrontCategories();
+		$frontCategories = Category::frontCategories();
 		$headerMenu = self::getMenu($controller, $frontCategories);
 		$header = self::getHeader($controller,$headerMenu);
 		$controller->set(compact(
