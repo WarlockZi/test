@@ -56,8 +56,7 @@ use \app\core\Icon;
 					<a href="">Акции</a>
 
 					<hr>
-					<a href="">Перчатки</a>
-					<a href="">Бахилы</a>
+
 					<a href="/category">Каталог</a>
 
 				</div>

@@ -24,6 +24,7 @@ class SelectBuilder extends Builder
 	private $modelId;
 
 	private $morphModel;
+	private $morphedModel;
 	private $morphId;
 	private $morphSlug;
 	private $morphOneOrMany;
@@ -88,12 +89,14 @@ class SelectBuilder extends Builder
 	}
 
 	public function morph(string $model,
+												string $morphedModel,
 												int $id,
 												string $slug = '',
 												string $oneOrMany = 'one',
 												bool $detach = false)
 	{
 		$this->morphModel = "data-morph-model='{$model}'";
+		$this->morphedModel = "data-morphed-model='{$morphedModel}'";
 		$this->morphId = "data-morph-id='{$id}'";
 		$this->morphSlug = $slug ? "data-morph-slug='{$slug}'" : "";
 		$this->morphOneOrMany = "data-morph-oneOrMany='{$oneOrMany}'";

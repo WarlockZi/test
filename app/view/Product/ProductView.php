@@ -5,7 +5,6 @@ namespace app\view\Product;
 use app\core\Icon;
 use app\model\Manufacturer;
 use app\model\Product;
-use app\model\Propertable;
 use app\model\Unit;
 use app\view\Builders\MorphBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
@@ -156,7 +155,7 @@ class ProductView
 				->collection($property->vals)
 //				->model('property')
 //				->modelId($property['id'])
-				->morph('product', $product->id, '', 'one', true)
+				->morph('product', 'val', $product->id, '', 'one', true)
 				->selected($selected)
 				->initialOption('', 0)
 				->get();
@@ -170,12 +169,9 @@ class ProductView
 		$str = "";
 		$currentCategory = $product->category;
 
-		$str .= self::getSelect($product->category, $product);
-
 		while ($currentCategory) {
-			$category = $currentCategory->parentRecursive;
-			$str .= self::getSelect($category, $product);
-			$currentCategory = $category->parentRecursive;
+			$str .= self::getSelect($currentCategory, $product);
+			$currentCategory = $currentCategory->parentRecursive;
 		}
 		return $str;
 	}
@@ -321,15 +317,6 @@ class ProductView
 		return include ROOT . '/app/view/Product/main_unit.php';
 	}
 
-//	protected static function prepareVals($vals)
-//	{
-//		$arr = [];
-//		foreach ($vals as $val) {
-//			$arr[$val['id']] = $val['name'];
-//		}
-//		return $arr;
-//	}
-
 	protected static function hasCat($category)
 	{
 		return $category['parentRecursive'];
@@ -372,25 +359,4 @@ class ProductView
 		return $str;
 	}
 
-
-//	public static function card($slug)
-//	{
-//		$product = IlluminateProduct::
-//		with('properties', 'category', 'category.parentRecursive')
-//			->where('slug', '=', $slug)
-//			->get()
-//			->toArray()[0];
-//		$product['nav'] = self::getNavigationStr($product['category']['parentRecursive']);
-//		return $product;
-//	}
-
-//	protected static function getNavigationStr(array $arr, $str = '')
-//	{
-//		$str = '/' . $arr['alias'];
-//		while ($arr['parentRecursive']) {
-//			$str .= "/" . $arr['parentRecursive'];
-//			self::getNavigationStr($arr['parentRecursive'], $str);
-//		}
-//		return $str;
-//	}
 }

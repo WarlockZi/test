@@ -124,7 +124,7 @@ function setup(select) {
   async function sendToServer(target) {
     let sel = target.closest('[custom-select]')
     if (sel.dataset.morphModel) {
-      let data = getMorph()
+      let data = getMorph(sel)
       let url =  `/adminsc/${data.morph.model}/attachOne`
       let res = await (url, data)
     }

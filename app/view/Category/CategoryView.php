@@ -23,7 +23,7 @@ class CategoryView
 			'products',
 			'parentRecursive',
 			'properties',
-			'children',
+//			'children',
 			'mainImages')
 			->find($id);
 
