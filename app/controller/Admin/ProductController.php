@@ -3,14 +3,12 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-//use app\model\IlluminateModelDecorator;
 use app\model\Image;
 use app\model\Product;
 use app\model\Propertable;
 use app\model\Tag;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
-use app\view\Category\CategoryView;
 use app\view\Product\ProductView;
 
 
@@ -25,20 +23,9 @@ class ProductController Extends AppController
 		$prod = ProductRepository::getProduct('id',$id);
 
 		$product = ProductView::edit($prod);
-		$breadcrumbs = BreadcrumbsRepository::getBreadcrumbs($prod,false,);
+		$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($prod->category,false,);
 		$this->set(compact('product', 'breadcrumbs'));
 	}
-
-//	public function actionIndex()
-//	{
-//		$this->view='card';
-//		if (isset($this->route['slug'])) {
-//			$slug = $this->route['slug'];
-//			$product = ProductCardView::getCard($slug);
-//			$this->set(compact('product'));
-//		}
-//	}
-
 
 	protected function detachTagFromImage($tagName, $imgId)
 	{
@@ -57,11 +44,6 @@ class ProductController Extends AppController
 		}
 	}
 
-//	public function actionUpdateOrCreate()
-//	{
-//		$this->actionUpdateOrCreate($this->ajax);
-//	}
-
 	public function actionSetProperty()
 	{
 		if ($this->ajax) {
@@ -77,8 +59,16 @@ class ProductController Extends AppController
 		$items = Product::all()->take(10);
 		$list = ProductView::list($items);
 		$this->set(compact('list'));
-
 	}
 
+//	public function actionIndex()
+//	{
+//		$this->view='card';
+//		if (isset($this->route['slug'])) {
+//			$slug = $this->route['slug'];
+//			$product = ProductCardView::getCard($slug);
+//			$this->set(compact('product'));
+//		}
+//	}
 
 }

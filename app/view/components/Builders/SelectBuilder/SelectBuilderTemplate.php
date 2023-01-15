@@ -9,6 +9,7 @@
   <?= $this->belongsToId; ?>
 
 	<?= $this->morphModel; ?>
+	<?= $this->morphedModel; ?>
 	<?= $this->morphId; ?>
 	<?= $this->morphSlug; ?>
 	<?= $this->morphOneOrMany; ?>

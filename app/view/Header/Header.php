@@ -5,10 +5,9 @@ namespace app\view\Header;
 
 
 use app\controller\Controller;
-use app\core\Cache;
-use app\model\Category;
 use app\core\Icon;
-use mysql_xdevapi\Collection;
+use app\model\Category;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class Header
@@ -77,18 +76,11 @@ class Header
 	}
 
 
-	public static function getChips(Controller $controller)
-	{
-		ob_start();
-		include ROOT . '/app/view/components/admin_menu/admin_menu__accordion.php';
-		return ob_get_clean();
-	}
 
-
-	public static function getUserMenu(Controller $controller)
-	{
-		ob_start();
-		include ROOT . '/app/view/components/admin_menu/admin_menu__accordion.php';
-		return ob_get_clean();
-	}
+//	public static function getUserMenu(Controller $controller)
+//	{
+//		ob_start();
+//		include ROOT . '/app/view/components/admin_menu/admin_menu__accordion.php';
+//		return ob_get_clean();
+//	}
 }

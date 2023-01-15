@@ -52,8 +52,6 @@ class Category extends Model
 
 	public function parent()
 	{
-//		return $this->belongsTo(Category::class, 'category_id')
-//			->with('properties.vals');
 		return $this->belongsTo(Category::class, 'category_id');
 	}
 	public function parentRecursive()
@@ -71,6 +69,11 @@ class Category extends Model
 	public function childrenRecursive()
 	{
 		return $this->children()->with('childrenRecursive');
+	}
+
+	public function children()
+	{
+		return $this->hasMany(Category::class, 'category_id');
 	}
 
 }
