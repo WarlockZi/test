@@ -1,6 +1,4 @@
 <div class="item_header">
-
-
 	<? include ROOT . '/app/view/components/Builders/ItemBuilder/tabs.php' ?>
 </div>
 
