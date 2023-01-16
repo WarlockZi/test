@@ -23,11 +23,7 @@ class Test extends Model
 		$id = $this->items[0]['id'];
 		return Question::findAllWhere('parent', $id);
 	}
-	public function getChildren($id)
-	{
-		$children = $this->findAllWhere('parent', $id);
-		return $children;
-	}
+
 
 
 

@@ -3,6 +3,7 @@
 namespace app\model;
 
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class Test extends Model
@@ -26,12 +27,12 @@ class Test extends Model
 		return $this->belongsTo(Test::class, 'parent');
 	}
 
-	public function getChildren($id)
+	public function children()
 	{
 		return $this->hasMany(Test::class, 'parent');
 	}
 
-	public static function pagination(array $items)
+	public static function pagination(Collection $items)
 	{
 		$pagination = '<div class="pagination">';
 		$i = 0;

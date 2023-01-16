@@ -8,9 +8,7 @@
   <?= $this->belongsToModel; ?>
   <?= $this->belongsToId; ?>
 
-	<?= $this->morphModel; ?>
 	<?= $this->morphedModel; ?>
-	<?= $this->morphId; ?>
 	<?= $this->morphSlug; ?>
 	<?= $this->morphOneOrMany; ?>
 	<?= $this->morphDetach; ?>
@@ -19,7 +17,6 @@
 	<?= $this->class; ?>
 >
 	<?= $this->initialOption; ?>
-
 	<?= $this->options; ?>
 
 </select>

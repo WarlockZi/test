@@ -21,7 +21,7 @@ class ListSelectBuilder extends Builder
 	private $model;
 	private $modelId;
 
-	private $morphModel;
+	private $morphedModel;
 	private $morphId;
 	private $morphSlug;
 	private $morphOneOrMany;

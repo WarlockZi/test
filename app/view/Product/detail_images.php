@@ -1,5 +1,5 @@
 <div class="detail-images-wrap">
-	<h3><?=$title;?></h3>
+	<h2><?=$title;?></h2>
 	<div class="images">
 		<?= $detail_image ?>
 	</div>

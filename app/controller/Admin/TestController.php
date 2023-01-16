@@ -19,28 +19,28 @@ class TestController extends AppController
 		parent::__construct($route);
 	}
 
-	public function actionDo(): void
-	{
-		$page_name = 'Прохождение тестов';
-		$this->set(compact('page_name'));
-
-		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
-		$test = Test::find($testId);
-		if ($test) {
-			$questions
-				= Question::where('test_id',$testId)
-				->with('answers')
-				->get()->toArray();
-			if ($questions) {
-				$this->shuffleAnswers($questions);
-				$this->cacheCorrectAnswers($questions);
-			}
-			$testData = $questions;
-			$pagination = Test::pagination($testData, false, $test) ?? '';
-			$this->set(compact('testData', 'pagination'));
-		}
-		$this->set(compact('test'));
-	}
+//	public function actionDo(): void
+//	{
+//		$page_name = 'Прохождение тестов';
+//		$this->set(compact('page_name'));
+//
+//		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+//		$test = Test::find($testId);
+//		if ($test) {
+//			$questions
+//				= Question::where('test_id',$testId)
+//				->with('answers')
+//				->get()->toArray();
+//			if ($questions) {
+//				$this->shuffleAnswers($questions);
+//				$this->cacheCorrectAnswers($questions);
+//			}
+//			$testData = $questions;
+//			$pagination = Test::pagination($testData, false, $test) ?? '';
+//			$this->set(compact('testData', 'pagination'));
+//		}
+//		$this->set(compact('test'));
+//	}
 
 	public function actionEdit()
 	{

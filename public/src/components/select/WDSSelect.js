@@ -5,23 +5,21 @@ export default class WDSSelect {
 
   constructor(el) {
     // debugger
-
     if (!el) return
     if (el.multiple) return
 
     this.title = el.title ?? ''
     this.field = el.dataset.field
-    this.model = el.dataset.model
-    this.modelId = el.dataset.modelId
+    this.model = el.closest('.item_wrap').dataset.model
+    this.modelId = el.closest('.item_wrap').dataset.id
 
     this.options = getFormattedOptions(el.querySelectorAll("option"))
 
     this.sel = document.createElement("div")
     this.sel.setAttribute("custom-select", '')
-    // debugger
-    if (el.dataset.morphModel) {
-      this.sel.dataset.morphModel = el.dataset.morphModel
-      this.sel.dataset.morphId = el.dataset.morphId
+    debugger
+    if (el.dataset.morphedModel) {
+      this.sel.dataset.morphedModel = el.dataset.morphedModel
       this.sel.dataset.morphSlug = el.dataset.morphSlug ?? ''
       this.sel.dataset.morphDetach = el.dataset.morphDetach ?? ''
       this.sel.dataset.morphOneormany = el.dataset.morphOneormany ?? ''

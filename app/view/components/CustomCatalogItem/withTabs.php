@@ -1,7 +1,7 @@
 <div class="item_header">
 
 	<div class="page-title"><?= $this->pageTitle ?></div>
-	<? include ROOT . '/app/view/components/CustomCatalogItem/tabs.php' ?>
+<!--	--><?// include ROOT . '/app/view/components/CustomCatalogItem/tabs.php' ?>
 </div>
 
 
