@@ -7,9 +7,6 @@
 
 	<? if (isset($category) && $category): ?>
 
-	  <!--	<div class="category-wrap">-->
-	  <!---->
-	  <!--	</div>-->
 
 		<? if ($category['childrenRecursive']->count()): ?>
 
@@ -47,7 +44,6 @@
 		<? endif; ?>
 
 
-	  <!--</div>-->
 	<? else: ?>
 	  <div class="no-categories">
 		  <H1>Категорий нет</H1>

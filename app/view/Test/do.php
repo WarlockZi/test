@@ -7,11 +7,7 @@
 		<div class="content">
 				<? include ROOT . '/app/view/Test/test_do_accordion.php'; ?>
 
-				<? if ($test): ?>
-					<? include ROOT . '/app/view/Test/do_content.php'; ?>
-				<? else: ?>
-			  <h2></h2>
-				<? endif; ?>
+				<? include ROOT . '/app/view/Test/do_content.php'; ?>
 
 	</section>
 </div>

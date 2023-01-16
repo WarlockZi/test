@@ -146,7 +146,7 @@ class ProductView
 
 	protected static function getSelect(Model $category, Product $product): string
 	{
-		$str = "<div class='category'>{$category->name}</div><br>";
+		$str = "<div class='category'>{$category->name}</div>";
 		foreach ($category->properties as $property) {
 			$int = $property->vals->intersect($product->values);
 			$selected = $int ? $int[0]->id : 0;
@@ -155,7 +155,7 @@ class ProductView
 				->collection($property->vals)
 //				->model('property')
 //				->modelId($property['id'])
-				->morph('product', 'val', $product->id, '', 'one', true)
+				->morph('val', '', 'one', true)
 				->selected($selected)
 				->initialOption('', 0)
 				->get();

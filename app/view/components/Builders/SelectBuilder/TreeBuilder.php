@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TreeBuilder
 {
-
-	private $self;
-	public $collection;
+	private $selected;
+	private $collection;
+	private $tab = '&nbsp';
 
 	public static function build(Collection $collection)
 	{

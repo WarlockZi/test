@@ -34,7 +34,7 @@ class CategoryController Extends AppController
 				->get()->first();
 			$this->set(compact('category'));
 
-			$breadcrumbs = BreadcrumbsRepository::breadcrumbs($category->id, false, false);
+			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category, false, false);
 			$this->set(compact('breadcrumbs'));
 
 		} else {
