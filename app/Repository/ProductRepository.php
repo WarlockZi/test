@@ -21,31 +21,7 @@ class ProductRepository extends Controller
 	public static function getCard($slug)
 	{
 		$product = self::getProduct('slug', $slug);
-//		$product['parentCategories'] = self::getParentCategories($product['category']);
-
 		return $product;
-	}
-
-	protected static function flatten_array(array $demo_array)
-	{
-		$new_array = array();
-		array_walk_recursive($demo_array, function ($array) use (&$new_array) {
-			$new_array[] = $array;
-		});
-		return $new_array;
-	}
-
-	protected static function getParentCategories($categories)
-	{
-		$categoriesArr = [];
-		$categoriesArr[] = $categories;
-		while (isset($categories['parentRecursive'])) {
-			if (isset($categories['parentRecursive']['name'])) {
-				$categoriesArr[] = $categories['parentRecursive'];
-			}
-			$categories = $categories['parentRecursive'];
-		}
-		return array_reverse($categoriesArr);
 	}
 
 	public static function getProduct(string $where, $val)
@@ -64,6 +40,5 @@ class ProductRepository extends Controller
 			->with('parentCategoryRecursive')
 			->where($where, $val)->first();
 	}
-
 
 }

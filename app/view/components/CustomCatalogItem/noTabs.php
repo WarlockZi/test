@@ -1,6 +1,5 @@
 <div class="item_header">
-
-	  <div class="page-title"><?= $this->pageTitle??''; ?></div>
+	<?= $this->pageTitle; ?>
 </div>
 
 <div class="item_content">
@@ -9,7 +8,7 @@
 	<? foreach ($this->fields as $data): ?>
 	  <div class="row">
 		  <div class="field">
-		    <?=$data['field'];?></div>
+					<?= $data['field']; ?></div>
 		  :
 			 <? include ROOT . '/app/view/components/MyItem/value.php' ?>
 	  </div>

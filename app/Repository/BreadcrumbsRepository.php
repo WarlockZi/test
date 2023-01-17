@@ -27,7 +27,7 @@ class BreadcrumbsRepository
 																								string $class = 'breadcrumbs-1')
 	{
 		$str = '';
-		$prefix = $admn ? '/admin' : '/category/';
+		$prefix = $admn ? '/adminsc/category/' : '/category/';
 
 		$arrayCategories = self::arrayCategories($category);
 
@@ -44,7 +44,7 @@ class BreadcrumbsRepository
 			}
 		}
 
-		$str = "<li><a href='/category'>Категории</a></li>" . $str;
+		$str = "<li><a href='{$prefix}'>Категории</a></li>" . $str;
 		return "<nav class='{$class}'>{$str}</nav>";
 
 	}

@@ -45,7 +45,7 @@ class ItemBuilder extends Builder
 
 	public function pageTitle(string $pageTitle)
 	{
-		$this->pageTitle = $pageTitle ?? '';
+		$this->pageTitle = $pageTitle ?"<div class='page-title'>{$pageTitle}</div>": '';
 		return $this;
 	}
 

@@ -148,13 +148,11 @@ class ProductView
 	{
 		$str = "<div class='category'>{$category->name}</div>";
 		foreach ($category->properties as $property) {
-			$int = $property->vals->intersect($product->values);
-			$selected = $int ? $int[0]->id : 0;
+			$intersect = $property->vals->intersect($product->values);
+			$selected = $intersect->count() ? $intersect[0]->id : 0;
 			$propName = "<div class='name'>{$property->name}</div>";
 			$select = SelectBuilder::build()
 				->collection($property->vals)
-//				->model('property')
-//				->modelId($property['id'])
 				->morph('val', '', 'one', true)
 				->selected($selected)
 				->initialOption('', 0)
