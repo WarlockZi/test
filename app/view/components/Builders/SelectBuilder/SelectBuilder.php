@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Collection;
 
 class SelectBuilder extends Builder
 {
-	private $tree2 = [];
-	private $tree = [];
+	private $tree;
+	private $treeRelation;
 
 	private $array;
 	private $collection;
 
-	private $options = [];
+	private $options;
 	private $class;
 	private $title;
 	private $field;
@@ -31,12 +31,13 @@ class SelectBuilder extends Builder
 	private $belongsToModel;
 	private $belongsToId;
 
-	private $selected = false;
-	private $excluded = false;
+	private $selected;
+	private $excluded;
 	private $nameOptionByField = 'name';
 	private $initialOption;
 
 	private $tab = '&nbsp;';
+	private $tabMultiply = 1;
 
 	public static function build()
 	{
@@ -44,15 +45,16 @@ class SelectBuilder extends Builder
 		return $select;
 	}
 
-	public function tree($tree)
-	{
-		$this->tree = $tree;
-		return $this;
-	}
 
-	public function tree2($tree)
+	public function tree(Collection $tree,
+											 string $treeRelation,
+											 string $tab = null,
+											 int $multiply = null)
 	{
 		$this->tree = $tree;
+		$this->treeRelation = $treeRelation;
+		$this->tab = $tab ?? $this->tab;
+		$this->tabMultiply = $multiply ?? $this->tabMultiply;
 		return $this;
 	}
 
@@ -118,7 +120,6 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
-
 	public function initialOption(string $initialOptionLabel, int $initialOptionValue)
 	{
 		$this->initialOption =
@@ -144,10 +145,17 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
-	public function tab(string $tab)
+	private function getTree(): void
 	{
-		$this->tab = $tab;
-		return $this;
+		$this->options =
+			TreeBuilder::build(
+				$this->tree,
+				$this->treeRelation,
+				$this->tab,
+				$this->tabMultiply
+				)
+				->selected($this->selected)
+				->get();
 	}
 
 	private function getArray(): void
@@ -170,26 +178,24 @@ class SelectBuilder extends Builder
 		$this->options = $tpl;
 	}
 
-	protected function getTree2($data, $level = 0)
+	public function get()
 	{
-		$string = '';
-		foreach ($data as $item) {
-			$string .= $this->addItem($item, $level);
+		if ($this->tree) {
+			$this->getTree();
+		} elseif ($this->array) {
+			$this->getArray();
+		} else {
+			$this->getCollection();
 		}
-		return $string;
-	}
 
-	private function addItem($item, $level)
-	{
-		$tab = str_repeat($this->tab, $level);
-		$selected = (int)$item['id'] === (int)$this->selected
-			? 'selected'
-			: '';
-		$menu = "<option value='{$item['id']}' {$selected}>{$tab}{$item['name']}</option>";
-		if (isset($item['childs'])) {
-			$menu .= "{$this->getTree2($item['childs'],$level+1)}";
+		if ($this->excluded !== false) {
+			unset($this->tree[$this->excluded]);
 		}
-		return $menu;
+
+		ob_start();
+		include ROOT . '/app/view/components/Builders/SelectBuilder/SelectBuilderTemplate.php';
+		$result = ob_get_clean();
+		return $this->clean($result);
 	}
 
 //	private function getTree($tree, $level = 0, $str = '')
@@ -206,39 +212,47 @@ class SelectBuilder extends Builder
 //		}
 //		return $str;
 //	}
+//
+//	protected function getTree2($data, $level = 0)
+//	{
+//		$string = '';
+//		foreach ($data as $item) {
+//			$string .= $this->addItem($item, $level);
+//		}
+//		return $string;
+//	}
+//
+//	private function addItem($item, $level)
+//	{
+//		$tab = str_repeat($this->tab, $level);
+//		$selected = (int)$item['id'] === (int)$this->selected
+//			? 'selected'
+//			: '';
+//		$menu = "<option value='{$item['id']}' {$selected}>{$tab}{$item['name']}</option>";
+//		if (isset($item['childs'])) {
+//			$menu .= "{$this->getTree2($item['childs'],$level+1)}";
+//		}
+//		return $menu;
+//	}
+//
+//	protected function getChilds(array $tree, $level, $str)
+//	{
+//		foreach ($tree as $id => $item) {
+//			$selected = (int)$this->selected === (int)$item['id'] ? 'selected' : '';
+//			$tab = str_repeat($this->tab, $level);
+//			$str .= "<option value='{$item['id']}' $selected>{$tab}{$item[$this->nameOptionByField]}</option>";
+//
+//			if (isset($item['childs'])) {
+//				$str .= $this->getChilds($item['childs'], $level + 1, $str);
+//			}
+//		}
+//		return $str;
+//	}
 
-	protected function getChilds(array $tree, $level, $str)
-	{
-		foreach ($tree as $id => $item) {
-			$selected = (int)$this->selected === (int)$item['id'] ? 'selected' : '';
-			$tab = str_repeat($this->tab, $level);
-			$str .= "<option value='{$item['id']}' $selected>{$tab}{$item[$this->nameOptionByField]}</option>";
-
-			if (isset($item['childs'])) {
-				$str .= $this->getChilds($item['childs'], $level + 1, $str);
-			}
-		}
-		return $str;
-	}
-
-	public function get()
-	{
-		if ($this->tree) {
-			$this->options = TreeBuilder::build($this->tree)->get();
-		} elseif ($this->array) {
-			$this->getArray();
-		} else {
-			$this->getCollection();
-		}
-
-		if ($this->excluded !== false) {
-			unset($this->tree[$this->excluded]);
-		}
-
-		ob_start();
-		include ROOT . '/app/view/components/Builders/SelectBuilder/SelectBuilderTemplate.php';
-		$result = ob_get_clean();
-		return $this->clean($result);
-	}
+//	public function tree2($tree)
+//	{
+//		$this->tree = $tree;
+//		return $this;
+//	}
 
 }

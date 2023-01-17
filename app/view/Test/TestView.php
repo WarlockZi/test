@@ -15,11 +15,11 @@ class TestView
 
 	public static function item($id)
 	{
-		$view =new self();
+		$view = new self();
 		$test = Test::find($id);
 
 		$parents = $test->parents;
-		$isTest = $test->isTest?'теста':'папки';
+		$isTest = $test->isTest ? 'теста' : 'папки';
 		return ItemBuilder::build($test, 'test')
 			->pageTitle("Редактирование {$isTest} - {$test['name']}")
 			->del()
@@ -55,7 +55,7 @@ class TestView
 	public static function enabled(Test $item)
 	{
 		return SelectBuilder::build()
-			->array(['не показывать','показывать'])
+			->array(['не показывать', 'показывать'])
 			->class('custom-select')
 			->field('enable')
 			->selected($item['enable'])
@@ -64,17 +64,21 @@ class TestView
 
 	public static function belongsTo(Model $item)
 	{
-		$tests = Test::where('isTest', '0')->get()->toArray();
-		$tree = Test::where('isTest','0')->with('children')->with('parent')->get();
-//		$tree = Tree::tree($tests);
+		$treeRelaion = 'children';
+
+		$tree = Test::where('isTest', '0')
+			->where('parent',0)
+			->with(
+				[$treeRelaion => function ($q) {
+					$q->where('isTest', '0');}				]
+			)->get();
+
 		return SelectBuilder::build()
-			->tree($tree)
-			->class('custom-select')
+			->tree($tree, $treeRelaion,null, 4)
 			->field('parent')
-			->initialOption('',0)
+			->initialOption('', 0)
 			->selected($item->parent)
 			->excluded($item->id)
-			->tab('&nbsp&nbsp')
 			->get();
 
 	}
@@ -83,7 +87,7 @@ class TestView
 	{
 		$tests =
 			Test::where('isTest', '1')
-			->get()->toArray();
+				->get()->toArray();
 		$parent_select = '<select>';
 		foreach ($tests as $t) {
 			$selectedStr = (int)$t['id'] === $selected ? 'selected' : '';

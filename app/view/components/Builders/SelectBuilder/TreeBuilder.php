@@ -3,74 +3,60 @@
 
 namespace app\view\components\Builders\SelectBuilder;
 
-
 use Illuminate\Database\Eloquent\Collection;
 
 class TreeBuilder
 {
-	private $selected;
-	private $collection;
-	private $tab = '&nbsp';
 
-	public static function build(Collection $collection)
+	private $collection;
+	private $relation;
+
+	private $selected;
+
+	private $tab = '&nbsp;';
+	private $tabMultiply = 1;
+
+	public static function build(Collection $collection,
+															 string $relation,
+															 string $tab = null,
+															 int $multiply = null)
 	{
 		$self = new self();
 		$self->collection = $collection;
-		return $self;
+		$self->relation = $relation;
+		$self->tab = $tab ?? $self->tab;
+		$self->tabMultiply = $multiply ?? $self->tabMultiply;
 
+		return $self;
 	}
 
-	public function get(){
-		$level = 0;
-		$string = '';
-		foreach ($this->collection as $item) {
-			$string .= $this->addItem($item, $level);
+	public function selected(int $selected)
+	{
+		$this->selected = $selected;
+		return $this;
+	}
+
+	protected function getOption($item, $level)
+	{
+		$tab = str_repeat($this->tab, $level * $this->tabMultiply);
+		return "<option data-level={$level}>{$tab}{$item->name}</option>>";
+	}
+
+	protected function recursion($collection, $level, $string)
+	{
+		foreach ($collection as $item) {
+			$string .= $this->getOption($item, $level);
+			if ($item->{$this->relation}) {
+				$string .= $this->recursion($item->{$this->relation}, $level + 1, '');
+			}
 		}
 		return $string;
 	}
 
-
-	private function addItem($item, $level)
+	public function get()
 	{
-		$tab = str_repeat($this->tab, $level);
-		$selected = (int)$item['id'] === (int)$this->selected
-			? 'selected'
-			: '';
-		$menu = "<option value='{$item['id']}' {$selected}>{$tab}{$item['name']}</option>";
-		if (isset($item['childs'])) {
-			$menu .= "{$this->getTree2($item['childs'],$level+1)}";
-		}
-		return $menu;
-	}
-
-	private function getTree($tree, $level = 0, $str = '')
-	{
-		foreach ($tree as $k => $item) {
-			$selected = (int)$this->selected === (int)$item['id'] ? 'selected' : '';
-			$tab = str_repeat($this->tab, $level);
-
-			$str .= "<option value='{$item['id']}' $selected>{$tab}{$item[$this->nameOptionByField]}</option>";
-
-			if (isset($item['childs'])) {
-				$str .= $this->getChilds($item['childs'], $level + 1, $str);
-			}
-		}
+		$str = $this->recursion($this->collection, 0, '');
 		return $str;
 	}
-
-	protected function getChilds(array $tree, $level, $str)
-	{
-		foreach ($tree as $id => $item) {
-			$selected = (int)$this->selected === (int)$item['id'] ? 'selected' : '';
-			$tab = str_repeat($this->tab, $level);
-			$str .= "<option value='{$item['id']}' $selected>{$tab}{$item[$this->nameOptionByField]}</option>";
-
-			if (isset($item['childs'])) {
-				$str .= $this->getChilds($item['childs'], $level + 1, $str);
-			}
-		}
-		return $str;
-	}
-
 
 }

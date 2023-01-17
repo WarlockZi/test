@@ -1,5 +1,6 @@
 import './WDSSelect.scss'
 import './customSelect.scss'
+import {post} from "../../common";
 
 export default class WDSSelect {
 
@@ -27,6 +28,9 @@ export default class WDSSelect {
     if (el.dataset.model) {
       this.sel.dataset.model = el.dataset.model
       this.sel.dataset.id = el.dataset.modelId
+    }
+    if (el.dataset.field) {
+      this.sel.dataset.field = el.dataset.field
     }
 
     if (el.className) this.sel.classList.add(el.className)
@@ -109,22 +113,30 @@ function setup(select) {
         model: sel.dataset.morphModel,
         id: sel.dataset.morphId
       },
-      morphed:{
-        model:sel.dataset.morphedModel,
-        id:sel.value,
-        slug:sel.dataset.slug,
-        oneOrMany:sel.dataset.oneOrMany,
-        detach:sel.dataset.detach,
+      morphed: {
+        model: sel.dataset.morphedModel,
+        id: sel.value,
+        slug: sel.dataset.slug,
+        oneOrMany: sel.dataset.oneOrMany,
+        detach: sel.dataset.detach,
       }
     }
   }
+
 
   async function sendToServer(target) {
     let sel = target.closest('[custom-select]')
     if (sel.dataset.morphModel) {
       let data = getMorph(sel)
-      let url =  `/adminsc/${data.morph.model}/attachOne`
-      let res = await (url, data)
+      let url = `/adminsc/${data.morph.model}/attachOne`
+      let res = await post(url, data)
+    }
+    if (sel.dataset.field) {
+      let id = target.closest('[data-model]').dataset.id
+      let model = target.closest('[data-model]').dataset.model
+      let data = {[sel.dataset.field]: sel.dataset.value,id}
+      let url = `/adminsc/${model}/updateOrCreate`
+      let res = await post(url, data)
     }
   }
 

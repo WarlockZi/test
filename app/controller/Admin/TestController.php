@@ -19,29 +19,6 @@ class TestController extends AppController
 		parent::__construct($route);
 	}
 
-//	public function actionDo(): void
-//	{
-//		$page_name = 'Прохождение тестов';
-//		$this->set(compact('page_name'));
-//
-//		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
-//		$test = Test::find($testId);
-//		if ($test) {
-//			$questions
-//				= Question::where('test_id',$testId)
-//				->with('answers')
-//				->get()->toArray();
-//			if ($questions) {
-//				$this->shuffleAnswers($questions);
-//				$this->cacheCorrectAnswers($questions);
-//			}
-//			$testData = $questions;
-//			$pagination = Test::pagination($testData, false, $test) ?? '';
-//			$this->set(compact('testData', 'pagination'));
-//		}
-//		$this->set(compact('test'));
-//	}
-
 	public function actionEdit()
 	{
 		if ($this->ajax) {
@@ -54,24 +31,11 @@ class TestController extends AppController
 			$this->set(compact('item'));
 		}
 	}
+
 	public function actionIndex()
 	{
 		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
 	}
-
-//	public function actionShow()
-//	{
-//		$this->view = 'edit_show';
-//
-//		$page_name = 'Создание теста';
-//		$this->set(compact('page_name'));
-//
-//		$paths = $this->paths();
-//		$this->set(compact('paths'));
-//
-//		$test['isTest'] = 1;
-//		$this->set(compact('test'));
-//	}
 
 	public function actionPathshow()
 	{
@@ -148,5 +112,42 @@ class TestController extends AppController
 	{
 		$this->exitJson(Test::where('isTest', '1')->get()->toArray());
 	}
+
+//	public function actionDo(): void
+//	{
+//		$page_name = 'Прохождение тестов';
+//		$this->set(compact('page_name'));
+//
+//		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+//		$test = Test::find($testId);
+//		if ($test) {
+//			$questions
+//				= Question::where('test_id',$testId)
+//				->with('answers')
+//				->get()->toArray();
+//			if ($questions) {
+//				$this->shuffleAnswers($questions);
+//				$this->cacheCorrectAnswers($questions);
+//			}
+//			$testData = $questions;
+//			$pagination = Test::pagination($testData, false, $test) ?? '';
+//			$this->set(compact('testData', 'pagination'));
+//		}
+//		$this->set(compact('test'));
+//	}
+
+//	public function actionShow()
+//	{
+//		$this->view = 'edit_show';
+//
+//		$page_name = 'Создание теста';
+//		$this->set(compact('page_name'));
+//
+//		$paths = $this->paths();
+//		$this->set(compact('paths'));
+//
+//		$test['isTest'] = 1;
+//		$this->set(compact('test'));
+//	}
 
 }

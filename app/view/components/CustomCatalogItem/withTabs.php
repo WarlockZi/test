@@ -1,5 +1,4 @@
 <div class="item_header">
-
 	<div class="page-title"><?= $this->pageTitle ?></div>
 	<? include ROOT . '/app/view/components/CustomCatalogItem/tabs.php' ?>
 </div>
@@ -24,7 +23,6 @@
 	<? foreach ($this->tabs as $k => $tab): ?>
 	  <section
 			 <?= isset($tab['field']) ? "data-field={$tab['field']}": ''; ?>
-<!--			  data-type="inputs"-->
 			  data-id=<?= $n ?>>
 			 <?= $tab['html'] ?? ''; ?>
 

@@ -1,4 +1,4 @@
-<div class="page-title"><?= $this->pageTitle ?></div>
+<?= $this->pageTitle; ?>
 <div class="item_wrap" <?= $this->dataModel; ?> <?= $this->id; ?>>
 
 		 <? if ($this->tabs){
