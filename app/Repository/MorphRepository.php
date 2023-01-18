@@ -38,8 +38,8 @@ class MorphRepository
 	{
 		$res = $model
 			->$function()
-			->withPivot([$model[id]=>['slug'=>$slug]])
-			->detach();
+			->withPivot([$model['id']=>['slug'=>$slug]])
+			->detach($id);
 		return $res;
 	}
 //
