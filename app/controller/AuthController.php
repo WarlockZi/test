@@ -250,5 +250,9 @@ class AuthController extends AppController
 	{
 		$view = 'unautherized';
 	}
-
+	public function preparePassword(string $password): string
+	{
+		$salt = "popiyonovacheesa";
+		return md5($password . $salt);
+	}
 }

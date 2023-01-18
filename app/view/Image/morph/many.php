@@ -5,7 +5,7 @@ use \app\Repository\ImageRepository;
 ?>
 
 <div <?= $this->oneOrMany; ?>
-	<?= $this->morphModel; ?>
+	<?= $this->morphFunction; ?>
 	<?= $this->slug; ?>
 	<?= $this->class; ?>
 	<?= $this->dndPath; ?>

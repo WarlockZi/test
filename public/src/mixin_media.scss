@@ -18,13 +18,34 @@
   }
 }
 
+@mixin error {
+  .message {
+    font-size: .9rem;
+    margin-bottom: 15px;
+    transition: scale .5s;
+
+    &.error{
+      border: 3px solid lighten($color-warning,20%);
+      background-color: lighten($color-warning,40%);
+      border-radius: 3px;
+      padding: 10px;
+      color: darken($color-warning,5%);
+    }
+
+    a {
+      padding: 0;
+      color: $color-main-hover;
+      font-weight: 600;
+    }
+  }
+}
 
 @mixin info-tag {
   .info-tag {
     color: white;
     background-color: $color-main;
   }
-  .info{
+  .info {
     margin-bottom: 10px;
   }
 }

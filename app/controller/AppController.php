@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\Repository\ListMorphRepository;
+use app\Repository\MorphRepository;
 use app\view\Header\Header;
 use app\view\View;
 use Illuminate\Database\Eloquent\Model;
@@ -53,20 +54,28 @@ class AppController extends Controller
 			}
 		}
 	}
+//
+//	protected static function attachMorph(array $response, array $morph)
+//	{
+//		if ($response['morph_oneormany'] === 'one') {
+//			if ($response['morph_detach'] === 'true') {
+//				ListMorphRepository::attachOneDetach($response, $morph);
+//			}
+//			ListMorphRepository::attachOneNoDetach($response, $morph);
+//		} else {
+//			if ($response['morph_detach'] === 'true') {
+//				ListMorphRepository::attachOneDetach($response, $morph);
+//			}
+//			ListMorphRepository::attachOneNoDetach($response, $morph);
+//		}
+//	}
 
-	protected static function attachMorph(array $response, array $morph)
+	public function actionAttach()
 	{
-		if ($response['morph_oneormany'] === 'one') {
-			if ($response['morph_detach'] === 'true') {
-				ListMorphRepository::attachOneDetach($response,$morph);
-			}
-			ListMorphRepository::attachOneNoDetach($response,$morph);
-		} else {
-			if ($response['morph_detach'] === 'true') {
-				ListMorphRepository::attachOneDetach($response,$morph);
-			}
-			ListMorphRepository::attachOneNoDetach($response,$morph);
-		}
+		$req = $this->ajax;
+		if (!$req) $this->exitWithError('Плохой запрос');
+		if (!isset($req['morph'])) $this->exitWithError('Плохой запрос');
+		MorphRepository::attach($req);
 	}
 
 	public function actionUpdateOrCreate()
@@ -82,7 +91,7 @@ class AppController extends Controller
 				if (isset($this->ajax['morph_type'])) {
 					$morph['morph'] = self::shortClassName($model);
 					$morph['morphId'] = $model->id;
-					self::attachMorph($this->ajax,$morph);
+					self::attachMorph($this->ajax, $morph);
 				}
 				$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
 			} else {
@@ -128,12 +137,6 @@ class AppController extends Controller
 			exit(json_encode(['error' => $msg]));
 		}
 		exit();
-	}
-
-	public function preparePassword(string $password): string
-	{
-		$salt = "popiyonovacheesa";
-		return md5($password . $salt);
 	}
 
 	protected function setMainAssets()

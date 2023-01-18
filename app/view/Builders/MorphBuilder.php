@@ -13,7 +13,7 @@ class MorphBuilder
 	protected $many;
 	protected $morphed;
 	protected $morph;
-	protected $morphModel;
+	protected $morphFunction;
 	protected $slug;
 	protected $class;
 
@@ -33,7 +33,7 @@ class MorphBuilder
 		$self = new static;
 		$self->morphed = $morphed;
 		$self->morph = $morph;
-		$self->morphModel = "data-model={$morph}";
+		$self->morphFunction = "data-model={$morph}";
 		$self->slug = "data-slug='{$slug}'";
 		$self->morphPath = FS::platformSlashes(
 			FS::getPath('app', 'view', $self->morph, 'morph')
