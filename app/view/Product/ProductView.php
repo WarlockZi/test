@@ -153,7 +153,7 @@ class ProductView
 			$propName = "<div class='name'>{$property->name}</div>";
 			$select = SelectBuilder::build()
 				->collection($property->vals)
-				->morph('val', '', 'one', true)
+				->morph('values', $property->id, 'one', true)
 				->selected($selected)
 				->initialOption('', 0)
 				->get();

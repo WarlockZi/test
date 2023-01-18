@@ -18,9 +18,9 @@ export default class WDSSelect {
 
     this.sel = document.createElement("div")
     this.sel.setAttribute("custom-select", '')
-    debugger
-    if (el.dataset.morphModel) {
-      this.sel.dataset.morphModel = el.dataset.morphModel
+    // debugger
+    if (el.dataset.morphFunction) {
+      this.sel.dataset.morphFunction = el.dataset.morphFunction
       this.sel.dataset.morphSlug = el.dataset.morphSlug ?? ''
       this.sel.dataset.morphDetach = el.dataset.morphDetach ?? ''
       this.sel.dataset.morphOneormany = el.dataset.morphOneormany ?? ''
@@ -42,7 +42,6 @@ export default class WDSSelect {
     this.ul = document.createElement("ul")
     setup(this)
     el.after(this.sel)
-    // el.style.display = "none"
     el.remove()
   }
 
@@ -88,9 +87,9 @@ function setup(select) {
   }
 
   if (select.field) {
-    select.sel.dataset['field'] = select.field
+    select.sel.dataset.field = select.field
   }
-  select.sel.dataset['value'] = select.selectedOption.value
+  select.sel.dataset.value = select.selectedOption.value
   select.sel.tabIndex = 0
 
   select.sel.append(select.label)
@@ -108,28 +107,28 @@ function setup(select) {
   })
 
   function getMorph(sel) {
+    debugger
+    let item = sel.closest('.item_wrap')
     return {
       morph: {
-        model: sel.dataset.morphModel,
-        id: sel.dataset.morphId
+        id: item.dataset.id,
+        model: item.dataset.model,
       },
       morphed: {
-        model: sel.dataset.morphedModel,
-        id: sel.value,
-        slug: sel.dataset.slug,
-        oneOrMany: sel.dataset.oneOrMany,
-        detach: sel.dataset.detach,
+        id: sel.dataset.value,
+        function: sel.dataset.morphFunction,
+        slug: sel.dataset.morphSlug,
+        oneOrMany: sel.dataset.morphOneormany,
+        detach: sel.dataset.morphDetach,
       }
     }
   }
 
-
   async function sendToServer(target) {
     let sel = target.closest('[custom-select]')
-    if (sel.dataset.morphModel) {
+    if (sel.dataset.morphFunction) {
       let data = getMorph(sel)
-      // let url = `/adminsc/${data.morph.model}/attachOne`
-      let url = `/adminsc/attachMorph`
+      let url = `/adminsc/${data.morph.model}/attach`
       let res = await post(url, data)
     }
     if (sel.dataset.field) {

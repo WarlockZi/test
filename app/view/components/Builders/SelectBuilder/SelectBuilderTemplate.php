@@ -8,7 +8,7 @@
   <?= $this->belongsToModel; ?>
   <?= $this->belongsToId; ?>
 
-	<?= $this->morphModel; ?>
+	<?= $this->morphFunction; ?>
 	<?= $this->morphSlug; ?>
 	<?= $this->morphOneOrMany; ?>
 	<?= $this->morphDetach; ?>

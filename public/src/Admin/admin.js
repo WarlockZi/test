@@ -27,6 +27,7 @@ import radio from '@components/radio/radio'
 import multiselect from '@components/multiselect/multiselect'
 import catalogItem from '@components/catalog-item/catalog-item'
 import tooltips from '../components/tooltip/tooltip';
+import error from '../components/error/error';
 import accordionShow from '../components/accordion-show';
 import quill from '../components/quill/quill';
 

@@ -1,5 +1,6 @@
 import './common.scss'
 import './Admin/admin.scss'
+import error from './components/error/error'
 
 
 export function objAndData2FormData(obj, files, formData = new FormData) {
@@ -234,12 +235,14 @@ async function post(url, data = {}) {
           }
 
         } else if (res.error) {
-          if (msg) {
-            msg.innerHTML = ''
-            msg.innerHTML = res.error
-            $(msg).removeClass('success')
-            $(msg).addClass('error')
-          }
+          // debugger
+          // if (msg) {
+          //   msg.innerHTML = ''
+          //   msg.innerHTML = res.error
+          //   $(msg).removeClass('success')
+          //   $(msg).addClass('error')
+          // }
+            error(res.error)
         }
         resolve(res);
       }

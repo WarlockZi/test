@@ -3,8 +3,6 @@
 namespace app\core;
 
 use app\controller\AppController;
-use app\controller\СatalogController;
-use app\view\View;
 
 class Router
 {
@@ -51,9 +49,9 @@ class Router
 	protected static function getNameSpace($route)
 	{
 		if (isset($route['admin']) && $route['admin']) {
-		return 'app\controller\admin\\';
+			return 'app\controller\admin\\';
 		}
-			return 'app\controller\\';
+		return 'app\controller\\';
 	}
 
 	public static function dispatch($url)
