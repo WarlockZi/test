@@ -18,7 +18,6 @@ class CategoryView
 
 	public static function edit($id): string
 	{
-
 		$category = Category::with(
 			'products',
 			'parentRecursive',
@@ -171,8 +170,4 @@ class CategoryView
 		return $parent_select;
 	}
 
-//	public static function getBreadcrumb(array $category)
-//	{
-//		return "<a href='/adminsc/category/edit/{$category['id']}'>{$category['name']}</a>";
-//	}
 }
