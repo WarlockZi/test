@@ -128,7 +128,8 @@ function setup(select) {
     let sel = target.closest('[custom-select]')
     if (sel.dataset.morphModel) {
       let data = getMorph(sel)
-      let url = `/adminsc/${data.morph.model}/attachOne`
+      // let url = `/adminsc/${data.morph.model}/attachOne`
+      let url = `/adminsc/attachMorph`
       let res = await post(url, data)
     }
     if (sel.dataset.field) {
