@@ -99,11 +99,14 @@ use \app\view\Product\ProductView;
 			<div class="cust-questions-wrap">
 				<h3 class="info-tag">Оставьте свой отзыв</h3>
 				<ol>
-					<li><span class="info">Вам понравился продукт</span></li>
-					<li><span class="info">Напишите свой отзыв</span></li>
-					<li><span class="info">Расскажите нам немного о себе</span>
+					<li>
+						<span class="info">Вам понравился продукт</span></li>
 						<input type="text">
+					<li>
+						<span class="info">Напишите свой отзыв</span></li>
 						<input type="text">
+					<li>
+						<span class="info">Расскажите нам немного о себе</span>
 						<input type="text">
 					</li>
 
@@ -154,4 +157,5 @@ use \app\view\Product\ProductView;
 
 <? else: ?>
 	<div>Такого товара нет</div>
+	<a href="/adminsc/category">Перейти в каталог</a>
 <? endif; ?>

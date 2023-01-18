@@ -5,9 +5,15 @@ namespace app\Repository;
 
 
 use app\model\Category;
+use app\model\Product;
 
 class BreadcrumbsRepository
 {
+
+  private static function getPrefix(bool $admin):string
+  {
+    return 	$admin ? '/adminsc/category/' : '/category/';
+  }
 
 	private static function arrayCategories(Category $category): array
 	{
@@ -21,18 +27,31 @@ class BreadcrumbsRepository
 		return $cats;
 	}
 
+	public static function getProductBreadcrumbs(Product $product,
+																								bool $linkLast = false,
+																								bool $admin = false,
+																								string $class = 'breadcrumbs-1'){
+	  if ($product->category){
+	    return self::getCategoryBreadcrumbs($product->category, $linkLast, $admin, $class);
+    }
+    $prefix = self::getPrefix($admin);
+
+    $str = "<li><a href='{$prefix}'>Категории</a></li>";
+    return "<nav class='{$class}'>{$str}</nav>";
+  }
+
 	public static function getCategoryBreadcrumbs(Category $category,
 																								bool $linkLast = false,
-																								bool $admn = false,
+																								bool $admin = false,
 																								string $class = 'breadcrumbs-1')
 	{
 		$str = '';
-		$prefix = $admn ? '/adminsc/category/' : '/category/';
+		$prefix = self::getPrefix($admin);
 
 		$arrayCategories = self::arrayCategories($category);
 
 		foreach ($arrayCategories as $i => $cat) {
-			$slug = $admn ? "edit/{$cat->id}" : "{$cat->slug}";
+			$slug = $admin ? "edit/{$cat->id}" : "{$cat->slug}";
 			if ($i === 0) {
 				if (!$linkLast) {
 					$str = "<li><div>{$cat->name}</div></li>" . $str;

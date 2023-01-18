@@ -1,8 +1,15 @@
 <div class="adm-content">
 
-	<?= $breadcrumbs; ?>
+  <? if ($product): ?>
 
-	<?= $product ?>
+    <?= $breadcrumbs; ?>
+    <?= $product ?>
+
+  <? else: ?>
+		<div>Такого товара нет</div>
+		<br>
+		<a href="/adminsc/category">Перейти в каталог</a>
+  <? endif; ?>
 
 </div>
 

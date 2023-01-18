@@ -12,8 +12,8 @@ class SelectBuilder extends Builder
 	private $tree;
 	private $treeRelation;
 
-	private $array;
-	private $collection;
+	private $array=[];
+	private $collection=[];
 
 	private $options;
 	private $class;
@@ -23,7 +23,7 @@ class SelectBuilder extends Builder
 	private $model;
 	private $modelId;
 
-	private $morphedModel;
+	private $morphModel;
 	private $morphSlug;
 	private $morphOneOrMany;
 	private $morphDetach;
@@ -88,12 +88,12 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
-	public function morph(string $morphedModel,
+	public function morph(string $morphModel,
 												string $slug = '',
 												string $oneOrMany = 'one',
 												bool $detach = false)
 	{
-		$this->morphedModel = "data-morphed-model='{$morphedModel}'";
+		$this->morphModel = "data-morph-model='{$morphModel}'";
 		$this->morphSlug = $slug ? "data-morph-slug='{$slug}'" : "";
 		$this->morphOneOrMany = "data-morph-oneOrMany='{$oneOrMany}'";
 		$detach = $detach ? 'true' : 'false';
@@ -197,62 +197,5 @@ class SelectBuilder extends Builder
 		$result = ob_get_clean();
 		return $this->clean($result);
 	}
-
-//	private function getTree($tree, $level = 0, $str = '')
-//	{
-//		foreach ($tree as $k => $item) {
-//			$selected = (int)$this->selected === (int)$item['id'] ? 'selected' : '';
-//			$tab = str_repeat($this->tab, $level);
-//
-//			$str .= "<option value='{$item['id']}' $selected>{$tab}{$item[$this->nameOptionByField]}</option>";
-//
-//			if (isset($item['childs'])) {
-//				$str .= $this->getChilds($item['childs'], $level + 1, $str);
-//			}
-//		}
-//		return $str;
-//	}
-//
-//	protected function getTree2($data, $level = 0)
-//	{
-//		$string = '';
-//		foreach ($data as $item) {
-//			$string .= $this->addItem($item, $level);
-//		}
-//		return $string;
-//	}
-//
-//	private function addItem($item, $level)
-//	{
-//		$tab = str_repeat($this->tab, $level);
-//		$selected = (int)$item['id'] === (int)$this->selected
-//			? 'selected'
-//			: '';
-//		$menu = "<option value='{$item['id']}' {$selected}>{$tab}{$item['name']}</option>";
-//		if (isset($item['childs'])) {
-//			$menu .= "{$this->getTree2($item['childs'],$level+1)}";
-//		}
-//		return $menu;
-//	}
-//
-//	protected function getChilds(array $tree, $level, $str)
-//	{
-//		foreach ($tree as $id => $item) {
-//			$selected = (int)$this->selected === (int)$item['id'] ? 'selected' : '';
-//			$tab = str_repeat($this->tab, $level);
-//			$str .= "<option value='{$item['id']}' $selected>{$tab}{$item[$this->nameOptionByField]}</option>";
-//
-//			if (isset($item['childs'])) {
-//				$str .= $this->getChilds($item['childs'], $level + 1, $str);
-//			}
-//		}
-//		return $str;
-//	}
-
-//	public function tree2($tree)
-//	{
-//		$this->tree = $tree;
-//		return $this;
-//	}
 
 }

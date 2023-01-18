@@ -11,23 +11,23 @@ class ListColumnBuilder
 
 	public $field = 'id';
 	public $dataField;
-	public $class = '';
-	public $name = '';
+	public $class ;
+	public $name ;
 	public $type;
-	public $sort = '';
-	public $sortIcon = '';
-	public $search = '';
+	public $sort ;
+	public $sortIcon ;
+	public $search ;
 	public $width = 'auto';
-	public $hidden = '';
-	public $contenteditable = '';
+	public $hidden ;
+	public $contenteditable ;
 	public $link = false;
-	public $html = '';
-	public $function = '';
-	public $functionClass = '';
+	public $html ;
+	public $function ;
+	public $functionClass ;
 
 	public $select = false;
 	public $nameOptionByField;
-	public $initialOption = '';
+	public $initialOption ;
 	public $initialOptionValue = 0;
 
 	public static function build(string $field)

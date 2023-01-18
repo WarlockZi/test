@@ -19,8 +19,8 @@ export default class WDSSelect {
     this.sel = document.createElement("div")
     this.sel.setAttribute("custom-select", '')
     debugger
-    if (el.dataset.morphedModel) {
-      this.sel.dataset.morphedModel = el.dataset.morphedModel
+    if (el.dataset.morphModel) {
+      this.sel.dataset.morphModel = el.dataset.morphModel
       this.sel.dataset.morphSlug = el.dataset.morphSlug ?? ''
       this.sel.dataset.morphDetach = el.dataset.morphDetach ?? ''
       this.sel.dataset.morphOneormany = el.dataset.morphOneormany ?? ''

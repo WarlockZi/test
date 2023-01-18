@@ -3,63 +3,62 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\model\Image;
 use app\model\Product;
-use app\model\Propertable;
-use app\model\Tag;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
 use app\view\Product\ProductView;
 
 
-class ProductController Extends AppController
+class ProductController extends AppController
 {
 
-	public $model = Product::class;
+  public $model = Product::class;
 
-	public function actionEdit()
-	{
-		$id = $this->route['id'];
-		$prod = ProductRepository::getProduct('id',$id);
+  public function actionEdit()
+  {
+    $id = $this->route['id'];
+    $prod = ProductRepository::getProduct('id', $id);
+    $product = $breadcrumbs = null;
+    if ($prod) {
+      $product = ProductView::edit($prod);
+      $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, false, true);
+    }
+    $this->set(compact('product', 'breadcrumbs'));
+  }
 
-		$product = ProductView::edit($prod);
-		$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($prod->category,false,true);
-		$this->set(compact('product', 'breadcrumbs'));
-	}
-
-	protected function detachTagFromImage($tagName, $imgId)
-	{
-		$tag = Tag::first('name', $tagName);
-		$image = Image::find($imgId);
-		$image->tags()->detach($tag->id);
-	}
-
-	public function actionAddDescription()
-	{
-		if ($this->ajax) {
-			$product= Product::find($this->ajax['id']);
-			$product->dtxt = $this->ajax['description'];
-			$product->save();
-			$this->exitWithPopup('ok');
-		}
-	}
-
-	public function actionSetProperty()
-	{
-		if ($this->ajax) {
-			$this->ajax['propertable_type'] = Product::class;
-			$id = Propertable::create($this->ajax);
-
-			$this->exitWithPopup('hurra');
-		}
-	}
-
-	public function actionList()
-	{
-		$items = Product::all()->take(10);
-		$list = ProductView::list($items);
-		$this->set(compact('list'));
-	}
+//	protected function detachTagFromImage($tagName, $imgId)
+//	{
+//		$tag = Tag::first('name', $tagName);
+//		$image = Image::find($imgId);
+//		$image->tags()->detach($tag->id);
+//	}
+//
+//	public function actionAddDescription()
+//	{
+//		if ($this->ajax) {
+//			$product= Product::find($this->ajax['id']);
+//			$product->dtxt = $this->ajax['description'];
+//			$product->save();
+//			$this->exitWithPopup('ok');
+//		}
+//	}
+//
+//	public function actionSetProperty()
+//	{
+//		if ($this->ajax) {
+//			$this->ajax['propertable_type'] = Product::class;
+//			$id = Propertable::create($this->ajax);
+//
+//			$this->exitWithPopup('hurra');
+//		}
+//	}
+//
+//	public function actionList()
+//	{
+//		$items = Product::all()->take(10);
+//		$list = ProductView::list($items);
+//		$this->set(compact('list'));
+//	}
 
 //	public function actionIndex()
 //	{
