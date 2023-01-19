@@ -26,8 +26,8 @@ class TestresultController extends AppController
 	public function actionResult()
 	{
 		$id = $this->route['id'];
-		$res = TestResult::findOneWhere('id', $id);
-		$testHtml= $res['html'] ;
+		$res = TestResult::find($id);
+		$testHtml= $res->html;
 		$this->set(compact('testHtml', 'res'));
 	}
 
@@ -46,8 +46,9 @@ class TestresultController extends AppController
 	public function actionCreate()
 	{
 		if ($this->ajax) {
-			if ($resid = TestResult::create($this->ajax,false,false)) {
-				$this->sendTestRes($this->ajax, $resid-1);
+			$result = TestResult::create($this->ajax);
+			if ($result->wasRecentlyCreated ) {
+				$this->sendTestResult($this->ajax, $result->id-1);
 				$this->exitWithPopup('Результат сохранен');
 			}else{
 				$this->exitWithPopup('Результат в базу не сохранен');
@@ -55,7 +56,7 @@ class TestresultController extends AppController
 		}
 	}
 
-	private function sendTestRes($post, $resid)
+	private function sendTestResult($post, $resid)
 	{
 		if ($_ENV['TEST_EMAIL_ALL_SEND']) {
 			exit(json_encode('mail not sent'));

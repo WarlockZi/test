@@ -267,6 +267,9 @@ class ElementCollection extends Array {
   value = function () {
     return this[0].getAttribute('value')
   }
+  first = function () {
+    return this[0]
+  }
   attr = function (attrName, attrVal) {
     if (attrVal) {
       this[0].setAttribute(attrName, attrVal)

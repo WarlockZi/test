@@ -10,9 +10,8 @@
   margin: 10px 0;
   background-color: $color-main;
   color: #ffffff;
-  border-radius: 4px;
   display: flex;
-  font-weight: 800;
+  font-weight: 400;
   //box-shadow: 5px 4px 6px 1px #6a8784;
   cursor: pointer;
   border: none;
@@ -49,8 +48,10 @@
   }
 
   .test {
-    min-width: 520px;
+    //min-width: 520px;
     max-width: 600px;
+    width: 100%;
+    //flex: 1 0 auto;
   }
 
   .test-data {
@@ -111,8 +112,9 @@
     }
 
     .test-name {
-      @include _h3;
+      @include _h1;
       margin-bottom: 20px;
+      font-weight: normal;
     }
   }
 

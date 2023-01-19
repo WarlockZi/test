@@ -76,17 +76,17 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
-	public function model(string $model)
-	{
-		$this->model = "data-model='{$model}'";
-		return $this;
-	}
-
-	public function modelId($modelId)
-	{
-		$this->modelId = "data-model-id='{$modelId}'";
-		return $this;
-	}
+//	public function model(string $model)
+//	{
+//		$this->model = "data-model='{$model}'";
+//		return $this;
+//	}
+//
+//	public function modelId($modelId)
+//	{
+//		$this->modelId = "data-model-id='{$modelId}'";
+//		return $this;
+//	}
 
 	public function morph(string $morphFunction,
 												string $slug = '',

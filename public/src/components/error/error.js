@@ -2,6 +2,7 @@ import './error.scss'
 import {$} from '../../common'
 
 export default function error(message) {
+  debugger
   let adm_content = $('.adm-content')[0]
   if (!adm_content) return
 

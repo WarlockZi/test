@@ -292,7 +292,7 @@ class ProductView
 	{
 		$f = SelectBuilder::build()
 			->array(Unit::select())
-			->model('product')
+//			->model('product')
 			->field('main_unit')
 			->initialOption('', 0)
 			->selected($product->main_unit)
@@ -306,7 +306,7 @@ class ProductView
 	{
 		$f = SelectBuilder::build()
 			->array(Unit::select())
-			->model('product')
+//			->model('product')
 			->field('base_unit')
 			->initialOption('', 0)
 			->selected($product->base_unit)

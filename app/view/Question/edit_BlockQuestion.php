@@ -40,5 +40,5 @@
 
 
 	</div>
-	<div class='message'></div>
+<!--	<div class='message'></div>-->
 </div>

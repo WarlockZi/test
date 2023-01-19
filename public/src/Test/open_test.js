@@ -4,10 +4,10 @@ import {$, post, cachePage} from "../common";
 import '../components/accordion-show';
 import pagination from "../components/pagination/pagination";
 
-pagination()
 
 let openTest = $('.opentest-do')[0]
 if (openTest) {
+  pagination()
   showFirstQuest()
   $(openTest).on('click', handleClick)
   $(openTest).on('keyup', handleKeyup)
@@ -15,7 +15,7 @@ if (openTest) {
 
 function showFirstQuest() {
   let firstQuest = $('.question')[0]
-  if (firstQuest)firstQuest.classList.add('show')
+  if (firstQuest) firstQuest.classList.add('show')
 }
 
 
@@ -68,7 +68,7 @@ async function handleClick({target}) {
 
 function correctCount(questions) {
   let correct = 0;
-  [].forEach.call(questions,(q) => {
+  [].forEach.call(questions, (q) => {
     let q_id = q.id
     let q_el = $(`.question[data-id='${q_id}']`)[0]
     let textarea = $(q_el).find('.textarea')
@@ -77,20 +77,21 @@ function correctCount(questions) {
     q.Openanswer.forEach((a) => {
       word += `(${a.answer})?`
     })
-    correct += hilite(`${word}`, textarea,q_id)
+    correct += hilite(`${word}`, textarea, q_id)
 
 
   })
   return correct
 }
+
 function hilitePagination(id) {
   let pagination = $(`[data-pagination="${id}"]`)
-  if (pagination){
-    pagination.css('backgroundColor','green')
+  if (pagination) {
+    pagination.css('backgroundColor', 'green')
   }
 }
 
-function hilite(word, element,q_id) {
+function hilite(word, element, q_id) {
   let text = element.innerHTML
   let rgxp = new RegExp(word, 'g');
   let arr = text.match(rgxp)

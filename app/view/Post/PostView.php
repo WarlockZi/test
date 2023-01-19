@@ -63,7 +63,7 @@ class PostView extends MyView
 	public static function cheifSelect($posts,$post): string
 	{
 		return SelectBuilder::build($posts)
-			->model('post')
+//			->model('post')
 			->field('chief')
 			->initialOption('', 0)
 			->selected($post['chief']['id']??null)
@@ -78,7 +78,7 @@ class PostView extends MyView
 
 		return MultiSelectBuilder::build($posts)
 			->field('subordinate')
-			->model('post')
+//			->model('post')
 			->initialOption(0, '')
 			->selected($ids)
 			->excluded($post->id)

@@ -18,11 +18,11 @@ import pagination from "../components/pagination/pagination";
 
 export default function testEdit() {
 
-  pagination()
 
   let testEdit = $('.test-edit-wrapper')[0]
   if (testEdit) {
 
+    pagination()
     sortable('.test-edit-wrapper .questions',
       '.questions>.question-edit',
       'question')

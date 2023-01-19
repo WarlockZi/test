@@ -132,7 +132,7 @@ function setup(select) {
       let res = await post(url, data)
     }
     if (sel.dataset.field) {
-      let id = target.closest('[data-model]').dataset.id
+      let id = target.closest('.item_wrap').dataset.id
       let model = target.closest('[data-model]').dataset.model
       let data = {[sel.dataset.field]: sel.dataset.value,id}
       let url = `/adminsc/${model}/updateOrCreate`

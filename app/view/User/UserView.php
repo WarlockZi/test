@@ -292,7 +292,7 @@ abstract class UserView extends MyView
 	public static function getSex(array $item)
 	{
 		return SelectBuilder::build()
-			->model('user')
+//			->model('user')
 			->field('sex')
 			->nameOptionByField('name')
 			->array(['m' => 'М', 'f' => 'Ж'])
@@ -303,7 +303,7 @@ abstract class UserView extends MyView
 	public static function getBirhtdate($user)
 	{
 		return DateBuilder::build($user['birthDate'])
-			->model('user')
+//			->model('user')
 			->field('birthDate')
 			->get();
 	}
@@ -311,7 +311,7 @@ abstract class UserView extends MyView
 	public static function getHiredHtml($user)
 	{
 		return DateBuilder::build($user['hired'])
-			->model('user')
+//			->model('user')
 			->field('hired')
 			->min('1965-01-01')
 			->max('2025-01-01')
@@ -321,7 +321,7 @@ abstract class UserView extends MyView
 	public static function getFiredHtml($user)
 	{
 		return DateBuilder::build($user['fired'])
-			->model('user')
+//			->model('user')
 			->field('fired')
 			->min('1965-01-01')
 			->max('2025-01-01')
@@ -332,7 +332,7 @@ abstract class UserView extends MyView
 	public static function getConfirmHtml($item)
 	{
 		return SelectBuilder::build()
-			->model('user')
+//			->model('user')
 			->field('confirm')
 			->nameOptionByField('name')
 			->array([1 => 'да', 0 => 'нет'])

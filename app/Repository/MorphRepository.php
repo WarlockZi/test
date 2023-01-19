@@ -31,7 +31,6 @@ class MorphRepository
 				->syncWithoutDetaching([$morphed['id'] => ['slug' => $slug]]);
 			return true;
 		}
-		return false;
 	}
 
 	public static function detach($model, $function, $slug, $id)
