@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class ListSelectBuilder extends Builder
 {
 	private $tree;
-	private $collection ;
+	private $collection;
 	private $options;
 	private $class;
 	private $title;
@@ -34,7 +34,6 @@ class ListSelectBuilder extends Builder
 	private $excluded = false;
 	private $nameOptionByField = 'name';
 	private $initialOption;
-	private $initialOptionValue;
 
 	private $tab = '&nbsp;';
 
@@ -49,12 +48,13 @@ class ListSelectBuilder extends Builder
 		$this->collection = $collection;
 		return $this;
 	}
+
 	public function item(Model $item)
 	{
 		$model = AppController::shortClassName($item);
 		$id = $item->id;
 		$this->model = "data-model='{$model}''";
-		$this->modelId = "data-model-id='".$id."'";
+		$this->modelId = "data-model-id='" . $id . "'";
 		return $this;
 	}
 
@@ -116,6 +116,7 @@ class ListSelectBuilder extends Builder
 		}
 		return $tpl;
 	}
+
 	public function getEmpty()
 	{
 		$this->selected = 0;
@@ -131,9 +132,8 @@ class ListSelectBuilder extends Builder
 		return $this->clean($result);
 	}
 
-	public function get(int $id=0)
+	public function get(int $id = 0)
 	{
-//		$this->selected = $id;
 		$this->options = $this->getOptions();
 
 		if ($this->excluded !== false) {

@@ -19,16 +19,14 @@ export default function sortable(containerSelector, elSelector, model) {
 
         async function sort(upToQestionNumber) {
           let els = $(elSelector);
-          let questionsEls = [].map.call(els, function (el, i) {
-              if (i - 1 < upToQestionNumber) return el
-            }
-          )
+          els.length = upToQestionNumber-1
 
-          let toChange = questionsEls.map((el) => {
+          let toChange = els.map((el) => {
             return el.dataset.id
           })
+
           let res = await post(`/adminsc/${model}/sort`, {toChange})
-          questionsEls.map((el, i) => {
+          els.map((el, i) => {
             $(el).find('.sort').innerText = i + 1
           })
         }

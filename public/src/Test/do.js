@@ -2,10 +2,10 @@ import './do.scss'
 import {post, $, cachePage} from '../common'
 import pagination from "../components/pagination/pagination";
 
-pagination()
 
 let testDo = $('.test-do .content')[0]
 if (testDo) {
+  pagination()
   showFirstQuest()
   finishBtnInit()
   testDo.addEventListener('click', handleClick)
@@ -95,7 +95,7 @@ function objToServer(errorCnt) {
 
 function colorView(correctAnswers) {
   let questions = $('.question');
-  [].map.call(questions, (question)=> {
+  [].map.call(questions, (question) => {
     let errors = colorQuestions(question, correctAnswers)
     colorPgination(question, errors)
   })
@@ -114,11 +114,11 @@ function colorPgination(question, errors) {
 function colorQuestions(question, correctAnswers) {
   let answers = question.querySelectorAll('.a');
   let errors = [];
-  [].map.call(answers, (answer)=> {
+  [].map.call(answers, (answer) => {
     let input = $(answer).find('input')
     let id = answer.dataset.id
     let error = checkCorrectAnswers(id, correctAnswers, input, answer)
-    if (error)errors.push(true)
+    if (error) errors.push(true)
   })
   return errors
 }
@@ -134,7 +134,7 @@ function checkCorrectAnswers(id, correctAnswers, input, answer) {
     error = true
   } else if (!checked && correctAnser) {// кнопка не нажата, в correct_answers есть
     answer.classList.add('done'); //green check зеленый значек
-    error =true
+    error = true
   } else if (!checked && !correctAnser) {// кнопка не нажата, в correct_answers нет
   }
   return error

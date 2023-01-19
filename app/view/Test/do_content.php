@@ -1,8 +1,8 @@
 <div class="test">
 
 	<div class="navigation">
-		<div class='test-name' data-test-id=<?= $test->id; ?>><?= $test->name; ?></div>
-		 <?= $pagination; ?>
+		<div class='test-name' data-test-id=<?= $test->id??''; ?>>Пройти тест : <?= $test->name??''; ?></div>
+		 <?= $pagination??''; ?>
 	</div>
 
 

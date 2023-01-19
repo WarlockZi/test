@@ -7,7 +7,7 @@ export default function () {
     'pActiveClass': 'active',
     'pageClass': 'question',
     'pageActiveClass': 'show',
-    'prevBttnEl': $('#prev')[0],
-    'nextBttnEl': $('#next')[0],
+    'prevBttnId': '#prev',
+    'nextBttnId': '#next',
   })
 }
