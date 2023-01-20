@@ -1,7 +1,6 @@
-import {$, post} from "../../common";
+import {$, post} from "../../../common";
 
 export const _testResult = {
-
 
   delServer: async (id) => {
     let opentest = $('.opentest')[0]
@@ -11,14 +10,12 @@ export const _testResult = {
       let res = await post('/adminsc/testresult/delete', {id})
     }
   },
-
   delDom: (id) => {
     [].map.call($(`[data-row = "${id}"]`), function (i) {
         i.remove()
       }
     )
   },
-
   delete: (id) => {
     if (confirm("Удалить результат теста?")) {
       _testResult.delServer(id)

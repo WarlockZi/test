@@ -9,11 +9,13 @@ import {$, debounce} from '../common'
 
 import {_question} from "./model/question"
 import {_test} from "./model/test";
-import {_answer} from "./model/answer";
+
 
 import sortable from "../components/sortable"
 import WDSSelect from "../components/select/WDSSelect"
 import pagination from "../components/pagination/pagination";
+import Answer from "./Mode/Answer";
+import Testresult from "./Mode/Testresult";
 
 
 export default function testEdit() {
@@ -35,6 +37,9 @@ export default function testEdit() {
 
 function handleClick({target}) {
 
+  let answer = new Answer()
+  let test = new Testresult()
+// debugger
   if (target.classList.contains('test-path__update')) {
     _test.update()
   } else if (target.classList.contains('test__update')) {
@@ -54,11 +59,11 @@ function handleClick({target}) {
   } else if (!!target.closest('.question__delete')) {
     _question.del(target)
   } else if (!!target.closest('.delete')) {
-    _answer.del(target)
+    answer.delete(target)
   } else if (target.classList.contains('answer__create-button')) {
-    _answer.answerCreate(target)
+    answer.create(target)
   } else if (target.classList.contains('correct')) {
-    _answer.saveAnswer(target)
+    answer.update(target)
   }
 }
 
@@ -68,7 +73,7 @@ async function handleKeyup({target}) {
   if (target.classList.contains('text')) {
     let answer = target.closest('.answer')
     if (answer) {
-      _answer.saveAnswer(target)
+      answer.saveAnswer(target)
     } else {
       _question.saveQuestion(target)
     }

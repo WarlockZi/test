@@ -11,29 +11,18 @@ class answer {
     let res = await post('/adminsc/answer/updateOrCreate', answer)
   }
 
-  async del(target) {
-    let el = target.closest('.answer')
-
-    let id = +target.dataset.id
-    if (confirm('Удалить?')) {
-      let res = await post(`/adminsc/answer/delete`, {id})
-      if (res) {
-        el.remove()
-      }
-    }
-  }
 
   async answerCreate(target) {
     let answer = $('.answer__create .answer')[0]
     let question = target.closest('.question-edit')
     let q_id = +question.dataset.id
+    let sort = question.querySelectorAll('.answer').length + 1
     let clone = answer.cloneNode(true)
     let answerModel = this.getAnswerModel(clone, q_id)
     let res = await post(`/adminsc/answer/updateOrCreate`, answerModel)
     if (res) {
-      if (res.arr.popup) popup.show(res.arr.popup)
-      if (res.arr.id ) {
-        let sort = question.querySelectorAll('.answer').length + 1
+      // if (res.arr.popup) popup.show(res.arr.popup)
+      if (res.arr.id) {
         clone.querySelector('.sort').innerText = sort
         clone.querySelector('.delete').dataset.id =
           clone.dataset.id = res.arr.id
@@ -54,4 +43,15 @@ class answer {
   }
 }
 
+// async del(target) {
+//   let el = target.closest('.answer')
+//
+//   let id = +target.dataset.id
+//   if (confirm('Удалить?')) {
+//     let res = await post(`/adminsc/answer/delete`, {id})
+//     if (res) {
+//       el.remove()
+//     }
+//   }
+// }
 export let _answer = new answer()

@@ -215,26 +215,8 @@
           }
 
           .delete {
-            width: 35px;
-            height: 100%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            @include delete;
 
-            svg {
-              width: 15px;
-              fill: $color-warning;
-              pointer-events: none;
-            }
-
-            &:hover {
-              background-color: $color-warning;
-
-              svg {
-                fill: white;
-              }
-            }
           }
         }
 
@@ -320,27 +302,11 @@
 
   .question__create-button {
     //position: fixed;
-    bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px 0;
-    border-radius: 3%;
-    padding: 5px 10px;
-    border: 1px solid $color-success;
-    background-color: white;
-    color: $color-success;
-    cursor: pointer;
+    @include _button(1px,$color-white, darken($color-success,25%),darken($color-success,25%));
     align-self: self-end;
-
-    &:hover {
-      border: 1px solid white;
-      background-color: $color-success;
-      color: white;
-
-    }
-
-
+    margin: 10px 0;
+    padding: 5px 10px;
+    bottom: 10px;
     //@include test-edit__act-button;
     //@include test-edit__act-button;
   }
@@ -364,37 +330,17 @@
 
     &:before {
       @include _chevron();
-      border-right: 2px solid #1bbc9b;
-      border-top: 2px solid #1bbc9b;
+      border-right: 2px solid darken($color-success,25%);
+      border-top: 2px solid darken($color-success,25%);
     }
 
   }
 
 
   .question__delete {
-    width: 55px;
-    cursor: pointer;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+
+    @include delete($width:55px,$svg-width:20px);
     border: 1px solid $color-gray2;
-
-    svg {
-      fill: $color-warning;
-      pointer-events: none;
-    }
-
-    &:hover {
-      background-color: $color-warning;
-
-      svg {
-        fill: white;
-      }
-    }
-
-
   }
 
 }
