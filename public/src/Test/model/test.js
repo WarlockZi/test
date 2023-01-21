@@ -94,12 +94,5 @@ export const _test = {
     }
 
   },
-  // selectedValueCustomSelect(className) {
-  //   let select = $(`[data-field=${className}]`)[0]
-  //   let selected = [...select.options].filter((opt) => opt.selected)
-  //   if (selected) {
-  //     return +selected[0].value
-  //   }
-  // },
 
 }

@@ -6,18 +6,12 @@ export default class Model {
     this.id = 0
   }
 
-  updateOrCreate() {
-
-  }
-
   getUrlUpdateOrCreate() {
     return `/adminsc/${this.name}/updateOrCreate`
   }
 
-  async create(target) {
-    // debugger
-    let id = await post(this.getUrlUpdateOrCreate(), {id: 0})
-    return id
+  updateOrCreate(model) {
+    return post(this.getUrlUpdateOrCreate(), model)
   }
 
   delServer() {
@@ -26,7 +20,6 @@ export default class Model {
 
   delDom() {
     let selector = this.delDomSelector;
-
     [].map.call($(selector), function (i) {
         i.remove()
       }
@@ -35,8 +28,7 @@ export default class Model {
 
   async delete(target) {
     let id  = target.closest(this.className).dataset.id
-    debugger
-    // if (!confirm('Удалить?')) return false
+    if (!confirm('Удалить?')) return false
     this.id = id
     if (await this.delServer()) {
       this.delDom()

@@ -29,16 +29,17 @@ export default function testEdit() {
       '.questions>.question-edit',
       'question')
 
-    $(testEdit).on('keyup', debouncedHandleKeyup)
-    $(testEdit).on('change', handleChange)
-    $(testEdit).on('click', handleClick)
+    let answer = new Answer()
+    let test = new Testresult()
+
+    $(testEdit).on('keyup', debouncedHandleKeyup.bind(this))
+    $(testEdit).on('change', handleChange.bind(this))
+    $(testEdit).on('click', handleClick.bind(this))
   }
 }
 
 function handleClick({target}) {
 
-  let answer = new Answer()
-  let test = new Testresult()
 // debugger
   if (target.classList.contains('test-path__update')) {
     _test.update()
@@ -67,13 +68,13 @@ function handleClick({target}) {
   }
 }
 
-let debouncedHandleKeyup = debounce(handleKeyup)
+let debouncedHandleKeyup = debounce(handleKeyup.bind(this)).bind(this)
 
 async function handleKeyup({target}) {
   if (target.classList.contains('text')) {
-    let answer = target.closest('.answer')
-    if (answer) {
-      answer.saveAnswer(target)
+    let answerEl = target.closest('.answer')
+    if (answerEl) {
+      answer.update(target)
     } else {
       _question.saveQuestion(target)
     }

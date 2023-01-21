@@ -8,7 +8,7 @@ export default class Answer extends Model {
 
     this.name = 'answer'
     this.className = '.answer'
-    this.emptySelector = '.answer__create .answer'
+    this.emptySelector = '.empty .answer'
     this.questionSelector = '.question-edit'
 
     this.answerSelector = '.text'
@@ -61,20 +61,19 @@ export default class Answer extends Model {
     return null
   }
 
-
   getQuestion_id(target) {
     return target.closest(this.questionSelector).dataset.id
   }
 
   async create(target) {
     this.target = target
-    await this.sendToServer()
+    await this.createOnServer()
     this.render()
   }
 
-  async sendToServer() {
+  async createOnServer() {
     this.model.question_id = this.getQuestion_id(this.target)
-    let res = await post(this.getUrlUpdateOrCreate(), this.model)
+    let res = await super.createOnServer(this.model)
     this.id = res.arr.id
   }
 
@@ -88,9 +87,7 @@ export default class Answer extends Model {
   async update(target) {
     this.target = target
     let answer = this.find(this.getId(target))
-    let url = this.getUrlUpdateOrCreate()
-    debugger
-    let res = await post(url, answer.model)
+    let res = await super.updateOrCreate(answer.model)
   }
 
 }
