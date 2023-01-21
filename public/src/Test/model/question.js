@@ -1,5 +1,5 @@
 import {$, popup, post, trimStr} from "../../common"
-import {_answer} from "./answer";
+import {_answer} from "./del/answer";
 
 class question {
 
@@ -8,7 +8,7 @@ class question {
   }
 
   async questionCreate(target) {
-    let question = $('.question__create .question-edit')[0]
+    let question = $('.empty .question-edit').first()
     let clone = question.cloneNode(true)
     let questionModel = this.getQuestionModel(clone)
     let res = await post(`/adminsc/question/updateOrCreate`, questionModel)
@@ -25,7 +25,7 @@ class question {
       id: +el.dataset.id,
       qustion: trimStr(el.querySelector('.text').innerText),
       test_id: +window.location.href.split('/').pop(),
-      sort: +$('.question-edit').length,
+      sort: +el.closest('.question-edit').querySelector('.sort').innerText,
     }
   }
 

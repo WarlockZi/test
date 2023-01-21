@@ -99,11 +99,11 @@
   flex-flow: column;
   margin: 10px 0;
 
-  .question__create {
-    display: none;
-  }
+  //.question__create {
+  //  display: none;
+  //}
 
-  .answer__create {
+  .empty {
     display: none;
     opacity: 0;
     align-items: center;
