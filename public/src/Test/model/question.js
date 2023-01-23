@@ -43,6 +43,7 @@ class question {
   }
 
   showAnswers(target) {
+
     let row = target.closest('.question-edit')
     let answers = $(row).find('.question__answers')
     answers.classList.toggle('height')

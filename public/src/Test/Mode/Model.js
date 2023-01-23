@@ -6,12 +6,32 @@ export default class Model {
     this.id = 0
   }
 
+  get empty() {
+    return $(this.emptySelector)[0].cloneNode(true)
+  }
+
+  getElById(id) {
+    if (!id) return false
+    return $(this.className).filter(
+      (el) => {
+        return el.dataset.id === id
+      })[0];
+  }
+
+  getEl() {
+    return this.target.closest(this.className)
+  }
+
+  getId() {
+    return this.getEl(this.target).dataset.id
+  }
+
   getUrlUpdateOrCreate() {
     return `/adminsc/${this.name}/updateOrCreate`
   }
 
-  updateOrCreate(model) {
-    return post(this.getUrlUpdateOrCreate(), model)
+  updateOrCreate() {
+    return post(this.getUrlUpdateOrCreate(), this.model)
   }
 
   delServer() {
@@ -26,10 +46,9 @@ export default class Model {
     )
   }
 
-  async delete(target) {
-    let id  = target.closest(this.className).dataset.id
+  async delete() {
     if (!confirm('Удалить?')) return false
-    this.id = id
+    this.id = this.getId()
     if (await this.delServer()) {
       this.delDom()
     }
