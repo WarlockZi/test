@@ -1,4 +1,4 @@
-import {$, post, trimStr} from '../../common'
+import {$} from '../../common'
 import Model from "./Model";
 
 export default class Answer extends Model {
@@ -16,21 +16,33 @@ export default class Answer extends Model {
     this.picaSelector = ''
 
     this.model = {}
+
+    this.fullfill(target)
+
+    this.row =
+      target.closest(this.className)??
+      target.parentNode.querySelector(this.emptySelector)
+
+
+
+    this.target = null
+  }
+
+  fullfill(target){
+    let el = this.target = target.closest(this.className)??null
+    let sort = +$(el).find(this.sortSelector).innerText>0?
+      +$(el).find(this.sortSelector).innerText:
+      this.sort
     this.model.id = 0
     this.model.answer = null
     this.model.question_id = null
     this.model.correct_answer = null
     this.model.pica = null
-
-    this.target = null
   }
 
+
   find(id) {
-    if (!id) return false
-    let el = $(this.className).filter(
-      (el) => {
-        return el.dataset.id === id
-      })[0];
+    let el = this.getElById(id)
     this.model.id = id;
     debugger
     this.model.answer = $(el).find(this.answerSelector).innerText
@@ -40,17 +52,13 @@ export default class Answer extends Model {
     return this
   }
 
-  getId(target) {
-    return target.closest(this.className).dataset.id
-  }
-
   get delDomSelector() {
     return `.answer[data-id='${this.id}']`
   }
 
-  get empty() {
-    return $(this.emptySelector)[0].cloneNode(true)
-  }
+  // get empty() {
+  //   return $(this.emptySelector)[0].cloneNode(true)
+  // }
 
   get sort() {
     return this.question.querySelectorAll(this.className).length + 1 ?? null
@@ -73,7 +81,7 @@ export default class Answer extends Model {
 
   async createOnServer() {
     this.model.question_id = this.getQuestion_id(this.target)
-    let res = await super.createOnServer(this.model)
+    let res = await super.updateOrCreate(this.model)
     this.id = res.arr.id
   }
 

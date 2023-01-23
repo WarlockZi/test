@@ -2,24 +2,20 @@ import './test-edit.scss'
 import '../components/footer/footer.scss'
 
 import './test-edit-menu.scss'
-
 import './test-update'
 
 import {$, debounce} from '../common'
 
-import {_question} from "./model/question"
 import {_test} from "./model/test";
 
-
 import sortable from "../components/sortable"
-import WDSSelect from "../components/select/WDSSelect"
 import pagination from "../components/pagination/pagination";
+
 import Answer from "./Mode/Answer";
-import Testresult from "./Mode/Testresult";
+import Question from "./Mode/Question";
 
 
 export default function testEdit() {
-
 
   let testEdit = $('.test-edit-wrapper')[0]
   if (testEdit) {
@@ -29,23 +25,17 @@ export default function testEdit() {
       '.questions>.question-edit',
       'question')
 
-    let answer = new Answer()
-    let test = new Testresult()
-
-    $(testEdit).on('keyup', debouncedHandleKeyup.bind(this))
-    $(testEdit).on('change', handleChange.bind(this))
-    $(testEdit).on('click', handleClick.bind(this))
+    $(testEdit).on('keyup', debouncedHandleKeyup)
+    $(testEdit).on('change', handleChange)
+    $(testEdit).on('click', handleClick)
   }
 }
 
 function handleClick({target}) {
-
+  let answer = new Answer()
+  let question = new Question(target)
 // debugger
-  if (target.classList.contains('test-path__update')) {
-    _test.update()
-  } else if (target.classList.contains('test__update')) {
-    _test.update()
-  } else if (target.classList.contains('test__save')) {
+  if (['test-path__update', 'test__update', 'test__save'].includes(target.classList)) {
     _test.update()
   } else if (target.classList.contains('test__delete')) {
     _test.delete()
@@ -54,11 +44,12 @@ function handleClick({target}) {
   } else if (target.classList.contains('test__create')) {
     _test.create()
   } else if (!!target.closest('.question__show-answers')) {
-    _question.showAnswers(target)
+    question.showAnswers()
   } else if (target.classList.contains('question__create-button')) {
-    _question.questionCreate(target)
+    // question.updateOrCreate()
+    question.create()
   } else if (!!target.closest('.question__delete')) {
-    _question.del(target)
+    question.delete()
   } else if (!!target.closest('.delete')) {
     answer.delete(target)
   } else if (target.classList.contains('answer__create-button')) {
@@ -68,22 +59,25 @@ function handleClick({target}) {
   }
 }
 
-let debouncedHandleKeyup = debounce(handleKeyup.bind(this)).bind(this)
+let debouncedHandleKeyup = debounce(handleKeyup)
 
 async function handleKeyup({target}) {
   if (target.classList.contains('text')) {
     let answerEl = target.closest('.answer')
     if (answerEl) {
+      let answer = new Answer()
       answer.update(target)
     } else {
-      _question.saveQuestion(target)
+      let question = new Question(target)
+      question.update()
     }
   }
 }
 
 async function handleChange({target}) {
   if (!!target.closest('.question-edit__parent-select')) {
-    _question.changeParent(target)
+    let question = new Question(target)
+    question.changeParent(target)
   }
 }
 
