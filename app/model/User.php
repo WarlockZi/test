@@ -80,25 +80,25 @@ class User extends Model
 		return !!array_intersect($user['rights'], $rights);
 	}
 
-	public function findOne($id, $field = '')
-	{
-		if ($user = parent::findOne($id)) {
-			$user['rights'] = explode(',', $user['rights']);
-		}
-		return $user ?? null;
-	}
+//	public function findOne($id, $field = '')
+//	{
+//		if ($user = parent::findOne($id)) {
+//			$user['rights'] = explode(',', $user['rights']);
+//		}
+//		return $user ?? null;
+//	}
 
-	public static function findOneWhere($field = '', $value = '')
-	{
-		if ($user = parent::findOneWhere($field, $value)) {
-			$user['rights'] = explode(',', $user['rights']);
-			$post_id = is_array($user['post_id'])
-				? explode(',', $user['post_id'])
-				: Null;
-			$user['post_id'] = $post_id;
-		}
-		return $user ?? null;
-	}
+//	public static function findOneWhere($field = '', $value = '')
+//	{
+//		if ($user = parent::findOneWhere($field, $value)) {
+//			$user['rights'] = explode(',', $user['rights']);
+//			$post_id = is_array($user['post_id'])
+//				? explode(',', $user['post_id'])
+//				: Null;
+//			$user['post_id'] = $post_id;
+//		}
+//		return $user ?? null;
+//	}
 
 	public function checkName($name)
 	{
@@ -127,14 +127,6 @@ class User extends Model
 	public static function checkEmail($email)
 	{
 		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			return true;
-		}
-		return false;
-	}
-
-	public function checkEmailExists($email):bool
-	{
-		if ($this->findOneWhere('email', $email)) {
 			return true;
 		}
 		return false;

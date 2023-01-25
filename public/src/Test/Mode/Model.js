@@ -23,7 +23,7 @@ export default class Model {
   }
 
   getId() {
-    return this.getEl(this.target).dataset.id
+    return this.getEl().dataset.id
   }
 
   getUrlUpdateOrCreate() {

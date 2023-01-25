@@ -12,7 +12,7 @@
     }
 
     a {
-      @include _button(10px, $color-success);
+      @include colored_button(10px, $color-success);
       font-size: 0.8rem;
       justify-content: flex-start;
       max-width: 300px;

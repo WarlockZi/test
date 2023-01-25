@@ -4,18 +4,17 @@
 namespace app\Repository;
 
 
-use app\model\Question;
-use \app\view\Test\TestView;
+use app\model\Opentest;
 
-class QuestionRepository
+class OpenquestionRepository
 {
 
 	public static function empty($test)
 	{
-		$question = new Question;
+		$question = new Opentest();
 		$question = $question->fillable;
 		$question['id'] = 0;
-		$parentSelector = TestView::questionParentSelector($test['id']);
+		$parentSelector = \app\view\Test\TestView::questionParentSelector($test['id']);
 		ob_start();
 		include ROOT . '/app/view/Question/edit_BlockQuestion.php';
 		return ob_get_clean();

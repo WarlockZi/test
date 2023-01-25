@@ -9,14 +9,13 @@
   align-items: center;
   justify-content: center;
   align-self: flex-start;
-  //border-radius: 4px;
   cursor: pointer;
-  background-color: $color-main;
+  background-color: #337ab7;
   color: white;
-  margin-right: 25px;
-  //min-width: 103px;
+  margin-right: -4px;
   width: 150px;
   border: 1px solid transparent;
+  font-size: 0.7rem;
 
   @include _1000 {
     display: flex;

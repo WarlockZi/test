@@ -12,6 +12,7 @@
   margin: 0 0 15px 0;
   @include _h1;
 }
+
 .item_wrap {
   display: flex;
   min-width: 400px;
@@ -137,9 +138,14 @@
       margin: $margin-form;
       flex: 1 0 160px;
       position: relative;
-      border: 1px solid transparent;
 
-      &:hover {
+      & > [contenteditable],
+      & > [custom-select] {
+        border: 1px solid transparent;
+      }
+
+      & > [contenteditable]:hover,
+      & > [custom-select]:hover {
         border: $border-field-hover;
       }
 
@@ -242,11 +248,11 @@
     flex: 1 0;
     margin: 40px 0 0;
 
-    .save, .del, .to-list {
+    .save, .to-list {
       padding: 10px 15px;
       $border-radius: 3%;
       line-height: 1.2rem;
-      @include _button($border-radius);
+      @include colored_button($border-radius);
       align-self: end;
 
       &:hover {
@@ -256,24 +262,18 @@
       }
 
       svg {
-        transition: fill 500ms;
+
         fill: #ffffff;
       }
     }
 
     .del {
-      background-color: $color-warning;
+      @include delete(
+              $width: 35px,
+              $height: 35px,
+              $svg-width: 25px,
+              $color: $color-warning);
       border: 1px solid $color-warning;
-
-      &:hover {
-        svg {
-          fill: $color-warning;
-        }
-      }
-
-      svg {
-        fill: #ffffff;
-      }
     }
   }
 

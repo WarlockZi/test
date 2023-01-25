@@ -1,7 +1,8 @@
 <?php
 
-namespace app\controller;
+namespace app\controller\Admin;
 
+use app\controller\AppController;
 use app\core\Auth;
 use app\model\User;
 use app\view\User\UserView;
@@ -26,12 +27,6 @@ class UserController extends AppController
 		$this->set(compact('list'));
 	}
 
-//	public function actionChange()
-//	{
-//		$this->view = 'list';
-//		$users = User::all();
-//		$this->set(compact('users'));
-//	}
 
 	public function actionEdit()
 	{
@@ -60,4 +55,10 @@ class UserController extends AppController
 		}
 	}
 
+//	public function actionChange()
+//	{
+//		$this->view = 'list';
+//		$users = User::all();
+//		$this->set(compact('users'));
+//	}
 }

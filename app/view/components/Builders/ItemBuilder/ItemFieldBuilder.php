@@ -17,7 +17,7 @@ class ItemFieldBuilder
   public $class = '';
   public $name = '';
   public $link = '';
-  public $type = 'text';
+//  public $type = 'text';
   public $morph = '';
   public $slug = '';
   public $typeModificator = '';
@@ -49,11 +49,11 @@ class ItemFieldBuilder
     return $this;
   }
 
-  public function type(string $type)
-  {
-    $this->type = $type;
-    return $this;
-  }
+//  public function type(string $type)
+//  {
+//    $this->type = $type;
+//    return $this;
+//  }
 
   public function link(string $link)
   {
@@ -107,17 +107,17 @@ class ItemFieldBuilder
 
   protected function setValue(): void
   {
-    if ($this->type === 'checkbox') {
-      $this->value = '';
-      $val = (int)$this->item[$this->field];
-      $this->typeModificator = $val === 1 ? 'checked' : '';
-
-    } elseif ($this->type === 'image') {
-      $this->value = ImageRepository::getSrc($this);
-
-    } else {
+//    if ($this->type === 'checkbox') {
+//      $this->value = '';
+//      $val = (int)$this->item[$this->field];
+//      $this->typeModificator = $val === 1 ? 'checked' : '';
+//
+//    } elseif ($this->type === 'image') {
+//      $this->value = ImageRepository::getSrc($this);
+//
+//    } else {
       $this->value = $this->item[$this->field];
-    }
+//    }
   }
 
   public function toHtml(string $model): string

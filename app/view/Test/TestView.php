@@ -3,19 +3,18 @@
 namespace app\view\Test;
 
 use app\model\Test;
-use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
+use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
+use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\MyTree\Tree;
 use Illuminate\Database\Eloquent\Model;
 
 class TestView
 {
-//	protected $model = Test::class;
+
 
 	public static function item($id)
 	{
-		$view = new self();
 		$test = Test::find($id);
 
 		$parents = $test->parents;
@@ -38,15 +37,20 @@ class TestView
 			->field(
 				ItemFieldBuilder::build('enable', $test)
 					->name('Показывать')
-					->type('select')
-					->html(TestView::enabled($test))
+					->html(
+						CheckboxBuilder::build(
+							'enable',
+							$test->enable,
+							'int'
+						)->get()
+
+					)
 					->get()
 			)
 			->field(
 				ItemFieldBuilder::build('parent', $test)
 					->name('Принадлежит')
-					->html(TestView::belongsTo($test))
-					->type('select')
+					->html(self::belongsTo($test))
 					->get()
 			)
 			->get();

@@ -42,7 +42,7 @@
   height: 20px;
 
   $border-radius: 75%;
-  @include _button($border-radius);
+  @include colored_button($border-radius);
   align-self: end;
 
   &:hover {
@@ -67,10 +67,11 @@
   z-index: 1;
   margin-right: 6vw;
 
-  .list{
+  .list {
     display: flex;
     flex-flow: column;
-    .path-child__row{
+
+    .path-child__row {
       display: flex;
     }
   }
@@ -80,11 +81,12 @@
     flex-flow: column;
     flex-wrap: wrap;
     position: relative;
-    margin: 0px 0 10px 2px;
 
     .test-name {
-      margin: 0;
-      @include _h2;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: $color-gray-max;
+      margin: 15px;
     }
   }
 
@@ -97,11 +99,6 @@
 .questions {
   display: flex;
   flex-flow: column;
-  margin: 10px 0;
-
-  //.question__create {
-  //  display: none;
-  //}
 
   .empty {
     display: none;
@@ -110,19 +107,23 @@
     transition: opacity 1s;
   }
 
-  .question-edit:last-child {
-    padding: 3px;
-  }
-
-  .question-edit:first-child {
-    padding-top: 1px;
-  }
 
   .question-edit {
-    //background-color: #efefef;
     display: flex;
     flex-flow: column;
     background: aliceblue;
+
+    &:nth-of-type(2) {
+      .row:first-of-type > * {
+        border-top: solid $color-gray2 1px;
+      }
+    }
+
+    .row:first-of-type > * {
+      border-left: solid $color-gray2 1px;
+      border-bottom: solid $color-gray2 1px;
+      border-top: solid transparent 1px;
+    }
 
     .text {
       display: flex;
@@ -131,24 +132,20 @@
       min-width: 90px;
       padding: 10px;
       background-color: white;
-      //margin: 0 1px;
-      font-weight: 600;
       position: relative;
       font-size: 0.8rem;
       color: darken($color-success, 25%);
-      border-top: 1px solid $color-gray2;
-      border-bottom: 1px solid $color-gray2;
-      border-left: 1px solid $color-gray2;
 
       &:focus-visible {
         outline: none !important;
       }
 
       &:hover {
-        border: $color-success 1px solid;
+        border: $color-success 1px solid !important;
         border-radius: 6px;
       }
     }
+
 
     .row {
       display: flex;
@@ -164,11 +161,10 @@
         transform: scaleY(0);
         transform-origin: top;
         transition: transform 0.1s;
-        //border: 1px solid #6ca3fead;
 
         &.height {
           height: auto !important;
-          margin: 5px 56px 10px 47px;
+          margin: 5px 14px 10px 47px;
         }
 
         &.scale {
@@ -183,7 +179,6 @@
           overflow: hidden;
           align-items: center;
           border: 1px solid $color-gray2;
-            //background: lighten($color-main, 27%);
 
           .textarea {
             min-height: 10px;
@@ -207,7 +202,7 @@
             flex: 1;
             font-size: .8rem;
             border: 1px solid transparent;
-            color: darken($color-main, 39%);
+            color: darken($color-success, 19%);
 
             &:hover {
               border: 1px solid $color-gray4;
@@ -215,8 +210,11 @@
           }
 
           .delete {
-            @include delete;
-
+            @include white_svg_button(
+                    $width: 20px,
+                    $height: 100%,
+                    $svg-width: 15px,
+                    $color: $color-warning);
           }
         }
 
@@ -234,12 +232,8 @@
         align-items: center;
         justify-content: center;
         background-color: #fff;
-        //margin-right: 1px;
         padding: 0;
         font-weight: 600;
-        border-top: 1px solid $color-gray2;
-        border-bottom: 1px solid $color-gray2;
-        border-left: 1px solid $color-gray2;
         color: darken($color-success, 25%);
       }
 
@@ -250,9 +244,6 @@
         cursor: pointer;
         position: relative;
         margin-right: 1px;
-        border-top: 1px solid $color-gray2;
-        border-bottom: 1px solid $color-gray2;
-        border-left: 1px solid $color-gray2;
 
         &:hover {
           background-color: $color-success;
@@ -278,9 +269,6 @@
       display: flex;
       max-height: fit-content;
       background-color: #ffffff;
-      border-top: 1px solid $color-gray2;
-      border-bottom: 1px solid $color-gray2;
-      border-left: 1px solid $color-gray2;
 
       select {
         width: 18px;
@@ -293,22 +281,17 @@
         }
       }
 
-      //&:after{
-      //  @include _chevron(-20px)
-      //}
     }
 
   }
 
+
   .question__create-button {
-    //position: fixed;
-    @include _button(1px,$color-white, darken($color-success,25%),darken($color-success,25%));
+    @include colored_button(1px, $color-white, darken($color-success, 25%), darken($color-success, 25%));
     align-self: self-end;
     margin: 10px 0;
     padding: 5px 10px;
     bottom: 10px;
-    //@include test-edit__act-button;
-    //@include test-edit__act-button;
   }
 
   .rotate {
@@ -322,16 +305,12 @@
     width: 30px;
     background-color: white;
     cursor: pointer;
-    //margin-left: 1px;
     min-width: 35px;
-    border-top: 1px solid $color-gray2;
-    border-bottom: 1px solid $color-gray2;
-    border-left: 1px solid $color-gray2;
 
     &:before {
       @include _chevron();
-      border-right: 2px solid darken($color-success,25%);
-      border-top: 2px solid darken($color-success,25%);
+      border-right: 2px solid darken($color-success, 25%);
+      border-top: 2px solid darken($color-success, 25%);
     }
 
   }
@@ -339,14 +318,19 @@
 
   .question__delete {
 
-    @include delete($width:55px,$svg-width:20px);
-    border: 1px solid $color-gray2;
+    @include white_svg_button(
+            $width: 35px,
+            $height: 100%,
+            $svg-width: 20px,
+            $color: $color-warning);
+    height: inherit;
   }
 
 }
 
 .rules {
   font-size: .7rem;
+
   h1 {
     color: $color-warning;
   }
