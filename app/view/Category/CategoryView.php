@@ -8,7 +8,7 @@ use app\model\Property;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
-use app\view\components\Builders\ItemBuilder\CheckboxBuilder;
+use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 
@@ -47,7 +47,7 @@ class CategoryView
 					->get()
 			)
 			->tab(
-				CheckboxBuilder::build('Основная картинка')
+				ItemTabBuilder::build('Основная картинка')
 					->html(
 						self::getMainImage($category)
 					)
@@ -55,7 +55,7 @@ class CategoryView
 
 			)
 			->tab(
-				CheckboxBuilder::build('Товары категории')
+				ItemTabBuilder::build('Товары категории')
 					->html(
 						MyList::build(Product::class)
 							->belongsTo('category', $id)
@@ -83,7 +83,7 @@ class CategoryView
 					->get()
 			)
 			->tab(
-				CheckboxBuilder::build('Св-ва категории')
+				ItemTabBuilder::build('Св-ва категории')
 					->html(
 						MyList::build(Property::class)
 							->items($category->properties?? [])
@@ -107,7 +107,7 @@ class CategoryView
 					->get()
 			)
 			->tab(
-				CheckboxBuilder::build('Подкатегории')
+				ItemTabBuilder::build('Подкатегории')
 					->html(
 						MyList::build(Category::class)
 							->edit()

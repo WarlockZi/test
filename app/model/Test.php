@@ -15,7 +15,6 @@ class Test extends Model
 		'id','name','enable','parent','isTest',
 	];
 
-//	public $hasMany = [];
 
 	public function questions()
 	{
@@ -24,13 +23,17 @@ class Test extends Model
 
 	public function parent()
 	{
-		return $this->belongsTo(Test::class, 'parent');
+		return $this->belongsTo(Test::class, 'test_id');
 	}
 
 	public function children()
 	{
-		return $this->hasMany(Test::class, 'parent');
+		return $this->hasMany(Test::class, 'test_id');
 	}
+
+	public function childrenRecursive(){
+	  return $this->hasMany(Test::class, 'test_id')->with('children');
+  }
 
 	public static function pagination(Collection $items)
 	{
