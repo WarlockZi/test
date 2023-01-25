@@ -1,3 +1,3 @@
 <div class="test-head">
-	<? include ROOT. "/app/view/Test/menu_toggle.php"; ?>
+	<div class="accordion-open">Выбрать тест</div>
 </div>

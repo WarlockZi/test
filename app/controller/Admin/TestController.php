@@ -136,18 +136,5 @@ class TestController extends AppController
 		$this->set(compact('test'));
 	}
 
-//	public function actionShow()
-//	{
-//		$this->view = 'edit_show';
-//
-//		$page_name = 'Создание теста';
-//		$this->set(compact('page_name'));
-//
-//		$paths = $this->paths();
-//		$this->set(compact('paths'));
-//
-//		$test['isTest'] = 1;
-//		$this->set(compact('test'));
-//	}
 
 }

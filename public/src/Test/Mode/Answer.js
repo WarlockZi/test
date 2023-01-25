@@ -1,50 +1,48 @@
 import {$} from '../../common'
 import Model from "./Model";
 
-export default class Answer extends Model {
+class Answer extends Model {
 
-  constructor() {
+  constructor(target) {
     super()
 
     this.name = 'answer'
     this.className = '.answer'
     this.emptySelector = '.empty .answer'
     this.questionSelector = '.question-edit'
+    this.questionsSelector = '.questions'
 
     this.answerSelector = '.text'
     this.correct_answerSelector = 'input'
+    this.sortSelector = '.sort'
     this.picaSelector = ''
 
     this.model = {}
-
-    this.fullfill(target)
-
+    this.target = target
     this.row =
-      target.closest(this.className)??
-      target.parentNode.querySelector(this.emptySelector)
+      target.closest(this.className) ??
+      target.closest(this.questionsSelector).querySelector(this.emptySelector)
 
+    this.fullfill()
 
-
-    this.target = null
+    return this
   }
 
-  fullfill(target){
-    let el = this.target = target.closest(this.className)??null
-    let sort = +$(el).find(this.sortSelector).innerText>0?
-      +$(el).find(this.sortSelector).innerText:
-      this.sort
-    this.model.id = 0
-    this.model.answer = null
-    this.model.question_id = null
-    this.model.correct_answer = null
+  fullfill() {
+    let el = this.getEl()
+    debugger
+    this.model.id = this.getId() ?? 0
+    this.model.answer = $(el).find(this.answerSelector).innerText.trim()?? ''
+    this.model.question_id = this.getQuestion_id() ?? null
+    this.model.correct_answer = +$(el).find(this.correct_answerSelector).checked ?? 0
     this.model.pica = null
   }
 
 
   find(id) {
+    debugger
     let el = this.getElById(id)
     this.model.id = id;
-    debugger
     this.model.answer = $(el).find(this.answerSelector).innerText
     this.model.question_id = this.question.dataset.id
     this.model.correct_answer = +$(el).find(this.correct_answerSelector).checked
@@ -56,10 +54,6 @@ export default class Answer extends Model {
     return `.answer[data-id='${this.id}']`
   }
 
-  // get empty() {
-  //   return $(this.emptySelector)[0].cloneNode(true)
-  // }
-
   get sort() {
     return this.question.querySelectorAll(this.className).length + 1 ?? null
   }
@@ -69,19 +63,18 @@ export default class Answer extends Model {
     return null
   }
 
-  getQuestion_id(target) {
-    return target.closest(this.questionSelector).dataset.id
+  getQuestion_id() {
+    return this.target.closest(this.questionSelector).dataset.id
   }
 
-  async create(target) {
-    this.target = target
+  async create() {
+    debugger
     await this.createOnServer()
     this.render()
   }
 
   async createOnServer() {
-    this.model.question_id = this.getQuestion_id(this.target)
-    let res = await super.updateOrCreate(this.model)
+    let res = await super.updateOrCreate()
     this.id = res.arr.id
   }
 
@@ -92,10 +85,13 @@ export default class Answer extends Model {
     this.target.before(empty)
   }
 
-  async update(target) {
-    this.target = target
-    let answer = this.find(this.getId(target))
+  async update() {
+    let answer = this.getEl()
     let res = await super.updateOrCreate(answer.model)
   }
 
+}
+
+export default function answer(target) {
+  return new Answer(target)
 }

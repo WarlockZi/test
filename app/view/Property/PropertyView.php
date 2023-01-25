@@ -6,7 +6,7 @@ use app\model\Property;
 use app\model\Val;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
-use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
+use app\view\components\Builders\ItemBuilder\CheckboxBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\MyView;
@@ -64,7 +64,7 @@ class PropertyView extends MyView
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Значения')
+				CheckboxBuilder::build('Значения')
 					->html(
 						MyList::build(Val::class)
 							->items($item->vals)
@@ -89,7 +89,7 @@ class PropertyView extends MyView
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Принадлежит')
+				CheckboxBuilder::build('Принадлежит')
 					->html(
 						self::getMorphs($item)
 					)

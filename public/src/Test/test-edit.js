@@ -11,8 +11,8 @@ import {_test} from "./model/test";
 import sortable from "../components/sortable"
 import pagination from "../components/pagination/pagination";
 
-import Answer from "./Mode/Answer";
-import Question from "./Mode/Question";
+import answer from "./Mode/Answer";
+import question from "./Mode/Question";
 
 
 export default function testEdit() {
@@ -32,30 +32,28 @@ export default function testEdit() {
 }
 
 function handleClick({target}) {
-  let answer = new Answer()
-  let question = new Question(target)
-// debugger
   if (['test-path__update', 'test__update', 'test__save'].includes(target.classList)) {
     _test.update()
   } else if (target.classList.contains('test__delete')) {
     _test.delete()
-  } else if (target.classList.contains('test-path__create')) {
-    _test.path_create()
   } else if (target.classList.contains('test__create')) {
     _test.create()
-  } else if (!!target.closest('.question__show-answers')) {
-    question.showAnswers()
-  } else if (target.classList.contains('question__create-button')) {
-    // question.updateOrCreate()
-    question.create()
+  } else if (target.classList.contains('test-path__create')) {
+    _test.path_create()
+
   } else if (!!target.closest('.question__delete')) {
-    question.delete()
+    question(target).delete()
+  } else if (target.classList.contains('question__create-button')) {
+    question(target).create()
+  } else if (!!target.closest('.question__show-answers')) {
+    question(target).showAnswers()
+
   } else if (!!target.closest('.delete')) {
-    answer.delete(target)
+    answer(target).delete()
   } else if (target.classList.contains('answer__create-button')) {
-    answer.create(target)
+    answer(target).create()
   } else if (target.classList.contains('correct')) {
-    answer.update(target)
+    answer(target).update()
   }
 }
 
@@ -65,19 +63,17 @@ async function handleKeyup({target}) {
   if (target.classList.contains('text')) {
     let answerEl = target.closest('.answer')
     if (answerEl) {
-      let answer = new Answer()
-      answer.update(target)
+      // debugger
+      answer(target).update()
     } else {
-      let question = new Question(target)
-      question.update()
+      question(target).update()
     }
   }
 }
 
 async function handleChange({target}) {
   if (!!target.closest('.question-edit__parent-select')) {
-    let question = new Question(target)
-    question.changeParent(target)
+   question(target).changeParent()
   }
 }
 

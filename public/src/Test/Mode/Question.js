@@ -1,7 +1,7 @@
-import {$, post} from '../../common'
+import {$} from '../../common'
 import Model from "./Model";
 
-export default class Question extends Model {
+class Question extends Model {
 
   constructor(target = null) {
     super()
@@ -22,15 +22,14 @@ export default class Question extends Model {
     // debugger
     this.fullfill(this.row)
     this.target = target
+    return this
   }
 
-  async changeParent(target) {
-    this.target = target
+  async changeParent() {
     this.model.id = this.getId()
-    let opt = target.options[target.selectedIndex]
+    let opt = this.target.options[this.target.selectedIndex]
     this.model.test_id = opt.dataset['questionParentId']
 
-    // debugger
     let res = await this.updateOrCreate(this.model)
     if (res) {
       this.row.remove()
@@ -70,7 +69,7 @@ export default class Question extends Model {
   }
 
   get sort() {
-    return this.test.querySelectorAll(this.className).length + 1 ?? null
+    return this.test.querySelectorAll(this.className).length ?? null
   }
 
   getTest_id() {
@@ -78,7 +77,7 @@ export default class Question extends Model {
     return null
   }
 
-  async create(target) {
+  async create() {
     debugger
     await this.createOnServer()
     this.render()
@@ -99,6 +98,6 @@ export default class Question extends Model {
   async update() {
     let res = await super.updateOrCreate(this.model)
   }
-
-
 }
+
+export default function question(target) {return new Question(target)}

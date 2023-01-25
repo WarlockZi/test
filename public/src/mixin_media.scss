@@ -18,28 +18,80 @@
   }
 }
 
-@mixin delete($width:35px,$svg-width:15px) {
+@mixin white_svg_button(
+  $width:35px,
+  $height:100%,
+  $svg-width:15px,
+  $color:$color-warning
+) {
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   width: $width;
-  height: 100%;
+  height: $height;
   background-color: white;
 
   svg {
+    fill: $color;
     width: $svg-width;
-    fill: $color-warning;
     pointer-events: none;
+    transition: fill 500ms;
   }
 
   &:hover {
-    background-color: $color-warning;
+    background-color: $color;
 
     svg {
       fill: white;
     }
   }
+
+}
+
+@mixin colored_svg_button(
+  $width:35px,
+  $height:100%,
+  $svg-width:15px,
+  $color:$color-warning
+) {
+
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $width;
+  height: $height;
+  background-color: $color;
+
+  svg {
+    fill: $color-white;
+    width: $svg-width;
+    pointer-events: none;
+    transition: fill 500ms;
+  }
+
+  &:hover {
+    background-color: $color-white;
+
+    svg {
+      fill: $color;
+    }
+  }
+}
+
+@mixin delete(
+  $width,
+  $height,
+  $svg-width,
+  $color
+) {
+  @include colored_svg_button(
+                  $width,
+                  $height,
+                  $svg-width,
+                  $color
+  );
 }
 
 @mixin error {
@@ -235,11 +287,12 @@
   }
 }
 
-@mixin _button(
-  $border-radius:1px,
+@mixin colored_button(
+  $border-radius:0px,
   $color:$color-white,
   $background:$color-main,
-$border-color:$color-main) {
+$border-color:$color-main
+) {
   display: flex;
   padding: 3px;
   justify-content: center;

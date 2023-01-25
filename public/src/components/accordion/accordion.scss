@@ -14,7 +14,7 @@ $font-size-item: .5rem;
     display: flex;
     flex-flow: column;
     background: #4d5158;
-    width: 170px;
+    min-width: 170px;
 
     a {
       padding: $item-padding-M 100% $item-padding-M 29px;

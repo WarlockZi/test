@@ -4,7 +4,6 @@ namespace app\view\widgets\Accordion;
 
 
 use app\view\components\MyTree;
-use http\Env\Request;
 
 class Accordion
 {

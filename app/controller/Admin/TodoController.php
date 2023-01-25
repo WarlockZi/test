@@ -43,12 +43,12 @@ class TodoController Extends AppController
 		$this->set(compact('yearly'));
 	}
 
-	public function actionShow()
-	{
-		$todos=Todo::findAll();
-		$table = $this->getTable($todos);
-		$this->set(compact('table'));
-	}
+//	public function actionShow()
+//	{
+//		$todos=Todo::all();
+//		$table = $this->getTable($todos);
+//		$this->set(compact('table'));
+//	}
 
 
 	public function actionCreate()

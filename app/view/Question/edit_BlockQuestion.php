@@ -5,7 +5,7 @@
 		<div class="sort"><?= $question['sort'] ?? '' ?></div>
 
 		<div class="question-edit__parent-select" data-tooltip="Переместить этот вопрос с ответами в другой тест">
-			<?=$parentSelector;?>
+				<?= $parentSelector; ?>
 		</div>
 
 		<div class="question__show-answers"
@@ -16,8 +16,8 @@
 		</div>
 		<div class="question__delete"
 		     data-tooltip="Удалить Ответ с вопросами"
-		     data-model = 'question'
-		     data-id = <?=$question['id']?>
+		     data-model='question'
+		     data-id= <?= $question['id'] ?>
 		>
 				<? include TRASH; ?>
 		</div>
@@ -26,10 +26,10 @@
 	<div class="row">
 
 		<div class="question__answers">
-				<? if (isset($question['answers'])): ?>
-						<? foreach ($question['answers'] as $i=>$a): ?>
-								<? \app\Repository\AnswerRepository::getAnswer($i, $a);?>
-						<? endforeach; ?>
+				<? if (isset($question->answers)): ?>
+					<? foreach ($question->answers as $i => $a): ?>
+						<? \app\Repository\AnswerRepository::getAnswer($i, $a); ?>
+					<? endforeach; ?>
 				<? endif; ?>
 
 			<div class="answer__create-button"
@@ -40,5 +40,5 @@
 
 
 	</div>
-<!--	<div class='message'></div>-->
+	<!--	<div class='message'></div>-->
 </div>

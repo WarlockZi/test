@@ -185,7 +185,7 @@
       margin: 20px 10px;
 
       $border-radius: 10%;
-      @include _button($border-radius);
+      @include colored_button($border-radius);
       align-self: end;
     }
   }

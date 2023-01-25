@@ -9,7 +9,7 @@ use app\model\Unit;
 use app\view\Builders\MorphBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
-use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
+use app\view\components\Builders\ItemBuilder\CheckboxBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
@@ -90,49 +90,49 @@ class ProductView
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Свойства товара')
+				CheckboxBuilder::build('Свойства товара')
 					->html(
 						self::getProperties($product)
 					)
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Описание')
+				CheckboxBuilder::build('Описание')
 					->html(
 						self::getDescription($product)
 					)
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Seo')
+				CheckboxBuilder::build('Seo')
 					->html(
 						self::getSeo($product)
 					)
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Основная картинка')
+				CheckboxBuilder::build('Основная картинка')
 					->html(
 						self::getMainImage($product)
 					)
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Детальные картинки')
+				CheckboxBuilder::build('Детальные картинки')
 					->html(
 						self::getDetailImages($product)
 					)
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Внутритарная упаковка')
+				CheckboxBuilder::build('Внутритарная упаковка')
 					->html(
 						self::getSmallPackImages($product)
 					)
 					->get()
 			)
 			->tab(
-				ItemTabBuilder::build('Транспортная упаковка')
+				CheckboxBuilder::build('Транспортная упаковка')
 					->html(
 						self::getBigPackImages($product)
 					)
