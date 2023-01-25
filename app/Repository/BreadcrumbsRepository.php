@@ -30,7 +30,7 @@ class BreadcrumbsRepository
 	public static function getProductBreadcrumbs(Product $product,
 																								bool $linkLast = false,
 																								bool $admin = false,
-																								string $class = 'breadcrumbs-1'){
+																								string $class = 'breadcrumbs-4'){
 	  if ($product->category){
 	    return self::getCategoryBreadcrumbs($product->category, $linkLast, $admin, $class);
     }
@@ -43,7 +43,7 @@ class BreadcrumbsRepository
 	public static function getCategoryBreadcrumbs(Category $category,
 																								bool $linkLast = false,
 																								bool $admin = false,
-																								string $class = 'breadcrumbs-1')
+																								string $class = 'breadcrumbs-4')
 	{
 		$str = '';
 		$prefix = self::getPrefix($admin);

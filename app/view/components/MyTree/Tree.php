@@ -6,7 +6,7 @@ namespace app\view\components\MyTree;
 class Tree
 {
 	public $items = [];
-	public $model = '';
+
 	public $parent = '';
 	public $template = '';
 
@@ -24,7 +24,6 @@ class Tree
 
 	public function model(string $model)
 	{
-		$this->model = $model;
 		$this->liTemplate = ROOT . "/app/view/components/MyTree/{$model}/{$model}Li.php";
 		$this->ulTemplate = ROOT . "/app/view/components/MyTree/{$model}/{$model}Ul.php";
 		return $this;
@@ -47,7 +46,7 @@ class Tree
 		$items = self::idKeys($items);
 		$tree = [];
 		foreach ($items as $id => &$node) {
-			if ((isset($node[$parent])&&!(bool)$node[$parent])||$node[$parent]===null) {
+			if ((isset($node[$parent])&&!(bool)$node[$parent])||$node[$parent]==null) {
 			  if (count($node)>1)
 				$tree[$id] = &$node;
 			} elseif (isset($node[$parent]) && $node[$parent]) {
@@ -56,6 +55,10 @@ class Tree
 		}
 		return $tree;
 	}
+
+	public function tree2(){
+
+  }
 
 	public static function idKeys(array $items)
 	{

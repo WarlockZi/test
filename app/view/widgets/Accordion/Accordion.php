@@ -25,7 +25,7 @@ class Accordion
 		if (!$this->link) {
 			$this->link = "/adminsc/{$this->model->model}/update/";
 		}
-		$this->run();
+		$this->run2();
 	}
 
 	public function getOptions($options)
@@ -40,6 +40,12 @@ class Accordion
 	protected function run()
 	{
 		$this->tree = MyTree\Tree::tree($this->models, $this->parentFieldName);
+		$this->html = $this->showCat($this->tree);
+		$this->output();
+	}
+	protected function run2()
+	{
+		$this->tree = MyTree\Tree::tree2($this->models, $this->parentFieldName);
 		$this->html = $this->showCat($this->tree);
 		$this->output();
 	}

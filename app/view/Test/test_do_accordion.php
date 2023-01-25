@@ -1,17 +1,23 @@
-<? use app\view\widgets\Accordion\Accordion;
+<?
+
+use app\view\widgets\Accordion\Accordion;
+use \app\model\Test;
 
 $menu = new Accordion([
 
-	'model' => \app\model\Test::class,
-	'models' => \app\model\Test::where('enable', 1)->get()->toArray(),
-	'class' => 'test-edit',
-	'label_after' => "",
-//	'link' => "/adminsc/test/do/",
-	'link' => "/test/do/",
-	'parentFieldName'=>'parent',
+  'models' =>
+    Test::where('enable', 1)
+      ->where('test_id', 0)
+      ->with('childrenRecursive')
+      ->get()
+      ->toArray(),
+  'class' => 'test-edit',
+  'label_after' => "",
+  'link' => "/test/do/",
+  'parentFieldName' => 'test_id',
 
 ]);
 ?>
 <div class='accordion_wrap'>
-	<?=$menu->html??'';?>
+  <?= $menu->html ?? ''; ?>
 </div>

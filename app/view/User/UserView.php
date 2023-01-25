@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use app\view\components\Builders\Date\DateBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
-use app\view\components\Builders\ItemBuilder\CheckboxBuilder;
+use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
@@ -45,7 +45,7 @@ abstract class UserView extends MyView
 		if (is_string($user['rights'])) {
 			$user['rights'] = explode(',', $user['rights']);
 		}
-		return CheckboxBuilder::build("Права")
+		return ItemTabBuilder::build("Права")
 			->html(self::getRights($user))
 			->field('rights')
 			->get();
