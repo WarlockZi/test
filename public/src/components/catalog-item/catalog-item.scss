@@ -126,7 +126,7 @@
       margin: $margin-form;
     }
 
-    .text[contenteditable] {
+    [contenteditable] {
       background-color: white;
       padding: $padding-form;
       box-sizing: border-box;

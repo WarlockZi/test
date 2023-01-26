@@ -5,34 +5,33 @@ import WDSSelect from "../select/WDSSelect";
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
   if (customCatalogItem) {
-
-    let model = customCatalogItem.dataset.model
-    let id = +customCatalogItem.dataset.id
-
-    $(customCatalogItem).on('click', handleClick)
-
     let selects = $('[custom-select]')
     if (selects) {
       [].map.call(selects, function (select) {
         new WDSSelect(select)
       })
     }
+
+    this.model = customCatalogItem.dataset.model
+    this.id = +customCatalogItem.dataset.id
+    debugger
+    $(customCatalogItem).on('click', handleClick)
+    let self = this
+    let ku = handleKeyup.bind(this)
+    $(customCatalogItem)[0].onkeyup = ku
+    // $(customCatalogItem)[0].onkeyup = handleKeyup.bind(this, model, id)
   }
-  // async function sendToServer(i, file, url) {
-  //   let formData = new FormData()
-  //   formData.append(i, file, file['name'])
-  //   formData.append('imageable_id', productId)
-  //   let res = await fetch(url, {
-  //     method: 'POST',
-  //     body: formData
-  //   })
-  //   let json = await res.json()
-  //   let id = await json.arr.id
-  //   if (json.arr.popup) {
-  //     popup.show(json.arr.popup)
-  //   }
-  //   return id
+
+  // async function handleKeyup(model, id, {target}) {
+  //   let field = target.dataset.field
+  //   let data = {id, model, [field]: target.innerText}
+  //   alert(date)
   // }
+  async function handleKeyup(e,cont) {
+    let field = target.dataset.field
+    let data = {id, model, [field]: target.innerText}
+    alert(date)
+  }
 
   async function handleClick({target}) {
     let itemId = +customCatalogItem.dataset.id
@@ -121,10 +120,10 @@ export default function catalogItem() {
           })
           obj[field.dataset.field] = ids.toString()
         } else if (field.dataset.type === 'inputs') {
-      debugger
+          debugger
           obj[field.dataset.field] = getInputs(field)
         } else if (field.type === 'date') {
-          obj[field.dataset.field] = field.value?field.value:'1970-01-02'
+          obj[field.dataset.field] = field.value ? field.value : '1970-01-02'
         } else {
           obj[field.dataset.field] = trimStr(field.innerText)
         }
@@ -149,4 +148,20 @@ export default function catalogItem() {
     return names.join()
 
   }
+
+  // async function sendToServer(i, file, url) {
+  //   let formData = new FormData()
+  //   formData.append(i, file, file['name'])
+  //   formData.append('imageable_id', productId)
+  //   let res = await fetch(url, {
+  //     method: 'POST',
+  //     body: formData
+  //   })
+  //   let json = await res.json()
+  //   let id = await json.arr.id
+  //   if (json.arr.popup) {
+  //     popup.show(json.arr.popup)
+  //   }
+  //   return id
+  // }
 }
