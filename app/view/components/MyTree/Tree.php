@@ -56,7 +56,7 @@ class Tree
 		return $tree;
 	}
 
-	public function tree2(){
+	public static function tree2(){
 
   }
 

@@ -1,3 +1,8 @@
+<?
+
+use \app\view\Accordion\AccordionView;
+
+?>
 <div class="adm-content">
 
 
@@ -8,7 +13,8 @@
 		<div class="test-edit__cont">
 
 			<div class='accordion_wrap'>
-					 <? include ROOT . '/app/view/Test/edit_accordion.php' ?>
+					 <?= AccordionView::testEdit() ?>
+				<!--					 --><? // include ROOT . '/app/view/Test/edit_accordion.php' ?>
 
 					 <? include ROOT . '/app/view/Test/edit_add-test-button.php' ?>
 			</div>

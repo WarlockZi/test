@@ -1,9 +1,11 @@
-<? use app\view\widgets\Accordion\Accordion;
+<?
+use app\view\widgets\Accordion\Accordion;
+use \app\model\Test;
 
 $menu = new Accordion([
-	'model' => \app\model\Test::class,
-	'models' => \app\model\Test::all()->toArray(),
-	'parentFieldName' => 'parent',
+	'model' => Test::class,
+	'models' => Test::all()->toArray(),
+	'parentFieldName' => 'test_id',
 	'class' => 'test-edit',
 	'label_after' => ICONS . "/edit.svg",
 	'link' => '/adminsc/question/edit/',
