@@ -17,7 +17,7 @@ class TestView
 	{
 		$test = Test::find($id);
 
-		$parents = $test->parents;
+//		$parents = $test->parents;
 		$isTest = $test->isTest ? 'теста' : 'папки';
 		return ItemBuilder::build($test, 'test')
 			->pageTitle("Редактирование {$isTest} - {$test['name']}")
@@ -71,7 +71,7 @@ class TestView
 		$treeRelaion = 'children';
 
 		$tree = Test::where('isTest', '0')
-			->where('parent',0)
+			->where('test_id',0)
 			->with(
 				[$treeRelaion => function ($q) {
 					$q->where('isTest', '0');}				]
@@ -79,9 +79,9 @@ class TestView
 
 		return SelectBuilder::build()
 			->tree($tree, $treeRelaion,null, 4)
-			->field('parent')
+			->field('test_id')
 			->initialOption('', 0)
-			->selected($item->parent)
+			->selected($item->test_id)
 			->excluded($item->id)
 			->get();
 
@@ -94,8 +94,8 @@ class TestView
 				->get()->toArray();
 		$parent_select = '<select>';
 		foreach ($tests as $t) {
-			$selectedStr = (int)$t['id'] === $selected ? 'selected' : '';
-			$parent_select .= "<option data-question-parent-id={$t['id']} {$selectedStr}>{$t['name']}</option>";
+			$selected = $t['id'] == $selected ? 'selected' : '';
+			$parent_select .= "<option data-question-parent-id={$t['id']} {$selected}>{$t['name']}</option>";
 		}
 		$parent_select .= "</select>";
 

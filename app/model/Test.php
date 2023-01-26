@@ -28,7 +28,7 @@ class Test extends Model
 
 	public function children()
 	{
-		return $this->hasMany(Test::class, 'test_id');
+		return $this->hasMany(Test::class, 'test_id')->with('children');
 	}
 
 	public function childrenRecursive(){

@@ -38,8 +38,9 @@ class TreeBuilder
 
 	protected function getOption($item, $level)
 	{
+		$selected = $item->id== $this->selected?'selected':'';
 		$tab = str_repeat($this->tab, $level * $this->tabMultiply);
-		return "<option data-level={$level}>{$tab}{$item->name}</option>>";
+		return "<option data-level={$level} {$selected}>{$tab}{$item->name}</option>>";
 	}
 
 	protected function recursion($collection, $level, $string)
