@@ -47,7 +47,7 @@ abstract class UserView extends MyView
 		}
 		return ItemTabBuilder::build("Права")
 			->html(self::getRights($user))
-			->field('rights')
+//			->field('rights')
 			->get();
 	}
 

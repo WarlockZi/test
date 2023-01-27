@@ -1,9 +1,9 @@
 <? ob_start(); ?>
 
-	<div class='content user-rights'
+	<div checkboxes
+	     class='content'
 	     data-field='rights'
-	     data-model="user"
-	     data-type="inputs">
+	>
 		 <? foreach ($configRights as $right => $description): ?>
 		  <div class="row">
 			  <label class="name"
