@@ -22,6 +22,7 @@ class User extends Model
 		'hired',
 		'fired',
 		'sex',
+		'phone'
 	];
 
 	public function rights()

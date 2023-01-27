@@ -1,70 +1,74 @@
 import './catalog-item.scss';
-import {$, popup, post, trimStr} from '../../common';
+import {$, debounce, popup, post, trimStr} from '../../common';
 import WDSSelect from "../select/WDSSelect";
+import checkboxes from "../checkboxes/checkboxes";
 
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
   if (customCatalogItem) {
+    checkboxes.init('[checkboxes]','[data-id]','[data-value]')
+
+
     let selects = $('[custom-select]')
     if (selects) {
       [].map.call(selects, function (select) {
         new WDSSelect(select)
       })
     }
-
-    this.model = customCatalogItem.dataset.model
-    this.id = +customCatalogItem.dataset.id
-    debugger
-    $(customCatalogItem).on('click', handleClick)
-    let self = this
-    let ku = handleKeyup.bind(this)
-    $(customCatalogItem)[0].onkeyup = ku
-    // $(customCatalogItem)[0].onkeyup = handleKeyup.bind(this, model, id)
+    let context = {
+      model: customCatalogItem.dataset.model,
+      id: +customCatalogItem.dataset.id
+    }
+    customCatalogItem.onclick = handleClick.bind(context)
+    customCatalogItem.onkeyup = debounce(handleKeyup.bind(context))
   }
 
-  // async function handleKeyup(model, id, {target}) {
-  //   let field = target.dataset.field
-  //   let data = {id, model, [field]: target.innerText}
-  //   alert(date)
-  // }
-  async function handleKeyup(e,cont) {
+  async function handleKeyup({target}) {
+    if (
+      !target.hasAttribute('contenteditable') ||
+      !target.dataset.field
+    ) return
+
     let field = target.dataset.field
-    let data = {id, model, [field]: target.innerText}
-    alert(date)
+    let data = {
+      id: this.id,
+      [field]: target.innerText
+    }
+    await post(`/adminsc/${this.model}/updateOrCreate`, data)
   }
+
 
   async function handleClick({target}) {
-    let itemId = +customCatalogItem.dataset.id
-    let modelName = customCatalogItem.dataset.model
+    this.target = target
     if (target.closest('.save')) {
-      save(modelName)
+      // save.bind(this)
     } else if (target.closest('.del')
       && target.closest('.del').dataset.model) {
-      del(itemId, target.closest('.del').dataset.model)
+      del(this.id, this.model)
     } else if ((target.classList.contains('tab'))) {
-      handleTab(target, modelName)
-    } else if ((target.classList.contains('checkbox'))) {
-      handleCheckbox(target, modelName, itemId)
+      handleTab(target, this.model)
+    } else if ((target.getAttribute('type')==='checkbox')) {
+      // debugger
+      handleCheckbox.apply(this)
     }
   }
 
-  async function handleCheckbox(target, modelName, id) {
-    target.classList.toggle('checked')
-
-    let field = target.dataset.field
+  async function handleCheckbox() {
+debugger
+    this.target.classList.toggle('checked')
+    let field = this.target.dataset.field
     let value = +target.classList.contains('checked')
-    let data = {[field]: value, id}
+    let data = {id:this.id,[field]: value}
     let res = await post(`/adminsc/${modelName}/updateOrCreate`, data)
 
   }
 
   async function handleTab(target) {
     let visibleSection = $(`[data-tab].show`)[0]
-    visibleSection.classList.toggle('show')
     let section = $(`[data-tab='${target.dataset.tabId}']`)[0]
-    section.classList.toggle('show')
-
     let activeTab = $(`.tab.active`)[0]
+    visibleSection.classList.toggle('show')
+    section.classList.toggle('show')
     activeTab.classList.toggle('active')
     target.classList.toggle('active')
   }
@@ -76,34 +80,34 @@ export default function catalogItem() {
     }
   }
 
-  async function save(modelName) {
-    if (checkRequired()) return false
-    let model = getModel(modelName)
-    let res = await post(`/adminsc/${modelName}/updateorcreate`, model)
-  }
+  // async function save() {
+  //   if (checkRequired()) return false
+  //   let model = getModel(modelName)
+  //   let res = await post(`/adminsc/${this.model}/updateorcreate`, model)
+  // }
 
-  function checkRequired() {
-    let required = $('[required]');
-    let errCount = 0;
-    [].forEach.call(required, function (el) {
-      if (!el.innerText) {
-        el.style.borderColor = 'red'
-        if ($(el).find('.error')) return
-        let error = document.createElement('div')
-        error.innerText = 'Заполните поле'
-        error.classList.add('error')
-        el.closest('.value').appendChild(error)
-        errCount++
-      }
-    })
-    return errCount
-  }
+  // function checkRequired() {
+  //   let required = $('[required]');
+  //   let errCount = 0;
+  //   [].forEach.call(required, function (el) {
+  //     if (!el.innerText) {
+  //       el.style.borderColor = 'red'
+  //       if ($(el).find('.error')) return
+  //       let error = document.createElement('div')
+  //       error.innerText = 'Заполните поле'
+  //       error.classList.add('error')
+  //       el.closest('.value').appendChild(error)
+  //       errCount++
+  //     }
+  //   })
+  //   return errCount
+  // }
 
   function getModel(modelName) {
     let fields = $(`[data-field][data-model='${modelName}']`);
     let obj = {};
 
-    debugger;
+    // debugger;
     [].map.call(fields, (field) => {
         if (field.closest('[data-parent]')) return obj
         if (
@@ -120,7 +124,7 @@ export default function catalogItem() {
           })
           obj[field.dataset.field] = ids.toString()
         } else if (field.dataset.type === 'inputs') {
-          debugger
+          // debugger
           obj[field.dataset.field] = getInputs(field)
         } else if (field.type === 'date') {
           obj[field.dataset.field] = field.value ? field.value : '1970-01-02'
