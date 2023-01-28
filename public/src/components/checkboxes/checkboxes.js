@@ -1,17 +1,21 @@
+import {$} from '../../common'
 class Checkboxes {
-  constructor() {
-    debugger
+  constructor(container, field, value) {
+
+    this.container = $(container).first()
+    this.field = this.container.dataset.field
+    this.value = this.container.dataset.value
     // this.init()
     return this
   }
 
-  init(container, field, value) {
-    this.container = container
-    this.field = field
-    this.value = value
+  onChange(callback) {
+    debugger
+    callback().bind(this)
+
   }
 }
 
-export default function checkboxes() {
-  return new Checkboxes()
+export default function checkboxes(container, field, value) {
+  return new Checkboxes(container, field, value)
 }

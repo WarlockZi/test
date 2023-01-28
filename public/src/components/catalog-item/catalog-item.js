@@ -6,9 +6,6 @@ import checkboxes from "../checkboxes/checkboxes";
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
   if (customCatalogItem) {
-    checkboxes.init('[checkboxes]','[data-id]','[data-value]')
-
-
     let selects = $('[custom-select]')
     if (selects) {
       [].map.call(selects, function (select) {
@@ -19,6 +16,8 @@ export default function catalogItem() {
       model: customCatalogItem.dataset.model,
       id: +customCatalogItem.dataset.id
     }
+    checkboxes('[checkboxes]','[data-id]','[data-value]')
+      .onChange(update.bind(context))
     customCatalogItem.onclick = handleClick.bind(context)
     customCatalogItem.onkeyup = debounce(handleKeyup.bind(context))
   }
@@ -80,11 +79,9 @@ debugger
     }
   }
 
-  // async function save() {
-  //   if (checkRequired()) return false
-  //   let model = getModel(modelName)
-  //   let res = await post(`/adminsc/${this.model}/updateorcreate`, model)
-  // }
+  async function update() {
+    let res = await post(`/adminsc/${this.model}/updateorcreate`, this.data)
+  }
 
   // function checkRequired() {
   //   let required = $('[required]');
