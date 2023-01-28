@@ -68,7 +68,7 @@ class Header
 
 	}
 
-	public static function getAdninHeader(Controller $controller)
+	public static function setAdninHeader(Controller $controller)
 	{
 		$adminMenu = self::getAdminMenu($controller);
 		$adminHeader = self::getTopAdmin($controller);

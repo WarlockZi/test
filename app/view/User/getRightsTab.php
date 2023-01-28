@@ -11,7 +11,7 @@
 			  <input id="right<?= $right; ?>"
 			         class="right"
 			         data-id='<?= $right; ?>'
-			         type="checkbox" <?= in_array($right, $user['rights']) ? 'checked' : '' ?>>
+			         type="checkbox" <?= in_array($right, $user->rights) ? 'checked' : '' ?>>
 			  <label class="description"
 			         for="right<?= $right; ?>"
 			  ><?= $description; ?></label>
@@ -25,7 +25,7 @@
 			  <input id="right<?= $right['id'] ?>"
 			         class="right"
 			         data-id='<?= $right['id'] ?>'
-			         type="checkbox" <?= in_array($right['name'], $user['rights']) ? 'checked' : '' ?>>
+			         type="checkbox" <?= in_array($right['name'], $user->rights) ? 'checked' : '' ?>>
 			  <label class="description"
 			         for="right<?= $right['id'] ?>"
 			  ><?= $right['description']; ?></label>

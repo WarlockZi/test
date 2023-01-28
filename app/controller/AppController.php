@@ -22,7 +22,7 @@ class AppController extends Controller
     if (isset($route['admin'])) {
       $this->setAdminAssets();
       Auth::autorize($this);
-      Header::getAdninHeader($this);
+      Header::setAdninHeader($this);
     } else {
       $this->setMainAssets();
       Header::getVitexHeader($this);

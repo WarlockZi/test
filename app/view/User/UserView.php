@@ -40,20 +40,18 @@ abstract class UserView extends MyView
 		return UserView::noElement();
 	}
 
-	public static function getAdminTab($user)
+	public static function getAdminTab(Model $user)
 	{
-		if (is_string($user['rights'])) {
-			$user['rights'] = explode(',', $user['rights']);
+		if (is_string($user->rights)) {
+			$user->rights = explode(',', $user->rights);
 		}
 		return ItemTabBuilder::build("Права")
 			->html(self::getRights($user))
-//			->field('rights')
 			->get();
 	}
 
 	public static function guest($item)
 	{
-		$userArr = $item->toArray();
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item->fi())
 			->save()
@@ -94,7 +92,7 @@ abstract class UserView extends MyView
 				ItemFieldBuilder::build('birthDate', $item)
 					->name('Дата рождения')
 					->html(
-						self::getBirhtdate($userArr)
+						self::getBirhtdate($item)
 					)
 					->get()
 			)
@@ -102,7 +100,7 @@ abstract class UserView extends MyView
 				ItemFieldBuilder::build('sex', $item)
 					->name('Пол')
 					->html(
-						self::getSex($userArr)
+						self::getSex($item)
 					)
 					->get()
 			)
@@ -111,8 +109,6 @@ abstract class UserView extends MyView
 
 	public static function employee($item)
 	{
-		$userArr = $item->toArray();
-		$userArr['rights'] = explode(',', $userArr['rights']);
 
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
@@ -164,22 +160,22 @@ abstract class UserView extends MyView
 				ItemFieldBuilder::build('sex', $item)
 					->name('Пол')
 					->html(
-						self::getSex($userArr)
+						self::getSex($item)
 					)
 					->get()
 			)
 			->get();
 	}
 
-	public static function admin($item)
+	public static function admin(Model $item)
 	{
-		$userArr = $item->toArray();
+
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
 			->toList()
 			->save()
 			->del()
-			->tab(UserView::getAdminTab($userArr))
+			->tab(UserView::getAdminTab($item))
 			->field(
 				ItemFieldBuilder::build('id', $item)
 					->name('ID')
@@ -225,7 +221,7 @@ abstract class UserView extends MyView
 				ItemFieldBuilder::build('sex', $item)
 					->name('Пол')
 					->html(
-						self::getSex($userArr)
+						self::getSex($item)
 					)
 					->get()
 			)
@@ -281,7 +277,7 @@ abstract class UserView extends MyView
 	}
 
 
-	public static function getRights($user)
+	public static function getRights(Model $user)
 	{
 		$configRights = Config::getConfigRights();
 		$rights = Right::all()->toArray();
@@ -289,21 +285,19 @@ abstract class UserView extends MyView
 	}
 
 
-	public static function getSex(array $item)
+	public static function getSex(Model $item)
 	{
 		return SelectBuilder::build()
-//			->model('user')
 			->field('sex')
 			->nameOptionByField('name')
 			->array(['m' => 'М', 'f' => 'Ж'])
-			->selected($item['sex'])
+			->selected($item->sex)
 			->get();
 	}
 
-	public static function getBirhtdate($user)
+	public static function getBirhtdate(Model $user)
 	{
-		return DateBuilder::build($user['birthDate'])
-//			->model('user')
+		return DateBuilder::build($user->birthDate)
 			->field('birthDate')
 			->get();
 	}
@@ -311,7 +305,6 @@ abstract class UserView extends MyView
 	public static function getHiredHtml($user)
 	{
 		return DateBuilder::build($user['hired'])
-//			->model('user')
 			->field('hired')
 			->min('1965-01-01')
 			->max('2025-01-01')
@@ -321,7 +314,6 @@ abstract class UserView extends MyView
 	public static function getFiredHtml($user)
 	{
 		return DateBuilder::build($user['fired'])
-//			->model('user')
 			->field('fired')
 			->min('1965-01-01')
 			->max('2025-01-01')
@@ -332,7 +324,6 @@ abstract class UserView extends MyView
 	public static function getConfirmHtml($item)
 	{
 		return SelectBuilder::build()
-//			->model('user')
 			->field('confirm')
 			->nameOptionByField('name')
 			->array([1 => 'да', 0 => 'нет'])
