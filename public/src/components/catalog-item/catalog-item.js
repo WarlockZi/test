@@ -16,8 +16,9 @@ export default function catalogItem() {
       model: customCatalogItem.dataset.model,
       id: +customCatalogItem.dataset.id
     }
-    checkboxes('[checkboxes]','[data-id]','[data-value]')
-      .onChange(update.bind(context))
+    checkboxes('[checkboxes]')
+      .setContext(context)
+      .onChange(update)
     customCatalogItem.onclick = handleClick.bind(context)
     customCatalogItem.onkeyup = debounce(handleKeyup.bind(context))
   }
@@ -48,19 +49,18 @@ export default function catalogItem() {
       handleTab(target, this.model)
     } else if ((target.getAttribute('type')==='checkbox')) {
       // debugger
-      handleCheckbox.apply(this)
+      // handleCheckbox.apply(this)
     }
   }
 
-  async function handleCheckbox() {
-debugger
-    this.target.classList.toggle('checked')
-    let field = this.target.dataset.field
-    let value = +target.classList.contains('checked')
-    let data = {id:this.id,[field]: value}
-    let res = await post(`/adminsc/${modelName}/updateOrCreate`, data)
-
-  }
+//   async function handleCheckbox() {
+// debugger
+//     this.target.classList.toggle('checked')
+//     let field = this.target.dataset.field
+//     let value = +target.classList.contains('checked')
+//     let data = {id:this.id,[field]: value}
+//     let res = await post(`/adminsc/${modelName}/updateOrCreate`, data)
+//   }
 
   async function handleTab(target) {
     let visibleSection = $(`[data-tab].show`)[0]
@@ -80,6 +80,7 @@ debugger
   }
 
   async function update() {
+    debugger
     let res = await post(`/adminsc/${this.model}/updateorcreate`, this.data)
   }
 

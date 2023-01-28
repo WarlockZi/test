@@ -1,5 +1,5 @@
 <section class="profile__wrapper">
 
-<?=$item;?>
+	<?= $item; ?>
 
 </section>

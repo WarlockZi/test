@@ -4,6 +4,7 @@
 namespace app\core;
 
 use app\controller\AppController;
+use app\controller\Controller;
 use app\model\User;
 
 class Auth extends AppController
@@ -26,7 +27,7 @@ class Auth extends AppController
 		return isset($_SESSION['id']) && $_SESSION['id'];
 	}
 
-	public static function autorize($Controller): void
+	public static function autorize(Controller $controller): void
 	{
 
 		if (!self::sessionHasUserId()) {
@@ -41,18 +42,18 @@ class Auth extends AppController
 			$errors[] = 'Неправильные данные для входа на сайт';
 			header("Location:/user/login");
 			exit();
-
-		} elseif (!$user['confirm'] == "1") {
+		}
+		if (!$user['confirm'] == "1") {
 			$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
 			header("Location:/auth/noconfirm");
 			exit();
-
-		} else {
-			if ($user['email'] === $_ENV['SU_EMAIL']) {
-				define('SU', true);
-			}
-			$Controller->user = $user;
 		}
+
+		if ($user['email'] === $_ENV['SU_EMAIL']) {
+			define('SU', true);
+		}
+		$controller->user = $user;
+
 	}
 
 }

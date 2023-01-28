@@ -57,12 +57,11 @@ class AuthController extends AppController
 		$this->view = 'profile1';
 
 		$user = User::find($_SESSION['id']);
-		$userArr = User::find($_SESSION['id'])->toArray();
 
-		if (User::can($userArr, ['role_employee'])) {
-			Header::getAdninHeader($this);
+		if (User::can($this->user, ['role_employee'])) {
+			Header::setAdninHeader($this);
 			$this->layout = 'admin';
-			if (User::can($userArr, ['role_admin'])) {
+			if (User::can($this->user, ['role_admin'])) {
 				$item = UserView::admin($user);
 			} else {
 				$item = UserView::employee($user);
@@ -74,8 +73,8 @@ class AuthController extends AppController
 			View::setJs('admin.js');
 			View::setCss('admin.css');
 		} else {
-			$item = UserView::guest($user);;
 			$this->layout = 'vitex';
+			$item = UserView::guest($user);;
 		}
 
 		$this->set(compact('item'));
