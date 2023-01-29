@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Header
 {
+	protected $menu;
 
 	public static function getMenu(Controller $controller, Collection $frontCategories)
 	{
@@ -39,8 +40,6 @@ class Header
 			'header',
 			));
 	}
-
-
 	public static function getTopAdmin(Controller $controller)
 	{
 		ob_start();
@@ -48,7 +47,7 @@ class Header
 		return ob_get_clean();
 	}
 
-	public static function getAdminMenu(Controller $controller)
+	public static function getAdminSidebar(Controller $controller)
 	{
 //		$cache = Cache::get('admin_sidebar');
 //		if ($cache){
@@ -60,27 +59,16 @@ class Header
 //			Cache::set('admin_sidebar',$res);
 //			return $res;
 //		}
-
 			ob_start();
 			include ROOT . '/app/view/Header/admin/admin_menu__accordion.php';
 			$res = ob_get_clean();
 			return $res;
-
 	}
 
 	public static function setAdninHeader(Controller $controller)
 	{
-		$adminMenu = self::getAdminMenu($controller);
+		$adminSidebar = self::getAdminSidebar($controller);
 		$adminHeader = self::getTopAdmin($controller);
-		$controller->set(compact('adminHeader','adminMenu'));
+		$controller->set(compact('adminHeader','adminSidebar'));
 	}
-
-
-
-//	public static function getUserMenu(Controller $controller)
-//	{
-//		ob_start();
-//		include ROOT . '/app/view/components/admin_menu/admin_menu__accordion.php';
-//		return ob_get_clean();
-//	}
 }

@@ -9,7 +9,6 @@
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
 
 
-
 	<!--	<link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">-->
 	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 	<!-- Include the Quill library -->
@@ -22,12 +21,9 @@
 
 <body>
 
-
 <div class="admin-layout__container">
 
-
-	<?= $adminMenu; ?>
-
+	<?= $adminSidebar; ?>
 	<?= $adminHeader; ?>
 
 	<div class="admin-layout__content">
@@ -39,9 +35,7 @@
 	<div class="led"></div>
 </div>
 
-
 <? $this::getJS() ?>
-
 
 </body>
 </html>

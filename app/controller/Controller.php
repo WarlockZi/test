@@ -31,8 +31,8 @@ abstract class Controller
 
 	public function getView()
 	{
-		$vObj = new View($this->route, $this->layout, $this->view, $this->user);
-		$vObj->render($this->vars);
+		$view = new View($this->route, $this->layout, $this->view, $this->user);
+		$view->render($this->vars);
 	}
 
 	protected function getFiles($absolutePath)

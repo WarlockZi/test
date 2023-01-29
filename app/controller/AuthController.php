@@ -54,7 +54,7 @@ class AuthController extends AppController
 	public function actionProfile()
 	{
 		Auth::autorize($this);
-		$this->view = 'profile1';
+		$this->view = 'profile';
 
 		$user = User::find($_SESSION['id']);
 
