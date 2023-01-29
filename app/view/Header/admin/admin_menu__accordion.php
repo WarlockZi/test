@@ -1,7 +1,6 @@
 <? use \app\model\User;
 use \app\core\Icon;
 
-$user = $controller->user;
 ?>
 <div class="admin_sidebar">
 
@@ -79,7 +78,7 @@ $user = $controller->user;
 
 			  <ul class="level-1">
 				  <a class="neon" href='/adminsc/videoinstruction'>Инструкции</a>
-						 <? if (User::can($controller->user, ['role_admin'])): ?>
+						 <? if (User::can($user, ['role_admin'])): ?>
 					 <a class="neon" href='/adminsc/videoinstruction/edit'>Редактировать инструкции</a>
 						 <? endif; ?>
 			  </ul>

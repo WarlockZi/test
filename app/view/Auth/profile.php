@@ -1,5 +1,8 @@
-<section class="profile__wrapper">
+<div class="adm-content">
 
-	<?= $item; ?>
+	<main class="profile">
+		<div class='message'></div>
+		 <?= $item; ?>
+	</main>
 
-</section>
+</div>
