@@ -1,3 +1,7 @@
+<?
+use app\view\Footer\Footer;
+use \app\view\Header\Header;
+?>
 <!DOCTYPE html>
 <html>
 <!--ADMIN-LAYOUT-->
@@ -14,17 +18,16 @@
 	<!-- Include the Quill library -->
 	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
-	<!--    <link rel="stylesheet" href="http:localhost:3000/public/dist/admin.css" type="text/css">-->
 	<? $this::getCSS() ?>
-	<!--<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>-->
 </head>
 
 <body>
 
 <div class="admin-layout__container">
 
-	<?= $adminSidebar; ?>
-	<?= $adminHeader; ?>
+<!--	--><?//= $adminSidebar; ?>
+<!--	--><?//= $adminHeader; ?>
+	<?=Header::getAdminHeader();?>
 
 	<div class="admin-layout__content">
 
@@ -34,6 +37,8 @@
 
 	<div class="led"></div>
 </div>
+
+<?=Footer::getAdminFooter()?>
 
 <? $this::getJS() ?>
 

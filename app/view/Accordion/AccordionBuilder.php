@@ -4,6 +4,7 @@
 namespace app\view\Accordion;
 
 
+use app\core\Icon;
 use Illuminate\Database\Eloquent\Collection;
 
 class AccordionBuilder
@@ -11,12 +12,17 @@ class AccordionBuilder
 	protected $items;
 	protected $modelName;
 	protected $modelShortName;
+	protected $link;
 	protected $parentName;
 
-	protected $ulBefore;
-	protected $ulAfter;
-	protected $liBefore;
-	protected $liAfter;
+	protected $relation;
+	protected $class;
+
+	protected $liBefore='';
+	protected $liAfter='';
+
+	protected $ulBefore='';
+	protected $ulAfter='';
 
 	public static function build(
 		Collection $items,
@@ -24,63 +30,94 @@ class AccordionBuilder
 	)
 	{
 		$accordion = new self;
-		$accordion->items = $items;
+		$accordion->items = $items->toArray();
 
 		$reflect = new \ReflectionClass($items);
-		$accordion->modelShortName = lcfirst($reflect->getShortName());
 		$accordion->modelName = get_class($items);
+		$accordion->modelShortName = lcfirst($reflect->getShortName());
 
 		$accordion->link = $link;
 
 		return $accordion;
 	}
 
-
-	public function parentName(string $parentName)
+	public function relation(string $name)
 	{
-		$this->parentName = $parentName;
+		$this->relation = $name;
 		return $this;
 	}
 
-	public function ulBefore(string $ulBefore)
+	public function class(string $name)
 	{
-		$this->ulBefore = $ulBefore;
+		$this->class = $name;
 		return $this;
 	}
 
-	public function ulAfter(string $ulAfter)
+	protected function setLi($name, $icon, $link)
 	{
-		$this->ulAfter = $ulAfter;
-		return $this;
+		$icon = Icon::$icon() ? Icon::$icon() : $icon;
+		if ($link) {
+			$this->$name = "<a href='{$link}'>{$icon}</a>";
+		} else {
+			$this->$name = "<div class='before'>{$icon}</div>";
+		}
 	}
-	public function liBefore(string $liBefore)
+
+	public function liAfter(string $icon, string $link = '')
 	{
-		$this->liBefore = $liBefore;
+		$this->setLi('liAfter', $icon, $link);
 		return $this;
 	}
 
-	public function liAfter(string $liAfter)
+	public function liBefore(string $icon, string $link = '')
 	{
-		$this->liAfter = $liAfter;
+		$this->setLi('liBefore', $icon, $link);
 		return $this;
+	}
+
+	public function ulAfter(string $icon, string $link = '')
+	{
+		$this->setLi('ulAfter', $icon, $link);
+		return $this;
+	}
+
+	public function ulBefore(string $icon, string $link = '')
+	{
+		$this->setLi('ulBefore', $icon, $link);
+		return $this;
+	}
+
+
+	protected function getUl($ul)
+	{
+		$lis = '';
+		foreach ($ul as $li) {
+			$lis .= $this->getLi($li);
+		}
+		return "<ul>{$lis}</ul>";
+	}
+
+	protected function getLi($ul)
+	{
+		$uls = '';
+		$before = $this->liBefore;
+		$after = $this->liAfter;
+		if (count($ul[$this->relation])) {
+			$before = $this->ulBefore;
+			$after = $this->ulAfter;
+			$uls .= $this->getUl($ul[$this->relation]);
+		}
+		return "<li><label><span>{$before}<tag>{$ul['name']}</tag></span>{$after}</label>{$uls}</li>";
 	}
 
 	public function get()
 	{
 		$res = '';
 		foreach ($this->items as $item) {
-			if ($item->$rel) {
-				$res .= $this->getUl($item, $rel);
-			} else {
-				$li = '';
-			}
+			$res .= $this->getLi($item);
 		}
-		return 'accordion';
+		return "<ul accordion class='{$this->class}'>$res</ul>";
 	}
 
-	protected function getUl($item, $rel)
-	{
-		return "<ul>{$this->ulBefore}dddd{$this->ulAfter}</ul>";
-	}
 
 }

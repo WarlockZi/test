@@ -41,6 +41,7 @@ $(document).ready(function () {
   tooltips()
   // tiny()
   quill()
+  // debugger
   accordionShow()
 
   testEdit()

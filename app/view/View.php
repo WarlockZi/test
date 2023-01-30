@@ -115,6 +115,17 @@ class View
 		self::$jsCss['js'][] = $str;
 	}
 
+	public static function setCDNJs(string $src):void
+	{
+		$str = "<script src='{$src}'></script>";
+		self::$jsCss['js'][] = $str;
+	}
+
+	public static function setCDNCss(string $src):void
+	{
+		self::$jsCss['css'][] = "<link href='{$src}' rel='stylesheet' type='text/css'>";
+	}
+
 	public static function setCss($file)
 	{
 		$cache = true;

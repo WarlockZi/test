@@ -1,10 +1,9 @@
 <?
 
 use \app\model\User;
-use \app\controller\AuthController;
 use \app\core\Icon;
 
-$user = AuthController::user(); ?>
+$user = $controller->user; ?>
 <? if (!$user): ?>
 
 	<div class="guest-menu" aria-label="login">
