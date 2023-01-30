@@ -29,7 +29,6 @@ class Auth extends AppController
 
 	public static function autorize(Controller $controller): void
 	{
-
 		if (!self::sessionHasUserId()) {
 			header("Location:/auth/login");
 			exit();

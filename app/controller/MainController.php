@@ -12,7 +12,7 @@ class MainController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
-		Auth::autorize($this);
+//		Auth::autorize($this);
 //		$sale = Product::where('sale', '=', 1)->get();
 //		$this->set(compact('sale'));
 	}

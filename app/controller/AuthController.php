@@ -53,7 +53,7 @@ class AuthController extends AppController
 
 	public function actionProfile()
 	{
-		Auth::autorize($this);
+
 		$this->view = 'profile';
 
 		$user = User::find($_SESSION['id']);
@@ -82,7 +82,7 @@ class AuthController extends AppController
 
 	public function actionChangePassword()
 	{
-		Auth::autorize($this);
+//		Auth::autorize($this);
 		if ($data = $this->ajax) {
 			if (!$data['old_password'] || !$data['new_password'])
 				$this->exitWithError('Заполните старый и новый пароль');
@@ -147,8 +147,7 @@ class AuthController extends AppController
 			if (!User::checkEmail($data['email'])) $this->exitWithError("Неверный формат email");
 			if (!User::checkPassword($data['password'])) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
 
-			$user = User::where('email', $data['email'])->get()[0]
-				->toArray();
+			$user = User::where('email', $data['email'])->first()->toArray();
 
 			if (!$user) $this->exitWithError('Пользователь не зарегистрирован');
 			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
@@ -221,23 +220,23 @@ class AuthController extends AppController
 
 	public function actionSuccess()
 	{
-		Auth::autorize($this);
+//		Auth::autorize($this);
 	}
 
 	public static function user()
 	{
-		if (isset($_SESSION['id']) && $_SESSION['id']) {
-			$user = User::where('id',$_SESSION['id'])->first();
-			if (!$user) {
-				return false;
-			}
-			return $user->toArray();
-		}
+		if (isset($_SESSION['id']) && $_SESSION['id']) return false;
+
+		$user = User::where('id', $_SESSION['id'])->first();
+		if (!$user) return false;
+
+		return $user->toArray();
+
 	}
 
 	public function actionCabinet()
 	{
-		Auth::autorize($this);
+//		Auth::autorize($this);
 	}
 
 	public function actionNoconfirm()
@@ -249,6 +248,7 @@ class AuthController extends AppController
 	{
 		$view = 'unautherized';
 	}
+
 	public function preparePassword(string $password): string
 	{
 		$salt = "popiyonovacheesa";

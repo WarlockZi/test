@@ -1,9 +1,12 @@
+<?
+use \app\model\User;
+?>
 <div class="admin-layout_header">
 	<a href='/' class="logo" aria-label='На главную'>
 		 <? include ROOT . '/app/view/Header/admin/logo_VITEX_grey.php' ?>
 	</a>
 
-	<? if (\app\model\User::can($controller->user)): ?>
+	<? if (User::can($controller->user)): ?>
 		<? include ROOT . '/app/view/Header/admin/chips.php' ?>
 	<? endif; ?>
 

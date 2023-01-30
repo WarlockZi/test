@@ -8,6 +8,16 @@
 $font-size-path: .7rem;
 $font-size-item: .5rem;
 
+@mixin arrow{
+  flex: 0 0 17px;
+  width: 17px;
+  height: 17px;
+  background: url(./img/cd-icons.svg) no-repeat 1px 0;
+
+  transform: rotate(-90deg);
+  transition: transform 200ms;
+}
+
 @mixin accordion {
 
   [accordion] {
@@ -15,9 +25,34 @@ $font-size-item: .5rem;
     flex-flow: column;
     background: #4d5158;
     min-width: 170px;
+    color:white;
+
+    label{
+      display: flex;
+      justify-content: space-between;
+
+      span{
+        display: flex;
+
+        .before{
+          display: flex;
+        }
+
+        tag{
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+        }
+      }
+
+      .arrow{
+        @include arrow;
+      }
+
+    }
 
     a {
-      padding: $item-padding-M 100% $item-padding-M 29px;
+      //padding: $item-padding-M 100% $item-padding-M 29px;
       min-height: 10px;
       display: flex;
       align-items: center;
@@ -148,12 +183,7 @@ $font-size-item: .5rem;
       align-items: center;
 
       .arrow {
-        flex: 0 0 17px;
-        height: 16px;
-        background: url(./img/cd-icons.svg) no-repeat 1px 0;
-
-        transform: rotate(-90deg);
-        transition: transform 200ms;
+        @include arrow;
       }
 
       .img {
@@ -191,7 +221,7 @@ $font-size-item: .5rem;
       }
 
       a {
-        padding: $item-padding-M $item-padding-M+14 $item-padding-M 29px;
+        //padding: $item-padding-M $item-padding-M+14 $item-padding-M 29px;
         //font-size: .8rem;
         min-height: 10px;
         display: flex;
@@ -211,7 +241,7 @@ $font-size-item: .5rem;
 
       ul ul label,
       ul ul a {
-        padding-left: 52px;
+        padding-left: 30px;
       }
 
       ul ul ul label,

@@ -19,7 +19,7 @@
 	</div>
 
 	<div class="menu">
-		 <?= $headerMenu; ?>
+		 <?= $frontCategories; ?>
 	</div>
 
 

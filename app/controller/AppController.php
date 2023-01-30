@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\Repository\MorphRepository;
+use app\view\Footer\Footer;
 use app\view\Header\Header;
 use app\view\View;
 use Illuminate\Database\Eloquent\Model;
@@ -19,14 +20,17 @@ class AppController extends Controller
   {
     parent::__construct($route);
 
+		Auth::autorize($this);
     if (isset($route['admin'])) {
       $this->setAdminAssets();
-      Auth::autorize($this);
       Header::setAdninHeader($this);
+      Footer::setAdminFooter();
     } else {
       $this->setMainAssets();
-      Header::getVitexHeader($this);
+      Header::setUserHeader($this);
+      Footer::setUserFooter();
     }
+
     $this->isAjax();
   }
 
@@ -154,6 +158,12 @@ class AppController extends Controller
     View::setCss('list.css');
 
     View::setCss('product.css');
+
+    View::setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
+    View::setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");
+//    View::setCDNCss("https://cdn.quilljs.com/1.3.6/quill.bubble.css");
+
+
 //		View::setJs('list.css');
   }
 

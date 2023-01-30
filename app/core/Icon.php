@@ -12,7 +12,7 @@ class Icon
 	public static $commonPicPath = 'pic';
 	public static $commonIconPath = 'icons';
 
-	public static function __callStatic($name, $arguments)
+	public static function __callStatic($name, $arguments):string
 	{
 		$arg = count($arguments)?
 			$arguments[0].DIRECTORY_SEPARATOR:
@@ -24,6 +24,7 @@ class Icon
 			$arg
 			);
 		$file = FS::getAbsoluteFilePath($path,$name.$ext);
+		if (!is_readable($file)) return '';
 
 		ob_start();
 		include $file;
