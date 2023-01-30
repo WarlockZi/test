@@ -36,6 +36,7 @@ $font-size-item: .5rem;
 
         .before{
           display: flex;
+          align-items: center;
         }
 
         tag{
@@ -70,6 +71,7 @@ $font-size-item: .5rem;
       user-select: none;
       position: relative;
       cursor: pointer;
+      padding: 5px;
 
       &:hover {
         background: tint($color-level-0, 3%);
