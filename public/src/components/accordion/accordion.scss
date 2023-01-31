@@ -8,7 +8,7 @@
 $font-size-path: .7rem;
 $font-size-item: .5rem;
 
-@mixin arrow{
+@mixin arrow {
   flex: 0 0 17px;
   width: 17px;
   height: 17px;
@@ -23,32 +23,38 @@ $font-size-item: .5rem;
   [accordion] {
     display: flex;
     flex-flow: column;
-    background: #4d5158;
     min-width: 170px;
-    color:white;
+    color: white;
 
-    label{
+    .arrow {
+      @include arrow;
+      &.rotate {
+        transform: rotate(0deg);
+      }
+    }
+
+    label {
       display: flex;
       justify-content: space-between;
+      padding: 5px;
 
-      span{
+      span {
         display: flex;
 
-        .before{
+        .before {
           display: flex;
           align-items: center;
+          gap: 3px;
         }
 
-        tag{
+        tag {
           display: flex;
           flex-wrap: wrap;
           align-items: center;
+          padding-left: 4px;
         }
       }
 
-      .arrow{
-        @include arrow;
-      }
 
     }
 
@@ -71,14 +77,11 @@ $font-size-item: .5rem;
       user-select: none;
       position: relative;
       cursor: pointer;
-      padding: 5px;
+      //padding: 5px;
+      background: #4d5158;
 
       &:hover {
         background: tint($color-level-0, 3%);
-      }
-
-      &.rotate > .label > .arrow {
-        transform: rotate(0deg);
       }
 
       a { // isTest
@@ -126,27 +129,31 @@ $font-size-item: .5rem;
 
 
     .level-1 {
-      background: $color-level-2;
-
-      .label {
-        padding-left: 24px;
+      label, ul {
+        background: $color-level-2;
 
         &:hover {
           background-color: tint($color-level-2, 3%);
         }
       }
+
+      .label {
+        padding-left: 24px;
+      }
     }
 
 
     .level-2 {
-      background-color: $color-level-3;
-
-      .label {
-        padding-left: 36px;
+      label, ul {
+        background-color: $color-level-3;
 
         &:hover {
           background-color: tint($color-level-3, 3%);
         }
+      }
+
+      .label {
+        padding-left: 36px;
       }
     }
 
@@ -184,9 +191,7 @@ $font-size-item: .5rem;
       display: flex;
       align-items: center;
 
-      .arrow {
-        @include arrow;
-      }
+
 
       .img {
         width: 16px;
@@ -206,12 +211,12 @@ $font-size-item: .5rem;
 
     ul ul label,
     ul ul a {
-      padding-left: ($item-padding-S * 5) + 40px;
+      //padding-left: ($item-padding-S * 5) + 40px;
     }
 
     ul ul ul label,
     ul ul ul a {
-      padding-left: ($item-padding-S * 6) + 10px;
+      //padding-left: ($item-padding-S * 6) + 10px;
     }
 
 
@@ -237,13 +242,13 @@ $font-size-item: .5rem;
         }
 
         a {
-          padding-left: ($item-padding-M ) + 25px;
+          //padding-left: ($item-padding-M ) + 25px;
         }
       }
 
       ul ul label,
       ul ul a {
-        padding-left: 30px;
+        padding-left: 17px;
       }
 
       ul ul ul label,

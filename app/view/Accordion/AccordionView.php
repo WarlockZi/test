@@ -12,7 +12,7 @@ class AccordionView
 
 	public static function testEdit()
 	{
-		$accordion = AccordionBuilder::build(
+		return AccordionBuilder::build(
 			Test::where('test_id', 0)
 				->with('children')
 				->get(),
@@ -22,13 +22,12 @@ class AccordionView
 			->class('accordion_wrap')
 
 			->ulBefore("<div class='arrow'></div>".Icon::path())
-			->ulAfter( "edit",'/adminsc/test/edit/')
+			->ulAfter( "editWhite",'/adminsc/test/edit/')
 
-			->liAfter("user",'/adminsc/test/edit/')
+			->liAfter("editWhite",'/adminsc/test/edit/')
+			->isPathAttr("isTest")
 //			->liBefore("path",)
 			->get();
-
-		return $accordion;
 
 //		$accordion = new Accordion([
 //			'model' => Test::class,
@@ -50,21 +49,38 @@ class AccordionView
 
 	public static function testDo()
 	{
-		$menu = new Accordion([
+		return AccordionBuilder::build(
+			Test::where('test_id', 0)
+				->where('enable', 1)
+				->with('children')
+				->get(),
+			'/adminsc/question/edit/'
+		)
+			->relation('children')
+			->class('accordion_wrap')
 
-			'models' =>
-				Test::where('test_id', 0)
-					->where('enable', 1)
-					->with('childrenRecursive')
-					->get()
-					->toArray(),
-			'class' => 'accordion_wrap',
-			'label_after' => "",
-			'link' => "/test/do/",
-			'childName' => 'children_recursive',
+			->ulBefore("<div class='arrow'></div>".Icon::path())
+//			->ulAfter( "editWhite",'/adminsc/test/edit/')
 
-		]);
-
-		return $menu->getHtml();
+			->liAfter("editWhite",'/adminsc/test/edit/')
+			->isPathAttr("isTest")
+//			->liBefore("path",)
+			->get();
+//		$menu = new Accordion([
+//
+//			'models' =>
+//				Test::where('test_id', 0)
+//					->where('enable', 1)
+//					->with('childrenRecursive')
+//					->get()
+//					->toArray(),
+//			'class' => 'accordion_wrap',
+//			'label_after' => "",
+//			'link' => "/test/do/",
+//			'childName' => 'children_recursive',
+//
+//		]);
+//
+//		return $menu->getHtml();
 	}
 }

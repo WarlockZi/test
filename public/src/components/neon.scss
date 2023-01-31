@@ -1,10 +1,10 @@
 @import "../var";
+.neon{
+  padding-left: 35px;
+}
 .neon:hover {
   color: #fff;
-  text-shadow: /* White glow */
+  text-shadow:
           0 0 9px $color-main,
-            /* Green glow */
-          //0 0 5px #0fa,
           0 0 17px $color-main
-
 }

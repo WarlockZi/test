@@ -13,7 +13,7 @@ use \app\core\Icon;
 	</div>
 
 
-	<div accordion>
+	<ul accordion>
 
 		<a class="house neon" href="/adminsc">
 		 <?= Icon::house('admin-menu') ?>
@@ -197,7 +197,7 @@ use \app\core\Icon;
 		<li class="admin_sidebar-tail"></li>
 
 
-	</div>
+	</ul>
 
 
 </div>
