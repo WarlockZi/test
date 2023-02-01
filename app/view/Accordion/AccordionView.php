@@ -5,10 +5,28 @@ namespace app\view\Accordion;
 
 
 use app\core\Icon;
+use app\model\Opentest;
 use app\model\Test;
 
 class AccordionView
 {
+
+	public static function opentestEdit()
+	{
+		return AccordionBuilder::build(
+			Opentest::where('opentest_id', 0)
+				->with('children')
+				->get(),
+			'/adminsc/openquestion/edit/'
+		)
+			->relation('children')
+			->class('test-edit')
+			->ulBefore("<div class='arrow'></div>".Icon::path())
+			->ulAfter( "editWhite",'/adminsc/opentest/edit/')
+			->liAfter("editWhite",'/adminsc/opentest/edit/')
+			->isPathAttr("isTest")
+			->get();
+	}
 
 	public static function testEdit()
 	{
@@ -19,32 +37,12 @@ class AccordionView
 			'/adminsc/question/edit/'
 		)
 			->relation('children')
-			->class('accordion_wrap')
-
+			->class('test-edit')
 			->ulBefore("<div class='arrow'></div>".Icon::path())
 			->ulAfter( "editWhite",'/adminsc/test/edit/')
-
 			->liAfter("editWhite",'/adminsc/test/edit/')
 			->isPathAttr("isTest")
-//			->liBefore("path",)
 			->get();
-
-//		$accordion = new Accordion([
-//			'model' => Test::class,
-//			'models' => Test::where('test_id', 0)
-//				->with('children')
-//				->get()
-//				->toArray(),
-//
-//			'childName' => 'children',
-//			'class' => 'test-edit accordion_wrap',
-//			'label_after' => ICONS . "/edit.svg",
-//			'link' => '/adminsc/question/edit/',
-//			'link_label_after' => '/adminsc/test/edit/',
-//
-//		]);
-//
-//		return $accordion->getHtml();
 	}
 
 	public static function testDo()
@@ -60,12 +58,11 @@ class AccordionView
 			->class('accordion_wrap')
 
 			->ulBefore("<div class='arrow'></div>".Icon::path())
-//			->ulAfter( "editWhite",'/adminsc/test/edit/')
 
-			->liAfter("editWhite",'/adminsc/test/edit/')
 			->isPathAttr("isTest")
 //			->liBefore("path",)
 			->get();
+
 //		$menu = new Accordion([
 //
 //			'models' =>
@@ -78,9 +75,21 @@ class AccordionView
 //			'label_after' => "",
 //			'link' => "/test/do/",
 //			'childName' => 'children_recursive',
-//
+//		]);
+//		return $menu->getHtml();
+//		$accordion = new Accordion([
+//			'model' => Test::class,
+//			'models' => Test::where('test_id', 0)
+//				->with('children')
+//				->get()
+//				->toArray(),
+//			'childName' => 'children',
+//			'class' => 'test-edit accordion_wrap',
+//			'label_after' => ICONS . "/edit.svg",
+//			'link' => '/adminsc/question/edit/',
+//			'link_label_after' => '/adminsc/test/edit/',
 //		]);
 //
-//		return $menu->getHtml();
+//		return $accordion->getHtml();
 	}
 }

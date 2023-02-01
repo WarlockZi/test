@@ -5,7 +5,7 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\model\Test;
 use app\model\Question;
-use app\view\Test\TestView;
+use app\view\Test\OpentestView;
 use app\view\View;
 
 
@@ -27,7 +27,7 @@ class TestController extends AppController
 		}
 		if (isset($this->route['id'])) {
 			$id = $this->route['id'];
-			$item = TestView::item($id);
+			$item = OpentestView::item($id);
 			$this->set(compact('item'));
 		}
 	}

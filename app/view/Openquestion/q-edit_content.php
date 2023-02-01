@@ -8,7 +8,7 @@
 
 		  <div class="questions" data-test-id="<?= $test['id'] ?>">
 
-					<? $parent_selector = \app\view\OpenTest\OpentestView::getParentSelector(0, $test['id']); ?>
+					<? $parent_selector = \app\view\OpenTest\OpentestView1::getParentSelector(0, $test['id']); ?>
 
 					<? foreach ($test['questions'] as $id => $block): ?>
 						<? include ROOT . '/app/view/OpenTest/edit_BlockQuestion.php' ?>

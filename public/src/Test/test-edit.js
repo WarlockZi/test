@@ -32,6 +32,7 @@ export default function testEdit() {
 }
 
 function handleClick({target}) {
+  // debugger
   if (['test-path__update', 'test__update', 'test__save'].includes(target.classList)) {
     _test.update()
   } else if (target.classList.contains('test__delete')) {

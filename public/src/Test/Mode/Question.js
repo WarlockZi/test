@@ -49,9 +49,9 @@ class Question extends Model {
 
   fullfill(target){
     let el = this.target = target.closest(this.className)??null
-    let sort = +$(el).find(this.sortSelector).innerText>0?
-      +$(el).find(this.sortSelector).innerText:
-      this.sort
+    let sort = +$(el).find(this.sortSelector).innerText>0
+      ?+$(el).find(this.sortSelector).innerText
+      :this.sort
     this.model.id = el.dataset.id??null
     this.model.sort = sort
     this.model.qustion = $(el).find(this.textSelector).innerText.trim()??null

@@ -163,7 +163,7 @@ class SelectBuilder extends Builder
 		$tpl = '';
 		foreach ($this->array as $index => $item) {
 			$selected = $this->selected === $index ? 'selected' : '';
-			$tpl .= "<option value='{$index}' $selected>{$item}</option>";
+			$tpl .= "<option value='{$item['id']}' $selected>{$item['name']}</option>";
 		}
 		$this->options = $tpl;
 	}
