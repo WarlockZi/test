@@ -3,7 +3,7 @@
 namespace app\view\Accordion;
 
 
-class Accordion
+class delAccordion
 {
 	protected $models = [];
 
@@ -91,32 +91,4 @@ class Accordion
 		return '';
 	}
 
-//	protected function run2()
-//	{
-//		$this->tree = MyTree\Tree::build($this->models)
-//			->parent($this->childName)
-//			->get();
-//		$this->html = $this->showCat($this->tree);
-//	}
-
-//	function tplMenu($item, $lev)
-//	{
-//		$childs = isset($item['childs']);
-//		$class = $childs ? "class='childs'" : '';
-//		$menu = "<li {$class}>";
-//		$menu .= "{$this->li($item, $lev)}";
-//		if ($childs) {
-//			$menu .= "<ul  class='level-{$lev}'>" . $this->showCat($item['childs'], $lev) . '</ul>';
-//		}
-//		return $menu .= '</li>';
-//	}
-//	function showCat($data, $lev = 0)
-//	{
-//		$string = '';
-//		$lev++;
-//		foreach ($data as $item) {
-//			$string .= $this->tplMenu($item, $lev);
-//		}
-//		return $string;
-//	}
 }

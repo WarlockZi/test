@@ -18,20 +18,19 @@ class Answer extends Model {
     this.picaSelector = ''
 
     this.model = {}
-    this.target = target
     this.row =
       target.closest(this.className) ??
       target.closest(this.questionsSelector).querySelector(this.emptySelector)
 
-    this.fullfill()
+    this.target = target
+    this.fullfill(this.row)
 
     return this
   }
 
-  fullfill() {
-    let el = this.getEl()
-    debugger
-    this.model.id = this.getId() ?? 0
+  fullfill(target) {
+    let el = target.closest(this.className)??null
+    this.model.id = el.dataset.id ?? 0
     this.model.answer = $(el).find(this.answerSelector).innerText.trim()?? ''
     this.model.question_id = this.getQuestion_id() ?? null
     this.model.correct_answer = +$(el).find(this.correct_answerSelector).checked ?? 0
@@ -68,9 +67,9 @@ class Answer extends Model {
   }
 
   async create() {
-    debugger
     await this.createOnServer()
     this.render()
+
   }
 
   async createOnServer() {

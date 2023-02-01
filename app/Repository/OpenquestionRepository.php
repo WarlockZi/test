@@ -14,9 +14,9 @@ class OpenquestionRepository
 		$question = new Opentest();
 		$question = $question->fillable;
 		$question['id'] = 0;
-		$parentSelector = \app\view\Test\TestView::questionParentSelector($test['id']);
+		$parentSelector = \app\view\OpenTest\OpentestView::questionParentSelector($test['id']);
 		ob_start();
-		include ROOT . '/app/view/Question/edit_BlockQuestion.php';
+		include ROOT . '/app/view/Openquestion/q-edit.php';
 		return ob_get_clean();
 
 	}

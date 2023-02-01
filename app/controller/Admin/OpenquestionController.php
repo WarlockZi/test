@@ -5,12 +5,12 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\model\Openquestion;
 use app\model\Opentest;
-use app\view\OpenTest\OpentestView;
+use app\view\OpenTest\OpentestView1;
 
 
 class OpenquestionController Extends AppController
 {
-	private $model = Openquestion::class;
+//	private $model = Openquestion::class;
 
 	public function __construct(array $route)
 	{
@@ -24,12 +24,16 @@ class OpenquestionController Extends AppController
 
 		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
 		if ($id) {
-			$test = Openquestion::with('questions.answers')
+			$test = Opentest::with('questions.answers')
+//				->where('id', $id)
+//				->where('opentest_id', $id)
 				->find($id);
 
-			$parentSelector = OpentestView::questionParentSelector($test->id);
+			$parentSelector = OpentestView1::getParentSelector($id);
+//			$parentSelector = OpentestView::questionParentSelector($test->id);
 
 			$this->set(compact('test','parentSelector'));
+			$this->view = 'q-edit';
 		}
 	}
 
