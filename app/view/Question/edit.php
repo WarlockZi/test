@@ -1,19 +1,25 @@
 <?
-use app\view\Accordion\AccordionView;
+
+use \app\view\Accordion\AccordionView;
+use \app\view\Test\TestView;
+use \app\view\Question\QuestionView;
+
 ?>
+
 <div class="adm-content">
-<div class="test-edit-wrapper">
 
-	<? include ROOT . '/app/view/Test/test_head.php'; ?>
+	<div class="test-edit">
 
-	<div class="test-edit__cont">
+		 <? TestView::testHead(); ?>
 
-		<div class='accordion_wrap'>
-			<?=AccordionView::testEdit()?>
-<!--				--><?// include ROOT . '/app/view/Test/edit_accordion.php' ?>
-				<? include ROOT . '/app/view/Test/edit_add-test-button.php' ?>
+		<div class="test-edit__cont">
+
+				<?= AccordionView::testEditAccordion() ?>
+
+				<?= QuestionView::getEditContent($test)?>
+
 		</div>
-		 <? include ROOT . '/app/view/Question/edit_content.php' ?>
 	</div>
-</div>
+
+
 </div>

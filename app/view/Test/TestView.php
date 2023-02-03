@@ -12,12 +12,14 @@ use Illuminate\Database\Eloquent\Model;
 class TestView
 {
 
+	public static function testHead(){
+		include ROOT . '/app/view/Test/test_head.php';
+	}
 
 	public static function item($id)
 	{
 		$test = Test::find($id);
 
-//		$parents = $test->parents;
 		$isTest = $test->isTest ? 'теста' : 'папки';
 		return ItemBuilder::build($test, 'test')
 			->pageTitle("Редактирование {$isTest} - {$test['name']}")

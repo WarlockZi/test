@@ -35,21 +35,6 @@ abstract class Controller
 		$view->render($this->vars);
 	}
 
-	protected function getFiles($absolutePath)
-	{
-		$files = [];
-		foreach (glob($absolutePath . "/*") as $file) {
-			$path_parts = pathinfo($file);
-
-			$files[$file]['size'] = filesize($file);
-			$files[$file]['dirname'] = $path_parts['dirname'];
-			$files[$file]['basename'] = $path_parts['basename'];
-			$files[$file]['extension'] = $path_parts['extension'];
-			$files[$file]['filename'] = $path_parts['filename'];
-		}
-		return $files;
-	}
-
 	protected function getPaths($absolutePath)
 	{
 		$paths = [];

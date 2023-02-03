@@ -8,15 +8,12 @@
 				<?= $parentSelector; ?>
 		</div>
 
-		<div class="question__show-answers"
-		     data-tooltip="Показать ответы">
-		</div>
+		<div class="question__show-answers" data-tooltip="Показать ответы"></div>
 		<div class="text" contenteditable="true">
 				<?= $question['qustion'] ?? '' ?>
 		</div>
 		<div class="question__delete"
 		     data-tooltip="Удалить Ответ с вопросами"
-		     data-model='question'
 		     data-id= <?= $question['id'] ?>
 		>
 				<? include TRASH; ?>
