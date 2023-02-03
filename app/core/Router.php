@@ -39,7 +39,8 @@ class Router
 	{
 		http_response_code(404);
 		$route = ['controller' => '404', 'action' => 'index'];
-		$controller = new AppController($route);
+//		$this->view='vitex';
+		$controller = new NotFoundController($route);
 		$errorText = 'bad - ' . $error . ' = ' . $errorData;
 		$controller->set(compact('errorText'));
 		$controller->getView();

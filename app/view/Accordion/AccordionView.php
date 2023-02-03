@@ -69,7 +69,7 @@ class AccordionView
 				->where('enable', 1)
 				->with('children')
 				->get(),
-			'/adminsc/question/edit/'
+			'/adminsc/question/do/'
 		)
 			->relation('children')
 			->class('accordion_wrap')

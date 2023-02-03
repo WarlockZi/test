@@ -15,26 +15,26 @@ class TestController extends AppController
 		parent::__construct($route);
 	}
 
-	public function actionDo(): void
-	{
-		$page_name = 'Прохождение тестов';
-		$this->set(compact('page_name'));
-
-		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
-		$test = Test::with('questions.answers')->find($testId);
-
-		if ($test) {
-			if ($test->questions) {
-				foreach ($test->questions as &$question) {
-					$question->answers->shuffle();
-				}
-//				$this->cacheCorrectAnswers($questions);
-			}
-			$pagination = Test::pagination($test->questions ?? '');
-			$this->set(compact('test', 'pagination'));
-		}
-		$this->set(compact('test'));
-	}
+//	public function actionDo(): void
+//	{
+//		$page_name = 'Прохождение тестов';
+//		$this->set(compact('page_name'));
+//
+//		$testId = isset($this->route['id']) ? (int)$this->route['id'] : 0;
+//		$test = Test::with('questions.answers')->find($testId);
+//
+//		if ($test) {
+//			if ($test->questions) {
+//				foreach ($test->questions as &$question) {
+//					$question->answers->shuffle();
+//				}
+////				$this->cacheCorrectAnswers($questions);
+//			}
+//			$pagination = Test::pagination($test->questions ?? '');
+//			$this->set(compact('test', 'pagination'));
+//		}
+//		$this->set(compact('test'));
+//	}
 
 
 	function shuffle_assoc($array)
