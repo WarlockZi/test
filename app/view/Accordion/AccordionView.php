@@ -21,16 +21,17 @@ class AccordionView
 		)
 			->relation('children')
 			->class('test-edit')
-			->ulBefore("<div class='arrow'></div>".Icon::path())
-			->ulAfter( "editWhite",'/adminsc/opentest/edit/')
-			->liAfter("editWhite",'/adminsc/opentest/edit/')
+			->ulBefore("<div class='arrow'></div>" . Icon::path())
+			->ulAfter("editWhite", '/adminsc/opentest/edit/')
+			->liAfter("editWhite", '/adminsc/opentest/edit/')
 			->isPathAttr("isTest")
 			->get();
 	}
 
-	public static function testEdit()
+	public static function testEditAccordion()
 	{
-		return AccordionBuilder::build(
+//		ob_start();
+		$accordion =AccordionBuilder::build(
 			Test::where('test_id', 0)
 				->with('children')
 				->get(),
@@ -38,12 +39,28 @@ class AccordionView
 		)
 			->relation('children')
 			->class('test-edit')
-			->ulBefore("<div class='arrow'></div>".Icon::path())
-			->ulAfter( "editWhite",'/adminsc/test/edit/')
-			->liAfter("editWhite",'/adminsc/test/edit/')
+			->ulBefore("<div class='arrow'></div>" . Icon::path())
+			->ulAfter("editWhite", '/adminsc/test/edit/')
+			->liAfter("editWhite", '/adminsc/test/edit/')
 			->isPathAttr("isTest")
 			->get();
+//		$accordion = ob_get_clean();
+		$button = self::getButton();
+
+		return "<div class='accordion_wrap'>{$accordion}{$button}</div>";
 	}
+
+	private static function getButton()
+	{
+		ob_start();
+		include ROOT . '/app/view/Test/edit_add-test-button.php';
+		return ob_get_clean();
+	}
+
+
+
+
+
 
 	public static function testDo()
 	{
@@ -56,9 +73,7 @@ class AccordionView
 		)
 			->relation('children')
 			->class('accordion_wrap')
-
-			->ulBefore("<div class='arrow'></div>".Icon::path())
-
+			->ulBefore("<div class='arrow'></div>" . Icon::path())
 			->isPathAttr("isTest")
 //			->liBefore("path",)
 			->get();

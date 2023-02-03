@@ -21,15 +21,13 @@ class QuestionController Extends AppController
 		$page_name = 'Редактирование тестов';
 		$this->set(compact('page_name'));
 
-		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
-		if ($id) {
+		if (isset($this->route['id'])) {
+			$id = (int)$this->route['id'] ?? 0;
 			$test = Test::with('questions.answers')
 				->orderBy('sort')
 				->find($id);
 
-			$parentSelector = \app\view\Test\TestView::questionParentSelector($test->id);
-
-			$this->set(compact('test','parentSelector'));
+			$this->set(compact('test'));
 		}
 	}
 
