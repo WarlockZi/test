@@ -3,46 +3,37 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\model\Openquestion;
 use app\model\Opentest;
-use app\view\OpenTest\OpentestView1;
 
 
 class OpenquestionController Extends AppController
 {
-//	private $model = Openquestion::class;
+  public function __construct(array $route)
+  {
+    parent::__construct($route);
+  }
 
-	public function __construct(array $route)
-	{
-		parent::__construct($route);
-	}
+  public function actionEdit()
+  {
+    $page_name = 'Редактирование jnrhsns] тестов';
+    $this->set(compact('page_name'));
 
-	public function actionEdit()
-	{
-		$page_name = 'Редактирование открытых тестов';
-		$this->set(compact('page_name'));
+    if (isset($this->route['id'])) {
+      $id = (int)$this->route['id'] ?? 0;
+      $test = Opentest::with('questions.answers')
+        ->orderBy('sort')
+        ->find($id);
 
-		$id = isset($this->route['id']) ? (int)$this->route['id'] : 0;
-		if ($id) {
-			$test = Opentest::with('questions.answers')
-//				->where('id', $id)
-//				->where('opentest_id', $id)
-				->find($id);
+      $this->set(compact('test'));
+    }
+  }
 
-			$parentSelector = OpentestView1::getParentSelector($id);
-//			$parentSelector = OpentestView::questionParentSelector($test->id);
-
-			$this->set(compact('test','parentSelector'));
-			$this->view = 'q-edit';
-		}
-	}
-
-	public function actionSort()
-	{
-		$q_ids = $this->ajax['toChange'];
-		Openquestion::sort($q_ids);
-		$this->exitWithPopup('Сортировка сохранена');
-	}
+  public function actionSort()
+  {
+    $q_ids = $this->ajax['toChange'];
+    Opentest::sort($q_ids);
+    $this->exitWithPopup('Сортировка сохранена');
+  }
 
 
 }
