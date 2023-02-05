@@ -2,11 +2,14 @@
 
 namespace app\view;
 
+use app\core\Error;
 use Illuminate\Database\Eloquent\Model;
 
 class View
 {
 
+	protected $defaultView = ROOT . '/app/view/default.php';
+	protected $defaultLayout = 'vitex';
 	public $route;
 	public $layout;
 	public $view;
@@ -26,28 +29,41 @@ class View
 		$this->view = $view;
 	}
 
+	protected function validateViewFile(View $view)
+	{
+		$viewName = $view->view.'.php';
+		$file_view = ROOT . "/app/view/{$view->route['controller']}/{$viewName}";
+		if (!is_file($file_view)) {
+			Error::setError("Не найден файл вида - {$viewName}");
+			return $view->defaultView;
+		}
+		return $file_view;
+	}
+
+	protected function validateLayoutFile(View $view)
+	{
+		$layout = ROOT . "/app/view/layouts/{$view->layout}.php";
+		if (!is_file($layout)) {
+			Error::setError("Не найден layout - {$layout}");
+			return $view->defaultLayout;
+		}
+		return $layout;
+	}
+
 	public function render(array $vars = [])
 	{
 		extract($vars);
 
-		$file_view = ROOT . "/app/view/{$this->route['controller']}/{$this->view}.php";
-		ob_start();
-		if (is_file($file_view)) {
-			require $file_view;
-		} else {
-			echo "<main class='content'><br>Не найден файл вида {$this->view}</main>";
-		}
-		$content = ob_get_clean();
+		$file_view = $this->validateViewFile($this);
 
 		ob_start();
-		if ($this->layout !== false) {
-			$file_layout = ROOT . "/app/view/layouts/{$this->layout}.php";
-			if (is_file($file_layout)) {
-				require $file_layout;
-			} else {
-				echo '<br> Не найден шаблон Layout' . $this->layout;
-			}
-		}
+		require $file_view;
+		$content = ob_get_clean();
+
+
+		$layout = $this->validateLayoutFile($this);
+		ob_start();
+		require $layout;
 		$page_cache = ob_get_clean();
 //		self::toFile($page_cache);
 		echo $page_cache;
@@ -115,13 +131,13 @@ class View
 		self::$jsCss['js'][] = $str;
 	}
 
-	public static function setCDNJs(string $src):void
+	public static function setCDNJs(string $src): void
 	{
 		$str = "<script src='{$src}'></script>";
 		self::$jsCss['js'][] = $str;
 	}
 
-	public static function setCDNCss(string $src):void
+	public static function setCDNCss(string $src): void
 	{
 		self::$jsCss['css'][] = "<link href='{$src}' rel='stylesheet' type='text/css'>";
 	}

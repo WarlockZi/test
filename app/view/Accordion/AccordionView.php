@@ -30,7 +30,7 @@ class AccordionView
 
 	public static function testEditAccordion()
 	{
-//		ob_start();
+
 		$accordion =AccordionBuilder::build(
 			Test::where('test_id', 0)
 				->with('children')
@@ -44,7 +44,7 @@ class AccordionView
 			->liAfter("editWhite", '/adminsc/test/edit/')
 			->isPathAttr("isTest")
 			->get();
-//		$accordion = ob_get_clean();
+
 		$button = self::getButton();
 
 		return "<div class='accordion_wrap'>{$accordion}{$button}</div>";
@@ -60,8 +60,6 @@ class AccordionView
 
 
 
-
-
 	public static function testDo()
 	{
 		return AccordionBuilder::build(
@@ -69,7 +67,7 @@ class AccordionView
 				->where('enable', 1)
 				->with('children')
 				->get(),
-			'/adminsc/question/do/'
+			'/adminsc/test/do/'
 		)
 			->relation('children')
 			->class('accordion_wrap')
