@@ -23,6 +23,14 @@ abstract class Controller
       : $this->createToken();
 	}
 
+	public static function getNameSpace($route)
+	{
+		if (isset($route['admin']) && $route['admin']) {
+			return 'app\controller\admin\\';
+		}
+		return 'app\controller\\';
+	}
+
 	protected function createToken()
 	{
 		$salt = "popiyonovacheesa";

@@ -5,6 +5,7 @@ namespace app\Repository;
 
 
 use app\model\Answer;
+use Illuminate\Database\Eloquent\Collection;
 
 class AnswerRepository
 {
@@ -21,6 +22,18 @@ class AnswerRepository
 	public static function getAnswer(int $i, Answer $answer)
 	{
 		include ROOT . "/app/view/Question/edit_BlockAnswer.php";
+	}
+
+
+	public static function cacheCorrectAnswers($questions): void
+	{
+		$_SESSION['correct_answers'] = $questions->map(function ($q) {
+				return $q->answers->filter(function ($v, $k) {
+					return $v->correct_answer === 1;
+				});
+			})
+				->flatten()
+				->pluck('id') ?? '';
 	}
 
 

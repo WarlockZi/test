@@ -2,7 +2,7 @@
 
 namespace app\core;
 
-use app\controller\AppController;
+use app\controller\Controller;
 
 class Router
 {
@@ -35,43 +35,25 @@ class Router
 		return false;
 	}
 
-	protected static function get404($error, $errorData)
-	{
-		http_response_code(404);
-		$route = ['controller' => '404', 'action' => 'index'];
-//		$this->view='vitex';
-		$controller = new NotFoundController($route);
-		$errorText = 'bad - ' . $error . ' = ' . $errorData;
-		$controller->set(compact('errorText'));
-		$controller->getView();
-		exit();
-	}
-
-	protected static function getNameSpace($route)
-	{
-		if (isset($route['admin']) && $route['admin']) {
-			return 'app\controller\admin\\';
-		}
-		return 'app\controller\\';
-	}
-
 	public static function dispatch($url)
 	{
 		require_once ROOT . '/app/core/routes.php';
 
 		$url = self::removeQuryString($url);
 
-		if (!self::matchRoute($url)) self::get404('url', $url);
-		$nameSpace = self::getNameSpace(self::$route);
-		$controller = $nameSpace . self::$route['controller'] . 'Controller';
+		if (!self::matchRoute($url)) NotFound::url($url);
 
-		if (!class_exists($controller)) self::get404('controller', $controller);
+		$nameSpace = Controller::getNameSpace(self::$route);
+		$controllerName = self::$route['controller'] . 'Controller';
+		$controller = $nameSpace . $controllerName;
+		if (!class_exists($controller)) NotFound::controller($controllerName, self::$route);
 		$controller = new $controller(self::$route);
-		$action = 'action' . self::upperCamelCase(self::$route['action']); // . 'Action'; //Action для того, чтобы пользователь не мог обращаться к функции(хотя можно написать protected)
 
-		if (!method_exists($controller, $action)) self::get404('action', $action);
-		$controller->$action(); // Выполним метод
-		$controller->getView(); // Подключим вид
+		$action = 'action' . self::upperCamelCase(self::$route['action']);
+		if (!method_exists($controller, $action)) NotFound::action($action,$controller);
+		$controller->$action();
+
+		$controller->getView();
 	}
 
 	protected static function upperCamelCase($name)
@@ -99,5 +81,10 @@ class Router
 				return '';
 			}
 		}
+	}
+
+	public static function isLogin(array $route)
+	{
+		return $route['controller'] === 'Auth' && $route['action'] === 'login';
 	}
 }
