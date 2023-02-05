@@ -5,11 +5,20 @@ namespace app\Repository;
 
 
 use app\model\Question;
-use \app\view\Test\TestView;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+
 
 class QuestionRepository
 {
+
+	public static function shuffleAnswers(Collection $questions)
+	{
+		return $questions->map(function ($q) {
+			$q->setRelation('answers',$q->answers->shuffle());
+			return $q;
+		});
+	}
 
 	public static function empty(Model $test, string $parentSelector)
 	{
@@ -23,7 +32,7 @@ class QuestionRepository
 
 	}
 
-	public static function getQuestion($question,$parentSelector='')
+	public static function getQuestion($question, $parentSelector = '')
 	{
 		ob_start();
 		include ROOT . '/app/view/Question/edit_BlockQuestion.php';
