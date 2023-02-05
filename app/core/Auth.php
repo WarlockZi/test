@@ -19,17 +19,19 @@ class Auth extends AppController
 
 	public static function setAuth(int $userId): void
 	{
-		$_SESSION['id'] = $userId;
+		Session::setUserId($userId);
 	}
 
-	public static function sessionHasUserId()
-	{
-		return isset($_SESSION['id']) && $_SESSION['id'];
-	}
 
 	public static function autorize(Controller $controller): void
 	{
-		if (!self::sessionHasUserId()) {
+		if (Router::isLogin($controller->route)) {
+			return;
+		}
+
+		Session::setUserId();
+
+		if (!Session::getUserId()) {
 			header("Location:/auth/login");
 			exit();
 		}
