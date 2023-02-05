@@ -38,8 +38,8 @@ class View
 			echo "<main class='content'><br>Не найден файл вида {$this->view}</main>";
 		}
 		$content = ob_get_clean();
-		ob_start();
 
+		ob_start();
 		if ($this->layout !== false) {
 			$file_layout = ROOT . "/app/view/layouts/{$this->layout}.php";
 			if (is_file($file_layout)) {

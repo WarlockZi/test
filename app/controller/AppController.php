@@ -162,8 +162,6 @@ class AppController extends Controller
     View::setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
     View::setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");
 //    View::setCDNCss("https://cdn.quilljs.com/1.3.6/quill.bubble.css");
-
-
 //		View::setJs('list.css');
   }
 
