@@ -51,6 +51,10 @@ abstract class Controller
 	{
 		$this->vars = array_merge($this->vars, $vars);
 	}
+  public function setError(string $errrorString)
+  {
+    $this->vars = array_merge($this->vars, $vars);
+  }
 
 	public function badToken($data)
 	{
@@ -69,7 +73,7 @@ abstract class Controller
 		if (isset($_POST['param'])) {
 
 			$req = json_decode($_POST['param'], true);
-			if ($this->badToken($req)) return "Плохой запрос";
+			if ($this->badToken($req)) return false;
 
 			if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
 				&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])
