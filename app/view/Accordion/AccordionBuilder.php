@@ -112,13 +112,15 @@ class AccordionBuilder
 		$body = "<a href='{$this->link}{$ul['id']}'>{$before}<tag>{$ul['name']}</tag></a>";
 		if (count($ul[$this->relation])||!$ul[$this->isPathAttr]) {
 			$before = $this->ulBefore;
-			$after = $this->ulAfter;
+			$after = $this->getAfter();
 			$body = "<span>{$before}<tag>{$ul['name']}</tag></span>";
 			$uls .= $this->getUl($ul[$this->relation], ++$level);
 		}
 		return "<li><label>$body{$after}</label>{$uls}</li>";
 	}
-
+private function getAfter(){
+  $this->ulAfter."/{$ul['id']}"
+}
 	public function get()
 	{
 		$res = '';

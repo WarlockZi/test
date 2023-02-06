@@ -30,7 +30,6 @@ class AccordionView
 
 	public static function testEditAccordion()
 	{
-
 		$accordion =AccordionBuilder::build(
 			Test::where('test_id', 0)
 				->with('children')
@@ -47,7 +46,8 @@ class AccordionView
 
 		$button = self::getButton();
 
-		return "<div class='accordion_wrap'>{$accordion}{$button}</div>";
+		return "{$accordion}{$button}";
+//		return "<div class='accordion_wra'>{$accordion}{$button}</div>";
 	}
 
 	private static function getButton()
