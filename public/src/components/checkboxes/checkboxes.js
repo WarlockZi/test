@@ -1,10 +1,11 @@
 import {$} from '../../common'
 
 class Checkboxes {
-  constructor(container) {
+  constructor(container, context) {
     this.container = $(container).first()
-    if (!this.container)return
+    if (!this.container)return null
     this.data = {}
+    this.setContext(context)
     return this
   }
 
@@ -29,6 +30,7 @@ class Checkboxes {
 
   onChange(callback) {
     // debugger
+    if (!this.container) return
     this.container.onchange = function () {
       let value = this.getValue()
       this.container.dataset.value = value

@@ -25,7 +25,6 @@ class QuestionRepository
 		$question = new Question();
 		$question = $question->getFillable();
 		$question['id'] = 0;
-//		$parentSelector = TestView::questionParentSelector($test['id']);
 		ob_start();
 		include ROOT . '/app/view/Question/edit_BlockQuestion.php';
 		return ob_get_clean();

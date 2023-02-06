@@ -14,7 +14,7 @@ use app\view\components\Builders\ListBuilder\MyList;
 
 class CategoryView
 {
-	public $html;
+//	public $html;
 
 	public static function edit($id): string
 	{
@@ -22,7 +22,6 @@ class CategoryView
 			'products',
 			'parentRecursive',
 			'properties',
-//			'children',
 			'mainImages')
 			->find($id);
 
@@ -43,7 +42,7 @@ class CategoryView
 			->field(
 				ItemFieldBuilder::build('show_front', $category)
 					->name('Показывать на главоной')
-					->type('checkbox')
+//					->type('checkbox')
 					->get()
 			)
 			->tab(
@@ -137,11 +136,16 @@ class CategoryView
 
 	public static function list($models): string
 	{
-		$view = new self();
-		$table = include ROOT . '/app/view/Category/list.php';
-		$view->set(compact('table'));
+		return MyList::build(Category::class)
+			->edit()
 
-		return $view->html;
+			->get();
+
+//		$view = new self();
+//		$table = include ROOT . '/app/view/Category/list.php';
+//		$view->set(compact('table'));
+//
+//		return $view->html;
 	}
 
 

@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\controller\Interfaces\IModelable;
 use app\core\Auth;
 use app\Repository\MorphRepository;
 use app\view\Footer\Footer;
@@ -9,12 +10,14 @@ use app\view\Header\Header;
 use app\view\View;
 use Illuminate\Database\Eloquent\Model;
 
-class AppController extends Controller
+class AppController extends Controller implements IModelable
 {
   protected $ajax;
   public $user;
   public $modelName;
-  public $model;
+  protected $model;
+
+	public function setModel(){}
 
   public function __construct(array $route)
   {
@@ -57,21 +60,7 @@ class AppController extends Controller
       }
     }
   }
-//
-//	protected static function attachMorph(array $response, array $morph)
-//	{
-//		if ($response['morph_oneormany'] === 'one') {
-//			if ($response['morph_detach'] === 'true') {
-//				ListMorphRepository::attachOneDetach($response, $morph);
-//			}
-//			ListMorphRepository::attachOneNoDetach($response, $morph);
-//		} else {
-//			if ($response['morph_detach'] === 'true') {
-//				ListMorphRepository::attachOneDetach($response, $morph);
-//			}
-//			ListMorphRepository::attachOneNoDetach($response, $morph);
-//		}
-//	}
+
 
   public function actionAttach()
   {
@@ -79,6 +68,7 @@ class AppController extends Controller
     if (!$req) $this->exitWithError('Плохой запрос');
     if (!isset($req['morph'])) $this->exitWithError('Плохой запрос');
     MorphRepository::attach($req);
+    $this->exitWithPopup('ok');
   }
 
   public function actionUpdateOrCreate()

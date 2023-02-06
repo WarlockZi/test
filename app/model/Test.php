@@ -12,7 +12,7 @@ class Test extends Model
 	public $timestamps = false;
 
 	protected $fillable = [
-		'id','name','enable','parent','isTest',
+		'id','name','enable','test_id','isTest',
 	];
 
 
