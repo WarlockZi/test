@@ -140,12 +140,12 @@
       position: relative;
 
       & > [contenteditable],
-      & > [custom-select] {
+      & [custom-select] {
         border: 1px solid transparent;
       }
 
       & > [contenteditable]:hover,
-      & > [custom-select]:hover {
+      & [custom-select]:hover {
         border: $border-field-hover;
       }
 
@@ -248,24 +248,44 @@
     flex: 1 0;
     margin: 40px 0 0;
 
-    .save, .to-list {
-      padding: 10px 15px;
-      $border-radius: 3%;
-      line-height: 1.2rem;
-      @include colored_button($border-radius);
-      align-self: end;
 
-      &:hover {
-        svg {
-          fill: $color-main;
-        }
-      }
-
-      svg {
-
-        fill: #ffffff;
-      }
+    .save {
+      @include delete(
+              $width: 35px,
+              $height: 35px,
+              $svg-width: 25px,
+              $color: $color-main);
+      border: 1px solid $color-main;
     }
+
+    .to-list {
+      @include delete(
+              $width: 135px,
+              $height: 35px,
+              $svg-width: 25px,
+              $color: $color-main);
+      border: 1px solid $color-main;
+
+    }
+
+    //.save, .to-list {
+    //  padding: 10px 15px;
+    //  $border-radius: 3%;
+    //  line-height: 1.2rem;
+    //  @include colored_button($border-radius);
+    //  align-self: end;
+    //
+    //  &:hover {
+    //    svg {
+    //      fill: $color-main;
+    //    }
+    //  }
+    //
+    //  svg {
+    //    fill: #ffffff;
+    //  }
+    //}
+
 
     .del {
       @include delete(

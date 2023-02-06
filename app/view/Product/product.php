@@ -23,32 +23,10 @@ use \app\view\Product\ProductView;
 
 				<div class="properties">
 
-					<div class="row">
-						<div class="property">
-						<span>
-						Артикул
-						</span>
-						</div>
-						<div class="value"><?= $product->art; ?></div>
-					</div>
+							<? foreach ($product->categoryProperties as $property): ?>
+								<?= ProductView::renderProperty($property); ?>
+							<? endforeach; ?>
 
-					<div class="row">
-						<div class="property">
-						<span>
-						Страна
-						</span>
-						</div>
-						<div class="value"><?= $product->manufacturer->country->name ?? 'Неизвестна'; ?></div>
-					</div>
-
-					<div class="row">
-						<div class="property">
-						<span>
-						Производитель
-						</span>
-						</div>
-						<div class="value"><?= $product->manufacturer->name ?? 'Неизвестен'; ?></div>
-					</div>
 
 				</div>
 			</div>
@@ -59,12 +37,12 @@ use \app\view\Product\ProductView;
 			</div>
 
 			<div class="row">
-					 <?= ProductView::getCardImages('Вид внутритранспортной упоковки',
+					 <?= ProductView::getCardImages('Вид внутритарной упаковки',
 						 $product->smallpackImages); ?>
 			</div>
 
 			<div class="row">
-					 <?= ProductView::getCardImages('Вид транспортной упоковки',
+					 <?= ProductView::getCardImages('Вид транспортной упаковки',
 						 $product->bigpackImages); ?>
 			</div>
 
@@ -101,10 +79,10 @@ use \app\view\Product\ProductView;
 				<ol>
 					<li>
 						<span class="info">Вам понравился продукт</span></li>
-						<input type="text">
+					<input type="text">
 					<li>
 						<span class="info">Напишите свой отзыв</span></li>
-						<input type="text">
+					<input type="text">
 					<li>
 						<span class="info">Расскажите нам немного о себе</span>
 						<input type="text">

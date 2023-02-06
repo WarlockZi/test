@@ -63,6 +63,7 @@
   width: $width;
   height: $height;
   background-color: $color;
+  color: $color-white;
 
   svg {
     fill: $color-white;
@@ -73,6 +74,7 @@
 
   &:hover {
     background-color: $color-white;
+    color: $color;
 
     svg {
       fill: $color;

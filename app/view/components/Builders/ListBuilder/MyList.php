@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class MyList
 {
-	private $grid = "style='display: grid; grid-template-columns:";
+	private $grid;
 
 	private $model;
 	private $pageTitle;
@@ -141,16 +141,17 @@ class MyList
 
 	protected function prepareGridHeader(): void
 	{
+		$columns = '';
 		foreach ($this->columns as $colName => $column) {
-			$this->grid .= ' ' . $column->width;
+			$columns .= ' ' . $column->width;
 		}
 		if ($this->headEditCol) {
-			$this->grid .= ' 50px';
+			$columns .= ' 50px';
 		}
 		if ($this->headDelCol) {
-			$this->grid .= ' 50px';
+			$columns .= ' 50px';
 		}
-		$this->grid .= "'";
+		$this->grid .= "style='display: grid; grid-template-columns:{$columns}'";
 	}
 
 	protected function getEmpty($column)

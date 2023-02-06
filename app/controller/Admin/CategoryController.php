@@ -42,4 +42,10 @@ class CategoryController Extends AppController
 		$this->set(compact('category', 'breadcrumbs'));
 	}
 
+	public function actionList()
+	{
+		$table = CategoryView::list(Category::all());
+
+		$this->set(compact('table'));
+	}
 }

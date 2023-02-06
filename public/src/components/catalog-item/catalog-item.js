@@ -16,8 +16,7 @@ export default function catalogItem() {
       model: customCatalogItem.dataset.model,
       id: +customCatalogItem.dataset.id
     }
-    checkboxes('[checkboxes]')
-      .setContext(context)
+    checkboxes('[checkboxes]',context)
       .onChange(update)
     customCatalogItem.onclick = handleClick.bind(context)
     customCatalogItem.onkeyup = debounce(handleKeyup.bind(context))

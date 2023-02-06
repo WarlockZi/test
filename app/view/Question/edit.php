@@ -5,10 +5,9 @@ use \app\view\Test\TestView;
 use \app\view\Question\QuestionView;
 
 ?>
-
 <div class="adm-content">
 
-	<div class="test-edit">
+	<div class="test-edit-wrapper">
 
 		 <? TestView::testHead(); ?>
 

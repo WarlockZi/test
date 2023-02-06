@@ -15,10 +15,9 @@ class Unit extends Model
 			'main_unit');
 	}
 
-	public static function select(){
-		return self::all()
-			->pluck('name', 'id')
-			->toArray();
+	public static function forSelect(){
+		return self::select(['name', 'id'])
+			->get();
 	}
 
 

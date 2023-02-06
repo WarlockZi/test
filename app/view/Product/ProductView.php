@@ -20,8 +20,15 @@ use Illuminate\Database\Eloquent\Model;
 class ProductView
 {
 
-	public $modelName = Product::class;
+
 	public $model = 'product';
+
+	public static function renderProperty($property)
+	{
+		ob_start();
+		include ROOT . '/app/view/Product/property.php';
+		return ob_get_clean();
+	}
 
 	public static function getCardDetailImage($image)
 	{
@@ -291,22 +298,21 @@ class ProductView
 	protected static function getMainUnit(Model $product): string
 	{
 		$f = SelectBuilder::build()
-			->array(Unit::select())
-//			->model('product')
+			->array(Unit::forSelect()->toArray())
 			->field('main_unit')
 			->initialOption('', 0)
 			->selected($product->main_unit)
 			->get();
 
-		return include ROOT . '/app/view/Product/main_unit.php';
+		return $f;
+//		return include ROOT . '/app/view/Product/main_unit.php';
 	}
 
 
 	protected static function getBaseUnit(Model $product): string
 	{
 		$f = SelectBuilder::build()
-			->array(Unit::select())
-//			->model('product')
+			->array(Unit::forSelect()->toArray())
 			->field('base_unit')
 			->initialOption('', 0)
 			->selected($product->base_unit)

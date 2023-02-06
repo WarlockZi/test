@@ -18,11 +18,11 @@ class AccordionBuilder
 	protected $relation;
 	protected $class;
 
-	protected $liBefore = '';
-	protected $liAfter = '';
+	protected $liBefore = ['icon' => '', 'link' => ''];
+	protected $liAfter = ['icon' => '', 'link' => ''];
 
-	protected $ulBefore = '';
-	protected $ulAfter = '';
+	protected $ulBefore = ['icon' => '', 'link' => ''];
+	protected $ulAfter = ['icon' => '', 'link' => ''];
 
 	protected $isPathAttr = '';
 
@@ -55,14 +55,10 @@ class AccordionBuilder
 		return $this;
 	}
 
-	protected function setLi($name, $icon, $link)
+	protected function setLi($name, $icon, $link = '')
 	{
-		$icon = Icon::$icon() ? Icon::$icon() : $icon;
-		if ($link) {
-			$this->$name = "<a href='{$link}'>{$icon}</a>";
-		} else {
-			$this->$name = "<div class='before'>{$icon}</div>";
-		}
+		$this->$name['icon'] = Icon::$icon() ? Icon::$icon() : $icon;
+		$this->$name['link'] = $link;
 	}
 
 	public function liAfter(string $icon, string $link = '')
@@ -107,20 +103,29 @@ class AccordionBuilder
 	protected function getLi($ul, int $level)
 	{
 		$uls = '';
-		$before = $this->liBefore;
-		$after = $this->liAfter;
+		$before = $this->getBeforeAfter('li','before', $ul);
+		$after = $this->getBeforeAfter('li','after', $ul);
 		$body = "<a href='{$this->link}{$ul['id']}'>{$before}<tag>{$ul['name']}</tag></a>";
-		if (count($ul[$this->relation])||!$ul[$this->isPathAttr]) {
-			$before = $this->ulBefore;
-			$after = $this->getAfter();
+		if (count($ul[$this->relation]) || !$ul[$this->isPathAttr]) {
+			$before = $this->getBeforeAfter('ul','before', $ul);
+			$after = $this->getBeforeAfter('ul','after', $ul);
 			$body = "<span>{$before}<tag>{$ul['name']}</tag></span>";
 			$uls .= $this->getUl($ul[$this->relation], ++$level);
 		}
 		return "<li><label>$body{$after}</label>{$uls}</li>";
 	}
-private function getAfter(){
-  $this->ulAfter."/{$ul['id']}"
-}
+
+	private function getBeforeAfter(string $tag, string $place, $ul):string
+	{
+		$tag .= ucfirst($place);
+		$icon = $this->$tag['icon'];
+		if ($this->$tag['link']){
+			$link = $this->$tag['link']."{$ul['id']}";
+			return "<a href='{$link}'>{$icon}</a>";
+		}else{
+			return "<div class='before'>{$icon}</div>";
+		}
+	}
 	public function get()
 	{
 		$res = '';
@@ -129,6 +134,5 @@ private function getAfter(){
 		}
 		return "<ul accordion class='{$this->class}'>$res</ul>";
 	}
-
 
 }

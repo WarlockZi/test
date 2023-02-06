@@ -1,9 +1,11 @@
 <div class="custom-list__wrapper"
 	<?= $this->dataModel; ?>
+
 	<?= $this->morph; ?>
 	<?= $this->morphId; ?>
 	<?= $this->morphOneOrMany; ?>
 	<?= $this->morphDetach; ?>
+
 	<?= $this->belongsTo; ?>
 	<?= $this->belongsToId; ?>
 >

@@ -3,16 +3,23 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\controller\Interfaces\IModelable;
 use app\model\Test;
 use app\Repository\AnswerRepository;
 use app\Repository\QuestionRepository;
-use app\view\OpenTest\OpentestView;
+use app\view\Test\TestView;
 use app\view\View;
-use Illuminate\Database\Eloquent\Collection;
 
 
 class TestController extends AppController
 {
+	public $model;
+
+	public function setModels()
+	{
+		$this->model = Test::class;
+	}
+
 	public function actionDo(): void
 	{
 		$page_name = 'Прохождение тестов';
@@ -47,10 +54,16 @@ class TestController extends AppController
 			$id = Test::update($this->ajax);
 			$this->exitJson(['id' => $id]);
 		}
+
 		if (isset($this->route['id'])) {
+
 			$id = $this->route['id'];
-			$item = OpentestView::item($id);
+			$item = TestView::item($id);
 			$this->set(compact('item'));
+
+		}else{
+			$test = '';
+			$this->set(compact('test'));
 		}
 	}
 

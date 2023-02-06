@@ -86,6 +86,7 @@ $font-size-item: .5rem;
 
       a { // isTest
         display: flex;
+        //padding: 10px;
 
         .img {
           width: 16px;
@@ -107,7 +108,7 @@ $font-size-item: .5rem;
     & > li > .label, & > li > a {
       display: flex;
       align-items: center;
-      padding: 12px 22px 12px 12px;
+      padding: 6px 10px 6px 10px;
       color: $color-3;
       font-size: $font-size-path;
     }
@@ -259,7 +260,7 @@ $font-size-item: .5rem;
   }
 }
 
-$width-short: 62px;
+$width-short: 57px;
 $width-half: 170px;
 $width-full: 170px;
 
@@ -381,15 +382,15 @@ $width-full: 170px;
 
     a, li .label {
       @include _600 {
-        padding-bottom: 6px;
-        padding-top: 6px;
+        //padding-bottom: 6px;
+        //padding-top: 6px;
         max-width: $width-full;
         min-width: $width-full;
       }
 
       @include _1000 {
-        padding-bottom: 6px;
-        padding-top: 6px;
+        //padding-bottom: 6px;
+        //padding-top: 6px;
         max-width: $width-full;
         min-width: $width-full;
       }

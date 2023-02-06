@@ -30,7 +30,7 @@ class AccordionView
 
 	public static function testEditAccordion()
 	{
-		$accordion =AccordionBuilder::build(
+		$accordion = AccordionBuilder::build(
 			Test::where('test_id', 0)
 				->with('children')
 				->get(),
@@ -46,7 +46,7 @@ class AccordionView
 
 		$button = self::getButton();
 
-		return "{$accordion}{$button}";
+		return "<div class='accordion_wrap'>{$accordion}{$button}</div>";
 //		return "<div class='accordion_wra'>{$accordion}{$button}</div>";
 	}
 
@@ -56,8 +56,6 @@ class AccordionView
 		include ROOT . '/app/view/Test/edit_add-test-button.php';
 		return ob_get_clean();
 	}
-
-
 
 
 	public static function testDo()
