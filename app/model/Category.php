@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+	public $timestamps = false;
 
 	protected $fillable = [
-		'name' => '',
-		'description' => '',
-		'sort' => 1,
-		'img' => '',
-		'category_id' => 0,
+		'name',
+		'description',
+		'sort',
+		'img',
+		'category_id',
+		'show_front',
 	];
 
 	public function mainImages()
@@ -45,6 +47,7 @@ class Category extends Model
 	{
 		return $this->belongsTo(Category::class);
 	}
+
 	public function parents()
 	{
 		return $this->cat()->with('parents');
@@ -54,6 +57,7 @@ class Category extends Model
 	{
 		return $this->belongsTo(Category::class, 'category_id');
 	}
+
 	public function parentRecursive()
 	{
 		return $this->parent()->with('parentRecursive');

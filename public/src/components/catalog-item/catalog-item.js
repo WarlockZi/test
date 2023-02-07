@@ -2,6 +2,7 @@ import './catalog-item.scss';
 import {$, debounce, popup, post, trimStr} from '../../common';
 import WDSSelect from "../select/WDSSelect";
 import checkboxes from "../checkboxes/checkboxes";
+import checkbox from "../checkbox/checkbox";
 
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
@@ -18,6 +19,8 @@ export default function catalogItem() {
     }
     checkboxes('[checkboxes]',context)
       .onChange(update)
+    // debugger
+    checkbox(context)
     customCatalogItem.onclick = handleClick.bind(context)
     customCatalogItem.onkeyup = debounce(handleKeyup.bind(context))
   }

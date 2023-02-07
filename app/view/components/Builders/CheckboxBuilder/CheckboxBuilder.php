@@ -22,25 +22,11 @@ class CheckboxBuilder extends Builder
 //	public $html = '';
 
 	public static function build(string $field,
-															 bool $checked = false,
-															 string $valueType = 'bool')
+															 bool $checked)
 	{
 		$checkbox = new self();
 		$checkbox->field = "data-field='{$field}'";
-
-
 		$checkbox->checked = $checked ? "checked" : '';
-		if ($valueType  === 'bool') {
-			$value = $checked ? 'true' : 'false';
-			$checkbox->value = "data-value='{$value}'";
-		} elseif ($valueType  === 'int') {
-			$value = $checked ? 1 : 0;
-			$checkbox->value = "data-value={$value}";
-		} elseif ($valueType  === 'string') {
-			$value = $checked ? 'yes' : 'no';
-			$checkbox->value = "data-value='{$value}'";
-		}
-
 		return $checkbox;
 	}
 

@@ -18,7 +18,7 @@
 		<!--  HEADER  -->
 		 <? foreach ($this->columns as $c): ?>
 		  <div
-				  class="head <?= $c->class; ?>"
+				  <?= $c->classHeader; ?>
 					<?= $c->type; ?>
 					<?= $c->sort; ?>
 		  >
@@ -28,9 +28,9 @@
 		  </div>
 		 <? endforeach; ?>
 
-		 <?= ($this->headEditCol); ?>
+<!--		 --><?//= ($this->headEditCol); ?>
 
-		 <?= ($this->headDelCol); ?>
+<!--		 --><?//= ($this->headDelCol); ?>
 
 		<!--  TABLE  -->
 		<!--		 Empty row-->
@@ -47,7 +47,7 @@
 
 				  <div
 								<?= $this->dataModel; ?>
-						  data-id="<?= $item['id']; ?>"
+								<?= $this->getId($item['id']); ?>
 								<?= $c->dataField; ?>
 								<?= $c->class; ?>
 								<?= $c->contenteditable; ?>
@@ -56,8 +56,8 @@
 
 			 <? endforeach; ?>
 
-			 <?= $this->getEditButton($item['id']); ?>
-			 <?= $this->getDelButton($item['id']); ?>
+<!--			 --><?//= $this->getEditButton($item['id']); ?>
+<!--			 --><?//= $this->getDelButton($item['id']); ?>
 
 		 <? endforeach; ?>
 
