@@ -15,7 +15,7 @@ class BreadcrumbsRepository
     return 	$admin ? '/adminsc/category/' : '/category/';
   }
 
-	private static function arrayCategories(Category $category): array
+	private static function flatCategoryParents(Category $category): array
 	{
 		$cats[] = $category;
 		if ($category->parentRecursive) {
@@ -40,15 +40,16 @@ class BreadcrumbsRepository
     return "<nav class='{$class}'>{$str}</nav>";
   }
 
-	public static function getCategoryBreadcrumbs(Category $category,
+	public static function getCategoryBreadcrumbs(int $id,
 																								bool $linkLast = false,
 																								bool $admin = false,
 																								string $class = 'breadcrumbs-4')
 	{
 		$str = '';
 		$prefix = self::getPrefix($admin);
+		$category = Category::with('parentRecursive')->find($id);
 
-		$arrayCategories = self::arrayCategories($category);
+		$arrayCategories = self::flatCategoryParents($category);
 
 		foreach ($arrayCategories as $i => $cat) {
 			$slug = $admin ? "edit/{$cat->id}" : "{$cat->slug}";
