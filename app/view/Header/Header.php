@@ -11,7 +11,6 @@ use app\model\Category;
 
 class Header
 {
-//	protected \app\model\User;
 	protected static $adminHeader;
 	protected static $userHeader;
 

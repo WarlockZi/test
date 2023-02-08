@@ -7,7 +7,7 @@ export default function quill() {
     let textarea = $(selector)[0]
     if (!textarea) return false
 
-    let  toolbarOptions = [
+    let toolbarOptions = [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       ['blockquote'],
 
@@ -40,12 +40,12 @@ export default function quill() {
 
     let quill = new Quill(selector, options);
 
-debugger
+    // debugger
     try {
       const json = JSON.parse(text);
       quill.setContents(json)
     } catch (e) {
-        quill.insertText(0, text)
+      quill.insertText(0, text)
     }
 
     textarea.style.background = '#fff'

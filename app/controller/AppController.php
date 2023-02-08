@@ -144,10 +144,12 @@ class AppController extends Controller implements IModelable
     View::setJs('cookie.js');
     View::setCss('cookie.css');
 
-    View::setJs('list.js');
-    View::setCss('list.css');
+//    View::setJs('list.js');
+//    View::setCss('list.css');
 
+    View::setJs('product.js');
     View::setCss('product.css');
+//    View::setJs('card.js');
 
     View::setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
     View::setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");
@@ -158,10 +160,13 @@ class AppController extends Controller implements IModelable
   protected function setAdminAssets()
   {
     $this->layout = 'admin';
+
     View::setJs('admin.js');
     View::setCss('admin.css');
+
     View::setJs('list.js');
     View::setCss('list.css');
+
     View::setJs('common.js');
     View::setCss('common.css');
   }
