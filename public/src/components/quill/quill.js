@@ -40,6 +40,7 @@ export default function quill() {
 
     let quill = new Quill(selector, options);
 
+debugger
     try {
       const json = JSON.parse(text);
       quill.setContents(json)
@@ -53,11 +54,11 @@ export default function quill() {
     button.addEventListener('click', function () {
 
         let productId = $(`.item_wrap[data-model='product']`)[0].dataset.id
-        let description = JSON.stringify(quill.getContents())
+        let txt = JSON.stringify(quill.getContents())
 
-        post('/adminsc/product/adddescription',
+        post('/adminsc/product/updateOrCreate',
           {
-            description,
+            txt,
             'id': productId
           }
         )

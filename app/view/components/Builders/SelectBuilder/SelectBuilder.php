@@ -151,8 +151,8 @@ class SelectBuilder extends Builder
 				$this->tab,
 				$this->tabMultiply
 				)
-				->excluded($this->excluded)
-				->selected($this->selected)
+				->excluded($this->excluded??0)
+				->selected($this->selected??0)
 				->get();
 	}
 

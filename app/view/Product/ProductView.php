@@ -3,10 +3,12 @@
 namespace app\view\Product;
 
 use app\core\Icon;
+use app\model\Category;
 use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Unit;
 use app\view\Builders\MorphBuilder;
+use app\view\components\Builders\Builder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
@@ -20,8 +22,19 @@ use Illuminate\Database\Eloquent\Model;
 class ProductView
 {
 
-
 	public $model = 'product';
+
+	protected static function clean(string $str){
+		$builder = new Builder();
+		return $builder->clean($str);
+	}
+
+	public static function renderToCart(Product $product)
+	{
+		ob_start();
+		include ROOT . '/app/view/Product/Main/toCart.php';
+		return ob_get_clean();
+	}
 
 	public static function renderProperty($property)
 	{
@@ -36,7 +49,9 @@ class ProductView
 		return "<div class='detail-image-wrap'>{$im}</div>";
 	}
 
-	public static function getCardImages(string $title, Collection $collection)
+	public static function getCardImages(string $title,
+																			 Collection $collection,
+																			 string $class='detail-images-wrap')
 	{
 		ob_start();
 		$detail_image = '';
@@ -61,6 +76,14 @@ class ProductView
 					->name('Артикул')
 					->contenteditable()
 					->required()
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('category_id', $product)
+					->name('Категория')
+					->html(self::getCategorySelect($product))
+					->contenteditable()
+
 					->get()
 			)
 			->field(
@@ -169,7 +192,7 @@ class ProductView
 		return $str;
 	}
 
-	protected static function getProperties($product): string
+	protected static function getProperties(Product $product): string
 	{
 		$str = "";
 		$currentCategory = $product->category;
@@ -202,12 +225,11 @@ class ProductView
 
 	protected static function getDescription($product): string
 	{
-		$str = include ROOT . '/app/view/Product/description.php';
-		return $str;
+		return include ROOT . '/app/view/Product/description.php';
 	}
 
 
-	protected static function getSmallPackImages($product): string
+	protected static function getSmallPackImages(Product $product): string
 	{
 		return MorphBuilder::build(
 			$product,
@@ -303,11 +325,9 @@ class ProductView
 			->initialOption('', 0)
 			->selected($product->main_unit)
 			->get();
-
 		return $f;
 //		return include ROOT . '/app/view/Product/main_unit.php';
 	}
-
 
 	protected static function getBaseUnit(Model $product): string
 	{
@@ -317,20 +337,22 @@ class ProductView
 			->initialOption('', 0)
 			->selected($product->base_unit)
 			->get();
-
-		return include ROOT . '/app/view/Product/main_unit.php';
+		return self::clean($f);
 	}
-
-	protected static function hasCat($category)
+	protected static function getCategorySelect(Model $product): string
 	{
-		return $category['parentRecursive'];
+		$f = SelectBuilder::build()
+			->tree(Category::all(),'children')
+			->field('category_id')
+			->initialOption('', 0)
+			->selected($product->category_id??0)
+			->get();
+		return self::clean($f);
 	}
-
 
 	public static function list(Collection $items): string
 	{
-		$view = new self;
-		return MyList::build($view->modelName)
+		return MyList::build(Product::class)
 			->pageTitle('Товары')
 			->column(
 				ListColumnBuilder::build('id')
