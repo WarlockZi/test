@@ -7,25 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Videoinstruction extends Model
 {
-	public $table = 'videoinstructions';
-	public  $model = 'videoinstruction';
+//	public  $model = 'videoinstruction';
+  public $timestamps = false;
 
-	protected $fillable = [
-		'name'=>'',
-		'link'=>'',
-		'user_id'=>0,
-		'sort'=>0,
-		'tag'=>'',
-	];
+  protected $fillable = [
+    'name',
+    'link',
+    'user_id',
+    'sort',
+    'tag',
+  ];
 
-	public function empty()
-	{
-		return $this->fillable;
-	}
+  protected $attributes = [
+    'name'=>'видео',
+    'link'=>'https://youtube.com'
+  ];
 
-//	public static function create($value=[],$register=false,$needsAuth=true)
-//	{
-//		return parent::create($value);
-//	}
+  public function empty()
+  {
+    return $this->fillable;
+  }
+
 
 }

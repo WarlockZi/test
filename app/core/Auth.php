@@ -17,9 +17,9 @@ class Auth extends AppController
 		}
 	}
 
-	public static function setAuth(int $userId): void
+	public static function setAuth(): void
 	{
-		Session::setUserId($userId);
+		Session::setUser();
 	}
 
 
@@ -28,32 +28,30 @@ class Auth extends AppController
 		if (Router::isLogin($controller->route)) {
 			return;
 		}
+//		Session::setUserId();
+//		if (!Session::getUserId()) {
+//			header("Location:/auth/login");
+//			exit();
+//		}
 
-		Session::setUserId();
+		$user = Session::getUser();
 
-		if (!Session::getUserId()) {
-			header("Location:/auth/login");
-			exit();
-		}
-
-		$user = User::find($_SESSION['id'])->toArray();
-
-		if ($user === false) {
-			$_SESSION['id'] = '';
-			$errors[] = 'Неправильные данные для входа на сайт';
-			header("Location:/user/login");
-			exit();
-		}
-		if (!$user['confirm'] == "1") {
-			$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
-			header("Location:/auth/noconfirm");
-			exit();
-		}
-
-		if ($user['email'] === $_ENV['SU_EMAIL']) {
-			define('SU', true);
-		}
-		$controller->user = $user;
+//		if ($user === null) {
+//			$_SESSION['id'] = '';
+//			$errors[] = 'Неправильные данные для входа на сайт';
+//			header("Location:/user/login");
+//			exit();
+//		}
+//		if (!$user['confirm'] == "1") {
+//			$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
+//			header("Location:/auth/noconfirm");
+//			exit();
+//		}
+//
+//		if ($user['email'] === $_ENV['SU_EMAIL']) {
+//			define('SU', true);
+//		}
+//		$controller->user = $user;
 
 	}
 
