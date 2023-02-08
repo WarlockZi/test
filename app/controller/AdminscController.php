@@ -17,7 +17,7 @@ class AdminscController extends AppController
 		if (!User::can($this->user, ['role_employee'])) {
 			header('Location:/auth/profile');
 		}
-		Header::setAdninHeader($this);
+//		Header::setAdninHeader($this);
 	}
 
 

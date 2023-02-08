@@ -4,9 +4,9 @@
 namespace app\view\Header;
 
 
-use app\controller\Controller;
 use app\core\Icon;
 use app\model\Category;
+use app\view\View;
 
 
 class Header
@@ -14,14 +14,14 @@ class Header
 	protected static $adminHeader;
 	protected static $userHeader;
 
-	public static function getTopAdmin(Controller $controller)
+	public static function getTopAdmin(View $view)
 	{
 		ob_start();
 		include ROOT . '/app/view/Header/admin/admin_header.php';
 		return ob_get_clean();
 	}
 
-	public static function getAdminSidebar(Controller $controller)
+	public static function getAdminSidebar()
 	{
 			ob_start();
 			include ROOT . '/app/view/Header/admin/admin_menu__accordion.php';
@@ -29,19 +29,19 @@ class Header
 			return $res;
 	}
 
-	public static function setAdninHeader(Controller $controller)
+	public static function setAdninHeader()
 	{
-		$adminSidebar = self::getAdminSidebar($controller);
-		$adminHeader = self::getTopAdmin($controller);
+		$adminSidebar = self::getAdminSidebar();
+		$adminHeader = self::getTopAdmin();
 		self::$adminHeader = $adminSidebar.$adminHeader;
 	}
 
 
 
-	public static function setUserHeader(Controller $controller)
+	public static function setUserHeader()
 	{
 		$frontCategories = self::getMenu();
-		$index = ($controller->route['action'] === "index" && $controller->route['controller'] == "Main");
+		$index = ($view->route['action'] === "index" && $view->route['controller'] == "Main");
 		$logo = Icon::logo_squre1().Icon::logo_vitex1();
 		ob_start();
 		include ROOT . '/app/view/Header/vitex_header.php';

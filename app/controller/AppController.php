@@ -2,37 +2,22 @@
 
 namespace app\controller;
 
-use app\controller\Interfaces\IModelable;
 use app\core\Auth;
 use app\Repository\MorphRepository;
-use app\view\Footer\Footer;
-use app\view\Header\Header;
-use app\view\View;
 use Illuminate\Database\Eloquent\Model;
 
-class AppController extends Controller implements IModelable
+class AppController extends Controller
 {
-  protected $ajax;
   public $user;
-  public $modelName;
-  protected $model;
-
-	public function setModel(){}
+//  public $modelName;
+//  protected $model;
+  protected $ajax;
 
   public function __construct(array $route)
   {
     parent::__construct($route);
 
 		Auth::autorize($this);
-    if (isset($route['admin'])) {
-      $this->setAdminAssets();
-      Header::setAdninHeader($this);
-      Footer::setAdminFooter();
-    } else {
-      $this->setMainAssets();
-      Header::setUserHeader($this);
-      Footer::setUserFooter();
-    }
 
     $this->isAjax();
   }
@@ -131,45 +116,5 @@ class AppController extends Controller implements IModelable
     }
     exit();
   }
-
-  protected function setMainAssets()
-  {
-    $this->layout = 'vitex';
-    View::setJs('main.js');
-    View::setCss('main.css');
-    View::setJs('mainHeader.js');
-    View::setCss('mainHeader.css');
-//		View::setJs('breadcrumbs.js');
-//		View::setCss('breadcrumbs.css');
-    View::setJs('cookie.js');
-    View::setCss('cookie.css');
-
-//    View::setJs('list.js');
-//    View::setCss('list.css');
-
-    View::setJs('product.js');
-    View::setCss('product.css');
-//    View::setJs('card.js');
-
-    View::setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
-    View::setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");
-//    View::setCDNCss("https://cdn.quilljs.com/1.3.6/quill.bubble.css");
-//		View::setJs('list.css');
-  }
-
-  protected function setAdminAssets()
-  {
-    $this->layout = 'admin';
-
-    View::setJs('admin.js');
-    View::setCss('admin.css');
-
-    View::setJs('list.js');
-    View::setCss('list.css');
-
-    View::setJs('common.js');
-    View::setCss('common.css');
-  }
-
 
 }

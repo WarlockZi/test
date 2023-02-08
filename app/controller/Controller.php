@@ -21,6 +21,8 @@ abstract class Controller
 		$this->token = !empty($_SESSION['token'])
       ? $_SESSION['token']
       : $this->createToken();
+
+		View::setAssets($route);
 	}
 
 	public static function getNameSpace($route)
