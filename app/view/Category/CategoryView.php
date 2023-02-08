@@ -15,8 +15,6 @@ use app\view\components\Builders\ListBuilder\MyList;
 
 class CategoryView
 {
-//	public $html;
-
 	public static function edit($id): string
 	{
 		$category = Category::with(

@@ -1,5 +1,5 @@
 import './card.scss'
-// import qui from '../components/quill/quill'
+
 import {$} from '../common'
 
 window.onload = function () {
@@ -13,6 +13,7 @@ window.onload = function () {
     // theme: 'bubble'
     // theme: 'snow'
   };
+
   var q = new Quill(quillSelector, options);
   q.setContents(text)
   q.enable(false)
