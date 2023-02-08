@@ -3,11 +3,13 @@ import {$, debounce, popup, post, trimStr} from '../../common';
 import WDSSelect from "../select/WDSSelect";
 import checkboxes from "../checkboxes/checkboxes";
 import checkbox from "../checkbox/checkbox";
+import DragNDrop from "../dnd/DragNDrop";
 
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
   if (customCatalogItem) {
     let selects = $('[custom-select]')
+
     if (selects) {
       [].map.call(selects, function (select) {
         new WDSSelect(select)
@@ -20,9 +22,23 @@ export default function catalogItem() {
     checkboxes('[checkboxes]',context)
       .onChange(update)
     // debugger
-    checkbox(context)
+    checkbox(context);
+
+    [].map.call($('[data-dnd]'), (dnd)=>{
+      let dn = new DragNDrop(dnd, handleDnd)
+    })
+
     customCatalogItem.onclick = handleClick.bind(context)
     customCatalogItem.onkeyup = debounce(handleKeyup.bind(context))
+  }
+
+  function handleDnd(files,target){
+      debugger
+    if (target.dataset.morph){
+
+    } else if(target.dataset.belongsTo){
+
+    }
   }
 
   async function handleKeyup({target}) {
@@ -44,9 +60,8 @@ export default function catalogItem() {
     this.target = target
     if (target.closest('.save')) {
       // save.bind(this)
-    } else if (target.closest('.del')
-      && target.closest('.del').dataset.model) {
-      del(this.id, this.model)
+    } else if (target.closest('.detach')) {
+      detach(this.id, this.model)
     } else if ((target.classList.contains('tab'))) {
       handleTab(target, this.model)
     } else if ((target.getAttribute('type')==='checkbox')) {
@@ -76,6 +91,12 @@ export default function catalogItem() {
 
   async function del(id, modelName) {
     let res = await post(`/adminsc/${modelName}/delete`, {id})
+    if (res) {
+      window.location.href = `/adminsc/${modelName}/edit`
+    }
+  }
+  async function detach(id, modelName) {
+    let res = await post(`/adminsc/${modelName}/detach`, {id})
     if (res) {
       window.location.href = `/adminsc/${modelName}/edit`
     }

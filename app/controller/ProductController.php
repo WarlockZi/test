@@ -2,8 +2,6 @@
 
 namespace app\controller;
 
-use app\controller\Interfaces\IModelable;
-use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
 use app\view\View;
@@ -12,9 +10,6 @@ use app\view\View;
 class ProductController extends AppController
 {
 	protected $model;
-
-//	public function setModel()
-//	{$this->model = Product::class;}
 
 	public function actionIndex()
 	{

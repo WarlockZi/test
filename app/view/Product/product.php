@@ -17,33 +17,39 @@ use \app\view\Product\ProductView;
 
 			<div class="row">
 
+				<div class="detail-image">
+					 <?= ProductView::getCardImages('',
+						 $product->detailImages); ?>
+				</div>
+
 				<div class="main-image">
 							<?= ImageRepository::getProductMainImage($product); ?>
 				</div>
 
 				<div class="properties">
-
 							<? foreach ($product->categoryProperties as $property): ?>
 								<?= ProductView::renderProperty($property); ?>
 							<? endforeach; ?>
-
-
 				</div>
+
+				<div class="to-cart">
+							<?= ProductView::renderToCart($product); ?>
+				</div>
+
 			</div>
 
-			<div class="row">
-					 <?= ProductView::getCardImages('Датальные картинки товара',
-						 $product->detailImages); ?>
-			</div>
+<!--			<div class="row">-->
+<!---->
+<!--			</div>-->
 
 			<div class="row">
 					 <?= ProductView::getCardImages('Вид внутритарной упаковки',
-						 $product->smallpackImages); ?>
+						 $product->smallpackImages, 'small-pack'); ?>
 			</div>
 
 			<div class="row">
 					 <?= ProductView::getCardImages('Вид транспортной упаковки',
-						 $product->bigpackImages); ?>
+						 $product->bigpackImages, 'big-pack'); ?>
 			</div>
 
 			<div class="info-wrap">
