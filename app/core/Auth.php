@@ -23,35 +23,34 @@ class Auth extends AppController
 	}
 
 
-	public static function autorize(Controller $controller): void
+	public static function autorize(): void
 	{
-		if (Router::isLogin($controller->route)) {
+		if (Router::isLogin(Router::getRoute())) {
 			return;
 		}
-//		Session::setUserId();
-//		if (!Session::getUserId()) {
-//			header("Location:/auth/login");
-//			exit();
-//		}
+		Session::setUser();
+		if (!Session::getUser()) {
+			header("Location:/auth/login");
+			exit();
+		}
 
 		$user = Session::getUser();
 
-//		if ($user === null) {
-//			$_SESSION['id'] = '';
-//			$errors[] = 'Неправильные данные для входа на сайт';
-//			header("Location:/user/login");
-//			exit();
-//		}
-//		if (!$user['confirm'] == "1") {
-//			$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
-//			header("Location:/auth/noconfirm");
-//			exit();
-//		}
-//
-//		if ($user['email'] === $_ENV['SU_EMAIL']) {
-//			define('SU', true);
-//		}
-//		$controller->user = $user;
+		if ($user === null) {
+			$_SESSION['id'] = '';
+			$errors[] = 'Неправильные данные для входа на сайт';
+			header("Location:/auth/login");
+			exit();
+		}
+		if (!$user['confirm'] == "1") {
+			$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
+			header("Location:/auth/noconfirm");
+			exit();
+		}
+
+		if ($user['email'] === $_ENV['SU_EMAIL']) {
+			define('SU', true);
+		}
 
 	}
 
