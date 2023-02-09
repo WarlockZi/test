@@ -18,9 +18,12 @@ class Session
 
   public static function setUser(): void
   {
-    if (isset($_SESSION['id'])) {
+    if (isset($_SESSION['id'])&&$_SESSION['id']) {
       self::$user = User::find($_SESSION['id'])->toArray();
-    }
+    }else{
+    	$user = new User();
+      self::$user = $user->toArray();
+		}
   }
 
 }

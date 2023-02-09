@@ -2,23 +2,17 @@
 
 namespace app\controller;
 
-use app\core\Auth;
 use app\Repository\MorphRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class AppController extends Controller
 {
   public $user;
-//  public $modelName;
-//  protected $model;
   protected $ajax;
 
   public function __construct(array $route)
   {
     parent::__construct($route);
-
-		Auth::autorize($this);
-
     $this->isAjax();
   }
 
@@ -45,7 +39,6 @@ class AppController extends Controller
       }
     }
   }
-
 
   public function actionAttach()
   {

@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\core\App;
+use app\core\Auth;
 use app\model\User;
 use app\view\Header\Header;
 use app\view\View;
@@ -14,6 +15,8 @@ class AdminscController extends AppController
 	public function __construct($route)
 	{
 		parent::__construct($route);
+
+		Auth::autorize($this);
 		if (!User::can($this->user, ['role_employee'])) {
 			header('Location:/auth/profile');
 		}

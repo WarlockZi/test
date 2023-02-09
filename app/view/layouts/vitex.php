@@ -23,13 +23,13 @@ use \app\core\Error;
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
 
 	<? $this::getMeta(); ?>
-	<? $this::getCSS(); ?>
+	<? $this->getCSS(); ?>
 
 </head>
 
 <body>
 
-<?= Header::getUserHeader(); ?>
+<?= $this->header; ?>
 
 <?= Error::getErrorHtml() ?>
 

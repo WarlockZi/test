@@ -207,10 +207,11 @@ nav.breadcrumbs-5 {
     display: block;
     height: 27%;
     position: absolute;
-    left: 0;
+    //left: 0;
     right: 0;
     top: 5px;
-    z-index: 1;
+    width: 1px;
+    //z-index: 1;
     transform: skewX(45deg);
     //&:hover {
     //  background-color: blue;
