@@ -20,6 +20,7 @@ class View implements IFooterable,IHeaderable,IRenderable
 	public $user;
 	protected $defaultView = ROOT . '/app/view/default.php';
 	protected $defaultLayout = 'vitex';
+	protected $notFound = ROOT.'/app/veiw/404.php';
 	public $layout;
 	public $view;
 	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
@@ -31,24 +32,11 @@ class View implements IFooterable,IHeaderable,IRenderable
 	{
 //		$this->user = $user;
 		$this->route = $route;
-//		if ($layout === false) {
-//			$this->layout = false;
-//		} else {
-//			$this->layout = $layout ?: ''; //LAYOUT;
-//		}
-		$this->view = $view;
 
+		$this->view = $view;
 //		$this->setView();
 	}
 
-//	protected function setHeader()
-//	{
-//		if (Session::getUser()) {
-//			Header::getAdminHeader();
-//		} else {
-//			Header::getUserHeader();
-//		}
-//	}
 	protected function setView()
 	{
 		if (Session::getUser()) {

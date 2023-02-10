@@ -18,7 +18,7 @@ class AdminView extends View
 		$this->setHeader();
 	}
 
-	protected function setHeader()
+	public function setHeader()
 	{
 		$this->header = new AdminHeader();
 
