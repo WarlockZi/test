@@ -72,6 +72,7 @@ class Router
 		$url = self::removeQuryString($url);
 		self::matchRoute($url);
 		if (self::isAdmin()) {
+			Auth::autorize();
 			$view = new AdminView(self::$route);
 		} else {
 			$view = new UserView(self::$route);
@@ -86,7 +87,7 @@ class Router
 		$controller = new $controller(self::$route);
 
 		$action = 'action' . self::upperCamelCase(self::$route['action']);
-		if (!method_exists($controller, $action)) NotFound::action($action, $controller,$view);
+		if (!method_exists($controller, $action)) NotFound::action($action, $controller, $view);
 		$controller->$action();
 		$view->render();
 
