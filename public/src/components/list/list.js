@@ -95,19 +95,19 @@ if (tables) {
 
         /// delete
       } else if (
-        target.className === '.del:not(.head)' ||
-        target.closest('.del:not(.head)')) {
+        target.className === '.del:not(.head)'
+        ||target.closest('.del:not(.head)')) {
         modelDel(target.closest('.del:not(.head)'))
 
         /// edit
-      } else if (target.className === '.edit:not(.head)' ||
-        target.closest('.edit:not(.head)')) {
+      } else if (target.className === 'edit:not(.head)'
+        ||target.closest('.edit:not(.head)')) {
         e.preventDefault()
         edit(target, modelName)
 
         /// sort
-      } else if (target.classList.contains('head') ||
-        target.classList.contains('icon')) {
+      } else if (target.classList.contains('head')
+        ||target.classList.contains('icon')) {
         let header = target.closest('.head')
         if (header.hasAttribute('data-sort')) {
           let index = [].findIndex.call(sortables, (el, i, inputs) => {

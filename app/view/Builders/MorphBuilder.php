@@ -5,6 +5,7 @@ namespace app\view\Builders;
 
 
 use app\controller\FS;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class MorphBuilder
@@ -42,14 +43,14 @@ class MorphBuilder
 		return $self;
 	}
 
-	public function one($one)
+	public function one(Collection $one)
 	{
 		$this->one = $one;
 		$this->oneOrMany = "data-morph='one'";
 		return $this;
 	}
 
-	public function many($many)
+	public function many(Collection $many)
 	{
 		$this->many = $many->all();
 		$this->oneOrMany = "data-morph='many'";

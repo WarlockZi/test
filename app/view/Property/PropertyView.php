@@ -9,9 +9,9 @@ use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
-use app\view\MyView;
 
-class PropertyView extends MyView
+
+class PropertyView
 {
 	public $modelName = Property::class;
 	public $model = 'property';

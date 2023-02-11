@@ -10,7 +10,7 @@ use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\MyView;
 
-class VideoinstructionView extends MyView
+class VideoinstructionView
 {
 	public $model = Videoinstruction::class;
 	public $html;

@@ -1,6 +1,9 @@
 <?
+
 use \app\view\Header\Header;
 use \app\view\Footer\Footer;
+use \app\core\Error;
+
 ?>
 
 <!DOCTYPE html>
@@ -14,19 +17,21 @@ use \app\view\Footer\Footer;
 	<meta name="HandheldFriendly" content="True">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="yandex-verification" content="003253e624aad5b6"/>
-<!--	<link rel="canonical" href="/--><?//= isset($vars['canonical']) ? $vars['canonical'] : '' ?><!--"/>-->
+	<!--	<link rel="canonical" href="/--><? //= isset($vars['canonical']) ? $vars['canonical'] : '' ?><!--"/>-->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
 
 	<? $this::getMeta(); ?>
-	<? $this::getCSS(); ?>
+	<? $this->getCSS(); ?>
 
 </head>
 
 <body>
 
-<?= Header::getUserHeader(); ?>
+<?= $this->header; ?>
+
+<?= Error::getErrorHtml() ?>
 
 <?= $content; ?>
 
@@ -35,8 +40,8 @@ use \app\view\Footer\Footer;
 
 
 <? $this::getJS(); ?>
-<?//= Footer::getYaMetrica(); ?>
-<?//= Footer::getVK(); ?>
+<? //= Footer::getYaMetrica(); ?>
+<? //= Footer::getVK(); ?>
 
 </body>
 </html>

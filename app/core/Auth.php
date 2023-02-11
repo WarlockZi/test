@@ -17,29 +17,29 @@ class Auth extends AppController
 		}
 	}
 
-	public static function setAuth(int $userId): void
+	public static function setAuth(): void
 	{
-		$_SESSION['id'] = $userId;
+		Session::setUser();
 	}
 
-	public static function sessionHasUserId()
-	{
-		return isset($_SESSION['id']) && $_SESSION['id'];
-	}
 
-	public static function autorize(Controller $controller): void
+	public static function autorize(): void
 	{
-		if (!self::sessionHasUserId()) {
+		if (Router::isLogin(Router::getRoute())) {
+			return;
+		}
+		Session::setUser();
+		if (!Session::getUser()) {
 			header("Location:/auth/login");
 			exit();
 		}
 
-		$user = User::find($_SESSION['id'])->toArray();
+		$user = Session::getUser();
 
-		if ($user === false) {
+		if ($user === null) {
 			$_SESSION['id'] = '';
 			$errors[] = 'Неправильные данные для входа на сайт';
-			header("Location:/user/login");
+			header("Location:/auth/login");
 			exit();
 		}
 		if (!$user['confirm'] == "1") {
@@ -51,7 +51,6 @@ class Auth extends AppController
 		if ($user['email'] === $_ENV['SU_EMAIL']) {
 			define('SU', true);
 		}
-		$controller->user = $user;
 
 	}
 

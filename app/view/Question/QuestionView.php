@@ -10,8 +10,9 @@ use app\view\Test\TestView;
 class QuestionView
 {
 
-	public static function getEditContent($test)
+	public static function getEditContent($test='')
 	{
+		if (!$test) return "<div class=''>Выберите тест для редактирования</div>";
 		$parentSelector = TestView::questionParentSelector($test->id);
 		$content = self::getContent($test, $parentSelector);
 		$rules = self::getRules();

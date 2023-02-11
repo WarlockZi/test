@@ -1,6 +1,9 @@
 <?
+
 use app\view\Footer\Footer;
 use \app\view\Header\Header;
+use \app\core\Error;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,11 +28,12 @@ use \app\view\Header\Header;
 
 <div class="admin-layout__container">
 
-<!--	--><?//= $adminSidebar; ?>
-<!--	--><?//= $adminHeader; ?>
-	<?=Header::getAdminHeader();?>
+	<?= Header::getAdminHeader(); ?>
+
 
 	<div class="admin-layout__content">
+
+		 <?= Error::getErrorHtml() ?>
 
 		 <?= $content ?>
 
@@ -38,7 +42,7 @@ use \app\view\Header\Header;
 	<div class="led"></div>
 </div>
 
-<?=Footer::getAdminFooter()?>
+<?= Footer::getAdminFooter() ?>
 
 <? $this::getJS() ?>
 

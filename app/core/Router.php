@@ -2,20 +2,48 @@
 
 namespace app\core;
 
-use app\controller\AppController;
+use app\view\AdminView;
+use app\view\UserView;
 
 class Router
 {
 	protected static $routes = [];
 	protected static $route = [];
+	protected static $namespace;
+
+	public static function getNamespace()
+	{
+		return self::$namespace;
+	}
+
+	public static function setNamespace(): void
+	{
+		if (isset(self::$route['admin']) && self::$route['admin']) {
+			self::$namespace = 'app\controller\admin\\';
+		}
+		self::$namespace = 'app\controller\\';
+	}
+
+	public static function getController()
+	{
+		return self::$controller;
+	}
+
+	public static function setController(): void
+	{
+		self::$controller = self::$route['controller'] . 'Controller';
+	}
+
+	protected static $controller;
 
 	public static function add($regexp, $route = [])
 	{
 		self::$routes[$regexp] = $route;
 	}
 
-	public static function matchRoute($url)
+	public static function matchRoute($url): void
 	{
+		require_once ROOT . '/app/core/routes.php';
 		foreach (self::$routes as $pattern => $route) {
 			if (preg_match("#$pattern#i", $url, $matches)) {
 				foreach ($matches as $k => $v) {
@@ -29,49 +57,41 @@ class Router
 				$route['controller'] = isset($route['controller']) ? self::upperCamelCase($route['controller']) : '';
 
 				self::$route = $route;
-				return true;
 			}
 		}
-		return false;
 	}
 
-	protected static function get404($error, $errorData)
+	protected static function isAdmin()
 	{
-		http_response_code(404);
-		$route = ['controller' => '404', 'action' => 'index'];
-//		$this->view='vitex';
-		$controller = new NotFoundController($route);
-		$errorText = 'bad - ' . $error . ' = ' . $errorData;
-		$controller->set(compact('errorText'));
-		$controller->getView();
-		exit();
+		return isset(self::$route['admin']) && self::$route['admin'];
 	}
 
-	protected static function getNameSpace($route)
-	{
-		if (isset($route['admin']) && $route['admin']) {
-			return 'app\controller\admin\\';
-		}
-		return 'app\controller\\';
-	}
 
 	public static function dispatch($url)
 	{
-		require_once ROOT . '/app/core/routes.php';
-
 		$url = self::removeQuryString($url);
+		self::matchRoute($url);
+		if (self::isAdmin()) {
+			Auth::autorize();
+			$view = new AdminView(self::$route);
+		} else {
+			$view = new UserView(self::$route);
+		}
 
-		if (!self::matchRoute($url)) self::get404('url', $url);
-		$nameSpace = self::getNameSpace(self::$route);
-		$controller = $nameSpace . self::$route['controller'] . 'Controller';
+		if (!self::$route) NotFound::url($url);
 
-		if (!class_exists($controller)) self::get404('controller', $controller);
+		self::setNamespace();
+		self::setController();
+		$controller = self::$namespace . self::$controller;
+		if (!class_exists($controller)) NotFound::controller();
 		$controller = new $controller(self::$route);
-		$action = 'action' . self::upperCamelCase(self::$route['action']); // . 'Action'; //Action для того, чтобы пользователь не мог обращаться к функции(хотя можно написать protected)
 
-		if (!method_exists($controller, $action)) self::get404('action', $action);
-		$controller->$action(); // Выполним метод
-		$controller->getView(); // Подключим вид
+		$action = 'action' . self::upperCamelCase(self::$route['action']);
+		if (!method_exists($controller, $action)) NotFound::action($action, $controller, $view);
+		$controller->$action();
+		$view->render();
+
+//		$controller->getView();
 	}
 
 	protected static function upperCamelCase($name)
@@ -99,5 +119,16 @@ class Router
 				return '';
 			}
 		}
+	}
+
+	public static function isLogin(array $route)
+	{
+		return $route['controller'] === 'Auth' && $route['action'] === 'login';
+	}
+
+
+	public static function getRoute(): array
+	{
+		return self::$route;
 	}
 }

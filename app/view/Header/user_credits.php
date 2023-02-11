@@ -1,9 +1,10 @@
 <?
 
 use app\model\User;
+use \app\core\Session;
 
 
-$user = $controller->user;
+$user = Session::getUser();
 
 ?>
 

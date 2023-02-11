@@ -1,5 +1,5 @@
 import './common.scss'
-import './Admin/admin.scss'
+// import './Admin/admin.scss'
 import error from './components/error/error'
 
 

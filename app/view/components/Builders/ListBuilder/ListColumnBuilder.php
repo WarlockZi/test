@@ -11,19 +11,21 @@ class ListColumnBuilder
 
 	public $field = 'id';
 	public $dataField;
-	public $class ;
-	public $name ;
+	public $class;
+	public $classHeader;
+
+	public $name;
 	public $type;
-	public $sort ;
-	public $sortIcon ;
-	public $search ;
+	public $sort;
+	public $sortIcon;
+	public $search;
 	public $width = 'auto';
-	public $hidden ;
-	public $contenteditable ;
-	public $link = false;
-	public $html ;
-	public $function ;
-	public $functionClass ;
+	public $hidden;
+	public $contenteditable;
+
+	public $html;
+	public $function;
+	public $functionClass;
 
 	public $select = false;
 	public $nameOptionByField;
@@ -41,6 +43,11 @@ class ListColumnBuilder
 	public function class(string $class)
 	{
 		$this->class = "class='{$class}'";
+		return $this;
+	}
+	public function classHeader(string $class)
+	{
+		$this->classHeader = "class='{$class}'";
 		return $this;
 	}
 
@@ -125,6 +132,7 @@ class ListColumnBuilder
 
 	public function get(): self
 	{
+		$this->classHeader = $this->classHeader??"class='head'";
 		$this->name = $this->name ? $this->name : $this->field;
 		return $this;
 	}

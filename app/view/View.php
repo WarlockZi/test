@@ -2,52 +2,102 @@
 
 namespace app\view;
 
+use app\controller\FS;
+use app\core\Error;
+use app\core\Session;
+use app\model\User;
+use app\view\Footer\Footer;
+use app\view\Header\Header;
+use app\view\Interfaces\IFooterable;
+use app\view\Interfaces\IHeaderable;
+use app\view\Interfaces\IRenderable;
 use Illuminate\Database\Eloquent\Model;
 
-class View
+class View implements IFooterable,IHeaderable,IRenderable
 {
 
 	public $route;
+	public $user;
+	protected $defaultView = ROOT . '/app/view/default.php';
+	protected $defaultLayout = 'vitex';
+	protected $notFound = ROOT.'/app/veiw/404.php';
 	public $layout;
 	public $view;
-	public $user;
 	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
 	public static $jsCss = ['js' => [], 'css' => []];
 
+
+
 	function __construct($route, $layout = '', $view = '', $user = '')
 	{
-		$this->user = $user;
+//		$this->user = $user;
 		$this->route = $route;
-		if ($layout === false) {
-			$this->layout = false;
-		} else {
-			$this->layout = $layout ?: ''; //LAYOUT;
-		}
+
 		$this->view = $view;
+//		$this->setView();
+	}
+
+	protected function setView()
+	{
+		if (Session::getUser()) {
+			Header::getAdminHeader();
+		} else {
+			Header::getUserHeader();
+		}
+	}
+
+
+
+	protected function validateViewFile(View $view)
+	{
+//		$file_view = $view->view;
+////		$file_view = $view->view ? $view->view : $view->defaultView;
+//		$file = $file_view . '.php';
+//
+//		$layout = FS::getAbsoluteFilePath(ROOT . "/app/view/layouts/", $file);
+//		if (!is_file($layout)) {
+//			Error::setError("Не найден layout - {$layout}");
+//			return ROOT . "/app/view/layouts/{$view->defaultLayout}.php";
+//		}
+//		return $layout;
+
+		$viewName = $view->view . '.php';
+		$file_view = ROOT . "/app/view/{$view->route['controller']}/{$viewName}";
+		if (!is_file($file_view)) {
+			Error::setError("Не найден файл вида - {$viewName}");
+			return $view->defaultView;
+		}
+		return $file_view;
+	}
+
+	protected function validateLayoutFile(View $view)
+	{
+		$layout = $view->layout
+			? $view->layout
+			: $view->defaultLayout;
+		$file = $layout . '.php';
+
+		$layout = FS::getAbsoluteFilePath(ROOT . "/app/view/layouts/", $file);
+		if (!is_file($layout)) {
+			Error::setError("Не найден layout - {$layout}");
+			return ROOT . "/app/view/layouts/{$view->defaultLayout}.php";
+		}
+		return $layout;
 	}
 
 	public function render(array $vars = [])
 	{
 		extract($vars);
 
-		$file_view = ROOT . "/app/view/{$this->route['controller']}/{$this->view}.php";
-		ob_start();
-		if (is_file($file_view)) {
-			require $file_view;
-		} else {
-			echo "<main class='content'><br>Не найден файл вида {$this->view}</main>";
-		}
-		$content = ob_get_clean();
-		ob_start();
+		$file_view = $this->validateViewFile($this);
 
-		if ($this->layout !== false) {
-			$file_layout = ROOT . "/app/view/layouts/{$this->layout}.php";
-			if (is_file($file_layout)) {
-				require $file_layout;
-			} else {
-				echo '<br> Не найден шаблон Layout' . $this->layout;
-			}
-		}
+		ob_start();
+		require $file_view;
+		$content = ob_get_clean();
+
+		$layout = $this->validateLayoutFile($this);
+		ob_start();
+		require $layout;
 		$page_cache = ob_get_clean();
 //		self::toFile($page_cache);
 		echo $page_cache;
@@ -115,13 +165,13 @@ class View
 		self::$jsCss['js'][] = $str;
 	}
 
-	public static function setCDNJs(string $src):void
+	public static function setCDNJs(string $src): void
 	{
 		$str = "<script src='{$src}'></script>";
 		self::$jsCss['js'][] = $str;
 	}
 
-	public static function setCDNCss(string $src):void
+	public static function setCDNCss(string $src): void
 	{
 		self::$jsCss['css'][] = "<link href='{$src}' rel='stylesheet' type='text/css'>";
 	}
@@ -135,7 +185,7 @@ class View
 		self::$jsCss['css'][] = "<link href='{$host}{$file}{$time}' rel='stylesheet' type='text/css'>";
 	}
 
-	public static function getCSS()
+	public function getCSS()
 	{
 		$css = '';
 		$arr = self::$jsCss['css'];
@@ -147,7 +197,7 @@ class View
 		echo $css;
 	}
 
-	public static function getJS()
+	public function getJS()
 	{
 		$js = '';
 		if (is_array(self::$jsCss['js'])) {
@@ -178,4 +228,28 @@ class View
 		self::$meta['desc'] = $desc ? $desc : 'Медицинкские перчатки';
 		self::$meta['keywords'] = $keywords ? $keywords : 'Медицинкские перчатки';
 	}
+
+
+
+
+//	public static function setAssets($route)
+//	{
+//		if (isset($route['admin'])) {
+//			$user = Session::getUser();
+//			if (!$user || !User::can($user)) {
+//				self::setMainAssets();
+//				Header::setUserHeader();
+//				Footer::setUserFooter();
+//			} else {
+//				self::setAdminAssets();
+//				Header::setAdninHeader();
+//				Footer::setAdminFooter();
+//			}
+//		}
+//	}
+
+
+
+	function setHeader(){}
+	function setFooter(){}
 }

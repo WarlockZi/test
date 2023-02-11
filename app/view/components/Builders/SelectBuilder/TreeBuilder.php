@@ -12,6 +12,7 @@ class TreeBuilder
 	private $relation;
 
 	private $selected;
+	private $excluded;
 
 	private $tab = '&nbsp;';
 	private $tabMultiply = 1;
@@ -36,11 +37,18 @@ class TreeBuilder
 		return $this;
 	}
 
-	protected function getOption($item, $level)
+	public function excluded(int $excluded)
 	{
-		$selected = $item->id== $this->selected?'selected':'';
+		$this->excluded = $excluded;
+		return $this;
+	}
+
+	protected function getOption($item, $level): string
+	{
+		if ($item->id === $this->excluded) return '';
+		$selected = $item->id == $this->selected ? 'selected' : '';
 		$tab = str_repeat($this->tab, $level * $this->tabMultiply);
-		return "<option data-level={$level} {$selected}>{$tab}{$item->name}</option>>";
+		return "<option data-level={$level} value = '{$item->id}' {$selected}>{$tab}{$item->name}</option>>";
 	}
 
 	protected function recursion($collection, $level, $string)

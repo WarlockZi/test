@@ -16,7 +16,7 @@ nav.breadcrumbs-4 {
   line-height: 30px;
   font-size: 13px;
   height: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 45px;
   display: flex;
   flex-wrap: wrap;
   font-family: Verdana, sans-serif;
@@ -182,5 +182,62 @@ nav.breadcrumbs-1 {
     }
   }
 }
+
+nav.breadcrumbs-5 {
+  margin-bottom: 20px;
+  padding: 0;
+
+  a:hover {
+  }
+
+  li {
+    display: inline-block;
+    line-height: 20px;
+    margin: 0 5px 0 -17px;
+    padding: 0 20px;
+    position: relative;
+    font-size: 13px;
+    font-family: Verdana, sans-serif;
+  }
+
+  li:before,
+  li:after {
+    border-right: 3px solid #BFE2FF;
+    content: '';
+    display: block;
+    height: 27%;
+    position: absolute;
+    //left: 0;
+    right: 0;
+    top: 5px;
+    width: 1px;
+    //z-index: 1;
+    transform: skewX(45deg);
+    //&:hover {
+    //  background-color: blue;
+    //  cursor: pointer;
+    //}
+  }
+
+  li:after {
+    bottom: 0;
+    top: 10px;
+    transform: skewX(-45deg);
+  }
+
+  li:last-of-type:before,
+  li:last-of-type:after {
+    display: none;
+  }
+  li a {
+    color: #000;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  li a:hover {
+    color: #337AB7;
+  }
+}
+
 
 

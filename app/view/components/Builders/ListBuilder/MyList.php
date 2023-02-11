@@ -4,12 +4,12 @@
 namespace app\view\components\Builders\ListBuilder;
 
 
-use app\view\components\Builders\SelectBuilder\SelectBuilder;
+use app\core\Icon;
 use Illuminate\Database\Eloquent\Collection;
 
 class MyList
 {
-	private $grid = "style='display: grid; grid-template-columns:";
+	private $grid;
 
 	private $model;
 	private $pageTitle;
@@ -36,6 +36,23 @@ class MyList
 		return $view;
 	}
 
+	public function link(string $field,
+											 string $classHeader,
+											 string $class,
+											 string $name,
+											 string $width,
+											 string $className,
+											 string $funcName)
+	{
+		$this->columns[$field] = ListColumnBuilder::build($field)
+			->classHeader($classHeader)
+			->class($class)
+			->name($name)
+			->width($width)
+			->function($className, $funcName)
+			->get();
+	}
+
 	public function belongsTo(string $model, $id)
 	{
 		$this->belongsTo = "data-belongs-to=" . $model;
@@ -45,7 +62,7 @@ class MyList
 
 	public function pageTitle(string $pageTitle)
 	{
-		$this->pageTitle = 	"<div class='list-title'>{$pageTitle}</div>";
+		$this->pageTitle = "<div class='list-title'>{$pageTitle}</div>";
 		return $this;
 	}
 
@@ -54,7 +71,7 @@ class MyList
 		$this->morph = "data-morph={$model}";
 		$this->morphId = "data-morphId={$id}";
 		$this->morphOneOrMany = "data-morphOneOrMany={$oneOrMany}";
-		$detach = $detach?'true':'false';
+		$detach = $detach ? 'true' : 'false';
 		$this->morphDetach = "data-morphDetach={$detach}";
 		return $this;
 	}
@@ -89,27 +106,18 @@ class MyList
 		return $this;
 	}
 
-	public function del()
-	{
-
-		$this->headDelCol = "<div class='head del'></div>";
-		return $this;
-	}
-
-	public function edit()
-	{
-		$this->headEditCol = "<div class='head edit'></div>";
-		return $this;
-	}
 
 	protected function getEditButton(int $itemId)
 	{
 		if ($this->headEditCol) {
 			$hidden = $itemId ? '' : 'hidden';
-			$str = "<div {$hidden} class='edit'  $this->dataModel " .
-				"data-id='{$itemId}'></div>";
-			return $str;
+			return "<div {$hidden} class='edit'  $this->dataModel " .
+				"data-id='{$itemId}'></div>";;
 		}
+	}
+	protected function getId(int $itemId)
+	{
+		return "data-id={$itemId}";
 	}
 
 	protected function getDelButton(int $itemId)
@@ -139,20 +147,48 @@ class MyList
 		return $str;
 	}
 
-	protected function prepareGridHeader(): void
+	public function del()
 	{
-		foreach ($this->columns as $colName => $column) {
-			$this->grid .= ' ' . $column->width;
-		}
-		if ($this->headEditCol) {
-			$this->grid .= ' 50px';
-		}
-		if ($this->headDelCol) {
-			$this->grid .= ' 50px';
-		}
-		$this->grid .= "'";
+		$this->columns['del'] = ListColumnBuilder::build('del')
+			->classHeader('head del')
+			->class('del')
+			->name(Icon::trashIcon())
+			->width('50px')
+			->get();
+		return $this;
+	}
+	public function edit()
+	{
+		$this->columns['edit'] = ListColumnBuilder::build('edit')
+			->classHeader('head edit')
+			->class('edit')
+			->name(Icon::editWhite())
+			->width('50px')
+			->get();
+
+		return $this;
 	}
 
+	protected function prepareGridHeader(): void
+	{
+		$columns = '';
+		foreach ($this->columns as $colName => $column) {
+			$columns .= ' ' . $column->width;
+		}
+
+		$this->grid .= "style='display: grid; grid-template-columns:{$columns}'";
+	}
+	protected function getData($column, $item, $field)
+	{
+		if ($column->function) {
+			$func = $column->function;
+			return $column->functionClass::$func($column, $item, $field);
+		} else if ($column->select) {
+			return $column->select->get($item->$field ?? 0);
+		} else {
+			return $item[$field];
+		}
+	}
 	protected function getEmpty($column)
 	{
 		if ($column->select) {
@@ -162,17 +198,7 @@ class MyList
 		}
 	}
 
-	protected function getData($column, $item, $field)
-	{
-		if ($column->function) {
-			$func = $column->function;
-			return $column->functionClass::$func($item);
-		} else if ($column->select) {
-			return $column->select->get($item->$field ?? 0);
-		} else {
-			return $item[$field];
-		}
-	}
+
 
 	protected function template()
 	{
@@ -188,4 +214,13 @@ class MyList
 
 		return $this->html;
 	}
+
+
+	// пример функции получения ссылки. Должна располагаться не здесь,
+	// а в любом другом классе, указанном в функции funcion ListColumnBuilder
+//	public function getLink($column, $item, $field){
+//		$href = '/adminsc/category/edit/'.$item->id;
+//		return "<a href = {$href}>Редакт категорию {$item->id}</a>";
+//	}
+
 }

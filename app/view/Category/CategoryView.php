@@ -5,6 +5,7 @@ namespace app\view\Category;
 use app\model\Category;
 use app\model\Product;
 use app\model\Property;
+use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
@@ -14,15 +15,12 @@ use app\view\components\Builders\ListBuilder\MyList;
 
 class CategoryView
 {
-	public $html;
-
 	public static function edit($id): string
 	{
 		$category = Category::with(
 			'products',
 			'parentRecursive',
 			'properties',
-//			'children',
 			'mainImages')
 			->find($id);
 
@@ -43,7 +41,12 @@ class CategoryView
 			->field(
 				ItemFieldBuilder::build('show_front', $category)
 					->name('Показывать на главоной')
-					->type('checkbox')
+					->html(
+						CheckboxBuilder::build('show_front',
+							$category->show_front)
+							->get()
+					)
+//					->type('checkbox')
 					->get()
 			)
 			->tab(
@@ -60,8 +63,6 @@ class CategoryView
 						MyList::build(Product::class)
 							->belongsTo('category', $id)
 							->addButton('ajax')
-							->edit()
-							->del()
 							->items($category['products'] ?? [])
 							->column(
 								ListColumnBuilder::build('id')
@@ -78,6 +79,8 @@ class CategoryView
 									->name("Назв. на сайте")
 									->get()
 							)
+							->edit()
+							->del()
 							->get()
 					)
 					->get()
@@ -86,10 +89,8 @@ class CategoryView
 				ItemTabBuilder::build('Св-ва категории')
 					->html(
 						MyList::build(Property::class)
-							->items($category->properties?? [])
-							->morph('category', $id,'many',false)
-							->edit()
-							->del()
+							->items($category->properties ?? [])
+							->morph('category', $id, 'many', false)
 							->addButton('ajax')
 							->column(
 								ListColumnBuilder::build('id')
@@ -102,6 +103,8 @@ class CategoryView
 									->contenteditable()
 									->get()
 							)
+							->edit()
+							->del()
 							->get()
 					)
 					->get()
@@ -109,9 +112,8 @@ class CategoryView
 			->tab(
 				ItemTabBuilder::build('Подкатегории')
 					->html(
+
 						MyList::build(Category::class)
-							->edit()
-							->del()
 							->addButton('ajax')
 							->items($category['children'] ?? [])
 							->column(
@@ -125,7 +127,11 @@ class CategoryView
 									->contenteditable()
 									->get()
 							)
+							->belongsTo('category', $id)
+							->edit()
+							->del()
 							->get()
+
 					)
 					->get()
 			)
@@ -137,19 +143,17 @@ class CategoryView
 
 	public static function list($models): string
 	{
-		$view = new self();
-		$table = include ROOT . '/app/view/Category/list.php';
-		$view->set(compact('table'));
-
-		return $view->html;
+		return MyList::build(Category::class)
+			->edit()
+			->get();
 	}
 
 
 	private static function getMainImage($category)
 	{
 		return DndBuilder::build('catalog', 'dnd')
-			->morph($category, 'mainImages','image',0,
-				true,'one',
+			->morph($category, 'mainImages', 'image', 0,
+				true, 'one',
 				'main', 'holder')
 			->get();
 	}
