@@ -7,10 +7,27 @@ namespace app\Repository;
 use app\controller\Controller;
 use app\controller\FS;
 use app\model\Product;
+use app\model\Property;
+use app\model\Val;
 
 class ProductRepository extends Controller
 {
 	public static $ProductRepository;
+
+	public static function preparePropertiesList(Product $product)
+	{
+		$arr = [
+			['name' => 'Артикул', 'value' => $product->art],
+			['name' => 'Страна', 'value' => $product->manufacturer->country->name ?? 'Неизвестен'],
+			['name' => 'Производитель', 'value' => $product->manufacturer->name ?? 'Неизвестен'],
+		];
+
+		foreach ($product->values as $value){
+			$property = Val::find($value->id)->property->name;
+			array_push($arr, ['name'=>$property, 'value'=>$value->name]);
+		}
+		return $arr;
+	}
 
 	public static function clear()
 	{

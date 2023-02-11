@@ -40,7 +40,7 @@
     }
 
     .edit:hover {
-      background-color: lighten($color-main, 20%);
+      background-color: lighten($color-main, 45%);
 
       svg {
         stroke: #ffffff;
@@ -48,7 +48,7 @@
     }
 
     .del:hover {
-      background-color: lighten($color-warning, 20%);
+      background-color: lighten($color-warning, 35%);
 
       svg {
         fill: #ffffff;
@@ -150,13 +150,9 @@
       }
 
       &.edit {
-        //background-image: url("/pic/icons/edit.svg");
-        //background-position: center;
-        //background-repeat: no-repeat;
-        //background-size: 20px;
         svg {
           stroke: white;
-          stroke-width: 2px;
+          stroke-width: 1px;
         }
 
       }

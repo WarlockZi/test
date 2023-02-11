@@ -17,61 +17,45 @@ use \app\view\Product\ProductView;
 
 			<div class="row">
 
+				<div class="detail-image">
+					 <?= ProductView::getCardImages('',
+						 $product->detailImages); ?>
+				</div>
+
 				<div class="main-image">
 							<?= ImageRepository::getProductMainImage($product); ?>
 				</div>
 
 				<div class="properties">
-
-					<div class="row">
-						<div class="property">
-						<span>
-						Артикул
-						</span>
-						</div>
-						<div class="value"><?= $product->art; ?></div>
-					</div>
-
-					<div class="row">
-						<div class="property">
-						<span>
-						Страна
-						</span>
-						</div>
-						<div class="value"><?= $product->manufacturer->country->name ?? 'Неизвестна'; ?></div>
-					</div>
-
-					<div class="row">
-						<div class="property">
-						<span>
-						Производитель
-						</span>
-						</div>
-						<div class="value"><?= $product->manufacturer->name ?? 'Неизвестен'; ?></div>
-					</div>
-
+							<? foreach ($product->categoryProperties as $property): ?>
+								<?= ProductView::renderProperty($property); ?>
+							<? endforeach; ?>
 				</div>
+
+				<div class="to-cart">
+							<?= ProductView::renderToCart($product); ?>
+				</div>
+
+			</div>
+
+<!--			<div class="row">-->
+<!---->
+<!--			</div>-->
+
+			<div class="row">
+					 <?= ProductView::getCardImages('Вид внутритарной упаковки',
+						 $product->smallpackImages, 'small-pack'); ?>
 			</div>
 
 			<div class="row">
-					 <?= ProductView::getCardImages('Датальные картинки товара',
-						 $product->detailImages); ?>
-			</div>
-
-			<div class="row">
-					 <?= ProductView::getCardImages('Вид внутритранспортной упоковки',
-						 $product->smallpackImages); ?>
-			</div>
-
-			<div class="row">
-					 <?= ProductView::getCardImages('Вид транспортной упоковки',
-						 $product->bigpackImages); ?>
+					 <?= ProductView::getCardImages('Вид транспортной упаковки',
+						 $product->bigpackImages, 'big-pack'); ?>
 			</div>
 
 			<div class="info-wrap">
 				<h3 class="info-tag">Информация о товаре</h3>
 				<p class="detail-text">
-							<?= $product['dtxt'] ?>
+							<?= $product['txt'] ?>
 				</p>
 			</div>
 
@@ -101,10 +85,10 @@ use \app\view\Product\ProductView;
 				<ol>
 					<li>
 						<span class="info">Вам понравился продукт</span></li>
-						<input type="text">
+					<input type="text">
 					<li>
 						<span class="info">Напишите свой отзыв</span></li>
-						<input type="text">
+					<input type="text">
 					<li>
 						<span class="info">Расскажите нам немного о себе</span>
 						<input type="text">

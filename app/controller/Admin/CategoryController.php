@@ -36,10 +36,15 @@ class CategoryController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route['id'];
-		$category = Category::with('parentRecursive')->find($id);
-		$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category,false, true);
+		$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($id,false, true);
 		$category = CategoryView::edit($id);
 		$this->set(compact('category', 'breadcrumbs'));
 	}
 
+	public function actionList()
+	{
+		$table = CategoryView::list(Category::all());
+
+		$this->set(compact('table'));
+	}
 }

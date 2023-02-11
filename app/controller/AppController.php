@@ -2,35 +2,17 @@
 
 namespace app\controller;
 
-use app\core\Auth;
 use app\Repository\MorphRepository;
-use app\view\Footer\Footer;
-use app\view\Header\Header;
-use app\view\View;
 use Illuminate\Database\Eloquent\Model;
 
 class AppController extends Controller
 {
-  protected $ajax;
   public $user;
-  public $modelName;
-  public $model;
+  protected $ajax;
 
   public function __construct(array $route)
   {
     parent::__construct($route);
-
-		Auth::autorize($this);
-    if (isset($route['admin'])) {
-      $this->setAdminAssets();
-      Header::setAdninHeader($this);
-      Footer::setAdminFooter();
-    } else {
-      $this->setMainAssets();
-      Header::setUserHeader($this);
-      Footer::setUserFooter();
-    }
-
     $this->isAjax();
   }
 
@@ -57,21 +39,6 @@ class AppController extends Controller
       }
     }
   }
-//
-//	protected static function attachMorph(array $response, array $morph)
-//	{
-//		if ($response['morph_oneormany'] === 'one') {
-//			if ($response['morph_detach'] === 'true') {
-//				ListMorphRepository::attachOneDetach($response, $morph);
-//			}
-//			ListMorphRepository::attachOneNoDetach($response, $morph);
-//		} else {
-//			if ($response['morph_detach'] === 'true') {
-//				ListMorphRepository::attachOneDetach($response, $morph);
-//			}
-//			ListMorphRepository::attachOneNoDetach($response, $morph);
-//		}
-//	}
 
   public function actionAttach()
   {
@@ -79,6 +46,7 @@ class AppController extends Controller
     if (!$req) $this->exitWithError('Плохой запрос');
     if (!isset($req['morph'])) $this->exitWithError('Плохой запрос');
     MorphRepository::attach($req);
+    $this->exitWithPopup('ok');
   }
 
   public function actionUpdateOrCreate()
@@ -141,42 +109,5 @@ class AppController extends Controller
     }
     exit();
   }
-
-  protected function setMainAssets()
-  {
-    $this->layout = 'vitex';
-    View::setJs('main.js');
-    View::setCss('main.css');
-    View::setJs('mainHeader.js');
-    View::setCss('mainHeader.css');
-//		View::setJs('breadcrumbs.js');
-//		View::setCss('breadcrumbs.css');
-    View::setJs('cookie.js');
-    View::setCss('cookie.css');
-
-    View::setJs('list.js');
-    View::setCss('list.css');
-
-    View::setCss('product.css');
-
-    View::setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
-    View::setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");
-//    View::setCDNCss("https://cdn.quilljs.com/1.3.6/quill.bubble.css");
-
-
-//		View::setJs('list.css');
-  }
-
-  protected function setAdminAssets()
-  {
-    $this->layout = 'admin';
-    View::setJs('admin.js');
-    View::setCss('admin.css');
-    View::setJs('list.js');
-    View::setCss('list.css');
-    View::setJs('common.js');
-    View::setCss('common.css');
-  }
-
 
 }

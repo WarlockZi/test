@@ -20,9 +20,9 @@ class TestView
 	{
 		$test = Test::find($id);
 
-		$isTest = $test->isTest ? 'теста' : 'папки';
+		$isTest = $test->isTest ? 'тест' : 'папку';
 		return ItemBuilder::build($test, 'test')
-			->pageTitle("Редактирование {$isTest} - {$test['name']}")
+			->pageTitle("Редактировать {$isTest} - {$test['name']}")
 			->del()
 			->save()
 			->field(
@@ -82,6 +82,7 @@ class TestView
 		return SelectBuilder::build()
 			->tree($tree, $treeRelaion,null, 4)
 			->field('test_id')
+			->belongsTo('test',$item->id)
 			->initialOption('', 0)
 			->selected($item->test_id)
 			->excluded($item->id)

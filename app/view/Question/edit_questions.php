@@ -7,7 +7,7 @@ use app\view\Question\QuestionView;
 
 ?>
 <div class="test-edit__title">
-	<p class="test-name">Название теста - <?= $test->name; ?></p>
+	<p class="test-name">Редактировать тест - <?= $test->name; ?></p>
 </div>
 
 <div class="questions" data-test-id="<?= $test->id; ?>">

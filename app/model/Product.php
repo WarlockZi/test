@@ -13,12 +13,15 @@ class Product extends Model
 		'name',
     'act',
 		'art',
-		'description',
+		'txt',
 		'category_id',
 		'image_id',
 		'main_unit',
 		'base_unit',
-		'manufacturer_id'
+		'manufacturer_id',
+		'title',
+		'keywords',
+		'description',
 	];
 
 	public function detailImages()

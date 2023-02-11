@@ -121,7 +121,7 @@ class AuthController extends AppController
 				->toArray();
 
 			if ($user) {
-				Auth::setAuth((int)$user['id']);
+//				Auth::setAuth((int)$user['id']);
 				$password = $this->randomPassword();
 				$newPassword = $this->preparePassword($password);
 				User::where('id', $user['id'])
@@ -153,7 +153,7 @@ class AuthController extends AppController
 			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
 			if ($user['password'] !== $this->preparePassword($data['password']))
 				$this->exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
-			Auth::setAuth((int)$user['id']);
+			Auth::setAuth();
 			$this->user = $user;
 			if (User::can($user, ['role_employee'])) {
 				$this->exitJson(['role' => 'employee']);
@@ -208,7 +208,7 @@ class AuthController extends AppController
 		$user = User::where('hash', $hash)->first();
 		if ($user) {
 			$user['confirm'] = "1";
-			Auth::setAuth($user);
+//			Auth::setAuth($user);
 			if ($user->update()) {
 				header('Location:/auth/success');
 				$this->exitWithPopup('"Вы успешно подтвердили свой E-mail."');

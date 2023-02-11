@@ -19,9 +19,12 @@ abstract class Controller
 
 		$this->view = $route['action'];
 		$this->token = !empty($_SESSION['token'])
-      ? $_SESSION['token']
-      : $this->createToken();
+			? $_SESSION['token']
+			: $this->createToken();
+
+//		View::setAssets($route);
 	}
+
 
 	protected function createToken()
 	{
@@ -35,24 +38,12 @@ abstract class Controller
 		$view->render($this->vars);
 	}
 
-	protected function getPaths($absolutePath)
-	{
-		$paths = [];
-		foreach (scandir("{$absolutePath}/") as $path) {
-			if ($path !== '.' && $path !== '..') {
-				$paths[$path]['basename'] = $path;
-				$paths[$path]['fullpath'] = "{$absolutePath}/{$path}";
-			}
-		}
-		return $paths;
-	}
-
 	public function set($vars)
 	{
 		$this->vars = array_merge($this->vars, $vars);
 	}
 
-	public function badToken($data)
+	public function badToken(array $data):bool
 	{
 		if (!$data) return false;
 		if (!$data['token']
@@ -64,12 +55,12 @@ abstract class Controller
 		return false;
 	}
 
-	public function isAjax()
+	public function isAjax(): array
 	{
 		if (isset($_POST['param'])) {
 
 			$req = json_decode($_POST['param'], true);
-			if ($this->badToken($req)) return "Плохой запрос";
+			if ($this->badToken($req)) return [];
 
 			if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
 				&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])
@@ -79,7 +70,7 @@ abstract class Controller
 				return $req;
 			}
 		}
-		return false;
+		return [];
 	}
 
 }

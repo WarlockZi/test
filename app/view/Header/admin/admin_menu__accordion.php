@@ -1,6 +1,9 @@
-<? use \app\model\User;
+<?
+use \app\model\User;
 use \app\core\Icon;
+use \app\core\Session;
 
+$user = Session::getUser();
 ?>
 <div class="admin_sidebar">
 

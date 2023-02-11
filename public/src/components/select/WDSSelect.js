@@ -25,9 +25,10 @@ export default class WDSSelect {
       this.sel.dataset.morphDetach = el.dataset.morphDetach ?? ''
       this.sel.dataset.morphOneormany = el.dataset.morphOneormany ?? ''
     }
-    if (el.dataset.model) {
-      this.sel.dataset.model = el.dataset.model
-      this.sel.dataset.id = el.dataset.modelId
+    // debugger
+    if (el.dataset.belongstoModel) {
+      this.sel.dataset.belongstoModel = el.dataset.belongstoModel
+      this.sel.dataset.belongstoId = el.dataset.belongstoId
     }
     if (el.dataset.field) {
       this.sel.dataset.field = el.dataset.field
@@ -103,11 +104,11 @@ function setup(select) {
 
   select.ul.classList.add("options")
   select.options.forEach(option => {
+    // debugger
     setOption(option)
   })
 
   function getMorph(sel) {
-    debugger
     let item = sel.closest('.item_wrap')
     return {
       morph: {

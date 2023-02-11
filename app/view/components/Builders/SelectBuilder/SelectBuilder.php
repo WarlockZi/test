@@ -75,19 +75,16 @@ class SelectBuilder extends Builder
 		$this->class = "class='{$class}'";
 		return $this;
 	}
-
 //	public function model(string $model)
 //	{
 //		$this->model = "data-model='{$model}'";
 //		return $this;
 //	}
-//
 //	public function modelId($modelId)
 //	{
 //		$this->modelId = "data-model-id='{$modelId}'";
 //		return $this;
 //	}
-
 	public function morph(string $morphFunction,
 												string $slug = '',
 												string $oneOrMany = 'one',
@@ -103,7 +100,7 @@ class SelectBuilder extends Builder
 
 	public function belongsTo(string $model, int $id)
 	{
-		$this->belongsToModel = "data-belongsTo-Model='{$model}'";
+		$this->belongsToModel = "data-belongsTo-model='{$model}'";
 		$this->belongsToId = "data-belongsTo-id='{$id}'";
 		return $this;
 	}
@@ -154,7 +151,8 @@ class SelectBuilder extends Builder
 				$this->tab,
 				$this->tabMultiply
 				)
-				->selected($this->selected)
+				->excluded($this->excluded??0)
+				->selected($this->selected??0)
 				->get();
 	}
 
@@ -162,7 +160,7 @@ class SelectBuilder extends Builder
 	{
 		$tpl = '';
 		foreach ($this->array as $index => $item) {
-			$selected = $this->selected === $index ? 'selected' : '';
+			$selected = $this->selected === $item['id'] ? 'selected' : '';
 			$tpl .= "<option value='{$item['id']}' $selected>{$item['name']}</option>";
 		}
 		$this->options = $tpl;

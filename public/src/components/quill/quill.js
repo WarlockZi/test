@@ -7,7 +7,7 @@ export default function quill() {
     let textarea = $(selector)[0]
     if (!textarea) return false
 
-    let  toolbarOptions = [
+    let toolbarOptions = [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       ['blockquote'],
 
@@ -40,11 +40,12 @@ export default function quill() {
 
     let quill = new Quill(selector, options);
 
+    // debugger
     try {
       const json = JSON.parse(text);
       quill.setContents(json)
     } catch (e) {
-        quill.insertText(0, text)
+      quill.insertText(0, text)
     }
 
     textarea.style.background = '#fff'
@@ -53,11 +54,11 @@ export default function quill() {
     button.addEventListener('click', function () {
 
         let productId = $(`.item_wrap[data-model='product']`)[0].dataset.id
-        let description = JSON.stringify(quill.getContents())
+        let txt = JSON.stringify(quill.getContents())
 
-        post('/adminsc/product/adddescription',
+        post('/adminsc/product/updateOrCreate',
           {
-            description,
+            txt,
             'id': productId
           }
         )

@@ -8,12 +8,12 @@ use app\model\Test;
 
 class TestController extends AppController
 {
-	public $model = Test::class;
+//	public $model = Test::class;
 
-	public function __construct(array $route)
-	{
-		parent::__construct($route);
-	}
+//	public function __construct(array $route)
+//	{
+//		parent::__construct($route);
+//	}
 
 //	public function actionDo(): void
 //	{
@@ -37,46 +37,46 @@ class TestController extends AppController
 //	}
 
 
-	function shuffle_assoc($array)
-	{
-		$keys = array_keys($array);
-		shuffle($keys);
-		foreach ($keys as $key) {
-			$new[$key] = $array[$key];
-		}
-		return $new;
-	}
+//	function shuffle_assoc($array)
+//	{
+//		$keys = array_keys($array);
+//		shuffle($keys);
+//		foreach ($keys as $key) {
+//			$new[$key] = $array[$key];
+//		}
+//		return $new;
+//	}
 
-	private function shuffleAnswers(array &$arr): void
-	{
-		foreach ($arr as $index => &$question) {
-			if (isset($question['answers']) && count($question['answers'])) {
-				$new = $this->shuffle_assoc($question['answers']);
-				$question['answers'] = $new;
-			}
-		}
-	}
+//	private function shuffleAnswers(array &$arr): void
+//	{
+//		foreach ($arr as $index => &$question) {
+//			if (isset($question['answers']) && count($question['answers'])) {
+//				$new = $this->shuffle_assoc($question['answers']);
+//				$question['answers'] = $new;
+//			}
+//		}
+//	}
 
-	private function getCorrectAnswers(array $arr): array
-	{
-		$correctAnswers = [];
-		foreach ($arr as $q) {
-			if (isset($q['answers'])) {
-				foreach ($q['answers'] as $answer) {
-					if ($answer['correct_answer']) {
-						$correctAnswers[] = $answer['id'];
-					}
-				}
-			}
-		}
-		return $correctAnswers;
-	}
+//	private function getCorrectAnswers(array $arr): array
+//	{
+//		$correctAnswers = [];
+//		foreach ($arr as $q) {
+//			if (isset($q['answers'])) {
+//				foreach ($q['answers'] as $answer) {
+//					if ($answer['correct_answer']) {
+//						$correctAnswers[] = $answer['id'];
+//					}
+//				}
+//			}
+//		}
+//		return $correctAnswers;
+//	}
 
-	private function cacheCorrectAnswers(array $arr): void
-	{
-		$correctAnswers = $this->getCorrectAnswers($arr);
-		$_SESSION['correct_answers'] = $correctAnswers ?? '';
-	}
+//	private function cacheCorrectAnswers(array $arr): void
+//	{
+//		$correctAnswers = $this->getCorrectAnswers($arr);
+//		$_SESSION['correct_answers'] = $correctAnswers ?? '';
+//	}
 
 //	public function actionPaths()
 //	{

@@ -8,6 +8,7 @@ use app\model\Image;
 
 class FS
 {
+
 	public static function delFilesFromPath(string $path, string $ext = ''): array
 	{
 		$ext = $ext ?? '*';
@@ -20,6 +21,17 @@ class FS
 		return $deleted;
 	}
 
+//	protected function getPaths($absolutePath)
+//	{
+//		$paths = [];
+//		foreach (scandir("{$absolutePath}/") as $path) {
+//			if ($path !== '.' && $path !== '..') {
+//				$paths[$path]['basename'] = $path;
+//				$paths[$path]['fullpath'] = "{$absolutePath}/{$path}";
+//			}
+//		}
+//		return $paths;
+//	}
 	public static function getPath(...$args)
 	{
 		$s = DIRECTORY_SEPARATOR;
