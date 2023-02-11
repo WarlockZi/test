@@ -153,12 +153,16 @@ class AuthController extends AppController
 			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
 			if ($user['password'] !== $this->preparePassword($data['password']))
 				$this->exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
-			Auth::setAuth();
+			Auth::setAuth($user);
 			$this->user = $user;
 			if (User::can($user, ['role_employee'])) {
-				$this->exitJson(['role' => 'employee']);
+				header("Location:/adminsc");
+				exit();
+//				$this->exitJson(['role' => 'employee']);
 			} else {
-				$this->exitJson(['role' => 'user']);
+				header("Location:/");
+//				$this->exitJson(['role' => 'user']);
+				exit();
 			}
 		}
 
