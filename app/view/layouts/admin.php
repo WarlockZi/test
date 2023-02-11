@@ -28,7 +28,7 @@ use \app\core\Error;
 
 <div class="admin-layout__container">
 
-	<?= Header::getAdminHeader(); ?>
+	<?= \app\view\Header\AdminHeader::getHeader(); ?>
 
 
 	<div class="admin-layout__content">

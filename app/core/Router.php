@@ -63,7 +63,7 @@ class Router
 
 	protected static function isAdmin()
 	{
-		return isset(self::$route['admin']) && self::$route['admin'];
+		return (isset(self::$route['controller']) && self::$route['controller'] ==='Adminsc') ;
 	}
 
 
@@ -71,8 +71,8 @@ class Router
 	{
 		$url = self::removeQuryString($url);
 		self::matchRoute($url);
-		if (self::isAdmin()) {
-			Auth::autorize();
+		$user = Auth::autorize();
+		if (Router::isAdmin()) {
 			$view = new AdminView(self::$route);
 		} else {
 			$view = new UserView(self::$route);
@@ -88,6 +88,7 @@ class Router
 
 		$action = 'action' . self::upperCamelCase(self::$route['action']);
 		if (!method_exists($controller, $action)) NotFound::action($action, $controller, $view);
+		$controller->user = $user;
 		$controller->$action();
 		$view->render();
 

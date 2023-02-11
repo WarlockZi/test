@@ -22,7 +22,7 @@ class AdminView extends View
 	{
 		$this->header = new AdminHeader();
 
-		Header::getAdminHeader();
+//		Header::getAdminHeader();
 
 	}
 

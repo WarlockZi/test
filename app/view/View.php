@@ -13,19 +13,18 @@ use app\view\Interfaces\IHeaderable;
 use app\view\Interfaces\IRenderable;
 use Illuminate\Database\Eloquent\Model;
 
-class View implements IFooterable,IHeaderable,IRenderable
+class View implements IFooterable, IHeaderable, IRenderable
 {
 
 	public $route;
 	public $user;
 	protected $defaultView = ROOT . '/app/view/default.php';
 	protected $defaultLayout = 'vitex';
-	protected $notFound = ROOT.'/app/veiw/404.php';
+	protected $notFound = ROOT . '/app/veiw/404.php';
 	public $layout;
 	public $view;
 	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
 	public static $jsCss = ['js' => [], 'css' => []];
-
 
 
 	function __construct($route, $layout = '', $view = '', $user = '')
@@ -47,7 +46,6 @@ class View implements IFooterable,IHeaderable,IRenderable
 	}
 
 
-
 	protected function validateViewFile(View $view)
 	{
 //		$file_view = $view->view;
@@ -61,7 +59,8 @@ class View implements IFooterable,IHeaderable,IRenderable
 //		}
 //		return $layout;
 
-		$viewName = $view->view . '.php';
+		$v = $view->route['action'] ? $view->route['action'] : 'index';
+		$viewName = $v . '.php';
 		$file_view = ROOT . "/app/view/{$view->route['controller']}/{$viewName}";
 		if (!is_file($file_view)) {
 			Error::setError("Не найден файл вида - {$viewName}");
@@ -249,7 +248,11 @@ class View implements IFooterable,IHeaderable,IRenderable
 //	}
 
 
+	function setHeader()
+	{
+	}
 
-	function setHeader(){}
-	function setFooter(){}
+	function setFooter()
+	{
+	}
 }

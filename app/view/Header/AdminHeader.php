@@ -8,7 +8,7 @@ use app\view\View;
 
 class AdminHeader
 {
-	protected $header;
+	protected static $header;
 
 	public function __construct()
 	{
@@ -21,7 +21,7 @@ class AdminHeader
 	{
 		$adminSidebar = $this->getSidebar();
 		$adminHeader = $this->getTop();
-		$this->header = $adminSidebar . $adminHeader;
+		self::$header = $adminSidebar . $adminHeader;
 		$this->setAssets();
 	}
 
@@ -50,9 +50,9 @@ class AdminHeader
 		$res = ob_get_clean();
 		return $res;
 	}
-	public function getHeader()
+	public static function getHeader()
 	{
-		return $this->header;
+		return self::$header;
 	}
 
 

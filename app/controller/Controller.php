@@ -43,11 +43,10 @@ abstract class Controller
 		$this->vars = array_merge($this->vars, $vars);
 	}
 
-	public function badToken(array $data):bool
+	public function badToken(array $data): bool
 	{
-		if (!$data) return false;
-		if (!$data['token']
-			&& !$_SESSION['token'] === $_POST['token']
+		if (!$data || !isset($data['token']) || !$data['token']) return false;
+		if (!$_SESSION['token'] === $data['token']
 		) {
 			unset($data['token']);
 			return true;
