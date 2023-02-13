@@ -2,6 +2,7 @@
 
 namespace app\core;
 
+use app\model\User;
 use app\view\AdminView;
 use app\view\UserView;
 
@@ -10,6 +11,7 @@ class Router
 	protected static $routes = [];
 	protected static $route = [];
 	protected static $namespace;
+	protected static $controller;
 
 	public static function getNamespace()
 	{
@@ -26,15 +28,16 @@ class Router
 
 	public static function getController()
 	{
+		return self::$namespace . self::$controller;
+	}
+
+	public static function setController(): string
+	{
+		self::setNamespace();
+		self::$controller = self::$namespace.self::$route['controller'] . 'Controller';
 		return self::$controller;
 	}
 
-	public static function setController(): void
-	{
-		self::$controller = self::$route['controller'] . 'Controller';
-	}
-
-	protected static $controller;
 
 	public static function add($regexp, $route = [])
 	{
@@ -63,7 +66,7 @@ class Router
 
 	protected static function isAdmin()
 	{
-		return (isset(self::$route['controller']) && self::$route['controller'] ==='Adminsc') ;
+		return (isset(self::$route['admin']) && self::$route['admin'] === 'adminsc');
 	}
 
 
@@ -71,26 +74,26 @@ class Router
 	{
 		$url = self::removeQuryString($url);
 		self::matchRoute($url);
+
 		$user = Auth::autorize();
-		if (Router::isAdmin()) {
+		if (Router::isAdmin() && User::can($user,['role_employee'])) {
 			$view = new AdminView(self::$route);
 		} else {
 			$view = new UserView(self::$route);
 		}
 
-		if (!self::$route) NotFound::url($url);
+		if (!self::$route) NotFound::url($url, $view);
 
-		self::setNamespace();
-		self::setController();
-		$controller = self::$namespace . self::$controller;
-		if (!class_exists($controller)) NotFound::controller();
+		$controller = self::setController();
+		if (!class_exists($controller)) NotFound::controller(self::$controller, $view);
 		$controller = new $controller(self::$route);
 
 		$action = 'action' . self::upperCamelCase(self::$route['action']);
 		if (!method_exists($controller, $action)) NotFound::action($action, $controller, $view);
 		$controller->user = $user;
 		$controller->$action();
-		$view->render();
+		$view->view=$controller->view;
+		$view->render($controller->vars);
 
 //		$controller->getView();
 	}

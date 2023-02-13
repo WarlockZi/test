@@ -26,4 +26,9 @@ class AdminView extends View
 
 	}
 
+	function getErrors()
+	{
+
+
+	}
 }

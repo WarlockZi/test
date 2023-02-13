@@ -31,7 +31,7 @@ use \app\core\Error;
 
 <?= $this->header; ?>
 
-<?= Error::getErrorHtml() ?>
+<?= $this->getErrors(); ?>
 
 <?= $content; ?>
 

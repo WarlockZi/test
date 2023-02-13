@@ -34,8 +34,8 @@ abstract class Controller
 
 	public function getView()
 	{
-		$view = new View($this->route, $this->layout, $this->view, $this->user);
-		$view->render($this->vars);
+//		$view = new View($this->route, $this->layout, $this->view, $this->user);
+		$this->view->render($this->vars);
 	}
 
 	public function set($vars)
