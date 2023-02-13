@@ -4,28 +4,24 @@
 namespace app\core;
 
 
-use app\controller\AppController;
 use app\controller\Controller;
 use app\view\View;
 
 class NotFound
 {
 
-	public static function url(string $url){
+	public static function url(string $url, View $view){
 		$error = "Плохой запрос url - {$url}";
 		Error::setError($error);
-		$route = ['controller'=>'AppController','action'=>'index'];
-		$controller = new AppController($route);
-		$controller->getView();
+		$route = ['controller'=>'AppController','action'=>'ind ex'];
+		$view->render();
 		exit();
 	}
 
-	public static function controller(){
-		Auth::autorize();
-		$error = "Плохой запрос controller - {$route['controller']}";
+	public static function controller(string $controller, View $view){
+		$error = "Плохой запрос controller - {$controller}";
 		Error::setError($error);
-		$controller = new AppController($route);
-		$controller->getView();
+		$view->render();
 		exit();
 	}
 

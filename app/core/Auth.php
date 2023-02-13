@@ -4,7 +4,6 @@
 namespace app\core;
 
 use app\controller\AppController;
-use app\controller\Controller;
 use app\model\User;
 
 class Auth extends AppController

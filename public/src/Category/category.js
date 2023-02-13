@@ -1,1 +1,1 @@
-import './category.scss'
+// import './category.scss'

@@ -5,35 +5,31 @@ namespace app\view;
 use app\controller\FS;
 use app\core\Error;
 use app\core\Session;
-use app\model\User;
-use app\view\Footer\Footer;
 use app\view\Header\Header;
+use app\view\Interfaces\IErrors;
 use app\view\Interfaces\IFooterable;
 use app\view\Interfaces\IHeaderable;
 use app\view\Interfaces\IRenderable;
 use Illuminate\Database\Eloquent\Model;
 
-class View implements IFooterable, IHeaderable, IRenderable
+abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors
 {
 
 	public $route;
+	public $errors;
 	public $user;
 	protected $defaultView = ROOT . '/app/view/default.php';
 	protected $defaultLayout = 'vitex';
-	protected $notFound = ROOT . '/app/veiw/404.php';
 	public $layout;
 	public $view;
 	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
 	public static $jsCss = ['js' => [], 'css' => []];
 
 
-	function __construct($route, $layout = '', $view = '', $user = '')
+	function __construct($route, $layout = '', $view = 'index.php', $user = '')
 	{
-//		$this->user = $user;
 		$this->route = $route;
-
 		$this->view = $view;
-//		$this->setView();
 	}
 
 	protected function setView()
@@ -48,18 +44,8 @@ class View implements IFooterable, IHeaderable, IRenderable
 
 	protected function validateViewFile(View $view)
 	{
-//		$file_view = $view->view;
-////		$file_view = $view->view ? $view->view : $view->defaultView;
-//		$file = $file_view . '.php';
-//
-//		$layout = FS::getAbsoluteFilePath(ROOT . "/app/view/layouts/", $file);
-//		if (!is_file($layout)) {
-//			Error::setError("Не найден layout - {$layout}");
-//			return ROOT . "/app/view/layouts/{$view->defaultLayout}.php";
-//		}
-//		return $layout;
 
-		$v = $view->route['action'] ? $view->route['action'] : 'index';
+		$v = $view->view ? $view->view : $view->route['action'];
 		$viewName = $v . '.php';
 		$file_view = ROOT . "/app/view/{$view->route['controller']}/{$viewName}";
 		if (!is_file($file_view)) {
@@ -100,9 +86,7 @@ class View implements IFooterable, IHeaderable, IRenderable
 		$page_cache = ob_get_clean();
 //		self::toFile($page_cache);
 		echo $page_cache;
-
 	}
-
 
 	public static function toFile($page_cache)
 	{
@@ -251,6 +235,10 @@ class View implements IFooterable, IHeaderable, IRenderable
 	function setHeader()
 	{
 	}
+
+//	public function getErrors()
+//	{
+//	}
 
 	function setFooter()
 	{

@@ -5,7 +5,6 @@ namespace app\controller;
 
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
-use app\view\Category\CategoryView;
 
 
 class CategoryController Extends AppController

@@ -156,13 +156,9 @@ class AuthController extends AppController
 			Auth::setAuth($user);
 			$this->user = $user;
 			if (User::can($user, ['role_employee'])) {
-				header("Location:/adminsc");
-				exit();
-//				$this->exitJson(['role' => 'employee']);
+				$this->exitJson(['role' => 'employee']);
 			} else {
-				header("Location:/");
-//				$this->exitJson(['role' => 'user']);
-				exit();
+				$this->exitJson(['role' => 'user']);
 			}
 		}
 
@@ -172,7 +168,7 @@ class AuthController extends AppController
 
 	public function actionLogout()
 	{
-		if (isset($_COOKIE[session_name()])) {  // session_name() - получаем название текущей сессии
+		if (isset($_COOKIE[session_name()])) {
 			setcookie(session_name(), '', time() - 86400, '/');
 		}
 		unset($_SESSION);

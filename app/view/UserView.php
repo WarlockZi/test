@@ -4,6 +4,7 @@
 namespace app\view;
 
 
+use app\core\Error;
 use app\core\Icon;
 use app\core\Router;
 use app\model\Category;
@@ -11,6 +12,7 @@ use app\model\Category;
 class UserView extends View
 {
 	public $layout = 'vitex';
+	protected static $get404 = ROOT . '/app/view/404/index.php';
 	protected $header;
 
 	public function __construct($route)
@@ -65,4 +67,15 @@ class UserView extends View
 //		View::setJs('list.css');
 	}
 
+	protected static function get404()
+	{
+		return self::$get404;
+	}
+
+	function getErrors()
+	{
+		if (Error::getErrorHtml()){
+			include self::get404();
+		}
+	}
 }
