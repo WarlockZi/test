@@ -53,7 +53,7 @@ class AccordionView
 	private static function getButton()
 	{
 		ob_start();
-		include ROOT . '/app/view/Test/edit_add-test-button.php';
+		include ROOT . '/app/view/Test/Admin/edit_add-test-button.php';
 		return ob_get_clean();
 	}
 

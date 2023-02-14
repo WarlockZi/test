@@ -8,7 +8,6 @@ use app\model\Videoinstruction;
 
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
-use app\view\MyView;
 
 class VideoinstructionView
 {

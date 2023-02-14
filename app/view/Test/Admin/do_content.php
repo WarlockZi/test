@@ -7,7 +7,7 @@
       <?= $pagination ?? ''; ?>
 		</div>
 
-    <? include ROOT . '/app/view/Test/do_test-data.php'; ?>
+    <? include ROOT . '/app/view/Test/Admin/do_test-data.php'; ?>
 
   <? else: ?>
 		<h2>Выберите тест</h2>

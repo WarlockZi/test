@@ -32,14 +32,14 @@ class QuestionView
 	private static function getRules()
 	{
 		ob_start();
-		include ROOT . '/app/view/Test/edit_rules.php';
+		include ROOT . '/app/view/Test/Admin/edit_rules.php';
 		return ob_get_clean();
 	}
 
 	private static function getContent($test, $parentSelector)
 	{
 		ob_start();
-		include ROOT . '/app/view/Question/edit_questions.php';
+		include ROOT . '/app/view/Question/Admin/edit_questions.php';
 		return ob_get_clean();
 	}
 

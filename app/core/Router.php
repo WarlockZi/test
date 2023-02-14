@@ -22,8 +22,9 @@ class Router
 	{
 		if (isset(self::$route['admin']) && self::$route['admin']) {
 			self::$namespace = 'app\controller\admin\\';
+		} else {
+			self::$namespace = 'app\controller\\';
 		}
-		self::$namespace = 'app\controller\\';
 	}
 
 	public static function getController()
@@ -34,7 +35,7 @@ class Router
 	public static function setController(): string
 	{
 		self::setNamespace();
-		self::$controller = self::$namespace.self::$route['controller'] . 'Controller';
+		self::$controller = self::$namespace . self::$route['controller'] . 'Controller';
 		return self::$controller;
 	}
 
@@ -76,7 +77,7 @@ class Router
 		self::matchRoute($url);
 
 		$user = Auth::autorize();
-		if (Router::isAdmin() && User::can($user,['role_employee'])) {
+		if (Router::isAdmin() && User::can($user, ['role_employee'])) {
 			$view = new AdminView(self::$route);
 		} else {
 			$view = new UserView(self::$route);
@@ -92,7 +93,7 @@ class Router
 		if (!method_exists($controller, $action)) NotFound::action($action, $controller, $view);
 		$controller->user = $user;
 		$controller->$action();
-		$view->view=$controller->view;
+		$view->view = $controller->view;
 		$view->render($controller->vars);
 
 //		$controller->getView();
@@ -127,7 +128,16 @@ class Router
 
 	public static function isLogin(array $route)
 	{
+		if (!isset($route['controller'])) return false;
+		if (!isset($route['action'])) return false;
 		return $route['controller'] === 'Auth' && $route['action'] === 'login';
+	}
+
+	public static function isHome(array $route)
+	{
+		if (!isset($route['controller'])) return false;
+		if (!isset($route['action'])) return false;
+		return $route['controller'] === 'Main' && $route['action'] === 'index';
 	}
 
 

@@ -35,6 +35,9 @@ class AdminHeader
 
 		View::setJs('common.js');
 		View::setCss('common.css');
+
+		View::setJs('product.js');
+		View::setCss('product.css');
 	}
 	protected function getTop()
 	{

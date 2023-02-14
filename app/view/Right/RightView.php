@@ -8,7 +8,7 @@ use app\view\components\Builders\ListBuilder\MyList;
 use app\view\MyView;
 use Illuminate\Database\Eloquent\Model;
 
-class RightView extends MyView
+class RightView
 {
 	public $model = Right::class;
 	public $html;

@@ -1,5 +1,5 @@
 import '../Product/product.scss'
-// import './category.scss'
+import './category.scss'
 import {$, post} from "../../common";
 import Imageable from '../Image/Imageable';
 import Category from '../Category/Category';

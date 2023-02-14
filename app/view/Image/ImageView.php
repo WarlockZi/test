@@ -8,11 +8,10 @@ use app\model\Image;
 use app\Repository\ImageRepository;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
-use app\view\MyView;
 use Illuminate\Database\Eloquent\Collection;
 
 
-class ImageView extends MyView
+class ImageView
 {
 
 	public $model = Image::class;
