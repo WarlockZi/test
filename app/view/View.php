@@ -25,6 +25,8 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors
 	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
 	public static $jsCss = ['js' => [], 'css' => []];
 
+	protected $contentFile;
+
 
 	function __construct($route, $layout = '', $view = 'index.php', $user = '')
 	{
@@ -41,19 +43,38 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors
 		}
 	}
 
-
-	protected function validateViewFile(View $view)
+	public function getContentFile()
 	{
-
-		$v = $view->view ? $view->view : $view->route['action'];
-		$viewName = $v . '.php';
-		$file_view = ROOT . "/app/view/{$view->route['controller']}/{$viewName}";
-		if (!is_file($file_view)) {
-			Error::setError("Не найден файл вида - {$viewName}");
-			return $view->defaultView;
-		}
-		return $file_view;
+		return $this->contentFile;
 	}
+
+	public function setContentFile(array $route): void
+	{
+		if (!isset($route['action'])) $this->contentFile = $this->defaultView;
+		if (!isset($route['controller'])) $this->contentFile = $this->defaultView;
+		$path = '';
+		if (isset($route['admin']))$path = 'Admin/';
+		$file = ROOT . "/app/view/{$route['controller']}/{$path}{$route['action']}.php";
+		if (is_readable($file)) {
+			$this->contentFile = $file;
+		}else{
+			Error::setError("Нет файла вида - {$path}{$route['action']}.php");
+			$this->contentFile = $this->defaultView;
+		}
+	}
+
+//	protected function validateViewFile(View $view)
+//	{
+//
+//		$v = $view->view ? $view->view : $view->route['action'];
+//		$viewName = $v . '.php';
+//		$file_view = ROOT . "/app/view/{$view->route['controller']}/{$viewName}";
+//		if (!is_file($file_view)) {
+//			Error::setError("Не найден файл вида - {$viewName}");
+//			return $view->defaultView;
+//		}
+//		return $file_view;
+//	}
 
 	protected function validateLayoutFile(View $view)
 	{
@@ -74,7 +95,9 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors
 	{
 		extract($vars);
 
-		$file_view = $this->validateViewFile($this);
+		$this->setContentFile($this->route);
+		$file_view = $this->getContentFile();
+//		$file_view = $this->validateViewFile($this);
 
 		ob_start();
 		require $file_view;

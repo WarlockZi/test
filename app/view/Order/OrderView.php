@@ -11,7 +11,7 @@ use app\view\components\Builders\ListBuilder\MyList;
 use app\view\MyView;
 
 
-abstract class OrderView extends MyView
+abstract class OrderView
 {
 
 	public $model = Order::class;

@@ -35,8 +35,9 @@ use \app\core\Error;
 
 <?= $content; ?>
 
-<?= Footer::getUserFooter(); ?>
-<?= Footer::getUserCookie(); ?>
+<?= $this->getFooter(); ?>
+<?//= Footer::getUserFooter(); ?>
+<?//= Footer::getUserCookie(); ?>
 
 
 <? $this::getJS(); ?>

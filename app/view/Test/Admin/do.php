@@ -16,7 +16,7 @@ use \app\view\Accordion\AccordionView;
 			</div>
 			<!--				--><? // include ROOT . '/app/view/Test/test_do_accordion.php'; ?>
 
-				<? include ROOT . '/app/view/Test/do_content.php'; ?>
+				<? include ROOT . '/app/view/Test/Admin/do_content.php'; ?>
 
 	</section>
 </div>

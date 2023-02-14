@@ -15,13 +15,13 @@ class AnswerRepository
 		$answer = new Answer;
 		$i = -1;
 		ob_start();
-		include ROOT . '/app/view/Question/edit_BlockAnswer.php';
+		include ROOT . '/app/view/Question/Admin/edit_BlockAnswer.php';
 		return ob_get_clean();
 	}
 
 	public static function getAnswer(int $i, Answer $answer)
 	{
-		include ROOT . "/app/view/Question/edit_BlockAnswer.php";
+		include ROOT . "/app/view/Question/Admin/edit_BlockAnswer.php";
 	}
 
 

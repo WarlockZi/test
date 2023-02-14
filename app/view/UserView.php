@@ -12,8 +12,9 @@ use app\model\Category;
 class UserView extends View
 {
 	public $layout = 'vitex';
-	protected static $get404 = ROOT . '/app/view/404/index.php';
+	protected static $noViewError = ROOT . '/app/view/404/index.php';
 	protected $header;
+	protected $footer;
 
 	public function __construct($route)
 	{
@@ -31,15 +32,23 @@ class UserView extends View
 		$frontCategories = ob_get_clean();
 
 		$route = Router::getRoute();
-		$index = ($route['action'] === "index" && $route['controller'] == "Main");
+		$index = Router::isHome($route);
 		$logo = Icon::logo_squre1() . Icon::logo_vitex1();
 		ob_start();
 		include ROOT . '/app/view/Header/vitex_header.php';
 		$this->header = ob_get_clean();
 	}
 
-	public function setFooter(){
+	public function setFooter()
+	{
+		ob_start();
+		include ROOT . '/app/view/Footer/footerView.php';
+		$this->footer = ob_get_clean();
+	}
 
+	public function getFooter()
+	{
+		return $this->footer;
 	}
 
 	protected function setAssets()
@@ -69,12 +78,12 @@ class UserView extends View
 
 	protected static function get404()
 	{
-		return self::$get404;
+		return self::$noViewError;
 	}
 
 	function getErrors()
 	{
-		if (Error::getErrorHtml()){
+		if (Error::getErrorHtml()) {
 			include self::get404();
 		}
 	}

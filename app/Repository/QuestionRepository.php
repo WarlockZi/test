@@ -26,7 +26,7 @@ class QuestionRepository
 		$question = $question->getFillable();
 		$question['id'] = 0;
 		ob_start();
-		include ROOT . '/app/view/Question/edit_BlockQuestion.php';
+		include ROOT . '/app/view/Question/Admin/edit_BlockQuestion.php';
 		return ob_get_clean();
 
 	}
@@ -34,7 +34,7 @@ class QuestionRepository
 	public static function getQuestion($question, $parentSelector = '')
 	{
 		ob_start();
-		include ROOT . '/app/view/Question/edit_BlockQuestion.php';
+		include ROOT . '/app/view/Question/Admin/edit_BlockQuestion.php';
 		return ob_get_clean();
 	}
 

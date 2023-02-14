@@ -12,10 +12,9 @@ use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\MultiSelectBuilder\MultiSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\CustomMultiSelect\CustomMultiSelect;
-use app\view\MyView;
 
 
-class PostView extends MyView
+class PostView
 {
 
 	public $model = Post::class;

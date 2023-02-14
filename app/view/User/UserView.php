@@ -19,7 +19,7 @@ use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 
 
-abstract class UserView extends MyView
+abstract class UserView
 {
 
 	public $model;

@@ -11,6 +11,7 @@ class AdminView extends View
 {
 	public $layout = 'admin';
 	protected $header;
+	protected $noViewError = "Файл вида не найден";
 
 	public function __construct($route)
 	{
