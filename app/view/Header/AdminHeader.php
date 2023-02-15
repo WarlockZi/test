@@ -4,26 +4,42 @@
 namespace app\view\Header;
 
 
+use app\view\Interfaces\IHeaderable;
 use app\view\View;
 
-class AdminHeader
+class AdminHeader implements IHeaderable
 {
 	protected static $header;
+	protected $footer;
 
 	public function __construct()
 	{
+//		$this->setFooter();
 		$this->setHeader();
 		return $this->getHeader();
 	}
 
-
-	protected function setHeader()
+	public function getHeader()
+	{
+		return self::$header;
+	}
+	public function setHeader()
 	{
 		$adminSidebar = $this->getSidebar();
 		$adminHeader = $this->getTop();
 		self::$header = $adminSidebar . $adminHeader;
 		$this->setAssets();
 	}
+
+//	public function getFooter()
+//	{
+//		return $this->footer;
+//	}
+//	public function setFooter()
+//	{
+//		$this->footer = AbstractFooter::getAdminFooter();
+//
+//	}
 
 	protected function setAssets()
 	{
@@ -53,10 +69,7 @@ class AdminHeader
 		$res = ob_get_clean();
 		return $res;
 	}
-	public static function getHeader()
-	{
-		return self::$header;
-	}
+
 
 
 }

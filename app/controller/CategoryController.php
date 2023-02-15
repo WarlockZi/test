@@ -31,10 +31,10 @@ class CategoryController Extends AppController
 				->with('products')
 				->with('products.mainImages')
 				->get()->first();
-			$this->set(compact('category'));
 
 			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
-			$this->set(compact('breadcrumbs'));
+
+			$this->set(compact('breadcrumbs','category'));
 
 		} else {
 			$categories = Category::where('category_id', 0)

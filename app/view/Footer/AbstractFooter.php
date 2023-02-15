@@ -4,14 +4,16 @@
 namespace app\view\Footer;
 
 
-class Footer
-{
+use app\view\Interfaces\IFooterable;
 
-	private static $adminFooter;
-	private static $userFooter;
-	private static $userCookie;
+abstract class AbstractFooter implements IFooterable
+{
+	private static $cookie;
 	private static $yaMetrica;
 	private static $VK;
+
+	protected $footer;
+
 
 	public static function setVK(): void
 	{
@@ -47,31 +49,6 @@ class Footer
 	public static function getUserCookie()
 	{
 		return self::$userCookie;
-	}
-
-	public static function setUserFooter(): void
-	{
-		ob_start();
-		include ROOT . '/app/view/components/footer/footer.php';
-		self::$userFooter = ob_get_clean();
-	}
-
-	public static function getUserFooter()
-	{
-		return self::$userFooter;
-	}
-
-
-	public static function setAdminFooter()
-	{
-		ob_start();
-		include ROOT . '/app/view/components/footer/footer.php';
-		self::$adminFooter = ob_get_clean();
-	}
-
-	public static function getAdminFooter()
-	{
-		return self::$adminFooter;
 	}
 
 }

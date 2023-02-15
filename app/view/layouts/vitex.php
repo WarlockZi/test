@@ -1,7 +1,7 @@
 <?
 
 use \app\view\Header\Header;
-use \app\view\Footer\Footer;
+use \app\view\Footer\AbstractFooter;
 use \app\core\Error;
 
 ?>
@@ -29,14 +29,14 @@ use \app\core\Error;
 
 <body>
 
-<?= $this->header; ?>
+<?= $this->header->getHeader(); ?>
 
 <?= $this->getErrors(); ?>
 
-<?= $content; ?>
+<?= $this->getContent(); ?>
 
 <?= $this->getFooter(); ?>
-<?//= Footer::getUserFooter(); ?>
+
 <?//= Footer::getUserCookie(); ?>
 
 

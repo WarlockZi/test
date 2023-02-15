@@ -5,16 +5,14 @@ namespace app\view;
 
 
 use app\core\Error;
-use app\core\Icon;
-use app\core\Router;
-use app\model\Category;
+use app\view\Header\UserHeader;
 
 class UserView extends View
 {
 	public $layout = 'vitex';
 	protected static $noViewError = ROOT . '/app/view/404/index.php';
-	protected $header;
-	protected $footer;
+//	protected $header;
+//	protected $footer;
 
 	public function __construct($route)
 	{
@@ -26,17 +24,8 @@ class UserView extends View
 
 	public function setHeader()
 	{
-		$frontCategories = Category::frontCategories();
-		ob_start();
-		include ROOT . '/app/view/Header/header_menu.php';
-		$frontCategories = ob_get_clean();
+		$this->header = new UserHeader();
 
-		$route = Router::getRoute();
-		$index = Router::isHome($route);
-		$logo = Icon::logo_squre1() . Icon::logo_vitex1();
-		ob_start();
-		include ROOT . '/app/view/Header/vitex_header.php';
-		$this->header = ob_get_clean();
 	}
 
 	public function setFooter()
@@ -86,5 +75,10 @@ class UserView extends View
 		if (Error::getErrorHtml()) {
 			include self::get404();
 		}
+	}
+
+	function getHeader()
+	{
+		return $this->header->getHeader();
 	}
 }
