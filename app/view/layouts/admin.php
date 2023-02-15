@@ -1,8 +1,7 @@
 <?
 
-use app\view\Footer\Footer;
-use \app\view\Header\Header;
-use \app\core\Error;
+use app\core\Error;
+use app\view\Footer\AbstractFooter;
 
 ?>
 <!DOCTYPE html>
@@ -28,21 +27,23 @@ use \app\core\Error;
 
 <div class="admin-layout__container">
 
-	<?= \app\view\Header\AdminHeader::getHeader(); ?>
+	<?= $this->getHeader(); ?>
 
 
 	<div class="admin-layout__content">
 
 		 <?= Error::getErrorHtml() ?>
 
-		 <?= $content ?>
+		<div class="adm-content">
+				<?= $this->getContent(); ?>
+		</div>
 
 	</div>
 
 	<div class="led"></div>
 </div>
 
-<?= Footer::getAdminFooter() ?>
+<?= $this->getFooter();//::getAdminFooter() ?>
 
 <? $this::getJS() ?>
 

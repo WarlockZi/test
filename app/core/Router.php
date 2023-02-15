@@ -13,10 +13,6 @@ class Router
 	protected static $namespace;
 	protected static $controller;
 
-	public static function getNamespace()
-	{
-		return self::$namespace;
-	}
 
 	public static function setNamespace(): void
 	{
@@ -25,11 +21,6 @@ class Router
 		} else {
 			self::$namespace = 'app\controller\\';
 		}
-	}
-
-	public static function getController()
-	{
-		return self::$namespace . self::$controller;
 	}
 
 	public static function setController(): string
@@ -45,38 +36,47 @@ class Router
 		self::$routes[$regexp] = $route;
 	}
 
-	public static function matchRoute($url): void
+	public static function fillRoutes(): void
 	{
 		require_once ROOT . '/app/core/routes.php';
+	}
+
+	public static function matchRoute($url): void
+	{
 		foreach (self::$routes as $pattern => $route) {
 			if (preg_match("#$pattern#i", $url, $matches)) {
+				$route = [
+					'admin' => '',
+					'controller' => '',
+					'action' => 'index',
+					'slug' => '',
+					'id' => 0];
+
 				foreach ($matches as $k => $v) {
-					if (is_string($k)) { // превращаем нумеро7ванный массив в ассоциативный
+					if (is_string($k)) {
 						$route[$k] = $v;
 					}
 				}
-				if (!isset($route['action'])) {
-					$route['action'] = 'index';
+				if ($route['admin'] && !$route['controller']) {
+					$route['controller'] = 'Adminsc';
 				}
-				$route['controller'] = isset($route['controller']) ? self::upperCamelCase($route['controller']) : '';
+				$controller = isset($route['controller']) ? self::upperCamelCase($route['controller']) : '';
+				$route['controller'] = $controller;
 
 				self::$route = $route;
 			}
 		}
 	}
 
-	protected static function isAdmin()
+	public static function isAdmin()
 	{
-		return (isset(self::$route['admin']) && self::$route['admin'] === 'adminsc');
+		return isset(self::$route['admin']);
 	}
 
 
 	public static function dispatch($url)
 	{
-		$url = self::removeQuryString($url);
-		self::matchRoute($url);
 
-		$user = Auth::autorize();
 		if (Router::isAdmin() && User::can($user, ['role_employee'])) {
 			$view = new AdminView(self::$route);
 		} else {
@@ -99,31 +99,21 @@ class Router
 //		$controller->getView();
 	}
 
-	protected static function upperCamelCase($name)
+	protected static function upperCamelCase($name): string
 	{
-		$name = str_replace(' ', '', ucwords(str_replace('-', ' ', $name)));
-		return $name;
+		return str_replace(' ', '', ucwords(str_replace('-', ' ', $name)));
 	}
 
 	protected static function lowerCamelCase($name)
 	{
-		$name = str_replace('-', ' ', $name);
-		$name = ucwords($name);
-		$name = str_replace(' ', '', $name);
-		$name = lcfirst($name);
-		return $name;
+		return lcfirst(str_replace(' ', '', ucwords(str_replace('-', ' ', $name))));
 	}
 
-	protected static function removeQuryString($url)
+	public static function removeQuryString(string $url)
 	{
-		if ($url) {
-			$params = explode('&', $url, 2);
-			if (!strpos($params[0], '=')) {
-				return trim($params[0], '/');
-			} else {
-				return '';
-			}
-		}
+		$params = explode('&', $url, 2);
+		if (!$url || strpos($params[0], '=')) return '';
+		return trim($params[0], '/');
 	}
 
 	public static function isLogin(array $route)

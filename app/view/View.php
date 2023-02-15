@@ -4,7 +4,7 @@ namespace app\view;
 
 use app\controller\FS;
 use app\core\Error;
-use app\core\Session;
+use app\core\Router;
 use app\view\Header\Header;
 use app\view\Interfaces\IErrors;
 use app\view\Interfaces\IFooterable;
@@ -25,8 +25,9 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors
 	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
 	public static $jsCss = ['js' => [], 'css' => []];
 
-	protected $contentFile;
-
+	protected IHeaderable $header;
+	protected $content;
+	protected $footer;
 
 	function __construct($route, $layout = '', $view = 'index.php', $user = '')
 	{
@@ -34,79 +35,74 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors
 		$this->view = $view;
 	}
 
-	protected function setView()
+	public function getContent()
 	{
-		if (Session::getUser()) {
-			Header::getAdminHeader();
-		} else {
-			Header::getUserHeader();
-		}
+		return $this->content;
 	}
 
-	public function getContentFile()
-	{
-		return $this->contentFile;
+	public function getFileContent(string $file, array $vars=[]){
+		extract($vars);
+		ob_start();
+		require $file;
+		return ob_get_clean();
 	}
 
-	public function setContentFile(array $route): void
-	{
-		if (!isset($route['action'])) $this->contentFile = $this->defaultView;
-		if (!isset($route['controller'])) $this->contentFile = $this->defaultView;
-		$path = '';
-		if (isset($route['admin']))$path = 'Admin/';
-		$file = ROOT . "/app/view/{$route['controller']}/{$path}{$route['action']}.php";
-		if (is_readable($file)) {
-			$this->contentFile = $file;
-		}else{
-			Error::setError("Нет файла вида - {$path}{$route['action']}.php");
-			$this->contentFile = $this->defaultView;
-		}
-	}
-
-//	protected function validateViewFile(View $view)
-//	{
-//
-//		$v = $view->view ? $view->view : $view->route['action'];
-//		$viewName = $v . '.php';
-//		$file_view = ROOT . "/app/view/{$view->route['controller']}/{$viewName}";
-//		if (!is_file($file_view)) {
-//			Error::setError("Не найден файл вида - {$viewName}");
-//			return $view->defaultView;
-//		}
-//		return $file_view;
+//	public static function getFileContent(string $file, array $vars=[]){
+//		extract($vars);
+//		ob_start();
+//		require $file;
+//		return ob_get_clean();
 //	}
-
-	protected function validateLayoutFile(View $view)
+	public static function __callStatic($name, $arguments)
 	{
-		$layout = $view->layout
-			? $view->layout
-			: $view->defaultLayout;
+		if ($name === 'getFileContent'){
+
+		}
+	}
+
+	public function setContent(array $route, array $vars): void
+	{
+		if (!isset($route['action'])) $this->content = $this->defaultView;
+		if (!isset($route['controller'])) $this->content = $this->defaultView;
+		$path = Router::isAdmin() ? 'Admin/' : '';
+		$action = $this->view ? $this->view : $route['action'];
+		$file = ROOT . "/app/view/{$route['controller']}/{$path}{$action}.php";
+		if (is_readable($file)) {
+			$this->content = self::getFileContent($file, $vars);
+		} else {
+			Error::setError("Нет файла вида - {$path}{$route['action']}.php");
+			$this->content = self::getFileContent($this->defaultView);
+		}
+	}
+
+	public function setLayout(): void
+	{
+		$layout = $this->layout
+			? $this->layout
+			: $this->defaultLayout;
 		$file = $layout . '.php';
 
 		$layout = FS::getAbsoluteFilePath(ROOT . "/app/view/layouts/", $file);
 		if (!is_file($layout)) {
 			Error::setError("Не найден layout - {$layout}");
-			return ROOT . "/app/view/layouts/{$view->defaultLayout}.php";
+			$this->layout =  ROOT . "/app/view/layouts/{$this->defaultLayout}.php";
 		}
-		return $layout;
+		$this->layout =  $layout;
+	}
+
+	protected function validateLayoutFile(View $view)
+	{
+
 	}
 
 	public function render(array $vars = [])
 	{
-		extract($vars);
+		$this->setContent($this->route, $vars);
+//		$file_view = $this->content;
 
-		$this->setContentFile($this->route);
-		$file_view = $this->getContentFile();
-//		$file_view = $this->validateViewFile($this);
+		$this->setLayout();
 
-		ob_start();
-		require $file_view;
-		$content = ob_get_clean();
-
-		$layout = $this->validateLayoutFile($this);
-		ob_start();
-		require $layout;
-		$page_cache = ob_get_clean();
+		$page_cache = self::getFileContent($this->layout);
 //		self::toFile($page_cache);
 		echo $page_cache;
 	}
@@ -237,7 +233,6 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors
 
 
 
-
 //	public static function setAssets($route)
 //	{
 //		if (isset($route['admin'])) {
@@ -254,16 +249,36 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors
 //		}
 //	}
 
+//	protected function setView()
+//	{
+//		if (Session::getUser()) {
+//			Header::getAdminHeader();
+//		} else {
+//			Header::getUserHeader();
+//		}
+//	}
 
-	function setHeader()
-	{
-	}
+//	protected function validateViewFile(View $view)
+//	{
+//
+//		$v = $view->view ? $view->view : $view->route['action'];
+//		$viewName = $v . '.php';
+//		$file_view = ROOT . "/app/view/{$view->route['controller']}/{$viewName}";
+//		if (!is_file($file_view)) {
+//			Error::setError("Не найден файл вида - {$viewName}");
+//			return $view->defaultView;
+//		}
+//		return $file_view;
+//	}
+//	function setHeader()
+//	{
+//	}
 
 //	public function getErrors()
 //	{
 //	}
 
-	function setFooter()
-	{
-	}
+//	function setFooter()
+//	{
+//	}
 }

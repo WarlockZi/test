@@ -1,6 +1,7 @@
 <?
 
 use app\core\App;
+use app\core\Auth;
 use app\core\Router;
 use \Engine\DI\DI;
 
@@ -30,7 +31,12 @@ new App(new DI);
 //DI::test();
 
 try {
-	Router::dispatch($_SERVER['REQUEST_URI']);
+	$user = Auth::autorize();
+	\app\core\Session::setUser();
+	Router::fillRoutes();
+	$url = Router::removeQuryString($_SERVER['REQUEST_URI']);
+	Router::matchRoute($url);
+	Router::dispatch($url);
 //	Router::dispatch($_SERVER['QUERY_STRING']);
 } catch (Exception $e) {
 	exit($e);
