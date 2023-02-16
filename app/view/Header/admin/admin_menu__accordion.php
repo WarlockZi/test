@@ -3,7 +3,7 @@ use \app\model\User;
 use \app\core\Icon;
 use \app\core\Session;
 
-$user = Session::getUser();
+$user =$this->user;
 ?>
 <div class="admin_sidebar">
 

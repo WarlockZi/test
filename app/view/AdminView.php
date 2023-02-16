@@ -4,20 +4,34 @@
 namespace app\view;
 
 
+use app\core\Auth;
+use app\core\Error;
 use app\view\Footer\AdminFooter;
 use app\view\Header\AdminHeader;
 
 class AdminView extends View
 {
-	public $layout = 'admin';
-
+	protected $layout = ROOT . "/app/view/layouts/admin.php";
 	protected $noViewError = "Файл вида не найден";
 
 	public function __construct($route)
 	{
 		parent::__construct($route);
-		$this->setHeader();
+		$this->user = $user;
+		$this->setHeader($user);
 		$this->setFooter();
+	}
+
+	public function setContent(array $route, array $vars): void
+	{
+		$action = $this->view ? $this->view : $route['action'];
+		$file = ROOT . "/app/view/{$route['controller']}/Admin/{$action}.php";
+		if (is_readable($file)) {
+			$this->content = self::getFileContent($file, $vars);
+		} else {
+			Error::setError("Нет файла вида - Admin/{$route['action']}.php");
+			$this->content = self::getFileContent($this->view);
+		}
 	}
 
 	public function getHeader()
@@ -25,9 +39,9 @@ class AdminView extends View
 		return $this->header->getHeader();
 	}
 
-	public function setHeader()
+	public function setHeader($user)
 	{
-		$this->header = new AdminHeader();
+		$this->header = new AdminHeader(Auth::getUser());
 	}
 
 	function getErrors()
@@ -43,5 +57,11 @@ class AdminView extends View
 	function getFooter()
 	{
 		return $this->footer->getFooter();
+	}
+
+
+	function getLayout()
+	{
+		return $this->layout;
 	}
 }

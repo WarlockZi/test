@@ -5,23 +5,22 @@ namespace app\view;
 use app\controller\FS;
 use app\core\Error;
 use app\core\Router;
-use app\view\Header\Header;
 use app\view\Interfaces\IErrors;
 use app\view\Interfaces\IFooterable;
 use app\view\Interfaces\IHeaderable;
+use app\view\Interfaces\ILayout;
 use app\view\Interfaces\IRenderable;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors
+abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, ILayout
 {
 
 	public $route;
 	public $errors;
 	public $user;
-	protected $defaultView = ROOT . '/app/view/default.php';
-	protected $defaultLayout = 'vitex';
-	public $layout;
-	public $view;
+
+	public $view = ROOT . '/app/view/default.php';
+
 	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
 	public static $jsCss = ['js' => [], 'css' => []];
 
@@ -40,71 +39,21 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors
 		return $this->content;
 	}
 
-	public function getFileContent(string $file, array $vars=[]){
+	public function getFileContent(string $file, array $vars = [])
+	{
 		extract($vars);
 		ob_start();
 		require $file;
 		return ob_get_clean();
 	}
 
-//	public static function getFileContent(string $file, array $vars=[]){
-//		extract($vars);
-//		ob_start();
-//		require $file;
-//		return ob_get_clean();
-//	}
-	public static function __callStatic($name, $arguments)
-	{
-		if ($name === 'getFileContent'){
-
-		}
-	}
-
-	public function setContent(array $route, array $vars): void
-	{
-		if (!isset($route['action'])) $this->content = $this->defaultView;
-		if (!isset($route['controller'])) $this->content = $this->defaultView;
-		$path = Router::isAdmin() ? 'Admin/' : '';
-		$action = $this->view ? $this->view : $route['action'];
-		$file = ROOT . "/app/view/{$route['controller']}/{$path}{$action}.php";
-		if (is_readable($file)) {
-			$this->content = self::getFileContent($file, $vars);
-		} else {
-			Error::setError("Нет файла вида - {$path}{$route['action']}.php");
-			$this->content = self::getFileContent($this->defaultView);
-		}
-	}
-
-	public function setLayout(): void
-	{
-		$layout = $this->layout
-			? $this->layout
-			: $this->defaultLayout;
-		$file = $layout . '.php';
-
-		$layout = FS::getAbsoluteFilePath(ROOT . "/app/view/layouts/", $file);
-		if (!is_file($layout)) {
-			Error::setError("Не найден layout - {$layout}");
-			$this->layout =  ROOT . "/app/view/layouts/{$this->defaultLayout}.php";
-		}
-		$this->layout =  $layout;
-	}
-
-	protected function validateLayoutFile(View $view)
-	{
-
-	}
 
 	public function render(array $vars = [])
 	{
 		$this->setContent($this->route, $vars);
-//		$file_view = $this->content;
 
-		$this->setLayout();
+		echo self::getFileContent($this->layout);
 
-		$page_cache = self::getFileContent($this->layout);
-//		self::toFile($page_cache);
-		echo $page_cache;
 	}
 
 	public static function toFile($page_cache)
@@ -231,54 +180,4 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors
 		self::$meta['keywords'] = $keywords ? $keywords : 'Медицинкские перчатки';
 	}
 
-
-
-//	public static function setAssets($route)
-//	{
-//		if (isset($route['admin'])) {
-//			$user = Session::getUser();
-//			if (!$user || !User::can($user)) {
-//				self::setMainAssets();
-//				Header::setUserHeader();
-//				Footer::setUserFooter();
-//			} else {
-//				self::setAdminAssets();
-//				Header::setAdninHeader();
-//				Footer::setAdminFooter();
-//			}
-//		}
-//	}
-
-//	protected function setView()
-//	{
-//		if (Session::getUser()) {
-//			Header::getAdminHeader();
-//		} else {
-//			Header::getUserHeader();
-//		}
-//	}
-
-//	protected function validateViewFile(View $view)
-//	{
-//
-//		$v = $view->view ? $view->view : $view->route['action'];
-//		$viewName = $v . '.php';
-//		$file_view = ROOT . "/app/view/{$view->route['controller']}/{$viewName}";
-//		if (!is_file($file_view)) {
-//			Error::setError("Не найден файл вида - {$viewName}");
-//			return $view->defaultView;
-//		}
-//		return $file_view;
-//	}
-//	function setHeader()
-//	{
-//	}
-
-//	public function getErrors()
-//	{
-//	}
-
-//	function setFooter()
-//	{
-//	}
 }

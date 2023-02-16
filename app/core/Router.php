@@ -17,7 +17,7 @@ class Router
 	public static function setNamespace(): void
 	{
 		if (isset(self::$route['admin']) && self::$route['admin']) {
-			self::$namespace = 'app\controller\admin\\';
+			self::$namespace = 'app\controller\Admin\\';
 		} else {
 			self::$namespace = 'app\controller\\';
 		}
@@ -60,6 +60,10 @@ class Router
 				if ($route['admin'] && !$route['controller']) {
 					$route['controller'] = 'Adminsc';
 				}
+				if ($route['action'] ==='index' && !$route['controller']) {
+					$route['controller'] = 'Main';
+				}
+
 				$controller = isset($route['controller']) ? self::upperCamelCase($route['controller']) : '';
 				$route['controller'] = $controller;
 
@@ -70,14 +74,15 @@ class Router
 
 	public static function isAdmin()
 	{
-		return isset(self::$route['admin']);
+		return self::$route['admin'];
 	}
 
 
 	public static function dispatch($url)
 	{
+		Router::matchRoute($url);
 
-		if (Router::isAdmin() && User::can($user, ['role_employee'])) {
+		if (Router::isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
 			$view = new AdminView(self::$route);
 		} else {
 			$view = new UserView(self::$route);
@@ -91,8 +96,8 @@ class Router
 
 		$action = 'action' . self::upperCamelCase(self::$route['action']);
 		if (!method_exists($controller, $action)) NotFound::action($action, $controller, $view);
-		$controller->user = $user;
 		$controller->$action();
+
 		$view->view = $controller->view;
 		$view->render($controller->vars);
 
@@ -123,8 +128,9 @@ class Router
 		return $route['controller'] === 'Auth' && $route['action'] === 'login';
 	}
 
-	public static function isHome(array $route)
+	public static function isHome()
 	{
+		$route = Router::getRoute();
 		if (!isset($route['controller'])) return false;
 		if (!isset($route['action'])) return false;
 		return $route['controller'] === 'Main' && $route['action'] === 'index';

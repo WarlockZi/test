@@ -4,6 +4,7 @@
 namespace app\view\Header;
 
 
+use app\controller\FS;
 use app\core\Icon;
 use app\core\Router;
 use app\model\Category;
@@ -14,9 +15,10 @@ class UserHeader implements IHeaderable
 {
 	protected $header;
 
-	public function __construct()
+	public function __construct($user)
 	{
-		$this->setHeader();
+		$this->user = $user;
+		$this->setHeader($user);
 //		return $this->getHeader();
 	}
 
@@ -24,17 +26,17 @@ class UserHeader implements IHeaderable
 	{
 		return $this->header;
 	}
-	public function setHeader()
+	public function setHeader($user)
 	{
-//		$this->header = new UserHeader();
-		$frontCategories = Category::frontCategories();
-		ob_start();
-		include ROOT . '/app/view/Header/header_menu.php';
-		$frontCategories = ob_get_clean();
 
-		$route = Router::getRoute();
-		$index = Router::isHome($route);
+		$frontCategories = Category::frontCategories();
+
+		$frontCategories = FS::getFileContent(ROOT . '/app/view/Header/header_menu.php');
+
+
+		$index = Router::isHome();
 		$logo = Icon::logo_squre1() . Icon::logo_vitex1();
+
 		ob_start();
 		include ROOT . '/app/view/Header/vitex_header.php';
 		$this->header = ob_get_clean();

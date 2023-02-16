@@ -2,9 +2,9 @@
 
 use \app\model\User;
 use \app\core\Icon;
-use \app\core\Session;
 
-$user = Session::getUser(); ?>
+
+$user = \app\core\Auth::getUser(); ?>
 <? if (!$user): ?>
 
 	<div class="guest-menu" aria-label="login">
