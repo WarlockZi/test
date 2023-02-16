@@ -6,8 +6,9 @@ namespace app\core;
 use app\controller\AppController;
 use app\model\User;
 
-class Auth extends AppController
+class Auth
 {
+	protected static $user =[];
 
 	public static function checkAuthorized(array $user, array $rights): void
 	{
@@ -16,10 +17,21 @@ class Auth extends AppController
 		}
 	}
 
-	public static function setAuth($user): void
+	public static function getUser()
 	{
-		Session::setUser($user);
-		Session::setId($user['id']);
+		return self::$user;
+	}
+
+	public static function setUser(): void
+	{
+		if (isset($_SESSION['id']) && $_SESSION['id']) {
+			self::$user = User::find($_SESSION['id'])->toArray();
+		}
+	}
+
+	public static function setAuth(): void
+	{
+		self::setUser();
 	}
 
 
@@ -28,7 +40,7 @@ class Auth extends AppController
 		if (Router::isLogin(Router::getRoute())) {
 			return [];
 		}
-		$user = Session::getUser();
+		$user = self::getUser();
 		if (!$user) {
 			header("Location:/auth/login");
 			exit();
@@ -41,8 +53,7 @@ class Auth extends AppController
 			exit();
 		}
 
-		Session::setId($user['id']);
-		Session::setUser($user);
+		self::setUser();
 		if (!$user['confirm'] == "1") {
 			$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
 			header("Location:/auth/noconfirm");

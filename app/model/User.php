@@ -71,6 +71,14 @@ class User extends Model
 		return !!array_intersect(['role_admin'], $user['rights']);
 	}
 
+	public static function isEmployee(array $user): bool
+	{
+		if (is_string($user['rights'])) {
+			$user['rights'] = explode(',', $user['rights']);
+		}
+		return !!array_intersect(['role_employee'], $user['rights']);
+	}
+
 	public static function isSu(): bool
 	{
 		return defined('SU');

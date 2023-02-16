@@ -4,15 +4,14 @@
 namespace app\view;
 
 
+use app\controller\FS;
 use app\core\Error;
 use app\view\Header\UserHeader;
 
 class UserView extends View
 {
-	public $layout = 'vitex';
+	protected $layout = ROOT . "/app/view/layouts/vitex.php";
 	protected static $noViewError = ROOT . '/app/view/404/index.php';
-//	protected $header;
-//	protected $footer;
 
 	public function __construct($route)
 	{
@@ -22,6 +21,17 @@ class UserView extends View
 		$this->setAssets();
 	}
 
+	public function setContent(array $route, array $vars): void
+	{
+		$action = $this->view ? $this->view : $route['action'];
+		$file = ROOT . "/app/view/{$route['controller']}/{$action}.php";
+		if (is_readable($file)) {
+			$this->content = self::getFileContent($file, $vars);
+		} else {
+			Error::setError("Нет файла вида - {$route['action']}.php");
+			$this->content = self::getFileContent($this->view);
+		}
+	}
 	public function setHeader()
 	{
 		$this->header = new UserHeader();
@@ -80,5 +90,11 @@ class UserView extends View
 	function getHeader()
 	{
 		return $this->header->getHeader();
+	}
+
+
+	function getLayout()
+	{
+		return $this->layout;
 	}
 }

@@ -31,11 +31,10 @@ new App(new DI);
 //DI::test();
 
 try {
-	$user = Auth::autorize();
-	\app\core\Session::setUser();
+	Auth::setAuth();
+
 	Router::fillRoutes();
 	$url = Router::removeQuryString($_SERVER['REQUEST_URI']);
-	Router::matchRoute($url);
 	Router::dispatch($url);
 //	Router::dispatch($_SERVER['QUERY_STRING']);
 } catch (Exception $e) {

@@ -2,13 +2,12 @@
 
 namespace app\controller;
 
-use app\view\View;
 
 abstract class Controller
 {
 	public $route;
 	public $view;
-	public $layout;
+//	public $layout;
 	public $vars = [];
 	protected $token;
 	protected $ajax;
