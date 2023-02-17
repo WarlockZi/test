@@ -2,16 +2,7 @@
 
 	<div class="info">
 
-		 <? if ($index): ?>
-		  <div class="logo">
-					<?= $logo; ?>
-		  </div>
-
-		 <? else: ?>
-		  <a href='/' class="logo" aria-label='На главную'>
-					<?= $logo; ?>
-		  </a>
-		 <? endif; ?>
+		<?=$this->logo;?>
 
 		 <? include ROOT . '/app/view/Header/phone.php'; ?>
 		 <? include ROOT . '/app/view/Header/location.php'; ?>
@@ -19,7 +10,7 @@
 	</div>
 
 	<div class="menu">
-		 <?= $frontCategories; ?>
+		 <?= $this->frontCategories; ?>
 	</div>
 
 

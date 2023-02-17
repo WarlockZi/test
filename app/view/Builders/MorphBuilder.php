@@ -10,50 +10,56 @@ use Illuminate\Database\Eloquent\Model;
 
 class MorphBuilder
 {
-	protected $one;
-	protected $many;
+
 	protected $morphed;
 	protected $morph;
-	protected $morphFunction;
+	protected $functionString;
+	protected $function;
 	protected $slug;
-	protected $class;
-
 	protected $oneOrMany;
+
 	protected $dndToolTip;
 	protected $dndContent;
 
-	protected $function_sync;
-	protected $function_sync_without_detaching;
-	protected $function_del;
-	protected $function_detach;
-	protected $template;
-	protected $morphPath = '';
+	protected $class;
 
-	public static function build(Model $morphed, string $morph, string $slug, string $class)
+
+	protected $function_detach;
+
+	protected $morphPath = ROOT.'/app/view/Morph/';
+	protected $template='many_dnd_plus.php';
+
+	public static function build(Model $morphed, string $morph, bool $one, string $relation)
 	{
 		$self = new static;
+
 		$self->morphed = $morphed;
 		$self->morph = $morph;
-		$self->morphFunction = "data-model={$morph}";
-		$self->slug = "data-slug='{$slug}'";
-		$self->morphPath = FS::platformSlashes(
-			FS::getPath('app', 'view', $self->morph, 'morph')
-		);
-		$self->class = "class ='{$class}'";
+		$self->oneOrMany = $one ? "data-morph-oneormany='one'" : "data-morph-oneormany='many'";
+		$self->function = "data-morph-function ='{$relation}'";
+		$self->relation = $relation;
+
+		$self->template = $self->morphPath.$self->template;
+
 		return $self;
 	}
 
-	public function one(Collection $one)
+	public function template($template)
 	{
-		$this->one = $one;
-		$this->oneOrMany = "data-morph='one'";
+		$this->morphPath = $this->morphPath.$this->morph.'/';
+		$this->template = $this->morphPath . $template;
 		return $this;
 	}
 
-	public function many(Collection $many)
+	public function slug(string $slug)
 	{
-		$this->many = $many->all();
-		$this->oneOrMany = "data-morph='many'";
+		$this->slug = "data-morph-slug={$slug}";
+		return $this;
+	}
+
+	public function class(string $class)
+	{
+		$this->class = "class ='{$class}'";
 		return $this;
 	}
 
@@ -85,35 +91,11 @@ class MorphBuilder
 		return $this;
 	}
 
-	public function template($template)
-	{
-		$this->template = $this->morphPath . $template;
-		return $this;
-	}
-
-	public function function_sync($function_sync)
-	{
-		$this->function_sync = $function_sync;
-		return $this;
-	}
-
-	public function function_sync_without_detaching($function_sync_without_detaching)
-	{
-		$this->function_sync_without_detaching = $function_sync_without_detaching;
-		return $this;
-	}
-
-	public function function_del($function_del)
-	{
-		$this->function_del = $function_del;
-		return $this;
-	}
-
-	public function function_detach($function_detach)
-	{
-		$this->function_detach = $function_detach;
-		return $this;
-	}
+//	public function function_detach($function_detach)
+//	{
+//		$this->function_detach = $function_detach;
+//		return $this;
+//	}
 
 	public function get()
 	{

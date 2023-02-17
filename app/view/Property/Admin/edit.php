@@ -1,4 +1,3 @@
-<div class="adm-content">
 
 
 		<?= $item; ?>
@@ -8,5 +7,3 @@
 <!--		--><?//= $propert['name']; ?>
 <!--	--><?// endforeach; ?>
 
-
-</div>

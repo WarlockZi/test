@@ -6,11 +6,11 @@ use \app\core\Icon;
 <div class="header-catalog-menu">
 	<div class="header-catalog-menu__wrap">
 
-		 <? foreach ($frontCategories as $mainItem): ?>
-		  <div class='h-cat'><?= $mainItem['name']; ?>
+		 <? foreach ($this->frontCategories as $category): ?>
+		  <div class='h-cat'><?= $category['name']; ?>
 			  <ul>
-						 <? if (isset($mainItem['children'])): ?>
-							 <? foreach ($mainItem['children'] as $item): ?>
+						 <? if (isset($category['children'])): ?>
+							 <? foreach ($category['children'] as $item): ?>
 						 <li>
 							 <a href="/category/<?= $item['slug'] ?>"><?= $item['name'] ?></a>
 						 </li>

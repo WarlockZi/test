@@ -3,7 +3,7 @@
 use \app\view\Accordion\AccordionView;
 
 ?>
-<div class="adm-content">
+
 
 	<section class="test-do">
 
@@ -19,4 +19,4 @@ use \app\view\Accordion\AccordionView;
 				<? include ROOT . '/app/view/Test/Admin/do_content.php'; ?>
 
 	</section>
-</div>
+

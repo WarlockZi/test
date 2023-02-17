@@ -1,4 +1,4 @@
-<div class="adm-content">
+
 
 	<section class="planning-create">
 
@@ -42,4 +42,4 @@
 
 
 	</section>
-</div>
+

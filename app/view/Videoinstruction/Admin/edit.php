@@ -1,4 +1,3 @@
-<div class="adm-content">
 
 	<div class="videoinstruction">
 
@@ -9,4 +8,3 @@
 		</div>
 
 	</div>
-</div>

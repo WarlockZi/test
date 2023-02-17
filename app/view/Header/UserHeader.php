@@ -4,9 +4,6 @@
 namespace app\view\Header;
 
 
-use app\controller\FS;
-use app\core\Icon;
-use app\core\Router;
 use app\model\Category;
 use app\view\Interfaces\IHeaderable;
 use app\view\View;
@@ -14,32 +11,39 @@ use app\view\View;
 class UserHeader implements IHeaderable
 {
 	protected $header;
+	protected $frontCategories;
+	protected $index;
+	protected $logo;
+	protected $path = ROOT . '/app/view/Header/';
 
 	public function __construct($user)
 	{
 		$this->user = $user;
 		$this->setHeader($user);
-//		return $this->getHeader();
 	}
 
 	public function getHeader()
 	{
 		return $this->header;
 	}
+
+	public function getFileContent(string $file)
+	{
+		ob_start();
+		require $this->path . $file;
+		return ob_get_clean();
+	}
+
 	public function setHeader($user)
 	{
 
-		$frontCategories = Category::frontCategories();
+		$this->frontCategories = Category::frontCategories();
 
-		$frontCategories = FS::getFileContent(ROOT . '/app/view/Header/header_menu.php');
+		$this->frontCategories = $this->getFileContent('header_menu.php');
 
+		$this->logo = $this->getFileContent('logo.php');
 
-		$index = Router::isHome();
-		$logo = Icon::logo_squre1() . Icon::logo_vitex1();
-
-		ob_start();
-		include ROOT . '/app/view/Header/vitex_header.php';
-		$this->header = ob_get_clean();
+		$this->header = $this->getFileContent('vitex_header.php');
 
 		$this->setAssets();
 	}
@@ -59,8 +63,6 @@ class UserHeader implements IHeaderable
 		View::setJs('product.js');
 		View::setCss('product.css');
 	}
-
-
 
 
 }

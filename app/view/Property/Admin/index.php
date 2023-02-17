@@ -1,4 +1,3 @@
-<div class="adm-content">
 
 	<div class="page-name">Свойства</div>
 
@@ -9,5 +8,3 @@
 <!--			 --><?//= $property['name']; ?>
 <!--	  </div>-->
 <!--	--><?// endforeach; ?>
-
-</div>

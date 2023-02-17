@@ -4,7 +4,6 @@
 namespace app\view;
 
 
-use app\controller\FS;
 use app\core\Error;
 use app\view\Header\UserHeader;
 
@@ -16,7 +15,7 @@ class UserView extends View
 	public function __construct($route)
 	{
 		parent::__construct($route);
-		$this->setHeader();
+		$this->setHeader($this->user);
 		$this->setFooter();
 		$this->setAssets();
 	}
@@ -32,9 +31,9 @@ class UserView extends View
 			$this->content = self::getFileContent($this->view);
 		}
 	}
-	public function setHeader()
+	public function setHeader($user)
 	{
-		$this->header = new UserHeader();
+		$this->header = new UserHeader($user);
 
 	}
 

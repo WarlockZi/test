@@ -17,8 +17,8 @@ class AdminView extends View
 	public function __construct($route)
 	{
 		parent::__construct($route);
-		$this->user = $user;
-		$this->setHeader($user);
+		$this->user = Auth::getUser();
+		$this->setHeader($this->user);
 		$this->setFooter();
 	}
 
@@ -41,7 +41,7 @@ class AdminView extends View
 
 	public function setHeader($user)
 	{
-		$this->header = new AdminHeader(Auth::getUser());
+		$this->header = new AdminHeader($user);
 	}
 
 	function getErrors()

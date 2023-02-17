@@ -16,7 +16,7 @@ class AdminHeader implements IHeaderable
 	public function __construct(array $user)
 	{
 		$this->user = $user;
-		$this->setHeader();
+		$this->setHeader($user);
 		return $this->getHeader();
 	}
 
@@ -24,7 +24,7 @@ class AdminHeader implements IHeaderable
 	{
 		return $this->header;
 	}
-	public function setHeader()
+	public function setHeader($user)
 	{
 		$adminSidebar = $this->getSidebar();
 		$adminHeader = $this->getTop();

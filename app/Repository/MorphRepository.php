@@ -4,8 +4,6 @@
 namespace app\Repository;
 
 
-use Illuminate\Database\Eloquent\Model;
-
 class MorphRepository
 {
 	private static function getModelName(string $name)

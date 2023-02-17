@@ -21,7 +21,7 @@ class CategoryController Extends AppController
 	public function actionIndex()
 	{
 		$accordion = '';
-		if (isset($this->route['slug'])) {
+		if ($this->route['slug']) {
 			$this->view = 'category';
 			$slug = $this->route['slug'];
 

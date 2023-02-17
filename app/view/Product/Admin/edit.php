@@ -1,4 +1,3 @@
-<div class="adm-content">
 
   <? if ($product): ?>
 
@@ -11,7 +10,6 @@
 		<a href="/adminsc/category">Перейти в каталог</a>
   <? endif; ?>
 
-</div>
 
 
 

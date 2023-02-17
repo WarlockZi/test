@@ -43,29 +43,35 @@ class Router
 
 	public static function matchRoute($url): void
 	{
-		foreach (self::$routes as $pattern => $route) {
+		$route = [
+			'admin' => '',
+			'controller' => '',
+			'action' => 'index',
+			'slug' => '',
+			'id' => 0
+		];
+
+		foreach (self::$routes as $pattern => $r) {
 			if (preg_match("#$pattern#i", $url, $matches)) {
-				$route = [
-					'admin' => '',
-					'controller' => '',
-					'action' => 'index',
-					'slug' => '',
-					'id' => 0];
 
 				foreach ($matches as $k => $v) {
-					if (is_string($k)) {
-						$route[$k] = $v;
+					if (is_numeric($k)) {
+						unset($matches[$k]);
 					}
 				}
+
+				$r = array_merge($matches,$r);
+				foreach ($route as $k => $v) {
+					if (isset($r[$k])) {
+						$route[$k] = $r[$k];
+					}
+				}
+
 				if ($route['admin'] && !$route['controller']) {
 					$route['controller'] = 'Adminsc';
 				}
-				if ($route['action'] ==='index' && !$route['controller']) {
-					$route['controller'] = 'Main';
-				}
 
-				$controller = isset($route['controller']) ? self::upperCamelCase($route['controller']) : '';
-				$route['controller'] = $controller;
+				$route['controller'] = self::upperCamelCase($route['controller']);;
 
 				self::$route = $route;
 			}
@@ -123,16 +129,12 @@ class Router
 
 	public static function isLogin(array $route)
 	{
-		if (!isset($route['controller'])) return false;
-		if (!isset($route['action'])) return false;
 		return $route['controller'] === 'Auth' && $route['action'] === 'login';
 	}
 
 	public static function isHome()
 	{
 		$route = Router::getRoute();
-		if (!isset($route['controller'])) return false;
-		if (!isset($route['action'])) return false;
 		return $route['controller'] === 'Main' && $route['action'] === 'index';
 	}
 

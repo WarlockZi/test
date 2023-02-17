@@ -1,4 +1,4 @@
-<div class="adm-content">
+
 
 	<div class="page-name">Функции</div>
 
@@ -6,4 +6,3 @@
 
 
 
-</div>
