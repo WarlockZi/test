@@ -1,4 +1,3 @@
-<div class="adm-content">
 
 	<div class="opentest-edit-wrapper">
 
@@ -20,4 +19,3 @@
 
 		</div>
 	</div>
-</div>

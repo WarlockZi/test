@@ -4,7 +4,7 @@ use app\view\Accordion\AccordionView;
 use app\view\Test\TestView;
 
 ?>
-<div class="adm-content">
+
 
 	<div class="test-edit-wrapper">
 
@@ -23,5 +23,5 @@ use app\view\Test\TestView;
 
 	</div>
 
-</div>
+
 

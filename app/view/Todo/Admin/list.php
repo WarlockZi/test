@@ -1,4 +1,3 @@
-<div class="adm-content">
 
 	<div class="page-name">Функции</div>
 
@@ -12,5 +11,3 @@
 	<div class="todo__type">Ежегодные</div>
 	<?=$yearly;?>
 
-
-</div>

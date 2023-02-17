@@ -1,4 +1,4 @@
-<div class="adm-content">
+
 
 
   <? if (\app\model\User::can(\app\core\Session::getUser())):// SU ?>
@@ -39,4 +39,3 @@
 
 
 
-</div>

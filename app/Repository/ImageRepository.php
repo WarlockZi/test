@@ -85,7 +85,7 @@ class ImageRepository
 		if ($oneOrMany === 'many') {
 			return $res = MorphRepository::attachMany($morph, $morphed, $slug, $detach);
 		} else { //one
-			$res = MorphRepository::attachOne($morph, $morphed, $slug, $detach);
+			$res = MorphRepository::attach([$morph, $morphed, $slug, $detach]);
 			if ($res['attached']) {
 				return ImageRepository::getSrcMorph($morph);
 			}

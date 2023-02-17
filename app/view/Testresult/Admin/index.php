@@ -1,5 +1,4 @@
 
-<div class="adm-content">
 
 	<div class="page-name">Результаты тестов</div>
 
@@ -20,4 +19,3 @@
 			</div>
 		<? endforeach; ?>
 	</div>
-</div>

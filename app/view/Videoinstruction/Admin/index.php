@@ -1,4 +1,4 @@
-<div class="adm-content">
+
 <div class="videoinstructions">
 
 	<div class="page-name">Видео инструкции</div>
@@ -19,5 +19,4 @@
 
 	</div>
 
-</div>
 </div>

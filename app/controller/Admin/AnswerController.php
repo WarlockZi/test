@@ -14,33 +14,6 @@ class AnswerController Extends AppController
 		parent::__construct($route);
 	}
 
-//	public function actionUpdateOrCreate()
-//	{
-//		if ($this->ajax)
-//
-//			$answer = Answer::updateOrCreate(['id'=>$this->ajax['id']],$this->ajax);
-//			if ($answer->wasRecentlyCreated) {
-//        $this->exitJson(['popup' => 'Создан', 'id' => $id]);
-//			}else{
-//				$this->exitWithError('Ответ не сохранен');
-//			}
-//
-//	}
-
-//	public function actionDelete()
-//	{
-//		$id =
-//
-//		if ($this->ajax['id']) {
-//
-//			if (Answer::find()delete($this->ajax['id'])) {
-//				$this->exitWithPopup('Ответ удален');
-//			}
-//		} else {
-//			$this->exitWithMsg('No id');
-//		}
-//	}
-
 	public function actionShow()
 	{
 		if ($this->ajax) {

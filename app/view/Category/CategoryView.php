@@ -2,9 +2,11 @@
 
 namespace app\view\Category;
 
+use app\core\Icon;
 use app\model\Category;
 use app\model\Product;
 use app\model\Property;
+use app\view\Builders\MorphBuilder;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
@@ -52,7 +54,22 @@ class CategoryView
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
-						self::getMainImage($category)
+
+						MorphBuilder::build($category, 'image', true, 'mainImages')
+							->class('dnd')
+							->template('many.php')
+//							->dnd('dnd',
+//								'dnd','dnd',
+//								'перетащить картинку',
+//								Icon::plus(),'category')
+							->get()
+
+//						DndBuilder::build('catalog', 'dnd')
+//							->morph($category, 'mainImages', 'image', 0,
+//								true, 'one',
+//								'main', 'holder')
+//							->get()
+
 					)
 					->get()
 
@@ -148,15 +165,6 @@ class CategoryView
 			->get();
 	}
 
-
-	private static function getMainImage($category)
-	{
-		return DndBuilder::build('catalog', 'dnd')
-			->morph($category, 'mainImages', 'image', 0,
-				true, 'one',
-				'main', 'holder')
-			->get();
-	}
 
 	public static function selector(int $selected, int $exclude = -1): string
 	{

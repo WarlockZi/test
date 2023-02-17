@@ -2,7 +2,6 @@
 
 use app\model\User;
 
-
 ?>
 
 <div class="user-credits">

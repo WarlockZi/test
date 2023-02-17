@@ -210,14 +210,19 @@ async function post(url, data = {}) {
         req.send('param=' + JSON.stringify(data));
       }
       req.onerror = function (e) {
-        reject(Error("Network Error" + e));
+        reject(Error("Network Error" + e.message));
       };
       req.onload = function () {
-        let res = JSON.parse(req.response)
+        try {
+          let res = JSON.parse(req.response)
+        } catch (e) {
+          console.log('////////////********* REQUEST ERROR ***********//////////////////////')
+          console.log(req.response)
+          return
+        }
         let msg = $('.message')[0]
 
         if (res.popup || res?.arr?.popup) {
-
 
           popup.show(res.popup ?? res?.arr?.popup)
         } else if (res.msg) {
@@ -233,16 +238,8 @@ async function post(url, data = {}) {
             $(msg).addClass('success')
             $(msg).removeClass('error')
           }
-
         } else if (res.error) {
-          // debugger
-          // if (msg) {
-          //   msg.innerHTML = ''
-          //   msg.innerHTML = res.error
-          //   $(msg).removeClass('success')
-          //   $(msg).addClass('error')
-          // }
-            error(res.error)
+          error(res.error)
         }
         resolve(res);
       }

@@ -3,6 +3,7 @@
 namespace app\view;
 
 use app\controller\FS;
+use app\core\Auth;
 use app\core\Error;
 use app\core\Router;
 use app\view\Interfaces\IErrors;
@@ -28,8 +29,9 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 	protected $content;
 	protected $footer;
 
-	function __construct($route, $layout = '', $view = 'index.php', $user = '')
+	function __construct($route, $layout = '', $view = 'index.php')
 	{
+		$this->user = Auth::getUser();
 		$this->route = $route;
 		$this->view = $view;
 	}

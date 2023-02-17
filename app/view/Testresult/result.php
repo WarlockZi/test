@@ -1,4 +1,4 @@
-<div class="adm-content">
+
 
 	<div class="testresult">
 
@@ -16,4 +16,4 @@
 
 	</div>
 
-</div>
+

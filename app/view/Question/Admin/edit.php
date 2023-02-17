@@ -5,7 +5,7 @@ use \app\view\Test\TestView;
 use \app\view\Question\QuestionView;
 
 ?>
-<div class="adm-content">
+
 
 	<div class="test-edit-wrapper">
 
@@ -21,4 +21,4 @@ use \app\view\Question\QuestionView;
 	</div>
 
 
-</div>
+

@@ -6,8 +6,10 @@ import DragNDropOne from "../dnd/DragNDropOne";
 export default class Morph {
 
   constructor(dnd, morphedEl) {
-    ///image
     // debugger
+
+    this.url = '/adminsc/morph/attach'
+    ///image
     let morphEl = dnd.parentNode
     this.morphModel = morphEl.dataset.morphModel
     this.morphId = morphEl.dataset.morphId
@@ -53,6 +55,7 @@ export default class Morph {
     data.morph.id = context.morphId
     data.morph.slug = context.slug
     data.morph.path = context.path
+    data.morph.oneOrMany = context.oneOrMany
 
     data.morphed.type = context.morphedModel
     data.morphed.id = context.morphedId
@@ -61,12 +64,12 @@ export default class Morph {
   }
 
   static async dndCallback(files) {
-    let url = `/adminsc/${this.morphModel}/attach${this.oneOrMany}`
 
+// debugger
     let data = Morph.prepareData(this)
     data = objAndData2FormData(data, files)
 
-    let res = await post(url, data)
+    let res = await post(this.url, data)
     if (res.arr) {
       Morph.appendTo(this, res.arr)
     }
@@ -127,7 +130,6 @@ export default class Morph {
   }
 
   static appendManyImages(appendTo, srcArr) {
-
     srcArr.forEach((image) => {
       Morph.renderImage(appendTo, image)
     })
