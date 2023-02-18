@@ -20,7 +20,7 @@ class UserView extends View
 		$this->setAssets();
 	}
 
-	public function setContent(array $route, array $vars): void
+	protected function setContent(array $route, array $vars): void
 	{
 		$action = $this->view ? $this->view : $route['action'];
 		$file = ROOT . "/app/view/{$route['controller']}/{$action}.php";
@@ -31,6 +31,7 @@ class UserView extends View
 			$this->content = self::getFileContent($this->view);
 		}
 	}
+
 	public function setHeader($user)
 	{
 		$this->header = new UserHeader($user);

@@ -112,7 +112,7 @@ abstract class UserView
 
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
-			->toList('','',false)
+			->toList('', '', false)
 			->save()
 			->del(false)
 			->field(
@@ -290,7 +290,12 @@ abstract class UserView
 		return SelectBuilder::build()
 			->field('sex')
 			->nameOptionByField('name')
-			->array(['m' => 'М', 'f' => 'Ж'])
+			->array(
+				[
+					0 => ['id' => 'm', 'name' => 'М'],
+					1 => ['id' => 'f', 'name' => 'Ж']
+				]
+			)
 			->selected($item->sex)
 			->get();
 	}
@@ -326,7 +331,12 @@ abstract class UserView
 		return SelectBuilder::build()
 			->field('confirm')
 			->nameOptionByField('name')
-			->array([1 => 'да', 0 => 'нет'])
+			->array(
+				[
+					0 => ['id' => 0, 'name' => 'нет'],
+					1 => ['id' => 1, 'name' => 'да'],
+				]
+			)
 			->selected($item['confirm'] ?? 0)
 			->get();
 	}

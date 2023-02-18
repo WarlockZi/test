@@ -54,14 +54,13 @@ class AuthController extends AppController
 	public function actionProfile()
 	{
 
-		$this->view = 'profile';
+		$userArr = Auth::getUser();
+		$user = User::find($userArr['id']);
 
-		$user = User::find($_SESSION['id']);
-
-		if (User::can($this->user, ['role_employee'])) {
-			Header::setAdninHeader($this);
-			$this->layout = 'admin';
-			if (User::can($this->user, ['role_admin'])) {
+		if (User::can($userArr, ['role_employee'])) {
+//			Header::setAdninHeader($this);
+//			$this->layout = 'admin';
+			if (User::can($userArr, ['role_admin'])) {
 				$item = UserView::admin($user);
 			} else {
 				$item = UserView::employee($user);
@@ -70,8 +69,8 @@ class AuthController extends AppController
 			View::unsetJs('auth.js');
 			View::unsetCss('auth.css');
 
-			View::setJs('admin.js');
-			View::setCss('admin.css');
+//			View::setJs('admin.js');
+//			View::setCss('admin.css');
 		} else {
 			$this->layout = 'vitex';
 			$item = UserView::guest($user);;
