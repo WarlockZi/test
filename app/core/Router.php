@@ -30,7 +30,6 @@ class Router
 		return self::$controller;
 	}
 
-
 	public static function add($regexp, $route = [])
 	{
 		self::$routes[$regexp] = $route;
@@ -45,7 +44,7 @@ class Router
 	{
 		$route = [
 			'admin' => '',
-			'controller' => '',
+			'controller' => 'Adminsc',
 			'action' => 'index',
 			'slug' => '',
 			'id' => 0
@@ -66,13 +65,7 @@ class Router
 						$route[$k] = $r[$k];
 					}
 				}
-
-				if ($route['admin'] && !$route['controller']) {
-					$route['controller'] = 'Adminsc';
-				}
-
 				$route['controller'] = self::upperCamelCase($route['controller']);;
-
 				self::$route = $route;
 			}
 		}
@@ -82,7 +75,6 @@ class Router
 	{
 		return self::$route['admin'];
 	}
-
 
 	public static function dispatch($url)
 	{
@@ -105,9 +97,9 @@ class Router
 		$controller->$action();
 
 		$view->view = $controller->view;
+		$view->layout = $controller->layout;
 		$view->render($controller->vars);
 
-//		$controller->getView();
 	}
 
 	protected static function upperCamelCase($name): string

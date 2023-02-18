@@ -44,7 +44,7 @@ $user =$this->user;
 		 <? endif; ?>
 
 
-		 <? if (User::can($user, ['role_admin', 'role_rop'])): // admin ?>
+		 <? if (User::can($user, ['role_admin'])): // admin ?>
 		  <li settings>
 
 			  <div class="label">

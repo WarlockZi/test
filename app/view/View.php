@@ -20,15 +20,14 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 	public $errors;
 	public $user;
 
-	public $view = ROOT . '/app/view/default.php';
-
-	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
-	public static $jsCss = ['js' => [], 'css' => []];
+	public $view = 'default';
 
 	protected IHeaderable $header;
 	protected $content;
 	protected $footer;
 
+	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
+	public static $jsCss = ['js' => [], 'css' => []];
 	function __construct($route, $layout = '', $view = 'index.php')
 	{
 		$this->user = Auth::getUser();
@@ -53,9 +52,7 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 	public function render(array $vars = [])
 	{
 		$this->setContent($this->route, $vars);
-
 		echo self::getFileContent($this->layout);
-
 	}
 
 	public static function toFile($page_cache)

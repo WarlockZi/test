@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppController extends Controller
 {
-  public $user;
+//  public $user;
   protected $ajax;
 
   public function __construct(array $route)

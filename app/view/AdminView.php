@@ -22,7 +22,7 @@ class AdminView extends View
 		$this->setFooter();
 	}
 
-	public function setContent(array $route, array $vars): void
+	protected function setContent(array $route, array $vars): void
 	{
 		$action = $this->view ? $this->view : $route['action'];
 		$file = ROOT . "/app/view/{$route['controller']}/Admin/{$action}.php";
