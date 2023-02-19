@@ -3,11 +3,17 @@
 namespace app\controller;
 
 
+use app\core\Auth;
+use app\core\Router;
+use app\model\User;
+use app\view\AdminView;
+use app\view\UserView;
+
 abstract class Controller
 {
 	public $route;
 	public $view;
-//	public $layout;
+	public $layout = 'vitex';
 	public $vars = [];
 	protected $token;
 	protected $ajax;
@@ -17,11 +23,8 @@ abstract class Controller
 		$this->route = $route;
 
 		$this->view = $route['action'];
-		$this->token = !empty($_SESSION['token'])
-			? $_SESSION['token']
-			: $this->createToken();
 
-//		View::setAssets($route);
+		$this->token = !empty($_SESSION['token']) ? $_SESSION['token'] : $this->createToken();
 	}
 
 
@@ -31,11 +34,7 @@ abstract class Controller
 		return $_SESSION['token'] = md5($salt . microtime(true));
 	}
 
-	public function getView()
-	{
-//		$view = new View($this->route, $this->layout, $this->view, $this->user);
-		$this->view->render($this->vars);
-	}
+
 
 	public function set($vars)
 	{
@@ -69,6 +68,45 @@ abstract class Controller
 			}
 		}
 		return [];
+	}
+
+	public function exitJson(array $arr = []): void
+	{
+		if ($arr) {
+			exit(json_encode(['arr' => $arr]));
+		}
+	}
+
+	public function exitWithPopup(string $msg): void
+	{
+		if ($msg) {
+			exit(json_encode(['popup' => $msg]));
+		}
+		exit();
+	}
+
+	public function exitWithMsg(string $msg): void
+	{
+		if ($msg) {
+			exit(json_encode(['msg' => $msg]));
+		}
+		exit();
+	}
+
+	public function exitWithSuccess(string $msg): void
+	{
+		if ($msg) {
+			exit(json_encode(['success' => $msg]));
+		}
+		exit();
+	}
+
+	public function exitWithError(string $msg): void
+	{
+		if ($msg) {
+			exit(json_encode(['error' => $msg]));
+		}
+		exit();
 	}
 
 }

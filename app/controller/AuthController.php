@@ -5,7 +5,6 @@ namespace app\controller;
 use app\core\Auth;
 use app\core\Mail;
 use app\model\User;
-use app\view\Header\Header;
 use app\view\User\UserView;
 use app\view\View;
 
