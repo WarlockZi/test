@@ -80,26 +80,17 @@ class Router
 	{
 		Router::matchRoute($url);
 
-		if (Router::isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
-			$view = new AdminView(self::$route);
-		} else {
-			$view = new UserView(self::$route);
-		}
-
-		if (!self::$route) NotFound::url($url, $view);
+		if (!self::$route) NotFound::url($url);
 
 		$controller = self::setController();
-		if (!class_exists($controller)) NotFound::controller(self::$controller, $view);
+		if (!class_exists($controller)) NotFound::controller(self::$controller);
 		$controller = new $controller(self::$route);
 
 		$action = 'action' . self::upperCamelCase(self::$route['action']);
-		if (!method_exists($controller, $action)) NotFound::action($action, $controller, $view);
+		if (!method_exists($controller, $action)) NotFound::action($action, $controller);
 		$controller->$action();
 
-		$view->view = $controller->view;
-		$view->layout = $controller->layout;
-		$view->render($controller->vars);
-
+		$controller->setView();
 	}
 
 	protected static function upperCamelCase($name): string
