@@ -38,7 +38,7 @@
 
 
 </div>
-<? include ROOT . '/app/view/Test/test_edit_prev_next_buttons.php' ?>
+<? include ROOT . '/app/view/Test/Admin/test_edit_prev_next_buttons.php' ?>
 
 <a class="test-do__finish-btn" data-id="<?= $test->id; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
 </div>

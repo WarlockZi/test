@@ -58,6 +58,10 @@ class CategoryView
 						MorphBuilder::build($category, 'image', true, 'mainImages')
 							->class('dnd')
 							->template('many.php')
+							->content(
+								DndBuilder::build('category', 'holder')
+									->get()
+							)
 //							->dnd('dnd',
 //								'dnd','dnd',
 //								'перетащить картинку',

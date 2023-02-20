@@ -1,7 +1,4 @@
-import {$, post, objAndData2FormData} from "../../common";
-import DragNDrop from "../dnd/DragNDrop";
-import DragNDropMany from "../dnd/DragNDropMany";
-import DragNDropOne from "../dnd/DragNDropOne";
+import {$, objAndData2FormData, post} from "../../common";
 
 export default class Morph {
 
@@ -13,36 +10,29 @@ export default class Morph {
     let morphEl = dnd.parentNode
     this.morphModel = morphEl.dataset.morphModel
     this.morphId = morphEl.dataset.morphId
-    this.slug = morphEl.dataset.morphSlug ?? ''
-    this.oneOrMany = morphEl.dataset.morphOneormany
+    // this.slug = morphEl.dataset.morphSlug ?? ''
+    // this.oneOrMany = morphEl.dataset.morphOneormany
+    this.function = morphEl.dataset.function
 
     ///category
     this.morphedModel = morphedEl.dataset.model
     this.morphedId = morphedEl.dataset.id
 
     this.path = dnd.dataset.path ?? ''
-    this.append = morphEl
+    // this.append = morphEl
 
     let dndCallback = Morph.dndCallback.bind(this)
 
-    if (this.oneOrMany === 'many') {
-      new DragNDropMany(dnd, dndCallback)
-    } else {
-      new DragNDropOne(dnd, dndCallback)
-    }
+    // if (this.oneOrMany === 'many') {
+    //   new DragNDropMany(dnd, dndCallback)
+    // } else {
+    //   new DragNDropOne(dnd, dndCallback)
+    // }
 
     $(morphEl).on('click', function ({target}) {
       // debugger
       if (target.hasAttribute('data-detach')) Morph.detach(target)
     })
-  }
-
-  static setImagePath(morphedEl) {
-    let imagePath = $(morphedEl).find('[data-path]')
-    if (imagePath) {
-      return imagePath.dataset.path
-    }
-    return ''
   }
 
   static prepareData(context) {
@@ -56,6 +46,7 @@ export default class Morph {
     data.morph.slug = context.slug
     data.morph.path = context.path
     data.morph.oneOrMany = context.oneOrMany
+    data.morph.function = context.oneOrMany
 
     data.morphed.type = context.morphedModel
     data.morphed.id = context.morphedId
@@ -90,33 +81,34 @@ export default class Morph {
   }
 
   static async detach(target) {
+    // debugger
     let container = target.closest('.wrap')
     let morphedType = target.closest('.item_wrap').dataset.model
     let morphedId = target.closest('.item_wrap').dataset.id
-    let slug = target.closest('[data-morph-model]').dataset.morphSlug
-    let morphType = target.closest('[data-morph-model]').dataset.morphModel
-    let morphId = target.dataset.id
-    let url = `/adminsc/${morphType}/detach`
-    let data = {morphedType, morphedId, morphId, slug}
+    let funct = target.closest('[data-morph-function]').dataset.morphFunction
+    // let slug = target.closest('[data-morph-model]').dataset.morphSlug
+    // let morphType = target.closest('[data-morph-model]').dataset.morphModel
+    let morphId = +target.dataset.id
+    let url = `/adminsc/${morphedType}/detach`
+    let data = {morphedType, morphedId, morphId, funct}
     let res = await post(url, data)
     if (res.success) {
       container.remove()
     }
   }
 
-  static async attach(oneOrMany, files) {
-    let container = target.closest('.wrap')
-    let morphedType = target.closest('.item_wrap').dataset.model
-    let morphedId = target.closest('.item_wrap').dataset.id
-    let slug = target.closest('.morph').dataset.slug
-    let morphType = target.closest('.morph').dataset.type
-    let morphId = target.dataset.id
-    let url = `/adminsc/${morphType}/detach`
-    let data = {morphedType, morphedId, morphId, slug}
+  static async attach(files, target, context ) {
+
+    let morphedType = context.model
+    let morphedId = context.id
+
+    let func = context.func
+    // debugger
+    let url = `/adminsc/${morphedType}/attach`
+    let data = {morphedType, morphedId, func}
+    data = objAndData2FormData(data,files)
     let res = await post(url, data)
-    if (res.success) {
-      container.remove()
-    }
+
   }
 
 
@@ -127,6 +119,13 @@ export default class Morph {
     } else {
       img.src = image?.src
     }
+  }
+  static setImagePath(morphedEl) {
+    let imagePath = $(morphedEl).find('[data-path]')
+    if (imagePath) {
+      return imagePath.dataset.path
+    }
+    return ''
   }
 
   static appendManyImages(appendTo, srcArr) {
@@ -140,7 +139,7 @@ export default class Morph {
     let img = document.createElement('img')
     img.src = image.src
     let del = document.createElement('div')
-    del.setAttribute('data-detach','')
+    del.setAttribute('data-detach', '')
     del.classList.add('detach')
     del.dataset.id = image.id
     del.innerText = 'x'

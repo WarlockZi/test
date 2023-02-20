@@ -9,7 +9,6 @@ use app\Repository\MorphRepository;
 use app\view\AdminView;
 use app\view\UserView;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\View;
 
 class AppController extends Controller
 {
@@ -23,28 +22,29 @@ class AppController extends Controller
 
 	public function setView()
 	{
-		$pref = Router::isAdmin()?'/Admin':'';
+		$pref = Router::isAdmin() ? '/Admin' : '';
 		$controller = $this->route['controller'];
-  	$this->layout = ROOT."/app/view/layouts/{$this->layout}.php";
-  	$this->view = ROOT."/app/view/{$controller}{$pref}/{$this->view}.php";
-  	$view = $this->getView();
-  	$view->render();
+		$this->layout = ROOT . "/app/view/layouts/{$this->layout}.php";
+		$this->view = ROOT . "/app/view/{$controller}{$pref}/{$this->view}.php";
+		$view = $this->getView();
+		$view->render();
 	}
+
 	protected function setLayout()
 	{
 		if (Router::isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
-			return ROOT.'/app/view/layouts/admin.php';
+			return ROOT . '/app/view/layouts/admin.php';
 		} else {
-			return ROOT.'/app/view/layouts/vitex.php';
+			return ROOT . '/app/view/layouts/vitex.php';
 		}
 	}
 
 	public function getView()
 	{
 		if (Router::isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
-			return new AdminView($this->route);
+			return new AdminView($this);
 		} else {
-			return new UserView($this->route);
+			return new UserView($this);
 		}
 	}
 
@@ -69,10 +69,23 @@ class AppController extends Controller
 
 	public function actionAttach()
 	{
+		$req = $_POST;
+		if (!$req) $this->exitWithError('Плохой запрос');
+		if ($_FILES) {
+			MorphRepository::attachWithFiles($_FILES, $req);
+		} else {
+			MorphRepository::attach($req);
+		}
+
+		$this->exitWithPopup('ok');
+	}
+
+	public function actionDetach()
+	{
 		$req = $this->ajax;
 		if (!$req) $this->exitWithError('Плохой запрос');
-		if (!isset($req['morph'])) $this->exitWithError('Плохой запрос');
-		MorphRepository::attach($req);
+//		if (!isset($req['morph'])) $this->exitWithError('Плохой запрос');
+		MorphRepository::detach($req);
 		$this->exitWithPopup('ok');
 	}
 
