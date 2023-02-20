@@ -4,6 +4,7 @@ import WDSSelect from "../select/WDSSelect";
 import checkboxes from "../checkboxes/checkboxes";
 import checkbox from "../checkbox/checkbox";
 import DragNDrop from "../dnd/DragNDrop";
+import Morph from "../morph/morph";
 
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
@@ -19,24 +20,29 @@ export default function catalogItem() {
       model: customCatalogItem.dataset.model,
       id: +customCatalogItem.dataset.id
     }
-    checkboxes('[checkboxes]',context)
+
+    checkboxes('[checkboxes]', context)
       .onChange(update)
     // debugger
     checkbox(context);
 
-    [].map.call($('[data-dnd]'), (dnd)=>{
-      let dn = new DragNDrop(dnd, handleDnd)
+    [].map.call($('[data-dnd-path]'), (dnd) => {
+      // debugger
+      let dn = new DragNDrop(dnd, handleDnd.bind(context))
     })
 
     customCatalogItem.onclick = handleClick.bind(context)
     customCatalogItem.onkeyup = debounce(handleKeyup.bind(context))
   }
 
-  function handleDnd(files,target){
-      debugger
-    if (target.dataset.morph){
+  function handleDnd(files, target) {
+    // debugger
+    let func = target.parentNode.dataset.morphFunction
+    if (func) {
+      this.func = func
+      Morph.attach(files, target, this)
 
-    } else if(target.dataset.belongsTo){
+    } else if (target.dataset.belongsTo) {
 
     }
   }
@@ -61,23 +67,14 @@ export default function catalogItem() {
     if (target.closest('.save')) {
       // save.bind(this)
     } else if (target.closest('.detach')) {
-      detach(this.id, this.model)
+      // detach(this.id, this.model)
     } else if ((target.classList.contains('tab'))) {
       handleTab(target, this.model)
-    } else if ((target.getAttribute('type')==='checkbox')) {
+    } else if ((target.getAttribute('type') === 'checkbox')) {
       // debugger
       // handleCheckbox.apply(this)
     }
   }
-
-//   async function handleCheckbox() {
-// debugger
-//     this.target.classList.toggle('checked')
-//     let field = this.target.dataset.field
-//     let value = +target.classList.contains('checked')
-//     let data = {id:this.id,[field]: value}
-//     let res = await post(`/adminsc/${modelName}/updateOrCreate`, data)
-//   }
 
   async function handleTab(target) {
     let visibleSection = $(`[data-tab].show`)[0]
@@ -95,7 +92,9 @@ export default function catalogItem() {
       window.location.href = `/adminsc/${modelName}/edit`
     }
   }
+
   async function detach(id, modelName) {
+    debugger
     let res = await post(`/adminsc/${modelName}/detach`, {id})
     if (res) {
       window.location.href = `/adminsc/${modelName}/edit`
@@ -107,22 +106,6 @@ export default function catalogItem() {
     let res = await post(`/adminsc/${this.model}/updateorcreate`, this.data)
   }
 
-  // function checkRequired() {
-  //   let required = $('[required]');
-  //   let errCount = 0;
-  //   [].forEach.call(required, function (el) {
-  //     if (!el.innerText) {
-  //       el.style.borderColor = 'red'
-  //       if ($(el).find('.error')) return
-  //       let error = document.createElement('div')
-  //       error.innerText = 'Заполните поле'
-  //       error.classList.add('error')
-  //       el.closest('.value').appendChild(error)
-  //       errCount++
-  //     }
-  //   })
-  //   return errCount
-  // }
 
   function getModel(modelName) {
     let fields = $(`[data-field][data-model='${modelName}']`);
@@ -174,6 +157,23 @@ export default function catalogItem() {
 
   }
 
+
+  // function checkRequired() {
+  //   let required = $('[required]');
+  //   let errCount = 0;
+  //   [].forEach.call(required, function (el) {
+  //     if (!el.innerText) {
+  //       el.style.borderColor = 'red'
+  //       if ($(el).find('.error')) return
+  //       let error = document.createElement('div')
+  //       error.innerText = 'Заполните поле'
+  //       error.classList.add('error')
+  //       el.closest('.value').appendChild(error)
+  //       errCount++
+  //     }
+  //   })
+  //   return errCount
+  // }
   // async function sendToServer(i, file, url) {
   //   let formData = new FormData()
   //   formData.append(i, file, file['name'])
