@@ -4,16 +4,17 @@ use \app\Repository\ImageRepository;
 
 ?>
 
-<div <?= $this->oneOrMany; ?>
-	<?= $this->morphFunction; ?>
+<div
+	<?= $this->oneOrMany; ?>
 	<?= $this->slug; ?>
+	<?= $this->function; ?>
+	<?= $this->morph; ?>
 	<?= $this->class; ?>
-	<?= $this->dndPath; ?>
 >
-	<?= $this->addAction; ?>
+	<?= $this->content;?>
 
-	<? if (isset($this->one[0])): ?>
-		<? $item = $this->one[0] ?>
+
+	<? foreach ($this->items as $item): ?>
 	  <div class="wrap">
 		  <div class="item">
 					<?
@@ -22,10 +23,10 @@ use \app\Repository\ImageRepository;
 					?>
 			  <img class="" src="<?= $src ?>" alt="">
 		  </div>
-			 <? include $this->detach; ?>
-	  </div>
+			 <?= $this->getDetach($item); ?>
 
-	<? endif; ?>
+	  </div>
+	<? endforeach; ?>
 
 </div>
 

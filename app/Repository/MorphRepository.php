@@ -3,8 +3,9 @@
 
 namespace app\Repository;
 
+use app\controller\AppController;
 
-class MorphRepository
+class MorphRepository extends AppController
 {
 	private static function getModelName(string $name)
 	{
@@ -31,74 +32,50 @@ class MorphRepository
 		}
 	}
 
-	public static function detach($model, $function, $slug, $id)
+	public static function attachWithFiles(array $files, array $req): bool
 	{
-		$res = $model
-			->$function()
-			->withPivot([$model['id']=>['slug'=>$slug]])
-			->detach($id);
-		return $res;
-	}
-//
-//	public static function attachOne(Model $morph, array $morphed, string $slug, bool $detach)
-//	{
-//		$modelName = self::getModelName($morphed['type']);
-//		$model = $modelName::find($morphed['id']);
-//
-//		$function = $slug . ucfirst($morph->getTable());
-//
-//		if ($detach) {
-//			return $model->$function()
-//				->wherePivot('slug', $slug)
-//				->sync([$morph->id => ['slug' => $slug]]);
-//		} else {
-//			return $model->$function()->syncWithoutDetach([$morph[0]->id => ['slug' => $slug]]);
-//		}
-//	}
-//
-//	public static function attachOneNoDetach(array $morph, array $morphed, string $slug, bool $detach)
-//	{
-//		$modelName = 'app\\model\\' . ucfirst($morphed['type']);
-//		$model = $modelName::find($morphed['id']);
-//
-//		$function = $slug . ucfirst($morph[0]->getTable());
-//
-//		if ($detach) {
-//			return $model->$function()
-//				->wherePivot('slug', $slug)
-//				->sync([$morph[0]->id => ['slug' => $slug]]);
-//		} else {
-//			return $model->$function()->syncWithoutDetach([$morph[0]->id => ['slug' => $slug]]);
-//		}
-//	}
-//
-//	public static function attachMany(array $morphs, array $morphed, string $slug, bool $detach)
-//	{
-//		$modelName = 'app\\model\\' . ucfirst($morphed['type']);
-//		$model = $modelName::find($morphed['id']);
-//
-//		$function = $slug . ucfirst($morphs[0]->getTable());
-//
-//		if ($detach) {
-//			return $attached = self::attachManyDetaching($model, $morphs, $function, $slug);
-//		} else {
-//			return $attached = self::attachManyNoDetaching($model, $morphs, $function, $slug);
-//		}
-//
-//	}
-//
-//	protected static function attachManyNoDetaching($model, $morphs, $function, $slug)
-//	{
-//		$attached = [];
-//		foreach ($morphs as $item) {
-//			$res = $model->$function()->get()->contains($item);
-//			if (!$res) {
-//				$res = $model->$function()->attach([$item->id => ['slug' => $slug]]);
-//				$attached[] = ImageRepository::getSrcMorph($item);
-//			}
-//		}
-//		return $attached;
-//	}
+		$morphed = $req['morphedType'];
+		$morphedId = $req['morphedId'];
+		$model = self::getModelName($morphed)::find($morphedId);
+		$func = $req['func'];
 
+		$errors = [];
+		foreach ($files as $file) {
+			ImageRepository::saveToFile($model, $file);
+			if (ImageRepository::saveToFile()) {
+				$res = $model->$func()->syncWithoutDetaching($morphedId);
+
+			} else {
+			}
+
+		}
+
+
+//		$slug = $morphed['slug'];
+
+//		if ($morphed['detach'] === 'true') {
+//			$res = $model->$func()
+//				->wherePivot('slug', $slug)
+//				->sync([$morphed['id'] => ['slug' => $slug]]);
+//			return true;
+//		} else {
+
+//		}
+	}
+
+	public static function detach(array $req)
+	{
+		$model = 'app\model\\' . ucfirst($req['morphedType']);
+		$id = $req['morphId'];
+		$model = $model::find($req['morphedId']);
+
+		$f = $req['funct'];
+		$res = $model->$f()->detach($id);
+		if ($res) {
+			exit(json_encode(['poppup' => 'ok']));
+		} else {
+			exit(json_encode(['poppup' => 'ошибка']));
+		}
+	}
 
 }
