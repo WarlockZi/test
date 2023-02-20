@@ -2,18 +2,20 @@
 
 namespace app\view\Product;
 
-use app\core\Icon;
 use app\model\Category;
 use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Unit;
-use app\view\Builders\MorphBuilder;
+
 use app\view\components\Builders\Builder;
+use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
+
+use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use Illuminate\Database\Eloquent\Collection;
@@ -237,17 +239,12 @@ class ProductView
 			'smallpack',
 			'dnd',
 			)
-			->many($product->smallpackImages)
-			->template('many.php')
+//			->many($product->smallpackImages)
+			->content(
+				DndBuilder::build('product', 'dnd')
+					->get()
+			)
 			->detach('detach')
-			->dnd(
-				'many_dnd_plus.php',
-				'holder',
-				'dnd',
-				'Перетащите файл сюда',
-				Icon::plus(),
-				'catalog',
-				)
 			->get();
 	}
 
@@ -257,19 +254,23 @@ class ProductView
 			$product,
 			'Image',
 			'bigpack',
-			'dnd',
+			'mainImages',
 			)
-			->many($product->bigpackImages)
-			->template('many.php')
 			->detach('detach')
-			->dnd(
-				'many_dnd_plus.php',
-				'holder',
-				'dnd',
-				'Перетащите файл сюда',
-				Icon::plus(),
-				'catalog',
-				)
+			->content(
+				DndBuilder::build('product', 'dnd')
+					->get()
+			)
+//			->template('many.php')
+//			->many($product->bigpackImages)
+//			->dnd(
+//				'many_dnd_plus.php',
+//				'holder',
+//				'dnd',
+//				'Перетащите файл сюда',
+//				Icon::plus(),
+//				'catalog',
+//				)
 			->get();
 	}
 
@@ -281,17 +282,13 @@ class ProductView
 			'detail',
 			'dnd',
 			)
-			->many($product->detailImages)
-			->template('many.php')
+//			->many($product->detailImages)
+			->content(
+				DndBuilder::build('product', 'dnd')
+					->get()
+			)
 			->detach('detach')
-			->dnd(
-				'many_dnd_plus.php',
-				'holder',
-				'dnd',
-				'Перетащите файл сюда',
-				Icon::plus(),
-				'catalog',
-				)
+
 			->get();
 	}
 
@@ -301,19 +298,14 @@ class ProductView
 			$product,
 			'Image',
 			'main',
-			'dnd',
+			'mainImages',
 			)
-			->one($product->mainImages)
-			->template('one.php')
 			->detach('detach')
-			->dnd(
-				'many_dnd_plus.php',
-				'holder',
-				'dnd',
-				'Перетащите файл сюда',
-				Icon::plus(),
-				'catalog',
-				)
+			->class('dnd')
+			->content(
+				DndBuilder::build('product')
+					->get()
+			)
 			->get();
 	}
 

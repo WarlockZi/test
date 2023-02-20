@@ -8,15 +8,17 @@ export default function product() {
   if (!product) return false
 
   // let morphs = $('[data-morph-model]')
-  let dnds = $('[data-dnd]')
+  let dnds = $('[data-dnd-path]')
 
   // debugger
   dnds.forEach((dnd) => {
-    if (dnd.parentNode.dataset.morphModel) {
+    if (dnd.parentNode.dataset.morphFunction) {
       let m = new Morph(dnd.parentNode, product)
     } else if (dnd.parentNode.dataset.belongsTo) {
     }
   })
+
+  // let morphs =
 
   let customSelects = $('[custom-select]')
 

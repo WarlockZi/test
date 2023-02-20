@@ -4,6 +4,7 @@
 namespace app\view;
 
 
+use app\controller\Controller;
 use app\core\Error;
 use app\view\Header\UserHeader;
 
@@ -20,14 +21,14 @@ class UserView extends View
 		$this->setAssets();
 	}
 
-	protected function setContent(array $route, array $vars): void
+	protected function setContent(Controller $controller): void
 	{
-		$action = $this->view ? $this->view : $route['action'];
-		$file = ROOT . "/app/view/{$route['controller']}/{$action}.php";
-		if (is_readable($file)) {
-			$this->content = self::getFileContent($file, $vars);
+		$action = $controller->view ;
+//		$file = ROOT . "/app/view/{$route['controller']}/{$action}";
+		if (is_readable($action)) {
+			$this->content = self::getFileContent($action, $controller->vars);
 		} else {
-			Error::setError("Нет файла вида - {$route['action']}.php");
+			Error::setError("Нет файла вида - {$route['action']}");
 			$this->content = self::getFileContent($this->view);
 		}
 	}

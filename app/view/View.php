@@ -16,11 +16,11 @@ use Illuminate\Database\Eloquent\Model;
 abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, ILayout
 {
 
-	public $route;
+	public $controller;
 	public $errors;
 	public $user;
 
-	public $view = 'default';
+//	public $view = 'default';
 
 	protected IHeaderable $header;
 	protected $content;
@@ -28,11 +28,11 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 
 	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
 	public static $jsCss = ['js' => [], 'css' => []];
-	function __construct($route, $layout = '', $view = 'index.php')
+	function __construct($controller)
 	{
 		$this->user = Auth::getUser();
-		$this->route = $route;
-		$this->view = $view;
+		$this->controller = $controller;
+//		$this->view = $view;
 	}
 
 	public function getContent()
@@ -49,9 +49,9 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 	}
 
 
-	public function render(array $vars = [])
+	public function render()
 	{
-		$this->setContent($this->route, $vars);
+		$this->setContent($this->controller, );
 		echo self::getFileContent($this->layout);
 	}
 

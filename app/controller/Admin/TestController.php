@@ -55,7 +55,7 @@ class TestController extends AppController
 			$this->exitJson(['id' => $id]);
 		}
 
-		if (isset($this->route['id'])) {
+		if ($this->route['id']) {
 
 			$id = $this->route['id'];
 			$item = TestView::item($id);

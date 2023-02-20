@@ -4,6 +4,7 @@
 namespace app\view;
 
 
+use app\controller\Controller;
 use app\core\Auth;
 use app\core\Error;
 use app\view\Footer\AdminFooter;
@@ -14,23 +15,23 @@ class AdminView extends View
 	protected $layout = ROOT . "/app/view/layouts/admin.php";
 	protected $noViewError = "Файл вида не найден";
 
-	public function __construct($route)
+	public function __construct(Controller $controller)
 	{
-		parent::__construct($route);
+		parent::__construct($controller);
 		$this->user = Auth::getUser();
 		$this->setHeader($this->user);
 		$this->setFooter();
 	}
 
-	protected function setContent(array $route, array $vars): void
+	protected function setContent(Controller $controller): void
 	{
-		$action = $this->view ? $this->view : $route['action'];
-		$file = ROOT . "/app/view/{$route['controller']}/Admin/{$action}.php";
-		if (is_readable($file)) {
-			$this->content = self::getFileContent($file, $vars);
+		$action = $controller->view;
+
+		if (is_readable($action)) {
+			$this->content = self::getFileContent($action, $controller->vars);
 		} else {
-			Error::setError("Нет файла вида - Admin/{$route['action']}.php");
-			$this->content = self::getFileContent($this->view);
+			Error::setError("Нет файла вида - Admin/view");
+			$this->content = self::getFileContent($controller->view);
 		}
 	}
 
