@@ -2,11 +2,9 @@
 
 namespace app\view\Category;
 
-use app\core\Icon;
 use app\model\Category;
 use app\model\Product;
 use app\model\Property;
-use app\view\Builders\MorphBuilder;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
@@ -14,6 +12,7 @@ use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\Morph\MorphBuilder;
 
 class CategoryView
 {

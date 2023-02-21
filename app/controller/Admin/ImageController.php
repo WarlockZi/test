@@ -48,8 +48,7 @@ class ImageController Extends AppController
 		$images = [];
 
 		foreach ($_FILES as $file) {
-			ImageRepository::validateSize($file);
-			ImageRepository::validateType($file);
+			ImageRepository::validate($file);
 
 			$image = ImageRepository::firstOrCreate($file, $morph);
 			if ($image->wasRecentlyCreated) {

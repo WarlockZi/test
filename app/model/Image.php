@@ -2,6 +2,7 @@
 
 namespace app\model;
 
+use app\Repository\ImageRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
@@ -20,18 +21,26 @@ class Image extends Model
 		'fullpath',
 	];
 
-	public function getFullPath(){
-		$ext = $this->getExt();
-		$path = $this->path?$this->path.'/':'';
-		return '/'.$this->imagePath.'/'.$path.$this->hash.'.'.$ext;
+	public function getRepo()
+	{
+		return new ImageRepository;
 	}
 
-	public function getExt(){
+	public function getFullPath()
+	{
+		$ext = $this->getExt();
+		$path = $this->path ? $this->path . '/' : '';
+		return '/' . $this->imagePath . '/' . $path . $this->hash . '.' . $ext;
+	}
+
+	public function getExt()
+	{
 		return $this->type;
 	}
 
-	public function getPath(){
-		return '/'.$this->imagePath.'/'.$this->path.'/';
+	public function getPath()
+	{
+		return '/' . $this->imagePath . '/' . $this->path . '/';
 	}
 
 	public function products()

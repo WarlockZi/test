@@ -38,6 +38,11 @@ class Product extends Model
 			Image::class,
 			'imageable',
 			)->where('slug', '=', 'main');
+
+//		return $this->morphToMany(
+//			Image::class,
+//			'imageable',
+//			)->where('slug', '=', 'main');
 	}
 
 	public function smallpackImages()
