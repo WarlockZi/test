@@ -301,6 +301,7 @@ class ProductView
 			'mainImages',
 			)
 			->detach('detach')
+			->slug('main')
 			->class('dnd')
 			->content(
 				DndBuilder::build('product')

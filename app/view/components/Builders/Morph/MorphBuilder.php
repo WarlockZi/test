@@ -37,9 +37,11 @@ class MorphBuilder
 
 		$self->morphed = $morphed;
 		$self->morph = $morph;
+
 		$self->oneOrMany = $one ? "data-morph-oneormany='one'" : "data-morph-oneormany='many'";
 		$self->function = "data-morph-function ='{$relation}'";
-		$self->relation = $relation;
+		$self->slug = $relation;
+
 		$self->items = $morphed[$relation]??[];
 
 		$self->template = $self->morphPath . $self->template;

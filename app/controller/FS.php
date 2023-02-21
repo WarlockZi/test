@@ -9,15 +9,29 @@ use app\model\Image;
 class FS
 {
 
-	public static function getFileContent(string $file, array $vars=[]){
+	protected static $storagePath = ROOT . '/pic/';
+
+	public static function getStoragePath(): string
+	{
+		return self::platformSlashes(self::$storagePath);
+	}
+
+	public static function saveToStorage(string $path, $file, string $fileName): bool
+	{
+		$path = self::getOrCreateAbsolutePath(self::$storagePath, $path);
+		return self::platformSlashes(self::$storagePath);
+	}
+
+
+	public static function getFileContent(string $file, array $vars = [])
+	{
 		extract($vars);
 		ob_start();
 		require $file;
 		return ob_get_clean();
 	}
 
-	public
-	static function delFilesFromPath(string $path, string $ext = ''): array
+	public static function delFilesFromPath(string $path, string $ext = ''): array
 	{
 		$ext = $ext ?? '*';
 		$files = glob(ROOT . $path . "*.$ext");
@@ -29,19 +43,7 @@ class FS
 		return $deleted;
 	}
 
-//	protected function getPaths($absolutePath)
-//	{
-//		$paths = [];
-//		foreach (scandir("{$absolutePath}/") as $path) {
-//			if ($path !== '.' && $path !== '..') {
-//				$paths[$path]['basename'] = $path;
-//				$paths[$path]['fullpath'] = "{$absolutePath}/{$path}";
-//			}
-//		}
-//		return $paths;
-//	}
-	public
-	static function getPath(...$args)
+	public static function getPath(...$args)
 	{
 		$s = DIRECTORY_SEPARATOR;
 		$str = ROOT . $s;
@@ -51,29 +53,25 @@ class FS
 		return self::platformSlashes($str);
 	}
 
-	public
-	static function platformSlashes($path)
+	public static function platformSlashes($path)
 	{
 		return str_replace('/', DIRECTORY_SEPARATOR, $path);
 	}
 
-	public
-	static function getAbsoluteImagePath($path, Image $image)
+	public static function getAbsoluteImagePath($path, Image $image)
 	{
 		$s = DIRECTORY_SEPARATOR;
-		return $path . $image->hash . '.' . $image->type;
+		return "{$path}{$s}{$image->hash}.{$image->type}";
 	}
 
-	public
-	static function getAbsoluteFilePath($path, string $file)
+	public static function getAbsoluteFilePath($path, string $file)
 	{
 		$s = DIRECTORY_SEPARATOR;
 		$path = FS::platformSlashes($path);
 		return $path . $file;
 	}
 
-	public
-	static function getOrCreateAbsolutePath(...$args)
+	public static function getOrCreateAbsolutePath(...$args)
 	{
 		$s = DIRECTORY_SEPARATOR;
 		$dir = ROOT;
@@ -86,8 +84,7 @@ class FS
 		return $dir;
 	}
 
-	public
-	static function parsePathToString(string $fullPath)
+	public static function parsePathToString(string $fullPath): string
 	{
 		$s = DIRECTORY_SEPARATOR;
 		$str = '';
@@ -104,8 +101,7 @@ class FS
 		return $str;
 	}
 
-	public
-	static function getAbsolutePath(...$args)
+	public static function getAbsolutePath(...$args)
 	{
 		$s = DIRECTORY_SEPARATOR;
 		$dir = ROOT;
@@ -122,11 +118,16 @@ class FS
 	}
 
 
-//	function platformSlashes($path)
+//	protected function getPaths($absolutePath)
 //	{
-//		$str = str_replace('\\', DIRECTORY_SEPARATOR, $path);
-//		return str_replace('/', DIRECTORY_SEPARATOR, $str);
+//		$paths = [];
+//		foreach (scandir("{$absolutePath}/") as $path) {
+//			if ($path !== '.' && $path !== '..') {
+//				$paths[$path]['basename'] = $path;
+//				$paths[$path]['fullpath'] = "{$absolutePath}/{$path}";
+//			}
+//		}
+//		return $paths;
 //	}
-
 
 }

@@ -101,11 +101,12 @@ export default class Morph {
 
     let morphedType = context.model
     let morphedId = context.id
+    let path = target.dataset.dndPath
 
     let func = context.func
     // debugger
     let url = `/adminsc/${morphedType}/attach`
-    let data = {morphedType, morphedId, func}
+    let data = {morphedType, morphedId, func, path}
     data = objAndData2FormData(data,files)
     let res = await post(url, data)
 

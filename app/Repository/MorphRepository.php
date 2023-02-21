@@ -32,34 +32,53 @@ class MorphRepository extends AppController
 		}
 	}
 
-	public static function attachWithFiles(array $files, array $req): bool
+	public static function attachWithFiles(array $files, array $req)
 	{
-		$morphed = $req['morphedType'];
+		$morphedType = $req['morphedType'];
 		$morphedId = $req['morphedId'];
-		$model = self::getModelName($morphed)::find($morphedId);
+
+		$oneOrMany = $req['oneOrMany'];
+		$slug = $req['slug'];
+		$path = $req['path'];
 		$func = $req['func'];
 
-		$errors = [];
-		foreach ($files as $file) {
-			ImageRepository::saveToFile($model, $file);
-			if (ImageRepository::saveToFile()) {
-				$res = $model->$func()->syncWithoutDetaching($morphedId);
+		$model = self::getModelName($morphedType)::find($morphedId);
+		$relation = $model->$func();
+		$repository = $relation->getRelated()->getRepo();
 
-			} else {
+		if ($oneOrMany=== 'one') {
+			$file = $files[0];
+			$repository::validate($file);
+			$morph = $repository->firstOrCreate($file, $path);
+
+			if ($morph->wasRecentlyCreated) {
+				$repository::saveToFile($morph, $file, $path);
 			}
+			$slug = 'main';
+			$res = $model->$func()
+				->wherePivot('slug', $slug)
+				->sync([$morph['id'] => ['slug' => $slug]]);
+
+			exit();
+		} else {
+			$file = $files[0];
+			$repository::validate($file);
+			$morph = $repository->firstOrCreate($file, $path);
+
+			if ($morph->wasRecentlyCreated) {
+				$repository::saveToFile($morph, $file, $path);
+			}
+			$res = $model->mainImages()->attach($morph->id);
+
+			exit();
 
 		}
-
-
 //		$slug = $morphed['slug'];
-
 //		if ($morphed['detach'] === 'true') {
 //			$res = $model->$func()
 //				->wherePivot('slug', $slug)
 //				->sync([$morphed['id'] => ['slug' => $slug]]);
 //			return true;
-//		} else {
-
 //		}
 	}
 

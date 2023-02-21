@@ -6,9 +6,7 @@ use \app\Repository\ImageRepository;
 
 <div
 	<?= $this->oneOrMany; ?>
-	<?= $this->slug; ?>
 	<?= $this->function; ?>
-	<?= $this->morph; ?>
 	<?= $this->class; ?>
 >
 	<?= $this->content;?>

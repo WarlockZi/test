@@ -14,6 +14,11 @@ class ImageRepository
 {
 	public static $picPath = '/pic/';
 	public static $size = 1000000;
+	public static $model = Image::class;
+
+	public static $acceptedTypes = [
+		'jpg', 'jpeg', 'png', 'webp', 'gif'
+	];
 	public static $types = [
 		"image/png" => "png",
 		"image/jpg" => "jpg",
@@ -21,10 +26,6 @@ class ImageRepository
 		"image/gif" => "gif",
 		"image/webp" => "webp",
 	];
-	public static $acceptedTypes = [
-		'jpg', 'jpeg', 'png', 'webp', 'gif'
-	];
-	public static $model = Image::class;
 
 
 	public static function getSrc(ItemFieldBuilder $field): string
@@ -60,8 +61,6 @@ class ImageRepository
 		return $imageArr;
 	}
 
-
-
 	public static function getMorphOneImage(Model $model, $relation): string
 	{
 		$items = $model->$relation;
@@ -80,17 +79,17 @@ class ImageRepository
 		return "<div class='item'><img src='{$image->getFullPath()}' alt=''>{$del}</div>";
 	}
 
-	public static function sync(Model $morph, array $morphed, string $slug, string $oneOrMany, bool $detach)
-	{
-		if ($oneOrMany === 'many') {
-			return $res = MorphRepository::attachMany($morph, $morphed, $slug, $detach);
-		} else { //one
-			$res = MorphRepository::attach([$morph, $morphed, $slug, $detach]);
-			if ($res['attached']) {
-				return ImageRepository::getSrcMorph($morph);
-			}
-		}
-	}
+//	public static function sync(Model $morph, array $morphed, string $slug, string $oneOrMany, bool $detach)
+//	{
+//		if ($oneOrMany === 'many') {
+//			return $res = MorphRepository::attachMany($morph, $morphed, $slug, $detach);
+//		} else { //one
+//			$res = MorphRepository::attach([$morph, $morphed, $slug, $detach]);
+//			if ($res['attached']) {
+//				return ImageRepository::getSrcMorph($morph);
+//			}
+//		}
+//	}
 
 	public static function getImagePath(int $id): string
 	{
@@ -107,10 +106,10 @@ class ImageRepository
 	}
 
 
-	public static function saveToFile(Model $image, $file)
+	public static function saveToFile(Model $model, array $file, string $path): bool
 	{
-		$dir = FS::getOrCreateAbsolutePath($image->imagePath, $image->path);
-		$full = FS::getAbsoluteImagePath($dir, $image);
+		$dir = FS::getOrCreateAbsolutePath($model->imagePath, $model->path);
+		$full = FS::getAbsoluteImagePath($dir, $model);
 		if (!is_readable($full)) {
 			move_uploaded_file($file['tmp_name'], $full);
 			return true;
@@ -118,20 +117,27 @@ class ImageRepository
 		return false;
 	}
 
-	public static function firstOrCreate(array $file, array $morph)
+
+	public static function firstOrCreate(array $file, string $path)
 	{
 		$hash = hash_file('md5', $file['tmp_name']);
 		return
 			Image::firstOrCreate([
 				'hash' => $hash,
+				'path' => $path,
 				'size' => $file['size'],
-				'path' => $morph['path'],
 			], [
 				'hash' => $hash,
+				'path' => $path,
 				'name' => $file['name'],
-				'path' => $morph['path'],
 				'type' => ImageRepository::getFileExt($file['type']),
 			]);
+	}
+
+	public static function validate(array $file): void
+	{
+		self::validateSize($file);
+		self::validateType($file);
 	}
 
 	public static function validateSize(array $file)
