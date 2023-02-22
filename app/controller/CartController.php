@@ -6,8 +6,8 @@ use \app\view\View;
 
 class CartController extends AppController {
 
-   public function __construct($route) {
-      parent::__construct($route);
+   public function __construct() {
+      parent::__construct();
    }
 
    public function actionIndex() {

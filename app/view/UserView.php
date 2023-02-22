@@ -6,6 +6,8 @@ namespace app\view;
 
 use app\controller\Controller;
 use app\core\Error;
+use app\core\FS;
+use app\view\Assets\UserAssets;
 use app\view\Header\UserHeader;
 
 class UserView extends View
@@ -13,20 +15,25 @@ class UserView extends View
 	protected $layout = ROOT . "/app/view/layouts/vitex.php";
 	protected static $noViewError = ROOT . '/app/view/404/index.php';
 
-	public function __construct($route)
+	public function __construct(Controller $controller)
 	{
-		parent::__construct($route);
+		parent::__construct($controller);
 		$this->setHeader($this->user);
 		$this->setFooter();
 		$this->setAssets();
 	}
+	protected function getViewFile(): string
+	{
+		$route = $this->controller->getRoute();
+		$controller = ucfirst($route->controller);
+		$action = $route->action;
+		return FS::platformSlashes(ROOT . "/app/view/{$controller}/{$action}.php");
+	}
 
 	protected function setContent(Controller $controller): void
 	{
-		$action = $controller->view ;
-//		$file = ROOT . "/app/view/{$route['controller']}/{$action}";
-		if (is_readable($action)) {
-			$this->content = self::getFileContent($action, $controller->vars);
+		if (is_readable($this->view)) {
+			$this->content = self::getFileContent($this->view, $controller->vars);
 		} else {
 			Error::setError("Нет файла вида - {$route['action']}");
 			$this->content = self::getFileContent($this->view);
@@ -53,27 +60,7 @@ class UserView extends View
 
 	protected function setAssets()
 	{
-//    $this->layout = 'vitex';
-		View::setJs('main.js');
-		View::setCss('main.css');
-		View::setJs('mainHeader.js');
-		View::setCss('mainHeader.css');
-//		View::setJs('breadcrumbs.js');
-//		View::setCss('breadcrumbs.css');
-		View::setJs('cookie.js');
-		View::setCss('cookie.css');
-
-//    View::setJs('list.js');
-//    View::setCss('list.css');
-
-		View::setJs('product.js');
-		View::setCss('product.css');
-//    View::setJs('card.js');
-
-		View::setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
-		View::setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");
-//    View::setCDNCss("https://cdn.quilljs.com/1.3.6/quill.bubble.css");
-//		View::setJs('list.css');
+		$this->assets = new UserAssets();
 	}
 
 	protected static function get404()

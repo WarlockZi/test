@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\controller;
+namespace app\core;
 
 
 use app\model\Image;

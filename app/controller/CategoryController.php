@@ -3,6 +3,7 @@
 namespace app\controller;
 
 
+use app\core\Route;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 
@@ -10,18 +11,15 @@ use app\Repository\BreadcrumbsRepository;
 class CategoryController Extends AppController
 {
 
-	public $model = Category::class;
-	public $modelName = 'category';
-
-	public function __construct(array $route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 	}
 
 	public function actionIndex()
 	{
 		$accordion = '';
-		if ($this->route['slug']) {
+		if ($this->route->slug) {
 			$this->view = 'category';
 			$slug = $this->route['slug'];
 

@@ -3,14 +3,15 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Route;
 use app\model\Opentest;
 
 
 class OpenquestionController Extends AppController
 {
-  public function __construct(array $route)
+  public function __construct()
   {
-    parent::__construct($route);
+    parent::__construct();
   }
 
   public function actionEdit()

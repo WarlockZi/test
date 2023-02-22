@@ -4,6 +4,7 @@ namespace app\controller\Admin;
 
 
 use app\controller\AppController;
+use app\core\Route;
 use app\model\Val;
 
 class ValController Extends AppController
@@ -11,9 +12,9 @@ class ValController Extends AppController
 
 	public $model = Val::class;
 
-	public function __construct(array $route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 	}
 
 	public function actionIndex()

@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Route;
 use app\model\Todo;
 
 use app\view\components\CustomList\CustomList;
@@ -11,12 +12,12 @@ use app\view\Todo\TodoView;
 
 class TodoController Extends AppController
 {
-	public $model = Todo::class;
-	public $modelName = 'todo';
+//	public $model = Todo::class;
+//	public $modelName = 'todo';
 
-	public function __construct(array $route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 
 	}
 	public function actionIndex()

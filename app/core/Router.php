@@ -2,21 +2,17 @@
 
 namespace app\core;
 
-use app\model\User;
-use app\view\AdminView;
-use app\view\UserView;
-
 class Router
 {
 	protected static $routes = [];
-	protected static $route = [];
 	protected static $namespace;
 	protected static $controller;
 
+	protected static $route;
 
 	public static function setNamespace(): void
 	{
-		if (isset(self::$route['admin']) && self::$route['admin']) {
+		if (self::$route->admin) {
 			self::$namespace = 'app\controller\Admin\\';
 		} else {
 			self::$namespace = 'app\controller\\';
@@ -26,7 +22,7 @@ class Router
 	public static function setController(): string
 	{
 		self::setNamespace();
-		self::$controller = self::$namespace . self::$route['controller'] . 'Controller';
+		self::$controller = self::$namespace . self::$route->controller . 'Controller';
 		return self::$controller;
 	}
 
@@ -42,14 +38,6 @@ class Router
 
 	public static function matchRoute($url): void
 	{
-		$route = [
-			'admin' => '',
-			'controller' => 'Adminsc',
-			'action' => 'index',
-			'slug' => '',
-			'id' => 0
-		];
-
 		foreach (self::$routes as $pattern => $r) {
 			if (preg_match("#$pattern#i", $url, $matches)) {
 
@@ -59,35 +47,38 @@ class Router
 					}
 				}
 
-				$r = array_merge($matches,$r);
-				foreach ($route as $k => $v) {
-					if (isset($r[$k])) {
-						$route[$k] = $r[$k];
-					}
+				$matches = array_merge($matches,$r);
+				$route = new Route();
+				foreach ($matches as $k => $v) {
+					$route->$k = $v;
 				}
-				$route['controller'] = self::upperCamelCase($route['controller']);;
 				self::$route = $route;
 			}
 		}
+
 	}
 
-	public static function isAdmin()
+	protected static function handleErrors(string $controller, string $action)
 	{
-		return self::$route['admin'];
+		if (!class_exists($controller)){
+			NotFound::controller($controller);
+		}else if (!Router::$route->action){
+			NotFound::action($controller);
+		}
+
 	}
 
 	public static function dispatch($url)
 	{
 		Router::matchRoute($url);
 
-		if (!self::$route) NotFound::url($url);
-
 		$controller = self::setController();
-		if (!class_exists($controller)) NotFound::controller(self::$controller);
-		$controller = new $controller(self::$route);
+		$action = 'action' . self::upperCamelCase(self::$route->action);
 
-		$action = 'action' . self::upperCamelCase(self::$route['action']);
-		if (!method_exists($controller, $action)) NotFound::action($action, $controller);
+		Router::handleErrors($controller, $action);
+
+		$controller = new $controller();
+		Auth::autorize();
 		$controller->$action();
 
 		$controller->setView();
@@ -110,19 +101,17 @@ class Router
 		return trim($params[0], '/');
 	}
 
-	public static function isLogin(array $route)
-	{
-		return $route['controller'] === 'Auth' && $route['action'] === 'login';
-	}
-
-	public static function isHome()
+	public static function needsNoAuth()
 	{
 		$route = Router::getRoute();
-		return $route['controller'] === 'Main' && $route['action'] === 'index';
+		return $route->controller === 'Auth' && $route->action === 'login'
+			|| $route->controller === 'Auth' && $route->action === 'noconfirm'
+			|| $route->controller === 'Main' && $route->action === 'index'
+			|| $route->controller === 'Product'
+			|| $route->controller === 'Category';
 	}
 
-
-	public static function getRoute(): array
+	public static function getRoute(): Route
 	{
 		return self::$route;
 	}

@@ -4,18 +4,19 @@ namespace app\controller\Admin;
 
 
 use app\controller\AppController;
+use app\core\Route;
 use app\view\Order\OrderView;
 
 
 class OrderController Extends AppController
 {
-	public $modelName = 'order';
-	public $model = Order::class;
-	public $table = 'orders';
+//	public $modelName = 'order';
+//	public $model = Order::class;
+//	public $table = 'orders';
 
-	public function __construct(array $route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 
 	}
 

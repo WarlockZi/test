@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Route;
 use app\model\Right;
 use app\model\User;
 use app\view\Right\RightView;
@@ -15,9 +16,9 @@ class RightController Extends AppController
 	public $modelName = 'right';
 	public $tableName = 'rights';
 
-	public function __construct(array $route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 
 	}
   public function actionUpdateOrCreate()

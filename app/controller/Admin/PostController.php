@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Route;
 use app\model\Post;
 use app\view\Post\PostView;
 
@@ -13,9 +14,9 @@ class PostController Extends AppController
 	public  $modelName = 'post';
 	public  $tableName = 'posts';
 
-	public function __construct(array $route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 
 	}
 

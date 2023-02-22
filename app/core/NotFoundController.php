@@ -8,9 +8,9 @@ use app\controller\Controller;
 
 class NotFoundController extends Controller
 {
-  public function __construct($route)
+  public function __construct()
   {
-    parent::__construct($route);
+    parent::__construct();
   }
 
 }

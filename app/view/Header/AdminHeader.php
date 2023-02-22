@@ -29,23 +29,9 @@ class AdminHeader implements IHeaderable
 		$adminSidebar = $this->getSidebar();
 		$adminHeader = $this->getTop();
 		$this->header = $adminSidebar . $adminHeader;
-		$this->setAssets();
+//		$this->setAssets();
 	}
 
-	protected function setAssets()
-	{
-		View::setJs('admin.js');
-		View::setCss('admin.css');
-
-		View::setJs('list.js');
-		View::setCss('list.css');
-
-		View::setJs('common.js');
-		View::setCss('common.css');
-
-		View::setJs('product.js');
-		View::setCss('product.css');
-	}
 	protected function getTop()
 	{
 		ob_start();

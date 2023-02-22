@@ -1,9 +1,4 @@
 <?
-
-use \app\view\Header\Header;
-use \app\view\Footer\AbstractFooter;
-use \app\core\Error;
-
 ?>
 
 <!DOCTYPE html>
@@ -22,8 +17,9 @@ use \app\core\Error;
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
 
-	<? $this::getMeta(); ?>
-	<? $this->getCSS(); ?>
+	<?= $this->assets->getMeta(); ?>
+	<?= $this->assets->getCss(); ?>
+<!--	--><?// $this->getCSS(); ?>
 
 </head>
 
@@ -39,8 +35,8 @@ use \app\core\Error;
 
 <?//= Footer::getUserCookie(); ?>
 
+<?= $this->assets->getJs(); ?>
 
-<? $this::getJS(); ?>
 <? //= Footer::getYaMetrica(); ?>
 <? //= Footer::getVK(); ?>
 

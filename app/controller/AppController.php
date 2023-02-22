@@ -3,7 +3,6 @@
 namespace app\controller;
 
 use app\core\Auth;
-use app\core\Router;
 use app\model\User;
 use app\Repository\MorphRepository;
 use app\view\AdminView;
@@ -14,34 +13,26 @@ class AppController extends Controller
 {
 	protected $ajax;
 
-	public function __construct(array $route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 		$this->isAjax();
 	}
 
 	public function setView()
 	{
-		$pref = Router::isAdmin() ? '/Admin' : '';
-		$controller = $this->route['controller'];
-		$this->layout = ROOT . "/app/view/layouts/{$this->layout}.php";
-		$this->view = ROOT . "/app/view/{$controller}{$pref}/{$this->view}.php";
+		$pref = $this->route->isAdmin() ? '/Admin' : '';
+		$controller = $this->route->controller;
+//		$this->layout = ROOT . "/app/view/layouts/{$this->layout}.php";
+//		$this->view = ROOT . "/app/view/{$controller}{$pref}/{$this->view}.php";
 		$view = $this->getView();
 		$view->render();
 	}
 
-	protected function setLayout()
-	{
-		if (Router::isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
-			return ROOT . '/app/view/layouts/admin.php';
-		} else {
-			return ROOT . '/app/view/layouts/vitex.php';
-		}
-	}
 
 	public function getView()
 	{
-		if (Router::isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
+		if ($this->route->isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
 			return new AdminView($this);
 		} else {
 			return new UserView($this);
@@ -84,7 +75,6 @@ class AppController extends Controller
 	{
 		$req = $this->ajax;
 		if (!$req) $this->exitWithError('Плохой запрос');
-//		if (!isset($req['morph'])) $this->exitWithError('Плохой запрос');
 		MorphRepository::detach($req);
 		$this->exitWithPopup('ok');
 	}

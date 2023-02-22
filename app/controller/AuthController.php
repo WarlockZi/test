@@ -11,9 +11,9 @@ use app\view\View;
 class AuthController extends AppController
 {
 
-	public function __construct($route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 		View::setJs('auth.js');
 		View::setCss('auth.css');
 	}

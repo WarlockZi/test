@@ -9,13 +9,14 @@ use app\model\User;
 use app\view\AdminView;
 use app\view\UserView;
 
-class NotFound
+class NotFound extends Controller
 {
 
 	public static function url(string $url)
 	{
 		$error = "Плохой запрос url - {$url}";
 		Error::setError($error);
+//		Router::setController('AppController');
 		$view = self::setView();
 		$view->route = ['controller' => 'AppController', 'action' => 'index'];
 		$view->render();
@@ -27,6 +28,7 @@ class NotFound
 		$error = "Плохой запрос controller - {$controller}";
 		Error::setError($error);
 		$view = self::setView();
+		$view->controller = new $controller;
 		$view->render();
 		exit();
 	}
@@ -41,10 +43,10 @@ class NotFound
 	}
 
 	protected static function setView(){
-		if (Router::isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
-			return new AdminView(self::$route);
+		if (Router::getRoute()->isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
+			return new AdminView(new self);
 		} else {
-			return new UserView(self::$route);
+			return new UserView(new self);
 		}
 	}
 

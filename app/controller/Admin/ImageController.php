@@ -13,7 +13,7 @@ class ImageController Extends AppController
 
 	public function __construct(array $route)
 	{
-		parent::__construct($route);
+		parent::__construct();
 	}
 
 	public function actionIndex()

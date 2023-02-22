@@ -48,8 +48,8 @@ use \app\core\Icon;
 
 			<div class="mobile-menu">
 				<div class="wrap">
-					<a href="/about/contacts">Контакты</a>
-					<a href="/about/requisites">Реквизиты</a>
+					<a href="/main/about/contacts">Контакты</a>
+					<a href="/main/about/requisites">Реквизиты</a>
 					<a href="/main/about">О компании</a>
 
 					<hr>
