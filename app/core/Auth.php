@@ -8,7 +8,7 @@ use app\model\User;
 
 class Auth
 {
-	protected static $user =[];
+	protected static $user = [];
 
 	public static function checkAuthorized(array $user, array $rights): void
 	{
@@ -37,9 +37,10 @@ class Auth
 
 	public static function autorize(): array
 	{
-		if (Router::isLogin(Router::getRoute())) {
+		if (Router::needsNoAuth(Router::getRoute())) {
 			return [];
 		}
+
 		$user = self::getUser();
 		if (!$user) {
 			header("Location:/auth/login");

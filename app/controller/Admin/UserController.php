@@ -14,9 +14,9 @@ class UserController extends AppController
 	public $modelName = 'user';
 
 
-	public function __construct($route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 	}
 
 	public function actionIndex()

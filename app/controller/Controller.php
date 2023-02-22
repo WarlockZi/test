@@ -3,37 +3,37 @@
 namespace app\controller;
 
 
-use app\core\Auth;
 use app\core\Router;
-use app\model\User;
-use app\view\AdminView;
-use app\view\UserView;
 
 abstract class Controller
 {
-	public $route;
-	public $view;
-	public $layout = 'vitex';
 	public $vars = [];
+
 	protected $token;
+	protected $route;
 	protected $ajax;
 
-	function __construct($route)
+	function __construct()
 	{
-		$this->route = $route;
-
-		$this->view = $route['action'];
-
-		$this->token = !empty($_SESSION['token']) ? $_SESSION['token'] : $this->createToken();
+		$this->route = Router::getRoute();
+		$this->token = $this->createToken();
 	}
 
 
-	protected function createToken()
+	protected function createToken(): string
 	{
 		$salt = "popiyonovacheesa";
-		return $_SESSION['token'] = md5($salt . microtime(true));
+		if (isset($_SESSION['token']) && $_SESSION['token']) {
+			return $_SESSION['token'];
+		} else {
+			$_SESSION['token'] = md5($salt . microtime(true));
+			return $_SESSION['token'];
+		}
 	}
 
+	public function getRoute(){
+		return $this->route;
+	}
 
 
 	public function set($vars)

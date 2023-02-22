@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Route;
 use app\model\Answer;
 use app\model\Todo;
 use app\view\components\CustomList\CustomList;
@@ -13,9 +14,9 @@ class PlanningController Extends AppController
 	public $modelName = Todo::class;
 	public $model = 'todo';
 
-	public function __construct(array $route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 	}
 
 	public function actionIndex()

@@ -20,7 +20,7 @@ use app\view\Footer\AbstractFooter;
 	<!-- Include the Quill library -->
 	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
-	<? $this::getCSS() ?>
+	<?= $this->assets->getCss() ?>
 </head>
 
 <body>
@@ -45,7 +45,7 @@ use app\view\Footer\AbstractFooter;
 
 <?= $this->getFooter();//::getAdminFooter() ?>
 
-<? $this::getJS() ?>
+<?= $this->assets->getJs() ?>
 
 </body>
 </html>

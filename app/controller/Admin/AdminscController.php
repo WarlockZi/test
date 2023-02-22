@@ -12,9 +12,9 @@ use app\view\View;
 class AdminscController extends AppController
 {
 
-	public function __construct($route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 		if (!User::can(Auth::getUser(), ['role_employee'])) {
 			header('Location:/auth/profile');
 		}
@@ -42,7 +42,7 @@ class AdminscController extends AppController
 
 	public function actionIndex()
 	{
-		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
+//		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
 
 

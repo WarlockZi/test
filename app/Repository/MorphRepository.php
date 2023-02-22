@@ -54,7 +54,6 @@ class MorphRepository extends AppController
 			if ($morph->wasRecentlyCreated) {
 				$repository::saveToFile($morph, $file, $path);
 			}
-			$slug = 'main';
 			$res = $model->$func()
 				->wherePivot('slug', $slug)
 				->sync([$morph['id'] => ['slug' => $slug]]);

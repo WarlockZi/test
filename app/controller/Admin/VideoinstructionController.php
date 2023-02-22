@@ -4,16 +4,16 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\Auth;
+use app\core\Route;
 use app\model\Videoinstruction;
 use app\view\Videoinstruction\VideoinstructionView;
 
 class VideoinstructionController Extends AppController
 {
-	public $model = Videoinstruction::class;
 
-	public function __construct(array $route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 	}
 
 	public function actionIndex()

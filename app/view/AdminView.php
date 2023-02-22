@@ -5,9 +5,9 @@ namespace app\view;
 
 
 use app\controller\Controller;
-use app\core\Auth;
 use app\core\Error;
-use app\view\Footer\AdminFooter;
+use app\core\FS;
+use app\view\Assets\AdminAssets;
 use app\view\Header\AdminHeader;
 
 class AdminView extends View
@@ -18,17 +18,25 @@ class AdminView extends View
 	public function __construct(Controller $controller)
 	{
 		parent::__construct($controller);
-		$this->user = Auth::getUser();
+
 		$this->setHeader($this->user);
 		$this->setFooter();
+		$this->setAssets();
+	}
+
+	protected function getViewFile(): string
+	{
+		$route = $this->controller->getRoute();
+		$controller = ucfirst($route->controller);
+		$action = $route->action;
+		return FS::platformSlashes(ROOT . "/app/view/{$controller}/Admin/{$action}.php");
 	}
 
 	protected function setContent(Controller $controller): void
 	{
-		$action = $controller->view;
 
-		if (is_readable($action)) {
-			$this->content = self::getFileContent($action, $controller->vars);
+		if (is_readable($this->view)) {
+			$this->content = self::getFileContent($this->view, $controller->vars);
 		} else {
 			Error::setError("Нет файла вида - Admin/view");
 			$this->content = self::getFileContent($controller->view);
@@ -52,17 +60,24 @@ class AdminView extends View
 
 	function setFooter()
 	{
-		$this->footer = new AdminFooter();
+		ob_start();
+		include ROOT . '/app/view/Footer/footerView.php';
+		$this->footer = ob_get_clean();
 	}
 
 	function getFooter()
 	{
-		return $this->footer->getFooter();
+		return $this->footer;
 	}
 
 
 	function getLayout()
 	{
 		return $this->layout;
+	}
+
+	protected function setAssets()
+	{
+		$this->assets = new AdminAssets();
 	}
 }

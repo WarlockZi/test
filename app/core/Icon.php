@@ -4,7 +4,7 @@
 namespace app\core;
 
 
-use app\controller\FS;
+use app\core\FS;
 
 class Icon
 {

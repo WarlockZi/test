@@ -230,6 +230,23 @@ class ProductView
 		return include ROOT . '/app/view/Product/description.php';
 	}
 
+	protected static function getMainImage($product): string
+	{
+		return MorphBuilder::build(
+			$product,
+			'Image',
+			'main',
+			'mainImages',
+			)
+			->detach('detach')
+
+			->class('dnd')
+			->content(
+				DndBuilder::build('product')
+					->get()
+			)
+			->get();
+	}
 
 	protected static function getSmallPackImages(Product $product): string
 	{
@@ -237,14 +254,14 @@ class ProductView
 			$product,
 			'Image',
 			'smallpack',
-			'dnd',
+			'smallpackImages',
 			)
-//			->many($product->smallpackImages)
+			->many()
+			->detach('detach')
 			->content(
 				DndBuilder::build('product', 'dnd')
 					->get()
 			)
-			->detach('detach')
 			->get();
 	}
 
@@ -254,9 +271,10 @@ class ProductView
 			$product,
 			'Image',
 			'bigpack',
-			'mainImages',
+			'bigPack',
 			)
 			->detach('detach')
+			->many()
 			->content(
 				DndBuilder::build('product', 'dnd')
 					->get()
@@ -280,35 +298,19 @@ class ProductView
 			$product,
 			'Image',
 			'detail',
-			'dnd',
+			'detailImages',
 			)
+			->many()
+			->detach('detach')
 //			->many($product->detailImages)
 			->content(
 				DndBuilder::build('product', 'dnd')
 					->get()
 			)
-			->detach('detach')
 
 			->get();
 	}
 
-	protected static function getMainImage($product): string
-	{
-		return MorphBuilder::build(
-			$product,
-			'Image',
-			'main',
-			'mainImages',
-			)
-			->detach('detach')
-			->slug('main')
-			->class('dnd')
-			->content(
-				DndBuilder::build('product')
-					->get()
-			)
-			->get();
-	}
 
 	protected static function getMainUnit(Model $product): string
 	{

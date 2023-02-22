@@ -3,7 +3,7 @@
 use app\core\Icon;
 use app\core\Router;
 
-$index = $this->index = Router::isHome();
+$index = $this->index = Router::getRoute()->isHome();
 $logo = Icon::logo_squre1() . Icon::logo_vitex1();
 
 if ($index): ?>

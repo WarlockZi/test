@@ -2,25 +2,19 @@
 
 namespace app\controller;
 
-use app\core\Auth;
-use app\view\Header\Header;
 use app\view\View;
 
 class MainController extends AppController
 {
 
-	public function __construct($route)
+	public function __construct()
 	{
-		parent::__construct($route);
-//		Auth::autorize($this);
-//		$sale = Product::where('sale', '=', 1)->get();
-//		$this->set(compact('sale'));
+		parent::__construct();
 	}
 
 	public function actionIndex()
 	{
-//		Header::getVitexHeader($this);
-		View::setMeta('Нитриловые перчатки оптом', 'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.', 'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
+//		View::setMeta('Нитриловые перчатки оптом', 'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.', 'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
 	}
 
 	public function actionPoliticaconf()

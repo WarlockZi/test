@@ -4,6 +4,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Route;
 use app\model\TestResult;
 use app\core\Mail;
 
@@ -12,9 +13,9 @@ class TestresultController extends AppController
 {
 	public $model = TestResult::class;
 
-	public function __construct(array $route)
+	public function __construct()
 	{
-		parent::__construct($route);
+		parent::__construct();
 	}
 
 	public function actionIndex()
