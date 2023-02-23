@@ -19,7 +19,6 @@ class MorphController Extends AppController
 			$controller = "app\controller\Admin\\{$morph}Controller";
 			$controller = new $controller([]);
 			$controller->attachOne();
-
 		}
 	}
 }

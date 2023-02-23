@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\controller\Interfaces\IModelable;
+use app\core\Router;
 use app\model\Test;
 use app\Repository\AnswerRepository;
 use app\Repository\QuestionRepository;
@@ -13,7 +13,12 @@ use app\view\View;
 
 class TestController extends AppController
 {
-	public $model;
+//	public $model;
+
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
 	public function setModels()
 	{
@@ -43,10 +48,7 @@ class TestController extends AppController
 		}
 	}
 
-	public function __construct(array $route)
-	{
-		parent::__construct();
-	}
+
 
 	public function actionEdit()
 	{
@@ -55,9 +57,10 @@ class TestController extends AppController
 			$this->exitJson(['id' => $id]);
 		}
 
-		if ($this->route['id']) {
+		$id = Router::getRoute()->id;
+		$test = Test::query()->find($id);
 
-			$id = $this->route['id'];
+		if ($test) {
 			$item = TestView::item($id);
 			$this->set(compact('item'));
 

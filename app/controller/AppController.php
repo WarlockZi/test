@@ -21,10 +21,8 @@ class AppController extends Controller
 
 	public function setView()
 	{
-		$pref = $this->route->isAdmin() ? '/Admin' : '';
-		$controller = $this->route->controller;
-//		$this->layout = ROOT . "/app/view/layouts/{$this->layout}.php";
-//		$this->view = ROOT . "/app/view/{$controller}{$pref}/{$this->view}.php";
+//		$pref = $this->route->isAdmin() ? '/Admin' : '';
+//		$controller = $this->route->controller;
 		$view = $this->getView();
 		$view->render();
 	}

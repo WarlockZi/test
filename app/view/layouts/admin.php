@@ -1,7 +1,6 @@
 <?
 
 use app\core\Error;
-use app\view\Footer\AbstractFooter;
 
 ?>
 <!DOCTYPE html>
@@ -17,7 +16,7 @@ use app\view\Footer\AbstractFooter;
 
 	<!--	<link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">-->
 	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-	<!-- Include the Quill library -->
+
 	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 	<?= $this->assets->getCss() ?>

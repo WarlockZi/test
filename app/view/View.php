@@ -4,7 +4,6 @@ namespace app\view;
 
 use app\controller\Controller;
 use app\core\Auth;
-use app\core\FS;
 use app\view\Interfaces\IErrors;
 use app\view\Interfaces\IFooterable;
 use app\view\Interfaces\IHeaderable;

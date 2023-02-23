@@ -5,6 +5,7 @@ namespace app\view\components\Builders\ItemBuilder;
 
 use app\view\components\Builders\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class ItemBuilder extends Builder
 {
@@ -27,9 +28,15 @@ class ItemBuilder extends Builder
 
 	public $html = '';
 
+	function getModelName($table)
+	{
+		return Str::studly(Str::singular($table));
+	}
+
 	public static function build(Model $item, string $model)
 	{
 		$view = new static();
+		$name = $view->getModelName($item->getTable());
 		$view->dataModel = "data-model='{$model}'";
 		$view->model = $model;
 		$view->item = $item->toArray();

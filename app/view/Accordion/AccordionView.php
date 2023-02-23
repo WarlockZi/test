@@ -47,7 +47,7 @@ class AccordionView
 		$button = self::getButton();
 
 		return "<div class='accordion_wrap'>{$accordion}{$button}</div>";
-//		return "<div class='accordion_wra'>{$accordion}{$button}</div>";
+
 	}
 
 	private static function getButton()

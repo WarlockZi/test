@@ -27,17 +27,17 @@ class Trees
 		return $tree->html;
 	}
 
-	public function getOptions(array $options)
-	{
-		foreach ($options as $k => $v) {
-			if (property_exists($this, $k)) {
-				$this->$k = $v;
-			}
-		}
-		$templ = $this->template;
-		$this->liTemplate = ROOT . "/app/view/components/Tree/{$templ}/{$templ}Li.php";
-		$this->ulTemplate = ROOT . "/app/view/components/Tree/{$templ}/{$templ}Ul.php";
-	}
+//	public function getOptions(array $options)
+//	{
+//		foreach ($options as $k => $v) {
+//			if (property_exists($this, $k)) {
+//				$this->$k = $v;
+//			}
+//		}
+//		$templ = $this->template;
+//		$this->liTemplate = ROOT . "/app/view/components/Tree/{$templ}/{$templ}Li.php";
+//		$this->ulTemplate = ROOT . "/app/view/components/Tree/{$templ}/{$templ}Ul.php";
+//	}
 
 	public function run()
 	{
