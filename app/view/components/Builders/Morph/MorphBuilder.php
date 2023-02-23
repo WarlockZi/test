@@ -45,7 +45,6 @@ class MorphBuilder
 
 	public function template($template)
 	{
-		$this->morphPath = $this->morphPath . $this->morph . '/';
 		$this->template = $this->morphPath . $template;
 		return $this;
 	}

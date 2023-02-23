@@ -47,7 +47,6 @@ class CategoryView
 							$category->show_front)
 							->get()
 					)
-//					->type('checkbox')
 					->get()
 			)
 			->tab(

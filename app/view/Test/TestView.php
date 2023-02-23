@@ -16,10 +16,8 @@ class TestView
 		include ROOT . '/app/view/Test/test_head.php';
 	}
 
-	public static function item($id)
+	public static function item($test)
 	{
-		$test = Test::find($id);
-
 		$isTest = $test->isTest ? 'тест' : 'папку';
 		return ItemBuilder::build($test, 'test')
 			->pageTitle("Редактировать {$isTest} - {$test['name']}")
