@@ -13,6 +13,7 @@ use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 
 class CategoryView
 {
@@ -45,6 +46,16 @@ class CategoryView
 					->html(
 						CheckboxBuilder::build('show_front',
 							$category->show_front)
+							->get()
+					)
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('categiry_id', $category)
+					->name('Принадлежит')
+					->html(
+						SelectBuilder::build()
+							->tree(Category::all(),'category_id')
 							->get()
 					)
 					->get()
@@ -160,9 +171,16 @@ class CategoryView
 			->get();
 	}
 
-	public static function list($models): string
+	public static function list(): string
 	{
-		return MyList::build(Category::class)
+		return MyList::build(Category::class,10)
+			->column(
+				ListColumnBuilder::build('id')
+					->get()
+			)->column(
+				ListColumnBuilder::build('name')
+					->get()
+			)
 			->edit()
 			->get();
 	}

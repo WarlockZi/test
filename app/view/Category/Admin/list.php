@@ -1,5 +1,4 @@
+<div class="page-name">Категории</div>
 
-	<div class="page-name">Категории</div>
-
-	<?=$table;?>
+<?= $table; ?>
 
