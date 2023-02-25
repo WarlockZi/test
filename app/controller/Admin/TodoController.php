@@ -3,9 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\core\Route;
 use app\model\Todo;
-
 use app\view\components\CustomList\CustomList;
 use app\view\Todo\TodoView;
 
@@ -18,14 +16,12 @@ class TodoController Extends AppController
 	public function __construct()
 	{
 		parent::__construct();
-
 	}
 	public function actionIndex()
 	{
 		$daily = Todo::where('type', 'daily')->get()->toArray();
 		$daily = TodoView::daily($daily);
 		$this->set(compact('daily'));
-
 	}
 
 	public function actionList()

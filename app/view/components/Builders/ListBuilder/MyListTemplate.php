@@ -28,11 +28,8 @@
 		  </div>
 		 <? endforeach; ?>
 
-<!--		 --><?//= ($this->headEditCol); ?>
-
-<!--		 --><?//= ($this->headDelCol); ?>
-
 		<!--  TABLE  -->
+
 		<!--		 Empty row-->
 		 <?= $this->emptyRow(); ?>
 
@@ -55,9 +52,6 @@
 				 <? endif; ?>
 
 			 <? endforeach; ?>
-
-<!--			 --><?//= $this->getEditButton($item['id']); ?>
-<!--			 --><?//= $this->getDelButton($item['id']); ?>
 
 		 <? endforeach; ?>
 

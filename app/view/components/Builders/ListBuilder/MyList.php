@@ -12,28 +12,41 @@ class MyList
 	private $grid;
 
 	private $model;
-	private $pageTitle;
 	private $dataModel;
-	private $addButton = false;
 	private $tableClassName;
+	private $pageTitle;
+
+	private $addButton = false;
 	private $columns = [];
 	private $items = [];
+
 	private $headEditCol;
 	private $headDelCol;
+
 	private $belongsTo;
 	private $belongsToId;
+
 	private $morph;
 	private $morphId = null;
 	private $morphDetach;
 	private $morphOneOrMany;
 
-	public static function build(string $modelName)
+	public static function build(string $modelName, int $count=0)
 	{
 		$view = new static();
 		$view->model = new $modelName;
+		$view->setImtems($count);
 		$model = strtolower(class_basename($view->model));
 		$view->dataModel = "data-model='{$model}'";
 		return $view;
+	}
+
+	protected function setImtems(int $count){
+		if ($count){
+			$this->items = $this->model::all()->take($count);
+		}else{
+			$this->items = $this->model::all();
+		}
 	}
 
 	public function link(string $field,
@@ -88,9 +101,9 @@ class MyList
 		return $this;
 	}
 
-	public function column(ListColumnBuilder $a)
+	public function column(ListColumnBuilder $column)
 	{
-		$this->columns[$a->field] = $a;
+		$this->columns[$column->field] = $column;
 		return $this;
 	}
 
@@ -106,6 +119,10 @@ class MyList
 		return $this;
 	}
 
+	protected function getId(int $itemId)
+	{
+		return "data-id={$itemId}";
+	}
 
 	protected function getEditButton(int $itemId)
 	{
@@ -114,10 +131,6 @@ class MyList
 			return "<div {$hidden} class='edit'  $this->dataModel " .
 				"data-id='{$itemId}'></div>";;
 		}
-	}
-	protected function getId(int $itemId)
-	{
-		return "data-id={$itemId}";
 	}
 
 	protected function getDelButton(int $itemId)
@@ -157,6 +170,7 @@ class MyList
 			->get();
 		return $this;
 	}
+
 	public function edit()
 	{
 		$this->columns['edit'] = ListColumnBuilder::build('edit')
@@ -189,6 +203,7 @@ class MyList
 			return $item[$field];
 		}
 	}
+
 	protected function getEmpty($column)
 	{
 		if ($column->select) {

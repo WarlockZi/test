@@ -3,25 +3,20 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\model\Answer;
 use app\model\Todo;
 use app\view\components\CustomList\CustomList;
 use app\view\Planning\PlanningView;
 
 class PlanningController Extends AppController
 {
-	public $modelName = Todo::class;
-	public $model = 'todo';
+//	public $modelName = Todo::class;
+//	public $model = 'todo';
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function actionIndex()
-	{
-
-	}
 
 	public function actionCreate()
 	{
@@ -79,11 +74,8 @@ class PlanningController Extends AppController
 		);
 	}
 
-	public function actionDelete()
+	public function actionIndex()
 	{
-		if (Answer::delete($this->ajax['a_id'])) {
-			$this->exitWithPopup('ok');
-		}
 
 	}
 
