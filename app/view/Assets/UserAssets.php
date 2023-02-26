@@ -4,11 +4,13 @@
 namespace app\view\Assets;
 
 
+use app\controller\Controller;
+
 class UserAssets extends Assets
 {
 
-	public function __construct(){
-		parent::__construct();
+	public function __construct(Controller $controller){
+		parent::__construct($controller);
 
 		$this->setJs('main');
 		$this->setJs('mainHeader');

@@ -55,7 +55,9 @@ class CategoryView
 					->name('Принадлежит')
 					->html(
 						SelectBuilder::build()
-							->tree(Category::all(),'category_id')
+							->initialOption('',0)
+							->selected($category->category_id)
+							->tree(Category::all(),'children')
 							->get()
 					)
 					->get()

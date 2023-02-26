@@ -12,6 +12,7 @@ abstract class Controller
 	protected $token;
 	protected $route;
 	protected $ajax;
+	protected $assets=[];
 
 	function __construct()
 	{
@@ -19,6 +20,12 @@ abstract class Controller
 		$this->token = $this->createToken();
 	}
 
+	protected function setJs(string $js){
+		$this->assets['js'][] = $js;
+	}
+	protected function setCss(string $css){
+		$this->assets['css'][] = $css;
+	}
 
 	protected function createToken(): string
 	{
@@ -35,11 +42,11 @@ abstract class Controller
 		return $this->route;
 	}
 
-
 	public function set($vars)
 	{
 		$this->vars = array_merge($this->vars, $vars);
 	}
+
 
 	public function badToken(array $data): bool
 	{
@@ -50,6 +57,11 @@ abstract class Controller
 			return true;
 		}
 		return false;
+	}
+
+	public function getAssets(): array
+	{
+		return $this->assets;
 	}
 
 	public function isAjax(): array

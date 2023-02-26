@@ -12,8 +12,8 @@ class SelectBuilder extends Builder
 	private $tree;
 	private $treeRelation;
 
-	private $array=[];
-	private $collection=[];
+	private $array = [];
+	private $collection = [];
 
 	private $options;
 	private $class;
@@ -108,7 +108,7 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
-	public function initialOption(string $initialOptionLabel, int $initialOptionValue)
+	public function initialOption(string $initialOptionLabel = '', int $initialOptionValue = 0)
 	{
 		$this->initialOption =
 			"<option value='{$initialOptionValue}'>{$initialOptionLabel}</option>";
@@ -141,9 +141,9 @@ class SelectBuilder extends Builder
 				$this->treeRelation,
 				$this->tab,
 				$this->tabMultiply
-				)
-				->excluded($this->excluded??0)
-				->selected($this->selected??0)
+			)
+				->excluded($this->excluded ?? 0)
+				->selected($this->selected ?? 0)
 				->get();
 	}
 

@@ -14,8 +14,8 @@ class AuthController extends AppController
 	public function __construct()
 	{
 		parent::__construct();
-		View::setJs('auth.js');
-		View::setCss('auth.css');
+		$this->setJs('auth');
+		$this->setCss('auth');
 	}
 
 	public function actionRegister()

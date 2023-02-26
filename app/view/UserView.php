@@ -17,10 +17,10 @@ class UserView extends View
 
 	public function __construct(Controller $controller)
 	{
-		parent::__construct($controller);
+		$this->setAssets($controller);
+		parent::__construct();
 		$this->setHeader($this->user);
 		$this->setFooter();
-		$this->setAssets();
 	}
 	protected function getViewFile(): string
 	{
@@ -58,9 +58,9 @@ class UserView extends View
 		return $this->footer;
 	}
 
-	protected function setAssets()
+	protected function setAssets(Controller $controller)
 	{
-		$this->assets = new UserAssets();
+		$this->assets = new UserAssets($controller);
 	}
 
 	protected static function get404()
