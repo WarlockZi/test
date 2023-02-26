@@ -33,10 +33,5 @@ class Route
 	{
 		return $this->controller === 'Main' && $this->action === 'index';
 	}
-	public function toArray(){
-		$f = get_object_vars($this);
-//		foreach ($this-> as $item) {
-//
-//		}
-	}
+
 }
