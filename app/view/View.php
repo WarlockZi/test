@@ -23,13 +23,21 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 	protected $footer;
 
 	public static $meta = ['title' => '', 'desc' => '', 'keywords' => ''];
-	public static $jsCss = ['js' => [], 'css' => []];
+//	public static $jsCss = ['js' => [], 'css' => []];
 
 	function __construct(Controller $controller)
 	{
 		$this->controller = $controller;
+		$this->mergeAssets();
 		$this->user = Auth::getUser();
 		$this->view = $this->getViewFile();
+	}
+
+	protected function mergeAssets(){
+		if ($this->controller->getAssets()){
+			$this->assets->js = array_merge($this->assets['js'],$this->controller['js']);
+			$this->assets['css'] = array_merge($this->assets['css'],$this->controller['css']);
+		}
 	}
 
 	public function getContent()

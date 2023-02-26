@@ -1,16 +1,16 @@
 <footer>
 	<div class="footer_menu">
 		<div class="column">
-			<a href="/main/about/contacts" nofollow noindex>Контакты</a>
-			<a href="/main/about/requisites" nofollow noindex>Реквизиты</a>
+			<a href="/main/contacts" nofollow noindex>Контакты</a>
+			<a href="/main/requisites" nofollow noindex>Реквизиты</a>
 		</div>
 		<div class="column">
 			<a href="#">Новости</a>
 		</div>
 		<div class="column">
-			<a href="/main/about/return_change" nofollow noindex>Возврат и обмен</a>
-			<a href="/main/about/politicaconf" nofollow noindex>Политика конфиденциальности</a>
-			<a href="/main/about/oferta" nofollow noindex>Оферта</a>
+			<a href="/main/return_change" nofollow noindex>Возврат и обмен</a>
+			<a href="/main/politicaconf" nofollow noindex>Политика конфиденциальности</a>
+			<a href="/main/oferta" nofollow noindex>Оферта</a>
 		</div>
 
 	</div>
