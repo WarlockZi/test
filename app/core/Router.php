@@ -19,11 +19,10 @@ class Router
 		}
 	}
 
-	public static function setController(): string
+	public static function setController(): void
 	{
 		self::setNamespace();
 		self::$controller = self::$namespace . self::$route->controller . 'Controller';
-		return self::$controller;
 	}
 
 	public static function add($regexp, $route = [])
@@ -72,12 +71,12 @@ class Router
 	{
 		Router::matchRoute($url);
 
-		$controller = self::setController();
+		self::setController();
 		$action = 'action' . self::upperCamelCase(self::$route->action);
 
-		Router::handleErrors($controller, $action);
+		Router::handleErrors(self::$controller , $action);
 
-		$controller = new $controller();
+		$controller = new self::$controller();
 		Auth::autorize();
 		$controller->$action();
 
