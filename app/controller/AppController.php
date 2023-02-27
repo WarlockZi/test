@@ -2,11 +2,7 @@
 
 namespace app\controller;
 
-use app\core\Auth;
-use app\model\User;
 use app\Repository\MorphRepository;
-use app\view\AdminView;
-use app\view\UserView;
 use Illuminate\Database\Eloquent\Model;
 
 class AppController extends Controller
@@ -23,16 +19,6 @@ class AppController extends Controller
 	{
 		$view = $this->getView();
 		$view->render();
-	}
-
-
-	public function getView()
-	{
-		if ($this->route->isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
-			return new AdminView($this);
-		} else {
-			return new UserView($this);
-		}
 	}
 
 	public function actionDelete()
@@ -78,7 +64,6 @@ class AppController extends Controller
 	public function actionUpdateOrCreate()
 	{
 		if ($this->ajax) {
-
 			$model = $this->model::updateOrCreate(
 				['id' => $this->ajax['id']],
 				$this->ajax
@@ -86,9 +71,9 @@ class AppController extends Controller
 
 			if ($model->wasRecentlyCreated) {
 				if (isset($this->ajax['morph_type'])) {
-					$morph['morph'] = self::shortClassName($model);
-					$morph['morphId'] = $model->id;
-					self::attachMorph($this->ajax, $morph);
+//					$morph['morph'] = self::shortClassName($model);
+//					$morph['morphId'] = $model->id;
+					self::attachMorph($this->ajax, $model);
 				}
 				$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
 			} else {

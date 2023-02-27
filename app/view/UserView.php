@@ -13,12 +13,12 @@ use app\view\Header\UserHeader;
 class UserView extends View
 {
 	protected $layout = ROOT . "/app/view/layouts/vitex.php";
-	protected static $noViewError = ROOT . '/app/view/404/index.php';
+	protected $noViewError = ROOT . '/app/view/404/index.php';
 
 	public function __construct(Controller $controller)
 	{
+		parent::__construct($controller);
 		$this->setAssets($controller);
-		parent::__construct();
 		$this->setHeader($this->user);
 		$this->setFooter();
 	}
@@ -43,7 +43,6 @@ class UserView extends View
 	public function setHeader($user)
 	{
 		$this->header = new UserHeader($user);
-
 	}
 
 	public function setFooter()
@@ -60,7 +59,8 @@ class UserView extends View
 
 	protected function setAssets(Controller $controller)
 	{
-		$this->assets = new UserAssets($controller);
+		new UserAssets($controller);
+		$this->assets = $controller->getAssets();
 	}
 
 	protected static function get404()

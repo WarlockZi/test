@@ -2,7 +2,7 @@
 
 <div class="test-data">
 
-	<? foreach ($test->questions as $id_quest => $question): ?>
+	<? foreach ($test->getQuestions() as $id_quest => $question): ?>
 	  <div class="question" data-id="<?= $question->id; ?>">
 
 		  <div class="q">
@@ -40,6 +40,6 @@
 </div>
 <? include ROOT . '/app/view/Test/Admin/test_edit_prev_next_buttons.php' ?>
 
-<a class="test-do__finish-btn" data-id="<?= $test->id; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
+<a class="test-do__finish-btn" data-id="<?= $test->getTest()->id; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
 </div>
 

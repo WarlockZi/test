@@ -5,6 +5,7 @@ namespace app\Repository;
 
 
 use app\model\Question;
+use app\model\Test;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,10 +13,11 @@ use Illuminate\Database\Eloquent\Model;
 class QuestionRepository
 {
 
-	public static function shuffleAnswers(Collection $questions)
+	public static function shuffleAnswers(Test $test): Collection
 	{
-		return $questions->map(function ($q) {
-			$q->setRelation('answers',$q->answers->shuffle());
+		if (!$test || !$test->questions) return null;
+		return $test->questions->map(function ($q) {
+			$q->setRelation('answers', $q->answers->shuffle());
 			return $q;
 		});
 	}

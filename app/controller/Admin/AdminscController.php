@@ -15,7 +15,8 @@ class AdminscController extends AppController
 	public function __construct()
 	{
 		parent::__construct();
-		if (!User::can(Auth::getUser(), ['role_employee'])) {
+
+		if (!User::isEmployee(Auth::getUser())){
 			header('Location:/auth/profile');
 		}
 	}

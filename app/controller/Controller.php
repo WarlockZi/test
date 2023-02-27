@@ -3,7 +3,12 @@
 namespace app\controller;
 
 
+use app\core\Auth;
 use app\core\Router;
+use app\model\User;
+use app\view\AdminView;
+use app\view\Assets\Assets;
+use app\view\UserView;
 
 abstract class Controller
 {
@@ -12,19 +17,23 @@ abstract class Controller
 	protected $token;
 	protected $route;
 	protected $ajax;
-	protected $assets=[];
+
+	protected Assets $assets;
 
 	function __construct()
 	{
+		$this->assets = new Assets($this);
 		$this->route = Router::getRoute();
 		$this->token = $this->createToken();
 	}
 
-	protected function setJs(string $js){
-		$this->assets['js'][] = $js;
-	}
-	protected function setCss(string $css){
-		$this->assets['css'][] = $css;
+	public function getView()
+	{
+		if ($this->route->isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
+			return new AdminView($this);
+		} else {
+			return new UserView($this);
+		}
 	}
 
 	protected function createToken(): string
@@ -59,7 +68,7 @@ abstract class Controller
 		return false;
 	}
 
-	public function getAssets(): array
+	public function getAssets(): Assets
 	{
 		return $this->assets;
 	}

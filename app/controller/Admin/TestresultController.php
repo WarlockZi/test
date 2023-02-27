@@ -26,8 +26,7 @@ class TestresultController extends AppController
 
 	public function actionResult()
 	{
-		$id = $this->route['id'];
-		$res = TestResult::find($id);
+		$res = TestResult::find($this->route->id);
 		$testHtml= $res->html;
 		$this->set(compact('testHtml', 'res'));
 	}

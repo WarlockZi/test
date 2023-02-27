@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use app\controller\Controller;
+
 class Router
 {
 	protected static $routes = [];
@@ -19,10 +21,11 @@ class Router
 		}
 	}
 
-	public static function setController(): void
+	public static function setController(): string
 	{
 		self::setNamespace();
 		self::$controller = self::$namespace . self::$route->controller . 'Controller';
+		return self::$controller;
 	}
 
 	public static function add($regexp, $route = [])
@@ -71,12 +74,12 @@ class Router
 	{
 		Router::matchRoute($url);
 
-		self::setController();
+		$controller = self::setController();
 		$action = 'action' . self::upperCamelCase(self::$route->action);
 
-		Router::handleErrors(self::$controller , $action);
+		Router::handleErrors($controller, $action);
 
-		$controller = new self::$controller();
+		$controller = new $controller;
 		Auth::autorize();
 		$controller->$action();
 

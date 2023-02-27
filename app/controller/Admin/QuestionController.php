@@ -10,6 +10,7 @@ use app\model\Test;
 
 class QuestionController Extends AppController
 {
+	protected $model = Question::class;
 
 	public function __construct()
 	{

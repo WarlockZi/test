@@ -4,38 +4,28 @@
 namespace app\view\Assets;
 
 
-use app\controller\Controller;
 use Illuminate\Database\Eloquent\Model;
 
 class Assets
 {
 	protected $host;
 	protected $cache;
+
 	protected $js = [];
-	protected $CDNjs = [];
 	protected $css = [];
+	protected $CDNjs = [];
 	protected $CDNcss = [];
+
 	protected $title;
 	protected $desc;
 	protected $keywords;
 
-	public function __construct(Controller $controller)
+	public function __construct()
 	{
-		$this->setJsCssFromController($controller);
 		$this->setCache(false);
 		$this->setHost();
 	}
 
-	public function setJsCssFromController(Controller $controller)
-	{
-		$assets = $controller->getAssets();
-		if ($assets){
-			foreach ($assets['js'] as $js){
-				$this->setJs($js);
-			}
-		}
-
-	}
 	public function getMeta()
 	{
 		return "<title>{$this->title}</title>" .

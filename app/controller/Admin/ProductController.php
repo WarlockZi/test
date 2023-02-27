@@ -16,7 +16,7 @@ class ProductController extends AppController
 
   public function actionEdit()
   {
-    $id = $this->route['id'];
+    $id = $this->route->id;
     $prod = ProductRepository::getProduct('id', $id);
     $product = $breadcrumbs = null;
     if ($prod) {
