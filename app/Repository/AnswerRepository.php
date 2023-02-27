@@ -5,6 +5,7 @@ namespace app\Repository;
 
 
 use app\model\Answer;
+use app\model\Test;
 use Illuminate\Database\Eloquent\Collection;
 
 class AnswerRepository
@@ -25,15 +26,16 @@ class AnswerRepository
 	}
 
 
-	public static function cacheCorrectAnswers($questions): void
+	public static function cacheCorrectAnswers(Test $test): void
 	{
-		$_SESSION['correct_answers'] = $questions->map(function ($q) {
+		$res = $test->questions->map(function ($q) {
 				return $q->answers->filter(function ($v, $k) {
 					return $v->correct_answer === 1;
 				});
 			})
 				->flatten()
 				->pluck('id') ?? '';
+		$_SESSION['correct_answers'] = $res->toArray();
 	}
 
 

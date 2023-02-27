@@ -14,8 +14,8 @@ class AuthController extends AppController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->setJs('auth');
-		$this->setCss('auth');
+		$this->assets->setJs('auth');
+		$this->assets->setCss('auth');
 	}
 
 	public function actionRegister()
@@ -57,8 +57,6 @@ class AuthController extends AppController
 		$user = User::find($userArr['id']);
 
 		if (User::can($userArr, ['role_employee'])) {
-//			Header::setAdninHeader($this);
-//			$this->layout = 'admin';
 			if (User::can($userArr, ['role_admin'])) {
 				$item = UserView::admin($user);
 			} else {
@@ -80,7 +78,6 @@ class AuthController extends AppController
 
 	public function actionChangePassword()
 	{
-//		Auth::autorize($this);
 		if ($data = $this->ajax) {
 			if (!$data['old_password'] || !$data['new_password'])
 				$this->exitWithError('Заполните старый и новый пароль');
@@ -234,7 +231,7 @@ class AuthController extends AppController
 
 	public function actionCabinet()
 	{
-//		Auth::autorize($this);
+
 	}
 
 	public function actionNoconfirm()

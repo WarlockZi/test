@@ -7,23 +7,23 @@ use app\model\Answer;
 
 class AnswerController Extends AppController
 {
-	public $model = Answer::class;
+	protected $model = Answer::class;
 
-	public function __construct(array $route)
+	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function actionShow()
-	{
-		if ($this->ajax) {
-			$a_id = Answer::autoincrement();
-			$q_id = $this->ajax['q_id'];
-
-			Answer::create([]);
-		}
-		$index = 1;
-		$answer = include ROOT . '/app/view/Test/edit_BlockAnswer.php';
-	}
+//	public function actionShow()
+//	{
+//		if ($this->ajax) {
+//			$a_id = Answer::autoincrement();
+//			$q_id = $this->ajax['q_id'];
+//
+//			Answer::create([]);
+//		}
+//		$index = 1;
+//		$answer = include ROOT . '/app/view/Test/edit_BlockAnswer.php';
+//	}
 
 }

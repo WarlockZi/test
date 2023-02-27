@@ -10,20 +10,24 @@ class UserAssets extends Assets
 {
 
 	public function __construct(Controller $controller){
-		parent::__construct($controller);
+		parent::__construct();
 
-		$this->setJs('main');
-		$this->setJs('mainHeader');
-		$this->setJs('cookie');
-		$this->setJs('product');
+		$controller->getAssets()->setJs('main');
+		$controller->getAssets()->setJs('mainHeader');
+		$controller->getAssets()->setJs('cookie');
+		$controller->getAssets()->setJs('product');
 
-		$this->setCss('main');
-		$this->setCss('mainHeader');
-		$this->setCss('cookie');
-		$this->setCss('product');
+		$controller->getAssets()->setCss('main');
+		$controller->getAssets()->setCss('mainHeader');
+		$controller->getAssets()->setCss('cookie');
+		$controller->getAssets()->setCss('product');
 
-		$this->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
-		$this->setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");
+		$controller->getAssets()->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
+		$controller->getAssets()->setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");
+
+
+		return $this;
+//		return $controller->getAssets();
 
 //    View::setJs('card.js');
 //    View::setJs('list.js');

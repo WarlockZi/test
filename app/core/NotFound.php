@@ -27,6 +27,8 @@ class NotFound extends Controller
 	{
 		$error = "Плохой запрос controller - {$controller}";
 		Error::setError($error);
+		$controller = new $controller;
+		$view = $controller->get();
 		$view = self::setView();
 		$view->controller = new $controller;
 		$view->render();

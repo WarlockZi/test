@@ -17,11 +17,12 @@ import question from "./Mode/Question";
 
 export default function testEdit() {
 
-  let testEdit = $('.test-edit')[0]
+  // debugger
+  let testEdit = $('.test-edit__cont')[0]
   if (testEdit) {
 
     pagination()
-    sortable('.test-edit .questions',
+    sortable('.test-edit__cont .questions',
       '.questions>.question-edit',
       'question')
 

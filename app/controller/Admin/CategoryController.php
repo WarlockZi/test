@@ -27,8 +27,13 @@ class CategoryController Extends AppController
 			->model('category')
 			->get();
 
-		$this->set(compact('categories'));
-		$this->set(compact('accordion'));
+//		$categories = Category::with('childrenRecursive')
+//			->select(['id','name'])
+//			->get()
+//			->toArray();
+
+		$this->set(compact('categories', 'accordion'));
+
 	}
 
 	public function actionEdit()

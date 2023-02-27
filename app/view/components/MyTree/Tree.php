@@ -34,16 +34,16 @@ class Tree
 		return $this;
 	}
 
-
 	public function get()
 	{
-		$tree = self::tree($this->items, $this->parent);
+		$tree = $this->tree();
 		return $this->showCat($tree);
 	}
 
-	public static function tree(array $items, string $parent = 'parent'): array
+	public function tree(): array
 	{
-		$items = self::idKeys($items);
+		$items = self::idKeys($this->items);
+		$parent = $this->parent;
 		$tree = [];
 		foreach ($items as $id => &$node) {
 			if ((isset($node[$parent])&&!(bool)$node[$parent])||$node[$parent]==null) {
@@ -55,10 +55,6 @@ class Tree
 		}
 		return $tree;
 	}
-
-	public static function tree2(){
-
-  }
 
 	public static function idKeys(array $items)
 	{

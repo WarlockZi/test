@@ -214,34 +214,34 @@ async function post(url, data = {}) {
       };
       req.onload = function () {
         try {
-          let res = JSON.parse(req.response)
+          const res = JSON.parse(req.response)
+          let msg = $('.message')[0]
+
+          if (res?.popup || res?.arr?.popup) {
+
+            popup.show(res.popup ?? res?.arr?.popup)
+          } else if (res.msg) {
+            if (msg) {
+              msg.innerHTML = res.msg
+              msg.innerHTML = res.msg
+              $(msg).removeClass('success')
+              $(msg).removeClass('error')
+            }
+          } else if (res.success) {
+            if (msg) {
+              msg.innerHTML = res.success
+              $(msg).addClass('success')
+              $(msg).removeClass('error')
+            }
+          } else if (res.error) {
+            error(res.error)
+          }
+          resolve(res);
         } catch (e) {
           console.log('////////////********* REQUEST ERROR ***********//////////////////////')
           console.log(req.response)
-          return
+          return false
         }
-        let msg = $('.message')[0]
-
-        if (res.popup || res?.arr?.popup) {
-
-          popup.show(res.popup ?? res?.arr?.popup)
-        } else if (res.msg) {
-          if (msg) {
-            msg.innerHTML = res.msg
-            msg.innerHTML = res.msg
-            $(msg).removeClass('success')
-            $(msg).removeClass('error')
-          }
-        } else if (res.success) {
-          if (msg) {
-            msg.innerHTML = res.success
-            $(msg).addClass('success')
-            $(msg).removeClass('error')
-          }
-        } else if (res.error) {
-          error(res.error)
-        }
-        resolve(res);
       }
     }
   )

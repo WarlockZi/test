@@ -14,6 +14,7 @@ class AdminView extends View
 {
 	protected $layout = ROOT . "/app/view/layouts/admin.php";
 	protected $noViewError = "Файл вида не найден";
+	protected $defaultView = ROOT."/app/view/default.php";
 
 	public function __construct(Controller $controller)
 	{
@@ -34,12 +35,11 @@ class AdminView extends View
 
 	protected function setContent(Controller $controller): void
 	{
-
 		if (is_readable($this->view)) {
 			$this->content = self::getFileContent($this->view, $controller->vars);
 		} else {
-			Error::setError("Нет файла вида - Admin/view");
-			$this->content = self::getFileContent($controller->view);
+			Error::setError("Нет файла вида - Admin/".$controller->getRoute()->action);
+			$this->content = self::getFileContent($this->defaultView);
 		}
 	}
 

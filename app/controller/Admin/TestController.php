@@ -7,47 +7,35 @@ use app\core\Router;
 use app\model\Test;
 use app\Repository\AnswerRepository;
 use app\Repository\QuestionRepository;
+use app\Repository\TestRepository;
 use app\view\Test\TestView;
 use app\view\View;
 
 
 class TestController extends AppController
 {
-//	public $model;
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function setModels()
-	{
-		$this->model = Test::class;
-	}
-
 	public function actionDo(): void
 	{
-		$page_name = 'Прохождение тестов';
-		$this->set(compact('page_name'));
+		$model = Test::with('questions.answers')
+			->find($this->route->id);
 
-		if (isset($this->route['id'])) {
-			$id = (int)$this->route['id'] ?? 0;
-			$test = Test::with('questions.answers')
-				->find($id);
-
-			if ($test) {
-				if ($test->questions) {
-//					$test->questions =
-						$new = QuestionRepository::shuffleAnswers($test->questions);
-					AnswerRepository::cacheCorrectAnswers($test->questions);
-				}
-				$pagination = Test::pagination($new ?? '');
-				$this->set(compact('test', 'pagination'));
-			}
-			$this->set(compact('test'));
+		$test = new TestRepository();
+		$test->setPageName("Прохождение тестов");
+		if ($model) {
+			$test->setTest($model);
+			$test->setQuestions(QuestionRepository::shuffleAnswers($model));
+			$test->setPagination(Test::pagination($test->getQuestions()));
+			AnswerRepository::cacheCorrectAnswers($model);
 		}
-	}
+		$this->set(compact('test'));
 
+	}
 
 
 	public function actionEdit()
@@ -64,7 +52,7 @@ class TestController extends AppController
 			$item = TestView::item($id);
 			$this->set(compact('item'));
 
-		}else{
+		} else {
 			$test = '';
 			$this->set(compact('test'));
 		}
@@ -94,19 +82,6 @@ class TestController extends AppController
 	{
 		$this->exitJson(($_SESSION['correct_answers']));
 	}
-
-//  function shuffle_assoc($array)
-//  {
-//    $keys = array_keys($array);
-//    shuffle($keys);
-//    foreach ($keys as $key) {
-//      $new[$key] = $array[$key];
-//    }
-//    return $new;
-//  }
-
-
-
 
 
 	public function actionPaths()
