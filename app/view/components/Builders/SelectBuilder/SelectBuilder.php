@@ -13,9 +13,9 @@ class SelectBuilder extends Builder
 	private $treeRelation;
 
 	private $array = [];
-	private $collection = [];
+	private Collection $collection;
 
-	private $options;
+	private $options='';
 	private $class;
 	private $title;
 	private $field;
@@ -45,13 +45,12 @@ class SelectBuilder extends Builder
 		return $select;
 	}
 
-
-	public function tree(Collection $tree,
+	public function tree(Collection $collection,
 											 string $treeRelation,
 											 string $tab = null,
 											 int $multiply = null)
 	{
-		$this->tree = $tree;
+		$this->collection = $collection;
 		$this->treeRelation = $treeRelation;
 		$this->tab = $tab ?? $this->tab;
 		$this->tabMultiply = $multiply ?? $this->tabMultiply;
@@ -137,7 +136,7 @@ class SelectBuilder extends Builder
 	{
 		$this->options =
 			TreeBuilder::build(
-				$this->tree,
+				$this->collection,
 				$this->treeRelation,
 				$this->tab,
 				$this->tabMultiply
@@ -159,12 +158,13 @@ class SelectBuilder extends Builder
 
 	private function getCollection(): void
 	{
-		$tpl = '';
-		foreach ($this->collection as $item) {
+		$arr = $this->collection->toArray();
+
+		foreach ($arr as $item) {
 			$selected = $this->selected === $item->id ? 'selected' : '';
-			$tpl .= "<option value='{$item->id}' $selected>{$item->name}</option>";
+			$this->options .= "<option value='{$item->id}' $selected>{$item->name}</option>";
 		}
-		$this->options = $tpl;
+
 	}
 
 	public function get()

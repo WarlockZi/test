@@ -9,6 +9,7 @@ class TreeBuilder
 {
 
 	private $collection;
+	private $arr;
 	private $relation;
 
 	private $selected;
@@ -24,6 +25,7 @@ class TreeBuilder
 	{
 		$self = new self();
 		$self->collection = $collection;
+		$self->arr = $collection->toArray();
 		$self->relation = $relation;
 		$self->tab = $tab ?? $self->tab;
 		$self->tabMultiply = $multiply ?? $self->tabMultiply;
@@ -51,12 +53,25 @@ class TreeBuilder
 		return "<option data-level={$level} value = '{$item->id}' {$selected}>{$tab}{$item->name}</option>>";
 	}
 
-	protected function recursion($collection, $level, $string)
+//	protected function recursion($collection, $level, $string)
+//	{
+//		foreach ($collection as $item) {
+//			$string .= $this->getOption($item, $level);
+//			if ($item->{$this->relation}) {
+//				$string .= $this->recursion($item->{$this->relation}, $level + 1, '');
+//				$item = $item->{$this->relation};
+//			}
+//		}
+//		return $string;
+//	}
+
+	protected function recursion($level, $string)
 	{
-		foreach ($collection as $item) {
+		foreach ($this->arr as $item) {
 			$string .= $this->getOption($item, $level);
 			if ($item->{$this->relation}) {
 				$string .= $this->recursion($item->{$this->relation}, $level + 1, '');
+				$item = $item->{$this->relation};
 			}
 		}
 		return $string;
@@ -64,7 +79,8 @@ class TreeBuilder
 
 	public function get()
 	{
-		$str = $this->recursion($this->collection, 0, '');
+//		$str = $this->recursion($this->collection, 0, '');
+		$str = $this->recursion( 0, '');
 		return $str;
 	}
 
