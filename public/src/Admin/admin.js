@@ -28,11 +28,14 @@ import multiselect from '@components/multiselect/multiselect'
 import catalogItem from '@components/catalog-item/catalog-item'
 import tooltips from '../components/tooltip/tooltip';
 import error from '../components/error/error';
+import select from '../components/select/select';
 import accordionShow from '../components/accordion-show';
 import quill from '../components/quill/quill';
 
 
 $(document).ready(function () {
+
+  select()
 
   navigate(window.location.pathname)
   radio()

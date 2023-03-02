@@ -1,5 +1,5 @@
 import './WDSSelect.scss'
-import './customSelect.scss'
+import '../del/customSelect.scss'
 import {post} from "../../common";
 
 export default class WDSSelect {
@@ -11,8 +11,8 @@ export default class WDSSelect {
 
     this.title = el.title ?? ''
     this.field = el.dataset.field
-    this.model = el.closest('.item_wrap').dataset.model
-    this.modelId = el.closest('.item_wrap').dataset.id
+    this.model = el.closest('.item_wrap')?.dataset.model
+    this.modelId = el.closest('.item_wrap')?.dataset.id
 
     this.options = getFormattedOptions(el.querySelectorAll("option"))
 
@@ -135,7 +135,7 @@ function setup(select) {
     if (sel.dataset.field) {
       let id = target.closest('.item_wrap').dataset.id
       let model = target.closest('[data-model]').dataset.model
-      let data = {[sel.dataset.field]: sel.dataset.value,id}
+      let data = {[sel.dataset.field]: sel.dataset.value, id}
       let url = `/adminsc/${model}/updateOrCreate`
       let res = await post(url, data)
     }

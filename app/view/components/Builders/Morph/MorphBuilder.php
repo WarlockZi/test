@@ -68,11 +68,11 @@ class MorphBuilder
 		$this->content = $content;
 		return $this;
 	}
-	public function many()
-	{
-		$this->oneOrMany = "data-morph-oneormany='many'";
-		return $this;
-	}
+//	public function many()
+//	{
+//		$this->oneOrMany = "data-morph-oneormany='many'";
+//		return $this;
+//	}
 
 	protected function getDetach(Model $item)
 	{

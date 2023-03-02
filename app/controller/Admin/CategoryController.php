@@ -7,8 +7,8 @@ use app\controller\AppController;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\view\Category\CategoryView;
+use app\view\components\Builders\SelectBuilder\OptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\MyTree\Tree;
 
 
 class CategoryController Extends AppController
@@ -21,26 +21,18 @@ class CategoryController Extends AppController
 
 	public function actionIndex()
 	{
-		$categories = Category::with('childrenRecursive')
+		$categories = Category::query()
+			->where('category_id', 0)
+			->with('childrenRecursive')
 			->select('id', 'name')
 			->get();
-//		$categories = Category::all()->toArray();
 
-//		$accordion = Tree::build($categories)
-//			->parent('category_id')
-//			->model('category')
-//			->get();
-		$accordion = SelectBuilder::build()
-//			->collection($categories)
-			->tree($categories, 'childrenRecursive')
-//			->('category_id')
-//			->model('category')
-			->get();
-
-//		$categories = Category::with('childrenRecursive')
-//			->select(['id','name'])
-//			->get()
-//			->toArray();
+		$accordion = SelectBuilder::build(
+			OptionsBuilder::build(
+				$categories,'children_recursive',2)
+				->initialOption()
+				->get()
+		)->get();
 
 		$this->set(compact('categories', 'accordion'));
 
