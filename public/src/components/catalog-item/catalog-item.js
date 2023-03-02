@@ -9,13 +9,7 @@ import Morph from "../morph/morph";
 export default function catalogItem() {
   let customCatalogItem = $('.item_wrap')[0]
   if (customCatalogItem) {
-    let selects = $('[custom-select]')
 
-    if (selects) {
-      [].map.call(selects, function (select) {
-        new WDSSelect(select)
-      })
-    }
     let context = {
       model: customCatalogItem.dataset.model,
       id: +customCatalogItem.dataset.id
@@ -23,7 +17,6 @@ export default function catalogItem() {
 
     checkboxes('[checkboxes]', context)
       .onChange(update)
-    // debugger
     checkbox(context);
 
     [].map.call($('[data-dnd-path]'), (dnd) => {

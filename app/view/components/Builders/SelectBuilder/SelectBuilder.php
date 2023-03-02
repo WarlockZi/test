@@ -5,15 +5,14 @@ namespace app\view\components\Builders\SelectBuilder;
 
 
 use app\view\components\Builders\Builder;
-use Illuminate\Database\Eloquent\Collection;
 
 class SelectBuilder extends Builder
 {
-	private $tree;
-	private $treeRelation;
-
-	private $array = [];
-	private Collection $collection;
+//	private $tree;
+//	private $relation;
+//
+//	private $array = [];
+//	private Collection $collection;
 
 	private $options='';
 	private $class;
@@ -31,42 +30,20 @@ class SelectBuilder extends Builder
 	private $belongsToModel;
 	private $belongsToId;
 
-	private $selected;
-	private $excluded;
-	private $nameOptionByField = 'name';
-	private $initialOption;
+//	private $selected;
+//	private $excluded;
+//
+//	private $initialOption;
+//
+//	private $tab = '&nbsp;';
+//	private $tabMultiply = 1;
 
-	private $tab = '&nbsp;';
-	private $tabMultiply = 1;
-
-	public static function build()
+	public static function build(string $options)
 	{
 		$select = new static();
+		$select->options = $options;
+
 		return $select;
-	}
-
-	public function tree(Collection $collection,
-											 string $treeRelation,
-											 string $tab = null,
-											 int $multiply = null)
-	{
-		$this->collection = $collection;
-		$this->treeRelation = $treeRelation;
-		$this->tab = $tab ?? $this->tab;
-		$this->tabMultiply = $multiply ?? $this->tabMultiply;
-		return $this;
-	}
-
-	public function array(array $array)
-	{
-		$this->array = $array;
-		return $this;
-	}
-
-	public function collection(Collection $collection)
-	{
-		$this->collection = $collection;
-		return $this;
 	}
 
 	public function class(string $class)
@@ -114,77 +91,70 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
-	public function nameOptionByField(string $nameOptionByField)
-	{
-		$this->nameOptionByField = $nameOptionByField;
-		return $this;
-	}
-
-	public function selected($selected)
-	{
-		$this->selected = $selected;
-		return $this;
-	}
-
-	public function excluded(string $excluded)
-	{
-		$this->excluded = (int)$excluded;
-		return $this;
-	}
-
-	private function getTree(): void
-	{
-		$this->options =
-			TreeBuilder::build(
-				$this->collection,
-				$this->treeRelation,
-				$this->tab,
-				$this->tabMultiply
-			)
-				->excluded($this->excluded ?? 0)
-				->selected($this->selected ?? 0)
-				->get();
-	}
-
-	private function getArray(): void
-	{
-		$tpl = '';
-		foreach ($this->array as $index => $item) {
-			$selected = $this->selected === $item['id'] ? 'selected' : '';
-			$tpl .= "<option value='{$item['id']}' $selected>{$item['name']}</option>";
-		}
-		$this->options = $tpl;
-	}
-
-	private function getCollection(): void
-	{
-		$arr = $this->collection->toArray();
-
-		foreach ($arr as $item) {
-			$selected = $this->selected === $item->id ? 'selected' : '';
-			$this->options .= "<option value='{$item->id}' $selected>{$item->name}</option>";
-		}
-
-	}
-
 	public function get()
 	{
-		if ($this->tree) {
-			$this->getTree();
-		} elseif ($this->array) {
-			$this->getArray();
-		} else {
-			$this->getCollection();
-		}
-
-		if ($this->excluded !== false) {
-			unset($this->tree[$this->excluded]);
-		}
-
 		ob_start();
 		include ROOT . '/app/view/components/Builders/SelectBuilder/SelectBuilderTemplate.php';
 		$result = ob_get_clean();
 		return $this->clean($result);
 	}
+
+//	public function tree(Collection $collection,
+//											 string $relation,
+//											 string $tab = null,
+//											 int $multiply = null)
+//	{
+//		$this->tree = $collection;
+//		$this->relation = $relation;
+//		$this->tab = $tab ?? $this->tab;
+//		$this->tabMultiply = $multiply ?? $this->tabMultiply;
+//		return $this;
+//	}
+//
+//	public function array(array $array)
+//	{
+//		$this->array = $array;
+//		return $this;
+//	}
+//
+//	public function collection(Collection $collection)
+//	{
+//		$this->collection = $collection;
+//		return $this;
+//	}
+
+//	public function selected($selected)
+//	{
+//		$this->selected = $selected;
+//		return $this;
+//	}
+//
+//	public function excluded(string $excluded)
+//	{
+//		$this->excluded = (int)$excluded;
+//		return $this;
+//	}
+
+//	private function getArray(): void
+//	{
+//		$tpl = '';
+//		foreach ($this->array as $index => $item) {
+//			$selected = $this->selected === $item['id'] ? 'selected' : '';
+//			$tpl .= "<option value='{$item['id']}' $selected>{$item['name']}</option>";
+//		}
+//		$this->options = $tpl;
+//	}
+//
+//	private function getCollection(): void
+//	{
+//		$arr = $this->collection->toArray();
+//
+//		foreach ($arr as $item) {
+//			$selected = $this->selected === $item['id'] ? 'selected' : '';
+//			$this->options .= "<option value='{$item['id']}' $selected>{$item['name']}</option>";
+//		}
+//
+//	}
+
 
 }
