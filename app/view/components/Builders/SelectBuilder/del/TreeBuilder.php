@@ -6,7 +6,7 @@ namespace app\view\components\Builders\SelectBuilder;
 use app\core\Error;
 use Illuminate\Database\Eloquent\Collection;
 
-class TreeBuilder
+class TreeBuilders
 {
 	private array $arr;
 	private string $relation;

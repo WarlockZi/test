@@ -63,7 +63,6 @@ class Category extends Model
 		return $this->parent()->with('parentRecursive');
 	}
 
-
 	public function products()
 	{
 		return $this->hasMany(Product::class);
