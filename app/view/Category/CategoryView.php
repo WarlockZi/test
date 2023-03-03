@@ -14,6 +14,7 @@ use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
+use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 
 class CategoryView
 {
@@ -54,9 +55,10 @@ class CategoryView
 				ItemFieldBuilder::build('categiry_id', $category)
 					->name('Принадлежит')
 					->html(
-						SelectBuilder::build()
-							->initialOption('',0)
-							->selected($category->category_id)
+						SelectBuilder::build(
+							TreeOptionsBuilder::build()
+								->get()
+						)->selected($category->category_id)
 							->tree(Category::all(),'children')
 							->get()
 					)

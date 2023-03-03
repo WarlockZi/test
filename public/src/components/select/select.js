@@ -5,7 +5,7 @@ import WDSSelect from "./WDSSelect";
 export default function () {
   let selects = $('[custom-select]')
 
-  debugger
+  // debugger
   if (selects) {
     [].map.call(selects, function (select) {
       new WDSSelect(select)

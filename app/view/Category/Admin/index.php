@@ -1,6 +1,7 @@
+<div class="page-name">Категория</div>
 
-	<div class="page-name">Категория</div>
-
-	<div class="category-tree">
+<div class="category-tree">
+	<ul>
 		 <?= $accordion; ?>
-	</div>
+	</ul>
+</div>
