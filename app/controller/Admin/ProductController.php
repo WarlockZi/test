@@ -11,9 +11,7 @@ use app\view\Product\ProductView;
 
 class ProductController extends AppController
 {
-
   public $model = Product::class;
-
   public function actionEdit()
   {
     $id = $this->route->id;
@@ -32,44 +30,5 @@ class ProductController extends AppController
 		$list = ProductView::list($items);
 		$this->set(compact('list'));
 	}
-
-//	protected function detachTagFromImage($tagName, $imgId)
-//	{
-//		$tag = Tag::first('name', $tagName);
-//		$image = Image::find($imgId);
-//		$image->tags()->detach($tag->id);
-//	}
-//
-//	public function actionAddDescription()
-//	{
-//		if ($this->ajax) {
-//			$product= Product::find($this->ajax['id']);
-//			$product->dtxt = $this->ajax['description'];
-//			$product->save();
-//			$this->exitWithPopup('ok');
-//		}
-//	}
-//
-//	public function actionSetProperty()
-//	{
-//		if ($this->ajax) {
-//			$this->ajax['propertable_type'] = Product::class;
-//			$id = Propertable::create($this->ajax);
-//
-//			$this->exitWithPopup('hurra');
-//		}
-//	}
-//
-
-
-//	public function actionIndex()
-//	{
-//		$this->view='card';
-//		if (isset($this->route['slug'])) {
-//			$slug = $this->route['slug'];
-//			$product = ProductCardView::getCard($slug);
-//			$this->set(compact('product'));
-//		}
-//	}
 
 }

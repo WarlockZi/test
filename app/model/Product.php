@@ -70,19 +70,19 @@ class Product extends Model
 			'main_unit',
 			);
 	}
-
+	public function baseUnit()
+	{
+		return $this->hasOne(Unit::class,
+			'id',
+			'base_unit',
+			);
+	}
 	public function manufacturer()
 	{
 		return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
 	}
 
-	public function secondaryUnit()
-	{
-		return $this->hasOne(Unit::class,
-			'id',
-			'secondary_unit',
-			);
-	}
+
 
 	public function categoryCategoryRecPropsVals()
 	{
