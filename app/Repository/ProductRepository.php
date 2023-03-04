@@ -52,8 +52,8 @@ class ProductRepository extends Controller
 			->with('detailImages')
 			->with('smallpackImages')
 			->with('bigpackImages')
+			->with('baseUnit')
 			->with('mainUnit')
-			->with('secondaryUnit')
 			->with('parentCategoryRecursive')
 			->where($where, $val)->first();
 	}

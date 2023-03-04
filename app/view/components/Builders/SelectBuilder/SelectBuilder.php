@@ -13,6 +13,13 @@ class SelectBuilder extends Builder
 //
 //	private $array = [];
 //	private Collection $collection;
+//	private $selected;
+//	private $excluded;
+//
+//	private $initialOption;
+//
+//	private $tab = '&nbsp;';
+//	private $tabMultiply = 1;
 
 	private $options='';
 	private $class;
@@ -29,14 +36,6 @@ class SelectBuilder extends Builder
 
 	private $belongsToModel;
 	private $belongsToId;
-
-//	private $selected;
-//	private $excluded;
-//
-//	private $initialOption;
-//
-//	private $tab = '&nbsp;';
-//	private $tabMultiply = 1;
 
 	public static function build(string $options)
 	{

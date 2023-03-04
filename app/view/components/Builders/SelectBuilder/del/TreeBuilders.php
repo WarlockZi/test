@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TreeBuilders
 {
-	private array $arr;
-	private string $relation;
+	protected array $arr;
+	protected string $relation;
 
-	private int $selected;
-	private int $excluded;
+	protected int $selected;
+	protected int $excluded;
 
-	private $localtab;
-	private $tab;
-	private $tabMultiply;
+	protected $localtab;
+	protected $tab;
+	protected $tabMultiply;
 
 	public static function build(Collection $collection,
 															 string $relation,

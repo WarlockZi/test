@@ -4,14 +4,10 @@ namespace app\controller\Admin;
 
 
 use app\controller\AppController;
-use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
 use app\view\Category\CategoryView;
-use app\view\components\Builders\SelectBuilder\OptionsBuilder;
-use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\TreeABuilder;
-use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 
 
 class CategoryController Extends AppController

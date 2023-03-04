@@ -27,7 +27,7 @@ class TreeOptionsBuilder extends TreeBuilder
 		return "<option data-level={$level} value = {$id} {$selected}>{$this->localtab}{$item['name']}</option>";
 	}
 
-	protected function options($items, $level, $string)
+	public function options($items, $level, $string)
 	{
 		foreach ($items as $item) {
 			$string .= $this->getOption($item, $level);

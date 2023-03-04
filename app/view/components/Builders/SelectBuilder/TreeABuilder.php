@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TreeABuilder extends TreeBuilder
 {
-	private $tag = 'a';
 	private $class;
 	private $href;
 
@@ -28,7 +27,7 @@ class TreeABuilder extends TreeBuilder
 		$selected = $id == $this->selected ? 'selected' : '';
 		$this->localtab = str_repeat($this->tab, $level * $this->tabMultiply);
 		$href = "href='{$this->href}{$item['id']}'";
-		return "<a data-level={$level} value={$id} {$this->class} {$href} {$selected}>{$this->localtab}{$item['name']}</a>";
+		return "<a data-level={$level} value={$id} {$this->class} {$href} {$selected}>₽{$this->localtab}{$item['name']}</a>";
 	}
 
 	protected function options($items, $level, $string)

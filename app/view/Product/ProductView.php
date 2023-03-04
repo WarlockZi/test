@@ -2,11 +2,10 @@
 
 namespace app\view\Product;
 
-use app\model\Category;
 use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Unit;
-
+use app\Repository\CategoryRepository;
 use app\view\components\Builders\Builder;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
@@ -14,10 +13,11 @@ use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
-
 use app\view\components\Builders\Morph\MorphBuilder;
+use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
+use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,7 +26,8 @@ class ProductView
 
 	public $model = 'product';
 
-	protected static function clean(string $str){
+	protected static function clean(string $str)
+	{
 		$builder = new Builder();
 		return $builder->clean($str);
 	}
@@ -53,7 +54,7 @@ class ProductView
 
 	public static function getCardImages(string $title,
 																			 Collection $collection,
-																			 string $class='detail-images-wrap')
+																			 string $class = 'detail-images-wrap')
 	{
 		ob_start();
 		$detail_image = '';
@@ -64,7 +65,7 @@ class ProductView
 		return ob_get_clean();
 	}
 
-	public static function edit(Model $product): string
+	public static function edit(Product $product): string
 	{
 		return ItemBuilder::build($product, 'product')
 			->pageTitle('Товар :  ' . $product['name'])
@@ -85,7 +86,6 @@ class ProductView
 					->name('Категория')
 					->html(self::getCategorySelect($product))
 					->contenteditable()
-
 					->get()
 			)
 			->field(
@@ -98,13 +98,13 @@ class ProductView
 			->field(
 				ItemFieldBuilder::build('baseUnit', $product)
 					->name('Базовая ед')
-					->html(self::getBaseUnit($product))
+					->html(self::getUnit($product->baseUnit->id ?? 0))
 					->get()
 			)
 			->field(
 				ItemFieldBuilder::build('mainUnit', $product)
 					->name('Основная ед')
-					->html(self::getMainUnit($product))
+					->html(self::getUnit($product->mainUnit->id ?? 0))
 					->get()
 			)
 			->field(
@@ -239,7 +239,6 @@ class ProductView
 			'mainImages',
 			)
 			->detach('detach')
-
 			->class('dnd')
 			->content(
 				DndBuilder::build('product')
@@ -256,7 +255,7 @@ class ProductView
 			'smallpack',
 			'smallpackImages',
 			)
-			->many()
+//			->many()
 			->detach('detach')
 			->content(
 				DndBuilder::build('product', 'dnd')
@@ -274,21 +273,11 @@ class ProductView
 			'bigPack',
 			)
 			->detach('detach')
-			->many()
+//			->many()
 			->content(
 				DndBuilder::build('product', 'dnd')
 					->get()
 			)
-//			->template('many.php')
-//			->many($product->bigpackImages)
-//			->dnd(
-//				'many_dnd_plus.php',
-//				'holder',
-//				'dnd',
-//				'Перетащите файл сюда',
-//				Icon::plus(),
-//				'catalog',
-//				)
 			->get();
 	}
 
@@ -300,47 +289,39 @@ class ProductView
 			'detail',
 			'detailImages',
 			)
-			->many()
+//			->many()
 			->detach('detach')
 //			->many($product->detailImages)
 			->content(
 				DndBuilder::build('product', 'dnd')
 					->get()
 			)
-
 			->get();
 	}
 
 
-	protected static function getMainUnit(Model $product): string
+	protected static function getUnit($selected)
 	{
-		$f = SelectBuilder::build()
-			->array(Unit::forSelect()->toArray())
-			->field('main_unit')
+		$f = SelectBuilder::build(
+			ArrayOptionsBuilder::build(Unit::forSelect())
+				->selected($selected)
+				->get()
+		)
 			->initialOption('', 0)
-			->selected($product->main_unit)
-			->get();
-		return $f;
-//		return include ROOT . '/app/view/Product/main_unit.php';
-	}
-
-	protected static function getBaseUnit(Model $product): string
-	{
-		$f = SelectBuilder::build()
-			->array(Unit::forSelect()->toArray())
-			->field('base_unit')
-			->initialOption('', 0)
-			->selected($product->base_unit)
 			->get();
 		return self::clean($f);
 	}
+
+
 	protected static function getCategorySelect(Model $product): string
 	{
-		$f = SelectBuilder::build()
-			->tree(Category::all(),'children')
+		$f = SelectBuilder::build(
+			TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
+				->initialOption()
+				->selected($product->category_id)
+				->get()
+		)
 			->field('category_id')
-			->initialOption('', 0)
-			->selected($product->category_id??0)
 			->get();
 		return self::clean($f);
 	}
