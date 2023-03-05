@@ -24,27 +24,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductView
 {
 
-	public $model = 'product';
-
-	protected static function clean(string $str)
-	{
-		$builder = new Builder();
-		return $builder->clean($str);
-	}
-
-	public static function renderToCart(Product $product)
-	{
-		ob_start();
-		include ROOT . '/app/view/Product/Main/toCart.php';
-		return ob_get_clean();
-	}
-
-	public static function renderProperty($property)
-	{
-		ob_start();
-		include ROOT . '/app/view/Product/property.php';
-		return ob_get_clean();
-	}
+	protected $model = 'product';
 
 	public static function getCardDetailImage($image)
 	{
@@ -145,34 +125,51 @@ class ProductView
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
-						self::getMainImage($product)
+						self::getImage($product, 'main', 'mainImages')
 					)
 					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Детальные картинки')
 					->html(
-						self::getDetailImages($product)
+						self::getImage($product, 'detail', 'detailImages')
 					)
 					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Внутритарная упаковка')
 					->html(
-						self::getSmallPackImages($product)
+						self::getImage($product, 'smallpack', 'smallpackImages')
 					)
 					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Транспортная упаковка')
 					->html(
-						self::getBigPackImages($product)
+						self::getImage($product, 'bigpack', 'bigPackImages')
 					)
 					->get()
 			)
 			->del()
 			->save()
 			->toList('list')
+			->get();
+	}
+
+	protected static function getImage(Product $product, string $slug, string $relation)
+	{
+		return MorphBuilder::build(
+			$product,
+			'Image',
+			$slug,
+			$relation,
+			)
+			->detach('detach')
+			->class('dnd')
+			->content(
+				DndBuilder::build('product')
+					->get()
+			)
 			->get();
 	}
 
@@ -206,7 +203,6 @@ class ProductView
 		return $str;
 	}
 
-
 	protected static function getSeo($product): string
 	{
 		return "<div class='show'>" .
@@ -228,75 +224,6 @@ class ProductView
 	protected static function getDescription($product): string
 	{
 		return include ROOT . '/app/view/Product/description.php';
-	}
-
-	protected static function getMainImage($product): string
-	{
-		return MorphBuilder::build(
-			$product,
-			'Image',
-			'main',
-			'mainImages',
-			)
-			->detach('detach')
-			->class('dnd')
-			->content(
-				DndBuilder::build('product')
-					->get()
-			)
-			->get();
-	}
-
-	protected static function getSmallPackImages(Product $product): string
-	{
-		return MorphBuilder::build(
-			$product,
-			'Image',
-			'smallpack',
-			'smallpackImages',
-			)
-//			->many()
-			->detach('detach')
-			->content(
-				DndBuilder::build('product', 'dnd')
-					->get()
-			)
-			->get();
-	}
-
-	protected static function getBigPackImages($product): string
-	{
-		return MorphBuilder::build(
-			$product,
-			'Image',
-			'bigpack',
-			'bigPack',
-			)
-			->detach('detach')
-//			->many()
-			->content(
-				DndBuilder::build('product', 'dnd')
-					->get()
-			)
-			->get();
-	}
-
-	protected static function getDetailImages($product): string
-	{
-		return MorphBuilder::build(
-			$product,
-			'Image',
-			'detail',
-			'detailImages',
-			)
-//			->many()
-			->detach('detach')
-//			->many($product->detailImages)
-			->content(
-				DndBuilder::build('product', 'dnd')
-					->get()
-			)
-			->get();
 	}
 
 
@@ -360,5 +287,86 @@ class ProductView
 		}
 		return $str;
 	}
+
+	protected static function clean(string $str)
+	{
+		$builder = new Builder();
+		return $builder->clean($str);
+	}
+
+	public static function renderToCart(Product $product)
+	{
+		ob_start();
+		include ROOT . '/app/view/Product/Main/toCart.php';
+		return ob_get_clean();
+	}
+
+	public static function renderProperty($property)
+	{
+		ob_start();
+		include ROOT . '/app/view/Product/property.php';
+		return ob_get_clean();
+	}
+//	protected static function getMainImage($product): string
+//	{
+//		return MorphBuilder::build(
+//			$product,
+//			'Image',
+//			'main',
+//			'mainImages',
+//			)
+//			->detach('detach')
+//			->class('dnd')
+//			->content(
+//				DndBuilder::build('product')
+//					->get()
+//			)
+//			->get();
+//	}
+//	protected static function getSmallPackImages(Product $product): string
+//	{
+//		return MorphBuilder::build(
+//			$product,
+//			'Image',
+//			'smallpack',
+//			'smallpackImages',
+//			)
+//			->detach('detach')
+//			->content(
+//				DndBuilder::build('product', 'dnd')
+//					->get()
+//			)
+//			->get();
+//	}
+//	protected static function getBigPackImages($product): string
+//	{
+//		return MorphBuilder::build(
+//			$product,
+//			'Image',
+//			'bigpack',
+//			'bigPackImages',
+//			)
+//			->detach('detach')
+//			->content(
+//				DndBuilder::build('product', 'dnd')
+//					->get()
+//			)
+//			->get();
+//	}
+//	protected static function getDetailImages($product): string
+//	{
+//		return MorphBuilder::build(
+//			$product,
+//			'Image',
+//			'detail',
+//			'detailImages',
+//			)
+//			->detach('detach')
+//			->content(
+//				DndBuilder::build('product', 'dnd')
+//					->get()
+//			)
+//			->get();
+//	}
 
 }

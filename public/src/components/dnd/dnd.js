@@ -5,6 +5,8 @@ export function dnd1(holderClass = '', cb) {
 
   let holders = $(holderClass);
 
+  debugger
+
   [].forEach.call(holders, function (h) {
 
     h.ondragenter = function (e) {

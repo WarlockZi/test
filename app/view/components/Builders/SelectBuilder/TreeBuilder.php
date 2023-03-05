@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 abstract class TreeBuilder
 {
-	private array $arr;
+	protected array $arr;
 	protected  string $relation;
 
 	protected  $selected = null;

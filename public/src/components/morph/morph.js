@@ -97,17 +97,21 @@ export default class Morph {
     }
   }
 
-  static async attach(files, target, context ) {
+  static async attach(files, target, context) {
 
     let morphedType = context.model
     let morphedId = context.id
     let path = target.dataset.dndPath
+    if (target.parentNode.dataset.morphOneormany === 'one') {
+      let fr = Array.prototype.slice.call(files, 0, 1);
 
-    let func = context.func
-    // debugger
+    }
+
+    let relation = context.relation
+    debugger
     let url = `/adminsc/${morphedType}/attach`
-    let data = {morphedType, morphedId, func, path}
-    data = objAndData2FormData(data,files)
+    let data = {morphedType, morphedId, relation, path}
+    data = objAndData2FormData(data, files)
     let res = await post(url, data)
 
   }
@@ -121,6 +125,7 @@ export default class Morph {
       img.src = image?.src
     }
   }
+
   static setImagePath(morphedEl) {
     let imagePath = $(morphedEl).find('[data-path]')
     if (imagePath) {
