@@ -13,7 +13,7 @@ class MorphBuilder
 	protected $morph;
 	protected $items = [];
 
-	protected $oneOrMany;
+	protected $oneOrMany = "data-morph-oneormany='one'";
 	protected $slug;
 	protected $relation;
 
@@ -34,7 +34,6 @@ class MorphBuilder
 		$self->morphed = $morphed;
 		$self->items = $morphed[$relation] ?? [];
 
-		$self->oneOrMany = "data-morph-oneormany='one'";
 		$self->relation = "data-morph-relation ='{$relation}'";
 		$self->slug = "data-morph-slug={$slug}";
 
@@ -68,11 +67,11 @@ class MorphBuilder
 		$this->content = $content;
 		return $this;
 	}
-//	public function many()
-//	{
-//		$this->oneOrMany = "data-morph-oneormany='many'";
-//		return $this;
-//	}
+	public function many()
+	{
+		$this->oneOrMany = "data-morph-oneormany='many'";
+		return $this;
+	}
 
 	protected function getDetach(Model $item)
 	{

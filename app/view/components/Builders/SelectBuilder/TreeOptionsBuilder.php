@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TreeOptionsBuilder extends TreeBuilder
 {
-	private $tag = 'option';
-
 	public static function build(Collection $collection,
 															 string $relation,
 															 int $multiply = 1,

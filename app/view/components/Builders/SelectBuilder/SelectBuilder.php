@@ -8,18 +8,6 @@ use app\view\components\Builders\Builder;
 
 class SelectBuilder extends Builder
 {
-//	private $tree;
-//	private $relation;
-//
-//	private $array = [];
-//	private Collection $collection;
-//	private $selected;
-//	private $excluded;
-//
-//	private $initialOption;
-//
-//	private $tab = '&nbsp;';
-//	private $tabMultiply = 1;
 
 	private $options='';
 	private $class;
@@ -36,6 +24,8 @@ class SelectBuilder extends Builder
 
 	private $belongsToModel;
 	private $belongsToId;
+
+	private $initialOption;
 
 	public static function build(string $options)
 	{
@@ -97,63 +87,5 @@ class SelectBuilder extends Builder
 		$result = ob_get_clean();
 		return $this->clean($result);
 	}
-
-//	public function tree(Collection $collection,
-//											 string $relation,
-//											 string $tab = null,
-//											 int $multiply = null)
-//	{
-//		$this->tree = $collection;
-//		$this->relation = $relation;
-//		$this->tab = $tab ?? $this->tab;
-//		$this->tabMultiply = $multiply ?? $this->tabMultiply;
-//		return $this;
-//	}
-//
-//	public function array(array $array)
-//	{
-//		$this->array = $array;
-//		return $this;
-//	}
-//
-//	public function collection(Collection $collection)
-//	{
-//		$this->collection = $collection;
-//		return $this;
-//	}
-
-//	public function selected($selected)
-//	{
-//		$this->selected = $selected;
-//		return $this;
-//	}
-//
-//	public function excluded(string $excluded)
-//	{
-//		$this->excluded = (int)$excluded;
-//		return $this;
-//	}
-
-//	private function getArray(): void
-//	{
-//		$tpl = '';
-//		foreach ($this->array as $index => $item) {
-//			$selected = $this->selected === $item['id'] ? 'selected' : '';
-//			$tpl .= "<option value='{$item['id']}' $selected>{$item['name']}</option>";
-//		}
-//		$this->options = $tpl;
-//	}
-//
-//	private function getCollection(): void
-//	{
-//		$arr = $this->collection->toArray();
-//
-//		foreach ($arr as $item) {
-//			$selected = $this->selected === $item['id'] ? 'selected' : '';
-//			$this->options .= "<option value='{$item['id']}' $selected>{$item['name']}</option>";
-//		}
-//
-//	}
-
 
 }

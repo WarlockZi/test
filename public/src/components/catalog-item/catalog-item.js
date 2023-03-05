@@ -30,9 +30,8 @@ export default function catalogItem() {
 
   function handleDnd(files, target) {
     // debugger
-    let func = target.parentNode.dataset.morphFunction
-    if (func) {
-      this.func = func
+    this.relation = target.parentNode.dataset.morphRelation
+    if (this.relation) {
       Morph.attach(files, target, this)
 
     } else if (target.dataset.belongsTo) {

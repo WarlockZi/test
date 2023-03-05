@@ -16,7 +16,7 @@ class ProductController extends AppController
   {
     $id = $this->route->id;
     $prod = ProductRepository::getProduct('id', $id);
-    $product = $breadcrumbs = null;
+//    $product = $breadcrumbs = null;
     if ($prod) {
       $product = ProductView::edit($prod);
       $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, false, true);
