@@ -13,15 +13,15 @@ class ProductController extends AppController
 
 	public function actionIndex()
 	{
-		if (isset($this->route['slug'])) {
+		$slug = $this->route->slug;
+		if ($slug) {
 			$this->view = 'product';
-			$slug = $this->route['slug'];
 			$product = ProductRepository::getProduct('slug', $slug);
 			$product->categoryProperties = ProductRepository::preparePropertiesList($product);
 
 			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, false,);
 			$this->set(compact('product', 'breadcrumbs'));
-			View::setItemMeta($product);
+			$this->assets->setItemMeta($product);
 		} else {
 			header('Location:/category');
 		}

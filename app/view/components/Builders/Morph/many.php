@@ -10,7 +10,7 @@ use \app\Repository\ImageRepository;
 	<?= $this->slug; ?>
 	<?= $this->class; ?>
 >
-	<?= $this->content;?>
+	<?= $this->html;?>
 
 
 	<? foreach ($this->items as $item): ?>

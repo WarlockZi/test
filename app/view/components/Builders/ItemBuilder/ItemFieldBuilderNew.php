@@ -6,27 +6,27 @@ namespace app\view\components\Builders\ItemBuilder;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ItemFieldBuilder
+class ItemFieldBuilderNew
 {
-	public $field ;
-	public $item;
-	public $datafield;
-	public $class;
-	public $name;
-//	public $link;
 
-	public $html;
+	protected $field;
+	protected $item;
 
-	public $value;
-	public $hidden;
-	public $required;
-	public $contenteditable;
+	protected $class;
+	protected $name;
 
-	public static function build(string $fieldName, Model $item)
+	protected $value;
+	protected $hidden;
+	protected $required;
+	protected $contenteditable;
+
+	protected $html;
+
+	public static function build(string $field, Model $item)
 	{
 		$field = new static();
-		$field->datafield = "data-field={$fieldName}";
-		$field->field = $fieldName;
+		$field->field = "data-field={$field}";
+//		$field->field = $fieldName;
 		$field->item = $item;
 		return $field;
 	}
@@ -43,15 +43,10 @@ class ItemFieldBuilder
 		return $this;
 	}
 
-	public function link(string $link)
-	{
-		$this->link = $link;
-		return $this;
-	}
 
 	public function html(string $html)
 	{
-		$this->value = $html;
+		$this->html = $html;
 		return $this;
 	}
 
@@ -76,7 +71,7 @@ class ItemFieldBuilder
 	public function get()
 	{
 		$this->name = $this->name ? $this->name : $this->field;
-//		$this->setValue();
+		$this->setValue();
 
 		return $this;
 	}

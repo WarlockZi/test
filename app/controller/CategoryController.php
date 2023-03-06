@@ -21,7 +21,7 @@ class CategoryController Extends AppController
 		$accordion = '';
 		if ($this->route->slug) {
 			$this->view = 'category';
-			$slug = $this->route['slug'];
+			$slug = $this->route->slug;
 
 			$category = Category::where('slug', $slug)
 				->with('childrenRecursive')

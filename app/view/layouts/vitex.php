@@ -27,7 +27,7 @@
 
 <?= $this->header->getHeader(); ?>
 
-<?= $this->getErrors(); ?>
+<?//= $this->getErrors(); ?>
 
 <?= $this->getContent(); ?>
 

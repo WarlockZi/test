@@ -42,7 +42,7 @@ class AppController extends Controller
 
 	public function actionAttach()
 	{
-		$req = $_POST;
+		$req = $this->isAjax();
 		if (!$req) $this->exitWithError('Плохой запрос');
 		if ($_FILES) {
 			MorphRepository::attachWithFiles($_FILES, $req);
@@ -71,8 +71,6 @@ class AppController extends Controller
 
 			if ($model->wasRecentlyCreated) {
 				if (isset($this->ajax['morph_type'])) {
-//					$morph['morph'] = self::shortClassName($model);
-//					$morph['morphId'] = $model->id;
 					self::attachMorph($this->ajax, $model);
 				}
 				$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);

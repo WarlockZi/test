@@ -14,16 +14,7 @@ class SelectBuilder extends Builder
 	private $title;
 	private $field;
 
-	private $model;
-	private $modelId;
-
-	private $morphFunction;
-	private $morphSlug;
-	private $morphOneOrMany;
-	private $morphDetach;
-
-	private $belongsToModel;
-	private $belongsToId;
+	private $relation;
 
 	private $initialOption;
 
@@ -41,23 +32,10 @@ class SelectBuilder extends Builder
 		return $this;
 	}
 
-	public function morph(string $morphFunction,
-												string $slug = '',
-												string $oneOrMany = 'one',
-												bool $detach = false)
-	{
-		$this->morphFunction = "data-morph-function='{$morphFunction}'";
-		$this->morphSlug = $slug ? "data-morph-slug='{$slug}'" : "";
-		$this->morphOneOrMany = "data-morph-oneOrMany='{$oneOrMany}'";
-		$detach = $detach ? 'true' : 'false';
-		$this->morphDetach = $detach ? "data-morph-detach='{$detach}'" : "";
-		return $this;
-	}
 
-	public function belongsTo(string $model, int $id)
+	public function relation(string $relation)
 	{
-		$this->belongsToModel = "data-belongsTo-model='{$model}'";
-		$this->belongsToId = "data-belongsTo-id='{$id}'";
+		$this->relation = "data-relation='{$relation}'";
 		return $this;
 	}
 
