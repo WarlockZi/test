@@ -13,7 +13,7 @@ use app\view\Header\UserHeader;
 class UserView extends View
 {
 	protected $layout = ROOT . "/app/view/layouts/vitex.php";
-	protected $noViewError = ROOT . '/app/view/404/index.php';
+	protected static $noViewError = ROOT . '/app/view/404/index.php';
 
 	public function __construct(Controller $controller)
 	{
@@ -22,11 +22,11 @@ class UserView extends View
 		$this->setHeader($this->user);
 		$this->setFooter();
 	}
-	protected function getViewFile(): string
+	protected function getViewFile(Controller $controller): string
 	{
 		$route = $this->controller->getRoute();
+		$action = $controller->view?$controller->view:$route->action;
 		$controller = ucfirst($route->controller);
-		$action = $route->action;
 		return FS::platformSlashes(ROOT . "/app/view/{$controller}/{$action}.php");
 	}
 
@@ -35,7 +35,7 @@ class UserView extends View
 		if (is_readable($this->view)) {
 			$this->content = self::getFileContent($this->view, $controller->vars);
 		} else {
-			Error::setError("Нет файла вида - {$route['action']}");
+			Error::setError("Нет файла вида - {$controller->getRoute()->action}");
 			$this->content = self::getFileContent($this->view);
 		}
 	}

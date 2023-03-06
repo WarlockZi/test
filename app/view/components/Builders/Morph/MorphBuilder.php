@@ -62,9 +62,10 @@ class MorphBuilder
 		return $this;
 	}
 
-	public function content(string $content)
+	public function html(string $html)
 	{
-		$this->content = $content;
+		$this->html = $html;
+		$this->items = [];
 		return $this;
 	}
 	public function many()

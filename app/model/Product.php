@@ -65,18 +65,25 @@ class Product extends Model
 
 	public function mainUnit()
 	{
-		return $this->hasOne(Unit::class,
-			'id',
+		return $this->belongsTo(Unit::class,
 			'main_unit',
+//			'id',
 			);
 	}
 	public function baseUnit()
 	{
-		return $this->hasOne(Unit::class,
-			'id',
+		return $this->belongsTo(Unit::class,
 			'base_unit',
+//			'id',
 			);
 	}
+//	public function baseUnit()
+//	{
+//		return $this->hasOne(Unit::class,
+//			'id',
+//			'base_unit',
+//			);
+//	}
 	public function manufacturer()
 	{
 		return $this->belongsTo(Manufacturer::class, 'manufacturer_id');

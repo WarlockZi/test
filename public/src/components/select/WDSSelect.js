@@ -110,6 +110,7 @@ function setup(select) {
 
   function getMorph(sel) {
     let item = sel.closest('.item_wrap')
+    let morph = sel.parentNode
     return {
       morph: {
         id: item.dataset.id,
@@ -117,17 +118,16 @@ function setup(select) {
       },
       morphed: {
         id: sel.dataset.value,
-        function: sel.dataset.morphFunction,
-        slug: sel.dataset.morphSlug,
-        oneOrMany: sel.dataset.morphOneormany,
-        detach: sel.dataset.morphDetach,
+        relation: morph.dataset.morphRelation,
+        slug: morph.dataset.morphSlug,
+        oneOrMany: morph.dataset.morphOneormany,
       }
     }
   }
 
   async function sendToServer(target) {
     let sel = target.closest('[custom-select]')
-    if (sel.dataset.morphFunction) {
+    if (sel.parentNode.dataset.morphRelation) {
       let data = getMorph(sel)
       let url = `/adminsc/${data.morph.model}/attach`
       let res = await post(url, data)

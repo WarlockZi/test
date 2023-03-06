@@ -29,7 +29,7 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 	{
 		$this->controller = $controller;
 		$this->user = Auth::getUser();
-		$this->view = $this->getViewFile();
+		$this->view = $this->getViewFile($controller);
 	}
 
 	public function getContent()
@@ -48,7 +48,7 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 
 	public function render()
 	{
-		$this->setContent($this->controller,);
+		$this->setContent($this->controller);
 		echo self::getFileContent($this->layout);
 	}
 

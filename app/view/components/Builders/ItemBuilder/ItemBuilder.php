@@ -9,13 +9,13 @@ use Illuminate\Support\Str;
 
 class ItemBuilder extends Builder
 {
-	private $model = '';
-	private $dataModel = '';
-	private $id = 0;
+	private $model;
+	private $dataModel;
+	private $id;
 	private $item = [];
 
-	private $pageTitle = '';
-	private $class = '';
+	private $pageTitle;
+	private $class;
 	private $del = false;
 	private $save = false;
 
@@ -27,11 +27,6 @@ class ItemBuilder extends Builder
 	private $tabs = [];
 
 	public $html = '';
-
-	function getModelName($table)
-	{
-		return Str::studly(Str::singular($table));
-	}
 
 	public static function build(Model $item, string $model)
 	{
@@ -54,6 +49,31 @@ class ItemBuilder extends Builder
 	{
 		$this->pageTitle = $pageTitle ?"<div class='page-title'>{$pageTitle}</div>": '';
 		return $this;
+	}
+
+	public function field($field)
+	{
+		$this->fields[] = $field;
+		return $this;
+	}
+
+	public function tab($tab)
+	{
+		$this->tabs[] = $tab;
+		return $this;
+	}
+
+	public function get()
+	{
+		ob_start();
+		include ROOT . '/app/view/components/Builders/ItemBuilder/ItemTemplate.php';
+		$result = ob_get_clean();
+		return $this->clean($result);
+	}
+
+	function getModelName($table)
+	{
+		return Str::studly(Str::singular($table));
 	}
 
 	public function del(bool $isAdmin = true)
@@ -80,26 +100,6 @@ class ItemBuilder extends Builder
 			$this->toListText = $text ? $text : $this->toListText;
 		}
 		return $this;
-	}
-
-	public function field($field)
-	{
-		$this->fields[] = $field;
-		return $this;
-	}
-
-	public function tab($tab)
-	{
-		$this->tabs[] = $tab;
-		return $this;
-	}
-
-	public function get()
-	{
-		ob_start();
-		include ROOT . '/app/view/components/Builders/ItemBuilder/ItemTemplate.php';
-		$result = ob_get_clean();
-		return $this->clean($result);
 	}
 
 }

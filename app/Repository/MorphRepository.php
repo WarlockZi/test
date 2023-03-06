@@ -16,16 +16,16 @@ class MorphRepository extends AppController
 	{
 		$morph = $req['morph'];
 		$morphed = $req['morphed'];
-		$model = self::getModelName($morph['model'])::find($morph['id']);
-		$func = $req['morphed']['function'];
+		$relation = $req['morphed']['relation'];
+		$model = self::getModelName($morph['model'])::with($relation)->find($morph['id']);
 		$slug = $morphed['slug'];
 		if ($morphed['detach'] === 'true') {
-			$res = $model->$func()
+			$res = $model->$relation()
 				->wherePivot('slug', $slug)
 				->sync([$morphed['id'] => ['slug' => $slug]]);
 			return true;
 		} else {
-			$res = $model->$func()
+			$res = $model->$relation()
 				->wherePivot('slug', $slug)
 				->syncWithoutDetaching([$morphed['id'] => ['slug' => $slug]]);
 			return true;

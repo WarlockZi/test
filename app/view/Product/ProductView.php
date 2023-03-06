@@ -18,6 +18,7 @@ use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
+use app\view\components\HasOne\HasOne;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -65,7 +66,6 @@ class ProductView
 				ItemFieldBuilder::build('category_id', $product)
 					->name('Категория')
 					->html(self::getCategorySelect($product))
-					->contenteditable()
 					->get()
 			)
 			->field(
@@ -76,15 +76,15 @@ class ProductView
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('baseUnit', $product)
-					->name('Базовая ед')
-					->html(self::getUnit($product->baseUnit->id ?? 0))
+				ItemFieldBuilder::build('base_unit', $product)
+					->name('Базовая единица')
+					->html(self::getUnit($product->baseUnit->id ?? 0, 'base_unit'))
 					->get()
 			)
 			->field(
 				ItemFieldBuilder::build('mainUnit', $product)
 					->name('Основная ед')
-					->html(self::getUnit($product->mainUnit->id ?? 0))
+					->html(self::getUnit($product->mainUnit->id ?? 0,'main_unit'))
 					->get()
 			)
 			->field(
@@ -156,6 +156,21 @@ class ProductView
 			->get();
 	}
 
+	protected static function getUnit(int $selected, string $field)
+	{
+		return self::clean(
+			SelectBuilder::build(
+				ArrayOptionsBuilder::build(Unit::forSelect())
+					->selected($selected)
+					->get()
+			)
+				->field($field)
+				->initialOption('', 0)
+				->get()
+		);
+	}
+
+
 	protected static function getImage(Product $product, string $slug, string $relation)
 	{
 		return MorphBuilder::build(
@@ -166,7 +181,7 @@ class ProductView
 			)
 			->detach('detach')
 			->class('dnd')
-			->content(
+			->html(
 				DndBuilder::build('product')
 					->get()
 			)
@@ -225,20 +240,6 @@ class ProductView
 	{
 		return include ROOT . '/app/view/Product/description.php';
 	}
-
-
-	protected static function getUnit($selected)
-	{
-		$f = SelectBuilder::build(
-			ArrayOptionsBuilder::build(Unit::forSelect())
-				->selected($selected)
-				->get()
-		)
-			->initialOption('', 0)
-			->get();
-		return self::clean($f);
-	}
-
 
 	protected static function getCategorySelect(Model $product): string
 	{
