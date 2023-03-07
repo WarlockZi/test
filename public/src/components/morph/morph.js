@@ -110,9 +110,9 @@ export default class Morph {
     let relation = context.relation
     debugger
     let url = `/adminsc/${morphedType}/attach`
-    let data = {morphedType, morphedId, relation, path}
-    data = objAndData2FormData(data, files)
-    let res = await post(url, data)
+    let param = {morphedType, morphedId, relation, path}
+    param = objAndData2FormData(param, files)
+    let res = await post(url, param)
 
   }
 

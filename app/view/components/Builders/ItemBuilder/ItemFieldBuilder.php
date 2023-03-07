@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ItemFieldBuilder
 {
-	public $field ;
+	public $field;
 	public $item;
 	public $datafield;
 	public $class;
@@ -51,7 +51,7 @@ class ItemFieldBuilder
 
 	public function html(string $html)
 	{
-		$this->value = $html;
+		$this->html = $html;
 		return $this;
 	}
 
@@ -76,15 +76,11 @@ class ItemFieldBuilder
 	public function get()
 	{
 		$this->name = $this->name ? $this->name : $this->field;
-//		$this->setValue();
+		$this->value = $this->html ? $this->html : $this->item[$this->field];
 
 		return $this;
 	}
 
-	protected function setValue(): void
-	{
-		$this->value = $this->item[$this->field];
-	}
 
 	public function toHtml(string $model): string
 	{

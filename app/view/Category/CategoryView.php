@@ -5,6 +5,7 @@ namespace app\view\Category;
 use app\model\Category;
 use app\model\Product;
 use app\model\Property;
+use app\Repository\CategoryRepository;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
@@ -20,12 +21,7 @@ class CategoryView
 {
 	public static function edit($id): string
 	{
-		$category = Category::with(
-			'products',
-			'parentRecursive',
-			'properties',
-			'mainImages')
-			->find($id);
+		$category = CategoryRepository::edit($id);
 
 		return ItemBuilder::build($category, 'category')
 			->pageTitle('Категория :  ' . $category->name)
@@ -55,12 +51,7 @@ class CategoryView
 				ItemFieldBuilder::build('categiry_id', $category)
 					->name('Принадлежит')
 					->html(
-						SelectBuilder::build(
-							TreeOptionsBuilder::build()
-								->get()
-						)->selected($category->category_id)
-							->tree(Category::all(),'children')
-							->get()
+						CategoryRepository::selector($category->category_id)
 					)
 					->get()
 			)
@@ -71,22 +62,11 @@ class CategoryView
 						MorphBuilder::build($category, 'image', true, 'mainImages')
 							->class('dnd')
 							->template('many.php')
-							->content(
+							->html(
 								DndBuilder::build('category', 'holder')
 									->get()
 							)
-//							->dnd('dnd',
-//								'dnd','dnd',
-//								'перетащить картинку',
-//								Icon::plus(),'category')
 							->get()
-
-//						DndBuilder::build('catalog', 'dnd')
-//							->morph($category, 'mainImages', 'image', 0,
-//								true, 'one',
-//								'main', 'holder')
-//							->get()
-
 					)
 					->get()
 
@@ -122,23 +102,27 @@ class CategoryView
 			->tab(
 				ItemTabBuilder::build('Св-ва категории')
 					->html(
-						MyList::build(Property::class)
-							->items($category->properties ?? [])
-							->morph('category', $id, 'many', false)
-							->addButton('ajax')
-							->column(
-								ListColumnBuilder::build('id')
-									->width('40px')
-									->get()
-							)
-							->column(
-								ListColumnBuilder::build('name')
-									->name("Назввание")
-									->contenteditable()
-									->get()
-							)
-							->edit()
-							->del()
+						MorphBuilder::build(new Property(),'prop','prop', 'properties')
+							->many()
+							->html(
+								MyList::build(Property::class)
+								->items($category->properties ?? [])
+//								->morph('category', $id, 'many', false)
+								->addButton('ajax')
+								->column(
+									ListColumnBuilder::build('id')
+										->width('40px')
+										->get()
+								)
+								->column(
+									ListColumnBuilder::build('name')
+										->name("Назввание")
+										->contenteditable()
+										->get()
+								)
+								->edit()
+								->del()
+								->get())
 							->get()
 					)
 					->get()
@@ -146,7 +130,6 @@ class CategoryView
 			->tab(
 				ItemTabBuilder::build('Подкатегории')
 					->html(
-
 						MyList::build(Category::class)
 							->addButton('ajax')
 							->items($category['children'] ?? [])
@@ -177,7 +160,7 @@ class CategoryView
 
 	public static function list(): string
 	{
-		return MyList::build(Category::class,10)
+		return MyList::build(Category::class, 10)
 			->column(
 				ListColumnBuilder::build('id')
 					->get()

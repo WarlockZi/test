@@ -71,7 +71,7 @@ class AppController extends Controller
 
 			if ($model->wasRecentlyCreated) {
 				if (isset($this->ajax['morph_type'])) {
-					self::attachMorph($this->ajax, $model);
+					$this->actionAttach($this->ajax, $model);
 				}
 				$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
 			} else {
