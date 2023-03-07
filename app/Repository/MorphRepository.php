@@ -16,7 +16,7 @@ class MorphRepository extends AppController
 	{
 		$morph = $req['morph'];
 		$morphed = $req['morphed'];
-		$relation = $req['morphed']['relation'];
+		$relation = $morphed['relation'];
 		$model = self::getModelName($morph['model'])::with($relation)->find($morph['id']);
 		$slug = $morphed['slug'];
 		if ($morphed['detach'] === 'true') {

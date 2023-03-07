@@ -4,7 +4,15 @@
 
   @include tree();
 
-  .flex1{
-    background-color: #b3e6dc;
+  box-shadow: white 0px 0px 9px 16px;
+
+  a:hover{
+    transition: all 100ms;
+    background-color: #8b8f8e;
+    color: white;
   }
+
+  //.flex1{
+  //  background-color: #b3e6dc;
+  //}
 }

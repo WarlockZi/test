@@ -19,15 +19,13 @@
 
 	<?= $this->assets->getMeta(); ?>
 	<?= $this->assets->getCss(); ?>
-<!--	--><?// $this->getCSS(); ?>
+	<?= $this->assets->getCDNCss(); ?>
 
 </head>
 
 <body>
 
 <?= $this->header->getHeader(); ?>
-
-<?//= $this->getErrors(); ?>
 
 <?= $this->getContent(); ?>
 
@@ -36,7 +34,7 @@
 <?//= Footer::getUserCookie(); ?>
 
 <?= $this->assets->getJs(); ?>
-
+<?= $this->assets->getCDNJs(); ?>
 <? //= Footer::getYaMetrica(); ?>
 <? //= Footer::getVK(); ?>
 

@@ -65,7 +65,7 @@ class ProductView
 			->field(
 				ItemFieldBuilder::build('category_id', $product)
 					->name('Категория')
-					->html(self::getCategorySelect($product))
+					->html(CategoryRepository::selector($product->category_id))
 					->get()
 			)
 			->field(
@@ -84,7 +84,7 @@ class ProductView
 			->field(
 				ItemFieldBuilder::build('mainUnit', $product)
 					->name('Основная ед')
-					->html(self::getUnit($product->mainUnit->id ?? 0,'main_unit'))
+					->html(self::getUnit($product->mainUnit->id ?? 0, 'main_unit'))
 					->get()
 			)
 			->field(
@@ -241,18 +241,6 @@ class ProductView
 		return include ROOT . '/app/view/Product/description.php';
 	}
 
-	protected static function getCategorySelect(Model $product): string
-	{
-		$f = SelectBuilder::build(
-			TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
-				->initialOption()
-				->selected($product->category_id)
-				->get()
-		)
-			->field('category_id')
-			->get();
-		return self::clean($f);
-	}
 
 	public static function list(Collection $items): string
 	{

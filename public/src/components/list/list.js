@@ -89,9 +89,9 @@ if (tables) {
 
       /// create
       if (target.className === 'add-model') {
-        // debugger
-        modelCreate(modelName, modelId, belongsTo, belongsToId, morph, morphId, morphoneormany, morphdetach)
-        // modelCreate(this)
+        debugger
+        // modelCreate(modelName, modelId, belongsTo, belongsToId, morph, morphId, morphoneormany, morphdetach)
+        modelCreate(this)
 
         /// delete
       } else if (
@@ -156,6 +156,7 @@ if (tables) {
         data[parentName] = +belongsToId
       }
       if (morph) {
+        data = new MorphDTO(morphEl,morphedEl)
         data.morph_type = morph
         data.morph_id = morphId
         data.morph_oneormany = morphoneormany
