@@ -9,6 +9,7 @@ use app\Repository\ImageRepository;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 
 class ImageView
@@ -16,6 +17,21 @@ class ImageView
 
 	public $model = Image::class;
 
+	public static function morphImages(Collection $collection): string
+	{
+		if (!$collection->count()) return '';
+		$str = '';
+		foreach ($collection->items as $item) {
+				$str.= include ROOT.'/app/view/Image/Admin/morphImages.php';
+		}
+	}
+
+	protected static function getDetach(Model $item)
+	{
+		ob_start();
+		include ROOT.'/app/view/components/Builders/Morph/detach.php';
+		return ob_get_clean();
+	}
 
 	public static function list(Collection $items): string
 	{
@@ -57,8 +73,6 @@ class ImageView
 					->function(ImageRepository::class, 'getImgTags')
 					->get()
 			)
-
-
 			->get();
 	}
 

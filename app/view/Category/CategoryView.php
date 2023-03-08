@@ -16,6 +16,7 @@ use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
+use app\view\Image\ImageView;
 
 class CategoryView
 {
@@ -64,7 +65,8 @@ class CategoryView
 							->template('many.php')
 							->html(
 								DndBuilder::build('category', 'holder')
-									->get()
+									->get().	ImageView::morphImages($category->mainImages)
+
 							)
 							->get()
 					)
@@ -148,7 +150,6 @@ class CategoryView
 							->edit()
 							->del()
 							->get()
-
 					)
 					->get()
 			)
