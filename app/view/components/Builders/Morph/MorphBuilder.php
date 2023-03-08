@@ -11,7 +11,7 @@ class MorphBuilder
 
 	protected $morphed;
 	protected $morph;
-	protected $items = [];
+	protected $items;
 
 	protected $oneOrMany = "data-morph-oneormany='one'";
 	protected $slug;
@@ -32,7 +32,7 @@ class MorphBuilder
 
 		$self->morph = $morph;
 		$self->morphed = $morphed;
-		$self->items = $morphed[$relation] ?? [];
+		$self->items = $morphed[$relation];
 
 		$self->relation = "data-morph-relation ='{$relation}'";
 		$self->slug = "data-morph-slug={$slug}";
@@ -42,7 +42,7 @@ class MorphBuilder
 		return $self;
 	}
 
-	public function template($template)
+	public function template(string $template)
 	{
 		$this->template = $this->morphPath . $template;
 		return $this;
@@ -65,7 +65,7 @@ class MorphBuilder
 	public function html(string $html)
 	{
 		$this->html = $html;
-		$this->items = [];
+		$this->items = null;
 		return $this;
 	}
 	public function many()
@@ -74,12 +74,6 @@ class MorphBuilder
 		return $this;
 	}
 
-	protected function getDetach(Model $item)
-	{
-		ob_start();
-		include $this->detach;
-		return ob_get_clean();
-	}
 
 	public function get()
 	{
