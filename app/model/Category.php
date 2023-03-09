@@ -38,10 +38,6 @@ class Category extends Model
 		return $this->morphToMany(Property::class, 'propertable');
 	}
 
-	public function category()
-	{
-		return $this->parent()->with('parentRecursive');
-	}
 
 	public function cat()
 	{
@@ -53,6 +49,10 @@ class Category extends Model
 		return $this->cat()->with('parents');
 	}
 
+	public function category()
+	{
+		return $this->parent()->with('parentRecursive');
+	}
 	public function parent()
 	{
 		return $this->belongsTo(Category::class, 'category_id');

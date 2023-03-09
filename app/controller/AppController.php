@@ -63,7 +63,11 @@ class AppController extends Controller
 
 	public function actionUpdateOrCreate()
 	{
+		$req = $this->ajax;
 		if ($this->ajax) {
+
+			if ()
+
 			$model = $this->model::updateOrCreate(
 				['id' => $this->ajax['id']],
 				$this->ajax
