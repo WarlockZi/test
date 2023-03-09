@@ -17,13 +17,13 @@ if (tables) {
     const modelName = table.dataset.model ?? null
     const modelId = table.dataset.id ?? null
 
-    const belongsTo = table.dataset.belongsTo ?? null
-    const belongsToId = table.dataset.belongsToId ?? null
-
-    const morph = table.dataset.morph ?? null
-    const morphId = table.dataset.morphid ?? null
-    const morphoneormany = table.dataset.morphoneormany ?? null
-    const morphdetach = table.dataset.morphdetach ?? null
+    // const belongsTo = table.dataset.belongsTo ?? null
+    // const belongsToId = table.dataset.belongsToId ?? null
+    //
+    // const morph = table.dataset.morph ?? null
+    // const morphId = table.dataset.morphid ?? null
+    // const morphoneormany = table.dataset.morphoneormany ?? null
+    // const morphdetach = table.dataset.morphdetach ?? null
 
     const rows = fillRows()
 
@@ -151,20 +151,29 @@ if (tables) {
     async function modelCreate(modelName, modelId, belongsTo, belongsToId, morph, morphId, morphoneormany, morphdetach) {
       debugger
       let data = {}
-      if (belongsTo) {
-        let parentName = belongsTo + '_id'
-        data[parentName] = +belongsToId
-      }
-      if (morph) {
-        data = new MorphDTO(morphEl,morphedEl)
-        data.morph_type = morph
-        data.morph_id = morphId
-        data.morph_oneormany = morphoneormany
-        data.morph_detach = morphdetach
+      let relation = table.dataset.relation
+      if (relation){
+        let parent = table.closest('.item_wrap')
+        data.model = parent.dataset.model
+        data.id = parent.dataset.id
+        data.relation = relation
+        // data.relation = relation
       }
 
-      data.id = 0
-      let res = await post(`/adminsc/${modelName}/updateOrCreate`, data)
+      // if (belongsTo) {
+      //   let parentName = belongsTo + '_id'
+      //   data[parentName] = +belongsToId
+      // }
+      // if (morph) {
+      //   data = new MorphDTO(morphEl,morphedEl)
+      //   data.morph_type = morph
+      //   data.morph_id = morphId
+      //   data.morph_oneormany = morphoneormany
+      //   data.morph_detach = morphdetach
+      // }
+
+      // data.id = 0
+      let res = await post(`/adminsc/${data.model}/updateOrCreate`, data)
       if (res.arr.id) {
         newrow(res.arr.id)
       }

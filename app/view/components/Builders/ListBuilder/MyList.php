@@ -14,6 +14,7 @@ class MyList
 	private $model;
 	private $dataModel;
 	private $tableClassName;
+
 	private $pageTitle;
 
 	private $addButton = false;
@@ -23,15 +24,17 @@ class MyList
 	private $headEditCol;
 	private $headDelCol;
 
-	private $belongsTo;
-	private $belongsToId;
+//	private $belongsTo;
+//	private $belongsToId;
 
-	private $morph;
-	private $morphId = null;
-	private $morphDetach;
-	private $morphOneOrMany;
+	private $relation;
 
-	public static function build(string $modelName, int $count=0)
+//	private $morph;
+//	private $morphId = null;
+//	private $morphDetach;
+//	private $morphOneOrMany;
+
+	public static function build(string $modelName, int $count = 0)
 	{
 		$view = new static();
 		$view->model = new $modelName;
@@ -41,10 +44,11 @@ class MyList
 		return $view;
 	}
 
-	protected function setImtems(int $count){
-		if ($count){
+	protected function setImtems(int $count)
+	{
+		if ($count) {
 			$this->items = $this->model::all()->take($count);
-		}else{
+		} else {
 			$this->items = $this->model::all();
 		}
 	}
@@ -66,10 +70,17 @@ class MyList
 			->get();
 	}
 
-	public function belongsTo(string $model, $id)
+//	public function belongsTo(string $model, $id)
+//	{
+//		$this->realtion();
+//		$this->belongsTo = "data-belongs-to=" . $model;
+//		$this->belongsToId = "data-belongs-to-id=" . $id;
+//		return $this;
+//	}
+
+	public function realtion(string $relation)
 	{
-		$this->belongsTo = "data-belongs-to=" . $model;
-		$this->belongsToId = "data-belongs-to-id=" . $id;
+		$this->relation = "data-relation = '{$relation}'";
 		return $this;
 	}
 
@@ -79,15 +90,15 @@ class MyList
 		return $this;
 	}
 
-	public function morph(string $model, int $id, string $oneOrMany = 'one', bool $detach = false)
-	{
-		$this->morph = "data-morph={$model}";
-		$this->morphId = "data-morphId={$id}";
-		$this->morphOneOrMany = "data-morphOneOrMany={$oneOrMany}";
-		$detach = $detach ? 'true' : 'false';
-		$this->morphDetach = "data-morphDetach={$detach}";
-		return $this;
-	}
+//	public function morph(string $model, int $id, string $oneOrMany = 'one', bool $detach = false)
+//	{
+//		$this->morph = "data-morph={$model}";
+//		$this->morphId = "data-morphId={$id}";
+//		$this->morphOneOrMany = "data-morphOneOrMany={$oneOrMany}";
+//		$detach = $detach ? 'true' : 'false';
+//		$this->morphDetach = "data-morphDetach={$detach}";
+//		return $this;
+//	}
 
 	public function all()
 	{
@@ -119,21 +130,22 @@ class MyList
 		return $this;
 	}
 
-	protected function getId(int $itemId)
+	protected function getId(int $itemId): string
 	{
 		return "data-id={$itemId}";
 	}
 
-	protected function getEditButton(int $itemId)
+	protected function getEditButton(int $itemId): string
 	{
 		if ($this->headEditCol) {
 			$hidden = $itemId ? '' : 'hidden';
 			return "<div {$hidden} class='edit'  $this->dataModel " .
-				"data-id='{$itemId}'></div>";;
+				"data-id='{$itemId}'></div>";
 		}
+		return '';
 	}
 
-	protected function getDelButton(int $itemId)
+	protected function getDelButton(int $itemId): string
 	{
 		if ($this->headDelCol) {
 			$hidden = $itemId ? '' : 'hidden';
@@ -141,9 +153,10 @@ class MyList
 				"data-id='{$itemId}'></div>";
 			return $str;
 		}
+		return '';
 	}
 
-	protected function emptyRow()
+	protected function emptyRow(): string
 	{
 		$str = '';
 		foreach ($this->columns as $field => $column) {
@@ -192,6 +205,7 @@ class MyList
 
 		$this->grid .= "style='display: grid; grid-template-columns:{$columns}'";
 	}
+
 	protected function getData($column, $item, $field)
 	{
 		if ($column->function) {
@@ -208,11 +222,9 @@ class MyList
 	{
 		if ($column->select) {
 			return $column->select->getEmpty();
-		} else {
-			return '';
 		}
+		return '';
 	}
-
 
 
 	protected function template()

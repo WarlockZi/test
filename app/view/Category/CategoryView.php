@@ -65,7 +65,7 @@ class CategoryView
 							->template('many.php')
 							->html(
 								DndBuilder::build('category', 'holder')
-									->get().	ImageView::morphImages($category->mainImages)
+									->get() . ImageView::morphImages($category->mainImages)
 
 							)
 							->get()
@@ -77,7 +77,9 @@ class CategoryView
 				ItemTabBuilder::build('Товары категории')
 					->html(
 						MyList::build(Product::class)
-							->belongsTo('category', $id)
+//							->belongsTo('category', $id)
+							->pageTitle('Товары категории')
+							->realtion('products')
 							->addButton('ajax')
 							->items($category['products'] ?? [])
 							->column(
@@ -104,27 +106,28 @@ class CategoryView
 			->tab(
 				ItemTabBuilder::build('Св-ва категории')
 					->html(
-						MorphBuilder::build(new Property(),'prop','prop', 'properties')
+						MorphBuilder::build(new Property(), 'prop', 'prop', 'properties')
 							->many()
 							->html(
 								MyList::build(Property::class)
-								->items($category->properties ?? [])
+									->items($category->properties ?? [])
+									->pageTitle('Св-ва категории')
 //								->morph('category', $id, 'many', false)
-								->addButton('ajax')
-								->column(
-									ListColumnBuilder::build('id')
-										->width('40px')
-										->get()
-								)
-								->column(
-									ListColumnBuilder::build('name')
-										->name("Назввание")
-										->contenteditable()
-										->get()
-								)
-								->edit()
-								->del()
-								->get())
+									->addButton('ajax')
+									->column(
+										ListColumnBuilder::build('id')
+											->width('40px')
+											->get()
+									)
+									->column(
+										ListColumnBuilder::build('name')
+											->name("Назввание")
+											->contenteditable()
+											->get()
+									)
+									->edit()
+									->del()
+									->get())
 							->get()
 					)
 					->get()
@@ -133,6 +136,7 @@ class CategoryView
 				ItemTabBuilder::build('Подкатегории')
 					->html(
 						MyList::build(Category::class)
+							->pageTitle('Подкатегории')
 							->addButton('ajax')
 							->items($category['children'] ?? [])
 							->column(
@@ -146,7 +150,8 @@ class CategoryView
 									->contenteditable()
 									->get()
 							)
-							->belongsTo('category', $id)
+							->realtion('children')
+//							->belongsTo('category', $id)
 							->edit()
 							->del()
 							->get()
