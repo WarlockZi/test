@@ -25,15 +25,11 @@ class ItemTabBuilder extends Builder
 		$this->html = $this->clean($html);
 		return $this;
 	}
-	public function field(string $field)
-	{
-		$this->field = "data-field='{$field}'";
-		return $this;
-	}
+//	public function field(string $field)
+//	{
+//		$this->field = "data-field='{$field}'";
+//		return $this;
+//	}
 
-	public function get()
-	{
-		return $this;
-	}
 
 }

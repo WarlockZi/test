@@ -9,47 +9,37 @@ use Illuminate\Database\Eloquent\Collection;
 
 class MyList
 {
-	private $grid;
-
-	private $model;
-	private $dataModel;
-	private $tableClassName;
-
 	private $pageTitle;
+
+	private $grid;
+	private $class;
 
 	private $addButton = false;
 	private $columns = [];
-	private $items = [];
+	private Collection $items;
 
 	private $headEditCol;
 	private $headDelCol;
 
-//	private $belongsTo;
-//	private $belongsToId;
-
 	private $relation;
-
-//	private $morph;
-//	private $morphId = null;
-//	private $morphDetach;
-//	private $morphOneOrMany;
 
 	public static function build(string $modelName, int $count = 0)
 	{
-		$view = new static();
-		$view->model = new $modelName;
-		$view->setImtems($count);
-		$model = strtolower(class_basename($view->model));
-		$view->dataModel = "data-model='{$model}'";
-		return $view;
+		$list = new static();
+		$list->items = $list->setItems($count, $modelName);
+		$model = new $modelName;
+		$model = strtolower(class_basename($modelName));
+		$list->dataModel = "data-model='{$model}'";
+		return $list;
 	}
 
-	protected function setImtems(int $count)
+	protected function setItems(int $count, string $modelName): Collection
 	{
+		$model = new $modelName;
 		if ($count) {
-			$this->items = $this->model::all()->take($count);
+			return $model::all()->take($count);
 		} else {
-			$this->items = $this->model::all();
+			return $model::all();
 		}
 	}
 
@@ -70,17 +60,15 @@ class MyList
 			->get();
 	}
 
-//	public function belongsTo(string $model, $id)
-//	{
-//		$this->realtion();
-//		$this->belongsTo = "data-belongs-to=" . $model;
-//		$this->belongsToId = "data-belongs-to-id=" . $id;
-//		return $this;
-//	}
 
 	public function realtion(string $relation)
 	{
 		$this->relation = "data-relation = '{$relation}'";
+		return $this;
+	}
+	public function class(string $class)
+	{
+		$this->class = "class = '{$class}'";
 		return $this;
 	}
 
@@ -89,16 +77,6 @@ class MyList
 		$this->pageTitle = "<div class='list-title'>{$pageTitle}</div>";
 		return $this;
 	}
-
-//	public function morph(string $model, int $id, string $oneOrMany = 'one', bool $detach = false)
-//	{
-//		$this->morph = "data-morph={$model}";
-//		$this->morphId = "data-morphId={$id}";
-//		$this->morphOneOrMany = "data-morphOneOrMany={$oneOrMany}";
-//		$detach = $detach ? 'true' : 'false';
-//		$this->morphDetach = "data-morphDetach={$detach}";
-//		return $this;
-//	}
 
 	public function all()
 	{
@@ -242,7 +220,23 @@ class MyList
 		return $this->html;
 	}
 
+//	public function belongsTo(string $model, $id)
+//	{
+//		$this->realtion();
+//		$this->belongsTo = "data-belongs-to=" . $model;
+//		$this->belongsToId = "data-belongs-to-id=" . $id;
+//		return $this;
+//	}
 
+//	public function morph(string $model, int $id, string $oneOrMany = 'one', bool $detach = false)
+//	{
+//		$this->morph = "data-morph={$model}";
+//		$this->morphId = "data-morphId={$id}";
+//		$this->morphOneOrMany = "data-morphOneOrMany={$oneOrMany}";
+//		$detach = $detach ? 'true' : 'false';
+//		$this->morphDetach = "data-morphDetach={$detach}";
+//		return $this;
+//	}
 	// пример функции получения ссылки. Должна располагаться не здесь,
 	// а в любом другом классе, указанном в функции funcion ListColumnBuilder
 //	public function getLink($column, $item, $field){

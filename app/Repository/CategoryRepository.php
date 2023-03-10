@@ -16,6 +16,7 @@ class CategoryRepository
 	{
 		return Category::with(
 			'products',
+			'children',
 			'parentRecursive',
 			'properties',
 			'mainImages')

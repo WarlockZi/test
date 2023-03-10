@@ -46,8 +46,7 @@ abstract class UserView
 			$user->rights = explode(',', $user->rights);
 		}
 		return ItemTabBuilder::build("Права")
-			->html(self::getRights($user))
-			->get();
+			->html(self::getRights($user));
 	}
 
 	public static function guest($item)

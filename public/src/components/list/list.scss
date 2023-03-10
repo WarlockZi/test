@@ -1,7 +1,7 @@
 @import "../../var";
 @import "../../mixin_media";
 
-.custom-list__wrapper {
+[custom-list] {
   background-color: #fff;
   padding-bottom: 10px;
   //margin-left: 15px;
@@ -169,7 +169,7 @@
 
   }
 
-  .custom-list__buttons {
+  .buttons {
     display: flex;
     justify-content: flex-end;
 

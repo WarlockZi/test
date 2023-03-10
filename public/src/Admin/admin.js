@@ -31,18 +31,19 @@ import error from '../components/error/error';
 import select from '../components/select/select';
 import accordionShow from '../components/accordion-show';
 import quill from '../components/quill/quill';
+import morph from '../components/morph/morph';
 
 
 $(document).ready(function () {
 
   select()
+  morph()
 
   navigate(window.location.pathname)
   radio()
   multiselect()
   catalogItem()
   tooltips()
-  // tiny()
   quill()
   // debugger
   accordionShow()

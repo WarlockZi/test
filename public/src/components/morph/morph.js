@@ -1,40 +1,56 @@
 import {$, objAndData2FormData, post} from "../../common";
+import {dnd1} from "../dnd/dnd";
 
-export default class Morph {
-
-  constructor(dnd, morphedEl) {
-    // debugger
-
+class Morph {
+  constructor(morphEl) {
     this.url = '/adminsc/morph/attach'
-    ///image
-    let morphEl = dnd.parentNode
-    this.morphModel = morphEl.dataset.morphModel
-    this.morphId = morphEl.dataset.morphId
-    // this.slug = morphEl.dataset.morphSlug ?? ''
-    // this.oneOrMany = morphEl.dataset.morphOneormany
-    this.function = morphEl.dataset.function
 
-    ///category
-    this.morphedModel = morphedEl.dataset.model
-    this.morphedId = morphedEl.dataset.id
+    this.model = morphEl.closest('.item_wrap').dataset.model
+    this.id = morphEl.closest('.item_wrap').dataset.id
 
-    this.path = dnd.dataset.path ?? ''
-    // this.append = morphEl
+    this.slug = morphEl.dataset.morphSlug
+    this.oneOrMany = morphEl.dataset.morphOneormany
+    this.relation = morphEl.dataset.morphRelation
+
+    let detaches = $(morphEl)[0].querySelectorAll('[data-detach]');
+    [].forEach.call(detaches, (detach) => {
+      detach.onclick = this.detach.bind(this)
+    })
+
+    debugger
+    let dnds = $(morphEl)[0].querySelectorAll('.holder');
+    [].forEach.call(dnds, (dnd) => {
+      new dnd1(this.attach.bind(this))
+      // detach.onclick = this.detach.bind(this)
+    })
 
     let dndCallback = Morph.dndCallback.bind(this)
-
-    // if (this.oneOrMany === 'many') {
-    //   new DragNDropMany(dnd, dndCallback)
-    // } else {
-    //   new DragNDropOne(dnd, dndCallback)
-    // }
-
-    $(morphEl).on('click', function ({target}) {
-      // debugger
-      if (target.hasAttribute('data-detach')) Morph.detach(target)
-    })
+  }
+  async attach(files, target, context) {
+    let morphedType = context.model
+    let morphedId = context.id
+    let path = target.dataset.dndPath
+    if (target.parentNode.dataset.morphOneormany === 'one') {
+      let fr = Array.prototype.slice.call(files, 0, 1);
+    }
+    let relation = context.relation
+    debugger
+    let url = `/adminsc/${morphedType}/attach`
+    let param = {morphedType, morphedId, relation, path}
+    param = objAndData2FormData(param, files)
+    let res = await post(url, param)
   }
 
+  async detach({target}) {
+    debugger
+    let url = `/adminsc/${this.model}/detach`
+    let data = this
+    data.morphId = target.dataset.id
+    let res = await post(url, data)
+    if (res.success) {
+      container.remove()
+    }
+  }
   static prepareData(context) {
     let data = {}
     data.morph = {}
@@ -80,41 +96,8 @@ export default class Morph {
     }
   }
 
-  static async detach(target) {
-    // debugger
-    let container = target.closest('.wrap')
-    let morphedType = target.closest('.item_wrap').dataset.model
-    let morphedId = target.closest('.item_wrap').dataset.id
-    let funct = target.closest('[data-morph-function]').dataset.morphFunction
-    // let slug = target.closest('[data-morph-model]').dataset.morphSlug
-    // let morphType = target.closest('[data-morph-model]').dataset.morphModel
-    let morphId = +target.dataset.id
-    let url = `/adminsc/${morphedType}/detach`
-    let data = {morphedType, morphedId, morphId, funct}
-    let res = await post(url, data)
-    if (res.success) {
-      container.remove()
-    }
-  }
 
-  static async attach(files, target, context) {
 
-    let morphedType = context.model
-    let morphedId = context.id
-    let path = target.dataset.dndPath
-    if (target.parentNode.dataset.morphOneormany === 'one') {
-      let fr = Array.prototype.slice.call(files, 0, 1);
-
-    }
-
-    let relation = context.relation
-    debugger
-    let url = `/adminsc/${morphedType}/attach`
-    let param = {morphedType, morphedId, relation, path}
-    param = objAndData2FormData(param, files)
-    let res = await post(url, param)
-
-  }
 
 
   static appendOneImage(appendTo, image) {
@@ -157,5 +140,15 @@ export default class Morph {
     wrap.appendChild(item)
     wrap.appendChild(del)
     holder.appendChild(wrap)
+  }
+}
+
+export default function morph() {
+  let morphs = $('[data-morph-relation]')
+  if (morphs) {
+    // debugger
+    morphs.forEach((morph) => {
+      new Morph(morph)
+    })
   }
 }

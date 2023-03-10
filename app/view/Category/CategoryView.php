@@ -59,18 +59,15 @@ class CategoryView
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
-
-						MorphBuilder::build($category, 'image', true, 'mainImages')
+						MorphBuilder::build($category, 'image', 'main', 'mainImages')
 							->class('dnd')
-							->template('many.php')
 							->html(
-								DndBuilder::build('category', 'holder')
+								DndBuilder::build('category')
 									->get() . ImageView::morphImages($category->mainImages)
 
 							)
 							->get()
 					)
-					->get()
 
 			)
 			->tab(
@@ -101,7 +98,6 @@ class CategoryView
 							->del()
 							->get()
 					)
-					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Св-ва категории')
@@ -130,14 +126,12 @@ class CategoryView
 									->get())
 							->get()
 					)
-					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Подкатегории')
 					->html(
 						MyList::build(Category::class)
 							->pageTitle('Подкатегории')
-							->addButton('ajax')
 							->items($category['children'] ?? [])
 							->column(
 								ListColumnBuilder::build('id')
@@ -154,9 +148,9 @@ class CategoryView
 //							->belongsTo('category', $id)
 							->edit()
 							->del()
+							->addButton('ajax')
 							->get()
 					)
-					->get()
 			)
 			->del()
 			->save()

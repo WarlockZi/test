@@ -57,26 +57,43 @@ class AppController extends Controller
 	{
 		$req = $this->ajax;
 		if (!$req) $this->exitWithError('Плохой запрос');
-		MorphRepository::detach($req);
+		MorphRepository::detach($this,$req);
 		$this->exitWithPopup('ok');
 	}
+
+
 
 	public function actionUpdateOrCreate()
 	{
 		$req = $this->ajax;
-		if ($this->ajax) {
+		if ($req) {
 
-			if ()
+			if (isset($req['relation'])){
+				$relation = $req['relation'];
+				$model = $this->model::with($relation)->find($req['id']);
+
+				$created = $model->$relation()->create();
+				$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
+			}
+
+			if (isset($req['morph'])){
+				$morph = $req['morph'];
+				$relation = $morph['relation'];
+				$model = $this->model::with($relation)->find($req['id']);
+				$created = $model->$relation()->create();
+				$model->$relation()->syncWithoutDetaching($created);
+				$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
+			}
 
 			$model = $this->model::updateOrCreate(
-				['id' => $this->ajax['id']],
+				['id' => $req['id']],
 				$this->ajax
 			);
 
 			if ($model->wasRecentlyCreated) {
-				if (isset($this->ajax['morph_type'])) {
-					$this->actionAttach($this->ajax, $model);
-				}
+//				if (isset($req['morph_type'])) {
+//					$this->actionAttach($req, $model);
+//				}
 				$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
 			} else {
 				$this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);

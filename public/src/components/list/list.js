@@ -1,8 +1,9 @@
 import './list.scss';
 import {$, post, debounce} from '../../common';
+import MorphDTO from "../morph/MorphDTO";
 
 // export default function list() {
-const tables = $('.custom-list__wrapper')
+const tables = $('[custom-list]')
 
 if (tables) {
   [].forEach.call(tables, function (table) {
@@ -35,6 +36,7 @@ if (tables) {
 
     async function customSelectChange({target}) {
 
+      debugger
       // modelUpdate(this)
       let wrapper = target.closest('[data-model]')
       let model = wrapper.dataset.model
@@ -68,9 +70,13 @@ if (tables) {
       e.target.innerText = ''
     }
 
-    function handleKeyUp({target}) {
+    function handleKeyUp(e) {
+      // debugger
+      let target = e.target
+      e.cancelBubble = true
 
       // contenteditable
+      // debugger
       if (target.hasAttribute('contenteditable')) {
         debouncedInput(table, contenteditable, target)
 
@@ -89,25 +95,25 @@ if (tables) {
 
       /// create
       if (target.className === 'add-model') {
-        debugger
+        // debugger
         // modelCreate(modelName, modelId, belongsTo, belongsToId, morph, morphId, morphoneormany, morphdetach)
         modelCreate(this)
 
         /// delete
       } else if (
         target.className === '.del:not(.head)'
-        ||target.closest('.del:not(.head)')) {
+        || target.closest('.del:not(.head)')) {
         modelDel(target.closest('.del:not(.head)'))
 
         /// edit
       } else if (target.className === 'edit:not(.head)'
-        ||target.closest('.edit:not(.head)')) {
+        || target.closest('.edit:not(.head)')) {
         e.preventDefault()
         edit(target, modelName)
 
         /// sort
       } else if (target.classList.contains('head')
-        ||target.classList.contains('icon')) {
+        || target.classList.contains('icon')) {
         let header = target.closest('.head')
         if (header.hasAttribute('data-sort')) {
           let index = [].findIndex.call(sortables, (el, i, inputs) => {
@@ -148,31 +154,36 @@ if (tables) {
 
     }
 
-    async function modelCreate(modelName, modelId, belongsTo, belongsToId, morph, morphId, morphoneormany, morphdetach) {
+    function createRelation(data, table, relation) {
+      let parent = table.closest('.item_wrap')
+      data.model = parent.dataset.model
+      data.id = parent.dataset.id
+      data.relation = relation
+      return data
+    }
+
+    function createMorph(data, table, morph) {
+      let parent = table.closest('.item_wrap')
+      data.model = parent.dataset.model
+      data.id = parent.dataset.id
+
+      data.morph = new MorphDTO(table.parentNode)
       debugger
+      return  data
+    }
+
+
+    async function modelCreate() {
       let data = {}
       let relation = table.dataset.relation
-      if (relation){
-        let parent = table.closest('.item_wrap')
-        data.model = parent.dataset.model
-        data.id = parent.dataset.id
-        data.relation = relation
-        // data.relation = relation
+      if (relation) {
+        data = createRelation(data, table, relation)
+      }
+      let morph = table.parentNode.dataset.morphRelation
+      if (morph) {
+        data = createMorph(data, table, relation)
       }
 
-      // if (belongsTo) {
-      //   let parentName = belongsTo + '_id'
-      //   data[parentName] = +belongsToId
-      // }
-      // if (morph) {
-      //   data = new MorphDTO(morphEl,morphedEl)
-      //   data.morph_type = morph
-      //   data.morph_id = morphId
-      //   data.morph_oneormany = morphoneormany
-      //   data.morph_detach = morphdetach
-      // }
-
-      // data.id = 0
       let res = await post(`/adminsc/${data.model}/updateOrCreate`, data)
       if (res.arr.id) {
         newrow(res.arr.id)
@@ -319,6 +330,7 @@ if (tables) {
     }
 
     async function save(model) {
+      // debugger
       let url = `/adminsc/${model.modelName}/updateOrCreate`
       let res = await post(url, model.model)
     }

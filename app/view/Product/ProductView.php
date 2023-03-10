@@ -106,49 +106,42 @@ class ProductView
 					->html(
 						self::getProperties($product)
 					)
-					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Описание')
 					->html(
 						self::getDescription($product)
 					)
-					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Seo')
 					->html(
 						self::getSeo($product)
 					)
-					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
 						self::getImage($product, 'main', 'mainImages')
 					)
-					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Детальные картинки')
 					->html(
 						self::getImage($product, 'detail', 'detailImages')
 					)
-					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Внутритарная упаковка')
 					->html(
 						self::getImage($product, 'smallpack', 'smallpackImages')
 					)
-					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Транспортная упаковка')
 					->html(
 						self::getImage($product, 'bigpack', 'bigPackImages')
 					)
-					->get()
 			)
 			->del()
 			->save()

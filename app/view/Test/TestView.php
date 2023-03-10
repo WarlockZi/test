@@ -80,6 +80,7 @@ class TestView
 		return SelectBuilder::build()
 			->tree($tree, $treeRelaion,null, 4)
 			->field('test_id')
+//			->relation()
 			->belongsTo('test',$item->id)
 			->initialOption('', 0)
 			->selected($item->test_id)

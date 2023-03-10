@@ -86,14 +86,12 @@ class PropertyView
 							->addButton('ajax')
 							->get()
 					)
-					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Принадлежит')
 					->html(
 						self::getMorphs($item)
 					)
-					->get()
 			)
 			->del()
 			->save()

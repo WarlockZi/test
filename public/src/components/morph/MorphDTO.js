@@ -1,29 +1,22 @@
-class MorphDTO {
+class MorphDTOClass {
 
-  constructor(morphEl,morphedEl) {
+  constructor(morphEl) {
     this._morph = {}
-    this._morph.model = morphEl.dataset.model
-    this._morph.id = morphEl.dataset.id
-
-    this._morphed = {}
-    this._morphed.relation = morphedEl.dataset.relation
-    this._morphed.oneormany = morphedEl.dataset.oneormany
-    this._morphed.slug = morphedEl.dataset.slug
-
+    this._morph.relation = morphEl.dataset.morphRelation
+    this._morph.oneormany = morphEl.dataset.morphOneormany
+    this._morph.slug = morphEl.dataset.morphSlug
     return this
   }
 
-  set morph(morph) {
+  get morph(){
+    return this._morph
+  }
+
+  set morph(morph){
     this._morph = morph
   }
-
-  get morph() {
-    return this.morph
-  }
-
-
 }
 
-export default function MorphDTO(morphEl,morphedEl) {
-  new MorphDTO(morphEl,morphedEl)
+export default function MorphDTO(morphEl) {
+  return new MorphDTOClass(morphEl).morph
 }

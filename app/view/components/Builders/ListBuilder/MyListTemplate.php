@@ -1,15 +1,9 @@
-<div class="custom-list__wrapper"
+<div custom-list
+	<?= $this->class; ?>
 	<?= $this->dataModel; ?>
 	<?= $this->relation; ?>
 >
 
-<!--	--><?//= $this->morph; ?>
-<!--	--><?//= $this->morphId; ?>
-<!--	--><?//= $this->morphOneOrMany; ?>
-<!--	--><?//= $this->morphDetach; ?>
-
-<!--	--><?//= $this->belongsTo; ?>
-<!--	--><?//= $this->belongsToId; ?>
 	<?= $this->pageTitle; ?>
 
 	<div class="custom-list"
@@ -59,7 +53,7 @@
 	</div>
 
 	<!--  ADD BUTTON  -->
-	<div class="custom-list__buttons">
+	<div class="buttons">
 		 <? include ROOT . '/app/view/components/Builders/ListBuilder/add.php'; ?>
 	</div>
 

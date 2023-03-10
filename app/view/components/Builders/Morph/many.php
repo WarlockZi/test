@@ -1,12 +1,6 @@
-<?
-
-use \app\Repository\ImageRepository;
-
-?>
-
 <div
-	<?= $this->oneOrMany; ?>
 	<?= $this->relation; ?>
+	<?= $this->oneOrMany; ?>
 	<?= $this->slug; ?>
 	<?= $this->class; ?>
 >
