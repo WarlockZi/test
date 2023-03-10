@@ -1,7 +1,7 @@
 // import './dnd.scss'
 import {$} from '../../common'
 
-export function dnd1(holderClass = '', cb) {
+export function dnd1(cb, holderClass = '.holder') {
 
   let holders = $(holderClass);
 

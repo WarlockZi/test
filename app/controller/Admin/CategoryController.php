@@ -14,7 +14,7 @@ use app\view\components\Builders\SelectBuilder\TreeABuilder;
 class CategoryController Extends AppController
 {
 
-	protected $model = Category::class;
+	public $model = Category::class;
 
 	public function __construct()
 	{

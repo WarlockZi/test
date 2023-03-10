@@ -4,6 +4,7 @@
 namespace app\Repository;
 
 use app\controller\AppController;
+use app\controller\Controller;
 
 class MorphRepository extends AppController
 {
@@ -81,14 +82,18 @@ class MorphRepository extends AppController
 //		}
 	}
 
-	public static function detach(array $req)
+	public static function detach(Controller $controller, array $req)
 	{
-		$model = 'app\model\\' . ucfirst($req['morphedType']);
-		$id = $req['morphId'];
-		$model = $model::find($req['morphedId']);
+		$relation = $req['relation'];
+		$morphId = $req['morphId'];
+		$model = $controller->model::with($relation)->find($req['id']);
+		$res = $model->$relation()->detach($morphId);
 
-		$f = $req['funct'];
-		$res = $model->$f()->detach($id);
+//		$model = $model::->find$req['morphId'];
+//		$model = $model::find($req['morphedId']);
+
+//		$f = $req['funct'];
+//		$res = $model->$f()->detach($id);
 		if ($res) {
 			exit(json_encode(['poppup' => 'ok']));
 		} else {

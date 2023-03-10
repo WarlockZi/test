@@ -20,10 +20,12 @@ class ImageView
 	public static function morphImages(Collection $collection): string
 	{
 		if (!$collection->count()) return '';
+		ob_start();
 		$str = '';
-		foreach ($collection->items as $item) {
+		foreach ($collection as $item) {
 				$str.= include ROOT.'/app/view/Image/Admin/morphImages.php';
 		}
+		return ob_get_clean();
 	}
 
 	protected static function getDetach(Model $item)
