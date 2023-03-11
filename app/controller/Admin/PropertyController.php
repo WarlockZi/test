@@ -15,7 +15,12 @@ class PropertyController Extends AppController
 
 	public $model = Property::class;
 
-	public function __construct()
+	public function getModel()
+  {
+    return $this->model;
+  }
+
+  public function __construct()
 	{
 		parent::__construct();
 	}

@@ -22,22 +22,23 @@ class Auth
 		return self::$user;
 	}
 
-	public static function setUser(): void
+
+
+	public static function setAuth(array $user): void
 	{
-		if (isset($_SESSION['id']) && $_SESSION['id']) {
-			self::$user = User::find($_SESSION['id'])->toArray();
-		}
+	  $_SESSION['id'] = $user['id'];
 	}
 
-	public static function setAuth(): void
-	{
-		self::setUser();
-	}
+	public static function getAuth(){
+    if (isset($_SESSION['id']) && $_SESSION['id']) {
+      self::$user = User::find($_SESSION['id'])->toArray();
+    }
+  }
 
 
 	public static function autorize(): array
 	{
-		if (Router::needsNoAuth(Router::getRoute())) {
+		if (Router::needsNoAuth()) {
 			return [];
 		}
 
@@ -54,7 +55,7 @@ class Auth
 			exit();
 		}
 
-		self::setUser();
+		self::setAuth($user);
 		if (!$user['confirm'] == "1") {
 			$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
 			header("Location:/auth/noconfirm");
