@@ -89,42 +89,6 @@ class User extends Model
 		return !!array_intersect($user['rights'], $rights);
 	}
 
-//	public function findOne($id, $field = '')
-//	{
-//		if ($user = parent::findOne($id)) {
-//			$user['rights'] = explode(',', $user['rights']);
-//		}
-//		return $user ?? null;
-//	}
-
-//	public static function findOneWhere($field = '', $value = '')
-//	{
-//		if ($user = parent::findOneWhere($field, $value)) {
-//			$user['rights'] = explode(',', $user['rights']);
-//			$post_id = is_array($user['post_id'])
-//				? explode(',', $user['post_id'])
-//				: Null;
-//			$user['post_id'] = $post_id;
-//		}
-//		return $user ?? null;
-//	}
-
-	public function checkName($name)
-	{
-		if (strlen($name) >= 2) {
-			return true;
-		}
-		return false;
-	}
-
-	public function checkPhone($phone)
-	{
-		if (strlen($phone) >= 10) {
-			return true;
-		}
-		return false;
-	}
-
 	public static function checkPassword(string $password)
 	{
 		if (strlen($password) >= 6) {
@@ -141,4 +105,19 @@ class User extends Model
 		return false;
 	}
 
+//	public function checkName($name)
+//	{
+//		if (strlen($name) >= 2) {
+//			return true;
+//		}
+//		return false;
+//	}
+//
+//	public function checkPhone($phone)
+//	{
+//		if (strlen($phone) >= 10) {
+//			return true;
+//		}
+//		return false;
+//	}
 }

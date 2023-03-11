@@ -23,7 +23,7 @@ const config = {
     common: path.resolve(src, 'common.js'),
     list: path.resolve(src, 'components/list/list.js'),
     product: path.resolve(src, 'Product/card.js'),
-    dnd: path.resolve(src, 'components/dnd.js'),
+    dnd: path.resolve(src, 'components/dnd/dnd.js'),
     // breadcrumbs: path.resolve(src, 'components/breadcrumbs.js'),
 
   },

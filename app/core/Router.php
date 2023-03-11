@@ -52,7 +52,7 @@ class Router
 				$matches = array_merge($matches,$r);
 				$route = new Route();
 				foreach ($matches as $k => $v) {
-					$route->$k = $v;
+					$route->$k = strtolower($v);
 				}
 				self::$route = $route;
 			}
@@ -106,11 +106,12 @@ class Router
 	public static function needsNoAuth()
 	{
 		$route = Router::getRoute();
-		return $route->controller === 'Auth' && $route->action === 'login'
-			|| $route->controller === 'Auth' && $route->action === 'noconfirm'
-			|| $route->controller === 'Main' && $route->action === 'index'
-			|| $route->controller === 'Product'
-			|| $route->controller === 'Category';
+		return
+      $route->controller === 'auth' && $route->action === 'login'
+			|| $route->controller === 'auth' && $route->action === 'noconfirm'
+			|| $route->controller === 'main' && $route->action === 'index'
+			|| $route->controller === 'product'
+			|| $route->controller === 'category';
 	}
 
 	public static function getRoute(): Route

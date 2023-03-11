@@ -146,7 +146,7 @@ class AuthController extends AppController
 
 			if (!$user) $this->exitWithError('Пользователь не зарегистрирован');
 			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
-			if ($user['password'] !== $this->preparePassword($data['password']))
+			if (!$user['password'] === $this->preparePassword($data['password']))
 				$this->exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
 			Auth::setAuth($user);
 			$this->user = $user;

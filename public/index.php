@@ -31,7 +31,7 @@ new App(new DI);
 //DI::test();
 
 try {
-	Auth::setAuth();
+	Auth::getAuth();
 
 	Router::fillRoutes();
 	$url = Router::removeQuryString($_SERVER['REQUEST_URI']);

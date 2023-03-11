@@ -25,7 +25,7 @@ class UserView extends View
 	protected function getViewFile(Controller $controller): string
 	{
 		$route = $this->controller->getRoute();
-		$action = $controller->view?$controller->view:$route->action;
+		$action = property_exists($controller,'view')?$controller->view:$route->action;
 		$controller = ucfirst($route->controller);
 		return FS::platformSlashes(ROOT . "/app/view/{$controller}/{$action}.php");
 	}
