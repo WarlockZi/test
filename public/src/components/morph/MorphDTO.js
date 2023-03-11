@@ -5,6 +5,7 @@ class MorphDTOClass {
     this._morph.relation = morphEl.dataset.morphRelation
     this._morph.oneormany = morphEl.dataset.morphOneormany
     this._morph.slug = morphEl.dataset.morphSlug
+    this._morph.path = morphEl.dataset.morphPath
     return this
   }
 

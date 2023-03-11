@@ -1,12 +1,10 @@
 // import './dnd.scss'
 import {$} from '../../common'
 
-export function dnd1(cb, holderClass = '.holder') {
-
+export function Dnd(cb, holderClass = '.holder') {
   let holders = $(holderClass);
 
-  debugger
-
+  // debugger
   [].forEach.call(holders, function (h) {
 
     h.ondragenter = function (e) {
@@ -25,7 +23,12 @@ export function dnd1(cb, holderClass = '.holder') {
     }
     h.ondrop = function (e) {
       e.preventDefault()
-      cb(e.dataTransfer.files)
+      debugger
+      // if (e.target?.dataset?.morphOneormany === 'one'){
+      // if (true){
+      //   e.dataTransfer.files = e.dataTransfer.files.length = 1
+      // }
+      cb(e.dataTransfer.files, e.target)
     }
   })
 
