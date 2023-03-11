@@ -19,25 +19,9 @@ export default function catalogItem() {
       .onChange(update)
     checkbox(context);
 
-    // [].map.call($('[data-dnd-path]'), (dnd) => {
-    //   // debugger
-    //   let dn = new DragNDrop(dnd, handleDnd.bind(context))
-    // })
-
     customCatalogItem.onclick = handleClick.bind(context)
     customCatalogItem.onkeyup = debounce(handleKeyup.bind(context))
   }
-
-  // function handleDnd(files, target) {
-  //   // debugger
-  //   this.relation = target.parentNode.dataset.morphRelation
-  //   if (this.relation) {
-  //     Morph.attach(files, target, this)
-  //
-  //   } else if (target.dataset.belongsTo) {
-  //
-  //   }
-  // }
 
   async function handleKeyup({target}) {
     if (
@@ -127,13 +111,11 @@ export default function catalogItem() {
         } else {
           obj[field.dataset.field] = trimStr(field.innerText)
         }
-      }
-      ,
+      },
       obj
     )
     return obj
   }
-
 
   function getInputs(field) {
     let inputs = field.querySelectorAll('input')

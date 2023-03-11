@@ -1,10 +1,9 @@
 import {$, objAndData2FormData, post} from "../../common";
-import {dnd1} from "../dnd/dnd";
+import {Dnd} from "../dnd/dnd";
+import MorphDTO from "./MorphDTO";
 
 class Morph {
   constructor(morphEl) {
-    this.url = '/adminsc/morph/attach'
-
     this.model = morphEl.closest('.item_wrap').dataset.model
     this.id = morphEl.closest('.item_wrap').dataset.id
 
@@ -16,27 +15,21 @@ class Morph {
     [].forEach.call(detaches, (detach) => {
       detach.onclick = this.detach.bind(this)
     })
-
-    debugger
-    let dnds = $(morphEl)[0].querySelectorAll('.holder');
-    [].forEach.call(dnds, (dnd) => {
-      new dnd1(this.attach.bind(this))
-      // detach.onclick = this.detach.bind(this)
-    })
-
-    let dndCallback = Morph.dndCallback.bind(this)
+    // debugger
+    let holder = $(morphEl)[0].querySelectorAll('.holder')
+    if(holder) new Dnd(this.attach.bind(this))
+    // let dndCallback = Morph.dndCallback.bind(this)
   }
-  async attach(files, target, context) {
-    let morphedType = context.model
-    let morphedId = context.id
-    let path = target.dataset.dndPath
+
+  async attach(files, target) {
+    let morph = new MorphDTO(target.parentNode)
+
     if (target.parentNode.dataset.morphOneormany === 'one') {
       let fr = Array.prototype.slice.call(files, 0, 1);
     }
-    let relation = context.relation
     debugger
-    let url = `/adminsc/${morphedType}/attach`
-    let param = {morphedType, morphedId, relation, path}
+    let url = `/adminsc/${this.model}/attach`
+    let param = {model:this.model, id:this.id, morph}
     param = objAndData2FormData(param, files)
     let res = await post(url, param)
   }
@@ -46,28 +39,11 @@ class Morph {
     let url = `/adminsc/${this.model}/detach`
     let data = this
     data.morphId = target.dataset.id
+
     let res = await post(url, data)
     if (res.success) {
       container.remove()
     }
-  }
-  static prepareData(context) {
-    let data = {}
-    data.morph = {}
-    data.morphed = {}
-
-    // debugger
-    data.morph.type = context.morphModel
-    data.morph.id = context.morphId
-    data.morph.slug = context.slug
-    data.morph.path = context.path
-    data.morph.oneOrMany = context.oneOrMany
-    data.morph.function = context.oneOrMany
-
-    data.morphed.type = context.morphedModel
-    data.morphed.id = context.morphedId
-
-    return data
   }
 
   static async dndCallback(files) {
@@ -95,8 +71,6 @@ class Morph {
       }
     }
   }
-
-
 
 
 
