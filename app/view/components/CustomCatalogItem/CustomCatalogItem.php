@@ -4,6 +4,8 @@
 namespace app\view\components\CustomCatalogItem;
 
 
+use app\core\FS;
+
 class CustomCatalogItem
 {
 	public $pageTitle = '';
@@ -37,9 +39,7 @@ class CustomCatalogItem
 
 	protected function run()
 	{
-		ob_start();
-		include ROOT . '/app/view/components/CustomCatalogItem/CustomCatalogItemTemplate.php';
-		$this->html = ob_get_clean();
+		$this->html = FS::getFileContent(ROOT . '/app/view/components/CustomCatalogItem/CustomCatalogItemTemplate.php');
 	}
 
 }

@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\Morph;
 
 
+use app\core\FS;
 use Illuminate\Database\Eloquent\Model;
 
 class MorphBuilder
@@ -77,9 +78,7 @@ class MorphBuilder
 
 	public function get()
 	{
-		ob_start();
-		include $this->template;
-		return ob_get_clean();
+		return FS::getFileContent($this->template);
 	}
 
 }

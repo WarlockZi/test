@@ -4,6 +4,7 @@
 namespace app\view\Footer;
 
 
+use app\core\FS;
 use app\view\Interfaces\IFooterable;
 
 abstract class AbstractFooter implements IFooterable
@@ -17,9 +18,7 @@ abstract class AbstractFooter implements IFooterable
 
 	public static function setVK(): void
 	{
-		ob_start();
-		include ROOT . '/app/view/components/footer/vk.php';
-		self::$VK = ob_get_clean();
+		self::$VK = FS::getFileContent(ROOT . '/app/view/components/footer/vk.php');
 	}
 
 	public static function getVK():string
@@ -29,9 +28,7 @@ abstract class AbstractFooter implements IFooterable
 
 	public static function setYaMetrica(): void
 	{
-		ob_start();
-		include ROOT . '/app/view/components/footer/ya_metrica.php';
-		self::$yaMetrica = ob_get_clean();
+		self::$yaMetrica = FS::getFileContent(ROOT . '/app/view/components/footer/ya_metrica.php');
 	}
 
 	public static function getYaMetrica()
@@ -41,9 +38,7 @@ abstract class AbstractFooter implements IFooterable
 
 	public static function setUserCookie(): void
 	{
-		ob_start();
-		include ROOT . '/app/view/components/footer/ya_metrica.php';
-		self::$userCookie = ob_get_clean();
+		self::$userCookie = FS::getFileContent(ROOT . '/app/view/components/footer/ya_metrica.php');
 	}
 
 	public static function getUserCookie()

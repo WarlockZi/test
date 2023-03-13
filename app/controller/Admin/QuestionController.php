@@ -4,8 +4,11 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\Router;
+use app\Factory\AbstractTestFactory;
+use app\Factory\TestFactory;
 use app\model\Question;
 use app\model\Test;
+use app\Repository\TestRepository;
 
 
 class QuestionController Extends AppController
@@ -19,15 +22,12 @@ class QuestionController Extends AppController
 
 	public function actionEdit()
 	{
-		$page_name = 'Редактирование тестов';
-		$this->set(compact('page_name'));
-
 		$id = Router::getRoute()->id;
-
 		if ($id) {
-			$test = Test::with('questions.answers')
-				->orderBy('sort')
-				->find($id);
+			$test = TestRepository::edit($id);
+
+			$page_name = 'Редактирование тестов';
+			$this->set(compact('page_name'));
 
 			$this->set(compact('test'));
 		}

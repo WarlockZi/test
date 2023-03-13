@@ -4,6 +4,8 @@
 namespace app\view\components\CustomMultiSelect;
 
 
+use app\core\FS;
+
 class CustomMultiSelect
 {
 	private $field = '';
@@ -42,20 +44,12 @@ class CustomMultiSelect
 
 	public function getOption($item,$level)
 	{
-		ob_start();
-		require $this->tpl;
-		return ob_get_clean();
+		return FS::getFileContent($this->tpl);
 	}
-
 
 	public function run()
 	{
-//		$model = new self($options);
-		ob_start();
-		include ROOT . '/app/view/components/CustomMultiSelect/CustomMultiSelectTemplate.php';
-		$html = ob_get_clean();
-		$this->html = $html;
-//		return ;
+		$this->html = FS::getFileContent(ROOT . '/app/view/components/CustomMultiSelect/CustomMultiSelectTemplate.php');
 	}
 
 

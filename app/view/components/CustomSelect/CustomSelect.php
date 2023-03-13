@@ -4,6 +4,8 @@
 namespace app\view\components\CustomSelect;
 
 
+use app\core\FS;
+
 class CustomSelect
 {
 	private $field = '';
@@ -59,9 +61,7 @@ class CustomSelect
 
 	private function run()
 	{
-		ob_start();
-		include ROOT . '/app/view/components/CustomSelect/CustomSelectTemplate.php';
-		$this->html = ob_get_clean();
+		$this->html = FS::getFileContent(ROOT . '/app/view/components/CustomSelect/CustomSelectTemplate.php');
 	}
 
 	private function tpl($tpl, $v, $k)

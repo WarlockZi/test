@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\Date;
 
 
+use app\core\FS;
 use app\view\components\Builders\Builder;
 
 class DateBuilder extends Builder
@@ -83,10 +84,7 @@ class DateBuilder extends Builder
 
 	public function get()
 	{
-		ob_start();
-		require ROOT . '/app/view/components/Builders/Date/Date.php';
-		$html = ob_get_clean();
-		return $html;
+		return FS::getFileContent(ROOT . '/app/view/components/Builders/Date/Date.php');
 	}
 
 }

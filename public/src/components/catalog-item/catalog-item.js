@@ -1,14 +1,16 @@
 import './catalog-item.scss';
-import {$, debounce, popup, post, trimStr} from '../../common';
-import WDSSelect from "../select/WDSSelect";
+import {$, debounce, post, trimStr} from '../../common';
 import checkboxes from "../checkboxes/checkboxes";
 import checkbox from "../checkbox/checkbox";
-import DragNDrop from "../dnd/DragNDrop";
-import Morph from "../morph/morph";
 
 export default function catalogItem() {
+
+  // self = new this
   let customCatalogItem = $('.item_wrap')[0]
   if (customCatalogItem) {
+
+    self.model = customCatalogItem.dataset.model
+    self.id = +customCatalogItem.dataset.id
 
     let context = {
       model: customCatalogItem.dataset.model,
@@ -62,32 +64,32 @@ export default function catalogItem() {
     target.classList.toggle('active')
   }
 
-  async function del(id, modelName) {
-    let res = await post(`/adminsc/${modelName}/delete`, {id})
-    if (res) {
-      window.location.href = `/adminsc/${modelName}/edit`
-    }
-  }
-
-  async function detach(id, modelName) {
-    debugger
-    let res = await post(`/adminsc/${modelName}/detach`, {id})
-    if (res) {
-      window.location.href = `/adminsc/${modelName}/edit`
-    }
-  }
-
-  async function update() {
-    debugger
-    let res = await post(`/adminsc/${this.model}/updateorcreate`, this.data)
-  }
+  // async function del(id, modelName) {
+  //   let res = await post(`/adminsc/${modelName}/delete`, {id})
+  //   if (res) {
+  //     window.location.href = `/adminsc/${modelName}/edit`
+  //   }
+  // }
+  //
+  // async function detach(id, modelName) {
+  //   debugger
+  //   let res = await post(`/adminsc/${modelName}/detach`, {id})
+  //   if (res) {
+  //     window.location.href = `/adminsc/${modelName}/edit`
+  //   }
+  // }
+  //
+  // async function update() {
+  //   debugger
+  //   let res = await post(`/adminsc/${this.model}/updateorcreate`, this.data)
+  // }
 
 
   function getModel(modelName) {
     let fields = $(`[data-field][data-model='${modelName}']`);
     let obj = {};
 
-    // debugger;
+    debugger;
     [].map.call(fields, (field) => {
         if (field.closest('[data-parent]')) return obj
         if (
@@ -128,7 +130,6 @@ export default function catalogItem() {
       names.push(name)
     })
     return names.join()
-
   }
 
 

@@ -4,6 +4,8 @@
 namespace app\view\components\CustomRadio;
 
 
+use app\core\FS;
+
 class CustomRadio
 {
 	private $field = 'field';
@@ -50,11 +52,8 @@ class CustomRadio
 
 	public function run()
 	{
-		ob_start();
-		include ROOT . '/app/view/components/CustomRadio/CustomRadioTemplate.php';
-		$t = ob_get_clean();
-		$this->html = $t;
-		return $t;
+		$this->html = FS::getFileContent(ROOT . '/app/view/components/CustomRadio/CustomRadioTemplate.php');
+		return $this->html;
 	}
 
 

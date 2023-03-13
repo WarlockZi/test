@@ -2,7 +2,7 @@
 
 <div class="test-data">
 
-	<? foreach ($test->getQuestions() as $id_quest => $question): ?>
+	<? foreach ($test->getTest()->questions as $id_quest => $question): ?>
 	  <div class="question" data-id="<?= $question->id; ?>">
 
 		  <div class="q">
@@ -11,12 +11,7 @@
 
 		  </div>
 
-			 <? if ($question->picq): ?>
-			 <div class="qpic">
-				 <img class="test-qpic"
-				      src="<?= ImageRepository::getImg('/pic/' . $question->picq); ?>">
-			 </div>
-			 <? endif; ?>
+			 <?= \app\view\Question\QuestionView::getImg($question) ?>
 
 			 <? if (isset($question->answers)) : ?>
 				 <? foreach ($question->answers as $index => $answer): ?>
@@ -24,11 +19,9 @@
 					 <input type="checkbox" id="answer-<?= $answer->id ?>">
 					 <label for="answer-<?= $answer->id ?>"><?= $answer->answer ?></label>
 
-							 <? if ($answer->pica): ?>
-						<div class="apic">
-							<img src="<?= ImageRepository::getImg('/pic/' . $answer->pica) ?>" alt="">
-						</div>
-							 <? endif; ?>
+			 <?= \app\Repository\AnswerRepository::getImg($answer) ?>
+
+
 				 </div>
 				 <? endforeach; ?>
 			 <? endif; ?>
@@ -40,6 +33,6 @@
 </div>
 <? include ROOT . '/app/view/Test/Admin/test_edit_prev_next_buttons.php' ?>
 
-<a class="test-do__finish-btn" data-id="<?= $test->getTest()->id; ?>">ЗАКОНЧИТЬ ТЕСТ</a>
+<div class="test-do__finish-btn" data-id="<?= $test->getTest()->id; ?>">ЗАКОНЧИТЬ ТЕСТ</div>
 </div>
 

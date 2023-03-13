@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\Dnd;
 
 
+use app\core\FS;
 use app\view\components\Builders\Builder;
 
 class DndBuilder extends Builder
@@ -30,9 +31,7 @@ class DndBuilder extends Builder
 
 	public function get()
 	{
-		ob_start();
-		include ROOT . '/app/view/components/Builders/Dnd/template.php';
-		$result = ob_get_clean();
+		$result = FS::getFileContent(ROOT . '/app/view/components/Builders/Dnd/template.php');
 		return $this->clean($result);
 	}
 

@@ -4,7 +4,7 @@
 namespace app\core;
 
 
-use app\core\FS;
+use \app\core\FS;
 
 class Icon
 {
@@ -26,9 +26,7 @@ class Icon
 		$file = FS::getAbsoluteFilePath($path,$name.$ext);
 		if (!is_readable($file)) return '';
 
-		ob_start();
-		include $file;
-		return ob_get_clean();
+		return FS::getFileContent($file);
 	}
 
 }

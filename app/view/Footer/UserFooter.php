@@ -4,6 +4,8 @@
 namespace app\view\Footer;
 
 
+use app\core\FS;
+
 class UserFooter extends AbstractFooter
 {
 	public function __construct()
@@ -13,9 +15,7 @@ class UserFooter extends AbstractFooter
 
 	public function setFooter()
 	{
-		ob_start();
-		include ROOT . '/app/view/Footer/footerView.php';
-		$this->footer= ob_get_clean();
+		$this->footer= FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
 	}
 
 	public function getFooter()

@@ -35,11 +35,11 @@ class Test extends Model
 	  return $this->hasMany(Test::class, 'test_id')->with('children');
   }
 
-	public static function pagination(Collection $items)
+	public static function pagination(Collection $questions)
 	{
 		$pagination = '<div class="pagination">';
 		$i = 0;
-		foreach ($items as $id => $el) {
+		foreach ($questions as $id => $el) {
 			$i++;
 			$d = "<div data-pagination={$el['id']}>{$i}</div>";
 			$pagination .= $d;

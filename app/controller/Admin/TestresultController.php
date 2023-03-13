@@ -4,6 +4,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\FS;
 use app\core\Route;
 use app\model\TestResult;
 use app\core\Mail;
@@ -76,9 +77,7 @@ class TestresultController extends AppController
 	private static function prepareBodyTestResults($data, $id)
 	{
 		$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/adminsc/testresult/result/' . $id;
-		ob_start();
-		require ROOT . '/app/view/TestResult/do_email.php';
-		$template = ob_get_clean();
+		$template = FS::getFileContent(ROOT . '/app/view/TestResult/do_email.php');
 		return $template;
 	}
 

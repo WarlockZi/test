@@ -4,14 +4,14 @@
 namespace app\view\Header;
 
 
+use app\core\FS;
+use app\model\User;
 use app\view\Interfaces\IHeaderable;
-use app\view\View;
 
 class AdminHeader implements IHeaderable
 {
 	protected $header;
 	protected $user;
-
 
 	public function __construct(array $user)
 	{
@@ -26,25 +26,25 @@ class AdminHeader implements IHeaderable
 	}
 	public function setHeader($user)
 	{
-		$adminSidebar = $this->getSidebar();
-		$adminHeader = $this->getTop();
+		$logo = FS::getFileContent(ROOT.'/app/view/Header/admin/logo_VITEX_grey.php');
+		$chips = User::can($user)
+			?FS::getFileContent(ROOT.'/app/view/Header/admin/chips.php')
+			:'';
+		$user_menu = FS::getFileContent(ROOT . '/app/view/Header/user_menu.php');
+		$vars = compact('user','logo','chips','user_menu');
+		$adminSidebar = $this->getSidebar($vars);
+		$adminHeader = $this->getTop($vars);
 		$this->header = $adminSidebar . $adminHeader;
-//		$this->setAssets();
 	}
 
-	protected function getTop()
+	protected function getTop(array $arr)
 	{
-		ob_start();
-		include ROOT . '/app/view/Header/admin/admin_header.php';
-		return ob_get_clean();
+		return FS::getFileContent(ROOT . '/app/view/Header/admin/admin_header.php', $arr);
 	}
 
-	protected function getSidebar()
+	protected function getSidebar(array $arr)
 	{
-		ob_start();
-		include ROOT . '/app/view/Header/admin/admin_menu__accordion.php';
-		$res = ob_get_clean();
-		return $res;
+		return FS::getFileContent(ROOT . '/app/view/Header/admin/admin_menu__accordion.php', $arr);
 	}
 
 

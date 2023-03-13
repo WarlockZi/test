@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\FS;
 use app\model\Openanswer;
 
 
@@ -25,9 +26,7 @@ class OpenanswerController Extends AppController
 				$a['answer'] = '';
 				$i = $this->ajax['sort'] ?? 1;
 
-				ob_start();
-				include ROOT . '/app/view/Opentest/edit_BlockAnswer.php';
-				$html = ob_get_clean();
+				$html = FS::getFileContent(ROOT . '/app/view/Opentest/edit_BlockAnswer.php');
 				$this->exitJson(['html' => $html]);
 			}
 			$this->exitWithPopup('ok');
