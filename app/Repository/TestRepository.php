@@ -4,12 +4,30 @@
 namespace app\Repository;
 
 
+use app\model\Test;
+use Illuminate\Database\Eloquent\Model;
+
 class TestRepository
 {
 	protected $test;
 	protected $questions;
 	protected $page_name;
 	protected $pagination;
+
+
+	public static function do(int $id):Model
+	{
+			return Test::query()
+				->with('questions.answers')
+				->find($id);
+	}
+
+	public static function edit(int $id):Model
+	{
+			return Test::with('questions.answers')
+				->orderBy('sort')
+				->find($id);
+	}
 
 	public function getTest()
 	{
@@ -21,6 +39,7 @@ class TestRepository
 		$this->test = $test;
 		return $this;
 	}
+
 	public function getQuestions()
 	{
 		return $this->questions;
@@ -53,8 +72,6 @@ class TestRepository
 		$this->pagination = $pagination;
 		return $this;
 	}
-
-
 
 
 }

@@ -4,12 +4,24 @@
 namespace app\view\Question;
 
 
+use app\core\FS;
+use app\model\Question;
 use app\model\Test;
+use app\Repository\ImageRepository;
 use app\Repository\QuestionRepository;
 use app\view\Test\TestView;
 
 class QuestionView
 {
+
+	public static function getImg(Question $question): string
+	{
+		if ($question->picq) {
+			$src = ImageRepository::getImg('/pic/' . $question->picq);
+			return "<div class='qpic'><img class='test-qpic' src='{$src}'</div>";
+		}
+		return '';
+	}
 
 	public static function getEditContent(Test $test)
 	{
@@ -31,16 +43,12 @@ class QuestionView
 
 	private static function getRules()
 	{
-		ob_start();
-		include ROOT . '/app/view/Test/Admin/edit_rules.php';
-		return ob_get_clean();
+		return FS::getFileContent(ROOT . '/app/view/Test/Admin/edit_rules.php');
 	}
 
 	private static function getContent($test, $parentSelector)
 	{
-		ob_start();
-		include ROOT . '/app/view/Question/Admin/edit_questions.php';
-		return ob_get_clean();
+		return FS::getFileContent(ROOT . '/app/view/Question/Admin/edit_questions.php');
 	}
 
 }

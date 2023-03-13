@@ -4,20 +4,27 @@
 namespace app\Repository;
 
 
+use app\core\FS;
 use app\model\Answer;
 use app\model\Test;
-use Illuminate\Database\Eloquent\Collection;
 
 class AnswerRepository
 {
+
+	public static function getImg(Answer $answer): string
+	{
+		if ($answer->pica) {
+			$src = ImageRepository::getImg('/pic/' . $answer->pica);
+			return "<div class='apic'><img src='{$src}'></div>";
+		}
+		return '';
+	}
 
 	public static function empty()
 	{
 		$answer = new Answer;
 		$i = -1;
-		ob_start();
-		include ROOT . '/app/view/Question/Admin/edit_BlockAnswer.php';
-		return ob_get_clean();
+		return FS::getFileContent(ROOT . '/app/view/Question/Admin/edit_BlockAnswer.php');
 	}
 
 	public static function getAnswer(int $i, Answer $answer)

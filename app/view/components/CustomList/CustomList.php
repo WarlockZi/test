@@ -4,6 +4,8 @@
 namespace app\view\components\CustomList;
 
 
+use app\core\FS;
+
 class CustomList
 {
 	public $html = '';
@@ -118,9 +120,7 @@ class CustomList
 
 	protected function template()
 	{
-		ob_start();
-		include ROOT . '/app/view/components/CustomList/CustomListTemplate.php';
-		$this->html = ob_get_clean();
+		$this->html = FS::getFileContent(ROOT . '/app/view/components/CustomList/CustomListTemplate.php');
 		return $this->html ;
 	}
 

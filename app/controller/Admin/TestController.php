@@ -4,6 +4,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\Router;
+use app\Factory\AbstractTestFactory;
 use app\model\Test;
 use app\Repository\AnswerRepository;
 use app\Repository\QuestionRepository;
@@ -22,17 +23,22 @@ class TestController extends AppController
 
 	public function actionDo(): void
 	{
-		$model = Test::with('questions.answers')
-			->find($this->route->id);
-
-		$test = new TestRepository();
-		$test->setPageName("Прохождение тестов");
-		if ($model) {
-			$test->setTest($model);
-			$test->setQuestions(QuestionRepository::shuffleAnswers($model));
-			$test->setPagination(Test::pagination($test->getQuestions()));
-			AnswerRepository::cacheCorrectAnswers($model);
+		$id = $this->route->id;
+		if ($id) {
+			$test = AbstractTestFactory::getFactory('test')->do($this->route->id);
 		}
+
+//		$model = Test::with('questions.answers')
+//			->find($this->route->id);
+
+//		$test = new TestRepository();
+
+//		if ($model) {
+//			$test->setTest($model);
+//			$test->setQuestions(QuestionRepository::shuffleAnswers($model));
+//			$test->setPagination(Test::pagination($test->getQuestions()));
+//			AnswerRepository::cacheCorrectAnswers($model);
+//		}
 		$this->set(compact('test'));
 
 	}

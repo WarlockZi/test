@@ -30,4 +30,5 @@ class Question extends \Illuminate\Database\Eloquent\Model
 		return $this->belongsTo(Test::class);
 	}
 
+
 }

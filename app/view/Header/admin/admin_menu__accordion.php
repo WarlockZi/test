@@ -1,9 +1,8 @@
 <?
+
 use \app\model\User;
 use \app\core\Icon;
-use \app\core\Session;
 
-$user =$this->user;
 ?>
 <div class="admin_sidebar">
 
@@ -19,7 +18,7 @@ $user =$this->user;
 	<ul accordion>
 
 		<a class="house neon" href="/adminsc">
-		 <?= Icon::house('admin-menu') ?>
+				<?= Icon::house('admin-menu') ?>
 
 			Главная
 		</a>
@@ -49,7 +48,7 @@ $user =$this->user;
 
 			  <div class="label">
 				  <span class="arrow"></span>
-<!--						 --><?// include ICONS . '/admin-menu/settings-streamline.svg'; ?>
+				  <!--						 --><? // include ICONS . '/admin-menu/settings-streamline.svg'; ?>
 						 <?= Icon::settingsStreamline('admin-menu') ?>
 				  Настройки
 			  </div>
@@ -92,7 +91,7 @@ $user =$this->user;
 			<div class="label">
 				<span class="arrow"></span>
 					 <?= Icon::star('admin-menu') ?>
-							Тесты
+				Тесты
 			</div>
 			<ul class="level-1">
 

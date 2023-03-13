@@ -12,8 +12,14 @@ use Illuminate\Database\Eloquent\Model;
 class TestView
 {
 
-	public static function testHead(){
+	public static function testHead()
+	{
 		include ROOT . '/app/view/Test/test_head.php';
+	}
+
+	public static function noTestTitle(): string
+	{
+		return "<h2>Выберите тест</h2>";
 	}
 
 	public static function item($test)
@@ -71,17 +77,18 @@ class TestView
 		$treeRelaion = 'children';
 
 		$tree = Test::where('isTest', '0')
-			->where('test_id',0)
+			->where('test_id', 0)
 			->with(
 				[$treeRelaion => function ($q) {
-					$q->where('isTest', '0');}				]
+					$q->where('isTest', '0');
+				}]
 			)->get();
 
 		return SelectBuilder::build()
-			->tree($tree, $treeRelaion,null, 4)
+			->tree($tree, $treeRelaion, null, 4)
 			->field('test_id')
 //			->relation()
-			->belongsTo('test',$item->id)
+			->belongsTo('test', $item->id)
 			->initialOption('', 0)
 			->selected($item->test_id)
 			->excluded($item->id)

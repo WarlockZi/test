@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\CheckboxBuilder;
 
 
+use app\core\FS;
 use app\view\components\Builders\Builder;
 
 class CheckboxBuilder extends Builder
@@ -50,13 +51,9 @@ class CheckboxBuilder extends Builder
 	public function get()
 	{
 		if ($this->label) {
-			ob_start();
-			include ROOT . '/app/view/components/Builders/CheckboxBuilder/LabelCheckboxTemplate.php';
-			return ob_get_clean();
+			return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/LabelCheckboxTemplate.php');
 		} else {
-			ob_start();
-			include ROOT . '/app/view/components/Builders/CheckboxBuilder/CheckboxTemplate.php';
-			return ob_get_clean();
+			return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/CheckboxTemplate.php');
 		}
 	}
 

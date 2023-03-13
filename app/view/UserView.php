@@ -47,9 +47,7 @@ class UserView extends View
 
 	public function setFooter()
 	{
-		ob_start();
-		include ROOT . '/app/view/Footer/footerView.php';
-		$this->footer = ob_get_clean();
+		$this->footer = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
 	}
 
 	public function getFooter()

@@ -4,6 +4,7 @@
 namespace app\Repository;
 
 
+use app\core\FS;
 use app\model\Question;
 use app\model\Test;
 use Illuminate\Database\Eloquent\Collection;
@@ -27,10 +28,7 @@ class QuestionRepository
 		$question = new Question();
 		$question = $question->getFillable();
 		$question['id'] = 0;
-		ob_start();
-		include ROOT . '/app/view/Question/Admin/edit_BlockQuestion.php';
-		return ob_get_clean();
-
+		return FS::getFileContent(ROOT . '/app/view/Question/Admin/edit_BlockQuestion.php');
 	}
 
 	public static function getQuestion($question, $parentSelector = '')
