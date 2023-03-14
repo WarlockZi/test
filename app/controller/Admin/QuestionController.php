@@ -9,6 +9,8 @@ use app\Factory\TestFactory;
 use app\model\Question;
 use app\model\Test;
 use app\Repository\TestRepository;
+use app\Services\Test\TestDoService;
+use app\Services\Test\TestEditService;
 
 
 class QuestionController Extends AppController
@@ -24,7 +26,7 @@ class QuestionController Extends AppController
 	{
 		$id = Router::getRoute()->id;
 		if ($id) {
-			$test = TestRepository::edit($id);
+			$test = new TestEditService();
 
 			$page_name = 'Редактирование тестов';
 			$this->set(compact('page_name'));

@@ -1,9 +1,9 @@
 <input
 		my-checkbox
 		type="checkbox"
-	<?= $this->inputClass; ?>
-	<?= $this->field; ?>
-	<?= $this->checked; ?>
+	<?= $box->class; ?>
+	<?= $box->field; ?>
+	<?= $box->checked; ?>
 >
 
 

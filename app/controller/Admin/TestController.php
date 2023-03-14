@@ -6,15 +6,13 @@ use app\controller\AppController;
 use app\core\Router;
 use app\Factory\AbstractTestFactory;
 use app\model\Test;
-use app\Repository\AnswerRepository;
-use app\Repository\QuestionRepository;
-use app\Repository\TestRepository;
 use app\view\Test\TestView;
 use app\view\View;
 
 
 class TestController extends AppController
 {
+	public $model = Test::class;
 
 	public function __construct()
 	{
@@ -24,38 +22,18 @@ class TestController extends AppController
 	public function actionDo(): void
 	{
 		$id = $this->route->id;
-		if ($id) {
-			$test = AbstractTestFactory::getFactory('test')->do($this->route->id);
-		}
-
-//		$model = Test::with('questions.answers')
-//			->find($this->route->id);
-
-//		$test = new TestRepository();
-
-//		if ($model) {
-//			$test->setTest($model);
-//			$test->setQuestions(QuestionRepository::shuffleAnswers($model));
-//			$test->setPagination(Test::pagination($test->getQuestions()));
-//			AnswerRepository::cacheCorrectAnswers($model);
-//		}
+		$test = AbstractTestFactory::getFactory('test')->do($this->route->id);
 		$this->set(compact('test'));
-
 	}
 
 
 	public function actionEdit()
 	{
-		if ($this->ajax) {
-			$id = Test::update($this->ajax);
-			$this->exitJson(['id' => $id]);
-		}
-
 		$id = Router::getRoute()->id;
 		$test = Test::query()->find($id);
 
 		if ($test) {
-			$item = TestView::item($id);
+			$item = TestView::item($test);
 			$this->set(compact('item'));
 
 		} else {

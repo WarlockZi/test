@@ -13,7 +13,7 @@ use \app\view\Question\QuestionView;
 
 		<div class="test-edit__cont">
 
-				<?= AccordionView::testEditAccordion() ;
+				<?= AccordionView::testEdit() ;
 						$test = QuestionView::getEditContent($test);
 						if ($test):
 				?>

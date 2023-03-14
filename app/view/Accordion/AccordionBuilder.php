@@ -4,6 +4,7 @@
 namespace app\view\Accordion;
 
 
+use app\core\FS;
 use app\core\Icon;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -25,6 +26,7 @@ class AccordionBuilder
 	protected $ulAfter = ['icon' => '', 'link' => ''];
 
 	protected $isPathAttr = '';
+	protected $attachAfter;
 
 	public static function build(
 		Collection $items,
@@ -48,10 +50,15 @@ class AccordionBuilder
 		$this->relation = $name;
 		return $this;
 	}
-
-	public function class(string $name)
+	public function attachButtonAfter(string $file)
 	{
-		$this->class = $name;
+		$this->attachAfter = $this->attachAfter.FS::getFileContent($file);
+		return $this;
+	}
+
+	public function class(string $class)
+	{
+		$this->class = ' '.$class;
 		return $this;
 	}
 
@@ -132,7 +139,7 @@ class AccordionBuilder
 		foreach ($this->items as $item) {
 			$res .= $this->getLi($item, 0);
 		}
-		return "<ul accordion class='{$this->class}'>$res</ul>";
+		return "		<div class='accordion_wrap{$this->class}'><ul accordion class='{$this->class}'>$res</ul>{$this->attachAfter}</div>";
 	}
 
 }

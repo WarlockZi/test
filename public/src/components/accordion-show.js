@@ -15,7 +15,7 @@ export default function accordionShow() {
 
 
   let button = $('.accordion-open')[0]
-  debugger
+  // debugger
   if (button) {
     $(button).on('click', function () {
       let menu = $('.accordion_wrap')[0]

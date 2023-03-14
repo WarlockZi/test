@@ -1,8 +1,6 @@
-<? use app\Repository\ImageRepository; ?>
+<div class="test-data test-do">
 
-<div class="test-data">
-
-	<? foreach ($test->getTest()->questions as $id_quest => $question): ?>
+	<? foreach ($test->questions as $id_quest => $question): ?>
 	  <div class="question" data-id="<?= $question->id; ?>">
 
 		  <div class="q">
@@ -19,7 +17,7 @@
 					 <input type="checkbox" id="answer-<?= $answer->id ?>">
 					 <label for="answer-<?= $answer->id ?>"><?= $answer->answer ?></label>
 
-			 <?= \app\Repository\AnswerRepository::getImg($answer) ?>
+							 <?= \app\Repository\AnswerRepository::getImg($answer) ?>
 
 
 				 </div>
@@ -33,6 +31,6 @@
 </div>
 <? include ROOT . '/app/view/Test/Admin/test_edit_prev_next_buttons.php' ?>
 
-<div class="test-do__finish-btn" data-id="<?= $test->getTest()->id; ?>">ЗАКОНЧИТЬ ТЕСТ</div>
-</div>
+<div class="test-do__finish-btn" data-id="<?= $test->id; ?>">ЗАКОНЧИТЬ ТЕСТ</div>
+<!--</div>-->
 

@@ -57,7 +57,7 @@ input,
 textarea,
 textarea:focus,
 .button:focus {
-  outline: none;
+  outline: transparent;
 }
 
 .flex1 {
@@ -72,5 +72,5 @@ textarea:focus,
 }
 
 [contenteditable]:focus-visible{
-  outline: none;
+  outline: transparent;
 }
