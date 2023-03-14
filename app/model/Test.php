@@ -8,13 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Test extends Model
 {
-
 	public $timestamps = false;
 
 	protected $fillable = [
 		'id','name','enable','test_id','isTest',
 	];
-
 
 	public function questions()
 	{
@@ -35,16 +33,4 @@ class Test extends Model
 	  return $this->hasMany(Test::class, 'test_id')->with('children');
   }
 
-	public static function pagination(Collection $questions)
-	{
-		$pagination = '<div class="pagination">';
-		$i = 0;
-		foreach ($questions as $id => $el) {
-			$i++;
-			$d = "<div data-pagination={$el['id']}>{$i}</div>";
-			$pagination .= $d;
-		}
-
-		return $pagination . '</div>';
-	}
 }

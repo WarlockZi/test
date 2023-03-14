@@ -64,60 +64,13 @@ export default function catalogItem() {
     target.classList.toggle('active')
   }
 
-  // async function del(id, modelName) {
-  //   let res = await post(`/adminsc/${modelName}/delete`, {id})
-  //   if (res) {
-  //     window.location.href = `/adminsc/${modelName}/edit`
-  //   }
-  // }
-  //
-  // async function detach(id, modelName) {
-  //   debugger
-  //   let res = await post(`/adminsc/${modelName}/detach`, {id})
-  //   if (res) {
-  //     window.location.href = `/adminsc/${modelName}/edit`
-  //   }
-  // }
-  //
-  // async function update() {
-  //   debugger
-  //   let res = await post(`/adminsc/${this.model}/updateorcreate`, this.data)
-  // }
 
-
-  function getModel(modelName) {
-    let fields = $(`[data-field][data-model='${modelName}']`);
-    let obj = {};
-
-    debugger;
-    [].map.call(fields, (field) => {
-        if (field.closest('[data-parent]')) return obj
-        if (
-          field.hasAttribute('data-value') ||
-          field.hasAttribute('custom-select') ||
-          field.hasAttribute('custom-radio') ||
-          field.hasAttribute('tab')
-        ) {
-          obj[field.dataset.field] = field.dataset.value
-        } else if (field.hasAttribute('multi-select')) {
-          let chips = field.querySelectorAll('.chip');
-          let ids = [].map.call(chips, (chip) => {
-            return chip.dataset.id
-          })
-          obj[field.dataset.field] = ids.toString()
-        } else if (field.dataset.type === 'inputs') {
-          // debugger
-          obj[field.dataset.field] = getInputs(field)
-        } else if (field.type === 'date') {
-          obj[field.dataset.field] = field.value ? field.value : '1970-01-02'
-        } else {
-          obj[field.dataset.field] = trimStr(field.innerText)
-        }
-      },
-      obj
-    )
-    return obj
+  async function update() {
+    let res = await post(`/adminsc/${this.model}/updateorcreate`, this.data)
   }
+
+
+
 
   function getInputs(field) {
     let inputs = field.querySelectorAll('input')
@@ -132,7 +85,39 @@ export default function catalogItem() {
     return names.join()
   }
 
-
+  // function getModel(modelName) {
+  //   let fields = $(`[data-field][data-model='${modelName}']`);
+  //   let obj = {};
+  //
+  //   debugger;
+  //   [].map.call(fields, (field) => {
+  //       if (field.closest('[data-parent]')) return obj
+  //       if (
+  //         field.hasAttribute('data-value') ||
+  //         field.hasAttribute('custom-select') ||
+  //         field.hasAttribute('custom-radio') ||
+  //         field.hasAttribute('tab')
+  //       ) {
+  //         obj[field.dataset.field] = field.dataset.value
+  //       } else if (field.hasAttribute('multi-select')) {
+  //         let chips = field.querySelectorAll('.chip');
+  //         let ids = [].map.call(chips, (chip) => {
+  //           return chip.dataset.id
+  //         })
+  //         obj[field.dataset.field] = ids.toString()
+  //       } else if (field.dataset.type === 'inputs') {
+  //         // debugger
+  //         obj[field.dataset.field] = getInputs(field)
+  //       } else if (field.type === 'date') {
+  //         obj[field.dataset.field] = field.value ? field.value : '1970-01-02'
+  //       } else {
+  //         obj[field.dataset.field] = trimStr(field.innerText)
+  //       }
+  //     },
+  //     obj
+  //   )
+  //   return obj
+  // }
   // function checkRequired() {
   //   let required = $('[required]');
   //   let errCount = 0;
@@ -164,4 +149,21 @@ export default function catalogItem() {
   //   }
   //   return id
   // }
+
+
+  // async function del(id, modelName) {
+  //   let res = await post(`/adminsc/${modelName}/delete`, {id})
+  //   if (res) {
+  //     window.location.href = `/adminsc/${modelName}/edit`
+  //   }
+  // }
+  //
+  // async function detach(id, modelName) {
+  //   debugger
+  //   let res = await post(`/adminsc/${modelName}/detach`, {id})
+  //   if (res) {
+  //     window.location.href = `/adminsc/${modelName}/edit`
+  //   }
+  // }
+  //
 }

@@ -9,18 +9,16 @@ use app\view\components\Builders\Builder;
 
 class CheckboxBuilder extends Builder
 {
-	private $field;
-	private $checked;
-	private $value = null;
+	public $field;
+	public $checked;
 
-	private $inputClass;
+	public $class;
+	public $id;
 
-	private $for;
-	private $label;
-	private $id;
-	private $labelClass;
+	public $for;
+	public $label;
+	public $labelClass;
 
-//	public $html = '';
 
 	public static function build(string $field,
 															 bool $checked)
@@ -33,7 +31,7 @@ class CheckboxBuilder extends Builder
 
 	public function inputClass(string $class)
 	{
-		$this->inputClass = "class ='{$class}'";
+		$this->class = "class ='{$class}'";
 		return $this;
 	}
 
@@ -50,10 +48,11 @@ class CheckboxBuilder extends Builder
 
 	public function get()
 	{
+		$box = $this;
 		if ($this->label) {
-			return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/LabelCheckboxTemplate.php');
+			return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/LabelCheckboxTemplate.php', compact('box'));
 		} else {
-			return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/CheckboxTemplate.php');
+			return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/CheckboxTemplate.php', compact('box'));
 		}
 	}
 

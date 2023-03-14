@@ -1,15 +1,16 @@
 <label
-	<?= $this->labelClass; ?>
-	<?= $this->for; ?>
+	<?= $box->labelClass; ?>
+	<?= $box->for; ?>
 >
-	<?= $this->label; ?>
+	<?= $box->label; ?>
 
 	<input
+			my-checkbox
 			type="checkbox"
-		 <?= $this->id; ?>
-		 <?= $this->inputClass; ?>
-		 <?= $this->field; ?>
-		 <?= $this->checked; ?>
+		 <?= $box->id; ?>
+		 <?= $box->class; ?>
+		 <?= $box->field; ?>
+		 <?= $box->checked; ?>
 	>
 </label>
 
