@@ -12,11 +12,11 @@ use app\view\Product\ProductView;
 class ProductController extends AppController
 {
   public $model = Product::class;
+
   public function actionEdit()
   {
     $id = $this->route->id;
-    $prod = ProductRepository::getProduct('id', $id);
-//    $product = $breadcrumbs = null;
+    $prod = ProductRepository::edit($id);
     if ($prod) {
       $product = ProductView::edit($prod);
       $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, false, true);

@@ -37,11 +37,11 @@ class ProductRepository extends Controller
 
 	public static function getCard($slug)
 	{
-		$product = self::getProduct('slug', $slug);
+		$product = self::edit('slug', $slug);
 		return $product;
 	}
 
-	public static function getProduct(string $where, $val)
+	public static function edit(int $val)
 	{
 		return Product::
 		with('category.properties.vals')
@@ -55,7 +55,7 @@ class ProductRepository extends Controller
 			->with('baseUnit')
 			->with('mainUnit')
 			->with('parentCategoryRecursive')
-			->where($where, $val)->first();
+			->find($val);
 	}
 
 }

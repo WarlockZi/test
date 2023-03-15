@@ -1,10 +1,10 @@
 <div
-	<?= $this->relation; ?>
-	<?= $this->oneOrMany; ?>
-	<?= $this->slug; ?>
-	<?= $this->class; ?>
+	<?= $morph->relation; ?>
+	<?= $morph->oneOrMany; ?>
+	<?= $morph->slug; ?>
+	<?= $morph->class; ?>
 >
-	<?= $this->html;?>
+	<?= $morph->html;?>
 
 </div>
 

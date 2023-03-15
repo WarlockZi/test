@@ -6,10 +6,13 @@ namespace app\controller;
 use app\core\Route;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
+use app\Repository\CategoryRepository;
 
 
 class CategoryController Extends AppController
 {
+
+	public $model = Category::class;
 
 	public function __construct()
 	{
@@ -21,25 +24,17 @@ class CategoryController Extends AppController
 		$accordion = '';
 		if ($this->route->slug) {
 			$this->view = 'category';
+
 			$slug = $this->route->slug;
-
-			$category = Category::where('slug', $slug)
-				->with('childrenRecursive')
-				->with('parentRecursive')
-				->with('products')
-				->with('products.mainImages')
-				->get()->first();
-
+			$category = CategoryRepository::index($slug);
 			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
 
 			$this->set(compact('breadcrumbs','category'));
-
 		} else {
-			$categories = Category::where('category_id', 0)
-				->with('childrenRecursive')
-				->get();
-			$this->set(compact('categories'));
 			$this->view = 'categories';
+
+			$categories = CategoryRepository::indexNoSlug();
+			$this->set(compact('categories'));
 		}
 		$this->set(compact('accordion'));
 	}

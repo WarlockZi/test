@@ -19,6 +19,7 @@ use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 use app\view\components\HasOne\HasOne;
+use app\view\Image\ImageView;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -122,25 +123,25 @@ class ProductView
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
-						self::getImage($product, 'main', 'mainImages')
+						self::getImage($product, 'mainImages','main')
 					)
 			)
 			->tab(
 				ItemTabBuilder::build('Детальные картинки')
 					->html(
-						self::getImage($product, 'detail', 'detailImages')
+						self::getImage($product, 'detailImages','detail',true)
 					)
 			)
 			->tab(
 				ItemTabBuilder::build('Внутритарная упаковка')
 					->html(
-						self::getImage($product, 'smallpack', 'smallpackImages')
+						self::getImage($product, 'smallpackImages','smallpack',true)
 					)
 			)
 			->tab(
-				ItemTabBuilder::build('Транспортная упаковка')
+				ItemTabBuilder::build('Транспортная упаковка',true)
 					->html(
-						self::getImage($product, 'bigpack', 'bigPackImages')
+						self::getImage($product, 'bigPackImages','bigpack',true)
 					)
 			)
 			->del()
@@ -164,21 +165,25 @@ class ProductView
 	}
 
 
-	protected static function getImage(Product $product, string $slug, string $relation)
+	protected static function getImage(Product $product,
+																		 string $relation,
+																		 string $slug,
+																		 bool $many = false)
 	{
-		return MorphBuilder::build(
-			$product,
-			'Image',
-			$slug,
+		$imgs = ImageView::morphImages($product, $relation);
+
+		$img = MorphBuilder::build($product,
 			$relation,
+			$slug,
+			$many
 			)
 			->detach('detach')
-			->class('dnd')
 			->html(
-				DndBuilder::build('product')
-					->get()
+				DndBuilder::make('product') . $imgs
 			)
 			->get();
+
+		return $img;
 	}
 
 	protected static function getSelect(Model $category, Product $product): string
@@ -289,66 +294,5 @@ class ProductView
 		include ROOT . '/app/view/Product/property.php';
 		return ob_get_clean();
 	}
-//	protected static function getMainImage($product): string
-//	{
-//		return MorphBuilder::build(
-//			$product,
-//			'Image',
-//			'main',
-//			'mainImages',
-//			)
-//			->detach('detach')
-//			->class('dnd')
-//			->content(
-//				DndBuilder::build('product')
-//					->get()
-//			)
-//			->get();
-//	}
-//	protected static function getSmallPackImages(Product $product): string
-//	{
-//		return MorphBuilder::build(
-//			$product,
-//			'Image',
-//			'smallpack',
-//			'smallpackImages',
-//			)
-//			->detach('detach')
-//			->content(
-//				DndBuilder::build('product', 'dnd')
-//					->get()
-//			)
-//			->get();
-//	}
-//	protected static function getBigPackImages($product): string
-//	{
-//		return MorphBuilder::build(
-//			$product,
-//			'Image',
-//			'bigpack',
-//			'bigPackImages',
-//			)
-//			->detach('detach')
-//			->content(
-//				DndBuilder::build('product', 'dnd')
-//					->get()
-//			)
-//			->get();
-//	}
-//	protected static function getDetailImages($product): string
-//	{
-//		return MorphBuilder::build(
-//			$product,
-//			'Image',
-//			'detail',
-//			'detailImages',
-//			)
-//			->detach('detach')
-//			->content(
-//				DndBuilder::build('product', 'dnd')
-//					->get()
-//			)
-//			->get();
-//	}
 
 }

@@ -2,6 +2,7 @@
 
 namespace app\model;
 
+use app\core\FS;
 use app\Repository\ImageRepository;
 use Illuminate\Database\Eloquent\Model;
 
@@ -60,24 +61,9 @@ class Image extends Model
 		return $this->belongsTo(Image::class,);
 	}
 
-
 	public function tags()
 	{
 		return $this->morphToMany(Tag::class, 'taggable');
 	}
-
-//	public function bigPack($query)
-//	{
-//		return $query->where('tag')->name === 'ddf';
-//	}
-//	public function productMainImage()
-//	{
-//		return $this->morphTo();
-//	}
-//	public function category(){
-//		return $this->morphedByMany(Category::class,'imageable')
-//			->withPivot('slug');
-//	}
-
 
 }
