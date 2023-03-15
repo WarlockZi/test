@@ -4,7 +4,7 @@
 namespace app\Repository;
 
 
-use app\controller\FS;
+use app\core\FS;
 use app\model\Image;
 use app\model\Product;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
@@ -66,7 +66,7 @@ class ImageRepository
 	{
 		$items = $model->$relation;
 		if ($items->count()) {
-			$del = "<div data-detach='' class='detach' data-id={$items[0]->id}>x</div>";
+			$del = "<div data-detach='' data-id={$items[0]->id}>x</div>";
 			$im = "<div class='item'><img src='{$items[0]->getFullPath()}' alt=''>{$del}</div>";
 			return "<div class='wrap'>{$im}</div>";
 		}
@@ -79,18 +79,6 @@ class ImageRepository
 		$del = "<div data-detach='' class='detach' data-id={$image->id}>x</div>";
 		return "<div class='item'><img src='{$image->getFullPath()}' alt=''>{$del}</div>";
 	}
-
-//	public static function sync(Model $morph, array $morphed, string $slug, string $oneOrMany, bool $detach)
-//	{
-//		if ($oneOrMany === 'many') {
-//			return $res = MorphRepository::attachMany($morph, $morphed, $slug, $detach);
-//		} else { //one
-//			$res = MorphRepository::attach([$morph, $morphed, $slug, $detach]);
-//			if ($res['attached']) {
-//				return ImageRepository::getSrcMorph($morph);
-//			}
-//		}
-//	}
 
 	public static function getImagePath(int $id): string
 	{
@@ -106,7 +94,6 @@ class ImageRepository
 		return is_readable($file);
 	}
 
-
 	public static function saveToFile(Model $model, array $file, string $path): bool
 	{
 		$dir = FS::getOrCreateAbsolutePath($model->imagePath, $model->path);
@@ -117,7 +104,6 @@ class ImageRepository
 		}
 		return false;
 	}
-
 
 	public static function firstOrCreate(array $file, string $path)
 	{

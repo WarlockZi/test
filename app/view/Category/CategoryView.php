@@ -14,8 +14,6 @@ use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
-use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 use app\view\Image\ImageView;
 
 class CategoryView
@@ -60,21 +58,16 @@ class CategoryView
 				ItemTabBuilder::build('Основная картинка')
 					->html(
 						MorphBuilder::build($category, 'image', 'main', 'mainImages')
-							->class('dnd')
 							->html(
-								DndBuilder::build('category')
-									->get() . ImageView::morphImages($category->mainImages)
-
+								DndBuilder::make('category') . ImageView::morphImages($category, 'mainImages')
 							)
 							->get()
 					)
-
 			)
 			->tab(
 				ItemTabBuilder::build('Товары категории')
 					->html(
 						MyList::build(Product::class)
-//							->belongsTo('category', $id)
 							->pageTitle('Товары категории')
 							->realtion('products')
 							->addButton('ajax')
@@ -145,7 +138,6 @@ class CategoryView
 									->get()
 							)
 							->realtion('children')
-//							->belongsTo('category', $id)
 							->edit()
 							->del()
 							->addButton('ajax')

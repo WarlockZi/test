@@ -35,19 +35,23 @@ class MorphRepository extends AppController
 
 	public static function attachWithFiles(array $files, array $req)
 	{
-		$morphedType = $req['morphedType'];
-		$morphedId = $req['morphedId'];
+		$self = new self;
+		$model = $req['model'];
+		$id = $req['id'];
+		$morph = $req['morph'];
 
-		$oneOrMany = $req['oneOrMany'];
-		$slug = $req['slug'];
-		$path = $req['path'];
-		$func = $req['func'];
+		$relationName = $morph['relation'];
+		$oneOrMany = $morph['oneormany'];
+		$slug = $morph['slug'];
+		$path = $morph['path'];
 
-		$model = self::getModelName($morphedType)::find($morphedId);
-		$relation = $model->$func();
+
+
+		$model = self::getModelName($model)::with($relationName)->find($id);
+		$relation = $model->$relationName();
 		$repository = $relation->getRelated()->getRepo();
 
-		if ($oneOrMany=== 'one') {
+		if ($oneOrMany === 'one') {
 			$file = $files[0];
 			$repository::validate($file);
 			$morph = $repository->firstOrCreate($file, $path);
@@ -55,47 +59,46 @@ class MorphRepository extends AppController
 			if ($morph->wasRecentlyCreated) {
 				$repository::saveToFile($morph, $file, $path);
 			}
-			$res = $model->$func()
+
+			$res = $model->$relationName()
 				->wherePivot('slug', $slug)
 				->sync([$morph['id'] => ['slug' => $slug]]);
+			$image['src'] = $morph->getFullPath();
+			$image['id'] = $morph->id;
 
-			exit();
+			$self->exitJson([$image]);
 		} else {
-			$file = $files[0];
-			$repository::validate($file);
-			$morph = $repository->firstOrCreate($file, $path);
-
-			if ($morph->wasRecentlyCreated) {
-				$repository::saveToFile($morph, $file, $path);
+			$ids = [];
+			foreach ($files as $file) {
+				$repository::validate($file);
+				$morph = $repository->firstOrCreate($file, $path);
+				if ($morph->wasRecentlyCreated) {
+					$repository::saveToFile($morph, $file, $path);
+				}
+				$ids[] = $morph->id;
+				$res = $model->$relationName()
+					->wherePivot('slug', $slug)
+					->sync([$morph['id'] => ['slug' => $slug]],false);
+				$res = $model->$relationName()->sync([$morph->id], false);
+				$f = 1;
 			}
-			$res = $model->mainImages()->attach($morph->id);
 
+//			$res = $model->$relationName()->sync($ids);
 			exit();
-
 		}
-//		$slug = $morphed['slug'];
-//		if ($morphed['detach'] === 'true') {
-//			$res = $model->$func()
-//				->wherePivot('slug', $slug)
-//				->sync([$morphed['id'] => ['slug' => $slug]]);
-//			return true;
-//		}
+
 	}
 
 	public static function detach(Controller $controller, array $req)
 	{
+		$self = new self;
 		$relation = $req['relation'];
 		$morphId = $req['morphId'];
 		$model = $controller->model::with($relation)->find($req['id']);
 		$res = $model->$relation()->detach($morphId);
 
-//		$model = $model::->find$req['morphId'];
-//		$model = $model::find($req['morphedId']);
-
-//		$f = $req['funct'];
-//		$res = $model->$f()->detach($id);
 		if ($res) {
-			exit(json_encode(['poppup' => 'ok']));
+			$self->exitWithSuccess('ok');
 		} else {
 			exit(json_encode(['poppup' => 'ошибка']));
 		}

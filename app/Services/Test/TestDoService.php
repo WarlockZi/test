@@ -21,9 +21,9 @@ class TestDoService
 	public function __construct($id)
 	{
 		if ($id === null) {
-			$this->setAccordion();
 			$this->setNoTestTitle();
 			$this->setContent($this->getNoTestTitle());
+			$this->setAccordion();
 		} else {
 			$test = TestRepository::do($id);
 			$this->setContent(
@@ -32,7 +32,6 @@ class TestDoService
 			$this->setPagination($test);
 			$this->setAccordion();
 		}
-		return $this;
 	}
 
 	public function setPageName($page_name)

@@ -45,7 +45,7 @@ class AppController extends Controller implements IModelable
   public function actionAttach()
   {
     $req = $this->isAjax();
-    if (!$req) $this->exitWithError('Плохой запрос');
+    if (!$req) $req = $_POST;
     if ($_FILES) {
       MorphRepository::attachWithFiles($_FILES, $req);
     } else {

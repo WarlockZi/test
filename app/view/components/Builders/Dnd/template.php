@@ -1,7 +1,8 @@
 <div
-	<?= $this->path; ?>
-	<?= $this->class; ?>
-	<?= $this->tooltip; ?>
+		dnd
+	<?= $dnd->path; ?>
+	<?= $dnd->class; ?>
+	<?= $dnd->tooltip; ?>
 >
 	<?= \app\core\Icon::plus() ?>
 </div>

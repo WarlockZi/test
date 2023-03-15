@@ -17,12 +17,12 @@ class ImageView
 
 	public $model = Image::class;
 
-	public static function morphImages(Collection $collection): string
+	public static function morphImages(Model $model, string $relation): string
 	{
-		if (!$collection->count()) return '';
+		if (!$model->$relation->count()||!$model->$relation) return '';
 		ob_start();
 		$str = '';
-		foreach ($collection as $item) {
+		foreach ($model->$relation as $item) {
 				$str.= include ROOT.'/app/view/Image/Admin/morphImages.php';
 		}
 		return ob_get_clean();

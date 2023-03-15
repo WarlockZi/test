@@ -12,6 +12,21 @@ use Illuminate\Database\Eloquent\Collection;
 class CategoryRepository
 {
 
+	public static function indexNoSlug(){
+		return Category::where('category_id', 0)
+			->with('childrenRecursive')
+			->get();
+	}
+	public static function index(string $slug)
+	{
+		return Category::where('slug', $slug)
+			->with('childrenRecursive')
+			->with('parentRecursive')
+			->with('products')
+			->with('products.mainImages')
+			->get()->first();
+	}
+
 	public static function edit($id)
 	{
 		return Category::with(

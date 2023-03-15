@@ -18,14 +18,6 @@ if (tables) {
     const modelName = table.dataset.model ?? null
     const modelId = table.dataset.id ?? null
 
-    // const belongsTo = table.dataset.belongsTo ?? null
-    // const belongsToId = table.dataset.belongsToId ?? null
-    //
-    // const morph = table.dataset.morph ?? null
-    // const morphId = table.dataset.morphid ?? null
-    // const morphoneormany = table.dataset.morphoneormany ?? null
-    // const morphdetach = table.dataset.morphdetach ?? null
-
     const rows = fillRows()
 
     const WSSelects = $('[custom-select]');
