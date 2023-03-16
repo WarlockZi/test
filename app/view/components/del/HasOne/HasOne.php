@@ -20,7 +20,7 @@ class HasOne
 		$this->html = $html;
 
 		ob_start();
-		$html = include ROOT.'/app/view/components/HasOne/template.php';
+		$html = include ROOT . '/app/view/components/HasOne/template.php';
 		return ob_get_clean();
 	}
 

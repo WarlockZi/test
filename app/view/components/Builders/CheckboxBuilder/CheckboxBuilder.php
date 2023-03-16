@@ -21,7 +21,7 @@ class CheckboxBuilder extends Builder
 
 
 	public static function build(string $field,
-															 bool $checked)
+															 ?bool $checked)
 	{
 		$checkbox = new self();
 		$checkbox->field = "data-field='{$field}'";

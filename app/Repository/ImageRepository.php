@@ -96,7 +96,7 @@ class ImageRepository
 
 	public static function saveToFile(Model $model, array $file, string $path): bool
 	{
-		$dir = FS::getOrCreateAbsolutePath($model->imagePath, $model->path);
+		$dir = FS::getOrCreateAbsolutePath($model->imagePath, $path);
 		$full = FS::getAbsoluteImagePath($dir, $model);
 		if (!is_readable($full)) {
 			move_uploaded_file($file['tmp_name'], $full);
@@ -130,7 +130,8 @@ class ImageRepository
 	public static function validateSize(array $file)
 	{
 		$validSize = self::$size;
-		if ($file['size'] > $validSize) exit(json_encode(['popup' => "Файл {$file} больше {$validSize}"]));
+		if ($file['size'] > $validSize)
+			exit(json_encode(['popup' => "Файл {$file['name']} больше {$validSize}"]));
 	}
 
 	public static function validateType(array $file)

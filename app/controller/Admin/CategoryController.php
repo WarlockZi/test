@@ -9,6 +9,7 @@ use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
 use app\view\Category\CategoryView;
 use app\view\components\Builders\SelectBuilder\TreeABuilder;
+use function PHPSTORM_META\type;
 
 
 class CategoryController Extends AppController
@@ -27,7 +28,7 @@ class CategoryController Extends AppController
 
 		$accordion =
 			TreeABuilder::build(
-				$categories,'children_recursive',2)
+				$categories, 'children_recursive', 2)
 				->href('/adminsc/category/edit/')
 				->get();
 
@@ -38,7 +39,9 @@ class CategoryController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route->id;
+
 		$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($id, false, true);
+
 		$category = CategoryView::edit($id);
 		$this->set(compact('category', 'breadcrumbs'));
 	}

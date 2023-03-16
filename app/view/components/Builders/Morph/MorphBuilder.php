@@ -65,7 +65,7 @@ class MorphBuilder
 
 	public function html(string $html)
 	{
-		$this->html = $html;
+		$this->html .= $html;
 		$this->items = null;
 		return $this;
 	}

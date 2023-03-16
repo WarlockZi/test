@@ -69,6 +69,16 @@ function replaceBackSpace(str) {
   return str.trim();
 }
 
+function formatDate(date, time) {
+  let t = new Date()
+  let now = t.now()
+  let dateArr = now.split('-')
+  debugger
+  let formattedDate = dateArr.forEach((s) => {
+    if (s === 'yyyy') return t.getFullYear
+    if (s === 'm') return t.getMonth
+  })
+}
 
 function trimStr(str) {
   str = replaceNbsps(str)
@@ -410,5 +420,6 @@ export {
   debounce,
   IsJson,
   post, get,
-  validate, $
+  validate, $,
+  formatDate
 }

@@ -38,7 +38,9 @@ class AdminView extends View
 		if (is_readable($this->view)) {
 			$this->content = self::getFileContent($this->view, $controller->vars);
 		} else {
-			Error::setError("Нет файла вида - Admin/".$controller->getRoute()->action);
+			$action = $controller->getRoute()->action;
+			$model = ucfirst($controller->getModel());
+			Error::setError("Нет файла вида - Admin/{$model}/{$action}");
 			$this->content = self::getFileContent($this->defaultView);
 		}
 	}

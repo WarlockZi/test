@@ -16,6 +16,7 @@ class Category extends Model
 		'img',
 		'category_id',
 		'show_front',
+		'deleted_at',
 	];
 
 	public function mainImages()
@@ -76,7 +77,9 @@ class Category extends Model
 
 	public function children()
 	{
-		return $this->hasMany(Category::class, 'category_id');
+		return $this
+			->hasMany(Category::class, 'category_id')
+			->whereNull('deleted_at');
 	}
 
 }

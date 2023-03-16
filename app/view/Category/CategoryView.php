@@ -18,8 +18,9 @@ use app\view\Image\ImageView;
 
 class CategoryView
 {
-	public static function edit($id): string
+	public static function edit(?int $id): string
 	{
+
 		$category = CategoryRepository::edit($id);
 
 		return ItemBuilder::build($category, 'category')
@@ -50,17 +51,16 @@ class CategoryView
 				ItemFieldBuilder::build('categiry_id', $category)
 					->name('Принадлежит')
 					->html(
-						CategoryRepository::selector($category->category_id)
+						CategoryRepository::selector($category->category_id, $category->id)
 					)
 					->get()
 			)
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
-						MorphBuilder::build($category, 'image', 'main', 'mainImages')
-							->html(
-								DndBuilder::make('category') . ImageView::morphImages($category, 'mainImages')
-							)
+						MorphBuilder::build($category, 'mainImages', 'main')
+							->html(DndBuilder::make('category'))
+							->html(ImageView::morphImages($category, 'mainImages'))
 							->get()
 					)
 			)
@@ -95,13 +95,12 @@ class CategoryView
 			->tab(
 				ItemTabBuilder::build('Св-ва категории')
 					->html(
-						MorphBuilder::build(new Property(), 'prop', 'prop', 'properties')
+						MorphBuilder::build($category, 'properties', 'prop', true)
 							->many()
 							->html(
 								MyList::build(Property::class)
 									->items($category->properties ?? [])
 									->pageTitle('Св-ва категории')
-//								->morph('category', $id, 'many', false)
 									->addButton('ajax')
 									->column(
 										ListColumnBuilder::build('id')
@@ -144,8 +143,8 @@ class CategoryView
 							->get()
 					)
 			)
-			->del()
-			->save()
+//			->del()
+			->softDel()
 			->toList('', 'К списку категорий')
 			->get();
 	}

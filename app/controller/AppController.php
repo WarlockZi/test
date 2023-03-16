@@ -16,7 +16,6 @@ class AppController extends Controller implements IModelable
     $this->isAjax();
   }
 
-
   public function setView()
   {
     $view = $this->getView();
@@ -88,13 +87,10 @@ class AppController extends Controller implements IModelable
 
       $model = $this->model::updateOrCreate(
         ['id' => $req['id']],
-        $this->ajax
+				$req
       );
 
       if ($model->wasRecentlyCreated) {
-//				if (isset($req['morph_type'])) {
-//					$this->actionAttach($req, $model);
-//				}
         $this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
       } else {
         $this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);
@@ -115,5 +111,11 @@ class AppController extends Controller implements IModelable
   public function setModel()
   {
   }
+//
+//  public function actionShow(){
+//
+//  	$model = $this->getModel();
+//
+//	}
 
 }

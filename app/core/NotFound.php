@@ -4,6 +4,7 @@
 namespace app\core;
 
 
+use app\controller\AppController;
 use app\controller\Controller;
 use app\model\User;
 use app\view\AdminView;
@@ -11,6 +12,9 @@ use app\view\UserView;
 
 class NotFound extends Controller
 {
+	public function getModel(){
+
+	}
 
 	public static function url(string $url)
 	{
@@ -27,8 +31,8 @@ class NotFound extends Controller
 	{
 		$error = "Плохой запрос controller - {$controller}";
 		Error::setError($error);
-		$controller = new $controller;
-		$view = $controller->get();
+		$controller = new self();
+		$view = $controller->getView();
 		$view = self::setView();
 		$view->controller = new $controller;
 		$view->render();

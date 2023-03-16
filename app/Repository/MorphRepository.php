@@ -45,8 +45,6 @@ class MorphRepository extends AppController
 		$slug = $morph['slug'];
 		$path = $morph['path'];
 
-
-
 		$model = self::getModelName($model)::with($relationName)->find($id);
 		$relation = $model->$relationName();
 		$repository = $relation->getRelated()->getRepo();
@@ -69,6 +67,7 @@ class MorphRepository extends AppController
 			$self->exitJson([$image]);
 		} else {
 			$ids = [];
+			$images = [];
 			foreach ($files as $file) {
 				$repository::validate($file);
 				$morph = $repository->firstOrCreate($file, $path);
@@ -76,12 +75,15 @@ class MorphRepository extends AppController
 					$repository::saveToFile($morph, $file, $path);
 				}
 				$ids[] = $morph->id;
+				$image['src'] = $morph->getFullPath();
+				$image['id'] = $morph->id;
+				$images[] = $image;
 				$res = $model->$relationName()
 					->wherePivot('slug', $slug)
-					->sync([$morph['id'] => ['slug' => $slug]],false);
+					->sync([$morph['id'] => ['slug' => $slug]], false);
 				$res = $model->$relationName()->sync([$morph->id], false);
-				$f = 1;
 			}
+			$self->exitJson($images);
 
 //			$res = $model->$relationName()->sync($ids);
 			exit();

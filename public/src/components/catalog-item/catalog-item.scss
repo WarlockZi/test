@@ -2,6 +2,13 @@
 @import "../../mixin_media";
 @import "../breadcrumbs";
 
+.ql-toolbar.ql-snow{
+  button{
+    background-color: initial;
+    border: initial;
+  }
+}
+
 .profile {
   min-width: 400px;
   max-width: 70%;
@@ -64,16 +71,16 @@
       margin: 0 0 0;
       padding: 2px 5px;
       text-align: center;
-      color: #fff;
       border: 1px solid #e1e1e1;
       border-right: none;
-      background: #4d5158;
       border-radius: 3px 0px 0 3px;
       cursor: pointer;
       display: flex;
       align-items: center;
       max-width: 75px;
       border-left: 3px solid transparent;
+      color: #555;
+      background-color: $color-gray3;
 
       @include _400 {
         font-size: 10px;
@@ -85,15 +92,15 @@
       }
 
       &:hover {
-        color: #888;
         cursor: pointer;
+        background-color: $color-gray5;
       }
 
       &.active {
-        color: #555;
+        color: #fff;
+        background: #4d5158;
         border-left: 2px solid $color-main;
         border-bottom: 1px solid $color-gray3;
-        background-color: $color-gray3;
         //border-left: 1px solid #ddd;
         border-right: 2px solid $color-gray3;
       }
@@ -287,7 +294,7 @@
     //}
 
 
-    .del {
+    .del, [soft-del] {
       @include delete(
               $width: 35px,
               $height: 35px,
