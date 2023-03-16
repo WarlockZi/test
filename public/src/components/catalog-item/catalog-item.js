@@ -1,7 +1,8 @@
 import './catalog-item.scss';
-import {$, debounce, post, trimStr} from '../../common';
+import {$, debounce, post, trimStr,formatDate} from '../../common';
 import checkboxes from "../checkboxes/checkboxes";
 import checkbox from "../checkbox/checkbox";
+
 
 export default function catalogItem() {
 
@@ -41,11 +42,14 @@ export default function catalogItem() {
 
 
   async function handleClick({target}) {
+
     this.target = target
     if (target.closest('.save')) {
       // save.bind(this)
     } else if (target.closest('.detach')) {
       // detach(this.id, this.model)
+    } else if (target.hasAttribute('soft-del')) {
+      softDel(this)
     } else if ((target.classList.contains('tab'))) {
       handleTab(target, this.model)
     } else if ((target.getAttribute('type') === 'checkbox')) {
@@ -64,12 +68,24 @@ export default function catalogItem() {
     target.classList.toggle('active')
   }
 
+  async function softDel(self) {
+    let url = `/adminsc/${self.model}/updateorcreate`
+
+    let deleted = new Date().toLocaleString('ru-RU', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hour12: false, minute:'2-digit'})
+    debugger
+    let data = {deleted_at: deleted, id: self.id}
+    let res = await post(url, data)
+
+    if (res) {
+      console.log('lk------')
+    }
+
+  }
+
 
   async function update() {
     let res = await post(`/adminsc/${this.model}/updateorcreate`, this.data)
   }
-
-
 
 
   function getInputs(field) {

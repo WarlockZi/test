@@ -12,11 +12,13 @@ use Illuminate\Database\Eloquent\Collection;
 class CategoryRepository
 {
 
-	public static function indexNoSlug(){
+	public static function indexNoSlug()
+	{
 		return Category::where('category_id', 0)
 			->with('childrenRecursive')
 			->get();
 	}
+
 	public static function index(string $slug)
 	{
 		return Category::where('slug', $slug)
@@ -27,8 +29,10 @@ class CategoryRepository
 			->get()->first();
 	}
 
-	public static function edit($id)
+	public static function edit(?int $id)
 	{
+		if ($id == null)
+			return Category::create();
 		return Category::with(
 			'products',
 			'children',
@@ -45,15 +49,17 @@ class CategoryRepository
 			->where('category_id', 0)
 			->with('childrenRecursive')
 			->select('id', 'name')
+			->whereNull('deleted_at')
 			->get();
 	}
 
-	public static function selector(int $selected): string
+	public static function selector(?int $selected, ?int $excluded = -1): string
 	{
 		return SelectBuilder::build(
 			TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
 				->initialOption()
 				->selected($selected)
+				->excluded($excluded)
 				->get()
 		)
 			->field('category_id')

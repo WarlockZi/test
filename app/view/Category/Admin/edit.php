@@ -1,4 +1,3 @@
+<?= $breadcrumbs; ?>
 
-	<?= $breadcrumbs; ?>
-
-	<?= $category; ?>
+<?= $category; ?>

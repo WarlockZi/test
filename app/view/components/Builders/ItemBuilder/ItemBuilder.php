@@ -17,6 +17,7 @@ class ItemBuilder extends Builder
 	private $pageTitle;
 	private $class;
 	private $del = false;
+	private $softDel = false;
 	private $save = false;
 
 	public $toListHref = '';
@@ -28,7 +29,7 @@ class ItemBuilder extends Builder
 
 	public $html = '';
 
-	public static function build(Model $item, string $model)
+	public static function build(?Model $item, string $model)
 	{
 		$view = new static();
 		$name = $view->getModelName($item->getTable());
@@ -81,6 +82,14 @@ class ItemBuilder extends Builder
 		if ($isAdmin) {
 			$this->del = true;
 		}
+		return $this;
+	}
+
+
+	public function softDel()
+	{
+		$this->del = false;
+		$this->softDel = true;
 		return $this;
 	}
 

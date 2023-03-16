@@ -45,7 +45,7 @@ abstract class TreeBuilder
 	}
 
 
-	public function selected(int $selected)
+	public function selected(?int $selected)
 	{
 		$this->selected = $selected;
 		return $this;

@@ -40,11 +40,12 @@ class BreadcrumbsRepository
     return "<nav class='{$class}'>{$str}</nav>";
   }
 
-	public static function getCategoryBreadcrumbs(int $id,
+	public static function getCategoryBreadcrumbs(?int $id,
 																								bool $linkLast = false,
 																								bool $admin = false,
-																								string $class = 'breadcrumbs-5')
+																								string $class = 'breadcrumbs-5'):string
 	{
+		if ($id == null) return "Категории";
 		$str = '';
 		$prefix = self::getPrefix($admin);
 		$category = Category::with('parentRecursive')->find($id);

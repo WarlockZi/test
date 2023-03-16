@@ -154,6 +154,7 @@ use \app\core\Icon;
 			</div>
 			<ul class="level-1">
 					 <? if (User::can($user, ['role_admin'])): // admin ?>
+				  <a class="neon" href="/adminsc/xml">Загрузить товары из файла</a>
 				  <a class="neon" href="/adminsc/category">Категории</a>
 				  <a class="neon" href="/adminsc/product/list">Товары</a>
 

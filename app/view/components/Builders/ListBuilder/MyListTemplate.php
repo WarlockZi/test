@@ -1,6 +1,5 @@
 <div custom-list
 	<?= $this->class; ?>
-	<?= $this->dataModel; ?>
 	<?= $this->relation; ?>
 >
 

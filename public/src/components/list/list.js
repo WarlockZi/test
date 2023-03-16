@@ -87,7 +87,6 @@ if (tables) {
 
       /// create
       if (target.className === 'add-model') {
-        // debugger
         // modelCreate(modelName, modelId, belongsTo, belongsToId, morph, morphId, morphoneormany, morphdetach)
         modelCreate(this)
 
@@ -101,7 +100,7 @@ if (tables) {
       } else if (target.className === 'edit:not(.head)'
         || target.closest('.edit:not(.head)')) {
         e.preventDefault()
-        edit(target, modelName)
+        edit(target)
 
         /// sort
       } else if (target.classList.contains('head')
@@ -114,13 +113,13 @@ if (tables) {
           sortColumn(index)
         }
       }
-
     }
 
-    function edit(target, modelName) {
-      let id = target.closest('.edit:not(.head)').dataset['id']
-      window.location = `/adminsc/${modelName}/edit/${id}`;
-
+    function edit(target) {
+      let model = target.dataset.model
+      // let id = target.closest('.edit:not(.head)').dataset['id']
+      let id = target.dataset.id
+      window.location = `/adminsc/${model}/edit/${id}`;
     }
 
     // DELETE
@@ -159,7 +158,7 @@ if (tables) {
       data.model = parent.dataset.model
       data.id = parent.dataset.id
 
-      data.morph = new MorphDTO(table.parentNode)
+      data.morph = new MorphDTO(table)
       debugger
       return  data
     }

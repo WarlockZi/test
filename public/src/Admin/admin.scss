@@ -22,6 +22,14 @@
   .adm-content {
     padding: 70px 30px;
 
+    button {
+      @include colored_button();
+      padding: 5px;
+      margin: 0 5px;
+
+    }
+
+
     @include _600 {
       padding: 85px 30px;
     }
