@@ -55,7 +55,10 @@ class Router
 					$route->$k = strtolower($v);
 				}
 				self::$route = $route;
-				printf(var_dump($route));
+				printf(var_dump($route->controller));
+				printf(var_dump($route->action));
+				printf(var_dump($route->admin));
+				printf(var_dump($route->id));
 			}
 		}
 
