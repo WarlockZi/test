@@ -12,10 +12,10 @@ class AppController extends Controller implements IModelable
 
 	public function __construct()
 	{
-		echo 'app b<br>';
+//		echo 'app b<br>';
 		parent::__construct();
 		$this->isAjax();
-		echo 'app a<br>';
+//		echo 'app a<br>';
 
 
 	}
