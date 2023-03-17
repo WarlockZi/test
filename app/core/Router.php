@@ -55,6 +55,7 @@ class Router
 					$route->$k = strtolower($v);
 				}
 				self::$route = $route;
+				printf(var_dump($route));
 			}
 		}
 
