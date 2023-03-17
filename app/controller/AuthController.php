@@ -140,9 +140,10 @@ class AuthController extends AppController
 
 	public function actionLogin()
 	{
-		echo 'login - '.printf($this->ajax);
+		echo 'login - ' . printf($this->ajax);
 		if ($data = $this->ajax) {
-
+			echo 'login - есть пайлоуд' . printf($this->ajax);
+			$this->exitWithPopup('ds');
 			if (!User::checkEmail($data['email'])) $this->exitWithError("Неверный формат email");
 			if (!User::checkPassword($data['password'])) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
 
