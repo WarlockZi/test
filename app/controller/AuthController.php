@@ -14,13 +14,41 @@ class AuthController extends AppController
 
 	public function __construct()
 	{
-		echo printf(Router::getRoute());
+//		echo printf(Router::getRoute());
 //		echo 'login - constructor'.printf($this->ajax);
 		parent::__construct();
 		$this->assets->setJs('auth');
 		$this->assets->setCss('auth');
 	}
 
+	public function actionLogin()
+	{
+		echo 'login - ' . printf($this->isAjax());
+		echo 'login - ' . printf($this->ajax);
+		if ($data = $this->ajax) {
+			echo 'login - есть пайлоуд' . printf($this->ajax);
+			$this->exitWithPopup('ds');
+			if (!User::checkEmail($data['email'])) $this->exitWithError("Неверный формат email");
+			if (!User::checkPassword($data['password'])) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
+
+			$user = User::where('email', $data['email'])->first()->toArray();
+
+			if (!$user) $this->exitWithError('Пользователь не зарегистрирован');
+			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
+			if (!$user['password'] === $this->preparePassword($data['password']))
+				$this->exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
+			Auth::setAuth($user);
+			$this->user = $user;
+			if (User::can($user, ['role_employee'])) {
+				$this->exitJson(['role' => 'employee']);
+			} else {
+				$this->exitJson(['role' => 'user']);
+			}
+		}
+
+		$this->view = 'login';
+		$this->layout = 'vitex';
+	}
 	public function actionRegister()
 	{
 		if ($user = $this->ajax) {
@@ -138,34 +166,6 @@ class AuthController extends AppController
 		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
 	}
 
-	public function actionLogin()
-	{
-		echo 'login - ' . printf($this->isAjax());
-		echo 'login - ' . printf($this->ajax);
-		if ($data = $this->ajax) {
-			echo 'login - есть пайлоуд' . printf($this->ajax);
-			$this->exitWithPopup('ds');
-			if (!User::checkEmail($data['email'])) $this->exitWithError("Неверный формат email");
-			if (!User::checkPassword($data['password'])) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
-
-			$user = User::where('email', $data['email'])->first()->toArray();
-
-			if (!$user) $this->exitWithError('Пользователь не зарегистрирован');
-			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
-			if (!$user['password'] === $this->preparePassword($data['password']))
-				$this->exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
-			Auth::setAuth($user);
-			$this->user = $user;
-			if (User::can($user, ['role_employee'])) {
-				$this->exitJson(['role' => 'employee']);
-			} else {
-				$this->exitJson(['role' => 'user']);
-			}
-		}
-
-		$this->view = 'login';
-		$this->layout = 'vitex';
-	}
 
 	public function actionLogout()
 	{
