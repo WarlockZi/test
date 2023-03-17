@@ -223,7 +223,7 @@ async function post(url, data = {}) {
         reject(Error("Network Error" + e.message));
       };
       req.onload = function () {
-        try {
+        // try {
           const res = JSON.parse(req.response)
           let msg = $('.message')[0]
 
@@ -247,11 +247,11 @@ async function post(url, data = {}) {
             error(res.error)
           }
           resolve(res);
-        } catch (e) {
-          console.log('////////////********* REQUEST ERROR ***********//////////////////////')
-          console.log(req.response)
-          return false
-        }
+        // } catch (e) {
+        //   console.log('////////////********* REQUEST ERROR ***********//////////////////////')
+        //   console.log(req.response)
+        //   return false
+        // }
       }
     }
   )
