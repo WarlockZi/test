@@ -57,7 +57,7 @@ class Assets
 	{
 		$str = '';
 		foreach ($this->js as $name) {
-			$str .= "<script src='{$this->host}{$name}{$this->getTime()}.js'></script>";
+			$str .= "<script src='{$this->host}{$name}.js{$this->getTime()}'></script>";
 		}
 		return $str;
 	}
@@ -76,7 +76,7 @@ class Assets
 	{
 		$str = '';
 		foreach ($this->js as $name) {
-			$str .= "<link href='{$this->host}{$name}{$this->getTime()}.css' rel='stylesheet' type='text/css'>";
+			$str .= "<link href='{$this->host}{$name}.css'{$this->getTime()} rel='stylesheet' type='text/css'>";
 		}
 		return $str;
 	}
