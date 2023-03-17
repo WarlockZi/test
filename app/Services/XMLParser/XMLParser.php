@@ -29,10 +29,12 @@ class XMLParser
 	{
 		$length = $groups->Группа->count();
 		$i = 0;
+		$g = json_decode($groups->Группа);
 		while ($i < $length) {
 			$hash = (string)$groups->Группа[$i]->Ид;
 			$name = (string)$groups->Группа[$i]->Наименование;
-			echo str_repeat('-', $level) . $level . $name . '<br>';
+			$pref = str_repeat('- ', $level);
+			echo "{$pref} {$level} {$name}<br>";
 			$i++;
 			if (isset($groups->Группа[$i]->Группы))
 				$this->recursion($groups->Группа[$i]->Группы, ++$level);
