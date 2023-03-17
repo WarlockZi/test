@@ -140,6 +140,7 @@ class AuthController extends AppController
 
 	public function actionLogin()
 	{
+		echo 'login - ' . printf($this->isAjax());
 		echo 'login - ' . printf($this->ajax);
 		if ($data = $this->ajax) {
 			echo 'login - есть пайлоуд' . printf($this->ajax);
