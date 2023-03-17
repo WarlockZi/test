@@ -65,8 +65,9 @@ class Router
 	{
 
 		if (!class_exists($controller)) {
+			var_dump($controller);
 			NotFound::controller($controller);
-			exit('P1');
+
 		} else if (!Router::$route->action) {
 
 			NotFound::action(Router::$route->action, $controller);
