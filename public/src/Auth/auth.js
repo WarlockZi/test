@@ -19,6 +19,7 @@ import catalogItem from '@components/catalog-item/catalog-item'
 import radio from '@components/radio/radio'
 import showPassword from "../components/showPassword/showPassword";
 
+alert('dg')
 radio()
 
 multiselect()
