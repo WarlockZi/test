@@ -137,6 +137,7 @@ class AuthController extends AppController
 
 	public function actionLogin()
 	{
+		echo 'login - '.printf($this->ajax);
 		if ($data = $this->ajax) {
 
 			if (!User::checkEmail($data['email'])) $this->exitWithError("Неверный формат email");
