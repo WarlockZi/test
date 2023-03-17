@@ -40,20 +40,35 @@ class Category extends Model
 	}
 
 
+
+	public function category()
+	{
+		return $this->parent()->with('parentRecursive');
+	}
+
+
+	public function products()
+	{
+		return $this->hasMany(Product::class);
+	}
+
+
+
 	public function cat()
 	{
 		return $this->belongsTo(Category::class);
 	}
+
+
+
+
+
 
 	public function parents()
 	{
 		return $this->cat()->with('parents');
 	}
 
-	public function category()
-	{
-		return $this->parent()->with('parentRecursive');
-	}
 	public function parent()
 	{
 		return $this->belongsTo(Category::class, 'category_id');
@@ -64,10 +79,8 @@ class Category extends Model
 		return $this->parent()->with('parentRecursive');
 	}
 
-	public function products()
-	{
-		return $this->hasMany(Product::class);
-	}
+
+
 
 
 	public function childrenRecursive()

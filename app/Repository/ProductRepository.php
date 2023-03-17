@@ -22,9 +22,9 @@ class ProductRepository extends Controller
 			['name' => 'Производитель', 'value' => $product->manufacturer->name ?? 'Неизвестен'],
 		];
 
-		foreach ($product->values as $value){
+		foreach ($product->values as $value) {
 			$property = Val::find($value->id)->property->name;
-			array_push($arr, ['name'=>$property, 'value'=>$value->name]);
+			array_push($arr, ['name' => $property, 'value' => $value->name]);
 		}
 		return $arr;
 	}
@@ -45,7 +45,8 @@ class ProductRepository extends Controller
 	{
 		return Product::
 		with('category.properties.vals')
-			->with('category.parentRecursive', 'category.parents')
+			->with('category.parentRecursive')
+			->with('category.parents')
 			->with('mainImages')
 			->with('values')
 			->with('manufacturer.country')
@@ -54,8 +55,27 @@ class ProductRepository extends Controller
 			->with('bigpackImages')
 			->with('baseUnit')
 			->with('mainUnit')
-			->with('parentCategoryRecursive')
+//			->with('parentCategoryRecursive')
 			->find($val);
+	}
+
+	public static function main(string $slug)
+	{
+		return Product::query()
+			->with('category.properties.vals')
+			->with('category.parentRecursive')
+			->with('category.parents')
+			->with('mainImages')
+			->with('values')
+			->with('manufacturer.country')
+			->with('detailImages')
+			->with('smallpackImages')
+			->with('bigpackImages')
+			->with('baseUnit')
+			->with('mainUnit')
+//			->with('parentCategoryRecursive')
+			->where('slug',$slug)
+			->first();
 	}
 
 }

@@ -3,11 +3,9 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\core\App;
 use app\core\Auth;
 use app\model\User;
 use app\Services\XMLParser\XMLParser;
-use app\view\View;
 
 
 class xmlController extends AppController

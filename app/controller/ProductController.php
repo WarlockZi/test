@@ -17,7 +17,7 @@ class ProductController extends AppController
 		if ($slug) {
 
 			$this->view = 'product';
-			$product = ProductRepository::getProduct('slug', $slug);
+			$product = ProductRepository::main($slug);
 			$product->categoryProperties = ProductRepository::preparePropertiesList($product);
 
 			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, false,);

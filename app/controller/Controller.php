@@ -22,9 +22,11 @@ abstract class Controller
 
 	function __construct()
 	{
-		$this->assets = new Assets($this);
-		$this->route = Router::getRoute();
-		$this->token = $this->createToken();
+		if (!$this->isAjax()) {
+			$this->assets = new Assets($this);
+			$this->route = Router::getRoute();
+			$this->token = $this->createToken();
+		}
 	}
 
 	public function getView()

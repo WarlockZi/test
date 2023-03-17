@@ -20,6 +20,7 @@ class MyList
 
 	private $headEditCol;
 	private $headDelCol;
+	private $model;
 
 	private $relation;
 
@@ -29,7 +30,7 @@ class MyList
 		$list->items = $list->setItems($count, $modelName);
 		$model = new $modelName;
 		$model = strtolower(class_basename($modelName));
-		$list->dataModel = "data-model='{$model}'";
+		$list->model = "data-model='{$model}'";
 		return $list;
 	}
 

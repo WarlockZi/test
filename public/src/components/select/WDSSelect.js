@@ -90,13 +90,14 @@ function setup(select) {
   if (select.field) {
     select.sel.dataset.field = select.field
   }
-  select.sel.dataset.value = select.selectedOption.value
+  // debugger
+  select.sel.dataset.value = select?.selectedOption?.value
   select.sel.tabIndex = 0
 
   select.sel.append(select.label)
 
   select.space.classList.add("space")
-  select.space.innerText = select.selectedOption.label
+  select.space.innerText = select?.selectedOption?.label
   select.label.append(select.space)
 
   select.arrow.classList.add("arrow")
@@ -143,6 +144,7 @@ function setup(select) {
 
   function setOption(option) {
     const li = document.createElement("li")
+    // debugger
     li.innerText = option.label
     li.dataset.value = option.value
     li.classList.toggle("selected", option.selected)

@@ -16,7 +16,7 @@ if (tables) {
     const ids = getIds()
 
     const modelName = table.dataset.model ?? null
-    const modelId = table.dataset.id ?? null
+    // const modelId = table.dataset.id ?? null
 
     const rows = fillRows()
 
@@ -27,7 +27,6 @@ if (tables) {
     })
 
     async function customSelectChange({target}) {
-
       debugger
       // modelUpdate(this)
       let wrapper = target.closest('[data-model]')
@@ -88,7 +87,7 @@ if (tables) {
       /// create
       if (target.className === 'add-model') {
         // modelCreate(modelName, modelId, belongsTo, belongsToId, morph, morphId, morphoneormany, morphdetach)
-        modelCreate(this)
+        modelCreate(target)
 
         /// delete
       } else if (
@@ -116,8 +115,8 @@ if (tables) {
     }
 
     function edit(target) {
-      let model = target.dataset.model
-      // let id = target.closest('.edit:not(.head)').dataset['id']
+      // debugger
+      let model = target.closest('[custom-list]').dataset.model
       let id = target.dataset.id
       window.location = `/adminsc/${model}/edit/${id}`;
     }
@@ -139,11 +138,7 @@ if (tables) {
       })
     }
 
-
     // UPDATE OR CREATE
-    function modelUpdate() {
-
-    }
 
     function createRelation(data, table, relation) {
       let parent = table.closest('.item_wrap')
@@ -159,13 +154,15 @@ if (tables) {
       data.id = parent.dataset.id
 
       data.morph = new MorphDTO(table)
-      debugger
+      // debugger
       return  data
     }
 
 
-    async function modelCreate() {
+    async function modelCreate(target) {
       let data = {}
+      data.model = target.closest('[custom-list]').dataset.model
+      data.id = 0
       let relation = table.dataset.relation
       if (relation) {
         data = createRelation(data, table, relation)
@@ -186,7 +183,7 @@ if (tables) {
       [].forEach.call(hidden, function (el) {
         let newEl = el.cloneNode(true)
         newEl.removeAttribute('hidden')
-        // newEl.contentEditable.remove('head')
+
         let tableContent = $(table).find('.custom-list')
         tableContent.appendChild(newEl)
         if (['id'].includes(newEl.dataset.field)) {
@@ -328,11 +325,9 @@ if (tables) {
 
 
     function makeServerModel(target, modelName) {
-      let model = target.dataset.model
+      let model = target.closest('[custom-list]').dataset.model
       let id = target.dataset.id
       let field = target.dataset.field
-      let belongsTo = target.dataset.belongsTo ?? null
-      let belongsId = target.dataset.belongsToId ?? null
       let obj = {
         model: {
           id: target.dataset.id,

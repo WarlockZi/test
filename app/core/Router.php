@@ -65,7 +65,7 @@ class Router
 	{
 
 		if (!class_exists($controller)) {
-			var_dump($controller);
+//			var_dump($controller);
 			NotFound::controller($controller);
 
 		} else if (!Router::$route->action) {

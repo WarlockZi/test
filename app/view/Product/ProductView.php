@@ -2,6 +2,7 @@
 
 namespace app\view\Product;
 
+use app\core\FS;
 use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Unit;
@@ -17,35 +18,13 @@ use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
-use app\view\components\HasOne\HasOne;
 use app\view\Image\ImageView;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductView
 {
-
 	protected $model = 'product';
-
-	public static function getCardDetailImage($image)
-	{
-		$im = "<img class = 'detail-image' src='{$image->getFullPath($image)}' alt=''></img>";
-		return "<div class='detail-image-wrap'>{$im}</div>";
-	}
-
-	public static function getCardImages(string $title,
-																			 Collection $collection,
-																			 string $class = 'detail-images-wrap')
-	{
-		ob_start();
-		$detail_image = '';
-		foreach ($collection as $image) {
-			$detail_image .= self::getCardDetailImage($image);
-		}
-		include ROOT . '/app/view/Product/detail_images.php';
-		return ob_get_clean();
-	}
 
 	public static function edit(Product $product): string
 	{
@@ -177,6 +156,7 @@ class ProductView
 			$slug,
 			$many
 			)
+			->class('dnd-image')
 			->detach('detach')
 			->html(
 				DndBuilder::make('product') . $imgs
@@ -190,18 +170,24 @@ class ProductView
 	{
 		$str = "<div class='category'>{$category->name}</div>";
 		foreach ($category->properties as $property) {
-			$intersect = $property->vals->intersect($product->values);
-			$selected = $intersect->count() ? $intersect[0]->id : 0;
-			$propName = "<div class='name'>{$property->name}</div>";
-			$select = SelectBuilder::build()
-				->collection($property->vals)
-				->morph('values', $property->id, 'one', true)
-				->selected($selected)
-				->initialOption('', 0)
-				->get();
-			$str .= "<div class='property'>{$propName}<br>{$select}</div>";
+			$str.=self::getPropertySelector($property,$product);
 		}
 		return $str;
+	}
+
+	protected static function getPropertySelector($property,$product){
+		$intersect = $property->vals->intersect($product->values);
+		$selected = $intersect->count() ? $intersect[0]->id : 0;
+		$options = ArrayOptionsBuilder::build($property->vals)
+			->initialOption()
+			->selected($selected)
+			->get();
+		$select = MorphBuilder::build($product, 'values', '',true)
+			->html(SelectBuilder::build($options)
+				->get())
+			->get();
+		$propName = "<div class='name'>{$property->name}</div>";
+		return "<div class='property'>{$propName}<br>{$select}</div>";
 	}
 
 	protected static function getProperties(Product $product): string
@@ -239,7 +225,6 @@ class ProductView
 		return include ROOT . '/app/view/Product/description.php';
 	}
 
-
 	public static function list(Collection $items): string
 	{
 		return MyList::build(Product::class)
@@ -264,7 +249,6 @@ class ProductView
 			->get();
 	}
 
-
 	public static function belongToCategory($category)
 	{
 		$arr = $category->toArray();
@@ -283,15 +267,30 @@ class ProductView
 
 	public static function renderToCart(Product $product)
 	{
-		ob_start();
-		include ROOT . '/app/view/Product/Main/toCart.php';
-		return ob_get_clean();
+		return FS::getFileContent(ROOT . '/app/view/Product/Main/toCart.php',compact('product'));
 	}
 
 	public static function renderProperty($property)
 	{
+		return FS::getFileContent(ROOT . '/app/view/Product/property.php',compact('property'));
+	}
+
+	public static function getCardDetailImage($image)
+	{
+		$im = "<img class = 'detail-image' src='{$image->getFullPath($image)}' alt=''></img>";
+		return "<div class='detail-image-wrap'>{$im}</div>";
+	}
+
+	public static function getCardImages(string $title,
+																			 Collection $collection,
+																			 string $class = 'detail-images-wrap')
+	{
 		ob_start();
-		include ROOT . '/app/view/Product/property.php';
+		$detail_image = '';
+		foreach ($collection as $image) {
+			$detail_image .= self::getCardDetailImage($image);
+		}
+		include ROOT . '/app/view/Product/detail_images.php';
 		return ob_get_clean();
 	}
 

@@ -6,7 +6,7 @@
 	<?= $this->field; ?>
 	<?= $this->class; ?>
 >
-	<?= $this->initialOption; ?>
+
 	<?= $this->options; ?>
 
 </select>
