@@ -76,7 +76,7 @@ abstract class Controller
 
 	public function isAjax(): array
 	{
-			echo 'req - ' . printf($_POST['param']);
+		echo 'isAjax - ' . printf($_POST['param']);
 		if (isset($_POST['param'])) {
 			$req = json_decode($_POST['param'], true);
 			echo 'req - ' . printf($req);
