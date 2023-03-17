@@ -77,12 +77,12 @@ class Router
 		$controller = self::setController();
 		echo "router {$controller}<br>";
 		$action = 'action' . self::upperCamelCase(self::$route->action);
+		echo "router {$action}<br>";
 
 		Router::handleErrors($controller, $action);
 
 		$controller = new $controller;
 		Auth::autorize();
-		echo "router {$action}<br>";
 		$controller->$action();
 
 		$controller->setView();
