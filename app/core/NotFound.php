@@ -3,8 +3,6 @@
 
 namespace app\core;
 
-
-use app\controller\AppController;
 use app\controller\Controller;
 use app\model\User;
 use app\view\AdminView;
@@ -20,7 +18,7 @@ class NotFound extends Controller
 	{
 		$error = "Плохой запрос url - {$url}";
 		Error::setError($error);
-//		Router::setController('AppController');
+
 		$view = self::setView();
 		$view->route = ['controller' => 'AppController', 'action' => 'index'];
 		$view->render();
@@ -32,14 +30,14 @@ class NotFound extends Controller
 		$error = "Плохой запрос controller - {$controller}";
 		Error::setError($error);
 		$controller = new self();
-		$view = $controller->getView();
+
 		$view = self::setView();
 		$view->controller = new $controller;
 		$view->render();
 		exit();
 	}
 
-	public static function action(string $action, Controller $controller)
+	public static function action(string $action, string $controller)
 	{
 		$error = "Плохой запрос action - {$action} у контроллера - {$controller->shortClassName($controller)}";
 		Error::setError($error);

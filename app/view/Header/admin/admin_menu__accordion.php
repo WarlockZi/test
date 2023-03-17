@@ -54,7 +54,7 @@ use \app\core\Icon;
 			  </div>
 
 			  <ul class="level-1">
-						 <? if (User::can($user, ['gate_admin'])): // admin ?>
+						 <? if (User::can($user, ['role_admin'])): // admin ?>
 					 <a class="neon" href='/adminsc/property'>Свойства</a>
 					 <a class="neon" href='/adminsc/right'>Права</a>
 					 <a class="neon" href='/adminsc/country'>Страны</a>
