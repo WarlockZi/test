@@ -62,9 +62,12 @@ class Router
 
 	protected static function handleErrors(string $controller, string $action)
 	{
+		echo "err {$controller}<br>";
 		if (!class_exists($controller)){
+		echo "err1 {$controller}<br>";
 			NotFound::controller($controller);
 		}else if (!Router::$route->action){
+		echo "err2 {$controller}<br>";
 			NotFound::action($controller);
 		}
 
