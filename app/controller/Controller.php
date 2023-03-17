@@ -22,6 +22,7 @@ abstract class Controller
 
 	function __construct()
 	{
+		echo 'login - constructor'.printf($this->ajax);
 		$this->assets = new Assets($this);
 		$this->route = Router::getRoute();
 		$this->token = $this->createToken();
