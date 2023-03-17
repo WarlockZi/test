@@ -50,7 +50,7 @@ class Router
 					}
 				}
 
-				$matches = array_merge($matches,$r);
+				$matches = array_merge($matches, $r);
 				$route = new Route();
 				foreach ($matches as $k => $v) {
 					$route->$k = strtolower($v);
@@ -63,13 +63,13 @@ class Router
 
 	protected static function handleErrors(string $controller, string $action)
 	{
-//		echo "err {$controller}<br>";
-		if (!class_exists($controller)){
-//		echo "e1 {$controller}<br>";
+
+		if (!class_exists($controller)) {
+
 			NotFound::controller($controller);
-		}else if (!Router::$route->action){
-//		echo "e2 {$controller}<br>";
-			NotFound::action(Router::$route->action,$controller);
+		} else if (!Router::$route->action) {
+
+			NotFound::action(Router::$route->action, $controller);
 		}
 
 	}
@@ -112,7 +112,7 @@ class Router
 	{
 		$route = Router::getRoute();
 		return
-      $route->controller === 'auth' && $route->action === 'login'
+			$route->controller === 'auth' && $route->action === 'login'
 			|| $route->controller === 'auth' && $route->action === 'noconfirm'
 			|| $route->controller === 'main' && $route->action === 'index'
 			|| $route->controller === 'product'
