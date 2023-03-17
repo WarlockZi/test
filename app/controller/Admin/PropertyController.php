@@ -21,7 +21,7 @@ class PropertyController Extends AppController
   }
 
   public function __construct()
-	{
+	{			exit('P2');
 		parent::__construct();
 	}
 
