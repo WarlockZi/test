@@ -22,6 +22,7 @@ abstract class Controller
 
 	function __construct()
 	{
+		echo 'postParam - ' . printf(isset($_POST['param']));
 //		echo 'login - constructor'.printf($this->ajax);
 		$this->assets = new Assets($this);
 		$this->route = Router::getRoute();
