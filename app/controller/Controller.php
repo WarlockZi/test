@@ -77,9 +77,9 @@ abstract class Controller
 	public function isAjax(): array
 	{
 		if (isset($_POST['param'])) {
-
 			$req = json_decode($_POST['param'], true);
-			echo 'req - ' . printf(isset($req));
+			echo 'req - ' . printf($req);
+			echo 'req - ' . printf($req);
 			if ($this->badToken($req)) return [];
 
 			if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
