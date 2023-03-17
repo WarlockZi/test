@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Assets
 {
 	protected $host;
-	protected $cache;
+	protected $cache = false;
 
 	protected $js = [];
 	protected $css = [];
@@ -22,7 +22,7 @@ class Assets
 
 	public function __construct()
 	{
-		$this->setCache(false);
+		$this->setCache();
 		$this->setHost();
 	}
 
@@ -47,38 +47,9 @@ class Assets
 		$this->keywords = $keywords ? $keywords : 'Медицинкские перчатки';
 	}
 
-
 	public function setJs(string $name)
 	{
 		$this->js[] = $name;
-	}
-
-	public function getJS(): string
-	{
-		$str = '';
-		foreach ($this->js as $name) {
-			$str .= "<script src='{$this->host}{$name}.js{$this->getTime()}'></script>";
-		}
-		return $str;
-	}
-
-	public function setCss(string $name)
-	{
-		$this->css[] = $name;
-	}
-
-	protected function getTime()
-	{
-		return ($this->cache) ? "" : "?" . time();
-	}
-
-	public function getCss()
-	{
-		$str = '';
-		foreach ($this->js as $name) {
-			$str .= "<link href='{$this->host}{$name}.css'{$this->getTime()} rel='stylesheet' type='text/css'>";
-		}
-		return $str;
 	}
 
 	public function setCDNJs(string $src): void
@@ -119,7 +90,6 @@ class Assets
 		unset($this->css[$name]);
 	}
 
-
 	public function setHost()
 	{
 		$this->host = $_ENV['MODE'] === 'development'
@@ -127,17 +97,40 @@ class Assets
 			: '/public/dist/';;
 	}
 
+	public function setCss(string $name)
+	{
+		$this->css[] = $name;
+	}
+
 	public function getHost()
 	{
 		return $this->host;
 	}
 
-	public function setCache(bool $cache = true): void
+	protected function getTime()
 	{
-//		echo $_ENV['MODE'];
-//		echo 'cache -'.$this->cache;
+		return ($this->cache) ? "?" . time() : "";
+	}
+
+	public function getJS(string $str=''): string
+	{
+		foreach ($this->js as $name) {
+			$str .= "<script src='{$this->host}{$name}.js{$this->getTime()}'></script>";
+		}
+		return $str;
+	}
+	public function getCss(string $str='')
+	{
+		foreach ($this->js as $name) {
+			$str .= "<link href='{$this->host}{$name}.css'{$this->getTime()} rel='stylesheet' type='text/css'>";
+		}
+		return $str;
+	}
+
+	public function setCache(): void
+	{
 		if ($_ENV['MODE'] === 'development') {
-			$this->cache = $cache;
+			$this->cache = false;
 		} else {
 			$this->cache = false;
 		}
