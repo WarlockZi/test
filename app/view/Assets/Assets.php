@@ -131,6 +131,7 @@ class Assets
 
 	public function setCache(bool $cache = true): void
 	{
+		echo $_ENV['MODE'];
 		if ($_ENV['MODE'] === 'development') {
 			$this->cache = $cache;
 		}else{
