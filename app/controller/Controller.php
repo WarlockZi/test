@@ -22,8 +22,6 @@ abstract class Controller
 
 	function __construct()
 	{
-		echo 'postParam - ' . printf(isset($_POST['param']));
-//		echo 'login - constructor'.printf($this->ajax);
 		$this->assets = new Assets($this);
 		$this->route = Router::getRoute();
 		$this->token = $this->createToken();
@@ -49,7 +47,8 @@ abstract class Controller
 		}
 	}
 
-	public function getRoute(){
+	public function getRoute()
+	{
 		return $this->route;
 	}
 
@@ -77,10 +76,10 @@ abstract class Controller
 
 	public function isAjax(): array
 	{
-//		echo 'postParam - ' . printf(isset($_POST['param']));
 		if (isset($_POST['param'])) {
 
 			$req = json_decode($_POST['param'], true);
+			echo 'req - ' . printf(isset($req));
 			if ($this->badToken($req)) return [];
 
 			if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
