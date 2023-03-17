@@ -27,7 +27,7 @@ class AuthController extends AppController
 			if (!User::checkPassword($data['password'])) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
 
 			$user = User::where('email', $data['email'])->first()->toArray();
-			echo 'login - есть пайлоуд' . var_dump($user);
+//			echo 'login - есть пайлоуд' . var_dump($user);
 
 			if (!$user) $this->exitWithError('Пользователь не зарегистрирован');
 			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');

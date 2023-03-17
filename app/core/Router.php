@@ -65,10 +65,10 @@ class Router
 	{
 //		echo "err {$controller}<br>";
 		if (!class_exists($controller)){
-		echo "e1 {$controller}<br>";
+//		echo "e1 {$controller}<br>";
 			NotFound::controller($controller);
 		}else if (!Router::$route->action){
-		echo "e2 {$controller}<br>";
+//		echo "e2 {$controller}<br>";
 			NotFound::action(Router::$route->action,$controller);
 		}
 
@@ -84,7 +84,7 @@ class Router
 		Router::handleErrors($controller, $action);
 
 		$controller = new $controller;
-//		echo "router {$action}<br>";
+
 		Auth::autorize();
 		$controller->$action();
 
