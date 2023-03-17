@@ -63,11 +63,13 @@ class Router
 
 	protected static function handleErrors(string $controller, string $action)
 	{
+			exit('P0');
 
 		if (!class_exists($controller)) {
-
+			exit('P1');
 			NotFound::controller($controller);
 		} else if (!Router::$route->action) {
+			exit('P2');
 
 			NotFound::action(Router::$route->action, $controller);
 		}
