@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\core\Mail;
+use app\core\Router;
 use app\model\User;
 use app\view\User\UserView;
 use app\view\View;
@@ -13,6 +14,7 @@ class AuthController extends AppController
 
 	public function __construct()
 	{
+		echo printf(Router::getRoute());
 //		echo 'login - constructor'.printf($this->ajax);
 		parent::__construct();
 		$this->assets->setJs('auth');
