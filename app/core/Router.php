@@ -78,8 +78,8 @@ class Router
 		$action = 'action' . self::upperCamelCase(self::$route->action);
 
 		Router::handleErrors($controller, $action);
-		echo "router {$controller}<br>";
 
+		echo "router {$controller}<br>";
 		$controller = new $controller;
 		echo "router {$action}<br>";
 		Auth::autorize();
