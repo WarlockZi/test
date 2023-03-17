@@ -22,9 +22,11 @@ abstract class Controller
 
 	function __construct()
 	{
+		echo 'con b';
 		$this->assets = new Assets($this);
 		$this->route = Router::getRoute();
 		$this->token = $this->createToken();
+		echo 'con a';
 	}
 
 	public function getView()
