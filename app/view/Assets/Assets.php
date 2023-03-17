@@ -70,7 +70,7 @@ class Assets
 
 	public function getCss()
 	{
-		$time = ($this->cache) ? "?" . time() : '';
+		$time = ($this->cache) ? "":"?" . time() ;
 		$str = '';
 		foreach ($this->js as $name) {
 			$str .= "<link href='{$this->host}{$name}{$time}.css' rel='stylesheet' type='text/css'>";
