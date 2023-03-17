@@ -55,10 +55,9 @@ class Assets
 
 	public function getJS(): string
 	{
-		$time = ($this->cache) ? "?" . time() : '';
 		$str = '';
 		foreach ($this->js as $name) {
-			$str .= "<script src='{$this->host}{$name}{$time}.js'></script>";
+			$str .= "<script src='{$this->host}{$name}{$this->getTime()}.js'></script>";
 		}
 		return $str;
 	}
@@ -68,12 +67,16 @@ class Assets
 		$this->css[] = $name;
 	}
 
+	protected function getTime()
+	{
+		return ($this->cache) ? "" : "?" . time();
+	}
+
 	public function getCss()
 	{
-		$time = ($this->cache) ? "":"?" . time() ;
 		$str = '';
 		foreach ($this->js as $name) {
-			$str .= "<link href='{$this->host}{$name}{$time}.css' rel='stylesheet' type='text/css'>";
+			$str .= "<link href='{$this->host}{$name}{$this->getTime()}.css' rel='stylesheet' type='text/css'>";
 		}
 		return $str;
 	}
@@ -132,10 +135,10 @@ class Assets
 	public function setCache(bool $cache = true): void
 	{
 //		echo $_ENV['MODE'];
-		echo 'cache -'.$this->cache;
+//		echo 'cache -'.$this->cache;
 		if ($_ENV['MODE'] === 'development') {
 			$this->cache = $cache;
-		}else{
+		} else {
 			$this->cache = true;
 		}
 	}
