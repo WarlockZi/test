@@ -1,7 +1,6 @@
 @import "../../var";
 @import "../../mixin_media";
 
-
 .user-menu {
   position: relative;
   display: flex;
@@ -67,6 +66,7 @@
     right: -1px;
     width: 280px;
     padding: 10px;
+
 
     a {
       padding: 5px 10px;

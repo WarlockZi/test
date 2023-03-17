@@ -10,6 +10,90 @@ header {
   align-items: center;
 
 
+
+  .user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    cursor: pointer;
+    color: #2b303a;
+    padding: 3px 3px 3px 3px;
+    flex: 0 1 auto;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+
+    img {
+      border: 2px solid #f5f5f5;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin: 0 6px;
+      width: 44px;
+      @include _600 {
+        width: 30px;
+      }
+    }
+
+    .credits {
+      display: flex;
+      flex-flow: column;
+      flex: 0 0 200px;
+
+      .fio {
+        font-size: .8rem;
+        @include _600 {
+          font-size: .7rem;
+        }
+      }
+
+      .email {
+        font-size: .6rem;
+      }
+    }
+
+    //&:after {
+    //  content: '☰';
+    //  display: block;
+    //  padding: 3px 8px;
+    //  align-self: center;
+    //}
+
+    &:hover > .menu {
+      display: flex;
+    }
+
+    .menu {
+      display: none;
+      flex-flow: column;
+      border: 1px solid #eee;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      background: #fff;
+      z-index: 501;
+      position: absolute;
+      top: 100%;
+      right: -1px;
+      width: 280px;
+      padding: 10px;
+
+      a {
+        padding: 5px 10px;
+        color: $color-a;
+
+        &:hover {
+          background-color: #e5e5e5;
+        }
+      }
+    }
+
+  }
+
+
+
+
+
+
   @include _600 {
     padding: 0;
   }
