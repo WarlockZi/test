@@ -23,7 +23,7 @@ define('EDIT', ICONS . '/edit.svg');
 define('COMPONENTS', ROOT . '/app/view/components');
 require_once './Eloquent.php';
 
-//ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 if (DEV) {
 	ini_set('display_errors', 1);
 }
