@@ -22,7 +22,7 @@ class AuthController extends AppController
 	public function actionLogin()
 	{
 		if ($data = $this->ajax) {
-			$this->exitWithPopup('ds');
+//			$this->exitWithPopup('ds');
 			if (!User::checkEmail($data['email'])) $this->exitWithError("Неверный формат email");
 			if (!User::checkPassword($data['password'])) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
 
