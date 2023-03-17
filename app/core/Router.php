@@ -75,12 +75,14 @@ class Router
 		Router::matchRoute($url);
 
 		$controller = self::setController();
+		echo "router {$controller}<br>";
 		$action = 'action' . self::upperCamelCase(self::$route->action);
 
 		Router::handleErrors($controller, $action);
 
 		$controller = new $controller;
 		Auth::autorize();
+		echo "router {$action}<br>";
 		$controller->$action();
 
 		$controller->setView();
