@@ -139,7 +139,7 @@ class Assets
 		if ($_ENV['MODE'] === 'development') {
 			$this->cache = $cache;
 		} else {
-			$this->cache = true;
+			$this->cache = false;
 		}
 	}
 
