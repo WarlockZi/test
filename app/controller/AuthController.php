@@ -13,6 +13,7 @@ class AuthController extends AppController
 
 	public function __construct()
 	{
+		echo 'login - constructor'.printf($this->ajax);
 		parent::__construct();
 		$this->assets->setJs('auth');
 		$this->assets->setCss('auth');
