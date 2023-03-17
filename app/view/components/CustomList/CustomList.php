@@ -15,13 +15,13 @@ class CustomList
 	private $delCol = false;
 	private $editCol = false;
 	private $searchStr = '<input type="text">';
-	private $tableClassName = '';
+//	private $tableClassName = '';
 	private $model = '';
 	private $field = '';
-	private $filter = '';
+//	private $filter = '';
 	private $models = [];
-	private $parent = '';
-	private $parentId = null;
+//	private $parent = '';
+//	private $parentId = null;
 
 
 	public function __construct($options)

@@ -20,24 +20,30 @@ class XMLParser
 	{
 		$x = simplexml_load_file($this->file);
 		$groups = $x->Классификатор->Группы;
-		$this->recursion($groups);
+		$g = json_decode(json_encode($groups), true)['Группа'];
+		$this->recursion($g);
 
 		$goods = $x[''];
 	}
 
 	protected function recursion($groups, $level = 0)
 	{
-		$length = $groups->Группа->count();
-		$i = 0;
-		$g = json_decode($groups->Группа);
-		while ($i < $length) {
-			$hash = (string)$groups->Группа[$i]->Ид;
-			$name = (string)$groups->Группа[$i]->Наименование;
-			$pref = str_repeat('- ', $level);
-			echo "{$pref} {$level} {$name}<br>";
-			$i++;
-			if (isset($groups->Группа[$i]->Группы))
-				$this->recursion($groups->Группа[$i]->Группы, ++$level);
+		if (!isset($groups['Ид'])) {
+			foreach ($groups as $i => $group) {
+				$hash = (string)$group['Ид'];
+				$name = (string)$group['Наименование'];
+				$pref = str_repeat('- ', $level);
+				echo "{$pref} #{$i} {$level} {$name}<br>";
+
+				if (isset($group['Группы']))
+					$this->recursion($group['Группы']['Группа'], ++$level);
+			}
+		}else{
+				$hash = (string)$groups['Ид'];
+				$name = (string)$groups['Наименование'];
+				$pref = str_repeat('- ', $level);
+
+				echo "{$pref} {$level} {$name}<br>";
 		}
 	}
 

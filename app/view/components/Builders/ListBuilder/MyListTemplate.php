@@ -1,6 +1,7 @@
 <div custom-list
 	<?= $this->class; ?>
 	<?= $this->relation; ?>
+	<?= $this->model; ?>
 >
 
 	<?= $this->pageTitle; ?>
@@ -37,7 +38,7 @@
 				 <? else: ?>
 
 				  <div
-								<?= $this->dataModel; ?>
+
 								<?= $this->getId($item['id']); ?>
 								<?= $c->dataField; ?>
 								<?= $c->class; ?>

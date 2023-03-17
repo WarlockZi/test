@@ -33,8 +33,8 @@ class PropertyController Extends AppController
 
 	public function actionEdit()
 	{
-		if (isset($this->route['id'])) {
-			$item = PropertyView::edit($this->route['id']);
+		if ($this->route->id) {
+			$item = PropertyView::edit($this->route->id);
 			$this->set(compact('item'));
 		} else {
 			header('Location: /adminsc/property');

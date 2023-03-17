@@ -4,7 +4,6 @@ namespace app\controller\Admin;
 
 
 use app\controller\AppController;
-use app\core\Route;
 use app\model\Val;
 
 class ValController Extends AppController

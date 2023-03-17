@@ -68,7 +68,7 @@ class PropertyView
 					->html(
 						MyList::build(Val::class)
 							->items($item->vals)
-							->belongsTo($view->model, $id)
+							->realtion('vals')
 							->column(
 								ListColumnBuilder::build('id')
 									->name('ID')

@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppController extends Controller implements IModelable
 {
-	protected $ajax;
+
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->isAjax();
 	}
 
 	public function setView()
