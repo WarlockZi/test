@@ -22,7 +22,6 @@ class PropertyController Extends AppController
 
   public function __construct()
 	{
-		$this->exitWithPopup('P');
 		parent::__construct();
 	}
 
