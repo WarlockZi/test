@@ -14,8 +14,6 @@ class AuthController extends AppController
 
 	public function __construct()
 	{
-//		echo printf(Router::getRoute());
-//		echo 'login - constructor'.printf($this->ajax);
 		parent::__construct();
 		$this->assets->setJs('auth');
 		$this->assets->setCss('auth');
@@ -23,8 +21,8 @@ class AuthController extends AppController
 
 	public function actionLogin()
 	{
-		echo 'login - ' . printf($this->isAjax());
-		echo 'login - ' . printf($this->ajax);
+//		echo 'login - ' . printf($this->isAjax());
+//		echo 'login - ' . printf($this->ajax);
 		if ($data = $this->ajax) {
 			echo 'login - есть пайлоуд' . printf($this->ajax);
 			$this->exitWithPopup('ds');
