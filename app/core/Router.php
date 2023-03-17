@@ -24,7 +24,8 @@ class Router
 	public static function setController(): string
 	{
 		self::setNamespace();
-		self::$controller = self::$namespace . self::$route->controller . 'Controller';
+		$name = ucfirst(self::$route->controller);
+		self::$controller = self::$namespace . $name . 'Controller';
 		return self::$controller;
 	}
 
