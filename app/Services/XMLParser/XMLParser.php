@@ -18,45 +18,62 @@ class XMLParser
 
 	protected function run()
 	{
-		$x = simplexml_load_file($this->file);
-		$groups = $x->Классификатор->Группы;
-		$g = json_decode(json_encode($groups), true)['Группа'];
-		$this->recursion($g);
+		$content = simplexml_load_file($this->file);
 
-		$goods = $x[''];
+		$groups = $content->Классификатор->Группы;
+		$groups = json_decode(json_encode($groups), true)['Группа'];
+//		$groups = array();
+		$arr = $this->go($groups);
+
+		$goods = $content->Классификатор->Группы;
 	}
 
-	protected function recursion($groups, $level = 0)
+	protected function isAssoc(array $arr)
 	{
-		if (!isset($groups['Ид'])) {
-			foreach ($groups as $i => $group) {
-				$hash = (string)$group['Ид'];
-				$name = (string)$group['Наименование'];
-				$pref = str_repeat('- ', $level);
-				echo "{$pref} #{$i} {$level} {$name}<br>";
+		if (array() === $arr) return false;
+		return array_keys($arr) !== range(0, count($arr) - 1);
+	}
 
-				if (isset($group['Группы']))
-					$this->recursion($group['Группы']['Группа'], ++$level);
-			}
-		}else{
-				$hash = (string)$groups['Ид'];
-				$name = (string)$groups['Наименование'];
-				$pref = str_repeat('- ', $level);
-
-				echo "{$pref} {$level} {$name}<br>";
+	protected function push(&$parent, array &$arr, &$curr)
+	{
+		if (!$parent) {
+			array_push($arr, $curr);
+		} else {
+			array_push($parent, $curr);
 		}
 	}
 
-//		$stream = fopen($this->file,'r');
-//		$parser = xml_parser_create();
-//		while (($data = fread($stream, 16384))) {
-//			$str = $data;
-//			xml_parse($parser, $data);
-//		}
-//
-//		xml_parse($parser,'',true);
-//		xml_parser_free($parser);
-//		fclose($stream);
+	protected function fillCurrent(array $groups, $id, $category_id)
+	{
+		foreach ($groups as $k => $v) {
+			$curr[$k] = $v;
+		}
+		$curr['id'] = $id;
+		$curr['category_id'] = $category_id;
+		return $curr;
+	}
 
+	protected function go($groups, $level = 0, array $arr = [], &$parent = [], $id = 0){
+		$level++;
+		if ($this->isAssoc($groups)) {
+			$id++;
+			$curr = $this->fillCurrent($groups, $id, $parent['id']);
+			$this->push($parent, $arr, $curr);
+		} else {
+			foreach ($groups as $i => $group) {
+				$id++;
+				$curr = $this->fillCurrent($group, $id, $parent['id']);
+				$this->push($parent, $arr, $curr);
+				if (isset($group['Группы']))
+					$this->recursion($group['Группы']['Группа'], $level, $arr, $curr, $id);
+			}
+		}
+		return $arr;
+	}
+
+	protected function recursion($groups, $level = 0, array $arr = [], &$parent = [], $id = 0)
+	{
+
+	}
 
 }

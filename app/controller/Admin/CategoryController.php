@@ -26,11 +26,7 @@ class CategoryController Extends AppController
 	{
 		$categories = CategoryRepository::treeAll();
 
-		$accordion =
-			TreeABuilder::build(
-				$categories, 'children_recursive', 2)
-				->href('/adminsc/category/edit/')
-				->get();
+		$accordion = CategoryView::indexTree($categories);
 
 		$this->set(compact('categories', 'accordion'));
 

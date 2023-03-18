@@ -3,6 +3,7 @@
 namespace app\model;
 
 
+use app\Services\Slug;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -14,6 +15,7 @@ class Product extends Model
     'act',
 		'art',
 		'txt',
+		'slug',
 		'category_id',
 		'image_id',
 		'main_unit',
@@ -24,6 +26,12 @@ class Product extends Model
 		'description',
 	];
 
+	protected static function booted() {
+		static::Updating (function($product) {
+			$product->slug = Slug::slug($product->name);
+			return $product;
+		});
+	}
 	public function detailImages()
 	{
 		return $this->morphToMany(
@@ -62,14 +70,13 @@ class Product extends Model
 			)->where('slug', '=', 'bigpack');
 	}
 
-
 	public function mainUnit()
 	{
 		return $this->belongsTo(Unit::class,
-			'main_unit',
-//			'id',
+			'main_unit'
 			);
 	}
+
 	public function baseUnit()
 	{
 		return $this->belongsTo(Unit::class,
@@ -118,9 +125,11 @@ class Product extends Model
 	public function values()
 	{
 		return $this->morphToMany(Val::class, 'valuable');
-//		return $this->morphToMany(Val::class, 'valuables')->with(Property::class);
 	}
-
+//	public function valuesWithProperty()
+//	{
+//		return $this->morphToMany(Val::class, 'valuable')->with('property');
+//	}
 }
 
 

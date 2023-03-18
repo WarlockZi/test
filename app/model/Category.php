@@ -3,6 +3,7 @@
 namespace app\model;
 
 
+use app\Services\Slug;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -13,11 +14,19 @@ class Category extends Model
 		'name',
 		'description',
 		'sort',
+		'slug',
 		'img',
 		'category_id',
 		'show_front',
 		'deleted_at',
 	];
+
+	protected static function booted() {
+		static::Updating (function($category) {
+			$category->slug = Slug::slug($category->name);
+			return $category;
+		});
+	}
 
 	public function mainImages()
 	{
@@ -30,7 +39,7 @@ class Category extends Model
 	public static function frontCategories()
 	{
 		return static::where('show_front', 1)
-			->with('children')
+			->with('childrenNotDeleted')
 			->get();
 	}
 
@@ -85,14 +94,20 @@ class Category extends Model
 
 	public function childrenRecursive()
 	{
-		return $this->children()->with('childrenRecursive');
+		return $this->childrenNotDeleted()->with('childrenRecursive');
 	}
 
-	public function children()
+	public function childrenNotDeleted()
 	{
 		return $this
 			->hasMany(Category::class, 'category_id')
 			->whereNull('deleted_at');
+	}
+	public function childrenDeleted()
+	{
+		return $this
+			->hasMany(Category::class, 'category_id')
+			->whereNotNull('deleted_at');
 	}
 
 }

@@ -14,10 +14,20 @@ use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
+use app\view\components\Builders\SelectBuilder\TreeABuilder;
 use app\view\Image\ImageView;
 
 class CategoryView
 {
+
+	public static function indexTree($categoriesTree)
+	{
+		return TreeABuilder::build(
+			$categoriesTree, 'children_recursive', 2)
+			->href('/adminsc/category/edit/')
+			->get();
+	}
+
 	public static function edit(?int $id): string
 	{
 
@@ -28,6 +38,11 @@ class CategoryView
 			->field(
 				ItemFieldBuilder::build('id', $category)
 					->name('ID')
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('slug', $category)
+					->name('Адрес')
 					->get()
 			)
 			->field(
@@ -124,7 +139,7 @@ class CategoryView
 					->html(
 						MyList::build(Category::class)
 							->pageTitle('Подкатегории')
-							->items($category['children'] ?? [])
+							->items($category['childrenNotDeleted'] ?? [])
 							->column(
 								ListColumnBuilder::build('id')
 									->width('40px')
@@ -136,7 +151,31 @@ class CategoryView
 									->contenteditable()
 									->get()
 							)
-							->realtion('children')
+							->realtion('childrenNotDeleted')
+							->edit()
+							->del()
+							->addButton('ajax')
+							->get()
+					)
+			)
+			->tab(
+				ItemTabBuilder::build('Удаленные Подкатегории')
+					->html(
+						MyList::build(Category::class)
+							->pageTitle('Удаленные подкатегории')
+							->items($category['childrenDeleted'] ?? [])
+							->column(
+								ListColumnBuilder::build('id')
+									->width('40px')
+									->get()
+							)
+							->column(
+								ListColumnBuilder::build('name')
+									->name("Назввание")
+									->contenteditable()
+									->get()
+							)
+							->realtion('childrenDeleted')
 							->edit()
 							->del()
 							->addButton('ajax')
@@ -163,6 +202,15 @@ class CategoryView
 			->get();
 	}
 
+	public static function getMainImage(Category $category)
+	{
+		if ($category->mainImages->count()){
+			ImageView::catMainImage($category->mainImages->first());
+		}else{
+			return ImageView::noImage();
+		}
+
+	}
 
 	public static function selector(int $selected, int $exclude = -1): string
 	{

@@ -4,6 +4,7 @@
 namespace app\view\Image;
 
 
+use app\core\FS;
 use app\model\Image;
 use app\Repository\ImageRepository;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
@@ -16,6 +17,16 @@ class ImageView
 {
 
 	public $model = Image::class;
+
+	public static function noImage(){
+		return "<img src='/pic/srvc/nophoto-min.jpg'>";
+	}
+	public static function catMainImage(string $image){
+		return "<img src='{$image}'>";
+	}
+	public static function productMainImage(string $image){
+		return "<img src='{$image}'>";
+	}
 
 	public static function morphImages(Model $model, string $relation): string
 	{
@@ -30,15 +41,12 @@ class ImageView
 
 	protected static function getDetach(Model $item)
 	{
-		ob_start();
-		include ROOT.'/app/view/components/Builders/Morph/detach.php';
-		return ob_get_clean();
+		return FS::getFileContent(ROOT.'/app/view/components/Builders/Morph/detach.php',compact('item'));
 	}
 
 	public static function list(Collection $items): string
 	{
 		$view = new self;
-//		$items = Image::all()->toArray();
 		return MyList::build($view->model)
 			->items($items)
 			->pageTitle('Картинки')

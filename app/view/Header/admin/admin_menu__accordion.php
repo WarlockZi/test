@@ -154,7 +154,6 @@ use \app\core\Icon;
 			</div>
 			<ul class="level-1">
 					 <? if (User::can($user, ['role_admin'])): // admin ?>
-				  <a class="neon" href="/adminsc/xml">Загрузить товары из файла</a>
 				  <a class="neon" href="/adminsc/category">Категории</a>
 				  <a class="neon" href="/adminsc/product/list">Товары</a>
 
@@ -193,6 +192,7 @@ use \app\core\Icon;
 				  <a class="neon" href='/adminsc/settings/dump'>Dump</a>
 				  <a class="neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
 				  <a class="neon" href='/adminsc/settings/cache'>Очистить кэш</a>
+				  <a class="neon" href="/adminsc/xml">Загрузить товары из файла</a>
 			  </ul>
 		  </li>
 		 <? endif; ?>

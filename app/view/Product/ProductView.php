@@ -3,6 +3,7 @@
 namespace app\view\Product;
 
 use app\core\FS;
+use app\model\Category;
 use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Unit;
@@ -19,12 +20,22 @@ use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\Image\ImageView;
+use app\view\Property\PropertyView;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductView
 {
 	protected $model = 'product';
+
+	public static function getMainImage(Product $product): string
+	{
+		if ($product->mainImages->count()) {
+			ImageView::productMainImage($product->mainImages->first());
+		} else {
+			return ImageView::noImage();
+		}
+	}
 
 	public static function edit(Product $product): string
 	{
@@ -33,6 +44,11 @@ class ProductView
 			->field(
 				ItemFieldBuilder::build('id', $product)
 					->name('ID')
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('slug', $product)
+					->name('Адрес')
 					->get()
 			)
 			->field(
@@ -102,29 +118,29 @@ class ProductView
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
-						self::getImage($product, 'mainImages','main')
+						self::getImage($product, 'mainImages', 'main')
 					)
 			)
 			->tab(
 				ItemTabBuilder::build('Детальные картинки')
 					->html(
-						self::getImage($product, 'detailImages','detail',true)
+						self::getImage($product, 'detailImages', 'detail', true)
 					)
 			)
 			->tab(
 				ItemTabBuilder::build('Внутритарная упаковка')
 					->html(
-						self::getImage($product, 'smallpackImages','smallpack',true)
+						self::getImage($product, 'smallpackImages', 'smallpack', true)
 					)
 			)
 			->tab(
-				ItemTabBuilder::build('Транспортная упаковка',true)
+				ItemTabBuilder::build('Транспортная упаковка', true)
 					->html(
-						self::getImage($product, 'bigPackImages','bigpack',true)
+						self::getImage($product, 'bigPackImages', 'bigpack', true)
 					)
 			)
 			->del()
-			->save()
+//			->save()
 			->toList('list')
 			->get();
 	}
@@ -155,7 +171,7 @@ class ProductView
 			$relation,
 			$slug,
 			$many
-			)
+		)
 			->class('dnd-image')
 			->detach('detach')
 			->html(
@@ -166,33 +182,19 @@ class ProductView
 		return $img;
 	}
 
-	protected static function getSelect(Model $category, Product $product): string
+	protected static function getSelect(Category $category, Product $product): string
 	{
 		$str = "<div class='category'>{$category->name}</div>";
 		foreach ($category->properties as $property) {
-			$str.=self::getPropertySelector($property,$product);
+			$str .= PropertyView::getProductSelector($property, $product);
 		}
 		return $str;
 	}
 
-	protected static function getPropertySelector($property,$product){
-		$intersect = $property->vals->intersect($product->values);
-		$selected = $intersect->count() ? $intersect[0]->id : 0;
-		$options = ArrayOptionsBuilder::build($property->vals)
-			->initialOption()
-			->selected($selected)
-			->get();
-		$select = MorphBuilder::build($product, 'values', '',true)
-			->html(SelectBuilder::build($options)
-				->get())
-			->get();
-		$propName = "<div class='name'>{$property->name}</div>";
-		return "<div class='property'>{$propName}<br>{$select}</div>";
-	}
 
-	protected static function getProperties(Product $product): string
+
+	protected static function getProperties(Product $product, string $str = ''): string
 	{
-		$str = "";
 		$currentCategory = $product->category;
 
 		while ($currentCategory) {
@@ -267,12 +269,12 @@ class ProductView
 
 	public static function renderToCart(Product $product)
 	{
-		return FS::getFileContent(ROOT . '/app/view/Product/Main/toCart.php',compact('product'));
+		return FS::getFileContent(ROOT . '/app/view/Product/Main/toCart.php', compact('product'));
 	}
 
 	public static function renderProperty($property)
 	{
-		return FS::getFileContent(ROOT . '/app/view/Product/property.php',compact('property'));
+		return FS::getFileContent(ROOT . '/app/view/Product/property.php', compact('property'));
 	}
 
 	public static function getCardDetailImage($image)

@@ -20,7 +20,7 @@ class MorphRepository extends AppController
 		$relation = $morphed['relation'];
 		$model = self::getModelName($morph['model'])::with($relation)->find($morph['id']);
 		$slug = $morphed['slug'];
-		if ($morphed['detach'] === 'true') {
+		if ($morphed['oneOrMany'] === 'one') {
 			$res = $model->$relation()
 				->wherePivot('slug', $slug)
 				->sync([$morphed['id'] => ['slug' => $slug]]);

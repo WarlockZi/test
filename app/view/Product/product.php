@@ -38,9 +38,6 @@ use \app\view\Product\ProductView;
 
 			</div>
 
-<!--			<div class="row">-->
-<!---->
-<!--			</div>-->
 
 			<div class="row">
 					 <?= ProductView::getCardImages('Вид внутритарной упаковки',
