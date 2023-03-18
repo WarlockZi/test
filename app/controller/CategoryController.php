@@ -3,7 +3,6 @@
 namespace app\controller;
 
 
-use app\core\Route;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
@@ -12,7 +11,7 @@ use app\Repository\CategoryRepository;
 class CategoryController Extends AppController
 {
 
-	public $model = Category::class;
+	protected $model = Category::class;
 
 	public function __construct()
 	{
@@ -38,5 +37,6 @@ class CategoryController Extends AppController
 		}
 		$this->set(compact('accordion'));
 	}
+
 
 }

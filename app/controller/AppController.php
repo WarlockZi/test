@@ -43,6 +43,7 @@ class AppController extends Controller implements IModelable
 	public function actionAttach()
 	{
 		$req = $this->isAjax();
+
 		if (!$req) $req = $_POST;
 		if ($_FILES) {
 			MorphRepository::attachWithFiles($_FILES, $req);
@@ -107,8 +108,9 @@ class AppController extends Controller implements IModelable
 		return $this->model;
 	}
 
-	public function setModel()
+	public function setModel(string $model)
 	{
+		$this->model = $model;
 	}
 //
 //  public function actionShow(){

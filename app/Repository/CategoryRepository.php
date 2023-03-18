@@ -6,6 +6,7 @@ namespace app\Repository;
 
 use app\model\Category;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
+use app\view\components\Builders\SelectBuilder\TreeABuilder;
 use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -35,7 +36,8 @@ class CategoryRepository
 			return Category::create();
 		return Category::with(
 			'products',
-			'children',
+			'childrenNotDeleted',
+			'childrenDeleted',
 			'parentRecursive',
 			'properties',
 			'mainImages')

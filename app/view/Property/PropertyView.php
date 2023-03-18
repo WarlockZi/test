@@ -2,6 +2,7 @@
 
 namespace app\view\Property;
 
+use app\model\Product;
 use app\model\Property;
 use app\model\Val;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
@@ -9,6 +10,9 @@ use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\Morph\MorphBuilder;
+use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 
 
 class PropertyView
@@ -98,6 +102,24 @@ class PropertyView
 			->toList()
 			->get();
 
+	}
+
+	public static function getProductSelector(Property $property, Product $product)
+	{
+		$intersect = $property->vals->intersect($product->values);
+		$selected = $intersect->count() ? $intersect[0]->id : 0;
+		$options = ArrayOptionsBuilder::build($property->vals)
+			->initialOption()
+			->selected($selected)
+			->get();
+
+		$select = MorphBuilder::build($product, 'values', 'prop-'.$property->id)
+			->html(SelectBuilder::build($options)
+				->get())
+			->get();
+
+		$propName = "<div class='name'>{$property->name}</div>";
+		return "<div class='property'>{$propName}<br>{$select}</div>";
 	}
 
 	protected static function getMorphs($item)
