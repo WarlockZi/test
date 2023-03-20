@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\core\Auth;
 use app\model\User;
+use app\Services\XMLParser\Parser2;
 use app\Services\XMLParser\XMLParser;
 
 
@@ -26,13 +27,10 @@ class xmlController extends AppController
 		if (isset($_POST['file'])){
 
 			$parser = new XMLParser($_POST['file']);
+//			$parser = new Parser2($_POST['file']);
 
 		}
-
-//		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
-
-
 }
 
 
