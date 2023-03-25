@@ -1,5 +1,5 @@
 import {$} from '../../common'
-import './header.scss'
+// import './header.scss'
 
 let gumburger = $('.gamburger')[0]
 if (gumburger) {

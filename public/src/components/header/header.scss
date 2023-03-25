@@ -10,7 +10,6 @@ header {
   align-items: center;
 
 
-
   .user-menu {
     position: relative;
     display: flex;
@@ -90,15 +89,11 @@ header {
   }
 
 
-
-
-
-
   @include _600 {
     padding: 0;
   }
 
-  .menu{
+  .menu {
     width: 100%;
   }
 
@@ -280,6 +275,11 @@ header {
             background: #ababab33;
           }
 
+          a {
+            display: flex;
+
+          }
+
           a:hover {
             background: #eeeeee;;
           }
@@ -299,6 +299,7 @@ header {
       li {
         margin: 1px 10px;
         padding: 3px 5px;
+
         a {
           font: 600 9px/13px 'Proxima Nova', sans-serif;
           color: $color-gray-mid;
