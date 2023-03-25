@@ -9,8 +9,8 @@ use \app\core\Icon;
 		 <? foreach ($this->frontCategories as $category): ?>
 		  <div class='h-cat'><?= $category['name']; ?>
 			  <ul>
-						 <? if (isset($category['children'])): ?>
-							 <? foreach ($category['children'] as $item): ?>
+						 <? if (isset($category->childrenNotDeleted)): ?>
+							 <? foreach ($category->childrenNotDeleted as $item): ?>
 						 <li>
 							 <a href="/category/<?= $item['slug'] ?>"><?= $item['name'] ?></a>
 						 </li>

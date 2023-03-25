@@ -25,12 +25,8 @@ class CategoryController Extends AppController
 	public function actionIndex()
 	{
 		$categories = CategoryRepository::treeAll();
-//		$categories = CategoryRepository::all();
-
 		$accordion = CategoryView::indexTree($categories);
-
 		$this->set(compact('categories', 'accordion'));
-
 	}
 
 	public function actionEdit()
