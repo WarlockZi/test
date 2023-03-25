@@ -20,7 +20,6 @@ class AdminscController extends AppController
 			header('Location:/auth/profile');
 		}
 	}
-
 	public function actionClearCache()
 	{
 		$path = ROOT . "/tmp/cache/*.txt";
