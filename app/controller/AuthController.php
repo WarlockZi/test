@@ -10,6 +10,8 @@ use app\view\View;
 
 class AuthController extends AppController
 {
+  protected string $salt = "popiyonovacheesa";
+
   public function __construct()
   {
     parent::__construct();
@@ -248,7 +250,6 @@ class AuthController extends AppController
 
   public function preparePassword(string $password): string
   {
-    $salt = "popiyonovacheesa";
-    return md5($password . $salt);
+    return md5($password . $this->salt);
   }
 }

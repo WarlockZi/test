@@ -30,7 +30,6 @@ class CategoryView
 
 	public static function edit(?int $id): string
 	{
-
 		$category = CategoryRepository::edit($id);
 
 		return ItemBuilder::build($category, 'category')
@@ -66,7 +65,7 @@ class CategoryView
 				ItemFieldBuilder::build('categiry_id', $category)
 					->name('Принадлежит')
 					->html(
-						CategoryRepository::selector($category->category_id, $category->id)
+						CategoryRepository::selector1($category->category_id, CategoryRepository::editSelectorExcluded($category))
 					)
 					->get()
 			)
@@ -212,20 +211,20 @@ class CategoryView
 
 	}
 
-	public static function selector(int $selected, int $exclude = -1): string
-	{
-		$cats = Category::all()->toArray();
-		$parent_select = '<select>';
-		$parent_select .= "<option value=0>---</option>";
-		foreach ($cats as $t) {
-			if ((int)$t['id'] !== $exclude) {
-				$selectedStr = (int)$t['id'] === $selected ? 'selected' : '';
-				$parent_select .= "<option value={$t['id']} {$selectedStr}>{$t['name']}</option>";
-			}
-		}
-		$parent_select .= "</select>";
-
-		return $parent_select;
-	}
+//	public static function selector(int $selected, int $exclude = -1): string
+//	{
+//		$cats = Category::all()->toArray();
+//		$parent_select = '<select>';
+//		$parent_select .= "<option value=0>---</option>";
+//		foreach ($cats as $t) {
+//			if ((int)$t['id'] !== $exclude) {
+//				$selectedStr = (int)$t['id'] === $selected ? 'selected' : '';
+//				$parent_select .= "<option value={$t['id']} {$selectedStr}>{$t['name']}</option>";
+//			}
+//		}
+//		$parent_select .= "</select>";
+//
+//		return $parent_select;
+//	}
 
 }
