@@ -51,7 +51,7 @@ abstract class TreeBuilder
 		return $this;
 	}
 
-	public function excluded(int $excluded)
+	public function excluded( $excluded)
 	{
 		$this->excluded = $excluded;
 		return $this;
