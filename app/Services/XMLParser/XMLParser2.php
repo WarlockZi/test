@@ -6,7 +6,7 @@ namespace app\Services\XMLParser;
 
 use app\core\FS;
 
-class Parser2
+class XMLParser2
 {
 	protected $file;
 
