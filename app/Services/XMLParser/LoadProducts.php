@@ -5,6 +5,7 @@ namespace app\Services\XMLParser;
 
 use app\model\Category;
 use app\model\Product;
+use app\Services\Slug;
 
 class LoadProducts extends Parser
 {
@@ -30,6 +31,7 @@ class LoadProducts extends Parser
     $g['1s_categrory_id'] = $good['Группы']['Ид'];
     $g['art'] = $good['Артикул'];
     $g['name'] = $good['Наименование'];
+    $g['slug'] = Slug::slug($g['name']);
     $g['txt'] = $good['Описание']?$good['Описание']:'';
 
     foreach ($good['ЗначенияРеквизитов']['ЗначениеРеквизита'] as $requisite) {
