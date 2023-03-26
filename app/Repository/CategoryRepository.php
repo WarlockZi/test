@@ -15,7 +15,7 @@ class CategoryRepository
 
   public static function indexNoSlug()
   {
-    return Category::where('category_id', 0)
+    return Category::whereNull('category_id')
       ->with('childrenRecursive')
       ->get();
   }
@@ -60,7 +60,7 @@ class CategoryRepository
   public static function treeAll(): Collection
   {
     return Category::query()
-      ->where('category_id', 0)
+      ->where('category_id', null)
       ->with('childrenRecursive')
       ->select('id', 'name')
       ->whereNull('deleted_at')

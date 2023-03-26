@@ -11,6 +11,7 @@ class Category extends Model
   public $timestamps = false;
 
   protected $fillable = [
+    '1s',
     'name',
     'description',
     'sort',
@@ -28,6 +29,8 @@ class Category extends Model
       return $category;
     });
   }
+
+
 
   public function mainImages()
   {
