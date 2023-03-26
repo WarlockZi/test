@@ -3,17 +3,15 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\core\Auth;
 use app\model\Category;
 use app\model\Product;
-use app\model\User;
 use app\Services\XMLParser\Parser;
 use app\Services\XMLParser\Parser2;
 use app\Services\XMLParser\XMLParser;
 use app\Services\XMLParser\XMLParser3;
 
 
-class xmlController extends AppController
+class XmlController extends AppController
 {
   public $model = xml::class;
 
