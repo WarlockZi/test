@@ -4,7 +4,6 @@ namespace app\controller;
 
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
-use app\view\View;
 
 
 class ProductController extends AppController

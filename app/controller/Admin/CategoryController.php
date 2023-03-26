@@ -32,9 +32,7 @@ class CategoryController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route->id;
-
 		$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($id, false, true);
-
 		$category = CategoryView::edit($id);
 		$this->set(compact('category', 'breadcrumbs'));
 	}

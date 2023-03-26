@@ -117,7 +117,7 @@ class Router
 			|| $route->controller === 'auth' && $route->action === 'noconfirm'
 			|| $route->controller === 'main' && $route->action === 'index'
 			|| $route->controller === 'product' && !$route->admin
-			|| $route->controller === 'category';
+			|| $route->controller === 'category' && !$route->admin;
 	}
 
 	public static function getRoute(): Route
