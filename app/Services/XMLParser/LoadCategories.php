@@ -16,11 +16,11 @@ class LoadCategories extends Parser
     $groups = $this->xmlObj['Классификатор']['Группы']['Группа'];
     $arr = [];
     $id = 0;
-    $this->recursion($groups, -1, $id, $arr);
+    $this->recursion($groups, $id, -1, $arr);
     $goods = [''];
   }
 
-  protected function recursion($groups, $level = 0, &$id, &$parent = null)
+  protected function recursion($groups, &$id, $level = 0, &$parent = null)
   {
     $level++;
     foreach ($groups as $i => $group) {
@@ -29,9 +29,9 @@ class LoadCategories extends Parser
         $item = $this->fillItem($group, $level, $id, $parent);
         $parent[] = &$item;
         if (isset($group['Группы']))
-          $this->recursion($group['Группы'], $level, $id, $item);
+          $this->recursion($group['Группы'], $id, $level, $item);
       } else {
-        $this->recursion($group, $level, $id, $parent);
+        $this->recursion($group, $id, $level, $parent);
       }
     }
   }
