@@ -262,6 +262,24 @@ main {
       @include _600 {
         padding: 17px;
       }
+
+      &.delivery,
+      &.assortiment,
+      &.certificates,
+      &.result {
+        svg {
+          position: absolute;
+          top: -54px;
+          right: 14%;
+          width: 169px;
+          height: 208px;
+          filter: blur(6px);
+          stroke: var(--color-main);
+          opacity: 0.3;
+          z-index: -1;
+        }
+      }
+
     }
 
     p {
@@ -270,22 +288,7 @@ main {
     }
   }
 
-  .delivery,
-  .assortiment,
-  .certificates,
-  .result {
-    svg {
-      position: absolute;
-      top: -54px;
-      right: 14%;
-      width: 169px;
-      height: 208px;
-      filter: blur(6px);
-      stroke: var(--color-main);
-      opacity: 0.3;
-      z-index: -1;
-    }
-  }
+
 
 }
 
