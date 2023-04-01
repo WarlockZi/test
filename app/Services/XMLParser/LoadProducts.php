@@ -27,7 +27,7 @@ class LoadProducts extends Parser
 
   protected function fillGood($good)
   {
-    $g['1s'] = $good['Ид'];
+    $g['xml'] = $good['Ид'];
     $g['1s_categrory_id'] = $good['Группы']['Ид'];
     $g['art'] = $good['Артикул'];
     $g['name'] = $good['Наименование'];
@@ -40,7 +40,7 @@ class LoadProducts extends Parser
       }
     }
 
-    $cat = Category::where('1s', $g['1s_categrory_id'])->first();
+    $cat = Category::where('xml', $g['1s_categrory_id'])->first();
     $g['category_id'] = $cat->id;
     $p = Product::create($g);
 

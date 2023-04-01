@@ -13,6 +13,7 @@ import '../Test/opentest-edit'
 import testEdit from '../Test/test-edit'
 import '../Test/do'
 import '../Test/open_test'
+import '../Admin/xml/xml';
 
 import './Planning/planning'
 import './Settings/settings'
