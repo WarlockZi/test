@@ -15,6 +15,7 @@ class Parser
   public function __construct(string $file='g')
   {
     $this->file = FS::platformSlashes(ROOT . '/app/Services/XMLParser/' . $file . '.xml');
+    if (!is_readable($this->file))exit();
     $this->xml = simplexml_load_file($this->file);
     $this->xmlObj = json_decode(json_encode($this->xml), true);
   }
@@ -36,7 +37,7 @@ class Parser
   protected function fillItem(array $group, int $level, int $id, &$parent)
   {
     $item['id'] = $id;
-    $item['1s'] = $group['Ид'];
+    $item['xml'] = $group['Ид'];
     if ($level > 0)
       $item['category_id'] = $parent['id'];
     $item['name'] = $group['Наименование'];

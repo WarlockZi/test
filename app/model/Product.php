@@ -12,7 +12,7 @@ class Product extends Model
 
 	protected $fillable = [
 		'name',
-		'1s',
+		'xml',
     '1s_category_id',
     'act',
 		'art',
