@@ -8,6 +8,7 @@ use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Unit;
 use app\Repository\CategoryRepository;
+use app\Repository\ProductRepository;
 use app\view\components\Builders\Builder;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
@@ -22,7 +23,6 @@ use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\Image\ImageView;
 use app\view\Property\PropertyView;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 class ProductView
 {
@@ -31,10 +31,9 @@ class ProductView
 	public static function getMainImage(Product $product): string
 	{
 		if ($product->mainImages->count()) {
-			ImageView::productMainImage($product->mainImages->first());
-		} else {
-			return ImageView::noImage();
+			return ImageView::productMainImage($product->mainImages->first());
 		}
+		return ImageView::noImage();
 	}
 
 	public static function edit(Product $product): string
@@ -192,7 +191,6 @@ class ProductView
 	}
 
 
-
 	protected static function getProperties(Product $product, string $str = ''): string
 	{
 		$currentCategory = $product->category;
@@ -242,6 +240,15 @@ class ProductView
 					->contenteditable()
 					->search()
 					->width('1fr')
+					->get()
+			)
+			->column(
+				ListColumnBuilder::build('price')
+					->name('Цена')
+					->contenteditable()
+					->width('1fr')
+//					->html($items)
+					->function(ProductRepository::class, 'priceStatic')
 					->get()
 			)
 			->items($items)

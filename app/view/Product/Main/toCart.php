@@ -1,7 +1,11 @@
 <div class="price">
 
-	<div class="new-price">22 500 ₽</div>
-	<div class="old-price">24 500 ₽</div>
+	<? $price = $product->getRelation('price')->price;
+	$oldPrice = number_format($price * 0.9, 2,);
+	?>
+
+	<div class="new-price"><?= $price; ?>₽</div>
+	<div class="old-price"><?= $oldPrice; ?> ₽</div>
 
 </div>
 

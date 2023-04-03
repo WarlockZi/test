@@ -26,7 +26,8 @@ class ProductController extends AppController
 
 	public function actionList()
 	{
-		$items = Product::all()->take(10);
+		$items = Product::with('price')
+			->take(10)->get();
 		$list = ProductView::list($items);
 		$this->set(compact('list'));
 	}

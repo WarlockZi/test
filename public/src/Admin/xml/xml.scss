@@ -1,4 +1,5 @@
 @import "../../var";
+@import "../../mixin_media";
 
 .xml {
 
@@ -7,6 +8,14 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+
+    span.file{
+      @include colored_button;
+      width: 100px;
+    }
+    p{
+      display: flex;
+    }
 
     input {
       padding: 5px;

@@ -24,8 +24,8 @@ class ImageView
 	public static function catMainImage(string $image){
 		return "<img src='{$image}'>";
 	}
-	public static function productMainImage(string $image){
-		return "<img src='{$image}'>";
+	public static function productMainImage(Image $image){
+		return "<img src='{$image->getFullPath()}'>";
 	}
 
 	public static function morphImages(Model $model, string $relation): string

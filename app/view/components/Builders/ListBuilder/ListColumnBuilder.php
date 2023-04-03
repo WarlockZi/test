@@ -51,26 +51,26 @@ class ListColumnBuilder
 		return $this;
 	}
 
-	public function select(
-		string $modelName,
-		string $nameOptionByField='name',
-		bool $tree = false,
-		string $initialOption = '',
-		int $initialOptionValue = 0
-	)
-	{
-		$this->select = true;
-		$this->nameOptionByField = $nameOptionByField;
-		$this->initialOption = $initialOption;
-		$this->initialOptionValue = $initialOptionValue;
-
-		$items = $modelName::all();
-		$this->select = ListSelectBuilder::build()
-			->collection($items)
-			->initialOption('',0)
-		;
-		return $this;
-	}
+//	public function select(
+//		string $modelName,
+//		string $nameOptionByField='name',
+//		bool $tree = false,
+//		string $initialOption = '',
+//		int $initialOptionValue = 0
+//	)
+//	{
+//		$this->select = true;
+//		$this->nameOptionByField = $nameOptionByField;
+//		$this->initialOption = $initialOption;
+//		$this->initialOptionValue = $initialOptionValue;
+//
+//		$items = $modelName::all();
+//		$this->select = ListSelectBuilder::build()
+//			->collection($items)
+//			->initialOption('',0)
+//		;
+//		return $this;
+//	}
 
 
 

@@ -9,49 +9,52 @@ use app\Services\Slug;
 
 class LoadProducts extends Parser
 {
-  protected $goods;
+	protected $goods;
 
-  public function __construct()
-  {
-    parent::__construct();
-    $this->goods = $this->xmlObj['Каталог']['Товары']['Товар'];
-    $this->run();
-  }
+	public function __construct($file)
+	{
+		parent::__construct($file);
+		$this->goods = $this->xmlObj['Каталог']['Товары']['Товар'];
+		$this->run();
+	}
 
-  protected function run()
-  {
-    foreach ($this->goods as $good) {
-      $this->fillGood($good);
-    }
-  }
+	protected function run()
+	{
+		$id = 0;
+		foreach ($this->goods as $good) {
+			$this->fillGood($good,$id++);
+		}
+	}
 
-  protected function fillGood($good)
-  {
-    $g['xml'] = $good['Ид'];
-    $g['1s_categrory_id'] = $good['Группы']['Ид'];
-    $g['art'] = $good['Артикул'];
-    $g['name'] = $good['Наименование'];
-    $g['slug'] = Slug::slug($g['name']);
-    $g['txt'] = $good['Описание']?$good['Описание']:'';
+	protected function fillGood($good,$id)
+	{
+//    $g['1s_id'] = $good['Ид'];
+		$g['1s_categrory_id'] = $good['Группы']['Ид'];
+		$g['art'] = $good['Артикул'];
+		$g['name'] = $good['Наименование'];
+		$g['slug'] = Slug::slug($g['name']);
+		if (!Product::where('slug', $g['slug'])->first()) {
+			$g['txt'] = $good['Описание'] ? $good['Описание'] : '';
 
-    foreach ($good['ЗначенияРеквизитов']['ЗначениеРеквизита'] as $requisite) {
-      if ($requisite['Наименование']==='Полное наименование'){
-        $g['full_name'] = $requisite['Значение'];
-      }
-    }
+			foreach ($good['ЗначенияРеквизитов']['ЗначениеРеквизита'] as $requisite) {
+				if ($requisite['Наименование'] === 'Полное наименование') {
+					$g['full_name'] = $requisite['Значение'];
+				}
+			}
 
-    $cat = Category::where('xml', $g['1s_categrory_id'])->first();
-    $g['category_id'] = $cat->id;
-    $p = Product::create($g);
+			$cat = Category::where('1s_id', $g['1s_categrory_id'])->first();
+			$g['category_id'] = $cat->id;
+			$p = Product::create($g);
+			$this->ech($g,$id);
+		}else{
+			$this->ech($g,$id,'same slug'.$g['slug']);
+		}
+	}
 
-    $this->ech($p);
-
-  }
-
-  protected function ech( $item)
-  {
-    echo "{$item->id} - {$item->name}<br>";
-  }
+	protected function ech($item, $id,$sameSlug='')
+	{
+		echo "{$id} - {$sameSlug} {$item['name']}<br>";
+	}
 
 
 }
