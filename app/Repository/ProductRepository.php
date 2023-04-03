@@ -9,6 +9,7 @@ use app\controller\FS;
 use app\model\Product;
 use app\model\Property;
 use app\model\Val;
+use app\view\Image\ImageView;
 
 class ProductRepository extends Controller
 {
@@ -34,9 +35,22 @@ class ProductRepository extends Controller
 		$deleted = FS::delFilesFromPath("\pic\product\\");
 		ImageRepository::delAll();
 	}
+
 	public static function priceStatic($column, $item, $d)
 	{
 		return $item->price;
+	}
+
+	public static function imageStatic($column, $item, $d)
+	{
+//		$src = ImageRepository::getImagePath($item);
+		$art = trim($item->art);
+		$src = "/pic/product/uploads/{$art}.jpg";
+		if (is_file(ROOT . $src)) {
+			return "<img style='width: 50px; height: 50px;' src='{$src}'>";
+		}else{
+			return ImageView::noImage();
+		}
 	}
 
 	public static function getCard($slug)
@@ -79,7 +93,7 @@ class ProductRepository extends Controller
 			->with('baseUnit')
 			->with('mainUnit')
 //			->with('parentCategoryRecursive')
-			->where('slug',$slug)
+			->where('slug', $slug)
 			->first();
 	}
 
