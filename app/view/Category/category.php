@@ -43,7 +43,7 @@
 				 <a href="/product/<?= $product->slug; ?>" class="product">
 					 <h3 class="name"><?= $product->name; ?></h3>
 							 <?= \app\view\Product\ProductView::getMainImage($product) ?>
-					 <p>Цена - <?= $product->getRelation('price')->price ?>
+					 <p>Цена - <?= $product->getRelation('price') ? $product->getRelation('price')->price : 0; ?>
 					 </p>
 
 				 </a>
