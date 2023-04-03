@@ -24,7 +24,7 @@ class Icon
 			$arg
 			);
 		$file = FS::getAbsoluteFilePath($path,$name.$ext);
-		if (!is_readable($file)) return '';
+		if (!is_readable($file)) return $file;
 
 		return FS::getFileContent($file);
 	}
