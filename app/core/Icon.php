@@ -17,7 +17,7 @@ class Icon
 		$arg = count($arguments)?
 			$arguments[0].DIRECTORY_SEPARATOR:
 			'';
-		echo $arg;
+//		echo $arg;
 		$ext = '.svg';
 		$path = FS::getAbsolutePath(
 			self::$commonPicPath,
