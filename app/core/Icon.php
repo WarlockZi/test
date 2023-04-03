@@ -23,6 +23,7 @@ class Icon
 			self::$commonIconPath,
 			$arg
 			);
+		echo $path;
 		$file = FS::getAbsoluteFilePath($path,$name.$ext);
 		if (!is_readable($file)) return $file;
 
