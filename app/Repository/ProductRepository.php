@@ -34,6 +34,10 @@ class ProductRepository extends Controller
 		$deleted = FS::delFilesFromPath("\pic\product\\");
 		ImageRepository::delAll();
 	}
+	public static function priceStatic($column, $item, $d)
+	{
+		return $item->price;
+	}
 
 	public static function getCard($slug)
 	{
@@ -65,6 +69,7 @@ class ProductRepository extends Controller
 			->with('category.properties.vals')
 			->with('category.parentRecursive')
 			->with('category.parents')
+			->with('price')
 			->with('mainImages')
 			->with('values')
 			->with('manufacturer.country')

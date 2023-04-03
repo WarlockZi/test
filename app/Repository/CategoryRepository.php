@@ -37,7 +37,7 @@ class CategoryRepository
     return Category::where('slug', $slug)
       ->with('childrenRecursive')
       ->with('parentRecursive')
-      ->with('products')
+      ->with('products.price')
       ->with('products.mainImages')
       ->get()->first();
   }

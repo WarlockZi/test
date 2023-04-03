@@ -12,7 +12,6 @@ class Product extends Model
 
 	protected $fillable = [
 		'name',
-		'xml',
     '1s_category_id',
     'act',
 		'art',
@@ -40,6 +39,10 @@ class Product extends Model
 			Image::class,
 			'imageable',
 			)->where('slug', '=', 'detail');
+	}
+	public function price()
+	{
+		return $this->hasOne(Price::class,'1s_art','art');
 	}
 
 	public function mainImages()

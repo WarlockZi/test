@@ -4,6 +4,7 @@ namespace app\model;
 
 use app\core\FS;
 use app\Repository\ImageRepository;
+use app\view\Image\ImageView;
 use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
@@ -31,7 +32,11 @@ class Image extends Model
 	{
 		$ext = $this->getExt();
 		$path = $this->path ? $this->path . '/' : '';
-		return '/' . $this->imagePath . '/' . $path . $this->hash . '.' . $ext;
+		if (is_file(ROOT . '$path')) {
+			return '/' . $this->imagePath . '/' . $path . $this->hash . '.' . $ext;
+		}
+		return "/pic/srvc/nophoto-min.jpg";
+//		return ImageView::noImage();
 	}
 
 	public function getExt()

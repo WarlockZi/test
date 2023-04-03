@@ -20,7 +20,7 @@ class CategoryController Extends AppController
 
 	public function actionIndex()
 	{
-		$accordion = '';
+//		$accordion = '';
 		if ($this->route->slug) {
 			$this->view = 'category';
 
@@ -35,7 +35,7 @@ class CategoryController Extends AppController
 			$categories = CategoryRepository::indexNoSlug();
 			$this->set(compact('categories'));
 		}
-		$this->set(compact('accordion'));
+//		$this->set(compact('accordion'));
 	}
 
 
