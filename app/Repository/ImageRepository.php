@@ -41,6 +41,9 @@ class ImageRepository
 		return ImageRepository::getImg($field->getFullPath());
 	}
 
+	public static function getProductMainImageSrc(Product $product): string{
+		return "/pic/product/uploads/{$product->art}.jpg";
+	}
 	public static function getProductMainImage(Product $product): string
 	{
 		if ($product->mainImages->count()) {
@@ -50,8 +53,8 @@ class ImageRepository
 			return "<img title = '{$name}'" .
 				"src = '{$src}' alt = '{$name}'>";
 		} else {
-			$src = ImageRepository::getImg();
-			return "<img src = {$src}>";
+			$src = self::getProductMainImageSrc($product);
+			return "<img src = {$src}";
 		}
 	}
 

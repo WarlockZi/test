@@ -27,11 +27,14 @@ use Illuminate\Database\Eloquent\Collection;
 class ProductView
 {
 	protected $model = 'product';
+	protected static $mainImagePath = '/pic/product/uploads/';
 
 	public static function getMainImage(Product $product): string
 	{
-		if ($product->mainImages->count()) {
-			return ImageView::productMainImage($product->mainImages->first());
+		$path = self::$mainImagePath.$product->art.'.jpg';
+		$file = ROOT.$path;
+		if (is_file($file)) {
+			return "<img src='$path'>";
 		}
 		return ImageView::noImage();
 	}
@@ -247,8 +250,14 @@ class ProductView
 					->name('Цена')
 					->contenteditable()
 					->width('1fr')
-//					->html($items)
 					->function(ProductRepository::class, 'priceStatic')
+					->get()
+			)
+			->column(
+				ListColumnBuilder::build('image')
+					->name('Картинка')
+					->width('1fr')
+					->function(ProductRepository::class, 'imageStatic')
 					->get()
 			)
 			->items($items)

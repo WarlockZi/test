@@ -40,6 +40,8 @@ class XmlController extends AppController
 				$parser = new LoadPrices($file);
 
 
+			} elseif ($_POST['action'] === 'parseImages') {
+				self::parseImages();
 			} elseif ($_POST['action'] === 'removePrices') {
 				Price::truncate();
 			} elseif ($_POST['action'] === 'removeCategories') {
@@ -55,23 +57,22 @@ class XmlController extends AppController
 
 	}
 
-	public function actionLoadProducts()
+	public function parseImages()
 	{
+		$prods = Product::all();
+
+		foreach ($prods as $prod){
+			$art = trim($prod->art);
+			$file = FS::platformSlashes(ROOT."/pic/product/uploads/{$art}.jpg");
+			$newfile = FS::platformSlashes(ROOT."/pic/product/new/{$art}.jpg");
+			if (is_file($file)){
+				rename($file, $newfile);
+			}
+		}
 
 	}
 
-	public function actionLoadCategories()
-	{
-	}
 
-	public function actionTruncateProducts()
-	{
-
-	}
-
-	public function actionTruncateCategories()
-	{
-	}
 }
 
 

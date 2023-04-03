@@ -23,6 +23,8 @@
 				<button type="submit" name="action" value="loadCategories">Загрузить категории</button>
 				<button type="submit" name="action" value="loadPrices">Загрузить цены</button>
 
+				<button type="submit" name="action" value="parseImages">Фильтровать картинки</button>
+
 
 			</form>
 		</div>
