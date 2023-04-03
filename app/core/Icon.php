@@ -6,6 +6,7 @@ namespace app\core;
 
 use \app\core\FS;
 
+
 class Icon
 {
 
@@ -17,14 +18,10 @@ class Icon
 		$arg = count($arguments)?
 			$arguments[0].DIRECTORY_SEPARATOR:
 			'';
-//		echo $arg;
+
 		$ext = '.svg';
-		$path = FS::getAbsolutePath(
-			self::$commonPicPath,
-			self::$commonIconPath,
-			$arg
-			);
-		$file = FS::getAbsoluteFilePath($path,$name.$ext);
+		$path = ROOT."/".self::$commonPicPath."/".self::$commonIconPath."/".$arg.$name.$ext;
+		$file = FS::platformSlashes($path);
 		if (!is_readable($file)) return $file;
 
 		return FS::getFileContent($file);
