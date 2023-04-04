@@ -43,8 +43,13 @@
 				 <a href="/product/<?= $product->slug; ?>" class="product">
 					 <h3 class="name"><?= $product->name; ?></h3>
 							 <?= \app\view\Product\ProductView::getMainImage($product) ?>
-					 <p>Цена - <?= $product->getRelation('price') ? $product->getRelation('price')->price : 0; ?>
-					 </p>
+							 <? if ($product->getRelation('price')) {
+								 $price = $product->getRelation('price')->price;
+								 $price = bcdiv($price, 1, 2);
+								 $currency = $product->getRelation('price')->currency ?? null;
+								 $unit = $product->getRelation('price')->unit ?? null;
+							 }; ?>
+					 <p><?= $price; ?> <?= $currency; ?> / <?= $unit; ?></p>
 
 				 </a>
 					<? endforeach; ?>

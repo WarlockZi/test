@@ -17,10 +17,10 @@ error_reporting(E_ALL);
 define('DEV', $_ENV['MODE'] === 'development'); //0-не выводить ошибки
 define('ROOT', dirname(__DIR__));
 define('ICONS', ROOT . '/pic/icons');
-define('TRASH', ICONS . '/trashIcon.svg');
-define('SAVE', ICONS . '/save.svg');
-define('EDIT', ICONS . '/edit.svg');
-define('COMPONENTS', ROOT . '/app/view/components');
+//define('TRASH', ICONS . '/trashIcon.svg');
+//define('SAVE', ICONS . '/save.svg');
+//define('EDIT', ICONS . '/edit.svg');
+//define('COMPONENTS', ROOT . '/app/view/components');
 require_once './Eloquent.php';
 
 ini_set('display_errors', 1);
