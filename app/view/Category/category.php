@@ -45,7 +45,7 @@
 							 <?= \app\view\Product\ProductView::getMainImage($product) ?>
 							 <? if ($product->getRelation('price')) {
 								 $price = $product->getRelation('price')->price;
-								 $price = bcdiv($price, 1, 2);
+//								 $price = bcdiv($price, 1, 2);
 								 $currency = $product->getRelation('price')->currency ?? null;
 								 $unit = $product->getRelation('price')->unit ?? null;
 							 }; ?>
