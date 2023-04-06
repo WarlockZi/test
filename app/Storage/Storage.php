@@ -25,6 +25,7 @@ class Storage
 
   public function getFiles()
   {
+  	echo $this->path;
     return glob("{$this->path}*.*");
   }
 
