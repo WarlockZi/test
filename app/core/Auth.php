@@ -3,7 +3,6 @@
 
 namespace app\core;
 
-use app\controller\AppController;
 use app\model\User;
 
 class Auth
@@ -23,17 +22,19 @@ class Auth
 	}
 
 
-
 	public static function setAuth(array $user): void
 	{
-	  $_SESSION['id'] = $user['id'];
+		$_SESSION['id'] = $user['id'];
 	}
 
-	public static function getAuth(){
-    if (isset($_SESSION['id']) && $_SESSION['id']) {
-      self::$user = User::find($_SESSION['id'])->toArray();
-    }
-  }
+	public static function getAuth()
+	{
+		if (isset($_SESSION['id']) && $_SESSION['id']) {
+			$user = User::find($_SESSION['id']);
+
+			self::$user = $user ? $user->toArray() : null;
+		}
+	}
 
 
 	public static function autorize(): array

@@ -64,7 +64,7 @@ class AccordionBuilder
 
 	protected function setLi($name, $icon, $link = '')
 	{
-		$this->$name['icon'] = Icon::$icon() ? Icon::$icon() : $icon;
+		$this->$name['icon'] = $icon ;
 		$this->$name['link'] = $link;
 	}
 

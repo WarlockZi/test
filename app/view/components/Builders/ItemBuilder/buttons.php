@@ -1,18 +1,20 @@
 <!--  BUTTONS  -->
 <div class="item_buttons">
 
-	<? if ($this->del): ?>
+	<? use app\core\Icon;
+
+	 if ($this->del): ?>
 	  <div class="del"
 	       data-model="<?= $this->model; ?>"
 	       data-id="<?= $this->item['id']; ?>"
 	  >
-			 <? include TRASH ?>
+			 <?= Icon::trashIcon() ?>
 	  </div>
 	<? endif; ?>
 
 	<? if ($this->softDel): ?>
 	  <div soft-del>
-			 <? include TRASH ?>
+			 <?= Icon::trashIcon() ?>
 	  </div>
 	<? endif; ?>
 
@@ -21,7 +23,7 @@
 	  <div class="save"
 	       data-model="<?= $this->model; ?>"
 	       data-id="<?= $this->item['id']; ?>">
-			 <? include SAVE ?>
+			 <?= Icon::save();?>
 	  </div>
 	<? endif; ?>
 

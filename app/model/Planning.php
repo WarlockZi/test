@@ -7,19 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Planning extends Model
 {
-	public $table = 'planning';
-	public $model = 'planning';
 
 	protected $fillable = [
-		'employee'=>0,
-		'plan'=>'',
-		'do'=>[],
+		'name',
+		'description',
 	];
-
-//	public static function delete($id)
-//	{
-//		return parent::delete($id);
-//
-//	}
 
 }

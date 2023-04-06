@@ -44,7 +44,7 @@
 		<div class="advantage__cards-wrap">
 
 			<div class="advantage__card assortiment">
-				<? include ICONS . '/feather/check-square.svg'; ?>
+				<?= \app\core\Icon::checkSquare('feather'); ?>
 				Ассортимент
 
 				<p>Легко сориентироваться. Ничего лишнего.</p>
@@ -52,14 +52,14 @@
 			</div>
 
 			<div class="advantage__card delivery">
-				<? include ICONS . '/feather/truck.svg'; ?>
+				<?= \app\core\Icon::truck('feather'); ?>
 				Доставка
 				<p>Согласуем с Вами сроки поставки.</p>
 
 			</div>
 
 			<div class="advantage__card result">
-				<? include ICONS . '/feather/package.svg'; ?>
+				<?= \app\core\Icon::package('feather'); ?>
 
 				Наличие
 				<p>Обеспечиваем достаточное количество товара на складе.</p>

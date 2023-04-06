@@ -1,12 +1,12 @@
 <div>
 	<input
 			custom-date
-		 <?= $this->model; ?>
-		 <?= $this->field; ?>
-		 <?= $this->class; ?>
-		 <?= $this->min; ?>
-		 <?= $this->max; ?>
-		 <?= $this->value; ?>
+		 <?= $date->model; ?>
+		 <?= $date->field; ?>
+		 <?= $date->class; ?>
+		 <?= $date->min; ?>
+		 <?= $date->max; ?>
+		 <?= $date->value; ?>
 			type="date"
 	>
 

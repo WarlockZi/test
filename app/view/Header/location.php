@@ -1,5 +1,5 @@
 <div class='location'>
-	<? include ICONS . '/feather/map-pin.svg';?>
+	<?= \app\core\Icon::mapPin('feather');?>
 	 <?$adress =\app\controller\Address::getFactAddress();?>
 	 <?= $adress ?>
 </div>

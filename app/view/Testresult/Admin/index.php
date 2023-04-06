@@ -3,7 +3,9 @@
 	<div class="page-name">Результаты тестов</div>
 
 	<div class="test-results__table">
-		<? foreach ($res as $i): ?>
+		<? use app\core\Icon;
+
+			foreach ($res as $i): ?>
 			<div class="item" data-row="<?= $i['id'] ?>"> <?= $i['user']; ?></div>
 			<a class="item" data-row="<?= $i['id'] ?>" href='<?= '/adminsc/testresult/result/' . $i['id']; ?>'
 			   class="test-result"><?= $i['testname']; ?></a>
@@ -15,7 +17,7 @@
 
 			<div class="item del-btn <?= \app\model\User::can($this->user, ['test-results_del'] ) ? 'del' : ''; ?>"
 			     data-row="<?= $i['id'] ?>">
-				<? include TRASH;?>
+				<?= Icon::trashIcon();?>
 			</div>
 		<? endforeach; ?>
 	</div>

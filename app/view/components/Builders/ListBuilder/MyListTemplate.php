@@ -1,7 +1,7 @@
 <div custom-list
 	<?= $this->class; ?>
 	<?= $this->relation; ?>
-	<?= $this->model; ?>
+	<?= $this->dataModel; ?>
 >
 
 	<?= $this->pageTitle; ?>

@@ -9,7 +9,7 @@ class ArrayOptionsBuilder
 {
 	private array $arr;
 	protected int $selected=0;
-	protected int $excluded=0;
+	protected int $excluded=-1;
 	protected string $initialOption='';
 
 	public static function build(Collection $collection)
@@ -52,7 +52,7 @@ class ArrayOptionsBuilder
 		return $this;
 	}
 
-	public function initialOption(int $value=0, string $label=''){
+	public function initialOption(int $value=0, string $label=null){
 		$this->initialOption = "<option value={$value}>$label</option>";
 		return $this;
 	}

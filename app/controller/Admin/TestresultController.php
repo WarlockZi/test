@@ -77,7 +77,7 @@ class TestresultController extends AppController
 	private static function prepareBodyTestResults($data, $id)
 	{
 		$results_link = "http://" . $_SERVER['HTTP_HOST'] . '/adminsc/testresult/result/' . $id;
-		$template = FS::getFileContent(ROOT . '/app/view/TestResult/do_email.php');
+		$template = FS::getFileContent(ROOT . '/app/view/TestResult/do_email.php',compact('data'));
 		return $template;
 	}
 

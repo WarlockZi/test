@@ -11,6 +11,8 @@ use app\view\Videoinstruction\VideoinstructionView;
 class VideoinstructionController Extends AppController
 {
 
+	protected $model = Videoinstruction::class;
+
 	public function __construct()
 	{
 		parent::__construct();

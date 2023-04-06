@@ -84,7 +84,8 @@ class DateBuilder extends Builder
 
 	public function get()
 	{
-		return FS::getFileContent(ROOT . '/app/view/components/Builders/Date/Date.php');
+		$date = $this;
+		return FS::getFileContent(ROOT . '/app/view/components/Builders/Date/Date.php',compact('date'));
 	}
 
 }
