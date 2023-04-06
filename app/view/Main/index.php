@@ -66,7 +66,7 @@
 			</div>
 
 			<div class="advantage__card certificates">
-				<? include ICONS . '/feather/layers.svg'; ?>
+				<?= \app\core\Icon::layers('feather'); ?>
 				Сертификаты
 				<p>С каждой поставкой предоставляем сертификаты.</p>
 			</div>
