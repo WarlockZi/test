@@ -3,11 +3,12 @@
 	<div class="flex1">
 
 		<div class="container">
+				<? var_dump($files) ?>
 				<? foreach ($files as $file): ?>
 			  <p><span class="file">
           <?= basename($file, '.xml'); ?>
 					</span> -
-						 <?= filesize($file)/1000 . ' Kbite'; ?>
+						 <?= filesize($file) / 1000 . ' Kbite'; ?>
 			  </p>
 				<? endforeach; ?>
 		</div>
