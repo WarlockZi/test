@@ -12,7 +12,7 @@ class XmlStorage extends Storage
   public function __construct()
   {
     parent::__construct();
-    $this->path = $this->storagePath.'xml';
+    $this->path = $this->storagePath.'xml'.DIRECTORY_SEPARATOR;
     return $this;
   }
 }
