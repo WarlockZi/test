@@ -18,8 +18,8 @@ class Storage
   {
     $this->storagePath = FS::platformSlashes(ROOT . '/app/Storage/');
     $this->path = $this->storagePath;
-    $this->files = $this->getFiles();
-    $this->dirs = $this->getDirs();
+//    $this->files = $this->getFiles();
+//    $this->dirs = $this->getDirs();
   }
 
 
