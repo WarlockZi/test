@@ -111,6 +111,7 @@ header {
       margin-left: 27px;
 
       @include _600 {
+        margin: 2px;
         padding: 10px 15px;
       }
 

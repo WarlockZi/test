@@ -10,13 +10,7 @@ use app\model\Product;
 use app\Services\XMLParser\LoadCategories;
 use app\Services\XMLParser\LoadPrices;
 use app\Services\XMLParser\LoadProducts;
-use app\Services\XMLParser\Parser;
-
-//use app\Services\XMLParser\Parser2;
-//use app\Services\XMLParser\XMLParser;
-//use app\Services\XMLParser\XMLParser3;
 use app\Storage\XmlStorage;
-
 
 class XmlController extends AppController
 {
@@ -33,11 +27,11 @@ class XmlController extends AppController
 			$file = FS::platformSlashes(ROOT . '/app/Storage/xml/' . $_POST['file'] . '.xml');
 			$readable = is_readable($file);
 			if ($_POST['action'] === 'loadProducts' && $readable) {
-				$parser = new LoadProducts($file);
+				new LoadProducts($file);
 			} elseif ($_POST['action'] === 'loadCategories' && $readable) {
-				$parser = new LoadCategories($file);
+				new LoadCategories($file);
 			} elseif ($_POST['action'] === 'loadPrices' && $readable) {
-				$parser = new LoadPrices($file);
+				new LoadPrices($file);
 
 
 			} elseif ($_POST['action'] === 'parseImages') {
