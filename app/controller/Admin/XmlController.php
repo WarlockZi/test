@@ -52,7 +52,6 @@ class XmlController extends AppController
 		}
 		$storage = new XmlStorage;
 		$files = $storage->getFiles();
-		var_dump($files);
 		$this->set(compact('files'));
 
 	}

@@ -3,7 +3,6 @@
 	<div class="flex1">
 
 		<div class="container">
-				<? var_dump($files) ?>
 				<? foreach ($files as $file): ?>
 			  <p><span class="file">
           <?= basename($file, '.xml'); ?>
