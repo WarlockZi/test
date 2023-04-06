@@ -112,11 +112,5 @@ class AppController extends Controller implements IModelable
 	{
 		$this->model = $model;
 	}
-//
-//  public function actionShow(){
-//
-//  	$model = $this->getModel();
-//
-//	}
 
 }

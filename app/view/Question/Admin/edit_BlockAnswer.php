@@ -1,4 +1,6 @@
-<?$checked = (bool)$answer->correct_answer===false ? '' : 'checked' ;?>
+<?$checked = (bool)$answer->correct_answer===false ? '' : 'checked' ;
+
+use app\core\Icon; ?>
 <div class="answer" data-id=<?= $answer->id; ?>>
 
 	<div class="sort"><?= ++$i; ?></div>
@@ -6,7 +8,7 @@
 	       class="correct" <?= $checked; ?>/>
 	<div class="text" contenteditable="true"><?= $answer->answer; ?></div>
 	<div class="delete">
-		 <? include ICONS . '/trashIcon.svg'; ?>
+		 <?= Icon::trashIcon(); ?>
 	</div>
 
 </div>

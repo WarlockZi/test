@@ -1,3 +1,8 @@
+<?php
+
+use app\core\Icon;
+
+?>
 <div class="question-edit" data-id="<?= $question['id'] ?>">
 
 	<div class="row">
@@ -16,7 +21,7 @@
 		     data-tooltip="Удалить Ответ с вопросами"
 		     data-id= <?= $question['id'] ?>
 		>
-				<? include TRASH; ?>
+				<?= Icon::trashIcon(); ?>
 		</div>
 	</div>
 

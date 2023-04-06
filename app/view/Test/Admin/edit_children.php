@@ -11,7 +11,7 @@
 	<div class="list">
 		 <? foreach ($test['children'] as $child): ?>
 		  <div class="path-child__row">
-					<? include ROOT . '/app/view/components/icons/path.svg' ?>
+					<?= \app\core\Icon::path() ?>
 			  <div><?= $child['name'] ?></div>
 		  </div>
 		 <? endforeach; ?>

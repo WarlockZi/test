@@ -18,7 +18,7 @@
 		</div>
 
 		<div class="arrow">
-				<? include ICONS . '/ArrowDropDownIcon.svg' ?>
+				<?= \app\core\Icon::ArrowDropDownIcon() ?>
 		</div>
 
 		<ul>

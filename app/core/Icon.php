@@ -4,9 +4,6 @@
 namespace app\core;
 
 
-use \app\core\FS;
-
-
 class Icon
 {
 

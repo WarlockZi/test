@@ -16,28 +16,24 @@ require_once "../vendor/autoload.php";
 error_reporting(E_ALL);
 define('DEV', $_ENV['MODE'] === 'development'); //0-не выводить ошибки
 define('ROOT', dirname(__DIR__));
-define('ICONS', ROOT . '/pic/icons');
-//define('TRASH', ICONS . '/trashIcon.svg');
-//define('SAVE', ICONS . '/save.svg');
-//define('EDIT', ICONS . '/edit.svg');
-//define('COMPONENTS', ROOT . '/app/view/components');
+
+
 require_once './Eloquent.php';
 
-ini_set('display_errors', 1);
-if (DEV) {
-	ini_set('display_errors', 1);
-}
-new App(new DI);
+ini_set('display_errors', $_ENV['MODE']==='development');
+
 //new App();
 //DI::test();
 
 try {
 	Auth::getAuth();
 
+	new App(new DI);
+
 	Router::fillRoutes();
 	$url = Router::removeQuryString($_SERVER['REQUEST_URI']);
 	Router::dispatch($url);
-//	Router::dispatch($_SERVER['QUERY_STRING']);
+
 } catch (Exception $e) {
 	exit($e);
 };

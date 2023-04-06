@@ -114,6 +114,7 @@ class Router
 		$route = Router::getRoute();
 		return
 			$route->controller === 'auth' && $route->action === 'login'
+			|| $route->controller === 'auth' && $route->action === 'register'
 			|| $route->controller === 'auth' && $route->action === 'noconfirm'
 			|| $route->controller === 'main' && $route->action === 'index'
 			|| $route->controller === 'product' && !$route->admin

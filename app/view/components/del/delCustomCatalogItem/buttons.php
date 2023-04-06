@@ -1,11 +1,13 @@
 <!--  BUTTONS  -->
 <div class="item_buttons">
 
-	<? if ($this->delBttn): ?>
+	<? use app\core\Icon;
+
+	 if ($this->delBttn): ?>
 	  <div class="del"
 	       data-model="<?=$this->modelName;?>"
 	       data-id="<?=$this->item['id'];?>">
-			 <? include TRASH ?>
+			 <?=Icon::trashIcon() ?>
 	  </div>
 	<? endif; ?>
 

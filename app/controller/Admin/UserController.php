@@ -21,7 +21,8 @@ class UserController extends AppController
 
 	public function actionIndex()
 	{
-		Auth::checkAuthorized($this->user, ['role_admin']);
+		$user = Auth::getUser();
+		Auth::checkAuthorized($user, ['role_admin']);
 
 		$list = UserView::listAll();
 		$this->set(compact('list'));
@@ -30,8 +31,8 @@ class UserController extends AppController
 
 	public function actionEdit()
 	{
-		$item = $this->model::find($this->route['id']);
-		$item = UserView::getViewByRole($item, $this->user);
+		$item = $this->model::find($this->route->id);
+		$item = UserView::getViewByRole($item, Auth::getUser());
 
 		$this->set(compact('item'));
 

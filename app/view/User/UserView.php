@@ -6,9 +6,11 @@ namespace app\view\User;
 
 use app\model\Right;
 use app\model\User;
+use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\MyView;
 use app\config\Config;
 use app\view\Right\RightView;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use app\view\components\Builders\Date\DateBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
@@ -286,16 +288,15 @@ abstract class UserView
 
 	public static function getSex(Model $item)
 	{
-		return SelectBuilder::build()
+		$options = ArrayOptionsBuilder::build(new Collection([
+			0 => ['id' => 'm', 'name' => 'М'],
+			1 => ['id' => 'f', 'name' => 'Ж']
+		]))
+			->selected((int)$item->sex)
+			->get();
+
+		return SelectBuilder::build($options)
 			->field('sex')
-			->nameOptionByField('name')
-			->array(
-				[
-					0 => ['id' => 'm', 'name' => 'М'],
-					1 => ['id' => 'f', 'name' => 'Ж']
-				]
-			)
-			->selected($item->sex)
 			->get();
 	}
 
@@ -327,16 +328,14 @@ abstract class UserView
 
 	public static function getConfirmHtml($item)
 	{
-		return SelectBuilder::build()
+		$options = ArrayOptionsBuilder::build(new Collection(				[
+			0 => ['id' => 0, 'name' => 'нет'],
+			1 => ['id' => 1, 'name' => 'да'],
+		]))->selected((int)$item['confirm'] ?? 0)
+			->get();
+
+		return SelectBuilder::build($options)
 			->field('confirm')
-			->nameOptionByField('name')
-			->array(
-				[
-					0 => ['id' => 0, 'name' => 'нет'],
-					1 => ['id' => 1, 'name' => 'да'],
-				]
-			)
-			->selected($item['confirm'] ?? 0)
 			->get();
 	}
 

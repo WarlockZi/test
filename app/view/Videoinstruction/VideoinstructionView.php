@@ -16,10 +16,8 @@ class VideoinstructionView
 
 	public static function listAll()
 	{
-
 		$view = new self;
 		return MyList::build($view->model)
-			->all()
 			->column(
 				ListColumnBuilder::build('sort')
 					->width('50px')
@@ -38,14 +36,14 @@ class VideoinstructionView
 			)
 			->column(
 				ListColumnBuilder::build('link')
-					->contenteditable(true)
+					->contenteditable()
 					->width('auto')
 					->name('Ссылка')
 					->get()
 			)
 			->column(
 				ListColumnBuilder::build('tag')
-					->contenteditable(true)
+					->contenteditable()
 					->width('auto')
 					->name('Группа')
 					->get()

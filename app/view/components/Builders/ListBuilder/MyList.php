@@ -21,26 +21,27 @@ class MyList
 	private $headEditCol;
 	private $headDelCol;
 	private $model;
+	private $modelName;
+	private $dataModel;
 
 	private $relation;
 
 	public static function build(string $modelName, int $count = 0)
 	{
 		$list = new static();
-		$list->items = $list->setItems($count, $modelName);
+
+		$list->modelName = $modelName;
 		$model = new $modelName;
+		$list->model = $model;
 		$model = strtolower(class_basename($modelName));
-		$list->model = "data-model='{$model}'";
+		$list->dataModel = "data-model='{$model}'";
 		return $list;
 	}
 
-	protected function setItems(int $count, string $modelName): Collection
+	protected function setItems()
 	{
-		$model = new $modelName;
-		if ($count) {
-			return $model::all()->take($count);
-		} else {
-			return $model::all();
+		if (!$this->items) {
+			$this->items =  $this->modelName::all();
 		}
 	}
 
@@ -215,34 +216,11 @@ class MyList
 
 	public function get()
 	{
+		$this->setItems();
 		$this->prepareGridHeader();
 		$this->template();
 
 		return $this->html;
 	}
-
-//	public function belongsTo(string $model, $id)
-//	{
-//		$this->realtion();
-//		$this->belongsTo = "data-belongs-to=" . $model;
-//		$this->belongsToId = "data-belongs-to-id=" . $id;
-//		return $this;
-//	}
-
-//	public function morph(string $model, int $id, string $oneOrMany = 'one', bool $detach = false)
-//	{
-//		$this->morph = "data-morph={$model}";
-//		$this->morphId = "data-morphId={$id}";
-//		$this->morphOneOrMany = "data-morphOneOrMany={$oneOrMany}";
-//		$detach = $detach ? 'true' : 'false';
-//		$this->morphDetach = "data-morphDetach={$detach}";
-//		return $this;
-//	}
-	// пример функции получения ссылки. Должна располагаться не здесь,
-	// а в любом другом классе, указанном в функции funcion ListColumnBuilder
-//	public function getLink($column, $item, $field){
-//		$href = '/adminsc/category/edit/'.$item->id;
-//		return "<a href = {$href}>Редакт категорию {$item->id}</a>";
-//	}
 
 }

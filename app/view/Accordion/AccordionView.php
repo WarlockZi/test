@@ -22,8 +22,10 @@ class AccordionView
 			->relation('children')
 			->class('test-edit')
 			->ulBefore("<div class='arrow'></div>" . Icon::path())
-			->ulAfter("editWhite", '/adminsc/test/edit/')
-			->liAfter("editWhite", '/adminsc/test/edit/')
+//			->ulAfter("editWhite", '/adminsc/test/edit/')
+			->ulAfter(Icon::editWhite(), '/adminsc/test/edit/')
+//			->liAfter("editWhite", '/adminsc/test/edit/')
+			->liAfter(Icon::editWhite(), '/adminsc/test/edit/')
 			->isPathAttr("isTest")
 			->attachButtonAfter(ROOT.'/app/view/Accordion/Admin/edit_add-test-button.php')
 			->get();
@@ -32,6 +34,7 @@ class AccordionView
 
 	public static function testDo()
 	{
+		$icon = Icon::path();
 		return AccordionBuilder::build(
 			Test::where('test_id', 0)
 				->where('enable', 1)
@@ -40,7 +43,8 @@ class AccordionView
 			'/adminsc/test/do/'
 		)
 			->relation('children')
-			->ulBefore("<div class='arrow'></div>" . Icon::path())
+			->ulBefore("<div class='arrow'></div>" . $icon)
+//			->ulBefore("<div class='arrow'></div>" . Icon::path())
 			->isPathAttr("isTest")
 			->get();
 	}
@@ -56,8 +60,10 @@ class AccordionView
 			->relation('children')
 			->class('test-edit')
 			->ulBefore("<div class='arrow'></div>" . Icon::path())
-			->ulAfter("editWhite", '/adminsc/opentest/edit/')
-			->liAfter("editWhite", '/adminsc/opentest/edit/')
+			->ulAfter(Icon::editWhite(), '/adminsc/opentest/edit/')
+//			->ulAfter("editWhite", '/adminsc/opentest/edit/')
+			->liAfter(Icon::editWhite(), '/adminsc/opentest/edit/')
+//			->liAfter("editWhite", '/adminsc/opentest/edit/')
 			->isPathAttr("isTest")
 			->attachAfter(ROOT.'/app/view/Accordion/Admin/edit_add_test_button.php')
 			->get();

@@ -105,19 +105,5 @@ class User extends Model
 		return false;
 	}
 
-//	public function checkName($name)
-//	{
-//		if (strlen($name) >= 2) {
-//			return true;
-//		}
-//		return false;
-//	}
-//
-//	public function checkPhone($phone)
-//	{
-//		if (strlen($phone) >= 10) {
-//			return true;
-//		}
-//		return false;
-//	}
+
 }
