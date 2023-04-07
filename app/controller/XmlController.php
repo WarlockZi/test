@@ -1,12 +1,10 @@
 <?php
 
-namespace app\controller\Admin;
+namespace app\controller;
 
-use app\controller\AppController;
-
-
-class IntegrationController extends AppController
+class XmlController extends AppController
 {
+	public $model = xml::class;
 
 	public function __construct()
 	{
@@ -14,7 +12,7 @@ class IntegrationController extends AppController
 	}
 
 
-	public function actionIndex()
+	public function actionInt()
 	{
 
 		$text = '';
@@ -29,14 +27,16 @@ class IntegrationController extends AppController
 		}
 		$path = ROOT.'/pic/integration.txt';
 		file_put_contents($path,$text);
-		echo "success\ncatalog\ncheckauth";
+//		echo "success\ncatalog\ncheckauth";
 //		header('Content-Type',null, 200);
 	}
-	public function action1c_exchange()
+		public function action1c_exchange()
 	{
 		echo "success\n1s\nintegr";
 //		header('Content-Type',null, 200);
 	}
+
+
 
 }
 

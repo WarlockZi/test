@@ -1,14 +1,20 @@
 @import "var";
 @import "mixin_media";
 
+
+.user-content
+//.adm-content
+{
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+}
+
+
 .errors {
   @include error;
   margin: 65px 25px;
 
-}
-
-.default_veiw {
-  flex: 1 0 auto;
 }
 
 select {
@@ -16,14 +22,6 @@ select {
   padding: 3px;
 }
 
-
-.mb5 {
-  margin-bottom: 5px;
-}
-
-.mb10 {
-  margin-bottom: 10px;
-}
 
 .tip {
   position: absolute;

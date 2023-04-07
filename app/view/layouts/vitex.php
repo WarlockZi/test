@@ -27,11 +27,13 @@
 
 <?= $this->header->getHeader(); ?>
 
-<?= $this->getContent(); ?>
+<div class="user-content">
+	<?= $this->getContent(); ?>
+</div>
 
 <?= $this->getFooter(); ?>
 
-<?//= Footer::getUserCookie(); ?>
+<? //= Footer::getUserCookie(); ?>
 
 <?= $this->assets->getJs(); ?>
 <?= $this->assets->getCDNJs(); ?>

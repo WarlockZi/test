@@ -9,8 +9,9 @@
 
 
 .admin-layout__container {
-  position: relative;
   display: flex;
+  flex-direction: column;
+  position: relative;
   flex: 1 0 auto;
   margin-top: 0;
 
