@@ -112,14 +112,14 @@ header {
 
       @include _600 {
         margin: 2px;
-        padding: 10px 15px;
+        padding: 5px;
       }
 
       .logo_vitex {
         height: 33px;
 
         @include _600 {
-          height: 25px;
+          height: 20px;
         }
         @include _500 {
           //width: 50px;
