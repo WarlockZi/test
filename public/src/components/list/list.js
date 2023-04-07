@@ -2,7 +2,7 @@ import './list.scss';
 import {$, post, debounce} from '../../common';
 import MorphDTO from "../morph/MorphDTO";
 
-// export default function list() {
+
 const tables = $('[custom-list]')
 
 if (tables) {

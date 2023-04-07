@@ -62,7 +62,6 @@ class XmlController extends AppController
 				rename($file, $newfile);
 			}
 		}
-
 	}
 
 

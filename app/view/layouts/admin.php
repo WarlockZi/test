@@ -35,7 +35,7 @@ use app\core\Error;
 
 		<div class="adm-content">
 				<?= $this->getContent(); ?>
-		</div>
+		</div
 
 	</div>
 

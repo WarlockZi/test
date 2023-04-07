@@ -1,7 +1,12 @@
 @import "../../var";
 @import "../../mixin_media";
+@import "../../components/dnd/dnd";
 
 .xml {
+
+  .container.files{
+    @include dnd;
+  }
 
   .container {
     width: 51%;

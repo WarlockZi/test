@@ -35,6 +35,7 @@ class LoadProducts extends Parser
 		$g['slug'] = Slug::slug($g['name']);
 		if (!Product::where('slug', $g['slug'])->first()) {
 			$g['txt'] = $good['Описание'] ? $good['Описание'] : '';
+//			$g['instock'] = $good['Количество'] ? $good['Количество'] : 0;
 
 			foreach ($good['ЗначенияРеквизитов']['ЗначениеРеквизита'] as $requisite) {
 				if ($requisite['Наименование'] === 'Полное наименование') {
@@ -53,7 +54,8 @@ class LoadProducts extends Parser
 
 	protected function ech($item, $id,$sameSlug='')
 	{
-		echo "{$id} - {$sameSlug} {$item['name']}<br>";
+//		$instock = "колво: {$item['Количество']}-";
+		echo "{$id}  {$sameSlug} {$item['name']}<br>";
 	}
 
 
