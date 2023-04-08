@@ -12,7 +12,7 @@ class Product extends Model
 
 	protected $fillable = [
 		'name',
-    '1s_category_id',
+    'sort',
     'act',
 		'art',
 		'txt',
@@ -25,6 +25,9 @@ class Product extends Model
 		'title',
 		'keywords',
 		'description',
+    '1s_category_id',
+    '1s_id',
+		'instore'
 	];
 
 	protected static function booted() {

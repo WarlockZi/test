@@ -22,7 +22,7 @@ class ProductController extends AppController
 			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, false,);
 			$this->set(compact('product', 'breadcrumbs'));
 			$this->assets->setItemMeta($product);
-//			$this->assets->setCDNJs('https://cdn.quilljs.com/1.3.6/quill.js');
+
 		} else {
 			header('Location:/category');
 		}

@@ -26,6 +26,7 @@
 				<button type="submit" name="action" value="removePrices">Удалить цены</button>
 				<BR>
 				<button type="submit" name="action" value="loadProducts">Загрузить товары</button>
+				<button type="submit" name="action" value="loadProductsOffer">Загрузить товары offer</button>
 				<button type="submit" name="action" value="loadCategories">Загрузить категории</button>
 				<button type="submit" name="action" value="loadPrices">Загрузить цены</button>
 

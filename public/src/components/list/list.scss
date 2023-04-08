@@ -40,7 +40,7 @@
     }
 
     .edit:hover {
-      background-color: lighten($color-main, 45%);
+      //background-color: lighten($color-main, 45%);
 
       svg {
         stroke: #ffffff;
@@ -48,8 +48,6 @@
     }
 
     .del:hover {
-      background-color: lighten($color-warning, 35%);
-
       svg {
         fill: #ffffff;
       }
@@ -71,13 +69,13 @@
     .edit {
       @include headEdit;
       @include delEditBcgrnd;
-      background-image: url("/pic/icons/editWhite.svg");
+      //background-image: url("/pic/icons/editWhite.svg");
     }
 
     .del {
       @include headEdit;
       @include delEditBcgrnd;
-      background-image: url("/pic/icons/trashWhite.svg");
+      //background-image: url("/pic/icons/trashWhite.svg");
     }
 
     .del:not(.head) {
@@ -101,9 +99,9 @@
       box-sizing: border-box;
       display: flex;
       flex-flow: column;
-      cursor: pointer;
       position: relative;
       min-height: 27px;
+
 
       .icon {
         position: absolute;
@@ -145,7 +143,7 @@
         align-items: center;
 
         &:hover {
-          background-color: #5b626e;
+          //background-color: #5b626e;
         }
       }
 

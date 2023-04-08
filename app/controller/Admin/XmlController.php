@@ -10,6 +10,7 @@ use app\model\Product;
 use app\Services\XMLParser\LoadCategories;
 use app\Services\XMLParser\LoadPrices;
 use app\Services\XMLParser\LoadProducts;
+use app\Services\XMLParser\LoadProductsOffer;
 use app\Storage\XmlStorage;
 
 class XmlController extends AppController
@@ -28,6 +29,8 @@ class XmlController extends AppController
 			$readable = is_readable($file);
 			if ($_POST['action'] === 'loadProducts' && $readable) {
 				new LoadProducts($file);
+			} elseif ($_POST['action'] === 'loadProductsOffer' && $readable) {
+				new LoadProductsOffer($file);
 			} elseif ($_POST['action'] === 'loadCategories' && $readable) {
 				new LoadCategories($file);
 			} elseif ($_POST['action'] === 'loadPrices' && $readable) {
