@@ -28,14 +28,13 @@ class LoadProducts extends Parser
 
 	protected function fillGood($good,$id)
 	{
-//    $g['1s_id'] = $good['Ид'];
-		$g['1s_categrory_id'] = $good['Группы']['Ид'];
+    $g['1s_id'] = $good['Ид'];
+		$g['1s_category_id'] = $good['Группы']['Ид'];
 		$g['art'] = $good['Артикул'];
 		$g['name'] = $good['Наименование'];
 		$g['slug'] = Slug::slug($g['name']);
 		if (!Product::where('slug', $g['slug'])->first()) {
 			$g['txt'] = $good['Описание'] ? $good['Описание'] : '';
-//			$g['instock'] = $good['Количество'] ? $good['Количество'] : 0;
 
 			foreach ($good['ЗначенияРеквизитов']['ЗначениеРеквизита'] as $requisite) {
 				if ($requisite['Наименование'] === 'Полное наименование') {
@@ -43,7 +42,7 @@ class LoadProducts extends Parser
 				}
 			}
 
-			$cat = Category::where('1s_id', $g['1s_categrory_id'])->first();
+			$cat = Category::where('1s_id', $g['1s_category_id'])->first();
 			$g['category_id'] = $cat->id;
 			$p = Product::create($g);
 			$this->ech($g,$id);
@@ -54,8 +53,8 @@ class LoadProducts extends Parser
 
 	protected function ech($item, $id,$sameSlug='')
 	{
-//		$instock = "колво: {$item['Количество']}-";
-		echo "{$id}  {$sameSlug} {$item['name']}<br>";
+
+		echo "{$id}  - {$sameSlug} {$item['name']}<br>";
 	}
 
 

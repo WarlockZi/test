@@ -6,6 +6,7 @@ namespace app\controller;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
+use app\Repository\ProductRepository;
 
 
 class CategoryController Extends AppController
@@ -20,12 +21,13 @@ class CategoryController Extends AppController
 
 	public function actionIndex()
 	{
-//		$accordion = '';
+
 		if ($this->route->slug) {
 			$this->view = 'category';
 
 			$slug = $this->route->slug;
 			$category = CategoryRepository::index($slug);
+			$category->products->filters = ProductRepository::getFilters();
 			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
 
 			$this->set(compact('breadcrumbs','category'));
@@ -35,7 +37,7 @@ class CategoryController Extends AppController
 			$categories = CategoryRepository::indexNoSlug();
 			$this->set(compact('categories'));
 		}
-//		$this->set(compact('accordion'));
+
 	}
 
 

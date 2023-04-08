@@ -7,13 +7,18 @@ namespace app\Repository;
 use app\controller\Controller;
 use app\controller\FS;
 use app\model\Product;
-use app\model\Property;
 use app\model\Val;
 use app\view\Image\ImageView;
 
 class ProductRepository extends Controller
 {
 	public static $ProductRepository;
+	protected $viewPath;
+
+	public function __construct()
+	{
+		$this->viewPath = \app\core\FS::platformSlashes(ROOT.'/app/view/Product/');
+	}
 
 	public static function preparePropertiesList(Product $product)
 	{
@@ -38,17 +43,16 @@ class ProductRepository extends Controller
 
 	public static function priceStatic($column, $item, $d)
 	{
-		return $item->price;
+		return $item->getRelation('price')->price??0;
 	}
 
 	public static function imageStatic($column, $item, $d)
 	{
-//		$src = ImageRepository::getImagePath($item);
 		$art = trim($item->art);
 		$src = "/pic/product/uploads/{$art}.jpg";
 		if (is_file(ROOT . $src)) {
 			return "<img style='width: 50px; height: 50px;' src='{$src}'>";
-		}else{
+		} else {
 			return ImageView::noImage();
 		}
 	}
@@ -59,10 +63,37 @@ class ProductRepository extends Controller
 		return $product;
 	}
 
+	public static function getFilters()
+	{
+		$self = new static();
+		$filters= [
+			'noInstore'=>'Показать с остатком = 0',
+			'noPrice'=>'Показать без цены',
+		];
+
+
+		return \app\core\FS::getFileContent($self->viewPath.'filters.php',compact('filters'));
+	}
+
+	protected static function makeCheck(){
+
+
+	}
+
+	public static function list()
+	{
+		return Product::query()
+			->with('price')
+			->take(10)
+			->orderBy('sort')
+			->get();
+	}
+
 	public static function edit(int $val)
 	{
-		return Product::
-		with('category.properties.vals')
+		return Product::query()
+//			->orderBy('sort')
+			->with('category.properties.vals')
 			->with('category.parentRecursive')
 			->with('category.parents')
 			->with('mainImages')
@@ -73,13 +104,13 @@ class ProductRepository extends Controller
 			->with('bigpackImages')
 			->with('baseUnit')
 			->with('mainUnit')
-//			->with('parentCategoryRecursive')
 			->find($val);
 	}
 
 	public static function main(string $slug)
 	{
 		return Product::query()
+			->orderBy('sort')
 			->with('category.properties.vals')
 			->with('category.parentRecursive')
 			->with('category.parents')
@@ -92,7 +123,6 @@ class ProductRepository extends Controller
 			->with('bigpackImages')
 			->with('baseUnit')
 			->with('mainUnit')
-//			->with('parentCategoryRecursive')
 			->where('slug', $slug)
 			->first();
 	}
