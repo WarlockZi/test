@@ -1,8 +1,11 @@
-<div class="filters">
-	<? foreach ($filters as $k => $v): ?>
-	<div class="filter">
-	  <input id="<?= $k; ?>" type="checkbox">
-	  <label for="<?= $k; ?>"><?= $v; ?></label>
+<div class="slider filters">
+	<div class="wrap">
+		 <? foreach ($filters as $k => $v): ?>
+		  <div class="filter">
+			  <input id="<?= $k; ?>" type="checkbox">
+			  <label for="<?= $k; ?>"><?= $v; ?></label>
+		  </div>
+		 <? endforeach; ?>
 	</div>
-	<? endforeach; ?>
+	<div class="slide">Фильтры</div>
 </div>
