@@ -1,10 +1,14 @@
 import {$, slider} from '../common';
 
-let category = $('.category').first()
 
-if (category) {
+let category = $('.category').first()
+if (category) init()
+
+function init() {
   slider()
+
   let filters = $('.filters .wrap').first()
+  if (!filters) return false
   filters.onchange = ({target}) => {
     let filter = target.closest('.filter')
     let input = filter.querySelector('input')
@@ -41,5 +45,6 @@ class callMethod {
       p.classList.toggle('show')
     })
   }
+
 
 }

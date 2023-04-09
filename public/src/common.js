@@ -373,6 +373,7 @@ function $(selector) {
 
 function slider() {
   let slider = $('.slider').first()
+  if (!slider) return false
   slider.onclick = function ({target}) {
     if (target.classList.contains('slide')) {
       let wrap = slider.querySelector('.wrap')
