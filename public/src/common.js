@@ -371,6 +371,20 @@ function $(selector) {
   }
 }
 
+function slider() {
+  let slider = $('.slider').first()
+  slider.onclick = function ({target}) {
+    if (target.classList.contains('slide')) {
+      let wrap = slider.querySelector('.wrap')
+      if (!wrap.style.height) {
+        wrap.style.height = wrap.scrollHeight + 'px'
+      } else {
+        wrap.style.height = ''
+      }
+    }
+  }
+}
+
 export function fragmentDate(date, order, y, m, d, glue) {
   let o = new Date(date)
 
@@ -413,6 +427,7 @@ function addTooltip(args) {
 
 
 export {
+  slider,
   cachePage,
   trimStr,
   addTooltip,

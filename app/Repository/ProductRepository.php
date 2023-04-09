@@ -67,8 +67,8 @@ class ProductRepository extends Controller
 	{
 		$self = new static();
 		$filters= [
-			'noInstore'=>'Показать с остатком = 0',
-			'noPrice'=>'Показать без цены',
+			'instore'=>'Показать с остатком = 0',
+			'price'=>'Показать c ценой = 0',
 		];
 
 
