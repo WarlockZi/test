@@ -6,10 +6,12 @@
 
 	  <div class="category-wrap">
 			 <? foreach ($categories as $category): ?>
+				 <? if ($category): ?>
 
-			 <a class="category-card" href="/category/<?=$category->slug;?>">
-						<?= $category->name ?>
-			 </a>
+				 <a class="category-card" href="/category/<?= $category->slug; ?>">
+							 <?= $category->name ?>
+				 </a>
+				 <? endif; ?>
 
 			 <? endforeach; ?>
 	  </div>

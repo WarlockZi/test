@@ -16,10 +16,13 @@
 
 		  <div class="category-child-wrap">
 					<? foreach ($category['childrenRecursive'] as $child): ?>
-				 <a class="category-card" href="/category/<?= $child->slug ?>">
-							 <?= $child->name ?>
-							 <?= \app\view\Category\CategoryView::getMainImage($child) ?>
-				 </a>
+<!--						--><?// if ($child->products->count() || $child->childrenRecursive->count()): ?>
+					 <a class="category-card" href="/category/<?= $child->slug ?>">
+									<?= $child->name ?>
+									<?= \app\view\Category\CategoryView::getMainImage($child) ?>
+					 </a>
+
+<!--						--><?// endif; ?>
 					<? endforeach; ?>
 		  </div>
 
@@ -32,7 +35,7 @@
 		<? endif; ?>
 
 		<? if (!$category->products->count()): ?>
-		  <!--		  <h3>В категории нет товаров</h3>-->
+<!--		  		  <h3>В категории нет товаров</h3>-->
 		<? else: ?>
 
 		  <div class="products-header">
@@ -42,18 +45,13 @@
 		  <div class="product-wrap">
 
 					<? foreach ($category->products as $product): ?>
-						<?
-						$price = $product->getRelation('price')->price ?? 0;
-						$currency = $product->getRelation('price')->currency ?? '-';
-						$unit = $product->getRelation('price')->unit ?? 'ед';
-						?>
 
 				 <a data-instore="<?= $product->instore ?? 0; ?>"
-				    data-price="<?= $price; ?>"
+				    data-price="<?= $product->getRelation('price')->price ?? 0; ?>"
 				    href="/product/<?= $product->slug; ?>" class="product">
 					 <h3 class="name"><?= $product->name; ?></h3>
 							 <?= \app\view\Product\ProductView::getMainImage($product) ?>
-					 <p><?= $price; ?> <?= $currency; ?> / <?= $unit; ?></p>
+					 <p><?= $product->priceWithCurrencyUnit(); ?></p>
 					 <p>Остаток - <?= $product->instore ?? 0; ?></p>
 
 				 </a>

@@ -331,26 +331,28 @@ $border-color:$color-main
 }
 
 @mixin slider {
+  font-size: 13px;
   position: relative;
   display: inline-flex;
   margin-bottom: 40px;
   margin-top: 1px;
 
-  .wrap{
+  .wrap {
     top: -20px;
     left: 0;
     display: flex;
     flex-direction: column;
     height: 0;
     background-color: white;
-    transition: all 1s;
+    transition: all 300ms;
     overflow: hidden;
+
     .filter {
       display: flex;
     }
   }
 
-  .slide{
+  .slide {
     content: 'Фильтры';
     position: absolute;
     width: 100%;
@@ -365,6 +367,10 @@ $border-color:$color-main
     color: white;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
+    cursor: pointer;
+    &:hover{
+      background-color: lighten($color-main,10%);
+    }
   }
 
 }

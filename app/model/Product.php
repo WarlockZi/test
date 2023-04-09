@@ -12,8 +12,8 @@ class Product extends Model
 
 	protected $fillable = [
 		'name',
-    'sort',
-    'act',
+		'sort',
+		'act',
 		'art',
 		'txt',
 		'slug',
@@ -25,17 +25,27 @@ class Product extends Model
 		'title',
 		'keywords',
 		'description',
-    '1s_category_id',
-    '1s_id',
+		'1s_category_id',
+		'1s_id',
 		'instore'
 	];
 
-	protected static function booted() {
-		static::Updating (function($product) {
+	protected static function booted()
+	{
+		static::Updating(function ($product) {
 			$product->slug = Slug::slug($product->name);
 			return $product;
 		});
 	}
+
+	public function priceWithCurrencyUnit()
+	{
+		$price = $this->getRelation('price');
+		if ($price)
+			return "{$price->price} {$price->currency} / {$price->unit}";
+		return 'цена - не определена';
+	}
+
 	public function detailImages()
 	{
 		return $this->morphToMany(
@@ -43,9 +53,10 @@ class Product extends Model
 			'imageable',
 			)->where('slug', '=', 'detail');
 	}
+
 	public function price()
 	{
-		return $this->hasOne(Price::class,'1s_art','art');
+		return $this->hasOne(Price::class, '1s_art', 'art');
 	}
 
 	public function mainImages()
@@ -82,7 +93,7 @@ class Product extends Model
 	{
 		return $this->belongsTo(Unit::class,
 			'main_unit'
-			);
+		);
 	}
 
 	public function baseUnit()
@@ -90,7 +101,7 @@ class Product extends Model
 		return $this->belongsTo(Unit::class,
 			'base_unit',
 //			'id',
-			);
+		);
 	}
 //	public function baseUnit()
 //	{
@@ -103,7 +114,6 @@ class Product extends Model
 	{
 		return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
 	}
-
 
 
 	public function categoryCategoryRecPropsVals()
@@ -126,7 +136,8 @@ class Product extends Model
 		return $this->belongsTo(Category::class)->with('category_rec');
 	}
 
-	public function parentCategoryRecursive(){
+	public function parentCategoryRecursive()
+	{
 		return $this->category()->with('parentRecursive');
 	}
 

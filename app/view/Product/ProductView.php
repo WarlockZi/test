@@ -34,7 +34,7 @@ class ProductView
 		$path = self::$mainImagePath.$product->art.'.jpg';
 		$file = ROOT.$path;
 		if (is_file($file)) {
-			return "<img src='$path'>";
+			return "<img src='$path' loading='lazy'>";
 		}
 		return ImageView::noImage();
 	}
