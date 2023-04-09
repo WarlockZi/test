@@ -16,10 +16,10 @@
   flex-direction: column;
   flex: 1 1 auto;
   margin: 0 auto;
-  max-width: 800px;
+  width: clamp(500px,80%,900px);
   padding: 25px;
   background-color: white;
-  min-width: 900px;
+  //min-width: 900px;
 
   h1 {
     @include _h1;
@@ -56,14 +56,6 @@
   p {
     margin: 5px 0;
   }
-}
-
-main {
-  display: flex;
-  flex: 1 0 auto;
-  max-width: 1310px;
-  margin: 10px auto;
-  flex-flow: column;
 }
 
 
