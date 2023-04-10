@@ -27,9 +27,9 @@
 
 <?= $this->header->getHeader(); ?>
 
-<div class="user-content">
+<main class="user-content">
 	<?= $this->getContent(); ?>
-</div>
+</main>
 
 <?= $this->getFooter(); ?>
 
