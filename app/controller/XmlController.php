@@ -12,7 +12,7 @@ class XmlController extends AppController
 	}
 
 
-	public function actionInt()
+	public function actionInc()
 	{
 
 		$text = '';
