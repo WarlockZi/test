@@ -4,7 +4,7 @@
 namespace app\Storage;
 
 
-class XmlStorage extends Storage
+class PicStorage extends Storage
 {
 
   protected $path;
@@ -12,15 +12,13 @@ class XmlStorage extends Storage
   public function __construct()
   {
     parent::__construct();
-    $this->path = $this->storagePath.'xml'.DIRECTORY_SEPARATOR;
+    $this->path = ROOT.DIRECTORY_SEPARATOR.'pic'.DIRECTORY_SEPARATOR;
     return $this;
   }
 
   public static function getFileContent($name){
   	$self = new static();
-  	$file = $self->path.$name.'.txt';
-  	$content = file_get_contents($file);
-  	echo $content;;
-  	return ;
+  	$file = $self->path.$name;
+  	return file_get_contents($file);
 	}
 }
