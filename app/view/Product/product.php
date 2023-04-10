@@ -7,7 +7,6 @@ use \app\view\Product\ProductView;
 
 <? if ($product): ?>
 
-	<main class="vitex-content">
 
 		<div class="product-card">
 
@@ -138,7 +137,6 @@ use \app\view\Product\ProductView;
 
 		</div>
 
-	</main>
 
 <? else: ?>
 	<div>Такого товара нет</div>

@@ -2,15 +2,6 @@
 @import "mixin_media";
 
 
-.user-content
-//.adm-content
-{
-  display: flex;
-  flex: 1 0 auto;
-  flex-direction: column;
-}
-
-
 .errors {
   @include error;
   margin: 65px 25px;
