@@ -193,7 +193,7 @@ use \app\core\Icon;
 				  <a class="neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
 				  <a class="neon" href='/adminsc/settings/cache'>Очистить кэш</a>
 				  <a class="neon" href="/adminsc/xml">Загрузить товары из файла</a>
-				  <a class="neon" href="/adminsc/xml/incRead">Файл ответа</a>
+				  <a class="neon" href="/adminsc/xml/incread">Файл ответа</a>
 			  </ul>
 		  </li>
 		 <? endif; ?>
