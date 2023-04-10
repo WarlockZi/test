@@ -10,6 +10,13 @@ use app\view\UserView;
 
 class NotFound extends Controller
 {
+	protected $file404;
+
+	public function __construct()
+	{
+		$this->file404 = ROOT.'/app/view/404/index.php';
+	}
+
 	public function getModel(){
 
 	}
@@ -25,29 +32,33 @@ class NotFound extends Controller
 		exit();
 	}
 
-	public static function controller(string $controller)
+	public static function controller(Route $route)
 	{
-		$error = "Плохой запрос controller - {$controller}";
+		$error = "Плохой запрос controller - {$route->controller}";
 		Error::setError($error);
+
 		$controller = new self();
+//		$controller->route->setController(static::class);
 
-		$view = self::setView();
+		$view = self::setView($route);
 		$view->controller = new $controller;
+		$content = FS::getFileContent($controller->file404);
+		$view->controller->set(compact('content'));
 		$view->render();
 		exit();
 	}
 
-	public static function action(string $action, string $controller)
+	public static function action(Route $route)
 	{
-		$error = "Плохой запрос action - {$action} у контроллера - {$controller->shortClassName($controller)}";
+		$error = "Плохой запрос action - {$route->action} у контроллера - {$route->controller->shortClassName($route->controller)}";
 		Error::setError($error);
-		$view = self::setView();
+		$view = self::setView($route);
 		$view->render();
 		exit();
 	}
 
-	protected static function setView(){
-		if (Router::getRoute()->isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
+	protected static function setView(Route $route){
+		if (User::can(Auth::getUser(), ['role_employee'])) {
 			return new AdminView(new self);
 		} else {
 			return new UserView(new self);

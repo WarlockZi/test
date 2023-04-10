@@ -27,7 +27,6 @@ abstract class Controller
 			$this->assets = new Assets($this);
 			$this->route = Router::getRoute();
 			$this->token = $this->createToken();
-//			$this->auth = new Auth();
 		}
 	}
 
