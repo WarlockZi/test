@@ -30,9 +30,9 @@ try {
 
 	new App(new DI);
 
-	Router::fillRoutes();
-	$url = Router::removeQuryString($_SERVER['REQUEST_URI']);
-	Router::dispatch($url);
+	$router = new Router();
+	$url = $router->removeQuryString($_SERVER['REQUEST_URI']);
+	$router->dispatch($url);
 
 } catch (Exception $e) {
 	exit($e);

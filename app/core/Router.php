@@ -7,40 +7,24 @@ use app\controller\Controller;
 class Router
 {
 	protected static $routes = [];
-	protected static $namespace;
-	protected static $controller;
+	protected $namespace;
+	protected $controller;
 
 	protected static $route;
 
-	public static function setNamespace(): void
+	public function __construct()
 	{
-		if (self::$route->admin) {
-			self::$namespace = 'app\controller\Admin\\';
-		} else {
-			self::$namespace = 'app\controller\\';
-		}
+		$this->fillRoutes();
 	}
 
-	public static function setController(): string
+	public static function getRoute()
 	{
-		self::setNamespace();
-		$name = ucfirst(self::$route->controller);
-		self::$controller = self::$namespace . $name . 'Controller';
-		return self::$controller;
+		return self::$route;
 	}
 
-	public static function add($regexp, $route = [])
+	public function matchRoute($url): Route
 	{
-		self::$routes[$regexp] = $route;
-	}
-
-	public static function fillRoutes(): void
-	{
-		require_once ROOT . '/app/core/routes.php';
-	}
-
-	public static function matchRoute($url): void
-	{
+		$route = new Route();
 		foreach (self::$routes as $pattern => $r) {
 			if (preg_match("#$pattern#i", $url, $matches)) {
 
@@ -49,60 +33,46 @@ class Router
 						unset($matches[$k]);
 					}
 				}
-
 				$matches = array_merge($matches, $r);
-				$route = new Route();
 				foreach ($matches as $k => $v) {
 					$route->$k = strtolower($v);
 				}
 				self::$route = $route;
 			}
 		}
-
+		return $route;
 	}
 
-	protected static function handleErrors(string $controller, string $action)
+	protected function handleErrors(Route $route)
 	{
-
-		if (!class_exists($controller)) {
-//			var_dump($controller);
-			NotFound::controller($controller);
-
+		if (!class_exists($route->controller)) {
+			NotFound::controller($route);
 		} else if (!Router::$route->action) {
-
-			NotFound::action(Router::$route->action, $controller);
+			NotFound::action($route);
 		}
-
 	}
 
-	public static function dispatch($url)
+	public function dispatch($url)
 	{
-		Router::matchRoute($url);
+		$route = $this->matchRoute($url);
 
-		$controller = self::setController();
-		$action = 'action' . self::upperCamelCase(self::$route->action);
+		$route->setAmin($route);
+		$route->setController($route);
+		$route->setAction($route);
+		$this::$route = $route;
 
-		Router::handleErrors($controller, $action);
+		Router::handleErrors($route);
 
-		$controller = new $controller;
+		$controller = new $this->route->controller;
 
 		Auth::autorize();
-		$controller->$action();
+		$controller->$this->route->action();
 
 		$controller->setView();
 	}
 
-	protected static function upperCamelCase($name): string
-	{
-		return str_replace(' ', '', ucwords(str_replace('-', ' ', $name)));
-	}
 
-	protected static function lowerCamelCase($name)
-	{
-		return lcfirst(str_replace(' ', '', ucwords(str_replace('-', ' ', $name))));
-	}
-
-	public static function removeQuryString(string $url)
+	public function removeQuryString(string $url): string
 	{
 		$params = explode('&', $url, 2);
 		if (!$url || strpos($params[0], '=')) return '';
@@ -120,9 +90,14 @@ class Router
 			|| $route->controller === 'product' && !$route->admin
 			|| $route->controller === 'category' && !$route->admin;
 	}
-
-	public static function getRoute(): Route
+	public static function add($regexp, $route = [])
 	{
-		return self::$route;
+		self::$routes[$regexp] = $route;
 	}
+
+	public function fillRoutes(): void
+	{
+		require_once ROOT . '/app/core/routes.php';
+	}
+
 }
