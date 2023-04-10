@@ -2,6 +2,8 @@
 
 namespace app\controller;
 
+use app\Storage\XmlStorage;
+
 class XmlController extends AppController
 {
 	public $model = xml::class;
@@ -26,7 +28,7 @@ class XmlController extends AppController
 			$text .= json_encode($_GET);
 		}
 		$path = ROOT . '/pic/integration.txt';
-		file_put_contents($path, $text, FILE_APPEND);
+		file_put_contents($path, $text.'\n', FILE_APPEND);
 //		echo "success\ncatalog\ncheckauth";
 		echo "success";
 //		header('Content-Type',null, 200);
@@ -34,8 +36,15 @@ class XmlController extends AppController
 
 	public function action1s_exchange()
 	{
-		echo "success\n1s\nintegr";
+		$coockieName = 'inc';
+		$coockieVal = '456456';
+		setcookie($coockieName, $coockieVal);
+		echo "success";
 //		header('Content-Type',null, 200);
+	}
+
+	public function actionIncRead(){
+		$file = XmlStorage::
 	}
 
 
