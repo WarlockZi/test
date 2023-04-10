@@ -13,10 +13,8 @@ class XmlController extends AppController
 		parent::__construct();
 	}
 
-
 	public function actionInc()
 	{
-
 		$text = '';
 		if (isset($_POST)) {
 			$text .= json_encode($_POST);
@@ -42,11 +40,6 @@ class XmlController extends AppController
 		echo "success";
 //		header('Content-Type',null, 200);
 	}
-
-	public function actionIncRead(){
-		$file = XmlStorage::
-	}
-
 
 }
 

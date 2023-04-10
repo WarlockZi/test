@@ -11,6 +11,7 @@ use app\Services\XMLParser\LoadCategories;
 use app\Services\XMLParser\LoadPrices;
 use app\Services\XMLParser\LoadProducts;
 use app\Services\XMLParser\LoadProductsOffer;
+use app\Storage\PicStorage;
 use app\Storage\XmlStorage;
 
 class XmlController extends AppController
@@ -65,6 +66,12 @@ class XmlController extends AppController
 				rename($file, $newfile);
 			}
 		}
+	}
+
+	public function actionIncread(){
+		$content = PicStorage::getFileContent('integration.txt');
+		$this->set(compact('content'));
+//		$file = XmlStorage::getFileContent('integration.txt');
 	}
 
 
