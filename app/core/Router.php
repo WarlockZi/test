@@ -2,15 +2,12 @@
 
 namespace app\core;
 
-use app\controller\Controller;
-
 class Router
 {
 	protected static $routes = [];
+	protected static $route;
 	protected $namespace;
 	protected $controller;
-
-	protected static $route;
 
 	public function __construct()
 	{
@@ -25,6 +22,7 @@ class Router
 	public function matchRoute($url): Route
 	{
 		$route = new Route();
+		$route->setUrl($url);
 		foreach (self::$routes as $pattern => $r) {
 			if (preg_match("#$pattern#i", $url, $matches)) {
 
@@ -54,19 +52,21 @@ class Router
 
 	public function dispatch($url)
 	{
-		$route = $this->matchRoute($url);
+		$parcedRoute = $this->matchRoute($url);
 
-		$route->setAmin($route);
-		$route->setController($route);
-		$route->setAction($route);
-		$this::$route = $route;
+		$parcedRoute->setAmin($parcedRoute);
+		$parcedRoute->setController($parcedRoute);
+		$parcedRoute->setAction($parcedRoute);
 
-		Router::handleErrors($route);
+		self::$route = $parcedRoute;
 
-		$controller = new $this->route->controller;
+		Router::handleErrors($parcedRoute);
+
+		$controller = new self::$route->controller;
 
 		Auth::autorize();
-		$controller->$this->route->action();
+		$action = self::$route->actionName;
+		$controller->$action();
 
 		$controller->setView();
 	}
@@ -83,12 +83,13 @@ class Router
 	{
 		$route = Router::getRoute();
 		return
-			$route->controller === 'auth' && $route->action === 'login'
-			|| $route->controller === 'auth' && $route->action === 'register'
-			|| $route->controller === 'auth' && $route->action === 'noconfirm'
-			|| $route->controller === 'main' && $route->action === 'index'
-			|| $route->controller === 'product' && !$route->admin
-			|| $route->controller === 'category' && !$route->admin;
+			$route->controllerName === 'Auth' && $route->action === 'login'
+			|| $route->controllerName === 'Auth' && $route->action === 'register'
+			|| $route->controllerName === 'Auth' && $route->action === 'returnpass'
+			|| $route->controllerName === 'Auth' && $route->action === 'noconfirm'
+			|| $route->controllerName === 'main' && $route->action === 'index'
+			|| $route->controllerName === 'product' && !$route->admin
+			|| $route->controllerName === 'category' && !$route->admin;
 	}
 	public static function add($regexp, $route = [])
 	{

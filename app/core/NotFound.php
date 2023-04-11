@@ -14,6 +14,7 @@ class NotFound extends Controller
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->file404 = ROOT.'/app/view/404/index.php';
 	}
 
@@ -34,7 +35,7 @@ class NotFound extends Controller
 
 	public static function controller(Route $route)
 	{
-		$error = "Плохой запрос controller - {$route->controller}";
+		$error = "Не найден controller - {$route->controller}";
 		Error::setError($error);
 
 		$controller = new self();

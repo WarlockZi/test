@@ -9,13 +9,21 @@ class Route
 	protected $admin;
 	protected $controller;
 	protected $action = 'index';
+	protected $actionName = 'index';
 	protected $slug;
 	protected $id;
+	protected $url;
+	protected $namespace;
+	protected $controllerName;
+
+	public function __construct()
+	{
+	}
 
 	public function __set($name, $value)
 	{
 		if (property_exists($this, $name)) {
-			$this->$$name = $value;
+			$this->$name = $value;
 		}
 	}
 
@@ -36,34 +44,45 @@ class Route
 		return $this->controller === 'Main' && $this->action === 'index';
 	}
 
-	public function getNamespace(Route $route): string
+	public function getNamespace(): string
+	{
+		return $this->namespace;
+	}
+
+	public function setNamespace(Route $route)
 	{
 		if ($route->admin) {
-			return 'app\controller\Admin\\';
+			$this->namespace = 'app\controller\Admin\\';
 		} else {
-			return 'app\controller\\';
+			$this->namespace = 'app\controller\\';
 		}
 	}
 
-	public function setController(Route $route):void
+	public function setController(Route $route): void
 	{
-		if ($route->controller){
-			$namespace = $this->getNamespace($route);
-			$name = ucfirst($route->controller);
-			$this->controller = $namespace . $name . 'Controller';
-		}else{
+		if ($route->controller) {
+			$this->setNamespace($route);
+//			$this->namespace = $this->getNamespace($route);
+			$this->controllerName = ucfirst($route->controller);
+			$this->controller = $this->namespace . $this->controllerName . 'Controller';
+		} else {
 			$namespace = $this->getNamespace($route);
 			$this->controller = $namespace . 'NotFoundController';
 		}
 	}
-	public function setAmin(Route $route):void
+
+	public function setAmin(Route $route): void
 	{
-		$route->admin = (bool)$route->admin;
+		$this->admin = (bool)$route->admin;
+	}
+	public function setUrl(string $url): void
+	{
+		$this->url = $url;
 	}
 
-	public function setAction(Route $route):void
+	public function setAction(Route $route): void
 	{
-		$this->action = 'action' . $this->upperCamelCase($route->action);
+		$this->actionName = 'action' . $this->upperCamelCase($route->action);
 	}
 
 	protected function upperCamelCase($name): string
