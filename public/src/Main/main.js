@@ -1,4 +1,4 @@
-import '../Auth/auth'
+// import '../Auth/auth'
 import './main.scss'
 
 import '../components/header/autocomplete'

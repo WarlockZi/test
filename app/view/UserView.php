@@ -26,7 +26,7 @@ class UserView extends View
 	{
 		$route = $this->controller->getRoute();
 		$action = property_exists($controller,'view')?$controller->view:$route->action;
-		$controller = ucfirst($route->controller);
+		$controller = ucfirst($route->controllerName);
 		return FS::platformSlashes(ROOT . "/app/view/{$controller}/{$action}.php");
 	}
 

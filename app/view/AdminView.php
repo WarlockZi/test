@@ -28,7 +28,7 @@ class AdminView extends View
 	protected function getViewFile(): string
 	{
 		$route = $this->controller->getRoute();
-		$controller = ucfirst($route->controller);
+		$controller = ucfirst($route->controllerName);
 		$action = $route->action;
 		return FS::platformSlashes(ROOT . "/app/view/{$controller}/Admin/{$action}.php");
 	}
@@ -38,7 +38,7 @@ class AdminView extends View
 		if (is_readable($this->view)) {
 			$this->content = self::getFileContent($this->view, $controller->vars);
 		} else {
-			$action = $controller->getRoute()->action;
+			$action = $controller->getRoute()->actionName;
 			$model = ucfirst($controller->getModel());
 			Error::setError("Нет файла вида - Admin/{$model}/{$action}");
 			$this->content = self::getFileContent($this->defaultView,$this->controller->vars);

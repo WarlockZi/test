@@ -2,6 +2,7 @@ import {post, $, validate, trimStr} from '../common'
 
 let registerForm = $("[data-auth='register']")[0]
 if (registerForm) {
+  // debugger
   $(registerForm).on('click', sendData)
 }
 
@@ -43,6 +44,7 @@ async function parseRegisterResponse(email,password) {
     "surName": $("[name='surName']")[0].value,
     "name": $("[name='name']")[0].value,
   }
+  // debugger
 
   let res = await post('/auth/register', data)
 

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class AppController extends Controller implements IModelable
 {
 
+	protected $model;
+
 
 	public function __construct()
 	{
@@ -108,7 +110,7 @@ class AppController extends Controller implements IModelable
 		return $this->model;
 	}
 
-	public function setModel(string $model)
+	public function setModel( $model)
 	{
 		$this->model = $model;
 	}

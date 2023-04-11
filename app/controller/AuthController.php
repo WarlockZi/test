@@ -72,7 +72,7 @@ class AuthController extends AppController
 				exit('registration failed');
 			}
 			try {
-				$sent = Mail::send_mail($data);
+				Mail::send_mail($data);
 			} catch (\Exception $e) {
 				exit($e->getMessage());
 			}
@@ -83,7 +83,6 @@ class AuthController extends AppController
 
 	public function actionProfile()
 	{
-
 		$userArr = Auth::getUser();
 		$user = User::find($userArr['id']);
 
@@ -96,8 +95,7 @@ class AuthController extends AppController
 
 			$this->assets->unsetJs('auth.js');
 			$this->assets->unsetCss('auth.css');
-//			View::setJs('admin.js');
-//			View::setCss('admin.css');
+
 		} else {
 			$this->layout = 'vitex';
 			$item = UserView::guest($user);;
@@ -138,7 +136,6 @@ class AuthController extends AppController
 	public function actionReturnpass()
 	{
 		if ($data = $this->ajax) {
-
 			$_SESSION['id'] = '';
 			$user = User::where('email', $data['email'])
 				->select('id', 'password', 'email')
@@ -146,7 +143,6 @@ class AuthController extends AppController
 				->toArray();
 
 			if ($user) {
-//				Auth::setAuth((int)$user['id']);
 				$password = $this->randomPassword();
 				$newPassword = $this->preparePassword($password);
 				User::where('id', $user['id'])
@@ -162,7 +158,7 @@ class AuthController extends AppController
 				$this->exitWithError("Пользователя с таким e-mail нет");
 			}
 		}
-		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
+//		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
 	}
 
 
