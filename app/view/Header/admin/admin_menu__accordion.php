@@ -194,6 +194,7 @@ use \app\core\Icon;
 				  <a class="neon" href='/adminsc/settings/cache'>Очистить кэш</a>
 				  <a class="neon" href="/adminsc/xml">Загрузить товары из файла</a>
 				  <a class="neon" href="/adminsc/xml/incread">Файл ответа</a>
+				  <a class="neon" href="/adminsc/xml/incclear">Очисть файл ответа</a>
 			  </ul>
 		  </li>
 		 <? endif; ?>
