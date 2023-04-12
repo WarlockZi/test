@@ -5,8 +5,13 @@ namespace app\controller;
 class XmlController extends AppController
 {
 	public $model = xml::class;
+
+	protected $sess = 'sessid';
+	protected $sessid = '7f8ec88162e001fdccabfdd202653fc6';
+
 	protected $cookieName = 'inc';
 	protected $cookieVal = '456456';
+
 	protected $path = ROOT . '/pic/integration.txt';
 
 	public function __construct()
@@ -34,8 +39,7 @@ class XmlController extends AppController
 
 	protected function writeFile()
 	{
-		$text = '-------' . date('H:i:s') . '----------';
-		$text = $this->writeResp();
+		$text = $this->writeResp('setZipSize');
 		$text .= $this->route->params['filename'];
 
 		file_put_contents($this->path, $text, FILE_APPEND);
@@ -44,7 +48,7 @@ class XmlController extends AppController
 
 	protected function setZipSize()
 	{
-		$text = $this->writeResp();
+		$text = $this->writeResp('setZipSize');
 		$str = "zip=yes\nfile_limit=10000000000";
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit($str);
@@ -52,28 +56,28 @@ class XmlController extends AppController
 
 	protected function setAuth()
 	{
-		$text = $this->writeResp();
+		$text = $this->writeResp('setAuth');
 
 		file_put_contents($this->path, $text, FILE_APPEND);
-		exit("success\n{$this->cookieName}\n{$this->cookieVal}");
+		exit("success\ninc\n777777\nsessid\n55fdsa55");
 	}
 
-	protected function writeResp()
+	protected function writeResp($func)
 	{
-		$text = '------' . date("H:i:s") . '--<br>';
+		$text = '------' . date("H:i:s") . "{$func}<br>";
 		$params = json_encode($this->route->params);
-		$text .= 'params' . $params;
+//		$text .= 'params' . $params;
 		if (isset($_POST)) {
-			$text .= json_encode($_POST);
+			$text .= '$_POST - '.json_encode($_POST).'<br>';
 		}
 		if (isset($_FILES)) {
-			$text .= json_encode($_FILES);
+			$text .= '$_FILES - '.json_encode($_FILES).'<br>';
 		}
 		if (isset($_GET)) {
-			$text .= json_encode($_GET);
+			$text .= '$_GET - '.json_encode($_GET).'<br>';
 		}
 		if (isset($_COOKIE)) {
-			$text .= json_encode($_COOKIE);
+			$text .= '$_COOKIE - '.json_encode($_COOKIE).'<br>';
 		}
 		return $text . '<br>';
 	}
