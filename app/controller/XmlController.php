@@ -37,7 +37,7 @@ class XmlController extends AppController
 		$path = ROOT . '/pic/integration.txt';
 		$ispath = is_file(ROOT . '/pic/integration.txt');
 //		exit("f-{$ispath} - name {$path}");
-		file_put_contents($path, $text.'<br>, FILE_APPEND);
+		file_put_contents($path, $text.'<br>', FILE_APPEND);
 		exit("success\n{$this->cookieName}\n{$this->cookieVal}");
 //		echo "success\ncatalog\ncheckauth";
 
