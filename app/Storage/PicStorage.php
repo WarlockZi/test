@@ -19,6 +19,7 @@ class PicStorage extends Storage
 		$self = new static();
 		return $self->path.$name;
 	}
+
   public static function getFileContent($name){
   	$self = new static();
   	$file = $self->path.$name;
