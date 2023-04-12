@@ -2,6 +2,9 @@
 
 namespace app\controller;
 
+use app\Storage\Storage;
+use app\Storage\XmlStorage;
+
 class XmlController extends AppController
 {
 	public $model = xml::class;
@@ -49,7 +52,9 @@ class XmlController extends AppController
 	protected function writeFile()
 	{
 		$text = $this->writeResp('setZipSize');
-		$text .= $this->route->params['filename'];
+		$filename = $this->route->params['filename'];
+		$text .= $filename;
+		move_uploaded_file($filename,XmlStorage::save($filename));
 
 		file_put_contents($this->path, $text, FILE_APPEND);
 
