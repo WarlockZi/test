@@ -16,6 +16,8 @@ class Route
 	protected $slug;
 	protected $id;
 	protected $url;
+	protected $extra;
+	protected $handler;
 
 	protected $uri;
 	protected $params;
