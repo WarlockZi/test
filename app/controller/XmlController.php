@@ -36,7 +36,12 @@ class XmlController extends AppController
 			&& $this->route->params['mode'] === 'file') {
 			$this->writeFile();
 
-		} elseif ($this->route->handler === '1c_exchange.php') {
+		} elseif ($this->route->params['type'] === 'catalog'
+			&& $this->route->params['mode'] === 'import') {
+			$this->writeFile();
+
+		}
+		elseif ($this->route->handler === '1c_exchange.php') {
 			if ($this->route->params['type'] === 'catalog'
 				&& $this->route->params['mode'] === 'file'
 			) {
@@ -55,9 +60,16 @@ class XmlController extends AppController
 		$filename = $this->route->params['filename'];
 		$text .= $filename;
 		move_uploaded_file($filename,ROOT.'/pic/'.$filename);
-
 		file_put_contents($this->path, $text, FILE_APPEND);
-
+		exit('success');
+	}
+	protected function progress()
+	{
+		$text = $this->writeResp('setZipSize');
+		$filename = $this->route->params['filename'];
+		$text .= $filename;
+		move_uploaded_file($filename,ROOT.'/pic/'.$filename);
+		file_put_contents($this->path, $text, FILE_APPEND);
 		exit('success');
 	}
 
@@ -85,18 +97,15 @@ class XmlController extends AppController
 		if (isset($_POST)) {
 			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
 		}
-		if (isset($_REQUEST)) {
-			$text .= '$_REQUEST - ' . json_encode($_REQUEST) . '<br>';
-		}
 		if (isset($_FILES)) {
 			$text .= '$_FILES - ' . json_encode($_FILES) . '<br>';
 		}
 		if (isset($_GET)) {
 			$text .= '$_GET - ' . json_encode($_GET) . '<br>';
 		}
-		if (isset($_COOKIE)) {
-			$text .= '$_COOKIE - ' . json_encode($_COOKIE) . '<br>';
-		}
+//		if (isset($_COOKIE)) {
+//			$text .= '$_COOKIE - ' . json_encode($_COOKIE) . '<br>';
+//		}
 		return $text ;
 	}
 

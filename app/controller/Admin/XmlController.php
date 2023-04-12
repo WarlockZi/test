@@ -75,8 +75,9 @@ class XmlController extends AppController
 	}
 
 	public function actionIncread(){
+		$path = sys_get_temp_dir();
 		$content = PicStorage::getFileContent('integration.txt');
-		exit("content -  {$content}");
+		exit("content - {$path}  {$content}");
 		$this->set(compact('content'));
 	}
 
