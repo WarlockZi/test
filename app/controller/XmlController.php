@@ -2,6 +2,8 @@
 
 namespace app\controller;
 
+use app\core\Route;
+
 class XmlController extends AppController
 {
 	public $model = xml::class;
@@ -15,7 +17,20 @@ class XmlController extends AppController
 
 	public function actionInc()
 	{
-		$text = '';
+		if ($this->route->handler === '1c_exchange.php') {
+			$str = "zip=yes\nfile_limit=1000000";
+			$path = ROOT . '/pic/integration.txt';
+			file_put_contents($path, $str . '<br>', FILE_APPEND);
+			exit($str);
+		}else{
+			$this->setAuth();
+		}
+
+	}
+
+	protected function setAuth()
+	{
+		$text = time();
 		if (isset($_POST)) {
 			$text .= json_encode($_POST);
 		}
@@ -28,14 +43,14 @@ class XmlController extends AppController
 		if (isset($_COOKIE)) {
 			$text .= json_encode($_COOKIE);
 		}
-		setcookie($this->cookieName, $this->cookieVal);
-		$date = date("D, d M Y H:i:s",strtotime('1 January 2024')) . 'GMT';
-		header("Set-Cookie: {$this->cookieName}={$this->cookieVal}; EXPIRES{$date};");
+//		setcookie($this->cookieName, $this->cookieVal);
+//		$date = date("D, d M Y H:i:s",strtotime('1 January 2024')) . 'GMT';
+//		header("Set-Cookie: {$this->cookieName}={$this->cookieVal}; EXPIRES{$date};");
 
 		$path = ROOT . '/pic/integration.txt';
 		$ispath = is_file(ROOT . '/pic/integration.txt');
 //		exit("f-{$ispath} - name {$path}");
-		file_put_contents($path, $text.'<br>', FILE_APPEND);
+		file_put_contents($path, $text . '<br>', FILE_APPEND);
 		exit("success\n{$this->cookieName}\n{$this->cookieVal}");
 //		echo "success\ncatalog\ncheckauth";
 
