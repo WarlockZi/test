@@ -6,15 +6,19 @@ namespace app\core;
 
 class Route
 {
-	protected $admin;
+	protected $namespace;
 	protected $controller;
+	protected $controllerName;
 	protected $action = 'index';
 	protected $actionName = 'index';
+
+	protected $admin;
 	protected $slug;
 	protected $id;
 	protected $url;
-	protected $namespace;
-	protected $controllerName;
+
+	protected $uri;
+	protected $params;
 
 	public function __construct()
 	{
@@ -32,6 +36,14 @@ class Route
 		if (property_exists($this, $name)) {
 			return $this->$name;
 		}
+	}
+
+	public function setParams($params){
+		$this->params = $params;
+	}
+
+	public function setUri($uri){
+		$this->uri = $uri;
 	}
 
 	public function isAdmin(): bool
