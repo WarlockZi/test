@@ -16,6 +16,9 @@ class XmlController extends AppController
 
 	public function actionInc()
 	{
+		if (isset($_POST)) {
+
+		}
 		if ($this->route->handler === '1c_exchange.php') {
 			if ($this->route->params['type'] === 'catalog'
 				&& $this->route->params['mode'] === 'file'
@@ -23,7 +26,6 @@ class XmlController extends AppController
 				$this->writeFile();
 			} else {
 				$this->setZipSize();
-
 			}
 		} else {
 			$this->setAuth();
@@ -32,36 +34,35 @@ class XmlController extends AppController
 
 	protected function writeFile()
 	{
-		$text = '-------'.date('H:i:s').'----------';
+		$text = '-------' . date('H:i:s') . '----------';
 		$text = $this->writeResp();
 		$text .= $this->route->params['filename'];
-//		$str = "zip=yes\nfile_limit=10000000000";
-//		$path = ROOT . '/pic/integration.txt';
+
 		file_put_contents($this->path, $text, FILE_APPEND);
-//		exit($str);
+
 	}
 
 	protected function setZipSize()
 	{
 		$text = $this->writeResp();
 		$str = "zip=yes\nfile_limit=10000000000";
-		$path = ROOT . '/pic/integration.txt';
-		file_put_contents($path, $text, FILE_APPEND);
+		file_put_contents($this->path, $text, FILE_APPEND);
 		exit($str);
 	}
 
 	protected function setAuth()
 	{
 		$text = $this->writeResp();
-		$path = ROOT . '/pic/integration.txt';
-		$ispath = is_file(ROOT . '/pic/integration.txt');
-		file_put_contents($path, $text, FILE_APPEND);
+
+		file_put_contents($this->path, $text, FILE_APPEND);
 		exit("success\n{$this->cookieName}\n{$this->cookieVal}");
 	}
 
 	protected function writeResp()
 	{
-		$text = date("H:i:s");
+		$text = '------' . date("H:i:s") . '--<br>';
+		$params = json_encode($this->route->params);
+		$text .= 'params' . $params;
 		if (isset($_POST)) {
 			$text .= json_encode($_POST);
 		}
