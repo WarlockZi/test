@@ -21,10 +21,19 @@ class XmlController extends AppController
 
 	public function actionInc()
 	{
-		if (isset($_POST)) {
+//		if (isset($_POST)) {
+//
+//		}
 
-		}
-		if ($this->route->handler === '1c_exchange.php') {
+		if ($this->route->params['type'] === 'catalog'
+			&& $this->route->params['mode'] === 'init') {
+			$this->setZipSize();
+
+		} elseif ($this->route->params['type'] === 'catalog'
+			&& $this->route->params['mode'] === 'file') {
+			$this->writeFile();
+
+		} elseif ($this->route->handler === '1c_exchange.php') {
 			if ($this->route->params['type'] === 'catalog'
 				&& $this->route->params['mode'] === 'file'
 			) {
@@ -68,16 +77,16 @@ class XmlController extends AppController
 		$params = json_encode($this->route->params);
 //		$text .= 'params' . $params;
 		if (isset($_POST)) {
-			$text .= '$_POST - '.json_encode($_POST).'<br>';
+			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
 		}
 		if (isset($_FILES)) {
-			$text .= '$_FILES - '.json_encode($_FILES).'<br>';
+			$text .= '$_FILES - ' . json_encode($_FILES) . '<br>';
 		}
 		if (isset($_GET)) {
-			$text .= '$_GET - '.json_encode($_GET).'<br>';
+			$text .= '$_GET - ' . json_encode($_GET) . '<br>';
 		}
 		if (isset($_COOKIE)) {
-			$text .= '$_COOKIE - '.json_encode($_COOKIE).'<br>';
+			$text .= '$_COOKIE - ' . json_encode($_COOKIE) . '<br>';
 		}
 		return $text . '<br>';
 	}
