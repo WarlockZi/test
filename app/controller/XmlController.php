@@ -30,6 +30,7 @@ class XmlController extends AppController
 		if (isset($_COOKIE)) {
 			$text .= json_encode($_COOKIE);
 		}
+		exit('f');
 		setcookie($this->cookieName, $this->cookieVal);
 		$date = date("D, d M Y H:i:s",strtotime('1 January 2024')) . 'GMT';
 		header("Set-Cookie: {$this->cookieName}={$this->cookieVal}; EXPIRES{$date};");
@@ -38,8 +39,7 @@ class XmlController extends AppController
 		file_put_contents($path, $text.'\n', FILE_APPEND);
 		exit("success\n{$this->cookieName}\n{$this->cookieVal}");
 //		echo "success\ncatalog\ncheckauth";
-//		echo "success";
-//		header('Content-Type',null, 200);
+
 	}
 
 	public function action1s_exchange()
