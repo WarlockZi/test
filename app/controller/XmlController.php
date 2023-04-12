@@ -54,7 +54,7 @@ class XmlController extends AppController
 		$text = $this->writeResp('setZipSize');
 		$filename = $this->route->params['filename'];
 		$text .= $filename;
-		move_uploaded_file($filename,XmlStorage::save($filename));
+		move_uploaded_file($filename,ROOT.'/pic/'.$filename);
 
 		file_put_contents($this->path, $text, FILE_APPEND);
 
