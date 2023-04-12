@@ -24,30 +24,20 @@ class XmlController extends AppController
 
 	public function actionInc()
 	{
-//		if (isset($_POST)) {
-//
-//		}
+		if (isset($this->route->params['type'])) {
 
-		if ($this->route->params['type'] === 'catalog'
-			&& $this->route->params['mode'] === 'init') {
-			$this->setZipSize();
-
-		} elseif ($this->route->params['type'] === 'catalog'
-			&& $this->route->params['mode'] === 'file') {
-			$this->writeFile();
-
-		} elseif ($this->route->params['type'] === 'catalog'
-			&& $this->route->params['mode'] === 'import') {
-			$this->writeFile();
-
-		}
-		elseif ($this->route->handler === '1c_exchange.php') {
 			if ($this->route->params['type'] === 'catalog'
-				&& $this->route->params['mode'] === 'file'
-			) {
-				$this->writeFile();
-			} else {
+				&& $this->route->params['mode'] === 'init') {
 				$this->setZipSize();
+
+			} elseif ($this->route->params['type'] === 'catalog'
+				&& $this->route->params['mode'] === 'file') {
+				$this->writeFile();
+
+			} elseif ($this->route->params['type'] === 'catalog'
+				&& $this->route->params['mode'] === 'import') {
+				$this->progress();
+
 			}
 		} else {
 			$this->setAuth();
@@ -56,19 +46,42 @@ class XmlController extends AppController
 
 	protected function writeFile()
 	{
-		$text = $this->writeResp('setZipSize');
 		$filename = $this->route->params['filename'];
+		$this->base($filename, $filename);
+		$text = $this->writeResp('setZipSize');
 		$text .= $filename;
-		move_uploaded_file($filename,ROOT.'/pic/'.$filename);
+		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit('success');
 	}
+
+	protected function base($tmp_name, $data_filename)
+	{
+		if (!is_uploaded_file($tmp_name)) {
+			die('Ошибка при загрузке файла ');
+		} else {
+			$data = file_get_contents($tmp_name);
+			$data = base64_decode($data);
+			if (!empty($data) && ($fp = @fopen($data_filename, 'wb'))) {
+				@fwrite($fp, $data);
+				@fclose($fp);
+			} else {
+				die('Ошибка при записи файла ' . $data_filename);
+			}
+			@header('HTTP/1.1 200 Ok');
+			@header('Content-type: text/html; charset=windows-1251');
+			$answer = "\n" . 'Файл ' . $data_filename . ' успешно загружен. ' . "\n" . 'Переданное сообщение: ' . $message;
+			print ($answer);
+		}
+
+	}
+
 	protected function progress()
 	{
-		$text = $this->writeResp('setZipSize');
+		$text = $this->writeResp('progress');
 		$filename = $this->route->params['filename'];
 		$text .= $filename;
-		move_uploaded_file($filename,ROOT.'/pic/'.$filename);
+		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit('success');
 	}
@@ -91,9 +104,8 @@ class XmlController extends AppController
 
 	protected function writeResp($func)
 	{
-		$text = '------' . date("H:i:s") . "{$func}<br>";
-//		$params = json_encode($this->route->params);
-//		$text .= 'params' . $params;
+		$text = '--' . date("H:i:s") . "--{$func}<br>";
+
 		if (isset($_POST)) {
 			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
 		}
@@ -106,7 +118,7 @@ class XmlController extends AppController
 //		if (isset($_COOKIE)) {
 //			$text .= '$_COOKIE - ' . json_encode($_COOKIE) . '<br>';
 //		}
-		return $text ;
+		return $text;
 	}
 
 	protected function no()
