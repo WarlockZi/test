@@ -58,12 +58,13 @@ class XmlController extends AppController
 
 		file_put_contents($this->path, $text, FILE_APPEND);
 
+		exit('success');
 	}
 
 	protected function setZipSize()
 	{
 		$text = $this->writeResp('setZipSize');
-		$str = "zip=no\nfile_limit=100000000";
+		$str = "zip=yes\nfile_limit=100000000";
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit($str);
 	}
@@ -73,13 +74,13 @@ class XmlController extends AppController
 		$text = $this->writeResp('setAuth');
 
 		file_put_contents($this->path, $text, FILE_APPEND);
-		exit("success\ninc\n777777\nsessid\n55fdsa55");
+		exit("success\ninc\n777777\n55fdsa55");
 	}
 
 	protected function writeResp($func)
 	{
 		$text = '------' . date("H:i:s") . "{$func}<br>";
-		$params = json_encode($this->route->params);
+//		$params = json_encode($this->route->params);
 //		$text .= 'params' . $params;
 		if (isset($_POST)) {
 			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
@@ -96,7 +97,7 @@ class XmlController extends AppController
 		if (isset($_COOKIE)) {
 			$text .= '$_COOKIE - ' . json_encode($_COOKIE) . '<br>';
 		}
-		return $text . '<br>';
+		return $text ;
 	}
 
 	protected function no()
