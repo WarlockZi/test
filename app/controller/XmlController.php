@@ -18,18 +18,30 @@ class XmlController extends AppController
 	public function actionInc()
 	{
 		if ($this->route->handler === '1c_exchange.php') {
-			$str = "zip=yes\nfile_limit=1000000";
-			$path = ROOT . '/pic/integration.txt';
-			file_put_contents($path, $str . '<br>', FILE_APPEND);
-			exit($str);
-		}else{
+			$this->setZipSize();
+		} else {
 			$this->setAuth();
 		}
+	}
 
+	protected function setZipSize(){
+		$text = $this->writeResp();
+		$str = "zip=yes\nfile_limit=10000000000";
+		$path = ROOT . '/pic/integration.txt';
+		file_put_contents($path, $text, FILE_APPEND);
+		exit($str);
 	}
 
 	protected function setAuth()
 	{
+		$text = $this->writeResp();
+		$path = ROOT . '/pic/integration.txt';
+		$ispath = is_file(ROOT . '/pic/integration.txt');
+		file_put_contents($path, $text , FILE_APPEND);
+		exit("success\n{$this->cookieName}\n{$this->cookieVal}");
+	}
+
+	protected function writeResp(){
 		$text = time();
 		if (isset($_POST)) {
 			$text .= json_encode($_POST);
@@ -43,15 +55,15 @@ class XmlController extends AppController
 		if (isset($_COOKIE)) {
 			$text .= json_encode($_COOKIE);
 		}
-//		setcookie($this->cookieName, $this->cookieVal);
+		return $text. '<br>';
+	}
+
+	protected function no()
+	{
+//		exit("f-{$ispath} - name {$path}");
+		//		setcookie($this->cookieName, $this->cookieVal);
 //		$date = date("D, d M Y H:i:s",strtotime('1 January 2024')) . 'GMT';
 //		header("Set-Cookie: {$this->cookieName}={$this->cookieVal}; EXPIRES{$date};");
-
-		$path = ROOT . '/pic/integration.txt';
-		$ispath = is_file(ROOT . '/pic/integration.txt');
-//		exit("f-{$ispath} - name {$path}");
-		file_put_contents($path, $text . '<br>', FILE_APPEND);
-		exit("success\n{$this->cookieName}\n{$this->cookieVal}");
 //		echo "success\ncatalog\ncheckauth";
 
 	}
