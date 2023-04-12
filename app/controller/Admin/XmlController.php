@@ -79,6 +79,15 @@ class XmlController extends AppController
 		$this->set(compact('content'));
 	}
 
+	public function actionIncClear(){
+		$file= PicStorage::getFile('integration.txt');
+		file_put_contents($file,'');
+
+		$content = PicStorage::getFileContent('integration.txt');
+		$this->set(compact('content'));
+	}
+
+
 
 }
 
