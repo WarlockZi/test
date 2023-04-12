@@ -8,11 +8,17 @@ class Router
 	protected static $route;
 	protected $namespace;
 	protected $controller;
+	protected $uri;
+	protected $url;
+	protected $params;
 
-	public function __construct()
+	public function __construct(string $uri)
 	{
+		$this->uri = $uri;
+		$this->url = $this->getUrl($uri);
 		$this->fillRoutes();
 	}
+
 
 	public static function getRoute()
 	{
@@ -50,10 +56,11 @@ class Router
 		}
 	}
 
-	public function dispatch($url)
+	public function dispatch()
 	{
-		$parcedRoute = $this->matchRoute($url);
-
+		$parcedRoute = $this->matchRoute($this->url);
+		$parcedRoute->setUri($this->uri);
+		$parcedRoute->setParams($this->params);
 		$parcedRoute->setAmin($parcedRoute);
 		$parcedRoute->setController($parcedRoute);
 		$parcedRoute->setAction($parcedRoute);
@@ -71,12 +78,27 @@ class Router
 		$controller->setView();
 	}
 
-
-	public function removeQuryString(string $url): string
+	protected function getUrl($uri)
 	{
-		$params = explode('&', $url, 2);
-		if (!$url || strpos($params[0], '=')) return '';
-		return trim($params[0], '/');
+		$arr = explode('?', $uri);
+		if (isset($arr[1])) {
+			$this->getParams($arr[1]);
+		}
+		$url = $arr[0];
+		if (!$url || strpos($url, '=')) return '';
+		return trim($url, '/');
+	}
+
+	public function getParams(string $arr): void
+	{
+		if (!$arr) return;
+		$arr = explode('&', $arr);
+		$params = [];
+		foreach ($arr as $string) {
+			$a = explode('=', $string);
+			$params[$a[0]] = $a[1];
+		}
+		$this->params = $params;
 	}
 
 	public static function needsNoAuth()
@@ -84,6 +106,7 @@ class Router
 		$route = Router::getRoute();
 		return
 			$route->controllerName === 'Auth' && $route->action === 'login'
+			|| $route->controllerName === 'Xml' && $route->action === 'inc'
 			|| $route->controllerName === 'Auth' && $route->action === 'register'
 			|| $route->controllerName === 'Auth' && $route->action === 'returnpass'
 			|| $route->controllerName === 'Auth' && $route->action === 'noconfirm'
@@ -91,6 +114,7 @@ class Router
 			|| $route->controllerName === 'Product' && !$route->admin
 			|| $route->controllerName === 'Category' && !$route->admin;
 	}
+
 	public static function add($regexp, $route = [])
 	{
 		self::$routes[$regexp] = $route;

@@ -2,8 +2,6 @@
 
 namespace app\controller;
 
-use app\Storage\XmlStorage;
-
 class XmlController extends AppController
 {
 	public $model = xml::class;
@@ -41,12 +39,6 @@ class XmlController extends AppController
 		exit("success\n{$this->cookieName}\n{$this->cookieVal}");
 //		echo "success\ncatalog\ncheckauth";
 
-	}
-
-	public function action1s_exchange()
-	{
-
-//		header('Content-Type',null, 200);
 	}
 
 }

@@ -6,7 +6,7 @@ Router::add("^(?P<controller>product)\/?(?P<slug>[_a-z0-9-]+)?\/?(?<extra>[a-z0-
 Router::add("^(?P<controller>category)\/?(?P<slug>[_a-z0-9-]+)?\/?(?<extra>[a-z0-9-]+)?$", ['controller' => 'Category']);
 Router::add("^(?P<controller>main)\/(?P<action>[a-zA-Z0-9]+)");
 Router::add("^(?P<controller>auth)\/(?<action>[a-z0-9]+)?\/?(?<id>[0-9a-zA-z]+)?");
-Router::add("^(?P<controller>xml)\/?(?P<action>[a-zA-Z0-9]+)?$");
+Router::add("^(?P<controller>xml)\/?(?P<action>[a-zA-Z0-9]+)?(?P<extra>.+)?$");
 
 Router::add("^.?search.?", ['controller' => 'search', 'action' => 'index']);
 
