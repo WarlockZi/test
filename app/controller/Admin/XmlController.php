@@ -58,10 +58,16 @@ class XmlController extends AppController
 	{
 		$prods = Product::all();
 
+		$uploads = ROOT . "\pic\product\uploads\\";
+		$origin = 'C:\Users\v.voronik\Desktop\origin\\';
+		$to = 'C:\Users\v.voronik\Desktop\new1\\';
+		if (!is_dir($to)) mkdir($to);
+
 		foreach ($prods as $prod){
 			$art = trim($prod->art);
-			$file = FS::platformSlashes(ROOT."/pic/product/uploads/{$art}.jpg");
-			$newfile = FS::platformSlashes(ROOT."/pic/product/new/{$art}.jpg");
+
+			$file = FS::platformSlashes("$origin{$art}.jpg");
+			$newfile = FS::platformSlashes("$to{$art}.jpg");
 			if (is_file($file)){
 				rename($file, $newfile);
 			}

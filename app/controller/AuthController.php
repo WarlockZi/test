@@ -158,7 +158,6 @@ class AuthController extends AppController
 				$this->exitWithError("Пользователя с таким e-mail нет");
 			}
 		}
-//		View::setMeta('Забыли пароль', 'Забыли пароль', 'Забыли пароль');
 	}
 
 
