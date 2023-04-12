@@ -40,9 +40,12 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 	public function getFileContent(string $file, array $vars = [])
 	{
 		extract($vars);
-		ob_start();
-		require $file;
-		return ob_get_clean();
+		if (is_file($file)) {
+			ob_start();
+			require $file;
+			return ob_get_clean();
+		}
+		return '';
 	}
 
 

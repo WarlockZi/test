@@ -66,6 +66,7 @@ class Route
 			$this->controllerName = ucfirst($route->controller);
 			$this->controller = $this->namespace . $this->controllerName . 'Controller';
 		} else {
+			$this->setNamespace($route);
 			$namespace = $this->getNamespace($route);
 			$this->controller = $namespace . 'NotFoundController';
 		}
