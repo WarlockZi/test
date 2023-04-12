@@ -63,7 +63,7 @@ class XmlController extends AppController
 	protected function setZipSize()
 	{
 		$text = $this->writeResp('setZipSize');
-		$str = "zip=yes\nfile_limit=10000000000";
+		$str = "zip=no\nfile_limit=100000000";
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit($str);
 	}
@@ -83,6 +83,9 @@ class XmlController extends AppController
 //		$text .= 'params' . $params;
 		if (isset($_POST)) {
 			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
+		}
+		if (isset($_REQUEST)) {
+			$text .= '$_REQUEST - ' . json_encode($_REQUEST) . '<br>';
 		}
 		if (isset($_FILES)) {
 			$text .= '$_FILES - ' . json_encode($_FILES) . '<br>';
