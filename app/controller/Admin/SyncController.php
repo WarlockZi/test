@@ -23,7 +23,7 @@ class SyncController extends AppController
 	protected $path = ROOT . '/pic/integration.txt';
 	protected $importPath;
 
-	protected $viewPath = ROOT.'/app/view/Xml/Admin/';
+	protected $viewPath = ROOT . '/app/view/Xml/Admin/';
 
 	public function __construct()
 	{
@@ -40,26 +40,28 @@ class SyncController extends AppController
 		$to = 'C:\Users\v.voronik\Desktop\new1\\';
 		if (!is_dir($to)) mkdir($to);
 
-		foreach ($prods as $prod){
+		foreach ($prods as $prod) {
 			$art = trim($prod->art);
 
 			$file = FS::platformSlashes("$origin{$art}.jpg");
 			$newfile = FS::platformSlashes("$to{$art}.jpg");
-			if (is_file($file)){
+			if (is_file($file)) {
 				rename($file, $newfile);
 			}
 		}
 	}
 
-	public function actionIncread(){
-		$button = FS::getFileContent($this->viewPath.'button.php');
-		$content = $button.StorageImg::getFileContent('integration.txt');
+	public function actionIncread()
+	{
+		$button = FS::getFileContent($this->viewPath . 'button.php');
+		$content = $button . StorageImg::getFileContent('integration.txt');
 		$this->set(compact('content'));
 	}
 
-	public function actionIncClear(){
-		$file= StorageImg::getFile('integration.txt');
-		file_put_contents($file,'');
+	public function actionIncClear()
+	{
+		$file = StorageImg::getFile('integration.txt');
+		file_put_contents($file, '');
 
 		$content = StorageImg::getFileContent('integration.txt');
 		$this->set(compact('content'));
@@ -109,19 +111,19 @@ class SyncController extends AppController
 		}
 	}
 
-	protected	function checkauth()
+	protected function checkauth()
 	{
 		$this->logReqest('checkauth');
 		exit("success\ninc\n777777\n55fdsa55");
 	}
 
-	protected	function init()
+	protected function init()
 	{
 		$this->logReqest('init');
 		exit("zip=no\nfile_limit=10000000");
 	}
 
-	protected	function file()
+	protected function file()
 	{
 		$filename = $this->route->params['filename'];
 		$rawPost = file_get_contents('php://input');
@@ -131,12 +133,12 @@ class SyncController extends AppController
 		exit('success');
 	}
 
-	protected	function import()
+	protected function import()
 	{
 		exit('success');
 	}
 
-	protected	function logReqest($func)
+	protected function logReqest($func)
 	{
 		$text = '<br>--' . date("H:i:s") . "--{$func}<br>";
 		if (isset($_GET)) {
@@ -144,6 +146,7 @@ class SyncController extends AppController
 		}
 		if (isset($this->route->params['filename'])) {
 			$text .= 'filename - ' . $filename = $this->route->params['filename'] . '<br>';
+			$text .= $this->importPath . $filename;
 		}
 //		if (isset($_POST)) {
 //			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
