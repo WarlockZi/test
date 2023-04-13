@@ -4,7 +4,7 @@
 namespace app\Storage;
 
 
-class XmlStorage extends Storage
+class StorageXml extends Storage
 {
 
 	protected $path;
