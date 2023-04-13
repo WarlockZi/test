@@ -6,8 +6,6 @@ class XmlController extends AppController
 {
 	public $model = xml::class;
 
-	protected $sess = 'sessid';
-	protected $sessid = '7f8ec88162e001fdccabfdd202653fc6';
 
 	protected $cookieName = 'inc';
 	protected $cookieVal = '456456';
@@ -45,43 +43,23 @@ class XmlController extends AppController
 	protected function writeFile()
 	{
 		$filename = $this->route->params['filename'];
-//		$this->base($filename, $filename);
+
 		$rawPost = file_get_contents('php://input');
 //		copy($rawPost,__DIR__);
 		$text = $this->writeResp('setZipSize');
 		$text .= $filename . "<br>{$rawPost}";
-		file_put_contents($this->import.$filename,$rawPost);
+//		file_put_contents($this->import . $filename, $rawPost);
 		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit('progress');
 	}
 
-	protected function base($tmp_name, $data_filename)
-	{
-		if (!is_uploaded_file($tmp_name)) {
-			die('Ошибка при загрузке файла ');
-		} else {
-			$data = file_get_contents($tmp_name);
-			$data = base64_decode($data);
-			if (!empty($data) && ($fp = @fopen($data_filename, 'wb'))) {
-				@fwrite($fp, $data);
-				@fclose($fp);
-			} else {
-				die('Ошибка при записи файла ' . $data_filename);
-			}
-			@header('HTTP/1.1 200 Ok');
-			@header('Content-type: text/html; charset=windows-1251');
-			$answer = "\n" . 'Файл ' . $data_filename . ' успешно загружен. ' . "\n" . 'Переданное сообщение: ';
-			print ($answer);
-		}
-
-	}
 
 	protected function progress()
 	{
 		$text = $this->writeResp('progress');
 		$filename = $this->route->params['filename'];
-		$text .= $filename."<br>";
+		$text .= $filename . "<br>";
 		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit('success');
@@ -120,6 +98,7 @@ class XmlController extends AppController
 		return $text;
 	}
 
+
 	protected function getHeaders($str = '')
 	{
 		$headers = apache_request_headers();
@@ -129,16 +108,6 @@ class XmlController extends AppController
 		return $str;
 	}
 
-
-	protected function no()
-	{
-//		exit("f-{$ispath} - name {$path}");
-		//		setcookie($this->cookieName, $this->cookieVal);
-//		$date = date("D, d M Y H:i:s",strtotime('1 January 2024')) . 'GMT';
-//		header("Set-Cookie: {$this->cookieName}={$this->cookieVal}; EXPIRES{$date};");
-//		echo "success\ncatalog\ncheckauth";
-
-	}
 
 }
 
