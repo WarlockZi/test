@@ -82,8 +82,8 @@ class SyncController extends AppController
 
 				} elseif ($this->route->params['mode'] === 'file') {
 					$this->file();
-					sleep(10);
-					$this->load();
+//					sleep(10);
+//					$this->load();
 
 				} elseif ($this->route->params['mode'] === 'import') {
 					$this->import();
