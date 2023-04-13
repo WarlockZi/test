@@ -3,9 +3,7 @@
 namespace app\Services\XMLParser;
 
 
-use app\model\Category;
 use app\model\Product;
-use app\Services\Slug;
 
 class LoadProductsOffer extends Parser
 {

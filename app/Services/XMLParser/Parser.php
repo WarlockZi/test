@@ -2,9 +2,6 @@
 
 namespace app\Services\XMLParser;
 
-use app\model\Category;
-use app\Services\Slug;
-
 class Parser
 {
   protected $file;
@@ -26,15 +23,4 @@ class Parser
     return array_keys($arr) !== range(0, count($arr) - 1);
   }
 
-//	public function loadPrices(){
-//		new LoadPrices($this->file);
-//	}
-//
-//	public function loadCategories(){
-//		new LoadCategories($this->file);
-//	}
-//
-//	public function loadProducts(){
-//		new LoadProducts($this->file);
-//	}
 }

@@ -11,8 +11,8 @@ use app\Services\XMLParser\LoadCategories;
 use app\Services\XMLParser\LoadPrices;
 use app\Services\XMLParser\LoadProducts;
 use app\Services\XMLParser\LoadProductsOffer;
-use app\Storage\PicStorage;
-use app\Storage\XmlStorage;
+use app\Storage\StorageImg;
+use app\Storage\StorageXml;
 
 class XmlController extends AppController
 {
@@ -49,7 +49,7 @@ class XmlController extends AppController
 				Product::truncate();
 			}
 		}
-		$storage = new XmlStorage;
+		$storage = new StorageXml;
 		$files = $storage->getFiles();
 		$this->set(compact('files'));
 
@@ -77,15 +77,15 @@ class XmlController extends AppController
 
 	public function actionIncread(){
 		$button = FS::getFileContent($this->viewPath.'button.php');
-		$content = $button.PicStorage::getFileContent('integration.txt');
+		$content = $button.StorageImg::getFileContent('integration.txt');
 		$this->set(compact('content'));
 	}
 
 	public function actionIncClear(){
-		$file= PicStorage::getFile('integration.txt');
+		$file= StorageImg::getFile('integration.txt');
 		file_put_contents($file,'');
 
-		$content = PicStorage::getFileContent('integration.txt');
+		$content = StorageImg::getFileContent('integration.txt');
 		$this->set(compact('content'));
 	}
 

@@ -2,9 +2,17 @@
 
 namespace app\controller;
 
-use app\Storage\XmlStorage;
+use app\model\Category;
+use app\model\Price;
+use app\model\Product;
+use app\Services\XMLParser\LoadCategories;
+use app\Services\XMLParser\LoadPrices;
+use app\Services\XMLParser\LoadProducts;
+use app\Services\XMLParser\LoadProductsOffer;
+use app\Storage\Storage1c;
+use function Composer\Autoload\includeFile;
 
-class XmlController extends AppController
+class SyncController extends AppController
 {
 	public $model = xml::class;
 
@@ -18,11 +26,10 @@ class XmlController extends AppController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->importPath = __DIR__.'/';
-//		$this->importPath = XmlStorage::get1cPath();
+		$this->importPath = Storage1c::getPath();
 	}
 
-	public function actionInc()
+	public function actionInit()
 	{
 		if (isset($this->route->params['type'])) {
 
@@ -36,6 +43,8 @@ class XmlController extends AppController
 
 				} elseif ($this->route->params['mode'] === 'file') {
 					$this->file();
+					sleep(10);
+					$this->load();
 
 				} elseif ($this->route->params['mode'] === 'import') {
 					$this->import();
@@ -44,19 +53,43 @@ class XmlController extends AppController
 		}
 	}
 
-	protected function checkauth()
+	protected function load()
+	{
+		$file = Storage1c::getPath() . 'import0_1.xml';
+		$readable = is_readable($file);
+		if ($readable) {
+			Category::truncate();
+			Product::truncate();
+			new LoadCategories($file);
+			new LoadProducts($file);
+		}
+		$file = Storage1c::getPath() . 'offers0_1.xml';
+		$readable = is_readable($file);
+		if ($readable) {
+			Price::truncate();
+			new LoadPrices($file);
+			new LoadProductsOffer($file);
+		}
+
+
+	}
+
+	protected
+	function checkauth()
 	{
 		$this->logReqest('checkauth');
 		exit("success\ninc\n777777\n55fdsa55");
 	}
 
-	protected function init()
+	protected
+	function init()
 	{
 		$this->logReqest('init');
 		exit("zip=no\nfile_limit=10000000");
 	}
 
-	protected function file()
+	protected
+	function file()
 	{
 		$filename = $this->route->params['filename'];
 		$rawPost = file_get_contents('php://input');
@@ -66,12 +99,14 @@ class XmlController extends AppController
 		exit('success');
 	}
 
-	protected function import()
+	protected
+	function import()
 	{
 		exit('success');
 	}
 
-	protected function logReqest($func)
+	protected
+	function logReqest($func)
 	{
 		$text = '<br>--' . date("H:i:s") . "--{$func}<br>";
 		if (isset($_GET)) {
@@ -91,7 +126,8 @@ class XmlController extends AppController
 	}
 
 
-	protected function getHeaders($str = '')
+	protected
+	function getHeaders($str = '')
 	{
 		$headers = apache_request_headers();
 		foreach ($headers as $header => $value) {

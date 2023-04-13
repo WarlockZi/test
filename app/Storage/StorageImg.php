@@ -4,7 +4,7 @@
 namespace app\Storage;
 
 
-class PicStorage extends Storage
+class StorageImg extends Storage
 {
 
   protected $path;
