@@ -28,28 +28,27 @@ class XmlController extends AppController
 					$this->setAuth();
 
 				} elseif ($this->route->params['mode'] === 'init') {
-					$this->setZipSize();
+					$this->init();
 
 				} elseif ($this->route->params['mode'] === 'file') {
-					$this->writeFile();
+					$this->file();
 
 				} elseif ($this->route->params['mode'] === 'import') {
-					$this->progress();
+					$this->import();
 				}
 			}
 		}
 	}
 
-	protected function writeFile()
+	protected function file()
 	{
 		$filename = $this->route->params['filename'];
-
 		$rawPost = file_get_contents('php://input');
 //		copy($rawPost,__DIR__);
 		$text = $this->writeResp('setZipSize');
 		$text .= $filename . "<br>";
 		file_put_contents($this->import . $filename, $rawPost);
-		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
+//		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit('progress');
 	}
@@ -65,7 +64,7 @@ class XmlController extends AppController
 		exit('success');
 	}
 
-	protected function setZipSize()
+	protected function init()
 	{
 		$text = $this->writeResp('setZipSize');
 		file_put_contents($this->path, $text, FILE_APPEND);
@@ -76,7 +75,6 @@ class XmlController extends AppController
 	protected function setAuth()
 	{
 		$text = $this->writeResp('setAuth');
-
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit("success\ninc\n777777\n55fdsa55");
 	}
@@ -84,7 +82,6 @@ class XmlController extends AppController
 	protected function writeResp($func)
 	{
 		$text = '<br>--' . date("H:i:s") . "--{$func}<br>";
-
 		if (isset($_POST)) {
 			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
 		}
