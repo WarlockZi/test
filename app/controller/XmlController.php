@@ -23,21 +23,20 @@ class XmlController extends AppController
 	{
 		if (isset($this->route->params['type'])) {
 
-			if ($this->route->params['type'] === 'catalog'
-				&& $this->route->params['mode'] === 'init') {
-				$this->setZipSize();
+			if ($this->route->params['type'] === 'catalog') {
 
-			} elseif ($this->route->params['type'] === 'catalog'
-				&& $this->route->params['mode'] === 'file') {
-				$this->writeFile();
+				if ($this->route->params['mode'] === 'checkauth') {
+					$this->setAuth();
+				} elseif ($this->route->params['mode'] === 'init') {
+					$this->setZipSize();
 
-			} elseif ($this->route->params['type'] === 'catalog'
-				&& $this->route->params['mode'] === 'import') {
-				$this->progress();
+				} elseif ($this->route->params['mode'] === 'file') {
+					$this->writeFile();
 
+				} elseif ($this->route->params['mode'] === 'import') {
+					$this->progress();
+				}
 			}
-		} else {
-			$this->setAuth();
 		}
 	}
 
@@ -67,7 +66,7 @@ class XmlController extends AppController
 			}
 			@header('HTTP/1.1 200 Ok');
 			@header('Content-type: text/html; charset=windows-1251');
-			$answer = "\n" . 'Файл ' . $data_filename . ' успешно загружен. ' . "\n" . 'Переданное сообщение: ' . $message;
+			$answer = "\n" . 'Файл ' . $data_filename . ' успешно загружен. ' . "\n" . 'Переданное сообщение: ';
 			print ($answer);
 		}
 
@@ -115,7 +114,7 @@ class XmlController extends AppController
 //		if (isset($_COOKIE)) {
 //			$text .= '$_COOKIE - ' . json_encode($_COOKIE) . '<br>';
 //		}
-		$text .= 'headers -'.$this->getHeaders();
+		$text .= 'headers -' . $this->getHeaders();
 		return $text;
 	}
 
@@ -123,7 +122,7 @@ class XmlController extends AppController
 	{
 		$headers = apache_request_headers();
 		foreach ($headers as $header => $value) {
-			$str.= "$header: $value <br />\n";
+			$str .= "$header: $value <br />\n";
 		}
 		return $str;
 	}
