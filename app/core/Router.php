@@ -51,8 +51,6 @@ class Router
 	{
 		if (!class_exists($route->controller)) {
 			NotFound::controller($route);
-		} else if (!Router::$route->action) {
-			NotFound::action($route);
 		}
 	}
 
@@ -73,6 +71,11 @@ class Router
 
 		Auth::autorize();
 		$action = self::$route->actionName;
+		if (!method_exists($controller, $action)){
+			http_response_code(404);
+			include(ROOT.'/app/view/404/index.php'); // provide your own HTML for the error page
+			die();
+		}
 		$controller->$action();
 
 		$controller->setView();

@@ -17,6 +17,7 @@ use app\Storage\XmlStorage;
 class XmlController extends AppController
 {
 	public $model = xml::class;
+	protected $viewPath = ROOT.'/app/view/Xml/Admin/';
 
 	public function __construct()
 	{
@@ -75,9 +76,8 @@ class XmlController extends AppController
 	}
 
 	public function actionIncread(){
-		$path = sys_get_temp_dir();
-		$content = PicStorage::getFileContent('integration.txt');
-		exit("++ {$path} ++  {$content}");
+		$button = FS::getFileContent($this->viewPath.'button.php');
+		$content = $button.PicStorage::getFileContent('integration.txt');
 		$this->set(compact('content'));
 	}
 
@@ -88,8 +88,6 @@ class XmlController extends AppController
 		$content = PicStorage::getFileContent('integration.txt');
 		$this->set(compact('content'));
 	}
-
-
 
 }
 
