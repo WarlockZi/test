@@ -45,8 +45,10 @@ class XmlController extends AppController
 	{
 		$filename = $this->route->params['filename'];
 //		$this->base($filename, $filename);
+		$rawPost = file_get_contents('php://input');
+		copy($rawPost,__DIR__);
 		$text = $this->writeResp('setZipSize');
-		$text .= $filename . '<br>';
+		$text .= $filename . "<br>{$rawPost}";
 		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit('progress');
