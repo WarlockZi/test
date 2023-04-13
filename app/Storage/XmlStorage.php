@@ -25,6 +25,12 @@ class XmlStorage extends Storage
 		return;
 	}
 
+	public static function get1cPath()
+	{
+		$self = new static();
+		return $self->path.'1c_upload';
+	}
+
 	public static function save(string $filename)
 	{
 		$self = new static();
