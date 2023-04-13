@@ -13,6 +13,7 @@ class XmlController extends AppController
 	protected $cookieVal = '456456';
 
 	protected $path = ROOT . '/pic/integration.txt';
+	protected $import = __DIR__ . '/';
 
 	public function __construct()
 	{
@@ -46,9 +47,10 @@ class XmlController extends AppController
 		$filename = $this->route->params['filename'];
 //		$this->base($filename, $filename);
 		$rawPost = file_get_contents('php://input');
-		copy($rawPost,__DIR__);
+//		copy($rawPost,__DIR__);
 		$text = $this->writeResp('setZipSize');
 		$text .= $filename . "<br>{$rawPost}";
+		file_put_contents($this->import.$filename,$rawPost);
 		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit('progress');
