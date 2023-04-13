@@ -69,7 +69,7 @@ class XmlController extends AppController
 	{
 		$text = $this->writeResp('setZipSize');
 		file_put_contents($this->path, $text, FILE_APPEND);
-		$str = "zip=no\nfile_limit=100000000";
+		$str = "zip=yes\nfile_limit=100000000";
 		exit($str);
 	}
 
@@ -94,7 +94,7 @@ class XmlController extends AppController
 		if (isset($_GET)) {
 			$text .= '$_GET - ' . json_encode($_GET) . '<br>';
 		}
-		$text .= 'headers -' . $this->getHeaders();
+//		$text .= 'headers -' . $this->getHeaders();
 		return $text;
 	}
 
