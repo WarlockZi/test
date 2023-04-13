@@ -31,37 +31,6 @@ class SyncController extends AppController
 		$this->importPath = Storage1c::getPath();
 	}
 
-	public function actionIndex()
-	{
-		if ($_POST) {
-			$file = FS::platformSlashes(ROOT . '/app/Storage/xml/' . $_POST['file'] . '.xml');
-			$readable = is_readable($file);
-			if ($_POST['action'] === 'loadProducts' && $readable) {
-				new LoadProducts($file);
-			} elseif ($_POST['action'] === 'loadProductsOffer' && $readable) {
-				new LoadProductsOffer($file);
-			} elseif ($_POST['action'] === 'loadCategories' && $readable) {
-				new LoadCategories($file);
-			} elseif ($_POST['action'] === 'loadPrices' && $readable) {
-				new LoadPrices($file);
-
-
-			} elseif ($_POST['action'] === 'parseImages') {
-				self::parseImages();
-			} elseif ($_POST['action'] === 'removePrices') {
-				Price::truncate();
-			} elseif ($_POST['action'] === 'removeCategories') {
-				Category::truncate();
-			} elseif ($_POST['action'] === 'removeProducts') {
-				Product::truncate();
-			}
-		}
-		$storage = new StorageXml;
-		$files = $storage->getFiles();
-		$this->set(compact('files'));
-
-	}
-
 	public function parseImages()
 	{
 		$prods = Product::all();
@@ -138,26 +107,21 @@ class SyncController extends AppController
 			new LoadPrices($file);
 			new LoadProductsOffer($file);
 		}
-
-
 	}
 
-	protected
-	function checkauth()
+	protected	function checkauth()
 	{
 		$this->logReqest('checkauth');
 		exit("success\ninc\n777777\n55fdsa55");
 	}
 
-	protected
-	function init()
+	protected	function init()
 	{
 		$this->logReqest('init');
 		exit("zip=no\nfile_limit=10000000");
 	}
 
-	protected
-	function file()
+	protected	function file()
 	{
 		$filename = $this->route->params['filename'];
 		$rawPost = file_get_contents('php://input');
@@ -167,14 +131,12 @@ class SyncController extends AppController
 		exit('success');
 	}
 
-	protected
-	function import()
+	protected	function import()
 	{
 		exit('success');
 	}
 
-	protected
-	function logReqest($func)
+	protected	function logReqest($func)
 	{
 		$text = '<br>--' . date("H:i:s") . "--{$func}<br>";
 		if (isset($_GET)) {
@@ -194,8 +156,7 @@ class SyncController extends AppController
 	}
 
 
-	protected
-	function getHeaders($str = '')
+	protected function getHeaders($str = '')
 	{
 		$headers = apache_request_headers();
 		foreach ($headers as $header => $value) {
@@ -203,6 +164,36 @@ class SyncController extends AppController
 		}
 		return $str;
 	}
+//	public function actionIndex()
+//	{
+//		if ($_POST) {
+//			$file = FS::platformSlashes(ROOT . '/app/Storage/xml/' . $_POST['file'] . '.xml');
+//			$readable = is_readable($file);
+//			if ($_POST['action'] === 'loadProducts' && $readable) {
+//				new LoadProducts($file);
+//			} elseif ($_POST['action'] === 'loadProductsOffer' && $readable) {
+//				new LoadProductsOffer($file);
+//			} elseif ($_POST['action'] === 'loadCategories' && $readable) {
+//				new LoadCategories($file);
+//			} elseif ($_POST['action'] === 'loadPrices' && $readable) {
+//				new LoadPrices($file);
+//
+//
+//			} elseif ($_POST['action'] === 'parseImages') {
+//				self::parseImages();
+//			} elseif ($_POST['action'] === 'removePrices') {
+//				Price::truncate();
+//			} elseif ($_POST['action'] === 'removeCategories') {
+//				Category::truncate();
+//			} elseif ($_POST['action'] === 'removeProducts') {
+//				Product::truncate();
+//			}
+//		}
+//		$storage = new StorageXml;
+//		$files = $storage->getFiles();
+//		$this->set(compact('files'));
+//
+//	}
 
 
 }

@@ -1,4 +1,4 @@
-import './xml.scss'
+import './sync1c.scss'
 import {$,post} from '../../common'
 
 let files = $('.file').on('click', clickHandle)
@@ -14,20 +14,21 @@ function clickHandle({target}){
 let incclear = $(`button[func='incclear']`).first()
 if (incclear){
   incclear.onclick = async function ({target}) {
-    let res = await post('/adminsc/xml/incclear',{})
+    let res = await post('/adminsc/sync/incclear',{})
   }
 }
-let inc = $(`button[func='inc']`).first()
-if (inc){
-  inc.onclick = async function ({target}) {
-    let res = await post('/xml/inc',{})
-  }
-}
-debugger
+
 let incread = $(`button[func='incread']`).first()
 if (incread){
   incread.onclick = async function ({target}) {
-    window.location.path = '/adminsc/xml/incread'
+    window.location.path = '/adminsc/sync/incread'
 
   }
 }
+// let inc = $(`button[func='inc']`).first()
+// if (inc){
+//   inc.onclick = async function ({target}) {
+//     let res = await post('/xml/inc',{})
+//   }
+// }
+// debugger
