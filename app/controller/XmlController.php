@@ -2,6 +2,8 @@
 
 namespace app\controller;
 
+use app\Storage\XmlStorage;
+
 class XmlController extends AppController
 {
 	public $model = xml::class;
@@ -11,11 +13,13 @@ class XmlController extends AppController
 	protected $cookieVal = '456456';
 
 	protected $path = ROOT . '/pic/integration.txt';
-	protected $import = __DIR__ . '/';
+	protected $importPath;
 
 	public function __construct()
 	{
 		parent::__construct();
+		$this->importPath = __DIR__.'/';
+//		$this->importPath = XmlStorage::get1cPath();
 	}
 
 	public function actionInc()
@@ -25,7 +29,7 @@ class XmlController extends AppController
 			if ($this->route->params['type'] === 'catalog') {
 
 				if ($this->route->params['mode'] === 'checkauth') {
-					$this->setAuth();
+					$this->checkauth();
 
 				} elseif ($this->route->params['mode'] === 'init') {
 					$this->init();
@@ -40,59 +44,50 @@ class XmlController extends AppController
 		}
 	}
 
-	protected function file()
+	protected function checkauth()
 	{
-		$filename = $this->route->params['filename'];
-		$rawPost = file_get_contents('php://input');
-//		copy($rawPost,__DIR__);
-		$text = $this->writeResp('setZipSize');
-		$text .= $filename . "<br>";
-		file_put_contents($this->import . $filename, $rawPost);
-//		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
-		file_put_contents($this->path, $text, FILE_APPEND);
-		exit('progress');
-	}
-
-
-	protected function progress()
-	{
-		$text = $this->writeResp('progress');
-		$filename = $this->route->params['filename'];
-		$text .= $filename . "<br>";
-		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
-		file_put_contents($this->path, $text, FILE_APPEND);
-		exit('success');
+		$this->logReqest('checkauth');
+		exit("success\ninc\n777777\n55fdsa55");
 	}
 
 	protected function init()
 	{
-		$text = $this->writeResp('setZipSize');
-		file_put_contents($this->path, $text, FILE_APPEND);
-		$str = "zip=yes\nfile_limit=100000000";
-		exit($str);
+		$this->logReqest('init');
+		exit("zip=no\nfile_limit=10000000");
 	}
 
-	protected function setAuth()
+	protected function file()
 	{
-		$text = $this->writeResp('setAuth');
-		file_put_contents($this->path, $text, FILE_APPEND);
-		exit("success\ninc\n777777\n55fdsa55");
+		$filename = $this->route->params['filename'];
+		$rawPost = file_get_contents('php://input');
+		file_put_contents($this->importPath . $filename, $rawPost);
+
+		$this->logReqest('file');
+		exit('success');
 	}
 
-	protected function writeResp($func)
+	protected function import()
+	{
+		exit('success');
+	}
+
+	protected function logReqest($func)
 	{
 		$text = '<br>--' . date("H:i:s") . "--{$func}<br>";
-		if (isset($_POST)) {
-			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
-		}
-		if (isset($_FILES)) {
-			$text .= '$_FILES - ' . json_encode($_FILES) . '<br>';
-		}
 		if (isset($_GET)) {
 			$text .= '$_GET - ' . json_encode($_GET) . '<br>';
 		}
+		if (isset($this->route->params['filename'])) {
+			$text .= 'filename - ' . $filename = $this->route->params['filename'] . '<br>';
+		}
+//		if (isset($_POST)) {
+//			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
+//		}
+//		if (isset($_FILES)) {
+//			$text .= '$_FILES - ' . json_encode($_FILES) . '<br>';
+//		}
 //		$text .= 'headers -' . $this->getHeaders();
-		return $text;
+		file_put_contents($this->path, $text, FILE_APPEND);
 	}
 
 
