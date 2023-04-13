@@ -27,6 +27,7 @@ class XmlController extends AppController
 
 				if ($this->route->params['mode'] === 'checkauth') {
 					$this->setAuth();
+
 				} elseif ($this->route->params['mode'] === 'init') {
 					$this->setZipSize();
 
@@ -43,12 +44,12 @@ class XmlController extends AppController
 	protected function writeFile()
 	{
 		$filename = $this->route->params['filename'];
-		$this->base($filename, $filename);
+//		$this->base($filename, $filename);
 		$text = $this->writeResp('setZipSize');
 		$text .= $filename . '<br>';
 		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
 		file_put_contents($this->path, $text, FILE_APPEND);
-		exit('success');
+		exit('progress');
 	}
 
 	protected function base($tmp_name, $data_filename)
@@ -76,7 +77,7 @@ class XmlController extends AppController
 	{
 		$text = $this->writeResp('progress');
 		$filename = $this->route->params['filename'];
-		$text .= $filename;
+		$text .= $filename."<br>";
 		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit('success');
@@ -85,8 +86,8 @@ class XmlController extends AppController
 	protected function setZipSize()
 	{
 		$text = $this->writeResp('setZipSize');
-		$str = "zip=yes\nfile_limit=100000000";
 		file_put_contents($this->path, $text, FILE_APPEND);
+		$str = "zip=no\nfile_limit=100000000";
 		exit($str);
 	}
 
@@ -111,9 +112,6 @@ class XmlController extends AppController
 		if (isset($_GET)) {
 			$text .= '$_GET - ' . json_encode($_GET) . '<br>';
 		}
-//		if (isset($_COOKIE)) {
-//			$text .= '$_COOKIE - ' . json_encode($_COOKIE) . '<br>';
-//		}
 		$text .= 'headers -' . $this->getHeaders();
 		return $text;
 	}
