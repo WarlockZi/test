@@ -2,9 +2,6 @@
 
 namespace app\controller;
 
-use app\Storage\Storage;
-use app\Storage\XmlStorage;
-
 class XmlController extends AppController
 {
 	public $model = xml::class;
@@ -49,7 +46,7 @@ class XmlController extends AppController
 		$filename = $this->route->params['filename'];
 		$this->base($filename, $filename);
 		$text = $this->writeResp('setZipSize');
-		$text .= $filename;
+		$text .= $filename . '<br>';
 		move_uploaded_file($filename, ROOT . '/pic/' . $filename);
 		file_put_contents($this->path, $text, FILE_APPEND);
 		exit('success');
@@ -104,7 +101,7 @@ class XmlController extends AppController
 
 	protected function writeResp($func)
 	{
-		$text = '--' . date("H:i:s") . "--{$func}<br>";
+		$text = '<br>--' . date("H:i:s") . "--{$func}<br>";
 
 		if (isset($_POST)) {
 			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
@@ -118,8 +115,19 @@ class XmlController extends AppController
 //		if (isset($_COOKIE)) {
 //			$text .= '$_COOKIE - ' . json_encode($_COOKIE) . '<br>';
 //		}
+		$text .= 'headers -'.$this->getHeaders();
 		return $text;
 	}
+
+	protected function getHeaders($str = '')
+	{
+		$headers = apache_request_headers();
+		foreach ($headers as $header => $value) {
+			$str.= "$header: $value <br />\n";
+		}
+		return $str;
+	}
+
 
 	protected function no()
 	{
