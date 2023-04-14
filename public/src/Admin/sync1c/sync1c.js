@@ -15,10 +15,14 @@ let incclear = $(`button[func='incclear']`).first()
 if (incclear){
   incclear.onclick = async function ({target}) {
     let res = await post('/adminsc/sync/incclear',{})
+    if (res?.arr?.success){
+      $('.sync').first().innerText = res.arr?.content
+    }
   }
 }
 
 let incread = $(`button[func='incread']`).first()
+    debugger
 if (incread){
   incread.onclick = async function ({target}) {
     window.location.path = '/adminsc/sync/incread'
