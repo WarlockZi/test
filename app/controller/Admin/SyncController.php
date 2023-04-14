@@ -32,8 +32,11 @@ class SyncController extends AppController
 
 	public function actionIncread()
 	{
-		$button = FS::getFileContent($this->viewPath . 'button.php');
 		$content = StorageImg::getFileContent('integration.txt');
+		if (isset($_POST)){
+			$this->exitJson(['success'=>true,'content'=>$content]);
+		}
+		$button = FS::getFileContent($this->viewPath . 'button.php');
 //		$content = FS::getFileContent($this->viewPath . 'read.php', compact('content', 'button'));
 		$this->set(compact('content','button'));
 	}

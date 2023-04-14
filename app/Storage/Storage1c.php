@@ -11,7 +11,7 @@ class Storage1c extends Storage
 	public function __construct()
 	{
 		parent::__construct();
-		$this->path = $this->storagePath.'uploads'.DIRECTORY_SEPARATOR;
+		$this->path = $this->storagePath.'upload'.DIRECTORY_SEPARATOR;
 	}
 
 	public static function getPath(){
