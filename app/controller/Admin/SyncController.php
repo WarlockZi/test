@@ -12,7 +12,6 @@ use app\Services\XMLParser\LoadPrices;
 use app\Services\XMLParser\LoadProducts;
 use app\Services\XMLParser\LoadProductsOffer;
 use app\Storage\Storage1c;
-use app\Storage\StorageImg;
 use app\Storage\StorageImport;
 use app\Storage\StorageLog;
 
