@@ -22,31 +22,12 @@ class SyncController extends AppController
 	protected $importPath;
 
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
+	protected $rawPost;
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->importPath = Storage1c::getPath();
-	}
-
-	public function parseImages()
-	{
-		$prods = Product::all();
-
-		$uploads = ROOT . "\pic\product\uploads\\";
-		$origin = 'C:\Users\v.voronik\Desktop\origin\\';
-		$to = 'C:\Users\v.voronik\Desktop\new1\\';
-		if (!is_dir($to)) mkdir($to);
-
-		foreach ($prods as $prod) {
-			$art = trim($prod->art);
-
-			$file = FS::platformSlashes("$origin{$art}.jpg");
-			$newfile = FS::platformSlashes("$to{$art}.jpg");
-			if (is_file($file)) {
-				rename($file, $newfile);
-			}
-		}
 	}
 
 	public function actionIncread()
@@ -125,8 +106,8 @@ class SyncController extends AppController
 	protected function file()
 	{
 		$filename = $this->route->params['filename'];
-		$rawPost = file_get_contents('php://input');
-		file_put_contents($this->importPath . $filename, $rawPost);
+		$this->rawPost = file_get_contents('php://input');
+		file_put_contents($this->importPath . $filename, $this->rawPost);
 
 		$this->logReqest('file');
 		exit('success');
@@ -150,10 +131,11 @@ class SyncController extends AppController
 //		if (isset($_POST)) {
 //			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
 //		}
-//		if (isset($_FILES)) {
-//			$text .= '$_FILES - ' . json_encode($_FILES) . '<br>';
-//		}
-//		$text .= 'headers -' . $this->getHeaders();
+		if (isset($_GLOBALS)) {
+			$text .= '$_GLOBALS - ' . json_encode($_GLOBALS) . '<br>';
+		}
+		$text .= 'headers -' . $this->getHeaders();
+		$text .= $this->rawPost;
 		file_put_contents($this->path, $text, FILE_APPEND);
 	}
 
@@ -165,6 +147,27 @@ class SyncController extends AppController
 			$str .= "$header: $value <br />\n";
 		}
 		return $str;
+	}
+
+
+	public function parseImages()
+	{
+		$prods = Product::all();
+
+		$uploads = ROOT . "\pic\product\uploads\\";
+		$origin = 'C:\Users\v.voronik\Desktop\origin\\';
+		$to = 'C:\Users\v.voronik\Desktop\new1\\';
+		if (!is_dir($to)) mkdir($to);
+
+		foreach ($prods as $prod) {
+			$art = trim($prod->art);
+
+			$file = FS::platformSlashes("$origin{$art}.jpg");
+			$newfile = FS::platformSlashes("$to{$art}.jpg");
+			if (is_file($file)) {
+				rename($file, $newfile);
+			}
+		}
 	}
 //	public function actionIndex()
 //	{
