@@ -18,15 +18,15 @@ class SyncController extends AppController
 {
 	public $model = xml::class;
 
-	protected $path = ROOT . '/pic/integration.txt';
-	protected $importPath;
-
-	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
+	protected $log;
 	protected $rawPost;
+	protected $importPath;
+	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
 
 	public function __construct()
 	{
 		parent::__construct();
+		$this->log = FS::platformSlashes(ROOT . '/pic/integration.txt');
 		$this->importPath = Storage1c::getPath();
 	}
 
@@ -136,7 +136,7 @@ class SyncController extends AppController
 		}
 		$text .= 'headers -' . $this->getHeaders();
 		$text .= $this->rawPost;
-		file_put_contents($this->path, $text, FILE_APPEND);
+		file_put_contents($this->log, $text, FILE_APPEND);
 	}
 
 
