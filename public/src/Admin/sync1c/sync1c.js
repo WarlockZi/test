@@ -16,7 +16,7 @@ if (incclear){
   incclear.onclick = async function ({target}) {
     let res = await post('/adminsc/sync/incclear',{})
     if (res?.arr?.success){
-      $('.sync').first().innerText = res.arr?.content
+      document.querySelector('.sync').innerText = res.arr?.content
     }
   }
 }
