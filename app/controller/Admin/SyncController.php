@@ -61,10 +61,13 @@ class SyncController extends AppController
 					$this->init();
 				} elseif ($this->route->params['mode'] === 'file') {
 					$this->file();
-//					sleep(10);
-//					$this->load();
+					sleep(20);
+					$time = '<br>+++'.date('H:i:s').'<br>+++';
+					$this->append($time);
+					$this->load();
+
 				} elseif ($this->route->params['mode'] === 'import') {
-					$this->import();
+//					$this->import();
 				}
 			}
 		}
@@ -72,15 +75,19 @@ class SyncController extends AppController
 
 	protected function load()
 	{
-		$file = Storage1c::getPath() . 'import0_1.xml';
+		$file = StorageImport::getFile('import0_1.xml') ;
 		$readable = is_readable($file);
+		$time = "<br>readable = {$readable}<br>";
+		$this->append($time);
 		if ($readable) {
 			Category::truncate();
 			Product::truncate();
+			$trunkate = "<br>trunkate = {true}<br>";
+			$this->append($trunkate);
 			new LoadCategories($file);
 			new LoadProducts($file);
 		}
-		$file = Storage1c::getPath() . 'offers0_1.xml';
+		$file = StorageImport::getFile('offers0_1.xml');
 		$readable = is_readable($file);
 		if ($readable) {
 			Price::truncate();
@@ -128,11 +135,13 @@ class SyncController extends AppController
 
 		$text .= 'headers -' . $this->getHeaders();
 		$text .= $this->filename;
+		$this->append($text);
 //		$text .= $this->rawPost;
-		file_put_contents($this->log, $text, FILE_APPEND);
 	}
 
-
+	protected function append(string $text){
+		file_put_contents($this->log, $text, FILE_APPEND);
+	}
 	protected function getHeaders($str = '')
 	{
 		$headers = apache_request_headers();
