@@ -26,19 +26,22 @@ class SyncController extends AppController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->log = FS::platformSlashes(ROOT . '/pic/integration.txt');
-		$this->importPath = Storage1c::getPath();
+		$this->log = __DIR__ . DIRECTORY_SEPARATOR . 'integration.txt';
+		$this->importPath = __DIR__ . DIRECTORY_SEPARATOR;
+//		$this->log = FS::platformSlashes(ROOT . '/pic/integration.txt');
+//		$this->importPath = Storage1c::getPath();
 	}
 
 	public function actionIncread()
 	{
-		$content = StorageImg::getFileContent('integration.txt');
-		if (isset($_POST)){
-			$this->exitJson(['success'=>true,'content'=>$content]);
-		}
-		$button = FS::getFileContent($this->viewPath . 'button.php');
+			$content = StorageImg::getFileContent('integration.txt');
+			if ($this->route->params) {
+				$this->exitJson(['success' => true, 'content' => $content]);
+			}
+			$button = FS::getFileContent($this->viewPath . 'button.php');
 //		$content = FS::getFileContent($this->viewPath . 'read.php', compact('content', 'button'));
-		$this->set(compact('content','button'));
+			$this->set(compact('content', 'button'));
+
 	}
 
 	public function actionIncClear()
@@ -47,7 +50,7 @@ class SyncController extends AppController
 		file_put_contents($file, '');
 
 		$content = StorageImg::getFileContent('integration.txt');
-		$this->exitJson(['success'=>'success','content'=>$content]);
+		$this->exitJson(['success' => 'success', 'content' => $content]);
 	}
 
 
