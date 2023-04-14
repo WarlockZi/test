@@ -10,7 +10,7 @@ class User extends Model
 {
 	public $timestamps = true;
 	protected $fillable = [
-		'email','password',
+		'email', 'password',
 		'name',
 		'surName',
 		'middleName',
@@ -53,7 +53,7 @@ class User extends Model
 
 	public static function can(array $user, $rights = []): bool
 	{
-		if (is_string($user['rights'])) {
+		if (is_string($user['rights'] && isset($user['rights']))) {
 			$user['rights'] = explode(',', $user['rights']);
 		}
 
