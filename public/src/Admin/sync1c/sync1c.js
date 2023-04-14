@@ -22,20 +22,22 @@ if (incclear){
 }
 
 let incread = $(`button[func='incread']`).first()
-    debugger
 if (incread){
   incread.onclick = async function ({target}) {
     let res = await post('/adminsc/sync/incread',{})
     if (res?.arr?.success){
       document.querySelector('.sync').innerText = res.arr?.content
     }
-
   }
 }
-// let inc = $(`button[func='inc']`).first()
-// if (inc){
-//   inc.onclick = async function ({target}) {
-//     let res = await post('/xml/inc',{})
-//   }
-// }
+let load = $(`button[func='load']`).first()
+debugger
+if (load){
+  load.onclick = async function ({target}) {
+    let res = await post('/adminsc/sync/load',{})
+    if (res?.arr?.success){
+      document.querySelector('.sync').innerText = res.arr?.content
+    }
+  }
+}
 // debugger
