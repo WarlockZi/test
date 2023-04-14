@@ -13,8 +13,6 @@ use app\Services\XMLParser\LoadProducts;
 use app\Services\XMLParser\LoadProductsOffer;
 use app\Storage\Storage1c;
 use app\Storage\StorageImg;
-use app\Storage\StorageXml;
-use function Composer\Autoload\includeFile;
 
 class SyncController extends AppController
 {
@@ -23,7 +21,7 @@ class SyncController extends AppController
 	protected $path = ROOT . '/pic/integration.txt';
 	protected $importPath;
 
-	protected $viewPath = ROOT . '/app/view/Xml/Admin/';
+	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
 
 	public function __construct()
 	{
@@ -54,8 +52,9 @@ class SyncController extends AppController
 	public function actionIncread()
 	{
 		$button = FS::getFileContent($this->viewPath . 'button.php');
-		$content = $button . StorageImg::getFileContent('integration.txt');
-		$this->set(compact('content'));
+		$content = StorageImg::getFileContent('integration.txt');
+//		$content = FS::getFileContent($this->viewPath . 'read.php', compact('content', 'button'));
+		$this->set(compact('content','button'));
 	}
 
 	public function actionIncClear()
@@ -64,7 +63,7 @@ class SyncController extends AppController
 		file_put_contents($file, '');
 
 		$content = StorageImg::getFileContent('integration.txt');
-		$this->set(compact('content'));
+		$this->exitJson(['success'=>'success','content'=>$content]);
 	}
 
 

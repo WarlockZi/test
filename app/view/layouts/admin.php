@@ -31,9 +31,8 @@ use app\core\Error;
 
 	<div class="admin-layout__content">
 
-		 <?= Error::getErrorHtml() ?>
-
 		<div class="adm-content">
+		 <?= Error::getErrorHtml() ?>
 				<?= $this->getContent(); ?>
 		</div
 
