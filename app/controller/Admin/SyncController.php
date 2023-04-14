@@ -20,6 +20,7 @@ class SyncController extends AppController
 
 	protected $log;
 	protected $rawPost;
+	protected $filename;
 	protected $importPath;
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
 
@@ -111,7 +112,7 @@ class SyncController extends AppController
 
 	protected function file()
 	{
-		$filename = $this->route->params['filename'];
+		$filename = $this->filename = $this->route->params['filename'];
 		$this->rawPost = file_get_contents('php://input');
 		file_put_contents($this->importPath . $filename, $this->rawPost);
 
@@ -134,14 +135,15 @@ class SyncController extends AppController
 			$text .= 'filename - ' . $filename = $this->route->params['filename'] . '<br>';
 			$text .= $this->importPath . $filename;
 		}
-//		if (isset($_POST)) {
-//			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
-//		}
+		if (isset($_POST)) {
+			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
+		}
 		if (isset($_GLOBALS)) {
 			$text .= '$_GLOBALS - ' . json_encode($_GLOBALS) . '<br>';
 		}
 		$text .= 'headers -' . $this->getHeaders();
-		$text .= $this->rawPost;
+		$text .= $this->filename;
+//		$text .= $this->rawPost;
 		file_put_contents($this->log, $text, FILE_APPEND);
 	}
 
