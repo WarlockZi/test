@@ -1,0 +1,16 @@
+<br>--13:27:04--checkauth<br>$_GET - {"adminsc\/sync\/init":"","type":"catalog","mode":"checkauth"}<br>headers -Cache-Control: max-age=0 <br />
+Sec-Ch-Ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99" <br />
+Sec-Ch-Ua-Mobile: ?0 <br />
+Sec-Ch-Ua-Platform: "Windows" <br />
+Upgrade-Insecure-Requests: 1 <br />
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 <br />
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7 <br />
+Sec-Fetch-Site: same-origin <br />
+Sec-Fetch-Mode: navigate <br />
+Sec-Fetch-User: ?1 <br />
+Sec-Fetch-Dest: document <br />
+Referer: https://vi-production/adminsc <br />
+Accept-Encoding: gzip, deflate, br <br />
+Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,da;q=0.6 <br />
+Cookie: PHPSESSID=fa1undortq4okf2jr83jmftemp6oa6f2 <br />
+Host: vi-production <br />
