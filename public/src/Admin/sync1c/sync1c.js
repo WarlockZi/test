@@ -25,7 +25,10 @@ let incread = $(`button[func='incread']`).first()
     debugger
 if (incread){
   incread.onclick = async function ({target}) {
-    window.location.path = '/adminsc/sync/incread'
+    let res = await post('/adminsc/sync/incread',{})
+    if (res?.arr?.success){
+      document.querySelector('.sync').innerText = res.arr?.content
+    }
 
   }
 }
