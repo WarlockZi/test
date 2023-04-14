@@ -47,5 +47,18 @@ class Storage
     return $arr;
   }
 
+	public static function getPath(){
+		$self = new static();
+		return $self->path;
+	}
+	public static function getFileContent(string $file){
+		$self = new static();
+		return file_get_contents($self->path.$file);
+	}
+	public static function getFile(string $file){
+		$self = new static();
+		return $self->path.$file;
+	}
+
 
 }

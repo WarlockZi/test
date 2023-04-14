@@ -13,6 +13,8 @@ use app\Services\XMLParser\LoadProducts;
 use app\Services\XMLParser\LoadProductsOffer;
 use app\Storage\Storage1c;
 use app\Storage\StorageImg;
+use app\Storage\StorageImport;
+use app\Storage\StorageLog;
 
 class SyncController extends AppController
 {
@@ -27,10 +29,8 @@ class SyncController extends AppController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->log = __DIR__ . DIRECTORY_SEPARATOR . 'integration.txt';
-		$this->importPath = __DIR__ . DIRECTORY_SEPARATOR;
-//		$this->log = FS::platformSlashes(ROOT . '/pic/integration.txt');
-//		$this->importPath = Storage1c::getPath();
+		$this->log = StorageLog::getFile('log.txt');
+		$this->importPath = StorageImport::getPath();
 	}
 
 	public function actionIncread()
@@ -40,17 +40,14 @@ class SyncController extends AppController
 				$this->exitJson(['success' => true, 'content' => $content]);
 			}
 			$button = FS::getFileContent($this->viewPath . 'button.php');
-//		$content = FS::getFileContent($this->viewPath . 'read.php', compact('content', 'button'));
 			$this->set(compact('content', 'button'));
-
 	}
 
 	public function actionIncClear()
 	{
-		$file = $this->log;
-		file_put_contents($file, '');
+		file_put_contents($this->log, '');
 
-		$content = StorageImg::getFileContent('integration.txt');
+		$content = StorageLog::getFileContent('log.txt');
 		$this->exitJson(['success' => 'success', 'content' => $content]);
 	}
 
@@ -58,20 +55,15 @@ class SyncController extends AppController
 	public function actionInit()
 	{
 		if (isset($this->route->params['type'])) {
-
 			if ($this->route->params['type'] === 'catalog') {
-
 				if ($this->route->params['mode'] === 'checkauth') {
 					$this->checkauth();
-
 				} elseif ($this->route->params['mode'] === 'init') {
 					$this->init();
-
 				} elseif ($this->route->params['mode'] === 'file') {
 					$this->file();
 //					sleep(10);
 //					$this->load();
-
 				} elseif ($this->route->params['mode'] === 'import') {
 					$this->import();
 				}
@@ -120,10 +112,6 @@ class SyncController extends AppController
 		exit('success');
 	}
 
-	protected function import()
-	{
-		exit('success');
-	}
 
 	protected function logReqest($func)
 	{
@@ -138,9 +126,7 @@ class SyncController extends AppController
 		if (isset($_POST)) {
 			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
 		}
-		if (isset($_GLOBALS)) {
-			$text .= '$_GLOBALS - ' . json_encode($_GLOBALS) . '<br>';
-		}
+
 		$text .= 'headers -' . $this->getHeaders();
 		$text .= $this->filename;
 //		$text .= $this->rawPost;
@@ -156,8 +142,10 @@ class SyncController extends AppController
 		}
 		return $str;
 	}
-
-
+	protected function import()
+	{
+		exit('success');
+	}
 	public function parseImages()
 	{
 		$prods = Product::all();
