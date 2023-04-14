@@ -36,7 +36,7 @@ class SyncController extends AppController
 	public function actionIncread()
 	{
 			$content = file_get_contents($this->log);
-			if ($this->route->params) {
+			if (isset($_POST['param'])) {
 				$this->exitJson(['success' => true, 'content' => $content]);
 			}
 			$button = FS::getFileContent($this->viewPath . 'button.php');
@@ -47,7 +47,7 @@ class SyncController extends AppController
 
 	public function actionIncClear()
 	{
-		$file = StorageImg::getFile('integration.txt');
+		$file = $this->log;
 		file_put_contents($file, '');
 
 		$content = StorageImg::getFileContent('integration.txt');
