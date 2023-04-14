@@ -35,7 +35,7 @@ class SyncController extends AppController
 
 	public function actionIncread()
 	{
-			$content = StorageImg::getFileContent('integration.txt');
+			$content = file_get_contents($this->log);
 			if ($this->route->params) {
 				$this->exitJson(['success' => true, 'content' => $content]);
 			}
