@@ -53,7 +53,7 @@ class User extends Model
 
 	public static function can(array $user, $rights = []): bool
 	{
-		if (is_string($user['rights'] && isset($user['rights']))) {
+		if (is_string($user['rights'])) {
 			$user['rights'] = explode(',', $user['rights']);
 		}
 
