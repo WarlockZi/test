@@ -1,6 +1,6 @@
 <div class="category">
 
-	<? if (!$category): ?>
+	<? if (!isset($category)): ?>
 	  <div class="no-categories">
 		  <H1>Такой категории нет</H1>
 	  </div>

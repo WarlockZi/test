@@ -34,12 +34,12 @@ class SyncController extends AppController
 
 	public function actionIncread()
 	{
-			$content = file_get_contents($this->log);
-			if (isset($_POST['param'])) {
-				$this->exitJson(['success' => true, 'content' => $content]);
-			}
-			$button = FS::getFileContent($this->viewPath . 'button.php');
-			$this->set(compact('content', 'button'));
+		$content = file_get_contents($this->log);
+		if (isset($_POST['param'])) {
+			$this->exitJson(['success' => true, 'content' => $content]);
+		}
+		$button = FS::getFileContent($this->viewPath . 'button.php');
+		$this->set(compact('content', 'button'));
 	}
 
 	public function actionIncClear()
@@ -61,10 +61,10 @@ class SyncController extends AppController
 					$this->init();
 				} elseif ($this->route->params['mode'] === 'file') {
 					$this->file();
-					sleep(20);
-					$time = '<br>+++'.date('H:i:s').'<br>+++';
-					$this->append($time);
-					$this->load();
+//					sleep(20);
+//					$time = '<br>+++' . date('H:i:s') . '<br>+++';
+//					$this->append($time);
+//					$this->load();
 
 				} elseif ($this->route->params['mode'] === 'import') {
 //					$this->import();
@@ -73,9 +73,9 @@ class SyncController extends AppController
 		}
 	}
 
-	protected function load()
+	public function actionLoad()
 	{
-		$file = StorageImport::getFile('import0_1.xml') ;
+		$file = StorageImport::getFile('import0_1.xml');
 		$readable = is_readable($file);
 		$time = "<br>readable = {$readable}<br>";
 		$this->append($time);
@@ -110,9 +110,9 @@ class SyncController extends AppController
 
 	protected function file()
 	{
-		$filename = $this->filename = $this->route->params['filename'];
+		$this->filename = $this->route->params['filename'];
 		$this->rawPost = file_get_contents('php://input');
-		file_put_contents($this->importPath . $filename, $this->rawPost);
+		file_put_contents($this->importPath . $this->filename, $this->rawPost);
 
 		$this->logReqest('file');
 		exit('success');
@@ -139,9 +139,11 @@ class SyncController extends AppController
 //		$text .= $this->rawPost;
 	}
 
-	protected function append(string $text){
-		file_put_contents($this->log, $text, FILE_APPEND);
+	protected function append(string $text)
+	{
+		file_put_contents($this->log, $text, FILE_APPEND | LOCK_EX);
 	}
+
 	protected function getHeaders($str = '')
 	{
 		$headers = apache_request_headers();
@@ -150,10 +152,12 @@ class SyncController extends AppController
 		}
 		return $str;
 	}
+
 	protected function import()
 	{
 		exit('success');
 	}
+
 	public function parseImages()
 	{
 		$prods = Product::all();

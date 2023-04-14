@@ -27,10 +27,11 @@ class CategoryController Extends AppController
 
 			$slug = $this->route->slug;
 			$category = CategoryRepository::index($slug);
-			$category->products->filters = ProductRepository::getFilters();
-			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
-
-			$this->set(compact('breadcrumbs','category'));
+			if ($category) {
+				$category->products->filters = ProductRepository::getFilters();
+				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
+				$this->set(compact('breadcrumbs', 'category'));
+			}
 		} else {
 			$this->view = 'categories';
 
