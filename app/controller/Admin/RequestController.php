@@ -19,6 +19,8 @@ class RequestController Extends AppController
 		if ($_ENV['MODE'] === 'production') {
 			$content = file_get_contents('/var/www/vitexopt/data/logs/vitexopt.ru.access.log');
 			$content = preg_replace("/\n/", "<br/>\n", $content);
+			$content = $this->filter($content);
+			$content = $this->decorate($content);
 		} else {
 			$content = 'список';
 		}
@@ -26,5 +28,17 @@ class RequestController Extends AppController
 		$this->set(compact('content'));
 	}
 
+	protected function decorate($content){
+		return "<div class='sync'>{$content}</div>";
+	}
+
+	protected function filter($content){
+		$arr = explode('<br>', $content);
+		$res = '';
+		foreach ($arr as $str){
+			if (!strpos($str, 'bots')) $res.=$str;
+		}
+		return $res;
+	}
 
 }
