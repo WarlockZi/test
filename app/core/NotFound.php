@@ -41,17 +41,19 @@ class NotFound extends Controller
 		$controller = new self();
 //		$controller->route->setController(static::class);
 
+		http_response_code(404);
 		$view = self::setView($route);
 		$view->controller = new $controller;
-		$content = FS::getFileContent($controller->file404);
-		$view->controller->set(compact('content'));
+		$content = $view->get404();
+		$view->setContent($view->controller);
 		$view->render();
-		exit();
+		exit;
 	}
 
 	public static function action(Route $route)
 	{
 		$error = "Плохой action - {$route->action} у контроллера - {$route->controller->shortClassName($route->controller)}";
+		http_response_code(404);
 		Error::setError($error);
 		$view = self::setView($route);
 		$view->render();

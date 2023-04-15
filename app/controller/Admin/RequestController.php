@@ -22,7 +22,10 @@ class RequestController Extends AppController
 			$content = $this->filter($content);
 			$content = $this->decorate($content);
 		} else {
-			$content = 'список';
+			$content = file_get_contents(__DIR__.'/vitexopt.ru.access.log');
+			$content = preg_replace("/\n/", "<br/>\n", $content);
+			$content = $this->filter($content);
+			$content = $this->decorate($content);
 		}
 
 		$this->set(compact('content'));
@@ -33,11 +36,10 @@ class RequestController Extends AppController
 	}
 
 	protected function filter($content){
-		$arr = explode('<br>', $content);
-		var_dump($arr);
+		$arr = explode('<br/>', $content);
 		$res = '';
 		foreach ($arr as $str){
-			if (!strpos($str, 'bots')) $res.=$str;
+			if (!strpos($str, 'bots')) $res.=$str.'<br/><br/>';
 		}
 		return $res;
 	}
