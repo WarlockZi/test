@@ -3,12 +3,41 @@
 @import "../../components/dnd/dnd";
 
 
-.sync{
+.sync {
   font-size: 10px;
+
+  .img {
+    background-color: rgba(213, 255, 109, 0.38);
+  }
+
+  .requests {
+    display: flex;
+    flex-direction: column;
+
+    .req{
+      padding: 5px;
+      background-color: #f5ff0026;
+    }
+
+    .line {
+      display: flex;
+    }
+
+    .date {
+      background-color: #e8e8e8;
+      margin: 0 10px;
+    }
+
+    .some {
+      background-color: #ff330017;
+      margin-right: 10px;
+    }
+  }
 }
+
 .xml {
 
-  .container.files{
+  .container.files {
     @include dnd;
   }
 
@@ -18,11 +47,12 @@
     flex-direction: column;
     align-items: stretch;
 
-    span.file{
+    span.file {
       @include colored_button;
       width: 100px;
     }
-    p{
+
+    p {
       display: flex;
     }
 

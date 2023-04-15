@@ -33,7 +33,7 @@ class AdminView extends View
 		return FS::platformSlashes(ROOT . "/app/view/{$controller}/Admin/{$action}.php");
 	}
 
-	protected function setContent(Controller $controller): void
+	public function setContent(Controller $controller): void
 	{
 		if (is_readable($this->view)) {
 			$this->content = self::getFileContent($this->view, $controller->vars);
@@ -43,6 +43,11 @@ class AdminView extends View
 			Error::setError("Нет файла вида - {$model}/Admin/{$action}");
 			$this->content = self::getFileContent($this->defaultView,$this->controller->vars);
 		}
+	}
+	public function get404(): string
+	{
+		return $this->noViewError;
+//		return FS::getFileContent(self::$noViewError);
 	}
 
 	public function getHeader()
