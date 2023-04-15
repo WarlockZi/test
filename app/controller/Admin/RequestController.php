@@ -21,9 +21,9 @@ class RequestController Extends AppController
 		} else {
 			$content = file_get_contents(__DIR__ . '/vitexopt.ru.access.log');
 		}
-			$content = preg_replace("/\n/", "<br/>\n", $content);
-			$content = $this->filter($content);
-			$content = $this->decorate($content);
+		$content = preg_replace("/\n/", "<br/>\n", $content);
+		$content = $this->filter($content);
+		$content = $this->decorate($content);
 
 		$this->set(compact('content'));
 	}
