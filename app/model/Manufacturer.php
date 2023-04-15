@@ -3,6 +3,8 @@
 namespace app\model;
 
 
+use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 class Manufacturer extends Model
@@ -19,6 +21,15 @@ class Manufacturer extends Model
 		return $this->belongsTo(Country::class);
 	}
 
+	public static function countrySelect($column, $item)
+	{
+		return SelectBuilder::build(ArrayOptionsBuilder::build(Country::all())
+			->initialOption()
+			->selected($item->country->id)
+			->get()
+		)
+			->get();
+	}
 
 
 }
