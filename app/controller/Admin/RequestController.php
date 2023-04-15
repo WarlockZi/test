@@ -19,7 +19,7 @@ class RequestController Extends AppController
 		if ($_ENV['MODE'] === 'production') {
 			$content = file_get_contents('/var/www/vitexopt/data/logs/vitexopt.ru.access.log');
 			$content = preg_replace("/\n/", "<br/>\n", $content);
-			$content = $this->filter($content);
+//			$content = $this->filter($content);
 			$content = $this->decorate($content);
 		} else {
 			$content = 'список';
