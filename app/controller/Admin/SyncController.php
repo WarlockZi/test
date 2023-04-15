@@ -125,16 +125,13 @@ class SyncController extends AppController
 		if (isset($_GET)) {
 			$text .= '$_GET - ' . json_encode($_GET) . '<br>';
 		}
+
+		$text .= 'headers -' . $this->getHeaders();
 		if (isset($this->route->params['filename'])) {
 			$text .= 'filename - ' . $filename = $this->route->params['filename'] . '<br>';
 			$text .= $this->importPath . $filename;
 		}
-		if (isset($_POST)) {
-			$text .= '$_POST - ' . json_encode($_POST) . '<br>';
-		}
 
-		$text .= 'headers -' . $this->getHeaders();
-		$text .= $this->filename;
 		$this->append($text);
 //		$text .= $this->rawPost;
 	}
