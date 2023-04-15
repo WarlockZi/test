@@ -51,6 +51,9 @@ class ProductView
 			->field(
 				ItemFieldBuilder::build('slug', $product)
 					->name('Адрес')
+					->html(
+						"<a href='/product/{$product->slug}'>{$product->slug}</a>"
+					)
 					->get()
 			)
 			->field(
