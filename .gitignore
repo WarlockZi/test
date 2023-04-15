@@ -8,3 +8,5 @@
 /.idea/
 /composer.phar
 /.env
+/app/Storage/import/*
+/app/Storage/log/*
