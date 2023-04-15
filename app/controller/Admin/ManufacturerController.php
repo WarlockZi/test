@@ -10,7 +10,7 @@ class ManufacturerController Extends AppController
 {
 	public $model = manufacturer::class;
 
-	public function __construct(array $route)
+	public function __construct()
 	{
 		parent::__construct();
 	}

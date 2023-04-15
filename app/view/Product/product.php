@@ -55,7 +55,7 @@ use \app\view\Product\ProductView;
 			<div class="info-wrap">
 				<h3 class="info-tag">Информация о товаре</h3>
 				<p class="detail-text">
-							<?= $product['txt'] ?>
+							<?= $product['txt']; ?>
 				</p>
 			</div>
 
