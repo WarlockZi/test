@@ -22,21 +22,27 @@ class UserView extends View
 		$this->setHeader($this->user);
 		$this->setFooter();
 	}
+
 	protected function getViewFile(Controller $controller): string
 	{
 		$route = $this->controller->getRoute();
-		$action = property_exists($controller,'view')?$controller->view:$route->action;
+		$action = property_exists($controller, 'view') ? $controller->view : $route->action;
 		$controller = ucfirst($route->controllerName);
 		return FS::platformSlashes(ROOT . "/app/view/{$controller}/{$action}.php");
 	}
 
-	protected function setContent(Controller $controller): void
+	public function get404(): string
+	{
+		return FS::getFileContent(self::$noViewError);
+	}
+
+	public function setContent(Controller $controller): void
 	{
 		if (is_readable($this->view)) {
 			$this->content = self::getFileContent($this->view, $controller->vars);
 		} else {
 			Error::setError("Нет файла вида - {$controller->getRoute()->action}");
-			$this->content = self::getFileContent($this->view);
+			$this->content = self::getFileContent(self::$noViewError);
 		}
 	}
 
@@ -61,10 +67,10 @@ class UserView extends View
 		$this->assets = $controller->getAssets();
 	}
 
-	protected static function get404()
-	{
-		return self::$noViewError;
-	}
+//	protected static function get404()
+//	{
+//		return self::$noViewError;
+//	}
 
 	function getErrors()
 	{
