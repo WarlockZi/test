@@ -1,9 +1,14 @@
 import './card.scss'
+import './toCart'
 
 import {$} from '../common'
 
 
+
 window.onload = function () {
+
+  let button = $('.to-cart .button').first()
+    button.addEventListener('click', getVersion)
 
   let zoom = $('.zoom').first()
   if (zoom) {

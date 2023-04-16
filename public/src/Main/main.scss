@@ -9,8 +9,10 @@
 //@import "../Product/card";
 
 
-:root{
+:root {
   --color-main: #337ab7;
+  --bodyLFont: .8rem;
+  --bodyLLine: 1rem;
 }
 
 .user-content {
@@ -18,7 +20,7 @@
   flex-direction: column;
   flex: 1 1 auto;
   margin: 0 auto;
-  width: clamp(500px,80%,900px);
+  width: clamp(500px, 80%, 900px);
   padding: 25px;
   background-color: white;
   //min-width: 900px;
@@ -26,18 +28,21 @@
   h1 {
     @include _h1;
   }
+
   h2 {
     @include _h2;
     margin-bottom: 25px;
   }
+
   h3 {
     @include _h3;
   }
+
   h4 {
     @include _h4;
   }
 
-@import "../Category/category";
+  @import "../Category/category";
 
 
 }
@@ -145,6 +150,7 @@
   }
 
   h1 {
+    color: #ffffff;
     font-size: xx-large;
     margin: 0 0 35px;
     letter-spacing: 3px;
@@ -269,7 +275,7 @@
           filter: blur(6px);
           stroke: var(--color-main);
           opacity: 0.3;
-          z-index: -1;
+          //z-index: -1;
         }
       }
 
@@ -280,7 +286,6 @@
       font-size: 1rem;
     }
   }
-
 
 
 }
