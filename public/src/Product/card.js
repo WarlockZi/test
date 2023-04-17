@@ -1,14 +1,14 @@
 import './card.scss'
-import './toCart'
+import toCart from './toCart'
 
 import {$} from '../common'
 
 
-
 window.onload = function () {
 
-  let button = $('.to-cart .button').first()
-    button.addEventListener('click', getVersion)
+  let cart = $('.to-cart').first()
+  if (cart)
+    cart.addEventListener('click', toCart)
 
   let zoom = $('.zoom').first()
   if (zoom) {
@@ -28,10 +28,10 @@ window.onload = function () {
 
 
   let quillSelector = '.detail-text'
-  let textarea =  $(quillSelector)[0]
+  let textarea = $(quillSelector)[0]
 
-  if (textarea){
-  let innertext =textarea.innerText
+  if (textarea) {
+    let innertext = textarea.innerText
     if (isJsonString(innertext)) {
       let text = JSON.parse(textarea.innerText)
       var options = {
@@ -45,10 +45,6 @@ window.onload = function () {
       q.enable(false)
     }
   }
-
-
-
-
 
 
   function isJsonString(str) {

@@ -16,13 +16,13 @@
 
 		  <div class="category-child-wrap">
 					<? foreach ($category['childrenRecursive'] as $child): ?>
-<!--						--><?// if ($child->products->count() || $child->childrenRecursive->count()): ?>
-					 <a class="category-card" href="/category/<?= $child->slug ?>">
-									<?= $child->name ?>
-									<?= \app\view\Category\CategoryView::getMainImage($child) ?>
-					 </a>
+				 <!--						--><? // if ($child->products->count() || $child->childrenRecursive->count()): ?>
+				 <a class="category-card" href="/category/<?= $child->slug ?>">
+							 <?= $child->name ?>
+							 <?= \app\view\Category\CategoryView::getMainImage($child) ?>
+				 </a>
 
-<!--						--><?// endif; ?>
+				 <!--						--><? // endif; ?>
 					<? endforeach; ?>
 		  </div>
 
@@ -35,7 +35,7 @@
 		<? endif; ?>
 
 		<? if (!$category->products->count()): ?>
-<!--		  		  <h3>В категории нет товаров</h3>-->
+		  <!--		  		  <h3>В категории нет товаров</h3>-->
 		<? else: ?>
 
 		  <div class="products-header">
@@ -51,8 +51,11 @@
 				    href="/product/<?= $product->slug; ?>" class="product">
 					 <h3 class="name"><?= $product->name; ?></h3>
 							 <?= \app\view\Product\ProductView::getMainImage($product) ?>
+					 <span class="footer">
 					 <p><?= $product->priceWithCurrencyUnit(); ?></p>
-					 <p>Остаток - <?= $product->instore ?? 0; ?></p>
+					 <p>Остаток - <?= $product->instore ?? 0; ?> <?= $product->mainUnit ?? 0; ?></p>
+					 <p>Артикул: <?= $product->art ?? 0; ?></p>
+					 </span>
 
 				 </a>
 

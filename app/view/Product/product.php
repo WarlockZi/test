@@ -32,11 +32,11 @@ if ($product): ?>
 			<div class="to-cart">
 					 <?= ProductView::renderToCart($product); ?>
 
-				<div class="adjust">
-					<div class="button">
-						<span class='bigger'>В корзине</span>
+				<div class="adjust none">
+					<a href="/cart" class="button green">
+						<span class='bigger'>В корзину</span>
+					</a>
 
-					</div>
 					<div class="plus-minus">
 						<button tabindex="0" class="minus">
 							<?=\app\core\Icon::minus()?>

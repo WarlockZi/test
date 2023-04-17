@@ -4,7 +4,7 @@
 namespace app\Storage;
 
 
-class StorageXml extends Storage
+class StorageTxt extends Storage
 {
 
 	protected $path;
@@ -21,8 +21,14 @@ class StorageXml extends Storage
 		$self = new static();
 		$file = $self->path . $name . '.txt';
 		$content = file_get_contents($file);
-		echo $content;;
-		return;
+		return $content;
+	}
+
+	public static function putFileContent(string $filename, string $content)
+	{
+		$self = new static();
+		$file = $self->path . $filename . '.txt';
+		return file_put_contents($file, $content);
 	}
 
 	public static function get1cPath()

@@ -39,6 +39,7 @@ class CategoryRepository
       ->with('parentRecursive')
       ->with('products.price')
       ->with('products.mainImages')
+      ->with('products.mainUnit')
       ->get()->first();
   }
 

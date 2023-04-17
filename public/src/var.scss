@@ -5,13 +5,14 @@ $color-main-green: #1bbc9b;
 
 //$color-main: #6ca3fe;
 $color-main: #337ab7;
+//$color-main: var(--color-main);
 $color-main-lighten10: lighten($color-main, 10%);
 $color-main-darken10: darken($color-main, 10%);
 
 $color-contenteditable: lighten($color-main, 27%);
 $color-main-hover: #2d6b9f;
 $color-main-selected: lighten($color-main, 22%);
-;
+
 
 $color-white: #ffffff;
 $color-blue: #5199BD;
@@ -82,3 +83,6 @@ $color-option-selected-form: white;
 
 $font-size-table: 0.7rem;
 $font-size: 0.7rem;
+//:root{
+//  --color-main: #337ab7;
+//}
