@@ -11,19 +11,25 @@ export default function toCart({target}) {
     product: +this.closest('.product-card').dataset.id,
 
     showBlue: function () {
-      this.blue.classList.remove('none')
+      this.blue.classList.remove('none');
       this.adjust.classList.add('none')
     },
+
+    showGreen: function () {
+      this.blue.classList.add('none');
+      this.adjust.classList.remove('none');
+
+      debounce(this.send, 900)
+    },
+
     send: function () {
-      let res = post('/order/')
+      debugger;
+      let res = post('/order/create', this)
+    },
 
-    }
-  }
-
-  if (target.classList.contains('button')) {
-    cart.adjust.classList.toggle('none')
-    cart.blue.classList.toggle('none')
-
+  };
+  if (target.classList.contains('blue')) {
+    cart.showGreen()
   } else if (target.classList.contains('minus')) {
     if (cart.digit > 1) {
       cart.digitEl.innerText = --cart.digit
