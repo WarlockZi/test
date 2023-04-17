@@ -7,4 +7,6 @@
 
 <button func="load">Загрузить</button>
 <br>
+<button func="load">				  <a class="neon" href="/adminsc/sync/init?type=catalog&mode=import">Запрос 1с</a></button>
+<br>
 <!--<button func="inc">Запрос</button>-->

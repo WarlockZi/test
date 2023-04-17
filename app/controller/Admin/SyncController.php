@@ -5,8 +5,13 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\core\FS;
 use app\model\Category;
+use app\model\Price;
 use app\model\Product;
+use app\model\Unit;
+use app\Services\XMLParser\LoadCategories;
+use app\Services\XMLParser\LoadPrices;
 use app\Services\XMLParser\LoadProducts;
+use app\Services\XMLParser\LoadProductsOffer;
 use app\Storage\StorageImport;
 use app\Storage\StorageLog;
 
@@ -73,22 +78,25 @@ class SyncController extends AppController
 	{
 		$file = StorageImport::getFile('import0_1.xml');
 		$readable = is_readable($file);
-		$time = "<br>readable = {$readable}<br>";
-		$this->append($time);
+
+		$this->append("<br>readable <br>");
 		if ($readable) {
-			Category::truncate();
-			Product::truncate();
-			$trunkate = "<br>trunkate = {true}<br>";
-			$this->append($trunkate);
+//			Category::truncate();
+//			Product::truncate();
+			$trunkated = "<br>trunkated = {cat and prod}<br>";
+			$this->append($trunkated);
 //			new LoadCategories($file);
 //			new LoadProducts($file);
+			$this->append("<br>loaded = {cat and prod}<br>");
 		}
-//		$file = StorageImport::getFile('offers0_1.xml');
-//		$readable = is_readable($file);
+		$file = StorageImport::getFile('offers0_1.xml');
+		$readable = is_readable($file);
 		if ($readable) {
-//			Price::truncate();
-//			new LoadPrices($file);
-//			new LoadProductsOffer($file);
+			Price::truncate();
+//			Unit::truncate();
+			$this->append("<br>trunkated = price<br>");
+			new LoadPrices($file);
+			$this->append("<br>loaded = price<br>");
 		}
 		exit('success');
 	}
@@ -135,7 +143,8 @@ class SyncController extends AppController
 
 	protected function append(string $text)
 	{
-		file_put_contents($this->log, $text, FILE_APPEND | LOCK_EX);
+		$time = date('H:i:s');
+		file_put_contents($this->log, $text. " - {$time} - ", FILE_APPEND | LOCK_EX);
 	}
 
 	protected function getHeaders($str = '')

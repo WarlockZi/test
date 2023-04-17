@@ -5,7 +5,9 @@
 				<h1>Контактная информация</h1>
 
 				<h3>Юридический / Почтовый адрес:</h3>
-				<?$adress = \app\controller\Address::postCodeDecorator(\app\controller\Address::$factAddress);?>
+				<?$adress = Address::postCodeDecorator(Address::$factAddress);
+
+						use app\controller\Address; ?>
 				<p><?=$adress?></p>
 
 				<h3>Пункт выдачи заказов:</h3>
@@ -33,7 +35,7 @@
 	<h3>Как к нам проехать со стороны ул. Клубова</h3>
 	<video
 			controls
-			height="300"
+			style = "width: 703px; height: 396px;"
 	>
 		<source
 				src="/pic/video/Как%20к%20нам%20проехать.webm"
