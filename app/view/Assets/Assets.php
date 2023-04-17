@@ -35,10 +35,6 @@ class Assets
 
 	public function setItemMeta(Model $item)
 	{
-		exit(
-
-		"title {$item->title} name {$item->name} de {$item->description} ke {$item->keywords}"
-		);
 		$this->title = $item->title ?? $item->name;
 		$this->desc = $item->description ? $item->description : $item->name;
 		$this->keywords = $item->keywords ? $item->keywords : $item->name;
