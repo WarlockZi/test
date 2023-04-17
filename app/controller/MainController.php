@@ -40,7 +40,7 @@ class MainController extends AppController
 
 	public function actionContacts()
 	{
-		View::setMeta('Задайте вопрос', 'Задайте вопрос', 'Задайте вопрос');
+		$this->assets->setMeta('Контакты', 'Контакты', 'Контакты');
 	}
 
 	public function actionOferta()
@@ -51,12 +51,19 @@ class MainController extends AppController
 	{
 	}
 
-	public function actionReturn_change()
+	public function actionReturnChange()
 	{
+//		$this->setView();
 	}
 
 	public function actionArticles()
 	{
+	}
+
+	public function actionNews()
+	{
+		$content = 'Следите за новостями)';
+		$this->set(compact('content'));
 	}
 
 }

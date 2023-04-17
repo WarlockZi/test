@@ -5,7 +5,7 @@
 			<a href="/main/requisites" nofollow noindex>Реквизиты</a>
 		</div>
 		<div class="column">
-			<a href="#">Новости</a>
+			<a href="/main/news">Новости</a>
 		</div>
 		<div class="column">
 			<a href="/main/return_change" nofollow noindex>Возврат и обмен</a>

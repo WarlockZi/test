@@ -1,5 +1,6 @@
 <?
 
+use app\core\Icon;
 use \app\Repository\ImageRepository;
 use \app\view\Product\ProductView;
 
@@ -39,11 +40,11 @@ if ($product): ?>
 
 					<div class="plus-minus">
 						<button tabindex="0" class="minus">
-							<?=\app\core\Icon::minus()?>
+							<?= Icon::minus()?>
 						</button>
-						<span class="digit">1</span>
+						<span class="digit" contenteditable="true">1</span>
 						<button tabindex="0" class="plus">
-							<?=\app\core\Icon::plus1()?>
+							<?= Icon::plus1()?>
 
 						</button>
 					</div>
@@ -130,20 +131,20 @@ if ($product): ?>
 		<div class="star-rating">
 			<div class="star-rating__wrap">
 				<input id="star-rating-5" type="radio" value="5" class="none">
-				<label class="star" for="star-rating-5"><?= \app\core\Icon::starUse() ?></label>
+				<label class="star" for="star-rating-5"><?= Icon::starUse() ?></label>
 				<input id="star-rating-4" type="radio" value="4" class="none">
-				<label class="star" for="star-rating-4"><?= \app\core\Icon::starUse() ?></label>
+				<label class="star" for="star-rating-4"><?= Icon::starUse() ?></label>
 				<input id="star-rating-3" type="radio" value="3" class="none">
-				<label class="star" for="star-rating-3"><?= \app\core\Icon::starUse() ?></label>
+				<label class="star" for="star-rating-3"><?= Icon::starUse() ?></label>
 				<input id="star-rating-2" type="radio" value="2" class="none">
-				<label class="star" for="star-rating-2"><?= \app\core\Icon::starUse() ?></label>
+				<label class="star" for="star-rating-2"><?= Icon::starUse() ?></label>
 				<input id="star-rating-1" type="radio" value="1" class="none">
-				<label class="star" for="star-rating-1"><?= \app\core\Icon::starUse() ?></label>
+				<label class="star" for="star-rating-1"><?= Icon::starUse() ?></label>
 			</div>
 		</div>
 
 
-		 <?= \app\core\Icon::star() ?>
+		 <?= Icon::star() ?>
 		<!---->
 		<!--			<h3 class="info-tag">Отзывы</h3>-->
 		<!---->
