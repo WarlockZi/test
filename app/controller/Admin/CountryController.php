@@ -10,7 +10,7 @@ class CountryController Extends AppController
 {
 	public $model = Country::class;
 
-	public function __construct(array $route)
+	public function __construct()
 	{
 		parent::__construct();
 	}

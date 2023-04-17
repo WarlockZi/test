@@ -9,4 +9,4 @@
 
 </div>
 
-<div class="button">Добавить в корзину</div>
+<div class="button blue">Добавить в корзину</div>

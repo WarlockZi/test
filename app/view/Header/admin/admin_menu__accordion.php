@@ -23,7 +23,7 @@ use \app\core\Icon;
 			Главная
 		</a>
 
-		 <? if (User::can($user, ['gate_admin', 'role_rop'])): // admin ?>
+		 <? if (User::can($user, ['role_admin'])): // admin ?>
 		  <li crm>
 
 			  <div class="label">
@@ -35,6 +35,7 @@ use \app\core\Icon;
 
 			  </div>
 			  <ul class="level-1">
+				  <a class="neon" href="/adminsc/wish">Предложения сайт</a>
 				  <a class="neon" href="/adminsc/order">Заказы</a>
 				  <a class="neon" href="/adminsc/user">Пользователи</a>
 				  <a class="neon" href="/adminsc/crm">crm</a>

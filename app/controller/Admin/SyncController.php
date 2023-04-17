@@ -76,13 +76,13 @@ class SyncController extends AppController
 		if ($readable) {
 //			Category::truncate();
 			Product::truncate();
-			$trunkate = "<br>trunkate = {true}<br>";
-			$this->append($trunkate);
+//			$trunkate = "<br>trunkate = {true}<br>";
+//			$this->append($trunkate);
 //			new LoadCategories($file);
 			new LoadProducts($file);
 		}
-		$file = StorageImport::getFile('offers0_1.xml');
-		$readable = is_readable($file);
+//		$file = StorageImport::getFile('offers0_1.xml');
+//		$readable = is_readable($file);
 		if ($readable) {
 //			Price::truncate();
 //			new LoadPrices($file);
