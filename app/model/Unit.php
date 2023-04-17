@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Unit extends Model
 {
-	protected $fillable = ['name', 'full_name'];
+	protected $fillable = [
+		'name',
+		'full_name',
+		'code',
+		'national',
+		'international'
+	];
+
 	public $timestamps = false;
 
 	public function products()

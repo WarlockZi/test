@@ -100,16 +100,9 @@ class Product extends Model
 	{
 		return $this->belongsTo(Unit::class,
 			'base_unit',
-//			'id',
 		);
 	}
-//	public function baseUnit()
-//	{
-//		return $this->hasOne(Unit::class,
-//			'id',
-//			'base_unit',
-//			);
-//	}
+
 	public function manufacturer()
 	{
 		return $this->belongsTo(Manufacturer::class, 'manufacturer_id');

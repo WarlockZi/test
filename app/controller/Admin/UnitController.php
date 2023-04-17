@@ -19,7 +19,6 @@ class UnitController extends AppController
 		$units = MyList::build(Unit::class)
 			->pageTitle('Единицы измерения')
 			->addButton('ajax')
-			->del()
 			->items(Unit::all())
 			->column(
 				ListColumnBuilder::build('id')
@@ -38,6 +37,13 @@ class UnitController extends AppController
 					->name('Полное')
 					->get()
 			)
+			->column(
+				ListColumnBuilder::build('code')
+					->contenteditable()
+					->name('Код')
+					->get()
+			)
+			->del()
 			->get();
 
 		$this->set(compact('units'));

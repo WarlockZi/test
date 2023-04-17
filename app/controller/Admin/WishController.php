@@ -25,7 +25,7 @@ class WishController Extends AppController
 		if (isset($_POST['content'])){
 			$content = $_POST['content'];
 			StorageTxt::putFileContent('wish',$content);
-			$this->exitWithPopup('Сохранено');
+//			$this->exitWithPopup('Сохранено');
 //			header('Location:/adminsc');
 		}
 	}
