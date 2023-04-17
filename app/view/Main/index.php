@@ -73,7 +73,7 @@ use app\core\Icon;
 			<div class="advantage__card certificates">
 				<?= Icon::layers('feather'); ?>
 				Сертификаты
-				<p>Fредоставляем сертификаты по запросу.</p>
+				<p>Предоставляем сертификаты по запросу.</p>
 			</div>
 		</div>
 	</div>
