@@ -109,6 +109,7 @@ class Router
 		$route = Router::getRoute();
 		return
 			$route->controllerName === 'Auth' && $route->action === 'login'
+			|| $route->controllerName === 'Main'
 			|| $route->controllerName === 'Sync' && $route->action === 'init'
 			|| $route->controllerName === 'Auth' && $route->action === 'register'
 			|| $route->controllerName === 'Auth' && $route->action === 'returnpass'

@@ -28,6 +28,12 @@ export default function toCart({target}) {
     },
 
   };
+
+  cart.digitEl.onkeydown = function (e) {
+    if (isNaN(+e.key) && e.key !== 'Backspace')
+      e.preventDefault()
+  };
+
   if (target.classList.contains('blue')) {
     cart.showGreen()
   } else if (target.classList.contains('minus')) {

@@ -4,6 +4,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\FS;
+use app\model\Category;
 use app\model\Product;
 use app\Services\XMLParser\LoadProducts;
 use app\Storage\StorageImport;
@@ -55,31 +56,32 @@ class SyncController extends AppController
 					$this->init();
 				} elseif ($this->route->params['mode'] === 'file') {
 					$this->file();
-//					sleep(20);
-//					$time = '<br>+++' . date('H:i:s') . '<br>+++';
-//					$this->append($time);
-//					$this->load();
+
+					$time = '<br>+++' . date('H:i:s') . '<br>+++';
+					$this->append($time);
+
 
 				} elseif ($this->route->params['mode'] === 'import') {
-//					$this->import();
+					$this->import();
 				}
 			}
 		}
 	}
 
-	public function actionLoad()
+
+	public function import()
 	{
 		$file = StorageImport::getFile('import0_1.xml');
 		$readable = is_readable($file);
 		$time = "<br>readable = {$readable}<br>";
 		$this->append($time);
 		if ($readable) {
-//			Category::truncate();
+			Category::truncate();
 			Product::truncate();
-//			$trunkate = "<br>trunkate = {true}<br>";
-//			$this->append($trunkate);
+			$trunkate = "<br>trunkate = {true}<br>";
+			$this->append($trunkate);
 //			new LoadCategories($file);
-			new LoadProducts($file);
+//			new LoadProducts($file);
 		}
 //		$file = StorageImport::getFile('offers0_1.xml');
 //		$readable = is_readable($file);
@@ -88,6 +90,7 @@ class SyncController extends AppController
 //			new LoadPrices($file);
 //			new LoadProductsOffer($file);
 		}
+		exit('success');
 	}
 
 	protected function checkauth()
@@ -144,11 +147,6 @@ class SyncController extends AppController
 		return $str;
 	}
 
-	protected function import()
-	{
-		exit('success');
-	}
-
 	public function parseImages()
 	{
 		$prods = Product::all();
@@ -168,6 +166,11 @@ class SyncController extends AppController
 			}
 		}
 	}
+
+	public function actionLoad(){
+		$this->import();
+	}
+
 //	public function actionIndex()
 //	{
 //		if ($_POST) {
