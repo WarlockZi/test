@@ -1,3 +1,8 @@
+<?php
+
+use app\core\Icon;
+
+?>
 <div class="banner gloves">
 	<div class="banner__text">
 		<div class="banner__container right">
@@ -44,7 +49,7 @@
 		<div class="advantage__cards-wrap">
 
 			<div class="advantage__card assortiment">
-				<?= \app\core\Icon::checkSquare('feather'); ?>
+				<?= Icon::checkSquare('feather'); ?>
 				Ассортимент
 
 				<p>Легко сориентироваться. Ничего лишнего.</p>
@@ -52,23 +57,23 @@
 			</div>
 
 			<div class="advantage__card delivery">
-				<?= \app\core\Icon::truck('feather'); ?>
+				<?= Icon::truck('feather'); ?>
 				Доставка
 				<p>Согласуем с Вами сроки поставки.</p>
 
 			</div>
 
 			<div class="advantage__card result">
-				<?= \app\core\Icon::package('feather'); ?>
+				<?= Icon::package('feather'); ?>
 
 				Наличие
 				<p>Обеспечиваем достаточное количество товара на складе.</p>
 			</div>
 
 			<div class="advantage__card certificates">
-				<?= \app\core\Icon::layers('feather'); ?>
+				<?= Icon::layers('feather'); ?>
 				Сертификаты
-				<p>С каждой поставкой предоставляем сертификаты.</p>
+				<p>Fредоставляем сертификаты по запросу.</p>
 			</div>
 		</div>
 	</div>
@@ -82,7 +87,7 @@
 		<div class="step">Вы его оплачиваете</div>
 		<div class="step">Мы оформляем документы</div>
 		<div class="step">Отправляем на транспортную компанию товар</div>
-		<div class="step">Транспортная компания доставляет к двери Вашей организации</div>
+		<div class="step">Транспортная компания доставляет</div>
 		<div class="step">Вы принимаете товар. Подписываете документы. Отправляете их нам</div>
 	</div>
 </div>

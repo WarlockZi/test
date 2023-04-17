@@ -8,36 +8,19 @@ class Order extends Model
 {
 
 	public $table = 'orders';
-	public  $model = 'order';
+	public $model = 'order';
+
+	public $timestamps = false;
 
 	protected $fillable = [
 		'name' => '',
-		'customer_id' => 1,
+		'customer_id',
+		'sess',
 	];
 
-
-	public static function cheifs($id)
+	public function items()
 	{
-		$model = new static();
-		$cheifs = $model->morphTo('post', 'chief', $id);
-		return $cheifs;
-	}
-
-	public static function subordinates($id)
-	{
-		$model = new static();
-		$subordinates = $model->morphTo('post', 'subordinate', $id);
-		return $subordinates;
-	}
-
-	public static function findOneWhere($field, $value)
-	{
-		$post = parent::findOneWhere($field, $value);
-		if ($post) {
-			$post['chief'] = explode(',', $post['chief']);
-			$post['subordinate'] = explode(',', $post['subordinate']);
-		}
-		return $post;
+		return $this->hasMany(OrderItem::class);
 	}
 
 }

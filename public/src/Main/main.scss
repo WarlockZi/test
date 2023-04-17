@@ -70,7 +70,7 @@
   display: flex;
   flex-flow: column;
   align-items: start;
-  min-height: 47vw;
+  //min-height: 47vw;
 
   &.gloves {
     background: url("/pic/site-gloves.jpg") no-repeat;
@@ -197,10 +197,12 @@
 
     &.right {
       align-self: flex-end;
+      display: none;
     }
 
     &.left {
       align-self: flex-start;
+      display: none;
     }
 
 

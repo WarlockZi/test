@@ -53,7 +53,7 @@ class ImageRepository
 			return "<img title = '{$name}'" .
 				"src = '{$src}' alt = '{$name}'>";
 		} else {
-			$src = self::getProductMainImageSrc($product);
+			$src = ImageRepository::getImg('');
 			return "<img src = {$src}";
 		}
 	}
