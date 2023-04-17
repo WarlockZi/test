@@ -28,7 +28,6 @@ class Assets
 
 	public function getMeta()
 	{
-//		echo "t - {$this->title} d - {$this->desc} k - {$this->keywords}";
 		return "<title>{$this->title}</title>" .
 			"<meta name = 'description' content = '{$this->desc}'>" .
 			"<meta name = 'keywords' content = '{$this->keywords}'>";
@@ -39,8 +38,6 @@ class Assets
 		$this->title = $item->title ? $item->title: $item->name;
 		$this->desc = $item->description ? $item->description : $item->name;
 		$this->keywords = $item->keywords ? $item->keywords : $item->name;
-		echo "it t - {$item->title} d - {$this->desc} k - {$this->keywords}</br>";
-//		echo "t - {$this->title} d - {$this->desc} k - {$this->keywords}";
 	}
 
 	public function setMeta(string $title, string $desc, string $keywords)
@@ -125,7 +122,7 @@ class Assets
 	public function getCss(string $str='')
 	{
 		foreach ($this->js as $name) {
-			$str .= "<link href='{$this->host}{$name}.css'{$this->getTime()} rel='stylesheet' type='text/css'>";
+			$str .= "<link href='{$this->host}{$name}.css{$this->getTime()}' rel='stylesheet' type='text/css'>";
 		}
 		return $str;
 	}
