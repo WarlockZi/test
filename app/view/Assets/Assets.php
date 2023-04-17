@@ -28,6 +28,7 @@ class Assets
 
 	public function getMeta()
 	{
+		echo "t - {$this->title} d - {$this->desc} k - {$this->keywords}";
 		return "<title>{$this->title}</title>" .
 			"<meta name = 'description' content = '{$this->desc}'>" .
 			"<meta name = 'keywords' content = '{$this->keywords}'>";
