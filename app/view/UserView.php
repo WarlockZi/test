@@ -67,10 +67,6 @@ class UserView extends View
 		$this->assets = $controller->getAssets();
 	}
 
-//	protected static function get404()
-//	{
-//		return self::$noViewError;
-//	}
 
 	function getErrors()
 	{

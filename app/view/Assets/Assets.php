@@ -28,7 +28,7 @@ class Assets
 
 	public function getMeta()
 	{
-		echo "t - {$this->title} d - {$this->desc} k - {$this->keywords}";
+//		echo "t - {$this->title} d - {$this->desc} k - {$this->keywords}";
 		return "<title>{$this->title}</title>" .
 			"<meta name = 'description' content = '{$this->desc}'>" .
 			"<meta name = 'keywords' content = '{$this->keywords}'>";
@@ -36,6 +36,7 @@ class Assets
 
 	public function setItemMeta(Model $item)
 	{
+		echo "t - {$this->title} d - {$this->desc} k - {$this->keywords}";
 		$this->title = $item->title ?? $item->name;
 		$this->desc = $item->description ? $item->description : $item->name;
 		$this->keywords = $item->keywords ? $item->keywords : $item->name;
