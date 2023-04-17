@@ -19,7 +19,7 @@ class ProductController extends AppController
 			$product = ProductRepository::main($slug);
 			$product->categoryProperties = ProductRepository::preparePropertiesList($product);
 
-			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, false,);
+			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, true,);
 			$this->set(compact('product', 'breadcrumbs'));
 			$this->assets->setItemMeta($product);
 

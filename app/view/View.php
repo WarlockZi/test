@@ -37,10 +37,6 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 		return $this->content;
 	}
 
-//	public function setContent(string $content)
-//	{
-//		$this->content = $content;
-//	}
 	public function getFileContent(string $file, array $vars = [])
 	{
 		extract($vars);
