@@ -46,12 +46,10 @@ class ImageRepository
 	}
 	public static function getProductMainImage(Product $product): string
 	{
-		if ($product->mainImages->count()) {
-			$image = $product->mainImages[0];
-			$src = ImageRepository::getSrcMorph($image)['src'];
+		$src = ImageRepository::getProductMainImageSrc($product);
+		if(is_readable(ROOT.$src)){
 			$name = $product['name'];
-			return "<img title = '{$name}'" .
-				"src = '{$src}' alt = '{$name}'>";
+			return "<img title = '{$name}' src = '{$src}' alt = '{$name}'>";
 		} else {
 			$src = ImageRepository::getImg('');
 			return "<img src = {$src}";
