@@ -36,11 +36,11 @@ class Assets
 
 	public function setItemMeta(Model $item)
 	{
-		$this->title = $item->title ?? $item->name;
+		$this->title = $item->title ? $item->title: $item->name;
 		$this->desc = $item->description ? $item->description : $item->name;
 		$this->keywords = $item->keywords ? $item->keywords : $item->name;
 		echo "it t - {$item->title} d - {$this->desc} k - {$this->keywords}</br>";
-		echo "t - {$this->title} d - {$this->desc} k - {$this->keywords}";
+//		echo "t - {$this->title} d - {$this->desc} k - {$this->keywords}";
 	}
 
 	public function setMeta(string $title, string $desc, string $keywords)
