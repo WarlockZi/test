@@ -31,6 +31,7 @@ class CategoryController Extends AppController
 				$category->products->filters = ProductRepository::getFilters();
 				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
 				$this->set(compact('breadcrumbs', 'category'));
+				$this->assets->setItemMeta($category);
 			}
 		} else {
 			$this->view = 'categories';

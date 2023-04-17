@@ -22,14 +22,14 @@ use \app\core\Icon;
 		 <? endforeach; ?>
 
 
-		<div class='h-cat'>Акции
-			<ul>
-				<li>
-					Акций нет. Но скоро будут
-				</li>
-
-			</ul>
-		</div>
+<!--		<div class='h-cat'>Акции-->
+<!--			<ul>-->
+<!--				<li>-->
+<!--					Акций нет. Но скоро будут-->
+<!--				</li>-->
+<!---->
+<!--			</ul>-->
+<!--		</div>-->
 
 		<div class='utils'>
 			<div class="search">

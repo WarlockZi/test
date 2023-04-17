@@ -19,7 +19,7 @@ class ProductController extends AppController
     $prod = ProductRepository::edit($id);
     if ($prod) {
       $product = ProductView::edit($prod);
-      $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, false, true);
+      $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);
     }
     $this->set(compact('product', 'breadcrumbs'));
   }
