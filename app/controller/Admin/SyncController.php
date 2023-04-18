@@ -92,8 +92,8 @@ class SyncController extends AppController
 	public function import()
 	{
 		$this->trancate();
-		$this->append("<br>trancated-------<br>");
-		exit;
+//		$this->append("<br>trancated-------<br>");
+//		exit;
 		if ($_ENV['MODE'] === 'development') {
 			$storage = StorageXml::class;
 		} else {
