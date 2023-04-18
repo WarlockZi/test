@@ -16,6 +16,11 @@ class FS
 		return self::platformSlashes(self::$storagePath);
 	}
 
+	public static function makePath($path)
+	{
+		return mkdir($path, 0777, true);
+	}
+
 	public static function saveToStorage(string $path, $file, string $fileName): bool
 	{
 		$path = self::getOrCreateAbsolutePath(self::$storagePath, $path);
