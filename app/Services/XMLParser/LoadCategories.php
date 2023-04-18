@@ -44,17 +44,19 @@ class LoadCategories extends Parser
 		$item['1s_id'] = $group['Ид'];
 		if ($level > 0)
 			$item['category_id'] = $parent['id'];
+		if ($level = 0) {
+			$item['show_front'] = 1;
+		}
 		$item['name'] = $group['Наименование'];
 		$item['slug'] = Slug::slug($item['name']);
 		$category = Category::create($item);
 		$item['pref'] = str_repeat('-', $level);
-		$this->ech($item);
+//		$this->ech($item);
 		return $item;
 	}
 
 	protected function ech(array $item)
 	{
-//		$cat_id = $item['category_id'] ?? 0;
 		echo "{$item['id']} {$item['pref']} {$item['name']}<br>";
 	}
 }
