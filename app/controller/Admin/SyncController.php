@@ -63,7 +63,7 @@ class SyncController extends AppController
 	{
 		$this->trancate();
 		$count = Category::count();
-		$this->exitJson(['success' => 'success', 'content' => 'Удалены категории, товары, цены Количество кат - '.$count]);
+		$this->exitJson(['success' => 'success', 'content' => 'Удалены категории, товары, цены Количество кат - ' . $count]);
 	}
 
 	public function actionInit()
@@ -92,12 +92,14 @@ class SyncController extends AppController
 	public function import()
 	{
 		$this->trancate();
+		$this->append("<br>trancated-------<br>");
+		exit;
 		if ($_ENV['MODE'] === 'development') {
 			$storage = StorageXml::class;
 		} else {
 			$storage = StorageImport::class;
 		}
-			$file = $storage::getFile('import0_1.xml');
+		$file = $storage::getFile('import0_1.xml');
 
 		if (is_readable($file)) {
 			new LoadCategories($file);
@@ -105,7 +107,6 @@ class SyncController extends AppController
 			$this->append("<br>loaded = {cat and prod}<br>");
 		}
 		$file = $storage::getFile('offers0_1.xml');
-
 		if (is_readable($file)) {
 			new LoadPrices($file);
 			$this->append("<br>loaded = price<br>");
@@ -129,10 +130,6 @@ class SyncController extends AppController
 	{
 		$this->filename = $this->route->params['filename'];
 		$this->rawPost = file_get_contents('php://input');
-
-		if (!is_dir($this->importPath)){
-			$res = FS::makePath($this->importPath);
-		}
 		file_put_contents($this->importPath . $this->filename, $this->rawPost);
 
 		$this->logReqest('file');
