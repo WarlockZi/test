@@ -129,6 +129,10 @@ class SyncController extends AppController
 	{
 		$this->filename = $this->route->params['filename'];
 		$this->rawPost = file_get_contents('php://input');
+
+		if (!is_dir($this->importPath)){
+			$res = FS::makePath($this->importPath);
+		}
 		file_put_contents($this->importPath . $this->filename, $this->rawPost);
 
 		$this->logReqest('file');
