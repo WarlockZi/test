@@ -4,6 +4,8 @@
 
 <button func="incread">Чтение</button>
 <br>
+<button func="inctruncate">Truncate</button>
+<br>
 
 <button func="load">Загрузить</button>
 <br>

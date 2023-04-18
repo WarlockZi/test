@@ -45,9 +45,9 @@ class LoadProducts extends Parser
 			$cat = Category::where('1s_id', $g['1s_category_id'])->first();
 			$g['category_id'] = $cat->id;
 			$p = Product::create($g);
-			$this->ech($g,$id);
+//			$this->ech($g,$id);
 		}else{
-			$this->ech($g,$id,'same slug'.$g['slug']);
+//			$this->ech($g,$id,'same slug'.$g['slug']);
 		}
 	}
 

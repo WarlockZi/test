@@ -14,6 +14,7 @@ import testEdit from '../Test/test-edit'
 import '../Test/do'
 import '../Test/open_test'
 import './sync1c/sync1c';
+import './chart/chart';
 
 
 import './Planning/planning'
@@ -39,21 +40,21 @@ import morph from '../components/morph/morph';
 
 $(document).ready(function () {
 
-  select()
-  morph()
+  select();
+  morph();
 
-  navigate(window.location.pathname)
-  radio()
-  multiselect()
-  catalogItem()
-  tooltips()
-  quill()
+  navigate(window.location.pathname);
+  radio();
+  multiselect();
+  catalogItem();
+  tooltips();
+  quill();
   // debugger
-  accordionShow()
+  accordionShow();
 
-  testEdit()
-  product()
-  category()
+  testEdit();
+  product();
+  category();
 
   function navigate(str) {
     if (/\/adminsc\/settings/.test(str)
@@ -92,7 +93,7 @@ $(document).ready(function () {
 
   }
 
-})
+});
 
 
 
