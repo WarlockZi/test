@@ -1,6 +1,9 @@
 <div class="category">
 
-	<? if (!isset($category)): ?>
+	<? use app\view\Category\CategoryView;
+	 use app\view\Product\ProductView;
+
+	 if (!isset($category)): ?>
 	  <div class="no-categories">
 		  <H1>Такой категории нет</H1>
 	  </div>
@@ -19,7 +22,7 @@
 				 <!--						--><? // if ($child->products->count() || $child->childrenRecursive->count()): ?>
 				 <a class="category-card" href="/category/<?= $child->slug ?>">
 							 <?= $child->name ?>
-							 <?= \app\view\Category\CategoryView::getMainImage($child) ?>
+							 <?= CategoryView::getMainImage($child) ?>
 				 </a>
 
 				 <!--						--><? // endif; ?>
@@ -50,10 +53,10 @@
 				    data-price="<?= $product->getRelation('price')->price ?? 0; ?>"
 				    href="/product/<?= $product->slug; ?>" class="product">
 					 <h3 class="name"><?= $product->name; ?></h3>
-							 <?= \app\view\Product\ProductView::getMainImage($product) ?>
+							 <?= ProductView::getMainImage($product) ?>
 					 <span class="footer">
 					 <p><?= $product->priceWithCurrencyUnit(); ?></p>
-					 <p>Остаток - <?= $product->instore ?? 0; ?> <?= $product->mainUnit ?? 0; ?></p>
+					 <p>Остаток - <?= $product->instore ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
 					 <p>Артикул: <?= $product->art ?? 0; ?></p>
 					 </span>
 

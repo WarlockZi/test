@@ -42,7 +42,7 @@ class Product extends Model
 	{
 		$price = $this->getRelation('price');
 		if ($price)
-			return "{$price->price} {$price->currency} / {$price->unit}";
+			return "{$price->price} {$price->currency} / {$this->baseUnit->name}";
 		return 'цена - не определена';
 	}
 
