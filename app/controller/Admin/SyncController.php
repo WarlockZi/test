@@ -50,7 +50,15 @@ class SyncController extends AppController
 		$this->exitJson(['success' => 'success', 'content' => $content]);
 	}
 
+	public function actionIncTruncate()
+	{
+		Category::truncate();
+		Product::truncate();
+		Price::truncate();
+//			Unit::truncate();
 
+		$this->exitJson(['success' => 'success', 'content' => 'Удалены категории, товары, цены']);
+	}
 	public function actionInit()
 	{
 		if (isset($this->route->params['type'])) {
@@ -77,24 +85,15 @@ class SyncController extends AppController
 	public function import()
 	{
 		$file = StorageImport::getFile('import0_1.xml');
-		$readable = is_readable($file);
 
-		$this->append("<br>readable <br>");
-		if ($readable) {
-//			Category::truncate();
-//			Product::truncate();
-			$trunkated = "<br>trunkated = {cat and prod}<br>";
-			$this->append($trunkated);
-//			new LoadCategories($file);
-//			new LoadProducts($file);
+		if (is_readable($file)) {
+			new LoadCategories($file);
+			new LoadProducts($file);
 			$this->append("<br>loaded = {cat and prod}<br>");
 		}
 		$file = StorageImport::getFile('offers0_1.xml');
-		$readable = is_readable($file);
-		if ($readable) {
-			Price::truncate();
-//			Unit::truncate();
-			$this->append("<br>trunkated = price<br>");
+
+		if (is_readable($file)) {
 			new LoadPrices($file);
 			$this->append("<br>loaded = price<br>");
 		}
