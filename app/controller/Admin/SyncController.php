@@ -92,8 +92,7 @@ class SyncController extends AppController
 	public function import()
 	{
 		$this->trancate();
-//		$this->append("<br>trancated-------<br>");
-//		exit;
+
 		if ($_ENV['MODE'] === 'development') {
 			$storage = StorageXml::class;
 		} else {
@@ -104,7 +103,7 @@ class SyncController extends AppController
 		if (is_readable($file)) {
 			new LoadCategories($file);
 			new LoadProducts($file);
-			$this->append("<br>loaded = {cat and prod}<br>");
+
 		}
 		$file = $storage::getFile('offers0_1.xml');
 		if (is_readable($file)) {
