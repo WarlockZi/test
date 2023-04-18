@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Dotenv\Parser;
 
+use function array_merge;
+use function array_reduce;
 use Dotenv\Exception\InvalidFileException;
 use Dotenv\Util\Regex;
 use GrahamCampbell\ResultType\Result;
 use GrahamCampbell\ResultType\Success;
+use function sprintf;
 
 final class Parser implements ParserInterface
 {
@@ -16,9 +19,9 @@ final class Parser implements ParserInterface
      *
      * @param string $content
      *
-     * @throws \Dotenv\Exception\InvalidFileException
+     * @throws InvalidFileException
      *
-     * @return \Dotenv\Parser\Entry[]
+     * @return Entry[]
      */
     public function parse(string $content)
     {
@@ -27,7 +30,7 @@ final class Parser implements ParserInterface
         })->flatMap(static function (array $lines) {
             return self::process(Lines::process($lines));
         })->mapError(static function (string $error) {
-            throw new InvalidFileException(\sprintf('Failed to parse dotenv file. %s', $error));
+            throw new InvalidFileException(sprintf('Failed to parse dotenv file. %s', $error));
         })->success()->get();
     }
 
@@ -36,15 +39,15 @@ final class Parser implements ParserInterface
      *
      * @param string[] $entries
      *
-     * @return \GrahamCampbell\ResultType\Result<\Dotenv\Parser\Entry[],string>
+     * @return Result
      */
     private static function process(array $entries)
     {
-        /** @var \GrahamCampbell\ResultType\Result<\Dotenv\Parser\Entry[],string> */
-        return \array_reduce($entries, static function (Result $result, string $raw) {
+        /** @var Result */
+        return array_reduce($entries, static function (Result $result, string $raw) {
             return $result->flatMap(static function (array $entries) use ($raw) {
                 return EntryParser::parse($raw)->map(static function (Entry $entry) use ($entries) {
-                    return \array_merge($entries, [$entry]);
+                    return array_merge($entries, [$entry]);
                 });
             });
         }, Success::create([]));

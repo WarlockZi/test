@@ -4,7 +4,9 @@
 
     <p class="topmargin1">ИП Медведева Е.Г.</p>
     <p>ИНН:352507425251     ОГРНИП    318352500067259</p>
-		<?$adress = \app\controller\Address::postCodeDecorator(\app\controller\Address::$factAddress);?>
+		<?$adress = Address::postCodeDecorator(Address::$factAddress);
+
+			use app\controller\Address; ?>
 
     <p>Адрес фактический: <?=$adress?></p>
     <p>Адрес для почты: <?=$adress?></p>

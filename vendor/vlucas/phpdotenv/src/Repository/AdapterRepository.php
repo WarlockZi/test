@@ -12,22 +12,22 @@ final class AdapterRepository implements RepositoryInterface
     /**
      * The reader to use.
      *
-     * @var \Dotenv\Repository\Adapter\ReaderInterface
+     * @var ReaderInterface
      */
     private $reader;
 
     /**
      * The writer to use.
      *
-     * @var \Dotenv\Repository\Adapter\WriterInterface
+     * @var WriterInterface
      */
     private $writer;
 
     /**
      * Create a new adapter repository instance.
      *
-     * @param \Dotenv\Repository\Adapter\ReaderInterface $reader
-     * @param \Dotenv\Repository\Adapter\WriterInterface $writer
+     * @param ReaderInterface $reader
+     * @param WriterInterface $writer
      *
      * @return void
      */

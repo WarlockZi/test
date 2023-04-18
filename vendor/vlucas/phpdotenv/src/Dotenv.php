@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dotenv;
 
+use Dotenv\Exception\InvalidFileException;
 use Dotenv\Exception\InvalidPathException;
 use Dotenv\Loader\Loader;
 use Dotenv\Loader\LoaderInterface;
@@ -22,38 +23,38 @@ class Dotenv
     /**
      * The store instance.
      *
-     * @var \Dotenv\Store\StoreInterface
+     * @var StoreInterface
      */
     private $store;
 
     /**
      * The parser instance.
      *
-     * @var \Dotenv\Parser\ParserInterface
+     * @var ParserInterface
      */
     private $parser;
 
     /**
      * The loader instance.
      *
-     * @var \Dotenv\Loader\LoaderInterface
+     * @var LoaderInterface
      */
     private $loader;
 
     /**
      * The repository instance.
      *
-     * @var \Dotenv\Repository\RepositoryInterface
+     * @var RepositoryInterface
      */
     private $repository;
 
     /**
      * Create a new dotenv instance.
      *
-     * @param \Dotenv\Store\StoreInterface           $store
-     * @param \Dotenv\Parser\ParserInterface         $parser
-     * @param \Dotenv\Loader\LoaderInterface         $loader
-     * @param \Dotenv\Repository\RepositoryInterface $repository
+     * @param StoreInterface $store
+     * @param ParserInterface $parser
+     * @param LoaderInterface $loader
+     * @param RepositoryInterface $repository
      *
      * @return void
      */
@@ -72,13 +73,13 @@ class Dotenv
     /**
      * Create a new dotenv instance.
      *
-     * @param \Dotenv\Repository\RepositoryInterface $repository
+     * @param RepositoryInterface $repository
      * @param string|string[]                        $paths
      * @param string|string[]|null                   $names
      * @param bool                                   $shortCircuit
      * @param string|null                            $fileEncoding
      *
-     * @return \Dotenv\Dotenv
+     * @return Dotenv
      */
     public static function create(RepositoryInterface $repository, $paths, $names = null, bool $shortCircuit = true, string $fileEncoding = null)
     {
@@ -107,7 +108,7 @@ class Dotenv
      * @param bool                 $shortCircuit
      * @param string|null          $fileEncoding
      *
-     * @return \Dotenv\Dotenv
+     * @return Dotenv
      */
     public static function createMutable($paths, $names = null, bool $shortCircuit = true, string $fileEncoding = null)
     {
@@ -124,7 +125,7 @@ class Dotenv
      * @param bool                 $shortCircuit
      * @param string|null          $fileEncoding
      *
-     * @return \Dotenv\Dotenv
+     * @return Dotenv
      */
     public static function createUnsafeMutable($paths, $names = null, bool $shortCircuit = true, string $fileEncoding = null)
     {
@@ -143,7 +144,7 @@ class Dotenv
      * @param bool                 $shortCircuit
      * @param string|null          $fileEncoding
      *
-     * @return \Dotenv\Dotenv
+     * @return Dotenv
      */
     public static function createImmutable($paths, $names = null, bool $shortCircuit = true, string $fileEncoding = null)
     {
@@ -160,7 +161,7 @@ class Dotenv
      * @param bool                 $shortCircuit
      * @param string|null          $fileEncoding
      *
-     * @return \Dotenv\Dotenv
+     * @return Dotenv
      */
     public static function createUnsafeImmutable($paths, $names = null, bool $shortCircuit = true, string $fileEncoding = null)
     {
@@ -180,7 +181,7 @@ class Dotenv
      * @param bool                 $shortCircuit
      * @param string|null          $fileEncoding
      *
-     * @return \Dotenv\Dotenv
+     * @return Dotenv
      */
     public static function createArrayBacked($paths, $names = null, bool $shortCircuit = true, string $fileEncoding = null)
     {
@@ -197,7 +198,7 @@ class Dotenv
      *
      * @param string $content
      *
-     * @throws \Dotenv\Exception\InvalidFileException
+     * @throws InvalidFileException
      *
      * @return array<string,string|null>
      */
@@ -213,9 +214,9 @@ class Dotenv
     /**
      * Read and load environment file(s).
      *
-     * @throws \Dotenv\Exception\InvalidPathException|\Dotenv\Exception\InvalidEncodingException|\Dotenv\Exception\InvalidFileException
-     *
      * @return array<string,string|null>
+     *@throws \Dotenv\Exception\InvalidPathException|\Dotenv\Exception\InvalidEncodingException|InvalidFileException
+     *
      */
     public function load()
     {
@@ -227,9 +228,9 @@ class Dotenv
     /**
      * Read and load environment file(s), silently failing if no files can be read.
      *
-     * @throws \Dotenv\Exception\InvalidEncodingException|\Dotenv\Exception\InvalidFileException
-     *
      * @return array<string,string|null>
+     *@throws \Dotenv\Exception\InvalidEncodingException|InvalidFileException
+     *
      */
     public function safeLoad()
     {
@@ -246,7 +247,7 @@ class Dotenv
      *
      * @param string|string[] $variables
      *
-     * @return \Dotenv\Validator
+     * @return Validator
      */
     public function required($variables)
     {
@@ -258,7 +259,7 @@ class Dotenv
      *
      * @param string|string[] $variables
      *
-     * @return \Dotenv\Validator
+     * @return Validator
      */
     public function ifPresent($variables)
     {

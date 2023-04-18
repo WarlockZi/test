@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Dotenv\Repository\Adapter;
 
+use PhpOption\Option;
+
 interface ReaderInterface
 {
     /**
@@ -11,7 +13,7 @@ interface ReaderInterface
      *
      * @param string $name
      *
-     * @return \PhpOption\Option<string>
+     * @return Option<string>
      */
     public function read(string $name);
 }

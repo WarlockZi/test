@@ -38,7 +38,9 @@
 				центральный офис, производство и офис в Санкт-Петербурге.</p>
 			<p>Осуществляется <strong>в рабочее время</strong> со склада</p>
 
-				<? $adress = \app\controller\Address::getFactAddress(); ?>
+				<? $adress = Address::getFactAddress();
+
+						use app\controller\Address; ?>
 
 			<p><strong>Адрес склада:</strong><br><?=$adress?></p>
 		</div>
@@ -92,7 +94,7 @@
 	</p>
 
 	<h3>Самовывоз</h3>
-	<?$adress = \app\controller\Address::getFactAddress();?>
+	<?$adress = Address::getFactAddress();?>
 
 	<p>
 

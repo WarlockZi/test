@@ -9,14 +9,14 @@ final class ReplacingWriter implements WriterInterface
     /**
      * The inner writer to use.
      *
-     * @var \Dotenv\Repository\Adapter\WriterInterface
+     * @var WriterInterface
      */
     private $writer;
 
     /**
      * The inner reader to use.
      *
-     * @var \Dotenv\Repository\Adapter\ReaderInterface
+     * @var ReaderInterface
      */
     private $reader;
 
@@ -30,8 +30,8 @@ final class ReplacingWriter implements WriterInterface
     /**
      * Create a new replacement writer instance.
      *
-     * @param \Dotenv\Repository\Adapter\WriterInterface $writer
-     * @param \Dotenv\Repository\Adapter\ReaderInterface $reader
+     * @param WriterInterface $writer
+     * @param ReaderInterface $reader
      *
      * @return void
      */

@@ -7,29 +7,29 @@ import {$} from '../../common'
             autocomplete(input)
         }, true)
     }
-})
+});
 
 
 async function autocomplete(input) {
-    let search = input.parentNode
-    let result = $(search).find('.search__result')
+    let search = input.parentNode;
+    let result = $(search).find('.search__result');
 
     if (input.value.length < 1) {
-        if (result) result.innerHTML = ''
+        if (result) result.innerHTML = '';
         return
     }
 
-    let data = await fetch('/search?q=' + input.value)
-    data = await data.json(data)
+    let data = await fetch('/search?q=' + input.value);
+    data = await data.json(data);
 
     if (result.childNodes.length!==0) {
         result.innerHTML = ''
     }
 
     data.map(e => {
-        let a = document.createElement("a")
-        a.href = e.alias
-        a.innerHTML = `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name
+        let a = document.createElement("a");
+        a.href = e.alias;
+        a.innerHTML = `<img src='/pic/${e.preview_pic}' alt='${e.name}'>` + e.name;
         result.appendChild(a)
     });
 

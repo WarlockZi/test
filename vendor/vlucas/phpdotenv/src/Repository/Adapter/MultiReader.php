@@ -5,20 +5,21 @@ declare(strict_types=1);
 namespace Dotenv\Repository\Adapter;
 
 use PhpOption\None;
+use PhpOption\Option;
 
 final class MultiReader implements ReaderInterface
 {
     /**
      * The set of readers to use.
      *
-     * @var \Dotenv\Repository\Adapter\ReaderInterface[]
+     * @var ReaderInterface[]
      */
     private $readers;
 
     /**
      * Create a new multi-reader instance.
      *
-     * @param \Dotenv\Repository\Adapter\ReaderInterface[] $readers
+     * @param ReaderInterface[] $readers
      *
      * @return void
      */
@@ -32,7 +33,7 @@ final class MultiReader implements ReaderInterface
      *
      * @param string $name
      *
-     * @return \PhpOption\Option<string>
+     * @return Option<string>
      */
     public function read(string $name)
     {

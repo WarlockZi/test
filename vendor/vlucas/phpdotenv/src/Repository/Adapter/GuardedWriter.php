@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Dotenv\Repository\Adapter;
 
+use function in_array;
+
 final class GuardedWriter implements WriterInterface
 {
     /**
      * The inner writer to use.
      *
-     * @var \Dotenv\Repository\Adapter\WriterInterface
+     * @var WriterInterface
      */
     private $writer;
 
@@ -23,7 +25,7 @@ final class GuardedWriter implements WriterInterface
     /**
      * Create a new guarded writer instance.
      *
-     * @param \Dotenv\Repository\Adapter\WriterInterface $writer
+     * @param WriterInterface $writer
      * @param string[]                                   $allowList
      *
      * @return void
@@ -80,6 +82,6 @@ final class GuardedWriter implements WriterInterface
      */
     private function isAllowed(string $name)
     {
-        return \in_array($name, $this->allowList, true);
+        return in_array($name, $this->allowList, true);
     }
 }

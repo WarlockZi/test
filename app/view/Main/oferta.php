@@ -67,7 +67,9 @@
 			<ul class="d-psvd-lst">
 				<li>
 					<p class="d-x-large topmargin1">1. ТЕРМИНЫ И ОПРЕДЕЛЕНИЯ</p>
-							<? $adress = \app\controller\Address::postCodeDecorator(\app\controller\Address::$factAddress); ?>
+							<? $adress = Address::postCodeDecorator(Address::$factAddress);
+
+										 use app\controller\Address; ?>
 
 
 					<dd>Продавец</dd>
@@ -552,7 +554,7 @@
 						"Витекс"</p>
 					<p>ИНН:352507425251 КПП 352501001 ОГРН 1173525018292</p>
 
-							<? $adress = \app\controller\Address::postCodeDecorator(\app\controller\Address::$factAddress); ?>
+							<? $adress = Address::postCodeDecorator(Address::$factAddress); ?>
 
 					<p>Адрес фактический: <?= $adress ?></p>
 					<p>Адрес для почты: <?= $adress ?></p>

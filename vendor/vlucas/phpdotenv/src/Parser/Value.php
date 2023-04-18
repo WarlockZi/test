@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Dotenv\Parser;
 
+use function array_merge;
 use Dotenv\Util\Str;
+use function rsort;
 
 final class Value
 {
@@ -39,7 +41,7 @@ final class Value
     /**
      * Create an empty value instance.
      *
-     * @return \Dotenv\Parser\Value
+     * @return Value
      */
     public static function blank()
     {
@@ -52,13 +54,13 @@ final class Value
      * @param string $chars
      * @param bool   $var
      *
-     * @return \Dotenv\Parser\Value
+     * @return Value
      */
     public function append(string $chars, bool $var)
     {
         return new self(
             $this->chars.$chars,
-            $var ? \array_merge($this->vars, [Str::len($this->chars)]) : $this->vars
+            $var ? array_merge($this->vars, [Str::len($this->chars)]) : $this->vars
         );
     }
 
@@ -81,7 +83,7 @@ final class Value
     {
         $vars = $this->vars;
 
-        \rsort($vars);
+        rsort($vars);
 
         return $vars;
     }

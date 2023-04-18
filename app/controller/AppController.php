@@ -5,6 +5,7 @@ namespace app\controller;
 use app\controller\Interfaces\IModelable;
 use app\Repository\MorphRepository;
 use Illuminate\Database\Eloquent\Model;
+use ReflectionClass;
 
 class AppController extends Controller implements IModelable
 {
@@ -102,7 +103,7 @@ class AppController extends Controller implements IModelable
 
 	public static function shortClassName($object)
 	{
-		return lcfirst((new \ReflectionClass($object))->getShortName());
+		return lcfirst((new ReflectionClass($object))->getShortName());
 	}
 
 	public function getModel()
