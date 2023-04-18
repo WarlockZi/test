@@ -20,9 +20,9 @@ import radio from '@components/radio/radio'
 import showPassword from "../components/showPassword/showPassword";
 
 
-radio()
+radio();
 
-multiselect()
-catalogItem()
-showPassword()
+multiselect();
+catalogItem();
+showPassword();
 

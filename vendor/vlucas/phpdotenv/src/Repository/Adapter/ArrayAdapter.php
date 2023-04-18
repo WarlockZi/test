@@ -29,11 +29,11 @@ final class ArrayAdapter implements AdapterInterface
     /**
      * Create a new instance of the adapter, if it is available.
      *
-     * @return \PhpOption\Option<\Dotenv\Repository\Adapter\AdapterInterface>
+     * @return Option
      */
     public static function create()
     {
-        /** @var \PhpOption\Option<AdapterInterface> */
+        /** @var Option */
         return Some::create(new self());
     }
 
@@ -42,7 +42,7 @@ final class ArrayAdapter implements AdapterInterface
      *
      * @param string $name
      *
-     * @return \PhpOption\Option<string>
+     * @return Option
      */
     public function read(string $name)
     {

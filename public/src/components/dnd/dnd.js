@@ -9,21 +9,21 @@ export function Dnd(cb, holderClass = '[dnd]') {
   [].forEach.call(holders, function (h) {
 
     h.ondragenter = function (e) {
-      e.preventDefault()
-      this.classList.toggle('hover')
+      e.preventDefault();
+      this.classList.toggle('hover');
       return false
-    }
+    };
     h.ondragleave = function (e) {
-      e.preventDefault()
-      this.classList.toggle('hover')
+      e.preventDefault();
+      this.classList.toggle('hover');
       return false
-    }
+    };
     h.ondragover = function (e) {//без ondragover не работает drop
-      e.preventDefault()
+      e.preventDefault();
       return false;
-    }
+    };
     h.ondrop = function (e) {
-      e.preventDefault()
+      e.preventDefault();
       // debugger
       cb(e.dataTransfer.files, e.target)
     }

@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Dotenv\Parser;
 
+use function array_push;
 use Dotenv\Util\Regex;
 use Dotenv\Util\Str;
+use function implode;
+use function str_replace;
+use function trim;
 
 final class Lines
 {
@@ -64,11 +68,11 @@ final class Lines
         }
 
         if ($multiline) {
-            \array_push($buffer, $line);
+            array_push($buffer, $line);
 
             if (self::looksLikeMultilineStop($line, $started)) {
                 $multiline = false;
-                $line = \implode("\n", $buffer);
+                $line = implode("\n", $buffer);
                 $buffer = [];
             }
         }
@@ -104,7 +108,7 @@ final class Lines
             return true;
         }
 
-        return Regex::occurences('/(?=([^\\\\]"))/', \str_replace('\\\\', '', $line))->map(static function (int $count) use ($started) {
+        return Regex::occurences('/(?=([^\\\\]"))/', str_replace('\\\\', '', $line))->map(static function (int $count) use ($started) {
             return $started ? $count > 1 : $count >= 1;
         })->success()->getOrElse(false);
     }
@@ -118,7 +122,7 @@ final class Lines
      */
     private static function isCommentOrWhitespace(string $line)
     {
-        $line = \trim($line);
+        $line = trim($line);
 
         return $line === '' || (isset($line[0]) && $line[0] === '#');
     }

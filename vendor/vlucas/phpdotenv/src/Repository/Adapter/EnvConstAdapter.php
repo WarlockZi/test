@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dotenv\Repository\Adapter;
 
+use function is_string;
 use PhpOption\Option;
 use PhpOption\Some;
 
@@ -22,11 +23,11 @@ final class EnvConstAdapter implements AdapterInterface
     /**
      * Create a new instance of the adapter, if it is available.
      *
-     * @return \PhpOption\Option<\Dotenv\Repository\Adapter\AdapterInterface>
+     * @return Option
      */
     public static function create()
     {
-        /** @var \PhpOption\Option<AdapterInterface> */
+        /** @var Option */
         return Some::create(new self());
     }
 
@@ -35,11 +36,11 @@ final class EnvConstAdapter implements AdapterInterface
      *
      * @param string $name
      *
-     * @return \PhpOption\Option<string>
+     * @return Option
      */
     public function read(string $name)
     {
-        /** @var \PhpOption\Option<string> */
+        /** @var Option */
         return Option::fromArraysValue($_ENV, $name)
             ->map(static function ($value) {
                 if ($value === false) {
@@ -52,7 +53,7 @@ final class EnvConstAdapter implements AdapterInterface
 
                 return $value;
             })->filter(static function ($value) {
-                return \is_string($value);
+                return is_string($value);
             });
     }
 

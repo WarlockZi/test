@@ -7,4 +7,4 @@ $("body").on("click", function (e) {
             // alert(e.target.className)
         }
     }
-)
+);

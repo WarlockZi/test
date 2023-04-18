@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dotenv\Store;
 
+use function array_merge;
 use Dotenv\Store\File\Paths;
 
 final class StoreBuilder
@@ -62,7 +63,7 @@ final class StoreBuilder
     /**
      * Create a new store builder instance with no names.
      *
-     * @return \Dotenv\Store\StoreBuilder
+     * @return StoreBuilder
      */
     public static function createWithNoNames()
     {
@@ -72,7 +73,7 @@ final class StoreBuilder
     /**
      * Create a new store builder instance with the default name.
      *
-     * @return \Dotenv\Store\StoreBuilder
+     * @return StoreBuilder
      */
     public static function createWithDefaultName()
     {
@@ -84,11 +85,11 @@ final class StoreBuilder
      *
      * @param string $path
      *
-     * @return \Dotenv\Store\StoreBuilder
+     * @return StoreBuilder
      */
     public function addPath(string $path)
     {
-        return new self(\array_merge($this->paths, [$path]), $this->names, $this->shortCircuit, $this->fileEncoding);
+        return new self(array_merge($this->paths, [$path]), $this->names, $this->shortCircuit, $this->fileEncoding);
     }
 
     /**
@@ -96,17 +97,17 @@ final class StoreBuilder
      *
      * @param string $name
      *
-     * @return \Dotenv\Store\StoreBuilder
+     * @return StoreBuilder
      */
     public function addName(string $name)
     {
-        return new self($this->paths, \array_merge($this->names, [$name]), $this->shortCircuit, $this->fileEncoding);
+        return new self($this->paths, array_merge($this->names, [$name]), $this->shortCircuit, $this->fileEncoding);
     }
 
     /**
      * Creates a store builder with short circuit mode enabled.
      *
-     * @return \Dotenv\Store\StoreBuilder
+     * @return StoreBuilder
      */
     public function shortCircuit()
     {
@@ -118,7 +119,7 @@ final class StoreBuilder
      *
      * @param string|null $fileEncoding
      *
-     * @return \Dotenv\Store\StoreBuilder
+     * @return StoreBuilder
      */
     public function fileEncoding(string $fileEncoding = null)
     {
@@ -128,7 +129,7 @@ final class StoreBuilder
     /**
      * Creates a new store instance.
      *
-     * @return \Dotenv\Store\StoreInterface
+     * @return StoreInterface
      */
     public function make()
     {

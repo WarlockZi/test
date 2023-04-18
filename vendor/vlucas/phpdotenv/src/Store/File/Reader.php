@@ -6,6 +6,7 @@ namespace Dotenv\Store\File;
 
 use Dotenv\Exception\InvalidEncodingException;
 use Dotenv\Util\Str;
+use function file_get_contents;
 use PhpOption\Option;
 
 /**
@@ -36,9 +37,9 @@ final class Reader
      * @param bool        $shortCircuit
      * @param string|null $fileEncoding
      *
-     * @throws \Dotenv\Exception\InvalidEncodingException
-     *
      * @return array<string,string>
+		 *@throws InvalidEncodingException
+     *
      */
     public static function read(array $filePaths, bool $shortCircuit = true, string $fileEncoding = null)
     {
@@ -63,14 +64,14 @@ final class Reader
      * @param string      $path
      * @param string|null $encoding
      *
-     * @throws \Dotenv\Exception\InvalidEncodingException
+     * @return Option
+		 * @throws InvalidEncodingException
      *
-     * @return \PhpOption\Option<string>
      */
     private static function readFromFile(string $path, string $encoding = null)
     {
         /** @var Option<string> */
-        $content = Option::fromValue(@\file_get_contents($path), false);
+        $content = Option::fromValue(@file_get_contents($path), false);
 
         return $content->flatMap(static function (string $content) use ($encoding) {
             return Str::utf8($content, $encoding)->mapError(static function (string $error) {

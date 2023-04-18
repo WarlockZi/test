@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use PDO;
+
 class DB {
 
     public $pdo;
@@ -12,11 +14,11 @@ class DB {
     public function __construct() {
 
         $options = [
-            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ];
         try {
-            $this->pdo = new \PDO($_ENV['DB_DSN'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $options);
+            $this->pdo = new PDO($_ENV['DB_DSN'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $options);
         } catch (PDOException $e) {
             die('Подключение не удалось: ' . $e->getMessage());
         }
