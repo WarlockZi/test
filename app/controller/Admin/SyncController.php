@@ -50,15 +50,20 @@ class SyncController extends AppController
 		$this->exitJson(['success' => 'success', 'content' => $content]);
 	}
 
-	public function actionIncTruncate()
+	public function trancate()
 	{
 		Category::truncate();
 		Product::truncate();
 		Price::truncate();
 //			Unit::truncate();
+	}
 
+	public function actionIncTruncate()
+	{
+		$this->trancate();
 		$this->exitJson(['success' => 'success', 'content' => 'Удалены категории, товары, цены']);
 	}
+
 	public function actionInit()
 	{
 		if (isset($this->route->params['type'])) {
@@ -84,6 +89,7 @@ class SyncController extends AppController
 
 	public function import()
 	{
+		$this->trancate();
 		$file = StorageImport::getFile('import0_1.xml');
 
 		if (is_readable($file)) {
@@ -143,7 +149,7 @@ class SyncController extends AppController
 	protected function append(string $text)
 	{
 		$time = date('H:i:s');
-		file_put_contents($this->log, $text. " - {$time} - ", FILE_APPEND | LOCK_EX);
+		file_put_contents($this->log, $text . " - {$time} - ", FILE_APPEND | LOCK_EX);
 	}
 
 	protected function getHeaders($str = '')
@@ -175,7 +181,8 @@ class SyncController extends AppController
 		}
 	}
 
-	public function actionLoad(){
+	public function actionLoad()
+	{
 		$this->import();
 	}
 
