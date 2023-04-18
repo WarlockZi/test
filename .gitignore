@@ -8,6 +8,4 @@
 /.idea/
 /composer.phar
 /.env
-/app/Storage/import/import0_1.xml
-/app/Storage/import/offers0_1.xml
-/app/Storage/log/*
+
