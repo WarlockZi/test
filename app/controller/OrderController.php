@@ -1,18 +1,15 @@
 <?php
 
-namespace app\controller\Admin;
+namespace app\controller;
 
 
-use app\controller\AppController;
-use app\core\Route;
+use app\model\Order;
 use app\view\Order\OrderView;
 
 
 class OrderController Extends AppController
 {
-//	public $modelName = 'order';
-//	public $model = Order::class;
-//	public $table = 'orders';
+	public $model = Order::class;
 
 	public function __construct()
 	{
@@ -25,6 +22,7 @@ class OrderController Extends AppController
 		$list = OrderView::listAll();
 		$this->set(compact('list'));
 	}
+
 
 
 

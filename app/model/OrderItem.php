@@ -13,9 +13,12 @@ class OrderItem extends Model
 
 	protected $fillable = [
 		'name',
-		'date',
+		'sess',
+		'order_id',
+		'product_id',
 		'customer_id',
-		'sess'
+		'count',
+		'date',
 	];
 
 
