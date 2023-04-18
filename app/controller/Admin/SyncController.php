@@ -14,6 +14,7 @@ use app\Services\XMLParser\LoadProducts;
 use app\Services\XMLParser\LoadProductsOffer;
 use app\Storage\StorageImport;
 use app\Storage\StorageLog;
+use app\Storage\StorageXml;
 
 class SyncController extends AppController
 {
@@ -61,7 +62,8 @@ class SyncController extends AppController
 	public function actionIncTruncate()
 	{
 		$this->trancate();
-		$this->exitJson(['success' => 'success', 'content' => 'Удалены категории, товары, цены']);
+		$count = Category::count();
+		$this->exitJson(['success' => 'success', 'content' => 'Удалены категории, товары, цены Количество кат - '.$count]);
 	}
 
 	public function actionInit()
@@ -90,14 +92,19 @@ class SyncController extends AppController
 	public function import()
 	{
 		$this->trancate();
-		$file = StorageImport::getFile('import0_1.xml');
+		if ($_ENV['MODE'] === 'development') {
+			$storage = StorageXml::class;
+		} else {
+			$storage = StorageImport::class;
+		}
+			$file = $storage::getFile('import0_1.xml');
 
 		if (is_readable($file)) {
 			new LoadCategories($file);
 			new LoadProducts($file);
 			$this->append("<br>loaded = {cat and prod}<br>");
 		}
-		$file = StorageImport::getFile('offers0_1.xml');
+		$file = $storage::getFile('offers0_1.xml');
 
 		if (is_readable($file)) {
 			new LoadPrices($file);
@@ -143,7 +150,7 @@ class SyncController extends AppController
 		}
 
 		$this->append($text);
-//		$text .= $this->rawPost;
+
 	}
 
 	protected function append(string $text)
@@ -185,38 +192,6 @@ class SyncController extends AppController
 	{
 		$this->import();
 	}
-
-//	public function actionIndex()
-//	{
-//		if ($_POST) {
-//			$file = FS::platformSlashes(ROOT . '/app/Storage/xml/' . $_POST['file'] . '.xml');
-//			$readable = is_readable($file);
-//			if ($_POST['action'] === 'loadProducts' && $readable) {
-//				new LoadProducts($file);
-//			} elseif ($_POST['action'] === 'loadProductsOffer' && $readable) {
-//				new LoadProductsOffer($file);
-//			} elseif ($_POST['action'] === 'loadCategories' && $readable) {
-//				new LoadCategories($file);
-//			} elseif ($_POST['action'] === 'loadPrices' && $readable) {
-//				new LoadPrices($file);
-//
-//
-//			} elseif ($_POST['action'] === 'parseImages') {
-//				self::parseImages();
-//			} elseif ($_POST['action'] === 'removePrices') {
-//				Price::truncate();
-//			} elseif ($_POST['action'] === 'removeCategories') {
-//				Category::truncate();
-//			} elseif ($_POST['action'] === 'removeProducts') {
-//				Product::truncate();
-//			}
-//		}
-//		$storage = new StorageXml;
-//		$files = $storage->getFiles();
-//		$this->set(compact('files'));
-//
-//	}
-
 
 }
 
