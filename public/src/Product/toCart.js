@@ -1,31 +1,45 @@
-import {post, debounce} from "../common";
+import {post, debounce, getToken} from "../common";
 
 export default function toCart({target}) {
 
   let cart = {
     cart: this,
+    token: getToken(),
+    count: document.querySelector('.utils .cart .count'),
     adjust: this.querySelector('.adjust'),
     blue: this.querySelector('.blue'),
     digitEl: this.querySelector('.digit'),
     digit: +this.querySelector('.digit').innerText,
-    product: +this.closest('.product-card').dataset.id,
+    product: this.closest('.product-card').dataset.id,
 
     showBlue: function () {
       this.blue.classList.remove('none');
-      this.adjust.classList.add('none')
+      this.adjust.classList.add('none');
+      this.count.innerText = --this.count.innerText
     },
 
     showGreen: function () {
       this.blue.classList.add('none');
       this.adjust.classList.remove('none');
-
-      debounce(this.send, 900)
+      this.count.style.display = 'flex';
+      this.count.innerText = ++this.count.innerText;
+      let debounced = debounce(this.send, 900);
+      let obj = this.dto();
+      // debugger;
+      debounced(obj)
     },
 
-    send: function () {
-      debugger;
-      let res = post('/order/create', this)
+    send: function (obj) {
+      let res = post('/adminsc/orderItem/updateOrCreate', obj)
     },
+
+    dto: function () {
+      return {
+        sess:this.token,
+        product_id: this.product,
+        count: this.digit
+      }
+    }
 
   };
 
@@ -38,13 +52,17 @@ export default function toCart({target}) {
     cart.showGreen()
   } else if (target.classList.contains('minus')) {
     if (cart.digit > 1) {
-      cart.digitEl.innerText = --cart.digit
+      cart.digitEl.innerText = --cart.digit;
+      cart.count.innerText = cart.digit;
+      let obj = this.dto();
+      // debugger;
+      cart.debounced(obj)
     } else if (cart.digit === 1) {
       cart.showBlue()
     }
-
   } else if (target.classList.contains('plus')) {
-    cart.digitEl.innerText = ++cart.digit
+    cart.digitEl.innerText = ++cart.digit;
+    cart.count.innerText = cart.digit
   }
 
 

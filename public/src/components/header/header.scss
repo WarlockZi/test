@@ -198,7 +198,7 @@ header {
     .search,
     .gamburger,
     .cart {
-      position: initial;
+      position: relative;
       height: 100%;
       margin: initial;
       display: flex;
@@ -207,6 +207,24 @@ header {
 
       &:hover {
         background-color: #0070ff;
+      }
+    }
+
+    .cart{
+      .count{
+        display: none;
+        position: absolute;
+        bottom: 22%;
+        right: 24px;
+        width: 6px;
+        height: 6px;
+        color: #ffffff;
+        background-color: red;
+        border-radius: 50%;
+        padding: 7px;
+        align-items: center;
+        justify-content: center;
+        font-size: .8rem;
       }
     }
 
