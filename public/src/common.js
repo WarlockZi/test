@@ -20,7 +20,7 @@ export function objAndData2FormData(obj, files, formData = new FormData) {
         self.createFormData(value, subKeyStrTrans);
       }
     }
-  }
+  };
   self.createFormData(obj);
   return self.formData;
 }
@@ -33,7 +33,7 @@ const debounce = (fn, time = 700) => {
     clearTimeout(timeout);
     timeout = setTimeout(functionCall, time);
   }
-}
+};
 
 function IsJson(str) {
   try {
@@ -70,29 +70,29 @@ function replaceBackSpace(str) {
 }
 
 function formatDate(date, time) {
-  let t = new Date()
-  let now = t.now()
-  let dateArr = now.split('-')
-  debugger
+  let t = new Date();
+  let now = t.now();
+  let dateArr = now.split('-');
+  debugger;
   let formattedDate = dateArr.forEach((s) => {
-    if (s === 'yyyy') return t.getFullYear
+    if (s === 'yyyy') return t.getFullYear;
     if (s === 'm') return t.getMonth
   })
 }
 
 function trimStr(str) {
-  str = replaceNbsps(str)
-  str = replaceNs(str)
-  str = replaceTs(str)
+  str = replaceNbsps(str);
+  str = replaceNs(str);
+  str = replaceTs(str);
   // str = replaceSpace(str)
-  str = replaceBackSpace(str)
+  str = replaceBackSpace(str);
   return str
 }
 
 function setMorph(data) {
-  if (!data.model) return
-  if (!data.id) return
-  if (!data.morph) return
+  if (!data.model) return;
+  if (!data.id) return;
+  if (!data.morph) return;
   let url = getMorphUrl(data.model, data.id)
 
 
@@ -108,16 +108,16 @@ function getFieldUrl(model, id) {
 
 
 function cachePage(className) {
-  let html = $(className)[0].outerHTML
+  let html = $(className)[0].outerHTML;
   return trimStr(html)
 }
 
 let validate = {
   sort: () => {
-    let error = this.nextElementSibling
-    let ar = this.value.match(/\D+/)
+    let error = this.nextElementSibling;
+    let ar = this.value.match(/\D+/);
     if (ar) {
-      error.innerText = 'Только цифры'
+      error.innerText = 'Только цифры';
       error.style.opacity = '1'
     } else {
       if (error.style.opacity === "1") {
@@ -126,25 +126,25 @@ let validate = {
     }
   },
   email: (email) => {
-    if (!email) return false
-    let text = "Неправильный формат почты"
+    if (!email) return false;
+    let text = "Неправильный формат почты";
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    let res = re.test(String(email).toLowerCase())
-    if (!res) return text
+    let res = re.test(String(email).toLowerCase());
+    if (!res) return text;
     return false
   },
   password: (password) => {
-    if (!password) return false
+    if (!password) return false;
     let text = "Пароль может состоять из \n " +
       "- Большие латинские бкувы \n" +
       "- Маленькие латинские буквы \n" +
       "- Цифры \n" +
-      "- Должен содержать не менее 6 символов"
-    let res = /^[a-zA-Z\-0-9]{6,20}$/.test(password)
-    if (!res) return text
+      "- Должен содержать не менее 6 символов";
+    let res = /^[a-zA-Z\-0-9]{6,20}$/.test(password);
+    if (!res) return text;
     return false
   }
-}
+};
 
 
 // function up() {
@@ -161,27 +161,27 @@ let validate = {
 let popup = {
 
   show: function (txt, callback) {
-    let close = this.el('div', 'popup__close')
-    close.innerText = 'X'
-    let popup__item = this.el('div', 'popup__item')
+    let close = this.el('div', 'popup__close');
+    close.innerText = 'X';
+    let popup__item = this.el('div', 'popup__item');
 
-    popup__item.innerText = txt
-    popup__item.append(close)
-    let popup = $('.popup')[0]
+    popup__item.innerText = txt;
+    popup__item.append(close);
+    let popup = $('.popup')[0];
     if (!popup) {
       popup = this.el('div', 'popup')
     }
-    popup.append(popup__item)
-    popup.addEventListener('click', this.close, true)
-    document.body.append(popup)
+    popup.append(popup__item);
+    popup.addEventListener('click', this.close, true);
+    document.body.append(popup);
     let hideDelay = 5000;
     setTimeout(() => {
-      popup__item.classList.remove('popup__item')
+      popup__item.classList.remove('popup__item');
       popup__item.classList.add('popup-hide')
-    }, hideDelay)
+    }, hideDelay);
     let removeDelay = hideDelay + 950;
     setTimeout(() => {
-      popup__item.remove()
+      popup__item.remove();
       if (callback) {
         callback()
       }
@@ -194,11 +194,11 @@ let popup = {
     }
   },
   el: function (tagName, className) {
-    let el = document.createElement(tagName)
-    el.classList.add(className)
+    let el = document.createElement(tagName);
+    el.classList.add(className);
     return el
   }
-}
+};
 
 async function get(key) {
   let p = window.location.search;
@@ -206,10 +206,15 @@ async function get(key) {
   return p ? p[1] : false;
 }
 
+function getToken() {
+  return document.querySelector('meta[name="token"]').getAttribute('content')
+    ?? null
+}
+
 async function post(url, data = {}) {
 
   return new Promise(async function (resolve, reject) {
-      data.token = document.querySelector('meta[name="token"]').getAttribute('content')
+      data.token = document.querySelector('meta[name="token"]').getAttribute('content');
       let req = new XMLHttpRequest();
       req.open('POST', url, true);
       req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -224,29 +229,29 @@ async function post(url, data = {}) {
       };
       req.onload = function () {
         // try {
-          const res = JSON.parse(req.response)
-          let msg = $('.message')[0]
+        const res = JSON.parse(req.response);
+        let msg = $('.message')[0];
 
-          if (res?.popup || res?.arr?.popup) {
+        if (res?.popup || res?.arr?.popup) {
 
-            popup.show(res.popup ?? res?.arr?.popup)
-          } else if (res.msg) {
-            if (msg) {
-              msg.innerHTML = res.msg
-              msg.innerHTML = res.msg
-              $(msg).removeClass('success')
-              $(msg).removeClass('error')
-            }
-          } else if (res.success) {
-            if (msg) {
-              msg.innerHTML = res.success
-              $(msg).addClass('success')
-              $(msg).removeClass('error')
-            }
-          } else if (res.error) {
-            error(res.error)
+          popup.show(res.popup ?? res?.arr?.popup)
+        } else if (res.msg) {
+          if (msg) {
+            msg.innerHTML = res.msg;
+            msg.innerHTML = res.msg;
+            $(msg).removeClass('success');
+            $(msg).removeClass('error')
           }
-          resolve(res);
+        } else if (res.success) {
+          if (msg) {
+            msg.innerHTML = res.success;
+            $(msg).addClass('success');
+            $(msg).removeClass('error')
+          }
+        } else if (res.error) {
+          error(res.error)
+        }
+        resolve(res);
         // } catch (e) {
         //   console.log('////////////********* REQUEST ERROR ***********//////////////////////')
         //   console.log(req.response)
@@ -264,7 +269,7 @@ class ElementCollection extends Array {
     if (typeof cbOrSelector === 'function') {
       this.forEach(e => e.addEventListener(event, cbOrSelector))
     } else {
-      let elems = this[0].querySelectorAll(cbOrSelector)
+      let elems = this[0].querySelectorAll(cbOrSelector);
       elems.forEach(elem => {
         elem.addEventListener(event, cb)
       })
@@ -273,72 +278,72 @@ class ElementCollection extends Array {
 
   value = function () {
     return this[0].getAttribute('value')
-  }
+  };
   first = function () {
     return this[0]
-  }
+  };
   attr = function (attrName, attrVal) {
     if (attrVal) {
       this[0].setAttribute(attrName, attrVal)
     }
     return this[0].getAttribute(attrName)
-  }
+  };
   selectedIndexValue = function () {
     if (this.length)
       return this[0].selectedOptions[0].value
-  }
+  };
   options = function () {
     if (this.length) return this[0].options
-  }
+  };
   count = function () {
     return this.length
-  }
+  };
   text = function () {
     if (this.length) return this[0].innerText
-  }
+  };
   checked = function () {
     if (this.length) return this[0].checked
-  }
+  };
   getWithStyle = function (attr, val) {
-    let arr = []
+    let arr = [];
     this.forEach((s) => {
       if (s.style[attr] === val) {
         arr.push(s)
       }
-    })
+    });
     return arr
-  }
+  };
   addClass = function (className) {
     this.forEach((s) => {
       s.classList.add(className)
     })
-  }
+  };
   removeClass = function (className) {
     this.forEach((s) => {
       s.classList.remove(className)
     })
-  }
+  };
   hasClass = function (className) {
     if (this.classList.contains(className)) return true
-  }
+  };
   append = function (el) {
     this[0].appendChild(el)
-  }
+  };
   find = function (item) {
     if (typeof item === 'string') {
       return this[0].querySelector(item)
     } else {
       let filtered = this[0].filter((el) => {
         return el === item
-      })
+      });
       return filtered[0]
     }
-  }
+  };
   findAll = function (item) {
     if (typeof item === 'string') {
       return this[0].querySelectorAll(item)
     }
-  }
+  };
 
 
   css = function (attr, val) {
@@ -348,12 +353,12 @@ class ElementCollection extends Array {
     this.forEach((s) => {
       s.style[attr] = val
     })
-  }
+  };
 
   ready(cb) {
     const isReady = this.some(e => {
       return e.readyState != null && e.readyState != 'loading'
-    })
+    });
     if (isReady) {
       cb()
     } else {
@@ -372,11 +377,11 @@ function $(selector) {
 }
 
 function slider() {
-  let slider = $('.slider').first()
-  if (!slider) return false
+  let slider = $('.slider').first();
+  if (!slider) return false;
   slider.onclick = function ({target}) {
     if (target.classList.contains('slide')) {
-      let wrap = slider.querySelector('.wrap')
+      let wrap = slider.querySelector('.wrap');
       if (!wrap.style.height) {
         wrap.style.height = wrap.scrollHeight + 'px'
       } else {
@@ -387,19 +392,19 @@ function slider() {
 }
 
 export function fragmentDate(date, order, y, m, d, glue) {
-  let o = new Date(date)
+  let o = new Date(date);
 
   let monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
   let dayNames = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"];
 
-  let yyyy = o.getFullYear()
-  let mm = o.getMonth() + 1
-  let dd = o.getDate()
-  let M = monthNames[o.getMonth()]
-  let D = o.getDay()
-  let wd = dayNames[o.getDay()]
+  let yyyy = o.getFullYear();
+  let mm = o.getMonth() + 1;
+  let dd = o.getDate();
+  let M = monthNames[o.getMonth()];
+  let D = o.getDay();
+  let wd = dayNames[o.getDay()];
 
   if (dd < 10) dd = '0' + dd;
   if (mm < 10) mm = '0' + mm;
@@ -410,17 +415,17 @@ function addTooltip(args) {
 
   [].forEach.call(args, (el) => {
     el.onmouseenter = function () {
-      let tip = document.createElement('div')
-      tip.classList.add('tip')
-      tip.innerText = args.message
+      let tip = document.createElement('div');
+      tip.classList.add('tip');
+      tip.innerText = args.message;
 
-      el.append(tip)
-      let remove = () => tip.remove()
+      el.append(tip);
+      let remove = () => tip.remove();
       tip.addEventListener('mousemove', remove.bind(tip), true)
-    }.bind(args)
+    }.bind(args);
 
     el.onmouseleave = () => {
-      let tip = el.querySelector('.tip')
+      let tip = el.querySelector('.tip');
       tip.remove()
     }
   })
@@ -428,6 +433,7 @@ function addTooltip(args) {
 
 
 export {
+  getToken,
   slider,
   cachePage,
   trimStr,

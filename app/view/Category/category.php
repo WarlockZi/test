@@ -56,7 +56,7 @@
 							 <?= ProductView::getMainImage($product) ?>
 					 <span class="footer">
 					 <p><?= $product->priceWithCurrencyUnit(); ?></p>
-					 <p>Остаток - <?= $product->instore ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
+					 <p>Остаток - <?= number_format($product->instore,0,'',' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
 					 <p>Артикул: <?= $product->art ?? 0; ?></p>
 					 </span>
 

@@ -4,7 +4,9 @@
 namespace app\view\Header;
 
 
+use app\core\FS;
 use app\model\Category;
+use app\Repository\OrderRepository;
 use app\view\Interfaces\IHeaderable;
 use app\view\View;
 
@@ -36,10 +38,10 @@ class UserHeader implements IHeaderable
 
 	public function setHeader($user)
 	{
+		$this->frontCategories = $frontCategories = Category::frontCategories();
+		$oItems = OrderRepository::count();
 
-		$this->frontCategories = Category::frontCategories();
-
-		$this->frontCategories = $this->getFileContent('header_menu.php');
+		$this->frontCategories = FS::getFileContent($this->path.'/header_menu.php',compact('oItems','frontCategories'));
 
 		$this->logo = $this->getFileContent('logo.php');
 

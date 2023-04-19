@@ -13,16 +13,22 @@ class OrderItem extends Model
 
 	protected $fillable = [
 		'name',
-		'date',
+		'sess',
+		'order_id',
+		'product_id',
 		'customer_id',
-		'sess'
+		'count',
+		'date',
 	];
 
 
 	public function order()
 	{
 		return $this->belongsTo(Order::class);
+	}
 
+	public function product(){
+		return $this->hasOne(Product::class,'1s_id','product_id');
 	}
 
 

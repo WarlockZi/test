@@ -1,38 +1,30 @@
-<div class="xml">
+<?php
 
-	<div class="df">
+use app\core\Icon;
 
+?>
+<div class="sync">
 
-		<div class="container files">
+	<div class="container files">
 
-			<div dnd data-path="xml"><?=\app\core\Icon::plus()?></div>
+		<div dnd data-path="xml"><?= Icon::plus() ?></div>
 
-				<? foreach ($files as $file): ?>
-			  <p><span class="file">
-          <?= basename($file, '.xml'); ?>
-					</span>   -
-						 <?= filesize($file) / 1000 . ' Kbite'; ?>
-			  </p>
-				<? endforeach; ?>
-		</div>
-
-		<div class="container">
-
-			<form action="xml" method="post">
-
-				<input name="file" type="text">
-				<button type="submit" name="action" value="removeCategories">Удалить категории</button>
-				<button type="submit" name="action" value="removeProducts">Удалить товары</button>
-				<button type="submit" name="action" value="removePrices">Удалить цены</button>
-				<BR>
-				<button type="submit" name="action" value="loadProducts">Загрузить товары</button>
-				<button type="submit" name="action" value="loadProductsOffer">Загрузить товары offer</button>
-				<button type="submit" name="action" value="loadCategories">Загрузить категории</button>
-				<button type="submit" name="action" value="loadPrices">Загрузить цены</button>
-
-				<button type="submit" name="action" value="parseImages">Фильтровать картинки</button>
-
-			</form>
-		</div>
 	</div>
+
+	<div class="container">
+
+		<a class="button" href="/adminsc/sync/removeCategories">Удалить категории</a>
+		<a class="button" href="/adminsc/sync/removeProducts">Удалить товары</a>
+		<a class="button" href="/adminsc/sync/removePrices">Удалить цены</a>
+		<BR>
+		<a class="button" href="/adminsc/sync/loadCategories">Загрузить категории</a>
+		<a class="button" href="/adminsc/sync/loadProducts">Загрузить товары</a>
+		<a class="button" href="/adminsc/sync/loadPrices">Загрузить цены и количество</a>
+
+		<BR>
+		<a class="button" href="/adminsc/sync/parseImages">Фильтровать картинки</a>
+
+
+	</div>
+
 </div>

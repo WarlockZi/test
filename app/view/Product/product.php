@@ -7,7 +7,7 @@ use \app\view\Product\ProductView;
 if ($product): ?>
 
 
-	<div class="product-card" data-id="<?= $product->id ?>">
+	<div class="product-card" data-id="<?= $product['1s_id']; ?>">
 
 		 <?= $breadcrumbs ?>
 		<h1><?= $product['name']; ?></h1>

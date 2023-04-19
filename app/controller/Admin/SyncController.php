@@ -8,6 +8,7 @@ use app\model\Category;
 use app\model\Price;
 use app\model\Product;
 use app\model\Unit;
+use app\Repository\SyncRepository;
 use app\Services\XMLParser\LoadCategories;
 use app\Services\XMLParser\LoadPrices;
 use app\Services\XMLParser\LoadProducts;
@@ -20,177 +21,72 @@ class SyncController extends AppController
 {
 	public $model = xml::class;
 
-	protected $log;
+
 	protected $rawPost;
 	protected $filename;
-	protected $importPath;
+
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
+	protected $repo;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->log = StorageLog::getFile('log.txt');
-		$this->importPath = StorageImport::getPath();
+
+		$this->repo = new SyncRepository();
 	}
 
 	public function actionIncread()
 	{
-		$content = file_get_contents($this->log);
-		if (isset($_POST['param'])) {
-			$this->exitJson(['success' => true, 'content' => $content]);
-		}
-		$button = FS::getFileContent($this->viewPath . 'button.php');
-		$this->set(compact('content', 'button'));
+		$this->repo->read();
 	}
 
 	public function actionIncClear()
 	{
-		file_put_contents($this->log, '');
-
-		$content = StorageLog::getFileContent('log.txt');
-		$this->exitJson(['success' => 'success', 'content' => $content]);
+		$this->repo->incClear();
 	}
 
-	public function trancate()
-	{
-		Category::truncate();
-		Product::truncate();
-		Price::truncate();
-//			Unit::truncate();
-	}
 
 	public function actionIncTruncate()
 	{
-		$this->trancate();
+
+		$this->repo->truncate();
+
 		$count = Category::count();
 		$this->exitJson(['success' => 'success', 'content' => 'Удалены категории, товары, цены Количество кат - ' . $count]);
 	}
 
 	public function actionInit()
 	{
-		if (isset($this->route->params['type'])) {
-			if ($this->route->params['type'] === 'catalog') {
-				if ($this->route->params['mode'] === 'checkauth') {
-					$this->checkauth();
-				} elseif ($this->route->params['mode'] === 'init') {
-					$this->init();
-				} elseif ($this->route->params['mode'] === 'file') {
-					$this->file();
-
-					$time = '<br>+++' . date('H:i:s') . '<br>+++';
-					$this->append($time);
-
-
-				} elseif ($this->route->params['mode'] === 'import') {
-					$this->import();
-				}
-			}
-		}
+		$this->repo->init();
 	}
 
-
-	public function import()
+	public function actionPart()//init
 	{
-		$this->trancate();
-
-		if ($_ENV['MODE'] === 'development') {
-			$storage = StorageXml::class;
-		} else {
-			$storage = StorageImport::class;
-		}
-		$file = $storage::getFile('import0_1.xml');
-
-		if (is_readable($file)) {
-			new LoadCategories($file);
-			new LoadProducts($file);
-
-		}
-		$file = $storage::getFile('offers0_1.xml');
-		if (is_readable($file)) {
-			new LoadPrices($file);
-			$this->append("<br>loaded = price<br>");
-		}
-		exit('success');
+		$this->repo->part();
 	}
 
-	protected function checkauth()
+	public function actionIndex()//init
 	{
-		$this->logReqest('checkauth');
-		exit("success\ninc\n777777\n55fdsa55");
+		$tree = [];
+		$this->set(compact('tree'));
+//		$this->repo->part();
 	}
 
-	protected function init()
+	public function actionPartload()//load
 	{
-		$this->logReqest('init');
-		exit("zip=no\nfile_limit=10000000");
+		$this->repo->partload();
 	}
 
-	protected function file()
+	public function actionParseImages()
 	{
-		$this->filename = $this->route->params['filename'];
-		$this->rawPost = file_get_contents('php://input');
-		file_put_contents($this->importPath . $this->filename, $this->rawPost);
-
-		$this->logReqest('file');
-		exit('success');
-	}
-
-
-	protected function logReqest($func)
-	{
-		$text = '<br>--' . date("H:i:s") . "--{$func}<br>";
-		if (isset($_GET)) {
-			$text .= '$_GET - ' . json_encode($_GET) . '<br>';
-		}
-
-		$text .= 'headers -' . $this->getHeaders();
-		if (isset($this->route->params['filename'])) {
-			$text .= 'filename - ' . $filename = $this->route->params['filename'] . '<br>';
-			$text .= $this->importPath . $filename;
-		}
-
-		$this->append($text);
 
 	}
 
-	protected function append(string $text)
-	{
-		$time = date('H:i:s');
-		file_put_contents($this->log, $text . " - {$time} - ", FILE_APPEND | LOCK_EX);
-	}
 
-	protected function getHeaders($str = '')
-	{
-		$headers = apache_request_headers();
-		foreach ($headers as $header => $value) {
-			$str .= "$header: $value <br />\n";
-		}
-		return $str;
-	}
-
-	public function parseImages()
-	{
-		$prods = Product::all();
-
-		$uploads = ROOT . "\pic\product\uploads\\";
-		$origin = 'C:\Users\v.voronik\Desktop\origin\\';
-		$to = 'C:\Users\v.voronik\Desktop\new1\\';
-		if (!is_dir($to)) mkdir($to);
-
-		foreach ($prods as $prod) {
-			$art = trim($prod->art);
-
-			$file = FS::platformSlashes("$origin{$art}.jpg");
-			$newfile = FS::platformSlashes("$to{$art}.jpg");
-			if (is_file($file)) {
-				rename($file, $newfile);
-			}
-		}
-	}
 
 	public function actionLoad()
 	{
-		$this->import();
+		$this->repo->import();
 	}
 
 }

@@ -26,20 +26,7 @@ class OrderController Extends AppController
 		$this->set(compact('list'));
 	}
 
-	public function actionCreate()
-	{
-		if ($this->ajax) {
-			if ($id = $this->modelClass::create($this->ajax)) {
-				$this->exitJson(['id' => $id,]);
-			}
-		}
-	}
 
-	public function actionUpdateOrCreate()
-	{
-		if ($this->ajax) {
-		}
-	}
 
 
 

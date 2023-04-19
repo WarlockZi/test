@@ -50,6 +50,41 @@
 
 .cart {
   margin: 40px auto;
+
+  .row {
+    display: flex;
+    gap: 5px;
+    font-size: .8rem;
+
+    @mixin grey() {
+      flex:0 0 auto;
+      padding: 10px;
+      background-color: #ccc;
+      border-radius: 5px;
+      margin: 3px 0;
+
+      &:hover {
+        background-color: lighten(#ccc, 10%);
+      }
+    }
+
+    .num {
+      @include grey;
+    }
+
+    .name {
+      @include grey;
+      flex:1 0 auto;
+    }
+    .count{
+      @include grey;
+      border: 1px solid transparent;
+      width: 60px;
+    }
+
+
+  }
+
 }
 
 .about {
