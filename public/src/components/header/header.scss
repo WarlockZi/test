@@ -206,7 +206,7 @@ header {
       align-items: center;
 
       &:hover {
-        background-color: #0070ff;
+        background-color: #285f8f;
       }
     }
 
@@ -214,7 +214,7 @@ header {
       min-height: 50px;
 
       .count {
-        display: none;
+        //display: none;
         position: absolute;
         bottom: 15%;
         right: 24px;
