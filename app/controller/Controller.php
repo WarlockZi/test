@@ -41,12 +41,7 @@ abstract class Controller
 
 	protected function createToken(): string
 	{
-		$salt = "popiyonovacheesa";
-		if (!isset($_SESSION['token']) || $_SESSION['token']) {
-			$_SESSION['token'] = md5($salt . microtime(true));
-			return $_SESSION['token'];
-		}
-		return $_SESSION['token'];
+			return $_SESSION['token'] = session_id();
 	}
 
 	public function getRoute()

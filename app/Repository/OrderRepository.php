@@ -12,7 +12,7 @@ class OrderRepository
 	public static function main(){
 		$sess = session_id();
 		$oItems  = OrderItem::where('sess',$sess)
-			->with('product.mainImages')
+			->with('product')
 			->get()
 			;
 
