@@ -6,7 +6,7 @@ use \app\core\Icon;
 <div class="header-catalog-menu">
 	<div class="header-catalog-menu__wrap">
 
-		 <? foreach ($this->frontCategories as $category): ?>
+		 <? foreach ($frontCategories as $category): ?>
 		  <div class='h-cat'><?= $category['name']; ?>
 			  <ul>
 						 <? if (isset($category->childrenNotDeleted)): ?>
@@ -38,7 +38,7 @@ use \app\core\Icon;
 			</div>
 
 			<a class="cart" href="/cart">
-				<div class="count">0</div>
+				<div class="count<?=$oItems?' show':'';?>"><?=$oItems;?></div>
 					 <?= Icon::shoppingCart('feather'); ?>
 			</a>
 

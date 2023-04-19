@@ -4,7 +4,6 @@ export default function toCart({target}) {
 
   let cart = {
     cart: this,
-    token: getToken(),
     count: document.querySelector('.utils .cart .count'),
     adjust: this.querySelector('.adjust'),
     blue: this.querySelector('.blue'),
@@ -23,19 +22,25 @@ export default function toCart({target}) {
       this.adjust.classList.remove('none');
       this.count.style.display = 'flex';
       this.count.innerText = ++this.count.innerText;
-      let debounced = debounce(this.send, 900);
+
+
       let obj = this.dto();
-      // debugger;
-      debounced(obj)
+      this.debounced(this.send.bind(obj))
     },
 
     send: function (obj) {
       let res = post('/adminsc/orderItem/updateOrCreate', obj)
     },
 
+    debounced: function (f) {
+      let debounced = debounce(f, 500);
+      let obj = this.dto();
+      debounced(obj)
+    },
+
     dto: function () {
       return {
-        sess:this.token,
+        sess: '',
         product_id: this.product,
         count: this.digit
       }
@@ -50,19 +55,22 @@ export default function toCart({target}) {
 
   if (target.classList.contains('blue')) {
     cart.showGreen()
+
   } else if (target.classList.contains('minus')) {
     if (cart.digit > 1) {
       cart.digitEl.innerText = --cart.digit;
       cart.count.innerText = cart.digit;
-      let obj = this.dto();
-      // debugger;
-      cart.debounced(obj)
+      let obj = cart.dto();
+      cart.debounced(cart.send.bind(obj))
     } else if (cart.digit === 1) {
       cart.showBlue()
     }
+
   } else if (target.classList.contains('plus')) {
     cart.digitEl.innerText = ++cart.digit;
-    cart.count.innerText = cart.digit
+    cart.count.innerText = cart.digit;
+    let obj = cart.dto();
+    cart.debounced(cart.send.bind(obj))
   }
 
 

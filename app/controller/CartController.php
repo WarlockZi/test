@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\Repository\OrderRepository;
 use \app\view\View;
 
 class CartController extends AppController {
@@ -11,6 +12,10 @@ class CartController extends AppController {
    }
 
    public function actionIndex() {
+
+		 $oItems = OrderRepository::main();
+		 $this->set(compact('oItems'));
+
 
    }
 

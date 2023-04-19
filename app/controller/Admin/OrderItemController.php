@@ -31,13 +31,16 @@ class OrderItemController Extends AppController
 	{
 		$req = $this->ajax;
 		if ($req) {
+			$req['sess'] = session_id();
 
 			$orderItm = OrderItem::updateOrCreate(
 				['sess' => $req['sess'], 'product_id' => $req['product_id']],
 				['count'=>$req['count']]
 			);
-
+			$o = $orderItm->toArray();
+			$c = $orderItm->wasRecentlyCreated;
 		}
+		$this->exitJson(['success']);
 
 	}
 

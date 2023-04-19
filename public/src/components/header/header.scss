@@ -210,11 +210,13 @@ header {
       }
     }
 
-    .cart{
-      .count{
+    .cart {
+      min-height: 50px;
+
+      .count {
         display: none;
         position: absolute;
-        bottom: 22%;
+        bottom: 15%;
         right: 24px;
         width: 6px;
         height: 6px;
@@ -225,6 +227,10 @@ header {
         align-items: center;
         justify-content: center;
         font-size: .8rem;
+
+        &.show {
+          display: flex;
+        }
       }
     }
 
