@@ -41,8 +41,10 @@ class Product extends Model
 	public function priceWithCurrencyUnit()
 	{
 		$price = $this->getRelation('price');
-		if ($price)
-			return "{$price->price} {$price->currency} / {$this->baseUnit->name}";
+		if ($price) {
+			$number = number_format($price->price, 2, '.', ' ');
+			return "{$number} {$price->currency} / {$this->baseUnit->name}";
+		}
 		return 'цена - не определена';
 	}
 
@@ -100,7 +102,7 @@ class Product extends Model
 	{
 		return $this->belongsTo(Unit::class,
 			'base_unit',
-		);
+			);
 	}
 
 	public function manufacturer()

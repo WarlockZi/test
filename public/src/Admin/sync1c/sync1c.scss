@@ -3,14 +3,14 @@
 @import "../../components/dnd/dnd";
 
 
-.sync {
+.requests {
   font-size: 10px;
 
   .img {
     background-color: rgba(213, 255, 109, 0.38);
   }
 
-  .requests {
+  .request {
     display: flex;
     flex-direction: column;
     user-select: initial;
@@ -40,10 +40,16 @@
   }
 }
 
-.xml {
+.sync {
+  display: flex;
 
   .container.files {
     @include dnd;
+  }
+
+  .button{
+    @include colored_button();
+
   }
 
   .container {
@@ -51,6 +57,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    gap:5px;
 
     span.file {
       @include colored_button;

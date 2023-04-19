@@ -30,7 +30,7 @@ class RequestController Extends AppController
 
 	protected function decorate($content)
 	{
-		return "<div class='sync'>{$content}</div>";
+		return "<div class='requests'>{$content}</div>";
 	}
 
 	protected function filter($content)
@@ -67,6 +67,6 @@ class RequestController Extends AppController
 	protected function getString(array $arr, int $int)
 	{
 		if (!isset($arr['agent'])) return '';
-		return "<div class='requests'><div class='line'><div class='time'>{$arr['time']}</div> <div class='date'>{$arr['date']}</div> <div class='method'>{$arr['method']}</div><div class='ip'>{$arr['ip']}</div></div> <div class='line'><div class='req'>{$arr['req']}</div></div> <div class='line'><div class='some'>{$arr['some']}</div> <div class='agent'>{$arr['agent']}</div></div></div><br/>";
+		return "<div class='request'><div class='line'><div class='time'>{$arr['time']}</div> <div class='date'>{$arr['date']}</div> <div class='method'>{$arr['method']}</div><div class='ip'>{$arr['ip']}</div></div> <div class='line'><div class='req'>{$arr['req']}</div></div> <div class='line'><div class='some'>{$arr['some']}</div> <div class='agent'>{$arr['agent']}</div></div></div><br/>";
 	}
 }
