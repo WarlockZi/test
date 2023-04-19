@@ -21,6 +21,13 @@ class OrderItem extends Model
 		'date',
 	];
 
+	////////auth
+//*mobile
+//*phone (code)
+//name
+//*second name
+//*third name
+//*company
 
 	public function order()
 	{
