@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\Repository\BreadcrumbsRepository;
+use app\Repository\OrderRepository;
 use app\Repository\ProductRepository;
 
 
@@ -17,10 +18,11 @@ class ProductController extends AppController
 
 			$this->view = 'product';
 			$product = ProductRepository::main($slug);
+			$oItems = OrderRepository::count();
 			$product->categoryProperties = ProductRepository::preparePropertiesList($product);
 
 			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, true,);
-			$this->set(compact('product', 'breadcrumbs'));
+			$this->set(compact('product', 'breadcrumbs', 'oItems'));
 			$this->assets->setItemMeta($product);
 
 		} else {

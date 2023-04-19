@@ -21,6 +21,7 @@ class FS
 		return mkdir($path, 0777, true);
 	}
 
+
 	public static function saveToStorage(string $path, $file, string $fileName): bool
 	{
 		$path = self::getOrCreateAbsolutePath(self::$storagePath, $path);
