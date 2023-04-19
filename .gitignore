@@ -1,4 +1,3 @@
-
 !/tmp/
 /tmp/*
 !/tmp/cache/
@@ -8,4 +7,5 @@
 /.idea/
 /composer.phar
 /.env
+/app/Storage/log/*
 
