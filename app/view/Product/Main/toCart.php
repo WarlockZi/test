@@ -1,7 +1,9 @@
 <div class="price">
 
-	<? $price = number_format($product->getRelation('price')->price,2,'.', ' ');
-	$oldPrice = number_format($price * 1.1, 2,);
+	<?
+	$number = $product->getRelation('price')->price;
+	$price = number_format($number,2,'.', ' ');
+	$oldPrice = number_format($number * 1.1, 2,);
 	?>
 
 	<div class="new-price"><?= $price; ?> ₽</div>
