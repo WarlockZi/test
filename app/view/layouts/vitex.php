@@ -37,5 +37,27 @@
 <? //= Footer::getYaMetrica(); ?>
 <? //= Footer::getVK(); ?>
 
+<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+	<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+	<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+</svg>
+
+<div class="popup-wrapper">
+	<div class="overlay"></div>
+	<div class="popup-box">
+		<h2>Данные для связи с Вами</h2>
+		<div class="popup-close">x</div>
+
+		<div class="form">
+			<input type="text" name="tel" required placeholder="Сотовый">
+			<input type="text" name="fio" required placeholder="Как к вам обращаться">
+			<input type="text" name="company" required placeholder="Компания">
+			<p>Оставляя данные вы соглашаетесь с обработкой данных</p>
+			<button type="submit" id="submit">Отправить</button>
+		</div>
+
+	</div>
+</div>
+
 </body>
 </html>
