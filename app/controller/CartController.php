@@ -2,22 +2,31 @@
 
 namespace app\controller;
 
+use app\core\Auth;
+use app\core\Error;
 use app\Repository\OrderRepository;
 use \app\view\View;
 
-class CartController extends AppController {
+class CartController extends AppController
+{
 
-   public function __construct() {
-      parent::__construct();
-   }
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-   public function actionIndex() {
+	public function actionIndex()
+	{
 
-		 $oItems = OrderRepository::main();
-		 $this->set(compact('oItems'));
+		if (!Auth::getUser()) {
+			Error::setError('Чтобы мы смогли выставить вам счет введите имя и телефон');
+		}
+
+		$oItems = OrderRepository::main();
+		$this->set(compact('oItems'));
 
 
-   }
+	}
 
 }
 

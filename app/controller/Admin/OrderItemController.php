@@ -22,8 +22,7 @@ class OrderItemController Extends AppController
 
 	public function actionIndex()
 	{
-		$list = OrderView::listAll();
-		$this->set(compact('list'));
+
 	}
 
 

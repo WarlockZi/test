@@ -111,6 +111,7 @@ class Router
 			$route->controllerName === 'Auth' && $route->action === 'login'
 			|| $route->controllerName === 'Cart'
 			|| $route->controllerName === 'Main'
+			|| $route->controllerName === 'Orderitem'
 			|| $route->controllerName === 'Sync' && $route->action === 'init'
 			|| $route->controllerName === 'Sync' && $route->action === 'load'
 			|| $route->controllerName === 'Auth' && $route->action === 'register'
