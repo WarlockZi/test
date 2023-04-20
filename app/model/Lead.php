@@ -4,27 +4,23 @@ namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Lead extends Model
 {
-
-	public $table = 'orders';
-	public $model = 'order';
-
 	public $timestamps = false;
 
 	protected $fillable = [
-		'name' => '',
-		'customer_id',
-		'sess',
+		'name',
+		'surname',
+		'middle_name',
+		'mobile',
+		'code',
+		'phone',
+		'company',
 	];
 
 	public function items()
 	{
 		return $this->hasMany(OrderItem::class);
-	}
-	public function lead()
-	{
-		return $this->belongsTo(Lead::class);
 	}
 
 }

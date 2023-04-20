@@ -211,6 +211,13 @@ function getToken() {
     ?? null
 }
 
+function createEl(tagName, className, text){
+  let div = document.createElement('div');
+  div.classList.add(className);
+  div.innerText = text;
+  return div
+}
+
 async function post(url, data = {}) {
 
   return new Promise(async function (resolve, reject) {
@@ -433,6 +440,7 @@ function addTooltip(args) {
 
 
 export {
+  createEl,
   getToken,
   slider,
   cachePage,

@@ -67,9 +67,10 @@
 			<ul class="d-psvd-lst">
 				<li>
 					<p class="d-x-large topmargin1">1. ТЕРМИНЫ И ОПРЕДЕЛЕНИЯ</p>
-							<? $adress = Address::postCodeDecorator(Address::$factAddress);
-
-										 use app\controller\Address; ?>
+							<?
+							use app\controller\Address;
+							$adress = Address::postCodeDecorator(Address::$factAddress);
+							?>
 
 
 					<dd>Продавец</dd>
