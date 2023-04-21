@@ -8,10 +8,21 @@ use app\Services\Slug;
 
 class LoadCategories extends Parser
 {
-	public function __construct($file)
+	protected $type;
+
+	public function __construct($file, $type)
 	{
 		parent::__construct($file);
+		$this->type = $type;
 		$this->run();
+	}
+
+	protected function runPart()
+	{
+		$groups = $this->xmlObj['Классификатор']['Группы']['Группа'];
+		$arr = [];
+		$id = 0;
+		$this->recursion($groups['Группы']['Группа'], $id, -1, $arr);
 	}
 
 	protected function run()
@@ -42,14 +53,26 @@ class LoadCategories extends Parser
 	{
 		$item['id'] = $id;
 		$item['1s_id'] = $group['Ид'];
-		if ($level > 0&&isset($parent['id']))
+		if ($level > 0 && isset($parent['id']))
 			$item['category_id'] = $parent['id'];
 		if ($level === 1) {
 			$item['show_front'] = 1;
 		}
 		$item['name'] = $group['Наименование'];
 		$item['slug'] = Slug::slug($item['name']);
-		$category = Category::create($item);
+
+		if ($this->type === 'full') {
+			$category = Category::create($item);
+		} else {
+			$found = Category::query()
+				->where('1s_id', $item['1s_id'])
+				->first();
+			if ($found){
+				$found->delete();
+				$category = Category::create($item);
+			}
+		}
+
 //		$item['pref'] = str_repeat('-', $level);
 //		$this->ech($item);
 		return $item;

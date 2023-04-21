@@ -10,10 +10,12 @@ use app\model\Unit;
 class LoadPrices extends Parser
 {
 	protected $prices;
+	protected $type;
 
-	public function __construct($file)
+	public function __construct($file, $type)
 	{
 		parent::__construct($file);
+		$this->type = $type;
 		$this->prices = $this->xmlObj['ПакетПредложений']['Предложения']['Предложение'];
 		$this->run();
 	}
@@ -29,7 +31,17 @@ class LoadPrices extends Parser
 	{
 		$price = $this->fillPrice($arr);
 
-		$price = Price::create($price);
+		if ($this->type === 'full') {
+			$price = Price::create($price);
+		} else {
+			$found = Price::query()
+				->where('1s_id', $price['1s_id'])
+				->first();
+			if ($found){
+				$found->delete();
+				$category = Price::create($price);
+			}
+		}
 
 		$unit = Unit::where('code', $price->unit_code)->first();
 		if (!$unit) {
