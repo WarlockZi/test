@@ -17,14 +17,6 @@ class LoadCategories extends Parser
 		$this->run();
 	}
 
-	protected function runPart()
-	{
-		$groups = $this->xmlObj['Классификатор']['Группы']['Группа'];
-		$arr = [];
-		$id = 0;
-		$this->recursion($groups['Группы']['Группа'], $id, -1, $arr);
-	}
-
 	protected function run()
 	{
 		$groups = $this->xmlObj['Классификатор']['Группы']['Группа'];
@@ -69,6 +61,11 @@ class LoadCategories extends Parser
 				->first();
 			if ($found){
 				$found->delete();
+				if ($level > 0 && isset($parent['id']))
+					$item['category_id'] = $parent['id'];
+				if ($level === 1) {
+					$item['show_front'] = 1;
+				}
 				$category = Category::create($item);
 			}
 		}

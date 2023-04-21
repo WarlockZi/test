@@ -56,7 +56,6 @@ class SyncRepository
 
 	public function partload()
 	{
-//		$this->trancate();
 		$file = $this->storage::getFile('import0_1.xml');
 
 		if (is_readable($file)) {
@@ -67,7 +66,7 @@ class SyncRepository
 		$file = $this->storage::getFile('offers0_1.xml');
 		if (is_readable($file)) {
 			new LoadPrices($file,'part');
-			$this->append("<br>loaded = price<br>");
+//			$this->append("<br>loaded = price<br>");
 		}
 		exit('success');
 	}
