@@ -1,9 +1,9 @@
 <div class="category">
 
 	<? use app\view\Category\CategoryView;
-	 use app\view\Product\ProductView;
+	use app\view\Product\ProductView;
 
-	 if (!isset($category)): ?>
+	if (!isset($category)): ?>
 	  <div class="no-categories">
 		  <H1>Такой категории нет</H1>
 	  </div>
@@ -56,7 +56,7 @@
 							 <?= ProductView::getMainImage($product) ?>
 					 <span class="footer">
 					 <p><?= $product->priceWithCurrencyUnit(); ?></p>
-					 <p>Остаток - <?= number_format($product->instore,0,'',' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
+					 <p>Остаток - <?= number_format($product->instore, 0, '', ' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
 					 <p>Артикул: <?= $product->art ?? 0; ?></p>
 					 </span>
 
