@@ -8,7 +8,7 @@ class OrderItem extends Model
 {
 
 	public $table = 'orderItems';
-	public  $model = 'orderItem';
+	public $model = 'orderItem';
 	public $timestamps = false;
 
 	protected $fillable = [
@@ -22,20 +22,26 @@ class OrderItem extends Model
 	];
 
 	////////auth
-//*mobile
-//*phone (code)
-//name
-//*second name
-//*third name
-//*company
+	///  Надо ли проверять электронку
+	/// id
+
+//*name
+//surname
+//middle_name
+
+//-/*/-mobile
+// (*code)
+//-/*/-phone
+//company
 
 	public function order()
 	{
 		return $this->belongsTo(Order::class);
 	}
 
-	public function product(){
-		return $this->hasOne(Product::class,'1s_id','product_id');
+	public function product()
+	{
+		return $this->hasOne(Product::class, '1s_id', 'product_id');
 	}
 
 
