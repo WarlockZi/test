@@ -12,7 +12,7 @@
 	<!--	<link rel="canonical" href="/--><? //= isset($vars['canonical']) ? $vars['canonical'] : '' ?><!--"/>-->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="https://vitexopt.ru/public/favicon.ico" type="image/x-icon">
 
 	<?= $this->assets->getMeta(); ?>
 	<?= $this->assets->getCss(); ?>

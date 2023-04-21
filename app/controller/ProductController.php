@@ -19,7 +19,9 @@ class ProductController extends AppController
 			$this->view = 'product';
 			$product = ProductRepository::main($slug);
 			$oItems = OrderRepository::count();
-			$product->categoryProperties = ProductRepository::preparePropertiesList($product);
+			if ($product) {
+				$product->categoryProperties = ProductRepository::preparePropertiesList($product);
+			}
 
 			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, true,);
 			$this->set(compact('product', 'breadcrumbs', 'oItems'));
