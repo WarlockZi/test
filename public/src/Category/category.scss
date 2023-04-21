@@ -36,7 +36,10 @@
 
       &[data-instore="0"] {
         filter:grayscale(1);
-        background-color: #dadada;
+        background-color: #fbfbfb;
+        img{
+          filter:brightness(90%);
+        }
         //display: none;
       }
 
