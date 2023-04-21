@@ -28,6 +28,10 @@ use app\core\Icon;
 		<a class="button" href="/adminsc/sync/init?type=catalog&mode=import">/adminsc/sync/init?type=catalog&mode=import</a>
 		<a class="button" href="/adminsc/sync/incread">incread</a>
 
+		<BR>
+		<BR>
+		<a class="button" href="/adminsc/sync/part?type=catalog&mode=checkauth">/adminsc/sync/part?type=catalog&mode=checkauth</a>
+		<a class="button" href="/adminsc/sync/part?type=catalog&mode=import">/adminsc/sync/part?type=catalog&mode=import</a>
 
 	</div>
 

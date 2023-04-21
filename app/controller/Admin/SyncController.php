@@ -20,20 +20,72 @@ use app\Storage\StorageXml;
 class SyncController extends AppController
 {
 	public $model = xml::class;
-
-
 	protected $rawPost;
 	protected $filename;
-
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
 	protected $repo;
 
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->repo = new SyncRepository($this->route);
 	}
+
+	public function actionPart()//init
+	{
+		$this->repo->part();
+	}
+
+	public function actionPartload()//load
+	{
+		$this->repo->partload();
+	}
+
+
+	public function actionInit()
+	{
+		$this->repo->init();
+	}
+
+
+
+	public function actionParseImages()
+	{
+
+	}
+
+	public function actionRemovecategories()
+	{
+		$this->repo->removeCategories();
+	}
+
+	public function actionRemoveproducts()
+	{
+		$this->repo->removeProducts();
+	}
+
+	public function actionRemoveprices()
+	{
+		$this->repo->removePrices();
+	}
+
+	public function actionTruncate()
+	{
+		$this->repo->trancate();
+	}
+
+	public function actionLoad()
+	{
+		$this->repo->import();
+	}
+
+
+	public function actionIndex()//init
+	{
+		$tree = [];
+		$this->set(compact('tree'));
+	}
+
 
 	public function actionIncread()
 	{
@@ -46,62 +98,11 @@ class SyncController extends AppController
 		$this->repo->incClear();
 	}
 
-
 	public function actionIncTruncate()
 	{
-
 		$this->repo->truncate();
-
 		$count = Category::count();
 		$this->exitJson(['success' => 'success', 'content' => 'Удалены категории, товары, цены Количество кат - ' . $count]);
-	}
-
-	public function actionInit()
-	{
-		$this->repo->init();
-	}
-
-	public function actionPart()//init
-	{
-		$this->repo->part();
-	}
-
-	public function actionIndex()//init
-	{
-		$tree = [];
-		$this->set(compact('tree'));
-//		$this->repo->part();
-	}
-
-	public function actionPartload()//load
-	{
-		$this->repo->partload();
-	}
-
-	public function actionParseImages()
-	{
-
-	}
-	public function actionRemovecategories()
-	{
-		$this->repo->removeCategories();
-	}
-	public function actionRemoveproducts()
-	{
-		$this->repo->removeProducts();
-	}
-	public function actionRemoveprices()
-	{
-		$this->repo->removePrices();
-	}
-	public function actionTruncate()
-	{
-		$this->repo->trancate();
-	}
-
-	public function actionLoad()
-	{
-		$this->repo->import();
 	}
 
 }

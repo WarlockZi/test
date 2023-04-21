@@ -38,7 +38,7 @@
         filter:grayscale(1);
         background-color: #fbfbfb;
         img{
-          filter:brightness(90%);
+          opacity:.5;
         }
         //display: none;
       }
@@ -59,6 +59,9 @@
       .name {
         font-weight: initial;
         padding: 10px;
+      }
+      .footer{
+        color: #000;
       }
 
     }
