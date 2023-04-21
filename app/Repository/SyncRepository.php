@@ -99,7 +99,7 @@ class SyncRepository
 	protected function append(string $text)
 	{
 		$time = date('H:i:s');
-		file_put_contents($this->log, $text . " - {$time} - ", FILE_APPEND | LOCK_EX);
+//		file_put_contents($this->log, $text . " - {$time} - ", FILE_APPEND | LOCK_EX);
 	}
 
 	protected function getHeaders($str = '')
