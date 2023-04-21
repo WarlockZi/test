@@ -33,7 +33,7 @@ export default function toCart({target}) {
     },
 
     debounced: function (f) {
-      let debounced = debounce(f, 500);
+      let debounced = debounce(f, 300);
       let obj = this.dto();
       debounced(obj)
     },
@@ -51,6 +51,9 @@ export default function toCart({target}) {
   cart.digitEl.onkeydown = function (e) {
     if (isNaN(+e.key) && e.key !== 'Backspace')
       e.preventDefault()
+  };
+  cart.digitEl.onchange = function (e) {
+
   };
 
   if (target.classList.contains('blue')) {

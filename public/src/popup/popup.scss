@@ -1,0 +1,150 @@
+@import "../var";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
+
+
+.popup-container {
+  //width: 800px;
+  margin: 10px auto;
+  text-align: center;
+
+  .button {
+    margin-top: 30px;
+    padding: 2.2% 5.5%;
+    display: inline-block;
+    transition: all linear 0.15s;
+    border-radius: 3px;
+    background: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #333;
+
+    &:hover {
+      opacity: 1.75;
+    }
+  }
+}
+
+.popup-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    content: "";
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 3;
+    transition: opacity 1s;
+  }
+
+  .popup-box {
+    width: 400px;
+    padding: 70px;
+    transform: translate(-50%, -50%) scale(.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0px 2px 16px rgba(80, 80, 80, 0.9);
+    border-radius: 20px;
+    text-align: center;
+    background: white;
+
+    .form{
+      display: flex;
+      flex-direction: column;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 20px;
+      color: #000000;
+    }
+
+    p {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      color: #000000;
+    }
+
+
+
+    .popup-close {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      top: 10px;
+      right: 10px;
+      border-radius: 1000px;
+      background: $color-main;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff;
+      line-height: 190%;
+      cursor: pointer;
+      transition: all ease 0.5s;
+
+      &:hover {
+        transform: rotate(180deg);
+      }
+    }
+
+  }
+
+
+  .transform-in, .transform-out {
+    display: block;
+    transition: all ease 0.5s;
+    z-index: 3;
+  }
+
+  .transform-in {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .transform-out {
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+  #submit {
+    padding: 15px 30px 15px 30px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    text-transform: uppercase;
+    color: white;
+    background-color: $color-main;
+
+    &:hover{
+      background-color: $color-main-hover;
+    }
+  }
+
+  input {
+    //width: 100%;
+    height: 55px;
+    background-color: #eee;
+    border: none;
+    padding-left: 15px;
+    outline: none;
+    font-weight: 600;
+    position: relative;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+
+}

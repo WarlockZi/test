@@ -6,6 +6,8 @@
 @import '../components/header/header.scss';
 @import '../components/list.scss';
 @import "../components/breadcrumbs";
+@import "../components/breadcrumbs";
+@import "../Cart/cart";
 //@import "../Product/card";
 
 
@@ -48,69 +50,6 @@
 }
 
 
-.cart {
-  margin: 40px auto;
-
-  .row {
-    display: flex;
-    gap: 5px;
-    font-size: .8rem;
-
-
-    @mixin grey() {
-      flex: 0 0 auto;
-      padding: 10px;
-      background-color: #f0f0f0;
-      border-radius: 5px;
-      margin: 3px 0;
-
-    }
-
-    .num {
-      @include grey;
-    }
-
-    .name {
-      @include grey;
-      flex: 1 0 20%;
-    }
-
-    img {
-      width: 100px;
-    }
-
-    .count {
-      @include grey;
-      border: 1px solid transparent;
-      width: 60px;
-    }
-
-    .del{
-      @include grey;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      svg{fill:red;}
-
-    }
-
-
-  }
-
-}
-
-.about {
-  max-width: 800px;
-  margin: 40px auto;
-
-  ol li {
-    list-style: circle;
-  }
-
-  p {
-    margin: 5px 0;
-  }
-}
 
 
 .banner {
