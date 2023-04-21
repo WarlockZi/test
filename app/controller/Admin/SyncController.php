@@ -32,12 +32,13 @@ class SyncController extends AppController
 	{
 		parent::__construct();
 
-		$this->repo = new SyncRepository();
+		$this->repo = new SyncRepository($this->route);
 	}
 
 	public function actionIncread()
 	{
-		$this->repo->read();
+		list($content, $button) = $this->repo->read();
+		$this->set(compact('content', 'button'));
 	}
 
 	public function actionIncClear()
@@ -81,8 +82,22 @@ class SyncController extends AppController
 	{
 
 	}
-
-
+	public function actionRemovecategories()
+	{
+		$this->repo->removeCategories();
+	}
+	public function actionRemoveproducts()
+	{
+		$this->repo->removeProducts();
+	}
+	public function actionRemoveprices()
+	{
+		$this->repo->removePrices();
+	}
+	public function actionTruncate()
+	{
+		$this->repo->trancate();
+	}
 
 	public function actionLoad()
 	{

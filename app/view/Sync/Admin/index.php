@@ -23,6 +23,10 @@ use app\core\Icon;
 
 		<BR>
 		<a class="button" href="/adminsc/sync/parseImages">Фильтровать картинки</a>
+		<BR>
+		<BR>
+		<a class="button" href="/adminsc/sync/init?type=catalog&mode=import">/adminsc/sync/init?type=catalog&mode=import</a>
+		<a class="button" href="/adminsc/sync/incread">incread</a>
 
 
 	</div>
