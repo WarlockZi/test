@@ -35,11 +35,12 @@
       color: $color-gray10;
 
       &[data-instore="0"] {
-        display: none;
+        filter:grayscale(1);
+        //display: none;
       }
 
       &[data-price^="0"] {
-        display: none;
+        //display: none;
       }
 
       &.show{
