@@ -32,8 +32,12 @@ class CategoryController Extends AppController
 				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
 				$this->set(compact('breadcrumbs', 'category'));
 				$this->assets->setItemMeta($category);
-//			$this->assets->setMeta('Категории','Категории:VITEX','Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент');
+			}else{
+				$view = $this->getView();
+				$this->view = $view->get404();
+				http_response_code(404);
 			}
+
 		} else {
 			$this->view = 'categories';
 
