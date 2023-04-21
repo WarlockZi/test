@@ -35,13 +35,16 @@ class CategoryRepository
 
   public static function index(string $slug)
   {
-    return Category::where('slug', $slug)
+    return Category::query()
+			->where('slug', $slug)
       ->with('childrenRecursive')
       ->with('parentRecursive')
-      ->with('products.price')
-      ->with('products.mainImages')
-      ->with('products.mainUnit')
-      ->get()->first();
+      ->with('productsInStore')
+      ->with('productsNotInStore')
+
+//			->orderBy('instore')
+      ->get()
+			->first();
   }
 
   public static function edit(?int $id)

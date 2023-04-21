@@ -43,11 +43,11 @@
 
 		  <div class="products-header">
 			  <h1>Товары</h1>
-					<?= $category->products->filters ?>
+			  <!--					--><? //= $category->products->filters ?>
 		  </div>
 		  <div class="product-wrap">
 
-					<? foreach ($category->products as $product): ?>
+					<? foreach ($category->productsInStore as $product): ?>
 
 				 <a data-instore="<?= $product->instore ?? 0; ?>"
 				    data-price="<?= $product->getRelation('price')->price ?? 0; ?>"
@@ -63,6 +63,24 @@
 				 </a>
 
 					<? endforeach; ?>
+
+					<? foreach ($category->productsNotInStore as $product): ?>
+
+				 <a data-instore="<?= $product->instore ?? 0; ?>"
+				    data-price="<?= $product->getRelation('price')->price ?? 0; ?>"
+				    href="/product/<?= $product->slug; ?>" class="product">
+					 <h3 class="name"><?= $product->name; ?></h3>
+							 <?= ProductView::getMainImage($product) ?>
+					 <span class="footer">
+					 <p><?= $product->priceWithCurrencyUnit(); ?></p>
+					 <p>Остаток - <?= number_format($product->instore, 0, '', ' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
+					 <p>Артикул: <?= $product->art ?? 0; ?></p>
+					 </span>
+
+				 </a>
+
+					<? endforeach; ?>
+
 		  </div>
 		<? endif; ?>
 	<? endif; ?>
