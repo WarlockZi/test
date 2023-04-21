@@ -19,28 +19,22 @@ class SyncRepository
 {
 	protected $log;
 	protected $importPath;
+	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
+	protected $route ;
 
-	public function __construct()
+	public function __construct($route)
 	{
 		$this->log = StorageLog::getFile('log.txt');
 		$this->importPath = StorageImport::getPath();
+		$this->route = $route;
 	}
 
-
-	public function read()
-	{
-		$content = file_get_contents($this->log);
-		if (isset($_POST['param'])) {
-			$this->exitJson(['success' => true, 'content' => $content]);
-		}
-		$button = FS::getFileContent($this->viewPath . 'button.php');
-		$this->set(compact('content', 'button'));
-	}
 
 	public function part()
 	{
 
 	}
+
 	public function partload()
 	{
 
@@ -54,13 +48,6 @@ class SyncRepository
 		$this->exitJson(['success' => 'success', 'content' => $content]);
 	}
 
-	public function trancate()
-	{
-		Category::truncate();
-		Product::truncate();
-		Price::truncate();
-//			Unit::truncate();
-	}
 
 	public function init()
 	{
@@ -182,4 +169,33 @@ class SyncRepository
 		}
 	}
 
+
+	public function read()
+	{
+		$content = file_get_contents($this->log);
+		if (isset($_POST['param'])) {
+			$this->exitJson(['success' => true, 'content' => $content]);
+		}
+		$button = FS::getFileContent($this->viewPath . 'button.php');
+		return [$content, $button];
+	}
+
+	public function removeCategories(){
+		Category::truncate();
+	}
+
+	public function removeProducts(){
+		Product::truncate();
+	}
+	public function removePrices(){
+		Price::truncate();
+	}
+
+	public function trancate()
+	{
+		$this->removeCategories();
+		$this->removeProducts();
+		$this->removePrices();
+//			Unit::truncate();
+	}
 }
