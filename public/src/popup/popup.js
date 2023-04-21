@@ -4,8 +4,10 @@ import Cart from '../Cart/cart'
 import {$, createEl, post} from '../common';
 
 export default function popup() {
+  let popupShow = $('.popup-container .popup-show').first();
+  if (!popupShow) return false;
   let popup = {
-    show: $('.popup-container .popup-show').first(),
+    show: popupShow,
     close: $('.popup-close').first(),
     wrapper: $('.popup-wrapper').first(),
     box: $('.popup-box').first(),

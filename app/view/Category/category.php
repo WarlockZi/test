@@ -15,7 +15,7 @@
 
 
 		<? if ($category['childrenRecursive']->count()): ?>
-		  <h2>Подкатегории</h2>
+		  <h1>Подкатегории</h1>
 
 		  <div class="category-child-wrap">
 					<? foreach ($category['childrenRecursive'] as $child): ?>

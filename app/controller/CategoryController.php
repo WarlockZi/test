@@ -32,6 +32,7 @@ class CategoryController Extends AppController
 				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
 				$this->set(compact('breadcrumbs', 'category'));
 				$this->assets->setItemMeta($category);
+//			$this->assets->setMeta('Категории','Категории:VITEX','Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент');
 			}
 		} else {
 			$this->view = 'categories';
@@ -39,6 +40,7 @@ class CategoryController Extends AppController
 			$categories = CategoryRepository::indexNoSlug();
 
 			$this->set(compact('categories'));
+			$this->assets->setMeta('Категории','Категории:VITEX','Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент');
 		}
 	}
 }
