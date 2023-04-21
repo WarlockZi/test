@@ -15,8 +15,9 @@ class CategoryRepository
 
   public static function indexNoSlug()
   {
-    return Category::whereNull('category_id')
-      ->with('childrenRecursive')
+    return Category::with('childrenRecursive')
+		->whereNull('category_id')
+//      ->with('childrenRecursive')
       ->get();
   }
 

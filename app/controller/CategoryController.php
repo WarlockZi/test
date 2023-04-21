@@ -37,6 +37,7 @@ class CategoryController Extends AppController
 			$this->view = 'categories';
 
 			$categories = CategoryRepository::indexNoSlug();
+
 			$this->set(compact('categories'));
 		}
 	}
