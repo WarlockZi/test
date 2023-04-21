@@ -1,4 +1,4 @@
-// import '../Auth/auth'
+import '../404/404.scss'
 import './main.scss'
 import popup from '../popup/popup'
 import cart from '../Cart/cart'

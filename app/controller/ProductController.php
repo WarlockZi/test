@@ -21,12 +21,13 @@ class ProductController extends AppController
 			$oItems = OrderRepository::count();
 			if ($product) {
 				$product->categoryProperties = ProductRepository::preparePropertiesList($product);
-			}
-
-			$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, true,);
-			$this->set(compact('product', 'breadcrumbs', 'oItems'));
-			$this->assets->setItemMeta($product);
-
+				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, true,);
+				$this->set(compact('product', 'breadcrumbs', 'oItems'));
+				$this->assets->setItemMeta($product);
+			} else{
+				$view = $this->getView();
+				$this->view = $view->get404();
+				http_response_code(404);}
 		} else {
 			header('Location:/category');
 		}
