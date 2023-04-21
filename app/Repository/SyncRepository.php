@@ -32,12 +32,49 @@ class SyncRepository
 
 	public function part()
 	{
+		if (isset($this->route->params['type'])) {
+			if ($this->route->params['type'] === 'catalog') {
+				if ($this->route->params['mode'] === 'checkauth') {
+					$this->checkauth();
+				} elseif ($this->route->params['mode'] === 'init') {
+					$this->zip();
+				} elseif ($this->route->params['mode'] === 'file') {
+					$this->file();
+
+					$time = '<br>+++' . date('H:i:s') . '<br>+++';
+					$this->append($time);
+
+
+				} elseif ($this->route->params['mode'] === 'import') {
+					$this->import();
+				}
+			}
+		}
 
 	}
 
 	public function partload()
 	{
+		$this->trancate();
 
+		if ($_ENV['MODE'] === 'development') {
+			$storage = StorageXml::class;
+		} else {
+			$storage = StorageImport::class;
+		}
+		$file = $storage::getFile('import0_1.xml');
+
+		if (is_readable($file)) {
+			new LoadCategories($file);
+			new LoadProducts($file);
+
+		}
+		$file = $storage::getFile('offers0_1.xml');
+		if (is_readable($file)) {
+			new LoadPrices($file);
+			$this->append("<br>loaded = price<br>");
+		}
+		exit('success');
 	}
 
 	public function incClear()
