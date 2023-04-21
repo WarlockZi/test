@@ -18,8 +18,11 @@ class AppController extends Controller implements IModelable
 		parent::__construct();
 	}
 
-	public function setView()
+	public function setView(string $type='')
 	{
+		if ($type === 'notFound') {
+			$view = $this->getView();
+		}
 		$view = $this->getView();
 		$view->render();
 	}
@@ -111,7 +114,7 @@ class AppController extends Controller implements IModelable
 		return $this->model;
 	}
 
-	public function setModel( $model)
+	public function setModel($model)
 	{
 		$this->model = $model;
 	}
