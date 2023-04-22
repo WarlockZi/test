@@ -38,11 +38,12 @@
 				центральный офис, производство и офис в Санкт-Петербурге.</p>
 			<p>Осуществляется <strong>в рабочее время</strong> со склада</p>
 
-				<? $adress = Address::getFactAddress();
+				<?
+				use app\controller\Address;
+				$adress = Address::getFactAddress();
+				?>
 
-						use app\controller\Address; ?>
-
-			<p><strong>Адрес склада:</strong><br><?=$adress?></p>
+			<p><strong>Адрес склада:</strong><br><?= $adress ?></p>
 		</div>
 		<div class="delivery-item column">
 			<svg viewBox="0 0 512 512">
@@ -94,12 +95,12 @@
 	</p>
 
 	<h3>Самовывоз</h3>
-	<?$adress = Address::getFactAddress();?>
+	<? $adress = Address::getFactAddress(); ?>
 
 	<p>
 
 		Оплаченный заказ вы самостоятельно сможете забрать по адресу:
-		Пункт-выдачи: <?=$adress?>
+		Пункт-выдачи: <?= $adress ?>
 		График работы:
 		10:00 - 20:00 Понедельник - Пятница
 	</p>

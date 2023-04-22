@@ -8,7 +8,7 @@
 			<a href="/main/news">Новости</a>
 		</div>
 		<div class="column">
-			<a href="/main/return_change" nofollow noindex>Возврат и обмен</a>
+			<a href="/main/returnChange" nofollow noindex>Возврат и обмен</a>
 			<a href="/main/politicaconf" nofollow noindex>Политика конфиденциальности</a>
 			<a href="/main/oferta" nofollow noindex>Оферта</a>
 		</div>
