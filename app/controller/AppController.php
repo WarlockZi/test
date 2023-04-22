@@ -9,10 +9,7 @@ use ReflectionClass;
 
 class AppController extends Controller implements IModelable
 {
-
 	protected $model;
-
-
 	public function __construct()
 	{
 		parent::__construct();
