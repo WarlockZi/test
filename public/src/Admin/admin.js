@@ -13,8 +13,12 @@ import '../Test/opentest-edit'
 import testEdit from '../Test/test-edit'
 import '../Test/do'
 import '../Test/open_test'
+
+
 import './sync1c/sync1c';
 import './chart/chart';
+import './chartjs/chartjs';
+import quill from '../components/quill/quill';
 
 
 import './Planning/planning'
@@ -34,7 +38,6 @@ import tooltips from '../components/tooltip/tooltip';
 import error from '../components/error/error';
 import select from '../components/select/select';
 import accordionShow from '../components/accordion-show';
-import quill from '../components/quill/quill';
 import morph from '../components/morph/morph';
 
 

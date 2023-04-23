@@ -16,6 +16,7 @@ use app\core\Icon;
 			<div class="row">
 				<div class="column">
 					<div class="digit">1 545</div>
+
 					<div class="name">Прибыль</div>
 				</div>
 				<div class="icon"><?= Icon::income() ?></div>
@@ -23,7 +24,7 @@ use app\core\Icon;
 
 			<div class="row">
 				<div class="graph-title">По месяцу</div>
-				<div id="income" class="graph"></div>
+					<canvas id="income" width="100" height="100"></canvas>
 			</div>
 		</div>
 
@@ -40,7 +41,8 @@ use app\core\Icon;
 
 			<div class="row">
 				<div class="graph-title">По месяцу</div>
-				<div id="supplied" class="graph"></div>
+					<canvas id="supplied" width="100" height="100"></canvas>
+<!--				<div id="supplied" class="graph"></div>-->
 			</div>
 
 		</div>
@@ -58,12 +60,13 @@ use app\core\Icon;
 
 			<div class="row">
 				<div class="graph-title">По месяцу</div>
-				<div id="newCustomers" class="graph"></div>
+<!--				<div id="newCustomers" class="graph"></div>-->
+					<canvas id="newCustomers" width="100" height="100"></canvas>
 			</div>
 
 		</div>
 
-		<div class="block efficient">
+		<div class="block coefficient">
 
 			<div class="row">
 				<div class="column">
@@ -75,7 +78,8 @@ use app\core\Icon;
 
 			<div class="row">
 				<div class="graph-title">По месяцу</div>
-				<div id="coefficient" class="graph"></div>
+<!--				<div id="coefficient" class="graph"></div>-->
+					<canvas id="coefficient" width="100" height="100"></canvas>
 			</div>
 
 		</div>

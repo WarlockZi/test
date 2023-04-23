@@ -26,6 +26,9 @@
     min-height: 140px;
     flex: 1 0 190px;
 
+    canvas{
+      width: 150px !important;
+    }
 
     @include _1000{
       flex:2 0 190px;
