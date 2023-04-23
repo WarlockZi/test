@@ -43,6 +43,8 @@
     "webpack-dev-server": "^4.7.1"
   },
   "dependencies": {
+    "@cubejs-client/core": "^0.31.0",
+    "chart.js": "^4.0.0",
     "fecha": "^4.2.3",
     "sortablejs": "^1.14.0",
     "tinymce": "^6.1.2",

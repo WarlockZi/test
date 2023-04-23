@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\view\View;
 
 class MainController extends AppController
 {
@@ -45,14 +44,17 @@ class MainController extends AppController
 
 	public function actionOferta()
 	{
+		$this->assets->setMeta('Оферта', 'Оферта', 'Оферта');
 	}
 
 	public function actionAbout()
 	{
+		$this->assets->setMeta('О нас', 'О нас', 'О нас');
 	}
 
 	public function actionReturnChange()
 	{
+		$this->assets->setMeta('Возврат и обмен', 'Возврат и обмен', 'Возврат и обмен');
 //		$this->setView();
 	}
 
@@ -64,6 +66,7 @@ class MainController extends AppController
 	{
 		$content = 'Следите за новостями)';
 		$this->set(compact('content'));
+		$this->assets->setMeta('Новости', 'Новости', 'Новости');
 	}
 
 }
