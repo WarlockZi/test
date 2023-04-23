@@ -1,5 +1,10 @@
 import './chart.scss'
 
+if (typeof  anychart!=='undefined') {
+  ()=>{
+
+
+
 anychart.onDocumentLoad(function () {
 
 
@@ -185,5 +190,8 @@ anychart.onDocumentLoad(function () {
 
 
 });
+  }
+}
+
 
 
