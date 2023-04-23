@@ -5,10 +5,10 @@ namespace app\Storage;
 
 
 use app\core\FS;
+use DirectoryIterator;
 
 class Storage
 {
-
   protected $storagePath;
   protected $path;
   protected $files;
@@ -30,7 +30,7 @@ class Storage
   {
     $dirs = array();
 
-    foreach (new \DirectoryIterator($this->path) as $file) {
+    foreach (new DirectoryIterator($this->path) as $file) {
       if ($file->isDir() && !$file->isDot()) {
         $dirs[] = $file->getFilename();
       }
