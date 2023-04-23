@@ -72,7 +72,7 @@
 					 <h3 class="name"><?= $product->name; ?></h3>
 							 <?= ProductView::getMainImage($product) ?>
 					 <span class="footer">
-					 <p><?= $product->priceWithCurrencyUnit(); ?></p>
+					 <p>Цена: уточнить у менеджера</p>
 					 <p>Остаток - <?= number_format($product->instore, 0, '', ' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
 					 <p>Артикул: <?= $product->art ?? 0; ?></p>
 					 </span>
