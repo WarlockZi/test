@@ -17,13 +17,16 @@ export default class Search {
   }
 
   showPanel() {
-    this.panel.classList.toggle('show')
+    this.panel.classList.toggle('show');
+    this.result.innerHTML = '';
+    this.text.value = ''
   }
 
   async find({target}) {
     this.result.innerHTML = '';
 
-    let text = this.text.innerText;
+    let text = target.value;
+    if (!text) return false;
     let res = await post('/search', {text});
     if (res?.arr?.found) {
       this.makeString(res?.arr?.found)
@@ -43,9 +46,11 @@ export default class Search {
     a.href = `/product/${row.slug}`;
     let index = createEl('div', 'index', i);
     let name = createEl('div', 'name', row.name);
+    let art = createEl('div', 'art', row.art);
     let img = createEl('img');
     img.src = row.mainImagePath;
     a.append(index);
+    a.append(art);
     a.append(name);
     a.append(img);
     li.append(a);

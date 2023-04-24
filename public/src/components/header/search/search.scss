@@ -57,11 +57,17 @@
             padding: 5px;
           }
 
+          .art {
+            display: flex;
+            padding: 3px;
+            align-items: center;
+            justify-content: center;
+            word-break: break-all;
+          }
           .name {
             display: flex;
             padding: 13px;
             flex: 1 0;
-
           }
 
           img {
