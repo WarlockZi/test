@@ -170,12 +170,13 @@ header {
   }
 
   .header-catalog-menu__wrap {
+    display: flex;
+    position: relative;
+    background: $color-main;
     max-width: 1310px;
     width: 100%;
     margin: 0 auto;
-    display: flex;
     justify-content: end;
-    background: $color-main;
 
     @include mobile-menu();
 
