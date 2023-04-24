@@ -211,10 +211,12 @@ function getToken() {
     ?? null
 }
 
-function createEl(tagName, className, text){
-  let div = document.createElement('div');
-  div.classList.add(className);
-  div.innerText = text;
+function createEl(tagName, className = '', text = '') {
+  let div = document.createElement(tagName);
+  if (className) {
+    div.classList.add(className);
+  }
+  div.innerText = text ? text : '';
   return div
 }
 

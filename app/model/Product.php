@@ -3,6 +3,7 @@
 namespace app\model;
 
 
+use app\core\FS;
 use app\Services\Slug;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,6 +31,18 @@ class Product extends Model
 		'instore'
 	];
 
+	protected $appends = ['mainImagePath'];
+
+	public function getMainImagePathAttribute()
+	{
+		$art = trim($this->art);
+		$path = FS::platformSlashes("/pic/product/uploads/{$art}.jpg");
+		if (is_readable(ROOT . $path)) {
+			return $path;
+		} else {
+			return ROOT.'/pic/srvc/nophoto-min.jpg';
+		}
+	}
 	protected static function booted()
 	{
 		static::Updating(function ($product) {
