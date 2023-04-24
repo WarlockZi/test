@@ -7,6 +7,16 @@ use \app\core\Icon;
 
 	<div class="header-catalog-menu__wrap">
 
+		<div class="search-panel">
+			<div class="wrap">
+				<input type="text" class="text"></input>
+
+				<ul class="result">
+
+				</ul>
+			</div>
+		</div>
+
 		 <? foreach ($frontCategories as $category): ?>
 		  <div class='h-cat'><?= $category['name']; ?>
 			  <ul>
@@ -67,14 +77,6 @@ use \app\core\Icon;
 
 	</div>
 
-	<div class="search-panel">
-		<div class="wrap">
-			<div class="text" contenteditable="true"></div>
 
-			<ul class="result">
-
-			</ul>
-		</div>
-	</div>
 
 </div>

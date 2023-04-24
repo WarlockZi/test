@@ -40,7 +40,7 @@ class Product extends Model
 		if (is_readable(ROOT . $path)) {
 			return $path;
 		} else {
-			return ROOT.'/pic/srvc/nophoto-min.jpg';
+			return '/pic/srvc/nophoto-min.jpg';
 		}
 	}
 	protected static function booted()
