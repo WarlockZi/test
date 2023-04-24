@@ -13,6 +13,7 @@
   position: absolute;
   top: 0;
   min-width: 100%;
+  z-index: 0;
 
   @include _600 {
     display: none;

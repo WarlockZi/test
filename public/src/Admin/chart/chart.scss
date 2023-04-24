@@ -7,6 +7,8 @@
     justify-content: space-between;
     margin-bottom: 10px;
     flex-wrap: wrap;
+
+
   }
 
   #map{
@@ -27,16 +29,19 @@
     flex: 1 0 190px;
 
     canvas{
-      width: 150px !important;
+      //width: 150px !important;
+      min-width: 180px !important;
     }
 
     @include _1000{
-      flex:2 0 190px;
+      flex:1 0 20%;
     }
     @include _800{
-      flex:4 0 190px;
+      flex:1 0 30%;
     }
-
+    @include _600{
+      flex:4 0 90%;
+    }
     .icon{
       svg{
         fill:#fff;
