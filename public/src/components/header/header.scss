@@ -1,6 +1,7 @@
 @import "./mobile-menu";
 @import "phone";
 @import "user_menu";
+@import "./search/search";
 
 header {
   display: flex;
@@ -95,6 +96,7 @@ header {
 
   .menu {
     width: 100%;
+    z-index: 1;
   }
 
   .info {
@@ -164,7 +166,7 @@ header {
     top: 0;
     min-height: 40px;
     display: flex;
-    z-index: 1;
+    //z-index: 1;
   }
 
   .header-catalog-menu__wrap {

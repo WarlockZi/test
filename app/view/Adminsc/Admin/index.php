@@ -6,9 +6,9 @@ use app\core\Icon;
 
 <div class="main">
 
-<div class="page-title">
-	Главная
-</div>
+	<div class="page-title">
+		Главная
+	</div>
 
 	<div class="container">
 
@@ -23,8 +23,8 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-				<div class="graph-title">По месяцу</div>
-					<canvas id="income" width="100" height="100"></canvas>
+<!--				<div class="graph-title">По месяцу</div>-->
+				<canvas id="income" width="100" height="100"></canvas>
 			</div>
 		</div>
 
@@ -40,9 +40,9 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-				<div class="graph-title">По месяцу</div>
-					<canvas id="supplied" width="100" height="100"></canvas>
-<!--				<div id="supplied" class="graph"></div>-->
+<!--				<div class="graph-title">По месяцу</div>-->
+				<canvas id="supplied" width="100" height="100"></canvas>
+				<!--				<div id="supplied" class="graph"></div>-->
 			</div>
 
 		</div>
@@ -59,9 +59,9 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-				<div class="graph-title">По месяцу</div>
-<!--				<div id="newCustomers" class="graph"></div>-->
-					<canvas id="newCustomers" width="100" height="100"></canvas>
+<!--				<div class="graph-title">По месяцу</div>-->
+				<!--				<div id="newCustomers" class="graph"></div>-->
+				<canvas id="newCustomers" width="100" height="100"></canvas>
 			</div>
 
 		</div>
@@ -77,13 +77,12 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-				<div class="graph-title">По месяцу</div>
-<!--				<div id="coefficient" class="graph"></div>-->
-					<canvas id="coefficient" width="100" height="100"></canvas>
+<!--				<div class="graph-title">По месяцу</div>-->
+				<!--				<div id="coefficient" class="graph"></div>-->
+				<canvas id="coefficient" width="100" height="100"></canvas>
 			</div>
 
 		</div>
-
 
 
 	</div>
