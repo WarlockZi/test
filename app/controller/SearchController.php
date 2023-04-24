@@ -12,17 +12,27 @@ class SearchController extends AppController
 	{
 		if (!$this->ajax) exit();
 
-		$q = stripslashes(mb_strtolower($this->ajax['text']));
-		$q = addslashes('%' . $q . '%');
+		$q = $this->ajax['text'];
+		$q = stripslashes(mb_strtolower($q));
+		$q = '%' . $q . '%';
 
-		$arr = Product::query()
-			->where('name', 'LIKE', $q)
+		$art = Product::query()
+			->where('art', 'LIKE', $q)
 			->select('name', 'slug','art')
 			->take(20)
 			->get()
 			->toArray()
 		;
 
-		$this->exitJson(['found' => $arr]);
+		$arr = Product::query()
+		->where('name', 'LIKE', $q)
+		->select('name', 'slug','art')
+		->take(20)
+		->get()
+		->toArray()
+	;
+		$res = array_merge($art,$arr);
+
+		$this->exitJson(['found' => $res]);
 	}
 }
