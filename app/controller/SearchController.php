@@ -18,20 +18,20 @@ class SearchController extends AppController
 
 		$art = Product::query()
 			->where('art', 'LIKE', $q)
-			->select('name', 'slug','art')
+			->where('instore', '>', 0)
+			->select('name', 'slug', 'art')
 			->take(20)
 			->get()
-			->toArray()
-		;
+			->toArray();
 
 		$arr = Product::query()
-		->where('name', 'LIKE', $q)
-		->select('name', 'slug','art')
-		->take(20)
-		->get()
-		->toArray()
-	;
-		$res = array_merge($art,$arr);
+			->where('name', 'LIKE', $q)
+			->where('instore', '>', 0)
+			->select('name', 'slug', 'art')
+			->take(20)
+			->get()
+			->toArray();
+		$res = array_merge($art, $arr);
 
 		$this->exitJson(['found' => $res]);
 	}

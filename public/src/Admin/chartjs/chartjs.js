@@ -2,6 +2,8 @@
 import Chart from 'chart.js/auto'
 
 (async function () {
+  if (!document.getElementById('income')) return false;
+
   Chart.defaults.color = 'white';
 
   let data = [
