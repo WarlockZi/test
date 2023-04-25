@@ -1,7 +1,5 @@
 import './common.scss'
-// import './Admin/admin.scss'
 import error from './components/error/error'
-
 
 export function objAndData2FormData(obj, files, formData = new FormData) {
   // self = {}
@@ -10,6 +8,7 @@ export function objAndData2FormData(obj, files, formData = new FormData) {
     self.formData.append(i, files[i])
   }
   self.createFormData = function (obj, subKeyStr = '') {
+    debugger;
     for (let i in obj) {
       let value = obj[i];
       let subKeyStrTrans = subKeyStr ? subKeyStr + '[' + i + ']' : i;

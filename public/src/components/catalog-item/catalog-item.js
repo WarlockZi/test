@@ -2,48 +2,54 @@ import './catalog-item.scss';
 import {$, debounce, post, trimStr,formatDate} from '../../common';
 import checkboxes from "../checkboxes/checkboxes";
 import checkbox from "../checkbox/checkbox";
+import DndFile from "../dnd/DndFile";
 
 
 export default function catalogItem() {
 
   // self = new this
-  let customCatalogItem = $('.item_wrap')[0]
+  let customCatalogItem = $('.item_wrap')[0];
   if (customCatalogItem) {
 
-    self.model = customCatalogItem.dataset.model
-    self.id = +customCatalogItem.dataset.id
+    self.model = customCatalogItem.dataset.model;
+    self.id = +customCatalogItem.dataset.id;
 
     let context = {
       model: customCatalogItem.dataset.model,
       id: +customCatalogItem.dataset.id
-    }
+    };
 
     checkboxes('[checkboxes]', context)
-      .onChange(update)
+      .onChange(update);
     checkbox(context);
 
-    customCatalogItem.onclick = handleClick.bind(context)
-    customCatalogItem.onkeyup = debounce(handleKeyup.bind(context))
+    customCatalogItem.onclick = handleClick.bind(context);
+    customCatalogItem.onkeyup = debounce(handleKeyup.bind(context));
+// debugger
+    let addFile = customCatalogItem.querySelector('[dnd].add-file');
+    if (addFile){
+      new DndFile(addFile)
+    }
   }
 
   async function handleKeyup({target}) {
     if (
       !target.hasAttribute('contenteditable') ||
       !target.dataset.field
-    ) return
+    ) return;
 
-    let field = target.dataset.field
+    let field = target.dataset.field;
     let data = {
       id: this.id,
       [field]: target.innerText
-    }
+    };
     await post(`/adminsc/${this.model}/updateOrCreate`, data)
   }
 
 
   async function handleClick({target}) {
 
-    this.target = target
+    this.target = target;
     if (target.closest('.save')) {
       // save.bind(this)
     } else if (target.closest('.detach')) {
@@ -59,22 +65,22 @@ export default function catalogItem() {
   }
 
   async function handleTab(target) {
-    let visibleSection = $(`[data-tab].show`)[0]
-    let section = $(`[data-tab='${target.dataset.tabId}']`)[0]
-    let activeTab = $(`.tab.active`)[0]
-    visibleSection.classList.toggle('show')
-    section.classList.toggle('show')
-    activeTab.classList.toggle('active')
+    let visibleSection = $(`[data-tab].show`)[0];
+    let section = $(`[data-tab='${target.dataset.tabId}']`)[0];
+    let activeTab = $(`.tab.active`)[0];
+    visibleSection.classList.toggle('show');
+    section.classList.toggle('show');
+    activeTab.classList.toggle('active');
     target.classList.toggle('active')
   }
 
   async function softDel(self) {
-    let url = `/adminsc/${self.model}/updateorcreate`
+    let url = `/adminsc/${self.model}/updateorcreate`;
 
-    let deleted = new Date().toLocaleString('ru-RU', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hour12: false, minute:'2-digit'})
-    debugger
-    let data = {deleted_at: deleted, id: self.id}
-    let res = await post(url, data)
+    let deleted = new Date().toLocaleString('ru-RU', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hour12: false, minute:'2-digit'});
+    debugger;
+    let data = {deleted_at: deleted, id: self.id};
+    let res = await post(url, data);
 
     if (res) {
       console.log('lk------')
@@ -89,15 +95,15 @@ export default function catalogItem() {
 
 
   function getInputs(field) {
-    let inputs = field.querySelectorAll('input')
-    let names = []
+    let inputs = field.querySelectorAll('input');
+    let names = [];
     inputs.forEach((inp) => {
-      if (!inp.checked) return
-      let name = inp.parentNode.querySelector('.name').innerText
-      if (!name) return
+      if (!inp.checked) return;
+      let name = inp.parentNode.querySelector('.name').innerText;
+      if (!name) return;
 
       names.push(name)
-    })
+    });
     return names.join()
   }
 
