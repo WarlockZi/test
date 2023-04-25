@@ -112,7 +112,6 @@ class SyncRepository
 		if (is_readable($file)) {
 			new LoadCategories($file,'full');
 			new LoadProducts($file,'full');
-
 		}
 		$file = $this->storage::getFile('offers0_1.xml');
 		if (is_readable($file)) {
