@@ -31,8 +31,8 @@ class ProductView
 
 	public static function getMainImage(Product $product): string
 	{
-		$path = self::$mainImagePath.$product->art.'.jpg';
-		$file = ROOT.$path;
+		$path = self::$mainImagePath . $product->art . '.jpg';
+		$file = ROOT . $path;
 		if (is_file($file)) {
 			return "<img src='$path' loading='lazy'>";
 		}
@@ -129,7 +129,8 @@ class ProductView
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
-						self::getImage($product, 'mainImages', 'main')
+						self::mainImage()
+//						self::getImage($product, 'mainImages', 'main')
 					)
 			)
 			->tab(
@@ -151,11 +152,13 @@ class ProductView
 					)
 			)
 			->del()
-//			->save()
 			->toList('list')
 			->get();
 	}
-
+	protected static function mainImage()
+	{
+		return DndBuilder::make('product/uploads','add-file');
+	}
 	protected static function getUnit(int $selected, string $field)
 	{
 		return self::clean(
@@ -169,6 +172,7 @@ class ProductView
 				->get()
 		);
 	}
+
 
 
 	protected static function getImage(Product $product,
@@ -255,6 +259,14 @@ class ProductView
 					->get()
 			)
 			->column(
+				ListColumnBuilder::build('art')
+					->name('Артикул')
+					->contenteditable()
+					->search()
+					->width('100px')
+					->get()
+			)
+			->column(
 				ListColumnBuilder::build('sort')
 					->name('Порядок')
 					->contenteditable()
@@ -270,13 +282,13 @@ class ProductView
 					->function(ProductRepository::class, 'priceStatic')
 					->get()
 			)
-			->column(
-				ListColumnBuilder::build('image')
-					->name('Картинка')
-					->width('100px')
-					->function(ProductRepository::class, 'imageStatic')
-					->get()
-			)
+//			->column(
+//				ListColumnBuilder::build('image')
+//					->name('Картинка')
+//					->width('100px')
+//					->function(ProductRepository::class, 'imageStatic')
+//					->get()
+//			)
 			->items($items)
 			->edit()
 			->del()

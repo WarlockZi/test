@@ -11,6 +11,7 @@ export default class Search {
     this.result = $(panel).find('.result');
 
     this.button.onclick = this.showPanel.bind(this);
+    this.panel.onclick = this.closePanel.bind(this);
 
     this.debouncedKeyUp = debounce(this.find, 800);
     this.text.onkeyup = this.debouncedKeyUp.bind(this)
@@ -22,6 +23,13 @@ export default class Search {
     this.text.value = ''
   }
 
+  closePanel({target}) {
+    if (!target.classList.contains('search-panel')) return false;
+    this.panel.classList.toggle('show');
+    this.result.innerHTML = '';
+    this.text.value = ''
+  }
+  
   async find({target}) {
     this.result.innerHTML = '';
 
@@ -35,21 +43,21 @@ export default class Search {
 
   makeString(arr){
     let str = '';
-    arr.map((row,i)=>{
-      this.result.append(this.createLi(++i,row))
+    arr.map((row)=>{
+      this.result.append(this.createLi(row))
     })
   }
 
-  createLi(i,row){
+  createLi(row){
     let li = createEl('li');
     let a = createEl('a');
     a.href = `/product/${row.slug}`;
-    let index = createEl('div', 'index', i);
+    // let index = createEl('div', 'index', i);
     let name = createEl('div', 'name', row.name);
     let art = createEl('div', 'art', row.art);
     let img = createEl('img');
     img.src = row.mainImagePath;
-    a.append(index);
+    // a.append(index);
     a.append(art);
     a.append(name);
     a.append(img);

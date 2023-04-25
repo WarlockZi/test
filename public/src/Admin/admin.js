@@ -16,7 +16,7 @@ import '../Test/open_test'
 
 
 import './sync1c/sync1c';
-import './chart/chart';
+// import './chart/chart';
 import './chartjs/chartjs';
 import quill from '../components/quill/quill';
 
