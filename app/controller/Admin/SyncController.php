@@ -41,13 +41,10 @@ class SyncController extends AppController
 		$this->repo->partload();
 	}
 
-
 	public function actionInit()
 	{
 		$this->repo->init();
 	}
-
-
 
 	public function actionParseImages()
 	{
@@ -79,13 +76,11 @@ class SyncController extends AppController
 		$this->repo->import();
 	}
 
-
 	public function actionIndex()//init
 	{
 		$tree = [];
 		$this->set(compact('tree'));
 	}
-
 
 	public function actionIncread()
 	{
