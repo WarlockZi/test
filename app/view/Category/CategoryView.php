@@ -97,8 +97,9 @@ class CategoryView
 									->get()
 							)
 							->column(
-								ListColumnBuilder::build('slug')
-									->name("Назв. на сайте")
+								ListColumnBuilder::build('art')
+									->name("Арт")
+									->width("100px")
 									->get()
 							)
 							->edit()
