@@ -62,7 +62,9 @@ class Category extends Model
 	public function products()
 	{
 		return $this->hasMany(Product::class)
-			->orderByDesc('name')->groupBy('instore');
+			->orderByDesc('name')
+//			->groupBy('instore')
+			;
 	}
 
 	public function productsNotInStore()

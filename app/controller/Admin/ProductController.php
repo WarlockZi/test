@@ -26,9 +26,17 @@ class ProductController extends AppController
 
 	public function actionList()
 	{
+		$pagination = ProductView::pagination();
+
+
+		$req = $this->ajax;
+
+		if ($req){
+
+		}
 		$items = ProductRepository::list();
 		$list = ProductView::list($items);
-		$this->set(compact('list'));
+		$this->set(compact('list', 'pagination'));
 	}
 
 }
