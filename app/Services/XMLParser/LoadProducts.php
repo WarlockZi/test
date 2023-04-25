@@ -52,7 +52,7 @@ class LoadProducts extends Parser
 	{
     $g['1s_id'] = $good['Ид'];
 		$g['1s_category_id'] = $good['Группы']['Ид'];
-		$g['art'] = $good['Артикул'];
+		$g['art'] = trim($good['Артикул']);
 		$g['name'] = $good['Наименование'];
 		$g['slug'] = Slug::slug($g['name']);
 //		if (!Product::where('slug', $g['slug'])->first()) {
