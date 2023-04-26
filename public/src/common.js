@@ -384,6 +384,37 @@ function $(selector) {
   }
 }
 
+function getCookie(key) {
+  let match = document.cookie.match('(^|;)?' + key + '=([^;]*)');
+  return match ? match[2] : false
+}
+
+function cookieRemove(key) {
+  if (cookieExists(key))
+    document.cookie = key + '=; Max-Age=-1;';
+  return false
+}
+
+function cookieExists(key) {
+  let match = document.cookie.match('(^|;)?' + key + '=([^;]*)');
+  return !!match
+}
+function setCookie(key, value, digit, unit, path = '/') {
+  let units = {
+    s: 1,
+    m: 60,
+    h: 60 * 60,
+    d: 60 * 60 * 24,
+    w: 60 * 60 * 24 * 7,
+    M: 60 * 60 * 24 * 30,
+    y: 60 * 60 * 24 * 365
+  };
+
+  let date = new Date();
+  date.setTime(date.getTime() + (digit * units.unit));
+  document.cookie = `${key}=${value}; expires=${date} path=${path}; SameSite=lax`
+}
+
 function slider() {
   let slider = $('.slider').first();
   if (!slider) return false;
@@ -441,6 +472,9 @@ function addTooltip(args) {
 
 
 export {
+  cookieRemove,
+  setCookie,
+  getCookie,
   createEl,
   getToken,
   slider,
