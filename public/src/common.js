@@ -2,13 +2,13 @@ import './common.scss'
 import error from './components/error/error'
 
 export function objAndData2FormData(obj, files, formData = new FormData) {
-  // self = {}
+
   self.formData = formData;
   for (let i = 0; i < files.length; i++) {
     self.formData.append(i, files[i])
   }
   self.createFormData = function (obj, subKeyStr = '') {
-    debugger;
+
     for (let i in obj) {
       let value = obj[i];
       let subKeyStrTrans = subKeyStr ? subKeyStr + '[' + i + ']' : i;

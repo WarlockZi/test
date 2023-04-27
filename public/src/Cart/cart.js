@@ -21,6 +21,8 @@ export default class Cart {
   }
 
   counterStart() {
+    let end = getCookie('cart');
+    this.counter.setEnd(end);
     let res = this.duration();
     setInterval(function () {
       this.counter.innerText = --res;
@@ -29,8 +31,6 @@ export default class Cart {
   }
 
   duration(){
-    let end = getCookie('cart');
-    this.counter.setEnd(end);
     this.counter.getFormattedDiff()
     // cookieRemove('cart')
 

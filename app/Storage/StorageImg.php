@@ -7,12 +7,13 @@ namespace app\Storage;
 class StorageImg extends Storage
 {
 
-  protected $path;
+//  protected $path;
 
   public function __construct()
   {
     parent::__construct();
     $this->path = ROOT.DIRECTORY_SEPARATOR.'pic'.DIRECTORY_SEPARATOR;
+    $this->relativePath = '/pic/';
     return $this;
   }
 	public static function getFile($name){
