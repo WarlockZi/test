@@ -15,11 +15,11 @@ use app\core\Error;
 
 <!--quill.js-->
 	<!--	<link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">-->
-	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+	<link defer href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+	<script defer src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <!--	chart.js-->
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 <!--anychart.js-->

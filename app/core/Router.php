@@ -52,6 +52,9 @@ class Router
 		if (!class_exists($route->controller)) {
 			NotFound::controller($route);
 		}
+		if (!method_exists($route->controller,$route->actionName)){
+			NotFound::action($route);
+		}
 	}
 
 	public function dispatch()

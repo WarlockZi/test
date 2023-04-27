@@ -27,7 +27,7 @@ class PlanningController Extends AppController
 		$items = Todo::where('type', 'день')->
 		where('user_id', Auth::getUser())->
 		get();
-		$daily = PlanningView::list($items);
+		$daily = PlanningView::listDaily($items);
 		$this->set(compact('daily'));
 	}
 

@@ -29,6 +29,22 @@ class ProductView
 	protected $model = 'product';
 	protected static $mainImagePath = '/pic/product/uploads/';
 
+	public static function pagination($str = ''): string
+	{
+		$count = Product::count();
+		$remnant = $count % 10;
+		$full = ($count - $remnant) / 10;
+		for ($i = 1; $i < $full; $i++) {
+			$str .= "<div data-pagination='{$i}'>$i</div>";
+		}
+		return "<div data-model='product' class = 'pagination'>{$str}</div>";
+	}
+	protected static function mainImage()
+	{
+		$dnd = DndBuilder::make('product/uploads', 'add-file');
+		return "<div class='dnd-image'>{$dnd}</div>";
+	}
+
 	public static function getMainImage(Product $product): string
 	{
 		$path = self::$mainImagePath . $product->art . '.jpg';
@@ -155,10 +171,9 @@ class ProductView
 			->toList('list')
 			->get();
 	}
-	protected static function mainImage()
-	{
-		return DndBuilder::make('product/uploads','add-file');
-	}
+
+
+
 	protected static function getUnit(int $selected, string $field)
 	{
 		return self::clean(
@@ -174,7 +189,6 @@ class ProductView
 	}
 
 
-
 	protected static function getImage(Product $product,
 																		 string $relation,
 																		 string $slug,
@@ -187,7 +201,7 @@ class ProductView
 			$slug,
 			$many
 		)
-			->class('dnd-image')
+//			->class('dnd-image')
 			->detach('detach')
 			->html(
 				DndBuilder::make('product') . $imgs

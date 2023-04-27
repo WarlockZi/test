@@ -99,6 +99,7 @@ class CategoryView
 							->column(
 								ListColumnBuilder::build('art')
 									->name("Арт")
+									->search()
 									->width("100px")
 									->get()
 							)

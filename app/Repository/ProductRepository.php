@@ -84,7 +84,7 @@ class ProductRepository extends Controller
 	{
 		return Product::query()
 			->with('price')
-//			->take(10)
+			->take(20)
 			->orderBy('sort')
 			->get();
 	}

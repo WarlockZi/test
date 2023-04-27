@@ -27,6 +27,7 @@ import './Videoinstructions/videoinstructions'
 import './Category/category1'
 import rights from './Rights/rights'
 import product from './Category/category1'
+// import pagination from './Product/pagination'
 import category from './Product/product'
 import user from './user/user'
 

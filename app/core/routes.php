@@ -10,7 +10,7 @@ Router::add("^adminsc\/(?P<controller>sync)\/?(?P<action>[a-zA-Z0-9]+)\/?(?P<han
 
 Router::add("^.?search.?", ['controller' => 'search', 'action' => 'index']);
 
-Router::add("^cart\/?$", ['controller' => 'Cart']);
+Router::add("^cart\/?(?P<action>[a-zA-Z]+)?$", ['controller' => 'Cart']);
 
 Router::add("^(?P<admin>adminsc)\/?$", ['controller' => 'Adminsc','action'=>'index']);
 Router::add("^(?P<admin>adminsc)\/?(?P<controller>[a-z-]+)?\/?(?P<action>[a-z-]+)?\/?(?P<id>[0-9]+)?$");
