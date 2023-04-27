@@ -39,6 +39,11 @@ class ProductView
 		}
 		return "<div data-model='product' class = 'pagination'>{$str}</div>";
 	}
+	protected static function mainImage()
+	{
+		$dnd = DndBuilder::make('product/uploads', 'add-file');
+		return "<div class='dnd-image'>{$dnd}</div>";
+	}
 
 	public static function getMainImage(Product $product): string
 	{
@@ -167,10 +172,7 @@ class ProductView
 			->get();
 	}
 
-	protected static function mainImage()
-	{
-		return DndBuilder::make('product/uploads', 'add-file');
-	}
+
 
 	protected static function getUnit(int $selected, string $field)
 	{
@@ -199,7 +201,7 @@ class ProductView
 			$slug,
 			$many
 		)
-			->class('dnd-image')
+//			->class('dnd-image')
 			->detach('detach')
 			->html(
 				DndBuilder::make('product') . $imgs

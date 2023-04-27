@@ -1,11 +1,11 @@
 import './catalog-item.scss';
-import {$, debounce, post, trimStr,formatDate} from '../../common';
+import {$, debounce, post, trimStr, formatDate, createEl} from '../../common';
 import checkboxes from "../checkboxes/checkboxes";
 import checkbox from "../checkbox/checkbox";
 import DndFile from "../dnd/DndFile";
 
 
-export default function catalogItem() {
+export default async function catalogItem() {
 
   // self = new this
   let customCatalogItem = $('.item_wrap')[0];
@@ -25,11 +25,22 @@ export default function catalogItem() {
 
     customCatalogItem.onclick = handleClick.bind(context);
     customCatalogItem.onkeyup = debounce(handleKeyup.bind(context));
-// debugger
     let addFile = customCatalogItem.querySelector('[dnd].add-file');
-    if (addFile){
-      new DndFile(addFile)
+    if (addFile) {
+      let dndFile = new DndFile(addFile, showSavedFile)
+      // let srcs = dndFile.send()
+      // showSavedFile(srcs, addFile)
     }
+  }
+
+  function showSavedFile(srcs) {
+    debugger;
+    srcs.relativeSrcs.forEach((src) => {
+      let img = createEl('img');
+      img.src = src;
+      this.el.append(img)
+    })
+
   }
 
   async function handleKeyup({target}) {
@@ -77,7 +88,14 @@ export default function catalogItem() {
   async function softDel(self) {
     let url = `/adminsc/${self.model}/updateorcreate`;
 
-    let deleted = new Date().toLocaleString('ru-RU', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hour12: false, minute:'2-digit'});
+    let deleted = new Date().toLocaleString('ru-RU', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      hour12: false,
+      minute: '2-digit'
+    });
     debugger;
     let data = {deleted_at: deleted, id: self.id};
     let res = await post(url, data);

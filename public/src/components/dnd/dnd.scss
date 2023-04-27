@@ -15,6 +15,7 @@
     border-radius: 3%;
     background-color: $color-gray1;
     border: $color-gray3 1px solid;
+    //pointer-events: none;
 
     &:hover {
       background-color: $color-gray0;
@@ -41,15 +42,15 @@
     }
 
 
-    img {
-      &:hover {
-        position: absolute;
-        top: 0;
-        left: -100%;
-        z-index: 1;
-        border: 1px solid;
-      }
-    }
+    //img {
+    //  &:hover {
+    //    position: absolute;
+    //    top: 0;
+    //    left: -100%;
+    //    z-index: 1;
+    //    border: 1px solid;
+    //  }
+    //}
 
     p {
       flex: 1;

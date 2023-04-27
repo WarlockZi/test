@@ -14,15 +14,14 @@ class FileController extends AppController
 		parent::__construct();
 	}
 
-	public function actionSave(){
-		$req = $_POST;
-		if ($req){
-			$path = $req['path'];
-			$storage = new StorageImg();
-			$storage->save($path);
-		}
+	public function actionSave()
+	{
+		if (!$_POST) $this->exitWithPopup('Ошибка - не установлена папка');
+		if (!$_FILES) $this->exitWithPopup('Ошибка - не передан файл');
+
+		$storage = new StorageImg();
+		$srcs = $storage->save($_POST['path'], $_FILES);
+		$this->exitJson(['srcs'=>$srcs]);
 
 	}
-
-
 }

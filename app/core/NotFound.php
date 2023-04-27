@@ -52,7 +52,7 @@ class NotFound extends Controller
 
 	public static function action(Route $route)
 	{
-		$error = "Плохой action - {$route->action} у контроллера - {$route->controller->shortClassName($route->controller)}";
+		$error = "Плохой action - {$route->action} у контроллера - {$route->controller::shortClassName($route->controller)}";
 		http_response_code(404);
 		Error::setError($error);
 		$view = self::setView($route);

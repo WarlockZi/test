@@ -12,8 +12,9 @@ class DndBuilder extends Builder
 	public $path;
 	public $class;
 	public $tooltip;
+	public $wrapClass;
 
-	public static function make(string $path, string $class = '', string $tooltip = '')
+	public static function make(string $path, string $class = '', string $tooltip = '',string $wrapClass='')
 	{
 		$dnd = new static();
 		$dnd->path = "data-path='{$path}'";
