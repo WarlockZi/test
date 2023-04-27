@@ -29,8 +29,9 @@
     flex: 1 0 190px;
 
     canvas{
-      //width: 150px !important;
-      min-width: 180px !important;
+      width: clamp(180px, 100%, 240px) !important;
+      justify-self: flex-end;
+      //min-width: 180px !important;
     }
 
     @include _1000{
@@ -40,7 +41,7 @@
       flex:1 0 30%;
     }
     @include _600{
-      flex:4 0 90%;
+      flex:1 0 90%;
     }
     .icon{
       svg{

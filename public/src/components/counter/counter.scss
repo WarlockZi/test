@@ -1,0 +1,32 @@
+#countdown {
+  margin:0px auto;
+  width:auto;
+  padding:20px 20px 20px 10px;
+  position:relative;
+  border:#222 2px solid;
+  background:#eee;
+}
+#countdown div {
+  margin:0px 0px 0px 10px;
+  float:left;
+  width:88px;
+}
+#countdown div span {
+  display:block;
+  height:53px;
+  background:#000;
+  border-bottom:#f00 1px solid;
+  color:#eee;
+  font-size: 24pt;
+  padding-top: 4px;
+  padding-left: 16px;
+  letter-spacing: 31px;
+  /* Последние 4 параметра отвечают за размер текста и его выравнивание на циферблате */
+}
+#countdown #week,#countdown #day,#countdown #hour,#countdown #minute,#countdown #second {
+  display:none;
+}
+.clear {
+  clear:both;
+  float:none !important;
+}

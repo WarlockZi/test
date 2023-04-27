@@ -1,4 +1,5 @@
 // debugger
+import './chart.scss'
 import Chart from 'chart.js/auto'
 
 (async function () {
