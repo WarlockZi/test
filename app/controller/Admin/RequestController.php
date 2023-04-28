@@ -28,6 +28,21 @@ class RequestController Extends AppController
 		$this->set(compact('content'));
 	}
 
+	public function actionPhpinfo()
+	{
+		ob_start();
+		phpinfo();
+		$content = ob_get_clean();
+		$this->set(compact('content'));
+	}
+
+	public function actionTest()
+	{
+		$this->layout = 'test';
+//		$content = 'd';
+//		$this->set(compact('content'));
+	}
+
 	protected function decorate($content)
 	{
 		return "<div class='requests'>{$content}</div>";

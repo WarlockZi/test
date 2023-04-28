@@ -18,6 +18,8 @@ abstract class Controller
 	protected $route;
 	protected $ajax;
 	protected $auth;
+	protected $layout;
+	protected $layoutPath = ROOT.'/app/view/layouts/';
 
 	protected Assets $assets;
 
@@ -42,6 +44,11 @@ abstract class Controller
 	protected function createToken(): string
 	{
 			return $_SESSION['token'] = session_id();
+	}
+
+	public function getLayout(): string
+	{
+			return $this->layoutPath.$this->layout.'.php';
 	}
 
 	public function getRoute()

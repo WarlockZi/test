@@ -46,7 +46,6 @@ export default class Search {
   }
 
   makeString(arr){
-    let str = '';
     arr.map((row)=>{
       this.result.append(this.createLi(row))
     })
@@ -56,14 +55,11 @@ export default class Search {
     let li = createEl('li');
     let a = createEl('a');
     a.href = `/product/${row.slug}`;
-    // let index = createEl('div', 'index', i);
-    debugger;
     li.append(a);
     let name = createEl('div', 'name', row.name);
     let art = createEl('div', 'art', row.art);
     let img = createEl('img');
     img.src = row.mainImagePath;
-    // a.append(index);
     a.append(art);
     a.append(name);
     a.append(img);
