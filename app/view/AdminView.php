@@ -19,7 +19,7 @@ class AdminView extends View
 	public function __construct(Controller $controller)
 	{
 		parent::__construct($controller);
-
+		$this->layout = $controller->getLayout()??$this->layout;
 		$this->setHeader($this->user);
 		$this->setFooter();
 		$this->setAssets();

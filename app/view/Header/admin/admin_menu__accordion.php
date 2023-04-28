@@ -196,6 +196,8 @@ use \app\core\Icon;
 <!--				  <a class="neon" href="/adminsc/sync/init?type=catalog& mode=import">Запрос 1с</a>-->
 				  <a class="neon" href="/adminsc/sync/incread">Файл ответа</a>
 				  <a class="neon" href="/adminsc/request">Запросы</a>
+				  <a class="neon" href="/adminsc/request/phpinfo/">PHPinfo</a>
+				  <a class="neon" href="/adminsc/request/test/">test</a>
 			  </ul>
 		  </li>
 		 <? endif; ?>
