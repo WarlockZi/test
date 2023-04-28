@@ -28,7 +28,6 @@ class ImageRepository
 	];
 
 
-
 	public static function getSrc(ItemFieldBuilder $field): string
 	{
 		if ($field) {
@@ -41,13 +40,15 @@ class ImageRepository
 		return ImageRepository::getImg($field->getFullPath());
 	}
 
-	public static function getProductMainImageSrc(Product $product): string{
+	public static function getProductMainImageSrc(Product $product): string
+	{
 		return "/pic/product/uploads/{$product->art}.jpg";
 	}
+
 	public static function getProductMainImage(Product $product): string
 	{
 		$src = ImageRepository::getProductMainImageSrc($product);
-		if(is_readable(ROOT.$src)){
+		if (is_readable(ROOT . FS::platformSlashes($src))) {
 			$name = $product['name'];
 			return "<img title = '{$name}' src = '{$src}' alt = '{$name}' />";
 		} else {
