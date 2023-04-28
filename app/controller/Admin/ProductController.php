@@ -28,8 +28,6 @@ class ProductController extends AppController
 	{
 //		$pagination = ProductView::pagination();
 //		$req = $this->ajax;
-//		if ($req){
-//		}
 
 		$items = ProductRepository::list();
 		$list = ProductView::list($items);

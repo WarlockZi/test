@@ -39,7 +39,6 @@ class NotFound extends Controller
 		Error::setError($error);
 
 		$controller = new self();
-//		$controller->route->setController(static::class);
 
 		http_response_code(404);
 		$view = self::setView($route);
@@ -47,7 +46,7 @@ class NotFound extends Controller
 		$content = $view->get404();
 		$view->setContent($view->controller);
 		$view->render();
-		exit;
+		exit();
 	}
 
 	public static function action(Route $route)
