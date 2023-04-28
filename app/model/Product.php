@@ -36,8 +36,8 @@ class Product extends Model
 	public function getMainImagePathAttribute()
 	{
 		$art = trim($this->art);
-		$path = FS::platformSlashes("/pic/product/uploads/{$art}.jpg");
-		if (is_readable(ROOT . $path)) {
+		$path = "/pic/product/uploads/{$art}.jpg";
+		if (is_readable(ROOT . FS::platformSlashes($path))) {
 			return $path;
 		} else {
 			return '/pic/srvc/nophoto-min.jpg';
