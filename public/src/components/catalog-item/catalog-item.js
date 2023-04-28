@@ -28,8 +28,6 @@ export default async function catalogItem() {
     let addFile = customCatalogItem.querySelector('[dnd].add-file');
     if (addFile) {
       let dndFile = new DndFile(addFile, showSavedFile)
-      // let srcs = dndFile.send()
-      // showSavedFile(srcs, addFile)
     }
   }
 
@@ -38,7 +36,7 @@ export default async function catalogItem() {
     srcs.relativeSrcs.forEach((src) => {
       let img = createEl('img');
       img.src = src;
-      this.el.append(img)
+      this.el.closest('.dnd-container').append(img)
     })
 
   }

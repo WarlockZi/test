@@ -37,9 +37,10 @@ class StorageTxt extends Storage
 		return $self->path.'1c_upload';
 	}
 
-	public static function save(string $filename)
+	public function save(string $filename, array $files):array
 	{
 		$self = new static();
 		move_uploaded_file($filename, $self->path . $filename);
+		return [];
 	}
 }

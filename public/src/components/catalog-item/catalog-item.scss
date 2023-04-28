@@ -1,5 +1,6 @@
 @import "../../var";
 @import "../../mixin_media";
+@import "../../components/dnd/dnd";
 @import "../breadcrumbs";
 
 .ql-toolbar.ql-snow {
@@ -27,6 +28,10 @@
   position: relative;
   padding: 0;
   font-size: $font-size;
+
+  .dnd-container {
+    @include dnd-container;
+  }
 
   .dnd-image {
     display: flex;

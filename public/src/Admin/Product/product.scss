@@ -3,11 +3,9 @@
 @import "../../components/morph/morph";
 
 [data-morph-relation] {
-  //display: flex;
-  align-items: center;
-  background-color: white;
-  flex-wrap: wrap;
-  margin: 5px;
+
+
+  @include dnd-container();
 
   @include dnd();
 
