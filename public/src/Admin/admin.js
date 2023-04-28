@@ -2,6 +2,7 @@ import './admin.scss'
 import './model/cache';
 
 import '../components/header/header-adm'
+import '../components/header/search/search'
 import '../components/accordion/accordion'
 import '../components/admin_sidebar'
 import '../components/date/date';
@@ -40,10 +41,12 @@ import error from '../components/error/error';
 import select from '../components/select/select';
 import accordionShow from '../components/accordion-show';
 import morph from '../components/morph/morph';
+import Search from "../components/header/search/search";
 
 
 $(document).ready(function () {
 
+  new Search();
   select();
   morph();
 

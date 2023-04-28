@@ -49,10 +49,10 @@ class ImageRepository
 		$src = ImageRepository::getProductMainImageSrc($product);
 		if(is_readable(ROOT.$src)){
 			$name = $product['name'];
-			return "<img title = '{$name}' src = '{$src}' alt = '{$name}'>";
+			return "<img title = '{$name}' src = '{$src}' alt = '{$name}' />";
 		} else {
 			$src = ImageRepository::getImg('');
-			return "<img src = {$src}";
+			return "<img src = {$src} />";
 		}
 	}
 
