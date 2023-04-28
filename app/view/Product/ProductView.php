@@ -8,6 +8,7 @@ use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Unit;
 use app\Repository\CategoryRepository;
+use app\Repository\ImageRepository;
 use app\Repository\ProductRepository;
 use app\view\components\Builders\Builder;
 use app\view\components\Builders\Dnd\DndBuilder;
@@ -39,10 +40,11 @@ class ProductView
 		}
 		return "<div data-model='product' class = 'pagination'>{$str}</div>";
 	}
-	protected static function mainImage()
+	protected static function mainImage(Product $p)
 	{
 		$dnd = DndBuilder::make('product/uploads', 'add-file');
-		return "<div class='dnd-image'>{$dnd}</div>";
+		$img = ImageRepository::getProductMainImage($p);
+		return "<div class='dnd-container'>{$dnd}{$img}</div>";
 	}
 
 	public static function getMainImage(Product $product): string
@@ -145,7 +147,7 @@ class ProductView
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
-						self::mainImage()
+						self::mainImage($product)
 //						self::getImage($product, 'mainImages', 'main')
 					)
 			)
