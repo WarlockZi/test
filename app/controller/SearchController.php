@@ -2,9 +2,7 @@
 
 namespace app\controller;
 
-use app\core\App;
 use app\model\Product;
-use app\view\View;
 
 class SearchController extends AppController
 {

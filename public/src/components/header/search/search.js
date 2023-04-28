@@ -1,7 +1,11 @@
+import "./search.scss";
 import {$, debounce, post, createEl} from '../../../common'
 
 export default class Search {
+
   constructor() {
+
+    debugger;
     let button = $('.search').first();
     let panel = $('.search-panel').first();
     if (!button || !panel) return;
@@ -53,6 +57,8 @@ export default class Search {
     let a = createEl('a');
     a.href = `/product/${row.slug}`;
     // let index = createEl('div', 'index', i);
+    debugger;
+    li.append(a);
     let name = createEl('div', 'name', row.name);
     let art = createEl('div', 'art', row.art);
     let img = createEl('img');

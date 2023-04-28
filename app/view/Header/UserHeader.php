@@ -40,30 +40,12 @@ class UserHeader implements IHeaderable
 	{
 		$this->frontCategories = $frontCategories = Category::frontCategories();
 		$oItems = OrderRepository::count();
+		$searchPanel = FS::getFileContent($this->path.'/searchPanel.php');
 
-		$this->frontCategories = FS::getFileContent($this->path.'/header_menu.php',compact('oItems','frontCategories'));
+		$this->frontCategories = FS::getFileContent($this->path.'/header_menu.php',compact('oItems','frontCategories','searchPanel'));
 
 		$this->logo = $this->getFileContent('logo.php');
 
 		$this->header = $this->getFileContent('vitex_header.php');
-//		$this->setAssets();
 	}
-
-
-//	protected function setAssets()
-//	{
-////		View::setJs('admin.js');
-////		View::setCss('admin.css');
-//
-//		View::setJs('list.js');
-//		View::setCss('list.css');
-//
-//		View::setJs('common.js');
-//		View::setCss('common.css');
-//
-//		View::setJs('product.js');
-//		View::setCss('product.css');
-//	}
-
-
 }
