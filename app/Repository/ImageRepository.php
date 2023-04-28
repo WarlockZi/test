@@ -48,12 +48,13 @@ class ImageRepository
 	public static function getProductMainImage(Product $product): string
 	{
 		$src = ImageRepository::getProductMainImageSrc($product);
-		if (is_readable(ROOT . FS::platformSlashes($src))) {
+		$del = ROOT . FS::platformSlashes($src);
+		if (is_readable($del)) {
 			$name = $product['name'];
 			return "<img title = '{$name}' src = '{$src}' alt = '{$name}' />";
 		} else {
 			$src = ImageRepository::getImg('');
-			return "<img src = {$src} />";
+			return "<img src = {$src} {$del}/>";
 		}
 	}
 
