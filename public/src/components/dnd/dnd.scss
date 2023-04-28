@@ -2,6 +2,23 @@
 //.dndhover {
 //  border: 1px dashed $color-main !important;
 //}
+
+@mixin dnd-container{
+  align-items: center;
+  background-color: white;
+  flex-wrap: wrap;
+  margin: 5px;
+  display: flex;
+
+
+  img{
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    border: 1px solid #d8d8d8;
+  }
+}
+
 @mixin dnd {
   [dnd] {
     display: flex;

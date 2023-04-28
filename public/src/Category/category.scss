@@ -1,4 +1,5 @@
 @import "../var";
+@import "../mixin_media";
 
 .category {
   .products-header {
@@ -23,6 +24,10 @@
     max-width: 80vw;
     gap: 5px;
 
+    @include _400{
+      justify-content: center;
+    }
+
 
     a.product {
       display: flex;
@@ -33,6 +38,10 @@
       padding: 10px;
       border: 1px solid $color-gray2;
       color: $color-gray10;
+
+      @include _400{
+        width: 80%;
+      }
 
       &[data-instore="0"] {
         filter:grayscale(1);
