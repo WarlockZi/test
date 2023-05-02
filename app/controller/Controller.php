@@ -36,6 +36,7 @@ abstract class Controller
 	{
 		if ($this->route->isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
 			return new AdminView($this);
+
 		} else {
 			return new UserView($this);
 		}
@@ -48,7 +49,11 @@ abstract class Controller
 
 	public function getLayout(): string
 	{
-			return $this->layoutPath.$this->layout.'.php';
+		$layout = $this->layoutPath.$this->layout.'.php';
+		if (is_readable($layout)){
+			return $layout;
+		}
+		return false;
 	}
 
 	public function getRoute()

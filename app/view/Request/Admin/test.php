@@ -1,48 +1,60 @@
+<header class="site-header sticky-top py-1 bg-light">
+	<nav class="container d-flex flex-column flex-md-row justify-content-end">
+		<div class="btn-group">
+			<a class="py-2 d-md-inline-block btn btn-outline-primary" href="#">Войти</a>
+			<a class="py-2 d-md-inline-block btn btn-outline-primary" href="#">Выйти</a>
+		</div>
+	</nav>
+</header>
+
+
 <main>
-	<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-		<div class="col-md-5 p-lg-5 mx-auto my-5">
-			<h1 class="display-4 fw-normal">Забавный заголовок</h1>
-			<p class="lead fw-normal">И еще более остроумный подзаголовок в придачу. Начните свои маркетинговые усилия с этого примера, основанного на маркетинговых страницах Apple.</p>
-			<a class="btn btn-outline-secondary" href="#">Скоро будет</a>
-		</div>
-		<div class="product-device shadow-sm d-none d-md-block"></div>
-		<div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
-	</div>
-
-	<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
-		<div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-			<div class="my-3 py-3">
-				<h2 class="display-5">Другой заголовок</h2>
-				<p class="lead">И еще более остроумный подзаголовок.</p>
+	<div class="container my-4">
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex flex-column">
+						<div class="form-group">
+							<input type="text" id="title" class="form-control" maxlength="50" autocomplete="off" placeholder="Title" required>
+						</div>
+						<div class="form-check form-switch my-1">
+							<input class="form-check-input" type="checkbox" id="important">
+							<label class="form-check-label" for="important">Важная</label>
+						</div>
+						<button type="submit" class="btn btn-success btn-block my-2 float-right">Save</button>
+					</div>
+				</div>
 			</div>
-			<div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
 		</div>
-		<div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-			<div class="my-3 p-3">
-				<h2 class="display-5">Другой заголовок</h2>
-				<p class="lead">И еще более остроумный подзаголовок.</p>
+
+		<div class="col-md-8">
+			<div class="row">
+				<div class="col-sm-3 text-left">
+					<p class="font-weight-bold">Title</p>
+				</div>
+				<div class="col-sm-6 text-left">
+					<p class="font-weight-bold">Description</p>
+				</div>
+				<div class="col-sm-3 text-right">
+					<p class="font-weight-bold">Delete</p>
+				</div>
 			</div>
-			<div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+			<hr>
+			<div id="tasks"></div>
+		</div>
+
+		</div>
+
+		<div class="container d-flex my-5 justify-content-center">
+			<div class="btn-toolbar d-flex " role="toolbar" aria-label="Панель инструментов с группами кнопок">
+				<div class="btn-group me-2" role="group" aria-label="Вторая группа">
+					<button type="button" class="btn btn-secondary">1</button>
+					<button type="button" class="btn btn-secondary">2</button>
+					<button type="button" class="btn btn-secondary">3</button>
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<div class="btn-toolbar" role="toolbar" aria-label="Панель инструментов с группами кнопок">
-		<div class="btn-group me-2" role="group" aria-label="Первая группа">
-			<button type="button" class="btn btn-primary">1</button>
-			<button type="button" class="btn btn-primary">2</button>
-			<button type="button" class="btn btn-primary">3</button>
-			<button type="button" class="btn btn-primary">4</button>
-		</div>
-		<div class="btn-group me-2" role="group" aria-label="Вторая группа">
-			<button type="button" class="btn btn-secondary">5</button>
-			<button type="button" class="btn btn-secondary">6</button>
-			<button type="button" class="btn btn-secondary">7</button>
-		</div>
-		<div class="btn-group" role="group" aria-label="Третья группа">
-			<button type="button" class="btn btn-info">8</button>
-		</div>
-	</div>
-
-
-
 </main>
+
+
