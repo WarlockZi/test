@@ -5,7 +5,7 @@ export default class Search {
 
   constructor() {
 
-    debugger;
+    // debugger;
     let button = $('.search').first();
     let panel = $('.search-panel').first();
     if (!button || !panel) return;

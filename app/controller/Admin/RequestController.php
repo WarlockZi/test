@@ -39,8 +39,8 @@ class RequestController Extends AppController
 	public function actionTest()
 	{
 		$this->layout = 'test';
-//		$content = 'd';
-//		$this->set(compact('content'));
+		$content = 'd';
+		$this->set(compact('content'));
 	}
 
 	protected function decorate($content)
