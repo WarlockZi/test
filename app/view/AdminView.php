@@ -8,21 +8,27 @@ use app\controller\Controller;
 use app\core\Error;
 use app\core\FS;
 use app\view\Assets\AdminAssets;
+use app\view\Assets\TestAssets;
 use app\view\Header\AdminHeader;
 
 class AdminView extends View
 {
 	protected $layout = ROOT . "/app/view/layouts/admin.php";
 	protected $noViewError = "Файл вида не найден";
-	protected $defaultView = ROOT."/app/view/default.php";
+	protected $defaultView = ROOT . "/app/view/default.php";
 
 	public function __construct(Controller $controller)
 	{
 		parent::__construct($controller);
 
+		$this->setLayout($controller);
 		$this->setHeader($this->user);
 		$this->setFooter();
-		$this->setAssets();
+		if ($this->controller->getRoute()->action === 'test') {
+			$this->setTestAssets();
+		} else {
+			$this->setAssets();
+		}
 	}
 
 	protected function getViewFile(): string
@@ -33,6 +39,12 @@ class AdminView extends View
 		return FS::platformSlashes(ROOT . "/app/view/{$controller}/Admin/{$action}.php");
 	}
 
+	protected function setLayout(Controller $controller)
+	{
+		$layout = $controller->getLayout();
+		$this->layout = $layout ? $layout : $this->layout;
+	}
+
 	public function setContent(Controller $controller): void
 	{
 		if (is_readable($this->view)) {
@@ -41,9 +53,10 @@ class AdminView extends View
 			$action = $controller->getRoute()->action;
 			$model = ucfirst($controller->getRoute()->controllerName);
 			Error::setError("Нет файла вида - {$model}/Admin/{$action}");
-			$this->content = self::getFileContent($this->defaultView,$this->controller->vars);
+			$this->content = self::getFileContent($this->defaultView, $this->controller->vars);
 		}
 	}
+
 	public function get404(): string
 	{
 		return $this->noViewError;
@@ -84,5 +97,10 @@ class AdminView extends View
 	protected function setAssets()
 	{
 		$this->assets = new AdminAssets();
+	}
+
+	protected function setTestAssets()
+	{
+		$this->assets = new TestAssets();
 	}
 }
