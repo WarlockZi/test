@@ -34,6 +34,10 @@ class AccordionView
 
 	public static function testDo()
 	{
+		$upload_max_filesize = ini_get("upload_max_filesize");
+		$file_uploads = ini_get("file_uploads");
+		$post_max_size = ini_get("post_max_size");
+//		$up = ini_get("upload_max_filesize");
 		$icon = Icon::path();
 		return AccordionBuilder::build(
 			Test::where('test_id', 0)

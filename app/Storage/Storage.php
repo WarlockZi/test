@@ -71,6 +71,9 @@ class Storage
 		$rel = $this->relativePath . $path.'/';
 		$srcs = [];
 		foreach ($files as $file) {
+
+			if ($file['size']>2000000)
+				exit(json_encode(['error'=>"file {$file['name']} - too big size {$file['size']}"]));
 			$full = $to . $file['name'];
 			$rel = $rel . $file['name'];
 			move_uploaded_file($file['tmp_name'], $full);

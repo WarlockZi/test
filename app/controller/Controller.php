@@ -18,6 +18,8 @@ abstract class Controller
 	protected $route;
 	protected $ajax;
 	protected $auth;
+	protected $layout;
+	protected $layoutPath = ROOT.'/app/view/layouts/';
 
 	protected Assets $assets;
 
@@ -34,6 +36,7 @@ abstract class Controller
 	{
 		if ($this->route->isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
 			return new AdminView($this);
+
 		} else {
 			return new UserView($this);
 		}
@@ -42,6 +45,15 @@ abstract class Controller
 	protected function createToken(): string
 	{
 			return $_SESSION['token'] = session_id();
+	}
+
+	public function getLayout(): string
+	{
+		$layout = $this->layoutPath.$this->layout.'.php';
+		if (is_readable($layout)){
+			return $layout;
+		}
+		return false;
 	}
 
 	public function getRoute()

@@ -22,6 +22,5 @@ class FileController extends AppController
 		$storage = new StorageImg();
 		$srcs = $storage->save($_POST['path'], $_FILES);
 		$this->exitJson(['srcs'=>$srcs]);
-
 	}
 }

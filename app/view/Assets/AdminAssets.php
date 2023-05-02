@@ -19,7 +19,10 @@ class AdminAssets extends Assets
 		$this->setCss('list');
 		$this->setCss('common');
 		$this->setCss('product');
+
 //		$this->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
 //		$this->setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");
+
+		$this->setCss('product');
 	}
 }
