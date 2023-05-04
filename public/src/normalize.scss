@@ -24,11 +24,8 @@ body {
   font-family: arial, sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
   padding: 0 calc(0px - (100vw - 100%)) 0 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow: hidden;
-  user-select: none;
   background-color: $color-gray1;
 
   @include _500 {

@@ -1,6 +1,8 @@
 <div class="category">
 
-	<? use app\view\Category\CategoryView;
+	<? use app\core\Auth;
+	 use app\core\Icon;
+	 use app\view\Category\CategoryView;
 	use app\view\Product\ProductView;
 
 	if (!isset($category)): ?>
@@ -47,6 +49,8 @@
 		  </div>
 		  <div class="product-wrap">
 
+					<? $admin = Auth::isAdmin();
+					$icon = Icon::edit(); ?>
 					<? foreach ($category->productsInStore as $product): ?>
 
 				 <a data-instore="<?= $product->instore ?? 0; ?>"
@@ -58,9 +62,14 @@
 					 <p><?= $product->priceWithCurrencyUnit(); ?></p>
 					 <p>Остаток - <?= number_format($product->instore, 0, '', ' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
 					 <p>Артикул: <?= $product->art ?? 0; ?></p>
-					 </span>
 
+					 </span>
 				 </a>
+						<? if ($admin): ?>
+					 <div class="edit">
+						 <a href="/adminsc/product/edit/<?= $product->id ?>"><?= $icon ?></a>
+					 </div>
+						<? endif; ?>
 
 					<? endforeach; ?>
 
@@ -76,8 +85,12 @@
 					 <p>Остаток - <?= number_format($product->instore, 0, '', ' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
 					 <p>Артикул: <?= $product->art ?? 0; ?></p>
 					 </span>
-
 				 </a>
+						<? if ($admin): ?>
+					 <div class="edit">
+						 <a href="/adminsc/product/edit/<?= $product->id ?>"><?= $icon ?></a>
+					 </div>
+						<? endif; ?>
 
 					<? endforeach; ?>
 
