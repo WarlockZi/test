@@ -97,6 +97,7 @@
 				 </div>
 
 					<? endforeach; ?>
+
 			  <div class="hoist">Наверх</div>
 		  </div>
 		<? endif; ?>
