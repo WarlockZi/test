@@ -97,12 +97,12 @@
 				 </div>
 
 					<? endforeach; ?>
-
+			  <div class="hoist">Наверх</div>
 		  </div>
 		<? endif; ?>
 	<? endif; ?>
 
-	<div class="hoist">Наверх</div>
+
 
 </div>
 
