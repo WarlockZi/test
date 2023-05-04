@@ -98,8 +98,8 @@
 
 					<? endforeach; ?>
 
-			  <div class="hoist">Наверх</div>
 		  </div>
+			  <div class="hoist">Наверх</div>
 		<? endif; ?>
 	<? endif; ?>
 
