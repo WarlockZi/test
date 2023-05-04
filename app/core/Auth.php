@@ -36,6 +36,14 @@ class Auth
 		}
 	}
 
+	public static function isAdmin(){
+		$user = self::getUser();
+		if (User::can($user, ['role_admin'])){
+			return true;
+		}
+		return false;
+	}
+
 
 	public static function autorize(): array
 	{
