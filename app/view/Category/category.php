@@ -102,5 +102,7 @@
 		<? endif; ?>
 	<? endif; ?>
 
+	<div class="hoist">Наверх</div>
+
 </div>
 
