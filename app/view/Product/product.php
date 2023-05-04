@@ -1,5 +1,6 @@
 <?
 
+use app\core\Auth;
 use app\core\Icon;
 use \app\Repository\ImageRepository;
 use \app\view\Product\ProductView;
@@ -30,26 +31,26 @@ if ($product): ?>
 			</div>
 
 
-<!--			<div class="to-cart">-->
-<!--					 --><?//= ProductView::renderToCart($product); ?>
-<!---->
-<!--				<div class="adjust none">-->
-<!--					<a href="/cart" class="button green">-->
-<!--						<span class='bigger'>В корзину</span>-->
-<!--					</a>-->
-<!---->
-<!--					<div class="plus-minus">-->
-<!--						<button tabindex="0" class="minus">-->
-<!--							--><?//= Icon::minus()?>
-<!--						</button>-->
-<!--						<span class="digit" contenteditable="true">1</span>-->
-<!--						<button tabindex="0" class="plus">-->
-<!--							--><?//= Icon::plus1()?>
-<!---->
-<!--						</button>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</div>-->
+			<!--			<div class="to-cart">-->
+			<!--					 --><? //= ProductView::renderToCart($product); ?>
+			<!---->
+			<!--				<div class="adjust none">-->
+			<!--					<a href="/cart" class="button green">-->
+			<!--						<span class='bigger'>В корзину</span>-->
+			<!--					</a>-->
+			<!---->
+			<!--					<div class="plus-minus">-->
+			<!--						<button tabindex="0" class="minus">-->
+			<!--							--><? //= Icon::minus()?>
+			<!--						</button>-->
+			<!--						<span class="digit" contenteditable="true">1</span>-->
+			<!--						<button tabindex="0" class="plus">-->
+			<!--							--><? //= Icon::plus1()?>
+			<!---->
+			<!--						</button>-->
+			<!--					</div>-->
+			<!--				</div>-->
+			<!--			</div>-->
 
 		</div>
 
@@ -142,7 +143,11 @@ if ($product): ?>
 				<label class="star" for="star-rating-1"><?= Icon::starUse() ?></label>
 			</div>
 		</div>
-
+		 <? if (Auth::isAdmin()): ?>
+		  <div class="edit">
+			  <a href="/adminsc/product/edit/<?=$product->id?>">Редакт</a>
+		  </div>
+		 <? endif; ?>
 
 		 <?= Icon::star() ?>
 		<!---->
