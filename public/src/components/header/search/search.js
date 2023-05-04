@@ -55,7 +55,7 @@ export default class Search {
     let li = createEl('li');
     let a = createEl('a');
     a.href = `/product/${row.slug}`;
-    li.append(a);
+    li.appendChild(a);
     let name = createEl('div', 'name', row.name);
     let art = createEl('div', 'art', row.art);
     let img = createEl('img');
