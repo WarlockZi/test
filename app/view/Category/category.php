@@ -1,8 +1,8 @@
 <div class="category">
 
 	<? use app\core\Auth;
-	 use app\core\Icon;
-	 use app\view\Category\CategoryView;
+	use app\core\Icon;
+	use app\view\Category\CategoryView;
 	use app\view\Product\ProductView;
 
 	if (!isset($category)): ?>
@@ -51,46 +51,50 @@
 
 					<? $admin = Auth::isAdmin();
 					$icon = Icon::edit(); ?>
-					<? foreach ($category->productsInStore as $product): ?>
 
-				 <a data-instore="<?= $product->instore ?? 0; ?>"
-				    data-price="<?= $product->getRelation('price')->price ?? 0; ?>"
-				    href="/product/<?= $product->slug; ?>" class="product">
-					 <h3 class="name"><?= $product->name; ?></h3>
-							 <?= ProductView::getMainImage($product) ?>
-					 <span class="footer">
+					<? foreach ($category->productsInStore as $product): ?>
+				 <div class="column">
+					 <a data-instore="<?= $product->instore ?? 0; ?>"
+					    data-price="<?= $product->getRelation('price')->price ?? 0; ?>"
+					    href="/product/<?= $product->slug; ?>" class="product">
+						 <h3 class="name"><?= $product->name; ?></h3>
+									<?= ProductView::getMainImage($product) ?>
+						 <span class="footer">
 					 <p><?= $product->priceWithCurrencyUnit(); ?></p>
 					 <p>Остаток - <?= number_format($product->instore, 0, '', ' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
 					 <p>Артикул: <?= $product->art ?? 0; ?></p>
 
 					 </span>
-				 </a>
-						<? if ($admin): ?>
-					 <div class="edit">
-						 <a href="/adminsc/product/edit/<?= $product->id ?>"><?= $icon ?></a>
-					 </div>
-						<? endif; ?>
+					 </a>
+							 <? if ($admin): ?>
+						<div class="edit">
+							<a href="/adminsc/product/edit/<?= $product->id ?>"><?= $icon ?></a>
+						</div>
+							 <? endif; ?>
 
+				 </div>
 					<? endforeach; ?>
 
 					<? foreach ($category->productsNotInStore as $product): ?>
+				 <div class="column">
 
-				 <a data-instore="<?= $product->instore ?? 0; ?>"
-				    data-price="<?= $product->getRelation('price')->price ?? 0; ?>"
-				    href="/product/<?= $product->slug; ?>" class="product">
-					 <h3 class="name"><?= $product->name; ?></h3>
-							 <?= ProductView::getMainImage($product) ?>
-					 <span class="footer">
+					 <a data-instore="<?= $product->instore ?? 0; ?>"
+					    data-price="<?= $product->getRelation('price')->price ?? 0; ?>"
+					    href="/product/<?= $product->slug; ?>" class="product">
+						 <h3 class="name"><?= $product->name; ?></h3>
+									<?= ProductView::getMainImage($product) ?>
+						 <span class="footer">
 					 <p>Цена: уточнить у менеджера</p>
 					 <p>Остаток - <?= number_format($product->instore, 0, '', ' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
 					 <p>Артикул: <?= $product->art ?? 0; ?></p>
 					 </span>
-				 </a>
-						<? if ($admin): ?>
-					 <div class="edit">
-						 <a href="/adminsc/product/edit/<?= $product->id ?>"><?= $icon ?></a>
-					 </div>
-						<? endif; ?>
+					 </a>
+							 <? if ($admin): ?>
+						<div class="edit">
+							<a href="/adminsc/product/edit/<?= $product->id ?>"><?= $icon ?></a>
+						</div>
+							 <? endif; ?>
+				 </div>
 
 					<? endforeach; ?>
 
