@@ -5,6 +5,7 @@ namespace app\model;
 
 use app\core\FS;
 use app\Services\Slug;
+use app\view\Image\ImageView;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -40,7 +41,7 @@ class Product extends Model
 		if (is_readable(ROOT . FS::platformSlashes($path))) {
 			return $path;
 		} else {
-			return '/pic/srvc/nophoto-min.jpg';
+			return ImageView::noImageSrc();
 		}
 	}
 	protected static function booted()

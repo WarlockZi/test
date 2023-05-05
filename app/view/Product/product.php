@@ -2,8 +2,7 @@
 
 use app\core\Auth;
 use app\core\Icon;
-use \app\Repository\ImageRepository;
-use \app\view\Product\ProductView;
+use app\view\Product\ProductView;
 
 if ($product): ?>
 
@@ -21,14 +20,9 @@ if ($product): ?>
 						 $product->detailImages); ?>
 			</div>
 
-			<div class="main-image">
-				<figure class="zoom"
-				        style="background-image: url('<?= ImageRepository::getProductMainImageSrc($product); ?>')">
+			<?=ProductView::getMainImage($product)?>
 
-							<?= ImageRepository::getProductMainImage($product); ?>
 
-				</figure>
-			</div>
 
 
 			<!--			<div class="to-cart">-->

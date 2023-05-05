@@ -5,9 +5,9 @@ export default class Search {
 
   constructor() {
 
-    // debugger;
-    let button = $('.search').first();
+    let button = $('.utils .search').first();
     let panel = $('.search-panel').first();
+    // debugger
     if (!button || !panel) return;
     this.button = button;
     this.panel = panel;
@@ -28,12 +28,15 @@ export default class Search {
   }
 
   closePanel({target}) {
-    if (!target.classList.contains('search-panel')) return false;
-    this.panel.classList.toggle('show');
-    this.result.innerHTML = '';
-    this.text.value = ''
+    // let list = target.classList
+    if (target.classList.contains('search-panel')) {
+
+      this.panel.classList.toggle('show');
+      this.result.innerHTML = '';
+      this.text.value = ''
+    }
   }
-  
+
   async find({target}) {
     this.result.innerHTML = '';
 
@@ -45,13 +48,13 @@ export default class Search {
     }
   }
 
-  makeString(arr){
-    arr.map((row)=>{
+  makeString(arr) {
+    arr.map((row) => {
       this.result.append(this.createLi(row))
     })
   }
 
-  createLi(row){
+  createLi(row) {
     let li = createEl('li');
     let a = createEl('a');
     a.href = `/product/${row.slug}`;

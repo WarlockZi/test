@@ -33,7 +33,7 @@ class FS
 	{
 		extract($vars);
 		ob_start();
-		require $file;
+		require FS::platformSlashes($file);
 		return ob_get_clean();
 	}
 

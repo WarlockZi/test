@@ -7,6 +7,7 @@ use app\controller\AppController;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
+use app\view\Category\CategoryFormView;
 use app\view\Category\CategoryView;
 
 
@@ -25,7 +26,7 @@ class CategoryController extends AppController
     $categories = CategoryRepository::treeAll();
     $accordion = '';
     if ($categories->count()) {
-      $accordion = CategoryView::indexTree($categories) ;
+      $accordion = CategoryFormView::indexTree($categories) ;
     }
     $this->set(compact('accordion'));
   }
@@ -34,13 +35,13 @@ class CategoryController extends AppController
   {
     $id = $this->route->id;
     $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($id, false, true);
-    $category = CategoryView::edit($id);
+    $category = CategoryFormView::edit($id);
     $this->set(compact('category', 'breadcrumbs'));
   }
 
   public function actionList()
   {
-    $table = CategoryView::list();
+    $table = CategoryFormView::list();
 
     $this->set(compact('table'));
   }

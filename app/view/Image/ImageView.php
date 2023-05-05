@@ -15,12 +15,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class ImageView
 {
+	public static $noPhotoRelative = '/pic/srvc/nophoto-min.jpg';
 
 	public $model = Image::class;
 
 	public static function noImage(){
-		return "<img src='/pic/srvc/nophoto-min.jpg'>";
+		$src = self::$noPhotoRelative;
+		return "<img src={$src}>";
 	}
+
+	public static function noImageSrc(){
+		return self::$noPhotoRelative;
+	}
+
 	public static function catMainImage(string $image){
 		return "<img src='{$image}'>";
 	}
