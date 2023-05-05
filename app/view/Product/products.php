@@ -1,3 +1,8 @@
+<?php
+
+use app\view\Image\ImageView;
+
+?>
 <main>
 	<div class="site">
 		<nav class="breadcrumbs">
@@ -14,7 +19,7 @@
 					  <div class="product">
 						  <div class="product-front" <?= "/" ?>>
 							  <div class="img-container">
-								  <img src="<?= $product['dpic'] ? '/pic' : '/pic/srvc/nophoto-min.jpg' ?><?= $product['dpic']; ?>"
+								  <img src="<?= $product['dpic'] ? '/pic' : ImageView::noImage() ?><?= $product['dpic']; ?>"
 								       alt="<?= $product['name']; ?>">
 							  </div>
 							  <a href="/catalog<?= $product['durl']; ?>"><?= $product['name']; ?></a>

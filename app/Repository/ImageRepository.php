@@ -8,6 +8,7 @@ use app\core\FS;
 use app\model\Image;
 use app\model\Product;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
+use app\view\Image\ImageView;
 use Illuminate\Database\Eloquent\Model;
 
 class ImageRepository
@@ -42,7 +43,11 @@ class ImageRepository
 
 	public static function getProductMainImageSrc(Product $product): string
 	{
-		return "/pic/product/uploads/{$product->art}.jpg";
+		$path = "/pic/product/uploads/{$product->art}.jpg";
+		if (is_readable(FS::platformSlashes(ROOT . $path))) {
+			return $path;
+		}
+		return ImageView::noImageSrc();
 	}
 
 	public static function getProductMainImage(Product $product): string
@@ -51,7 +56,7 @@ class ImageRepository
 		$del = ROOT . FS::platformSlashes($src);
 		if (is_readable($del)) {
 			$name = $product['name'];
-			return "<img title = '{$name}' src = '{$src}' alt = '{$name}' />";
+			return "<img src = '{$src}' title = '{$name}' alt = '{$name}'/>";
 		} else {
 			$src = ImageRepository::getImg('');
 			return "<img src = {$src} {$del}/>";
@@ -159,7 +164,7 @@ class ImageRepository
 		if (is_readable($file) && $path) {
 			return $path;
 		} else {
-			return '/pic/srvc/nophoto-min.jpg';
+			return ImageView::noImageSrc();
 		}
 	}
 
