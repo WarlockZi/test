@@ -1,10 +1,15 @@
+<?php
+
+use app\core\Icon;
+
+?>
 <div
 		dnd
 	<?= $dnd->path; ?>
 	<?= $dnd->class; ?>
 	<?= $dnd->tooltip; ?>
 >
-	<?= \app\core\Icon::plus() ?>
+	<?= Icon::download() ?>
 </div>
 
 

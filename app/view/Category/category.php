@@ -1,11 +1,10 @@
 <div class="category">
 
 	<? use app\core\Auth;
-	use app\core\Icon;
-	use app\view\Category\CategoryView;
-	use app\view\Product\ProductView;
+	 use app\core\Icon;
+	 use app\view\Category\CategoryView;
 
-	if (!isset($category)): ?>
+	 if (!isset($category)): ?>
 	  <div class="no-categories">
 		  <H1>Такой категории нет</H1>
 	  </div>
@@ -46,47 +45,8 @@
 
 		  <div class="products-header">
 
-			  <!--			  <div class="search-panel">-->
-			  <!--				  <div class="wrap">-->
-			  <!--					  <ul class="result">-->
-			  <!--						  UL-->
-			  <!--						  <li>-->
-			  <!--							  <a href="/product/perchatki_lateksnye_high_risk_38g_sverhpr__neopudr__nesteril__tekst__r_s__10___safe_care___25_250">ddd</a>-->
-			  <!--							  <a href="/product/perchatki_lateksnye_high_risk_38g_sverhpr__neopudr__nesteril__tekst__r_s__10___safe_care___25_250">-->
-			  <!--								  <div class="art">DL215</div>-->
-			  <!--							  </a>-->
-			  <!--						  </li>-->
-			  <!--					  </ul>-->
-			  <!--				  </div>-->
-			  <!--			  </div>-->
-
 			  <h1>Товары</h1>
 
-
-			  <!--			  <div class="search-panel show">-->
-			  <!--				  <div class="wrap">-->
-			  <!--					  <input type="text" class="text">-->
-			  <!---->
-			  <!---->
-			  <!--					  <ul class="result">-->
-			  <!--						  <li>-->
-			  <!--							  <a href="/product/zerkalo_ginekologicheskoe_s_povorotnym_fiksatorom_sterilnoe_r_s__medicinskie_izdeliya___up_130sht">-->
-			  <!--								  <h3 class="name">Зеркало гинекологическое с поворотным фиксатором стерильное р.S /Медицинские-->
-			  <!--									  изделия/ (уп.130шт)</h3>-->
-			  <!--								  <img src="/pic/product/uploads/Зер103.jpg" loading="lazy"> <span class="footer">-->
-			  <!---->
-			  <!--							  </a>-->
-			  <!---->
-			  <!--							  <a href="/product/perchatki_lateksnye_high_risk_38g_sverhpr__neopudr__nesteril__tekst__r_s__10___safe_care___25_250">ddd</a>-->
-			  <!--							  <a href="/product/perchatki_lateksnye_high_risk_38g_sverhpr__neopudr__nesteril__tekst__r_s__10___safe_care___25_250">-->
-			  <!--								  <div class="art">DL215</div>-->
-			  <!--							  </a>-->
-			  <!--						  </li>-->
-			  <!--					  </ul>-->
-			  <!---->
-			  <!---->
-			  <!--				  </div>-->
-			  <!--			  </div>-->
 
 			  <!--					--><? //= $category->products->filters ?>
 		  </div>

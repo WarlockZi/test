@@ -3,8 +3,8 @@ import {$, debounce, post, createEl} from '../../../common'
 
 export default class Search {
 
-  constructor() {
-
+  constructor(admin=false) {
+    this.admin = admin;
     let button = $('.utils .search').first();
     let panel = $('.search-panel').first();
     // debugger
@@ -23,6 +23,7 @@ export default class Search {
 
   showPanel() {
     this.panel.classList.toggle('show');
+    this.result.style.display = 'initial';
     this.result.innerHTML = '';
     this.text.value = ''
   }
@@ -54,10 +55,18 @@ export default class Search {
     })
   }
 
+  composeHref(row){
+    if (this.admin){
+      return `/adminsc/product/edit/${row.id}`
+    }else {
+      return `/product/${row.slug}`
+    }
+  }
+
   createLi(row) {
     let li = createEl('li');
     let a = createEl('a');
-    a.href = `/product/${row.slug}`;
+    a.href = this.composeHref(row);
     li.appendChild(a);
     let name = createEl('div', 'name', row.name);
     let art = createEl('div', 'art', row.art);

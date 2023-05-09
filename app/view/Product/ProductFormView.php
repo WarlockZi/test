@@ -119,8 +119,7 @@ class ProductFormView
 			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
-						self::mainImage($product)
-//						self::getImage($product, 'mainImages', 'main')
+						ProductView::mainImage($product)
 					)
 			)
 			->tab(

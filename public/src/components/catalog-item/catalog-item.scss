@@ -129,6 +129,10 @@
     padding: 5px 0;
     align-items: center;
 
+    a {
+      word-break: break-word;
+    }
+
     .field {
       display: flex;
       justify-content: flex-end;
@@ -137,6 +141,7 @@
       font-weight: 400;
       text-align: end;
       flex: 0 0;
+
     }
 
     .text:not([contenteditable]) {

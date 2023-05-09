@@ -7,6 +7,7 @@ use app\model\Product;
 use app\Repository\ImageRepository;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\Image\ImageView;
+use Engine\DI\DI;
 
 class ProductView
 {
@@ -24,7 +25,11 @@ class ProductView
 		return "<div data-model='product' class = 'pagination'>{$str}</div>";
 	}
 
-	protected static function mainImage(Product $p)
+	public static function toCart(Product $p){
+		return FS::getFileContent(__DIR__.'/toCart.php', compact('p'));
+	}
+
+	public static function mainImage(Product $p)
 	{
 		$dnd = DndBuilder::make('product/uploads', 'add-file');
 		$img = ImageRepository::getProductMainImage($p);
@@ -38,24 +43,41 @@ class ProductView
 
 	public static function getMainImage(Product $product): string
 	{
-		$file = FS::platformSlashes(ProductView::getMainImageFile($product));
+		$file = ProductView::getMainImageFile($product);
 		if (is_readable($file)) {
-			return FS::platformSlashes(FS::getFileContent(__DIR__ . '/main_image.php', compact('product')));
+			return FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
 		} else {
-			$path = self::$mainImagePath . $product->art . '.jpg';
-			$file = FS::platformSlashes(ROOT . $path);
-			if (is_file($file)) {
-				return "<img src='$path' loading='lazy'>";
-			}
-			return '';
+
+			return ImageView::noImage();
+//			$path = self::$mainImagePath . $product->art . '.jpg';
+//			$file = FS::platformSlashes(ROOT . $path);
+//			if (is_file($file)) {
+//				return "<img src='$path' loading='lazy'>";
+//			}
+//			return '';
 		}
 	}
-
+//	public static function getCardMainImage(Product $product): string
+//	{
+//		$file = ProductView::getMainImageFile($product);
+//		if (is_readable($file)) {
+//			return FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
+//		} else {
+//
+//			return ImageView::noImage();
+////			$path = self::$mainImagePath . $product->art . '.jpg';
+////			$file = FS::platformSlashes(ROOT . $path);
+////			if (is_file($file)) {
+////				return "<img src='$path' loading='lazy'>";
+////			}
+////			return '';
+//		}
+//	}
 	public static function getCardMainImage($product)
 	{
 		$file = FS::platformSlashes(ProductView::getMainImageFile($product));
 		if (is_readable($file)) {
-			return FS::platformSlashes(FS::getFileContent(__DIR__ . '/main_image.php', compact('product')));
+			return FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
 		} else {
 			return ImageView::noImage();
 		}
