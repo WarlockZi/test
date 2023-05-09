@@ -8,12 +8,11 @@
   justify-content: space-between;
   max-width: 1310px;
   border-bottom: 1px solid #f0f0f0;
-  //padding: 15px 0px 15px 0px;
   max-height: 52px;
   position: absolute;
   top: 0;
   min-width: 100%;
-  //z-index: 0;
+  z-index: 1;
 
   @include _600 {
     display: none;
@@ -30,7 +29,6 @@
     }
 
   }
-
 
 
 }
