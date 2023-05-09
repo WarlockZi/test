@@ -18,6 +18,14 @@
     display: none;
   }
 
+  .relative{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    background-color: whitesmoke;
+    min-width: 100%;
+  }
+
   .logo {
     display: flex;
     align-items: center;
