@@ -9,18 +9,30 @@ export default class Cart {
     if (!container) return;
     this.container = container;
 
-    // this.counter = $('#counter').first()
-    this.counterEl = $('#counter span').first();
+    this.counterEl = $('#counter').first();
+
     this.counter = new Counter();
+    this.counter.start();
+    debugger;
+    this.counter.showCounter(this.counterEl);
+
     this.rows = container.querySelectorAll('.row');
     this.container.onclick = this.handleClick;
 
-    // if (this.rows.length) {
-      this.counterStart.call(this)
-    // }
+    this.counterStart.call(this)
+  }
+
+  cartRemove(){
+
   }
 
   counterStart() {
+    if (!this.counter.dif) {
+      this.cartRemove()
+    } else {
+      this.counter.showCounter(this.counterEl)
+    }
+
     let end = getCookie('cart');
     this.counter.setEnd(end);
     let res = this.duration();
@@ -30,23 +42,22 @@ export default class Cart {
     }.bind(this), 1000)
   }
 
-  duration(){
+  duration() {
     this.counter.getFormattedDiff()
     // cookieRemove('cart')
-
   }
 
 
-  async dropCart() {
-    this.counter.remove();
-    let cartToken = getToken();
-    let res = await post('/cart/drop', {cartToken});
-    if (res?.arr?.ok) {
-      debugger;
-      this.container.innerHTML = 'Корзина пуста'
-    }
-
-  }
+  // async dropCart() {
+  //   this.counter.remove();
+  //   let cartToken = getToken();
+  //   let res = await post('/cart/drop', {cartToken});
+  //   if (res?.arr?.ok) {
+  //     debugger;
+  //     this.container.innerHTML = 'Корзина пуста'
+  //   }
+  //
+  // }
 
   getRows() {
     let rows = [].map.call(this.rows, (row) => {
