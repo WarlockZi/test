@@ -29,6 +29,7 @@ class SearchController extends AppController
 			->take(20)
 			->get()
 			->toArray();
+
 		$res = array_merge($art, $name);
 
 		$this->exitJson(['found' => $res]);

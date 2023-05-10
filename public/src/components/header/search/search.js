@@ -3,7 +3,7 @@ import {$, debounce, post, createEl} from '../../../common'
 
 export default class Search {
 
-  constructor(admin=false) {
+  constructor(admin = false) {
     this.admin = admin;
     let button = $('.utils .search').first();
     let panel = $('.search-panel').first();
@@ -13,24 +13,29 @@ export default class Search {
     this.panel = panel;
     this.text = $(panel).find('.text');
     this.result = $(panel).find('.result');
+    this.closeBtn = $(panel).find('.close');
 
     this.button.onclick = this.showPanel.bind(this);
     this.panel.onclick = this.closePanel.bind(this);
 
     this.debouncedKeyUp = debounce(this.find, 800);
-    this.text.onkeyup = this.debouncedKeyUp.bind(this)
+    this.text.onkeyup = this.debouncedKeyUp.bind(this);
+
+    this.closeBtn.onklick = this.closePanel.bind(this)
   }
 
   showPanel() {
     this.panel.classList.toggle('show');
-    this.result.style.display = 'initial';
     this.result.innerHTML = '';
     this.text.value = ''
   }
 
   closePanel({target}) {
     // let list = target.classList
-    if (target.classList.contains('search-panel')) {
+    if (
+      target.classList.contains('search-panel') ||
+      target.classList.contains('close')
+    ) {
 
       this.panel.classList.toggle('show');
       this.result.innerHTML = '';
@@ -45,6 +50,7 @@ export default class Search {
     if (!text) return false;
     let res = await post('/search', {text});
     if (res?.arr?.found) {
+      this.result.style.display = 'initial';
       this.makeString(res?.arr?.found)
     }
   }
@@ -55,10 +61,10 @@ export default class Search {
     })
   }
 
-  composeHref(row){
-    if (this.admin){
+  composeHref(row) {
+    if (this.admin) {
       return `/adminsc/product/edit/${row.id}`
-    }else {
+    } else {
       return `/product/${row.slug}`
     }
   }

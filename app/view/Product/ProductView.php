@@ -7,7 +7,6 @@ use app\model\Product;
 use app\Repository\ImageRepository;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\Image\ImageView;
-use Engine\DI\DI;
 
 class ProductView
 {
@@ -49,14 +48,9 @@ class ProductView
 		} else {
 
 			return ImageView::noImage();
-//			$path = self::$mainImagePath . $product->art . '.jpg';
-//			$file = FS::platformSlashes(ROOT . $path);
-//			if (is_file($file)) {
-//				return "<img src='$path' loading='lazy'>";
-//			}
-//			return '';
 		}
 	}
+
 //	public static function getCardMainImage(Product $product): string
 //	{
 //		$file = ProductView::getMainImageFile($product);

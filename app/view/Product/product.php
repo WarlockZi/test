@@ -23,7 +23,7 @@ if ($product): ?>
 			</div>
 
 				<?= ProductView::getCardMainImage($product) ?>
-			<!--				--><? //= ProductView::toCart($product) ?>
+							<?= ProductView::toCart($product) ?>
 		</div>
 
 
