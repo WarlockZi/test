@@ -5,9 +5,11 @@
 
   .search {
     position: relative;
-    height: 32px;
+    //height: 32px;
+    background: $color-main;
     margin: 2px 15px;
     display: flex;
+    height: 100%;
   }
 
   .search-top {

@@ -1,15 +1,15 @@
 <div class="category">
 
 	<? use app\core\Auth;
-	use app\core\Icon;
-	use app\view\Category\CategoryView;
-	use app\view\Product\ProductView;
+	 use app\core\Icon;
+	 use app\view\Category\CategoryView;
 
-	if (!isset($category)): ?>
+	 if (!isset($category)): ?>
 	  <div class="no-categories">
 		  <H1>Такой категории нет</H1>
 	  </div>
 	<? else: ?>
+
 
 		<?= $breadcrumbs ?? '' ?>
 
@@ -44,7 +44,10 @@
 		<? else: ?>
 
 		  <div class="products-header">
+
 			  <h1>Товары</h1>
+
+
 			  <!--					--><? //= $category->products->filters ?>
 		  </div>
 		  <div class="product-wrap">
@@ -53,26 +56,9 @@
 					$icon = Icon::edit(); ?>
 
 					<? foreach ($category->productsInStore as $product): ?>
-				 <div class="column">
-					 <a data-instore="<?= $product->instore ?? 0; ?>"
-					    data-price="<?= $product->getRelation('price')->price ?? 0; ?>"
-					    href="/product/<?= $product->slug; ?>" class="product">
-						 <h3 class="name"><?= $product->name; ?></h3>
-									<?= ProductView::getMainImage($product) ?>
-						 <span class="footer">
-					 <p><?= $product->priceWithCurrencyUnit(); ?></p>
-					 <p>Остаток - <?= number_format($product->instore, 0, '', ' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
-					 <p>Артикул: <?= $product->art ?? 0; ?></p>
 
-					 </span>
-					 </a>
-							 <? if ($admin): ?>
-						<div class="edit">
-							<a href="/adminsc/product/edit/<?= $product->id ?>"><?= $icon ?></a>
-						</div>
-							 <? endif; ?>
+						<?= CategoryView::getProductCard($product,$icon) ?>
 
-				 </div>
 					<? endforeach; ?>
 
 					<? foreach ($category->productsNotInStore as $product): ?>
@@ -82,7 +68,7 @@
 					    data-price="<?= $product->getRelation('price')->price ?? 0; ?>"
 					    href="/product/<?= $product->slug; ?>" class="product">
 						 <h3 class="name"><?= $product->name; ?></h3>
-									<?= ProductView::getMainImage($product) ?>
+									<?= CategoryView::getProductMainImage($product) ?>
 						 <span class="footer">
 					 <p>Цена: уточнить у менеджера</p>
 					 <p>Остаток - <?= number_format($product->instore, 0, '', ' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
@@ -98,11 +84,10 @@
 
 					<? endforeach; ?>
 
+		  <div class="hoist">Наверх</div>
 		  </div>
-			  <div class="hoist">Наверх</div>
 		<? endif; ?>
 	<? endif; ?>
-
 
 
 </div>

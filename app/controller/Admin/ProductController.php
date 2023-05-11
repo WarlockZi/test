@@ -6,7 +6,7 @@ use app\controller\AppController;
 use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
-use app\view\Product\ProductView;
+use app\view\Product\ProductFormView;
 
 
 class ProductController extends AppController
@@ -18,7 +18,7 @@ class ProductController extends AppController
     $id = $this->route->id;
     $prod = ProductRepository::edit($id);
     if ($prod) {
-      $product = ProductView::edit($prod);
+      $product = ProductFormView::edit($prod);
       $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);
     }
     $this->set(compact('product', 'breadcrumbs'));
@@ -26,11 +26,8 @@ class ProductController extends AppController
 
 	public function actionList()
 	{
-//		$pagination = ProductView::pagination();
-//		$req = $this->ajax;
-
 		$items = ProductRepository::list();
-		$list = ProductView::list($items);
+		$list = ProductFormView::list($items);
 		$this->set(compact('list'));
 	}
 
