@@ -46,7 +46,7 @@ import Search from "../components/header/search/search";
 
 $(document).ready(function () {
 
-  new Search();
+  new Search(true);
   select();
   morph();
 

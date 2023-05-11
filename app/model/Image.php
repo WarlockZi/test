@@ -35,7 +35,7 @@ class Image extends Model
 		if (is_file(ROOT . '$path')) {
 			return '/' . $this->imagePath . '/' . $path . $this->hash . '.' . $ext;
 		}
-		return "/pic/srvc/nophoto-min.jpg";
+		return ImageView::noImageSrc();
 //		return ImageView::noImage();
 	}
 

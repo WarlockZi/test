@@ -1,52 +1,54 @@
 import './counter.scss'
 
 export default class Counter {
-  constructor() {
-    this.seconds = 0;
-    this.minutes = 0;
-    this.hours = 0;
-    this.days = 0;
-    this.hour = 3600;
-    this.day = 3600 * 24;
-    this.diff = (24 * 60 * 60) + (23 * 60 * 60) + (58 * 60) + (58)
+  constructor(el, deadLineMs, callback) {
+
+    this.deadline = deadLineMs;
+    this.callback = callback;
+
+    this.$days = el.querySelector('.days');
+    this.$hours = el.querySelector('.hours');
+    this.$minutes = el.querySelector('.minutes');
+    this.$seconds = el.querySelector('.seconds');
+
+    this.timerId = null;
+    this.countdownTimer.call(this);
+    this.timerId = setInterval(this.countdownTimer.bind(this), 1000);
   }
 
-  getDiff(end) {
-    if (!end) return false;
-    let date = new Date();
-    let now = Math.abs(Math.round(date.getTime() / 1000));
-    this.diff = end - now;
-    return this.diff
-  }
+  countdownTimer() {
+    const deadline = this.deadline;
 
-  setEnd(end) {
-    if (!end) return false;
-    let date = new Date();
-    let now = Math.abs(Math.round(date.getTime() / 1000));
-    this.diff = end - now;
-    return this.diff
-  }
+    let diff = new Date(deadline) - new Date();
 
-
-  getFormattedDiff() {
-    // function timer() {
-      this.days = (this.diff / this.day) | 0;
-      let msecDays = this.days * this.day;
-      this.hours = ((this.diff - msecDays) / 3600) | 0;
-      let msecHours = this.hours * this.hour;
-      this.minutes = ((this.diff - msecDays - msecHours) / 60) | 0;
-      let msecMinutes = this.minutes * 60;
-      this.seconds = (this.diff - msecDays - msecHours - msecMinutes) | 0;
-      // debugger
-
-      this.seconds = this.seconds < 10 ? "0" + this.seconds : this.seconds;
-      this.minutes = this.minutes < 10 ? "0" + this.minutes : this.minutes;
-      this.hours = this.hours < 10 ? "0" + this.hours : this.hours;
-      this.days = this.days < 10 ? "0" + this.days : this.days;
-      this.diff = --this.diff
+    if (diff <= 0) {
+      clearInterval(this.timerId);
+      if (this.callback) this.callback()
     }
+    const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;
+    const hours = diff > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
+    const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
+    const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 0;
 
-    // timer.call(this)
-    // setInterval(timer.bind(this), 1000);
+    this.$days.textContent = days < 10 ? '0' + days : days;
+    this.$hours.textContent = hours < 10 ? '0' + hours : hours;
+    this.$minutes.textContent = minutes < 10 ? '0' + minutes : minutes;
+    this.$seconds.textContent = seconds < 10 ? '0' + seconds : seconds;
+
+    this.$days.dataset.title = this.declensionNum(days, ['день', 'дня', 'дней']);
+    this.$hours.dataset.title = this.declensionNum(hours, ['час', 'часа', 'часов']);
+    this.$minutes.dataset.title = this.declensionNum(minutes, ['минута', 'минуты', 'минут']);
+    this.$seconds.dataset.title = this.declensionNum(seconds, ['секунда', 'секунды', 'секунд'])
+  }
+
+  reset(deadline) {
+    this.deadline = deadline;
+    this.countdownTimer.call(this);
+    this.timerId = setInterval(this.countdownTimer.bind(this), 1000);
+  }
+
+  declensionNum(num, words) {
+    return words[(num % 100 > 4 && num % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(num % 10 < 5) ? num % 10 : 5]];
+  }
 
 }

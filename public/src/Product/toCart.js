@@ -14,14 +14,14 @@ export default function toCart({target}) {
     showBlue: function () {
       this.blue.classList.remove('none');
       this.adjust.classList.add('none');
-      this.count.innerText = --this.count.innerText
+      // this.count.innerText = --this.count.innerText
     },
 
     showGreen: function () {
       this.blue.classList.add('none');
       this.adjust.classList.remove('none');
-      this.count.style.display = 'flex';
-      this.count.innerText = ++this.count.innerText;
+      // this.count.style.display = 'flex';
+      // this.count.innerText = ++this.count.innerText;
 
 
       let obj = this.dto();
@@ -62,7 +62,7 @@ export default function toCart({target}) {
   } else if (target.classList.contains('minus')) {
     if (cart.digit > 1) {
       cart.digitEl.innerText = --cart.digit;
-      cart.count.innerText = cart.digit;
+      // cart.count.innerText = cart.digit;
       let obj = cart.dto();
       cart.debounced(cart.send.bind(obj))
     } else if (cart.digit === 1) {
@@ -71,7 +71,7 @@ export default function toCart({target}) {
 
   } else if (target.classList.contains('plus')) {
     cart.digitEl.innerText = ++cart.digit;
-    cart.count.innerText = cart.digit;
+    // cart.count.innerText = cart.digit;
     let obj = cart.dto();
     cart.debounced(cart.send.bind(obj))
   }

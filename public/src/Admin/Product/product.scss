@@ -4,8 +4,10 @@
 
 [data-morph-relation] {
 
+  .dnd-container {
 
-  @include dnd-container();
+    @include dnd-container();
+  }
 
   @include dnd();
 

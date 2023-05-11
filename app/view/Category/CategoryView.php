@@ -2,215 +2,43 @@
 
 namespace app\view\Category;
 
+use app\core\Auth;
+use app\core\FS;
 use app\model\Category;
 use app\model\Product;
-use app\model\Property;
-use app\Repository\CategoryRepository;
-use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
-use app\view\components\Builders\Dnd\DndBuilder;
-use app\view\components\Builders\ItemBuilder\ItemBuilder;
-use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
-use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
-use app\view\components\Builders\Morph\MorphBuilder;
-use app\view\components\Builders\SelectBuilder\TreeABuilder;
+use app\Repository\ImageRepository;
 use app\view\Image\ImageView;
+use app\view\Product\ProductView;
 
 class CategoryView
 {
 
-	public static function indexTree($categoriesTree)
+	public static function getProductCard(Product $product, $icon): string
 	{
-		return TreeABuilder::build(
-			$categoriesTree, 'children_recursive', 2)
-			->href('/adminsc/category/edit/')
-			->get();
+		$admin = Auth::isAdmin();
+		$srt = FS::getFileContent(__DIR__ . '/product_card.php', compact('product', 'admin', 'icon'));
+		return $srt;
 	}
 
-	public static function edit(?int $id): string
+	public static function getProductMainImage(Product $product)
 	{
-		$category = CategoryRepository::edit($id);
-
-		return ItemBuilder::build($category, 'category')
-			->pageTitle('Категория :  ' . $category->name)
-			->field(
-				ItemFieldBuilder::build('id', $category)
-					->name('ID')
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('slug', $category)
-					->name('Адрес')
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('name', $category)
-					->name('Наименование')
-					->contenteditable()
-					->required()
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('show_front', $category)
-					->name('Показывать на главоной')
-					->html(
-						CheckboxBuilder::build('show_front',
-							$category->show_front)
-							->get()
-					)
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('categiry_id', $category)
-					->name('Принадлежит')
-					->html(
-						CategoryRepository::selector1($category->category_id, CategoryRepository::editSelectorExcluded($category))
-					)
-					->get()
-			)
-			->tab(
-				ItemTabBuilder::build('Основная картинка')
-					->html(
-						MorphBuilder::build($category, 'mainImages', 'main')
-							->html(DndBuilder::make('category'))
-							->html(ImageView::morphImages($category, 'mainImages'))
-							->get()
-					)
-			)
-			->tab(
-				ItemTabBuilder::build('Товары категории')
-					->html(
-						MyList::build(Product::class)
-							->pageTitle('Товары категории')
-							->realtion('products')
-							->addButton('ajax')
-							->items($category['products'] ?? [])
-							->column(
-								ListColumnBuilder::build('id')
-									->width("40px")
-									->get()
-							)
-							->column(
-								ListColumnBuilder::build('name')
-									->name("Название")
-									->get()
-							)
-							->column(
-								ListColumnBuilder::build('art')
-									->name("Арт")
-									->search()
-									->width("100px")
-									->get()
-							)
-							->edit()
-							->del()
-							->get()
-					)
-			)
-			->tab(
-				ItemTabBuilder::build('Св-ва категории')
-					->html(
-						MorphBuilder::build($category, 'properties', 'prop', true)
-							->many()
-							->html(
-								MyList::build(Property::class)
-									->items($category->properties ?? [])
-									->pageTitle('Св-ва категории')
-									->addButton('ajax')
-									->column(
-										ListColumnBuilder::build('id')
-											->width('40px')
-											->get()
-									)
-									->column(
-										ListColumnBuilder::build('name')
-											->name("Назввание")
-											->contenteditable()
-											->get()
-									)
-									->edit()
-									->del()
-									->get())
-							->get()
-					)
-			)
-			->tab(
-				ItemTabBuilder::build('Подкатегории')
-					->html(
-						MyList::build(Category::class)
-							->pageTitle('Подкатегории')
-							->items($category['childrenNotDeleted'] ?? [])
-							->column(
-								ListColumnBuilder::build('id')
-									->width('40px')
-									->get()
-							)
-							->column(
-								ListColumnBuilder::build('name')
-									->name("Назввание")
-									->contenteditable()
-									->get()
-							)
-							->realtion('childrenNotDeleted')
-							->edit()
-							->del()
-							->addButton('ajax')
-							->get()
-					)
-			)
-			->tab(
-				ItemTabBuilder::build('Удаленные Подкатегории')
-					->html(
-						MyList::build(Category::class)
-							->pageTitle('Удаленные подкатегории')
-							->items($category['childrenDeleted'] ?? [])
-							->column(
-								ListColumnBuilder::build('id')
-									->width('40px')
-									->get()
-							)
-							->column(
-								ListColumnBuilder::build('name')
-									->name("Назввание")
-									->contenteditable()
-									->get()
-							)
-							->realtion('childrenDeleted')
-							->edit()
-							->del()
-							->addButton('ajax')
-							->get()
-					)
-			)
-//			->del()
-			->softDel()
-			->toList('', 'К списку категорий')
-			->get();
-	}
-
-	public static function list(): string
-	{
-		return MyList::build(Category::class, 10)
-			->column(
-				ListColumnBuilder::build('id')
-					->get()
-			)->column(
-				ListColumnBuilder::build('name')
-					->get()
-			)
-			->edit()
-			->get();
+		$file = ProductView::getMainImageFile($product);
+		if (is_readable($file)) {
+			$relativePath = ImageRepository::getProductMainImageSrc($product);
+			$srt = FS::getFileContent(__DIR__ . '/product_main_image.php', compact('relativePath', 'product'));
+			return $srt;
+		} else {
+			return ImageView::noImage();
+		}
 	}
 
 	public static function getMainImage(Category $category)
 	{
-		if ($category->mainImages->count()){
+		if ($category->mainImages->count()) {
 			ImageView::catMainImage($category->mainImages->first());
-		}else{
+		} else {
 			return ImageView::noImage();
 		}
-
 	}
 
 //	public static function selector(int $selected, int $exclude = -1): string

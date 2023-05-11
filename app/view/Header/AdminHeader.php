@@ -17,7 +17,7 @@ class AdminHeader implements IHeaderable
 	public function __construct(array $user)
 	{
 		$this->user = $user;
-		$this->path = ROOT.'/app/view/Header/';
+		$this->path = __DIR__.'/';
 		$this->setHeader($user);
 		return $this->getHeader();
 	}
