@@ -3,10 +3,16 @@
 	<div id="counter">
 		Отлично! Вы набрали корзинку товаров. Чтобы оформить заказ - зарегистрируйтесь!
 		Иначе корзинка сгорит через
-		<div class="h"></div> :
-		<div class="m"></div> :
-		<div class="s"></div>
-		секунд
+
+		<div id="timer">
+			<div class="items">
+				<div class="item days">00</div>
+				<div class="item hours">00</div>
+				<div class="item minutes">00</div>
+				<div class="item seconds">00</div>
+			</div>
+		</div>
+
 	</div>
 
 	<? use app\core\Icon;
