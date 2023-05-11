@@ -1,7 +1,7 @@
 import './check_mark.scss'
 import './popup.scss'
 import Cart from '../Cart/cart'
-import {$, createEl, post} from '../common';
+import {$, createEl, post} from '../common'
 
 export default function popup() {
   let popupShow = $('.popup-container .popup-show').first();
@@ -34,7 +34,6 @@ export default function popup() {
 
     let data = {form,rows};
 
-
     close();
     let res = await post('/adminsc/orderItem/toorder', data);
     if (res.arr.ok) {
@@ -60,13 +59,13 @@ export default function popup() {
   }
 
   function show() {
-    // debugger;
+    // debugger
     popup.wrapper.style.display = 'flex';
     setTimeout(function () {
       popup.overlay.style.opacity = 1;
       popup.box.style.opacity = 1;
       popup.box.classList.remove('transform-out');
-      popup.box.classList.add('transform-in');
+      popup.box.classList.add('transform-in')
     }, 1)
   }
 
@@ -76,7 +75,7 @@ export default function popup() {
     popup.overlay.style.opacity = 0;
     popup.box.style.opacity = 0;
     setTimeout(function () {
-      popup.wrapper.style.display = 'none';
+      popup.wrapper.style.display = 'none'
     }, 800)
   }
 }

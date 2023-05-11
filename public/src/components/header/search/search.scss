@@ -1,19 +1,6 @@
 @import "../../../var";
 
-
-.search-panel {
-  background: #f5f5f5;
-  position: absolute;
-  width: 100%;
-  top: 0;
-  display: flex;
-  align-items: start;
-  justify-content: end;
-  transition: top 500ms ease-in;
-  z-index: -1;
-  box-shadow: 1px -2px 20px 0px #ccc;
-
-
+.admin-layout_header {
   .utils {
     .search {
       height: 100%;
@@ -33,6 +20,20 @@
       }
     }
   }
+}
+
+.search-panel {
+  background: #f5f5f5;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  display: flex;
+  align-items: start;
+  justify-content: end;
+  transition: top 500ms ease-in;
+  z-index: -1;
+  box-shadow: 1px -2px 20px 0px #ccc;
+
 
   &.show {
     top: 100%;
@@ -66,7 +67,8 @@
       &:hover {
         background-color: $color-white-hover;
       }
-      svg{
+
+      svg {
         pointer-events: none;
       }
     }
