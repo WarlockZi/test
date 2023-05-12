@@ -27,12 +27,12 @@ class OrderItemController Extends AppController
 		if ($this->ajax) {
 			$form = $this->ajax['form'];
 			$sess = $_SESSION['token'];
-			$orderItems = OrderItem::where('sess',$sess)->get();
+			$orderItems = OrderItem::where('sess', $sess)->get();
 			$lead = Lead::create($form);
 			$order = Order::create($form);
 			$order->lead()->associate($lead);
 			$order->save();
-			foreach ($orderItems as $orderItem){
+			foreach ($orderItems as $orderItem) {
 				$orderItem->order()->associate($order);
 				$orderItem->save();
 			}
@@ -45,18 +45,12 @@ class OrderItemController Extends AppController
 		$id = $this->ajax['id'];
 
 		if (!$id) $this->exitWithMsg('No id');
-		$model = new $this->model;
-		if ($model instanceof Model) {
-			$item = $model::where('product_id', $id)->first();
-			if ($item) {
-//				$destroy = $item->delete();
-				$this->exitJson(['ok' => $id, 'popup' => 'Ok']);
-			}
-		} else {
-			if ($model::delete($id)) {
-				$this->exitWithPopup('Удален');
-			}
+
+		if ($this->model::destroy($id)) {
+			$this->exitJson(['ok' => true, 'popup' => 'Удален']);
 		}
+		$this->exitWithPopup('Не удален');
+
 	}
 
 	public function actionIndex()
@@ -69,18 +63,19 @@ class OrderItemController Extends AppController
 	{
 		$req = $this->ajax;
 		if ($req) {
-			$req['sess'] = session_id();
-
 			$orderItm = OrderItem::updateOrCreate(
-				['sess' => $req['sess'], 'product_id' => $req['product_id']],
-				['count' => $req['count']]
+				['product_id' => $req['product_id'],
+					'sess' => $req['sess'],
+				],
+				['product_id' => $req['product_id'],
+					'sess' => $req['sess'],
+					'count' => $req['count'],
+					'ip' => $_SERVER['REMOTE_ADDR'],
+				]
 			);
-			$o = $orderItm->toArray();
-			$c = $orderItm->wasRecentlyCreated;
+			$created = $orderItm->wasRecentlyCreated;
+			$this->exitJson(['error' => "не записано"]);
 		}
-		$this->exitJson(['success']);
-
+		$this->exitJson(['popup' => "ok"]);
 	}
-
-
 }

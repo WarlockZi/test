@@ -1,8 +1,9 @@
 import './cart.scss'
 import '../components/counter/counter'
-import {$, getCookie, getToken, cookieRemove, post} from '../common'
+import {$, getCookie, time, getToken, cookieRemove, post} from '../common'
 import Counter from "../components/counter/counter";
 import Cookie from "../components/cookie/new/cookie";
+import Popup from "../components/popup/popup";
 
 export default class Cart {
   constructor() {
@@ -10,13 +11,22 @@ export default class Cart {
     if (!container) return;
     this.container = container;
 
+    this.popup = new Popup();
+
+    this.cartLeadBtn = container.querySelector('#cartLead');
+    this.cartLeadBtn.onclick = this.cartLead.bind(this);
+
+    this.cartLoginBtn = container.querySelector('#cartLogin');
+    this.cartLoginBtn.onclick = this.cartLead.bind(this);
+
     this.rows = container.querySelectorAll('.row');
-    this.container.onclick = this.handleClick;
+    this.container.onclick = this.handleClick.bind(this);
+    this.container.onclick = this.handleClick.bind(this);
 
     this.cookie = new Cookie();
     this.counterEl = $('#counter').first();
 
-    this.cartLifeMs = 1 * 1000 * 1_000_000;
+    this.cartLifeMs = time.hMs+time.mMs*30;
     this.counterStart()
   }
 
@@ -40,6 +50,14 @@ export default class Cart {
 
   getDeadline() {
     return this.cartLifeMs + Date.now()
+  }
+
+  cartLogin() {
+    this.popup.show('cartLogin')
+  }
+
+  cartLead() {
+    this.popup.show('cartLead')
   }
 
   counterCallback() {
@@ -82,18 +100,35 @@ export default class Cart {
   }
 
   async handleClick({target}) {
+    // debugger
     if (target.classList.contains('del')) {
-      let row = target.closest('.row');
-      let id = row.querySelector('.name').dataset['1sid'];
-
-      let res = await post(`/adminsc/orderItem/delete`, {id});
-      if (res.arr.ok) {
-        row.remove()
-      }
-
-    } else if (target.classList.contains('d')) {
+      this.deleteOItem(target)
+    } else if (target.classList.contains('count')) {
+      this.updateOItem(target)
 
     }
   }
+
+  async deleteOItem(target) {
+    let row = target.closest('.row');
+    let id = row.dataset.id;
+
+    let res = await post(`/adminsc/orderItem/delete`, {id});
+    if (res?.arr?.ok) {
+      row.remove()
+    }
+  }
+
+  async updateOItem(target) {
+    let productId = target.closest('.row').dataset.productId;
+    let count = target.value;
+    let sess = getToken();
+
+    let res = await post(`/adminsc/orderItem/updateOrCreate`, {sess, productId, count});
+    // if (res?.arr?.ok) {
+    //   row.remove()
+    // }
+  }
+
 
 }

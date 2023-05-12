@@ -1,8 +1,11 @@
-<main class="cart">
+<div class="cart">
+	<? use app\core\Icon;
 
+	if ($oItems->count()): ?>
 	<div id="counter">
-		Отлично! Вы набрали корзинку товаров. Чтобы оформить заказ - зарегистрируйтесь!
-		Иначе корзинка сгорит через
+		<p>Отлично! </p>
+		<p>Чтобы мы смогли обработать ваш заказ - оставьте свои данные!</p>
+		<p>Иначе корзина сгорит через</p>
 
 		<div id="timer">
 			<div class="items">
@@ -15,31 +18,33 @@
 
 	</div>
 
-	<? use app\core\Icon;
 
-	if ($oItems->count()): ?>
 		<? foreach ($oItems as $i => $oItem): ?>
 
-		  <div class="row">
+		  <div class="row" data-product-id="<?= $oItem->product_id?>">
 			  <div class="num"><?= ++$i; ?></div>
 
-			  <div class="name" data-1sId="<?= $oItem->product['1s_id'] ?>"><?= $oItem->product->name; ?></div>
+			  <div class="name"><?= $oItem->product->name; ?></div>
 			  <img src="/pic/product/uploads/<?= $oItem->product->art . '.jpg' ?? ''; ?>"
 			       alt="<?= $oItem->product->name; ?>">
 			  <input type="number" class="count" min="0" value="<?= $oItem->count; ?>">
+			  <div class="unit"><?=$oItem->product->baseUnit->name?></div>
 			  <div class="del"><?= Icon::trashWhite() ?></div>
 		  </div>
 		<? endforeach; ?>
 
 	  <div class="popup-container">
-		  <div class="button popup-show">Заказать</div>
+		  <div id="cartLead" class="button popup-show">Оставить свои данные</div>
 	  </div>
 
+		<div class="popup-container">
+			<div id="cartLogin" class="button popup-show">Войти под своей учеткой</div>
+		</div>
 
 	<? else: ?>
 	  Корзина пуста
 
 	<? endif; ?>
 
-</main>
+</div>
 

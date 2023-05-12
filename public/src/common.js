@@ -226,6 +226,24 @@ function createEl(tagName, className = '', text = '') {
   div.innerText = text ? text : '';
   return div
 }
+function createInput(options) {
+  let i = document.createElement('input');
+  if (type in options)  i.type = options.type;
+  if (required in options)  i.required = options.required;
+  if (name in options)  i.name = options.name;
+  if (placeholder in options)  i.placeholder = options.placeholder;
+  if (value in options)  i.value = options.value;
+  return i
+}
+
+const time =  {
+  'm':60,
+  'h':60*60,
+  'd':60*60*24,
+  'mMs':60*1000,
+  'hMs':60*60*1000,
+  'dMs':60*60*24*1000,
+};
 
 async function post(url, data = {}) {
 
@@ -480,11 +498,13 @@ function addTooltip(args) {
 
 
 export {
+  time,
   scrollToTop,
   cookieRemove,
   setCookie,
   getCookie,
   createEl,
+  createInput,
   getToken,
   slider,
   cachePage,
