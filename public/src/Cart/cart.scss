@@ -4,6 +4,10 @@
 .cart {
   //margin: 40px auto;
 
+  p{
+    font-size: 1.1rem;
+  }
+
   .message {
     margin: 40px auto;
     width: clamp(300px, 40%, 450px);
@@ -44,6 +48,13 @@
       @include grey;
       border: 1px solid transparent;
       width: 60px;
+    }
+
+    .unit {
+      @include grey;
+      align-items: center;
+      display: flex;
+
     }
 
     .del {
