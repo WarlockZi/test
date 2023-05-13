@@ -12,7 +12,9 @@ class OrderRepository
 	public static function main(){
 		$sess = session_id();
 		$oItems  = OrderItem::where('sess',$sess)
-			->with('product')
+//			->with('product')
+//			->with('product.priceWithCurrencyUnit')
+			->with('product.price')
 			->get()
 			;
 

@@ -22,6 +22,7 @@ class CartController extends AppController
 			$id = $this->ajax['cartToken'];
 			OrderItem::where('sess', $id)
 				->delete();
+
 			$this->exitJson(['ok'=>true]);
 		}
 	}
@@ -29,12 +30,10 @@ class CartController extends AppController
 
 	public function actionIndex()
 	{
-		if (!isset($_COOKIE['cart'])) {
-			$digit = 10;
-			$unit = 'm';
-			$value = time()+Cookie::getTime($digit, $unit);
-			Cookie::set('cart', $value, $digit, $unit);
-		}
+
+		if (isset($_COOKIE['cartCounter'])) setcookie('cartCounter','', time()-3600);
+		if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline','', time()-3600);
+		if (isset($_COOKIE['cart'])) setcookie('cart','', time()-3600);
 
 		if (!Auth::getUser()) {
 			Error::setError('Чтобы мы смогли выставить вам счет введите имя и телефон');

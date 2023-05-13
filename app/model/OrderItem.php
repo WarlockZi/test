@@ -12,13 +12,11 @@ class OrderItem extends Model
 	public $timestamps = false;
 
 	protected $fillable = [
-		'name',
-		'sess',
-		'order_id',
 		'product_id',
-		'customer_id',
 		'count',
-		'date',
+		'sess',
+		'ip',
+		'crated_at',
 	];
 
 	////////auth

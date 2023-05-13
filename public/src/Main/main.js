@@ -1,6 +1,6 @@
 import '../404/404.scss'
 import './main.scss'
-import popup from '../popup/popup'
+import popup from '../components/popup/popup'
 import cart from '../Cart/cart'
 
 import '../components/header/autocomplete'
@@ -9,7 +9,7 @@ import '../Category/category'
 
 document.addEventListener('DOMContentLoaded',function () {
   // debugger
-  popup();
+  // popup();
   new cart()
 });
 
