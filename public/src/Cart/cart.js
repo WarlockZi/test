@@ -7,11 +7,14 @@ import Popup from "../components/popup/popup";
 
 export default class Cart {
   constructor() {
-    let container = $('.user-content .cart').first();
+    let container = $('.user-content .cart .content').first();
     if (!container) return;
     this.container = container;
 
     this.popup = new Popup();
+
+    this.total = container.querySelector('.total span');
+    this.cartEmptyText = container.parentNode.querySelector('.empty-cart');
 
     this.cartLeadBtn = container.querySelector('#cartLead');
     this.cartLeadBtn.onclick = this.cartLead.bind(this);
@@ -21,13 +24,29 @@ export default class Cart {
 
     this.rows = container.querySelectorAll('.row');
     this.container.onclick = this.handleClick.bind(this);
-    this.container.onclick = this.handleClick.bind(this);
+    this.container.onchange = this.rerenderSums.bind(this);
 
     this.cookie = new Cookie();
     this.counterEl = $('#counter').first();
 
-    this.cartLifeMs = time.hMs+time.mMs*30;
-    this.counterStart()
+    this.cartLifeMs = time.mMs * 3;
+    this.counterStart();
+
+    this.rerenderSums()
+  }
+
+  rerenderSums() {
+    if (!this.rows.length) return false;
+    let total = [].reduce.call(this.rows, (acc, row, accd, rows) => {
+      let price = row.querySelector('.price').dataset.price;
+      let count = row.querySelector('.count').value;
+      let sum = price * count;
+      row.querySelector('.sum').innerText = sum.toFixed(2);
+      acc += sum;
+      return acc
+    }, 0);
+    let formatter = new Intl.NumberFormat("ru");
+    this.total.innerText = formatter.format(total.toFixed(2))
   }
 
   counterStart() {
@@ -53,11 +72,11 @@ export default class Cart {
   }
 
   cartLogin() {
-    this.popup.show('cartLogin')
+    // this.popup.show('cartLogin')
   }
 
   cartLead() {
-    this.popup.show('cartLead')
+    // this.popup.show('cartLead')
   }
 
   counterCallback() {
@@ -85,7 +104,8 @@ export default class Cart {
     let res = await post('/cart/drop', {cartToken});
     if (res?.arr?.ok) {
       // debugger
-      this.container.innerHTML = 'Корзина пуста'
+      this.cartEmptyText.classList.remove('none');
+      this.container.classList.add('none')
     }
   }
 
@@ -104,6 +124,7 @@ export default class Cart {
     if (target.classList.contains('del')) {
       this.deleteOItem(target)
     } else if (target.classList.contains('count')) {
+      this.rerenderSums();
       this.updateOItem(target)
 
     }
@@ -111,7 +132,7 @@ export default class Cart {
 
   async deleteOItem(target) {
     let row = target.closest('.row');
-    let id = row.dataset.id;
+    let id = row.dataset.productId;
 
     let res = await post(`/adminsc/orderItem/delete`, {id});
     if (res?.arr?.ok) {
@@ -120,11 +141,11 @@ export default class Cart {
   }
 
   async updateOItem(target) {
-    let productId = target.closest('.row').dataset.productId;
+    let product_id = target.closest('.row').dataset.productId;
     let count = target.value;
     let sess = getToken();
 
-    let res = await post(`/adminsc/orderItem/updateOrCreate`, {sess, productId, count});
+    let res = await post(`/adminsc/orderItem/updateOrCreate`, {sess, product_id, count});
     // if (res?.arr?.ok) {
     //   row.remove()
     // }
