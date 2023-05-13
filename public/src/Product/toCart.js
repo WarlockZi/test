@@ -40,7 +40,8 @@ export default function toCart({target}) {
 
     dto: function () {
       return {
-        sess: '',
+        id: 0,
+        sess: getToken(),
         product_id: this.product,
         count: this.digit
       }

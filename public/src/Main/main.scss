@@ -5,6 +5,7 @@
 @import '../components/footer/footer.scss';
 @import '../components/header/header.scss';
 @import '../components/list.scss';
+@import '../components/popup.scss';
 @import "../components/breadcrumbs";
 @import "../components/breadcrumbs";
 @import "../Cart/cart";
@@ -65,20 +66,20 @@
   //min-height: 47vw;
 
   &.gloves {
-    background: url("/pic/site-gloves.jpg") no-repeat;
+    background: url("/pic/srvc/main/site-gloves.jpg") no-repeat;
     background-position: center right;
     background-size: cover;
   }
 
   &.boot-cover {
-    background: url("/pic/site-bootcover-824.jpg") no-repeat;
+    background: url("/pic/srvc/main/site-bootcover-824.jpg") no-repeat;
     background-position: center left;
     background-size: cover;
     align-items: flex-end;
   }
 
   &.endosirynge {
-    background: url("/pic/site-syringe-gradientt.jpg") no-repeat;
+    background: url("/pic/srvc/main/site-syringe-gradientt.jpg") no-repeat;
     background-position: center right;
     background-size: cover;
   }
@@ -372,5 +373,16 @@
     }
   }
 
+  .about {
+    max-width: 800px;
+    margin: 40px auto;
 
+    ol li {
+      list-style: circle;
+    }
+
+    p {
+      margin: 5px 0;
+    }
+  }
 }

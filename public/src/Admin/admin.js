@@ -44,7 +44,9 @@ import morph from '../components/morph/morph';
 import Search from "../components/header/search/search";
 
 
-$(document).ready(function () {
+$(document).ready(async function () {
+
+  // let popup = await import('./')
 
   new Search(true);
   select();
