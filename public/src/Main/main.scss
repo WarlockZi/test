@@ -373,5 +373,16 @@
     }
   }
 
+  .about {
+    max-width: 800px;
+    margin: 40px auto;
 
+    ol li {
+      list-style: circle;
+    }
+
+    p {
+      margin: 5px 0;
+    }
+  }
 }

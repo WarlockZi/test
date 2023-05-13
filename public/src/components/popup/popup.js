@@ -9,14 +9,14 @@ export default class Popup {
     let popupShow = $('.popup-wrapper').first();
     if (!popupShow) return false;
 
-    this.showEl = popupShow;
-    this.closeEl = $('.popup-close').first();
-    this.wrapper = $('.popup-wrapper').first();
-    this.box = $('.popup-box').first();
-    this.overlay = $('.overlay').first();
-    this.submitEl = $(`.popup-box #submit`).first();
-    this.cart = $('.user-content .cart').first();
-    this.check = $('.checkmark').first();
+    this.showEl     = popupShow;
+    this.closeEl    = $('.popup-close').first();
+    this.wrapper    = $('.popup-wrapper').first();
+    this.box        = $('.popup-box').first();
+    this.overlay    = $('.overlay').first();
+    this.submitEl   = $(`.popup-box #submit`).first();
+    this.cart       = $('.user-content .cart').first();
+    this.check      = $('.checkmark').first();
 
     this.showEl.addEventListener('click', this.show.bind(this));
     this.closeEl.addEventListener('click', this.close.bind(this));
@@ -25,7 +25,7 @@ export default class Popup {
   }
 
   async fillForm(name) {
-    return  await import(name)
+    // return  await import(name)
   }
 
   async submit({target}) {
@@ -65,15 +65,15 @@ export default class Popup {
   }
 
   show(name) {
-    // debugger
-    let items = this.fillForm(name);
+    debugger;
+    // let items = this.fillForm(name);
     this.wrapper.style.display = 'flex';
     setTimeout(function () {
       this.overlay.style.opacity = 1;
       this.box.style.opacity = 1;
       this.box.classList.remove('transform-out');
       this.box.classList.add('transform-in')
-    }, 1)
+    }.bind(this), 1)
   }
 
   close() {
@@ -83,7 +83,7 @@ export default class Popup {
     this.box.style.opacity = 0;
     setTimeout(function () {
       this.wrapper.style.display = 'none'
-    }, 800)
+    }.bind(this), 800)
   }
 
 }

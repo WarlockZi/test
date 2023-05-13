@@ -47,17 +47,16 @@
 <div class="popup-wrapper">
 	<div class="overlay"></div>
 	<div class="popup-box">
-		<h2></h2>
+		<h2>Данные для связи с Вами</h2>
 		<div class="popup-close">x</div>
 
 		<div class="form">
-<!--			<input type="text" required name="tel"    placeholder="Сотовый">-->
-<!--			<input type="text" required name="fio"    placeholder="Как к вам обращаться">-->
-<!--			<input type="text" required name="company" placeholder="Компания">-->
+						<input type="text" required name="tel"    placeholder="Сотовый">
+						<input type="text" required name="fio"    placeholder="Как к вам обращаться">
+						<input type="text" required name="company" placeholder="Компания">
 			<p>Оставляя данные вы соглашаетесь с их обработкой</p>
 			<button id="submit">Отправить</button>
 		</div>
-
 	</div>
 </div>
 
