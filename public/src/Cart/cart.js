@@ -52,6 +52,7 @@ export default class Cart {
   counterStart() {
     let rows = $(this.container).find('.row');
     if (rows) {
+      debugger;
       let cartDeadline = +this.cookie.cookie.get_cookie('cartDeadline');
       let dif = cartDeadline - Date.now();
       if (dif >= 0) {
@@ -80,13 +81,12 @@ export default class Cart {
   }
 
   counterCallback() {
-    // this.counterReset()
     this.nullifyCookie();
     this.dropCart()
   }
 
   nullifyCookie() {
-    this.cookie.cookie.set_cookie('cartDeadline', -1)
+    cookieRemove('cartDeadline')
   }
 
   counterReset() {
@@ -106,6 +106,14 @@ export default class Cart {
       // debugger
       this.cartEmptyText.classList.remove('none');
       this.container.classList.add('none')
+    }
+  }
+
+  orderItemDTO(target){
+    let row = target.closest('.row');
+    return {
+      sess:getToken(),
+      product_id:row.dataset.productId
     }
   }
 
@@ -131,10 +139,9 @@ export default class Cart {
   }
 
   async deleteOItem(target) {
-    let row = target.closest('.row');
-    let id = row.dataset.productId;
+    let orderItemDto = this.orderItemDTO(target);
 
-    let res = await post(`/adminsc/orderItem/delete`, {id});
+    let res = await post(`/adminsc/orderItem/delete`, {...orderItemDto});
     if (res?.arr?.ok) {
       row.remove()
     }

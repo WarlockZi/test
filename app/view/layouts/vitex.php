@@ -60,5 +60,20 @@
 	</div>
 </div>
 
+<div class="popup-wrapper">
+	<div class="overlay"></div>
+	<div class="popup-box">
+		<h2>Вход</h2>
+		<div class="popup-close">x</div>
+
+		<div class="form">
+			<input type="text" required name="email"     placeholder="email">
+			<input type="text" required name="password"  placeholder="пароль">
+			<p>Оставляя данные вы соглашаетесь с их обработкой</p>
+			<button id="submit">Отправить</button>
+		</div>
+	</div>
+</div>
+
 </body>
 </html>
