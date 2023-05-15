@@ -9,25 +9,27 @@ use app\model\OrderItem;
 class OrderRepository
 {
 
-	public static function main(){
+	public static function main()
+	{
 		$sess = session_id();
-		$oItems  = OrderItem::where('sess',$sess)
-//			->with('product')
-//			->with('product.priceWithCurrencyUnit')
+		$oItems = OrderItem::query()
+//			->withTrashed()
+			->where('sess', $sess)
+			->where('sess', $sess)
 			->with('product.price')
-			->get()
-			;
+			->get();
 
 		return $oItems;
 	}
 
-	public static function count(){
+	public static function count()
+	{
 		$sess = session_id();
-		$oItems  = OrderItem::where('sess',$sess)->get()->toArray();
+		$oItems = OrderItem::where('sess', $sess)->get()->toArray();
 		$count = 0;
-		if ($oItems){
-			foreach ($oItems as $item){
-				$count+=$item['count'];
+		if ($oItems) {
+			foreach ($oItems as $item) {
+				$count += $item['count'];
 			}
 		}
 		return $count;

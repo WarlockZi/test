@@ -3,13 +3,13 @@
 namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderItem extends Model
 {
-
+	use SoftDeletes;
 	public $table = 'orderItems';
 	public $model = 'orderItem';
-	public $timestamps = false;
+	public $timestamps = true;
 
 	protected $fillable = [
 		'product_id',

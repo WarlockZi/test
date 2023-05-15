@@ -42,11 +42,16 @@ class OrderItemController Extends AppController
 
 	public function actionDelete()
 	{
-		$id = $this->ajax['id'];
+		$product_id = $this->ajax['product_id'];
+		$sess = $this->ajax['sess'];
 
-		if (!$id) $this->exitWithMsg('No id');
-
-		if ($this->model::destroy($id)) {
+		if (!$product_id) $this->exitWithMsg('No id');
+		$orderItem = $this->model::where('sess',$sess)
+			->where('product_id',$product_id)
+			->first()
+			->delete()
+		;
+		if ($orderItem->trashed) {
 			$this->exitJson(['ok' => true, 'popup' => 'Удален']);
 		}
 		$this->exitWithPopup('Не удален');
