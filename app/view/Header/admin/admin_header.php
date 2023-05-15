@@ -2,7 +2,7 @@
 	<div class="relative">
 
 	<?= $logo; ?>
-	<?= $chips; ?>
+<!--	--><?//= $chips; ?>
 	<?= $searchPanel; ?>
 	<?= $searchButton; ?>
 
