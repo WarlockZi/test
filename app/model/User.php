@@ -47,8 +47,8 @@ class User extends Model
 		}
 
 		return $user['sex'] === 'f'
-			? ImageRepository::getImg('/pic/ava_female.jpg')
-			: ImageRepository::getImg('/pic/ava_male.png');
+			? ImageRepository::getImg('/pic/srvc/main/ava_female.jpg')
+			: ImageRepository::getImg('/pic/srvc/main/ava_male.png');
 	}
 
 	public static function can(array $user, $rights = []): bool

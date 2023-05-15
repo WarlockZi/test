@@ -10,7 +10,6 @@ use app\Repository\OrderRepository;
 
 class CartController extends AppController
 {
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -18,30 +17,24 @@ class CartController extends AppController
 
 	public function actionDrop()
 	{
-		if (isset($this->ajax['cartToken'])) {
-			$id = $this->ajax['cartToken'];
-			OrderItem::where('sess', $id)
-				->delete();
+		if (!isset($this->ajax['cartToken'])) exit('No cart sess');
+		$id = $this->ajax['cartToken'];
+		OrderItem::query()
+			->where('sess', $id)
+			->delete();
 
-			$this->exitJson(['ok'=>true]);
-		}
+		if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
+		$this->exitJson(['ok' => true]);
+
 	}
-
 
 	public function actionIndex()
 	{
-
-		if (isset($_COOKIE['cartCounter'])) setcookie('cartCounter','', time()-3600);
-		if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline','', time()-3600);
-		if (isset($_COOKIE['cart'])) setcookie('cart','', time()-3600);
-
 		if (!Auth::getUser()) {
 			Error::setError('Чтобы мы смогли выставить вам счет введите имя и телефон');
 		}
-
 		$oItems = OrderRepository::main();
 		$this->set(compact('oItems'));
-
 	}
 }
 
