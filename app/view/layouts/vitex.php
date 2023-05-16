@@ -39,41 +39,25 @@
 <? //= Footer::getYaMetrica(); ?>
 <? //= Footer::getVK(); ?>
 
-<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-	<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-	<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-</svg>
 
-<div class="popup-wrapper">
+<form class="popup-wrapper" data-popup="default">
 	<div class="overlay"></div>
 	<div class="popup-box">
-		<h2>Данные для связи с Вами</h2>
+		<div class="title">Заголовок</div>
 		<div class="popup-close">x</div>
 
 		<div class="form">
-						<input type="text" required name="tel"    placeholder="Сотовый">
-						<input type="text" required name="fio"    placeholder="Как к вам обращаться">
-						<input type="text" required name="company" placeholder="Компания">
-			<p>Оставляя данные вы соглашаетесь с их обработкой</p>
-			<button id="submit">Отправить</button>
 		</div>
+		<p>Оставляя данные вы соглашаетесь с их обработкой</p>
+		<button type="submit" id="submit">Отправить</button>
 	</div>
-</div>
 
-<div class="popup-wrapper">
-	<div class="overlay"></div>
-	<div class="popup-box">
-		<h2>Вход</h2>
-		<div class="popup-close">x</div>
+	<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+		<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+		<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+	</svg>
 
-		<div class="form">
-			<input type="text" required name="email"     placeholder="email">
-			<input type="text" required name="password"  placeholder="пароль">
-			<p>Оставляя данные вы соглашаетесь с их обработкой</p>
-			<button id="submit">Отправить</button>
-		</div>
-	</div>
-</div>
+</form>
 
 </body>
 </html>

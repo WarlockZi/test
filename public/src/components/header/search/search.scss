@@ -2,6 +2,10 @@
 
 .admin-layout_header {
   .utils {
+    display: flex;
+    flex: 1 0;
+    justify-content: flex-end;
+
     .search {
       height: 100%;
       cursor: pointer;

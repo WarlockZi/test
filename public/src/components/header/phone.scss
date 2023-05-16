@@ -2,7 +2,7 @@
 @import "../../mixin_media";
 
 /***** Всплывающие телефоны */
-.phone {
+@mixin phone {
   position: relative;
   display: flex;
   align-items: center;
