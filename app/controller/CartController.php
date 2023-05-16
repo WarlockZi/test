@@ -6,6 +6,7 @@ use app\core\Auth;
 use app\core\Cookie;
 use app\core\Error;
 use app\model\OrderItem;
+use app\model\User;
 use app\Repository\OrderRepository;
 
 class CartController extends AppController
@@ -35,6 +36,19 @@ class CartController extends AppController
 		}
 		$oItems = OrderRepository::main();
 		$this->set(compact('oItems'));
+	}
+
+	public function actionLogin()
+	{
+		if (!isset($this->ajax['email']) || !isset($this->ajax['password'])) $this->exitWithError('Bad data');
+		$user = User::where('email', $this->ajax['email'])
+			->where('password', $this->ajax['password'])
+			->first();
+
+		if ($user) {
+			Auth::setAuth($user);
+			$this->exitJson(['ok'=>true]);
+		}
 	}
 }
 

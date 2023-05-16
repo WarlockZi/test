@@ -15,6 +15,7 @@ export default class PopupDefault {
     this.submitEl = $(this.popup).find(`#submit`);
 
     this.button = props.button;
+    // debugger
     this.data = props.data;
     this.callback = props.callback;
 
@@ -31,21 +32,12 @@ export default class PopupDefault {
     this.form.innerHTML = '';
     this.title.innerText = this.data.title;
     for (let field in this.data.fields) {
-      this.form.prepend(this.data.fields[field].el)
+      this.form.prepend(this.data.fields[field])
     }
   }
 
   async submit({target}) {
-
     let success = this.callback(this.form.querySelectorAll('input'));
-    // let form = {
-    //   mobile: $(`.popup-box [name='tel']`).first().value,
-    //   name: $(`.popup-box [name='fio']`).first().value,
-    //   company: $(`.popup-box [name='company']`).first().value,
-    // };
-    // let cart = new Cart();
-    // let rows = cart.getRows();
-    // let data = {form, rows};
     // close();
     // let res = await post('/adminsc/orderItem/toorder', data);
     // if (res.arr.ok) {
@@ -74,7 +66,6 @@ export default class PopupDefault {
   }
 
   async show(name) {
-
     this.renderFields(name);
 
     this.popup.style.display = 'flex';

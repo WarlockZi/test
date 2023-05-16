@@ -42,12 +42,9 @@
 
 		<div class="total">Всего -&nbsp;&nbsp;<span></span>&nbsp;&nbsp;руб.</div>
 
-		<div class="popup-container">
-			<div id="cartLead" class="button popup-show">Оставить свои данные</div>
-		</div>
-
-		<div class="popup-container">
-			<div id="cartLogin" class="button popup-show">Войти под своей учеткой</div>
+		<div class="buttons">
+			<div class="button" id="cartLead"  >Оставить свои данные</div>
+			<div class="button" id="cartLogin" >Войти под своей учеткой</div>
 		</div>
 	</div>
 

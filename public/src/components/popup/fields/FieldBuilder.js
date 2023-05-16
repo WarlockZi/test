@@ -1,7 +1,19 @@
 export default class FieldBuilder {
-  constructor(tag='input') {
-    this.el = document.createElement(tag);
-    this.el.type = 'text'
+  constructor(id) {
+    this.container = document.createElement('div');
+    this.container.classList.add('input-container');
+
+    this.el = document.createElement('input');
+    this.el.type = 'text';
+    this.el.placeholder = ' ';
+    this.el.id = id;
+
+    this.labelBadge = document.createElement('div');
+    this.labelBadge.classList.add('badge');
+
+    this.label = document.createElement('label');
+    this.label.htmlFor  = id
+
   }
 
   class(name) {
@@ -9,8 +21,8 @@ export default class FieldBuilder {
     return this
   }
 
-  placeholder(str) {
-    this.el.placeholder = str;
+  placeholder(placeholder) {
+    this.label.innerText = placeholder;
     return this
   }
 
@@ -34,18 +46,38 @@ export default class FieldBuilder {
     return this
   }
 
+
   type(type) {
     this.el.type = type;
     return this
   }
 
   pattern(pattern) {
-    this.el.pattern = pattern;
+    // let regex = pattern;
+    let reg = new RegExp(pattern);
+    this.el.setAttribute("pattern", reg.source);
+    return this
+  }
+
+  badgeWidth(width) {
+    this.labelBadge.style.width = width;
     return this
   }
 
   error(error) {
-    this.el.error = error;
+    this.errorEl = document.createElement('div');
+    this.errorEl.innerText = error;
     return this
   }
+
+  make() {
+    // debugger
+    this.container.append(this.el);
+    this.container.append(this.labelBadge);
+    this.container.append(this.label);
+    if (this.errorEl) this.container.append(this.errorEl);
+    return this.container
+  }
+
+
 }

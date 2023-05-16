@@ -370,8 +370,9 @@ $border-color:$color-main
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     cursor: pointer;
-    &:hover{
-      background-color: lighten($color-main,10%);
+
+    &:hover {
+      background-color: lighten($color-main, 10%);
     }
   }
 

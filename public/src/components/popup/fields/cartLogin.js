@@ -7,15 +7,25 @@ export default class cartLogin {
   }
 
   setFields() {
-    let email = new FieldBuilder();
-    email = email.class('email')
+    let email = new FieldBuilder('email');
+    debugger;
+    email = email
       .required()
-      .placeholder('email');
+      // .pattern(
+      //   '^(([^<>()[\\]\\.,;:\\s@\\"]+(\\.[^<>()[\\]\\.,;:\\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\\]\\.,;:\\s@\\"]+\\.)+[^<>()[\\]\\.,;:\\s@\\"]{2,})$')
+        // "^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$")
+      .badgeWidth('55px')
+      .type('email')
+      .placeholder('email')
+      .make();
 
-    let password = new FieldBuilder();
-    password = password.class('password')
+    let password = new FieldBuilder('password');
+    password = password
       .required()
-      .placeholder('пароль');
+      .pattern('[a-zA-Z0-9-_()]{6,}')
+      .badgeWidth('65px')
+      .placeholder('пароль')
+      .make();
     return {email, password}
   }
 

@@ -1,31 +1,6 @@
 @import "../../var";
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
 
-
-.popup-container {
-  //width: 800px;
-  margin: 10px auto;
-  text-align: center;
-
-  .button {
-    margin-top: 30px;
-    padding: 2.2% 5.5%;
-    display: inline-block;
-    transition: all linear 0.15s;
-    border-radius: 3px;
-    background: #fff;
-    font-size: 22px;
-    font-weight: bold;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: #333;
-
-    &:hover {
-      opacity: 1.75;
-    }
-  }
-}
-
 .popup-wrapper {
   position: absolute;
   top: 0;
@@ -53,29 +28,16 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    box-shadow: 0px 2px 16px rgba(80, 80, 80, 0.9);
     border-radius: 20px;
     text-align: center;
-    background: white;
-
-    .form {
-      display: flex;
-      flex-direction: column;
-    }
+    box-shadow: 0px 2px 16px rgba(80, 80, 80, 0.9);
+    background: #15172b;
+    color: #eee;
 
     .title {
       margin-bottom: 20px;
       font-size: 20px;
-      color: #000000;
     }
-
-    p {
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-      color: #000000;
-    }
-
 
     .popup-close {
       position: absolute;
@@ -98,6 +60,107 @@
       &:hover {
         transform: rotate(180deg);
       }
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+
+      .input-container {
+        display: flex;
+        height: 50px;
+        position: relative;
+        width: 100%;
+        margin: 20px 0;
+
+        input {
+          background-color: #303245;
+          border-radius: 12px;
+          border: 0;
+          color: #eee;
+          font-size: 18px;
+          height: 100%;
+          outline: 0;
+          padding: 4px 20px 0;
+          width: 100%;
+
+          &:-webkit-autofill,
+          &:-webkit-autofill:hover,
+          &:-webkit-autofill:focus,
+          &:-webkit-autofill:active {
+            transition: background-color 5000s ease-in-out 0s;
+            -webkit-text-fill-color: #eee !important;
+          }
+
+          &:not(:placeholder-shown):not(:focus):invalid {
+            border: 1px solid #dc2f55;
+          }
+
+          &:not(:placeholder-shown):not(:focus):valid {
+            border: 1px solid #2fdcdb;
+          }
+
+          &:not(:placeholder-shown):not(:focus):invalid ~ label  {
+            color: #dc2f55;
+          }
+
+          &:not(:placeholder-shown):not(:focus):valid ~ label {
+            color: #2fdcdb;
+          }
+
+          //&:focus:invalid ~ label {
+          //  color: #dc2f55;
+          //}
+
+          &:focus ~ .badge,
+          &:not(:placeholder-shown) ~ .badge {
+            transform: translateY(8px);
+          }
+
+          &:focus ~ label,
+          &:not(:placeholder-shown) ~ label {
+            transform: translateY(-30px) translateX(10px) scale(0.75);
+          }
+
+          &:not(:placeholder-shown) ~ label {
+            color: #808097;
+          }
+
+        }
+
+        .badge {
+          background-color: #15172b;
+          border-radius: 10px;
+          height: 20px;
+          left: 20px;
+          position: absolute;
+          top: -20px;
+          transform: translateY(0);
+          transition: transform 200ms;
+          width: 76px;
+        }
+
+        label {
+          color: #65657b;
+          left: 20px;
+          line-height: 14px;
+          pointer-events: none;
+          position: absolute;
+          transform-origin: 0 50%;
+          transition: transform 200ms, color 200ms;
+          top: 20px;
+          padding-left: 5px;
+        }
+
+
+      }
+    }
+
+
+    p {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
     }
 
   }
@@ -131,26 +194,4 @@
       background-color: $color-main-hover;
     }
   }
-
-  input {
-    height: 35px;
-    background-color: #eee;
-    border: 1px solid transparent;
-    padding-left: 15px;
-    outline: none;
-    font-weight: 600;
-    position: relative;
-    border-radius: 10px;
-    margin-bottom: 10px;
-
-    &:not(:placeholder-shown):not(:focus):invalid {
-      border: 1px solid red;
-    }
-
-    &:not(:placeholder-shown):not(:focus):valid {
-      border: 1px solid green;
-    }
-  }
-
-
 }
