@@ -58,11 +58,11 @@
 
 					<? endforeach; ?>
 
-					<? foreach ($category->productsNotInStore as $product): ?>
-
-						<?= CategoryView::getProductCard($product, $icon) ?>
-
-					<? endforeach; ?>
+<!--					--><?// foreach ($category->productsNotInStore as $product): ?>
+<!---->
+<!--						--><?//= CategoryView::getProductCard($product, $icon) ?>
+<!---->
+<!--					--><?// endforeach; ?>
 
 			  <div class="hoist">Наверх</div>
 		  </div>
