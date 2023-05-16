@@ -1,4 +1,4 @@
-import './cart.scss'
+// import './cart.scss'
 import '../components/counter/counter'
 import {$, getCookie, time, getToken, cookieRemove, post} from '../common'
 import Counter from "../components/counter/counter";
@@ -19,6 +19,7 @@ export default class Cart {
       data: new cartLead(),
       callback: this.popupLeadCallback.bind(this)
     });
+
     new PopupDefault({
       button: $('#cartLogin').first(),
       data: new cartLogin(),
@@ -41,16 +42,20 @@ export default class Cart {
     this.cookie = new Cookie();
     this.counterEl = $('#counter').first();
 
-    this.cartLifeMs = time.mMs * 10;
+    this.cartLifeMs = time.mMs * 30;
     this.counterStart();
 
     this.rerenderSums()
   }
 
-  popupLoginCallback(fields) {
+  async popupLoginCallback(fields) {
     debugger;
-    let email = fields.login;
-    let password = fields.password
+    let email = fields.email.value;
+    let password = fields.password.value;
+    let res = await post('/cart/login',{email, password});
+    if (res){
+      window.location.reload
+    }
 
   }
 

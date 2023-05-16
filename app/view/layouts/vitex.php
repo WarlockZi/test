@@ -40,7 +40,7 @@
 <? //= Footer::getVK(); ?>
 
 
-<form class="popup-wrapper" data-popup="default">
+<div class="popup-wrapper" data-popup="default">
 	<div class="overlay"></div>
 	<div class="popup-box">
 		<div class="title">Заголовок</div>
@@ -48,8 +48,9 @@
 
 		<div class="form">
 		</div>
+
 		<p>Оставляя данные вы соглашаетесь с их обработкой</p>
-		<button type="submit" id="submit">Отправить</button>
+		<button id="submit">Отправить</button>
 	</div>
 
 	<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -57,7 +58,7 @@
 		<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
 	</svg>
 
-</form>
+</div>
 
 </body>
 </html>
