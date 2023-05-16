@@ -3,7 +3,10 @@ import '../components/counter/counter'
 import {$, getCookie, time, getToken, cookieRemove, post} from '../common'
 import Counter from "../components/counter/counter";
 import Cookie from "../components/cookie/new/cookie";
-import Popup from "../components/popup/popup";
+// import Popup from "../components/popup/popup";
+import PopupDefault from "../components/popup/popupDefault";
+import cartLead from "../components/popup/fields/cartLead";
+import cartLogin from "../components/popup/fields/cartLogin";
 
 export default class Cart {
   constructor() {
@@ -11,7 +14,16 @@ export default class Cart {
     if (!container) return;
     this.container = container;
 
-    this.popup = new Popup();
+    new PopupDefault({
+      button: $('#cartLead').first(),
+      data: new cartLead(),
+      callback: this.popupLeadCallback.bind(this)
+    });
+    new PopupDefault({
+      button: $('#cartLogin').first(),
+      data: new cartLogin(),
+      callback: this.popupLoginCallback.bind(this)
+    });
 
     this.total = container.querySelector('.total span');
     this.cartEmptyText = container.parentNode.querySelector('.empty-cart');
@@ -29,10 +41,21 @@ export default class Cart {
     this.cookie = new Cookie();
     this.counterEl = $('#counter').first();
 
-    this.cartLifeMs = time.mMs * 3;
+    this.cartLifeMs = time.mMs * 10;
     this.counterStart();
 
     this.rerenderSums()
+  }
+
+  popupLoginCallback(fields) {
+    debugger;
+    let email = fields.login;
+    let password = fields.password
+
+  }
+
+  popupLeadCallback(fields) {
+
   }
 
   rerenderSums() {
@@ -52,7 +75,6 @@ export default class Cart {
   counterStart() {
     let rows = $(this.container).find('.row');
     if (rows) {
-      debugger;
       let cartDeadline = +this.cookie.cookie.get_cookie('cartDeadline');
       let dif = cartDeadline - Date.now();
       if (dif >= 0) {
@@ -109,11 +131,11 @@ export default class Cart {
     }
   }
 
-  orderItemDTO(target){
+  orderItemDTO(target) {
     let row = target.closest('.row');
     return {
-      sess:getToken(),
-      product_id:row.dataset.productId
+      sess: getToken(),
+      product_id: row.dataset.productId
     }
   }
 

@@ -35,21 +35,12 @@ class CategoryRepository
 
   public static function index(string $slug)
   {
-//    return Category::query()
-//			->where('slug', $slug)
-//      ->with('childrenRecursive')
-//      ->with('parentRecursive')
-//      ->with('products.price')
-//      ->with('products.mainImages')
-//      ->with('products.mainUnit')
-//      ->get()
-//			->first();
     return Category::query()
 			->where('slug', $slug)
       ->with('childrenRecursive')
       ->with('parentRecursive')
       ->with('productsInStore')
-      ->with('productsNotInStore')
+//      ->with('productsNotInStore')
       ->get()
 			->first();
   }

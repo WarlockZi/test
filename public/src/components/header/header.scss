@@ -137,6 +137,11 @@ header {
       }
     }
 
+    .phone {
+      @include phone;
+    }
+
+
     .location {
       align-items: center;
       display: flex;
