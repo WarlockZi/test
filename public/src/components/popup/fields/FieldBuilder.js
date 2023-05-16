@@ -43,6 +43,7 @@ export default class FieldBuilder {
     this.el.pattern = pattern;
     return this
   }
+
   error(error) {
     this.el.error = error;
     return this

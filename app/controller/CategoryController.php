@@ -21,7 +21,6 @@ class CategoryController Extends AppController
 
 	public function actionIndex()
 	{
-
 		if ($this->route->slug) {
 			$this->view = 'category';
 

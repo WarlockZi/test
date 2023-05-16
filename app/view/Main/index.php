@@ -3,10 +3,10 @@
 use app\core\Icon;
 
 ?>
-<div class="banner gloves">
+<a href="/category/perchatki_medicinskie" class="banner gloves">
 	<div class="banner__text">
 		<div class="banner__container right">
-			<h1>Медицинские перчатки оптом</h1>
+			<h1>Медицинские перчатки</h1>
 			<p>Нитриловые перчатки добавят комфорта
 				в работе. Плотно облигает руку. Минимально
 				сокращают чувствительность.
@@ -14,12 +14,12 @@ use app\core\Icon;
 		</div>
 		<div class="banner__CTA right">Подробнее</div>
 	</div>
-</div>
+</a>
 
-<div class="banner boot-cover">
+<a href="/category/odnorazovaya_odezhda__halaty__shapochki__narukavniki__bahily__maski" class="banner boot-cover">
 	<div class="banner__text">
 		<div class="banner__container left">
-			<h1>Бахилы оптом</h1>
+			<h1>Одноразовая одежда</h1>
 			<p>Обесечьте чистоту ваших помещений.
 				Бахилы с двойным дном обладают
 				повышенной износоустойчивостью
@@ -27,20 +27,20 @@ use app\core\Icon;
 		</div>
 		<div class="banner__CTA left">Подробнее</div>
 	</div>
-</div>
+</a>
 
 
-<div class="banner endosirynge">
+<a href="/category/odnorazovyy_instrument_dlya_stomatologii" class="banner endosirynge">
 	<div class="banner__text">
 		<div class="banner__container right">
-			<h1>Эндошприц оптом</h1>
+			<h1>Одноразовый инструмент</h1>
 			<p>Поможет быстро и эффективно промыть
 				зубные каналы. Прост в использовании.
 			</p>
 		</div>
 		<div class="banner__CTA right">Подробнее</div>
 	</div>
-</div>
+</a>
 
 
 <div class="advantages">

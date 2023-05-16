@@ -133,10 +133,9 @@
   }
 
   input {
-    //width: 100%;
     height: 35px;
     background-color: #eee;
-    border: none;
+    border: 1px solid transparent;
     padding-left: 15px;
     outline: none;
     font-weight: 600;
@@ -144,12 +143,12 @@
     border-radius: 10px;
     margin-bottom: 10px;
 
-    &:invalid {
-      border-color: red;
+    &:not(:placeholder-shown):not(:focus):invalid {
+      border: 1px solid red;
     }
 
-    &:valid {
-      border-color: green;
+    &:not(:placeholder-shown):not(:focus):valid {
+      border: 1px solid green;
     }
   }
 

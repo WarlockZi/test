@@ -11,22 +11,22 @@ export default class cartLogin {
     name = name.class('name')
       .required()
       .placeholder('Как к Вам обращаться')
-      .pattern('[а-яА-я]{1}');
-      // .error('заполните, пожалуйста, ваше имя')
+      .pattern('[а-яА-Я]{1,}')
+      .error('заполните, пожалуйста, ваше имя');
 
     let phone = new FieldBuilder();
     phone = phone.class('phone')
       .required()
       .placeholder('сотовый для связи')
-      .pattern('[0-9-_()]{10}');
-      // .error('телефон состоит минимум из 10 цифр')
+      .pattern('[0-9-_()]{10}')
+      .error('телефон состоит минимум из 10 цифр');
 
     let company = new FieldBuilder();
     company = company.class('company')
       .required()
       .placeholder('название Вашей компании')
-      .pattern('[а-яА-я]{1}');
-      // .error('заполните, пожалуйста, название вашей компании')
+      .pattern('[а-яА-я]{1,}')
+      .error('заполните, пожалуйста, название вашей компании');
     return {name, phone, company}
   }
 
