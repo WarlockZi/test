@@ -31,9 +31,6 @@ class CartController extends AppController
 
 	public function actionIndex()
 	{
-		if (!Auth::getUser()) {
-			Error::setError('Чтобы мы смогли выставить вам счет введите имя и телефон');
-		}
 		$oItems = OrderRepository::main();
 		$this->set(compact('oItems'));
 	}

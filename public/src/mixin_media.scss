@@ -18,6 +18,8 @@
   }
 }
 
+
+
 @mixin white_svg_button(
   $width:35px,
   $height:100%,
@@ -408,4 +410,10 @@ $border-color:$color-main
   color: $color-grey-logo;
   margin: 0;
   margin-bottom: 15px;
+}
+
+
+.page-title {
+  margin: 0 0 15px 0;
+  @include _h2;
 }

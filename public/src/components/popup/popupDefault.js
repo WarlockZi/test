@@ -6,12 +6,12 @@ import {$, createEl, post} from '../../common'
 export default class PopupDefault {
 
   constructor(props) {
-    this.popup = $(`[data-popup='default']`).first();
-    this.closeEl = $(this.popup).find('.popup-close');
-    this.title = $(this.popup).find('.title');
-    this.box = $(this.popup).find('.popup-box');
-    this.form = $(this.popup).find('.form');
-    this.overlay = $(this.popup).find('.overlay');
+    this.popup =    $(`[data-popup='default']`).first();
+    this.closeEl =  $(this.popup).find('.popup-close');
+    this.title =    $(this.popup).find('.title');
+    this.box =      $(this.popup).find('.popup-box');
+    this.form =     $(this.popup).find('.form');
+    this.overlay =  $(this.popup).find('.overlay');
     this.submitEl = $(this.popup).find(`#submit`);
 
     this.button = props.button;

@@ -29,11 +29,7 @@ export default class Cart {
     this.total = container.querySelector('.total span');
     this.cartEmptyText = container.parentNode.querySelector('.empty-cart');
 
-    this.cartLeadBtn = container.querySelector('#cartLead');
-    this.cartLeadBtn.onclick = this.cartLead.bind(this);
-
-    this.cartLoginBtn = container.querySelector('#cartLogin');
-    this.cartLoginBtn.onclick = this.cartLead.bind(this);
+    this.loginLeadButtons();
 
     this.rows = container.querySelectorAll('.row');
     this.container.onclick = this.handleClick.bind(this);
@@ -41,19 +37,26 @@ export default class Cart {
 
     this.cookie = new Cookie();
     this.counterEl = $('#counter').first();
-
     this.cartLifeMs = time.mMs * 30;
-    this.counterStart();
+    if (this.counterEl) this.counterStart();
 
     this.rerenderSums()
+  }
+
+  loginLeadButtons() {
+    this.cartLeadBtn = this.container.querySelector('#cartLead');
+    if (this.cartLeadBtn) this.cartLeadBtn.onclick = this.cartLead.bind(this);
+
+    this.cartLoginBtn = this.container.querySelector('#cartLogin');
+    if (this.cartLoginBtn) this.cartLoginBtn.onclick = this.cartLead.bind(this);
   }
 
   async popupLoginCallback(fields) {
     debugger;
     let email = fields.email.value;
     let password = fields.password.value;
-    let res = await post('/cart/login',{email, password});
-    if (res){
+    let res = await post('/cart/login', {email, password});
+    if (res) {
       window.location.reload
     }
 

@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
 
-	public $table = 'orders';
-	public $model = 'order';
+//	public $table = 'orders';
+//	public $model = 'order';
 
 	public $timestamps = false;
 
 	protected $fillable = [
-		'name' => '',
-		'customer_id',
+		'product_id',
+		'count',
 		'sess',
+		'ip',
+		'user_id',
+		'crated_at',
 	];
 
 	public function items()
@@ -26,5 +29,10 @@ class Order extends Model
 	{
 		return $this->belongsTo(Lead::class);
 	}
+	public function product()
+	{
+		return $this->hasOne(Product::class, '1s_id', 'product_id');
+	}
+
 
 }

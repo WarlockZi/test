@@ -8,7 +8,7 @@ export default class cartLogin {
 
   setFields() {
     let email = new FieldBuilder('email');
-    debugger;
+    // debugger;
     email = email
       .required()
       // .pattern(
