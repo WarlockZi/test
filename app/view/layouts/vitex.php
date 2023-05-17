@@ -1,3 +1,8 @@
+<?php
+
+use app\core\Icon;
+
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -44,7 +49,7 @@
 	<div class="overlay"></div>
 	<div class="popup-box">
 		<div class="title">Заголовок</div>
-		<div class="popup-close">x</div>
+		<div class="popup-close"><?= Icon::close()?></div>
 
 		<div class="form">
 		</div>

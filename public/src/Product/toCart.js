@@ -1,4 +1,5 @@
 import {post, debounce, getToken} from "../common";
+import Cookie from "../components/cookie/new/cookie";
 
 export default function toCart({target}) {
 
@@ -22,8 +23,6 @@ export default function toCart({target}) {
       this.adjust.classList.remove('none');
       // this.count.style.display = 'flex';
       // this.count.innerText = ++this.count.innerText;
-
-
       let obj = this.dto();
       this.debounced(this.send.bind(obj))
     },

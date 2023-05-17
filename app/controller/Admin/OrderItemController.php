@@ -4,6 +4,7 @@ namespace app\controller\Admin;
 
 
 use app\controller\AppController;
+use app\core\Auth;
 use app\core\Route;
 use app\model\Lead;
 use app\model\Order;
@@ -46,11 +47,10 @@ class OrderItemController Extends AppController
 		$sess = $this->ajax['sess'];
 
 		if (!$product_id) $this->exitWithMsg('No id');
-		$orderItem = $this->model::where('sess',$sess)
-			->where('product_id',$product_id)
+		$orderItem = $this->model::where('sess', $sess)
+			->where('product_id', $product_id)
 			->first()
-			->delete()
-		;
+			->delete();
 		if ($orderItem->trashed) {
 			$this->exitJson(['ok' => true, 'popup' => 'Удален']);
 		}
@@ -68,18 +68,32 @@ class OrderItemController Extends AppController
 	{
 		$req = $this->ajax;
 		if ($req) {
-			$orderItm = OrderItem::updateOrCreate(
-				['product_id' => $req['product_id'],
-					'sess' => $req['sess'],
-				],
-				['product_id' => $req['product_id'],
-					'sess' => $req['sess'],
-					'count' => $req['count'],
-					'ip' => $_SERVER['REMOTE_ADDR'],
-				]
-			);
+			if (Auth::isAuthed()) {
+				$orderItm = Order::updateOrCreate(
+					['product_id' => $req['product_id'],
+						'sess' => $req['sess'],
+					],
+					['product_id' => $req['product_id'],
+						'sess' => $req['sess'],
+						'count' => $req['count'],
+						'ip' => $_SERVER['REMOTE_ADDR'],
+						'user_id' => Auth::getUser()['id'],
+					]
+				);
+			} else {
+				$orderItm = OrderItem::updateOrCreate(
+					['product_id' => $req['product_id'],
+						'sess' => $req['sess'],
+					],
+					['product_id' => $req['product_id'],
+						'sess' => $req['sess'],
+						'count' => $req['count'],
+						'ip' => $_SERVER['REMOTE_ADDR'],
+					]
+				);
+			}
 			$created = $orderItm->wasRecentlyCreated;
-			$this->exitJson(['error' => "не записано"]);
+//			$this->exitJson(['error' => "не записано"]);
 		}
 		$this->exitJson(['popup' => "ok"]);
 	}

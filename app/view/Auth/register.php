@@ -5,11 +5,14 @@
 		<div class='message'></div>
 		<input type="email"
 		       placeholder="E-mail"
-					 required/>
+					 required autocomplete/>
 
 		<div class="pass">
-			<input type="password" name="password" class="form-input password" placeholder="Пароль"
-			       current-password required/>
+			<input type="password"
+			       name="password"
+			       class="form-input password"
+			       placeholder="Пароль"
+			       current-password required autocomplete/>
 			<div class="password-control"></div>
 		</div>
 

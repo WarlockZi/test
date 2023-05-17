@@ -85,17 +85,15 @@
           fill: red;
           pointer-events: none;
         }
-
       }
-
-
     }
 
     .buttons {
       display: flex;
       flex-direction: column;
-      margin: 0 auto;
-      width: 50%;
+      align-items: end;
+      //margin: 0 auto;
+      //width: 50%;
 
       .button {
         @include colored_button(6px);
@@ -103,6 +101,7 @@
         padding: 20px;
         margin: 20px 0;
         justify-content: center;
+        flex: 0 0 30%;
       }
     }
   }
@@ -116,10 +115,23 @@
 
   .total {
     display: flex;
-    justify-content: end;
-    border-top: 1px solid $color-gray2;
-    margin: 10px 0;
-    padding: 10px;
+    justify-content: flex-end;
+    border-bottom: 1px solid $color-gray2;
+    align-items: center;
+
+    .title {
+      font-weight: 600;
+
+    }
+
+    span {
+      display: flex;
+      justify-content: end;
+      margin: 10px 0;
+      padding: 10px;
+      flex: 0 0 150px;
+    }
+
   }
 }
 
