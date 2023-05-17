@@ -44,6 +44,10 @@ class Auth
 		return false;
 	}
 
+	public static function isAuthed(){
+		return !!self::getUser();
+	}
+
 
 	public static function autorize(): array
 	{
