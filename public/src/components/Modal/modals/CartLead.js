@@ -1,9 +1,22 @@
-import FieldBuilder from "./FieldBuilder";
+import FieldBuilder from "../builders/FieldBuilder";
+import {createElement} from "../../../common";
 
-export default class cartLogin {
+export default class CartLead {
   constructor() {
-    this.fields = this.setFields();
-    this.title = 'Данные для связи'
+    this.footer = [];
+    this.title = 'Данные для связи';
+    this.submitText= 'отправить Kea';
+    this.setFields();
+    this.setFooter();
+  }
+
+  setFooter(){
+    let builder = new createElement();
+    this.footer.push(builder
+      .tag('div')
+      .attr('class','button')
+      .text('Отправить Lead')
+      .make())
   }
 
   setFields() {
@@ -36,7 +49,7 @@ export default class cartLogin {
       // .error('заполните, пожалуйста, название вашей компании')
       .make()
     ;
-    return {name, phone, company}
+    this.fields =  {name, phone, company}
   }
 
 

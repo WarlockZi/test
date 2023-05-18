@@ -45,17 +45,14 @@ use app\core\Icon;
 <? //= Footer::getVK(); ?>
 
 
-<div class="popup-wrapper" data-popup="default">
+<div class="modal-wrapper" data-modal="default">
 	<div class="overlay"></div>
-	<div class="popup-box">
+	<div class="modal-box">
 		<div class="title">Заголовок</div>
-		<div class="popup-close"><?= Icon::close()?></div>
-
-		<div class="form">
-		</div>
-
-		<p>Оставляя данные вы соглашаетесь с их обработкой</p>
-		<button id="submit">Отправить</button>
+		<div class="modal-close"><?= Icon::close()?></div>
+		<div class="content"></div>
+		<div class="footer"></div>
+		<div id="submit" class="button">OK</div>
 	</div>
 
 	<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">

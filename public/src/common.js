@@ -226,14 +226,35 @@ function createEl(tagName, className = '', text = '') {
   div.innerText = text ? text : '';
   return div
 }
-function createInput(options) {
-  let i = document.createElement('input');
-  if (type in options)  i.type = options.type;
-  if (required in options)  i.required = options.required;
-  if (name in options)  i.name = options.name;
-  if (placeholder in options)  i.placeholder = options.placeholder;
-  if (value in options)  i.value = options.value;
-  return i
+
+class createElement {
+  constructor() {
+    this.attributes = []
+  }
+
+  tag(tag) {
+    this.tag = tag;
+    return this
+  }
+
+  text(text) {
+    this.text = text;
+    return this
+  }
+
+  attr(key, value) {
+    this.attributes.push([key,value]);
+    return this
+  }
+
+  make() {
+    let el = document.createElement(this.tag);
+    el.innerText = this.text;
+    this.attributes.forEach((entry,i)=>{
+      el.setAttribute(entry[0],entry[1])
+    });
+    return el
+  }
 }
 
 const time =  {
@@ -498,13 +519,14 @@ function addTooltip(args) {
 
 
 export {
+  createElement,
   time,
   scrollToTop,
   cookieRemove,
   setCookie,
   getCookie,
   createEl,
-  createInput,
+
   getToken,
   slider,
   cachePage,

@@ -62,6 +62,16 @@ class Product extends Model
 		return 'цена - не определена';
 	}
 
+	public function toCartPrice()
+	{
+		$price = $this->getRelation('price');
+		if ($price) {
+			$number = number_format($price->price, 2, '.', ' ');
+			return "{$number} {$price->currency} / {$this->baseUnit->name}";
+		}
+		return 'цена - не определена';
+	}
+
 	public function detailImages()
 	{
 		return $this->morphToMany(
