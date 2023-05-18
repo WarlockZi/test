@@ -1,19 +1,15 @@
-import FieldBuilder from "./FieldBuilder";
+import FieldBuilder from "../builders/FieldBuilder";
 
 export default class cartLogin {
   constructor() {
-    this.fields = this.setFields();
+    this.setFields();
     this.title = 'Вход'
   }
 
   setFields() {
     let email = new FieldBuilder('email');
-    // debugger;
     email = email
       .required()
-      // .pattern(
-      //   '^(([^<>()[\\]\\.,;:\\s@\\"]+(\\.[^<>()[\\]\\.,;:\\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\\]\\.,;:\\s@\\"]+\\.)+[^<>()[\\]\\.,;:\\s@\\"]{2,})$')
-        // "^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$")
       .badgeWidth('55px')
       .type('email')
       .placeholder('email')
@@ -26,7 +22,7 @@ export default class cartLogin {
       .badgeWidth('65px')
       .placeholder('пароль')
       .make();
-    return {email, password}
+    this.fields = {email, password}
   }
 
 }

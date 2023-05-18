@@ -14,12 +14,12 @@ class OrderRepository
 	public static function main()
 	{
 		$sess = session_id();
-		$id = Auth::getUser()['id'];
-		if ($id) {
+		$user = Auth::getUser();
+		if ($user) {
 			$oItems = Order::query()
 //			->withTrashed()
 				->where('sess', $sess)
-				->where('user_id', $id)
+				->where('user_id', $user['id'])
 				->with('product.price')
 				->get();
 		} else {
