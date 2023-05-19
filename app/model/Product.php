@@ -56,6 +56,8 @@ class Product extends Model
 	{
 		$price = $this->getRelation('price');
 		echo $price->price;
+		echo '***';
+		echo '***';
 		if ($price) {
 			$number = number_format($price->price, 2, '.', ' ');
 			return "{$number} {$price->currency} / {$this->baseUnit->name}";
