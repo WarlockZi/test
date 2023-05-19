@@ -1,14 +1,32 @@
-import FieldBuilder from "./FieldBuilder";
+import FieldBuilder from "../builders/FieldBuilder";
+import {createElement} from "../../../common";
 
-export default class cartLogin {
+export default class CartLead {
   constructor() {
-    this.fields = this.setFields();
-    this.title = 'Данные для связи'
+    this.footer = [];
+    this.content = [];
+    this.fields = [];
+
+    this.title = 'Данные для связи';
+    this.submitText= 'отправить Kea';
+    this.setFields();
+    this.setFooter();
+  }
+
+  setFooter(){
+    let builder = new createElement();
+    this.footer.push(builder
+      .tag('div')
+      .attr('class','button')
+      .text('Отправить Lead')
+      .make())
   }
 
   setFields() {
-    let name = new FieldBuilder('name');
-    name = name
+    // let builder = new FieldBuilder;
+
+    let name = new FieldBuilder
+      .id('name')
       .badgeWidth('150px')
       .required()
       .placeholder('как к Вам обращаться')
@@ -17,8 +35,8 @@ export default class cartLogin {
       .make()
     ;
 
-    let phone = new FieldBuilder('phone');
-    phone = phone
+    let phone = new FieldBuilder
+      .id('phone')
       .badgeWidth('130px')
       .required()
       .placeholder('сотовый для связи')
@@ -27,8 +45,8 @@ export default class cartLogin {
       .make()
     ;
 
-    let company = new FieldBuilder('company');
-    company = company
+    let company = new FieldBuilder
+      .id('company')
       .badgeWidth('175px')
       .required()
       .placeholder('название Вашей компании')
@@ -36,7 +54,7 @@ export default class cartLogin {
       // .error('заполните, пожалуйста, название вашей компании')
       .make()
     ;
-    return {name, phone, company}
+    this.fields =  [name, phone, company]
   }
 
 
