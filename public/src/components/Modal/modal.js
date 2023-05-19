@@ -28,11 +28,13 @@ export default class Modal {
     this.overlay.addEventListener('click', this.close.bind(this));
     this.submitEl.addEventListener('click', this.submit.bind(this));
   }
+
   async show() {
+    this.content.innerHTML = '';
     this.renderTitle();
+    this.renderContent();
     this.renderFields();
     this.renderFooter();
-    this.renderContent();
     this.renderSubmitText();
 
     this.modal.style.display = 'flex';
@@ -43,32 +45,35 @@ export default class Modal {
       this.box.classList.add('transform-in')
     }.bind(this), 1)
   }
-  renderTitle(){
-    this.title.innerText = this.data.title;
-  }
-  renderSubmitText(){
-    this.submitEl.innerText = this.data.submitText;
-  }
 
   async renderFields() {
-    this.content.innerHTML = '';
-    for (let field in this.data.fields) {
-      this.content.prepend(this.data.fields[field])
-    }
+    this.data.fields.forEach((field) => {
+      this.content.appendChild(field)
+    })
   }
+
   async renderContent() {
-    this.content.innerHTML = '';
+
     for (let line in this.data.content) {
-      this.content.prepend(this.data.content[line])
+      this.content.appendChild(this.data.content[line])
     }
   }
+
   async renderFooter() {
-    this.footer.innerHTML = '';
-    debugger;
     for (let line in this.data.footer) {
-      this.footer.prepend(this.data.footer[line])
+      this.footer.appendChild(this.data.footer[line])
     }
   }
+
+  renderTitle() {
+    this.title.innerText = this.data.title ?? 'Заголовок';
+  }
+
+  renderSubmitText() {
+    this.submitEl.innerText = this.data.submitText ?? 'ok';
+  }
+
+
   async submit({target}) {
     let success = this.callback(this.content.querySelectorAll('input'));
     // close();
@@ -97,7 +102,6 @@ export default class Modal {
       `Вашу заявку оператор сможет найти по номеру вашего телефона - ${form.tel}`);
     this.cart.appendChild(div)
   }
-
 
 
   close() {
