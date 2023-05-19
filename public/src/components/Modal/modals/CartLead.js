@@ -23,9 +23,7 @@ export default class CartLead {
   }
 
   setFields() {
-    // let builder = new FieldBuilder;
-
-    let name = new FieldBuilder
+    let name = (new FieldBuilder())
       .id('name')
       .badgeWidth('150px')
       .required()
@@ -35,7 +33,7 @@ export default class CartLead {
       .make()
     ;
 
-    let phone = new FieldBuilder
+    let phone = (new FieldBuilder)
       .id('phone')
       .badgeWidth('130px')
       .required()
@@ -45,7 +43,7 @@ export default class CartLead {
       .make()
     ;
 
-    let company = new FieldBuilder
+    let company = (new FieldBuilder)
       .id('company')
       .badgeWidth('175px')
       .required()

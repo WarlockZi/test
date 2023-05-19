@@ -72,7 +72,7 @@ class PropertyView
 					->html(
 						MyList::build(Val::class)
 							->items($item->vals)
-							->realtion('vals')
+							->relation('vals')
 							->column(
 								ListColumnBuilder::build('id')
 									->name('ID')

@@ -3,16 +3,15 @@ import {createElement} from "../../../common";
 export default class CartSuccess {
   constructor() {
     this.title = 'Заказ принят в обработку';
-    this.submitText = 'хрю хрю';
+    this.submitText = 'Успешно';
     this.content = [];
     this.footer = [];
-    this.setContent();
-    this.setFooter();
+    // this.setContent();
+    // this.setFooter();
   }
 
   setFooter() {
-    let builder = new createElement();
-    this.footer.push(builder
+    this.footer.push((new createElement())
       .tag('div')
       .attr('id', 'submit')
       .attr('class', 'button')
@@ -22,11 +21,10 @@ export default class CartSuccess {
   }
 
   setContent() {
-    let builder = new createElement();
-    this.content.push(builder
+    this.content.push(new createElement()
       .tag('div')
       .attr('class', 'text')
-      .text('Body')
+      .text('Какое-то сообщение')
       .make()
     )
   }
