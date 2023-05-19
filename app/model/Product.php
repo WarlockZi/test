@@ -56,8 +56,8 @@ class Product extends Model
 	{
 		$price = $this->getRelation('price');
 
-		var_dump($price->price);
-		var_dump($price);
+//		var_dump($price->price);
+//		var_dump($price);
 
 		if ($price) {
 			$number = number_format($price->price, 2, '.', ' ');
