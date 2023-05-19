@@ -2,27 +2,37 @@ import FieldBuilder from "../builders/FieldBuilder";
 
 export default class cartLogin {
   constructor() {
+    this.content = [];
+    this.fields = [];
+    this.footer = [];
+
+    this.title = 'Вход';
+    this.submitText= 'Отправить';
     this.setFields();
-    this.title = 'Вход'
+    // this.setFooter();
+
   }
 
   setFields() {
-    let email = new FieldBuilder('email');
-    email = email
+    let builder = new FieldBuilder;
+
+    let email = builder
+      .id('email')
       .required()
       .badgeWidth('55px')
       .type('email')
       .placeholder('email')
       .make();
 
-    let password = new FieldBuilder('password');
-    password = password
+    let password = builder
+      .id('password')
       .required()
       .pattern('[a-zA-Z0-9-_()]{6,}')
       .badgeWidth('65px')
       .placeholder('пароль')
       .make();
-    this.fields = {email, password}
+
+    this.fields = [email, password]
   }
 
 }
