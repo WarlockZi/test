@@ -55,10 +55,6 @@ class Product extends Model
 	public function priceWithCurrencyUnit()
 	{
 		$price = $this->getRelation('price');
-
-//		var_dump($price->price);
-//		var_dump($price);
-
 		if ($price) {
 			$number = number_format($price->price, 2, '.', ' ');
 			return "{$number} {$price->currency} / {$this->baseUnit->name}";
@@ -86,7 +82,7 @@ class Product extends Model
 
 	public function price()
 	{
-		return $this->hasOne(Price::class, '1s_art', 'art');
+		return $this->hasOne(Price::class, '1s_id', '1s_id');
 	}
 
 	public function mainImages()
