@@ -55,8 +55,9 @@ class Product extends Model
 	public function priceWithCurrencyUnit()
 	{
 		$price = $this->getRelation('price');
-		echo 'd';
+
 		var_dump($price->price);
+		var_dump($price);
 
 		if ($price) {
 			$number = number_format($price->price, 2, '.', ' ');
