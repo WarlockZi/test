@@ -10,5 +10,3 @@
 	<div class="old-price"><?= $oldPrice; ?> ₽</div>
 
 </div>
-
-<div class="button blue">Добавить в корзину</div>

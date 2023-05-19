@@ -1,31 +1,37 @@
 // import './cart.scss'
 import '../components/counter/counter'
-import {$, getCookie, time, getToken, cookieRemove, post} from '../common'
+import {$, cookieRemove, getToken, post, time} from '../common'
 import Counter from "../components/counter/counter";
 import Cookie from "../components/cookie/new/cookie";
-// import Popup from "../components/popup/popup";
-import PopupDefault from "../components/popup/popupDefault";
-import cartLead from "../components/popup/fields/cartLead";
-import cartLogin from "../components/popup/fields/cartLogin";
+import Modal from "../components/Modal/modal";
+import CartSuccess from "../components/Modal/modals/CartSuccess";
+import CartLogin from "../components/Modal/modals/CartLogin";
+import CartLead from "../components/Modal/modals/CartLead";
 
 export default class Cart {
   constructor() {
     let container = $('.user-content .cart .content').first();
     if (!container) return;
     this.container = container;
+    this.modal = document.querySelector('[data-modal]');
 
-    new PopupDefault({
+    new Modal({
       button: $('#cartLead').first(),
-      data: new cartLead(),
-      callback: this.popupLeadCallback.bind(this)
+      data: new CartLead(),
+      callback: this.modalLeadCallback.bind(this)
     });
 
-    new PopupDefault({
+    new Modal({
       button: $('#cartLogin').first(),
-      data: new cartLogin(),
-      callback: this.popupLoginCallback.bind(this)
+      data: new CartLogin(),
+      callback: this.modalLoginCallback.bind(this)
     });
 
+    new Modal({
+      button: $('#cartSuccess').first(),
+      data: new CartSuccess(),
+      callback: this.modalcartSuccessCallback.bind(this)
+    });
     this.total = container.querySelector('.total span');
     this.cartEmptyText = container.parentNode.querySelector('.empty-cart');
 
@@ -51,7 +57,7 @@ export default class Cart {
     if (this.cartLoginBtn) this.cartLoginBtn.onclick = this.cartLead.bind(this);
   }
 
-  async popupLoginCallback(fields) {
+  async modalLeadCallback(fields) {
     debugger;
     let email = fields.email.value;
     let password = fields.password.value;
@@ -59,10 +65,17 @@ export default class Cart {
     if (res) {
       window.location.reload
     }
-
   }
-
-  popupLeadCallback(fields) {
+  async modalcartSuccessCallback(fields) {
+    debugger;
+    let email = fields.email.value;
+    let password = fields.password.value;
+    let res = await post('/cart/login', {email, password});
+    if (res) {
+      window.location.reload
+    }
+  }
+  modalLoginCallback(fields) {
 
   }
 
