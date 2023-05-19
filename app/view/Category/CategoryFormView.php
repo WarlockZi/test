@@ -78,7 +78,7 @@ class CategoryFormView
 					->html(
 						MyList::build(Product::class)
 							->pageTitle('Товары категории')
-							->realtion('products')
+							->relation('products')
 							->addButton('ajax')
 							->items($category['products'] ?? [])
 							->column(
@@ -147,7 +147,7 @@ class CategoryFormView
 									->contenteditable()
 									->get()
 							)
-							->realtion('childrenNotDeleted')
+							->relation('childrenNotDeleted')
 							->edit()
 							->del()
 							->addButton('ajax')
@@ -171,7 +171,7 @@ class CategoryFormView
 									->contenteditable()
 									->get()
 							)
-							->realtion('childrenDeleted')
+							->relation('childrenDeleted')
 							->edit()
 							->del()
 							->addButton('ajax')

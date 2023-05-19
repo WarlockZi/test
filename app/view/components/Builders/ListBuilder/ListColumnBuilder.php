@@ -4,8 +4,6 @@
 namespace app\view\components\Builders\ListBuilder;
 
 
-use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
-
 class ListColumnBuilder
 {
 
@@ -50,29 +48,6 @@ class ListColumnBuilder
 		$this->classHeader = "class='{$class}'";
 		return $this;
 	}
-
-//	public function select(
-//		string $modelName,
-//		string $nameOptionByField='name',
-//		bool $tree = false,
-//		string $initialOption = '',
-//		int $initialOptionValue = 0
-//	)
-//	{
-//		$this->select = true;
-//		$this->nameOptionByField = $nameOptionByField;
-//		$this->initialOption = $initialOption;
-//		$this->initialOptionValue = $initialOptionValue;
-//
-//		$items = $modelName::all();
-//		$this->select = ListSelectBuilder::build()
-//			->collection($items)
-//			->initialOption('',0)
-//		;
-//		return $this;
-//	}
-
-
 
 	public function name(string $name)
 	{
@@ -136,5 +111,29 @@ class ListColumnBuilder
 		$this->name = $this->name ? $this->name : $this->field;
 		return $this;
 	}
+
+//	public function select(
+//		string $modelName,
+//		string $nameOptionByField='name',
+//		bool $tree = false,
+//		string $initialOption = '',
+//		int $initialOptionValue = 0
+//	)
+//	{
+//		$this->select = true;
+//		$this->nameOptionByField = $nameOptionByField;
+//		$this->initialOption = $initialOption;
+//		$this->initialOptionValue = $initialOptionValue;
+//
+//		$items = $modelName::all();
+//		$this->select = ListSelectBuilder::build()
+//			->collection($items)
+//			->initialOption('',0)
+//		;
+//		return $this;
+//	}
+
+
+
 
 }

@@ -14,9 +14,8 @@ export default class cartLogin {
   }
 
   setFields() {
-    let builder = new FieldBuilder;
 
-    let email = builder
+    let email = (new FieldBuilder)
       .id('email')
       .required()
       .badgeWidth('55px')
@@ -24,7 +23,7 @@ export default class cartLogin {
       .placeholder('email')
       .make();
 
-    let password = builder
+    let password = (new FieldBuilder)
       .id('password')
       .required()
       .pattern('[a-zA-Z0-9-_()]{6,}')

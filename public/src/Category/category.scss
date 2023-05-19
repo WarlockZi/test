@@ -38,6 +38,8 @@
       padding: 10px;
       border: 1px solid $color-gray2;
       color: $color-gray10;
+      margin-bottom: 0;
+      line-height: 20px;
 
       @include _400{
         width: 80%;

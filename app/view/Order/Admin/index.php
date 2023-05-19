@@ -1,7 +1,5 @@
+<div class="page-name">Заказы</div>
 
-
-	<div class="page-name">Заказы</div>
-
-	<?=$list;?>
+<?= $list; ?>
 
 
