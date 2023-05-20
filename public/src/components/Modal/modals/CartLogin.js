@@ -1,16 +1,13 @@
 import FieldBuilder from "../builders/FieldBuilder";
+import ModalContent from "./ModalContent";
 
-export default class cartLogin {
+export default class cartLogin  extends ModalContent{
   constructor() {
-    this.content = [];
-    this.fields = [];
-    this.footer = [];
-
+    super();
     this.title = 'Вход';
     this.submitText= 'Отправить';
     this.setFields();
     // this.setFooter();
-
   }
 
   setFields() {

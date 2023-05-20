@@ -40,10 +40,10 @@ use \app\core\Icon;
 				<div class="search__button"></div>
 			</div>
 
-<!--			<a class="cart" href="/cart">-->
-<!--				<div class="count--><?//= $oItems ? ' show' : ''; ?><!--">--><?//= $oItems; ?><!--</div>-->
-<!--					 --><?//= Icon::shoppingCart('feather'); ?>
-<!--			</a>-->
+			<a class="cart" href="/cart">
+				<div class="count<?= $oItems ? ' show' : ''; ?>"><?= $oItems; ?></div>
+					 <?= Icon::shoppingCart('feather'); ?>
+			</a>
 
 			<div class="gamburger">
 					 <?= Icon::menu('feather') ?>

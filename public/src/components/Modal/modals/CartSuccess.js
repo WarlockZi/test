@@ -1,11 +1,11 @@
 import {createElement} from "../../../common";
+import ModalContent from "./ModalContent";
 
-export default class CartSuccess {
+export default class CartSuccess extends ModalContent{
   constructor() {
+    super();
     this.title = 'Заказ принят в обработку';
     this.submitText = 'Успешно';
-    this.content = [];
-    this.footer = [];
     // this.setContent();
     // this.setFooter();
   }
@@ -28,5 +28,7 @@ export default class CartSuccess {
       .make()
     )
   }
+
+
 
 }
