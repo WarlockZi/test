@@ -13,7 +13,7 @@ export default class Cart {
     let container = $('.user-content .cart .content').first();
     if (!container) return;
     this.container = container;
-    this.modal = document.querySelector('[data-modal]');
+    // this.modal = document.querySelector('[data-modal]');
 
     new Modal({
       button: $('#cartLead').first(),
@@ -32,6 +32,7 @@ export default class Cart {
       data: new CartSuccess(),
       callback: this.modalcartSuccessCallback.bind(this)
     });
+
     this.total = container.querySelector('.total span');
     this.cartEmptyText = container.parentNode.querySelector('.empty-cart');
 
@@ -66,17 +67,11 @@ export default class Cart {
       window.location.reload
     }
   }
-  async modalcartSuccessCallback(fields) {
-    debugger;
-    let email = fields.email.value;
-    let password = fields.password.value;
-    let res = await post('/cart/login', {email, password});
-    if (res) {
-      window.location.reload
-    }
+  async modalcartSuccessCallback(inputs, modal) {
+    modal.close()
   }
-  modalLoginCallback(fields) {
 
+  modalLoginCallback(fields) {
   }
 
   rerenderSums() {
@@ -115,13 +110,13 @@ export default class Cart {
     return this.cartLifeMs + Date.now()
   }
 
-  cartLogin() {
-    // this.popup.show('cartLogin')
-  }
-
-  cartLead() {
-    // this.popup.show('cartLead')
-  }
+  // cartLogin() {
+  //   // this.popup.show('cartLogin')
+  // }
+  //
+  // cartLead() {
+  //   // this.popup.show('cartLead')
+  // }
 
   counterCallback() {
     this.nullifyCookie();
@@ -196,9 +191,7 @@ export default class Cart {
     let sess = getToken();
 
     let res = await post(`/adminsc/orderItem/updateOrCreate`, {sess, product_id, count});
-    // if (res?.arr?.ok) {
-    //   row.remove()
-    // }
+
   }
 
 

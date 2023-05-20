@@ -1,12 +1,10 @@
 import FieldBuilder from "../builders/FieldBuilder";
 import {createElement} from "../../../common";
+import ModalContent from "./ModalContent";
 
-export default class CartLead {
+export default class CartLead extends ModalContent{
   constructor() {
-    this.footer = [];
-    this.content = [];
-    this.fields = [];
-
+    super();
     this.title = 'Данные для связи';
     this.submitText= 'отправить Kea';
     this.setFields();
@@ -14,8 +12,7 @@ export default class CartLead {
   }
 
   setFooter(){
-    let builder = new createElement();
-    this.footer.push(builder
+    this.footer.push((new createElement())
       .tag('div')
       .attr('class','button')
       .text('Отправить Lead')
