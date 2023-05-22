@@ -6,6 +6,7 @@ namespace app\core;
 use app\controller\Controller;
 use app\model\User;
 use app\view\AdminView;
+use app\view\Assets\UserAssets;
 use app\view\UserView;
 
 class NotFound extends Controller
@@ -15,12 +16,12 @@ class NotFound extends Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->assets = new UserAssets();
 		$this->assets->setMeta('Страница не найдена', 'Страница не найдена');
 		$this->file404 = ROOT.'/app/view/404/index.php';
 	}
 
 	public function getModel(){
-
 	}
 
 	public static function url(string $url)
