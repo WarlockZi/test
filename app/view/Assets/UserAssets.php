@@ -25,7 +25,6 @@ class UserAssets extends Assets
 		$controller->getAssets()->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
 		$controller->getAssets()->setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");
 
-
 		return $this;
 //		return $controller->getAssets();
 

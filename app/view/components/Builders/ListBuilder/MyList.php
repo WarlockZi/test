@@ -63,7 +63,7 @@ class MyList
 	}
 
 
-	public function realtion(string $relation)
+	public function relation(string $relation)
 	{
 		$this->relation = "data-relation = '{$relation}'";
 		return $this;

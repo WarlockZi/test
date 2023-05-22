@@ -40,7 +40,7 @@ class Assets
 		$this->keywords = $item->keywords ? $item->keywords : $item->name;
 	}
 
-	public function setMeta(string $title, string $desc, string $keywords)
+	public function setMeta(string $title, string $desc='', string $keywords='')
 	{
 		$this->title = $title ? $title : 'Медицинкские перчатки';
 		$this->desc = $desc ? $desc : 'Медицинкские перчатки';

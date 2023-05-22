@@ -1,0 +1,13 @@
+@import "../../mixin_media";
+
+.order {
+  .user {
+    margin: 10px 0;
+  }
+
+  @include cartRow;
+
+  .row {
+    gap: 5px;
+  }
+}

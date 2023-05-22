@@ -1,7 +1,7 @@
 import {$, post, validate} from "../common";
 
-// debugger
-let loginForm = $("[data-auth='login']")[0];
+debugger;
+let loginForm = $("[data-auth='login']").first();
 if (loginForm) {
   $(loginForm).on('click', sendData.bind(this))
 }

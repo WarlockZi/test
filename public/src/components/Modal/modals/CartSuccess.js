@@ -1,18 +1,17 @@
 import {createElement} from "../../../common";
+import ModalContent from "./ModalContent";
 
-export default class CartSuccess {
+export default class CartSuccess extends ModalContent{
   constructor() {
+    super();
     this.title = 'Заказ принят в обработку';
-    this.submitText = 'хрю хрю';
-    this.content = [];
-    this.footer = [];
-    this.setContent();
-    this.setFooter();
+    this.submitText = 'Успешно';
+    // this.setContent();
+    // this.setFooter();
   }
 
   setFooter() {
-    let builder = new createElement();
-    this.footer.push(builder
+    this.footer.push((new createElement())
       .tag('div')
       .attr('id', 'submit')
       .attr('class', 'button')
@@ -22,13 +21,14 @@ export default class CartSuccess {
   }
 
   setContent() {
-    let builder = new createElement();
-    this.content.push(builder
+    this.content.push(new createElement()
       .tag('div')
       .attr('class', 'text')
-      .text('Body')
+      .text('Какое-то сообщение')
       .make()
     )
   }
+
+
 
 }

@@ -7,8 +7,10 @@ namespace app\view;
 use app\controller\Controller;
 use app\core\Error;
 use app\core\FS;
+use app\model\Product;
 use app\view\Assets\UserAssets;
 use app\view\Header\UserHeader;
+use Illuminate\Database\Eloquent\Model;
 
 class UserView extends View
 {

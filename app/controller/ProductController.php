@@ -26,6 +26,7 @@ class ProductController extends AppController
 				$this->assets->setItemMeta($product);
 			} else{
 				$view = $this->getView();
+				$this->assets->setMeta('Страница не найдена');
 				$this->view = $view->get404();
 				http_response_code(404);}
 		} else {

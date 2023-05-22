@@ -12,7 +12,7 @@ function check_cookie(cookie_name) {
 }
 
 function clicked() {
-  setCookie('cn', 1, 3, 'd');
+  setCookie('cn', 1, 3, 'Gol.js');
   $('#cookie-notice').css('bottom', '-100%');
 }
 
