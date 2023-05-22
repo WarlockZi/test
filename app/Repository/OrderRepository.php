@@ -19,6 +19,7 @@ class OrderRepository
 			->with('user')
 			->with('product')
 			->orderBy('user_id')
+			->groupBy('user_id')
 			->get()
 		;
 		return $orders;
@@ -29,11 +30,12 @@ class OrderRepository
 		$userId = Order::where('id',$id)->first()->user_id;
 		$orders = Order::query()
 			->select('product_id', 'id','user_id','count')
+			->selectRaw('SUM(count) as total_count')
 			->where('user_id',$userId)
 			->with('user')
 			->with('product.price')
+			->groupBy('product_id')
 			->get()
-
 		;
 		return $orders;
 	}
@@ -43,7 +45,6 @@ class OrderRepository
 		$user = Auth::getUser();
 		if ($user) {
 			$oItems = Order::query()
-				->where('sess', $sess)
 				->where('user_id', $user['id'])
 				->with('product.price')
 				->get();
