@@ -6,6 +6,7 @@ namespace app\view\Order;
 
 use app\model\Order;
 
+use app\model\User;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\MyView;
@@ -34,5 +35,30 @@ abstract class OrderView
 			->edit()
 			->get();
 	}
+
+	public static function list($items): string
+	{
+		return MyList::build(Order::class)
+			->column(
+				ListColumnBuilder::build('id')
+					->name('ID')
+					->get())
+			->column(
+				ListColumnBuilder::build('user')
+					->function(Order::class, 'userEmail')
+					->name('Клиент')
+					->search()
+					->width('1fr')
+					->get())
+			->items($items)
+			->edit()
+			->get();
+	}
+
+//	public static function edit($orders)
+//	{
+//		return 	include __DIR__.'/Admin/edit.php';
+//
+//	}
 
 }

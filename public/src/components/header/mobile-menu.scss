@@ -7,7 +7,7 @@
     top: 100%;
     right: -1000px;
     width: 250px;
-    background: #78aafe;
+    background: $color-main;
     transition: right 200ms;
 
     //@include _500 {
@@ -38,7 +38,7 @@
         cursor: pointer;
 
         &:hover {
-          background-color: #0070ff;
+          background-color: $color-main-hover;
         }
       }
     }

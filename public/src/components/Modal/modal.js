@@ -32,8 +32,8 @@ export default class Modal {
   async show() {
     this.content.innerHTML = '';
     this.renderTitle();
-    this.renderContent();
     this.renderFields();
+    this.renderContent();
     this.renderFooter();
     this.renderSubmitText();
 
@@ -53,7 +53,6 @@ export default class Modal {
   }
 
   async renderContent() {
-
     for (let line in this.data.content) {
       this.content.appendChild(this.data.content[line])
     }
@@ -73,36 +72,9 @@ export default class Modal {
     this.submitEl.innerText = this.data.submitText ?? 'ok';
   }
 
-
   async submit({target}) {
-    let success = this.callback(this.content.querySelectorAll('input'));
-    // close();
-    // let res = await post('/adminsc/orderItem/toorder', data);
-    // if (res.arr.ok) {
-    //   this.showSuccess()
-    // }
-    if (success) {
-      debugger;
-      this.showSuccess()
-    }
+    this.callback(this.content.querySelectorAll('input'),this);
   }
-
-  showSuccess() {
-    let clone = this.check.cloneNode(true);
-    this.cart.style.transition = 'all 1s';
-    this.cart.opacity = 0;
-    this.cart.minHeight = '100%';
-    this.cart.innerHTML = '';
-
-    this.cart.appendChild(clone);
-    clone.style.display = 'block';
-
-    let div = createEl('div',
-      'message',
-      `Вашу заявку оператор сможет найти по номеру вашего телефона - ${form.tel}`);
-    this.cart.appendChild(div)
-  }
-
 
   close() {
     this.box.classList.remove('transform-in');

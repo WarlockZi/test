@@ -33,6 +33,9 @@ select {
   display: flex;
   flex-flow: column;
 }
+.row {
+  display: flex;
+}
 
 .button.button-outlined.button-success {
   @include colored_button(3px, $color-success, $color-white)

@@ -1,22 +1,18 @@
 import FieldBuilder from "../builders/FieldBuilder";
+import ModalContent from "./ModalContent";
 
-export default class cartLogin {
+export default class cartLogin  extends ModalContent{
   constructor() {
-    this.content = [];
-    this.fields = [];
-    this.footer = [];
-
+    super();
     this.title = 'Вход';
     this.submitText= 'Отправить';
     this.setFields();
     // this.setFooter();
-
   }
 
   setFields() {
-    let builder = new FieldBuilder;
 
-    let email = builder
+    let email = (new FieldBuilder)
       .id('email')
       .required()
       .badgeWidth('55px')
@@ -24,7 +20,7 @@ export default class cartLogin {
       .placeholder('email')
       .make();
 
-    let password = builder
+    let password = (new FieldBuilder)
       .id('password')
       .required()
       .pattern('[a-zA-Z0-9-_()]{6,}')
