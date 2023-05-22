@@ -1,9 +1,13 @@
-.order{
-  .user{
-    margin: 10px;
+@import "../../mixin_media";
+
+.order {
+  .user {
+    margin: 10px 0;
   }
 
-  .row{
-    gap:5px;
+  @include cartRow;
+
+  .row {
+    gap: 5px;
   }
 }

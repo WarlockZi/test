@@ -15,6 +15,7 @@ class NotFound extends Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->assets->setMeta('Страница не найдена', 'Страница не найдена');
 		$this->file404 = ROOT.'/app/view/404/index.php';
 	}
 
@@ -38,11 +39,9 @@ class NotFound extends Controller
 		$error = "Не найден controller - {$route->controller}";
 		Error::setError($error);
 
-		$controller = new self();
-
 		http_response_code(404);
 		$view = self::setView($route);
-		$view->controller = new $controller;
+
 		$content = $view->get404();
 		$view->setContent($view->controller);
 		$view->render();

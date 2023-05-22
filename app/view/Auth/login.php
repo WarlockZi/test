@@ -4,7 +4,7 @@
 		<h1 class="title">Вход на сайт</h1>
 		<div class='message'></div>
 
-		<input type="email" placeholder="E-mail" autocomplete="email"/>
+		<input type="email" name="email" autocomplete="email"/>
 
 		<div class="pass">
 			<input name="password" class="form-input password" type="password" placeholder="Пароль"

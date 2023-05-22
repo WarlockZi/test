@@ -36,7 +36,7 @@ export default class Cart {
     this.total = container.querySelector('.total span');
     this.cartEmptyText = container.parentNode.querySelector('.empty-cart');
 
-    this.loginLeadButtons();
+    // this.loginLeadButtons();
 
     this.rows = container.querySelectorAll('.row');
     this.container.onclick = this.handleClick.bind(this);
@@ -50,13 +50,13 @@ export default class Cart {
     this.rerenderSums()
   }
 
-  loginLeadButtons() {
-    this.cartLeadBtn = this.container.querySelector('#cartLead');
-    if (this.cartLeadBtn) this.cartLeadBtn.onclick = this.cartLead.bind(this);
-
-    this.cartLoginBtn = this.container.querySelector('#cartLogin');
-    if (this.cartLoginBtn) this.cartLoginBtn.onclick = this.cartLead.bind(this);
-  }
+  // loginLeadButtons() {
+  //   this.cartLeadBtn = this.container.querySelector('#cartLead');
+  //   if (this.cartLeadBtn) this.cartLeadBtn.onclick = this.cartLead.bind(this);
+  //
+  //   this.cartLoginBtn = this.container.querySelector('#cartLogin');
+  //   if (this.cartLoginBtn) this.cartLoginBtn.onclick = this.cartLead.bind(this);
+  // }
 
   async modalLeadCallback(fields) {
     debugger;
