@@ -179,7 +179,7 @@ export default class Cart {
   async deleteOItem(target) {
     let orderItemDto = this.orderItemDTO(target);
 
-    let res = await post(`/adminsc/orderItem/delete`, {...orderItemDto});
+    let res = await post(`/orderItem/delete`, {...orderItemDto});
     if (res?.arr?.ok) {
       row.remove()
     }
@@ -190,7 +190,7 @@ export default class Cart {
     let count = target.value;
     let sess = getToken();
 
-    let res = await post(`/adminsc/orderItem/updateOrCreate`, {sess, product_id, count});
+    let res = await post(`/orderItem/updateOrCreate`, {sess, product_id, count});
 
   }
 
