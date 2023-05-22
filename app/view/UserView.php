@@ -20,7 +20,7 @@ class UserView extends View
 	public function __construct(Controller $controller)
 	{
 		parent::__construct($controller);
-		$this->setAssets($controller);
+		$this->setAssets();
 		$this->setHeader($this->user);
 		$this->setFooter();
 	}
@@ -63,10 +63,9 @@ class UserView extends View
 		return $this->footer;
 	}
 
-	protected function setAssets(Controller $controller)
+	protected function setAssets()
 	{
-		new UserAssets($controller);
-		$this->assets = $controller->getAssets();
+		$this->assets = new UserAssets();
 	}
 
 
