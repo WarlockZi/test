@@ -12,6 +12,10 @@ Disallow: /search/
 Disallow: /auth/login
 Disallow: /auth/register
 Disallow: /auth/forgot
+Disallow: /auth/returnpass
+Disallow: /main/requisites
+Disallow: /main/politicaconf
+Disallow: /cart
 Disallow: /404
 
 Disallow: /*?
