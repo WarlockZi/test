@@ -91,10 +91,14 @@ class OrderitemController Extends AppController
 					]
 				);
 			}
-			$created = $orderItm->wasRecentlyCreated;
-//			$this->exitJson(['error' => "не записано"]);
+			if ($orderItm->wasRecentlyCreated) {
+				$this->exitJson(['popup' => "Добавлено в корзину"]);
+			}
+			if ($orderItm->wasChanged()) {
+				$this->exitJson(['popup' => "Изменено"]);
+			}
+			$this->exitJson(['error' => "не записано"]);
 		}
 
-		$this->exitJson(['popup' => "ok"]);
 	}
 }

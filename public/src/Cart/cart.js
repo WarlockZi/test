@@ -51,13 +51,15 @@ export default class Cart {
   }
 
 
-  async modalLeadCallback(fields) {
+  async modalLeadCallback(fields,modal) {
     debugger;
+    modal.submitEl.removeEventListener('click', this.modalLoginCallback);
     let name = fields.name.value;
     let phone = fields.phone.value;
     let company = fields.company.value;
     let sess = getToken();
     let res = await post('/cart/lead', {name, phone, company, sess});
+    modal.close();
     if (res) {
       window.location.reload
     }
@@ -67,11 +69,13 @@ export default class Cart {
     modal.close()
   }
 
-  async modalLoginCallback(fields) {
+  async modalLoginCallback(fields, modal) {
+    modal.submitEl.removeEventListener('click', this.modalLoginCallback);
     let email = fields.email.value;
     let password = fields.password.value;
     let sess = getToken();
     let res = await post('/cart/login', {email, password, sess});
+    modal.close();
     if (res) {
       window.location.reload
     }

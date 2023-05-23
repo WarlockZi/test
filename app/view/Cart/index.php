@@ -37,7 +37,7 @@
 				  <div class="price"
 				       data-price=<?= $oItem->product->getRelation('price')->price; ?>><?= $oItem->product->priceWithCurrencyUnit() ?></div>
 			  </div>
-			  <input type="number" class="count" min="0" max="999999" value="<?= $oItem->count_total; ?>">
+			  <input type="number" class="count" min="0" max="999999" value="<?= $oItem->count; ?>">
 
 			  <div class="sum"></div>
 			  <div class="del"><?= Icon::trashWhite() ?></div>
