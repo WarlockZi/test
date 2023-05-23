@@ -35,7 +35,7 @@ export default class CartLead extends ModalContent{
       .badgeWidth('130px')
       .required()
       .placeholder('сотовый для связи')
-      .pattern('[0-9-_()]{10}')
+      .pattern('[0-9-+_()]{6,17}')
       // .error('телефон состоит минимум из 10 цифр')
       .make()
     ;
@@ -45,7 +45,7 @@ export default class CartLead extends ModalContent{
       .badgeWidth('175px')
       .required()
       .placeholder('название Вашей компании')
-      .pattern('[а-яА-я]{1,}')
+      .pattern('[a-zA-Zа-яА-я\\s]{3,}')
       // .error('заполните, пожалуйста, название вашей компании')
       .make()
     ;
