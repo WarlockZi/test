@@ -92,6 +92,7 @@ class OrderItemController Extends AppController
 			$created = $orderItm->wasRecentlyCreated;
 //			$this->exitJson(['error' => "не записано"]);
 		}
+		var_dump($req);
 		$this->exitJson(['popup' => "ok"]);
 	}
 }
