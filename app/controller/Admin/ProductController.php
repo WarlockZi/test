@@ -22,6 +22,8 @@ class ProductController extends AppController
       $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);
     }
     $this->set(compact('product', 'breadcrumbs'));
+    $this->assets->setProduct();
+    $this->assets->setQuill();
   }
 
 	public function actionList()

@@ -179,7 +179,7 @@ class CategoryFormView
 					)
 			)
 //			->del()
-			->softDel()
+//			->softDel()
 			->toList('', 'К списку категорий')
 			->get();
 	}

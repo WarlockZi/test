@@ -66,6 +66,8 @@ class UserView extends View
 	protected function setAssets()
 	{
 		$this->assets = new UserAssets();
+		$this->assets->merge($this->controller->getAssets());
+
 	}
 
 

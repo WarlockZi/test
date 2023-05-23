@@ -16,6 +16,7 @@ class Lead extends Model
 		'code',
 		'phone',
 		'company',
+		'sess'
 	];
 
 	public function items()

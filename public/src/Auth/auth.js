@@ -1,4 +1,4 @@
-import '../components/header/autocomplete'
+import '../components/header/Autocomplete/autocomplete'
 
 import '../components/showPassword/showPassword'
 

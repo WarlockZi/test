@@ -7,6 +7,7 @@ use app\core\Mail;
 use app\model\User;
 use app\view\User\UserView;
 use app\view\View;
+use Exception;
 
 class AuthController extends AppController
 {
@@ -16,8 +17,8 @@ class AuthController extends AppController
 	{
 		parent::__construct();
 		if (!$this->ajax) {
-			$this->assets->setJs('auth');
-			$this->assets->setCss('auth');
+			$this->assets->setAuth();
+//			$this->assets->setCss('auth');
 		}
 	}
 
@@ -73,7 +74,7 @@ class AuthController extends AppController
 			}
 			try {
 				Mail::send_mail($data);
-			} catch (\Exception $e) {
+			} catch (Exception $e) {
 				exit($e->getMessage());
 			}
 			$this->exitWithMsg('confirmed');

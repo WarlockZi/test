@@ -1,10 +1,10 @@
 const path = require("path");
-const src = path.resolve(__dirname, 'public/src')
+const src = path.resolve(__dirname, 'public/src');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 
 require('dotenv').config().parsed;
-const env = process.env
+const env = process.env;
 
 const config = {
   target: ["web", "es5"],
@@ -19,7 +19,6 @@ const config = {
     auth: path.resolve(src, 'Auth/auth.js'),
     main: path.resolve(src, 'Main/main.js'),
     cookie: path.resolve(src, 'components/cookie/cookie.js'),
-    mainHeader: path.resolve(src, 'components/header/header.js'),
     common: path.resolve(src, 'common.js'),
     list: path.resolve(src, 'components/list/list.js'),
     product: path.resolve(src, 'Product/card.js'),
@@ -100,7 +99,7 @@ const config = {
 };
 
 module.exports = (env, argv) => {
-  console.log('mode:', argv.mode)
+  console.log('mode:', argv.mode);
   if (argv.mode ==='production') {
     config.devtool = "nosources-source-map"
   } else {

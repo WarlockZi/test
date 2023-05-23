@@ -1,4 +1,4 @@
-import {post, $, validate, trimStr} from '../common'
+import {$, post, trimStr, validate} from '../common'
 
 let registerForm = $("[data-auth='register']")[0];
 if (registerForm) {
