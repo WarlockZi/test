@@ -64,6 +64,7 @@ class OrderItemController Extends AppController
 	public function actionUpdateOrCreate()
 	{
 		$req = $this->ajax;
+		var_dump($req);
 		if ($req) {
 			if (Auth::isAuthed()) {
 				$orderItm = Order::updateOrCreate(
@@ -92,7 +93,7 @@ class OrderItemController Extends AppController
 			$created = $orderItm->wasRecentlyCreated;
 //			$this->exitJson(['error' => "не записано"]);
 		}
-		var_dump($req);
+
 		$this->exitJson(['popup' => "ok"]);
 	}
 }
