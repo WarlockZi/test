@@ -10,6 +10,7 @@
 	  >
 			 <?= Icon::trashIcon() ?>
 	  </div>
+
 	<? endif; ?>
 
 	<? if ($this->softDel): ?>

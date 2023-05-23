@@ -28,7 +28,7 @@ export default class cartLogin  extends ModalContent{
       .placeholder('пароль')
       .make();
 
-    this.fields = [email, password]
+    this.fields = {email, password}
   }
 
 }

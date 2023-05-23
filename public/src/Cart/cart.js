@@ -13,8 +13,8 @@ export default class Cart {
     let container = $('.user-content .cart .content').first();
     if (!container) return;
     this.container = container;
-    // this.modal = document.querySelector('[data-modal]');
 
+    debugger;
     new Modal({
       button: $('#cartLead').first(),
       data: new CartLead(),
@@ -50,28 +50,31 @@ export default class Cart {
     this.rerenderSums()
   }
 
-  // loginLeadButtons() {
-  //   this.cartLeadBtn = this.container.querySelector('#cartLead');
-  //   if (this.cartLeadBtn) this.cartLeadBtn.onclick = this.cartLead.bind(this);
-  //
-  //   this.cartLoginBtn = this.container.querySelector('#cartLogin');
-  //   if (this.cartLoginBtn) this.cartLoginBtn.onclick = this.cartLead.bind(this);
-  // }
 
   async modalLeadCallback(fields) {
     debugger;
-    let email = fields.email.value;
-    let password = fields.password.value;
-    let res = await post('/cart/login', {email, password});
+    let name = fields.name.value;
+    let phone = fields.phone.value;
+    let company = fields.company.value;
+    let sess = getToken();
+    let res = await post('/cart/lead', {name, phone, company, sess});
     if (res) {
       window.location.reload
     }
   }
+
   async modalcartSuccessCallback(inputs, modal) {
     modal.close()
   }
 
-  modalLoginCallback(fields) {
+  async modalLoginCallback(fields) {
+    let email = fields.email.value;
+    let password = fields.password.value;
+    let sess = getToken();
+    let res = await post('/cart/login', {email, password, sess});
+    if (res) {
+      window.location.reload
+    }
   }
 
   rerenderSums() {
@@ -179,7 +182,7 @@ export default class Cart {
   async deleteOItem(target) {
     let orderItemDto = this.orderItemDTO(target);
 
-    let res = await post(`/adminsc/orderItem/delete`, {...orderItemDto});
+    let res = await post(`/orderItem/delete`, {...orderItemDto});
     if (res?.arr?.ok) {
       row.remove()
     }
@@ -190,7 +193,7 @@ export default class Cart {
     let count = target.value;
     let sess = getToken();
 
-    let res = await post(`/adminsc/orderItem/updateOrCreate`, {sess, product_id, count});
+    let res = await post(`/orderItem/updateOrCreate`, {sess, product_id, count});
 
   }
 

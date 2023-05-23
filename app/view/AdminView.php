@@ -97,6 +97,7 @@ class AdminView extends View
 	protected function setAssets()
 	{
 		$this->assets = new AdminAssets();
+		$this->assets->merge($this->controller->getAssets());
 	}
 
 	protected function setTestAssets()
