@@ -10,7 +10,7 @@ use app\model\Order;
 use app\model\OrderItem;
 
 
-class OrderItemController Extends AppController
+class OrderitemController Extends AppController
 {
 
 	public $model = OrderItem::class;
