@@ -18,7 +18,6 @@ class OrderitemController Extends AppController
 	public function __construct()
 	{
 		parent::__construct();
-		exit('index');
 	}
 
 	public function actionToorder()
@@ -66,7 +65,7 @@ class OrderitemController Extends AppController
 	public function actionUpdateOrCreate()
 	{
 		$req = $this->ajax;
-		exit($req);
+
 		if ($req) {
 			if (Auth::isAuthed()) {
 				$orderItm = Order::updateOrCreate(

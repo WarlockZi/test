@@ -28,10 +28,8 @@ export default function toCart({target}) {
     },
 
     send: async function (obj) {
-
-      // let res = post('/adminsc/OrderItem/updateOrCreate', obj);
-      let res = await post('/adminsc/OrderItem', obj);
-      alert(res)
+      let res = await post('/adminsc/OrderItem/updateOrCreate', obj);
+      console.log(res)
     },
 
     debounced: function (f) {
