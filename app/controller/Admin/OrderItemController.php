@@ -18,6 +18,7 @@ class OrderItemController Extends AppController
 	public function __construct()
 	{
 		parent::__construct();
+		exit('index');
 	}
 
 	public function actionToorder()
@@ -57,7 +58,7 @@ class OrderItemController Extends AppController
 
 	public function actionIndex()
 	{
-		exit('index');
+
 
 	}
 
