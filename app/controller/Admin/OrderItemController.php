@@ -57,6 +57,7 @@ class OrderItemController Extends AppController
 
 	public function actionIndex()
 	{
+		exit('index');
 
 	}
 
