@@ -6,7 +6,7 @@ export default class CartLead extends ModalContent{
   constructor() {
     super();
     this.title = 'Данные для связи';
-    this.submitText= 'отправить Kea';
+    this.submitText= 'отправить данные';
     this.setFields();
     this.setFooter();
   }
@@ -15,7 +15,7 @@ export default class CartLead extends ModalContent{
     this.footer.push((new createElement())
       .tag('div')
       .attr('class','button')
-      .text('Отправить Lead')
+      .text('Отправляя данные, вы соглашаетесь на обработку персональных данных')
       .make())
   }
 
@@ -49,7 +49,7 @@ export default class CartLead extends ModalContent{
       // .error('заполните, пожалуйста, название вашей компании')
       .make()
     ;
-    this.fields =  [name, phone, company]
+    this.fields =  {name, phone, company}
   }
 
 

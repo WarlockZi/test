@@ -298,10 +298,6 @@ class ProductFormView
 		return $builder->clean($str);
 	}
 
-	public static function renderToCart(Product $product)
-	{
-		return FS::getFileContent(ROOT . '/app/view/Product/Main/toCart.php', compact('product'));
-	}
 
 	public static function renderProperty($property)
 	{
@@ -323,7 +319,7 @@ class ProductFormView
 		foreach ($collection as $image) {
 			$detail_image .= self::getCardDetailImage($image);
 		}
-		include ROOT . '/app/view/Product/detail_images.php';
+		include ROOT . '/app/view/Product/card/detail_images.php';
 		return ob_get_clean();
 	}
 

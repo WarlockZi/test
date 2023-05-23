@@ -155,6 +155,7 @@
   height: $height;
   background-color: $color;
   color: $color-white;
+  user-select: none;
 
   svg {
     fill: $color-white;

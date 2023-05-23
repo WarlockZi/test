@@ -24,9 +24,9 @@ class ProductView
 		return "<div data-model='product' class = 'pagination'>{$str}</div>";
 	}
 
-	public static function toCart(Product $product){
-		return FS::getFileContent(__DIR__.'/toCart.php', compact('product'));
-	}
+//	public static function toCart(Product $product){
+//		return FS::getFileContent(__DIR__.'/toCart.php', compact('product'));
+//	}
 
 	public static function mainImage(Product $p)
 	{

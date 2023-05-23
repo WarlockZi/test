@@ -9,6 +9,8 @@ export default class Modal {
     if (!this.modal) return;
     if (!props.button) return;
 
+    this.fieldsObj = {};
+
     this.closeEl = $(this.modal).find('.modal-close');
     this.title = $(this.modal).find('.title');
     this.box = $(this.modal).find('.modal-box');
@@ -47,9 +49,11 @@ export default class Modal {
   }
 
   async renderFields() {
-    this.data.fields.forEach((field) => {
-      this.content.appendChild(field)
-    })
+    let fields = this.data.fields;
+    for (let field in fields) {
+      this.fieldsObj[field] = fields[field].querySelector('input');
+      this.content.appendChild(fields[field])
+    }
   }
 
   async renderContent() {
@@ -72,8 +76,8 @@ export default class Modal {
     this.submitEl.innerText = this.data.submitText ?? 'ok';
   }
 
-  async submit({target}) {
-    this.callback(this.content.querySelectorAll('input'),this);
+  async submit() {
+    this.callback(this.fieldsObj, this);
   }
 
   close() {
