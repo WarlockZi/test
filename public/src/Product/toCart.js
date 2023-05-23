@@ -28,7 +28,9 @@ export default function toCart({target}) {
     },
 
     send: function (obj) {
-      let res = post('/adminsc/orderitem/updateOrCreate', obj)
+      debugger;
+      let res = post('/adminsc/OrderItem/updateOrCreate', obj);
+      console.log(res)
     },
 
     debounced: function (f) {
