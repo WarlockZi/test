@@ -27,10 +27,10 @@ export default function toCart({target}) {
       this.debounced(this.send.bind(obj))
     },
 
-    send: function (obj) {
+    send: async function (obj) {
 
       // let res = post('/adminsc/OrderItem/updateOrCreate', obj);
-      let res = post('/adminsc/OrderItem', obj);
+      let res = await post('/adminsc/OrderItem', obj);
       alert(res)
     },
 
