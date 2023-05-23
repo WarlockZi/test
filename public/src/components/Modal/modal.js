@@ -28,10 +28,11 @@ export default class Modal {
     this.button.addEventListener('click', this.show.bind(this));
     this.closeEl.addEventListener('click', this.close.bind(this));
     this.overlay.addEventListener('click', this.close.bind(this));
-    this.submitEl.addEventListener('click', this.submit.bind(this));
+
   }
 
   async show() {
+    this.submitEl.addEventListener('click', this.submit.bind(this));
     this.content.innerHTML = '';
     this.renderTitle();
     this.renderFields();
