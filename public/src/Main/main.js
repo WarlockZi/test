@@ -3,11 +3,22 @@ import './main.scss'
 
 import cart from '../Cart/cart'
 
-import '../components/header/autocomplete'
-
 import '../Category/category'
+import {$} from "../common";
+import Search from "../components/header/search/search";
 
 document.addEventListener('DOMContentLoaded',function () {
+  let gumburger = $('.gamburger')[0];
+  if (gumburger) {
+    $('.gamburger').on('click', opentMobilePanel)
+  }
+
+  function opentMobilePanel(e) {
+    let mm = e.target.closest('.utils').querySelector('.mobile-menu');
+    mm.classList.toggle('show')
+  }
+
+  new Search();
   new cart()
 });
 

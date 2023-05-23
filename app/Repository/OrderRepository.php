@@ -45,8 +45,12 @@ class OrderRepository
 		$user = Auth::getUser();
 		if ($user) {
 			$oItems = Order::query()
+				->select('*')
+				->selectRaw('SUM(count) as count_total')
 				->where('user_id', $user['id'])
 				->with('product.price')
+				->groupBy('product_id')
+//				->selectRaw('SUM(count) as count_total')
 				->get();
 		} else {
 			$oItems = OrderItem::query()

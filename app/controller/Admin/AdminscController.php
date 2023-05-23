@@ -42,6 +42,8 @@ class AdminscController extends AppController
 
 	public function actionIndex()
 	{
+//		<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		$this->assets->setCDNJs("https://cdn.jsdelivr.net/npm/chart.js", true);
 //		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
 

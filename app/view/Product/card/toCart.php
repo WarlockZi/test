@@ -6,7 +6,7 @@ use app\core\Icon;
 
 <div class="to-cart">
 
-	<? include __DIR__ . '/Main/toCart.php' ?>
+	<? include __DIR__ . '/price.php' ?>
 	<div class="button blue">Добавить в корзину</div>
 
 	<div class="adjust none">

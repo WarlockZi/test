@@ -24,6 +24,7 @@ class ProductController extends AppController
 				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, true,);
 				$this->set(compact('product', 'breadcrumbs', 'oItems'));
 				$this->assets->setItemMeta($product);
+				$this->assets->setProduct();
 			} else{
 				$view = $this->getView();
 				$this->assets->setMeta('Страница не найдена');
