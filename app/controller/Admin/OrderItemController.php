@@ -64,7 +64,7 @@ class OrderItemController Extends AppController
 	public function actionUpdateOrCreate()
 	{
 		$req = $this->ajax;
-		var_dump($req);
+		exit($req);
 		if ($req) {
 			if (Auth::isAuthed()) {
 				$orderItm = Order::updateOrCreate(
