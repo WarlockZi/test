@@ -1,83 +1,85 @@
-import {post, debounce, getToken} from "../common";
-import Cookie from "../components/cookie/new/cookie";
+import {$, debounce, getToken, post} from "../common";
 
-export default function toCart({target}) {
+export default class toCart {
+  constructor() {
+    this.toCart = $('.to-cart').first();
+    this.count = document.querySelector('.utils .cart .count');
+    this.adjust = this.toCart.querySelector('.adjust');
+    this.blue = this.toCart.querySelector('.blue');
+    this.digitEl = this.toCart.querySelector('.digit');
+    this.digit = +this.toCart.querySelector('.digit').innerText;
+    this.product = this.toCart.closest('.product-card').dataset.id;
 
-  let cart = {
-    cart: this,
-    count: document.querySelector('.utils .cart .count'),
-    adjust: this.querySelector('.adjust'),
-    blue: this.querySelector('.blue'),
-    digitEl: this.querySelector('.digit'),
-    digit: +this.querySelector('.digit').innerText,
-    product: this.closest('.product-card').dataset.id,
+    this.digitEl.onkeydown = debounce(this.keyDown.bind(this), 1300);
+    this.toCart.onclick = this.handleClick.bind(this)
+  }
 
-    showBlue: function () {
-      this.blue.classList.remove('none');
-      this.adjust.classList.add('none');
-      // this.count.innerText = --this.count.innerText
-    },
+  showBlue() {
+    this.blue.classList.remove('none');
+    this.adjust.classList.add('none');
+    this.count.innerText = --this.count.innerText
+  }
 
-    showGreen: function () {
-      this.blue.classList.add('none');
-      this.adjust.classList.remove('none');
-      // this.count.style.display = 'flex';
-      // this.count.innerText = ++this.count.innerText;
-      let obj = this.dto();
-      this.debounced(this.send.bind(obj))
-    },
+  showGreen() {
+    this.blue.classList.add('none');
+    this.adjust.classList.remove('none');
+    this.count.innerText = ++this.count.innerText
+  }
 
-    send: async function (obj) {
-      let res = await post('/adminsc/OrderItem/updateOrCreate', obj);
-      console.log(res)
-    },
-
-    debounced: function (f) {
-      let debounced = debounce(f, 300);
-      let obj = this.dto();
-      debounced(obj)
-    },
-
-    dto: function () {
-      debugger;
-      return {
-        id: 0,
-        sess: getToken(),
-        product_id: this.product,
-        count: this.digit
-      }
-    }
-
-  };
-
-  cart.digitEl.onkeydown = function (e) {
-    if (isNaN(+e.key) && e.key !== 'Backspace')
-      e.preventDefault()
-  };
-  cart.digitEl.onchange = function (e) {
-
-  };
-
-  if (target.classList.contains('blue')) {
-    cart.showGreen()
-
-  } else if (target.classList.contains('minus')) {
-    if (cart.digit > 1) {
-      cart.digitEl.innerText = --cart.digit;
-      // cart.count.innerText = cart.digit;
-      let obj = cart.dto();
-      cart.debounced(cart.send.bind(obj))
-    } else if (cart.digit === 1) {
-      cart.showBlue()
-    }
-
-  } else if (target.classList.contains('plus')) {
-    cart.digitEl.innerText = ++cart.digit;
-    // cart.count.innerText = cart.digit;
-    let obj = cart.dto();
-    cart.debounced(cart.send.bind(obj))
+  async send() {
+    let obj = this.dto();
+    let res = await post('/adminsc/OrderItem/updateOrCreate', obj);
+    console.log(res)
   }
 
 
-}
+  keyDown(e) {
+    if (isNaN(+e.key) && e.key !== 'Backspace') {
+      e.preventDefault()
+    }
+    this.send()
+  }
+
+  handleClick({target}) {
+
+    if (target.classList.contains('blue')) {
+      this.showGreen();
+      this.debounced(this.send.bind(this))
+
+    } else if (target.classList.contains('minus')) {
+      if (this.digit > 1) {
+        this.digitEl.innerText = --this.digit;
+        this.debounced(this.send.bind(this))
+      } else if (this.digit === 1) {
+        this.showBlue()
+      }
+    } else if (target.classList.contains('plus')) {
+      this.digitEl.innerText = ++this.digit;
+      this.debounced(this.send.bind(this))
+    }
+  }
+
+  debounced(f, timeout = 300) {
+    let debounced = debounce(f, timeout);
+    let obj = this.dto();
+    debounced(obj)
+  }
+
+  dto() {
+    return {
+      id: 0,
+      sess: getToken(),
+      product_id: this.product,
+      count: +this.digitEl.innerText
+    }
+  }
+};
+
+
+
+
+
+
+
+
 
