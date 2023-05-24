@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
 
-  h1{
+  h1 {
     font-family: sans-serif;
   }
 
@@ -14,6 +14,7 @@
     width: 30%;
     flex: 1;
     margin-right: 7%;
+
 
     figure.zoom {
       background-position: 50% 50%;
@@ -190,6 +191,14 @@
     display: flex;
     margin-bottom: 10px;
     align-items: flex-start;
+
+    img {
+      width: 300px;
+      height: 300px;
+      object-fit: contain;
+      border: 1px solid $color-gray-min;
+      padding: 10px;
+    }
   }
 
   .left_column {
@@ -204,16 +213,6 @@
     flex: 1 1 50%;
   }
 
-  .main-image {
-    //margin: 10px 0;
-    img {
-      width: 300px;
-      height: 300px;
-      object-fit: contain;
-      border: 1px solid $color-gray-min;
-      padding: 10px;
-    }
-  }
 
   @include info-tag;
 
