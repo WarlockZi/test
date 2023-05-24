@@ -1,6 +1,8 @@
 <div class="cart">
 	<? use app\core\Auth;
-	 use app\core\Icon; ?>
+	 use app\core\Icon;
+	 use \app\view\Product\ProductView;
+	 ?>
 
 	<div class="<?= $oItems->count() ? '' : 'none'; ?> content">
 
@@ -30,8 +32,8 @@
 		  <div class="row" data-product-id="<?= $oItem->product_id ?>">
 			  <div class="num"><?= ++$i; ?></div>
 
-			  <img src="/pic/product/uploads/<?= $oItem->product->art . '.jpg' ?? ''; ?>"
-			       alt="<?= $oItem->product->name; ?>">
+			  <img src="<?= ProductView::mainImageSrc($oItem->product)?>" alt="<?= $oItem->product->name; ?>">
+<!--			  <img src="/pic/product/uploads/--><?//= $oItem->product->art . '.jpg' ?? ''; ?><!--" alt="--><?//= $oItem->product->name; ?><!--">-->
 			  <div class="name-price">
 				  <div class="name"><?= $oItem->product->name; ?></div>
 				  <div class="price"

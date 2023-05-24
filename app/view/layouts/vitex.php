@@ -52,7 +52,6 @@ use app\core\Icon;
 		<div class="modal-close"><?= Icon::close()?></div>
 		<div class="content"></div>
 		<div class="footer"></div>
-		<div id="submit" class="button">OK</div>
 	</div>
 
 	<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">

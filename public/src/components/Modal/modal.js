@@ -1,6 +1,6 @@
 import './check_mark.scss'
 import './modal.scss'
-import {$, createEl} from '../../common'
+import {$, createEl, createElement} from '../../common'
 
 export default class Modal {
 
@@ -8,6 +8,10 @@ export default class Modal {
     this.modal = $(`[data-modal='default']`).first();
     if (!this.modal) return;
     if (!props.button) return;
+
+    this.button = props.button;
+    this.data = props.data;
+    this.callback = props.callback;
 
     this.fieldsObj = {};
 
@@ -17,22 +21,17 @@ export default class Modal {
     this.content = $(this.modal).find('.content');
     this.footer = $(this.modal).find('.footer');
     this.overlay = $(this.modal).find('.overlay');
-    this.submitEl = $(this.modal).find(`#submit`);
-
-    this.button = props.button;
-    this.data = props.data;
-    this.callback = props.callback;
 
     this.check = $('.checkmark').first();
 
     this.button.addEventListener('click', this.show.bind(this));
     this.closeEl.addEventListener('click', this.close.bind(this));
     this.overlay.addEventListener('click', this.close.bind(this));
-
   }
 
   async show() {
-    this.submitEl.addEventListener('click', this.submit.bind(this));
+    this.$submit = (new createElement()).tag('div').attr('class', 'button').attr('id', 'submit').text(this.data.submitText).build();
+    this.$submit.addEventListener('click', this.submit.bind(this));
     this.content.innerHTML = '';
     this.renderTitle();
     this.renderFields();
@@ -67,6 +66,7 @@ export default class Modal {
     for (let line in this.data.footer) {
       this.footer.appendChild(this.data.footer[line])
     }
+    this.footer.appendChild(this.$submit)
   }
 
   renderTitle() {
@@ -74,7 +74,7 @@ export default class Modal {
   }
 
   renderSubmitText() {
-    this.submitEl.innerText = this.data.submitText ?? 'ok';
+    this.$submit.innerText = this.data.submitText ?? 'ok';
   }
 
   async submit() {
@@ -87,8 +87,9 @@ export default class Modal {
     this.overlay.style.opacity = 0;
     this.box.style.opacity = 0;
     setTimeout(function () {
-      this.modal.style.display = 'none'
-    }.bind(this), 800)
+      this.modal.style.display = 'none';
+      this.footer.innerHTML = '';
+    }.bind(this), 500)
   }
 
 }
