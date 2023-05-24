@@ -247,7 +247,7 @@ class createElement {
     return this
   }
 
-  make() {
+  build() {
     let el = document.createElement(this.tag);
     el.innerText = this.text;
     this.attributes.forEach((entry,i)=>{

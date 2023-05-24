@@ -16,7 +16,7 @@ export default class CartSuccess extends ModalContent{
       .attr('id', 'submit')
       .attr('class', 'button')
       .text('ok')
-      .make())
+      .build())
 
   }
 
@@ -25,7 +25,7 @@ export default class CartSuccess extends ModalContent{
       .tag('div')
       .attr('class', 'text')
       .text('Какое-то сообщение')
-      .make()
+      .build()
     )
   }
 

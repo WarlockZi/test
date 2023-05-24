@@ -24,15 +24,21 @@ class ProductView
 		return "<div data-model='product' class = 'pagination'>{$str}</div>";
 	}
 
-//	public static function toCart(Product $product){
-//		return FS::getFileContent(__DIR__.'/toCart.php', compact('product'));
-//	}
-
 	public static function mainImage(Product $p)
 	{
 		$dnd = DndBuilder::make('product/uploads', 'add-file');
 		$img = ImageRepository::getProductMainImage($p);
 		return "<div class='dnd-container'>{$dnd}{$img}</div>";
+	}
+
+	public static function mainImageSrc(Product $p)
+	{
+		$src = '/pic/product/uploads/' . $p->art . '.jpg';
+		$slashedSrc = FS::platformSlashes(ROOT . $src);
+		if (is_readable($slashedSrc)) {
+			return $src;
+		}
+		return ImageView::noImageSrc();
 	}
 
 	public static function getMainImageFile(Product $product): string

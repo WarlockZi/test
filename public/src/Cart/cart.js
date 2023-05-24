@@ -14,7 +14,6 @@ export default class Cart {
     if (!container) return;
     this.container = container;
 
-    debugger;
     new Modal({
       button: $('#cartLead').first(),
       data: new CartLead(),
@@ -52,8 +51,6 @@ export default class Cart {
 
 
   async modalLeadCallback(fields,modal) {
-    debugger;
-    modal.submitEl.removeEventListener('click', this.modalLoginCallback);
     let name = fields.name.value;
     let phone = fields.phone.value;
     let company = fields.company.value;
@@ -70,7 +67,6 @@ export default class Cart {
   }
 
   async modalLoginCallback(fields, modal) {
-    modal.submitEl.removeEventListener('click', this.modalLoginCallback);
     let email = fields.email.value;
     let password = fields.password.value;
     let sess = getToken();
