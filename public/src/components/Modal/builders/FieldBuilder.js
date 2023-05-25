@@ -48,7 +48,7 @@ export default class FieldBuilder {
     return this
   }
 
-  make() {
+  build() {
     return new InputContainer(this)
   }
 

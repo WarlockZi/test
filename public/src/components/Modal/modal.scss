@@ -84,10 +84,16 @@
           padding: 4px 20px 0;
           width: 100%;
 
+          //&:-webkit-autofill:selected{
+          //  background-color: #303245 !important;
+          //}
+
           &:-webkit-autofill,
           &:-webkit-autofill:hover,
           &:-webkit-autofill:focus,
-          &:-webkit-autofill:active {
+          //&:-webkit-autofill:selected,
+          &:-webkit-autofill:active{
+            -webkit-box-shadow:0 0 0 1000px #303245 inset !important; ;
             transition: background-color 5000s ease-in-out 0s;
             -webkit-text-fill-color: #eee !important;
           }

@@ -4,6 +4,7 @@ namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class OrderItem extends Model
 {
 	use SoftDeletes;
@@ -37,9 +38,18 @@ class OrderItem extends Model
 		return $this->belongsTo(Order::class);
 	}
 
+	public static function leadData($columnBuilder, $orderItem, $fieldName)
+	{
+		return $orderItem->lead->name . ' - ' . $orderItem->lead->company;
+	}
+
 	public function product()
 	{
 		return $this->hasOne(Product::class, '1s_id', 'product_id');
+	}
+
+	public function lead(){
+		return $this->belongsTo(Lead::class,'sess','sess');
 	}
 
 

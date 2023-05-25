@@ -16,7 +16,7 @@ export default class CartLead extends ModalContent{
       .tag('div')
       .attr('class','button')
       .text('Отправляя данные, вы соглашаетесь на обработку персональных данных')
-      .make())
+      .build())
   }
 
   setFields() {
@@ -27,7 +27,7 @@ export default class CartLead extends ModalContent{
       .placeholder('как к Вам обращаться')
       .pattern('[а-яА-Я]{1,}')
       // .error('заполните, пожалуйста, ваше имя')
-      .make()
+      .build()
     ;
 
     let phone = (new FieldBuilder)
@@ -37,7 +37,7 @@ export default class CartLead extends ModalContent{
       .placeholder('сотовый для связи')
       .pattern('[0-9-+_()]{6,17}')
       // .error('телефон состоит минимум из 10 цифр')
-      .make()
+      .build()
     ;
 
     let company = (new FieldBuilder)
@@ -47,7 +47,7 @@ export default class CartLead extends ModalContent{
       .placeholder('название Вашей компании')
       .pattern('[a-zA-Zа-яА-я\\s]{3,}')
       // .error('заполните, пожалуйста, название вашей компании')
-      .make()
+      .build()
     ;
     this.fields =  {name, phone, company}
   }
