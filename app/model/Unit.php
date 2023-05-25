@@ -27,6 +27,11 @@ class Unit extends Model
 			->get();
 	}
 
+	public function units(){
+		return $this
+			->morphToMany(Unit::class, 'unitable')
+			->withPivot('multiplier','multiplied_unit_id');
+	}
 
 }
 
