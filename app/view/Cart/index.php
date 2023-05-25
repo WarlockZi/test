@@ -36,10 +36,8 @@
 				  <div class="num"><?= ++$i; ?></div>
 
 				  <img src="<?= ProductView::mainImageSrc($oItem->product) ?>" alt="<?= $oItem->product->name; ?>">
-				  <!--			  <img src="/pic/product/uploads/-->
-						 <? //= $oItem->product->art . '.jpg' ?? ''; ?><!--" alt="--><? //= $oItem->product->name; ?><!--">-->
 				  <div class="name-price">
-					  <div class="name"><?= $oItem->product->name; ?></div>
+					  <a href="/product/<?= $oItem->product->slug; ?>" class="name"><?= $oItem->product->name; ?></a>
 					  <div class="price"
 					       data-price=<?= $oItem->product->getRelation('price')->price; ?>><?= $oItem->product->priceWithCurrencyUnit() ?></div>
 				  </div>
@@ -57,7 +55,7 @@
 			<span></span>&nbsp;&nbsp;руб.
 		</div>
 
-		 <? if (!Auth::isAuthed()): ?>
+		 <? if (!$authed): ?>
 		  <div class="buttons">
 			  <div class="button" id="cartLead">Оставить свои данные</div>
 			  <div class="button" id="cartLogin">Войти под своей учеткой</div>
