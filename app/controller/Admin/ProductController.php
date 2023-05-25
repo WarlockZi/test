@@ -6,7 +6,7 @@ use app\controller\AppController;
 use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
-use app\view\Product\ProductFormView;
+use app\view\FormViews\ProductFormView;
 
 
 class ProductController extends AppController

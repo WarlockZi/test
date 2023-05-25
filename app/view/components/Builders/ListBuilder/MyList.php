@@ -104,8 +104,10 @@ class MyList
 		return $this;
 	}
 
+//	public function addButton()
 	public function addButton(string $ajaxOrRedirect)
 	{
+//		$this->addButton = true;
 		$this->addButton = $ajaxOrRedirect;
 		return $this;
 	}

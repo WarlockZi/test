@@ -36,7 +36,8 @@
 			  <div class="row" data-product-id="<?= $oItem->product_id ?>">
 				  <div class="num"><?= ++$i; ?></div>
 
-				  <img src="<?= ProductView::mainImageSrc($oItem->product) ?>" alt="<?= $oItem->product->name; ?>">
+				  <img src="<?= $oItem->product->mainImagePath ?>" alt="<?= $oItem->product->name; ?>">
+<!--				  <img src="--><?//= ProductView::mainImageSrc($oItem->product) ?><!--" alt="--><?//= $oItem->product->name; ?><!--">-->
 				  <div class="name-price">
 					  <a href="/product/<?= $oItem->product->slug; ?>" class="name"><?= $oItem->product->name; ?></a>
 					  <div class="price"
