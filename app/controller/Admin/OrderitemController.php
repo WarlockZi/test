@@ -44,10 +44,11 @@ class OrderitemController Extends AppController
 		$sess = $this->ajax['sess'];
 
 		if (!$product_id) $this->exitWithMsg('No id');
-		$orderItem = $this->model::where('sess', $sess)
+		$orderItem = $this->model::query()
+			->where('sess', $sess)
 			->where('product_id', $product_id)
 			->first()
-			->delete();
+			->forceDelete();
 		if ($orderItem->trashed) {
 			$this->exitJson(['ok' => true, 'popup' => 'Удален']);
 		}
