@@ -1,8 +1,8 @@
 import FieldBuilder from "../builders/FieldBuilder";
 import {createElement} from "../../../common";
-import ModalContent from "./ModalContent";
+import Cart from "./Cart";
 
-export default class CartLead extends ModalContent{
+export default class CartLead extends Cart{
   constructor() {
     super();
     this.title = 'Данные для связи';
