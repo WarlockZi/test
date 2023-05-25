@@ -1,7 +1,7 @@
 import {createElement} from "../../../common";
-import ModalContent from "./ModalContent";
+import Cart from "./Cart";
 
-export default class CartSuccess extends ModalContent{
+export default class CartSuccess extends Cart{
   constructor() {
     super();
     this.title = 'Заказ принят в обработку';

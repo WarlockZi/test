@@ -1,4 +1,4 @@
-export default class MadalContent {
+export default class Cart {
   constructor() {
     this.title = 'Заголовок';
     this.submitText = 'OK';

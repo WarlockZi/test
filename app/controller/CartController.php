@@ -4,8 +4,6 @@ namespace app\controller;
 
 use app\Actions\CartAction;
 use app\core\Auth;
-use app\core\Cookie;
-use app\core\Error;
 use app\model\Lead;
 use app\model\OrderItem;
 use app\model\User;

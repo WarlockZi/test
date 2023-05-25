@@ -1,7 +1,7 @@
 import FieldBuilder from "../builders/FieldBuilder";
-import ModalContent from "./ModalContent";
+import Cart from "./Cart";
 
-export default class cartLogin  extends ModalContent{
+export default class cartLogin  extends Cart{
   constructor() {
     super();
     this.title = 'Вход';
@@ -15,6 +15,8 @@ export default class cartLogin  extends ModalContent{
     let email = (new FieldBuilder)
       .id('email')
       .required()
+      .name('email')
+      .autocomplete()
       .badgeWidth('55px')
       .type('email')
       .placeholder('email')
@@ -23,6 +25,8 @@ export default class cartLogin  extends ModalContent{
     let password = (new FieldBuilder)
       .id('password')
       .required()
+      .name('password')
+      .autocomplete()
       .pattern('[a-zA-Z0-9-_()]{6,}')
       .badgeWidth('65px')
       .placeholder('пароль')
