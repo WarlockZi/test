@@ -10,12 +10,13 @@ use ReflectionClass;
 class AppController extends Controller implements IModelable
 {
 	protected $model;
+
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function setView(string $type='')
+	public function setView(string $type = '')
 	{
 		if ($type === 'notFound') {
 			$view = $this->getView();
@@ -30,16 +31,11 @@ class AppController extends Controller implements IModelable
 
 		if (!$id) $this->exitWithMsg('No id');
 		$model = new $this->model;
-		if ($model instanceof Model) {
-			$item = $model->find((int)$id);
-			if ($item) {
-				$destroy = $item->delete();
-				$this->exitJson(['id' => $id, 'popup' => 'Ok']);
-			}
-		} else {
-			if ($model::delete($id)) {
-				$this->exitWithPopup('Удален');
-			}
+
+		$item = $model->find((int)$id);
+		if ($item) {
+			$destroy = $item->delete();
+			$this->exitJson(['id' => $id, 'popup' => 'Ok']);
 		}
 	}
 

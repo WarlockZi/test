@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\Actions\CartAction;
 use app\core\Auth;
 use app\core\Cookie;
 use app\core\Error;
@@ -41,13 +42,16 @@ class CartController extends AppController
 		$req = $this->ajax;
 
 		$user = User::query()
-			->where('email',$req['email'])->first()->toArray();
+			->where('email', $req['email'])
+			->first()
+			->toArray();
 
 		if ($user) {
 			Auth::setAuth($user);
+			CartAction::convertOrderItemsToOrders($req,$user['id']);
 			$this->exitJson(['ok' => true]);
 		}
-		$this->exitWithError('bad');
+		$this->exitJson(['error'=>'Не правильные данные']);
 	}
 
 
@@ -57,15 +61,17 @@ class CartController extends AppController
 
 		$lead = Lead::query()
 			->updateOrCreate([
-				'name'=>$req['name'],
-				'phone'=>$req['phone'],
-				'company'=>$req['company'],
-				'sess'=>$req['sess'],
+				'name' => $req['name'],
+				'phone' => $req['phone'],
+				'company' => $req['company'],
+				'sess' => $req['sess'],
 			], [$req]);
 
 		if ($lead->wasRecentlyCreated) {
 //			Auth::setAuth($user);
-			$this->exitJson(['ok' => true]);
+			$this->exitJson(['ok' => true, 'popup' => 'Скоро мы Вам перезвоним!']);
+		} else if ($lead->wasChanged()) {
+			$this->exitJson(['ok' => true, 'popup' => 'Заказ сохранен!']);
 		}
 		$this->exitWithError('bad');
 	}
