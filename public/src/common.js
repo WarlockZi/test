@@ -243,27 +243,27 @@ class createElement {
   }
 
   attr(key, value) {
-    this.attributes.push([key,value]);
+    this.attributes.push([key, value]);
     return this
   }
 
   build() {
     let el = document.createElement(this.tag);
     el.innerText = this.text;
-    this.attributes.forEach((entry,i)=>{
-      el.setAttribute(entry[0],entry[1])
+    this.attributes.forEach((entry, i) => {
+      el.setAttribute(entry[0], entry[1])
     });
     return el
   }
 }
 
-const time =  {
-  'm':60,
-  'h':60*60,
-  'd':60*60*24,
-  'mMs':60*1000,
-  'hMs':60*60*1000,
-  'dMs':60*60*24*1000,
+const time = {
+  'm': 60,
+  'h': 60 * 60,
+  'd': 60 * 60 * 24,
+  'mMs': 60 * 1000,
+  'hMs': 60 * 60 * 1000,
+  'dMs': 60 * 60 * 24 * 1000,
 };
 
 async function post(url, data = {}) {
@@ -283,35 +283,41 @@ async function post(url, data = {}) {
         reject(Error("Network Error" + e.message));
       };
       req.onload = function () {
-        // try {
-        const res = JSON.parse(req.response);
-        let msg = $('.message')[0];
 
-        if (res?.popup || res?.arr?.popup) {
+        try {
+          if (!IsJson(req.response)) {
+            console.log(req.response);
+            return
+          }
+          const res = JSON.parse(req.response);
+          let msg = $('.message')[0];
 
-          popup.show(res.popup ?? res?.arr?.popup)
-        } else if (res.msg) {
-          if (msg) {
-            msg.innerHTML = res.msg;
-            msg.innerHTML = res.msg;
-            $(msg).removeClass('success');
-            $(msg).removeClass('error')
+          if (res?.popup || res?.arr?.popup) {
+
+            popup.show(res.popup ?? res?.arr?.popup)
+          } else if (res.msg) {
+            if (msg) {
+              msg.innerHTML = res.msg;
+              msg.innerHTML = res.msg;
+              $(msg).removeClass('success');
+              $(msg).removeClass('error')
+            }
+          } else if (res.success) {
+            if (msg) {
+              msg.innerHTML = res.success;
+              $(msg).addClass('success');
+              $(msg).removeClass('error')
+            }
+          } else if (res.error) {
+            error(res.error)
           }
-        } else if (res.success) {
-          if (msg) {
-            msg.innerHTML = res.success;
-            $(msg).addClass('success');
-            $(msg).removeClass('error')
-          }
-        } else if (res.error) {
-          error(res.error)
+          resolve(res);
+
+        } catch (e) {
+            console.log('////////////********* REQUEST ERROR ***********//////////////////////');
+            console.log(req.response);
+            return false
         }
-        resolve(res);
-        // } catch (e) {
-        //   console.log('////////////********* REQUEST ERROR ***********//////////////////////')
-        //   console.log(req.response)
-        //   return false
-        // }
       }
     }
   )
@@ -446,6 +452,7 @@ function cookieExists(key) {
   let match = document.cookie.match('(^|;)?' + key + '=([^;]*)');
   return !!match
 }
+
 function setCookie(key, value, digit, unit, path = '/') {
   let units = {
     s: 1,

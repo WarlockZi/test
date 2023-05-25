@@ -10,7 +10,7 @@ use app\model\Order;
 use app\model\OrderItem;
 
 
-class OrderRepository
+class OrderitemRepository
 {
 
 	public static function leadList()
@@ -41,18 +41,15 @@ class OrderRepository
 
 	public static function edit($id)
 	{
-		$userId = Order::where('id',$id)->first()->user_id;
-		$orders = Order::query()
-			->select('product_id', 'id','user_id','count')
-			->selectRaw('SUM(count) as total_count')
-			->where('user_id',$userId)
-			->with('user')
-			->with('product.price')
-			->groupBy('product_id')
-			->get()
-		;
-		return $orders;
+		$orderItem = OrderItem::find($id);
+		$lead = Lead::where('sess',$orderItem->sess)->first();
+		$oItems = OrderItem::query()
+			->where('sess',$orderItem->sess)
+			->whereNull('deleted_at')
+			->get();
+		return compact('oItems','lead');
 	}
+
 	public static function main()
 	{
 		$user = Auth::getUser();

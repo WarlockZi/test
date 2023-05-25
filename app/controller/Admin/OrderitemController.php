@@ -8,6 +8,8 @@ use app\core\Auth;
 use app\model\Lead;
 use app\model\Order;
 use app\model\OrderItem;
+use app\Repository\OrderitemRepository;
+use app\Repository\OrderRepository;
 
 
 class OrderitemController Extends AppController
@@ -58,10 +60,13 @@ class OrderitemController Extends AppController
 
 	public function actionIndex()
 	{
-
-
 	}
-
+	public function actionEdit()
+	{
+		$orderId = $this->route->id;
+		$orderitems = OrderitemRepository::edit($orderId);
+		$this->set(compact('orderitems'));
+	}
 
 	public function actionUpdateOrCreate()
 	{
