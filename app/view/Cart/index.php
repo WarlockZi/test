@@ -4,13 +4,14 @@
 	use \app\view\Product\ProductView;
 
 	$authed = Auth::isAuthed();
+
 	?>
 
 	<div class="<?= $oItems->count() ? '' : 'none'; ?> content">
 
 		<div class="page-title">Корзина</div>
 
-		 <? if (!$authed): ?>
+		 <? if (!$authed && !$lead): ?>
 		  <div id="counter">
 			  <p>Отлично! </p>
 			  <p>Чтобы мы смогли обработать ваш заказ - оставьте свои данные!</p>

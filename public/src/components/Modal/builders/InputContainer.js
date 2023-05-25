@@ -23,7 +23,7 @@ export default class InputContainer {
     if (_className) this.input.classList.add(_className);
     if (_hidden) this.input.hidden = _hidden;
     if (_required) this.input.required = _required;
-    debugger;
+
     if (_autocomplete) this.input.autocomplete = _autocomplete;
     if (_name) this.input.name = _name;
     if (_pattern) this.input.pattern = _pattern;
