@@ -13,6 +13,7 @@ export default class Cart {
     let container = $('.user-content .cart .content').first();
     if (!container) return;
     this.container = container;
+    this.model = $(this.container).find('[data-model]').dataset.model;
 
     new Modal({
       button: $('#cartLead').first(),
@@ -33,9 +34,7 @@ export default class Cart {
     });
 
     this.total = container.querySelector('.total span');
-    this.cartEmptyText = container.parentNode.querySelector('.empty-cart');
-
-    // this.loginLeadButtons();
+    this.$cartEmptyText = document.querySelector('.empty-cart');
 
     this.rows = container.querySelectorAll('.row');
     this.container.onclick = this.handleClick.bind(this);
@@ -50,7 +49,7 @@ export default class Cart {
   }
 
 
-  async modalLeadCallback(fields,modal) {
+  async modalLeadCallback(fields, modal) {
     let name = fields.name.value;
     let phone = fields.phone.value;
     let company = fields.company.value;
@@ -113,14 +112,6 @@ export default class Cart {
     return this.cartLifeMs + Date.now()
   }
 
-  // cartLogin() {
-  //   // this.popup.show('cartLogin')
-  // }
-  //
-  // cartLead() {
-  //   // this.popup.show('cartLead')
-  // }
-
   counterCallback() {
     this.nullifyCookie();
     this.dropCart()
@@ -175,17 +166,25 @@ export default class Cart {
     } else if (target.classList.contains('count')) {
       this.rerenderSums();
       this.updateOItem(target)
-
     }
   }
 
   async deleteOItem(target) {
     let orderItemDto = this.orderItemDTO(target);
-
-    let res = await post(`/orderItem/delete`, {...orderItemDto});
+    let res = await post(`/adminsc/${this.model}/delete`, {...orderItemDto});
     if (res?.arr?.ok) {
-      row.remove()
+      target.closest('.row').remove();
+      if (this.countRows() < 1) this.showEmptyCart()
     }
+  }
+
+  countRows(){
+    return document.querySelectorAll('.row').length
+  }
+
+  showEmptyCart() {
+    this.container.innerHTML = '';
+    this.$cartEmptyText.classList.remove('none')
   }
 
   async updateOItem(target) {
@@ -193,7 +192,7 @@ export default class Cart {
     let count = target.value;
     let sess = getToken();
 
-    let res = await post(`/orderItem/updateOrCreate`, {sess, product_id, count});
+    let res = await post(`/adminsc/orderItem/updateOrCreate`, {sess, product_id, count});
 
   }
 

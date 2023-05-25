@@ -12,7 +12,20 @@ use app\model\OrderItem;
 class OrderRepository
 {
 
-	public static function list()
+	public static function leadList()
+	{
+		$orders = OrderItem::query()
+			->select('product_id', 'id','sess','count')
+			->has('lead')
+			->with('lead')
+			->with('product')
+			->groupBy('product_id')
+			->get()
+		;
+		return $orders;
+	}
+
+	public static function clientList()
 	{
 		$orders = Order::query()
 			->select('product_id', 'id','user_id','count')
