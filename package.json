@@ -10,7 +10,6 @@
     "> 1%, not dead"
   ],
   "scripts": {
-    "nrd": "npm run dev",
     "build": "webpack --mode production",
     "dev": "webpack -w --mode production",
     "serve": "webpack serve --mode development",
