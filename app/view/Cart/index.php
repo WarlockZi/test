@@ -56,7 +56,7 @@
 			<span></span>&nbsp;&nbsp;руб.
 		</div>
 
-		 <? if (!$authed): ?>
+		 <? if (!$authed && !$lead): ?>
 		  <div class="buttons">
 			  <div class="button" id="cartLead">Оставить свои данные</div>
 			  <div class="button" id="cartLogin">Войти под своей учеткой</div>
