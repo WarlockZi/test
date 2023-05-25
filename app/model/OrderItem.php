@@ -27,7 +27,7 @@ class OrderItem extends Model
 
 	public static function leadData($columnBuilder, $orderItem, $fieldName)
 	{
-		return $orderItem->lead->name . ' - ' . $orderItem->lead->company;
+		return $orderItem->lead->name . ' - ' . $orderItem->lead->company. ' - ' . $orderItem->lead->phone;
 	}
 
 	public function product()
