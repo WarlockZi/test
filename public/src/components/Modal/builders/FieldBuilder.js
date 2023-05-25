@@ -6,7 +6,8 @@ export default class FieldBuilder {
     this._required = false;
     this._badgeWidth = '50px';
     this._id = 'name';
-    this._placeholder = 'email'
+    this._placeholder = 'email';
+    this._autocomplete = false
   }
 
   id(id) {
@@ -23,6 +24,14 @@ export default class FieldBuilder {
   }
   required() {
     this._required = true;
+    return this
+  }
+  name(name) {
+    this._name = name;
+    return this
+  }
+  autocomplete() {
+    this._autocomplete = true;
     return this
   }
   placeholder(placeholder) {
