@@ -57,7 +57,7 @@ export default class Cart {
     let res = await post('/cart/lead', {name, phone, company, sess});
     modal.close();
     if (res) {
-      window.location.reload
+      location.reload()
     }
   }
 
@@ -72,7 +72,7 @@ export default class Cart {
     let res = await post('/cart/login', {email, password, sess});
     modal.close();
     if (res) {
-      window.location.reload
+      location.reload()
     }
   }
 
