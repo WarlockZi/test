@@ -39,7 +39,7 @@ abstract class OrderView
 
 	public static function leadList($items): string
 	{
-		return MyList::build(Order::class)
+		return MyList::build(OrderItem::class)
 			->column(
 				ListColumnBuilder::build('id')
 					->name('ID')

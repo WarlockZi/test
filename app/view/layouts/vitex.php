@@ -47,12 +47,12 @@ use app\core\Icon;
 
 <div class="modal-wrapper" data-modal="default">
 	<div class="overlay"></div>
-	<div class="modal-box">
+	<form class="modal-box">
 		<div class="title">Заголовок</div>
 		<div class="modal-close"><?= Icon::close()?></div>
 		<div class="content"></div>
 		<div class="footer"></div>
-	</div>
+	</form>
 
 	<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
 		<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>

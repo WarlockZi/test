@@ -31,8 +31,9 @@ class CartController extends AppController
 
 	public function actionIndex()
 	{
+		$lead = Lead::where('sess',session_id())->first();
 		$oItems = OrderRepository::main();
-		$this->set(compact('oItems'));
+		$this->set(compact('oItems','lead'));
 	}
 
 	public function actionLogin()
