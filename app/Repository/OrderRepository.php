@@ -63,7 +63,6 @@ class OrderRepository
 				->where('user_id', $user['id'])
 				->with('product.price')
 				->groupBy('product_id')
-//				->selectRaw('SUM(count) as count_total')
 				->get();
 		} else {
 			$oItems = OrderItem::query()
