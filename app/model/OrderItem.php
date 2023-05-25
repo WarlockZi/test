@@ -20,19 +20,6 @@ class OrderItem extends Model
 		'crated_at',
 	];
 
-	////////auth
-	///  Надо ли проверять электронку
-	/// id
-
-//*name
-//surname
-//middle_name
-
-//-/*/-mobile
-// (*code)
-//-/*/-phone
-//company
-
 	public function order()
 	{
 		return $this->belongsTo(Order::class);
@@ -48,8 +35,9 @@ class OrderItem extends Model
 		return $this->hasOne(Product::class, '1s_id', 'product_id');
 	}
 
-	public function lead(){
-		return $this->belongsTo(Lead::class,'sess','sess');
+	public function lead()
+	{
+		return $this->hasOne(Lead::class, 'sess', 'sess');
 	}
 
 
