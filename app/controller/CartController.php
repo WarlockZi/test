@@ -31,9 +31,9 @@ class CartController extends AppController
 
 	public function actionIndex()
 	{
-		$lead = Lead::where('sess',session_id())->first();
+		$lead = Lead::where('sess', session_id())->first();
 		$oItems = OrderRepository::main();
-		$this->set(compact('oItems','lead'));
+		$this->set(compact('oItems', 'lead'));
 	}
 
 	public function actionLogin()
@@ -47,10 +47,10 @@ class CartController extends AppController
 
 		if ($user) {
 			Auth::setAuth($user);
-			CartAction::convertOrderItemsToOrders($req,$user['id']);
+			CartAction::convertOrderItemsToOrders($req, $user['id']);
 			$this->exitJson(['ok' => true]);
 		}
-		$this->exitJson(['error'=>'Не правильные данные']);
+		$this->exitJson(['error' => 'Не правильные данные']);
 	}
 
 
@@ -66,13 +66,10 @@ class CartController extends AppController
 				'sess' => $req['sess'],
 			], [$req]);
 
-		if ($lead->wasRecentlyCreated) {
-//			Auth::setAuth($user);
-			$this->exitJson(['ok' => true, 'popup' => 'Скоро мы Вам перезвоним!']);
-		} else if ($lead->wasChanged()) {
+		if ($lead->wasChanged()) {
 			$this->exitJson(['ok' => true, 'popup' => 'Заказ сохранен!']);
 		}
-		$this->exitWithError('bad');
+		$this->exitJson(['ok' => true, 'popup' => 'Скоро мы Вам перезвоним!']);
 	}
 }
 
