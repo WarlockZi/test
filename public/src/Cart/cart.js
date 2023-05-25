@@ -135,9 +135,7 @@ export default class Cart {
     let cartToken = getToken();
     let res = await post('/cart/drop', {cartToken});
     if (res?.arr?.ok) {
-      // debugger
-      this.cartEmptyText.classList.remove('none');
-      this.container.classList.add('none')
+      this.showEmptyCart()
     }
   }
 
