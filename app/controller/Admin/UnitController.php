@@ -26,9 +26,8 @@ class UnitController extends AppController
 		$id = $this->getRoute()->id;
 		if ($id) {
 			$unit = UnitRepository::edit($id);
-			$morphUnits = UnitRepository::editList($id);
-			$unitList = UnitFormView::edit($morphUnits);
-			$this->set(compact('unit','unitList'));
+			$unitItem = UnitFormView::editItem($unit);
+			$this->set(compact('unit', 'unitItem'));
 		}
 	}
 }
