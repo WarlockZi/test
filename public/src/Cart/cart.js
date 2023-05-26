@@ -87,7 +87,7 @@ export default class Cart {
       return acc
     }, 0);
     let formatter = new Intl.NumberFormat("ru");
-    this.total.innerText = formatter.format(total.toFixed(2))
+    this.total.innerText = formatter.format(total.toFixed(2)).replace(/,/g, '.')
   }
 
   counterStart() {
