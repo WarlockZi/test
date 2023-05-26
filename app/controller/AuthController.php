@@ -73,7 +73,15 @@ class AuthController extends AppController
 				exit('registration failed');
 			}
 			try {
-				Mail::send_mail($data);
+				$headers  = "MIME-Version: 1.0\r\n";
+				$headers .= "Content-type: text/html; charset=utf-8\r\n";
+				$headers .= "To: <{$data['to']}>\r\n";
+				$headers .= "From: <{$data['from']}>\r\n";
+				if (mail($data['to'][0], "Подтвердите Email на сайте", $headers)) {
+					// Если да, то выводит сообщение
+					echo 'Подтвердите на почте';
+				}
+//				Mail::send_mail($data);
 			} catch (Exception $e) {
 				exit($e->getMessage());
 			}
