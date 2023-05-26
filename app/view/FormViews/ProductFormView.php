@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\view\Product;
+namespace app\view\FormViews;
 
 
 use app\core\FS;
@@ -23,6 +23,7 @@ use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\Image\ImageView;
+use app\view\Product\ProductView;
 use app\view\Property\PropertyView;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -129,6 +130,12 @@ class ProductFormView
 					)
 			)
 			->tab(
+				ItemTabBuilder::build('Единицы')
+					->html(
+						self::units($product)
+					)
+			)
+			->tab(
 				ItemTabBuilder::build('Внутритарная упаковка')
 					->html(
 						self::getImage($product, 'smallpackImages', 'smallpack', true)
@@ -140,15 +147,15 @@ class ProductFormView
 						self::getImage($product, 'bigPackImages', 'bigpack', true)
 					)
 			)
-			->del()
-			->toList('list')
+//			->del()
+//			->toList('list')
 			->get();
 	}
 
 
 	protected static function getUnit(int $selected, string $field)
 	{
-		return self::clean(
+		return
 			SelectBuilder::build(
 				ArrayOptionsBuilder::build(Unit::forSelect())
 					->selected($selected)
@@ -156,8 +163,7 @@ class ProductFormView
 			)
 				->field($field)
 				->initialOption('', 0)
-				->get()
-		);
+				->get();
 	}
 
 
@@ -173,7 +179,6 @@ class ProductFormView
 			$slug,
 			$many
 		)
-//			->class('dnd-image')
 			->detach('detach')
 			->html(
 				DndBuilder::make('product') . $imgs
@@ -225,6 +230,26 @@ class ProductFormView
 	protected static function getDescription($product): string
 	{
 		return include ROOT . '/app/view/Product/description.php';
+	}
+
+	protected static function units(Product $product)
+	{
+		$items = $product->units;
+		return
+			MorphBuilder::build($product, 'units','unit')
+			->html(
+				MyList::build(Unit::class)
+					->pageTitle('Единицы')
+					->column(
+						ListColumnBuilder::build('id')
+							->get())
+					->items($items)
+					->edit()
+					->addButton('ajax')
+					->get()
+			)
+			->get();
+
 	}
 
 	public static function list(Collection $items): string
@@ -322,7 +347,6 @@ class ProductFormView
 		include ROOT . '/app/view/Product/card/detail_images.php';
 		return ob_get_clean();
 	}
-
 
 
 }

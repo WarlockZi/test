@@ -86,7 +86,6 @@ if (tables) {
 
       /// create
       if (target.className === 'add-model') {
-        // modelCreate(modelName, modelId, belongsTo, belongsToId, morph, morphId, morphoneormany, morphdetach)
         modelCreate(target)
 
         /// delete

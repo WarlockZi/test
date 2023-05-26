@@ -51,5 +51,7 @@ async function parseLoginResponse() {
     window.location = '/adminsc'
   } else if (res?.arr?.role === 'user') {
     window.location = '/auth/cabinet'
+  } else if (res?.error){
+
   }
 }

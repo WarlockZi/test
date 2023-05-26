@@ -20,16 +20,9 @@ class ItemTabBuilder extends Builder
 		return $view;
 	}
 
-	public function html(string $html)
+	public function html(string $html):ItemTabBuilder
 	{
 		$this->html = $this->clean($html);
 		return $this;
 	}
-//	public function field(string $field)
-//	{
-//		$this->field = "data-field='{$field}'";
-//		return $this;
-//	}
-
-
 }

@@ -44,6 +44,12 @@ class Product extends Model
 			return ImageView::noImageSrc();
 		}
 	}
+
+	public function units()
+	{
+		return $this->morphToMany(Unit::class, 'unitable');
+	}
+
 	protected static function booted()
 	{
 		static::Updating(function ($product) {
@@ -164,10 +170,7 @@ class Product extends Model
 	{
 		return $this->morphToMany(Val::class, 'valuable');
 	}
-//	public function valuesWithProperty()
-//	{
-//		return $this->morphToMany(Val::class, 'valuable')->with('property');
-//	}
+
 }
 
 
