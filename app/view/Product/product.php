@@ -2,7 +2,7 @@
 
 use app\core\Auth;
 use app\core\Icon;
-use \app\view\Product\ProductFormView;
+use \app\view\FormViews\ProductFormView;
 use \app\view\Product\ProductView;
 
 

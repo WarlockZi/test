@@ -12,31 +12,32 @@ function sendData({target}) {
   let password = trimStr($('input[name = password]')[0].value);
 
   if (target.classList.contains('submit__button')) {
-    if (validateData(email,password))
-      parseRegisterResponse(email,password)
+    if (isValid(email, password))
+      parseRegisterResponse(email, password)
   }
 }
 
-function validateData(email,password) {
-
-
-  let error = validate.email(email);
+function renderError(error) {
   let msg = $('.message')[0];
+  msg.innerText = msg.innerText + error;
+  $(msg).addClass('error');
+}
+
+function isValid(email, password) {
+  let error = validate.email(email);
   if (error) {
-    msg.innerText = msg.innerText + error;
-    $(msg).addClass('error');
+    renderError(error);
     return false
   }
   error = validate.password(password);
   if (error) {
-    msg.innerText = msg.innerText + error;
-    $(msg).addClass('error');
+    renderError(error);
     return false
   }
   return true
 }
 
-async function parseRegisterResponse(email,password) {
+async function parseRegisterResponse(email, password) {
   let msg = $(".message")[0];
   let data = {
     email,
@@ -47,7 +48,7 @@ async function parseRegisterResponse(email,password) {
   // debugger
 
   let res = await post('/auth/register', data);
-
+debugger;
   if (res.msg === 'confirmed') {
     msg.classList.remove('error');
     msg.classList.add('success');
