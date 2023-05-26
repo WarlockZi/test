@@ -297,7 +297,7 @@ async function post(url, data = {}) {
             popup.show(res.popup ?? res?.arr?.popup)
           } else if (res.msg) {
             if (msg) {
-              msg.innerHTML = res.msg;
+
               msg.innerHTML = res.msg;
               $(msg).removeClass('success');
               $(msg).removeClass('error')
