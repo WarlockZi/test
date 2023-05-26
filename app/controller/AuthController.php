@@ -75,9 +75,9 @@ class AuthController extends AppController
 			try {
 				$headers  = "MIME-Version: 1.0\r\n";
 				$headers .= "Content-type: text/html; charset=utf-8\r\n";
-				$headers .= "To: <{$data['to']}>\r\n";
+				$headers .= "To: <vvoronik@yanedex.ru>\r\n";
 				$headers .= "From: <vitexopt@vitexopt.ru>\r\n";
-				if (mail($data['to'][0], "Подтвердите Email на сайте", $headers)) {
+				if (mail('vvoronik@yanedex.ru', "Подтвердите Email на сайте", 'f',$headers)) {
 					// Если да, то выводит сообщение
 					echo 'Подтвердите на почте';
 				}
