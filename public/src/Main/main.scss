@@ -20,12 +20,14 @@
 
 
 .user-content-wrap {
-
-
-  .user-content {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
+
+  .user-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
     margin: 0 auto;
     width: clamp(310px, 80%, 900px);
     padding: 25px;
