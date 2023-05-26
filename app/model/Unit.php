@@ -22,11 +22,22 @@ class Unit extends Model
 			'main_unit');
 	}
 
-	public static function forSelect(){
+	public static function forSelect()
+	{
 		return self::select(['name', 'id'])
 			->get();
 	}
 
+	public function units()
+	{
+		return $this
+			->morphToMany(Unit::class, 'unitable')
+			->withPivot('multiplier', 'multiplied_unit_id');
+	}
 
+	public static function multiplier($builder, $item, $field)
+	{
+		return $item->pivot->multipier ?? 0;
+	}
 }
 

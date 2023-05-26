@@ -16,7 +16,7 @@ use app\core\Icon;
 	</div>
 </a>
 
-<a href="/category/odnorazovaya_odezhda__halaty__shapochki__narukavniki__bahily__maski" class="banner boot-cover">
+<a href="/category/odnorazovaya_odezhda" class="banner boot-cover">
 	<div class="banner__text">
 		<div class="banner__container left">
 			<h1>Одноразовая одежда</h1>

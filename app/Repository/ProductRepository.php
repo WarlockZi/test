@@ -104,6 +104,7 @@ class ProductRepository extends Controller
 			->with('bigpackImages')
 			->with('baseUnit')
 			->with('mainUnit')
+			->with('units.units')
 			->find($val);
 	}
 

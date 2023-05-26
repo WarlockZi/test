@@ -309,6 +309,9 @@ async function post(url, data = {}) {
               $(msg).removeClass('error')
             }
           } else if (res.error) {
+            msg.innerHTML = res.error;
+            $(msg).addClass('error');
+            $(msg).removeClass('success');
             error(res.error)
           }
           resolve(res);

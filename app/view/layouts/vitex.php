@@ -29,7 +29,7 @@ use app\core\Icon;
 
 <?= $this->header->getHeader(); ?>
 
-<div class="relative">
+<div class="user-content-wrap">
 	<main class="user-content">
 		 <?= $this->getContent(); ?>
 	</main>
