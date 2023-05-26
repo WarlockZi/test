@@ -15,7 +15,8 @@ class UnitRepository
 
 	public static function edit(int $id)
 	{
-		return Unit::with('units')
+		return Unit::query()
+			->with('units')
 			->where('id', $id)
 			->first();
 	}
