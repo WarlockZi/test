@@ -21,8 +21,8 @@ class Product extends Model
 		'slug',
 		'category_id',
 		'image_id',
-		'main_unit',
 		'base_unit',
+		'main_unit',
 		'manufacturer_id',
 		'title',
 		'keywords',
@@ -44,10 +44,25 @@ class Product extends Model
 			return ImageView::noImageSrc();
 		}
 	}
-
+	public function baseUnit()
+	{
+		return $this->morphToMany(Unit::class,'unitable',)
+//			->with('units')
+			;
+	}
+//	public function baseUnit()
+//	{
+//		return $this->morphedByMany(Unit::class,'base_unit',)->with('units');
+//	}
+	public function mainUnit()
+	{
+		return $this->belongsTo(Unit::class,'main_unit');
+	}
 	public function units()
 	{
-		return $this->morphToMany(Unit::class, 'unitable');
+		return $this->morphToMany(Unit::class, 'unitable')
+			->withPivot('multiplier','multiplied_unit_id')
+			->orderByPivot('multiplier');
 	}
 
 	protected static function booted()
@@ -121,25 +136,6 @@ class Product extends Model
 			)->where('slug', '=', 'bigpack');
 	}
 
-	public function mainUnit()
-	{
-		return $this->belongsTo(Unit::class,
-			'main_unit'
-		);
-	}
-
-	public function baseUnit()
-	{
-		return $this->belongsTo(Unit::class,
-			'base_unit',
-			);
-	}
-
-	public function manufacturer()
-	{
-		return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
-	}
-
 
 	public function categoryCategoryRecPropsVals()
 	{
@@ -170,7 +166,10 @@ class Product extends Model
 	{
 		return $this->morphToMany(Val::class, 'valuable');
 	}
-
+	public function manufacturer()
+	{
+		return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
+	}
 }
 
 

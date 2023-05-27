@@ -36,7 +36,6 @@ class Image extends Model
 			return '/' . $this->imagePath . '/' . $path . $this->hash . '.' . $ext;
 		}
 		return ImageView::noImageSrc();
-//		return ImageView::noImage();
 	}
 
 	public function getExt()
