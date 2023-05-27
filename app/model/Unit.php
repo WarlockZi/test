@@ -16,10 +16,38 @@ class Unit extends Model
 
 	public $timestamps = false;
 
+	public function units()
+	{
+		return $this
+			->morphedByMany(Unit::class, 'unitable')
+			->where(function ($q) {
+				$q->where('multiplied_product_id', $this->products->id);
+			})
+			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id');
+	}
+
+//	public function units()
+//	{
+//		return $this
+//			->morphTo(Unit::class, 'unitable')
+//			->withPivot('multiplier', 'multiplied_unit_id');
+//	}
+//	public function units()
+//	{
+//		return $this
+//			->morphToMany(Unit::class, 'unitable')
+//			->withPivot('multiplier', 'multiplied_unit_id');
+//	}
+
+	public static function multiplier($builder, $item, $field)
+	{
+		return $item->pivot->multipier ?? 0;
+	}
+
 	public function products()
 	{
 		return $this->belongsTo(Product::class,
-			'main_unit');
+			'base_unit');
 	}
 
 	public static function forSelect()
@@ -28,16 +56,5 @@ class Unit extends Model
 			->get();
 	}
 
-	public function units()
-	{
-		return $this
-			->morphToMany(Unit::class, 'unitable')
-			->withPivot('multiplier', 'multiplied_unit_id');
-	}
-
-	public static function multiplier($builder, $item, $field)
-	{
-		return $item->pivot->multipier ?? 0;
-	}
 }
 

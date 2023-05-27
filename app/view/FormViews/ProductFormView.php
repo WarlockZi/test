@@ -73,12 +73,12 @@ class ProductFormView
 					->required()
 					->get()
 			)
-			->field(
-				ItemFieldBuilder::build('base_unit', $product)
-					->name('Базовая единица')
-					->html(self::getUnit($product->baseUnit->id ?? 0, 'base_unit'))
-					->get()
-			)
+//			->field(
+//				ItemFieldBuilder::build('base_unit', $product)
+//					->name('Базовая единица')
+//					->html(self::getUnit($product->baseUnit->id ?? 0, 'base_unit'))
+//					->get()
+//			)
 			->field(
 				ItemFieldBuilder::build('mainUnit', $product)
 					->name('Основная ед')
@@ -234,14 +234,19 @@ class ProductFormView
 
 	protected static function units(Product $product)
 	{
-		$items = $product->units;
+		$produc = $product->toArray();
+		$items = $product->baseUnit[0]->units;
+		$ite = $items->toArray();
 		return
-			MorphBuilder::build($product, 'units','unit')
+			MorphBuilder::build($product->baseUnit, 'units','unit')
 			->html(
 				MyList::build(Unit::class)
 					->pageTitle('Единицы')
 					->column(
 						ListColumnBuilder::build('id')
+							->get())
+					->column(
+						ListColumnBuilder::build('name')
 							->get())
 					->items($items)
 					->edit()
