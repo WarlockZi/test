@@ -102,9 +102,9 @@ class ProductRepository extends Controller
 			->with('detailImages')
 			->with('smallpackImages')
 			->with('bigpackImages')
-			->with('baseUnit')
+			->with('baseUnit.units')
 			->with('mainUnit')
-			->with('units.units')
+//			->with('units.units')
 			->find($val);
 	}
 
