@@ -30,6 +30,31 @@ use Illuminate\Database\Eloquent\Collection;
 class ProductFormView
 {
 
+  protected static function units(Product $product):string
+  {
+    $produc = $product->toArray();
+    if (!$product->baseUnit->count()) return 'Базовая единица не выбрана';
+    $items = $product->baseUnit[0]->units;
+    $ite = $items->toArray();
+    return
+      MorphBuilder::build($product->baseUnit, 'units','unit')
+        ->html(
+          MyList::build(Unit::class)
+            ->pageTitle('Единицы')
+            ->column(
+              ListColumnBuilder::build('id')
+                ->get())
+            ->column(
+              ListColumnBuilder::build('name')
+                ->get())
+            ->items($items)
+            ->edit()
+            ->addButton('ajax')
+            ->get()
+        )
+        ->get();
+  }
+
 	public static function edit(Product $product): string
 	{
 		return ItemBuilder::build($product, 'product')
@@ -73,18 +98,18 @@ class ProductFormView
 					->required()
 					->get()
 			)
-//			->field(
-//				ItemFieldBuilder::build('base_unit', $product)
-//					->name('Базовая единица')
-//					->html(self::getUnit($product->baseUnit->id ?? 0, 'base_unit'))
-//					->get()
-//			)
 			->field(
-				ItemFieldBuilder::build('mainUnit', $product)
-					->name('Основная ед')
-					->html(self::getUnit($product->mainUnit->id ?? 0, 'main_unit'))
+				ItemFieldBuilder::build('base_unit', $product)
+					->name('Базовая единица')
+					->html(self::getUnit($product->baseUnit->id ?? 0, 'base_unit'))
 					->get()
 			)
+//			->field(
+//				ItemFieldBuilder::build('mainUnit', $product)
+//					->name('Основная ед')
+//					->html(self::getUnit($product->mainUnit->id ?? 0, 'main_unit'))
+//					->get()
+//			)
 			->field(
 				ItemFieldBuilder::build('manufacturer', $product)
 					->name('Производитель')
@@ -230,31 +255,6 @@ class ProductFormView
 	protected static function getDescription($product): string
 	{
 		return include ROOT . '/app/view/Product/description.php';
-	}
-
-	protected static function units(Product $product)
-	{
-		$produc = $product->toArray();
-		$items = $product->baseUnit[0]->units;
-		$ite = $items->toArray();
-		return
-			MorphBuilder::build($product->baseUnit, 'units','unit')
-			->html(
-				MyList::build(Unit::class)
-					->pageTitle('Единицы')
-					->column(
-						ListColumnBuilder::build('id')
-							->get())
-					->column(
-						ListColumnBuilder::build('name')
-							->get())
-					->items($items)
-					->edit()
-					->addButton('ajax')
-					->get()
-			)
-			->get();
-
 	}
 
 	public static function list(Collection $items): string
