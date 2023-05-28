@@ -46,7 +46,7 @@ class Product extends Model
 	}
 	public function baseUnit()
 	{
-		return $this->morphToMany(Unit::class,'unitable',)
+		return $this->morphToMany(Unit::class,'unitable')->first()
 //			->with('units')
 			;
 	}
