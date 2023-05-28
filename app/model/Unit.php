@@ -20,12 +20,18 @@ class Unit extends Model
 	{
 		return $this
 			->morphedByMany(Unit::class, 'unitable')
-			->where(function ($q) {
-				$q->where('multiplied_product_id', $this->products->id);
-			})
-			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id');
+//			->wherePivot('multiplied_product_id')
+//			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
+			;
 	}
-
+	public function unitUnits()
+	{
+		return $this
+			->morphedByMany(Unit::class, 'unitable')
+			->wherePivot('multiplied_product_id')
+			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
+			;
+	}
 //	public function units()
 //	{
 //		return $this
