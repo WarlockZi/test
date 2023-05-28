@@ -51,6 +51,7 @@ class Product extends Model
 			;
 	}
 //	public function baseUnit()
+//https://darkghosthunter.medium.com/laravel-has-many-through-pivot-elegantly-958dd096db
 //	{
 //		return $this->morphedByMany(Unit::class,'base_unit',)->with('units');
 //	}
