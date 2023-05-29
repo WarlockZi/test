@@ -75,11 +75,6 @@ class ProductRepository extends Controller
 		return \app\core\FS::getFileContent($self->viewPath.'filters.php',compact('filters'));
 	}
 
-	protected static function makeCheck(){
-
-
-	}
-
 	public static function list()
 	{
 		return Product::query()
