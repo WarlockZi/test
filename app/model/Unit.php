@@ -16,41 +16,44 @@ class Unit extends Model
 
 	public $timestamps = false;
 
-	public function units()
+	public function units($id)
 	{
+//		$id = $this->id=256;
 		return $this
-			->morphedByMany(Unit::class, 'unitable')
+			->morphToMany(Unit::class, 'unitable')
+			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
+			->wherePivot(function ($q)use($id){
+				$q->where('multiplied_product_id', $id);
+			})
 //			->wherePivot('multiplied_product_id')
 //			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
 			;
 	}
-	public function unitUnits()
-	{
+
+	public function unit(){
 		return $this
 			->morphedByMany(Unit::class, 'unitable')
-			->wherePivot('multiplied_product_id')
 			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
+			->wherePivot(function ($q){
+				$q->where('multiplied_product_id', $this->product()->id);
+			})
+//			->wherePivot('multiplied_product_id')
+//			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
 			;
 	}
-//	public function units()
-//	{
-//		return $this
-//			->morphTo(Unit::class, 'unitable')
-//			->withPivot('multiplier', 'multiplied_unit_id');
-//	}
-//	public function units()
-//	{
-//		return $this
-//			->morphToMany(Unit::class, 'unitable')
-//			->withPivot('multiplier', 'multiplied_unit_id');
-//	}
+
+	public function unitable(){
+		return $this->morphTo()
+//		return $this->morphedByMany(Unit::class,'unitable')
+			;
+	}
 
 	public static function multiplier($builder, $item, $field)
 	{
 		return $item->pivot->multipier ?? 0;
 	}
 
-	public function products()
+	public function product()
 	{
 		return $this->belongsTo(Product::class,
 			'base_unit');
