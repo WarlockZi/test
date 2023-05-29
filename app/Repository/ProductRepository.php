@@ -7,6 +7,7 @@ namespace app\Repository;
 use app\controller\Controller;
 use app\controller\FS;
 use app\model\Product;
+use app\model\Unit;
 use app\model\Val;
 use app\view\Image\ImageView;
 
@@ -18,6 +19,73 @@ class ProductRepository extends Controller
 	public function __construct()
 	{
 		$this->viewPath = \app\core\FS::platformSlashes(ROOT.'/app/view/Product/');
+	}
+
+	public static function edit(int $val)
+	{
+		return Product::query()
+//			->orderBy('sort')
+			->with('category.properties.vals')
+			->with('category.parentRecursive')
+			->with('category.parents')
+			->with('mainImages')
+			->with('values')
+			->with('manufacturer.country')
+			->with('detailImages')
+			->with('smallpackImages')
+			->with('bigpackImages')
+//			->with('baseUnit.units',function ($val)use($val){
+//				$this->morphToMany(Unit::class, 'unitable')
+//					->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
+//					->wherePivot(function ($q)use($val){
+//						$q->where('multiplied_product_id', $val);
+//					});
+//			})
+			->with(['baseUnit'=>function ($query)use($val){
+				$query
+					->withPivot('multiplied_product_id')
+					->wherePivot('multiplied_product_id',$val)
+				;
+			}])
+//			->with('units')
+//			->with('units')
+//			->with('mainUnit')
+//			->with('units.units')
+			->find($val)
+//			->loadMorph('baseUnit', [
+//				Unit::class=>['unit']
+////				Unit::class=>'units'
+//			])
+			;
+	}
+
+	public static function main(string $slug)
+	{
+		return Product::query()
+			->orderBy('sort')
+			->with('category.properties.vals')
+			->with('category.parentRecursive')
+			->with('category.parents')
+			->with('price')
+			->with('mainImages')
+			->with('values')
+			->with('manufacturer.country')
+			->with('detailImages')
+			->with('smallpackImages')
+			->with('bigpackImages')
+			->with('baseUnit')
+			->with('mainUnit')
+			->where('slug', $slug)
+			->first();
+	}
+
+	public static function list()
+	{
+		return Product::query()
+			->with('price')
+			->take(20)
+			->orderBy('sort')
+			->get();
 	}
 
 	public static function preparePropertiesList(Product $product)
@@ -73,55 +141,6 @@ class ProductRepository extends Controller
 
 
 		return \app\core\FS::getFileContent($self->viewPath.'filters.php',compact('filters'));
-	}
-
-	public static function list()
-	{
-		return Product::query()
-			->with('price')
-			->take(20)
-			->orderBy('sort')
-			->get();
-	}
-
-	public static function edit(int $val)
-	{
-		return Product::query()
-//			->orderBy('sort')
-			->with('category.properties.vals')
-			->with('category.parentRecursive')
-			->with('category.parents')
-			->with('mainImages')
-			->with('values')
-			->with('manufacturer.country')
-			->with('detailImages')
-			->with('smallpackImages')
-			->with('bigpackImages')
-			->with('baseUnit')
-			->with('units')
-//			->with('mainUnit')
-//			->with('units.units')
-			->find($val);
-	}
-
-	public static function main(string $slug)
-	{
-		return Product::query()
-			->orderBy('sort')
-			->with('category.properties.vals')
-			->with('category.parentRecursive')
-			->with('category.parents')
-			->with('price')
-			->with('mainImages')
-			->with('values')
-			->with('manufacturer.country')
-			->with('detailImages')
-			->with('smallpackImages')
-			->with('bigpackImages')
-			->with('baseUnit')
-			->with('mainUnit')
-			->where('slug', $slug)
-			->first();
 	}
 
 }

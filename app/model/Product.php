@@ -46,7 +46,15 @@ class Product extends Model
 	}
 	public function baseUnit()
 	{
-		return $this->morphToMany(Unit::class,'unitable')->first()
+//		$productId = 1;
+//		$va = $val;
+		return $this
+			->morphToMany(Unit::class,'unitable')
+			->withPivot('multiplier')
+			->wherePivot('multiplied_unit_id',)
+			->with('units',function ($q)use($productId){
+
+			})
 //			->with('units')
 			;
 	}
@@ -61,9 +69,10 @@ class Product extends Model
 	}
 	public function units()
 	{
-		return $this->morphToMany(Unit::class, 'unitable')
-			->withPivot('multiplier','multiplied_unit_id')
-			->orderByPivot('multiplier');
+		return $this->morph(Unit::class, 'unitable')
+//			->withPivot('multiplier','multiplied_unit_id')
+//			->orderByPivot('multiplier')
+			;
 	}
 
 	protected static function booted()
