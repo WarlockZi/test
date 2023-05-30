@@ -44,34 +44,13 @@ class Product extends Model
 			return ImageView::noImageSrc();
 		}
 	}
+
+
 	public function baseUnit()
 	{
-//		$productId = 1;
-//		$va = $val;
 		return $this
 			->morphToMany(Unit::class,'unitable')
-			->withPivot('multiplier')
-			->wherePivot('multiplied_unit_id',)
-			->with('units',function ($q)use($productId){
-
-			})
-//			->with('units')
-			;
-	}
-//	public function baseUnit()
-//https://darkghosthunter.medium.com/laravel-has-many-through-pivot-elegantly-958dd096db
-//	{
-//		return $this->morphedByMany(Unit::class,'base_unit',)->with('units');
-//	}
-	public function mainUnit()
-	{
-		return $this->belongsTo(Unit::class,'main_unit');
-	}
-	public function units()
-	{
-		return $this->morph(Unit::class, 'unitable')
-//			->withPivot('multiplier','multiplied_unit_id')
-//			->orderByPivot('multiplier')
+//			->withPivot('multiplier','multiplied_unit_id','multiplied_product_id')
 			;
 	}
 

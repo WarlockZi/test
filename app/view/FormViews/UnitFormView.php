@@ -70,25 +70,49 @@ class UnitFormView
 	public static function editItem($unit): string
 	{
 		$item =
-			ItemBuilder::build($unit, Unit::class)
+			ItemBuilder::build($unit, 'unit')
 				->pageTitle('Единицы измерения')
-//				->items($unit->units)
 				->field(
 					ItemFieldBuilder::build('id', $unit)
 						->get()
 				)
-				->tab(
-					MorphBuilder::build($unit, 'units', 'multi')
-						->html(
-							ItemTabBuilder::build('Комплекты')
-								->html(self::morphs($unit->units)
-								)
-						)
+				->field(
+					ItemFieldBuilder::build('name', $unit)
+						->contenteditable()
+						->get()
 				)
+//				->tab(
+//					ItemTabBuilder::build('Комплекты')
+//						->html(
+//							MorphBuilder::build($unit, 'units', 'multi')
+//								->html(
+//									MyList::build(Unit::class)
+//										->items($unit->units)
+//
+//										->column(
+//											ListColumnBuilder::build('name')
+//												->get()
+//										)
+//
+//										->column(
+//											ListColumnBuilder::build('Коэф')
+//												->function(Unit::class, 'parentUnitMultiplier')
+//												->get()
+//										)
+//										->column(
+//											ListColumnBuilder::build('Баз. ед')
+//												->function(Unit::class, 'parentUnitName')
+//												->get()
+//										)
+//
+//										->get()
+//								)
+//								->get()
+//						)
+//				)
 				->del()
 				->get();
 		return $item;
-
 	}
 
 	public static function index(): string

@@ -9,6 +9,7 @@ use app\controller\FS;
 use app\model\Product;
 use app\model\Unit;
 use app\model\Val;
+use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\Image\ImageView;
 
 class ProductRepository extends Controller
@@ -34,29 +35,14 @@ class ProductRepository extends Controller
 			->with('detailImages')
 			->with('smallpackImages')
 			->with('bigpackImages')
-//			->with('baseUnit.units',function ($val)use($val){
-//				$this->morphToMany(Unit::class, 'unitable')
-//					->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
-//					->wherePivot(function ($q)use($val){
-//						$q->where('multiplied_product_id', $val);
-//					});
-//			})
 			->with(['baseUnit'=>function ($query)use($val){
-				$query
-					->withPivot('multiplied_product_id')
-					->wherePivot('multiplied_product_id',$val)
+				$query->with(['units'=>function($query)use($val){
+						$query->where('multiplied_product_id',$val);
+					}]
+					)
 				;
 			}])
-//			->with('units')
-//			->with('units')
-//			->with('mainUnit')
-//			->with('units.units')
-			->find($val)
-//			->loadMorph('baseUnit', [
-//				Unit::class=>['unit']
-////				Unit::class=>'units'
-//			])
-			;
+			->find($val);
 	}
 
 	public static function main(string $slug)
