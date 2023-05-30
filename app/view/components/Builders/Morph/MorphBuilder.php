@@ -63,7 +63,7 @@ class MorphBuilder
 		return $this;
 	}
 
-	public function html(string $html)
+	public function html(string $html):MorphBuilder
 	{
 		$this->html .= $html;
 		$this->items = null;
@@ -77,7 +77,7 @@ class MorphBuilder
 	}
 
 
-	public function get()
+	public function get():string
 	{
 		$morph = $this;
 		return FS::getFileContent($this->template, compact('morph'));

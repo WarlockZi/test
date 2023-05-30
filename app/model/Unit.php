@@ -16,41 +16,31 @@ class Unit extends Model
 
 	public $timestamps = false;
 
-	public function units($id)
+	public static function parentUnitName($builder, $item)
 	{
-//		$id = $this->id=256;
-		return $this
-			->morphToMany(Unit::class, 'unitable')
-			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
-			->wherePivot(function ($q)use($id){
-				$q->where('multiplied_product_id', $id);
-			})
-//			->wherePivot('multiplied_product_id')
-//			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
-			;
+		$parent  = $item->parent;
+		return $item->parent->first()->full_name;
 	}
 
-	public function unit(){
-		return $this
-			->morphedByMany(Unit::class, 'unitable')
-			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
-			->wherePivot(function ($q){
-				$q->where('multiplied_product_id', $this->product()->id);
-			})
-//			->wherePivot('multiplied_product_id')
-//			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id')
-			;
+	public static function parentUnitMultiplier($builder, $item)
+	{
+		return $item->pivot->multiplier;
 	}
 
-	public function unitable(){
-		return $this->morphTo()
-//		return $this->morphedByMany(Unit::class,'unitable')
-			;
+	public function parent(){
+		return $this->morphToMany(Unit::class, 'unitable');
 	}
 
 	public static function multiplier($builder, $item, $field)
 	{
-		return $item->pivot->multipier ?? 0;
+		return isset($item->pivot->multiplier) ? $item->pivot->multiplier : 0;
+	}
+
+	public function units()
+	{
+		return $this
+			->morphedByMany(Unit::class, 'unitable')
+			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id');
 	}
 
 	public function product()
