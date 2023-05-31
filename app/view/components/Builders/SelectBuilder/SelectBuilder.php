@@ -16,7 +16,7 @@ class SelectBuilder extends Builder
 
 	private $relation;
 
-	private $initialOption;
+	private $initialOption='';
 
 	public static function build(string $options)
 	{
@@ -55,6 +55,7 @@ class SelectBuilder extends Builder
 	{
 		$this->initialOption =
 			"<option value='{$initialOptionValue}'>{$initialOptionLabel}</option>";
+	  $this->options = $this->initialOption.$this->options;
 		return $this;
 	}
 

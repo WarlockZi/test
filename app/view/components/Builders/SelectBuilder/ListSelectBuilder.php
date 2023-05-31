@@ -33,7 +33,7 @@ class ListSelectBuilder extends Builder
 	private $selected = false;
 	private $excluded = false;
 	private $nameOptionByField = 'name';
-	private $initialOption;
+	private $initialOption='';
 
 	private $tab = '&nbsp;';
 
@@ -114,7 +114,7 @@ class ListSelectBuilder extends Builder
 			$selected = $this->selected === $item->id ? 'selected' : '';
 			$tpl .= "<option value='{$item['id']}' $selected>{$item['name']}</option>";
 		}
-		return $tpl;
+		return $this->initialOption.$tpl;
 	}
 
 	public function getEmpty()
