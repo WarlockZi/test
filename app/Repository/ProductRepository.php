@@ -60,7 +60,7 @@ class ProductRepository extends Controller
 			->with('smallpackImages')
 			->with('bigpackImages')
 			->with('baseUnit')
-			->with('mainUnit')
+//			->with('mainUnit')
 			->where('slug', $slug)
 			->first();
 	}

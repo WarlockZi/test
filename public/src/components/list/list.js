@@ -148,9 +148,9 @@ if (tables) {
     }
 
     function createMorph(data, table, morph) {
-      let parent = table.closest('.item_wrap');
-      data.model = parent.dataset.model;
-      data.id = parent.dataset.id;
+      let $parent = table.closest('.item_wrap');
+      data.model = $parent.dataset.model;
+      data.id = $parent.dataset.id;
 
       data.morph = new MorphDTO(table);
       // debugger

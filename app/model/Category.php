@@ -52,12 +52,10 @@ class Category extends Model
 		return $this->morphToMany(Property::class, 'propertable');
 	}
 
-
 	public function category()
 	{
 		return $this->parent()->with('parentRecursive');
 	}
-
 
 	public function products()
 	{
@@ -73,7 +71,7 @@ class Category extends Model
 			->where('instore',0)
 			->with('price')
 			->with('mainImages')
-			->with('mainUnit')
+//			->with('mainUnit')
 			->orderBy('name');
 	}
 
@@ -83,7 +81,8 @@ class Category extends Model
 			->where('instore','<>',0)
 			->with('price')
 			->with('mainImages')
-			->with('mainUnit')
+//			->with('mainUnit')
+			->with('baseUnit.units')
 			->orderBy('name');
 	}
 

@@ -11,6 +11,8 @@ use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
+use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 
 class UnitFormView
 {
@@ -25,6 +27,15 @@ class UnitFormView
 				->get();
 	}
 
+
+	public static function selector(): string
+	{
+		$selector = SelectBuilder::build(
+			ArrayOptionsBuilder::build(Unit::all())->get()
+		)->get();
+
+		return $selector;
+	}
 
 	protected static function morphs($items)
 	{

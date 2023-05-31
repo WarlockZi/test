@@ -45,38 +45,13 @@ class ProductFormView
 
 	protected static function units(Product $product): string
 	{
-		if (!$product->baseUnit->count()) return 'Базовая единица не выбрана';
-
-		$items = $product->baseUnit->first()->units;
-		return
-			MorphBuilder::build($product->baseUnit->first(), 'units', 'unit')
-				->html(
-					MyList::build(Unit::class)
-						->pageTitle('Единицы')
-						->column(
-							ListColumnBuilder::build('id')
-								->get())
-						->column(
-							ListColumnBuilder::build('name')
-								->get())
-						->column(
-							ListColumnBuilder::build('Коэфф')
-								->function(
-									Unit::class, 'multiplier'
-								)
-								->contenteditable()
-								->get())
-						->column(
-							ListColumnBuilder::build('morph')
-								->name('Баз. ед')
-								->html($product->baseUnit->first()->name)
-								->get())
-						->items($items)
-						->edit()
-						->addButton('ajax')
-						->get()
-				)
-				->get();
+		$baseUnit = $product->baseUnit;
+		if (!$baseUnit->count()) return 'Базовая единица не выбрана';
+		$units = $product->baseUnit->first()->units;
+		$selector = UnitFormView::selector();
+		return FS::getFileContent(ROOT.'/app/view/Product/Admin/units.php',
+			compact('units','baseUnit','selector'));
+//
 	}
 
 	public static function edit(Product $product): string
@@ -126,11 +101,11 @@ class ProductFormView
 				ItemFieldBuilder::build('base_unit', $product)
 					->name('Базовая единица')
 					->html(
-						MorphBuilder::build($product, 'baseUnit', 'main')
-							->html(
-								self::getUnit($product->baseUnit->first()->id ?? 0, 'base_unit')
-							)
-							->get()
+								self::getUnit($product->baseUnit->id ?? 0, 'base_unit')
+//						MorphBuilder::build($product, 'baseUnit', 'main')
+//							->html(
+//							)
+//							->get()
 					)
 					->get()
 			)
@@ -192,7 +167,7 @@ class ProductFormView
 					)
 			)
 			->tab(
-				ItemTabBuilder::build('Транспортная упаковка', true)
+				ItemTabBuilder::build('Транспортная упаковка')
 					->html(
 						self::getImage($product, 'bigPackImages', 'bigpack', true)
 					)
@@ -363,5 +338,33 @@ class ProductFormView
 		return ob_get_clean();
 	}
 
+//MorphBuilder::build($product->baseUnit->first(), 'units', 'unit')
+//				->html(
+//					MyList::build(Unit::class)
+//						->pageTitle('Единицы')
+//						->column(
+//							ListColumnBuilder::build('id')
+//								->get())
+//						->column(
+//							ListColumnBuilder::build('name')
+//								->get())
+//						->column(
+//							ListColumnBuilder::build('Коэфф')
+//								->function(
+//									Unit::class, 'multiplier'
+//								)
+//								->contenteditable()
+//								->get())
+//						->column(
+//							ListColumnBuilder::build('morph')
+//								->name('Баз. ед')
+//								->html($product->baseUnit->first()->name)
+//								->get())
+//						->items($items)
+//						->edit()
+//						->addButton('ajax')
+//						->get()
+//				)
+//				->get();
 
 }
