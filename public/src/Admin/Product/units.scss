@@ -1,0 +1,38 @@
+@import "../../var";
+@import "../../mixin_media";
+
+.units {
+  background: #fff;
+  padding: 10px;
+
+  .row{
+    align-items: stretch !important;
+  }
+
+  .title {
+    @include _h2;
+  }
+
+  .name, .multiplier, .baseUnit{
+    display: flex;
+    flex: 1;
+    padding: 10px 0;
+    background-color: $color-gray2;
+  }
+  .del{
+    display: flex;
+    width: 50px;
+    align-items: center;
+    padding: 10px 0;
+    background-color: $color-gray2;
+  }
+
+  .add-unit {
+    @include colored_button();
+    align-self: flex-end;
+    margin-top: 10px;
+    padding: 5px;
+
+
+  }
+}

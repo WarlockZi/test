@@ -22,7 +22,7 @@ class Product extends Model
 		'category_id',
 		'image_id',
 		'base_unit',
-		'main_unit',
+//		'main_unit',
 		'manufacturer_id',
 		'title',
 		'keywords',
@@ -45,15 +45,20 @@ class Product extends Model
 		}
 	}
 
-
+//	public function baseUnit()
+//	{
+//		return $this
+//			->morphToMany(Unit::class,'unitable')
+////			->withPivot('multiplier','multiplied_unit_id','multiplied_product_id')
+//			;
+//	}
 	public function baseUnit()
 	{
 		return $this
-			->morphToMany(Unit::class,'unitable')
+			->belongsTo(Unit::class,'base_unit','id')
 //			->withPivot('multiplier','multiplied_unit_id','multiplied_product_id')
 			;
 	}
-
 	protected static function booted()
 	{
 		static::Updating(function ($product) {
@@ -63,16 +68,6 @@ class Product extends Model
 	}
 
 	public function priceWithCurrencyUnit()
-	{
-		$price = $this->getRelation('price');
-		if ($price) {
-			$number = number_format($price->price, 2, '.', ' ');
-			return "{$number} {$price->currency} / {$this->baseUnit->name}";
-		}
-		return 'цена - не определена';
-	}
-
-	public function toCartPrice()
 	{
 		$price = $this->getRelation('price');
 		if ($price) {

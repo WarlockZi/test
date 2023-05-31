@@ -8,6 +8,7 @@ Disallow: /app/
 Disallow: /catalog/
 Disallow: /about/
 Disallow: /search/
+Disallow: /adminsc/
 
 Disallow: /auth/login
 Disallow: /auth/register
