@@ -31,7 +31,7 @@ class UnitFormView
 	public static function selector(): string
 	{
 		$selector = SelectBuilder::build(
-			ArrayOptionsBuilder::build(Unit::all())->get()
+			ArrayOptionsBuilder::build(Unit::all())->initialOption()->get()
 		)->get();
 
 		return $selector;

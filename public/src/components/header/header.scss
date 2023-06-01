@@ -40,6 +40,9 @@ header {
       display: flex;
       flex-flow: column;
       flex: 0 0 200px;
+      @include _500{
+        display: none;
+      }
 
       .fio {
         font-size: .8rem;

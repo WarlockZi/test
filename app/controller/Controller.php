@@ -16,6 +16,7 @@ abstract class Controller
 
 	protected $token;
 	protected $route;
+//	public $notFound;
 	protected $ajax;
 	protected $auth;
 	protected $layout;

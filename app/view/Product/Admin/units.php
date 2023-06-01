@@ -15,15 +15,19 @@ use app\core\Icon;
 			<div class="del"><?= Icon::trashIcon() ?></div>
 		</div>
 
-
-		 <? foreach ($units as $unit): ?>
-		  <div class="row">
-			  <div class="name"><?= $selector() ?></div>
-			  <div class="multiplier"><?=$unit->multiplier?></div>
-			  <div class="baseUnit"><?= $baseUnit->name ?>"</div>
-			  <div class="del"><?= Icon::trashIcon() ?></div>
-		  </div>
-		 <? endforeach; ?>
+		<div class="rows">
+			<div class="none">
+					 <?= $selector; ?>
+			</div>
+				<? foreach ($units as $unit): ?>
+			  <div class="row">
+				  <div class="name"><?= $selector ?></div>
+				  <div class="multiplier"><?= $unit->multiplier ?></div>
+				  <div class="baseUnit"><?= $baseUnit->name ?>"</div>
+				  <div class="del"><?= Icon::trashIcon() ?></div>
+			  </div>
+				<? endforeach; ?>
+		</div>
 
 		<div class="add-unit"
 		     data-unit="<?= $baseUnit->id ?>"
