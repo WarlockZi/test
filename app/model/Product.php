@@ -44,7 +44,6 @@ class Product extends Model
 			return ImageView::noImageSrc();
 		}
 	}
-
 //	public function baseUnit()
 //	{
 //		return $this

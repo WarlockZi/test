@@ -15,7 +15,7 @@ if ($product): ?>
 		<h1><?= $product['name']; ?></h1>
 
 
-		<div class="row">
+		<div class="main-image-wrapper">
 
 			<div class="detail-image">
 					 <?= ProductFormView::getCardImages('', $product->detailImages); ?>

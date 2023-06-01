@@ -27,9 +27,7 @@ class UserView extends View
 
 	protected function getViewFile(Controller $controller): string
 	{
-//		var_dump($controller);
 		$route = $this->controller->getRoute();
-//		var_dump($route);
 		$action = property_exists($controller, 'view') ? $controller->view : $route->action;
 		$controller = ucfirst($route->controllerName);
 		return FS::platformSlashes(ROOT . "/app/view/{$controller}/{$action}.php");
@@ -69,9 +67,7 @@ class UserView extends View
 	{
 		$this->assets = new UserAssets();
 		$this->assets->merge($this->controller->getAssets());
-
 	}
-
 
 	function getErrors()
 	{
@@ -84,7 +80,6 @@ class UserView extends View
 	{
 		return $this->header->getHeader();
 	}
-
 
 	function getLayout()
 	{

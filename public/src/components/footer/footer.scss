@@ -1,4 +1,5 @@
 @import "../../mixin_media";
+
 footer {
   flex-flow: column;
   flex: 0 0 auto;
@@ -6,46 +7,47 @@ footer {
   padding: 10px;
   min-height: 110px;
   color: #9b9b9b;
+  font-size: 13px;
 
   a {
     color: #ffffff;
   }
 
   p {
-    font-size: 10px;
+    font-size: 13px;
   }
-}
 
-.footer_legal {
-  display: flex;
-  justify-content: space-between;
-  gap: 100px;
-}
-
-.footer_menu {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  max-width: 700px;
-  margin: 0 auto;
-  border-bottom: 1px solid #7a7a7a;
-  padding-top: 30px;
-  padding-bottom: 30px;
-
-  .column {
+  .menu {
     display: flex;
-    flex-flow: column;
-    @include _500{
-      font-size: 10px;
+    gap: 15px;
+    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto;
+    border-bottom: 1px solid #7a7a7a;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    @include _600{
+      gap: 0;
     }
 
-    a {
-      width: 100px;
-      padding: 5px;
+    .column {
+      a {
+        width: 100px;
+        padding: 5px;
+        word-break: break-word;
+      }
     }
+ }
+  .legal {
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
   }
 
 }
+
+
+
 
 
 
