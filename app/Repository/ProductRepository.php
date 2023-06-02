@@ -35,13 +35,15 @@ class ProductRepository extends Controller
 			->with('detailImages')
 			->with('smallpackImages')
 			->with('bigpackImages')
+
 			->with(['baseUnit'=>function ($query)use($val){
 				$query->with(['units'=>function($query)use($val){
-						$query->where('multiplied_product_id',$val);
+						$query->wherePivot('product_id',$val);
 					}]
 					)
 				;
 			}])
+
 			->find($val);
 	}
 

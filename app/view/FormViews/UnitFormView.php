@@ -28,10 +28,14 @@ class UnitFormView
 	}
 
 
-	public static function selector(): string
+	public static function selector($excluded = 0, $selected = 0): string
 	{
 		$selector = SelectBuilder::build(
-			ArrayOptionsBuilder::build(Unit::all())->initialOption()->get()
+			ArrayOptionsBuilder::build(Unit::all())
+				->initialOption()
+				->selected($selected)
+				->excluded($excluded)
+				->get()
 		)->get();
 
 		return $selector;
