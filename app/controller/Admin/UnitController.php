@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 
 
 use app\controller\AppController;
+use app\model\Product;
 use app\model\Unit;
 use app\Repository\UnitRepository;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
@@ -19,6 +20,25 @@ class UnitController extends AppController
 	{
 		$units = UnitFormView::index();
 		$this->set(compact('units'));
+	}
+
+	public function actionAttachUnit()
+	{
+		$req = $this->isAjax();
+		$pivot = $req['pivot'];
+		$product = Product::with('baseUnit')->find($req['productId']);
+		if (!$product->baseUnit) $this->exitWithError('No base unit');
+		if (!$pivot) $this->exitWithError('No pivot unit');
+
+		$unit = Unit::find($pivot['unitId']);
+
+		$product->baseUnit->units()->sync($unit);
+
+
+		if ($req){
+
+		}
+
 	}
 
 	public function actionEdit()

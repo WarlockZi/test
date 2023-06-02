@@ -14,10 +14,9 @@ use app\core\Icon;
 	<meta name="HandheldFriendly" content="True">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="yandex-verification" content="003253e624aad5b6"/>
-	<!--	<link rel="canonical" href="/--><? //= isset($vars['canonical']) ? $vars['canonical'] : '' ?><!--"/>-->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="https://vitexopt.ru/public/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/logo-square.svg" type="image/svg+xml">
 
 	<?= $this->assets->getMeta(); ?>
 	<?= $this->assets->getCss(); ?>

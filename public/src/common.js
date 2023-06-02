@@ -1,4 +1,4 @@
-import './common.scss'
+// import './common.scss'
 import error from './components/error/error'
 
 const scrollToTop = () => {
@@ -237,11 +237,16 @@ class createElement {
     return this
   }
 
-  text(text) {
-    this.text = text;
+  text(txt) {
+    this._text = txt;
     return this
   }
 
+  html(html) {
+    debugger;
+    this._html = html;
+    return this
+  }
   attr(key, value) {
     this.attributes.push([key, value]);
     return this
@@ -249,7 +254,8 @@ class createElement {
 
   build() {
     let el = document.createElement(this.tag);
-    el.innerText = this.text;
+    el.innerText = this._text??'';
+    el.innerHTML = this._html??'';
     this.attributes.forEach((entry, i) => {
       el.setAttribute(entry[0], entry[1])
     });

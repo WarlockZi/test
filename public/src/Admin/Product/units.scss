@@ -1,0 +1,59 @@
+@import "../../var";
+@import "../../mixin_media";
+
+.units {
+  background: #fff;
+  padding: 10px;
+
+  .title {
+    @include _h2;
+  }
+  
+  .row{
+    align-items: stretch !important;
+    .name, .multiplier, .baseUnit{
+      display: flex;
+      flex: 1;
+      padding: 10px;
+      background-color: $color-gray2;
+      align-items: center;
+      border-right: 1px solid #ffffff;
+    }
+    .del{
+      display: flex;
+      width: 50px;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+      background-color: $color-gray2;
+    }
+  }
+  
+  .rows{
+    .row{
+      padding: 1px;
+      [custom-select]{
+        border: 1px solid #cccccc;
+        min-width: 0;
+        max-width: initial;
+        flex: 1;
+      }
+
+      .del:hover{
+        cursor: pointer;
+      }
+    }
+  }
+
+
+
+
+  .add-unit {
+    @include colored_button();
+    align-self: flex-end;
+    margin-top: 10px;
+    padding: 5px;
+
+
+  }
+}

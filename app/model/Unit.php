@@ -16,10 +16,37 @@ class Unit extends Model
 
 	public $timestamps = false;
 
-	public function products()
+	public static function parentUnitName($builder, $item)
+	{
+		$parent  = $item->parent;
+		return $item->parent->first()->full_name;
+	}
+
+	public static function parentUnitMultiplier($builder, $item)
+	{
+		return $item->pivot->multiplier;
+	}
+
+	public function parent(){
+		return $this->morphToMany(Unit::class, 'unitable');
+	}
+
+	public static function multiplier($builder, $item, $field)
+	{
+		return isset($item->pivot->multiplier) ? $item->pivot->multiplier : 0;
+	}
+
+	public function units()
+	{
+		return $this
+			->morphedByMany(Unit::class, 'unitable')
+			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id');
+	}
+
+	public function product()
 	{
 		return $this->belongsTo(Product::class,
-			'main_unit');
+			'base_unit');
 	}
 
 	public static function forSelect()
@@ -28,16 +55,5 @@ class Unit extends Model
 			->get();
 	}
 
-	public function units()
-	{
-		return $this
-			->morphToMany(Unit::class, 'unitable')
-			->withPivot('multiplier', 'multiplied_unit_id');
-	}
-
-	public static function multiplier($builder, $item, $field)
-	{
-		return $item->pivot->multipier ?? 0;
-	}
 }
 
