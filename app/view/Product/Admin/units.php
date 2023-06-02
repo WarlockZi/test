@@ -8,10 +8,10 @@ use app\core\Icon;
 
 	<div class="column">
 		<div class="title">Единицы</div>
-		<div class="row">
+		<div class="head">
 			<div class="name">Единица</div>
 			<div class="multiplier">Коэфф</div>
-			<div class="baseUnit">Базовая ед.</div>
+			<div class="base-unit">Базовая ед.</div>
 			<div class="del"><?= Icon::trashIcon() ?></div>
 		</div>
 
@@ -19,12 +19,12 @@ use app\core\Icon;
 			<div class="none">
 					 <?= $selector; ?>
 			</div>
-				<? foreach ($units as $unit): ?>
+				<? foreach ($baseUnit->units as $unit): ?>
 			  <div class="row">
-				  <div class="name"><?= $selector ?></div>
-				  <div class="multiplier"><?= $unit->multiplier ?></div>
-				  <div class="baseUnit"><?= $baseUnit->name ?>"</div>
-				  <div class="del"><?= Icon::trashIcon() ?></div>
+				  <?= UnitFormView::selector($baseUnit->id)?>
+				  <input type="number" value="<?= $unit->pivot->multiplier ?>">
+				  <div class="base-unit"><?= $baseUnit->name ?></div>
+				  <div class="del">X</div>
 			  </div>
 				<? endforeach; ?>
 		</div>

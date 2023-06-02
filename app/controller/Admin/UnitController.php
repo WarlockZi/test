@@ -27,12 +27,16 @@ class UnitController extends AppController
 		$req = $this->isAjax();
 		$pivot = $req['pivot'];
 		$product = Product::with('baseUnit')->find($req['productId']);
-		if (!$product->baseUnit) $this->exitWithError('No base unit');
-		if (!$pivot) $this->exitWithError('No pivot unit');
+		if (!$pivot['unitId']) $this->exitWithError('No pivot unitId');
+		$baseUnit = $product->baseUnit;
+		if (!$baseUnit) $this->exitWithError('No base unit');
 
 		$unit = Unit::find($pivot['unitId']);
 
-		$product->baseUnit->units()->sync($unit);
+		$product->baseUnit->units()->sync([$unit->id=>[
+			'multiplier'=>$pivot['multiplier'],
+			'product_id'=>$product->id
+		]]);
 
 
 		if ($req){
