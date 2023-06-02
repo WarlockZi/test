@@ -22,6 +22,13 @@ class Unit extends Model
 		return $item->parent->first()->full_name;
 	}
 
+	public function units()
+	{
+		return $this
+			->morphedByMany(Unit::class, 'unitable')
+			->withPivot('multiplier', 'product_id');
+	}
+
 	public static function parentUnitMultiplier($builder, $item)
 	{
 		return $item->pivot->multiplier;
@@ -34,13 +41,6 @@ class Unit extends Model
 	public static function multiplier($builder, $item, $field)
 	{
 		return isset($item->pivot->multiplier) ? $item->pivot->multiplier : 0;
-	}
-
-	public function units()
-	{
-		return $this
-			->morphedByMany(Unit::class, 'unitable')
-			->withPivot('multiplier', 'multiplied_unit_id', 'multiplied_product_id');
 	}
 
 	public function product()

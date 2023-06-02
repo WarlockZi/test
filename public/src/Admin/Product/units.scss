@@ -8,44 +8,75 @@
   .title {
     @include _h2;
   }
-  
-  .row{
+
+  .head {
+    display: flex;
     align-items: stretch !important;
-    .name, .multiplier, .baseUnit{
+
+    .name, .multiplier, .base-unit {
       display: flex;
       flex: 1;
       padding: 10px;
       background-color: $color-gray2;
       align-items: center;
-      border-right: 1px solid #ffffff;
+      border: 1px solid #ffffff;
     }
-    .del{
+
+    .del {
       display: flex;
       width: 50px;
       align-items: center;
       justify-content: center;
       padding: 10px 0;
       background-color: $color-gray2;
+      border: 1px solid #ffffff;
     }
   }
-  
-  .rows{
-    .row{
+
+  .rows {
+    .row {
       padding: 1px;
-      [custom-select]{
-        border: 1px solid #cccccc;
-        min-width: 0;
-        max-width: initial;
+
+      //.name {
+      //  flex: 1;
+      //  min-width: 0;
+
+        [custom-select] {
+          border: 1px solid #cccccc;
+          min-width: 0;
+          max-width: initial;
         flex: 1;
+
+          span{
+            min-width: 0;
+          }
+        }
+      //}
+
+      input {
+        flex: 1;
+        padding: 0;
+        min-width: 0;
       }
 
-      .del:hover{
+      .base-unit {
+        flex: 1;
+        padding: 10px;
+      }
+
+      .del {
+        display: flex;
+        justify-content: center;
         cursor: pointer;
+        width: 50px;
+
+        &:hover {
+          background-color: #d8d8d8;
+        }
+
       }
     }
   }
-
-
 
 
   .add-unit {
