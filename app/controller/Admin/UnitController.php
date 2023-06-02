@@ -32,8 +32,15 @@ class UnitController extends AppController
 		if (!$baseUnit) $this->exitWithError('No base unit');
 
 		$unit = Unit::find($pivot['unitId']);
+		$b = $baseUnit->toArray();
+		$u = $unit->toArray();
+		$p = $product->toArray();
 
-		$product->baseUnit->units()->sync([$unit->id=>[
+		$product->baseUnit->units()->updateOrCreate([
+			'unit_id'=>$baseUnit->id,
+			'unitable_id'=>$unit->id,
+		],
+			[$unit->id=>[
 			'multiplier'=>$pivot['multiplier'],
 			'product_id'=>$product->id
 		]]);

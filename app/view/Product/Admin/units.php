@@ -21,7 +21,7 @@ use app\core\Icon;
 			</div>
 				<? foreach ($baseUnit->units as $unit): ?>
 			  <div class="row">
-				  <?= UnitFormView::selector($baseUnit->id)?>
+				  <?= UnitFormView::selector($baseUnit->id, $unit->id)?>
 				  <input type="number" value="<?= $unit->pivot->multiplier ?>">
 				  <div class="base-unit"><?= $baseUnit->name ?></div>
 				  <div class="del">X</div>

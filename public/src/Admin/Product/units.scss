@@ -36,6 +36,7 @@
   .rows {
     .row {
       padding: 1px;
+      align-items: initial;
 
       //.name {
       //  flex: 1;
@@ -57,6 +58,7 @@
         flex: 1;
         padding: 0;
         min-width: 0;
+        border: none;
       }
 
       .base-unit {
@@ -67,8 +69,10 @@
       .del {
         display: flex;
         justify-content: center;
+        align-items: center;
         cursor: pointer;
         width: 50px;
+        user-select: none;
 
         &:hover {
           background-color: #d8d8d8;
