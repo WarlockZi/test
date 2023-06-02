@@ -48,7 +48,6 @@ class Product extends Model
 	{
 		return $this
 			->belongsTo(Unit::class,'base_unit','id')
-//			->withPivot('multiplier','product_id')
 			;
 	}
 
@@ -104,7 +103,6 @@ class Product extends Model
 			)->where('slug', '=', 'smallpack');
 	}
 
-
 	public function bigPackImages()
 	{
 		return $this->morphToMany(
@@ -112,7 +110,6 @@ class Product extends Model
 			'imageable',
 			)->where('slug', '=', 'bigpack');
 	}
-
 
 	public function categoryCategoryRecPropsVals()
 	{
