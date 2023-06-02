@@ -8,55 +8,59 @@ export default class Unit {
     this.productId = $('.item_wrap').first().dataset.id;
 
     this.$addUnit = $('.add-unit').first();
-    this.$addUnit = $('.add-unit').first();
+    this.$baseUnit = $(`[data-field='base_unit'] [data-field='base_unit']`).first();
     this.$rows = $('.rows').first();
     this.$selector = $(this.$rows).find('[custom-select]');
 
     this.$rows.onchange = this.update.bind(this);
-    this.$addUnit.onclick = this.addRow.bind(this)
-
-
+    this.$addUnit.onclick = this.createRow.bind(this)
   }
 
-  async addRow() {
-    let data = this.dto();
-    this.createRow()
-  }
 
   async update({target}) {
     let row = target.closest('.row');
     let data = this.dto(row);
-    // let res = await post('/adminsc/unit/attachUnit', data)
+    if (!data.pivot.unitId || !data.pivot.multiplier) return false;
+    let res = await post('/adminsc/unit/attachUnit', data);
     this.createRow(res)
   }
 
   dto(row) {
     let pivot;
+    let unitId = this.getUnitId(row);
     if (row) {
-      let unit = $(row).find('select');
       pivot = {
-        'unitId': unit.options[unit.selectedIndex].value ?? 0,
-        'multiplier': $(row).find('.multiplier').innerText ?? 0,
+        'unitId': unitId,
+        'multiplier': $(row).find('input').value ?? 0,
       }
     }
     return {
       productId: this.productId,
       pivot: pivot ?? null
     }
+  }
 
+  getUnitId(row) {
+    let classSelected = row.querySelector('[custom-select] .selected');
+    if (classSelected) {
+      return classSelected.dataset.value ?? 0
+    } else {
+      let select = row.querySelector('select');
+      return select.options[select.options.selectedIndex].value??0
+    }
   }
 
   createRow(res) {
     res = {
-      multiplier: 2,
-      baseUnit: 'пар'
+      multiplier: 10,
+      baseUnit: this.$baseUnit.selectedOptions[0].innerText
     };
     let row = (new createElement()).tag('div').attr('class', 'row').build();
     let selector = this.$selector.cloneNode(true);
 
-    let multiplier = (new createElement()).attr('type', 'number').tag('input').attr('class', 'multiplier').attr('value', res.multiplier).build();
-    let baseUnit = (new createElement()).tag('div').attr('class', 'baseUnit').text(res.baseUnit).build();
-    let del = (new createElement()).tag('div').attr('class', 'del').text('X').build();
+    let multiplier = (new createElement()).attr('type', 'number').tag('input').attr('value', res.multiplier).build();
+    let baseUnit = (new createElement()).tag('div').attr('class', 'base-unit').text(res.baseUnit).build();
+    let del = (new createElement()).tag('div').attr('class', 'del').build();
 
     row.append(selector);
     row.append(multiplier);

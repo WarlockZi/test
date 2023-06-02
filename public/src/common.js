@@ -247,6 +247,7 @@ class createElement {
     this._html = html;
     return this
   }
+
   attr(key, value) {
     this.attributes.push([key, value]);
     return this
@@ -254,8 +255,13 @@ class createElement {
 
   build() {
     let el = document.createElement(this.tag);
-    el.innerText = this._text??'';
-    el.innerHTML = this._html??'';
+    if (this._text) {
+      el.innerText = this._text;
+    }
+    if (this._html) {
+      el.innerHTML = this._html
+    }
+
     this.attributes.forEach((entry, i) => {
       el.setAttribute(entry[0], entry[1])
     });
@@ -323,9 +329,9 @@ async function post(url, data = {}) {
           resolve(res);
 
         } catch (e) {
-            console.log('////////////********* REQUEST ERROR ***********//////////////////////');
-            console.log(req.response);
-            return false
+          console.log('////////////********* REQUEST ERROR ***********//////////////////////');
+          console.log(req.response);
+          return false
         }
       }
     }

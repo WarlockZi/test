@@ -44,20 +44,14 @@ class Product extends Model
 			return ImageView::noImageSrc();
 		}
 	}
-//	public function baseUnit()
-//	{
-//		return $this
-//			->morphToMany(Unit::class,'unitable')
-////			->withPivot('multiplier','multiplied_unit_id','multiplied_product_id')
-//			;
-//	}
 	public function baseUnit()
 	{
 		return $this
 			->belongsTo(Unit::class,'base_unit','id')
-//			->withPivot('multiplier','multiplied_unit_id','multiplied_product_id')
+//			->withPivot('multiplier','product_id')
 			;
 	}
+
 	protected static function booted()
 	{
 		static::Updating(function ($product) {

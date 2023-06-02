@@ -54,7 +54,7 @@ class Assets
 
 	public function setCDNJs(string $src, bool $defer = false, bool $async = false): void
 	{
-		$this->CDNjs[] = ['src' => $src, 'defer' => $defer?'defer':'', 'async' => $async?'async':''];
+		$this->CDNjs[] = ['src' => $src, 'defer' => $defer ? 'defer' : '', 'async' => $async ? 'async' : ''];
 	}
 
 	public function getCDNJs(): string
@@ -190,14 +190,14 @@ class Assets
 			$this->setCss($css);
 		}
 		foreach ($assets->getCDNJsArray() as $js) {
-			$this->setCDNJs($js['src'],$js['defer'],$js['async'],);
+			$this->setCDNJs($js['src'], $js['defer'], $js['async'],);
 		}
 		foreach ($assets->getCDNCssArray() as $css) {
 			$this->setCDNCss($css);
 		}
-		$this->title = 'VITEX | '.$this->title.$assets->title;
-		$this->desc = $this->desc.$assets->desc;
-		$this->keywords = $this->keywords.$assets->keywords;
+		$this->title = 'VITEX | ' . $this->title . $assets->title;
+		$this->desc = $this->desc . $assets->desc;
+		$this->keywords = $this->keywords . $assets->keywords;
 
 	}
 
