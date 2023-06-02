@@ -21,8 +21,8 @@ class Product extends Model
 		'slug',
 		'category_id',
 		'image_id',
-		'main_unit',
 		'base_unit',
+//		'main_unit',
 		'manufacturer_id',
 		'title',
 		'keywords',
@@ -44,12 +44,20 @@ class Product extends Model
 			return ImageView::noImageSrc();
 		}
 	}
-
-	public function units()
+//	public function baseUnit()
+//	{
+//		return $this
+//			->morphToMany(Unit::class,'unitable')
+////			->withPivot('multiplier','multiplied_unit_id','multiplied_product_id')
+//			;
+//	}
+	public function baseUnit()
 	{
-		return $this->morphToMany(Unit::class, 'unitable');
+		return $this
+			->belongsTo(Unit::class,'base_unit','id')
+//			->withPivot('multiplier','multiplied_unit_id','multiplied_product_id')
+			;
 	}
-
 	protected static function booted()
 	{
 		static::Updating(function ($product) {
@@ -59,16 +67,6 @@ class Product extends Model
 	}
 
 	public function priceWithCurrencyUnit()
-	{
-		$price = $this->getRelation('price');
-		if ($price) {
-			$number = number_format($price->price, 2, '.', ' ');
-			return "{$number} {$price->currency} / {$this->baseUnit->name}";
-		}
-		return 'цена - не определена';
-	}
-
-	public function toCartPrice()
 	{
 		$price = $this->getRelation('price');
 		if ($price) {
@@ -121,25 +119,6 @@ class Product extends Model
 			)->where('slug', '=', 'bigpack');
 	}
 
-	public function mainUnit()
-	{
-		return $this->belongsTo(Unit::class,
-			'main_unit'
-		);
-	}
-
-	public function baseUnit()
-	{
-		return $this->belongsTo(Unit::class,
-			'base_unit',
-			);
-	}
-
-	public function manufacturer()
-	{
-		return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
-	}
-
 
 	public function categoryCategoryRecPropsVals()
 	{
@@ -170,7 +149,10 @@ class Product extends Model
 	{
 		return $this->morphToMany(Val::class, 'valuable');
 	}
-
+	public function manufacturer()
+	{
+		return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
+	}
 }
 
 

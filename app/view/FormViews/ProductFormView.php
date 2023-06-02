@@ -29,6 +29,30 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ProductFormView
 {
+	protected static function getUnit(int $selected, string $field):string
+	{
+		$html =
+			SelectBuilder::build(
+				ArrayOptionsBuilder::build(Unit::forSelect())
+					->selected($selected)
+					->get()
+			)
+				->field($field)
+				->initialOption('', 0)
+				->get();
+		return $html;
+	}
+
+	protected static function units(Product $product): string
+	{
+		$baseUnit = $product->baseUnit;
+		if (!$baseUnit->count()) return 'Базовая единица не выбрана';
+		$units = $product->baseUnit->first()->units;
+		$selector = UnitFormView::selector();
+		return FS::getFileContent(ROOT.'/app/view/Product/Admin/units.php',
+			compact('units','baseUnit','selector'));
+//
+	}
 
 	public static function edit(Product $product): string
 	{
@@ -76,15 +100,16 @@ class ProductFormView
 			->field(
 				ItemFieldBuilder::build('base_unit', $product)
 					->name('Базовая единица')
-					->html(self::getUnit($product->baseUnit->id ?? 0, 'base_unit'))
+					->html(
+								self::getUnit($product->baseUnit->id ?? 0, 'base_unit')
+//						MorphBuilder::build($product, 'baseUnit', 'main')
+//							->html(
+//							)
+//							->get()
+					)
 					->get()
 			)
-			->field(
-				ItemFieldBuilder::build('mainUnit', $product)
-					->name('Основная ед')
-					->html(self::getUnit($product->mainUnit->id ?? 0, 'main_unit'))
-					->get()
-			)
+
 			->field(
 				ItemFieldBuilder::build('manufacturer', $product)
 					->name('Производитель')
@@ -142,7 +167,7 @@ class ProductFormView
 					)
 			)
 			->tab(
-				ItemTabBuilder::build('Транспортная упаковка', true)
+				ItemTabBuilder::build('Транспортная упаковка')
 					->html(
 						self::getImage($product, 'bigPackImages', 'bigpack', true)
 					)
@@ -151,21 +176,6 @@ class ProductFormView
 //			->toList('list')
 			->get();
 	}
-
-
-	protected static function getUnit(int $selected, string $field)
-	{
-		return
-			SelectBuilder::build(
-				ArrayOptionsBuilder::build(Unit::forSelect())
-					->selected($selected)
-					->get()
-			)
-				->field($field)
-				->initialOption('', 0)
-				->get();
-	}
-
 
 	protected static function getImage(Product $product,
 																		 string $relation,
@@ -230,26 +240,6 @@ class ProductFormView
 	protected static function getDescription($product): string
 	{
 		return include ROOT . '/app/view/Product/description.php';
-	}
-
-	protected static function units(Product $product)
-	{
-		$items = $product->units;
-		return
-			MorphBuilder::build($product, 'units','unit')
-			->html(
-				MyList::build(Unit::class)
-					->pageTitle('Единицы')
-					->column(
-						ListColumnBuilder::build('id')
-							->get())
-					->items($items)
-					->edit()
-					->addButton('ajax')
-					->get()
-			)
-			->get();
-
 	}
 
 	public static function list(Collection $items): string
@@ -348,5 +338,33 @@ class ProductFormView
 		return ob_get_clean();
 	}
 
+//MorphBuilder::build($product->baseUnit->first(), 'units', 'unit')
+//				->html(
+//					MyList::build(Unit::class)
+//						->pageTitle('Единицы')
+//						->column(
+//							ListColumnBuilder::build('id')
+//								->get())
+//						->column(
+//							ListColumnBuilder::build('name')
+//								->get())
+//						->column(
+//							ListColumnBuilder::build('Коэфф')
+//								->function(
+//									Unit::class, 'multiplier'
+//								)
+//								->contenteditable()
+//								->get())
+//						->column(
+//							ListColumnBuilder::build('morph')
+//								->name('Баз. ед')
+//								->html($product->baseUnit->first()->name)
+//								->get())
+//						->items($items)
+//						->edit()
+//						->addButton('ajax')
+//						->get()
+//				)
+//				->get();
 
 }

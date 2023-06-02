@@ -11,6 +11,8 @@ use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
+use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 
 class UnitFormView
 {
@@ -25,6 +27,15 @@ class UnitFormView
 				->get();
 	}
 
+
+	public static function selector(): string
+	{
+		$selector = SelectBuilder::build(
+			ArrayOptionsBuilder::build(Unit::all())->initialOption()->get()
+		)->get();
+
+		return $selector;
+	}
 
 	protected static function morphs($items)
 	{
@@ -70,25 +81,49 @@ class UnitFormView
 	public static function editItem($unit): string
 	{
 		$item =
-			ItemBuilder::build($unit, Unit::class)
+			ItemBuilder::build($unit, 'unit')
 				->pageTitle('Единицы измерения')
-//				->items($unit->units)
 				->field(
 					ItemFieldBuilder::build('id', $unit)
 						->get()
 				)
-				->tab(
-					MorphBuilder::build($unit, 'units', 'multi')
-						->html(
-							ItemTabBuilder::build('Комплекты')
-								->html(self::morphs($unit->units)
-								)
-						)
+				->field(
+					ItemFieldBuilder::build('name', $unit)
+						->contenteditable()
+						->get()
 				)
+//				->tab(
+//					ItemTabBuilder::build('Комплекты')
+//						->html(
+//							MorphBuilder::build($unit, 'units', 'multi')
+//								->html(
+//									MyList::build(Unit::class)
+//										->items($unit->units)
+//
+//										->column(
+//											ListColumnBuilder::build('name')
+//												->get()
+//										)
+//
+//										->column(
+//											ListColumnBuilder::build('Коэф')
+//												->function(Unit::class, 'parentUnitMultiplier')
+//												->get()
+//										)
+//										->column(
+//											ListColumnBuilder::build('Баз. ед')
+//												->function(Unit::class, 'parentUnitName')
+//												->get()
+//										)
+//
+//										->get()
+//								)
+//								->get()
+//						)
+//				)
 				->del()
 				->get();
 		return $item;
-
 	}
 
 	public static function index(): string

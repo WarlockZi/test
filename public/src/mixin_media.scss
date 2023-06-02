@@ -350,13 +350,10 @@
     display: flex;
     flex-flow: column;
 
-    //background-color: darkslategray;
-
     li a {
       display: flex;
       flex-flow: column;
       padding: $padding;
-      //background-color: #bc5900;
       color: darkslategray;
     }
 
@@ -400,6 +397,7 @@ $border-color:$color-main
   box-sizing: border-box;
   border: 1px solid $border-color;
   transition: background 500ms, color 500ms;
+  user-select: none;
 
   &:hover {
     color: $background;

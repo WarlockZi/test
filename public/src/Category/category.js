@@ -1,5 +1,3 @@
-
-
 import {$, slider, scrollToTop} from '../common';
 
 
@@ -8,8 +6,8 @@ if (category) init();
 
 function init() {
   slider();
-
-  $('.hoist').first().onclick = function(){
+  let hoist = $('.hoist').first();
+  if (hoist) hoist.onclick = function () {
     scrollToTop();
   };
 
@@ -23,7 +21,6 @@ function init() {
 
   }
 }
-
 
 
 class callMethod {

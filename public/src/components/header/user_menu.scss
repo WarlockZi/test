@@ -31,10 +31,12 @@
     flex-flow: column;
     flex: 0 0 200px;
 
+
+
     .fio {
       font-size: .8rem;
       @include _600 {
-        font-size: .7rem;
+        font-size: .8rem;
       }
     }
 
