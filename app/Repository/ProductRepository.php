@@ -38,7 +38,7 @@ class ProductRepository extends Controller
 
 			->with(['baseUnit'=>function ($query)use($val){
 				$query->with(['units'=>function($query)use($val){
-						$query->wherePivot('product_id',$val);
+						$query->wherePivot('product_id',$val)->get();
 					}]
 					)
 				;
@@ -125,7 +125,6 @@ class ProductRepository extends Controller
 			'instore'=>'Показать с остатком = 0',
 			'price'=>'Показать c ценой = 0',
 		];
-
 
 		return \app\core\FS::getFileContent($self->viewPath.'filters.php',compact('filters'));
 	}

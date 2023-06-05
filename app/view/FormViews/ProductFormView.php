@@ -46,12 +46,12 @@ class ProductFormView
 	protected static function units(Product $product): string
 	{
 		$baseUnit = $product->baseUnit;
-		if (!$baseUnit->count()) return 'Базовая единица не выбрана';
-		$units = $product->baseUnit->first()->units;
-		$selector = UnitFormView::selector();
+		$p = $product->toArray();
+		if (!$baseUnit) return 'Базовая единица не выбрана';
+		$units = $baseUnit->units;
+		$selector = UnitFormView::selector($baseUnit->id);
 		return FS::getFileContent(ROOT.'/app/view/Product/Admin/units.php',
 			compact('units','baseUnit','selector'));
-//
 	}
 
 	public static function edit(Product $product): string
@@ -102,10 +102,6 @@ class ProductFormView
 					->name('Базовая единица')
 					->html(
 								self::getUnit($product->baseUnit->id ?? 0, 'base_unit')
-//						MorphBuilder::build($product, 'baseUnit', 'main')
-//							->html(
-//							)
-//							->get()
 					)
 					->get()
 			)
