@@ -18,6 +18,7 @@ class ProductController extends AppController
 
 			$this->view = 'product';
 			$product = ProductRepository::main($slug);
+			$arr = $product->toArray();
 			$oItems = OrderRepository::count();
 			if ($product) {
 				$product->categoryProperties = ProductRepository::preparePropertiesList($product);
@@ -25,6 +26,7 @@ class ProductController extends AppController
 				$this->set(compact('product', 'breadcrumbs', 'oItems'));
 				$this->assets->setItemMeta($product);
 				$this->assets->setProduct();
+				$this->assets->setQuill();
 			} else{
 				$this->notFound = true;
 				$view = $this->getView('not found');

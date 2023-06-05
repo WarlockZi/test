@@ -37,6 +37,9 @@ class CategoryFormView
 			->field(
 				ItemFieldBuilder::build('slug', $category)
 					->name('Адрес')
+					->html(
+						"<a href='/category/{$category->slug}'>{$category->slug}</a>"
+					)
 					->get()
 			)
 			->field(
