@@ -30,7 +30,7 @@ export default class Modal {
   }
 
   async show() {
-    this.$submit = (new createElement()).tag('div').attr('type', 'submit').attr('class', 'button').attr('id', 'submit').text(this.data.submitText).build();
+    this.$submit = (new createElement()).tag('div').attr('type', 'submit').attr('class', 'button').attr('id', 'submit').text(this.data.submitText).get();
     this.$submit.addEventListener('click', this.submit.bind(this));
     this.content.innerHTML = '';
     this.renderTitle();
