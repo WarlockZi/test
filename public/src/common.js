@@ -253,7 +253,7 @@ class createElement {
     return this
   }
 
-  build() {
+  get() {
     let el = document.createElement(this.tag);
     if (this._text) {
       el.innerText = this._text;

@@ -52,7 +52,7 @@ final class Lines
     }
 
     /**
-     * Used to build all multiline variable process.
+     * Used to get all multiline variable process.
      *
      * @param bool     $multiline
      * @param string   $line

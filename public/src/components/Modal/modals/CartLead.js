@@ -16,7 +16,7 @@ export default class CartLead extends Cart{
       .tag('div')
       .attr('class','button')
       .text('Отправляя данные, вы соглашаетесь на обработку персональных данных')
-      .build())
+      .get())
   }
 
   setFields() {
@@ -27,7 +27,7 @@ export default class CartLead extends Cart{
       .placeholder('как к Вам обращаться')
       .pattern('[а-яА-Я]{1,}')
       // .error('заполните, пожалуйста, ваше имя')
-      .build()
+      .get()
     ;
 
     let phone = (new FieldBuilder)
@@ -37,7 +37,7 @@ export default class CartLead extends Cart{
       .placeholder('сотовый для связи')
       .pattern('[0-9-+_()]{6,17}')
       // .error('телефон состоит минимум из 10 цифр')
-      .build()
+      .get()
     ;
 
     let company = (new FieldBuilder)
@@ -47,7 +47,7 @@ export default class CartLead extends Cart{
       .placeholder('название Вашей компании')
       .pattern('[a-zA-Zа-яА-я\\s]{3,}')
       // .error('заполните, пожалуйста, название вашей компании')
-      .build()
+      .get()
     ;
     this.fields =  {name, phone, company}
   }

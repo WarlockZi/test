@@ -20,7 +20,7 @@ export default class cartLogin  extends Cart{
       .badgeWidth('55px')
       .type('email')
       .placeholder('email')
-      .build();
+      .get();
 
     let password = (new FieldBuilder)
       .id('password')
@@ -30,7 +30,7 @@ export default class cartLogin  extends Cart{
       .pattern('[a-zA-Z0-9-_()]{6,}')
       .badgeWidth('65px')
       .placeholder('пароль')
-      .build();
+      .get();
 
     this.fields = {email, password}
   }
