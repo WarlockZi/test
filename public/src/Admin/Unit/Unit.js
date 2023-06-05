@@ -5,7 +5,7 @@ export default class Unit {
     this.$table = $(tableClass).first();
     if (!this.$table) return;
 
-    this.productId = $('.item_wrap').first().dataset.id;
+    this.productId = +$('.item_wrap').first().dataset.id;
 
     this.$addUnit = $('.add-unit').first();
     this.$baseUnit = $(`[data-field='base_unit'] [data-field='base_unit']`).first();
@@ -14,8 +14,15 @@ export default class Unit {
 
     this.$rows.onchange = this.update.bind(this);
     this.$addUnit.onclick = this.createRow.bind(this)
+    this.$rows.onclick = this.clickRow.bind(this)
   }
 
+  async clickRow({target}) {
+    if (target.classList.contains('del')) {
+      let data = this.dto(target.closest('.row'))
+      let res = await post('/adminsc/unit/detachunit', data)
+    }
+  }
 
   async update({target}) {
     let row = target.closest('.row');
@@ -34,10 +41,16 @@ export default class Unit {
         'multiplier': $(row).find('input').value ?? 0,
       }
     }
+    debugger
     return {
+      baseUnit: this.getBaseUnitId(),
       productId: this.productId,
       pivot: pivot ?? null
+
     }
+  }
+  getBaseUnitId(){
+    return +this.$baseUnit.options[this.$baseUnit.selectedIndex].value
   }
 
   getUnitId(row) {
@@ -46,7 +59,7 @@ export default class Unit {
       return classSelected.dataset.value ?? 0
     } else {
       let select = row.querySelector('select');
-      return select.options[select.options.selectedIndex].value??0
+      return select.options[select.options.selectedIndex].value ?? 0
     }
   }
 
