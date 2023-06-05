@@ -46,12 +46,12 @@ class ProductFormView
 	protected static function units(Product $product): string
 	{
 		$baseUnit = $product->baseUnit;
-		if (!$baseUnit->count()) return 'Базовая единица не выбрана';
-		$units = $product->baseUnit->first()->units;
-		$selector = UnitFormView::selector();
+		$p = $product->toArray();
+		if (!$baseUnit) return 'Базовая единица не выбрана';
+		$units = $baseUnit->units;
+		$selector = UnitFormView::selector($baseUnit->id);
 		return FS::getFileContent(ROOT.'/app/view/Product/Admin/units.php',
 			compact('units','baseUnit','selector'));
-//
 	}
 
 	public static function edit(Product $product): string
@@ -102,10 +102,6 @@ class ProductFormView
 					->name('Базовая единица')
 					->html(
 								self::getUnit($product->baseUnit->id ?? 0, 'base_unit')
-//						MorphBuilder::build($product, 'baseUnit', 'main')
-//							->html(
-//							)
-//							->get()
 					)
 					->get()
 			)
@@ -284,7 +280,7 @@ class ProductFormView
 					->get()
 			)
 //			->column(
-//				ListColumnBuilder::build('image')
+//				ListColumnBuilder::get('image')
 //					->name('Картинка')
 //					->width('100px')
 //					->function(ProductRepository::class, 'imageStatic')
@@ -338,25 +334,25 @@ class ProductFormView
 		return ob_get_clean();
 	}
 
-//MorphBuilder::build($product->baseUnit->first(), 'units', 'unit')
+//MorphBuilder::get($product->baseUnit->first(), 'units', 'unit')
 //				->html(
-//					MyList::build(Unit::class)
+//					MyList::get(Unit::class)
 //						->pageTitle('Единицы')
 //						->column(
-//							ListColumnBuilder::build('id')
+//							ListColumnBuilder::get('id')
 //								->get())
 //						->column(
-//							ListColumnBuilder::build('name')
+//							ListColumnBuilder::get('name')
 //								->get())
 //						->column(
-//							ListColumnBuilder::build('Коэфф')
+//							ListColumnBuilder::get('Коэфф')
 //								->function(
 //									Unit::class, 'multiplier'
 //								)
 //								->contenteditable()
 //								->get())
 //						->column(
-//							ListColumnBuilder::build('morph')
+//							ListColumnBuilder::get('morph')
 //								->name('Баз. ед')
 //								->html($product->baseUnit->first()->name)
 //								->get())

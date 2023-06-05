@@ -16,7 +16,7 @@ export default class CartSuccess extends Cart{
       .attr('id', 'submit')
       .attr('class', 'button')
       .text('ok')
-      .build())
+      .get())
 
   }
 
@@ -25,7 +25,7 @@ export default class CartSuccess extends Cart{
       .tag('div')
       .attr('class', 'text')
       .text('Какое-то сообщение')
-      .build()
+      .get()
     )
   }
 

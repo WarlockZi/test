@@ -126,7 +126,7 @@ class ListColumnBuilder
 //		$this->initialOptionValue = $initialOptionValue;
 //
 //		$items = $modelName::all();
-//		$this->select = ListSelectBuilder::build()
+//		$this->select = ListSelectBuilder::get()
 //			->collection($items)
 //			->initialOption('',0)
 //		;

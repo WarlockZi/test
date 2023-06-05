@@ -97,25 +97,25 @@ class UnitFormView
 						->get()
 				)
 //				->tab(
-//					ItemTabBuilder::build('Комплекты')
+//					ItemTabBuilder::get('Комплекты')
 //						->html(
-//							MorphBuilder::build($unit, 'units', 'multi')
+//							MorphBuilder::get($unit, 'units', 'multi')
 //								->html(
-//									MyList::build(Unit::class)
+//									MyList::get(Unit::class)
 //										->items($unit->units)
 //
 //										->column(
-//											ListColumnBuilder::build('name')
+//											ListColumnBuilder::get('name')
 //												->get()
 //										)
 //
 //										->column(
-//											ListColumnBuilder::build('Коэф')
+//											ListColumnBuilder::get('Коэф')
 //												->function(Unit::class, 'parentUnitMultiplier')
 //												->get()
 //										)
 //										->column(
-//											ListColumnBuilder::build('Баз. ед')
+//											ListColumnBuilder::get('Баз. ед')
 //												->function(Unit::class, 'parentUnitName')
 //												->get()
 //										)
