@@ -280,7 +280,7 @@ class ProductFormView
 					->get()
 			)
 //			->column(
-//				ListColumnBuilder::build('image')
+//				ListColumnBuilder::get('image')
 //					->name('Картинка')
 //					->width('100px')
 //					->function(ProductRepository::class, 'imageStatic')
@@ -334,25 +334,25 @@ class ProductFormView
 		return ob_get_clean();
 	}
 
-//MorphBuilder::build($product->baseUnit->first(), 'units', 'unit')
+//MorphBuilder::get($product->baseUnit->first(), 'units', 'unit')
 //				->html(
-//					MyList::build(Unit::class)
+//					MyList::get(Unit::class)
 //						->pageTitle('Единицы')
 //						->column(
-//							ListColumnBuilder::build('id')
+//							ListColumnBuilder::get('id')
 //								->get())
 //						->column(
-//							ListColumnBuilder::build('name')
+//							ListColumnBuilder::get('name')
 //								->get())
 //						->column(
-//							ListColumnBuilder::build('Коэфф')
+//							ListColumnBuilder::get('Коэфф')
 //								->function(
 //									Unit::class, 'multiplier'
 //								)
 //								->contenteditable()
 //								->get())
 //						->column(
-//							ListColumnBuilder::build('morph')
+//							ListColumnBuilder::get('morph')
 //								->name('Баз. ед')
 //								->html($product->baseUnit->first()->name)
 //								->get())

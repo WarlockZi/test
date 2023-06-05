@@ -44,6 +44,7 @@ class UnitController extends AppController
       $unit, ['multiplier' => $pivot['multiplier']]
     );
   }
+
   public function actionUpdateUnit()
   {
     list($pivot, $product, $unit) = $this->check($this->isAjax());
@@ -52,7 +53,13 @@ class UnitController extends AppController
     );
   }
 
-
+	public function actionChangeUnit()
+	{
+		list($pivot, $product, $unit) = $this->check($this->isAjax());
+		$product->baseUnit->units()->updateExistingPivot(
+			$unit, ['multiplier' => $pivot['multiplier']]
+		);
+	}
 
   public function actionDetachUnit()
   {

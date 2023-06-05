@@ -1,4 +1,5 @@
 import {$, createElement, post} from '../../common'
+import WDSSelect from "../../components/select/WDSSelect";
 
 export default class Unit {
   constructor(tableClass) {
@@ -13,13 +14,32 @@ export default class Unit {
     this.$selector = $(this.$rows).find('[custom-select]');
 
     this.$rows.onchange = this.update.bind(this);
-    this.$addUnit.onclick = this.createRow.bind(this)
-    this.$rows.onclick = this.clickRow.bind(this)
+    this.$addUnit.onclick = this.createRow.bind(this);
+    this.$rows.onclick = this.clickRow.bind(this);
+
+    this.initSelects()
+
+
+  }
+
+  initSelects() {
+    var evt = document.createEvent("MouseEvent");
+    evt.initEvent("myEvent", true, true);
+
+    let selects = $('[custom-select]');
+    debugger;
+    selects.forEach((s) => {
+      s.addEventListener('myEvent', this.myEvent)
+    })
+  }
+
+  myEvent() {
+    debugger
   }
 
   async clickRow({target}) {
     if (target.classList.contains('del')) {
-      let data = this.dto(target.closest('.row'))
+      let data = this.dto(target.closest('.row'));
       let res = await post('/adminsc/unit/detachunit', data)
     }
   }
@@ -41,7 +61,7 @@ export default class Unit {
         'multiplier': $(row).find('input').value ?? 0,
       }
     }
-    debugger
+    debugger;
     return {
       baseUnit: this.getBaseUnitId(),
       productId: this.productId,
@@ -49,7 +69,8 @@ export default class Unit {
 
     }
   }
-  getBaseUnitId(){
+
+  getBaseUnitId() {
     return +this.$baseUnit.options[this.$baseUnit.selectedIndex].value
   }
 
@@ -68,21 +89,29 @@ export default class Unit {
       multiplier: 10,
       baseUnit: this.$baseUnit.selectedOptions[0].innerText
     };
-    let row = (new createElement()).tag('div').attr('class', 'row').build();
+    let row = (new createElement()).tag('div').attr('class', 'row').get();
     let selector = this.$selector.cloneNode(true);
 
-    let multiplier = (new createElement()).attr('type', 'number').tag('input').attr('value', res.multiplier).build();
-    let baseUnit = (new createElement()).tag('div').attr('class', 'base-unit').text(res.baseUnit).build();
-    let del = (new createElement()).tag('div').attr('class', 'del').build();
+    let multiplier = (new createElement()).attr('type', 'number').tag('input').attr('value', res.multiplier).get();
+    let baseUnit = (new createElement()).tag('div').attr('class', 'base-unit').text(res.baseUnit).get();
+    let del = (new createElement()).tag('div').attr('class', 'del').text('X').get();
 
     row.append(selector);
     row.append(multiplier);
     row.append(baseUnit);
     row.append(del);
+    new WDSSelect(selector, this.unitSelected.bind(this));
 
     this.$rows.append(row)
+  }
+
+  async unitSelected(obj) {
+    let res = await post('/adminsc/unit/changeUnit',
+      {
+        'prev': obj.prev,
+        'next': obj.next
+      })
 
 
   }
-
 }
