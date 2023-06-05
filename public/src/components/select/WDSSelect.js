@@ -4,12 +4,11 @@ import {createElement, post} from "../../common";
 
 export default class WDSSelect {
 
-  constructor(el, callback = null) {
+  constructor(el) {
     // debugger
     if (!el) return;
     if (el.multiple) return;
 
-    this.callback = callback ?? null;
     this.title = el.title ?? '';
     this.field = el.dataset.field;
     this.model = el.closest('.item_wrap')?.dataset.model;
@@ -19,11 +18,11 @@ export default class WDSSelect {
 
     this.sel = document.createElement("div");
     this.sel.setAttribute("custom-select", '');
-    // debugger
+
     if (el.dataset.morphFunction) {
       this.setMorph()
     }
-    // debugger
+
     if (el.dataset.belongstoModel) {
       this.sel.dataset.belongstoModel = el.dataset.belongstoModel;
       this.sel.dataset.belongstoId = el.dataset.belongstoId
@@ -65,15 +64,12 @@ export default class WDSSelect {
       return option.value === value
     });
     const prev = this.selectedOption;
-    this.next = next;
-    this.prev = prev;
 
     prev.selected = false;
-
     next.selected = true;
 
     this.space.innerText = next.label;
-    // this.label.closest('[custom-select]').dataset['id'] = next.value
+
     this.label.closest('[custom-select]').dataset['value'] = next.value;
     this.ul
       .querySelector(`[data-value="${prev.value}"]`)
@@ -84,9 +80,10 @@ export default class WDSSelect {
     newCustomElement.classList.add("selected");
     newCustomElement.scrollIntoView({block: "nearest"});
 
-    if (this.callback) {
-      this.callback(this)
-    }
+    this.sel.dispatchEvent(new CustomEvent('unit.changed', {
+      bubbles: true,
+      detail: {next, prev}
+    }))
   }
 }
 
@@ -94,9 +91,6 @@ function setup(select) {
 
   if (select.title) {
     select.titleElement = (new createElement()).tag("div").attr('class', 'title').text(select.title).get();
-    // select.titleElement = document.createElement("div")
-    // select.titleElement.classList.add("title")
-    // select.titleElement.innerText = select.title
     select.sel.append(select.titleElement)
   }
 

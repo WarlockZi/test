@@ -196,7 +196,7 @@ class ProductFormView
 
 	protected static function getSelect(Category $category, Product $product): string
 	{
-		$str = "<div class='category'>{$category->name}</div>";
+		$str = "<a href='/adminsc/category/edit/$category->id' class='category'>{$category->name}</a>";
 		foreach ($category->properties as $property) {
 			$str .= PropertyView::getProductSelector($property, $product);
 		}

@@ -1,5 +1,6 @@
 import {$, createElement, post} from '../../common'
 import WDSSelect from "../../components/select/WDSSelect";
+import cartLogin from "../../components/Modal/modals/CartLogin";
 
 export default class Unit {
   constructor(tableClass) {
@@ -7,64 +8,62 @@ export default class Unit {
     if (!this.$table) return;
 
     this.productId = +$('.item_wrap').first().dataset.id;
+    this.$baseUnit = $(`[data-field='base_unit'] [data-field='base_unit']`).first();
+    this.baseUnitId = this.$baseUnit.options[this.$baseUnit.selectedIndex].value;
 
     this.$addUnit = $('.add-unit').first();
-    this.$baseUnit = $(`[data-field='base_unit'] [data-field='base_unit']`).first();
     this.$rows = $('.rows').first();
     this.$selector = $(this.$rows).find('[custom-select]');
 
     this.$rows.onchange = this.update.bind(this);
     this.$addUnit.onclick = this.createRow.bind(this);
     this.$rows.onclick = this.clickRow.bind(this);
-
-    this.initSelects()
-
-
+    this.$rows.addEventListener('unit.changed', this.unitChanged.bind(this))
   }
 
-  initSelects() {
-    var evt = document.createEvent("MouseEvent");
-    evt.initEvent("myEvent", true, true);
+  async unitChanged(obj) {
+    let dto = this.dto(obj.currentTarget);
+    dto.next = obj.detail.next.value;
+    dto.prev = obj.detail.prev.value;
 
-    let selects = $('[custom-select]');
-    debugger;
-    selects.forEach((s) => {
-      s.addEventListener('myEvent', this.myEvent)
-    })
-  }
-
-  myEvent() {
-    debugger
+    let res = await post('/adminsc/unit/changeUnit', dto)
   }
 
   async clickRow({target}) {
     if (target.classList.contains('del')) {
-      let data = this.dto(target.closest('.row'));
-      let res = await post('/adminsc/unit/detachunit', data)
+      let row = target.closest('.row');
+      let data = this.dto(row);
+      let res = await post('/adminsc/unit/detachunit', data);
+      debugger;
+      if (res?.arr?.ok) {
+        row.remove()
+      } else if (target.tagName === 'INPUT') {
+        this.update()
+      }
     }
   }
 
-  async update({target}) {
+  async update(e) {
+    let target = e.target;
     let row = target.closest('.row');
     let data = this.dto(row);
-    if (!data.pivot.unitId || !data.pivot.multiplier) return false;
-    let res = await post('/adminsc/unit/attachUnit', data);
+
+    let res = await post('/adminsc/unit/updatePivot', data);
     this.createRow(res)
   }
 
   dto(row) {
     let pivot;
-    let unitId = this.getUnitId(row);
+    let unitId = +this.getUnitId(row);
     if (row) {
       pivot = {
-        'unitId': unitId,
-        'multiplier': $(row).find('input').value ?? 0,
+        'product_id': this.productId,
+        'multiplier': +$(row).find('input').value ?? 0,
       }
     }
-    debugger;
     return {
       baseUnit: this.getBaseUnitId(),
-      productId: this.productId,
+      unitId: unitId,
       pivot: pivot ?? null
 
     }
@@ -100,18 +99,8 @@ export default class Unit {
     row.append(multiplier);
     row.append(baseUnit);
     row.append(del);
-    new WDSSelect(selector, this.unitSelected.bind(this));
+    new WDSSelect(selector);
 
     this.$rows.append(row)
-  }
-
-  async unitSelected(obj) {
-    let res = await post('/adminsc/unit/changeUnit',
-      {
-        'prev': obj.prev,
-        'next': obj.next
-      })
-
-
   }
 }
