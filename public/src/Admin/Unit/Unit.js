@@ -7,7 +7,8 @@ export default class Unit {
     this.$table = $(tableClass).first();
     if (!this.$table) return;
 
-    this.productId = +$('.item_wrap').first().dataset.id;
+    this.productId = +$('.item-wrap').first().dataset.id;
+    this.product1sId = $(`[data-field='1s_id']`).first().innerText;
     this.$baseUnit = $(`[data-field='base_unit'] [data-field='base_unit']`).first();
     this.baseUnitId = this.$baseUnit.options[this.$baseUnit.selectedIndex].value;
 
@@ -22,7 +23,8 @@ export default class Unit {
   }
 
   async unitChanged(obj) {
-    let dto = this.dto(obj.currentTarget);
+
+    let dto = this.dto(obj.target.closest('.row'));
     dto.next = obj.detail.next.value;
     dto.prev = obj.detail.prev.value;
 
@@ -57,7 +59,7 @@ export default class Unit {
     let unitId = +this.getUnitId(row);
     if (row) {
       pivot = {
-        'product_id': this.productId,
+        'product_id': this.product1sId,
         'multiplier': +$(row).find('input').value ?? 0,
       }
     }

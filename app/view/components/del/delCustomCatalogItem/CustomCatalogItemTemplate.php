@@ -1,4 +1,4 @@
-<div class="item_wrap"
+<div class="item-wrap"
 		 data-model="<?= $this->modelName ?>"
 		 data-table="<?= $this->tableClassName ?>"
 		 data-id="<?= $this->item['id'] ?>"

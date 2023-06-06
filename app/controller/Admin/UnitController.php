@@ -27,13 +27,14 @@ class UnitController extends AppController
 		$pivot = $req['pivot'];
 		if (!$req['unitId']) $this->exitWithError('No pivot unitId');
 
-		$product = Product::with('baseUnit')->find($req['pivot']['product_id']);
+		$product = Product::with('baseUnit')
+      ->where('1s_id',$req['pivot']['product_id'])
+      ->first();
 		if (!$product->baseUnit) $this->exitWithError('No base unit');
 		$unit = Unit::find($req['unitId']);
 		$arr = array($pivot, $product, $unit);
 		$b = $product->baseUnit->toArray();
 		$u = $unit->toArray();
-		$dd = $product->baseUnit->units->find(2);
 		return $arr;
 	}
 
@@ -49,9 +50,9 @@ class UnitController extends AppController
 	{
 		list($pivot, $product, $unit) = $this->check($this->ajax);
 		$product->baseUnit->units()->updateExistingPivot(
-			$unit, ['multiplier' => $pivot['multiplier'],
+			$unit,['multiplier' => $pivot['multiplier'],
 				'product_id' => $pivot['product_id']]
-		);
+    );
 	}
 
 	public function actionChangeUnit()
@@ -66,7 +67,7 @@ class UnitController extends AppController
 		Unit::find($baseUnit)
 			->units()
 			->detach($prev);
-		Unit::find($baseUnit)
+		$res = Unit::find($baseUnit)
 			->units()
 			->attach([$next=>['multiplier' => $pivot['multiplier'],
 				'product_id' => $pivot['product_id']]]);

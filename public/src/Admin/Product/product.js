@@ -5,7 +5,7 @@ import Morph from "../../components/morph/morph";
 
 export default function product() {
 
-  let product = $(`.item_wrap[data-model='product']`)[0];
+  let product = $(`.item-wrap[data-model='product']`)[0];
   if (!product) return false;
 
   // let morphs = $('[data-morph-model]')
@@ -38,7 +38,7 @@ export default function product() {
 
       let observer = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
-          let propertable_id = $('.item_wrap')[0].dataset.id;
+          let propertable_id = $('.item-wrap')[0].dataset.id;
           let property_id = mutation.target.dataset.modelId;
           let val_id = mutation.target.dataset.value;
           post('/adminsc/product/setProperty',

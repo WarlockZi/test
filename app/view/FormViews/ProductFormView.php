@@ -63,6 +63,7 @@ class ProductFormView
 					->name('ID')
 					->get()
 			)
+
 			->field(
 				ItemFieldBuilder::build('slug', $product)
 					->name('Адрес')
@@ -120,6 +121,11 @@ class ProductFormView
 					)
 					->get()
 			)
+      ->field(
+        ItemFieldBuilder::build('1s_id', $product)
+          ->name('1s_ID')
+          ->get()
+      )
 			->tab(
 				ItemTabBuilder::build('Свойства товара')
 					->html(

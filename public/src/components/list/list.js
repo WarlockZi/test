@@ -140,7 +140,7 @@ if (tables) {
     // UPDATE OR CREATE
 
     function createRelation(data, table, relation) {
-      let parent = table.closest('.item_wrap');
+      let parent = table.closest('.item-wrap');
       data.model = parent.dataset.model;
       data.id = parent.dataset.id;
       data.relation = relation;
@@ -148,7 +148,7 @@ if (tables) {
     }
 
     function createMorph(data, table, morph) {
-      let $parent = table.closest('.item_wrap');
+      let $parent = table.closest('.item-wrap');
       data.model = $parent.dataset.model;
       data.id = $parent.dataset.id;
 
