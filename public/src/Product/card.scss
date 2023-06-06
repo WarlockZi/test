@@ -73,6 +73,7 @@
 
       .price-units {
         width: 50%;
+        margin-bottom: 10px;
 
         .price-unit-row {
           display: flex;
@@ -94,7 +95,7 @@
 
       .price {
         display: flex;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
 
         .old-price {
           font-size: 1.1rem;

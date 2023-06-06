@@ -31,7 +31,8 @@ if ($product): ?>
 			<div class="info-tag">Характеристики</div>
 			<div class="properties">
 					 <? foreach ($product->categoryProperties as $property): ?>
-						 <?= ProductFormView::renderProperty($property); ?>
+						 <? include __DIR__. '/property.php'; ?>
+<!--						 --><?//= ProductFormView::renderProperty($property); ?>
 					 <? endforeach; ?>
 			</div>
 		</div>

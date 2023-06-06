@@ -27,12 +27,13 @@ class UnitController extends AppController
 		$pivot = $req['pivot'];
 		if (!$req['unitId']) $this->exitWithError('No pivot unitId');
 
-		$product = Product::with('baseUnit')
+		$product = Product::with('baseUnit.units')
       ->where('1s_id',$req['pivot']['product_id'])
       ->first();
 		if (!$product->baseUnit) $this->exitWithError('No base unit');
 		$unit = Unit::find($req['unitId']);
 		$arr = array($pivot, $product, $unit);
+		$p = $product->toArray();
 		$b = $product->baseUnit->toArray();
 		$u = $unit->toArray();
 		return $arr;
