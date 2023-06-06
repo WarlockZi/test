@@ -2,8 +2,8 @@
 
 	<div class="price-for-unit">
 
-		 <? $unit_price = $unit->pivot->multiplier * (float)$price; ?>
-		 <?= number_format($unit_price, 2, '.', ' ') ?>
+		 <? $unitPrice = $unit->pivot->multiplier * (float)$priceNumber; ?>
+		 <?= number_format($unitPrice, 2, '.', ' ') ?>
 	</div>
 	₽ /
 	<div class="unit">
@@ -11,6 +11,6 @@
 	</div>
 
 </div>
-<?=var_dump((float)$price)?>
-<?=var_dump($price)?>
-<?=var_dump($unit->pivot->toArray())?>
+<?//=var_dump((float)$price)?>
+<?//=var_dump($price)?>
+<?//=var_dump($unit->pivot->toArray())?>
