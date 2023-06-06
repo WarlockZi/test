@@ -63,6 +63,7 @@ class ProductFormView
 					->name('ID')
 					->get()
 			)
+
 			->field(
 				ItemFieldBuilder::build('slug', $product)
 					->name('Адрес')
@@ -120,6 +121,11 @@ class ProductFormView
 					)
 					->get()
 			)
+      ->field(
+        ItemFieldBuilder::build('1s_id', $product)
+          ->name('1s_ID')
+          ->get()
+      )
 			->tab(
 				ItemTabBuilder::build('Свойства товара')
 					->html(
@@ -196,7 +202,7 @@ class ProductFormView
 
 	protected static function getSelect(Category $category, Product $product): string
 	{
-		$str = "<div class='category'>{$category->name}</div>";
+		$str = "<a href='/adminsc/category/edit/$category->id' class='category'>{$category->name}</a>";
 		foreach ($category->properties as $property) {
 			$str .= PropertyView::getProductSelector($property, $product);
 		}

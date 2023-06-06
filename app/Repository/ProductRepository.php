@@ -11,6 +11,7 @@ use app\model\Unit;
 use app\model\Val;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\Image\ImageView;
+use const http\Client\Curl\PROXY_SOCKS4;
 
 class ProductRepository extends Controller
 {
@@ -37,7 +38,7 @@ class ProductRepository extends Controller
 			->with('bigpackImages')
 
 			->with(['baseUnit'=>function ($query)use($val){
-				$query->with(['units'=>function($query)use($val){
+				$query->first()->with(['units'=>function($query)use($val){
 						$query->wherePivot('product_id',$val)->get();
 					}]
 					)
@@ -49,6 +50,7 @@ class ProductRepository extends Controller
 
 	public static function main(string $slug)
 	{
+		$id = Product::where('slug', $slug)->select('id')->first()->toArray()['id'];
 		return Product::query()
 			->orderBy('sort')
 			->with('category.properties.vals')
@@ -61,7 +63,15 @@ class ProductRepository extends Controller
 			->with('detailImages')
 			->with('smallpackImages')
 			->with('bigpackImages')
-			->with('baseUnit')
+
+			->with(['baseUnit'=>function ($query)use($id){
+				$query->with(['units'=>function($query)use($id){
+						$query->wherePivot('product_id',$id)->get();
+					}]
+				)
+				;
+			}])
+
 			->where('slug', $slug)
 			->first();
 	}
