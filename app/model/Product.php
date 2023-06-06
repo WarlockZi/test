@@ -23,7 +23,6 @@ class Product extends Model
     'category_id',
     'image_id',
     'base_unit',
-//		'main_unit',
     'manufacturer_id',
     'title',
     'keywords',

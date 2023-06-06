@@ -4,8 +4,8 @@ import MorphDTO from "./MorphDTO";
 
 class Morph {
   constructor(morphEl) {
-    this.model = morphEl.closest('.item_wrap').dataset.model;
-    this.id = +morphEl.closest('.item_wrap').dataset.id;
+    this.model = morphEl.closest('.item-wrap').dataset.model;
+    this.id = +morphEl.closest('.item-wrap').dataset.id;
 
     morphEl.onclick = this.handleClick.bind(this);
     // debugger

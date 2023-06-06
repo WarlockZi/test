@@ -8,7 +8,7 @@ import DndFile from "../dnd/DndFile";
 export default async function catalogItem() {
 
   // self = new this
-  let customCatalogItem = $('.item_wrap')[0];
+  let customCatalogItem = $('.item-wrap')[0];
   if (customCatalogItem) {
 
     self.model = customCatalogItem.dataset.model;

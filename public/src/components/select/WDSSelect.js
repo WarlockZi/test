@@ -11,8 +11,8 @@ export default class WDSSelect {
 
     this.title = el.title ?? '';
     this.field = el.dataset.field;
-    this.model = el.closest('.item_wrap')?.dataset.model;
-    this.modelId = el.closest('.item_wrap')?.dataset.id;
+    this.model = el.closest('.item-wrap')?.dataset.model;
+    this.modelId = el.closest('.item-wrap')?.dataset.id;
 
     this.options = getFormattedOptions(el.querySelectorAll("option"));
 
@@ -117,7 +117,7 @@ function setup(select) {
   });
 
   function getMorph(sel) {
-    let item = sel.closest('.item_wrap');
+    let item = sel.closest('.item-wrap');
     let morph = sel.parentNode;
     return {
       morph: {
@@ -141,7 +141,7 @@ function setup(select) {
       let res = await post(url, data)
     }
     if (sel.dataset.field) {
-      let id = target.closest('.item_wrap').dataset.id;
+      let id = target.closest('.item-wrap').dataset.id;
       let model = target.closest('[data-model]').dataset.model;
       let data = {[sel.dataset.field]: sel.dataset.value, id};
       let url = `/adminsc/${model}/updateOrCreate`;
