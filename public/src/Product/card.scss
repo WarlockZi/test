@@ -72,16 +72,17 @@
       }
 
       .price-units {
-        width: 50%;
+        width: 70%;
         margin-bottom: 10px;
 
         .price-unit-row {
           display: flex;
+          font-size: .8rem;
 
           .price-for-unit {
             display: flex;
             justify-content: end;
-            width: 70px;
+            width: 90px;
             margin-right: 5px;
 
           }
@@ -97,17 +98,18 @@
         display: flex;
         margin-bottom: 10px;
 
+        .new-price {
+          font-size: 1.4rem;
+          margin-right: 10px;
+          font-weight: bold;
+        }
         .old-price {
+          width: 40%;
           font-size: 1.1rem;
           text-decoration: line-through $textSecondary;
           color: $textSecondary
         }
 
-        .new-price {
-          font-size: 1.6rem;
-          margin-right: 10px;
-          font-weight: bold;
-        }
       }
 
       .button {
