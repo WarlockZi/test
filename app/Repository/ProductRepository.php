@@ -7,11 +7,8 @@ namespace app\Repository;
 use app\controller\Controller;
 use app\controller\FS;
 use app\model\Product;
-use app\model\Unit;
 use app\model\Val;
-use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\Image\ImageView;
-use const http\Client\Curl\PROXY_SOCKS4;
 
 class ProductRepository extends Controller
 {
@@ -26,7 +23,6 @@ class ProductRepository extends Controller
 	public static function edit(int $val)
 	{
 		return Product::query()
-//			->orderBy('sort')
 			->with('category.properties.vals')
 			->with('category.parentRecursive')
 			->with('category.parents')
@@ -50,7 +46,7 @@ class ProductRepository extends Controller
 
 	public static function main(string $slug)
 	{
-		$id = Product::where('slug', $slug)->select('id')->first()->toArray()['id'];
+		$id = Product::where('slug', $slug)->first()['1s_id'];
 		return Product::query()
 			->orderBy('sort')
 			->with('category.properties.vals')
@@ -88,7 +84,7 @@ class ProductRepository extends Controller
 	public static function preparePropertiesList(Product $product)
 	{
 		$arr = [
-			['name' => 'Артикул', 'value' => $product->art],
+
 			['name' => 'Страна', 'value' => $product->manufacturer->country->name ?? 'Неизвестен'],
 			['name' => 'Производитель', 'value' => $product->manufacturer->name ?? 'Неизвестен'],
 		];
