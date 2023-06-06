@@ -20,8 +20,9 @@ class ProductRepository extends Controller
 		$this->viewPath = \app\core\FS::platformSlashes(ROOT.'/app/view/Product/');
 	}
 
-	public static function edit(int $val)
+	public static function edit(int $id)
 	{
+		$id = Product::where('id', $id)->first()['1s_id'];
 		return Product::query()
 			->with('category.properties.vals')
 			->with('category.parentRecursive')
@@ -33,15 +34,15 @@ class ProductRepository extends Controller
 			->with('smallpackImages')
 			->with('bigpackImages')
 
-			->with(['baseUnit'=>function ($query)use($val){
-				$query->first()->with(['units'=>function($query)use($val){
-						$query->wherePivot('product_id',$val)->get();
+			->with(['baseUnit'=>function ($query)use($id){
+				$query->with(['units'=>function($query)use($id){
+						$query->wherePivot('product_id',$id)->get();
 					}]
 					)
 				;
 			}])
 
-			->find($val);
+			->find($id);
 	}
 
 	public static function main(string $slug)
