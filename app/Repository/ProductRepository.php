@@ -24,6 +24,7 @@ class ProductRepository extends Controller
 	{
 		$id = Product::where('id', $id)->first()['1s_id'];
 		return Product::query()
+			->where('1s_id',$id)
 			->with('category.properties.vals')
 			->with('category.parentRecursive')
 			->with('category.parents')
@@ -42,7 +43,7 @@ class ProductRepository extends Controller
 				;
 			}])
 
-			->find($id);
+			->first();
 	}
 
 	public static function main(string $slug)
