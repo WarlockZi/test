@@ -174,8 +174,6 @@ class ProductFormView
 						self::getImage($product, 'bigPackImages', 'bigpack', true)
 					)
 			)
-//			->del()
-//			->toList('list')
 			->get();
 	}
 
@@ -339,34 +337,4 @@ class ProductFormView
 		include ROOT . '/app/view/Product/card/detail_images.php';
 		return ob_get_clean();
 	}
-
-//MorphBuilder::get($product->baseUnit->first(), 'units', 'unit')
-//				->html(
-//					MyList::get(Unit::class)
-//						->pageTitle('Единицы')
-//						->column(
-//							ListColumnBuilder::get('id')
-//								->get())
-//						->column(
-//							ListColumnBuilder::get('name')
-//								->get())
-//						->column(
-//							ListColumnBuilder::get('Коэфф')
-//								->function(
-//									Unit::class, 'multiplier'
-//								)
-//								->contenteditable()
-//								->get())
-//						->column(
-//							ListColumnBuilder::get('morph')
-//								->name('Баз. ед')
-//								->html($product->baseUnit->first()->name)
-//								->get())
-//						->items($items)
-//						->edit()
-//						->addButton('ajax')
-//						->get()
-//				)
-//				->get();
-
 }
