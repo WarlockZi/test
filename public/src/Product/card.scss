@@ -66,6 +66,32 @@
 
       @include green;
 
+      .art{
+        font-size: 0.8rem;
+        margin-bottom: 5px;
+      }
+
+      .price-units {
+        width: 50%;
+
+        .price-unit-row {
+          display: flex;
+
+          .price-for-unit {
+            display: flex;
+            justify-content: end;
+            width: 70px;
+            margin-right: 5px;
+
+          }
+
+          .unit {
+            margin-left: 5px;
+
+          }
+        }
+      }
+
       .price {
         display: flex;
         margin-bottom: 20px;

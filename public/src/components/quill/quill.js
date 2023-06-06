@@ -53,7 +53,7 @@ export default function quill() {
     let button = $('#button')[0]
     button.addEventListener('click', function () {
 
-        let productId = $(`.item_wrap[data-model='product']`)[0].dataset.id
+        let productId = $(`.item-wrap[data-model='product']`)[0].dataset.id
         let txt = JSON.stringify(quill.getContents())
 
         post('/adminsc/product/updateOrCreate',

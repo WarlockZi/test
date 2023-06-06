@@ -14,72 +14,85 @@ use app\view\FormViews\UnitFormView;
 
 class UnitController extends AppController
 {
-  public $model = Unit::class;
+	public $model = Unit::class;
 
-  public function actionIndex()
-  {
-    $units = UnitFormView::index();
-    $this->set(compact('units'));
-  }
-
-  protected function check($req):array
-  {
-    $pivot = $req['pivot'];
-    if (!$pivot['unitId']) $this->exitWithError('No pivot unitId');
-
-    $product = Product::with('baseUnit')->find($req['productId']);
-    if (!$product->baseUnit) $this->exitWithError('No base unit');
-    $unit = Unit::find($pivot['unitId']);
-    $arr = array($pivot, $product, $unit);
-    $b = $product->baseUnit->toArray();
-    $u = $unit->toArray();
-    $dd = $product->baseUnit->units()->find(2);
-    return $arr;
-  }
-
-  public function actionAttachUnit()
-  {
-    list($pivot, $product, $unit) = $this->check($this->isAjax());
-    $product->baseUnit->units()->attach(
-      $unit, ['multiplier' => $pivot['multiplier']]
-    );
-  }
-
-  public function actionUpdateUnit()
-  {
-    list($pivot, $product, $unit) = $this->check($this->isAjax());
-    $product->baseUnit->units()->updateExistingPivot(
-      $unit, ['multiplier' => $pivot['multiplier']]
-    );
-  }
-
-	public function actionChangeUnit()
+	public function actionIndex()
 	{
-		list($pivot, $product, $unit) = $this->check($this->isAjax());
-		$product->baseUnit->units()->updateExistingPivot(
+		$units = UnitFormView::index();
+		$this->set(compact('units'));
+	}
+
+	protected function check($req): array
+	{
+		$pivot = $req['pivot'];
+		if (!$req['unitId']) $this->exitWithError('No pivot unitId');
+
+		$product = Product::with('baseUnit')
+      ->where('1s_id',$req['pivot']['product_id'])
+      ->first();
+		if (!$product->baseUnit) $this->exitWithError('No base unit');
+		$unit = Unit::find($req['unitId']);
+		$arr = array($pivot, $product, $unit);
+		$b = $product->baseUnit->toArray();
+		$u = $unit->toArray();
+		return $arr;
+	}
+
+	public function actionAttachUnit()
+	{
+		list($pivot, $product, $unit) = $this->check($this->ajax);
+		$product->baseUnit->units()->attach(
 			$unit, ['multiplier' => $pivot['multiplier']]
 		);
 	}
 
-  public function actionDetachUnit()
-  {
-    $req = $this->ajax;
-    $productId = $req['productId'];
-    $baseUnit = Unit::find($req['baseUnit'])
-      ->units()
-      ->detach($req['unit']);
+	public function actionUpdatePivot()
+	{
+		list($pivot, $product, $unit) = $this->check($this->ajax);
+		$product->baseUnit->units()->updateExistingPivot(
+			$unit,['multiplier' => $pivot['multiplier'],
+				'product_id' => $pivot['product_id']]
+    );
+	}
 
-    exit(json_encode(['poppup' => 'ошибка']));
+	public function actionChangeUnit()
+	{
+		$req = $this->ajax;
 
-  }
+		$prev = $req['prev'];
+		$next = $req['next'];
+		$baseUnit = $req['baseUnit'];
+		$pivot = $req['pivot'];
 
-  public function actionEdit()
-  {
-    $id = $this->getRoute()->id;
-    if ($id) {
-      $unit = UnitRepository::edit($id);
-      $unitItem = UnitFormView::editItem($unit);
-      $this->set(compact('unit', 'unitItem'));
-    }
-  }
+		Unit::find($baseUnit)
+			->units()
+			->detach($prev);
+		$res = Unit::find($baseUnit)
+			->units()
+			->attach([$next=>['multiplier' => $pivot['multiplier'],
+				'product_id' => $pivot['product_id']]]);
+		$this->exitWithPopup('Ok');
+	}
+
+	public function actionDetachUnit()
+	{
+		$req = $this->ajax;
+
+		Unit::find($req['baseUnit'])
+			->units()
+			->detach($req['unitId']);
+
+		$this->exitJson(['ok'=>'ok','popup'=>'Отсоединен']);
+
+	}
+
+	public function actionEdit()
+	{
+		$id = $this->getRoute()->id;
+		if ($id) {
+			$unit = UnitRepository::edit($id);
+			$unitItem = UnitFormView::editItem($unit);
+			$this->set(compact('unit', 'unitItem'));
+		}
+	}
 }
