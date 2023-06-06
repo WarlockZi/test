@@ -1,14 +1,14 @@
 <div class="price">
 
 	<?
-	$number = $product->getRelation('price')->price;
+	$priceNumber = $product->getRelation('price')->price;
 	$baseUnit = $product->baseUnit->name??'';
-	$price = number_format($number, 2, '.', ' ');
-	$oldPrice = number_format($number * 1.1, 2,);
+	$formatedBasePrice = number_format($priceNumber, 2, '.', ' ');
+	$formatedOldPrice = number_format($priceNumber * 1.1, 2,);
 	?>
 
-	<div class="new-price"><?= $price; ?> ₽ / <?= $baseUnit; ?> </div>
-	<div class="old-price"><?= $oldPrice; ?> ₽</div>
+	<div class="new-price"><?= $formatedBasePrice; ?> ₽ / <?= $baseUnit; ?> </div>
+	<div class="old-price"><?= $formatedOldPrice; ?> ₽</div>
 
 </div>
 <div class="price-units ">
