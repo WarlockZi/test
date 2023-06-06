@@ -32,10 +32,7 @@ class UnitController extends AppController
       ->first();
 		if (!$product->baseUnit) $this->exitWithError('No base unit');
 		$unit = Unit::find($req['unitId']);
-		$arr = array($pivot, $product, $unit);
-		$p = $product->toArray();
-		$b = $product->baseUnit->toArray();
-		$u = $unit->toArray();
+	$arr = array($pivot, $product, $unit);
 		return $arr;
 	}
 
