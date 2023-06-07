@@ -120,11 +120,6 @@ class ProductRepository extends Controller
 		}
 	}
 
-	public static function getCard($slug)
-	{
-		$product = self::edit('slug', $slug);
-		return $product;
-	}
 
 	public static function getFilters()
 	{
@@ -133,8 +128,13 @@ class ProductRepository extends Controller
 			'instore'=>'Показать с остатком = 0',
 			'price'=>'Показать c ценой = 0',
 		];
-
 		return \app\core\FS::getFileContent($self->viewPath.'filters.php',compact('filters'));
 	}
+
+//	public static function getCard($slug)
+//	{
+//		$product = self::edit('slug', $slug);
+//		return $product;
+//	}
 
 }
