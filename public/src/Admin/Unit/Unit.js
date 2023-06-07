@@ -19,7 +19,7 @@ export default class Unit {
     this.$rows.onchange = this.update.bind(this);
     this.$addUnit.onclick = this.createRow.bind(this);
     this.$rows.onclick = this.clickRow.bind(this);
-    this.$rows.addEventListener('unit.changed', this.unitChanged.bind(this))
+    this.$rows.addEventListener('customSelect.changed', this.unitChanged.bind(this))
   }
 
   async unitChanged(obj) {

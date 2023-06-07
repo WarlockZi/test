@@ -79,8 +79,8 @@ export default class WDSSelect {
     );
     newCustomElement.classList.add("selected");
     newCustomElement.scrollIntoView({block: "nearest"});
-
-    this.sel.dispatchEvent(new CustomEvent('unit.changed', {
+debugger;
+    this.sel.dispatchEvent(new CustomEvent('customSelect.changed', {
       bubbles: true,
       detail: {next, prev}
     }))
