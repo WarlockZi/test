@@ -72,15 +72,13 @@ const config = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        enforce: "pre",
-
+        // enforce: "pre",
         use: [
-          'source-map-loader',
+          // 'source-map-loader',
           {
             loader: 'babel-loader',
           },
         ]
-
       },
 
       {
