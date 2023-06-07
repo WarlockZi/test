@@ -19,6 +19,8 @@ class AdminscController extends AppController
 		if (!User::isEmployee(Auth::getUser())){
 			header('Location:/auth/profile');
 		}
+
+
 	}
 	public function actionClearCache()
 	{

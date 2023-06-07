@@ -13,8 +13,6 @@ class Property extends Model
 
 	protected $fillable = [
 		'name',
-		'value',
-		'description',
 	];
 
 
