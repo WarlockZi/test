@@ -29,6 +29,8 @@ class AdminView extends View
 		} else {
 			$this->setAssets();
 		}
+
+
 	}
 
 	protected function getViewFile(): string
