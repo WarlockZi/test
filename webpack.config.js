@@ -104,7 +104,8 @@ const config = {
 module.exports = (env, argv) => {
   console.log('mode:', argv.mode);
   if (argv.mode === 'production') {
-    config.devtool = "nosources-source-map"
+    // config.devtool = "nosources-source-map"
+    config.devtool = "source-map"
   } else {
     config.devtool = "source-map"
   }
