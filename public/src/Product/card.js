@@ -8,8 +8,6 @@ window.onload = function () {
 
   new toCart();
 
-
-
   let zoom = $('.zoom').first();
   if (zoom) {
 
