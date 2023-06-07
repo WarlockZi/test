@@ -34,7 +34,6 @@ const config = {
   },
 
 
-
   devServer: {
     allowedHosts: "all",
     host: "localhost",
@@ -73,9 +72,15 @@ const config = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-        }
+        enforce: "pre",
+
+        use: [
+          'source-map-loader',
+          {
+            loader: 'babel-loader',
+          },
+        ]
+
       },
 
       {
@@ -100,7 +105,7 @@ const config = {
 
 module.exports = (env, argv) => {
   console.log('mode:', argv.mode);
-  if (argv.mode ==='production') {
+  if (argv.mode === 'production') {
     config.devtool = "nosources-source-map"
   } else {
     config.devtool = "source-map"

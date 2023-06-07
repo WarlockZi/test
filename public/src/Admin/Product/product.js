@@ -1,5 +1,6 @@
 import './product.scss'
 import './units'
+// import './properies'
 import {$, popup, post} from '../../common'
 import Morph from "../../components/morph/morph";
 
