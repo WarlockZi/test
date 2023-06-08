@@ -12,13 +12,13 @@ use app\view\Image\ImageView;
 
 class ProductRepository extends Controller
 {
-	public static $ProductRepository;
-	protected $viewPath;
+//	public static $ProductRepository;
+//	protected $viewPath;
 
-	public function __construct()
-	{
-		$this->viewPath = \app\core\FS::platformSlashes(ROOT.'/app/view/Product/');
-	}
+//	public function __construct()
+//	{
+//		$this->viewPath = \app\core\FS::platformSlashes(ROOT.'/app/view/Product/');
+//	}
 
 	public static function edit(int $id)
 	{
@@ -26,10 +26,10 @@ class ProductRepository extends Controller
 		return Product::query()
 			->where('1s_id',$id)
 			->with('category.properties.vals')
+			->with('values')
 			->with('category.parentRecursive')
 			->with('category.parents')
 			->with('mainImages')
-			->with('values')
 			->with('manufacturer.country')
 			->with('detailImages')
 			->with('smallpackImages')
@@ -39,8 +39,7 @@ class ProductRepository extends Controller
 				$query->with(['units'=>function($query)use($id){
 						$query->wherePivot('product_id',$id)->get();
 					}]
-					)
-				;
+					);
 			}])
 
 			->first();
