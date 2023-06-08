@@ -1,7 +1,7 @@
 <div class="price">
 
 	<?
-	$priceNumber = $product->getRelation('price')->price;
+	$priceNumber = $product->getRelation('price')->price??0;
 	$baseUnit = $product->baseUnit->name??'';
 	$formatedBasePrice = number_format($priceNumber, 2, '.', ' ');
 	$formatedOldPrice = number_format($priceNumber * 1.1, 2,);

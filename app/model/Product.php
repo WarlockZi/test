@@ -92,7 +92,7 @@ class Product extends Model
 //		return $this->morphToMany(
 //			Image::class,
 //			'imageable',
-//			)->where('slug', '=', 'main');
+//			)->where('slug','main');
   }
 
   public function smallpackImages()
@@ -100,7 +100,7 @@ class Product extends Model
     return $this->morphToMany(
       Image::class,
       'imageable',
-    )->where('slug', '=', 'smallpack');
+    )->where('slug', 'smallpack');
   }
 
   public function bigPackImages()
@@ -108,7 +108,7 @@ class Product extends Model
     return $this->morphToMany(
       Image::class,
       'imageable',
-    )->where('slug', '=', 'bigpack');
+    )->where('slug', 'bigpack');
   }
 
   public function categoryCategoryRecPropsVals()
