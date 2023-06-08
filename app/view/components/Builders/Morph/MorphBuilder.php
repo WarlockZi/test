@@ -19,6 +19,7 @@ class MorphBuilder
 	protected $template = ROOT . '/app/view/components/Builders/Morph/many.php';
 
 	public $relation;
+	public $model;
 	public $oneOrMany = "data-morph-oneormany='one'";
 	public $slug;
 
@@ -43,9 +44,10 @@ class MorphBuilder
 		return $self;
 	}
 
-	public function template(string $template)
+
+	public function model(string $modelName)
 	{
-		$this->template = $template;
+		$this->model = "data-morph-model='{$modelName}'";
 		return $this;
 	}
 
@@ -76,6 +78,11 @@ class MorphBuilder
 		return $this;
 	}
 
+	public function template(string $template)
+	{
+		$this->template = $template;
+		return $this;
+	}
 
 	public function get():string
 	{

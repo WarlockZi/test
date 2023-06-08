@@ -9,26 +9,10 @@ export default function product() {
   let product = $(`.item-wrap[data-model='product']`)[0];
   if (!product) return false;
 
-  // let morphs = $('[data-morph-model]')
   let dnds = $('[data-dnd-path]');
-
-  // debugger
   dnds.forEach((dnd) => {
     if (dnd.parentNode.dataset.morphFunction) {
       let m = new Morph(dnd.parentNode, product)
-    } else if (dnd.parentNode.dataset.belongsTo) {
-    }
-  });
-
-  // let morphs =
-
-  let customSelects = $('[custom-select]');
-
-  customSelects.forEach((sel)=>{
-    if (sel.dataset.morphModel){
-      let m = 1
-    } else{
-      let m = 1
     }
   });
 
@@ -53,18 +37,5 @@ export default function product() {
       );
     })
   }
-
-  function validateType(file) {
-    if ([
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/webp',
-      'image/gif'
-    ].includes(file.type)) return true;
-    popup.show(`Тип файлa ${file['name']} должен быть jpg, jpeg, png, webp, gif`);
-    return false
-  }
-
 
 }

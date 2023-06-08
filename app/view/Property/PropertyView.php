@@ -53,9 +53,9 @@ class PropertyView
 	public static function edit($id)
 	{
 		$view = new self();
-		$item = $view->modelName::with('categories', 'products','vals')->find($id);
+		$item = $view->modelName::with('categories', 'products', 'vals')->find($id);
 		return ItemBuilder::build($item, 'property')
-			->pageTitle('Свойство : '.$item->name)
+			->pageTitle('Свойство : ' . $item->name)
 			->field(
 				ItemFieldBuilder::build('id', $item)
 					->name('ID')
@@ -68,7 +68,7 @@ class PropertyView
 					->get()
 			)
 			->tab(
-        ItemTabBuilder::build('Значения')
+				ItemTabBuilder::build('Значения')
 					->html(
 						MyList::build(Val::class)
 							->items($item->vals)
@@ -113,9 +113,9 @@ class PropertyView
 			->selected($selected)
 			->get();
 
-		$select = MorphBuilder::build($product, 'values', 'prop-'.$property->id)
-			->html(SelectBuilder::build($options)
-				->get())
+		$select = MorphBuilder::build($product, 'values', 'prop-' . $property->id)
+			->html(SelectBuilder::build($options)->get())
+			->model('val')
 			->get();
 
 		$propName = "<div class='name'>{$property->name}</div>";
@@ -127,15 +127,15 @@ class PropertyView
 		$categories = $item->categories->toArray();
 		$products = $item->products->toArray();
 		$categoriesHtml = '';
-		foreach ($categories as $category){
+		foreach ($categories as $category) {
 			$categoriesHtml .= "<a href='/adminsc/category/edit/{$category['id']}'>Категория {$category['name']}</a>";
 		}
 		$productsHtml = '';
-		foreach ($products as $product){
+		foreach ($products as $product) {
 			$productsHtml .= "<a href='/adminsc/product/edit/{$product['id']}'>Товар {$product['name']}</a>";
 		}
 
-		return $categoriesHtml. $productsHtml;
+		return $categoriesHtml . $productsHtml;
 	}
 
 }
