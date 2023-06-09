@@ -5,7 +5,7 @@ namespace app\Repository;
 
 
 use app\controller\Controller;
-use app\controller\FS;
+use app\core\FS;
 use app\model\Product;
 use app\model\Val;
 use app\view\Image\ImageView;
@@ -127,7 +127,7 @@ class ProductRepository extends Controller
 			'instore'=>'Показать с остатком = 0',
 			'price'=>'Показать c ценой = 0',
 		];
-		return \app\core\FS::getFileContent($self->viewPath.'filters.php',compact('filters'));
+		return FS::getFileContent($self->viewPath.'filters.php',compact('filters'));
 	}
 
 //	public static function getCard($slug)
