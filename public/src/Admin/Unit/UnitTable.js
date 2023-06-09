@@ -1,8 +1,9 @@
 import {$, createElement, post} from '../../common'
 import WDSSelect from "../../components/select/WDSSelect";
-import cartLogin from "../../components/Modal/modals/CartLogin";
+import SelectNew from "../../components/select/SelectNew";
 
-export default class Unit {
+
+export default class UnitTable {
   constructor(tableClass) {
     this.$table = $(tableClass).first();
     if (!this.$table) return;
@@ -14,14 +15,22 @@ export default class Unit {
 
     this.$addUnit = $('.add-unit').first();
     this.$rows = $('.rows').first();
-    this.$selector = $(this.$rows).find('[custom-select]');
+    this.$selector = $(this.$rows).find('[select-new]');
 
     this.$addUnit.onclick = this.createRow.bind(this);
     this.$rows.onchange = this.update.bind(this);
     this.$rows.onclick = this.clickRow.bind(this);
     this.$rows.addEventListener('customSelect.changed', this.unitChanged.bind(this));
 
-    setTimeout(this.deleteSelected.bind(this), 300)
+    this.initSelects();
+    setTimeout(this.deleteSelected.bind(this), 800)
+  }
+
+  initSelects(){
+    debugger;
+    this.$rows.querySelectorAll('[select-new]').forEach((s)=>{
+      new SelectNew(s)
+    })
   }
 
   deleteSelected() {

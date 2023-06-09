@@ -49,7 +49,7 @@ class ProductFormView
 		$p = $product->toArray();
 		if (!$baseUnit) return 'Базовая единица не выбрана';
 		$units = $baseUnit->units;
-		$selector = UnitFormView::selector($baseUnit->id);
+		$selector = UnitFormView::selectorNew($baseUnit->id);
 		return FS::getFileContent(ROOT.'/app/view/Product/Admin/units.php',
 			compact('units','baseUnit','selector'));
 	}

@@ -21,14 +21,14 @@ class ListSelectBuilder extends Builder
 	private $model;
 	private $modelId;
 
-	private $morphFunction;
-	private $morphId;
-	private $morphSlug;
-	private $morphOneOrMany;
-	private $morphDetach;
+//	private $morphFunction;
+//	private $morphId;
+//	private $morphSlug;
+//	private $morphOneOrMany;
+//	private $morphDetach;
 
-	private $belongsToModel;
-	private $belongsToId;
+//	private $belongsToModel;
+//	private $belongsToId;
 
 	private $selected = false;
 	private $excluded = false;
