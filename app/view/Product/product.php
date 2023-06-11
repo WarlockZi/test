@@ -27,6 +27,12 @@ if ($product): ?>
 
 		<!--		--><? //include __DIR__.'/card/packs.php'?>
 
+		 <? if (Auth::isAdmin()): ?>
+		  <div class="product-card__edit">
+			  <a href="/adminsc/product/edit/<?= $product->id ?>">Редакт</a>
+		  </div>
+		 <? endif; ?>
+
 		<div class="info-wrap">
 			<div class="info-tag">Характеристики</div>
 			<div class="properties">
@@ -47,11 +53,6 @@ if ($product): ?>
 		 <? //include __DIR__.'/card/olsoLike.php'?>
 		 <? //include __DIR__.'/card/rating.php'?>
 
-		 <? if (Auth::isAdmin()): ?>
-		  <div class="edit">
-			  <a href="/adminsc/product/edit/<?= $product->id ?>">Редакт</a>
-		  </div>
-		 <? endif; ?>
 
 		 <?= Icon::star() ?>
 		<!--		 --><? // include __DIR__ . '/card/reviews.php' ?>
