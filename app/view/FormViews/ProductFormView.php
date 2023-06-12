@@ -207,7 +207,6 @@ class ProductFormView
 		return $str;
 	}
 
-
 	protected static function getProperties(Product $product, string $str = ''): string
 	{
 		$currentCategory = $product->category;

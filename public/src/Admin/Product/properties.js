@@ -5,16 +5,35 @@ let item = $('.item-wrap').first();
 item.addEventListener('customSelect.changed', selectChanged);
 
 async function selectChanged(obj) {
-  debugger;
-  let propertable_id = $('.item-wrap')[0].dataset.id;
-  let property_id = mutation.target.dataset.modelId;
-  let val_id = mutation.target.dataset.value;
-  post('/adminsc/product/setProperty',
-    {propertable_id, property_id, val_id});
 
-  let res = await post('/adminsc/product/changeval', obj)
+  data = valDto();
+  data.morphed.old_id = obj.detail.prev.value;
+  data.morphed.new_id = obj.detail.next.value;
+
+  let url = (!old_id) ? '/adminsc/product/attachVal' :
+    (!new_id) ? '/adminsc/product/detachVal' :
+      '/adminsc/product/changeVal';
+
+  let res = await post(url, data)
 
 }
+
+function valDto() {
+  return {
+    morph: {
+      model: 'product',
+      id: item.dataset.id,
+    },
+    morphed: {
+      model: 'val',
+      old_id: 0,
+      new_id: 0
+    }
+
+  }
+
+}
+
 // [].map.call(property, function (prop) {
 //   let observer = new MutationObserver(function (mutations) {
 //     mutations.forEach(function (mutation) {

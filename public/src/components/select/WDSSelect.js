@@ -12,10 +12,11 @@ export default class WDSSelect {
     this.modelId = el.closest('.item-wrap')?.dataset.id;
 
     this.options = getFormattedOptions(el.querySelectorAll("option"));
-
     this.sel = (new createElement()).tag("div").attr("custom-select", '').attr('class', el?.className).get();
 
-    this.morphBelongField(this.sel, el);
+    if (el.dataset.field) {
+      this.sel.dataset.field = el.dataset.field
+    }
 
     el.after(this.sel);
     if (this.field) {
@@ -34,19 +35,15 @@ export default class WDSSelect {
     this.label.append(this.arrow);
 
     this.ul = (new createElement()).tag("ul").attr('class', "options").get();
-
     this.options.forEach(option => {
       setOption(option, this)
     });
-
     this.sel.append(this.ul);
 
     this.label.onclick = () => this.ul.classList.toggle("show");
     this.sel.onblur = () => this.ul.classList.remove("show");
-
     this.sel.onkeydown = this.keyDownhandler;
 
-    // setup(this);
     el.remove()
   }
 
@@ -104,42 +101,14 @@ export default class WDSSelect {
 
     this.label.closest('[custom-select]').dataset['value'] = next.value;
     prev.element.classList.remove('selected');
-    // this.ul.querySelector(`.selected`).classList.remove("selected");
-    debugger;
     next.element.classList.add('selected');
     next.element.scrollIntoView({block: "nearest"});
-    // const newCustomElement = this.ul.querySelector(
-    //   `[data-value="${next.value}"]`);
-    // if (newCustomElement) {
-    //   newCustomElement.classList.add("selected");
-    //   newCustomElement.scrollIntoView({block: "nearest"});
-    // }
 
-    dispatchEvent(new CustomEvent('customSelect.changed', {
+    this.sel.dispatchEvent(new CustomEvent('customSelect.changed', {
       bubbles: true,
       detail: {next, prev, target: this.sel}
     }))
   }
-
-
-  morphBelongField(sel, el) {
-    // if (el.dataset.morphFunction) {
-    //   sel.dataset.morphFunction = el.dataset.morphFunction;
-    //   sel.dataset.morphSlug = el.dataset.morphSlug ?? '';
-    //   sel.dataset.morphDetach = el.dataset.morphDetach ?? '';
-    //   sel.dataset.morphOneormany = el.dataset.morphOneormany ?? ''
-    // }
-
-    // if (el.dataset.belongstoModel) {
-    //   sel.dataset.belongstoModel = el.dataset.belongstoModel;
-    //   sel.dataset.belongstoId = el.dataset.belongstoId
-    // }
-    if (el.dataset.field) {
-      sel.dataset.field = el.dataset.field
-    }
-  }
-
-
 }
 
 
@@ -150,43 +119,43 @@ function setOption(option, select) {
   li.onclick = ({target}) => {
     select.selectValue(option.value);
     select.ul.classList.remove("show");
-    sendToServer(target)
+    // sendToServer(target)
   };
   select.ul.append(li)
 }
+//
+// async function sendToServer(target) {
+//   let sel = target.closest('[custom-select]');
+//   if (sel.parentNode.dataset.morphRelation) {
+//     let data = getMorph(sel);
+//     let url = `/adminsc/${data.morph.model}/attach`;
+//     let res = await post(url, data)
+//   }
+//   if (sel.dataset.field) {
+//     let id = target.closest('.item-wrap').dataset.id;
+//     let model = target.closest('[data-model]').dataset.model;
+//     let data = {[sel.dataset.field]: sel.dataset.value, id};
+//     let url = `/adminsc/${model}/updateOrCreate`;
+//     let res = await post(url, data)
+//   }
+// }
 
-async function sendToServer(target) {
-  let sel = target.closest('[custom-select]');
-  if (sel.parentNode.dataset.morphRelation) {
-    let data = getMorph(sel);
-    let url = `/adminsc/${data.morph.model}/attach`;
-    let res = await post(url, data)
-  }
-  if (sel.dataset.field) {
-    let id = target.closest('.item-wrap').dataset.id;
-    let model = target.closest('[data-model]').dataset.model;
-    let data = {[sel.dataset.field]: sel.dataset.value, id};
-    let url = `/adminsc/${model}/updateOrCreate`;
-    let res = await post(url, data)
-  }
-}
-
-function getMorph(sel) {
-  let item = sel.closest('.item-wrap');
-  let morph = sel.parentNode;
-  return {
-    morph: {
-      id: item.dataset.id,
-      model: item.dataset.model,
-    },
-    morphed: {
-      id: sel.dataset.value,
-      relation: morph.dataset.morphRelation,
-      slug: morph.dataset.morphSlug,
-      oneOrMany: morph.dataset.morphOneormany,
-    }
-  }
-}
+// function getMorph(sel) {
+//   let item = sel.closest('.item-wrap');
+//   let morph = sel.parentNode;
+//   return {
+//     morph: {
+//       id: item.dataset.id,
+//       model: item.dataset.model,
+//     },
+//     morphed: {
+//       id: sel.dataset.value,
+//       relation: morph.dataset.morphRelation,
+//       slug: morph.dataset.morphSlug,
+//       oneOrMany: morph.dataset.morphOneormany,
+//     }
+//   }
+// }
 
 function getFormattedOptions(options) {
   return [...options].map(option => {
