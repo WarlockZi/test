@@ -17,4 +17,13 @@ export default function product() {
     }
   });
 
+  // let selects = [...$('[custom-select]',...$('[select-new]'))]
+
+
+  // selects.forEach((s)=>{
+  //   let field
+  // })
+
+
+
 }
