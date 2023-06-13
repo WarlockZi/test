@@ -1,7 +1,5 @@
-// import './WDSSelect.scss'
 import './SelectNew.scss'
 
-// import '../del/customSelect.scss'
 import {createElement, post} from "../../common";
 
 export default class Select {
@@ -91,15 +89,14 @@ export default class Select {
 
     this.space.innerText = next.label;
 
-    this.label.closest('[custom-select]').dataset['value'] = next.value;
+    this.sel.dataset['value'] = next.value;
     prev.element.classList.remove('selected');
 
     debugger;
     next.element.classList.add('selected');
     next.element.scrollIntoView({block: "nearest"});
 
-
-    dispatchEvent(new CustomEvent('customSelect.changed', {
+    this.sel.dispatchEvent(new CustomEvent('customSelect.changed', {
       bubbles: true,
       detail: {next, prev, target: this.sel}
     }))
@@ -115,7 +112,7 @@ function setOption(option, select) {
   li.onclick = ({target}) => {
     select.selectValue(option.value);
     select.ul.classList.remove("show");
-    sendToServer(target)
+    // sendToServer(target)
   };
   select.ul.append(li)
 }
@@ -132,14 +129,14 @@ function getFormattedOptions(options) {
 }
 
 
-async function sendToServer(target) {
-  let sel = target.closest('[custom-select]');
-
-  if (sel.dataset.field) {
-    let id = target.closest('.item-wrap').dataset.id;
-    let model = target.closest('[data-model]').dataset.model;
-    let data = {[sel.dataset.field]: sel.dataset.value, id};
-    let url = `/adminsc/${model}/updateOrCreate`;
-    let res = await post(url, data)
-  }
-}
+// async function sendToServer(target) {
+//   let sel = target.closest('[custom-select]');
+//
+//   if (sel.dataset.field) {
+//     let id = target.closest('.item-wrap').dataset.id;
+//     let model = target.closest('[data-model]').dataset.model;
+//     let data = {[sel.dataset.field]: sel.dataset.value, id};
+//     let url = `/adminsc/${model}/updateOrCreate`;
+//     let res = await post(url, data)
+//   }
+// }

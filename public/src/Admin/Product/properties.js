@@ -1,21 +1,18 @@
 import {$, post} from '../../common'
-import Property from '../Property/Property'
 
 let item = $('.item-wrap').first();
 item.addEventListener('customSelect.changed', selectChanged);
 
 async function selectChanged(obj) {
+  let action = obj.target;
 
-  data = valDto();
+  let data = valDto();
   data.morphed.old_id = obj.detail.prev.value;
   data.morphed.new_id = obj.detail.next.value;
 
-  let url = (!old_id) ? '/adminsc/product/attachVal' :
-    (!new_id) ? '/adminsc/product/detachVal' :
-      '/adminsc/product/changeVal';
+  let url = '/adminsc/product/changeVal';
 
   let res = await post(url, data)
-
 }
 
 function valDto() {
@@ -29,9 +26,7 @@ function valDto() {
       old_id: 0,
       new_id: 0
     }
-
   }
-
 }
 
 // [].map.call(property, function (prop) {

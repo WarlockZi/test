@@ -71,6 +71,7 @@ export default class UnitTable {
   }
 
   async unitChanged(obj) {
+    debugger;
     let data = this.dto(obj.target.closest('.row'));
     data.next = obj.detail.next.value;
     data.prev = obj.detail.prev.value;
@@ -150,13 +151,10 @@ export default class UnitTable {
   }
 
   getUnitId(row) {
-    let classSelected = row.querySelector('[custom-select] .selected');
-    if (classSelected) {
+    let classSelected = row.querySelector('[select-new] .selected');
+
       return classSelected.dataset.value ?? 0
-    } else {
-      let select = row.querySelector('select');
-      return select.options[select.options.selectedIndex].value ?? 0
-    }
+
   }
 
 }
