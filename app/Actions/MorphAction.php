@@ -7,27 +7,22 @@ namespace app\Actions;
 use app\model\Product;
 use app\model\Val;
 
-class ProductAction
+class MorphAction
 {
-
-	public static function attach(array $req){
+	public static function attach(array $req)
+	{
 		$product = Product::find($req['morph']['id']);
 		$val = Val::with('property')->find($req['morphed']['id']);
 		$val->product()->attach($product);
 		exit('ok');
 	}
 
-	public static function changeVal(array $req){
-		if (!$req['old_id']===0){
-			MorphAction::attach($req);
-		}else if (!$req['new_id'])
-			MorphAction::detach($req);
-		else{
-			MorphAction::attach($req);
-		}
+	public static function detach(array $req)
+	{
 		$product = Product::find($req['morph']['id']);
 		$val = Val::with('property')->find($req['morphed']['id']);
 		$val->product()->attach($product);
 		exit('ok');
 	}
+
 }

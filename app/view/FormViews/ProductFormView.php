@@ -133,6 +133,12 @@ class ProductFormView
 					)
 			)
 			->tab(
+				ItemTabBuilder::build('Единицы')
+					->html(
+						self::units($product)
+					)
+			)
+			->tab(
 				ItemTabBuilder::build('Описание')
 					->html(
 						self::getDescription($product)
@@ -156,12 +162,7 @@ class ProductFormView
 						self::getImage($product, 'detailImages', 'detail', true)
 					)
 			)
-			->tab(
-				ItemTabBuilder::build('Единицы')
-					->html(
-						self::units($product)
-					)
-			)
+
 			->tab(
 				ItemTabBuilder::build('Внутритарная упаковка')
 					->html(

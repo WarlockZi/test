@@ -34,10 +34,10 @@ class ProductController extends AppController
 		$list = ProductFormView::list($items);
 		$this->set(compact('list'));
 	}
-	public function actionAttachval()
-	{
-		ProductAction::attach($this->ajax);
-	}
+//	public function actionAttachval()
+//	{
+//		ProductAction::attach($this->ajax);
+//	}
 	public function actionChangeval()
 	{
 		ProductAction::changeVal($this->ajax);

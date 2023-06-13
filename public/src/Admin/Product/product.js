@@ -16,14 +16,4 @@ export default function product() {
       let m = new Morph(dnd.parentNode, product)
     }
   });
-
-  // let selects = [...$('[custom-select]',...$('[select-new]'))]
-
-
-  // selects.forEach((s)=>{
-  //   let field
-  // })
-
-
-
 }
