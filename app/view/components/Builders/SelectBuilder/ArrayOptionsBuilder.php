@@ -32,7 +32,7 @@ class ArrayOptionsBuilder
 		foreach ($items as $item) {
 			$id = $item['id'];
 			if ($id === $this->excluded) continue;
-			$selected = $id == $this->selected ? 'selected' : '';
+			$selected = $id == $this->selected ? "selected" : '';
 			$string .= "<option value = {$id} {$selected}>{$item['name']}</option>";
 		}
 		return $string;

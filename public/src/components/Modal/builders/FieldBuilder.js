@@ -57,7 +57,7 @@ export default class FieldBuilder {
     return this
   }
 
-  build() {
+  get() {
     return new InputContainer(this)
   }
 

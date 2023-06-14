@@ -5,20 +5,20 @@ namespace app\Repository;
 
 
 use app\controller\Controller;
-use app\controller\FS;
+use app\core\FS;
 use app\model\Product;
 use app\model\Val;
 use app\view\Image\ImageView;
 
 class ProductRepository extends Controller
 {
-	public static $ProductRepository;
-	protected $viewPath;
+//	public static $ProductRepository;
+//	protected $viewPath;
 
-	public function __construct()
-	{
-		$this->viewPath = \app\core\FS::platformSlashes(ROOT.'/app/view/Product/');
-	}
+//	public function __construct()
+//	{
+//		$this->viewPath = \app\core\FS::platformSlashes(ROOT.'/app/view/Product/');
+//	}
 
 	public static function edit(int $id)
 	{
@@ -26,10 +26,10 @@ class ProductRepository extends Controller
 		return Product::query()
 			->where('1s_id',$id)
 			->with('category.properties.vals')
+			->with('values')
 			->with('category.parentRecursive')
 			->with('category.parents')
 			->with('mainImages')
-			->with('values')
 			->with('manufacturer.country')
 			->with('detailImages')
 			->with('smallpackImages')
@@ -39,8 +39,7 @@ class ProductRepository extends Controller
 				$query->with(['units'=>function($query)use($id){
 						$query->wherePivot('product_id',$id)->get();
 					}]
-					)
-				;
+					);
 			}])
 
 			->first();
@@ -128,7 +127,7 @@ class ProductRepository extends Controller
 			'instore'=>'Показать с остатком = 0',
 			'price'=>'Показать c ценой = 0',
 		];
-		return \app\core\FS::getFileContent($self->viewPath.'filters.php',compact('filters'));
+		return FS::getFileContent($self->viewPath.'filters.php',compact('filters'));
 	}
 
 //	public static function getCard($slug)
