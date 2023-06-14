@@ -23,4 +23,8 @@ class Val extends Model
 		return $this->belongsTo(Property::class);
 	}
 
+	public function product(){
+		return $this->morphedByMany(Product::class, 'valuable');
+	}
+
 }

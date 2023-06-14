@@ -13,6 +13,7 @@ use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
+use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 
 class UnitFormView
 {
@@ -41,6 +42,18 @@ class UnitFormView
 		return $selector;
 	}
 
+	public static function selectorNew($excluded = 0, $selected = 0): string
+	{
+		$selector = SelectNewBuilder::build(
+			ArrayOptionsBuilder::build(Unit::all())
+				->initialOption()
+				->selected($selected)
+				->excluded($excluded)
+				->get()
+		)->get();
+
+		return $selector;
+	}
 	protected static function morphs($items)
 	{
 		$list =

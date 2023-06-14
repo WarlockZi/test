@@ -34,6 +34,11 @@ class Product extends Model
 
   protected $appends = ['mainImagePath'];
 
+	public function values()
+	{
+		return $this->morphToMany(Val::class, 'valuable');
+	}
+
   public function getMainImagePathAttribute()
   {
     $art = trim($this->art);
@@ -92,7 +97,7 @@ class Product extends Model
 //		return $this->morphToMany(
 //			Image::class,
 //			'imageable',
-//			)->where('slug', '=', 'main');
+//			)->where('slug','main');
   }
 
   public function smallpackImages()
@@ -100,7 +105,7 @@ class Product extends Model
     return $this->morphToMany(
       Image::class,
       'imageable',
-    )->where('slug', '=', 'smallpack');
+    )->where('slug', 'smallpack');
   }
 
   public function bigPackImages()
@@ -108,7 +113,7 @@ class Product extends Model
     return $this->morphToMany(
       Image::class,
       'imageable',
-    )->where('slug', '=', 'bigpack');
+    )->where('slug', 'bigpack');
   }
 
   public function categoryCategoryRecPropsVals()
@@ -134,11 +139,6 @@ class Product extends Model
   public function parentCategoryRecursive()
   {
     return $this->category()->with('parentRecursive');
-  }
-
-  public function values()
-  {
-    return $this->morphToMany(Val::class, 'valuable');
   }
 
   public function manufacturer()

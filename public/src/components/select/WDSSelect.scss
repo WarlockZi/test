@@ -27,20 +27,14 @@
 }
 
 
-[custom-select] {
+[custom-select],[select-new] {
   display: flex;
-  flex: 1 0 auto;
+  flex: 1 0;
   align-items: center;
   position: relative;
   background-color: white;
-  //border: 1px solid #ccc;
-  //padding: 5px;
-  min-width: 100%;
+  min-width: 10px;
   max-width: 200px;
-
-  //&:hover {
-  //  border: $border-field-hover;
-  //}
 
   &:focus-visible {
     outline: 1px solid $color-gray5;
@@ -67,7 +61,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-width: 150px;
+    min-width: 15px;
     cursor: pointer;
     user-select: none;
     min-height: 0.85rem;

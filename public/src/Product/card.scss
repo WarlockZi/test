@@ -6,6 +6,23 @@
   display: flex;
   flex-direction: column;
 
+  .product-card__edit {
+    margin-bottom: 10px;
+
+    a {
+      padding: 5px 10px;
+      border: 1px solid tomato;
+      border-radius: 10px;
+      color: tomato;
+
+      &:hover {
+        color: white;
+        background-color: tomato;
+        border: 1px solid white;
+      }
+    }
+  }
+
   h1 {
     font-family: sans-serif;
   }
@@ -66,7 +83,7 @@
 
       @include green;
 
-      .art{
+      .art {
         font-size: 0.8rem;
         margin-bottom: 5px;
       }
@@ -103,6 +120,7 @@
           margin-right: 10px;
           font-weight: bold;
         }
+
         .old-price {
           width: 40%;
           font-size: 1rem;

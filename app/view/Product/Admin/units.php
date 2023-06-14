@@ -8,6 +8,7 @@ use app\core\Icon;
 
 	<div class="column">
 		<div class="title">Единицы</div>
+
 		<div class="head">
 			<div class="name">Единица</div>
 			<div class="multiplier">Коэфф</div>
@@ -21,7 +22,7 @@ use app\core\Icon;
 			</div>
 				<? foreach ($baseUnit->units as $unit): ?>
 			  <div class="row">
-				  <?= UnitFormView::selector($baseUnit->id, $unit->id)?>
+				  <?= UnitFormView::selectorNew($baseUnit->id, $unit->id)?>
 				  <input type="number" value="<?= $unit->pivot->multiplier ?>">
 				  <div class="base-unit"><?= $baseUnit->name ?></div>
 				  <div class="del">X</div>

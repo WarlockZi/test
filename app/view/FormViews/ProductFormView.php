@@ -49,7 +49,7 @@ class ProductFormView
 		$p = $product->toArray();
 		if (!$baseUnit) return 'Базовая единица не выбрана';
 		$units = $baseUnit->units;
-		$selector = UnitFormView::selector($baseUnit->id);
+		$selector = UnitFormView::selectorNew($baseUnit->id);
 		return FS::getFileContent(ROOT.'/app/view/Product/Admin/units.php',
 			compact('units','baseUnit','selector'));
 	}
@@ -133,6 +133,12 @@ class ProductFormView
 					)
 			)
 			->tab(
+				ItemTabBuilder::build('Единицы')
+					->html(
+						self::units($product)
+					)
+			)
+			->tab(
 				ItemTabBuilder::build('Описание')
 					->html(
 						self::getDescription($product)
@@ -156,12 +162,7 @@ class ProductFormView
 						self::getImage($product, 'detailImages', 'detail', true)
 					)
 			)
-			->tab(
-				ItemTabBuilder::build('Единицы')
-					->html(
-						self::units($product)
-					)
-			)
+
 			->tab(
 				ItemTabBuilder::build('Внутритарная упаковка')
 					->html(
@@ -207,7 +208,6 @@ class ProductFormView
 		return $str;
 	}
 
-
 	protected static function getProperties(Product $product, string $str = ''): string
 	{
 		$currentCategory = $product->category;
@@ -216,7 +216,7 @@ class ProductFormView
 			$str .= self::getSelect($currentCategory, $product);
 			$currentCategory = $currentCategory->parentRecursive;
 		}
-		return $str;
+		return "<div class='properties'>$str</div>"	;
 	}
 
 	protected static function getSeo($product): string
