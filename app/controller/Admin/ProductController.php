@@ -14,6 +14,11 @@ class ProductController extends AppController
 {
 	public $model = Product::class;
 
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
 	public function actionEdit()
 	{
 		$id = $this->route->id;
@@ -34,12 +39,14 @@ class ProductController extends AppController
 		$list = ProductFormView::list($items);
 		$this->set(compact('list'));
 	}
-//	public function actionAttachval()
-//	{
-//		ProductAction::attach($this->ajax);
-//	}
+
 	public function actionChangeval()
 	{
 		ProductAction::changeVal($this->ajax);
+	}
+
+	public function actionChangeunit()
+	{
+		ProductAction::changeUnit($this->ajax);
 	}
 }

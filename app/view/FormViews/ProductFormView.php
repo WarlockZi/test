@@ -216,7 +216,7 @@ class ProductFormView
 			$str .= self::getSelect($currentCategory, $product);
 			$currentCategory = $currentCategory->parentRecursive;
 		}
-		return $str;
+		return "<div class='properties'>$str</div>"	;
 	}
 
 	protected static function getSeo($product): string

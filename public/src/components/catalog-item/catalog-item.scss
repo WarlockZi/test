@@ -17,7 +17,6 @@
 }
 
 
-
 .item-wrap {
   display: flex;
   min-width: 400px;
@@ -45,18 +44,23 @@
       font-weight: 600;
     }
 
-    .property {
-      display: flex;
-      margin-bottom: 5px;
+    .properties {
 
-      .name {
+      .property {
         display: flex;
-        width: 200px;
-      }
+        margin-bottom: 5px;
 
-      [custom-select] {
-        min-width: 200px;
+        .name {
+          display: flex;
+          align-items: center;
+          width: 200px;
 
+        }
+
+        [custom-select] {
+          min-width: 200px;
+
+        }
       }
     }
   }

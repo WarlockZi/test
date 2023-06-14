@@ -92,7 +92,6 @@ export default class Select {
     this.sel.dataset['value'] = next.value;
     prev.element.classList.remove('selected');
 
-    debugger;
     next.element.classList.add('selected');
     next.element.scrollIntoView({block: "nearest"});
 
