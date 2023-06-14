@@ -8,7 +8,6 @@ export default class UnitTable {
     this.$table = $(tableClass).first();
     if (!this.$table) return;
 
-    this.productId = +$('.item-wrap').first().dataset.id;
     this.product1sId = $(`[data-field='1s_id']`).first().innerText;
     this.$baseUnit = $(`[data-field='base_unit'] [data-field='base_unit']`).first();
     this.baseUnitId = this.$baseUnit.options[this.$baseUnit.selectedIndex].value;
@@ -18,7 +17,8 @@ export default class UnitTable {
     this.$selector = $(this.$rows).find('[select-new]');
 
     this.$addUnit.onclick = this.createRow.bind(this);
-    this.$rows.onchange = this.update.bind(this);
+    this.$rows.onchange = this.handleChange.bind(this);
+    this.$rows.onkeyup = this.handleKeyUp.bind(this);
     this.$rows.onclick = this.clickRow.bind(this);
     this.$rows.addEventListener('customSelect.changed', this.unitChanged.bind(this));
 
@@ -26,9 +26,8 @@ export default class UnitTable {
     setTimeout(this.deleteSelected.bind(this), 800)
   }
 
-  initSelects(){
-    debugger;
-    this.$rows.querySelectorAll('[select-new]').forEach((s)=>{
+  initSelects() {
+    this.$rows.querySelectorAll('[select-new]').forEach((s) => {
       new SelectNew(s)
     })
   }
@@ -64,24 +63,23 @@ export default class UnitTable {
     row.append(baseUnit);
     row.append(del);
 
-    new WDSSelect($selector);
+    new SelectNew($selector);
 
     this.$rows.append(row);
     this.deleteSelected()
   }
 
   async unitChanged(obj) {
-    debugger;
     let data = this.dto(obj.target.closest('.row'));
-    data.next = obj.detail.next.value;
-    data.prev = obj.detail.prev.value;
+    data.morphed.new_id = obj.detail.next.value;
+    data.morphed.old_id = obj.detail.prev.value;
     if (obj.detail.next.value)
       this.deleteSelectedUnitFromSelects(obj.detail.next.value);
 
     if (obj.detail.prev.value)
       this.addDeletedUnitToSelects(obj.detail.prev);
 
-    let res = await post('/adminsc/unit/changeUnit', data)
+    let res = await post('/adminsc/product/changeUnit', data)
   }
 
   deleteSelectedUnitFromSelects(value) {
@@ -114,35 +112,48 @@ export default class UnitTable {
     if (target.classList.contains('del')) {
       let row = target.closest('.row');
       let data = this.dto(row);
-      let res = await post('/adminsc/unit/detachunit', data);
-      debugger;
+      data.morphed.detach = 1;
+      let res = await post('/adminsc/product/changeunit', data);
       if (res?.arr?.ok) {
         row.remove()
-      } else if (target.tagName === 'INPUT') {
-        this.update()
       }
     }
   }
 
-  async update(e) {
-    let target = e.target;
-    let row = target.closest('.row');
-    let data = this.dto(row);
+  handleKeyUp(e){
+    let multiplier = +e.target.value;
+    if (!/\d+/.test(multiplier)) {
+      return
+    }
+    this.update(e, this)
+  }
 
-    let res = await post('/adminsc/unit/updatePivot', data);
-    this.createRow(res)
+  handleChange(e){
+    this.update(e, this)
+  }
+
+  async update(e, self) {
+
+    let row = e.target.closest('.row');
+    let data = self.dto(row);
+    data.morphed.new_id = data.morphed.old_id;
+
+    let res = await post('/adminsc/product/changeUnit', data);
   }
 
   dto(row) {
-    let unitId = +this.getUnitId(row);
     let pivot = {
       'product_id': this.product1sId,
       'multiplier': +$(row).find('input').value ?? 0,
     };
+    let morphed = {
+      new_id: 0,
+      old_id: +this.getUnitId(row),
+      detach: 0
+    };
     return {
-      baseUnit: this.getBaseUnitId(),
-      unitId: unitId,
-      pivot: pivot ?? null
+      baseUnitId: this.getBaseUnitId(),
+      pivot, morphed
     }
   }
 
@@ -151,10 +162,8 @@ export default class UnitTable {
   }
 
   getUnitId(row) {
-    let classSelected = row.querySelector('[select-new] .selected');
-
-      return classSelected.dataset.value ?? 0
-
+    let classSelected = row.querySelector('[select-new]');
+    return classSelected.dataset.value ?? 0
   }
 
 }

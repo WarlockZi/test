@@ -34,6 +34,11 @@ class Product extends Model
 
   protected $appends = ['mainImagePath'];
 
+	public function values()
+	{
+		return $this->morphToMany(Val::class, 'valuable');
+	}
+
   public function getMainImagePathAttribute()
   {
     $art = trim($this->art);
@@ -134,11 +139,6 @@ class Product extends Model
   public function parentCategoryRecursive()
   {
     return $this->category()->with('parentRecursive');
-  }
-
-  public function values()
-  {
-    return $this->morphToMany(Val::class, 'valuable');
   }
 
   public function manufacturer()
