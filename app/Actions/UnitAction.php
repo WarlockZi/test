@@ -41,13 +41,13 @@ class UnitAction
 
 	public static function changeUnit(array $req)
 	{
-		$old_id = $req['morphed']['old_id'];
-		$new_id = $req['morphed']['new_id'];
-		$detach = $req['morphed']['detach'];
 		$pivot = $req['pivot'];
 		$baseUunit = Unit::find($req['baseUnitId']);
+		$old_id = $req['morphed']['old_id'];
+		$new_id = $req['morphed']['new_id'];
 		$arr = array($pivot, $baseUunit, $old_id, $new_id);
 
+		$detach = $req['morphed']['detach'];
 		if (!$old_id) {
 			$res = self::attachUnit($arr);
 		} elseif ($detach) {
