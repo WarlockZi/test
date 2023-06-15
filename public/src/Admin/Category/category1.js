@@ -5,27 +5,20 @@ import Imageable from '../Image/Imageable';
 import Category from '../Category/Category';
 
 import Morph from "../../components/morph/morph";
-import SelectNew from "../../components/select/SelectNew";
-
 
 export default function category() {
 
-
-  let category = $(`.item-wrap[data-model='category']`)[0];
-  if (!category) return false;
+  let $category = $(`.item-wrap[data-model='category']`)[0];
+  if (!$category) return false;
 
   let dto = {
-    id: +category.dataset.id,
+    id: +$category.dataset.id,
   };
-  // let morphs = $('[data-morph-model]')
-  let dnds = $('[data-dnd]');
 
-  // debugger
+  let dnds = $('[data-dnd]');
   dnds.forEach((dnd) => {
     if (dnd.parentNode.dataset.morphModel) {
-      let m = new Morph(dnd, category)
-    } else if (dnd.parentNode.dataset.belongsTo) {
-      let m = new BelongsTo(dnd, category)
+      let m = new Morph(dnd, $category)
     }
   });
 
@@ -34,22 +27,27 @@ export default function category() {
   if (parent_category) {
     parent_category.addEventListener('customSelect.changed', attachCategory.bind(dto))
   }
+
+  let addPropertyBtn = $('.add-property').first()
+  if (addPropertyBtn){
+    addPropertyBtn.onclick = newRow.bind($('.properties').first())
+  }
 }
 
-
+function newRow(){
+  let $clone = this.querySelector('.rows .none .row').cloneNode(true)
+  let $rows = this.querySelector('.rows')
+  $rows.append($clone)
+}
 function attachCategory({detail}) {
   debugger;
   let data = {
-    token: getToken(),
     id: this.id,
     category_id: +detail.next.value,
   };
   post('/adminsc/category/updateOrCreate', data)
 
 }
-
-// let sel = "[data-field='image_main']"
-// new DragNDrop(sel, addMainImg, true, null)
 
 async function addMainImg(files) {
   let catId = $('.item-wrap')[0].dataset.id;

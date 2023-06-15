@@ -11,41 +11,51 @@ use app\view\components\Builders\SelectBuilder\SelectBuilder;
 
 class PropertyFormView
 {
-	public static function usedPropsArr(Category $c):array
+  public static function usedParentsProps(Category $c):array
+  {
+    $propIds = [];
+    $parent = $c->parentRecursive;
+    if ($parent) {
+      if ($parent->properties->count()) {
+        foreach ($parent->properties as $prop) {
+          $propIds[] = $prop->id;
+        }
+      }
+    }
+    return $propIds;
+  }
+	public static function usedCatNParentProps(Category $c):array
 	{
-		$C = $c->toArray();
 		$propIds = [];
-		$parent = $c->parentRecursive;
-//		$P = $parent->toArray();
-		if ($parent) {
-			if ($parent->properties->count()) {
-				foreach ($parent->properties as $prop) {
-					$propIds[] = $prop->id;
-				}
-			}
-		}
-		return $propIds;
+    if ($c->properties->count()) {
+      foreach ($c->properties as $prop) {
+        $propIds[] = $prop->id;
+      }
+    }
+
+		return array(...$propIds,...self::usedParentsProps($c));
 	}
 
-	public static function newPropertySelector($excluded = [], $selected = 0)
+	public static function newPropertySelector($c)
 	{
-//		$used = self::usedPropsArr($category);
+		$excluded = self::usedCatNParentProps($c);
 		return SelectBuilder::build(
 			ArrayOptionsBuilder::build(Property::all())
 				->excluded($excluded)
-				->selected($selected)
+				->selected(0)
 				->initialOption()
 				->get()
 		)->get();
 
 	}
 
-	public static function selector($excluded, $selected)
+	public static function selector(Category $c, Property $p)
 	{
+	  $excluded = self::usedParentsProps($c);
 		return SelectBuilder::build(
 			ArrayOptionsBuilder::build(Property::all())
 				->excluded($excluded)
-				->selected($selected)
+				->selected($p->id)
 				->initialOption()
 				->get()
 		)->get();

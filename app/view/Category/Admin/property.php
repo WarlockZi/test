@@ -4,7 +4,7 @@ ob_start();
 use app\core\Icon;
 use \app\view\Property\PropertyFormView;
 
-$excluded = PropertyFormView::usedPropsArr($category)
+
 ?>
 <div class="properties">
 
@@ -20,21 +20,22 @@ $excluded = PropertyFormView::usedPropsArr($category)
 
 		<div class="rows">
 			<div class="none">
-					 <?= PropertyFormView::newPropertySelector($excluded); ?>
+				<div class="row">
+          <?= PropertyFormView::newPropertySelector($category); ?>
+					<div class="del">X</div>
+					<div class="edit"><?=Icon::edit()?></div>
+				</div>
 			</div>
 				<? foreach ($category->properties as $property): ?>
 			  <div class="row">
-				  <?= PropertyFormView::selector($excluded, $property->id)?>
+				  <?= PropertyFormView::selector($category,$property)?>
 				  <div class="del">X</div>
 				  <div class="edit"><?=Icon::edit()?></div>
 			  </div>
 				<? endforeach; ?>
 		</div>
 
-		<div class="add-unit"
-		     data-unit="<?= $category->id ?>"
-		>+
-		</div>
+		<div class="add-property">+</div>
 
 	</div>
 </div>
