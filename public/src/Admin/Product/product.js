@@ -3,6 +3,7 @@ import './units'
 import './properties'
 import {$, popup, post} from '../../common'
 import Morph from "../../components/morph/morph";
+import SelectNew from "../../components/select/SelectNew";
 
 export default function product() {
 
@@ -16,4 +17,7 @@ export default function product() {
       let m = new Morph(dnd.parentNode, product)
     }
   });
+
 }
+
+

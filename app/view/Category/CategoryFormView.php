@@ -109,28 +109,7 @@ class CategoryFormView
 			->tab(
 				ItemTabBuilder::build('Св-ва категории')
 					->html(
-						MorphBuilder::build($category, 'properties', 'prop', true)
-							->many()
-							->html(
-								MyList::build(Property::class)
-									->items($category->properties ?? [])
-									->pageTitle('Св-ва категории')
-									->addButton('ajax')
-									->column(
-										ListColumnBuilder::build('id')
-											->width('40px')
-											->get()
-									)
-									->column(
-										ListColumnBuilder::build('name')
-											->name("Назввание")
-											->contenteditable()
-											->get()
-									)
-									->edit()
-									->del()
-									->get())
-							->get()
+						self::properties($category)
 					)
 			)
 			->tab(
@@ -181,8 +160,6 @@ class CategoryFormView
 							->get()
 					)
 			)
-//			->del()
-//			->softDel()
 			->toList('', 'К списку категорий')
 			->get();
 	}
@@ -193,6 +170,29 @@ class CategoryFormView
 			$categoriesTree, 'children_recursive', 2)
 			->href('/adminsc/category/edit/')
 			->get();
+	}
+
+	public static function properties($category)
+	{
+		return include __DIR__.'/Admin/property.php';
+//			MyList::build(Property::class)
+//				->items($category->properties ?? [])
+//				->pageTitle('Св-ва категории')
+//				->addButton('ajax')
+//				->column(
+//					ListColumnBuilder::build('id')
+//						->width('40px')
+//						->get()
+//				)
+//				->column(
+//					ListColumnBuilder::build('name')
+//						->name("Назввание")
+//						->contenteditable()
+//						->get()
+//				)
+//				->edit()
+//				->del()
+//				->get();
 	}
 
 	public static function list(): string

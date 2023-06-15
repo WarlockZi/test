@@ -53,7 +53,7 @@ class CategoryRepository
       'products',
       'childrenNotDeleted',
       'childrenDeleted',
-      'parentRecursive',
+      'parentRecursive.properties',
       'properties',
       'mainImages')
       ->find($id);
