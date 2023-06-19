@@ -51,7 +51,7 @@ class LoadPrices extends Parser
 		$prod = Product::where('1s_id', $price['1s_id'])->first();
 		if ($prod) {
 			$prod->instore = $arr['Количество'] ? $arr['Количество'] : 0;
-			$prod->baseUnit()->associate($unit);
+			$prod->base_unit = $unit->id;
 			$prod->save();
 //			$this->ech($prod,$id);
 		}

@@ -2,8 +2,8 @@
 
 namespace app\controller\Admin;
 
+use app\Actions\SyncActions;
 use app\controller\AppController;
-use app\model\Category;
 use app\Repository\SyncRepository;
 use app\Services\XMLParser\LoadProductsOffer;
 
@@ -18,7 +18,7 @@ class SyncController extends AppController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->repo = new SyncRepository($this->route);
+		$this->repo = new SyncActions($this->route);
 	}
 
 	public function actionPart()//init
@@ -36,60 +36,68 @@ class SyncController extends AppController
 		$this->repo->init();
 	}
 
-	public function actionParseImages()
+	public function actionRemoveall()
 	{
-
+		$this->repo->trancate();
 	}
-
 	public function actionRemovecategories()
 	{
 		$this->repo->removeCategories();
 	}
-
 	public function actionRemoveproducts()
 	{
 		$this->repo->removeProducts();
 	}
-
 	public function actionRemoveprices()
 	{
 		$this->repo->removePrices();
 	}
 
-	public function actionTruncate()
-	{
-		$this->repo->trancate();
-	}
 
 	public function actionLoad()
 	{
 		$this->repo->import();
 	}
-
+	public function actionLoadCategories()
+	{
+		$this->repo->LoadCategories();
+	}
+	public function actionLoadProducts()
+	{
+		$this->repo->LoadProducts();
+	}
+	public function actionLoadPrices()
+	{
+		$this->repo->LoadPrices();
+	}
 	public function actionIndex()//init
 	{
 		$tree = [];
 		$this->set(compact('tree'));
 	}
 
-	public function actionIncread()
+	public function actionLogshow()
 	{
-		list($content, $button) = $this->repo->read();
-		$this->set(compact('content', 'button'));
+		$this->repo->logshow();
 	}
 
-	public function actionIncClear()
+	public function actionLogclear()
 	{
-		$this->repo->incClear();
+		$this->repo->logclear();
 	}
 
-	public function actionIncTruncate()
+
+
+	public function actionTruncate()
 	{
-		$this->repo->truncate();
-		$count = Category::count();
-		$this->exitJson(['success' => 'success', 'content' => 'Удалены категории, товары, цены Количество кат - ' . $count]);
+		$this->repo->trancate();
 	}
 
+
+	public function actionParseImages()
+	{
+
+	}
 }
 
 

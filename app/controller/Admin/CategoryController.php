@@ -39,7 +39,7 @@ class CategoryController extends AppController
     $this->set(compact('category', 'breadcrumbs',
 		));
   }
-	public function actionChangeval()
+	public function actionChangeproperty()
 	{
 		CategoryAction::changeProperty($this->ajax);
 	}

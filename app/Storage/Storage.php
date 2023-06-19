@@ -21,6 +21,12 @@ class Storage
 		$this->path = $this->storagePath;
 	}
 
+	public static function getFile(string $file)
+	{
+		$self = new static();
+		return $self->path . $file;
+	}
+
 	public function getFiles()
 	{
 		return glob("{$this->path}*.*");
@@ -59,11 +65,6 @@ class Storage
 		return file_get_contents($self->path . $file);
 	}
 
-	public static function getFile(string $file)
-	{
-		$self = new static();
-		return $self->path . $file;
-	}
 
 	public function save(string $path, array $files):array
 	{
