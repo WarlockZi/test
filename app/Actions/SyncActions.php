@@ -1,9 +1,10 @@
 <?php
 
 
-namespace app\Repository;
+namespace app\Actions;
 
 
+use app\controller\AppController;
 use app\core\FS;
 use app\model\Category;
 use app\model\Price;
@@ -15,13 +16,15 @@ use app\Storage\StorageImport;
 use app\Storage\StorageLog;
 use app\Storage\StorageXml;
 
-class SyncRepository
+class SyncActions extends AppController
 {
 	protected $log;
 	protected $importPath;
 	protected $storage;
+	protected $importFile;
+	protected $offerFile;
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
-	protected $route ;
+	protected $route;
 
 	public function __construct($route)
 	{
@@ -33,6 +36,8 @@ class SyncRepository
 		} else {
 			$this->storage = StorageImport::class;
 		}
+		$this->importFile = $this->storage::getFile('import0_1.xml');
+		$this->offerFile = $this->storage::getFile('offers0_1.xml');
 	}
 
 	public function part()
@@ -56,27 +61,16 @@ class SyncRepository
 
 	public function partload()
 	{
-		$file = $this->storage::getFile('import0_1.xml');
-
-		if (is_readable($file)) {
-			new LoadCategories($file,'part');
-			new LoadProducts($file,'part');
+		if (is_readable($this->importFile)) {
+			new LoadCategories($this->importFile, 'part');
+			new LoadProducts($this->importFile, 'part');
 
 		}
-		$file = $this->storage::getFile('offers0_1.xml');
-		if (is_readable($file)) {
-			new LoadPrices($file,'part');
-//			$this->append("<br>loaded = price<br>");
+
+		if (is_readable($this->offerFile)) {
+			new LoadPrices($this->offerFile, 'part');
 		}
 		exit('success');
-	}
-
-	public function incClear()
-	{
-		file_put_contents($this->log, '');
-
-		$content = StorageLog::getFileContent('log.txt');
-		$this->exitJson(['success' => 'success', 'content' => $content]);
 	}
 
 
@@ -102,30 +96,63 @@ class SyncRepository
 		}
 	}
 
-
 	public function import()
 	{
 		$this->trancate();
 
-		$file = $this->storage::getFile('import0_1.xml');
 
-		if (is_readable($file)) {
-			new LoadCategories($file,'full');
-			new LoadProducts($file,'full');
+		if (is_readable($this->importFile)) {
+			$this->LoadCategories($this->importFile);
+			$this->LoadProducts($this->importFile);
 		}
-		$file = $this->storage::getFile('offers0_1.xml');
-		if (is_readable($file)) {
-			new LoadPrices($file,'full');
+
+		if (is_readable($this->offerFile)) {
+			$this->LoadPrices($this->offerFile);
 			$this->append("<br>loaded = price<br>");
 		}
 		exit('success');
 	}
 
-	protected function append(string $text)
+	public function LoadCategories()
 	{
-		$time = date('H:i:s');
-//		file_put_contents($this->log, $text . " - {$time} - ", FILE_APPEND | LOCK_EX);
+		new LoadCategories($this->importFile, 'full');
+		$this->exitWithPopup('ok');
 	}
+
+	public function LoadProducts()
+	{
+		new LoadProducts($this->importFile, 'full');
+		$this->exitWithPopup('ok');
+	}
+
+	public function LoadPrices()
+	{
+		new LoadPrices($this->offerFile, 'full');
+		$this->exitWithPopup('ok');
+	}
+
+	protected function checkauth()
+	{
+		$this->logReqest('checkauth');
+		exit("success\ninc\n777777\n55fdsa55");
+	}
+
+	protected function zip()
+	{
+		$this->logReqest('init');
+		exit("zip=no\nfile_limit=10000000");
+	}
+
+	protected function file()
+	{
+		$this->filename = $this->route->params['filename'];
+		$this->rawPost = file_get_contents('php://input');
+		file_put_contents($this->importPath . $this->filename, $this->rawPost);
+
+		$this->logReqest('file');
+		exit('success');
+	}
+
 
 	protected function getHeaders($str = '')
 	{
@@ -153,26 +180,10 @@ class SyncRepository
 
 	}
 
-	protected function checkauth()
+	protected function append(string $text)
 	{
-		$this->logReqest('checkauth');
-		exit("success\ninc\n777777\n55fdsa55");
-	}
-
-	protected function zip()
-	{
-		$this->logReqest('init');
-		exit("zip=no\nfile_limit=10000000");
-	}
-
-	protected function file()
-	{
-		$this->filename = $this->route->params['filename'];
-		$this->rawPost = file_get_contents('php://input');
-		file_put_contents($this->importPath . $this->filename, $this->rawPost);
-
-		$this->logReqest('file');
-		exit('success');
+		$time = date('H:i:s');
+//		file_put_contents($this->log, $text . " - {$time} - ", FILE_APPEND | LOCK_EX);
 	}
 
 	public function parseImages()
@@ -192,29 +203,47 @@ class SyncRepository
 			}
 		}
 	}
-	public function read()
+
+	public function logshow()
 	{
-		$content = file_get_contents($this->log);
+		$content = 'LOG<br>' . file_get_contents($this->log);
 		if (isset($_POST['param'])) {
 			$this->exitJson(['success' => true, 'content' => $content]);
 		}
-		$button = FS::getFileContent($this->viewPath . 'button.php');
-		return [$content, $button];
 	}
-	public function removeCategories(){
+
+	public function logclear()
+	{
+		file_put_contents($this->log, '');
+
+		$content = StorageLog::getFileContent('log.txt');
+		$this->exitJson(['success' => 'success', 'content' => $content]);
+	}
+
+
+	public function removeCategories()
+	{
 		Category::truncate();
+		$this->exitWithPopup('ok');
 	}
-	public function removeProducts(){
+
+	public function removeProducts()
+	{
 		Product::truncate();
+		$this->exitWithPopup('ok');
 	}
-	public function removePrices(){
+
+	public function removePrices()
+	{
 		Price::truncate();
+		$this->exitWithPopup('ok');
 	}
+
 	public function trancate()
 	{
 		$this->removeCategories();
 		$this->removeProducts();
 		$this->removePrices();
-//			Unit::truncate();
+		$this->exitWithPopup('ok');
 	}
 }

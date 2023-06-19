@@ -16,12 +16,12 @@ class CategoryAction
 		$oldVal = $req['morphed']['old_id'];
 
 		if (!$oldVal) {
-			$category->values()->attach($newVal);
+			$category->properties()->attach($newVal);
 			exit(json_encode(['popup' => 'Добавлен']));
 
 		} else if (!$newVal) {
-			$category->values()->detach($oldVal);
-			exit(json_encode(['popup' => 'Удален']));
+			$category->properties()->detach($oldVal);
+			exit(json_encode(['ok'=>'ok','popup' => 'Удален']));
 
 		} else {
 			if ($newVal === $oldVal) exit(json_encode(['popup' => 'Одинаковые значения']));

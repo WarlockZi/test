@@ -19,24 +19,53 @@ export default class PropertyTable {
       }
     });
 
-    this.$rows.addEventListener('customSelect.changed', this.propertyChange.bind(this))
+    this.$rows.addEventListener('customSelect.changed', this.propertyChange.bind(this));
+    this.$rows.addEventListener('click', this.handleClick.bind(this))
   }
 
-  async propertyChange(obj) {
+  async handleClick({target}) {
     {
-      let data = this.dto();
-      data.morphed.old_id = obj.detail.prev.value;
-      data.morphed.new_id = obj.detail.next.value;
-      let res = await post(`/adminsc/product/changeVal`, data)
+      if (target.classList.contains('del')) {
+        this.deleteRow(target)
+      }else if (target.classList.contains('edit')){
+        this.editProperty(target)
+      }
     }
   }
 
-  dto(obj) {
+  async editProperty(target) {
+    let $row = target.closest('.row');
+    let $selector = $($row).find('[select-new]');
+    let id = +$selector.dataset.value;
+    let data = this.dto();
+    data.morphed.new_id = 0;
+    data.morphed.old_id = id;
+    let res = await post(`/adminsc/category/changeProperty`, data)
+  }
+
+  async deleteRow(target) {
+    let $row = target.closest('.row');
+    let $selector = $($row).find('[select-new]');
+    let id = +$selector.dataset.value;
+    let data = this.dto();
+    data.morphed.new_id = 0;
+    data.morphed.old_id = id;
+    let res = await post(`/adminsc/category/changeProperty`, data);
+    if (res?.arr?.ok)  $row.remove()
+  }
+  async propertyChange(obj) {
+    {
+      let data = this.dto(obj);
+      let res = await post(`/adminsc/category/changeProperty`, data)
+    }
+  }
+
+  dto(obj={}) {
     return {
-      category_id: this.$el.dataset.id,
+      category_id: this.$el.closest(`[data-model="category"]`).dataset.id,
       morphed: {
-        old_id: +obj.detail.prev.value,
-        new_id: +obj.detail.next.value
+        old_id: +obj?.detail?.prev?.value,
+        new_id: +obj?.detail?.next?.value
       }
     }
   }
