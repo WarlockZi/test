@@ -46,7 +46,7 @@
 
     .properties {
 
-      .property {
+      .property, a {
         display: flex;
         margin-bottom: 5px;
 
@@ -59,7 +59,6 @@
 
         [custom-select] {
           min-width: 200px;
-
         }
       }
     }

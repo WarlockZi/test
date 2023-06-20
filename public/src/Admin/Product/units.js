@@ -1,6 +1,6 @@
 import './units.scss'
 import {$} from '../../common'
-import UnitTable from '../Unit/UnitTable'
+import UnitTable from './UnitTable'
 
   let $units = $('.units').first();
   if ($units) {
