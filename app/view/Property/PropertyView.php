@@ -118,8 +118,9 @@ class PropertyView
 			->model('val')
 			->get();
 
-		$propName = "<div class='name'>{$property->name}</div>";
-		return "<div class='property'>{$propName}<br>{$select}</div>";
+		$propName = "<div class='property'>{$property->name}</div>";
+		$valueSelector = "<div class='value'>{$select}</div>";
+		return "<div class='row'>{$propName}{$valueSelector}</div>";
 	}
 
 	protected static function getMorphs($item)

@@ -15,7 +15,7 @@ export default function product() {
 
   new Fields(product);
 
-  new Relations(product);
+  // new Relations(product);
 
   let dnds = $('[data-dnd-path]');
   dnds.forEach((dnd) => {
