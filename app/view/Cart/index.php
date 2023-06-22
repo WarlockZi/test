@@ -32,23 +32,28 @@
 		<div data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
 
 				<? foreach ($oItems as $i => $oItem): ?>
+					<? if ($oItem->product): ?>
 
-			  <div class="row" data-product-id="<?= $oItem->product_id ?>">
-				  <div class="num"><?= ++$i; ?></div>
+				  <div class="row" data-product-id="<?= $oItem->product_id ?>">
+					  <div class="num"><?= ++$i; ?></div>
 
-				  <img src="<?= $oItem->product->mainImagePath ?>" alt="<?= $oItem->product->name; ?>">
-<!--				  <img src="--><?//= ProductView::mainImageSrc($oItem->product) ?><!--" alt="--><?//= $oItem->product->name; ?><!--">-->
-				  <div class="name-price">
-					  <a href="/product/<?= $oItem->product->slug; ?>" class="name"><?= $oItem->product->name; ?></a>
-					  <div class="price"
-					       data-price=<?= $oItem->product->getRelation('price')->price; ?>><?= $oItem->product->priceWithCurrencyUnit() ?></div>
+					  <img src="<?= $oItem->product->mainImagePath ?>" alt="<?= $oItem->product->name; ?>">
+					  <!--				  <img src="--><? //= ProductView::mainImageSrc($oItem->product) ?><!--" alt="-->
+								<? //= $oItem->product->name; ?><!--">-->
+					  <div class="name-price">
+						  <a href="/product/<?= $oItem->product->slug; ?>" class="name"><?= $oItem->product->name; ?></a>
+						  <div class="price"
+						       data-price=<?= $oItem->product->getRelation('price')->price; ?>><?= $oItem->product->priceWithCurrencyUnit() ?></div>
+					  </div>
+					  <input type="number" class="count" min="0" max="999999" value="<?= $oItem->count; ?>">
+
+					  <div class="sum"></div>
+					  <div class="del"><?= Icon::trashWhite() ?></div>
+
 				  </div>
-				  <input type="number" class="count" min="0" max="999999" value="<?= $oItem->count; ?>">
-
-				  <div class="sum"></div>
-				  <div class="del"><?= Icon::trashWhite() ?></div>
-
-			  </div>
+					<? else: ?>
+				  товар не найден
+					<? endif; ?>
 				<? endforeach; ?>
 		</div>
 

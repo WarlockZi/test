@@ -40,6 +40,7 @@ class CategoryRepository
       ->with('childrenRecursive')
       ->with('parentRecursive')
       ->with('productsInStore')
+      ->with('seo')
 //      ->with('productsNotInStore')
       ->get()
 			->first();

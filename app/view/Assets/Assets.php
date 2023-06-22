@@ -35,9 +35,9 @@ class Assets
 
 	public function setItemMeta(Model $item)
 	{
-		$this->title = $item->title ? $item->title : $item->name;
-		$this->desc = $item->description ? $item->description : $item->name;
-		$this->keywords = $item->keywords ? $item->keywords : $item->name;
+		$this->title = $item->seo? $item->seo->title : $item->name;
+		$this->desc = $item->seo? $item->seo->description : $item->name;
+		$this->keywords = $item->seo? $item->seo->keywords : $item->name;
 	}
 
 	public function setMeta(string $title, string $desc = '', string $keywords = '')

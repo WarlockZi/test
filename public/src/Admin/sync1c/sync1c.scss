@@ -58,6 +58,7 @@
     flex-direction: column;
     align-items: stretch;
     gap:5px;
+    padding: 15px;
 
     span.file {
       @include colored_button;

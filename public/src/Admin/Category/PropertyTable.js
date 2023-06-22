@@ -27,20 +27,15 @@ export default class PropertyTable {
     {
       if (target.classList.contains('del')) {
         this.deleteRow(target)
-      }else if (target.classList.contains('edit')){
+      } else if (target.classList.contains('edit')) {
         this.editProperty(target)
       }
     }
   }
 
   async editProperty(target) {
-    let $row = target.closest('.row');
-    let $selector = $($row).find('[select-new]');
-    let id = +$selector.dataset.value;
-    let data = this.dto();
-    data.morphed.new_id = 0;
-    data.morphed.old_id = id;
-    let res = await post(`/adminsc/category/changeProperty`, data)
+    let id = target.closest('.row').querySelector('[select-new]').dataset.value;
+   location.href = `/adminsc/property/edit/${id}`
   }
 
   async deleteRow(target) {
@@ -51,8 +46,9 @@ export default class PropertyTable {
     data.morphed.new_id = 0;
     data.morphed.old_id = id;
     let res = await post(`/adminsc/category/changeProperty`, data);
-    if (res?.arr?.ok)  $row.remove()
+    if (res?.ok) $row.remove()
   }
+
   async propertyChange(obj) {
     {
       let data = this.dto(obj);
@@ -60,7 +56,7 @@ export default class PropertyTable {
     }
   }
 
-  dto(obj={}) {
+  dto(obj = {}) {
     return {
       category_id: this.$el.closest(`[data-model="category"]`).dataset.id,
       morphed: {

@@ -21,7 +21,6 @@ class ProductController extends AppController
 			$arr = $product->toArray();
 			$oItems = OrderRepository::count();
 			if ($product) {
-				$product->categoryProperties = ProductRepository::preparePropertiesList($product);
 				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, true,);
 				$this->set(compact('product', 'breadcrumbs', 'oItems'));
 				$this->assets->setItemMeta($product);

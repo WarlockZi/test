@@ -32,13 +32,3 @@ export default class Values {
   }
 }
 
-
-// [].map.call(property, function (prop) {
-//   let observer = new MutationObserver(function (mutations) {
-//     mutations.forEach(function (mutation) {
-//     });
-//   });
-//   observer.observe(
-//     prop, {attributes: true,}
-//   );
-// })
