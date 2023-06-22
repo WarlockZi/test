@@ -57,9 +57,8 @@ class LoadProducts extends Parser
 		$g['name'] = $good['Наименование'];
 		$g['slug'] = Slug::slug($g['name']);
 		if (Product::where('slug', $g['slug'])->first()) {
-			$g['slug'] = $g['slug'] . '--' . $g['art'];
+			$g['slug'] = $g['slug'] . '_' . Slug::slug($g['art']);
 		}
-//		if (!Product::where('slug', $g['slug'])->first()) {
 		$g['txt'] = $good['Описание'] ? preg_replace('/\n/', '<br>', $good['Описание']) : '';
 
 		foreach ($good['ЗначенияРеквизитов']['ЗначениеРеквизита'] as $requisite) {

@@ -26,7 +26,7 @@ class Unit extends Model
 	{
 		return $this
 			->morphedByMany(Unit::class, 'unitable')
-			->withPivot('multiplier', 'product_id');
+			->withPivot('multiplier', 'product_id','main');
 	}
 
 	public static function parentUnitMultiplier($builder, $item)

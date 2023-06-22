@@ -38,9 +38,9 @@ class PropertyView
 					->contenteditable()
 					->get()
 			)->column(
-				ListColumnBuilder::build('description')
+				ListColumnBuilder::build('show_as')
 					->contenteditable()
-					->name('Описание')
+					->name('Показывать как')
 					->get()
 			)
 			->edit()

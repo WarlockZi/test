@@ -57,30 +57,15 @@ class ProductView
 		}
 	}
 
-//	public static function getCardMainImage(Product $product): string
-//	{
-//		$file = ProductView::getMainImageFile($product);
-//		if (is_readable($file)) {
-//			return FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
-//		} else {
-//
-//			return ImageView::noImage();
-////			$path = self::$mainImagePath . $product->art . '.jpg';
-////			$file = FS::platformSlashes(ROOT . $path);
-////			if (is_file($file)) {
-////				return "<img src='$path' loading='lazy'>";
-////			}
-////			return '';
-//		}
-//	}
 	public static function getCardMainImage($product)
 	{
 		$file = FS::platformSlashes(ProductView::getMainImageFile($product));
 		if (is_readable($file)) {
-			return FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
+			$image =  FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
 		} else {
-			return ImageView::noImage();
+			$image = ImageView::noImage();
 		}
+		return "<div class='main-image'>{$image}</div>";
 	}
 
 }

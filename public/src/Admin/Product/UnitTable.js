@@ -133,7 +133,6 @@ export default class UnitTable {
   }
 
   async update(e, self) {
-
     let row = e.target.closest('.row');
     let data = self.dto(row);
     data.morphed.new_id = data.morphed.old_id;
@@ -144,7 +143,8 @@ export default class UnitTable {
   dto(row) {
     let pivot = {
       'product_id': this.product1sId,
-      'multiplier': +$(row).find('input').value ?? 0,
+      'multiplier': +$(row).find(`input[type='number']`).value ?? 0,
+      'main': $(row).find(`input[type='checkbox']`).checked?1:0,
     };
     let morphed = {
       new_id: 0,
