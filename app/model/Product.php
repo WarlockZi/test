@@ -56,12 +56,18 @@ class Product extends Model
 		}
 	}
 
-	public function baseUnit(): BelongsTo
+	public function baseUnit()
 	{
 		return $this
 			->belongsTo(Unit::class, 'base_unit', 'id');
 	}
 
+//	public function units()
+//	{
+//		return $this
+//			->morphedByMany(Unit::class, 'unitable')
+//			->wherePivot('product_id',$this->id);
+//	}
 	protected static function booted()
 	{
 		static::Updating(function ($product) {

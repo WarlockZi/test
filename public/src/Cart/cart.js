@@ -80,8 +80,9 @@ export default class Cart {
     if (!this.rows.length) return false;
     let total = [].reduce.call(this.rows, (acc, row, accd, rows) => {
       let price = row.querySelector('.price').dataset.price;
-      let count = row.querySelector('.count').value;
-      let sum = price * count;
+      let count = row.querySelector('input').value;
+      let multiplier = row.querySelector('[data-multiplier]').value;
+      let sum = price * count * multiplier;
       row.querySelector('.sum').innerText = sum.toFixed(2);
       acc += sum;
       return acc
@@ -164,6 +165,15 @@ export default class Cart {
     } else if (target.classList.contains('count')) {
       this.rerenderSums();
       this.updateOItem(target)
+    }else if(target.classList.contains('plus')){
+      let quantatyInput = target.closest('.step-field').querySelector('input');
+      quantatyInput.value++;
+      this.rerenderSums();
+
+    }else if(target.classList.contains('minus')){
+      let quantatyInput = target.closest('.step-field').querySelector('input');
+      quantatyInput.value--;
+      this.rerenderSums();
     }
   }
 
@@ -176,7 +186,7 @@ export default class Cart {
     }
   }
 
-  countRows(){
+  countRows() {
     return document.querySelectorAll('.row').length
   }
 

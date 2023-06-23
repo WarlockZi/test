@@ -6,6 +6,20 @@
 
   .content {
 
+    .count-setter {
+      @include cartRowGrey;
+      max-width: 120px;
+      display: flex;
+      align-items: center;
+
+      @include countSetter;
+    }
+
+    .order-item_not-found {
+      padding: 10px;
+      color: $color-warning;
+    }
+
     p {
       font-size: 1.1rem;
     }
