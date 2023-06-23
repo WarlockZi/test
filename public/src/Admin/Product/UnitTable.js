@@ -56,11 +56,15 @@ export default class UnitTable {
 
     let multiplier = (new createElement()).attr('type', 'number').tag('input').attr('value', 10).get();
     let baseUnit = (new createElement()).tag('div').attr('class', 'base-unit').text(baseUnitText).get();
+    let minUnit = (new createElement()).tag('div').className( 'min-unit').get();
+    let minUnitInput = (new createElement()).tag('input').attr('type','checkbox').get();
     let del = (new createElement()).tag('div').attr('class', 'del').text('X').get();
 
     row.append($selector);
     row.append(multiplier);
     row.append(baseUnit);
+    minUnit.append(minUnitInput);
+    row.append(minUnit);
     row.append(del);
 
     new SelectNew($selector);
@@ -134,6 +138,8 @@ export default class UnitTable {
 
   async update(e, self) {
     let row = e.target.closest('.row');
+    let chosenUnit = +$(row).find('[select-new]').dataset.value;
+    if (!chosenUnit) return false;
     let data = self.dto(row);
     data.morphed.new_id = data.morphed.old_id;
 
