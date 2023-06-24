@@ -78,16 +78,16 @@ export default class Cart {
 
   rerenderSums() {
     if (!this.rows.length) return false;
+    let formatter = new Intl.NumberFormat("ru-RU");
     let total = [].reduce.call(this.rows, (acc, row, accd, rows) => {
       let price = row.querySelector('.price').dataset.price;
       let count = row.querySelector('input').value;
       let multiplier = row.querySelector('[data-multiplier]').value;
       let sum = price * count * multiplier;
-      row.querySelector('.sum').innerText = sum.toFixed(2);
+      row.querySelector('.sum').innerText = formatter.format(sum.toFixed(2)).replace(/,/g, '.');
       acc += sum;
       return acc
     }, 0);
-    let formatter = new Intl.NumberFormat("ru");
     this.total.innerText = formatter.format(total.toFixed(2)).replace(/,/g, '.')
   }
 
