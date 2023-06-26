@@ -16,10 +16,12 @@ class OrderitemController Extends AppController
 {
 
 	public $model = OrderItem::class;
+	protected $repo;
 
 	public function __construct()
 	{
 		parent::__construct();
+		$this->repo = new OrderitemRepository();
 	}
 
 	public function actionToorder()
@@ -46,12 +48,9 @@ class OrderitemController Extends AppController
 		$sess = $this->ajax['sess'];
 
 		if (!$product_id) $this->exitWithMsg('No id');
-		$orderItem = $this->model::query()
-			->where('sess', $sess)
-			->where('product_id', $product_id)
-			->first()
-			->forceDelete();
-		if ($orderItem->trashed) {
+		$trashed = $this->repo->deleteItem($this->model, $sess, $product_id);
+
+		if ($trashed) {
 			$this->exitJson(['ok' => true, 'popup' => 'Удален']);
 		}
 		$this->exitWithPopup('Не удален');
