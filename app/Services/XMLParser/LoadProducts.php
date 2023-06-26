@@ -12,7 +12,7 @@ class LoadProducts extends Parser
 	protected $goods;
 	protected $type;
 
-	public function __construct($file,$type)
+	public function __construct($file, $type)
 	{
 		parent::__construct($file);
 		$this->type = $type;
@@ -24,23 +24,24 @@ class LoadProducts extends Parser
 	{
 		$id = 0;
 		foreach ($this->goods as $good) {
-			$this->fork($good,$id++);
+			$this->fork($good, $id++);
 		}
 	}
 
-	protected function fork($good,$id){
-		if ($this->type==='full'){
-			$product = $this->fillGood($good,$id);
+	protected function fork($good, $id)
+	{
+		if ($this->type === 'full') {
+			$product = $this->fillGood($good, $id);
 			$cat = Category::where('1s_id', $product['1s_category_id'])->first();
 			$product['category_id'] = $cat->id;
 			$p = Product::create($product);
-		}else{
+		} else {
 			$found = Product::query()
 				->where('1s_id', $good['Ид'])
 				->first();
-			if ($found){
+			if ($found) {
 				$found->delete();
-				$product = $this->fillGood($good,$id);
+				$product = $this->fillGood($good, $id);
 				$cat = Category::where('1s_id', $product['1s_category_id'])->first();
 				$product['category_id'] = $cat->id;
 				$prod = Product::create($product);
@@ -48,22 +49,24 @@ class LoadProducts extends Parser
 		}
 	}
 
-	protected function fillGood($good,$id)
+	protected function fillGood($good, $id)
 	{
-    $g['1s_id'] = $good['Ид'];
+		$g['1s_id'] = $good['Ид'];
 		$g['1s_category_id'] = $good['Группы']['Ид'];
 		$g['art'] = trim($good['Артикул']);
 		$g['name'] = $good['Наименование'];
 		$g['slug'] = Slug::slug($g['name']);
-//		if (!Product::where('slug', $g['slug'])->first()) {
-			$g['txt'] = $good['Описание'] ? preg_replace('/\n/','<br>', $good['Описание']) : '';
+		if (Product::where('slug', $g['slug'])->first()) {
+			$g['slug'] = $g['slug'] . '_' . Slug::slug($g['art']);
+		}
+		$g['txt'] = $good['Описание'] ? preg_replace('/\n/', '<br>', $good['Описание']) : '';
 
-			foreach ($good['ЗначенияРеквизитов']['ЗначениеРеквизита'] as $requisite) {
-				if ($requisite['Наименование'] === 'Полное наименование') {
-					$g['full_name'] = $requisite['Значение'];
-				}
+		foreach ($good['ЗначенияРеквизитов']['ЗначениеРеквизита'] as $requisite) {
+			if ($requisite['Наименование'] === 'Полное наименование') {
+				$g['full_name'] = $requisite['Значение'];
 			}
-			return $g;
+		}
+		return $g;
 
 
 //			$this->ech($g,$id);
@@ -72,7 +75,7 @@ class LoadProducts extends Parser
 //		}
 	}
 
-	protected function ech($item, $id,$sameSlug='')
+	protected function ech($item, $id, $sameSlug = '')
 	{
 		echo "{$id}  - {$sameSlug} {$item['name']}<br>";
 	}

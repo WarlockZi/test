@@ -40,6 +40,7 @@ class CategoryRepository
       ->with('childrenRecursive')
       ->with('parentRecursive')
       ->with('productsInStore')
+      ->with('seo')
 //      ->with('productsNotInStore')
       ->get()
 			->first();
@@ -53,7 +54,7 @@ class CategoryRepository
       'products',
       'childrenNotDeleted',
       'childrenDeleted',
-      'parentRecursive',
+      'parentRecursive.properties',
       'properties',
       'mainImages')
       ->find($id);

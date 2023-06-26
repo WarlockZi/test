@@ -13,6 +13,7 @@ class Property extends Model
 
 	protected $fillable = [
 		'name',
+		'show_as',
 	];
 
 

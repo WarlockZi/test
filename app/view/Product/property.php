@@ -1,8 +1,10 @@
 <div class="row">
 	<div class="property">
 						<span>
-						<?=$property['name'];?>
+						<?=$value->property->show_as
+						  ?$value->property->show_as
+						  :$value->property->name;?>
 						</span>
 	</div>
-	<div class="value"><?= $property['value']; ?></div>
+	<div class="value"><?= $value->name; ?></div>
 </div>

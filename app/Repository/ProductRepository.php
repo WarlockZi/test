@@ -12,13 +12,6 @@ use app\view\Image\ImageView;
 
 class ProductRepository extends Controller
 {
-//	public static $ProductRepository;
-//	protected $viewPath;
-
-//	public function __construct()
-//	{
-//		$this->viewPath = \app\core\FS::platformSlashes(ROOT.'/app/view/Product/');
-//	}
 
 	public static function edit(int $id)
 	{
@@ -34,19 +27,18 @@ class ProductRepository extends Controller
 			->with('detailImages')
 			->with('smallpackImages')
 			->with('bigpackImages')
-
 			->with(['baseUnit'=>function ($query)use($id){
 				$query->with(['units'=>function($query)use($id){
 						$query->wherePivot('product_id',$id)->get();
 					}]
 					);
 			}])
-
 			->first();
 	}
 
 	public static function main(string $slug)
 	{
+		$p= Product::where('slug', $slug)->first();
 		$id = Product::where('slug', $slug)->first()['1s_id'];
 		return Product::query()
 			->orderBy('sort')
@@ -55,12 +47,12 @@ class ProductRepository extends Controller
 			->with('category.parents')
 			->with('price')
 			->with('mainImages')
-			->with('values')
+			->with('values.property')
 			->with('manufacturer.country')
 			->with('detailImages')
 			->with('smallpackImages')
 			->with('bigpackImages')
-
+			->with('seo')
 			->with(['baseUnit'=>function ($query)use($id){
 				$query->with(['units'=>function($query)use($id){
 						$query->wherePivot('product_id',$id)->get();
@@ -80,21 +72,6 @@ class ProductRepository extends Controller
 			->take(20)
 			->orderBy('sort')
 			->get();
-	}
-
-	public static function preparePropertiesList(Product $product)
-	{
-		$arr = [
-
-			['name' => 'Страна', 'value' => $product->manufacturer->country->name ?? 'Неизвестен'],
-			['name' => 'Производитель', 'value' => $product->manufacturer->name ?? 'Неизвестен'],
-		];
-
-		foreach ($product->values as $value) {
-			$property = Val::find($value->id)->property->name;
-			array_push($arr, ['name' => $property, 'value' => $value->name]);
-		}
-		return $arr;
 	}
 
 	public static function clear()
@@ -119,7 +96,6 @@ class ProductRepository extends Controller
 		}
 	}
 
-
 	public static function getFilters()
 	{
 		$self = new static();
@@ -129,11 +105,4 @@ class ProductRepository extends Controller
 		];
 		return FS::getFileContent($self->viewPath.'filters.php',compact('filters'));
 	}
-
-//	public static function getCard($slug)
-//	{
-//		$product = self::edit('slug', $slug);
-//		return $product;
-//	}
-
 }

@@ -9,7 +9,13 @@ export default class Select {
 
     this.options = getFormattedOptions(el.querySelectorAll("option"));
 
-    this.sel = (new createElement()).attr("data-value", this?.selectedOption?.value??'').tag("div").attr("select-new", '').attr('class', el?.className).attr('tabindex',0).get();
+    this.sel = (new createElement())
+      .tag("div")
+      .className(el?.className)
+      .field(el.dataset.field)
+      .attr("select-new", '')
+      .attr("data-value", this?.selectedOption?.value ?? '')
+      .attr('tabindex', '0').get();
 
     el.after(this.sel);
 
@@ -37,7 +43,7 @@ export default class Select {
     el.remove()
   }
 
-  keyDownhandler(e){
+  keyDownhandler(e) {
     let debounceTimeout;
     let searchTerm = "";
 

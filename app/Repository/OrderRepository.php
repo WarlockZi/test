@@ -62,6 +62,11 @@ class OrderRepository
 				->selectRaw('SUM(count) as count_total')
 				->where('user_id', $user['id'])
 				->with('product.price')
+				->with('product.baseUnit')
+//				->with('product.baseUnit.units',function($q){
+//					$q->where('product_id', 'product:1s_id');
+//				})
+				->with('product.baseUnit.units')
 				->groupBy('product_id')
 				->get();
 		} else {
@@ -70,6 +75,7 @@ class OrderRepository
 				->with('product.price')
 				->get();
 		}
+//		$a= $oItems->toArray();
 		return $oItems;
 	}
 

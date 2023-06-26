@@ -237,6 +237,15 @@ class createElement {
     return this
   }
 
+  className(className) {
+    this._className = className;
+    return this
+  }
+
+  field(field) {
+    this._field = field;
+    return this
+  }
   text(txt) {
     this._text = txt;
     return this
@@ -261,7 +270,12 @@ class createElement {
     if (this._html) {
       el.innerHTML = this._html
     }
-
+    if (this._className) {
+      el.classList.add(this._className)
+    }
+    if (this._field) {
+      el.dataset.field = this._field
+    }
     this.attributes.forEach((entry, i) => {
       el.setAttribute(entry[0], entry[1])
     });

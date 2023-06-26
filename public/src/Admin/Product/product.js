@@ -1,14 +1,21 @@
 import './product.scss'
 import './units'
-import './properties'
+import './Values'
 import {$, popup, post} from '../../common'
 import Morph from "../../components/morph/morph";
+import {Fields} from "./Fields";
+
+import Values from "./Values";
 
 export default function product() {
-
-
-  let product = $(`.item-wrap[data-model='product']`)[0];
+  let product = $(`.item-wrap[data-model='product']`).first();
   if (!product) return false;
+
+  new Values(product);
+
+  new Fields(product);
+
+  // new Relations(product);
 
   let dnds = $('[data-dnd-path]');
   dnds.forEach((dnd) => {
@@ -16,4 +23,7 @@ export default function product() {
       let m = new Morph(dnd.parentNode, product)
     }
   });
+
 }
+
+

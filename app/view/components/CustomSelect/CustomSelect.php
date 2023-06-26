@@ -8,18 +8,18 @@ use app\core\FS;
 
 class CustomSelect
 {
-	private $field = '';
-	private $class = '';
-	private $tab = '- ';
-	private $title = '';
+//	private $field = '';
+//	private $class = '';
+//	private $tab = '- ';
+//	private $title = '';
 	private $tree = [];
 	private $selected = 0;
 	private $exclude = [];
 	private $optionName = 'name';
 
-	private $initialOptionValue = 0;
-	private $initialOptionLabel = null;
-	private $type = 'string';
+//	private $initialOptionValue = 0;
+//	private $initialOptionLabel = null;
+//	private $type = 'string';
 
 	private $finalTpl = ROOT . '/app/view/components/CustomSelect/tpl.php';
 	public $html;
