@@ -3,12 +3,16 @@
 	<div class="page-name">Заказы</div>
 
 	<div class="leads">
-		Заказы Лидов
+		<div class="title">
+			Заказы Лидов
+		</div>
 		 <?= $leadlist; ?>
 	</div>
 
 	<div class="clients">
-		Заказы Клиентов
+		<div class="title">
+			Заказы Клиентов
+		</div>
 		 <?= $clientlist; ?>
 	</div>
 

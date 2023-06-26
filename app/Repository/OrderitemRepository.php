@@ -83,4 +83,14 @@ class OrderitemRepository
 		}
 		return $count;
 	}
+
+	public function deleteItem($model, $sess, $product_id)
+	{
+		return $model::query()
+			->where('sess', $sess)
+			->where('product_id', $product_id)
+			->first()
+			->forceDelete();
+	}
+
 }
