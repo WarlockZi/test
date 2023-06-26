@@ -9,6 +9,8 @@ use app\core\Error;
 use app\core\FS;
 use app\model\Product;
 use app\view\Assets\UserAssets;
+use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
+use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 use app\view\Header\UserHeader;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,6 +27,16 @@ class UserView extends View
 		$this->setFooter();
 	}
 
+	public function getManagerSecector()
+	{
+		$select = SelectNewBuilder::build(
+			ArrayOptionsBuilder::build(User::get)
+				->initialOption()
+				->get()
+		)
+			->get();
+
+	}
 	protected function getViewFile(Controller $controller): string
 	{
 		$route = $this->controller->getRoute();

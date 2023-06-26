@@ -48,7 +48,6 @@ export default class Cart {
     this.rerenderSums()
   }
 
-
   async modalLeadCallback(fields, modal) {
     let name = fields.name.value;
     let phone = fields.phone.value;
