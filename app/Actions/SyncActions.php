@@ -12,6 +12,7 @@ use app\model\Product;
 use app\Services\XMLParser\LoadCategories;
 use app\Services\XMLParser\LoadPrices;
 use app\Services\XMLParser\LoadProducts;
+use app\Storage\StorageDev;
 use app\Storage\StorageImport;
 use app\Storage\StorageLog;
 use app\Storage\StorageXml;
@@ -28,16 +29,20 @@ class SyncActions extends AppController
 
 	public function __construct($route)
 	{
+		$this->setStorage();
+		$this->route = $route;
+
+		$this->importFile = $this->storage::getFile('import0_1.xml');
+		$this->offerFile = $this->storage::getFile('offers0_1.xml');
+	}
+	public function setStorage(){
 		$this->log = StorageLog::getFile('log.txt');
 		$this->importPath = StorageImport::getPath();
-		$this->route = $route;
 		if ($_ENV['MODE'] === 'development') {
-			$this->storage = StorageXml::class;
+			$this->storage = StorageDev::class;
 		} else {
 			$this->storage = StorageImport::class;
 		}
-		$this->importFile = $this->storage::getFile('import0_1.xml');
-		$this->offerFile = $this->storage::getFile('offers0_1.xml');
 	}
 
 	public function part()
