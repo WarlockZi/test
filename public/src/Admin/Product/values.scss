@@ -1,0 +1,26 @@
+@import "../../var";
+
+.values {
+  display: flex;
+  flex-direction: column;
+
+  .category {
+    margin: 3px 0;
+    font-weight: 600;
+    color: $color-gray-mid;
+    &:hover{
+      background-color: $color-gray2;
+    }
+  }
+
+  .row {
+    .property {
+      width: 45%;
+    }
+
+    .value {
+      width: 55%;
+
+    }
+  }
+}

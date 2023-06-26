@@ -3,12 +3,12 @@
 namespace app\controller\Admin;
 
 
+use app\Actions\CategoryAction;
 use app\controller\AppController;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
 use app\view\Category\CategoryFormView;
-use app\view\Category\CategoryView;
 
 
 class CategoryController extends AppController
@@ -36,13 +36,17 @@ class CategoryController extends AppController
     $id = $this->route->id;
     $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($id, false, true);
     $category = CategoryFormView::edit($id);
-    $this->set(compact('category', 'breadcrumbs'));
+    $this->set(compact('category', 'breadcrumbs',
+		));
   }
+	public function actionChangeproperty()
+	{
+		CategoryAction::changeProperty($this->ajax);
+	}
 
   public function actionList()
   {
     $table = CategoryFormView::list();
-
     $this->set(compact('table'));
   }
 }

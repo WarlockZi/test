@@ -17,7 +17,7 @@ class SearchController extends AppController
 		$art = Product::query()
 			->where('art', 'LIKE', $q)
 			->where('instore', '>', 0)
-			->select('name', 'slug', 'art','id')
+			->select('name', 'slug', 'art', 'id', 'instore',)
 			->take(20)
 			->get()
 			->toArray();
@@ -25,7 +25,7 @@ class SearchController extends AppController
 		$name = Product::query()
 			->where('name', 'LIKE', $q)
 			->where('instore', '>', 0)
-			->select('name', 'slug', 'art','id')
+			->select('name', 'slug', 'art', 'id', 'instore',)
 			->take(20)
 			->get()
 			->toArray();

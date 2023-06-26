@@ -46,7 +46,7 @@ class ProductFormView
 	protected static function units(Product $product): string
 	{
 		$baseUnit = $product->baseUnit;
-		$p = $product->toArray();
+//		$p = $product->toArray();
 		if (!$baseUnit) return 'Базовая единица не выбрана';
 		$units = $baseUnit->units;
 		$selector = UnitFormView::selectorNew($baseUnit->id);
@@ -216,7 +216,7 @@ class ProductFormView
 			$str .= self::getSelect($currentCategory, $product);
 			$currentCategory = $currentCategory->parentRecursive;
 		}
-		return "<div class='properties'>$str</div>"	;
+		return "<div class='values'>$str</div>"	;
 	}
 
 	protected static function getSeo($product): string
@@ -313,11 +313,11 @@ class ProductFormView
 		return $builder->clean($str);
 	}
 
-
-	public static function renderProperty($property)
-	{
-		return FS::getFileContent(ROOT . '/app/view/Product/property.php', compact('property'));
-	}
+//
+//	public static function renderProperty($property)
+//	{
+//		return FS::getFileContent(ROOT . '/app/view/Product/property.php', compact('property'));
+//	}
 
 	public static function getCardDetailImage($image)
 	{

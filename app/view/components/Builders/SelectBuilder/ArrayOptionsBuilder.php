@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 class ArrayOptionsBuilder
 {
 	private array $arr;
-	protected int $selected=0;
-	protected int $excluded=-1;
-	protected string $initialOption='';
+	protected int $selected = 0;
+	protected $excluded = [];
+	protected string $initialOption = '';
 
 	public static function build(Collection $collection)
 	{
@@ -21,7 +21,7 @@ class ArrayOptionsBuilder
 
 	public function get(): string
 	{
-		if (!count($this->arr)&&!$this->initialOption) $this->initialOption();
+		if (!count($this->arr) && !$this->initialOption) $this->initialOption();
 		$str = $this->initialOption;
 		$str .= $this->options($this->arr, '');
 		return $str;
@@ -31,7 +31,7 @@ class ArrayOptionsBuilder
 	{
 		foreach ($items as $item) {
 			$id = $item['id'];
-			if ($id === $this->excluded) continue;
+			if (in_array($id , $this->excluded)) continue;
 			$selected = $id == $this->selected ? "selected" : '';
 			$string .= "<option value = {$id} {$selected}>{$item['name']}</option>";
 		}
@@ -46,13 +46,18 @@ class ArrayOptionsBuilder
 		return $this;
 	}
 
-	public function excluded(int $excluded)
+	public function excluded($excluded)
 	{
-		$this->excluded = $excluded;
+		if (is_numeric($excluded)) {
+			$this->excluded[] = $excluded;
+		} else {
+			$this->excluded = $excluded;
+		}
 		return $this;
 	}
 
-	public function initialOption(int $value=0, string $label=null){
+	public function initialOption(int $value = 0, string $label = null)
+	{
 		$this->initialOption = "<option value={$value}>$label</option>";
 		return $this;
 	}

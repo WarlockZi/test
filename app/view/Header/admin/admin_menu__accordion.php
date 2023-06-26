@@ -194,7 +194,7 @@ use \app\core\Icon;
 				  <a class="neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
 				  <a class="neon" href='/adminsc/settings/cache'>Очистить кэш</a>
 <!--				  <a class="neon" href="/adminsc/sync/init?type=catalog& mode=import">Запрос 1с</a>-->
-				  <a class="neon" href="/adminsc/sync/incread">Файл ответа</a>
+				  <a class="neon" href="/adminsc/sync">1c Sync</a>
 				  <a class="neon" href="/adminsc/request">Запросы</a>
 				  <a class="neon" href="/adminsc/request/phpinfo/">PHPinfo</a>
 				  <a class="neon" href="/adminsc/request/test/">test</a>

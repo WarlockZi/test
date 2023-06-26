@@ -23,42 +23,13 @@ class LoadPrices extends Parser
 	protected function run()
 	{
 		foreach ($this->prices as $price) {
-			$this->fillGood($price);
+			$Price = $this->createPrice($price);
+			$Unit = $this->createUnit($price, $Price);
+			$this->attachPriceUnitToProduct($Price, $Unit, $price);
 		}
 	}
 
-	protected function fillGood($arr)
-	{
-		$price = $this->fillPrice($arr);
-
-		if ($this->type === 'full') {
-			$price = Price::create($price);
-		} else {
-			$found = Price::query()
-				->where('1s_id', $price['1s_id'])
-				->first();
-			if ($found){
-				$found->delete();
-				$category = Price::create($price);
-			}
-		}
-
-		$unit = Unit::where('code', $price->unit_code)->first();
-		if (!$unit) {
-			$unit = $this->createUnit($price);
-		}
-
-		$prod = Product::where('1s_id', $price['1s_id'])->first();
-		if ($prod) {
-			$prod->instore = $arr['Количество'] ? $arr['Количество'] : 0;
-			$prod->baseUnit()->associate($unit);
-			$prod->save();
-//			$this->ech($prod,$id);
-		}
-
-	}
-
-	protected function fillPrice($price)
+	protected function createPrice($price)
 	{
 		$g['1s_id'] = $price['Ид'];
 		$g['1s_art'] = $price['Артикул'];
@@ -68,15 +39,38 @@ class LoadPrices extends Parser
 
 		$g['currency'] = $price['Цены']['Цена']['Валюта'];
 		$g['price'] = $price['Цены']['Цена']['ЦенаЗаЕдиницу'];
-		return $g;
+
+		if ($this->type === 'full') {
+			$price = Price::create($g);
+		} else {
+			$found = Price::query()
+				->where('1s_id', $price['1s_id'])
+				->first();
+			if ($found) {
+				$found->delete();
+				$item = Price::create($g);
+			}
+		}
+		return $price;
 	}
 
-	protected function createUnit($price)
+	protected function createUnit($price, $Price)
 	{
-		$u['code'] = $price->unit_code;
-		$u['full_name'] = $price->unit;
-		$u = Unit::create($u);
-		return $u;
+		$unit = Unit::where('code', $Price->unit_code)->first();
+		if (!$unit) {
+			$u['code'] = $Price->unit_code;
+			$u['full_name'] = $Price->unit;
+			$unit = Unit::create($u);
+		}
+		return $unit;
+	}
+
+	protected function attachPriceUnitToProduct(Price $Price, Unit $Unit, $price)
+	{
+		$prod = Product::where('1s_id', $Price['1s_id'])->update([
+			'instore'=>$price['Количество'],
+			'base_unit'=>$Unit->id,
+		]);
 	}
 
 	protected function ech($item)

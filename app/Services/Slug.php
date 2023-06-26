@@ -56,7 +56,8 @@ class Slug
 		$value = mb_ereg_replace('[^-0-9a-z_]', $defaults['substituteSpaceBy'], $value);
 		$value = mb_ereg_replace('[-]+', '-', $value);
 		$value = trim($value, '-');
-		$value = trim($value, '_');
+//		sometimes slugs differ by dot at the end replaced by underscore
+//		$value = trim($value, '_');
 
 		return $value;
 	}

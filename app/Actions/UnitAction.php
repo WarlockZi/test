@@ -69,7 +69,9 @@ class UnitAction
 		list($pivot, $baseUnit, $old_id, $new_id) = $req;
 		$res = $baseUnit->units()
 			->wherePivot('product_id', $pivot['product_id'])
-			->updateExistingPivot($old_id, ['multiplier' => $pivot['multiplier']]);
+			->updateExistingPivot($old_id,
+				['multiplier' => $pivot['multiplier'],
+					'main' => $pivot['main']]);
 		if ($res)
 			return true;
 		return false;

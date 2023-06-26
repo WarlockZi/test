@@ -39,6 +39,12 @@ class Category extends Model
 			)->where('slug', '=', 'main');
 	}
 
+	public function seo()
+	{
+		return $this
+			->hasOne(Seo::class,'product_category_1sid','1s_id');
+	}
+
 	public static function frontCategories()
 	{
 		$d = static::where('show_front', 1)

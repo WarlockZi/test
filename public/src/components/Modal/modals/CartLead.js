@@ -45,7 +45,7 @@ export default class CartLead extends Cart{
       .badgeWidth('175px')
       .required()
       .placeholder('название Вашей компании')
-      .pattern('[a-zA-Zа-яА-я\\s]{3,}')
+      .pattern('[a-zA-Zа-яА-я\\s()]{3,}')
       // .error('заполните, пожалуйста, название вашей компании')
       .get()
     ;

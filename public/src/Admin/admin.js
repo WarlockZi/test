@@ -49,7 +49,7 @@ $(document).ready(async function () {
   // let popup = await import('./')
 
   new Search(true);
-  select();
+  // select();
   morph();
 
   navigate(window.location.pathname);

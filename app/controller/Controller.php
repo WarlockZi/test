@@ -16,7 +16,6 @@ abstract class Controller
 
 	protected $token;
 	protected $route;
-//	public $notFound;
 	protected $ajax;
 	protected $auth;
 	protected $layout;
@@ -27,7 +26,7 @@ abstract class Controller
 	function __construct()
 	{
 		if (!$this->isAjax()) {
-			$this->assets = new Assets($this);
+			$this->assets = new Assets();
 			$this->route = Router::getRoute();
 			$this->token = $this->createToken();
 		}
@@ -35,7 +34,7 @@ abstract class Controller
 
 	public function getView()
 	{
-		if ($this->ajax) return;
+		if ($this->ajax) return false;
 		if ($this->route->isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
 			return new AdminView($this);
 		} else {

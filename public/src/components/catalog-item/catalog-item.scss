@@ -37,33 +37,32 @@
     max-width: 100%;
   }
 
-  &[data-model='product'] {
-    .category {
-      margin: 10px 0;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
+  //&[data-model='product'] {
+    //.category {
+    //  margin: 10px 0;
+    //  text-transform: uppercase;
+    //  font-weight: 600;
+    //}
 
-    .properties {
-
-      .property {
-        display: flex;
-        margin-bottom: 5px;
-
-        .name {
-          display: flex;
-          align-items: center;
-          width: 200px;
-
-        }
-
-        [custom-select] {
-          min-width: 200px;
-
-        }
-      }
-    }
-  }
+    //.properties {
+      //
+      //.property, a {
+      //  display: flex;
+      //  margin-bottom: 5px;
+      //
+      //  .name {
+      //    display: flex;
+      //    align-items: center;
+      //    width: 200px;
+      //
+      //  }
+      //
+      //  [custom-select] {
+      //    min-width: 200px;
+      //  }
+      //}
+    //}
+  //}
 }
 
 
