@@ -18,7 +18,6 @@ class ProductController extends AppController
 
 			$this->view = 'product';
 			$product = ProductRepository::main($slug);
-			$arr = $product->toArray();
 			$oItems = OrderRepository::count();
 			if ($product) {
 				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category->id, true,);

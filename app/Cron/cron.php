@@ -15,4 +15,4 @@ $html_data = file_get_contents('https://vitexopt.ru/adminsc/sync/load', false, $
 echo "DONE!";
 exit;
 
-?>
+

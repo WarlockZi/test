@@ -105,14 +105,13 @@ class SyncActions extends AppController
 	{
 		$this->trancate();
 
-
 		if (is_readable($this->importFile)) {
-			$this->LoadCategories($this->importFile);
-			$this->LoadProducts($this->importFile);
+			$this->LoadCategories();
+			$this->LoadProducts();
 		}
 
 		if (is_readable($this->offerFile)) {
-			$this->LoadPrices($this->offerFile);
+			$this->LoadPrices();
 			$this->append("<br>loaded = price<br>");
 		}
 		exit('success');
@@ -120,7 +119,7 @@ class SyncActions extends AppController
 
 	public function LoadCategories()
 	{
-		new LoadCategories($this->importFile, 'full');
+		new LoadCategories($this->importFile, 'full',true);
 		$this->exitWithPopup('ok');
 	}
 
