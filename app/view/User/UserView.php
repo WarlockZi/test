@@ -113,7 +113,7 @@ abstract class UserView
 
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
-			->toList('', '', false)
+			->toList('adminsc/user/list', '', false)
 			->save()
 			->del(false)
 			->field(
@@ -173,7 +173,7 @@ abstract class UserView
 
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
-			->toList()
+			->toList('adminsc/user/list')
 			->save()
 			->del()
 			->tab(UserView::getAdminTab($item))

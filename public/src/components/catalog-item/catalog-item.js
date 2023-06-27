@@ -7,7 +7,6 @@ import DndFile from "../dnd/DndFile";
 
 export default async function catalogItem() {
 
-  // self = new this
   let customCatalogItem = $('.item-wrap')[0];
   if (customCatalogItem) {
 
@@ -68,8 +67,6 @@ export default async function catalogItem() {
     } else if ((target.classList.contains('tab'))) {
       handleTab(target, this.model)
     } else if ((target.getAttribute('type') === 'checkbox')) {
-      // debugger
-      // handleCheckbox.apply(this)
     }
   }
 
@@ -104,104 +101,21 @@ export default async function catalogItem() {
 
   }
 
-
   async function update() {
     let res = await post(`/adminsc/${this.model}/updateorcreate`, this.data)
   }
 
-
-  function getInputs(field) {
-    let inputs = field.querySelectorAll('input');
-    let names = [];
-    inputs.forEach((inp) => {
-      if (!inp.checked) return;
-      let name = inp.parentNode.querySelector('.name').innerText;
-      if (!name) return;
-
-      names.push(name)
-    });
-    return names.join()
-  }
-
-  // function getModel(modelName) {
-  //   let fields = $(`[data-field][data-model='${modelName}']`);
-  //   let obj = {};
+  // function getInputs(field) {
+  //   let inputs = field.querySelectorAll('input');
+  //   let names = [];
+  //   inputs.forEach((inp) => {
+  //     if (!inp.checked) return;
+  //     let name = inp.parentNode.querySelector('.name').innerText;
+  //     if (!name) return;
   //
-  //   debugger;
-  //   [].map.call(fields, (field) => {
-  //       if (field.closest('[data-parent]')) return obj
-  //       if (
-  //         field.hasAttribute('data-value') ||
-  //         field.hasAttribute('custom-select') ||
-  //         field.hasAttribute('custom-radio') ||
-  //         field.hasAttribute('tab')
-  //       ) {
-  //         obj[field.dataset.field] = field.dataset.value
-  //       } else if (field.hasAttribute('multi-select')) {
-  //         let chips = field.querySelectorAll('.chip');
-  //         let ids = [].map.call(chips, (chip) => {
-  //           return chip.dataset.id
-  //         })
-  //         obj[field.dataset.field] = ids.toString()
-  //       } else if (field.dataset.type === 'inputs') {
-  //         // debugger
-  //         obj[field.dataset.field] = getInputs(field)
-  //       } else if (field.type === 'date') {
-  //         obj[field.dataset.field] = field.value ? field.value : '1970-01-02'
-  //       } else {
-  //         obj[field.dataset.field] = trimStr(field.innerText)
-  //       }
-  //     },
-  //     obj
-  //   )
-  //   return obj
-  // }
-  // function checkRequired() {
-  //   let required = $('[required]');
-  //   let errCount = 0;
-  //   [].forEach.call(required, function (el) {
-  //     if (!el.innerText) {
-  //       el.style.borderColor = 'red'
-  //       if ($(el).find('.error')) return
-  //       let error = document.createElement('div')
-  //       error.innerText = 'Заполните поле'
-  //       error.classList.add('error')
-  //       el.closest('.value').appendChild(error)
-  //       errCount++
-  //     }
-  //   })
-  //   return errCount
-  // }
-  // async function sendToServer(i, file, url) {
-  //   let formData = new FormData()
-  //   formData.append(i, file, file['name'])
-  //   formData.append('imageable_id', productId)
-  //   let res = await fetch(url, {
-  //     method: 'POST',
-  //     body: formData
-  //   })
-  //   let json = await res.json()
-  //   let id = await json.arr.id
-  //   if (json.arr.popup) {
-  //     popup.show(json.arr.popup)
-  //   }
-  //   return id
+  //     names.push(name)
+  //   });
+  //   return names.join()
   // }
 
-
-  // async function del(id, modelName) {
-  //   let res = await post(`/adminsc/${modelName}/delete`, {id})
-  //   if (res) {
-  //     window.location.href = `/adminsc/${modelName}/edit`
-  //   }
-  // }
-  //
-  // async function detach(id, modelName) {
-  //   debugger
-  //   let res = await post(`/adminsc/${modelName}/detach`, {id})
-  //   if (res) {
-  //     window.location.href = `/adminsc/${modelName}/edit`
-  //   }
-  // }
-  //
 }

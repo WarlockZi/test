@@ -22,22 +22,15 @@ class SyncController extends AppController
 		parent::__construct();
 		$this->logger = new FileLogger();
 		$this->repo = new SyncActions($this->route, $this->logger);
-
-	}
-
-	public function actionPart()//init
-	{
-		$this->repo->part();
-	}
-
-	public function actionPartload()//part load
-	{
-		$this->repo->partload();
 	}
 
 	public function actionInit()
 	{
-		$this->repo->init($this->logger);
+		$this->repo->init();
+	}
+	public function actionLoad()
+	{
+		$this->repo->import();
 	}
 
 	public function actionRemoveall()
@@ -61,10 +54,6 @@ class SyncController extends AppController
 	}
 
 
-	public function actionLoad()
-	{
-		$this->repo->import();
-	}
 
 	public function actionLoadCategories()
 	{
@@ -107,6 +96,15 @@ class SyncController extends AppController
 	public function actionParseImages()
 	{
 
+	}
+	public function actionPart()//init
+	{
+		$this->repo->part();
+	}
+
+	public function actionPartload()//part load
+	{
+		$this->repo->partload();
 	}
 }
 

@@ -163,6 +163,7 @@ if (tables) {
       data.model = target.closest('[custom-list]').dataset.model;
       data.id = 0;
       let relation = table.dataset.relation;
+
       if (relation) {
         data = createRelation(data, table, relation)
       }

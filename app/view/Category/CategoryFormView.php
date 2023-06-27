@@ -160,7 +160,7 @@ class CategoryFormView
 							->get()
 					)
 			)
-			->toList('', 'К списку категорий')
+			->toList('adminsc/category/list', 'К списку категорий')
 			->get();
 	}
 

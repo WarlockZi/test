@@ -28,7 +28,7 @@ class SyncActions extends AppController
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
 	protected $route;
 
-	public function __construct($route, ILogger $logger)
+	public function __construct($route, $logger)
 	{
 		$this->setStorage();
 		$this->route = $route;
