@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 use app\Actions\SyncActions;
 use app\controller\AppController;
 use app\Repository\SyncRepository;
+use app\Services\Logger\FileLogger;
 use app\Services\XMLParser\LoadProductsOffer;
 
 class SyncController extends AppController
@@ -14,11 +15,14 @@ class SyncController extends AppController
 	protected $filename;
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
 	protected $repo;
+	protected $logger = false;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->repo = new SyncActions($this->route);
+		$this->logger = new FileLogger();
+		$this->repo = new SyncActions($this->route, $this->logger);
+
 	}
 
 	public function actionPart()//init
@@ -26,28 +30,31 @@ class SyncController extends AppController
 		$this->repo->part();
 	}
 
-	public function actionPartload()//load
+	public function actionPartload()//part load
 	{
 		$this->repo->partload();
 	}
 
 	public function actionInit()
 	{
-		$this->repo->init();
+		$this->repo->init($this->logger);
 	}
 
 	public function actionRemoveall()
 	{
 		$this->repo->trancate();
 	}
+
 	public function actionRemovecategories()
 	{
 		$this->repo->removeCategories();
 	}
+
 	public function actionRemoveproducts()
 	{
 		$this->repo->removeProducts();
 	}
+
 	public function actionRemoveprices()
 	{
 		$this->repo->removePrices();
@@ -58,18 +65,22 @@ class SyncController extends AppController
 	{
 		$this->repo->import();
 	}
+
 	public function actionLoadCategories()
 	{
 		$this->repo->LoadCategories();
 	}
+
 	public function actionLoadProducts()
 	{
 		$this->repo->LoadProducts();
 	}
+
 	public function actionLoadPrices()
 	{
 		$this->repo->LoadPrices();
 	}
+
 	public function actionIndex()//init
 	{
 		$tree = [];
@@ -85,7 +96,6 @@ class SyncController extends AppController
 	{
 		$this->repo->logclear();
 	}
-
 
 
 	public function actionTruncate()

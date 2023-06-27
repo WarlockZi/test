@@ -9,6 +9,8 @@ use app\core\FS;
 use app\model\Category;
 use app\model\Price;
 use app\model\Product;
+use app\Services\Logger\FileLogger;
+use app\Services\Logger\ILogger;
 use app\Services\XMLParser\LoadCategories;
 use app\Services\XMLParser\LoadPrices;
 use app\Services\XMLParser\LoadProducts;
@@ -19,7 +21,6 @@ use app\Storage\StorageXml;
 
 class SyncActions extends AppController
 {
-	protected $log;
 	protected $importPath;
 	protected $storage;
 	protected $importFile;
@@ -27,55 +28,23 @@ class SyncActions extends AppController
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
 	protected $route;
 
-	public function __construct($route)
+	public function __construct($route, ILogger $logger)
 	{
 		$this->setStorage();
 		$this->route = $route;
+		$this->logger = $logger;
 
 		$this->importFile = $this->storage::getFile('import0_1.xml');
 		$this->offerFile = $this->storage::getFile('offers0_1.xml');
 	}
 	public function setStorage(){
-		$this->log = StorageLog::getFile('log.txt');
+//		$this->log = StorageLog::getFile('log.txt');
 		$this->importPath = StorageImport::getPath();
 		if ($_ENV['MODE'] === 'development') {
 			$this->storage = StorageDev::class;
 		} else {
 			$this->storage = StorageImport::class;
 		}
-	}
-
-	public function part()
-	{
-		if (isset($this->route->params['type'])) {
-			if ($this->route->params['type'] === 'catalog') {
-				if ($this->route->params['mode'] === 'checkauth') {
-					$this->checkauth();
-				} elseif ($this->route->params['mode'] === 'init') {
-					$this->zip();
-				} elseif ($this->route->params['mode'] === 'file') {
-					$this->file();
-//					$time = '<br>+++' . date('H:i:s') . '<br>+++';
-//					$this->append($time);
-				} elseif ($this->route->params['mode'] === 'import') {
-					$this->partload();
-				}
-			}
-		}
-	}
-
-	public function partload()
-	{
-		if (is_readable($this->importFile)) {
-			new LoadCategories($this->importFile, 'part');
-			new LoadProducts($this->importFile, 'part');
-
-		}
-
-		if (is_readable($this->offerFile)) {
-			new LoadPrices($this->offerFile, 'part');
-		}
-		exit('success');
 	}
 
 
@@ -119,20 +88,17 @@ class SyncActions extends AppController
 
 	public function LoadCategories()
 	{
-		new LoadCategories($this->importFile, 'full',true);
-		$this->exitWithPopup('ok');
+		new LoadCategories($this->importFile, 'full',$this->logger);
 	}
 
 	public function LoadProducts()
 	{
 		new LoadProducts($this->importFile, 'full');
-		$this->exitWithPopup('ok');
 	}
 
 	public function LoadPrices()
 	{
 		new LoadPrices($this->offerFile, 'full');
-		$this->exitWithPopup('ok');
 	}
 
 	protected function checkauth()
@@ -228,19 +194,19 @@ class SyncActions extends AppController
 	public function removeCategories()
 	{
 		Category::truncate();
-		$this->exitWithPopup('ok');
+//		$this->exitWithPopup('ok');
 	}
 
 	public function removeProducts()
 	{
 		Product::truncate();
-		$this->exitWithPopup('ok');
+//		$this->exitWithPopup('ok');
 	}
 
 	public function removePrices()
 	{
 		Price::truncate();
-		$this->exitWithPopup('ok');
+//		$this->exitWithPopup('ok');
 	}
 
 	public function trancate()
@@ -248,6 +214,39 @@ class SyncActions extends AppController
 		$this->removeCategories();
 		$this->removeProducts();
 		$this->removePrices();
-		$this->exitWithPopup('ok');
+//		$this->exitWithPopup('ok');
+	}
+
+	public function part()
+	{
+		if (isset($this->route->params['type'])) {
+			if ($this->route->params['type'] === 'catalog') {
+				if ($this->route->params['mode'] === 'checkauth') {
+					$this->checkauth();
+				} elseif ($this->route->params['mode'] === 'init') {
+					$this->zip();
+				} elseif ($this->route->params['mode'] === 'file') {
+					$this->file();
+//					$time = '<br>+++' . date('H:i:s') . '<br>+++';
+//					$this->append($time);
+				} elseif ($this->route->params['mode'] === 'import') {
+					$this->partload();
+				}
+			}
+		}
+	}
+
+	public function partload()
+	{
+		if (is_readable($this->importFile)) {
+			new LoadCategories($this->importFile, 'part',false);
+			new LoadProducts($this->importFile, 'part');
+
+		}
+
+		if (is_readable($this->offerFile)) {
+			new LoadPrices($this->offerFile, 'part');
+		}
+		exit('success');
 	}
 }

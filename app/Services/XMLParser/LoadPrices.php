@@ -6,18 +6,22 @@ namespace app\Services\XMLParser;
 use app\model\Price;
 use app\model\Product;
 use app\model\Unit;
+use app\Services\Logger\ILogger;
 
 class LoadPrices extends Parser
 {
 	protected $prices;
 	protected $type;
+	protected $logger;
 
-	public function __construct($file, $type)
+	public function __construct($file, $type, $logger)
 	{
 		parent::__construct($file);
 		$this->type = $type;
 		$this->prices = $this->xmlObj['ПакетПредложений']['Предложения']['Предложение'];
+		if ($logger) $logger->write('--- prices load start ---');
 		$this->run();
+		if ($logger) $logger->write('--- prices load stop ---');
 	}
 
 	protected function run()
