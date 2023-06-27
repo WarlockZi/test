@@ -44,7 +44,10 @@ class Product extends Model
 	{
 		return $this->morphToMany(Val::class, 'valuable');
 	}
-
+	public function promotions()
+	{
+		return $this->hasMany(Promotion::class,'product_1s_id','1s_id');
+	}
 	public function getMainImagePathAttribute()
 	{
 		$art = trim($this->art);

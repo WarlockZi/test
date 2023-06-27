@@ -36,4 +36,8 @@ class ProductAction
 		UnitAction::changeUnit($req);
 	}
 
+	public static function changePromotion(array $req)
+	{
+		UnitAction::changeUnit($req);
+	}
 }

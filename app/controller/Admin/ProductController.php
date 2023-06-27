@@ -7,7 +7,7 @@ use app\controller\AppController;
 use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
-use app\view\FormViews\ProductFormView;
+use app\view\Product\ProductFormView;
 
 
 class ProductController extends AppController
@@ -47,5 +47,10 @@ class ProductController extends AppController
 	public function actionChangeunit()
 	{
 		ProductAction::changeUnit($this->ajax);
+	}
+
+	public function actionChangepromotion()
+	{
+		ProductAction::changePromotion($this->ajax);
 	}
 }

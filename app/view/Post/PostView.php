@@ -31,7 +31,7 @@ class PostView
 			->pageTitle('Должность : ' . $post->name)
 			->del()
 			->save()
-			->toList()
+			->toList('adminsc/post/list')
 			->field(
 				ItemFieldBuilder::build('id',$post)
 					->name('ID')

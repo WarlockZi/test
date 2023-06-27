@@ -29,7 +29,7 @@
 	<? endif; ?>
 
 	<? if ($this->toList): ?>
-	  <a href="/adminsc/<?= $this->model . $this->toListHref; ?>"
+	  <a href="<?=$this->toListHref; ?>"
 	     class="to-list">
 			 <?= $this->toListText ?>
 	  </a>

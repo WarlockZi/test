@@ -54,7 +54,7 @@ class ItemBuilder extends Builder
     return $this;
   }
 
-  public function field($field)
+  public function field(ItemFieldBuilder $field)
   {
     $this->fields[] = $field;
     return $this;

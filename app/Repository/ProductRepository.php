@@ -25,6 +25,7 @@ class ProductRepository extends Controller
 			->with('mainImages')
 			->with('manufacturer.country')
 			->with('detailImages')
+			->with('promotions')
 			->with('smallpackImages')
 			->with('bigpackImages')
 			->with(['baseUnit'=>function ($query)use($id){

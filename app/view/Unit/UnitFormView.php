@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\view\FormViews;
+namespace app\view\Unit;
 
 
 use app\model\Unit;

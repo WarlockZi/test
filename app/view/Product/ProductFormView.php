@@ -1,13 +1,14 @@
 <?php
 
 
-namespace app\view\FormViews;
+namespace app\view\Product;
 
 
 use app\core\FS;
 use app\model\Category;
 use app\model\Manufacturer;
 use app\model\Product;
+use app\model\Promotion;
 use app\model\Unit;
 use app\Repository\CategoryRepository;
 use app\Repository\ProductRepository;
@@ -23,13 +24,16 @@ use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\Image\ImageView;
-use app\view\Product\ProductView;
+
 use app\view\Property\PropertyView;
+
+
+use app\view\Unit\UnitFormView;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductFormView
 {
-	protected static function getUnit(int $selected, string $field):string
+	protected static function getUnit(int $selected, string $field): string
 	{
 		$html =
 			SelectBuilder::build(
@@ -50,8 +54,8 @@ class ProductFormView
 		if (!$baseUnit) return 'Базовая единица не выбрана';
 		$units = $baseUnit->units;
 		$selector = UnitFormView::selectorNew($baseUnit->id);
-		return FS::getFileContent(ROOT.'/app/view/Product/Admin/units.php',
-			compact('units','baseUnit','selector'));
+		return FS::getFileContent(ROOT . '/app/view/Product/Admin/units.php',
+			compact('units', 'baseUnit', 'selector'));
 	}
 
 	public static function edit(Product $product): string
@@ -63,7 +67,6 @@ class ProductFormView
 					->name('ID')
 					->get()
 			)
-
 			->field(
 				ItemFieldBuilder::build('slug', $product)
 					->name('Адрес')
@@ -102,11 +105,10 @@ class ProductFormView
 				ItemFieldBuilder::build('base_unit', $product)
 					->name('Базовая единица')
 					->html(
-								self::getUnit($product->baseUnit->id ?? 0, 'base_unit')
+						self::getUnit($product->baseUnit->id ?? 0, 'base_unit')
 					)
 					->get()
 			)
-
 			->field(
 				ItemFieldBuilder::build('manufacturer', $product)
 					->name('Производитель')
@@ -121,11 +123,11 @@ class ProductFormView
 					)
 					->get()
 			)
-      ->field(
-        ItemFieldBuilder::build('1s_id', $product)
-          ->name('1s_ID')
-          ->get()
-      )
+			->field(
+				ItemFieldBuilder::build('1s_id', $product)
+					->name('1s_ID')
+					->get()
+			)
 			->tab(
 				ItemTabBuilder::build('Свойства товара')
 					->html(
@@ -151,6 +153,12 @@ class ProductFormView
 					)
 			)
 			->tab(
+				ItemTabBuilder::build('Акции')
+					->html(
+						self::promotions($product)
+					)
+			)
+			->tab(
 				ItemTabBuilder::build('Основная картинка')
 					->html(
 						ProductView::mainImage($product)
@@ -162,7 +170,6 @@ class ProductFormView
 						self::getImage($product, 'detailImages', 'detail', true)
 					)
 			)
-
 			->tab(
 				ItemTabBuilder::build('Внутритарная упаковка')
 					->html(
@@ -216,7 +223,7 @@ class ProductFormView
 			$str .= self::getSelect($currentCategory, $product);
 			$currentCategory = $currentCategory->parentRecursive;
 		}
-		return "<div class='values'>$str</div>"	;
+		return "<div class='values'>$str</div>";
 	}
 
 	protected static function getSeo($product): string
@@ -240,6 +247,27 @@ class ProductFormView
 	protected static function getDescription($product): string
 	{
 		return include ROOT . '/app/view/Product/description.php';
+	}
+
+	protected static function promotions($product): string
+	{
+		return MyList::build(Promotion::class)
+			->relation('promotions')
+			->items($product->promotions)
+			->column(
+				ListColumnBuilder::build('id')
+					->get()
+			)
+			->column(ListColumnBuilder::build('count')
+				->contenteditable()
+				->get()
+			)
+//			->column(ListColumnBuilder::build('count')
+//				->get()
+//			)
+			->edit()
+			->addButton('ajax')
+			->get();
 	}
 
 	public static function list(Collection $items): string
