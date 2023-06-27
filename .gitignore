@@ -9,4 +9,5 @@
 /.env
 /app/Storage/log/*
 /app/Storage/dev/*
+/app/Storage/import/*
 
