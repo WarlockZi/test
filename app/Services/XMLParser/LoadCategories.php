@@ -9,19 +9,19 @@ use app\Services\Slug;
 class LoadCategories extends Parser
 {
 	protected $type;
+	protected $log;
 
-	public function __construct($file, $type)
+	public function __construct($file, $type, $log)
 	{
 		parent::__construct($file);
+		$this->log = $log;
 		$this->type = $type;
 		$this->run();
 	}
 
-	protected function run()
+	protected function run($arr = [], $id = 0)
 	{
 		$groups = $this->xmlObj['Классификатор']['Группы']['Группа'];
-		$arr = [];
-		$id = 0;
 		$this->recursion($groups['Группы']['Группа'], $id, -1, $arr);
 	}
 
@@ -54,22 +54,13 @@ class LoadCategories extends Parser
 		$item['slug'] = Slug::slug($item['name']);
 
 		if ($this->type === 'full') {
-			$category = Category::create($item);
+			Category::create($item);
 		} else {
-			$found = Category::query()
-				->where('1s_id', $item['1s_id'])
-				->first();
-			if ($found){
-				$found->delete();
-				if ($level > 0 && isset($parent['id']))
-					$item['category_id'] = $parent['id'];
-				if ($level === 1) {
-					$item['show_front'] = 1;
-				}
-				$category = Category::create($item);
-			}
+			$this->partCreate($item, $level, $parent);
 		}
+		echo $item;
 
+		if ($this->log) $this->log($item);
 //		$item['pref'] = str_repeat('-', $level);
 //		$this->ech($item);
 		return $item;
@@ -78,5 +69,21 @@ class LoadCategories extends Parser
 	protected function ech(array $item)
 	{
 		echo "{$item['id']} {$item['pref']} {$item['name']}<br>";
+	}
+
+	protected function partCreate($item, $level, $parent)
+	{
+		$found = Category::query()
+			->where('1s_id', $item['1s_id'])
+			->first();
+		if ($found) {
+			$found->delete();
+			if ($level > 0 && isset($parent['id']))
+				$item['category_id'] = $parent['id'];
+			if ($level === 1) {
+				$item['show_front'] = 1;
+			}
+			Category::create($item);
+		}
 	}
 }
