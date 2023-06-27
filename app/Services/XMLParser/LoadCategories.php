@@ -9,13 +9,14 @@ use app\Services\Slug;
 class LoadCategories extends Parser
 {
 	protected $type;
-	protected $log;
+	protected $logger;
 
-	public function __construct($file, $type, $log)
+	public function __construct($file, $type, $logger)
 	{
 		parent::__construct($file);
-		$this->log = $log;
+		$this->logger = $logger;
 		$this->type = $type;
+		if ($this->logger) $this->logger->write("---- CATEGORIES ----"."\n");
 		$this->run();
 	}
 
@@ -58,11 +59,8 @@ class LoadCategories extends Parser
 		} else {
 			$this->partCreate($item, $level, $parent);
 		}
-		echo $item;
+//		if ($this->logger) $this->logger->write(json_encode($item)."\n");
 
-		if ($this->log) $this->log($item);
-//		$item['pref'] = str_repeat('-', $level);
-//		$this->ech($item);
 		return $item;
 	}
 

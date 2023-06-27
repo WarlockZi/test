@@ -5,6 +5,7 @@ namespace app\Services\XMLParser;
 
 use app\model\Category;
 use app\model\Product;
+use app\Services\Logger\ILogger;
 use app\Services\Slug;
 
 class LoadProducts extends Parser
@@ -12,12 +13,14 @@ class LoadProducts extends Parser
 	protected $goods;
 	protected $type;
 
-	public function __construct($file, $type)
+	public function __construct($file, $type, $logger)
 	{
 		parent::__construct($file);
 		$this->type = $type;
 		$this->goods = $this->xmlObj['Каталог']['Товары']['Товар'];
+		if ($logger) $logger->write('--- products load start ---');
 		$this->run();
+		if ($logger) $logger->write('--- products load stop ---');
 	}
 
 	protected function run()

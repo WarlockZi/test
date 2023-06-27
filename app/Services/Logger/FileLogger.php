@@ -10,9 +10,9 @@ class FileLogger implements ILogger
 {
 	protected $logFile;
 
-	public function __construct()
+	public function __construct($filename = 'log.txt')
 	{
-		$this->logFile = StorageLog::getFile('log');
+		$this->logFile = StorageLog::getFile($filename);
 	}
 
 
@@ -24,6 +24,9 @@ class FileLogger implements ILogger
 
 	public function write($content)
 	{
-		return file_put_contents($this->logFile, $content);
+		if (is_readable($this->logFile)) {
+			return file_put_contents($this->logFile, $content, FILE_APPEND);
+		}
+		return false;
 	}
 }
