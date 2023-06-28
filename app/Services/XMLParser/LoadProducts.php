@@ -24,7 +24,6 @@ class LoadProducts extends Parser
 		$this->run();
 		if ($this->logger)
 			$this->logger->write('--- products stop ---'.$this->now());
-		exit('stop');
 	}
 
 	protected function run()
