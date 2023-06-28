@@ -20,7 +20,7 @@ class LoadProducts extends Parser
 		$this->goods = $this->xmlObj['Каталог']['Товары']['Товар'];
 		if ($this->logger)
 			$this->logger->write('--- products start ---'.$this->now());
-		exit('start');
+
 		$this->run();
 		if ($this->logger)
 			$this->logger->write('--- products stop ---'.$this->now());
