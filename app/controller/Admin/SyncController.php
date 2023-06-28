@@ -20,6 +20,7 @@ class SyncController extends AppController
 	public function __construct()
 	{
 		parent::__construct();
+		$stash = '';
 		$this->logger = new FileLogger();
 		$this->repo = new SyncActions($this->route, $this->logger);
 	}
