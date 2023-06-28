@@ -81,7 +81,7 @@ class SyncActions extends AppController
 
 		if (is_readable($this->offerFile)) {
 			$this->LoadPrices();
-			$this->append("<br>loaded = price<br>");
+//			$this->append("<br>loaded = price<br>");
 		}
 		exit('success');
 	}
