@@ -20,10 +20,10 @@ class LoadPrices extends Parser
 		$this->type = $type;
 		$this->prices = $this->xmlObj['ПакетПредложений']['Предложения']['Предложение'];
 		if ($this->logger)
-			$this->logger->write('--- price start ---'.$this->now());
+			$this->logger->write('--- price    start ---'.$this->now());
 		$this->run();
 		if ($this->logger)
-			$this->logger->write('--- price stop ---'.$this->now());
+			$this->logger->write('--- price     stop ---'.$this->now());
 	}
 
 	protected function run()
