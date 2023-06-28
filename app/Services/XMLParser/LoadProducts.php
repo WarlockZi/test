@@ -13,14 +13,16 @@ class LoadProducts extends Parser
 	protected $goods;
 	protected $type;
 
-	public function __construct($file, $type, $logger)
+	public function __construct($file, $type)
 	{
 		parent::__construct($file);
 		$this->type = $type;
 		$this->goods = $this->xmlObj['Каталог']['Товары']['Товар'];
-		if ($logger) $logger->write('--- products load start ---');
+		if ($this->logger)
+			$this->logger->write('--- products start ---'.$this->now());
 		$this->run();
-		if ($logger) $logger->write('--- products load stop ---');
+		if ($this->logger)
+			$this->logger->write('--- products stop ---'.$this->now());
 	}
 
 	protected function run()

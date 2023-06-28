@@ -16,8 +16,11 @@ class LoadCategories extends Parser
 		parent::__construct($file);
 		$this->logger = $logger;
 		$this->type = $type;
-		if ($this->logger) $this->logger->write("---- CATEGORIES ----"."\n");
+		if ($this->logger)
+			$this->logger->write('--- category start ---'.$this->now());
 		$this->run();
+		if ($this->logger)
+			$this->logger->write('--- category stop ---'.$this->now());
 	}
 
 	protected function run($arr = [], $id = 0)

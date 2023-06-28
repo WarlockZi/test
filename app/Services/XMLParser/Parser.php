@@ -19,6 +19,11 @@ class Parser
 		$this->xmlObj = json_decode(json_encode($this->xml), true);
 	}
 
+	protected function now()
+	{
+		return date("F j, Y, g:i a") . "\n";
+	}
+
 
 	protected function isAssoc(array $arr)
 	{
