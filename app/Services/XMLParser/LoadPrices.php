@@ -14,14 +14,16 @@ class LoadPrices extends Parser
 	protected $type;
 	protected $logger;
 
-	public function __construct($file, $type, $logger)
+	public function __construct($file, $type)
 	{
 		parent::__construct($file);
 		$this->type = $type;
 		$this->prices = $this->xmlObj['ПакетПредложений']['Предложения']['Предложение'];
-		if ($logger) $logger->write('--- prices load start ---');
+		if ($this->logger)
+			$this->logger->write('--- price start ---'.$this->now());
 		$this->run();
-		if ($logger) $logger->write('--- prices load stop ---');
+		if ($this->logger)
+			$this->logger->write('--- price stop ---'.$this->now());
 	}
 
 	protected function run()
