@@ -12,7 +12,7 @@ class Promotion extends Model
 	protected $fillable = [
 		'new_price',
 		'count',
-		'date',
+		'active_till',
 		'product_1s_id',
 	];
 

@@ -42,23 +42,22 @@ import select from '../components/select/select';
 import accordionShow from '../components/accordion-show';
 import morph from '../components/morph/morph';
 import Search from "../components/header/search/search";
+import Promotion from "../Promotions/Promotion";
 
 
 $(document).ready(async function () {
 
-  // let popup = await import('./')
+  new Promotion();
 
   new Search(true);
-  // select();
-  morph();
 
+  morph();
   navigate(window.location.pathname);
   radio();
   multiselect();
   catalogItem();
   tooltips();
   quill();
-  // debugger
   accordionShow();
 
   testEdit();
@@ -80,11 +79,11 @@ $(document).ready(async function () {
       $("[crm]").addClass('current')
 
 
-    } else if ( /\/adminsc\/planning/.test(str)) {
+    } else if (/\/adminsc\/planning/.test(str)) {
       $("[plan]").addClass('current')
 
     } else if (
-      /\/adminsc\/category/.test(str)||
+      /\/adminsc\/category/.test(str) ||
       /\/adminsc\/product/.test(str)
     ) {
       $("[catalog]").addClass('current')

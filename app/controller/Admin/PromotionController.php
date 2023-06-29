@@ -4,8 +4,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\model\Promotion;
-use app\view\components\Builders\ItemBuilder\ItemBuilder;
-use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
+use app\view\Promotion\PromotionFormView;
 
 class PromotionController Extends AppController
 {
@@ -20,28 +19,8 @@ class PromotionController Extends AppController
 	{
 		$id = $this->route->id;
 		$promotion = Promotion::with('product')->find($id);
-		$promotion = ItemBuilder::build($promotion, 'promotion')
-			->field(
-				ItemFieldBuilder::build('id', $promotion)
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('count', $promotion)
-					->name('количество')
-					->contenteditable()
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('new_price', $promotion)
-					->contenteditable()
-					->name('новая цена')
-					->get()
-
-			)
-			->toList("adminsc/product/edit/{$promotion->product['id']}",'К списку')
-			->get();
+		$promotion = PromotionFormView::edit($promotion);
 		$this->set(compact('promotion'));
-
 	}
 
 }
