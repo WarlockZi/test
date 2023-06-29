@@ -57,7 +57,7 @@ use \app\core\Icon;
 					<a href="/main/about">О компании</a>
 
 					<hr>
-					<a href="">Акции</a>
+					<a href="/promotions">Акции</a>
 
 					<hr>
 

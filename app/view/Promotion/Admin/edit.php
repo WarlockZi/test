@@ -1,4 +1,4 @@
-<div class="promotion">
+<div class="promotion-edit">
 
 <?=$promotion?>
 

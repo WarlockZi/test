@@ -23,7 +23,7 @@ use \app\core\Icon;
 			Главная
 		</a>
 
-		 <? if (User::can($user, ['role_admin'])): // admin ?>
+		 <? if (User::can($user, ['role_admin', 'role_seller'])): // admin ?>
 		  <li crm>
 
 			  <div class="label">
@@ -193,7 +193,7 @@ use \app\core\Icon;
 				  <a class="neon" href='/adminsc/settings/dump'>Dump</a>
 				  <a class="neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
 				  <a class="neon" href='/adminsc/settings/cache'>Очистить кэш</a>
-<!--				  <a class="neon" href="/adminsc/sync/init?type=catalog& mode=import">Запрос 1с</a>-->
+				  <!--				  <a class="neon" href="/adminsc/sync/init?type=catalog& mode=import">Запрос 1с</a>-->
 				  <a class="neon" href="/adminsc/sync">1c Sync</a>
 				  <a class="neon" href="/adminsc/request">Запросы</a>
 				  <a class="neon" href="/adminsc/request/phpinfo/">PHPinfo</a>
