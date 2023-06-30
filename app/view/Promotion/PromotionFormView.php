@@ -5,6 +5,7 @@ namespace app\view\Promotion;
 
 
 use app\core\FS;
+use app\model\Promotion;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
@@ -15,6 +16,7 @@ class PromotionFormView
 
 	static function edit($promotion)
 	{
+		$link = $promotion->product?"adminsc/product/edit/{$promotion->product->id}":'adminsc/product/list';
 		$promotion = ItemBuilder::build($promotion, 'promotion')
 			->field(
 				ItemFieldBuilder::build('id', $promotion)
@@ -39,7 +41,7 @@ class PromotionFormView
 					->name('Действует до')
 					->get()
 			)
-			->toList("adminsc/product/edit/{$promotion->product['id']}", 'К товару')
+			->toList($link, 'К товару')
 			->pageTitle('Акция')
 			->get();
 
@@ -47,16 +49,19 @@ class PromotionFormView
 	}
 
 
-	public static function index($promotions){
+	public static function adminIndex($promotions){
 
-		$promotion = MyList::build($promotions)
+		$promotion = MyList::build(Promotion::class)
+			->items($promotions)
 			->pageTitle('Акции')
 			->column(
 				ListColumnBuilder::build('product')
+					->function(Promotion::class, 'productLink')
 					->name('Товар')
 					->get()
 			)
 			->del()
+//			->softDel()
 			->edit()
 			->get();
 
