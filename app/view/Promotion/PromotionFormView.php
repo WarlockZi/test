@@ -60,6 +60,21 @@ class PromotionFormView
 					->name('Товар')
 					->get()
 			)
+			->column(
+				ListColumnBuilder::build('count')
+					->name('От количества')
+					->get()
+			)
+			->column(
+				ListColumnBuilder::build('active_till')
+					->name('Действует до')
+					->get()
+			)
+			->column(
+				ListColumnBuilder::build('new_price')
+					->name('Цена по акции')
+					->get()
+			)
 			->del()
 //			->softDel()
 			->edit()
