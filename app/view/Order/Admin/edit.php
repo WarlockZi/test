@@ -1,7 +1,7 @@
 <? use app\view\UserView;?>
-<div class="order">
+<div class="order-edit">
 
-	<div class="page-name">Заказ</div>
+	<div class="page-name">Заказ <span id="order-id">&nbsp;новый</span></div>
 
 	<div class="row user">
 		<div class="client">
@@ -15,7 +15,7 @@
 		<div class="manager">
 			Менеджер -
 		</div>
-		 <?= UserView::getManagerSecector(); ?>
+		 <?= UserView::getManagerSelector(); ?>
 	</div>
 
 	<? foreach ($orders as $order): ?>

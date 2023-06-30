@@ -7,6 +7,8 @@ namespace app\view\Promotion;
 use app\core\FS;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
+use app\view\components\Builders\ListBuilder\ListColumnBuilder;
+use app\view\components\Builders\ListBuilder\MyList;
 
 class PromotionFormView
 {
@@ -33,7 +35,7 @@ class PromotionFormView
 
 			->field(
 				ItemFieldBuilder::build('active_till', $promotion)
-					->html(self::activeTill($promotion))
+					->html(FS::getFileContent(__DIR__.'/Admin/active_till.php',compact('promotion')))
 					->name('Действует до')
 					->get()
 			)
@@ -44,9 +46,21 @@ class PromotionFormView
 		return $promotion;
 	}
 
-	protected static function activeTill($promotion){
-		return FS::getFileContent(__DIR__.'/Admin/active_till.php',compact('promotion'));
 
+	public static function index($promotions){
+
+		$promotion = MyList::build($promotions)
+			->pageTitle('Акции')
+			->column(
+				ListColumnBuilder::build('product')
+					->name('Товар')
+					->get()
+			)
+			->del()
+			->edit()
+			->get();
+
+		return $promotion;
 	}
 
 }

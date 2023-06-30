@@ -1,6 +1,6 @@
 <?
 
-use app\view\FormViews\UnitFormView;
+use app\view\Unit\UnitFormView;
 use app\core\Icon;
 
 ?>

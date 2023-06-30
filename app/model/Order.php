@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
 
-//	public $table = 'orders';
-//	public $model = 'order';
-
 	public $timestamps = false;
 
 	protected $fillable = [
@@ -19,6 +16,7 @@ class Order extends Model
 		'ip',
 		'user_id',
 		'crated_at',
+		'bill_id'
 	];
 
 	public function items()
@@ -41,8 +39,14 @@ class Order extends Model
 		return $this->belongsTo(User::class);
 	}
 
-	public static function userEmail($builder, $order, $func){
+	public static function userEmail($builder, $order, $func)
+	{
 		return $order->user->email;
+	}
+
+	public function manager()
+	{
+		return $this->hasOne(User::class);
 	}
 
 

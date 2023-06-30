@@ -208,7 +208,9 @@ header {
 
     .search,
     .gamburger,
-    .cart {
+    .cart,
+    .promotions
+    {
       position: relative;
       height: 100%;
       margin: initial;
@@ -218,6 +220,15 @@ header {
 
       &:hover {
         background-color: #285f8f;
+      }
+
+    }
+
+    .promotions{
+
+      svg{
+        fill:transparent;
+        stroke-width: 1px;
       }
     }
 
