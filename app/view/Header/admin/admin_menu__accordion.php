@@ -23,22 +23,21 @@ use \app\core\Icon;
 			Главная
 		</a>
 
-		 <? if (User::can($user, ['role_admin', 'role_seller'])): // admin ?>
+		 <? if (User::can($user, ['role_admin', 'role_manager'])): // admin ?>
 		  <li crm>
 
 			  <div class="label">
 
 				  <div class="arrow"></div>
 						 <?= Icon::chart('admin-menu') ?>
-
 				  CRM
-
 			  </div>
 			  <ul class="level-1">
 				  <a class="neon" href="/adminsc/wish">Предложения сайт</a>
 				  <a class="neon" href="/adminsc/order">Заказы</a>
 				  <a class="neon" href="/adminsc/user">Пользователи</a>
 				  <a class="neon" href="/adminsc/crm">crm</a>
+				  <a class="neon" href="/adminsc/promotion">Акции</a>
 			  </ul>
 		  </li>
 		 <? endif; ?>

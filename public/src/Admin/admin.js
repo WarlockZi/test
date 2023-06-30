@@ -43,12 +43,13 @@ import accordionShow from '../components/accordion-show';
 import morph from '../components/morph/morph';
 import Search from "../components/header/search/search";
 import Promotion from "../Promotions/Promotion";
+import Order from "../Admin/Order/order";
 
 
 $(document).ready(async function () {
 
+  new Order();
   new Promotion();
-
   new Search(true);
 
   morph();

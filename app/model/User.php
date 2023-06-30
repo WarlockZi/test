@@ -22,7 +22,7 @@ class User extends Model
 		'hired',
 		'fired',
 		'sex',
-		'phone'
+		'phone',
 	];
 
 	public function rights()
@@ -74,7 +74,7 @@ class User extends Model
 
 	public static function isEmployee(array $user): bool
 	{
-		if(!$user) return false;
+		if (!$user) return false;
 		if (is_string($user['rights'])) {
 			$user['rights'] = explode(',', $user['rights']);
 		}

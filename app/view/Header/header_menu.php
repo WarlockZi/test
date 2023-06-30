@@ -44,6 +44,9 @@ use \app\core\Icon;
 				<div class="count<?= $oItems ? ' show' : ''; ?>"><?= $oItems; ?></div>
 					 <?= Icon::shoppingCart('feather'); ?>
 			</a>
+			<a class="promotions" href="/promotion">
+					 <?= Icon::gift(); ?>
+			</a>
 
 			<div class="gamburger">
 					 <?= Icon::menu('feather') ?>

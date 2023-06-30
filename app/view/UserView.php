@@ -8,6 +8,7 @@ use app\controller\Controller;
 use app\core\Error;
 use app\core\FS;
 use app\model\Product;
+use app\model\User;
 use app\view\Assets\UserAssets;
 use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
@@ -27,16 +28,19 @@ class UserView extends View
 		$this->setFooter();
 	}
 
-	public function getManagerSecector()
+	public static function getManagerSelector()
 	{
+		$u = User::where('rights', 'LIKE', '%role_manager%')->get();
 		$select = SelectNewBuilder::build(
-			ArrayOptionsBuilder::build(User::get)
+			ArrayOptionsBuilder::build($u)
 				->initialOption()
 				->get()
 		)
 			->get();
+		return $select;
 
 	}
+
 	protected function getViewFile(Controller $controller): string
 	{
 		$route = $this->controller->getRoute();
