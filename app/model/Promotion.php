@@ -25,5 +25,11 @@ class Promotion extends Model
 				);
 	}
 
+	public static function productLink($b, $i, $col)
+	{
+		if ($i->product)
+			return $i->product->name;
+	}
+
 
 }

@@ -25,7 +25,7 @@ class PromotionController Extends AppController
 	public function actionIndex()
 	{
 		$promotions = Promotion::with('product')->get();
-//		$promotion = PromotionFormView::index($promotions);
-//		$this->set(compact('promotion'));
+		$promotions = PromotionFormView::adminIndex($promotions);
+		$this->set(compact('promotions'));
 	}
 }

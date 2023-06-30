@@ -60,9 +60,6 @@ use \app\core\Icon;
 					<a href="/main/about">О компании</a>
 
 					<hr>
-					<a href="/promotions">Акции</a>
-
-					<hr>
 
 					<a href="/category">Каталог</a>
 
