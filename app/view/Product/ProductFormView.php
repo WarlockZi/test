@@ -44,6 +44,13 @@ class ProductFormView
 					->get()
 			)
 			->column(
+				ListColumnBuilder::build('art')
+					->name('Арт')
+					->search()
+					->width('70px')
+					->get()
+			)
+			->column(
 				ListColumnBuilder::build('name')
 					->name('Наименование')
 					->contenteditable()
