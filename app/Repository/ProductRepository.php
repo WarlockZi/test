@@ -79,7 +79,7 @@ class ProductRepository extends Controller
 	public static function hasNoImgInStore()
 	{
 		$products = Product::query()
-			->select('art', 'name', 'id')
+			->select('art', 'name', 'id','instore')
 			->get();
 
 		$arr = new Collection();
@@ -95,7 +95,7 @@ class ProductRepository extends Controller
 	public static function hasNoImgNotInStore()
 	{
 		$products = Product::query()
-			->select('art', 'name', 'id')
+			->select('art', 'name', 'id','instore')
 			->get();
 
 		$arr = new Collection();
