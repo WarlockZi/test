@@ -18,7 +18,7 @@ class ReportController extends AppController
 	{
 		$this->view = 'productswithoutimg';
 		$p = ProductRepository::hasNoImgInStore();
-		$productList = ProductFormView::hasNoImgList($p);
+		$productList = ProductFormView::hasNoImgList($p, 'Товары без картинок в наличии');
 		$this->set(compact('productList'));
 	}
 
@@ -26,7 +26,7 @@ class ReportController extends AppController
 	{
 		$this->view = 'productswithoutimg';
 		$p = ProductRepository::hasNoImgNotInStore();
-		$productList = ProductFormView::hasNoImgList($p);
+		$productList = ProductFormView::hasNoImgList($p, 'Товары без картинок без наличия');
 		$this->set(compact('productList'));
 	}
 }
