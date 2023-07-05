@@ -39,6 +39,7 @@ class AdminView extends View
 	{
 		if ($controller->view){
 			$file = $controller->getViewPath().'\\'.$controller->view.'.php';
+			echo $file;
 			if (is_file($file)){
 				$this->view = $file;
 			}
