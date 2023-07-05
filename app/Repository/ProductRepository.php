@@ -79,14 +79,18 @@ class ProductRepository extends Controller
 	public static function hasNoImg()
 	{
 		$products = Product::query()
-			->select('art','name','id')
+			->select('art', 'name', 'id')
 			->get();
 
 		$arr = new Collection();
-		foreach ($products as $product){
-			if (!is_file(StorageImg::getFile('product\\uploads\\'.$product->art.'.jpg'))){
+		foreach ($products as $product) {
+			if (!$product->mainImages) {
 				$arr->push($product);
 			}
+
+//			if (!is_file(StorageImg::getFile('product\\uploads\\'.$product->art.'.jpg'))){
+//				$arr->push($product);
+//			}
 		}
 		return $arr;
 	}
