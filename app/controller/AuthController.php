@@ -8,10 +8,12 @@ use app\model\User;
 use app\view\User\UserView;
 use app\view\View;
 use Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class AuthController extends AppController
 {
 	protected string $salt = "popiyonovacheesa";
+	protected $mailer;
 
 	public function __construct()
 	{
@@ -20,6 +22,7 @@ class AuthController extends AppController
 			$this->assets->setAuth();
 //			$this->assets->setCss('auth');
 		}
+		$this->mailer = new PHPMailer();
 	}
 
 	public function actionLogin()
@@ -52,6 +55,8 @@ class AuthController extends AppController
 
 	public function actionRegister()
 	{
+
+//		$r =fsockopen("smtp.yandex.ru", 465, $errnum, $errstr, 5);
 		if ($user = $this->ajax) {
 			if (!$user['password']) exit('empty password');
 			if (!$user['email']) exit('empty email');
@@ -66,22 +71,22 @@ class AuthController extends AppController
 
 			$data = Mail::mailConfirmFactory($user);
 
-			$user = User::create($user);
-			$user->save();
+//			$user = User::create($user);
+//			$user->save();
 
-			if (!$user) {
-				exit('registration failed');
-			}
+//			if (!$user) {
+//				exit('registration failed');
+//			}
 			try {
-				$headers  = "MIME-Version: 1.0\r\n";
-				$headers .= "Content-type: text/html; charset=utf-8\r\n";
-				$headers .= "To: <vvoronik@yanedex.ru>\r\n";
-				$headers .= "From: <vitexopt@vitexopt.ru>\r\n";
-				if (mail('vvoronik@yanedex.ru', "Подтвердите Email на сайте", 'f',$headers)) {
-					// Если да, то выводит сообщение
-					echo 'Подтвердите на почте';
-				}
-//				Mail::send_mail($data);
+//				$headers  = "MIME-Version: 1.0\r\n";
+//				$headers .= "Content-type: text/html; charset=utf-8\r\n";
+//				$headers .= "To: <vvoronik@yanedex.ru>\r\n";
+//				$headers .= "From: <vitexopt@vitexopt.ru>\r\n";
+//				if (mail('vvoronik@yanedex.ru', "Подтвердите Email на сайте", 'f',$headers)) {
+//					// Если да, то выводит сообщение
+//					echo 'Подтвердите на почте';
+//				} vitaliy04111979@gmail.com
+				Mail::send_mail($data);
 			} catch (Exception $e) {
 				exit($e->getMessage());
 			}

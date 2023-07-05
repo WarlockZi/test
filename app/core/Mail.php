@@ -11,7 +11,7 @@ class Mail
 	protected static function setMailer()
 	{
 		$mail = new PHPMailer(true);
-    $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;
+    $mail->SMTPDebug = 2;
 		$mail->isSMTP();
 		$mail->SMTPOptions = array(
 			'ssl' => array(
@@ -20,12 +20,21 @@ class Mail
 				'allow_self_signed' => true
 			)
 		);
-		$mail->Port = (int)$_ENV['SMTP_PORT'];
+		$mail->Port = 465;
 		$mail->Username = $_ENV['SMTP_USERNAME'];
 		$mail->Password = $_ENV['SMTP_PASS'];
-		$mail->SMTPAuth = (bool)$_ENV['SMTP_AUTH'];
-		$mail->SMTPSecure = (bool)$_ENV['SMTP_SMTPSECURE'];
-		$mail->Host = $_ENV['SMTP_HOST'];
+		$mail->SMTPAuth = true;
+//		$mail->SMTPSecure = (bool)$_ENV['SMTP_SMTPSECURE'];
+		$mail->Host = 'smtp.yandex.ru';
+
+//		$mail->Port = (int)$_ENV['SMTP_PORT'];
+//		$mail->Username = $_ENV['SMTP_USERNAME'];
+//		$mail->Password = $_ENV['SMTP_PASS'];
+//		$mail->SMTPAuth = (bool)$_ENV['SMTP_AUTH'];
+//		$mail->SMTPSecure = (bool)$_ENV['SMTP_SMTPSECURE'];
+//		$mail->Host = $_ENV['SMTP_HOST'];
+
+//		vitaliy04111979@gmail.com
 		$mail->setFrom($_ENV['SMTP_FROM_EMAIL'], $_ENV['SMTP_FROM_NAME']);
 		$mail->CharSet = "utf-8";
 		return $mail;
@@ -34,6 +43,7 @@ class Mail
 	public static function send_mail($data)
 	{
 		$mail = self::setMailer();
+
 		try {
 			foreach ($data['to'] as $address) {
 				$mail->addAddress($address);

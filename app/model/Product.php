@@ -40,6 +40,7 @@ class Product extends Model
 			->hasOne(Seo::class,'product_category_1sid','1s_id');
 	}
 
+
 	public function values()
 	{
 		return $this->morphToMany(Val::class, 'valuable');

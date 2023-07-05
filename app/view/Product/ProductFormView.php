@@ -33,6 +33,32 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ProductFormView
 {
+
+	public static function hasNoImgList($products){
+
+		return MyList::build(Product::class)
+			->pageTitle('Товары')
+			->column(
+				ListColumnBuilder::build('id')
+					->name('ID')
+					->get()
+			)
+			->column(
+				ListColumnBuilder::build('name')
+					->name('Наименование')
+					->contenteditable()
+					->search()
+					->width('1fr')
+					->get()
+			)
+			->items($products)
+			->edit()
+			->del()
+			->addButton('ajax')
+			->get();
+
+	}
+
 	protected static function getUnit(int $selected, string $field): string
 	{
 		$html =

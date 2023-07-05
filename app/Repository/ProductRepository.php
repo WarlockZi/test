@@ -8,7 +8,9 @@ use app\controller\Controller;
 use app\core\FS;
 use app\model\Product;
 use app\model\Val;
+use app\Storage\StorageImg;
 use app\view\Image\ImageView;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductRepository extends Controller
 {
@@ -17,7 +19,7 @@ class ProductRepository extends Controller
 	{
 		$id = Product::where('id', $id)->first()['1s_id'];
 		return Product::query()
-			->where('1s_id',$id)
+			->where('1s_id', $id)
 			->with('category.properties.vals')
 			->with('values')
 			->with('category.parentRecursive')
@@ -28,18 +30,18 @@ class ProductRepository extends Controller
 			->with('promotions')
 			->with('smallpackImages')
 			->with('bigpackImages')
-			->with(['baseUnit'=>function ($query)use($id){
-				$query->with(['units'=>function($query)use($id){
-						$query->wherePivot('product_id',$id)->get();
+			->with(['baseUnit' => function ($query) use ($id) {
+				$query->with(['units' => function ($query) use ($id) {
+						$query->wherePivot('product_id', $id)->get();
 					}]
-					);
+				);
 			}])
 			->first();
 	}
 
 	public static function main(string $slug)
 	{
-		$p= Product::where('slug', $slug)->first();
+		$p = Product::where('slug', $slug)->first();
 		$id = Product::where('slug', $slug)->first()['1s_id'];
 		return Product::query()
 			->orderBy('sort')
@@ -53,15 +55,14 @@ class ProductRepository extends Controller
 			->with('detailImages')
 			->with('smallpackImages')
 			->with('bigpackImages')
+			->with('promotions.unit')
 			->with('seo')
-			->with(['baseUnit'=>function ($query)use($id){
-				$query->with(['units'=>function($query)use($id){
-						$query->wherePivot('product_id',$id)->get();
+			->with(['baseUnit' => function ($query) use ($id) {
+				$query->with(['units' => function ($query) use ($id) {
+						$query->wherePivot('product_id', $id)->get();
 					}]
-				)
-				;
+				);
 			}])
-
 			->where('slug', $slug)
 			->first();
 	}
@@ -75,6 +76,21 @@ class ProductRepository extends Controller
 			->get();
 	}
 
+	public static function hasNoImg()
+	{
+		$products = Product::query()
+			->select('art','name','id')
+			->get();
+
+		$arr = new Collection();
+		foreach ($products as $product){
+			if (!is_file(StorageImg::getFile('product\\uploads\\'.$product->art.'.jpg'))){
+				$arr->push($product);
+			}
+		}
+		return $arr;
+	}
+
 	public static function clear()
 	{
 		$deleted = FS::delFilesFromPath("\pic\product\\");
@@ -83,7 +99,7 @@ class ProductRepository extends Controller
 
 	public static function priceStatic($column, $item, $d)
 	{
-		return $item->getRelation('price')->price??0;
+		return $item->getRelation('price')->price ?? 0;
 	}
 
 	public static function imageStatic($column, $item, $d)
@@ -100,10 +116,10 @@ class ProductRepository extends Controller
 	public static function getFilters()
 	{
 		$self = new static();
-		$filters= [
-			'instore'=>'Показать с остатком = 0',
-			'price'=>'Показать c ценой = 0',
+		$filters = [
+			'instore' => 'Показать с остатком = 0',
+			'price' => 'Показать c ценой = 0',
 		];
-		return FS::getFileContent($self->viewPath.'filters.php',compact('filters'));
+		return FS::getFileContent($self->viewPath . 'filters.php', compact('filters'));
 	}
 }

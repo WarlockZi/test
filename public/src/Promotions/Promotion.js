@@ -1,5 +1,6 @@
 import './promotion.scss'
 import {$, post} from '../common'
+import SelectNew from "../components/select/SelectNew";
 
 export default class Promotion {
   constructor() {
@@ -9,22 +10,33 @@ export default class Promotion {
     this.id = $(this.$promotion).find(`[data-field='id']`).innerText;
 
     this.$activeTill = $(`[data-field='active-till']`).first();
-    this.$activeTill.onchange = this.handleChange.bind(this)
+    this.$activeTill.onchange = this.handleChange.bind(this);
+
+    this.$unit = $('[select-new].unit').first();
+    let unit = new SelectNew(this.$unit);
+    unit.onchange(this.unitChanged.bind(this))
 
   }
 
-  handleChange({target}){
+  unitChanged(unit) {
+    let data = this.dto(this);
+    data.unit_id= unit.next.value;
+    let res = post('/adminsc/promotion/updateOrCreate', data);
+
+  }
+
+  handleChange({target}) {
 
     let data = this.dto(this);
     data.active_till = target.value;
     let res = post('/adminsc/promotion/updateOrCreate', data);
-    if (res){
+    if (res) {
 
     }
 
   }
 
-  dto(self){
+  dto(self) {
     return {
       id: self.id
     }

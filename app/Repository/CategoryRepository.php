@@ -33,18 +33,32 @@ class CategoryRepository
     return $d;
   }
 
-  public static function index(string $slug)
-  {
-    return Category::query()
+//  public static function index(string $slug)
+//  {
+//    return Category::query()
+//			->where('slug', $slug)
+//      ->with('childrenRecursive')
+//      ->with('parentRecursive')
+//      ->with('productsInStore',
+//				'products.promotions')
+//      ->with('seo')
+////      ->with('productsNotInStore')
+//      ->get()
+//			->first();
+//  }
+
+  public static function indexInstore(string $slug){
+		return Category::query()
 			->where('slug', $slug)
-      ->with('childrenRecursive')
-      ->with('parentRecursive')
-      ->with('productsInStore')
-      ->with('seo')
+			->with('childrenRecursive')
+			->with('parentRecursive')
+			->with('productsInStore')
+			->with('products.promotions')
+			->with('seo')
 //      ->with('productsNotInStore')
-      ->get()
+			->get()
 			->first();
-  }
+	}
 
   public static function edit(?int $id)
   {

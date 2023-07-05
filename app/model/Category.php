@@ -87,7 +87,7 @@ class Category extends Model
 			->where('instore','<>',0)
 			->with('price')
 			->with('mainImages')
-//			->with('mainUnit')
+			->with('promotions')
 			->with('baseUnit.units')
 			->orderBy('name');
 	}

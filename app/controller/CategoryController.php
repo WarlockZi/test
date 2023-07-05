@@ -25,7 +25,7 @@ class CategoryController Extends AppController
 			$this->view = 'category';
 
 			$slug = $this->route->slug;
-			$category = CategoryRepository::index($slug);
+			$category = CategoryRepository::indexInstore($slug);
 			if ($category) {
 //				$category->products->filters = ProductRepository::getFilters();
 				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
