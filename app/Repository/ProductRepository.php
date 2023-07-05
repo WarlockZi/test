@@ -76,7 +76,7 @@ class ProductRepository extends Controller
 			->get();
 	}
 
-	public static function hasNoImg()
+	public static function hasNoImgInStore()
 	{
 		$products = Product::query()
 			->select('art', 'name', 'id')
@@ -85,9 +85,23 @@ class ProductRepository extends Controller
 		$arr = new Collection();
 		foreach ($products as $product) {
 			$file = StorageImg::getFile('product/uploads/' . $product->art . '.jpg');
-			if (!is_file($file)) {
-//				echo is_file($file) . ' - - ';
-//				echo $file . '<br>';
+			if (!is_file($file) && $product->instore) {
+				$arr->push($product);
+			}
+		}
+		return $arr;
+	}
+
+	public static function hasNoImgNotInStore()
+	{
+		$products = Product::query()
+			->select('art', 'name', 'id')
+			->get();
+
+		$arr = new Collection();
+		foreach ($products as $product) {
+			$file = StorageImg::getFile('product/uploads/' . $product->art . '.jpg');
+			if (!is_file($file)&& !$product->instore) {
 				$arr->push($product);
 			}
 		}

@@ -14,13 +14,21 @@ class ReportController extends AppController
 		parent::__construct();
 	}
 
-	public function actionProductswithoutimg()
+	public function actionProductswithoutimgInstore()
 	{
-		$p = ProductRepository::hasNoImg();
+		$this->view = 'productswithoutimg';
+		$p = ProductRepository::hasNoImgInStore();
 		$productList = ProductFormView::hasNoImgList($p);
 		$this->set(compact('productList'));
 	}
 
+	public function actionProductswithoutimgNotinstore()
+	{
+		$this->view = 'productswithoutimg';
+		$p = ProductRepository::hasNoImgNotInStore();
+		$productList = ProductFormView::hasNoImgList($p);
+		$this->set(compact('productList'));
+	}
 }
 
 

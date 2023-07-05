@@ -4,6 +4,7 @@ namespace app\controller;
 
 
 use app\core\Auth;
+use app\core\FS;
 use app\core\Router;
 use app\model\User;
 use app\view\AdminView;
@@ -19,7 +20,7 @@ abstract class Controller
 	protected $ajax;
 	protected $auth;
 	protected $layout;
-	protected $layoutPath = ROOT.'/app/view/layouts/';
+	protected $layoutPath = ROOT . '/app/view/layouts/';
 
 	protected Assets $assets;
 
@@ -42,15 +43,22 @@ abstract class Controller
 		}
 	}
 
+	public function getViewPath()
+	{
+		$admin = $this->route->admin ? 'Admin' : '';
+		$path = FS::platformSlashes(ROOT . "/app/view/" . "{$this->route->controllerName}/" . $admin);
+		return $path;
+	}
+
 	protected function createToken(): string
 	{
-			return $_SESSION['token'] = session_id();
+		return $_SESSION['token'] = session_id();
 	}
 
 	public function getLayout(): string
 	{
-		$layout = $this->layoutPath.$this->layout.'.php';
-		if (is_readable($layout)){
+		$layout = $this->layoutPath . $this->layout . '.php';
+		if (is_readable($layout)) {
 			return $layout;
 		}
 		return false;
@@ -92,7 +100,7 @@ abstract class Controller
 			if ($this->badToken($req)) return [];
 
 			if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-				&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=== 'xmlhttprequest') {
+				&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
 				unset($req['token']);
 				$this->ajax = $req;
 				return $req;
