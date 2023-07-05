@@ -14,6 +14,7 @@ class Promotion extends Model
 		'count',
 		'active_till',
 		'product_1s_id',
+		'unit_id',
 	];
 
 	public function product()
@@ -23,6 +24,11 @@ class Promotion extends Model
 				'product_1s_id',
 				'1s_id',
 				);
+	}
+
+	public function unit()
+	{
+		return $this->hasOne(Unit::class,'id','unit_id');
 	}
 
 	public static function productLink($b, $i, $col)

@@ -9,6 +9,8 @@ use app\core\Icon;
 	<div class="art">Арт. <?=$product->art?></div>
 
 	<? include __DIR__ . '/price.php' ?>
+	<? include __DIR__ . '/promotion.php' ?>
+
 	<? include __DIR__ . '/count.php' ?>
 	<div class="button blue">Добавить в корзину</div>
 

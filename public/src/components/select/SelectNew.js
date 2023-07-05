@@ -43,6 +43,10 @@ export default class Select {
     el.remove()
   }
 
+  onchange(callback){
+    this.callback = callback
+  }
+
   keyDownhandler(e) {
     let debounceTimeout;
     let searchTerm = "";
@@ -104,7 +108,9 @@ export default class Select {
     this.sel.dispatchEvent(new CustomEvent('customSelect.changed', {
       bubbles: true,
       detail: {next, prev, target: this.sel}
-    }))
+    }));
+
+    this.callback({next, prev, target: this.sel})
   }
 
 }

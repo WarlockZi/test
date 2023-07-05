@@ -91,6 +91,20 @@
 
       @include green;
 
+      .promotions{
+        position: relative;
+        border: 1px solid red;
+        padding: 15px;
+        .promotion{
+          display: inline-flex;
+          padding: 5px;
+          background-color: red;
+          font-size: 13px;
+          margin-bottom: 5px;
+          color: white;
+        }
+      }
+
       .art {
         font-size: 0.8rem;
         margin-bottom: 5px;

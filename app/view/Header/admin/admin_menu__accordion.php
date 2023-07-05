@@ -138,6 +138,20 @@ use \app\core\Icon;
 			</ul>
 		</li>
 
+		<li class="reports">
+			<div class="label">
+				<span class="arrow"></span>
+					 <?= Icon::target('admin-menu') ?>
+				Отчеты
+			</div>
+			<ul class="level-1">
+					 <? if (User::can($user, ['role_admin'])): // admin ?>
+				  <a class="neon" href="/adminsc/report/productsWithoutImg">Товары без картинок</a>
+
+					 <? endif; ?>
+			</ul>
+		</li>
+
 		<a strat class="neon" href="/adminsc/planning">
 				<?= Icon::grid('admin-menu') ?>
 			<span>
