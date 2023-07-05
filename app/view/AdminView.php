@@ -16,11 +16,13 @@ class AdminView extends View
 	protected $layout = ROOT . "/app/view/layouts/admin.php";
 	protected $noViewError = "Файл вида не найден";
 	protected $defaultView = ROOT . "/app/view/default.php";
+	protected $view;
 
 	public function __construct(Controller $controller)
 	{
 		parent::__construct($controller);
 
+		$this->setView($controller);
 		$this->setLayout($controller);
 		$this->setHeader($this->user);
 		$this->setFooter();
@@ -30,6 +32,17 @@ class AdminView extends View
 			$this->setAssets();
 		}
 
+
+	}
+
+	protected function setView($controller)
+	{
+		if ($controller->view){
+			$file = $controller->getViewPath().'\\'.$controller->view.'.php';
+			if (is_file($file)){
+				$this->view = $file;
+			}
+		}
 
 	}
 

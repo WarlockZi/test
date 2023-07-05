@@ -146,7 +146,8 @@ use \app\core\Icon;
 			</div>
 			<ul class="level-1">
 					 <? if (User::can($user, ['role_admin'])): // admin ?>
-				  <a class="neon" href="/adminsc/report/productsWithoutImg">Товары без картинок</a>
+				  <a class="neon" href="/adminsc/report/productsWithoutImgInstore">Товары без картинок в наличии</a>
+				  <a class="neon" href="/adminsc/report/productsWithoutImgNotinstore">Товары без картинок без наличия</a>
 
 					 <? endif; ?>
 			</ul>
