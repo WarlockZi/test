@@ -87,7 +87,7 @@ class ProductRepository extends Controller
 //			if (!$product->mainImages) {
 //				$arr->push($product);
 //			}
-			$file = StorageImg::getFile('product\\uploads\\' . $product->art . '.jpg');
+			$file = StorageImg::getFile('product/uploads/' . $product->art . '.jpg');
 			if (!is_file($file)) {
 				echo is_file($file) . ' - - ';
 				echo $file . '<br>';
