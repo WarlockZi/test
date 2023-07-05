@@ -84,13 +84,10 @@ class ProductRepository extends Controller
 
 		$arr = new Collection();
 		foreach ($products as $product) {
-//			if (!$product->mainImages) {
-//				$arr->push($product);
-//			}
 			$file = StorageImg::getFile('product/uploads/' . $product->art . '.jpg');
 			if (!is_file($file)) {
-				echo is_file($file) . ' - - ';
-				echo $file . '<br>';
+//				echo is_file($file) . ' - - ';
+//				echo $file . '<br>';
 				$arr->push($product);
 			}
 		}
