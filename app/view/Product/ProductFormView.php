@@ -34,10 +34,10 @@ use Illuminate\Database\Eloquent\Collection;
 class ProductFormView
 {
 
-	public static function hasNoImgList($products){
+	public static function hasNoImgList($products, $title){
 
 		return MyList::build(Product::class)
-			->pageTitle('Товары')
+			->pageTitle($title)
 			->column(
 				ListColumnBuilder::build('id')
 					->name('ID')
