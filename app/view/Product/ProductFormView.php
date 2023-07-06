@@ -33,6 +33,37 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ProductFormView
 {
+	public static function hasOnlyBaseUnit($products){
+
+		return MyList::build(Product::class)
+			->pageTitle('Товары имеющие только базовую единицу')
+			->column(
+				ListColumnBuilder::build('id')
+					->name('ID')
+					->get()
+			)
+			->column(
+				ListColumnBuilder::build('art')
+					->name('Арт')
+					->search()
+					->width('70px')
+					->get()
+			)
+			->column(
+				ListColumnBuilder::build('name')
+					->name('Наименование')
+					->contenteditable()
+					->search()
+					->width('1fr')
+					->get()
+			)
+			->items($products)
+			->edit()
+			->del()
+			->addButton('ajax')
+			->get();
+
+	}
 
 	public static function hasNoImgList($products, $title){
 

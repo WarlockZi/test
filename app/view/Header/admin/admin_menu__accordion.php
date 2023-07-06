@@ -149,6 +149,9 @@ use \app\core\Icon;
 				  <a class="neon" href="/adminsc/report/productsWithoutImgInstore">Товары без картинок в наличии</a>
 				  <a class="neon" href="/adminsc/report/productsWithoutImgNotinstore">Товары без картинок без наличия</a>
 
+						 <a class="neon" href="/adminsc/report/productsNoMinimumUnit">Товары без min единицы</a>
+				  <a class="neon" href="/adminsc/report/productsHaveOnlyBaseUnit">Товары доп единиц</a>
+
 					 <? endif; ?>
 			</ul>
 		</li>

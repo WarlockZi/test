@@ -37,7 +37,7 @@ class AdminView extends View
 
 	protected function setView($controller)
 	{
-		if ($controller->view){
+		if (property_exists($controller, 'view')){
 			$file = $controller->getViewPath().'/'.$controller->view.'.php';
 			if (is_file($file)){
 				$this->view = $file;
