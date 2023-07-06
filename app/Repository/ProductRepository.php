@@ -67,6 +67,24 @@ class ProductRepository extends Controller
 			->first();
 	}
 
+	public static function noMinimumUnit()
+	{
+		$p = Product::query()
+			->with(['baseUnit.units'=>function($q){
+				$q->where();
+			}])
+			->get();
+		return $p;
+	}
+
+	public static function haveOnlyBaseUnit()
+	{
+		$p = Product::query()
+			->has('baseUnit.units','<',1)
+			->get();
+		return $p;
+	}
+
 	public static function list()
 	{
 		return Product::query()
@@ -79,7 +97,7 @@ class ProductRepository extends Controller
 	public static function hasNoImgInStore()
 	{
 		$products = Product::query()
-			->select('art', 'name', 'id','instore')
+			->select('art', 'name', 'id', 'instore')
 			->get();
 
 		$arr = new Collection();
@@ -95,13 +113,13 @@ class ProductRepository extends Controller
 	public static function hasNoImgNotInStore()
 	{
 		$products = Product::query()
-			->select('art', 'name', 'id','instore')
+			->select('art', 'name', 'id', 'instore')
 			->get();
 
 		$arr = new Collection();
 		foreach ($products as $product) {
 			$file = StorageImg::getFile('product/uploads/' . $product->art . '.jpg');
-			if (!is_file($file)&& !$product->instore) {
+			if (!is_file($file) && !$product->instore) {
 				$arr->push($product);
 			}
 		}
