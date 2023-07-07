@@ -35,6 +35,7 @@ class ProductFormView
 {
 	public static function hasOnlyBaseUnit($products){
 
+
 		return MyList::build(Product::class)
 			->pageTitle('Товары имеющие только базовую единицу')
 			->column(
