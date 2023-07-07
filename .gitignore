@@ -10,4 +10,7 @@
 /app/Storage/log/*
 /app/Storage/dev/*
 /app/Storage/import/*
+/pic/product/*
+/pic/category/*
+/pic/video/*
 
