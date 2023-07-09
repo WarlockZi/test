@@ -7,6 +7,7 @@ namespace app\Repository;
 use app\controller\Controller;
 use app\core\FS;
 use app\model\Product;
+use app\model\Unit;
 use app\model\Val;
 use app\Storage\StorageImg;
 use app\view\Image\ImageView;
@@ -70,9 +71,12 @@ class ProductRepository extends Controller
 	public static function noMinimumUnit()
 	{
 		$p = Product::query()
-			->with(['baseUnit.units'=>function($q){
-				$q->where();
-			}])
+			->whereHas('baseUnit', function ($q) {
+				$q->whereHas('units',function ($qu){
+					$qu->wherePivot('main',1);
+				});
+			})
+			->take(10)
 			->get();
 		return $p;
 	}
@@ -80,7 +84,7 @@ class ProductRepository extends Controller
 	public static function haveOnlyBaseUnit()
 	{
 		$p = Product::query()
-			->has('baseUnit.units','<',1)
+			->has('baseUnit.units', '<', 1)
 			->get();
 		return $p;
 	}

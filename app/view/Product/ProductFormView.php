@@ -102,7 +102,7 @@ class ProductFormView
 	{
 		$html =
 			SelectBuilder::build(
-				ArrayOptionsBuilder::build(Unit::forSelect())
+				ArrayOptionsBuilder::build(Unit::select(['name','id'])->get())
 					->selected($selected)
 					->get()
 			)
