@@ -30,14 +30,15 @@ class ReportController extends AppController
 		$this->set(compact('productList'));
 	}
 
-	public function actionProductsNoMinimumUnit()
+	public function actionProductsnominimumunit()
 	{
+		$this->view = 'productswithoutimg';
 		$p = ProductRepository::noMinimumUnit();
-		$productList = ProductFormView::hasNoImgList($p, 'Товары без картинок без наличия');
+		$productList = ProductFormView::hasNoImgList($p, 'Товары без min упаковки');
 		$this->set(compact('productList'));
 	}
 
-	public function actionProductsHaveOnlyBaseUnit()
+	public function actionProductshaveonlybaseunit()
 	{
 		$p = ProductRepository::haveOnlyBaseUnit();
 		$productList = ProductFormView::hasOnlyBaseUnit($p);

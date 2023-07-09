@@ -18,7 +18,6 @@ class Unit extends Model
 
 	public static function parentUnitName($builder, $item)
 	{
-		$parent = $item->parent;
 		return $item->parent->first()->full_name;
 	}
 
@@ -28,6 +27,15 @@ class Unit extends Model
 			->morphedByMany(Unit::class, 'unitable')
 			->withPivot('multiplier', 'product_id', 'main');
 	}
+
+	public function mainUnits()
+	{
+		return $this
+			->morphedByMany(Unit::class, 'unitable')
+			->withPivot('multiplier', 'product_id', 'main')
+			->wherePivot('main',1);
+	}
+
 
 	public static function parentUnitMultiplier($builder, $item)
 	{
@@ -48,12 +56,6 @@ class Unit extends Model
 	{
 		return $this->belongsTo(Product::class,
 			'base_unit');
-	}
-
-	public static function forSelect()
-	{
-		return self::select(['name', 'id'])
-			->get();
 	}
 
 }

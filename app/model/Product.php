@@ -37,18 +37,19 @@ class Product extends Model
 	public function seo()
 	{
 		return $this
-			->hasOne(Seo::class,'product_category_1sid','1s_id');
+			->hasOne(Seo::class, 'product_category_1sid', '1s_id');
 	}
-
 
 	public function values()
 	{
 		return $this->morphToMany(Val::class, 'valuable');
 	}
+
 	public function promotions()
 	{
-		return $this->hasMany(Promotion::class,'product_1s_id','1s_id');
+		return $this->hasMany(Promotion::class, 'product_1s_id', '1s_id');
 	}
+
 	public function getMainImagePathAttribute()
 	{
 		$art = trim($this->art);
@@ -66,6 +67,20 @@ class Product extends Model
 			->belongsTo(Unit::class, 'base_unit', 'id');
 	}
 
+	public function mainUnits()
+	{
+		$bu = $this->baseUnit()->id;
+		return $this
+			->morphedByMany(Unit::class,
+				'unitable',
+				null,
+				null,
+				null,
+				null,null)
+			->withPivot('main');
+
+	}
+
 //	public function units()
 //	{
 //		return $this
@@ -76,7 +91,7 @@ class Product extends Model
 	{
 		static::Updating(function ($product) {
 			if (Product::where('slug', $product->slug)->first()) {
-				$product->slug = Slug::slug($product->name).$product->art;
+				$product->slug = Slug::slug($product->name) . $product->art;
 
 			} else {
 				$product->slug = Slug::slug($product->name);
