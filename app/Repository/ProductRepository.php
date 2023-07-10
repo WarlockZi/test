@@ -71,11 +71,7 @@ class ProductRepository extends Controller
 	public static function noMinimumUnit()
 	{
 		$p = Product::query()
-			->whereHas('baseUnit', function ($q) {
-				$q->whereHas('units',function ($qu){
-					$qu->wherePivot('main',1);
-				});
-			})
+			->whereHas('mainUnits')
 			->take(10)
 			->get();
 		return $p;
