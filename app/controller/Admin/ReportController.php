@@ -3,6 +3,8 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\model\Product;
+use app\model\Unit;
 use app\Repository\ProductRepository;
 use app\view\Product\ProductFormView;
 
@@ -33,7 +35,10 @@ class ReportController extends AppController
 	public function actionProductsnominimumunit()
 	{
 		$this->view = 'productswithoutimg';
-		$p = ProductRepository::noMinimumUnit();
+//		$p = ProductRepository::noMinimumUnit();
+		$p = Product::find([Unit::has('mainUnits')])->get();
+//		);
+//		$productList = Unit::has('mainUnits')->get();
 		$productList = ProductFormView::hasNoImgList($p, 'Товары без min упаковки');
 		$this->set(compact('productList'));
 	}
