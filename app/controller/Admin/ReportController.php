@@ -61,23 +61,7 @@ class ReportController extends AppController
 //				});
 //		})->with('baseUnit.units')
 //			->get();
-		$products = DB::table('unitables')
-			->orderBy('product_id')
-			->get()
-			->groupBy('product_id')
-			->filter(function ($i) {
-				$o = $i->filter(function ($v) {
-					return $v->main;
-				});
-				if (!$o->count()) return $i;
-			});
-		$arr = new Collection();
-		foreach ($products as $id => $product) {
-			$prod = Product::where('1s_id', $id)->first();
-			if ($prod)
-				$arr->push($prod);
-		}
-		$products = Collection::make($arr);
+		$products = ProductRepository::noMinimumUnit();
 		$productList = ProductFormView::hasNoImgList($products, 'Товары без min упаковки');
 		$this->set(compact('productList'));
 	}
@@ -85,7 +69,6 @@ class ReportController extends AppController
 	public function actionProductshaveonlybaseunit()
 	{
 		$p = ProductRepository::haveOnlyBaseUnit();
-//		var_dump($p);
 		$productList = ProductFormView::hasOnlyBaseUnit($p);
 		$this->set(compact('productList'));
 	}

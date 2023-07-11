@@ -11,6 +11,7 @@ use app\model\Unit;
 use app\model\Val;
 use app\Storage\StorageImg;
 use app\view\Image\ImageView;
+use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductRepository extends Controller
@@ -70,18 +71,32 @@ class ProductRepository extends Controller
 
 	public static function noMinimumUnit()
 	{
-		$p = Product::query()
-			->whereHas('mainUnits')
-			->get();
-		return $p;
+		$products = DB::table('unitables')
+			->orderBy('product_id')
+			->get()
+			->groupBy('product_id')
+			->filter(function ($i) {
+				$o = $i->filter(function ($v) {
+					return $v->main;
+				});
+				if (!$o->count()) return $i;
+			});
+		$arr = new Collection();
+		foreach ($products as $id => $product) {
+			$prod = Product::where('1s_id', $id)->first();
+			if ($prod && $product->instore)
+				$arr->push($prod);
+		}
+		return Collection::make($arr);
 	}
 
 	public static function haveOnlyBaseUnit()
 	{
 		$p = Product::query()
-			->has('baseUnit.units')
+			->whereDoesntHave('baseUnit.units')
 			->get();
 		return $p;
+
 	}
 
 	public static function list()
