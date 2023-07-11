@@ -70,17 +70,14 @@ class ReportController extends AppController
 					return $v->main;
 				});
 				if (!$o->count()) return $i;
-			})
-		;
+			});
 		$arr = new Collection();
 		foreach ($products as $id => $product) {
 			$prod = Product::where('1s_id', $id)->first();
 			if ($prod)
 				$arr->push($prod);
 		}
-
 		$products = Collection::make($arr);
-
 		$productList = ProductFormView::hasNoImgList($products, 'Товары без min упаковки');
 		$this->set(compact('productList'));
 	}
