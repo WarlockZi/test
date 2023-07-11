@@ -34,13 +34,18 @@ class Product extends Model
 
 	protected $appends = ['mainImagePath'];
 
-//	public function mainUnits()
-//	{
-////		$bu = $this->baseUnit()->id;
-//		return $this
-//			->whereHas('baseUnit.units',)
-//			->wherePivot('main',1);
+	public function mainUnits()
+	{
+		return $this
+			->baseUnit()->units->count();
 //		return $this->Unit::has('mainUnits')->get();
+	}
+
+//	public function units()
+//	{
+//		return $this
+//			->morphedByMany(Unit::class, 'unitable')
+//			->wherePivot('product_id',$this->id);
 //	}
 	public function seo()
 	{
@@ -75,14 +80,6 @@ class Product extends Model
 			->belongsTo(Unit::class, 'base_unit', 'id');
 	}
 
-
-
-//	public function units()
-//	{
-//		return $this
-//			->morphedByMany(Unit::class, 'unitable')
-//			->wherePivot('product_id',$this->id);
-//	}
 	protected static function booted()
 	{
 		static::Updating(function ($product) {
