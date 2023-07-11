@@ -28,6 +28,12 @@ class Unit extends Model
 			->withPivot('multiplier', 'product_id', 'main');
 	}
 
+	public function unit()
+	{
+		return $this
+			->morphTo('unitable', Unit::class , )
+			->withPivot('multiplier', 'product_id', 'main');
+	}
 	public function mainUnits()
 	{
 		return $this
