@@ -4,9 +4,10 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\model\Product;
-use app\model\Unit;
 use app\Repository\ProductRepository;
 use app\view\Product\ProductFormView;
+use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class ReportController extends AppController
 {
@@ -35,11 +36,52 @@ class ReportController extends AppController
 	public function actionProductsnominimumunit()
 	{
 		$this->view = 'productswithoutimg';
-//		$p = ProductRepository::noMinimumUnit();
-		$p = Product::find([Unit::has('mainUnits')])->get();
-//		);
-//		$productList = Unit::has('mainUnits')->get();
-		$productList = ProductFormView::hasNoImgList($p, 'Товары без min упаковки');
+//		$u = Unit::has('mainUnits',function($q){
+////			$q->query()->wherePivot('main',1);
+//		})->get()
+//			->toArray()
+//		;
+//		$u = Unit::has('units'
+////			,function($q){
+//////			$q->query()->wherePivot('main',1);
+////		}
+//		)->with('units')
+//			->get()
+////			->pluck('units.pivot.product_id')
+//			->toArray();
+//		$u = Unit::whereHas('mainUnits',function($q){
+//			$q->where('main',1);
+//		})->get()->toArray();
+//		$products = Product::whereHas('baseUnit', function ($q) {
+//			$q->whereHasMorph(
+//				'units',
+//				[User::class],
+//				function ($qu) {
+//					$qu->wherePivot('main', 1);
+//				});
+//		})->with('baseUnit.units')
+//			->get();
+		$products = DB::table('unitables')
+			->orderBy('product_id')
+			->get()
+			->groupBy('product_id')
+			->filter(function ($i) {
+				$o = $i->filter(function ($v) {
+					return $v->main;
+				});
+				if (!$o->count()) return $i;
+			})
+		;
+		$arr = new Collection();
+		foreach ($products as $id => $product) {
+			$prod = Product::where('1s_id', $id)->first();
+			if ($prod)
+				$arr->push($prod);
+		}
+
+		$products = Collection::make($arr);
+
+		$productList = ProductFormView::hasNoImgList($products, 'Товары без min упаковки');
 		$this->set(compact('productList'));
 	}
 

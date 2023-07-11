@@ -150,7 +150,7 @@ export default class UnitTable {
     let pivot = {
       'product_id': this.product1sId,
       'multiplier': +$(row).find(`input[type='number']`).value ?? 0,
-      'main': $(row).find(`input[type='checkbox']`).checked?1:0,
+      'main': $(row).find(`input[type='checkbox']`).checked?1:null,
     };
     let morphed = {
       new_id: 0,
