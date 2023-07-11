@@ -87,6 +87,7 @@ class ReportController extends AppController
 
 	public function actionProductshaveonlybaseunit()
 	{
+		exit('only base');
 		$p = ProductRepository::haveOnlyBaseUnit();
 		$productList = ProductFormView::hasOnlyBaseUnit($p);
 		$this->set(compact('productList'));
