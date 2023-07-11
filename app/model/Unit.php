@@ -32,9 +32,7 @@ class Unit extends Model
 	{
 		return $this
 			->morphedByMany(Unit::class, 'unitable')
-//			->with('units')
 			->withPivot('multiplier', 'product_id', 'main')
-//			->wherePivot('main',0)
 			;
 	}
 

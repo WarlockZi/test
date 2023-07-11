@@ -72,7 +72,6 @@ class ProductRepository extends Controller
 	{
 		$p = Product::query()
 			->whereHas('mainUnits')
-			->take(10)
 			->get();
 		return $p;
 	}
@@ -80,7 +79,9 @@ class ProductRepository extends Controller
 	public static function haveOnlyBaseUnit()
 	{
 		$p = Product::query()
-			->doesntHave('baseUnit.units')
+			->whereHas('baseUnit', function ($q) {
+				$q->whereDoesntHave('units');
+			})
 			->get();
 		return $p;
 	}

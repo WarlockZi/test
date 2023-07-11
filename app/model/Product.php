@@ -34,16 +34,14 @@ class Product extends Model
 
 	protected $appends = ['mainImagePath'];
 
-	public function mainUnits()
-	{
-//		$bu = $this->baseUnit()->id;
+//	public function mainUnits()
+//	{
+////		$bu = $this->baseUnit()->id;
 //		return $this
 //			->whereHas('baseUnit.units',)
 //			->wherePivot('main',1);
-//		return $this->Unit::has('mainUnits')->get()
-
-
-	}
+//		return $this->Unit::has('mainUnits')->get();
+//	}
 	public function seo()
 	{
 		return $this
