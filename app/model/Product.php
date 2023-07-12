@@ -34,6 +34,11 @@ class Product extends Model
 
 	protected $appends = ['mainImagePath'];
 
+	public function baseUnit()
+	{
+		return $this
+			->belongsTo(Unit::class, 'base_unit', 'id');
+	}
 //	public function mainUnits()
 //	{
 ////		$bu = $this->baseUnit()->id;
@@ -69,11 +74,7 @@ class Product extends Model
 		}
 	}
 
-	public function baseUnit()
-	{
-		return $this
-			->belongsTo(Unit::class, 'base_unit', 'id');
-	}
+
 
 
 
