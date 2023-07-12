@@ -93,11 +93,19 @@ class ProductRepository extends Controller
 	public static function haveOnlyBaseUnit()
 	{
 
-		$R = Product::whereHas('baseUnit', function ($q) {
+		$R = Product::query()
+			->select('id','art','name')
+			->whereHas('baseUnit', function ($q) {
 			$q->whereDoesntHave('units');
 		})
-			->with('baseUnit.units')
-			->get();
+//			->with('baseUnit.units')
+//			->take(3)
+			->get()
+//			->first()
+//			->toArray()
+		;
+//		var_dump($R->baseUnit->units);
+		return $R;
 //		$products = DB::table('unitables')
 //			->select('product_id')
 //			->groupBy('product_id')
@@ -119,8 +127,7 @@ class ProductRepository extends Controller
 //			->get();
 
 //		$p = Product::where('1s_id', '<>', self::getP($products))->get();
-var_dump($R);
-		return $R;
+
 
 	}
 
