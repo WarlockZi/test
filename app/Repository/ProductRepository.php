@@ -92,34 +92,42 @@ class ProductRepository extends Controller
 
 	public static function haveOnlyBaseUnit()
 	{
-		$products = DB::table('unitables')
-			->select('product_id')
-			->groupBy('product_id')
-			->get()
-		;
-		$arr = new Collection();
-		foreach ($products as $id => $product) {
-			$prod = Product::where('1s_id', $id)->get()->first();
-			if ($prod && $prod->instore)
-				$arr->push($prod);
-		}
 
-		$p = DB::table('products')->select(['1s_id'])->get();
-		$a = $p->diff($products);
+		$R = Product::whereHas('baseUnit', function ($q) {
+			$q->whereDoesntHave('units');
+		})
+			->with('baseUnit.units')
+			->get();
+//		$products = DB::table('unitables')
+//			->select('product_id')
+//			->groupBy('product_id')
+//			->get();
+//		$arr = new Collection();
+//		foreach ($products as $id => $product) {
+//			$prod = Product::where('1s_id', $id)->get()->first();
+//			if ($prod && $prod->instore)
+//				$arr->push($prod);
+//		}
+//
+//		$p = DB::table('products')
+//			->select('1s_id')
+//			->get();
+//		$a = $p->diff($products);
 
 //		$products = DB::table('products')
 //			->whereNotIn('product_id', $p)
 //			->get();
 
-		$p = Product::where('1s_id', '<>', self::getP($products))->get();
+//		$p = Product::where('1s_id', '<>', self::getP($products))->get();
 
-		return $p;
+		return $R;
 
 	}
 
-	protected static function getP($products){
-		foreach ($products as $k=>$product)
-		return $product;
+	protected static function getP($products)
+	{
+		foreach ($products as $k => $product)
+			return $product;
 	}
 
 	public static function list()
