@@ -119,7 +119,7 @@ class ProductRepository extends Controller
 //			->get();
 
 //		$p = Product::where('1s_id', '<>', self::getP($products))->get();
-
+var_dump($R);
 		return $R;
 
 	}
