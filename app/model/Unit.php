@@ -16,6 +16,11 @@ class Unit extends Model
 
 	public $timestamps = false;
 
+	public function getUnitablesCountAttribute()
+	{
+		return $this->units_count;
+	}
+
 	public static function parentUnitName($builder, $item)
 	{
 		return $item->parent->first()->full_name;

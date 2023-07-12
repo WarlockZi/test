@@ -94,40 +94,15 @@ class ProductRepository extends Controller
 	{
 
 		$R = Product::query()
-			->select('id','art','name')
-			->whereHas('baseUnit', function ($q) {
-			$q->whereDoesntHave('units');
-		})
-//			->with('baseUnit.units')
-//			->take(3)
-			->get()
+			->whereHas('baseUnit',function($q){
+				$q->doesntHave('units');
+			})
+			->get(['id','art','name'])
 //			->first()
 //			->toArray()
 		;
 //		var_dump($R->baseUnit->units);
 		return $R;
-//		$products = DB::table('unitables')
-//			->select('product_id')
-//			->groupBy('product_id')
-//			->get();
-//		$arr = new Collection();
-//		foreach ($products as $id => $product) {
-//			$prod = Product::where('1s_id', $id)->get()->first();
-//			if ($prod && $prod->instore)
-//				$arr->push($prod);
-//		}
-//
-//		$p = DB::table('products')
-//			->select('1s_id')
-//			->get();
-//		$a = $p->diff($products);
-
-//		$products = DB::table('products')
-//			->whereNotIn('product_id', $p)
-//			->get();
-
-//		$p = Product::where('1s_id', '<>', self::getP($products))->get();
-
 
 	}
 
