@@ -124,14 +124,14 @@ class ProductRepository extends Controller
 //		;
 //		$products = DB::select("select `id`, `art`, `name` from `products` where exists (select * from `units` where `products`.`base_unit` = `units`.`id` and not exists (select * from `units` as `u` inner join `unitables` on `u`.`id` = `unitables`.`unitable_id` where `units`.`id` = `unitables`.`unit_id` and `unitables`.`unitable_type` = 'app\model\Unit'))");
 //		var_dump($products);
-		$all = Product::all(['id', 'art', 'name','1s_id']);
+		$all = Product::where('instore','>',0)->get(['id', 'art', 'name', '1s_id']);
 		$part = DB::table('unitables')
 			->get()
 			->groupBy('product_id');
 
-		foreach ($part as $k=>$product){
-			$all = $all->reject(function ($v,$k)use($part){
-				return $part->offsetExists($v['1s_id']);
+		foreach ($part as $k => $product) {
+			$all = $all->reject(function ($product, $k) use ($part) {
+				return $part->offsetExists($product['1s_id']) ;
 			});
 		}
 		return $all;
