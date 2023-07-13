@@ -93,8 +93,9 @@ class ProductRepository extends Controller
 	public static function haveOnlyBaseUnit()
 	{
 
-//		$products = DB::select("select `id`, `art`, `name` from `products` where exists (select * from `units` where `products`.`base_unit` = `units`.`id` and not exists (select * from `units` as `laravel_reserved_0` inner join `unitables` on `laravel_reserved_0`.`id` = `unitables`.`unitable_id` where `units`.`id` = `unitables`.`unit_id` and `unitables`.`unitable_type` = 'app\\model\\Unit'))");
-//		$baseUnit = DB::table('units')
+		$productss = DB::select("select `id`, `art`, `name` from `products` where exists (select * from `units` where `products`.`base_unit` = `units`.`id` and not exists (select * from `units` as `laravel_reserved_0` inner join `unitables` on `laravel_reserved_0`.`id` = `unitables`.`unitable_id` where `units`.`id` = `unitables`.`unit_id` and `unitables`.`unitable_type` = 'app\\model\\Unit'))");
+
+//				$baseUnit = DB::table('units')
 //			->select(DB::raw(1))
 //			->whereColumn('unitables.unit_id', 'units.id');
 //
@@ -117,10 +118,10 @@ class ProductRepository extends Controller
 //			->get();
 
 		$products = Product::query()
-			->whereHas('baseUnit',function($q){
-				$q->doesntHave('units');
+			->whereHas('baseUnit', function ($q) {
+				$q->whereDoesntHave('units');
 			})
-			->get(['id','art','name'])
+			->get(['id', 'art', 'name'])
 		;
 //		$products = Product::query()
 //			->whereHas('baseUnit',function($q){
