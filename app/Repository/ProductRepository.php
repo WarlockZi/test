@@ -93,7 +93,6 @@ class ProductRepository extends Controller
 	public static function haveOnlyBaseUnit()
 	{
 
-		$productss = DB::select("select `id`, `art`, `name` from `products` where exists (select * from `units` where `products`.`base_unit` = `units`.`id` and not exists (select * from `units` as `laravel_reserved_0` inner join `unitables` on `laravel_reserved_0`.`id` = `unitables`.`unitable_id` where `units`.`id` = `unitables`.`unit_id` and `unitables`.`unitable_type` = 'app\\model\\Unit'))");
 
 //				$baseUnit = DB::table('units')
 //			->select(DB::raw(1))
@@ -102,20 +101,21 @@ class ProductRepository extends Controller
 //		$mainUnit = DB::table('unitables')
 //			->select(DB::raw(1))
 //			->whereColumn('unitables.unit_id', 'units.id');
-//
+
 //		$products = DB::table('products')
 //			->select('*')
 //			->whereExists(function ($q) {
-//				$q->select(DB::raw(1))
+//				$q->select()
 //					->from('units')
-//					->whereColumn('id', 'products.base_unit')
-//					->doesnExist(function ($query) {
-//						$query->select(DB::raw(1))
+//					->whereColumn('products.base_unit', 'units.id')
+//					->whereDoesnExist(function ($query) {
+//						$query->select()
 //							->from('unitables')
 //							->selectRaw('unitable_type= \app\model\Unit and unitable_id=units.id');
 //					});
 //			})
-//			->get();
+//			->toSql()//			->get()
+//		;
 
 		$products = Product::query()
 			->whereHas('baseUnit', function ($q) {
@@ -123,12 +123,7 @@ class ProductRepository extends Controller
 			})
 			->get(['id', 'art', 'name'])
 		;
-//		$products = Product::query()
-//			->whereHas('baseUnit',function($q){
-//				$q->has('units');
-//			})
-//			->get(['id','art','name'])
-//		;
+//		$products = DB::select("select `id`, `art`, `name` from `products` where exists (select * from `units` where `products`.`base_unit` = `units`.`id` and not exists (select * from `units` as `u` inner join `unitables` on `u`.`id` = `unitables`.`unitable_id` where `units`.`id` = `unitables`.`unit_id` and `unitables`.`unitable_type` = 'app\model\Unit'))");
 
 		return $products;
 
