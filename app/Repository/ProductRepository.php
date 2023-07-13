@@ -126,7 +126,7 @@ class ProductRepository extends Controller
 			//						->get(['id', 'art', 'name'])
 		;
 //		$products = DB::select("select `id`, `art`, `name` from `products` where exists (select * from `units` where `products`.`base_unit` = `units`.`id` and not exists (select * from `units` as `u` inner join `unitables` on `u`.`id` = `unitables`.`unitable_id` where `units`.`id` = `unitables`.`unit_id` and `unitables`.`unitable_type` = 'app\model\Unit'))");
-		var_dump($products);
+//		var_dump($products);
 		return $products;
 
 	}
