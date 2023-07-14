@@ -1,3 +1,4 @@
+
 <? if ($product->promotions->count()): ?>
 	<div class="promotions">
 		<div class="promotion">Акция</div>
