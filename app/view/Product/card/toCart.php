@@ -6,7 +6,7 @@ use app\core\Icon;
 
 <div class="to-cart">
 
-	<div class="art">Арт. <?=$product->art?></div>
+	<div class="art">Арт. <?= $product->art ?></div>
 
 	<? include __DIR__ . '/price.php' ?>
 	<? include __DIR__ . '/promotion.php' ?>
@@ -23,7 +23,21 @@ use app\core\Icon;
 			<button tabindex="0" class="minus">
 					 <?= Icon::minus() ?>
 			</button>
-			<span class="digit" contenteditable="true">1</span>
+				<?
+
+		 $mainUnit = $product->baseUnit->units
+		   ->where('pivot.product_id', $product['1s_id'])
+		   ->where('pivot.main', 1)
+		   ->first();
+		 if ($mainUnit) {
+			 $unitName = $mainUnit->name;
+			 $multiplier = $mainUnit->pivot->multiplier;
+		 } else {
+			 $unitName = $product->baseUnit->name;
+			 $multiplier = 1;
+		 }
+		 ?>
+			<span class="digit" contenteditable="true">1</span><span><?=$unitName?></span>
 			<button tabindex="0" class="plus">
 					 <?= Icon::plus1() ?>
 

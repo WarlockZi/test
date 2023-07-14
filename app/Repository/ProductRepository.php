@@ -122,18 +122,19 @@ class ProductRepository extends Controller
 ////			->get()
 //			//						->get(['id', 'art', 'name'])
 //		;
-//		$products = DB::select("select `id`, `art`, `name` from `products` where exists (select * from `units` where `products`.`base_unit` = `units`.`id` and not exists (select * from `units` as `u` inner join `unitables` on `u`.`id` = `unitables`.`unitable_id` where `units`.`id` = `unitables`.`unit_id` and `unitables`.`unitable_type` = 'app\model\Unit'))");
-//		var_dump($products);
-		$all = Product::where('instore','>',0)->get(['id', 'art', 'name', '1s_id']);
-		$part = DB::table('unitables')
-			->get()
-			->groupBy('product_id');
 
-		foreach ($part as $k => $product) {
-			$all = $all->reject(function ($product, $k) use ($part) {
-				return $part->offsetExists($product['1s_id']) ;
-			});
-		}
+		$all = DB::select("select `*` from `products` where exists (select * from `units` where `products`.`base_unit` = `units`.`id` and not exists (select * from `units` as `u` inner join `unitables` as `b` on `u`.`id` = `b`.`unitable_id` where `units`.`id` = `b`.`unit_id` and `b`.`unitable_type` = 'app\model\Unit' and `b`.`product_id` = `products`.`1s_id`))");
+
+//		$all = Product::where('instore','>',0)->get(['id', 'art', 'name', '1s_id']);
+//		$part = DB::table('unitables')
+//			->get()
+//			->groupBy('product_id');
+//		foreach ($part as $k => $product) {
+//			$all = $all->reject(function ($product, $k) use ($part) {
+//				return $part->offsetExists($product['1s_id']) ;
+//			});
+//		}
+
 		return $all;
 
 	}
