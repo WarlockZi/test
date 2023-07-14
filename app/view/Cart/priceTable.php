@@ -8,15 +8,18 @@
 		})->all();
 
 	foreach ($filtered as $unit): ?>
-		<?
-		$price = $oItem->product->getRelation('price')->price;
-		$multiplier = $unit->pivot->multiplier;
-		$price = $price * $multiplier;
+	  <div class="row">
 
-		echo number_format($price, 2, '.', ' ');
-		?>
+			 <?
+			 $price = $oItem->product->getRelation('price')->price;
+			 $multiplier = $unit->pivot->multiplier;
+			 $price = $price * $multiplier;
 
-	  /
-		<?= $unit->name; ?>
+			 echo number_format($price, 2, '.', ' ');
+			 ?>
+
+		  /
+			 <?= $unit->name; ?>
+	  </div>
 	<? endforeach; ?>
 </div>
