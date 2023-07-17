@@ -94,6 +94,7 @@ class AppController extends Controller implements IModelable
 			} else {
 				$this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);
 			}
+			$this->exitWithError('Ошибка');
 		}
 	}
 
