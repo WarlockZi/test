@@ -39,6 +39,7 @@ use app\core\Icon;
 		     data-unit="<?= $baseUnit->id ?>"
 		>+
 		</div>
+		 <?= $baseEqualsMainUnit; ?>
 
 	</div>
 </div>

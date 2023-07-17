@@ -12,6 +12,7 @@ class ProductView
 {
 	protected $model = 'product';
 	protected static $mainImagePath = '/pic/product/uploads/';
+	protected static $viewPath = ROOT.'/app/view/Product/Admin/';
 
 	public static function pagination($str = ''): string
 	{
@@ -31,6 +32,10 @@ class ProductView
 		return "<div class='dnd-container'>{$dnd}{$img}</div>";
 	}
 
+	public static function baseEqualsMainUnit(Product $p)
+	{
+		return FS::getFileContent(self::$viewPath.'baseEqualsMain.php',[$p]);
+	}
 	public static function mainImageSrc(Product $p)
 	{
 		$src = '/pic/product/uploads/' . $p->art . '.jpg';
