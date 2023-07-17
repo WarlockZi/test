@@ -123,8 +123,11 @@ class ProductRepository extends Controller
 //			//						->get(['id', 'art', 'name'])
 //		;
 
-		$all = DB::select("select `*` from `products` where exists (select * from `units` where `products`.`base_unit` = `units`.`id` and not exists (select * from `units` as `u` inner join `unitables` as `b` on `u`.`id` = `b`.`unitable_id` where `units`.`id` = `b`.`unit_id` and `b`.`unitable_type` = 'app\model\Unit' and `b`.`product_id` = `products`.`1s_id`))");
+		$all = DB::select("select * from `products` where not exists (select * from `unitables` as `b` where `b`.`product_id` = `products`.`1s_id`)");
+//		$all = DB::select("select * from `products` where exists (select * from `units` where `products`.`base_unit` = `units`.`id` and not exists (select * from `units` as `u` inner join `unitables` as `b` on `u`.`id` = `b`.`unitable_id` where `units`.`id` = `b`.`unit_id` and `b`.`unitable_type` = 'app\model\Unit' and `b`.`product_id` = `products`.`1s_id`))");
 
+//		$all = new Collection($all);
+//		$a =
 //		$all = Product::where('instore','>',0)->get(['id', 'art', 'name', '1s_id']);
 //		$part = DB::table('unitables')
 //			->get()
