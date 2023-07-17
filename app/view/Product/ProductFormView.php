@@ -114,12 +114,12 @@ class ProductFormView
 	protected static function units(Product $product): string
 	{
 		$baseUnit = $product->baseUnit;
-//		$p = $product->toArray();
 		if (!$baseUnit) return 'Базовая единица не выбрана';
 		$units = $baseUnit->units;
+		$baseEqualsMainUnit = ProductView::baseEqualsMainUnit($product);
 		$selector = UnitFormView::selectorNew($baseUnit->id);
 		return FS::getFileContent(ROOT . '/app/view/Product/Admin/units.php',
-			compact('units', 'baseUnit', 'selector'));
+			compact('units', 'baseUnit', 'selector','baseEqualsMainUnit'));
 	}
 
 	public static function edit(Product $product): string

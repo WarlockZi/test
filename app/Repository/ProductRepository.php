@@ -82,9 +82,10 @@ class ProductRepository extends Controller
 				if (!$o->count()) return $i;
 			});
 		$arr = new Collection();
+
 		foreach ($products as $id => $product) {
 			$prod = Product::where('1s_id', $id)->get()->first();
-			if ($prod && $prod->instore)
+			if ($prod && $prod->instore && !$prod->base_equals_main_unit)
 				$arr->push($prod);
 		}
 		return Collection::make($arr);

@@ -29,7 +29,8 @@ class Product extends Model
 		'description',
 		'1s_category_id',
 		'1s_id',
-		'instore'
+		'instore',
+		'base_equals_main_unit',
 	];
 
 	protected $appends = ['mainImagePath'];
