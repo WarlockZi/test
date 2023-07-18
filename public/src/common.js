@@ -9,11 +9,15 @@ const scrollToTop = () => {
   }
 };
 
-export function objAndData2FormData(obj, files, formData = new FormData) {
+export function objAndFiles2FormData(obj, files, formData = new FormData) {
 
   self.formData = formData;
-  for (let i = 0; i < files.length; i++) {
-    self.formData.append(i, files[i])
+  if (typeof (files) === 'FileList') {
+    for (let i = 0; i < files.length; i++) {
+      self.formData.append(i, files[i])
+    }
+  } else {
+      self.formData.append('file', files)
   }
   self.createFormData = function (obj, subKeyStr = '') {
 
@@ -246,6 +250,7 @@ class createElement {
     this._field = field;
     return this
   }
+
   text(txt) {
     this._text = txt;
     return this

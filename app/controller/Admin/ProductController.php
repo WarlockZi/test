@@ -49,6 +49,14 @@ class ProductController extends AppController
 		ProductAction::changeUnit($this->ajax);
 	}
 
+	public function actionAttachmainimage()
+	{
+		if (!$_FILES['file']) $this->exitWithPopup('Ошибка - не передан файл');
+		ProductAction::attachMainImage($_FILES['file']);
+
+
+	}
+
 	public function actionChangepromotion()
 	{
 		ProductAction::changePromotion($this->ajax);

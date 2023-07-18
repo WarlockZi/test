@@ -16,10 +16,10 @@ class StorageImg extends Storage
     $this->relativePath = '/pic/';
     return $this;
   }
-	public static function getFile($name){
-		$self = new static();
-		return $self->path.$name;
-	}
+//	public static function getFile($name){
+//		$self = new static();
+//		return $self->path.$name;
+//	}
 
   public static function getFileContent($name){
   	$self = new static();

@@ -68,8 +68,8 @@ class Storage
 
 	public function save(string $path, array $files):array
 	{
-		$to = $this->path . $path . DIRECTORY_SEPARATOR;
-		$rel = $this->relativePath . $path.'/';
+		$to = FS::platformSlashes($this->path . $path . '/');
+		$rel = FS::platformSlashes($this->relativePath . $path.'/');
 		$srcs = [];
 		foreach ($files as $file) {
 

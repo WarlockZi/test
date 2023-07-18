@@ -24,10 +24,10 @@ export default async function catalogItem() {
 
     customCatalogItem.onclick = handleClick.bind(context);
     customCatalogItem.onkeyup = debounce(handleKeyup.bind(context));
-    let addFile = customCatalogItem.querySelector('[dnd].add-file');
-    if (addFile) {
-      let dndFile = new DndFile(addFile, showSavedFile)
-    }
+    // let addFile = customCatalogItem.querySelector('[dnd].add-file');
+    // if (addFile) {
+    //   let dndFile = new DndFile(addFile, showSavedFile)
+    // }
   }
 
   function showSavedFile(srcs) {
