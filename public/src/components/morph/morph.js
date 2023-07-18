@@ -1,4 +1,4 @@
-import {$, objAndData2FormData, post} from "../../common";
+import {$, objAndFiles2FormData, post} from "../../common";
 import Dnd from "../dnd/dnd";
 import MorphDTO from "./MorphDTO";
 
@@ -10,7 +10,7 @@ class Morph {
     morphEl.onclick = this.handleClick.bind(this);
     // debugger
     if (morphEl.querySelector('[dnd]')) {
-      new Dnd(this.attach.bind(this),morphEl)
+      new Dnd(morphEl,this.attach.bind(this))
     }
   }
 
@@ -27,7 +27,7 @@ class Morph {
     let url = `/adminsc/${this.model}/attach`;
     let param = {model: this.model, id: this.id, morph: this.morph};
 
-    let res = await post(url, objAndData2FormData(param, files));
+    let res = await post(url, objAndFiles2FormData(param, files));
     if (res.arr) {
       Morph.appendTo(this, res.arr)
     }
