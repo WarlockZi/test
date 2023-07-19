@@ -2,7 +2,7 @@ import './catalog-item.scss';
 import {$, debounce, post, trimStr, formatDate, createEl} from '../../common';
 import checkboxes from "../checkboxes/checkboxes";
 import checkbox from "../checkbox/checkbox";
-import DndFile from "../dnd/DndFile";
+
 
 
 export default async function catalogItem() {
@@ -24,10 +24,7 @@ export default async function catalogItem() {
 
     customCatalogItem.onclick = handleClick.bind(context);
     customCatalogItem.onkeyup = debounce(handleKeyup.bind(context));
-    // let addFile = customCatalogItem.querySelector('[dnd].add-file');
-    // if (addFile) {
-    //   let dndFile = new DndFile(addFile, showSavedFile)
-    // }
+
   }
 
   function showSavedFile(srcs) {

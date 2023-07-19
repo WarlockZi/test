@@ -15,21 +15,17 @@ class ProductAction
 	public static function attachMainImage($file)
 	{
 		$storage = new StorageProduct();
-		$path = self::getFilePaths($file,$storage);
-		$f = self::saveImge($path,$storage,$file);
-
+		$paths = self::getFilePaths($file, $storage);
+		$storage->saveFile($paths['relativeSrcs'][0], $file);
+		return $paths['absoluteSrcs'][0];
 	}
 
-	public static function saveImge($path,$storage,$file){
-//		if (!is_file($path)) {
-			return $storage->saveFile($path, $file);
-//		}
-		return false;
-	}
-	protected static function getFilePaths($file,$storage){
-		$rel = $storage->getImagePath().$storage->productImagesPath . $file['name'];
-		$path = FS::platformSlashes($storage->getImagePath() . $file['name']);
-		$srcs['absoluteSrcs'][] = $path;
+
+	protected static function getFilePaths($file, $storage)
+	{
+		$rel = FS::platformSlashes($storage->getImagePath() . $file['name']);
+		$abs = $storage->relativePath . $storage->productImagesPath . $file['name'];
+		$srcs['absoluteSrcs'][] = $abs;
 		$srcs['relativeSrcs'][] = $rel;
 		return $srcs;
 	}
