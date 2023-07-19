@@ -4,9 +4,11 @@
 namespace app\Storage;
 
 
-
 class StorageProduct extends StorageImg
 {
+	public $productImagesPath;
+	public $relativePath;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -19,7 +21,7 @@ class StorageProduct extends StorageImg
 		return $this->path . $this->productImagesPath;
 	}
 
-	public function saveFile(string $path, $file): array
+	public function saveFile(string $path, $file)
 	{
 		if ($file['size'] > 2000000)
 			exit(json_encode(['error' => "file {$file['name']} - too big size {$file['size']}"]));

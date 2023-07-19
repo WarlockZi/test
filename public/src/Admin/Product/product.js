@@ -6,7 +6,7 @@ import {$, objAndFiles2FormData, post} from '../../common'
 import {Fields} from "./Fields";
 
 import Values from "./Values";
-import DndFile from "../../components/dnd/DndFile";
+
 import Dnd from "../../components/dnd/dnd";
 
 export default function product() {
@@ -18,29 +18,17 @@ export default function product() {
   new Fields(product);
 
   new Dnd($('.add-file')[0], addMainImage)
-  // new Relations(product);
-  //   debugger
-  // let dnds = $('[data-dnd-path]');
-  // dnds.forEach((dnd) => {
-  //   if (dnd.parentNode.dataset.morphFunction) {
-  //     let m = new Morph(dnd.parentNode, product)
-  //   }
-  // });
 }
 
 async function addMainImage(files, target) {
-  let datas = {
-
-  };
-
-  let data = objAndFiles2FormData(datas, files[0]);
-
+  let data = objAndFiles2FormData({}, files[0]);
   let res = await post('/adminsc/product/attachMainImage', data);
-  if (res) {
-    rerenderMainImage(res, target)
+  let src = res?.arr[0];
+  if (src) {
+    let mainImage = target.closest('.dnd-container').querySelector('img');
+    mainImage.removeAttribute("src");
+    mainImage.setAttribute("src", src)
   }
 }
 
-function rerenderMainImage(res, target) {
 
-}
