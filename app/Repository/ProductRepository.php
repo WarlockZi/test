@@ -28,6 +28,7 @@ class ProductRepository extends Controller
 			->with('category.parents')
 			->with('mainImages')
 			->with('manufacturer.country')
+			->with('properties')
 			->with('detailImages')
 			->with('promotions')
 			->with('smallpackImages')
@@ -71,7 +72,7 @@ class ProductRepository extends Controller
 
 	public static function noMinimumUnit()
 	{
-		$products = DB::table('unitables')
+		$unitables = DB::table('unitables')
 			->orderBy('product_id')
 			->get()
 			->groupBy('product_id')
@@ -83,10 +84,21 @@ class ProductRepository extends Controller
 			});
 		$arr = new Collection();
 
-		foreach ($products as $id => $product) {
-			$prod = Product::where('1s_id', $id)->get()->first();
-			if ($prod && $prod->instore && !$prod->base_equals_main_unit)
-				$arr->push($prod);
+		foreach ($unitables as $id => $unitable) {
+			$prod = Product::where('1s_id', $id)
+				->with('properties')
+				->get()->first();
+
+			if ($prod) {
+				if ($prod->instore) {
+					if ($prod->properties) {
+						if (!$prod->properties->base_equals_main_unit)
+							$arr->push($prod);
+					} else {
+						$arr->push($prod);
+					}
+				}
+			}
 		}
 		return Collection::make($arr);
 	}

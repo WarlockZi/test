@@ -35,19 +35,18 @@ class Product extends Model
 
 	protected $appends = ['mainImagePath'];
 
+	public function properties()
+	{
+		return $this
+			->hasOne(ProductProperty::class,'product_1s_id','1s_id');
+	}
+
 	public function baseUnit()
 	{
 		return $this
 			->belongsTo(Unit::class, 'base_unit', 'id');
 	}
-//	public function mainUnits()
-//	{
-////		$bu = $this->baseUnit()->id;
-//		return $this
-//			->whereHas('baseUnit.units',)
-//			->wherePivot('main',1);
-//		return $this->Unit::has('mainUnits')->get();
-//	}
+
 	public function seo()
 	{
 		return $this
@@ -75,16 +74,6 @@ class Product extends Model
 		}
 	}
 
-
-
-
-
-//	public function units()
-//	{
-//		return $this
-//			->morphedByMany(Unit::class, 'unitable')
-//			->wherePivot('product_id',$this->id);
-//	}
 	protected static function booted()
 	{
 		static::Updating(function ($product) {
@@ -127,7 +116,6 @@ class Product extends Model
 			Image::class,
 			'imageable',
 			)->where('slug', '=', 'main');
-
 //		return $this->morphToMany(
 //			Image::class,
 //			'imageable',
@@ -155,11 +143,6 @@ class Product extends Model
 		return $this->belongsTo(Category::class)->with('parentRecursive.properties.vals');
 	}
 
-	public function properties()
-	{
-		return $this->morphToMany(Property::class, 'propertable');
-	}
-
 	public function category()
 	{
 		return $this->belongsTo(Category::class);
@@ -179,6 +162,10 @@ class Product extends Model
 	{
 		return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
 	}
+//	public function properties()
+//	{
+//		return $this->morphToMany(Property::class, 'propertable');
+//	}
 }
 
 

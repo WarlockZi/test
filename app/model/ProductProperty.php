@@ -14,7 +14,11 @@ class ProductProperty extends Model
 		'name' => '',
 		'property_id' => '',
 		'val_id' => '',
+		'product_1s_id' => '',
+		'base_equals_main_unit',
 	];
+
+
 
 
 	public function property()
