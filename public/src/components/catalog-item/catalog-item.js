@@ -4,7 +4,6 @@ import checkboxes from "../checkboxes/checkboxes";
 import checkbox from "../checkbox/checkbox";
 
 
-
 export default async function catalogItem() {
 
   let customCatalogItem = $('.item-wrap')[0];
@@ -27,15 +26,6 @@ export default async function catalogItem() {
 
   }
 
-  function showSavedFile(srcs) {
-    debugger;
-    srcs.relativeSrcs.forEach((src) => {
-      let img = createEl('img');
-      img.src = src;
-      this.el.closest('.dnd-container').append(img)
-    })
-
-  }
 
   async function handleKeyup({target}) {
     if (
@@ -101,6 +91,14 @@ export default async function catalogItem() {
   async function update() {
     let res = await post(`/adminsc/${this.model}/updateorcreate`, this.data)
   }
+  // function showSavedFile(srcs) {
+  //   debugger;
+  //   srcs.relativeSrcs.forEach((src) => {
+  //     let img = createEl('img');
+  //     img.src = src;
+  //     this.el.closest('.dnd-container').append(img)
+  //   })
+  // }
 
   // function getInputs(field) {
   //   let inputs = field.querySelectorAll('input');

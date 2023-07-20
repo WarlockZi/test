@@ -8,7 +8,7 @@ export class Fields {
     this.$category_id = $(`[data-field="category_id"]`).first();
     this.$base_unit = $(`[data-field="base_unit"]`).first();
     this.$manufacturer_id = $(`[data-field="manufacturer_id"]`).first();
-    this.$base_equals_main_unit = $(`[data-field="base_equals_main_unit"]`).first();
+    // this.$base_equals_main_unit = $(`[data-field="base_equals_main_unit"]`).first();
     this.setup()
   }
 
@@ -17,7 +17,7 @@ export class Fields {
     new SelectNew(this.$category_id);
     new SelectNew(this.$base_unit);
     new SelectNew(this.$manufacturer_id);
-    this.$base_equals_main_unit.addEventListener('change', this.checkBoxChanged.bind(this))
+    // this.$base_equals_main_unit.addEventListener('change', this.checkBoxChanged.bind(this))
   }
 
   async checkBoxChanged({target}){

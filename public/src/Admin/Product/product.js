@@ -17,7 +17,19 @@ export default function product() {
 
   new Fields(product);
 
-  new Dnd($('.add-file')[0], addMainImage)
+  new Dnd($('.add-file')[0], addMainImage);
+
+  let baseEqMainUnit = product.querySelector(`[data-action='equal']`);
+  baseEqMainUnit.onchange = setEqual
+}
+
+async function setEqual({target}) {
+  let data = {
+    ['1s_id']: target.closest('.item_content').querySelector(`[data-field="1s_id"]`).innerText,
+    'equal': +target.checked
+  };
+  let res = await post('/adminsc/product/Setbaseequalmainunit',data)
+
 }
 
 async function addMainImage(files, target) {

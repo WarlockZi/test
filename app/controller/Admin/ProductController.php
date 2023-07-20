@@ -60,4 +60,12 @@ class ProductController extends AppController
 	{
 		ProductAction::changePromotion($this->ajax);
 	}
+
+	public function actionSetbaseequalmainunit()
+	{
+		if (ProductAction::setBaseEqualMainUnit($this->ajax)) {
+			$this->exitWithPopup('Обновлено');
+		}
+		$this->exitJson(['popup' => 'ошибка']);
+	}
 }

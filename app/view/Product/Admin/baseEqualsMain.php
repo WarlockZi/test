@@ -3,8 +3,14 @@
 		Базовая единица равна основной
 	</div>
 	<div class="value">
-		 <?$checked=$vars[0]->base_equals_main_unit?'checked':''; ?>
-		<input data-field="base_equals_main_unit" type="checkbox" <?=$checked?>>
+		 <? if ($vars[0]->properties) {
+			 $checked = $vars[0]->properties->base_equals_main_unit ? 'checked' : '';
+		 } else {
+			 $checked = '';
+		 }
+		 ?>
+
+		<input data-action="equal" type="checkbox" <?= $checked ?>>
 
 	</div>
 </div>
