@@ -9,7 +9,7 @@ use app\core\Icon;
 	<!--	VITEX-LAYOUT-->
 	<meta charset="utf-8">
 	<meta name="token" content="<?= $_SESSION['token'] ?>">
-	<meta http-equiv="cleartype" content="on">
+	<meta http-equiv="cleartype" content="on"/>
 	<meta name="MobileOptimized" content="320">
 	<meta name="HandheldFriendly" content="True">
 	<meta name="apple-mobile-web-app-capable" content="yes">

@@ -1,10 +1,11 @@
 <?
 
+use app\core\Auth;
 use \app\model\User;
 use \app\core\Icon;
 
 
-$user = \app\core\Auth::getUser(); ?>
+$user = Auth::getUser(); ?>
 <? if (!$user): ?>
 
 	<div class="guest-menu" aria-label="login">
@@ -12,9 +13,15 @@ $user = \app\core\Auth::getUser(); ?>
 		Вход
 
 		<ul class="guest-menu__menu">
-			<a href="/auth/login">Войти</a>
-			<a href="/auth/register">Регистрация</a>
-			<a href="/auth/returnpass">Забыл пароль</a>
+			<li>
+				<a href="/auth/login">Войти</a>
+			</li>
+			<li>
+				<a href="/auth/register">Регистрация</a>
+			</li>
+			<li>
+				<a href="/auth/returnpass">Забыл пароль</a>
+			</li>
 		</ul>
 
 	</div>
