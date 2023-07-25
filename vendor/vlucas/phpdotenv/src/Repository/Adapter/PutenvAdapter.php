@@ -52,7 +52,7 @@ final class PutenvAdapter implements AdapterInterface
     /**
      * Read an environment variable, if it exists.
      *
-     * @param string $name
+     * @param non-empty-string $name
      *
      * @return Option
      */
@@ -67,8 +67,8 @@ final class PutenvAdapter implements AdapterInterface
     /**
      * Write to an environment variable, if possible.
      *
-     * @param string $name
-     * @param string $value
+     * @param non-empty-string $name
+     * @param string           $value
      *
      * @return bool
      */
@@ -82,7 +82,7 @@ final class PutenvAdapter implements AdapterInterface
     /**
      * Delete an environment variable, if possible.
      *
-     * @param string $name
+     * @param non-empty-string $name
      *
      * @return bool
      */

@@ -16,7 +16,7 @@ $promotion = $product->promotions->count() ? "<div class='promotion'>Акция<
 		<span class="footer">
 
 					 <p>Цена: <?= $product->instore ? $product->priceWithCurrencyUnit() : 'уточняйте у менеджера'; ?></p>
-					 <p>Остаток: <?= number_format($product->instore, 0, '', ' ') ?? 0; ?> <?= $product->baseUnit->name ?? 0; ?></p>
+					 <p>Остаток:  в наличии</p>
 					 <p>Артикул: <?= $product->art ?? 0; ?></p>
 
 					 </span>

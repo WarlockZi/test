@@ -7,7 +7,7 @@ use app\controller\AppController;
 use app\core\FS;
 use app\core\Route;
 use app\model\TestResult;
-use app\core\Mail;
+use app\core\PHPMail;
 
 
 class TestresultController extends AppController
@@ -70,7 +70,7 @@ class TestresultController extends AppController
 		$data['body'] = self::prepareBodyTestResults($post, $resid - 1);
 		$data['altBody'] = "Ссылка на страницу с результатами: тут";
 
-		$sent = Mail::send_mail($data);
+		$sent = PHPMail::send_mail($data);
 		$this->exitWithPopup('Результат сохранен');
 	}
 

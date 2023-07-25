@@ -6,6 +6,7 @@ namespace Dotenv\Repository;
 
 use Dotenv\Repository\Adapter\ReaderInterface;
 use Dotenv\Repository\Adapter\WriterInterface;
+use InvalidArgumentException;
 
 final class AdapterRepository implements RepositoryInterface
 {
@@ -46,7 +47,7 @@ final class AdapterRepository implements RepositoryInterface
      */
     public function has(string $name)
     {
-        return $this->reader->read($name)->isDefined();
+        return '' !== $name && $this->reader->read($name)->isDefined();
     }
 
     /**
@@ -55,9 +56,15 @@ final class AdapterRepository implements RepositoryInterface
      * @param string $name
      *
      * @return string|null
+		 * @throws InvalidArgumentException
+     *
      */
     public function get(string $name)
     {
+        if ('' === $name) {
+            throw new InvalidArgumentException('Expected name to be a non-empty string.');
+        }
+
         return $this->reader->read($name)->getOrElse(null);
     }
 
@@ -68,9 +75,15 @@ final class AdapterRepository implements RepositoryInterface
      * @param string $value
      *
      * @return bool
+		 * @throws InvalidArgumentException
+     *
      */
     public function set(string $name, string $value)
     {
+        if ('' === $name) {
+            throw new InvalidArgumentException('Expected name to be a non-empty string.');
+        }
+
         return $this->writer->write($name, $value);
     }
 
@@ -80,9 +93,15 @@ final class AdapterRepository implements RepositoryInterface
      * @param string $name
      *
      * @return bool
+		 * @throws InvalidArgumentException
+     *
      */
     public function clear(string $name)
     {
+        if ('' === $name) {
+            throw new InvalidArgumentException('Expected name to be a non-empty string.');
+        }
+
         return $this->writer->delete($name);
     }
 }
