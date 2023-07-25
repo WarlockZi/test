@@ -3,10 +3,9 @@
 namespace app\controller;
 
 use app\core\Auth;
-use app\core\Mail;
+use app\core\Mail\PHPMail;
 use app\model\User;
 use app\view\User\UserView;
-use app\view\View;
 use Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -20,11 +19,57 @@ class AuthController extends AppController
 		parent::__construct();
 		if (!$this->ajax) {
 			$this->assets->setAuth();
-//			$this->assets->setCss('auth');
 		}
 		$this->mailer = new PHPMailer();
 	}
 
+	public function actionRegister()
+	{
+
+//		$r =fsockopen("smtp.yandex.ru", 465, $errnum, $errstr, 5);vitaliy04111979@gmail.com
+		if ($user = $this->ajax) {
+			if (!$user['password']) exit('empty password');
+			if (!$user['email']) exit('empty email');
+
+			$found = User::where('email', $user['email'])->first();
+			if ($found) $this->exitWithMsg('mail exists');
+
+			$user['password'] = $this->preparePassword($user['password']);
+			$user['hash'] = md5(microtime());
+			$user['rights'] = 'user_update';
+			$user['sex'] = 'm';
+
+			$mailer = new PHPMail('elastic');
+
+//			$user = User::create($user);
+//			$user->save();
+
+//			if (!$user) {
+//				exit('registration failed');
+//			}
+			try {
+//				$headers  = "MIME-Version: 1.0\r\n";
+//				$headers .= "Content-type: text/html; charset=utf-8\r\n";
+//				$headers .= "To: <vvoronik@yanedex.ru>\r\n";
+//				$headers .= "From: <vitexopt@vitexopt.ru>\r\n";
+//				if (mail('vvoronik@yanedex.ru', "Подтвердите Email на сайте", 'f',$headers)) {
+//					// Если да, то выводит сообщение
+//					echo 'Подтвердите на почте';
+//				} vitaliy04111979@gmail.com
+//@                1800    IN    TXT    v=spf1 include:spf.unisender.ru ~all
+//us._domainkey    1800    IN    TXT    v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC5580N4opwHfx3Bh1uqbLn3TKHha3baeHMPEqxeddR0SWGonYV2oW1iVoF/FzCEduhLClLF1N4UJEGc/mtwLmm0qyCtT6wIRlKyvCE5ldgcLRSaO/Ju1zGEmsc3Qz+datGSI4R0Fs7jzqoKw491vNRGhlol5tlEQs/HozNEKxbWwIDAQAB
+//@                1800    IN    TXT    unisender-go-validate-hash=0b040cf7fbb22c48384d2960e1dbdf92
+
+
+				$mailer = new SymfonyMailer();
+//				Mail::send_mail($data);uxzlzqtsavhfeufa
+			} catch (Exception $e) {
+				exit($e->getMessage());
+			}
+			$this->exitWithMsg('confirmed');
+
+		}
+	}
 	public function actionLogin()
 	{
 		if ($data = $this->ajax) {
@@ -53,47 +98,7 @@ class AuthController extends AppController
 		$this->layout = 'vitex';
 	}
 
-	public function actionRegister()
-	{
 
-//		$r =fsockopen("smtp.yandex.ru", 465, $errnum, $errstr, 5);
-		if ($user = $this->ajax) {
-			if (!$user['password']) exit('empty password');
-			if (!$user['email']) exit('empty email');
-
-			$found = User::where('email', $user['email'])->first();
-			if ($found) $this->exitWithMsg('mail exists');
-
-			$user['password'] = $this->preparePassword($user['password']);
-			$user['hash'] = md5(microtime());
-			$user['rights'] = 'user_update';
-			$user['sex'] = 'm';
-
-			$data = Mail::mailConfirmFactory($user);
-
-//			$user = User::create($user);
-//			$user->save();
-
-//			if (!$user) {
-//				exit('registration failed');
-//			}
-			try {
-//				$headers  = "MIME-Version: 1.0\r\n";
-//				$headers .= "Content-type: text/html; charset=utf-8\r\n";
-//				$headers .= "To: <vvoronik@yanedex.ru>\r\n";
-//				$headers .= "From: <vitexopt@vitexopt.ru>\r\n";
-//				if (mail('vvoronik@yanedex.ru', "Подтвердите Email на сайте", 'f',$headers)) {
-//					// Если да, то выводит сообщение
-//					echo 'Подтвердите на почте';
-//				} vitaliy04111979@gmail.com
-				Mail::send_mail($data);
-			} catch (Exception $e) {
-				exit($e->getMessage());
-			}
-			$this->exitWithMsg('confirmed');
-
-		}
-	}
 
 	public function actionProfile()
 	{
@@ -166,7 +171,7 @@ class AuthController extends AppController
 				$data['subject'] = 'Новый пароль';
 				$data['body'] = "Ваш новый пароль: " . $password;
 
-				Mail::send_mail($data);
+				PHPMail::send_mail($data);
 				$this->exitWithSuccess('Новый пароль проверьте на почте');
 			} else {
 				$this->exitWithError("Пользователя с таким e-mail нет");

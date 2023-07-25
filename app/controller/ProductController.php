@@ -15,7 +15,6 @@ class ProductController extends AppController
 	{
 		$slug = $this->route->slug;
 		if ($slug) {
-
 			$this->view = 'product';
 			$product = ProductRepository::main($slug);
 			$oItems = OrderRepository::count();

@@ -85,6 +85,7 @@ final class EntryParser
         })->getOrElse([$line, null]);
 
         if ($result[0] === '') {
+            /** @var Result{string,string|null},string> */
             return Error::create(self::getErrorMessage('an unexpected equals', $line));
         }
 
@@ -113,9 +114,11 @@ final class EntryParser
         }
 
         if (!self::isValidName($name)) {
+            /** @var Result */
             return Error::create(self::getErrorMessage('an invalid name', $name));
         }
 
+        /** @var Result */
         return Success::create($name);
     }
 
@@ -147,7 +150,7 @@ final class EntryParser
      */
     private static function isValidName(string $name)
     {
-        return Regex::matches('~\A[a-zA-Z0-9_.]+\z~', $name)->success()->getOrElse(false);
+        return Regex::matches('~(*UTF8)\A[\p{Ll}\p{Lu}\p{M}\p{N}_.]+\z~', $name)->success()->getOrElse(false);
     }
 
     /**
@@ -165,6 +168,7 @@ final class EntryParser
     private static function parseValue(string $value)
     {
         if (trim($value) === '') {
+            /** @var Result */
             return Success::create(Value::blank());
         }
 
@@ -175,10 +179,13 @@ final class EntryParser
                 });
             });
         }, Success::create([Value::blank(), self::INITIAL_STATE]))->flatMap(static function (array $result) {
+            /** @psalm-suppress DocblockTypeContradiction */
             if (in_array($result[1], self::REJECT_STATES, true)) {
+                /** @var Result */
                 return Error::create('a missing closing quote');
             }
 
+            /** @var Result */
             return Success::create($result[0]);
         })->mapError(static function (string $err) use ($value) {
             return self::getErrorMessage($err, $value);

@@ -19,9 +19,9 @@ final class Parser implements ParserInterface
      *
      * @param string $content
      *
-     * @throws InvalidFileException
-     *
      * @return Entry[]
+     *@throws \Dotenv\Exception\InvalidFileException
+		 *
      */
     public function parse(string $content)
     {
@@ -47,6 +47,7 @@ final class Parser implements ParserInterface
         return array_reduce($entries, static function (Result $result, string $raw) {
             return $result->flatMap(static function (array $entries) use ($raw) {
                 return EntryParser::parse($raw)->map(static function (Entry $entry) use ($entries) {
+                    /** @var Entry[] */
                     return array_merge($entries, [$entry]);
                 });
             });

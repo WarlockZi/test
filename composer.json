@@ -15,6 +15,14 @@
     "phpmailer/phpmailer": "^6.4",
     "vlucas/phpdotenv": "^5.3",
     "illuminate/events": "^8.83",
-    "illuminate/database": "^8.83"
-  }
+    "illuminate/database": "^8.83",
+    "symfony/mailer": "^5.4",
+    "elasticemail/elasticemail-php": "^4.0"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/elasticemail/elasticemail-php.git"
+    }
+  ]
 }

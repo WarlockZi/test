@@ -45,9 +45,9 @@ if ($product): ?>
 
 		<div class="info-wrap">
 			<div class="info-tag">Информация о товаре</div>
-			<p class="detail-text">
+			<article class="detail-text">
 					 <?= $product['txt']; ?>
-			</p>
+			</article>
 		</div>
 
 		 <? //include __DIR__.'/card/olsoLike.php'?>

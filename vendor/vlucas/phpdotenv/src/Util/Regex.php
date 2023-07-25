@@ -55,7 +55,7 @@ final class Regex
      *
      * @return Result<int,string>
      */
-    public static function occurences(string $pattern, string $subject)
+    public static function occurrences(string $pattern, string $subject)
     {
         return self::pregAndWrap(static function (string $subject) use ($pattern) {
             return (int) @preg_match_all($pattern, $subject);
@@ -110,9 +110,11 @@ final class Regex
         $result = $operation($subject);
 
         if (preg_last_error() !== PREG_NO_ERROR) {
+            /** @var Result<V,string> */
             return Error::create(preg_last_error_msg());
         }
 
+        /** @var Result<V,string> */
         return Success::create($result);
     }
 }

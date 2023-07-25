@@ -45,7 +45,7 @@ class ProductRepository extends Controller
 	public static function main(string $slug)
 	{
 		$p = Product::where('slug', $slug)->first();
-		$id = Product::where('slug', $slug)->first()['1s_id'];
+		$id = $p['1s_id'];
 		return Product::query()
 			->orderBy('sort')
 			->with('category.properties.vals')
