@@ -63,7 +63,7 @@ body {
 
 .slogan-article {
     position: relative;
-    width: 50%;
+    max-width: 590px;
     margin: 0 auto;
     max-width: 1200px;
 }
@@ -146,6 +146,7 @@ body {
 
 .advantage-services {
     display: flex;
+    margin: 0 auto;
     max-width: 80%;
 }
 
