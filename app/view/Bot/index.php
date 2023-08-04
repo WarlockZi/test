@@ -5,9 +5,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>BOTcorp</title>
-	<link rel="stylesheet" href="./css/normalize.css">
-	<link rel="stylesheet" href="./css/style.css">
-	<script type="module" src="./js/app.js" defer></script>
+	<link rel="stylesheet" href="/public/src/bot/css/normalize.css">
+	<link rel="stylesheet" href="/public/src/bot/css/style.css">
+	<script type="module" src="/public/src/bot/js/app.js" defer></script>
 </head>
 
 <body>
@@ -87,7 +87,7 @@
 			<div class="section-wrap">
 				<div class="flex">
 					<div class="flex1">
-						<img class="about-us-img" src="./img/main/ввв-прозрачный.png" alt="Вороник Виталий">
+						<img class="about-us-img" src="/public/src/bot/img/main/ввв-прозрачный.png" alt="Вороник Виталий">
 					</div>
 					<div class="flex1">
 						<h2 class="main-h2 about-h2">
