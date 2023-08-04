@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +5,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>BOTcorp</title>
-	<link rel="stylesheet" href="/public/src/bot/css/normalize.css">
-	<link rel="stylesheet" href="/public/src/bot/css/style.css">
-	<script type="module" src="/public/src/bot/js/app.js" defer></script>
+	<link rel="stylesheet" href="./css/normalize.css">
+	<link rel="stylesheet" href="./css/style.css">
+	<script type="module" src="./js/app.js" defer></script>
 </head>
 
 <body>
@@ -25,7 +24,7 @@
 				<h1 class="slogan-h1">
 					Автоматизируй свой <span class="slogan-blue">бизнес</span>
 				</h1>
-				<p class="slogan-p">Автоматизируем продажи с помощью голосовых и чат ботов с интеграцией 1с </p>
+				<p class="slogan-p">Автоматизируем продажи с помощью голосовых и чат ботов c различными CRM системами </p>
 
 				<button class="button blue-button">Связаться</button>
 				<button class="button grey-button">Узнать больше</button>
@@ -88,13 +87,13 @@
 			<div class="section-wrap">
 				<div class="flex">
 					<div class="flex1">
-						<img class="about-us-img" src="/public/src/bot/img/main/ввв-прозрачный.png" alt="Вороник Виталий">
+						<img class="about-us-img" src="./img/main/ввв-прозрачный.png" alt="Вороник Виталий">
 					</div>
 					<div class="flex1">
 						<h2 class="main-h2 about-h2">
 							Кто мы такие
 						</h2>
-						<p class="main-p">Меня зовут Вороник Виталий и я основатель компании «Боткорп, где мы с
+						<p class="main-p">Меня зовут Вороник Виталий и я основатель компании "Боткорп", где мы с
 							командой помогаем
 							бизнесу с
 							разработкой, интеграцией и автоматизацией процессов с помощью ботов.</p>
@@ -119,7 +118,7 @@
 		</section>
 
 		<section class="connect">
-			<div class="section-content flex">
+			<div class="connect-wrap">
 				<p class="connect-p">Свяжитесь с нами прямо сейчас</p>
 				<button class="button grey-button connect-button">Связаться</button>
 			</div>
@@ -249,7 +248,6 @@
 		© 2023 ИП Вороник Виталий Викторович ИНН 253523642447
 
 	</footer>
-
 
 
 </div>
