@@ -25,8 +25,8 @@
 
 		<div class="submit__button">Зарегистрироваться</div>
 <div class="bottom">
-		<a href="/auth/returnpass">Забыл пароль</a>
-		<a href="/auth/login">Войти</a>
+		<a href="/auth/returnpass"  rel="nofollow">Забыл пароль</a>
+		<a href="/auth/login" rel="nofollow">Войти</a>
 </div>
 
 		<p>Нажимая на кнопку "Регистрация", вы принимаете условия <a href="/main/oferta">Публичной оферты</a> и

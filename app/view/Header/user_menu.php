@@ -14,13 +14,13 @@ $user = Auth::getUser(); ?>
 
 		<ul class="guest-menu__menu">
 			<li>
-				<a href="/auth/login">Войти</a>
+				<a href="/auth/login" rel="nofollow">Войти</a>
 			</li>
 			<li>
-				<a href="/auth/register">Регистрация</a>
+				<a href="/auth/register" rel="nofollow">Регистрация</a>
 			</li>
 			<li>
-				<a href="/auth/returnpass">Забыл пароль</a>
+				<a href="/auth/returnpass" rel="nofollow">Забыл пароль</a>
 			</li>
 		</ul>
 

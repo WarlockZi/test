@@ -94,7 +94,7 @@ class Assets
 	{
 		$this->host = $_ENV['MODE'] === 'development'
 			? 'http://localhost:4000/'
-			: '/public/dist/';;
+			: '/public/dist/';
 	}
 
 	public function getHost()
