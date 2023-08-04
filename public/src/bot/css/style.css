@@ -63,7 +63,7 @@ body {
 
 .slogan-article {
     position: relative;
-    width: 50%;
+    max-width: 590px;
     margin: 0 auto;
     max-width: 1200px;
 }
@@ -106,7 +106,12 @@ body {
     background-color: var(--color-button-grey);
     color: white;
 }
-
+.connect-wrap{
+    display: flex;
+    max-width: 1200px;
+    justify-content: space-around;
+    margin: 0 auto;
+}
 .advantages {
     padding: 120px 25px;
     background-color: var(--color-body-light-grey);
@@ -146,6 +151,7 @@ body {
 
 .advantage-services {
     display: flex;
+    margin: 0 auto;
     max-width: 80%;
 }
 
