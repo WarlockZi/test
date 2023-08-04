@@ -1,0 +1,50 @@
+<?php
+
+
+namespace app\Actions;
+
+use app\model\User;
+
+class AuthAction
+{
+	protected $salt = "popiyonovacheesa";
+
+	public function createUser(array $req)
+	{
+		$user['email'] = $req['email'];
+		$user['password'] = $this->preparePassword($req['password']);
+		$user['hash'] = md5(microtime());
+		$user['rights'] = 'user_update';
+		$user['sex'] = 'm';
+		return User::query()->create($user)??false;
+
+	}
+
+	public function preparePassword(string $password): string
+	{
+		return md5($password . $this->salt);
+	}
+
+	public function randomPassword(): string
+	{
+		$arr = [
+			'1234567890',
+			'abcdefghijklmnopqrstuvwxyz',
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+		];
+
+		$pass = array();
+
+		$arrLength = count($arr) - 1;
+		$y = 0;
+		for ($i = 0; $i < 8; $i++) {
+			if ($y > $arrLength) $y = 0;
+			$arrChosen = $arr[$y];
+			$arrChosernLen = strlen($arrChosen) - 1;
+			$n = rand(0, $arrChosernLen);
+			$pass[] = $arrChosen[$n];
+			$y++;
+		}
+		return implode($pass);
+	}
+}

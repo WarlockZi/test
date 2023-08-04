@@ -13,8 +13,8 @@
 					 required/>
 		<div class="submit__button">Отправить</div>
 		<div class="bottom">
-			<a href="/auth/login">Войти</a>
-			<a href="/auth/register"">Регистрация</a>
+			<a href="/auth/login" rel="nofollow">Войти</a>
+			<a href="/auth/register" rel="nofollow"">Регистрация</a>
 		</div>
 	</form>
 </main>

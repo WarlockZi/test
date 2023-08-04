@@ -19,7 +19,9 @@ function sendData({target}) {
 
 function renderError(error) {
   let msg = $('.message')[0];
+  msg.innerText = '';
   msg.innerText = msg.innerText + error;
+  $(msg).removeClass('success');
   $(msg).addClass('error');
 }
 
@@ -49,7 +51,7 @@ async function parseRegisterResponse(email, password) {
 
   let res = await post('/auth/register', data);
 debugger;
-  if (res.msg === 'confirmed') {
+  if (res?.arr?.message === 'confirmed') {
     msg.classList.remove('error');
     msg.classList.add('success');
     msg.innerHTML =
@@ -58,7 +60,7 @@ debugger;
       '<bold>email</bold>.<br> ' +
       '-Перейдите по ссылке в письме.'
   } else if (res.msg === 'mail exists') {
-    msg.innerHTML = 'Эта почта уже зарегистрирована';
+    msg.innerHTML = 'Эта почта уже зарегистрирована. Войдите в систему по кнопке внизу Войти или, если не помните пароль, восстановите пароль по кнопке Забыл пароль';
     msg.classList.remove('success');
     msg.classList.add('error')
 

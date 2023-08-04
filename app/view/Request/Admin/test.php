@@ -1,8 +1,8 @@
 <header class="site-header sticky-top py-1 bg-light">
 	<nav class="container d-flex flex-column flex-md-row justify-content-end">
 		<div class="btn-group">
-			<a class="py-2 d-md-inline-block btn btn-outline-primary" href="#">Войти</a>
-			<a class="py-2 d-md-inline-block btn btn-outline-primary" href="#">Выйти</a>
+			<a class="py-2 d-md-inline-block btn btn-outline-primary" href="#" rel="nofollow">Войти</a>
+			<a class="py-2 d-md-inline-block btn btn-outline-primary" href="#" rel="nofollow">Выйти</a>
 		</div>
 	</nav>
 </header>

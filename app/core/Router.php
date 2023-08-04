@@ -114,6 +114,7 @@ class Router
 			$route->controllerName === 'Auth' && $route->action === 'login'
 			|| $route->controllerName === 'Cart'
 			|| $route->controllerName === 'Main'
+			|| $route->controllerName === 'Bot'
 			|| $route->controllerName === 'Promotion'
 			|| $route->controllerName === 'Orderitem'
 			|| $route->controllerName === 'Search'
