@@ -10,12 +10,13 @@ export class Accordeon {
 
         this.$accordeon.addEventListener("click", this.toggleAccordion.bind(this))
     }
-    
+
     toggleAccordion({ target }) {
 
-        if (!target.classList.contains("accordeon-btn")) return;
-
         let element = target.closest(".accordeon-item");
+
+        if (!element) return;
+
         let content = element.querySelector(this.contentClass);
 
         if (this.elementOld != null) {
