@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>BOTcorp</title>
 	<link rel="stylesheet" href="/public/src/bot/css/normalize.css">
 	<link rel="stylesheet" href="/public/src/bot/css/style.css">
@@ -19,16 +19,25 @@
 	<main>
 		<section class="slogan">
 			<div class="slogan-overlay"></div>
-			<article class="slogan-article">
+			<div class="slogan-article-wrap">
 
-				<h1 class="slogan-h1">
-					Автоматизируй свой <span class="slogan-blue">бизнес</span>
-				</h1>
-				<p class="slogan-p">Автоматизируем продажи с помощью голосовых и чат ботов c различными CRM системами </p>
+				<article class="slogan-article">
 
-				<button class="button blue-button">Связаться</button>
-				<button class="button grey-button">Узнать больше</button>
-			</article>
+					<h1 class="slogan-h1">
+						Автоматизируй свой <span class="slogan-blue">бизнес</span>
+					</h1>
+					<p class="slogan-p">Автоматизируем продажи с помощью голосовых и чат ботов c различными CRM
+						системами </p>
+
+					<div class="slogan-butns">
+						<button class="button blue-button">Связаться</button>
+						<button class="button grey-button">Узнать больше</button>
+					</div>
+
+				</article>
+				<div class="slogan-article-space"></div>
+			</div>
+
 		</section>
 
 		<section class="advantages section">
@@ -50,9 +59,11 @@
 									d="M0 256v128c0 17.7 14.3 32 32 32h32V224H32c-17.7 0-32 14.3-32 32zM464 96H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H176c-44.2 0-80 35.8-80 80v272c0 35.3 28.7 64 64 64h320c35.3 0 64-28.7 64-64V176c0-44.2-35.8-80-80-80zM256 416h-64v-32h64v32zm-32-120c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40zm128 120h-64v-32h64v32zm96 0h-64v-32h64v32zm-32-120c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40zm192-72h-32v192h32c17.7 0 32-14.3 32-32V256c0-17.7-14.3-32-32-32z">
 							</path>
 						</svg>
-						<h3 class="advantage-header3">Автоматизация</h3>
-						<p class="advantage-p">Получите полный комплекс услуг по автоматизации процессов вашей
-							организации c голосовыми роботами</p>
+						<div class="advantage-text">
+							<h3 class="advantage-header3">Автоматизация</h3>
+							<p class="advantage-p">Получите полный комплекс услуг по автоматизации процессов вашей
+								организации c голосовыми роботами</p>
+						</div>
 					</article>
 
 					<article class="advantage-article">
@@ -62,9 +73,11 @@
 									d="M1 0l-1 1 1.5 1.5-1.5 1.5h4v-4l-1.5 1.5-1.5-1.5zm3 4v4l1.5-1.5 1.5 1.5 1-1-1.5-1.5 1.5-1.5h-4z">
 							</path>
 						</svg>
-						<h3 class="advantage-header3">Интеграция</h3>
-						<p class="advantage-p">Мы помогаем интегрировать WordPress и внешнее ПО и сервисы между
-							собой</p>
+						<div class="advantage-text">
+							<h3 class="advantage-header3">Интеграция</h3>
+							<p class="advantage-p">Мы помогаем интегрировать WordPress и внешнее ПО и сервисы между
+								собой</p>
+						</div>
 					</article>
 
 					<article class="advantage-article">
@@ -74,9 +87,11 @@
 									d="M.34 0a.5.5 0 0 0-.34.5v5a.5.5 0 0 0 .5.5h2.5v1h-1c-.55 0-1 .45-1 1h6c0-.55-.45-1-1-1h-1v-1h2.5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.09 0 .5.5 0 0 0-.06 0zm.66 1h6v4h-6v-4z">
 							</path>
 						</svg>
-						<h3 class="advantage-header3">Внедрение</h3>
-						<p class="advantage-p">Мы внедрим наши решения и настроим всё для лёгкой и безопасной работы
-						</p>
+						<div class="advantage-text">
+							<h3 class="advantage-header3">Внедрение</h3>
+							<p class="advantage-p">Мы внедрим наши решения и настроим всё для лёгкой и безопасной
+								работы</p>
+						</div>
 					</article>
 				</div>
 
@@ -86,10 +101,10 @@
 		<section class="about-us">
 			<div class="section-wrap">
 				<div class="flex">
-					<div class="flex1">
+					<div class="">
 						<img class="about-us-img" src="/public/src/bot/img/main/ввв-прозрачный.png" alt="Вороник Виталий">
 					</div>
-					<div class="flex1">
+					<div class="">
 						<h2 class="main-h2 about-h2">
 							Кто мы такие
 						</h2>
@@ -118,7 +133,7 @@
 		</section>
 
 		<section class="connect">
-			<div class="connect-wrap">
+			<div class="connect-wrap flex">
 				<p class="connect-p">Свяжитесь с нами прямо сейчас</p>
 				<button class="button grey-button connect-button">Связаться</button>
 			</div>

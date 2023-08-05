@@ -34,7 +34,7 @@ body {
 .slogan {
     position: relative;
     padding: 200px 25px 150px 25px;
-    background-image: url(/public/img/main/apple-unsplash-min.jpg);
+    background-image: url(/public/src/bot/img/main/apple-unsplash-min.jpg);
     background-size: cover;
     background-position: 50% 50%;
     background-attachment: scroll;
