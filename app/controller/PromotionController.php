@@ -19,6 +19,7 @@ class PromotionController Extends AppController
 			->with('product.price')
 			->get();
 		$this->set(compact('promotions'));
+		$this->assets->setMeta("Акции", "Акции","Акции");
 	}
 
 }

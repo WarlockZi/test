@@ -17,6 +17,9 @@ export class Accordeon {
 
         if (!element) return;
 
+        let isContent = target.closest('.accordeon-item-content');
+        if (isContent) return;
+
         let content = element.querySelector(this.contentClass);
 
         if (this.elementOld != null) {
