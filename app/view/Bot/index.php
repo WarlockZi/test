@@ -6,14 +6,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>BOTcorp</title>
 	<link rel="stylesheet" href="/public/src/bot/css/normalize.css">
-	<link rel="stylesheet" href="/public/src/bot/css/style.css">
-	<script type="module" src="/public/src/bot/js/app.js" defer></script>
+	<!--	<link rel="stylesheet" href="/public/src/bot/css/style.css">-->
+	<link rel="stylesheet" href="http://localhost:4000/bot.css">
+	<script type="module" src="http://localhost:4000/bot.js" defer></script>
+	<!--	<script type="module" src="/public/src/bot/js/app.js" defer></script>-->
 </head>
 
 <body>
 <div class="container">
 
 	<header>
+		<input type="checkbox">
+		<label for="menu-icon"></label>
+		<div class="nav"></div>
 
 	</header>
 	<main>
@@ -43,7 +48,7 @@
 		<section class="advantages section">
 			<div class="section-content">
 
-				<h2 class="advantage-header2">
+				<h2 class="main-h2">
 					Автоматизация бизнеса экономит до 90% расходов компании и приносит больше денег
 				</h2>
 				<p class="advantage-call">Чтобы начать автоматизацию, интеграцию и внедрение нового продукта c
@@ -60,7 +65,7 @@
 							</path>
 						</svg>
 						<div class="advantage-text">
-							<h3 class="advantage-header3">Автоматизация</h3>
+							<h3 class="main-h3">Автоматизация</h3>
 							<p class="advantage-p">Получите полный комплекс услуг по автоматизации процессов вашей
 								организации c голосовыми роботами</p>
 						</div>
@@ -74,7 +79,7 @@
 							</path>
 						</svg>
 						<div class="advantage-text">
-							<h3 class="advantage-header3">Интеграция</h3>
+							<h3 class="main-h3">Интеграция</h3>
 							<p class="advantage-p">Мы помогаем интегрировать голосового бота и внешнее ПО и сервисы между
 								собой</p>
 						</div>
@@ -88,7 +93,7 @@
 							</path>
 						</svg>
 						<div class="advantage-text">
-							<h3 class="advantage-header3">Внедрение</h3>
+							<h3 class="main-h3">Внедрение</h3>
 							<p class="advantage-p">Мы внедрим наши решения и настроим всё для лёгкой и безопасной
 								работы</p>
 						</div>
@@ -98,10 +103,68 @@
 			</div>
 		</section>
 
-		<section class="about-us">
+		<section class="services section">
 			<div class="section-wrap">
-				<div class="flex">
-					<div class="">
+
+				<h2 class="main-h2">Услуги</h2>
+
+				<div class="services-wrap">
+
+					<article class="card">
+						<h3 class="main-h3">
+							Лидогенерация
+						</h3>
+						<p class="services">Массовый обзвон клиентов</p>
+						<a class="services-link" href="/bot/leadgen">Подробнее</a>
+					</article>
+
+
+				</div>
+			</div>
+		</section>
+
+		<section class="problems section">
+			<div class="section-wrap">
+
+				<h2 class="main-h2 about-h2">Проблемы, которые мы решаем</h2>
+
+				<div class="problems-wrap">
+
+					<article class="card">
+						<h3 class="card-header">
+							Администратор не отрабатывает возражения
+						</h3>
+						<audio class="problems-audio" controls>
+							<source src="/public/src/bot/audio/manager.mp3" type="audio/mp3">
+						</audio>
+					</article>
+
+					<article class="card">
+						<h3 class="card-header">
+							Администратор бросает трубку
+						</h3>
+						<audio class="problems-audio" controls>
+							<source src="/public/src/bot/audio/manager.mp3" type="audio/mp3">
+						</audio>
+					</article>
+
+					<article class="card">
+						<h3 class="card-header">
+							Администратор не обучен
+						</h3>
+						<audio class="problems-audio" controls>
+							<source src="/public/src/bot/audio/manager.mp3" type="audio/mp3">
+						</audio>
+					</article>
+
+				</div>
+			</div>
+		</section>
+
+		<section class="about-us section">
+			<div class="section-wrap">
+				<div class="about-us-wrap">
+					<div class="about-us-img-wrap">
 						<img class="about-us-img" src="/public/src/bot/img/main/ввв-прозрачный.png" alt="Вороник Виталий">
 					</div>
 					<div class="about-us-text">
@@ -132,15 +195,14 @@
 			</div>
 		</section>
 
-		<section class="connect">
+		<section class="connect section">
 			<div class="connect-wrap flex">
 				<p class="connect-p">Свяжитесь с нами прямо сейчас</p>
-				<button class="button grey-button connect-button">Связаться</button>
+				<button class="button blue-button connect-button">Связаться</button>
 			</div>
-
 		</section>
 
-		<section class="faq">
+		<section class="faq section">
 			<div class="section-wrap">
 
 				<h2 class="main-h2">Ответы на вопросы</h2>
@@ -249,7 +311,7 @@
 		</section>
 
 
-		<section class="bottom">
+		<section class="bottom section">
 			<div class="bottom-wrap section-wrap column">
 				<h2 class="main-h2">Автоматизируйте свой бизнес сегодня</h2>
 				<p class="main-p bottom-p">Для этого свяжитесь с нами и мы начнём нашу работу.</p>
@@ -259,6 +321,8 @@
 		</section>
 
 	</main>
+
+
 	<footer class="footer">
 		© 2023 ИП Вороник Виталий Викторович ИНН 253523642447
 

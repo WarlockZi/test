@@ -20,4 +20,10 @@ class BotController extends AppController
 		exit($content);
 	}
 
+	public function actionLeadgen()
+	{
+		$content = FS::getFileContent(ROOT.'/app/view/Bot/index.php');
+
+		exit($content);
+	}
 }
