@@ -16,6 +16,7 @@ const config = {
     // },
 
     admin: path.resolve(src, 'Admin/admin.js'),
+    bot: path.resolve(src, 'bot/js/app.js'),
     auth: path.resolve(src, 'Auth/auth.js'),
     main: path.resolve(src, 'Main/main.js'),
     cookie: path.resolve(src, 'components/cookie/cookie.js'),
