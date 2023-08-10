@@ -115,7 +115,7 @@ class Assets
 	public function getJS(string $str = ''): string
 	{
 		foreach ($this->js as $name) {
-			$str .= "<script src='{$this->host}{$name}.js{$this->getTime()}'></script>";
+			$str .= "<script src='{$this->host}{$name}.js{$this->getTime()}' defer></script>";
 		}
 		return $str;
 	}
