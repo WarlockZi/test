@@ -1,3 +1,4 @@
+@import "normalize";
 @import "../../var";
 @import "../../mixin_media";
 @import "elipse";
@@ -184,9 +185,10 @@ body {
   color: white;
 }
 
-.services-wrap {
+.cards-wrap{
   display: flex;
   flex-wrap: wrap;
+  gap: 10px;
 }
 
 .services-link {
@@ -199,17 +201,6 @@ body {
   border-radius: 15px;
 }
 
-.problems-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 10px auto;
-  background-color: var(--color-body-light-grey);
-  gap: 15px;
-}
-
-.problems-h2 {
-
-}
 
 .problems-audio {
   display: flex;
@@ -221,10 +212,12 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px;
+  padding: 20px;
   background-color: var(--color-grey-4);
   flex: 1;
-  border-radius: 15px;
+  border-radius: 10px;
+  max-width: 33%;
+
 }
 
 .card-header {
@@ -272,8 +265,8 @@ body {
   margin-bottom: 25px;
   max-width: 1200px;
   text-align: center;
-  font-size: calc(0.5rem + 2vw);
-  line-height: calc(0.8rem + 2vw);
+  font-size: clamp(1rem, .5rem + 2vw, 2.5rem);
+  line-height: clamp(0.8rem, 0.8rem + 2vw, 2.8rem);
   font-weight: 700;
   @include _400 {
     font-size: calc(0.5rem + 1vw);

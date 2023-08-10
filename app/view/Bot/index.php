@@ -1,17 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>BOTcorp</title>
-<!--	<link rel="stylesheet" href="/public/src/bot/css/normalize.css">-->
-	<!--	<link rel="stylesheet" href="/public/src/bot/css/style.css">-->
-<!--	<link rel="stylesheet" href="http://localhost:4000/bot.css">-->
-<!--	<script type="module" src="http://localhost:4000/bot.js" defer></script>-->
+	<title>bot99</title>
 	<?=$assets->getCss()?>
 	<?=$assets->getJs()?>
-	<!--	<script type="module" src="/public/src/bot/js/app.js" defer></script>-->
+
 </head>
 
 <body>
@@ -28,10 +24,10 @@
 						<a href="#">Голосовые боты</a>
 					</li>
 					<li class="nav-item">
-						<a href="#">Голосовые боты</a>
+						<a href="#">Чат боты</a>
 					</li>
 					<li class="nav-item">
-						<a href="#">Голосовые боты</a>
+						<a href="#">Интеграция с CRM</a>
 					</li>
 				</ul>
 
@@ -126,7 +122,7 @@
 
 				<h2 class="main-h2">Услуги</h2>
 
-				<div class="services-wrap">
+				<div class="cards-wrap">
 
 					<article class="card">
 						<h3 class="main-h3">
@@ -136,7 +132,29 @@
 						<a class="services-link" href="/bot/leadgen">Подробнее</a>
 					</article>
 
+					<article class="card">
+						<h3 class="main-h3">
+							NPS
+						</h3>
+						<p class="services">Оценка качества сервиса</p>
+						<a class="services-link" href="/bot/nps">Подробнее</a>
+					</article>
 
+					<article class="card">
+						<h3 class="main-h3">
+							Входящие звонки
+						</h3>
+						<p class="services">Клиенты звонят круглосуточно</p>
+						<a class="services-link" href="/bot/leadgen">Подробнее</a>
+					</article>
+
+					<article class="card">
+						<h3 class="main-h3">
+							Исходящие звонки
+						</h3>
+						<p class="services">Если не хватает свободных рук или сотрудников</p>
+						<a class="services-link" href="/bot/leadgen">Подробнее</a>
+					</article>
 				</div>
 			</div>
 		</section>
@@ -146,7 +164,7 @@
 
 				<h2 class="main-h2 about-h2">Проблемы, которые мы решаем</h2>
 
-				<div class="problems-wrap">
+				<div class="cards-wrap">
 
 					<article class="card">
 						<h3 class="card-header">
@@ -183,7 +201,7 @@
 			<div class="section-wrap">
 				<div class="about-us-wrap">
 					<div class="about-us-img-wrap">
-						<img class="about-us-img" src="/public/src/bot/img/main/ввв-прозрачный.png" alt="Вороник Виталий">
+						<img class="about-us-img" src="/public/src/bot/img/main/ввв-прозрачный.png" alt="Вороник Виталий" >
 					</div>
 					<div class="about-us-text">
 						<h2 class="main-h2 about-h2">
