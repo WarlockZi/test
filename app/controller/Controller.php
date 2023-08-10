@@ -22,7 +22,7 @@ abstract class Controller
 	protected $layout;
 	protected $layoutPath = ROOT . '/app/view/layouts/';
 
-	protected Assets $assets;
+	protected $assets;
 
 	function __construct()
 	{

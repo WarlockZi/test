@@ -5,10 +5,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>BOTcorp</title>
-	<link rel="stylesheet" href="/public/src/bot/css/normalize.css">
+<!--	<link rel="stylesheet" href="/public/src/bot/css/normalize.css">-->
 	<!--	<link rel="stylesheet" href="/public/src/bot/css/style.css">-->
-	<link rel="stylesheet" href="http://localhost:4000/bot.css">
-	<script type="module" src="http://localhost:4000/bot.js" defer></script>
+<!--	<link rel="stylesheet" href="http://localhost:4000/bot.css">-->
+<!--	<script type="module" src="http://localhost:4000/bot.js" defer></script>-->
+	<?=$assets->getCss()?>
+	<?=$assets->getJs()?>
 	<!--	<script type="module" src="/public/src/bot/js/app.js" defer></script>-->
 </head>
 
@@ -16,9 +18,25 @@
 <div class="container">
 
 	<header>
-		<input type="checkbox">
-		<label for="menu-icon"></label>
-		<div class="nav"></div>
+		<div class="elipse">
+			<input class="elipse-input" id="elipse-input" type="checkbox">
+			<label class="elipse-label" for="elipse-input"></label>
+			<nav class="nav">
+				<ul>
+
+					<li class="nav-item">
+						<a href="#">Голосовые боты</a>
+					</li>
+					<li class="nav-item">
+						<a href="#">Голосовые боты</a>
+					</li>
+					<li class="nav-item">
+						<a href="#">Голосовые боты</a>
+					</li>
+				</ul>
+
+			</nav>
+		</div>
 
 	</header>
 	<main>
@@ -196,7 +214,7 @@
 		</section>
 
 		<section class="connect section">
-			<div class="connect-wrap flex">
+			<div class="connect-wrap">
 				<p class="connect-p">Свяжитесь с нами прямо сейчас</p>
 				<button class="button blue-button connect-button">Связаться</button>
 			</div>
