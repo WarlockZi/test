@@ -35,6 +35,7 @@
 		</div>
 
 	</header>
+
 	<main>
 		<section class="slogan">
 			<div class="slogan-overlay"></div>
@@ -155,6 +156,24 @@
 						<p class="services">Если не хватает свободных рук или сотрудников</p>
 						<a class="services-link" href="/bot/leadgen">Подробнее</a>
 					</article>
+
+					<article class="card">
+						<h3 class="main-h3">
+							Ответы на частые вопросы
+						</h3>
+						<p class="services">Устали отвечать на одни и те же вопросы</p>
+						<a class="services-link" href="/bot/leadgen">Подробнее</a>
+					</article>
+
+					<article class="card">
+						<h3 class="main-h3">
+							Игровые механики
+						</h3>
+						<p class="services">Люди всегда любили играть. </p>
+						<a class="services-link" href="/bot/leadgen" title="" >Подробнее</a>
+					</article>
+
+
 				</div>
 			</div>
 		</section>
@@ -162,7 +181,7 @@
 		<section class="problems section">
 			<div class="section-wrap">
 
-				<h2 class="main-h2 about-h2">Проблемы, которые мы решаем</h2>
+				<h2 class="main-h2 about-h2">Решим ваши проблемы</h2>
 
 				<div class="cards-wrap">
 
@@ -201,31 +220,22 @@
 			<div class="section-wrap">
 				<div class="about-us-wrap">
 					<div class="about-us-img-wrap">
-						<img class="about-us-img" src="/public/src/bot/img/main/ввв-прозрачный.png" alt="Вороник Виталий" >
+						<img class="about-us-img" src="/public/src/bot/img/main/ввв-прозрачный.png" alt="Вороник Виталий" loading="lazy">
 					</div>
 					<div class="about-us-text">
 						<h2 class="main-h2 about-h2">
 							Кто мы такие
 						</h2>
-						<p class="main-p">Меня зовут Вороник Виталий и я основатель компании "Боткорп", где мы с
-							командой помогаем
-							бизнесу с
-							разработкой, интеграцией и автоматизацией процессов с помощью ботов.</p>
+						<p class="main-p">Меня зовут Вороник Виталий и я основатель компании "Bot99", где мы с
+							командой помогаем бизнесу разрабатывать интегрировать и автоматизировать процессы с помощью ботов.</p>
 						<p class="main-p">Основная наша цель заключается в знаменитой фразе «Вкалывают роботы, а не
 							человек».</p>
 						<p class="main-p">Поэтому мы на 100% сосредоточены на том, чтобы заменить большинство
-							операций средствами
-							автоматизации, освободить ваш бизнес от рутины и сэкономить деньги.</p>
+							операций средствами автоматизации, освободить ваш бизнес от рутины и сэкономить деньги.</p>
 						<p class="main-p">Мы сами являемся разработчиками ПО, а также официальными партнёрами
-							большинства сервисов
-							и
-							поставщиков ПО для бизнеса.</p>
+							большинства сервисов и поставщиков ПО для бизнеса.</p>
 						<p class="main-p">Сделайте следующий шаг с нами и вы увидите, как растёт ваша выручка,
-							расходы сокращаются,
-							а
-							число
-							ошибок (тот самый человеческий фактор) стремиться к абсолютному нулю.</p>
-
+							расходы сокращаются, а число ошибок (тот самый человеческий фактор) стремиться к нулю.</p>
 					</div>
 				</div>
 			</div>
@@ -346,7 +356,6 @@
 			</div>
 		</section>
 
-
 		<section class="bottom section">
 			<div class="bottom-wrap section-wrap column">
 				<h2 class="main-h2">Автоматизируйте свой бизнес сегодня</h2>
@@ -358,12 +367,9 @@
 
 	</main>
 
-
 	<footer class="footer">
 		© 2023 ИП Вороник Виталий Викторович ИНН 253523642447
-
 	</footer>
-
 
 </div>
 </body>
