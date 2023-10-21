@@ -45,10 +45,12 @@ class ImageRepository
 	{
 		$path = "/pic/product/uploads/{$product->art}.jpg";
 		echo $path;
-		echo "\n";
+		echo "<br>";
 		echo $product->art;
-		echo "\n";
+		echo "<br>";
 		echo FS::platformSlashes(ROOT . $path);
+		echo "<br>";
+		echo is_readable(FS::platformSlashes(ROOT . $path));
 
 		if (is_readable(FS::platformSlashes(ROOT . $path))) {
 			return $path;
