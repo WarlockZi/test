@@ -44,6 +44,12 @@ class ImageRepository
 	public static function getProductMainImageSrc(Product $product): string
 	{
 		$path = "/pic/product/uploads/{$product->art}.jpg";
+		echo $path;
+		echo "\n";
+		echo $product->art;
+		echo "\n";
+		echo FS::platformSlashes(ROOT . $path);
+
 		if (is_readable(FS::platformSlashes(ROOT . $path))) {
 			return $path;
 		}
