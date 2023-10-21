@@ -52,15 +52,13 @@ class ImageRepository
 		$pathWithSlashes = FS::platformSlashes(ROOT . $path);
 		echo $pathWithSlashes;
 		echo "<br>--";
-		echo is_readable($pathWithSlashes);
-		echo "<br>--";
 		echo is_file($pathWithSlashes);
+		echo "ing <img src='{$path}'>";
 
 //		$files1 = scandir(ROOT.$subdir);
-//
 //		print_r($files1);
 
-		if (is_readable(FS::platformSlashes(ROOT . $path))) {
+		if (is_readable($pathWithSlashes)) {
 			return $path;
 		}
 		return ImageView::noImageSrc();
