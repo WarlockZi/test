@@ -55,8 +55,10 @@ class ImageRepository
 		echo is_file($pathWithSlashes);
 		echo "ing <img src='{$path}'>";
 
-//		$files1 = scandir(ROOT.$subdir);
-//		print_r($files1);
+		$files1 = scandir(ROOT.$subdir);
+		echo "<pre>";
+		print_r($files1);
+		echo "</pre>";
 
 		if (is_readable($pathWithSlashes)) {
 			return $path;
