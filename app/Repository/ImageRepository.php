@@ -43,17 +43,22 @@ class ImageRepository
 
 	public static function getProductMainImageSrc(Product $product): string
 	{
-		$path = "/pic/product/uploads/{$product->art}.jpg";
+		$subdir = "/pic/product/uploads/";
+		$path = "{$subdir}{$product->art}.jpg";
 		echo $path;
 		echo "<br>";
 		echo $product->art;
 		echo "<br>--";
-		$pathWithSlashes=FS::platformSlashes(ROOT . $path);
+		$pathWithSlashes = FS::platformSlashes(ROOT . $path);
 		echo $pathWithSlashes;
 		echo "<br>--";
 		echo is_readable($pathWithSlashes);
 		echo "<br>--";
 		echo file_exists($pathWithSlashes);
+
+		$files1 = scandir(ROOT.$subdir);
+
+		print_r($files1);
 
 		if (is_readable(FS::platformSlashes(ROOT . $path))) {
 			return $path;
