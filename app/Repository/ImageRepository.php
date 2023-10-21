@@ -47,10 +47,13 @@ class ImageRepository
 		echo $path;
 		echo "<br>";
 		echo $product->art;
-		echo "<br>";
-		echo FS::platformSlashes(ROOT . $path);
-		echo "<br>";
-		echo is_readable(FS::platformSlashes(ROOT . $path));
+		echo "<br>--";
+		$pathWithSlashes=FS::platformSlashes(ROOT . $path);
+		echo $pathWithSlashes;
+		echo "<br>--";
+		echo is_readable($pathWithSlashes);
+		echo "<br>--";
+		echo file_exists($pathWithSlashes);
 
 		if (is_readable(FS::platformSlashes(ROOT . $path))) {
 			return $path;
