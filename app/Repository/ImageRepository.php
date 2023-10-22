@@ -56,6 +56,7 @@ class ImageRepository
 		echo "ing <img src='{$path}'>";
 
 		$files1 = scandir(ROOT.$subdir);
+
 		echo "<pre>";
 		print_r($files1);
 		echo "</pre>";
