@@ -8,7 +8,7 @@ export default class UnitTable {
     this.$table = $(tableClass).first();
     if (!this.$table) return;
 
-    this.product1sId = $(`[data-field='1s_id']`).first().innerText;
+    this.product1sId = $(`[data-field='1s_id']`).innerText;
     this.$baseUnit = $(`[data-field='base_unit'] [data-field='base_unit']`).first();
     this.baseUnitId = this.$baseUnit.options[this.$baseUnit.selectedIndex].value;
 
