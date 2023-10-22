@@ -44,16 +44,20 @@ class ImageRepository
 	public static function getProductMainImageSrc(Product $product): string
 	{
 		$subdir = "/pic/product/uploads/";
-		$path = "{$subdir}{$product->art}.jpg";
-		$pathWithSlashes = FS::platformSlashes(ROOT . $path);
-//		echo $path;
-//		echo "<br>";
-//		echo $product->art;
-//		echo "<br>--";
-//		echo $pathWithSlashes;
-//		echo "<br>--";
-//		echo is_file($pathWithSlashes);
-//		echo "ing <img src='{$path}'>";
+		$file = "{$product->art}.jpg";
+		$pathWithSlashes = FS::platformSlashes(ROOT . $subdir . $file);
+
+		echo 'subdir + file --- ' . $subdir . $file;
+		echo "<br>";
+		echo 'is dir root subidr--- ' . is_dir(ROOT . $subdir);
+		echo "<br>--";
+		echo $pathWithSlashes;
+		echo "<br>--";
+		echo 'is file (root + subdir + file) --- '.is_file($pathWithSlashes);
+		echo "<br>--";
+		echo 'filesize --- '.filesize($pathWithSlashes);
+
+//		echo "ing <img src='{$subdir}{$file}'>";
 
 //		$files = scandir(ROOT.$subdir);
 //		echo "<pre>";
@@ -61,7 +65,7 @@ class ImageRepository
 //		echo "</pre>";
 
 		if (is_readable($pathWithSlashes)) {
-			return $path;
+			return $subdir . $file;
 		}
 		return ImageView::noImageSrc();
 	}
