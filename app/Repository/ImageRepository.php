@@ -45,7 +45,7 @@ class ImageRepository
 	{
 		$subdir = "/pic/product/uploads/";
 		$file = "{$product->art}.jpg";
-		$file = "04 04.jpg";
+		$file = "04GUT15 P21.jpg";
 		$pathWithSlashes = FS::platformSlashes(ROOT . $subdir . $file);
 
 		echo 'subdir + file --- ' . $subdir . $file;
