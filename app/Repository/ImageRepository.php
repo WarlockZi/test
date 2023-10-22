@@ -45,25 +45,7 @@ class ImageRepository
 	{
 		$subdir = "/pic/product/uploads/";
 		$file = "{$product->art}.jpg";
-//		$file = "04GUT15 P21.jpg";
 		$pathWithSlashes = FS::platformSlashes(ROOT . $subdir . $file);
-
-		echo 'subdir + file --- ' . $subdir . $file;
-		echo "<br>";
-		echo 'is dir root subidr--- ' . is_dir(ROOT . $subdir);
-		echo "<br>--";
-		echo $pathWithSlashes;
-		echo "<br>--";
-		echo 'is file (root + subdir + file) --- '.is_file($pathWithSlashes);
-		echo "<br>--";
-		echo 'filesize --- '.filesize($pathWithSlashes);
-
-//		echo "ing <img src='{$subdir}{$file}'>";
-
-//		$files = scandir(ROOT.$subdir);
-//		echo "<pre>";
-//		print_r($files);
-//		echo "</pre>";
 
 		if (is_readable($pathWithSlashes)) {
 			return $subdir . $file;
