@@ -45,15 +45,15 @@ class ImageRepository
 	{
 		$subdir = "/pic/product/uploads/";
 		$path = "{$subdir}{$product->art}.jpg";
-		echo $path;
-		echo "<br>";
-		echo $product->art;
-		echo "<br>--";
 		$pathWithSlashes = FS::platformSlashes(ROOT . $path);
-		echo $pathWithSlashes;
-		echo "<br>--";
-		echo is_file($pathWithSlashes);
-		echo "ing <img src='{$path}'>";
+//		echo $path;
+//		echo "<br>";
+//		echo $product->art;
+//		echo "<br>--";
+//		echo $pathWithSlashes;
+//		echo "<br>--";
+//		echo is_file($pathWithSlashes);
+//		echo "ing <img src='{$path}'>";
 
 //		$files = scandir(ROOT.$subdir);
 //		echo "<pre>";
