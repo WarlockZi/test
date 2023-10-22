@@ -38,7 +38,7 @@ const config = {
   devServer: {
     allowedHosts: "all",
     host: "localhost",
-    // https: true,
+    https: true,
     port: 4000,
     hot: true,
     watchFiles: {
