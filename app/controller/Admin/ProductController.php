@@ -53,7 +53,7 @@ class ProductController extends AppController
 	{
 		if (!$_FILES['file']) $this->exitWithPopup('Ошибка - не передан файл');
 		$productId = $_POST['productId'];
-		if (!$productId) $this->exitWithPopup('Ошибка - не id продукта');
+		if (!$productId) $this->exitWithPopup('Ошибка - нет id продукта');
 		$srcs = ProductAction::attachMainImage($_FILES['file'], $productId);
 		if ($srcs) $this->exitJson([$srcs]);
 	}
