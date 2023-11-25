@@ -5,6 +5,7 @@ namespace app\Repository;
 
 
 use app\core\FS;
+use app\Domain\Product\Image\ProductMainImage;
 use app\model\Image;
 use app\model\Product;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
@@ -43,12 +44,15 @@ class ImageRepository
 
 	public static function getProductMainImageSrc(Product $product): string
 	{
-		$subdir = "/pic/product/uploads/";
-		$file = "{$product->art}.jpg";
-		$pathWithSlashes = FS::platformSlashes(ROOT . $subdir . $file);
+//		$subdir = "/pic/product/uploads/";
+//		$file = "{$product->art}.jpg";
+//		$pathWithSlashes = FS::platformSlashes(ROOT . $subdir . $file);
 
-		if (is_readable($pathWithSlashes)) {
-			return $subdir . $file;
+		$prodMainImage = new ProductMainImage($product);
+		$path = $prodMainImage->getRelativePath();
+
+		if ($path) {
+			return $path;
 		}
 		return ImageView::noImageSrc();
 	}

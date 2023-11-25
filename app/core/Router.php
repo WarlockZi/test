@@ -126,6 +126,7 @@ class Router
 			|| $route->controllerName === 'Auth' && $route->action === 'register'
 			|| $route->controllerName === 'Auth' && $route->action === 'returnpass'
 			|| $route->controllerName === 'Auth' && $route->action === 'noconfirm'
+			|| $route->controllerName === 'Auth' && $route->action === 'confirm'
 			|| $route->controllerName === 'Main' && $route->action === 'index'
 			|| $route->controllerName === 'Product' && !$route->admin
 			|| $route->controllerName === 'Category' && !$route->admin;

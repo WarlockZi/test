@@ -10,7 +10,7 @@ import Values from "./Values";
 import Dnd from "../../components/dnd/dnd";
 
 export default function product() {
-  let product = $(`.item-wrap[data-model='product']`).first();
+  const product = $(`.item-wrap[data-model='product']`).first();
   if (!product) return false;
 
   new Values(product);
@@ -28,12 +28,15 @@ async function setEqual({target}) {
     ['1s_id']: target.closest('.item_content').querySelector(`[data-field="1s_id"]`).innerText,
     'equal': +target.checked
   };
-  let res = await post('/adminsc/product/Setbaseequalmainunit',data)
-
+  let res = await post('/adminsc/product/Setbaseequalmainunit', data)
 }
 
 async function addMainImage(files, target) {
-  let data = objAndFiles2FormData({}, files[0]);
+
+  const obj = {productId: target.closest('.item-wrap').dataset.id,};
+  // debugger
+  let data = objAndFiles2FormData(obj, files[0]);
+
   let res = await post('/adminsc/product/attachMainImage', data);
   let src = res?.arr[0];
   if (src) {

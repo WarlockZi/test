@@ -10,3 +10,28 @@ Content-Type: application/x-www-form-urlencoded
 id=99&content=new-element
 
 ###
+#		$myCurl = curl_init();
+#		curl_setopt_array($myCurl, array(
+#			CURLOPT_URL => 'https://test-api.baikalsr.ru/v2/order/list',
+#//			CURLOPT_URL => 'https://baikalsr.ru/v2/order/list',
+#			CURLOPT_RETURNTRANSFER => true,
+#			CURLOPT_POST => true,
+#
+#				CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+#				CURLOPT_USERPWD => "89115440126:EMR1510",
+
+#//			CURLOPT_POSTFIELDS => http_build_query(array(/*здесь массив параметров запроса*/))
+#		));
+#		$response = curl_exec($myCurl);
+#		curl_close($myCurl);
+#		//	5b04b88e186532347159fe1441d0fff5
+#		//login 89115440126
+#		//pas EMR1510
+#
+#		//POST https://test-api.baikalsr.ru/v2/order/list
+
+
+POST https://vi-production/adminsc/product/edit/256
+Content-Type: application/x-www-form-urlencoded
+
+id=99&content=new-element

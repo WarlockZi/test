@@ -149,7 +149,7 @@ use \app\core\Icon;
 				  <a class="neon" href="/adminsc/report/productsWithoutImgInstore">Товары без картинок в наличии</a>
 				  <a class="neon" href="/adminsc/report/productsWithoutImgNotinstore">Товары без картинок без наличия</a>
 
-						 <a class="neon" href="/adminsc/report/productsNoMinimumUnit">Товары без min единицы</a>
+				  <a class="neon" href="/adminsc/report/productsNoMinimumUnit">Товары без min единицы</a>
 				  <a class="neon" href="/adminsc/report/productsHaveOnlyBaseUnit">Товары доп единиц</a>
 
 					 <? endif; ?>
@@ -179,6 +179,16 @@ use \app\core\Icon;
 			</ul>
 		</li>
 
+<!--		<li logistic>-->
+<!--			<div class="label">-->
+<!--				<span class="arrow"></span>-->
+<!--					 --><?//= Icon::shoppingCart('feather') ?>
+<!---->
+<!--				Логистика-->
+<!--			</div>-->
+<!---->
+<!--		</li>-->
+
 		<li user>
 			<div class="label">
 				<span class="arrow"></span>
@@ -206,6 +216,10 @@ use \app\core\Icon;
 				  SU
 			  </div>
 			  <ul class="level-1">
+
+
+					    <a class="neon" href="/adminsc/logistic">Логистика</a>
+
 				  <a class="neon" href='/adminsc/Sitemap'>Создать SiteMap</a>
 				  <a class="neon" href='/adminsc/settings/dump'>Dump</a>
 				  <a class="neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>

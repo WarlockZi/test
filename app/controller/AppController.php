@@ -5,6 +5,7 @@ namespace app\controller;
 use app\controller\Interfaces\IModelable;
 use app\Repository\MorphRepository;
 use Illuminate\Database\Eloquent\Model;
+use mysql_xdevapi\Exception;
 use ReflectionClass;
 
 class AppController extends Controller implements IModelable
@@ -65,37 +66,37 @@ class AppController extends Controller implements IModelable
 	public function actionUpdateOrCreate()
 	{
 		$req = $this->ajax;
-		if ($req) {
+		if (!$req) throw new Exception('No request');
 
-			if (isset($req['relation'])) {
-				$relation = $req['relation'];
-				$model = $this->model::with($relation)->find($req['id']);
+		if (isset($req['relation'])) {
+			$relation = $req['relation'];
+			$model = $this->model::with($relation)->find($req['id']);
 
-				$created = $model->$relation()->create();
-				$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
-			}
-
-			if (isset($req['morph'])) {
-				$morph = $req['morph'];
-				$relation = $morph['relation'];
-				$model = $this->model::with($relation)->find($req['id']);
-				$created = $model->$relation()->create();
-				$model->$relation()->syncWithoutDetaching($created);
-				$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
-			}
-
-			$model = $this->model::updateOrCreate(
-				['id' => $req['id']],
-				$req
-			);
-
-			if ($model->wasRecentlyCreated) {
-				$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
-			} else {
-				$this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);
-			}
-			$this->exitWithError('Ошибка');
+			$created = $model->$relation()->create();
+			$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
 		}
+
+		if (isset($req['morph'])) {
+			$morph = $req['morph'];
+			$relation = $morph['relation'];
+			$model = $this->model::with($relation)->find($req['id']);
+			$created = $model->$relation()->create();
+			$model->$relation()->syncWithoutDetaching($created);
+			$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
+		}
+
+		$model = $this->model::updateOrCreate(
+			['id' => $req['id']],
+			$req
+		);
+
+		if ($model->wasRecentlyCreated) {
+			$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
+		} else {
+			$this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);
+		}
+		$this->exitWithError('Ошибка');
+
 	}
 
 	public static function shortClassName($object)

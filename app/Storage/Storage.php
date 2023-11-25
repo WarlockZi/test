@@ -82,7 +82,6 @@ class Storage
 			$srcs['relativeSrcs'][] = $rel;
 		}
 		return $srcs;
-
 	}
 
 }
