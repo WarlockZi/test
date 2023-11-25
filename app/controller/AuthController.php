@@ -47,7 +47,7 @@ class AuthController extends AppController
 
 			$sent = $this->mailer->sendRegistrationMail($user);
 
-			$this->exitJson(['message' => 'confirmed', 'popup' => $userMessage ."\n". $sent]);
+			$this->exitJson(['message' => 'confirmed', 'popup' => $userMessage . "\n" . $sent]);
 		}
 	}
 
@@ -141,7 +141,7 @@ class AuthController extends AppController
 			if ($user) {
 				$password = $this->actions->randomPassword();
 				$newPassword = $this->actions->preparePassword($password);
-				User::where('id',$user['id'])
+				User::where('id', $user['id'])
 					->update(['password' => $newPassword]);
 
 				$this->mailer->returnPassword($data);
@@ -166,20 +166,23 @@ class AuthController extends AppController
 
 	public function actionConfirm()
 	{
-		$hash = $this->route['id'];
+		$hash = $this->route->id;
 
 		if (!$hash) header('Location:/');
 		$user = User::where('hash', $hash)->first();
-		if ($user) {
-			$user['confirm'] = "1";
-//			Auth::setAuth($user);
-			if ($user->update()) {
-				header('Location:/auth/success');
-				$this->exitWithPopup('"Вы успешно подтвердили свой E-mail."');
-			}
+
+		if (!$user) {
+			header('Location:/auth/login');
+			exit();
 		}
-		header('Location:/auth/login');
-		exit();
+
+		$user['confirm'] = "1";
+		Auth::setAuth($user->toArray());
+		if ($user->update()) {
+			header('Location:/auth/success');
+			$this->exitWithPopup('"Вы успешно подтвердили свой E-mail."');
+		}
+
 	}
 
 

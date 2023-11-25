@@ -3,22 +3,24 @@
 
 namespace app\Actions;
 
-
-use app\core\FS;
+use app\Domain\Product\Image\ProductMainImage;
 use app\model\Product;
-use app\Storage\StorageProduct;
 use Exception;
 
 class ProductAction
 {
-	static $imgPath = 'product/uploads/';
 
-	public static function attachMainImage($file)
+	public static function attachMainImage(array $file, string $productId): string
 	{
-		$storage = new StorageProduct();
-		$paths = self::getFilePaths($file, $storage);
-		$storage->saveFile($paths['relativeSrcs'][0], $file);
-		return $paths['absoluteSrcs'][0];
+		if ($file['size'] > 200000) {
+			throw new Exception('file size is big --- !!!');
+		}
+		$product = Product::query()->find($productId);
+		$mainImage = new ProductMainImage($product, $file);
+
+		$mainImage->deletePreviousFile();
+		$mainImage->save();
+		return $mainImage->getRelativePath();
 	}
 
 	public static function setBaseEqualMainUnit($req)
@@ -35,14 +37,14 @@ class ProductAction
 		}
 	}
 
-	protected static function getFilePaths($file, $storage)
+/*	protected static function getFilePaths($file, $storage)
 	{
 		$rel = FS::platformSlashes($storage->getImagePath() . $file['name']);
 		$abs = $storage->relativePath . $storage->productImagesPath . $file['name'];
 		$srcs['absoluteSrcs'][] = $abs;
 		$srcs['relativeSrcs'][] = $rel;
 		return $srcs;
-	}
+	}*/
 
 	public static function changeVal(array $req)
 	{

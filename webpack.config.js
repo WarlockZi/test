@@ -7,7 +7,7 @@ require('dotenv').config().parsed;
 const env = process.env;
 
 const config = {
-  target: ["web", "es5"],
+  target: "web",
 
   entry: {
     // auth:{
@@ -38,9 +38,21 @@ const config = {
   devServer: {
     allowedHosts: "all",
     host: "localhost",
-    https: true,
+    server: 'https',
     port: 4000,
+
     hot: true,
+    liveReload: true,
+    static: {
+      directory: path.join(__dirname, 'public', 'dist'),
+    },
+    client: {
+      logging: 'info',
+      // progress: true,
+      webSocketTransport: 'ws',
+      overlay: true,
+    },
+    // webSocketServer: 'ws',
     watchFiles: {
       paths: ['public/src/**/*.*'],
     },
@@ -58,6 +70,7 @@ const config = {
       //   chunkFilename: devMode ? "[id].css" : "[id].[contenthash].css",
       // }
     ),
+
     new webpack.DefinePlugin({
       'process.env.SU_EMAIL': JSON.stringify(env.SU_EMAIL)
     }),
@@ -73,7 +86,6 @@ const config = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        // enforce: "pre",
         use: [
           // 'source-map-loader',
           {
@@ -86,7 +98,6 @@ const config = {
         test: /\.(?:ico|gif|png|jpg|jpeg|svg|woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
-      // {test: /\.svg/, type: 'asset/inline'},
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
