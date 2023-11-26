@@ -35,6 +35,7 @@ class ProductMainImage extends AbstractProductImage
 					$type;
 			}
 		}
+		return '';
 	}
 
 	public function getAbsolutePath(): string
