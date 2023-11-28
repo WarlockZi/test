@@ -31,6 +31,7 @@ const config = {
     path: path.resolve(__dirname, "public/dist"),
     filename: '[name].js',
     asyncChunks: true,
+    publicPath: "/assets/",
     clean: true,
   },
 
@@ -52,7 +53,7 @@ const config = {
       webSocketTransport: 'ws',
       overlay: true,
     },
-    // webSocketServer: 'ws',
+    webSocketServer: 'ws',
     watchFiles: {
       paths: ['public/src/**/*.*'],
     },

@@ -6,9 +6,8 @@ namespace app\Repository;
 
 use app\controller\Controller;
 use app\core\FS;
+use app\Domain\Product\Image\ProductMainImage;
 use app\model\Product;
-use app\model\Unit;
-use app\model\Val;
 use app\Storage\StorageImg;
 use app\view\Image\ImageView;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -46,7 +45,7 @@ class ProductRepository extends Controller
 	{
 		$p = Product::where('slug', $slug)->first();
 		$id = $p['1s_id'];
-		return Product::query()
+		$product = Product::query()
 			->orderBy('sort')
 			->with('category.properties.vals')
 			->with('category.parentRecursive')
@@ -68,6 +67,9 @@ class ProductRepository extends Controller
 			}])
 			->where('slug', $slug)
 			->first();
+
+//		$product->mainImage = (new ProductMainImage($product))->getRelativePath();
+		return $product;
 	}
 
 	public static function noMinimumUnit()

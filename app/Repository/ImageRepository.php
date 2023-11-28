@@ -44,17 +44,7 @@ class ImageRepository
 
 	public static function getProductMainImageSrc(Product $product): string
 	{
-//		$subdir = "/pic/product/uploads/";
-//		$file = "{$product->art}.jpg";
-//		$pathWithSlashes = FS::platformSlashes(ROOT . $subdir . $file);
-
-		$prodMainImage = new ProductMainImage($product);
-		$path = $prodMainImage->getRelativePath();
-
-		if ($path) {
-			return $path;
-		}
-		return ImageView::noImageSrc();
+		return $product->mainImagePath;
 	}
 
 	public static function getProductMainImage(Product $product): string
