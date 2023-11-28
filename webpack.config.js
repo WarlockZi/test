@@ -42,7 +42,7 @@ const config = {
     server: 'https',
     port: 4000,
 
-    hot: true,
+    // hot: true,
     liveReload: true,
     static: {
       directory: path.join(__dirname, 'public', 'dist'),
