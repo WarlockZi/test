@@ -43,7 +43,7 @@ export default class Select {
     el.remove()
   }
 
-  onchange(callback){
+  onchange(callback) {
     this.callback = callback
   }
 
@@ -109,8 +109,7 @@ export default class Select {
       bubbles: true,
       detail: {next, prev, target: this.sel}
     }));
-
-    this.callback({next, prev, target: this.sel})
+    // if (this.callback) this.callback({next, prev, target: this.sel})
   }
 
 }
@@ -123,7 +122,6 @@ function setOption(option, select) {
   li.onclick = ({target}) => {
     select.selectValue(option.value);
     select.ul.classList.remove("show");
-    // sendToServer(target)
   };
   select.ul.append(li)
 }
@@ -139,15 +137,3 @@ function getFormattedOptions(options) {
   })
 }
 
-
-// async function sendToServer(target) {
-//   let sel = target.closest('[custom-select]');
-//
-//   if (sel.dataset.field) {
-//     let id = target.closest('.item-wrap').dataset.id;
-//     let model = target.closest('[data-model]').dataset.model;
-//     let data = {[sel.dataset.field]: sel.dataset.value, id};
-//     let url = `/adminsc/${model}/updateOrCreate`;
-//     let res = await post(url, data)
-//   }
-// }
