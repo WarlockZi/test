@@ -97,6 +97,7 @@ class Assets
 //			? 'https://127.0.0.1:4000/dist/'
 			? 'https://127.0.0.1:4000/'
 			: '/public/dist/';
+//			: '/assets/';
 	}
 
 	public function getHost()
