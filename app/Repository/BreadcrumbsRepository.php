@@ -49,6 +49,7 @@ class BreadcrumbsRepository
 		$str = '';
 		$prefix = self::getPrefix($admin);
 		$category = Category::with('parentRecursive')->find($id);
+		if (!$category) return "Категории";
 
 		$arrayCategories = self::flatCategoryParents($category);
 

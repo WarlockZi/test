@@ -3,11 +3,10 @@
 namespace app\model;
 
 
-use app\core\FS;
+use app\Domain\Product\Image\ProductMainImage;
 use app\Services\Slug;
 use app\view\Image\ImageView;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
@@ -35,10 +34,16 @@ class Product extends Model
 
 	protected $appends = ['mainImagePath'];
 
+	protected function getMainImagePathAttribute()
+	{
+		$path = (new ProductMainImage($this))->getRelativePath();
+		return $path ? $path : ImageView::noImageSrc();
+	}
+
 	public function properties()
 	{
 		return $this
-			->hasOne(ProductProperty::class,'product_1s_id','1s_id');
+			->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
 	}
 
 	public function baseUnit()
@@ -63,26 +68,16 @@ class Product extends Model
 		return $this->hasMany(Promotion::class, 'product_1s_id', '1s_id');
 	}
 
-	public function getMainImagePathAttribute()
-	{
-		$art = trim($this->art);
-		$path = "/pic/product/uploads/{$art}.jpg";
-		if (is_readable(ROOT . FS::platformSlashes($path))) {
-			return $path;
-		} else {
-			return ImageView::noImageSrc();
-		}
-	}
 
 	protected static function booted()
 	{
 		static::Updating(function ($product) {
-			if (Product::where('slug', $product->slug)->first()) {
-				$product->slug = Slug::slug($product->name) . $product->art;
-
-			} else {
-				$product->slug = Slug::slug($product->name);
-			}
+//			if (Product::where('slug', $product->slug)->first()) {
+//				$product->slug = Slug::slug($product->name) . $product->art;
+//
+//			} else {
+			$product->slug = Slug::slug($product->name);
+//			}
 			return $product;
 		});
 	}
@@ -162,10 +157,7 @@ class Product extends Model
 	{
 		return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
 	}
-//	public function properties()
-//	{
-//		return $this->morphToMany(Property::class, 'propertable');
-//	}
+
 }
 
 

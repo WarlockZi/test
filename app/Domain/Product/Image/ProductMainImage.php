@@ -40,11 +40,29 @@ class ProductMainImage extends AbstractProductImage
 
 	public function getAbsolutePath(): string
 	{
-		return
-			$this->absolutePath .
-			$this->product->art .
-			'.' .
-			$this->getExtension();
+		if ($this->file) {
+			return $this->absolutePath .
+				$this->product->art .
+				'.' .
+				$this->getExtension();
+		}
+
+		foreach ($this->acceptedTypes as $type) {
+			$fileName = $this->absolutePath .
+				$this->product->art .
+				'.' .
+				$type;
+
+			if (file_exists($fileName)) {
+				return $this->absolutePath .
+					$this->product->art .
+					'.' .
+					$type;
+			}
+		}
+
+		return '';
+
 	}
 
 	public function save(): void

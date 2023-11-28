@@ -3,6 +3,7 @@
 namespace app\view\Product;
 
 use app\core\FS;
+use app\Domain\Product\Image\ProductMainImage;
 use app\model\Product;
 use app\Repository\ImageRepository;
 use app\view\components\Builders\Dnd\DndBuilder;
@@ -64,12 +65,15 @@ class ProductView
 
 	public static function getCardMainImage($product)
 	{
-		$file = FS::platformSlashes(ProductView::getMainImageFile($product));
+		$mi = new ProductMainImage($product);
+		$file = $mi->getAbsolutePath();
+
 		if (is_readable($file)) {
 			$image =  FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
 		} else {
 			$image = ImageView::noImage();
 		}
+
 		return "<div class='main-image'>{$image}</div>";
 	}
 
