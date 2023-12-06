@@ -176,12 +176,12 @@ class ProductRepository extends Controller
 	{
 		$products = Product::query()
 			->select('art', 'name', 'id', 'instore')
+			->where('instore', '>', 0)
 			->get();
 
 		$arr = new Collection();
 		foreach ($products as $product) {
-			$file = StorageImg::getFile('product/uploads/' . $product->art . '.jpg');
-			if (!is_file($file) && $product->instore) {
+			if ($product->mainImagePath == '/pic/srvc/nophoto-min.jpg') {
 				$arr->push($product);
 			}
 		}
