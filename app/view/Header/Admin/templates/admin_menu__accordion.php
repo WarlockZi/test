@@ -10,7 +10,7 @@ use \app\core\Icon;
 
 		 <?= Icon::gamburger() ?>
 
-		 <? include ROOT . '/app/view/Header/user_credits.php' ?>
+		 <? include ROOT . '/app/view/Header/templates/user_credits.php' ?>
 
 	</div>
 
@@ -217,9 +217,8 @@ use \app\core\Icon;
 			  </div>
 			  <ul class="level-1">
 
-
-					    <a class="neon" href="/adminsc/logistic">Логистика</a>
-
+				  <a class="neon" href="/adminsc/logistic">Логистика</a>
+				  <a class="neon" href="/adminsc/settings/list">Настройки</a>
 				  <a class="neon" href='/adminsc/Sitemap'>Создать SiteMap</a>
 				  <a class="neon" href='/adminsc/settings/dump'>Dump</a>
 				  <a class="neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>

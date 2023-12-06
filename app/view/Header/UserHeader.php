@@ -4,48 +4,65 @@
 namespace app\view\Header;
 
 
+use app\controller\Controller;
 use app\core\FS;
-use app\model\Category;
-use app\Repository\OrderRepository;
-use app\view\Interfaces\IHeaderable;
-use app\view\View;
+use app\Repository\SettingsRepository;
+use app\view\Header\BlueRibbon\BlueRibbon;
 
-class UserHeader implements IHeaderable
+
+class UserHeader
 {
 	protected $header;
 	protected $frontCategories;
 	protected $index;
 	protected $logo;
-	protected $path = ROOT . '/app/view/Header/';
 
-	public function __construct($user)
+	protected $phone;
+	protected $location;
+	protected $userMenu;
+
+	protected $path = __DIR__.'/templates/';
+
+	public function __construct()
 	{
-		$this->user = $user;
-		$this->setHeader($user);
+		$header = $this;
+		$this->header = FS::getFileContent($this->path.'vitex_header.php',compact('header'));
+	}
+	public function blueRibbon(){
+		return (new BlueRibbon())->getTemplate();
+	}
+	public function phone(){
+		return FS::getFileContent($this->path.'phone.php');
+	}
+	public function location(){
+		$settings = (new SettingsRepository())->all();
+		return FS::getFileContent($this->path.'location.php', compact('settings'));
+	}
+	public function userMenu(){
+		return FS::getFileContent($this->path.'user_menu.php');
+	}
+	public function logo(){
+		return FS::getFileContent($this->path.'logo.php');
+	}
+
+	protected function getPhone(){
+		return FS::getFileContent($this->path . '/searchPanel.php');
+	}
+
+	protected function getLocation(){
+		return FS::getFileContent($this->path . '/searchPanel.php');
+	}
+
+	protected function getUserMenu(){
+		return FS::getFileContent($this->path . '/searchPanel.php');
+	}
+
+	protected function getSearchPanel(){
+		return FS::getFileContent($this->path . '/searchPanel.php');
 	}
 
 	public function getHeader()
 	{
 		return $this->header;
-	}
-
-	public function getFileContent(string $file)
-	{
-		ob_start();
-		require $this->path . $file;
-		return ob_get_clean();
-	}
-
-	public function setHeader($user)
-	{
-		$this->frontCategories = $frontCategories = Category::frontCategories();
-		$oItems = OrderRepository::count();
-		$searchPanel = FS::getFileContent($this->path.'/searchPanel.php');
-
-		$this->frontCategories = FS::getFileContent($this->path.'/header_menu.php',compact('oItems','frontCategories','searchPanel'));
-
-		$this->logo = $this->getFileContent('logo.php');
-
-		$this->header = $this->getFileContent('vitex_header.php');
 	}
 }

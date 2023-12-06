@@ -39,7 +39,7 @@ export class CustomSelect {
     option.classList.add(CLASS_NAME_SELECTED);
     this._elToggle.textContent = option.textContent;
     this._elToggle.value = option.dataset['value'];
-    this._elToggle.dataset.index = option.dataset['index'];
+    this._elToggle.dataset.index = option.dataset['view.Settings.Admin.list.php'];
     this._elRoot.dispatchEvent(new CustomEvent('select.change'));
     this._params.onSelected ? this._params.onSelected(this, option) : null;
     return option.dataset['value'];
@@ -99,7 +99,7 @@ export class CustomSelect {
     }
   }
   get selectedIndex() {
-    return this._elToggle.dataset['index'];
+    return this._elToggle.dataset['view.Settings.Admin.list.php'];
   }
   set selectedIndex(index) {
     const option = this._elRoot.querySelector(`.select__option[data-index="${index}"]`);

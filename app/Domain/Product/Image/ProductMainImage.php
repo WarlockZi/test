@@ -18,21 +18,17 @@ class ProductMainImage extends AbstractProductImage
 		if ($this->file) {
 			return $this->relativePath .
 				$this->product->art .
-				'.' .
-				$this->getExtension();
+				'.' . $this->getExtension();
 		}
-
 		foreach ($this->acceptedTypes as $type) {
 			$fileName = $this->absolutePath .
 				$this->product->art .
-				'.' .
-				$type;
+				'.' . $type;
 
 			if (file_exists($fileName)) {
 				return $this->relativePath .
 					$this->product->art .
-					'.' .
-					$type;
+					'.' . $type;
 			}
 		}
 		return '';
@@ -43,26 +39,21 @@ class ProductMainImage extends AbstractProductImage
 		if ($this->file) {
 			return $this->absolutePath .
 				$this->product->art .
-				'.' .
-				$this->getExtension();
+				'.' . $this->getExtension();
 		}
 
 		foreach ($this->acceptedTypes as $type) {
 			$fileName = $this->absolutePath .
 				$this->product->art .
-				'.' .
-				$type;
+				'.' . $type;
 
 			if (file_exists($fileName)) {
 				return $this->absolutePath .
 					$this->product->art .
-					'.' .
-					$type;
+					'.' . $type;
 			}
 		}
-
 		return '';
-
 	}
 
 	public function save(): void

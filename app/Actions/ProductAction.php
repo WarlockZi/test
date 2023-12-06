@@ -12,6 +12,10 @@ class ProductAction
 
 	public static function attachMainImage(array $file, string $productId): string
 	{
+		//Уменьшать размер и качество картинки автоматом
+		//Заменить слеш в названии на дефис
+
+		ProductMainImage::class;
 		if ($file['size'] > 200000) {
 			throw new Exception('file size is big --- !!!');
 		}

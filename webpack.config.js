@@ -14,7 +14,6 @@ const config = {
     //   // vendor: path.resolve(src, 'common.js'),
     //   // file
     // },
-
     admin: path.resolve(src, 'Admin/admin.js'),
     bot: path.resolve(src, 'bot/js/app.js'),
     auth: path.resolve(src, 'Auth/auth.js'),
@@ -25,7 +24,6 @@ const config = {
     product: path.resolve(src, 'Product/card.js'),
     dnd: path.resolve(src, 'components/dnd/dnd.js'),
     // breadcrumbs: path.resolve(src, 'components/breadcrumbs.js'),
-
   },
   output: {
     path: path.resolve(__dirname, "public/dist"),
@@ -39,7 +37,7 @@ const config = {
   devServer: {
     allowedHosts: "all",
     host: "localhost",
-    server: 'https',
+    server: 'http',
     port: 4000,
 
     // hot: true,

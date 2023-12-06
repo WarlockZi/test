@@ -11,7 +11,7 @@ use app\view\Interfaces\IHeaderable;
 use app\view\Interfaces\ILayout;
 use app\view\Interfaces\IRenderable;
 
-abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, ILayout
+abstract class View implements IFooterable, IRenderable, IErrors, ILayout
 {
 
 	public $controller;
@@ -19,7 +19,7 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 	public $errors;
 	public $user;
 
-	protected IHeaderable $header;
+	protected $header;
 	protected $content;
 	protected $footer;
 
@@ -62,6 +62,5 @@ abstract class View implements IFooterable, IHeaderable, IRenderable, IErrors, I
 			file_put_contents($file, $page_cache);
 		}
 	}
-
 
 }
