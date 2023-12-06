@@ -65,7 +65,7 @@ class ProductFormView
 			->get();
 	}
 
-	public static function hasNoImgList($products, $title){
+	public static function hasNoImgList(Collection $products, string $title){
 
 		return MyList::build(Product::class)
 			->pageTitle($title)

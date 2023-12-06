@@ -7,13 +7,11 @@ namespace app\view;
 use app\controller\Controller;
 use app\core\Error;
 use app\core\FS;
-use app\model\Product;
 use app\model\User;
 use app\view\Assets\UserAssets;
 use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 use app\view\Header\UserHeader;
-use Illuminate\Database\Eloquent\Model;
 
 class UserView extends View
 {
@@ -24,7 +22,8 @@ class UserView extends View
 	{
 		parent::__construct($controller);
 		$this->setAssets();
-		$this->setHeader($this->user);
+		$this->header = new UserHeader($controller);
+//		$this->setHeader($this->user, $this->controller->settings);
 		$this->setFooter();
 	}
 
@@ -64,9 +63,9 @@ class UserView extends View
 		}
 	}
 
-	public function setHeader($user)
+	public function setHeader($user, $settings)
 	{
-		$this->header = new UserHeader($user);
+		$this->header = new UserHeader($this);
 	}
 
 	public function setFooter()

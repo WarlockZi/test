@@ -1,6 +1,7 @@
 <div class="promotions-index">
 	<div class="page-title">
 		Акции
+		Чтобы завести акцию, нужно зайти в товар
 
 	</div>
 

@@ -6,9 +6,7 @@ namespace app\Repository;
 
 use app\controller\Controller;
 use app\core\FS;
-use app\Domain\Product\Image\ProductMainImage;
 use app\model\Product;
-use app\Storage\StorageImg;
 use app\view\Image\ImageView;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Collection;
@@ -107,54 +105,8 @@ class ProductRepository extends Controller
 
 	public static function haveOnlyBaseUnit()
 	{
-//				$baseUnit = DB::table('units')
-//			->select(DB::raw(1))
-//			->whereColumn('unitables.unit_id', 'units.id');
-//
-//		$mainUnit = DB::table('unitables')
-//			->select(DB::raw(1))
-//			->whereColumn('unitables.unit_id', 'units.id');
-
-//		$products = DB::table('products')
-//			->select('*')
-//			->whereExists(function ($q) {
-//				$q->select()
-//					->from('units')
-//					->whereColumn('products.base_unit', 'units.id')
-//					->whereDoesnExist(function ($query) {
-//						$query->select()
-//							->from('unitables')
-//							->selectRaw('unitable_type= \app\model\Unit and unitable_id=units.id');
-//					});
-//			})
-//			->toSql()//			->get()
-//		;
-//		$products = Product::query()
-//			->whereHas('baseUnit', function ($q) {
-//				$q->whereDoesntHave('units');
-//			})
-//			->toSql()
-////			->get()
-//			//						->get(['id', 'art', 'name'])
-//		;
-
 		$all = DB::select("select * from `products` where instore > 0 and not exists (select * from `unitables` as `b` where `b`.`product_id` = `products`.`1s_id`)");
-//		$all = DB::select("select * from `products` where exists (select * from `units` where `products`.`base_unit` = `units`.`id` and not exists (select * from `units` as `u` inner join `unitables` as `b` on `u`.`id` = `b`.`unitable_id` where `units`.`id` = `b`.`unit_id` and `b`.`unitable_type` = 'app\model\Unit' and `b`.`product_id` = `products`.`1s_id`))");
-
-//		$all = new Collection($all);
-//		$a =
-//		$all = Product::where('instore','>',0)->get(['id', 'art', 'name', '1s_id']);
-//		$part = DB::table('unitables')
-//			->get()
-//			->groupBy('product_id');
-//		foreach ($part as $k => $product) {
-//			$all = $all->reject(function ($product, $k) use ($part) {
-//				return $part->offsetExists($product['1s_id']) ;
-//			});
-//		}
-
 		return $all;
-
 	}
 
 	protected static function getP($products)
@@ -172,16 +124,20 @@ class ProductRepository extends Controller
 			->get();
 	}
 
+	public static function hasMainImage(Product $p){
+		return $p->mainImagePath == '/pic/srvc/nophoto-min.jpg';
+	}
+
 	public static function hasNoImgInStore()
 	{
 		$products = Product::query()
 			->select('art', 'name', 'id', 'instore')
+			->where('instore', '>', 0)
 			->get();
 
 		$arr = new Collection();
 		foreach ($products as $product) {
-			$file = StorageImg::getFile('product/uploads/' . $product->art . '.jpg');
-			if (!is_file($file) && $product->instore) {
+			if (self::hasMainImage($product)) {
 				$arr->push($product);
 			}
 		}
@@ -192,12 +148,13 @@ class ProductRepository extends Controller
 	{
 		$products = Product::query()
 			->select('art', 'name', 'id', 'instore')
+			->where('instore', '<', 0)
 			->get();
 
 		$arr = new Collection();
 		foreach ($products as $product) {
-			$file = StorageImg::getFile('product/uploads/' . $product->art . '.jpg');
-			if (!is_file($file) && !$product->instore) {
+//			$file = StorageImg::getFile('product/uploads/' . $product->art . '.jpg');
+			if (self::hasMainImage($product)) {
 				$arr->push($product);
 			}
 		}

@@ -1,9 +1,9 @@
 <?
 
-use app\core\App;
+//use app\core\App;
+//use \Engine\DI\DI;
 use app\core\Auth;
 use app\core\Router;
-use \Engine\DI\DI;
 
 session_start();
 
@@ -27,8 +27,7 @@ ini_set('display_errors', $_ENV['MODE']==='development');
 
 try {
 	Auth::getAuth();
-
-	new App(new DI);
+//	new App(new DI);
 
 	$router = new Router($_SERVER['REQUEST_URI']);
 	$router->dispatch();

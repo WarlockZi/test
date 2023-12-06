@@ -23,6 +23,7 @@ abstract class AbstractProductImage
 
 	public function __construct(Product $product, array $file=[])
 	{
+		$this->imagic = new \Imagick($file);
 		$this->file = $file;
 		$this->product = $product;
 		$this->absolutePath = realpath($this->absolutePath).DIRECTORY_SEPARATOR;

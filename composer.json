@@ -12,6 +12,7 @@
     "app"
   ],
   "require": {
+    "ext-imagick": "*",
     "phpmailer/phpmailer": "^6.4",
     "vlucas/phpdotenv": "^5.3",
     "illuminate/events": "^8.83",

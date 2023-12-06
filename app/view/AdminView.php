@@ -9,7 +9,8 @@ use app\core\Error;
 use app\core\FS;
 use app\view\Assets\AdminAssets;
 use app\view\Assets\TestAssets;
-use app\view\Header\AdminHeader;
+use app\view\Header\Admin\AdminHeader;
+
 
 class AdminView extends View
 {
@@ -31,8 +32,6 @@ class AdminView extends View
 		} else {
 			$this->setAssets();
 		}
-
-
 	}
 
 	protected function setView($controller)
@@ -43,7 +42,6 @@ class AdminView extends View
 				$this->view = $file;
 			}
 		}
-
 	}
 
 	protected function getViewFile(): string

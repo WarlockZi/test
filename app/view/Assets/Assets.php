@@ -95,7 +95,7 @@ class Assets
 		$this->host = $_ENV['MODE'] === 'development'
 //			? 'https://localhost:4000/dist/'
 //			? 'https://127.0.0.1:4000/dist/'
-			? 'https://127.0.0.1:4000/'
+			? 'http://127.0.0.1:4000/'
 			: '/public/dist/';
 //			: '/assets/';
 	}

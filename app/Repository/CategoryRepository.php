@@ -17,9 +17,17 @@ class CategoryRepository
   {
     return Category::with('childrenRecursive')
 		->whereNull('category_id')
-//      ->with('childrenRecursive')
       ->get();
   }
+
+	public static function getHeaderCategories()
+	{
+		return Category::query()
+			->where('show_front', 1)
+			->with('childrenNotDeleted')
+			->get();
+		return $d;
+	}
 
   public static function editSelectorExcluded($category): array
   {
@@ -32,20 +40,6 @@ class CategoryRepository
       ->toArray();
     return $d;
   }
-
-//  public static function index(string $slug)
-//  {
-//    return Category::query()
-//			->where('slug', $slug)
-//      ->with('childrenRecursive')
-//      ->with('parentRecursive')
-//      ->with('productsInStore',
-//				'products.promotions')
-//      ->with('seo')
-////      ->with('productsNotInStore')
-//      ->get()
-//			->first();
-//  }
 
   public static function indexInstore(string $slug){
 		return Category::query()

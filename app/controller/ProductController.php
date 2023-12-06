@@ -20,7 +20,7 @@ class ProductController extends AppController
 			$product = ProductRepository::main($slug);
 			$oItems = OrderRepository::count();
 			if ($product) {
-				$cat = Category::query()->find($product->category_id);
+//				$cat = Category::query()->find($product->category_id);
 				$cat = $product->category_id;
 				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($cat, true,);
 				$this->set(compact('product', 'breadcrumbs', 'oItems'));
