@@ -5,6 +5,7 @@
 /refs/
 /node_modules/
 /.idea/
+/.vscode
 /composer.phar
 /.env
 /app/Storage/log/*

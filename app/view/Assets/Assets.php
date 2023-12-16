@@ -92,9 +92,10 @@ class Assets
 
 	public function setHost()
 	{
-		$this->host = $_ENV['MODE'] === 'development'
+		$this->host = $_ENV['DEV']
 //			? 'https://localhost:4000/dist/'
 //			? 'https://127.0.0.1:4000/dist/'
+			// ? 'http://127.0.0.1:4000/public/dist/'
 			? 'http://127.0.0.1:4000/'
 			: '/public/dist/';
 //			: '/assets/';
@@ -153,7 +154,7 @@ class Assets
 
 	public function setCache(): void
 	{
-		if ($_ENV['MODE'] === 'development') {
+		if ($_ENV['DEV']) {
 			$this->cache = false;
 		} else {
 			$this->cache = false;
