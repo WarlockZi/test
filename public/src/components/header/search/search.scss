@@ -5,6 +5,12 @@
     display: flex;
     flex: 1 0;
     justify-content: flex-end;
+    
+    button{
+      border: none;
+      padding: 0;
+      background-color: inherit;
+    }
 
     .search {
       height: 100%;

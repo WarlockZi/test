@@ -197,19 +197,25 @@ header {
     padding: 0 20px;
     align-items: center;
     justify-content: space-between;
+    color: white;
 
     svg {
-      stroke: white;
-      stroke-width: 3px;
       width: 17px;
       height: 17px;
       padding: 0 15px;
+      fill: transparent;
+    }
+
+    button{
+      border: none;
+      padding: 0;
+      background-color: inherit;
     }
 
     .search,
-    .gamburger,
     .cart,
-    .promotions
+    .promotions,
+    .gamburger
     {
       position: relative;
       height: 100%;
@@ -217,19 +223,12 @@ header {
       display: flex;
       cursor: pointer;
       align-items: center;
+      color: inherit;
 
       &:hover {
         background-color: #285f8f;
       }
 
-    }
-
-    .promotions{
-
-      svg{
-        fill:transparent;
-        stroke-width: 1px;
-      }
     }
 
     .cart {
@@ -254,10 +253,6 @@ header {
           display: flex;
         }
       }
-    }
-
-    .menu {
-
     }
 
   }

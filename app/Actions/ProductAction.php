@@ -16,7 +16,7 @@ class ProductAction
 		//Заменить слеш в названии на дефис
 
 		ProductMainImage::class;
-		if ($file['size'] > 200000) {
+		if ($file['size'] > 300000) {
 			throw new Exception('file size is big --- !!!');
 		}
 		$product = Product::query()->find($productId);
