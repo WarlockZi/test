@@ -55,6 +55,11 @@ class Assets
 	public function setCDNJs(string $src, bool $defer = false, bool $async = false): void
 	{
 		$this->CDNjs[] = ['src' => $src, 'defer' => $defer ? 'defer' : '', 'async' => $async ? 'async' : ''];
+	}	
+
+	public function setCDNCss(string $src): void
+	{
+		$this->CDNcss[] = $src;
 	}
 
 	public function getCDNJs(): string
@@ -64,11 +69,6 @@ class Assets
 			$str .= "<script {$CDNjs['defer']} {$CDNjs['async']}  src='{$CDNjs['src']}'></script>";
 		}
 		return $str;
-	}
-
-	public function setCDNCss(string $src): void
-	{
-		$this->CDNcss[] = $src;
 	}
 
 	public function getCDNCss(): string
@@ -194,7 +194,7 @@ class Assets
 			$this->setCss($css);
 		}
 		foreach ($assets->getCDNJsArray() as $js) {
-			$this->setCDNJs($js['src'], $js['defer'], $js['async'],);
+			$this->setCDNJs($js['src'], $js['defer']==='defer', $js['async']==='async',);
 		}
 		foreach ($assets->getCDNCssArray() as $css) {
 			$this->setCDNCss($css);

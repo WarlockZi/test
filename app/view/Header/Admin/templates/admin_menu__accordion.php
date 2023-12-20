@@ -125,7 +125,7 @@ use \app\core\Icon;
 		<li plan>
 			<div class="label">
 				<span class="arrow"></span>
-					 <?= Icon::target('admin-menu') ?>
+					 <?= Icon::flag('admin-menu') ?>
 				Планирование
 			</div>
 			<ul class="level-1">

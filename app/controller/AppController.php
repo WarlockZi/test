@@ -5,7 +5,7 @@ namespace app\controller;
 use app\controller\Interfaces\IModelable;
 use app\Repository\MorphRepository;
 use app\Repository\SettingsRepository;
-use mysql_xdevapi\Exception;
+use \Exception;
 use ReflectionClass;
 
 class AppController extends Controller implements IModelable
@@ -21,9 +21,6 @@ class AppController extends Controller implements IModelable
 
 	public function setView(string $type = '')
 	{
-//		if ($type === 'notFound') {
-//			$view = $this->getView();
-//		}
 		$view = $this->getView();
 		$view->render();
 	}

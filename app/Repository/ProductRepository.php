@@ -3,7 +3,7 @@
 
 namespace app\Repository;
 
-
+use app\controller\AppController;
 use app\controller\Controller;
 use app\core\FS;
 use app\model\Product;
@@ -11,7 +11,7 @@ use app\view\Image\ImageView;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Collection;
 
-class ProductRepository extends Controller
+class ProductRepository extends AppController
 {
 
 	public static function edit(int $id)
@@ -120,7 +120,7 @@ class ProductRepository extends Controller
 		return Product::query()
 			->with('price')
 			->take(20)
-			->orderBy('sort')
+			->orderBy('id', "DESC")
 			->get();
 	}
 
@@ -190,6 +190,6 @@ class ProductRepository extends Controller
 			'instore' => 'Показать с остатком = 0',
 			'price' => 'Показать c ценой = 0',
 		];
-		return FS::getFileContent($self->viewPath . 'filters.php', compact('filters'));
+		return FS::getFileContent('./filters.php', compact('filters'));
 	}
 }

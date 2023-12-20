@@ -4,6 +4,6 @@ use app\core\Icon;
 
 ?>
 
-<div class="search">
+<button class="search">
 	<?= Icon::search('feather'); ?>
-</div>
+</button>

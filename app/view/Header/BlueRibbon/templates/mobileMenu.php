@@ -3,11 +3,11 @@
 use app\core\Icon;
 
 ?>
-<div class="gamburger">
+<button class="gamburger">
 	<?= Icon::menu('feather') ?>
-</div>
+</button>
 
-<div class="mobile-menu">
+<aside class="mobile-menu">
 	<div class="wrap">
 		<a href="/main/contacts">Контакты</a>
 		<a href="/main/requisites">Реквизиты</a>
@@ -18,4 +18,4 @@ use app\core\Icon;
 		<a href="/category">Каталог</a>
 
 	</div>
-</div>
+</aside>
