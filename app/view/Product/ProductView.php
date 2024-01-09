@@ -13,7 +13,7 @@ class ProductView
 {
 	protected $model = 'product';
 	protected static $mainImagePath = '/pic/product/uploads/';
-	protected static $viewPath = ROOT.'/app/view/Product/Admin/';
+	protected static $viewPath = ROOT . '/app/view/Product/Admin/';
 
 	public static function pagination($str = ''): string
 	{
@@ -35,8 +35,9 @@ class ProductView
 
 	public static function baseEqualsMainUnit(Product $p)
 	{
-		return FS::getFileContent(self::$viewPath.'baseEqualsMain.php',[$p]);
+		return FS::getFileContent(self::$viewPath . 'baseEqualsMain.php', [$p]);
 	}
+
 	public static function mainImageSrc(Product $p)
 	{
 		$src = '/pic/product/uploads/' . $p->art . '.jpg';
@@ -66,15 +67,17 @@ class ProductView
 	public static function getCardMainImage($product)
 	{
 		$mi = new ProductMainImage($product);
-		$file = $mi->getAbsolutePath();
+		try {
+			$file = $mi->getAbsolutePath();
 
-		if (is_readable($file)) {
-			$image =  FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
-		} else {
-			$image = ImageView::noImage();
+			if (is_readable($file)) {
+				$image = FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
+			} else {
+				$image = ImageView::noImage();
+			}
+			return "<div class='main-image'>{$image}</div>";
+		} catch (\Exception $e) {
+			return "<p class='main-image'>{$e}</p>";
 		}
-
-		return "<div class='main-image'>{$image}</div>";
 	}
-
 }

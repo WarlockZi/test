@@ -8,36 +8,72 @@ use app\model\Product;
 
 abstract class AbstractProductImage
 {
-	protected array $types = [
-		"image/jpg" => "jpg",
-		"image/jpeg" => "jpeg",
-		"image/png" => "png",
-		"image/webp" => "webp",
-		"image/gif" => "gif",
-	];
-	protected array $acceptedTypes = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-	protected string $relativePath = '/pic/product/uploads/';
-	protected string $absolutePath = ROOT . '/pic/product/uploads';
 	protected array $file;
 	protected Product $product;
+	protected array $types ;
+	protected array $acceptedTypes ;
+	protected string $relativePath;
+	protected string $absolutePath;
+	protected string $absoluteThumbPath;
 
 	public function __construct(Product $product, array $file=[])
 	{
-		// $this->imagic = new \Imagick($file);
-		$this->file = $file;
 		$this->product = $product;
-		$this->absolutePath = realpath($this->absolutePath).DIRECTORY_SEPARATOR;
+		$this->file = $file;
+		$this->relativePath = '/pic/product/uploads/';
+		$this->absolutePath = ROOT . '/pic/product/uploads'.DIRECTORY_SEPARATOR;
+		$this->absoluteThumbPath = ROOT . '/pic/product/thumbs'.DIRECTORY_SEPARATOR;
+		$this->acceptedTypes = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+		$this->types = [
+			"image/jpg" => "jpg",
+			"image/jpeg" => "jpeg",
+			"image/png" => "png",
+			"image/webp" => "webp",
+			"image/gif" => "gif",
+		];
 	}
 
 	public function getExtension(): string
 	{
-		return $this->types[$this->file['type']];
+		return $this->file?$this->types[$this->file['type']]:'';
+	}
+
+	protected function prepareArticle(string $art): string
+	{
+		$art = str_replace(['/', '//', '\\'], '_', $art);
+		return trim(strip_tags($art));
+	}
+
+	public function getRelativePath(): string
+	{
+		if ($this->file) {
+			return $this->getPathWithExt('relativePath');
+		}
+		foreach ($this->acceptedTypes as $type) {
+			$fileName = $this->getPathWithExt('absolutePath', $type);
+
+			if (file_exists($fileName)) {
+				return $this->getPathWithExt('relativePath', $type);
+			}
+		}
+		return '';
+	}
+
+	public function getAbsolutePath(): string
+	{
+		if ($this->file) {
+			return $this->getPathWithExt('absolutePath');
+		}
+
+		foreach ($this->acceptedTypes as $type) {
+			$fileName = $this->getPathWithExt('absolutePath', $type);
+
+			if (file_exists($fileName)) {
+				return $fileName;
+			}
+		}
+		return '';
 	}
 
 	abstract public function save(): void;
-
-	abstract public function getRelativePath(): string;
-
-	abstract public function getAbsolutePath(): string;
-
 }
