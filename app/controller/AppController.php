@@ -19,7 +19,7 @@ class AppController extends Controller implements IModelable
 		$this->settings = (new SettingsRepository())->initial();
 	}
 
-	public function setView(string $type = '')
+	public function setView()
 	{
 		$view = $this->getView();
 		$view->render();

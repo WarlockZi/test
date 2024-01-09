@@ -22,6 +22,7 @@ class CategoryView
 	public static function getProductMainImage(Product $product)
 	{
 			$relativePath = ImageRepository::getProductMainImageSrc($product);
+			echo $relativePath;
 			return FS::getFileContent(__DIR__ . '/product_main_image.php', compact('relativePath', 'product'));
 	}
 

@@ -5,72 +5,71 @@ namespace app\Domain\Product\Image;
 
 
 use app\model\Product;
+use app\Services\ImagickService;
 
 class ProductMainImage extends AbstractProductImage
 {
 	protected string $art;
+	protected ImagickService $imagickService;
+	protected $thumbDir = 'thumbs' . DIRECTORY_SEPARATOR;
+	protected $maxImgHeight = 700;
+	protected $maxImgWidth = 700;
+	protected $quality = 60;
+	protected $maxThumbHeight = 300;
+	protected $maxThumbWidth = 300;
+	protected $fullPath;
 
 	public function __construct(Product $product, array $file = [])
 	{
 		parent::__construct($product, $file);
-		$this->art = $this->getFilenameFromArt($this->product->art);
+		$this->art = $this->prepareArticle($this->product->art);
+		$this->fullPath = $this->art . '.' . $this->getExtension();
 	}
 
-	protected function getPathWithExt(string $relOrAbs): string
+	protected function getPathWithExt($relOrAbs, $type = null): string
 	{
-		return $this->$relOrAbs .
-			$this->art .
-			'.' . $this->getExtension();
-	}
-	protected function getPathWithType($relOrAbs, $type): string
-	{
+		$type = $type ?? $this->getExtension();
 		return $this->$relOrAbs .
 			$this->art .
 			'.' . $type;
 	}
-	protected function getFilenameFromArt(string $art): string
-	{
-		$art = str_replace(['/', '//', '\\'], '_', $art);
-		return trim(strip_tags($art));
-	}
-	public function getRelativePath(): string
-	{
-		if ($this->file) {
-			return $this->getPathWithExt('relativePath');
-		}
-		foreach ($this->acceptedTypes as $type) {
-			$fileName = $this->getPathWithType('relativePath', $type);
 
-			if (file_exists($fileName)) {
-				return $fileName;
-			}
+	public function reduceQuality(int $quality)
+	{
+		$imageService = new ImagickService($this->getAbsolutePath());
+		$q = $imageService->img->getImageCompressionQuality();
+		if ($q > $quality) {
+			$imageService->img->setImageCompressionQuality($quality);
+			$imageService->img->writeImage();
 		}
-		return '';
 	}
 
-	public function getAbsolutePath(): string
+	public function thumbnail()
 	{
-		if ($this->file) {
-			return $this->absolutePath .
-				$this->art .
-				'.' . $this->getExtension();
-		}
+		$absPath = $this->getAbsolutePath();
 
-		foreach ($this->acceptedTypes as $type) {
-			$fileName = $this->absolutePath .
-				$this->art .
-				'.' . $type;
+		$webpName = $this->absoluteThumbPath . $this->art . '.webp';
+		copy($absPath, $webpName);
+		$ima = new ImagickService($webpName);
+		$ima->img->setImageFormat("WEBP");
+		$ima->thumbnail(
+			$webpName,
+			$this->maxThumbWidth,
+			$this->maxThumbHeight,
+			);
 
-			if (file_exists($fileName)) {
-				return $fileName;
-			}
-		}
-		return '';
+//		$ima->img->writeImage($webpName);
+		$ima->img->clear();
+		$ima->img->destroy();
 	}
 
 	public function save(): void
 	{
-		move_uploaded_file($this->file['tmp_name'], $this->getAbsolutePath());
+		$absPath = $this->getAbsolutePath();
+		move_uploaded_file($this->file['tmp_name'], $absPath);
+
+		$this->reduceQuality(60);
+
 	}
 
 	public function deletePreviousFile(): void

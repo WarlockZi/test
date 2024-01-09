@@ -50,14 +50,9 @@ class ImageRepository
 	public static function getProductMainImage(Product $product): string
 	{
 		$src = ImageRepository::getProductMainImageSrc($product);
-		$del = ROOT . FS::platformSlashes($src);
-		if (is_readable($del)) {
-			$name = $product['name'];
-			return "<img src = '{$src}' title = '{$name}' alt = '{$name}'/>";
-		} else {
-			$src = ImageRepository::getImg('');
-			return "<img src = {$src} {$del}/>";
-		}
+		$name = $product->name ?? "";
+
+		return "<img src = '{$src}' title = '{$name}' alt = '{$name}'/>";
 	}
 
 	public static function getSrcMorph(Model $image): array
@@ -76,7 +71,6 @@ class ImageRepository
 			return "<div class='wrap'>{$im}</div>";
 		}
 		return '';
-
 	}
 
 	public static function getMorphManyImages(Model $image): string
@@ -199,6 +193,4 @@ class ImageRepository
 		$types = self::$types;
 		return $types[$type] ?? null;
 	}
-
-
 }
