@@ -52,6 +52,11 @@ class Assets
 		$this->js[] = $name;
 	}
 
+	/**
+	 * @param string $src
+	 * @param bool $defer
+	 * @param bool $async
+	 */
 	public function setCDNJs(string $src, bool $defer = false, bool $async = false): void
 	{
 		$this->CDNjs[] = ['src' => $src, 'defer' => $defer ? 'defer' : '', 'async' => $async ? 'async' : ''];

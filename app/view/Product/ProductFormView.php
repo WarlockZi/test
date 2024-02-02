@@ -322,7 +322,7 @@ class ProductFormView
 				ListColumnBuilder::build('id')
 					->get()
 			)
-			->column(ListColumnBuilder::build('count')
+			->column(ListColumnBuilder::build('Количество')
 				->contenteditable()
 				->get()
 			)

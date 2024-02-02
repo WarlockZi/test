@@ -47,6 +47,8 @@ class CategoryRepository
 			->with('childrenRecursive')
 			->with('parentRecursive')
 			->with('productsInStore')
+//			->with('productsNotInStore')
+			->with('productsNotInStoreInMatrix')
 			->with('products.promotions')
 			->with('seo')
 //      ->with('productsNotInStore')

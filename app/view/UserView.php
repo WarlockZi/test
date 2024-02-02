@@ -22,7 +22,7 @@ class UserView extends View
 	{
 		parent::__construct($controller);
 		$this->setAssets();
-		$this->header = new UserHeader($controller);
+		$this->header = new UserHeader();
 //		$this->setHeader($this->user, $this->controller->settings);
 		$this->setFooter();
 	}
@@ -44,7 +44,7 @@ class UserView extends View
 	{
 		$route = $this->controller->getRoute();
 		$action = property_exists($controller, 'view') ? $controller->view : $route->action;
-		$controller = ucfirst($route->controllerName);
+		$controller = ucfirst($route->controllerName ?? '');
 		return FS::platformSlashes(ROOT . "/app/view/{$controller}/{$action}.php");
 	}
 
@@ -65,7 +65,7 @@ class UserView extends View
 
 	public function setHeader($user, $settings)
 	{
-		$this->header = new UserHeader($this);
+		$this->header = new UserHeader();
 	}
 
 	public function setFooter()

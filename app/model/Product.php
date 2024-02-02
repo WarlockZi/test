@@ -72,12 +72,7 @@ class Product extends Model
 	protected static function booted()
 	{
 		static::Updating(function ($product) {
-//			if (Product::where('slug', $product->slug)->first()) {
-//				$product->slug = Slug::slug($product->name) . $product->art;
-//
-//			} else {
 			$product->slug = Slug::slug($product->name);
-//			}
 			return $product;
 		});
 	}

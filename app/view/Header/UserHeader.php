@@ -4,7 +4,6 @@
 namespace app\view\Header;
 
 
-use app\controller\Controller;
 use app\core\FS;
 use app\Repository\SettingsRepository;
 use app\view\Header\BlueRibbon\BlueRibbon;

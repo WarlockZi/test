@@ -7,7 +7,7 @@ $promotion = $product->promotions->count() ? "<div class='promotion'>Акция<
 <div class="column">
 	<?= $promotion ?>
 	<a data-instore="<?= $product->instore ?? 0; ?>"
-	   data-price="<?= $product->getRelation('price')->price ?? 0; ?>"
+
 	   href="/product/<?= $product->slug; ?>" class="product">
 
 
@@ -16,7 +16,7 @@ $promotion = $product->promotions->count() ? "<div class='promotion'>Акция<
 		<span class="footer">
 
 					 <p>Цена: <?= $product->instore ? $product->priceWithCurrencyUnit() : 'уточняйте у менеджера'; ?></p>
-					 <p>Статус:  в наличии</p>
+					 <p>Статус:  <?= !!$product->instore ? "в наличии" : "под заказ"; ?></p>
 					 <p>Артикул: <?= $product->art ?? 0; ?></p>
 
 					 </span>

@@ -12,6 +12,8 @@
     "app"
   ],
   "require": {
+    "ext-json": "*",
+    "ext-simplexml": "*",
     "ext-imagick": "*",
     "phpmailer/phpmailer": "^6.4",
     "vlucas/phpdotenv": "^5.3",

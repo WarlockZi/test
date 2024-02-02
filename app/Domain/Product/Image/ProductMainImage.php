@@ -41,6 +41,8 @@ class ProductMainImage extends AbstractProductImage
 		if ($q > $quality) {
 			$imageService->img->setImageCompressionQuality($quality);
 			$imageService->img->writeImage();
+			$imageService->img->clear();
+			$imageService->img->destroy();
 		}
 	}
 
@@ -56,6 +58,7 @@ class ProductMainImage extends AbstractProductImage
 			$webpName,
 			$this->maxThumbWidth,
 			$this->maxThumbHeight,
+			$this->quality,
 			);
 
 //		$ima->img->writeImage($webpName);
@@ -68,7 +71,7 @@ class ProductMainImage extends AbstractProductImage
 		$absPath = $this->getAbsolutePath();
 		move_uploaded_file($this->file['tmp_name'], $absPath);
 
-		$this->reduceQuality(60);
+		$this->reduceQuality($this->quality);
 
 	}
 
