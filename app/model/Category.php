@@ -5,6 +5,7 @@ namespace app\model;
 
 use app\Services\Slug;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -75,6 +76,16 @@ class Category extends Model
 	{
 		return $this->hasMany(Product::class)
 			->where('instore',0)
+			->with('price')
+			->with('mainImages')
+//			->with('mainUnit')
+			->orderBy('name');
+	}
+	public function productsNotInStoreInMatrix(): HasMany
+	{
+		return $this->hasMany(Product::class)
+			->where('instore',0)
+			->where('name','regexp', '\\s?\\*\\s?$')
 			->with('price')
 			->with('mainImages')
 //			->with('mainUnit')
