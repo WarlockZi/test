@@ -19,4 +19,4 @@ jobs:
       - name: Build
         run: |
           npm ci
-          npx run build
+          npm run build
