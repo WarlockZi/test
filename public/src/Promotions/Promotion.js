@@ -10,30 +10,28 @@ export default class Promotion {
     this.id = $(this.$promotion).find(`[data-field='id']`).innerText;
 
     this.$activeTill = $(`[data-field='active-till']`).first();
-    this.$activeTill.onchange = this.handleChange.bind(this);
+    this.$activeTill.onchange = this.activetillChanged.bind(this);
 
     this.$unit = $('[select-new].unit').first();
     let unit = new SelectNew(this.$unit);
-    unit.onchange(this.unitChanged.bind(this))
+    const u = $(`[data-field="unit"]`).first()
+    u.addEventListener('customSelect.changed', this.unitChanged.bind(this));
 
   }
 
-  unitChanged(unit) {
+  unitChanged(customEvent) {
     let data = this.dto(this);
-    data.unit_id= unit.next.value;
+    data.unit_id= customEvent.detail.next.value;
     let res = post('/adminsc/promotion/updateOrCreate', data);
 
   }
 
-  handleChange({target}) {
-
+  activetillChanged({target}) {
     let data = this.dto(this);
     data.active_till = target.value;
     let res = post('/adminsc/promotion/updateOrCreate', data);
     if (res) {
-
     }
-
   }
 
   dto(self) {
