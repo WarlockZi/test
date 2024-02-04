@@ -30,6 +30,7 @@ import rights from './Rights/rights'
 import category from './Category/category1'
 // import pagination from './Product/pagination'
 import product from './Product/product'
+
 import user from './User/user'
 
 
