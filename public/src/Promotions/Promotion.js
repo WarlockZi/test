@@ -16,7 +16,6 @@ export default class Promotion {
     let unit = new SelectNew(this.$unit);
     const u = $(`[data-field="unit"]`).first()
     u.addEventListener('customSelect.changed', this.unitChanged.bind(this));
-
   }
 
   unitChanged(customEvent) {
