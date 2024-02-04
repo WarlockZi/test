@@ -1,10 +1,12 @@
-<?
+<?php
 
 use app\core\Auth;
 use app\core\Router;
 
 session_start();
 error_reporting(E_ALL);
+
+ini_set("short_open_tag",1);
 
 define('ROOT', dirname(__DIR__));
 $slash = DIRECTORY_SEPARATOR;
@@ -19,7 +21,6 @@ if ($_ENV['DEV']) {
 require_once ROOT . $slash . "public" . $slash . "Eloquent.php";
 
 try {
-	// shell_exec('npm --version 2>&1');
 	Auth::getAuth();
 	$router = new Router($_SERVER['REQUEST_URI'] ?? '');
 	$router->dispatch();

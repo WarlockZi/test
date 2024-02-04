@@ -40,18 +40,18 @@ const config = {
     server: 'http',
     port: 4000,
 
-    // hot: true,
-    liveReload: true,
+    hot: false,
+    // liveReload: true,
     static: {
       directory: path.join(__dirname, 'public', 'dist'),
     },
     client: {
       logging: 'info',
       // progress: true,
-      webSocketTransport: 'ws',
-      overlay: true,
+      // webSocketTransport: 'ws',
+      overlay: false,
     },
-    webSocketServer: 'ws',
+    // webSocketServer: 'ws',
     watchFiles: {
       paths: ['public/src/**/*.*'],
     },
