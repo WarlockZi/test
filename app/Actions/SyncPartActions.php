@@ -13,7 +13,7 @@ use app\Services\XMLParser\LoadPrices;
 use app\Services\XMLParser\LoadProducts;
 use app\Storage\{StorageDev, StorageImport, StorageLog};
 
-class SyncActions extends AppController
+class SyncPartActions extends AppController
 {
 	protected $importPath;
 	protected $storage;
@@ -70,15 +70,15 @@ class SyncActions extends AppController
 
 	public function import()
 	{
-		if (!is_readable($this->importFile)) exit('Отсутстует файл importFile');
 
-		$this->LoadCategories();
-		$this->LoadProducts();
+		if (is_readable($this->importFile)) {
+			$this->LoadCategories();
+			$this->LoadProducts();
+		}
 
-		if (!is_readable($this->offerFile)) exit('Отсутстует файл offerFile');
-
-		$this->LoadPrices();
-
+		if (is_readable($this->offerFile)) {
+			$this->LoadPrices();
+		}
 		exit('success');
 	}
 
@@ -191,4 +191,36 @@ class SyncActions extends AppController
 		$this->removePrices();
 	}
 
+	public function part()
+	{
+		if (isset($this->route->params['type'])) {
+			if ($this->route->params['type'] === 'catalog') {
+				if ($this->route->params['mode'] === 'checkauth') {
+					$this->checkauth();
+				} elseif ($this->route->params['mode'] === 'init') {
+					$this->zip();
+				} elseif ($this->route->params['mode'] === 'file') {
+					$this->file();
+//					$time = '<br>+++' . date('H:i:s') . '<br>+++';
+//					$this->append($time);
+				} elseif ($this->route->params['mode'] === 'import') {
+					$this->partload();
+				}
+			}
+		}
+	}
+
+	public function partload()
+	{
+		if (is_readable($this->importFile)) {
+			new LoadCategories($this->importFile, 'part', false);
+			new LoadProducts($this->importFile, 'part');
+
+		}
+
+		if (is_readable($this->offerFile)) {
+			new LoadPrices($this->offerFile, 'part');
+		}
+		exit('success');
+	}
 }

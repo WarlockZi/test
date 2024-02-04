@@ -27,8 +27,13 @@ class SyncController extends AppController
 
 	public function actionInit()
 	{
-		$this->repo->init();
+		try {
+			$this->repo->init();
+		} catch (\Exception $e) {
+			exit($e);
+		}
 	}
+
 	public function actionLoad()
 	{
 		$this->repo->import();
@@ -53,7 +58,6 @@ class SyncController extends AppController
 	{
 		$this->repo->removePrices();
 	}
-
 
 
 	public function actionLoadCategories()
@@ -94,10 +98,6 @@ class SyncController extends AppController
 	}
 
 
-	public function actionParseImages()
-	{
-
-	}
 	public function actionPart()//init
 	{
 		$this->repo->part();

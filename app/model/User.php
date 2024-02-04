@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace app\model;
 
@@ -27,6 +27,7 @@ class User extends Model
 
 	public function rights()
 	{
+		echo ini_get("short_open_tag");
 		return $this->hasMany(Right::class);
 	}
 

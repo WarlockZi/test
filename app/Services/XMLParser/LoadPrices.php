@@ -6,24 +6,24 @@ namespace app\Services\XMLParser;
 use app\model\Price;
 use app\model\Product;
 use app\model\Unit;
-use app\Services\Logger\ILogger;
 
 class LoadPrices extends Parser
 {
 	protected $prices;
 	protected $type;
-	protected $logger;
 
 	public function __construct($file, $type)
 	{
 		parent::__construct($file);
 		$this->type = $type;
 		$this->prices = $this->xmlObj['ПакетПредложений']['Предложения']['Предложение'];
-		if ($this->logger)
-			$this->logger->write('--- price    start ---'.$this->now());
+		if ($this->logger) {
+			$this->logger->write('--- price    start ---' . $this->now());
+		}
 		$this->run();
-		if ($this->logger)
-			$this->logger->write('--- price     stop ---'.$this->now());
+		if ($this->logger){
+			$this->logger->write('--- price     stop ---' . $this->now());
+		}
 	}
 
 	protected function run()
@@ -74,8 +74,8 @@ class LoadPrices extends Parser
 	protected function attachPriceUnitToProduct(Price $Price, Unit $Unit, $price)
 	{
 		$prod = Product::where('1s_id', $Price['1s_id'])->update([
-			'instore'=>$price['Количество'],
-			'base_unit'=>$Unit->id,
+			'instore' => $price['Количество'],
+			'base_unit' => $Unit->id,
 		]);
 	}
 
