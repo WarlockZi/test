@@ -2,13 +2,9 @@
 
 namespace app\view\Manufacturer;
 
-use app\model\Country;
 use app\model\Manufacturer;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
-use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
-use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 
 class ManufacturerView
 {

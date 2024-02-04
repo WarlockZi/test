@@ -15,17 +15,17 @@ class ImagickService
 
 	protected function isWider(\Imagick $image, int $newWidth)
 	{
-		$currentWidth = $image->getImageWidth() ;
-		return $currentWidth>$newWidth?$currentWidth:0;
+		$currentWidth = $image->getImageWidth();
+		return $currentWidth > $newWidth ? $currentWidth : 0;
 	}
 
 	protected function isHeigher(\Imagick $image, int $newHeight)
 	{
 		$currentHeight = $image->getImageHeight();
-		return $currentHeight>$newHeight?$currentHeight:0;
+		return $currentHeight > $newHeight ? $currentHeight : 0;
 	}
 
-	public function thumbnail(string $path, int $newWidth, int $newHeight)
+	public function thumbnail(string $path, int $newWidth, int $newHeight, int $quality)
 	{
 		$img = new \Imagick($path);
 		$currentWidth = $this->isWider($img, $newWidth);
@@ -34,12 +34,10 @@ class ImagickService
 
 		if ($currentWidth) {
 			$img->resizeImage($newWidth, 0, \Imagick::FILTER_LANCZOS, 0);
-		}else{
+		} else {
 			$img->resizeImage(0, $newHeight, \Imagick::FILTER_LANCZOS, 0);
 		}
-		$q = $img->getCompressionQuality();
-		$img->setCompressionQuality(60);
-		$q = $img->getCompressionQuality();
+		$img->setCompressionQuality($quality);
 		$img->writeImage($path);
 
 		return 'resized';

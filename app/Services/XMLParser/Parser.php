@@ -9,6 +9,7 @@ class Parser
 	protected $file;
 	protected $xml;
 	protected $xmlObj;
+	protected $logger;
 
 	public function __construct(string $file)
 	{

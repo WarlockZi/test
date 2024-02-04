@@ -2,7 +2,6 @@
 
 namespace app\view\Country;
 
-use app\model\Country;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 
