@@ -17,6 +17,6 @@ jobs:
           node-version: '16.x'
 
       - name: Build
-        run:
+        run: |
           npm ci
           npx run build
