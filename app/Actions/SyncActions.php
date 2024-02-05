@@ -73,8 +73,8 @@ class SyncActions extends AppController
 		try{
 			if (!is_readable($this->importFile)) exit('Отсутстует файл importFile');
 
-//			$this->LoadCategories();
-//			$this->LoadProducts();
+			$this->LoadCategories();
+			$this->LoadProducts();
 
 			if (!is_readable($this->offerFile)) exit('Отсутстует файл offerFile');
 
@@ -191,8 +191,8 @@ class SyncActions extends AppController
 
 	public function trancate()
 	{
-//		$this->removeCategories();
-//		$this->removeProducts();
+		$this->removeCategories();
+		$this->removeProducts();
 		$this->removePrices();
 	}
 
