@@ -67,11 +67,11 @@
       }
 
       &[data-instore="0"] {
-        filter: grayscale(1);
+        filter: grayscale(0.1);
         background-color: #fbfbfb;
 
         img {
-          opacity: .5;
+          opacity: 0.8;
         }
 
         //display: none;

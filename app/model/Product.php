@@ -8,6 +8,9 @@ use app\Services\Slug;
 use app\view\Image\ImageView;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static truncate()
+ */
 class Product extends Model
 {
 	public $timestamps = false;

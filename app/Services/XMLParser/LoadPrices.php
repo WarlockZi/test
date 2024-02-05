@@ -21,7 +21,7 @@ class LoadPrices extends Parser
 			$this->logger->write('--- price    start ---' . $this->now());
 		}
 		$this->run();
-		if ($this->logger){
+		if ($this->logger) {
 			$this->logger->write('--- price     stop ---' . $this->now());
 		}
 	}
@@ -64,6 +64,7 @@ class LoadPrices extends Parser
 	{
 		$unit = Unit::where('code', $Price->unit_code)->first();
 		if (!$unit) {
+			$u['name'] = $price['Цены']['Цена']['Единица'] ?? mull;
 			$u['code'] = $Price->unit_code;
 			$u['full_name'] = $Price->unit;
 			$unit = Unit::create($u);
