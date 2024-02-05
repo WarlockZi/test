@@ -37,7 +37,7 @@ class SyncActions extends AppController
 	{
 //		$this->log = StorageLog::getFile('log.txt');
 		$this->importPath = StorageImport::getPath();
-		if ($_ENV['MODE'] === 'development') {
+		if ($_ENV['DEV']=='1') {
 			$this->storage = StorageDev::class;
 		} else {
 			$this->storage = StorageImport::class;
@@ -70,16 +70,21 @@ class SyncActions extends AppController
 
 	public function import()
 	{
-		if (!is_readable($this->importFile)) exit('Отсутстует файл importFile');
+		try{
+			if (!is_readable($this->importFile)) exit('Отсутстует файл importFile');
 
-		$this->LoadCategories();
-		$this->LoadProducts();
+//			$this->LoadCategories();
+//			$this->LoadProducts();
 
-		if (!is_readable($this->offerFile)) exit('Отсутстует файл offerFile');
+			if (!is_readable($this->offerFile)) exit('Отсутстует файл offerFile');
 
-		$this->LoadPrices();
+			$this->LoadPrices();
 
-		exit('success');
+			exit('success');
+		}catch(\Exception $e){
+			$ex = $e;
+		}
+
 	}
 
 	public function LoadCategories()
@@ -186,8 +191,8 @@ class SyncActions extends AppController
 
 	public function trancate()
 	{
-		$this->removeCategories();
-		$this->removeProducts();
+//		$this->removeCategories();
+//		$this->removeProducts();
 		$this->removePrices();
 	}
 
