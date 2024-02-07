@@ -12,7 +12,7 @@ $context = stream_context_create($opts);
 
 //for php4 use fopen
 $html_data = file_get_contents('https://vitexopt.ru/adminsc/sync/load', false, $context);
-echo "DONE!";
+echo "Load categories, products, prices, units done! ". date("H:i:s") ;
 exit;
 
 // 1c выгрузка происходит каждый день с 0:30:00 по 23:00:00
