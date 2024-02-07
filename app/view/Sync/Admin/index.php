@@ -38,7 +38,9 @@ use app\core\Icon;
 		<BR>
 		<a class="button"
 		   href="/adminsc/sync/init?type=catalog&mode=import">/adminsc/sync/init?type=catalog&mode=import</a>
-
+		<BR>
+		<BR>
+		<hr>
 		<BR>
 		<BR>
 		<a class="button" href="/adminsc/sync/part?type=catalog&mode=checkauth">/adminsc/sync/part?type=catalog&mode=checkauth</a>

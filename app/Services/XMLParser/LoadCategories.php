@@ -4,23 +4,20 @@ namespace app\Services\XMLParser;
 
 
 use app\model\Category;
+use app\Services\Logger\ILogger;
 use app\Services\Slug;
 
 class LoadCategories extends Parser
 {
-	protected $type;
 	protected $logger;
 
-	public function __construct($file, $type, $logger)
+	public function __construct($file, ILogger $logger)
 	{
 		parent::__construct($file);
 		$this->logger = $logger;
-		$this->type = $type;
-		if ($this->logger)
-			$this->logger->write('--- category start ---'.$this->now());
+		$this->logger->write('--- category start ---' . $this->now());
 		$this->run();
-		if ($this->logger)
-			$this->logger->write('--- category  stop ---'.$this->now());
+		$this->logger->write('--- category  stop ---' . $this->now());
 	}
 
 	protected function run($arr = [], $id = 0)
@@ -56,14 +53,7 @@ class LoadCategories extends Parser
 		}
 		$item['name'] = $group['Наименование'];
 		$item['slug'] = Slug::slug($item['name']);
-
-		if ($this->type === 'full') {
-			Category::create($item);
-		} else {
-			$this->partCreate($item, $level, $parent);
-		}
-//		if ($this->logger) $this->logger->write(json_encode($item)."\n");
-
+		Category::create($item);
 		return $item;
 	}
 

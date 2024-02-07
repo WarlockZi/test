@@ -11,7 +11,7 @@ use app\model\Product;
 use app\Services\XMLParser\LoadCategories;
 use app\Services\XMLParser\LoadPrices;
 use app\Services\XMLParser\LoadProducts;
-use app\Storage\{StorageDev, StorageImport, StorageLog};
+use app\Storage\{StorageDev, StorageImport};
 
 class SyncActions extends AppController
 {
@@ -35,9 +35,8 @@ class SyncActions extends AppController
 
 	public function setStorage()
 	{
-//		$this->log = StorageLog::getFile('log.txt');
 		$this->importPath = StorageImport::getPath();
-		if ($_ENV['DEV']=='1') {
+		if ($_ENV['DEV'] == '1') {
 			$this->storage = StorageDev::class;
 		} else {
 			$this->storage = StorageImport::class;
@@ -47,12 +46,10 @@ class SyncActions extends AppController
 	/**
 	 * @throws \Exception
 	 */
-
 	public function init()
 	{
 		if (!isset($this->route->params['type'])) throw new \Exception("Route param 'type' is empty");
 		if (!$this->route->params['type'] === 'catalog') throw new \Exception("Route param 'type' is not correct");
-
 
 		if ($this->route->params['mode'] === 'checkauth') {
 			$this->checkauth();
@@ -62,15 +59,14 @@ class SyncActions extends AppController
 			$this->file();
 
 		} elseif ($this->route->params['mode'] === 'import') {
-			$this->trancate();
-//			$this->softTrancate();
-			$this->import();
+			exit('success');
 		}
 	}
 
-	public function import()
+	public function load()
 	{
-		try{
+		try {
+			$this->trancate();
 			if (!is_readable($this->importFile)) exit('Отсутстует файл importFile');
 
 			$this->LoadCategories();
@@ -80,26 +76,24 @@ class SyncActions extends AppController
 
 			$this->LoadPrices();
 
-			exit('success');
-		}catch(\Exception $e){
-			$ex = $e;
+		} catch (\Exception $e) {
+			exit('Ошибка загрузки: ' . $e);
 		}
-
 	}
 
 	public function LoadCategories()
 	{
-		new LoadCategories($this->importFile, 'full', $this->logger);
+		new LoadCategories($this->importFile, $this->logger);
 	}
 
 	public function LoadProducts()
 	{
-		new LoadProducts($this->importFile, 'full');
+		new LoadProducts($this->importFile, $this->logger);
 	}
 
 	public function LoadPrices()
 	{
-		new LoadPrices($this->offerFile, 'full');
+		new LoadPrices($this->offerFile, $this->logger);
 	}
 
 	protected function checkauth()
@@ -116,22 +110,11 @@ class SyncActions extends AppController
 
 	protected function file()
 	{
-		$this->filename = $this->route->params['filename'];
-		$this->rawPost = file_get_contents('php://input');
-		file_put_contents($this->importPath . $this->filename, $this->rawPost);
+		$filename = $this->route->params['filename'];
+		file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
 
 		$this->logReqest('file');
 		exit('success');
-	}
-
-
-	protected function getHeaders($str = '')
-	{
-		$headers = apache_request_headers();
-		foreach ($headers as $header => $value) {
-			$str .= "$header: $value <br />\n";
-		}
-		return $str;
 	}
 
 	protected function logReqest($func)
@@ -141,31 +124,12 @@ class SyncActions extends AppController
 			$text .= '$_GET - ' . json_encode($_GET) . '<br>';
 		}
 
-		$text .= 'headers -' . $this->getHeaders();
 		if (isset($this->route->params['filename'])) {
 			$text .= 'filename - ' . $filename = $this->route->params['filename'] . '<br>';
 			$text .= $this->importPath . $filename;
 		}
-
+		$this->logger->write($text);
 	}
-
-
-	public function logshow()
-	{
-		$content = 'LOG<br>' . file_get_contents($this->log);
-		if (isset($_POST['param'])) {
-			$this->exitJson(['success' => true, 'content' => $content]);
-		}
-	}
-
-	public function logclear()
-	{
-		file_put_contents($this->log, '');
-
-		$content = StorageLog::getFileContent('log.txt');
-		$this->exitJson(['success' => 'success', 'content' => $content]);
-	}
-
 
 	public function removeCategories()
 	{
