@@ -4,9 +4,7 @@ namespace app\controller\Admin;
 
 use app\Actions\SyncActions;
 use app\controller\AppController;
-use app\Repository\SyncRepository;
 use app\Services\Logger\FileLogger;
-use app\Services\XMLParser\LoadProductsOffer;
 
 class SyncController extends AppController
 {
@@ -20,8 +18,7 @@ class SyncController extends AppController
 	public function __construct()
 	{
 		parent::__construct();
-		$stash = '';
-		$this->logger = new FileLogger();
+		$this->logger = new FileLogger('load.log');
 		$this->repo = new SyncActions($this->route, $this->logger);
 	}
 
@@ -30,13 +27,14 @@ class SyncController extends AppController
 		try {
 			$this->repo->init();
 		} catch (\Exception $e) {
-			exit($e);
+			$this->logger->write($e);
+			exit('Выгрузка на сайт не удалась. Подробности в load.log');
 		}
 	}
 
 	public function actionLoad()
 	{
-		$this->repo->import();
+		$this->repo->load();
 	}
 
 	public function actionRemoveall()
@@ -83,12 +81,14 @@ class SyncController extends AppController
 
 	public function actionLogshow()
 	{
-		$this->repo->logshow();
+		if (isset($_POST['param'])) {
+			$this->exitJson(['success' => true, 'content' => 'Log'.PHP_EOL. $this->logger->read()]);
+		}
 	}
 
-	public function actionLogclear()
-	{
-		$this->repo->logclear();
+	public function actionLogclear(){
+		$this->logger->clear();
+		$this->exitJson(['success' => 'success', 'content' => 'Log'.PHP_EOL.$this->logger->read()]);
 	}
 
 
@@ -97,16 +97,6 @@ class SyncController extends AppController
 		$this->repo->trancate();
 	}
 
-
-	public function actionPart()//init
-	{
-		$this->repo->part();
-	}
-
-	public function actionPartload()//part load
-	{
-		$this->repo->partload();
-	}
 }
 
 

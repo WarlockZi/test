@@ -15,15 +15,14 @@ class FileLogger implements ILogger
 		$this->logFile = StorageLog::getFile($fileName);
 	}
 
-	public function read($filename)
+	public function read():string
 	{
 		return file_get_contents($this->logFile);
 	}
 
 
-	public function write($content)
+	public function write(string $content):bool
 	{
-		if (!is_readable($this->logFile)) return false;
 		return file_put_contents($this->logFile, $content, FILE_APPEND);
 	}
 
@@ -31,5 +30,10 @@ class FileLogger implements ILogger
 	{
 		$this->logFile = StorageLog::getFile($fileName);
 		return $this;
+	}
+
+	public function clear(): void
+	{
+		if ($this->logFile) file_put_contents($this->logFile,'');
 	}
 }

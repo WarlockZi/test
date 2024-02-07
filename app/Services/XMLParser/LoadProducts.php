@@ -11,19 +11,16 @@ use app\Services\Slug;
 class LoadProducts extends Parser
 {
 	protected $goods;
-	protected $type;
+	protected $logger;
 
-	public function __construct($file, $type)
+	public function __construct($file, ILogger $logger)
 	{
 		parent::__construct($file);
-		$this->type = $type;
+		$this->logger = $logger;
 		$this->goods = $this->xmlObj['Каталог']['Товары']['Товар'];
-		if ($this->logger)
-			$this->logger->write('--- products start ---'.$this->now());
-
+		$this->logger->write('--- products start ---' . $this->now());
 		$this->run();
-		if ($this->logger)
-			$this->logger->write('--- products stop  ---'.$this->now());
+		$this->logger->write('--- products stop  ---' . $this->now());
 	}
 
 	protected function run()
@@ -36,30 +33,17 @@ class LoadProducts extends Parser
 
 	protected function fork($good, $id)
 	{
-		if ($this->type === 'full') {
-			$product = $this->fillGood($good, $id);
-			$cat = Category::where('1s_id', $product['1s_category_id'])->first();
-			$product['category_id'] = $cat->id;
-			$p = Product::create($product);
-		} else {
-			$found = Product::query()
-				->where('1s_id', $good['Ид'])
-				->first();
-			if ($found) {
-				$found->delete();
-				$product = $this->fillGood($good, $id);
-				$cat = Category::where('1s_id', $product['1s_category_id'])->first();
-				$product['category_id'] = $cat->id;
-				$prod = Product::create($product);
-			}
-		}
+		$product = $this->fillGood($good, $id);
+		$cat = Category::where('1s_id', $product['1s_category_id'])->first();
+		$product['category_id'] = $cat->id;
+		$p = Product::create($product);
 	}
 
 	protected function fillGood($good, $id)
 	{
 		$g['1s_id'] = $good['Ид'];
 		$g['1s_category_id'] = $good['Группы']['Ид'];
-		$g['art'] = $good['Артикул']? trim($good['Артикул']):'';
+		$g['art'] = $good['Артикул'] ? trim($good['Артикул']) : '';
 		$g['name'] = $good['Наименование'];
 		$g['slug'] = Slug::slug($g['name']);
 		if (Product::where('slug', $g['slug'])->first()) {
@@ -74,11 +58,6 @@ class LoadProducts extends Parser
 		}
 		return $g;
 
-
-//			$this->ech($g,$id);
-//		}else{
-//			$this->ech($g,$id,'same slug'.$g['slug']);
-//		}
 	}
 
 	protected function ech($item, $id, $sameSlug = '')

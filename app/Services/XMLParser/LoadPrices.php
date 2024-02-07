@@ -6,24 +6,22 @@ namespace app\Services\XMLParser;
 use app\model\Price;
 use app\model\Product;
 use app\model\Unit;
+use app\Services\Logger\ILogger;
 
 class LoadPrices extends Parser
 {
 	protected $prices;
-	protected $type;
+	protected $logger;
 
-	public function __construct($file, $type)
+	public function __construct($file, ILogger $logger)
 	{
 		parent::__construct($file);
-		$this->type = $type;
+
 		$this->prices = $this->xmlObj['ПакетПредложений']['Предложения']['Предложение'];
-		if ($this->logger) {
-			$this->logger->write('--- price    start ---' . $this->now());
-		}
+		$this->logger = $logger;
+		$this->logger->write('--- price    start ---' . $this->now());
 		$this->run();
-		if ($this->logger) {
-			$this->logger->write('--- price     stop ---' . $this->now());
-		}
+		$this->logger->write('--- price     stop ---' . $this->now());
 	}
 
 	protected function run()
@@ -46,17 +44,7 @@ class LoadPrices extends Parser
 		$g['currency'] = $price['Цены']['Цена']['Валюта'];
 		$g['price'] = $price['Цены']['Цена']['ЦенаЗаЕдиницу'];
 
-		if ($this->type === 'full') {
-			$price = Price::create($g);
-		} else {
-			$found = Price::query()
-				->where('1s_id', $price['1s_id'])
-				->first();
-			if ($found) {
-				$found->delete();
-				$item = Price::create($g);
-			}
-		}
+		$price = Price::create($g);
 		return $price;
 	}
 
