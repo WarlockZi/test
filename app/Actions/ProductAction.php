@@ -17,7 +17,7 @@ class ProductAction
 
 		$mainImage->deletePreviousFile();
 		$mainImage->save();
-		$mainImage->thumbnail();
+//		$mainImage->thumbnail();
 		return $mainImage->getRelativePath();
 	}
 

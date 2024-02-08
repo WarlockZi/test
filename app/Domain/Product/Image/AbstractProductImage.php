@@ -23,7 +23,7 @@ abstract class AbstractProductImage
 		$this->file = $file;
 		$this->relativePath = '/pic/product/uploads/';
 		$this->absolutePath = FS::platformSlashes(ROOT . '/pic/product/uploads/');
-		$this->absoluteThumbPath = ROOT . '/pic/product/thumbs/' ;
+		$this->absoluteThumbPath = ROOT . '/pic/product/thumbs/';
 		$this->acceptedTypes = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
 		$this->types = [
 			"image/jpg" => "jpg",
@@ -36,9 +36,11 @@ abstract class AbstractProductImage
 
 	public function getExtension(): string
 	{
-		return $this->file
-			? $this->types[$this->file['type']]
-			: $this->getFromAcceptedTypes();
+		if ($this->file) {
+			preg_match('~\..{2,4}$~', $this->file['name'], $matches);
+			return str_replace('.', '', $matches[0]);
+		}
+		return $this->getFromAcceptedTypes();
 	}
 
 	protected function getFromAcceptedTypes()
@@ -53,7 +55,7 @@ abstract class AbstractProductImage
 		return '';
 	}
 
-	protected function prepareArticle(string $art): string
+	protected function prepareArticle(string $art = ''): string
 	{
 		$art = str_replace(['/', '//', '\\'], '_', $art);
 		return trim(strip_tags($art));
@@ -62,7 +64,7 @@ abstract class AbstractProductImage
 	public function getRelativePath(): string
 	{
 		if ($this->file) {
-			return $this->getPathWithExt('relativePath');
+			return $this->getPathWithExt('relativePath',$this->getExtension());
 		}
 		foreach ($this->acceptedTypes as $type) {
 			$fileName = $this->getPathWithExt('absolutePath', $type);
@@ -77,7 +79,7 @@ abstract class AbstractProductImage
 	public function getAbsolutePath(): string
 	{
 		if ($this->file) {
-			return $this->getPathWithExt('absolutePath');
+			return $this->getPathWithExt('absolutePath', $this->getExtension());
 		}
 
 		foreach ($this->acceptedTypes as $type) {
@@ -94,6 +96,6 @@ abstract class AbstractProductImage
 
 	private function getPathWithExt(string $string, string $type = ''): string
 	{
-		return $this->$string.$this->art.'.'.$type;
+		return $this->$string . $this->art . '.' . $type;
 	}
 }
