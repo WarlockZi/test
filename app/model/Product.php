@@ -6,6 +6,7 @@ namespace app\model;
 use app\Domain\Product\Image\ProductMainImage;
 use app\Services\Slug;
 use app\view\Image\ImageView;
+use Illuminate\Database\Eloquent\Casts\AsStringable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -34,6 +35,18 @@ class Product extends Model
 		'instore',
 		'base_equals_main_unit',
 	];
+	protected $casts = [
+		'art' => 'string',
+	];
+
+	protected function castAttribute($key, $value)
+	{
+		if ($this->getCastType($key) == 'string' && is_null($value)) {
+			return '';
+		}
+
+		return parent::castAttribute($key, $value);
+	}
 
 	protected $appends = ['mainImagePath'];
 
