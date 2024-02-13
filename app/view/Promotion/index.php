@@ -1,18 +1,17 @@
 <div class="promotions-index">
 	<div class="page-title">
 		Акции
-		Чтобы завести акцию, нужно зайти в товар
 
 	</div>
 
 	<? foreach ($promotions as $promotion): ?>
 		<? if ($promotion->product): ?>
 		  <div class="promotion row">
-			  <div class="id">
-						 <?= $promotion->id;
-						 $unit = $promotion->product->baseUnit->name
-						 ?>
-			  </div>
+
+					<?
+					$unit = $promotion->product->baseUnit->name
+					?>
+
 
 			  <div class="old-price">
 				  цена без акции - <?= $promotion->product->getRelation('price')->price ?>

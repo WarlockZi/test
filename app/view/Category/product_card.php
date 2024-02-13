@@ -2,10 +2,10 @@
 
 use app\view\Category\CategoryView;
 
-$promotion = $product->promotions->count() ? "<div class='promotion'>Акция</div>" : '';
+$promotionLabel = $product->promotions->count() ? "<div class='promotion'>Акция</div>" : '';
 ?>
 <div class="column">
-	<?= $promotion ?>
+	<?= $promotionLabel ?>
 	<a data-instore="<?= $product->instore ?? 0; ?>"
 
 	   href="/product/<?= $product->slug; ?>" class="product">

@@ -8,6 +8,7 @@
 					?? '<b style="color:red;">неустановленных единиц</b>'; ?>
 			  - цена <?= $promotion->new_price ?>
 		  </div>
+		 <p>Акция действует до : <?=$promotion->active_till ;?></p>
 		 <? endforeach; ?>
 	</div>
 

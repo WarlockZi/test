@@ -35,7 +35,7 @@ class FrontendServerService
 
 			} else {
 //				$output = shell_exec('npm run serve');
-				$output = shell_exec('npm run serve');
+//				$output = shell_exec('npm run serve');
 //				echo "<p>{$self->host}:{$port} is not responding. Error {$errno}: {$errstr} </p>" . "\n";
 			}
 		}
