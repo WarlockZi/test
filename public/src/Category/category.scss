@@ -97,6 +97,11 @@
 
       .footer {
         color: #000;
+
+        .old-price{
+          text-decoration: line-through #707f8d;
+          color: #707f8d;
+        }
       }
 
     }

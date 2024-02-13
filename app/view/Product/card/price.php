@@ -8,7 +8,6 @@
 	?>
 
 	<div class="new-price"><?= $formatedBasePrice; ?> ₽ / <?= $baseUnit; ?> </div>
-	<div class="old-price"><?= $formatedOldPrice; ?> ₽</div>
 
 </div>
 <div class="price-units ">

@@ -98,9 +98,24 @@ class Product extends Model
 		$price = $this->getRelation('price');
 		if ($price) {
 			$number = number_format($price->price, 2, '.', ' ');
-			return "{$number} {$price->currency} / {$this->baseUnit->name}";
+			$priceWithCurrency = "{$number} {$price->currency}";
+			if ($this->promotions->count()) {
+				return $this->priceWithCurrncyUnitPromotion($number, $price->currency, $number);
+			}
+			return "{$priceWithCurrency} / {$this->baseUnit->name}";
 		}
 		return 'цена - не определена';
+	}
+
+	protected function priceWithCurrncyUnitPromotion(float $number, string $currency, string $oldPrice)
+	{
+		$promos = $this->promotions;
+		$str = '';
+		foreach ($promos as $promo) {
+			$newPrice = "{$promo->new_price} ";
+			$str .= "{$newPrice} <span class='old-price'>{$oldPrice}</span> {$currency} / {$this->baseUnit->name}";
+		}
+		return $str;
 	}
 
 	public function detailImages()
