@@ -36,31 +36,6 @@ class ReportController extends AppController
 	public function actionProductsnominimumunit()
 	{
 		$this->view = 'productswithoutimg';
-//		$u = Unit::has('mainUnits',function($q){
-////			$q->query()->wherePivot('main',1);
-//		})->get()
-//			->toArray()
-//		;
-//		$u = Unit::has('units'
-////			,function($q){
-//////			$q->query()->wherePivot('main',1);
-////		}
-//		)->with('units')
-//			->get()
-////			->pluck('units.pivot.product_id')
-//			->toArray();
-//		$u = Unit::whereHas('mainUnits',function($q){
-//			$q->where('main',1);
-//		})->get()->toArray();
-//		$products = Product::whereHas('baseUnit', function ($q) {
-//			$q->whereHasMorph(
-//				'units',
-//				[User::class],
-//				function ($qu) {
-//					$qu->wherePivot('main', 1);
-//				});
-//		})->with('baseUnit.units')
-//			->get();
 		$products = ProductRepository::noMinimumUnit();
 		$productList = ProductFormView::hasNoImgList($products, 'Товары без min упаковки');
 		$this->set(compact('productList'));
@@ -68,9 +43,7 @@ class ReportController extends AppController
 
 	public function actionProductshaveonlybaseunit()
 	{
-		$p = ProductRepository::haveOnlyBaseUnit();
-		$productList = $p;
-//		$productList = ProductFormView::hasOnlyBaseUnit($p);
+		$productList = ProductRepository::haveOnlyBaseUnit();
 		$this->set(compact('productList'));
 	}
 }

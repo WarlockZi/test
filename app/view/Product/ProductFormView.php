@@ -126,11 +126,7 @@ class ProductFormView
 	{
 		return ItemBuilder::build($product, 'product')
 			->pageTitle('Товар :  ' . $product['name'])
-			->field(
-				ItemFieldBuilder::build('id', $product)
-					->name('ID')
-					->get()
-			)
+
 			->field(
 				ItemFieldBuilder::build('slug', $product)
 					->name('Адрес')
@@ -188,8 +184,18 @@ class ProductFormView
 					->get()
 			)
 			->field(
+				ItemFieldBuilder::build('id', $product)
+					->name('ID')
+					->get()
+			)
+			->field(
 				ItemFieldBuilder::build('1s_id', $product)
 					->name('1s_ID')
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('instore', $product)
+					->name('наличие')
 					->get()
 			)
 			->tab(
