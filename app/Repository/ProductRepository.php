@@ -130,9 +130,15 @@ class ProductRepository extends AppController
 
 	public static function hasNoImgInStore()
 	{
-		$products = Product::query()
+		$productsInstoreWithStars = Product::query()
 			->select('art', 'name', 'id', 'instore')
-			->where('instore', '>', 0)
+			->where("name", 'REGEXP', "\\*$");
+
+			$products = Product::query()
+				->select('art', 'name', 'id', 'instore')
+				->where('instore', '>', 0)
+				->where("name", 'NOT REGEXP', "\\*$")
+				->union($productsInstoreWithStars)
 			->get();
 
 		$arr = new Collection();

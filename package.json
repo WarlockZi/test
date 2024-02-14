@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack -w --mode production",
+    "dev": "webpack -w --mode development",
     "serve": "webpack serve --mode development",
     "watch": "webpack --watch"
   },
@@ -43,7 +43,6 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "@cubejs-client/core": "^0.34.2",
     "chart.js": "^4.4.0",
     "fecha": "^4.2.3",
     "sortablejs": "^1.15.0",
