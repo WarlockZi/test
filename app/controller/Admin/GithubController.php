@@ -7,7 +7,7 @@ use app\Services\Logger\FileLogger;
 
 class GithubController Extends AppController
 {
-	protected $model = Github::class;
+	protected $model = Post::class;
 
 	public function __construct()
 	{
@@ -19,17 +19,15 @@ class GithubController Extends AppController
 		$logger = new FileLogger();
 		try {
 
-			$logger->write('webhook1' . PHP_EOL);
 			$content = file_get_contents('php://input');
 			$objec = json_decode($content);
-			$req = serialize($content) . PHP_EOL ?? '1' . PHP_EOL;
-			$logger->write($req);
-			$logger->write('type:' . gettype($objec) . PHP_EOL);
-			$logger->write('completed - '.$objec->action . PHP_EOL);
-			$logger->write(var_dump($_POST) . PHP_EOL);
+			if ($objec->action === 'completed') {
+				$res = shell_exec('git pull');
+			}
+			$logger->write('res - ' . $res . PHP_EOL);
 
 			http_response_code(200);
-			exit('type:' . gettype($objec) . PHP_EOL );
+			exit('type:' . gettype($objec) . PHP_EOL);
 
 		} catch (\Exception $e) {
 			$logger->write('error' . $e->getMessage());
