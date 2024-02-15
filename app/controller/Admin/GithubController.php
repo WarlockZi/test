@@ -35,7 +35,6 @@ class GithubController Extends AppController
 			$req = json_decode(file_get_contents($_POST), true). PHP_EOL ?? '1' . PHP_EOL;
 			$logger->write($req);
 
-
 			http_response_code(200);
 
 			exit('jj');
