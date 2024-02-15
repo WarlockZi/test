@@ -13,7 +13,10 @@ class Address
 
 	public static function getFactAddress(): string
 	{
-		$shipAddres = (new SettingsRepository())->initial()['shipAddress']['value'];
+		$shipAddres = (new SettingsRepository())->initial()['shipAddress'];
+		if ($shipAddres){
+			$shipAddres = $shipAddres['value'];
+		}
 		return $shipAddres??self::$factAddress;
 	}
 
