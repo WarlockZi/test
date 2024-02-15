@@ -156,7 +156,14 @@ class ProductFormView
 			)
 			->field(
 				ItemFieldBuilder::build('name', $product)
-					->name('Наименование')
+					->name('Рабочее наименование')
+					->contenteditable()
+					->required()
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('print_name', $product)
+					->name('Наименование для печати')
 					->contenteditable()
 					->required()
 					->get()

@@ -38,7 +38,14 @@ export default async function catalogItem() {
       id: this.id,
       [field]: target.innerText
     };
-    await post(`/adminsc/${this.model}/updateOrCreate`, data)
+    let res = await post(`/adminsc/${this.model}/updateOrCreate`, data)
+    if (res) {
+      target.dispatchEvent(new CustomEvent('catalogItem.changed', {
+          bubbles: true,
+          detail: {res}
+        })
+      )
+    }
   }
 
 
@@ -91,6 +98,7 @@ export default async function catalogItem() {
   async function update() {
     let res = await post(`/adminsc/${this.model}/updateorcreate`, this.data)
   }
+
   // function showSavedFile(srcs) {
   //   debugger;
   //   srcs.relativeSrcs.forEach((src) => {

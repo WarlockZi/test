@@ -7,6 +7,7 @@ use app\controller\AppController;
 use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
+use app\Services\Slug;
 use app\view\Product\ProductFormView;
 
 
@@ -38,6 +39,18 @@ class ProductController extends AppController
 		$list = ProductFormView::list($items);
 		$this->set(compact('list'));
 	}
+
+//	public function actionUpdateOrCreate()
+//	{
+//		try {
+//			if (isset($this->ajax['print_name'])) {
+//				$this->ajax['slug'] = Slug::slug($this->ajax['print_name']);
+//			}
+//			parent::actionUpdateOrCreate();
+//		} catch (\Exception $exception) {
+//			$this->exitJson(['error' => $exception->getMessage()]);
+//		}
+//	}
 
 	public function actionChangeval()
 	{

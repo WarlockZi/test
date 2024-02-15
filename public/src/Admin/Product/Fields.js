@@ -8,6 +8,9 @@ export class Fields {
     this.$category_id = $(`[data-field="category_id"]`).first();
     this.$base_unit = $(`[data-field="base_unit"]`).first();
     this.$manufacturer_id = $(`[data-field="manufacturer_id"]`).first();
+    this.$printName = $(`[data-field='print_name']`).first();
+    this.$printName.addEventListener('catalogItem.changed', this.changePrintName.bind(this))
+    this.$productUrl= $(`[data-field='slug']`).first();
     // this.$base_equals_main_unit = $(`[data-field="base_equals_main_unit"]`).first();
     this.setup()
   }
@@ -20,7 +23,17 @@ export class Fields {
     // this.$base_equals_main_unit.addEventListener('change', this.checkBoxChanged.bind(this))
   }
 
-  async checkBoxChanged({target}){
+  changePrintName(item) {
+    if (item.detail) {
+      let $url = this.$productUrl.querySelector('a')
+      let slug = item.detail?.res?.arr?.model.slug
+      $url.setAttribute('href',`/product/${slug}`)
+      $url.text = slug
+    }
+
+  }
+
+  async checkBoxChanged({target}) {
     let data = this.dto(this);
     data[target.dataset.field] = +target.checked;
     let res = await post('/adminsc/product/updateOrCreate', data)

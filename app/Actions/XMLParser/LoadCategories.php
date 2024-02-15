@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Services\XMLParser;
+namespace app\Actions\XMLParser;
 
 
 use app\model\Category;

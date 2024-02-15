@@ -62,6 +62,9 @@ class AppController extends Controller implements IModelable
 	}
 
 
+	/**
+	 * @throws Exception
+	 */
 	public function actionUpdateOrCreate()
 	{
 		$req = $this->ajax;
@@ -92,7 +95,7 @@ class AppController extends Controller implements IModelable
 		if ($model->wasRecentlyCreated) {
 			$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
 		} else {
-			$this->exitJson(['popup' => 'Обновлен', 'id' => $model->id]);
+			$this->exitJson(['popup' => 'Обновлен', 'model' => $model->toArray()]);
 		}
 		$this->exitWithError('Ошибка');
 

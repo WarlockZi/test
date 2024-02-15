@@ -18,6 +18,7 @@ class Product extends Model
 
 	protected $fillable = [
 		'name',
+		'print_name',
 		'sort',
 		'act',
 		'art',
@@ -88,7 +89,7 @@ class Product extends Model
 	protected static function booted()
 	{
 		static::Updating(function ($product) {
-			$product->slug = Slug::slug($product->name);
+			$product->slug = Slug::slug($product->print_name);
 			return $product;
 		});
 	}

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Services\XMLParser;
+namespace app\Actions\XMLParser;
 
 
 use app\model\Category;
@@ -45,17 +45,13 @@ class LoadProducts extends Parser
 		$g['1s_category_id'] = $good['Группы']['Ид'];
 		$g['art'] = $good['Артикул'] ? trim($good['Артикул']) : '';
 		$g['name'] = $good['Наименование'];
-		$g['slug'] = Slug::slug($g['name']);
+		$g['print_name'] = $good['ЗначенияРеквизитов']['ЗначениеРеквизита'][3]['Значение'];
+		$g['slug'] = Slug::slug($g['print_name']);
 		if (Product::where('slug', $g['slug'])->first()) {
 			$g['slug'] = $g['slug'] . '_' . Slug::slug($g['art']);
 		}
 		$g['txt'] = $good['Описание'] ? preg_replace('/\n/', '<br>', $good['Описание']) : '';
 
-		foreach ($good['ЗначенияРеквизитов']['ЗначениеРеквизита'] as $requisite) {
-			if ($requisite['Наименование'] === 'Полное наименование') {
-				$g['full_name'] = $requisite['Значение'];
-			}
-		}
 		return $g;
 
 	}
