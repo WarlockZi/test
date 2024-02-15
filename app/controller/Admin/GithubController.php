@@ -38,6 +38,7 @@ class GithubController Extends AppController
 		http_response_code(200);
 //		header();json_encode($_GET)
 
+
 		exit('jj');
 	}
 }
