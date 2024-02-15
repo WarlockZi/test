@@ -19,22 +19,19 @@ class GithubController Extends AppController
 		$logger = new FileLogger();
 		try {
 
-			$logger->write('webhook1');
+			$logger->write('webhook1'. PHP_EOL );
 			$req = serialize(file_get_contents('php://input') ). PHP_EOL ?? '1' . PHP_EOL;
 			$logger->write($req);
 
-			$logger->write('webhook2');
+			$logger->write('webhook2'. PHP_EOL );
 			$req = json_encode(file_get_contents('php://input')). PHP_EOL ?? '2' . PHP_EOL;
 			$logger->write($req);
 
 			http_response_code(200);
+			exit(var_dump($_POST));
 
-
-			exit('jj');
 		} catch (\Exception $e) {
 			$logger->write('error' . $e->getMessage());
-
 		}
-
 	}
 }
