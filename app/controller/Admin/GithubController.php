@@ -26,6 +26,4 @@ class GithubController Extends AppController
 		$req = var_dump(file_get_contents('php://input'));
 		$logger->write($req);
 	}
-
-
 }
