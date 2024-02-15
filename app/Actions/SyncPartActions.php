@@ -8,9 +8,9 @@ use app\controller\AppController;
 use app\model\Category;
 use app\model\Price;
 use app\model\Product;
-use app\Services\XMLParser\LoadCategories;
-use app\Services\XMLParser\LoadPrices;
-use app\Services\XMLParser\LoadProducts;
+use app\Actions\XMLParser\LoadCategories;
+use app\Actions\XMLParser\LoadPrices;
+use app\Actions\XMLParser\LoadProducts;
 use app\Storage\{StorageDev, StorageImport, StorageLog};
 
 class SyncPartActions extends AppController
@@ -84,17 +84,17 @@ class SyncPartActions extends AppController
 
 	public function LoadCategories()
 	{
-		new LoadCategories($this->importFile, 'full', $this->logger);
+		new LoadCategories($this->importFile, $this->logger);
 	}
 
 	public function LoadProducts()
 	{
-		new LoadProducts($this->importFile, 'full');
+		new LoadProducts($this->importFile, $this->logger);
 	}
 
 	public function LoadPrices()
 	{
-		new LoadPrices($this->offerFile, 'full');
+		new LoadPrices($this->offerFile, $this->logger);
 	}
 
 	protected function checkauth()
