@@ -38,4 +38,5 @@ class GithubController Extends AppController
 			$logger->write('error' . $e->getMessage());
 		}
 	}
+
 }
