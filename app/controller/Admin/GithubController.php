@@ -16,8 +16,8 @@ class GithubController Extends AppController
 
 	public function actionWebhook()
 	{
-		try{
-			$logger = new FileLogger();
+		$logger = new FileLogger();
+		try {
 
 			$logger->write('webhook4');
 			$req = json_encode($_POST) ?? '1' . PHP_EOL;
@@ -37,12 +37,10 @@ class GithubController Extends AppController
 
 
 			http_response_code(200);
-//		header();json_encode($_GET)
-
 
 			exit('jj');
-		}catch (\Exception $e){
-			$logger->write('error'. $e->getMessage());
+		} catch (\Exception $e) {
+			$logger->write('error' . $e->getMessage());
 
 		}
 
