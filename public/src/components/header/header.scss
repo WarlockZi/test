@@ -180,7 +180,9 @@ header {
   .header-catalog-menu__wrap {
     display: flex;
     position: relative;
-    background: $color-main;
+    //background: $color-main;
+    background: #b7335b;
+
     max-width: 1310px;
     width: 100%;
     margin: 0 auto;

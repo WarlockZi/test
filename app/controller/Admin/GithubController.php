@@ -3,11 +3,12 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\model\Answer;
 use app\Services\Logger\FileLogger;
 
 class GithubController Extends AppController
 {
-	protected $model = Post::class;
+	protected $model = Answer::class;
 
 	public function __construct()
 	{
