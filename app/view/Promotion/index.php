@@ -5,7 +5,7 @@
 	</div>
 
 	<? foreach ($promotions as $promotion): ?>
-		<? if ($promotion->product): ?>
+		<? if ($promotion && $promotion->product): ?>
 		  <div class="promotion row">
 
 					<?
