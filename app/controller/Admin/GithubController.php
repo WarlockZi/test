@@ -16,8 +16,14 @@ class GithubController Extends AppController
 
 	public function actionWebhook()
 	{
-		$req = json_decode(file_get_contents('php://input'), true);
 		$logger = new FileLogger();
+
+		$logger->write('webhook1');
+		$req = json_decode(file_get_contents('php://input'), true);
+		$logger->write($req);
+
+		$logger->write('webhook2');
+		$req = var_dump(file_get_contents('php://input'));
 		$logger->write($req);
 	}
 

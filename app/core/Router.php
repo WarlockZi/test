@@ -52,7 +52,7 @@ class Router
 		if (!class_exists($route->controller)) {
 			NotFound::controller($route);
 		}
-		if (!method_exists($route->controller,$route->actionName)){
+		if (!method_exists($route->controller, $route->actionName)) {
 			NotFound::action($route);
 		}
 	}
@@ -74,9 +74,9 @@ class Router
 
 		Auth::autorize();
 		$action = self::$route->actionName;
-		if (!method_exists($controller, $action)){
+		if (!method_exists($controller, $action)) {
 			http_response_code(404);
-			include(ROOT.'/app/view/404/index.php'); // provide your own HTML for the error page
+			include(ROOT . '/app/view/404/index.php'); // provide your own HTML for the error page
 			die();
 		}
 		$controller->$action();
@@ -129,7 +129,8 @@ class Router
 			|| $route->controllerName === 'Auth' && $route->action === 'confirm'
 			|| $route->controllerName === 'Main' && $route->action === 'index'
 			|| $route->controllerName === 'Product' && !$route->admin
-			|| $route->controllerName === 'Category' && !$route->admin;
+			|| $route->controllerName === 'Category' && !$route->admin
+			|| $route->controllerName === 'Github' && $route->action === 'webhook';
 	}
 
 	public static function add($regexp, $route = [])
