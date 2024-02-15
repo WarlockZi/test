@@ -11,7 +11,7 @@ $promotionLabel = $product->promotions->count() ? "<div class='promotion'>Акц
 	   href="/product/<?= $product->slug; ?>" class="product">
 
 
-		<h3 class="name"><?= $product->name; ?></h3>
+		<h3 class="name"><?= $product->print_name; ?></h3>
 		 <?= CategoryView::getProductMainImage($product) ?>
 		<span class="footer">
 

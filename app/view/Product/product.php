@@ -13,7 +13,7 @@ if ($product): ?>
 	<div class="product-card" data-id="<?= $product['1s_id']; ?>">
 
 		 <?= $breadcrumbs ?>
-		<h1><?= $product['name']; ?></h1>
+		<h1><?= $product['print_name']; ?></h1>
 
 
 		<div class="main-image-wrapper">
