@@ -25,5 +25,6 @@ class GithubController Extends AppController
 		$logger->write('webhook2');
 		$req = var_dump(file_get_contents('php://input'))??'2'.PHP_EOL;
 		$logger->write($req);
+		http_response_code(200);
 	}
 }
