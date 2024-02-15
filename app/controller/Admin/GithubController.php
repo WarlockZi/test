@@ -16,29 +16,35 @@ class GithubController Extends AppController
 
 	public function actionWebhook()
 	{
-		$logger = new FileLogger();
+		try{
+			$logger = new FileLogger();
 
-		$logger->write('webhook4');
-		$req = $_POST ?? '1' . PHP_EOL;
-		$logger->write($req);
+			$logger->write('webhook4');
+			$req = $_POST ?? '1' . PHP_EOL;
+			$logger->write($req);
 
-		$logger->write('webhook1');
-		$req = json_decode(file_get_contents('php://input'), true) ?? '1' . PHP_EOL;
-		$logger->write($req);
+			$logger->write('webhook1');
+			$req = json_decode(file_get_contents('php://input'), true) ?? '1' . PHP_EOL;
+			$logger->write($req);
 
-		$logger->write('webhook2');
-		$req = json_encode(file_get_contents('php://input')) ?? '2' . PHP_EOL;
-		$logger->write($req);
+			$logger->write('webhook2');
+			$req = json_encode(file_get_contents('php://input')) ?? '2' . PHP_EOL;
+			$logger->write($req);
 
-		$logger->write('webhook3');
-		$req = json_decode(file_get_contents($_POST), true) ?? '1' . PHP_EOL;
-		$logger->write($req);
+			$logger->write('webhook3');
+			$req = json_decode(file_get_contents($_POST), true) ?? '1' . PHP_EOL;
+			$logger->write($req);
 
 
-		http_response_code(200);
+			http_response_code(200);
 //		header();json_encode($_GET)
 
 
-		exit('jj');
+			exit('jj');
+		}catch (\Exception $e){
+			$logger->write('error'. $e->getMessage());
+
+		}
+
 	}
 }
