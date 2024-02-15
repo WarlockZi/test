@@ -25,7 +25,7 @@ class GithubController Extends AppController
 			$req = serialize($content) . PHP_EOL ?? '1' . PHP_EOL;
 			$logger->write($req);
 			$logger->write('type:' . gettype($objec) . PHP_EOL);
-			$logger->write('completed - '.$objec['action'] . PHP_EOL);
+			$logger->write('completed - '.$objec->action . PHP_EOL);
 			$logger->write(var_dump($_POST) . PHP_EOL);
 
 			http_response_code(200);
