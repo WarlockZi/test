@@ -19,11 +19,11 @@ class GithubController Extends AppController
 		$logger = new FileLogger();
 
 		$logger->write('webhook1');
-		$req = json_decode(file_get_contents('php://input'), true);
+		$req = json_decode(file_get_contents('php://input'), true)??'1'.PHP_EOL;
 		$logger->write($req);
 
 		$logger->write('webhook2');
-		$req = var_dump(file_get_contents('php://input'));
+		$req = var_dump(file_get_contents('php://input'))??'2'.PHP_EOL;
 		$logger->write($req);
 	}
 }
