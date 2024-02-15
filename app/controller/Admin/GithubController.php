@@ -31,6 +31,7 @@ class GithubController Extends AppController
 			http_response_code(200);
 			exit('type:' . gettype($objec) . PHP_EOL);
 
+
 		} catch (\Exception $e) {
 			$logger->write('error' . $e->getMessage());
 		}
