@@ -24,15 +24,12 @@ class GithubController Extends AppController
 			$objec = json_decode($content);
 			$req = serialize($content) . PHP_EOL ?? '1' . PHP_EOL;
 			$logger->write($req);
-
-			$logger->write('webhook2' . PHP_EOL);
-			$req = json_encode(file_get_contents('php://input')) . PHP_EOL ?? '2' . PHP_EOL;
-			$logger->write($req);
+			$logger->write('type:' . gettype($objec) . PHP_EOL);
+			$logger->write('completed - '.$objec['action'] . PHP_EOL);
+			$logger->write(var_dump($_POST) . PHP_EOL);
 
 			http_response_code(200);
-			exit('content:' . $content . PHP_EOL .
-				'type:' . gettype($objec) . PHP_EOL .
-				var_dump($_POST) . PHP_EOL);
+			exit('type:' . gettype($objec) . PHP_EOL );
 
 		} catch (\Exception $e) {
 			$logger->write('error' . $e->getMessage());
