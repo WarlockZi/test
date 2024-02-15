@@ -23,7 +23,8 @@ class GithubController Extends AppController
 			$content = file_get_contents('php://input');
 			$objec = json_decode($content);
 			if ($objec->action === 'completed') {
-				$res = shell_exec('git pull');
+				$path = '/var/www/vitexopt/data/www/vitexopt.ru/';
+				$res = shell_exec("cd {$path} && /usr/bin/git pull");
 			}
 			$logger->write('res - ' . $res . PHP_EOL);
 
