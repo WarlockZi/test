@@ -29,6 +29,7 @@ class GithubController Extends AppController
 				$cd = "cd {$path}";
 				$lsOutput = shell_exec($cd);
 
+
 				$ls = "ls -la";
 				shell_exec($ls);
 				$logger->write('$lsOutput - ' . $lsOutput . PHP_EOL);
