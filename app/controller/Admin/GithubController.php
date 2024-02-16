@@ -28,12 +28,12 @@ class GithubController Extends AppController
 
 //				$cd = `cd {$path}`;
 				$cd = `cd /var/www/vitexopt/data/www/vitexopt.ru/`;
-				$lsOutput = shell_exec($cd);
+//				$lsOutput = shell_exec($cd);
 
 
 				$ls = `ls -la`;
 				shell_exec($ls);
-				$logger->write('$lsOutput - ' . $lsOutput . PHP_EOL);
+				$logger->write('$ls ' . $ls . PHP_EOL);
 
 				$pull = `/usr/bin/git pull`;
 				$pullOutput = shell_exec($pull);
