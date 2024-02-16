@@ -24,17 +24,18 @@ class GithubController Extends AppController
 			$content = file_get_contents('php://input');
 			$objec = json_decode($content);
 			if ($objec->action === 'completed') {
-				$path = '/var/www/vitexopt/data/www/vitexopt.ru/';
+//				$path = '/var/www/vitexopt/data/www/vitexopt.ru/';
 
-				$cd = "cd {$path}";
+//				$cd = `cd {$path}`;
+				$cd = `cd /var/www/vitexopt/data/www/vitexopt.ru/`;
 				$lsOutput = shell_exec($cd);
 
 
-				$ls = "ls -la";
+				$ls = `ls -la`;
 				shell_exec($ls);
 				$logger->write('$lsOutput - ' . $lsOutput . PHP_EOL);
 
-				$pull = "/usr/bin/git pull";
+				$pull = `/usr/bin/git pull`;
 				$pullOutput = shell_exec($pull);
 				$logger->write('$pullOutput - ' . $pullOutput . PHP_EOL);
 			}
