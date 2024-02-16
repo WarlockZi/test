@@ -31,18 +31,22 @@ class GithubController Extends AppController
 //				$lsOutput = shell_exec($cd);
 
 
-				$ls = `ls -la`;
-				shell_exec($ls);
-				$logger->write('$ls ' . $ls . PHP_EOL);
+//				$ls = `ls -la`;
+				$exec = exec("ls -la");
+				$logger->write('$exec' . $exec . PHP_EOL);
 
 				$pull = `/usr/bin/git pull`;
 				$pullOutput = shell_exec($pull);
-				$logger->write('$pullOutput - ' . $pullOutput . PHP_EOL);
+				$logger->write('$pullOutput - ' . $pull . PHP_EOL);
+
+				$who = `whoami`;
+				$logger->write('whoam I- ' . $who . PHP_EOL);
 			}
+
+
 
 			http_response_code(200);
 			exit('type:' . gettype($objec) . PHP_EOL);
-
 
 		} catch (Exception $e) {
 			$logger->write('error' . $e->getMessage());
