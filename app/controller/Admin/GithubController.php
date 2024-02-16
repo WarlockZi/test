@@ -32,12 +32,12 @@ class GithubController Extends AppController
 
 
 //				$ls = `ls -la`;
-				$exec = exec("ls -la");
-				$logger->write('$exec' . $exec . PHP_EOL);
+//				$exec = exec("ls -la");
+				$logger->write('$cd' . $cd . PHP_EOL);
 
 				$pull = `/usr/bin/git pull`;
-				$pullOutput = shell_exec($pull);
-				$logger->write('$pullOutput - ' . $pull . PHP_EOL);
+//				$pullOutput = shell_exec($pull);
+				$logger->write('$pull - ' . $pull . PHP_EOL);
 
 				$who = `whoami`;
 				$logger->write('whoam I- ' . $who . PHP_EOL);
