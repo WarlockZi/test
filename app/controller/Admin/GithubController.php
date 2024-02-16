@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\model\Answer;
 use app\Services\Logger\FileLogger;
+use Exception;
 
 class GithubController Extends AppController
 {
@@ -24,15 +25,24 @@ class GithubController Extends AppController
 			$objec = json_decode($content);
 			if ($objec->action === 'completed') {
 				$path = '/var/www/vitexopt/data/www/vitexopt.ru/';
-				$res = shell_exec("cd {$path} && /usr/bin/git pull");
+
+				$cd = "cd {$path}";
+				$lsOutput = shell_exec($cd);
+
+				$ls = "ls -la";
+				shell_exec($ls);
+				$logger->write('$lsOutput - ' . $lsOutput . PHP_EOL);
+
+				$pull = "/usr/bin/git pull";
+				$pullOutput = shell_exec($pull);
+				$logger->write('$pullOutput - ' . $pullOutput . PHP_EOL);
 			}
-			$logger->write('$path - ' . $path . PHP_EOL);
 
 			http_response_code(200);
 			exit('type:' . gettype($objec) . PHP_EOL);
 
 
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			$logger->write('error' . $e->getMessage());
 		}
 	}
