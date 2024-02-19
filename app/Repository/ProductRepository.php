@@ -132,12 +132,12 @@ class ProductRepository extends AppController
 	{
 		$productsInstoreWithStars = Product::query()
 			->select('art', 'name', 'id', 'instore')
-			->where("print_name", 'REGEXP', "\\*$");
+			->where("name", 'REGEXP', "\\*$");
 
 			$products = Product::query()
 				->select('art', 'name', 'id', 'instore')
 				->where('instore', '>', 0)
-				->where("print_name", 'NOT REGEXP', "\\*$")
+				->where("name", 'NOT REGEXP', "\\*$")
 				->union($productsInstoreWithStars)
 			->get();
 			$a = $products->toArray();
