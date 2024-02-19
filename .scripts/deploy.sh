@@ -4,4 +4,5 @@ set -e
 # Загрузить последнюю версию приложения
 git pull
 
-echo "Deployment finished!
+echo whoami
+echo "Deployment finished!"
