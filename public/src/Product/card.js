@@ -1,7 +1,7 @@
 import './card.scss'
 import toCart from './toCart'
 
-import {$} from '../common'
+import {$, popup} from '../common'
 
 
 window.onload = function () {
@@ -28,7 +28,7 @@ window.onload = function () {
   shortLink.addEventListener('click', async (e)=> {
     navigator.permissions.query({ name: "clipboard-write" }).then((result) => {
       if (result.state === "granted" || result.state === "prompt") {
-        alert(e.target.dataset.shortlink)
+        popup.show('Ссылка скопирована')
         navigator.clipboard.writeText(e.target.dataset.shortlink)
       }
     });
