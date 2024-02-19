@@ -6,6 +6,7 @@ use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\OrderRepository;
 use app\Repository\ProductRepository;
+use app\Services\ShortlinkService;
 
 
 class ProductController extends AppController
@@ -16,6 +17,7 @@ class ProductController extends AppController
 	{
 		$slug = $this->route->slug;
 		if ($slug) {
+
 			$this->view = 'product';
 			$product = ProductRepository::main($slug);
 			$oItems = OrderRepository::count();
