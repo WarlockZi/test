@@ -4,9 +4,9 @@ namespace app\model;
 
 
 use app\Domain\Product\Image\ProductMainImage;
+use app\Services\ShortlinkService;
 use app\Services\Slug;
 use app\view\Image\ImageView;
-use Illuminate\Database\Eloquent\Casts\AsStringable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,6 +19,7 @@ class Product extends Model
 	protected $fillable = [
 		'name',
 		'print_name',
+		'short_link',
 		'sort',
 		'act',
 		'art',
@@ -92,6 +93,13 @@ class Product extends Model
 			$product->slug = Slug::slug($product->print_name);
 			return $product;
 		});
+	}
+
+	public function save(array $options = [])
+	{
+		if (!$this->short_link)
+			$this->short_link = ShortlinkService::getValidShortLink();
+		parent::save($options);
 	}
 
 	public function priceWithCurrencyUnit()

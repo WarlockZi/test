@@ -7,6 +7,7 @@ use app\controller\AppController;
 use app\controller\Controller;
 use app\core\FS;
 use app\model\Product;
+use app\Services\ShortlinkService;
 use app\view\Image\ImageView;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Collection;
@@ -41,7 +42,9 @@ class ProductRepository extends AppController
 
 	public static function main(string $slug)
 	{
+
 		$p = Product::where('slug', $slug)->first();
+		if (!$p) $p = Product::where('short_link', $slug)->first();
 		$id = $p['1s_id'];
 		$product = Product::query()
 			->orderBy('sort')
@@ -63,7 +66,7 @@ class ProductRepository extends AppController
 					}]
 				);
 			}])
-			->where('slug', $slug)
+			->where('1s_id', $id)
 			->first();
 
 //		$product->mainImage = (new ProductMainImage($product))->getRelativePath();
@@ -124,7 +127,8 @@ class ProductRepository extends AppController
 			->get();
 	}
 
-	public static function hasMainImage(Product $p){
+	public static function hasMainImage(Product $p)
+	{
 		return $p->mainImagePath == '/pic/srvc/nophoto-min.jpg';
 	}
 
@@ -134,13 +138,13 @@ class ProductRepository extends AppController
 			->select('art', 'name', 'id', 'instore')
 			->where("name", 'REGEXP', "\\*$");
 
-			$products = Product::query()
-				->select('art', 'name', 'id', 'instore')
-				->where('instore', '>', 0)
-				->where("name", 'NOT REGEXP', "\\*$")
-				->union($productsInstoreWithStars)
+		$products = Product::query()
+			->select('art', 'name', 'id', 'instore')
+			->where('instore', '>', 0)
+			->where("name", 'NOT REGEXP', "\\*$")
+			->union($productsInstoreWithStars)
 			->get();
-			$a = $products->toArray();
+		$a = $products->toArray();
 
 		$arr = new Collection();
 		foreach ($products as $product) {

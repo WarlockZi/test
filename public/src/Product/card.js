@@ -24,6 +24,15 @@ window.onload = function () {
     }
   }
 
+  const shortLink = $(`[data-shortLink]`).first()
+  shortLink.addEventListener('click', async (e)=> {
+    navigator.permissions.query({ name: "clipboard-write" }).then((result) => {
+      if (result.state === "granted" || result.state === "prompt") {
+        alert(e.target.dataset.shortlink)
+        navigator.clipboard.writeText(e.target.dataset.shortlink)
+      }
+    });
+  })
 
   let quillSelector = '.detail-text';
   let textarea = $(quillSelector)[0];

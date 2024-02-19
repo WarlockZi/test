@@ -6,6 +6,9 @@ use app\core\Icon;
 
 <div class="to-cart">
 
+	<div class="short-link" title = 'Скопировать короткую ссылку'
+	     data-shortLink = <?='https:/vitexopt.ru/product/'.$product->short_link?>><?=Icon::link();?>
+	</div>
 	<div class="art">Арт. <?= $product->art ?></div>
 
 	<? include __DIR__ . '/price.php' ?>

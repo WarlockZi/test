@@ -4,6 +4,7 @@
 namespace app\Actions;
 
 use app\model\User;
+use app\Services\ShortlinkService;
 
 class AuthAction
 {
@@ -27,24 +28,7 @@ class AuthAction
 
 	public function randomPassword(): string
 	{
-		$arr = [
-			'1234567890',
-			'abcdefghijklmnopqrstuvwxyz',
-			'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-		];
+		return ShortlinkService::create(8);
 
-		$pass = array();
-
-		$arrLength = count($arr) - 1;
-		$y = 0;
-		for ($i = 0; $i < 8; $i++) {
-			if ($y > $arrLength) $y = 0;
-			$arrChosen = $arr[$y];
-			$arrChosernLen = strlen($arrChosen) - 1;
-			$n = rand(0, $arrChosernLen);
-			$pass[] = $arrChosen[$n];
-			$y++;
-		}
-		return implode($pass);
 	}
 }
