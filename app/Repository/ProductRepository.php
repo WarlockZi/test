@@ -42,6 +42,13 @@ class ProductRepository extends AppController
 
 	public static function main(string $slug)
 	{
+		$ps = Product::all();
+		foreach ($ps as $pr) {
+			$short = ShortlinkService::getValidShortLink();
+			Product::where('id', $pr['id'])->update([
+				'short_link' => $short
+			]);
+		}
 
 		$p = Product::where('slug', $slug)->first();
 		if (!$p) $p = Product::where('short_link', $slug)->first();
