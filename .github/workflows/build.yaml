@@ -3,13 +3,12 @@ name: build
 on:
   push:
     branches: [ "master" ]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: who
-        run: whoami
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.3
         with:
