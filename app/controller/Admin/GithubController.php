@@ -25,21 +25,23 @@ class GithubController Extends AppController
 			$objec = json_decode($content);
 			if ($objec->action === 'completed') {
 
-				$time = date('H:i:s');
+				exec('/bin/bash ../../../../.scripts/deploy.sh');
 
-				$cd = `chdir /var/www/vitexopt/data/www`;
-				$pwd = `pwd`;
-				$logger->write('$cd pwd -' . $pwd . PHP_EOL);
-
-				$cd = `chdir /var/www/vitexopt/data/www/vitexopt.ru`;
-				$pwd = `pwd`;
-				$logger->write('$cd pwd -' . $pwd . PHP_EOL);
-
-				$pull = `/usr/bin/git pull`;
-//				$pullOutput = shell_exec($pull);
-
-				$build = `npm run build`;
-				$logger->write('$build - ' . $build . PHP_EOL);
+//				$time = date('H:i:s');
+//
+//				$cd = `chdir /var/www/vitexopt/data/www`;
+//				$pwd = `pwd`;
+//				$logger->write('$cd pwd -' . $pwd . PHP_EOL);
+//
+//				$cd = `chdir /var/www/vitexopt/data/www/vitexopt.ru`;
+//				$pwd = `pwd`;
+//				$logger->write('$cd pwd -' . $pwd . PHP_EOL);
+//
+//				$pull = `/usr/bin/git pull`;
+////				$pullOutput = shell_exec($pull);
+//
+//				$build = `npm run build`;
+//				$logger->write('$build - ' . $build . PHP_EOL);
 			}
 
 			http_response_code(200);
