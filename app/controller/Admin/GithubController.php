@@ -25,7 +25,7 @@ class GithubController Extends AppController
 			$objec = json_decode($content);
 			if ($objec->action === 'completed') {
 
-				exec('/bin/bash ../../../../.scripts/deploy.sh');
+//				exec('/bin/bash ../../../../.scripts/deploy.sh');
 //				$time = date('H:i:s');
 //
 //				$cd = `chdir /var/www/vitexopt/data/www`;
