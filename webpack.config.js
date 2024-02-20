@@ -33,7 +33,6 @@ const config = {
     clean: true,
   },
 
-
   devServer: {
     allowedHosts: "all",
     host: "localhost",
