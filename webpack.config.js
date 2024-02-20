@@ -28,7 +28,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, "public/dist"),
     filename: '[name].js',
-    asyncChunks: true,
+    // asyncChunks: true,
     // publicPath: "/assets/",
     clean: true,
   },
