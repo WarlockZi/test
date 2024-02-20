@@ -26,10 +26,10 @@ class GithubController Extends AppController
 			if ($objec->action === 'completed') {
 //				$path = '/var/www/vitexopt/data/www/vitexopt.ru/';
 
-				$time = date('Y-m-d H:i:s');
+				$time = date('H:i:s');
 				$cd = `cd /var/www/vitexopt/data/www/vitexopt.ru/`;
 
-				$logger->write('$cd' . $time . $cd . PHP_EOL);
+				$logger->write('$cd time -' . $time . $cd . PHP_EOL);
 
 				$pull = `/usr/bin/git pull`;
 //				$pullOutput = shell_exec($pull);
