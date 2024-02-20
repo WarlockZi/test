@@ -45,8 +45,6 @@ class GithubController Extends AppController
 			}
 
 
-
-
 			http_response_code(200);
 			exit('type:' . gettype($objec) . PHP_EOL);
 
