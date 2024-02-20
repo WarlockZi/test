@@ -28,7 +28,7 @@ class GithubController Extends AppController
 
 				$time = date('H:i:s');
 
-				$cd = `cd /var/www/vitexopt/data/www/vitexopt.ru/`;
+				$cd = `cd /var/www/vitexopt/data/www/vitexopt.ru`;
 				$pwd = `pwd`;
 
 
