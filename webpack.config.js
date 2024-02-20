@@ -33,7 +33,6 @@ const config = {
     clean: true,
   },
 
-
   devServer: {
     allowedHosts: "all",
     host: "localhost",
@@ -45,6 +44,7 @@ const config = {
     static: {
       directory: path.join(__dirname, 'public', 'dist'),
     },
+
     client: {
       logging: 'info',
       // progress: true,
