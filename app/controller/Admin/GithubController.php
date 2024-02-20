@@ -27,6 +27,7 @@ class GithubController Extends AppController
 //				$path = '/var/www/vitexopt/data/www/vitexopt.ru/';
 
 				$time = date('H:i:s');
+
 				$cd = `cd /var/www/vitexopt/data/www/vitexopt.ru/`;
 
 				$logger->write('$cd time -' . $time . $cd . PHP_EOL);
