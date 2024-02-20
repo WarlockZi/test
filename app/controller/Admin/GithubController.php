@@ -38,6 +38,7 @@ class GithubController Extends AppController
 //				$pullOutput = shell_exec($pull);
 				$logger->write('$pull - ' . $pull . PHP_EOL);
 
+
 				$build = `npm run build`;
 				$logger->write('$build - ' . $build . PHP_EOL);
 
