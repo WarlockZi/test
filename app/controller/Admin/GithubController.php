@@ -28,11 +28,11 @@ class GithubController Extends AppController
 
 				$time = date('H:i:s');
 
-				$cd = `cd /var/www/vitexopt/data/www`;
+				$cd = `chdir /var/www/vitexopt/data/www`;
 				$pwd = `pwd`;
 				$logger->write('$cd pwd -' . $pwd . PHP_EOL);
 
-				$cd = `cd /var/www/vitexopt/data/www/vitexopt.ru`;
+				$cd = `chdir /var/www/vitexopt/data/www/vitexopt.ru`;
 				$pwd = `pwd`;
 				$logger->write('$cd pwd -' . $pwd . PHP_EOL);
 
@@ -41,7 +41,6 @@ class GithubController Extends AppController
 
 				$build = `npm run build`;
 				$logger->write('$build - ' . $build . PHP_EOL);
-
 			}
 
 
