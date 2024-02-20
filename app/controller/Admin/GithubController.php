@@ -28,22 +28,20 @@ class GithubController Extends AppController
 
 				$time = date('H:i:s');
 
+				$cd = `cd /var/www/vitexopt/data/www`;
+				$pwd = `pwd`;
+				$logger->write('$cd pwd -' . $pwd . PHP_EOL);
+
 				$cd = `cd /var/www/vitexopt/data/www/vitexopt.ru`;
 				$pwd = `pwd`;
-
-				$logger->write('$cd pwd -' . $pwd . $cd . PHP_EOL);
+				$logger->write('$cd pwd -' . $pwd . PHP_EOL);
 
 				$pull = `/usr/bin/git pull`;
 //				$pullOutput = shell_exec($pull);
-				$logger->write('$pull - ' . $pull . PHP_EOL);
-
 
 				$build = `npm run build`;
 				$logger->write('$build - ' . $build . PHP_EOL);
 
-
-				$who = `whoami`;
-				$logger->write('whoam I- ' . $who . PHP_EOL);
 			}
 
 
