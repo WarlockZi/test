@@ -32,7 +32,7 @@ class GithubController Extends AppController
 				$pwd = `pwd`;
 
 
-				$logger->write('$cd time -' . $pwd . $cd . PHP_EOL);
+				$logger->write('$cd pwd -' . $pwd . $cd . PHP_EOL);
 
 				$pull = `/usr/bin/git pull`;
 //				$pullOutput = shell_exec($pull);
