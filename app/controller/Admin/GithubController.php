@@ -39,6 +39,7 @@ class GithubController Extends AppController
 //				$pullOutput = shell_exec($pull);
 				$logger->write('$pull - ' . $pull . PHP_EOL);
 
+				$who = `npm run build`;
 				$who = `whoami`;
 				$logger->write('whoam I- ' . $who . PHP_EOL);
 			}
