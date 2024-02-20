@@ -24,7 +24,6 @@ class GithubController Extends AppController
 			$content = file_get_contents('php://input');
 			$objec = json_decode($content);
 			if ($objec->action === 'completed') {
-//				$path = '/var/www/vitexopt/data/www/vitexopt.ru/';
 
 				$time = date('H:i:s');
 
