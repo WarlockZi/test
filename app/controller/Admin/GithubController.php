@@ -43,7 +43,6 @@ class GithubController Extends AppController
 				$logger->write('$build - ' . $build . PHP_EOL);
 			}
 
-
 			http_response_code(200);
 			exit('type:' . gettype($objec) . PHP_EOL);
 
