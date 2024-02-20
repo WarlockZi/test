@@ -26,24 +26,22 @@ class GithubController Extends AppController
 			if ($objec->action === 'completed') {
 //				$path = '/var/www/vitexopt/data/www/vitexopt.ru/';
 
-//				$cd = `cd {$path}`;
+				$time = time();
 				$cd = `cd /var/www/vitexopt/data/www/vitexopt.ru/`;
-//				$lsOutput = shell_exec($cd);
 
-
-//				$ls = `ls -la`;
-//				$exec = exec("ls -la");
-				$logger->write('$cd' . $cd . PHP_EOL);
+				$logger->write('$cd' . $time . $cd . PHP_EOL);
 
 				$pull = `/usr/bin/git pull`;
 //				$pullOutput = shell_exec($pull);
 				$logger->write('$pull - ' . $pull . PHP_EOL);
 
+				$build = `npm run build`;
+				$logger->write('$build - ' . $build . PHP_EOL);
+
+
 				$who = `whoami`;
 				$logger->write('whoam I- ' . $who . PHP_EOL);
 			}
-
-
 
 
 			http_response_code(200);
