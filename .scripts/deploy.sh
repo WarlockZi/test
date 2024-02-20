@@ -8,3 +8,4 @@ git pull
 npm run build >> /var/www/vitexopt/data/www/vitexopt.ru/app/Storage/log/log.txt
 
 echo "Deployment finished!" >> /var/www/vitexopt/data/www/vitexopt.ru/app/Storage/log/log.txt
+
