@@ -31,7 +31,6 @@ class GithubController Extends AppController
 				$cd = `cd /var/www/vitexopt/data/www/vitexopt.ru`;
 				$pwd = `pwd`;
 
-
 				$logger->write('$cd pwd -' . $pwd . $cd . PHP_EOL);
 
 				$pull = `/usr/bin/git pull`;
