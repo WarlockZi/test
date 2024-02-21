@@ -48,6 +48,7 @@ jobs:
         with:
           name: build-artifact
           path: public/dist
+          retention-days: 1
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.3
@@ -56,3 +57,6 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_KEY }}
+      -  run: cd /var/www/vitexopt/data/www/vitexopt.ru/puclic/
+      -  run: rm -R dist
+      -  run: cp build-artifact .
