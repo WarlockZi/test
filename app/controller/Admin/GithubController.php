@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\model\Answer;
 use app\Services\Logger\FileLogger;
+use Carbon\Traits\Date;
 use Exception;
 
 class GithubController Extends AppController
@@ -24,9 +25,11 @@ class GithubController Extends AppController
 			$content = file_get_contents('php://input');
 			$objec = json_decode($content);
 			if ($objec->action === 'completed') {
+				$time = Date::now();
+				$logger->write("time {$time} " . PHP_EOL);
 				try {
 					$e = exec('/bin/bash ../../../../.scripts/deploy.sh');
-					$logger->write('$exe -' . $e . PHP_EOL);
+					$logger->write("time {$time} exe {$e}" . PHP_EOL);
 				} catch (Exception $e) {
 					$logger->write('$error -' . $e . PHP_EOL);
 
