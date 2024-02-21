@@ -20,7 +20,7 @@ class GithubController Extends AppController
 	public function actionWebhook()
 	{
 		$logger = new FileLogger();
-		$time = Date::now();
+		$time = date('m/d/Y h:i:s a', time());
 		$logger->write("time {$time} " . PHP_EOL);
 		try {
 
