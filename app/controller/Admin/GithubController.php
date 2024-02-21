@@ -24,13 +24,18 @@ class GithubController Extends AppController
 			$content = file_get_contents('php://input');
 			$objec = json_decode($content);
 			if ($objec->action === 'completed') {
+				try {
+					$e = exec('/bin/bash ../../../../.scripts/deploy.sh');
+					$logger->write('$exe -' . $e . PHP_EOL);
+				} catch (Exception $e) {
+					$logger->write('$error -' . $e . PHP_EOL);
 
-//				exec('/bin/bash ../../../../.scripts/deploy.sh');
+				}
 //				$time = date('H:i:s');
 //
 //				$cd = `chdir /var/www/vitexopt/data/www`;
 //				$pwd = `pwd`;
-//				$logger->write('$cd pwd -' . $pwd . PHP_EOL);
+
 //
 //				$cd = `chdir /var/www/vitexopt/data/www/vitexopt.ru`;
 //				$pwd = `pwd`;
