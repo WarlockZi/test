@@ -24,13 +24,18 @@ class GithubController Extends AppController
 		$logger->write("time {$time} " . PHP_EOL);
 		try {
 
-//			$content = file_get_contents('php://input');
-//			$objec = json_decode($content);
+			$content = file_get_contents('php://input');
+			$objec = json_decode($content);
 //			if ($objec->action === 'completed') {
 			$logger->write("time {$time} " . PHP_EOL);
+			try {
+				$e = exec('/bin/bash ../../../../.scripts/deploy.sh');
+				$logger->write("time {$time} exe {$e}" . PHP_EOL);
 
-			$e = exec('/bin/bash ../../../../.scripts/deploy.sh');
-			$logger->write("time {$time} exe {$e}" . PHP_EOL);
+
+			} catch (Exception $e) {
+				$logger->write('$error -' . $e . PHP_EOL);
+			}
 
 
 //				$time = date('H:i:s');
@@ -51,6 +56,8 @@ class GithubController Extends AppController
 
 //			}
 
+			http_response_code(200);
+			exit('type:' . PHP_EOL);
 
 		} catch (Exception $e) {
 			$logger->write('error' . $e->getMessage());
