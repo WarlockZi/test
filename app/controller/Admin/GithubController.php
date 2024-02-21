@@ -32,7 +32,6 @@ class GithubController Extends AppController
 			$e = exec('/bin/bash ../../../../.scripts/deploy.sh');
 			$logger->write("time {$time} exe {$e}" . PHP_EOL);
 
-
 //				$time = date('H:i:s');
 //
 //				$cd = `chdir /var/www/vitexopt/data/www`;
