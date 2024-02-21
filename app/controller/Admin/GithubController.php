@@ -35,6 +35,7 @@ class GithubController Extends AppController
 				$logger->write('$error -' . $e . PHP_EOL);
 			}
 
+
 //				$time = date('H:i:s');
 //
 //				$cd = `chdir /var/www/vitexopt/data/www`;
