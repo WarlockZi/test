@@ -39,6 +39,4 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_KEY }}
-          script: |
-            cd /var/www/vitexopt/data/www/vitexopt.ru
-            npm run build
+
