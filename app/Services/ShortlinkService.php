@@ -8,10 +8,6 @@ use app\model\Product;
 
 class ShortlinkService
 {
-	public function __construct()
-	{
-	}
-
 	/**
 	 * @param string $name
 	 * @return string
