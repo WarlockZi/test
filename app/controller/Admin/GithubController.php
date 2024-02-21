@@ -27,7 +27,6 @@ class GithubController Extends AppController
 //			$content = file_get_contents('php://input');
 //			$objec = json_decode($content);
 
-
 			$e = exec('/bin/bash ../../../../.scripts/deploy.sh');
 			$logger->write("time {$time} exe {$e}" . PHP_EOL);
 
