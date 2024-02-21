@@ -27,9 +27,8 @@ class GithubController Extends AppController
 //			$content = file_get_contents('php://input');
 //			$objec = json_decode($content);
 
-
-			$e = exec('/bin/bash ../../../../.scripts/deploy.sh');
-			$logger->write("time {$time} exe {$e}" . PHP_EOL);
+			$e = shell_exec("cd /var/www/vitexopt/data/www/vitexopt.ru && npm run build 2>&1");
+			$logger->write("exe {$e}" . PHP_EOL);
 
 			http_response_code(200);
 			exit('type:' . PHP_EOL);
@@ -38,6 +37,5 @@ class GithubController Extends AppController
 			$logger->write('error' . $e->getMessage());
 		}
 	}
-
 
 }
