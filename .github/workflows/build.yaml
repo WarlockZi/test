@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-artifact
-          path: dist
+          path: public/dist
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.3
