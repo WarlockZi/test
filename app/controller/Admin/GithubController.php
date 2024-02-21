@@ -20,19 +20,20 @@ class GithubController Extends AppController
 	public function actionWebhook()
 	{
 		$logger = new FileLogger();
+		$time = Date::now();
+		$logger->write("time {$time} " . PHP_EOL);
 		try {
 
 			$content = file_get_contents('php://input');
 			$objec = json_decode($content);
 //			if ($objec->action === 'completed') {
-				$time = Date::now();
-				$logger->write("time {$time} " . PHP_EOL);
-				try {
-					$e = exec('/bin/bash ../../../../.scripts/deploy.sh');
-					$logger->write("time {$time} exe {$e}" . PHP_EOL);
-				} catch (Exception $e) {
-					$logger->write('$error -' . $e . PHP_EOL);
-				}
+			$logger->write("time {$time} " . PHP_EOL);
+			try {
+				$e = exec('/bin/bash ../../../../.scripts/deploy.sh');
+				$logger->write("time {$time} exe {$e}" . PHP_EOL);
+			} catch (Exception $e) {
+				$logger->write('$error -' . $e . PHP_EOL);
+			}
 
 //				$time = date('H:i:s');
 //
