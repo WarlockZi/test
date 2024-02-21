@@ -60,3 +60,4 @@ jobs:
       -  run: cd /var/www/vitexopt/data/www/vitexopt.ru/public/
       -  run: rm -R dist
       -  run: cp build-artifact .
+
