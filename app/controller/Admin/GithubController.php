@@ -24,7 +24,7 @@ class GithubController Extends AppController
 
 			$content = file_get_contents('php://input');
 			$objec = json_decode($content);
-			if ($objec->action === 'completed') {
+//			if ($objec->action === 'completed') {
 				$time = Date::now();
 				$logger->write("time {$time} " . PHP_EOL);
 				try {
@@ -32,8 +32,8 @@ class GithubController Extends AppController
 					$logger->write("time {$time} exe {$e}" . PHP_EOL);
 				} catch (Exception $e) {
 					$logger->write('$error -' . $e . PHP_EOL);
-
 				}
+
 //				$time = date('H:i:s');
 //
 //				$cd = `chdir /var/www/vitexopt/data/www`;
@@ -50,7 +50,7 @@ class GithubController Extends AppController
 //				$build = `npm run build`;
 //				$logger->write('$build - ' . $build . PHP_EOL);
 
-			}
+//			}
 
 			http_response_code(200);
 			exit('type:' . gettype($objec) . PHP_EOL);
