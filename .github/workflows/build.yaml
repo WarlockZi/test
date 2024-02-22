@@ -49,7 +49,6 @@ jobs:
           name: build-artifact
           path: dist
           retention-days: 1
-        run: |
 
       - name: copy file to server
         uses: appleboy/scp-action@v0.1.7
