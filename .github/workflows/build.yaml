@@ -52,10 +52,6 @@ jobs:
           name: build-artifact
           path: public/dist
 
-      - name: Display structure of downloaded files
-        run: ls -R
-
-
       - name: copy file to server
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -65,7 +61,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           source: public/dist/*
           target: ${{ secrets.SERVER_PATH }}
-          script: cd ${{ secrets.SERVER_PATH }} && git pull origin master
+          script: cd ${{ secrets.SERVER_PATH }} && git pull
 
 
 
