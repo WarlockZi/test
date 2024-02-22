@@ -1,5 +1,7 @@
 <?php
 
+namespace app\Services;
+
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Events\Dispatcher;
