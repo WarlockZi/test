@@ -63,12 +63,10 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           source: public/dist/*
-          target: /var/www/vitexopt/data/www/vitexopt.ru
+          target: ${{ secrets.SERVER_PATH }}
 
       - name: Git pull
-        run: |
-          cd /var/www/vitexopt/data/www/vitexopt.ru
-          git pull
+        script: cd ${{ secrets.SERVER_PATH }} && git pull origin master
 
 
 
