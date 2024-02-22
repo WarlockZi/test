@@ -98,7 +98,7 @@ jobs:
       - name: Install NPM dependencies
         run: npm ci
       - name: Compile assets for production
-        run: npm run bild
+        run: npm run build
 
   deploy:
     needs: build
