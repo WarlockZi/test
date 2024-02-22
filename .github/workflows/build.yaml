@@ -110,6 +110,12 @@ jobs:
       - name: Compile assets for production
         run: npm run build
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: public/dist
+          retention-days: 1
 
 
 
