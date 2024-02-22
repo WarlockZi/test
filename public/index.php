@@ -15,7 +15,7 @@ require_once ROOT . $slash . "vendor" . $slash . "autoload.php";
 
 if ($_ENV['DEV']) {
 	ini_set('display_errors', (int)$_ENV['DEV']);
-	\app\Services\FrontendServerService::serve();
+//	\app\Services\FrontendServerService::serve();
 }
 
 require_once ROOT . $slash . "public" . $slash . "Eloquent.php";

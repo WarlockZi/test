@@ -28,7 +28,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, "public/dist"),
     filename: '[name].js',
-    // asyncChunks: true,
+    asyncChunks: true,
     // publicPath: "/assets/",
     clean: true,
   },
@@ -39,7 +39,7 @@ const config = {
     server: 'http',
     port: 4000,
 
-    hot: false,
+    hot: true,
     // liveReload: true,
     static: {
       directory: path.join(__dirname, 'public', 'dist'),
