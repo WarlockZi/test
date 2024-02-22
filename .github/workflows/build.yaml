@@ -141,5 +141,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           script: |
             cd ${{ secrets.SERVER_PATH }}
+            cp /home/runner/work/test/test/public/dist/* ./public/dist
+            git add .
+            git commit --amend --no-edit
             git checkout -f
             git pull origin master
