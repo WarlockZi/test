@@ -115,8 +115,9 @@ jobs:
 
 
   deploy:
-    needs: build
+    name: deploy
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
       - name: Checkout
