@@ -74,7 +74,3 @@ jobs:
              git add .
              git commit --reuse-message=HEAD --amend
              git pull
-             git push
-
-
-
