@@ -64,6 +64,8 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           source: public/dist/*
           target: /var/www/vitexopt/data/www/vitexopt.ru
+
+      - name: Git pull
         run: |
           cd /var/www/vitexopt/data/www/vitexopt.ru
           git pull
