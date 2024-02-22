@@ -57,7 +57,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_KEY }}
-      -  run: sudo cd /var/www/vitexopt/data/www/vitexopt.ru/public/
+      -  run: chdir /var/www/vitexopt/data/www/vitexopt.ru/public
       -  run: rm -R dist
       -  run: cp build-artifact .
 
