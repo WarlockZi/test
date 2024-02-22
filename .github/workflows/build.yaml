@@ -84,7 +84,7 @@ on:
 jobs:
 
   build:
-
+    name: build
     runs-on: ubuntu-latest
 
     steps:
@@ -101,7 +101,9 @@ jobs:
         run: npm run bild
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
+
 
     steps:
       - name: Checkout
