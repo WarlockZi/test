@@ -63,6 +63,6 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           source: public/dist/*
-          target: /var/www/vitexopt/data/www/vitexopt.ru/public
+          target: /var/www/vitexopt/data/www/vitexopt.ru
 
 
