@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-artifact
-          path: dist
+          path: public/dist
 
 
   deploy:
@@ -47,7 +47,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifact
-          path: dist
+          path: public/dist
 
       - name: Display structure of downloaded files
         run: ls -R
@@ -59,7 +59,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          source: dist/*
+          source: public/dist/*
           target: /var/www/vitexopt/data/www/vitexopt.ru/public
 
 
