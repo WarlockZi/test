@@ -93,17 +93,30 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '18'
           check-latest: true
-      - name: Install NPM dependencies
-        run: npm ci
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+
       - name: Compile assets for production
         run: npm run build
+
+
+
+
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-
 
     steps:
       - name: Checkout
