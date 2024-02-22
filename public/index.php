@@ -1,24 +1,23 @@
 <?php
 
 use app\core\Auth;
+use app\core\FS;
 use app\core\Router;
 
 session_start();
-error_reporting(E_ALL);
-
-ini_set("short_open_tag",1);
-
+ini_set("short_open_tag", 1);
 define('ROOT', dirname(__DIR__));
-$slash = DIRECTORY_SEPARATOR;
-require_once ROOT . $slash . "vendor" . $slash . "autoload.php";
+
+require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
 (Dotenv\Dotenv::createImmutable(ROOT))->load();
 
 if ($_ENV['DEV']) {
 	ini_set('display_errors', (int)$_ENV['DEV']);
-	\app\Services\FrontendServerService::serve();
+	error_reporting(E_ALL);
+//	\app\Services\FrontendServerService::serve();
 }
 
-require_once ROOT . $slash . "public" . $slash . "Eloquent.php";
+require_once FS::platformSlashes(ROOT . "/app/Services/Eloquent.php");
 
 try {
 	Auth::getAuth();

@@ -30,7 +30,7 @@ use app\core\Icon;
 </a>
 
 
-<a href="/category/odnorazovyy_instrument_dlya_stomatologii" class="banner endosirynge">
+<a href="/category/stomatologicheskiy_instrument_" class="banner endosirynge">
 	<div class="banner__text">
 		<div class="banner__container right">
 			<h1>Одноразовый инструмент</h1>
