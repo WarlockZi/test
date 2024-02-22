@@ -10,7 +10,6 @@ const scrollToTop = () => {
   }
 };
 
-
 export function objAndFiles2FormData(obj, files, formData = new FormData) {
 
   self.formData = formData;
