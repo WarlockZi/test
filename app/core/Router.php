@@ -65,6 +65,8 @@ class Router
 		$parcedRoute->setAmin($parcedRoute);
 		$parcedRoute->setController($parcedRoute);
 		$parcedRoute->setAction($parcedRoute);
+		$parcedRoute->setHost();
+		$parcedRoute->setProtocol();
 
 		self::$route = $parcedRoute;
 
