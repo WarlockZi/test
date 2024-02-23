@@ -2,11 +2,9 @@
 
 namespace app\controller;
 
-use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\OrderRepository;
 use app\Repository\ProductRepository;
-use app\Services\ShortlinkService;
 
 
 class ProductController extends AppController

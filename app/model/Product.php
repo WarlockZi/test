@@ -95,6 +95,12 @@ class Product extends Model
 		});
 	}
 
+	public function getShortLink(){
+		$protocol = $_SERVER['REQUEST_SCHEME'];
+		$host = $_SERVER['HTTP_HOST'];
+		return "{$protocol}://{$host}/short/{$this->short_link}";
+	}
+
 	public function save(array $options = [])
 	{
 		if (!$this->short_link)

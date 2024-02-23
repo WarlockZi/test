@@ -6,7 +6,7 @@ import '../components/header/search/search'
 import '../components/accordion/accordion'
 import '../components/admin_sidebar'
 import '../components/date/date';
-// import tiny from "../components/tiny/tiny";
+
 import {$} from "../common";
 
 import '../Test/test_results/test_results'

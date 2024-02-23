@@ -21,10 +21,8 @@ class Route
 
 	protected $uri;
 	protected $params;
-
-	public function __construct()
-	{
-	}
+	protected $host;
+	protected $protocol;
 
 	public function __set($name, $value)
 	{
@@ -44,6 +42,12 @@ class Route
 		$this->params = $params;
 	}
 
+	public function setHost(){
+		$this->host = $_SERVER['HTTP_HOST'];
+	}
+	public function setProtocol(){
+		$this->protocol = $_SERVER['REQUEST_SCHEME'];
+	}
 	public function setUri($uri){
 		$this->uri = $uri;
 	}
@@ -76,12 +80,11 @@ class Route
 	{
 		if ($route->controller) {
 			$this->setNamespace($route);
-//			$this->namespace = $this->getNamespace($route);
 			$this->controllerName = ucfirst($route->controller);
 			$this->controller = $this->namespace . $this->controllerName . 'Controller';
 		} else {
 			$this->setNamespace($route);
-			$namespace = $this->getNamespace($route);
+			$namespace = $this->getNamespace();
 			$this->controller = $namespace . 'NotFoundController';
 		}
 	}
@@ -108,5 +111,9 @@ class Route
 	protected function lowerCamelCase($name)
 	{
 		return lcfirst(str_replace(' ', '', ucwords(str_replace('-', ' ', $name))));
+	}
+
+	public function getControllerName(){
+		return $this->controllerName;
 	}
 }

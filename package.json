@@ -9,7 +9,12 @@
   "browserslist": [
     "> 1%, not dead"
   ],
+  "pre-commit": [
+    "build",
+    "add-bundles"
+  ],
   "scripts": {
+    "add-bundles": "git add public/dist/*",
     "nrd": "npm run dev",
     "build": "webpack --mode production",
     "dev": "webpack -w",
@@ -33,6 +38,7 @@
     "node-sass": "^7.0.3",
     "postcss": "^8.4.5",
     "postcss-loader": "^5.3.0",
+    "pre-commit": "^1.2.2",
     "prettier": "^2.5.1",
     "sass": "^1.45.1",
     "sass-loader": "^12.4.0",
