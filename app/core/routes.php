@@ -3,6 +3,7 @@
 use app\core\Router;
 
 Router::add("^(?P<controller>product)\/?(?P<slug>[_a-z0-9-]+)?\/?(?<extra>[a-z0-9-]+)?$", ['controller' => 'Product']);
+Router::add("^(?P<controller>short)\/?(?P<slug>[_a-zA-Z0-9-]+)?\/?$", ['controller' => 'Short']);
 Router::add("^(?P<controller>category)\/?(?P<slug>[_a-z0-9-]+)?\/?(?<extra>[a-z0-9-]+)?$", ['controller' => 'Category']);
 Router::add("^(?P<controller>promotion)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Promotion']);
 Router::add("^(?P<controller>bot)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Bot']);

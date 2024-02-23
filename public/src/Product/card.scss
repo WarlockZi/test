@@ -92,8 +92,17 @@
 
       .short-link {
         position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         top: 10px;
         right: 10px;
+        padding: 5px 8px;
+        border-radius: 7px;
+
+        &:hover{
+          background-color: $color-gray2;
+        }
 
         svg {
           color: $dark-grey-hover;

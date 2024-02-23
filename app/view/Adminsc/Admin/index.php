@@ -23,7 +23,7 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-<!--				<div class="graph-title">По месяцу</div>-->
+				<!--				<div class="graph-title">По месяцу</div>-->
 				<canvas id="income" width="100" height="100"></canvas>
 			</div>
 		</div>
@@ -40,7 +40,7 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-<!--				<div class="graph-title">По месяцу</div>-->
+				<!--				<div class="graph-title">По месяцу</div>-->
 				<canvas id="supplied" width="100" height="100"></canvas>
 				<!--				<div id="supplied" class="graph"></div>-->
 			</div>
@@ -59,7 +59,7 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-<!--				<div class="graph-title">По месяцу</div>-->
+				<!--				<div class="graph-title">По месяцу</div>-->
 				<!--				<div id="newCustomers" class="graph"></div>-->
 				<canvas id="newCustomers" width="100" height="100"></canvas>
 			</div>
@@ -77,7 +77,7 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-<!--				<div class="graph-title">По месяцу</div>-->
+				<!--				<div class="graph-title">По месяцу</div>-->
 				<!--				<div id="coefficient" class="graph"></div>-->
 				<canvas id="coefficient" width="100" height="100"></canvas>
 			</div>
@@ -90,7 +90,25 @@ use app\core\Icon;
 	<div class="container">
 
 		<div class="block xl-1">
-			Еще инфо
+
+			<ul class="user-actions">
+				<li class="user-action">
+					<a href="/adminsc/report/productsNoMinimumUnit">Товары без картинок в наличии</a>
+				</li>
+				<li class="user-action">
+					<a href="/adminsc/report/productsWithoutImgNotinstore">Товары без картинок без наличия</a>
+				</li>
+				<li class="user-action">
+					<a href="/adminsc/report/productsNoMinimumUnit">Товары без min единиц</a>
+				</li>
+				<li class="user-action">
+					<a href="/adminsc/report/productsHaveOnlyBaseUnit">Товары без доп единиц</a>
+				</li>
+
+
+			</ul>
+
+
 		</div>
 
 	</div>

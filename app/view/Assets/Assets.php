@@ -20,6 +20,8 @@ class Assets
 	protected $desc;
 	protected $keywords;
 
+	protected $canonical;
+
 	public function __construct()
 	{
 		$this->setCache();
@@ -183,6 +185,11 @@ class Assets
 		$this->setJs('product');
 		$this->setCss('product');
 	}
+
+//	public function getCanonical()
+//	{
+//		return $this->canonical;
+//	}
 
 	public function setAuth()
 	{
