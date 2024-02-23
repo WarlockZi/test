@@ -7,6 +7,7 @@ namespace app\view;
 use app\controller\Controller;
 use app\core\Error;
 use app\core\FS;
+use app\core\Route;
 use app\model\User;
 use app\view\Assets\UserAssets;
 use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
@@ -17,13 +18,14 @@ class UserView extends View
 {
 	protected $layout = ROOT . "/app/view/layouts/vitex.php";
 	protected static $noViewError = ROOT . '/app/view/404/index.php';
+	protected $canonical;
 
 	public function __construct(Controller $controller)
 	{
 		parent::__construct($controller);
+		$this->setCanonical($controller);
 		$this->setAssets();
 		$this->header = new UserHeader();
-//		$this->setHeader($this->user, $this->controller->settings);
 		$this->setFooter();
 	}
 
@@ -82,6 +84,23 @@ class UserView extends View
 	{
 		$this->assets = new UserAssets();
 		$this->assets->merge($this->controller->getAssets());
+	}
+
+	public function setCanonical(Controller $controller)
+	{
+		$route = $controller->getRoute();
+		if ($route->getControllerName() == "Short") {
+			$slug = $controller->vars['product']->slug;
+			$href = "$route->protocol://$route->host/product/{$slug}";
+			$this->canonical = "<link rel='canonical' href={$href}>";
+		} else {
+			$this->canonical = '';
+		}
+	}
+
+	public function getCanonical()
+	{
+		return $this->canonical;
 	}
 
 	function getErrors()

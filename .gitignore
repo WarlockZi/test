@@ -1,3 +1,7 @@
+!/tmp/
+/tmp/*
+!/tmp/cache/
+/tmp/cache/*
 /refs/
 /node_modules/
 /.idea/

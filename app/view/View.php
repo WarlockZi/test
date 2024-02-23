@@ -4,6 +4,7 @@ namespace app\view;
 
 use app\controller\Controller;
 use app\core\Auth;
+use app\core\FS;
 use app\view\Assets\Assets;
 use app\view\Interfaces\IErrors;
 use app\view\Interfaces\IFooterable;
