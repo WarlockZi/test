@@ -74,11 +74,11 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          script: git pull
-#             cd ${{ secrets.SERVER_PATH }}
+          script: |
+             cd ${{ secrets.SERVER_PATH }}
+             git pull
 #             git add .
 #             git commit --amend --no-edit
-
 
 
 #name: build
