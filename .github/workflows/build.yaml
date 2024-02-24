@@ -5,45 +5,9 @@ on:
     branches: [ "master" ]
 
 jobs:
-
-#  build:
-#    name: build
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#
-#      - name: Set up node env
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: 18
-#          cache: npm
-#
-#      - name: Cache dependencies
-#        id: cache
-#        uses: actions/cache@v3
-#        with:
-#          path: ./node_modules
-#          key: modules-${{ hashFiles('package-lock.json') }}
-#
-#      - name: Install dependencies
-#        if: steps.cache.outputs.cache-hit != 'true'
-#        run: npm ci --ignore-scripts
-#
-#      - name: Build
-#        run: npm run build
-#
-#      - name: Upload artifact
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: build-artifact
-#          path: public/dist
-#          retention-days: 1
-
   deploy:
     name: deploy
     runs-on: ubuntu-latest
-#    needs: build
     environment: main < -- here
 
 
@@ -51,21 +15,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-#      - name: Download artifact
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: build-artifact
-#          path: public/dist
-#
-#      - name: copy file to server
-#        uses: appleboy/scp-action@v0.1.7
-#        with:
-#          host: ${{ secrets.SERVER_HOST }}
-#          username: ${{ secrets.SERVER_USER }}
-#          key: ${{ secrets.SERVER_KEY }}
-#          port: ${{ secrets.SERVER_PORT }}
-#          source: public/dist/*
-#          target: ${{ secrets.SERVER_PATH }}
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
@@ -77,77 +26,3 @@ jobs:
           script: |
              cd ${{ secrets.SERVER_PATH }}
              git pull
-#             git add .
-#             git commit --amend --no-edit
-
-#name: build
-#
-#on:
-#  push:
-#    branches: [ master ]
-
-#jobs:
-#
-#  build:
-#    name: build
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#      - name: Setup Node.js
-#        uses: actions/setup-node@v4
-#        with:
-#          node-version: '18'
-#          check-latest: true
-#
-#      - name: Cache dependencies
-#        id: cache
-#        uses: actions/cache@v3
-#        with:
-#          path: ./node_modules
-#          key: modules-${{ hashFiles('package-lock.json') }}
-#
-#      - name: Install dependencies
-#        if: steps.cache.outputs.cache-hit != 'true'
-#        run: npm ci --ignore-scripts
-#
-#      - name: Compile assets for production
-#        run: npm run build
-#
-#      - name: Upload artifact
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: build-artifact
-#          path: public/dist
-#          retention-days: 1
-
-
-#  deploy:
-#    name: deploy
-#    runs-on: ubuntu-latest
-#    needs: build
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#
-#      - name: Download artifact
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: build-artifact
-#          path: public/dist
-#
-#      - name: Deployment
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.SERVER_HOST }}
-#          key: ${{ secrets.SERVER_KEY }}
-#          username: ${{ secrets.SERVER_USER }}
-#          script: |
-#            cd ${{ secrets.SERVER_PATH }}
-#            cp /home/runner/work/test/test/public/dist/* ./public/dist
-#            git add .
-#            git commit --amend --no-edit
-#            git checkout -f
-#            git pull origin master
