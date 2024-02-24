@@ -110,7 +110,7 @@ $font-size-item: .5rem;
         left: 0;
         width: 4px;
         height: 100%;
-        background-color: lighten(red, 10%);
+        background-color: lighten($color-main, 10%);
       }
       color: lighten($color-main, 10%);
     }
