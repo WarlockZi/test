@@ -2,32 +2,52 @@
 
 use \app\model\User;
 use \app\core\Icon;
+use \app\view\Accordion\Admin\SidebarBuilder;
 
 ?>
-<div class="admin_sidebar">
+<?//=
+//SidebarBuilder::build($user)
+//	->class('sidebar')
+//	->item(
+//		[
+//			'header' => ['title' => 'CRM', 'icon' => 'chart', 'arrow' => 'arrow'],
+//			'rights' => ['role_admin', 'role_manager'],
+//			'ul' => [
+//				["/adminsc/wish", "Предложения сайт"],
+//				["/adminsc/order", "Заказы"],
+//				["/adminsc/user", "Пользователи"],
+//				["/adminsc/crm", "crm"],
+//				["/adminsc/promotion", "Акции"],
+//			]
+//		],
+//		)
+//	->get();
+//?>
 
-	<div class="admin_sidebar_header">
+<ul class="admin_sidebar">
+
+	<li class="admin_sidebar_header">
 
 		 <?= Icon::gamburger() ?>
 
 		 <? include ROOT . '/app/view/Header/templates/user_credits.php' ?>
 
-	</div>
+	</li>
+
 
 
 	<ul accordion>
+		<li>
+			<a class="house neon" href="/adminsc">
+					 <?= Icon::house('admin-menu') ?>
 
-		<a class="house neon" href="/adminsc">
-				<?= Icon::house('admin-menu') ?>
+				Главная
+			</a>
+		</li>
 
-			Главная
-		</a>
-
-		 <? if (User::can($user, ['role_admin', 'role_manager'])): // admin ?>
-		  <li crm>
-
+		 <? if (User::can($user, ['role_admin', 'role_manager'])): ?>
+		  <li>
 			  <div class="label">
-
 				  <div class="arrow"></div>
 						 <?= Icon::chart('admin-menu') ?>
 				  CRM
@@ -44,11 +64,10 @@ use \app\core\Icon;
 
 
 		 <? if (User::can($user, ['role_admin'])): // admin ?>
-		  <li settings>
+		  <li>
 
 			  <div class="label">
 				  <span class="arrow"></span>
-				  <!--						 --><? // include ICONS . '/admin-menu/settings-streamline.svg'; ?>
 						 <?= Icon::settingsStreamline('admin-menu') ?>
 				  Настройки
 			  </div>
@@ -70,7 +89,7 @@ use \app\core\Icon;
 		 <? endif; ?>
 
 		 <? if (User::can($user, ['role_employee'])): // admin ?>
-		  <li video>
+		  <li>
 
 			  <div class="label">
 				  <span class="arrow"></span>
@@ -87,7 +106,7 @@ use \app\core\Icon;
 		  </li>
 		 <? endif; ?>
 
-		<li test>
+		<li>
 			<div class="label">
 				<span class="arrow"></span>
 					 <?= Icon::star('admin-menu') ?>
@@ -122,7 +141,7 @@ use \app\core\Icon;
 			</ul>
 		</li>
 
-		<li plan>
+		<li>
 			<div class="label">
 				<span class="arrow"></span>
 					 <?= Icon::flag('admin-menu') ?>
@@ -163,7 +182,7 @@ use \app\core\Icon;
 		</span>
 		</a>
 
-		<li catalog>
+		<li>
 			<div class="label">
 				<span class="arrow"></span>
 					 <?= Icon::shoppingCart('feather') ?>
@@ -179,17 +198,17 @@ use \app\core\Icon;
 			</ul>
 		</li>
 
-<!--		<li logistic>-->
-<!--			<div class="label">-->
-<!--				<span class="arrow"></span>-->
-<!--					 --><?//= Icon::shoppingCart('feather') ?>
-<!---->
-<!--				Логистика-->
-<!--			</div>-->
-<!---->
-<!--		</li>-->
+		<!--		<li logistic>-->
+		<!--			<div class="label">-->
+		<!--				<span class="arrow"></span>-->
+		<!--					 --><? //= Icon::shoppingCart('feather') ?>
+		<!---->
+		<!--				Логистика-->
+		<!--			</div>-->
+		<!---->
+		<!--		</li>-->
 
-		<li user>
+		<li>
 			<div class="label">
 				<span class="arrow"></span>
 					 <?= Icon::userCheck('admin-menu') ?>
@@ -208,7 +227,7 @@ use \app\core\Icon;
 
 
 		 <? if (User::can($user)): ?>
-		  <li su>
+		  <li>
 
 			  <div class="label">
 				  <span class="arrow"></span>
@@ -223,7 +242,6 @@ use \app\core\Icon;
 				  <a class="neon" href='/adminsc/settings/dump'>Dump</a>
 				  <a class="neon" href='/adminsc/settings/props'>Свойства (товаров, пользователей)</a>
 				  <a class="neon" href='/adminsc/settings/cache'>Очистить кэш</a>
-				  <!--				  <a class="neon" href="/adminsc/sync/init?type=catalog& mode=import">Запрос 1с</a>-->
 				  <a class="neon" href="/adminsc/sync">1c Sync</a>
 				  <a class="neon" href="/adminsc/request">Запросы</a>
 				  <a class="neon" href="/adminsc/request/phpinfo/">PHPinfo</a>
@@ -238,4 +256,4 @@ use \app\core\Icon;
 	</ul>
 
 
-</div>
+</ul>
