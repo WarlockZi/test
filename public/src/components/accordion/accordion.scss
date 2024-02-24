@@ -47,19 +47,10 @@ $font-size-item: .5rem;
           gap: 3px;
         }
 
-        tag {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          padding-left: 4px;
-        }
       }
-
-
     }
 
     a {
-      //padding: $item-padding-M 100% $item-padding-M 29px;
       min-height: 10px;
       display: flex;
       align-items: center;
@@ -77,16 +68,14 @@ $font-size-item: .5rem;
       user-select: none;
       position: relative;
       cursor: pointer;
-      //padding: 5px;
       background: #4d5158;
 
       &:hover {
         background: tint($color-level-0, 3%);
       }
 
-      a { // isTest
+      a {
         display: flex;
-        //padding: 10px;
 
         .img {
           width: 16px;
@@ -121,10 +110,8 @@ $font-size-item: .5rem;
         left: 0;
         width: 4px;
         height: 100%;
-        background-color: lighten($color-main, 10%);
-
+        background-color: lighten(red, 10%);
       }
-
       color: lighten($color-main, 10%);
     }
 
@@ -166,7 +153,6 @@ $font-size-item: .5rem;
       }
     }
 
-
     .update {
       position: absolute;
       top: 20px;
@@ -191,8 +177,6 @@ $font-size-item: .5rem;
     .label {
       display: flex;
       align-items: center;
-
-
 
       .img {
         width: 16px;
@@ -229,8 +213,6 @@ $font-size-item: .5rem;
       }
 
       a {
-        //padding: $item-padding-M $item-padding-M+14 $item-padding-M 29px;
-        //font-size: .8rem;
         min-height: 10px;
         display: flex;
         align-items: center;
@@ -240,10 +222,6 @@ $font-size-item: .5rem;
       ul {
         label {
           padding-left: ($item-padding-M ) + 10px;
-        }
-
-        a {
-          //padding-left: ($item-padding-M ) + 25px;
         }
       }
 
@@ -270,10 +248,8 @@ $width-full: 170px;
   display: flex;
   flex-flow: column;
   overflow: hidden;
-  //margin-right: 30px;
   font-size: .75rem;
   min-width: 170px;
-  //margin-left: 20px;
   margin-right: 20px;
 
   @include _1000 {
@@ -335,11 +311,9 @@ $width-full: 170px;
     }
   }
   @include _400 {
-    //height: fit-content;
   }
 
   .admin_sidebar_header {
-    //display: none;
 
     @include _600 {
       display: flex;
@@ -382,16 +356,10 @@ $width-full: 170px;
 
     a, li .label {
       @include _600 {
-        //padding-bottom: 6px;
-        //padding-top: 6px;
-        //max-width: $width-full;
         min-width: $width-full;
       }
 
       @include _1000 {
-        //padding-bottom: 6px;
-        //padding-top: 6px;
-        //max-width: $width-full;
         min-width: $width-full;
       }
     }
