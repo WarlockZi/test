@@ -3,7 +3,7 @@
 
 namespace app\Actions;
 
-use app\Domain\Product\Image\ProductMainImage;
+use app\Domain\Product\Image\ProductMainImageEntity;
 use app\model\Product;
 use Exception;
 
@@ -13,7 +13,7 @@ class ProductAction
 	public static function attachMainImage(array $file, string $productId): string
 	{
 		$product = Product::query()->find($productId);
-		$mainImage = new ProductMainImage($product, $file);
+		$mainImage = new ProductMainImageEntity($product, $file);
 
 		$mainImage->deletePreviousFile();
 		$mainImage->save();
