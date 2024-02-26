@@ -3,7 +3,7 @@
 namespace app\view\Product;
 
 use app\core\FS;
-use app\Domain\Product\Image\ProductMainImage;
+use app\Domain\Product\Image\ProductMainImageEntity;
 use app\model\Product;
 use app\Repository\ImageRepository;
 use app\view\components\Builders\Dnd\DndBuilder;
@@ -66,7 +66,7 @@ class ProductView
 
 	public static function getCardMainImage($product)
 	{
-		$mi = new ProductMainImage($product);
+		$mi = new ProductMainImageEntity($product);
 		try {
 			$file = $mi->getAbsolutePath();
 
