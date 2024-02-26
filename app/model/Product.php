@@ -3,7 +3,7 @@
 namespace app\model;
 
 
-use app\Domain\Product\Image\ProductMainImage;
+use app\Domain\Product\Image\ProductMainImageEntity;
 use app\Services\ShortlinkService;
 use app\Services\Slug;
 use app\view\Image\ImageView;
@@ -54,7 +54,7 @@ class Product extends Model
 
 	protected function getMainImagePathAttribute()
 	{
-		$path = (new ProductMainImage($this))->getRelativePath();
+		$path = (new ProductMainImageEntity($this))->getRelativePath();
 		return $path ? $path : ImageView::noImageSrc();
 	}
 

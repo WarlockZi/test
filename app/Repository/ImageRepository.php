@@ -5,7 +5,7 @@ namespace app\Repository;
 
 
 use app\core\FS;
-use app\Domain\Product\Image\ProductMainImage;
+use app\Domain\Product\Image\ProductMainImageEntity;
 use app\model\Image;
 use app\model\Product;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
