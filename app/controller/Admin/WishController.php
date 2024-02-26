@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\Storage\StorageTxt;
+use app\Storage\StorageProd;
 use Workerman\Protocols\Http;
 
 class WishController Extends AppController
@@ -17,14 +17,14 @@ class WishController Extends AppController
 
 	public function actionIndex()
 	{
-		$content = StorageTxt::getFileContent('wish');
+		$content = StorageProd::getFileContent('wish');
 		$this->set(compact('content'));
 	}
 	public function actionSave()
 	{
 		if (isset($_POST['content'])){
 			$content = $_POST['content'];
-			StorageTxt::putFileContent('wish',$content);
+			StorageProd::putFileContent('wish',$content);
 			header('Location:/adminsc/wish');
 		}
 	}
