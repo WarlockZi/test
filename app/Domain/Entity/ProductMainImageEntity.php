@@ -4,10 +4,11 @@
 namespace app\Domain\Entity;
 
 
+use app\Domain\Product\Image\AbstractProductImage;
 use app\model\Product;
 use app\Services\ImagickService;
 
-class ProductMainImageEntity
+class ProductMainImageEntity extends AbstractProductImage
 {
 	protected string $art;
 	protected ImagickService $imagickService;
@@ -18,7 +19,6 @@ class ProductMainImageEntity
 	protected $maxThumbHeight = 300;
 	protected $maxThumbWidth = 300;
 	protected $fullPath;
-
 
 	public function __construct(Product $product, array $file = [])
 	{
