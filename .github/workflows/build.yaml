@@ -2,7 +2,9 @@ name: build
 
 on:
   push:
-    branches: [ "master","dev" ]
+    branches:
+      - "master"
+      - "dev"
 
 jobs:
   deploy:
@@ -10,11 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: main < -- here
 
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
