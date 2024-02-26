@@ -9,17 +9,15 @@
   "browserslist": [
     "> 1%, not dead"
   ],
-  "pre-commit": [
-    "build",
-    "add-bundles"
-  ],
+
   "scripts": {
     "add-bundles": "git add public/dist/*",
-    "nrd": "npm run dev",
     "build": "webpack --mode production",
     "dev": "webpack -w",
     "serve": "webpack serve --mode development",
-    "watch": "webpack --watch"
+    "vdev": "vite",
+    "vprev": "vite preview",
+    "vbuild": "vite build"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",
@@ -46,7 +44,8 @@
     "typescript": "^4.9.3",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.7.1"
+    "webpack-dev-server": "^4.7.1",
+    "vite": "4"
   },
   "dependencies": {
     "chart.js": "^4.4.0",
