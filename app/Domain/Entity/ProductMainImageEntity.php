@@ -19,7 +19,6 @@ class ProductMainImageEntity
 	protected $maxThumbWidth = 300;
 	protected $fullPath;
 
-
 	public function __construct(Product $product, array $file = [])
 	{
 		parent::__construct($product, $file);
