@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\Domain\Entity;
+namespace app\Domain\Product\Image;
 
 
 use app\Domain\Product\Image\AbstractProductImage;
