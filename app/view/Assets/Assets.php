@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Assets
 {
 	protected $host;
+	protected $port;
 	protected $cache = false;
 
 	protected $js = [];
@@ -26,6 +27,7 @@ class Assets
 	{
 		$this->setCache();
 		$this->setHost();
+		$this->setPort(5000);
 	}
 
 	public function getMeta()
@@ -97,15 +99,18 @@ class Assets
 		unset($this->css[$name]);
 	}
 
+	public function setPort(int $port)
+	{
+		$this->port = $_ENV['DEV']
+			? $port
+			: '';
+
+	}
 	public function setHost()
 	{
 		$this->host = $_ENV['DEV']
-//			? 'https://localhost:4000/dist/'
-//			? 'https://127.0.0.1:4000/dist/'
-			// ? 'http://127.0.0.1:4000/public/dist/'
-			? 'http://127.0.0.1:4000/'
+			? 'http://localhost'
 			: '/public/dist/';
-//			: '/assets/';
 	}
 
 	public function getHost()
@@ -126,7 +131,7 @@ class Assets
 	public function getJS(string $str = ''): string
 	{
 		foreach ($this->js as $name) {
-			$str .= "<script src='{$this->host}{$name}.js{$this->getTime()}' defer></script>";
+			$str .= "<script src='{$this->host}:{$this->port}/dist/dist/{$name}.js{$this->getTime()}' defer></script>";
 		}
 		return $str;
 	}
@@ -134,7 +139,7 @@ class Assets
 	public function getCss(string $str = '')
 	{
 		foreach ($this->css as $name) {
-			$str .= "<link href='{$this->host}{$name}.css{$this->getTime()}' rel='stylesheet' type='text/css'>";
+			$str .= "<link href='{$this->host}:{$this->port}/dist/dist/{$name}.css{$this->getTime()}' rel='stylesheet' type='text/css'>";
 		}
 		return $str;
 	}
@@ -186,10 +191,6 @@ class Assets
 		$this->setCss('product');
 	}
 
-//	public function getCanonical()
-//	{
-//		return $this->canonical;
-//	}
 
 	public function setAuth()
 	{
