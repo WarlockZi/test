@@ -102,7 +102,7 @@ class Assets
 	public function setPort(int $port)
 	{
 		$this->port = $_ENV['DEV']
-			? $port
+			? ":".$port
 			: '';
 
 	}
@@ -110,7 +110,8 @@ class Assets
 	{
 		$this->host = $_ENV['DEV']
 			? 'http://localhost'
-			: '/public/dist/';
+//			: '/public/dist/';
+			: '';
 	}
 
 	public function getHost()
@@ -131,7 +132,7 @@ class Assets
 	public function getJS(string $str = ''): string
 	{
 		foreach ($this->js as $name) {
-			$str .= "<script src='{$this->host}:{$this->port}/dist/dist/{$name}.js{$this->getTime()}' defer></script>";
+			$str .= "<script src='{$this->host}{$this->port}/dist/dist/{$name}.js{$this->getTime()}' defer></script>";
 		}
 		return $str;
 	}
@@ -139,7 +140,7 @@ class Assets
 	public function getCss(string $str = '')
 	{
 		foreach ($this->css as $name) {
-			$str .= "<link href='{$this->host}:{$this->port}/dist/dist/{$name}.css{$this->getTime()}' rel='stylesheet' type='text/css'>";
+			$str .= "<link href='{$this->host}{$this->port}/dist/dist/{$name}.css{$this->getTime()}' rel='stylesheet' type='text/css'>";
 		}
 		return $str;
 	}
