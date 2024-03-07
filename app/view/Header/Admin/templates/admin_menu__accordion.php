@@ -235,6 +235,8 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 				  SU
 			  </div>
 			  <ul class="level-1">
+				  <form action="/adminsc/images">
+					  <button type="submit">Картинки</button></form>
 
 				  <a class="neon" href="/adminsc/logistic">Логистика</a>
 				  <a class="neon" href="/adminsc/settings/list">Настройки</a>

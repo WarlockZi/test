@@ -5,6 +5,7 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\core\FS;
+use app\core\Route;
 use app\core\Router;
 use app\model\User;
 use app\view\AdminView;
@@ -28,7 +29,7 @@ abstract class Controller
 	{
 		if (!$this->isAjax()) {
 			$this->assets = new Assets();
-			$this->route = Router::getRoute();
+			$this->route = new Route();
 			$this->token = $this->createToken();
 		}
 	}
@@ -44,8 +45,8 @@ abstract class Controller
 
 	public function getViewPath()
 	{
-		$admin = $this->route->admin ? 'Admin' : '';
-		$path = FS::platformSlashes(ROOT . "/app/view/" . "{$this->route->controllerName}/" . $admin);
+		$admin = $this->route->isAdmin() ? 'Admin' : '';
+		$path = FS::platformSlashes(ROOT . "/app/view/" . "{$this->route->getControllerName()}/" . $admin);
 		return $path;
 	}
 

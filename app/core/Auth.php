@@ -49,9 +49,9 @@ class Auth
 	}
 
 
-	public static function autorize(): array
+	public static function autorize($route): array
 	{
-		if (Router::needsNoAuth()) {
+		if (Router::needsNoAuth($route)) {
 			return [];
 		}
 

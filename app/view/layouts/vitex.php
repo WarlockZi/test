@@ -17,6 +17,9 @@ use app\core\Icon;
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="/logo-square.svg" type="image/svg+xml">
+<!--	<script type="module" src="http://localhost:5000/@vite/client"></script>-->
+<!--	<script type="module" src="http://localhost:5000/dist/assets/admin.js"></script>-->
+<!--	<script type="module" src="http://localhost:5000/dist/assets/index.css"></script>-->
 	<?= $this->getCanonical(); ?>
 
 	<?= $this->assets->getMeta(); ?>

@@ -11,57 +11,38 @@ use app\view\Header\BlueRibbon\BlueRibbon;
 
 class UserHeader
 {
-	protected $header;
-	protected $frontCategories;
-	protected $index;
-	protected $logo;
+	public $route;
+	public $header;
+	public $frontCategories;
+	public $index;
+	public $logo;
 
-	protected $phone;
-	protected $location;
-	protected $userMenu;
+	public $phone;
+	public $location;
+	public $userMenu;
 
-	protected $path = __DIR__.'/templates/';
+	public $path = __DIR__.'/templates/';
+	public $pathBlue = __DIR__.'/BlueRibbon/templates/';
 
-	public function __construct()
+	public function __construct($route)
 	{
+		$this->route = $route;
 		$header = $this;
-		$this->header = FS::getFileContent($this->path.'vitex_header.php',compact('header'));
-	}
-	public function blueRibbon(){
-		return (new BlueRibbon())->getTemplate();
-	}
-	public function phone(){
-		return FS::getFileContent($this->path.'phone.php');
-	}
-	public function location(){
+		$this->blueRibbon = (new BlueRibbon())->getTemplate();
+		$this->phone = (FS::getFileContent($this->path.'phone.php'));
 		$settings = (new SettingsRepository())->all();
-		return FS::getFileContent($this->path.'location.php', compact('settings'));
-	}
-	public function userMenu(){
-		return FS::getFileContent($this->path.'user_menu.php');
-	}
-	public function logo(){
-		return FS::getFileContent($this->path.'logo.php');
-	}
-
-	protected function getPhone(){
-		return FS::getFileContent($this->path . '/searchPanel.php');
-	}
-
-	protected function getLocation(){
-		return FS::getFileContent($this->path . '/searchPanel.php');
+		$this->location = FS::getFileContent($this->path.'location.php', compact('settings'));
+		$this->userMenu = FS::getFileContent($this->path.'user_menu.php');
+		$this->logo = FS::getFileContent($this->path.'logo.php', compact('route'));
+		$this->phone = FS::getFileContent($this->pathBlue . 'searchPanel.php');
+		$this->loc = FS::getFileContent($this->pathBlue  . 'searchPanel.php');
+//		$this->logo = FS::getFileContent($this->pathBlue  . 'searchPanel.php');
+		$this->gUserMenu = FS::getFileContent($this->pathBlue  . 'searchPanel.php');
+		$this->gSearchPanel = FS::getFileContent($this->pathBlue  . 'searchPanel.php');
+		$this->gHeader = $this->header;
+		$this->header =
+			FS::getFileContent($this->path.'vitex_header.php',
+				compact('header'));
 	}
 
-	protected function getUserMenu(){
-		return FS::getFileContent($this->path . '/searchPanel.php');
-	}
-
-	protected function getSearchPanel(){
-		return FS::getFileContent($this->path . '/searchPanel.php');
-	}
-
-	public function getHeader()
-	{
-		return $this->header;
-	}
 }

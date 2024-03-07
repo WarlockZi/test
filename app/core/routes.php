@@ -18,7 +18,7 @@ Router::add("^cart\/?(?P<action>[a-zA-Z]+)?$", ['controller' => 'Cart']);
 
 Router::add("^(?P<admin>adminsc)\/?$", ['controller' => 'Adminsc','action'=>'index']);
 Router::add("^(?P<admin>adminsc)\/?(?P<controller>[a-z-]+)?\/?(?P<action>[a-z-]+)?\/?(?P<id>[0-9]+)?$");
-Router::add("^$", ['controller' => 'Main', 'action' => 'index']);
+Router::add("^$", ['controller' => 'MainController', 'action' => 'actionIndex']);
 
 
 

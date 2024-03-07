@@ -27,18 +27,16 @@ class AdminView extends View
 		$this->setLayout($controller);
 		$this->setHeader($this->user);
 		$this->setFooter();
-		if ($this->controller->getRoute()->action === 'test') {
-			$this->setTestAssets();
-		} else {
-			$this->setAssets();
-		}
+
+		$this->setAssets();
+
 	}
 
 	protected function setView($controller)
 	{
-		if (property_exists($controller, 'view')){
-			$file = $controller->getViewPath().'/'.$controller->view.'.php';
-			if (is_file($file)){
+		if (property_exists($controller, 'view')) {
+			$file = $controller->getViewPath() . '/' . $controller->view . '.php';
+			if (is_file($file)) {
 				$this->view = $file;
 			}
 		}
@@ -47,8 +45,8 @@ class AdminView extends View
 	protected function getViewFile(): string
 	{
 		$route = $this->controller->getRoute();
-		$controller = ucfirst($route->controllerName);
-		$action = $route->action;
+		$controller = ucfirst($route->getControllerName());
+		$action = $route->getAction();
 		return FS::platformSlashes(ROOT . "/app/view/{$controller}/Admin/{$action}.php");
 	}
 
@@ -63,8 +61,8 @@ class AdminView extends View
 		if (is_readable($this->view)) {
 			$this->content = self::getFileContent($this->view, $controller->vars);
 		} else {
-			$action = $controller->getRoute()->action;
-			$model = ucfirst($controller->getRoute()->controllerName);
+			$action = $controller->getRoute()->getAction();
+			$model = ucfirst($controller->getRoute()->getControllerName());
 			Error::setError("Нет файла вида - {$model}/Admin/{$action}");
 			$this->content = self::getFileContent($this->defaultView, $this->controller->vars);
 		}
@@ -73,7 +71,6 @@ class AdminView extends View
 	public function get404(): string
 	{
 		return $this->noViewError;
-//		return FS::getFileContent(self::$noViewError);
 	}
 
 	public function getHeader()
@@ -86,11 +83,6 @@ class AdminView extends View
 		$this->header = new AdminHeader($user);
 	}
 
-	function getErrors()
-	{
-	}
-
-
 	function setFooter()
 	{
 		$this->footer = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
@@ -100,7 +92,6 @@ class AdminView extends View
 	{
 		return $this->footer;
 	}
-
 
 	function getLayout()
 	{
@@ -116,5 +107,10 @@ class AdminView extends View
 	protected function setTestAssets()
 	{
 		$this->assets = new TestAssets();
+	}
+
+	function getErrors()
+	{
+		// TODO: Implement getErrors() method.
 	}
 }

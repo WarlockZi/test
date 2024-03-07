@@ -4,13 +4,16 @@
 namespace app\core;
 
 
+use app\controller\NotFoundController;
+use mysql_xdevapi\Exception;
+
 class Route
 {
 	protected $namespace;
-	protected $controller;
-	protected $controllerName;
-	protected $action = 'index';
-	protected $actionName = 'index';
+	public $controller= 'NotFound';
+	public $controllerName = NotFoundController::class;
+	public $action = 'index';
+	public $actionName = 'actionIndex';
 
 	protected $admin;
 	protected $slug;
@@ -23,20 +26,6 @@ class Route
 	protected $params;
 	protected $host;
 	protected $protocol;
-
-	public function __set($name, $value)
-	{
-		if (property_exists($this, $name)) {
-			$this->$name = $value;
-		}
-	}
-
-	public function __get($name)
-	{
-		if (property_exists($this, $name)) {
-			return $this->$name;
-		}
-	}
 
 	public function setParams($params){
 		$this->params = $params;
@@ -78,15 +67,27 @@ class Route
 
 	public function setController(Route $route): void
 	{
-		if ($route->controller) {
 			$this->setNamespace($route);
 			$this->controllerName = ucfirst($route->controller);
-			$this->controller = $this->namespace . $this->controllerName . 'Controller';
-		} else {
-			$this->setNamespace($route);
-			$namespace = $this->getNamespace();
-			$this->controller = $namespace . 'NotFoundController';
-		}
+			$this->controller = $this->namespace . $this->controllerName ;
+	}
+	public function getController(): string
+	{
+		if (!class_exists($this->controller))
+			throw new \Exception("Класс {$this->controller} не существует");
+		return $this->controller;
+	}
+
+	public function getAction(): string
+	{
+		if (!method_exists($this->action,$this->controller))
+			throw new \Exception("Метод {$this->action} не существует");
+		return $this->action;
+	}
+
+	public function getActionName(): string
+	{
+		return $this->actionName;
 	}
 
 	public function setAmin(Route $route): void
@@ -100,7 +101,7 @@ class Route
 
 	public function setAction(Route $route): void
 	{
-		$this->actionName = 'action' . $this->upperCamelCase($route->action);
+//		$this->actionName = 'action' . $this->upperCamelCase($route->action);
 	}
 
 	protected function upperCamelCase($name): string
@@ -113,7 +114,8 @@ class Route
 		return lcfirst(str_replace(' ', '', ucwords(str_replace('-', ' ', $name))));
 	}
 
-	public function getControllerName(){
+	public function getControllerName()
+	{
 		return $this->controllerName;
 	}
 }

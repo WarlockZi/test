@@ -2,10 +2,13 @@
 
 namespace app\core;
 
+use app\Exceptions\NoControllerException;
+use app\Exceptions\NoMethodException;
+
 class Router
 {
 	protected static $routes = [];
-	protected static $route;
+	protected $route;
 	protected $namespace;
 	protected $controller;
 	protected $uri;
@@ -14,20 +17,20 @@ class Router
 
 	public function __construct(string $uri)
 	{
+		$this->route = new Route();
 		$this->uri = $uri;
 		$this->url = $this->getUrl($uri);
 		$this->fillRoutes();
 	}
 
-
-	public static function getRoute()
+	public function getRoute()
 	{
-		return self::$route;
+		return $this->route;
 	}
 
 	public function matchRoute($url): Route
 	{
-		$route = new Route();
+		$route = $this->route;
 		$route->setUrl($url);
 		foreach (self::$routes as $pattern => $r) {
 			if (preg_match("#$pattern#i", $url, $matches)) {
@@ -39,25 +42,15 @@ class Router
 				}
 				$matches = array_merge($matches, $r);
 				foreach ($matches as $k => $v) {
-					$route->$k = strtolower($v);
+					$route->$k = $v;
 				}
-				self::$route = $route;
+//				$this->route = $route;
 			}
 		}
 		return $route;
 	}
 
-	protected function handleErrors(Route $route)
-	{
-		if (!class_exists($route->controller)) {
-			NotFound::controller($route);
-		}
-		if (!method_exists($route->controller, $route->actionName)) {
-			NotFound::action($route);
-		}
-	}
-
-	public function dispatch()
+	protected function setRoute()
 	{
 		$parcedRoute = $this->matchRoute($this->url);
 		$parcedRoute->setUri($this->uri);
@@ -67,15 +60,20 @@ class Router
 		$parcedRoute->setAction($parcedRoute);
 		$parcedRoute->setHost();
 		$parcedRoute->setProtocol();
+	}
 
-		self::$route = $parcedRoute;
+	public function dispatch()
+	{
+		$this->setRoute();
 
-		Router::handleErrors($parcedRoute);
+		$controller = $this->route->getController();
+		if ($this->route->getControllerName()==="NotFound"){
+			$this->errors[] = "Класс не существует";
+		}
+		$controller = new $controller;
 
-		$controller = new self::$route->controller;
-
-		Auth::autorize();
-		$action = self::$route->actionName;
+		Auth::autorize($this->route);
+		$action = $this->route->getActionName();
 		if (!method_exists($controller, $action)) {
 			http_response_code(404);
 			include(ROOT . '/app/view/404/index.php'); // provide your own HTML for the error page
@@ -109,30 +107,30 @@ class Router
 		$this->params = $params;
 	}
 
-	public static function needsNoAuth()
+	public static function needsNoAuth($route)
 	{
-		$route = Router::getRoute();
 		return
-			$route->controllerName === 'Auth' && $route->action === 'login'
-			|| $route->controllerName === 'Cart'
-			|| $route->controllerName === 'Main'
-			|| $route->controllerName === 'Bot'
-			|| $route->controllerName === 'Promotion'
-			|| $route->controllerName === 'Orderitem'
-			|| $route->controllerName === 'Search'
+			$route->getControllerName() === 'Auth' && $route->getAction() === 'login'
+			|| $route->getControllerName() === 'Auth' && $route->getAction() === 'register'
+			|| $route->getControllerName() === 'Auth' && $route->getAction() === 'returnpass'
+			|| $route->getControllerName() === 'Auth' && $route->getAction() === 'noconfirm'
+			|| $route->getControllerName() === 'Auth' && $route->getAction() === 'confirm'
 
-			|| $route->controllerName === 'Sync' && $route->action === 'part'
-			|| $route->controllerName === 'Sync' && $route->action === 'init'
-			|| $route->controllerName === 'Sync' && $route->action === 'load'
+			|| $route->getControllerName() === 'Cart'
+			|| $route->getControllerName() === 'Main'
+			|| $route->getControllerName() === 'Bot'
+			|| $route->getControllerName() === 'Promotion'
+			|| $route->getControllerName() === 'Orderitem'
+			|| $route->getControllerName() === 'Search'
 
-			|| $route->controllerName === 'Auth' && $route->action === 'register'
-			|| $route->controllerName === 'Auth' && $route->action === 'returnpass'
-			|| $route->controllerName === 'Auth' && $route->action === 'noconfirm'
-			|| $route->controllerName === 'Auth' && $route->action === 'confirm'
-			|| $route->controllerName === 'Main' && $route->action === 'index'
-			|| $route->controllerName === 'Product' && !$route->admin
-			|| $route->controllerName === 'Category' && !$route->admin
-			|| $route->controllerName === 'Github' && $route->action === 'webhook';
+			|| $route->getControllerName() === 'Sync' && $route->getAction() === 'part'
+			|| $route->getControllerName() === 'Sync' && $route->getAction() === 'init'
+			|| $route->getControllerName() === 'Sync' && $route->getAction() === 'load'
+
+			|| $route->getControllerName() === 'Main' && $route->getAction() === 'index'
+			|| $route->getControllerName() === 'Product' && !$route->isAdmin()
+			|| $route->getControllerName() === 'Category' && !$route->isAdmin()
+			|| $route->getControllerName() === 'Github' && $route->getAction() === 'webhook';
 	}
 
 	public static function add($regexp, $route = [])

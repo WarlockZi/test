@@ -12,6 +12,9 @@ use app\core\Error;
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
+<!--	<script type="module" src="http://localhost:5000/@vite/client"></script>-->
+<!--	<script type="module" src="http://localhost:4173/dist/assets/admin.js"></script>-->
+<!--	<script type="module" src="http://localhost:5000/dist/assets/index.js"></script>-->
 
 	<?= $this->assets->getCss() ?>
 	<?= $this->assets->getCDNCss() ?>

@@ -47,6 +47,12 @@ import Promotion from "../Promotions/Promotion";
 import Order from "../Admin/Order/order";
 
 
+let back = async ()=>{
+  debugger
+  let back  = await post('/');
+  let j = back.json();
+}
+
 $(document).ready(async function () {
 
   new Order();

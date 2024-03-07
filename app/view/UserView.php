@@ -7,11 +7,9 @@ namespace app\view;
 use app\controller\Controller;
 use app\core\Error;
 use app\core\FS;
-use app\core\Route;
-use app\model\User;
+use app\Repository\SelectorRepository;
+use app\Repository\UserRepository;
 use app\view\Assets\UserAssets;
-use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
-use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 use app\view\Header\UserHeader;
 
 class UserView extends View
@@ -25,21 +23,13 @@ class UserView extends View
 		parent::__construct($controller);
 		$this->setCanonical($controller);
 		$this->setAssets();
-		$this->header = new UserHeader();
+		$this->header = new UserHeader($controller->getRoute());
 		$this->setFooter();
 	}
 
 	public static function getManagerSelector()
 	{
-		$u = User::where('rights', 'LIKE', '%role_manager%')->get();
-		$select = SelectNewBuilder::build(
-			ArrayOptionsBuilder::build($u)
-				->initialOption()
-				->get()
-		)
-			->get();
-		return $select;
-
+			return SelectorRepository::userManager(UserRepository::userManager());
 	}
 
 	protected function getViewFile(Controller $controller): string
@@ -65,7 +55,7 @@ class UserView extends View
 		}
 	}
 
-	public function setHeader($user, $settings)
+	public function setHeader()
 	{
 		$this->header = new UserHeader();
 	}

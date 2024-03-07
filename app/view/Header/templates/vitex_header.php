@@ -2,14 +2,14 @@
 
 	<div class="info">
 
-		 <?= $header->logo(); ?>
+		 <?= $header->logo; ?>
 
-		 <?= $header->phone(); ?>
-		 <?= $header->location(); ?>
-		 <?= $header->userMenu(); ?>
+		 <?= $header->phone; ?>
+		 <?= $header->location; ?>
+		 <?= $header->userMenu; ?>
 
 	</div>
 
 	<?=
-	$header->blueRibbon(); ?>
+	$header->blueRibbon; ?>
 </header>

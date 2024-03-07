@@ -92,6 +92,8 @@ use app\core\Icon;
 		<div class="block xl-1">
 
 			<ul class="user-actions">
+
+
 				<li class="user-action">
 					<a href="/adminsc/report/productsNoMinimumUnit">Товары без картинок в наличии</a>
 				</li>

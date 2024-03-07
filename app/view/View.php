@@ -4,11 +4,9 @@ namespace app\view;
 
 use app\controller\Controller;
 use app\core\Auth;
-use app\core\FS;
 use app\view\Assets\Assets;
 use app\view\Interfaces\IErrors;
 use app\view\Interfaces\IFooterable;
-use app\view\Interfaces\IHeaderable;
 use app\view\Interfaces\ILayout;
 use app\view\Interfaces\IRenderable;
 
@@ -17,6 +15,7 @@ abstract class View implements IFooterable, IRenderable, IErrors, ILayout
 
 	public $controller;
 	public $viewFile;
+	protected $view;
 	public $errors;
 	public $user;
 

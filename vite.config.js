@@ -5,8 +5,12 @@ import htmlPurge from 'vite-plugin-html-purgecss'
 export default defineConfig({
   base: './',
 
-
   server: {
+    https: false,
+    cors: false,
+    hmr: {
+      host: 'localhost'
+    },
     host: 'localhost',
     port: 5000,
     http: { // https => https://localhost:3000 | http => http://localhost:3000
