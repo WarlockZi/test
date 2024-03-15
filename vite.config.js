@@ -3,7 +3,7 @@ import path from 'path';
 import htmlPurge from 'vite-plugin-html-purgecss'
 
 export default defineConfig({
-  base: './',
+  base: './dist/',
 
   server: {
     https: false,

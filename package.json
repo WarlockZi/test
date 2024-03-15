@@ -28,6 +28,7 @@
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-transform-runtime": "^7.14.3",
     "@babel/preset-env": "^7.16.5",
+    "@types/node": "^20.11.25",
     "@webpack-cli/generators": "^3.0.0",
     "autoprefixer": "^10.4.0",
     "babel-loader": "^8.2.3",
