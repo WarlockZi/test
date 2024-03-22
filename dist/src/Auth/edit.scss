@@ -1,0 +1,19 @@
+.popup__wrapper{
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  top: -100%;
+  left: -100%;
+  max-width: 500px;
+  .popup{
+    display: flex;
+    max-width: 200px;
+    position: absolute;
+    top: -100%;
+    .close{
+      display: flex;
+      position: absolute;
+    }
+  }
+
+}

@@ -1,0 +1,128 @@
+@import "../../var";
+@import "../../mixin_media";
+
+/// CLASS = TYPE 1
+[custom-select] .type1 {
+  background-color: #fff;
+  margin: 0 5px;
+  flex: 1 0 auto;
+
+  &:hover {
+    background-color: #cccccc;
+  }
+
+  .value {
+    padding: 0.5rem 0.5rem 0.25rem;
+    font-size: 1rem;
+  }
+
+}
+
+/// COMMON
+
+.value,
+.options,
+.option {
+  box-sizing: border-box;
+}
+
+
+[custom-select],[select-new] {
+  display: flex;
+  flex: 1 0;
+  align-items: center;
+  position: relative;
+  background-color: white;
+  min-width: 10px;
+  //max-width: 200px;
+
+  &:focus-visible {
+    outline: 1px solid $color-gray5;
+  }
+
+  // TITLE
+  .title {
+    display: inline-block;
+    position: absolute;
+
+    @include _h4;
+
+    &:focus-visible {
+      outline: 1px solid $color-gray5;
+    }
+  }
+
+  // VALUE
+  .custom-select:focus > .value {
+    outline: transparent;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 15px;
+    cursor: pointer;
+    user-select: none;
+    min-height: 0.85rem;
+    padding: 6px;
+    width: 100%;
+
+
+    .arrow {
+      content: '';
+      display: inline-block;
+      border: 4px solid transparent;
+      border-top-color: black;
+      margin-left: 12px;
+      margin-top: 4px;
+    }
+
+    .space {
+      min-height: 12px;
+    }
+
+  }
+
+
+  // OPTIONS
+  .options {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 102%;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    z-index: 1;
+    box-shadow: #445e8882 1px 3px 3px 0px;
+
+    &.show {
+      display: block;
+    }
+
+    // OPTION
+    li {
+      padding: 0.15rem 0.3rem;
+      cursor: pointer;
+      min-height: 0.87rem;
+      font-size: .7rem;
+      border: 1px solid transparent;
+
+      &:hover {
+        border: $border-option-hover-form;
+      }
+
+      &.selected {
+        background-color: $background-option-selected-form;
+        color: $color-option-selected-form;
+      }
+
+    }
+
+
+  }
+}

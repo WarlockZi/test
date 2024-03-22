@@ -1,0 +1,19 @@
+.noconfirm {
+  margin: 50px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile__grid {
+  display: grid;
+  align-items: center;
+  justify-items: right;
+  gap: 10px;
+  margin: 20px auto;
+  width: 600px;
+
+  div {
+    color: hsl(0deg 0% 45%);
+  }
+}
