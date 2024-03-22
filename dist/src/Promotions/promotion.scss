@@ -1,0 +1,42 @@
+@import "./../mixin_media";
+@import "./../var";
+
+.promotions-index {
+
+  .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+  }
+
+  .id {
+    @extend .center;
+  }
+
+  .old-price {
+    @extend .center;
+
+  }
+
+  .new-price {
+    @extend .center;
+    flex-direction: column;
+    .price{
+
+    }
+    .count{
+    }
+  }
+
+  .active-till{
+    @extend .center;
+
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+}

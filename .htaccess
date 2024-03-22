@@ -1,3 +1,4 @@
+
 Options -Indexes +FollowSymLinks
 php_flag short_open_tag On
 
@@ -70,5 +71,6 @@ Header set Cache-Control "max-age=2628000, public"
 <ifModule mod_headers.c>
 Header set Connection keep-alive
 </ifModule>
+
 
 

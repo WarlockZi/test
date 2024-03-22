@@ -62,4 +62,5 @@ use app\core\Icon;
 </div>
 
 </body>
+
 </html>

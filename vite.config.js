@@ -2,6 +2,11 @@ import {defineConfig} from 'vite';
 import path from 'path';
 
 export default defineConfig({
+<<<<<<< Updated upstream
+=======
+  base: '/',
+
+>>>>>>> Stashed changes
   server: {
     host: 'localhost',
     port:5000,
@@ -11,7 +16,19 @@ export default defineConfig({
   },
   // root: path.resolve(__dirname, './public/src'),
   build: {
+<<<<<<< Updated upstream
     outDir: path.resolve(__dirname, './dist')
+=======
+    emptyOutDir: true,
+    outDir: path.resolve(__dirname, '/dist'),
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/[name].js`,
+        chunkFileNames: `assets/[name].js`,
+        assetFileNames: `assets/[name].[ext]`
+      }
+    },
+>>>>>>> Stashed changes
   },
   resolve: {
     alias: {

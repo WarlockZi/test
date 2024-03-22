@@ -10,6 +10,11 @@
     "> 1%, not dead"
   ],
 
+  "pre-push": [
+    "pre-push",
+    "vbuild"
+  ],
+
   "scripts": {
     "add-bundles": "git add public/dist/*",
     "build": "webpack --mode production",

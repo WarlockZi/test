@@ -1,0 +1,189 @@
+@import "../../var";
+@import "../../mixin_media";
+
+[custom-list] {
+  background-color: #fff;
+  padding-bottom: 10px;
+  //margin-left: 15px;
+
+  @include _600 {
+    width: 90vw;
+    overflow-x: auto;
+  }
+
+  .list-title {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $color-admin-sidebar;
+  }
+
+  .custom-list {
+
+    [contenteditable]{
+      display: flex;
+      align-items: center;
+      font-size: .8rem;
+    }
+
+    [contenteditable]:hover {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    > * {
+      border: 1px solid transparent;
+      padding: 5px 3px;
+      border-bottom: solid 1px $color-gray4;
+      font-size: $font-size-table;
+      min-height: .875rem;
+      word-break: break-word;
+    }
+
+    .edit:hover {
+      //background-color: lighten($color-main, 45%);
+
+      svg {
+        stroke: #ffffff;
+      }
+    }
+
+    .del:hover {
+      svg {
+        fill: #ffffff;
+      }
+    }
+
+    @mixin headEdit {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      cursor: pointer;
+    }
+
+    @mixin delEditBcgrnd {
+      background-size: 47px 19px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .edit {
+      @include headEdit;
+      @include delEditBcgrnd;
+      //background-image: url("/pic/icons/editWhite.svg");
+    }
+
+    .del {
+      @include headEdit;
+      @include delEditBcgrnd;
+      //background-image: url("/pic/icons/trashWhite.svg");
+    }
+
+    .del:not(.head) {
+      background-image: url("/pic/icons/trashIcon.svg");
+      @include delEditBcgrnd;
+      min-height: .7rem;
+    }
+
+    .edit:not(.head) {
+      background-image: url("/pic/icons/edit.svg");
+      @include delEditBcgrnd;
+      min-height: .7rem;
+    }
+
+    .head {
+      padding: 2px 5px;
+      background-color: $color-admin-sidebar;
+      color: #fff;
+      font-weight: normal;
+      border-right: 1px solid #ffffff;
+      box-sizing: border-box;
+      display: flex;
+      flex-flow: column;
+      position: relative;
+      min-height: 27px;
+
+
+      .icon {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        right: 10px;
+        background: url("/pic/icons/upDown.svg") 0 0/15px 15px no-repeat;
+      }
+
+      input {
+        cursor: text;
+        position: relative;
+        margin: 0;
+        width: 1px;
+        background-image: url("/pic/icons/search.svg");
+        background-repeat: no-repeat;
+        background-position: 3px 3px, center;
+        background-size: 12px;
+        padding-left: 17px;
+        border-radius: 10px;
+        border: none;
+        transition: width 300ms ease-in-out;
+
+        &:focus {
+          width: 50%;
+        }
+
+        svg {
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      }
+
+      &.edit,
+      &.del {
+        text-align: center;
+        cursor: initial;
+        align-items: center;
+
+        &:hover {
+          //background-color: #5b626e;
+        }
+      }
+
+      &.edit {
+        svg {
+          stroke: white;
+          stroke-width: 1px;
+        }
+
+      }
+
+      &.del svg {
+        fill: white;
+      }
+
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+
+    .add-model {
+      justify-self: end;
+      font-size: 1.5rem;
+      width: 30px;
+      height: 30px;
+      margin: 20px 10px;
+
+      $border-radius: 10%;
+      @include colored_button($border-radius);
+      align-self: end;
+    }
+  }
+
+
+}

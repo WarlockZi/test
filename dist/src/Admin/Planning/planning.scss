@@ -1,0 +1,73 @@
+
+.planning {
+  display: flex;
+}
+
+.planning-table {
+  flex: 2;
+  display: grid;
+  grid-template-columns: 15px 50px 50px 30px 30px 1fr;
+  gap: 3px;
+  font-size: 10px;
+  align-items: center;
+
+  *:focus-visible {
+    outline: #1bbc9b;
+  }
+
+  .time-plan, .time-fact {
+    display: flex;
+    gap: 10px;
+
+    .minute, .hour {
+      position: relative;
+      width: 13px;
+      font-size: 6px;
+      border: none;
+      padding: 1px;
+
+      input{
+        border: 1px solid #cccccc;
+        width: 12px;
+        height: 13px;
+        font-size: 10px;
+        padding: 0;
+
+      }
+    }
+  }
+
+  .head {
+    background-color: #3d403f;
+    color: #fff;
+    padding: 3px;
+  }
+}
+
+
+
+
+
+.tuner {
+  position: relative;
+  cursor: pointer;
+
+  .up {
+    position: absolute;
+    display: inline-block;
+    bottom: 8px;
+    right: -8px;
+    border: 3px solid transparent;
+    border-bottom: 3px solid black;
+  }
+
+  .down {
+    position: absolute;
+    display: inline-block;
+    bottom: -3px;
+    right: -8px;
+    border: 3px solid transparent;
+    border-top: 3px solid black;
+  }
+}
+
