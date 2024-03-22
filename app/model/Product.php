@@ -7,6 +7,7 @@ use app\Domain\Product\Image\ProductMainImageEntity;
 use app\Services\ShortlinkService;
 use app\Services\Slug;
 use app\view\Image\ImageView;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -83,10 +84,23 @@ class Product extends Model
 
 	public function promotions()
 	{
-		return $this->hasMany(Promotion::class, 'product_1s_id', '1s_id');
+		return $this
+			->hasMany(Promotion::class, 'product_1s_id', '1s_id')
+;
+	}
+	public function activePromotions()
+	{
+		return $this
+			->hasMany(Promotion::class, 'product_1s_id', '1s_id')
+			->where('active_till','>=', Carbon::today()->toDateString());
 	}
 
-
+	public function inactivePromotions()
+	{
+		return $this
+			->hasMany(Promotion::class, 'product_1s_id', '1s_id')
+			->where('active_till','<', Carbon::today()->toDateString());
+	}
 	protected static function booted()
 	{
 		static::Updating(function ($product) {
