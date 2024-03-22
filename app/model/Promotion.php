@@ -3,6 +3,7 @@
 namespace app\model;
 
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Promotion extends Model
@@ -16,6 +17,16 @@ class Promotion extends Model
 		'product_1s_id',
 		'unit_id',
 	];
+
+	public function ActivePromotions()
+	{
+		return $this->product()->whereDay('active_till', '<', Carbon::today()->toDateString());
+	}
+
+	public function InactivePromotions()
+	{
+		return $this->product()->whereDay('active_till', '<', Carbon::today()->toDateString());
+	}
 
 	public function product()
 	{

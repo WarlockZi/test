@@ -6,7 +6,6 @@ namespace app\Repository;
 
 use app\model\Category;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\SelectBuilder\TreeABuilder;
 use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -49,7 +48,9 @@ class CategoryRepository
 			->with('productsInStore')
 //			->with('productsNotInStore')
 			->with('productsNotInStoreInMatrix')
-			->with('products.promotions')
+//			->with('ActivePromotions')
+			->with('products.activepromotions')
+			->with('products.inactivepromotions')
 			->with('seo')
 //      ->with('productsNotInStore')
 			->get()

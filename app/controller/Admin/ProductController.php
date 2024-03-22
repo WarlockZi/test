@@ -24,6 +24,7 @@ class ProductController extends AppController
 	{
 		$id = $this->route->id;
 		$prod = ProductRepository::edit($id);
+		$p = $prod->toArray();
 		if ($prod) {
 			$product = ProductFormView::edit($prod);
 			$breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);

@@ -29,6 +29,8 @@ class ProductRepository extends AppController
 			->with('properties')
 			->with('detailImages')
 			->with('promotions')
+			->with('activePromotions')
+			->with('inactivePromotions')
 			->with('smallpackImages')
 			->with('bigpackImages')
 			->with(['baseUnit' => function ($query) use ($id) {
