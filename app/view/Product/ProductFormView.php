@@ -205,6 +205,18 @@ class ProductFormView
 					->name('наличие')
 					->get()
 			)
+			->field(
+				ItemFieldBuilder::build('instore', $product)
+					->name('Основная картинка')
+					->html(ProductView::mainImage($product))
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('description', $product)
+					->name('Описание')
+					->html(						self::getDescription($product))
+					->get()
+			)
 			->tab(
 				ItemTabBuilder::build('Свойства товара')
 					->html(
@@ -235,12 +247,12 @@ class ProductFormView
 						self::promotions($product)
 					)
 			)
-			->tab(
-				ItemTabBuilder::build('Основная картинка')
-					->html(
-						ProductView::mainImage($product)
-					)
-			)
+//			->tab(
+//				ItemTabBuilder::build('Основная картинка')
+//					->html(
+//						ProductView::mainImage($product)
+//					)
+//			)
 			->tab(
 				ItemTabBuilder::build('Детальные картинки')
 					->html(
@@ -336,6 +348,7 @@ class ProductFormView
 					->get()
 			)
 			->column(ListColumnBuilder::build('Количество')
+				->function(Promotion::class, 'getCount')
 				->contenteditable()
 				->get()
 			)
