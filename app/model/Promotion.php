@@ -48,5 +48,11 @@ class Promotion extends Model
 			return $i->product->name;
 	}
 
+	public static function getCount($b, $i, $col)
+	{
+
+			return $i->count;
+	}
+
 
 }
