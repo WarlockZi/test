@@ -22,6 +22,8 @@ use app\core\Icon;
 	<?= $this->assets->getMeta(); ?>
 	<?= $this->assets->getCss(); ?>
 	<?= $this->assets->getCDNCss(); ?>
+<!--	<script type="module" src="../../../public/src/Admin/admin.js"></script>-->
+<!--	<script type="module" src="ws://localhost:5173/@vite/client"></script>-->
 
 </head>
 

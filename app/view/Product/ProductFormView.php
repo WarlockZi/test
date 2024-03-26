@@ -23,6 +23,7 @@ use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
+use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 use app\view\Image\ImageView;
 
 use app\view\Property\PropertyView;
@@ -35,7 +36,8 @@ class ProductFormView
 {
 
 
-	public static function hasOnlyBaseUnit($products){
+	public static function hasOnlyBaseUnit($products)
+	{
 		return MyList::build(Product::class)
 			->pageTitle('Товары имеющие только базовую единицу')
 			->column(
@@ -65,7 +67,8 @@ class ProductFormView
 			->get();
 	}
 
-	public static function hasNoImgList(Collection $products, string $title){
+	public static function hasNoImgList(Collection $products, string $title)
+	{
 
 		return MyList::build(Product::class)
 			->pageTitle($title)
@@ -101,7 +104,7 @@ class ProductFormView
 	{
 		$html =
 			SelectBuilder::build(
-				ArrayOptionsBuilder::build(Unit::select(['name','id'])->get())
+				ArrayOptionsBuilder::build(Unit::select(['name', 'id'])->get())
 					->selected($selected)
 					->get()
 			)
@@ -119,14 +122,13 @@ class ProductFormView
 		$baseEqualsMainUnit = ProductView::baseEqualsMainUnit($product);
 		$selector = UnitFormView::selectorNew($baseUnit->id);
 		return FS::getFileContent(ROOT . '/app/view/Product/Admin/units.php',
-			compact('units', 'baseUnit', 'selector','baseEqualsMainUnit'));
+			compact('units', 'baseUnit', 'selector', 'baseEqualsMainUnit'));
 	}
 
 	public static function edit(Product $product): string
 	{
 		return ItemBuilder::build($product, 'product')
 			->pageTitle('Товар :  ' . $product['name'])
-
 			->field(
 				ItemFieldBuilder::build('slug', $product)
 					->name('Адрес')
@@ -136,9 +138,15 @@ class ProductFormView
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('sort', $product)
-					->name('Порядок')
-					->contenteditable()
+				ItemFieldBuilder::build('Акции', $product)
+					->name('Действующие акции')
+					->html(
+						SelectNewBuilder::build(
+							ArrayOptionsBuilder::build($product->activePromotions, ['count' => 'кол-о', 'active_till' => 'до', 'new_price' => 'новая цена'])
+								->get()
+						)
+							->get()
+					)
 					->get()
 			)
 			->field(
@@ -191,16 +199,6 @@ class ProductFormView
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('id', $product)
-					->name('ID')
-					->get()
-			)
-			->field(
-				ItemFieldBuilder::build('1s_id', $product)
-					->name('1s_ID')
-					->get()
-			)
-			->field(
 				ItemFieldBuilder::build('instore', $product)
 					->name('наличие')
 					->get()
@@ -214,7 +212,23 @@ class ProductFormView
 			->field(
 				ItemFieldBuilder::build('description', $product)
 					->name('Описание')
-					->html(						self::getDescription($product))
+					->html(self::getDescription($product))
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('id', $product)
+					->name('ID')
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('1s_id', $product)
+					->name('1s_ID')
+					->get()
+			)
+			->field(
+				ItemFieldBuilder::build('sort', $product)
+					->name('Порядок')
+					->contenteditable()
 					->get()
 			)
 			->tab(
@@ -230,29 +244,17 @@ class ProductFormView
 					)
 			)
 			->tab(
-				ItemTabBuilder::build('Описание')
-					->html(
-						self::getDescription($product)
-					)
-			)
-			->tab(
 				ItemTabBuilder::build('Seo')
 					->html(
 						self::getSeo($product)
 					)
 			)
 			->tab(
-				ItemTabBuilder::build('Акции')
+				ItemTabBuilder::build('История акций')
 					->html(
 						self::promotions($product)
 					)
 			)
-//			->tab(
-//				ItemTabBuilder::build('Основная картинка')
-//					->html(
-//						ProductView::mainImage($product)
-//					)
-//			)
 			->tab(
 				ItemTabBuilder::build('Детальные картинки')
 					->html(
@@ -344,17 +346,19 @@ class ProductFormView
 			->relation('promotions')
 			->items($product->promotions)
 			->column(
-				ListColumnBuilder::build('id')
+				ListColumnBuilder::build('new_price')
+					->name('Цена по акции')
 					->get()
+			)
+			->column(ListColumnBuilder::build('active_till')
+				->name('До')
+				->get()
 			)
 			->column(ListColumnBuilder::build('Количество')
 				->function(Promotion::class, 'getCount')
 				->contenteditable()
 				->get()
 			)
-//			->column(ListColumnBuilder::build('count')
-//				->get()
-//			)
 			->edit()
 			->addButton('ajax')
 			->get();

@@ -128,7 +128,7 @@ class Product extends Model
 		if ($price) {
 			$number = number_format($price->price, 2, '.', ' ');
 			$priceWithCurrency = "{$number} {$price->currency}";
-			if ($this->promotions->count()) {
+			if ($this->activePromotions->count()) {
 				return $this->priceWithCurrncyUnitPromotion($number, $price->currency, $number);
 			}
 			return "{$priceWithCurrency} / {$this->baseUnit->name}";

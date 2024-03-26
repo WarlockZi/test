@@ -41,18 +41,6 @@ class ProductController extends AppController
 		$this->set(compact('list'));
 	}
 
-//	public function actionUpdateOrCreate()
-//	{
-//		try {
-//			if (isset($this->ajax['print_name'])) {
-//				$this->ajax['slug'] = Slug::slug($this->ajax['print_name']);
-//			}
-//			parent::actionUpdateOrCreate();
-//		} catch (\Exception $exception) {
-//			$this->exitJson(['error' => $exception->getMessage()]);
-//		}
-//	}
-
 	public function actionChangeval()
 	{
 		ProductAction::changeVal($this->ajax);

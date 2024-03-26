@@ -1,50 +1,50 @@
 import './admin.scss'
 import './model/cache';
 
-import '../components/header/header-adm'
-import '../components/header/search/search'
-import '../components/accordion/accordion'
-import '../components/admin_sidebar'
-import '../components/date/date';
+import '../components/header/header-adm.js'
+import '../components/header/search/search.js'
+import '../components/accordion/accordion.js'
+import '../components/admin_sidebar.js'
+import '../components/date/date.js'
 
-import {$} from "../common";
+import {$} from "../common.js"
 
-import '../Test/test_results/test_results'
-import '../Test/opentest-edit'
-import testEdit from '../Test/test-edit'
-import '../Test/do'
-import '../Test/open_test'
-
-
-import './sync1c/sync1c';
-// import './chart/chart';
-import './chartjs/chartjs';
-import quill from '../components/quill/quill';
+import '../Test/test_results/test_results.js'
+import '../Test/opentest-edit.js'
+import testEdit from '../Test/test-edit.js'
+import '../Test/do.js'
+import '../Test/open_test.js'
 
 
-import './Planning/planning'
-import './Settings/settings'
-import './Videoinstructions/videoinstructions'
-import './Category/category1'
-import rights from './Rights/rights'
-import category from './Category/category1'
-// import pagination from './Product/pagination'
-import product from './Product/product'
-
-import user from './User/user'
+import './sync1c/sync1c.js'
+// import './chart/chart'.js
+import './chartjs/chartjs.js'
+import quill from '../components/quill/quill.js'
 
 
-import radio from '@components/radio/radio'
-import multiselect from '@components/multiselect/multiselect'
-import catalogItem from '@components/catalog-item/catalog-item'
-import tooltips from '../components/tooltip/tooltip';
-import error from '../components/error/error';
-import select from '../components/select/select';
-import accordionShow from '../components/accordion-show';
-import morph from '../components/morph/morph';
-import Search from "../components/header/search/search";
-import Promotion from "../Promotions/Promotion";
-import Order from "../Admin/Order/order";
+import './Planning/planning.js'
+import './Settings/settings.js'
+import './Videoinstructions/videoinstructions.js'
+import './Category/category1.js'
+import rights from './Rights/rights.js'
+import category from './Category/category1.js'
+// import pagination from './Product/pagination.js'
+import product from './Product/product.js'
+
+import user from './User/user.js'
+
+
+import radio from '/public/src/components/radio/radio.js'
+import multiselect from '/public/src/components/multiselect/multiselect.js'
+import catalogItem from '/public/src/components/catalog-item/catalog-item.js'
+import tooltips from '../components/tooltip/tooltip.js'
+import error from '../components/error/error.js'
+import select from '../components/select/select.js'
+import accordionShow from '../components/accordion-show.js'
+import morph from '../components/morph/morph.js'
+import Search from "../components/header/search/search.js"
+import Promotion from "../Promotions/Promotion.js"
+import Order from "../Admin/Order/order.js"
 
 
 $(document).ready(async function () {
