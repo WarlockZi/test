@@ -24,6 +24,7 @@ class ProductController extends AppController
 	{
 		$id = $this->route->id;
 		$prod = ProductRepository::edit($id);
+		$p = $prod->toArray();
 		if ($prod) {
 			$product = ProductFormView::edit($prod);
 			$breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);
@@ -39,18 +40,6 @@ class ProductController extends AppController
 		$list = ProductFormView::list($items);
 		$this->set(compact('list'));
 	}
-
-//	public function actionUpdateOrCreate()
-//	{
-//		try {
-//			if (isset($this->ajax['print_name'])) {
-//				$this->ajax['slug'] = Slug::slug($this->ajax['print_name']);
-//			}
-//			parent::actionUpdateOrCreate();
-//		} catch (\Exception $exception) {
-//			$this->exitJson(['error' => $exception->getMessage()]);
-//		}
-//	}
 
 	public function actionChangeval()
 	{

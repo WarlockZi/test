@@ -23,6 +23,16 @@ class Category extends Model
 		'deleted_at',
 	];
 
+	public function InactivePromotions()
+	{
+		return $this->products->activepromotions();
+	}
+
+	public function ActivePromotions()
+	{
+		return $this->products->activepromotions();
+	}
+
 	protected static function booted()
 	{
 		static::Updating(function ($category) {
@@ -43,7 +53,7 @@ class Category extends Model
 	public function seo()
 	{
 		return $this
-			->hasOne(Seo::class,'product_category_1sid','1s_id');
+			->hasOne(Seo::class, 'product_category_1sid', '1s_id');
 	}
 
 //	public static function frontCategories()
@@ -67,25 +77,25 @@ class Category extends Model
 	public function products()
 	{
 		return $this->hasMany(Product::class)
-			->orderByDesc('name')
-//			->groupBy('instore')
+			->orderByDesc('name')//			->groupBy('instore')
 			;
 	}
 
 	public function productsNotInStore()
 	{
 		return $this->hasMany(Product::class)
-			->where('instore',0)
+			->where('instore', 0)
 			->with('price')
 			->with('mainImages')
 //			->with('mainUnit')
 			->orderBy('name');
 	}
+
 	public function productsNotInStoreInMatrix(): HasMany
 	{
 		return $this->hasMany(Product::class)
-			->where('instore',0)
-			->where('name','regexp', '\\s?\\*\\s?$')
+			->where('instore', 0)
+			->where('name', 'regexp', '\\s?\\*\\s?$')
 			->with('price')
 			->with('mainImages')
 //			->with('mainUnit')
@@ -95,7 +105,7 @@ class Category extends Model
 	public function productsInStore()
 	{
 		return $this->hasMany(Product::class)
-			->where('instore','<>',0)
+			->where('instore', '<>', 0)
 			->with('price')
 			->with('mainImages')
 			->with('promotions')

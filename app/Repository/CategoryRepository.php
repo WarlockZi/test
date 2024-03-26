@@ -6,7 +6,6 @@ namespace app\Repository;
 
 use app\model\Category;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\SelectBuilder\TreeABuilder;
 use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -26,7 +25,6 @@ class CategoryRepository
 			->where('show_front', 1)
 			->with('childrenNotDeleted')
 			->get();
-		return $d;
 	}
 
   public static function editSelectorExcluded($category): array
@@ -49,7 +47,9 @@ class CategoryRepository
 			->with('productsInStore')
 //			->with('productsNotInStore')
 			->with('productsNotInStoreInMatrix')
-			->with('products.promotions')
+//			->with('ActivePromotions')
+			->with('products.activepromotions')
+			->with('products.inactivepromotions')
 			->with('seo')
 //      ->with('productsNotInStore')
 			->get()
@@ -70,7 +70,6 @@ class CategoryRepository
       ->find($id);
   }
 
-
   public static function treeAll(): Collection
   {
     return Category::query()
@@ -80,8 +79,6 @@ class CategoryRepository
       ->whereNull('deleted_at')
       ->get();
   }
-
-
 
   public static function selector(?int $selected, ?int $excluded = -1): string
   {
@@ -110,6 +107,5 @@ class CategoryRepository
       ->field('category_id')
       ->get();
   }
-
 
 }

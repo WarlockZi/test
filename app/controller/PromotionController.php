@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\model\Promotion;
+use app\Repository\PromotionRepository;
 
 class PromotionController Extends AppController
 {
@@ -15,11 +16,10 @@ class PromotionController Extends AppController
 
 	public function actionIndex()
 	{
-		$promotions = Promotion::with('product.baseUnit')
-			->with('product.price')
-			->get();
+		$promotions = PromotionRepository::product();
+
 		$this->set(compact('promotions'));
-		$this->assets->setMeta("Акции", "Акции","Акции");
+		$this->assets->setMeta("Акции", "Акции", "Акции");
 	}
 
 }

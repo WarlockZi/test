@@ -2,7 +2,7 @@
 
 use app\view\Category\CategoryView;
 
-$promotionLabel = $product->promotions->count() ? "<div class='promotion'>Акция</div>" : '';
+$promotionLabel = $product->activepromotions->count() ? "<div class='promotion'>Акция</div>" : '';
 ?>
 <div class="column">
 	<?= $promotionLabel ?>
