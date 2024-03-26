@@ -33,7 +33,7 @@ class PropertyFormView
       }
     }
 
-		return array(...$propIds,...self::usedParentsProps($c));
+		return array_merge( ...$propIds, ...self::usedParentsProps($c));
 	}
 
 	public static function newPropertySelector($c)

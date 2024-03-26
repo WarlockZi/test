@@ -29,6 +29,8 @@ class ProductRepository extends AppController
 			->with('properties')
 			->with('detailImages')
 			->with('promotions')
+			->with('activePromotions')
+			->with('inactivePromotions')
 			->with('smallpackImages')
 			->with('bigpackImages')
 			->with(['baseUnit' => function ($query) use ($id) {
@@ -57,7 +59,8 @@ class ProductRepository extends AppController
 			->with('detailImages')
 			->with('smallpackImages')
 			->with('bigpackImages')
-			->with('promotions.unit')
+//			->with('promotions.unit')
+			->with('activepromotions.unit')
 			->with('seo')
 			->with(['baseUnit' => function ($query) use ($id) {
 				$query->with(['units' => function ($query) use ($id) {
