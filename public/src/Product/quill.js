@@ -19,7 +19,7 @@ export const quill = () => {
             // ['link', 'image'],
           ]
         }
-        : false
+        : {toolbar:false}
 
     return {
       debug: "warn",
@@ -36,31 +36,15 @@ export const quill = () => {
     let delta = quill.getContents();
     setContent(quill, delta)
     quill.on(Quill.events.TEXT_CHANGE, updateContent.bind(quill));
-    // quill.on('text-change', updateContent.bind(null, delta, quill));
   }
   function formatDelta(delta) {
     return JSON.stringify(delta.ops, null, 2)
   }
 
-  function fromPs(delta, quill){
-    const contents = quill.getContents();
-    if (delta) {
-      return  formatDelta(delta)
-    }
-    return  formatDelta(contents)
-    // let delt =  delta.getContents()
-    // let arr = delta.ops[0].insert.split('\n').map((line) => {
-    //   return line
-    // })
-    // delta.ops[0].insert = arr
-    // return arr
-  }
-
-  function updateContent(delta, quill) {
-    let d = fromPs(delta, this)
+  function updateContent(delta) {
     let tfs = this.getContents();
     let json = JSON.stringify(tfs)
-    // update(json)
+    update(json)
   }
   function setContent(quill, delta) {
     let innertext = textarea.innerText;
@@ -68,29 +52,27 @@ export const quill = () => {
       let text = JSON.parse(innertext);
       quill.setContents(text)
     } else {
-      let text = fromText(delta, quill,innertext);
-      // quill.setContents(text)
+      // let text = fromText(delta, quill,innertext);
     }
   }
 
-  function fromText(delta, quill,txt) {
-    let t = quill.getContents(txt)
-    let arr = delta.ops[0].insert.split('\n').map((line) => {
-      delta.insert(line)
-      return line
-    })
-  }
+  // function fromText(delta, quill,txt) {
+  //   let t = quill.getContents(txt)
+  //   let arr = delta.ops[0].insert.split('\n').map((line) => {
+  //     delta.insert(line)
+  //     return line
+  //   })
+  // }
 
-  async function update(json) {
+  async function update(txt) {
     let id = $('[data-field="id"]').first()
     id = +id.innerText
-    let data = {id, json}
+    let data = {id, txt}
     let res = await post(
       '/adminsc/product/updateOrCreate',
       data
     )
   }
-
 
   function isJsonString(str) {
     try {

@@ -19,13 +19,20 @@ class Assets
 	protected $title;
 	protected $desc;
 	protected $keywords;
+	protected $port;
 
 	protected $canonical;
 
 	public function __construct()
 	{
 		$this->setCache();
+		$this->setPort($_ENV['FRONTEND_PORT']);
 		$this->setHost();
+	}
+
+	public function setPort(int $port)
+	{
+		$this->port = $port;
 	}
 
 	public function getMeta()
@@ -37,9 +44,9 @@ class Assets
 
 	public function setItemMeta(Model $item)
 	{
-		$this->title = $item->seo? $item->seo->title : $item->name;
-		$this->desc = $item->seo? $item->seo->description : $item->name;
-		$this->keywords = $item->seo? $item->seo->keywords : $item->name;
+		$this->title = $item->seo ? $item->seo->title : $item->name;
+		$this->desc = $item->seo ? $item->seo->description : $item->name;
+		$this->keywords = $item->seo ? $item->seo->keywords : $item->name;
 	}
 
 	public function setMeta(string $title, string $desc = '', string $keywords = '')
@@ -62,7 +69,7 @@ class Assets
 	public function setCDNJs(string $src, bool $defer = false, bool $async = false): void
 	{
 		$this->CDNjs[] = ['src' => $src, 'defer' => $defer ? 'defer' : '', 'async' => $async ? 'async' : ''];
-	}	
+	}
 
 	public function setCDNCss(string $src): void
 	{
@@ -103,7 +110,7 @@ class Assets
 //			? 'https://localhost:4000/dist/'
 //			? 'https://127.0.0.1:4000/dist/'
 			// ? 'http://127.0.0.1:4000/public/dist/'
-			? 'http://127.0.0.1:4000/'
+			? "http://127.0.0.1:{$this->port}/"
 			: '/public/dist/';
 //			: '/assets/';
 	}
@@ -206,7 +213,7 @@ class Assets
 			$this->setCss($css);
 		}
 		foreach ($assets->getCDNJsArray() as $js) {
-			$this->setCDNJs($js['src'], $js['defer']==='defer', $js['async']==='async',);
+			$this->setCDNJs($js['src'], $js['defer'] === 'defer', $js['async'] === 'async',);
 		}
 		foreach ($assets->getCDNCssArray() as $css) {
 			$this->setCDNCss($css);
