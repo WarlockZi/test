@@ -10,11 +10,13 @@ use app\view\Image\ImageView;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+
 /**
  * @method static truncate()
  */
 class Product extends Model
 {
+	use \Illuminate\Database\Eloquent\SoftDeletes;
 	public $timestamps = false;
 
 	protected $fillable = [
@@ -37,10 +39,18 @@ class Product extends Model
 		'1s_id',
 		'instore',
 		'base_equals_main_unit',
+		'deleted_at',
 	];
 	protected $casts = [
 		'art' => 'string',
 	];
+
+	public function scopeTrashed($query, $type)
+	{
+		if ($type) {
+			return $query->withTrashed();
+		}
+	}
 
 	protected function castAttribute($key, $value)
 	{
@@ -85,22 +95,23 @@ class Product extends Model
 	public function promotions()
 	{
 		return $this
-			->hasMany(Promotion::class, 'product_1s_id', '1s_id')
-;
+			->hasMany(Promotion::class, 'product_1s_id', '1s_id');
 	}
+
 	public function activePromotions()
 	{
 		return $this
 			->hasMany(Promotion::class, 'product_1s_id', '1s_id')
-			->where('active_till','>=', Carbon::today()->toDateString());
+			->where('active_till', '>=', Carbon::today()->toDateString());
 	}
 
 	public function inactivePromotions()
 	{
 		return $this
 			->hasMany(Promotion::class, 'product_1s_id', '1s_id')
-			->where('active_till','<', Carbon::today()->toDateString());
+			->where('active_till', '<', Carbon::today()->toDateString());
 	}
+
 	protected static function booted()
 	{
 		static::Updating(function ($product) {
@@ -109,7 +120,8 @@ class Product extends Model
 		});
 	}
 
-	public function getShortLink(){
+	public function getShortLink()
+	{
 		$protocol = $_SERVER['REQUEST_SCHEME'];
 		$host = $_SERVER['HTTP_HOST'];
 		return "{$protocol}://{$host}/short/{$this->short_link}";

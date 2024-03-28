@@ -87,7 +87,8 @@ class AppController extends Controller implements IModelable
 			$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
 		}
 
-		$model = $this->model::updateOrCreate(
+		$model = $this->model::withTrashed()
+		->updateOrCreate(
 			['id' => $req['id']],
 			$req
 		);

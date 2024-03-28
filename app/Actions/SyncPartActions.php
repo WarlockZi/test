@@ -11,6 +11,7 @@ use app\model\Product;
 use app\Actions\XMLParser\LoadCategories;
 use app\Actions\XMLParser\LoadPrices;
 use app\Actions\XMLParser\LoadProducts;
+use app\Repository\SyncRepository;
 use app\Storage\{StorageDev, StorageImport, StorageLog};
 
 class SyncPartActions extends AppController
@@ -22,12 +23,14 @@ class SyncPartActions extends AppController
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
 	protected $route;
 	protected $logger;
+	protected $repo;
 
 	public function __construct($route, $logger)
 	{
 		$this->setStorage();
 		$this->route = $route;
 		$this->logger = $logger;
+		$this->repo = new SyncRepository();
 
 		$this->importFile = $this->storage::getFile('import0_1.xml');
 		$this->offerFile = $this->storage::getFile('offers0_1.xml');
@@ -62,12 +65,27 @@ class SyncPartActions extends AppController
 			$this->file();
 
 		} elseif ($this->route->params['mode'] === 'import') {
-			$this->trancate();
-//			$this->softTrancate();
+//			$this->trancate();
+			$this->repo->softTrancate();
 			$this->import();
 		}
 	}
 
+	protected function partCreate($item, $level, $parent)
+	{
+		$found = Category::query()
+			->where('1s_id', $item['1s_id'])
+			->first();
+		if ($found) {
+			$found->delete();
+			if ($level > 0 && isset($parent['id']))
+				$item['category_id'] = $parent['id'];
+			if ($level === 1) {
+				$item['show_front'] = 1;
+			}
+			Category::create($item);
+		}
+	}
 	public function import()
 	{
 
@@ -162,34 +180,7 @@ class SyncPartActions extends AppController
 	}
 
 
-	public function removeCategories()
-	{
-		Category::truncate();
-	}
 
-	public function removeProducts()
-	{
-		Product::truncate();
-	}
-
-	public function removePrices()
-	{
-		Price::truncate();
-	}
-
-	public function softTrancate()
-	{
-		$this->removeCategories();
-		$this->removeProducts();
-		$this->removePrices();
-	}
-
-	public function trancate()
-	{
-		$this->removeCategories();
-		$this->removeProducts();
-		$this->removePrices();
-	}
 
 	public function part()
 	{

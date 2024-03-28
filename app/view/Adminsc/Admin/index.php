@@ -92,18 +92,25 @@ use app\core\Icon;
 		<div class="block xl-1">
 
 			<ul class="user-actions">
-				<li class="user-action">
-					<a href="/adminsc/report/productsNoMinimumUnit">Товары без картинок в наличии</a>
-				</li>
-				<li class="user-action">
-					<a href="/adminsc/report/productsWithoutImgNotinstore">Товары без картинок без наличия</a>
-				</li>
-				<li class="user-action">
-					<a href="/adminsc/report/productsNoMinimumUnit">Товары без min единиц</a>
-				</li>
-				<li class="user-action">
-					<a href="/adminsc/report/productsHaveOnlyBaseUnit">Товары без доп единиц</a>
-				</li>
+				<?if (SU):?>
+					<li class="user-action">
+						<a href="/adminsc/sync">1s Sync</a>
+					</li>
+				<?else:?>
+					<li class="user-action">
+						<a href="/adminsc/report/productsNoMinimumUnit">Товары без картинок в наличии</a>
+					</li>
+					<li class="user-action">
+						<a href="/adminsc/report/productsWithoutImgNotinstore">Товары без картинок без наличия</a>
+					</li>
+					<li class="user-action">
+						<a href="/adminsc/report/productsNoMinimumUnit">Товары без min единиц</a>
+					</li>
+					<li class="user-action">
+						<a href="/adminsc/report/productsHaveOnlyBaseUnit">Товары без доп единиц</a>
+					</li>
+				<?endif;?>
+
 
 
 			</ul>

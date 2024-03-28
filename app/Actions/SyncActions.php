@@ -5,13 +5,7 @@ namespace app\Actions;
 
 
 use app\controller\AppController;
-use app\model\Category;
-use app\model\Price;
-use app\model\Product;
-use app\Actions\XMLParser\LoadCategories;
-use app\Actions\XMLParser\LoadPrices;
-use app\Actions\XMLParser\LoadProducts;
-use app\Storage\{StorageDev, StorageImport};
+use app\Repository\SyncRepository;
 
 class SyncActions extends AppController
 {
@@ -22,27 +16,12 @@ class SyncActions extends AppController
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
 	protected $route;
 	protected $logger;
+	protected $repo;
 
-	public function __construct($route, $logger)
+	public function __construct(SyncRepository $repo)
 	{
-		$this->setStorage();
-		$this->route = $route;
-		$this->logger = $logger;
-
-		$this->importFile = $this->storage::getFile('import0_1.xml');
-		$this->offerFile = $this->storage::getFile('offers0_1.xml');
+		$this->repo= $repo;
 	}
-
-	public function setStorage()
-	{
-		$this->importPath = StorageImport::getPath();
-		if ($_ENV['DEV'] == '1') {
-			$this->storage = StorageDev::class;
-		} else {
-			$this->storage = StorageImport::class;
-		}
-	}
-
 	/**
 	 * @throws \Exception
 	 */
@@ -66,34 +45,19 @@ class SyncActions extends AppController
 	public function load()
 	{
 		try {
-			$this->trancate();
+			$this->repo->softTrancate();
 			if (!is_readable($this->importFile)) exit('Отсутстует файл importFile');
 
-			$this->LoadCategories();
-			$this->LoadProducts();
+			$this->repo->LoadCategories();
+			$this->repo->LoadProducts();
 
 			if (!is_readable($this->offerFile)) exit('Отсутстует файл offerFile');
 
-			$this->LoadPrices();
+			$this->repo->LoadPrices();
 
 		} catch (\Exception $e) {
 			exit('Ошибка загрузки: ' . $e);
 		}
-	}
-
-	public function LoadCategories()
-	{
-		new LoadCategories($this->importFile, $this->logger);
-	}
-
-	public function LoadProducts()
-	{
-		new LoadProducts($this->importFile, $this->logger);
-	}
-
-	public function LoadPrices()
-	{
-		new LoadPrices($this->offerFile, $this->logger);
 	}
 
 	protected function checkauth()
@@ -130,36 +94,6 @@ class SyncActions extends AppController
 		}
 		$this->logger->write($text);
 	}
-
-	public function removeCategories()
-	{
-		Category::truncate();
-	}
-
-	public function removeProducts()
-	{
-		Product::truncate();
-	}
-
-	public function removePrices()
-	{
-		Price::truncate();
-	}
-
-	public function softTrancate()
-	{
-		$this->removeCategories();
-		$this->removeProducts();
-		$this->removePrices();
-	}
-
-	public function trancate()
-	{
-		$this->removeCategories();
-		$this->removeProducts();
-		$this->removePrices();
-	}
-
 
 
 }

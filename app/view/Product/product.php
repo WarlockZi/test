@@ -9,7 +9,14 @@ use \app\view\Product\ProductView;
 
 if ($product): ?>
 
+	<? if ($product->deleted_at): ?>
+		<div class="deleted-overlay">
+			<h1 class="deleted">
+				Товар закончился
+			</h1>
 
+		</div>
+	<? endif; ?>
 	<div class="product-card" data-id="<?= $product['1s_id']; ?>">
 
 		 <?= $breadcrumbs ?>
@@ -23,7 +30,7 @@ if ($product): ?>
 			</div>
 
 				<?= ProductView::getCardMainImage($product) ?>
-				<? include __DIR__.'/card/toCart.php'?>
+				<? include __DIR__ . '/card/toCart.php' ?>
 		</div>
 
 		<!--		--><? //include __DIR__.'/card/packs.php'?>
@@ -38,7 +45,7 @@ if ($product): ?>
 			<div class="info-tag">Характеристики</div>
 			<div class="properties">
 					 <? foreach ($product->values as $value): ?>
-						 <? include __DIR__. '/property.php'; ?>
+						 <? include __DIR__ . '/property.php'; ?>
 					 <? endforeach; ?>
 			</div>
 		</div>

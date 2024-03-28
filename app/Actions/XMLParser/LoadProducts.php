@@ -27,16 +27,16 @@ class LoadProducts extends Parser
 	{
 		$id = 0;
 		foreach ($this->goods as $good) {
-			$this->fork($good, $id++);
-		}
-	}
+			 $id++;
+			$product = $this->fillGood($good, $id);
+			$cat = Category::where('1s_id', $product['1s_category_id'])->first();
+			$product['category_id'] = $cat->id;
+			$product['deleted_at'] = null;
+			$updated = Product::withTrashed()
+				->updateOrCreate(['1s_id' => $product['1s_id']], $product);
+			$f = $updated;
 
-	protected function fork($good, $id)
-	{
-		$product = $this->fillGood($good, $id);
-		$cat = Category::where('1s_id', $product['1s_category_id'])->first();
-		$product['category_id'] = $cat->id;
-		$p = Product::create($product);
+		}
 	}
 
 	protected function fillGood($good, $id)
@@ -60,6 +60,4 @@ class LoadProducts extends Parser
 	{
 		echo "{$id}  - {$sameSlug} {$item['name']}<br>";
 	}
-
-
 }

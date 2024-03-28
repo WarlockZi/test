@@ -17,8 +17,9 @@ class ProductRepository extends AppController
 
 	public static function edit(int $id)
 	{
-		$id = Product::where('id', $id)->first()['1s_id'];
+		$id = Product::where('id', $id)->withTrashed()->first()['1s_id'];
 		return Product::query()
+			->withTrashed()
 			->where('1s_id', $id)
 			->with('category.properties.vals')
 			->with('values')
@@ -44,10 +45,11 @@ class ProductRepository extends AppController
 
 	public static function main(string $slug)
 	{
-		$p = Product::where('slug', $slug)->first();
+		$p = Product::where('slug', $slug)->withTrashed()->first();
 		if (!$p) $p = Product::where('short_link', $slug)->first();
 		$id = $p['1s_id'];
 		$product = Product::query()
+			->withTrashed()
 			->orderBy('sort')
 			->with('category.properties.vals')
 			->with('category.parentRecursive')

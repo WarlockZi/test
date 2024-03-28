@@ -53,7 +53,10 @@ class LoadCategories extends Parser
 		}
 		$item['name'] = $group['Наименование'];
 		$item['slug'] = Slug::slug($item['name']);
-		Category::create($item);
+		$item['deleted_at'] = NULL;
+
+		$updated = Category::withTrashed()
+			->updateOrCreate(['1s_id' => $item['1s_id']], $item);
 		return $item;
 	}
 
@@ -62,19 +65,5 @@ class LoadCategories extends Parser
 		echo "{$item['id']} {$item['pref']} {$item['name']}<br>";
 	}
 
-	protected function partCreate($item, $level, $parent)
-	{
-		$found = Category::query()
-			->where('1s_id', $item['1s_id'])
-			->first();
-		if ($found) {
-			$found->delete();
-			if ($level > 0 && isset($parent['id']))
-				$item['category_id'] = $parent['id'];
-			if ($level === 1) {
-				$item['show_front'] = 1;
-			}
-			Category::create($item);
-		}
-	}
+
 }
