@@ -12,6 +12,27 @@
 @import "../Cart/cart";
 //@import "../font/Montserrat-7.210/Monserrat";
 
+.deleted-overlay{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  background-color: #ff00697d;
+  height: 100vh;
+  z-index: 1;
+  position: fixed;
+  top: 109px;
+  left: -6px;
+
+  h1.deleted{
+    padding: 33px;
+    background-color: tomato;
+    color: #fff !important;
+    font-size: 25px !important;
+    opacity: .8;
+    border-radius: 16px;
+  }
+}
 
 :root {
   --color-main: #337ab7;

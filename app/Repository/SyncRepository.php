@@ -4,45 +4,106 @@
 namespace app\Repository;
 
 
-use app\core\FS;
-use app\model\Answer;
-use app\model\Test;
+use app\Actions\XMLParser\LoadCategories;
+use app\Actions\XMLParser\LoadPrices;
+use app\Actions\XMLParser\LoadProducts;
+use app\core\Route;
+use app\model\Category;
+use app\model\Price;
+use app\model\Product;
+use Carbon\Carbon;
 
-class AnswerRepository
+class SyncRepository
 {
 
-	public static function getImg(Answer $answer): string
+	protected $importFile;
+	protected $offerFile;
+	protected $logger;
+	protected $route;
+	public function __construct(Route $route, $importFile, $offerFile, $logger)
 	{
-		if ($answer->pica) {
-			$src = ImageRepository::getImg('/pic/' . $answer->pica);
-			return "<div class='apic'><img src='{$src}'></div>";
+		$this->route = $route;
+		$this->importFile = $importFile;
+		$this->logger = $logger;
+		$this->offerFile = $offerFile;
+	}
+
+	public function LoadCategories()
+	{
+		new LoadCategories($this->importFile, $this->logger);
+	}
+
+	public function LoadProducts()
+	{
+		new LoadProducts($this->importFile, $this->logger);
+	}
+
+	public function LoadPrices()
+	{
+		new LoadPrices($this->offerFile, $this->logger);
+	}
+
+
+
+
+
+
+	public function softTrancate()
+	{
+		$this->softRemoveCategories();
+		$this->softRemoveProducts();
+		$this->removePrices();
+	}
+
+	public function trancate()
+	{
+		$this->softTrancate();
+//		$this->removeCategories();
+//		$this->removeProducts();
+//		$this->removePrices();
+	}
+
+	protected function softDelete($model)
+	{
+		$model->update(['deleted_at'=>Carbon::today()]);
+	}
+
+	public function softRemoveProducts()
+	{
+		foreach (Product::all() as $model) {
+			$this->softDelete($model);
 		}
-		return '';
 	}
 
-	public static function empty()
+	public function softRemoveCategories()
 	{
-		$answer = new Answer;
-		$i = -1;
-		return FS::getFileContent(ROOT . '/app/view/Question/Admin/edit_BlockAnswer.php');
+//		$d = Product::query()->withTrashed()->get();
+//		$c = Category::query()->withTrashed()->get();
+//		$p = Price::query()->withTrashed()->get();
+		foreach (Category::all() as $model) {
+			$this->softDelete($model);
+		}
 	}
 
-	public static function getAnswer(int $i, Answer $answer)
+	public function softRemovePrices()
 	{
-		include ROOT . "/app/view/Question/Admin/edit_BlockAnswer.php";
+		Price::truncate();
 	}
 
 
-	public static function cacheCorrectAnswers(Test $test): void
+	private function removeProducts()
 	{
-		$res = $test->questions->map(function ($q) {
-				return $q->answers->filter(function ($v, $k) {
-					return $v->correct_answer === 1;
-				});
-			})
-				->flatten()
-				->pluck('id') ?? '';
-		$_SESSION['correct_answers'] = $res->toArray();
+		Product::truncate();
+	}
+
+	private function removeCategories()
+	{
+		Category::truncate();
+	}
+
+	public function removePrices()
+	{
+		Price::truncate();
 	}
 
 
