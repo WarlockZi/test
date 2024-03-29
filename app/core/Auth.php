@@ -27,24 +27,32 @@ class Auth
 		$_SESSION['id'] = $user['id'];
 	}
 
+	public static function setUser(User $user)
+	{
+		self::$user = $user->toArray();
+	}
+
 	public static function getAuth()
 	{
 		if (isset($_SESSION['id']) && $_SESSION['id']) {
 			$user = User::find($_SESSION['id']);
 
 			self::$user = $user ? $user->toArray() : null;
+			return $user;
 		}
 	}
 
-	public static function isAdmin(){
+	public static function isAdmin()
+	{
 		$user = self::getUser();
-		if (User::can($user, ['role_admin'])){
+		if (User::can($user, ['role_admin'])) {
 			return true;
 		}
 		return false;
 	}
 
-	public static function isAuthed(){
+	public static function isAuthed()
+	{
 		return !!self::getUser();
 	}
 

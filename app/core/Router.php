@@ -20,7 +20,7 @@ class Router
 	}
 
 
-	public static function getRoute()
+	public static function getRoute():Route
 	{
 		return self::$route;
 	}
@@ -56,9 +56,7 @@ class Router
 			NotFound::action($route);
 		}
 	}
-
-	public function dispatch()
-	{
+	protected function parseRoute(){
 		$parcedRoute = $this->matchRoute($this->url);
 		$parcedRoute->setUri($this->uri);
 		$parcedRoute->setParams($this->params);
@@ -69,8 +67,13 @@ class Router
 		$parcedRoute->setProtocol();
 
 		self::$route = $parcedRoute;
+	}
 
-		Router::handleErrors($parcedRoute);
+	public function dispatch()
+	{
+		$this->parseRoute();
+
+		Router::handleErrors(self::$route);
 
 		$controller = new self::$route->controller;
 
