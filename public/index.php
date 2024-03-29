@@ -22,8 +22,8 @@ try {
 
 	$user = Auth::getAuth();
 
-	$mockUser = \app\model\User::query()->find(160);
-	Auth::setUser($mockUser);
+//	$mockUser = \app\model\User::query()->find(160);
+//	Auth::setUser($mockUser);
 
 	$route = new Router($_SERVER['REQUEST_URI'] ?? '');
 	$route->dispatch();
