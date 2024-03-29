@@ -19,11 +19,18 @@ if ($_ENV['DEV']) {
 require_once FS::platformSlashes(ROOT . "/app/Services/Eloquent.php");
 
 try {
-	Auth::getAuth();
-	$router = new Router($_SERVER['REQUEST_URI'] ?? '');
-	$router->dispatch();
-} catch (Exception $e) {
-	exit($e);
-};
+
+	$user = Auth::getAuth();
+
+	$mockUser = \app\model\User::query()->find(160);
+	Auth::setUser($mockUser);
+
+	$route = new Router($_SERVER['REQUEST_URI'] ?? '');
+	$route->dispatch();
 
 exit();
+} catch (Exception $e) {
+	exit($e);
+}
+
+
