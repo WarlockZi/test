@@ -1,8 +1,8 @@
 import {defineConfig} from 'vite';
-import path from 'path';
+import {resolve} from 'path';
 
 export default defineConfig({
-  publicDir: '/dist/dist/admin.js',
+  root: resolve(__dirname, './public/src'),
   server: {
     host: 'localhost',
     port:4000,
@@ -12,13 +12,13 @@ export default defineConfig({
   },
   // root: path.resolve(__dirname, './public/src'),
   build: {
-    outDir: path.resolve(__dirname, './dist')
+    outDir: resolve(__dirname, './public/build')
   },
   resolve: {
     alias: {
       // '@': path.resolve(__dirname, './src'),
       // '@assets': path.resolve(__dirname, './src/assets'),
-      '@components': path.resolve(__dirname, './public/src/components'),
+      '@components': resolve(__dirname, './public/src/components'),
     },
   },
   plugins: []
