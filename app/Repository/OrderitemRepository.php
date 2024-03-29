@@ -45,8 +45,10 @@ class OrderitemRepository
 		$lead = Lead::where('sess',$orderItem->sess)->first();
 		$oItems = OrderItem::query()
 			->where('sess',$orderItem->sess)
-			->whereNull('deleted_at')
+//			->whereNull('deleted_at')
 			->get();
+		$oI = $oItems->toArray();
+		$l = $lead->toArray();
 		return compact('oItems','lead');
 	}
 

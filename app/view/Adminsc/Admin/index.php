@@ -23,7 +23,6 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-				<!--				<div class="graph-title">По месяцу</div>-->
 				<canvas id="income" width="100" height="100"></canvas>
 			</div>
 		</div>
@@ -40,9 +39,7 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-				<!--				<div class="graph-title">По месяцу</div>-->
 				<canvas id="supplied" width="100" height="100"></canvas>
-				<!--				<div id="supplied" class="graph"></div>-->
 			</div>
 
 		</div>
@@ -59,8 +56,6 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-				<!--				<div class="graph-title">По месяцу</div>-->
-				<!--				<div id="newCustomers" class="graph"></div>-->
 				<canvas id="newCustomers" width="100" height="100"></canvas>
 			</div>
 
@@ -77,8 +72,6 @@ use app\core\Icon;
 			</div>
 
 			<div class="row">
-				<!--				<div class="graph-title">По месяцу</div>-->
-				<!--				<div id="coefficient" class="graph"></div>-->
 				<canvas id="coefficient" width="100" height="100"></canvas>
 			</div>
 
@@ -92,7 +85,7 @@ use app\core\Icon;
 		<div class="block xl-1">
 
 			<ul class="user-actions">
-				<?if (SU):?>
+				<?if (defined('SU')):?>
 					<li class="user-action">
 						<a href="/adminsc/sync">1s Sync</a>
 					</li>

@@ -8,6 +8,7 @@ use app\core\Route;
 use app\model\Order;
 use app\Repository\OrderRepository;
 use app\view\Order\OrderView;
+use Carbon\Carbon;
 
 
 class OrderController Extends AppController
@@ -25,7 +26,7 @@ class OrderController Extends AppController
 		$leadlist = OrderView::leadList($orderItems);
 		$orders = OrderRepository::clientList();
 		$clientlist = OrderView::clientList($orders);
-		$this->set(compact('clientlist','leadlist'));
+		$this->set(compact('clientlist', 'leadlist'));
 	}
 
 	public function actionEdit()
@@ -45,7 +46,9 @@ class OrderController Extends AppController
 
 		$item = $model->where('product_id', $id)->first();
 		if ($item) {
-			$destroyed = $item->delete();
+			$destroyed =
+				$item::query()
+				->update(['deleted_at' => Carbon::today()]);
 			$this->exitJson(['ok' => 'ok', 'popup' => 'удален']);
 		}
 		$this->exitJson(['error' => 'не удален', 'popup' => 'не удален']);

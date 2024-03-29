@@ -34,7 +34,7 @@ class SyncController extends AppController
 		$this->offerFile = $this->storage::getFile('offers0_1.xml');
 
 		$this->repo = new SyncRepository($this->route, $this->importFile, $this->offerFile, $this->logger);
-		$this->actions = new SyncActions($this->repo);
+		$this->actions = new SyncActions($this->repo, $this->route);
 	}
 
 	public function setStorage()
@@ -52,7 +52,14 @@ class SyncController extends AppController
 		try {
 			$this->actions->init();
 		} catch (\Exception $e) {
-			$this->logger->write($e);
+			$message = PHP_EOL
+				. "---SyncControllerError---"
+				. PHP_EOL
+				. $e
+				. PHP_EOL
+				. $e->getMessage()
+				. PHP_EOL;
+			$this->logger->write($message);
 			exit('Выгрузка на сайт не удалась. Подробности в load.log');
 		}
 	}
@@ -83,8 +90,6 @@ class SyncController extends AppController
 	}
 
 
-
-
 	public function actionLoadCategories()
 	{
 		$this->repo->LoadCategories();
@@ -110,13 +115,14 @@ class SyncController extends AppController
 	public function actionLogshow()
 	{
 		if (isset($_POST['param'])) {
-			$this->exitJson(['success' => true, 'content' => 'Log'.PHP_EOL. $this->logger->read()]);
+			$this->exitJson(['success' => true, 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
 		}
 	}
 
-	public function actionLogclear(){
+	public function actionLogclear()
+	{
 		$this->logger->clear();
-		$this->exitJson(['success' => 'success', 'content' => 'Log'.PHP_EOL.$this->logger->read()]);
+		$this->exitJson(['success' => 'success', 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
 	}
 
 
