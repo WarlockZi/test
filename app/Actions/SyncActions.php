@@ -5,6 +5,7 @@ namespace app\Actions;
 
 
 use app\controller\AppController;
+use app\core\Route;
 use app\Repository\SyncRepository;
 
 class SyncActions extends AppController
@@ -18,10 +19,12 @@ class SyncActions extends AppController
 	protected $logger;
 	protected $repo;
 
-	public function __construct(SyncRepository $repo)
+	public function __construct(SyncRepository $repo, Route $route)
 	{
-		$this->repo= $repo;
+		$this->repo = $repo;
+		$this->route = $route;
 	}
+
 	/**
 	 * @throws \Exception
 	 */
@@ -56,7 +59,7 @@ class SyncActions extends AppController
 			$this->repo->LoadPrices();
 
 		} catch (\Exception $e) {
-			exit('Ошибка загрузки: ' . $e);
+			exit(PHP_EOL . '---Ошибка загрузки: SyncActions---' . PHP_EOL . $e->getMessage() . PHP_EOL . $e);
 		}
 	}
 
@@ -94,6 +97,4 @@ class SyncActions extends AppController
 		}
 		$this->logger->write($text);
 	}
-
-
 }

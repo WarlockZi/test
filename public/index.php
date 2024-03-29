@@ -14,7 +14,6 @@ require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "auto
 if ($_ENV['DEV']) {
 	ini_set('display_errors', (int)$_ENV['DEV']);
 	error_reporting(E_ALL);
-//	\app\Services\FrontendServerService::serve();
 }
 
 require_once FS::platformSlashes(ROOT . "/app/Services/Eloquent.php");

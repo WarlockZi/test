@@ -15,7 +15,6 @@ use Carbon\Carbon;
 
 class SyncRepository
 {
-
 	protected $importFile;
 	protected $offerFile;
 	protected $logger;
@@ -34,7 +33,7 @@ class SyncRepository
 	}
 
 	public function LoadProducts()
-	{
+		{
 		new LoadProducts($this->importFile, $this->logger);
 	}
 
@@ -42,8 +41,6 @@ class SyncRepository
 	{
 		new LoadPrices($this->offerFile, $this->logger);
 	}
-
-
 
 
 
@@ -77,9 +74,6 @@ class SyncRepository
 
 	public function softRemoveCategories()
 	{
-//		$d = Product::query()->withTrashed()->get();
-//		$c = Category::query()->withTrashed()->get();
-//		$p = Price::query()->withTrashed()->get();
 		foreach (Category::all() as $model) {
 			$this->softDelete($model);
 		}
@@ -105,6 +99,4 @@ class SyncRepository
 	{
 		Price::truncate();
 	}
-
-
 }

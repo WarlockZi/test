@@ -1,5 +1,20 @@
 @import "../../mixin_media";
 
+.lead-order {
+
+  .num {
+    padding: 10px;
+  }
+
+  .name {
+    padding: 10px;
+  }
+
+  .count {
+    padding: 10px;
+  }
+}
+
 .orders {
 
   .title {
@@ -8,9 +23,9 @@
 
   }
 
-  .round-border{
+  .round-border {
     border-radius: 5px;
-    border:1px solid $color-gray5;
+    border: 1px solid $color-gray5;
     padding: 3px;
     font-weight: 600;
     color: $color-gray-max;
