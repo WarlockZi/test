@@ -1,5 +1,5 @@
 import './admin.scss'
-import './model/cache';
+import './model/cache.js';
 
 import '../components/header/header-adm.js'
 import '../components/header/search/search.js'
@@ -34,9 +34,9 @@ import product from './Product/product.js'
 import user from './User/user.js'
 
 
-import radio from '/public/src/components/radio/radio.js'
-import multiselect from '/public/src/components/multiselect/multiselect.js'
-import catalogItem from '/public/src/components/catalog-item/catalog-item.js'
+import radio from '../components/radio/radio.js'
+import multiselect from '../components/multiselect/multiselect.js'
+import catalogItem from '../components/catalog-item/catalog-item.js'
 import tooltips from '../components/tooltip/tooltip.js'
 import error from '../components/error/error.js'
 import select from '../components/select/select.js'

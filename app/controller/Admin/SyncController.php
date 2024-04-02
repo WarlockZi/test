@@ -51,14 +51,9 @@ class SyncController extends AppController
 	{
 		try {
 			$this->actions->init();
+			$this->logger->write("Файлы из 1с загружены");
 		} catch (\Exception $e) {
-			$message = PHP_EOL
-				. "---SyncControllerError---"
-				. PHP_EOL
-				. $e
-				. PHP_EOL
-				. $e->getMessage()
-				. PHP_EOL;
+			$message = PHP_EOL. "---SyncControllerError---". PHP_EOL. $e. PHP_EOL. $e->getMessage(). PHP_EOL;
 			$this->logger->write($message);
 			exit('Выгрузка на сайт не удалась. Подробности в load.log');
 		}

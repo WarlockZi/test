@@ -1,7 +1,7 @@
 <?
 
 use app\core\Error;
-
+//require_once __DIR__ . '/helpers.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,18 +12,26 @@ use app\core\Error;
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
+	<script type="module" crossorigin="true" src="ws://localhost:5174/"></script>
+<!--	--><?//include (ROOT.'/public/build/index.html');?>
+<!--	--><?//= vite('main.js') ?>
+<!--	--><?//= $this->assets->getCss() ?>
+<!--	--><?//= $this->assets->getCDNCss() ?>
 
-	<?= $this->assets->getCss() ?>
-	<?= $this->assets->getCDNCss() ?>
-<!--	<script type="module" src="../../../public/src/Admin/admin.js"></script>-->
-<!--	<script type="module" src="ws://localhost:5173/@vite/client"></script>-->
 </head>
 
 <body>
 
 <div class="admin-layout__container">
 
+
+
+
+
+
 	<?= $this->getHeader(); ?>
+
+
 
 
 	<div class="admin-layout__content">
@@ -40,8 +48,8 @@ use app\core\Error;
 
 <?= $this->getFooter();?>
 
-<?= $this->assets->getJs() ?>
-<?= $this->assets->getCDNJs() ?>
+<?//= $this->assets->getJs() ?>
+<?//= $this->assets->getCDNJs() ?>
 
 </body>
 </html>
