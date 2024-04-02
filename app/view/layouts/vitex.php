@@ -18,27 +18,7 @@ use app\core\Icon;
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="/logo-square.svg" type="image/svg+xml">
 	<?= $this->getCanonical(); ?>
-	<script
-			type="module"
-	>
 
-	</script>
-	<script
-			type="module"
-	>
-     // import m from '/public/src/Main/main.js'
-     // // Then some JavaScript in the browser:
-     // var conn = new WebSocket('ws://localhost:8080/echo');
-     // conn.onmessage = function (e) {
-     //   console.log(e.data);
-     // };
-     // conn.onopen = function (e) {
-     //   conn.send('Hello Me!');
-     // };
-     // debugger
-     // if (m) {
-	  //
-     // }
 	</script>
 	<!--	<script type="module" src="http://192.168.1.212:3000/public/src/"></script>-->
 	<!--	<script type="module" src="../../../public/src/Main/main.js"></script>-->
@@ -49,8 +29,8 @@ use app\core\Icon;
 	<?= $this->assets->getMeta(); ?>
 
 
-	<!--	--><? //= $this->assets->getCss(); ?>
-	<!--	--><? //= $this->assets->getCDNCss(); ?>
+		<?= $this->assets->getCss(); ?>
+		<?= $this->assets->getCDNCss(); ?>
 
 </head>
 
@@ -68,8 +48,8 @@ use app\core\Icon;
 
 <? //= Footer::getUserCookie(); ?>
 
-<? //= $this->assets->getJs(); ?>
-<? //= $this->assets->getCDNJs(); ?>
+<?= $this->assets->getJs(); ?>
+<?= $this->assets->getCDNJs(); ?>
 
 <? //= Footer::getYaMetrica(); ?>
 <? //= Footer::getVK(); ?>
