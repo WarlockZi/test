@@ -27,10 +27,11 @@ class Assets
 	public function __construct()
 	{
 		$this->setCache();
-		$port = $_ENV['FRONTEND_PORT'];
-		$this->setHost('http://localhost');
+//		$port = $_ENV['FRONTEND_PORT'];
+		$this->setHost();
+//		$this->setHost('http://localhost');
 //		$this->setPort(4000);
-		$this->setPort(3000);
+//		$this->setPort(3000);
 //		$this->setPath('/');
 //		$this->setPath('public/src/Main/');
 //		$this->setPath('public/build/assets/');
