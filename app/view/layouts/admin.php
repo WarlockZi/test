@@ -15,8 +15,8 @@ use app\core\Error;
 	<script type="module" crossorigin="true" src="ws://localhost:5174/"></script>
 <!--	--><?//include (ROOT.'/public/build/index.html');?>
 <!--	--><?//= vite('main.js') ?>
-<!--	--><?//= $this->assets->getCss() ?>
-<!--	--><?//= $this->assets->getCDNCss() ?>
+	<?= $this->assets->getCss() ?>
+	<?= $this->assets->getCDNCss() ?>
 
 </head>
 
@@ -48,8 +48,8 @@ use app\core\Error;
 
 <?= $this->getFooter();?>
 
-<?//= $this->assets->getJs() ?>
-<?//= $this->assets->getCDNJs() ?>
+<?= $this->assets->getJs() ?>
+<?= $this->assets->getCDNJs() ?>
 
 </body>
 </html>
