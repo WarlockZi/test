@@ -23,6 +23,7 @@ class SyncActions extends AppController
 	{
 		$this->repo = $repo;
 		$this->route = $route;
+//		$this->logger =
 	}
 
 	/**
@@ -84,7 +85,7 @@ class SyncActions extends AppController
 		exit('success');
 	}
 
-	protected function logReqest($func)
+	protected function logReqest($func, $logger)
 	{
 		$text = '<br>--' . date("H:i:s") . "--{$func}<br>";
 		if (isset($_GET)) {

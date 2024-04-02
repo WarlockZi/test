@@ -19,7 +19,9 @@ if ($_ENV['DEV']) {
 require_once FS::platformSlashes(ROOT . "/app/Services/Eloquent.php");
 
 try {
-
+	header('Access-Control-Allow-Origin: *');
+	header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+	header('Access-Control-Allow-Headers: X-Requested-With');
 	$user = Auth::getAuth();
 
 //	$mockUser = \app\model\User::query()->find(160);

@@ -10,6 +10,7 @@ use app\core\FS;
 use app\view\Assets\AdminAssets;
 use app\view\Assets\TestAssets;
 use app\view\Header\Admin\AdminHeader;
+use function app\view\helpers\vite;
 
 
 class AdminView extends View
@@ -22,8 +23,9 @@ class AdminView extends View
 	public function __construct(Controller $controller)
 	{
 		parent::__construct($controller);
+		new \app\view\Vite('main.js');
 
-		$this->setView($controller);
+//		$this->setView($controller);
 		$this->setLayout($controller);
 		$this->setHeader($this->user);
 		$this->setFooter();
@@ -32,6 +34,11 @@ class AdminView extends View
 		} else {
 			$this->setAssets();
 		}
+	}
+
+	protected function vite($en){
+		$v = new \app\view\Vite($en);
+//		vite();
 	}
 
 	protected function setView($controller)

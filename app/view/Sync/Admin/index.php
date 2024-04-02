@@ -37,15 +37,15 @@ use app\core\Icon;
 		<BR>
 		<BR>
 		<a class="button"
-		   href="/adminsc/sync/init?type=catalog&mode=import">/adminsc/sync/init?type=catalog&mode=import</a>
+		   title="/adminsc/sync/init?type=catalog&mode=import"
+		   href="/adminsc/sync/load">type=catalog -- mode=import</a>
 		<BR>
 		<BR>
 		<hr>
 		<BR>
 		<BR>
 		<a class="button" href="/adminsc/sync/part?type=catalog&mode=checkauth">/adminsc/sync/part?type=catalog&mode=checkauth</a>
-		<a class="button"
-		   href="/adminsc/sync/part?type=catalog&mode=import">/adminsc/sync/part?type=catalog&mode=import</a>
+		<a class="button" title="/adminsc/sync/part?type=catalog&mode=import" href="/adminsc/sync/part?type=catalog&mode=import">/adminsc/sync/part?type=catalog&mode=import</a>
 
 	</div>
 

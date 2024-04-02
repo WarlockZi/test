@@ -20,19 +20,29 @@ class Assets
 	protected $desc;
 	protected $keywords;
 	protected $port;
+	protected $path;
 
 	protected $canonical;
 
 	public function __construct()
 	{
 		$this->setCache();
-		$this->setPort($_ENV['FRONTEND_PORT']);
-		$this->setHost();
+		$port = $_ENV['FRONTEND_PORT'];
+		$this->setHost('http://localhost');
+//		$this->setPort(4000);
+		$this->setPort(3000);
+//		$this->setPath('/');
+//		$this->setPath('public/src/Main/');
+//		$this->setPath('public/build/assets/');
+	}
+	public function setPath(string $path='')
+	{
+		$this->path = $path;
 	}
 
 	public function setPort(int $port)
 	{
-		$this->port = $port;
+		$this->port = ":".$port."/";
 	}
 
 	public function getMeta()
@@ -104,15 +114,19 @@ class Assets
 		unset($this->css[$name]);
 	}
 
-	public function setHost()
+	public function setHost($host='')
 	{
-		$this->host = $_ENV['DEV']
+		if ($host) {
+			$this->host = $host;
+		}else{
+			$this->host = $_ENV['DEV']
 //			? 'https://localhost:4000/dist/'
 //			? 'https://127.0.0.1:4000/dist/'
-			// ? 'http://127.0.0.1:4000/public/dist/'
-			? "http://127.0.0.1:{$this->port}/"
-			: '/public/dist/';
+				// ? 'http://127.0.0.1:4000/public/dist/'
+				? "http://127.0.0.1{$this->port}/{$this->path}"
+				: '/public/dist/';
 //			: '/assets/';
+		}
 	}
 
 	public function getHost()
@@ -133,7 +147,7 @@ class Assets
 	public function getJS(string $str = ''): string
 	{
 		foreach ($this->js as $name) {
-			$str .= "<script src='{$this->host}{$name}.js{$this->getTime()}' defer></script>";
+			$str .= "<script src='{$this->host}{$this->host}{$this->path}{$name}.js{$this->getTime()}' defer></script>";
 		}
 		return $str;
 	}
@@ -141,7 +155,7 @@ class Assets
 	public function getCss(string $str = '')
 	{
 		foreach ($this->css as $name) {
-			$str .= "<link href='{$this->host}{$name}.css{$this->getTime()}' rel='stylesheet' type='text/css'>";
+			$str .= "<link href='{$this->host}{$this->port}{$this->path}{$name}.css{$this->getTime()}' rel='stylesheet' type='text/css'>";
 		}
 		return $str;
 	}
