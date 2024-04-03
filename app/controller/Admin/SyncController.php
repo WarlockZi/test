@@ -34,7 +34,7 @@ class SyncController extends AppController
 		$this->offerFile = $this->storage::getFile('offers0_1.xml');
 
 		$this->repo = new SyncRepository($this->route, $this->importFile, $this->offerFile, $this->logger);
-		$this->actions = new SyncActions($this->repo, $this->route);
+		$this->actions = new SyncActions($this->repo, $this->route,$this->logger);
 	}
 
 	public function setStorage()

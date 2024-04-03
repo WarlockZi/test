@@ -7,6 +7,8 @@ namespace app\Actions;
 use app\controller\AppController;
 use app\core\Route;
 use app\Repository\SyncRepository;
+use app\Storage\StorageDev;
+use app\Storage\StorageImport;
 
 class SyncActions extends AppController
 {
@@ -19,11 +21,25 @@ class SyncActions extends AppController
 	protected $logger;
 	protected $repo;
 
-	public function __construct(SyncRepository $repo, Route $route)
+	public function __construct(SyncRepository $repo, Route $route, $logger)
 	{
+		$this->setStorage();
 		$this->repo = $repo;
 		$this->route = $route;
-//		$this->logger =
+		$this->logger = $logger;
+
+		$this->importFile = $this->storage::getFile('import0_1.xml');
+		$this->offerFile = $this->storage::getFile('offers0_1.xml');
+	}
+
+	public function setStorage()
+	{
+		$this->importPath = StorageImport::getPath();
+		if ($_ENV['DEV'] == '1') {
+			$this->storage = StorageDev::class;
+		} else {
+			$this->storage = StorageImport::class;
+		}
 	}
 
 	/**
@@ -46,17 +62,27 @@ class SyncActions extends AppController
 		}
 	}
 
+	private function importFilesExist(){
+		if (!is_readable($this->importFile)) {
+			$this->logger->write('Отсутстует файл importFile');
+			return false;
+		}
+		if (!is_readable($this->offerFile)) {
+			$this->logger->write('Отсутстует файл offerFile');
+			return false;
+		}
+		return true;
+	}
+
 	public function load()
 	{
 		try {
+			if (!$this->importFilesExist())exit('Отсутстуют импорт файлы');
+
 			$this->repo->softTrancate();
-			if (!is_readable($this->importFile)) exit('Отсутстует файл importFile');
 
 			$this->repo->LoadCategories();
 			$this->repo->LoadProducts();
-
-			if (!is_readable($this->offerFile)) exit('Отсутстует файл offerFile');
-
 			$this->repo->LoadPrices();
 
 		} catch (\Exception $e) {
@@ -85,7 +111,7 @@ class SyncActions extends AppController
 		exit('success');
 	}
 
-	protected function logReqest($func, $logger)
+	protected function logReqest($func)
 	{
 		$text = '<br>--' . date("H:i:s") . "--{$func}<br>";
 		if (isset($_GET)) {
