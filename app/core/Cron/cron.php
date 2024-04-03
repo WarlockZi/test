@@ -11,9 +11,9 @@ $opts = array(
 $context = stream_context_create($opts);
 
 //for php4 use fopen
-echo "querry sent to sync/load". date("Y_m_d H:i:s").PHP_EOL ;
+echo date("Y_m_d H:i:s") . PHP_EOL . " querry sent to sync/load";
 $html_data = file_get_contents('https://vitexopt.ru/adminsc/sync/load', false, $context);
-echo "Load categories, products, prices, units done! ". date("Y_m_d H:i:s").PHP_EOL ;
+echo date("Y_m_d H:i:s") . PHP_EOL . " done! ";
 exit;
 
 // 1c выгрузка происходит каждый день с 0:30:00 по 23:00:00
