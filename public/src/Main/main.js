@@ -10,23 +10,23 @@ import Promotions from '../Promotions/Promotion'
 
 // import WebSocket from 'ws';
 //
-const ws = new WebSocket('wss://localhost:3000');
+// const ws = new WebSocket('wss://localhost:3000');
+// //
+// debugger
+// ws.onerror = console.error;
 //
-debugger
-ws.onerror = console.error;
-
-ws.onopen = function open() {
-  ws.send('something');
-};
-
-ws.onmessage = function message(data) {
-  console.log('received: %s', data);
-}
+// ws.onopen = function open() {
+//   ws.send('something');
+// };
+//
+// ws.onmessage = function message(data) {
+//   console.log('received: %s', data);
+// }
 
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  debugger
+  // debugger
 
   // const proxy = new ViteProxyWebsocket({target: 'ws://example.com', path: '/websocket'});
 

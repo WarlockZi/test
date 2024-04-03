@@ -32,7 +32,7 @@ class Assets
 //		$this->setHost('http://localhost');
 //		$this->setPort(4000);
 //		$this->setPort(3000);
-//		$this->setPath('/');
+		$this->setPath('/');
 //		$this->setPath('public/src/Main/');
 //		$this->setPath('public/build/assets/');
 	}
@@ -40,7 +40,20 @@ class Assets
 	{
 		$this->path = $path;
 	}
-
+	public function setHost($host='')
+	{
+		if ($host) {
+			$this->host = $host;
+		}else{
+			$this->host = $_ENV['DEV']
+				? 'http://localhost:4000'
+//			? 'https://127.0.0.1:4000/dist/'
+				// ? 'http://127.0.0.1:4000/public/dist/'
+//				? "http://127.0.0.1{$this->port}/{$this->path}"
+				: '/public/dist/';
+//			: '/assets/';
+		}
+	}
 	public function setPort(int $port)
 	{
 		$this->port = ":".$port."/";
@@ -105,30 +118,8 @@ class Assets
 		return $str;
 	}
 
-	public function unsetJs(string $name)
-	{
-		unset($this->js[$name]);
-	}
 
-	public function unsetCss($name)
-	{
-		unset($this->css[$name]);
-	}
 
-	public function setHost($host='')
-	{
-		if ($host) {
-			$this->host = $host;
-		}else{
-			$this->host = $_ENV['DEV']
-//			? 'https://localhost:4000/dist/'
-//			? 'https://127.0.0.1:4000/dist/'
-				// ? 'http://127.0.0.1:4000/public/dist/'
-				? "http://127.0.0.1{$this->port}/{$this->path}"
-				: '/public/dist/';
-//			: '/assets/';
-		}
-	}
 
 	public function getHost()
 	{
@@ -148,7 +139,7 @@ class Assets
 	public function getJS(string $str = ''): string
 	{
 		foreach ($this->js as $name) {
-			$str .= "<script src='{$this->host}{$this->host}{$this->path}{$name}.js{$this->getTime()}' defer></script>";
+			$str .= "<script src='{$this->host}{$this->path}{$name}.js{$this->getTime()}' defer></script>";
 		}
 		return $str;
 	}
@@ -195,6 +186,15 @@ class Assets
 		return $this->cache;
 	}
 
+	public function unsetJs(string $name)
+	{
+		unset($this->js[$name]);
+	}
+
+	public function unsetCss($name)
+	{
+		unset($this->css[$name]);
+	}
 	public function setQuill()
 	{
 //		$this->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.bubble.css");
