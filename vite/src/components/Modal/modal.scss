@@ -1,0 +1,201 @@
+@import "../../var";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
+
+.modal-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    content: "";
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 3;
+    transition: opacity 300ms ease-in;
+  }
+
+  .modal-box {
+    width: 400px;
+    padding: 5%;
+    transform: translate(-50%, -50%) scale(.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0px 2px 16px rgba(80, 80, 80, 0.9);
+    background: #15172b;
+    color: #eee;
+
+    .title {
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+
+    .modal-close {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      top: 10px;
+      right: 10px;
+      border-radius: 1000px;
+      background: $color-main;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff;
+      line-height: 190%;
+      cursor: pointer;
+      transition: all ease 0.5s;
+
+      &:hover {
+        transform: rotate(180deg);
+      }
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+
+      .input-container {
+        display: flex;
+        height: 50px;
+        position: relative;
+        width: 100%;
+        margin: 20px 0;
+
+        input {
+          background-color: #303245;
+          border-radius: 12px;
+          border: 0;
+          color: #eee;
+          font-size: 18px;
+          height: 100%;
+          outline: 0;
+          padding: 4px 20px 0;
+          width: 100%;
+
+          //&:-webkit-autofill:selected{
+          //  background-color: #303245 !important;
+          //}
+
+          &:-webkit-autofill,
+          &:-webkit-autofill:hover,
+          &:-webkit-autofill:focus,
+          //&:-webkit-autofill:selected,
+          &:-webkit-autofill:active{
+            -webkit-box-shadow:0 0 0 1000px #303245 inset !important; ;
+            transition: background-color 5000s ease-in-out 0s;
+            -webkit-text-fill-color: #eee !important;
+          }
+
+          &:not(:placeholder-shown):not(:focus):invalid {
+            border: 1px solid #dc2f55;
+          }
+
+          &:not(:placeholder-shown):not(:focus):valid {
+            border: 1px solid #2fdcdb;
+          }
+
+          &:not(:placeholder-shown):not(:focus):invalid ~ label  {
+            color: #dc2f55;
+          }
+
+          &:not(:placeholder-shown):not(:focus):valid ~ label {
+            color: #2fdcdb;
+          }
+
+          //&:focus:invalid ~ label {
+          //  color: #dc2f55;
+          //}
+
+          &:focus ~ .badge,
+          &:not(:placeholder-shown) ~ .badge {
+            transform: translateY(8px);
+          }
+
+          &:focus ~ label,
+          &:not(:placeholder-shown) ~ label {
+            transform: translateY(-30px) translateX(10px) scale(0.75);
+          }
+
+          &:not(:placeholder-shown) ~ label {
+            color: #808097;
+          }
+
+        }
+
+        .badge {
+          background-color: #15172b;
+          border-radius: 10px;
+          height: 20px;
+          left: 20px;
+          position: absolute;
+          top: -20px;
+          transform: translateY(0);
+          transition: transform 200ms;
+          width: 76px;
+        }
+
+        label {
+          color: #65657b;
+          left: 20px;
+          line-height: 14px;
+          pointer-events: none;
+          position: absolute;
+          transform-origin: 0 50%;
+          transition: transform 200ms, color 200ms;
+          top: 20px;
+          padding-left: 5px;
+        }
+      }
+    }
+
+
+    p {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+    }
+
+  }
+
+
+  .transform-in, .transform-out {
+    display: block;
+    transition: all ease 0.5s;
+    z-index: 3;
+  }
+
+  .transform-in {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .transform-out {
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+  #submit {
+    padding: 15px 30px 15px 30px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    text-transform: uppercase;
+    color: white;
+    background-color: $color-main;
+
+    &:hover {
+      background-color: $color-main-hover;
+    }
+  }
+}

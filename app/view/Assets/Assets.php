@@ -40,7 +40,7 @@ class Assets
 	{
 		$this->path = $path;
 	}
-	public function setHost($host='')
+	public function setHost($host=''):void
 	{
 		if ($host) {
 			$this->host = $host;

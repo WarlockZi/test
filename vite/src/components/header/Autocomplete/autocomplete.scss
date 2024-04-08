@@ -1,0 +1,94 @@
+@import "../../../var";
+@import "../../../mixin_media";
+
+.search-wrap {
+
+  .search {
+    position: relative;
+    //height: 32px;
+    background: $color-main;
+    margin: 2px 15px;
+    display: flex;
+    height: 100%;
+  }
+
+  .search-top {
+    display: none;
+    @include _800 {
+      display: flex;
+    }
+  }
+
+  .search-header {
+    @include _800 {
+      display: none;
+    }
+  }
+
+  .search input {
+    flex: 1;
+    padding: 0 0 0 12px;
+    border: hsl(0, 0%, 31%) 1px solid;
+    border-radius: 2px;
+  }
+
+
+  .search__result {
+    position: absolute;
+    top: 100%;
+    z-index: 2;
+    right: 1px;
+    box-shadow: 0px 12px 18px 0px hsla(168, 50%, 42%, 0.8)
+  }
+
+  .search__result a {
+    display: flex;
+    color: #4a4a4a;
+    padding: 3px 10px;
+    align-items: center;
+    background-color: #fff;
+
+    &:hover {
+      transform: scale(1.01);
+      background-color: hsl(168, 75%, 98%);
+    }
+  }
+
+  .search__find {
+    height: 30px;
+    width: 32px;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: hsl(0, 0%, 50%);
+    }
+  }
+
+  .search__find:before {
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    box-sizing: border-box;
+    left: 9px;
+    top: 5px;
+    height: 14px;
+    width: 14px;
+    content: '';
+    display: block;
+    position: absolute;
+  }
+
+  .search__find:after {
+    background: #ccc;
+    bottom: 5px;
+    transform: rotate(-45deg);
+    right: 8px;
+    height: 9px;
+    width: 2px;
+    content: '';
+    display: block;
+    position: absolute;
+  }
+}

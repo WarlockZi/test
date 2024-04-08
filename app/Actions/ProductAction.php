@@ -10,6 +10,8 @@ use Exception;
 class ProductAction
 {
 
+
+
 	public static function attachMainImage(array $file, string $productId): string
 	{
 		$product = Product::query()->find($productId);

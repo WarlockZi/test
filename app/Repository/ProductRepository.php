@@ -152,10 +152,21 @@ class ProductRepository extends AppController
 			return $product;
 	}
 
+	public static function trashed()
+	{
+		return Product::query()
+			->with('price')
+			->onlyTrashed()
+			->with('mainImages')
+			->take(20)
+			->orderBy('id', "DESC")
+			->get();
+	}
 	public static function list()
 	{
 		return Product::query()
 			->with('price')
+			->with('mainImages')
 			->take(20)
 			->orderBy('id', "DESC")
 			->get();

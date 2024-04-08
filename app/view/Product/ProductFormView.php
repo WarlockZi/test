@@ -419,6 +419,61 @@ class ProductFormView
 			->get();
 	}
 
+	public static function trashed(Collection $items): string
+	{
+		return MyList::build(Product::class)
+			->pageTitle('Товары')
+			->column(
+				ListColumnBuilder::build('id')
+					->name('ID')
+					->get()
+			)
+			->column(
+				ListColumnBuilder::build('name')
+					->name('Наименование')
+					->contenteditable()
+					->search()
+					->width('1fr')
+					->get()
+			)
+			->column(
+				ListColumnBuilder::build('art')
+					->name('Артикул')
+					->contenteditable()
+					->search()
+					->width('100px')
+					->get()
+			)
+			->column(
+				ListColumnBuilder::build('sort')
+					->name('Порядок')
+					->contenteditable()
+					->search()
+					->width('50px')
+					->get()
+			)
+			->column(
+				ListColumnBuilder::build('price')
+					->name('Цена')
+					->contenteditable()
+					->width('70px')
+					->function(ProductRepository::class, 'priceStatic')
+					->get()
+			)
+//			->column(
+//				ListColumnBuilder::get('image')
+//					->name('Картинка')
+//					->width('100px')
+//					->function(ProductRepository::class, 'imageStatic')
+//					->get()
+//			)
+			->items($items)
+			->edit()
+			->del()
+			->addButton('ajax')
+			->get();
+	}
+
 	public static function belongToCategory($category)
 	{
 		$arr = $category->toArray();

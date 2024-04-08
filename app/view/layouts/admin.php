@@ -11,8 +11,7 @@ use app\core\Error;
 	<meta name="robots" content="noindex,nofollow"/>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
-	<script type="module" crossorigin="true" src="ws://localhost:5174/"></script>
+<!--	<script type="module" crossorigin="true" src="ws://localhost:5174/"></script>-->
 <!--	--><?//include (ROOT.'/public/build/index.html');?>
 <!--	--><?//= vite('main.js') ?>
 	<?= $this->assets->getCss() ?>

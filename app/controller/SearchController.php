@@ -8,6 +8,17 @@ use app\model\Product;
 
 class SearchController extends AppController
 {
+
+	protected function addTrashed($query, $admin)
+	{
+		if ($admin) {
+			$query->withTrashed();
+			$query->select('name', 'slug', 'art', 'id', 'instore','deleted_at');
+			return $query;
+		}
+		return $query->select('name', 'slug', 'art', 'id', 'instore',);
+	}
+
 	public function actionIndex()
 	{
 		if (!$this->ajax) exit();
@@ -18,19 +29,20 @@ class SearchController extends AppController
 
 		$admin = in_array('/adminsc', parse_url($_SERVER['HTTP_REFERER']));
 
-		$art = Product::query()
-			->trashed($admin)
+		$query = Product::query();
+		$query = $this->addTrashed($query, $admin);
+
+		$art = $query
 			->where('art', 'LIKE', $q)
 			->where('instore', '>', 0)
-			->select('name', 'slug', 'art', 'id', 'instore',)
+
 			->take(20)
 			->get();
 
-		$name = Product::query()
-			->trashed($admin)
+		$name = $query
 			->where('name', 'LIKE', $q)
 			->where('instore', '>', 0)
-			->select('name', 'slug', 'art', 'id', 'instore',)
+//			->select('name', 'slug', 'art', 'id', 'instore',)
 			->take(20)
 			->get();
 

@@ -1,0 +1,68 @@
+@import "../var";
+@import "../mixin_media";
+
+
+.cart {
+
+  .content {
+
+    .count-setter {
+      @include cartRowGrey;
+      max-width: 120px;
+      display: flex;
+      align-items: center;
+
+      @include countSetter;
+    }
+
+    .order-item_not-found {
+      padding: 10px;
+      color: $color-warning;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+
+    .message {
+      margin: 40px auto;
+      width: clamp(300px, 40%, 450px);
+      font-size: 1rem;
+      color: $color-main-green;
+      line-height: 3;
+    }
+
+    @include cartRow;
+
+
+  }
+
+  .empty-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30vh;
+  }
+
+  .total {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid $color-gray2;
+    align-items: center;
+
+    .title {
+      font-weight: 600;
+
+    }
+
+    span {
+      display: flex;
+      justify-content: end;
+      margin: 10px 0;
+      padding: 10px;
+      flex: 0 0 150px;
+    }
+
+  }
+}
+

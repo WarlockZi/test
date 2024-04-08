@@ -2,6 +2,7 @@
 
 use app\core\Icon;
 
+require_once __DIR__ . '/helpers.php';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -19,13 +20,19 @@ use app\core\Icon;
 	<link rel="icon" href="/logo-square.svg" type="image/svg+xml">
 	<?= $this->getCanonical(); ?>
 
-	</script>
+	<?= app\vite\Vite::serve('main.js') ?>
+<!--	--><?//= app\vite\Vite::serve('main.js','https://172.25.240.1:5133') ?>
+<!--	--><?//= app\vite\Vite::serve('main.js','https://192.168.1.212:5133') ?>
 	<!--	<script type="module" src="http://192.168.1.212:3000/public/src/"></script>-->
+	<!--	<script type="module" src="http://172.25.240.1:5133/public/src/"></script>-->
 	<!--	<script type="module" src="../../../public/src/Main/main.js"></script>-->
 	<!--	<script type="module" src="https://localhost:4000/public/src/Main/main.js"></script>-->
 	<!--	--><? //include (ROOT.'/public/build/index.html');?>
 	<!--	--><? //= vite('main.js') ?>
-	<!--	--><?php //echo $cssBundle ?>
+<!--		<script type="module" src="/@vite/client"></script>-->
+<!--		<script type="module" src="https://vi-production:5133/@vite/client"></script>-->
+<!--		<script type="module" src="../../../public/src/Main/main.js"></script>-->
+
 	<?= $this->assets->getMeta(); ?>
 
 
@@ -46,10 +53,11 @@ use app\core\Icon;
 
 <?= $this->getFooter(); ?>
 
-<? //= Footer::getUserCookie(); ?>
 
 <?= $this->assets->getJs(); ?>
 <?= $this->assets->getCDNJs(); ?>
+
+<? //= Footer::getUserCookie(); ?>
 
 <? //= Footer::getYaMetrica(); ?>
 <? //= Footer::getVK(); ?>
