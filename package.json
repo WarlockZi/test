@@ -14,7 +14,7 @@
     "build": "webpack --mode production",
     "dev": "webpack -w",
     "serve": "webpack serve --mode development",
-    "vdev": "vite ",
+    "vdev": "vite --host",
     "vprev": "vite preview",
     "vbuild": "vite build "
   },

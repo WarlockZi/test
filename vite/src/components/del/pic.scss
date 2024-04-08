@@ -1,0 +1,28 @@
+/*//////////////////////////////*/
+/*/////  PIC BOX  //////*/
+/*//////////////////////////////*/
+
+.pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+.pic .column {
+  padding: 10px;
+}
+
+.pic .column div {
+  height: 150px;
+  width: 150px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pic span {
+  padding: 20px 0 5px 10px;
+  max-width: 150px;
+}

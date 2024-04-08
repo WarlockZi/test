@@ -1,0 +1,19 @@
+@import "../../var";
+
+.custom-radio {
+  //margin: $margin-form;
+  background: #fff;
+  min-width: 127px;
+  display: flex;
+  gap: 10px;
+
+
+  label {
+  padding: 6px ;
+  }
+
+  label:hover {
+    background-color: #cccccc;
+  }
+
+}

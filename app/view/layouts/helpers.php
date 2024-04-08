@@ -1,151 +1,151 @@
 <?php
-// Helpers here serve as example. Change to suit your needs.
-const VITE_HOST = 'http://localhost:4000/public/build/assets';
-//const VITE_HOST = 'http://localhost:4000/';
-const MANIFEST = ROOT.'/public/build/manifest.json';
+
+namespace app\vite;
+
+class Vite
+{
+	protected $VITE_HOST;
+	protected $MANIFEST;
+	protected string $entry;
+	protected bool $isDev;
 
 //const VITE_HOST = 'http://localhost:4000/public/build/assets';
 
-// For a real-world example check here:
-// https://github.com/wp-bond/bond/blob/master/src/Tooling/Vite.php
-// https://github.com/wp-bond/boilerplate/tree/master/app/themes/boilerplate
+	protected function __construct(string $entry, $host )
+	{
+		$this->entry = $entry;
+		$this->VITE_HOST = $host;
+		$this->MANIFEST = $this->getManifest(ROOT . '/public/dist/.vite/manifest.json');
+		$this->isDev = $this->isDev();
+	}
 
-// you might check @vitejs/plugin-legacy if you need to support older browsers
-// https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
+	public static function serve(string $entry, $host= 'http://localhost:5133')
+	{
+		$vite = new self($entry, $host);
+		return $vite->vite();
+	}
 
-
-
-// Prints all the html entries needed for Vite
-
-function vite(string $entry): string
-{
-//	return
-//		'<script type="module" src="' . VITE_HOST . '/@vite/client"></script>' . "\n".
-//		'<script
-//		type="module"
-//		src="' . VITE_HOST . '/main-101be6d0.js"></script>'.PHP_EOL.
-//		'<link rel="stylesheet" href="'.VITE_HOST .'/main-e05fdccd.css">';
-
-    return "\n" . jsTag($entry)
-        . "\n" . jsPreloadImports($entry)
-        . "\n" . cssTag($entry);
-}
-
-
-// Some dev/prod mechanism would exist in your project
-
-function isDev(string $entry): bool
-{
-    // This method is very useful for the local server
-    // if we try to access it, and by any means, didn't started Vite yet
-    // it will fallback to load the production files from manifest
-    // so you still navigate your site as you intended!
-
-    static $exists = null;
-    if ($exists !== null) {
-        return $exists;
-    }
-    $handle = curl_init(VITE_HOST . '/' . $entry);
-    curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($handle, CURLOPT_NOBODY, true);
-
-    curl_exec($handle);
-    $error = curl_errno($handle);
-    curl_close($handle);
-
-    return $exists = !$error;
-}
+	function vite(): string
+	{
+		$js = $this->jsTag();
+		$preImport = $this->jsPreloadImports();
+		$css = $this->cssTag();
+		return "\n" . $js
+			. "\n" . $preImport
+			. "\n" . $css;
+	}
 
 
-// Helpers to print tags
+	function isDev(): bool
+	{
+		static $exists = null;
+		if ($exists !== null) {
+			return $exists;
+		}
 
-function jsTag(string $entry): string
-{
-    $url = isDev($entry)
-        ? VITE_HOST . '/' . $entry
-        : assetUrl($entry);
+		$h1 = $this->h1($this->VITE_HOST);
+//		$h2 = $this->h1('https://localhost:5133');
+//		$h3 = $this->h1('https://172.25.240.1:5133');
+//		$h4 = $this->h1('https://192.168.1.212:5133');
 
-    if (!$url) {
-        return '';
-    }
-    if (isDev($entry)) {
-        return '<script type="module" src="' . VITE_HOST . '/@vite/client"></script>' . "\n"
-            . '<script type="module" src="' . $url . '"></script>';
-    }
-    return '<script type="module" src="' . $url . '"></script>';
-}
+		return !$h1;
+	}
 
-function jsPreloadImports(string $entry): string
-{
-    if (isDev($entry)) {
-        return '';
-    }
+	function h1($host)
+	{
+		$handle = curl_init($host . '/' . $this->entry);
+		curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($handle, CURLOPT_NOBODY, true);
 
-    $res = '';
-    foreach (importsUrls($entry) as $url) {
-        $res .= '<link rel="modulepreload" href="'
-            . $url
-            . '">';
-    }
-    return $res;
-}
+		curl_exec($handle);
+		$error = curl_errno($handle);
+		curl_close($handle);
+		return $error;
+	}
 
-function cssTag(string $entry): string
-{
-    // not needed on dev, it's inject by Vite
-    if (isDev($entry)) {
-        return '';
-    }
+	function jsTag(): string
+	{
+		$url = $this->isDev
+			? $this->VITE_HOST . '/' . $this->entry
+			: $this->assetUrl();
 
-    $tags = '';
-    foreach (cssUrls($entry) as $url) {
-        $tags .= '<link rel="stylesheet" href="'
-            . $url
-            . '">';
-    }
-    return $tags;
-}
+		if (!$url) {
+			return '';
+		}
+		if ($this->isDev) {
+			return '<script type="module" src="' . $this->VITE_HOST . '/@vite/client"></script>' . "\n"
+				. '<script type="module" src="' . $url . '"></script>';
+		}
+		return '<script type="module" src="' . $url . '"></script>';
+	}
+
+	function jsPreloadImports(): string
+	{
+		if ($this->isDev) {
+			return '';
+		}
+
+		$res = '';
+		foreach ($this->importsUrls() as $url) {
+			$res .= '<link rel="modulepreload" href="'
+				. $url
+				. '">';
+		}
+		return $res;
+	}
+
+	function cssTag(): string
+	{
+		// not needed on dev, it's inject by Vite
+		if ($this->isDev) {
+			return '';
+		}
+
+		$tags = '';
+		foreach ($this->cssUrls() as $url) {
+			$tags .= '<link rel="stylesheet" href="'
+				. $url
+				. '">';
+		}
+		return $tags;
+	}
 
 
-// Helpers to locate files
+	function getManifest($path): array
+	{
+		$content = file_get_contents($path);
+		return json_decode($content, true);
+	}
 
-function getManifest(): array
-{
-    $content = file_get_contents(MANIFEST);
-    return json_decode($content, true);
-}
+	function assetUrl(): string
+	{
 
-function assetUrl(string $entry): string
-{
-    $manifest = getManifest();
+		return isset($this->MANIFEST[$this->entry])
+			? '/dist/' . $this->MANIFEST[$this->entry]['file']
+			: '';
+	}
 
-    return isset($manifest[$entry])
-        ? '/dist/' . $manifest[$entry]['file']
-        : '';
-}
+	function importsUrls(): array
+	{
+		$urls = [];
 
-function importsUrls(string $entry): array
-{
-    $urls = [];
-    $manifest = getManifest();
+		if (!empty($this->MANIFEST[$this->entry]['imports'])) {
+			foreach ($this->MANIFEST[$this->entry]['imports'] as $imports) {
+				$urls[] = '/dist/' . $this->MANIFEST[$imports]['file'];
+			}
+		}
+		return $urls;
+	}
 
-    if (!empty($manifest[$entry]['imports'])) {
-        foreach ($manifest[$entry]['imports'] as $imports) {
-            $urls[] = '/dist/' . $manifest[$imports]['file'];
-        }
-    }
-    return $urls;
-}
+	function cssUrls(): array
+	{
+		$urls = [];
 
-function cssUrls(string $entry): array
-{
-    $urls = [];
-    $manifest = getManifest();
-
-    if (!empty($manifest[$entry]['css'])) {
-        foreach ($manifest[$entry]['css'] as $file) {
-            $urls[] = '/dist/' . $file;
-        }
-    }
-    return $urls;
+		if (!empty($this->MANIFEST[$this->entry]['css'])) {
+			foreach ($this->MANIFEST[$this->entry]['css'] as $file) {
+				$urls[] = '/dist/' . $file;
+			}
+		}
+		return $urls;
+	}
 }

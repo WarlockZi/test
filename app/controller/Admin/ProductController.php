@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\Actions\ProductAction;
+use app\Actions\ProductFilterAction;
 use app\controller\AppController;
 use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
@@ -39,6 +40,19 @@ class ProductController extends AppController
 		$items = ProductRepository::list();
 		$list = ProductFormView::list($items);
 		$this->set(compact('list'));
+	}
+
+	public function actionTrashed()
+	{
+		$items = ProductRepository::trashed();
+		$trashed = ProductFormView::trashed($items);
+		$this->set(compact('trashed'));
+	}
+
+	public function actionFilter()
+	{
+		$res = ProductFilterAction::make($_POST)->get();
+		$this->exitJson($res);
 	}
 
 	public function actionChangeval()

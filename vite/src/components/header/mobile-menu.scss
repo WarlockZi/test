@@ -1,0 +1,48 @@
+@import "../../mixin_media";
+
+@mixin mobile-menu {
+
+  .mobile-menu {
+    position: absolute;
+    top: 100%;
+    right: -1000px;
+    width: 250px;
+    background: $color-main;
+    transition: right 200ms;
+
+    //@include _500 {
+    //  width: 100%;
+    //}
+
+    &.show {
+      right: 0;
+    }
+
+    hr{
+      width: 100%;
+    }
+
+    .wrap {
+      display: flex;
+      flex-flow: column;
+      margin: 20px;
+      text-align: end;
+
+      @include _500 {
+        text-align: center;
+      }
+
+      a {
+        color: #ffffff;
+        padding: 10px 50px 10px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $color-main-hover;
+        }
+      }
+    }
+
+  }
+
+}

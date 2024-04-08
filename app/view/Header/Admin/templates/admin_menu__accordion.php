@@ -193,6 +193,7 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 					 <? if (User::can($user, ['role_admin'])): // admin ?>
 				  <a class="neon" href="/adminsc/category">Категории</a>
 				  <a class="neon" href="/adminsc/product/list">Товары</a>
+				  <a class="neon" href="/adminsc/product/trashed">Товары удалены</a>
 
 					 <? endif; ?>
 			</ul>

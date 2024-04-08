@@ -1,0 +1,57 @@
+@import "../../var";
+
+$color-auto-fill: #d9e2f0;
+$secondary-color: #7f7f7f;
+$color-input: #323030;
+
+.centered {
+  margin: 10px 0px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.group {
+  overflow: hidden;
+  position: relative;
+
+  input {
+    display: block;
+    width: 100%;
+    padding: $padding-input-with-label;
+    color: #323030;
+    transition: 0.3s ease;
+    background: $color-gray1;
+    border: 1px solid $color-gray2;
+    box-sizing: border-box;
+
+    &:valid {
+
+      ~ label {
+        top: 0;
+        @include _h4;
+      }
+    }
+
+    // Stop Chrome's hideous pale yellow background on auto-fill
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px $color-auto-fill inset;
+      -webkit-text-fill-color: $color-input;
+      // border-bottom-color: rgba(white, .5);
+    }
+  }
+
+  label {
+    position: absolute;
+    top: 0px;
+    color: $color-main;
+    font: 400 14px Arial, Serif;
+    cursor: text;
+    transition: .25s ease;
+  }
+
+  ::selection {
+    background: rgba($secondary-color, .3);
+  }
+}

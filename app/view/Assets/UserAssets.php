@@ -11,7 +11,7 @@ class UserAssets extends Assets
 	{
 		parent::__construct();
 		$this->setJs('main');
-		$this->setJs('cookie');
+//		$this->setJs('cookie');
 
 		$this->setCss('main');
 		$this->setCss('cookie');

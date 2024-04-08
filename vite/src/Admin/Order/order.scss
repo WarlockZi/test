@@ -1,0 +1,62 @@
+@import "../../mixin_media";
+
+.lead-order {
+
+  .num {
+    padding: 10px;
+  }
+
+  .name {
+    padding: 10px;
+  }
+
+  .count {
+    padding: 10px;
+  }
+}
+
+.orders {
+
+  .title {
+    display: inline-flex;
+    margin: 10px 0;
+
+  }
+
+  .round-border {
+    border-radius: 5px;
+    border: 1px solid $color-gray5;
+    padding: 3px;
+    font-weight: 600;
+    color: $color-gray-max;
+  }
+
+  .leads {
+    margin: 10px 0;
+
+    .title {
+      @extend .title;
+      @extend .round-border;
+    }
+  }
+
+  .clients {
+    .title {
+      @extend .title;
+      @extend .round-border;
+    }
+
+  }
+}
+
+.order-edit {
+  .user {
+    margin: 10px 0;
+  }
+
+  @include cartRow;
+
+  .row {
+    gap: 5px;
+  }
+}

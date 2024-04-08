@@ -1,0 +1,54 @@
+.admin-actions {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 50px;
+  width: 150px;
+  border: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.adm-submenu {
+  max-width: 180px;
+  background-image: url(/pic/srvc/submenu-bg.png);
+  border-right: 1px solid #ddd;
+
+  .title {
+    font-weight: 600;
+    font-size: 25px;
+    color: #343436;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 10px;
+  }
+}
+
+
+
+.admin-actions a {
+  color: #4a4a4a;
+  font-size: 16px;
+  padding: 3px 0 7px 5px;
+
+  &:hover {
+    background: #cedbdf;
+
+  }
+
+  label ul {
+    display: none;
+    transition: all 1s;
+  }
+
+  label input {
+    display: none;
+  }
+
+  label input:checked + ul {
+    display: flex;
+    height: 100%;
+    transition: all 1s;
+  }
+
+
+
+}
+
