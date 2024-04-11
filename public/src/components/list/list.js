@@ -2,7 +2,6 @@ import './list.scss';
 import {$, post, debounce} from '../../common';
 import MorphDTO from "../morph/MorphDTO";
 
-debugger
 const tables = $('[custom-list]');
 
 if (tables) {
