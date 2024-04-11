@@ -34,6 +34,7 @@ class Unit extends Model
 			;
 	}
 
+
 	public function unit()
 	{
 		return $this
@@ -45,6 +46,8 @@ class Unit extends Model
 		return $this
 			->morphedByMany(Unit::class, 'unitable')
 			->withPivot('multiplier', 'product_id', 'main')
+			->wherePivot('main',1)
+			->orWherePivot('product_id',$this['1s_id'])
 			;
 	}
 

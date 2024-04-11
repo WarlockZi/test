@@ -27,19 +27,16 @@ use app\core\Icon;
 					 <?= Icon::minus() ?>
 			</button>
 				<?
-				if (isset($product->baseUnit->units)) {
-					$mainUnit = $product->baseUnit->units
-						->where('pivot.product_id', $product['1s_id'])
-						->where('pivot.main', 1)
-						->first();
-					if ($mainUnit) {
-						$unitName = $mainUnit->name;
-						$multiplier = $mainUnit->pivot->multiplier;
-					} else {
-						$unitName = $product->baseUnit->name;
-						$multiplier = 1;
-					}
+				$produt = $product->toArray();
+				$am = $product->baseUnit->units->toArray();
+				if (isset($product->baseUnit->units->mainUnit)) {
+					$unitName = $product->baseUnit->units->mainUnit->name;
+					$multiplier = $product->baseUnit->units->mainUnit->pivot->multiplier;
+				} else {
+					$unitName = $product->baseUnit->name;
+					$multiplier = 1;
 				}
+
 				?>
 			<span class="digit" contenteditable="true">1</span><span><?= $unitName ?></span>
 			<button tabindex="0" class="plus">

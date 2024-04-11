@@ -43,12 +43,9 @@ class ProductRepository extends AppController
 			->first();
 	}
 
-	public static function main(string $slug)
+	protected function mainShortSubquery($id)
 	{
-		$p = Product::where('slug', $slug)->withTrashed()->first();
-		if (!$p) $p = Product::where('short_link', $slug)->first();
-		$id = $p['1s_id'];
-		$product = Product::query()
+		return Product::query()
 			->withTrashed()
 			->orderBy('sort')
 			->with('category.properties.vals')
@@ -61,52 +58,45 @@ class ProductRepository extends AppController
 			->with('detailImages')
 			->with('smallpackImages')
 			->with('bigpackImages')
-//			->with('promotions.unit')
 			->with('activepromotions.unit')
 			->with('seo')
-			->with(['baseUnit' => function ($query) use ($id) {
-				$query->with(['units' => function ($query) use ($id) {
-						$query->wherePivot('product_id', $id)->get();
-					}]
-				);
+			->with(['baseUnit.units' => function ($query) use ($id) {
+				$query->wherePivot('main', 1)
+					->first();
 			}])
-			->where('1s_id', $id)
-			->first();
+			->where('1s_id', $id);
+	}
 
-//		$product->mainImage = (new ProductMainImage($product))->getRelativePath();
+	public static function main(string $slug)
+	{
+		$self = new self();
+		$p = Product::where('slug', $slug)->withTrashed()->first();
+		if (!$p) $p = Product::where('short_link', $slug)->first();
+		$id = $p['1s_id'];
+
+		$product =
+			$self->mainShortSubquery($id)
+				->first();;
+
+
+		$p = $product->toArray();
+
 		return $product;
 	}
 
 	public static function short(string $short)
 	{
+		$self = new self();
 		$p = Product::where('short_link', $short)->first();
 		$id = $p['1s_id'];
-		$product = Product::query()
-			->orderBy('sort')
-			->with('category.properties.vals')
-			->with('category.parentRecursive')
-			->with('category.parents')
-			->with('price')
-			->with('mainImages')
-			->with('values.property')
-			->with('manufacturer.country')
-			->with('detailImages')
-			->with('smallpackImages')
-			->with('bigpackImages')
-			->with('promotions.unit')
-			->with('seo')
-			->with(['baseUnit' => function ($query) use ($id) {
-				$query->with(['units' => function ($query) use ($id) {
-						$query->wherePivot('product_id', $id)->get();
-					}]
-				);
-			}])
-			->where('1s_id', $id)
-			->first();
+		$product =
+			$self->mainShortSubquery($id)
+				->first();;
 
-//		$product->mainImage = (new ProductMainImage($product))->getRelativePath();
+		$p = $product->toArray();
 		return $product;
 	}
+
 	public static function noMinimumUnit()
 	{
 		$unitables = DB::table('unitables')
@@ -162,6 +152,7 @@ class ProductRepository extends AppController
 			->orderBy('id', "DESC")
 			->get();
 	}
+
 	public static function list()
 	{
 		return Product::query()
