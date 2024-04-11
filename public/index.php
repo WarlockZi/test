@@ -6,6 +6,7 @@ use app\core\Router;
 
 session_start();
 ini_set("short_open_tag", 1);
+ini_set('memory_limit', '256M');
 define('ROOT', dirname(__DIR__));
 
 require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
