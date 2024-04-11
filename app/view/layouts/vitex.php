@@ -2,7 +2,7 @@
 
 use app\core\Icon;
 
-require_once __DIR__ . '/helpers.php';
+//require_once __DIR__ . '/helpers.php';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -20,7 +20,7 @@ require_once __DIR__ . '/helpers.php';
 	<link rel="icon" href="/logo-square.svg" type="image/svg+xml">
 	<?= $this->getCanonical(); ?>
 
-	<?= app\vite\Vite::serve('main.js') ?>
+<!--	--><?//= app\vite\Vite::serve('main.js') ?>
 <!--	--><?//= app\vite\Vite::serve('main.js','https://172.25.240.1:5133') ?>
 <!--	--><?//= app\vite\Vite::serve('main.js','https://192.168.1.212:5133') ?>
 	<!--	<script type="module" src="http://192.168.1.212:3000/public/src/"></script>-->

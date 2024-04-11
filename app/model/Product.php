@@ -51,7 +51,9 @@ class Product extends Model
 			return $query->withTrashed();
 		}
 	}
-	public function scopeWithMainImages($query){
+
+	public function scopeWithMainImages($query)
+	{
 		return $query->whereHas('mainImages');
 //		return $query->with('mainImages',function ($query){
 //			$query->count()>0;

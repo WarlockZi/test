@@ -6,8 +6,8 @@ use app\core\Icon;
 
 <div class="to-cart">
 
-	<div class="short-link" title = 'Скопировать короткую ссылку'
-	     data-shortLink = <?='https://vitexopt.ru/short/'.$product->short_link?>><?=Icon::link();?>
+	<div class="short-link" title='Скопировать короткую ссылку'
+	     data-shortLink= <?= 'https://vitexopt.ru/short/' . $product->short_link ?>><?= Icon::link(); ?>
 	</div>
 	<div class="art">Арт. <?= $product->art ?></div>
 
@@ -27,20 +27,16 @@ use app\core\Icon;
 					 <?= Icon::minus() ?>
 			</button>
 				<?
-
-		 $mainUnit = $product->baseUnit->units
-		   ->where('pivot.product_id', $product['1s_id'])
-		   ->where('pivot.main', 1)
-		   ->first();
-		 if ($mainUnit) {
-			 $unitName = $mainUnit->name;
-			 $multiplier = $mainUnit->pivot->multiplier;
-		 } else {
-			 $unitName = $product->baseUnit->name;
-			 $multiplier = 1;
-		 }
-		 ?>
-			<span class="digit" contenteditable="true">1</span><span><?=$unitName?></span>
+				$p = $product->toArray();
+				if ($product->baseUnit->units->count()) {
+					$unitName = $product->baseUnit->units->name;
+					$multiplier = $product->baseUnit->units->pivot->multiplier;
+				} else {
+					$unitName = $product->baseUnit->name;
+					$multiplier = 1;
+				}
+				?>
+			<span class="digit" contenteditable="true">1</span><span><?= $unitName ?></span>
 			<button tabindex="0" class="plus">
 					 <?= Icon::plus1() ?>
 
