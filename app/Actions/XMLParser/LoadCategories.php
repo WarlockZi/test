@@ -47,7 +47,7 @@ class LoadCategories extends Parser
 		try {
 			$item['id'] = $id;
 			$item['1s_id'] = $group['Ид'];
-			$item['category_id'] = ($level > 0 && isset($parent['id'])) ? $parent['id'] : NULL;
+			$item['category_id'] = $level > 0 && isset($parent['id']) ? $parent['id'] : NULL;
 			$item['show_front'] = $level === 1 ? 1 : NULL;
 
 			$item['name'] = $group['Наименование'];
