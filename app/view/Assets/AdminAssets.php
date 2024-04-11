@@ -11,13 +11,13 @@ class AdminAssets extends Assets
 		parent::__construct();
 
 		$this->setJs('admin');
-//		$this->setJs('list');
+		$this->setJs('list');
 //		$this->setJs('common');
 //		$this->setJs('product');
 
 		$this->setCss('admin');
 		$this->setCss('list');
-		$this->setCss('common');
+//		$this->setCss('common');
 //		$this->setCss('product');
 
 //		$this->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
