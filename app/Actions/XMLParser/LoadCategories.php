@@ -58,6 +58,8 @@ class LoadCategories extends Parser
 
 			$updated = Category::withTrashed()
 				->updateOrCreate(['1s_id' => $item['1s_id']], $item);
+			$this->logger->write('--- category  load ---' . $this->now(). $item.PHP_EOL);
+
 			return $item;
 		} catch (\Exception $e) {
 			$this->logger->write('--- category  error ---' . $this->now(). $e->getMessage());
