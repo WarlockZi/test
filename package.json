@@ -55,7 +55,7 @@
     "fecha": "^4.2.3",
     "node-quill-converter": "^0.3.3",
     "sortablejs": "^1.14.0",
-    "tinymce": "^6.1.2",
+    "tinymce": "^7.0.0",
     "uuid": "^8.3.2",
     "ws": "^8.16.0"
   }
