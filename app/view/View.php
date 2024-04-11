@@ -23,6 +23,7 @@ abstract class View implements IFooterable, IRenderable, IErrors, ILayout
 	protected $header;
 	protected $content;
 	protected $footer;
+	protected $view;
 
 	protected Assets $assets;
 

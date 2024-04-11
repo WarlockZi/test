@@ -18,7 +18,7 @@ class AdminView extends View
 	protected $layout = ROOT . "/app/view/layouts/admin.php";
 	protected $noViewError = "Файл вида не найден";
 	protected $defaultView = ROOT . "/app/view/default.php";
-	protected $view;
+//	protected $view;
 
 	public function __construct(Controller $controller)
 	{

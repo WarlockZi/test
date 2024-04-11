@@ -44,20 +44,25 @@ class LoadCategories extends Parser
 
 	protected function fillItem(array $group, int $level, int $id, &$parent)
 	{
-		$item['id'] = $id;
-		$item['1s_id'] = $group['Ид'];
-		if ($level > 0 && isset($parent['id']))
-			$item['category_id'] = $parent['id'];
-		if ($level === 1) {
-			$item['show_front'] = 1;
-		}
-		$item['name'] = $group['Наименование'];
-		$item['slug'] = Slug::slug($item['name']);
-		$item['deleted_at'] = NULL;
+		try {
+			$item['id'] = $id;
+			$item['1s_id'] = $group['Ид'];
+			if ($level > 0 && isset($parent['id']))
+				$item['category_id'] = $parent['id'];
+			if ($level === 1) {
+				$item['show_front'] = 1;
+			}
+			$item['name'] = $group['Наименование'];
+			$item['slug'] = Slug::slug($item['name']);
+			$item['deleted_at'] = NULL;
 
-		$updated = Category::withTrashed()
-			->updateOrCreate(['1s_id' => $item['1s_id']], $item);
-		return $item;
+			$updated = Category::withTrashed()
+				->updateOrCreate(['1s_id' => $item['1s_id']], $item);
+			return $item;
+		} catch (\Exception $e) {
+			$this->logger->write('--- category  error ---' . $this->now(). $e->getMessage());
+		}
+
 	}
 
 	protected function ech(array $item)
