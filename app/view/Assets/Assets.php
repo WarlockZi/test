@@ -50,7 +50,7 @@ class Assets
 //			? 'https://127.0.0.1:4000/dist/'
 				// ? 'http://127.0.0.1:4000/public/dist/'
 //				? "http://127.0.0.1{$this->port}/{$this->path}"
-				: '/public/dist/';
+				: '/public/dist';
 //			: '/assets/';
 		}
 	}
