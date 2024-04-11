@@ -47,22 +47,20 @@ class LoadCategories extends Parser
 		try {
 			$item['id'] = $id;
 			$item['1s_id'] = $group['Ид'];
-			if ($level > 0 && isset($parent['id']))
-				$item['category_id'] = $parent['id'];
-			if ($level === 1) {
-				$item['show_front'] = 1;
-			}
+			$item['category_id'] = ($level > 0 && isset($parent['id'])) ? $parent['id'] : NULL;
+			$item['show_front'] = $level === 1 ? 1 : NULL;
+
 			$item['name'] = $group['Наименование'];
 			$item['slug'] = Slug::slug($item['name']);
 			$item['deleted_at'] = NULL;
 
 			$updated = Category::withTrashed()
 				->updateOrCreate(['1s_id' => $item['1s_id']], $item);
-			$this->logger->write('--- category  load ---' . $this->now(). implode(',',$item). PHP_EOL);
+			$this->logger->write('--- category  load ---' . $this->now() . implode(',', $item) .' -- u --'.implode('**',$updated). PHP_EOL);
 
 			return $item;
 		} catch (\Exception $e) {
-			$this->logger->write('--- category  error ---' . $this->now(). $e->getMessage());
+			$this->logger->write('--- category  error ---' . $this->now() . $e->getMessage());
 		}
 
 	}
