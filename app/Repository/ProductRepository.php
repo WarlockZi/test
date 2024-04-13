@@ -79,7 +79,7 @@ class ProductRepository extends AppController
 				->first();;
 
 
-		$p = $product->toArray();
+//		$p = $product->toArray();
 
 		return $product;
 	}

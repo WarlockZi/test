@@ -11,8 +11,8 @@ if ($index): ?>
 		 <?= $logo; ?>
 	</div>
 
-<? else: ?>
+<?php else: ?>
 	<a href='/' class="logo" aria-label='На главную'>
 		 <?= $logo; ?>
 	</a>
-<? endif; ?>
+<?php endif; ?>
