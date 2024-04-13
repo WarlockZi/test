@@ -33,8 +33,7 @@
   align-items: center;
   position: relative;
   background-color: white;
-  min-width: 10px;
-  //max-width: 200px;
+  min-width: 100%;
 
   &:focus-visible {
     outline: 1px solid $color-gray5;
