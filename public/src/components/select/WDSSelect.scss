@@ -27,13 +27,18 @@
 }
 
 
-[custom-select],[select-new] {
+[custom-select], [select-new] {
   display: flex;
   flex: 1 0;
   align-items: center;
   position: relative;
   background-color: white;
-  min-width: 100%;
+
+  .line {
+    min-width: 100%;
+
+  }
+
 
   &:focus-visible {
     outline: 1px solid $color-gray5;
