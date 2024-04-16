@@ -77,10 +77,6 @@ class ProductRepository extends AppController
 		$product =
 			$self->mainShortSubquery($id)
 				->first();;
-
-
-//		$p = $product->toArray();
-
 		return $product;
 	}
 
