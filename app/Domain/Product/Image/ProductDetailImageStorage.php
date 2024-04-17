@@ -10,7 +10,7 @@ use app\model\Product;
 class ProductDetailImageStorage extends AbstractProductImage
 {
 	private $path;
-	private $relativePath;
+	protected string $relativePath;
 
 	public function __construct(array $file, Product $product)
 	{

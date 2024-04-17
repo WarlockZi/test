@@ -83,11 +83,29 @@ class SyncController extends AppController
 	{
 		$this->repo->removePrices();
 	}
+    public function actionRemovecategorieswithpopup()
+    {
+        $this->repo->softRemoveCategories();
+        $this->exitWithPopup('Удалены');
+    }
+
+    public function actionRemoveproductswithpopup()
+    {
+        $this->repo->softRemoveProducts();
+        $this->exitWithPopup('Удалены');
+    }
+
+    public function actionRemovepriceswithpopup()
+    {
+        $this->repo->removePrices();
+        $this->exitWithPopup('Удалены');
+    }
 
 
 	public function actionLoadCategories()
 	{
 		$this->repo->LoadCategories();
+
 	}
 
 	public function actionLoadProducts()
@@ -99,7 +117,28 @@ class SyncController extends AppController
 	{
 		$this->repo->LoadPrices();
 	}
+    public function actionLoadCategorieswithpopup()
+    {
+        $this->repo->LoadCategories();
+        $this->exitWithPopup('Загружены категории');
+    }
 
+    public function actionLoadProductswithpopup()
+    {
+        $this->repo->LoadProducts();
+        $this->exitWithPopup('Загружены товары');
+    }
+
+    public function actionLoadPriceswithpopup()
+    {
+        try {
+            $this->repo->LoadPrices();
+            $this->exitWithPopup('Загружены цены');
+        }catch (\Exception $exception){
+            $this->exitJson($exception);
+        }
+
+    }
 
 	public function actionIndex()//init
 	{

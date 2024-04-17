@@ -47,7 +47,7 @@ class SyncRepository
 
 	public function softTrancate()
 	{
-		$this->softRemoveCategories();
+		$this->removeCategories();
 		$this->softRemoveProducts();
 		$this->removePrices();
 	}

@@ -10,14 +10,14 @@ use app\Services\Logger\ILogger;
 
 class LoadPrices extends Parser
 {
-	protected $prices;
+
 	protected $logger;
 
 	public function __construct($file, ILogger $logger)
 	{
-		parent::__construct($file);
+		parent::__construct($file,'price');
 
-		$this->prices = $this->xmlObj['ПакетПредложений']['Предложения']['Предложение'];
+
 		$this->logger = $logger;
 		$this->logger->write('--- price    start ---' . $this->now());
 		$this->run();
@@ -26,7 +26,7 @@ class LoadPrices extends Parser
 
 	protected function run()
 	{
-		foreach ($this->prices as $price) {
+		foreach ($this->data as $price) {
 			$Price = $this->createPrice($price);
 			$Unit = $this->createUnit($price, $Price);
 			$this->attachPriceUnitToProduct($Price, $Unit, $price);
@@ -36,13 +36,13 @@ class LoadPrices extends Parser
 	protected function createPrice($price)
 	{
 		$g['1s_id'] = $price['Ид'];
-		$g['1s_art'] = $price['Артикул'];
+		$g['1s_art'] = $price['Артикул']?$price['Артикул']:'';
 
-		$g['unit'] = $price['БазоваяЕдиница']['@attributes']['НаименованиеПолное'];
-		$g['unit_code'] = $price['БазоваяЕдиница']['@attributes']['Код'];
+		$g['unit'] = $price['БазоваяЕдиница']['@attributes']['НаименованиеПолное']?$price['БазоваяЕдиница']['@attributes']['НаименованиеПолное']:'';
+		$g['unit_code'] = $price['БазоваяЕдиница']['@attributes']['Код']?$price['БазоваяЕдиница']['@attributes']['Код']:'';
 
-		$g['currency'] = $price['Цены']['Цена']['Валюта'];
-		$g['price'] = $price['Цены']['Цена']['ЦенаЗаЕдиницу'];
+		$g['currency'] = $price['Цены']['Цена']['Валюта']?$price['Цены']['Цена']['Валюта']:'';
+		$g['price'] = $price['Цены']['Цена']['ЦенаЗаЕдиницу']?$price['Цены']['Цена']['ЦенаЗаЕдиницу']:'';
 
 		$price = Price::create($g);
 		return $price;
@@ -52,7 +52,7 @@ class LoadPrices extends Parser
 	{
 		$unit = Unit::where('code', $Price->unit_code)->first();
 		if (!$unit) {
-			$u['name'] = $price['Цены']['Цена']['Единица'] ?? mull;
+			$u['name'] = $price['Цены']['Цена']['Единица'] ?? null;
 			$u['code'] = $Price->unit_code;
 			$u['full_name'] = $Price->unit;
 			$unit = Unit::create($u);
@@ -66,6 +66,7 @@ class LoadPrices extends Parser
 			'instore' => $price['Количество'],
 			'base_unit' => $Unit->id,
 		]);
+//        $this->ech($Price);
 	}
 
 	protected function ech($item)

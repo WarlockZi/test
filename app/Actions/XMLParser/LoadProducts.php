@@ -10,14 +10,13 @@ use app\Services\Slug;
 
 class LoadProducts extends Parser
 {
-	protected $goods;
+
 	protected $logger;
 
 	public function __construct($file, ILogger $logger)
 	{
-		parent::__construct($file);
+		parent::__construct($file,'product');
 		$this->logger = $logger;
-		$this->goods = $this->xmlObj['Каталог']['Товары']['Товар'];
 		$this->logger->write('--- products start ---' . $this->now());
 		$this->run();
 		$this->logger->write('--- products stop  ---' . $this->now());
@@ -26,7 +25,7 @@ class LoadProducts extends Parser
 	protected function run()
 	{
 		$id = 0;
-		foreach ($this->goods as $good) {
+		foreach ($this->data as $good) {
 			 $id++;
 			$product = $this->fillGood($good, $id);
 			$cat = Category::where('1s_id', $product['1s_category_id'])->first();

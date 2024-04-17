@@ -24,13 +24,13 @@ use app\core\Icon;
 
 	<div class="container">
 
-		<div class="button" id="removecategories">Удалить категории</div>
-		<div class="button" id="removeproducts">Удалить товары</div>
-		<div class="button" id="removeprices">Удалить цены</div>
+		<div class="button" id="removecategorieswithpopup">Удалить категории</div>
+		<div class="button" id="removeproductswithpopup">Удалить товары</div>
+		<div class="button" id="removepriceswithpopup">Удалить цены</div>
 		<BR>
-		<div class="button" id="loadcategories">Загрузить категории</div>
-		<div class="button" id="loadproducts">Загрузить товары</div>
-		<div class="button" id="loadprices">Загрузить цены и количество</div>
+		<div class="button" id="loadcategorieswithpopup">Загрузить категории</div>
+		<div class="button" id="loadproductswithpopup">Загрузить товары</div>
+		<div class="button" id="loadpriceswithpopup">Загрузить цены и количество</div>
 
 		<BR>
 		<div class="button" id="">Фильтровать картинки</div>
