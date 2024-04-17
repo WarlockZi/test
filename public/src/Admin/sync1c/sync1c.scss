@@ -15,7 +15,7 @@
     flex-direction: column;
     user-select: initial;
 
-    .req{
+    .req {
       padding: 5px;
       background-color: #f5ff0026;
     }
@@ -28,10 +28,12 @@
       background-color: #e8e8e8;
       margin: 0 10px;
     }
+
     .ip {
       background-color: rgba(0, 255, 24, 0.09);
       margin-left: 10px;
     }
+
     .some {
       background-color: #ff330017;
       margin-right: 10px;
@@ -43,12 +45,34 @@
 .sync {
   display: flex;
 
+  .buttons-block {
+    display: flex;
+    gap: 10px;
+
+    .buttons-block-left {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 2;
+
+    }
+
+    .buttons-block-right {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+
+    }
+  }
+
+
   .container.files {
     @include dnd;
   }
 
-  .button{
+  .button {
     @include colored_button();
+    padding: 5px 20px;
 
   }
 
@@ -57,7 +81,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap:5px;
+    gap: 5px;
     padding: 15px;
 
     span.file {

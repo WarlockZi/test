@@ -11,7 +11,7 @@ class LoadCategories extends Parser
 {
     protected $logger;
     protected $parent = 0;
-    protected $level = 0;
+//    protected $level = 0;
 
     public function __construct($file, ILogger $logger)
     {
@@ -36,7 +36,7 @@ class LoadCategories extends Parser
         if ($this->isAssoc($groups)) {
             $item = $this->fillItem($groups);
             if (isset($groups['Группы'])) {
-                $this->level++;
+//                $this->level++;
                 $this->parent = $item['id'];
                 $this->recursion($groups['Группы']['Группа']);
             }
@@ -45,7 +45,7 @@ class LoadCategories extends Parser
                 $this->recursion($group);
             }
             $this->parent = null;
-            $this->level = 0;
+//            $this->level = 0;
         }
     }
 
