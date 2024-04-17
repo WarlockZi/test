@@ -42,9 +42,6 @@ class SyncRepository
 		new LoadPrices($this->offerFile, $this->logger);
 	}
 
-
-
-
 	public function softTrancate()
 	{
 		$this->removeCategories();
