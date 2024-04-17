@@ -6,35 +6,49 @@ use app\Services\Logger\FileLogger;
 
 class Parser
 {
-	protected $file;
-	protected $xml;
-	protected $xmlObj;
-	protected $logger;
+    protected $file;
 
-	public function __construct(string $file)
-	{
-		if (!is_readable($file)) exit();
-		$this->logger = new FileLogger();
-		$this->file = $file;
-		$this->xml = simplexml_load_file($this->file);
-		$this->xmlObj = json_decode(json_encode($this->xml), true);
-	}
+    protected $logger;
+    protected $data;
 
-	protected function now()
-	{
-		return date("F j, Y, g:i a") . "\n";
-	}
+    public function __construct(string $file, string $type)
+    {
+        if (!is_readable($file)) exit();
+        $this->file = $file;
+        $this->logger = new FileLogger();
+        $xml = simplexml_load_file($this->file);
+        $xmlObj = json_decode(json_encode($xml), true);
+        switch ($type) {
+            case 'category':
+                $this->data = $xmlObj['Классификатор']['Группы']['Группа'];
+                break;
+            case 'product':
+                $this->data = $xmlObj['Каталог']['Товары']['Товар'];;
+                break;
+            case 'price':
+                $this->data = $xmlObj['ПакетПредложений']['Предложения']['Предложение'];
+                break;
+            default:
+                throw new \Exception('Пустые данные');
+        }
+
+    }
+
+    protected function now()
+    {
+        return date("F j, Y, g:i a") . "\n";
+    }
 
 
-	protected function isAssoc(array $arr)
-	{
-		if (array() === $arr) return false;
-		return array_keys($arr) !== range(0, count($arr) - 1);
-	}
+    protected function isAssoc(array $arr)
+    {
+        if (array() === $arr) return false;
+        return array_keys($arr) !== range(0, count($arr) - 1);
+    }
 
-	protected function log($content)
-	{
-		$this->logger->write($content);
-	}
+    protected function log($content)
+    {
+        $this->logger->write($content);
+    }
 
 }

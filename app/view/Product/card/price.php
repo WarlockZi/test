@@ -12,7 +12,9 @@
 </div>
 <div class="price-units ">
 
-	<? if (isset($product->baseUnit->units)): ?>
+	<? $arr = $product->baseUnit->units->toArray();
+
+    if (isset($product->baseUnit->units)): ?>
 		<? foreach ($product->baseUnit->units as $unit): ?>
 			<? include __DIR__ . '/priceUnit.php' ?>
 		<? endforeach; ?>

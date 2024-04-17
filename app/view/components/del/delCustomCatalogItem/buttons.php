@@ -13,7 +13,7 @@
 
 	<? if ($this->saveBttn): ?>
 	  <div class="save">
-			 <? include SAVE ?>
+
 	  </div>
 	<? endif; ?>
 

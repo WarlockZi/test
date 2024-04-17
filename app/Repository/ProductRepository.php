@@ -4,10 +4,8 @@
 namespace app\Repository;
 
 use app\controller\AppController;
-use app\controller\Controller;
 use app\core\FS;
 use app\model\Product;
-use app\Services\ShortlinkService;
 use app\view\Image\ImageView;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Collection;
@@ -72,12 +70,12 @@ class ProductRepository extends AppController
 		$self = new self();
 		$p = Product::where('slug', $slug)->withTrashed()->first();
 		if (!$p) $p = Product::where('short_link', $slug)->first();
+        if($p){
 		$id = $p['1s_id'];
-
-		$product =
-			$self->mainShortSubquery($id)
-				->first();;
-		return $product;
+            $product = $self->mainShortSubquery($id)->first();;
+            return $product;
+        }
+        return '--- Product repo error ---';
 	}
 
 	public static function short(string $short)
