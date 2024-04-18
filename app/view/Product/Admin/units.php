@@ -21,14 +21,14 @@ use app\core\Icon;
 			<div class="none">
 					 <?= $selector; ?>
 			</div>
-				<? foreach ($baseUnit->units as $unit): ?>
+				<? foreach ($dopUnits as $unit): ?>
 			  <div class="row">
 						 <?= UnitFormView::selectorNew($baseUnit->id, $unit->id) ?>
 				  <input type="number" value="<?= $unit->pivot->multiplier ?>">
 				  <div class="base-unit"><?= $baseUnit->name ?></div>
 
 				  <div class="min-unit">
-					  <input type="checkbox" <?= $unit->pivot->main ? 'checked' : ''; ?>>
+					  <input type="checkbox" <?= $unit->pivot->is_main ? 'checked' : ''; ?>>
 				  </div>
 				  <div class="del">X</div>
 			  </div>

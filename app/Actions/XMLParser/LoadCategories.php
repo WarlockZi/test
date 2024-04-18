@@ -11,6 +11,7 @@ class LoadCategories extends Parser
 {
     protected $logger;
     protected $parent = 0;
+
 //    protected $level = 0;
 
     public function __construct($file, ILogger $logger)
@@ -22,7 +23,7 @@ class LoadCategories extends Parser
         $this->logger->write('--- category  stop ---' . $this->now());
     }
 
-    protected function run():void
+    protected function run(): void
     {
         try {
             $this->recursion($this->data);
@@ -33,30 +34,32 @@ class LoadCategories extends Parser
 
     protected function recursion($groups)
     {
-        if ($this->isAssoc($groups)) {
-            $item = $this->fillItem($groups);
-            if (isset($groups['Группы'])) {
+
+            if ($this->isAssoc($groups)) {
+                $item = $this->fillItem($groups);
+                if (isset($groups['Группы'])) {
 //                $this->level++;
-                $this->parent = $item['id'];
-                $this->recursion($groups['Группы']['Группа']);
-            }
-        } else {
-            foreach ($groups as $group) {
-                $this->recursion($group);
-            }
-            $this->parent = null;
+                    $this->parent = $item['id'];
+                    $this->recursion($groups['Группы']['Группа']);
+                }
+            } else {
+                foreach ($groups as $group) {
+                    $this->recursion($group);
+                }
+                $this->parent = null;
 //            $this->level = 0;
-        }
+            }
+
     }
 
     protected function fillItem(array $group)
     {
-        $item['1s_id'] = $group['Ид'];
+        $item['1s_id']       = $group['Ид'];
         $item['category_id'] = $this->parent;
-        $item['show_front'] = (int)!(!!$this->parent);
+        $item['show_front']  = (int)!(!!$this->parent);
 
-        $item['name'] = $group['Наименование'];
-        $item['slug'] = Slug::slug($item['name']);
+        $item['name']       = $group['Наименование'];
+        $item['slug']       = Slug::slug($item['name']);
         $item['deleted_at'] = NULL;
 
         return Category::withTrashed()

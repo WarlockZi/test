@@ -14,8 +14,8 @@
 
 	<? $arr = $product->baseUnit->units->toArray();
 
-    if (isset($product->baseUnit->units)): ?>
-		<? foreach ($product->baseUnit->units as $unit): ?>
+    if (isset($product->dopUnits)): ?>
+		<? foreach ($product->dopUnits as $unit): ?>
 			<? include __DIR__ . '/priceUnit.php' ?>
 		<? endforeach; ?>
 	<? endif; ?>
