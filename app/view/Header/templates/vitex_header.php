@@ -2,14 +2,13 @@
 
 	<div class="info">
 
-		 <?= $header->logo(); ?>
+		 <?include 'logo.php'; ?>
 
-		 <?= $header->phone(); ?>
-		 <?= $header->location(); ?>
-		 <?= $header->userMenu(); ?>
+		 <?include 'phone.php'; ?>
+		 <?include 'location.php'; ?>
+		 <?include 'user_menu.php'; ?>
 
 	</div>
 
-	<?=
-	$header->blueRibbon(); ?>
+	<?=	$data['blueRibbon']; ?>
 </header>

@@ -1,18 +1,12 @@
 <?php
 
-use app\core\Icon;
-use app\core\Router;
-
-$index = Router::getRoute()->isHome();
-$logo = Icon::logo_squre1() . Icon::logo_vitex1();
-
-if ($index): ?>
+if ($data['index']): ?>
 	<div class="logo">
-		 <?= $logo; ?>
+		 <?= $data['logo']; ?>
 	</div>
 
 <?php else: ?>
 	<a href='/' class="logo" aria-label='На главную'>
-		 <?= $logo; ?>
+		 <?= $data['logo']; ?>
 	</a>
 <?php endif; ?>
