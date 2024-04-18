@@ -8,7 +8,6 @@ use app\controller\AppController;
 use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
-use app\Services\Slug;
 use app\view\Product\ProductFormView;
 
 
@@ -25,7 +24,7 @@ class ProductController extends AppController
 	{
 		$id = $this->route->id;
 		$prod = ProductRepository::edit($id);
-//		$p = $prod->toArray();
+		$p = $prod->toArray();
 		if ($prod) {
 			$product = ProductFormView::edit($prod);
 //			$product = ProductFormView::edit($prod);

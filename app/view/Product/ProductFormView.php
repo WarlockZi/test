@@ -118,11 +118,11 @@ class ProductFormView
 	{
 		$baseUnit = $product->baseUnit;
 		if (!$baseUnit) return 'Базовая единица не выбрана';
-		$units = $baseUnit->units;
+		$dopUnits = $product->dopUnits;
 		$baseEqualsMainUnit = ProductView::baseEqualsMainUnit($product);
 		$selector = UnitFormView::selectorNew($baseUnit->id);
 		return FS::getFileContent(ROOT . '/app/view/Product/Admin/units.php',
-			compact('units', 'baseUnit', 'selector', 'baseEqualsMainUnit'));
+			compact('dopUnits', 'baseUnit', 'selector', 'baseEqualsMainUnit'));
 	}
 
 	public static function edit(Product $product): string

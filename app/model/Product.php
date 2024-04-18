@@ -20,6 +20,7 @@ class Product extends Model
 {
 	use \Illuminate\Database\Eloquent\SoftDeletes;
 	public $timestamps = false;
+	protected $appends = ['mainImagePath'];
 
 	protected $fillable = [
 		'name',
@@ -46,6 +47,14 @@ class Product extends Model
 	protected $casts = [
 		'art' => 'string',
 	];
+	protected function castAttribute($key, $value)
+	{
+		if ($this->getCastType($key) == 'string' && is_null($value)) {
+			return '';
+		}
+
+		return parent::castAttribute($key, $value);
+	}
 
 	public function scopeTrashed($query, $type)
 	{
@@ -62,16 +71,7 @@ class Product extends Model
 //		});
 	}
 
-	protected function castAttribute($key, $value)
-	{
-		if ($this->getCastType($key) == 'string' && is_null($value)) {
-			return '';
-		}
 
-		return parent::castAttribute($key, $value);
-	}
-
-	protected $appends = ['mainImagePath'];
 
 	protected function getMainImagePathAttribute()
 	{
@@ -89,6 +89,12 @@ class Product extends Model
 	{
 		return $this
 			->belongsTo(Unit::class, 'base_unit', 'id');
+	}
+	public function dopUnits()
+	{
+		return $this
+			->belongsToMany(Unit::class,'product_unit','product_1s_id','unit_id','1s_id')
+            ->withPivot('multiplier','is_main');
 	}
 
 	public function seo()

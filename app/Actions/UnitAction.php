@@ -41,26 +41,35 @@ class UnitAction
 
 	public static function changeUnit(array $req)
 	{
-		$pivot = $req['pivot'];
-		$baseUunit = Unit::find($req['baseUnitId']);
-		$old_id = $req['morphed']['old_id'];
-		$new_id = $req['morphed']['new_id'];
-		$arr = array($pivot, $baseUunit, $old_id, $new_id);
+//        $id = $req['s_id'];
+//        $unitId = $req['unit_id'];
+        $pId = '1d7ddc15-4b51-11ec-8219-0cc47a6d1d83';
+        $units = Unit::findOrFail($pId)->dopUnits;
 
-		$detach = $req['morphed']['detach'];
-		if (!$old_id) {
-			$res = self::attachUnit($arr);
-		} elseif ($detach) {
-			$res = self::detachUnit($arr);
-		} elseif ($old_id === $new_id) {
-			$res = self::updatePivot($arr);
-		} elseif ($old_id !== $new_id) {
-			$res = self::swapUnit($arr);
-		}
 
-		if ($res)
-			exit(json_encode(['arr' => ['ok' => 'ok', 'popup' => 'Успешно']]));
-		exit(json_encode(['error' => 'error', 'popup' => 'Что-то пошло не так']));
+
+
+		$pivot = $req;
+//		$pivot = $req['pivot'];
+//		$baseUunit = Unit::find($req['baseUnitId']);
+//		$old_id = $req['morphed']['old_id'];
+//		$new_id = $req['morphed']['new_id'];
+//		$arr = array($pivot, $baseUunit, $old_id, $new_id);
+//
+//		$detach = $req['morphed']['detach'];
+//		if (!$old_id) {
+//			$res = self::attachUnit($arr);
+//		} elseif ($detach) {
+//			$res = self::detachUnit($arr);
+//		} elseif ($old_id === $new_id) {
+//			$res = self::updatePivot($arr);
+//		} elseif ($old_id !== $new_id) {
+//			$res = self::swapUnit($arr);
+//		}
+//
+//		if ($res)
+//			exit(json_encode(['arr' => ['ok' => 'ok', 'popup' => 'Успешно']]));
+//		exit(json_encode(['error' => 'error', 'popup' => 'Что-то пошло не так']));
 
 	}
 
