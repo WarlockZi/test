@@ -1,9 +1,4 @@
-<?php
-
-use app\core\Icon;
-
-?>
 <a class="cart" href="/cart">
-	<div class="count<?= $oItems ? ' show' : ''; ?>"><?= $oItems; ?></div>
-	<?= Icon::shoppingCart('feather'); ?>
+	<div class="count<?= $data['oItems'] ? ' show' : ''; ?>"><?= $data['oItems']; ?></div>
+	<?=$data['icon']  ?>
 </a>

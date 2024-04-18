@@ -19,24 +19,15 @@ class CategoryRepository
       ->get();
   }
 
-	public static function getHeaderCategories()
-	{
-		return Category::query()
-			->where('show_front', 1)
-			->with('childrenNotDeleted')
-			->get();
-	}
-
   public static function editSelectorExcluded($category): array
   {
-    $d = Category::query()
+    return Category::query()
       ->where('category_id', $category->id)
       ->select('id')
       ->get()
       ->pluck('id')
       ->push($category->id)
       ->toArray();
-    return $d;
   }
 
   public static function indexInstore(string $slug){
@@ -45,13 +36,10 @@ class CategoryRepository
 			->with('childrenRecursive')
 			->with('parentRecursive')
 			->with('productsInStore')
-//			->with('productsNotInStore')
 			->with('productsNotInStoreInMatrix')
-//			->with('ActivePromotions')
 			->with('products.activepromotions')
 			->with('products.inactivepromotions')
 			->with('seo')
-//      ->with('productsNotInStore')
 			->get()
 			->first();
 	}

@@ -59,7 +59,7 @@ class Route
 
 	public function isHome()
 	{
-		return $this->controller === 'Main' && $this->action === 'index';
+		return $this->uri==='/';
 	}
 
 	public function getNamespace(): string
