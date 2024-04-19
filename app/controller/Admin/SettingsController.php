@@ -26,11 +26,11 @@ class SettingsController Extends AppController
 	public function actionEdit()
 	{
 		$id = $this->route->id;
-		$setting = (new SettingsRepository)->edit($id);
-		if ($setting) {
-			$setting = SettingsFormView::edit($setting);
-		}
-		$this->set(compact('setting'));
+//		$setting = (new SettingsRepository)->edit($id);
+//		if ($setting) {
+//			$setting = SettingsFormView::edit($setting);
+//		}
+//		$this->set(compact('setting'));
 //		$this->assets->setProduct();
 	}
 }
