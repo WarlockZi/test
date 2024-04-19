@@ -23,7 +23,7 @@ class AdminView extends View
 	public function __construct(Controller $controller)
 	{
 		parent::__construct($controller);
-		new \app\view\Vite('main.js');
+//		new \app\view\Vite('main.js');
 
 //		$this->setView($controller);
 		$this->setLayout($controller);

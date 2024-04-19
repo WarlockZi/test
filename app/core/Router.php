@@ -43,6 +43,9 @@ class Router
 				}
 				self::$route = $route;
 			}
+            else{
+                $route->notFound = true;
+            }
 		}
 		return $route;
 	}

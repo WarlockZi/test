@@ -45,7 +45,7 @@ import morph from '../components/morph/morph.js'
 import Search from "../components/search/search.js"
 import Promotion from "../Promotions/Promotion.js"
 import Order from "../Admin/Order/order.js"
-
+import './ProductFilter/ProductFilter'
 
 $(document).ready(async function () {
 

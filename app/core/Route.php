@@ -23,6 +23,7 @@ class Route
 	protected $params;
 	protected $host;
 	protected $protocol;
+	protected $notFound=false;
 
 	public function __set($name, $value)
 	{
