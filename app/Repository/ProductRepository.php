@@ -32,7 +32,7 @@ class ProductRepository extends AppController
 			->with('inactivePromotions')
 			->with('smallpackImages')
 			->with('bigpackImages')
-            ->with('dopUnits')
+//            ->with('dopUnits')
 //            ->with('baseUnit')
 			->with(['baseUnit' => function ($query) use ($id) {
 				$query->with(['units' => function ($query) use ($id) {
