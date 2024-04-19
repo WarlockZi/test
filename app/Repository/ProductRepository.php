@@ -33,13 +33,13 @@ class ProductRepository extends AppController
 			->with('smallpackImages')
 			->with('bigpackImages')
             ->with('dopUnits')
-            ->with('baseUnit')
-//			->with(['baseUnit' => function ($query) use ($id) {
-//				$query->with(['units' => function ($query) use ($id) {
-//						$query->wherePivot('product_id', $id)->get();
-//					}]
-//				);
-//			}])
+//            ->with('baseUnit')
+			->with(['baseUnit' => function ($query) use ($id) {
+				$query->with(['units' => function ($query) use ($id) {
+						$query->wherePivot('product_id', $id)->get();
+					}]
+				);
+			}])
 			->first();
 	}
 

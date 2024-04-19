@@ -194,6 +194,7 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 				  <a class="neon" href="/adminsc/category">Категории</a>
 				  <a class="neon" href="/adminsc/product/list">Товары</a>
 				  <a class="neon" href="/adminsc/product/trashed">Товары удалены</a>
+				  <a class="neon" href="/adminsc/productfilter">Фильтр по товарам</a>
 
 					 <? endif; ?>
 			</ul>

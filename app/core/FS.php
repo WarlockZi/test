@@ -9,7 +9,6 @@ use app\model\Image;
 class FS
 {
     protected $absPath;
-//    protected static $storagePath = ROOT . '/pic/';
 
     public function __construct(string $absPath)
     {
@@ -24,8 +23,6 @@ class FS
         require $file;
         return ob_get_clean();
     }
-
-
 
 	public static function getFileContent(string $file, array $vars = [])
 	{
