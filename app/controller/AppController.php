@@ -16,7 +16,7 @@ class AppController extends Controller implements IModelable
 	public function __construct()
 	{
 		parent::__construct();
-		$this->settings = (new SettingsRepository())->initial();
+//		$this->settings = (new SettingsRepository())->initial();
 	}
 
 	public function setView()

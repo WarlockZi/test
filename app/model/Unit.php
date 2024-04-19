@@ -19,12 +19,21 @@ class Unit extends Model
 
     public $timestamps = false;
 
-    public function unis()
-    {
-        return $this->hasMany(Unit::class, 'dop_unit_id');
+//    public function unis()
+//    {
+//        return $this->hasMany(Unit::class, 'dop_unit_id');
+//    }
 
-    }
+public function prods()
+{
+    return $this->hasManyThrough(
+        Product::class,
+        ProductUnit::class,
 
+
+    );
+
+}
     public function productBaseUnit()
     {
         return $this->hasMany(Product::class);
