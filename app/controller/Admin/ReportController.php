@@ -3,11 +3,9 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\model\Product;
 use app\Repository\ProductRepository;
-use app\view\Product\ProductFormView;
-use Illuminate\Database\Capsule\Manager as DB;
-use Illuminate\Database\Eloquent\Collection;
+use app\view\Product\Admin\ProductFormView;
+
 
 class ReportController extends AppController
 {
@@ -17,19 +15,19 @@ class ReportController extends AppController
 		parent::__construct();
 	}
 
-	public function actionProductswithoutimgInstore()
+	public function actionProductsnoimgInstore()
 	{
 		$this->view = 'productswithoutimg';
-		$p = ProductRepository::hasNoImgInStore();
-		$productList = ProductFormView::hasNoImgList($p, 'Товары без картинок в наличии');
+		$p = ProductRepository::noImgInStore();
+		$productList = ProductFormView::noImgNoInstoreList($p, 'Товары без картинок в наличии');
 		$this->set(compact('productList'));
 	}
 
-	public function actionProductswithoutimgNotinstore()
+	public function actionProductsnoimgNotinstore()
 	{
 		$this->view = 'productswithoutimg';
-		$p = ProductRepository::hasNoImgNotInStore();
-		$productList = ProductFormView::hasNoImgList($p, 'Товары без картинок без наличия');
+		$p = ProductRepository::noImgNotInStore();
+		$productList = ProductFormView::noImgNoInstoreList($p, 'Товары без картинок без наличия');
 		$this->set(compact('productList'));
 	}
 
@@ -37,15 +35,23 @@ class ReportController extends AppController
 	{
 		$this->view = 'productswithoutimg';
 		$products = ProductRepository::noMinimumUnit();
-		$productList = ProductFormView::hasNoImgList($products, 'Товары без min упаковки');
+		$productList = ProductFormView::noMinUnitList($products, 'Товары без min упаковки');
 		$this->set(compact('productList'));
 	}
 
-	public function actionProductshaveonlybaseunit()
+	public function actionProductsnodopunit()
 	{
-		$productList = ProductRepository::haveOnlyBaseUnit();
+        $this->view = 'productsnoimg';
+		$productList = ProductRepository::noDopUnit();
 		$this->set(compact('productList'));
 	}
+	public function actionProductshavedopunit()
+	{
+        $this->view = 'productsnoimg';
+		$productList = ProductRepository::haveDopUnit();
+		$this->set(compact('productList'));
+	}
+
 }
 
 

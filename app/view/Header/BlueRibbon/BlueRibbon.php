@@ -14,8 +14,8 @@ class BlueRibbon
 
 	public function __construct()
 	{
-        $this->data = BlueRibbonRepository::data();
         $this->fs = new FS(__DIR__.'/templates/');
+        $this->data = BlueRibbonRepository::data();
 	}
     public function getTemplate(){
         return $this->fs->getContent('template', $this->data);

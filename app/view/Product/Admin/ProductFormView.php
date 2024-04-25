@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\view\Product;
+namespace app\view\Product\Admin;
 
 
 use app\core\FS;
@@ -26,6 +26,7 @@ use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 use app\view\Image\ImageView;
 
+use app\view\Product\ProductView;
 use app\view\Property\PropertyView;
 
 
@@ -65,9 +66,39 @@ class ProductFormView
             ->get();
     }
 
-    public static function hasNoImgList(Collection $products, string $title)
+    public static function noMinUnitList($products, string $title)
     {
+        return MyList::build(Product::class)
+            ->pageTitle($title)
+            ->column(
+                ListColumnBuilder::build('id')
+                    ->name('ID')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('art')
+                    ->name('Арт')
+                    ->search()
+                    ->width('70px')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('name')
+                    ->name('Наименование')
+                    ->contenteditable()
+                    ->search()
+                    ->width('1fr')
+                    ->get()
+            )
+            ->items($products)
+            ->edit()
+            ->del()
+            ->addButton('ajax')
+            ->get();
+    }
 
+    public static function noImgNoInstoreList(Collection $products, string $title)
+    {
         return MyList::build(Product::class)
             ->pageTitle($title)
             ->column(
@@ -116,12 +147,10 @@ class ProductFormView
     {
         $baseUnit = $product->baseUnit;
         if (!$baseUnit) return 'Базовая единица не выбрана';
-//		$dopUnits = $product->dopUnits;
         $baseEqualsMainUnit = ProductView::baseEqualsMainUnit($product);
         $selector           = UnitFormView::selectorNew($baseUnit->id);
         return FS::getFileContent(ROOT . '/app/view/Product/Admin/units.php',
             compact('baseUnit', 'selector', 'baseEqualsMainUnit'));
-//			compact('dopUnits', 'baseUnit', 'selector', 'baseEqualsMainUnit'));
     }
 
     public static function edit(Product $product): string
@@ -275,18 +304,11 @@ class ProductFormView
             ->get();
     }
 
-    protected static function getImage(Product $product,
-                                       string  $relation,
-                                       string  $slug,
-                                       bool    $many = false)
+    protected static function getImage(Product $product, string $relation, string $slug, bool $many = false)
     {
         $imgs = ImageView::morphImages($product, $relation);
 
-        $img = MorphBuilder::build($product,
-            $relation,
-            $slug,
-            $many
-        )
+        $img = MorphBuilder::build($product, $relation, $slug, $many)
             ->detach('detach')
             ->html(
                 DndBuilder::make('product') . $imgs
@@ -336,9 +358,8 @@ class ProductFormView
 
     protected static function getDescription($product): string
     {
-        return include ROOT . '/app/view/Product/description.php';
+        return include __DIR__ . './../description.php';
     }
-
     protected static function promotions($product): string
     {
         return MyList::build(Promotion::class)
@@ -501,9 +522,7 @@ class ProductFormView
         return "<div class='detail-image-wrap'>{$im}</div>";
     }
 
-    public static function getCardImages(string     $title,
-                                         Collection $collection,
-                                         string     $class = 'detail-images-wrap')
+    public static function getCardImages(string $title, Collection $collection, string $class = 'detail-images-wrap')
     {
         ob_start();
         $detail_image = '';

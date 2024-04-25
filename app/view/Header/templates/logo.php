@@ -1,12 +1,12 @@
 <?php
 
-if ($data['index']): ?>
+if ($index): ?>
 	<div class="logo">
-		 <?= $data['logo']; ?>
+		 <?= $logo; ?>
 	</div>
 
 <?php else: ?>
 	<a href='/' class="logo" aria-label='На главную'>
-		 <?= $data['logo']; ?>
+		 <?= $logo; ?>
 	</a>
 <?php endif; ?>

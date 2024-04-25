@@ -8,6 +8,7 @@ use app\controller\AppController;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
+use app\view\Category\CategoryArrayFormView;
 use app\view\Category\CategoryFormView;
 
 
@@ -35,9 +36,8 @@ class CategoryController extends AppController
   {
     $id = $this->route->id;
     $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($id, false, true);
-    $category = CategoryFormView::edit($id);
-    $this->set(compact('category', 'breadcrumbs',
-		));
+    $category = CategoryArrayFormView::edit($id);
+    $this->set(compact('category', 'breadcrumbs'));
   }
 	public function actionChangeproperty()
 	{

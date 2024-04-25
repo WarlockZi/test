@@ -6,7 +6,6 @@ namespace app\view\Category;
 
 use app\model\Category;
 use app\model\Product;
-use app\model\Property;
 use app\Repository\CategoryRepository;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
@@ -21,8 +20,6 @@ use app\view\Image\ImageView;
 
 class CategoryFormView
 {
-
-
 	public static function edit(?int $id): string
 	{
 		$category = CategoryRepository::edit($id);

@@ -4,6 +4,7 @@ namespace app\controller\Admin;
 
 
 use app\controller\AppController;
+use app\core\Response;
 use app\core\Route;
 use app\model\Order;
 use app\Repository\OrderRepository;
@@ -41,7 +42,7 @@ class OrderController Extends AppController
 	{
 		$id = $this->ajax['product_id'];
 
-		if (!$id) $this->exitWithMsg('No id');
+		if (!$id) Response::exitWithMsg('No id');
 		$model = new $this->model;
 
 		$item = $model->where('product_id', $id)->first();
@@ -49,9 +50,9 @@ class OrderController Extends AppController
 			$destroyed =
 				$item::query()
 				->update(['deleted_at' => Carbon::today()]);
-			$this->exitJson(['ok' => 'ok', 'popup' => 'удален']);
+			Response::exitJson(['ok' => 'ok', 'popup' => 'удален']);
 		}
-		$this->exitJson(['error' => 'не удален', 'popup' => 'не удален']);
+		Response::exitJson(['error' => 'не удален', 'popup' => 'не удален']);
 	}
 
 

@@ -55,7 +55,7 @@ class TodoController Extends AppController
 			$this->ajax['post_id'] = $this->user['post_id'];
 
 			if ($id = $this->model::create($this->ajax)) {
-				$this->exitJson([
+				Response::exitJson([
 					'id' => $id,
 				]);
 			}
@@ -66,7 +66,7 @@ class TodoController Extends AppController
 	{
 		if ($this->ajax) {
 			$this->model::update($this->ajax);
-			$this->exitWithPopup('ok' );
+			Response::exitWithPopup('ok' );
 		}
 		$this->layout = 'admin';
 		$this->view = 'edit_update';

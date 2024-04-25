@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\Auth;
+use app\core\Response;
 use app\model\Lead;
 use app\model\Order;
 use app\model\OrderItem;
@@ -37,7 +38,7 @@ class OrderitemController Extends AppController
 				$orderItem->order()->associate($order);
 				$orderItem->save();
 			}
-			$this->exitJson(['ok']);
+			Response::exitJson(['ok']);
 		}
 	}
 
@@ -46,13 +47,13 @@ class OrderitemController Extends AppController
 		$product_id = $this->ajax['product_id'];
 		$sess = $this->ajax['sess'];
 
-		if (!$product_id) $this->exitWithMsg('No id');
+		if (!$product_id) Response::exitWithMsg('No id');
 		$trashed = $this->repo->deleteItem($this->model, $sess, $product_id);
 
 		if ($trashed) {
-			$this->exitJson(['ok' => true, 'popup' => 'Удален']);
+			Response::exitJson(['ok' => true, 'popup' => 'Удален']);
 		}
-		$this->exitWithPopup('Не удален');
+		Response::exitWithPopup('Не удален');
 
 	}
 
@@ -98,12 +99,12 @@ class OrderitemController Extends AppController
 				);
 			}
 			if ($orderItm->wasRecentlyCreated) {
-				$this->exitJson(['popup' => "Добавлено в корзину"]);
+				Response::exitJson(['popup' => "Добавлено в корзину"]);
 			}
 			if ($orderItm->wasChanged()) {
-				$this->exitJson(['popup' => "Изменено"]);
+				Response::exitJson(['popup' => "Изменено"]);
 			}
-			$this->exitJson(['error' => "не записано"]);
+			Response::exitJson(['error' => "не записано"]);
 		}
 
 	}

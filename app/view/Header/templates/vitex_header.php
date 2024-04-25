@@ -10,5 +10,5 @@
 
 	</div>
 
-	<?=	$data['blueRibbon']; ?>
+	<?=	$blueRibbon; ?>
 </header>

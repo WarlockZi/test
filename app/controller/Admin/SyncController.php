@@ -4,6 +4,7 @@ namespace app\controller\Admin;
 
 use app\Actions\SyncActions;
 use app\controller\AppController;
+use app\core\Response;
 use app\Repository\SyncRepository;
 use app\Services\Logger\FileLogger;
 use app\Storage\StorageDev;
@@ -86,19 +87,19 @@ class SyncController extends AppController
     public function actionRemovecategorieswithpopup()
     {
         $this->repo->softRemoveCategories();
-        $this->exitWithPopup('Удалены');
+        Response::exitWithPopup('Удалены');
     }
 
     public function actionRemoveproductswithpopup()
     {
         $this->repo->softRemoveProducts();
-        $this->exitWithPopup('Удалены');
+        Response::exitWithPopup('Удалены');
     }
 
     public function actionRemovepriceswithpopup()
     {
         $this->repo->removePrices();
-        $this->exitWithPopup('Удалены');
+        Response::exitWithPopup('Удалены');
     }
 
 
@@ -120,22 +121,22 @@ class SyncController extends AppController
     public function actionLoadCategorieswithpopup()
     {
         $this->repo->LoadCategories();
-        $this->exitWithPopup('Загружены категории');
+        Response::exitWithPopup('Загружены категории');
     }
 
     public function actionLoadProductswithpopup()
     {
         $this->repo->LoadProducts();
-        $this->exitWithPopup('Загружены товары');
+        Response::exitWithPopup('Загружены товары');
     }
 
     public function actionLoadPriceswithpopup()
     {
         try {
             $this->repo->LoadPrices();
-            $this->exitWithPopup('Загружены цены');
+            Response::exitWithPopup('Загружены цены');
         }catch (\Exception $exception){
-            $this->exitJson($exception);
+            Response::exitJson($exception);
         }
 
     }
@@ -149,14 +150,14 @@ class SyncController extends AppController
 	public function actionLogshow()
 	{
 		if (isset($_POST['param'])) {
-			$this->exitJson(['success' => true, 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
+			Response::exitJson(['success' => true, 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
 		}
 	}
 
 	public function actionLogclear()
 	{
 		$this->logger->clear();
-		$this->exitJson(['success' => 'success', 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
+		Response::exitJson(['success' => 'success', 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
 	}
 
 

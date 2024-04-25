@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Response;
 use app\core\Router;
 use app\Factory\AbstractTestFactory;
 use app\Factory\TestFactory;
@@ -39,7 +40,7 @@ class QuestionController Extends AppController
 	{
 		$q_ids = $this->ajax['toChange'];
 		Question::sort($q_ids);
-		$this->exitWithPopup('Сортировка сохранена');
+		Response::exitWithPopup('Сортировка сохранена');
 	}
 
 }

@@ -5,13 +5,10 @@ namespace app\controller\Admin;
 use app\Actions\ProductAction;
 use app\Actions\ProductFilterAction;
 use app\controller\AppController;
-use app\core\DB;
 use app\model\Product;
-use app\model\ProductUnit;
-use app\model\Unit;
-use app\model\Unitable;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
+use app\view\Product\ProductArrayFormView;
 use app\view\Product\ProductFormView;
 
 
@@ -24,29 +21,14 @@ class ProductController extends AppController
 		parent::__construct();
 	}
 
-    private function copyUnits()
-    {
-        $unitables = Unitable::all()->toArray();
-        foreach ($unitables as $unitable){
-            $model = [
-                'product_1s_id'=>$unitable['product_id'],
-                'unit_id'=>$unitable['unitable_id'],
-                'multiplier'=>$unitable['multiplier'],
-                'is_main'=>$unitable['main']?1:null,
-            ];
-            ProductUnit::create($model);
-        }
-    }
-
 	public function actionEdit()
 	{
-        $this->copyUnits();
 		$id = $this->route->id;
 		$prod = ProductRepository::edit($id);
-		$p = $prod->toArray();
+//		$p = $prod->toArray();
 		if ($prod) {
-			$product = ProductFormView::edit($prod);
 //			$product = ProductFormView::edit($prod);
+			$product = ProductArrayFormView::edit($prod);
 			$breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);
 		}
 		$this->set(compact('product', 'breadcrumbs'));
@@ -57,7 +39,7 @@ class ProductController extends AppController
 	public function actionList()
 	{
 		$items = ProductRepository::list();
-		$list = ProductFormView::list($items);
+		$list = ProductArrayFormView::list($items);
 		$this->set(compact('list'));
 	}
 
@@ -106,3 +88,4 @@ class ProductController extends AppController
 		$this->exitJson(['popup' => 'ошибка']);
 	}
 }
+

@@ -1,4 +1,4 @@
-<?
+<?php
 
 use app\core\Error;
 //require_once __DIR__ . '/helpers.php';
@@ -12,10 +12,10 @@ use app\core\Error;
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--	<script type="module" crossorigin="true" src="ws://localhost:5174/"></script>-->
-<!--	--><?//include (ROOT.'/public/build/index.html');?>
-<!--	--><?//= vite('main.js') ?>
-	<?= $this->assets->getCss() ?>
-	<?= $this->assets->getCDNCss() ?>
+<!--	--><?php //include (ROOT.'/public/build/index.html');?>
+<!--	--><?php //= vite('main.js') ?>
+	<?= $assets->getCss() ?>
+	<?= $assets->getCDNCss() ?>
 
 </head>
 
@@ -23,21 +23,13 @@ use app\core\Error;
 
 <div class="admin-layout__container">
 
-
-
-
-
-
-	<?= $this->getHeader(); ?>
-
-
-
+	<?= $header; ?>
 
 	<div class="admin-layout__content">
 
 		<div class="adm-content">
 		 <?= Error::getErrorHtml() ?>
-				<?= $this->getContent(); ?>
+				<?= $content; ?>
 		</div
 
 	</div>
@@ -45,10 +37,10 @@ use app\core\Error;
 	<div class="led"></div>
 </div>
 
-<?= $this->getFooter();?>
+<?= $footer;?>
 
-<?= $this->assets->getJs() ?>
-<?= $this->assets->getCDNJs() ?>
+<?= $assets->getJs() ?>
+<?= $assets->getCDNJs() ?>
 
 </body>
 </html>

@@ -46,8 +46,6 @@ class CategoryRepository
 
   public static function edit(?int $id)
   {
-    if ($id == null)
-      return Category::create();
     return Category::with(
       'products',
       'childrenNotDeleted',
@@ -55,7 +53,7 @@ class CategoryRepository
       'parentRecursive.properties',
       'properties',
       'mainImages')
-      ->find($id);
+      ->findOrNew($id);
   }
 
   public static function treeAll(): Collection
@@ -95,5 +93,4 @@ class CategoryRepository
       ->field('category_id')
       ->get();
   }
-
 }

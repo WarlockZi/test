@@ -35,7 +35,7 @@ class OpenquestionController Extends AppController
   {
     $q_ids = $this->ajax['toChange'];
     Opentest::sort($q_ids);
-    $this->exitWithPopup('Сортировка сохранена');
+    Response::exitWithPopup('Сортировка сохранена');
   }
 
 
