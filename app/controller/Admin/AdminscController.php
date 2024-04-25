@@ -11,7 +11,6 @@ use app\view\View;
 
 class AdminscController extends AppController
 {
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -63,8 +62,7 @@ class AdminscController extends AppController
 
 	public function actionDumpWWW()
 	{
-		if ($this->isAjax()) {
-		}
+
 	}
 
 

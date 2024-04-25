@@ -25,12 +25,12 @@ try {
 	header('Access-Control-Allow-Headers: X-Requested-With');
 	$user = Auth::getAuth();
 
+
 //	$mockUser = \app\model\User::query()->find(160);
 //	Auth::setUser($mockUser);
 
-
-	$route = new Router($_SERVER['REQUEST_URI'] ?? '');
-	$route->dispatch();
+	$router = new Router($_SERVER['REQUEST_URI'] ?? '');
+	$router->dispatch();
 
 exit();
 } catch (Exception $e) {

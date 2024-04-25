@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Response;
 use app\core\Route;
 use app\model\Post;
 use app\view\Post\PostView;
@@ -31,7 +32,7 @@ class PostController Extends AppController
 	{
 		if ($this->ajax) {
 			$this->model::update($this->ajax);
-			$this->exitWithPopup('ok');
+			Response::exitWithPopup('ok');
 		}
 		$id = $this->route['id'];
 
@@ -60,7 +61,7 @@ class PostController Extends AppController
 		$id = $this->ajax['id'] ?? $_POST['id'];
 
 		if ($this->model::delete($id)) {
-			$this->exitWithPopup("ok");
+			Response::exitWithPopup("ok");
 		}
 
 		header('Location:/adminsc/post/list');
@@ -71,9 +72,9 @@ class PostController Extends AppController
 //		if ($this->ajax) {
 //			if ($id = Post::updateOrCreate($this->ajax)) {
 //				if (is_bool($id)) {
-//					$this->exitWithPopup('Сохранено');
+//					Response::exitWithPopup('Сохранено');
 //				}else{
-//					$this->exitJson(['id'=>$id,'msg'=>'Создан']);
+//					Response::exitJson(['id'=>$id,'msg'=>'Создан']);
 //				}
 //			}
 //		}

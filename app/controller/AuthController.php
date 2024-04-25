@@ -5,6 +5,7 @@ namespace app\controller;
 use app\Actions\AuthAction;
 use app\core\Auth;
 use app\core\Mail\PHPMail;
+use app\core\Response;
 use app\model\User;
 use app\Repository\UserRepository;
 use app\Services\TelegramBot\TelegramBot;
@@ -34,7 +35,7 @@ class AuthController extends AppController
 		if ($req) {
 			if (!$req['email']) exit('empty email');
 			$found = User::where('email', $req['email'])->first();
-			if ($found) $this->exitWithMsg('mail exists');
+			if ($found) Response::exitWithMsg('mail exists');
 
 			if (!$req['password']) exit('empty password');
 
@@ -47,7 +48,7 @@ class AuthController extends AppController
 
 			$sent = $this->mailer->sendRegistrationMail($user);
 
-			$this->exitJson(['message' => 'confirmed', 'popup' => $userMessage . "\n" . $sent]);
+			Response::exitJson(['message' => 'confirmed', 'popup' => $userMessage . "\n" . $sent]);
 		}
 	}
 
@@ -55,23 +56,23 @@ class AuthController extends AppController
 	{
 		if ($data = $this->ajax) {
 
-			if (!User::checkEmail($data['email'])) $this->exitWithError("Неверный формат email");
-			if (!User::checkPassword($data['password'])) $this->exitWithError("Пароль не должен быть короче 6-ти символов");
+			if (!User::checkEmail($data['email'])) Response::exitWithError("Неверный формат email");
+			if (!User::checkPassword($data['password'])) Response::exitWithError("Пароль не должен быть короче 6-ти символов");
 
 			$user = User::where('email', $data['email'])->first()
 				? User::where('email', $data['email'])->first()->toArray()
 				: null;
 
-			if (!$user) $this->exitWithError('Пользователь не зарегистрирован');
-			if (!$user['confirm']) $this->exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
+			if (!$user) Response::exitWithError('Пользователь не зарегистрирован');
+			if (!$user['confirm']) Response::exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
 			if (!$user['password'] === $this->actions->preparePassword($data['password']))
-				$this->exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
+				Response::exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
 			Auth::setAuth($user);
 			$this->user = $user;
 			if (User::can($user, ['role_employee'])) {
-				$this->exitJson(['role' => 'employee']);
+				Response::exitJson(['role' => 'employee']);
 			} else {
-				$this->exitJson(['role' => 'user']);
+				Response::exitJson(['role' => 'user']);
 			}
 		}
 
@@ -107,7 +108,7 @@ class AuthController extends AppController
 	{
 		if ($data = $this->ajax) {
 			if (!$data['old_password'] || !$data['new_password'])
-				$this->exitWithError('Заполните старый и новый пароль');
+				Response::exitWithError('Заполните старый и новый пароль');
 
 			$old_password = $this->actions->preparePassword($data['old_password']);
 
@@ -121,13 +122,13 @@ class AuthController extends AppController
 					->update(['password' => $newPassword]);
 				if ($res) {
 
-					$this->exitWithSuccess('Пароль поменeн');
+					Response::exitWithSuccess('Пароль поменeн');
 				} else {
-					$this->exitWithMsg('Что-то пошло не так (');
+					Response::exitWithMsg('Что-то пошло не так (');
 				}
 			} else {
 
-				$this->exitWithError('Не правильный старый пароль (');
+				Response::exitWithError('Не правильный старый пароль (');
 			}
 		}
 	}
@@ -145,9 +146,9 @@ class AuthController extends AppController
 					->update(['password' => $newPassword]);
 
 				$this->mailer->returnPassword($data);
-				$this->exitWithSuccess('Новый пароль проверьте на почте');
+				Response::exitWithSuccess('Новый пароль проверьте на почте');
 			} else {
-				$this->exitWithError("Пользователя с таким e-mail нет");
+				Response::exitWithError("Пользователя с таким e-mail нет");
 			}
 		}
 	}
@@ -180,7 +181,7 @@ class AuthController extends AppController
 		Auth::setAuth($user->toArray());
 		if ($user->update()) {
 			header('Location:/auth/success');
-			$this->exitWithPopup('"Вы успешно подтвердили свой E-mail."');
+			Response::exitWithPopup('"Вы успешно подтвердили свой E-mail."');
 		}
 
 	}

@@ -1,0 +1,46 @@
+<?php
+
+
+namespace app\builders;
+
+
+use app\view\components\Builders\Builder;
+
+class ItemArrayTabBuilder extends Builder
+{
+//	public string $model;
+    public string $html;
+    public string $tabTitle;
+    public string $field;
+
+    public static function build(string $title): ItemArrayTabBuilder
+    {
+        $view           = new self();
+        $view->html     = '';
+        $view->tabTitle = $title;
+        $view->field = '';
+        return $view;
+    }
+
+    public function html(string $html): ItemArrayTabBuilder
+    {
+        $this->html = $this->clean($html);
+        return $this;
+    }
+
+    public function getHtml(): string
+    {
+        return $this->html;
+    }
+
+    public function getTabTitle(): string
+    {
+        return $this->tabTitle;
+    }
+
+    public function getField(): string
+    {
+        return $this->field;
+    }
+
+}

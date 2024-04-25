@@ -90,14 +90,14 @@ class TestController extends AppController
 //
 //	public function actionTests()
 //	{
-//		$this->exitJson(Test::where('isTest', '1')->get()->toArray());
+//		Response::exitJson(Test::where('isTest', '1')->get()->toArray());
 //	}
 //
 //	public function actionEdit()
 //	{
 //		if ($this->ajax) {
 //			$id = Test::update($this->ajax);
-//			$this->exitJson(['id' => $id]);
+//			Response::exitJson(['id' => $id]);
 //		}
 //		if (isset($this->route['id'])) {
 //			$id = $this->route['id'];
@@ -127,6 +127,6 @@ class TestController extends AppController
 //
 //	public function actionGetCorrectAnswers()
 //	{
-//		$this->exitJson(($_SESSION['correct_answers']));
+//		Response::exitJson(($_SESSION['correct_answers']));
 //	}
 }

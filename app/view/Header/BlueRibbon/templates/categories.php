@@ -1,4 +1,4 @@
-<? foreach ($data['categories'] as $category): ?>
+<? foreach ($categories as $category): ?>
     <div class='h-cat'><?= $category['name']; ?>
         <ul>
             <? foreach ($category['children_not_deleted'] as $item): ?>

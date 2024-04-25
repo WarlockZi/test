@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Response;
 use app\core\Router;
 use app\Factory\AbstractTestFactory;
 use app\model\Test;
@@ -64,7 +65,7 @@ class TestController extends AppController
 
 	public function actionGetCorrectAnswers()
 	{
-		$this->exitJson(($_SESSION['correct_answers']));
+		Response::exitJson(($_SESSION['correct_answers']));
 	}
 
 
@@ -80,7 +81,7 @@ class TestController extends AppController
 
 	public function actionTests()
 	{
-		$this->exitJson(Test::where('isTest', '1')->get()->toArray());
+		Response::exitJson(Test::where('isTest', '1')->get()->toArray());
 	}
 
 

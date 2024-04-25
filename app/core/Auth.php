@@ -9,6 +9,20 @@ class Auth
 {
 	protected static $user = [];
 
+    public static function validateToken(array $data): bool
+    {
+        if (!$data || !isset($data['token']) || !$data['token']) return false;
+        if (!$_SESSION['token'] === $data['token']
+        ) {
+            unset($data['token']);
+            return true;
+        }
+        return false;
+    }
+    public static function setToken(): string
+    {
+        return $_SESSION['token'] = session_id();
+    }
 	public static function checkAuthorized(array $user, array $rights): void
 	{
 		if (!User::can($user, $rights)) {
@@ -27,9 +41,9 @@ class Auth
 		$_SESSION['id'] = $user['id'];
 	}
 
-	public static function setUser(User $user)
+	public static function setUser(User $mockuser)
 	{
-		self::$user = $user->toArray();
+		self::$user = $mockuser->toArray();
 	}
 
 	public static function getAuth()

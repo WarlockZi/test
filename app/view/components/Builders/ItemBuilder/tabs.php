@@ -5,13 +5,13 @@
 
 	>Основное
 	</div>
-	<? $n = 2; ?>
-	<? foreach ($this->tabs as $k => $tab): ?>
+    <?php $n = 2; ?>
+    <?php foreach ($this->tabs as $k => $tab): ?>
 	  <div data-tab-id="<?= $n; ?>"
 	       class="tab"
 	  >
 	    <?= $tab->tabTitle; ?>
 	  </div>
-		<? $n++; ?>
-	<? endforeach; ?>
+        <?php $n++; ?>
+    <?php endforeach; ?>
 </div>

@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Response;
 use app\core\Route;
 use app\model\Right;
 use app\model\User;
@@ -26,9 +27,9 @@ class RightController Extends AppController
     if ($this->ajax) {
       if ($id = Right::updateOrCreate($this->ajax)) {
         if (is_bool($id)) {
-          $this->exitWithPopup('Сохранено');
+          Response::exitWithPopup('Сохранено');
         }else{
-          $this->exitJson(['id'=>$id,'msg'=>'Создан']);
+          Response::exitJson(['id'=>$id,'msg'=>'Создан']);
         }
       }
     }
@@ -45,7 +46,7 @@ class RightController Extends AppController
 		$id = $this->ajax['id']??$_POST['id'];
 		if (User::can($this->user, ['right_delete']) || defined(SU)) {
 			if ($this->model::delete($id)) {
-				$this->exitWithPopup("ok");
+				Response::exitWithPopup("ok");
 			}
 		}
 		header('Location:/adminsc/right');

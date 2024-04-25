@@ -3,9 +3,10 @@
 namespace app\controller;
 
 use app\controller\Interfaces\IModelable;
+use app\core\Response;
 use app\Repository\MorphRepository;
-use app\Repository\SettingsRepository;
-use \Exception;
+use Exception;
+use Illuminate\Database\Eloquent\Model;
 use ReflectionClass;
 
 class AppController extends Controller implements IModelable
@@ -19,30 +20,30 @@ class AppController extends Controller implements IModelable
 //		$this->settings = (new SettingsRepository())->initial();
 	}
 
-	public function setView()
+	public function setView():void
 	{
 		$view = $this->getView();
 		$view->render();
 	}
 
-	public function actionDelete()
+	public function actionDelete():void
 	{
 		$id = $this->ajax['id'];
 
-		if (!$id) $this->exitWithMsg('No id');
+		if (!$id) Response::exitWithMsg('No id');
 		$model = new $this->model;
 
 		$item = $model->find((int)$id);
 		if ($item) {
 			$destroy = $item->delete();
-			$this->exitJson(['id' => $id, 'popup' => 'Ok']);
+			Response::exitJson(['id' => $id, 'popup' => 'Ok']);
 		}
 	}
 
-	public function actionAttach()
+	public function actionAttach():void
 	{
-		$req = $this->isAjax();
-//		$this->exitWithPopup(var_dump($req));
+		$req = $this->ajax;
+
 		if (!$req) $req = $_POST;
 		if ($_FILES) {
 			MorphRepository::attachWithFiles($_FILES, $req);
@@ -50,22 +51,22 @@ class AppController extends Controller implements IModelable
 			MorphRepository::attach($req);
 		}
 
-		$this->exitWithPopup('ok');
+		Response::exitWithPopup('ok');
 	}
 
-	public function actionDetach()
+	public function actionDetach():void
 	{
 		$req = $this->ajax;
-		if (!$req) $this->exitWithError('Плохой запрос');
+		if (!$req) Response::exitWithError('Плохой запрос');
 		MorphRepository::detach($this, $req);
-		$this->exitWithPopup('ok');
+		Response::exitWithPopup('ok');
 	}
 
 
 	/**
 	 * @throws Exception
 	 */
-	public function actionUpdateOrCreate()
+	public function actionUpdateOrCreate():void
 	{
 		$req = $this->ajax;
 		if (!$req) throw new Exception('No request');
@@ -75,7 +76,7 @@ class AppController extends Controller implements IModelable
 			$model = $this->model::with($relation)->find($req['id']);
 
 			$created = $model->$relation()->create();
-			$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
+			Response::exitJson(['popup' => 'Создан', 'id' => $created->id]);
 		}
 
 		if (isset($req['morph'])) {
@@ -84,7 +85,7 @@ class AppController extends Controller implements IModelable
 			$model = $this->model::with($relation)->find($req['id']);
 			$created = $model->$relation()->create();
 			$model->$relation()->syncWithoutDetaching($created);
-			$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
+			Response::exitJson(['popup' => 'Создан', 'id' => $created->id]);
 		}
 
 		$model = $this->model::withTrashed()
@@ -94,25 +95,25 @@ class AppController extends Controller implements IModelable
 		);
 
 		if ($model->wasRecentlyCreated) {
-			$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
+			Response::exitJson(['popup' => 'Создан', 'id' => $model->id]);
 		} else {
-			$this->exitJson(['popup' => 'Обновлен', 'model' => $model->toArray()]);
+			Response::exitJson(['popup' => 'Обновлен', 'model' => $model->toArray()]);
 		}
-		$this->exitWithError('Ошибка');
+		Response::exitWithError('Ошибка');
 
 	}
 
-	public static function shortClassName($object)
+	public static function shortClassName($object):string
 	{
 		return lcfirst((new ReflectionClass($object))->getShortName());
 	}
 
-	public function getModel()
+	public function getModel():Model
 	{
 		return $this->model;
 	}
 
-	public function setModel($model)
+	public function setModel($model):void
 	{
 		$this->model = $model;
 	}

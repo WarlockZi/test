@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Response;
 use app\model\Image;
 use app\Repository\ImageRepository;
 use app\view\Image\ImageView;
@@ -34,15 +35,15 @@ class ImageController Extends AppController
 				->wherePivot('slug', $post['slug'])
 				->detach($morphed->id);
 
-			$this->exitWithSuccess('ok');
+			Response::exitWithSuccess('ok');
 		}
 	}
 
 
 	public function actionAttachMany()
 	{
-		if (!$_POST) $this->exitWithPopup('нет данных');
-		if (!$_FILES) $this->exitWithPopup('нет файлов');
+		if (!$_POST) Response::exitWithPopup('нет данных');
+		if (!$_FILES) Response::exitWithPopup('нет файлов');
 		$morphed = $_POST['morphed'];
 		$morph = $_POST['morph'];
 		$images = [];
@@ -59,19 +60,19 @@ class ImageController Extends AppController
 
 		$srcs = ImageRepository::sync($images, $morphed, $morph['slug'], 'many',false);
 		if ($srcs) {
-			$this->exitJson($srcs);
+			Response::exitJson($srcs);
 		}
-		$this->exitWithPopup("Уже есть");
+		Response::exitWithPopup("Уже есть");
 	}
 //
 //	public function actionAttachOne()
 //	{
-//		if (!$_POST) $this->exitWithPopup('нет данных');
-//		if (!$_FILES) $this->exitWithPopup('нет файлов');
+//		if (!$_POST) Response::exitWithPopup('нет данных');
+//		if (!$_FILES) Response::exitWithPopup('нет файлов');
 //		$morphed = $_POST['morphed'];
 //		$morph = $_POST['morph'];
 //
-//		if (count($_FILES) > 1) $this->exitWithPopup('Можно только один файл');
+//		if (count($_FILES) > 1) Response::exitWithPopup('Можно только один файл');
 //		$file = $_FILES[0];
 //
 //		ImageRepository::validateSize($file);
@@ -84,19 +85,19 @@ class ImageController Extends AppController
 //
 //		$res = ImageRepository::sync($image, $morphed, $morph['slug'], 'one', true);
 //		if ($res) {
-//			$this->exitJson($res);
+//			Response::exitJson($res);
 //		}
-//		$this->exitWithPopup("Уже есть такая картинка");
+//		Response::exitWithPopup("Уже есть такая картинка");
 //
 //	}
 	public function attachOne()
 	{
-		if (!$_POST) $this->exitWithPopup('нет данных');
-		if (!$_FILES) $this->exitWithPopup('нет файлов');
+		if (!$_POST) Response::exitWithPopup('нет данных');
+		if (!$_FILES) Response::exitWithPopup('нет файлов');
 		$morphed = $_POST['morphed'];
 		$morph = $_POST['morph'];
 
-		if (count($_FILES) > 1) $this->exitWithPopup('Можно только один файл');
+		if (count($_FILES) > 1) Response::exitWithPopup('Можно только один файл');
 		$file = $_FILES[0];
 
 		ImageRepository::validateSize($file);
@@ -109,9 +110,9 @@ class ImageController Extends AppController
 
 		$res = ImageRepository::sync($image, $morphed, $morph['slug'], 'one', true);
 		if ($res) {
-			$this->exitJson($res);
+			Response::exitJson($res);
 		}
-		$this->exitWithPopup("Уже есть такая картинка");
+		Response::exitWithPopup("Уже есть такая картинка");
 
 	}
 }

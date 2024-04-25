@@ -43,7 +43,7 @@ use app\core\Icon;
              data-unit="<?= $baseUnit->id ?>"
         >+
         </div>
-        <?= $baseEqualsMainUnit; ?>
+<!--        --><?php //= $baseEqualsMainUnit; ?>
 
     </div>
 </div>

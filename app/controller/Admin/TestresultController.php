@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\FS;
+use app\core\Response;
 use app\core\Route;
 use app\model\TestResult;
 use app\core\PHPMail;
@@ -50,9 +51,9 @@ class TestresultController extends AppController
 			$result = TestResult::create($this->ajax);
 			if ($result->wasRecentlyCreated ) {
 				$this->sendTestResult($this->ajax, $result->id-1);
-				$this->exitWithPopup('Результат сохранен');
+				Response::exitWithPopup('Результат сохранен');
 			}else{
-				$this->exitWithPopup('Результат в базу не сохранен');
+				Response::exitWithPopup('Результат в базу не сохранен');
 			}
 		}
 	}
@@ -71,7 +72,7 @@ class TestresultController extends AppController
 		$data['altBody'] = "Ссылка на страницу с результатами: тут";
 
 		$sent = PHPMail::send_mail($data);
-		$this->exitWithPopup('Результат сохранен');
+		Response::exitWithPopup('Результат сохранен');
 	}
 
 	private static function prepareBodyTestResults($data, $id)

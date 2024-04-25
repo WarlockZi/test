@@ -4,9 +4,17 @@
 namespace app\view\components\Builders;
 
 
+use app\core\FS;
+
 class Builder
 {
-	public function clean(string $res):string
+    protected $fs;
+    public function __construct()
+    {
+        $this->fs = new FS();
+    }
+
+    public function clean(string $res):string
 	{
 		$regex[0] = "/\r\r+?/";
 		$regex[1] = "/\n\n+?/";

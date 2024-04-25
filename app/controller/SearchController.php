@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\Actions\SearchAction;
+use app\core\Response;
 
 class SearchController extends AppController
 {
@@ -19,6 +20,6 @@ class SearchController extends AppController
 	{
 		if (!$this->ajax) exit();
 		$res = $this->actions->index($this->ajax['text']);
-		$this->exitJson(['found' => $res]);
+		Response::exitJson(['found' => $res]);
 	}
 }

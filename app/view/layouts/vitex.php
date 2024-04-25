@@ -18,7 +18,7 @@ use app\core\Icon;
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="/logo-square.svg" type="image/svg+xml">
-	<?= $this->getCanonical(); ?>
+	<?= $view->getCanonical(); ?>
 
 <!--	--><?//= app\vite\Vite::serve('main.js') ?>
 <!--	--><?//= app\vite\Vite::serve('main.js','https://172.25.240.1:5133') ?>
@@ -33,29 +33,29 @@ use app\core\Icon;
 <!--		<script type="module" src="https://vi-production:5133/@vite/client"></script>-->
 <!--		<script type="module" src="../../../public/src/Main/main.js"></script>-->
 
-	<?= $this->assets->getMeta(); ?>
+	<?= $view->assets->getMeta(); ?>
 
 
-		<?= $this->assets->getCss(); ?>
-		<?= $this->assets->getCDNCss(); ?>
+		<?= $view->assets->getCss(); ?>
+		<?= $view->assets->getCDNCss(); ?>
 
 </head>
 
 <body>
 
-<?= $this->header->getHeader(); ?>
+<?= $view->header->getHeader(); ?>
 
 <div class="user-content-wrap">
 	<main class="user-content">
-		 <?= $this->getContent(); ?>
+		 <?= $view->getContent(); ?>
 	</main>
 </div>
 
-<?= $this->getFooter(); ?>
+<?= $view->getFooter(); ?>
 
 
-<?= $this->assets->getJs(); ?>
-<?= $this->assets->getCDNJs(); ?>
+<?= $view->assets->getJs(); ?>
+<?= $view->assets->getCDNJs(); ?>
 
 <? //= Footer::getUserCookie(); ?>
 

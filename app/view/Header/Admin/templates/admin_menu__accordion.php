@@ -165,12 +165,13 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 			</div>
 			<ul class="level-1">
 					 <? if (User::can($user, ['role_admin'])): // admin ?>
-				  <a class="neon" href="/adminsc/report/productsWithoutImgInstore">Товары без картинок в наличии</a>
-				  <a class="neon" href="/adminsc/report/productsWithoutImgNotinstore">Товары без картинок без наличия</a>
+
+				  <a class="neon" href="/adminsc/report/productsNoImgInstore">Товары без картинок в наличии</a>
+				  <a class="neon" href="/adminsc/report/productsNoImgNotinstore">Товары без картинок без наличия</a>
 
 				  <a class="neon" href="/adminsc/report/productsNoMinimumUnit">Товары без min единицы</a>
-				  <a class="neon" href="/adminsc/report/productsHaveOnlyBaseUnit">Товары доп единиц</a>
-
+				  <a class="neon" href="/adminsc/report/productsNoDopUnit" title="Нужны для корзины, чтобы ">Товары без доп единиц</a>
+                         <a class="neon" href="/adminsc/report/productsHaveDopUnit" title="Нужны для корзины, чтобы ">Товары имеющие доп единицу</a>
 					 <? endif; ?>
 			</ul>
 		</li>

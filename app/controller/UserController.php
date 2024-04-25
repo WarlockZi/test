@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\core\Auth;
+use app\core\Response;
 use app\model\User;
 use app\view\User\UserView;
 
@@ -43,7 +44,7 @@ class UserController extends AppController
 		if ($user = $this->ajax) {
 			$user['id'] = $_SESSION['id'];
 			User::updateOrCreate($user);
-			$this->exitWithPopup('Сохранено');
+			Response::exitWithPopup('Сохранено');
 		}
 	}
 
@@ -53,9 +54,9 @@ class UserController extends AppController
 		if ($data = $this->ajax) {
 			if (User::can($this->user, ['user_delete'])) {
 				User::delete($data['id']);
-				$this->exitWithPopup('ok');
+				Response::exitWithPopup('ok');
 			} else {
-				$this->exitWithPopup('Не хватает прав');
+				Response::exitWithPopup('Не хватает прав');
 			}
 		}
 	}

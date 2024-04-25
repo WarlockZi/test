@@ -5,6 +5,7 @@ namespace app\Actions;
 
 
 use app\controller\AppController;
+use app\core\Response;
 use app\model\Category;
 use app\model\Price;
 use app\model\Product;
@@ -167,7 +168,7 @@ class SyncPartActions extends AppController
 	{
 		$content = 'LOG<br>' . file_get_contents($this->log);
 		if (isset($_POST['param'])) {
-			$this->exitJson(['success' => true, 'content' => $content]);
+			Response::exitJson(['success' => true, 'content' => $content]);
 		}
 	}
 
@@ -176,7 +177,7 @@ class SyncPartActions extends AppController
 		file_put_contents($this->log, '');
 
 		$content = StorageLog::getFileContent('log.txt');
-		$this->exitJson(['success' => 'success', 'content' => $content]);
+		Response::exitJson(['success' => 'success', 'content' => $content]);
 	}
 
 

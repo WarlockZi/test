@@ -15,17 +15,14 @@ class ItemBuilder extends Builder
   private $id;
   private $sid = '';
   private $item = [];
-
   private $pageTitle;
   private $class;
   private $del = false;
   private $softDel = false;
   private $save = false;
-
   public $toListHref = '';
   public $toList = false;
   public $toListText = 'К списку';
-
   private $fields = [];
   private $tabs = [];
 

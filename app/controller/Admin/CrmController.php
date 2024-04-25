@@ -63,8 +63,7 @@ class CrmController extends AppController
 
 	public function actionDumpWWW()
 	{
-		if ($this->isAjax()) {
-		}
+
 	}
 
 

@@ -1,6 +1,6 @@
 <div class="category">
 
-	<? use app\core\Auth;
+    <?php use app\core\Auth;
 	use app\core\Icon;
 	use app\view\Category\CategoryView;
 
@@ -8,67 +8,67 @@
 	  <div class="no-categories">
 		  <H1>Такой категории нет</H1>
 	  </div>
-	<? else: ?>
+    <?php else: ?>
 
 		<?= $breadcrumbs ?? '' ?>
 
-		<? if ($category['childrenRecursive']->count()): ?>
+        <?php if ($category['childrenRecursive']->count()): ?>
 		  <h1>Подкатегории</h1>
 
 		  <div class="category-child-wrap">
-					<? foreach ($category['childrenRecursive'] as $child): ?>
+              <?php foreach ($category['childrenRecursive'] as $child): ?>
 				 <a class="category-card" href="/category/<?= $child->slug ?>">
 							 <?= $child->name ?>
-					 <!--							 --><? //= CategoryView::getMainImage($child) ?>
+					 <!--							 --><?php //= CategoryView::getMainImage($child) ?>
 				 </a>
 
-					<? endforeach; ?>
+              <?php endforeach; ?>
 		  </div>
-		<? endif; ?>
+        <?php endif; ?>
 
-		<? if ($category->productsInStore->count()): ?>
+        <?php if ($category->productsInStore->count()): ?>
 
 		  <div class="products-header">
 			  <h1>Товары в наличии</h1>
-			  <!--					--><? //= $category->products->filters ?>
+			  <!--					--><?php //= $category->products->filters ?>
 		  </div>
 
 		  <div class="product-wrap">
-					<? $admin = Auth::isAdmin();
-					$icon = Icon::edit(); ?>
+              <?php $admin = Auth::isAdmin();
+					$icon  = Icon::edit(); ?>
 
-					<? foreach ($category->productsInStore as $product): ?>
+              <?php foreach ($category->productsInStore as $product): ?>
 						<?= CategoryView::getProductCard($product, $icon) ?>
-					<? endforeach; ?>
+              <?php endforeach; ?>
 
 		  </div>
 
-		<? endif; ?>
+        <?php endif; ?>
 
-		<? if ($category->productsNotInStoreInMatrix->count()): ?>
+        <?php if ($category->productsNotInStoreInMatrix->count()): ?>
 
 		  <div class="products-header">
 			  <br>
 			  <br>
 			  <h1>Товары под заказ</h1>
-			  <!--					--><? //= $category->products->filters ?>
+			  <!--					--><?php //= $category->products->filters ?>
 		  </div>
 
 		  <div class="product-wrap">
 
-					<? $admin = Auth::isAdmin();
-					$icon = Icon::edit(); ?>
+              <?php $admin = Auth::isAdmin();
+					$icon  = Icon::edit(); ?>
 
-					<? foreach ($category->productsNotInStoreInMatrix as $product): ?>
-						<? if (str_ends_with($product->name,'*')): ?>
+              <?php foreach ($category->productsNotInStoreInMatrix as $product): ?>
+                  <?php if (str_ends_with($product->name,'*')): ?>
 							<?= CategoryView::getProductCard($product, $icon) ?>
-						<? endif; ?>
-					<? endforeach; ?>
+                  <?php endif; ?>
+              <?php endforeach; ?>
 
 		  </div>
-		<? endif; ?>
+        <?php endif; ?>
 	  <div class="hoist">Наверх</div>
-	<? endif; ?>
+    <?php endif; ?>
 
 
 </div>
