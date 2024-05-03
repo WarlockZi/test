@@ -25,6 +25,7 @@ class ErrorLogger implements ILogger
 
 	public function write(string $content):bool
 	{
+        file_put_contents(time(), $content.PHP_EOL, FILE_APPEND);
 		return file_put_contents($this->logFile, $content.PHP_EOL.PHP_EOL, FILE_APPEND);
 	}
 
