@@ -17,7 +17,7 @@
             <div class="price-unit-row ">
 
                 <div class="price-for-unit">
-                    <?= number_format($price * $multiplier, 2, '.', ' ') ?>
+                    <?= number_format((int)$price * $multiplier, 2, '.', ' ') ?>
                 </div>
                 ₽ /
                 <div class="unit">
