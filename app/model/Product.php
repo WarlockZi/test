@@ -53,7 +53,7 @@ class Product extends Model
         return Attribute::get(
             function () {
                 $array = [];
-                $price = $this->getRelation('price')->price;
+                $price = (int)$this->getRelation('price')->price;
                 if ($this->baseUnit) {
                     $array['baseUnit']['price'] = number_format($price, 2, '.', ' ');
                     $array['baseUnit']['unit']  = $this->baseUnit->name;
