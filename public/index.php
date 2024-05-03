@@ -34,7 +34,7 @@ try {
 
     exit();
 } catch (Exception $e) {
-    $logger = new \app\Services\Logger\FileLogger();
+    $logger = new \app\Services\Logger\ErrorLogger();
     $logger->write($e);
     exit($e);
 }
