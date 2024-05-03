@@ -63,10 +63,10 @@ class ProductController extends AppController
             ->delete();
 
         foreach ($duplicates as $duplicate) {
-            ProductUnit::where('product_1s_id', $duplicate->product_1s_id)
-                ->where('unit_id', $duplicate->unit_id)
+            ProductUnit::where('product_1s_id', $duplicate->product1sId)
+                ->where('unit_id', $duplicate->unitId)
                 ->where('multiplier', $duplicate->multiplier)
-                ->where('is_base', $duplicate->is_base)
+                ->where('is_base', $duplicate->isBase)
                 ->orderBy('product_1s_id', 'asc')
                 ->skip(1)
                 ->delete();
