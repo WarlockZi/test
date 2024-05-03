@@ -36,8 +36,8 @@ try {
 } catch (Throwable $e) {
     $logger = new \app\Services\Logger\ErrorLogger();
     $logger->write($e->getMessage());
-    $logger = new \app\Services\Logger\FileLogger();
-    $logger->write($e->getMessage());
+    $logger->write($e);
+
     exit($e);
 }
 
