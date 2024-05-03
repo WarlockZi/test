@@ -59,9 +59,10 @@ class ProductController extends AppController
             ->groupBy('product_1s_id', 'unit_id', 'multiplier', 'is_base')
             ->havingRaw('COUNT(*) > 1')
             ->get();
-        $nuls = ProductUnit::whereNull('product_1s_id')
-            ->delete();
+//        $nuls = ProductUnit::whereNull('product_1s_id')
+//            ->delete();
 
+        if (!$duplicates->count()) return null;
         foreach ($duplicates as $duplicate) {
             ProductUnit::where('product_1s_id', $duplicate->product1sId)
                 ->where('unit_id', $duplicate->unitId)
@@ -70,8 +71,8 @@ class ProductController extends AppController
                 ->orderBy('product_1s_id', 'asc')
                 ->skip(1)
                 ->delete();
-            return true;
         }
+        return true;
     }
 
     public function actionList()
