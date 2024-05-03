@@ -28,6 +28,7 @@ class ProductController extends AppController
         $id   = $this->route->id;
         $prod = ProductRepository::edit($id);
 //		$p = $prod->toArray();
+
 //        $this->copyBaseUnits();
         $this->cleanBaseUnits();
         if ($prod) {
