@@ -6,7 +6,7 @@
     ?>
 
     <div class="new-price">
-        <?= number_format($price, 2, '.', ' ') ?> ₽ / <?= $unit; ?>
+        <?= number_format((int)$price, 2, '.', ' ') ?> ₽ / <?= $unit; ?>
     </div>
 
 </div>
