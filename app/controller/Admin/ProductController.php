@@ -27,7 +27,8 @@ class ProductController extends AppController
         $id   = $this->route->id;
         $prod = ProductRepository::edit($id);
 //		$p = $prod->toArray();
-        $this->copyBaseUnits();
+//        $this->copyBaseUnits();
+        $this->cleanBaseUnits();
         if ($prod) {
 //			$product = ProductFormView::edit($prod);
             $product     = ProductArrayFormView::edit($prod);
@@ -49,6 +50,25 @@ class ProductController extends AppController
                 'is_base' => 1,
             ];
             ProductUnit::create($model);
+        }
+    }
+
+    private function cleanBaseUnits()
+    {
+        $duplicates = ProductUnit::select('product_1s_id', 'unit_id', 'multiplier', 'is_base')
+            ->groupBy('product_1s_id', 'unit_id', 'multiplier', 'is_base')
+            ->havingRaw('COUNT(*) > 1')
+            ->get();
+
+        foreach ($duplicates as $duplicate) {
+            ProductUnit::where('product_1s_id', $duplicate->product_1s_id)
+                ->where('unit_id', $duplicate->unit_id)
+                ->where('multiplier', $duplicate->multiplier)
+                ->where('is_base', $duplicate->is_base)
+                ->orderBy('product_1s_id', 'asc')
+                ->skip(1)
+                ->delete();
+            return true;
         }
     }
 
