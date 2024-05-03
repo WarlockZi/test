@@ -33,7 +33,7 @@ try {
     $router->dispatch();
 
     exit();
-} catch (Exception $e) {
+} catch (Throwable $e) {
 //    $logger = new \app\Services\Logger\ErrorLogger();
     $logger = new \app\Services\Logger\FileLogger();
     $logger->write($e->getMessage());
