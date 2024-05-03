@@ -8,10 +8,12 @@ use app\Storage\StorageLog;
 
 class ErrorLogger implements ILogger
 {
-	protected $logFile;
+	protected string $logFile;
+    protected string $logPath;
 
 	public function __construct($fileName = 'errors.txt')
 	{
+        $this->logPath = ROOT.'/app/Storage/log/';
 		$this->logFile = StorageLog::getFile($fileName);
 	}
 
