@@ -11,7 +11,6 @@ use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
 use app\Services\Logger\FileLogger;
 use app\view\Product\ProductArrayFormView;
-use app\view\Product\ProductFormView;
 
 
 class ProductController extends AppController
@@ -123,7 +122,7 @@ class ProductController extends AppController
     public function actionSetbaseequalmainunit()
     {
         if (ProductAction::setBaseEqualMainUnit($this->ajax)) {
-            $this->exitWithPopup('Обновлено');
+            Response('Обновлено');
         }
         $this->exitJson(['popup' => 'ошибка']);
     }
