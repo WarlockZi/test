@@ -59,6 +59,8 @@ class ProductController extends AppController
             ->groupBy('product_1s_id', 'unit_id', 'multiplier', 'is_base')
             ->havingRaw('COUNT(*) > 1')
             ->get();
+        $nuls = ProductUnit::whereNull('product_1s_id')
+            ->delete();
 
         foreach ($duplicates as $duplicate) {
             ProductUnit::where('product_1s_id', $duplicate->product_1s_id)
