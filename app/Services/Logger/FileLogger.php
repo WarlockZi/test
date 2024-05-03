@@ -23,7 +23,7 @@ class FileLogger implements ILogger
 
 	public function write(string $content):bool
 	{
-		return file_put_contents($this->logFile, $content, FILE_APPEND);
+		return file_put_contents($this->logFile, $content.PHP_EOL, FILE_APPEND);
 	}
 
 	public function setFile(string $fileName): ILogger

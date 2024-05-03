@@ -9,6 +9,7 @@ use app\model\Product;
 use app\model\ProductUnit;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
+use app\Services\Logger\FileLogger;
 use app\view\Product\ProductArrayFormView;
 use app\view\Product\ProductFormView;
 
@@ -30,13 +31,34 @@ class ProductController extends AppController
 //        $this->copyBaseUnits();
         $this->cleanBaseUnits();
         if ($prod) {
-//			$product = ProductFormView::edit($prod);
             $product     = ProductArrayFormView::edit($prod);
             $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);
         }
         $this->set(compact('product', 'breadcrumbs'));
         $this->assets->setProduct();
         $this->assets->setQuill();
+    }
+
+    private function cleanBaseUnits()
+    {
+        $duplicates = ProductUnit::select('product_1s_id', 'unit_id', 'multiplier', 'is_base')
+            ->groupBy('product_1s_id', 'unit_id', 'multiplier', 'is_base')
+            ->havingRaw('COUNT(*) > 1')
+            ->get();
+
+        $logger = new FileLogger();
+        $logger->write('duplicates->count -'.$duplicates->count());
+        if (!$duplicates->count()) return null;
+        foreach ($duplicates as $duplicate) {
+            $res = ProductUnit::where('product_1s_id', $duplicate->product_1s_id)
+                ->where('unit_id', $duplicate->unit_id)
+                ->where('multiplier', $duplicate->multiplier)
+                ->where('is_base', $duplicate->is_base)
+                ->orderBy('unit_id', 'asc')
+                ->skip(1)
+                ->delete();
+        }
+        return true;
     }
 
     private function copyBaseUnits()
@@ -51,28 +73,6 @@ class ProductController extends AppController
             ];
             ProductUnit::create($model);
         }
-    }
-
-    private function cleanBaseUnits()
-    {
-        $duplicates = ProductUnit::select('product_1s_id', 'unit_id', 'multiplier', 'is_base')
-            ->groupBy('product_1s_id', 'unit_id', 'multiplier', 'is_base')
-            ->havingRaw('COUNT(*) > 1')
-            ->get();
-//        $nuls = ProductUnit::whereNull('product_1s_id')
-//            ->delete();
-
-        if (!$duplicates->count()) return null;
-        foreach ($duplicates as $duplicate) {
-            ProductUnit::where('product_1s_id', $duplicate->product1sId)
-                ->where('unit_id', $duplicate->unitId)
-                ->where('multiplier', $duplicate->multiplier)
-                ->where('is_base', $duplicate->isBase)
-                ->orderBy('product_1s_id', 'asc')
-                ->skip(1)
-                ->delete();
-        }
-        return true;
     }
 
     public function actionList()
