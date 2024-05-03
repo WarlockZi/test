@@ -18,9 +18,6 @@ export default function product() {
   new Fields(product);
 
   new Dnd($('.add-file')[0], addMainImage);
-
-  let baseEqMainUnit = product.querySelector(`[data-action='equal']`);
-  baseEqMainUnit.onchange = setEqual
 }
 
 async function setEqual({target}) {

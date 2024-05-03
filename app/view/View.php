@@ -5,6 +5,7 @@ namespace app\view;
 use app\controller\Controller;
 use app\core\Auth;
 use app\core\FS;
+use app\core\Route;
 use app\view\Assets\Assets;
 
 abstract class View
@@ -19,13 +20,11 @@ abstract class View
     protected $view;
     public Assets $assets;
 
-    function __construct(Controller $controller)
+    function __construct(Route $route)
     {
-        $this->controller = $controller;
         $this->fs         = new FS(__DIR__ . '/');
         $this->user       = Auth::getUser();
-        $route = $controller->getRoute();
-        $this->view       = ($route->action ?? 'index');
+        $this->view       = ($route->getView() ?? 'index');
     }
 
     public function getContent()

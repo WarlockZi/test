@@ -56,7 +56,7 @@ class PostController Extends AppController
 	}
 
 
-	public function actionDelete()
+	public function actionDelete():void
 	{
 		$id = $this->ajax['id'] ?? $_POST['id'];
 

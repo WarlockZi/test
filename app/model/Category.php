@@ -59,14 +59,6 @@ class Category extends Model
 			->hasOne(Seo::class, 'product_category_1sid', '1s_id');
 	}
 
-//	public static function frontCategories()
-//	{
-//		$d = static::where('show_front', 1)
-//			->with('childrenNotDeleted')
-//			->get();
-//		return $d;
-//	}
-
 	public function properties()
 	{
 		return $this->morphToMany(Property::class, 'propertable');

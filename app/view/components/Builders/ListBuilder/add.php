@@ -1,9 +1,9 @@
-<? if ($this->addButton === 'ajax'): ?>
+<?php if ($addButton === 'ajax'): ?>
 
 	<div class="add-model">+</div>
 
-<? elseif ($this->addButton === 'redirect'): ?>
-	<a href="/adminsc/<?= $this->modelName ?>/show"
+<?php elseif ($addButton === 'redirect'): ?>
+	<a href="/adminsc/<?= $modelName ?>/show"
 	   class="add-model">+
 	</a>
-<? endif; ?>
+<?php endif; ?>

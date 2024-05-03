@@ -9,29 +9,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class ItemArrayBuilder extends Builder
 {
-//    private $model;
-//    private $sid = '';
-    private $fields;
-    private $tabs;
-    private $toListText;
-    private $toListHref;
-    private $pageTitle;
-    private $class;
-    private $item;
-    private $dataModel;
-    private $id;
-    private $del;
-    private $softDel;
-    private $save;
-    private $toList;
-    private $html;
-    private $modelName;
-    private $dataId;
+    private string $toListText;
+    private string $toListHref;
+    private string $pageTitle;
+    private string $class;
+    private array $item;
+    private array $fields;
+    private array $tabs;
+    private string $id;
+    private string $del;
+    private string $softDel;
+    private string $save;
+    private string $toList;
+    private string $html;
+    private string $modelName;
+    private string $dataId;
+    private string $dataModel;
+    private string $pageTiltle;
+    private FS $fs;
 
     public function __construct()
     {
         parent::__construct();
-        $this->fs = new FS(__DIR__ . DIRECTORY_SEPARATOR);
+        $this->fs     = new FS(__DIR__);
+        $this->dataId = '';
+        $this->html = '';
     }
 
     public static function build(Model $item, string $modelName)
@@ -91,6 +93,7 @@ class ItemArrayBuilder extends Builder
         }
         return $this;
     }
+
     public function softDel()
     {
         $this->del     = false;
@@ -100,7 +103,17 @@ class ItemArrayBuilder extends Builder
 
     public function get()
     {
-        return $this->clean($this->fs->getContent('ItemTemplate', $this));
+        try {
+//            $this->itemB='';
+            $data = get_object_vars($this);
+            return $this->clean($this->fs->getContent('ItemTemplate', $data));
+
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        } catch (\Error $exception) {
+            return $exception->getMessage();
+
+        }
     }
 
     ///  GETTERS
@@ -111,109 +124,50 @@ class ItemArrayBuilder extends Builder
 
     public function getToListHref(): string
     {
-        return $this->toListHref??'';
+        return $this->toListHref ?? '';
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPageTitle()
+    public function getClass(): string
     {
-        return $this->pageTitle?"<div class='page-title'>{$this->pageTitle}</div>" : '';
+        return $this->class ?? '';
     }
 
-    /**
-     * @return mixed
-     */
-    public function getClass():string
-    {
-        return $this->class??'';
-    }
-
-    /**
-     * @return mixed
-     */
     public function getItem()
     {
-        return $this->item??[];
+        return $this->item ?? [];
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDataModel()
-    {
-        return "data-model='{$this->modelName}'";
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id??0;
-    }
-
-    public function isDel(): bool
-    {
-        return $this->del??false;
-    }
-
-    public function isSoftDel(): bool
-    {
-        return $this->softDel??false;
-    }
-
-    public function isSave(): bool
-    {
-        return $this->save??false;
-    }
-
-    public function isToList(): bool
-    {
-        return $this->toList??false;
-    }
+//    public function getId()
+//    {
+//        return $this->id ?? 0;
+//    }
 
     public function getHtml(): string
     {
-        return $this->html??'';
+        return $this->html;
     }
 
-    /**
-     * @return string
-     */
-    public function getModelName():string
+    public function getModelName(): string
     {
-        return $this->modelName??'';
+        return $this->modelName ?? '';
     }
 
-    /**
-     * @return string
-     */
-    public function getDataId():string
+    public function getTabs(): array
     {
-        return "data-id='{$this->item['id']}'";
+        return $this->tabs ?? [];
     }
 
-    /**
-     * @return array
-     */
-    public function getTabs():array
+    public function getFields(): array
     {
-        return $this->tabs??[];
+        return $this->fields ?? [];
     }
 
-    /**
-     * @return array
-     */
-    public function getFields():array
+    public function getField(): string
     {
-        return $this->fields??[];
+        return $this->fields;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getSoftDel()
     {
         return $this->softDel;

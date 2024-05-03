@@ -49,7 +49,7 @@ class UserController extends AppController
 	}
 
 
-	public function actionDelete()
+	public function actionDelete():void
 	{
 		if ($data = $this->ajax) {
 			if (User::can($this->user, ['user_delete'])) {

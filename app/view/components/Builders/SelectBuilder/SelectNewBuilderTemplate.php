@@ -1,6 +1,6 @@
-<select select-new <?= $this->class; ?>>
+<select select-new <?= $class; ?>>
 
-	<?= $this->options; ?>
+	<?= $options; ?>
 
 </select>
 

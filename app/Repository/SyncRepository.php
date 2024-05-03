@@ -18,10 +18,10 @@ class SyncRepository
 	protected $importFile;
 	protected $offerFile;
 	protected $logger;
-	protected $route;
-	public function __construct(Route $route, $importFile, $offerFile, $logger)
+//	protected $route;
+	public function __construct($importFile, $offerFile, $logger)
 	{
-		$this->route = $route;
+//		$this->route = $route;
 		$this->importFile = $importFile;
 		$this->logger = $logger;
 		$this->offerFile = $offerFile;
@@ -47,6 +47,7 @@ class SyncRepository
 		$this->removeCategories();
 		$this->softRemoveProducts();
 		$this->removePrices();
+
 	}
 
 	public function trancate()

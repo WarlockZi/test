@@ -1,61 +1,60 @@
 <div custom-list
-	<?= $this->class; ?>
-	<?= $this->relation; ?>
-	<?= $this->dataModel; ?>
+    <?= $class; ?>
+     data-relation="<?= $relation; ?>"
+    <?= $dataModel; ?>
 >
 
-	<?= $this->pageTitle; ?>
+    <div class='list-title'><?= $pageTitle; ?></div>
 
-	<div class="custom-list"
-		 <?= $this->grid ?>
-	>
+    <div class="custom-list"
+        <?= $grid ?>
+    >
 
-		<!--  HEADER  -->
-		 <? foreach ($this->columns as $c): ?>
-		  <div
-				  <?= $c->classHeader; ?>
-					<?= $c->type; ?>
-					<?= $c->sort; ?>
-		  >
-					<?= $c->sortIcon; ?>
-					<?= $c->name; ?>
-					<?= $c->search; ?>
-		  </div>
-		 <? endforeach; ?>
+        <!--  HEADER  -->
+        <?php foreach ($columns as $c): ?>
+            <div
+                <?= $c->classHeader; ?>
+                <?= $c->type; ?>
+                <?= $c->sort; ?>
+            >
+                <?= $c->sortIcon; ?>
+                <?= $c->name; ?>
+                <?= $c->search; ?>
+            </div>
+        <?php endforeach; ?>
 
-		<!--  TABLE  -->
+        <!--  TABLE  -->
 
-		<!--		 Empty row-->
-		 <?= $this->emptyRow(); ?>
+        <!--		 Empty row-->
+        <?= $emptyRow; ?>
 
-		<!--		 Data rows-->
-		 <? foreach ($this->items as $item): ?>
+        <!--		 Data rows-->
+        <?php foreach ($items as $item): ?>
 
-			 <? foreach ($this->columns as $field => $c): ?>
+            <?php foreach ($columns as $field => $c): ?>
 
-				 <? if ($c->html): ?>
-					 <?= $c->html ?>
-				 <? else: ?>
+                <?php if ($c->html): ?>
+                    <?= $c->html ?>
+                <?php else: ?>
 
-				  <div
+                    <div
+                            data-id=<?= $item['id']; ?>
+                            <?= $c->dataField; ?>
+                            <?= $c->class; ?>
+                            <?= $c->contenteditable; ?>
+                    ><?= $c->getData($c, $item, $field); ?></div>
+                <?php endif; ?>
 
-								<?= $this->getId($item['id']); ?>
-								<?= $c->dataField; ?>
-								<?= $c->class; ?>
-								<?= $c->contenteditable; ?>
-				  ><?= $this->getData($c, $item, $field); ?></div>
-				 <? endif; ?>
+            <?php endforeach; ?>
 
-			 <? endforeach; ?>
+        <?php endforeach; ?>
 
-		 <? endforeach; ?>
+    </div>
 
-	</div>
-
-	<!--  ADD BUTTON  -->
-	<div class="buttons">
-		 <? include ROOT . '/app/view/components/Builders/ListBuilder/add.php'; ?>
-	</div>
+    <!--  ADD BUTTON  -->
+    <div class="buttons">
+        <?php $add ?>
+    </div>
 
 
 </div>

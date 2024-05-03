@@ -13,7 +13,8 @@ class ProductUnit extends Model
 		'product_1s_id',
         'unit_id',
         'multiplier',
-        'is_main'
+        'is_base',
+        'is_shippable',
 	];
     protected $table ='product_unit';
 }

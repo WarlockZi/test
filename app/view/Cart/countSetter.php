@@ -5,11 +5,11 @@
 		<span class="input-line"></span>
 
 		<div class="arrow-block ">
-			<!--			--><? //include ROOT.'/pic/icons/arrow.svg'?>
+			<!--			--><?php //include ROOT.'/pic/icons/arrow.svg'?>
 			<span class="arrow plus"></span>
 			<span class="arrow minus"></span>
 		</div>
-		 <?
+        <?php
 		 $mainUnit = $oItem->product->baseUnit->units
 		   ->where('pivot.product_id', $oItem->product['1s_id'])
 		   ->where('pivot.main', 1)

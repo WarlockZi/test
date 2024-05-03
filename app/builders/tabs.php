@@ -6,7 +6,7 @@
 	>Основное
 	</div>
     <?php $n = 2; ?>
-    <?php foreach ($data->getTabs() as $k => $tab): ?>
+    <?php foreach ($tabs as $k => $tab): ?>
 	  <div data-tab-id="<?= $n; ?>"
 	       class="tab"
 	  >

@@ -10,10 +10,12 @@ use app\model\Category;
 use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Promotion;
+use app\model\Seo;
 use app\model\Unit;
 use app\model\User;
 use app\Repository\CategoryRepository;
 use app\Repository\ProductRepository;
+use app\view\components\Builders\Builder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
@@ -29,10 +31,10 @@ use Illuminate\Support\Collection;
 class ProductArrayFormView
 {
 
-    public static function list(\Illuminate\Database\Eloquent\Collection $items): string
+    public static function list(\Illuminate\Database\Eloquent\Collection $items, string $title = ''): string
     {
         return MyList::build(Product::class)
-            ->pageTitle('Товары')
+            ->pageTitle($title)
             ->column(
                 ListColumnBuilder::build('id')
                     ->name('ID')
@@ -70,31 +72,11 @@ class ProductArrayFormView
                     ->function(ProductRepository::class, 'priceStatic')
                     ->get()
             )
-//			->column(
-//				ListColumnBuilder::get('image')
-//					->name('Картинка')
-//					->width('100px')
-//					->function(ProductRepository::class, 'imageStatic')
-//					->get()
-//			)
             ->items($items)
             ->edit()
             ->del()
             ->addButton('ajax')
             ->get();
-    }
-    protected static function getUnit(int $selected, string $field): string
-    {
-        $html =
-            SelectBuilder::build(
-                ArrayOptionsBuilder::build(Unit::select(['name', 'id'])->get())
-                    ->selected($selected)
-                    ->get()
-            )
-                ->field($field)
-                ->initialOption('', 0)
-                ->get();
-        return $html;
     }
 
     protected static function units(Product $product): string
@@ -123,10 +105,10 @@ class ProductArrayFormView
             ->field(
                 ItemArrayFieldBuilder::build('Акции', $product)
                     ->name('Действующие акции')
+                    ->dataField('promotions')
                     ->html(
-                        SelectNewBuilder::build(
-                            ArrayOptionsBuilder::build($product->activePromotions, ['count' => 'кол-о', 'active_till'
-                            => 'до', 'new_price' => 'новая цена'])
+                        SelectBuilder::build(
+                            ArrayOptionsBuilder::build($product->activePromotions, ['count' => 'кол-о', 'active_till' => 'до', 'new_price' => 'новая цена'])
                                 ->get()
                         )
                             ->get()
@@ -164,7 +146,7 @@ class ProductArrayFormView
                 ItemArrayFieldBuilder::build('base_unit', $product)
                     ->name('Базовая единица')
                     ->html(
-                        self::getUnit($product->baseUnit->id ?? 0, 'base_unit')
+                        self::getBaseUnit($product->baseUnit->id ?? 0, 'base_unit')
                     )
                     ->get()
             )
@@ -196,7 +178,7 @@ class ProductArrayFormView
             ->field(
                 ItemArrayFieldBuilder::build('description', $product)
                     ->name('Описание')
-                    ->html(self::getDescription($product))
+                    ->html(include ROOT . '/app/view/Product/description.php')
                     ->get()
             )
             ->field(
@@ -241,47 +223,39 @@ class ProductArrayFormView
             )
             ->get();
     }
-    protected static function getSelect(Category $category, Product $product): string
-    {
-        $str = "<a href='/adminsc/category/edit/$category->id' class='category'>{$category->name}</a>";
-        foreach ($category->properties as $property) {
-            $str .= PropertyView::getProductSelector($property, $product);
-        }
-        return $str;
-    }
 
-    protected static function getProperties(Product $product, string $str = ''): string
+    protected static function getBaseUnit(int $selected, string $field): string
     {
-        $currentCategory = $product->category;
-
-        while ($currentCategory) {
-            $str             .= self::getSelect($currentCategory, $product);
-            $currentCategory = $currentCategory->parentRecursive;
-        }
-        return "<div class='values'>$str</div>";
+        $html =
+            SelectBuilder::build(
+                ArrayOptionsBuilder::build(Unit::select(['name', 'id'])->get())
+                    ->selected($selected)
+                    ->get()
+            )
+                ->field($field)
+                ->initialOption('', 0)
+                ->get();
+        return $html;
     }
 
     protected static function getSeo($product): string
     {
-        return "<div class='show'>" .
-            ItemArrayFieldBuilder::build('description', $product)
+        $seo = $product->seo ?? new Seo();
+        $r   = "<div class='show'>" .
+            ItemArrayFieldBuilder::build('description', $seo)
                 ->name('Description')
                 ->contenteditable()
                 ->get()->toHtml('product') .
-            ItemArrayFieldBuilder::build('title', $product)
+            ItemArrayFieldBuilder::build('title', $seo)
                 ->name('Title')
                 ->contenteditable()
                 ->get()->toHtml('product') .
-            ItemArrayFieldBuilder::build('keywords', $product)
+            ItemArrayFieldBuilder::build('keywords', $seo)
                 ->name('Key words')
                 ->contenteditable()
                 ->get()->toHtml('product') .
             "</div>";
-    }
-
-    protected static function getDescription($product): string
-    {
-        return include ROOT . '/app/view/Product/description.php';
+        return $r;
     }
 
     protected static function promotions($product): string
@@ -308,6 +282,27 @@ class ProductArrayFormView
             ->get();
     }
 
+    protected static function getSelect(Category $category, Product $product): string
+    {
+        $str = "<a href='/adminsc/category/edit/$category->id' class='category'>{$category->name}</a>";
+        foreach ($category->properties as $property) {
+            $str .= PropertyView::getProductSelector($property, $product);
+        }
+        return $str;
+    }
+
+    protected static function getProperties(Product $product, string $str = ''): string
+    {
+        $currentCategory = $product->category;
+
+        while ($currentCategory) {
+            $str             .= self::getSelect($currentCategory, $product);
+            $currentCategory = $currentCategory->parentRecursive;
+        }
+        return "<div class='values'>$str</div>";
+    }
+
+
     public static function belongToCategory($category)
     {
         $arr = $category->toArray();
@@ -324,19 +319,13 @@ class ProductArrayFormView
         return $builder->clean($str);
     }
 
-//
-//	public static function renderProperty($property)
-//	{
-//		return FS::getFileContent(ROOT . '/app/view/Product/property.php', compact('property'));
-//	}
-
     public static function getCardDetailImage($image)
     {
         $im = "<img class = 'detail-image' src='{$image->getFullPath($image)}' alt=''></img>";
         return "<div class='detail-image-wrap'>{$im}</div>";
     }
 
-    public static function getCardImages(string $title,Collection $collection,string $class = 'detail-images-wrap')
+    public static function getCardImages(string $title, Collection $collection, string $class = 'detail-images-wrap')
     {
         ob_start();
         $detail_image = '';
@@ -347,15 +336,15 @@ class ProductArrayFormView
         return ob_get_clean();
     }
 
-//    public static function getManagerSelector()
-//    {
-//        $u      = User::where('rights', 'LIKE', '%role_manager%')->get();
-//        $select = SelectNewBuilder::build(
-//            ArrayOptionsBuilder::build($u)
-//                ->initialOption()
-//                ->get()
-//        )
-//            ->get();
-//        return $select;
-//    }
+    public static function getManagerSelector()
+    {
+        $u      = User::where('rights', 'LIKE', '%role_manager%')->get();
+        $select = SelectNewBuilder::build(
+            ArrayOptionsBuilder::build($u)
+                ->initialOption()
+                ->get()
+        )
+            ->get();
+        return $select;
+    }
 }

@@ -5,7 +5,6 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\Response;
-use app\core\Route;
 use app\model\Order;
 use app\Repository\OrderRepository;
 use app\view\Order\OrderView;
@@ -38,7 +37,7 @@ class OrderController Extends AppController
 	}
 
 
-	public function actionDelete()
+	public function actionDelete():void
 	{
 		$id = $this->ajax['product_id'];
 

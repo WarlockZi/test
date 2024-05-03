@@ -4,35 +4,37 @@
 namespace app\view\components\Builders\SelectBuilder;
 
 
+use app\core\FS;
 use app\view\components\Builders\Builder;
 
 class SelectNewBuilder extends Builder
 {
-
-	private $options='';
-	private $class;
+	private string $options;
+	private string $class;
+	private FS $fs;
 
 	public static function build(string $options)
 	{
 		$select = new static();
-		$select->options = $options;
+		$select->options = '';
+		$select->class = '';
+
+        $select->fs = new FS(__DIR__);
+        $select->options = $options;
 
 		return $select;
 	}
 
 	public function class(string $class)
 	{
-		$this->class = "class='{$class}'";
+		$this->class =$class;
 		return $this;
 	}
 
 	public function get()
 	{
-		ob_start();
-		include ROOT . '/app/view/components/Builders/SelectBuilder/SelectNewBuilderTemplate.php';
-//		include ROOT . '/app/view/components/Builders/SelectBuilder/SelectBuilderTemplate.php';
-		$result = ob_get_clean();
-		return $this->clean($result);
+        $data = get_object_vars($this);
+		return $this->clean($this->fs->getContent('SelectNewBuilderTemplate',$data));
 	}
 
 }

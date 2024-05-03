@@ -4,8 +4,8 @@ use app\core\Router;
 //$router = new Router();
 
 $this->add("^\/(?P<controller>product)\/?(?P<slug>[_a-z0-9-]+)?\/?(?<extra>[a-z0-9-]+)?$", ['controller' => 'Product']);
-$this->add("^\/(?P<controller>short)\/?(?P<slug>[_a-zA-Z0-9-]+)?\/?$", ['controller' => 'Short']);
-$this->add("^\/(?P<controller>category)\/?(?P<slug>[_a-z0-9-]+)?\/?(?<extra>[a-z0-9-]+)?$", ['controller' => 'Category']);
+$this->add("^\/short\/(?P<slug>.+)?\/?$", ['controller' => 'Short']);
+$this->add("^\/(?P<controller>category)\/?(?P<slug>[_a-zA-Z0-9-]+)?\/?(?<extra>[a-z0-9-]+)?$", ['controller' => 'Category']);
 $this->add("^\/(?P<controller>promotion)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Promotion']);
 $this->add("^\/(?P<controller>bot)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Bot']);
 $this->add("^\/(?P<controller>main)\/(?P<action>[a-zA-Z0-9]+)$");

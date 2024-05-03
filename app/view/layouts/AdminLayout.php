@@ -2,10 +2,12 @@
 
 namespace app\view\layouts;
 
+use app\controller\Controller;
 use app\core\Auth;
 use app\core\FS;
 use app\core\Route;
 use app\view\Assets\AdminAssets;
+use app\view\Assets\Assets;
 use app\view\Header\Admin\AdminHeader;
 
 class AdminLayout extends Layout
@@ -14,57 +16,97 @@ class AdminLayout extends Layout
     protected string $viewPath;
     protected string $layout;
     protected array $content;
-    protected FS $fs;
+    protected FS $layoutFs;
+    protected FS $viewFs;
 
-    public function __construct(Route $route, array $vars)
+    public function __construct(Route $route, Controller $controller)
     {
         $this->route    = $route;
-        $this->viewPath = dirname(__DIR__);
-//        if (User::can(Auth::getUser(), ['role_employee'])) http_redirect('/', 301);
         $this->setFs();
+        $this->setView();
+        $this->setErrors();
         $this->setLayout("layouts/admin");
-        $this->setContent($vars);
+        $this->setContent($controller);
     }
-
+    protected function setErrors()
+    {
+        if ($this->route->isNotFound()) {
+            $this->route->setError('Такого адреса нет');
+        }
+        if (!class_exists($this->route->getController())) {
+            $this->route->setError('Контроллер не найден');
+        }
+        if (!is_readable($this->viewFs->getAbsPath() . $this->getView() . '.php')) {
+            $this->route->setError('Файл вида не найден');
+        }
+    }
+    public function setFs(): void
+    {
+        $this->layoutFs = new FS(dirname(__DIR__));
+        $controller     = ucfirst($this->route->getControllerName());
+        $this->viewFs   = new FS(dirname(__DIR__) . DIRECTORY_SEPARATOR . $controller);
+    }
+    protected function setView(): void
+    {
+        $this->view = $this->route->getView() ?? $this->route->getAction() ?? 'default';
+    }
     public function setLayout(string $layout): void
     {
         $this->layout = $layout;
     }
 
-    public function setFs(): void
+    public function setContent($controller): void
     {
-        $this->fs = new FS($this->viewPath . '/');
-    }
-
-    public function setContent($vars): void
-    {
-        $this->content['header'] = (new AdminHeader(Auth::getUser()))->getHeader();
-        $this->content['assets'] = new AdminAssets();
-
-        $this->content['content'] = $this->prepareContent();
+        $this->content['header']  = $this->setHeader();
+        $this->content['assets']  = $this->setAssets($controller);
+        $this->content['content'] = $this->prepareContent($controller->vars);
+        $this->content['errors'] = $this->route->getErrorsHtml();
         $this->content['footer']  = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
     }
 
-    private function prepareContent()
+    protected function setAssets($controller): Assets
     {
-        $view = $this->getView();
-        $route =  $this->route;
-        $fs = new FS($view);
-        return $fs->getContent($route->getActionName(), ['route' =>$route, 'vars'=>$vars]);
+        $assets = new AdminAssets();
+        $assets->merge($controller->getAssets());
+        return $assets;
     }
 
-    protected function getView():string
+    protected function setHeader(): string
     {
-        if ($this->route->isNotFound()) {
-            $this->route->setError('Такого адреса нет');
-            return 'default';
+        return (new AdminHeader(Auth::getUser()))->getHeader();
+    }
+
+    private function prepareContent($vars): string
+    {
+        try {
+            $content = $this->viewFs->getContent($this->getView(), $vars);
+            return $content;
+        } catch (\Exception $exception) {
+            ob_get_clean();
+//            ob_clean();
+            $this->route->setError("В файле вида произошла ошибка");
+            $this->route->setError($exception->getMessage());
+            return $this->layoutFs->getContent('default', ['errors' => $this->route->getErrors()]);
         }
-        $controller = ucfirst($this->route->getControllerName());
-        return FS::resolve(
-            $this->viewPath,
-            $controller,
-            'Admin',
-        );
+
+
+//        $fs = new FS($this->getView());
+//        try {
+//            if (!class_exists($this->route->getController())){
+//                return 'Контроллер не найден';
+//            }
+//            $content = $fs->getContent($this->route->getActionName(), $vars);
+//            return $content;
+//        } catch (\Exception $exception) {
+//            ob_flush();
+//            $this->route->setError("Файл вида не найден");
+//            return $fs->getContent('default', ['errors' => $this->route->getErrors()]);
+//        }
+    }
+
+    protected function getView(): string
+    {
+        return 'Admin/'.$this->view;
     }
 
     public function render()
@@ -76,16 +118,13 @@ class AdminLayout extends Layout
     {
         return $this->content;
     }
-
-    protected function getLayout()
+    protected function getLayout(): string
     {
-        echo $this->fs->getContent($this->layout, $this->getContent());
+        return $this->layoutFs->getContent($this->layout, $this->getContent());
     }
-
-//    protected function vite($en)
+//    protected function getLayout()
 //    {
-//        $v = new \app\view\Vite($en);
-////		vite();
+//        return $this->fs->getContent($this->layout, $this->getContent());
 //    }
 
 //    protected function setTestAssets()

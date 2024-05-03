@@ -32,7 +32,7 @@ use app\core\Icon;
                     <div class="base-unit"><?= $baseUnit->name ?></div>
 
                     <div class="min-unit">
-                        <input type="checkbox" <?= $unit->pivot->is_main ? 'checked' : ''; ?>>
+                        <input type="checkbox" <?= $unit->pivot->is_base ? 'checked' : ''; ?>>
                     </div>
                     <div class="del">X</div>
                 </div>

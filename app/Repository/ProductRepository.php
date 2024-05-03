@@ -30,10 +30,12 @@ class ProductRepository extends AppController
             ->with('inactivePromotions')
             ->with('smallpackImages')
             ->with('bigpackImages')
+            ->with('seo')
 //            ->with('dopUnits')
 //            ->with('baseUnit')
             ->with(['baseUnit' => function ($query) use ($id) {
-                $query->with(['units' => function ($query) use ($id) {
+                $query->with(
+                    ['units' => function ($query) use ($id) {
                         $query->wherePivot('product_id', $id)->get();
                     }]
                 );
@@ -58,6 +60,7 @@ class ProductRepository extends AppController
             ->with('bigpackImages')
             ->with('activepromotions.unit')
             ->with('seo')
+            ->with('dopUnits')
             ->with(['baseUnit.units' => function ($query) use ($id) {
                 $query->wherePivot('main', 1)
                     ->first();
@@ -67,12 +70,12 @@ class ProductRepository extends AppController
 
     public static function main(string $slug)
     {
-        $self = new self();
+        $repo = new ProductRepository();
         $p    = Product::where('slug', $slug)->withTrashed()->first();
         if (!$p) $p = Product::where('short_link', $slug)->first();
         if ($p) {
             $id      = $p['1s_id'];
-            $product = $self->mainShortSubquery($id)->first();;
+            $product = $repo->mainShortSubquery($id)->first();;
             return $product;
         }
         return '--- Product repo error ---';
@@ -114,8 +117,8 @@ class ProductRepository extends AppController
         $p = Product::query()
             ->where('instore', '>', 0)
             ->whereHas('dopUnits')
-            ->get()
-            ->toArray();
+            ->get();
+//            ->toArray();
         return $p;
     }
 

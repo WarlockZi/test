@@ -39,7 +39,7 @@ abstract class OrderView
 
 	public static function leadList($items): string
 	{
-		return MyList::build(OrderItem::class)
+		$list =  MyList::build(OrderItem::class)
 			->column(
 				ListColumnBuilder::build('id')
 					->name('ID')
@@ -54,6 +54,7 @@ abstract class OrderView
 			->items($items)
 			->edit()
 			->get();
+        return $list;
 	}
 
 	public static function clientList($items): string
@@ -72,6 +73,7 @@ abstract class OrderView
 					->get())
 			->items($items)
 			->edit()
+			->addButton('ajax')
 			->get();
 	}
 //	public static function edit($orders)

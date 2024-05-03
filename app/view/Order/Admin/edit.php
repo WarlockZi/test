@@ -1,4 +1,3 @@
-<? use app\view\UserView;?>
 <div class="order-edit">
 
 	<div class="page-name">Заказ <span id="order-id">&nbsp;новый</span></div>
@@ -15,25 +14,25 @@
 		<div class="manager">
 			Менеджер -
 		</div>
-		 <?= UserView::getManagerSelector(); ?>
+		 <?= \app\view\Product\ProductArrayFormView::getManagerSelector(); ?>
 	</div>
 
-	<? foreach ($orders as $order): ?>
-		<? if ($order->product): ?>
+    <?php foreach ($orders as $order): ?>
+        <?php if ($order->product): ?>
 
 		  <div class="row">
 			  <div class="num"><?= $order->id ?></div>
 			  <div class="name-price">
 				  <div class="name"><?= $order->product->name ?></div>
 				  <div class="price"></div>
-				  <!--		  <div class="id">--><? //= $order->user->email ?><!--</div>-->
+				  <!--		  <div class="id">--><?php //= $order->user->email ?><!--</div>-->
 			  </div>
 			  <div class="count"><?= $order->total_count ?></div>
 		  </div>
-		<? else: ?>
+        <?php else: ?>
 		  <div class="not-found">Товар не найден</div>
-		<? endif; ?>
-	<? endforeach; ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
 
 </div>
 

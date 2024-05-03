@@ -2,8 +2,7 @@
 
 namespace app\core;
 
-use app\view\layouts\AdminLayout;
-use app\view\layouts\UserLayout;
+use app\model\User;
 
 class Router
 {
@@ -35,40 +34,34 @@ class Router
                 $this->route->setNotFound();
             }
         }
+        $this->route->isNotFound() ? $this->route->setActionName('default') : $f = 1;
     }
-
-    protected function handleErrors(Route $route)
-    {
-        if (!class_exists($route->controller)) {
-            NotFound::controller($route);
-        }
-        if (!method_exists($route->controller, $route->actionName)) {
-            NotFound::action($route);
-        }
-    }
-
 
     public function dispatch()
     {
         $controller = $this->route->getController();
-        $controller = new $controller();
+        try {
+            $controller = new $controller();
+        } catch (\Throwable $exception) {
+            $controller = $this->route->getBaseController();
+            $controller = new $controller;
+        }
+        $controller->setRoute($this->route);
 
-//        Auth::autorize();
-
-        $layout     = $this->route->getLayout();
         $actionName = $this->route->getActionName();
         $action     = $this->route->getAction();
         $this->route->setView($actionName);
-        $controller->$action($this->route, $layout);
 
-        $layout = new $layout($this->route, $controller->vars);
-        echo $layout->render();
+        $controller->$action();
 
+        $layout = $this->route->getLayout();
+        $layout = new $layout($this->route, $controller);
+        $layout->render();
     }
 
-    public static function needsNoAuth()
+    public static function needsNoAuth($route)
     {
-        return AuthValidator::check(Router::getRoute());
+        return AuthValidator::check($route);
     }
 
     public function add($regexp, $route = [])
@@ -80,5 +73,6 @@ class Router
     {
         require_once ROOT . '/app/core/routes.php';
     }
+
 }
 

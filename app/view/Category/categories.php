@@ -1,27 +1,27 @@
 <h1 class="page-name">Категории</h1>
 <div class="category">
 
-	<? use app\view\Category\CategoryView;
+    <?php
 
-	if (isset($categories) && $categories): ?>
+    if (isset($categories) && $categories): ?>
 
 	  <div class="category-child-wrap">
-			 <? foreach ($categories as $category): ?>
-				 <? if ($category): ?>
+          <?php foreach ($categories as $category): ?>
+              <?php if ($category): ?>
 
 				 <a class="category-card" href="/category/<?= $category->slug; ?>">
 							 <?= $category->name ?>
-<!--							 --><?//= CategoryView::getMainImage($category) ?>
+<!--							 --><?php //= CategoryView::getMainImage($category) ?>
 				 </a>
-				 <? endif; ?>
+              <?php endif; ?>
 
-			 <? endforeach; ?>
+          <?php endforeach; ?>
 	  </div>
 
-	<? else: ?>
+    <?php else: ?>
 	  <div class="no-categories">
 		  <H1>Категорий нет</H1>
 	  </div>
-	<? endif; ?>
+    <?php endif; ?>
 
 </div>

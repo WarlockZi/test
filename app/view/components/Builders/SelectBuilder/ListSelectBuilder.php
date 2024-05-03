@@ -3,55 +3,60 @@
 
 namespace app\view\components\Builders\SelectBuilder;
 
-
-use app\controller\AppController;
+use app\core\FS;
 use app\view\components\Builders\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class ListSelectBuilder extends Builder
 {
-	private $tree;
-	private $collection;
-	private $options;
-	private $class;
-	private $title;
+	private array $tree;
+	private string $options;
+	private string $class;
+	private string $title;
+	private string $field;
+	private string $model;
+	private string $modelId;
 
-	private $field;
-	private $model;
-	private $modelId;
+//	private string $morphFunction;
+//	private string $morphId;
+//	private string $morphSlug;
+//	private string $morphOneOrMany;
+//	private string $morphDetach;
 
-//	private $morphFunction;
-//	private $morphId;
-//	private $morphSlug;
-//	private $morphOneOrMany;
-//	private $morphDetach;
+//	private string $belongsToModel;
+//	private string $belongsToId;
 
-//	private $belongsToModel;
-//	private $belongsToId;
-
-	private $selected = false;
-	private $excluded = false;
-	private $nameOptionByField = 'name';
-	private $initialOption='';
-
-	private $tab = '&nbsp;';
+	private bool $selected = false;
+	private bool $excluded = false;
+	private string $nameOptionByField;
+	private string $initialOption='';
+	private string $tab;
+	private FS $fs;
+	private Collection $collection;
 
 	public static function build()
 	{
 		$select = new static();
+		$select->selected = false;
+		$select->excluded = false;
+		$select->class = '';
+		$select->initialOption = 'name';
+		$select->tab = '&nbsp;';
+		$select->title = '';
+		$select->fs = new FS(__DIR__);
+
 		return $select;
 	}
 
-	public function collection(Collection $collection)
+	public function collection(Collection $collection):ListSelectBuilder
 	{
 		$this->collection = $collection;
 		return $this;
 	}
-
-	public function item(Model $item)
+	public function item(Model $item):ListSelectBuilder
 	{
-		$model = AppController::shortClassName($item);
+        $model = $this->getShortName($item);
 		$id = $item->id;
 		$this->model = "data-model='{$model}''";
 		$this->modelId = "data-model-id='" . $id . "'";
@@ -125,25 +130,17 @@ class ListSelectBuilder extends Builder
 		if ($this->excluded !== false) {
 			unset($this->tree[$this->excluded]);
 		}
-
-		ob_start();
-		include ROOT . '/app/view/components/Builders/SelectBuilder/SelectBuilderTemplate.php';
-		$result = ob_get_clean();
-		return $this->clean($result);
+		return $this->fs->getContent("SelectBuilderTemplate");
 	}
 
 	public function get(int $id = 0)
 	{
 		$this->options = $this->getOptions();
-
 		if ($this->excluded !== false) {
 			unset($this->tree[$this->excluded]);
 		}
-
-		ob_start();
-		include ROOT . '/app/view/components/Builders/SelectBuilder/SelectBuilderTemplate.php';
-		$result = ob_get_clean();
-		return $result;
+        $data = get_object_vars($this);
+		return $this->fs->getContent('SelectBuilderTemplate',$data);
 	}
 
 }

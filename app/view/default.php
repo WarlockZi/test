@@ -1,6 +1,6 @@
 <?php
-foreach ($route->errors as $error){
-    echo $error;
+foreach ($errors as $error){
+    echo $error.'<br>';
 };
 ?>
 

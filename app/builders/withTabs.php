@@ -7,18 +7,18 @@
     <section data-tab="1" class="show">
 
         <!--  TABLE  -->
-        <?php foreach ($data->getFields() as $field): ?>
+        <?php foreach ($fields as $field): ?>
             <?php include __DIR__ .'/row.php'?>
         <?php endforeach; ?>
     </section>
 
     <?php $n = 2; ?>
-    <?php foreach ($data->getTabs() as $k => $tab): ?>
+    <?php foreach ($tabs as $k => $tab): ?>
         <section
 
-            <?= $tab->getField(); ?>
+            <?= $field->getField(); ?>
                 data-tab=<?= $n ?>>
-            <?= $tab->getHtml(); ?>
+            <?= $tab->html; ?>
 
         </section>
         <?php $n++; ?>

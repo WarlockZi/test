@@ -1,38 +1,38 @@
 <!--  BUTTONS  -->
 <div class="item_buttons">
 
-	<? use app\core\Icon;
+    <?php use app\core\Icon;
 
-	 if ($data->isDel()): ?>
+	 if ($field->isDel()): ?>
 	  <div class="del"
-	       data-model="<?= $data->getModelName(); ?>"
-	       data-id="<?= $data->item['id']; ?>"
+	       data-model="<?= $field->getModelName(); ?>"
+	       data-id="<?= $field->item['id']; ?>"
 	  >
 			 <?= Icon::trashIcon() ?>
 	  </div>
 
-	<? endif; ?>
+     <?php endif; ?>
 
-	<? if ($data->isSoftDel()): ?>
+    <?php if ($field->isSoftDel()): ?>
 	  <div soft-del>
 			 <?= Icon::trashIcon() ?>
 	  </div>
-	<? endif; ?>
+    <?php endif; ?>
 
 
-	<? if ($data->isSave()): ?>
+    <?php if ($field->isSave()): ?>
 	  <div class="save"
-	       data-model="<?= $data->getModelName(); ?>"
-	       data-id="<?= $data->item['id']; ?>">
+	       data-model="<?= $field->getModelName(); ?>"
+	       data-id="<?= $field->item['id']; ?>">
 			 <?= Icon::save();?>
 	  </div>
-	<? endif; ?>
+    <?php endif; ?>
 
-	<? if ($data->isToList()): ?>
-	  <a href="<?=$data->getToListHref(); ?>"
+    <?php if ($field->isToList()): ?>
+	  <a href="<?=$field->getToListHref(); ?>"
 	     class="to-list">
-			 <?= $data->getToListText() ?>
+			 <?= $field->getToListText() ?>
 	  </a>
-	<? endif; ?>
+    <?php endif; ?>
 
 </div>

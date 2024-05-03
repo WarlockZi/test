@@ -12,6 +12,8 @@ class ItemArrayTabBuilder extends Builder
     public string $html;
     public string $tabTitle;
     public string $field;
+    private string $tabs;
+    private string $noTabs;
 
     public static function build(string $title): ItemArrayTabBuilder
     {

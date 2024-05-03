@@ -42,7 +42,7 @@ class OrderitemController Extends AppController
 		}
 	}
 
-	public function actionDelete()
+	public function actionDelete():void
 	{
 		$product_id = $this->ajax['product_id'];
 		$sess = $this->ajax['sess'];
@@ -69,8 +69,8 @@ class OrderitemController Extends AppController
 		$this->set(compact('orderitems'));
 	}
 
-	public function actionUpdateOrCreate()
-	{
+	public function actionUpdateOrCreate(): void
+    {
 		$req = $this->ajax;
 
 		if ($req) {
