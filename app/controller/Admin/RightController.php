@@ -22,7 +22,7 @@ class RightController Extends AppController
 		parent::__construct();
 
 	}
-  public function actionUpdateOrCreate()
+  public function actionUpdateOrCreate(): void
   {
     if ($this->ajax) {
       if ($id = Right::updateOrCreate($this->ajax)) {
@@ -41,7 +41,7 @@ class RightController Extends AppController
 		$this->set(compact('list'));
 	}
 
-	public function actionDelete()
+	public function actionDelete():void
 	{
 		$id = $this->ajax['id']??$_POST['id'];
 		if (User::can($this->user, ['right_delete']) || defined(SU)) {

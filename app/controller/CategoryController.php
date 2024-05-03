@@ -6,12 +6,10 @@ namespace app\controller;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
-use app\Repository\ProductRepository;
 
 
 class CategoryController Extends AppController
 {
-
 	protected $model = Category::class;
 
 	public function __construct()
@@ -22,7 +20,7 @@ class CategoryController Extends AppController
 	public function actionIndex()
 	{
 		if ($this->route->slug) {
-			$this->view = 'category';
+			$this->route->setView('category');
 
 			$slug = $this->route->slug;
 			$category = CategoryRepository::indexInstore($slug);
@@ -38,7 +36,7 @@ class CategoryController Extends AppController
 			}
 
 		} else {
-			$this->view = 'categories';
+			$this->route->setView('categories');
 
 			$categories = CategoryRepository::indexNoSlug();
 

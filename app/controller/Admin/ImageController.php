@@ -12,7 +12,7 @@ class ImageController Extends AppController
 {
 	public $model = Image::class;
 
-	public function __construct(array $route)
+	public function __construct()
 	{
 		parent::__construct();
 	}
@@ -23,8 +23,8 @@ class ImageController Extends AppController
 		$this->set(compact('list'));
 	}
 
-	public function actionDetach()
-	{
+	public function actionDetach(): void
+    {
 		if ($post = $this->ajax) {
 			$morphedClass = '\app\model\\' . ucfirst($post['morphedType']);
 			$morphed = $morphedClass::find($post['morphedId']);

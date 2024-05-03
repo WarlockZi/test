@@ -6,21 +6,21 @@ export class Fields {
     this.$product = $product;
     this.$fields = $('.item_content').first();
     this.$category_id = $(`[data-field="category_id"]`).first();
+    this.$promotions = $(`[data-field="promotions"]`).first();
     this.$base_unit = $(`[data-field="base_unit"]`).first();
     this.$manufacturer_id = $(`[data-field="manufacturer_id"]`).first();
     this.$printName = $(`[data-field='print_name']`).first();
     this.$printName.addEventListener('catalogItem.changed', this.changePrintName.bind(this))
     this.$productUrl= $(`[data-field='slug']`).first();
-    // this.$base_equals_main_unit = $(`[data-field="base_equals_main_unit"]`).first();
     this.setup()
   }
 
   setup() {
     this.$fields.addEventListener('customSelect.changed', this.changeFields.bind(this));
     new SelectNew(this.$category_id);
+    new SelectNew(this.$promotions);
     new SelectNew(this.$base_unit);
     new SelectNew(this.$manufacturer_id);
-    // this.$base_equals_main_unit.addEventListener('change', this.checkBoxChanged.bind(this))
   }
 
   changePrintName(item) {

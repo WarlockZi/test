@@ -14,7 +14,17 @@ export default class Cart {
     if (!container) return;
     this.container = container;
     this.model = $(this.container).find('[data-model]').dataset.model;
+    this.total = document.querySelector('.total span');
+    this.$cartEmptyText = document.querySelector('.empty-cart');
 
+    this.rows = container.querySelectorAll('.row');
+    this.container.onclick = this.handleClick.bind(this);
+    this.container.onchange = this.rerenderSums.bind(this);
+
+    this.cookie = new Cookie();
+    this.counterEl = $('#counter').first();
+    this.cartLifeMs = time.mMs * 30;
+    if (this.counterEl) this.counterStart();
     new Modal({
       button: $('#cartLead').first(),
       data: new CartLead(),
@@ -33,17 +43,7 @@ export default class Cart {
       callback: this.modalcartSuccessCallback.bind(this)
     });
 
-    this.total = container.querySelector('.total span');
-    this.$cartEmptyText = document.querySelector('.empty-cart');
 
-    this.rows = container.querySelectorAll('.row');
-    this.container.onclick = this.handleClick.bind(this);
-    this.container.onchange = this.rerenderSums.bind(this);
-
-    this.cookie = new Cookie();
-    this.counterEl = $('#counter').first();
-    this.cartLifeMs = time.mMs * 30;
-    if (this.counterEl) this.counterStart();
 
     this.rerenderSums()
   }
@@ -78,8 +78,8 @@ export default class Cart {
   rerenderSums() {
     if (!this.rows.length) return false;
     let formatter = new Intl.NumberFormat("ru-RU");
-    let total = [].reduce.call(this.rows, (acc, row, accd, rows) => {
-      let price = row.querySelector('.price').dataset.price;
+    let total = [].reduce.call(this.rows, (acc, row, i, rows) => {
+      let price = +row.querySelector('.price-table').dataset.price;
       let count = row.querySelector('input').value;
       let multiplier = row.querySelector('[data-multiplier]').value;
       let sum = price * count * multiplier;
@@ -158,7 +158,6 @@ export default class Cart {
   }
 
   async handleClick({target}) {
-    // debugger
     if (target.classList.contains('del')) {
       this.deleteOItem(target)
     } else if (target.classList.contains('count')) {
@@ -171,6 +170,7 @@ export default class Cart {
 
     }else if(target.classList.contains('minus')){
       let quantatyInput = target.closest('.step-field').querySelector('input');
+      if(quantatyInput.value==="0") return false
       quantatyInput.value--;
       this.rerenderSums();
     }

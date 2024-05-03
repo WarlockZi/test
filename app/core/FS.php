@@ -3,29 +3,38 @@
 namespace app\core;
 class FS
 {
-    protected $absPath;
+    protected string $absPath;
 
     public function __construct(string $absPath = ROOT)
     {
-        $this->absPath = $absPath;
+        $this->absPath = $absPath . DIRECTORY_SEPARATOR;
     }
 
-    public function getContent(string $file, $data)
+    public function getAbsPath(): string
+    {
+        return $this->absPath;
+    }
+
+    public function getContent(string $file, array $data = [])
     {
         $file = FS::platformSlashes($this->absPath . $file . '.php');
         if (!is_readable($file)) throw new \Exception('File not exist');
 
         extract($data);
+        unset($data);
+        unset($fs);
         ob_start();
         require $file;
-        return ob_get_clean();
+//        $content = ob_end_clean();
+        $content = ob_get_clean();
+        return $content;
     }
 
     public static function resolve(...$paths)
     {
         $path = '';
         foreach ($paths as $str) {
-            $path .= $str.DIRECTORY_SEPARATOR;
+            if ($str) $path .= $str . DIRECTORY_SEPARATOR;
         }
         return $path;
     }

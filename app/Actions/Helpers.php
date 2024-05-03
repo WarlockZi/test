@@ -16,7 +16,7 @@ class Helpers
                 'product_1s_id' => $unitable['product_id'],
                 'unit_id' => $unitable['unitable_id'],
                 'multiplier' => $unitable['multiplier'],
-                'is_main' => $unitable['main'] ? 1 : null,
+                'is_base' => $unitable['main'] ? 1 : null,
             ];
             ProductUnit::create($model);
         }

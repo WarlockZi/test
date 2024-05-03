@@ -17,7 +17,9 @@ class VideoinstructionView
 	public static function listAll()
 	{
 		$view = new self;
+        $items = Videoinstruction::all();
 		return MyList::build($view->model)
+            ->items($items)
 			->column(
 				ListColumnBuilder::build('sort')
 					->width('50px')

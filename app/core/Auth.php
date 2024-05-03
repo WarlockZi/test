@@ -71,9 +71,9 @@ class Auth
 	}
 
 
-	public static function autorize(): array
+	public static function autorize(Route $route): array
 	{
-		if (Router::needsNoAuth()) {
+		if (Router::needsNoAuth($route)) {
 			return [];
 		}
 
@@ -85,14 +85,14 @@ class Auth
 
 		if ($user === null) {
 			$_SESSION['id'] = '';
-			$errors[] = 'Неправильные данные для входа на сайт';
+            $route->setError('Неправильные данные для входа на сайт');
 			header("Location:/auth/login");
 			exit();
 		}
 
 		self::setAuth($user);
 		if (!$user['confirm'] == "1") {
-			$errors[] = 'Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.';
+            $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
 			header("Location:/auth/noconfirm");
 			exit();
 		}

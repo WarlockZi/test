@@ -62,14 +62,9 @@ class AppController extends Controller implements IModelable
 		Response::exitWithPopup('ok');
 	}
 
-
-	/**
-	 * @throws Exception
-	 */
 	public function actionUpdateOrCreate():void
 	{
 		$req = $this->ajax;
-		if (!$req) throw new Exception('No request');
 
 		if (isset($req['relation'])) {
 			$relation = $req['relation'];
@@ -103,10 +98,6 @@ class AppController extends Controller implements IModelable
 
 	}
 
-	public static function shortClassName($object):string
-	{
-		return lcfirst((new ReflectionClass($object))->getShortName());
-	}
 
 	public function getModel():Model
 	{

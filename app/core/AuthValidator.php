@@ -7,25 +7,25 @@ class AuthValidator
     public static function check(Route $route)
     {
         return
-            $route->controllerName === 'Auth' && $route->action === 'login'
-            || $route->controllerName === 'Cart'
-            || $route->controllerName === 'Main'
-            || $route->controllerName === 'Bot'
-            || $route->controllerName === 'Promotion'
-            || $route->controllerName === 'Orderitem'
-            || $route->controllerName === 'Search'
+            strtolower($route->controller) === 'auth' && $route->action === 'login'
+            || strtolower($route->controller) === 'cart'
+            || strtolower($route->controller) === 'main'
+            || strtolower($route->controller) === 'bot'
+            || strtolower($route->controller) === 'promotion'
+            || strtolower($route->controller) === 'orderitem'
+            || strtolower($route->controller) === 'search'
 
-            || $route->controllerName === 'Sync' && $route->action === 'part'
-            || $route->controllerName === 'Sync' && $route->action === 'init'
-            || $route->controllerName === 'Sync' && $route->action === 'load'
+            || strtolower($route->controller) === 'sync' && $route->action === 'part'
+            || strtolower($route->controller) === 'sync' && $route->action === 'init'
+            || strtolower($route->controller) === 'sync' && $route->action === 'load'
 
-            || $route->controllerName === 'Auth' && $route->action === 'register'
-            || $route->controllerName === 'Auth' && $route->action === 'returnpass'
-            || $route->controllerName === 'Auth' && $route->action === 'noconfirm'
-            || $route->controllerName === 'Auth' && $route->action === 'confirm'
-            || $route->controllerName === 'Main' && $route->action === 'index'
-            || $route->controllerName === 'Product' && !$route->admin
-            || $route->controllerName === 'Category' && !$route->admin
-            || $route->controllerName === 'Github' && $route->action === 'webhook';
+            || strtolower($route->controller) === 'auth' && $route->action === 'register'
+            || strtolower($route->controller) === 'auth' && $route->action === 'returnpass'
+            || strtolower($route->controller) === 'auth' && $route->action === 'noconfirm'
+            || strtolower($route->controller) === 'auth' && $route->action === 'confirm'
+            || strtolower($route->controller) === 'main' && $route->action === 'index'
+            || strtolower($route->controller) === 'product' && !$route->admin
+            || strtolower($route->controller) === 'category' && !$route->admin
+            || strtolower($route->controller) === 'github' && $route->action === 'webhook';
     }
 }

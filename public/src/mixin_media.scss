@@ -134,13 +134,21 @@
       flex-direction: column;
       justify-content: space-between;
 
-      .name {
 
-      }
 
-      .price {
-        align-self: end;
-      }
+        .price-table{
+          display: grid;
+          grid-template-columns: 85px 35px;
+          align-self: end;
+
+          .price{
+            display: flex;
+            justify-content: end;
+            padding-right: 5px;
+
+          }
+        }
+
     }
 
 

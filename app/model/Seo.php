@@ -2,6 +2,7 @@
 
 namespace app\model;
 
+use http\Encoding\Stream;
 use Illuminate\Database\Eloquent\Model;
 
 class Seo extends Model
@@ -14,5 +15,13 @@ class Seo extends Model
 		'keywords',
 		'product_categry_1sid',
 	];
+
+    protected $attributes=[
+        'title'=>'',
+        'description'=>'',
+        'keywords'=>'',
+        'product_categry_1sid'=>'',
+    ];
+
 
 }

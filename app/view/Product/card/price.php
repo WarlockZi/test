@@ -1,26 +1,34 @@
 <div class="price">
-
-    <?
-    $priceNumber       = $product->getRelation('price')->price ?? 0;
-    $baseUnit          = $product->baseUnit->name ?? '';
-    $formatedBasePrice = number_format($priceNumber, 2, '.', ' ');
-    $formatedOldPrice  = number_format($priceNumber * 1.1, 2,);
+    <?php if ($product->baseUnit): ?>
+    <?php
+    $price = $product->getRelation('price')->price;
+    $unit  = $product->baseUnit->name;
     ?>
 
-    <div class="new-price"><?= $formatedBasePrice; ?> ₽ / <?= $baseUnit; ?> </div>
+    <div class="new-price">
+        <?= number_format($price, 2, '.', ' ') ?> ₽ / <?= $unit; ?>
+    </div>
 
 </div>
 <div class="price-units ">
+    <?php if ($product->dopUnits): ?>
+        <?php foreach ($product->dopUnits as $unit): ?>
+            <?php $multiplier = $unit->pivot->multiplier ?>
+            <div class="price-unit-row ">
 
-    <? $arr = $product->baseUnit->units->toArray();
-    if (isset($product->baseUnit->units)): ?>
-        <? foreach ($product->baseUnit->units as $unit): ?>
-            <? include __DIR__ . '/priceUnit.php' ?>
-        <? endforeach; ?>
-    <? endif; ?>
-    <!--    if (isset($product->dopUnits)): ?>-->
-    <!--		--><? // foreach ($product->dopUnits as $unit): ?>
-    <!--			--><? // include __DIR__ . '/priceUnit.php' ?>
-    <!--		--><? // endforeach; ?>
-    <!--	--><? // endif; ?>
+                <div class="price-for-unit">
+                    <?= number_format($price * $multiplier, 2, '.', ' ') ?>
+                </div>
+                ₽ /
+                <div class="unit">
+                    <?= $unit->name ?>
+                </div>
+
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <?php else: ?>
+        Цену уточняйте у менеджера
+    <?php endif; ?>
 </div>

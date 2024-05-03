@@ -35,7 +35,7 @@ class OpenanswerController Extends AppController
 	}
 
 
-	public function actionDelete()
+	public function actionDelete():void
 	{
 		$id = $this->ajax['id'];
 		if (Openanswer::delete($id)) {

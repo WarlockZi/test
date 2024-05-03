@@ -3,5 +3,7 @@
         <?= $field->getDataField(); ?>
         <?= $field->getContenteditable(); ?>
         <?= $field->getRequired(); ?>
-    ><?= $field->getValue(); ?></div>
+    >
+        <?= $field->getValue(); ?>
+    </div>
 </div>

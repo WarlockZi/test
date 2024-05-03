@@ -77,7 +77,7 @@ class AuthController extends AppController
 		}
 
 		$this->view = 'login';
-		$this->layout = 'vitex';
+//		$this->layout = 'vitex';
 	}
 
 

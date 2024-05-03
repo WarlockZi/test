@@ -4,11 +4,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\Auth;
-use app\model\Planning;
 use app\model\Todo;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
-use app\view\components\CustomList\CustomList;
 use app\view\Planning\PlanningView;
 
 class PlanningController Extends AppController
@@ -20,7 +16,6 @@ class PlanningController Extends AppController
 	{
 		parent::__construct();
 	}
-
 
 	public function actionCreate()
 	{
@@ -49,4 +44,9 @@ class PlanningController Extends AppController
 
 	}
 
+    public function actionPlan()
+    {
+
+
+    }
 }

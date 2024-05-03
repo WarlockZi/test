@@ -129,6 +129,7 @@ class ProductFormView
 
     }
 
+
     protected static function getUnit(int $selected, string $field): string
     {
         $html =
@@ -360,6 +361,7 @@ class ProductFormView
     {
         return include __DIR__ . './../description.php';
     }
+
     protected static function promotions($product): string
     {
         return MyList::build(Promotion::class)
@@ -425,13 +427,6 @@ class ProductFormView
                     ->function(ProductRepository::class, 'priceStatic')
                     ->get()
             )
-//			->column(
-//				ListColumnBuilder::get('image')
-//					->name('Картинка')
-//					->width('100px')
-//					->function(ProductRepository::class, 'imageStatic')
-//					->get()
-//			)
             ->items($items)
             ->edit()
             ->del()
@@ -480,13 +475,6 @@ class ProductFormView
                     ->function(ProductRepository::class, 'priceStatic')
                     ->get()
             )
-//			->column(
-//				ListColumnBuilder::get('image')
-//					->name('Картинка')
-//					->width('100px')
-//					->function(ProductRepository::class, 'imageStatic')
-//					->get()
-//			)
             ->items($items)
             ->edit()
             ->del()
@@ -520,6 +508,37 @@ class ProductFormView
     {
         $im = "<img class = 'detail-image' src='{$image->getFullPath($image)}' alt=''></img>";
         return "<div class='detail-image-wrap'>{$im}</div>";
+    }
+
+    public static function haveDopUnit(Collection $products, string $title): string
+    {
+        return MyList::build(Product::class)
+            ->pageTitle($title)
+            ->column(
+                ListColumnBuilder::build('id')
+                    ->name('ID')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('art')
+                    ->name('Арт')
+                    ->search()
+                    ->width('70px')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('name')
+                    ->name('Наименование')
+                    ->contenteditable()
+                    ->search()
+                    ->width('1fr')
+                    ->get()
+            )
+            ->items($products)
+            ->edit()
+            ->del()
+            ->addButton('ajax')
+            ->get();
     }
 
     public static function getCardImages(string $title, Collection $collection, string $class = 'detail-images-wrap')

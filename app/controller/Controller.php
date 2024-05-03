@@ -18,15 +18,13 @@ class Controller
     public $view;
 
     protected $token;
-    protected $route;
+    protected Route $route;
     protected $ajax;
     protected $auth;
     protected $assets;
 
     function __construct()
     {
-        $this->view = 'default';
-        $this->route = Route::getRoute();
         $this->getAjaxRequest();
         if (!$this->ajax) {
             $this->assets = new Assets();
@@ -42,15 +40,19 @@ class Controller
             return new UserView($this);
         }
     }
-    public function actionIndex(Route $route,string $layout)
-    {
-//        $baseController = $route->getBaseController();
-////        $baseController  = new $baseController($route);
-        $layout = $this->route->getLayout();
-        $layout = new $layout($route);
-        echo $layout->render();
 
+    public function setRoute(Route $route)
+    {
+        $this->route = $route;
     }
+
+    public function actionIndex()
+    {
+        $this->route->setView('default');
+        $this->route->setNotFound();
+        $this->route->setError('Путь не найден');
+    }
+
     public function getRoute()
     {
         return $this->route;

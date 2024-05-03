@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\Actions\CartAction;
 use app\core\Auth;
+use app\core\Icon;
 use app\core\Response;
 use app\model\Lead;
 use app\model\OrderItem;
@@ -24,7 +25,6 @@ class CartController extends AppController
 		OrderItem::query()
 			->where('sess', $id)
 			->delete();
-
 		if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
 		Response::exitJson(['ok' => true]);
 
@@ -34,7 +34,10 @@ class CartController extends AppController
 	{
 		$lead = Lead::where('sess', session_id())->first();
 		$oItems = OrderRepository::main();
-		$this->set(compact('oItems', 'lead'));
+        $authed = Auth::isAuthed();
+        $trashedWhite = Icon::trashWhite();
+
+		$this->set(compact('oItems', 'lead','authed', 'trashedWhite'));
 	}
 
 	public function actionLogin()

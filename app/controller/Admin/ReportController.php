@@ -47,11 +47,16 @@ class ReportController extends AppController
 	}
 	public function actionProductshavedopunit()
 	{
-        $this->view = 'productsnoimg';
-		$productList = ProductRepository::haveDopUnit();
+        $products = ProductRepository::haveDopUnit();
+        $productList = ProductFormView::haveDopUnit($products, 'Товары имеющие доп единицы');
 		$this->set(compact('productList'));
 	}
-
+    public function actionTrashed()
+    {
+        $products = ProductRepository::trashed();
+        $productList = ProductFormView::haveDopUnit($products, 'Товары имеющие доп единицы');
+        $this->set(compact('productList'));
+    }
 }
 
 

@@ -5,9 +5,7 @@ namespace app\core;
 
 
 use app\controller\Controller;
-use app\controller\MainController;
 use app\view\layouts\AdminLayout;
-use app\view\layouts\Layout;
 use app\view\layouts\UserLayout;
 
 class Route
@@ -18,46 +16,47 @@ class Route
     protected string $controller;
     protected string $baseController;
     protected string $action;
+
     protected string $layout;
     protected string $view;
     protected bool $admin;
+
     protected string $slug;
     protected string $id;
     protected string $extra;
     protected string $params;
+
     protected string $host;
     protected string $protocol;
     protected bool $notFound;
     protected array $errors;
-    private static Route $route;
 
     public function __construct()
     {
         $this->uri            = $_SERVER['REQUEST_URI'];
         $this->action         = 'index';
         $this->params         = '';
+        $this->slug           = '';
         $this->host           = '';
         $this->protocol       = '';
         $this->notFound       = true;
         $this->baseController = Controller::class;
         $this->controller     = '';
+        $this->errors         = [];
 
         $this->setAdmin();
         $this->setLayout();
         $this->setNamespace();
     }
 
-    public static function getRoute()
-    {
-        return new static();
-    }
-    public function setView(string $view):void
+    public function setView(string $view): void
     {
         $this->view = $view;
     }
+
     public function getView(): string
     {
-        return $this->action ?? 'index';
+        return $this->view ?? $this->action ?? 'index';
     }
 
     public function __set($name, $value)
@@ -90,6 +89,11 @@ class Route
         $this->actionName = 'action' . $this->upperCamelCase($route->action);
     }
 
+    public function setActionName(string $action): void
+    {
+        $this->actionName = $action ? $action : 'action' . $this->upperCamelCase($this->action);
+    }
+
     public function setParams(string $arr): void
     {
         if (!$arr) return;
@@ -109,12 +113,14 @@ class Route
 
     public function setAdmin(): void
     {
-        $this->admin = $this->uri;
+        $this->admin = str_contains($this->uri, 'adminsc');
     }
 
     public function setLayout(): void
     {
-        $this->layout = $this->admin ? AdminLayout::class : UserLayout::class;
+        $this->layout = ($this->admin && Auth::isAuthed())
+            ? AdminLayout::class
+            : UserLayout::class;
     }
 
     public function setSlug(string $slug): void
@@ -156,10 +162,12 @@ class Route
     {
         return 'action' . ucfirst($this->action);
     }
+
     public function getActionName(): string
     {
         return $this->action;
     }
+
     public function isAdmin(): bool
     {
         return $this->admin;
@@ -191,9 +199,6 @@ class Route
         $this->controller     = $this->namespace . $this->controllerName . 'Controller';
     }
 
-//
-
-
     public function getBaseController(): string
     {
         return $this->baseController;
@@ -201,17 +206,17 @@ class Route
 
     public function getNamespace(): string
     {
-        return $this->namespace;
+        return $this->isAdmin() ? "{$this->namespace}" : $this->namespace;
     }
 
     public function getLayout(): string
     {
-        return $this->layout;
+        return Auth::autorize($this) ? $this->layout : 'app\view\layouts\UserLayout';
     }
 
     public function getController()
     {
-        return $this->controller ? $this->getNamespace() . $this->getControllerFullName() : '';
+        return $this->controller ? $this->getNamespace() . $this->getControllerFullName() : Controller::class;
     }
 
     public function getControllerFullName(): string
@@ -224,20 +229,17 @@ class Route
         return $this->controller;
     }
 
-    public function getErrors(): string
+    public function getErrors(): array
     {
-        $errors = '';
-        foreach ($this->errors as $error) {
-            $errors .= $error;
-        }
-        return $errors;
+        return $this->errors;
     }
-//    public function setAmin(): void
-//    {
-//        $this->admin  = str_contains($this->uri, 'adminsc') ? true : false;
-//        $this->layout = $this->admin ? new AdminLayout() : new UserLayout();
-//        $this->view   = '';
-//    }
 
-
+    public function getErrorsHtml(): string
+    {
+        $str = '';
+        foreach ($this->errors as $error) {
+            $str .= "<p class='error'>$error</p>";
+        }
+        return $str;
+    }
 }

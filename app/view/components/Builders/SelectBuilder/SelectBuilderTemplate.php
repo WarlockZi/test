@@ -1,13 +1,13 @@
 <select
-		custom-select
-	<?= $this->title; ?>
+        custom-select
+    <?= $title; ?>
 
 
-	<?= $this->field; ?>
-	<?= $this->class; ?>
+    <?= $field; ?>
+        class="<?= $class; ?>"
 >
 
-	<?= $this->options; ?>
+    <?= $options; ?>
 
 </select>
 

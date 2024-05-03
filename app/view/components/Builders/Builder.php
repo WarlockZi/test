@@ -5,13 +5,12 @@ namespace app\view\components\Builders;
 
 
 use app\core\FS;
+use Illuminate\Database\Eloquent\Model;
 
 class Builder
 {
-    protected $fs;
     public function __construct()
     {
-        $this->fs = new FS();
     }
 
     public function clean(string $res):string
@@ -22,9 +21,18 @@ class Builder
 
 		$regex = "/\t\t+?/";
 		$res = preg_replace($regex,"\t",$res);
+
 		$regex = "/\r\n\t+?/";
 		$res = preg_replace($regex,"\t",$res);
+        $res = str_replace("\r\n\r\n","\r\n",$res);
+
 		return $res;
 	}
+
+    protected function getShortName(Model $model)
+    {
+        $reflection = new \ReflectionClass($model);
+        return lcfirst($reflection->getShortName());
+    }
 
 }

@@ -2,23 +2,32 @@
 
 namespace app\builders;
 
+use app\core\FS;
 use app\view\components\Builders\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class ItemArrayFieldBuilder extends Builder
 {
-    private string $field;
+    private string $fieldName;
+    private ItemArrayFieldBuilder $field;
     private array $item;
-    private string $dataField;
     private string $class;
     private string $name;
     private string $html;
     private string $value;
     private string $dataModel;
+    private string $dataField;
     private string $hidden;
     private string $link;
     private string $required;
+    private bool $del;
+    private bool $softDel;
+    private bool $edit;
+    private bool $save;
+    private bool $toList;
     private string $contenteditable;
+    private FS $fs;
+    private ItemArrayFieldBuilder $fieldObj;
 
     public function __construct()
     {
@@ -28,15 +37,21 @@ class ItemArrayFieldBuilder extends Builder
     public static function build(string $fieldName, Model $item)
     {
         $field                  = new static();
-        $field->field           = $fieldName;
+        $field->fieldName       = $fieldName;
+        $field->fs              = new FS(__DIR__);
         $field->dataField       = '';
         $field->contenteditable = '';
         $field->hidden          = '';
         $field->required        = '';
-//        $field->html            = '';
-//        $field->value           = '';
+        $field->html            = '';
+        $field->del             = false;
+        $field->softDel         = false;
+        $field->edit            = false;
+        $field->save            = false;
+        $field->toList          = false;
+        $field->fieldObj        = $field;
 //        $field->name            = '';
-        $field->item            = $item->toArray();
+        $field->item = $item->toArray();
         return $field;
     }
 
@@ -85,102 +100,99 @@ class ItemArrayFieldBuilder extends Builder
     public function toHtml(string $model): string
     {
         $this->dataModel = "data-model={$model}";
-        $field           = $this;
-        ob_start();
-        include __DIR__ . '/row.php';
-        return ob_get_clean();
+        $this->field     = $this;
+
+        $data = get_object_vars($this);
+        return $this->fs->getContent('row', $data);
+    }
+    public function dataField(string $dataField): ItemArrayFieldBuilder
+    {
+        $this->dataField = "data-field='{$dataField}'";
+        return $this;
     }
 
     public function get()
     {
-        $this->name  = $this->name ?? $this->field;
-        $this->value = $this->html ?? $this->item[$this->field];
+        $this->name  = $this->name ?? $this->fieldName;
+        $this->value = $this->html ?? $this->item[$this->fieldName];
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getField(): string
     {
         return $this->field ?? '';
     }
 
-    /**
-     * @return array
-     */
     public function getItem(): array
     {
         return $this->item;
     }
 
-    /**
-     * @return string
-     */
     public function getDatafield(): string
     {
-        return $this->dataField ? "data-field={$this->dataField}" : '';
+        return array_key_exists($this->fieldName, $this->item) ? "data-field={$this->fieldName}" : $this->dataField;
     }
 
-    /**
-     * @return string
-     */
     public function getClass(): string
     {
         return $this->class;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getHtml(): string
     {
         return $this->html;
     }
 
-    /**
-     * @return mixed
-     */
     public function getValue()
     {
-        return $this->value;
+        return !!$this->html ?$this->html: $this->item[$this->fieldName];
     }
 
-    /**
-     * @return string
-     */
     public function getDataModel(): string
     {
         return $this->dataModel;
     }
 
-    /**
-     * @return string
-     */
     public function getHidden(): string
     {
-        return $this->hidden ?? '';
+        return $this->hidden;
     }
 
-    /**
-     * @return string
-     */
     public function getRequired(): string
     {
         return $this->required;
     }
 
-    /**
-     * @return mixed
-     */
+    public function isDel(): string
+    {
+        return $this->del;
+    }
+
+    public function isEdit(): string
+    {
+        return $this->edit;
+    }
+
+    public function isSoftDel(): bool
+    {
+        return $this->softDel;
+    }
+
+    public function isSave(): bool
+    {
+        return $this->save;
+    }
+
+    public function isToList(): bool
+    {
+        return $this->toList;
+    }
+
     public function getContenteditable()
     {
         return $this->contenteditable;
