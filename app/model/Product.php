@@ -90,7 +90,7 @@ class Product extends Model
     protected function getBaseUnitPriceAttribute()
     {
         $baseUnit = $this->baseUnit;
-        $price    = number_format($this->price, 2, '.', ' ');
+        $price    = number_format((int)$this->price, 2, '.', ' ');
         return "{$price} ₽ / {$baseUnit->name}";
     }
 
