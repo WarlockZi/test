@@ -67,18 +67,6 @@ class PostController Extends AppController
 		header('Location:/adminsc/post/list');
 	}
 
-//	public function actionUpdateOrCreate()
-//	{
-//		if ($this->ajax) {
-//			if ($id = Post::updateOrCreate($this->ajax)) {
-//				if (is_bool($id)) {
-//					Response::exitWithPopup('Сохранено');
-//				}else{
-//					Response::exitJson(['id'=>$id,'msg'=>'Создан']);
-//				}
-//			}
-//		}
-//	}
 
 
 }

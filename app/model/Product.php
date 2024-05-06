@@ -3,6 +3,7 @@
 namespace app\model;
 
 
+use app\Actions\Helpers;
 use app\Domain\Product\Image\ProductMainImageEntity;
 use app\Services\ShortlinkService;
 use app\Services\Slug;
@@ -20,7 +21,6 @@ class Product extends Model
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
     public $timestamps = false;
-    protected $appends = ['mainImagePath'];
 
     protected $fillable = [
         'name',
@@ -48,24 +48,12 @@ class Product extends Model
         'art' => 'string',
     ];
 
-    protected function priceWithUnit(): Attribute
+    protected function shortLink(): Attribute
     {
         return Attribute::get(
             function () {
-                $array = [];
-                $price = (int)$this->getRelation('price')->price;
-                if ($this->baseUnit) {
-                    $array['baseUnit']['price'] = number_format($price, 2, '.', ' ');
-                    $array['baseUnit']['unit']  = $this->baseUnit->name;
-                }
-                if ($this->dopUnits) {
-                    foreach ($this->dopUnits as $unit) {
-                        $multiplier                              = $unit->pivot->multiplier;
-                        $array['dopUnits'][$multiplier]['price'] = number_format($price * $multiplier, 2, '.', ' ');
-                        $array['dopUnits'][$multiplier]['unit']  = $unit->name;
-                    }
-                }
-                return $array;
+                $link = $this->getRawOriginal('short_link');
+                return "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}/short/{$link}";
             }
         );
     }
@@ -75,8 +63,43 @@ class Product extends Model
         if ($this->getCastType($key) == 'string' && is_null($value)) {
             return '';
         }
-
         return parent::castAttribute($key, $value);
+    }
+
+    protected function getMainImagePathAttribute()
+    {
+        $path = (new ProductMainImageEntity($this))->getRelativePath();
+        return $path ?? ImageView::noImageSrc();
+    }
+    public function getPriceAttribute()
+    {
+        return $this->priceRelation->price;
+    }
+
+    public function getFormattedPriceAttribute()
+    {
+        return number_format($this->price,2,'.', ' ');
+    }
+    public function priceRelation()
+    {
+        return $this->hasOne(Price::class, '1s_id', '1s_id');
+    }
+    protected function getBaseUnitPriceAttribute()
+    {
+        $baseUnit = $this->baseUnit;
+        $price    = number_format($this->price,2,'.', ' ');
+        return "{$price} ₽ / {$baseUnit->name}";
+    }
+
+    protected function priceWithCurrncyUnitPromotion(float $number, string $currency, string $oldPrice)
+    {
+        $promos = $this->promotions;
+        $str    = '';
+        foreach ($promos as $promo) {
+            $newPrice = "{$promo->new_price} ";
+            $str      .= "{$newPrice} <span class='old-price'>{$oldPrice}</span> {$currency} / {$this->baseUnit->name}";
+        }
+        return $str;
     }
 
     public function scopeTrashed($query, $type)
@@ -89,36 +112,44 @@ class Product extends Model
     public function scopeWithMainImages($query)
     {
         return $query->whereHas('mainImages');
-//		return $query->with('mainImages',function ($query){
-//			$query->count()>0;
-//		});
     }
 
-    protected function getMainImagePathAttribute()
-    {
-        $path = (new ProductMainImageEntity($this))->getRelativePath();
-        return $path ? $path : ImageView::noImageSrc();
-    }
-
-    public function properties()
-    {
-        return $this
-            ->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
-    }
-
-    public function baseUnit()
-    {
-        return $this
-            ->belongsTo(Unit::class, 'base_unit', 'id');
-    }
 
     public function dopUnits()
     {
-        return $this
-            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id')
-            ->withPivot('multiplier', 'is_base');
+        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
+            ->withPivot('is_shippable','multiplier')->wherePivotNull('is_base');
     }
 
+    public function getBaseUnitAttribute()
+    {
+        return $this->baseUnitRelation->first();
+    }
+
+    public function baseUnitRelation()
+    {
+        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')->withPivot('is_shippable')->wherePivot('is_base', '=', '1');
+    }
+
+    public function shippableUnits()
+    {
+        return $this
+            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
+            ->withPivot('multiplier', 'is_base', 'is_shippable')
+            ->wherePivot('is_shippable', '=', '1');
+    }
+
+    public function units()
+    {
+        return $this
+            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
+            ->withPivot('id','multiplier', 'is_base', 'is_shippable');
+    }
+    public function getCleanAttribute()
+    {
+//        Helpers::clean();
+        return true;
+    }
     public function seo()
     {
         return $this
@@ -158,43 +189,11 @@ class Product extends Model
         });
     }
 
-    public function getShortLink()
-    {
-        $protocol = $_SERVER['REQUEST_SCHEME'];
-        $host     = $_SERVER['HTTP_HOST'];
-        return "{$protocol}://{$host}/short/{$this->short_link}";
-    }
-
     public function save(array $options = [])
     {
         if (!$this->short_link)
             $this->short_link = ShortlinkService::getValidShortLink();
         parent::save($options);
-    }
-
-//	public function priceWithCurrencyUnit()
-//	{
-//		$price = $this->getRelation('price');
-//		if ($price) {
-//			$number = number_format($price->price, 2, '.', ' ');
-//			$priceWithCurrency = "{$number} {$price->currency}";
-//			if ($this->activePromotions->count()) {
-//				return $this->priceWithCurrncyUnitPromotion($number, $price->currency, $number);
-//			}
-//			return "{$priceWithCurrency} / {$this->baseUnit->name}";
-//		}
-//		return 'цена - не определена';
-//	}
-
-    protected function priceWithCurrncyUnitPromotion(float $number, string $currency, string $oldPrice)
-    {
-        $promos = $this->promotions;
-        $str    = '';
-        foreach ($promos as $promo) {
-            $newPrice = "{$promo->new_price} ";
-            $str      .= "{$newPrice} <span class='old-price'>{$oldPrice}</span> {$currency} / {$this->baseUnit->name}";
-        }
-        return $str;
     }
 
     public function detailImages()
@@ -205,10 +204,6 @@ class Product extends Model
         )->where('slug', '=', 'detail');
     }
 
-    public function price()
-    {
-        return $this->hasOne(Price::class, '1s_id', '1s_id');
-    }
 
     public function mainImages()
     {
@@ -216,10 +211,6 @@ class Product extends Model
             Image::class,
             'imageable',
         )->where('slug', '=', 'main');
-//		return $this->morphToMany(
-//			Image::class,
-//			'imageable',
-//			)->where('slug','main');
     }
 
     public function smallpackImages()

@@ -9,13 +9,17 @@ use app\core\Response;
 use app\model\Lead;
 use app\model\OrderItem;
 use app\model\User;
+use app\Repository\CartRepository;
 use app\Repository\OrderRepository;
+use app\view\Cart\CartView;
 
 class CartController extends AppController
 {
+    protected CartView $cartView;
 	public function __construct()
 	{
 		parent::__construct();
+        $this->cartView = new CartView();
 	}
 
 	public function actionDrop()
@@ -33,7 +37,7 @@ class CartController extends AppController
 	public function actionIndex()
 	{
 		$lead = Lead::where('sess', session_id())->first();
-		$oItems = OrderRepository::main();
+		$oItems = CartRepository::main();
         $authed = Auth::isAuthed();
         $trashedWhite = Icon::trashWhite();
 

@@ -23,7 +23,6 @@ class ProductRepository extends AppController
             ->with('category.parents')
             ->with('mainImages')
             ->with('manufacturer.country')
-            ->with('properties')
             ->with('detailImages')
             ->with('promotions')
             ->with('activePromotions')
@@ -31,15 +30,7 @@ class ProductRepository extends AppController
             ->with('smallpackImages')
             ->with('bigpackImages')
             ->with('seo')
-//            ->with('dopUnits')
-//            ->with('baseUnit')
-            ->with(['baseUnit' => function ($query) use ($id) {
-                $query->with(
-                    ['units' => function ($query) use ($id) {
-                        $query->wherePivot('product_id', $id)->get();
-                    }]
-                );
-            }])
+            ->with('dopUnits')
             ->first();
     }
 
@@ -51,7 +42,6 @@ class ProductRepository extends AppController
             ->with('category.properties.vals')
             ->with('category.parentRecursive')
             ->with('category.parents')
-            ->with('price')
             ->with('mainImages')
             ->with('values.property')
             ->with('manufacturer.country')
@@ -60,12 +50,14 @@ class ProductRepository extends AppController
             ->with('bigpackImages')
             ->with('activepromotions.unit')
             ->with('seo')
+//            ->with('baseUnit')
             ->with('dopUnits')
-            ->with(['baseUnit.units' => function ($query) use ($id) {
-                $query->wherePivot('main', 1)
-                    ->first();
-            }])
-            ->where('1s_id', $id);
+//            ->with(['units' => function ($query) use ($id) {
+//                $query->wherePivot('main', 1)
+//                    ->first();
+//            }])
+            ->where('1s_id', $id)
+            ->get();
     }
 
     public static function main(string $slug)

@@ -14,7 +14,7 @@ require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "auto
 
 if ($_ENV['DEV']) {
     ini_set('display_errors', 'On');
-    error_reporting(E_ALL| E_STRICT);
+    error_reporting(E_ALL | E_STRICT);
 }
 
 require_once FS::platformSlashes(ROOT . "/app/Services/Eloquent.php");
@@ -34,9 +34,10 @@ try {
 
     exit();
 } catch (Throwable $e) {
-    $logger = new \app\Services\Logger\ErrorLogger();
-    $logger->write($e);
-
+    if ($_ENV['DEV'] <> '1') {
+        $logger = new \app\Services\Logger\ErrorLogger();
+        $logger->write($e);
+    }
     exit($e);
 }
 

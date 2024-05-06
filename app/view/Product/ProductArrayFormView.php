@@ -6,9 +6,11 @@ namespace app\view\Product;
 use app\builders\ItemArrayFieldBuilder;
 use app\builders\ItemArrayTabBuilder;
 use app\core\FS;
+use app\Domain\UseCase\ProductUseCase;
 use app\model\Category;
 use app\model\Manufacturer;
 use app\model\Product;
+use app\model\ProductUnit;
 use app\model\Promotion;
 use app\model\Seo;
 use app\model\Unit;
@@ -23,6 +25,7 @@ use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 use app\view\Property\PropertyView;
+use app\view\Settings\Admin\SettingsFormView;
 use app\view\Unit\UnitFormView;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -81,17 +84,27 @@ class ProductArrayFormView
 
     protected static function units(Product $product): string
     {
-        $baseUnit = $product->baseUnit;
-        if (!$baseUnit) return 'Базовая единица не выбрана';
-        $units              = $baseUnit->units;
-        $baseEqualsMainUnit = ProductView::baseEqualsMainUnit($product);
-        $selector           = UnitFormView::selectorNew($baseUnit->id);
-        return FS::getFileContent(ROOT . '/app/view/Product/Admin/units.php',
-            compact('units', 'baseUnit', 'selector', 'baseEqualsMainUnit'));
+        $fs       = new FS(__DIR__.'/Admin');
+        $p        = $product->toArray();
+        $baseUnit = $product->units()->where('is_base', 1)->first();
+        $units    = $product->units;
+//        $selector = UnitFormView::selectorNew($baseUnit, $baseUnit->id);
+        return $fs->getContent('units', compact('units', 'baseUnit'));
     }
+
+    public static function unitsRow($unit): string
+    {
+        $fs        = new FS(__DIR__ . '/Admin');
+        $selector = UnitFormView::selectorNew($unit);
+        $name = $unit->name;
+        $shippable = $unit->pivot->is_shippable ? 'checked' : '';
+        return $fs->getContent('unitRow', compact('selector',  'name','shippable'));
+    }
+
 
     public static function edit(Model $product): string
     {
+        $p = $product->toArray();
         return \app\builders\ItemArrayBuilder::build($product, 'product')
             ->pageTitle('Товар :  ' . $product['name'])
             ->field(
@@ -166,11 +179,17 @@ class ProductArrayFormView
             )
             ->field(
                 ItemArrayFieldBuilder::build('instore', $product)
-                    ->name('наличие')
+                    ->name('Наличие')
                     ->get()
             )
             ->field(
-                ItemArrayFieldBuilder::build('instore', $product)
+                ItemArrayFieldBuilder::build('price', $product)
+                    ->name('Цена')
+                    ->html($product->price)
+                    ->get()
+            )
+            ->field(
+                ItemArrayFieldBuilder::build('main_image', $product)
                     ->name('Основная картинка')
                     ->html(ProductView::mainImage($product))
                     ->get()

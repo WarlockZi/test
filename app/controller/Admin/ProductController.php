@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 use app\Actions\ProductAction;
 use app\Actions\ProductFilterAction;
 use app\controller\AppController;
+use app\core\Response;
 use app\model\Product;
 use app\model\ProductUnit;
 use app\Repository\BreadcrumbsRepository;
@@ -29,7 +30,7 @@ class ProductController extends AppController
 //		$p = $prod->toArray();
 
 //        $this->copyBaseUnits();
-        $this->cleanBaseUnits();
+//        $this->cleanBaseUnits();
         if ($prod) {
             $product     = ProductArrayFormView::edit($prod);
             $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);
@@ -92,7 +93,7 @@ class ProductController extends AppController
     public function actionFilter()
     {
         $res = ProductFilterAction::make($_POST)->get();
-        $this->exitJson($res);
+        Response->exitJson($res);
     }
 
     public function actionChangeval()
@@ -107,11 +108,11 @@ class ProductController extends AppController
 
     public function actionAttachmainimage()
     {
-        if (!$_FILES['file']) $this->exitWithPopup('Ошибка - не передан файл');
+        if (!$_FILES['file']) Response::exitWithPopup('Ошибка - не передан файл');
         $productId = $_POST['productId'];
-        if (!$productId) $this->exitWithPopup('Ошибка - нет id продукта');
+        if (!$productId) Response::exitWithPopup('Ошибка - нет id продукта');
         $srcs = ProductAction::attachMainImage($_FILES['file'], $productId);
-        if ($srcs) $this->exitJson([$srcs]);
+        if ($srcs) Response::exitJson([$srcs]);
     }
 
     public function actionChangepromotion()
@@ -124,7 +125,7 @@ class ProductController extends AppController
         if (ProductAction::setBaseEqualMainUnit($this->ajax)) {
             Response('Обновлено');
         }
-        $this->exitJson(['popup' => 'ошибка']);
+        Response->exitJson(['popup' => 'ошибка']);
     }
 }
 

@@ -1,10 +1,6 @@
 <div class="category">
 
-    <?php use app\core\Auth;
-	use app\core\Icon;
-	use app\view\Category\CategoryView;
-
-	if (!isset($category)): ?>
+    <?php if (!isset($category)): ?>
 	  <div class="no-categories">
 		  <H1>Такой категории нет</H1>
 	  </div>
@@ -19,7 +15,6 @@
               <?php foreach ($category['childrenRecursive'] as $child): ?>
 				 <a class="category-card" href="/category/<?= $child->slug ?>">
 							 <?= $child->name ?>
-					 <!--							 --><?php //= CategoryView::getMainImage($child) ?>
 				 </a>
 
               <?php endforeach; ?>
@@ -34,11 +29,10 @@
 		  </div>
 
 		  <div class="product-wrap">
-              <?php $admin = Auth::isAdmin();
-					$icon  = Icon::edit(); ?>
+
 
               <?php foreach ($category->productsInStore as $product): ?>
-						<?= CategoryView::getProductCard($product, $icon) ?>
+                  <?php include 'product_card.php'?>
               <?php endforeach; ?>
 
 		  </div>
@@ -48,20 +42,16 @@
         <?php if ($category->productsNotInStoreInMatrix->count()): ?>
 
 		  <div class="products-header">
-			  <br>
-			  <br>
 			  <h1>Товары под заказ</h1>
 			  <!--					--><?php //= $category->products->filters ?>
 		  </div>
 
 		  <div class="product-wrap">
 
-              <?php $admin = Auth::isAdmin();
-					$icon  = Icon::edit(); ?>
 
               <?php foreach ($category->productsNotInStoreInMatrix as $product): ?>
                   <?php if (str_ends_with($product->name,'*')): ?>
-							<?= CategoryView::getProductCard($product, $icon) ?>
+                      <?php include 'product_card.php'?>
                   <?php endif; ?>
               <?php endforeach; ?>
 

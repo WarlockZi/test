@@ -23,6 +23,7 @@
     flex-wrap: wrap;
     max-width: 80vw;
     gap: 5px;
+    margin-bottom: 30px;
 
     @include _400 {
       justify-content: center;

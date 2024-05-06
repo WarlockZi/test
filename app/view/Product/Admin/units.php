@@ -1,6 +1,6 @@
-<?
+<?php
 
-use app\view\Unit\UnitFormView;
+use \app\view\Product\ProductArrayFormView;
 use app\core\Icon;
 
 ?>
@@ -13,7 +13,7 @@ use app\core\Icon;
             <div class="name">Единица</div>
             <div class="multiplier">Коэфф</div>
             <div class="base-unit">Базовая ед.</div>
-            <div class="min-unit">Миним. отгруж ед.</div>
+            <div class="min-unit" title="Можем отгрузить клиенту эту единицу">Отгруж ед.</div>
             <div class="del"><?= Icon::trashIcon() ?></div>
         </div>
 
@@ -21,29 +21,27 @@ use app\core\Icon;
             <div class="none">
                 <?= $selector; ?>
             </div>
-            <!--				--><? // foreach ($dopUnits as $unit): ?>
-            <? foreach ($baseUnit->units as $unit): ?>
-                <div class="row">
-                    <?= UnitFormView::selectorNew($baseUnit->id, $unit->id) ?>
 
-                    <!--                  --><?php //=UnitFormView::selectorNew($baseUnit->id, $unit->id) ?>
 
-                    <input type="number" value="<?= $unit->pivot->multiplier ?>">
-                    <div class="base-unit"><?= $baseUnit->name ?></div>
+            <div class="row">
+                <?= ProductArrayFormView::unitsRow($baseUnit); ?>
+            </div>
 
-                    <div class="min-unit">
-                        <input type="checkbox" <?= $unit->pivot->is_base ? 'checked' : ''; ?>>
+            <?php foreach ($units as $unit): ?>
+                <?php if (!$unit->pivot->is_base): ?>
+                    <div class="row">
+                        <?= ProductArrayFormView::unitsRow($unit) ?>
                     </div>
-                    <div class="del">X</div>
-                </div>
-            <? endforeach; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
 
         <div class="add-unit"
              data-unit="<?= $baseUnit->id ?>"
-        >+
+        >
+            +
         </div>
-<!--        --><?php //= $baseEqualsMainUnit; ?>
+
 
     </div>
 </div>
