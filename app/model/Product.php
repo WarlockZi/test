@@ -69,8 +69,9 @@ class Product extends Model
     protected function getMainImagePathAttribute()
     {
         $path = (new ProductMainImageEntity($this))->getRelativePath();
-        return $path ?? ImageView::noImageSrc();
+        return $path ? $path : ImageView::noImageSrc();
     }
+
     public function getPriceAttribute()
     {
         return $this->priceRelation->price;
@@ -78,16 +79,18 @@ class Product extends Model
 
     public function getFormattedPriceAttribute()
     {
-        return number_format($this->price,2,'.', ' ');
+        return number_format($this->price, 2, '.', ' ');
     }
+
     public function priceRelation()
     {
         return $this->hasOne(Price::class, '1s_id', '1s_id');
     }
+
     protected function getBaseUnitPriceAttribute()
     {
         $baseUnit = $this->baseUnit;
-        $price    = number_format($this->price,2,'.', ' ');
+        $price    = number_format($this->price, 2, '.', ' ');
         return "{$price} ₽ / {$baseUnit->name}";
     }
 
@@ -118,7 +121,7 @@ class Product extends Model
     public function dopUnits()
     {
         return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('is_shippable','multiplier')->wherePivotNull('is_base');
+            ->withPivot('is_shippable', 'multiplier')->wherePivotNull('is_base');
     }
 
     public function getBaseUnitAttribute()
@@ -143,13 +146,15 @@ class Product extends Model
     {
         return $this
             ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('id','multiplier', 'is_base', 'is_shippable');
+            ->withPivot('id', 'multiplier', 'is_base', 'is_shippable');
     }
+
     public function getCleanAttribute()
     {
 //        Helpers::clean();
         return true;
     }
+
     public function seo()
     {
         return $this
