@@ -1,6 +1,6 @@
 <div class="count-setter">
 	<div class="step-field">
-		<input type="number" value="<?= $oItem->count; ?>" maxlength="4">
+		<input type="number" value="<?= $oItem->count; ?>" onkeydown="if(this.value.length===4) return false;">
 
 
         <?= \app\view\Cart\CartView::shippableUnitsSelector($product); ?>

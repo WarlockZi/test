@@ -211,7 +211,7 @@ class Route
 
     public function getLayout(): string
     {
-        return Auth::autorize($this) ? $this->layout : 'app\view\layouts\UserLayout';
+        return Auth::isAdmin() ? $this->layout : 'app\view\layouts\UserLayout';
     }
 
     public function getController()

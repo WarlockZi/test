@@ -16,6 +16,7 @@ export default class Cart {
     this.model = $(this.container).find('[data-model]').dataset.model;
     this.total = document.querySelector('.total span');
     this.$cartEmptyText = document.querySelector('.empty-cart');
+    this.$cartCount = document.querySelector('.cart .count');
 
     this.rows = container.querySelectorAll('.row');
     this.container.onclick = this.handleClick.bind(this);
@@ -77,17 +78,21 @@ export default class Cart {
 
   rerenderSums() {
     if (!this.rows.length) return false;
-    let formatter = new Intl.NumberFormat("ru-RU");
+    let formatter = new Intl.NumberFormat("ru-RU",{maximumFractionDigits:2,minimumFractionDigits:2});
     let total = [].reduce.call(this.rows, (acc, row, i, rows) => {
       let price = +row.querySelector('.price-table').dataset.price;
       let count = row.querySelector('input').value;
-      let multiplier = row.querySelector('[data-multiplier]').value;
-      let sum = price * count * multiplier;
-      row.querySelector('.sum').innerText = formatter.format(sum.toFixed(2)).replace(/,/g, '.');
+
+      const select = row.querySelector('select');
+      const multiplier = select.options[select.options.selectedIndex].dataset.multiplier
+
+
+      let sum = (price * count * multiplier);
+      row.querySelector('.sum').innerText = formatter.format(sum).replace(/,/g, '.');
       acc += sum;
       return acc
     }, 0);
-    this.total.innerText = formatter.format(total.toFixed(2)).replace(/,/g, '.')
+    this.total.innerText = formatter.format(total).replace(/,/g, '.')
   }
 
   counterStart() {
@@ -148,13 +153,12 @@ export default class Cart {
   }
 
   getRows() {
-    let rows = [].map.call(this.rows, (row) => {
+    return [].map.call(this.rows, (row) => {
       return {
         id: row.querySelector('.name').dataset['1sid'],
         count: row.querySelector('.count').value
       }
     });
-    return rows
   }
 
   async handleClick({target}) {
@@ -192,6 +196,7 @@ export default class Cart {
   showEmptyCart() {
     this.container.innerHTML = '';
     this.$cartEmptyText.classList.remove('none')
+    this.$cartCount.classList.add('none')
   }
 
   async updateOItem(target) {

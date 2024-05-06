@@ -53,6 +53,7 @@ class Router
         $this->route->setView($actionName);
 
         $controller->$action();
+        Auth::autorize($this->route);
 
         $layout = $this->route->getLayout();
         $layout = new $layout($this->route, $controller);

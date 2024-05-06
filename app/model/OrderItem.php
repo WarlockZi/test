@@ -10,7 +10,6 @@ class OrderItem extends Model
     use SoftDeletes;
 
     public $table = 'orderItems';
-//	public $model = 'orderItem';
     public $timestamps = true;
 
     protected $fillable = [
@@ -19,6 +18,7 @@ class OrderItem extends Model
         'sess',
         'ip',
         'crated_at',
+        'deleted_at'
     ];
 
     public function order()
