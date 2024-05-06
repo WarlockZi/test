@@ -8,7 +8,7 @@ use app\core\Icon;
 
     <div class="short-link"
          title='Скопировать короткую ссылку'
-         data-shortLink= <?= $product->getShortLink(); ?>
+         data-shortLink= <?= $product->shortLink; ?>
     >
         <?= Icon::link(); ?>
     </div>
@@ -17,7 +17,10 @@ use app\core\Icon;
     <?php include __DIR__ . '/price.php' ?>
     <?php include __DIR__ . '/promotion.php' ?>
 
-    <?php include __DIR__ . '/count.php' ?>
+    <div class="instore">
+        <p>Статус: в наличии</p>
+    </div>
+
     <div class="button blue">Добавить в корзину</div>
 
     <div class="adjust none">

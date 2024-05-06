@@ -3,6 +3,8 @@
 namespace app\controller;
 
 use app\core\Auth;
+use app\Domain\UseCase\ProductUseCase;
+use app\model\Decorators\ProductDecorator;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\OrderRepository;
 use app\Repository\ProductRepository;
@@ -10,7 +12,14 @@ use app\Repository\ProductRepository;
 
 class ProductController extends AppController
 {
-    protected $model;
+//    protected $model;
+    protected ProductUseCase $case;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->case = new ProductUseCase();
+    }
 
     public function actionIndex()
     {
@@ -18,14 +27,18 @@ class ProductController extends AppController
         if (!$slug) {
             header('Location:/category');
         }
+        $productDecorator = new ProductDecorator();
 
         $product = ProductRepository::main($slug);
         if ($product) {
+            $p = $product->toArray();
             $this->route->setView('product');
             $oItems      = OrderRepository::count();
             $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category_id, true,);
             $userIsAdmin = Auth::isAdmin();
-            $this->set(compact('product', 'breadcrumbs', 'oItems', 'userIsAdmin'));
+            $case = $this->case;
+            $this->set(compact('product', 'breadcrumbs', 'oItems', 'userIsAdmin','case'));
+
             $this->assets->setItemMeta($product);
             $this->assets->setProduct();
             $this->assets->setQuill();

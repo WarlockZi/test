@@ -1,13 +1,13 @@
-<? if ($product): ?>
+<?php if ($product): ?>
 
 	<?= $breadcrumbs; ?>
 	<?= $product ?>
 
-<? else: ?>
+<?php else: ?>
 	<div>Такого товара нет</div>
 	<br>
 	<a href="/adminsc/category">Перейти в каталог</a>
-<? endif; ?>
+<?php endif; ?>
 
 
 

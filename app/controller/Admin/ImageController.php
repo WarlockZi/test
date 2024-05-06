@@ -64,32 +64,7 @@ class ImageController Extends AppController
 		}
 		Response::exitWithPopup("Уже есть");
 	}
-//
-//	public function actionAttachOne()
-//	{
-//		if (!$_POST) Response::exitWithPopup('нет данных');
-//		if (!$_FILES) Response::exitWithPopup('нет файлов');
-//		$morphed = $_POST['morphed'];
-//		$morph = $_POST['morph'];
-//
-//		if (count($_FILES) > 1) Response::exitWithPopup('Можно только один файл');
-//		$file = $_FILES[0];
-//
-//		ImageRepository::validateSize($file);
-//		ImageRepository::validateType($file);
-//
-//		$image = ImageRepository::firstOrCreate($file, $morph);
-//		if ($image->wasRecentlyCreated) {
-//			ImageRepository::saveToFile($image, $file);
-//		}
-//
-//		$res = ImageRepository::sync($image, $morphed, $morph['slug'], 'one', true);
-//		if ($res) {
-//			Response::exitJson($res);
-//		}
-//		Response::exitWithPopup("Уже есть такая картинка");
-//
-//	}
+
 	public function attachOne()
 	{
 		if (!$_POST) Response::exitWithPopup('нет данных');

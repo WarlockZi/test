@@ -15,7 +15,7 @@ class FS
         return $this->absPath;
     }
 
-    public function getContent(string $file, array $data = [])
+    public function getContent(string $file, array $data = []):string
     {
         $file = FS::platformSlashes($this->absPath . $file . '.php');
         if (!is_readable($file)) throw new \Exception('File not exist');
@@ -24,10 +24,18 @@ class FS
         unset($data);
         unset($fs);
         ob_start();
-        require $file;
-//        $content = ob_end_clean();
-        $content = ob_get_clean();
-        return $content;
+        try {
+            require $file;
+            $content = ob_get_clean();
+            return $content;
+        } catch (\Throwable $exception){
+            $content = ob_get_clean();
+            if ($_ENV['DEV']==='1'){
+                return $exception;
+            }
+            return 'ошибка в файле';
+        }
+
     }
 
     public static function resolve(...$paths)

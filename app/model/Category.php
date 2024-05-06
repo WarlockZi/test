@@ -80,7 +80,7 @@ class Category extends Model
 	{
 		return $this->hasMany(Product::class)
 			->where('instore', 0)
-			->with('price')
+//			->with('price')
 			->with('mainImages')
 //			->with('mainUnit')
 			->orderBy('name');
@@ -91,9 +91,8 @@ class Category extends Model
 		return $this->hasMany(Product::class)
 			->where('instore', 0)
 			->where('name', 'regexp', '\\s?\\*\\s?$')
-			->with('price')
+//			->with('price')
 			->with('mainImages')
-//			->with('mainUnit')
 			->orderBy('name');
 	}
 
@@ -101,10 +100,10 @@ class Category extends Model
 	{
 		return $this->hasMany(Product::class)
 			->where('instore', '<>', 0)
-			->with('price')
+//			->with('price')
 			->with('mainImages')
 			->with('promotions')
-			->with('baseUnit.units')
+			->with('units')
 			->orderBy('name');
 	}
 

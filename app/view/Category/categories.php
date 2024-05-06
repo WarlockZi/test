@@ -11,7 +11,6 @@
 
 				 <a class="category-card" href="/category/<?= $category->slug; ?>">
 							 <?= $category->name ?>
-<!--							 --><?php //= CategoryView::getMainImage($category) ?>
 				 </a>
               <?php endif; ?>
 

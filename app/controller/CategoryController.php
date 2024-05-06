@@ -3,45 +3,54 @@
 namespace app\controller;
 
 
+use app\core\Auth;
+use app\core\Icon;
+use app\Domain\UseCase\CategoryUseCase;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
 
 
-class CategoryController Extends AppController
+class CategoryController extends AppController
 {
-	protected $model = Category::class;
+    protected $model = Category::class;
+    protected CategoryUseCase $case;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->case = new CategoryUseCase();
+    }
 
-	public function actionIndex()
-	{
-		if ($this->route->slug) {
-			$this->route->setView('category');
+    public function actionIndex()
+    {
+        if ($this->route->slug) {
+            $this->route->setView('category');
 
-			$slug = $this->route->slug;
-			$category = CategoryRepository::indexInstore($slug);
-			if ($category) {
+            $slug     = $this->route->slug;
+            $category = CategoryRepository::indexInstore($slug);
+            $c        = $category->toArray();
+            if ($category) {
 //				$category->products->filters = ProductRepository::getFilters();
-				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
-				$this->set(compact('breadcrumbs', 'category'));
-				$this->assets->setItemMeta($category);
-			}else{
-				$view = $this->getView();
-				$this->view = $view->get404();
-				http_response_code(404);
-			}
+                $admin       = Auth::isAdmin();
+                $edit        = Icon::edit();
+                $case  = $this->case;
+                $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
+                $this->set(compact('admin', 'edit', 'breadcrumbs', 'category', 'case'));
+                $this->assets->setItemMeta($category);
+            } else {
+                $view       = $this->getView();
+                $this->view = $view->get404();
+                http_response_code(404);
+            }
 
-		} else {
-			$this->route->setView('categories');
+        } else {
+            $this->route->setView('categories');
 
-			$categories = CategoryRepository::indexNoSlug();
+            $categories = CategoryRepository::indexNoSlug();
 
-			$this->set(compact('categories'));
-			$this->assets->setMeta('Категории','Категории:VITEX','Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент');
-		}
-	}
+            $this->set(compact('categories'));
+            $this->assets->setMeta('Категории', 'Категории:VITEX', 'Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент');
+        }
+    }
 }

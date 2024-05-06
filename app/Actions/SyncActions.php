@@ -17,15 +17,12 @@ class SyncActions extends AppController
 	protected $importFile;
 	protected $offerFile;
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
-//	protected Route $route;
 	protected $logger;
 	protected $repo;
-
 	public function __construct(SyncRepository $repo, $logger)
 	{
 		$this->setStorage();
 		$this->repo = $repo;
-//		$this->route = $route;
 		$this->logger = $logger;
 
 		$this->importFile = $this->storage::getFile('import0_1.xml');

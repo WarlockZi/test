@@ -82,8 +82,14 @@ class UserLayout extends Layout
             return $content;
         } catch (\Exception $exception) {
             ob_get_clean();
+            ob_flush();
             $this->route->setError("В файле вида произошла ошибка");
-            $this->route->setError($exception->getMessage());
+            if ($_ENV['DEV'] === '1') {
+                $this->route->setError($exception);
+            } else {
+                $this->route->setError($exception->getMessage());
+            }
+
             return $this->layoutFs->getContent('default', ['errors' => $this->route->getErrors()]);
         }
     }
