@@ -1,13 +1,17 @@
 <?php
 
 namespace app\core;
+use app\Services\Logger\ErrorLogger;
+
 class FS
 {
     protected string $absPath;
+    protected ErrorLogger $errorLogger;
 
     public function __construct(string $absPath = ROOT)
     {
         $this->absPath = $absPath . DIRECTORY_SEPARATOR;
+        $this->errorLogger = new ErrorLogger();
     }
 
     public function getAbsPath(): string
@@ -17,14 +21,14 @@ class FS
 
     public function getContent(string $file, array $data = []):string
     {
-        $file = FS::platformSlashes($this->absPath . $file . '.php');
-        if (!is_readable($file)) throw new \Exception('File not exist');
-
-        extract($data);
-        unset($data);
-        unset($fs);
-        ob_start();
         try {
+            $file = FS::platformSlashes($this->absPath . $file . '.php');
+            if (!is_readable($file)) throw new \Exception('File not exist');
+
+            extract($data);
+            unset($data);
+            unset($fs);
+            ob_start();
             require $file;
             $content = ob_get_clean();
             return $content;
@@ -33,6 +37,7 @@ class FS
             if ($_ENV['DEV']==='1'){
                 return $exception;
             }
+            $this->errorLogger->write($exception);
             return 'ошибка в файле';
         }
 
