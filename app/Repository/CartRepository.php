@@ -7,7 +7,6 @@ namespace app\Repository;
 use app\core\Auth;
 use app\model\Order;
 use app\model\OrderItem;
-use app\model\Product;
 
 class CartRepository
 {
@@ -28,9 +27,7 @@ class CartRepository
         } else {
             $oItems = OrderItem::query()
                 ->where('sess', session_id())
-                ->with('product.price')
                 ->with('product.shippableUnits')
-                ->with('product.baseUnit')
                 ->with('product.dopUnits')
                 ->get();
         }
@@ -46,7 +43,6 @@ class CartRepository
             ->selectRaw('SUM(count) as total_count')
             ->where('user_id', $userId)
             ->with('user')
-            ->with('product.price')
             ->groupBy('product_id')
             ->get();
         return $orders;
