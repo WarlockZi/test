@@ -233,7 +233,7 @@ class Assets
 		foreach ($assets->getCDNCssArray() as $css) {
 			$this->setCDNCss($css);
 		}
-		$this->title = $this->title . $assets->title . ' | VITEX';
+		$this->title = $this->title . $assets->title . '  VITEX';
 		$this->desc = $this->desc . $assets->desc;
 		$this->keywords = $this->keywords . $assets->keywords;
 

@@ -31,7 +31,7 @@ class CartView
                 $options .= self::getOptions($unit);
             }
         } else {
-            $options .= self::getOptions($product->baseUnit()->first());
+            $options .= self::getOptions($product->baseUnit);
         }
         return "<select class='units'>{$options}</select>";
     }
