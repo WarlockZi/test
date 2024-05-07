@@ -50,8 +50,8 @@ class ProductRepository extends AppController
             ->with('bigpackImages')
             ->with('activepromotions.unit')
             ->with('seo')
-//            ->with('baseUnit')
-            ->with('dopUnits')
+            ->with('shippableUnits')
+//            ->with('dopUnits')
 //            ->with(['units' => function ($query) use ($id) {
 //                $query->wherePivot('main', 1)
 //                    ->first();

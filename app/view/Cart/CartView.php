@@ -23,24 +23,26 @@ class CartView
         return 'цена - не определена';
     }
 
-    public static function shippableUnitsSelector(Product $product): string
+    public static function shippableUnitsSelector(Product $product, int $selectedId): string
     {
         $options = '';
         if ($product->shippableUnits()->count()) {
             foreach ($product->shippableUnits as $unit) {
-                $options .= self::getOptions($unit);
+                $options .= self::getOptions($unit, $selectedId);
             }
         } else {
-            $options .= self::getOptions($product->baseUnit);
+            $options .= self::getOptions($product->baseUnit, $selectedId);
         }
-        return "<select class='units'>{$options}</select>";
+        return "<select class='units' data-unitSelector>{$options}</select>";
     }
 
-    protected static function getOptions(Unit $unit): string
+    protected static function getOptions(Unit $unit, int $selecedId): string
     {
+        $id         = $unit->id;
+        $seleced    = $selecedId === $id ? "selected='selected'" : '';
         $name       = $unit->name;
         $multiplier = $unit->pivot->multiplier ?? 1;
-        $html       = "<option data-multiplier='{$multiplier}'>{$name}</option>";
+        $html       = "<option data-multiplier='{$multiplier}' data-id='{$id}' {$seleced}>{$name}</option>";
 
         return $html;
 

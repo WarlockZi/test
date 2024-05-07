@@ -1,5 +1,5 @@
-<select name="dopUnit" id="">
-    <?php foreach ($product->dopUnits as $dopUnit): ?>
-        <option value="<?=$dopUnit->id?>"><?=$dopUnit->name?></option>
+<select id="shippableSelector">
+    <?php foreach ($product->shippableUnits as $shippable): ?>
+        <option value="<?=$shippable->id?>"><?=$shippable->name?></option>
     <?php endforeach; ?>
 </select>
