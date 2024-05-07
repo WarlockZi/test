@@ -12,6 +12,5 @@
 			<span class="arrow minus"></span>
 		</div>
 
-
 	</div>
 </div>
