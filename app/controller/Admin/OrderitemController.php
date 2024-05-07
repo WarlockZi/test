@@ -76,24 +76,30 @@ class OrderitemController Extends AppController
 		if ($req) {
 			if (Auth::isAuthed()) {
 				$orderItm = Order::updateOrCreate(
-					['product_id' => $req['product_id'],
+					[
+                        'product_id' => $req['product_id'],
 						'sess' => $req['sess'],
 					],
-					['product_id' => $req['product_id'],
+					[
+                        'product_id' => $req['product_id'],
 						'sess' => $req['sess'],
 						'count' => $req['count'],
+                        'unit_id'=>$req['unit_id'],
 						'ip' => $_SERVER['REMOTE_ADDR'],
 						'user_id' => Auth::getUser()['id'],
 					]
 				);
 			} else {
 				$orderItm = OrderItem::updateOrCreate(
-					['product_id' => $req['product_id'],
+					[
+                        'product_id' => $req['product_id'],
 						'sess' => $req['sess'],
 					],
-					['product_id' => $req['product_id'],
+					[
+                        'product_id' => $req['product_id'],
 						'sess' => $req['sess'],
 						'count' => $req['count'],
+                        'unit_id'=>$req['unit_id'],
 						'ip' => $_SERVER['REMOTE_ADDR'],
 					]
 				);
@@ -102,9 +108,9 @@ class OrderitemController Extends AppController
 				Response::exitJson(['popup' => "Добавлено в корзину"]);
 			}
 			if ($orderItm->wasChanged()) {
-				Response::exitJson(['popup' => "Изменено"]);
+				Response::exitJson(['popup' => "Заказ изменен"]);
 			}
-			Response::exitJson(['error' => "не записано"]);
+			Response::exitJson(['popup'=>'не записано','error' => "не записано"]);
 		}
 
 	}

@@ -18,9 +18,10 @@ export default class Cart {
     this.$cartEmptyText = document.querySelector('.empty-cart');
     this.$cartCount = document.querySelector('.cart .count');
 
+
     this.rows = container.querySelectorAll('.row');
     this.container.onclick = this.handleClick.bind(this);
-    this.container.onchange = this.rerenderSums.bind(this);
+    this.container.onchange = this.handleChange.bind(this);
 
     this.cookie = new Cookie();
     this.counterEl = $('#counter').first();
@@ -43,8 +44,6 @@ export default class Cart {
       data: new CartSuccess(),
       callback: this.modalcartSuccessCallback.bind(this)
     });
-
-
 
     this.rerenderSums()
   }
@@ -75,6 +74,27 @@ export default class Cart {
       location.reload()
     }
   }
+  dto(row){
+    const $select = row.querySelector('[data-unitSelector]')
+    const unit_id = $select.options[$select.selectedIndex].dataset.id
+    return {
+       product_id : row.closest('.row').dataset.productId,
+       unit_id,
+       count:row.querySelector('input').value,
+       sess : getToken(),
+    }
+  }
+  async updateOItem(target) {
+    const row = target.closest('.row')
+    let res = await post(`/adminsc/orderItem/updateOrCreate`, this.dto(row));
+  }
+
+  handleChange({target}){
+        if (target.hasAttribute('data-unitSelector')){
+          this.updateOItem(target)
+        }
+        this.rerenderSums()
+  }
 
   rerenderSums() {
     if (!this.rows.length) return false;
@@ -85,7 +105,6 @@ export default class Cart {
 
       const select = row.querySelector('select');
       const multiplier = select.options[select.options.selectedIndex].dataset.multiplier
-
 
       let sum = (price * count * multiplier);
       row.querySelector('.sum').innerText = formatter.format(sum).replace(/,/g, '.');
@@ -186,6 +205,7 @@ export default class Cart {
     if (res?.arr?.ok) {
       target.closest('.row').remove();
       if (this.countRows() < 1) this.showEmptyCart()
+      this.rerenderSums()
     }
   }
 
@@ -199,14 +219,7 @@ export default class Cart {
     this.$cartCount.classList.add('none')
   }
 
-  async updateOItem(target) {
-    let product_id = target.closest('.row').dataset.productId;
-    let count = target.value;
-    let sess = getToken();
 
-    let res = await post(`/adminsc/orderItem/updateOrCreate`, {sess, product_id, count});
-
-  }
 
 
 }

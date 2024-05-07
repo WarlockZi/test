@@ -1,11 +1,10 @@
 <div class="count-setter">
 	<div class="step-field">
-		<input type="number" value="<?= $oItem->count; ?>" onkeydown="if(this.value.length===4) return false;">
+		<input type="number" value="<?= $oItem->count; ?>">
 
 
-        <?= \app\view\Cart\CartView::shippableUnitsSelector($product); ?>
+        <?= \app\view\Cart\CartView::shippableUnitsSelector($product, $oItem->unit_id); ?>
 
-        <input hidden data-multiplier value="<?= $multiplier ?: 1; ?>">
 		<span class="input-line"></span>
 
 		<div class="arrow-block ">

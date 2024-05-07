@@ -21,7 +21,6 @@ class Product extends Model
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
     public $timestamps = false;
-
     protected $fillable = [
         'name',
         'print_name',
