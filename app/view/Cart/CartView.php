@@ -2,10 +2,8 @@
 
 namespace app\view\Cart;
 
-use app\model\OrderItem;
 use app\model\Product;
 use app\model\Unit;
-use Illuminate\Database\Eloquent\Collection;
 
 class CartView
 {
