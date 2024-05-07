@@ -34,6 +34,7 @@ export default class UnitTable {
   }
 
   deleteSelected() {
+    debugger
     let selected = this.$rows.querySelectorAll('.selected');
     selected = Array.from(selected).map((s) => {
       if (+s.dataset.value) return s.dataset.value;

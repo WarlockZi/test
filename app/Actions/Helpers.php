@@ -61,6 +61,31 @@ class Helpers
         Response::exitWithPopup('конец');
     }
 
+    public static function cleanBase()
+    {
+        $products = Product::with('units')
+            ->select('id', '1s_id')
+            ->get()
+            ->toArray();
+        foreach ($products as $product) {
+            $arr   = [];
+            $units = $product['units'];
+            foreach ($units as $unit) {
+                if (!$unit['pivot']['is_base']) continue;
+                if (!array_key_exists($unit['id'], $arr,)) {
+                    $arr[$unit['id']] = $unit;
+                } else {
+                    $pu = ProductUnit::where('product_1s_id', $unit['pivot']['product_1s_id'])
+                        ->where('id',$unit['pivot']['id'])
+//                        ->get()
+                        ->delete()
+                    ;
+                }
+            }
+        }
+        Response::exitWithPopup('конец');
+    }
+
     public static function makeUnitsShippable()
     {
         $unitables = ProductUnit::all();

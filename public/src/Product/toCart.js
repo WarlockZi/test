@@ -18,6 +18,7 @@ export default class toCart {
     }
 
     changeShippable() {
+        // const shippableId = this.getShippableId()
         this.updateOrCreate()
     }
 
@@ -26,6 +27,19 @@ export default class toCart {
         return this.shippableSelector.options[index].value
     }
 
+    async updateOrCreate() {
+        const dto = this.dto()
+        let res = await post('/adminsc/OrderItem/updateOrCreate',dto );
+        console.log(res)
+    }
+    dto() {
+        return {
+            sess: getToken(),
+            product_id: this.product,
+            count: +this.digitEl.innerText,
+            unit_id: +this.getShippableId()
+        }
+    }
     showBlue() {
         this.blue.classList.remove('none');
         this.adjust.classList.add('none');
@@ -36,12 +50,6 @@ export default class toCart {
         this.blue.classList.add('none');
         this.adjust.classList.remove('none');
         this.count.innerText = ++this.count.innerText
-    }
-
-    async updateOrCreate() {
-        const dto = this.dto()
-        let res = await post('/adminsc/OrderItem/updateOrCreate',dto );
-        console.log(res)
     }
 
 
@@ -76,15 +84,7 @@ export default class toCart {
         debounced(this.dto())
     }
 
-    dto() {
-        return {
-            id: 0,
-            sess: getToken(),
-            product_id: this.product,
-            count: +this.digitEl.innerText,
-            unit_id: +this.getShippableId()
-        }
-    }
+
 };
 
 

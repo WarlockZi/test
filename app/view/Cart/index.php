@@ -25,19 +25,9 @@
                         <div class="price-table"
                              data-price=<?= $product->price ?>
                         >
-                            <?php if ($product->baseUnit): ?>
-                                <div class="price">
-                                    <?= $product->formattedPrice ?>
-                                    ₽
-                                </div>
-                                <div class="unit">/ <?= $product->baseUnit->name; ?></div>
-                            <?php endif; ?>
 
-                            <?php if ($product->dopUnits->count()): ?>
-                                <?php foreach ($product->dopUnits as $unit): ?>
-                                    <?php include 'formattedDopUnit.php' ?>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                            <?php include __DIR__ . '/unitsTable.php';  ?>
+
                         </div>
                     </div>
                     <?php include __DIR__ . '/countSetter.php' ?>

@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\Actions\CartAction;
+use app\Actions\Helpers;
 use app\core\Auth;
 use app\core\Icon;
 use app\core\Response;
@@ -36,7 +37,8 @@ class CartController extends AppController
 
 	public function actionIndex()
 	{
-		$lead = Lead::where('sess', session_id())->first();
+        $s =  session_id();
+		$lead = Lead::where('sess',$s)->first();
 		$oItems = CartRepository::main();
         $authed = Auth::isAuthed();
         $trashedWhite = Icon::trashWhite();

@@ -13,22 +13,22 @@ class CartRepository
         public static function main()
     {
         $user = Auth::getUser();
+        $sess = session_id();
         if ($user) {
             $oItems = Order::query()
                 ->select('*')
                 ->selectRaw('SUM(count) as count_total')
                 ->where('user_id', $user['id'])
+                ->where('sess', $sess)
                 ->whereNull('deleted_at')
-                ->with('product.dopUnits')
-                ->with('product.shippableUnits')
+                ->with('product.units')
                 ->groupBy('product_id')
                 ->get();
             $oI     = $oItems->toArray();
         } else {
             $oItems = OrderItem::query()
                 ->where('sess', session_id())
-                ->with('product.shippableUnits')
-                ->with('product.dopUnits')
+                ->with('product.units')
                 ->get();
         }
         $arr = $oItems->toArray();

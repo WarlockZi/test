@@ -32,11 +32,9 @@ use app\core\Icon;
             <button tabindex="0" class="minus"><?= Icon::minus() ?></button>
 
             <span class="digit" contenteditable="true">1</span>
-            <?php if ($product->shippableUnits->count()): ?>
+
                 <span><?php include 'dopUnitsSelector.php' ?></span>
-            <?php else: ?>
-                <span><?= $product->baseUnit->name ?></span>
-            <?php endif; ?>
+
             <button tabindex="0" class="plus">
                 <?= Icon::plus1() ?>
 
