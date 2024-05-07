@@ -84,7 +84,7 @@ class ProductArrayFormView
 
     protected static function units(Product $product): string
     {
-        $fs       = new FS(__DIR__.'/Admin');
+        $fs       = new FS(__DIR__ . '/Admin');
         $p        = $product->toArray();
         $baseUnit = $product->units()->where('is_base', 1)->first();
         $units    = $product->units;
@@ -92,13 +92,13 @@ class ProductArrayFormView
         return $fs->getContent('units', compact('units', 'baseUnit'));
     }
 
-    public static function unitsRow($unit): string
+    public static function unitsRow(Unit $unit,string $name, bool $deletable): string
     {
         $fs        = new FS(__DIR__ . '/Admin');
-        $selector = UnitFormView::selectorNew($unit);
-        $name = $unit->name;
+        $selector  = UnitFormView::selectorNew($unit);
         $shippable = $unit->pivot->is_shippable ? 'checked' : '';
-        return $fs->getContent('unitRow', compact('selector',  'name','shippable'));
+        $multiplier = $unit->pivot->multiplier;
+        return $fs->getContent('unitRow', compact('selector', 'name', 'shippable', 'multiplier','deletable'));
     }
 
 

@@ -3,7 +3,7 @@
 		<input type="number" value="<?= $oItem->count; ?>">
 
 
-        <?= \app\view\Cart\CartView::shippableUnitsSelector($product, $oItem->unit_id??1); ?>
+        <?= \app\view\Cart\CartView::shippableUnitsSelector($product, $oItem->unit_id); ?>
 
 		<span class="input-line"></span>
 

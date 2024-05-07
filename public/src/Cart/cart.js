@@ -189,12 +189,14 @@ export default class Cart {
     }else if(target.classList.contains('plus')){
       let quantatyInput = target.closest('.step-field').querySelector('input');
       quantatyInput.value++;
+      this.updateOItem(target)
       this.rerenderSums();
 
     }else if(target.classList.contains('minus')){
       let quantatyInput = target.closest('.step-field').querySelector('input');
       if(quantatyInput.value==="0") return false
       quantatyInput.value--;
+      this.updateOItem(target)
       this.rerenderSums();
     }
   }

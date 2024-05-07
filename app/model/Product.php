@@ -4,6 +4,7 @@ namespace app\model;
 
 
 use app\Actions\Helpers;
+use app\core\Response;
 use app\Domain\Product\Image\ProductMainImageEntity;
 use app\Services\ShortlinkService;
 use app\Services\Slug;
@@ -141,11 +142,13 @@ class Product extends Model
             ->wherePivot('is_shippable', '=', '1');
     }
 
+
+
     public function units()
     {
         return $this
             ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('id', 'multiplier', 'is_base', 'is_shippable');
+            ->withPivot('id', 'multiplier', 'is_base', 'is_shippable')->orderByPivot('multiplier');
     }
 
     public function getCleanAttribute()
