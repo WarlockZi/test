@@ -28,10 +28,12 @@
                     <!--		  <div class="id">--><?php //= $order->user->email ?><!--</div>-->
                 </div>
                 <div class="count"><?= $order->total_count ?></div>
+                <div class="unit count"><?= $order->unit->name ?></div>
+                <?$o = $order->toArray();?>
                 <?php if ($order->deleted_at): ?>
-                    <div class="active"><?= $order->deleted_at ?></div>
+                    <div class="active count"><?= $order->deleted_at ?></div>
                 <?php else: ?>
-                    <div class="deleted"><?= $order->deleted_at ?></div>
+                    <div class="deleted count"><?= $order->deleted_at ?></div>
                 <?php endif; ?>
             </div>
         <?php else: ?>
@@ -39,7 +41,7 @@
         <?php endif; ?>
 
     <?php endforeach; ?>
-    
+
     <a href="/adminsc/order">
         <div class="button">К списку заказов</div>
     </a>

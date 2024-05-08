@@ -4,10 +4,8 @@
 namespace app\Repository;
 
 
-use app\core\Auth;
 use app\model\Order;
 use app\model\OrderItem;
-use app\model\Product;
 
 
 class OrderRepository
@@ -40,44 +38,16 @@ class OrderRepository
     {
         $userId = Order::where('id', $id)->first()->user_id;
         $orders = Order::query()
-            ->select('product_id', 'id', 'user_id', 'count')
+            ->select('product_id', 'id', 'user_id', 'count', 'unit_id')
             ->selectRaw('SUM(count) as total_count')
             ->where('user_id', $userId)
             ->with('user')
             ->with('product')
+            ->with('unit')
             ->groupBy('product_id')
             ->get();
         return $orders;
     }
-
-//    public static function main()
-//    {
-//        $user = Auth::getUser();
-//        if ($user) {
-//            $oItems = Order::query()
-//                ->select('*')
-//                ->selectRaw('SUM(count) as count_total')
-//                ->where('user_id', $user['id'])
-//                ->whereNull('deleted_at')
-//                ->with('product.price')
-//                ->with('product.baseUnit')
-//                ->with('product.dopUnits')
-//                ->with('product.shippableUnits')
-//                ->groupBy('product_id')
-//                ->get();
-//            $oI     = $oItems->toArray();
-//        } else {
-//            $oItems = OrderItem::query()
-//                ->where('sess', session_id())
-//                ->with('product.price')
-//                ->with('product.shippableUnits')
-//                ->with('product.baseUnit')
-//                ->with('product.dopUnits')
-//                ->get();
-//        }
-//        $arr = $oItems->toArray();
-//        return $oItems;
-//    }
 
     public static function count(): int
     {
