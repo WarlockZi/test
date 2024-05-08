@@ -40,15 +40,18 @@ class Order extends Model
 		return $this->belongsTo(User::class);
 	}
 
-	public static function userEmail($builder, $order, $func)
-	{
-		return $order->user->email;
-	}
-
+    public function unit()
+    {
+        return $this->hasOne(Unit::class,'id','unit_id');
+    }
 	public function manager()
 	{
 		return $this->hasOne(User::class);
 	}
 
+    public static function userEmail($builder, $order, $func)
+    {
+        return $order->user->email;
+    }
 
 }
