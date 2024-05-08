@@ -44,7 +44,7 @@ class OrderRepository
             ->selectRaw('SUM(count) as total_count')
             ->where('user_id', $userId)
             ->with('user')
-            ->with('product.price')
+            ->with('product')
             ->groupBy('product_id')
             ->get();
         return $orders;
