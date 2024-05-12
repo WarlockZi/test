@@ -63,11 +63,6 @@ class Router
         $layout->render();
     }
 
-    public static function needsNoAuth($route)
-    {
-        return AuthValidator::check($route);
-    }
-
     public function add($regexp, $route = [])
     {
         $this->routes[$regexp] = $route;
