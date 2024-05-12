@@ -52,6 +52,10 @@ class OrderRepository
     public static function count(): int
     {
         $sess = session_id();
-        return OrderItem::where('sess', $sess)->get()->count();
+        return OrderItem::where('sess', $sess)
+            ->whereNull('deleted_at')
+            ->get()
+            ->count()
+            ;
     }
 }

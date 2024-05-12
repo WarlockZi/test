@@ -15,6 +15,8 @@
 
 					 </span>
     </a>
+    <?php include "toCart.php";?>
+    <div class="to-cart">Добавить</div>
     <?php if ($admin): ?>
         <div class="edit">
             <a href="/adminsc/product/edit/<?= $product->id ?>"><?= $edit ?></a>

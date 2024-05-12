@@ -3,6 +3,7 @@
     <?php if (!isset($category)): ?>
 	  <div class="no-categories">
 		  <H1>Такой категории нет</H1>
+		  <H1><?=$category?></H1>
 	  </div>
     <?php else: ?>
 

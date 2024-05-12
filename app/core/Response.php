@@ -18,6 +18,10 @@ class Response
         }
         exit();
     }
+    public static function dbResponse(): void
+    {
+
+    }
 
     public static function exitWithMsg(string $msg): void
     {

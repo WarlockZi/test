@@ -70,7 +70,7 @@ class ProductRepository extends AppController
             $product = $repo->mainShortSubquery($id)->first();;
             return $product;
         }
-        return '--- Product repo error ---';
+        return null;
     }
 
     public static function short(string $short)

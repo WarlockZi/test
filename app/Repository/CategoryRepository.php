@@ -4,6 +4,7 @@
 namespace app\Repository;
 
 
+use app\core\Response;
 use app\model\Category;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
@@ -30,19 +31,22 @@ class CategoryRepository
             ->toArray();
     }
 
-    public static function indexInstore(string $slug)
+    public function indexInstore(string $slug)
     {
-        return Category::query()
-            ->where('slug', $slug)
-            ->with('childrenRecursive')
-            ->with('parentRecursive')
-            ->with('productsInStore')
-            ->with('productsNotInStoreInMatrix')
-            ->with('products.activepromotions')
-            ->with('products.inactivepromotions')
-            ->with('seo')
-            ->get()
-            ->first();
+            $category = Category::query()
+                ->where('slug', $slug)
+                ->with('childrenRecursive')
+                ->with('parentRecursive')
+                ->with('productsInStore')
+                ->with('productsNotInStoreInMatrix')
+                ->with('products.activepromotions')
+                ->with('products.inactivepromotions')
+                ->with('products.shippableUnits')
+                ->with('seo')
+                ->get()
+                ->first();
+            return $category;
+
     }
 
     public static function edit(?int $id)

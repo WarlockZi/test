@@ -27,11 +27,11 @@ class ProductController extends AppController
         if (!$slug) {
             header('Location:/category');
         }
-        $productDecorator = new ProductDecorator();
+//        $productDecorator = new ProductDecorator();
 
         $product = ProductRepository::main($slug);
         if ($product) {
-            $p = $product->toArray();
+//            $p = $product->toArray();
             $this->route->setView('product');
             $oItems      = OrderRepository::count();
             $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category_id, true,);
