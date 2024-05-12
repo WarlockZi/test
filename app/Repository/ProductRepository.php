@@ -30,7 +30,7 @@ class ProductRepository extends AppController
             ->with('smallpackImages')
             ->with('bigpackImages')
             ->with('seo')
-            ->with('dopUnits')
+//            ->with('dopUnits')
             ->first();
     }
 
@@ -51,11 +51,6 @@ class ProductRepository extends AppController
             ->with('activepromotions.unit')
             ->with('seo')
             ->with('shippableUnits')
-//            ->with('dopUnits')
-//            ->with(['units' => function ($query) use ($id) {
-//                $query->wherePivot('main', 1)
-//                    ->first();
-//            }])
             ->where('1s_id', $id)
             ->get();
     }

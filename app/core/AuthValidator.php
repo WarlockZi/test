@@ -25,6 +25,7 @@ class AuthValidator
             || strtolower($route->controller) === 'auth' && $route->action === 'confirm'
             || strtolower($route->controller) === 'main' && $route->action === 'index'
             || strtolower($route->controller) === 'product' && !$route->admin
+            || strtolower($route->controller) === 'short' && !$route->action ==='index'
             || strtolower($route->controller) === 'category' && !$route->admin
             || strtolower($route->controller) === 'github' && $route->action === 'webhook';
     }
