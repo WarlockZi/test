@@ -3,29 +3,15 @@ import './main.scss'
 // import ViteProxyWebsocket from 'vite-proxy-websocket'
 import cart from '../Cart/cart'
 
-import '../Category/category'
+import Categrory from "../Category/category";
 import {$} from "../common";
 import Search from "../components/search/search";
 import Promotions from '../Promotions/Promotion'
 
-// import WebSocket from 'ws';
-//
-// const ws = new WebSocket('wss://localhost:3000');
-// //
-// debugger
-// ws.onerror = console.error;
-//
-// ws.onopen = function open() {
-//   ws.send('something');
-// };
-//
-// ws.onmessage = function message(data) {
-//   console.log('received: %s', data);
-// }
-
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  new Categrory()
   // debugger
 
   // const proxy = new ViteProxyWebsocket({target: 'ws://example.com', path: '/websocket'});
