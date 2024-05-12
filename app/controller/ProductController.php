@@ -43,6 +43,7 @@ class ProductController extends AppController
             $this->assets->setProduct();
             $this->assets->setQuill();
         } else {
+            $this->route->setView('product');
 //            $this->notFound = true;
             $view = $this->getView();
             $this->assets->setMeta('Страница не найдена');
