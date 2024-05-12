@@ -73,8 +73,10 @@ class Auth
 
 	public static function autorize(Route $route): array
 	{
-		if (Router::needsNoAuth($route)) {
-			return [];
+        echo 'before check';
+		if (AuthValidator::needsNoAuth($route)) {
+            echo 'in check';
+			return [];//no user
 		}
 
 		$user = self::getUser();

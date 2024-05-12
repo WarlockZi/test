@@ -4,7 +4,7 @@ namespace app\core;
 
 class AuthValidator
 {
-    public static function check(Route $route)
+    public static function needsNoAuth(Route $route)
     {
         return
             strtolower($route->controller) === 'auth' && $route->action === 'login'
@@ -25,7 +25,7 @@ class AuthValidator
             || strtolower($route->controller) === 'auth' && $route->action === 'confirm'
             || strtolower($route->controller) === 'main' && $route->action === 'index'
             || strtolower($route->controller) === 'product' && !$route->admin
-            || strtolower($route->controller) === 'short' && !$route->action ==='index'
+            || strtolower($route->controller) === 'short'
             || strtolower($route->controller) === 'category' && !$route->admin
             || strtolower($route->controller) === 'github' && $route->action === 'webhook';
     }
