@@ -62,8 +62,9 @@ class ProductRepository extends AppController
 
     public static function main(string $slug)
     {
+        $slug = "%{$slug}%";
         $repo = new ProductRepository();
-        $p    = Product::where('slug', $slug)->withTrashed()->first();
+        $p    = Product::where('slug', 'Like', $slug)->withTrashed()->first();
         if (!$p) $p = Product::where('short_link', $slug)->first();
         if ($p) {
             $id      = $p['1s_id'];
@@ -77,7 +78,6 @@ class ProductRepository extends AppController
     {
         $self = new self();
         $p    = Product::where('short_link', $short)->firstOrFail();
-//        if ()
         $id      = $p['1s_id'];
         $product =
             $self->mainShortSubquery($id)
