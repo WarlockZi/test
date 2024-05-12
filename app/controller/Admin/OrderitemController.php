@@ -66,7 +66,7 @@ class OrderitemController extends AppController
     public function actionEdit()
     {
         $orderId    = $this->route->id;
-        $orderitems = OrderitemRepository::edit($orderId);
+        $orderitems = $this->repo->edit($orderId);
         $this->set(compact('orderitems'));
     }
 

@@ -51,8 +51,11 @@ class Router
         $actionName = $this->route->getActionName();
         $action     = $this->route->getAction();
         $this->route->setView($actionName);
-
-        $controller->$action();
+        try {
+            $controller->$action();
+        } catch (\Throwable $exception) {
+            $f = $exception->getMessage();
+        }
         Auth::autorize($this->route);
 
         $layout = $this->route->getLayout();

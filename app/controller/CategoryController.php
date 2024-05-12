@@ -16,9 +16,11 @@ class CategoryController extends AppController
     protected $model = Category::class;
     protected CategoryUseCase $case;
 
+    protected CategoryRepository $repo;
     public function __construct()
     {
         parent::__construct();
+        $this->repo = new CategoryRepository();
         $this->case = new CategoryUseCase();
     }
 
@@ -28,8 +30,8 @@ class CategoryController extends AppController
             $this->route->setView('category');
 
             $slug     = $this->route->slug;
-            $category = CategoryRepository::indexInstore($slug);
-            $c        = $category->toArray();
+            $category = $this->repo->indexInstore($slug);
+
             if ($category) {
 //				$category->products->filters = ProductRepository::getFilters();
                 $admin       = Auth::isAdmin();
@@ -40,7 +42,6 @@ class CategoryController extends AppController
                 $this->assets->setItemMeta($category);
             } else {
                 $view       = $this->getView();
-                $this->view = $view->get404();
                 http_response_code(404);
             }
 
