@@ -52,9 +52,8 @@ class Helpers
                     $arr[$unit['id']] = $unit;
                 } else {
                     $pu = ProductUnit::where('product_1s_id', $unit['pivot']['product_1s_id'])
-                        ->where('id',$unit['pivot']['id'])
-                        ->delete()
-                    ;
+                        ->where('id', $unit['pivot']['id'])
+                        ->delete();
                 }
             }
         }
@@ -76,10 +75,29 @@ class Helpers
                     $arr[$unit['id']] = $unit;
                 } else {
                     $pu = ProductUnit::where('product_1s_id', $unit['pivot']['product_1s_id'])
-                        ->where('id',$unit['pivot']['id'])
-//                        ->get()
-                        ->delete()
-                    ;
+                        ->where('id', $unit['pivot']['id'])
+                        ->delete();
+                }
+            }
+        }
+        Response::exitWithPopup('конец');
+    }
+
+    public static function makeBaseUnitsShippable()
+    {
+        $products = Product::with('units')
+            ->select('id', '1s_id')
+            ->get()
+            ->toArray();
+        foreach ($products as $product) {
+            if (count($product['units']) === 1) {
+                $unit = $product['units'][0];
+                if ($unit['pivot']['is_base']===1) {
+                    $pu = ProductUnit::query()
+                        ->where('product_1s_id', $unit['pivot']['product_1s_id'])
+                        ->where('id', $unit['pivot']['id'])
+                        ->first();
+                    $pu->update(['is_shippable' => 1]);
                 }
             }
         }
