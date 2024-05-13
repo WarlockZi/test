@@ -1,5 +1,5 @@
 <div class="to-cart">
-<? \app\Actions\Helpers::makeBaseUnitsShippable()?>
+
     <div class="button blue-button">Добавить</div>
 
     <div class="green-button-wrap">
