@@ -32,38 +32,53 @@
     .column {
       position: relative;
 
-      .to-cart{
-        .blue-button{
+      .to-cart {
+        .button {
           display: flex;
-          background-color: $color-main;
-          padding: 10px;
-          color: white;
-          align-items: center;
           justify-content: center;
-          border-radius: 5px;
-          margin-bottom: 15px;
+          align-items: center;
+          color: white;
           cursor: pointer;
+          padding: 10px;
+          border-radius: 5px;
           transition: background-color 100ms ease-in-out;
-          &:hover{
-            background-color: darken($color-main,10%);
+
+          &:hover {
+            background-color: darken($color-main, 10%);
           }
+
         }
-        .green-button-wrap{
+
+        .blue-button {
+          background-color: $color-main;
+          margin-bottom: 50px;
+        }
+
+        .green-button-wrap {
           display: none;
           flex-direction: column;
           margin-bottom: 15px;
 
-          .count-wrap{
+          .count-wrap {
             display: flex;
+
+            .input{
+              border: 1px solid lightgrey;
+              border-radius: 5px;
+            }
+            .selector{
+              border: 1px solid lightgrey;
+              border-radius: 5px;
+
+            }
+
+
+
           }
 
           .green-button {
-            display: flex;
             background-color: $color-main-green;
-            padding: 10px;
             margin-bottom: 10px;
-            border-radius: 5px;
-            color: white;
             justify-content: center;
           }
 
@@ -137,7 +152,7 @@
       .footer {
         color: #000;
 
-        .old-price{
+        .old-price {
           text-decoration: line-through #707f8d;
           color: #707f8d;
         }
