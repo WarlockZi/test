@@ -20,9 +20,9 @@
     <?php include "toCart.php";?>
 
     <?php if ($admin): ?>
-        <div class="edit">
-            <a href="/adminsc/product/edit/<?= $product->id ?>"><?= $edit ?></a>
-        </div>
+
+            <a href="/adminsc/product/edit/<?= $product->id ?>" class="edit"><?= $edit ?></a>
+
     <?php endif; ?>
 
 </div>

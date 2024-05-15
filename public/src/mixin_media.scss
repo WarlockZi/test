@@ -1,10 +1,13 @@
-// Using
-//.div {
-//   @include _1200 {
-//       @content;
-//   }
-//}
 @import "var";
+
+@mixin input_clear{
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  }
+}
 
 @function color($color,$sat,$light,$opacity) {
   @if $color == red {
@@ -29,7 +32,7 @@
 
 @mixin countSetter {
 
-  .step-field {
+  .unit-row {
     position: relative;
     display: flex;
     width: 120px;
@@ -49,6 +52,8 @@
       color: #363A47;
       text-align: center;
     }
+
+
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
       /* display: none; <- Crashes Chrome on hover */

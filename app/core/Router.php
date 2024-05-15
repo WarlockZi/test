@@ -2,8 +2,6 @@
 
 namespace app\core;
 
-use app\model\User;
-
 class Router
 {
     protected Route $route;

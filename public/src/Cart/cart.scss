@@ -6,10 +6,11 @@
 
   .content {
 
-    .count-setter {
+    .shippable-table {
+      display: flex;
+      flex-direction: column;
       @include cartRowGrey;
       max-width: 120px;
-      display: flex;
       align-items: center;
 
       @include countSetter;

@@ -2,11 +2,18 @@
 
 namespace app\view\Cart;
 
+use app\core\FS;
 use app\model\Product;
 use app\model\Unit;
 
 class CartView
 {
+    private FS $fs;
+    public function __construct()
+    {
+        $this->fs = new FS(__DIR__);
+    }
+
     public function priceWithCurrencyUnit()
     {
         $price = $this->getRelation('price');
@@ -21,17 +28,10 @@ class CartView
         return 'цена - не определена';
     }
 
-    public static function shippableUnitsSelector(Product $product, int $selectedId): string
+    public static function cartTable(Product $product): string
     {
-        $options = '';
-        if ($product->shippableUnits()->count()) {
-            foreach ($product->shippableUnits as $unit) {
-                $options .= self::getOptions($unit, $selectedId);
-            }
-        } else {
-            $options .= self::getOptions($product->baseUnit, $selectedId);
-        }
-        return "<select class='units' data-unitSelector>{$options}</select>";
+        $cartView = new self();
+        return $cartView->fs->getContent('cartTable', compact('product'));
     }
 
     protected static function getOptions(Unit $unit, int $selecedId): string
@@ -43,6 +43,18 @@ class CartView
         $html       = "<option data-multiplier='{$multiplier}' data-id='{$id}' {$seleced}>{$name}</option>";
 
         return $html;
-
     }
+    //    public static function shippableUnitsSelector(Product $product, int $selectedId): string
+//    {
+//        $options = '';
+//        if ($product->shippableUnits()->count()) {
+//            foreach ($product->shippableUnits as $unit) {
+//                $options .= self::getOptions($unit, $selectedId);
+//            }
+//        } else {
+//            $options .= self::getOptions($product->baseUnit, $selectedId);
+//        }
+//        return "<select class='units' data-unitSelector>{$options}</select>";
+//    }
+
 }

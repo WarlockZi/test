@@ -18,7 +18,7 @@ class UserHeader
     public function __construct(Route $route)
     {
         $this->fs           = new FS(__DIR__ . '/templates');
-        $data['blueRibbon'] = (new BlueRibbon())->getTemplate();
+        $data['blueRibbon'] = (new BlueRibbon())->toString();
         $data['index']      = $route->isHome();
         $data['logo']       = Icon::logo_squre1() . Icon::logo_vitex1();
         $this->header       = $this->fs->getContent('vitex_header', $data);

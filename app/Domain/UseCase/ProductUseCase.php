@@ -33,7 +33,7 @@ class ProductUseCase
         foreach ($dopUnits as $unit) {
             $multiplier     = $unit->pivot->multiplier;
             $formattedPrice = $price && $multiplier
-                ? number_format($price, 2, '.', ' ')
+                ? number_format((int)$price*$multiplier, 2, '.', ' ')
                 : 'Цену уточняйте у менеджера';
             $str            .= "<div class='price-unit-row'>
                 <div class='price-for-unit'>

@@ -44,6 +44,11 @@ class OrderItem extends Model
     {
         return $this->hasOne(Lead::class, 'sess', 'sess');
     }
+    public function unit()
+    {
+        return $this->hasOne(Unit::class, 'id','unit_id');
+
+    }
 
 
 }

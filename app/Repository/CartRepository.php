@@ -10,7 +10,7 @@ use app\model\OrderItem;
 
 class CartRepository
 {
-        public static function main()
+    public static function main()
     {
         $user = Auth::getUser();
         $sess = session_id();
@@ -24,15 +24,43 @@ class CartRepository
                 ->with('product.units')
                 ->groupBy('product_id')
                 ->get();
-            $oI     = $oItems->toArray();
         } else {
             $oItems = OrderItem::query()
                 ->where('sess', session_id())
                 ->with('product.units')
-                ->get();
+                ->with('unit')
+                ->get()
+                ->groupBy('product_id');
+//            $oItem = $oItems->toArray();
         }
-        $arr = $oItems->toArray();
         return $oItems;
+    }
+
+    public static function count()
+    {
+        $user = Auth::getUser();
+        $sess = session_id();
+        if ($user) {
+            $oItems = Order::query()
+                ->select('user_id', 'sess','product_id','deleted_at','count')
+                ->selectRaw('SUM(count) as count_total')
+                ->where('user_id', $user['id'])
+                ->where('sess', $sess)
+                ->whereNull('deleted_at')
+                ->with('product')
+                ->groupBy('product_id')
+                ->get();
+//            $ar = $oItems->toArray();
+        } else {
+            $oItems = OrderItem::query()
+                ->where('sess', session_id())
+                ->with('product')
+                ->groupBy('product_id')
+                ->get();
+//            $ar = $oItems->toArray();
+        }
+        return $oItems;
+
     }
 
     public static function edit($id)
@@ -70,9 +98,6 @@ class CartRepository
 //            ->get();
 //        return $orders;
 //    }
-
-
-
 
 
 //    public static function count(): int

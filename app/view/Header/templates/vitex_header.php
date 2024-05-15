@@ -2,11 +2,11 @@
 
 	<div class="info">
 
-		 <?include 'logo.php'; ?>
+        <?php include 'logo.php'; ?>
 
-		 <?include 'phone.php'; ?>
-		 <?include 'location.php'; ?>
-		 <?include 'user_menu.php'; ?>
+        <?php include 'phone.php'; ?>
+        <?php include 'location.php'; ?>
+        <?php include 'user_menu.php'; ?>
 
 	</div>
 
