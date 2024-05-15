@@ -4,7 +4,6 @@
 namespace app\Repository;
 
 
-use app\core\Response;
 use app\model\Category;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
@@ -12,6 +11,14 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CategoryRepository
 {
+
+    public static function showFrontCategories(): array
+    {
+        return Category::query()
+            ->where('show_front', 1)
+            ->with('childrenNotDeleted')
+            ->get()->toArray();
+    }
 
     public static function indexNoSlug()
     {
@@ -33,19 +40,19 @@ class CategoryRepository
 
     public function indexInstore(string $slug)
     {
-            $category = Category::query()
-                ->where('slug', $slug)
-                ->with('childrenRecursive')
-                ->with('parentRecursive')
-                ->with('productsInStore')
-                ->with('productsNotInStoreInMatrix')
-                ->with('products.activepromotions')
-                ->with('products.inactivepromotions')
-                ->with('products.shippableUnits')
-                ->with('seo')
-                ->get()
-                ->first();
-            return $category;
+        $category = Category::query()
+            ->where('slug', $slug)
+            ->with('childrenRecursive')
+            ->with('parentRecursive')
+            ->with('productsInStore')
+            ->with('productsNotInStoreInMatrix')
+            ->with('products.activepromotions')
+            ->with('products.inactivepromotions')
+            ->with('products.shippableUnits')
+            ->with('seo')
+            ->get()
+            ->first();
+        return $category;
 
     }
 

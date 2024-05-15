@@ -5,6 +5,7 @@ namespace app\view\layouts;
 use app\controller\Controller;
 use app\core\FS;
 use app\core\Route;
+use app\view\Assets\Assets;
 use app\view\Assets\UserAssets;
 use app\view\Header\UserHeader;
 
@@ -15,12 +16,16 @@ class UserLayout extends Layout
     protected string $layout;
     protected string $view;
     protected array $content;
+    protected Assets $assets;
+    protected UserHeader $header;
     protected FS $viewFs;
     protected FS $layoutFs;
 
     public function __construct(Route $route, Controller $controller)
     {
-        $this->route = $route;
+        $this->route  = $route;
+        $this->assets = new UserAssets();
+        $this->header = new UserHeader($this->route);
         $this->setFs();
         $this->setLayout("layouts/vitex");
         $this->setView();
@@ -65,12 +70,9 @@ class UserLayout extends Layout
 
     public function setContent(Controller $controller): void
     {
-        $this->content['header'] = (new UserHeader($this->route))->getHeader();
-//        $uv                         = new UserView($route);
-//        $this->content['canonical'] = $uv->getCanonical();
-        $ass = new UserAssets();
-        $ass->merge($controller->getAssets());
-        $this->content['assets']  = $ass;
+        $this->content['header'] = $this->header->getHeader();
+        $this->assets->merge($controller->getAssets());
+        $this->content['assets']  = $this->assets;
         $this->content['content'] = $this->prepareContent($controller->vars);
         $this->content['footer']  = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
     }

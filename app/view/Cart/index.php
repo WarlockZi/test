@@ -10,7 +10,7 @@
 
             <?php foreach ($oItems as $i => $oItem): ?>
 
-                <?php $product = $oItem->product; ?>
+                <?php $product = $oItem->first()->product; ?>
                 <div class="row" data-product-id="<?= $product['1s_id']; ?>">
                     <div class="num"><?= ++$i; ?></div>
 
@@ -19,18 +19,18 @@
                     <div class="name-price">
                         <a href="/product/<?= $product->slug; ?>"
                            class="name">
-                            <?= $product->name; ?>
+                            <?= $product->name; ?> ()
                         </a>
 
                         <div class="price-table"
                              data-price=<?= $product->price ?>
                         >
 
-                            <?php include __DIR__ . '/unitsTable.php';  ?>
+<!--                            --><?php //include __DIR__ . '/unitsTable.php';  ?>
 
                         </div>
                     </div>
-                    <?php include __DIR__ . '/countSetter.php' ?>
+                    <?php include dirname(__DIR__).'/share/shippableUnitTable.php' ?>
 
                     <div class="sum"></div>
                     <div class="del"><?= $trashedWhite; ?></div>

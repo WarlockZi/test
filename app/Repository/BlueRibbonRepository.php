@@ -10,11 +10,8 @@ class BlueRibbonRepository
     public static function data()
     {
         return [
-            'categories' => Category::query()
-                ->where('show_front', 1)
-                ->with('childrenNotDeleted')
-                ->get()->toArray(),
-            'oItems' => OrderRepository::count(),
+            'categories' => CategoryRepository::showFrontCategories(),
+            'oItems' => CartRepository::count(),
             'icon' => Icon::shoppingCart('feather'),
         ];
     }
