@@ -2,7 +2,7 @@ import {$, debounce, getToken, post} from "../common";
 
 export default class toCart {
     constructor() {
-        this.toCart = $('.to-cart').first();
+        this.toCart = $('.shippable-table').first();
         if (!this.toCart) return;
         this.count = document.querySelector('.utils .cart .count');
         this.adjust = this.toCart.querySelector('.adjust');

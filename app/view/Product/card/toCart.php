@@ -4,7 +4,7 @@ use app\core\Icon;
 
 ?>
 
-<div class="to-cart">
+<div class="shippable-table">
 
     <div class="short-link"
          title='Скопировать короткую ссылку'

@@ -5,16 +5,13 @@ export default function handleShippableUnitsTableClick({target}){
 
 class shippableTable{
     constructor(target) {
-        this.target
+        this.target = target
 
         this.table = target.closest('.shippable-table')
-        this.blueButton = target.closest('.to-cart').querySelector('.blue-button')
-        this.greenButton = target.closest('.to-cart').querySelector('.green-button')
-        this.row = target.closest('.unit-row')
-        this.count = this.row.querySelector('input').value
-
-        this.blueButton.addEventListener('click', this.handleClick.bind(this))
-
+        this.blueButton = this.table.querySelector('.blue-button')
+        this.greenButton = this.table.querySelector('.green-button')
+        this.greenButtonWrap = this.table.querySelector('.green-button-wrap')
+        this.handleClick()
     }
 
     handleClick(){
@@ -78,19 +75,17 @@ class shippableTable{
     }
 
     showBlueButton(target) {
-        const buttons = this.getButtons(target)
-        buttons.greenButtonWrap.style.display = 'none'
-        buttons.input.value = 0
+        this.greenButtonWrap.style.display = 'none'
+        this.greenButtonWrap.querySelector('input').value = 0
     }
 
     showGreenButton(target) {
-        const buttons = this.getButtons(target)
-        buttons.greenButtonWrap.style.display = 'flex'
-        buttons.input.value = 1
+        this.greenButtonWrap.style.display = 'flex'
+        this.greenButtonWrap.querySelector('input').value = 1
     }
 
     getButtons(target) {
-        const toCart = target.closest('.to-cart')
+        const toCart = target.closest('.shippable-table')
         return {
             blueButton: toCart.querySelector('.blue-button'),
             greenButtonWrap: toCart.querySelector('.green-button-wrap'),

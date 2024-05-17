@@ -8,6 +8,7 @@ use app\model\Product;
 class ProductUseCase
 {
     protected ProductDecorator $productDecorator;
+
     public function __construct()
     {
         $this->productDecorator = new ProductDecorator();
@@ -15,7 +16,7 @@ class ProductUseCase
 
     public function baseUnitPrice(Product $product): string
     {
-        $baseUnit = $product->baseUnit->first() ?? 'ед отсутств';
+        $baseUnit       = $product->baseUnit->first() ?? 'ед отсутств';
         $price          = (int)$product->getRelation('price')->price;
         $formattedPrice = $price
             ? number_format($price, 2, '.', ' ')
@@ -26,14 +27,14 @@ class ProductUseCase
 
     public function dopUnitsPrices(Product $product): string
     {
-        $dopUnits = $product->dopUnits;
-        if (!$dopUnits->count()) return '';
+        $shippableUnits = $product->shippableUnits;
+        if (!$product->shippableUnits->count()) return '';
         $price = $product->price;
-        $str = '';
-        foreach ($dopUnits as $unit) {
-            $multiplier     = $unit->pivot->multiplier;
+        $str   = '';
+        foreach ($shippableUnits as $unit) {
+            $multiplier     = $unit->pivot->multiplier ?? 1;
             $formattedPrice = $price && $multiplier
-                ? number_format((int)$price*$multiplier, 2, '.', ' ')
+                ? number_format((int)$price * $multiplier, 2, '.', ' ')
                 : 'Цену уточняйте у менеджера';
             $str            .= "<div class='price-unit-row'>
                 <div class='price-for-unit'>
