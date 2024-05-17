@@ -21,12 +21,12 @@ class ShippableUnitsTableFactory
         $self = new self($units);
         $self->table = new ShippableUnitsTable($units);
         if ($module === 'product') {
-            return $self->table->blueButton();
+            return $self->table->blueButton()->greenButton()->get();
         } elseif ($module === 'category') {
-            return $self->table->blueButton();
+            return $self->table->blueButton()->greenButton()->get();
 
         }
-        return $self->table->get();;//cart
+        return $self->table->get(); //cart
 
     }
 

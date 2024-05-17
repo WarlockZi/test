@@ -44,85 +44,9 @@
         }
       }
 
-      .to-cart {
-        position: relative;
+      @include shippable-table;
 
-        .button {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: white;
-          cursor: pointer;
-          padding: 10px;
-          border-radius: 5px;
-          transition: background-color 100ms ease-in-out;
 
-          &:hover {
-            background-color: darken($color-main, 10%);
-          }
-        }
-
-        .blue-button {
-          background-color: $color-main;
-          margin-bottom: 63px;
-        }
-
-        .green-button-wrap {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          display: none;
-          flex-direction: column;
-          margin-bottom: 15px;
-
-          .unit-row {
-            display: flex;
-            margin-bottom: 10px;
-
-            .contains{
-              font-size: 10px;
-            }
-
-            .button{
-              background-color: $color-main-green;
-              border: 1px solid transparent;
-              color: white;
-              border-radius: 3px;
-              cursor: pointer;
-            }
-
-            .plus,.minus{
-              padding: 3px 8px;
-            }
-
-            .input{
-              text-align: center;
-              border: 1px solid #e7e7e7;
-              border-radius: 3px;
-              width: 30px;
-              margin: 0 10px;
-            }
-
-            @include input_clear;
-
-            .plus{
-              margin-right: 5px;
-            }
-
-            .shippable-unit{
-
-            }
-          }
-
-          .green-button {
-            background-color: $color-main-green;
-            margin-bottom: 10px;
-            justify-content: center;
-          }
-
-        }
-      }
 
       .promotion {
         position: absolute;

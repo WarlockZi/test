@@ -9,7 +9,7 @@ class OrderItem extends Model
 {
     use SoftDeletes;
 
-    public $table = 'orderItems';
+    public $table = 'orderitems';
     public $timestamps = true;
 
     protected $fillable = [

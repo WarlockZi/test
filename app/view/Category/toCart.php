@@ -1,4 +1,4 @@
-<div class="to-cart">
+<div class="shippable-table">
 
     <div class="button blue-button">Добавить</div>
 

@@ -45,6 +45,7 @@ class CategoryRepository
             ->with('childrenRecursive')
             ->with('parentRecursive')
             ->with('productsInStore')
+            ->with('products.orderItems')
             ->with('productsNotInStoreInMatrix')
             ->with('products.activepromotions')
             ->with('products.inactivepromotions')
@@ -52,6 +53,7 @@ class CategoryRepository
             ->with('seo')
             ->get()
             ->first();
+        $c = $category->toArray();
         return $category;
 
     }

@@ -17,7 +17,8 @@
 
 					 </div>
     </a>
-    <?php include "toCart.php";?>
+    <?= \app\view\share\ShippableUnitsTableFactory::create('category',$product->shippableUnits);?>
+<!--    --><?php //include "toCart.php";?>
 
     <?php if ($admin): ?>
 

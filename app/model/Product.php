@@ -3,8 +3,6 @@
 namespace app\model;
 
 
-use app\Actions\Helpers;
-use app\core\Response;
 use app\Domain\Product\Image\ProductMainImageEntity;
 use app\Services\ShortlinkService;
 use app\Services\Slug;
@@ -14,9 +12,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 
-/**
- * @method static truncate()
- */
 class Product extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
@@ -117,23 +112,43 @@ class Product extends Model
         return $query->whereHas('mainImages');
     }
 
-
-    public function dopUnits()
+    protected static function booted()
     {
-        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('is_shippable', 'multiplier')->wherePivotNull('is_base');
+        static::Updating(function ($product) {
+            $product->slug = Slug::slug($product->print_name);
+            return $product;
+        });
+    }
+
+    public function save(array $options = [])
+    {
+        if (!$this->short_link)
+            $this->short_link = ShortlinkService::getValidShortLink();
+        parent::save($options);
+    }
+
+    public function orderItems()
+    {
+        $sess       = $_SESSION['token'];
+        $orderItems = $this
+            ->hasMany(OrderItem::class, 'product_id', '1s_id')
+            ->whereNull('deleted_at')
+            ->where('sess',$sess)
+//            ->get()
+            ;
+//        $oI = $orderItems->toArray();
+
+        return $orderItems;
     }
 
     public function getBaseUnitAttribute()
     {
         return $this->baseUnitRelation->first();
     }
-
     public function baseUnitRelation()
     {
         return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')->withPivot('is_shippable')->wherePivot('is_base', '=', '1');
     }
-
     public function shippableUnits()
     {
         return $this
@@ -141,9 +156,6 @@ class Product extends Model
             ->withPivot('multiplier', 'is_base', 'is_shippable')
             ->wherePivot('is_shippable', '=', '1');
     }
-
-
-
     public function units()
     {
         return $this
@@ -151,11 +163,6 @@ class Product extends Model
             ->withPivot('id', 'multiplier', 'is_base', 'is_shippable')->orderByPivot('multiplier');
     }
 
-    public function getCleanAttribute()
-    {
-//        Helpers::clean();
-        return true;
-    }
 
     public function seo()
     {
@@ -167,6 +174,8 @@ class Product extends Model
     {
         return $this->morphToMany(Val::class, 'valuable');
     }
+
+
 
     public function promotions()
     {
@@ -188,20 +197,34 @@ class Product extends Model
             ->where('active_till', '<', Carbon::today()->toDateString());
     }
 
-    protected static function booted()
+    public function manufacturer()
     {
-        static::Updating(function ($product) {
-            $product->slug = Slug::slug($product->print_name);
-            return $product;
-        });
+        return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
     }
 
-    public function save(array $options = [])
+
+    public function categoryCategoryRecPropsVals()
     {
-        if (!$this->short_link)
-            $this->short_link = ShortlinkService::getValidShortLink();
-        parent::save($options);
+        return $this->belongsTo(Category::class)->with('parentRecursive.properties.vals');
     }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    public function categories()
+    {
+        return $this->belongsTo(Category::class)->with('category_rec');
+    }
+
+    public function parentCategoryRecursive()
+    {
+        return $this->category()->with('parentRecursive');
+    }
+
+
+
+
+
 
     public function detailImages()
     {
@@ -210,7 +233,6 @@ class Product extends Model
             'imageable',
         )->where('slug', '=', 'detail');
     }
-
 
     public function mainImages()
     {
@@ -236,31 +258,12 @@ class Product extends Model
         )->where('slug', 'bigpack');
     }
 
-    public function categoryCategoryRecPropsVals()
-    {
-        return $this->belongsTo(Category::class)->with('parentRecursive.properties.vals');
-    }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function categories()
-    {
-        return $this->belongsTo(Category::class)->with('category_rec');
-    }
-
-    public function parentCategoryRecursive()
-    {
-        return $this->category()->with('parentRecursive');
-    }
-
-    public function manufacturer()
-    {
-        return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
-    }
-
+//    public function dopUnits()
+//    {
+//        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
+//            ->withPivot('is_shippable', 'multiplier')->wherePivotNull('is_base');
+//    }
 }
 
 
