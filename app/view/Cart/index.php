@@ -1,6 +1,7 @@
+<? use \app\view\share\ShippableUnitsTableFactory; ?>
 <div class="cart">
 
-    <div class="<?= $oItems->count() ? '' : 'none'; ?> content">
+    <div class="<?= $products->count() ? '' : 'none'; ?> content">
 
         <div class="page-title">Корзина</div>
 
@@ -8,15 +9,14 @@
 
         <div data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
 
-            <?php foreach ($oItems as $i => $oItem): ?>
+            <?php foreach ($products as $i => $product): ?>
 
-                <?php $product = $oItem->first()->product; ?>
                 <div class="row" data-product-id="<?= $product['1s_id']; ?>">
-                    <div class="num"><?= ++$i; ?></div>
+                    <div class="num cell"><?= ++$i; ?></div>
 
                     <img src="<?= $product->mainImagePath ?>" alt="<?= $product->name; ?>">
 
-                    <div class="name-price">
+                    <div class="name-price cell">
                         <a href="/product/<?= $product->slug; ?>"
                            class="name">
                             <?= $product->name; ?> ()
@@ -26,11 +26,15 @@
                              data-price=<?= $product->price ?>
                         >
 
-<!--                            --><?php //include __DIR__ . '/unitsTable.php';  ?>
+                            <!--                            --><?php //include __DIR__ . '/unitsTable.php';  ?>
 
                         </div>
                     </div>
-                    <?php include dirname(__DIR__).'/share/shippableUnitTable.php' ?>
+
+                    <div class="cell">
+                        <?= ShippableUnitsTableFactory::create($product, 'cart'); ?>
+                    </div>
+                    <!--                    --><?php //include dirname(__DIR__).'/share/shippableUnitTable.php' ?>
 
                     <div class="sum"></div>
                     <div class="del"><?= $trashedWhite; ?></div>
@@ -58,7 +62,7 @@
         </div>
 
     </div>
-    <div class="empty-cart <?= $oItems->count() ? 'none' : ''; ?>">
+    <div class="empty-cart <?= $products->count() ? 'none' : ''; ?>">
         Корзина пуста
     </div>
 </div>

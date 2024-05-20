@@ -51,6 +51,7 @@ class ProductRepository extends AppController
             ->with('activepromotions.unit')
             ->with('seo')
             ->with('shippableUnits')
+            ->with('orderItems')
             ->where('1s_id', $id)
             ->get();
     }

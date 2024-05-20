@@ -4,7 +4,6 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\Domain\UseCase\ProductUseCase;
-use app\model\Decorators\ProductDecorator;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\OrderRepository;
 use app\Repository\ProductRepository;
@@ -27,7 +26,6 @@ class ProductController extends AppController
         if (!$slug) {
             header('Location:/category');
         }
-//        $productDecorator = new ProductDecorator();
 
         $product = ProductRepository::main($slug);
         if ($product) {

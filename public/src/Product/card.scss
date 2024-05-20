@@ -1,6 +1,5 @@
 @import "../mixin_media";
 @import "../var";
-@import "./greenButton";
 
 .product-card {
   display: flex;
@@ -27,7 +26,7 @@
     font-family: sans-serif;
   }
 
-  .main-image-wrapper {
+  .product-card_hero {
     display: flex;
     align-items: flex-start;
     margin-bottom: 10px;
@@ -79,7 +78,7 @@
       }
     }
 
-    .shippable-table {
+    .product-info {
       position: relative;
       display: flex;
       flex-direction: column;
@@ -109,8 +108,9 @@
           pointer-events: none;
         }
       }
+      //@include shippable-table;
 
-      @include green;
+      //@include green;
 
       .promotions {
         position: relative;
@@ -174,20 +174,20 @@
 
       }
 
-      .button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: $color-main;
-        padding: 18px 9px;
-        color: #ffffff;
-        border-radius: 20px;
-
-        &:hover {
-          background-color: darken($color-main, 10%);
-          cursor: pointer;
-        }
-      }
+      //.button {
+      //  display: flex;
+      //  align-items: center;
+      //  justify-content: center;
+      //  background-color: $color-main;
+      //  padding: 18px 9px;
+      //  color: #ffffff;
+      //  border-radius: 20px;
+      //
+      //  &:hover {
+      //    background-color: darken($color-main, 10%);
+      //    cursor: pointer;
+      //  }
+      //}
     }
 
     .detail-image {

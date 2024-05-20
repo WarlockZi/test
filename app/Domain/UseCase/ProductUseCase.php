@@ -17,7 +17,7 @@ class ProductUseCase
     public function baseUnitPrice(Product $product): string
     {
         $baseUnit       = $product->baseUnit->first() ?? 'ед отсутств';
-        $price          = (int)$product->getRelation('price')->price;
+        $price          = (float)$product->getRelation('price')->price;
         $formattedPrice = $price
             ? number_format($price, 2, '.', ' ')
             : 'Цену уточняйте у менеджера';
@@ -34,7 +34,7 @@ class ProductUseCase
         foreach ($shippableUnits as $unit) {
             $multiplier     = $unit->pivot->multiplier ?? 1;
             $formattedPrice = $price && $multiplier
-                ? number_format((int)$price * $multiplier, 2, '.', ' ')
+                ? number_format((float)$price * $multiplier, 2, '.', ' ')
                 : 'Цену уточняйте у менеджера';
             $str            .= "<div class='price-unit-row'>
                 <div class='price-for-unit'>

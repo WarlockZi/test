@@ -3,7 +3,6 @@
 namespace app\view\Cart;
 
 use app\core\FS;
-use app\model\Product;
 use app\model\Unit;
 
 class CartView
@@ -28,11 +27,7 @@ class CartView
         return 'цена - не определена';
     }
 
-    public static function cartTable(Product $product): string
-    {
-        $cartView = new self();
-        return $cartView->fs->getContent('cartTable', compact('product'));
-    }
+
 
     protected static function getOptions(Unit $unit, int $selecedId): string
     {
@@ -56,5 +51,9 @@ class CartView
 //        }
 //        return "<select class='units' data-unitSelector>{$options}</select>";
 //    }
-
+//    public static function cartTable(Product $product): string
+//    {
+//        $cartView = new self();
+//        return $cartView->fs->getContent('cartTable', compact('product'));
+//    }
 }

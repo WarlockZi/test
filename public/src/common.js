@@ -9,7 +9,11 @@ const scrollToTop = () => {
 
   }
 };
-
+export const formatter= new Intl.NumberFormat("ru", {
+  style: "currency",
+  currency: "RUB",
+  minimumFractionDigits: 2
+});
 export function objAndFiles2FormData(obj, files, formData = new FormData) {
 
   self.formData = formData;

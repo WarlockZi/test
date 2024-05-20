@@ -64,7 +64,7 @@ class ProductView
 		}
 	}
 
-	public static function getCardMainImage($product)
+	public static function getCardMainImage(Product $product)
 	{
 		$mi = new ProductMainImageEntity($product);
 		try {
@@ -76,7 +76,7 @@ class ProductView
 				$image = ImageView::noImage();
 			}
 			return "<div class='main-image'>{$image}</div>";
-		} catch (\Exception $e) {
+		} catch (\Throwable $e) {
 			return "<p class='main-image'>{$e}</p>";
 		}
 	}

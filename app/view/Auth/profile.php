@@ -1,8 +1,6 @@
-
-
-	<main class="profile">
-		<div class='message'></div>
-		 <?= $item; ?>
-	</main>
+<main class="profile">
+    <div class='message'></div>
+    <?= $item; ?>
+</main>
 
 

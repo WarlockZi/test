@@ -8,10 +8,10 @@ export default class toCart {
         this.adjust = this.toCart.querySelector('.adjust');
         this.blue = this.toCart.querySelector('.blue');
         this.digitEl = this.toCart.querySelector('.digit');
-        this.digit = +this.toCart.querySelector('.digit').innerText;
-        this.product = this.toCart.closest('.product-card').dataset.id;
-        this.shippableSelector = this.toCart.querySelector('#shippableSelector')
-        this.shippableSelector.addEventListener('change', this.changeShippable.bind(this))
+        // this.digit = +this.toCart.querySelector('.digit').innerText;
+        // this.product = this.toCart.closest('.product-card').dataset.id;
+        // this.shippableSelector = this.toCart.querySelector('#shippableSelector')
+        // this.shippableSelector.addEventListener('change', this.changeShippable.bind(this))
 
         this.digitEl.onkeydown = debounce(this.keyDown.bind(this), 1300);
         this.toCart.onclick = this.handleClick.bind(this)

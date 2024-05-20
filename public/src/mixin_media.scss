@@ -1,99 +1,5 @@
 @import "var";
 
-@mixin shippable-table{
-  .shippable-table {
-    position: relative;
-    display: flex;
-
-    .button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      cursor: pointer;
-      padding: 10px;
-      border-radius: 5px;
-      transition: background-color 100ms ease-in-out;
-      border: none;
-      flex: 1;
-
-      &:hover {
-        background-color: darken($color-main, 10%);
-      }
-    }
-
-    .blue-button {
-      background-color: $color-main;
-      margin-bottom: 63px;
-    }
-
-    .green-button-wrap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: none;
-      flex-direction: column;
-      margin-bottom: 15px;
-
-      .unit-row {
-        display: flex;
-        margin-bottom: 10px;
-
-        .contains{
-          font-size: 10px;
-        }
-
-        .button{
-          background-color: $color-main-green;
-          border: 1px solid transparent;
-          color: white;
-          border-radius: 3px;
-          cursor: pointer;
-        }
-
-        .plus,.minus{
-          padding: 3px 8px;
-        }
-
-        .input{
-          text-align: center;
-          border: 1px solid #e7e7e7;
-          border-radius: 3px;
-          width: 30px;
-          margin: 0 10px;
-        }
-
-        @include input_clear;
-
-        .plus{
-          margin-right: 5px;
-        }
-
-        .shippable-unit{
-
-        }
-      }
-
-      .green-button {
-        background-color: $color-main-green;
-        margin-bottom: 10px;
-        justify-content: center;
-      }
-
-    }
-  }
-}
-
-@mixin input_clear{
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-  }
-}
-
 @function color($color,$sat,$light,$opacity) {
   @if $color == red {
     @return hsl(0deg, $sat*1%, $light*1%, $opacity*1%);
@@ -106,93 +12,23 @@
   }
 }
 
+@mixin input-clear {
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  }
+}
+
 @mixin cartRowGrey {
-  flex: 0 0 auto;
+  display: flex;
   padding: 10px;
   background-color: #f0f0f0;
   border-radius: 5px;
   margin: 3px 0;
 }
 
-
-@mixin countSetter {
-
-  .unit-row {
-    position: relative;
-    display: flex;
-    width: 120px;
-    height: 36px;
-
-    input {
-      box-sizing: border-box;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 24px;
-      width: 100%;
-      height: 36px;
-      padding: 4px 2px 2px 2px;
-      background: #FFFFFF;
-      border-radius: 4px;
-      border: 0;
-      color: #363A47;
-      text-align: center;
-    }
-
-
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      /* display: none; <- Crashes Chrome on hover */
-      -webkit-appearance: none;
-      margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-    }
-
-    .input-line {
-      position: absolute;
-      bottom: 7px;
-      left: 10px;
-      width: 36px;
-      height: 1px;
-      background: #E0E0E0;
-      content: "";
-    }
-
-    .arrow-block {
-      background: lightgreen;
-      border-radius: 0px 4px 4px 0px;
-
-      .arrow {
-        display: block;
-        width: 16px;
-        height: 16px;
-        cursor: pointer;
-        border: 1px solid transparent;
-        border-radius: 2px;
-
-        &:hover {
-          border-color: $color-gray5;
-        }
-
-        &.plus {
-          background-image: url(/pic/icons/arrowUp.svg);
-        }
-
-        &.minus {
-          background-image: url(/pic/icons/arrowUp.svg);
-          transform: rotate(180deg);
-        }
-      }
-
-    }
-
-    .units {
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 24px;
-      color: #363A47;
-    }
-  }
-
-}
 
 @mixin cartRow {
 
@@ -211,27 +47,29 @@
       object-fit: contain;
     }
 
-    .name-price {
+    .cell {
       @include cartRowGrey;
+    }
+
+    .name-price {
       display: flex;
       flex: 1 0 20%;
       flex-direction: column;
       justify-content: space-between;
 
 
+      .price-table {
+        display: grid;
+        grid-template-columns: 85px 110px;
+        align-self: end;
 
-        .price-table{
-          display: grid;
-          grid-template-columns: 85px 110px;
-          align-self: end;
+        .price {
+          display: flex;
+          justify-content: end;
+          padding-right: 5px;
 
-          .price{
-            display: flex;
-            justify-content: end;
-            padding-right: 5px;
-
-          }
         }
+      }
 
     }
 

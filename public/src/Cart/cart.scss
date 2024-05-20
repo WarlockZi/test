@@ -1,20 +1,20 @@
 @import "../var";
 @import "../mixin_media";
-
+//@import "../share/shippableTable";
 
 .cart {
 
   .content {
 
-    .shippable-table {
-      display: flex;
-      flex-direction: column;
-      @include cartRowGrey;
-      max-width: 120px;
-      align-items: center;
-
-      @include countSetter;
-    }
+    //.shippable-table {
+    //  display: flex;
+    //  flex-direction: column;
+    //  @include cartRowGrey;
+    //  max-width: 120px;
+    //  align-items: center;
+    //
+    //  //@include shippable-table;
+    //}
 
     .order-item_not-found {
       padding: 10px;
@@ -32,6 +32,7 @@
       color: $color-main-green;
       line-height: 3;
     }
+
 
     @include cartRow;
 
