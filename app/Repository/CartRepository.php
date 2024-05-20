@@ -7,6 +7,7 @@ namespace app\Repository;
 use app\core\Auth;
 use app\model\Order;
 use app\model\OrderItem;
+use app\model\Product;
 
 class CartRepository
 {
@@ -15,7 +16,7 @@ class CartRepository
         $user = Auth::getUser();
         $sess = session_id();
         if ($user) {
-            $oItems = Order::query()
+            $products = Order::query()
                 ->select('*')
                 ->selectRaw('SUM(count) as count_total')
                 ->where('user_id', $user['id'])
@@ -25,15 +26,15 @@ class CartRepository
                 ->groupBy('product_id')
                 ->get();
         } else {
-            $oItems = OrderItem::query()
-                ->where('sess', session_id())
-                ->with('product.units')
-                ->with('unit')
+            $products = Product::query()
+                ->whereHas('orderItems')
+                ->with('units')
+                ->with('orderItems')
                 ->get()
-                ->groupBy('product_id');
-//            $oItem = $oItems->toArray();
+                ;
+//            $oItem = $products->toArray();
         }
-        return $oItems;
+        return $products;
     }
 
     public static function count()

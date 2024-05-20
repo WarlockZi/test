@@ -10,23 +10,25 @@ use app\view\components\Builders\Builder;
 class DateBuilder extends Builder
 {
 
-	public $class = '';
-	public $model = '';
-	public $field = '';
-	public $value = "value='2000-01-01'";
-	public $day = '';
-	public $month = '';
-	public $year = '';
-	public $min = "min='1965-01-01'";
-	public $max = "max='2030-01-01'";
-	public $format = 'yy-mm-dd';
+	public FS $fs;
+	public string $class = '';
+	public string $model = '';
+	public string $field = '';
+	public string $value;
+	public string $day = '';
+	public string $month = '';
+	public string $year = '';
+	public string $min = "min='1965-01-01'";
+	public string $max = "max='2030-01-01'";
+	public string $format = 'yy-mm-dd';
 
 	public static function build($data)
 	{
-		$date = new self();
-		$value = date('Y-m-d', strtotime($data));
-		$date->value = "value='{$value}'" ;
-		return $date;
+		$self = new self();
+        $self->fs = new FS(__DIR__);
+		$value = date('Y-m-d', strtotime(time()));
+        $self->value = "value='{$value}'" ;
+		return $self;
 	}
 
 	public function field($field)

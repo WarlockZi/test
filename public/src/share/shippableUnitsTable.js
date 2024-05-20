@@ -1,96 +1,134 @@
-export default function handleShippableUnitsTableClick({target}){
+import "./shippableTable.scss";
+import {post} from "../common";
 
-    new shippableTable(target)
+export default function handleShippableUnitsTableClick({target}) {
+
+    const table = new shippableTable(target)
 }
 
-class shippableTable{
+class shippableTable {
     constructor(target) {
+        if (!target) return false
         this.target = target
 
         this.table = target.closest('.shippable-table')
-        this.blueButton = this.table.querySelector('.blue-button')
-        this.greenButton = this.table.querySelector('.green-button')
+
         this.greenButtonWrap = this.table.querySelector('.green-button-wrap')
+        this.price = +this.table.dataset.price
+        this.sid = this.table.dataset['1sid']
+        this.total = this.table.querySelector('[data-total]')
+        this.formatter = new Intl.NumberFormat("ru", {
+            style: "currency",
+            currency: "RUB",
+            minimumFractionDigits: 2
+        });
+        const greenButton = this.table.querySelector('.green-button')
+        if (greenButton) {
+            greenButton.addEventListener('click', function () {
+                window.location.href = '/cart'
+            })
+        }
+
         this.handleClick()
+        this.renderSums()
     }
 
-    handleClick(){
+    handleClick() {
         const target = this.target
+        const row = target.closest('.unit-row')
         if (target.classList.contains('blue-button')) {
             this.showGreenButton(target)
         } else if (target.classList.contains('plus')) {
-            this.increment(target)
+            this.increment(row)
         } else if (target.classList.contains('minus')) {
-            this.decrement(target)
+            this.decrement(row)
+        } else if (target.classList.contains('input')) {
+            this.handleChange(row)
         }
     }
-    increment(target) {
-        const row = target.closest('.unit-row')
+
+    increment(row) {
         row.querySelector('input').value++
-        this.handleChange(target)
+        this.handleChange(row)
     }
 
-    decrement(target) {
-        const row = target.closest('.unit-row')
-        const count = row.querySelector('input').value
-        if (count > 0) row.querySelector('input').value--
-        this.handleChange(target)
+    decrement(row) {
+        const input = row.querySelector('input')
+        const count = +input.value
+        if (count < 2) {
+            input.value = ''
+        } else {
+            input.value--
+        }
+        this.handleChange(row)
     }
 
-    getCount(target) {
-        const greenButtonWrap = target.closest('.green-button-wrap')
-        const f = greenButtonWrap.querySelectorAll('input')
-        return [...greenButtonWrap.querySelectorAll('input')].reduce((acc, el) => {
+    getTotalCount(target) {
+        return [...this.table.querySelectorAll('input')].reduce((acc, el) => {
             return acc + (+el.value)
         }, 0)
+    }
+
+    getTotalSum() {
+        return [...this.table.querySelectorAll('.sub-sum')].reduce((acc, el) => {
+            return acc + (+el.value)
+        }, 0)
+    }
+
+    handleChange(row) {
+        const count = this.getTotalCount(row)
+        this.renderSums()
+        if (count === 0) this.showBlueButton()
+        this.toServer(this.dto(row))
 
     }
 
-    handleChange(target) {
-        const count = this.getCount(target)
-        if (
-            target.classList.contains('input') ||
-            target.classList.contains('plus') ||
-            target.classList.contains('minus')
-        ) {
-            if (count === 0) this.showBlueButton(target)
-            this.toServer(this.dto(target))
+    renderSums() {
+        let total = [...this.table.querySelectorAll('.unit-row')].reduce((acc, row, i) => {
+            const rowDto = this.rowDto(row)
+            let sub_sum = +rowDto.price * +rowDto.multiplier * +rowDto.count
+            rowDto.sub_sum.innerText = this.formatter.format(sub_sum)
+            return acc + sub_sum
+        }, 0)
+
+        if (this.total) {
+            this.total.innerText = this.formatter.format(total)
         }
     }
 
-    dto(target) {
-        const s_id = target.closest('[data-1sid]').dataset['1sid']
-        const unit_id = target.closest('.unit-row').dataset.unitid
-        const count  = target.closest('.unit-row').querySelector('input').value
+    rowDto(row) {
         return {
-            s_id,
-            unit_id,
-            count
+            s_id: this.sid,
+            price: this.price,
+            unit_id: row.dataset.unitid,
+            count: row.querySelector('input').value,
+            multiplier: row.dataset.multiplier,
+            sub_sum: row.querySelector('.sub-sum'),
+        }
+    }
+
+    dto(row) {
+        return {
+            unit_id: row.dataset.unitid,
+            count: row.querySelector('input').value,
+            product_id: this.sid,
         }
     }
 
     toServer(dto) {
-        post
-
+        post('/adminsc/orderitem/updateOrCreate', dto)
     }
 
-    showBlueButton(target) {
+    showBlueButton() {
         this.greenButtonWrap.style.display = 'none'
         this.greenButtonWrap.querySelector('input').value = 0
     }
 
-    showGreenButton(target) {
+    showGreenButton() {
         this.greenButtonWrap.style.display = 'flex'
-        this.greenButtonWrap.querySelector('input').value = 1
+        const count = +this.greenButtonWrap.querySelector('input').value
+        this.greenButtonWrap.querySelector('input').value = count ? count : 1
     }
 
-    getButtons(target) {
-        const toCart = target.closest('.shippable-table')
-        return {
-            blueButton: toCart.querySelector('.blue-button'),
-            greenButtonWrap: toCart.querySelector('.green-button-wrap'),
-            input: toCart.querySelector('input')
-        }
-    }
 }
 

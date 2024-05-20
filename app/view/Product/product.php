@@ -16,13 +16,13 @@ if ($product): ?>
 
         </div>
     <?php endif; ?>
-    <div class="product-card" data-id="<?= $product['1s_id']; ?>">
+    <div class="product-card" data-1sid="<?= $product['1s_id']; ?>">
 
         <?= $breadcrumbs ?>
         <h1><?= $product['print_name']; ?></h1>
 
 
-        <div class="main-image-wrapper">
+        <div class="product-card_hero">
 
             <div class="detail-image">
                 <?= ProductFormView::getCardImages('', $product->detailImages); ?>

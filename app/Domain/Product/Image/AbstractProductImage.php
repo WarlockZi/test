@@ -96,6 +96,6 @@ abstract class AbstractProductImage
 
 	private function getPathWithExt(string $string, string $type = ''): string
 	{
-		return $this->$string . $this->art . '.' . $type;
+		return "{$this->$string}{$this->art}.{$type}";
 	}
 }

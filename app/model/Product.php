@@ -28,7 +28,6 @@ class Product extends Model
         'slug',
         'category_id',
         'image_id',
-        'base_unit',
         'manufacturer_id',
         'title',
         'keywords',
@@ -36,7 +35,6 @@ class Product extends Model
         '1s_category_id',
         '1s_id',
         'instore',
-        'base_equals_main_unit',
         'deleted_at',
     ];
     protected $casts = [
@@ -82,10 +80,32 @@ class Product extends Model
         return $this->hasOne(Price::class, '1s_id', '1s_id');
     }
 
+    protected function getUnitsTableAttribute()
+    {
+        $arr      = [];
+        $units    = $this->units;
+        $baseUnit = $this->baseUnit->name;
+        foreach ($units as $unit) {
+            $price                        = number_format((float)$this->price, 2, '.', ' ');
+            $formatted_sum                = number_format((float)$this->price * $unit->pivot->multiplier, 2, '.', ' ');
+            $pivot                        = $unit->pivot;
+            $sid                          = $pivot->product_1s_id;
+            $arr[$sid]['price']           = (float)$this->price;
+            $arr[$sid]['currency']        = '₽';
+            $arr[$sid]['1s_id']           = $sid;
+            $arr[$sid]['name']            = $unit->name;
+            $arr[$sid]['base_unit_name']  = $baseUnit;
+            $arr[$sid]['multiplier']      = $unit->pivot->multiplier;
+            $arr[$sid]['formatted_price'] = $price;
+            $arr[$sid]['formatted_sum']   = $formatted_sum;
+        }
+        return $arr;
+    }
+
     protected function getBaseUnitPriceAttribute()
     {
         $baseUnit = $this->baseUnit;
-        $price    = number_format((int)$this->price, 2, '.', ' ');
+        $price    = number_format((float)$this->price, 2, '.', ' ');
         return "{$price} ₽ / {$baseUnit->name}";
     }
 
@@ -129,13 +149,12 @@ class Product extends Model
 
     public function orderItems()
     {
-        $sess       = $_SESSION['token'];
         $orderItems = $this
             ->hasMany(OrderItem::class, 'product_id', '1s_id')
             ->whereNull('deleted_at')
-            ->where('sess',$sess)
+            ->where('sess',  $_SESSION['token'])
 //            ->get()
-            ;
+        ;
 //        $oI = $orderItems->toArray();
 
         return $orderItems;
@@ -145,10 +164,12 @@ class Product extends Model
     {
         return $this->baseUnitRelation->first();
     }
+
     public function baseUnitRelation()
     {
         return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')->withPivot('is_shippable')->wherePivot('is_base', '=', '1');
     }
+
     public function shippableUnits()
     {
         return $this
@@ -156,6 +177,7 @@ class Product extends Model
             ->withPivot('multiplier', 'is_base', 'is_shippable')
             ->wherePivot('is_shippable', '=', '1');
     }
+
     public function units()
     {
         return $this
@@ -174,7 +196,6 @@ class Product extends Model
     {
         return $this->morphToMany(Val::class, 'valuable');
     }
-
 
 
     public function promotions()
@@ -207,10 +228,12 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class)->with('parentRecursive.properties.vals');
     }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
+
     public function categories()
     {
         return $this->belongsTo(Category::class)->with('category_rec');
@@ -220,10 +243,6 @@ class Product extends Model
     {
         return $this->category()->with('parentRecursive');
     }
-
-
-
-
 
 
     public function detailImages()
