@@ -32,7 +32,7 @@ class Zip
         header('Content-disposition: attachment; filename=' . $this->zipname);
         header('Content-Length: ' . filesize($this->zipname));
         readfile($this->zipname);
-        exit();
+        exit('downloaded');
     }
 
 
