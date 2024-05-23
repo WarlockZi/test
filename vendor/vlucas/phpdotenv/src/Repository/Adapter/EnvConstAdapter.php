@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Dotenv\Repository\Adapter;
 
-use function is_scalar;
 use PhpOption\Option;
 use PhpOption\Some;
 
@@ -23,11 +22,11 @@ final class EnvConstAdapter implements AdapterInterface
     /**
      * Create a new instance of the adapter, if it is available.
      *
-     * @return Option
+     * @return \PhpOption\Option<\Dotenv\Repository\Adapter\AdapterInterface>
      */
     public static function create()
     {
-        /** @var Option */
+        /** @var \PhpOption\Option<AdapterInterface> */
         return Some::create(new self());
     }
 
@@ -36,14 +35,14 @@ final class EnvConstAdapter implements AdapterInterface
      *
      * @param non-empty-string $name
      *
-     * @return Option
+     * @return \PhpOption\Option<string>
      */
     public function read(string $name)
     {
-        /** @var Option */
+        /** @var \PhpOption\Option<string> */
         return Option::fromArraysValue($_ENV, $name)
             ->filter(static function ($value) {
-                return is_scalar($value);
+                return \is_scalar($value);
             })
             ->map(static function ($value) {
                 if ($value === false) {

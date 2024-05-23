@@ -2,9 +2,7 @@
   "autoload": {
     "psr-4": {
       "Dotenv\\": "vendor/vlucas/phpdotenv/src",
-      "app\\": "app",
-      "Engine\\": "engine",
-      "Engine\\DI\\": "engine/DI"
+      "app\\": "app"
     }
   },
   "classmap": [
@@ -13,14 +11,13 @@
   ],
   "require": {
     "ext-json": "*",
+    "ext-zip": "*",
     "ext-simplexml": "*",
-    "ext-curl": "*",
-    "ext-imagick": "*",
     "phpmailer/phpmailer": "^6.4",
     "vlucas/phpdotenv": "^5.3",
     "illuminate/events": "^8.83",
-    "illuminate/database": "^8.83",
-    "ext-http": "*"
+    "illuminate/database": "^8.83"
+
   }
 
 }

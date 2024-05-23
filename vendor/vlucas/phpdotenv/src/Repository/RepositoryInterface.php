@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dotenv\Repository;
 
-use InvalidArgumentException;
-
 interface RepositoryInterface
 {
     /**
@@ -22,7 +20,7 @@ interface RepositoryInterface
      *
      * @param string $name
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return string|null
      */
@@ -34,7 +32,7 @@ interface RepositoryInterface
      * @param string $name
      * @param string $value
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return bool
      */
@@ -45,7 +43,7 @@ interface RepositoryInterface
      *
      * @param string $name
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return bool
      */
