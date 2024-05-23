@@ -18,6 +18,7 @@
     "illuminate/events": "^8.83",
     "illuminate/database": "^8.83"
 
-  }
+  },
+  "platform-check": false
 
 }
