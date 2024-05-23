@@ -13,7 +13,7 @@ window.onload = function () {
   if (!product) return false
 
   product.addEventListener('click', handleShippableUnitsTableClick.bind(product))
-  handleShippableUnitsTableClick()
+  // handleShippableUnitsTableClick()
   zoom()
   shortLink()
   quill()
