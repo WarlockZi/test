@@ -31,7 +31,9 @@ class Zip
             $zip->open($this->zipname, \ZipArchive::CREATE);
             foreach ($this->files as $file) {
                 $file = FS::platformSlashes($file);
+                $this->errorLogger->write(PHP_EOL . PHP_EOL . $file);
                 if (file_exists($file)) {
+                    $this->errorLogger->write(PHP_EOL . PHP_EOL . file_exists($file). ' -- file exists');
                     $zip->addFile($file, basename($file));
                 }
             }
