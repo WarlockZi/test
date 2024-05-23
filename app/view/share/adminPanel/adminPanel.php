@@ -2,13 +2,13 @@
     <div class="admin-panel">
         <div class="download-sync">
 
-            <a href="/app/storage/import/import0_1.xml"
+            <a href="/app/Storage/import/import0_1.xml"
                target="_blank"
-               download= "import"
+               download="import"
             >imp</a>
-            <a href="/app/storage/import/offers0_1.xml"
+            <a href="/app/Storage/import/offers0_1.xml"
                target="_blank"
-               download= "offers"
+               download="offers"
             >off</a>
         </div>
 
