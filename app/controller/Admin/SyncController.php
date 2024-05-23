@@ -6,6 +6,7 @@ use app\Actions\SyncActions;
 use app\controller\AppController;
 use app\core\Response;
 use app\core\Route;
+use app\core\Zip;
 use app\Repository\SyncRepository;
 use app\Services\Logger\FileLogger;
 use app\Storage\StorageDev;
@@ -48,47 +49,26 @@ class SyncController extends AppController
         }
     }
 
+    private function getImportFiles(): array
+    {
+        if ($_ENV['DEV'] == 1) {
+            return [
+                'import' => ROOT . '/app/Storage/dev/import0_1.xml',
+                'offer' => ROOT . '/app/Storage/dev/offers0_1.xml',
+            ];
+        }
+        return [
+            'import' => ROOT . '/app/Storage/import/import0_1.xml',
+            'offer' => ROOT . '/app/Storage/import/offers0_1.xml',
+        ];
+    }
+
     public function actionDownload()
     {
-        $zip =  new \ZipArchive();
-        $tmp_file = 'myzip.zip';
-        if ($zip->open($tmp_file,  \ZipArchive::CREATE)) {
-            $zip->addFile(ROOT . '/app/Storage/import/import0_1.xml', 'import0_1.xml');
-            $zip->addFile(ROOT . '/app/Storage/import/offers0_1.xml', 'offers0_1.xml');
-            $zip->close();
-
-            header('Content-disposition: attachment; filename=myzip.zip');
-            header('Content-type: application/zip');
-            readfile($tmp_file);
-        } else {
-            echo 'Failed!';
-        }
-
-        exit;
-
-//        $files = [
-//            'import' => ROOT . '/app/Storage/import/import0_1.xml',
-//            'offer' => ROOT . '/app/Storage/import/offers0_1.xml',
-//        ];
-
-//        foreach ($files as $file) {
-//            if (is_readable($file)) {
-//                header('Pragma: public');
-//                header('Expires: 0');
-//                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-//                header('Cache-Control: private', false); // required for certain browsers
-//                header('Content-Type: application/pdf');
-//
-//                header('Content-Disposition: attachment; filename="' . basename($file) . '";');
-//                header('Content-Transfer-Encoding: binary');
-//                header('Content-Length: ' . filesize($file));
-//
-//                readfile($file);
-//            }
-//        }
-//
-//
-//        exit;
+        $files   = $this->getImportFiles();
+        $zip = new Zip($files, 'file.zip');
+        exit($_ENV['DEV'] .'daf');
+        $zip->download();
     }
 
     public function actionInit()
