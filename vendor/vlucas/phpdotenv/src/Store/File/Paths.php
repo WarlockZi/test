@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Dotenv\Store\File;
 
-use const DIRECTORY_SEPARATOR;
-use function rtrim;
-
 /**
  * @internal
  */
@@ -38,7 +35,7 @@ final class Paths
 
         foreach ($paths as $path) {
             foreach ($names as $name) {
-                $files[] = rtrim($path, DIRECTORY_SEPARATOR). DIRECTORY_SEPARATOR.$name;
+                $files[] = \rtrim($path, \DIRECTORY_SEPARATOR).\DIRECTORY_SEPARATOR.$name;
             }
         }
 
