@@ -56,7 +56,7 @@ class SyncController extends AppController
             $zip->addFile(ROOT . '/app/Storage/import/import0_1.xml', 'import0_1.xml');
             $zip->addFile(ROOT . '/app/Storage/import/offers0_1.xml', 'offers0_1.xml');
             $zip->close();
-//            echo 'Archive created!';
+            echo 'Archive created!';
             header('Content-disposition: attachment; filename=files.zip');
             header('Content-type: application/zip');
             readfile($tmp_file);
