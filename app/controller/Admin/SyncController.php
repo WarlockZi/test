@@ -32,7 +32,7 @@ class SyncController extends AppController
         parent::__construct();
 
         $this->setStorage();
-        $this->logger = new FileLogger('load.log');
+        $this->logger      = new FileLogger('load.log');
         $this->errorLogger = new ErrorLogger('errors.txt');
 
         $this->importFile = $this->storage::getFile('import0_1.xml');
@@ -59,18 +59,19 @@ class SyncController extends AppController
                 'import' => ROOT . '/app/Storage/dev/import0_1.xml',
                 'offer' => ROOT . '/app/Storage/dev/offers0_1.xml',
             ];
+        } else {
+            return [
+                'import' => ROOT . '/app/Storage/import/import1_1.xml',
+                'offer' => ROOT . '/app/Storage/import/offers1_1.xml',
+            ];
         }
-
-        return [
-            'import' => ROOT . '/app/Storage/import/import1_1.xml',
-            'offer' => ROOT . '/app/Storage/import/offers1_1.xml',
-        ];
     }
 
     public function actionDownload()
     {
-        $files   = $this->getImportFiles();
-        $zip = new Zip($files, 'import.zip');
+        $files = $this->getImportFiles();
+            $this->logger->write("Файлы dddd из 1с загружены");
+        $zip   = new Zip($files, 'import.zip');
         $zip->download();
         exit;
     }
