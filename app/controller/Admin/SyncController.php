@@ -70,7 +70,7 @@ class SyncController extends AppController
     public function actionDownload()
     {
         $files   = $this->getImportFiles();
-        $this->errorLogger->write(var_dump($files) .'-- '. $_ENV['DEV']);
+        $this->errorLogger->write($files .'-- '. $_ENV['DEV']);
         $zip = new Zip($files, 'file.zip');
         $zip->download();
         exit($_ENV['DEV'] .'daf');
