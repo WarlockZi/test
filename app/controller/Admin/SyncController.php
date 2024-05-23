@@ -47,23 +47,30 @@ class SyncController extends AppController
             $this->storage = StorageImport::class;
         }
     }
+
     public function actionDownload()
     {
-        $import = ROOT.'/app/Storage/import/import0_1.xml';
-        if(!is_readable($import)) exit;
-        $offer = 'offer0_1.xml'; // of course find the exact filename....
-        $filename = $import;
-        header('Pragma: public');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Cache-Control: private', false); // required for certain browsers
-        header('Content-Type: application/pdf');
+        $files = [
+            'import' => ROOT . '/app/Storage/import/import0_1.xml',
+            'offer' => ROOT . '/app/Storage/import/offers0_1.xml',
+        ];
 
-        header('Content-Disposition: attachment; filename="'. basename($filename) . '";');
-        header('Content-Transfer-Encoding: binary');
-        header('Content-Length: ' . filesize($filename));
+        foreach ($files as $file) {
+            if (is_readable($file)) {
+                header('Pragma: public');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                header('Cache-Control: private', false); // required for certain browsers
+                header('Content-Type: application/pdf');
 
-        readfile($filename);
+                header('Content-Disposition: attachment; filename="' . basename($file) . '";');
+                header('Content-Transfer-Encoding: binary');
+                header('Content-Length: ' . filesize($file));
+
+                readfile($file);
+            }
+        }
+
 
         exit;
     }
