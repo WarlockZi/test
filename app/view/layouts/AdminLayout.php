@@ -89,19 +89,6 @@ class AdminLayout extends Layout
             return $this->layoutFs->getContent('default', ['errors' => $this->route->getErrors()]);
         }
 
-
-//        $fs = new FS($this->getView());
-//        try {
-//            if (!class_exists($this->route->getController())){
-//                return 'Контроллер не найден';
-//            }
-//            $content = $fs->getContent($this->route->getActionName(), $vars);
-//            return $content;
-//        } catch (\Exception $exception) {
-//            ob_flush();
-//            $this->route->setError("Файл вида не найден");
-//            return $fs->getContent('default', ['errors' => $this->route->getErrors()]);
-//        }
     }
 
     protected function getView(): string
@@ -122,13 +109,4 @@ class AdminLayout extends Layout
     {
         return $this->layoutFs->getContent($this->layout, $this->getContent());
     }
-//    protected function getLayout()
-//    {
-//        return $this->fs->getContent($this->layout, $this->getContent());
-//    }
-
-//    protected function setTestAssets()
-//    {
-//        $this->assets = new TestAssets();
-//    }
 }
