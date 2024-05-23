@@ -52,7 +52,8 @@ class Router
         try {
             $controller->$action();
         } catch (\Throwable $exception) {
-            $f = $exception->getMessage();
+            $this->errorLogger->write('Router 55 - error in action' . $action . PHP_EOL
+                . $exception->getMessage());
         }
         Auth::autorize($this->route);
 
