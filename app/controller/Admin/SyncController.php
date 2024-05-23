@@ -50,6 +50,7 @@ class SyncController extends AppController
     public function actionDownload()
     {
         $import = ROOT.'/app/Storage/import/import0_1.xml';
+        if(!is_readable($import)) exit;
         $offer = 'offer0_1.xml'; // of course find the exact filename....
         $filename = $import;
         header('Pragma: public');
