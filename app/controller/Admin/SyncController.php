@@ -33,7 +33,7 @@ class SyncController extends AppController
 
         $this->setStorage();
         $this->logger      = new FileLogger('load.log');
-        $this->errorLogger = new ErrorLogger('errors.txt');
+        $this->errorLogger = new ErrorLogger();
 
         $this->importFile = $this->storage::getFile('import0_1.xml');
         $this->offerFile  = $this->storage::getFile('offers0_1.xml');
