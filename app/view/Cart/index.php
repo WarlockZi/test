@@ -7,7 +7,7 @@
 
         <?php include 'counter.php' ?>
 
-        <div data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
+        <div class="table" data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
 
             <?php foreach ($products as $i => $product): ?>
 
@@ -19,22 +19,13 @@
                     <div class="name-price cell">
                         <a href="/product/<?= $product->slug; ?>"
                            class="name">
-                            <?= $product->name; ?> ()
+                            <?= $product->name; ?>
                         </a>
-
-                        <div class="price-table"
-                             data-price=<?= $product->price ?>
-                        >
-
-                            <!--                            --><?php //include __DIR__ . '/unitsTable.php';  ?>
-
-                        </div>
                     </div>
 
-                    <div class="cell">
+                    <div class="cell cart-shippable-table">
                         <?= ShippableUnitsTableFactory::create($product, 'cart'); ?>
                     </div>
-                    <!--                    --><?php //include dirname(__DIR__).'/share/shippableUnitTable.php' ?>
 
                     <div class="sum"></div>
                     <div class="del"><?= $trashedWhite; ?></div>

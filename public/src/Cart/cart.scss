@@ -1,6 +1,5 @@
 @import "../var";
 @import "../mixin_media";
-//@import "../share/shippableTable";
 
 .cart {
 
@@ -15,6 +14,12 @@
     //
     //  //@include shippable-table;
     //}
+
+    .table{
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
 
     .order-item_not-found {
       padding: 10px;

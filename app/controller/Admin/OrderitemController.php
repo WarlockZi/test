@@ -10,6 +10,7 @@ use app\model\Lead;
 use app\model\Order;
 use app\model\OrderItem;
 use app\Repository\OrderitemRepository;
+use Carbon\Carbon;
 
 
 class OrderitemController extends AppController
@@ -75,20 +76,23 @@ class OrderitemController extends AppController
         $req = $this->ajax;
 
         if ($req) {
+            $now = Carbon::now()->toDateTimeString();
             if (Auth::isAuthed()) {
                 $orderItm = Order::updateOrCreate(
                     [
                         'product_id' => $req['product_id'],
-                        'sess' => $req['sess'],
-                        'deleted_at' => null,
+                        'sess' => $_COOKIE['PHPSESSID'],
                         'user_id' => Auth::getUser()['id'],
+                        'unit_id' => (int)$req['unit_id'],
+                        'deleted_at' => null,
                     ],
                     [
                         'product_id' => $req['product_id'],
-                        'sess' => $req['sess'],
+                        'sess' => $_COOKIE['PHPSESSID'],
                         'count' => (int)$req['count'],
-                        'unit_id' => (int)$req['unit_id'],
                         'ip' => $_SERVER['REMOTE_ADDR'],
+                        'unit_id' => (int)$req['unit_id'],
+                        'updated_at' => $now,
                     ]
                 );
             } else {
@@ -97,6 +101,7 @@ class OrderitemController extends AppController
                         'product_id' => $req['product_id'],
                         'sess' => $_COOKIE['PHPSESSID'],
                         'deleted_at' => null,
+                        'unit_id' => (int)$req['unit_id'],
                     ],
                     [
                         'product_id' => $req['product_id'],
@@ -104,6 +109,7 @@ class OrderitemController extends AppController
                         'count' => (int)$req['count'],
                         'unit_id' => (int)$req['unit_id'],
                         'ip' => $_SERVER['REMOTE_ADDR'],
+                        'updated_at' => $now,
                     ]
                 );
             }

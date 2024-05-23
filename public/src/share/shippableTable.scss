@@ -5,6 +5,8 @@
   .arrows {
     display: flex;
     width: 72px;
+    margin-right: 2px;
+    gap: 1px;
 
     .arrow {
       display: block;
@@ -16,7 +18,7 @@
       background-repeat: no-repeat;
       background-position: center;
       background-color: $color-main-green;
-      padding: 1px 9px;
+      padding: 0px 9px;
       color: lighten($color-main-green, 35%);
       cursor: pointer;
 
@@ -31,11 +33,11 @@
 
       &.plus {
         background-image: url(/pic/icons/arrowUp.svg);
+        transform: rotate(180deg);
       }
 
       &.minus {
         background-image: url(/pic/icons/arrowUp.svg);
-        transform: rotate(180deg);
       }
     }
 
@@ -46,8 +48,20 @@
 .shippable-table {
   position: relative;
   display: flex;
-  width: 240px;
   flex-direction: column;
+
+  &.font-size-0-8-rem {
+    font-size: .8rem;
+  }
+
+  &.font-size-1-0-rem {
+    font-size: 1rem;
+  }
+
+  &.font-size-1-1-rem {
+    font-size: 1.1rem;
+  }
+
 
   .button {
     display: flex;
@@ -60,6 +74,7 @@
     transition: background-color 100ms ease-in-out;
     border: none;
     flex: 1;
+    font-size: 1em;
   }
 
   .blue-button {
@@ -71,10 +86,16 @@
     }
   }
 
+  .green-button-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
   .green-button {
     background-color: $color-main-green;
     margin-bottom: 10px;
     justify-content: center;
+    font-size: 1em;
 
     &:hover {
       background-color: darken($color-main-green, 10%);
@@ -82,8 +103,8 @@
   }
 
   .unit-row {
-
     display: flex;
+    justify-content: space-between;
     margin-bottom: 0px;
 
     .input {
@@ -93,27 +114,44 @@
       border-radius: 3px;
       width: 30px;
       margin-right: 3px;
-      flex: 1;
+      width: 25px;
+      font-size: 1em;
     }
 
     @include input-clear;
 
     .unit-name {
       display: flex;
-      flex-direction: column;
       align-items: start;
       justify-content: start;
-      flex: clamp(45px, 26%, 100px);
       margin-right: 3px;
-      font-size: .7rem;
+      font-size: .7em;
+      margin-bottom: 2px;
 
       .name {
+        width: 30px;
+        margin-bottom: 1px;
         font-weight: 600;
+        font-size: 1.2em;
+        align-self: end;
       }
 
       .description {
-        font-size: .55rem;
+        display: flex;
+        flex-direction: column;
+        width: 50px;
+
+        .contains {
+          font-size: .65em;
+        }
+
+        .cost {
+          font-weight: bold;
+          font-size: .75em;
+
+        }
       }
+
     }
 
     @include arrow-block;
@@ -121,8 +159,8 @@
     .sub-sum {
       display: flex;
       justify-content: end;
-      font-size: 0.7rem;
-      width: 90px;
+      width: 68px;
+      font-size: .8em;
     }
   }
 

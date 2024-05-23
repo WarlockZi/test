@@ -8,32 +8,30 @@ use app\core\Auth;
 use app\model\Order;
 use app\model\OrderItem;
 use app\model\Product;
+use Illuminate\Database\Eloquent\Collection;
 
 class CartRepository
 {
-    public static function main()
+    public static function main(): Collection
     {
         $user = Auth::getUser();
-        $sess = session_id();
         if ($user) {
-            $products = Order::query()
-                ->select('*')
-                ->selectRaw('SUM(count) as count_total')
-                ->where('user_id', $user['id'])
-                ->where('sess', $sess)
+            $products = Product::query()
+                ->whereHas('orders')
+                ->with('orders')
+//                ->selectRaw('SUM(count) as count_total')
                 ->whereNull('deleted_at')
-                ->with('product.units')
-                ->groupBy('product_id')
+                ->with('units')
                 ->get();
+
         } else {
             $products = Product::query()
                 ->whereHas('orderItems')
-                ->with('units')
                 ->with('orderItems')
-                ->get()
-                ;
-//            $oItem = $products->toArray();
+                ->with('units')
+                ->get();
         }
+        $oItem = $products->toArray();
         return $products;
     }
 
@@ -43,7 +41,7 @@ class CartRepository
         $sess = session_id();
         if ($user) {
             $oItems = Order::query()
-                ->select('user_id', 'sess','product_id','deleted_at','count')
+                ->select('user_id', 'sess', 'product_id', 'deleted_at', 'count')
                 ->selectRaw('SUM(count) as count_total')
                 ->where('user_id', $user['id'])
                 ->where('sess', $sess)
@@ -51,14 +49,12 @@ class CartRepository
                 ->with('product')
                 ->groupBy('product_id')
                 ->get();
-//            $ar = $oItems->toArray();
         } else {
             $oItems = OrderItem::query()
                 ->where('sess', session_id())
                 ->with('product')
                 ->groupBy('product_id')
                 ->get();
-//            $ar = $oItems->toArray();
         }
         return $oItems;
 
