@@ -21,6 +21,7 @@ use app\core\Error;
 </head>
 
 <body>
+<? include_once  dirname(__DIR__).'/share/adminPanel/adminPanel.php';?>
 
 <div class="admin-layout__container">
 

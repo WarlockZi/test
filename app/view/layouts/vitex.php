@@ -29,6 +29,7 @@ use app\core\Icon;
 </head>
 
 <body>
+<? include_once  dirname(__DIR__).'/share/adminPanel/adminPanel.php';?>
 
 <?= $header; ?>
 

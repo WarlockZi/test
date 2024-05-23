@@ -1,12 +1,10 @@
 <?php
 
-namespace app\view\share;
+namespace app\view\share\shippable;
 
 use app\core\Auth;
 use app\core\FS;
 use app\model\Product;
-use app\model\Unit;
-use app\view\Testresult\testRestultView;
 use Illuminate\Database\Eloquent\Collection;
 
 class ShippableUnitsTable
