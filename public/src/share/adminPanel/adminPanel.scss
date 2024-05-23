@@ -1,7 +1,8 @@
 @import "../../var";
 
 .admin-panel {
-  background-color: $color-gray-max;
+  border-top: 1px solid white;
+  background-color: $color-gray-browser;
 
   a {
     color: white;
