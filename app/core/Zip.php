@@ -2,14 +2,18 @@
 
 namespace app\core;
 
+use app\Services\Logger\ErrorLogger;
+
 class Zip
 {
     private array $files;
     private string $zipname;
     private \ZipArchive $zip;
+    private ErrorLogger $errorLogger;
 
     public function __construct($files, $zipname)
     {
+        $this->errorLogger = new ErrorLogger('errors.txt');
         try {
             $this->files   = $files;
             $this->zipname = $zipname;
@@ -44,6 +48,7 @@ class Zip
             header('Content-disposition: attachment; filename=' . $this->zipname);
             header('Content-Length: ' . filesize($this->zipname));
             readfile($this->zipname);
+            $this->errorLogger->write('download - done');
             exit('downloaded');
         } catch (\Throwable $exception) {
             $this->errorLogger->write('download - ' . $exception->getMessage());
