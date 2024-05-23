@@ -64,6 +64,7 @@ class SyncController extends AppController
             echo 'Failed!';
         }
 
+        exit;
 
 //        $files = [
 //            'import' => ROOT . '/app/Storage/import/import0_1.xml',
