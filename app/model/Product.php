@@ -160,6 +160,18 @@ class Product extends Model
         return $orderItems;
     }
 
+    public function orders()
+    {
+        $orders = $this
+            ->hasMany(Order::class, 'product_id', '1s_id')
+            ->whereNull('deleted_at')
+            ->where('sess',  $_SESSION['token'])
+//            ->get()
+        ;
+//        $oI = $orders->toArray();
+
+        return $orders;
+    }
     public function getBaseUnitAttribute()
     {
         return $this->baseUnitRelation->first();

@@ -18,7 +18,8 @@ class OrderItem extends Model
         'unit_id',
         'sess',
         'ip',
-        'crated_at',
+        'created_at',
+        'updated_at',
         'deleted_at'
     ];
 

@@ -1,14 +1,19 @@
 import {$, scrollToTop} from '../common';
-import handleShippableUnitsTableClick from "../share/shippableUnitsTable";
+import {d,qa} from '../constants';
 import hoist from "../share/hoist";
+import shippableTable from "../share/shippableUnitsTable";
 
 export default class Categrory {
     constructor() {
         this.category = $('.category').first();
-        if (!this.category) return false
-        this.category.addEventListener('click', handleShippableUnitsTableClick.bind(this))
-    }
+        if (!this.category) return false;
 
+        [...this.category[qa]('.shippable-table')]
+            .forEach((table) => {
+                new shippableTable(table)
+
+            })
+    }
 
 
 }

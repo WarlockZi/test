@@ -1,50 +1,65 @@
 import "./shippableTable.scss";
 import {post} from "../common";
+import {ael, qs} from '../constants';
 
-export default function handleShippableUnitsTableClick({target}) {
 
-    const table = new shippableTable(target)
-}
-
-class shippableTable {
+export default class shippableTable {
     constructor(target) {
         if (!target) return false
         this.target = target
 
         this.table = target.closest('.shippable-table')
+        this.table[ael]('click', this.handleClick.bind(this))
 
-        this.greenButtonWrap = this.table.querySelector('.green-button-wrap')
+        this.blueButton = this.table[qs]('.blue-button')
+        this.greenButtonWrap = this.table[qs]('.green-button-wrap')
         this.price = +this.table.dataset.price
         this.sid = this.table.dataset['1sid']
-        this.total = this.table.querySelector('[data-total]')
+        this.total = this.table[qs]('[data-total]')
         this.formatter = new Intl.NumberFormat("ru", {
             style: "currency",
             currency: "RUB",
             minimumFractionDigits: 2
         });
-        const greenButton = this.table.querySelector('.green-button')
-        if (greenButton) {
-            greenButton.addEventListener('click', function () {
-                window.location.href = '/cart'
-            })
-        }
 
-        this.handleClick()
+
+        this.showButtons()
+        // this.handleClick()
         this.renderSums()
     }
 
-    handleClick() {
-        const target = this.target
-        const row = target.closest('.unit-row')
-        if (target.classList.contains('blue-button')) {
-            this.showGreenButton(target)
-        } else if (target.classList.contains('plus')) {
+    showButtons() {
+        if (this.getTotalCount()) {
+            if (this.blueButton) {
+                this.blueButton.style.display = 'none'
+            }
+            this.greenButtonWrap.style.display = 'flex'
+        } else {
+            if (this.blueButton) {
+                this.blueButton.style.display = 'flex'
+            }
+            this.greenButtonWrap.style.display = 'none'
+        }
+
+    }
+
+    handleClick({target}) {
+        const targ = target ?? this.target
+        if (targ.classList.contains('blue-button')) {
+            this.showGreenButton(targ)
+        } else if (targ.classList.contains('green-button')) {
+            window.location.href = '/cart'
+        } else if (targ.classList.contains('plus')) {
+            const row = targ.closest('.unit-row')
             this.increment(row)
-        } else if (target.classList.contains('minus')) {
+        } else if (targ.classList.contains('minus')) {
+            const row = targ.closest('.unit-row')
             this.decrement(row)
-        } else if (target.classList.contains('input')) {
+        } else if (targ.classList.contains('input')) {
+            const row = targ.closest('.unit-row')
             this.handleChange(row)
         }
+        return this
     }
 
     increment(row) {
@@ -87,7 +102,8 @@ class shippableTable {
         let total = [...this.table.querySelectorAll('.unit-row')].reduce((acc, row, i) => {
             const rowDto = this.rowDto(row)
             let sub_sum = +rowDto.price * +rowDto.multiplier * +rowDto.count
-            rowDto.sub_sum.innerText = this.formatter.format(sub_sum)
+            if (rowDto.sub_sum)
+                rowDto.sub_sum.innerText = this.formatter.format(sub_sum)
             return acc + sub_sum
         }, 0)
 
@@ -116,7 +132,8 @@ class shippableTable {
     }
 
     toServer(dto) {
-        post('/adminsc/orderitem/updateOrCreate', dto)
+        let url = '/adminsc/orderitem/updateOrCreate'
+        post(url, dto)
     }
 
     showBlueButton() {

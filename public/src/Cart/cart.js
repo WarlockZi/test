@@ -7,48 +7,67 @@ import CartSuccess from "../components/Modal/modals/CartSuccess";
 import CartLogin from "../components/Modal/modals/CartLogin";
 import CartLead from "../components/Modal/modals/CartLead";
 import handleShippableUnitsTableClick from "../share/shippableUnitsTable";
+import {d, qs, qa, ael} from '../constants';
 
 export default class Cart {
     constructor() {
         let container = $('.user-content .cart .content').first();
         if (!container) return;
         this.container = container;
-        this.model = $(this.container).find('[data-model]').dataset.model;
-        this.total = document.querySelector('.total span');
-        this.$cartEmptyText = document.querySelector('.empty-cart');
-        this.$cartCount = document.querySelector('.cart .count');
-
-        this.rows = container.querySelectorAll('.row');
         this.container.onclick = this.handleClick.bind(this);
-        // this.container.onchange = this.handleChange.bind(this);
+        this.container[ael]('click', handleShippableUnitsTableClick.bind(this))
+
+        this.model = $(this.container).find('[data-model]').dataset.model;
+        this.total = d[qs]('.total span');
+        this.$cartEmptyText = d[qs]('.empty-cart');
+        this.$cartCount = d[qs]('.cart .count');
+
+        this.rows = container[qa]('.row');
+
         this.shippable = new handleShippableUnitsTableClick(this)
         this.renderSums()
-        this.container.addEventListener('click', handleShippableUnitsTableClick.bind(this))
 
         this.cookie = new Cookie();
-        this.counterEl = $('#counter').first();
-        this.cartLifeMs = time.mMs * 30;
-        if (this.counterEl) this.counterStart();
+
+        if (this.rows.length) {
+            let cartDeadline = +this.cookie.cookie.get_cookie('cartDeadline');
+            const dif = cartDeadline - Date.now();
+            if (dif <= 0) {
+                cartDeadline = this.getDeadline();
+            }
+            this.cookie.cookie.set_cookie('cartDeadline', cartDeadline);
+            this.counter = new Counter(this.counterEl, cartDeadline, this.counterCallback.bind(this))
+
+        } else {
+            this.counterCallback()
+        }
+
+        const counter = new Counter({
+            el: d[qs]('#counter'),
+            durationMinutes: 30,
+            callback: this.counterCallback,
+            timeToLive: 30
+        })
+
 
         new Modal({
-            button: $('#cartLead').first(),
+            button: d[qs]('#cartLead'),
             data: new CartLead(),
             callback: this.modalLeadCallback.bind(this)
         });
 
         new Modal({
-            button: $('#cartLogin').first(),
+            button: d[qs]('#cartLogin'),
             data: new CartLogin(),
             callback: this.modalLoginCallback.bind(this)
         });
 
         new Modal({
-            button: $('#cartSuccess').first(),
+            button: d[qs]('#cartSuccess'),
             data: new CartSuccess(),
             callback: this.modalcartSuccessCallback.bind(this)
         });
 
-        // this.rerenderSums()
     }
 
     renderSums() {
@@ -93,36 +112,16 @@ export default class Cart {
         }
     }
 
-    counterStart() {
-        let rows = $(this.container).find('.row');
-        if (rows) {
-            let cartDeadline = +this.cookie.cookie.get_cookie('cartDeadline');
-            let dif = cartDeadline - Date.now();
-            if (dif >= 0) {
-                this.cookie.cookie.set_cookie('cartDeadline', cartDeadline);
-                this.counter = new Counter(this.counterEl, cartDeadline, this.counterCallback.bind(this))
-            } else {
-                let cartDeadline = this.getDeadline();
-                this.cookie.cookie.set_cookie('cartDeadline', cartDeadline);
-                this.counter = new Counter(this.counterEl, cartDeadline, this.counterCallback.bind(this))
-            }
-        } else {
-            this.counterCallback()
-        }
-    }
 
     getDeadline() {
         return this.cartLifeMs + Date.now()
     }
 
     counterCallback() {
-        this.nullifyCookie();
+        cookieRemove('cartDeadline')
         this.dropCart()
     }
 
-    nullifyCookie() {
-        cookieRemove('cartDeadline')
-    }
 
     counterReset() {
         let cartDeadline = this.getDeadline();
@@ -135,8 +134,8 @@ export default class Cart {
     }
 
     async dropCart() {
-        let cartToken = getToken();
-        let res = await post('/cart/drop', {cartToken});
+        const cartToken = getToken();
+        const res = await post('/cart/drop', {cartToken});
         if (res?.arr?.ok) {
             this.showEmptyCart()
         }
@@ -165,18 +164,6 @@ export default class Cart {
         } else if (target.classList.contains('count')) {
             this.rerenderSums();
             this.updateOItem(target)
-        } else if (target.classList.contains('plus')) {
-            let quantatyInput = target.closest('.unit-row').querySelector('input');
-            quantatyInput.value++;
-            this.updateOItem(target)
-            this.rerenderSums();
-
-        } else if (target.classList.contains('minus')) {
-            let quantatyInput = target.closest('.unit-row').querySelector('input');
-            if (quantatyInput.value === "0") return false
-            quantatyInput.value--;
-            this.updateOItem(target)
-            this.rerenderSums();
         }
     }
 
@@ -191,7 +178,7 @@ export default class Cart {
     }
 
     countRows() {
-        return document.querySelectorAll('.row').length
+        return d[qa]('.row').length
     }
 
     showEmptyCart() {
@@ -199,46 +186,5 @@ export default class Cart {
         this.$cartEmptyText.classList.remove('none')
         this.$cartCount.classList.add('none')
     }
-
-    // dto(row) {
-    //     const $select = row.querySelector('[data-unitSelector]')
-    //     const unit_id = $select.options[$select.selectedIndex].dataset.id
-    //     return {
-    //         product_id: row.closest('.row').dataset.productId,
-    //         unit_id,
-    //         count: row.querySelector('input').value,
-    //         sess: getToken(),
-    //     }
-    // }
-
-    // async updateOItem(target) {
-    //     const row = target.closest('.row')
-    //     let res = await post(`/adminsc/orderItem/updateOrCreate`, this.dto(row));
-    // }
-    //
-    // handleChange({target}) {
-    //     if (target.hasAttribute('data-unitSelector')) {
-    //         this.updateOItem(target)
-    //     }
-    //     this.rerenderSums()
-    // }
-
-    // rerenderSums() {
-    //     if (!this.rows.length) return false;
-    //     let formatter = new Intl.NumberFormat("ru-RU", {maximumFractionDigits: 2, minimumFractionDigits: 2});
-    //     let total = [].reduce.call(this.rows, (acc, row, i, rows) => {
-    //         let price = +row.querySelector('.price-table').dataset.price;
-    //         let count = row.querySelector('input').value;
-    //
-    //         const select = row.querySelector('select');
-    //         // const multiplier = select.options[select.options.selectedIndex].dataset.multiplier
-    //
-    //         // let sum = (price * count * multiplier);
-    //         // row.querySelector('.sum').innerText = formatter.format(sum).replace(/,/g, '.');
-    //         // acc += sum;
-    //         // return acc
-    //     }, 0);
-    //     this.total.innerText = formatter.format(total).replace(/,/g, '.')
-    // }
 
 }

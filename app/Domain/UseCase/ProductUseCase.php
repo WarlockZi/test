@@ -41,7 +41,9 @@ class ProductUseCase
                      {$formattedPrice}
                 </div>
                 ₽ /
-                <div class='unit'>{$unit->name}</div>
+                <div class='unit'>
+                {$unit->name}<span> ({$multiplier} {$product->baseUnit->name})</span>
+                </div>
 
             </div>";
         }
