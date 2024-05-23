@@ -19,6 +19,8 @@
     "illuminate/database": "^8.83"
 
   },
-  "platform-check": false
+  "config": {
+    "platform-check": false
+  }
 
 }
