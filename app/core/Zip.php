@@ -30,6 +30,7 @@ class Zip
             $zip = new \ZipArchive();
             $zip->open($this->zipname, \ZipArchive::CREATE);
             foreach ($this->files as $file) {
+                $file = FS::platformSlashes($file);
                 if (file_exists($file)) {
                     $zip->addFile($file, basename($file));
                 }
