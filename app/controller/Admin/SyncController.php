@@ -8,6 +8,7 @@ use app\core\Response;
 use app\core\Route;
 use app\core\Zip;
 use app\Repository\SyncRepository;
+use app\Services\Logger\ErrorLogger;
 use app\Services\Logger\FileLogger;
 use app\Storage\StorageDev;
 use app\Storage\StorageImport;
@@ -21,6 +22,7 @@ class SyncController extends AppController
     protected $repo;
     protected Route $route;
     protected $logger = false;
+    protected ErrorLogger $errorLogger;
     protected $importFile = false;
     protected $offerFile = false;
     protected $storage;
@@ -31,6 +33,7 @@ class SyncController extends AppController
 
         $this->setStorage();
         $this->logger = new FileLogger('load.log');
+        $this->errorLogger = new ErrorLogger('errors.txt');
 
         $this->importFile = $this->storage::getFile('import0_1.xml');
         $this->offerFile  = $this->storage::getFile('offers0_1.xml');
@@ -57,6 +60,7 @@ class SyncController extends AppController
                 'offer' => ROOT . '/app/Storage/dev/offers0_1.xml',
             ];
         }
+
         return [
             'import' => ROOT . '/app/Storage/import/import0_1.xml',
             'offer' => ROOT . '/app/Storage/import/offers0_1.xml',
@@ -66,6 +70,7 @@ class SyncController extends AppController
     public function actionDownload()
     {
         $files   = $this->getImportFiles();
+        $this->errorLogger->write(var_dump($files) .'-- '. $_ENV['DEV']);
         $zip = new Zip($files, 'file.zip');
         $zip->download();
         exit($_ENV['DEV'] .'daf');
