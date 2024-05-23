@@ -23,8 +23,6 @@ class SyncController extends AppController
     protected $importFile = false;
     protected $offerFile = false;
     protected $storage;
-//    protected $viewPath = ROOT . '/app/view/Sync/Admin/';
-//    protected $rawPost;
 
     public function __construct()
     {

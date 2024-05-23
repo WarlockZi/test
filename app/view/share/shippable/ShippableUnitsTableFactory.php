@@ -1,6 +1,6 @@
 <?php
 
-namespace app\view\share;
+namespace app\view\share\shippable;
 
 
 use app\model\Product;

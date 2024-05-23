@@ -16,7 +16,7 @@
             <p>Артикул: <?= $product->art ?? ''; ?></p>
         </div>
     </a>
-    <?= \app\view\share\ShippableUnitsTableFactory::create($product, 'category'); ?>
+    <?= \app\view\share\shippable\ShippableUnitsTableFactory::create($product, 'category'); ?>
 
 
     <?php if ($admin): ?>
