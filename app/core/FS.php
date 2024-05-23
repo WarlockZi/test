@@ -23,7 +23,7 @@ class FS
     {
         try {
             $file = FS::platformSlashes($this->absPath . $file . '.php');
-            if (!is_readable($file)) throw new \Exception('File not exist');
+            if (!is_readable($file)) $this->errorLogger->write('not exist - '.$file);
 
             extract($data);
             unset($data);
