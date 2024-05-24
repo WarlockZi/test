@@ -21,7 +21,7 @@ use app\core\Icon;
         <p>Статус: в наличии</p>
     </div>
 
-    <?= \app\view\share\ShippableUnitsTableFactory::create($product,'product' ); ?>
+    <?= \app\view\share\shippable\ShippableUnitsTableFactory::create($product,'product' ); ?>
 
     </div>
 </div>
