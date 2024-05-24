@@ -24,7 +24,7 @@ class Route
     protected string $slug;
     protected string $id;
     protected string $extra;
-    protected string $params;
+    protected array $params;
 
     protected string $host;
     protected string $protocol;
@@ -35,7 +35,6 @@ class Route
     {
         $this->uri            = $_SERVER['REQUEST_URI'];
         $this->action         = 'index';
-        $this->params         = '';
         $this->slug           = '';
         $this->host           = '';
         $this->protocol       = '';
@@ -44,6 +43,8 @@ class Route
         $this->controller     = '';
         $this->errors         = [];
 
+        $this->setUrl();
+//        $this->setParams();
         $this->setAdmin();
         $this->setLayout();
         $this->setNamespace();
@@ -81,7 +82,8 @@ class Route
         }
         $url = $arr[0];
         if (!$url || strpos($url, '=')) return '';
-        return trim($url, '/');
+        $this->uri = trim($url, '/');
+        $this->url = '/'.trim($url, '/');
     }
 
     public function setAction(Route $route): void
@@ -94,10 +96,10 @@ class Route
         $this->actionName = $action ? $action : 'action' . $this->upperCamelCase($this->action);
     }
 
-    public function setParams(string $arr): void
+    public function setParams(string $params): void
     {
-        if (!$arr) return;
-        $arr    = explode('&', $arr);
+        if (!$params) return;
+        $arr    = explode('&', $params);
         $params = [];
         foreach ($arr as $string) {
             $a             = explode('=', $string);

@@ -22,6 +22,7 @@ class SyncActions extends AppController
     protected $logger;
     protected ErrorLogger $errorLogger;
     protected $repo;
+    protected Route $route;
 
     public function __construct(SyncRepository $repo, $logger)
     {
@@ -37,8 +38,9 @@ class SyncActions extends AppController
     /**
      * @throws \Exception
      */
-    public function init()
+    public function init(Route $route)
     {
+        $this->route = $route;
         try {
             if ($this->route->params['mode'] === 'checkauth') {
                 $this->checkauth();
