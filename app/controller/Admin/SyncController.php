@@ -42,16 +42,6 @@ class SyncController extends AppController
         $this->actions = new SyncActions($this->repo, $this->logger);
     }
 
-    public function setStorage()
-    {
-        $this->importPath = StorageImport::getPath();
-        if ($_ENV['DEV'] == '1') {
-            $this->storage = StorageDev::class;
-        } else {
-            $this->storage = StorageImport::class;
-        }
-    }
-
     private function getImportFiles(): array
     {
         if ($_ENV['DEV'] == 1) {
@@ -79,12 +69,13 @@ class SyncController extends AppController
     public function actionInit()
     {
         try {
+            $this->logger->write("Пришел запрос init из 1с");
             $this->actions->init();
             $this->logger->write("Файлы из 1с загружены");
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $message = PHP_EOL . "---SyncControllerError---" . PHP_EOL . $e . PHP_EOL . $e->getMessage() . PHP_EOL;
             $this->logger->write($message);
-            exit('Выгрузка на сайт не удалась. Подробности в load.log');
+            exit('Выгрузка на сайт не удалась. Подробности в load.log'.PHP_EOL);
         }
     }
 
@@ -197,6 +188,17 @@ class SyncController extends AppController
     {
         $this->repo->trancate();
     }
+
+    public function setStorage()
+    {
+        $this->importPath = StorageImport::getPath();
+        if ($_ENV['DEV'] == '1') {
+            $this->storage = StorageDev::class;
+        } else {
+            $this->storage = StorageImport::class;
+        }
+    }
+
 
 }
 

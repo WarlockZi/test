@@ -2,16 +2,20 @@
 
 namespace app\core;
 
+use app\Services\Logger\ErrorLogger;
+
 class Router
 {
     protected Route $route;
     protected array $routes;
     protected string $namespace;
+    protected ErrorLogger $errorLogger;
 
     public function __construct(string $uri = '')
     {
         $this->fillRoutes();
         $this->matchRoute($uri);
+        $this->errorLogger = new ErrorLogger();
     }
 
     protected function matchRoute($url)

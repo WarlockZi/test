@@ -1,7 +1,11 @@
+default
 <?php
-foreach ($errors as $error){
-    echo $error.'<br>';
-};
+if (isset($errors) && is_array($errors)) {
+
+    foreach ($errors as $error) {
+        echo $error . '<br>';
+    };
+}
 ?>
 
-<?=$content ?? '';?>
+<?= $content ?? ''; ?>

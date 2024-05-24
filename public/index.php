@@ -9,7 +9,8 @@ ini_set("short_open_tag", 1);
 ini_set('memory_limit', '256M');
 define('ROOT', dirname(__DIR__));
 
-require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
+$s = DIRECTORY_SEPARATOR;
+require_once ROOT . $s . "vendor" . $s . "autoload.php";
 (Dotenv\Dotenv::createImmutable(ROOT))->load();
 
 if ($_ENV['DEV']) {
