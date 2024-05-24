@@ -26,13 +26,14 @@ class SyncActions extends AppController
 
     public function __construct(SyncRepository $repo, $logger)
     {
-        $this->setStorage();
+        $this->importPath = StorageImport::getPath();
+        $this->storage = new StorageImport;
         $this->repo        = $repo;
         $this->logger      = $logger;
         $this->errorLogger = new ErrorLogger();
 
-        $this->importFile = $this->storage::getFile('import0_1.xml');
-        $this->offerFile  = $this->storage::getFile('offers0_1.xml');
+        $this->importFile = $this->importPath.'import0_1.xml';
+        $this->offerFile  = $this->importPath.'offers0_1.xml';
     }
 
     /**
@@ -110,26 +111,13 @@ class SyncActions extends AppController
 
     protected function logReqest($func)
     {
-        $text = '<br>--' . date("H:i:s") . "--{$func}<br>";
-        if (isset($_GET)) {
-            $text .= '$_GET - ' . json_encode($_GET) . '<br>';
-        }
+        $text = date("Y-m-d H:i:s") . "--{$func}" . PHP_EOL;
 
         if (isset($this->route->params['filename'])) {
-            $text .= 'filename - ' . $filename = $this->route->params['filename'] . '<br>';
+            $text .= 'filename - ' . $filename = $this->route->params['filename'] . PHP_EOL;
             $text .= $this->importPath . $filename;
         }
         $this->logger->write($text);
-    }
-
-    public function setStorage()
-    {
-        $this->importPath = StorageImport::getPath();
-        if ($_ENV['DEV'] == '1') {
-            $this->storage = StorageDev::class;
-        } else {
-            $this->storage = StorageImport::class;
-        }
     }
 
 }
