@@ -4,17 +4,16 @@
 namespace app\Services\Logger;
 
 
+use app\core\FS;
 use app\Storage\StorageLog;
 
 class ErrorLogger implements ILogger
 {
 	protected string $logFile;
-    protected string $logPath;
 
 	public function __construct($fileName = 'errors.txt')
 	{
-        $this->logPath = ROOT.'/app/Storage/log/';
-		$this->logFile = StorageLog::getFile($fileName);
+        $this->setFile($fileName);
 	}
 
 	public function read():string
@@ -22,16 +21,15 @@ class ErrorLogger implements ILogger
 		return file_get_contents($this->logFile);
 	}
 
-
 	public function write(string $content):bool
 	{
-//        file_put_contents(time(), $content.PHP_EOL.PHP_EOL, FILE_APPEND);
+        file_put_contents(time(), $content.PHP_EOL.PHP_EOL, FILE_APPEND);
 		return file_put_contents($this->logFile,  date('Y-m-d H:i:s').PHP_EOL.$content.PHP_EOL, FILE_APPEND);
 	}
 
 	public function setFile(string $fileName): ILogger
 	{
-		$this->logFile = StorageLog::getFile($fileName);
+        $this->logFile = FS::platformSlashes(ROOT.'/app/Storage/log/'.$fileName);
 		return $this;
 	}
 
