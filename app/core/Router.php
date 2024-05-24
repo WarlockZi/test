@@ -22,7 +22,7 @@ class Router
     {
         $this->route = new Route();
         foreach ($this->routes as $pattern => $r) {
-            if (preg_match("#$pattern#i", $url, $matches)) {
+            if (preg_match("#$pattern#i", $this->route->url, $matches)) {
 
                 foreach ($matches as $k => $v) {
                     if (is_numeric($k)) {
