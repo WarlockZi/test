@@ -35,6 +35,9 @@ class Zip
                 if (file_exists($file)) {
                     $this->errorLogger->write(PHP_EOL . PHP_EOL . file_exists($file). ' -- file exists');
                     $zip->addFile($file, basename($file));
+                }else{
+                    $this->errorLogger->write(PHP_EOL . $file. ' -- file not exists');
+
                 }
             }
             $this->zip = $zip;
@@ -52,12 +55,9 @@ class Zip
             header('Content-Length: ' . filesize($this->zipname));
             readfile($this->zipname);
             $this->errorLogger->write('download - done');
-            exit('downloaded');
+            exit();
         } catch (\Throwable $exception) {
             $this->errorLogger->write('download - ' . $exception->getMessage());
         }
-
     }
-
-
 }

@@ -21,8 +21,8 @@ class SyncController extends AppController
     protected $actions;
     protected $repo;
     protected Route $route;
-    protected $logger = false;
     protected ErrorLogger $errorLogger;
+    protected $logger;
     protected $importFile = false;
     protected $offerFile = false;
     protected $storage;
@@ -60,8 +60,8 @@ class SyncController extends AppController
     public function actionDownload()
     {
         $files = $this->getImportFiles();
-            $this->logger->write("Файлы dddd из 1с загружены");
-        $zip   = new Zip($files, 'import.zip');
+        $this->logger->write("Файлы dddd из 1с загружены");
+        $zip = new Zip($files, 'import.zip');
         $zip->download();
         exit;
     }
@@ -75,7 +75,7 @@ class SyncController extends AppController
         } catch (\Throwable $e) {
             $message = PHP_EOL . "---SyncControllerError---" . PHP_EOL . $e . PHP_EOL . $e->getMessage() . PHP_EOL;
             $this->logger->write($message);
-            exit('Выгрузка на сайт не удалась. Подробности в load.log'.PHP_EOL);
+            exit('Выгрузка на сайт не удалась. Подробности в load.log' . PHP_EOL);
         }
         exit;
     }
