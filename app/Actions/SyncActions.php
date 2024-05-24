@@ -29,24 +29,11 @@ class SyncActions extends AppController
 		$this->offerFile = $this->storage::getFile('offers0_1.xml');
 	}
 
-	public function setStorage()
-	{
-		$this->importPath = StorageImport::getPath();
-		if ($_ENV['DEV'] == '1') {
-			$this->storage = StorageDev::class;
-		} else {
-			$this->storage = StorageImport::class;
-		}
-	}
-
 	/**
 	 * @throws \Exception
 	 */
 	public function init()
 	{
-		if (!isset($this->route->params['type'])) throw new \Exception("Route param 'type' is empty");
-		if (!$this->route->params['type'] === 'catalog') throw new \Exception("Route param 'type' is not correct");
-
 		if ($this->route->params['mode'] === 'checkauth') {
 			$this->checkauth();
 		} elseif ($this->route->params['mode'] === 'init') {
@@ -121,4 +108,15 @@ class SyncActions extends AppController
 		}
 		$this->logger->write($text);
 	}
+
+    public function setStorage()
+    {
+        $this->importPath = StorageImport::getPath();
+        if ($_ENV['DEV'] == '1') {
+            $this->storage = StorageDev::class;
+        } else {
+            $this->storage = StorageImport::class;
+        }
+    }
+
 }

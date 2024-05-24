@@ -49,13 +49,13 @@ use app\core\Icon;
 
 
         <BR>
-        <div class="button" id="">Фильтровать картинки</div>
-        <BR>
-        <BR>
         <a class="button"
-           title="/adminsc/sync/init?type=catalog&mode=import"
-           href="/adminsc/sync/load">type=catalog -- mode=import</a>
+           title="/adminsc/sync/init?type=catalog&mode=checkauth"
+           href="/adminsc/sync/load">type=catalog -- mode=checkauth</a>
         <BR>
+        <BR>
+        <BR>
+        <div class="button" id="">Фильтровать картинки</div>
         <BR>
         <hr>
         <BR>
