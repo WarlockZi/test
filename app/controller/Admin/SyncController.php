@@ -51,8 +51,8 @@ class SyncController extends AppController
             ];
         } else {
             return [
-                'import' => ROOT . '/app/Storage/import/import1_1.xml',
-                'offer' => ROOT . '/app/Storage/import/offers1_1.xml',
+                'import' => ROOT . '/app/Storage/import/import0_1.xml',
+                'offer' => ROOT . '/app/Storage/import/offers0_1.xml',
             ];
         }
     }
@@ -60,7 +60,6 @@ class SyncController extends AppController
     public function actionDownload()
     {
         $files = $this->getImportFiles();
-        $this->logger->write("Файлы dddd из 1с загружены");
         $zip = new Zip($files, 'import.zip');
         $zip->download();
         exit;
