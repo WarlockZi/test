@@ -5,20 +5,15 @@
   display: flex;
   flex-direction: column;
 
-  .product-card__edit {
-    margin-bottom: 10px;
-
-    a {
-      padding: 5px 10px;
-      border: 1px solid tomato;
-      border-radius: 10px;
-      color: tomato;
-
-      &:hover {
-        color: white;
-        background-color: tomato;
-        border: 1px solid white;
-      }
+  .edit{
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    padding: 1px 5px;
+    border-radius: 5px;
+    background-color: #c5ffec;
+    &:hover{
+      background-color: darken(#c5ffec, 30%);
     }
   }
 

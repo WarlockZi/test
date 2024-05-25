@@ -1,5 +1,5 @@
-@import "../var.scss";
-@import "../mixin_media.scss";
+@import "../../var";
+@import "../../mixin_media";
 
 @mixin arrow-block {
   .arrows {
@@ -87,7 +87,7 @@
   }
 
   .green-button-wrap {
-    display: flex;
+    display: none;
     flex-direction: column;
   }
 

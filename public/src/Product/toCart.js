@@ -1,9 +1,12 @@
 import {$, debounce, getToken, post} from "../common";
+import shippableTable from "../share/shippable/shippableUnitsTable";
+import {d, qs} from "../constants";
 
 export default class toCart {
     constructor() {
         this.toCart = $('.shippable-table').first();
         if (!this.toCart) return;
+        new shippableTable(d[qs]('.shippable-table'))
         this.count = document.querySelector('.utils .cart .count');
         this.adjust = this.toCart.querySelector('.adjust');
         this.blue = this.toCart.querySelector('.blue');

@@ -3,7 +3,7 @@ import './main.scss'
 // import ViteProxyWebsocket from 'vite-proxy-websocket'
 import cart from '../Cart/cart'
 
-import Categrory from "../Category/category";
+import Category from "../Category/category";
 import {$} from "../common";
 import Search from "../components/search/search";
 import Promotions from '../Promotions/Promotion'
@@ -11,13 +11,7 @@ import Promotions from '../Promotions/Promotion'
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  new Categrory()
-  // debugger
-
-  // const proxy = new ViteProxyWebsocket({target: 'ws://example.com', path: '/websocket'});
-
-  // proxy.listen(3000);
-
+  new Category()
   let gumburger = $('.gamburger')[0];
   if (gumburger) {
     $('.gamburger').on('click', opentMobilePanel)

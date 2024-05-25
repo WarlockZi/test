@@ -1,4 +1,5 @@
 <div
+        unit-row
         class="unit-row"
         data-unitId="<?= $unit->id; ?>"
         data-multiplier="<?= $multiplier; ?>"

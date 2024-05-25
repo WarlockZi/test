@@ -1,4 +1,4 @@
-import {$, scrollToTop} from "../common";
+import {$, scrollToTop} from "../../common";
 import "./hoist.scss";
 
 let hoist = $('.hoist').first();

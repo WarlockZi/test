@@ -32,11 +32,7 @@ if ($product): ?>
             <?php include 'card/toCart.php' ?>
         </div>
 
-        <?php if ($userIsAdmin): ?>
-            <div class="product-card__edit">
-                <a href="/adminsc/product/edit/<?= $product->id ?>">Редакт</a>
-            </div>
-        <?php endif; ?>
+
 
         <div class="info-wrap">
             <div class="info-tag">Характеристики</div>
