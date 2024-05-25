@@ -31,20 +31,18 @@ class Zip
             $zip->open($this->zipname, \ZipArchive::CREATE);
             foreach ($this->files as $file) {
                 $file = FS::platformSlashes($file);
-                $this->errorLogger->write(PHP_EOL . PHP_EOL . $file);
+                $this->errorLogger->write(PHP_EOL . $file);
                 if (file_exists($file)) {
-                    $this->errorLogger->write(PHP_EOL . PHP_EOL . file_exists($file). ' -- file exists');
+                    $this->errorLogger->write( PHP_EOL . file_exists($file). ' -- file exists');
                     $zip->addFile($file, basename($file));
                 }else{
                     $this->errorLogger->write(PHP_EOL . $file. ' -- file not exists');
-
                 }
             }
             $this->zip = $zip;
         } catch (\Throwable $exception) {
             $this->errorLogger->write('create zip - ' . $exception->getMessage());
         }
-
     }
 
     public function download(): void

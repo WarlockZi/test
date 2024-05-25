@@ -2,7 +2,10 @@ import './product.scss'
 import './units'
 import './Values'
 import {$, objAndFiles2FormData, post} from '../../common'
-// import Morph from "../../components/morph/morph";
+import {d, qs, qa, ael} from '../../constants'
+import shippableTable from "../../share/shippable/shippableUnitsTable";
+
+
 import {Fields} from "./Fields";
 
 import Values from "./Values";
@@ -10,12 +13,14 @@ import Values from "./Values";
 import Dnd from "../../components/dnd/dnd";
 
 export default function product() {
-  const product = $(`.item-wrap[data-model='product']`).first();
+  const product = d[qs](`.item-wrap
+  [data-model='product']`);
   if (!product) return false;
 
   new Values(product);
 
   new Fields(product);
+
 
   new Dnd($('.add-file')[0], addMainImage);
 }

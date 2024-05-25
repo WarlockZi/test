@@ -2,6 +2,7 @@ import './counter.scss'
 
 export default class Counter {
   constructor(el, deadLineMs, callback) {
+    if (!el) return false
 
     this.deadline = deadLineMs;
     this.callback = callback;

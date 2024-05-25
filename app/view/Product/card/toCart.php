@@ -6,6 +6,9 @@ use app\core\Icon;
 
 <div class="product-info">
 
+    <?php if ($userIsAdmin): ?>
+        <a href="/adminsc/product/edit/<?= $product->id ?>" class="edit"><?= Icon::edit(); ?></a>
+    <?php endif; ?>
     <div class="short-link"
          title='Скопировать короткую ссылку'
          data-shortLink= <?= $product->shortLink; ?>
@@ -21,7 +24,7 @@ use app\core\Icon;
         <p>Статус: в наличии</p>
     </div>
 
-    <?= \app\view\share\shippable\ShippableUnitsTableFactory::create($product,'product' ); ?>
+    <?= \app\view\share\shippable\ShippableUnitsTableFactory::create($product, 'product'); ?>
 
-    </div>
+</div>
 </div>

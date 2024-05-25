@@ -1,19 +1,31 @@
-import {$, scrollToTop} from '../common';
-import {d,qa} from '../constants';
-import hoist from "../share/hoist";
-import shippableTable from "../share/shippableUnitsTable";
+import {$, getToken, scrollToTop} from '../common';
+import {ael, d, qa, qs} from '../constants';
+import hoist from "../share/hoist/hoist";
+import shippableTable from "../share/shippable/shippableUnitsTable";
 
-export default class Categrory {
+export default class Category {
     constructor() {
-        this.category = $('.category').first();
+        this.category = document[qs]('.category');
         if (!this.category) return false;
+        this.mapShippableTables()
+        this.category[ael]('click', this.handleClick.bind(this))
+    }
 
+    handleClick({target}) {
+        if (target.classList.contains('.blue-button')){
+            const table = target.closest('[shipable-table]')
+            const firstRow = table[qs]('.unit-row')
+        }
+    }
+
+
+    mapShippableTables() {
         [...this.category[qa]('.shippable-table')]
             .forEach((table) => {
                 new shippableTable(table)
-
             })
     }
+
 
 
 }

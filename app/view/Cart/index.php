@@ -1,4 +1,4 @@
-<? use \app\view\share\ShippableUnitsTableFactory; ?>
+<? use \app\view\share\shippable\ShippableUnitsTableFactory; ?>
 <div class="cart">
 
     <div class="<?= $products->count() ? '' : 'none'; ?> content">
@@ -27,7 +27,7 @@
                         <?= ShippableUnitsTableFactory::create($product, 'cart'); ?>
                     </div>
 
-                    <div class="sum"></div>
+                    <div class="sub-sum sum"></div>
                     <div class="del"><?= $trashedWhite; ?></div>
                 </div>
 

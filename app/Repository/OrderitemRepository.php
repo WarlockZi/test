@@ -9,10 +9,8 @@ use app\model\Lead;
 use app\model\Order;
 use app\model\OrderItem;
 
-
 class OrderitemRepository
 {
-
     public static function leadList()
     {
         $orders = OrderItem::query()
@@ -41,25 +39,17 @@ class OrderitemRepository
     {
         try {
             $orderItem = OrderItem::find($id);
-            $lead      = Lead::where('sess', $orderItem->sess)->first();
-            $oItems    = OrderItem::query()
+            $lead = Lead::where('sess', $orderItem->sess)->first();
+            $oItems = OrderItem::query()
                 ->where('sesss', $orderItem->sess)
-//			->whereNull('deleted_at')
                 ->get();
-//        $oI        = $oItems->toArray();
-//        $l         = $lead->toArray();
-        }catch (\Throwable $exception){
+
+        } catch (\Throwable $exception) {
 
         }
-
-        return $this->response();
         return compact('oItems', 'lead');
     }
 
-    protected function response()
-    {
-
-    }
 
     public static function main()
     {
@@ -84,9 +74,9 @@ class OrderitemRepository
 
     public static function count()
     {
-        $sess   = session_id();
+        $sess = session_id();
         $oItems = OrderItem::where('sess', $sess)->get()->toArray();
-        $count  = 0;
+        $count = 0;
         if ($oItems) {
             foreach ($oItems as $item) {
                 $count += $item['count'];
@@ -95,14 +85,16 @@ class OrderitemRepository
         return $count;
     }
 
-    public function deleteItem($model, $sess, $product_id)
+    public function deleteItem(string $model, string $sess, string $product_id, array $unitIds)
     {
-        $oItem = $model::query()
-            ->where('sess', $sess)
-            ->where('product_id', $product_id)
-            ->first();
-        if ($oItem) return $oItem::query()->forceDelete();
-        return false;
+        foreach ($unitIds as $unitId) {
+            $oItem = $model::query()
+                ->where('sess', $sess)
+                ->where('product_id', $product_id)
+                ->where('unit_id', $unitId)
+                ->first();
+            if ($oItem) $oItem::query()->forceDelete();
+        }
     }
 
 }
