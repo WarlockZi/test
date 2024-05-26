@@ -85,10 +85,10 @@ class ProductRepository extends AppController
 
     public static function noMinimumUnit()
     {
-        return  Product::whereDoesntHave('dopUnits')
+        return  Product::whereDoesntHave('shippableUnits')
             ->select('name', 'art', 'id')
             ->withTrashed()
-            ->get();
+            ->get()??Collection::empty();
     }
 
     public static function noDopUnit()
@@ -130,7 +130,7 @@ class ProductRepository extends AppController
     public static function list()
     {
         return Product::query()
-            ->with('price')
+//            ->with('price')
             ->with('mainImages')
             ->take(20)
             ->orderBy('id', "DESC")

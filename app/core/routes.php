@@ -20,3 +20,4 @@ $this->add("^\/adminsc\/?$", ['controller' => 'Adminsc','action'=>'index']);
 $this->add("^\/adminsc\/?(?P<controller>[a-z-]+)?\/?(?P<action>[a-z-]+)?\/?(?P<id>[0-9]+)?$");
 $this->add("^\/$", ['controller' => 'Main', 'action' => 'index']);
 
+$this->add("^\/(?P<controller>[a-zA-Z]+)\/(?<action>[a-zA-Z0-9]+)?\/?(?<id>[0-9a-zA-z]+)?");

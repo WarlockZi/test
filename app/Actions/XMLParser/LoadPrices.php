@@ -89,6 +89,4 @@ class LoadPrices extends Parser
     {
         echo "{$item->id} - {$item->price}<br>";
     }
-
-
 }

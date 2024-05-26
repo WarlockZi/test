@@ -2,6 +2,7 @@
 
 namespace app\controller\Admin;
 
+use app\Actions\Helpers;
 use app\controller\AppController;
 use app\core\App;
 use app\core\Auth;
@@ -27,11 +28,6 @@ class AdminscController extends AppController
 		exit('Успешно');
 	}
 
-	public function actionProdtypes()
-	{
-		$types = App::$app->adminsc->getProd_types();
-		$this->set(compact('types'));
-	}
 
 	public function actionSiteMap()
 	{
@@ -42,6 +38,7 @@ class AdminscController extends AppController
 
 	public function actionIndex()
 	{
+       Helpers::makeBaseUnitsShippable();
 		$this->assets->setCDNJs("https://cdn.jsdelivr.net/npm/chart.js", true);
 	}
 

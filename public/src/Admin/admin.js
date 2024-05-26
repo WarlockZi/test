@@ -28,8 +28,6 @@ import './Videoinstructions/videoinstructions.js'
 import './Category/category1.js'
 import rights from './Rights/rights.js'
 import category from './Category/category1.js'
-// import pagination from './Product/pagination.js'
-import product from './Product/product.js'
 
 import user from './User/user.js'
 
@@ -44,64 +42,74 @@ import accordionShow from '../components/accordion-show.js'
 import morph from '../components/morph/morph.js'
 import Search from "../components/search/search.js"
 import Promotion from "../Promotions/Promotion.js"
-import Order from "../Admin/Order/order.js"
 import './ProductFilter/ProductFilter'
+// import Order from "../Admin/Order/order.js"
+// import pagination from './Product/pagination.js'
+// import product from './Product/product.js'
 
 $(document).ready(async function () {
 
-  new Order();
-  new Promotion();
-  new Search(true);
 
-  morph();
-  navigate(window.location.pathname);
-  radio();
-  multiselect();
-  catalogItem();
-  tooltips();
-  quill();
-  accordionShow();
-
-  testEdit();
-  product();
-  category();
-
-  function navigate(str) {
-    if (/\/adminsc\/settings/.test(str)
-      || /\/adminsc\/right\/list/.test(str)
-      || /\/adminsc\/post\/list/.test(str) ||
-      /\/adminsc\/todo\/list/.test(str)) {
-      // rights()
-      $("[settings]").addClass('current')
-
-
-    } else if (/\/auth\/profile/.test(str)) {
-      // user()
-    } else if (/\/adminsc\/crm/.test(str)) {
-      $("[crm]").addClass('current')
-
-
-    } else if (/\/adminsc\/planning/.test(str)) {
-      $("[plan]").addClass('current')
-
-    } else if (
-      /\/adminsc\/category/.test(str) ||
-      /\/adminsc\/product/.test(str)
-    ) {
-      $("[catalog]").addClass('current')
-
-    } else if (
-      /\/test/.test(str)
-      || /\/opentest/.test(str)
-      || /\/adminsc\/opentest/.test(str)
-      || /\/adminsc\/test/.test(str)) {
-      $("[test]").addClass('current')
-
-    } else {
-      $("[href='/adminsc']").addClass('current')
+    if (document.querySelector(`.item-wrap[data-model='product']`)) {
+        let {default: prod} = await import('./Product/product.js')
+        prod();
     }
+    if (document.querySelector('.order-edit')) {
+        let {default: Order} = await import('./Order/order.js')
+        new Order()
+    }
+    // new Order(); $('.order-edit').first();
+    new Promotion();
+    new Search(true);
 
-  }
+    morph();
+    navigate(window.location.pathname);
+    radio();
+    multiselect();
+    catalogItem();
+    tooltips();
+    quill();
+    accordionShow();
+
+    testEdit();
+    category();
+
+    function navigate(str) {
+        if (/\/adminsc\/settings/.test(str)
+            || /\/adminsc\/right\/list/.test(str)
+            || /\/adminsc\/post\/list/.test(str) ||
+            /\/adminsc\/todo\/list/.test(str)) {
+            // rights()
+            $("[settings]").addClass('current')
+
+
+        } else if (/\/auth\/profile/.test(str)) {
+            // user()
+        } else if (/\/adminsc\/crm/.test(str)) {
+            $("[crm]").addClass('current')
+
+
+        } else if (/\/adminsc\/planning/.test(str)) {
+            $("[plan]").addClass('current')
+
+        } else if (
+            /\/adminsc\/category/.test(str) ||
+            /\/adminsc\/product/.test(str)
+        ) {
+            $("[catalog]").addClass('current')
+
+        } else if (
+            /\/test/.test(str)
+            || /\/opentest/.test(str)
+            || /\/adminsc\/opentest/.test(str)
+            || /\/adminsc\/test/.test(str)) {
+            $("[test]").addClass('current')
+
+        } else {
+            $("[href='/adminsc']").addClass('current')
+        }
+
+    }
 
 });
 

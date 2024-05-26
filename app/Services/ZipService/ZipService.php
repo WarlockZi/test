@@ -1,17 +1,18 @@
 <?php
 
-namespace app\core;
+namespace app\Services\ZipService;
 
+use app\core\FS;
 use app\Services\Logger\ErrorLogger;
 
-class Zip
+class ZipService
 {
     private array $files;
     private string $zipname;
     private \ZipArchive $zip;
     private ErrorLogger $errorLogger;
 
-    public function __construct($files, $zipname)
+    public function __construct(array $files=[], string $zipname='')
     {
         $this->errorLogger = new ErrorLogger('errors.txt');
         try {
@@ -19,11 +20,20 @@ class Zip
             $this->zipname = $zipname;
             $this->createZip();
         } catch (\Throwable $exception) {
-            $this->errorLogger->write('__const' . $exception->getMessage());
+            $this->errorLogger->write('__ZipService__' . $exception->getMessage());
         }
-
     }
 
+    public function files(array $files):ZipService
+    {
+       $this->files = $files;
+       return $this;
+    }
+   public function zipname(string $zipname):ZipService
+   {
+      $this->zipname = $zipname;
+      return $this;
+   }
     private function createZip(): void
     {
         try {

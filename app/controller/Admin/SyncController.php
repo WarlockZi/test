@@ -6,7 +6,6 @@ use app\Actions\SyncActions;
 use app\controller\AppController;
 use app\core\Response;
 use app\core\Route;
-use app\core\Zip;
 use app\Repository\SyncRepository;
 use app\Services\Logger\ErrorLogger;
 use app\Services\Logger\FileLogger;
@@ -40,29 +39,6 @@ class SyncController extends AppController
 
         $this->repo    = new SyncRepository($this->importFile, $this->offerFile, $this->logger);
         $this->actions = new SyncActions($this->repo, $this->logger);
-    }
-
-    private function getImportFiles(): array
-    {
-        if ($_ENV['DEV'] == 1) {
-            return [
-                'import' => ROOT . '/app/Storage/dev/import0_1.xml',
-                'offer' => ROOT . '/app/Storage/dev/offers0_1.xml',
-            ];
-        } else {
-            return [
-                'import' => ROOT . '/app/Storage/import/import0_1.xml',
-                'offer' => ROOT . '/app/Storage/import/offers0_1.xml',
-            ];
-        }
-    }
-
-    public function actionDownload()
-    {
-        $files = $this->getImportFiles();
-        $zip = new Zip($files, 'import.zip');
-        $zip->download();
-        exit;
     }
 
     public function actionInit()
