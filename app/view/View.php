@@ -10,14 +10,13 @@ use app\view\Assets\Assets;
 
 abstract class View
 {
-    protected $controller;
-    protected $fs;
-    public $errors;
-    public $user;
-    public $header;
-    public $content;
-    public $footer;
-    protected $view;
+    protected Controller $controller;
+    protected FS $fs;
+    public array $user;
+    public string $header;
+    public string $content;
+    public string $footer;
+    protected string $view;
     public Assets $assets;
 
     function __construct(Route $route)
@@ -27,12 +26,12 @@ abstract class View
         $this->view       = ($route->getView() ?? 'index');
     }
 
-    public function getContent()
+    public function getContent():string
     {
         return $this->content;
     }
 
-    public function render()
+    public function render():void
     {
         $this->setContent($this->controller);
         echo $this->fs->getContent($this->layout, ['view' => $this]);

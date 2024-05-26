@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\Factory;
+namespace app\core\Factory;
 
 
 abstract class AbstractTestFactory

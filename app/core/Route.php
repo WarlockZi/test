@@ -23,7 +23,7 @@ class Route
 
     protected string $slug;
     protected string $id;
-    protected string $extra;
+
     protected array $params;
 
     protected string $host;
@@ -44,7 +44,6 @@ class Route
         $this->errors         = [];
 
         $this->setUrl();
-//        $this->setParams();
         $this->setAdmin();
         $this->setLayout();
         $this->setNamespace();
@@ -88,12 +87,12 @@ class Route
 
     public function setAction(Route $route): void
     {
-        $this->actionName = 'action' . $this->upperCamelCase($route->action);
+        $this->actionName = 'action' . ucfirst($route->action);
     }
 
     public function setActionName(string $action): void
     {
-        $this->actionName = $action ? $action : 'action' . $this->upperCamelCase($this->action);
+        $this->actionName = $action ? $action : 'action' . ucfirst($this->action);
     }
 
     public function setParams(string $params): void
@@ -135,10 +134,6 @@ class Route
         $this->id = $id;
     }
 
-    public function setExtra(string $extra): void
-    {
-        $this->extra = $extra;
-    }
 
     public function setNotFound(): void
     {

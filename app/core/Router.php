@@ -18,7 +18,7 @@ class Router
         $this->errorLogger = new ErrorLogger();
     }
 
-    protected function matchRoute($url)
+    protected function matchRoute():void
     {
         $this->route = new Route();
         foreach ($this->routes as $pattern => $r) {
@@ -60,7 +60,7 @@ class Router
             $this->errorLogger->write('Router 55 - error in action' . $action . PHP_EOL
                 . $exception->getMessage());
         }
-        Auth::autorize($this->route);
+        Auth::authorize($this->route);
 
         $layout = $this->route->getLayout();
         $layout = new $layout($this->route, $controller);

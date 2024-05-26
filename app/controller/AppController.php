@@ -5,9 +5,7 @@ namespace app\controller;
 use app\controller\Interfaces\IModelable;
 use app\core\Response;
 use app\Repository\MorphRepository;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
-use ReflectionClass;
 
 class AppController extends Controller implements IModelable
 {
@@ -17,13 +15,6 @@ class AppController extends Controller implements IModelable
 	public function __construct()
 	{
 		parent::__construct();
-//		$this->settings = (new SettingsRepository())->initial();
-	}
-
-	public function setView():void
-	{
-		$view = $this->getView();
-		$view->render();
 	}
 
 	public function actionDelete():void

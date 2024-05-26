@@ -14,7 +14,6 @@ class UserController extends AppController
 	public $model = User::class;
 	public $modelName = 'user';
 
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -57,10 +56,4 @@ class UserController extends AppController
 		}
 	}
 
-//	public function actionChange()
-//	{
-//		$this->view = 'list';
-//		$users = User::all();
-//		$this->set(compact('users'));
-//	}
 }
