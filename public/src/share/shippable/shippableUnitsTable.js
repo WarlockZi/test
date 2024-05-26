@@ -140,9 +140,9 @@ export default class shippableTable {
         });
     }
 
-    toServer(dto) {
+    async toServer(dto) {
         const url = `${this.url}/updateOrCreate`
-        post(url, dto)
+        const res = await post(url, dto)
     }
 
     rowDto(row) {
