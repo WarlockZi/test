@@ -13,6 +13,7 @@ class AuthValidator
             || strtolower($route->controller) === 'bot'
             || strtolower($route->controller) === 'promotion'
             || strtolower($route->controller) === 'orderitem'
+            || strtolower($route->controller) === 'order'
             || strtolower($route->controller) === 'search'
 
             || strtolower($route->controller) === 'sync' && $route->action === 'part'

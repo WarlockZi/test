@@ -34,6 +34,7 @@ class Router
                     $this->route->$k = strtolower($v);
                 }
                 $this->route->setNotFound();
+                break;
             }
         }
         $this->route->isNotFound() ? $this->route->setActionName('default') : $f = 1;
@@ -75,6 +76,7 @@ class Router
     {
         require_once ROOT . '/app/core/routes.php';
     }
+
 
 }
 

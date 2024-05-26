@@ -72,7 +72,7 @@ class ProductArrayFormView
                     ->name('Цена')
                     ->contenteditable()
                     ->width('70px')
-                    ->function(ProductRepository::class, 'priceStatic')
+//                    ->function(ProductRepository::class, 'priceStatic')
                     ->get()
             )
             ->items($items)

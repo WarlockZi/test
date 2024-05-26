@@ -7,7 +7,6 @@ use app\controller\AppController;
 use app\core\Auth;
 use app\core\Response;
 use app\model\Order;
-use app\model\OrderItem;
 use app\Repository\OrderRepository;
 use app\view\Order\OrderView;
 use Carbon\Carbon;

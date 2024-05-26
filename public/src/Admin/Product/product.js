@@ -13,14 +13,13 @@ import Values from "./Values";
 import Dnd from "../../components/dnd/dnd";
 
 export default function product() {
-  const product = d[qs](`.item-wrap
+  const product = document[qs](`.item-wrap
   [data-model='product']`);
   if (!product) return false;
 
   new Values(product);
 
   new Fields(product);
-
 
   new Dnd($('.add-file')[0], addMainImage);
 }

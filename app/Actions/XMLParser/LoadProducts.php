@@ -22,7 +22,7 @@ class LoadProducts extends Parser
 		$this->logger->write('--- products stop  ---' . $this->now());
 	}
 
-	protected function run()
+	protected function run():void
 	{
 		$id = 0;
 		foreach ($this->data as $good) {
@@ -34,11 +34,10 @@ class LoadProducts extends Parser
 			$updated = Product::withTrashed()
 				->updateOrCreate(['1s_id' => $product['1s_id']], $product);
 			$f = $updated;
-
 		}
 	}
 
-	protected function fillGood($good, $id)
+	protected function fillGood($good, $id):array
 	{
 		$g['1s_id'] = $good['Ид'];
 		$g['1s_category_id'] = $good['Группы']['Ид'];
@@ -52,10 +51,9 @@ class LoadProducts extends Parser
 		$g['txt'] = $good['Описание'] ? preg_replace('/\n/', '<br>', $good['Описание']) : '';
 
 		return $g;
-
 	}
 
-	protected function ech($item, $id, $sameSlug = '')
+	protected function ech($item, $id, $sameSlug = ''):void
 	{
 		echo "{$id}  - {$sameSlug} {$item['name']}<br>";
 	}
