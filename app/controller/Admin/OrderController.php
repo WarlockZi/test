@@ -60,14 +60,14 @@ class OrderController extends AppController
                   'updated_at' => $now,
                ]
             );
+            if ($order->wasRecentlyCreated) {
+               Response::exitJson(['popup' => "Добавлено в корзину"]);
+            }
+            if ($order->wasChanged()) {
+               Response::exitJson(['popup' => "Заказ изменен"]);
+            }
+            Response::exitJson(['popup' => 'не записано', 'error' => "не записано"]);
          }
-         if ($order->wasRecentlyCreated) {
-            Response::exitJson(['popup' => "Добавлено в корзину"]);
-         }
-         if ($order->wasChanged()) {
-            Response::exitJson(['popup' => "Заказ изменен"]);
-         }
-         Response::exitJson(['popup' => 'не записано', 'error' => "не записано"]);
       }
    }
 
