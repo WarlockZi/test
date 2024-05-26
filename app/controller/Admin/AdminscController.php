@@ -36,9 +36,8 @@ class AdminscController extends AppController
 	}
 
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
-       Helpers::makeBaseUnitsShippable();
 		$this->assets->setCDNJs("https://cdn.jsdelivr.net/npm/chart.js", true);
 	}
 
