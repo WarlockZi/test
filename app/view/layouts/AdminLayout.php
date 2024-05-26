@@ -13,7 +13,7 @@ use app\view\Header\Admin\AdminHeader;
 class AdminLayout extends Layout
 {
     protected Route $route;
-    protected string $viewPath;
+    protected string $view;
     protected string $layout;
     protected array $content;
     protected FS $layoutFs;
@@ -28,7 +28,7 @@ class AdminLayout extends Layout
         $this->setLayout("layouts/admin");
         $this->setContent($controller);
     }
-    protected function setErrors()
+    protected function setErrors():void
     {
         if ($this->route->isNotFound()) {
             $this->route->setError('Такого адреса нет');
@@ -83,12 +83,10 @@ class AdminLayout extends Layout
             return $content;
         } catch (\Exception $exception) {
             ob_get_clean();
-//            ob_clean();
             $this->route->setError("В файле вида произошла ошибка");
             $this->route->setError($exception->getMessage());
             return $this->layoutFs->getContent('default', ['errors' => $this->route->getErrors()]);
         }
-
     }
 
     protected function getView(): string
@@ -96,7 +94,7 @@ class AdminLayout extends Layout
         return 'Admin/'.$this->view;
     }
 
-    public function render()
+    public function render():void
     {
         echo $this->getLayout();
     }

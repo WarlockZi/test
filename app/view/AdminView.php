@@ -5,19 +5,13 @@ namespace app\view;
 
 
 use app\controller\Controller;
-use app\core\Auth;
 use app\core\FS;
-use app\model\User;
-use app\view\Assets\AdminAssets;
-use app\view\Assets\TestAssets;
-use app\view\Header\Admin\AdminHeader;
-use function app\view\helpers\vite;
 
 
 class AdminView extends View
 {
-    protected $noViewError;
-    protected $defaultView;
+    protected string $noViewError;
+    protected string $defaultView;
 
     public function __construct(Controller $controller)
     {
@@ -26,13 +20,13 @@ class AdminView extends View
 
         $this->defaultView = "/default";
         $this->noViewError = "Файл вида не найден";
-        $this->setHeader($this->user);
-        $this->setFooter();
-        if ($this->controller->getRoute()->action === 'test') {
-            $this->setTestAssets();
-        } else {
-            $this->setAssets();
-        }
+//        $this->setHeader($this->user);
+//        $this->setFooter();
+//        if ($this->controller->getRoute()->action === 'test') {
+//            $this->setTestAssets();
+//        } else {
+//            $this->setAssets();
+//        }
     }
 
     public function setContent(Controller $controller): void

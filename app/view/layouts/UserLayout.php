@@ -48,7 +48,7 @@ class UserLayout extends Layout
         $this->view = $this->route->getView() ?? $this->route->getAction() ?? 'default';
     }
 
-    protected function setErrors()
+    protected function setErrors():void
     {
         if ($this->route->isNotFound()) {
             $this->route->setError('Такого адреса нет');
@@ -80,8 +80,7 @@ class UserLayout extends Layout
     private function prepareContent($vars): string
     {
         try {
-            $content = $this->viewFs->getContent($this->getView(), $vars);
-            return $content;
+           return $this->viewFs->getContent($this->getView(), $vars);
         } catch (\Exception $exception) {
             ob_get_clean();
             ob_flush();
@@ -97,7 +96,7 @@ class UserLayout extends Layout
     }
 
 
-    public function render()
+    public function render():void
     {
         echo $this->getLayout();
     }

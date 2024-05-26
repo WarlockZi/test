@@ -23,16 +23,15 @@ class TestDoService
 		if ($id === null) {
 			$this->setNoTestTitle();
 			$this->setContent($this->getNoTestTitle());
-			$this->setAccordion();
-		} else {
+        } else {
 			$test = TestRepository::do($id);
 			$this->setContent(
 				FS::getFileContent(ROOT . '/app/view/Test/Admin/do_test-data.php', compact('test'))
 			);
 			$this->setPagination($test);
-			$this->setAccordion();
-		}
-	}
+        }
+       $this->setAccordion();
+    }
 
 	public function setPageName($page_name)
 	{

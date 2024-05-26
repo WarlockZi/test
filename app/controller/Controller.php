@@ -32,14 +32,14 @@ class Controller
         }
     }
 
-    public function getView()
-    {
-        if ($this->route->isAdmin()) {
-            return new AdminView($this);
-        } else {
-            return new UserView($this);
-        }
-    }
+//    public function getView()
+//    {
+//        if ($this->route->isAdmin()) {
+//            return new AdminView($this);
+//        } else {
+//            return new UserView($this);
+//        }
+//    }
 
     public function setRoute(Route $route)
     {
