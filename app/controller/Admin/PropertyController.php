@@ -17,7 +17,7 @@ class PropertyController Extends AppController
     parent::__construct();
 }
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$list = PropertyView::listAll();
 		$this->set(compact('list'));

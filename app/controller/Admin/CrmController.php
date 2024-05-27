@@ -40,7 +40,7 @@ class CrmController extends AppController
 	}
 
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 //		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}

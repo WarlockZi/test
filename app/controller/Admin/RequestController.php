@@ -14,7 +14,7 @@ class RequestController Extends AppController
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		if ($_ENV['MODE'] === 'production') {
 			$content = file_get_contents('/var/www/vitexopt/data/logs/vitexopt.ru.access.log');

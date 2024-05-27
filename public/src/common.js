@@ -226,6 +226,9 @@ function getToken() {
   return document.querySelector('meta[name="token"]').getAttribute('content')
     ?? null
 }
+function isAuthed() {
+  return localStorage.getItem('id')
+}
 
 function createEl(tagName, className = '', text = '') {
   let div = document.createElement(tagName);
@@ -583,5 +586,6 @@ export {
   IsJson,
   post, get,
   validate, $,
-  formatDate
+  formatDate,
+  isAuthed
 }

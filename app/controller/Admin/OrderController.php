@@ -21,7 +21,7 @@ class OrderController extends AppController
       parent::__construct();
    }
 
-   public function actionIndex()
+   public function actionIndex():void
    {
       $orderItems = OrderRepository::leadList();
       $leadlist = OrderView::leadList($orderItems);

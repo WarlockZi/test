@@ -8,7 +8,7 @@ class ShortController extends AppController
 {
     protected $model;
 
-    public function actionIndex()
+    public function actionIndex():void
     {
         $shortLink = $this->route->slug;
         if ($shortLink) {

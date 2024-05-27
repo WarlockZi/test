@@ -17,7 +17,7 @@ class ImageController Extends AppController
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$list = ImageView::list(Image::all());
 		$this->set(compact('list'));

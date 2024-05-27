@@ -140,7 +140,7 @@ class SyncController extends AppController
 
     }
 
-    public function actionIndex()//init
+    public function actionIndex():void//init
     {
         $tree = [];
         $this->set(compact('tree'));

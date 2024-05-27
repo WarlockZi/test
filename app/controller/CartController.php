@@ -35,7 +35,7 @@ class CartController extends AppController
 
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
         $s =  session_id();
 		$lead = Lead::where('sess',$s)->first();

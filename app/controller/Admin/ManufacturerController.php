@@ -15,7 +15,7 @@ class ManufacturerController Extends AppController
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$manufacturers = ManufacturerView::list($this->model);
 		$this->set(compact('manufacturers'));

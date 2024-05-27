@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '980ea2cc6f40679bc060fd5f31c1a1d76d5ac9db',
+        'reference' => '498c47ef4a07b35812e70566c96fa914cd56951a',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '980ea2cc6f40679bc060fd5f31c1a1d76d5ac9db',
+            'reference' => '498c47ef4a07b35812e70566c96fa914cd56951a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -271,6 +271,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'symfony/polyfill-php83' => array(
+            'pretty_version' => 'v1.29.0',
+            'version' => '1.29.0.0',
+            'reference' => '86fcae159633351e5fd145d1c47de6c528f8caff',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-php83',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'symfony/service-contracts' => array(
             'pretty_version' => 'v3.5.0',
             'version' => '3.5.0.0',
@@ -312,6 +321,15 @@
             'provided' => array(
                 0 => '2.3|3.0',
             ),
+        ),
+        'symfony/validator' => array(
+            'pretty_version' => 'v7.0.7',
+            'version' => '7.0.7.0',
+            'reference' => 'ab4e75b9d23ba70e78480aecbe4d8da15adf10eb',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/validator',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'vlucas/phpdotenv' => array(
             'pretty_version' => 'v5.6.0',

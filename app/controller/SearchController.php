@@ -16,7 +16,7 @@ class SearchController extends AppController
 	}
 
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		if (!$this->ajax) exit();
 		$res = $this->actions->index($this->ajax['text']);

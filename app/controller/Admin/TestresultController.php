@@ -20,7 +20,7 @@ class TestresultController extends AppController
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$res = TestResult::all()->toArray();
 		$this->set(compact('res'));

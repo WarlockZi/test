@@ -18,7 +18,7 @@ class VideoinstructionController Extends AppController
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$videos = Videoinstruction::where('id', '>', 0)
 //			->orderBy(['tag', 'sort'])

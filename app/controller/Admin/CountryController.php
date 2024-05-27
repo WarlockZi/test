@@ -15,7 +15,7 @@ class CountryController Extends AppController
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 
 		$countries = CountryView::list($this->model);

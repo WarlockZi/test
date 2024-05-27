@@ -54,7 +54,7 @@ class TestController extends AppController
       }
    }
 
-   public function actionIndex()
+   public function actionIndex():void
    {
       View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
    }

@@ -5,6 +5,7 @@ namespace app\controller;
 use app\Actions\AuthAction;
 use app\core\Auth;
 use app\core\Mail\PHPMail;
+use app\core\Request;
 use app\core\Response;
 use app\model\User;
 use app\Repository\UserRepository;
@@ -13,198 +14,200 @@ use app\view\User\UserView;
 
 class AuthController extends AppController
 {
-	protected $mailer;
-	protected $actions;
+   protected PHPMail $mailer;
+   protected AuthAction $actions;
+   protected UserRepository $userRepository;
 
-	public function __construct()
-	{
-		parent::__construct();
+   public function __construct()
+   {
+      parent::__construct();
 //		$bot = new TelegramBot();
 //		$bot->send('Что так');
 
-		$this->actions = new AuthAction();
-		$this->mailer = new PHPMail('env');
-		if (!$this->ajax) {
-			$this->assets->setAuth();
-		}
-	}
+      $this->actions = new AuthAction();
+      $this->userRepository = new UserRepository();
+      $this->mailer = new PHPMail('env');
+      if (!$this->ajax) {
+         $this->assets->setAuth();
+      }
+   }
 
-	public function actionRegister()
-	{
-		$req = $this->ajax;
-		if ($req) {
-			if (!$req['email']) exit('empty email');
-			$found = User::where('email', $req['email'])->first();
-			if ($found) Response::exitWithMsg('mail exists');
+   public function actionRegister(): void
+   {
+      $req = $this->ajax;
+      if ($req) {
+         if (!$req['email']) exit('empty email');
 
-			if (!$req['password']) exit('empty password');
+         if ($this->userRepository->findByMail($req['email'])) Response::exitWithMsg('mail exists');
 
-			$user = $this->actions->createUser($req);
-			if ($user) {
-				$userMessage = "Пользователь создан";
-			} else {
-				$userMessage = "Пользователь не создан";
-			}
+         if (!$req['password']) exit('empty password');
 
-			$sent = $this->mailer->sendRegistrationMail($user);
+         $user = $this->userRepository->createUser($req);
+         if ($user) {
+            $userMessage = "Пользователь создан";
+         } else {
+            $userMessage = "Пользователь не создан";
+         }
 
-			Response::exitJson(['message' => 'confirmed', 'popup' => $userMessage . "\n" . $sent]);
-		}
-	}
+         $sent = $this->mailer->sendRegistrationMail($user);
 
-	public function actionLogin()
-	{
-		if ($data = $this->ajax) {
+         Response::exitJson(['message' => 'confirmed', 'popup' => $userMessage . "\n" . $sent]);
+      }
+   }
 
-			if (!User::checkEmail($data['email'])) Response::exitWithError("Неверный формат email");
-			if (!User::checkPassword($data['password'])) Response::exitWithError("Пароль не должен быть короче 6-ти символов");
+   public function actionLogin(): void
+   {
+      if ($data = $this->ajax) {
 
-			$user = User::where('email', $data['email'])->first()
-				? User::where('email', $data['email'])->first()->toArray()
-				: null;
+         $req = new Request();
+         $errors = $req->checkLoginCredentials($data);
+         if ($errors)
+            Response::exitJson(['errors' => $errors, 'popup' => $errors]);
+         $user = $this->userRepository->findByMail($data['email'])->toArray();
 
-			if (!$user) Response::exitWithError('Пользователь не зарегистрирован');
-			if (!$user['confirm']) Response::exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
-			if (!$user['password'] === $this->actions->preparePassword($data['password']))
-				Response::exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
-			Auth::setAuth($user);
-			$this->user = $user;
-			if (User::can($user, ['role_employee'])) {
-				Response::exitJson(['role' => 'employee']);
-			} else {
-				Response::exitJson(['role' => 'user']);
-			}
-		}
+         if (!$user['confirm'])
+            Response::exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
+         if ($user['password'] !== $this->userRepository->preparePassword($data['password'])) {
+            if (!Auth::isSU($user)) {
+               Response::exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
+            }
+         }
+         Auth::setAuth($user);
 
-		$this->view = 'login';
-//		$this->layout = 'vitex';
-	}
-
-
-	public function actionProfile()
-	{
-		$userArr = Auth::getUser();
-		$user = User::find($userArr['id']);
-
-		if (User::can($userArr, ['role_employee'])) {
-			if (User::can($userArr, ['role_admin'])) {
-				$item = UserView::admin($user);
-			} else {
-				$item = UserView::employee($user);
-			}
-
-			$this->assets->unsetJs('auth.js');
-			$this->assets->unsetCss('auth.css');
-
-		} else {
-			$this->layout = 'vitex';
-			$item = UserView::guest($user);;
-		}
-
-		$this->set(compact('item'));
-	}
-
-	public function actionChangePassword()
-	{
-		if ($data = $this->ajax) {
-			if (!$data['old_password'] || !$data['new_password'])
-				Response::exitWithError('Заполните старый и новый пароль');
-
-			$old_password = $this->actions->preparePassword($data['old_password']);
-
-			$user = User::where('password', $old_password)
-				->get()->toArray();
-
-			if ($user) {
-				$user = $user[0];
-				$newPassword = $this->actions->preparePassword($data['new_password']);
-				$res = User::where('id', $user['id'])
-					->update(['password' => $newPassword]);
-				if ($res) {
-
-					Response::exitWithSuccess('Пароль поменeн');
-				} else {
-					Response::exitWithMsg('Что-то пошло не так (');
-				}
-			} else {
-
-				Response::exitWithError('Не правильный старый пароль (');
-			}
-		}
-	}
-
-	public function actionReturnpass()
-	{
-		if ($data = $this->ajax) {
-			$_SESSION['id'] = '';
-			$user = UserRepository::returnPassword($data);
-
-			if ($user) {
-				$password = $this->actions->randomPassword();
-				$newPassword = $this->actions->preparePassword($password);
-				User::where('id', $user['id'])
-					->update(['password' => $newPassword]);
-
-				$this->mailer->returnPassword($data);
-				Response::exitWithSuccess('Новый пароль проверьте на почте');
-			} else {
-				Response::exitWithError("Пользователя с таким e-mail нет");
-			}
-		}
-	}
+//         $this->user = $user;
+         if (User::can($user, ['role_employee'])) {
+            Response::exitJson(['role' => 'employee', 'id' => $user['id']]);
+         } else {
+            Response::exitJson(['role' => 'user', 'id' => $user['id']]);
+         }
+      }
+      $this->view = 'login';
+   }
 
 
-	public function actionLogout()
-	{
-		if (isset($_COOKIE[session_name()])) {
-			setcookie(session_name(), '', time() - 86400, '/');
-		}
-		unset($_SESSION);
-		header("Location: /");
-		exit();
-	}
+   public function actionProfile(): void
+   {
+      $userArr = Auth::getUser();
+      $user = User::find($userArr['id']);
+
+      if (User::can($userArr, ['role_employee'])) {
+         if (User::can($userArr, ['role_admin'])) {
+            $item = UserView::admin($user);
+         } else {
+            $item = UserView::employee($user);
+         }
+
+         $this->assets->unsetJs('auth.js');
+         $this->assets->unsetCss('auth.css');
+
+      } else {
+         $this->layout = 'vitex';
+         $item = UserView::guest($user);;
+      }
+
+      $this->set(compact('item'));
+   }
+
+   public function actionChangePassword(): void
+   {
+      if ($data = $this->ajax) {
+         if (!$data['old_password'] || !$data['new_password'])
+            Response::exitWithError('Заполните старый и новый пароль');
+
+         $old_password = $this->actions->preparePassword($data['old_password']);
+
+         $user = User::where('password', $old_password)
+            ->get()->toArray();
+
+         if ($user) {
+            $user = $user[0];
+            $newPassword = $this->actions->preparePassword($data['new_password']);
+            $res = User::where('id', $user['id'])
+               ->update(['password' => $newPassword]);
+            if ($res) {
+
+               Response::exitWithSuccess('Пароль поменeн');
+            } else {
+               Response::exitWithMsg('Что-то пошло не так (');
+            }
+         } else {
+
+            Response::exitWithError('Не правильный старый пароль (');
+         }
+      }
+   }
+
+   public function actionReturnpass(): void
+   {
+      if ($data = $this->ajax) {
+         $_SESSION['id'] = '';
+         $user = $this->userRepository->returnPassword($data);
+
+         if ($user) {
+            $password = $this->actions->randomPassword();
+            $newPassword = $this->actions->preparePassword($password);
+            User::where('id', $user['id'])
+               ->update(['password' => $newPassword]);
+
+            $this->mailer->returnPassword($data);
+            Response::exitWithSuccess('Новый пароль проверьте на почте');
+         } else {
+            Response::exitWithError("Пользователя с таким e-mail нет");
+         }
+      }
+   }
 
 
-	public function actionConfirm()
-	{
-		$hash = $this->route->id;
-
-		if (!$hash) header('Location:/');
-		$user = User::where('hash', $hash)->first();
-
-		if (!$user) {
-			header('Location:/auth/login');
-			exit();
-		}
-
-		$user['confirm'] = "1";
-		Auth::setAuth($user->toArray());
-		if ($user->update()) {
-			header('Location:/auth/success');
-			Response::exitWithPopup('"Вы успешно подтвердили свой E-mail."');
-		}
-
-	}
+   public function actionLogout(): void
+   {
+      if (isset($_COOKIE[session_name()])) {
+         setcookie(session_name(), '', time() - 86400, '/');
+      }
+      unset($_SESSION);
+      header("Location: /");
+      exit();
+   }
 
 
-	public static function user()
-	{
-		if (isset($_SESSION['id']) && $_SESSION['id']) return false;
+   public function actionConfirm(): void
+   {
+      $hash = $this->route->id;
 
-		$user = User::where('id', $_SESSION['id'])->first();
-		if (!$user) return false;
+      if (!$hash) header('Location:/');
+      $user = User::where('hash', $hash)->first();
 
-		return $user->toArray();
+      if (!$user) {
+         header('Location:/auth/login');
+         exit();
+      }
 
-	}
+      $user['confirm'] = "1";
+      Auth::setAuth($user->toArray());
+      if ($user->update()) {
+         header('Location:/auth/success');
+         Response::exitWithPopup('"Вы успешно подтвердили свой E-mail."');
+      }
+   }
 
-	public function actionUnautherized()
-	{
-		$view = 'unautherized';
-	}
 
-	public function actionUnsubscribe()
-	{
-		$view = 'unautherized';
-	}
+   public static function user(): array|bool
+   {
+      if (isset($_SESSION['id']) && $_SESSION['id']) return false;
+
+      $user = User::where('id', $_SESSION['id'])->first();
+      if (!$user) return false;
+
+      return $user->toArray();
+
+   }
+
+   public function actionUnautherized(): void
+   {
+      $view = 'unautherized';
+   }
+
+   public function actionUnsubscribe(): void
+   {
+      $view = 'unautherized';
+   }
 }

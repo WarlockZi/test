@@ -39,7 +39,7 @@ class PlanningController Extends AppController
 
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 
 	}
