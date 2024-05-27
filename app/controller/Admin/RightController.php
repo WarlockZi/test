@@ -35,7 +35,7 @@ class RightController Extends AppController
     }
   }
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$list = RightView::listAll();
 		$this->set(compact('list'));

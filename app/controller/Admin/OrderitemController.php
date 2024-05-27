@@ -57,7 +57,7 @@ class OrderitemController extends AppController
 
    }
 
-   public function actionIndex()
+   public function actionIndex():void
    {
 
 

@@ -19,7 +19,7 @@ class UserController extends AppController
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		Auth::checkAuthorized($this->user, ['role_admin']);
 

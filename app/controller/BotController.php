@@ -18,7 +18,7 @@ class BotController extends AppController
 		$this->assets = new BotAssets();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$assets = $this->assets;
 		$content = FS::getFileContent(ROOT.'/app/view/Bot/index.php',compact('assets'));

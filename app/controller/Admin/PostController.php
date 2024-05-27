@@ -21,7 +21,7 @@ class PostController Extends AppController
 
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$list = PostView::listAll();
 		$this->set(compact('list'));

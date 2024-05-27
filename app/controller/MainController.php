@@ -13,7 +13,7 @@ class MainController extends AppController
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 //        Helpers::copyUnits();
 //        Helpers::makeUnitsShippable();

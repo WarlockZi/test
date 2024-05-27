@@ -17,7 +17,7 @@ class LogisticController extends AppController
 		$key = '74ca418bbf3c680227905417d3f17589';
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$myCurl = curl_init();
 

@@ -14,7 +14,7 @@ class ProductfilterController Extends AppController
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
         $f = 1;
 

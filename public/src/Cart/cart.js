@@ -1,5 +1,5 @@
 import '../components/counter/counter'
-import {$, cookieRemove, getToken, post, time, formatter} from '../common'
+import {$, cookieRemove, getToken, post, time, formatter, isAuthed} from '../common'
 import Counter from "../components/counter/counter";
 import Cookie from "../components/cookie/new/cookie";
 import Modal from "../components/Modal/modal";
@@ -118,7 +118,7 @@ export default class Cart {
 
     setUrl() {
         this.url = '/adminsc/orderitem'
-        if (getToken()) {
+        if (isAuthed()) {
             this.url = '/adminsc/order'
         }
     }

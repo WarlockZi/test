@@ -18,7 +18,7 @@ class TodoController Extends AppController
 	{
 		parent::__construct();
 	}
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$daily = Todo::where('type', 'daily')->get()->toArray();
 		$daily = TodoView::daily($daily);

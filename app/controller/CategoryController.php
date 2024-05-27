@@ -24,7 +24,7 @@ class CategoryController extends AppController
         $this->case = new CategoryUseCase();
     }
 
-    public function actionIndex()
+    public function actionIndex():void
     {
         if ($this->route->slug) {
             $this->route->setView('category');

@@ -45,7 +45,7 @@ class UnitController extends AppController
 		}
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$units = UnitFormView::index();
 		$this->set(compact('units'));

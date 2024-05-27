@@ -22,7 +22,7 @@ class CategoryController extends AppController
     parent::__construct();
   }
 
-  public function actionIndex()
+  public function actionIndex():void
   {
     $categories = CategoryRepository::treeAll();
     $accordion = '';

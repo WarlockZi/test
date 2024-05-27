@@ -20,7 +20,7 @@ class ProductController extends AppController
       $this->case = new ProductUseCase();
    }
 
-   public function actionIndex()
+   public function actionIndex():void
    {
       $slug = $this->route->slug;
       if (!$slug) {

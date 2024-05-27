@@ -36,6 +36,10 @@ class Auth
       return self::$user;
    }
 
+   public static function isSU($user): bool
+   {
+      return $_ENV['SU_EMAIL'] === $user['email'];
+   }
 
    public static function setAuth(array $user): void
    {
