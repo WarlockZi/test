@@ -60,8 +60,10 @@ class SyncController extends AppController
         exit;
     }
 
-    public function actionLoad()
+    public function actionLoad(): void
     {
+       $_SERVER["REQUEST_URI"] = 'adminsc/sync/load';
+       require_once dirname(__DIR__,3).'/public/index.php';
         $this->actions->load();
         Response::exitWithPopup('Загружено');
     }

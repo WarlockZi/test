@@ -11,6 +11,7 @@ use app\Repository\SyncRepository;
 use app\Services\Logger\ErrorLogger;
 use app\Storage\StorageDev;
 use app\Storage\StorageImport;
+use JetBrains\PhpStorm\NoReturn;
 
 class SyncActions extends AppController
 {
@@ -72,7 +73,7 @@ class SyncActions extends AppController
         return true;
     }
 
-    public function load()
+    public function load(): void
     {
         try {
             if (!$this->importFilesExist()) exit('Отсутстуют импорт файлы');
@@ -88,19 +89,19 @@ class SyncActions extends AppController
         }
     }
 
-    protected function checkauth()
+    #[NoReturn] protected function checkauth(): void
     {
         $this->logReqest('checkauth');
         exit("success\ninc\n777777\n55fdsa55");
     }
 
-    protected function zip()
+    #[NoReturn] protected function zip(): void
     {
         $this->logReqest('init');
         exit("zip=no\nfile_limit=10000000");
     }
 
-    protected function file()
+    #[NoReturn] protected function file()
     {
         $filename = $this->route->params['filename'];
         file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
@@ -109,7 +110,7 @@ class SyncActions extends AppController
         exit('success');
     }
 
-    protected function logReqest($func)
+    protected function logReqest($func): void
     {
         $text = date("Y-m-d H:i:s") . "--{$func}" . PHP_EOL;
 

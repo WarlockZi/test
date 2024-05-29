@@ -2,12 +2,11 @@
 
 namespace app\controller;
 
-use app\controller\Interfaces\IModelable;
 use app\core\Response;
 use app\Repository\MorphRepository;
 use Illuminate\Database\Eloquent\Model;
 
-class AppController extends Controller implements IModelable
+class AppController extends Controller
 {
 	protected $model;
 	public array $settings;
