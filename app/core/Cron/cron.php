@@ -1,5 +1,5 @@
 <?php
-require __DIR__.'/app/controller/Admin/SyncController.php';
+require dirname(__DIR__,2).'/controller/Admin/SyncController.php';
 
 echo date("Y_m_d H:i:s") . " querry sent to sync/load" . PHP_EOL;
 
