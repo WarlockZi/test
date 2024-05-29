@@ -1,25 +1,18 @@
-<?
+<div class="test-edit-wrapper">
 
-use app\view\Accordion\AccordionView;
-use app\view\Test\TestView;
+    <div class="test-head">
+        <div class="accordion-open">Выбрать тест</div>
+    </div>
 
-?>
-	<div class="test-edit-wrapper">
+    <div class="test-edit__cont">
+       <?= $accordion; ?>
 
-		 <? TestView::testHead(); ?>
+        <div class="extra-wrap">
+           <?= $test ?? "Выберите тест для редактирования"; ?>
+        </div>
 
-		<div class="test-edit__cont">
-
-				<?= AccordionView::testEdit() ?>
-
-			<div class="extra-wrap">
-
-					 <?= $item??"Выберите тест для редактирования"; ?>
-			</div>
-
-		</div>
-
-	</div>
+    </div>
+</div>
 
 
 

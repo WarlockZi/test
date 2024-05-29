@@ -29,7 +29,7 @@
 
 [custom-select], [select-new] {
   display: flex;
-  flex: 1 0;
+  width: clamp(20px, 100%, 340px);
   align-items: center;
   position: relative;
   background-color: white;
