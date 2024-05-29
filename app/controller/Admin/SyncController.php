@@ -32,7 +32,7 @@ class SyncController extends AppController
           parent::__construct();
 
           $this->setStorage();
-          $this->logger      = new FileLogger('load.log');
+          $this->logger      = new FileLogger('load.txt');
           $this->errorLogger = new ErrorLogger();
 
           $this->importFile = $this->storage::getFile('import0_1.xml');
@@ -55,15 +55,15 @@ class SyncController extends AppController
         } catch (\Throwable $e) {
             $message = PHP_EOL . "---SyncControllerError---" . PHP_EOL . $e . PHP_EOL . $e->getMessage() . PHP_EOL;
             $this->logger->write($message);
-            exit('Выгрузка на сайт не удалась. Подробности в load.log' . PHP_EOL);
+            exit('Выгрузка на сайт не удалась. Подробности в load.txt' . PHP_EOL);
         }
         exit;
     }
 
     public function actionLoad(): void
     {
-       $_SERVER["REQUEST_URI"] = 'adminsc/sync/load';
-       require_once dirname(__DIR__,3).'/public/index.php';
+//       $_SERVER["REQUEST_URI"] = 'adminsc/sync/load';
+//       require_once dirname(__DIR__,3).'/public/index.php';
         $this->actions->load();
         Response::exitWithPopup('Загружено');
     }
