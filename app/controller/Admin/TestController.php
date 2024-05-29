@@ -3,34 +3,36 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\core\Factory\AbstractTestFactory;
 use app\core\Response;
 use app\core\Router;
 
 
 use app\model\Test;
 use app\Repository\TestRepository;
+use app\Services\Test\TestDoService;
 use app\view\Test\TestView;
 use app\view\View;
 
 
 class TestController extends AppController
 {
-
+   private TestView $testView;
    private TestRepository $repository;
+
    public function __construct()
    {
       parent::__construct();
       $this->repository = new TestRepository();
+      $this->testView   = new TestView();
    }
 
    public function actionDo(): void
    {
       $id = $this->route->id;
       if ($id) {
-         $test = AbstractTestFactory::getFactory('test')->do($id);
-         $this->set(compact('test','id'));
-      }else{
+         $testService = new TestDoService($id);
+         $this->set(compact('testService'));
+      } else {
          $this->route->setView('index');
          $tests = $this->repository->treeAll();
          $this->set(compact('tests'));
@@ -39,22 +41,16 @@ class TestController extends AppController
    }
 
 
-   public function actionEdit()
+   public function actionEdit(): void
    {
-      $id = Router::getRoute()->id;
-      $test = Test::query()->find($id);
-
-      if ($test) {
-         $item = TestView::item($test);
-         $this->set(compact('item'));
-
-      } else {
-         $test = '';
-         $this->set(compact('test'));
-      }
+      $id   = $this->route->id;
+      $test = TestRepository::findById($id);
+      if ($test) $test = $this->testView->item($test);
+      $accordion = $this->testView->getAccordion();
+      $this->set(compact('test', 'accordion'));
    }
 
-   public function actionIndex():void
+   public function actionIndex(): void
    {
       View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
    }
@@ -62,16 +58,15 @@ class TestController extends AppController
    public function actionPathshow()
    {
       $this->layout = 'admin';
-      $this->view = 'edit_show';
-      $page_name = 'Создание папки';
-      $this->set(compact('page_name'));
+      $this->view   = 'edit_show';
+      $page_name    = 'Создание папки';
 
       $paths = $this->paths();
-      $this->set(compact('paths'));
 
       $test['isTest'] = 0;
-      $rootTests = Test::where('isTest', 0)->get()->toArray();
-      $this->set(compact('rootTests', 'test'));
+      $rootTests      = Test::where('isTest', 0)->get()->toArray();
+
+      $this->set(compact('rootTests', 'page_name', 'paths', 'test'));
    }
 
    public function actionGetCorrectAnswers()
@@ -80,10 +75,10 @@ class TestController extends AppController
    }
 
 
-   public function actionPaths()
-   {
-      exit(json_encode($this->paths()));
-   }
+//   public function actionPaths()
+//   {
+//      exit(json_encode($this->paths()));
+//   }
 
    private function paths()
    {

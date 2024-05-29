@@ -28,17 +28,22 @@ class SyncController extends AppController
 
     public function __construct()
     {
-        parent::__construct();
+       try {
+          parent::__construct();
 
-        $this->setStorage();
-        $this->logger      = new FileLogger('load.log');
-        $this->errorLogger = new ErrorLogger();
+          $this->setStorage();
+          $this->logger      = new FileLogger('load.log');
+          $this->errorLogger = new ErrorLogger();
 
-        $this->importFile = $this->storage::getFile('import0_1.xml');
-        $this->offerFile  = $this->storage::getFile('offers0_1.xml');
+          $this->importFile = $this->storage::getFile('import0_1.xml');
+          $this->offerFile  = $this->storage::getFile('offers0_1.xml');
 
-        $this->repo    = new SyncRepository($this->importFile, $this->offerFile, $this->logger);
-        $this->actions = new SyncActions($this->repo, $this->logger);
+          $this->repo    = new SyncRepository($this->importFile, $this->offerFile, $this->logger);
+          $this->actions = new SyncActions($this->repo, $this->logger);
+       }catch (\Throwable $exception){
+          echo $exception.PHP_EOL;
+       }
+
     }
 
     public function actionInit()

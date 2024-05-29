@@ -16,12 +16,10 @@ class Controller
    protected string $token;
    protected Route $route;
    protected array $ajax;
-//    protected $auth;
    protected Assets $assets;
 
    function __construct()
    {
-//      Auth::setAuth($user);
       $this->setAjaxRequest();
       if (!$this->ajax) {
          $this->assets = new Assets();

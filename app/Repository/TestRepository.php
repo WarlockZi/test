@@ -16,6 +16,19 @@ class TestRepository
          ->with('questions.answers')
          ->find($id);
    }
+   public static function doAccordion(int $id):Collection
+   {
+      return Test::where('test_id', 0)
+         ->where('enable', 1)
+         ->with('children')
+         ->get();
+   }
+   public static function findById(int $id): Test|null
+   {
+      return Test::with('questions.answers')
+         ->find($id)
+         ??null;
+   }
 
    public static function edit(int $id): Model
    {

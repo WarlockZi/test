@@ -28,13 +28,10 @@
   flex-flow: column;
   flex: 1 1 auto;
   margin-right: 6vw;
-  //margin-top: 100px;
   max-width: 1310px;
   width: 100%;
-  min-height: 100%;
   background-color: #fff;
-  //margin-left: 20px;
-  //z-index: 1;
+
 
   @include _400 {
     flex-wrap: wrap;
@@ -42,16 +39,16 @@
 
   .content {
     display: flex;
-    //flex-flow: column;
+    flex-direction: column;
     width: 100%;
     margin-right: 20px;
   }
 
   .test {
-    //min-width: 520px;
+    display: flex;
     max-width: 600px;
     width: 100%;
-    //flex: 1 0 auto;
+
   }
 
   .test-data {

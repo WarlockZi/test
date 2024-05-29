@@ -40,7 +40,7 @@ class Router
         $this->route->isNotFound() ? $this->route->setActionName('default') : $f = 1;
     }
 
-    public function dispatch()
+    public function dispatch():void
     {
         $controller = $this->route->getController();
         try {

@@ -3,16 +3,22 @@
 namespace app\view\Test;
 
 use app\core\FS;
+use app\core\Icon;
 use app\model\Test;
 use app\Repository\TestRepository;
+use app\view\Accordion\AccordionBuilder;
 use app\view\Accordion\AccordionView;
 use app\view\components\Builders\Builder;
+use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
+use app\view\components\Builders\ItemBuilder\ItemBuilder;
+use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
+use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 use Illuminate\Database\Eloquent\Collection;
 
 
-class TestView extends Builder
+class TestEditView extends Builder
 {
    private FS $fs;
    protected string $accordion = '';
@@ -25,6 +31,7 @@ class TestView extends Builder
    public function __construct()
    {
       $this->fs = new FS(__DIR__);
+
       $this->accordion = AccordionView::testDo();
    }
 
@@ -52,9 +59,66 @@ class TestView extends Builder
    }
 
 
+   public function testEdit(): string
+   {
+      $accordion = AccordionBuilder::build(
+         Test::where('test_id', 0)
+            ->with('children')
+            ->get(),
+         '/adminsc/question/edit/'
+      )
+         ->relation('children')
+         ->class('test-edit')
+         ->ulBefore("<div class='arrow'></div>" . Icon::path())
+         ->ulAfter(Icon::editWhite(), '/adminsc/test/edit/')
+         ->liAfter(Icon::editWhite(), '/adminsc/test/edit/')
+         ->isPathAttr("isTest")
+         ->attachButtonAfter(ROOT . '/app/view/Accordion/Admin/edit_add-test-button.php')
+         ->get();
+      return $this->clean($accordion);
+   }
 
+   public function item(Test $test): string
+   {
+      $isTest = $test->isTest ? 'тест' : 'папку';
 
-
+      return $this->clean(ItemBuilder::build($test, 'test')
+         ->pageTitle("Редактировать {$isTest} - {$test['name']}")
+         ->del()
+         ->field(
+            ItemFieldBuilder::build('id', $test)
+               ->name('ID')
+               ->get()
+         )
+         ->field(
+            ItemFieldBuilder::build('name', $test)
+               ->name('Наименование')
+               ->contenteditable()
+               ->get()
+         )
+         ->field(
+            ItemFieldBuilder::build('enable', $test)
+               ->name('Показывать')
+               ->html(
+                  CheckboxBuilder::build(
+                     'enable',
+                     $test->enable,
+                  )->get()
+               )
+               ->get()
+         )
+         ->field(
+            ItemFieldBuilder::build('parent', $test)
+               ->name('Принадлежит')
+               ->html($this->testSelector($test->test_id, $test->id))
+               ->get()
+         )
+         ->tab(ItemTabBuilder::build('Вопросы')
+            ->html($this->getTestContent($test->id))
+         )
+         ->get()
+      );
+   }
 
    public function getTestContent(int $id): string
    {
