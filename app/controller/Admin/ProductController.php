@@ -3,10 +3,10 @@
 namespace app\controller\Admin;
 
 use app\Actions\ProductAction;
-use app\Actions\ProductFilterAction;
 use app\controller\AppController;
 use app\core\Response;
 use app\Repository\BreadcrumbsRepository;
+use app\Repository\ProductFilterRepository;
 use app\Repository\ProductRepository;
 use app\view\Product\ProductArrayFormView;
 
@@ -21,10 +21,10 @@ class ProductController extends AppController
         $this->repo = new ProductRepository();
     }
 
-    public function actionEdit()
+    public function actionEdit(): void
     {
         $id   = $this->route->id;
-        $prod = ProductRepository::edit($id);
+        $prod = $this->repo->edit($id);
 //		$p = $prod->toArray();
 
         if ($prod) {
@@ -36,37 +36,37 @@ class ProductController extends AppController
         $this->assets->setQuill();
     }
 
-    public function actionList()
+    public function actionList(): void
     {
         $items = ProductRepository::list();
         $list  = ProductArrayFormView::list($items, 'Товары');
         $this->set(compact('list'));
     }
 
-    public function actionTrashed()
+    public function actionTrashed(): void
     {
-        $items   = ProductRepository::trashed();
+        $items   = $this->repo->trashed();
         $trashed = ProductArrayFormView::list($items, 'Удаленные товары');
         $this->set(compact('trashed'));
     }
 
-    public function actionFilter()
+    public function actionFilter(): void
     {
-        $res = ProductFilterAction::make($_POST)->get();
-        Response->exitJson($res);
+        $res = ProductFilterRepository::make($_POST)->get();
+        Response::exitJson($res);
     }
 
     public function actionChangeval()
     {
-        ProductAction::changeVal($this->ajax);
+        $this->repo->changeVal($this->ajax);
     }
-   public function actionDeleteunit()
+   public function actionDeleteunit(): void
    {
       $this->repo->deleteUnit($this->ajax);
    }
     public function actionChangeunit()
     {
-        ProductAction::changeUnit($this->ajax);
+       $this->repo->changeUnit($this->ajax);
     }
 
     public function actionAttachmainimage()

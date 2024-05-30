@@ -6,8 +6,7 @@ namespace app\Storage;
 
 class StorageProd extends Storage
 {
-
-	protected $path;
+	protected string $path;
 
 	public function __construct()
 	{
@@ -16,8 +15,8 @@ class StorageProd extends Storage
 		return $this;
 	}
 
-	public static function getFileContent($name)
-	{
+	public static function getFileContent($name): false|string
+    {
 		$self = new static();
 		$file = $self->path . $name . '.txt';
 		$content = file_get_contents($file);

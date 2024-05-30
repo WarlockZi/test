@@ -10,6 +10,5 @@
            <a href="/adminsc/test/do/<?= $test->id ?>"><?= $test->name; ?></a>
        <? endforeach; ?>
 
-
     </div>
 </section>

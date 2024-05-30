@@ -34,7 +34,20 @@ class CartRepository
         $oItem = $products->toArray();
         return $products;
     }
+   public static function convertOrderItemsToOrders(array $req, $userId): void
+   {
+      $oItems = OrderItem::query()
+         ->where('sess', $req['sess'])
+         ->whereNull('deleted_at')
+         ->get();
 
+      foreach ($oItems as $item) {
+         $itemArr            = $item->toArray();
+         $itemArr['user_id'] = $userId;
+         Order::query()->create($itemArr);
+         $item->forceDelete();
+      }
+   }
     public static function count()
     {
         $user = Auth::getUser();

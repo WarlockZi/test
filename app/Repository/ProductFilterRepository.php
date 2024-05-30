@@ -1,19 +1,19 @@
 <?php
 
 
-namespace app\Actions;
+namespace app\Repository;
 
 use app\model\Product;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Database\Eloquent\Builder;
 
-class ProductFilterAction
+class ProductFilterRepository
 {
 	protected Builder $query;
 	protected  $builder;
 	protected  array $req;
 
-	public static function make(array $req): ProductFilterAction
+	public static function make(array $req): ProductFilterRepository
 	{
 		$self = new self();
 		$self->req = $req;

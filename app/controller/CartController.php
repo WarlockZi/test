@@ -17,10 +17,12 @@ use app\view\Cart\CartView;
 class CartController extends AppController
 {
     protected CartView $cartView;
+    protected CartRepository $repo;
 	public function __construct()
 	{
 		parent::__construct();
         $this->cartView = new CartView();
+        $this->repo = new CartRepository();
 	}
 
 	public function actionDrop()
@@ -57,7 +59,7 @@ class CartController extends AppController
 
 		if ($user) {
 			Auth::setAuth($user);
-			CartAction::convertOrderItemsToOrders($req, $user['id']);
+			$this->repo->convertOrderItemsToOrders($req, $user['id']);
 			Response::exitJson(['ok' => true]);
 		}
 		Response::exitJson(['error' => 'Не правильные данные']);

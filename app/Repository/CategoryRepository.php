@@ -5,9 +5,11 @@ namespace app\Repository;
 
 
 use app\model\Category;
+use app\model\Product;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 use Illuminate\Database\Eloquent\Collection;
+use JetBrains\PhpStorm\NoReturn;
 
 class CategoryRepository
 {
@@ -58,6 +60,27 @@ class CategoryRepository
 
    }
 
+   #[NoReturn] public static function changeProperty(array $req): void
+   {
+      $category = Category::find($req['category_id']);
+      $newVal = $req['morphed']['new_id'];
+      $oldVal = $req['morphed']['old_id'];
+
+      if (!$oldVal) {
+         $category->properties()->attach($newVal);
+         exit(json_encode(['popup' => 'Добавлен']));
+
+      } else if (!$newVal) {
+         $category->properties()->detach($oldVal);
+         exit(json_encode(['ok'=>'ok','popup' => 'Удален']));
+
+      } else {
+         if ($newVal === $oldVal) exit(json_encode(['popup' => 'Одинаковые значения']));
+         $category->properties()->detach($oldVal);
+         $category->properties()->attach($newVal);
+         exit(json_encode(['popup' => 'Поменян']));
+      }
+   }
    public static function edit(?int $id)
    {
       return Category::with(

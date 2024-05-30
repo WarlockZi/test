@@ -11,6 +11,23 @@ use app\model\Product;
  */
 class SearchRepository
 {
+   public function prepareQuryString($query): string
+   {
+      return '%' . stripslashes(mb_strtolower(trim($query))) . '%';
+   }
+
+   public function index(string $text): array
+   {
+      $queryString = $this->prepareQuryString($text);
+
+      $admin = in_array('/adminsc', parse_url($_SERVER['HTTP_REFERER']));
+
+      $art = $this->getArtQuery($this->getQuery($admin), $queryString);
+      $name = $this->getNameQuery($this->getQuery($admin), $queryString);
+      $sId = $this->getSIdQuery($this->getQuery($admin), $queryString);
+
+      return array_merge($art, $name, $sId);
+   }
 	public function getQuery($admin)
 	{
 		$query = Product::query();

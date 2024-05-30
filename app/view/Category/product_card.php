@@ -3,7 +3,7 @@
         data-instore="<?= $product->instore ?? 0; ?>"
         data-1sid="<?= $product['1s_id'] ?? 0; ?>"
 >
-    <?= $case->showProductPromotionLable($product) ?>
+    <?= $product->activepromotions->count() ? "<div class='promotion'>Акция</div>" : '';; ?>
     <a
             href="/product/<?= $product->slug; ?>" class="product">
 
@@ -12,7 +12,7 @@
         <div class="footer">
 
             <p>Цена: <?= $product->instore?$product->baseUnitPrice:'уточняйте'; ?></p>
-            <p>Статус: <?= $case->showProductStatus($product) ?></p>
+            <p>Статус: <?= $product->instore?"в наличии":'под заказ'; ?></p>
             <p>Артикул: <?= $product->art ?? ''; ?></p>
         </div>
     </a>

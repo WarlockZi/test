@@ -15,7 +15,7 @@ class AccordionView
          '/adminsc/test/do/'
       )
          ->relation('children')
-         ->ulBefore("<div class='arrow'></div>" . Icon::path())
+         ->ulBefore(Icon::arrowUp(). Icon::path())
          ->isPathAttr("isTest")
          ->get();
    }
