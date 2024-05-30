@@ -4,20 +4,18 @@ namespace app\view\Accordion;
 
 use app\core\Icon;
 use app\model\Opentest;
-use app\model\Test;
 use app\Repository\TestRepository;
 
 class AccordionView
 {
    public static function testDo()
    {
-      $icon = Icon::path();
-      return AccordionBuilder::build(TestRepository::doAccordion,
+      return AccordionBuilder::build(
+         TestRepository::doAccordion(),
          '/adminsc/test/do/'
       )
          ->relation('children')
-         ->ulBefore("<div class='arrow'></div>" . $icon)
-//			->ulBefore("<div class='arrow'></div>" . Icon::path())
+         ->ulBefore("<div class='arrow'></div>" . Icon::path())
          ->isPathAttr("isTest")
          ->get();
    }

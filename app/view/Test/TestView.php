@@ -15,46 +15,44 @@ use Illuminate\Database\Eloquent\Collection;
 class TestView extends Builder
 {
    private FS $fs;
-   protected string $accordion = '';
    protected string $pagination = '';
-   protected Test $test;
-   protected string $content;
 
    protected string $title = '<h2>Выберите тест</h2>';
 
    public function __construct()
    {
       $this->fs = new FS(__DIR__);
-      $this->accordion = AccordionView::testDo();
-   }
-
-   public function getContent($id): string
-   {
-      $this->test = TestRepository::findById($id);
-      $this->content = FS::getFileContent(ROOT . '/app/view/Test/Admin/do_test-data.php', compact('test'));
-      return $this->content;
    }
 
    public function getAccordion(): string
    {
-      return $this->accordion;
+      return AccordionView::testDo();
    }
 
-   public function getPagination($id): string
+   public function getContent($test): string
+   {
+      return FS::getFileContent(ROOT . '/app/view/Test/Admin/do_test-data.php', compact('test'));
+   }
+
+
+   public function getPagination($test): string
    {
       $pagination = $this->pagination($test->questions);
-      $pagination = "<div class='navigation'>" .
-         "<div class='test-name' data-test-id={$test->id}>{$test->name}</div>" .
-         "{$pagination}</div>";
-      $this->pagination = $pagination;
-      $test = TestRepository::do($id);
-      return $this->pagination;
+      return "<div class='navigation'><div class='test-name' data-test-id={$test->id}>{$test->name}</div>{$pagination}</div>";
    }
 
+   public function pagination(Collection $questions): string
+   {
+      $pagination = '';
+      $i          = 0;
+      foreach ($questions as $id => $el) {
+         $i++;
+         $d          = "<div data-pagination={$el['id']}>{$i}</div>";
+         $pagination .= $d;
+      }
 
-
-
-
+      return "<div class='pagination'>{$pagination}</div>";
+   }
 
    public function getTestContent(int $id): string
    {
@@ -62,18 +60,6 @@ class TestView extends Builder
       return "<div class='test-do'>" . $h->getPagination() . $h->getContent() . "</div>";
    }
 
-   public function pagination(Collection $questions): string
-   {
-      $pagination = '';
-      $i = 0;
-      foreach ($questions as $id => $el) {
-         $i++;
-         $d = "<div data-pagination={$el['id']}>{$i}</div>";
-         $pagination .= $d;
-      }
-
-      return "<div class='pagination'>{$pagination}</div>";
-   }
 
    public function testSelector(int $selected, int $excluded): string
    {

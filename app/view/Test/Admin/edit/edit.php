@@ -5,7 +5,7 @@
     </div>
 
     <div class="test-edit__cont">
-       <?= $accordion; ?>
+       <?= $testView->getAccordion(); ?>
 
         <div class="extra-wrap">
            <?= $test ?? "Выберите тест для редактирования"; ?>

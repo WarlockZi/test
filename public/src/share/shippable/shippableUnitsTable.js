@@ -1,5 +1,5 @@
 import "./shippableTable.scss";
-import {getToken, post} from "../../common";
+import {getToken, isAuthed, post} from "../../common";
 import {ael, qs, qa} from '../../constants';
 
 
@@ -18,7 +18,6 @@ export default class shippableTable {
         this.sid = this.table.dataset['1sid']
         this.total = this.table[qs]('[data-total]')
         this.setFormatter()
-        this.setUrl()
         this.showButtons()
         this.renderSums()
     }
@@ -111,10 +110,6 @@ export default class shippableTable {
         }
     }
 
-    deleteOrderItems(tableDTO) {
-        const url = `${this.url}/delete`
-        post(url, tableDTO)
-    }
 
     showGreenButton() {
         if (!this.greenButtonWrap) return false
@@ -125,11 +120,21 @@ export default class shippableTable {
         this.toServer(this.dto(this.greenButtonWrap[qs]('[unit-row]')))
     }
 
-    setUrl() {
-        this.url = '/adminsc/orderitem'
-        if (getToken()) {
-            this.url = '/adminsc/order'
+    getUrl() {
+        if (isAuthed()) {
+            return '/adminsc/order'
         }
+        return '/adminsc/orderitem'
+    }
+
+    deleteOrderItems(tableDTO) {
+        const url = `${this.getUrl()}/delete`
+        post(url, tableDTO)
+    }
+
+    async toServer(dto) {
+        const url = `${this.getUrl()}/updateOrCreate`
+        const res = await post(url, dto)
     }
 
     setFormatter() {
@@ -140,10 +145,6 @@ export default class shippableTable {
         });
     }
 
-    async toServer(dto) {
-        const url = `${this.url}/updateOrCreate`
-        const res = await post(url, dto)
-    }
 
     rowDto(row) {
         return {

@@ -16,7 +16,7 @@ class TestRepository
          ->with('questions.answers')
          ->find($id);
    }
-   public static function doAccordion(int $id):Collection
+   public static function doAccordion():Collection
    {
       return Test::where('test_id', 0)
          ->where('enable', 1)

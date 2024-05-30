@@ -16,7 +16,6 @@ class SelectNewBuilder extends Builder
 	public static function build(string $options)
 	{
 		$select = new static();
-		$select->options = '';
 		$select->class = '';
 
         $select->fs = new FS(__DIR__);

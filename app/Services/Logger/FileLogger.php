@@ -4,6 +4,7 @@
 namespace app\Services\Logger;
 
 
+use app\core\Response;
 use app\Storage\StorageLog;
 
 class FileLogger implements ILogger
@@ -36,4 +37,5 @@ class FileLogger implements ILogger
 	{
 		if ($this->logFile) file_put_contents($this->logFile,'');
 	}
+
 }

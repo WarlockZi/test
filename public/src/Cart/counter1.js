@@ -1,6 +1,5 @@
-import './counter.scss'
 
-export default class Counter {
+export default class Counter1 {
   constructor(el, deadLineMs, callback) {
     if (!el) return false
 

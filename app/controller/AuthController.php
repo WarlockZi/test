@@ -11,6 +11,7 @@ use app\model\User;
 use app\Repository\UserRepository;
 use app\Services\TelegramBot\TelegramBot;
 use app\view\User\UserView;
+use JetBrains\PhpStorm\NoReturn;
 
 class AuthController extends AppController
 {
@@ -158,14 +159,14 @@ class AuthController extends AppController
    }
 
 
-   public function actionLogout(): void
+   #[NoReturn] public function actionLogout(): void
    {
       if (isset($_COOKIE[session_name()])) {
          setcookie(session_name(), '', time() - 86400, '/');
       }
       unset($_SESSION);
       header("Location: /");
-      exit();
+      Response::exitJson(["response"=>'logout']);
    }
 
 

@@ -68,5 +68,10 @@ class Controller
          $this->ajax = [];
       }
    }
+   public function isAjax():bool
+   {
+      return !!$this->ajax;
+
+   }
 
 }

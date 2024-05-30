@@ -2,6 +2,7 @@
 @import "../common.scss";
 @import "../var.scss";
 @import '../normalize.scss';
+
 @import '../Auth/auth.scss';
 @import '../components/footer/footer.scss';
 @import '../components/header/header.scss';
@@ -9,7 +10,8 @@
 @import '../components/popup.scss';
 @import "../components/breadcrumbs";
 @import "../components/breadcrumbs";
-@import "../Cart/cart";
+@import "cart";
+@import "counter";
 //@import "../font/Montserrat-7.210/Monserrat";
 
 .deleted-overlay{

@@ -1,22 +1,14 @@
 <?php
 
-namespace app\Actions\XMLParser;
+namespace app\Services\Sync;
 
-use app\Services\Logger\FileLogger;
-
-class Parser
+class Load
 {
-    protected $file;
-
-    protected $logger;
-    protected $data;
+    protected mixed $data;
 
     public function __construct(string $file, string $type)
     {
-        if (!is_readable($file)) exit();
-        $this->file = $file;
-        $this->logger = new FileLogger();
-        $xml = simplexml_load_file($this->file);
+        $xml = simplexml_load_file($file);
         $xmlObj = json_decode(json_encode($xml), true);
         switch ($type) {
             case 'category':
@@ -31,24 +23,5 @@ class Parser
             default:
                 throw new \Exception('Пустые данные');
         }
-
     }
-
-    protected function now()
-    {
-        return date("F j, Y, g:i a") . "\n";
-    }
-
-
-    protected function isAssoc(array $arr)
-    {
-        if (array() === $arr) return false;
-        return array_keys($arr) !== range(0, count($arr) - 1);
-    }
-
-    protected function log($content)
-    {
-        $this->logger->write($content);
-    }
-
 }

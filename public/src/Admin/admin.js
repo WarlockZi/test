@@ -46,11 +46,10 @@ import './ProductFilter/ProductFilter'
 // import Order from "../Admin/Order/order.js"
 // import pagination from './Product/pagination.js'
 // import product from './Product/product.js'
-
+import {qs} from '../constants'
 $(document).ready(async function () {
 
-
-    if (document.querySelector(`.item-wrap[data-model='product']`)) {
+    if (document[qs](`.item-wrap[data-model='product']`)) {
         let {default: prod} = await import('./Product/product.js')
         prod();
     }
@@ -58,7 +57,7 @@ $(document).ready(async function () {
         let {default: Order} = await import('./Order/order.js')
         new Order()
     }
-    // new Order(); $('.order-edit').first();
+
     new Promotion();
     new Search(true);
 

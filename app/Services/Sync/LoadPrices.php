@@ -1,32 +1,23 @@
 <?php
 
-namespace app\Actions\XMLParser;
+namespace app\Services\Sync;
 
-
-use app\core\Response;
 use app\model\Price;
 use app\model\Product;
 use app\model\ProductUnit;
 use app\model\Unit;
-use app\Services\Logger\ILogger;
 
-class LoadPrices extends Parser
+class LoadPrices extends Load
 {
-
-    protected $logger;
     protected Product $product;
 
-    public function __construct($file, ILogger $logger)
+    public function __construct($file)
     {
         parent::__construct($file, 'price');
-
-        $this->logger = $logger;
-        $this->logger->write('--- price    start ---' . $this->now());
         $this->run();
-        $this->logger->write('--- price     stop ---' . $this->now());
     }
 
-    protected function run()
+    protected function run(): void
     {
         foreach ($this->data as $price) {
             $Price = $this->createPrice($price);
@@ -37,7 +28,6 @@ class LoadPrices extends Parser
             $this->instore2Product($price);
             $this->unit2Product($Price, $Unit);
         }
-        Response::exitWithPopup('Загрузка цен, единиц и количества закончилась');
     }
 
     protected function createPrice($price)
@@ -51,8 +41,7 @@ class LoadPrices extends Parser
         $g['currency'] = $price['Цены']['Цена']['Валюта'] ? $price['Цены']['Цена']['Валюта'] : '';
         $g['price']    = $price['Цены']['Цена']['ЦенаЗаЕдиницу'] ? $price['Цены']['Цена']['ЦенаЗаЕдиницу'] : '';
 
-        $price = Price::create($g);
-        return $price;
+        return Price::create($g);
     }
 
     protected function createUnit($price, $Price)
@@ -67,22 +56,23 @@ class LoadPrices extends Parser
         return $unit;
     }
 
-    protected function instore2Product($price)
+    protected function instore2Product($price): void
     {
         $this->product->update([
             'instore' => $price['Количество'],
         ]);
     }
 
-    protected function unit2Product(Price $Price, Unit $Unit)
+    protected function unit2Product(Price $Price, Unit $Unit): void
     {
         $attrs       = [
             'product_1s_id' => $Price['1s_id'],
             'unit_id' => $Unit['id'],
-            'is_base' => '1',
             'multiplier' => '1',
+            'is_base' => '1',
+            'is_shippable' => '1',
         ];
-        $productUnit = ProductUnit::updateOrCreate($attrs, $attrs);
+        ProductUnit::updateOrCreate($attrs, $attrs);
     }
 
     protected function ech($item)

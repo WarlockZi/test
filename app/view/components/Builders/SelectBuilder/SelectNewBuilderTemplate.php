@@ -1,6 +1,9 @@
-<select select-new <?= $class; ?>>
+<select
+        select-new
+        class="<?= $class; ?>"
+>
 
-	<?= $options; ?>
+   <?= $options; ?>
 
 </select>
 

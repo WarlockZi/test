@@ -1,6 +1,6 @@
-import '../components/counter/counter'
+import './counter1'
 import {$, cookieRemove, getToken, post, time, formatter, isAuthed} from '../common'
-import Counter from "../components/counter/counter";
+import Counter1 from "./counter1";
 import Cookie from "../components/cookie/new/cookie";
 import Modal from "../components/Modal/modal";
 import CartSuccess from "../components/Modal/modals/CartSuccess";

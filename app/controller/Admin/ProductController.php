@@ -6,7 +6,6 @@ use app\Actions\ProductAction;
 use app\Actions\ProductFilterAction;
 use app\controller\AppController;
 use app\core\Response;
-use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductRepository;
 use app\view\Product\ProductArrayFormView;
@@ -14,11 +13,12 @@ use app\view\Product\ProductArrayFormView;
 
 class ProductController extends AppController
 {
-    public $model = Product::class;
+   private ProductRepository $repo;
 
     public function __construct()
     {
         parent::__construct();
+        $this->repo = new ProductRepository();
     }
 
     public function actionEdit()
@@ -60,7 +60,10 @@ class ProductController extends AppController
     {
         ProductAction::changeVal($this->ajax);
     }
-
+   public function actionDeleteunit()
+   {
+      $this->repo->deleteUnit($this->ajax);
+   }
     public function actionChangeunit()
     {
         ProductAction::changeUnit($this->ajax);

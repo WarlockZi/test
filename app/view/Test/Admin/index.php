@@ -7,7 +7,7 @@
         <a href="<?= '/adminsc/test/do' ?>">Проходить тесты</a>
 
        <? foreach ($tests as $test): ?>
-           <a href="/test/do/<?= $test->id ?>"><?= $test->name; ?></a>
+           <a href="/adminsc/test/do/<?= $test->id ?>"><?= $test->name; ?></a>
        <? endforeach; ?>
 
 

@@ -5,8 +5,8 @@
     <div class="test">
        <?= $testView->getAccordion(); ?>
         <div class="content">
-           <?= $testView->getPagination(); ?>
-           <?= $testView->getContent(); ?>
+           <?= $testView->getPagination($test); ?>
+           <?= $testView->getContent($test); ?>
         </div>
     </div>
 </section>
