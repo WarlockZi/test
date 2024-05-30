@@ -94,12 +94,17 @@
 
       .user-action {
         display: block;
-        padding: 10px;
         background-color: white;
         border-radius: 5px;
 
         &:hover{
           background-color: #cccccc;
+        }
+
+        a{
+          display: block;
+          padding: 10px 15px;
+          color: $color-gray-mid;
         }
       }
     }

@@ -37,7 +37,7 @@ class CategoryController extends AppController
   }
 	public function actionChangeproperty()
 	{
-		CategoryAction::changeProperty($this->ajax);
+		$this->repo->changeProperty($this->ajax);
 	}
 
   public function actionList()

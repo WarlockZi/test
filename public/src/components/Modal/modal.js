@@ -1,6 +1,6 @@
 import './check_mark.scss'
 import './modal.scss'
-import {$, createEl, createElement} from '../../common'
+import {$, createElement} from '../../common'
 
 export default class Modal {
 

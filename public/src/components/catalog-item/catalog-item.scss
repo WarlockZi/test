@@ -245,12 +245,12 @@
       height: 130px;
       margin: 5px;
       border-radius: 3%;
-      background-color: #f8f8f8;
+      background-color: #f3f2f2;
       border: #e9e9e9 1px solid;
       //pointer-events: none;
 
       &:hover, &.hover {
-        background-color: white;
+        background-color: $color-gray-mid;
         border: #d9d9d9 1px solid;
       }
 

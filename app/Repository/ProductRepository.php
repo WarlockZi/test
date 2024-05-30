@@ -8,12 +8,11 @@ use app\core\FS;
 use app\core\Response;
 use app\model\Product;
 use app\model\ProductUnit;
-use app\view\Image\ImageView;
-use Illuminate\Database\Eloquent\Collection;
+use JetBrains\PhpStorm\NoReturn;
 
 class ProductRepository extends AppController
 {
-   public static function edit(int $id)
+   public function edit(int $id)
    {
       $id = Product::where('id', $id)->withTrashed()->first()['1s_id'];
       return Product::query()
@@ -32,7 +31,6 @@ class ProductRepository extends AppController
          ->with('smallpackImages')
          ->with('bigpackImages')
          ->with('seo')
-//            ->with('dopUnits')
          ->first();
    }
 
@@ -58,31 +56,65 @@ class ProductRepository extends AppController
          ->get();
    }
 
-   public static function main(string $slug)
+   public function main(string $slug)
    {
       $slug = "%{$slug}%";
-      $repo = new ProductRepository();
       $p    = Product::where('slug', 'Like', $slug)->withTrashed()->first();
       if (!$p) $p = Product::where('short_link', $slug)->first();
       if ($p) {
          $id      = $p['1s_id'];
-         $product = $repo->mainShortSubquery($id)->first();;
+         $product = $this->mainShortSubquery($id)->first();;
          return $product;
       }
       return null;
    }
 
-   public static function short(string $short)
+//
+   public function changePromotion(array $req)
    {
-      $self    = new self();
-      $p       = Product::where('short_link', $short)->firstOrFail();
-      $id      = $p['1s_id'];
-      $product =
-         $self->mainShortSubquery($id)
-            ->first();;
 
-      $p = $product->toArray();
-      return $product;
+   }
+   #[NoReturn] public function changeVal(array $req): void
+   {
+      $product = Product::find($req['product_id']);
+      $newVal = $req['morphed']['new_id'];
+      $oldVal = $req['morphed']['old_id'];
+
+      if (!$oldVal) {
+         $product->values()->attach($newVal);
+         exit(json_encode(['popup' => 'Добавлен']));
+
+      } else if (!$newVal) {
+         $product->values()->detach($oldVal);
+         exit(json_encode(['popup' => 'Удален']));
+
+      } else {
+         if ($newVal === $oldVal) exit(json_encode(['popup' => 'Одинаковые значения']));
+         $product->values()->detach($oldVal);
+         $product->values()->attach($newVal);
+         exit(json_encode(['popup' => 'Поменян']));
+      }
+   }
+   public function changeUnit(array $req): void
+   {
+      $productId   = $req['pivot']['product_id'];
+      $unitId      = $req['morphed']['new_id'];
+      $productUnit = [
+         'unit_id' => $unitId,
+         'multiplier' => $req['pivot']['multiplier'],
+         'is_shippable' => $req['pivot']['is_shippable'],
+      ];
+
+      try {
+         $unit = ProductUnit::query()
+            ->updateOrCreate(
+               ['product_1s_id'=> $productId,
+                  'unit_id'=> $unitId],
+               $productUnit);
+         Response::exitWithPopup('изменено');
+      } catch (\Throwable $exception) {
+         Response::exitWithPopup('не изменено');
+      }
    }
 
    public function deleteUnit(array $req): void
@@ -99,40 +131,8 @@ class ProductRepository extends AppController
       }
    }
 
-   public static function noMinimumUnit()
-   {
-      return Product::whereDoesntHave('shippableUnits')
-         ->select('name', 'art', 'id')
-         ->withTrashed()
-         ->get() ?? Collection::empty();
-   }
 
-   public static function noDopUnit()
-   {
-      $p = Product::query()
-         ->where('instore', '>', 0)
-         ->whereDoesntHave('dopUnits')
-         ->get();
-      return $p;
-   }
-
-   public static function haveDopUnit()
-   {
-      $p = Product::query()
-         ->where('instore', '>', 0)
-         ->whereHas('dopUnits')
-         ->get();
-//            ->toArray();
-      return $p;
-   }
-
-   protected static function getP($products)
-   {
-      foreach ($products as $k => $product)
-         return $product;
-   }
-
-   public static function trashed()
+   public function trashed()
    {
       return Product::query()
          ->with('price')
@@ -143,7 +143,7 @@ class ProductRepository extends AppController
          ->get();
    }
 
-   public static function list()
+   public function list()
    {
       return Product::query()
 //            ->with('price')
@@ -153,73 +153,8 @@ class ProductRepository extends AppController
          ->get();
    }
 
-   public static function hasMainImage(Product $p)
-   {
-      return $p->mainImagePath == '/pic/srvc/nophoto-min.jpg';
-   }
 
-   public static function noImgInStore()
-   {
-      $productsInstoreWithStars = Product::query()
-         ->select('art', 'name', 'id', 'instore')
-         ->where("name", 'REGEXP', "\\*$");
-
-      $products = Product::query()
-         ->select('art', 'name', 'id', 'instore')
-         ->where('instore', '>', 0)
-         ->where("name", 'NOT REGEXP', "\\*$")
-         ->union($productsInstoreWithStars)
-         ->get();
-      $a        = $products->toArray();
-
-      $arr = new Collection();
-      foreach ($products as $product) {
-         if (self::hasMainImage($product)) {
-            $arr->push($product);
-         }
-      }
-      return $arr;
-   }
-
-   public static function noImgNotInStore()
-   {
-      $products = Product::query()
-         ->select('art', 'name', 'id', 'instore')
-         ->where('instore', '<', 0)
-         ->get();
-
-      $arr = new Collection();
-      foreach ($products as $product) {
-         if (self::hasMainImage($product)) {
-            $arr->push($product);
-         }
-      }
-      return $arr;
-   }
-
-   public static function clear()
-   {
-      $deleted = FS::delFilesFromPath("\pic\product\\");
-      ImageRepository::delAll();
-   }
-
-   public static function priceStatic($column, $item, $d)
-   {
-      return $item->getRelation('price')->price ?? 0;
-   }
-
-   public static function imageStatic($column, $item, $d)
-   {
-      $art = trim($item->art);
-      $src = "/pic/product/uploads/{$art}.jpg";
-      if (is_file(ROOT . $src)) {
-         return "<img style='width: 50px; height: 50px;' src='{$src}'>";
-      } else {
-         return ImageView::noImage();
-      }
-   }
-
-   public static function getFilters()
+   public function getFilters()
    {
       $self    = new static();
       $filters = [
@@ -228,4 +163,26 @@ class ProductRepository extends AppController
       ];
       return FS::getFileContent('./filters.php', compact('filters'));
    }
+//   public function attachMainImage(array $file, string $productId): string
+//   {
+//      $product = Product::query()->find($productId);
+//      $mainImage = new ProductMainImageEntity($product, $file);
+//
+//      $mainImage->deletePreviousFile();
+//      $mainImage->save();
+////		$mainImage->thumbnail();
+//      return $mainImage->getRelativePath();
+//   }
+//   public function short(string $short)
+//   {
+//      $self    = new self();
+//      $p       = Product::where('short_link', $short)->firstOrFail();
+//      $id      = $p['1s_id'];
+//      $product =
+//         $self->mainShortSubquery($id)
+//            ->first();;
+//
+//      $p = $product->toArray();
+//      return $product;
+//   }
 }
