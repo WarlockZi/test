@@ -42,7 +42,7 @@ $user = Auth::getUser(); ?>
 			  <a class="list__item" href="/adminsc">Admin</a>
 				<? endif; ?>
 
-			<a href="/auth/logout" aria-label="logout">
+			<a href="/auth/logout" aria-label="logout" onclick="localStorage.setItem('id', null)">
 					 <?= Icon::logout2(); ?>Выход</a>
 		</div>
 	</div>

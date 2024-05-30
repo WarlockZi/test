@@ -35,13 +35,12 @@ class AccordionBuilder
 	{
 		$accordion = new self;
 		$accordion->items = $items->toArray();
-
-		$reflect = new \ReflectionClass($items);
-		$accordion->modelName = get_class($items);
-		$accordion->modelShortName = lcfirst($reflect->getShortName());
-
 		$accordion->link = $link;
 
+        $accordion->modelName = get_class($items);
+
+		$reflect = new \ReflectionClass($items);
+		$accordion->modelShortName = lcfirst($reflect->getShortName());
 		return $accordion;
 	}
 

@@ -15,8 +15,7 @@ use Carbon\Carbon;
 
 class OrderitemController extends AppController
 {
-   public $model = OrderItem::class;
-   protected $repo;
+   protected OrderitemRepository $repo;
 
    public function __construct()
    {
@@ -24,7 +23,7 @@ class OrderitemController extends AppController
       $this->repo = new OrderitemRepository();
    }
 
-   public function actionToorder()
+   public function actionToorder(): void
    {
       if ($this->ajax) {
          $form = $this->ajax['form'];
@@ -63,7 +62,7 @@ class OrderitemController extends AppController
 
    }
 
-   public function actionEdit()
+   public function actionEdit(): void
    {
       $orderId = $this->route->id;
       $orderitems = $this->repo->edit($orderId);

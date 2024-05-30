@@ -9,9 +9,9 @@ use DirectoryIterator;
 
 class Storage
 {
-	protected $storagePath;
-	protected $path;
-	protected $relativePath;
+	protected string $storagePath;
+	protected string $path;
+	protected string $relativePath;
 	protected $files;
 	protected $dirs;
 
@@ -21,14 +21,14 @@ class Storage
 		$this->path = $this->storagePath;
 	}
 
-	public static function getFile(string $file)
-	{
+	public static function getFile(string $file): string
+    {
 		$self = new static();
 		return $self->path . $file;
 	}
 
-	public function getFiles()
-	{
+	public function getFiles(): false|array
+    {
 		return glob("{$this->path}*.*");
 	}
 
@@ -44,8 +44,8 @@ class Storage
 		return $this->dirs;
 	}
 
-	public function getFileNames()
-	{
+	public function getFileNames(): array
+    {
 		$arr = [];
 		foreach ($this->files as $file) {
 			array_push($arr, basename($file, '.xml'));
@@ -53,14 +53,14 @@ class Storage
 		return $arr;
 	}
 
-	public static function getPath()
-	{
+	public static function getPath(): array|string
+    {
 		$self = new static();
 		return $self->path;
 	}
 
-	public static function getFileContent(string $file)
-	{
+	public static function getFileContent(string $file): false|string
+    {
 		$self = new static();
 		return file_get_contents($self->path . $file);
 	}

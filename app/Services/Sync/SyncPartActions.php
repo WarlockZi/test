@@ -1,17 +1,12 @@
 <?php
 
 
-namespace app\Actions;
+namespace app\Services\Sync;
 
 
 use app\controller\AppController;
 use app\core\Response;
 use app\model\Category;
-use app\model\Price;
-use app\model\Product;
-use app\Actions\XMLParser\LoadCategories;
-use app\Actions\XMLParser\LoadPrices;
-use app\Actions\XMLParser\LoadProducts;
 use app\Repository\SyncRepository;
 use app\Storage\{StorageDev, StorageImport, StorageLog};
 
@@ -22,7 +17,7 @@ class SyncPartActions extends AppController
 	protected $importFile;
 	protected $offerFile;
 	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
-	protected $route;
+
 	protected $logger;
 	protected $repo;
 

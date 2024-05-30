@@ -1,32 +1,38 @@
 import '../404/404.scss'
 import './main.scss'
 // import ViteProxyWebsocket from 'vite-proxy-websocket'
-import cart from '../Cart/cart'
-
-import Category from "../Category/category";
-import {$} from "../common";
+import {d, qs, ael} from '../constants';
 import Search from "../components/search/search";
-import Promotions from '../Promotions/Promotion'
+
+document.addEventListener('DOMContentLoaded', async function () {
+    new Search();
+    const gumburger = document[qs]('.gamburger');
+    if (gumburger) {
+        gumburger[ael]('click', opentMobilePanel)
+    }
+
+    function opentMobilePanel(e) {
+        const mm = e.target.closest('.utils')[qs]('.mobile-menu');
+        mm.classList.toggle('show')
+    }
 
 
-document.addEventListener('DOMContentLoaded', function () {
+    const category = document[qs]('.category')
+    if (category) {
+        const {default: Category} = await import('../Category/category')
+        new Category()
+    }
+    const promotions = document[qs]('.promotions-index')
+    if (promotions) {
+        const {default: Promotions} = await import('../Promotions/Promotion')
+        new Promotions;
+    }
 
-  new Category()
-  let gumburger = $('.gamburger')[0];
-  if (gumburger) {
-    $('.gamburger').on('click', opentMobilePanel)
-  }
-  new Promotions;
-
-
-  function opentMobilePanel(e) {
-    let mm = e.target.closest('.utils').querySelector('.mobile-menu');
-    mm.classList.toggle('show')
-  }
-
-
-  new Search();
-  new cart()
+    const cart = document[qs]('.user-content .cart')
+    if (cart) {
+        const {default: Cart} = await import('../Cart/cart')
+        new Cart()
+    }
 });
 
 

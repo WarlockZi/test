@@ -46,6 +46,8 @@ class Router
         try {
             $controller = new $controller();
         } catch (\Throwable $exception) {
+            $this->errorLogger->write('controller error - ' . $controller . PHP_EOL
+                . $exception->getMessage(). PHP_EOL);
             $controller = $this->route->getBaseController();
             $controller = new $controller;
         }
@@ -57,9 +59,10 @@ class Router
         try {
             $controller->$action();
         } catch (\Throwable $exception) {
-            $this->errorLogger->write('Router 55 - error in action' . $action . PHP_EOL
-                . $exception->getMessage());
+            $this->errorLogger->write('action error -' . $action . PHP_EOL
+                . $exception->getMessage(). PHP_EOL);
         }
+        if ($controller->isAjax()) exit;
         Auth::authorize($this->route);
 
         $layout = $this->route->getLayout();
@@ -67,7 +70,7 @@ class Router
         $layout->render();
     }
 
-    public function add($regexp, $route = [])
+    public function add($regexp, $route = []): void
     {
         $this->routes[$regexp] = $route;
     }

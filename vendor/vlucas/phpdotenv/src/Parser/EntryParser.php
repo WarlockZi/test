@@ -277,7 +277,7 @@ final class EntryParser
                 /** @var \GrahamCampbell\ResultType\Result<array{string,bool,int},string> */
                 return Success::create(['', false, self::COMMENT_STATE]);
             default:
-                throw new \Error('Parser entered invalid state.');
+                throw new \Error('Load entered invalid state.');
         }
     }
 

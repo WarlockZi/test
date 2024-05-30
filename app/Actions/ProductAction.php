@@ -20,19 +20,6 @@ class ProductAction
 		return $mainImage->getRelativePath();
 	}
 
-	public static function setBaseEqualMainUnit($req)
-	{
-		$product = Product::where('1s_id', $req['1s_id'])->first();
-		try {
-			$product->properties()
-				->updateOrCreate(
-					['product_1s_id' => $req['1s_id']],
-					['base_equals_main_unit' => $req['equal']]);
-			return true;
-		} catch (Exception $e) {
-			return false;
-		}
-	}
 
 /*	protected static function getFilePaths($file, $storage)
 	{
@@ -69,7 +56,11 @@ class ProductAction
 	{
 		UnitAction::changeUnit($req);
 	}
+   public static function deleteUnit(array $req)
+   {
 
+
+   }
 	public static function changePromotion(array $req)
 	{
 		UnitAction::changeUnit($req);

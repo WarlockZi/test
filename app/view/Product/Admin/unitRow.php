@@ -1,15 +1,15 @@
 <?= $selector ?>
 
-    <input type="number" value="<?= $multiplier; ?>">
+<?= $multiplier;?>
 
-    <div class="base-unit"><?= $name ?></div>
+<div class="base-unit"><?= $name ?></div>
 
-    <div class="min-unit">
-        <input type="checkbox" <?= $shippable; ?>>
-    </div>
+<div class="shippable">
+    <input type="checkbox" <?= $shippable; ?>>
+</div>
 
 <?php if ($deletable): ?>
     <div class="del" data-delete>X</div>
-<?php else:?>
+<?php else: ?>
     <div class="del"></div>
 <?php endif ?>

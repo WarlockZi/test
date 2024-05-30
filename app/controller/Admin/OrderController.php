@@ -2,7 +2,6 @@
 
 namespace app\controller\Admin;
 
-
 use app\controller\AppController;
 use app\core\Auth;
 use app\core\Response;
@@ -10,7 +9,6 @@ use app\model\Order;
 use app\Repository\OrderRepository;
 use app\view\Order\OrderView;
 use Carbon\Carbon;
-
 
 class OrderController extends AppController
 {
@@ -21,11 +19,11 @@ class OrderController extends AppController
       parent::__construct();
    }
 
-   public function actionIndex():void
+   public function actionIndex(): void
    {
       $orderItems = OrderRepository::leadList();
-      $leadlist = OrderView::leadList($orderItems);
-      $orders = OrderRepository::clientList();
+      $leadlist   = OrderView::leadList($orderItems);
+      $orders     = OrderRepository::clientList();
       $clientlist = OrderView::clientList($orders);
       $this->set(compact('clientlist', 'leadlist'));
    }
@@ -33,7 +31,7 @@ class OrderController extends AppController
    public function actionEdit()
    {
       $orderId = $this->route->id;
-      $orders = OrderRepository::edit($orderId);
+      $orders  = OrderRepository::edit($orderId);
       $this->set(compact('orders'));
    }
 

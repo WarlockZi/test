@@ -36,10 +36,13 @@ class Product extends Model
       '1s_id',
       'instore',
       'deleted_at',
+      'created_at',
+      'updated_at',
    ];
    protected $casts = [
       'art' => 'string',
    ];
+   protected $appends = ['price'];
 
    protected function shortLink(): Attribute
    {
@@ -69,7 +72,7 @@ class Product extends Model
 
    public function getPriceAttribute()
    {
-      return $this->priceRelation->price;
+      return $this->priceRelation()->first()->price;
    }
 
    public function getFormattedPriceAttribute()

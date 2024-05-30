@@ -2,7 +2,6 @@
 
 namespace app\controller\Admin;
 
-
 use app\Actions\CategoryAction;
 use app\controller\AppController;
 use app\model\Category;
@@ -11,12 +10,9 @@ use app\Repository\CategoryRepository;
 use app\view\Category\CategoryArrayFormView;
 use app\view\Category\CategoryFormView;
 
-
 class CategoryController extends AppController
 {
-
   public $model = Category::class;
-
   public function __construct()
   {
     parent::__construct();

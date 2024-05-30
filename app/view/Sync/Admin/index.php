@@ -22,9 +22,9 @@ use app\core\Icon;
         <div class="buttons-block">
             <div class="buttons-block-left">
 
-                <div class="button" id="removecategorieswithpopup">Удалить категории</div>
-                <div class="button" id="removeproductswithpopup">Удалить товары</div>
-                <div class="button" id="removepriceswithpopup">Удалить цены</div>
+                <div class="button" id="removecategories">Удалить категории</div>
+                <div class="button" id="removeproducts">Удалить товары</div>
+                <div class="button" id="removeprices">Удалить цены</div>
             </div>
             <div class="buttons-block-right">
                 <div class="button" id="removeall">Удалить все</div>
@@ -36,9 +36,9 @@ use app\core\Icon;
 
         <div class="buttons-block">
             <div class="buttons-block-left">
-                <div class="button" id="loadcategorieswithpopup">Загрузить категории</div>
-                <div class="button" id="loadproductswithpopup">Загрузить товары</div>
-                <div class="button" id="loadpriceswithpopup">Загрузить цены и количество</div>
+                <div class="button" id="loadcategories">Загрузить категории</div>
+                <div class="button" id="loadproducts">Загрузить товары</div>
+                <div class="button" id="loadprices">Загрузить цены и количество</div>
             </div>
             <div class="buttons-block-right">
                 <div class="button" id="loadall">Загрузить все</div>

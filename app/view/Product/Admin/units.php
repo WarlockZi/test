@@ -13,13 +13,13 @@ use app\core\Icon;
             <div class="name">Единица</div>
             <div class="multiplier">Коэфф</div>
             <div class="base-unit">Базовая ед.</div>
-            <div class="min-unit" title="Можем отгрузить клиенту эту единицу">Отгруж ед.</div>
+            <div class="shippable" title="Можем отгрузить клиенту эту единицу">Отгруж ед.</div>
             <div class="del"><?= Icon::trashIcon() ?></div>
         </div>
 
         <div class="rows">
             <div class="none">
-                <?= $selector; ?>
+                <?= $noneSelector; ?>
             </div>
 
 

@@ -3,7 +3,7 @@ import './units'
 import './Values'
 import {$, objAndFiles2FormData, post} from '../../common'
 import {d, qs, qa, ael} from '../../constants'
-import shippableTable from "../../share/shippable/shippableUnitsTable";
+// import shippableTable from "../../share/shippable/shippableUnitsTable";
 
 
 import {Fields} from "./Fields";
@@ -13,8 +13,7 @@ import Values from "./Values";
 import Dnd from "../../components/dnd/dnd";
 
 export default function product() {
-  const product = document[qs](`.item-wrap
-  [data-model='product']`);
+  const product = document[qs](`.item-wrap[data-model='product']`)
   if (!product) return false;
 
   new Values(product);
