@@ -25,12 +25,13 @@ class SyncService
 
    public function __construct()
    {
-      $this->storage    = new StorageImport;
-      $this->logger =  new FileLogger('import');
-      $this->importPath = $this->storage->getStoragePath();
+      $this->logger     = new FileLogger('import');
 
+      $this->storage    = new StorageImport;
+      $this->importPath = $this->storage->getStoragePath();
       $this->importFile = $this->storage::getFile('import0_1.xml');
       $this->offerFile  = $this->storage::getFile('offers0_1.xml');
+
    }
 
    public function requestFrom1s(): void
@@ -74,8 +75,9 @@ class SyncService
       foreach (Product::all() as $model) {
          $this->softDelete($model);
       }
-      $this->log('--- category  soft deleted ---');
+      $this->log('--- products  soft deleted ---');
    }
+
    public function softRemoveCategories(): void
    {
       foreach (Category::all() as $model) {
@@ -92,7 +94,7 @@ class SyncService
    private function removeProducts(): void
    {
       Product::truncate();
-      $this->log('--- product  deleted ---');
+      $this->log('--- products  deleted ---');
    }
 
    private function removeCategories(): void
@@ -151,7 +153,6 @@ class SyncService
    }
 
 
-
    #[NoReturn] protected function checkauth(): void
    {
       $this->logReqest('checkauth');
@@ -189,24 +190,19 @@ class SyncService
    protected function logReqest($func): void
    {
       $this->logDate();
-      $text = "func {$func} started" . PHP_EOL;
-      $this->logger->write($text);
-   }
-
-   protected function now(): string
-   {
-      return date("F j, Y, g:i a") . PHP_EOL;
+      $this->logger->write("func {$func} started" . PHP_EOL);
    }
 
    protected function logDate(): void
    {
-      $this->logger->write($this->now() . PHP_EOL);
+      $date = date("F j, Y, g:i a");
+      $this->logger->write($date . PHP_EOL);
    }
 
    #[NoReturn] protected function logError(string $msg, $e): void
    {
       $this->logDate();
-      $this->logger->write('- error -' . $msg);
+      $this->logger->write('- error -' . $msg . PHP_EOL . $e);
       if ($_ENV['DEV'] == '1') {
          Response::exitWithPopup($msg);
       }

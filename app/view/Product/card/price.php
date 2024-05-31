@@ -7,5 +7,5 @@
 
 </div>
 <div class="price-units ">
-    <?= $case->dopUnitsPrices($product) ?>
+    <?= $repo->dopUnitsPrices($product) ?>
 </div>

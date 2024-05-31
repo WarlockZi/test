@@ -6,6 +6,7 @@ use app\controller\AppController;
 use app\core\Response;
 use app\Services\Logger\FileLogger;
 use app\Services\Sync\SyncService;
+use JetBrains\PhpStorm\NoReturn;
 
 class SyncController extends AppController
 {
@@ -50,9 +51,10 @@ class SyncController extends AppController
 
 
    //load
-   public function actionLoad(): void
+   #[NoReturn] public function actionLoad(): void
    {
       $this->service->load();
+      exit();
    }
    public function actionLoadCategories(): void
    {
