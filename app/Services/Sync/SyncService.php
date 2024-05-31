@@ -25,7 +25,7 @@ class SyncService
 
    public function __construct()
    {
-      $this->logger = new FileLogger('import');
+      $this->logger = new FileLogger('import.txt');
 
       $this->storage    = new StorageImport;
       $this->importPath = $this->storage->getStoragePath();
@@ -37,7 +37,9 @@ class SyncService
    public function requestFrom1s(): void
    {
       $this->logReqest("Пришел запрос init из 1с");
-      $this->logReqest($this->route);
+      $this->logReqest($this->route->getControllerName());
+      $this->logReqest($this->route->action);
+      $this->logReqest($this->route->getAction());
       try {
          if ($this->route->params['mode'] === 'checkauth') {
             $this->checkauth();

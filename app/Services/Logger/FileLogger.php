@@ -9,9 +9,9 @@ use app\Storage\StorageLog;
 
 class FileLogger implements ILogger
 {
-	protected $logFile;
+	protected string $logFile;
 
-	public function __construct($fileName = 'log.txt')
+	public function __construct(string $fileName = 'log.txt')
 	{
 		$this->logFile = StorageLog::getFile($fileName);
 	}
