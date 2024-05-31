@@ -195,8 +195,8 @@ class Assets
 	{
 		unset($this->css[$name]);
 	}
-	public function setQuill()
-	{
+	public function setQuill(): void
+    {
 //		$this->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.bubble.css");
 		$this->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
 		$this->setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");

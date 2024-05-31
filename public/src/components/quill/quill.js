@@ -3,7 +3,8 @@ import {post, $} from '../../common'
 export default function quill() {
 
   window.onload = function () {
-    let selector = '#mytextarea'
+    const selector = '#detail-text'
+    // let selector = '#mytextarea'
     let textarea = $(selector)[0]
     if (!textarea) return false
 

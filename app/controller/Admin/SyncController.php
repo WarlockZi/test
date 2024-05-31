@@ -25,6 +25,7 @@ class SyncController extends AppController
       $this->service->requestFrom1s();
    }
 
+
    //remove
    public function actionRemoveall(): void
    {
