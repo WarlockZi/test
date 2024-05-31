@@ -36,10 +36,15 @@ class SyncService
 
    public function requestFrom1s(): void
    {
-      $this->logReqest("Пришел запрос init из 1с");
-      $this->logReqest($this->route->getControllerName());
-      $this->logReqest($this->route->action);
-      $this->logReqest($this->route->getAction());
+      $this->logReqest("Пришел запросввввв init из 1с");
+      try {
+         $this->logReqest($this->route->getControllerName());
+         $this->logReqest($this->route->action);
+         $this->logReqest($this->route->getAction());
+      }catch(\Throwable $exception){
+         $this->logReqest($exception);
+      }
+
       try {
          if ($this->route->params['mode'] === 'checkauth') {
             $this->checkauth();
