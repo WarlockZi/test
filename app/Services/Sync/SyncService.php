@@ -25,7 +25,7 @@ class SyncService
 
    public function __construct()
    {
-      $this->logger     = new FileLogger('import');
+      $this->logger = new FileLogger('import');
 
       $this->storage    = new StorageImport;
       $this->importPath = $this->storage->getStoragePath();
@@ -37,6 +37,7 @@ class SyncService
    public function requestFrom1s(): void
    {
       $this->logReqest("Пришел запрос init из 1с");
+      $this->logReqest($this->route);
       try {
          if ($this->route->params['mode'] === 'checkauth') {
             $this->checkauth();
@@ -152,6 +153,14 @@ class SyncService
       }
    }
 
+   protected function tc(callable $fn): void
+   {
+      try {
+         $fn();
+      } catch (\Throwable $exception) {
+         $this->logReqest(debug_backtrace()[1]["function"]);
+      }
+   }
 
    #[NoReturn] protected function checkauth(): void
    {
