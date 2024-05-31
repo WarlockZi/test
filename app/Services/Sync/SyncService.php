@@ -36,7 +36,7 @@ class SyncService
 
    public function requestFrom1s(): void
    {
-      $this->log("Пришел запрос init из 1с");
+      $this->logReqest("Пришел запрос init из 1с");
       try {
          if ($this->route->params['mode'] === 'checkauth') {
             $this->checkauth();
@@ -48,7 +48,7 @@ class SyncService
             exit('success');
          }
 
-         $this->log("Файлы из 1с загружены");
+         $this->logReqest("Файлы из 1с загружены");
       } catch (\Throwable $e) {
          $this->logError("---SyncControllerError---", $e);
       }

@@ -203,7 +203,7 @@ class ProductArrayFormView
          ->field(
             ItemArrayFieldBuilder::build('description', $product)
                ->name('Описание')
-               ->html(include ROOT . '/app/view/Product/description.php')
+               ->html(self::getDescription($product))
                ->get()
          )
          ->field(
@@ -247,6 +247,11 @@ class ProductArrayFormView
                )
          )
          ->get();
+   }
+   private static function getDescription(Product $product): string
+   {
+      $fs = new FS(__DIR__);
+      return $fs->getContent('description',compact('product'));
    }
 
    protected static function getBaseUnit(int $selected, string $field): string
@@ -327,24 +332,13 @@ class ProductArrayFormView
       return "<div class='values'>$str</div>";
    }
 
-
-   public static function belongToCategory($category)
-   {
-      $arr = $category->toArray();
-      $str = '';
-      foreach ($arr['products'] as $product) {
-         $str .= "<div>{$product['name']}</div>";
-      }
-      return $str;
-   }
-
-   protected static function clean(string $str)
+   protected static function clean(string $str): string
    {
       $builder = new Builder();
       return $builder->clean($str);
    }
 
-   public static function getCardDetailImage($image)
+   public static function getCardDetailImage($image): string
    {
       $im = "<img class = 'detail-image' src='{$image->getFullPath($image)}' alt=''></img>";
       return "<div class='detail-image-wrap'>{$im}</div>";

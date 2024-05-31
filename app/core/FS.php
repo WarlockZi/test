@@ -22,6 +22,7 @@ class FS
     public function getContent(string $file, array $data = []):string
     {
         try {
+
             $file = FS::platformSlashes($this->absPath . $file . '.php');
             if (!is_readable($file)) $this->errorLogger->write('not exist - '.$file);
 
@@ -33,9 +34,14 @@ class FS
             $content = ob_get_clean();
             return $content;
         } catch (\Throwable $exception){
+           $callerClass = debug_backtrace()[1]['file']." (line ".debug_backtrace()[1]['line'].")";
+           $callerMethod = debug_backtrace()[1]['function'];
             $content = ob_get_clean();
             if ($_ENV['DEV']==='1'){
-                return $exception;
+                return date('y-m-d, h:m:s').PHP_EOL.'<br><br>'.
+                   "class {$callerClass}".PHP_EOL.'<br><br>'.
+                   "method {$callerMethod}".PHP_EOL.'<br><br>'.
+                   $exception;
             }
             $this->errorLogger->write($exception);
             return 'ошибка в файле';

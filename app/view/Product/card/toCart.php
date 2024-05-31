@@ -1,6 +1,7 @@
 <?php
 
 use app\core\Icon;
+use app\view\share\shippable\ShippableUnitsTableFactory;
 
 ?>
 
@@ -24,7 +25,7 @@ use app\core\Icon;
         <p>Статус: в наличии</p>
     </div>
 
-    <?= \app\view\share\shippable\ShippableUnitsTableFactory::create($product, 'product'); ?>
+    <?= ShippableUnitsTableFactory::create($product, 'product'); ?>
 
 </div>
 </div>
