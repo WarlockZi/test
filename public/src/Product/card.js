@@ -18,5 +18,6 @@ window.onload = function () {
   // handleShippableUnitsTableClick()
   zoom()
   shortLink()
+
   quill()
 };
