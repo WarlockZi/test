@@ -44,7 +44,7 @@ class SyncService
          } elseif ($route->params['mode'] === 'init') {
             $this->zip();
          } elseif ($route->params['mode'] === 'file') {
-            $this->file();
+            $this->file($route);
          } elseif ($route->params['mode'] === 'import') {
             exit('success');
          }
@@ -52,6 +52,47 @@ class SyncService
          $this->logReqest("Файлы из 1с загружены");
       } catch (\Throwable $e) {
          $this->logError("---SyncControllerError---", $e);
+      }
+   }
+
+   protected function tc(callable $fn): void
+   {
+      try {
+         $fn();
+      } catch (\Throwable $exception) {
+         $this->logReqest(debug_backtrace()[1]["function"]);
+      }
+   }
+
+   #[NoReturn] protected function checkauth(): void
+   {
+      $this->logReqest('checkauth');
+      exit("success\ninc\n777777\n55fdsa55");
+   }
+
+   #[NoReturn] protected function zip(): void
+   {
+      $this->logReqest('init');
+      exit("zip=no\nfile_limit=10000000");
+   }
+
+   #[NoReturn] protected function file(Route $route): void
+   {
+      $filename = $route->params['filename'];
+      file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
+
+      $this->logReqest('file');
+      exit('success');
+   }
+
+   private function importFilesExist(): void
+   {
+      if (!is_readable($this->importFile)) {
+         $this->logger->write('Отсутстует файл importFile');
+         if (!is_readable($this->offerFile)) {
+            $this->logger->write('Отсутстует файл offerFile');
+         }
+         return;
       }
    }
 
@@ -150,47 +191,6 @@ class SyncService
 
       } catch (\Throwable $e) {
          $this->logError("--- Ошибка load ", $e);
-      }
-   }
-
-   protected function tc(callable $fn): void
-   {
-      try {
-         $fn();
-      } catch (\Throwable $exception) {
-         $this->logReqest(debug_backtrace()[1]["function"]);
-      }
-   }
-
-   #[NoReturn] protected function checkauth(): void
-   {
-      $this->logReqest('checkauth');
-      exit("success\ninc\n777777\n55fdsa55");
-   }
-
-   #[NoReturn] protected function zip(): void
-   {
-      $this->logReqest('init');
-      exit("zip=no\nfile_limit=10000000");
-   }
-
-   #[NoReturn] protected function file(): void
-   {
-      $filename = $this->route->params['filename'];
-      file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
-
-      $this->logReqest('file');
-      exit('success');
-   }
-
-   private function importFilesExist(): void
-   {
-      if (!is_readable($this->importFile)) {
-         $this->logger->write('Отсутстует файл importFile');
-         if (!is_readable($this->offerFile)) {
-            $this->logger->write('Отсутстует файл offerFile');
-         }
-         return;
       }
    }
 
