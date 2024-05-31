@@ -22,7 +22,7 @@ class SyncController extends AppController
 
    public function actionInit(): void
    {
-      $this->service->requestFrom1s();
+      $this->service->requestFrom1s($this->route);
       exit('done');
    }
 
