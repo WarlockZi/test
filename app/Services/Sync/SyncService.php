@@ -37,19 +37,19 @@ class SyncService
 
    public function requestFrom1s(Route $route): void
    {
-      $this->logReqest("Пришел запрос init из 1с");
       try {
          if ($route->params['mode'] === 'checkauth') {
+            $this->logReqest("Пришел запрос init из 1с");
             $this->checkauth();
          } elseif ($route->params['mode'] === 'init') {
             $this->zip();
          } elseif ($route->params['mode'] === 'file') {
-            $this->file($route);
+            $this->file($route->params['filename']);
          } elseif ($route->params['mode'] === 'import') {
+            $this->logReqest("Файлы из 1с загружены");
             exit('success');
          }
 
-         $this->logReqest("Файлы из 1с загружены");
       } catch (\Throwable $e) {
          $this->logError("---SyncControllerError---", $e);
       }
@@ -76,9 +76,8 @@ class SyncService
       exit("zip=no\nfile_limit=10000000");
    }
 
-   #[NoReturn] protected function file(Route $route): void
+   #[NoReturn] protected function file($filename): void
    {
-      $filename = $route->params['filename'];
       file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
 
       $this->logReqest('file');
