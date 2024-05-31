@@ -2,6 +2,7 @@
 
 namespace app\Services\Sync;
 
+use app\controller\AppController;
 use app\core\Response;
 use app\core\Route;
 use app\model\Category;
@@ -34,25 +35,22 @@ class SyncService
 
    }
 
-   public function requestFrom1s(): void
+   public function requestFrom1s(Route $route): void
    {
       $this->logReqest("Пришел запросввввв init из 1с");
-      try {
-         $this->logReqest($this->route->getControllerName());
-         $this->logReqest($this->route->action);
-         $this->logReqest($this->route->getAction());
-      }catch(\Throwable $exception){
-         $this->logReqest($exception);
-      }
+      $this->logReqest($route->getControllerName());
+      $this->logReqest($route->action);
+      $this->logReqest($route->getAction());
+
 
       try {
-         if ($this->route->params['mode'] === 'checkauth') {
+         if ($route->params['mode'] === 'checkauth') {
             $this->checkauth();
-         } elseif ($this->route->params['mode'] === 'init') {
+         } elseif ($route->params['mode'] === 'init') {
             $this->zip();
-         } elseif ($this->route->params['mode'] === 'file') {
+         } elseif ($route->params['mode'] === 'file') {
             $this->file();
-         } elseif ($this->route->params['mode'] === 'import') {
+         } elseif ($route->params['mode'] === 'import') {
             exit('success');
          }
 
