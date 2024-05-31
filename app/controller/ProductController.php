@@ -12,29 +12,29 @@ use app\Repository\ProductRepository;
 class ProductController extends AppController
 {
 //    protected $model;
-   protected ProductUseCase $case;
+   protected ProductRepository $repo;
 
    public function __construct()
    {
       parent::__construct();
-      $this->case = new ProductUseCase();
+      $this->repo = new ProductRepository();
    }
 
-   public function actionIndex():void
+   public function actionIndex(): void
    {
       $slug = $this->route->slug;
       if (!$slug) {
          header('Location:/category');
       }
 
-      $product = ProductRepository::main($slug);
+      $product = $this->repo->main($slug);
       $this->route->setView('product');
       if ($product) {
-         $oItems = OrderRepository::count();
+         $oItems      = OrderRepository::count();
          $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category_id, true,);
          $userIsAdmin = Auth::isAdmin();
-         $case = $this->case;
-         $this->set(compact('product', 'breadcrumbs', 'oItems', 'userIsAdmin', 'case'));
+         $repo        = $this->repo;
+         $this->set(compact('repo', 'product', 'breadcrumbs', 'oItems', 'userIsAdmin'));
 
          $this->assets->setItemMeta($product);
          $this->assets->setProduct();
