@@ -37,12 +37,7 @@ class SyncService
 
    public function requestFrom1s(Route $route): void
    {
-      $this->logReqest("Пришел запросввввв init из 1с");
-      $this->logReqest($route->getControllerName());
-      $this->logReqest($route->action);
-      $this->logReqest($route->getAction());
-
-
+      $this->logReqest("Пришел запрос init из 1с");
       try {
          if ($route->params['mode'] === 'checkauth') {
             $this->checkauth();
@@ -188,16 +183,15 @@ class SyncService
       exit('success');
    }
 
-   private function importFilesExist(): bool
+   private function importFilesExist(): void
    {
       if (!is_readable($this->importFile)) {
          $this->logger->write('Отсутстует файл importFile');
          if (!is_readable($this->offerFile)) {
             $this->logger->write('Отсутстует файл offerFile');
          }
-         return false;
+         return;
       }
-      return true;
    }
 
 ///log
@@ -209,8 +203,8 @@ class SyncService
 
    protected function logDate(): void
    {
-      $date = date("F j, Y, g:i a");
-      $this->logger->write($date . PHP_EOL);
+      $date = date("Y-m-d H:i:s");
+      $this->logger->write($date);
    }
 
    #[NoReturn] protected function logError(string $msg, $e): void
