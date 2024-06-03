@@ -292,6 +292,12 @@ class Product extends Model
          'imageable',
       )->where('slug', 'bigpack');
    }
+   public function mainImage()
+   {
+       $art = $this->art;
+       $file = ROOT. '/pic/product/upload/'.$art.'.jpg';
+       return file_exists($file);
+   }
 
 
 //    public function dopUnits()
