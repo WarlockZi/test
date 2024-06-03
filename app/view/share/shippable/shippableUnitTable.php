@@ -13,8 +13,8 @@
     </div>
 
     <div class="arrows">
-        <div class="arrow plus"><?= \app\core\Icon::arrowUp() ?></div>
-        <div class="arrow minus"><?= \app\core\Icon::arrowUp() ?></div>
+        <div class="arrow plus"></div>
+        <div class="arrow minus"></div>
 
     </div>
 

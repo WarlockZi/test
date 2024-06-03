@@ -4,6 +4,7 @@
 /tmp/cache/*
 /refs/
 /node_modules/
+/vendor
 /.idea/
 /.vscode
 /composer.phar

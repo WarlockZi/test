@@ -1,12 +1,12 @@
 import './counter1'
 import {$, cookieRemove, getToken, post, time, formatter, isAuthed} from '../common'
-import Counter1 from "./counter1";
+// import Counter1 from "./counter1";
 import Cookie from "../components/cookie/new/cookie";
 import Modal from "../components/Modal/modal";
 import CartSuccess from "../components/Modal/modals/CartSuccess";
 import CartLogin from "../components/Modal/modals/CartLogin";
 import CartLead from "../components/Modal/modals/CartLead";
-import {qs, qa, ael, it} from '../constants';
+import {qs, qa, it} from '../constants';
 import shippableTable from "../share/shippable/shippableUnitsTable";
 
 export default class Cart {
@@ -96,8 +96,9 @@ export default class Cart {
             if (this.rowTotalCount(target.closest('.row'))) {
                 this.renderSums()
             } else {
-                this.deleteCartRow(target)
+                await this.deleteCartRow(target)
             }
+                this.renderSums()
         }
     }
 
@@ -108,7 +109,7 @@ export default class Cart {
     }
 
     async deleteCartRow(target) {
-        const res = await post(`${this.url}/delete`, this.cartRowDTO(target));
+        const res = await post(`${this.url}/deleteRow`, this.cartRowDTO(target));
         if (res?.arr?.ok) {
             target.closest('.row').remove();
             if (this.rows.length < 1) this.showEmptyCart()

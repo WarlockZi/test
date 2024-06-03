@@ -2,7 +2,7 @@
      viewBox="0 0 18 18"
      fill="none">
     <path d="M1 6L8 11L15 6"
-          stroke="currentColor"
+          stroke="white"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"

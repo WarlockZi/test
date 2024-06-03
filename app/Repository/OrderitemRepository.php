@@ -85,10 +85,22 @@ class OrderitemRepository
         return $count;
     }
 
-    public function deleteItem(string $model, string $sess, string $product_id, array $unitIds)
+    public function deleteItem(string $sess, string $product_id, string $unitId)
+    {
+
+        $oItem = OrderItem::query()
+            ->where('sess', $sess)
+            ->where('product_id', $product_id)
+            ->where('unit_id', $unitId)
+            ->first();
+        if ($oItem) $oItem::query()->forceDelete();
+
+    }
+
+    public function deleteItems(string $sess, string $product_id, array $unitIds)
     {
         foreach ($unitIds as $unitId) {
-            $oItem = $model::query()
+            $oItem = OrderItem::query()
                 ->where('sess', $sess)
                 ->where('product_id', $product_id)
                 ->where('unit_id', $unitId)
@@ -96,5 +108,4 @@ class OrderitemRepository
             if ($oItem) $oItem::query()->forceDelete();
         }
     }
-
 }

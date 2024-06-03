@@ -11,7 +11,7 @@ define('ROOT', dirname(__DIR__));
 
 $s = DIRECTORY_SEPARATOR;
 require_once ROOT . $s . "vendor" . $s . "autoload.php";
-(Dotenv\Dotenv::createImmutable(ROOT))->load();
+(Dotenv\Dotenv::createImmutable(ROOT, '.env'))->load();
 
 if ($_ENV['DEV']) {
     ini_set('display_errors', 'On');
