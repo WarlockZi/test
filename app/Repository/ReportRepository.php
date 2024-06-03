@@ -5,6 +5,7 @@ namespace app\Repository;
 
 use app\controller\AppController;
 use app\core\FS;
+use app\core\Response;
 use app\model\Product;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -64,7 +65,7 @@ class ReportRepository extends AppController
 
         $arr = new Collection();
         foreach ($products as $product) {
-            if (self::hasMainImage($product)) {
+            if (!self::hasMainImage($product)) {
                 $arr->push($product);
             }
         }
@@ -76,6 +77,7 @@ class ReportRepository extends AppController
         $exts = ['jpg', 'jpeg', 'png', 'gif'];
         foreach ($exts as $ext) {
             $file = ROOT . "/pic/products/uploads/{$product->art}.{$ext}";
+                if ($product->art === 'Пер043') Response::exitWithPopup($file);
             if (file_exists(FS::platformSlashes($file))) {
                 return true;
             }
