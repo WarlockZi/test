@@ -64,7 +64,7 @@ class ReportRepository extends AppController
 
         $arr = new Collection();
         foreach ($products as $product) {
-            if (self::hasMainImage($product)) {
+            if (!self::hasMainImage($product)) {
                 $arr->push($product);
             }
         }
