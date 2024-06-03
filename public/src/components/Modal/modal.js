@@ -7,7 +7,7 @@ export default class Modal {
   constructor(props) {
     this.modal = $(`[data-modal='default']`).first();
     if (!this.modal) return;
-    if (!props.button) return;
+    if (!props?.button) return;
 
     this.button = props.button;
     this.data = props.data;
@@ -34,9 +34,9 @@ export default class Modal {
     this.$submit.addEventListener('click', this.submit.bind(this));
     this.content.innerHTML = '';
     this.renderTitle();
-    this.renderFields();
-    this.renderContent();
-    this.renderFooter();
+    await this.renderFields();
+    await this.renderContent();
+    await this.renderFooter();
     this.renderSubmitText();
 
     this.modal.style.display = 'flex';
