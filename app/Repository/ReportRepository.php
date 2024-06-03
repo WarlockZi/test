@@ -6,6 +6,7 @@ namespace app\Repository;
 use app\controller\AppController;
 use app\core\FS;
 use app\core\Response;
+use app\Domain\Entity\ProductMainImageEntity;
 use app\model\Product;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -61,7 +62,7 @@ class ReportRepository extends AppController
             ->where("name", 'NOT REGEXP', "\\*$")
             ->union($productsInstoreWithStars)
             ->get();
-        $a = $products->toArray();
+//        $a = $products->toArray();
 
         $arr = new Collection();
         foreach ($products as $product) {
@@ -74,10 +75,13 @@ class ReportRepository extends AppController
 
     private function hasMainImage($product): bool
     {
-        $exts = ['jpg', 'jpeg', 'png', 'gif'];
+        $exts = ['jpg', 'jpeg', 'png'];
+        $pEnt = new ProductMainImageEntity($product);
         foreach ($exts as $ext) {
-            $file = ROOT . "/pic/product/uploads/{$product->art}.{$ext}";
-            if (file_exists(FS::platformSlashes($file))) {
+            $path = FS::platformSlashes(ROOT . "/pic/product/uploads/");
+            $art = $pEnt->getArt();
+            $file = $path."{$art}.{$ext}";
+            if (file_exists($file)) {
 //                if ($product->art === 'Пер043') Response::exitWithPopup($file);
                 return true;
             }
