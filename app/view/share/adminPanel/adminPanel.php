@@ -12,8 +12,8 @@
         <?php if (Auth::isOlya()): ?>
             <div class="row">
                 <a href="/adminsc/report/productsNoImgInstore">без картинок</a>
-                <a href="/adminsc/report/Productsnominimumunit">без мин упак</a>
-                <a href="/adminsc/report/Productsnodopunit">без мин единицы</a>
+                <a href="/adminsc/report/Productsnominunit">без мин упак</a>
+                <a href="/adminsc/report/Productsnosipppable">без мин единицы</a>
             </div>
         <?php endif; ?>
 

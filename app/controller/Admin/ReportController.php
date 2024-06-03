@@ -36,26 +36,27 @@ private ReportView $formView;
 		$this->set(compact('productList'));
 	}
 
-	public function actionProductsnominimumunit()
+	public function actionProductsNoMinUnit()
 	{
-		$this->view = 'productswithoutimg';
+		$this->view = 'productsnominunit';
 		$products = $this->repo->noMinimumUnit();
 		$productList = $this->formView->noMinUnitList($products, 'Товары без min упаковки');
 		$this->set(compact('productList'));
 	}
 
-	public function actionProductsnodopunit()
+	public function actionProductsNoSipppable()
 	{
         $this->view = 'productsnoimg';
-		$productList = $this->repo->noDopUnit();
+		$products = $this->repo->noDopUnit();
+		$productList = $this->formView->noMinUnitList($products, 'Товары без min упаковки');
 		$this->set(compact('productList'));
 	}
-	public function actionProductshavedopunit()
-	{
-        $products = $this->repo->haveDopUnit();
-        $productList = $this->formView->haveDopUnit($products, 'Товары имеющие доп единицы');
-		$this->set(compact('productList'));
-	}
+//	public function actionProductsnosipppable()
+//	{
+//        $products = $this->repo->haveDopUnit();
+//        $productList = $this->formView->haveDopUnit($products, 'Товары имеющие доп единицы');
+//		$this->set(compact('productList'));
+//	}
     public function actionTrashed()
     {
         $products = $this->repo->trashed();
