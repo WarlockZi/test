@@ -2,7 +2,7 @@
 
 namespace app\controller;
 
-use app\Actions\AuthAction;
+//use app\Actions\AuthAction;
 use app\core\Auth;
 use app\core\Mail\PHPMail;
 use app\core\Request;
@@ -16,7 +16,7 @@ use JetBrains\PhpStorm\NoReturn;
 class AuthController extends AppController
 {
    protected PHPMail $mailer;
-   protected  $actions;
+   protected UserRepository $actions;
    protected UserRepository $userRepository;
 
    public function __construct()
@@ -102,7 +102,7 @@ class AuthController extends AppController
          $this->assets->unsetCss('auth.css');
 
       } else {
-         $this->layout = 'vitex';
+//         $this-layout = 'vitex';
          $item = UserView::guest($user);;
       }
 
