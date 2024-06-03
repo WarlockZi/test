@@ -18,7 +18,8 @@
     "illuminate/events": "^8.83",
     "illuminate/database": "^8.83",
     "ext-mysqli": "*",
-    "symfony/validator": "^7.0"
+    "symfony/validator": "^7.0",
+    "ext-pdo": "*"
   },
   "config": {
     "platform-check": false

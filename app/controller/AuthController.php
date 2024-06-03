@@ -15,7 +15,6 @@ use JetBrains\PhpStorm\NoReturn;
 class AuthController extends AppController
 {
    protected PHPMail $mailer;
-   protected UserRepository $actions;
    protected UserRepository $userRepository;
 
    public function __construct()
@@ -25,7 +24,6 @@ class AuthController extends AppController
 //		$bot->send('Что так');
 
       $this->userRepository = new UserRepository();
-      $this->actions = $this->userRepository;
       $this->mailer = new PHPMail('env');
       if (!$this->ajax) {
          $this->assets->setAuth();
@@ -114,14 +112,14 @@ class AuthController extends AppController
          if (!$data['old_password'] || !$data['new_password'])
             Response::exitWithError('Заполните старый и новый пароль');
 
-         $old_password = $this->actions->preparePassword($data['old_password']);
+         $old_password = $this->userRepository->preparePassword($data['old_password']);
 
          $user = User::where('password', $old_password)
             ->get()->toArray();
 
          if ($user) {
             $user = $user[0];
-            $newPassword = $this->actions->preparePassword($data['new_password']);
+            $newPassword = $this->userRepository->preparePassword($data['new_password']);
             $res = User::where('id', $user['id'])
                ->update(['password' => $newPassword]);
             if ($res) {
@@ -144,8 +142,8 @@ class AuthController extends AppController
          $user = $this->userRepository->returnPassword($data);
 
          if ($user) {
-            $password = $this->actions->randomPassword();
-            $newPassword = $this->actions->preparePassword($password);
+            $password = $this->userRepository->randomPassword();
+            $newPassword = $this->userRepository->preparePassword($password);
             User::where('id', $user['id'])
                ->update(['password' => $newPassword]);
 
