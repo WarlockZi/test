@@ -28,7 +28,10 @@ try {
 
 
 //	$mockUser = \app\model\User::query()->find(160);
-//	Auth::setUser($mockUser);
+//	$Olya = \app\model\User::query()
+//        ->where('email', 'vitex018@yandex.ru')
+//        ->first();
+//	Auth::setUser($Olya);
 
     $router = new Router($_SERVER['REQUEST_URI'] ?? '');
     $router->dispatch();

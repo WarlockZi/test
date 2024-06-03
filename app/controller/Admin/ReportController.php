@@ -22,7 +22,7 @@ private ReportView $formView;
 
 	public function actionProductsnoimgInstore()
 	{
-		$this->view = 'productswithoutimg';
+		$this->view = 'productsnoimginstore';
 		$p = $this->repo->noImgInStore();
 		$productList = $this->formView->noImgNoInstoreList($p, 'Товары без картинок в наличии');
 		$this->set(compact('productList'));
