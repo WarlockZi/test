@@ -64,7 +64,7 @@ class ReportRepository extends AppController
 
         $arr = new Collection();
         foreach ($products as $product) {
-            if (self::hasMainImage($product)) {
+            if (!self::hasMainImage($product)) {
                 $arr->push($product);
             }
         }
@@ -73,8 +73,14 @@ class ReportRepository extends AppController
 
     private function hasMainImage($product): bool
     {
-        $file = ROOT . '/pic/products/uploads/' . "{$product->art}.jpg";
-        return file_exists(FS::platformSlashes($file));
+        $exts = ['jpg', 'jpeg', 'png', 'gif'];
+        foreach ($exts as $ext) {
+            $file = ROOT . "/pic/products/uploads/{$product->art}.{$ext}";
+            if (file_exists(FS::platformSlashes($file))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function noImgNotInStore()
