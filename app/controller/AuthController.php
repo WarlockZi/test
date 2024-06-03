@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-//use app\Actions\AuthAction;
 use app\core\Auth;
 use app\core\Mail\PHPMail;
 use app\core\Request;
