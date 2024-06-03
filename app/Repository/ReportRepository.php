@@ -77,8 +77,8 @@ class ReportRepository extends AppController
         $exts = ['jpg', 'jpeg', 'png', 'gif'];
         foreach ($exts as $ext) {
             $file = ROOT . "/pic/products/uploads/{$product->art}.{$ext}";
-                if ($product->art === 'Пер043') Response::exitWithPopup($file);
             if (file_exists(FS::platformSlashes($file))) {
+                if ($product->art === 'Пер043') Response::exitWithPopup($file);
                 return true;
             }
         }
