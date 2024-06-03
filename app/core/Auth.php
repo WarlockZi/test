@@ -36,11 +36,14 @@ class Auth
       return self::$user;
    }
 
-   public static function isSU($user): bool
+   public static function isSU(): bool
    {
-      return $_ENV['SU_EMAIL'] === $user['email'];
+      return $_ENV['SU_EMAIL'] === Auth::getUser()['email'];
    }
-
+    public static function isOlya(): bool
+    {
+        return 'vitex018@yandex.ru' === Auth::getUser()['email'];
+    }
    public static function setAuth(array $user): void
    {
       $_SESSION['id'] = $user['id'];
