@@ -29,6 +29,7 @@ class Router
                         unset($matches[$k]);
                     }
                 }
+
                 $matches = array_merge($matches, $r);
                 foreach ($matches as $k => $v) {
                     $this->route->$k = strtolower($v);
