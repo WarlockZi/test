@@ -213,8 +213,8 @@ class Assets
 //		return $this->canonical;
 //	}
 
-	public function setAuth()
-	{
+	public function setAuth(): void
+    {
 		$this->setJs('auth');
 		$this->setCss('auth');
 	}

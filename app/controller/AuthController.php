@@ -16,7 +16,7 @@ use JetBrains\PhpStorm\NoReturn;
 class AuthController extends AppController
 {
    protected PHPMail $mailer;
-   protected AuthAction $actions;
+   protected  $actions;
    protected UserRepository $userRepository;
 
    public function __construct()
@@ -25,8 +25,8 @@ class AuthController extends AppController
 //		$bot = new TelegramBot();
 //		$bot->send('Что так');
 
-      $this->actions = new AuthAction();
       $this->userRepository = new UserRepository();
+      $this->actions = $this->userRepository;
       $this->mailer = new PHPMail('env');
       if (!$this->ajax) {
          $this->assets->setAuth();
