@@ -1,11 +1,14 @@
 <?php use \app\core\Auth; ?>
-<?php if (\app\core\Auth::isAdmin()): ?>
+<?php if (Auth::isAdmin()): ?>
     <div class="admin-panel">
 
-        <?php if (Auth::isSU()): ?>
+        <?php if (Auth::isSU(Auth::getUser()['email'])): ?>
             <div class="row">
                 <a href="/Zip/importfiles">download</a>
                 <a href="/adminsc/sync"> Sync</a>
+                <a href="/adminsc/report/productsNoImgInstore">без картинок</a>
+                <a href="/adminsc/report/Productsnominunit">без мин упак</a>
+                <a href="/adminsc/report/Productsnoshippable">без мин единицы</a>
             </div>
         <?php endif; ?>
 
@@ -13,7 +16,7 @@
             <div class="row">
                 <a href="/adminsc/report/productsNoImgInstore">без картинок</a>
                 <a href="/adminsc/report/Productsnominunit">без мин упак</a>
-                <a href="/adminsc/report/Productsnosipppable">без мин единицы</a>
+                <a href="/adminsc/report/Productsnoshippable">без мин единицы</a>
             </div>
         <?php endif; ?>
 

@@ -41,7 +41,6 @@ export default function quill() {
 
       let quill = new Quill(selector, options);
 
-      debugger
       try {
          const json = JSON.parse(text);
          quill.setContents(json)

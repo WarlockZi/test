@@ -198,16 +198,7 @@ class ProductRepository extends AppController
       ];
       return FS::getFileContent('./filters.php', compact('filters'));
    }
-//   public function attachMainImage(array $file, string $productId): string
-//   {
-//      $product = Product::query()->find($productId);
-//      $mainImage = new ProductMainImageEntity($product, $file);
-//
-//      $mainImage->deletePreviousFile();
-//      $mainImage->save();
-////		$mainImage->thumbnail();
-//      return $mainImage->getRelativePath();
-//   }
+
 //   public function short(string $short)
 //   {
 //      $self    = new self();
