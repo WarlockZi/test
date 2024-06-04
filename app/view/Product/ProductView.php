@@ -6,6 +6,7 @@ use app\core\FS;
 use app\Domain\Product\Image\ProductMainImageEntity;
 use app\model\Product;
 use app\Repository\ImageRepository;
+use app\Services\ProductImageService;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\Image\ImageView;
 
@@ -29,55 +30,43 @@ class ProductView
 	public static function mainImage(Product $p)
 	{
 		$dnd = DndBuilder::make('product/uploads', 'add-file');
-		$img = ImageRepository::getProductMainImage($p);
-		return "<div class='dnd-container'>{$dnd}{$img}</div>";
+        $src = (new ProductImageService)->getRelativeImage($p);
+        $name = $p->name;
+		return "<div class='dnd-container'>{$dnd}<img src = '{$src}' title = '{$name}' alt = '{$name}'/></div>";
 	}
 
-	public static function baseEqualsMainUnit(Product $p)
-	{
-		return FS::getFileContent(self::$viewPath . 'baseEqualsMain.php', [$p]);
-	}
 
-	public static function mainImageSrc(Product $p)
-	{
-		$src = '/pic/product/uploads/' . $p->art . '.jpg';
-		$slashedSrc = FS::platformSlashes(ROOT . $src);
-		if (is_readable($slashedSrc)) {
-			return $src;
-		}
-		return ImageView::noImageSrc();
-	}
+//	public static function mainImageSrc(Product $p)
+//	{
+//		$src = '/pic/product/uploads/' . $p->art . '.jpg';
+//		$slashedSrc = FS::platformSlashes(ROOT . $src);
+//		if (is_readable($slashedSrc)) {
+//			return $src;
+//		}
+//		return ImageView::noImageSrc();
+//	}
 
-	public static function getMainImageFile(Product $product): string
-	{
-		return FS::platformSlashes(ROOT . self::$mainImagePath . "{$product->art}.jpg");
-	}
+//	public static function getMainImageFile(Product $product): string
+//	{
+//		return FS::platformSlashes(ROOT . self::$mainImagePath . "{$product->art}.jpg");
+//	}
 
-	public static function getMainImage(Product $product): string
-	{
-		$file = ProductView::getMainImageFile($product);
-		if (is_readable($file)) {
-			return FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
-		} else {
-
-			return ImageView::noImage();
-		}
-	}
+//	public static function getMainImage(Product $product): string
+//	{
+//		$file = ProductView::getMainImageFile($product);
+//		if (is_readable($file)) {
+//			return FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
+//		} else {
+//			return ImageView::noImage();
+//		}
+//	}
 
 	public static function getCardMainImage(Product $product)
 	{
-		$mi = new ProductMainImageEntity($product);
-		try {
-			$file = $mi->getAbsolutePath();
-
-			if (is_readable($file)) {
-				$image = FS::getFileContent(__DIR__ . '/main_image.php', compact('product'));
-			} else {
-				$image = ImageView::noImage();
-			}
-			return "<div class='main-image'>{$image}</div>";
-		} catch (\Throwable $e) {
-			return "<p class='main-image'>{$e}</p>";
-		}
+        $fs =  new FS(__DIR__);
+        $mainImagePath = (new ProductImageService())->getRelativeImage($product);
+        $src=$mainImagePath;
+        $name = $product->name;
+        return $fs->getContent('main_image1', compact('mainImagePath','src','name'));
 	}
 }

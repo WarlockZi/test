@@ -60,7 +60,7 @@ class User extends Model
 		}
 
 		$has = self::hasRights($user, $rights);
-		$su = self::isSu();
+		$su = self::isSu($user['email']);
 
 		return ($has || $su);
 	}

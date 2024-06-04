@@ -318,10 +318,6 @@
     flex: 1 1 50%;
   }
 
-  .info-wrap {
-    @include info-tag;
-  }
-
   .note {
     font-size: .6rem;
     font-style: italic;
@@ -333,7 +329,10 @@
     color: #ffffff;
     font-weight: normal;
   }
-}
 
+}
+.info-wrap {
+  @include info-tag;
+}
 
 

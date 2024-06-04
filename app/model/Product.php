@@ -4,6 +4,8 @@ namespace app\model;
 
 
 use app\Domain\Product\Image\ProductMainImageEntity;
+use app\Services\ProductImageService;
+use app\Services\ProductService;
 use app\Services\ShortlinkService;
 use app\Services\Slug;
 use app\view\Image\ImageView;
@@ -17,7 +19,8 @@ class Product extends Model
    use \Illuminate\Database\Eloquent\SoftDeletes;
 
    public $timestamps = false;
-   protected $fillable = [
+
+    protected $fillable = [
       'name',
       'print_name',
       'short_link',
@@ -66,8 +69,7 @@ class Product extends Model
 
    protected function getMainImagePathAttribute()
    {
-      $path = (new ProductMainImageEntity($this))->getRelativePath();
-      return $path ? $path : ImageView::noImageSrc();
+      return (new ProductImageService())->getImageRelativePath($this);
    }
 
    public function getPriceAttribute()

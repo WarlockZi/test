@@ -8,6 +8,7 @@ use app\core\FS;
 use app\core\Response;
 use app\Domain\Entity\ProductMainImageEntity;
 use app\model\Product;
+use app\Services\ProductImageService;
 use Illuminate\Database\Eloquent\Collection;
 
 class ReportRepository extends AppController
@@ -75,18 +76,12 @@ class ReportRepository extends AppController
 
     private function hasMainImage($product): bool
     {
-        $exts = ['jpg', 'jpeg', 'png'];
-        $pEnt = new ProductMainImageEntity($product);
-        foreach ($exts as $ext) {
-            $path = FS::platformSlashes(ROOT . "/pic/product/uploads/");
-            $art = $pEnt->getArt();
-            $file = $path."{$art}.{$ext}";
-            if (file_exists($file)) {
-//                if ($product->art === 'Пер043') Response::exitWithPopup($file);
-                return true;
-            }
+        $piService = new ProductImageService();
+        $src = $piService->getImageRelativePath($product);
+        if (!$src){
+            return false;
         }
-        return false;
+        return true;
     }
 
     public function noImgNotInStore()
