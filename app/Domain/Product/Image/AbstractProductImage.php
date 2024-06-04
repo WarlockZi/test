@@ -30,72 +30,8 @@ abstract class AbstractProductImage
 			"image/jpeg" => "jpeg",
 			"image/png" => "png",
 			"image/webp" => "webp",
-			"image/gif" => "gif",
 		];
 	}
 
-	public function getExtension(): string
-	{
-		if ($this->file) {
-			preg_match('~\..{2,4}$~', $this->file['name'], $matches);
-			return str_replace('.', '', $matches[0]);
-		}
-		return $this->getFromAcceptedTypes();
-	}
 
-	protected function getFromAcceptedTypes()
-	{
-		foreach ($this->acceptedTypes as $type) {
-			$fileName = $this->getPathWithExt('absolutePath', $type);
-
-			if (file_exists($fileName)) {
-				return $this->getPathWithExt('relativePath', $type);
-			}
-		}
-		return '';
-	}
-
-	protected function prepareArticle(string $art = ''): string
-	{
-		$art = str_replace(['/', '//', '\\'], '_', $art);
-		return trim(strip_tags($art));
-	}
-
-	public function getRelativePath(): string
-	{
-		if ($this->file) {
-			return $this->getPathWithExt('relativePath',$this->getExtension());
-		}
-		foreach ($this->acceptedTypes as $type) {
-			$fileName = $this->getPathWithExt('absolutePath', $type);
-
-			if (file_exists($fileName)) {
-				return $this->getPathWithExt('relativePath', $type);
-			}
-		}
-		return '';
-	}
-
-	public function getAbsolutePath(): string
-	{
-		if ($this->file) {
-			return $this->getPathWithExt('absolutePath', $this->getExtension());
-		}
-
-		foreach ($this->acceptedTypes as $type) {
-			$fileName = $this->getPathWithExt('absolutePath', $type);
-
-			if (file_exists($fileName)) {
-				return $fileName;
-			}
-		}
-		return '';
-	}
-
-	abstract public function save(): void;
-
-	private function getPathWithExt(string $string, string $type = ''): string
-	{
-		return "{$this->$string}{$this->art}.{$type}";
-	}
 }

@@ -12,23 +12,20 @@ import Values from "./Values";
 
 import Dnd from "../../components/dnd/dnd";
 
-export default function product() {
+export default async function product() {
   const product = document[qs](`.item-wrap[data-model='product']`)
   if (!product) return false;
 
   new Values(product);
 
   new Fields(product);
+  const dragNdrop = document[qs]('[dnd]')
+  if (dragNdrop){
+    const {default:Dnd} =  await import("../../components/dnd/dnd")
+    new Dnd(dragNdrop,addMainImage)
+  }
 
-  new Dnd($('.add-file')[0], addMainImage);
-}
-
-async function setEqual({target}) {
-  let data = {
-    ['1s_id']: target.closest('.item_content').querySelector(`[data-field="1s_id"]`).innerText,
-    'equal': +target.checked
-  };
-  let res = await post('/adminsc/product/Setbaseequalmainunit', data)
+  // new Dnd(), addMainImage);
 }
 
 async function addMainImage(files, target) {
@@ -37,7 +34,7 @@ async function addMainImage(files, target) {
   // debugger
   let data = objAndFiles2FormData(obj, files[0]);
 
-  let res = await post('/adminsc/product/attachMainImage', data);
+  let res = await post('/adminsc/product/saveMainImage', data);
   let src = res?.arr[0];
   if (src) {
     let mainImage = target.closest('.dnd-container').querySelector('img');

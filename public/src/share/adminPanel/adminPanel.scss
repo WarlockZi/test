@@ -5,14 +5,15 @@
   background-color: $color-gray-browser;
 
   .row {
+    font-size: .7rem;
     display: flex;
+    gap: 10px;
   }
 
   a {
     display: block;
     color: white;
-    margin-right: 5px;
-    padding: 2px;
+    padding: 6px;
 
     &:hover {
       background-color: $color-main;

@@ -50,14 +50,18 @@ import {qs} from '../constants'
 $(document).ready(async function () {
 
     if (document[qs](`.item-wrap[data-model='product']`)) {
-        let {default: prod} = await import('./Product/product.js')
+        const {default: prod} = await import('./Product/product.js')
         prod();
     }
     if (document.querySelector('.order-edit')) {
-        let {default: Order} = await import('./Order/order.js')
+        const {default: Order} = await import('./Order/order.js')
         new Order()
     }
 
+    if ($('.modal-wrapper')){
+        const {default:Modal} = await import("../components/Modal/modal")
+        new Modal()
+    }
     new Promotion();
     new Search(true);
 
