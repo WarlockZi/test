@@ -44,9 +44,9 @@ private ReportView $formView;
 		$this->set(compact('productList'));
 	}
 
-	public function actionProductsNoSipppable()
+	public function actionProductsNoShippable()
 	{
-        $this->view = 'productsnoimg';
+        $this->route->setView('productsnoimg');
 		$products = $this->repo->noDopUnit();
 		$productList = $this->formView->noMinUnitList($products, 'Товары без min упаковки');
 		$this->set(compact('productList'));

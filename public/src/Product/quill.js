@@ -1,7 +1,7 @@
 import {$, post} from "../common";
 
 export const quill = () => {
-  debugger
+
   let quillSelector = '.detail-text';
   let textarea = $(quillSelector)[0];
 

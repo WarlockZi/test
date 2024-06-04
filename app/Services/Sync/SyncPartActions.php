@@ -4,23 +4,20 @@
 namespace app\Services\Sync;
 
 
+use AllowDynamicProperties;
 use app\controller\AppController;
 use app\core\Response;
 use app\model\Category;
-use app\Repository\SyncRepository;
 use app\Storage\{StorageDev, StorageImport, StorageLog};
 
-class SyncPartActions extends AppController
+#[AllowDynamicProperties] class SyncPartActions extends AppController
 {
 	protected $importPath;
 	protected $storage;
 	protected $importFile;
 	protected $offerFile;
-	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
-
 	protected $logger;
 	protected $repo;
-
 	public function __construct($route, $logger)
 	{
 		$this->setStorage();
@@ -31,7 +28,6 @@ class SyncPartActions extends AppController
 		$this->importFile = $this->storage::getFile('import0_1.xml');
 		$this->offerFile = $this->storage::getFile('offers0_1.xml');
 	}
-
 	public function setStorage()
 	{
 //		$this->log = StorageLog::getFile('log.txt');
@@ -42,11 +38,9 @@ class SyncPartActions extends AppController
 			$this->storage = StorageImport::class;
 		}
 	}
-
 	/**
 	 * @throws \Exception
 	 */
-
 	public function init()
 	{
 		if (!isset($this->route->params['type'])) throw new \Exception("Route param 'type' is empty");
@@ -66,7 +60,6 @@ class SyncPartActions extends AppController
 			$this->import();
 		}
 	}
-
 	protected function partCreate($item, $level, $parent)
 	{
 		$found = Category::query()
@@ -95,34 +88,28 @@ class SyncPartActions extends AppController
 		}
 		exit('success');
 	}
-
 	public function LoadCategories()
 	{
 		new LoadCategories($this->importFile, $this->logger);
 	}
-
 	public function LoadProducts()
 	{
 		new LoadProducts($this->importFile, $this->logger);
 	}
-
 	public function LoadPrices()
 	{
 		new LoadPrices($this->offerFile, $this->logger);
 	}
-
 	protected function checkauth()
 	{
 		$this->logReqest('checkauth');
 		exit("success\ninc\n777777\n55fdsa55");
 	}
-
 	protected function zip()
 	{
 		$this->logReqest('init');
 		exit("zip=no\nfile_limit=10000000");
 	}
-
 	protected function file()
 	{
 		$this->filename = $this->route->params['filename'];
@@ -132,8 +119,6 @@ class SyncPartActions extends AppController
 		$this->logReqest('file');
 		exit('success');
 	}
-
-
 	protected function getHeaders($str = '')
 	{
 		$headers = apache_request_headers();
@@ -142,7 +127,6 @@ class SyncPartActions extends AppController
 		}
 		return $str;
 	}
-
 	protected function logReqest($func)
 	{
 		$text = '<br>--' . date("H:i:s") . "--{$func}<br>";
@@ -157,8 +141,6 @@ class SyncPartActions extends AppController
 		}
 
 	}
-
-
 	public function logshow()
 	{
 		$content = 'LOG<br>' . file_get_contents($this->log);
@@ -166,7 +148,6 @@ class SyncPartActions extends AppController
 			Response::exitJson(['success' => true, 'content' => $content]);
 		}
 	}
-
 	public function logclear()
 	{
 		file_put_contents($this->log, '');
@@ -174,10 +155,6 @@ class SyncPartActions extends AppController
 		$content = StorageLog::getFileContent('log.txt');
 		Response::exitJson(['success' => 'success', 'content' => $content]);
 	}
-
-
-
-
 	public function part()
 	{
 		if (isset($this->route->params['type'])) {
@@ -196,7 +173,6 @@ class SyncPartActions extends AppController
 			}
 		}
 	}
-
 	public function partload()
 	{
 		if (is_readable($this->importFile)) {
