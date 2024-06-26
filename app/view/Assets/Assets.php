@@ -32,7 +32,7 @@ class Assets
     {
         $this->host = $_ENV['DEV']
             ? $this->setLocalhost($host === 1 ? 'webpack' : 'vite')
-            : '/public/dist';
+            : '/public/dist/';
     }
 
     protected function getWebpack()
