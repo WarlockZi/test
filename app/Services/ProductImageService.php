@@ -42,7 +42,7 @@ class ProductImageService
                 return $relFile;
             }
         }
-        return '';
+        return $this->relNoImage;
     }
     public function getImageAbsolutePath(Product $product): string
     {

@@ -9,8 +9,6 @@ header {
   background: #fff;
   flex: 0 0 auto;
   align-items: center;
-  background-color: aliceblue;
-
 
   .user-menu {
     position: relative;
@@ -168,6 +166,8 @@ header {
 
   .header-catalog-menu {
     background-color: $color-main;
+
+    //background-color: $color-main;
     top: 0;
     min-height: 40px;
     display: flex;
@@ -177,6 +177,7 @@ header {
     display: flex;
     position: relative;
     background: $color-main;
+    //background: $color-main;
 
     max-width: 1310px;
     width: 100%;

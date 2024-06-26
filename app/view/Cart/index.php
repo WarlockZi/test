@@ -14,7 +14,7 @@
                 <div class="row" data-product-id="<?= $product['1s_id']; ?>">
                     <div class="num cell"><?= ++$i; ?></div>
 
-                    <img src="<?= $product->mainImagePath ?>" alt="<?= $product->name; ?>">
+                    <img src="<?= $product->mainImagePath; ?>" alt="<?= $product->name; ?>">
 
                     <div class="name-price cell">
                         <a href="/product/<?= $product->slug; ?>"

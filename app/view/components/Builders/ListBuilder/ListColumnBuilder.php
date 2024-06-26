@@ -121,6 +121,7 @@ class ListColumnBuilder
     public function get()
     {
         try {
+            $this->class = $this->class??"class='cell'";
             $this->classHeader = $this->classHeader ?? "class='head'";
             $this->name        = $this->name ? $this->name : $this->field;
             return $this;
@@ -128,27 +129,4 @@ class ListColumnBuilder
             return $exception->getMessage();
         }
     }
-
-//	public function select(
-//		string $modelName,
-//		string $nameOptionByField='name',
-//		bool $tree = false,
-//		string $initialOption = '',
-//		int $initialOptionValue = 0
-//	)
-//	{
-//		$this->select = true;
-//		$this->nameOptionByField = $nameOptionByField;
-//		$this->initialOption = $initialOption;
-//		$this->initialOptionValue = $initialOptionValue;
-//
-//		$items = $modelName::all();
-//		$this->select = ListSelectBuilder::get()
-//			->collection($items)
-//			->initialOption('',0)
-//		;
-//		return $this;
-//	}
-
-
 }

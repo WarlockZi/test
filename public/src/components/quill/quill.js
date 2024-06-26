@@ -1,4 +1,7 @@
 import {post, $} from '../../common'
+import Quill from "quill";
+import "quill/dist/quill.core.css";
+import 'quill/dist/quill.snow.css';
 
 export default function quill() {
 

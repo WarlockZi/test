@@ -37,24 +37,24 @@ class OrderController extends AppController
 
    public function actionUpdateOrCreate(): void
    {
-      $req = $this->ajax;
+       $req = $this->ajax;
       if ($req) {
          $now = Carbon::now()->toDateTimeString();
          if (Auth::isAuthed()) {
             $order = Order::updateOrCreate(
                [
                   'product_id' => $req['product_id'],
+                  'unit_id' => (int)$req['unit_id'],
                   'sess' => $_COOKIE['PHPSESSID'],
                   'user_id' => Auth::getUser()['id'],
-                  'unit_id' => (int)$req['unit_id'],
                   'deleted_at' => null,
                ],
                [
                   'product_id' => $req['product_id'],
+                  'unit_id' => (int)$req['unit_id'],
                   'sess' => $_COOKIE['PHPSESSID'],
                   'count' => (int)$req['count'],
                   'ip' => $_SERVER['REMOTE_ADDR'],
-                  'unit_id' => (int)$req['unit_id'],
                   'updated_at' => $now,
                ]
             );

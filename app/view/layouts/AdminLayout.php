@@ -23,7 +23,7 @@ class AdminLayout extends Layout
     {
         $this->route    = $route;
         $this->setFs();
-        $this->setView();
+        $this->setView($controller);
         $this->setErrors();
         $this->setLayout("layouts/admin");
         $this->setContent($controller);
@@ -36,8 +36,9 @@ class AdminLayout extends Layout
         if (!class_exists($this->route->getController())) {
             $this->route->setError('Контроллер не найден');
         }
-        if (!is_readable($this->viewFs->getAbsPath() . $this->getView() . '.php')) {
-            $this->route->setError('Файл вида не найден');
+        $view = $this->viewFs->getAbsPath() . $this->getView() . '.php';
+        if (!is_readable($view)) {
+            $this->route->setError('Файл вида не найден -'.$view);
         }
     }
     public function setFs(): void
@@ -46,9 +47,9 @@ class AdminLayout extends Layout
         $controller     = ucfirst($this->route->getControllerName());
         $this->viewFs   = new FS(dirname(__DIR__) . DIRECTORY_SEPARATOR . $controller);
     }
-    protected function setView(): void
+    protected function setView(Controller $controller): void
     {
-        $this->view = $this->route->getView() ?? $this->route->getAction() ?? 'default';
+        $this->view = $controller->view ?? $this->route->getActionName() ?? 'default';
     }
     public function setLayout(string $layout): void
     {
