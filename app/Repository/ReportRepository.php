@@ -79,7 +79,6 @@ class ReportRepository extends AppController
                 $q->where('is_base', 1)
                     ->where('is_shippable', 1);
             }])
-            ->take(10)
             ->get();
         return $products;
     }
