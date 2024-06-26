@@ -18,7 +18,7 @@ use app\core\Icon;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
-<!--    --><?php //= $canonical; ?>
+
 
     <?= $assets->getMeta(); ?>
 
@@ -41,8 +41,11 @@ use app\core\Icon;
 
 <?= $footer; ?>
 
-
+<!--    <script src="./src/some_script.js" type="module"></script>-->
 <?= $assets->getJs(); ?>
+
+
+
 <?= $assets->getCDNJs(); ?>
 
 <?php //= Footer::getUserCookie(); ?>

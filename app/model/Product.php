@@ -185,17 +185,23 @@ class Product extends Model
 
    public function baseUnitRelation()
    {
-      return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')->withPivot('is_shippable')->wherePivot('is_base', '=', '1');
+      return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')->withPivot('is_shippable','base_is_shippable')->wherePivot('is_base', '1');
    }
 
    public function shippableUnits()
    {
       return $this
          ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-         ->withPivot('multiplier', 'is_base', 'is_shippable')
+         ->withPivot('multiplier', 'is_base', 'is_shippable', 'base_is_shippable')
          ->wherePivot('is_shippable', '=', '1');
    }
-
+//    public function baseshippableUnits()
+//    {
+//        return $this
+//            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
+//            ->withPivot('multiplier', 'is_base', 'is_shippable', 'base_is_shippable')
+//            ->wherePivot('is_shippable', '=', '1');
+//    }
    public function units()
    {
       return $this
