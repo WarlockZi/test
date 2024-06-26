@@ -20,10 +20,16 @@ if ($_ENV['DEV']) {
 
 require_once FS::platformSlashes(ROOT . "/app/Services/Eloquent.php");
 
+//require_once dirname(__DIR__) . '/app/view/helpers.php';
+//vite('main.js') ;
+
 try {
-    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Origin: http://127.0.0.1:5173');
     header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
     header('Access-Control-Allow-Headers: X-Requested-With');
+    header('Access-Control-Allow-Headers: Content-Type');
+
+//    header('Content-Type: application/json');
     $user = Auth::getAuth();
 
 

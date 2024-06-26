@@ -44,7 +44,7 @@ class ProductController extends AppController
             $this->set(compact('product', 'breadcrumbs'));
         }
         $this->assets->setProduct();
-        $this->assets->setQuill();
+//        $this->assets->setQuill();
     }
 
     public function actionList(): void
@@ -54,6 +54,10 @@ class ProductController extends AppController
         $this->set(compact('list'));
     }
 
+    public function actionChangebaseisshippable(): void
+    {
+        ProductService::changeBaseIsShippable($this->ajax);
+    }
 
     public function actionTrashed(): void
     {
