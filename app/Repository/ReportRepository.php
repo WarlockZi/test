@@ -4,9 +4,6 @@
 namespace app\Repository;
 
 use app\controller\AppController;
-use app\core\FS;
-use app\core\Response;
-use app\Domain\Entity\ProductMainImageEntity;
 use app\model\Product;
 use app\Services\ProductImageService;
 use Illuminate\Database\Eloquent\Collection;
@@ -74,11 +71,24 @@ class ReportRepository extends AppController
         return $arr;
     }
 
+    public function baseIsShippable(): Collection
+    {
+        $products = Product::query()
+            ->select('art', 'name', '1s_id', 'id', 'instore', 'deleted_at')
+            ->with(['units' => function ($q) {
+                $q->where('is_base', 1)
+                    ->where('is_shippable', 1);
+            }])
+            ->take(10)
+            ->get();
+        return $products;
+    }
+
     private function hasMainImage($product): bool
     {
         $piService = new ProductImageService();
         $src = $piService->getImageRelativePath($product);
-        if (!$src){
+        if (!$src) {
             return false;
         }
         return true;

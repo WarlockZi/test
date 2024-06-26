@@ -20,7 +20,7 @@
 
   .custom-list {
 
-    [contenteditable]{
+    [contenteditable] {
       display: flex;
       align-items: center;
       font-size: .8rem;
@@ -29,6 +29,26 @@
     [contenteditable]:hover {
       border: 1px solid #ccc;
       border-radius: 4px;
+    }
+
+    .img {
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover{
+        background-color: $color-gray1;
+      }
+    }
+
+    input[type=checkbox]{
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
     }
 
     > * {

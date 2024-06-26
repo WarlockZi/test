@@ -22,7 +22,6 @@ class FS
     public function getContent(string $file, array $data = []):string
     {
         try {
-
             $file = FS::platformSlashes($this->absPath . $file . '.php');
             if (!is_readable($file)) $this->errorLogger->write('not exist - '.$file);
 

@@ -65,14 +65,22 @@ class LoadPrices extends Load
 
     protected function unit2Product(Price $Price, Unit $Unit): void
     {
-        $attrs       = [
+        $find = [
+            'product_1s_id' => $Price['1s_id'],
+            'unit_id' => $Unit['id'],
+            'multiplier' => '1',
+            'is_base' => '1',
+        ];
+        $new = [
             'product_1s_id' => $Price['1s_id'],
             'unit_id' => $Unit['id'],
             'multiplier' => '1',
             'is_base' => '1',
             'is_shippable' => '1',
+            'base_is_shippable' => '1',
         ];
-        ProductUnit::updateOrCreate($attrs, $attrs);
+
+        ProductUnit::updateOrCreate($find, $new);
     }
 
     protected function ech($item)

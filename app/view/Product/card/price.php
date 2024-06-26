@@ -7,5 +7,5 @@
 
 </div>
 <div class="price-units ">
-    <?= $repo->dopUnitsPrices($product) ?>
+    <?= $shippablePrices; ?>
 </div>

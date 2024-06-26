@@ -27,7 +27,13 @@ private ReportView $formView;
 		$productList = $this->formView->noImgNoInstoreList($p, 'Товары без картинок в наличии');
 		$this->set(compact('productList'));
 	}
-
+    public function actionProductsBaseIsShippable()
+    {
+        $this->view = 'products';
+        $p = $this->repo->baseIsShippable();
+        $productList = $this->formView->baseIsShippableList($p, 'Базовая отгружаемая');
+        $this->set(compact('productList'));
+    }
 	public function actionProductsnoimgNotinstore()
 	{
 		$this->view = 'productswithoutimg';
@@ -51,12 +57,7 @@ private ReportView $formView;
 		$productList = $this->formView->noMinUnitList($products, 'Товары без min упаковки');
 		$this->set(compact('productList'));
 	}
-//	public function actionProductsnosipppable()
-//	{
-//        $products = $this->repo->haveDopUnit();
-//        $productList = $this->formView->haveDopUnit($products, 'Товары имеющие доп единицы');
-//		$this->set(compact('productList'));
-//	}
+
     public function actionTrashed()
     {
         $products = $this->repo->trashed();

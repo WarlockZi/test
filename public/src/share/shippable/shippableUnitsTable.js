@@ -45,10 +45,11 @@ export default class shippableTable {
         } else if (targ.classList.contains('minus')) {
             const row = targ.closest('.unit-row')
             this.decrement(row)
-        } else if (targ.classList.contains('input')) {
-            const row = targ.closest('.unit-row')
-            this.handleChange(row)
         }
+        // else if (targ.classList.contains('input')) {
+        //     const row = targ.closest('.unit-row')
+        //     this.handleChange(row)
+        // }
         return this
     }
 
