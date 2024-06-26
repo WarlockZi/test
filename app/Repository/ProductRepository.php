@@ -23,25 +23,25 @@ class ProductRepository extends AppController
         return "{$formattedPrice} ₽ / {$baseUnit->name}";
     }
 
-//    private function drop()
-//    {
-//        $pru = ProductUnit::query()
-//            ->whereNull('multiplier')
-//            ->where('is_base', 1)
-//            ->orWhere(function ($q){
-//                $q->whereNull('is_shippable')
-//                    ->where('is_base', 1);
-//            })
-//            ->delete();
-//        $pru = ProductUnit::query()
-//            ->where('is_base', 1)
-//            ->where('is_shippable', 1)
-//            ->update(['base_is_shippable' => 1]);
-//    }
+    private function drop()
+    {
+        $pru = ProductUnit::query()
+            ->whereNull('multiplier')
+            ->where('is_base', 1)
+            ->orWhere(function ($q){
+                $q->whereNull('is_shippable')
+                    ->where('is_base', 1);
+            })
+            ->delete();
+        $pru = ProductUnit::query()
+            ->where('is_base', 1)
+            ->where('is_shippable', 1)
+            ->update(['base_is_shippable' => 1]);
+    }
 
     public function dopUnitsPrices(Product $product): string
     {
-//        $this->drop();
+        $this->drop();
         $shippableUnits = $product->shippableUnits;
         if (!$product->shippableUnits->count()) return '';
         $price = $product->price;
