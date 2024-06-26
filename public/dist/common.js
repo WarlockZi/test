@@ -1,0 +1,2 @@
+(()=>{"use strict";var r={448:(r,e,t)=>{t(869),new Intl.NumberFormat("ru",{style:"currency",currency:"RUB",minimumFractionDigits:2})},869:(r,e,t)=>{t(448)}},e={};function t(o){var n=e[o];if(void 0!==n)return n.exports;var i=e[o]={exports:{}};return r[o](i,i.exports,t),i.exports}t.d=(r,e)=>{for(var o in e)t.o(e,o)&&!t.o(r,o)&&Object.defineProperty(r,o,{enumerable:!0,get:e[o]})},t.o=(r,e)=>Object.prototype.hasOwnProperty.call(r,e),t(448)})();
+//# sourceMappingURL=common.js.map
