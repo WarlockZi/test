@@ -36,20 +36,20 @@ class ItemArrayFieldBuilder extends Builder
 
     public static function build(string $fieldName, Model $item)
     {
-        $field                  = new static();
-        $field->fieldName       = $fieldName;
-        $field->fs              = new FS(__DIR__);
-        $field->dataField       = '';
+        $field = new static();
+        $field->fieldName = $fieldName;
+        $field->fs = new FS(__DIR__);
+        $field->dataField = '';
         $field->contenteditable = '';
-        $field->hidden          = '';
-        $field->required        = '';
-        $field->html            = '';
-        $field->del             = false;
-        $field->softDel         = false;
-        $field->edit            = false;
-        $field->save            = false;
-        $field->toList          = false;
-        $field->fieldObj        = $field;
+        $field->hidden = '';
+        $field->required = '';
+        $field->html = '';
+        $field->del = false;
+        $field->softDel = false;
+        $field->edit = false;
+        $field->save = false;
+        $field->toList = false;
+        $field->fieldObj = $field;
 //        $field->name            = '';
         $field->item = $item->toArray();
         return $field;
@@ -100,11 +100,12 @@ class ItemArrayFieldBuilder extends Builder
     public function toHtml(string $model): string
     {
         $this->dataModel = "data-model={$model}";
-        $this->field     = $this;
+        $this->field = $this;
 
         $data = get_object_vars($this);
         return $this->fs->getContent('row', $data);
     }
+
     public function dataField(string $dataField): ItemArrayFieldBuilder
     {
         $this->dataField = "data-field='{$dataField}'";
@@ -113,7 +114,7 @@ class ItemArrayFieldBuilder extends Builder
 
     public function get()
     {
-        $this->name  = $this->name ?? $this->fieldName;
+        $this->name = $this->name ?? $this->fieldName;
         $this->value = $this->html ?? $this->item[$this->fieldName];
         return $this;
     }
@@ -150,7 +151,8 @@ class ItemArrayFieldBuilder extends Builder
 
     public function getValue()
     {
-        return !!$this->html ?$this->html: $this->item[$this->fieldName];
+        $value =  !!$this->html ? $this->html : $this->item[$this->fieldName];
+        return $value??"NULL";
     }
 
     public function getDataModel(): string

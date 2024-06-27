@@ -161,6 +161,11 @@ class ProductFormView
                ->contenteditable()
                ->get()
          )
+          ->field(
+            ItemFieldBuilder::build('deleted_at', $product)
+               ->name('Удален')
+               ->get()
+         )
          ->tab(
             ItemTabBuilder::build('Свойства товара')
                ->html(
