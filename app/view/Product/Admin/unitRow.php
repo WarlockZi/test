@@ -5,7 +5,7 @@
 <div class="base-unit"><?= $name ?></div>
 
 <div class="shippable">
-    <input type="checkbox" <?= $shippable; ?>>
+    <input type="checkbox" <?= $shippable; ?>  <?= $is_base; ?>>
 </div>
 
 <?php if ($deletable): ?>

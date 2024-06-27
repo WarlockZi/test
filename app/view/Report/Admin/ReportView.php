@@ -120,6 +120,7 @@ class ReportView
             ->column(
                 ListColumnBuilder::build('name')
                     ->name('Наименование')
+                    ->class('cell left')
                     ->contenteditable()
                     ->search()
                     ->width('1fr')
