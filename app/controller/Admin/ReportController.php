@@ -31,7 +31,7 @@ class ReportController extends AppController
     public function actionProductsBaseIsShippable()
     {
         $this->view = 'products';
-        $p = $this->repo->baseIsShippable()->take(10);
+        $p = $this->repo->baseIsShippable();
         $productList = $this->formView->baseIsShippableList($p, 'Базовая отгружаемая');
         $this->set(compact('productList'));
     }
@@ -54,7 +54,7 @@ class ReportController extends AppController
 
     public function actionProductsNoShippable()
     {
-        $this->route->setView('productsnoimg');
+        $this->view = 'products';
         $products = $this->repo->noDopUnit();
         $productList = $this->formView->noMinUnitList($products, 'Товары без min упаковки');
         $this->set(compact('productList'));
@@ -72,7 +72,7 @@ class ReportController extends AppController
         $this->view = 'products';
         $productRepository = new ProductRepository();
         $products = $productRepository::filter($_POST);
-        $productList = $this->formView->baseIsShippableList($products, 'Фильтр')??'';
+        $productList = $this->formView->baseIsShippableList($products, 'Фильтр') ?? '';
         $this->set(compact('productList'));
     }
 }
