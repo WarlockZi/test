@@ -4,22 +4,22 @@ namespace app\controller;
 
 use app\Actions\SearchAction;
 use app\core\Response;
+use app\Repository\SearchRepository;
 
 class SearchController extends AppController
 {
-	protected $actions;
+	private SearchRepository $service;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->actions = new SearchAction();
+		$this->service = new SearchRepository();
 	}
-
 
 	public function actionIndex():void
 	{
 		if (!$this->ajax) exit();
-		$res = $this->actions->index($this->ajax['text']);
+		$res = $this->service->index($this->ajax['text']);
 		Response::exitJson(['found' => $res]);
 	}
 }
