@@ -128,6 +128,40 @@ class ProductRepository extends AppController
 
     }
 
+    public static function filter($req)
+    {
+        extract($req);
+        $query = Product::query()
+        ;
+        if (isset($instore) && $instore === 'instore') {
+            $query->where('instore', '>', 0);
+        } elseif (isset($instore) && $instore === 'notinstore') {
+            $query->where('instore', '<>', 0);
+        }
+//        if (isset($mainImg) && $mainImg==='with-img'){
+//            $query->hasMainImage();
+//        }
+        if (isset($baseIsShippable) && $baseIsShippable) {
+            $query->with(['units' => function ($q) {
+                $q->where('base_is_shippable', 1);
+            }]);
+        } elseif (isset($baseIsShippable) && !$baseIsShippable) {
+            $query->whereHas('units', function ($q) {
+                $q->where('base_is_shippable', 0);
+            });
+        }
+        if (isset($take) && $take) {
+            $query->take($take);
+        }
+        if (isset($deleted) && $deleted==1) {
+            $query->withTrashed();
+        }
+
+        $p = $query->get();
+        $arr =  $p->toArray();
+        return $p;
+    }
+
     #[NoReturn] public function changeVal(array $req): void
     {
         $product = Product::find($req['product_id']);

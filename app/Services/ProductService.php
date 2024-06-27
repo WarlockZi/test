@@ -18,15 +18,14 @@ class ProductService
 
     public static function changeBaseIsShippable(array $req): void
     {
-        $product1sId = Product::find($req['id'])['1s_id'];
         $pu = ProductUnit::query()
-            ->where('product_1s_id', $product1sId)
+            ->where('product_1s_id', $req['product_1s_id'])
             ->where('is_base', 1)
             ->where('multiplier', 1)
             ->first()
             ;
-        $pu->base_is_shippable = (int)$req['checked'];
-        $pu->is_shippable = (int)$req['checked'];
+        $pu->base_is_shippable = (int)$req['base_is_shippable'];
+        $pu->is_shippable = (int)$req['base_is_shippable'];
         $pu->save();
         Response::exitJson(['popup' => 'ok']);
     }
@@ -54,8 +53,13 @@ class ProductService
     {
         $baseIsShippable = $product->baseUnit->pivot->base_is_shippable;
         $checked = $baseIsShippable ? "checked" : '';
-        return "<input type='checkbox' {$checked} data-func='changeBaseIsShippable'>";
+        return "<input type='checkbox' {$checked} data-func='changeBaseIsShippable' data-1sid='{$product['1s_id']}'>";
     }
+
+//    public static function changeBaseIsShippable(array $req): void
+//    {
+//
+//    }
 
     private function deletePreviousFile(Product $product): void
     {

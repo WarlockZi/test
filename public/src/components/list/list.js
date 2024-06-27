@@ -95,9 +95,10 @@ class List{
             // checkbox
          } else if (target.type === 'checkbox') {
             const funct = target.dataset.func
-            const checked = target.checked
-            const id = target.closest('[data-id]').dataset.id
-            const data = {checked, id}
+            const base_is_shippable = target.checked
+            // const id = target.closest('[data-id]').dataset.id
+            const product_1s_id = target.dataset['1sid']
+            const data = {base_is_shippable, product_1s_id}
             post(`/adminsc/${this.model}/${funct}`, data)
 
             /// sort

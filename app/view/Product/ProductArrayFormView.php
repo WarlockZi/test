@@ -99,7 +99,8 @@ class ProductArrayFormView
       $selector   = UnitFormView::selectorNew($unit);
       $shippable  = $unit->pivot->is_shippable ? 'checked' : '';
       $multiplier = self::multiplier($unit->pivot->multiplier);
-      return $fs->getContent('unitRow', compact('selector', 'name', 'shippable', 'multiplier', 'deletable'));
+      $is_base = $unit->pivot->is_base?'data-isBase':'';
+      return $fs->getContent('unitRow', compact('is_base','selector', 'name', 'shippable', 'multiplier', 'deletable'));
    }
 
    private static function multiplier($mult): string
@@ -222,6 +223,11 @@ class ProductArrayFormView
                ->contenteditable()
                ->get()
          )
+          ->field(
+              ItemArrayFieldBuilder::build('deleted_at', $product)
+                  ->name('Удален')
+                  ->get()
+          )
          ->tab(
             ItemArrayTabBuilder::build('Свойства товара')
                ->html(

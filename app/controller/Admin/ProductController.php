@@ -87,26 +87,13 @@ class ProductController extends AppController
         $this->repo->changeUnit($this->ajax);
     }
 
-
+    public function actionBaseIsShippable(): void
+    {
+        ProductService::changeBaseIsShippable($this->ajax);
+    }
     public function actionChangepromotion()
     {
         ProductAction::changePromotion($this->ajax);
     }
-
-//   public function actionSetbaseequalmainunit()
-//   {
-//      if (ProductAction::setBaseEqualMainUnit($this->ajax)) {
-//         Response('Обновлено');
-//      }
-//      Response::exitJson(['popup' => 'ошибка']);
-//   }
-//    public function actionAttachmainimage()
-//    {
-//        if (!$_FILES['file']) Response::exitWithPopup('Ошибка - не передан файл');
-//        $productId = $_POST['productId'];
-//        if (!$productId) Response::exitWithPopup('Ошибка - нет id продукта');
-//        $srcs = ProductAction::attachMainImage($_FILES['file'], $productId);
-//        if ($srcs) Response::exitJson([$srcs]);
-//    }
 }
 

@@ -34,6 +34,7 @@
     .img {
       max-width: 100%;
       object-fit: contain;
+      max-height: 100px;
     }
 
     .cell {
@@ -42,6 +43,9 @@
       justify-content: center;
       &:hover{
         background-color: $color-gray1;
+      }
+      &.left{
+        justify-content: start;
       }
     }
 
