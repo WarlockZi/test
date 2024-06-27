@@ -18,6 +18,7 @@
                 <a href="/adminsc/report/productsNoImgInstore">без картинок</a>
                 <a href="/adminsc/report/Productsnominunit">без мин упак</a>
                 <a href="/adminsc/report/Productsnoshippable">без мин единицы</a>
+                <a href="/adminsc/report/ProductsBaseIsShippable">баз = мин </a>
             </div>
         <?php endif; ?>
 
