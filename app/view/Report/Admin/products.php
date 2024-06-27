@@ -26,7 +26,7 @@
 
     <select name="take" id="take">
         <option value="">Все</option>
-        <option value="20" selected>выбрать 20</option>
+        <option value="20">выбрать 20</option>
         <option value="40">выбрать 40</option>
     </select>
 

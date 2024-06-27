@@ -150,12 +150,12 @@ export default class UnitTable {
          const data = {product_1s_id,base_is_shippable}
          const res = await post('/adminsc/product/changeBaseIsShippable', data);
       } else {
-         this.update(e, this)
+         this.update(target, this)
       }
    }
 
-   async update(e, self) {
-      let row = e.target.closest('.row');
+   async update(target, self) {
+      let row = target.closest('.row');
       let chosenUnit = +$(row).find('[select-new]').dataset.value;
       if (!chosenUnit) return false;
       let data = self.dto(row);

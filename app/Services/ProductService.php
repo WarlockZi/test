@@ -74,7 +74,7 @@ class ProductService
     {
         $productImageService = new ProductImageService();
         $imgPath = $productImageService->getRelativeImage($product);
-        return "<img src='{$imgPath}'class='img'><img/>";
+        return "<img src='{$imgPath}'class='img' loading='lazy'><img/>";
     }
 
     private function getRelativePath(): string
