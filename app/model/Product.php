@@ -45,7 +45,7 @@ class Product extends Model
    protected $casts = [
       'art' => 'string',
    ];
-   protected $appends = ['price'];
+   protected $appends = ['price','mainImage'];
 
    protected function shortLink(): Attribute
    {
@@ -70,6 +70,10 @@ class Product extends Model
    protected function getMainImagePathAttribute()
    {
       return (new ProductImageService())->getImageRelativePath($this);
+   }
+   public function getMainImageAttribute()
+   {
+       return (new ProductImageService())->getImageRelativePath($this);
    }
 
    public function getPriceAttribute()

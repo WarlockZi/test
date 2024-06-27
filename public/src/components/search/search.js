@@ -4,6 +4,7 @@ import {$, debounce, post, createEl} from '../../common'
 export default class Search {
 
   constructor(admin = false) {
+
     this.admin = admin;
     let button = $('.utils .search').first();
     let panel = $('.search-panel').first();
@@ -82,7 +83,7 @@ export default class Search {
     let name = createEl('div', 'name', row.name);
     let art = createEl('div', 'art', row.art);
     let img = createEl('img');
-    img.src = row.mainImagePath;
+    img.src = row.mainImage;
     a.append(art);
     a.append(name);
     a.append(img);

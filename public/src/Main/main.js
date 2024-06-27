@@ -7,6 +7,7 @@ import {$} from "../common";
 import  '../share/hoist/hoist';
 
 document.addEventListener('DOMContentLoaded', async function () {
+
     new Search();
     const gumburger = document[qs]('.gamburger');
     if (gumburger) {
