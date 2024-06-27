@@ -12,8 +12,8 @@ use app\view\Image\ImageView;
 use Illuminate\Database\Eloquent\Collection;
 
 
-//class ProductFormView
-//{
+class ProductFormView
+{
 //    protected static function getImage(Product $product, string $relation, string $slug, bool $many = false)
 //    {
 //        $imgs = ImageView::morphImages($product, $relation);
@@ -44,14 +44,14 @@ use Illuminate\Database\Eloquent\Collection;
 //        return "<div class='detail-image-wrap'>{$im}</div>";
 //    }
 //
-//    public static function getCardImages(string $title, Collection $collection, string $class = 'detail-images-wrap')
-//    {
-//        ob_start();
-//        $detail_image = '';
-//        foreach ($collection as $image) {
-//            $detail_image .= self::getCardDetailImage($image);
-//        }
-//        include ROOT . '/app/view/Product/card/detail_images.php';
-//        return ob_get_clean();
-//    }
-//}
+    public static function getCardImages(string $title, Collection $collection, string $class = 'detail-images-wrap')
+    {
+        ob_start();
+        $detail_image = '';
+        foreach ($collection as $image) {
+            $detail_image .= self::getCardDetailImage($image);
+        }
+        include ROOT . '/app/view/Product/card/detail_images.php';
+        return ob_get_clean();
+    }
+}
