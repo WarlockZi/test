@@ -138,7 +138,6 @@ class Product extends Model
    {
       return $query->whereHas('mainImages');
    }
-
    protected static function booted()
    {
       static::Updating(function ($product) {
@@ -195,13 +194,7 @@ class Product extends Model
          ->withPivot('multiplier', 'is_base', 'is_shippable', 'base_is_shippable')
          ->wherePivot('is_shippable', '=', '1');
    }
-//    public function baseshippableUnits()
-//    {
-//        return $this
-//            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-//            ->withPivot('multiplier', 'is_base', 'is_shippable', 'base_is_shippable')
-//            ->wherePivot('is_shippable', '=', '1');
-//    }
+
    public function units()
    {
       return $this
