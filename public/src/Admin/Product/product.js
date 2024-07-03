@@ -32,7 +32,7 @@ export default async function product() {
 async function setCardPanel(){
   const cardPanel = document[qs](`.cardPanel`)
   if (cardPanel){
-    const {default:cardPanel} = import("./../share/card_panel/card_panel")
+    const {default:cardPanel} = import("./../../share/card_panel/card_panel")
     new cardPanel()
   }
 }
