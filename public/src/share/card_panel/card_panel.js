@@ -9,10 +9,11 @@ export default class Card_panel {
    }
 
    shortLink(target) {
-      navigator.permissions.query({name: "clipboard-write"}).then((result) => {
+      navigator.permissions.query({name: "clipboard-write"}).then(async (result) => {
          if (result.state === "granted" || result.state === "prompt") {
-            popup.show('Ссылка скопирована')
-            navigator.clipboard.writeText(target.dataset.shortlink)
+            await navigator.clipboard.writeText(target.dataset.shortlink).then(() => {
+               popup.show('Ссылка скопирована')
+            })
          }
       });
    }
