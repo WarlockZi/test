@@ -7,13 +7,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TreeOptionsBuilder extends TreeBuilder
 {
-  public static function build(Collection $collection,
-                               string $relation,
-                               int $multiply = 1,
-                               string $tab = '&nbsp;')
+  public static function build(Collection $collection, string $relation, int $multiply = 1, string $tab = '&nbsp;')
   {
-    $self = new self($collection, $relation, $multiply, $tab);
-    return $self;
+      return new self($collection, $relation, $multiply, $tab);
   }
 
   protected function isExcluded(int $id)

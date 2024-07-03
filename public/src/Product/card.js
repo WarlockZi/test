@@ -1,7 +1,7 @@
 import './card.scss'
 import {zoom} from './zoom'
 import {quill} from './quill'
-import {shortLink} from './shortLink'
+import {card_panel} from '../share/card_panel/card_panel'
 import {$} from "../common";
 import shippableTable from "../share/shippable/shippableUnitsTable";
 import {d, qs} from "../constants";
@@ -17,7 +17,7 @@ window.onload = function () {
   // product.addEventListener('click', handleShippableUnitsTableClick.bind(product))
   // handleShippableUnitsTableClick()
   zoom()
-  shortLink()
+  card_panel()
 
   quill()
 };

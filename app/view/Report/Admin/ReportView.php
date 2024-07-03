@@ -10,98 +10,100 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ReportView
 {
-   public function haveDopUnit(Collection $products, string $title): string
-   {
-      return MyList::build(Product::class)
-         ->pageTitle($title)
-         ->column(
-            ListColumnBuilder::build('id')
-               ->name('ID')
-               ->get()
-         )
-         ->column(
-            ListColumnBuilder::build('art')
-               ->name('Арт')
-               ->search()
-               ->width('70px')
-               ->get()
-         )
-         ->column(
-            ListColumnBuilder::build('name')
-               ->name('Наименование')
-               ->contenteditable()
-               ->search()
-               ->width('1fr')
-               ->get()
-         )
-         ->items($products)
-         ->edit()
-         ->del()
-         ->addButton('ajax')
-         ->get();
-   }
-   public function noDopUnit($products): string
-   {
-      return MyList::build(Product::class)
-         ->pageTitle('Товары имеющие только базовую единицу')
-         ->column(
-            ListColumnBuilder::build('id')
-               ->name('ID')
-               ->get()
-         )
-         ->column(
-            ListColumnBuilder::build('art')
-               ->name('Арт')
-               ->search()
-               ->width('70px')
-               ->get()
-         )
-         ->column(
-            ListColumnBuilder::build('name')
-               ->name('Наименование')
-               ->contenteditable()
-               ->search()
-               ->width('1fr')
-               ->get()
-         )
-         ->items($products)
-         ->edit()
-         ->del()
-         ->addButton('ajax')
-         ->get();
-   }
+    public function haveDopUnit(Collection $products, string $title): string
+    {
+        return MyList::build(Product::class)
+            ->pageTitle($title)
+            ->column(
+                ListColumnBuilder::build('id')
+                    ->name('ID')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('art')
+                    ->name('Арт')
+                    ->search()
+                    ->width('70px')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('name')
+                    ->name('Наименование')
+                    ->contenteditable()
+                    ->search()
+                    ->width('1fr')
+                    ->get()
+            )
+            ->items($products)
+            ->edit()
+            ->del()
+            ->addButton('ajax')
+            ->get();
+    }
 
-   public function noMinUnitList($products, string $title): string
-   {
-      return MyList::build(Product::class)
-         ->pageTitle($title)
-         ->column(
-            ListColumnBuilder::build('id')
-               ->name('ID')
-               ->get()
-         )
-         ->column(
-            ListColumnBuilder::build('art')
-               ->name('Арт')
-               ->search()
-               ->width('70px')
-               ->get()
-         )
-         ->column(
-            ListColumnBuilder::build('name')
-               ->name('Наименование')
-               ->contenteditable()
-               ->search()
-               ->width('1fr')
-               ->get()
-         )
-         ->items($products)
-         ->edit()
-         ->del()
-         ->addButton('ajax')
-         ->get();
-   }
-    public function baseIsShippableList(Collection $products, string $title): string
+    public function noDopUnit($products): string
+    {
+        return MyList::build(Product::class)
+            ->pageTitle('Товары имеющие только базовую единицу')
+            ->column(
+                ListColumnBuilder::build('id')
+                    ->name('ID')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('art')
+                    ->name('Арт')
+                    ->search()
+                    ->width('70px')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('name')
+                    ->name('Наименование')
+                    ->contenteditable()
+                    ->search()
+                    ->width('1fr')
+                    ->get()
+            )
+            ->items($products)
+            ->edit()
+            ->del()
+            ->addButton('ajax')
+            ->get();
+    }
+
+    public function noMinUnitList($products, string $title): string
+    {
+        return MyList::build(Product::class)
+            ->pageTitle($title)
+            ->column(
+                ListColumnBuilder::build('id')
+                    ->name('ID')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('art')
+                    ->name('Арт')
+                    ->search()
+                    ->width('70px')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('name')
+                    ->name('Наименование')
+                    ->contenteditable()
+                    ->search()
+                    ->width('1fr')
+                    ->get()
+            )
+            ->items($products)
+            ->edit()
+            ->del()
+            ->addButton('ajax')
+            ->get();
+    }
+
+    public function filter(Collection $products, string $title): string
     {
         return MyList::build(Product::class)
             ->pageTitle($title)
@@ -121,15 +123,31 @@ class ReportView
                 ListColumnBuilder::build('name')
                     ->name('Наименование')
                     ->class('cell left')
-                    ->contenteditable()
                     ->search()
                     ->width('1fr')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('print_name')
+                    ->name('В матрице')
+                    ->class('cell font-size-1-5em')
+                    ->callback(function ($prod) {
+                        return str_ends_with($prod->name,'*')?'*':'';
+                    })
+                    ->width('50px')
                     ->get()
             )
             ->column(
                 ListColumnBuilder::build('img')
                     ->name('Картинка')
                     ->function(ProductService::class, 'productImg')
+                    ->width('100px')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('instore')
+                    ->name('Количество')
+//                    ->field('instore')
                     ->width('100px')
                     ->get()
             )
@@ -148,35 +166,35 @@ class ReportView
             ->get();
     }
 
-   public function noImgNoInstoreList(Collection $products, string $title): string
-   {
-      return MyList::build(Product::class)
-         ->pageTitle($title)
-         ->column(
-            ListColumnBuilder::build('id')
-               ->name('ID')
-               ->get()
-         )
-         ->column(
-            ListColumnBuilder::build('art')
-               ->name('Арт')
-               ->search()
-               ->width('70px')
-               ->get()
-         )
-         ->column(
-            ListColumnBuilder::build('name')
-               ->name('Наименование')
-               ->contenteditable()
-               ->search()
-               ->width('1fr')
-               ->get()
-         )
-         ->items($products)
-         ->edit()
-         ->del()
-         ->addButton('ajax')
-         ->get();
-   }
+    public function noImgNoInstoreList(Collection $products, string $title): string
+    {
+        return MyList::build(Product::class)
+            ->pageTitle($title)
+            ->column(
+                ListColumnBuilder::build('id')
+                    ->name('ID')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('art')
+                    ->name('Арт')
+                    ->search()
+                    ->width('70px')
+                    ->get()
+            )
+            ->column(
+                ListColumnBuilder::build('name')
+                    ->name('Наименование')
+                    ->contenteditable()
+                    ->search()
+                    ->width('1fr')
+                    ->get()
+            )
+            ->items($products)
+            ->edit()
+            ->del()
+            ->addButton('ajax')
+            ->get();
+    }
 
 }

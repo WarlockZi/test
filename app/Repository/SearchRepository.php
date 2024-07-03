@@ -13,8 +13,7 @@ class SearchRepository
 {
     public function prepareQuryString($query): string
     {
-        return '%' . mb_strtolower(trim($query)) . '%';
-//      return '%' . stripslashes(mb_strtolower(trim($query))) . '%';
+      return '%' . stripslashes(mb_strtolower(trim($query))) . '%';
     }
 
     public function index(string $text): array
@@ -34,6 +33,7 @@ class SearchRepository
                 "name" => $product->name,
                 "art" => $product->art,
                 "mainImage" => $product->mainImage,
+                "slug" => $product->slug,
             ];
         })->toArray();
     }

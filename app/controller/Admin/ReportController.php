@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\Repository\ProductRepository;
 use app\Repository\ReportRepository;
+use app\Services\Filters\ProductFilterService;
 use app\view\Report\Admin\ReportView;
 
 
@@ -12,12 +13,16 @@ class ReportController extends AppController
 {
     private ReportRepository $repo;
     private ReportView $formView;
+    private ProductRepository $productRepository;
+    private ProductFilterService $productFilterService;
 
     public function __construct()
     {
         parent::__construct();
         $this->repo = new ReportRepository();
         $this->formView = new ReportView();
+        $this->productRepository = new ProductRepository();
+        $this->productFilterService = new ProductFilterService();
     }
 
     public function actionProductsnoimgInstore()
@@ -70,11 +75,30 @@ class ReportController extends AppController
     public function actionFilter()
     {
         $this->view = 'products';
-        $productRepository = new ProductRepository();
-        $products = $productRepository::filter($_POST);
-        $productList = $this->formView->baseIsShippableList($products, 'Фильтр') ?? '';
-        $this->set(compact('productList'));
+
+        if (!empty($_POST)) {
+             $this->productFilterService->saveUserFilters($_POST);
+        }
+
+        $filters =  $this->productFilterService->factory('admin');
+        $products = $this->productRepository::filter($_POST);
+        $productList = $this->formView->filter($products, 'Фильтр') ?? '';
+        $this->set(compact('productList', 'filters'));
     }
+
+    private function getFilters(array $req)
+    {
+        if ($req) {
+            return $req;
+        } else {
+            return [
+                "deleted" => "1",
+                "take" => "20"
+            ];
+        }
+    }
+
+
 }
 
 

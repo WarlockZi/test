@@ -8,22 +8,26 @@ use app\Services\Logger\ErrorLogger;
 class ZipService
 {
     private array $files;
+    private string $path;
     private string $zipname;
     private \ZipArchive $zip;
     private ErrorLogger $errorLogger;
 
-    public function __construct(array $files=[], string $zipname='')
+    public function __construct(array $files=[])
     {
         $this->errorLogger = new ErrorLogger('errors.txt');
         try {
             $this->files   = $files;
-            $this->zipname = $zipname;
             $this->createZip();
         } catch (\Throwable $exception) {
             $this->errorLogger->write('__ZipService__' . $exception->getMessage());
         }
     }
-
+    public function path(string $path):ZipService
+    {
+        $this->path = $path;
+        return $this;
+    }
     public function files(array $files):ZipService
     {
        $this->files = $files;
@@ -61,7 +65,7 @@ class ZipService
             header('Content-Type: application/zip');
             header('Content-disposition: attachment; filename=' . $this->zipname);
             header('Content-Length: ' . filesize($this->zipname));
-            readfile($this->zipname);
+            readfile($this->path.$this->zipname);
             $this->errorLogger->write('download - done');
             exit();
         } catch (\Throwable $exception) {
