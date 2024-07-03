@@ -227,7 +227,7 @@ function getToken() {
     ?? null
 }
 function isAuthed() {
-  return localStorage.getItem('id')
+  return !localStorage.getItem('id')
 }
 
 function createEl(tagName, className = '', text = '') {

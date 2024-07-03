@@ -5,8 +5,6 @@ namespace app\view\Category;
 
 
 use app\builders\ItemArrayBuilder;
-use app\builders\ItemArrayFieldBuilder;
-use app\builders\ItemArrayTabBuilder;
 use app\model\Category;
 use app\model\Product;
 use app\Repository\CategoryRepository;
@@ -16,6 +14,8 @@ use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\TreeABuilder;
+use app\view\components\ItemBuilder\ItemArrayFieldBuilder;
+use app\view\components\ItemBuilder\ItemArrayTabBuilder;
 use app\view\Image\ImageView;
 
 class CategoryArrayFormView

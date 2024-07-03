@@ -8,7 +8,7 @@
 
         <!--  TABLE  -->
         <?php foreach ($fields as $field): ?>
-            <?php include __DIR__ .'/row.php'?>
+            <?php include __DIR__ . '/row.php' ?>
         <?php endforeach; ?>
     </section>
 
@@ -24,7 +24,7 @@
         <?php $n++; ?>
     <?php endforeach; ?>
 
-    <?php include __DIR__  . '/buttons.php' ?>
+    <?php include __DIR__ . '/buttons.php' ?>
 
 
 </div>

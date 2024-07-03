@@ -12,11 +12,13 @@ class ZipController extends AppController
    {
       $this->service = new ZipService();
    }
-   public function actionImportFiles()
+
+   public function actionDownload()
    {
       $files = (new ImportFiles)();
       $this->service
          ->files($files)
+          ->path('/app/Storage/import/')
          ->zipname('import.zip')
          ->download();
       exit;

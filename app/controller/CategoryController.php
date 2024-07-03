@@ -5,24 +5,20 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\core\Icon;
-use app\Domain\UseCase\CategoryUseCase;
-use app\model\Category;
-use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
+use app\view\share\card_panel\CardPanel;
 
 
 class CategoryController extends AppController
 {
-   protected $model = Category::class;
-   protected CategoryUseCase $case;
-
+   protected CardPanel $categoryView;
    protected CategoryRepository $repo;
-
    public function __construct()
    {
       parent::__construct();
       $this->repo = new CategoryRepository();
+      $this->categoryView = new CardPanel();
    }
 
    public function actionIndex(): void

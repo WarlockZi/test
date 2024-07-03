@@ -3,20 +3,15 @@
 
 namespace app\view\Product;
 
-use app\builders\ItemArrayFieldBuilder;
-use app\builders\ItemArrayTabBuilder;
 use app\core\FS;
-use app\Domain\UseCase\ProductUseCase;
 use app\model\Category;
 use app\model\Manufacturer;
 use app\model\Product;
-use app\model\ProductUnit;
 use app\model\Promotion;
 use app\model\Seo;
 use app\model\Unit;
 use app\model\User;
 use app\Repository\CategoryRepository;
-use app\Repository\ProductRepository;
 use app\view\components\Builders\Builder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
@@ -24,8 +19,10 @@ use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
+use app\view\components\ItemBuilder\ItemArrayBuilder;
+use app\view\components\ItemBuilder\ItemArrayFieldBuilder;
+use app\view\components\ItemBuilder\ItemArrayTabBuilder;
 use app\view\Property\PropertyView;
-use app\view\Settings\Admin\SettingsFormView;
 use app\view\Unit\UnitFormView;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -112,7 +109,7 @@ class ProductArrayFormView
    public static function edit(Model $product): string
    {
       $p = $product->toArray();
-      return \app\builders\ItemArrayBuilder::build($product, 'product')
+      return ItemArrayBuilder::build($product, 'product')
          ->pageTitle('Товар :  ' . $product['name'])
          ->field(
             ItemArrayFieldBuilder::build('slug', $product)

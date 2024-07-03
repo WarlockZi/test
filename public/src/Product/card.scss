@@ -84,25 +84,7 @@
       min-height: 66px;
       box-shadow: 0 20px 12px -16px rgb(0 30 85 / 10%), 0 8px 24px 18px rgb(0 30 85 / 5%);
 
-      .short-link {
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        top: 10px;
-        right: 10px;
-        padding: 5px 8px;
-        border-radius: 7px;
 
-        &:hover{
-          background-color: $color-gray2;
-        }
-
-        svg {
-          color: $dark-grey-hover;
-          pointer-events: none;
-        }
-      }
       //@include shippable-table;
 
       //@include green;

@@ -23,6 +23,7 @@ class ListColumnBuilder
 
     public $html;
     public $function;
+    public $callbackFn;
     public $functionClass;
 
     public $select = false;
@@ -43,7 +44,15 @@ class ListColumnBuilder
         $this->class = "class='{$class}'";
         return $this;
     }
-
+    public function callback($callback)
+    {
+        $this->callbackFn = $callback;
+        return $this;
+    }
+    public function callCallback($attr)
+    {
+        return call_user_func($this->callbackFn,$attr);
+    }
     public function classHeader(string $class)
     {
         $this->classHeader = "class='{$class}'";
@@ -113,6 +122,8 @@ class ListColumnBuilder
             return $column->functionClass::$func($column, $item, $field);
         } else if ($column->select) {
             return $column->select->get($item->$field ?? 0);
+        } else if ($column->callbackFn) {
+            return $column->callCallback($item);
         } else {
             return $item[$field];
         }

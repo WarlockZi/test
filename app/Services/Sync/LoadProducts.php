@@ -5,6 +5,7 @@ namespace app\Services\Sync;
 
 use app\model\Category;
 use app\model\Product;
+use app\Services\ShortlinkService;
 use app\Services\Slug;
 
 class LoadProducts extends Load
@@ -40,6 +41,7 @@ class LoadProducts extends Load
       $g['art']            = $good['Артикул'] ? trim($good['Артикул']) : '';
       $g['name']           = $good['Наименование'];
       $g['print_name']     = $good['ЗначенияРеквизитов']['ЗначениеРеквизита'][3]['Значение'];
+      $g['short_link']     = ShortlinkService::getValidShortLink();
       $g['slug']           = Slug::slug($g['print_name']);
       if (Product::where('slug', $g['slug'])->first()) {
          $g['slug'] = $g['slug'] . '_' . Slug::slug($g['art']);

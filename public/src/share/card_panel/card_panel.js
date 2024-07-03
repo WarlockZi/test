@@ -1,6 +1,8 @@
-import {$, popup} from "../common";
+import {$, popup} from "../../common";
+import './card_panel.scss'
 
-export const shortLink=()=>{
+export const card_panel=()=>{
+
   const shortLink = $(`[data-shortLink]`).first()
   if (shortLink) {
 
