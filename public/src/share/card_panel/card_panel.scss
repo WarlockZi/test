@@ -2,28 +2,35 @@
 
 .card-panel {
   position: absolute;
-  right: 10px;
-  top: 10px;
-  padding: 5px 8px;
+  right: -1px;
+  top: -5px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: $color-gray2;
 
-  .short-link {
+  .short-link, .edit {
+    padding: 1px 8px;
+      background-color: $color-gray9;
+
     &:hover {
-      background-color: $color-gray4;
+      background-color: $color-gray8;
+
     }
 
     svg {
-      color: $dark-grey-hover;
+      //color: $color-gray-min;
+      color: $color-gray-min;
+      stroke-width: 0px;
       pointer-events: none;
     }
   }
-  .edit{
-    svg{
-      color: $dark-grey-hover;
+
+  .edit {
+    svg {
+      stroke-width: 2px;
+      width: 12px;
+      height: 16px;
     }
   }
 }
