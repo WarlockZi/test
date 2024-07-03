@@ -1,6 +1,5 @@
 <?php
 
-use app\core\Icon;
 use app\view\share\shippable\ShippableUnitsTableFactory;
 
 ?>
@@ -21,4 +20,4 @@ use app\view\share\shippable\ShippableUnitsTableFactory;
     <?= ShippableUnitsTableFactory::create($product, 'product'); ?>
 
 </div>
-</div>
+
