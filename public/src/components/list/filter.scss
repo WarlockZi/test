@@ -1,0 +1,38 @@
+.list-filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: end;
+
+  .btn.filter-button{
+    align-self: center;
+  }
+
+  .filter {
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    select {
+      margin-bottom: 3px;
+    }
+
+    .filter-save {
+      display: flex;
+      align-items: center;
+
+      label {
+        font-size: 12px;
+
+      }
+
+      input {
+
+      }
+    }
+  }
+}

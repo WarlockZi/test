@@ -3,7 +3,6 @@
 namespace app\controller;
 
 use app\core\Auth;
-use app\Domain\UseCase\ProductUseCase;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\OrderRepository;
 use app\Repository\ProductRepository;

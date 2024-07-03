@@ -95,13 +95,13 @@ class OrderitemController extends AppController
                 $orderItm = OrderItem::updateOrCreate(
                     [
                         'product_id' => $req['product_id'],
-                        'sess' => $_COOKIE['PHPSESSID'],
+                        'sess' => session_id(),
                         'deleted_at' => null,
                         'unit_id' => (int)$req['unit_id'],
                     ],
                     [
                         'product_id' => $req['product_id'],
-                        'sess' => $_COOKIE['PHPSESSID'],
+                        'sess' => session_id(),
                         'count' => (int)$req['count'],
                         'unit_id' => (int)$req['unit_id'],
                         'ip' => $_SERVER['REMOTE_ADDR'],

@@ -35,6 +35,7 @@
 
                 <?php if ($c->html): ?>
                     <?= $c->html ?>
+
                 <?php else: ?>
 
                     <div
@@ -42,7 +43,8 @@
                             <?= $c->dataField; ?>
                             <?= $c->class; ?>
                             <?= $c->contenteditable; ?>
-                    ><?= $c->getData($c, $item, $field); ?></div>
+                    ><?= $c->getData($c, $item, $field); ?>
+                    </div>
                 <?php endif; ?>
 
             <?php endforeach; ?>

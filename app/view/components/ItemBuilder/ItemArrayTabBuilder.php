@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\builders;
+namespace app\view\components\ItemBuilder;
 
 
 use app\view\components\Builders\Builder;

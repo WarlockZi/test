@@ -17,6 +17,7 @@ export default class shippableTable {
         this.price = +this.table.dataset.price
         this.sid = this.table.dataset['1sid']
         this.total = this.table[qs]('[data-total]')
+        this.updateOrCreateUrl = this.table[qs]('[data-total]')
         this.setFormatter()
         this.showButtons()
         this.renderSums()
@@ -50,7 +51,7 @@ export default class shippableTable {
         //     const row = targ.closest('.unit-row')
         //     this.handleChange(row)
         // }
-        return this
+        // return this
     }
 
     increment(row) {
@@ -121,20 +122,23 @@ export default class shippableTable {
         this.toServer(this.dto(this.greenButtonWrap[qs]('[unit-row]')))
     }
 
-    getUrl() {
-        if (isAuthed()) {
-            return '/adminsc/order'
+    getUrl(key) {
+        const urls = {
+            "updateOrCreate": "updateOrCreate",
+            "delete": "delete",
         }
-        return '/adminsc/orderitem'
+        const url = urls[key]
+        const orderOrItem = isAuthed()?'order':'orderItem'
+
+        return `/adminsc/${orderOrItem}/${url}`
     }
 
     deleteOrderItems(tableDTO) {
-        const url = `${this.getUrl()}/delete`
-        post(url, tableDTO)
+        post(this.getUrl('delete'), tableDTO)
     }
 
     async toServer(dto) {
-        const url = `${this.getUrl()}/updateOrCreate`
+        const url = this.getUrl("updateOrCreate")
         const res = await post(url, dto)
     }
 
@@ -152,6 +156,7 @@ export default class shippableTable {
             count: row[qs]('input').value,
             multiplier: row.dataset.multiplier,
             sub_sum: row[qs]('.sub-sum'),
+            sess_id:localStorage.getItem('SESSION')
         }
     }
 

@@ -24,10 +24,18 @@ export default async function product() {
     const {default:Dnd} =  await import("../../components/dnd/dnd")
     new Dnd(dragNdrop,addMainImage)
   }
+  setCardPanel()
 
   // new Dnd(), addMainImage);
 }
 
+async function setCardPanel(){
+  const cardPanel = document[qs](`.cardPanel`)
+  if (cardPanel){
+    const {default:cardPanel} = import("./../../share/card_panel/card_panel")
+    new cardPanel()
+  }
+}
 async function addMainImage(files, target) {
 
   const obj = {productId: target.closest('.item-wrap').dataset.id,};
