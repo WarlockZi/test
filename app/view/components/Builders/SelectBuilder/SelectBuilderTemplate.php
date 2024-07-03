@@ -1,14 +1,12 @@
-<select
-        custom-select
+<select custom-select
     <?= $title; ?>
-
-
     <?= $field; ?>
-        class="<?= $class; ?>"
+    <?= $class; ?>
+    <?= $name; ?>
+    <?= $id; ?>
+
 >
-
     <?= $options; ?>
-
 </select>
 
 

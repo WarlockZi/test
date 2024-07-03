@@ -9,35 +9,43 @@ use app\view\components\Builders\Builder;
 
 class SelectBuilder extends Builder
 {
-
     private string $options;
-    private string $class;
-    private string $title;
-    private string $field;
-    private string $relation;
+    private FS $fs;
+    private string $class = '';
+    private string $title = '';
+    private string $field = '';
+    private string $name = '';
+    private string $id = '';
+    private string $relation = '';
 
-    private string $initialOption;
-    private FS $fs ;
+    private string $initialOption = '';
 
     public static function build(string $options)
     {
-        $select                = new static();
+        $select = new static();
         $select->fs = new FS(__DIR__);
-        $select->options       = $options;
-        $select->class         = '';
-        $select->title         = '';
-        $select->field         = '';
-        $select->relation      = '';
-        $select->initialOption = '';
+        $select->options = $options;
 
         return $select;
     }
+
     public function class(string $class)
     {
         $this->class = $class;
         return $this;
     }
 
+    public function name(string $name)
+    {
+        $this->name = "name={$name}";
+        return $this;
+    }
+
+    public function id(string $id)
+    {
+        $this->id = "id={$id}";
+        return $this;
+    }
 
     public function relation(string $relation)
     {
@@ -61,7 +69,7 @@ class SelectBuilder extends Builder
     {
         $this->initialOption =
             "<option value='{$initialOptionValue}'>{$initialOptionLabel}</option>";
-        $this->options       = $this->initialOption . $this->options;
+        $this->options = $this->initialOption . $this->options;
         return $this;
     }
 

@@ -4,7 +4,7 @@
   viewBox="0 0 24 24"
   xmlns="http://www.w3.org/2000/svg"
   fill="none"
-  stroke="#5195bd"
+  stroke="currentColor"
   stroke-width="1"
   stroke-linecap="round"
   stroke-linejoin="round"

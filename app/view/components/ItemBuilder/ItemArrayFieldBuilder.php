@@ -1,6 +1,6 @@
 <?php
 
-namespace app\builders;
+namespace app\view\components\ItemBuilder;
 
 use app\core\FS;
 use app\view\components\Builders\Builder;

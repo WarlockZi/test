@@ -29,9 +29,8 @@ class List{
       });
    }
       async customSelectChange({target}) {
-         debugger;
-         // modelUpdate(this)
          let wrapper = target.closest('[data-model]');
+         if (!wrapper) return false
          let model = wrapper.dataset.model;
          let modelId = wrapper.dataset.id;
          let field = wrapper.dataset.field;

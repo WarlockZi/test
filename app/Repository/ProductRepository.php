@@ -8,6 +8,7 @@ use app\core\FS;
 use app\core\Response;
 use app\model\Product;
 use app\model\ProductUnit;
+use app\Services\ProductImageService;
 use JetBrains\PhpStorm\NoReturn;
 
 class ProductRepository extends AppController
@@ -122,43 +123,101 @@ class ProductRepository extends AppController
         return null;
     }
 
-//
     public function changePromotion(array $req)
     {
 
     }
 
+    private static function defaultFilter()
+    {
+        return Product::query()
+            ->withTrashed()
+            ->take(20)
+            ->groupBy('art')
+            ->get()
+            ;
+    }
+
     public static function filter($req)
     {
+        if (!$req) {
+            return self::defaultFilter();
+        };
         extract($req);
-        $query = Product::query()
-        ;
-        if (isset($instore) && $instore === 'instore') {
-            $query->where('instore', '>', 0);
-        } elseif (isset($instore) && $instore === 'notinstore') {
-            $query->where('instore', '<>', 0);
+        $query = Product::query();
+
+        if (isset($instore)) {
+            if ($instore === '1') {
+                $query->where('instore', '>', 0);
+            } elseif ($instore === '2') {
+                $query->where('instore', '=', 0);
+            }
         }
-//        if (isset($mainImg) && $mainImg==='with-img'){
-//            $query->hasMainImage();
-//        }
-        if (isset($baseIsShippable) && $baseIsShippable) {
-            $query->with(['units' => function ($q) {
-                $q->where('base_is_shippable', 1);
-            }]);
-        } elseif (isset($baseIsShippable) && !$baseIsShippable) {
-            $query->whereHas('units', function ($q) {
-                $q->where('base_is_shippable', 0);
-            });
-        }
-        if (isset($take) && $take) {
-            $query->take($take);
-        }
-        if (isset($deleted) && $deleted==1) {
-            $query->withTrashed();
+        if (isset($baseIsShippable)) {
+            if ($baseIsShippable === "1") {
+                $query->whereHas('units', function ($q) {
+                    $q->where('base_is_shippable', 1);
+                });
+            } elseif ($baseIsShippable === "2") {
+                $query->whereHas('units', function ($q) {
+                    $q->where('base_is_shippable', 0);
+                });
+            }
         }
 
-        $p = $query->get();
-        $arr =  $p->toArray();
+        if (isset($deleted)) {
+            if ($deleted == "1") {
+                $query->withTrashed();
+            }elseif ($deleted === "2") {
+
+            }
+        }
+
+        if (isset($matrix)) {
+            if ($matrix === '1') {
+                $query->where("name", 'REGEXP', "\\*$");
+            } elseif ($matrix === '2'){
+                $query->where("name", 'NOT REGEXP', "\\*$");
+            }
+        }
+
+        if (isset($take)) {
+            if ($take === "1") {
+                $query->take(20);
+            } else if ($take === "2") {
+                $query->take(40);
+            }
+        }
+
+        if (isset($category)) {
+            if ($category) {
+                $query->where('category_id', $category);
+            }
+        }
+
+        $p = $query
+            ->groupBy('art')
+            ->get();
+
+        if (isset($image)) {
+            $noImg = (new ProductImageService())->getNoPhoto();
+            if ($image === "1") {
+                $p = $p->filter(function ($product) use ($noImg) {
+                    if ($product->mainImage !== $noImg) {
+                        return $product;
+                    }
+                    return false;
+                });
+            } else if ($image === "2") {
+                $p = $p->filter(function ($product) use ($noImg) {
+                    if ($product->mainImage === $noImg) {
+                        return $product;
+                    }
+                    return false;
+                });
+            }
+        }
+//        $arr = $p->toArray();
         return $p;
     }
 
@@ -220,7 +279,6 @@ class ProductRepository extends AppController
         }
     }
 
-
     public function trashed()
     {
         return Product::query()
@@ -235,34 +293,20 @@ class ProductRepository extends AppController
     public function list()
     {
         return Product::query()
-//            ->with('price')
             ->with('mainImages')
             ->take(20)
             ->orderBy('id', "DESC")
             ->get();
     }
 
+//    public function getFilters()
+//    {
+//        $self = new static();
+//        $filters = [
+//            'instore' => 'Показать с остатком = 0',
+//            'price' => 'Показать c ценой = 0',
+//        ];
+//        return FS::getFileContent('./delfilters.php', compact('filters'));
+//    }
 
-    public function getFilters()
-    {
-        $self = new static();
-        $filters = [
-            'instore' => 'Показать с остатком = 0',
-            'price' => 'Показать c ценой = 0',
-        ];
-        return FS::getFileContent('./filters.php', compact('filters'));
-    }
-
-//   public function short(string $short)
-//   {
-//      $self    = new self();
-//      $p       = Product::where('short_link', $short)->firstOrFail();
-//      $id      = $p['1s_id'];
-//      $product =
-//         $self->mainShortSubquery($id)
-//            ->first();;
-//
-//      $p = $product->toArray();
-//      return $product;
-//   }
 }
