@@ -12,9 +12,8 @@ use app\core\Error;
     <meta name="robots" content="noindex,nofollow"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--	<script type="module" crossorigin="true" src="ws://localhost:5174/"></script>-->
-    <!--	--><?php //include (ROOT.'/public/build/index.html');?>
-    <!--	--><?php //= vite('main.js') ?>
+    <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
+
     <?= $assets->getCss() ?>
     <?= $assets->getCDNCss() ?>
 
