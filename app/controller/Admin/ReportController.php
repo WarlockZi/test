@@ -74,7 +74,7 @@ class ReportController extends AppController
 
     public function actionFilter()
     {
-        $this->view = 'products';
+//        $this->view = 'products';
 
         if (!empty($_POST)) {
              $this->productFilterService->saveUserFilters($_POST);
@@ -86,17 +86,17 @@ class ReportController extends AppController
         $this->set(compact('productList', 'filters'));
     }
 
-    private function getFilters(array $req)
-    {
-        if ($req) {
-            return $req;
-        } else {
-            return [
-                "deleted" => "1",
-                "take" => "20"
-            ];
-        }
-    }
+//    private function getFilters(array $req)
+//    {
+//        if ($req) {
+//            return $req;
+//        } else {
+//            return [
+//                "deleted" => "1",
+//                "take" => "20"
+//            ];
+//        }
+//    }
 
 
 }
