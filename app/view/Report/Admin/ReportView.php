@@ -128,27 +128,26 @@ class ReportView
                     ->get()
             )
             ->column(
-                ListColumnBuilder::build('print_name')
+                ListColumnBuilder::build('matrix')
                     ->name('В матрице')
                     ->class('cell font-size-1-5em')
                     ->callback(function ($prod) {
                         return str_ends_with($prod->name,'*')?'*':'';
                     })
-                    ->width('50px')
+                    ->width('30px')
                     ->get()
             )
             ->column(
                 ListColumnBuilder::build('img')
                     ->name('Картинка')
                     ->function(ProductService::class, 'productImg')
-                    ->width('100px')
+                    ->width('40px')
                     ->get()
             )
             ->column(
                 ListColumnBuilder::build('instore')
                     ->name('Количество')
-//                    ->field('instore')
-                    ->width('100px')
+                    ->width('50px')
                     ->get()
             )
             ->column(
@@ -156,7 +155,7 @@ class ReportView
                     ->name('баз=отгруж')
                     ->class('cell')
                     ->function(ProductService::class, 'baseIsShippable')
-                    ->width('50px')
+                    ->width('30px')
                     ->get()
             )
             ->items($products)
