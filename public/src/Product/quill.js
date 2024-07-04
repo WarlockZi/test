@@ -28,7 +28,7 @@ export const quill = () => {
       debug: "warn",
       modules:
       toolbar,
-      placeholder: 'Compose an epic...',
+      placeholder: 'Нет информации...',
       readOnly: !isAdmin,
       theme: 'snow' //'bubble'
     };
