@@ -132,15 +132,20 @@ class ProductRepository extends AppController
     {
         return Product::query()
             ->withTrashed()
-            ->take(20)
+            ->take(10)
             ->groupBy('art')
             ->get()
             ;
     }
+    private static function array_every(array $array,callable $callback)
+    {
+        return  !in_array(false,  array_map($callback,$array));
+    }
 
     public static function filter($req)
     {
-        if (!$req) {
+        $nullEvry = self::array_every($req, function($f){return $f==0;});
+        if ($nullEvry) {
             return self::defaultFilter();
         };
         extract($req);
@@ -186,6 +191,8 @@ class ProductRepository extends AppController
                 $query->take(20);
             } else if ($take === "2") {
                 $query->take(40);
+            }else{
+                $query->take($take);
             }
         }
 

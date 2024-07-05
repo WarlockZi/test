@@ -25,6 +25,9 @@ class ProductFilterService
     {
         $userFilters = ProductFilterRepository::product(Auth::getUser()['id']);
         $obj = json_decode($userFilters['name']);
+        if (empty($obj)) {
+            $obj =  new \stdClass();
+        }
         $args = get_object_vars($obj);
         $formatted = [];
         foreach ($args as $filter => $selected) {
@@ -81,6 +84,9 @@ class ProductFilterService
     {
         if ($type == 'admin') {
             $userFilter = $this->setUserFilters();
+//            if (empty($userFilter)) {
+//                return 'Заполните фильтры';
+//            }
             $this->initialfilters = include 'productFilters.php';
 
             $filters = '';
