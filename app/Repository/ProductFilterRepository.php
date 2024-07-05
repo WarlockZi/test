@@ -14,7 +14,5 @@ class ProductFilterRepository
             ->select('name')
             ->first();
         return $userFilters ? $userFilters->toArray() : [];
-
     }
-
 }

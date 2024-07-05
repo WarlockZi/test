@@ -2,15 +2,15 @@
 
 $categoryId = $userFilter['category']['id'] ?? 0;
 
-$initialFilters = ["instore" => [
-
-    "title" => "наличие",
-    "options" => [
-        0 => '',
-        1 => 'в наличии',
-        2 => 'не в наличии',
+$initialFilters = [
+    "instore" => [
+        "title" => "наличие",
+        "options" => [
+            0 => '',
+            1 => 'в наличии',
+            2 => 'не в наличии',
+        ],
     ],
-],
 
     "baseIsShippable" => [
         "title" => "баз = отгруж",
