@@ -103,13 +103,14 @@ class ReportView
             ->get();
     }
 
-    public function filter(Collection $products, string $title): string
+    public function filter(Collection|null $products, string $title): string
     {
         return MyList::build(Product::class)
             ->pageTitle($title)
             ->column(
                 ListColumnBuilder::build('id')
                     ->name('ID')
+                    ->width('15px')
                     ->get()
             )
             ->column(
@@ -141,7 +142,7 @@ class ReportView
                 ListColumnBuilder::build('img')
                     ->name('Картинка')
                     ->function(ProductService::class, 'productImg')
-                    ->width('40px')
+                    ->width('50px')
                     ->get()
             )
             ->column(
@@ -162,7 +163,7 @@ class ReportView
             ->edit()
             ->del()
             ->addButton('ajax')
-            ->get();
+            ->get()??'Установите фильтры';
     }
 
     public function noImgNoInstoreList(Collection $products, string $title): string

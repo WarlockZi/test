@@ -24,6 +24,7 @@
 
   .adm-content {
     padding: 70px 30px;
+    min-height: 50vh;
 
     button {
       @include colored_button();

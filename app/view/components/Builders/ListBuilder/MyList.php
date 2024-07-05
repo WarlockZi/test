@@ -10,42 +10,33 @@ use Illuminate\Database\Eloquent\Collection;
 
 class MyList
 {
-    private string $pageTitle;
-    private string $grid;
-    private string $class;
-    private string $emptyRow;
-    private string $addButton;
-    private array $columns;
-    private string $headEditCol;
-    private string $headDelCol;
-    private string $tableClassName;
-    private string $model;
-    private string $modelName;
-    private string $dataModel;
-    private string $relation;
-    private string $add;
-    private Collection $items;
+    private array $columns = [];
+    private string $grid = '';
+    private string $class = '';
+    private bool $headEditCol = false;
+    private bool $headDelCol = false;
+    private string $emptyRow = '';
+    private string $pageTitle = '';
+    private string $add = '';
+    private string $relation = '';
+    private string $html = '';
+    private string $addButton = '';
+    private string $tableClassName = '';
+    private string $model = '';
+    private string $modelName = '';
+    private string $dataModel = '';
+    private Collection|null $items;
     private FS $fs;
-    private string $html;
 
     public static function build(string $modelName, int $count = 0)
     {
         $list              = new static();
-        $list->columns     = [];
-        $list->grid        = '';
-        $list->class       = '';
-        $list->addButton   = 'ajax';
-        $list->headEditCol = false;
-        $list->headDelCol  = false;
-        $list->emptyRow    = '';
-        $list->pageTitle   = '';
-        $list->add         = '';
-
-        $list->modelName = strtolower(class_basename($modelName));
         $list->model       = $modelName;
+        $list->modelName = strtolower(class_basename($modelName));
         $list->dataModel = "data-model='{$list->modelName}'";
-        $list->relation  = "";
-        $list->html      = "";
+
+        $list->addButton   = 'ajax';
+
         $list->fs        = new FS(__DIR__);
         return $list;
     }
@@ -98,7 +89,7 @@ class MyList
         return $this;
     }
 
-    public function items(Collection $items)
+    public function items(Collection|null $items)
     {
         $this->items = $items;
         return $this;
@@ -219,9 +210,4 @@ class MyList
             return $exception->getMessage();
         }
     }
-
-//    protected function setItems()
-//    {
-//        $this->items = $this->modelName::all();
-//    }
 }
