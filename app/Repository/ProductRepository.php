@@ -192,7 +192,7 @@ class ProductRepository extends AppController
             } else if ($take === "2") {
                 $query->take(40);
             }else{
-                $query->take($take);
+//                $query->take(10);
             }
         }
 
