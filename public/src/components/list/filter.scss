@@ -1,6 +1,28 @@
+.used-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .8rem;
+
+  span {
+    padding-left: 5px;
+  }
+
+  .selected-filter {
+    border: 1px solid $color-main;
+    padding: 5px;
+  }
+
+  .selected-value {
+    font-weight: bold;
+  }
+
+}
+
 .filter-wrap {
   display: flex;
-  position: absolute;
+  position: fixed;
+  top: 95px;
   left: 100%;
   transform-origin: left;
   transition: all 200ms ease-in-out;
@@ -30,13 +52,16 @@
     gap: 10px;
     padding: 10px;
     min-width: max-content;
+    max-width: 95vw;
     margin-bottom: 10px;
     align-items: start;
     flex-wrap: wrap;
-    background-color: $color-gray-browser;
     backdrop-filter: blur(10px);
-    opacity: .97;
+    opacity: 0.97;
     color: white;
+    overflow-y: scroll;
+    max-height: 80vh;
+    background-color: $color-gray-browser;
 
     .btn.filter-button {
       align-self: center;
