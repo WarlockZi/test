@@ -29,29 +29,38 @@
         <?= $emptyRow; ?>
 
         <!--		 Data rows-->
-        <?php foreach ($items as $item): ?>
+        <? if ($items->count()): ?>
 
-            <?php foreach ($columns as $field => $c): ?>
 
-                <?php if ($c->html): ?>
-                    <?= $c->html ?>
+            <?php foreach ($items as $item): ?>
 
-                <?php else: ?>
+                <?php foreach ($columns as $field => $c): ?>
 
-                    <div
-                            data-id=<?= $item['id']; ?>
-                            <?= $c->dataField; ?>
-                            <?= $c->class; ?>
-                            <?= $c->contenteditable; ?>
-                    ><?= $c->getData($c, $item, $field); ?>
-                    </div>
-                <?php endif; ?>
+                    <?php if ($c->html): ?>
+                        <?= $c->html ?>
+
+                    <?php else: ?>
+
+                        <div
+                                data-id=<?= $item['id']; ?>
+                                <?= $c->dataField; ?>
+                                <?= $c->class; ?>
+                                <?= $c->contenteditable; ?>
+                        ><?= $c->getData($c, $item, $field); ?>
+                        </div>
+                    <?php endif; ?>
+
+                <?php endforeach; ?>
 
             <?php endforeach; ?>
 
-        <?php endforeach; ?>
+        <? endif; ?>
 
     </div>
+
+    <? if (!$items->count()): ?>
+        <h3>Элементы не найдены</h3>
+    <? endif; ?>
 
     <!--  ADD BUTTON  -->
     <div class="buttons">

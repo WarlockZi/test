@@ -3,13 +3,12 @@
   position: absolute;
   left: 100%;
   transform-origin: left;
-  transition: all 500ms ease-in-out;
+  transition: all 200ms ease-in-out;
   transform: translate3d(0, 0, 0);
   z-index: 10;
 
   &:hover {
     transform: translate3d(-100%, 0, 0);
-
   }
 
   .filter-badge-title {
@@ -19,7 +18,7 @@
     left: -61px;
     top: 23px;
     padding: 10px;
-    background-color: $color-admin-sidebar;
+    background-color: $color-main;
     transform: rotate(270deg);
     color: white;
     cursor: pointer;
@@ -34,7 +33,9 @@
     margin-bottom: 10px;
     align-items: start;
     flex-wrap: wrap;
-    background-color: $color-admin-sidebar;
+    background-color: $color-gray-browser;
+    backdrop-filter: blur(10px);
+    opacity: .97;
     color: white;
 
     .btn.filter-button {
@@ -44,10 +45,11 @@
     .filter {
       display: flex;
       flex-direction: column;
+      margin-bottom: 10px;
 
       .title {
-        font-size: 12px;
-        margin-bottom: 10px;
+        font-size: 1rem;
+        margin-bottom: 5px;
       }
 
       select {
