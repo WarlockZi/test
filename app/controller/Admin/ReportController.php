@@ -81,7 +81,8 @@ class ReportController extends AppController
         $filters = $this->productFilterService->factory('admin');
         $products = $this->productRepository::filter($_POST);
         $productList = $this->formView->filter($products, 'Фильтр');
-        $this->set(compact('productList', 'filters'));
+        $userFiltersString = $this->productFilterService->getUserFilterString($_POST);
+        $this->set(compact('productList', 'filters', 'userFiltersString'));
     }
 }
 

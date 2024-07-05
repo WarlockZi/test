@@ -38,16 +38,6 @@ class ProductFilterService
         return $formatted;
     }
 
-    public function mergeInitialAndUserFilters(array $init, array $users)
-    {
-        foreach ($users as $index => $filter) {
-            if (key_exists(key($filter), $this->initialfilters)) {
-                $this->initialfilters[key($filter)]['selected'] = true;
-
-            }
-        }
-    }
-
     public function saveUserFilters(array $req): array
     {
         $reqFilters = $this->getUserFilters($req);
@@ -85,13 +75,10 @@ class ProductFilterService
     {
         if ($type == 'admin') {
             $userFilter = $this->setUserFilters();
-//            if (empty($userFilter)) {
-//                return 'Заполните фильтры';
-//            }
-            $this->initialfilters = include 'productFilters.php';
+            $initialfilters = include 'productFilters.php';
 
             $filters = '';
-            foreach ($this->initialfilters as $filter => $values) {
+            foreach ($initialfilters as $filter => $values) {
                 $filters .= $this->filterView
                     ->filterName($filter)
                     ->userFilters($this->userFilters)
@@ -105,4 +92,35 @@ class ProductFilterService
         }
         return $this->filterView->getProductFilter($filters);
     }
+
+    public function getUserFilterString($req): string
+    {
+        $notNull = array_filter($req, function ($filter) {
+            return $filter <> '0' && $filter <> 'on';
+        });
+        $initialfilters = include 'productFilters.php';
+        $str = '';
+        foreach ($initialfilters as $filter => $value) {
+            $filterRuName = $value['title'];
+            $selected = "*";
+            $selectedSpan = "<span>{$selected}</span>";
+            $filterSpan = "<span>{$filterRuName}{$selectedSpan}</span>";
+            if (array_key_exists($filter, $notNull)) {
+                $selected = $value['options'][$notNull[$filter]];
+                $selectedSpan = "<span class='selected-value'>{$selected}</span>";
+                $filterSpan = "<span class='selected-filter'>{$filterRuName}{$selectedSpan}</span>";
+            }
+            $str .= $filterSpan;
+        }
+        return "<div class='used-filters'>{$str}</div>";
+    }
+//    public function mergeInitialAndUserFilters(array $init, array $users)
+//
+//        foreach ($users as $index => $filter) {
+//            if (key_exists(key($filter), $this->initialfilters)) {
+//                $this->initialfilters[key($filter)]['selected'] = true;
+//
+//            }
+//        }
+//    }
 }
