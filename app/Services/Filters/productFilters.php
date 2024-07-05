@@ -1,6 +1,6 @@
 <?php
 
-$categoryId = $userFilter['category']['id']??null;
+$categoryId = $userFilter['category']['id'] ?? 0;
 
 $initialFilters = ["instore" => [
 
@@ -13,7 +13,7 @@ $initialFilters = ["instore" => [
 ],
 
     "baseIsShippable" => [
-        "title" => "баз=отгруж",
+        "title" => "баз = отгруж",
         "options" => [
             0 => '',
             1 => 'баз=отгруж',
