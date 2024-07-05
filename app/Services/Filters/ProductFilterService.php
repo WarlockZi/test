@@ -24,9 +24,10 @@ class ProductFilterService
     public function setUserFilters(): array
     {
         $userFilters = ProductFilterRepository::product(Auth::getUser()['id']);
-        $obj = json_decode($userFilters['name']);
+
+        $obj = $userFilters ? json_decode($userFilters['name']) : null;
         if (empty($obj)) {
-            $obj =  new \stdClass();
+            $obj = new \stdClass();
         }
         $args = get_object_vars($obj);
         $formatted = [];
