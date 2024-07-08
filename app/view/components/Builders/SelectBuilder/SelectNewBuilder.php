@@ -5,10 +5,11 @@ namespace app\view\components\Builders\SelectBuilder;
 
 
 use app\core\FS;
-use app\view\components\Builders\Builder;
+use app\view\components\Traits\CleanString;
 
-class SelectNewBuilder extends Builder
+class SelectNewBuilder
 {
+    use CleanString;
 	private string $options;
 	private string $class;
 	private FS $fs;

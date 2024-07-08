@@ -5,8 +5,8 @@ namespace app\Repository;
 
 
 use app\model\Category;
+use app\view\components\Builders\SelectBuilder\optionBuilders\TreeOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -62,8 +62,8 @@ class CategoryRepository
     #[NoReturn] public static function changeProperty(array $req): void
     {
         $category = Category::find($req['category_id']);
-        $newVal = $req['morphed']['new_id'];
-        $oldVal = $req['morphed']['old_id'];
+        $newVal   = $req['morphed']['new_id'];
+        $oldVal   = $req['morphed']['old_id'];
 
         if (!$oldVal) {
             $category->properties()->attach($newVal);
