@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\view\components\Builders\SelectBuilder;
+namespace app\view\components\Builders\SelectBuilder\optionBuilders;
 
 
 use app\core\Error;
@@ -9,27 +9,27 @@ use Illuminate\Database\Eloquent\Collection;
 
 abstract class TreeBuilder
 {
-    protected array $arr;
+    protected Collection $items;
     protected string $relation;
+    protected int $multiply;
+    protected string $tab;
+    protected array $arr;
 
     protected $selected = null;
     protected $excluded = null;
-
-    protected $tab;
     protected $localtab;
-    protected $tabMultiply;
 
     protected $initialOption;
+    protected array $flatArray = [];
 
     public function __construct(Collection $collection, string $relation, int $multiply = 1, string $tab = '&nbsp;')
     {
-        $this->arr = $collection->toArray();
+        $this->arr      = $collection->toArray();
+        $this->items    = $collection;
         $this->relation = $relation;
+        $this->multiply = $multiply;
+        $this->tab      = $tab;
         $this->validateFormat();
-
-        $this->tabMultiply = $multiply;
-        $this->tab = $tab;
-
         return $this;
     }
 
@@ -39,8 +39,6 @@ abstract class TreeBuilder
         $str .= $this->options($this->arr, 0, '');
         return $str;
     }
-
-
     public function selected(?int $selected)
     {
         $this->selected = $selected;

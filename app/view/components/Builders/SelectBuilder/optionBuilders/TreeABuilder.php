@@ -11,10 +11,7 @@ class TreeABuilder extends TreeBuilder
 	private $class;
 	private $href;
 
-	public static function build(Collection $collection,
-															 string $relation,
-															 int $multiply = 1,
-															 string $tab = '&nbsp;')
+	public static function build(Collection $collection, string $relation, int $multiply = 1, string $tab = '&nbsp;')
 	{
 		$self = new self($collection, $relation, $multiply, $tab);
 		return $self;
