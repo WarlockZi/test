@@ -18,7 +18,7 @@ use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
-use app\view\components\Builders\SelectBuilder\ListSelectBuilder;
+use app\view\components\Builders\SelectBuilder\SelectListBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 use app\view\Image\ImageView;
@@ -118,7 +118,7 @@ class ProductFormView
             ItemFieldBuilder::build('manufacturer', $product)
                ->name('Производитель')
                ->html(
-                  ListSelectBuilder::build()
+                  SelectListBuilder::build()
                      ->collection(Manufacturer::all())
                      ->item($product)
                      ->field('manufacturer_id')

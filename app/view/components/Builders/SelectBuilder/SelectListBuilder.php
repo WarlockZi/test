@@ -4,12 +4,13 @@
 namespace app\view\components\Builders\SelectBuilder;
 
 use app\core\FS;
-use app\view\components\Builders\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use app\view\components\Traits\CleanString;
 
-class ListSelectBuilder extends Builder
+class SelectListBuilder
 {
+    use CleanString;
 	private array $tree;
 	private string $options;
 	private string $class;
@@ -17,15 +18,6 @@ class ListSelectBuilder extends Builder
 	private string $field;
 	private string $model;
 	private string $modelId;
-
-//	private string $morphFunction;
-//	private string $morphId;
-//	private string $morphSlug;
-//	private string $morphOneOrMany;
-//	private string $morphDetach;
-
-//	private string $belongsToModel;
-//	private string $belongsToId;
 
 	private bool $selected = false;
 	private bool $excluded = false;
@@ -49,12 +41,12 @@ class ListSelectBuilder extends Builder
 		return $select;
 	}
 
-	public function collection(Collection $collection):ListSelectBuilder
+	public function collection(Collection $collection):SelectListBuilder
 	{
 		$this->collection = $collection;
 		return $this;
 	}
-	public function item(Model $item):ListSelectBuilder
+	public function item(Model $item):SelectListBuilder
 	{
         $model = $this->getShortName($item);
 		$id = $item->id;
@@ -62,6 +54,12 @@ class ListSelectBuilder extends Builder
 		$this->modelId = "data-model-id='" . $id . "'";
 		return $this;
 	}
+
+    protected function getShortName(Model $model):string
+    {
+        $reflection = new \ReflectionClass($model);
+        return lcfirst($reflection->getShortName());
+    }
 
 	public function class(string $class)
 	{
