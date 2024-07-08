@@ -1,7 +1,5 @@
 <?php
 
-$categoryId = $userFilter['category']['id'] ?? 0;
-
 $initialFilters = [
     "instore" => [
         "title" => "наличие",
@@ -54,7 +52,7 @@ $initialFilters = [
     ],
     "category" => [
         "title" => "категория",
-        "options" => \app\Repository\CategoryRepository::reportProductSelector($categoryId),
+        "options" => $CategoryFlatNestedArray,
     ],
 ];
 

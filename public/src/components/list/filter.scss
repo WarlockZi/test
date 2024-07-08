@@ -1,7 +1,9 @@
 .used-filters {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
+  max-width: 80%;
   font-size: .8rem;
 
   span {
@@ -24,7 +26,6 @@
   position: fixed;
   top: 95px;
   left: 100%;
-  transform-origin: left;
   transition: all 200ms ease-in-out;
   transform: translate3d(0, 0, 0);
   z-index: 10;
@@ -59,7 +60,6 @@
     backdrop-filter: blur(10px);
     opacity: 0.97;
     color: white;
-    overflow-y: scroll;
     max-height: 80vh;
     background-color: $color-gray-browser;
 
