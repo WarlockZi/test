@@ -48,13 +48,12 @@ class ZipService
             $zip = new \ZipArchive();
             $zip->open($this->zipname, \ZipArchive::CREATE);
             $this->errorLogger->write(PHP_EOL . 'new zip created and opened');
-            $this->errorLogger->write(PHP_EOL . count($this->files));
             foreach ($this->files as $file) {
                 $file = FS::platformSlashes($file);
                 $this->errorLogger->write(PHP_EOL . 'file path - ' . $file);
                 if (file_exists($file)) {
-                    $this->errorLogger->write(PHP_EOL . file_exists($file) . ' -- file exists');
                     $zip->addFile($file, basename($file));
+                    $this->errorLogger->write(PHP_EOL . ' -- basename - ' . basename($file));
                 } else {
                     $this->errorLogger->write(PHP_EOL . $file . ' -- file not exists');
                 }
