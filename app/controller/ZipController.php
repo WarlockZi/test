@@ -20,9 +20,6 @@ class ZipController extends AppController
     public function actionDownload()
     {
         $files = (new ImportFiles)();
-        foreach ($files as $file) {
-            $this->logger->write($file);
-        }
 
         $this->service
             ->files($files)
