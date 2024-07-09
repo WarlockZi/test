@@ -18,7 +18,6 @@ class ZipService
         $this->errorLogger = new ErrorLogger('errors.txt');
         try {
             $this->files = $files;
-            $this->createZip();
         } catch (\Throwable $exception) {
             $this->errorLogger->write('__ZipService__' . $exception->getMessage());
         }
@@ -43,7 +42,7 @@ class ZipService
         return $this;
     }
 
-    private function createZip(): void
+    public function createZip(): ZipService
     {
         try {
             $zip = new \ZipArchive();
@@ -64,6 +63,7 @@ class ZipService
         } catch (\Throwable $exception) {
             $this->errorLogger->write('create zip - ' . $exception->getMessage());
         }
+        return $this;
     }
 
     public function download(): void
