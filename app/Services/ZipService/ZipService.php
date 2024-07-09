@@ -25,7 +25,7 @@ class ZipService
 
     public function path(string $path): ZipService
     {
-        $this->path = $path;
+        $this->path = ROOT.$path;
         return $this;
     }
 
