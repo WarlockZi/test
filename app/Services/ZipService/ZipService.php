@@ -81,6 +81,7 @@ class ZipService
             header('Content-disposition: attachment; filename=' . $this->zipname);
             header('Content-Length: ' . filesize($this->zipname));
             readfile($this->path . $this->zipname);
+            $this->errorLogger->write('fpath zipname'. $this->path . $this->zipname);
             $this->errorLogger->write('download - done');
             exit();
         } catch (\Throwable $exception) {
