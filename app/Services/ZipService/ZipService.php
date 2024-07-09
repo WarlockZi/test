@@ -46,7 +46,7 @@ class ZipService
     {
         try {
             $zip = new \ZipArchive();
-            $zip->open($this->zipname, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+            $zip->open($this->path.$this->zipname, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
             $this->errorLogger->write(PHP_EOL . 'new zip created and opened');
             foreach ($this->files as $file) {
                 $file = FS::platformSlashes($file);
