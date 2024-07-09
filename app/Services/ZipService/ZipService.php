@@ -46,7 +46,7 @@ class ZipService
     {
         try {
             $zip = new \ZipArchive();
-            $zip->open($this->zipname, \ZipArchive::CREATE|\ZipArchive::OVERWRITE);
+            $zip->open($this->zipname, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
             $this->errorLogger->write(PHP_EOL . 'new zip created and opened');
             foreach ($this->files as $file) {
                 $file = FS::platformSlashes($file);
@@ -54,12 +54,17 @@ class ZipService
                 if (file_exists($file)) {
                     if ($zip->addFile($file)) {
                         $this->errorLogger->write(PHP_EOL . ' -- basename added- ' . basename($file));
-                    }else{
+                    } else {
                         $this->errorLogger->write(PHP_EOL . ' -- file not added');
                     }
                 } else {
                     $this->errorLogger->write(PHP_EOL . $file . ' -- file not exists');
                 }
+            }
+            $i    = 0;
+            while ($name = $zip->getNameIndex($i)) {
+                $i++;
+                $this->errorLogger->write(PHP_EOL . $name);
             }
             $zip->close();
             $this->zip = $zip;
