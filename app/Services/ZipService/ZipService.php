@@ -17,8 +17,7 @@ class ZipService
     {
         $this->errorLogger = new ErrorLogger('errors.txt');
         try {
-            $this->files   = $files;
-            $this->zipname = 'sync.zip';
+            $this->files = $files;
             $this->createZip();
         } catch (\Throwable $exception) {
             $this->errorLogger->write('__ZipService__' . $exception->getMessage());
@@ -34,6 +33,7 @@ class ZipService
     public function files(array $files): ZipService
     {
         $this->files = $files;
+        $this->errorLogger->write(PHP_EOL . count($this->files));
         return $this;
     }
 
