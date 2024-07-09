@@ -10,6 +10,7 @@ class ZipService
     private array $files;
     private string $path;
     private string $zipname;
+    private string $zippath;
     private \ZipArchive $zip;
     private ErrorLogger $errorLogger;
 
@@ -45,9 +46,9 @@ class ZipService
     {
         try {
             $zip = new \ZipArchive();
-            $zippath = $this->path.$this->zipname;
-            $this->errorLogger->write(PHP_EOL . 'zip path' .$zippath);
-            $zip->open($zippath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+            $this->zippath = $this->path.$this->zipname;
+            $this->errorLogger->write(PHP_EOL . 'zip path - ' .$this->zippath );
+            $zip->open($this->zippath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
             $this->errorLogger->write(PHP_EOL . 'new zip created and opened');
             foreach ($this->files as $file) {
                 $file = FS::platformSlashes($file);
