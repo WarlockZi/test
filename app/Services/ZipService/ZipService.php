@@ -58,6 +58,7 @@ class ZipService
                     $this->errorLogger->write(PHP_EOL . $file . ' -- file not exists');
                 }
             }
+            $zip->close();
             $this->zip = $zip;
         } catch (\Throwable $exception) {
             $this->errorLogger->write('create zip - ' . $exception->getMessage());
