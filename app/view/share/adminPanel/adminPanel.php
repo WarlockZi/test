@@ -9,7 +9,7 @@
             <a href="/adminsc/report/filter">фильтры</a>
 
             <?php if (Auth::isSU(Auth::getUser()['email'])): ?>
-<!--                <a href="/zip/download">Download</a>-->
+                <a href="/zip/download">Download</a>
 <!--                <a href="/adminsc/sync"> Sync</a>-->
             <?php endif; ?>
 
