@@ -18,6 +18,7 @@ class ZipService
         $this->errorLogger = new ErrorLogger('errors.txt');
         try {
             $this->files   = $files;
+            $this->zipname = 'sync.zip';
             $this->createZip();
         } catch (\Throwable $exception) {
             $this->errorLogger->write('__ZipService__' . $exception->getMessage());
