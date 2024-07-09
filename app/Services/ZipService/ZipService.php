@@ -32,7 +32,6 @@ class ZipService
     public function files(array $files): ZipService
     {
         $this->files = $files;
-        $this->errorLogger->write(PHP_EOL . count($this->files));
         return $this;
     }
 
@@ -46,7 +45,9 @@ class ZipService
     {
         try {
             $zip = new \ZipArchive();
-            $zip->open($this->path.$this->zipname, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+            $zippath = $this->path.$this->zipname;
+            $this->errorLogger->write(PHP_EOL . 'zip path' .$zippath);
+            $zip->open($zippath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
             $this->errorLogger->write(PHP_EOL . 'new zip created and opened');
             foreach ($this->files as $file) {
                 $file = FS::platformSlashes($file);
@@ -60,11 +61,6 @@ class ZipService
                 } else {
                     $this->errorLogger->write(PHP_EOL . $file . ' -- file not exists');
                 }
-            }
-            $i    = 0;
-            while ($name = $zip->getNameIndex($i)) {
-                $i++;
-                $this->errorLogger->write(PHP_EOL . $name);
             }
             $zip->close();
             $this->zip = $zip;
