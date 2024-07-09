@@ -52,11 +52,10 @@ class ZipService
                 $file = FS::platformSlashes($file);
                 $this->errorLogger->write(PHP_EOL . 'file path - ' . $file);
                 if (file_exists($file)) {
-                    if ($zip->addFile($file, basename($file))) {
-                        $this->errorLogger->write(PHP_EOL . ' -- basename - ' . basename($file));
+                    if ($zip->addFile($file)) {
+                        $this->errorLogger->write(PHP_EOL . ' -- basename added- ' . basename($file));
                     }else{
                         $this->errorLogger->write(PHP_EOL . ' -- file not added');
-
                     }
                 } else {
                     $this->errorLogger->write(PHP_EOL . $file . ' -- file not exists');
