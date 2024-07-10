@@ -4,6 +4,7 @@ namespace app\Services\ZipService;
 
 use app\core\FS;
 use app\Services\Logger\ErrorLogger;
+use Throwable;
 
 class ZipService
 {
@@ -26,7 +27,7 @@ class ZipService
 
     public function path(string $path): ZipService
     {
-        $this->path = ROOT.$path;
+        $this->path = FS::platformSlashes(ROOT . $path);
         return $this;
     }
 
@@ -45,20 +46,26 @@ class ZipService
     public function createZip(): ZipService
     {
         try {
-            $zip = new \ZipArchive();
-            $this->zippath = $this->path.$this->zipname;
-            $this->errorLogger->write(PHP_EOL . 'zip path - ' .$this->zippath );
+            $zip           = new \ZipArchive();
+            $this->zippath = $this->path . $this->zipname;
+            $this->errorLogger->write(PHP_EOL . 'zip path - ' . $this->zippath);
             $zip->open($this->zippath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
             $this->errorLogger->write(PHP_EOL . 'new zip created and opened');
             foreach ($this->files as $file) {
                 $file = FS::platformSlashes($file);
                 $this->errorLogger->write(PHP_EOL . 'file path - ' . $file);
                 if (file_exists($file)) {
-                    if ($zip->addFile($file)) {
-                        $this->errorLogger->write(PHP_EOL . ' -- basename added- ' . basename($file));
-                    } else {
-                        $this->errorLogger->write(PHP_EOL . ' -- file not added');
+                    try {
+                        if ($zip->addFile($file, basename($file))) {
+                            $this->errorLogger->write(PHP_EOL . ' -- basename added- ' . basename($file));
+                        } else {
+                            $this->errorLogger->write(PHP_EOL . ' -- file not added');
+                        }
+                    } catch (Throwable $exception) {
+                        $exc = $exception;
+                        $this->errorLogger->write(PHP_EOL . ' -- file not added'.$exc);
                     }
+
                 } else {
                     $this->errorLogger->write(PHP_EOL . $file . ' -- file not exists');
                 }
@@ -66,7 +73,7 @@ class ZipService
             $zip->close();
             $this->zip = $zip;
         } catch (\Throwable $exception) {
-            $this->errorLogger->write('create zip - ' . $exception->getMessage());
+            $this->errorLogger->write('create zip error - ' . $exception->getMessage());
         }
         return $this;
     }
@@ -76,9 +83,8 @@ class ZipService
         try {
             header('Content-Type: application/zip');
             header('Content-disposition: attachment; filename=' . $this->zipname);
-            header('Content-Length: ' . filesize($this->zipname));
-            readfile($this->path . $this->zipname);
-            $this->errorLogger->write('fpath zipname'. $this->path . $this->zipname);
+            header('Content-Length: ' . filesize($this->zippath));
+            readfile($this->zippath);
             $this->errorLogger->write('download - done');
             exit();
         } catch (\Throwable $exception) {

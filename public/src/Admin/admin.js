@@ -53,13 +53,13 @@ $(document).ready(async function () {
         const {default: prod} = await import('./Product/product.js')
         prod();
     }
-    if (document.querySelector('.order-edit')) {
+    if (document[qs]('.order-edit')) {
         const {default: Order} = await import('./Order/order.js')
         new Order()
     }
 
-    if ($('.modal-wrapper')){
-        const {default:Modal} = await import("../components/Modal/modal")
+    if (document[qs]('.modal-wrapper')){
+        const {default:Modal} = await import("../components/Modal/modal.js")
         new Modal()
     }
     new Promotion();
