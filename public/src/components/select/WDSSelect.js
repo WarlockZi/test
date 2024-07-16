@@ -44,6 +44,7 @@ export default class WDSSelect {
     this.sel.onblur = () => this.ul.classList.remove("show");
     this.sel.onkeydown = this.keyDownhandler;
 
+    debugger
     el.remove()
   }
 

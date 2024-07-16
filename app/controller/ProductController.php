@@ -37,11 +37,9 @@ class ProductController extends AppController
 
             $this->assets->setItemMeta($product);
             $this->assets->setProduct();
-//         $this->assets->setQuill();
+//         $this->assets->setQuill();http://vitexopt.ru/short/9zL6pN6fL2wL
         } else {
-//         $view = $this->getView();
             $this->assets->setMeta('Страница не найдена');
-//         $this->view = $view->get404();
             http_response_code(404);
         }
     }

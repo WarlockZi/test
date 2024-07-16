@@ -37,7 +37,6 @@ class CategoryController extends AppController
             $this->set(compact('admin', 'edit', 'breadcrumbs', 'category'));
             $this->assets->setItemMeta($category);
          } else {
-
             http_response_code(404);
          }
 

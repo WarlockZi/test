@@ -70,7 +70,7 @@ class Assets
         }
 
         $protocol = "http{$s}://";
-        $str = "{$protocol}{$h1}:{$port}{$path}";
+        $str      = "{$protocol}{$h1}:{$port}{$path}";
         return $str;
     }
 
@@ -99,15 +99,15 @@ class Assets
 
     public function setItemMeta(Model $item)
     {
-        $this->title = $item->seo ? $item->seo->title : $item->name;
-        $this->desc = $item->seo ? $item->seo->description : $item->name;
-        $this->keywords = $item->seo ? $item->seo->keywords : $item->name;
+        $this->title    = $item->ownProperties->seo_title ?? $item->name;
+        $this->desc     = $item->ownProperties->seo_description ?? $item->name;
+        $this->keywords = $item->ownProperties->seo_keywords ?? $item->name;
     }
 
     public function setMeta(string $title, string $desc = '', string $keywords = '')
     {
-        $this->title = $title ? $title : 'Медицинкские перчатки';
-        $this->desc = $desc ? $desc : 'Медицинкские перчатки';
+        $this->title    = $title ? $title : 'Медицинкские перчатки';
+        $this->desc     = $desc ? $desc : 'Медицинкские перчатки';
         $this->keywords = $keywords ? $keywords : 'Медицинкские перчатки';
     }
 
@@ -231,8 +231,8 @@ class Assets
         foreach ($assets->getCDNCssArray() as $css) {
             $this->setCDNCss($css);
         }
-        $this->title = $this->title . $assets->title . '  VITEX';
-        $this->desc = $this->desc . $assets->desc;
+        $this->title    = $this->title . $assets->title . '  VITEX';
+        $this->desc     = $this->desc . $assets->desc;
         $this->keywords = $this->keywords . $assets->keywords;
 
     }

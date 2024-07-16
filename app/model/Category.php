@@ -53,12 +53,17 @@ class Category extends Model
         )->where('slug', '=', 'main');
     }
 
-    public function seo()
-    {
-        return $this
-            ->hasOne(Seo::class, 'product_category_1sid', '1s_id');
-    }
+//    public function seo()
+//    {
+//        return $this
+//            ->hasOne(Seo::class, 'product_category_1sid', '1s_id');
+//    }
 
+public function ownProperties()
+{
+    return $this->hasOne(CategoryProperty::class, 'category_1s_id','1s_id');
+
+}
     public function properties()
     {
         return $this->morphToMany(Property::class, 'propertable');
@@ -90,6 +95,7 @@ class Category extends Model
             ->where('instore', 0)
             ->where('name', 'regexp', '\\s?\\*\\s?$')
             ->with('mainImages')
+            ->with('ownProperties')
             ->orderBy('name');
     }
 
@@ -100,6 +106,7 @@ class Category extends Model
             ->with('mainImages')
             ->with('promotions')
             ->with('units')
+            ->with('ownProperties')
             ->orderBy('name')
         ;
 

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\view\components\Builders\SelectBuilder;
+namespace app\view\components\Builders\SelectBuilder\optionBuilders;
 
 use Illuminate\Database\Eloquent\Collection;
 

@@ -128,7 +128,7 @@ class SelectListBuilder
 		if ($this->excluded !== false) {
 			unset($this->tree[$this->excluded]);
 		}
-		return $this->fs->getContent("SelectBuilderTemplate");
+		return $this->fs->getContent("templates\SelectBuilderTemplate");
 	}
 
 	public function get(int $id = 0)
@@ -138,7 +138,7 @@ class SelectListBuilder
 			unset($this->tree[$this->excluded]);
 		}
         $data = get_object_vars($this);
-		return $this->fs->getContent('SelectBuilderTemplate',$data);
+		return $this->fs->getContent('templates\SelectBuilderTemplate',$data);
 	}
 
 }

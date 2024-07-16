@@ -4,11 +4,12 @@
 namespace app\view\components\ItemBuilder;
 
 use app\core\FS;
-use app\view\components\Builders\Builder;
+use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Model;
 
-class ItemArrayBuilder extends Builder
+class ItemArrayBuilder
 {
+    use CleanString;
     private string $toListText;
     private string $toListHref;
     private string $pageTitle;
@@ -30,7 +31,6 @@ class ItemArrayBuilder extends Builder
 
     public function __construct()
     {
-        parent::__construct();
         $this->fs     = new FS(__DIR__);
         $this->dataId = '';
         $this->html = '';

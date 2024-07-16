@@ -1,9 +1,10 @@
 <?php
 
 
-namespace app\view\components\Builders\SelectBuilder;
+namespace app\view\components\Builders\SelectBuilder\optionBuilders;
 
 use app\core\Error;
+use app\view\components\Builders\SelectBuilder\optionBuilders\TreeBuilder;
 use Illuminate\Database\Eloquent\Collection;
 
 class TreeABuilder extends TreeBuilder
@@ -22,7 +23,7 @@ class TreeABuilder extends TreeBuilder
 		$id = $item['id'];
 		if ($id === $this->excluded) return '';
 		$selected = $id == $this->selected ? 'selected' : '';
-		$this->localtab = str_repeat($this->tab, $level * $this->tabMultiply);
+		$this->localtab = str_repeat($this->tab, $level * $this->multiply);
 		$href = "href='{$this->href}{$item['id']}'";
 		return "<a data-level={$level} value={$id} {$this->class} {$href} {$selected}>{$this->localtab}{$item['name']}</a>";
 	}

@@ -24,22 +24,6 @@ class ProductRepository extends AppController
         return "{$formattedPrice} ₽ / {$baseUnit->name}";
     }
 
-//    private function drop()
-//    {
-//        $pru = ProductUnit::query()
-//            ->whereNull('multiplier')
-//            ->where('is_base', 1)
-//            ->orWhere(function ($q){
-//                $q->whereNull('is_shippable')
-//                    ->where('is_base', 1);
-//            })
-//            ->delete();
-//        $pru = ProductUnit::query()
-//            ->where('is_base', 1)
-//            ->where('is_shippable', 1)
-//            ->update(['base_is_shippable' => 1]);
-//    }
-
     public function dopUnitsPrices(Product $product): string
     {
 //        $this->drop();
@@ -84,7 +68,6 @@ class ProductRepository extends AppController
             ->with('inactivePromotions')
             ->with('smallpackImages')
             ->with('bigpackImages')
-            ->with('seo')
             ->first();
     }
 
@@ -103,7 +86,6 @@ class ProductRepository extends AppController
             ->with('smallpackImages')
             ->with('bigpackImages')
             ->with('activepromotions.unit')
-            ->with('seo')
             ->with('shippableUnits')
             ->with('orderItems')
             ->where('1s_id', $id)
@@ -142,91 +124,91 @@ class ProductRepository extends AppController
         return  !in_array(false,  array_map($callback,$array));
     }
 
-    public static function filter($req)
-    {
-        $nullEvry = self::array_every($req, function($f){return $f==0;});
-        if ($nullEvry) {
-            return self::defaultFilter();
-        };
-        extract($req);
-        $query = Product::query();
-
-        if (isset($instore)) {
-            if ($instore === '1') {
-                $query->where('instore', '>', 0);
-            } elseif ($instore === '2') {
-                $query->where('instore', '=', 0);
-            }
-        }
-        if (isset($baseIsShippable)) {
-            if ($baseIsShippable === "1") {
-                $query->whereHas('units', function ($q) {
-                    $q->where('base_is_shippable', 1);
-                });
-            } elseif ($baseIsShippable === "2") {
-                $query->whereHas('units', function ($q) {
-                    $q->where('base_is_shippable', 0);
-                });
-            }
-        }
-
-        if (isset($deleted)) {
-            if ($deleted == "1") {
-                $query->withTrashed();
-            }elseif ($deleted === "2") {
-
-            }
-        }
-
-        if (isset($matrix)) {
-            if ($matrix === '1') {
-                $query->where("name", 'REGEXP', "\\*$");
-            } elseif ($matrix === '2'){
-                $query->where("name", 'NOT REGEXP', "\\*$");
-            }
-        }
-
-        if (isset($take)) {
-            if ($take === "1") {
-                $query->take(20);
-            } else if ($take === "2") {
-                $query->take(40);
-            }else{
-//                $query->take(10);
-            }
-        }
-
-        if (isset($category)) {
-            if ($category) {
-                $query->where('category_id', $category);
-            }
-        }
-
-        $p = $query
-            ->groupBy('art')
-            ->get();
-
-        if (isset($image)) {
-            $noImg = (new ProductImageService())->getNoPhoto();
-            if ($image === "1") {
-                $p = $p->filter(function ($product) use ($noImg) {
-                    if ($product->mainImage !== $noImg) {
-                        return $product;
-                    }
-                    return false;
-                });
-            } else if ($image === "2") {
-                $p = $p->filter(function ($product) use ($noImg) {
-                    if ($product->mainImage === $noImg) {
-                        return $product;
-                    }
-                    return false;
-                });
-            }
-        }
-//        $arr = $p->toArray();
-        return $p;
-    }
+//    public static function filter($req)
+//    {
+//        $nullEvry = self::array_every($req, function($f){return $f==0;});
+//        if ($nullEvry) {
+//            return self::defaultFilter();
+//        };
+//        extract($req);
+//        $query = Product::query();
+//
+//        if (isset($instore)) {
+//            if ($instore === '1') {
+//                $query->where('instore', '>', 0);
+//            } elseif ($instore === '2') {
+//                $query->where('instore', '=', 0);
+//            }
+//        }
+//        if (isset($baseIsShippable)) {
+//            if ($baseIsShippable === "1") {
+//                $query->whereHas('units', function ($q) {
+//                    $q->where('base_is_shippable', 1);
+//                });
+//            } elseif ($baseIsShippable === "2") {
+//                $query->whereHas('units', function ($q) {
+//                    $q->where('base_is_shippable', 0);
+//                });
+//            }
+//        }
+//
+//        if (isset($deleted)) {
+//            if ($deleted == "1") {
+//                $query->withTrashed();
+//            }elseif ($deleted === "2") {
+//
+//            }
+//        }
+//
+//        if (isset($matrix)) {
+//            if ($matrix === '1') {
+//                $query->where("name", 'REGEXP', "\\*$");
+//            } elseif ($matrix === '2'){
+//                $query->where("name", 'NOT REGEXP', "\\*$");
+//            }
+//        }
+//
+//        if (isset($take)) {
+//            if ($take === "1") {
+//                $query->take(20);
+//            } else if ($take === "2") {
+//                $query->take(40);
+//            }else{
+////                $query->take(10);
+//            }
+//        }
+//
+//        if (isset($category)) {
+//            if ($category) {
+//                $query->where('category_id', $category);
+//            }
+//        }
+//
+//        $p = $query
+//            ->groupBy('art')
+//            ->get();
+//
+//        if (isset($image)) {
+//            $noImg = (new ProductImageService())->getNoPhoto();
+//            if ($image === "1") {
+//                $p = $p->filter(function ($product) use ($noImg) {
+//                    if ($product->mainImage !== $noImg) {
+//                        return $product;
+//                    }
+//                    return false;
+//                });
+//            } else if ($image === "2") {
+//                $p = $p->filter(function ($product) use ($noImg) {
+//                    if ($product->mainImage === $noImg) {
+//                        return $product;
+//                    }
+//                    return false;
+//                });
+//            }
+//        }
+////        $arr = $p->toArray();
+//        return $p;
+//    }
 
     #[NoReturn] public function changeVal(array $req): void
     {
@@ -306,14 +288,5 @@ class ProductRepository extends AppController
             ->get();
     }
 
-//    public function getFilters()
-//    {
-//        $self = new static();
-//        $filters = [
-//            'instore' => 'Показать с остатком = 0',
-//            'price' => 'Показать c ценой = 0',
-//        ];
-//        return FS::getFileContent('./delfilters.php', compact('filters'));
-//    }
 
 }

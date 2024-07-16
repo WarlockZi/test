@@ -34,7 +34,7 @@ class SelectNewBuilder
 	public function get()
 	{
         $data = get_object_vars($this);
-		return $this->clean($this->fs->getContent('SelectNewBuilderTemplate',$data));
+		return $this->clean($this->fs->getContent('templates/SelectNewBuilderTemplate',$data));
 	}
 
 }

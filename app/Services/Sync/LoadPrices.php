@@ -80,7 +80,11 @@ class LoadPrices extends Load
             'base_is_shippable' => '1',
         ];
 
-        ProductUnit::updateOrCreate($find, $new);
+        if (!ProductUnit::query()->where($find)->exists()) {
+            $pu = ProductUnit::query()->create($new);
+        }
+
+//        ProductUnit::updateOrCreate($find, $new);
     }
 
     protected function ech($item)

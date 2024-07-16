@@ -6,17 +6,20 @@ use app\controller\AppController;
 use app\core\Response;
 use app\Services\Logger\FileLogger;
 use app\Services\Sync\SyncService;
+use app\Services\Sync\TrancateService;
 use JetBrains\PhpStorm\NoReturn;
 
 class SyncController extends AppController
 {
    protected SyncService $service;
+   protected TrancateService $trancateService;
    protected FileLogger $logger;
 
    public function __construct()
    {
       parent::__construct();
       $this->service = new SyncService();
+      $this->trancateService = new TrancateService();
       $this->logger  = new FileLogger('import.txt');
    }
 
@@ -30,25 +33,25 @@ class SyncController extends AppController
    //remove
    public function actionRemoveall(): void
    {
-      $this->service->softTrancate();
+      $this->trancateService->softTrancate();
    }
    public function actionTruncate(): void
    {
-      $this->service->trancate();
+      $this->trancateService->trancate();
    }
    public function actionRemovecategories(): void
    {
-      $this->service->softRemoveCategories();
+      $this->trancateService->softRemoveCategories();
    }
 
    public function actionRemoveproducts(): void
    {
-      $this->service->softRemoveProducts();
+      $this->trancateService->softRemoveProducts();
    }
 
    public function actionRemoveprices(): void
    {
-      $this->service->removePrices();
+      $this->trancateService->removePrices();
    }
 
 

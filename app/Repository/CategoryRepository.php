@@ -44,14 +44,15 @@ class CategoryRepository
         $category = Category::query()
             ->where('slug', $slug)
             ->with('childrenRecursive')
+            ->with('ownProperties')
             ->with('parentRecursive')
-            ->with('productsInStore')
+            ->with('products.ownProperties')
             ->with('products.orderItems')
+            ->with('productsInStore')
             ->with('productsNotInStoreInMatrix')
             ->with('products.activepromotions')
             ->with('products.inactivepromotions')
             ->with('products.shippableUnits')
-            ->with('seo')
             ->get()
             ->first();
 //        $c = $category->toArray();

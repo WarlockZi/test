@@ -3,11 +3,12 @@
 namespace app\view\components\ItemBuilder;
 
 use app\core\FS;
-use app\view\components\Builders\Builder;
+use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Model;
 
-class ItemArrayFieldBuilder extends Builder
+class ItemArrayFieldBuilder
 {
+    use CleanString;
     private string $fieldName;
     private ItemArrayFieldBuilder $field;
     private array $item;
@@ -29,11 +30,6 @@ class ItemArrayFieldBuilder extends Builder
     private FS $fs;
     private ItemArrayFieldBuilder $fieldObj;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public static function build(string $fieldName, Model $item)
     {
         $field = new static();
@@ -50,7 +46,6 @@ class ItemArrayFieldBuilder extends Builder
         $field->save = false;
         $field->toList = false;
         $field->fieldObj = $field;
-//        $field->name            = '';
         $field->item = $item->toArray();
         return $field;
     }
