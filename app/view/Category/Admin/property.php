@@ -6,7 +6,7 @@ use \app\view\Property\PropertyFormView;
 
 
 ?>
-<div class="properties">
+<div class="properties" custom-list>
 
 	<div class="column">
 		<div class="title">Свойства</div>

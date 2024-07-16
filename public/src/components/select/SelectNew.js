@@ -38,10 +38,12 @@ export default class Select {
 
     this.label.onclick = () => this.ul.classList.toggle("show");
     this.sel.onblur = () => this.ul.classList.remove("show");
-    this.sel.onkeydown = this.keyDownhandler;
+    this.sel.onkeydown = this.keyDownhandler.bind(this);
 
     el.remove()
+    return this;
   }
+
 
   onchange(callback) {
     this.callback = callback
@@ -71,11 +73,11 @@ export default class Select {
       debounceTimeout = setTimeout(() => {
         searchTerm = ""
       }, 500);
-      const searchedOption = e.target.options.find(option => {
-        return option.label.toLowerCase().startsWith(searchTerm)
+      const searchedOption = this.options.find(option => {
+        return option.label.toLowerCase().includes(searchTerm)
       });
       if (searchedOption) {
-        select.selectValue(searchedOption.value)
+        this.sel.selectValue(searchedOption.value)
       }
     }
   }

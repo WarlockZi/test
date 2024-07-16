@@ -25,9 +25,7 @@ import quill from '../components/quill/quill.js'
 import './Planning/planning.js'
 import './Settings/settings.js'
 import './Videoinstructions/videoinstructions.js'
-import './Category/category1.js'
 import rights from './Rights/rights.js'
-import category from './Category/category1.js'
 
 import user from './User/user.js'
 
@@ -45,13 +43,14 @@ import Promotion from "../Promotions/Promotion.js"
 import './ProductFilter/ProductFilter'
 // import Order from "../Admin/Order/order.js"
 // import pagination from './Product/pagination.js'
-// import product from './Product/product.js'
+// import product from './Product/Product.js'
 import {qs} from '../constants'
-$(document).ready(async function () {
 
-    if (document[qs](`.item-wrap[data-model='product']`)) {
-        const {default: prod} = await import('./Product/product.js')
-        prod();
+$(document).ready(async function () {
+    const product = document[qs](`.item-wrap[data-model='product']`)
+    if (product) {
+        const {default: Product} = await import('./Product/Product.js')
+        new Product(product);
     }
     if (document[qs]('.order-edit')) {
         const {default: Order} = await import('./Order/order.js')
@@ -60,8 +59,12 @@ $(document).ready(async function () {
 
     if (document[qs]('.modal-wrapper')){
         const {default:Modal} = await import("../components/Modal/modal.js")
-        new Modal()
     }
+    if (document[qs](`.item-wrap[data-model='category']`)){
+        const {default:Category} = await import('./Category/Category.js')
+        new Category()
+    }
+
     new Promotion();
     new Search(true);
 
@@ -75,7 +78,7 @@ $(document).ready(async function () {
     accordionShow();
 
     testEdit();
-    category();
+    // category();
 
     function navigate(str) {
         if (/\/adminsc\/settings/.test(str)

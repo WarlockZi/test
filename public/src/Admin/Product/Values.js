@@ -7,7 +7,6 @@ export default class Values {
     this.$product = $product;
     this.$values = $($product).find('.values');
     this.values = this.$values.querySelectorAll('.value');
-    // this.dto = this.dto();
     this.$values.addEventListener('customSelect.changed', this.selectChanged.bind(this));
     this.values.forEach((value) => {
       new SelectNew(value)

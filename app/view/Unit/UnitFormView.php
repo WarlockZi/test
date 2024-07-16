@@ -11,7 +11,7 @@ use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
-use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
+use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 use Illuminate\Database\Eloquent\Collection;
@@ -50,7 +50,6 @@ class UnitFormView
          ArrayOptionsBuilder::build($units)
             ->initialOption()
             ->selected($unit->id)
-//				->excluded($excluded)
             ->get()
       )
          ->class('name')
@@ -65,7 +64,6 @@ class UnitFormView
       $selector = SelectNewBuilder::build(
          ArrayOptionsBuilder::build($units)
             ->initialOption()
-//            ->selected($unit->id)
             ->excluded($baseUnit->id)
             ->get()
       )

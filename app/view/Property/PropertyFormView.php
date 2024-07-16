@@ -6,7 +6,7 @@ namespace app\view\Property;
 
 use app\model\Category;
 use app\model\Property;
-use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
+use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 
 class PropertyFormView

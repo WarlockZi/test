@@ -53,7 +53,7 @@ class TreeOptionsBuilder extends TreeBuilder
         $id = $item['id'];
         if ($this->isExcluded($id)) return '';
         $selected       = $id == $this->selected ? 'selected' : '';
-        $this->localtab = str_repeat($this->tab, $level * $this->tabMultiply);
+        $this->localtab = str_repeat($this->tab, $level * $this->multiply);
         return "<option data-level={$level} value = {$id} {$selected}>{$this->localtab}{$item['name']}</option>";
     }
 

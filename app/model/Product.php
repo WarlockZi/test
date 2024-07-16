@@ -15,23 +15,18 @@ class Product extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'name',
         'print_name',
-        'short_link',
         'sort',
-        'act',
         'art',
         'txt',
         'slug',
         'category_id',
         'image_id',
         'manufacturer_id',
-        'title',
-        'keywords',
-        'description',
         '1s_category_id',
         '1s_id',
         'instore',
@@ -42,28 +37,32 @@ class Product extends Model
     protected $casts = [
         'art' => 'string',
     ];
-    protected $appends = ['price', 'mainImage', 'short_link'];
+    protected $appends = ['price', 'mainImage','shortLink'];
 
-    protected function shortLink(): Attribute
+    public function ownProperties()
     {
-        return Attribute::get(
-            function () {
-                $link = $this->getRawOriginal('short_link');
-                $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
-                $host = $_SERVER['HTTP_HOST'] ?? '';
-                return "{$scheme}://{$host}/short/{$link}";
-            }
-        );
+        return $this->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
     }
+//    protected function shortLink(): Attribute
+//    {
+//        return Attribute::get(
+//            function () {
+//                $link = $this->getRawOriginal('short_link');
+//                $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
+//                $host = $_SERVER['HTTP_HOST'] ?? '';
+//                return "{$scheme}://{$host}/short/{$link}";
+//            }
+//        );
+//    }
 
     protected function getShortLinkAttribute(): string
     {
-        $link = $this->getRawOriginal('short_link');
-        if (!$link) {
-            $link = ShortlinkService::getValidShortLink();
-            $this->short_link = $link;
-            $this->save();
-        }
+        $link = $this->ownProperties->short_link;
+//        if (!$link) {
+//            $link = ShortlinkService::getValidShortLink();
+//            $this->short_link = $link;
+//            $this->save();
+//        }
         $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
         $host = $_SERVER['HTTP_HOST'] ?? '';
         return "{$scheme}://{$host}/short/{$link}";
@@ -162,12 +161,12 @@ class Product extends Model
         });
     }
 
-    public function save(array $options = [])
-    {
-        if (!$this->short_link)
-            $this->short_link = ShortlinkService::getValidShortLink();
-        parent::save($options);
-    }
+//    public function save(array $options = [])
+//    {
+//        if (!$this->short_link)
+//            $this->short_link = ShortlinkService::getValidShortLink();
+//        parent::save($options);
+//    }
 
     public function orderItems()
     {

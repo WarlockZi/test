@@ -1,7 +1,7 @@
 import SelectNew from "../../components/select/SelectNew";
 import {$, post} from "../../common";
 
-export class Fields {
+export default class Fields {
   constructor($product) {
     this.$product = $product;
     this.$fields = $('.item_content').first();

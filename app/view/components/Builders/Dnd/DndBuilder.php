@@ -5,10 +5,11 @@ namespace app\view\components\Builders\Dnd;
 
 
 use app\core\FS;
-use app\view\components\Builders\Builder;
+use app\view\components\Traits\CleanString;
 
-class DndBuilder extends Builder
+class DndBuilder
 {
+    use CleanString;
 	public $path;
 	public $class;
 	public $tooltip;

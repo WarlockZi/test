@@ -6,12 +6,12 @@ namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductProperty extends Model
+class CategoryProperty extends Model
 {
 
 	public $timestamps = false;
 	protected $fillable = [
-		'product_1s_id',
+		'category_1s_id',
 		'seo_title',
 		'seo_description',
 		'seo_keywords',
@@ -22,7 +22,7 @@ class ProductProperty extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_1s_id');
+        return $this->belongsTo(Category::class, 'category_1s_id');
     }
 
 	public function property()

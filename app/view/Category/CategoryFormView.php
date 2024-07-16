@@ -15,7 +15,7 @@ use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
-use app\view\components\Builders\SelectBuilder\TreeABuilder;
+use app\view\components\Builders\SelectBuilder\optionBuilders\TreeABuilder;
 use app\view\Image\ImageView;
 
 class CategoryFormView

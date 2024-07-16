@@ -10,7 +10,7 @@
 
             <?php if (Auth::isSU(Auth::getUser()['email'])): ?>
                 <a href="/zip/download">Download</a>
-<!--                <a href="/adminsc/sync"> Sync</a>-->
+                <a href="/adminsc/sync"> Sync</a>
             <?php endif; ?>
 
             <?php if (Auth::isOlya()): ?>

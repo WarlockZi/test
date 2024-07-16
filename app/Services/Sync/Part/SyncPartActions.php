@@ -1,13 +1,17 @@
 <?php
 
 
-namespace app\Services\Sync;
+namespace app\Services\Sync\Part;
 
 
 use AllowDynamicProperties;
 use app\controller\AppController;
 use app\core\Response;
 use app\model\Category;
+use app\Services\Sync\LoadCategories;
+use app\Services\Sync\LoadPrices;
+use app\Services\Sync\LoadProducts;
+use app\Services\Sync\SyncRepository;
 use app\Storage\{StorageDev, StorageImport, StorageLog};
 
 #[AllowDynamicProperties] class SyncPartActions extends AppController
