@@ -2,8 +2,8 @@
     <?= $title; ?>
     <?= $field; ?>
     <?= $class; ?>
-    <?= $name; ?>
-    <?= $id; ?>
+<!--    --><?php //= $name; ?>
+<!--    --><?php //= $id; ?>
 
 >
     <?= $options; ?>

@@ -19,7 +19,9 @@
     "illuminate/database": "^8.83",
     "ext-mysqli": "*",
     "symfony/validator": "^7.0",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "ext-curl": "*",
+    "ext-ssh2": "*"
   },
   "config": {
     "platform-check": false

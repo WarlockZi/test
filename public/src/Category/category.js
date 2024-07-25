@@ -1,6 +1,6 @@
 import {ael, d, qa, qs} from '../constants';
 import shippableTable from "../share/shippable/shippableUnitsTable";
-import Card_panel from "../share/card_panel/card_panel";
+// import Card_panel from "../share/card_panel/card_panel";
 
 export default class Category {
     constructor() {
@@ -8,7 +8,7 @@ export default class Category {
         if (!this.category) return false;
         this.setCardPanel()
         this.mapShippableTables()
-        this.cardPanel = new Card_panel()
+        // this.cardPanel = new Card_panel()
         this.category[ael]('click', this.handleClick.bind(this))
 
     }

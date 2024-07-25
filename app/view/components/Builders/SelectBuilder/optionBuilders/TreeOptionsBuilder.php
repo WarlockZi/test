@@ -61,7 +61,7 @@ class TreeOptionsBuilder extends TreeBuilder
     {
         foreach ($items as $item) {
 //            $this->flatArray[$item['id']] = $item['name'];
-            $string                       .= $this->getOption($item, $level);
+            $string .= $this->getOption($item, $level);
             if ($item[$this->relation]) {
                 $string .= $this->options($item[$this->relation], $level + 1, '');
             }

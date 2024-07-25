@@ -7,13 +7,19 @@ use app\model\Product;
 use app\model\ProductUnit;
 use app\model\Unit;
 
-class LoadPrices extends Load
+class LoadPrices
 {
-    protected Product $product;
-
-    public function __construct($file)
+    public function __construct
+    (
+        private array $file,
+        private array $data,
+        private Product $product,
+    )
     {
-        parent::__construct($file, 'price');
+        $xml        = simplexml_load_file($file);
+        $xmlObj     = json_decode(json_encode($xml), true);
+        $this->data = $xmlObj['ПакетПредложений']['Предложения']['Предложение'];
+
         $this->run();
     }
 

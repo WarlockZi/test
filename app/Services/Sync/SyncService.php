@@ -4,34 +4,24 @@ namespace app\Services\Sync;
 
 use app\core\Response;
 use app\core\Route;
-use app\model\Category;
-use app\model\Price;
-use app\model\Product;
 use app\Services\Logger\FileLogger;
-use app\Storage\Storage;
 use app\Storage\StorageImport;
-use Carbon\Carbon;
-use JetBrains\PhpStorm\NoReturn;
 
 class SyncService
 {
-    protected string $filename;
-    protected string $importPath = '';
-    protected string $importFile = '';
-    protected string $offerFile = '';
-    protected Route $route;
-    protected Storage $storage;
-    protected TrancateService $trancateService;
-    protected FileLogger $logger;
-
-    public function __construct()
+    public function __construct(
+        protected string          $importPath = '',
+        protected string          $importFile = '',
+        protected string          $offerFile = '',
+        protected FileLogger      $logger = new FileLogger('import.txt'),
+        protected StorageImport   $storage = new StorageImport,
+        protected TrancateService $trancateService = new TrancateService,
+    )
     {
-        $this->logger          = new FileLogger('import.txt');
-        $this->storage         = new StorageImport;
-        $this->trancateService = new TrancateService;
-        $this->importPath      = $this->storage->getStoragePath();
-        $this->importFile      = $this->storage::getFile('import0_1.xml');
-        $this->offerFile       = $this->storage::getFile('offers0_1.xml');
+
+        $this->importPath = $this->storage->getStoragePath();
+        $this->importFile = $this->storage::getFile('import0_1.xml');
+        $this->offerFile  = $this->storage::getFile('offers0_1.xml');
     }
 
     public function requestFrom1s(Route $route): void
@@ -48,41 +38,26 @@ class SyncService
                 $this->logReqest("Файлы из 1с загружены");
                 exit('success');
             }
-
         } catch (\Throwable $e) {
             $this->logError("---SyncControllerError---", $e);
         }
     }
-
-    protected function tc(callable $fn): void
-    {
-        try {
-            $fn();
-        } catch (\Throwable $exception) {
-            $this->logReqest(debug_backtrace()[1]["function"]);
-        }
-    }
-
-    #[NoReturn] protected function checkauth(): void
+    protected function checkauth(): void
     {
         $this->logReqest('checkauth');
         exit("success\ninc\n777777\n55fdsa55");
     }
-
-    #[NoReturn] protected function zip(): void
+    protected function zip(): void
     {
         $this->logReqest('init');
         exit("zip=no\nfile_limit=10000000");
     }
-
-    #[NoReturn] protected function file($filename): void
+    protected function file($filename): void
     {
         file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
-
         $this->logReqest('file');
         exit('success');
     }
-
     private function importFilesExist(): void
     {
         if (!is_readable($this->importFile)) {
@@ -90,70 +65,7 @@ class SyncService
             if (!is_readable($this->offerFile)) {
                 $this->logger->write('Отсутстует файл offerFile');
             }
-            return;
         }
-    }
-
-
-//trancate
-    public function softTrancate(): void
-    {
-        $this->removeCategories();
-//        $this->softRemoveProducts();
-        $this->removePrices();
-    }
-
-    public function trancate(): void
-    {
-        $this->softTrancate();
-//		$this->removeCategories();
-//		$this->removeProducts();
-//		$this->removePrices();
-    }
-
-    public function softRemoveProducts(): void
-    {
-        foreach (Product::all() as $model) {
-            $this->softDelete($model);
-        }
-        $this->log('--- products  soft deleted ---');
-    }
-
-    public function softRemoveCategories(): void
-    {
-        foreach (Category::all() as $model) {
-            $this->softDelete($model);
-        }
-        $this->log('--- category  soft deleted ---');
-    }
-
-    protected function softDelete($model): void
-    {
-        $model->update(['deleted_at' => Carbon::today()]);
-    }
-
-    private function removeProducts(): void
-    {
-        Product::truncate();
-        $this->log('--- products  deleted ---');
-    }
-
-    private function removeCategories(): void
-    {
-        Category::truncate();
-        $this->log('--- category  deleted ---');
-    }
-
-    public function softRemovePrices(): void
-    {
-        Price::truncate();
-        $this->log('--- price deleted ---');
-    }
-
-    public function removePrices(): void
-    {
-        Price::truncate();
-        $this->log('--- price  deleted ---');
     }
 
 
@@ -206,7 +118,7 @@ class SyncService
         $this->logger->write($date);
     }
 
-    #[NoReturn] protected function logError(string $msg, $e): void
+    protected function logError(string $msg, $e): void
     {
         $this->logDate();
         $this->logger->write('- error -' . $msg . PHP_EOL . $e);
@@ -225,3 +137,66 @@ class SyncService
         }
     }
 }
+
+//
+////trancate
+//    public function softTrancate(): void
+//    {
+//        $this->removeCategories();
+//        $this->softRemoveProducts();
+//        $this->removePrices();
+//    }
+//
+//    public function trancate(): void
+//    {
+//        $this->softTrancate();
+////		$this->removeCategories();
+////		$this->removeProducts();
+////		$this->removePrices();
+//    }
+//
+//    public function softRemoveProducts(): void
+//    {
+//        foreach (Product::all() as $model) {
+//            $this->softDelete($model);
+//        }
+//        $this->log('--- products  soft deleted ---');
+//    }
+//
+//    public function softRemoveCategories(): void
+//    {
+//        foreach (Category::all() as $model) {
+//            $this->softDelete($model);
+//        }
+//        $this->log('--- category  soft deleted ---');
+//    }
+//
+//    protected function softDelete($model): void
+//    {
+//        $model->update(['deleted_at' => Carbon::today()]);
+//    }
+//
+//    private function removeProducts(): void
+//    {
+//        Product::truncate();
+//        $this->log('--- products  deleted ---');
+//    }
+//
+//    private function removeCategories(): void
+//    {
+//        Category::truncate();
+//        $this->log('--- category  deleted ---');
+//    }
+//
+//    public function softRemovePrices(): void
+//    {
+//        Price::truncate();
+//        $this->log('--- price deleted ---');
+//    }
+//
+//    public function removePrices(): void
+//    {
+//        Price::truncate();
+//        $this->log('--- price  deleted ---');
+//    }
+

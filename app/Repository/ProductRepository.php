@@ -58,6 +58,7 @@ class ProductRepository extends AppController
             ->where('1s_id', $id)
             ->with('category.properties.vals')
             ->with('values')
+            ->with('ownProperties')
             ->with('category.parentRecursive')
             ->with('category.parents')
             ->with('mainImages')
@@ -124,93 +125,93 @@ class ProductRepository extends AppController
         return  !in_array(false,  array_map($callback,$array));
     }
 
-//    public static function filter($req)
-//    {
-//        $nullEvry = self::array_every($req, function($f){return $f==0;});
-//        if ($nullEvry) {
-//            return self::defaultFilter();
-//        };
-//        extract($req);
-//        $query = Product::query();
-//
-//        if (isset($instore)) {
-//            if ($instore === '1') {
-//                $query->where('instore', '>', 0);
-//            } elseif ($instore === '2') {
-//                $query->where('instore', '=', 0);
-//            }
-//        }
-//        if (isset($baseIsShippable)) {
-//            if ($baseIsShippable === "1") {
-//                $query->whereHas('units', function ($q) {
-//                    $q->where('base_is_shippable', 1);
-//                });
-//            } elseif ($baseIsShippable === "2") {
-//                $query->whereHas('units', function ($q) {
-//                    $q->where('base_is_shippable', 0);
-//                });
-//            }
-//        }
-//
-//        if (isset($deleted)) {
-//            if ($deleted == "1") {
-//                $query->withTrashed();
-//            }elseif ($deleted === "2") {
-//
-//            }
-//        }
-//
-//        if (isset($matrix)) {
-//            if ($matrix === '1') {
-//                $query->where("name", 'REGEXP', "\\*$");
-//            } elseif ($matrix === '2'){
-//                $query->where("name", 'NOT REGEXP', "\\*$");
-//            }
-//        }
-//
-//        if (isset($take)) {
-//            if ($take === "1") {
-//                $query->take(20);
-//            } else if ($take === "2") {
-//                $query->take(40);
-//            }else{
-////                $query->take(10);
-//            }
-//        }
-//
-//        if (isset($category)) {
-//            if ($category) {
-//                $query->where('category_id', $category);
-//            }
-//        }
-//
-//        $p = $query
-//            ->groupBy('art')
-//            ->get();
-//
-//        if (isset($image)) {
-//            $noImg = (new ProductImageService())->getNoPhoto();
-//            if ($image === "1") {
-//                $p = $p->filter(function ($product) use ($noImg) {
-//                    if ($product->mainImage !== $noImg) {
-//                        return $product;
-//                    }
-//                    return false;
-//                });
-//            } else if ($image === "2") {
-//                $p = $p->filter(function ($product) use ($noImg) {
-//                    if ($product->mainImage === $noImg) {
-//                        return $product;
-//                    }
-//                    return false;
-//                });
-//            }
-//        }
-////        $arr = $p->toArray();
-//        return $p;
-//    }
+    public static function filter($req)
+    {
+        $nullEvry = self::array_every($req, function($f){return $f==0;});
+        if ($nullEvry) {
+            return self::defaultFilter();
+        };
+        extract($req);
+        $query = Product::query();
 
-    #[NoReturn] public function changeVal(array $req): void
+        if (isset($instore)) {
+            if ($instore === '1') {
+                $query->where('instore', '>', 0);
+            } elseif ($instore === '2') {
+                $query->where('instore', '=', 0);
+            }
+        }
+        if (isset($baseIsShippable)) {
+            if ($baseIsShippable === "1") {
+                $query->whereHas('units', function ($q) {
+                    $q->where('base_is_shippable', 1);
+                });
+            } elseif ($baseIsShippable === "2") {
+                $query->whereHas('units', function ($q) {
+                    $q->where('base_is_shippable', 0);
+                });
+            }
+        }
+
+        if (isset($deleted)) {
+            if ($deleted == "1") {
+                $query->withTrashed();
+            }elseif ($deleted === "2") {
+
+            }
+        }
+
+        if (isset($matrix)) {
+            if ($matrix === '1') {
+                $query->where("name", 'REGEXP', "\\*$");
+            } elseif ($matrix === '2'){
+                $query->where("name", 'NOT REGEXP', "\\*$");
+            }
+        }
+
+        if (isset($take)) {
+            if ($take === "1") {
+                $query->take(20);
+            } else if ($take === "2") {
+                $query->take(40);
+            }else{
+//                $query->take(10);
+            }
+        }
+
+        if (isset($category)) {
+            if ($category) {
+                $query->where('category_id', $category);
+            }
+        }
+
+        $p = $query
+            ->groupBy('art')
+            ->get();
+
+        if (isset($image)) {
+            $noImg = (new ProductImageService())->getNoPhoto();
+            if ($image === "1") {
+                $p = $p->filter(function ($product) use ($noImg) {
+                    if ($product->mainImage !== $noImg) {
+                        return $product;
+                    }
+                    return false;
+                });
+            } else if ($image === "2") {
+                $p = $p->filter(function ($product) use ($noImg) {
+                    if ($product->mainImage === $noImg) {
+                        return $product;
+                    }
+                    return false;
+                });
+            }
+        }
+//        $arr = $p->toArray();
+        return $p;
+    }
+
+    public function changeVal(array $req): void
     {
         $product = Product::find($req['product_id']);
         $newVal = $req['morphed']['new_id'];

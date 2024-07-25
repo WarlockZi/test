@@ -110,7 +110,8 @@ class ItemArrayFieldBuilder
     public function get()
     {
         $this->name = $this->name ?? $this->fieldName;
-        $this->value = $this->html ?? $this->item[$this->fieldName];
+        $val = $this->item[$this->fieldName]??'';
+        $this->value = $this->html ?? $val;
         return $this;
     }
 

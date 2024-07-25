@@ -2,7 +2,7 @@
 
 use app\core\Icon;
 
-//require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/helpers.php';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -22,14 +22,15 @@ use app\core\Icon;
 
     <?= $assets->getMeta(); ?>
 
-
-    <?= $assets->getCss(); ?>
-    <?= $assets->getCDNCss(); ?>
+<!--    --><?php //= vite('Product/Product.js') ?>
+<!--    --><?php //= vite('Main/main.js') ?>
+        <?= $assets->getCss(); ?>
+    <!--    --><?php //= $assets->getCDNCss(); ?>
 
 </head>
 
 <body>
-<? include_once  dirname(__DIR__).'/share/adminPanel/adminPanel.php';?>
+<? include_once dirname(__DIR__) . '/share/adminPanel/adminPanel.php'; ?>
 
 <?= $header; ?>
 
@@ -44,9 +45,7 @@ use app\core\Icon;
 <!--    <script src="./src/some_script.js" type="module"></script>-->
 <?= $assets->getJs(); ?>
 
-
-
-<?= $assets->getCDNJs(); ?>
+<?php //= $assets->getCDNJs(); ?>
 
 <?php //= Footer::getUserCookie(); ?>
 

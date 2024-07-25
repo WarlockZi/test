@@ -9,14 +9,17 @@ use app\Services\ShortlinkService;
 use app\Services\Slug;
 use Carbon\Carbon;
 
-class LoadProducts extends Load
+class LoadProducts
 {
-
-    protected $logger;
-
-    public function __construct($file)
+    public function __construct(
+        private array $file,
+        private array $data,
+    )
     {
-        parent::__construct($file, 'product');
+        $xml        = simplexml_load_file($file);
+        $xmlObj     = json_decode(json_encode($xml), true);
+        $this->data = $xmlObj['Каталог']['Товары']['Товар'];;
+
         $this->run();
     }
 
@@ -31,7 +34,8 @@ class LoadProducts extends Load
         Product::with('ownProperties')->get()->each(function (Product $product) {
             $product->ownProperties()->updateOrCreate(
                 ['product_1s_id' => $product['1s_id']],
-                ['product_1s_id' => $product['1s_id'],
+                [
+                    'product_1s_id' => $product['1s_id'],
                     'short_link' => ShortlinkService::getValidShortLink(),
                 ]
             );
@@ -80,8 +84,4 @@ class LoadProducts extends Load
         return $g;
     }
 
-    protected function ech($item, $id, $sameSlug = ''): void
-    {
-        echo "{$id}  - {$sameSlug} {$item['name']}<br>";
-    }
 }

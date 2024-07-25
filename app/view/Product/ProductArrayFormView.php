@@ -167,18 +167,7 @@ class ProductArrayFormView
                ->get()
          )
          ->field(
-            ItemArrayFieldBuilder::build('manufacturer', $product)
-               ->name('Производитель')
-               ->html(
-                  SelectListBuilder::build()
-                     ->collection(Manufacturer::all())
-                     ->item($product)
-                     ->field('manufacturer_id')
-                     ->initialOption('', 0)
-                     ->selected($product->manufacturer->id ?? 0)
-                     ->get()
-               )
-               ->get()
+             self::manufacturer($product)
          )
          ->field(
             ItemArrayFieldBuilder::build('instore', $product)
@@ -250,6 +239,21 @@ class ProductArrayFormView
          )
          ->get();
    }
+   private static function manufacturer($product):ItemArrayFieldBuilder
+   {
+       return ItemArrayFieldBuilder::build('manufacturer', $product)
+           ->name('Производитель')
+           ->html(
+               SelectListBuilder::build()
+                   ->collection(Manufacturer::all())
+                   ->item($product)
+                   ->field('manufacturer_id')
+                   ->initialOption('', 0)
+                   ->selected($product->manufacturer->id ?? 0)
+                   ->get()
+           )
+           ->get();
+   }
    private static function getDescription(Product $product): string
    {
       $fs = new FS(__DIR__);
@@ -272,22 +276,22 @@ class ProductArrayFormView
 
    protected static function getSeo($product): string
    {
-      $seo = $product->seo ?? new Seo();
-      $r   = "<div class='show'>" .
-         ItemArrayFieldBuilder::build('description', $seo)
+      $ownProps = $product->ownProperties;
+      $str   = "<div class='show'>" .
+         ItemArrayFieldBuilder::build('seo_desc', $ownProps)
             ->name('Description')
             ->contenteditable()
             ->get()->toHtml('product') .
-         ItemArrayFieldBuilder::build('title', $seo)
+         ItemArrayFieldBuilder::build('seo_title', $ownProps)
             ->name('Title')
             ->contenteditable()
             ->get()->toHtml('product') .
-         ItemArrayFieldBuilder::build('keywords', $seo)
+         ItemArrayFieldBuilder::build('seo_keywords', $ownProps)
             ->name('Key words')
             ->contenteditable()
             ->get()->toHtml('product') .
          "</div>";
-      return $r;
+      return $str;
    }
 
    protected static function promotions($product): string

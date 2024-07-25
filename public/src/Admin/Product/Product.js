@@ -4,7 +4,6 @@ import './Values'
 import {objAndFiles2FormData, post} from '../../common'
 import {qs} from '../../constants'
 
-
 export default class Product {
    constructor(product) {
       if (!product) return false;

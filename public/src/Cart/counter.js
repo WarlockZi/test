@@ -3,6 +3,7 @@ import {qs} from "../constants";
 export default class Counter{
 
     setCounter() {
+        debugger
         if (!this.container[qs]('#counter')) return false
         if (this.rows.length) {
             let cartDeadline = +this.cookie.cookie.get_cookie('cartDeadline');
