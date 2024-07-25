@@ -204,16 +204,16 @@ class Assets
 
     public function merge(Assets $assets)
     {
-        foreach ($this->js as $js) {
+        foreach ($assets->js as $js) {
             $this->setJs($js);
         }
-        foreach ($this->css as $css) {
+        foreach ($assets->css as $css) {
             $this->setCss($css);
         }
-        foreach ($this->CDNjs as $js) {
+        foreach ($assets->CDNjs as $js) {
             $this->setCDNJs($js['src'], $js['defer'] === 'defer', $js['async'] === 'async',);
         }
-        foreach ($this->CDNCss as $css) {
+        foreach ($assets->CDNCss as $css) {
             $this->setCDNCss($css);
         }
         $this->title    = $this->title . $assets->title . '  VITEX';
