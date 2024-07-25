@@ -11,61 +11,33 @@ use app\view\Header\UserHeader;
 
 class UserLayout extends Layout
 {
-    protected Route $route;
-
-    protected string $layout;
-    protected string $view;
-    protected array $content;
     protected Assets $assets;
     protected UserHeader $header;
+    protected string $view = '';
     protected FS $viewFs;
+    protected string $layout = '';
     protected FS $layoutFs;
+    protected array $content = [];
 
-    public function __construct(Route $route, Controller $controller)
+    public function __construct(
+        protected Route $route,
+        Controller      $controller,
+    )
     {
-        $this->route  = $route;
         $this->assets = new UserAssets();
         $this->header = new UserHeader($this->route);
-        $this->setFs();
-        $this->setLayout("layouts/vitex");
-        $this->setView();
+
+        $this->view     = $this->route->getView() ?? $this->route->getAction() ?? 'default';
+        $this->viewFs   = new FS(dirname(__DIR__) . DIRECTORY_SEPARATOR . ucfirst($this->route->getControllerName()));
+        $this->layout   = "layouts/vitex";
+        $this->layoutFs = new FS(dirname(__DIR__));
         $this->setErrors();
         $this->setContent($controller);
-    }
-
-    public function setLayout(string $layout): void
-    {
-        $this->layout = $layout;
     }
 
     protected function getView(): string
     {
         return $this->view;
-    }
-
-    protected function setView(): void
-    {
-        $this->view = $this->route->getView() ?? $this->route->getAction() ?? 'default';
-    }
-
-    protected function setErrors():void
-    {
-        if ($this->route->isNotFound()) {
-            $this->route->setError('Такого адреса нет');
-        }
-        if (!class_exists($this->route->getController())) {
-            $this->route->setError('Контроллер не найден');
-        }
-        if (!is_readable($this->viewFs->getAbsPath() . $this->getView() . '.php')) {
-            $this->route->setError('Файл вида не найден');
-        }
-    }
-
-    public function setFs(): void
-    {
-        $this->layoutFs = new FS(dirname(__DIR__));
-        $controller     = ucfirst($this->route->getControllerName());
-        $this->viewFs   = new FS(dirname(__DIR__) . DIRECTORY_SEPARATOR . $controller);
     }
 
     public function setContent(Controller $controller): void
@@ -80,7 +52,7 @@ class UserLayout extends Layout
     private function prepareContent($vars): string
     {
         try {
-           return $this->viewFs->getContent($this->getView(), $vars);
+            return $this->viewFs->getContent($this->getView(), $vars);
         } catch (\Exception $exception) {
             ob_get_clean();
             ob_flush();
@@ -96,7 +68,7 @@ class UserLayout extends Layout
     }
 
 
-    public function render():void
+    public function render(): void
     {
         echo $this->getLayout();
     }

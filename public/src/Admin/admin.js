@@ -4,7 +4,7 @@ import './model/cache.js';
 import '../components/header/header-adm.js'
 import '../components/search/search.js'
 import '../components/accordion/accordion.js'
-import '../components/admin_sidebar.js'
+import '../components/AdminAccordion.js'
 import '../components/date/date.js'
 
 import {$} from "../common.js"
@@ -25,18 +25,13 @@ import quill from '../components/quill/quill.js'
 import './Planning/planning.js'
 import './Settings/settings.js'
 import './Videoinstructions/videoinstructions.js'
-import rights from './Rights/rights.js'
-
-import user from './User/user.js'
 
 
 import radio from '../components/radio/radio.js'
 import multiselect from '../components/multiselect/multiselect.js'
 import catalogItem from '../components/catalog-item/catalog-item.js'
 import tooltips from '../components/tooltip/tooltip.js'
-import error from '../components/error/error.js'
-import select from '../components/select/select.js'
-import accordionShow from '../components/accordion-show.js'
+// import accordionShow from '../components/accordion-show.js'
 import morph from '../components/morph/morph.js'
 import Search from "../components/search/search.js"
 import Promotion from "../Promotions/Promotion.js"
@@ -45,77 +40,50 @@ import './ProductFilter/ProductFilter'
 // import pagination from './Product/pagination.js'
 // import product from './Product/Product.js'
 import {qs} from '../constants'
-
+import navigate from "./Navigate";
 $(document).ready(async function () {
-    const product = document[qs](`.item-wrap[data-model='product']`)
-    if (product) {
-        const {default: Product} = await import('./Product/Product.js')
-        new Product(product);
-    }
-    if (document[qs]('.order-edit')) {
-        const {default: Order} = await import('./Order/order.js')
-        new Order()
-    }
 
-    if (document[qs]('.modal-wrapper')){
-        const {default:Modal} = await import("../components/Modal/modal.js")
-    }
-    if (document[qs](`.item-wrap[data-model='category']`)){
-        const {default:Category} = await import('./Category/Category.js')
-        new Category()
-    }
+   const product = document[qs](`.item-wrap[data-model='product']`)
+   if (product) {
+      const {default: Product} = await import('./Product/Product.js')
+      new Product(product);
+   }
+   if (document[qs]('.order-edit')) {
+      const {default: Order} = await import('./Order/order.js')
+      new Order()
+   }
 
-    new Promotion();
-    new Search(true);
+   if (document[qs]('.modal-wrapper')) {
+      const {default: Modal} = await import("../components/Modal/modal.js")
+      new Modal
+   }
 
-    morph();
-    navigate(window.location.pathname);
-    radio();
-    multiselect();
-    catalogItem();
-    tooltips();
-    quill();
-    accordionShow();
+   const category = document[qs](`.item-wrap[data-model='category']`)
+   if (category) {
+      const {default: Category} = await import('./Category/Category.js')
+      new Category(category)
+   }
+   // const property = document[qs](`.properties[custom-list]`)
+   // if (property) {
+   //    const {default: Property} = await import('./Property/Property.js')
+   //    new Property(property)
+   // }
+   new Promotion();
+   new Search(true);
 
-    testEdit();
-    // category();
+   morph();
+   navigate(window.location.pathname);
+   radio();
+   multiselect();
+   catalogItem();
+   tooltips();
+   quill();
+   testEdit();
 
-    function navigate(str) {
-        if (/\/adminsc\/settings/.test(str)
-            || /\/adminsc\/right\/list/.test(str)
-            || /\/adminsc\/post\/list/.test(str) ||
-            /\/adminsc\/todo\/list/.test(str)) {
-            // rights()
-            $("[settings]").addClass('current')
-
-
-        } else if (/\/auth\/profile/.test(str)) {
-            // user()
-        } else if (/\/adminsc\/crm/.test(str)) {
-            $("[crm]").addClass('current')
-
-
-        } else if (/\/adminsc\/planning/.test(str)) {
-            $("[plan]").addClass('current')
-
-        } else if (
-            /\/adminsc\/category/.test(str) ||
-            /\/adminsc\/product/.test(str)
-        ) {
-            $("[catalog]").addClass('current')
-
-        } else if (
-            /\/test/.test(str)
-            || /\/opentest/.test(str)
-            || /\/adminsc\/opentest/.test(str)
-            || /\/adminsc\/test/.test(str)) {
-            $("[test]").addClass('current')
-
-        } else {
-            $("[href='/adminsc']").addClass('current')
-        }
-
-    }
+   if (document[qs]('.admin_sidebar')) {
+      const {default: adminAccordion} = await import('../components/AdminAccordion.js')
+      new adminAccordion()
+   }
 
 });
 

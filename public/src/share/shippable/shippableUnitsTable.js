@@ -1,5 +1,5 @@
 import "./shippableTable.scss";
-import {getToken, isAuthed, post} from "../../common";
+import { isAuthed, post} from "../../common";
 import {ael, qs, qa} from '../../constants';
 
 

@@ -1,8 +1,8 @@
 <?php
 
 use app\core\Error;
-
 //require_once __DIR__ . '/helpers.php';
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,8 +15,9 @@ use app\core\Error;
     <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
 
     <?= $assets->getCss() ?>
-    <?= $assets->getCDNCss() ?>
-
+<!--    --><?php //= $assets->getCDNCss() ?>
+<!--    --><?php //= vite('Admin/admin.js') ?>
+<!--    --><?php //= vite('Main/main.js') ?>
 </head>
 
 <body>
@@ -41,7 +42,7 @@ use app\core\Error;
 <?= $footer; ?>
 
 <?= $assets->getJs() ?>
-<?= $assets->getCDNJs() ?>
+<?php //= $assets->getCDNJs() ?>
 
 </body>
 </html>

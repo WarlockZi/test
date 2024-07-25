@@ -4,6 +4,7 @@
 namespace app\view\Category;
 
 
+use app\core\FS;
 use app\model\Category;
 use app\model\Product;
 use app\Repository\CategoryRepository;
@@ -12,7 +13,7 @@ use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\ListBuilder\MyList;
 use app\view\components\Builders\Morph\MorphBuilder;
-use app\view\components\Builders\SelectBuilder\TreeABuilder;
+//use app\view\components\Builders\SelectBuilder\TreeABuilder;
 use app\view\components\ItemBuilder\ItemArrayBuilder;
 use app\view\components\ItemBuilder\ItemArrayFieldBuilder;
 use app\view\components\ItemBuilder\ItemArrayTabBuilder;
@@ -172,7 +173,13 @@ class CategoryArrayFormView
 
     public static function properties($category)
     {
-        return include __DIR__.'/Admin/property.php';
+        $fs = new FS(__DIR__.'/Admin');
+        $content = $fs->getContent('properties.php', compact('category'));
+        $editIcon = $fs->getContent('properties.php', compact('category'));
+        $delIcon = $fs->getContent('properties.php', compact('category'));
+        $emptyRow = $fs->getContent('properties.php', compact('category'));
+        $propertyRows = $fs->getContent('properties.php', compact('category'));
+        return $content;
     }
 
     public static function list(): string

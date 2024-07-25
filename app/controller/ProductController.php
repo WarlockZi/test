@@ -35,7 +35,11 @@ class ProductController extends AppController
 
             $this->set(compact('shippablePrices', 'product', 'breadcrumbs', 'oItems', 'userIsAdmin'));
 
-            $this->assets->setItemMeta($product);
+            $title    = $product->ownProperties->seo_title ?? $product->name;
+            $desc     = $product->ownProperties->seo_description ?? $product->name;
+            $keywords = $product->ownProperties->seo_keywords ?? $product->name;
+            $this->assets->setMeta($title, $desc, $keywords);
+
             $this->assets->setProduct();
 //         $this->assets->setQuill();http://vitexopt.ru/short/9zL6pN6fL2wL
         } else {

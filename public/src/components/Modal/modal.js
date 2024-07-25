@@ -5,7 +5,7 @@ import {$, createElement} from '../../common'
 export default class Modal {
 
   constructor(props) {
-    debugger
+
     this.modal = $(`[data-modal='default']`).first();
     if (!this.modal) return;
     if (!props?.button) return;

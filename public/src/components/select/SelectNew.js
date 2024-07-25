@@ -1,4 +1,4 @@
-import './SelectNew.scss'
+import './WDSSelect.scss'
 
 import {createElement, post} from "../../common";
 

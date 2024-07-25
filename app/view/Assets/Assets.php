@@ -4,34 +4,36 @@
 namespace app\view\Assets;
 
 
-use Illuminate\Database\Eloquent\Model;
-
 class Assets
 {
-    protected $host;
-    protected $cache = false;
+    public function __construct(
+        protected ?string $host = '',
+        protected ?bool   $cache = false,
 
-    protected $js = [];
-    protected $css = [];
-    protected $CDNjs = [];
-    protected $CDNcss = [];
+        protected ?array  $js = [],
+        protected ?array  $css = [],
+        protected ?array  $CDNjs = [],
+        protected ?array  $CDNCss = [],
 
-    protected $title;
-    protected $desc;
-    protected $keywords;
-    protected $port;
-    protected $path;
+        protected ?string $title = '',
+        protected ?string $desc = '',
+        protected ?string $keywords = '',
 
-    public function __construct()
+        protected ?string $port = '',
+        protected ?string $path = '',
+//        protected string $compiler = 'vite',
+        protected ?string $compiler = 'webpack',
+
+    )
     {
         $this->setCache();
-        $this->setHost(1);
+        $this->setHost();
     }
 
-    public function setHost($host = 1): void
+    public function setHost(): void
     {
         $this->host = $_ENV['DEV']
-            ? $this->setLocalhost($host === 1 ? 'webpack' : 'vite')
+            ? $this->setLocalhost($this->compiler)
             : '/public/dist/';
     }
 
@@ -49,32 +51,20 @@ class Assets
     {
         return [
             's' => '',
-//        $s = 's';
-//        $port = 4173;
             'port' => 5173,
-//        $path = '';
             'path' => '/dist/',
-//        $path = '/';
-//        $h1 = 'localhost';
             'h1' => '127.0.0.1',
-//        $h1 = 'vi-prod';
         ];
     }
 
     protected function setLocalhost($type): string
     {
-        if ($type === 'webpack') {
-            extract($this->getWebpack());
-        } else {
-            extract($this->getVite());
-        }
-
-        $protocol = "http{$s}://";
-        $str      = "{$protocol}{$h1}:{$port}{$path}";
+        $type === 'webpack' ? extract($this->getWebpack()) : extract($this->getVite());
+        $str = "http{$s}://" . "{$h1}:{$port}{$path}";
         return $str;
     }
 
-    public function getJS(string $str = ''): string
+    private function getWebpackJs(string $str = ''): string
     {
         foreach ($this->js as $name) {
             $str .= "<script type='module' src='{$this->host}{$this->path}{$name}.js{$this->getTime()}'></script>";
@@ -82,12 +72,43 @@ class Assets
         return $str;
     }
 
-    public function getCss(string $str = '')
+    private function getViteJs(): string
+    {
+        return '';
+    }
+    private function getWebpackCss(string $str = ''): string
     {
         foreach ($this->css as $name) {
             $str .= "<link href='{$this->host}{$this->port}{$this->path}{$name}.css{$this->getTime()}' rel='stylesheet' type='text/css'>";
         }
         return $str;
+    }
+
+    private function getViteCss(): string
+    {
+//        if (Router::){
+//        vite('Product/Product.js') ;
+//        vite('Main/main.js');
+//    }
+        $str = vite('Admin/admin.js');
+        $str .= vite('Main/main.js');
+        return $str;
+    }
+    public function getJS(): string
+    {
+        if ($this->compiler === 'webpack') {
+            return $this->getWebpackJs();
+        }
+        return $this->getViteJs();
+    }
+
+    public function getCss(string $str = '')
+    {
+        if ($this->compiler === 'webpack') {
+            return $this->getWebpackCss();
+        }
+        return $this->getViteCss();
+
     }
 
     public function getMeta()
@@ -97,30 +118,18 @@ class Assets
             "<meta name = 'keywords' content = '{$this->keywords}'>";
     }
 
-    public function setItemMeta(Model $item)
-    {
-        $this->title    = $item->ownProperties->seo_title ?? $item->name;
-        $this->desc     = $item->ownProperties->seo_description ?? $item->name;
-        $this->keywords = $item->ownProperties->seo_keywords ?? $item->name;
-    }
-
     public function setMeta(string $title, string $desc = '', string $keywords = '')
     {
-        $this->title    = $title ? $title : 'Медицинкские перчатки';
-        $this->desc     = $desc ? $desc : 'Медицинкские перчатки';
-        $this->keywords = $keywords ? $keywords : 'Медицинкские перчатки';
+        $this->title    = $title ?? 'Медицинкские перчатки оптом';
+        $this->desc     = $desc ?? 'Медицинкские перчатки оптом';
+        $this->keywords = $keywords ?? 'Медицинкские перчатки оптом';
     }
 
-    public function setJs(string $name)
+    public function setJs(string $name):void
     {
         $this->js[] = $name;
     }
 
-    /**
-     * @param string $src
-     * @param bool $defer
-     * @param bool $async
-     */
     public function setCDNJs(string $src, bool $defer = false, bool $async = false): void
     {
         $this->CDNjs[] = ['src' => $src, 'defer' => $defer ? 'defer' : '', 'async' => $async ? 'async' : ''];
@@ -159,33 +168,9 @@ class Assets
         return ($this->cache) ? "?" . time() : "";
     }
 
-    public function getCssArray()
-    {
-        return $this->css;
-    }
-
-    public function getJsArray()
-    {
-        return $this->js;
-    }
-
-    public function getCDNCssArray()
-    {
-        return $this->CDNcss;
-    }
-
-    public function getCDNJsArray()
-    {
-        return $this->CDNjs;
-    }
-
     public function setCache(): void
     {
-        if ($_ENV['DEV']) {
-            $this->cache = false;
-        } else {
-            $this->cache = false;
-        }
+        $this->cache = $_ENV['DEV'] ? false : false;
     }
 
     public function unsetJs(string $name)
@@ -219,16 +204,16 @@ class Assets
 
     public function merge(Assets $assets)
     {
-        foreach ($assets->getJsArray() as $js) {
+        foreach ($this->js as $js) {
             $this->setJs($js);
         }
-        foreach ($assets->getCssArray() as $css) {
+        foreach ($this->css as $css) {
             $this->setCss($css);
         }
-        foreach ($assets->getCDNJsArray() as $js) {
+        foreach ($this->CDNjs as $js) {
             $this->setCDNJs($js['src'], $js['defer'] === 'defer', $js['async'] === 'async',);
         }
-        foreach ($assets->getCDNCssArray() as $css) {
+        foreach ($this->CDNCss as $css) {
             $this->setCDNCss($css);
         }
         $this->title    = $this->title . $assets->title . '  VITEX';
