@@ -319,7 +319,7 @@ async function post(url, data = {}) {
         req.send('param=' + JSON.stringify(data));
       }
       req.onerror = function (e) {
-        reject(Error("Network Error" + e.message));
+        reject(Error("Ошибка отправки - " + e.message));
       };
       req.onload = function () {
 

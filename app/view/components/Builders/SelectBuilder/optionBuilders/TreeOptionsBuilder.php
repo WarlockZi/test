@@ -71,6 +71,8 @@ class TreeOptionsBuilder extends TreeBuilder
 
     public function initialOption(string $initialOptionLabel = '', int $initialOptionValue = 0): TreeOptionsBuilder
     {
+        $this->items->push(['id'=>'0','name'=>'']);
+        array_push($this->arr, ['id'=>'0','name'=>'']);
         $this->initialOption =
             "<option value='{$initialOptionValue}'>{$initialOptionLabel}</option>";
         return $this;
