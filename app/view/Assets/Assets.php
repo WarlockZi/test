@@ -202,23 +202,23 @@ class Assets
         $this->setCss('auth');
     }
 
-    public function merge(Assets $assets)
+    public function merge(Assets $controllerAssets)
     {
-        foreach ($assets->js as $js) {
+        foreach ($controllerAssets->js as $js) {
             $this->setJs($js);
         }
-        foreach ($assets->css as $css) {
+        foreach ($controllerAssets->css as $css) {
             $this->setCss($css);
         }
-        foreach ($assets->CDNjs as $js) {
+        foreach ($controllerAssets->CDNjs as $js) {
             $this->setCDNJs($js['src'], $js['defer'] === 'defer', $js['async'] === 'async',);
         }
-        foreach ($assets->CDNCss as $css) {
+        foreach ($controllerAssets->CDNCss as $css) {
             $this->setCDNCss($css);
         }
-        $this->title    = $this->title . $assets->title . '  VITEX';
-        $this->desc     = $this->desc . $assets->desc;
-        $this->keywords = $this->keywords . $assets->keywords;
+        $this->title    = $this->title . $controllerAssets->title . '  VITEX';
+        $this->desc     = $this->desc . $controllerAssets->desc;
+        $this->keywords = $this->keywords . $controllerAssets->keywords;
 
     }
 
