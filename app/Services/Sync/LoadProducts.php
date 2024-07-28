@@ -12,21 +12,39 @@ use Carbon\Carbon;
 class LoadProducts
 {
     public function __construct(
-        private array $file,
-        private array $data,
+        readonly private string $file,
+        private array           $data = [],
+        private array           $existing = [],
+        private array           $created = [],
+        private array           $deleted = [],
     )
     {
-        $xml        = simplexml_load_file($file);
+        $xml        = simplexml_load_file($this->file);
         $xmlObj     = json_decode(json_encode($xml), true);
-        $this->data = $xmlObj['Каталог']['Товары']['Товар'];;
+        $this->data = $xmlObj['Каталог']['Товары']['Товар'];
 
         $this->run();
     }
 
     protected function run(): void
     {
-        $this->updateOrCreateProducts();
-        $this->setShortLink();
+        try {
+            $this->updateOrCreateProducts();
+//        $this->setShortLink();
+            $this->deleteNonexisted();
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
+
+    }
+
+    protected function deleteNonexisted(): void
+    {
+        $p               = Product::whereNotIn('1s_id', $this->existing)->pluck('1s_id');
+        $this->deleted[] = $p->toArray();
+        $p->each(function (Product $product) {
+            $product->softDelete();
+        });
     }
 
     protected function setShortLink(): void
@@ -45,11 +63,15 @@ class LoadProducts
     private function updateOrCreateProducts(): void
     {
         foreach ($this->data as $good) {
-            $foundProduct = Product::withTrashed()
+            $this->existing[$good['Ид']] = $good['Ид'];
+            $product                     = Product::withTrashed()
                 ->updateOrCreate(
                     ['1s_id' => $good['Ид']],
                     $this->fillNewProduct($good)
                 );
+            if ($product->wasRecentlyCreated) {
+                $this->created = $product['name'];
+            }
         }
     }
 

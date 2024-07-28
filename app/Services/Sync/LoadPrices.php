@@ -9,14 +9,15 @@ use app\model\Unit;
 
 class LoadPrices
 {
+    private Product $product;
+    private array $data = [];
+
     public function __construct
     (
-        private array $file,
-        private array $data,
-        private Product $product,
+        readonly private string $file,
     )
     {
-        $xml        = simplexml_load_file($file);
+        $xml        = simplexml_load_file($this->file);
         $xmlObj     = json_decode(json_encode($xml), true);
         $this->data = $xmlObj['ПакетПредложений']['Предложения']['Предложение'];
 
@@ -29,9 +30,9 @@ class LoadPrices
             $Price = $this->createPrice($price);
             $Unit  = $this->createUnit($price, $Price);
 
-            $this->product = Product::where('1s_id', $Price['1s_id'])->first();
+            $this->product = Product::where('1s_id', $Price['1s_id'])
+                ->update(['instore' => $price['Количество']]);
 
-            $this->instore2Product($price);
             $this->unit2Product($Price, $Unit);
         }
     }
@@ -39,34 +40,30 @@ class LoadPrices
     protected function createPrice($price)
     {
         $g['1s_id']  = $price['Ид'];
-        $g['1s_art'] = $price['Артикул'] ? $price['Артикул'] : '';
+        $g['1s_art'] = $price['Артикул'] ?? '';
 
-        $g['unit']      = $price['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] ? $price['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] : '';
-        $g['unit_code'] = $price['БазоваяЕдиница']['@attributes']['Код'] ? $price['БазоваяЕдиница']['@attributes']['Код'] : '';
+        $g['unit']      = $price['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] ?? '';
+        $g['unit_code'] = $price['БазоваяЕдиница']['@attributes']['Код'] ?? '';
 
-        $g['currency'] = $price['Цены']['Цена']['Валюта'] ? $price['Цены']['Цена']['Валюта'] : '';
-        $g['price']    = $price['Цены']['Цена']['ЦенаЗаЕдиницу'] ? $price['Цены']['Цена']['ЦенаЗаЕдиницу'] : '';
+        $g['currency'] = $price['Цены']['Цена']['Валюта'] ?? '';
+        $g['price']    = $price['Цены']['Цена']['ЦенаЗаЕдиницу'] ?? '';
 
-        return Price::create($g);
+        return Price::firstOrCreate([
+            '1s_id' => $price['Ид'],
+            'unit_code' => $g['unit_code'],
+        ], $g);
     }
 
     protected function createUnit($price, $Price)
     {
-        $unit = Unit::where('code', $Price->unit_code)->first();
-        if (!$unit) {
-            $u['name']      = $price['Цены']['Цена']['Единица'] ?? null;
-            $u['code']      = $Price->unit_code;
-            $u['full_name'] = $Price->unit;
-            $unit           = Unit::create($u);
-        }
-        return $unit;
-    }
+        return Unit::firstOrCreate(
+            ['code' => $Price->unit_code],
+            [
+                'name' => $price['Цены']['Цена']['Единица'] ?? null,
+                'code' => $Price->unit_code,
+                'full_name' => $Price->unit,
+            ]);
 
-    protected function instore2Product($price): void
-    {
-        $this->product->update([
-            'instore' => $price['Количество'],
-        ]);
     }
 
     protected function unit2Product(Price $Price, Unit $Unit): void
@@ -74,10 +71,9 @@ class LoadPrices
         $find = [
             'product_1s_id' => $Price['1s_id'],
             'unit_id' => $Unit['id'],
-            'multiplier' => '1',
             'is_base' => '1',
         ];
-        $new = [
+        $new  = [
             'product_1s_id' => $Price['1s_id'],
             'unit_id' => $Unit['id'],
             'multiplier' => '1',
@@ -86,15 +82,7 @@ class LoadPrices
             'base_is_shippable' => '1',
         ];
 
-        if (!ProductUnit::query()->where($find)->exists()) {
-            $pu = ProductUnit::query()->create($new);
-        }
-
-//        ProductUnit::updateOrCreate($find, $new);
+        ProductUnit::firstOrCreate($find, $new);
     }
 
-    protected function ech($item)
-    {
-        echo "{$item->id} - {$item->price}<br>";
-    }
 }

@@ -9,19 +9,22 @@ use app\Storage\StorageImport;
 
 class SyncService
 {
+    protected LoadProducts $loadProducts;
+    protected string $importPath = '';
+        protected string $importFile = '';
+        protected string $offerFile = '';
+
     public function __construct(
-        protected string          $importPath = '',
-        protected string          $importFile = '',
-        protected string          $offerFile = '',
-        protected FileLogger      $logger = new FileLogger('import.txt'),
-        protected StorageImport   $storage = new StorageImport,
+        protected FileLogger $logger = new FileLogger('import.txt'),
+        protected StorageImport $storage = new StorageImport,
         protected TrancateService $trancateService = new TrancateService,
     )
     {
 
-        $this->importPath = $this->storage->getStoragePath();
-        $this->importFile = $this->storage::getFile('import0_1.xml');
-        $this->offerFile  = $this->storage::getFile('offers0_1.xml');
+        $this->importPath   = $this->storage->getStoragePath();
+        $this->importFile   = $this->storage::getFile('import0_1.xml');
+        $this->offerFile    = $this->storage::getFile('offers0_1.xml');
+//        $this->loadProducts = new LoadProducts($this->importFile);
     }
 
     public function requestFrom1s(Route $route): void
@@ -42,22 +45,26 @@ class SyncService
             $this->logError("---SyncControllerError---", $e);
         }
     }
+
     protected function checkauth(): void
     {
         $this->logReqest('checkauth');
         exit("success\ninc\n777777\n55fdsa55");
     }
+
     protected function zip(): void
     {
         $this->logReqest('init');
         exit("zip=no\nfile_limit=10000000");
     }
+
     protected function file($filename): void
     {
         file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
         $this->logReqest('file');
         exit('success');
     }
+
     private function importFilesExist(): void
     {
         if (!is_readable($this->importFile)) {
@@ -93,7 +100,7 @@ class SyncService
         try {
             $this->importFilesExist();
 
-            $this->softTrancate();
+//            $this->trancateService->softTrancate();
 
             $this->LoadCategories();
             $this->LoadProducts();
@@ -109,7 +116,7 @@ class SyncService
     protected function logReqest($func): void
     {
         $this->logDate();
-        $this->logger->write("func {$func} started" . PHP_EOL);
+        $this->logger->write("func {$func}" . PHP_EOL);
     }
 
     protected function logDate(): void
@@ -137,66 +144,4 @@ class SyncService
         }
     }
 }
-
-//
-////trancate
-//    public function softTrancate(): void
-//    {
-//        $this->removeCategories();
-//        $this->softRemoveProducts();
-//        $this->removePrices();
-//    }
-//
-//    public function trancate(): void
-//    {
-//        $this->softTrancate();
-////		$this->removeCategories();
-////		$this->removeProducts();
-////		$this->removePrices();
-//    }
-//
-//    public function softRemoveProducts(): void
-//    {
-//        foreach (Product::all() as $model) {
-//            $this->softDelete($model);
-//        }
-//        $this->log('--- products  soft deleted ---');
-//    }
-//
-//    public function softRemoveCategories(): void
-//    {
-//        foreach (Category::all() as $model) {
-//            $this->softDelete($model);
-//        }
-//        $this->log('--- category  soft deleted ---');
-//    }
-//
-//    protected function softDelete($model): void
-//    {
-//        $model->update(['deleted_at' => Carbon::today()]);
-//    }
-//
-//    private function removeProducts(): void
-//    {
-//        Product::truncate();
-//        $this->log('--- products  deleted ---');
-//    }
-//
-//    private function removeCategories(): void
-//    {
-//        Category::truncate();
-//        $this->log('--- category  deleted ---');
-//    }
-//
-//    public function softRemovePrices(): void
-//    {
-//        Price::truncate();
-//        $this->log('--- price deleted ---');
-//    }
-//
-//    public function removePrices(): void
-//    {
-//        Price::truncate();
-//        $this->log('--- price  deleted ---');
-//    }
 
