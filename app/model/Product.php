@@ -4,10 +4,8 @@ namespace app\model;
 
 
 use app\Services\ProductImageService;
-use app\Services\ShortlinkService;
 use app\Services\Slug;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 

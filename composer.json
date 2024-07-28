@@ -21,7 +21,8 @@
     "symfony/validator": "^7.0",
     "ext-pdo": "*",
     "ext-curl": "*",
-    "ext-ssh2": "*"
+    "ext-ssh2": "*",
+    "ext-pthreads": "*"
   },
   "config": {
     "platform-check": false
