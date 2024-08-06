@@ -1,6 +1,6 @@
 <?php
 
-use \app\view\Product\ProductArrayFormView;
+use \app\view\Product\Admin\ProductFormView;
 use app\core\Icon;
 
 ?>
@@ -24,13 +24,13 @@ use app\core\Icon;
 
 
             <div class="row">
-                <?= ProductArrayFormView::unitsRow($baseUnit, '',false); ?>
+                <?= ProductFormView::unitsRow($baseUnit, '',false); ?>
             </div>
 
             <?php foreach ($units as $unit): ?>
                 <?php if (!$unit->pivot->is_base): ?>
                     <div class="row">
-                        <?= ProductArrayFormView::unitsRow($unit,$baseUnit->name,true) ?>
+                        <?= ProductFormView::unitsRow($unit,$baseUnit->name,true) ?>
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>

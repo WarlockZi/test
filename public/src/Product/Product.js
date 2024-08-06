@@ -8,11 +8,11 @@ import shippableTable from "../share/shippable/shippableUnitsTable";
 // window.onload = function () {
 export default class Product{
 
-   __construct(){
+   constructor(){
       const product = $('.product-card').first();
       if (!product) return false
       const table = $('.shippable-table').first()
-      debugger
+
       new shippableTable(table)
 
       const short_link = $('.short-link').first()

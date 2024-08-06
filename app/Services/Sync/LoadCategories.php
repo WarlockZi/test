@@ -64,7 +64,7 @@ class LoadCategories
             ->updateOrCreate(['1s_id' => $item['1s_id']], $item);
 
         if ($cat->wasRecentlyCreated) {
-            $this->created = $cat['name'];
+            $this->created[] = $cat['name'];
         }
         return $cat;
     }

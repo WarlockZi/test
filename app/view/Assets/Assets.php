@@ -7,20 +7,20 @@ namespace app\view\Assets;
 class Assets
 {
     public function __construct(
-        protected ?string $host = '',
-        protected ?bool   $cache = false,
+        protected string $host = '',
+        protected bool   $cache = false,
 
-        protected ?array  $js = [],
-        protected ?array  $css = [],
-        protected ?array  $CDNjs = [],
-        protected ?array  $CDNCss = [],
+        protected array  $js = [],
+        protected array  $css = [],
+        protected array  $CDNjs = [],
+        protected array  $CDNCss = [],
 
-        protected ?string $title = '',
-        protected ?string $desc = '',
-        protected ?string $keywords = '',
+        protected string $title = '',
+        protected string $desc = '',
+        protected string $keywords = '',
 
-        protected ?string $port = '',
-        protected ?string $path = '',
+        protected string $port = '',
+        protected string $path = '',
 //        protected string $compiler = 'vite',
         protected ?string $compiler = 'webpack',
 
@@ -39,18 +39,28 @@ class Assets
 
     protected function getWebpack()
     {
-        return [
-            's' => '',
-            'port' => 4000,
-            'path' => '/',
-            'h1' => 'localhost',
-        ];
+        if ($_ENV['DEV'] === "1") {
+            return [
+                'protocol' => 'http://',
+                'h1' => 'localhost',
+                'port' => ":4000",
+                'path' => '/',
+            ];
+        } else {
+            return [
+                'protocol' => 'https://',
+                'h1' => 'vi-prod',
+                'port' => '',
+                'path' => '/public/dist/',
+            ];
+        }
+
     }
 
     protected function getVite()
     {
         return [
-            's' => '',
+            'protocol' => 'http://',
             'port' => 5173,
             'path' => '/dist/',
             'h1' => '127.0.0.1',
@@ -60,7 +70,7 @@ class Assets
     protected function setLocalhost($type): string
     {
         $type === 'webpack' ? extract($this->getWebpack()) : extract($this->getVite());
-        $str = "http{$s}://" . "{$h1}:{$port}{$path}";
+        $str =  "{$protocol}{$h1}{$port}{$path}";
         return $str;
     }
 
@@ -76,6 +86,7 @@ class Assets
     {
         return '';
     }
+
     private function getWebpackCss(string $str = ''): string
     {
         foreach ($this->css as $name) {
@@ -94,6 +105,7 @@ class Assets
         $str .= vite('Main/main.js');
         return $str;
     }
+
     public function getJS(): string
     {
         if ($this->compiler === 'webpack') {
@@ -125,7 +137,7 @@ class Assets
         $this->keywords = $keywords ?? 'Медицинкские перчатки оптом';
     }
 
-    public function setJs(string $name):void
+    public function setJs(string $name): void
     {
         $this->js[] = $name;
     }

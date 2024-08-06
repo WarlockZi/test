@@ -60,9 +60,8 @@ class TreeOptionsBuilder extends TreeBuilder
     public function options($items, $level, $string): string
     {
         foreach ($items as $item) {
-//            $this->flatArray[$item['id']] = $item['name'];
             $string .= $this->getOption($item, $level);
-            if ($item[$this->relation]) {
+            if (isset($item[$this->relation])) {
                 $string .= $this->options($item[$this->relation], $level + 1, '');
             }
         }

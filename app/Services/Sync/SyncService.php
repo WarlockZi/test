@@ -9,21 +9,20 @@ use app\Storage\StorageImport;
 
 class SyncService
 {
-    protected LoadProducts $loadProducts;
     protected string $importPath = '';
-        protected string $importFile = '';
-        protected string $offerFile = '';
+    protected string $importFile = '';
+    protected string $offerFile = '';
 
     public function __construct(
-        protected FileLogger $logger = new FileLogger('import.txt'),
-        protected StorageImport $storage = new StorageImport,
+        protected FileLogger      $logger = new FileLogger('import.txt'),
+        protected StorageImport   $storage = new StorageImport,
         protected TrancateService $trancateService = new TrancateService,
     )
     {
 
-        $this->importPath   = $this->storage->getStoragePath();
-        $this->importFile   = $this->storage::getFile('import0_1.xml');
-        $this->offerFile    = $this->storage::getFile('offers0_1.xml');
+        $this->importPath = $this->storage->getStoragePath();
+        $this->importFile = $this->storage::getFile('import0_1.xml');
+        $this->offerFile  = $this->storage::getFile('offers0_1.xml');
 //        $this->loadProducts = new LoadProducts($this->importFile);
     }
 

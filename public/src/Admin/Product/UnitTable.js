@@ -29,7 +29,7 @@ export default class UnitTable {
    }
 
    initSelects() {
-      this.$rows.querySelectorAll('[select-new]').forEach((s) => {
+      this.$rows.querySelectorAll('[custom-select]').forEach((s) => {
          new SelectNew(s)
       })
    }

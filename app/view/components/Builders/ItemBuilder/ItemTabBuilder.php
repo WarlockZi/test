@@ -4,10 +4,11 @@
 namespace app\view\components\Builders\ItemBuilder;
 
 
-use app\view\components\Builders\Builder;
+use app\view\components\Traits\CleanString;
 
-class ItemTabBuilder extends Builder
+class ItemTabBuilder
 {
+    use CleanString;
 	public $model='';
 	public $html='';
 	public $tabTitle='';

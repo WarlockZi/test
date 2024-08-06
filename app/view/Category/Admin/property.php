@@ -1,21 +1,23 @@
 <?
-ob_start();
+
 
 use app\core\Icon;
 use app\view\Property\PropertyFormView;
 
 
 ?>
-    <div class="properties" custom-list>
+<div class="properties" custom-list>
 
-        <div class="column">
-            <div class="title">Свойства</div>
+    <div class="column">
+        <div class="list-title">Свойства</div>
+
+        <div class="custom-list">
 
             <div class="head">
-                <div class="name">Свойство</div>
+                <div class="name head">Свойство</div>
 
-                <div class="del"><?= Icon::trashIcon() ?></div>
-                <div class="edit"><?= Icon::edit() ?></div>
+                <div class="del head"><?= Icon::trashIcon() ?></div>
+                <div class="edit head"><?= Icon::edit() ?></div>
             </div>
 
             <div class="rows">
@@ -36,7 +38,7 @@ use app\view\Property\PropertyFormView;
             </div>
 
             <div class="add-property">+</div>
-
         </div>
+
     </div>
-<? return ob_get_clean(); ?>
+</div>

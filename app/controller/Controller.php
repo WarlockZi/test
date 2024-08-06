@@ -15,7 +15,7 @@ class Controller
 
    protected string $token;
    protected Route $route;
-   protected array $ajax;
+   protected array $ajax = [];
    protected Assets $assets;
 
    function __construct()
