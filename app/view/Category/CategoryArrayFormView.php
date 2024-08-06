@@ -174,11 +174,11 @@ class CategoryArrayFormView
     public static function properties($category)
     {
         $fs = new FS(__DIR__.'/Admin');
-        $content = $fs->getContent('properties.php', compact('category'));
-        $editIcon = $fs->getContent('properties.php', compact('category'));
-        $delIcon = $fs->getContent('properties.php', compact('category'));
-        $emptyRow = $fs->getContent('properties.php', compact('category'));
-        $propertyRows = $fs->getContent('properties.php', compact('category'));
+        $content = $fs->getContent('property', compact('category'));
+//        $editIcon = $fs->getContent('properties.php', compact('category'));
+//        $delIcon = $fs->getContent('properties.php', compact('category'));
+//        $emptyRow = $fs->getContent('properties.php', compact('category'));
+//        $propertyRows = $fs->getContent('properties.php', compact('category'));
         return $content;
     }
 

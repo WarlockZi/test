@@ -14,7 +14,7 @@ class SelectNewBuilder
 	private string $class;
 	private FS $fs;
 
-	public static function build(string $options)
+	public static function build(string $options):SelectNewBuilder
 	{
 		$select = new static();
 		$select->class = '';

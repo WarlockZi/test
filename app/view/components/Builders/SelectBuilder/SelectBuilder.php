@@ -40,38 +40,38 @@ class SelectBuilder
 
     public function name(string $name):SelectBuilder
     {
-        $this->name = "name={$name}";
+        $this->name = "name=$name";
         return $this;
     }
 
     public function id(string $id):SelectBuilder
     {
-        $this->id = "id={$id}";
+        $this->id = "id=$id";
         return $this;
     }
 
     public function relation(string $relation):SelectBuilder
     {
-        $this->relation = "data-relation='{$relation}'";
+        $this->relation = "data-relation='$relation'";
         return $this;
     }
 
     public function field(string $field):SelectBuilder
     {
-        $this->field = "data-field='{$field}'";
+        $this->field = "data-field='$field'";
         return $this;
     }
 
     public function title(string $title):SelectBuilder
     {
-        $this->title = "title='{$title}'";
+        $this->title = "title='$title'";
         return $this;
     }
 
     public function initialOption(string $initialOptionLabel = '', int $initialOptionValue = 0):SelectBuilder
     {
         $this->initialOption =
-            "<option value='{$initialOptionValue}'>{$initialOptionLabel}</option>";
+            "<option value='$initialOptionValue'>$initialOptionLabel</option>";
         $this->options       = $this->initialOption . $this->options;
         return $this;
     }

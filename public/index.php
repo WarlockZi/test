@@ -19,7 +19,7 @@ try {
 
     exit();
 } catch (Throwable $e) {
-    if ($_ENV['DEV'] <> '1') {
+    if ($_ENV['DEV'] === '0') {
         $logger = new \app\Services\Logger\ErrorLogger();
         $logger->write($e);
     }

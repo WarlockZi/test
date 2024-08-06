@@ -70,7 +70,7 @@ class LoadProducts
                     $this->fillNewProduct($good)
                 );
             if ($product->wasRecentlyCreated) {
-                $this->created = $product['name'];
+                $this->created[] = $product['name'];
             }
         }
     }

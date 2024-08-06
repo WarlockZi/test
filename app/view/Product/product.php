@@ -2,9 +2,6 @@
 
 use app\core\Icon;
 
-use app\view\Product\ProductFormView;
-use \app\view\Product\ProductView;
-
 
 if ($product): ?>
 
@@ -23,13 +20,8 @@ if ($product): ?>
 
 
         <div class="product-card_hero">
-
-            <div class="detail-image">
-                <?= ProductFormView::getCardImages('', $product->detailImages); ?>
-            </div>
-
-            <?= ProductView::getCardMainImage($product) ?>
-            <?php include 'card/toCart.php' ?>
+            <? include 'main_image.php'?>
+            <? include 'card/toCart.php' ?>
         </div>
 
 
@@ -54,7 +46,7 @@ if ($product): ?>
         <?php //include __DIR__.'/card/rating.php'?>
 
 
-        <?= Icon::star() ?>
+<!--        --><?php //= Icon::star() ?>
         <!--		 --><?php // include __DIR__ . '/card/reviews.php' ?>
         <!--		 --><?php // include __DIR__ . '/card/alsoViewd.php.php' ?>
 

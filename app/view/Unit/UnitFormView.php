@@ -54,7 +54,6 @@ class UnitFormView
       )
          ->class('name')
          ->get();
-
       return $selector;
    }
 
