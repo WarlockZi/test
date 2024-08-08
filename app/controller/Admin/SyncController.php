@@ -7,7 +7,6 @@ use app\core\Response;
 use app\Services\Logger\FileLogger;
 use app\Services\Sync\SyncService;
 use app\Services\Sync\TrancateService;
-use JetBrains\PhpStorm\NoReturn;
 
 class SyncController extends AppController
 {
@@ -55,25 +54,43 @@ class SyncController extends AppController
 
 
     //load
-    #[NoReturn] public function actionLoad(): void
+    public function actionLoad(): void
     {
         $this->service->load();
+        if ($_ENV['DEV'] == 1) {
+            Response::exitWithPopup('Все перенесено');
+        }
         exit();
     }
 
     public function actionLoadCategories(): void
     {
         $this->service->LoadCategories();
+        if ($_ENV['DEV'] == '1') {
+            Response::exitWithPopup('Categories loaded');
+        }
     }
 
     public function actionLoadProducts(): void
     {
         $this->service->LoadProducts();
+        if ($_ENV['DEV'] == '1') {
+            Response::exitWithPopup('Products loaded');
+        }
     }
 
     public function actionLoadPrices(): void
     {
-        $this->service->LoadPrices();
+        try {
+            $this->service->LoadPrices();
+        } catch (Throwable $exception) {
+            $exc = $exception;
+            exit($exc);
+        }
+        if ($_ENV['DEV'] == '1') {
+            Response::exitWithPopup('Categories loaded');
+        }
+
     }
 
 

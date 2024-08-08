@@ -291,6 +291,7 @@ $width-full: 170px;
   min-width: $width-short;
   height: 100%;
   z-index: 2;
+  margin-top: 25px;
 
   &:hover {
     max-width: $width-half;

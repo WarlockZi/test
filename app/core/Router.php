@@ -76,6 +76,7 @@ class Router
         $this->routes[$regexp] = $route;
     }
 
+
     public function fillRoutes(): void
     {
         require_once ROOT . '/app/core/routes.php';
