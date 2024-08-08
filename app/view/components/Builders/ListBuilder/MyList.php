@@ -20,7 +20,7 @@ class MyList
     private string $add = '';
     private string $relation = '';
     private string $html = '';
-    private string $addButton = '';
+    private string $addButton = 'ajax';
     private string $tableClassName = '';
     private string $model = '';
     private string $modelName = '';
@@ -34,8 +34,6 @@ class MyList
         $list->model       = $modelName;
         $list->modelName = strtolower(class_basename($modelName));
         $list->dataModel = "data-model='{$list->modelName}'";
-
-        $list->addButton   = 'ajax';
 
         $list->fs        = new FS(__DIR__);
         return $list;

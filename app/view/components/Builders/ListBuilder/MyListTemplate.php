@@ -64,7 +64,7 @@
 
     <!--  ADD BUTTON  -->
     <div class="buttons">
-        <?php $add ?>
+        <?= $add; ?>
     </div>
 
 

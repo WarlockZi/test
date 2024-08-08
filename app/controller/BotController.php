@@ -4,13 +4,14 @@ namespace app\controller;
 
 
 use app\core\FS;
+use app\view\Assets\Assets;
 use app\view\Assets\BotAssets;
 
 class BotController extends AppController
 {
 	protected $css;
 	protected $js;
-	protected $assets;
+	protected Assets $assets;
 
 	public function __construct()
 	{
