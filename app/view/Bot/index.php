@@ -368,7 +368,14 @@
 	</main>
 
 	<footer class="footer">
-		© 2023 ИП Вороник Виталий Викторович ИНН 253523642447
+		<p>
+        © 2023 ИП Вороник Виталий Викторович ИНН 253523642447
+
+        </p>
+        <p class="creator">VORONIKLAB
+            <img src="/pic/srvc/creator.jpg" class="creator-img">
+
+        </p>
 	</footer>
 
 </div>

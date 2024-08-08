@@ -77,7 +77,7 @@ class List{
 
          /// create
          if (target.className === 'add-model') {
-            modelCreate(target)
+            this.modelCreate(target)
 
             /// delete
          } else if (
@@ -161,20 +161,20 @@ class List{
          let data = {};
          data.model = target.closest('[custom-list]').dataset.model;
          data.id = 0;
-         let relation = table.dataset.relation;
+         let relation = this.table.dataset.relation;
 
          if (relation) {
-            data = createRelation(data, table, relation)
+            data = this.createRelation(data, this.table, relation)
          }
          // debugger
-         let morph = table.parentNode.dataset.morphRelation;
+         let morph = this.table.parentNode.dataset.morphRelation;
          if (morph) {
-            data = createMorph(data, table, relation)
+            data = this.createMorph(data, this.table, relation)
          }
 
          let res = await post(`/adminsc/${data.model}/updateOrCreate`, data);
          if (res.arr.id) {
-            newrow(res.arr.id)
+            this.newrow(res?.arr.id)
          }
       }
 

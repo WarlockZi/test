@@ -171,7 +171,7 @@ class ProductFormView
                     )
             )
             ->tab(
-                ItemTabBuilder::build('История акций')
+                ItemTabBuilder::build('Акций')
                     ->html(
                         self::promotions($product)
                     )
@@ -280,18 +280,6 @@ class ProductFormView
     {
         return $mult ? "<input class='multiplier' type='number' value='{$mult}'>" : "<div class='multiplier'></div>";
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
