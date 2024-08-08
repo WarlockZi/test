@@ -38,6 +38,7 @@ class SyncService
                 $this->file($route->params['filename']);
             } elseif ($route->params['mode'] === 'import') {
                 $this->logReqest("Файлы из 1с загружены");
+                $this->load();
                 exit('success');
             }
         } catch (\Throwable $e) {
