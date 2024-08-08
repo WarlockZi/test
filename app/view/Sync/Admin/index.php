@@ -47,7 +47,7 @@ use app\core\Icon;
         </fieldset>
 
             <div class="buttons-block-right">
-                <div class="button" id="loadall">Загрузить все</div>
+                <div class="button" id="load">Загрузить все</div>
             </div>
         </div>
 

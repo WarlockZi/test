@@ -98,9 +98,7 @@ class SyncService
     {
         try {
             $this->importFilesExist();
-
 //            $this->trancateService->softTrancate();
-
             $this->LoadCategories();
             $this->LoadProducts();
             $this->LoadPrices();
@@ -136,11 +134,9 @@ class SyncService
 
     protected function log(string $msg): void
     {
-        $this->logDate();
+//        $this->logDate();
         $this->logger->write($msg);
-        if ($_ENV['DEV'] == '1') {
-            Response::exitWithPopup($msg);
-        }
+
     }
 }
 

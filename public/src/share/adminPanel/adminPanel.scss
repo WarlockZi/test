@@ -1,6 +1,11 @@
 @import "../../var";
 
 .admin-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
   border-top: 1px solid white;
   background-color: $color-gray-browser;
 

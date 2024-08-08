@@ -40,23 +40,24 @@ class LoadProducts
 
     protected function deleteNonexisted(): void
     {
-        $p               = Product::whereNotIn('1s_id', $this->existing)->pluck('1s_id');
-        $this->deleted[] = $p->toArray();
-        $p->each(function (Product $product) {
-            $product->softDelete();
+        $toDelete        = Product::whereNotIn('1s_id', $this->existing)->pluck('1s_id')->toArray();
+        $this->deleted[] = $toDelete;
+        $products        = Product::whereIn('1s_id', $toDelete)->get();
+        $products->each(function ($product) {
+            $product->delete();
         });
     }
 
     protected function setShortLink(): void
     {
         Product::with('ownProperties')->get()->each(function (Product $product) {
-            $product->ownProperties()->updateOrCreate(
-                ['product_1s_id' => $product['1s_id']],
-                [
-                    'product_1s_id' => $product['1s_id'],
-                    'short_link' => ShortlinkService::getValidShortLink(),
-                ]
-            );
+            $prodProps = $product
+                ->ownProperties()
+                ->where('product_1s_id', $product['1s_id'])
+                ->first();
+            if ($prodProps && !empty($prodProps->short_link)) {
+                $prodProps->update(['short_link' => ShortlinkService::getValidShortLink()]);
+            }
         });
     }
 

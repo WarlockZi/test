@@ -9,7 +9,7 @@ use app\model\Unit;
 
 class LoadPrices
 {
-    private Product $product;
+    private array $productIds = [];
     private array $data = [];
 
     public function __construct
@@ -30,28 +30,29 @@ class LoadPrices
             $Price = $this->createPrice($price);
             $Unit  = $this->createUnit($price, $Price);
 
-            $this->product = Product::where('1s_id', $Price['1s_id'])
-                ->update(['instore' => $price['Количество']]);
-
+            if (Product::where('1s_id', $Price['1s_id'])
+                ->update(['instore' => $price['Количество']])) {
+                $this->productIds[] = $price['Ид'];
+            }
             $this->unit2Product($Price, $Unit);
         }
     }
 
     protected function createPrice($price)
     {
-        $g['1s_id']  = $price['Ид'];
-        $g['1s_art'] = $price['Артикул'] ?? '';
+        $pri['1s_id']  = $price['Ид'];
+        $pri['1s_art'] = $price['Артикул'] ?? '';
 
-        $g['unit']      = $price['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] ?? '';
-        $g['unit_code'] = $price['БазоваяЕдиница']['@attributes']['Код'] ?? '';
+        $pri['unit']      = $price['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] ?? '';
+        $pri['unit_code'] = $price['БазоваяЕдиница']['@attributes']['Код'] ?? '';
 
-        $g['currency'] = $price['Цены']['Цена']['Валюта'] ?? '';
-        $g['price']    = $price['Цены']['Цена']['ЦенаЗаЕдиницу'] ?? '';
+        $pri['currency'] = $price['Цены']['Цена']['Валюта'] ?? '';
+        $pri['price']    = $price['Цены']['Цена']['ЦенаЗаЕдиницу'] ?? '';
 
         return Price::firstOrCreate([
             '1s_id' => $price['Ид'],
-            'unit_code' => $g['unit_code'],
-        ], $g);
+            'unit_code' => $pri['unit_code'],
+        ], $pri);
     }
 
     protected function createUnit($price, $Price)
