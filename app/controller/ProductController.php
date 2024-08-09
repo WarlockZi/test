@@ -24,9 +24,9 @@ class ProductController extends AppController
         if (!$slug) {
             header('Location:/category');
         }
+            exit($slug.'  -  ');
 
         $product = $this->repo->main($slug);
-            exit($slug.'  -  '.var_dump($product->toArray()));
         $this->route->setView('product');
         if ($product) {
             $oItems = OrderRepository::count();
