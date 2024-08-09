@@ -28,6 +28,7 @@ class ProductController extends AppController
         $product = $this->repo->main($slug);
         $this->route->setView('product');
         if ($product) {
+            exit($slug.'  -  '.var_dump($product->toArray()));
             $oItems = OrderRepository::count();
             $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category_id, true,);
             $userIsAdmin = Auth::isAdmin();
