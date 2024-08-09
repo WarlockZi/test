@@ -52,7 +52,10 @@ class Product extends Model
 //            }
 //        );
 //    }
-
+    public function scopeWithWhereHas($query, $relation, $constraint){
+        return $query->whereHas($relation, $constraint)
+            ->with([$relation => $constraint]);
+    }
     protected function getShortLinkAttribute(): string
     {
         $link = $this->ownProperties->short_link;

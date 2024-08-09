@@ -78,6 +78,7 @@ class ProductRepository extends AppController
             ->withTrashed()
 //            ->orderBy('sort')
             ->with('category.properties.vals')
+            ->with('ownProperties')
             ->with('category.parentRecursive')
             ->with('category.parents')
             ->with('mainImages')

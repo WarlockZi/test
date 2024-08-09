@@ -8,16 +8,14 @@ class ShortController extends AppController
 {
     protected $model;
 
-    public function actionIndex():void
+    public function actionIndex(): void
     {
         $shortLink = $this->route->slug;
         if ($shortLink) {
-            $slug = Product::with(['ownProperties'=> function ($query) use ($shortLink) {
-                $query->where('short_link', $shortLink);
-            }])->with('ownProperties')
-                ->first()
-                ->slug
-            ;
+            $slug = Product::withWhereHas('ownProperties', fn($query) =>
+            $query->where('short_link', 'like', $shortLink)
+            )->first()
+            ->slug;
 
             header("Location:/product/{$slug}");
         } else {
