@@ -76,7 +76,7 @@ class ProductRepository extends AppController
     {
         return Product::query()
             ->withTrashed()
-            ->orderBy('sort')
+//            ->orderBy('sort')
             ->with('category.properties.vals')
             ->with('category.parentRecursive')
             ->with('category.parents')
