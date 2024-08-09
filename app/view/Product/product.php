@@ -1,8 +1,4 @@
 <?php
-
-use app\core\Icon;
-
-
 if ($product): ?>
 
     <?php if ($product->deleted_at): ?>
