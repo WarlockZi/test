@@ -1,4 +1,5 @@
 <?php
+
 namespace app\view\layouts;
 
 // For a real-world example check here:
@@ -12,19 +13,26 @@ function vite(string $entry): string
     $vite = new helpers($entry);
     return $vite->getAssets();
 }
-class helpers
+
+class Helpers
 {
     public function __construct(
-        readonly private string $entry,
-        private array  $manifest = [],
-        private bool $isDev=false,
-        readonly private string  $VITE_HOST = 'http://localhost:5133',
-        readonly private string  $manifestPath = ROOT . '/public/build/.vite/manifest.json',
-        readonly private string  $publicPath = '/public/build/',
+        readonly private string $entry = '',
+        private array           $manifest = [],
+        private bool            $isDev = false,
+        readonly private string $VITE_HOST = 'http://localhost:5133',
+        readonly private string $manifestPath = ROOT . '/public/build/.vite/manifest.json',
+        readonly private string $publicPath = '/public/build/',
     )
     {
         $this->isDev    = $this->isDev($entry);
         $this->manifest = $this->getManifest();
+    }
+
+    public function vite(string $entry): string
+    {
+        $vite = new helpers($entry);
+        return $vite->getAssets();
     }
 
     public function getAssets(): string
@@ -54,12 +62,12 @@ class helpers
     function jsTag(): string
     {
         $url = $this->isDev
-            ? $this->VITE_HOST . '/' . $this->entry
+            ? $this->VITE_HOST . "{$this->publicPath}" . $this->entry
             : $this->assetUrl();
 
         if (!$url) return '';
         if ($this->isDev) {
-            return "<script type='module' src='$this->VITE_HOST/@vite/client'></script>\n"
+            return "<script type='module' src='$this->VITE_HOST{$this->publicPath}@vite/client'></script>\n"
                 . "<script type='module' src='$url'></script>";
         }
         return '<script type="module" src="' . $url . '"></script>';
@@ -116,7 +124,7 @@ class helpers
         $urls = [];
         if (!empty($this->manifest[$this->entry]['css'])) {
             foreach ($this->manifest[$this->entry]['css'] as $file) {
-                $urls[] = $this->publicPath.$file;
+                $urls[] = $this->publicPath . $file;
             }
         }
         return $urls;

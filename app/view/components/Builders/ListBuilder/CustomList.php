@@ -8,7 +8,7 @@ use app\core\FS;
 use app\core\Icon;
 use Illuminate\Database\Eloquent\Collection;
 
-class MyList
+class CustomList
 {
     private array $columns = [];
     private string $grid = '';
@@ -196,7 +196,7 @@ class MyList
             $this->emptyRow = $this->emptyRow();
             $this->prepareGridHeader();
             $data       = get_object_vars($this);
-            return $this->fs->getContent('MyListTemplate', $data);
+            return $this->fs->getContent('CustomListTemplate', $data);
 
         } catch (\TypeError $error) {
             return $error->getMessage();

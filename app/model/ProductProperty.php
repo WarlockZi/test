@@ -8,16 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductProperty extends Model
 {
-
-	public $timestamps = false;
+	public $timestamps = true;
 	protected $fillable = [
 		'product_1s_id',
+		'short_link',
+        'sort',
 		'seo_title',
 		'seo_description',
 		'seo_keywords',
-		'short_link',
         'new',
         'leader',
+        'created_at',
+        'updated_at',
+        'deleted_at',
 	];
 
     public function product()

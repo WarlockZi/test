@@ -10,11 +10,12 @@ class ItemFieldBuilder
 {
     public string $field;
     public Model $item;
-    public string $datafield;
+
+    public string $relation='';
     public string $name;
 
     public string $html;
-    public string $dataModel;
+//    public string $dataModel;
     public string $link;
 
     public string|null $value;
@@ -26,7 +27,6 @@ class ItemFieldBuilder
     public static function build(string $fieldName, Model $item): ItemFieldBuilder
     {
         $field            = new static();
-        $field->datafield = "data-field=$fieldName";
         $field->field     = $fieldName;
         $field->item      = $item;
         return $field;
@@ -49,7 +49,15 @@ class ItemFieldBuilder
         $this->link = $link;
         return $this;
     }
-
+    public function relation(string $relation): ItemFieldBuilder
+    {
+        $this->relation = $relation;
+        return $this;
+    }
+    public function getDatarelation(): string
+    {
+        return "data-relation='$this->relation'";
+    }
     public function html(string $html): ItemFieldBuilder
     {
         $this->html = $html;
@@ -81,11 +89,14 @@ class ItemFieldBuilder
 
         return $this;
     }
-
+    public function getDatafield(): string
+    {
+        return "data-field='$this->field'";
+    }
 
     public function toHtml(string $model): string
     {
-        $this->dataModel = "data-model=$model";
+//        $this->dataModel = "data-model=$model";
         $field           = $this;
         ob_start();
         include ROOT . '/app/view/components/Builders/ItemBuilder/row.php';

@@ -8,7 +8,7 @@ use app\model\Post;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use app\view\components\Builders\MultiSelectBuilder\MultiSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\CustomMultiSelect\CustomMultiSelect;
@@ -102,7 +102,7 @@ class PostView
 	public static function listAll(): string
 	{
 		$view = new self;
-		return MyList::build($view->model)
+		return CustomList::build($view->model)
 			->column(
 				ListColumnBuilder::build('id')
 					->name('ID')

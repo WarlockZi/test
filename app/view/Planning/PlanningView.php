@@ -6,7 +6,7 @@ namespace app\view\Planning;
 
 use app\model\Todo;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use Illuminate\Database\Eloquent\Collection;
 
 
@@ -19,7 +19,7 @@ class PlanningView
 	{
 		$view = new self;
 		$items = Todo::where('type','день')->get();
-		return MyList::build($view->modelName)
+		return CustomList::build($view->modelName)
 			->items($items)
 			->column(
 				ListColumnBuilder::build('id')
@@ -41,7 +41,7 @@ class PlanningView
 	{
 		$view = new self;
 		$items = Todo::where('type','неделя')->get();
-		return MyList::build($view->modelName)
+		return CustomList::build($view->modelName)
 			->items($items)
 			->column(
 				ListColumnBuilder::build('id')
@@ -63,7 +63,7 @@ class PlanningView
 	{
 		$view = new self;
 		$items = Todo::where('type','год')->get();
-		return MyList::build($view->modelName)
+		return CustomList::build($view->modelName)
 			->items($items)
 			->column(
 				ListColumnBuilder::build('id')

@@ -154,21 +154,6 @@ class Product extends Model
         return $query->whereHas('mainImages');
     }
 
-    protected static function booted()
-    {
-        static::Updating(function ($product) {
-            $product->slug = Slug::slug($product->print_name);
-            return $product;
-        });
-    }
-
-//    public function save(array $options = [])
-//    {
-//        if (!$this->short_link)
-//            $this->short_link = ShortlinkService::getValidShortLink();
-//        parent::save($options);
-//    }
-
     public function orderItems()
     {
         $orderItems = $this
@@ -200,7 +185,9 @@ class Product extends Model
 
     public function baseUnitRelation()
     {
-        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')->withPivot('is_shippable', 'base_is_shippable')->wherePivot('is_base', '1');
+        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
+            ->withPivot('is_shippable', 'base_is_shippable')
+            ->wherePivot('is_base', '1');
     }
 
     public function shippableUnits()
@@ -321,6 +308,20 @@ class Product extends Model
 //    {
 //        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
 //            ->withPivot('is_shippable', 'multiplier')->wherePivotNull('is_base');
+//    }
+    protected static function booted()
+    {
+//        static::Updating(function ($product) {
+//            $product->slug = Slug::slug($product->print_name);
+//            return $product;
+//        });
+    }
+
+//    public function save(array $options = [])
+//    {
+//        if (!$this->short_link)
+//            $this->short_link = ShortlinkService::getValidShortLink();
+//        parent::save($options);
 //    }
 }
 

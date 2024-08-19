@@ -11,7 +11,7 @@ use app\Repository\CategoryRepository;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use app\view\components\Builders\Morph\MorphBuilder;
 //use app\view\components\Builders\SelectBuilder\TreeABuilder;
 use app\view\components\ItemBuilder\ItemArrayBuilder;
@@ -77,7 +77,7 @@ class CategoryArrayFormView
             ->tab(
                 ItemArrayTabBuilder::build('Товары категории')
                     ->html(
-                        MyList::build(Product::class)
+                        CustomList::build(Product::class)
                             ->pageTitle('Товары категории')
                             ->relation('products')
                             ->addButton('ajax')
@@ -113,7 +113,7 @@ class CategoryArrayFormView
             ->tab(
                 ItemArrayTabBuilder::build('Подкатегории')
                     ->html(
-                        MyList::build(Category::class)
+                        CustomList::build(Category::class)
                             ->pageTitle('Подкатегории')
                             ->items($category['childrenNotDeleted'] ?? [])
                             ->column(
@@ -137,7 +137,7 @@ class CategoryArrayFormView
             ->tab(
                 ItemArrayTabBuilder::build('Удаленные Подкатегории')
                     ->html(
-                        MyList::build(Category::class)
+                        CustomList::build(Category::class)
                             ->pageTitle('Удаленные подкатегории')
                             ->items($category['childrenDeleted'] ?? [])
                             ->column(
@@ -184,7 +184,7 @@ class CategoryArrayFormView
 
     public static function list(): string
     {
-        return MyList::build(Category::class, 10)
+        return CustomList::build(Category::class, 10)
             ->column(
                 ListColumnBuilder::build('id')
                     ->get()

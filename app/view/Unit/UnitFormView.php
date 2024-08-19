@@ -9,7 +9,7 @@ use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
@@ -75,7 +75,7 @@ class UnitFormView
    protected static function morphs($items)
    {
       $list =
-         MyList::build(Unit::class)
+         CustomList::build(Unit::class)
             ->pageTitle('Единицы измерения')
             ->addButton('ajax')
             ->items($items)
@@ -134,7 +134,7 @@ class UnitFormView
 
    public static function index(): string
    {
-      return MyList::build(Unit::class)
+      return CustomList::build(Unit::class)
          ->pageTitle('Единицы измерения')
          ->addButton('ajax')
          ->items(Unit::all())

@@ -1,12 +1,12 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-0NP2Nx5v.js",
+    "file": "assets/Category-DsR3Gre0.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
     "imports": [
       "_constants-D6t7YzCi.js",
-      "_Promotion-DhzIVehj.js",
+      "_Promotion-08ArJgoL.js",
       "Admin/admin.js",
       "_preload-helper-DaGCtZ-7.js",
       "components/search/search.js",
@@ -18,34 +18,34 @@
     ]
   },
   "Admin/Order/order.js": {
-    "file": "assets/order-w3nEs6gi.js",
+    "file": "assets/order--qDWzcRO.js",
     "name": "order",
     "src": "Admin/Order/order.js",
     "isDynamicEntry": true,
     "imports": [
-      "_Promotion-DhzIVehj.js",
+      "_Promotion-08ArJgoL.js",
       "_constants-D6t7YzCi.js"
     ]
   },
   "Admin/Product/Fields.js": {
-    "file": "assets/Fields-3Sx1T6lW.js",
+    "file": "assets/Fields-DSRcsbUz.js",
     "name": "Fields",
     "src": "Admin/Product/Fields.js",
     "isDynamicEntry": true,
     "imports": [
-      "_Promotion-DhzIVehj.js",
+      "_Promotion-08ArJgoL.js",
       "_constants-D6t7YzCi.js"
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-9EvwJOP4.js",
+    "file": "assets/Product-CuyFrCvT.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
     "imports": [
       "_preload-helper-DaGCtZ-7.js",
       "_constants-D6t7YzCi.js",
-      "_Promotion-DhzIVehj.js"
+      "_Promotion-08ArJgoL.js"
     ],
     "dynamicImports": [
       "Admin/admin.js",
@@ -59,14 +59,14 @@
     ]
   },
   "Admin/Product/Values.js": {
-    "file": "assets/Values-DnWevYHb.js",
+    "file": "assets/Values-Dv0GdoRr.js",
     "name": "Values",
     "src": "Admin/Product/Values.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/Product/Product.js",
       "_constants-D6t7YzCi.js",
-      "_Promotion-DhzIVehj.js",
+      "_Promotion-08ArJgoL.js",
       "_preload-helper-DaGCtZ-7.js"
     ],
     "css": [
@@ -74,7 +74,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-COoE6xP1.js",
+    "file": "assets/admin-BbB-bfei.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -84,7 +84,7 @@
       "_constants-D6t7YzCi.js",
       "components/search/search.js",
       "_quill.snow-BxDoWBhC.js",
-      "_Promotion-DhzIVehj.js"
+      "_Promotion-08ArJgoL.js"
     ],
     "dynamicImports": [
       "Admin/Product/Product.js",
@@ -94,7 +94,7 @@
       "components/AdminAccordion.js"
     ],
     "css": [
-      "assets/admin-sdlmCktC.css"
+      "assets/admin-CDvGjXX9.css"
     ]
   },
   "Cart/cart.js": {
@@ -109,7 +109,7 @@
     ]
   },
   "Category/category.js": {
-    "file": "assets/category-BpfmpZ8_.js",
+    "file": "assets/category-D1_zVaAV.js",
     "name": "category",
     "src": "Category/category.js",
     "isDynamicEntry": true,
@@ -123,7 +123,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-PW1Q5oy9.js",
+    "file": "assets/main-CRdVT77l.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -136,15 +136,15 @@
       "components/Modal/modal.js",
       "Category/category.js",
       "Product/Product.js",
-      "_Promotion-DhzIVehj.js",
+      "_Promotion-08ArJgoL.js",
       "Cart/cart.js"
     ],
     "css": [
-      "assets/main-BTmMwR2G.css"
+      "assets/main-CPjzWgu_.css"
     ]
   },
   "Product/Product.js": {
-    "file": "assets/product-nl4DbwV3.js",
+    "file": "assets/product-XVO_9QJS.js",
     "name": "product",
     "src": "Product/Product.js",
     "isEntry": true,
@@ -156,22 +156,22 @@
       "_shippableUnitsTable-C_znsOA6.js"
     ],
     "css": [
-      "assets/product-CPzmIZUA.css"
+      "assets/product-CQHWeplN.css"
     ]
   },
   "_Promotion-!~{00d}~.js": {
-    "file": "assets/Promotion-DAohbegZ.css",
+    "file": "assets/Promotion-DnuCazsS.css",
     "src": "_Promotion-!~{00d}~.js"
   },
-  "_Promotion-DhzIVehj.js": {
-    "file": "assets/Promotion-DhzIVehj.js",
+  "_Promotion-08ArJgoL.js": {
+    "file": "assets/Promotion-08ArJgoL.js",
     "name": "Promotion",
     "isDynamicEntry": true,
     "imports": [
       "_constants-D6t7YzCi.js"
     ],
     "css": [
-      "assets/Promotion-DAohbegZ.css"
+      "assets/Promotion-DnuCazsS.css"
     ]
   },
   "_constants-D6t7YzCi.js": {

@@ -29,7 +29,9 @@ class FS
             unset($data);
             unset($fs);
             ob_start();
+
             require $file;
+
             $content = ob_get_clean();
             return $content;
         } catch (\Throwable $exception){

@@ -4,7 +4,7 @@ namespace app\view\Manufacturer;
 
 use app\model\Manufacturer;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 
 class ManufacturerView
 {
@@ -17,7 +17,7 @@ class ManufacturerView
 	{
 		$items = $modelName::with('country')
 			->get();
-		return MyList::build($modelName)
+		return CustomList::build($modelName)
 			->pageTitle('Поставщики')
 			->addButton('ajax')
 			->items($items)

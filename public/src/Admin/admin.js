@@ -41,6 +41,7 @@ import './ProductFilter/ProductFilter'
 // import product from './Product/Product.js'
 import {qs} from '../constants'
 import navigate from "./Navigate";
+import './../components/list/list.js'
 $(document).ready(async function () {
 
    const product = document[qs](`.item-wrap[data-model='product']`)
@@ -49,6 +50,10 @@ $(document).ready(async function () {
       new Product(product);
    }
    if (document[qs]('.order-edit')) {
+      const {default: Order} = await import('./Order/order.js')
+      new Order()
+   }
+   if (document[qs]('[custom-list]')) {
       const {default: Order} = await import('./Order/order.js')
       new Order()
    }
@@ -70,7 +75,10 @@ $(document).ready(async function () {
    // }
    new Promotion();
    new Search(true);
-
+   if (document[qs]('.admin_sidebar')) {
+      const {default: adminAccordion} = await import('../components/AdminAccordion.js')
+      new adminAccordion()
+   }
    morph();
    navigate(window.location.pathname);
    radio();
@@ -80,10 +88,8 @@ $(document).ready(async function () {
    quill();
    testEdit();
 
-   if (document[qs]('.admin_sidebar')) {
-      const {default: adminAccordion} = await import('../components/AdminAccordion.js')
-      new adminAccordion()
-   }
+
+
 
 });
 

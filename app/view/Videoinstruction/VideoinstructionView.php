@@ -7,7 +7,7 @@ namespace app\view\Videoinstruction;
 use app\model\Videoinstruction;
 
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 
 class VideoinstructionView
 {
@@ -18,7 +18,7 @@ class VideoinstructionView
 	{
 		$view = new self;
         $items = Videoinstruction::all();
-		return MyList::build($view->model)
+		return CustomList::build($view->model)
             ->items($items)
 			->column(
 				ListColumnBuilder::build('sort')

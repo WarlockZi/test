@@ -10,8 +10,8 @@ use app\model\Unit;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
-use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
+use app\view\components\Builders\ListBuilder\CustomList;
+use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 
 class PromotionFormView
@@ -72,7 +72,7 @@ class PromotionFormView
 	public static function adminIndex($promotions)
 	{
 
-		$promotion = MyList::build(Promotion::class)
+		$promotion = CustomList::build(Promotion::class)
 			->items($promotions)
 			->pageTitle('Акции')
 			->column(

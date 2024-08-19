@@ -10,7 +10,7 @@ export default class UnitTable {
 
       this.product1sId = $(`[data-field='1s_id']`).first().innerText;
 
-      this.$baseUnit = $(`[data-field='base_unit']`).first();
+      this.$baseUnit = $(`select`).first();
       // this.baseUnitId = this.$baseUnit.options[this.$baseUnit.selectedIndex].value;
 
       this.$addUnit = $('.add-unit').first();

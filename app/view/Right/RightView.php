@@ -4,7 +4,7 @@ namespace app\view\Right;
 
 use app\model\Right;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use app\view\MyView;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,7 +16,7 @@ class RightView
 	public static function listAll(): string
 	{
 		$view = new self;
-		return MyList::build($view->model)
+		return CustomList::build($view->model)
 			->column(
 				ListColumnBuilder::build('id')
 					->name('ID')
