@@ -2,7 +2,7 @@
 
 use app\core\Icon;
 
-require_once __DIR__ . '/helpers.php';
+//require_once __DIR__ . '/Helpers.php';
 ?>
 <!DOCTYPE html>
 <html lang="ru">

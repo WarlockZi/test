@@ -5,6 +5,7 @@ namespace app\Services\Sync;
 
 use app\model\Category;
 use app\model\Product;
+use app\model\ProductProperty;
 use app\Services\ShortlinkService;
 use app\Services\Slug;
 use Carbon\Carbon;
@@ -48,18 +49,18 @@ class LoadProducts
         });
     }
 
-    protected function setShortLink(): void
-    {
-        Product::with('ownProperties')->get()->each(function (Product $product) {
-            $prodProps = $product
-                ->ownProperties()
-                ->where('product_1s_id', $product['1s_id'])
-                ->first();
-            if ($prodProps && !empty($prodProps->short_link)) {
-                $prodProps->update(['short_link' => ShortlinkService::getValidShortLink()]);
-            }
-        });
-    }
+//    protected function setShortLink(): void
+//    {
+//        Product::with('ownProperties')->get()->each(function (Product $product) {
+//            $prodProps = $product
+//                ->ownProperties()
+//                ->where('product_1s_id', $product['1s_id'])
+//                ->first();
+//            if ($prodProps && !empty($prodProps->short_link)) {
+//                $prodProps->update(['short_link' => ShortlinkService::getValidShortLink()]);
+//            }
+//        });
+//    }
 
     private function updateOrCreateProducts(): void
     {
@@ -70,9 +71,27 @@ class LoadProducts
                     ['1s_id' => $good['Ид']],
                     $this->fillNewProduct($good)
                 );
+            $this->setProductOwnProps($product);
+
             if ($product->wasRecentlyCreated) {
                 $this->created[] = $product['name'];
             }
+        }
+    }
+
+    protected function setProductOwnProps(Product $product): void
+    {
+        $prodProps = ProductProperty::where('product_1s_id', $product['1s_id'])
+            ->first();
+        if (!$prodProps) {
+            ProductProperty::create([
+                'product_1s_id' => $product['1s_id'],
+                'short_link' => ShortlinkService::getValidShortLink(),
+            ]);
+        }
+        if ($prodProps && !$prodProps->short_link) {
+            $prodProps->short_link = ShortlinkService::getValidShortLink();
+            $prodProps->save();
         }
     }
 
@@ -84,27 +103,38 @@ class LoadProducts
         $g['name']           = $good['Наименование'];
         $g['print_name']     = $good['ЗначенияРеквизитов']['ЗначениеРеквизита'][3]['Значение'];
         $g['1s_category_id'] = $good['Группы']['Ид'];
-        $g                   = $this->setSlug($g);
-        $g                   = $this->setCategory($good, $g);
+        $g['slug']           = $this->setSlug($g);
+        $g['category_id']    = $this->setCategory($good, $g);
         $g['deleted_at']     = null;
-        $g['created_at']     = Carbon::now()->toDateTimeString();
+        $g['updated_at']     = Carbon::now()->toDateTimeString();
         return $g;
     }
 
-    private function setSlug($g): array
+    private function setSlug($g): string
     {
-        $g['slug'] = Slug::slug($g['print_name']);
-        if (Product::where('slug', $g['slug'])->first()) {
-            $g['slug'] = $g['slug'] . '_' . Slug::slug($g['art']);
+        $slug = Slug::slug($g['print_name']);
+        if (Product::where('slug', $slug)->first()) {
+            $art  = Slug::slug($g['art']);
+            $slug = "$slug" . "_" . "$art";
+            $i    = 0;
+            while (Product::where('slug', $slug)->first()) {
+                $slug = "$slug" . "_" . "$i++";
+            }
         }
-        return $g;
+        return $slug;
+
+//        $g['slug'] = Slug::slug($g['print_name']);
+//        if (Product::where('slug', $g['slug'])->first()) {
+//            $g['slug'] = $g['slug'] . '_' . Slug::slug($g['art']);
+//        }
+//        return $g;
     }
 
-    private function setCategory($good, $g): array
+    private function setCategory($good, $g): string
     {
-        $g['category_id'] = Category::where('1s_id', $good['Группы']['Ид'])
+        $category_id = Category::where('1s_id', $good['Группы']['Ид'])
             ->first()->id;
-        return $g;
+        return $category_id;
     }
 
 }

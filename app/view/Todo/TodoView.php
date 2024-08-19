@@ -6,7 +6,7 @@ namespace app\view\Todo;
 
 use app\model\Todo;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 
 
 class TodoView
@@ -16,7 +16,7 @@ class TodoView
 	{
 		$dailyTodos = Todo::where('type', 'daily')->get();
 
-		return MyList::build(Todo::class)
+		return CustomList::build(Todo::class)
 			->items($dailyTodos)
 			->column(
 				ListColumnBuilder::build('id')

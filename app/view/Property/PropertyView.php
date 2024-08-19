@@ -9,7 +9,7 @@ use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
@@ -23,7 +23,7 @@ class PropertyView
 	public static function listAll()
 	{
 		$view = new self;
-		return MyList::build($view->modelName)
+		return CustomList::build($view->modelName)
 			->all()
 			->column(
 				ListColumnBuilder::build('id')
@@ -70,7 +70,7 @@ class PropertyView
 			->tab(
 				ItemTabBuilder::build('Значения')
 					->html(
-						MyList::build(Val::class)
+						CustomList::build(Val::class)
 							->items($item->vals)
 							->relation('vals')
 							->column(

@@ -10,7 +10,7 @@ use app\Repository\ProductRepository;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use Illuminate\Database\Eloquent\Collection;
 
 
@@ -54,7 +54,7 @@ class SettingsFormView
 
 	public static function list(Collection $items): string
 	{
-		return MyList::build(Settings::class)
+		return CustomList::build(Settings::class)
 			->pageTitle('Настройки')
 			->column(
 				ListColumnBuilder::build('id')

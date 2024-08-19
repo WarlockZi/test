@@ -3,7 +3,7 @@
 namespace app\view\Country;
 
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 
 class CountryView
 {
@@ -15,7 +15,7 @@ class CountryView
 	public static function list(string $className)
 	{
     $countries = $className::all();
-		return MyList::build($className)
+		return CustomList::build($className)
 			->pageTitle('Страны')
 			->addButton('ajax')
 			->all()

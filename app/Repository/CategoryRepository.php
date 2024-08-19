@@ -96,12 +96,14 @@ class CategoryRepository
 
     public static function treeAll(): Collection
     {
-        return Category::query()
+        $cat = Category::query()
             ->where('category_id', null)
             ->with('childrenRecursive')
             ->select('id', 'name')
             ->whereNull('deleted_at')
             ->get();
+//        $arr = $cat->toArray();
+        return $cat;
     }
 
     public static function selector(?int $selected = 0, ?int $excluded = -1): string

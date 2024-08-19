@@ -8,7 +8,7 @@ use app\core\FS;
 use app\model\Image;
 use app\Repository\ImageRepository;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -54,7 +54,7 @@ class ImageView
 	public static function list(Collection $items): string
 	{
 		$view = new self;
-		return MyList::build($view->model)
+		return CustomList::build($view->model)
 			->items($items)
 			->pageTitle('Картинки')
 			->column(

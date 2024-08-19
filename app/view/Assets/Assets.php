@@ -4,6 +4,10 @@
 namespace app\view\Assets;
 
 
+
+
+use app\view\layouts\Helpers;
+
 class Assets
 {
     public function __construct(
@@ -21,8 +25,8 @@ class Assets
 
         protected string $port = '',
         protected string $path = '',
-//        protected string $compiler = 'vite',
-        protected ?string $compiler = 'webpack',
+        protected string|Helpers $compiler = 'vite',
+//        protected ?string|Helpers $compiler = 'webpack',
 
     )
     {
@@ -59,6 +63,7 @@ class Assets
 
     protected function getVite()
     {
+        $this->compiler = new Helpers();
         return [
             'protocol' => 'http://',
             'port' => 5173,
@@ -69,7 +74,9 @@ class Assets
 
     protected function setLocalhost($type): string
     {
-        $type === 'webpack' ? extract($this->getWebpack()) : extract($this->getVite());
+        $type === 'webpack'
+            ? extract($this->getWebpack())
+            : extract($this->getVite());
         $str =  "{$protocol}{$h1}{$port}{$path}";
         return $str;
     }
@@ -97,12 +104,9 @@ class Assets
 
     private function getViteCss(): string
     {
-//        if (Router::){
-//        vite('Product/Product.js') ;
-//        vite('Main/main.js');
-//    }
-        $str = vite('Admin/admin.js');
-        $str .= vite('Main/main.js');
+        $str = $this->compiler->vite('Admin/admin.js');
+        $str .= $this->compiler->vite('Main/main.js');
+        $str .= $this->compiler->vite('Auth/auth.js');
         return $str;
     }
 

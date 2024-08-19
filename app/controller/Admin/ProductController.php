@@ -15,6 +15,8 @@ use app\view\Product\Admin\ProductFormView;
 
 class ProductController extends AppController
 {
+    protected $model = Product::class;
+
     private ProductRepository $repo;
     private ProductService $service;
 

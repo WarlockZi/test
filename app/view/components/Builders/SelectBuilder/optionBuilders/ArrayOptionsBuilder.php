@@ -12,6 +12,7 @@ class ArrayOptionsBuilder
     protected array $excluded = [];
     protected string $initialOption = '';
     protected array $fieldsMap;
+    protected string $field = 'name';
 
     public static function build(Collection $collection, array $fieldsMap = []): ArrayOptionsBuilder
     {
@@ -21,6 +22,7 @@ class ArrayOptionsBuilder
         return $arrayOptions;
     }
 
+
     public function get(): string
     {
         if (!count($this->arr) && !$this->initialOption) $this->initialOption();
@@ -29,13 +31,19 @@ class ArrayOptionsBuilder
         return $str;
     }
 
-    public function options($items, string $string=''):string
+    public function field(string $field): ArrayOptionsBuilder
+    {
+        $this->field = $field;
+        return $this;
+    }
+
+    public function options($items, string $string = ''): string
     {
         foreach ($items as $item) {
             $id = $item['id'];
             if (in_array($id, $this->excluded)) continue;
             $selected = $id == $this->selected ? "selected" : '';
-            $string   .= "<option value = $id $selected>{$item['name']}</option>";
+            $string   .= "<option value = $id $selected>{$item[$this->field]}</option>";
         }
         return $string;
     }

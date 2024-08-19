@@ -29,17 +29,18 @@ class List{
       });
    }
       async customSelectChange({target}) {
-         let wrapper = target.closest('[data-model]');
+         const wrapper = target.closest('[data-model]');
          if (!wrapper) return false
-         let model = wrapper.dataset.model;
-         let modelId = wrapper.dataset.id;
-         let field = wrapper.dataset.field;
+         const model = wrapper.dataset.model;
+         const modelId = wrapper.dataset.id;
+         const field = wrapper.dataset.field;
+         const relation = target.dataset.relation;
 
-         let url = `/adminsc/${model}/updateOrCreate`;
-         let selected = target.options.selectedIndex;
-         let id = target.options[selected].value;
-         let data = {[field]: id, id: modelId};
-         let res = await post(url, data)
+         const url = `/adminsc/${model}/updateOrCreate`;
+         const selected = target.options.selectedIndex;
+         const id = target.options[selected].value;
+         const data = {[field]: id, id: modelId};
+         const res = await post(url, data)
       }
       getIds() {
          let els = $(this.table)[0].querySelectorAll('[data-id]');
@@ -108,7 +109,7 @@ class List{
                let index = [].findIndex.call(sortables, (el, i, inputs) => {
                   return el === header
                });
-               sortColumn(index)
+               this.sortColumn(index)
             }
          }
       }
@@ -139,7 +140,7 @@ class List{
 
       // UPDATE OR CREATE
       createRelation(data, table, relation) {
-         let parent = table.closest('.item-wrap');
+         const parent = table.closest('.item-wrap');
          data.model = parent.dataset.model;
          data.id = parent.dataset.id;
          data.relation = relation;
@@ -161,30 +162,30 @@ class List{
          let data = {};
          data.model = target.closest('[custom-list]').dataset.model;
          data.id = 0;
-         let relation = this.table.dataset.relation;
 
+         const relation = this.table.dataset.relation;
          if (relation) {
             data = this.createRelation(data, this.table, relation)
          }
          // debugger
-         let morph = this.table.parentNode.dataset.morphRelation;
+         const morph = this.table.parentNode.dataset.morphRelation;
          if (morph) {
             data = this.createMorph(data, this.table, relation)
          }
 
-         let res = await post(`/adminsc/${data.model}/updateOrCreate`, data);
+         const res = await post(`/adminsc/${data.model}/updateOrCreate`, data);
          if (res.arr.id) {
-            this.newrow(res?.arr.id)
+            this.newRow(res?.arr.id).bind(this)
          }
       }
 
 
-      newrow(id) {
-         [].forEach.call(hidden, function (el) {
-            let newEl = el.cloneNode(true);
+      newRow(id) {
+         [].forEach.call(this.hidden, function (el) {
+            const newEl = el.cloneNode(true);
             newEl.removeAttribute('hidden');
 
-            let tableContent = $(table).find('.custom-list');
+            const tableContent = $(this.table).find('.custom-list');
             tableContent.appendChild(newEl);
             if (['id'].includes(newEl.dataset.field)) {
                newEl.innerText = id
@@ -198,7 +199,8 @@ class List{
             }
             newEl.dataset['id'] = id
 
-         });
+         }.bind(this)
+         );
       }
 
 
@@ -243,12 +245,9 @@ class List{
 
 // SORT
       sortColumn(index) {
-
          let rows = this.fillRows();
-
          // Получить текущее направление
          const direction = this.directions[index] || 'asc';
-
          // Фактор по направлению
          const multiplier = (direction === 'asc') ? 1 : -1;
 
@@ -279,14 +278,14 @@ class List{
          });
 
          // Поменять направление
-         directions[index] = direction === 'asc' ? 'desc' : 'asc';
+         this.directions[index] = direction === 'asc' ? 'desc' : 'asc';
 
          // Добавить новую строку
          newRows.forEach(function (newRow) {
             newRow = Array.from(newRow);
             newRow.reverse();
             [].forEach.call(newRow, el => {
-               headers[headers.length - 1].after(el)
+               this.headers[this.headers.length - 1].after(el)
             })
          });
       }
@@ -309,7 +308,7 @@ class List{
       handleInput(table, contenteditable, target) {
          if (!target.hasAttribute('contenteditable')) return false;
          let model = makeServerModel(target, modelName);
-         save(model)
+         this.save(model)
       }
 
       async save(model) {

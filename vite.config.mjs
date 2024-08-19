@@ -5,8 +5,12 @@ import path from 'node:path'
 
 export default defineConfig(async ({command, mode}) => {
    const env = loadEnv(mode, process.cwd())
-   console.log(env.VITE_APP_ENV)
+   console.log(env)
+
    return {
+      define:{
+         'env': env
+      },
       plugins: [
          // vue(),
          liveReload([

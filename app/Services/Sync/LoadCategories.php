@@ -27,12 +27,13 @@ class LoadCategories
 
     protected function deleteNonexisted(): void
     {
-        $cat               = Category::whereNotIn('1s_id', $this->existed)->pluck('1s_id');
+        $cat             = Category::whereNotIn('1s_id', $this->existed)->pluck('1s_id');
         $this->deleted[] = $cat->toArray();
         $cat->each(function (Category $cat) {
             $cat->softDelete();
         });
     }
+
     protected function run($groups): void
     {
         if ($this->isAssoc($groups)) {
@@ -60,7 +61,7 @@ class LoadCategories
         $item['deleted_at'] = NULL;
 
         $this->existed[$group['Ид']] = $group['Ид'];
-        $cat                         = Category::withTrashed()
+        $cat                        = Category::withTrashed()
             ->updateOrCreate(['1s_id' => $item['1s_id']], $item);
 
         if ($cat->wasRecentlyCreated) {

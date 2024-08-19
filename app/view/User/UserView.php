@@ -12,7 +12,7 @@ use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\MyView;
@@ -251,7 +251,7 @@ abstract class UserView
 
 	public static function listAll(): string
 	{
-		return MyList::build(User::class)
+		return CustomList::build(User::class)
 			->column(
 				ListColumnBuilder::build('id')
 					->name('ID')

@@ -13,7 +13,7 @@ use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\TreeABuilder;
 use app\view\Image\ImageView;
@@ -76,7 +76,7 @@ class CategoryFormView
 			->tab(
 				ItemTabBuilder::build('Товары категории')
 					->html(
-						MyList::build(Product::class)
+						CustomList::build(Product::class)
 							->pageTitle('Товары категории')
 							->relation('products')
 							->addButton('ajax')
@@ -112,7 +112,7 @@ class CategoryFormView
 			->tab(
 				ItemTabBuilder::build('Подкатегории')
 					->html(
-						MyList::build(Category::class)
+						CustomList::build(Category::class)
 							->pageTitle('Подкатегории')
 							->items($category['childrenNotDeleted'] ?? [])
 							->column(
@@ -136,7 +136,7 @@ class CategoryFormView
 			->tab(
 				ItemTabBuilder::build('Удаленные Подкатегории')
 					->html(
-						MyList::build(Category::class)
+						CustomList::build(Category::class)
 							->pageTitle('Удаленные подкатегории')
 							->items($category['childrenDeleted'] ?? [])
 							->column(
@@ -194,7 +194,7 @@ class CategoryFormView
 
 	public static function list(): string
 	{
-		return MyList::build(Category::class, 10)
+		return CustomList::build(Category::class, 10)
 			->column(
 				ListColumnBuilder::build('id')
 					->get()

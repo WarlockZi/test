@@ -1,7 +1,7 @@
 <?php
 
 use app\core\Error;
-//require_once __DIR__ . '/helpers.php';
+//require_once __DIR__ . '/Helpers.php';
 
 ?>
 <!DOCTYPE html>

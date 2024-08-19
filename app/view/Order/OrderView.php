@@ -9,7 +9,7 @@ use app\model\Order;
 use app\model\OrderItem;
 use app\model\User;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use app\view\MyView;
 
 
@@ -21,7 +21,7 @@ abstract class OrderView
 
 	public static function listAll(): string
 	{
-		return MyList::build(Order::class)
+		return CustomList::build(Order::class)
 			->column(
 				ListColumnBuilder::build('id')
 					->name('ID')
@@ -39,7 +39,7 @@ abstract class OrderView
 
 	public static function leadList($items): string
 	{
-		$list =  MyList::build(OrderItem::class)
+		$list =  CustomList::build(OrderItem::class)
 			->column(
 				ListColumnBuilder::build('id')
 					->name('ID')
@@ -59,7 +59,7 @@ abstract class OrderView
 
 	public static function clientList($items): string
 	{
-		return MyList::build(Order::class)
+		return CustomList::build(Order::class)
 			->column(
 				ListColumnBuilder::build('id')
 					->name('ID')

@@ -5,14 +5,14 @@ namespace app\view\Report\Admin;
 use app\model\Product;
 use app\Services\ProductService;
 use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\ListBuilder\CustomList;
 use Illuminate\Database\Eloquent\Collection;
 
 class ReportView
 {
     public function filter(Collection|null $products, string $title): string
     {
-        return MyList::build(Product::class)
+        return CustomList::build(Product::class)
             ->pageTitle($title)
             ->column(
                 ListColumnBuilder::build('id')
@@ -74,7 +74,7 @@ class ReportView
     }
     public function haveDopUnit(Collection $products, string $title): string
     {
-        return MyList::build(Product::class)
+        return CustomList::build(Product::class)
             ->pageTitle($title)
             ->column(
                 ListColumnBuilder::build('id')
@@ -104,7 +104,7 @@ class ReportView
     }
     public function noDopUnit($products): string
     {
-        return MyList::build(Product::class)
+        return CustomList::build(Product::class)
             ->pageTitle('Товары имеющие только базовую единицу')
             ->column(
                 ListColumnBuilder::build('id')
@@ -134,7 +134,7 @@ class ReportView
     }
     public function noMinUnitList($products, string $title): string
     {
-        return MyList::build(Product::class)
+        return CustomList::build(Product::class)
             ->pageTitle($title)
             ->column(
                 ListColumnBuilder::build('id')
@@ -164,7 +164,7 @@ class ReportView
     }
     public function noImgNoInstoreList(Collection $products, string $title): string
     {
-        return MyList::build(Product::class)
+        return CustomList::build(Product::class)
             ->pageTitle($title)
             ->column(
                 ListColumnBuilder::build('id')
