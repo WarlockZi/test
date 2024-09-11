@@ -156,7 +156,7 @@ let validate = {
       "- Маленькие латинские буквы \n" +
       "- Цифры \n" +
       "- Должен содержать не менее 6 символов";
-    let res = /^[a-zA-Z\-0-9]{6,20}$/.test(password);
+    let res = /^[a-zA-Z0-9-_!#$%^&*()]{6,30}$/.test(password);
     if (!res) return text;
     return false
   }

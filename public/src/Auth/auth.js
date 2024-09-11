@@ -13,10 +13,6 @@ import './edit'
 import './auth.scss'
 // import './login'
 
-// import multiselect from '@components/multiselect/multiselect'
-// import catalogItem from '@components/catalog-item/catalog-item'
-
-// import radio from '@components/radio/radio'
 import showPassword from "../components/showPassword/showPassword";
 import {$} from "../common";
 
@@ -32,11 +28,5 @@ if ($('.modal-wrapper')){
     new Modal()
 }
 
-
-
-// radio();
-
-// multiselect();
-// catalogItem();
 showPassword();
 
