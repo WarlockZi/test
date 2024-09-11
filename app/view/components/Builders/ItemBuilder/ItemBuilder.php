@@ -29,7 +29,7 @@ class ItemBuilder
 
     public string $html = '';
 
-    public static function build(?Model $item, string $model):ItemBuilder
+    public static function build(?Model $item, string $model):static
     {
         $view            = new static();
         $name            = $view->getModelName($item->getTable());
@@ -40,25 +40,25 @@ class ItemBuilder
         return $view;
     }
 
-    public function class(string $class): ItemBuilder
+    public function class(string $class):static
     {
         $this->class = $class;
         return $this;
     }
 
-    public function pageTitle(string $pageTitle): ItemBuilder
+    public function pageTitle(string $pageTitle):static
     {
         $this->pageTitle = $pageTitle ? "<div class='page-title'>$pageTitle</div>" : '';
         return $this;
     }
 
-    public function field(ItemFieldBuilder $field): ItemBuilder
+    public function field(ItemFieldBuilder $field):static
     {
         $this->fields[] = $field;
         return $this;
     }
 
-    public function tab($tab): ItemBuilder
+    public function tab($tab):static
     {
         $this->tabs[] = $tab;
         return $this;
@@ -77,7 +77,7 @@ class ItemBuilder
         return Str::studly(Str::singular($table));
     }
 
-    public function del(bool $isAdmin = true): ItemBuilder
+    public function del(bool $isAdmin = true):static
     {
         if ($isAdmin) {
             $this->del = true;
@@ -85,26 +85,26 @@ class ItemBuilder
         return $this;
     }
 
-    public function sid(Product $product): ItemBuilder
+    public function sid(Product $product):static
     {
         $this->sid = "data-sid='{$product['1s_id']}'";
         return $this;
     }
 
-    public function softDel(): ItemBuilder
+    public function softDel():static
     {
         $this->del     = false;
         $this->softDel = true;
         return $this;
     }
 
-    public function save(): ItemBuilder
+    public function save():static
     {
         $this->save = true;
         return $this;
     }
 
-    public function toList(string $href = '', string $text = '', bool $isAdmin = true): ItemBuilder
+    public function toList(string $href = '', string $text = '', bool $isAdmin = true):static
     {
         if ($isAdmin) {
             $this->toList = true;

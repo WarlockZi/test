@@ -9,6 +9,10 @@
 
 @include error;
 
+.category-tree {
+  display: flex;
+  flex-direction: column;
+}
 
 .admin-layout__container {
   display: flex;

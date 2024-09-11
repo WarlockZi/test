@@ -5,8 +5,8 @@ namespace app\view\Planning;
 
 
 use app\model\Todo;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\CustomList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use Illuminate\Database\Eloquent\Collection;
 
 
@@ -19,14 +19,14 @@ class PlanningView
 	{
 		$view = new self;
 		$items = Todo::where('type','день')->get();
-		return CustomList::build($view->modelName)
+		return Table::build($view->modelName)
 			->items($items)
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Наименование')
 					->sort()
 					->contenteditable()
@@ -41,14 +41,14 @@ class PlanningView
 	{
 		$view = new self;
 		$items = Todo::where('type','неделя')->get();
-		return CustomList::build($view->modelName)
+		return Table::build($view->modelName)
 			->items($items)
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Наименование')
 					->sort()
 					->contenteditable()
@@ -63,14 +63,14 @@ class PlanningView
 	{
 		$view = new self;
 		$items = Todo::where('type','год')->get();
-		return CustomList::build($view->modelName)
+		return Table::build($view->modelName)
 			->items($items)
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Наименование')
 					->sort()
 					->contenteditable()

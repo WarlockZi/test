@@ -4,8 +4,8 @@ import "quill/dist/quill.core.css";
 import 'quill/dist/quill.snow.css';
 export const quill = () => {
 
-  let quillSelector = '.detail-text';
-  let textarea = $(quillSelector)[0];
+  const quillSelector = '.detail-text';
+  const textarea = $(quillSelector)[0];
 
   if (textarea) {
     createQuill()
@@ -35,8 +35,8 @@ export const quill = () => {
   }
 
   function createQuill() {
-    let quill = new Quill(quillSelector, getOptions());
-    let delta = quill.getContents();
+    const quill = new Quill(quillSelector, getOptions());
+    const delta = quill.getContents();
     setContent(quill, delta)
     quill.on(Quill.events.TEXT_CHANGE, updateContent.bind(quill));
   }
@@ -45,14 +45,14 @@ export const quill = () => {
   }
 
   function updateContent(delta) {
-    let tfs = this.getContents();
-    let json = JSON.stringify(tfs)
-    update(json)
+    const tfs = this.getContents();
+    const json = JSON.stringify(tfs)
+    this.update(json)
   }
   function setContent(quill, delta) {
-    let innertext = textarea.innerText;
+    const innertext = textarea.innerText;
     if (isJsonString(innertext)) {
-      let text = JSON.parse(innertext);
+      const text = JSON.parse(innertext);
       quill.setContents(text)
     } else {
       // let text = fromText(delta, quill,innertext);
@@ -70,8 +70,8 @@ export const quill = () => {
   async function update(txt) {
     let id = $('[data-field="id"]').first()
     id = +id.innerText
-    let data = {id, txt}
-    let res = await post(
+    const data = {id, txt}
+    const res = await post(
       '/adminsc/product/updateOrCreate',
       data
     )

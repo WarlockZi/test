@@ -15,20 +15,24 @@ use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
-use app\view\components\Builders\ListBuilder\CustomList;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\SelectBuilder\SelectListBuilder;
-use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use app\view\Image\ImageView;
 use app\view\Property\PropertyView;
-use app\view\Unit\UnitFormView;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductFormView
 {
+    private FS $fs;
+
+    public function __construct()
+    {
+        $this->fs = new FS(__DIR__);
+    }
+
     protected static function getUnit(int $selected): string
     {
         return SelectBuilder::build(
@@ -38,6 +42,36 @@ class ProductFormView
         )
             ->initialOption()
             ->get();
+    }
+
+    public function baseUnitPrice(Product $product): string
+    {
+        $baseUnit       = $product->baseUnit->first() ?? 'ед отсутств';
+        $price          = (float)$product->getRelation('price')->price;
+        $formattedPrice = $this->getFormattedPrice($price, 1);
+
+        return "{$formattedPrice} ₽ / {$baseUnit->name}";
+    }
+
+    protected function getFormattedPrice($price, int $multiplier): string
+    {
+        return $price && $multiplier
+            ? number_format((float)$price * $multiplier, 2, '.', ' ')
+            : 'Цену уточняйте у менеджера';
+    }
+
+    public function dopUnitsPrices(Product $product, string $str = ''): string
+    {
+        if (!$product->shippableUnits->count()) return '';
+        foreach ($product->shippableUnits as $unit) {
+            $formattedPrice    = $this->getFormattedPrice($product->price, $unit->pivot->multiplier);
+            $promotion         = $product->activePromotions->first() ?? null;
+            $promotionNewPrice = $promotion ? $this->getFormattedPrice($promotion->new_price,1) : '';
+            $promotion         = $product->activePromotions->first() ?? null;
+            $str               .= $this->fs->getContent('shippableUnitRow',
+                compact('product', 'formattedPrice', 'unit', 'promotion', 'promotionNewPrice'));
+        }
+        return $str;
     }
 
     public static function edit(Product $product): string
@@ -53,10 +87,10 @@ class ProductFormView
                     ->get()
             )
             ->field(
-                ItemFieldBuilder::build('Акции', $product)
+                ItemFieldBuilder::build('active_promotions', $product)
                     ->name('Действующие акции')
                     ->html(
-                        SelectNewBuilder::build(
+                        SelectBuilder::build(
                             ArrayOptionsBuilder::build(
                                 $product->activePromotions, ['count' => 'кол-о', 'active_till' => 'до', 'new_price' => 'новая цена'])
                                 ->field('active_till')
@@ -94,10 +128,10 @@ class ProductFormView
                     ->get()
             )
             ->field(
-                ItemFieldBuilder::build('baseUnit', $product)
+                ItemFieldBuilder::build('base_unit', $product)
                     ->name('Базовая единица')
                     ->html(
-                        self::getUnit($product->baseUnit->id ?? 0, )
+                        self::getUnit($product->baseUnit->id ?? 0,)
                     )
                     ->relation('baseUnit')
                     ->get()
@@ -106,13 +140,7 @@ class ProductFormView
                 ItemFieldBuilder::build('manufacturer', $product)
                     ->name('Производитель')
                     ->html(
-                        SelectListBuilder::build()
-                            ->collection(Manufacturer::all())
-                            ->item($product)
-                            ->field('manufacturer_id')
-                            ->initialOption('', 0)
-                            ->selected($product->manufacturer->id ?? 0)
-                            ->get()
+                        self::getManufacturer($product)
                     )
                     ->get()
             )
@@ -173,7 +201,7 @@ class ProductFormView
                     )
             )
             ->tab(
-                ItemTabBuilder::build('Акций')
+                ItemTabBuilder::build('Акции')
                     ->html(
                         self::promotions($product)
                     )
@@ -197,6 +225,19 @@ class ProductFormView
                     )
             )
             ->get();
+    }
+
+    public static function getManufacturer(Product $p): string
+    {
+        $select = SelectBuilder::build(
+            ArrayOptionsBuilder::build(Manufacturer::all())
+                ->initialOption(0, '')
+                ->selected($product->manufacturer->id ?? 0)
+                ->get()
+        )
+            ->field('manufacturer_id')
+            ->get();
+        return $select;
     }
 
     public static function mainImage(Product $p)
@@ -262,8 +303,18 @@ class ProductFormView
 
     public static function unitsRow(Unit $unit, string $name, bool $deletable): string
     {
-        $fs         = new FS(__DIR__);
-        $selector   = UnitFormView::selectorNew($unit);
+        $fs       = new FS(__DIR__);
+        $selector = SelectBuilder::build(
+            ArrayOptionsBuilder::build(
+                $unit->pivot->is_base
+                    ? new Collection([$unit])
+                    : Unit::all())
+                ->initialOption()
+                ->selected($unit->id)
+                ->get()
+        )
+            ->class('name')
+            ->get();;
         $shippable  = $unit->pivot->is_shippable ? 'checked' : '';
         $multiplier = self::multiplier($unit->pivot->multiplier);
         $is_base    = $unit->pivot->is_base ? 'data-isBase' : '';
@@ -275,7 +326,14 @@ class ProductFormView
         $fs           = new FS(__DIR__);
         $baseUnit     = $product->units()->where('is_base', 1)->first();
         $units        = $product->units;
-        $noneSelector = UnitFormView::noneSelector($baseUnit);
+        $noneSelector = SelectBuilder::build(
+            ArrayOptionsBuilder::build(Unit::all())
+                ->initialOption()
+                ->excluded($baseUnit->id)
+                ->get()
+        )
+            ->class('name')
+            ->get();
         $multiplier   = self::multiplier(null);
         return $fs->getContent('units', compact('units', 'noneSelector', 'baseUnit', 'multiplier'));
     }
@@ -284,7 +342,6 @@ class ProductFormView
     {
         return $mult ? "<input class='multiplier' type='number' value='{$mult}'>" : "<div class='multiplier'></div>";
     }
-
 
     protected static function getDescription($product): string
     {
@@ -295,50 +352,53 @@ class ProductFormView
 
     protected static function promotions($product): string
     {
-        $inactivePromotions = self::commonPromotions($product->inactivePromotions, 'Неактивные акции', false);
-        $activePromotions   = self::commonPromotions($product->activePromotions, 'Активные акции', true);
+        $inactivePromotions = self::commonPromotions($product->inactivePromotions, 'inactivePromotions', 'Неактивные акции', false, false);
+        $activePromotions   = self::commonPromotions($product->activePromotions, 'activePromotions', 'Активные акции', true, true);
 
         return $inactivePromotions . '<hr>' . $activePromotions;
     }
 
-    private static function commonPromotions(Collection $items, string $title, bool $addButton)
+    private static function commonPromotions(Collection $items, string $relation, string $title, bool $addButton, bool $edit)
     {
-        $customList = CustomList::build(Promotion::class)
-            ->relation('activePromotions')
-            ->items($items)
+        $customList = Table::build($items)
+            ->relation($relation)
             ->pageTitle($title)
             ->column(
-                ListColumnBuilder::build('new_price')
+                ColumnBuilder::build('new_price')
                     ->name('Цена по акции')
                     ->get()
             )
-            ->column(ListColumnBuilder::build('active_till')
+            ->column(ColumnBuilder::build('active_till')
                 ->name('До')
                 ->get()
+
             )
-            ->column(ListColumnBuilder::build('Количество')
+            ->column(ColumnBuilder::build('count')
+                ->name('Кол-во')
                 ->function(Promotion::class, 'getCount')
                 ->contenteditable()
                 ->get()
-            )
-            ->edit();
+            );
         if ($addButton) {
             $customList = $customList->addButton('ajax');
+        }
+        if ($edit) {
+            $customList = $customList->edit();
         }
         return $customList->get();
     }
 
     public static function trashed(Collection $items): string
     {
-        return CustomList::build(Product::class)
+        return Table::build($items)
             ->pageTitle('Товары')
             ->column(
-                ListColumnBuilder::build('id')
+                ColumnBuilder::build('id')
                     ->name('ID')
                     ->get()
             )
             ->column(
-                ListColumnBuilder::build('name')
+                ColumnBuilder::build('name')
                     ->name('Наименование')
                     ->contenteditable()
                     ->search()
@@ -346,7 +406,7 @@ class ProductFormView
                     ->get()
             )
             ->column(
-                ListColumnBuilder::build('art')
+                ColumnBuilder::build('art')
                     ->name('Артикул')
                     ->contenteditable()
                     ->search()
@@ -354,7 +414,7 @@ class ProductFormView
                     ->get()
             )
             ->column(
-                ListColumnBuilder::build('sort')
+                ColumnBuilder::build('sort')
                     ->name('Порядок')
                     ->contenteditable()
                     ->search()
@@ -362,14 +422,13 @@ class ProductFormView
                     ->get()
             )
             ->column(
-                ListColumnBuilder::build('price')
+                ColumnBuilder::build('price')
                     ->name('Цена')
                     ->contenteditable()
                     ->width('70px')
                     ->function(ProductRepository::class, 'priceStatic')
                     ->get()
             )
-            ->items($items)
             ->edit()
             ->del()
             ->addButton('ajax')

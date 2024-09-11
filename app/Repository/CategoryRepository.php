@@ -8,7 +8,6 @@ use app\model\Category;
 use app\view\components\Builders\SelectBuilder\optionBuilders\TreeOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use Illuminate\Database\Eloquent\Collection;
-use JetBrains\PhpStorm\NoReturn;
 
 class CategoryRepository
 {
@@ -28,16 +27,16 @@ class CategoryRepository
             ->get();
     }
 
-    public static function editSelectorExcluded($category): array
-    {
-        return Category::query()
-            ->where('category_id', $category->id)
-            ->select('id')
-            ->get()
-            ->pluck('id')
-            ->push($category->id)
-            ->toArray();
-    }
+//    public static function editSelectorExcluded($category): array
+//    {
+//        return Category::query()
+//            ->where('category_id', $category->id)
+//            ->select('id')
+//            ->get()
+//            ->pluck('id')
+//            ->push($category->id)
+//            ->toArray();
+//    }
 
     public function indexInstore(string $slug)
     {
@@ -50,7 +49,9 @@ class CategoryRepository
             ->with('products.orderItems')
             ->with('productsInStore')
             ->with('productsNotInStoreInMatrix')
-            ->with('products.activepromotions')
+            ->with(['products.activepromotions' => function ($q) {
+                $q->whereNull('active_till');
+            }])
             ->with('products.inactivepromotions')
             ->with('products.shippableUnits')
             ->get()
@@ -60,7 +61,7 @@ class CategoryRepository
 
     }
 
-    #[NoReturn] public static function changeProperty(array $req): void
+    public static function changeProperty(array $req): void
     {
         $category = Category::find($req['category_id']);
         $newVal   = $req['morphed']['new_id'];
@@ -119,32 +120,18 @@ class CategoryRepository
             ->get();
     }
 
-    public static function reportProductSelector(?int $selected = 0, ?int $excluded = -1): string
-    {
-        return SelectBuilder::build(
-            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
-                ->initialOption()
-                ->selected($selected)
-                ->excluded($excluded)
-                ->get()
-        )
-            ->name('category')
-            ->id('category')
-            ->get();
-    }
+//    public static function reportProductSelector(?int $selected = 0, ?int $excluded = -1): string
+//    {
+//        return SelectBuilder::build(
+//            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
+//                ->initialOption()
+//                ->selected($selected)
+//                ->excluded($excluded)
+//                ->get()
+//        )
+//            ->name('category')
+//            ->id('category')
+//            ->get();
+//    }
 
-    public static function selector1(?int $selected, ?array $excluded = []): string
-    {
-        return SelectBuilder::build(
-            TreeOptionsBuilder::build(
-                CategoryRepository::treeAll(),
-                'children_recursive', 2)
-                ->initialOption()
-                ->selected($selected)
-                ->excluded($excluded)
-                ->get()
-        )
-            ->field('category_id')
-            ->get();
-    }
 }

@@ -3,14 +3,14 @@ import Dnd from "../dnd/dnd";
 import MorphDTO from "./MorphDTO";
 
 class Morph {
-  constructor(morphEl) {
-    this.model = morphEl.closest('.item-wrap').dataset.model;
-    this.id = +morphEl.closest('.item-wrap').dataset.id;
+  constructor(el) {
+    this.model = el.closest('.item-wrap').dataset.model;
+    this.id = +el.closest('.item-wrap').dataset.id;
 
-    morphEl.onclick = this.handleClick.bind(this);
+    el.onclick = this.handleClick.bind(this);
     // debugger
-    if (morphEl.querySelector('[dnd]')) {
-      new Dnd(morphEl,this.attach.bind(this))
+    if (el.querySelector('[dnd]')) {
+      new Dnd(el,this.attach.bind(this))
     }
   }
 
@@ -90,12 +90,12 @@ class Morph {
 
 }
 
-export default function morph() {
-  let morphs = $('[data-morph-relation]');
-  // debugger
-  if (morphs) {
-    morphs.forEach((morph) => {
-      new Morph(morph)
-    })
-  }
-}
+// export default function morph() {
+//   let morphs = $('[data-morph-relation]');
+//   // debugger
+//   if (morphs) {
+//     morphs.forEach((morph) => {
+//       new Morph(morph)
+//     })
+//   }
+// }

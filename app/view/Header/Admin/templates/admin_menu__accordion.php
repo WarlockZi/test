@@ -166,12 +166,12 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 			<ul class="level-1">
 					 <? if (User::can($user, ['role_admin'])): // admin ?>
 
-				  <a class="neon" href="/adminsc/report/productsNoImgInstore">Товары без картинок в наличии</a>
-				  <a class="neon" href="/adminsc/report/productsNoImgNotinstore">Товары без картинок без наличия</a>
+<!--				  <a class="neon" href="/adminsc/report/productsNoImgInstore">Товары без картинок в наличии</a>-->
+<!--				  <a class="neon" href="/adminsc/report/productsNoImgNotinstore">Товары без картинок без наличия</a>-->
 
-				  <a class="neon" href="/adminsc/report/productsNoMinimumUnit">Товары без min единицы</a>
-				  <a class="neon" href="/adminsc/report/productsNoDopUnit" title="Нужны для корзины, чтобы ">Товары без доп единиц</a>
-                         <a class="neon" href="/adminsc/report/productsHaveDopUnit" title="Нужны для корзины, чтобы ">Товары имеющие доп единицу</a>
+<!--				  <a class="neon" href="/adminsc/report/productsNoMinimumUnit">Товары без min единицы</a>-->
+<!--				  <a class="neon" href="/adminsc/report/productsNoDopUnit" title="Нужны для корзины, чтобы ">Товары без доп единиц</a>-->
+<!--                         <a class="neon" href="/adminsc/report/productsHaveDopUnit" title="Нужны для корзины, чтобы ">Товары имеющие доп единицу</a>-->
 					 <? endif; ?>
 			</ul>
 		</li>
@@ -193,9 +193,9 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 			<ul class="level-1">
 					 <? if (User::can($user, ['role_admin'])): // admin ?>
 				  <a class="neon" href="/adminsc/category">Категории</a>
-				  <a class="neon" href="/adminsc/product/list">Товары</a>
-				  <a class="neon" href="/adminsc/product/trashed">Товары удалены</a>
-				  <a class="neon" href="/adminsc/productfilter">Фильтр по товарам</a>
+<!--				  <a class="neon" href="/adminsc/product/list">Товары</a>-->
+<!--				  <a class="neon" href="/adminsc/product/trashed">Товары удалены</a>-->
+<!--				  <a class="neon" href="/adminsc/productfilter">Фильтр по товарам</a>-->
 
 					 <? endif; ?>
 			</ul>

@@ -32,7 +32,7 @@ import multiselect from '../components/multiselect/multiselect.js'
 import catalogItem from '../components/catalog-item/catalog-item.js'
 import tooltips from '../components/tooltip/tooltip.js'
 // import accordionShow from '../components/accordion-show.js'
-import morph from '../components/morph/morph.js'
+// import morph from '../components/morph/morph.js'
 import Search from "../components/search/search.js"
 import Promotion from "../Promotions/Promotion.js"
 import './ProductFilter/ProductFilter'
@@ -44,16 +44,12 @@ import navigate from "./Navigate";
 import './../components/list/list.js'
 $(document).ready(async function () {
 
-   const product = document[qs](`.item-wrap[data-model='product']`)
-   if (product) {
+   // const product = document[qs](`.item-wrap[data-model='product']`)
+   // if (product) {
       const {default: Product} = await import('./Product/Product.js')
-      new Product(product);
-   }
+      new Product();
+   // }
    if (document[qs]('.order-edit')) {
-      const {default: Order} = await import('./Order/order.js')
-      new Order()
-   }
-   if (document[qs]('[custom-list]')) {
       const {default: Order} = await import('./Order/order.js')
       new Order()
    }
@@ -79,12 +75,13 @@ $(document).ready(async function () {
       const {default: adminAccordion} = await import('../components/AdminAccordion.js')
       new adminAccordion()
    }
-   morph();
+   // morph();
    navigate(window.location.pathname);
    radio();
    multiselect();
    catalogItem();
    tooltips();
+
    quill();
    testEdit();
 

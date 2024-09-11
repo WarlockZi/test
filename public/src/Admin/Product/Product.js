@@ -1,25 +1,27 @@
 import './product.scss'
 import './units'
-import './Values'
+import './Props.js'
 import {objAndFiles2FormData, post} from '../../common'
 import {qs} from '../../constants'
 
 export default class Product {
-   constructor(product) {
+   constructor() {
+      const product = document[qs](`.item-wrap[data-model='product']`)
       if (!product) return false;
       this.product = product
 
-      this.setValues()
-      this.setFields()
-      this.setDragNDrop()
-      this.setCardPanel()
+      this.setProps().then()
+      // const fields = this.setFields()
+      this.setFields().then()
+      this.setDragNDrop().then()
+      this.setCardPanel().then()
    }
 
    async setDragNDrop() {
       const dragNdrop = document[qs]('[dnd]')
       if (dragNdrop) {
          const {default: Dnd} = await import("../../components/dnd/dnd")
-         new Dnd(dragNdrop, this.addMainImage)
+         const dnd = await new Dnd(dragNdrop, this.addMainImage)
       }
    }
 
@@ -28,9 +30,9 @@ export default class Product {
       new Fields(this.product)
    }
 
-   async setValues() {
-      const {default: Values} = await import("./Values.js")
-      new Values(this.product)
+   async setProps() {
+      const {default: Props} = await import("./Props.js")
+      new Props(this.product)
    }
 
 
@@ -44,10 +46,10 @@ export default class Product {
 
    async addMainImage(files, target) {
       const obj = {productId: target.closest('.item-wrap').dataset.id,};
-      let data = objAndFiles2FormData(obj, files[0]);
+      const data = objAndFiles2FormData(obj, files[0]);
 
-      let res = await post('/adminsc/product/saveMainImage', data);
-      let src = res?.arr[0];
+      const res = await post('/adminsc/product/saveMainImage', data);
+      const src = res?.arr[0];
       if (src) {
          const mainImage = target.closest('.dnd-container').querySelector('img');
          mainImage.removeAttribute("src");

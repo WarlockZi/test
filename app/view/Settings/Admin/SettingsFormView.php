@@ -9,8 +9,8 @@ use app\model\Settings;
 use app\Repository\ProductRepository;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\CustomList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use Illuminate\Database\Eloquent\Collection;
 
 
@@ -54,15 +54,15 @@ class SettingsFormView
 
 	public static function list(Collection $items): string
 	{
-		return CustomList::build(Settings::class)
+		return Table::build(Settings::class)
 			->pageTitle('Настройки')
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('name')
 					->contenteditable()
 					->search()
@@ -70,7 +70,7 @@ class SettingsFormView
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('title')
+				ColumnBuilder::build('title')
 					->name('Наименование')
 					->contenteditable()
 					->search()
@@ -78,7 +78,7 @@ class SettingsFormView
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('value')
+				ColumnBuilder::build('value')
 					->name('Значение')
 					->contenteditable()
 					->search()

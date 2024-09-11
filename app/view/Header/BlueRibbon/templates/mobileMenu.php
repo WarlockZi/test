@@ -3,19 +3,27 @@
 use app\core\Icon;
 
 ?>
-<button class="gamburger">
-	<?= Icon::menu('feather') ?>
+<button class="util-item gamburger">
+    <?= Icon::menu('feather') ?>
 </button>
 
-<aside class="mobile-menu">
-	<div class="wrap">
-		<a href="/main/contacts">Контакты</a>
-		<a href="/main/requisites">Реквизиты</a>
-		<a href="/main/about">О компании</a>
+<nav class="mobile-menu">
+    <ul class="wrap">
+        <li>
+            <a href="/main/contacts">Контакты</a>
+        </li>
+        <li>
+            <a href="/main/requisites">Реквизиты</a>
+        </li>
+        <li>
+            <a href="/main/about">О компании</a>
+        </li>
 
-		<hr>
+        <hr>
 
-		<a href="/category">Каталог</a>
+        <li>
+            <a href="/category">Каталог</a>
+        </li>
 
-	</div>
-</aside>
+    </ul>
+</nav>

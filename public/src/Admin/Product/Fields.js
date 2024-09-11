@@ -5,12 +5,14 @@ export default class Fields {
   constructor($product) {
     this.$product = $product;
     this.$fields = $('.item_content').first();
+
     this.$category_id = $(`[data-field="category_id"]`).first();
-    this.$promotions = $(`[data-field="promotions"]`).first();
+    this.$promotions = $(`[data-field="active_promotions"]`).first();
     this.$base_unit = $(`[data-field="base_unit"]`).first();
     this.$manufacturer_id = $(`[data-field="manufacturer_id"]`).first();
     this.$printName = $(`[data-field='print_name']`).first();
     this.$printName.addEventListener('catalogItem.changed', this.changePrintName.bind(this))
+
     this.$productUrl= $(`[data-field='slug']`).first();
     this.setup()
   }

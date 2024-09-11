@@ -23,7 +23,7 @@ class AppController extends Controller
         if (!$id) Response::exitWithMsg('No id');
         $model = new $this->model;
 
-        $item = $model->find((int)$id);
+        $item = $model::find($id);
         if ($item) {
             $destroy = $item->delete();
             Response::exitJson(['id' => $id, 'popup' => 'Ok']);
@@ -57,12 +57,18 @@ class AppController extends Controller
         $req = $this->ajax;
 
         if (isset($req['relation'])) {
-            $id       = $req['id'];
+            $parentId       = $req['id'];
             $relation = $req['relation'];
-            $model    = $this->model::with($relation)->find($id);
+            $id = $req['fields']['id'];
+            $fields = $req['fields'];
+            $model    = $this->model::with($relation)->find($parentId);
 
-            $created = $this->model->$relation()->create();
-            Response::exitJson(['popup' => 'Создан', 'id' => $created->id]);
+            $rel = $model->$relation->find($id)->updateOrCreate(
+                ['id'=>$id],
+                $fields);
+            if ($rel->wasRecentlyCreated) Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
+
+            Response::exitJson(['popup' => 'Обновлен']);
         }
 
         if (isset($req['morph'])) {

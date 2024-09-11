@@ -6,16 +6,19 @@ use app\core\Auth;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\OrderRepository;
 use app\Repository\ProductRepository;
+use app\view\Product\Admin\ProductFormView;
 
 
 class ProductController extends AppController
 {
     protected ProductRepository $repo;
+    protected ProductFormView $formView;
 
     public function __construct()
     {
         parent::__construct();
         $this->repo = new ProductRepository();
+        $this->formView = new ProductFormView();
     }
 
     public function actionIndex(): void
@@ -35,7 +38,7 @@ class ProductController extends AppController
             $oItems          = OrderRepository::count();
             $breadcrumbs     = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category_id, true,);
             $userIsAdmin     = Auth::isAdmin();
-            $shippablePrices = $this->repo->dopUnitsPrices($product);
+            $shippablePrices = $this->formView->dopUnitsPrices($product);
 
             $this->set(compact('shippablePrices', 'product', 'breadcrumbs', 'oItems', 'userIsAdmin'));
 

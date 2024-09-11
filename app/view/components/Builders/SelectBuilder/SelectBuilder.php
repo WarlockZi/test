@@ -11,64 +11,47 @@ class SelectBuilder
 {
     use CleanString;
 
-    private string $options;
     private FS $fs;
     private string $class = '';
     private string $title = '';
-    private string $field = '';
-    private string $name = '';
-    private string $id = '';
     private string $relation = '';
-
+    private string $field = '';
+    private string $options;
     private string $initialOption = '';
 
-    public static function build(string $options):SelectBuilder
+    public static function build(string $options):static
     {
         $select          = new static();
         $select->fs      = new FS(__DIR__);
         $select->options = $options;
-
         return $select;
     }
 
 
-    public function class(string $class):SelectBuilder
+    public function class(string $class):static
     {
-        $this->class = $class;
+        $this->class = "class='$class'";
         return $this;
     }
 
-    public function name(string $name):SelectBuilder
+    public function title(string $title):static
     {
-        $this->name = "name=$name";
+        $this->title = "title='$title'";
+        return $this;
+    }
+    public function relation(string $relation, string $relationModel):static
+    {
+        $this->relation = "data-relation='$relation' data-relationmodel='$relationModel'";
         return $this;
     }
 
-    public function id(string $id):SelectBuilder
-    {
-        $this->id = "id=$id";
-        return $this;
-    }
-
-    public function relation(string $relation):SelectBuilder
-    {
-        $this->relation = "data-relation='$relation'";
-        return $this;
-    }
-
-    public function field(string $field):SelectBuilder
+    public function field(string $field):static
     {
         $this->field = "data-field='$field'";
         return $this;
     }
 
-    public function title(string $title):SelectBuilder
-    {
-        $this->title = "title='$title'";
-        return $this;
-    }
-
-    public function initialOption(string $initialOptionLabel = '', int $initialOptionValue = 0):SelectBuilder
+    public function initialOption(string $initialOptionLabel = '', int $initialOptionValue = 0):static
     {
         $this->initialOption =
             "<option value='$initialOptionValue'>$initialOptionLabel</option>";
@@ -81,10 +64,11 @@ class SelectBuilder
         $data = get_object_vars($this);
         return $this->clean($this->fs->getContent('templates/SelectBuilderTemplate', $data));
     }
+//    public function getOptions(): string
+//    {
+//        return $this->options;
+//    }
 
-    public function getOptions(): string
-    {
-        return $this->options;
-    }
+
 
 }

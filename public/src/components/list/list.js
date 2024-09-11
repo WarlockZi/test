@@ -1,18 +1,24 @@
 import './list.scss';
 import {$, debounce, post} from '../../common';
-import MorphDTO from "../morph/MorphDTO";
 
-class List{
+class Table {
    constructor(table) {
       this.table = table;
-      this.model = table.dataset.model
-      this.contenteditable = $('[contenteditable]');
-      this.headers = table.querySelectorAll('.head');
-      this.hidden = table.querySelectorAll('[hidden]');
-      this.sortables = table.querySelectorAll('[data-sort]');
-      this.inputs = $(table).findAll('.head input');
+      this.model = table.dataset.model ?? table.closest('[data-model]').dataset.model;
+      this.modelId = table.dataset.id ?? table.closest('[data-model]').dataset.id;
+      this.relation = table.dataset.relation ?? null;
+      this.relationModel = table.dataset.relationmodel ?? null;
+      // this.field = table.dataset.field;
+
+      this.url = `/adminsc/${this.model}/updateOrCreate`
+
+      this.headers = $('.head');
+      this.inputs = $('.head input');
+      this.hidden = $('[hidden]');
+      this.editable = $('[contenteditable]');
+      this.sortables = $('[data-sort]');
+      // this.add_button = $('.add-model');
       this.ids = this.getIds();
-      this.modelName = table.dataset.model ?? null;
       this.rows = this.fillRows();
       this.WSSelects = $('[custom-select]');
 
@@ -24,168 +30,148 @@ class List{
       this.table.addEventListener('paste', this.handlePaste.bind(this));
 
       this.debouncedInput = debounce(this.handleInput);
-      this.directions = Array.from(this.sortables).map(function (sortable) {
-         return ''
-      });
+      this.directions = Array
+         .from(this.sortables)
+         .map(function (sortable) {
+            return ''
+         });
    }
-      async customSelectChange({target}) {
-         const wrapper = target.closest('[data-model]');
-         if (!wrapper) return false
-         const model = wrapper.dataset.model;
-         const modelId = wrapper.dataset.id;
-         const field = wrapper.dataset.field;
-         const relation = target.dataset.relation;
 
-         const url = `/adminsc/${model}/updateOrCreate`;
-         const selected = target.options.selectedIndex;
-         const id = target.options[selected].value;
-         const data = {[field]: id, id: modelId};
-         const res = await post(url, data)
-      }
-      getIds() {
-         let els = $(this.table)[0].querySelectorAll('[data-id]');
-         return [].filter.call(els, function (el) {
-            return el.dataset.id !== '0'
-         })
-      }
-      handlePaste(e) {
-         e.target.innerText = e.clipboardData.getData('text/plain');
-         this.handleInput(this.table, this.contenteditable, e.target);
-         e.target.innerText = ''
-      }
+   async handleClick(e) {
+      const target = e.target;
 
-      handleKeyUp(e) {
-         // debugger
-         let target = e.target;
-         e.cancelBubble = true;
+      /// create
+      if (target.className === 'add-model') {
+         const res = await this.createModel(target)
 
-         // contenteditable
-         if (target.hasAttribute('contenteditable')) {
-            this.debouncedInput(this.table, this.contenteditable, target)
+         /// delete
+      } else if (
+         target.className === '.del:not(.head)'
+         || target.closest('.del:not(.head)')) {
+         const res = this.modelDel(target.closest('.del:not(.head)'))
 
-            /// search
-         } else if (target.closest('.head')) {
-            let header = target.closest('.head');
-            let index = [].findIndex.call(this.headers, (el, i, inputs) => {
+         /// edit
+      } else if (target.className === 'edit:not(.head)'
+         || target.closest('.edit:not(.head)')) {
+         e.preventDefault();
+         this.edit(target)
+
+         // checkbox
+      } else if (target.type === 'checkbox') {
+         const funct = target.dataset.func
+         const base_is_shippable = target.checked
+         // const id = target.closest('[data-id]').dataset.id
+         const product_1s_id = target.dataset['1sid']
+         const data = {base_is_shippable, product_1s_id}
+         post(`/adminsc/${this.model}/${funct}`, data)
+
+         /// sort
+      } else if (target.classList.contains('head')
+         || target.classList.contains('icon')) {
+         let header = target.closest('.head');
+         if (header.hasAttribute('data-sort')) {
+            let index = [].findIndex.call(sortables, (el, i, inputs) => {
                return el === header
             });
-            this.search(index, target)
+            this.sortColumn(index)
          }
       }
+   }
 
-      handleClick(e) {
-         let target = e.target;
+   edit(target) {
+      // debugger
+      const model = this.relation ? this.relationModel : this.model;
+      const id = this.relation ? target.dataset.id : this.modelId;
+      window.location = `/adminsc/${model}/edit/${id}`;
+   }
 
-         /// create
-         if (target.className === 'add-model') {
-            this.modelCreate(target)
+   async customSelectChange({target}) {
+      const wrapper = target.closest('[data-model]');
+      if (!wrapper) return false
 
-            /// delete
-         } else if (
-            target.className === '.del:not(.head)'
-            || target.closest('.del:not(.head)')) {
-            this.modelDel(target.closest('.del:not(.head)'))
+      const selected = target.options.selectedIndex;
+      const id = target.options[selected].value;
+      const data = {[this.field]: id, id: this.modelId};
+      const res = await post(this.url, data)
+   }
 
-            /// edit
-         } else if (target.className === 'edit:not(.head)'
-            || target.closest('.edit:not(.head)')) {
-            e.preventDefault();
-            this.edit(target)
+   getIds() {
+      let els = $(this.table)[0].querySelectorAll('[data-id]');
+      return [].filter.call(els, function (el) {
+         return el.dataset.id !== '0'
+      })
+   }
 
-            // checkbox
-         } else if (target.type === 'checkbox') {
-            const funct = target.dataset.func
-            const base_is_shippable = target.checked
-            // const id = target.closest('[data-id]').dataset.id
-            const product_1s_id = target.dataset['1sid']
-            const data = {base_is_shippable, product_1s_id}
-            post(`/adminsc/${this.model}/${funct}`, data)
+   handlePaste(e) {
+      e.target.innerText = e.clipboardData.getData('text/plain');
+      this.handleInput(e.target);
+      e.target.innerText = ''
+   }
 
-            /// sort
-         } else if (target.classList.contains('head')
-            || target.classList.contains('icon')) {
-            let header = target.closest('.head');
-            if (header.hasAttribute('data-sort')) {
-               let index = [].findIndex.call(sortables, (el, i, inputs) => {
-                  return el === header
-               });
-               this.sortColumn(index)
-            }
-         }
+   handleKeyUp(e) {
+      let target = e.target;
+      e.cancelBubble = true;
+
+      // contenteditable
+      if (target.hasAttribute('contenteditable')) {
+         this.debouncedInput(target)
+
+         /// search
+      } else if (target.closest('.head')) {
+         const header = target.closest('.head');
+         const index = [].findIndex.call(this.headers, (el, i, inputs) => {
+            return el === header
+         });
+         this.search(index, target)
       }
+   }
 
-      edit(target) {
-         // debugger
-         let model = target.closest('[custom-list]').dataset.model;
-         let id = target.dataset.id;
-         window.location = `/adminsc/${model}/edit/${id}`;
+/// INPUT
+   async handleInput(target) {
+      // const model = this.makeServerModel(target);
+      const data = this.createModel(target);
+      const res = await post(this.url, data);
+      if (res.arr.id) {
+         this.newRow(res?.arr.id).bind(this)
       }
+   }
 
-      // DELETE
-      async modelDel(el) {
-         if (!confirm('Удалить?')) return;
-         let id = el.dataset['id'];
-         let res = await post(`/adminsc/${modelName}/delete`, {id});
-         if (res) {
-            delView(id)
-         }
+
+   // DELETE
+   async modelDel(el) {
+      if (!confirm('Удалить?')) return;
+      let id = el.dataset['id'];
+      let res = await post(`/adminsc/${this.model}/delete`, {id});
+      if (res) {
+         delView(id)
       }
+   }
 
-      delView(id) {
-         let arr = $(`[data-id='${id}']`);
-         [].forEach.call(arr, function (el) {
-            el.remove()
-         })
+   // UPDATE OR CREATE
+   createModel(target) {
+      return {
+         "model": this.model,
+         "id": this.modelId,
+         "relation": this.relation,
+         "fields": this.relationDTO(target),
+      };
+   }
+
+
+   relationDTO(target) {
+      if (!this.relation) return null
+      return {
+         id: target.dataset.id,
+         [target.dataset.field]:target.innerText,
       }
+   }
 
-      // UPDATE OR CREATE
-      createRelation(data, table, relation) {
-         const parent = table.closest('.item-wrap');
-         data.model = parent.dataset.model;
-         data.id = parent.dataset.id;
-         data.relation = relation;
-         return data
-      }
-
-      createMorph(data, table, morph) {
-         let $parent = table.closest('.item-wrap');
-         data.model = $parent.dataset.model;
-         data.id = $parent.dataset.id;
-
-         data.morph = new MorphDTO(table);
-         // debugger
-         return data
-      }
-
-
-      async modelCreate(target) {
-         let data = {};
-         data.model = target.closest('[custom-list]').dataset.model;
-         data.id = 0;
-
-         const relation = this.table.dataset.relation;
-         if (relation) {
-            data = this.createRelation(data, this.table, relation)
-         }
-         // debugger
-         const morph = this.table.parentNode.dataset.morphRelation;
-         if (morph) {
-            data = this.createMorph(data, this.table, relation)
-         }
-
-         const res = await post(`/adminsc/${data.model}/updateOrCreate`, data);
-         if (res.arr.id) {
-            this.newRow(res?.arr.id).bind(this)
-         }
-      }
-
-
-      newRow(id) {
-         [].forEach.call(this.hidden, function (el) {
+   newRow(id) {
+      [].forEach.call(this.hidden, function (el) {
             const newEl = el.cloneNode(true);
             newEl.removeAttribute('hidden');
 
-            const tableContent = $(this.table).find('.custom-list');
+            const tableContent = $(this.table).find('.custom-table');
             tableContent.appendChild(newEl);
             if (['id'].includes(newEl.dataset.field)) {
                newEl.innerText = id
@@ -200,142 +186,132 @@ class List{
             newEl.dataset['id'] = id
 
          }.bind(this)
-         );
-      }
+      );
+   }
 
 
 /// SEARCH
-      showAllRows() {
-         [].forEach.call(this.rows, (row) => {
-            [].forEach.call(row, el => {
-               el.style.display = 'flex'
-            })
+   showAllRows() {
+      [].forEach.call(this.rows, (row) => {
+         [].forEach.call(row, el => {
+            el.style.display = 'flex'
          })
-      }
+      })
+   }
 
-      search(index, input) {
-         this.showAllRows();
-         const value = input.value;
+   search(index, input) {
+      this.showAllRows();
+      const value = input.value;
 
-         [].forEach.call(this.inputs, (inp) => {
-            if (inp !== input) inp.value = ''
-         });
+      [].forEach.call(this.inputs, (inp) => {
+         if (inp !== input) inp.value = ''
+      });
 
-         [].forEach.call(this.rows, function (row) {
-            const str = row[index].innerText;
-            const regexp = new RegExp(`${value}`, 'gi');
-            if (!str.match(regexp)) {
-               [].forEach.call(row, el => {
-                  el.style.display = 'none'
-               })
-            }
-         });
-      }
-
-      fillRows() {
-         /// get table rows array
-         let rows = [];
-         for (let i = 0; i < this.ids.length; i++) {
-            let id = this.ids[i].dataset.id;
-            let row = $(this.table)[0].querySelectorAll(`[data-id='${id}']`);
-            rows.push(row)
+      [].forEach.call(this.rows, function (row) {
+         const str = row[index].innerText;
+         const regexp = new RegExp(`${value}`, 'gi');
+         if (!str.match(regexp)) {
+            [].forEach.call(row, el => {
+               el.style.display = 'none'
+            })
          }
-         return rows
+      });
+   }
+
+   fillRows() {
+      /// get table rows array
+      let rows = [];
+      for (let i = 0; i < this.ids.length; i++) {
+         let id = this.ids[i].dataset.id;
+         let row = $(this.table)[0].querySelectorAll(`[data-id='${id}']`);
+         rows.push(row)
       }
+      return rows
+   }
 
 // SORT
-      sortColumn(index) {
-         let rows = this.fillRows();
-         // Получить текущее направление
-         const direction = this.directions[index] || 'asc';
-         // Фактор по направлению
-         const multiplier = (direction === 'asc') ? 1 : -1;
+   sortColumn(index) {
+      let rows = this.fillRows();
+      // Получить текущее направление
+      const direction = this.directions[index] || 'asc';
+      // Фактор по направлению
+      const multiplier = (direction === 'asc') ? 1 : -1;
 
-         const newRows = Array.from(rows);
+      const newRows = Array.from(rows);
 
-         newRows.sort(function (rowA, rowB) {
-            const cellA = rowA[index].innerHTML;
-            const cellB = rowB[index].innerHTML;
+      newRows.sort(function (rowA, rowB) {
+         const cellA = rowA[index].innerHTML;
+         const cellB = rowB[index].innerHTML;
 
-            const a = transform(index, cellA);
-            const b = transform(index, cellB);
+         const a = this.transform(index, cellA);
+         const b = transform(index, cellB);
 
-            switch (true) {
-               case a > b:
-                  return 1 * multiplier;
-               case a < b:
-                  return -1 * multiplier;
-               case a === b:
-                  return 0;
-            }
-         });
-
-         // Удалить старые строки
-         [].forEach.call(rows, function (nodeList) {
-            [].forEach.call(nodeList, el => {
-               el.remove()
-            })
-         });
-
-         // Поменять направление
-         this.directions[index] = direction === 'asc' ? 'desc' : 'asc';
-
-         // Добавить новую строку
-         newRows.forEach(function (newRow) {
-            newRow = Array.from(newRow);
-            newRow.reverse();
-            [].forEach.call(newRow, el => {
-               this.headers[this.headers.length - 1].after(el)
-            })
-         });
-      }
-
-// Преобразовать содержимое данной ячейки в заданном столбце
-      transform(index, content) {
-         // Получить тип данных столбца
-         if (!sortables[index]) return;
-         const type = sortables[index].getAttribute('data-type');
-         switch (type) {
-            case 'number':
-               return parseFloat(content);
-            case 'string':
-            default:
-               return content
+         switch (true) {
+            case a > b:
+               return 1 * multiplier;
+            case a < b:
+               return -1 * multiplier;
+            case a === b:
+               return 0;
          }
-      }
+      });
 
-/// INPUT
-      handleInput(table, contenteditable, target) {
-         if (!target.hasAttribute('contenteditable')) return false;
-         let model = makeServerModel(target, modelName);
-         this.save(model)
-      }
+      // Удалить старые строки
+      [].forEach.call(rows, function (nodeList) {
+         [].forEach.call(nodeList, el => {
+            el.remove()
+         })
+      });
 
-      async save(model) {
-         // debugger
-         let url = `/adminsc/${model.modelName}/updateOrCreate`;
-         let res = await post(url, model.model)
-      }
+      // Поменять направление
+      this.directions[index] = direction === 'asc' ? 'desc' : 'asc';
+
+      // Добавить новую строку
+      newRows.forEach(function (newRow) {
+         newRow = Array.from(newRow);
+         newRow.reverse();
+         [].forEach.call(newRow, el => {
+            this.headers[this.headers.length - 1].after(el)
+         })
+      });
+   }
 
 
-      makeServerModel(target, modelName) {
-         let model = target.closest('[custom-list]').dataset.model;
-         let id = target.dataset.id;
-         let field = target.dataset.field;
-         let obj = {
-            model: {
-               id: target.dataset.id,
-               [field]: target.innerText
-            },
-            modelName
-         };
-         return obj
-      }
+   transform(index, content) {// Преобразовать содержимое данной ячейки в заданном столбце
+      if (!this.sortables[index]) return;
+      const type = this.sortables[index].getAttribute('data-type');
+      return type === 'number' ? parseFloat(content) : content
+   }
+
+
+   save(model) {
+      return post(this.url, model.model)
+   }
+
+
+   makeServerModel(target) {
+      const modelName = this.model
+      return {
+         model: {
+            id: target.dataset.id,
+            [target.dataset.field]: target.innerText
+         },
+         modelName
+      };
+   }
+
+   delView(id) {
+      const arr = $(`[data-id='${id}']`);
+      [].forEach.call(arr, function (el) {
+         el.remove()
+      })
+   }
 }
 
-const tables = $('[custom-list]');
+const tables = $('[custom-table]');
 if (tables) {
    [].forEach.call(tables, function (table) {
-      new List(table)
+      new Table(table)
    })
 }
+export default Table

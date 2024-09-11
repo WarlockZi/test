@@ -51,6 +51,7 @@ class ProductService
 
     public static function baseIsShippable($col, $product): string
     {
+        if (!isset($product->baseUnit->pivot)) return '';
         $baseIsShippable = $product->baseUnit->pivot->base_is_shippable;
         $checked = $baseIsShippable ? "checked" : '';
         return "<input type='checkbox' {$checked} data-func='changeBaseIsShippable' data-1sid='{$product['1s_id']}'>";

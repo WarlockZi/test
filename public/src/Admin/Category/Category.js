@@ -3,57 +3,52 @@ import './category.scss'
 import PropertyTable from "./PropertyTable";
 import {$, post} from "../../common";
 import SelectNew from "../../components/select/SelectNew";
-import Morph from "../../components/morph/morph";
+// import Morph from "../../components/morph/morph";
+
 
 export default class Category {
-  constructor($el) {
-    this.$el = $el;
-    this.id = $el.dataset.id
-    this.$properties_table = this.$el.querySelector('.properties');
-    this.$parent_category = $(`[data-field='category_id']`).first();
-    this.$mainImage = this.$el.querySelector('.mainImage');
-    this.setup();
-    this.dto = this.dto()
-  }
+   constructor(el) {
+      this.el = el;
+      this.id = el.dataset.id
 
-
-  setup(){
-    if (this.$properties_table) {
-      new PropertyTable(this.$properties_table)
-    }
-    if (this.$parent_category) {
-      const parentSelector = new SelectNew(this.$parent_category);
+      this.setCategoryId()
+      this.setShowOnFrontPage()
+      this.setProperties()
+      this.setImage()
+   }
+   setCategoryId(){
+      const cat_id = $(`[data-field='category_id']`).first()
+      const parentSelector = new SelectNew(cat_id);
       parentSelector.sel.addEventListener('customSelect.changed', this.attachCategory.bind(this))
-    }
-    const dnds = $('[data-dnd]');
-    dnds.forEach((dnd) => {
-      if (dnd.parentNode.dataset.morphModel) {
-        let m = new Morph(dnd, $category)
+
+   }
+   setProperties(){
+      new PropertyTable(this.el.querySelector(`[data-relation="properties"]`))
+   }
+   setShowOnFrontPage(){
+      // new Checkbox(this.el.querySelector(`[data-relation="properties"]`))
+   }
+   setImage(){
+      // this.$mainImage = this.$el.querySelector('.mainImage');
+      // new Morph($('[data-dnd]').first(), $category)
+      // this.__dto = this.dto()
+   }
+
+   dto() {
+      return {
+         id: this.el.dataset.id,
       }
-    });
-  }
+   }
 
+   attachCategory({detail}) {
+      debugger;
+      let data = {
+         id: this.id,
+         category_id: +detail.next.value,
+      };
+      post('/adminsc/category/updateOrCreate', data)
+   }
 
-  dto() {
-    return {
-      id: this.$el.dataset.id,
-    }
-  }
-
-
-  attachCategory({detail}) {
-    debugger;
-    let data = {
-      id: this.id,
-      category_id: +detail.next.value,
-    };
-    post('/adminsc/category/updateOrCreate', data)
-
-  }
-
-// let dto = {
-//   id: +$category.dataset.id,
-// };
 
 // async function addMainImg(files) {
 //   let catId = $('.item-wrap')[0].dataset.id;

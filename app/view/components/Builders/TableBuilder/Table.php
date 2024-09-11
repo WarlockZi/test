@@ -1,47 +1,52 @@
 <?php
 
 
-namespace app\view\components\Builders\ListBuilder;
+namespace app\view\components\Builders\TableBuilder;
 
 
 use app\core\FS;
 use app\core\Icon;
 use Illuminate\Database\Eloquent\Collection;
 
-class CustomList
+class Table
 {
-    private array $columns = [];
+    private string $pageTitle = '';
     private string $grid = '';
+    private array $columns = [];
     private string $class = '';
+    private int $take = 0;
     private bool $headEditCol = false;
     private bool $headDelCol = false;
     private string $emptyRow = '';
-    private string $pageTitle = '';
     private string $add = '';
-    private string $relation = '';
+    private string $dataRelation = '';
+    private string $dataRelationModel = '';
+    private string $dataModel = '';
     private string $html = '';
     private string $addButton = 'ajax';
-    private string $tableClassName = '';
-    private string $model = '';
-    private string $modelName = '';
-    private string $dataModel = '';
-    private Collection|null $items;
+    private Collection $items;
+
     private FS $fs;
 
-    public static function build(string $modelName, int $count = 0)
+    public static function build(Collection $items):self
     {
-        $list              = new static();
-        $list->model       = $modelName;
-        $list->modelName = strtolower(class_basename($modelName));
-        $list->dataModel = "data-model='{$list->modelName}'";
-
+        $list            = new static();
+        $list->items = $items;
         $list->fs        = new FS(__DIR__);
+
         return $list;
     }
 
+    public function take(int $take): static
+    {
+        $this->take = $take;
+        return $this;
+    }
+
+
     public function link(string $field, string $classHeader, string $class, string $name, string $width, string $className, string $funcName)
     {
-        $this->columns[$field] = ListColumnBuilder::build($field)
+        $this->columns[$field] = ColumnBuilder::build($field)
             ->classHeader($classHeader)
             ->class($class)
             ->name($name)
@@ -50,46 +55,33 @@ class CustomList
             ->get();
     }
 
-
-    public function class(string $class)
+    public function class(string $class): static
     {
         $this->class = "class = '{$class}'";
         return $this;
     }
 
-    public function relation(string $relation)
+    public function relation(string $relation, string $relationModel): static
     {
-        $this->relation = $relation;
+        $this->dataRelation = "data-relation='$relation'";
+        $this->dataRelationModel = "data-relationModel='$relationModel'";
         return $this;
     }
-
-    public function pageTitle(string $pageTitle)
+    public function model(string $model): static
+    {
+        $this->dataModel = "data-model='$model'";
+        return $this;
+    }
+    public function pageTitle(string $pageTitle): static
     {
         $this->pageTitle = $pageTitle;
         return $this;
     }
 
-    public function all()
-    {
-        $this->items = $this->model::all();
-        return $this;
-    }
 
-    public function tableClass(string $class)
-    {
-        $this->tableClassName = $class;
-        return $this;
-    }
-
-    public function column(ListColumnBuilder $column)
+    public function column(ColumnBuilder $column): static
     {
         $this->columns[$column->field] = $column;
-        return $this;
-    }
-
-    public function items(Collection|null $items)
-    {
-        $this->items = $items;
         return $this;
     }
 
@@ -131,9 +123,9 @@ class CustomList
         return $str;
     }
 
-    public function del()
+    public function del(): static
     {
-        $this->columns['del'] = ListColumnBuilder::build('del')
+        $this->columns['del'] = ColumnBuilder::build('del')
             ->classHeader('head del')
             ->class('del')
             ->name(Icon::trashIcon())
@@ -142,9 +134,9 @@ class CustomList
         return $this;
     }
 
-    public function edit()
+    public function edit(): static
     {
-        $this->columns['edit'] = ListColumnBuilder::build('edit')
+        $this->columns['edit'] = ColumnBuilder::build('edit')
             ->classHeader('head edit')
             ->class('edit')
             ->name(Icon::editWhite())
@@ -154,10 +146,10 @@ class CustomList
         return $this;
     }
 
-    public function addButton(string $ajaxOrRedirect)
+    public function addButton(string $ajaxOrRedirect): static
     {
         $this->addButton = $ajaxOrRedirect;
-        $this->add       = $this->fs->getContent('add',['addButton'=>$this->addButton,'modelName'=>$this->modelName]);
+        $this->add       = $this->fs->getContent('add', ['addButton' => $this->addButton]);
         return $this;
     }
 
@@ -190,22 +182,18 @@ class CustomList
         }
         return '';
     }
+
     public function get()
     {
         try {
             $this->emptyRow = $this->emptyRow();
             $this->prepareGridHeader();
-            $data       = get_object_vars($this);
-            return $this->fs->getContent('CustomListTemplate', $data);
+            $this->items = $this->take ? $this->items->take($this->take) : $this->items;
+            $data        = get_object_vars($this);
+            return $this->fs->getContent('TableTemplate', $data);
 
-        } catch (\TypeError $error) {
+        } catch (\Throwable $error) {
             return $error->getMessage();
-
-        } catch (\Error $error) {
-            return $error->getMessage();
-
-        } catch (\Exception $exception) {
-            return $exception->getMessage();
         }
     }
 }

@@ -10,7 +10,7 @@ export default class UnitTable {
 
       this.product1sId = $(`[data-field='1s_id']`).first().innerText;
 
-      this.$baseUnit = $(`select`).first();
+      // this.$baseUnit = this.$table.find(`select`).first();
       // this.baseUnitId = this.$baseUnit.options[this.$baseUnit.selectedIndex].value;
 
       this.$addUnit = $('.add-unit').first();
@@ -24,7 +24,7 @@ export default class UnitTable {
       this.$rows.onclick = this.clickRow.bind(this);
       this.$rows.addEventListener('customSelect.changed', this.unitChanged.bind(this));
 
-      this.initSelects();
+      // this.initSelects();
       setTimeout(this.deleteSelected.bind(this), 800)
    }
 
@@ -61,16 +61,16 @@ export default class UnitTable {
    }
 
    createRow() {
-      let baseUnitText = this.$baseUnit.selectedOptions[0].innerText;
+      const baseUnitText = this.$baseUnit.selectedOptions[0].innerText;
 
-      let row = (new createElement()).tag('div').attr('class', 'row').get();
+      const row = (new createElement()).tag('div').attr('class', 'row').get();
       const select = this.createSelect(this.$emtyRow)
 
-      let multiplier = (new createElement()).attr('type', 'number').tag('input').attr('value', 10).className('multiplier').get();
-      let baseUnit = (new createElement()).tag('div').attr('class', 'base-unit').text(baseUnitText).get();
-      let minUnit = (new createElement()).tag('div').className('shippable').get();
-      let minUnitInput = (new createElement()).tag('input').attr('type', 'checkbox').get();
-      let del = (new createElement()).tag('div').attr('class', 'del').text('X').get();
+      const multiplier = (new createElement()).attr('type', 'number').tag('input').attr('value', 10).className('multiplier').get();
+      const baseUnit = (new createElement()).tag('div').attr('class', 'base-unit').text(baseUnitText).get();
+      const minUnit = (new createElement()).tag('div').className('shippable').get();
+      const minUnitInput = (new createElement()).tag('input').attr('type', 'checkbox').get();
+      const del = (new createElement()).tag('div').attr('class', 'del').text('X').get();
 
       row.append(select);
       row.append(multiplier);

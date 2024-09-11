@@ -59,6 +59,19 @@ class Helpers
         return $exists = !$error;
     }
 
+    function client(): string
+    {
+        $url = $this->isDev
+            ? $this->VITE_HOST . "{$this->publicPath}" . $this->entry
+            : $this->assetUrl();
+
+        if (!$url) return '';
+        if ($this->isDev) {
+            return "\n<script type='module' src='$this->VITE_HOST{$this->publicPath}@vite/client'></script>";
+        }
+        return "";
+    }
+
     function jsTag(): string
     {
         $url = $this->isDev
@@ -67,10 +80,9 @@ class Helpers
 
         if (!$url) return '';
         if ($this->isDev) {
-            return "<script type='module' src='$this->VITE_HOST{$this->publicPath}@vite/client'></script>\n"
-                . "<script type='module' src='$url'></script>";
+            return "<script type='module' src='$url'></script>";
         }
-        return '<script type="module" src="' . $url . '"></script>';
+        return "<script type='module' src='$url'></script>";
     }
 
     function jsPreloadImports(): string

@@ -4,58 +4,21 @@
 namespace app\Repository;
 
 use app\controller\AppController;
-use app\core\FS;
 use app\core\Response;
 use app\model\Product;
 use app\model\ProductUnit;
 use app\Services\ProductImageService;
-use JetBrains\PhpStorm\NoReturn;
 
 class ProductRepository extends AppController
 {
-    public function baseUnitPrice(Product $product): string
-    {
-        $baseUnit = $product->baseUnit->first() ?? 'ед отсутств';
-        $price = (float)$product->getRelation('price')->price;
-        $formattedPrice = $price
-            ? number_format($price, 2, '.', ' ')
-            : 'Цену уточняйте у менеджера';
-
-        return "{$formattedPrice} ₽ / {$baseUnit->name}";
-    }
-
-    public function dopUnitsPrices(Product $product): string
-    {
-//        $this->drop();
-        $shippableUnits = $product->shippableUnits;
-        if (!$product->shippableUnits->count()) return '';
-        $price = $product->price;
-        $str = '';
-        foreach ($shippableUnits as $unit) {
-            $multiplier = $unit->pivot->multiplier ?? 1;
-            $formattedPrice = $price && $multiplier
-                ? number_format((float)$price * $multiplier, 2, '.', ' ')
-                : 'Цену уточняйте у менеджера';
-            $str .= "<div class='price-unit-row'>
-                <div class='price-for-unit'>
-                     {$formattedPrice}
-                </div>
-                ₽ /
-                <div class='unit'>
-                {$unit->name}<span> ({$multiplier} {$product->baseUnit->name})</span>
-                </div>
-
-            </div>";
-        }
-        return $str;
-    }
-
     public function edit(int $id)
     {
         $id = Product::where('id', $id)->withTrashed()->first()['1s_id'];
+
         return Product::query()
             ->withTrashed()
             ->where('1s_id', $id)
+            ->whereNotNull('1s_id')
             ->with('category.properties.vals')
             ->with('values')
             ->with('ownProperties')
@@ -97,10 +60,10 @@ class ProductRepository extends AppController
     public function main(string $slug)
     {
         $slug = "%{$slug}%";
-        $p = Product::where('slug', 'Like', $slug)->withTrashed()->first();
+        $p    = Product::where('slug', 'Like', $slug)->withTrashed()->first();
         if (!$p) $p = Product::where('short_link', $slug)->first();
         if ($p) {
-            $id = $p['1s_id'];
+            $id      = $p['1s_id'];
             $product = $this->mainShortSubquery($id)->first();;
             return $product;
         }
@@ -118,17 +81,19 @@ class ProductRepository extends AppController
             ->withTrashed()
             ->take(10)
             ->groupBy('art')
-            ->get()
-            ;
+            ->get();
     }
-    private static function array_every(array $array,callable $callback)
+
+    private static function array_every(array $array, callable $callback):bool
     {
-        return  !in_array(false,  array_map($callback,$array));
+        return !in_array(false, array_map($callback, $array));
     }
 
     public static function filter($req)
     {
-        $nullEvry = self::array_every($req, function($f){return $f==0;});
+        $nullEvry = self::array_every($req, function ($f) {
+            return $f == 0;
+        });
         if ($nullEvry) {
             return self::defaultFilter();
         };
@@ -155,17 +120,19 @@ class ProductRepository extends AppController
         }
 
         if (isset($deleted)) {
-            if ($deleted == "1") {
+            if ($deleted == "1") { //все
                 $query->withTrashed();
-            }elseif ($deleted === "2") {
-
+            } elseif ($deleted === "2") { // не удаленные
+                $query->whereNull('deleted_at');
+            } elseif ($deleted === "3") { //удаленные
+                $query->onlyTrashed();
             }
         }
 
         if (isset($matrix)) {
             if ($matrix === '1') {
                 $query->where("name", 'REGEXP', "\\*$");
-            } elseif ($matrix === '2'){
+            } elseif ($matrix === '2') {
                 $query->where("name", 'NOT REGEXP', "\\*$");
             }
         }
@@ -175,7 +142,7 @@ class ProductRepository extends AppController
                 $query->take(20);
             } else if ($take === "2") {
                 $query->take(40);
-            }else{
+            } else {
 //                $query->take(10);
             }
         }
@@ -215,8 +182,8 @@ class ProductRepository extends AppController
     public function changeVal(array $req): void
     {
         $product = Product::find($req['product_id']);
-        $newVal = $req['morphed']['new_id'];
-        $oldVal = $req['morphed']['old_id'];
+        $newVal  = $req['morphed']['new_id'];
+        $oldVal  = $req['morphed']['old_id'];
 
         if (!$oldVal) {
             $product->values()->attach($newVal);
@@ -236,8 +203,8 @@ class ProductRepository extends AppController
 
     public function changeUnit(array $req): void
     {
-        $productId = $req['pivot']['product_id'];
-        $unitId = $req['morphed']['new_id'];
+        $productId   = $req['pivot']['product_id'];
+        $unitId      = $req['morphed']['new_id'];
         $productUnit = [
             'unit_id' => $unitId,
             'multiplier' => $req['pivot']['multiplier'],
@@ -260,7 +227,7 @@ class ProductRepository extends AppController
     {
         try {
             $productId = $req['pivot']['product_id'];
-            $unitId = $req['morphed']['old_id'];
+            $unitId    = $req['morphed']['old_id'];
             ProductUnit::where('product_1s_id', $productId)
                 ->where('unit_id', $unitId)
                 ->delete();
@@ -280,15 +247,5 @@ class ProductRepository extends AppController
             ->orderBy('id', "DESC")
             ->get();
     }
-
-    public function list()
-    {
-        return Product::query()
-            ->with('mainImages')
-            ->take(20)
-            ->orderBy('id', "DESC")
-            ->get();
-    }
-
 
 }

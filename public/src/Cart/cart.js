@@ -6,24 +6,23 @@ import Modal from "../components/Modal/modal";
 import CartSuccess from "../components/Modal/modals/CartSuccess";
 import CartLogin from "../components/Modal/modals/CartLogin";
 import CartLead from "../components/Modal/modals/CartLead";
-import {it, qa, qs} from '../constants';
+import {ael, it, qa, qs} from '../constants';
 import shippableTable from "../share/shippable/shippableUnitsTable";
 
 export default class Cart {
    constructor() {
-      let container = $('.user-content .cart .content').first();
-      if (!container) return;
+      this.container = $('.user-content .cart .content').first();
+      if (!this.container) return;
 
-      this.container = container;
-      container.onclick = this.handleClick.bind(this);
-      container.onkeyup = this.handleKeyUp.bind(this);
+      this.container[ael]('click', this.handleClick.bind(this));
+      this.container[ael]('keyup', this.handleKeyUp.bind(this));
       // container[ael]('click', handleShippableUnitsTableClick.bind(this))
 
       // this.cartDeadline = this.cartLifeMs + Date.now()
-      this.total = container[qs]('.total span');
-      this.$cartEmptyText = container[qs]('.empty-cart');
-      this.$cartCount = container[qs]('.cart .count');
-      this.rows = container[qa]('.row');
+      this.total = this.container[qs]('.total span');
+      this.$cartEmptyText = this.container[qs]('.empty-cart');
+      this.$cartCount = this.container[qs]('.cart .count');
+      this.rows = this.container[qa]('.row');
       this.setUrl()
 
       this.mapTables()
@@ -62,7 +61,7 @@ export default class Cart {
 
    counterCallback() {
       cookieRemove('cartDeadline')
-      this.dropCart()
+      this.dropCart().then()
    }
 
 
@@ -81,7 +80,7 @@ export default class Cart {
    }
 
    cartRowDTO(target) {
-      let row = target.closest('.row');
+      const row = target.closest('.row');
       return {
          sess: getToken(),
          product_id: row.dataset.productId,
@@ -96,6 +95,7 @@ export default class Cart {
       } else if (target.classList.contains('plus') || target.classList.contains('minus')) {
          if (this.rowTotalCount(target.closest('.row'))) {
             this.renderSums()
+            this.changeCount(target)
          } else {
             this.renderSums()
             // await this.deleteCartRow(target)
@@ -103,12 +103,18 @@ export default class Cart {
       }
    }
 
+   changeCount(target) {
+      const count = target.closest('[unit-row]')[qs]('input').value
+      post(this.url, count).then()
+
+   }
+
    async handleKeyUp({target}) {
       if (target.classList.contains('input') && target.tagName === 'INPUT') {
          this.renderSums()
          const count = +target.value
          // if (count) {
-            this.updateOrCreate(target,count)
+         this.updateOrCreate(target, count)
          // }
       }
    }
@@ -119,10 +125,10 @@ export default class Cart {
       }, 0)
    }
 
-   updateOrCreate(target,count){
+   updateOrCreate(target, count) {
       const product_id = target.closest('[shippable-table]').dataset['1sid'];
       const unit_id = target.closest('[unit-row]').dataset['unitid'];
-      post(this.url+`/updateOrCreate`, {product_id, unit_id,count})
+      post(this.url + `/updateOrCreate`, {product_id, unit_id, count})
    }
 
    async deleteCartRow(target) {
@@ -176,11 +182,11 @@ export default class Cart {
    }
 
    async modalLeadCallback(fields, modal) {
-      let name = fields.name.value;
-      let phone = fields.phone.value;
-      let company = fields.company.value;
-      let sess = getToken();
-      let res = await post('/cart/lead', {name, phone, company, sess});
+      const name = fields.name.value;
+      const phone = fields.phone.value;
+      const company = fields.company.value;
+      const sess = getToken();
+      const res = await post('/cart/lead', {name, phone, company, sess});
       modal.close();
       if (res) {
          location.reload()

@@ -111,12 +111,22 @@
       }
 
       .price-units {
-        width: 70%;
+        display: flex;
+        flex-direction: column;
+        width: 95%;
         margin-bottom: 10px;
+        font-size: .8rem;
 
-        .price-unit-row {
+        .red {
+          color: red;
+        }
+        .mb-5{
+          margin-bottom: 10px;
+        }
+
+        .default-price, .promotion-price {
           display: flex;
-          font-size: .8rem;
+
 
           .price-for-unit {
             display: flex;
@@ -129,8 +139,14 @@
           .unit {
             margin-left: 5px;
 
+            .unit-name {
+              display: inline-block;
+              min-width: 22px;
+            }
+
           }
         }
+
       }
 
       .price {
@@ -314,6 +330,7 @@
   }
 
 }
+
 .info-wrap {
   @include info-tag;
 }

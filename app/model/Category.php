@@ -12,7 +12,7 @@ class Category extends Model
 {
     use SoftDeletes;
 
-    public $timestamps = false;
+    public $timestamps = true;
     protected $fillable = [
         '1s_id',
         'name',

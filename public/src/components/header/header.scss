@@ -201,6 +201,12 @@ header {
       fill: transparent;
     }
 
+    .catalog {
+      svg {
+        fill: white;
+      }
+    }
+
     button {
       border: none;
       padding: 0;
@@ -211,6 +217,9 @@ header {
     .cart,
     .promotions,
     .gamburger {
+    }
+
+    .util-item {
       position: relative;
       height: 100%;
       margin: initial;

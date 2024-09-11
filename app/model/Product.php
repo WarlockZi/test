@@ -41,17 +41,7 @@ class Product extends Model
     {
         return $this->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
     }
-//    protected function shortLink(): Attribute
-//    {
-//        return Attribute::get(
-//            function () {
-//                $link = $this->getRawOriginal('short_link');
-//                $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
-//                $host = $_SERVER['HTTP_HOST'] ?? '';
-//                return "{$scheme}://{$host}/short/{$link}";
-//            }
-//        );
-//    }
+
     public function scopeWithWhereHas($query, $relation, $constraint){
         return $query->whereHas($relation, $constraint)
             ->with([$relation => $constraint]);
@@ -229,6 +219,7 @@ class Product extends Model
         return $this
             ->hasMany(Promotion::class, 'product_1s_id', '1s_id')
             ->where('active_till', '>=', Carbon::today()->toDateString());
+//            ->orWhereNull('active_till');
     }
 
     public function inactivePromotions()
@@ -308,6 +299,18 @@ class Product extends Model
 //    {
 //        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
 //            ->withPivot('is_shippable', 'multiplier')->wherePivotNull('is_base');
+//    }
+
+//    protected function shortLink(): Attribute
+//    {
+//        return Attribute::get(
+//            function () {
+//                $link = $this->getRawOriginal('short_link');
+//                $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
+//                $host = $_SERVER['HTTP_HOST'] ?? '';
+//                return "{$scheme}://{$host}/short/{$link}";
+//            }
+//        );
 //    }
     protected static function booted()
     {

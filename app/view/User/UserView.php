@@ -11,8 +11,8 @@ use app\view\components\Builders\Date\DateBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\CustomList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\MyView;
@@ -251,25 +251,25 @@ abstract class UserView
 
 	public static function listAll(): string
 	{
-		return CustomList::build(User::class)
+		return Table::build(User::class)
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Имя')
 					->search()
 					->width('1fr')
 					->get())
 			->column(
-				ListColumnBuilder::build('surName')
+				ColumnBuilder::build('surName')
 					->name('Фамилия')
 					->search()
 					->width('1fr')
 					->get())
 			->column(
-				ListColumnBuilder::build('confirm')
+				ColumnBuilder::build('confirm')
 					->name('co')
 					->get())
 			->edit()

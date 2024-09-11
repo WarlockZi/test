@@ -72,7 +72,6 @@ class AuthController extends AppController
          }
          Auth::setAuth($user);
 
-//         $this->user = $user;
          if (User::can($user, ['role_employee'])) {
             Response::exitJson(['role' => 'employee', 'id' => $user['id']]);
          } else {
@@ -99,7 +98,6 @@ class AuthController extends AppController
          $this->assets->unsetCss('auth.css');
 
       } else {
-//         $this-layout = 'vitex';
          $item = UserView::guest($user);;
       }
 

@@ -41,11 +41,12 @@ class CartController extends AppController
 	{
         $s =  session_id();
 		$lead = Lead::where('sess',$s)->first();
+        $user = Auth::getUser();
 		$products = CartRepository::main();
         $authed = Auth::isAuthed();
         $trashedWhite = Icon::trashWhite();
 
-		$this->set(compact('products', 'lead','authed', 'trashedWhite'));
+		$this->set(compact('products', 'lead', 'user','authed', 'trashedWhite'));
 	}
 
 	public function actionLogin()
