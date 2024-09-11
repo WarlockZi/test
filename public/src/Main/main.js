@@ -1,5 +1,5 @@
-import '../404/404.scss'
 import './main.scss'
+import '../404/404.scss'
 
 import {ael, qs} from '../constants';
 import '../share/hoist/hoist';

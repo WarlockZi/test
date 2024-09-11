@@ -14,7 +14,6 @@
         <div class="manager">
             Менеджер -
         </div>
-        <?= \app\view\Product\ProductArrayFormView::getManagerSelector(); ?>
     </div>
 
     <?php foreach ($orders as $order): ?>
@@ -29,7 +28,7 @@
                 </div>
                 <div class="count"><?= $order->total_count ?></div>
                 <div class="unit count"><?= $order->unit->name ?></div>
-                <?$o = $order->toArray();?>
+                <? $o = $order->toArray(); ?>
                 <?php if ($order->deleted_at): ?>
                     <div class="active count"><?= $order->deleted_at ?></div>
                 <?php else: ?>

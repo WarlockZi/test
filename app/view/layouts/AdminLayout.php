@@ -72,16 +72,7 @@ class AdminLayout extends Layout
 
     public function render(): void
     {
-        echo $this->getLayout();
+        echo $this->layoutFs->getContent($this->layout, $this->content);
     }
 
-    public function getContent(): array
-    {
-        return $this->content;
-    }
-
-    protected function getLayout(): string
-    {
-        return $this->layoutFs->getContent($this->layout, $this->getContent());
-    }
 }

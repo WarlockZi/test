@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Promotion extends Model
 {
-	public $timestamps = false;
+	public $timestamps = true;
 
 	protected $fillable = [
 		'new_price',

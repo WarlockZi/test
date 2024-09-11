@@ -1,10 +1,10 @@
 <?php
 
 
-namespace app\view\components\Builders\ListBuilder;
+namespace app\view\components\Builders\TableBuilder;
 
 
-class ListColumnBuilder
+class ColumnBuilder
 {
 
     public $field = 'id';
@@ -27,11 +27,8 @@ class ListColumnBuilder
     public $functionClass;
 
     public $select = false;
-    public $nameOptionByField;
-    public $initialOption;
-    public $initialOptionValue = 0;
 
-    public static function build(string $field)
+    public static function build(string $field): self
     {
         $column            = new static();
         $column->field     = $field;
@@ -39,48 +36,44 @@ class ListColumnBuilder
         return $column;
     }
 
-    public function class(string $class)
+    public function class(string $class): self
     {
         $this->class = "class='{$class}'";
         return $this;
     }
-    public function callback($callback)
-    {
-        $this->callbackFn = $callback;
-        return $this;
-    }
-    public function callCallback($attr)
-    {
-        return call_user_func($this->callbackFn,$attr);
-    }
-    public function classHeader(string $class)
+
+    public function classHeader(string $class): self
     {
         $this->classHeader = "class='{$class}'";
         return $this;
     }
 
-    public function name(string $name)
+    public function name(string $name): self
     {
         $this->name = $name;
         return $this;
     }
 
-    public function type(string $type)
+    public function type(string $type): self
     {
         $this->type = "data-type='{$type}'";
         return $this;
     }
 
-    public function sort()
+    public function sort(): self
     {
         $this->sort     = 'data-sort';
         $this->sortIcon = '<div class="icon"></div>';
         return $this;
     }
 
-    public function html($html)
+    public function html(string|callable $html): self
     {
-        $this->html = $html;
+        if (is_callable($html)) {
+            $this->html = $html();
+        } else {
+            $this->html = $html;
+        }
         return $this;
     }
 
@@ -97,13 +90,24 @@ class ListColumnBuilder
         return $this;
     }
 
+    public function callback($callback): self
+    {
+        $this->callbackFn = $callback;
+        return $this;
+    }
+
+    public function callCallback($attr)
+    {
+        return call_user_func($this->callbackFn, $attr);
+    }
+
     public function width(string $width): self
     {
         $this->width = $width;
         return $this;
     }
 
-    public function hidden()
+    public function hidden(): self
     {
         $this->hidden = 'hidden';
         return $this;
@@ -129,12 +133,12 @@ class ListColumnBuilder
         }
     }
 
-    public function get()
+    public function get(): self|string
     {
         try {
-            $this->class = $this->class??"class='cell'";
+            $this->class       = $this->class ?? "class='cell'";
             $this->classHeader = $this->classHeader ?? "class='head'";
-            $this->name        = $this->name ? $this->name : $this->field;
+            $this->name        = $this->name ?? $this->field;
             return $this;
         } catch (\Throwable $exception) {
             return $exception->getMessage();

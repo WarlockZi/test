@@ -3,8 +3,8 @@
 namespace app\view\Manufacturer;
 
 use app\model\Manufacturer;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\CustomList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 
 class ManufacturerView
 {
@@ -17,27 +17,23 @@ class ManufacturerView
 	{
 		$items = $modelName::with('country')
 			->get();
-		return CustomList::build($modelName)
+		return Table::build($items)
 			->pageTitle('Поставщики')
 			->addButton('ajax')
-			->items($items)
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->width('50px')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Наименование')
 					->search()
 					->contenteditable()
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('country_id')
-//					->html(
-//
-//					)
+				ColumnBuilder::build('country_id')
 					->function(Manufacturer::class, 'countrySelect')
 					->name('Страна')
 					->get()

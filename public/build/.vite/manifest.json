@@ -1,6 +1,6 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-DsR3Gre0.js",
+    "file": "assets/Category-CnN7upNY.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -38,7 +38,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-CuyFrCvT.js",
+    "file": "assets/Product-CZWm7qwh.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -59,7 +59,7 @@
     ]
   },
   "Admin/Product/Values.js": {
-    "file": "assets/Values-Dv0GdoRr.js",
+    "file": "assets/Values-BvebWgVq.js",
     "name": "Values",
     "src": "Admin/Product/Values.js",
     "isDynamicEntry": true,
@@ -74,7 +74,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-BbB-bfei.js",
+    "file": "assets/admin-Di6FP4JL.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -89,12 +89,13 @@
     "dynamicImports": [
       "Admin/Product/Product.js",
       "Admin/Order/order.js",
+      "Admin/Order/order.js",
       "components/Modal/modal.js",
       "Admin/Category/Category.js",
       "components/AdminAccordion.js"
     ],
     "css": [
-      "assets/admin-CDvGjXX9.css"
+      "assets/admin-DrcWyUOV.css"
     ]
   },
   "Cart/cart.js": {

@@ -27,6 +27,8 @@ use app\core\Icon;
         <?= $assets->getCss(); ?>
     <!--    --><?php //= $assets->getCDNCss(); ?>
 
+<? include_once __DIR__ . '/metrica.php'; ?>
+
 </head>
 
 <body>

@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 
 
 use app\controller\AppController;
+use app\model\Unit;
 use app\Repository\UnitRepository;
 use app\view\Unit\UnitFormView;
 
@@ -12,6 +13,7 @@ use app\view\Unit\UnitFormView;
 class UnitController extends AppController
 {
     private UnitRepository $repo;
+    protected $model = Unit::class;
 
     public function __construct()
     {

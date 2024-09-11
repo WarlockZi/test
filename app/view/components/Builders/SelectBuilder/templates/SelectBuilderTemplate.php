@@ -1,11 +1,8 @@
 <select custom-select
-    <?= $title; ?>
-    <?= $field; ?>
-    <?= $relation; ?>
-    <?= $class; ?>
-<!--    --><?php //= $name; ?>
-<!--    --><?php //= $id; ?>
-
+    <?= $title??''; ?>
+    <?= $field??''; ?>
+    <?= $relation??''; ?>
+    <?= $class??''; ?>
 >
     <?= $options; ?>
 </select>

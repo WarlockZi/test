@@ -9,7 +9,7 @@ use app\Domain\Product\Image\ProductMainImageEntity;
 use app\model\Image;
 use app\model\Product;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\Image\ImageView;
 use Illuminate\Database\Eloquent\Model;
 
@@ -160,7 +160,7 @@ class ImageRepository
 		}
 	}
 
-	public static function getImgByHash(ListColumnBuilder $list, Image $image, string $field)
+	public static function getImgByHash(ColumnBuilder $list, Image $image, string $field)
 	{
 		$picPath = "/pic/{$image['path']}/{$image['hash']}";
 		foreach (self::$acceptedTypes as $acceptedType) {
@@ -172,7 +172,7 @@ class ImageRepository
 	}
 
 
-	public static function getImgTags(ListColumnBuilder $list, Image $image, string $field)
+	public static function getImgTags(ColumnBuilder $list, Image $image, string $field)
 	{
 		$image = Image::find($image['id']);
 		$names = $image->tags

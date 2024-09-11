@@ -4,10 +4,10 @@
 		<div class="promotion">Акция</div>
         <?php foreach ($product->activepromotions as $promotion): ?>
 		  <div class="conditions">При покупке от
-					<?= $promotion->count; ?>&nbsp;
+					<?= $promotion->count?? '<b style="color:red;">неустановленного количества</b>';; ?>&nbsp;
 					<?= $promotion->unit->name
 					?? '<b style="color:red;">неустановленных единиц</b>'; ?>
-			  <br>- цена <?= $promotion->new_price ?>
+			  <br>- цена <?= $promotion->new_price?? '<b style="color:red;">неустановленная цена</b>'; ?>
 		  </div>
 		 <p>Акция действует до : <br><?=$promotion->active_till ;?></p>
         <?php endforeach; ?>

@@ -1,12 +1,13 @@
-<div custom-list
+<div custom-table
     <?= $class; ?>
-     data-relation="<?= $relation; ?>"
     <?= $dataModel; ?>
+    <?= $dataRelation; ?>
+    <?= $dataRelationModel; ?>
 >
 
-    <div class='list-title'><?= $pageTitle; ?></div>
+    <div class='table-title'><?= $pageTitle; ?></div>
 
-    <div class="custom-list"
+    <div class="custom-table"
         <?= $grid ?>
     >
 
@@ -46,7 +47,8 @@
                                 <?= $c->dataField; ?>
                                 <?= $c->class; ?>
                                 <?= $c->contenteditable; ?>
-                        ><?= $c->getData($c, $item, $field); ?>
+                        >
+                            <?= $c->getData($c, $item, $field); ?>
                         </div>
                     <?php endif; ?>
 
@@ -59,7 +61,7 @@
     </div>
 
     <? if (!$items->count()): ?>
-        <h3>Элементы не найдены</h3>
+        <h3 class="no-items">Элементы не найдены</h3>
     <? endif; ?>
 
     <!--  ADD BUTTON  -->

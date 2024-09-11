@@ -104,7 +104,8 @@ class Assets
 
     private function getViteCss(): string
     {
-        $str = $this->compiler->vite('Admin/admin.js');
+        $str = $this->compiler->client();
+        $str .= $this->compiler->vite('Admin/admin.js');
         $str .= $this->compiler->vite('Main/main.js');
         $str .= $this->compiler->vite('Auth/auth.js');
         return $str;

@@ -3,25 +3,25 @@
 
 namespace app\view\Tag;
 
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\CustomList;
+use app\model\Tag;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 
 class TagView
 {
 
 	public static function list(string $className)
 	{
-		return CustomList::build($className)
+		return Table::build(Tag::all())
 			->pageTitle('Тэги')
 			->del()
 			->addButton('ajax')
-			->all()
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->search()
 					->contenteditable()
 					->get()

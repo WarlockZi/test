@@ -7,8 +7,8 @@ namespace app\view\Post;
 use app\model\Post;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\CustomList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use app\view\components\Builders\MultiSelectBuilder\MultiSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\CustomMultiSelect\CustomMultiSelect;
@@ -102,14 +102,14 @@ class PostView
 	public static function listAll(): string
 	{
 		$view = new self;
-		return CustomList::build($view->model)
+		return Table::build($view->model)
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Наименование')
 					->contenteditable()
 					->search()
@@ -117,7 +117,7 @@ class PostView
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('full_name')
+				ColumnBuilder::build('full_name')
 					->name('Полное наим')
 					->contenteditable()
 					->search()

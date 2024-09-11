@@ -8,8 +8,8 @@ use app\model\Order;
 
 use app\model\OrderItem;
 use app\model\User;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\CustomList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use app\view\MyView;
 
 
@@ -21,37 +21,37 @@ abstract class OrderView
 
 	public static function listAll(): string
 	{
-		return CustomList::build(Order::class)
+		return Table::build(Order::all())
+            ->model('order')
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Наименование')
 					->search()
 					->width('1fr')
 					->get())
-			->all()
 			->edit()
 			->get();
 	}
 
 	public static function leadList($items): string
 	{
-		$list =  CustomList::build(OrderItem::class)
+		$list =  Table::build($items)
+            ->model('order')
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('user')
+				ColumnBuilder::build('user')
 					->function(OrderItem::class, 'leadData')
 					->name('Клиент')
 					->search()
 					->width('1fr')
 					->get())
-			->items($items)
 			->edit()
 			->get();
         return $list;
@@ -59,19 +59,19 @@ abstract class OrderView
 
 	public static function clientList($items): string
 	{
-		return CustomList::build(Order::class)
+		return Table::build(Order::all())
+            ->model('order')
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('user')
+				ColumnBuilder::build('user')
 					->function(Order::class, 'userEmail')
 					->name('Клиент')
 					->search()
 					->width('1fr')
 					->get())
-			->items($items)
 			->edit()
 			->addButton('ajax')
 			->get();

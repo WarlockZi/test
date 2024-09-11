@@ -1,4 +1,4 @@
-<div class="item_header">
+<div class="item_tabs">
     <?php include __DIR__ . '/tabs.php' ?>
 </div>
 

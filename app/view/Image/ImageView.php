@@ -7,8 +7,8 @@ namespace app\view\Image;
 use app\core\FS;
 use app\model\Image;
 use app\Repository\ImageRepository;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\CustomList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -54,16 +54,15 @@ class ImageView
 	public static function list(Collection $items): string
 	{
 		$view = new self;
-		return CustomList::build($view->model)
-			->items($items)
+		return Table::build($items)
 			->pageTitle('Картинки')
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Наименование')
 					->contenteditable()
 					->search()
@@ -71,20 +70,20 @@ class ImageView
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('type')
+				ColumnBuilder::build('type')
 					->name('Тип')
 					->width('150px')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('hash')
+				ColumnBuilder::build('hash')
 					->name('Картинка')
 					->width('150px')
 					->function(ImageRepository::class, 'getImgByHash')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('tags')
+				ColumnBuilder::build('tags')
 					->name('Тэги')
 					->width('150px')
 					->function(ImageRepository::class, 'getImgTags')

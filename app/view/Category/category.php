@@ -8,9 +8,9 @@
     <?php else: ?>
 
         <?= $breadcrumbs ?? '' ?>
+        <h1><?= "Категория - " . $category->name; ?></h1>
 
         <?php if ($category['childrenRecursive']->count()): ?>
-            <h1>Подкатегории</h1>
 
             <div class="category-child-wrap">
                 <?php foreach ($category['childrenRecursive'] as $child): ?>
@@ -22,7 +22,6 @@
             </div>
         <?php endif; ?>
 
-        <h1><?= "Категория - " . $category->name; ?></h1>
 
         <?php if ($category->productsInStore->count()): ?>
 

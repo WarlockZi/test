@@ -38,39 +38,19 @@ class ProductController extends AppController
     {
         $id   = $this->route->id;
         $prod = $this->repo->edit($id);
-//		$p = $prod->toArray();
 
         if ($prod) {
-            try {
-                $product = ProductFormView::edit($prod);
-            } catch (\Throwable $exception) {
-                $exc = $exception;
-            }
+            $product     = ProductFormView::edit($prod);
             $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);
             $this->set(compact('product', 'breadcrumbs'));
+        } else {
+            $product = null;
+            $this->set(compact('product',));
         }
         $this->assets->setProduct();
-//        $this->assets->setQuill();
+        $this->assets->setQuill();
     }
 
-    public function actionList(): void
-    {
-        $items = ProductRepository::list();
-        $list  = ProductArrayFormView::list($items, 'Товары');
-        $this->set(compact('list'));
-    }
-
-    public function actionChangebaseisshippable(): void
-    {
-        ProductService::changeBaseIsShippable($this->ajax);
-    }
-
-    public function actionTrashed(): void
-    {
-        $items   = $this->repo->trashed();
-        $trashed = ProductArrayFormView::list($items, 'Удаленные товары');
-        $this->set(compact('trashed'));
-    }
 
     public function actionFilter(): void
     {
@@ -102,5 +82,17 @@ class ProductController extends AppController
     {
         ProductAction::changePromotion($this->ajax);
     }
+
+//    public function actionChangebaseisshippable(): void
+//    {
+//        ProductService::changeBaseIsShippable($this->ajax);
+//    }
+//
+//    public function actionTrashed(): void
+//    {
+//        $items   = $this->repo->trashed();
+//        $trashed = ProductArrayFormView::list($items, 'Удаленные товары');
+//        $this->set(compact('trashed'));
+//    }
 }
 

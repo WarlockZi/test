@@ -42,7 +42,7 @@
             <?php if (!$authed && !$lead): ?>
                 <div class="buttons">
                     <div class="button" id="cartLead">Оставить свои данные</div>
-                    <div class="button" id="cartLogin">Войти под своей учеткой</div>
+                    <div class="button" id="cartLogin">Войти</div>
                 </div>
             <?php else: ?>
                 <div class="buttons">

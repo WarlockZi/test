@@ -24,7 +24,7 @@ class ItemFieldBuilder
     public bool $required = false;
     public string $contenteditable = '';
 
-    public static function build(string $fieldName, Model $item): ItemFieldBuilder
+    public static function build(string $fieldName, Model $item):static
     {
         $field            = new static();
         $field->field     = $fieldName;
@@ -32,24 +32,24 @@ class ItemFieldBuilder
         return $field;
     }
 
-    public function class(string $class): ItemFieldBuilder
+    public function class(string $class):static
     {
         $this->class = $class;
         return $this;
     }
 
-    public function name(string $name): ItemFieldBuilder
+    public function name(string $name):static
     {
         $this->name = $name;
         return $this;
     }
 
-    public function link(string $link): ItemFieldBuilder
+    public function link(string $link):static
     {
         $this->link = $link;
         return $this;
     }
-    public function relation(string $relation): ItemFieldBuilder
+    public function relation(string $relation):static
     {
         $this->relation = $relation;
         return $this;
@@ -58,31 +58,31 @@ class ItemFieldBuilder
     {
         return "data-relation='$this->relation'";
     }
-    public function html(string $html): ItemFieldBuilder
+    public function html(string $html):static
     {
         $this->html = $html;
         return $this;
     }
 
-    public function required(): ItemFieldBuilder
+    public function required():static
     {
         $this->required = 'required';
         return $this;
     }
 
-    public function hidden(): ItemFieldBuilder
+    public function hidden():static
     {
         $this->hidden = 'hidden';
         return $this;
     }
 
-    public function contenteditable(): ItemFieldBuilder
+    public function contenteditable():static
     {
         $this->contenteditable = 'contenteditable';
         return $this;
     }
 
-    public function get(): ItemFieldBuilder
+    public function get():static
     {
         $this->name  = $this->name ?? $this->field;
         $this->value = $this->html ?? $this->item[$this->field];

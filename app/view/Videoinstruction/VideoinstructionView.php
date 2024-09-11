@@ -6,8 +6,8 @@ namespace app\view\Videoinstruction;
 
 use app\model\Videoinstruction;
 
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\CustomList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 
 class VideoinstructionView
 {
@@ -18,10 +18,10 @@ class VideoinstructionView
 	{
 		$view = new self;
         $items = Videoinstruction::all();
-		return CustomList::build($view->model)
+		return Table::build($view->model)
             ->items($items)
 			->column(
-				ListColumnBuilder::build('sort')
+				ColumnBuilder::build('sort')
 					->width('50px')
 					->name('№')
 					->sort()
@@ -29,7 +29,7 @@ class VideoinstructionView
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->width('auto')
 					->contenteditable()
 					->name('Название')
@@ -37,21 +37,21 @@ class VideoinstructionView
 
 			)
 			->column(
-				ListColumnBuilder::build('link')
+				ColumnBuilder::build('link')
 					->contenteditable()
 					->width('auto')
 					->name('Ссылка')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('tag')
+				ColumnBuilder::build('tag')
 					->contenteditable()
 					->width('auto')
 					->name('Группа')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('user_id')
+				ColumnBuilder::build('user_id')
 					->width('50px')
 					->name('Польз')
 					->get()

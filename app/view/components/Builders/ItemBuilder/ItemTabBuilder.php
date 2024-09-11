@@ -21,7 +21,7 @@ class ItemTabBuilder
 		return $view;
 	}
 
-	public function html(string $html):ItemTabBuilder
+	public function html(string $html):static
 	{
 		$this->html = $this->clean($html);
 		return $this;

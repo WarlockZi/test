@@ -2,12 +2,10 @@
 
 namespace app\controller\Admin;
 
-use app\Actions\CategoryAction;
 use app\controller\AppController;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
-use app\view\Category\CategoryArrayFormView;
 use app\view\Category\CategoryFormView;
 
 class CategoryController extends AppController
@@ -21,29 +19,25 @@ class CategoryController extends AppController
 
     public function actionIndex(): void
     {
-        $categories = CategoryRepository::treeAll();
-        $accordion  = '';
-        if ($categories->count()) {
-//            $categoryTree = CategoryRepository::treeAll();
-            $categoryTree= CategoryFormView::indexTree($categories);
-        }
+        $categoryTree = CategoryFormView::list();
         $this->set(compact('categoryTree'));
     }
 
-    public function actionEdit()
+    public function actionEdit(): void
     {
-        $id           = $this->route->id;
-        $breadcrumbs  = BreadcrumbsRepository::getCategoryBreadcrumbs($id, false, true);
-        $category     = CategoryArrayFormView::edit($id);
+        $id          = $this->route->id;
+        $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($id, false, true);
+        $category    = CategoryRepository::edit($id);
+        $category    = CategoryFormView::edit($category);
         $this->set(compact('category', 'breadcrumbs'));
     }
-    public function actionCreate(): void
-    {
-        $this->view = 'edit';
-        $category = Category::create();
-        $category     = CategoryArrayFormView::edit($category->id);
-        $this->set(compact('category'));
-    }
+//    public function actionCreate(): void
+//    {
+//        $this->view = 'edit';
+//        $category = Category::create();
+//        $category     = CategoryArrayFormView::edit($category->id);
+//        $this->set(compact('category'));
+//    }
     public function actionChangeproperty()
     {
         $this->repo->changeProperty($this->ajax);

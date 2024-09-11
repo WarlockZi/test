@@ -3,8 +3,8 @@
 namespace app\view\Right;
 
 use app\model\Right;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\CustomList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use app\view\MyView;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,13 +16,13 @@ class RightView
 	public static function listAll(): string
 	{
 		$view = new self;
-		return CustomList::build($view->model)
+		return Table::build($view->model)
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Право')
 					->search()
 					->contenteditable()
@@ -30,7 +30,7 @@ class RightView
 					->width('1fr')
 					->get())
 			->column(
-				ListColumnBuilder::build('description')
+				ColumnBuilder::build('description')
 					->name('Описание')
 					->contenteditable(true)
 					->search(true)

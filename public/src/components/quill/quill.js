@@ -5,7 +5,7 @@ import 'quill/dist/quill.snow.css';
 
 export default function quill() {
 
-   window.onload = function () {
+   // window.onload = function () {
       const selector = '#detail-text'
       // let selector = '#mytextarea'
       let textarea = $(selector)[0]
@@ -48,7 +48,7 @@ export default function quill() {
          const json = JSON.parse(text);
          quill.setContents(json)
       } catch (e) {
-         quill.insertText(0, text)
+         // quill.insertText(0, text)
       }
 
       textarea.style.background = '#fff'
@@ -70,7 +70,7 @@ export default function quill() {
          )
       }
 
-   }
+   // }
 }
 
 
