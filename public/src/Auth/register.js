@@ -40,8 +40,8 @@ function isValid(email, password) {
 }
 
 async function parseRegisterResponse(email, password) {
-  let msg = $(".message")[0];
-  let data = {
+  const msg = $(".message")[0];
+  const data = {
     email,
     password,
     "surName": $("[name='surName']")[0].value,
@@ -49,9 +49,9 @@ async function parseRegisterResponse(email, password) {
   };
   // debugger
 
-  let res = await post('/auth/register', data);
-debugger;
-  if (res?.arr?.message === 'confirmed') {
+  const res = await post('/auth/register', data);
+
+  if (res?.arr?.success === 'confirm') {
     msg.classList.remove('error');
     msg.classList.add('success');
     msg.innerHTML =

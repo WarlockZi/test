@@ -35,7 +35,7 @@ class UserRepository
          ->toArray();
    }
 
-   public function findByMail(string $mail):User
+   public function findByMail(string $mail):User|null
    {
       return User::where('email', $mail)->first();
    }
@@ -47,6 +47,6 @@ class UserRepository
       $user['hash'] = md5(microtime());
       $user['rights'] = 'user_update';
       $user['sex'] = 'm';
-      return User::query()->create($user);
+      return User::create($user);
    }
 }
