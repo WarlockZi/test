@@ -124,6 +124,7 @@ class Assets
         if ($this->compiler === 'webpack') {
             return $this->getWebpackCss();
         }
+        $this->compiler = new Helpers();
         return $this->getViteCss();
 
     }
