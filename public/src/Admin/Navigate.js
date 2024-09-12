@@ -1,4 +1,4 @@
-import {$} from "../common";
+import {$} from "../common.js";
 
 export default function navigate(str) {
 

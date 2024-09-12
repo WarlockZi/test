@@ -1,5 +1,5 @@
 import './values.scss'
-import {$, post} from '../../common'
+import {$, post} from '../../common.js'
 import SelectNew from "../../components/select/SelectNew";
 
 export default class Props {

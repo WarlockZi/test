@@ -1,7 +1,7 @@
 import './product.scss'
 import './units'
 import './Props.js'
-import {objAndFiles2FormData, post} from '../../common'
+import {objAndFiles2FormData, post} from '../../common.js'
 import {qs} from '../../constants'
 
 export default class Product {

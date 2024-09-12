@@ -25,8 +25,8 @@ class Assets
 
         protected string $port = '',
         protected string $path = '',
-        protected string|Helpers $compiler = 'vite',
-//        protected ?string|Helpers $compiler = 'webpack',
+//        protected string|Helpers $compiler = 'vite',
+        protected string|Helpers $compiler = 'webpack',
 
     )
     {

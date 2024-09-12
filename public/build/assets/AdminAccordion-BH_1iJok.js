@@ -1,1 +1,0 @@
-import{q as o,b as c,$ as s}from"./constants-mwD5SO1c.js";class n{constructor(){document[o]("svg#burger")[c]("click",function(){s(".admin_sidebar [accordion]")[0].classList.toggle("show")})}}export{n as default};
