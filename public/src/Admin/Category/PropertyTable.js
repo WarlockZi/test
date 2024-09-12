@@ -1,4 +1,4 @@
-import {$, post} from "../../common";
+import {$, post} from "../../common.js";
 import SelectNew from "../../components/select/SelectNew";
 import {ael, qa, qs} from "../../constants.js";
 

@@ -1,5 +1,5 @@
 import './units.scss'
-import {$} from '../../common'
+import {$} from '../../common.js'
 import UnitTable from './UnitTable'
 
   let $units = $('.units').first();

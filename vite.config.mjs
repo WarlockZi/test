@@ -37,6 +37,7 @@ export default defineConfig(async ({command, mode}) => {
          // output dir for production build
          outDir: '../../public/build',
          emptyOutDir: true,
+         target: 'esnext',
 
          // emit manifest so PHP can find the hashed files
          manifest: true,
@@ -46,6 +47,7 @@ export default defineConfig(async ({command, mode}) => {
          rollupOptions: {
             input: {
                admin: path.resolve(__dirname, 'public/src/Admin/admin.js'),
+               auth: path.resolve(__dirname, 'public/src/Auth/auth.js'),
                main: path.resolve(__dirname, 'public/src/Main/main.js'),
                // product: path.resolve(__dirname, 'public/src/Product/Product.js'),
             }

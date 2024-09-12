@@ -8,6 +8,9 @@ const env = process.env;
 
 const config = {
   target: "web",
+  resolve: {
+    extensions: ['.js', '.json', '.wasm'],
+  },
 
   entry: {
     // auth:{

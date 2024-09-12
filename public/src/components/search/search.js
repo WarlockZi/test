@@ -1,5 +1,5 @@
 import "./search.scss";
-import {$, debounce, post, createEl} from '../../common'
+import {$, debounce, post, createEl} from '../../common.js'
 
 export default class Search {
 
