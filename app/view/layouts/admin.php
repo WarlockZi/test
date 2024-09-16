@@ -8,7 +8,7 @@ use app\core\Error;
 <html>
 <!--ADMIN-LAYOUT-->
 <head>
-    <meta name="token" content="<?= $_SESSION['token'] ?>">
+    <meta name="phpSession" content="<?= $_SESSION['phpSession']??''; ?>">
     <meta name="robots" content="noindex,nofollow"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

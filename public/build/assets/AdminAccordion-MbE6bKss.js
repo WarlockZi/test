@@ -1,0 +1,1 @@
+import{$ as o}from"./common-DXPqd3_f.js";import{q as c,a as r}from"./constants-Clh-pk9Y.js";class n{constructor(){document[c]("svg#burger")[r]("click",function(){o(".admin_sidebar [accordion]")[0].classList.toggle("show")})}}export{n as default};
