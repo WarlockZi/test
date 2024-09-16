@@ -3,241 +3,72 @@
 
 namespace app\view\Assets;
 
-
-
-
-use app\view\layouts\Helpers;
-
 class Assets
 {
     public function __construct(
-        protected string $host = '',
-        protected bool   $cache = false,
 
-        protected array  $js = [],
-        protected array  $css = [],
-        protected array  $CDNjs = [],
-        protected array  $CDNCss = [],
-
-        protected string $title = '',
-        protected string $desc = '',
-        protected string $keywords = '',
-
-        protected string $port = '',
-        protected string $path = '',
-//        protected string|Helpers $compiler = 'vite',
-        protected string|Helpers $compiler = 'webpack',
-
+        protected Compiler     $compiler = new AssetsVite(),
+//        protected Compiler     $compiler = new AssetsWebpack(),
+        public AssetsSEO      $seo = new AssetsSEO(),
+        public AssetsCDN      $CDN = new AssetsCDN(),
+        public AssetsCache    $cache = new AssetsCache(),
     )
     {
-        $this->setCache();
-        $this->setHost();
+        $this->cache->setCache();
+        $this->setCompiler();
     }
 
-    public function setHost(): void
+
+    protected function setCompiler(): string
     {
-        $this->host = $_ENV['DEV']
-            ? $this->setLocalhost($this->compiler)
-            : '/public/dist/';
-    }
-
-    protected function getWebpack()
-    {
-        if ($_ENV['DEV'] === "1") {
-            return [
-                'protocol' => 'http://',
-                'h1' => 'localhost',
-                'port' => ":4000",
-                'path' => '/',
-            ];
-        } else {
-            return [
-                'protocol' => 'https://',
-                'h1' => 'vi-prod',
-                'port' => '',
-                'path' => '/public/dist/',
-            ];
-        }
-
-    }
-
-    protected function getVite()
-    {
-        $this->compiler = new Helpers();
-        return [
-            'protocol' => 'http://',
-            'port' => 5173,
-            'path' => '/dist/',
-            'h1' => '127.0.0.1',
-        ];
-    }
-
-    protected function setLocalhost($type): string
-    {
-        $type === 'webpack'
-            ? extract($this->getWebpack())
-            : extract($this->getVite());
-        $str =  "{$protocol}{$h1}{$port}{$path}";
-        return $str;
-    }
-
-    private function getWebpackJs(string $str = ''): string
-    {
-        foreach ($this->js as $name) {
-            $str .= "<script type='module' src='{$this->host}{$this->path}{$name}.js{$this->getTime()}'></script>";
-        }
-        return $str;
-    }
-
-    private function getViteJs(): string
-    {
-        return '';
-    }
-
-    private function getWebpackCss(string $str = ''): string
-    {
-        foreach ($this->css as $name) {
-            $str .= "<link href='{$this->host}{$this->port}{$this->path}{$name}.css{$this->getTime()}' rel='stylesheet' type='text/css'>";
-        }
-        return $str;
-    }
-
-    private function getViteCss(): string
-    {
-        $str = $this->compiler->client();
-        $str .= $this->compiler->vite('Admin/admin.js');
-        $str .= $this->compiler->vite('Main/main.js');
-        $str .= $this->compiler->vite('Auth/auth.js');
-        return $str;
-    }
-
-    public function getJS(): string
-    {
-        if ($this->compiler === 'webpack') {
-            return $this->getWebpackJs();
-        }
-        return $this->getViteJs();
-    }
-
-    public function getCss(string $str = '')
-    {
-        if ($this->compiler === 'webpack') {
-            return $this->getWebpackCss();
-        }
-        $this->compiler = new Helpers();
-        return $this->getViteCss();
-
-    }
-
-    public function getMeta()
-    {
-        return "<title>{$this->title}</title>" .
-            "<meta name = 'description' content = '{$this->desc}'>" .
-            "<meta name = 'keywords' content = '{$this->keywords}'>";
-    }
-
-    public function setMeta(string $title, string $desc = '', string $keywords = '')
-    {
-        $this->title    = $title ?? 'Медицинкские перчатки оптом';
-        $this->desc     = $desc ?? 'Медицинкские перчатки оптом';
-        $this->keywords = $keywords ?? 'Медицинкские перчатки оптом';
+        extract($this->compiler->getConfig());
+        return "{$protocol}{$h1}{$port}{$path}";
     }
 
     public function setJs(string $name): void
     {
-        $this->js[] = $name;
+        $this->compiler->setJs($name);
     }
 
-    public function setCDNJs(string $src, bool $defer = false, bool $async = false): void
+    public function setCss(string $name):void
     {
-        $this->CDNjs[] = ['src' => $src, 'defer' => $defer ? 'defer' : '', 'async' => $async ? 'async' : ''];
+        $this->compiler->setCss($name);
     }
 
-    public function setCDNCss(string $src): void
+    public function getJS(): string
     {
-        $this->CDNcss[] = $src;
+        return $this->compiler->getJs();
     }
 
-    public function getCDNJs(): string
+    public function getCss(string $str = ''):string
     {
-        $str = '';
-        foreach ($this->CDNjs as $CDNjs) {
-            $str .= "<script {$CDNjs['defer']} {$CDNjs['async']}  src='{$CDNjs['src']}'></script>";
-        }
-        return $str;
+        return $this->compiler->getCss();
     }
 
-    public function getCDNCss(): string
+    public function getMeta():string
     {
-        $str = '';
-        foreach ($this->CDNcss as $CDNcss) {
-            $str .= "<link href='{$CDNcss}' rel='stylesheet' type='text/css'>";
-        }
-        return $str;
+        return $this->seo->getMeta();
     }
-
-    public function setCss(string $name)
+    public function setMeta(string $title, string $desc, string $keywords):void
     {
-        $this->css[] = $name;
+        $this->seo->setMeta($title, $desc, $keywords);
     }
-
-    protected function getTime()
-    {
-        return ($this->cache) ? "?" . time() : "";
-    }
-
-    public function setCache(): void
-    {
-        $this->cache = $_ENV['DEV'] ? false : false;
-    }
-
-    public function unsetJs(string $name)
-    {
-        unset($this->js[$name]);
-    }
-
-    public function unsetCss($name)
-    {
-        unset($this->css[$name]);
-    }
-
-    public function setQuill(): void
-    {
-//		$this->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.bubble.css");
-        $this->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
-        $this->setCDNCss("https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css");
-    }
-
-    public function setProduct()
-    {
-        $this->setJs('product');
-        $this->setCss('product');
-    }
-
-    public function setAuth(): void
-    {
-        $this->setJs('auth');
-        $this->setCss('auth');
-    }
-
-    public function merge(Assets $assets)
-    {
-        foreach ($assets->js as $js) {
-            $this->setJs($js);
-        }
-        foreach ($assets->css as $css) {
-            $this->setCss($css);
-        }
-        foreach ($assets->CDNjs as $js) {
-            $this->setCDNJs($js['src'], $js['defer'] === 'defer', $js['async'] === 'async',);
-        }
-        foreach ($assets->CDNCss as $css) {
-            $this->setCDNCss($css);
-        }
-        $this->title    = $this->title . $assets->title . '  VITEX';
-        $this->desc     = $this->desc . $assets->desc;
-        $this->keywords = $this->keywords . $assets->keywords;
-
-    }
+//    public function merge(Assets $controllerAssets): void
+//    {
+//        array_merge([$controllerAssets, $this->compiler->getJs()]);
+//        foreach ($controllerAssets->js as $js) {
+//            $this->setJs($js);
+//        }
+//        foreach ($controllerAssets->css as $css) {
+//            $this->setCss($css);
+//        }
+//        foreach ($controllerAssets->CDNjs as $js) {
+//            $this->setCDNJs($js['src'], $js['defer'] === 'defer', $js['async'] === 'async',);
+//        }
+//        foreach ($controllerAssets->CDNCss as $css) {
+//            $this->setCDNCss($css);
+//        }
+//        $this->seo->merge($this);
+//    }
 
 }

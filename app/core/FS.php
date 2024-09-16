@@ -36,12 +36,16 @@ class FS
             return $content;
         } catch (\Throwable $exception){
            $callerClass = debug_backtrace()[1]['file']." (line ".debug_backtrace()[1]['line'].")";
-           $callerMethod = debug_backtrace()[1]['function'];
+           $callerClass1 = debug_backtrace()[1]['file']." (line ".debug_backtrace()[1]['line'].")";
+           $callerMethod = debug_backtrace()[2]['function'];
+           $callerMethod1 = debug_backtrace()[2]['function'];
             $content = ob_get_clean();
             if ($_ENV['DEV']==='1'){
                 return date('y-m-d, h:m:s').PHP_EOL.'<br><br>'.
                    "class {$callerClass}".PHP_EOL.'<br><br>'.
+                   "class {$callerClass1}".PHP_EOL.'<br><br>'.
                    "method {$callerMethod}".PHP_EOL.'<br><br>'.
+                   "method {$callerMethod1}".PHP_EOL.'<br><br>'.
                    $exception;
             }
             $this->errorLogger->write($exception);

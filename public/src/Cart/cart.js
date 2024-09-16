@@ -1,5 +1,5 @@
 import './counter1'
-import {$, cookieRemove, formatter, getToken, isAuthed, post} from '../common'
+import {$, cookieRemove, formatter, getPhpSession, isAuthed, post} from '../common'
 // import Counter1 from "./counter1";
 import Cookie from "../components/cookie/new/cookie";
 import Modal from "../components/Modal/modal";
@@ -66,7 +66,7 @@ export default class Cart {
 
 
    async dropCart() {
-      const cartToken = getToken();
+      const cartToken = getPhpSession();
       const res = await post('/cart/drop', {cartToken});
       if (res?.arr?.ok) {
          this.showEmptyCart()
@@ -82,7 +82,7 @@ export default class Cart {
    cartRowDTO(target) {
       const row = target.closest('.row');
       return {
-         sess: getToken(),
+         sess: getPhpSession(),
          product_id: row.dataset.productId,
          unit_ids: this.rowUnitIds(row),
       }
@@ -104,9 +104,8 @@ export default class Cart {
    }
 
    changeCount(target) {
-      const count = target.closest('[unit-row]')[qs]('input').value
-      post(this.url, count).then()
-
+      // const count = target.closest('[unit-row]')[qs]('input').value
+      // const res = post(this.url, count)
    }
 
    async handleKeyUp({target}) {
@@ -185,7 +184,7 @@ export default class Cart {
       const name = fields.name.value;
       const phone = fields.phone.value;
       const company = fields.company.value;
-      const sess = getToken();
+      const sess = getPhpSession();
       const res = await post('/cart/lead', {name, phone, company, sess});
       modal.close();
       if (res) {
@@ -200,7 +199,7 @@ export default class Cart {
    async modalLoginCallback(fields, modal) {
       let email = fields.email.value;
       let password = fields.password.value;
-      let sess = getToken();
+      let sess = getPhpSession();
       let res = await post('/cart/login', {email, password, sess});
       modal.close();
       if (res) {

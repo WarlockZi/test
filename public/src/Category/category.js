@@ -24,7 +24,7 @@ export default class Category {
    handleClick({target}) {
       if (target.classList.contains('blue-button')) {
          const table = target.closest('[shipable-table]')
-         const firstRow = table[qs]('.unit-row')
+         // const firstRow = table[qs]('.unit-row')
       } else if (target.classList.contains('short-link')) {
          this.cardPanel.shortLink(target)
       }

@@ -27,7 +27,7 @@ class OrderitemController extends AppController
     {
         if ($this->ajax) {
             $form = $this->ajax['form'];
-            $sess = $_SESSION['token'];
+            $sess = $_SESSION['phpSession'];
             $orderItems = OrderItem::where('sess', $sess)->get();
             $lead = Lead::create($form);
             $order = Order::create($form);

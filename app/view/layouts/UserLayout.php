@@ -20,8 +20,8 @@ class UserLayout extends Layout
     protected array $content = [];
 
     public function __construct(
-        protected Route $route,
-        Controller      $controller,
+        protected Route   $route,
+        public Controller $controller,
     )
     {
         $this->assets = new UserAssets();
@@ -43,8 +43,7 @@ class UserLayout extends Layout
     public function setContent(Controller $controller): void
     {
         $this->content['header'] = $this->header->getHeader();
-        $this->assets->merge($controller->getAssets());
-        $this->content['assets']  = $this->assets;
+        $this->content['assets']  = $controller->assets;
         $this->content['content'] = $this->prepareContent($controller->vars);
         $this->content['footer']  = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
     }

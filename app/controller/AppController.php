@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppController extends Controller
 {
-    protected $model;
+    protected string $model;
     public array $settings;
 
     public function __construct()
