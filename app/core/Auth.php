@@ -8,20 +8,13 @@ class Auth
 {
     protected static array $user = [];
 
-    public static function validateToken(array $data): bool
+    public static function hasPphSession(array $req): bool
     {
-        if (!$data || !isset($data['token']) || !$data['token']) return false;
-        if (!$_SESSION['token'] === $data['token']
-        ) {
-            unset($data['token']);
+        if ($req && isset($req['phpSession']) && $req['phpSession'] && $_SESSION['phpSession'] === $req['phpSession']) {
+            unset($req['phpSession']);
             return true;
         }
         return false;
-    }
-
-    public static function setToken(): string
-    {
-        return $_SESSION['token'] = session_id();
     }
 
     public static function checkAuthorized(array $user, array $rights): void

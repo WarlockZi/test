@@ -44,7 +44,7 @@ class AdminLayout extends Layout
     protected function setAssets($controller): Assets
     {
         $assets = new AdminAssets();
-        $assets->merge($controller->getAssets());
+//        $assets->merge($controller->getAssets());
         return $assets;
     }
 

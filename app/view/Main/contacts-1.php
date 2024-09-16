@@ -19,7 +19,7 @@
             <!--<input class = "form-input" type="email"  placeholder="Ваш е-mail" value = <?= $user['email'] ?>>-->
             <textarea class="form-input" placeholder="Сообщение"></textarea>
             <input type="submit" class="form-input submit" class="btn btn-default" value="Отправить">
-            <input type="hidden" value=<?= $token ?>>
+            <input type="hidden" value=<?= $phpSession; ?>>
         </form>
     <?php endif; ?>
 

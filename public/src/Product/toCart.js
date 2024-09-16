@@ -1,4 +1,4 @@
-import {$, debounce, getToken, post} from "../common";
+import {$, debounce, getPhpSession, post} from "../common";
 import shippableTable from "../share/shippable/shippableUnitsTable";
 import {d, qs} from "../constants";
 
@@ -37,7 +37,7 @@ export default class toCart {
     }
     dto() {
         return {
-            sess: getToken(),
+            sess: getPhpSession(),
             product_id: this.product,
             count: +this.digitEl.innerText,
             unit_id: +this.getShippableId()

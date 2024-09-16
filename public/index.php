@@ -4,7 +4,9 @@ use app\core\Auth;
 use app\core\Router;
 
 session_start();
-require_once __DIR__ . DIRECTORY_SEPARATOR. 'bootstrap.php';
+$_SESSION['phpSession'] = session_id();
+
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 try {
     $user = Auth::getAuth();
