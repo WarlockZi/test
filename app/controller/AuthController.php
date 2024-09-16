@@ -23,9 +23,9 @@ class AuthController extends AppController
 
         $this->userRepository = new UserRepository();
         $this->mailer         = new PHPMail('env');
-        if (!$this->ajax) {
-            $this->assets->setAuth();
-        }
+//        if (!$this->ajax) {
+//            $this->assets->setAuth();
+//        }
     }
 
     public function actionRegister(): void
@@ -100,9 +100,6 @@ class AuthController extends AppController
                 $item = UserView::employee($user);
             }
 
-            $this->assets->unsetJs('auth.js');
-            $this->assets->unsetCss('auth.css');
-
         } else {
             $item = UserView::guest($user);;
         }
@@ -158,8 +155,7 @@ class AuthController extends AppController
     }
 
 
-    #[
-        NoReturn] public function actionLogout(): void
+    public function actionLogout(): void
     {
         if (isset($_COOKIE[session_name()])) {
             setcookie(session_name(), '', time() - 86400, '/');
@@ -209,6 +205,6 @@ class AuthController extends AppController
 
     public function actionUnsubscribe(): void
     {
-        $view = 'unautherized';
+        $view = 'unautherized'; // для почтовой отписки
     }
 }

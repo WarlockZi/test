@@ -7,6 +7,7 @@ use app\Services\ProductImageService;
 use app\Services\Slug;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 class Product extends Model
@@ -144,24 +145,24 @@ class Product extends Model
         return $query->whereHas('mainImages');
     }
 
-    public function orderItems()
+    public function orderItems():HasMany
     {
         $orderItems = $this
             ->hasMany(OrderItem::class, 'product_id', '1s_id')
             ->whereNull('deleted_at')
-            ->where('sess', $_SESSION['token'])//            ->get()
+            ->where('sess', $_SESSION['phpSession'])//            ->get()
         ;
 //        $oI = $orderItems->toArray();
 
         return $orderItems;
     }
 
-    public function orders()
+    public function orders():HasMany
     {
         $orders = $this
             ->hasMany(Order::class, 'product_id', '1s_id')
             ->whereNull('deleted_at')
-            ->where('sess', $_SESSION['token'])//            ->get()
+            ->where('sess', $_SESSION['phpSession'])//            ->get()
         ;
 //        $oI = $orders->toArray();
 
