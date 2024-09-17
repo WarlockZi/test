@@ -19,7 +19,7 @@ class Controller
     function __construct()
     {
         $this->setAjaxRequest();
-        if (!$this->ajax) {
+        if (!$this->isAjax()) {
             $this->assets = new Assets();
         }
     }
@@ -64,7 +64,7 @@ class Controller
 
     public function isAjax(): bool
     {
-        return !!$this->ajax;
+        return (isset($_SERVER['HTTP_X_REQUESTED_WITH'])&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
     }
 
 }

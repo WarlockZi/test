@@ -47,7 +47,7 @@ class SettingsFormView
 					->required()
 					->get()
 			)
-			->toList('adminsc/settings/list')
+			->toList('adminsc/settings/table')
 
 			->get();
 	}

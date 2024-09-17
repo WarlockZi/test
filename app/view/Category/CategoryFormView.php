@@ -154,7 +154,7 @@ class CategoryFormView
                                 ->get()
                         )
                 )
-                ->toList('adminsc/category/list', 'К списку категорий')
+                ->toList('adminsc/category/table', 'К списку категорий')
                 ->get();
         } catch (Throwable $exception) {
             $exc = $exception;

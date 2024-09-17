@@ -29,7 +29,7 @@ class UserController extends AppController
 
 //	public function actionChange()
 //	{
-//		$this->view = 'list';
+//		$this->view = 'table';
 //		$users = User::all();
 //		$this->set(compact('users'));
 //	}

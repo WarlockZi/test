@@ -70,7 +70,7 @@ class ReportView
 //            ->items($products)
             ->edit()
             ->del()
-            ->addButton('ajax')
+            ->addButton()
             ->get() ?? 'Установите фильтры';
     }
 

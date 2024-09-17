@@ -28,11 +28,11 @@ class ColumnBuilder
 
     public $select = false;
 
-    public static function build(string $field): self
+    public static function build(string $field=''): self
     {
         $column            = new static();
         $column->field     = $field;
-        $column->dataField = "data-field='{$field}'";
+        $column->dataField = $field ? "data-field='{$field}'" : '';
         return $column;
     }
 

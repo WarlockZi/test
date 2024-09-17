@@ -64,7 +64,7 @@ class PostController Extends AppController
 			Response::exitWithPopup("ok");
 		}
 
-		header('Location:/adminsc/post/list');
+		header('Location:/adminsc/post/table');
 	}
 
 

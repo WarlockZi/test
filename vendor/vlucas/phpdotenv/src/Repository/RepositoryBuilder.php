@@ -49,7 +49,7 @@ final class RepositoryBuilder
     private $immutable;
 
     /**
-     * The variable name allow list.
+     * The variable name allow table.
      *
      * @var string[]|null
      */
@@ -238,7 +238,7 @@ final class RepositoryBuilder
     }
 
     /**
-     * Creates a repository builder with the given allow list.
+     * Creates a repository builder with the given allow table.
      *
      * @param string[]|null $allowList
      *

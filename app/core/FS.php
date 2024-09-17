@@ -54,7 +54,7 @@ class FS
 
     }
 
-    public static function resolve(...$paths)
+    public static function resolve(...$paths):string
     {
         $path = '';
         foreach ($paths as $str) {
@@ -63,7 +63,7 @@ class FS
         return $path;
     }
 
-    public static function getFileContent(string $file, array $vars = [])
+    public static function getFileContent(string $file, array $vars = []):string
     {
         extract($vars);
         ob_start();
@@ -83,7 +83,7 @@ class FS
         return $deleted;
     }
 
-    public static function getPath(...$args)
+    public static function getPath(...$args):string
     {
         $s   = DIRECTORY_SEPARATOR;
         $str = ROOT . $s;
@@ -93,12 +93,12 @@ class FS
         return self::platformSlashes($str);
     }
 
-    public static function platformSlashes($path)
+    public static function platformSlashes($path):string
     {
         return str_replace('/', DIRECTORY_SEPARATOR, $path);
     }
 
-    public static function getOrCreateAbsolutePath(...$args)
+    public static function getOrCreateAbsolutePath(...$args):string
     {
         $s   = DIRECTORY_SEPARATOR;
         $dir = ROOT;

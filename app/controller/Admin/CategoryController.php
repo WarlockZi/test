@@ -10,7 +10,7 @@ use app\view\Category\CategoryFormView;
 
 class CategoryController extends AppController
 {
-    public $model = Category::class;
+    public string $model = Category::class;
 
     public function __construct()
     {

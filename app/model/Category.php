@@ -22,6 +22,8 @@ class Category extends Model
         'img',
         'category_id',
         'show_front',
+        'created_at',
+        'updated_at',
         'deleted_at',
     ];
 

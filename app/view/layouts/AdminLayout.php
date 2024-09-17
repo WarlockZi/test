@@ -56,7 +56,8 @@ class AdminLayout extends Layout
     private function prepareContent($vars): string
     {
         try {
-            return $content = $this->viewFs->getContent($this->getView(), $vars);
+            $view = $this->getView();
+            return $content = $this->viewFs->getContent($view, $vars);
         } catch (Exception $exception) {
             ob_get_clean();
             $this->route->setError("В файле вида произошла ошибка");

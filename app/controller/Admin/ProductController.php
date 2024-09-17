@@ -15,7 +15,7 @@ use app\view\Product\Admin\ProductFormView;
 
 class ProductController extends AppController
 {
-    protected $model = Product::class;
+    protected string $model = Product::class;
 
     private ProductRepository $repo;
     private ProductService $service;
@@ -83,15 +83,15 @@ class ProductController extends AppController
         ProductAction::changePromotion($this->ajax);
     }
 
-//    public function actionChangebaseisshippable(): void
-//    {
-//        ProductService::changeBaseIsShippable($this->ajax);
-//    }
-//
+    public function actionChangebaseisshippable(): void
+    {
+        ProductService::changeBaseIsShippable($this->ajax);
+    }
+
 //    public function actionTrashed(): void
 //    {
 //        $items   = $this->repo->trashed();
-//        $trashed = ProductArrayFormView::list($items, 'Удаленные товары');
+//        $trashed = ProductArrayFormView::table($items, 'Удаленные товары');
 //        $this->set(compact('trashed'));
 //    }
 }

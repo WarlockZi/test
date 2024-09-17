@@ -99,7 +99,7 @@ class PropertyView
 			)
 			->del()
 			->save()
-			->toList('adminsc/property/list')
+			->toList('adminsc/property/table')
 			->get();
 
 	}

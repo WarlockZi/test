@@ -54,9 +54,9 @@ class Router
         }
         $controller->setRoute($this->route);
 
-        $actionName = $this->route->getActionName();
+
         $action     = $this->route->getAction();
-        $this->route->setView($actionName);
+        $this->route->setView($this->route->getActionName());
         try {
             $controller->$action();
         } catch (\Throwable $exception) {

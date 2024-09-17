@@ -32,7 +32,7 @@ export default class Search {
   }
 
   closePanel({target}) {
-    // let list = target.classList
+    // let table = target.classList
     if (
       target.classList.contains('search-panel') ||
       target.classList.contains('close')

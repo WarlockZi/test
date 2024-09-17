@@ -22,22 +22,26 @@ class LoadCategories
         $this->data = $xmlObj['Классификатор']['Группы']['Группа']['Группы']['Группа'];
 
         $this->run($this->data);
+        $this->deleteNonexisted();
 
     }
 
     protected function deleteNonexisted(): void
     {
-        $cat             = Category::whereNotIn('1s_id', $this->existed)->pluck('1s_id');
-        $this->deleted[] = $cat->toArray();
-        $cat->each(function (Category $cat) {
-            $cat->softDelete();
+        $all = Category::all();
+
+        $all->each(function (Category $cat) {
+            if (!array_search($cat['1s_id'],$this->existed)) {
+                $cat->delete();
+            }
         });
     }
 
     protected function run($groups): void
     {
         if ($this->isAssoc($groups)) {
-            $item = $this->fillItem($groups);
+            $item                         = $this->fillItem($groups);
+            $this->existed[$groups['Ид']] = $groups['Ид'];
             if (isset($groups['Группы'])) {
                 $this->parent = $item['id'];
                 $this->run($groups['Группы']['Группа']);
@@ -60,8 +64,7 @@ class LoadCategories
         $item['slug']       = Slug::slug($item['name']);
         $item['deleted_at'] = NULL;
 
-        $this->existed[$group['Ид']] = $group['Ид'];
-        $cat                        = Category::withTrashed()
+        $cat = Category::withTrashed()
             ->updateOrCreate(['1s_id' => $item['1s_id']], $item);
 
         if ($cat->wasRecentlyCreated) {
