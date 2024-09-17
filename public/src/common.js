@@ -311,6 +311,7 @@ async function post(url, data = {}) {
    const res = await sendPost(url, init)
    handleResponse(res)
    showMessage(res)
+   return res
 }
 
 function setInit(url, body){
