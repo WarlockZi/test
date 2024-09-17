@@ -42,6 +42,7 @@ import './ProductFilter/ProductFilter'
 import {qs} from '../constants'
 import navigate from "./Navigate";
 import '../components/table/table.js'
+import CatalogItem from "../components/catalog-item/catalog-item.js";
 $(document).ready(async function () {
 
    // const product = document[qs](`.item-wrap[data-model='product']`)
@@ -79,7 +80,12 @@ $(document).ready(async function () {
    navigate(window.location.pathname);
    radio();
    multiselect();
-   catalogItem();
+
+   const customCatalogItem = $('.item-wrap')[0];
+   if (customCatalogItem){
+      new CatalogItem(customCatalogItem)
+   }
+   // catalogItem();
    tooltips();
 
    quill();

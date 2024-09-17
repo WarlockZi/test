@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class OrderController extends AppController
 {
-    protected $model = Order::class;
+    protected string $model = Order::class;
 
     public function __construct()
     {

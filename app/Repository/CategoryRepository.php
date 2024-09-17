@@ -91,6 +91,7 @@ class CategoryRepository
             'childrenDeleted',
             'parentRecursive.properties',
             'properties',
+            'ownProperties',
             'mainImages')
             ->findOrNew($id);
     }

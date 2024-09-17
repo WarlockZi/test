@@ -16,7 +16,7 @@ use app\Services\Test\TestEditService;
 
 class QuestionController Extends AppController
 {
-	protected $model = Question::class;
+	protected string $model = Question::class;
 
 	public function __construct()
 	{

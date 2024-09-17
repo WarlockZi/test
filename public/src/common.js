@@ -309,6 +309,9 @@ const time = {
 async function post(url, data = {}) {
    const init = setInit(url, data)
    const res = await sendPost(url, init)
+      .catch(err=>{
+         console.log(err)
+      })
    handleResponse(res)
    showMessage(res)
    return res
@@ -337,8 +340,8 @@ function sendPost(url, init) {
             }
          })
          .catch(err=>{
-            console.error("Fetch error" + res.error)
-            reject(res.error)
+            console.log("Fetch error" + err.message)
+            reject(err.message)
          })
    })
 }

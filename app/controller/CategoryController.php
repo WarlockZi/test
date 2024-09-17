@@ -31,7 +31,6 @@ class CategoryController extends AppController
             $category = $this->repo->indexInstore($slug);
 
             if ($category) {
-//				$category->products->filters = ProductRepository::getFilters();
                 $admin       = Auth::isAdmin();
                 $edit        = Icon::edit();
                 $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);

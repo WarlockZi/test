@@ -7,7 +7,7 @@ use app\model\Answer;
 
 class AnswerController Extends AppController
 {
-	protected $model = Answer::class;
+	protected string $model = Answer::class;
 
 	public function __construct()
 	{

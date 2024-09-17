@@ -13,7 +13,7 @@ use app\view\Unit\UnitFormView;
 class UnitController extends AppController
 {
     private UnitRepository $repo;
-    protected $model = Unit::class;
+    protected string $model = Unit::class;
 
     public function __construct()
     {

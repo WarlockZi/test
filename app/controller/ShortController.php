@@ -6,7 +6,7 @@ use app\model\Product;
 
 class ShortController extends AppController
 {
-    protected $model;
+    protected string $model;
 
     public function actionIndex(): void
     {
