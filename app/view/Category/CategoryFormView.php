@@ -18,11 +18,12 @@ use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use app\view\Image\ImageView;
+use Throwable;
 
 class CategoryFormView
 {
-	public static function edit(Category $category): string
-	{
+    public static function edit(Category $category): string
+    {
         try {
             return ItemBuilder::build($category, 'category')
                 ->pageTitle('Категория :  ' . $category->name)
@@ -147,20 +148,51 @@ class CategoryFormView
                                         ->contenteditable()
                                         ->get()
                                 )
-                                ->relation('childrenDeleted','category')
+                                ->relation('childrenDeleted', 'category')
                                 ->edit()
                                 ->del()
                                 ->addButton('ajax')
                                 ->get()
                         )
                 )
+                ->tab(
+                    ItemTabBuilder::build('seo')
+                        ->html(
+                            self::getSeo($category)
+                        )
+
+                )
                 ->toList('adminsc/category/table', 'К списку категорий')
                 ->get();
         } catch (Throwable $exception) {
-            $exc = $exception;
+            return $exception;
         }
 
-	}
+    }
+
+    protected static function getSeo(Category $category): string
+    {
+//        $p = $category->properties;
+        $p = $category->ownProperties;
+        return "<div class='show'>" .
+            ItemFieldBuilder::build('seo_description', $category->ownProperties)
+                ->name('Description')
+                ->contenteditable()
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
+            ItemFieldBuilder::build('seo_title', $category->ownProperties)
+                ->name('Title')
+                ->contenteditable()
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
+            ItemFieldBuilder::build('seo_keywords', $category->ownProperties)
+                ->name('Key words')
+                ->contenteditable()
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
+            "</div>";
+
+    }
 
 
     protected static function categorySelector(Category $category): string
@@ -179,7 +211,8 @@ class CategoryFormView
             ->get();
 
     }
-    public static function properties($properties):string
+
+    public static function properties($properties): string
     {
         $content = Table::build($properties)
             ->pageTitle('Св-ва категории')
@@ -198,13 +231,13 @@ class CategoryFormView
         return $content;
     }
 
-	public static function list(): string
-	{
+    public static function list(): string
+    {
         $tree = TreeABuilder::build(
             CategoryRepository::treeAll(), 'children_recursive', 2)
             ->href('/adminsc/category/edit/')
             ->get();
-        return "<ul class='category-tree'>".$tree."</ul>";
+        return "<ul class='category-tree'>" . $tree . "</ul>";
 
-	}
+    }
 }

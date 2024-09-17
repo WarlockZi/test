@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SettingsRepository
 {
-	protected $model;
+	protected string $model;
 	protected $array;
 
 	public function __construct()

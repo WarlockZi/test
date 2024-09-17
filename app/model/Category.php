@@ -61,11 +61,11 @@ class Category extends Model
 //            ->hasOne(Seo::class, 'product_category_1sid', '1s_id');
 //    }
 
-public function ownProperties()
-{
-    return $this->hasOne(CategoryProperty::class, 'category_1s_id','1s_id');
+    public function ownProperties()
+    {
+        return $this->hasOne(CategoryProperty::class, 'category_1s_id', '1s_id');
+    }
 
-}
     public function properties()
     {
         return $this->morphToMany(Property::class, 'propertable');
@@ -109,8 +109,7 @@ public function ownProperties()
             ->with('promotions')
             ->with('units')
             ->with('ownProperties')
-            ->orderBy('name')
-        ;
+            ->orderBy('name');
 
         return $pInStore;
     }

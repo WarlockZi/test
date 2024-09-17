@@ -52,32 +52,50 @@ class AppController extends Controller
         Response::exitWithPopup('ok');
     }
 
+    protected function updateOrCreateRelation(array $req): void
+    {
+        $action   = '';
+        $parentId = $req['id'];
+        $relation = $req['relation'];
+        $id       = $req['fields']['id'] ?? null;
+        $fields   = $req['fields'];
+        $model    = $this->model::with($relation)->find($parentId);
+        if ($id) {
+            $rel = $model->$relation->find($id)->updateOrCreate(
+                ['id' => $id],
+                $fields);
+            if ($rel->wasRecentlyCreated) Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
+        } else {
+            if ($model->$relation === null) {
+                $action = 'created';
+                $rel    = $model->$relation()->create($fields);
+            } else {
+                $action = 'updated';
+                $rel    = $model->$relation()->update($fields);
+            }
+        }
+        if ($action === 'created') Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
+
+        Response::exitJson(['popup' => 'Обновлен']);
+    }
+    protected function updateOrCreateMorph(array $req):void
+    {
+        $morph    = $req['morph'];
+        $relation = $morph['relation'];
+        $model    = $this->model::with($relation)->find($req['id']);
+        $created  = $this->model->$relation()->create();
+        $this->model->$relation()->syncWithoutDetaching($created);
+        Response::exitJson(['popup' => 'Создан', 'id' => $created->id]);
+    }
+
     public function actionUpdateOrCreate(): void
     {
         $req = $this->ajax;
-
         if (isset($req['relation'])) {
-            $parentId       = $req['id'];
-            $relation = $req['relation'];
-            $id = $req['fields']['id'];
-            $fields = $req['fields'];
-            $model    = $this->model::with($relation)->find($parentId);
-
-            $rel = $model->$relation->find($id)->updateOrCreate(
-                ['id'=>$id],
-                $fields);
-            if ($rel->wasRecentlyCreated) Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
-
-            Response::exitJson(['popup' => 'Обновлен']);
+            $this->updateOrCreateRelation($req);
         }
-
         if (isset($req['morph'])) {
-            $morph    = $req['morph'];
-            $relation = $morph['relation'];
-            $model    = $this->model::with($relation)->find($req['id']);
-            $created  = $this->model->$relation()->create();
-            $this->model->$relation()->syncWithoutDetaching($created);
-            Response::exitJson(['popup' => 'Создан', 'id' => $created->id]);
+            $this->updateOrCreateMorph($req);
         }
 
         $model = $this->model::updateOrCreate(
