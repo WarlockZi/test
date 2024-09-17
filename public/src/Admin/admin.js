@@ -41,7 +41,7 @@ import './ProductFilter/ProductFilter'
 // import product from './Product/Product.js'
 import {qs} from '../constants'
 import navigate from "./Navigate";
-import './../components/list/list.js'
+import '../components/table/table.js'
 $(document).ready(async function () {
 
    // const product = document[qs](`.item-wrap[data-model='product']`)
@@ -64,7 +64,7 @@ $(document).ready(async function () {
       const {default: Category} = await import('./Category/Category.js')
       new Category(category)
    }
-   // const property = document[qs](`.properties[custom-list]`)
+   // const property = document[qs](`.properties[custom-table]`)
    // if (property) {
    //    const {default: Property} = await import('./Property/Property.js')
    //    new Property(property)

@@ -306,40 +306,40 @@ const time = {
    'dMs': 60 * 60 * 24 * 1000,
 };
 
-function post(url, data = {}) {
-   const res = newPost(url, data)
-   return res
+async function post(url, data = {}) {
+   const init = setInit(url, data)
+   const res = await sendPost(url, init)
+   handleResponse(res)
+   showMessage(res)
 }
 
-function checkStatus(response) {
-   if (response.status >= 200 && response.status < 300) {
-      return response
-   } else {
-      const error = new Error(response.statusText)
-      error.response = response
-      throw error
-   }
-}
-
-function parseJSON(response) {
-   return response.json()
-}
-async function sendPost(url, body = {}) {
+function setInit(url, body){
    body.phpSession = getPhpSession();
    const headers = {"X-Requested-With": "XMLHttpRequest"}
    if (!(body instanceof FormData)) {
       headers["Content-Type"] = "application/x-www-form-urlencoded"
    }
-   const init = {
+   return {
       method: 'POST',
       headers,
       body: 'params=' + JSON.stringify(body),
    }
-   fetch(url, init)
-      .then(checkStatus)
-      .then(parseJSON)
-      .then(responseJson=>{return handleResponse(responseJson)})
+}
 
+function sendPost(url, init) {
+   return new Promise(async (resolve, reject) => {
+      const res = await fetch(url, init)
+         .then(async res=>{
+            if (res.status === 200) {
+               const data = await res.json()
+               resolve(data)
+            }
+         })
+         .catch(err=>{
+            console.error("Fetch error" + res.error)
+            reject(res.error)
+         })
+   })
 }
 
 function showMessage(res) {
@@ -367,19 +367,15 @@ function handleResponse(res) {
 
    } catch (e) {
       console.log('////////////********* REQUEST ERROR ***********//////////////////////');
-      if (IsJson(req.response)) {
-         console.log(JSON.parse(req.response));
+      if (IsJson(res.response)) {
+         console.log(JSON.parse(res.response));
       } else {
-         console.log(req.response);
+         console.log(res.response);
       }
       return false
    }
 }
 
-function newPost(url, body) {
-   const res = sendPost(url, body)
-   return res
-}
 
 function oldPost(url, data) {
    return new Promise(async function (resolve, reject) {

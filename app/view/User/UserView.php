@@ -113,7 +113,7 @@ abstract class UserView
 
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
-			->toList('adminsc/user/list', '', false)
+			->toList('adminsc/user/table', '', false)
 			->save()
 			->del(false)
 			->field(
@@ -173,7 +173,7 @@ abstract class UserView
 
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
-			->toList('adminsc/user/list')
+			->toList('adminsc/user/table')
 			->save()
 			->del()
 			->tab(UserView::getAdminTab($item))
@@ -343,7 +343,7 @@ abstract class UserView
 	{
 		return
 			"<div class='no-element'>Элемент не найден" .
-			"<a class='to-list' href='/adminsc/user'>К списку</a>" .
+			"<a class='to-table' href='/adminsc/user'>К списку</a>" .
 			"</div>";
 	}
 

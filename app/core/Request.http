@@ -12,8 +12,8 @@ id=99&content=new-element
 ###
 #		$myCurl = curl_init();
 #		curl_setopt_array($myCurl, array(
-#			CURLOPT_URL => 'https://test-api.baikalsr.ru/v2/order/list',
-#//			CURLOPT_URL => 'https://baikalsr.ru/v2/order/list',
+#			CURLOPT_URL => 'https://test-api.baikalsr.ru/v2/order/table',
+#//			CURLOPT_URL => 'https://baikalsr.ru/v2/order/table',
 #			CURLOPT_RETURNTRANSFER => true,
 #			CURLOPT_POST => true,
 #
@@ -28,7 +28,7 @@ id=99&content=new-element
 #		//login 89115440126
 #		//pas EMR1510
 #
-#		//POST https://test-api.baikalsr.ru/v2/order/list
+#		//POST https://test-api.baikalsr.ru/v2/order/table
 
 
 POST https://vi-production/adminsc/product/edit/256

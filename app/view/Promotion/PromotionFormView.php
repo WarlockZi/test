@@ -20,7 +20,7 @@ class PromotionFormView
 
 	static function edit($promotion)
 	{
-		$link = $promotion->product ? "adminsc/product/edit/{$promotion->product->id}" : 'adminsc/product/list';
+		$link = $promotion->product ? "adminsc/product/edit/{$promotion->product->id}" : 'adminsc/product/table';
 		$promotion = ItemBuilder::build($promotion, 'promotion')
 			->field(
 				ItemFieldBuilder::build('id', $promotion)

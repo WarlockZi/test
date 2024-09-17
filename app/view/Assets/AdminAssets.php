@@ -11,12 +11,12 @@ class AdminAssets extends Assets
 		parent::__construct();
 
 //		$this->setJs('admin');
-//		$this->setJs('list');
+//		$this->setJs('table');
 //		$this->setJs('common');
 //		$this->setJs('product');
 
 //		$this->setCss('admin');
-//		$this->setCss('list');
+//		$this->setCss('table');
 //		$this->setCss('common');
 //		$this->setCss('product');
 

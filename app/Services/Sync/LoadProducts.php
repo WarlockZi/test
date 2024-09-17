@@ -9,6 +9,7 @@ use app\model\ProductProperty;
 use app\Services\ShortlinkService;
 use app\Services\Slug;
 use Carbon\Carbon;
+use Throwable;
 
 class LoadProducts
 {
@@ -48,19 +49,6 @@ class LoadProducts
             $product->delete();
         });
     }
-
-//    protected function setShortLink(): void
-//    {
-//        Product::with('ownProperties')->get()->each(function (Product $product) {
-//            $prodProps = $product
-//                ->ownProperties()
-//                ->where('product_1s_id', $product['1s_id'])
-//                ->first();
-//            if ($prodProps && !empty($prodProps->short_link)) {
-//                $prodProps->update(['short_link' => ShortlinkService::getValidShortLink()]);
-//            }
-//        });
-//    }
 
     private function updateOrCreateProducts(): void
     {
@@ -136,5 +124,16 @@ class LoadProducts
             ->first()->id;
         return $category_id;
     }
-
+//    protected function setShortLink(): void
+//    {
+//        Product::with('ownProperties')->get()->each(function (Product $product) {
+//            $prodProps = $product
+//                ->ownProperties()
+//                ->where('product_1s_id', $product['1s_id'])
+//                ->first();
+//            if ($prodProps && !empty($prodProps->short_link)) {
+//                $prodProps->update(['short_link' => ShortlinkService::getValidShortLink()]);
+//            }
+//        });
+//    }
 }

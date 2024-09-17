@@ -1,4 +1,4 @@
-import './list.scss';
+import './table.scss';
 import {$, debounce, post} from '../../common';
 
 class Table {
@@ -42,7 +42,7 @@ class Table {
 
       /// create
       if (target.className === 'add-model') {
-         const res = await this.createModel(target)
+         this.createModel(target)
 
          /// delete
       } else if (
@@ -60,17 +60,16 @@ class Table {
       } else if (target.type === 'checkbox') {
          const funct = target.dataset.func
          const base_is_shippable = target.checked
-         // const id = target.closest('[data-id]').dataset.id
          const product_1s_id = target.dataset['1sid']
          const data = {base_is_shippable, product_1s_id}
-         post(`/adminsc/${this.model}/${funct}`, data)
+         await post(`/adminsc/${this.model}/${funct}`, data)
 
          /// sort
       } else if (target.classList.contains('head')
          || target.classList.contains('icon')) {
-         let header = target.closest('.head');
+         const header = target.closest('.head');
          if (header.hasAttribute('data-sort')) {
-            let index = [].findIndex.call(sortables, (el, i, inputs) => {
+            const index = [].findIndex.call(sortables, (el, i, inputs) => {
                return el === header
             });
             this.sortColumn(index)
@@ -231,7 +230,7 @@ class Table {
 
 // SORT
    sortColumn(index) {
-      let rows = this.fillRows();
+      const rows = this.fillRows();
       // Получить текущее направление
       const direction = this.directions[index] || 'asc';
       // Фактор по направлению
@@ -244,7 +243,7 @@ class Table {
          const cellB = rowB[index].innerHTML;
 
          const a = this.transform(index, cellA);
-         const b = transform(index, cellB);
+         const b = this.transform(index, cellB);
 
          switch (true) {
             case a > b:

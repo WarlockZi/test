@@ -23,7 +23,7 @@ class Table
     private string $dataRelationModel = '';
     private string $dataModel = '';
     private string $html = '';
-    private string $addButton = 'ajax';
+    private string $addButton = '';
     private Collection $items;
 
     private FS $fs;
@@ -44,7 +44,7 @@ class Table
     }
 
 
-    public function link(string $field, string $classHeader, string $class, string $name, string $width, string $className, string $funcName)
+    public function link(string $field, string $classHeader, string $class, string $name, string $width, string $className, string $funcName):static
     {
         $this->columns[$field] = ColumnBuilder::build($field)
             ->classHeader($classHeader)
@@ -108,6 +108,7 @@ class Table
 
     protected function emptyRow(): string
     {
+        if (!$this->addButton) return '';
         $str = '';
         foreach ($this->columns as $field => $column) {
 
@@ -125,7 +126,7 @@ class Table
 
     public function del(): static
     {
-        $this->columns['del'] = ColumnBuilder::build('del')
+        $this->columns['del'] = ColumnBuilder::build()
             ->classHeader('head del')
             ->class('del')
             ->name(Icon::trashIcon())
@@ -136,7 +137,7 @@ class Table
 
     public function edit(): static
     {
-        $this->columns['edit'] = ColumnBuilder::build('edit')
+        $this->columns['edit'] = ColumnBuilder::build()
             ->classHeader('head edit')
             ->class('edit')
             ->name(Icon::editWhite())
@@ -146,7 +147,7 @@ class Table
         return $this;
     }
 
-    public function addButton(string $ajaxOrRedirect): static
+    public function addButton(string $ajaxOrRedirect='ajax'): static
     {
         $this->addButton = $ajaxOrRedirect;
         $this->add       = $this->fs->getContent('add', ['addButton' => $this->addButton]);
@@ -183,7 +184,7 @@ class Table
         return '';
     }
 
-    public function get()
+    public function get():string
     {
         try {
             $this->emptyRow = $this->emptyRow();
