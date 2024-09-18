@@ -283,20 +283,23 @@ class ProductFormView
         return "<div class='values'>$str</div>";
     }
 
-    protected static function getSeo($product): string
+    protected static function getSeo(Product $product): string
     {
         return "<div class='show'>" .
-            ItemFieldBuilder::build('description', $product)
+            ItemFieldBuilder::build('seo_description', $product->ownProperties)
                 ->name('Description')
                 ->contenteditable()
+                ->relation('ownProperties')
                 ->get()->toHtml('product') .
-            ItemFieldBuilder::build('title', $product)
+            ItemFieldBuilder::build('seo_title', $product->ownProperties)
                 ->name('Title')
                 ->contenteditable()
+                ->relation('ownProperties')
                 ->get()->toHtml('product') .
-            ItemFieldBuilder::build('keywords', $product)
+            ItemFieldBuilder::build('seo_keywords', $product->ownProperties)
                 ->name('Key words')
                 ->contenteditable()
+                ->relation('ownProperties')
                 ->get()->toHtml('product') .
             "</div>";
     }
@@ -358,10 +361,10 @@ class ProductFormView
         return $inactivePromotions . '<hr>' . $activePromotions;
     }
 
-    private static function commonPromotions(Collection $items, string $relation, string $title, bool $addButton, bool $edit)
+    private static function commonPromotions(Collection $items, string $relation, string $title, bool $addButton, bool $edit):string
     {
         $customList = Table::build($items)
-            ->relation($relation)
+            ->relation($relation,'promotion')
             ->pageTitle($title)
             ->column(
                 ColumnBuilder::build('new_price')
