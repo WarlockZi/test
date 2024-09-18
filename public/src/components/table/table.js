@@ -80,7 +80,7 @@ class Table {
    edit(target) {
       // debugger
       const model = this.relation ? this.relationModel : this.model;
-      const id = this.relation ? target.dataset.id : this.modelId;
+      const id = this.relation ? target.dataset.id : this.modelId??target.dataset.id;
       window.location = `/adminsc/${model}/edit/${id}`;
    }
 

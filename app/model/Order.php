@@ -3,6 +3,7 @@
 namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
@@ -15,14 +16,14 @@ class Order extends Model
 		'sess',
 		'ip',
 		'user_id',
-		'crated_at',
 		'bill_id',
         'created_at',
+		'created_at',
         'updated_at',
         'deleted_at'
 	];
 
-	public function items()
+	public function items():HasMany
 	{
 		return $this->hasMany(OrderItem::class);
 	}

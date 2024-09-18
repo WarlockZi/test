@@ -38,7 +38,7 @@ class OrderRepository
     {
         $userId = Order::where('id', $id)->first()->user_id;
         $orders = Order::query()
-            ->select('product_id', 'id', 'user_id', 'count', 'unit_id')
+            ->select('product_id', 'id', 'user_id', 'count', 'unit_id','created_at')
             ->selectRaw('SUM(count) as total_count')
             ->where('user_id', $userId)
             ->with('user')

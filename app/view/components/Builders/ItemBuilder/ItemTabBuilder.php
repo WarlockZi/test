@@ -14,7 +14,7 @@ class ItemTabBuilder
 	public $tabTitle='';
 	public $field='';
 
-	public static function build(string $title)
+	public static function build(string $title):self
 	{
 		$view = new self();
 		$view->tabTitle = $title;
