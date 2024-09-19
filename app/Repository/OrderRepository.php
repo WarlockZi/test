@@ -28,7 +28,7 @@ class OrderRepository
             ->select('product_id', 'id', 'user_id', 'count')
             ->with('user')
             ->with('product')
-            ->orderBy('user_id')
+//            ->orderBy('user_id')
             ->groupBy('user_id')
             ->get();
         return $orders;
@@ -46,6 +46,7 @@ class OrderRepository
             ->with('unit')
             ->groupBy('product_id')
             ->get();
+//        $a = $orders->toArray();
         return $orders;
     }
 

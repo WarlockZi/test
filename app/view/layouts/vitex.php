@@ -31,10 +31,13 @@ use app\core\Icon;
 
 </head>
 
+<? include_once __DIR__ . '/google.php'; ?>
+
+
 <body>
-<? include_once dirname(__DIR__) . '/share/adminPanel/adminPanel.php'; ?>
 
 <?= $header; ?>
+
 
 <div class="user-content-wrap">
     <main class="user-content">

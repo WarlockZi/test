@@ -1,5 +1,5 @@
 <header>
-
+    <? include_once ROOT. '/app/view/share/adminPanel/adminPanel.php'; ?>
 	<div class="info">
 
         <?php include 'logo.php'; ?>

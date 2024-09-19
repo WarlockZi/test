@@ -17,7 +17,7 @@ class ImageView
 {
 	public static $noPhotoRelative = '/pic/srvc/nophoto-min.jpg';
 
-	public $model = Image::class;
+	public string $model = Image::class;
 
 	public static function noImage(){
 		$src = self::$noPhotoRelative;

@@ -77,7 +77,11 @@ class Table
         $this->pageTitle = $pageTitle;
         return $this;
     }
-
+    public function header(string $pageTitle): static
+    {
+        $this->pageTitle = $pageTitle;
+        return $this;
+    }
 
     public function column(ColumnBuilder $column): static
     {

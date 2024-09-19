@@ -1,6 +1,8 @@
+<?=$table??'';?>
+
 <div class="order-edit">
 
-    <div class="page-name">Заказ <span id="order-id">&nbsp;новый</span></div>
+    <div class="page-name">Заказ <span id="order-id">&nbsp</span></div>
 
     <div class="row user">
         <div class="client">
@@ -9,6 +11,7 @@
         <strong class="email"><?= $orders[0]->user->email ?></strong>
         <div class="fio"><?= $orders[0]->user->fi() ?></div>
     </div>
+
     <div class="row manager">
         <div class="manager">
             дата -
@@ -38,6 +41,7 @@
                 </div>
                 <div class="count"><?= $order->total_count ?></div>
                 <div class="unit count"><?= $order->unit->name ?? 'неустановленная единица' ?></div>
+                <div class="date"><?= $order->created_at ?? 'дата' ?></div>
                 <? $o = $order->toArray(); ?>
                 <?php if ($order->deleted_at): ?>
                     <div class="active count"><?= $order->deleted_at ?></div>

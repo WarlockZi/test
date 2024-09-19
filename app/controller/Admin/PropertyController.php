@@ -11,7 +11,7 @@ use app\view\Property\PropertyView;
 
 class PropertyController Extends AppController
 {
-	public $model = Property::class;
+	public string $model = Property::class;
     public function __construct()
 {
     parent::__construct();

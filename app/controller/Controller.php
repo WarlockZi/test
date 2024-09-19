@@ -29,7 +29,7 @@ class Controller
         $this->route = $route;
     }
 
-    public function actionIndex(): void
+    public function actionIndex()
     {
         $this->route->setView('404');
         $this->route->setError('Путь не найден');

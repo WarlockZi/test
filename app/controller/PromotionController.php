@@ -7,7 +7,7 @@ use app\Repository\PromotionRepository;
 
 class PromotionController Extends AppController
 {
-	public $model = Promotion::class;
+	public string $model = Promotion::class;
 
 	public function __construct()
 	{

@@ -18,8 +18,7 @@ class VideoinstructionView
 	{
 		$view = new self;
         $items = Videoinstruction::all();
-		return Table::build($view->model)
-            ->items($items)
+		return Table::build($items)
 			->column(
 				ColumnBuilder::build('sort')
 					->width('50px')

@@ -4,9 +4,7 @@
 namespace app\view\Settings\Admin;
 
 
-use app\model\Product;
 use app\model\Settings;
-use app\Repository\ProductRepository;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
@@ -54,7 +52,7 @@ class SettingsFormView
 
 	public static function list(Collection $items): string
 	{
-		return Table::build(Settings::class)
+		return Table::build($items)
 			->pageTitle('Настройки')
 			->column(
 				ColumnBuilder::build('id')
@@ -86,7 +84,6 @@ class SettingsFormView
 					->get()
 			)
 
-			->items($items)
 			->edit()
 			->del()
 			->addButton('ajax')

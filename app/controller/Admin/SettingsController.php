@@ -10,12 +10,17 @@ use app\view\Settings\Admin\SettingsFormView;
 
 class SettingsController Extends AppController
 {
-	public $model = Settings::class;
+	public string $model = Settings::class;
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
+    public function actionIndex(): void
+    {
+        $settings = $this->model::all();
+        $list = SettingsFormView::list($settings);
+        $this->set(compact('list'));
+    }
 	public function actionList()
 	{
 		$settings = (new SettingsRepository)->all();

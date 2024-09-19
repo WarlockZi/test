@@ -16,8 +16,7 @@ class TodoView
 	{
 		$dailyTodos = Todo::where('type', 'daily')->get();
 
-		return Table::build(Todo::class)
-			->items($dailyTodos)
+		return Table::build($dailyTodos)
 			->column(
 				ColumnBuilder::build('id')
 					->name("ID")

@@ -28,11 +28,11 @@ class OrderController extends AppController
         $this->set(compact('clientlist', 'leadlist'));
     }
 
-    public function actionEdit()
+    public function actionEdit():void
     {
-        $orderId = $this->route->id;
-        $orders = OrderRepository::edit($orderId);
-        $this->set(compact('orders'));
+        $orders = OrderRepository::edit($this->route->id);
+        $table = OrderView::editOrder($orders);
+        $this->set(compact('orders','table'));
     }
 
     public function actionUpdateOrCreate(): void

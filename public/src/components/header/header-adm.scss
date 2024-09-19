@@ -3,17 +3,18 @@
 
 
 .admin-layout_header {
-  background: #fff;
+  position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  max-width: 1310px;
   border-bottom: 1px solid #f0f0f0;
-  max-height: 52px;
-  position: absolute;
-  top: 0;
+  background: #fff;
+  max-width: 1310px;
   min-width: 100%;
+  max-height: 52px;
+  top: 0;
   z-index: 1;
-  margin-top: 25px;
+  //margin-top: 25px;
 
   @include _600 {
     display: none;

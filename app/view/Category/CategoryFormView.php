@@ -18,6 +18,7 @@ use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use app\view\Image\ImageView;
+use Illuminate\Database\Eloquent\Collection;
 use Throwable;
 
 class CategoryFormView
@@ -212,7 +213,7 @@ class CategoryFormView
 
     }
 
-    public static function properties($properties): string
+    public static function properties(Collection $properties): string
     {
         $content = Table::build($properties)
             ->pageTitle('Св-ва категории')

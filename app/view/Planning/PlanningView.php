@@ -20,7 +20,6 @@ class PlanningView
 		$view = new self;
 		$items = Todo::where('type','день')->get();
 		return Table::build($view->modelName)
-			->items($items)
 			->column(
 				ColumnBuilder::build('id')
 					->name('ID')
@@ -41,8 +40,8 @@ class PlanningView
 	{
 		$view = new self;
 		$items = Todo::where('type','неделя')->get();
-		return Table::build($view->modelName)
-			->items($items)
+		return Table::build($items)
+
 			->column(
 				ColumnBuilder::build('id')
 					->name('ID')
@@ -63,7 +62,7 @@ class PlanningView
 	{
 		$view = new self;
 		$items = Todo::where('type','год')->get();
-		return Table::build($view->modelName)
+		return Table::build($items)
 			->items($items)
 			->column(
 				ColumnBuilder::build('id')

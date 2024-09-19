@@ -43,13 +43,12 @@ class UnitFormView
     }
 
 
-    protected static function morphs($items)
+    protected static function morphs(Collection $items)
     {
         $list =
-            Table::build(Unit::class)
+            Table::build($items)
                 ->pageTitle('Единицы измерения')
                 ->addButton('ajax')
-                ->items($items)
                 ->column(
                     ColumnBuilder::build('id')
                         ->width('50px')
@@ -105,10 +104,9 @@ class UnitFormView
 
     public static function index(): string
     {
-        return Table::build(Unit::class)
+        return Table::build(Unit::class::all())
             ->pageTitle('Единицы измерения')
             ->addButton('ajax')
-            ->items(Unit::all())
             ->column(
                 ColumnBuilder::build('id')
                     ->width('50px')

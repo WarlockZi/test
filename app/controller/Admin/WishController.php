@@ -8,7 +8,7 @@ use Workerman\Protocols\Http;
 
 class WishController Extends AppController
 {
-	public $model = Http::class;
+	public string $model = Http::class;
 
 	public function __construct()
 	{
