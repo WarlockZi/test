@@ -13,7 +13,7 @@ use app\view\Right\RightView;
 
 class RightController Extends AppController
 {
-	public $model = Right::class;
+	public string $model = Right::class;
 	public $modelName = 'right';
 	public $tableName = 'rights';
 

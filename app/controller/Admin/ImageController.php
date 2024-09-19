@@ -10,7 +10,7 @@ use app\view\Image\ImageView;
 
 class ImageController Extends AppController
 {
-	public $model = Image::class;
+	public string $model = Image::class;
 
 	public function __construct()
 	{

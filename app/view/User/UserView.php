@@ -251,7 +251,7 @@ abstract class UserView
 
 	public static function listAll(): string
 	{
-		return Table::build(User::class)
+		return Table::build(User::class::all())
 			->column(
 				ColumnBuilder::build('id')
 					->name('ID')

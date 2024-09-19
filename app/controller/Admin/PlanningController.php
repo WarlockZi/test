@@ -10,7 +10,7 @@ use app\view\Planning\PlanningView;
 class PlanningController Extends AppController
 {
 	public $modelName = Todo::class;
-	public $model = 'todo';
+	public string $model = 'todo';
 
 	public function __construct()
 	{

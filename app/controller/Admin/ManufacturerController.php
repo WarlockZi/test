@@ -8,7 +8,7 @@ use app\view\manufacturer\manufacturerView;
 
 class ManufacturerController Extends AppController
 {
-	public $model = manufacturer::class;
+	public string $model = manufacturer::class;
 
 	public function __construct()
 	{

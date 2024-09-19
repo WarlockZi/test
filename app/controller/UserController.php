@@ -10,7 +10,7 @@ use app\view\User\UserView;
 
 class UserController extends AppController
 {
-	public $model = User::class;
+	public string $model = User::class;
 	public $modelName = 'user';
 
 

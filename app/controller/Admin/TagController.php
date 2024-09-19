@@ -11,7 +11,7 @@ use app\view\Tag\TagView;
 class TagController extends AppController
 {
 
-	public $model = Tag::class;
+	public string $model = Tag::class;
 
 	public function actionIndex():void
 	{

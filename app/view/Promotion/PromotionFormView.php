@@ -14,6 +14,7 @@ use app\view\components\Builders\TableBuilder\Table;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
+use Illuminate\Database\Eloquent\Collection;
 
 class PromotionFormView
 {
@@ -70,12 +71,11 @@ class PromotionFormView
 		return $s;
 	}
 
-	public static function adminIndex($promotions)
+	public static function adminIndex(Collection $promotions)
 	{
 
-		$promotion = Table::build(Promotion::class)
-			->items($promotions)
-			->pageTitle('Акции')
+		$promotion = Table::build($promotions)
+				->pageTitle('Акции')
 			->column(
 				ColumnBuilder::build('product')
 					->function(Promotion::class, 'productLink')

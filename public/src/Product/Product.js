@@ -4,6 +4,7 @@ import {quill} from './quill'
 import Card_panel from '../share/card_panel/card_panel'
 import {$} from "../common";
 import shippableTable from "../share/shippable/shippableUnitsTable";
+import MyQuill from "../components/quill/quill.js";
 
 // window.onload = function () {
 export default class Product{
@@ -24,7 +25,8 @@ export default class Product{
       }
 
       zoom()
-      quill()
+      // quill()
+      new MyQuill('#detail-text');
    }
 }
 

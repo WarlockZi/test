@@ -67,7 +67,7 @@ class ReportView
                     ->width('30px')
                     ->get()
             )
-//            ->items($products)
+
             ->edit()
             ->del()
             ->addButton()
@@ -76,7 +76,7 @@ class ReportView
 
     public function haveDopUnit(Collection $products, string $title): string
     {
-        return Table::build(Product::class)
+        return Table::build($products)
             ->pageTitle($title)
             ->column(
                 ColumnBuilder::build('id')
@@ -98,16 +98,15 @@ class ReportView
                     ->width('1fr')
                     ->get()
             )
-            ->items($products)
             ->edit()
             ->del()
             ->addButton('ajax')
             ->get();
     }
 
-    public function noDopUnit($products): string
+    public function noDopUnit(Collection $products): string
     {
-        return Table::build(Product::class)
+        return Table::build($products)
             ->pageTitle('Товары имеющие только базовую единицу')
             ->column(
                 ColumnBuilder::build('id')
@@ -129,7 +128,6 @@ class ReportView
                     ->width('1fr')
                     ->get()
             )
-            ->items($products)
             ->edit()
             ->del()
             ->addButton('ajax')
@@ -160,7 +158,6 @@ class ReportView
                     ->width('1fr')
                     ->get()
             )
-            ->items($products)
             ->edit()
             ->del()
             ->addButton('ajax')
@@ -191,7 +188,6 @@ class ReportView
                     ->width('1fr')
                     ->get()
             )
-            ->items($products)
             ->edit()
             ->del()
             ->addButton('ajax')

@@ -3,6 +3,7 @@ import './units'
 import './Props.js'
 import {objAndFiles2FormData, post} from '../../common.js'
 import {qs} from '../../constants'
+import MyQuill from "../../components/quill/quill.js";
 
 export default class Product {
    constructor() {
@@ -15,6 +16,7 @@ export default class Product {
       this.setFields().then()
       this.setDragNDrop().then()
       this.setCardPanel().then()
+      new MyQuill('#detail-text');
    }
 
    async setDragNDrop() {

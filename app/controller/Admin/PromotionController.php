@@ -9,7 +9,7 @@ use app\view\Promotion\PromotionFormView;
 
 class PromotionController Extends AppController
 {
-	public $model = Promotion::class;
+	public string $model = Promotion::class;
 
 	public function __construct()
 	{

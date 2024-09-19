@@ -23,7 +23,7 @@ class PropertyView
 	public static function listAll()
 	{
 		$view = new self;
-		return Table::build($view->modelName)
+		return Table::build($view->modelName::all())
 			->all()
 			->column(
 				ColumnBuilder::build('id')
@@ -71,7 +71,6 @@ class PropertyView
 				ItemTabBuilder::build('Значения')
 					->html(
 						Table::build($prop->vals,)
-//							->items($item->vals)
 							->relation('vals', 'value')
 							->column(
 								ColumnBuilder::build('id')
