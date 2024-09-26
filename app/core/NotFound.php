@@ -62,7 +62,7 @@ class NotFound extends Controller
 
     protected static function setView(Route $route)
     {
-        if (User::can(Auth::getUser(), ['role_employee']) && $route->admin) {
+        if ($user->can(['role_employee']) && $route->admin) {
             return new AdminView(new self);
         } else {
             return new UserView(new self);

@@ -37,10 +37,10 @@ class ProductController extends AppController
         if ($product) {
             $oItems          = OrderRepository::count();
             $breadcrumbs     = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category_id, true,);
-            $userIsAdmin     = Auth::isAdmin();
+            $userIsAdmin     = Auth::userIsAdmin();
             $shippablePrices = $this->formView->dopUnitsPrices($product);
 
-            $this->set(compact('shippablePrices', 'product', 'breadcrumbs', 'oItems', 'userIsAdmin'));
+            $this->setVars(compact('shippablePrices', 'product', 'breadcrumbs', 'oItems', 'userIsAdmin'));
 
             $title    = $product->ownProperties->seo_title ?? $product->name;
             $desc     = $product->ownProperties->seo_description ?? $product->name;

@@ -13,7 +13,7 @@
        </div>
        <div class="item" data-row="<?= $i['id'] ?>"> <?= $i['date']; ?></div>
 
-       <div class="item del-btn <?= \app\model\User::can($user, ['test-results_del']) ? 'del' : ''; ?>"
+       <div class="item del-btn <?= \app\model\$user->can(['test-results_del']) ? 'del' : ''; ?>"
             data-row="<?= $i['id'] ?>">
           <?= Icon::trashIcon(); ?>
        </div>

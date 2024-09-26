@@ -25,7 +25,7 @@ class ReportController extends AppController
         $filterService = $this->productFilterService->get();
         $products      = $this->productRepository::filter($_POST);
         $productList   = $this->formView->filter($products, 'Фильтр');
-        $this->set(compact('productList', 'filterService'));
+        $this->setVars(compact('productList', 'filterService'));
     }
 
     public function __construct()

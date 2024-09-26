@@ -24,7 +24,7 @@ class UserController extends AppController
 		Auth::checkAuthorized($this->user, ['role_admin']);
 
 		$list = UserView::listAll();
-		$this->set(compact('list'));
+		$this->setVars(compact('list'));
 	}
 
 //	public function actionChange()
@@ -39,7 +39,7 @@ class UserController extends AppController
 		$item = $this->model::find($this->route['id']);
 		$item = UserView::getViewByRole($item, $this->user);
 
-		$this->set(compact('item'));
+		$this->setVars(compact('item'));
 
 		if ($user = $this->ajax) {
 			$user['id'] = $_SESSION['id'];
@@ -52,7 +52,7 @@ class UserController extends AppController
 	public function actionDelete():void
 	{
 		if ($data = $this->ajax) {
-			if (User::can($this->user, ['user_delete'])) {
+			if ($user->can(['user_delete'])) {
 				User::delete($data['id']);
 				Response::exitWithPopup('ok');
 			} else {

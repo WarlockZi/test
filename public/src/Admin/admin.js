@@ -12,7 +12,7 @@ import {$} from "../common.js"
 // import '../Test/test_results/test_results.js'
 // import '../Test/opentest-edit.js'
 // import testEdit from '../Test/test-edit.js'
-// import '../Test/do.js'
+// import '../Test/test-do.js'
 // import '../Test/open_test.js'
 
 
@@ -36,8 +36,19 @@ import CatalogItem from "../components/catalog-item/catalog-item.js";
 import MyQuill from "../components/quill/quill.js";
 
 import '../share/scroll/scroll.js'
+import Accordion from "../components/accordion/accordion.js";
 $(document).ready(async function () {
 
+   const test = window.location.href.includes("/test")
+   if (test){
+      const {default:Test} = await import('./Test/index.js')
+   }
+
+   const AdminSidebar = $('.admin-sidebar').first()
+   if (AdminSidebar){
+      const {default: Accordion} = await import('../components/accordion/accordion.js')
+      new Accordion(AdminSidebar)
+   }
    // const product = document[qs](`.item-wrap[data-model='product']`)
    // if (product) {
       const {default: Product} = await import('./Product/Product.js')
@@ -60,6 +71,7 @@ $(document).ready(async function () {
    }
    new Promotion();
    new Search(true);
+
    if (document[qs]('.admin_sidebar')) {
       const {default: adminAccordion} = await import('../components/AdminAccordion.js')
       new adminAccordion()

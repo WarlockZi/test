@@ -20,11 +20,10 @@ class PropertyView
 	public $modelName = Property::class;
 	public $model = 'property';
 
-	public static function listAll()
+	public static function index():string
 	{
-		$view = new self;
-		return Table::build($view->modelName::all())
-			->all()
+		return Table::build(Property::all())
+            ->model('property')
 			->column(
 				ColumnBuilder::build('id')
 					->width('50px')
@@ -45,7 +44,7 @@ class PropertyView
 			)
 			->edit()
 			->del()
-			->addButton('ajax')
+			->addButton()
 			->get();
 	}
 

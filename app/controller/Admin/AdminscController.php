@@ -14,7 +14,7 @@ class AdminscController extends AppController
 	{
 		parent::__construct();
 
-		if (!User::isEmployee(Auth::getUser())){
+		if (!Auth::getUser()->isEmployee()){
 			header('Location:/auth/profile');
 		}
 
@@ -30,13 +30,13 @@ class AdminscController extends AppController
 	public function actionSiteMap()
 	{
 		$iniCatList = App::$app->category->getInitCategories();
-		$this->set(compact('iniCatList'));
+		$this->setVars(compact('iniCatList'));
 	}
 
 
 	public function actionIndex():void
 	{
-		$this->assets->setCDNJs("https://cdn.jsdelivr.net/npm/chart.js", true);
+//		$this->assets->setCDNJs("https://cdn.jsdelivr.net/npm/chart.js", true);
 	}
 
 
@@ -51,7 +51,7 @@ class AdminscController extends AppController
 	public function actionPics()
 	{
 		$pics = App::$app->adminsc->findAll('pic');
-		$this->set(compact('pics'));
+		$this->setVars(compact('pics'));
 	}
 
 	public function actionDumpWWW()

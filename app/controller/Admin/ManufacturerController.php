@@ -18,7 +18,7 @@ class ManufacturerController Extends AppController
 	public function actionIndex():void
 	{
 		$manufacturers = ManufacturerView::list($this->model);
-		$this->set(compact('manufacturers'));
+		$this->setVars(compact('manufacturers'));
 	}
 
 }

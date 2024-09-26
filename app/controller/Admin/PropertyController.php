@@ -19,15 +19,16 @@ class PropertyController Extends AppController
 
 	public function actionIndex():void
 	{
-		$list = PropertyView::listAll();
-		$this->set(compact('list'));
+		$list = PropertyView::index();
+		$this->setVars(compact('list'));
 	}
 
 	public function actionEdit()
 	{
+        $this->view = 'table';
 		if ($this->route->id) {
-			$item = PropertyView::edit($this->route->id);
-			$this->set(compact('item'));
+			$table = PropertyView::edit($this->route->id);
+			$this->setVars(compact('table'));
 		} else {
 			header('Location: /adminsc/property');
 		}

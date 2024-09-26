@@ -4,6 +4,7 @@ import {ael, qa, qs} from '../constants'
 
 export default class adminAccordion {
    constructor() {
+      debugger
       let currentTestId = +document['qs'](`[data-testid]`).dataset['testid']
       let menuItemCollection = document[qa]('.test-edit.accordion a')
       Array.from(menuItemCollection).filter((a) => {
@@ -18,7 +19,7 @@ export default class adminAccordion {
       })
 
       document[qs]('#burger')[ael]('click', function () {
-         let admin_sidebar = $('.admin_sidebar')[0]
+         let admin_sidebar = $('.admin-sidebar')[0]
          admin_sidebar.classList.toggle('open')
       })
    }

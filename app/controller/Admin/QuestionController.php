@@ -30,9 +30,9 @@ class QuestionController Extends AppController
 			$test = new TestEditService();
 
 			$page_name = 'Редактирование тестов';
-			$this->set(compact('page_name'));
+			$this->setVars(compact('page_name'));
 
-			$this->set(compact('test'));
+			$this->setVars(compact('test'));
 		}
 	}
 

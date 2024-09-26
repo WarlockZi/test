@@ -21,13 +21,13 @@ class PromotionController Extends AppController
 		$id = $this->route->id;
 		$promotion = Promotion::with('product')->firstOrCreate(['id'=>$id]);
 		$promotion = PromotionFormView::edit($promotion);
-		$this->set(compact('promotion'));
+		$this->setVars(compact('promotion'));
 	}
 	public function actionIndex():void
 	{
 		$promotions = Promotion::with('product')->get();
 		$promotions = PromotionFormView::adminIndex($promotions);
-		$this->set(compact('promotions'));
+		$this->setVars(compact('promotions'));
 	}
     public function actionUpdateOrCreate(): void
     {

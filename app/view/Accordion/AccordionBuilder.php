@@ -28,10 +28,7 @@ class AccordionBuilder
 	protected $isPathAttr = '';
 	protected $attachAfter;
 
-	public static function build(
-		Collection $items,
-		string $link
-	)
+	public static function build(Collection $items,string $link)
 	{
 		$accordion = new self;
 		$accordion->items = $items->toArray();
@@ -132,13 +129,13 @@ class AccordionBuilder
 			return "<div class='before'>{$icon}</div>";
 		}
 	}
-	public function get()
-	{
+	public function get(): string
+    {
 		$res = '';
 		foreach ($this->items as $item) {
 			$res .= $this->getLi($item, 0);
 		}
-		return "		<div class='accordion_wrap{$this->class}'><ul accordion class='{$this->class}'>$res</ul>{$this->attachAfter}</div>";
+		return "<div class='accordion_wrap test-accordion{$this->class}'><ul accordion class='{$this->class}'>$res</ul>{$this->attachAfter}</div>";
 	}
 
 }

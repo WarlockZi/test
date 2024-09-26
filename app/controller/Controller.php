@@ -11,7 +11,7 @@ use app\view\Assets\Assets;
 class Controller
 {
     public array $vars = [];
-    public string $view;
+    public string $view='index';
     protected Route $route;
     protected array $ajax = [];
     public Assets $assets;
@@ -27,6 +27,7 @@ class Controller
     public function setRoute(Route $route): void
     {
         $this->route = $route;
+        $this->view = $route->getView();
     }
 
     public function actionIndex()
@@ -34,7 +35,7 @@ class Controller
         $this->route->setView('404');
         $this->route->setError('Путь не найден');
         $errors = $this->route->getErrors();
-        $this->set(compact('errors'));
+        $this->setVars(compact('errors'));
     }
 
     public function getRoute(): Route
@@ -42,7 +43,7 @@ class Controller
         return $this->route;
     }
 
-    public function set($vars): void
+    public function setVars($vars): void
     {
         $this->vars = array_merge($this->vars, $vars);
     }

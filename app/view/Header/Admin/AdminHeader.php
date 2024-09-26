@@ -15,15 +15,15 @@ class AdminHeader
 	protected string $commonTemplates;
 	protected string $blueRibbonTemplates;
 
-	public function __construct(array $user)
+	public function __construct(User $user)
 	{
-		$this->user = $user;
+		$this->user = $user->toArray();
 		$this->templates = __DIR__ . '/templates/';
 		$this->commonTemplates = dirname(__DIR__ ). '/templates/';
 		$this->blueRibbonTemplates = dirname(__DIR__ ). '/BlueRibbon/templates/';
 
         $logo = FS::getFileContent($this->templates.'logo_VITEX_grey.php');
-        $chips = User::can($user)
+        $chips = $user->can()
             ? FS::getFileContent($this->templates.'chips.php')
             : '';
         $searchPanel = FS::getFileContent($this->blueRibbonTemplates . 'searchPanel.php');

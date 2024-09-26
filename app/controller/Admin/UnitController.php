@@ -65,14 +65,15 @@ class UnitController extends AppController
         if ($id) {
             $unit     = UnitRepository::edit($id);
             $unitItem = UnitFormView::editItem($unit);
-            $this->set(compact('unit', 'unitItem'));
+            $this->setVars(compact('unit', 'unitItem'));
         }
     }
 
     public function actionIndex(): void
     {
-        $units = UnitFormView::index();
-        $this->set(compact('units'));
+        $this->view = 'table';
+        $table = UnitFormView::index();
+        $this->setVars(compact('table'));
     }
 
 }

@@ -23,30 +23,15 @@ class PlanningController Extends AppController
 		where('user_id', Auth::getUser())->
 		get();
 		$daily = PlanningView::listDaily($items);
-		$this->set(compact('daily'));
-	}
-
-	public function actionList()
-	{
-		$daily = PlanningView::listDaily(Todo::class);
-		$weekly = PlanningView::listWeekly(Todo::class);
-		$yearly = PlanningView::listYearly(Todo::class);
-		$this->set(compact('daily','weekly','yearly'));
-	}
-
-	private function getTable($items)
-	{
-
+		$this->setVars(compact('daily'));
 	}
 
 	public function actionIndex():void
 	{
-
+        $daily = PlanningView::listDaily();
+        $weekly = PlanningView::listWeekly();
+        $yearly = PlanningView::listYearly();
+        $this->setVars(compact('daily','weekly','yearly'));
 	}
 
-    public function actionPlan()
-    {
-
-
-    }
 }

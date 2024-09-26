@@ -4,92 +4,77 @@ namespace app\model;
 
 
 use app\Repository\ImageRepository;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
-	public $timestamps = true;
-	protected $fillable = [
-		'email', 'password',
-		'name',
-		'surName',
-		'middleName',
-		'hash',
-		'confirm',
-		'rights',
-		'post_id',
-		'birthDate',
-		'hired',
-		'fired',
-		'sex',
-		'phone',
-	];
+    use softDeletes;
 
-	public function rights()
-	{
-		echo ini_get("short_open_tag");
-		return $this->hasMany(Right::class);
-	}
+    public $timestamps = true;
+    protected $fillable = [
+        'email', 'password',
+        'name',
+        'surName',
+        'middleName',
+        'hash',
+        'confirm',
+        'rights',
+        'post_id',
+        'birthDate',
+        'hired',
+        'fired',
+        'sex',
+        'phone',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
-	public function fio()
-	{
-		return "{$this->surName} {$this->name} {$this->middleName}";
-	}
+    protected function rights(): Attribute
+    {
+        return Attribute::get(fn(string $rights) => explode(',', $rights));
+    }
 
-	public function fi()
-	{
-		return "{$this->surName} {$this->name}";
-	}
 
-	public static function avatar(array $user): string
-	{
-		if (isset($user['avatar'])) {
-			return $user['avatar'];
-		}
+    public function fio(): string
+    {
+        return "{$this->surName} {$this->name} {$this->middleName}";
+    }
 
-		return $user['sex'] === 'f'
-			? ImageRepository::getImg('/pic/srvc/main/ava_female.jpg')
-			: ImageRepository::getImg('/pic/srvc/main/ava_male.png');
-	}
+    public function fi(): string
+    {
+        return "{$this->surName} {$this->name}";
+    }
 
-	public static function can(array $user, $rights = []): bool
-	{
-		if (!$user) return false;
-		if (is_string($user['rights'])) {
-			$user['rights'] = explode(',', $user['rights']);
-		}
+    public function avatar(): string
+    {
+        return $this['sex'] === 'f'
+            ? ImageRepository::getImg('/pic/srvc/main/ava_female.jpg')
+            : ImageRepository::getImg('/pic/srvc/main/ava_male.png');
+    }
 
-		$has = self::hasRights($user, $rights);
-		$su = self::isSu($user['email']);
+    public function can($rights = []): bool
+    {
+        $has = $this->hasRights($rights);
+        $su  = $this::isSu();
+        return ($has || $su);
+    }
 
-		return ($has || $su);
-	}
+    public function isEmployee(): bool
+    {
+        return $this->hasRights(['role_employee']);
+    }
 
-	public static function isAdmin(array $user): bool
-	{
-		if (is_string($user['rights'])) {
-			$user['rights'] = explode(',', $user['rights']);
-		}
-		return !!array_intersect(['role_admin'], $user['rights']);
-	}
+    public function isSu(): bool
+    {
+        return $this->email === $_ENV['SU_EMAIL'];
+    }
 
-	public static function isEmployee(array $user): bool
-	{
-		if (!$user) return false;
-		if (is_string($user['rights'])) {
-			$user['rights'] = explode(',', $user['rights']);
-		}
-		return !!array_intersect(['role_employee'], $user['rights']);
-	}
-
-	public static function isSu(): bool
-	{
-		return defined('SU');
-	}
-
-	public static function hasRights(array $user, array $rights): bool
-	{
-		return !!array_intersect($user['rights'], $rights);
-	}
+    public function hasRights(array $rights): bool
+    {
+        return !!array_intersect($this->rights, $rights);
+    }
 
 }

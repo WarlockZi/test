@@ -24,12 +24,24 @@ class AdminLayout extends Layout
         Controller      $controller,
     )
     {
-        $this->view     = $controller->view ?? $this->route->getActionName() ?? 'default';
-        $this->viewFs   = new FS(dirname(__DIR__) . DIRECTORY_SEPARATOR . ucfirst($this->route->getControllerName()));
+        $this->setView($controller);
         $this->layout   = "layouts/admin";
         $this->layoutFs = new FS(dirname(__DIR__));
         $this->setErrors();
         $this->setContent($controller);
+    }
+
+    protected function setView(Controller $controller): void
+    {
+        $view = $controller->view ?? 'default';
+        if ($view === 'table') {
+            $this->view = $view;
+            $path       = dirname(__DIR__) . DIRECTORY_SEPARATOR;
+        } else {
+            $this->view = 'Admin/' . $view;
+            $path       = dirname(__DIR__) . DIRECTORY_SEPARATOR . ucfirst($this->route->getControllerName());
+        }
+        $this->viewFs = new FS($path);
     }
 
     public function setContent($controller): void
@@ -39,18 +51,6 @@ class AdminLayout extends Layout
         $this->content['content'] = $this->prepareContent($controller->vars);
         $this->content['errors']  = $this->route->getErrorsHtml();
         $this->content['footer']  = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
-    }
-
-    protected function setAssets($controller): Assets
-    {
-        $assets = new AdminAssets();
-//        $assets->merge($controller->getAssets());
-        return $assets;
-    }
-
-    protected function setHeader(): string
-    {
-        return (new AdminHeader(Auth::getUser()))->getHeader();
     }
 
     private function prepareContent($vars): string
@@ -66,9 +66,20 @@ class AdminLayout extends Layout
         }
     }
 
+    protected function setAssets($controller): Assets
+    {
+        $assets = new AdminAssets();
+        return $assets;
+    }
+
+    protected function setHeader(): string
+    {
+        return (new AdminHeader(Auth::getUser()))->getHeader();
+    }
+
     protected function getView(): string
     {
-        return 'Admin/' . $this->view;
+        return $this->view;
     }
 
     public function render(): void

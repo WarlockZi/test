@@ -13,7 +13,7 @@ class CardPanel
 {
 	public static function card_panel(Product $product): string
 	{
-        $userIsAdmin = Auth::isAdmin();
+        $userIsAdmin = Auth::userIsAdmin();
         $fs = new FS(__DIR__);
         $edit = Icon::edit();
 		return $fs->getContent('card_panel', compact('product', 'edit', 'userIsAdmin'));

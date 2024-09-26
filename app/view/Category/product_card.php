@@ -11,7 +11,7 @@
         <img src="<?= $product->mainImagePath ?>" alt="<?= $product->name ?>" loading="lazy">
         <div class="footer">
 
-            <p>Цена: <?= $product->instore ? $product->baseUnitPrice : 'уточняйте'; ?></p>
+            <p>Цена: <?= $product->instore ? $product->baseUnitPrice : 'от '.$product->baseUnitPrice; ?></p>
             <p>Статус: <?= $product->instore ? "в наличии" : 'под заказ'; ?></p>
             <p>Артикул: <?= $product->art ?? ''; ?></p>
         </div>

@@ -1,5 +1,6 @@
 import SelectNew from "../../components/select/SelectNew";
 import {$, post} from './../../common.js'
+import './order.scss';
 
 export default class Order {
    constructor() {

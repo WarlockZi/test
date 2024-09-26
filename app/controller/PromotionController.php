@@ -18,7 +18,7 @@ class PromotionController Extends AppController
 	{
 		$promotions = PromotionRepository::product();
 
-		$this->set(compact('promotions'));
+		$this->setVars(compact('promotions'));
 		$this->assets->setMeta("Акции", "Акции", "Акции");
 	}
 

@@ -31,10 +31,10 @@ class CategoryController extends AppController
             $category = $this->repo->indexInstore($slug);
 
             if ($category) {
-                $admin       = Auth::isAdmin();
+                $admin       = Auth::userIsAdmin();
                 $edit        = Icon::edit();
                 $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
-                $this->set(compact('admin', 'edit', 'breadcrumbs', 'category'));
+                $this->setVars(compact('admin', 'edit', 'breadcrumbs', 'category'));
                 $title    = $category->ownProperties->seo_title ?? $category->name;
                 $desc     = $category->ownProperties->seo_description ?? $category->name;
                 $keywords = $category->ownProperties->seo_keywords ?? $category->name;
@@ -48,7 +48,7 @@ class CategoryController extends AppController
 
             $categories = CategoryRepository::indexNoSlug();
 
-            $this->set(compact('categories'));
+            $this->setVars(compact('categories'));
             $this->assets->setMeta('Категории', 'Категории:VITEX', 'Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент');
         }
     }

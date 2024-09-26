@@ -6,11 +6,14 @@ namespace app\view\components\Builders\TableBuilder;
 
 use app\core\FS;
 use app\core\Icon;
+use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Collection;
 
 class Table
 {
+    use CleanString;
     private string $pageTitle = '';
+    private string $header = '';
     private string $grid = '';
     private array $columns = [];
     private string $class = '';
@@ -44,7 +47,7 @@ class Table
     }
 
 
-    public function link(string $field, string $classHeader, string $class, string $name, string $width, string $className, string $funcName):static
+    public function link(string $field, string $classHeader, string $class, string $name, string $width, string $className, string $funcName):void
     {
         $this->columns[$field] = ColumnBuilder::build($field)
             ->classHeader($classHeader)
@@ -77,9 +80,9 @@ class Table
         $this->pageTitle = $pageTitle;
         return $this;
     }
-    public function header(string $pageTitle): static
+    public function header(string $header): static
     {
-        $this->pageTitle = $pageTitle;
+        $this->header = $header;
         return $this;
     }
 
@@ -195,7 +198,8 @@ class Table
             $this->prepareGridHeader();
             $this->items = $this->take ? $this->items->take($this->take) : $this->items;
             $data        = get_object_vars($this);
-            return $this->fs->getContent('TableTemplate', $data);
+            $content = $this->fs->getContent('TableTemplate', $data);
+            return $this->clean($content);
 
         } catch (\Throwable $error) {
             return $error->getMessage();

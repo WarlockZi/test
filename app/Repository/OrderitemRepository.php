@@ -13,14 +13,14 @@ class OrderitemRepository
 {
     public static function leadList()
     {
-        $orders = OrderItem::query()
+        $orderItem = OrderItem::query()
             ->select('product_id', 'id', 'sess', 'count')
             ->has('lead')
             ->with('lead')
             ->with('product')
             ->groupBy('product_id')
             ->get();
-        return $orders;
+        return $orderItem;
     }
 
     public static function clientList()
@@ -37,16 +37,11 @@ class OrderitemRepository
 
     public function edit($id)
     {
-        try {
-            $orderItem = OrderItem::find($id);
-            $lead = Lead::where('sess', $orderItem->sess)->first();
-            $oItems = OrderItem::query()
-                ->where('sesss', $orderItem->sess)
-                ->get();
-
-        } catch (\Throwable $exception) {
-
-        }
+        $orderItem = OrderItem::with(['product.activePromotions','unit','lead'])->find($id);
+        $lead      = Lead::where('sess', $orderItem->sess)->first();
+        $oItems    = OrderItem::query()
+            ->where('sess', $orderItem->sess)
+            ->get();
         return compact('oItems', 'lead');
     }
 
@@ -74,9 +69,9 @@ class OrderitemRepository
 
     public static function count()
     {
-        $sess = session_id();
+        $sess   = session_id();
         $oItems = OrderItem::where('sess', $sess)->get()->toArray();
-        $count = 0;
+        $count  = 0;
         if ($oItems) {
             foreach ($oItems as $item) {
                 $count += $item['count'];

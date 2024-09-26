@@ -4,27 +4,24 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\Response;
-use app\core\Route;
 use app\model\Post;
 use app\view\Post\PostView;
 
-
 class PostController Extends AppController
 {
-	public  $model = Post::class;
-	public  $modelName = 'post';
-	public  $tableName = 'posts';
+	public  string $model = Post::class;
+//	public  $modelName = 'post';
 
 	public function __construct()
 	{
 		parent::__construct();
-
 	}
 
 	public function actionIndex():void
 	{
-		$list = PostView::listAll();
-		$this->set(compact('list'));
+        $this->view = 'table';
+		$table = PostView::index();
+		$this->setVars(compact('table'));
 	}
 
 
@@ -37,7 +34,7 @@ class PostController Extends AppController
 		$id = $this->route['id'];
 
 		$item = PostView::item($id);
-		$this->set(compact('item'));
+		$this->setVars(compact('item'));
 	}
 
 	private function getItem($item, $chiefs, $subordinates)

@@ -16,6 +16,7 @@ trait CleanString
         $regex = "/\r\n\t+?/";
         $res = preg_replace($regex, "\t", $res);
         $res = str_replace("\r\n\r\n", "\r\n", $res);
+        $res = preg_replace ("/\s\s+/", " ", $res);
 
         return $res;
     }

@@ -1,0 +1,62 @@
+@import "../../var";
+
+.test-update__group{
+  margin-bottom: 10px;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.test-update__buttons{
+  display: flex;
+  gap: 10px;
+}
+.children{
+  .test-edit__child {
+    font-size: .7rem;
+  }
+}
+
+.test-path-add__th{
+  justify-self: end;
+  text-align: end;
+
+}
+
+.test-path-add__table {
+  display: flex;
+  flex-flow: column;
+}
+
+
+.test__save,
+.test__update,
+.test-path__update,
+.test-path__create,
+.test__create,
+.test__delete,
+.test-update__delete {
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 15px;
+  margin-bottom: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+  background-color: $color-main;
+  box-shadow: 0 2px 4px 0 $color-main;
+  transition: box-shadow 100ms;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 80px;
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.test__delete {
+  background-color: #ff2929;
+  box-shadow: 0 2px 4px 0 #aa1b1b9e;
+  justify-self: end;
+}

@@ -3,7 +3,7 @@
 @import "../mixin_media";
 @import '../normalize.scss';
 @import "../components/neon";
-@import "./Order/order";
+//@import "./Order/order";
 
 @include chips;
 
@@ -27,7 +27,7 @@
   }
 
   .adm-content {
-    padding: 95px 30px;
+    padding: 65px 30px;
     min-height: 50vh;
 
     button {
