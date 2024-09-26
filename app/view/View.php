@@ -6,13 +6,14 @@ use app\controller\Controller;
 use app\core\Auth;
 use app\core\FS;
 use app\core\Route;
+use app\model\User;
 use app\view\Assets\Assets;
 
 abstract class View
 {
     protected Controller $controller;
     protected FS $fs;
-    public array $user;
+    public User|null $user;
     public string $header;
     public string $content;
     public string $footer;

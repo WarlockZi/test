@@ -2,20 +2,19 @@
 
 use app\core\Icon;
 
-//require_once __DIR__ . '/Helpers.php';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <!--	VITEX-LAYOUT-->
     <meta charset="utf-8">
-    <meta name="phpSession" content="<?= $_SESSION['phpSession']??''; ?>">
+    <meta name="phpSession" content="<?= $_SESSION['phpSession'] ?? ''; ?>">
     <meta http-equiv="cleartype" content="on"/>
     <meta name="MobileOptimized" content="320">
     <meta name="HandheldFriendly" content="True">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="yandex-verification" content="003253e624aad5b6"/>
-    <meta name="yandex-verification" content="127ee751f73e25e0" />
+    <meta name="yandex-verification" content="127ee751f73e25e0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
@@ -23,12 +22,10 @@ use app\core\Icon;
 
     <?= $assets->getMeta(); ?>
 
-<!--    --><?php //= vite('Product/Product.js') ?>
-<!--    --><?php //= vite('Main/main.js') ?>
-        <?= $assets->getCss(); ?>
-    <!--    --><?php //= $assets->getCDNCss(); ?>
+    <?= $assets->getCss(); ?>
 
-<? include_once __DIR__ . '/metrica.php'; ?>
+
+    <? include_once __DIR__ . '/metrica.php'; ?>
 
 </head>
 
@@ -48,7 +45,6 @@ use app\core\Icon;
 
 <?= $footer; ?>
 
-<!--    <script src="./src/some_script.js" type="module"></script>-->
 <?= $assets->getJs(); ?>
 
 <?php //= $assets->getCDNJs(); ?>

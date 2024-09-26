@@ -36,10 +36,10 @@ class Footer
 		return self::$yaMetrica;
 	}
 
-	public static function setUserCookie(): void
-	{
-		self::$userCookie = FS::getFileContent(ROOT . '/app/view/components/footer/ya_metrica.php');
-	}
+//	public static function setUserCookie(): void
+//	{
+//		self::$userCookie = FS::getFileContent(ROOT . '/app/view/components/footer/ya_metrica.php');
+//	}
 
 	public static function getUserCookie()
 	{
