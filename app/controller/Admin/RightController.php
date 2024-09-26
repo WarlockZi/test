@@ -38,13 +38,13 @@ class RightController Extends AppController
 	public function actionIndex():void
 	{
 		$list = RightView::listAll();
-		$this->set(compact('list'));
+		$this->setVars(compact('list'));
 	}
 
 	public function actionDelete():void
 	{
 		$id = $this->ajax['id']??$_POST['id'];
-		if (User::can($this->user, ['right_delete']) || defined(SU)) {
+		if ($user->can(['right_delete']) || defined(SU)) {
 			if ($this->model::delete($id)) {
 				Response::exitWithPopup("ok");
 			}

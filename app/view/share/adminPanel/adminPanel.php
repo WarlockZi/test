@@ -1,5 +1,5 @@
 <?php use app\core\Auth; ?>
-<?php if (Auth::isAdmin()): ?>
+<?php if (Auth::userIsAdmin()): ?>
     <div class="admin-panel">
 
         <div class="row">

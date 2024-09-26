@@ -7,19 +7,15 @@ namespace app\view\Planning;
 use app\model\Todo;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
-use Illuminate\Database\Eloquent\Collection;
 
 
 class PlanningView
 {
-
-	public $modelName = Todo::class;
-
 	public static function listDaily(): string
 	{
-		$view = new self;
 		$items = Todo::where('type','день')->get();
-		return Table::build($view->modelName)
+		return Table::build($items)
+            ->model('todo')
 			->column(
 				ColumnBuilder::build('id')
 					->name('ID')
@@ -32,16 +28,14 @@ class PlanningView
 					->search()
 					->width('1fr')
 					->get())
-//			->all()
 			->edit()
 			->get();
 	}
 	public static function listWeekly(): string
 	{
-		$view = new self;
 		$items = Todo::where('type','неделя')->get();
 		return Table::build($items)
-
+            ->model('todo')
 			->column(
 				ColumnBuilder::build('id')
 					->name('ID')
@@ -54,16 +48,14 @@ class PlanningView
 					->search()
 					->width('1fr')
 					->get())
-//			->all()
 			->edit()
 			->get();
 	}
 	public static function listYearly(): string
 	{
-		$view = new self;
 		$items = Todo::where('type','год')->get();
 		return Table::build($items)
-			->items($items)
+            ->model('todo')
 			->column(
 				ColumnBuilder::build('id')
 					->name('ID')
@@ -80,6 +72,5 @@ class PlanningView
 			->edit()
 			->get();
 	}
-
 
 }

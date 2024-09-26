@@ -23,16 +23,18 @@ class OrderController extends AppController
     {
         $orderItems = OrderRepository::leadList();
         $leadlist = OrderView::leadList($orderItems);
+
         $orders = OrderRepository::clientList();
         $clientlist = OrderView::clientList($orders);
-        $this->set(compact('clientlist', 'leadlist'));
+        $this->setVars(compact('clientlist', 'leadlist'));
     }
 
     public function actionEdit():void
     {
+        $this->view = 'table';
         $orders = OrderRepository::edit($this->route->id);
         $table = OrderView::editOrder($orders);
-        $this->set(compact('orders','table'));
+        $this->setVars(compact('table'));
     }
 
     public function actionUpdateOrCreate(): void

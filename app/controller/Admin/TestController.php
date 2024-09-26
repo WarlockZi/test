@@ -4,12 +4,8 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\Response;
-use app\core\Router;
-
-
 use app\model\Test;
 use app\Repository\TestRepository;
-use app\Services\Test\TestDoService;
 use app\view\Test\TestView;
 use app\view\View;
 
@@ -32,12 +28,12 @@ class TestController extends AppController
       if ($id) {
          $test = TestRepository::do($id);
          $testView = $this->testView;
-         $this->set(compact('test','testView'));
+         $this->setVars(compact('test','testView'));
       } else {
-         $this->route->setView('index');
+         $this->view = 'index';
          $tests = $this->repository->treeAll();
          $testView = $this->testView;
-         $this->set(compact('tests', 'testView'));
+         $this->setVars(compact('tests', 'testView'));
       }
 
    }
@@ -51,12 +47,12 @@ class TestController extends AppController
          $this->route->setView('edit/edit');
          $test = TestRepository::do($id);
          $testView = $this->testView;
-         $this->set(compact('test','testView'));
+         $this->setVars(compact('test','testView'));
       } else {
          $this->route->setView('index');
          $tests = $this->repository->treeAll();
          $testView = $this->testView;
-         $this->set(compact('tests', 'testView'));
+         $this->setVars(compact('tests', 'testView'));
       }
 
 //      $test = TestRepository::findById($id);
@@ -81,7 +77,7 @@ class TestController extends AppController
       $test['isTest'] = 0;
       $rootTests      = Test::where('isTest', 0)->get()->toArray();
 
-      $this->set(compact('rootTests', 'page_name', 'paths', 'test'));
+      $this->setVars(compact('rootTests', 'page_name', 'paths', 'test'));
    }
 
    public function actionGetCorrectAnswers()

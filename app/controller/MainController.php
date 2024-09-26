@@ -71,7 +71,7 @@ class MainController extends AppController
 	public function actionNews()
 	{
 		$content = 'Следите за новостями)';
-		$this->set(compact('content'));
+		$this->setVars(compact('content'));
 		$this->assets->setMeta('Новости', 'Новости', 'Новости');
 	}
 

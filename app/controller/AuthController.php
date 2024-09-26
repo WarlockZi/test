@@ -67,18 +67,20 @@ class AuthController extends AppController
             $errors = $req->checkLoginCredentials($data);
             if ($errors)
                 Response::exitJson(['errors' => $errors, 'popup' => $errors]);
-            $user = $this->userRepository->findByMail($data['email'])->toArray();
+            $user = User::where('email',$data['email'])->first();
 
-            if (!$user['confirm'])
-                Response::exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
-            if ($user['password'] !== $this->userRepository->preparePassword($data['password'])) {
-                if (!Auth::isSU($user['email'])) {
+            if (!$user) Response::exitJson(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
+
+            if (!$user->confirm) Response::exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
+            if ($user->password !== $this->userRepository->preparePassword($data['password'])) {
+                if (!Auth::isSU($user->email)) {
                     Response::exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
                 }
             }
             Auth::setAuth($user);
+            Auth::setUser($user);
 
-            if (User::can($user, ['role_employee'])) {
+            if ($user->can(['role_employee'])) {
                 Response::exitJson(['role' => 'employee', 'id' => $user['id']]);
             } else {
                 Response::exitJson(['role' => 'user', 'id' => $user['id']]);
@@ -93,8 +95,8 @@ class AuthController extends AppController
         $userArr = Auth::getUser();
         $user    = User::find($userArr['id']);
 
-        if (User::can($userArr, ['role_employee'])) {
-            if (User::can($userArr, ['role_admin'])) {
+        if ($user->can(['role_employee'])) {
+            if ($user->can(['role_admin'])) {
                 $item = UserView::admin($user);
             } else {
                 $item = UserView::employee($user);
@@ -104,7 +106,7 @@ class AuthController extends AppController
             $item = UserView::guest($user);;
         }
 
-        $this->set(compact('item'));
+        $this->setVars(compact('item'));
     }
 
     public function actionChangePassword(): void
@@ -179,7 +181,7 @@ class AuthController extends AppController
         }
 
         $user['confirm'] = "1";
-        Auth::setAuth($user->toArray());
+        Auth::setAuth($user);
         if ($user->update()) {
             header('Location:/auth/success');
             Response::exitWithPopup('"Вы успешно подтвердили свой E-mail."');

@@ -20,7 +20,7 @@ class CategoryController extends AppController
     public function actionIndex(): void
     {
         $categoryTree = CategoryFormView::list();
-        $this->set(compact('categoryTree'));
+        $this->setVars(compact('categoryTree'));
     }
 
     public function actionEdit(): void
@@ -29,7 +29,7 @@ class CategoryController extends AppController
         $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($id, false, true);
         $category    = CategoryRepository::edit($id);
         $category    = CategoryFormView::edit($category);
-        $this->set(compact('category', 'breadcrumbs'));
+        $this->setVars(compact('category', 'breadcrumbs'));
     }
 //    public function actionCreate(): void
 //    {
@@ -46,6 +46,6 @@ class CategoryController extends AppController
     public function actionList()
     {
         $table = CategoryFormView::list();
-        $this->set(compact('table'));
+        $this->setVars(compact('table'));
     }
 }

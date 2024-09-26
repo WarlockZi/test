@@ -24,14 +24,14 @@ class TestresultController extends AppController
    {
       $res = TestResult::all()->toArray();
       $user = Auth::getUser();
-      $this->set(compact('res', 'user'));
+      $this->setVars(compact('res', 'user'));
    }
 
    public function actionResult()
    {
       $res = TestResult::find($this->route->id);
       $testHtml = $res->html;
-      $this->set(compact('testHtml', 'res'));
+      $this->setVars(compact('testHtml', 'res'));
    }
 
 

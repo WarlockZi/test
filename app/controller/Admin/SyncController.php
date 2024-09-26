@@ -98,7 +98,7 @@ class SyncController extends AppController
     public function actionIndex(): void//init
     {
         $tree = [];
-        $this->set(compact('tree'));
+        $this->setVars(compact('tree'));
     }
 
     public function actionLogshow(): void

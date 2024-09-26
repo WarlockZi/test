@@ -1,32 +1,13 @@
 <?
 
-use \app\model\User;
-use \app\core\Icon;
-use \app\view\Accordion\Admin\SidebarBuilder;
+use app\core\Icon;
 
 ?>
-<?//=
-//SidebarBuilder::build($user)
-//	->class('sidebar')
-//	->item(
-//		[
-//			'header' => ['title' => 'CRM', 'icon' => 'chart', 'arrow' => 'arrow'],
-//			'rights' => ['role_admin', 'role_manager'],
-//			'ul' => [
-//				["/adminsc/wish", "Предложения сайт"],
-//				["/adminsc/order", "Заказы"],
-//				["/adminsc/user", "Пользователи"],
-//				["/adminsc/crm", "crm"],
-//				["/adminsc/promotion", "Акции"],
-//			]
-//		],
-//		)
-//	->get();
-//?>
 
-<ul class="admin_sidebar">
+<div class="accordion_wrap">
+<ul class="admin-sidebar">
 
-	<li class="admin_sidebar_header">
+	<li class="admin-sidebar__header">
 
 		 <?= Icon::gamburger() ?>
 
@@ -45,7 +26,9 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 			</a>
 		</li>
 
-		 <? if (User::can($user, ['role_admin', 'role_manager'])): ?>
+
+
+		 <? if ($user->can(['role_admin', 'role_manager'])): ?>
 		  <li>
 			  <div class="label">
 				  <div class="arrow"></div>
@@ -63,7 +46,9 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 		 <? endif; ?>
 
 
-		 <? if (User::can($user, ['role_admin'])): // admin ?>
+
+
+		 <? if ($user->can(['role_admin'])): // admin ?>
 		  <li>
 
 			  <div class="label">
@@ -73,7 +58,7 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 			  </div>
 
 			  <ul class="level-1">
-						 <? if (User::can($user, ['role_admin'])): // admin ?>
+						 <? if ($user->can(['role_admin'])): // admin ?>
 					 <a class="neon" href='/adminsc/property'>Свойства</a>
 					 <a class="neon" href='/adminsc/right'>Права</a>
 					 <a class="neon" href='/adminsc/country'>Страны</a>
@@ -82,13 +67,13 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 					 <a class="neon" href='/adminsc/unit'>Ед. измерен.</a>
 					 <a class="neon" href='/adminsc/image'>Картинки</a>
 					 <a class="neon" href='/adminsc/post'>Должности</a>
-					 <a class="neon" href='/adminsc/todo'>Задачи</a>
+					 <a class="neon" href='/adminsc/planning'>Задачи</a>
 						 <? endif; ?>
 			  </ul>
 		  </li>
 		 <? endif; ?>
 
-		 <? if (User::can($user, ['role_employee'])): // admin ?>
+		 <? if ($user->can(['role_employee'])): // admin ?>
 		  <li>
 
 			  <div class="label">
@@ -99,7 +84,7 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 
 			  <ul class="level-1">
 				  <a class="neon" href='/adminsc/videoinstruction'>Инструкции</a>
-						 <? if (User::can($user, ['role_admin'])): ?>
+						 <? if ($user->can(['role_admin'])): ?>
 					 <a class="neon" href='/adminsc/videoinstruction/edit'>Редактировать инструкции</a>
 						 <? endif; ?>
 			  </ul>
@@ -114,27 +99,27 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 			</div>
 			<ul class="level-1">
 
-					 <? if (User::can($user, ['role_employee'])): ?>
+					 <? if ($user->can(['role_employee'])): ?>
 				  <a class="neon" href="/adminsc/test/do">Проходить тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($user, ['role_admin'])): ?>
+					 <? if ($user->can(['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/test/edit">Редактировать тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($user, ['role_admin'])): ?>
+					 <? if ($user->can(['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/testresult">Результаты тестов </a>
 					 <? endif; ?>
 
-					 <? if (User::can($user, ['role_employee'])): ?>
+					 <? if ($user->can(['role_employee'])): ?>
 				  <a class="neon" href="/adminsc/opentest/do">Проходить открытые тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($user, ['role_admin'])): ?>
+					 <? if ($user->can(['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/opentest/edit">Редактировать открытые тесты</a>
 					 <? endif; ?>
 
-					 <? if (User::can($user, ['role_admin'])): ?>
+					 <? if ($user->can(['role_admin'])): ?>
 				  <a class="neon" href="/adminsc/opentestresult">Результаты открытых тестов </a>
 					 <? endif; ?>
 
@@ -148,7 +133,7 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 				Планирование
 			</div>
 			<ul class="level-1">
-					 <? if (User::can($user, ['role_employee'])): // admin ?>
+					 <? if ($user->can(['role_employee'])): // admin ?>
 				  <a class="neon" href="/adminsc/planning/create">Создать задачи</a>
 				  <a class="neon" href="/adminsc/planning/list">Посмотреть планировки</a>
 				  <a class="neon" href="/adminsc/planning/plan">Спланироваться</a>
@@ -164,14 +149,8 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 				Отчеты
 			</div>
 			<ul class="level-1">
-					 <? if (User::can($user, ['role_admin'])): // admin ?>
+					 <? if ($user->can(['role_admin'])): // admin ?>
 
-<!--				  <a class="neon" href="/adminsc/report/productsNoImgInstore">Товары без картинок в наличии</a>-->
-<!--				  <a class="neon" href="/adminsc/report/productsNoImgNotinstore">Товары без картинок без наличия</a>-->
-
-<!--				  <a class="neon" href="/adminsc/report/productsNoMinimumUnit">Товары без min единицы</a>-->
-<!--				  <a class="neon" href="/adminsc/report/productsNoDopUnit" title="Нужны для корзины, чтобы ">Товары без доп единиц</a>-->
-<!--                         <a class="neon" href="/adminsc/report/productsHaveDopUnit" title="Нужны для корзины, чтобы ">Товары имеющие доп единицу</a>-->
 					 <? endif; ?>
 			</ul>
 		</li>
@@ -191,7 +170,7 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 				Каталог
 			</div>
 			<ul class="level-1">
-					 <? if (User::can($user, ['role_admin'])): // admin ?>
+					 <? if ($user->can(['role_admin'])): // admin ?>
 				  <a class="neon" href="/adminsc/category">Категории</a>
 <!--				  <a class="neon" href="/adminsc/product/list">Товары</a>-->
 <!--				  <a class="neon" href="/adminsc/product/trashed">Товары удалены</a>-->
@@ -218,7 +197,7 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 				Пользователь
 			</div>
 			<ul class="level-1">
-					 <? if (User::can($user, ['role_employee'])): // admin ?>
+					 <? if ($user->can(['role_employee'])): // admin ?>
 				  <a class="neon" href="/auth/returnpass">Забыл пароль</a>
 				  <a class="neon" href="/auth/changepassword">Сменить пароль</a>
 				  <a class="neon" href="/auth/profile">Изменить свой профиль</a>
@@ -229,7 +208,7 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 		</li>
 
 
-		 <? if (User::can($user)): ?>
+		 <? if ($user->can()): ?>
 		  <li>
 
 			  <div class="label">
@@ -260,3 +239,4 @@ use \app\view\Accordion\Admin\SidebarBuilder;
 
 
 </ul>
+</div>

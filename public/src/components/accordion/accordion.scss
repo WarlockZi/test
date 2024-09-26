@@ -19,7 +19,6 @@ $font-size-item: .5rem;
 }
 
 @mixin accordion {
-
   [accordion] {
     display: flex;
     flex-flow: column;
@@ -49,6 +48,10 @@ $font-size-item: .5rem;
         svg{
           width: 15px;
           padding: 3px;
+
+          &.rotate{
+            transform: rotate(-90deg);
+          }
         }
 
       }
@@ -280,7 +283,7 @@ $width-full: 170px;
   }
 }
 
-.admin_sidebar {
+.admin-sidebar {
   position: fixed;
   display: flex;
   flex-flow: column;
@@ -334,6 +337,9 @@ $width-full: 170px;
     }
   }
 
+  &.show {
+    height: auto;
+  }
   &.open {
     max-width: $width-half;
     min-width: $width-half;

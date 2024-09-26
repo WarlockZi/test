@@ -46,17 +46,14 @@ class CartController extends AppController
         $authed = Auth::isAuthed();
         $trashedWhite = Icon::trashWhite();
 
-		$this->set(compact('products', 'lead', 'user','authed', 'trashedWhite'));
+		$this->setVars(compact('products', 'lead', 'user','authed', 'trashedWhite'));
 	}
 
 	public function actionLogin()
 	{
 		$req = $this->ajax;
 
-		$user = User::query()
-			->where('email', $req['email'])
-			->first()
-			->toArray();
+		$user = User::where('email', $req['email'])->first();
 
 		if ($user) {
 			Auth::setAuth($user);

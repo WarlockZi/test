@@ -13,9 +13,7 @@ use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
-use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\MyView;
 use app\view\Right\RightView;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -30,8 +28,8 @@ abstract class UserView
 	public static function getViewByRole(Model $userToEdit, $thisUser)
 	{
 		if ($userToEdit) {
-			if (User::can($thisUser, ['role_employee'])) {
-				if (User::can($thisUser, ['role_admin'])) {
+			if ($user->can(['role_employee'])) {
+				if ($user->can(['role_admin'])) {
 					return UserView::admin($userToEdit);
 				}
 				return UserView::employee($userToEdit);
@@ -251,7 +249,8 @@ abstract class UserView
 
 	public static function listAll(): string
 	{
-		return Table::build(User::class::all())
+		return Table::build(User::all())
+            ->model('user')
 			->column(
 				ColumnBuilder::build('id')
 					->name('ID')
@@ -273,7 +272,7 @@ abstract class UserView
 					->name('co')
 					->get())
 			->edit()
-			->all()
+			->del()
 			->get();
 	}
 

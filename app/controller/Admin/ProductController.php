@@ -42,10 +42,10 @@ class ProductController extends AppController
         if ($prod) {
             $product     = ProductFormView::edit($prod);
             $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);
-            $this->set(compact('product', 'breadcrumbs'));
+            $this->setVars(compact('product', 'breadcrumbs'));
         } else {
             $product = null;
-            $this->set(compact('product',));
+            $this->setVars(compact('product',));
         }
         $this->assets->setProduct();
         $this->assets->setQuill();

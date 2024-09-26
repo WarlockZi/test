@@ -18,7 +18,7 @@ class WishController Extends AppController
 	public function actionIndex():void
 	{
 		$content = StorageProd::getFileContent('wish');
-		$this->set(compact('content'));
+		$this->setVars(compact('content'));
 	}
 	public function actionSave()
 	{

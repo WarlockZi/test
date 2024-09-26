@@ -25,7 +25,7 @@ class RequestController Extends AppController
 		$content = $this->filter($content);
 		$content = $this->decorate($content);
 
-		$this->set(compact('content'));
+		$this->setVars(compact('content'));
 	}
 
 	public function actionPhpinfo()
@@ -33,14 +33,14 @@ class RequestController Extends AppController
 		ob_start();
 		phpinfo();
 		$content = ob_get_clean();
-		$this->set(compact('content'));
+		$this->setVars(compact('content'));
 	}
 
 	public function actionTest()
 	{
 		$this->layout = 'test';
 		$content = 'd';
-		$this->set(compact('content'));
+		$this->setVars(compact('content'));
 	}
 
 	protected function decorate($content)

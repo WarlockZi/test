@@ -19,13 +19,13 @@ class SettingsController Extends AppController
     {
         $settings = $this->model::all();
         $list = SettingsFormView::list($settings);
-        $this->set(compact('list'));
+        $this->setVars(compact('list'));
     }
 	public function actionList()
 	{
 		$settings = (new SettingsRepository)->all();
 		$list = SettingsFormView::list($settings);
-		$this->set(compact('list'));
+		$this->setVars(compact('list'));
 	}
 
 	public function actionEdit()

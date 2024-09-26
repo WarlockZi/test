@@ -19,7 +19,7 @@ class CountryController Extends AppController
 	{
 
 		$countries = CountryView::list($this->model);
-		$this->set(compact('countries'));
+		$this->setVars(compact('countries'));
 	}
 
 }

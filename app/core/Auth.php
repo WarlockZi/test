@@ -6,7 +6,32 @@ use app\model\User;
 
 class Auth
 {
-    protected static array $user = [];
+    protected static User|null $user = null;
+
+    protected static Auth $instance;
+
+    protected function __construct()
+    {
+    }
+
+    protected function __clone()
+    {
+    }
+
+    public function __wakeup()
+    {
+        throw new \Exception("Cannot unserialize a singleton.");
+    }
+
+    public static function getInstance(): self
+    {
+        $cls = static::class;
+        if (!isset(self::$instance[$cls])) {
+            self::$instance[$cls] = new static();
+        }
+        return self::$instance[$cls];
+    }
+
 
     public static function hasPphSession(array $req): bool
     {
@@ -19,19 +44,28 @@ class Auth
 
     public static function checkAuthorized(array $user, array $rights): void
     {
-        if (!User::can($user, $rights)) {
+        if (!$user->can($rights)) {
             header("Location:/auth/unautherized");
         }
     }
 
-    public static function getUser(): array
+    public static function getUser(): User|null
     {
-        return self::$user;
+        return self::$user ?? self::auth();
     }
 
-    public static function isSU(string $email): bool
+    private static function auth(): User|null
     {
-        return $_ENV['SU_EMAIL'] === $email;
+        if (isset($_SESSION['id']) && $_SESSION['id']) {
+            self::$user = User::find($_SESSION['id']);
+            return self::$user;
+        }
+        return null;
+    }
+
+    public static function isSU(): bool
+    {
+        return $_ENV['SU_EMAIL'] === self::$user['email'];
     }
 
     public static function isOlya(): bool
@@ -39,34 +73,29 @@ class Auth
         return 'vitex018@yandex.ru' === Auth::getUser()['email'];
     }
 
-    public static function setAuth(array $user): void
+    public static function setAuth(User $user): void
     {
-        $_SESSION['id'] = $user['id'];
+        $_SESSION['id'] = $user->id;
     }
 
     public static function setUser(User $mockuser): void
     {
-        self::$user = $mockuser->toArray();
+        self::$user = $mockuser;
     }
 
     public static function getAuth(): User|null
     {
-        if (isset($_SESSION['id']) && $_SESSION['id']) {
-            $user = User::find($_SESSION['id']);
+        if (!isset($_SESSION['id']) || $_SESSION['id']) return null;
+        $user = User::find($_SESSION['id']);
 
-            self::$user = $user ? $user->toArray() : null;
-            return $user;
-        }
-        return null;
+        self::$user = $user ?? null;
+        return $user;
     }
 
-    public static function isAdmin(): bool
+
+    public static function userIsAdmin(): bool
     {
-        $user = self::getUser();
-        if (User::can($user, ['role_admin'])) {
-            return true;
-        }
-        return false;
+        return self::$user && self::$user->can(['role_admin']);
     }
 
     public static function isAuthed(): bool
@@ -74,10 +103,10 @@ class Auth
         return !!self::getUser();
     }
 
-    public static function authorize(Route $route): array
+    public static function authorize(Route $route): User|null
     {
         if (AuthValidator::needsNoAuth($route)) {
-            return [];//no user
+            return null;//no user
         }
 
         $user = self::getUser();

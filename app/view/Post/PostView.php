@@ -16,7 +16,6 @@ use app\view\components\CustomMultiSelect\CustomMultiSelect;
 
 class PostView
 {
-
 	public $model = Post::class;
 	public $html;
 
@@ -99,10 +98,12 @@ class PostView
 		]);
 	}
 
-	public static function listAll(): string
+	public static function index(): string
 	{
-		$view = new self;
-		return Table::build($view->model)
+		return Table::build(
+            Post::with('chief')->get()
+        )
+            ->pageTitle('Должности')
 			->column(
 				ColumnBuilder::build('id')
 					->name('ID')
@@ -110,21 +111,29 @@ class PostView
 			)
 			->column(
 				ColumnBuilder::build('name')
-					->name('Наименование')
+					->name('Краткое наим')
 					->contenteditable()
-					->search()
-					->width('1fr')
+                    ->class('left')
+					->width('100px')
 					->get()
 			)
+
 			->column(
 				ColumnBuilder::build('full_name')
 					->name('Полное наим')
 					->contenteditable()
-					->search()
-					->width('1fr')
+                    ->class('left')
+					->width('250px')
 					->get()
 			)
-			->all()
+            ->column(
+                ColumnBuilder::build('chief')
+                    ->callback(fn($post)=>$post->chief->name??'')
+                    ->class('left')
+                    ->name('Подчиняется')
+                    ->width('1fr')
+                    ->get()
+            )
 			->edit()
 			->del()
 			->addButton('ajax')

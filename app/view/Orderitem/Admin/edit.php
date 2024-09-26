@@ -3,9 +3,9 @@
 	<div class="page-name">Заказ</div>
 
 	<div class="column user"><b>Лид - </b>
-		<div class="mame">Как зовут -<?= $orderitems['lead']->name?></div>
-		<div class="phone">Телефон -<?= $orderitems['lead']->phone?></div>
-		<div class="company">Компания -<?= $orderitems['lead']->company?></div>
+		<div class="mame">Как зовут -<?= $orderitems['lead']->name??'не указано'?></div>
+		<div class="phone">Телефон -<?= $orderitems['lead']->phone??'не указано'?></div>
+		<div class="company">Компания -<?= $orderitems['lead']->company??'не указано'?></div>
 	</div>
 
 <br>

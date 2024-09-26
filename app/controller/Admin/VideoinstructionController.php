@@ -25,13 +25,13 @@ class VideoinstructionController Extends AppController
 			->orderBy('tag')
 			->orderBy('sort')
 			->get();
-		$this->set(compact('videos'));
+		$this->setVars(compact('videos'));
 	}
 
 	public function actionEdit()
 	{
 //		Auth::checkAuthorized(Auth::getUser(), ['role_admin']);
 		$VideoinstructionsView = VideoinstructionView::listAll();
-		$this->set(compact('VideoinstructionsView'));
+		$this->setVars(compact('VideoinstructionsView'));
 	}
 }

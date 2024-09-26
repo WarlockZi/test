@@ -104,7 +104,7 @@ class UnitFormView
 
     public static function index(): string
     {
-        return Table::build(Unit::class::all())
+        return Table::build(Unit::all())
             ->pageTitle('Единицы измерения')
             ->addButton('ajax')
             ->column(

@@ -51,10 +51,9 @@ class ImageView
 		return FS::getFileContent(ROOT.'/app/view/components/Builders/Morph/detach.php',compact('item'));
 	}
 
-	public static function list(Collection $items): string
+	public static function index(): string
 	{
-		$view = new self;
-		return Table::build($items)
+		return Table::build(Image::all())
 			->pageTitle('Картинки')
 			->column(
 				ColumnBuilder::build('id')

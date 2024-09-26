@@ -18,7 +18,7 @@ class Router
         $this->errorLogger = new ErrorLogger();
     }
 
-    protected function matchRoute():void
+    protected function matchRoute(): void
     {
         $this->route = new Route();
         foreach ($this->routes as $pattern => $r) {
@@ -41,27 +41,29 @@ class Router
         $this->route->isNotFound() ? $this->route->setActionName('default') : $f = 1;
     }
 
-    public function dispatch():void
+    private function log(callable $callback): void
+    {
+
+    }
+
+    public function dispatch(): void
     {
         $controller = $this->route->getController();
         try {
             $controller = new $controller();
         } catch (\Throwable $exception) {
-            $this->errorLogger->write('controller error - ' . $controller . PHP_EOL
-                . $exception->getMessage(). PHP_EOL);
+            $this->handleError($exception);
             $controller = $this->route->getBaseController();
             $controller = new $controller;
         }
         $controller->setRoute($this->route);
 
-
-        $action     = $this->route->getAction();
+        $action = $this->route->getAction();
         $this->route->setView($this->route->getActionName());
         try {
             $controller->$action();
         } catch (\Throwable $exception) {
-            $this->errorLogger->write('action error -' . $action . PHP_EOL
-                . $exception->getMessage(). PHP_EOL);
+            $this->handleError($exception);
         }
         if ($controller->isAjax()) exit;
         Auth::authorize($this->route);
@@ -69,6 +71,16 @@ class Router
         $layout = $this->route->getLayout();
         $layout = new $layout($this->route, $controller);
         $layout->render();
+    }
+
+    private function handleError($exception): void
+    {
+        if ($_ENV['DEV'] == 1) {
+            echo '<pre>' . $exception->getMessage() . '</pre>';
+            echo '<pre>' . $exception->getTraceAsString() . '</pre>';
+        }
+        $this->errorLogger->write('router error -' . PHP_EOL
+            . $exception->getMessage() . PHP_EOL);
     }
 
     public function add($regexp, $route = []): void

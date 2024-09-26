@@ -16,7 +16,7 @@ class TagController extends AppController
 	public function actionIndex():void
 	{
 		$tags = TagView::list(Tag::class);
-		$this->set(compact('tags'));
+		$this->setVars(compact('tags'));
 	}
 
 }

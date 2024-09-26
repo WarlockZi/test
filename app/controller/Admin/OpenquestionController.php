@@ -19,7 +19,7 @@ class OpenquestionController Extends AppController
   public function actionEdit()
   {
     $page_name = 'Редактирование jnrhsns] тестов';
-    $this->set(compact('page_name'));
+    $this->setVars(compact('page_name'));
 
     $id = Router::getRoute()->id;
 
@@ -28,7 +28,7 @@ class OpenquestionController Extends AppController
         ->orderBy('sort')
         ->find($id);
 
-      $this->set(compact('test'));
+      $this->setVars(compact('test'));
     }
   }
 

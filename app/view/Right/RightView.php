@@ -5,18 +5,16 @@ namespace app\view\Right;
 use app\model\Right;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
-use app\view\MyView;
 use Illuminate\Database\Eloquent\Model;
 
 class RightView
 {
-	public $model = Right::class;
+
 	public $html;
 
 	public static function listAll(): string
 	{
-		$view = new self;
-		return Table::build($view->model)
+		return Table::build(Right::all())
 			->column(
 				ColumnBuilder::build('id')
 					->name('ID')
@@ -39,7 +37,6 @@ class RightView
 			)
 			->addButton('ajax')
 			->del()
-			->all()
 			->get();
 	}
 

@@ -19,8 +19,8 @@ class ImageController Extends AppController
 
 	public function actionIndex():void
 	{
-		$list = ImageView::list(Image::all());
-		$this->set(compact('list'));
+		$list = ImageView::index();
+		$this->setVars(compact('list'));
 	}
 
 	public function actionDetach(): void

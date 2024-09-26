@@ -4,8 +4,8 @@ import {$, debounce, post} from '../../common';
 class Table {
    constructor(table) {
       this.table = table;
-      this.model = table.dataset.model ?? table.closest('[data-model]').dataset.model;
-      this.modelId = table.dataset.id ?? table.closest('[data-model]').dataset.id;
+      this.model = table.dataset.model ?? table.closest('[data-model]')?.dataset.model;
+      this.modelId = table.dataset.id ?? table.closest('[data-model]')?.dataset.id;
       this.relation = table.dataset.relation ?? null;
       this.relationModel = table.dataset.relationmodel ?? null;
       // this.field = table.dataset.field;
