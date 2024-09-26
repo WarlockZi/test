@@ -65,7 +65,9 @@ class Auth
 
     public static function isSU(): bool
     {
-        return $_ENV['SU_EMAIL'] === self::$user['email'];
+        $envEmail = $_ENV['SU_EMAIL'];
+        $userEmail = self::$user['email'];
+        return $envEmail===$userEmail;
     }
 
     public static function isOlya(): bool
