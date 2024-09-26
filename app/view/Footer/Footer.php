@@ -13,7 +13,7 @@ class Footer
 	private static $yaMetrica;
 	private static $VK;
 
-	protected $footer;
+	protected string $footer;
 
 
 	public static function setVK(): void
