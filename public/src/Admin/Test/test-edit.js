@@ -2,7 +2,7 @@ import './test-edit.scss'
 import '../../components/footer/footer.scss'
 
 import './test-edit-menu.scss'
-import './test-update.js.js'
+import './test-update.js'
 
 import {$, debounce} from '../../common.js'
 
