@@ -3,6 +3,7 @@
 namespace app\model;
 
 
+use app\core\Auth;
 use app\Repository\ImageRepository;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -58,18 +59,13 @@ class User extends Model
     public function can($rights = []): bool
     {
         $has = $this->hasRights($rights);
-        $su  = $this::isSu();
+        $su  = Auth::isSU();
         return ($has || $su);
     }
 
     public function isEmployee(): bool
     {
         return $this->hasRights(['role_employee']);
-    }
-
-    public function isSu(): bool
-    {
-        return $this->email === $_ENV['SU_EMAIL'];
     }
 
     public function hasRights(array $rights): bool
