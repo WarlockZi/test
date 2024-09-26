@@ -19,13 +19,9 @@ use app\core\Icon;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
 
-
     <?= $assets->getMeta(); ?>
 
     <?= $assets->getCss(); ?>
-
-
-    <? include_once __DIR__ . '/metrica.php'; ?>
 
 </head>
 
@@ -48,12 +44,6 @@ use app\core\Icon;
 <?= $assets->getJs(); ?>
 
 <?php //= $assets->getCDNJs(); ?>
-
-<?php //= Footer::getUserCookie(); ?>
-
-<?php //= Footer::getYaMetrica(); ?>
-<?php //= Footer::getVK(); ?>
-
 
 <div class="modal-wrapper" data-modal="default">
     <div class="overlay"></div>
