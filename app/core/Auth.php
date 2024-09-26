@@ -7,19 +7,10 @@ use app\model\User;
 class Auth
 {
     protected static User|null $user = null;
-
     protected static Auth $instance;
-
-    protected function __construct()
-    {
-    }
-
-    protected function __clone()
-    {
-    }
-
-    public function __wakeup()
-    {
+    protected function __construct(){}
+    protected function __clone(){}
+    public function __wakeup(){
         throw new \Exception("Cannot unserialize a singleton.");
     }
 
@@ -40,13 +31,6 @@ class Auth
             return true;
         }
         return false;
-    }
-
-    public static function checkAuthorized(array $user, array $rights): void
-    {
-        if (!$user->can($rights)) {
-            header("Location:/auth/unautherized");
-        }
     }
 
     public static function getUser(): User|null
@@ -84,17 +68,6 @@ class Auth
     {
         self::$user = $mockuser;
     }
-
-    public static function getAuth(): User|null
-    {
-        if (!isset($_SESSION['id']) || $_SESSION['id']) return null;
-        $user = User::find($_SESSION['id']);
-
-        self::$user = $user ?? null;
-        return $user;
-    }
-
-
     public static function userIsAdmin(): bool
     {
         return self::$user && self::$user->can(['role_admin']);
@@ -129,5 +102,14 @@ class Auth
         }
         return $user;
     }
+
+//    public static function getAuth(): User|null
+//    {
+//        if (!isset($_SESSION['id']) || $_SESSION['id']) return null;
+//        $user = User::find($_SESSION['id']);
+//
+//        self::$user = $user ?? null;
+//        return $user;
+//    }
 }
 

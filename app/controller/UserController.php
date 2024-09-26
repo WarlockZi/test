@@ -21,7 +21,7 @@ class UserController extends AppController
 
 	public function actionIndex():void
 	{
-		Auth::checkAuthorized($this->user, ['role_admin']);
+		Auth::getUser()->can();
 
 		$list = UserView::listAll();
 		$this->setVars(compact('list'));
