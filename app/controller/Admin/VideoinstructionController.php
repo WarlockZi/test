@@ -30,7 +30,6 @@ class VideoinstructionController Extends AppController
 
 	public function actionEdit()
 	{
-//		Auth::checkAuthorized(Auth::getUser(), ['role_admin']);
 		$VideoinstructionsView = VideoinstructionView::listAll();
 		$this->setVars(compact('VideoinstructionsView'));
 	}

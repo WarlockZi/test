@@ -5,9 +5,9 @@ namespace app\view\Footer;
 
 
 use app\core\FS;
-use app\view\Interfaces\IFooterable;
 
-abstract class AbstractFooter implements IFooterable
+
+class Footer
 {
 	private static $cookie;
 	private static $yaMetrica;

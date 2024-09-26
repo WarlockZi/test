@@ -6,7 +6,7 @@ namespace app\view\Footer;
 
 use app\core\FS;
 
-class UserFooter extends AbstractFooter
+class UserFooter extends Footer
 {
 	public function __construct()
 	{

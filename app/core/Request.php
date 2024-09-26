@@ -11,7 +11,7 @@ class Request
    {
       $textrequest = trim($textrequest);
       // Фиксируем атаки
-      if (preg_match("/script|http|<|>|<|>|SELECT|UNION|UPDATE|exe|exec|INSERT|tmp/i", $textrequest)) {
+      if (preg_match("/script|http|<|>|<|>|SELECT|UNION|UPDATE|INSERT|exe|exec|tmp/i", $textrequest)) {
 //         writelog('hack', date("y.m.d H:m:s")."\t".$_SERVER['REMOTE_ADDR']."\t".$textrequest);
          $textrequest = '';
       }
