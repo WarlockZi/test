@@ -11,13 +11,17 @@ class CategoryProperty extends Model
 
 	public $timestamps = false;
 	protected $fillable = [
-		'category_1s_id',
+		'slug',
+		'short_link',
 		'seo_title',
 		'seo_description',
 		'seo_keywords',
-		'short_link',
+		'seo_article',
         'new',
         'leader',
+        'show_front',
+        'sort',
+		'category_1s_id',
 	];
 
     public function product()

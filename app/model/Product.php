@@ -4,7 +4,7 @@ namespace app\model;
 
 
 use app\Services\ProductImageService;
-use app\Services\Slug;
+use app\Services\SlugService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

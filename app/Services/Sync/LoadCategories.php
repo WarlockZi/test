@@ -6,7 +6,7 @@ namespace app\Services\Sync;
 use app\model\Category;
 use app\model\CategoryProperty;
 use app\Services\ShortlinkService;
-use app\Services\Slug;
+use app\Services\SlugService;
 
 class LoadCategories
 {
@@ -22,17 +22,13 @@ class LoadCategories
         $xml        = simplexml_load_file($this->file);
         $xmlObj     = json_decode(json_encode($xml), true);
         $this->data = $xmlObj['Классификатор']['Группы']['Группа']['Группы']['Группа'];
-
         $this->run($this->data);
         $this->deleteNonexisted();
-
     }
 
     protected function deleteNonexisted(): void
     {
-        $all = Category::all();
-
-        $all->each(function (Category $cat) {
+        Category::all()->each(function (Category $cat) {
             if (!array_search($cat['1s_id'], $this->existed)) {
                 $cat->delete();
             }
@@ -62,7 +58,7 @@ class LoadCategories
         $item['category_id'] = $this->parent;
 
         $item['name']       = $group['Наименование'];
-        $item['slug']       = Slug::slug($item['name']);
+        $item['slug']       = SlugService::slug($item['name']);
         $item['deleted_at'] = NULL;
 
         $cat      = Category::withTrashed()
@@ -75,33 +71,21 @@ class LoadCategories
         return $cat;
     }
 
-    protected function setCategoryOwnProps(Category $category): void
+    protected function setCategoryOwnProps(Category $category): CategoryProperty
     {
-//        $catProps = CategoryProperty::where('category_1s_id', $category['1s_id'])
-//            ->first();
-
         $catProps = CategoryProperty::updateOrCreate(
             ['category_1s_id' => $category['1s_id']],
-            [
-                'show_front' => $category->show_front,
-            ]
+            ['show_front' => $category->show_front,]
         );
         if (!$catProps->short_link) {
             $catProps->short_link = ShortlinkService::getValidShortLink();
         }
         if (!$catProps->slug) {
-            if ($category->slug) {
-                $catProps->slug = $category->slug;
-            } else {
-                $catProps->slug = Slug::getValidCategorySlug($category);
-            }
+            $catProps->slug = $category->slug ?? SlugService::getValidCategorySlug($category);
         }
-        $catProps->save();
 
-//        if ($catProps && !$catProps->short_link) {
-//            $catProps->short_link = ShortlinkService::getValidShortLink();
-//            $catProps->save();
-//        }
+        $catProps->save();
+        return $catProps;
     }
 
     protected function isAssoc(array $arr): bool

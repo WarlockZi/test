@@ -3,7 +3,7 @@
 namespace app\model;
 
 
-use app\Services\Slug;
+use app\Services\SlugService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -41,7 +41,7 @@ class Category extends Model
     protected static function booted()
     {
         static::Updating(function ($category) {
-            $category->slug = Slug::slug($category->name);
+            $category->slug = SlugService::slug($category->name);
             return $category;
         });
     }

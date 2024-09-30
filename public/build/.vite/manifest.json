@@ -103,7 +103,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-CfVYbKlv.js",
+    "file": "assets/admin-C9bzFrsz.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -125,7 +125,7 @@
       "Admin/chartjs/chartjs.js"
     ],
     "css": [
-      "assets/admin-DoNMb23m.css"
+      "assets/admin-8gimtZuh.css"
     ]
   },
   "Admin/chartjs/chartjs.js": {
@@ -151,7 +151,7 @@
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-L3ZeF73t.js",
+    "file": "assets/catalog-item-DTjpK1zu.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
@@ -216,7 +216,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-CmcShJyK.js",
+    "file": "assets/main-Bwp3BUWr.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -233,7 +233,7 @@
       "Cart/cart.js"
     ],
     "css": [
-      "assets/main-Bp18RrJn.css"
+      "assets/main-iQFC3MWZ.css"
     ],
     "assets": [
       "assets/SegoeUI-ClaH7WPz.eot",
