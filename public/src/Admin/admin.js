@@ -80,11 +80,15 @@ $(document).ready(async function () {
    if (chart){
       const {default: MyChart} = await import('./chartjs/chartjs.js')
    }
-   const settings = window.location.pathname ==='/adminsc/settings'
-   if (settings)   {
-      const {default:Settings} = await import('./Settings/settings.js')
-   }
+
+   // const settings = window.location.pathname ==='/adminsc/settings'
+   // if (settings)   {
+   //    const {default:Settings} = await import('./Settings/settings.js')
+   // }
+
+
    // tooltips();
+
 
    // const property = document[qs](`.properties[custom-table]`)
    // if (property) {
