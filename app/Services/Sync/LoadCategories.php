@@ -4,6 +4,8 @@ namespace app\Services\Sync;
 
 
 use app\model\Category;
+use app\model\CategoryProperty;
+use app\Services\ShortlinkService;
 use app\Services\Slug;
 
 class LoadCategories
@@ -31,7 +33,7 @@ class LoadCategories
         $all = Category::all();
 
         $all->each(function (Category $cat) {
-            if (!array_search($cat['1s_id'],$this->existed)) {
+            if (!array_search($cat['1s_id'], $this->existed)) {
                 $cat->delete();
             }
         });
@@ -58,19 +60,48 @@ class LoadCategories
     {
         $item['1s_id']       = $group['Ид'];
         $item['category_id'] = $this->parent;
-        $item['show_front']  = (int)!(!!$this->parent);
 
         $item['name']       = $group['Наименование'];
         $item['slug']       = Slug::slug($item['name']);
         $item['deleted_at'] = NULL;
 
-        $cat = Category::withTrashed()
+        $cat      = Category::withTrashed()
             ->updateOrCreate(['1s_id' => $item['1s_id']], $item);
+        $catProps = $this->setCategoryOwnProps($cat);
 
         if ($cat->wasRecentlyCreated) {
             $this->created[] = $cat['name'];
         }
         return $cat;
+    }
+
+    protected function setCategoryOwnProps(Category $category): void
+    {
+//        $catProps = CategoryProperty::where('category_1s_id', $category['1s_id'])
+//            ->first();
+
+        $catProps = CategoryProperty::updateOrCreate(
+            ['category_1s_id' => $category['1s_id']],
+            [
+                'show_front' => $category->show_front,
+            ]
+        );
+        if (!$catProps->short_link) {
+            $catProps->short_link = ShortlinkService::getValidShortLink();
+        }
+        if (!$catProps->slug) {
+            if ($category->slug) {
+                $catProps->slug = $category->slug;
+            } else {
+                $catProps->slug = Slug::getValidCategorySlug($category);
+            }
+        }
+        $catProps->save();
+
+//        if ($catProps && !$catProps->short_link) {
+//            $catProps->short_link = ShortlinkService::getValidShortLink();
+//            $catProps->save();
+//        }
     }
 
     protected function isAssoc(array $arr): bool
