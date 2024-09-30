@@ -4,6 +4,7 @@
 namespace app\Services;
 
 
+use app\model\Category;
 use app\model\Product;
 
 class Slug
@@ -36,7 +37,19 @@ class Slug
         }
         return $slug;
     }
-
+    public static function getValidCategorySlug(Category $category): string
+    {
+        $slug = Slug::slug($category['print_name']);
+        if (Category::where('slug', $slug)->first()) {
+            $art  = Slug::slug($category['art']);
+            $slug = "$slug" . "_" . "$art";
+            $i    = 0;
+            while (Category::where('slug', $slug)->first()) {
+                $slug = "$slug" . "_" . "$i++";
+            }
+        }
+        return $slug;
+    }
     public static function slug($str, $options = array())
     {
 

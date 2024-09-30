@@ -103,7 +103,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-CK2v3rZF.js",
+    "file": "assets/admin-B5GOS_5S.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -125,7 +125,7 @@
       "Admin/chartjs/chartjs.js"
     ],
     "css": [
-      "assets/admin-Bdi9BPG9.css"
+      "assets/admin-Cdnaa46W.css"
     ]
   },
   "Admin/chartjs/chartjs.js": {
@@ -151,7 +151,7 @@
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-CYofIj3O.js",
+    "file": "assets/catalog-item-DGoL15fj.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
@@ -216,7 +216,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-CkXaH425.js",
+    "file": "assets/main-D7C5CLuI.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -370,16 +370,13 @@
     "isDynamicEntry": true
   },
   "components/search/search.js": {
-    "file": "assets/search-CTzFsdOs.js",
+    "file": "assets/search-B8zO6gn1.js",
     "name": "search",
     "src": "components/search/search.js",
     "isDynamicEntry": true,
     "imports": [
       "_common-RiEdO0HM.js",
       "_constants-Clh-pk9Y.js"
-    ],
-    "css": [
-      "assets/search-dbEvGbvK.css"
     ]
   },
   "font/Sagoe UI/SegoeUI-Bold.eot": {

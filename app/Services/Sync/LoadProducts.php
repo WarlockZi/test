@@ -32,7 +32,6 @@ class LoadProducts
     {
         try {
             $this->updateOrCreateProducts();
-//        $this->setShortLink();
             $this->deleteNonexisted();
         } catch (Throwable $exception) {
             $exc = $exception;

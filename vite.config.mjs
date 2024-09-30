@@ -29,9 +29,9 @@ export default defineConfig(async ({command, mode}) => {
          ? '/'
          : '/public/build/',
 
-      // css: {
-      //    // devSourcemap: true,
-      // },
+      css: {
+         devSourcemap: true,
+      },
 
       build: {
          // output dir for production build
