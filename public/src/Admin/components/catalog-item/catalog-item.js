@@ -1,7 +1,8 @@
 import './catalog-item.scss';
-import {$, debounce, post} from '../../common';
-import checkboxes from "../checkboxes/checkboxes";
-import checkbox from "../checkbox/checkbox";
+import {$, debounce, post} from '../../../common.js';
+import checkboxes from "../../../components/checkboxes/checkboxes.js";
+import checkbox from "../../../components/checkbox/checkbox.js";
+import {ael} from "../../../constants.js";
 
 
 export default class CatalogItem {
@@ -16,8 +17,8 @@ export default class CatalogItem {
          .onChange(this.update);
       checkbox(this.dto());
 
-      customCatalogItem.onclick = this.handleClick.bind(this);
-      customCatalogItem.onkeyup = debounce(this.handleKeyup.bind(this));
+      customCatalogItem[ael]('click',this.handleClick.bind(this))
+      customCatalogItem[ael]('keyup', debounce(this.handleKeyup.bind(this)))
    }
 
    dto() {

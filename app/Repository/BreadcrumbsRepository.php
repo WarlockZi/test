@@ -12,7 +12,7 @@ class BreadcrumbsRepository
 
   private static function getPrefix(bool $admin):string
   {
-    return 	$admin ? '/adminsc/category/' : '/category/';
+    return 	$admin ? '/adminsc/category/' : '/catalog/';
   }
 
 	private static function flatCategoryParents(Category $category): array

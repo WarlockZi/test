@@ -9,7 +9,7 @@ $_SESSION['phpSession'] = session_id();
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 try {
-    $user = Auth::getUser();
+//    $user = Auth::getUser();
 //	$mockUser = \app\model\User::query()->find(160);
 //	$Olya = \app\model\User::query()
 //        ->where('email', 'vitex018@yandex.ru')

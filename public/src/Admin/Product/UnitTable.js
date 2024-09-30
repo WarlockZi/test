@@ -136,7 +136,7 @@ export default class UnitTable {
    }
 
    handleKeyUp(e) {
-      let multiplier = +e.target.value;
+      const multiplier = +e.target.value;
       if (!/\d+/.test(multiplier)) {
          return
       }
@@ -155,10 +155,10 @@ export default class UnitTable {
    }
 
    async update(target, self) {
-      let row = target.closest('.row');
-      let chosenUnit = +$(row).find('[select-new]').dataset.value;
+      const row = target.closest('.row');
+      const chosenUnit = +$(row).find('[select-new]').dataset.value;
       if (!chosenUnit) return false;
-      let data = self.dto(row);
+      const data = self.dto(row);
       data.morphed.new_id = data.morphed.old_id;
 
       const res = await post('/adminsc/product/changeUnit', data);
@@ -166,12 +166,12 @@ export default class UnitTable {
    }
 
    dto(row) {
-      let pivot = {
+      const pivot = {
          'product_id': this.product1sId,
          'multiplier': +$(row).find(`.multiplier`).value ?? 0,
          'is_shippable': $(row).find(`.shippable input`).checked ? 1 : null,
       };
-      let morphed = {
+      const morphed = {
          new_id: 0,
          old_id: +this.getUnitId(row),
          detach: 0

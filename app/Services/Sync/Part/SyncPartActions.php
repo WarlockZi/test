@@ -106,7 +106,7 @@ use app\Storage\{StorageDev, StorageImport, StorageLog};
 	}
 	protected function checkauth()
 	{
-		$this->logReqest('checkauth');
+		$this->log('checkauth');
 		exit("success\ninc\n777777\n55fdsa55");
 	}
 	protected function zip()

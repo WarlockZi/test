@@ -3,7 +3,7 @@
 use app\core\Icon;
 
 ?>
-<a href="/category/perchatki_medicinskie" class="banner gloves">
+<a href="/catalog/perchatki_medicinskie" class="banner gloves">
 	<div class="banner__text">
 		<div class="banner__container right">
 			<h1>Медицинские перчатки</h1>
@@ -16,7 +16,7 @@ use app\core\Icon;
 	</div>
 </a>
 
-<a href="/category/odnorazovaya_odezhda" class="banner boot-cover">
+<a href="/catalog/odnorazovaya_odezhda" class="banner boot-cover">
 	<div class="banner__text">
 		<div class="banner__container left">
 			<h1>Одноразовая одежда</h1>
@@ -30,7 +30,7 @@ use app\core\Icon;
 </a>
 
 
-<a href="/category/stomatologicheskiy_instrument_" class="banner endosirynge">
+<a href="/catalog/stomatologicheskiy_instrument_" class="banner endosirynge">
 	<div class="banner__text">
 		<div class="banner__container right">
 			<h1>Одноразовый инструмент</h1>

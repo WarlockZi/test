@@ -1,4 +1,4 @@
-<footer>
+<footer class="footer">
     <div class="menu">
         <div class="column">
             <a href="/main/contacts">Контакты</a>
