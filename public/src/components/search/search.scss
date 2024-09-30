@@ -50,26 +50,7 @@
 
   &.show {
     transform: translateX(-110vw);
-  }
-
-  .search-filter {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 0.8rem;
-    margin: 0 0 12px;
-    padding: 0;
-
-    .filters {
-      display: flex;
-
-      li{
-        display: flex;
-        align-items: center;
-      }
-    }
+    z-index: 1;
   }
 
   .input-group {

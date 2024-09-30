@@ -47,7 +47,7 @@ class ProductController extends AppController
             $keywords = $product->ownProperties->seo_keywords ?? $product->name;
             $this->assets->setMeta($title, $desc, $keywords);
 
-            $this->assets->setProduct();
+//            $this->assets->setProduct();
 //         $this->assets->setQuill();http://vitexopt.ru/short/9zL6pN6fL2wL
         } else {
             $this->assets->setMeta('Страница не найдена');

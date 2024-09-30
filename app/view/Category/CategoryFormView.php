@@ -5,6 +5,7 @@ namespace app\view\Category;
 
 
 use app\model\Category;
+use app\model\CategoryProperty;
 use app\Repository\CategoryRepository;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
@@ -37,13 +38,13 @@ class CategoryFormView
                     ItemFieldBuilder::build('slug', $category)
                         ->name('Адрес')
                         ->html(
-                            "<a href='/category/{$category->slug}'>{$category->slug}</a>"
+                            "<a href='/catalog/{$category->slug}'>{$category->slug}</a>"
                         )
                         ->get()
                 )
                 ->field(
                     ItemFieldBuilder::build('name', $category)
-                        ->name('Наименование')
+                        ->name('Наименование в 1c')
                         ->contenteditable()
                         ->required()
                         ->get()
@@ -78,30 +79,7 @@ class CategoryFormView
                 ->tab(
                     ItemTabBuilder::build('Товары категории')
                         ->html(
-                            Table::build($category['products'])
-                                ->pageTitle('Товары категории')
-                                ->relation('products', 'product')
-                                ->addButton('ajax')
-                                ->column(
-                                    ColumnBuilder::build('id')
-                                        ->width("40px")
-                                        ->get()
-                                )
-                                ->column(
-                                    ColumnBuilder::build('name')
-                                        ->name("Название")
-                                        ->get()
-                                )
-                                ->column(
-                                    ColumnBuilder::build('art')
-                                        ->name("Арт")
-                                        ->search()
-                                        ->width("100px")
-                                        ->get()
-                                )
-                                ->edit()
-                                ->del()
-                                ->get()
+                            self::getProducts($category)
                         )
                 )
                 ->tab(
@@ -111,27 +89,8 @@ class CategoryFormView
                         )
                 )
                 ->tab(
-                    ItemTabBuilder::build('Подкатегории')
-                        ->html(
-                            Table::build($category['childrenNotDeleted'])
-                                ->pageTitle('Подкатегории')
-                                ->column(
-                                    ColumnBuilder::build('id')
-                                        ->width('40px')
-                                        ->get()
-                                )
-                                ->column(
-                                    ColumnBuilder::build('name')
-                                        ->name("Назввание")
-                                        ->contenteditable()
-                                        ->get()
-                                )
-                                ->relation('childrenNotDeleted', 'category')
-                                ->edit()
-                                ->del()
-                                ->addButton('ajax')
-                                ->get()
-                        )
+                    self::getChildCategories($category)
+
                 )
                 ->tab(
                     ItemTabBuilder::build('Удаленные Подкатегории')
@@ -159,7 +118,7 @@ class CategoryFormView
                 ->tab(
                     ItemTabBuilder::build('seo')
                         ->html(
-                            self::getSeo($category)
+                            self::getSeo($category->ownProperties)
                         )
 
                 )
@@ -170,23 +129,45 @@ class CategoryFormView
         }
 
     }
-
-    protected static function getSeo(Category $category): string
+    public static function getChildCategories(Category $category): ItemTabBuilder
     {
-//        $p = $category->properties;
-        $p = $category->ownProperties;
+        return ItemTabBuilder::build('Подкатегории')
+            ->html(
+                Table::build($category['childrenNotDeleted'])
+                    ->pageTitle('Подкатегории')
+                    ->column(
+                        ColumnBuilder::build('id')
+                            ->width('40px')
+                            ->get()
+                    )
+                    ->column(
+                        ColumnBuilder::build('name')
+                            ->name("Назввание")
+                            ->contenteditable()
+                            ->get()
+                    )
+                    ->relation('childrenNotDeleted', 'category')
+                    ->edit()
+                    ->del()
+                    ->addButton('ajax')
+                    ->get()
+            );
+    }
+    protected static function getSeo(CategoryProperty|null $categoryProperty): string
+    {
+        if (!$categoryProperty) return '';
         return "<div class='show'>" .
-            ItemFieldBuilder::build('seo_description', $category->ownProperties)
+            ItemFieldBuilder::build('seo_description', $categoryProperty)
                 ->name('Description')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
-            ItemFieldBuilder::build('seo_title', $category->ownProperties)
+            ItemFieldBuilder::build('seo_title', $categoryProperty)
                 ->name('Title')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
-            ItemFieldBuilder::build('seo_keywords', $category->ownProperties)
+            ItemFieldBuilder::build('seo_keywords', $categoryProperty)
                 ->name('Key words')
                 ->contenteditable()
                 ->relation('ownProperties')
@@ -195,7 +176,33 @@ class CategoryFormView
 
     }
 
-
+    protected static function getProducts(Category $category): string
+    {
+        return Table::build($category['products'])
+            ->pageTitle('Товары категории')
+            ->relation('products', 'product')
+            ->addButton('ajax')
+            ->column(
+                ColumnBuilder::build('id')
+                    ->width("40px")
+                    ->get()
+            )
+            ->column(
+                ColumnBuilder::build('name')
+                    ->name("Название")
+                    ->get()
+            )
+            ->column(
+                ColumnBuilder::build('art')
+                    ->name("Арт")
+                    ->search()
+                    ->width("100px")
+                    ->get()
+            )
+            ->edit()
+            ->del()
+            ->get();
+    }
     protected static function categorySelector(Category $category): string
     {
         return SelectBuilder::build(
@@ -207,7 +214,8 @@ class CategoryFormView
                 ->excluded($category->id)
                 ->get()
         )
-//            ->relation('')
+//            ->relation('ownProperties', 'ownProperties')
+
             ->field('category_id')
             ->get();
 

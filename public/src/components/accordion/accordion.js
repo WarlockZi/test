@@ -1,18 +1,26 @@
 import './accordion.scss'
 import {$} from '../../common'
-import {ael} from "../../constants.js";
+import {ael, qs} from "../../constants.js";
 
 export default class Accordion {
    constructor(accordion) {
       if (!accordion) return false
+      debugger
       this.arrowSelector = '.arrow'
       this.rootUl = $(accordion).find('[accordion]')
+      this.burger = document[qs]('svg#burger')
+      this.sidebar = $('.admin-sidebar').first()
 
+      // this.burger[ael]('click', this.handleClick.bind(this))
       accordion[ael]('click', this.handleClick.bind(this));
 
    }
 
    handleClick({target}) {
+      if (target === this.burger) {
+         this.sidebar.classList.toggle('show')
+      }
+
       const li = target.closest('li')
       if (!li) return
 

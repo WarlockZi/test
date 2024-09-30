@@ -177,7 +177,10 @@ header {
     display: flex;
     position: relative;
     background: $color-main;
-    //background: $color-main;
+
+    .show-front-a{
+      color: white;
+    }
 
     max-width: 1310px;
     width: 100%;

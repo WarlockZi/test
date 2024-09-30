@@ -25,11 +25,33 @@ class Route
     protected string $id = "0";
 
     protected array $params;
+    protected array $redirect = [];
+
 
     protected string $host = '';
     protected string $protocol = '';
     protected bool $notFound = true;
     protected array $errors = [];
+
+    public function getRedirect(): array
+    {
+        return $this->redirect;
+    }
+
+    public function getUrL(): string
+    {
+        return $this->url;
+    }
+
+    public function getUri(): string
+    {
+        return $this->uri;
+    }
+
+    public function setUri(string $uri): void
+    {
+        $this->uri = $uri;
+    }
 
     public function __construct()
     {
@@ -50,26 +72,14 @@ class Route
         return $this->view ?? $this->action ?? 'index';
     }
 
-    public function __set($name, $value)
-    {
-        if (property_exists($this, $name)) {
-            $this->$name = $value;
-        }
-    }
-
-    public function __get($name):string
-    {
-        return (property_exists($this, $name)) ? $this->$name : '';
-    }
-
-    protected function setUrl():void
+    protected function setUrl(): void
     {
         $arr = explode('?', $this->uri);
         if (isset($arr[1])) {
             $this->setParams($arr[1]);
         }
         $url = $arr[0];
-        if (!$url || strpos($url, '=')) return ;
+        if (!$url || strpos($url, '=')) return;
         $this->uri = trim($url, '/');
         $this->url = '/' . trim($url, '/');
     }
@@ -96,11 +106,6 @@ class Route
         $this->params = $params;
     }
 
-    public function setControllerName(string $controllerName): void
-    {
-        $this->controllerName = $controllerName;
-    }
-
     public function setAdmin(): void
     {
         $this->admin = str_contains($this->uri, 'adminsc');
@@ -113,17 +118,6 @@ class Route
             : UserLayout::class;
     }
 
-    public function setSlug(string $slug): void
-    {
-        $this->slug = $slug;
-    }
-
-    public function setId(string $id): void
-    {
-        $this->id = $id;
-    }
-
-
     public function setNotFound(): void
     {
         $this->notFound = false;
@@ -132,16 +126,6 @@ class Route
     public function setError(string $error): void
     {
         $this->errors[] = $error;
-    }
-
-    public function setHost()
-    {
-        $this->host = $_SERVER['HTTP_HOST'];
-    }
-
-    public function setProtocol()
-    {
-        $this->protocol = $_SERVER['REQUEST_SCHEME'];
     }
 
     public function getAction(): string
@@ -159,30 +143,23 @@ class Route
         return $this->admin;
     }
 
-    public function isHome()
+    public function isHome(): bool
     {
         return $this->uri === '/';
     }
 
-    public function isNotFound()
+    public function isNotFound(): bool
     {
         return $this->notFound;
     }
 
-    public function setNamespace()
+    public function setNamespace(): void
     {
         if ($this->isAdmin()) {
             $this->namespace = 'app\controller\Admin\\';
         } else {
             $this->namespace = 'app\controller\\';
         }
-    }
-
-    public function setController(): void
-    {
-        $this->setNamespace($this);
-        $this->controllerName = ucfirst($this->controller);
-        $this->controller     = $this->namespace . $this->controllerName . 'Controller';
     }
 
     public function getBaseController(): string
@@ -228,4 +205,61 @@ class Route
         }
         return $str;
     }
+
+    public function __set($name, $value): void
+    {
+        if (property_exists($this, $name)) {
+            $this->$name = $value;
+        }
+    }
+
+    public function __get($name)
+    {
+        return (property_exists($this, $name)) ? $this->$name : '';
+    }
+
+    public function setHost()
+    {
+        $this->host = $_SERVER['HTTP_HOST'];
+    }
+
+    public function setController(string $controller): void
+    {
+        $this->controller = $controller;
+    }
+    public function setRedirect(array $redirect): void
+    {
+        $this->redirect = $redirect;
+    }
+
+    public function getHost(): string
+    {
+        return $_SERVER['HTTP_HOST'];
+    }
+//    public function setSlug(string $slug): void
+//    {
+//        $this->slug = $slug;
+//    }
+//
+//    public function setId(string $id): void
+//    {
+//        $this->id = $id;
+//    }
+
+//
+//    public function setProtocol()
+//    {
+//        $this->protocol = $_SERVER['REQUEST_SCHEME'];
+//    }
+//    public function setControllerName(string $controllerName): void
+//    {
+//        $this->controllerName = $controllerName;
+//    }
+//    public function setController(): void
+//    {
+//        $this->setNamespace();
+//        $this->controllerName = ucfirst($this->controller);
+//        $this->controller     = $this->namespace . $this->controllerName . 'Controller';
+//    }
+
 }

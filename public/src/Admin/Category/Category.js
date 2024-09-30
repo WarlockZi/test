@@ -16,19 +16,23 @@ export default class Category {
       this.setProperties()
       this.setImage()
    }
-   setCategoryId(){
-      const cat_id = $(`[data-field='category_id']`).first()
-      const parentSelector = new SelectNew(cat_id);
+
+   setCategoryId() {
+      const el = $(`[data-field='category_id']`).first()
+      const parentSelector = new SelectNew(el);
       parentSelector.sel.addEventListener('customSelect.changed', this.attachCategory.bind(this))
 
    }
-   setProperties(){
+
+   setProperties() {
       new PropertyTable(this.el.querySelector(`[data-relation="properties"]`))
    }
-   setShowOnFrontPage(){
+
+   setShowOnFrontPage() {
       // new Checkbox(this.el.querySelector(`[data-relation="properties"]`))
    }
-   setImage(){
+
+   setImage() {
       // this.$mainImage = this.$el.querySelector('.mainImage');
       // new Morph($('[data-dnd]').first(), $category)
       // this.__dto = this.dto()
@@ -41,12 +45,15 @@ export default class Category {
    }
 
    attachCategory({detail}) {
-      debugger;
-      let data = {
+      const data = {
          id: this.id,
-         category_id: +detail.next.value,
+         relation:detail.target.dataset.relationmodel,
+         fields: {
+            'category_id': +detail.next.value,
+         }
+
       };
-      post('/adminsc/category/updateOrCreate', data)
+      post(`/adminsc/category/updateOrCreate`, data)
    }
 
 

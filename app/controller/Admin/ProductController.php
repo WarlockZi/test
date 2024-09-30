@@ -47,8 +47,8 @@ class ProductController extends AppController
             $product = null;
             $this->setVars(compact('product',));
         }
-        $this->assets->setProduct();
-        $this->assets->setQuill();
+//        $this->assets->setProduct();
+//        $this->assets->setQuill();
     }
 
 

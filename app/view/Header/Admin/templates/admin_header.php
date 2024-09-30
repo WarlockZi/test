@@ -1,4 +1,4 @@
-<div class="admin-layout_header">
+<div class="admin-layout_header a-header">
 
     <? include_once ROOT . '/app/view/share/adminPanel/adminPanel.php'; ?>
 

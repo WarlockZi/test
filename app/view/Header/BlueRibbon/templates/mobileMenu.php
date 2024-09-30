@@ -22,7 +22,7 @@ use app\core\Icon;
         <hr>
 
         <li>
-            <a href="/category">Каталог</a>
+            <a href="/catalog">Каталог</a>
         </li>
 
     </ul>

@@ -1,5 +1,10 @@
 @import "../../mixin_media";
 
+.category-tree {
+  display: flex;
+  flex-direction: column;
+}
+
 .category-tree{
 
   @include tree();

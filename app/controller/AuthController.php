@@ -73,7 +73,8 @@ class AuthController extends AppController
 
             if (!$user->confirm) Response::exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
             if ($user->password !== $this->userRepository->preparePassword($data['password'])) {
-                if (!Auth::isSU($user->email)) {
+                Auth::setUser($user);
+                if (!Auth::isSU()) {
                     Response::exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
                 }
             }

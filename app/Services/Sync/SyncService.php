@@ -30,14 +30,15 @@ class SyncService
     {
         try {
             if ($route->params['mode'] === 'checkauth') {
-                $this->logReqest("Пришел запрос init из 1с");
+                $this->logDate();
+                $this->log("Пришел запрос init из 1с");
                 $this->checkauth();
             } elseif ($route->params['mode'] === 'init') {
                 $this->zip();
             } elseif ($route->params['mode'] === 'file') {
                 $this->file($route->params['filename']);
             } elseif ($route->params['mode'] === 'import') {
-                $this->logReqest("Файлы из 1с загружены");
+                $this->log("Файлы из 1с загружены");
                 $this->load();
                 exit('success');
             }
@@ -48,20 +49,20 @@ class SyncService
 
     protected function checkauth(): void
     {
-        $this->logReqest('checkauth');
+        $this->log('checkauth');
         exit("success\ninc\n777777\n55fdsa55");
     }
 
     protected function zip(): void
     {
-        $this->logReqest('init');
+        $this->log('init');
         exit("zip=no\nfile_limit=10000000");
     }
 
     protected function file($filename): void
     {
         file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
-        $this->logReqest('file');
+        $this->log('file');
         exit('success');
     }
 
@@ -111,16 +112,11 @@ class SyncService
     }
 
 ///log
-    protected function logReqest($func): void
-    {
-        $this->logDate();
-        $this->logger->write("func {$func}" . PHP_EOL);
-    }
 
     protected function logDate(): void
     {
         $date = date("Y-m-d H:i:s");
-        $this->logger->write($date);
+        $this->log($date);
     }
 
     protected function logError(string $msg, $e): void
@@ -135,7 +131,6 @@ class SyncService
 
     protected function log(string $msg): void
     {
-//        $this->logDate();
         $this->logger->write($msg);
 
     }

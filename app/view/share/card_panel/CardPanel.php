@@ -7,6 +7,7 @@ namespace app\view\share\card_panel;
 use app\core\Auth;
 use app\core\FS;
 use app\core\Icon;
+use app\model\Category;
 use app\model\Product;
 
 class CardPanel
@@ -16,7 +17,14 @@ class CardPanel
         $userIsAdmin = Auth::userIsAdmin();
         $fs = new FS(__DIR__);
         $edit = Icon::edit();
-		return $fs->getContent('card_panel', compact('product', 'edit', 'userIsAdmin'));
+		return $fs->getContent('product_card_panel', compact('product', 'edit', 'userIsAdmin'));
 	}
+    public static function categoryCardPanel(Category $category): string
+    {
+        $userIsAdmin = Auth::userIsAdmin();
+        $fs = new FS(__DIR__);
+        $edit = Icon::edit();
+        return $fs->getContent('category_card_panel', compact('category', 'edit', 'userIsAdmin'));
+    }
 
 }

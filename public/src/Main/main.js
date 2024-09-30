@@ -6,6 +6,8 @@ import '../share/hoist/hoist';
 
 document.addEventListener('DOMContentLoaded', async function () {
 
+   const admin = window.location.pathname.includes('adminsc')
+   if (admin) return false
    const searchButton = document[qs]('.utils .search');
    if (searchButton) {
       const {default:Search} = await import('../components/search/search');

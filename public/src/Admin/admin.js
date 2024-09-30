@@ -1,27 +1,12 @@
 import './admin.scss'
 import './model/cache.js';
-
 import '../components/header/header-adm.js'
-import '../components/search/search.js'
 import '../components/accordion/accordion.js'
-import '../components/AdminAccordion.js'
 import '../components/date/date.js'
 
 import {$} from "../common.js"
 
-// import '../Test/test_results/test_results.js'
-// import '../Test/opentest-edit.js'
-// import testEdit from '../Test/test-edit.js'
-// import '../Test/test-do.js'
-// import '../Test/open_test.js'
-
-
 import './sync1c/sync1c.js'
-// import './chart/chart'.js
-// import './chartjs/chartjs.js'
-// import quill from '../components/quill/quill.js'
-
-
 import './Planning/planning.js'
 import './Settings/settings.js'
 import './Videoinstructions/videoinstructions.js'
@@ -30,14 +15,18 @@ import Promotion from "../Promotions/Promotion.js"
 import './ProductFilter/ProductFilter'
 
 import {qs} from '../constants'
-import navigate from "./Navigate";
+import Navigate from "./components/Navigate.js";
 import '../components/table/table.js'
-import CatalogItem from "../components/catalog-item/catalog-item.js";
+import CatalogItem from "./components/catalog-item/catalog-item.js";
 import MyQuill from "../components/quill/quill.js";
 
 import '../share/scroll/scroll.js'
-import Accordion from "../components/accordion/accordion.js";
+// import Accordion from "../components/accordion/accordion.js";
 $(document).ready(async function () {
+
+
+   const admin = window.location.pathname.includes('adminsc')
+   if (!admin) return false
 
    const test = window.location.href.includes("/test")
    if (test){
@@ -46,14 +35,26 @@ $(document).ready(async function () {
 
    const AdminSidebar = $('.admin-sidebar').first()
    if (AdminSidebar){
-      const {default: Accordion} = await import('../components/accordion/accordion.js')
+      const {default: Accordion} = await import('../Admin/components/AdminSidebar/AdminSidebar.js')
       new Accordion(AdminSidebar)
    }
-   // const product = document[qs](`.item-wrap[data-model='product']`)
-   // if (product) {
+
+   const product = document[qs](`.item-wrap[data-model='product']`)
+   if (product) {
       const {default: Product} = await import('./Product/Product.js')
       new Product();
+   }
+   const catalogItem = document[qs]('.item-wrap')
+   if (catalogItem) {
+      const {default: CatalogItem} = await import('./components/catalog-item/catalog-item.js')
+      new CatalogItem(catalogItem)
+   }
+   // const customCatalogItem = $('.item-wrap')[0];
+   // if (customCatalogItem){
+   //    new CatalogItem(customCatalogItem)
    // }
+
+
    if (document[qs]('.order-edit')) {
       const {default: Order} = await import('./Order/order.js')
       new Order()
@@ -72,16 +73,8 @@ $(document).ready(async function () {
    new Promotion();
    new Search(true);
 
-   if (document[qs]('.admin_sidebar')) {
-      const {default: adminAccordion} = await import('../components/AdminAccordion.js')
-      new adminAccordion()
-   }
-   navigate(window.location.pathname);
 
-   const customCatalogItem = $('.item-wrap')[0];
-   if (customCatalogItem){
-      new CatalogItem(customCatalogItem)
-   }
+   Navigate(window.location.pathname);
 
    const chart = document.getElementById('income')
    if (chart){

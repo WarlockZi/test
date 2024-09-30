@@ -22,7 +22,7 @@ class Router
     {
         $this->route = new Route();
         foreach ($this->routes as $pattern => $r) {
-            if (preg_match("#$pattern#i", $this->route->url, $matches)) {
+            if (preg_match("#$pattern#i", $this->route->getUrl(), $matches)) {
 
                 foreach ($matches as $k => $v) {
                     if (is_numeric($k)) {
@@ -32,17 +32,29 @@ class Router
 
                 $matches = array_merge($matches, $r);
                 foreach ($matches as $k => $v) {
-                    $this->route->$k = strtolower($v);
+                    $this->route->$k = is_string($v)?strtolower($v):$v;
                 }
+
+                $this->redirect();
                 $this->route->setNotFound();
                 break;
             }
         }
         $this->route->isNotFound() ? $this->route->setActionName('default') : $f = 1;
     }
-
-    private function log(callable $callback): void
+    private function redirect():void
     {
+        if (!$this->route->redirect) return;
+        $arr = $this->route->getRedirect();
+        $from = key($arr);
+        $to = $arr[$from];
+        $url = $this->route->getUrL();
+        $newUrl = str_replace($from,$to,$url);
+
+//        header("HTTP/2 301 Moved Permanently");
+//        header("Location: https://{$this->route->getHost()}".$newUrl);
+        header("Location: https://{$this->route->getHost()}".$newUrl, true, 301);
+        exit();
 
     }
 

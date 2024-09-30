@@ -14,9 +14,15 @@
 
             <div class="category-child-wrap">
                 <?php foreach ($category['childrenRecursive'] as $child): ?>
-                    <a class="category-card" href="/category/<?= $child->slug ?>">
-                        <?= $child->name ?>
-                    </a>
+                    <div class="category-card">
+                        <a class="category-card-a" href="/catalog/<?= $child->slug; ?>">
+                            <?= $child->name ?>
+                        </a>
+                        <?= \app\view\share\card_panel\CardPanel::categoryCardPanel($child) ?>
+                    </div>
+<!--                    <a class="category-card" href="/catalog/--><?php //= $child->slug ?><!--">-->
+<!--                        --><?php //= $child->name ?>
+<!--                    </a>-->
 
                 <?php endforeach; ?>
             </div>

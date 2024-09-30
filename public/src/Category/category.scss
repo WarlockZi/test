@@ -122,18 +122,23 @@
     gap: 10px;
 
     .category-card {
-      color: $color-gray10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100px;
-      width: 142px;
-      padding: 10px;
-      border: 1px solid #ccc;
+      position: relative;
 
-      &:hover {
-        border: 1px solid $color-main;
+
+      .category-card-a {
+        color: $color-gray10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100px;
+        width: 142px;
+        padding: 10px;
+        border: 1px solid #ccc;
+
+        &:hover {
+          border: 1px solid $color-main;
+        }
       }
     }
   }

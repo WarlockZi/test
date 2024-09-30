@@ -63,7 +63,8 @@ export default class Select {
          .attr("data-value", this?.selectedOption?.value ?? '')
          .attr('tabindex', '0')
       if (el.hasAttribute('data-field')) selectTag.attr('data-field', el.dataset.field)
-      if (el.hasAttribute('data-relation')) selectTag.attr('data-relation', el.dataset.relation)
+      if (el.firstChild.hasAttribute('data-relation')) selectTag.attr('data-relation', el.firstChild.dataset.relation)
+      if (el.firstChild.hasAttribute('data-relationmodel')) selectTag.attr('data-relationmodel', el.firstChild.dataset.relationmodel)
 
       return selectTag.get();
    }
@@ -74,7 +75,6 @@ export default class Select {
 
    handleLabelClick() {
       this.ul.classList.toggle("show");
-      // this.sel.selectValue(target.value);
    }
 
    handleUlClick({target}) {

@@ -1,5 +1,10 @@
 import {$} from "../../common.js";
 import pagination from "../../components/pagination/pagination.js";
+// import '../Test/test_results/test_results.js'
+// import '../Test/opentest-edit.js'
+// import testEdit from '../Test/test-edit.js'
+// import '../Test/test-do.js'
+// import '../Test/open_test.js'
 
 new pagination
 
