@@ -489,16 +489,14 @@ $border-color:$color-main
   font-size: 1.3rem;
   font-weight: 600;
   color: $color-grey-logo;
-  margin: 0;
-  margin-bottom: 15px;
+  margin: 0 0 25px;
 }
 
 @mixin _h2 {
   font-size: 1.0rem;
   font-weight: 600;
   color: $color-grey-logo;
-  margin: 0;
-  margin-bottom: 15px;
+  margin: 0 0 15px;
 }
 
 @mixin _h3 {

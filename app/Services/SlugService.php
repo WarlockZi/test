@@ -7,7 +7,7 @@ namespace app\Services;
 use app\model\Category;
 use app\model\Product;
 
-class Slug
+class SlugService
 {
     private $char_map = array(
         // Russian
@@ -26,9 +26,9 @@ class Slug
 
     public static function getValidProductSlug(Product $product): string
     {
-        $slug = Slug::slug($product['print_name']);
+        $slug = SlugService::slug($product['print_name']);
         if (Product::where('slug', $slug)->first()) {
-            $art  = Slug::slug($product['art']);
+            $art  = SlugService::slug($product['art']);
             $slug = "$slug" . "_" . "$art";
             $i    = 0;
             while (Product::where('slug', $slug)->first()) {
@@ -39,10 +39,9 @@ class Slug
     }
     public static function getValidCategorySlug(Category $category): string
     {
-        $slug = Slug::slug($category['print_name']);
+        $slug = SlugService::slug($category['print_name']);
         if (Category::where('slug', $slug)->first()) {
-            $art  = Slug::slug($category['art']);
-            $slug = "$slug" . "_" . "$art";
+            $slug = "{$slug}_{$category['s_id']}";
             $i    = 0;
             while (Category::where('slug', $slug)->first()) {
                 $slug = "$slug" . "_" . "$i++";
@@ -52,7 +51,6 @@ class Slug
     }
     public static function slug($str, $options = array())
     {
-
         $self = new self();
 
         // Make sure string is in UTF-8 and strip invalid UTF-8 characters

@@ -7,7 +7,7 @@ use app\model\Category;
 use app\model\Product;
 use app\model\ProductProperty;
 use app\Services\ShortlinkService;
-use app\Services\Slug;
+use app\Services\SlugService;
 use Carbon\Carbon;
 use Throwable;
 
@@ -99,9 +99,9 @@ class LoadProducts
 
     private function setSlug($g): string
     {
-        $slug = Slug::slug($g['print_name']);
+        $slug = SlugService::slug($g['print_name']);
         if (Product::where('slug', $slug)->first()) {
-            $art  = Slug::slug($g['art']);
+            $art  = SlugService::slug($g['art']);
             $slug = "$slug" . "_" . "$art";
             $i    = 0;
             while (Product::where('slug', $slug)->first()) {
