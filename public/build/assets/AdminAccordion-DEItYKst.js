@@ -1,1 +1,0 @@
-import{$ as r}from"./common-mpP3SXMn.js";import{q as s,a as o}from"./constants-Clh-pk9Y.js";class d{constructor(){this.burger=document[s]("svg#burger"),this.accordion=r(".admin-sidebar [accordion]").first(),this.burger[o]("click",this.handleClick.bind(this))}handleClick({target:i}){i===this.burger&&this.accordion.classList.toggle("show")}}export{d as default};
