@@ -7,6 +7,7 @@ use app\core\Response;
 use app\Services\Logger\FileLogger;
 use app\Services\Sync\SyncService;
 use app\Services\Sync\TrancateService;
+use Illuminate\Support\Carbon;
 
 class SyncController extends AppController
 {
@@ -31,22 +32,18 @@ class SyncController extends AppController
     {
         $this->trancateService->softTrancate();
     }
-
     public function actionTruncate(): void
     {
         $this->trancateService->trancate();
     }
-
     public function actionRemovecategories(): void
     {
         $this->trancateService->softRemoveCategories();
     }
-
     public function actionRemoveproducts(): void
     {
         $this->trancateService->softRemoveProducts();
     }
-
     public function actionRemoveprices(): void
     {
         $this->trancateService->removePrices();
@@ -56,6 +53,8 @@ class SyncController extends AppController
     //load
     public function actionLoad(): void
     {
+        $this->logger->write(Carbon::now());
+        $this->logger->write('Начата ручная загрузка');
         $this->service->load();
         if ($_ENV['DEV'] == 1) {
             Response::exitWithPopup('Все перенесено');

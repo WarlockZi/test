@@ -27,12 +27,22 @@ class Category extends Model
         'deleted_at',
     ];
 
-
+    protected $appends = ['shortLink'];
     public function InactivePromotions()
     {
         return $this->products->activepromotions();
     }
 
+    protected function getShortLinkAttribute(): string
+    {
+        if (!$this->ownProperties){
+            return '';
+        }
+        $link = $this->ownProperties->short_link;
+        $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+        return "{$scheme}://{$host}/short/{$link}";
+    }
     public function ActivePromotions()
     {
         return $this->products->activepromotions();
@@ -44,6 +54,7 @@ class Category extends Model
             $category->slug = SlugService::slug($category->name);
             return $category;
         });
+
     }
 
 
@@ -65,15 +76,13 @@ class Category extends Model
     {
         return $this->hasOne(CategoryProperty::class, 'category_1s_id', '1s_id');
     }
-
+    public function scopeWithWhereHas($query, $relation, $constraint){
+        return $query->whereHas($relation, $constraint)
+            ->with([$relation => $constraint]);
+    }
     public function properties()
     {
         return $this->morphToMany(Property::class, 'propertable');
-    }
-
-    public function category()
-    {
-        return $this->parent()->with('parentRecursive');
     }
 
     public function products()
@@ -119,6 +128,10 @@ class Category extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function category()
+    {
+        return $this->parent()->with('parentRecursive');
+    }
 
     public function parents()
     {

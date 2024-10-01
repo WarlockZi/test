@@ -49,7 +49,7 @@ class LoadPrices
         $pri['currency'] = $price['Цены']['Цена']['Валюта'] ?? '';
         $pri['price']    = $price['Цены']['Цена']['ЦенаЗаЕдиницу'] ?? '';
 
-        return Price::firstOrCreate([
+        return Price::updateOrCreate([
             '1s_id' => $price['Ид'],
             'unit_code' => $pri['unit_code'],
         ], $pri);

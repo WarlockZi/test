@@ -22,6 +22,7 @@ class CategoryProperty extends Model
         'show_front',
         'sort',
 		'category_1s_id',
+		'path',
 	];
 
     public function product()
