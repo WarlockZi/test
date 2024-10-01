@@ -1,52 +1,55 @@
-import '../404/404.scss'
 import './main.scss'
-// import ViteProxyWebsocket from 'vite-proxy-websocket'
-import cart from '../Cart/cart'
+import '../404/404.scss'
 
-import '../Category/category'
-import {$} from "../common";
-import Search from "../components/search/search";
-import Promotions from '../Promotions/Promotion'
+import {ael, qs} from '../constants';
+import '../share/hoist/hoist';
 
-// import WebSocket from 'ws';
-//
-// const ws = new WebSocket('wss://localhost:3000');
-// //
-// debugger
-// ws.onerror = console.error;
-//
-// ws.onopen = function open() {
-//   ws.send('something');
-// };
-//
-// ws.onmessage = function message(data) {
-//   console.log('received: %s', data);
-// }
+document.addEventListener('DOMContentLoaded', async function () {
 
+   const admin = window.location.pathname.includes('adminsc')
+   if (admin) return false
+   const searchButton = document[qs]('.utils .search');
+   if (searchButton) {
+      const {default:Search} = await import('../components/search/search');
+      new Search()
+   }
 
-document.addEventListener('DOMContentLoaded', function () {
+   const gumburger = document[qs]('.gamburger');
+   if (gumburger) {
+      gumburger[ael]('click', function (e){
+         const mm = e.target.closest('.utils')[qs]('.mobile-menu');
+         mm.classList.toggle('show')
+      })
+   }
+   // debugger
+   const modal = document[qs]('.modal-wrapper')
+   if (modal) {
+      const {default: Modal} = await import("../components/Modal/modal.js")
+      new Modal()
+   }
 
-  // debugger
+   const category = document[qs]('.category')
+   if (category) {
+      const {default: Category} = await import('../Category/category.js')
+      new Category()
+   }
+   const product = document[qs]('.product-card')
+   if (product) {
+      const {default: Product} = await import('../Product/Product.js')
+      new Product()
+   }
 
-  // const proxy = new ViteProxyWebsocket({target: 'ws://example.com', path: '/websocket'});
+   const promotions = document[qs]('.promotions-index')
+   if (promotions) {
+      const {default: Promotions} = await import('../Promotions/Promotion.js')
+      new Promotions;
+   }
 
-  // proxy.listen(3000);
-
-  let gumburger = $('.gamburger')[0];
-  if (gumburger) {
-    $('.gamburger').on('click', opentMobilePanel)
-  }
-  new Promotions;
-
-
-  function opentMobilePanel(e) {
-    let mm = e.target.closest('.utils').querySelector('.mobile-menu');
-    mm.classList.toggle('show')
-  }
-
-
-  new Search();
-  new cart()
+   const cart = document[qs]('.user-content .cart')
+   if (cart) {
+      const {default: Cart} = await import('../Cart/cart.js')
+      new Cart()
+   }
 });
 
 

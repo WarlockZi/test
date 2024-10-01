@@ -13,7 +13,7 @@
     display: flex;
     align-items: stretch !important;
 
-    .name, .multiplier, .base-unit, .min-unit {
+    .name, .multiplier, .base-unit, .shippable {
       display: flex;
       flex: 1;
       padding: 10px;
@@ -38,24 +38,25 @@
       padding: 1px;
       align-items: initial;
 
-      [custom-select] {
+      .name {
         border: 1px solid #cccccc;
         min-width: 0;
         max-width: initial;
         flex: 1;
+
         span {
           min-width: 0;
         }
       }
 
-      input[type='number']{
-      //input{
-        flex: 1;
+      .multiplier {
+        flex: 1 0 20px;
         padding: 0;
-        min-width: 0;
         border: none;
+        width: 0;
       }
-      input[type='checkbox']{
+
+      .shippable {
         display: flex;
         flex: 1;
       }
@@ -64,9 +65,10 @@
         flex: 1;
         padding: 10px 0;
       }
-      .min-unit{
+
+      .min-unit {
         flex: 1;
-        padding: 10px 0 ;
+        padding: 10px 0;
       }
 
       .del, .edit {

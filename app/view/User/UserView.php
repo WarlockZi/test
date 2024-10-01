@@ -4,21 +4,19 @@
 namespace app\view\User;
 
 
+use app\core\ConfigNew;
 use app\model\Right;
 use app\model\User;
-use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
-use app\view\MyView;
-use app\config\Config;
-use app\view\Right\RightView;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use app\view\components\Builders\Date\DateBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
+use app\view\Right\RightView;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 
 abstract class UserView
@@ -30,8 +28,8 @@ abstract class UserView
 	public static function getViewByRole(Model $userToEdit, $thisUser)
 	{
 		if ($userToEdit) {
-			if (User::can($thisUser, ['role_employee'])) {
-				if (User::can($thisUser, ['role_admin'])) {
+			if ($user->can(['role_employee'])) {
+				if ($user->can(['role_admin'])) {
 					return UserView::admin($userToEdit);
 				}
 				return UserView::employee($userToEdit);
@@ -113,7 +111,7 @@ abstract class UserView
 
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
-			->toList('adminsc/user/list', '', false)
+			->toList('adminsc/user/table', '', false)
 			->save()
 			->del(false)
 			->field(
@@ -173,7 +171,7 @@ abstract class UserView
 
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
-			->toList('adminsc/user/list')
+			->toList('adminsc/user/table')
 			->save()
 			->del()
 			->tab(UserView::getAdminTab($item))
@@ -251,36 +249,37 @@ abstract class UserView
 
 	public static function listAll(): string
 	{
-		return MyList::build(User::class)
+		return Table::build(User::all())
+            ->model('user')
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Имя')
 					->search()
 					->width('1fr')
 					->get())
 			->column(
-				ListColumnBuilder::build('surName')
+				ColumnBuilder::build('surName')
 					->name('Фамилия')
 					->search()
 					->width('1fr')
 					->get())
 			->column(
-				ListColumnBuilder::build('confirm')
+				ColumnBuilder::build('confirm')
 					->name('co')
 					->get())
 			->edit()
-			->all()
+			->del()
 			->get();
 	}
 
 
 	public static function getRights(Model $user)
 	{
-		$configRights = Config::getConfigRights();
+		$configRights = ConfigNew::getConfigRights();
 		$rights = Right::all()->toArray();
 		return RightView::getCheckList($configRights, $rights, $user);
 	}
@@ -343,7 +342,7 @@ abstract class UserView
 	{
 		return
 			"<div class='no-element'>Элемент не найден" .
-			"<a class='to-list' href='/adminsc/user'>К списку</a>" .
+			"<a class='to-table' href='/adminsc/user'>К списку</a>" .
 			"</div>";
 	}
 

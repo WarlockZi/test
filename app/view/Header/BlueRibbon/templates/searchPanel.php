@@ -3,10 +3,11 @@
 use app\core\Icon;
 
 ?>
-<div class="search-panel">
-	<div class="wrap">
-		<input type="text" class="text" placeholder="поиск">
-		<div class="close"><?= Icon::close();?></div>
-		<ul class="result"></ul>
-	</div>
-</div>
+<aside class="search-panel">
+    <div class="input-group">
+        <input type="text" class="text" placeholder="поиск">
+        <button class="close"><?= Icon::close(); ?></button>
+    </div>
+    <ul class="result"></ul>
+
+</aside>

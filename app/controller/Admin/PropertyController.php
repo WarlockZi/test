@@ -4,7 +4,6 @@ namespace app\controller\Admin;
 
 
 use app\controller\AppController;
-use app\core\Route;
 use app\model\Propertable;
 use app\model\Property;
 use app\view\Property\PropertyView;
@@ -12,39 +11,37 @@ use app\view\Property\PropertyView;
 
 class PropertyController Extends AppController
 {
+	public string $model = Property::class;
+    public function __construct()
+{
+    parent::__construct();
+}
 
-	public $model = Property::class;
-
-	public function getModel()
-  {
-    return $this->model;
-  }
-
-  public function __construct()
+	public function actionIndex():void
 	{
-		parent::__construct();
-	}
-
-	public function actionIndex()
-	{
-		$list = PropertyView::listAll();
-		$this->set(compact('list'));
+		$list = PropertyView::index();
+		$this->setVars(compact('list'));
 	}
 
 	public function actionEdit()
 	{
+        $this->view = 'table';
 		if ($this->route->id) {
-			$item = PropertyView::edit($this->route->id);
-			$this->set(compact('item'));
+			$table = PropertyView::edit($this->route->id);
+			$this->setVars(compact('table'));
 		} else {
 			header('Location: /adminsc/property');
 		}
 	}
 
-	public function actionDelete()
+	public function actionDelete():void
 	{
 		Propertable::where('property_id',$this->ajax['id'])->delete();
 		parent::actionDelete();
 	}
 
+//	public function getModel()
+//  {
+//    return $this->model;
+//  }
 }

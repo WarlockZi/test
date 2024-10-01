@@ -8,18 +8,18 @@ use app\view\Country\CountryView;
 
 class CountryController Extends AppController
 {
-	public $model = Country::class;
+	public string $model = Country::class;
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 
 		$countries = CountryView::list($this->model);
-		$this->set(compact('countries'));
+		$this->setVars(compact('countries'));
 	}
 
 }

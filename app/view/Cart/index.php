@@ -1,86 +1,63 @@
+<? use \app\view\share\shippable\ShippableUnitsTableFactory; ?>
 <div class="cart">
-	<? use app\core\Auth;
-	use app\core\Icon;
-	use \app\view\Product\ProductView;
 
-	$authed = Auth::isAuthed();
+    <div class="<?= $products->count() ? '' : 'none'; ?> content">
 
-	?>
+        <div class="page-title">Корзина</div>
 
-	<div class="<?= $oItems->count() ? '' : 'none'; ?> content">
+        <?php include 'counter.php' ?>
 
-		<div class="page-title">Корзина</div>
+        <div class="table" data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
 
-		 <? if (!$authed && !$lead): ?>
-		  <div id="counter">
-			  <p>Отлично! </p>
-			  <p>Чтобы мы смогли обработать ваш заказ - оставьте свои данные!</p>
-			  <p>Иначе корзина сгорит через</p>
+            <?php foreach ($products as $i => $product): ?>
 
-			  <div id="timer">
-				  <div class="items">
-					  <div class="item days">00</div>
-					  <div class="item hours">00</div>
-					  <div class="item minutes">00</div>
-					  <div class="item seconds">00</div>
-				  </div>
-			  </div>
+                <div class="row" data-product-id="<?= $product['1s_id']; ?>">
+                    <div class="num cell"><?= ++$i; ?></div>
 
-		  </div>
-		 <? endif; ?>
+                    <img src="<?= $product->mainImagePath; ?>" alt="<?= $product->name; ?>">
 
-		<div data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
+                    <div class="name-price cell">
+                        <a href="/product/<?= $product->slug; ?>"
+                           class="name">
+                            <?= $product->name; ?>
+                        </a>
+                    </div>
 
-				<? foreach ($oItems as $i => $oItem): ?>
-					<? if ($oItem->product): ?>
+                    <div class="cell cart-shippable-table">
+                        <?= ShippableUnitsTableFactory::create($product, 'cart'); ?>
+                    </div>
 
-				  <div class="row" data-product-id="<?= $oItem->product_id ?>">
-					  <div class="num"><?= ++$i; ?></div>
+                    <div class="sub-sum sum"></div>
+                    <div class="del"><?= $trashedWhite; ?></div>
+                </div>
 
-					  <img src="<?= $oItem->product->mainImagePath ?>" alt="<?= $oItem->product->name; ?>">
-					  <!--				  <img src="--><? //= ProductView::mainImageSrc($oItem->product) ?><!--" alt="-->
-					  <div class="name-price">
-						  <a href="/product/<?= $oItem->product->slug; ?>" class="name"><?= $oItem->product->name; ?></a>
-						  <div class="price"
-						       data-price=<?= $oItem->product->getRelation('price')->price; ?>>
-											<?= $oItem->product->priceWithCurrencyUnit() ?>
-											<? include __DIR__ . '/priceTable.php' ?>
-						  </div>
-					  </div>
-								<? include __DIR__ . '/countSetter.php' ?>
-
-					  <div class="sum"></div>
-					  <div class="del"><?= Icon::trashWhite() ?></div>
-
-				  </div>
-					<? else: ?>
-				  <div class="order-item_not-found">товар не найден</div>
-					<? endif; ?>
-				<? endforeach; ?>
-		</div>
-
-		<div class="total">
-			<div class="title">Всего -&nbsp;&nbsp;</div>
-			<span></span>&nbsp;&nbsp;руб.
-		</div>
-
-		 <? if (!$authed && !$lead): ?>
-		  <div class="buttons">
-			  <div class="button" id="cartLead">Оставить свои данные</div>
-			  <div class="button" id="cartLogin">Войти под своей учеткой</div>
-		  </div>
-		 <? else: ?>
-		  <div class="buttons">
-			  <div class="button" id="cartSuccess">Оформить заказ</div>
-		  </div>
-		 <? endif; ?>
-
-	</div>
-
-	<div class="empty-cart <?= $oItems->count() ? 'none' : ''; ?>">
-		Корзина пуста
-	</div>
+            <?php endforeach; ?>
 
 
+            <div class="total">
+                <div class="title">Всего -&nbsp;&nbsp;</div>
+                <span></span>&nbsp;&nbsp;₽
+            </div>
+
+            <?php if (!$authed && !$lead): ?>
+                <div class="buttons">
+                    <div class="button" id="cartLead">Оставить свои данные</div>
+                    <div class="button" id="cartLogin">Войти</div>
+                </div>
+            <?php else: ?>
+                <div class="buttons">
+                    <div class="button" id="cartSuccess">Оформить заказ</div>
+                </div>
+            <?php endif; ?>
+
+        </div>
+
+    </div>
+    <div class="empty-cart <?= $products->count() ? 'none' : ''; ?>">
+        Корзина пуста
+    </div>
 </div>
+
+
+
 

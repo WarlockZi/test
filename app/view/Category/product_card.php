@@ -1,30 +1,24 @@
-<?php
+<div
+        class="column"
+        data-instore="<?= $product->instore ?? 0; ?>"
+        data-1sid="<?= $product['1s_id'] ?? 0; ?>"
+>
+    <?= $product->activepromotions->count() ? "<div class='promotion'>Акция</div>" : '';; ?>
+    <a
+            href="/product/<?= $product->slug; ?>" class="product">
 
-use app\view\Category\CategoryView;
+        <h3 class="name"><?= $product->print_name; ?></h3>
+        <img src="<?= $product->mainImagePath ?>" alt="<?= $product->name ?>" loading="lazy">
+        <div class="footer">
 
-$promotionLabel = $product->activepromotions->count() ? "<div class='promotion'>Акция</div>" : '';
-?>
-<div class="column">
-	<?= $promotionLabel ?>
-	<a data-instore="<?= $product->instore ?? 0; ?>"
+            <p>Цена: <?= $product->instore ? $product->baseUnitPrice : "<span class='danger'>от</span> ".$product->baseUnitPrice; ?></p>
+            <p>Статус: <?= $product->instore ? "в наличии" : "<span class='danger'>под заказ</span>"; ?></p>
+            <p>Артикул: <?= $product->art ?? ''; ?></p>
+        </div>
+    </a>
+    <?= \app\view\share\shippable\ShippableUnitsTableFactory::create($product, 'category'); ?>
 
-	   href="/product/<?= $product->slug; ?>" class="product">
+    <?= \app\view\share\card_panel\CardPanel::card_panel($product) ?>
 
-
-		<h3 class="name"><?= $product->print_name; ?></h3>
-		 <?= CategoryView::getProductMainImage($product) ?>
-		<span class="footer">
-
-					 <p>Цена: <?= $product->instore ? $product->priceWithCurrencyUnit() : 'уточняйте у менеджера'; ?></p>
-					 <p>Статус:  <?= !!$product->instore ? "в наличии" : "под заказ"; ?></p>
-					 <p>Артикул: <?= $product->art ?? 0; ?></p>
-
-					 </span>
-	</a>
-	<? if ($admin): ?>
-	  <div class="edit">
-		  <a href="/adminsc/product/edit/<?= $product->id ?>"><?= $icon ?></a>
-	  </div>
-	<? endif; ?>
 
 </div>

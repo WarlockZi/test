@@ -1,139 +1,166 @@
-import './SelectNew.scss'
+import './WDSSelect.scss'
 
-import {createElement, post} from "../../common";
+import {createElement} from "../../common";
 
 export default class Select {
 
-  constructor(el) {
-    if (!el) return;
+   constructor(el) {
+      if (!el) return;
 
-    this.options = getFormattedOptions(el.querySelectorAll("option"));
+      this.ul = (new createElement()).tag("ul").attr('class', "options").get();
+      this.label = (new createElement()).tag("span").get();
 
-    this.sel = (new createElement())
-      .tag("div")
-      .className(el?.className)
-      .field(el.dataset.field)
-      .attr("select-new", '')
-      .attr("data-value", this?.selectedOption?.value ?? '')
-      .attr('tabindex', '0').get();
+      this.options = this.getFormattedOptions(el.querySelectorAll("option"));
 
-    el.after(this.sel);
+      this.space = (new createElement()).tag("div").attr('class', "space").text(this?.selectedOption?.label).get();
+      this.arrow = (new createElement()).tag("div").attr('class', "arrow").get();
+      this.sel = this.createSelectTag(el)
 
-    this.label = document.createElement("span");
-    this.sel.append(this.label);
 
-    this.space = (new createElement()).tag("div").attr('class', "space").text(this?.selectedOption?.label).get();
-    this.label.append(this.space);
+      el.after(this.sel);
+      this.label.append(this.space);
+      this.label.append(this.arrow);
+      this.sel.append(this.label);
+      this.sel.append(this.ul);
+      el.remove()
 
-    this.arrow = (new createElement()).tag("div").attr('class', "arrow").get();
-    this.label.append(this.arrow);
+      this.ul.addEventListener('click', this.handleUlClick.bind(this));
+      this.label.addEventListener('click', this.handleLabelClick.bind(this));
+      this.sel.addEventListener('blur', this.handleSelectBlur.bind(this))
+      this.sel.addEventListener('keydown', this.handleSelectKeydown.bind(this))
 
-    this.ul = (new createElement()).tag("ul").attr('class', "options").get();
+      return this;
+   }
 
-    this.options.forEach(option => {
-      setOption(option, this)
-    });
+   getFormattedOptions(options) {
+      // this.options.forEach(option => {
+      //    // li.onclick = ({target}) => {
+      //    //   select.selectValue(option.value);
+      //    //   select.ul.classList.remove("show");
+      //    // };
+      // });
+      return [...options].map(option => {
+         const li = (new createElement()).tag("li").text(option.label).attr('data-value', option.value).get();
+         if (option.selected) li.classList.add("selected");
+         this.ul.append(li)
 
-    this.sel.append(this.ul);
+         return {
+            value: option.value,
+            label: option.label,
+            selected: option.selected,
+            element: li,
+            option: option,
+         }
+      })
+   }
 
-    this.label.onclick = () => this.ul.classList.toggle("show");
-    this.sel.onblur = () => this.ul.classList.remove("show");
-    this.sel.onkeydown = this.keyDownhandler;
+   createSelectTag(el) {
+      const selectTag = (new createElement())
+         .tag("div")
+         .className(el?.className)
+         .field(el.dataset.field)
+         .attr("select-new", '')
+         .attr("data-value", this?.selectedOption?.value ?? '')
+         .attr('tabindex', '0')
+      if (el.hasAttribute('data-field')) selectTag.attr('data-field', el.dataset.field)
+      if (el.firstChild.hasAttribute('data-relation')) selectTag.attr('data-relation', el.firstChild.dataset.relation)
+      if (el.firstChild.hasAttribute('data-relationmodel')) selectTag.attr('data-relationmodel', el.firstChild.dataset.relationmodel)
 
-    el.remove()
-  }
+      return selectTag.get();
+   }
 
-  onchange(callback) {
-    this.callback = callback
-  }
+   handleSelectBlur() {
+      this.ul.classList.remove("show");
+   }
 
-  keyDownhandler(e) {
-    let debounceTimeout;
-    let searchTerm = "";
+   handleLabelClick() {
+      this.ul.classList.toggle("show");
+   }
 
-    if (e.code === "Space") {
-      select.ul.classList.toggle("show");
-    } else if (e.code === "ArrowUp") {
-      const prevOption = select.options[select.selectedOptionIndex - 1];
-      if (prevOption) {
-        select.selectValue(prevOption.value)
+   handleUlClick({target}) {
+      target.classList.add("selected")
+      this.selectedOption.element.classList.remove("selected")
+
+      this.selectValue(target.dataset.value);
+      this.ul.classList.remove("show");
+   }
+
+   onchange(callback) {
+      this.callback = callback
+   }
+
+   handleSelectKeydown(e) {
+      let debounceTimeout;
+      let searchTerm = "";
+
+      if (e.code === "Space") {
+         select.ul.classList.toggle("show");
+      } else if (e.code === "ArrowUp") {
+         const prevOption = select.options[select.selectedOptionIndex - 1];
+         if (prevOption) {
+            select.selectValue(prevOption.value)
+         }
+      } else if (e.code === "ArrowDown") {
+         const nextOption = select.options[select.selectedOptionIndex + 1];
+         if (nextOption) {
+            select.selectValue(nextOption.value)
+         }
+      } else if (e.code === "Enter" || e.code === "Escape") {
+         select.ul.classList.remove("show");
+      } else {
+         clearTimeout(debounceTimeout);
+         searchTerm += e.key;
+         debounceTimeout = setTimeout(() => {
+            searchTerm = ""
+         }, 500);
+         const searchedOption = this.options.find(option => {
+            return option.label.toLowerCase().includes(searchTerm)
+         });
+         if (searchedOption) {
+            this.sel.selectValue(searchedOption.value)
+         }
       }
-    } else if (e.code === "ArrowDown") {
-      const nextOption = select.options[select.selectedOptionIndex + 1];
-      if (nextOption) {
-        select.selectValue(nextOption.value)
-      }
-    } else if (e.code === "Enter" || e.code === "Escape") {
-      select.ul.classList.remove("show");
-    } else {
-      clearTimeout(debounceTimeout);
-      searchTerm += e.key;
-      debounceTimeout = setTimeout(() => {
-        searchTerm = ""
-      }, 500);
-      const searchedOption = e.target.options.find(option => {
-        return option.label.toLowerCase().startsWith(searchTerm)
+   }
+
+   get selectedOption() {
+      return this.options.find(option => option.selected)
+   }
+
+   get selectedOptionIndex() {
+      return this.options.indexOf(this.selectedOption)
+   }
+
+   selectValue(value) {
+      const next = this.options.find(option => {
+         return option.value === value
       });
-      if (searchedOption) {
-        select.selectValue(searchedOption.value)
-      }
-    }
-  }
+      const prev = this.selectedOption;
 
-  get selectedOption() {
-    return this.options.find(option => option.selected)
-  }
+      prev.selected = false;
+      next.selected = true;
 
-  get selectedOptionIndex() {
-    return this.options.indexOf(this.selectedOption)
-  }
+      this.space.innerText = next.label;
 
-  selectValue(value) {
-    const next = this.options.find(option => {
-      return option.value === value
-    });
-    const prev = this.selectedOption;
+      this.sel.dataset['value'] = next.value;
+      prev.element.classList.remove('selected');
 
-    prev.selected = false;
-    next.selected = true;
+      next.element.classList.add('selected');
+      next.element.scrollIntoView({block: "nearest"});
 
-    this.space.innerText = next.label;
+      this.sel.dispatchEvent(new CustomEvent('customSelect.changed', {
+         bubbles: true,
+         detail: {next, prev, target: this.sel}
+      }));
+   }
 
-    this.sel.dataset['value'] = next.value;
-    prev.element.classList.remove('selected');
-
-    next.element.classList.add('selected');
-    next.element.scrollIntoView({block: "nearest"});
-
-    this.sel.dispatchEvent(new CustomEvent('customSelect.changed', {
-      bubbles: true,
-      detail: {next, prev, target: this.sel}
-    }));
-    // if (this.callback) this.callback({next, prev, target: this.sel})
-  }
-
+   // setOption(option) {
+   //    const li = (new createElement()).tag("li").text(option.label).attr('data-value', option.value).get();
+   //
+   //    if (option.selected) li.classList.add("selected");
+   //    // li.onclick = ({target}) => {
+   //    //   select.selectValue(option.value);
+   //    //   select.ul.classList.remove("show");
+   //    // };
+   //    this.ul.append(li)
+   // }
 }
-
-
-function setOption(option, select) {
-  const li = (new createElement()).tag("li").text(option.label).attr('data-value', option.value).get();
-
-  if (option.selected) li.classList.add("selected");
-  li.onclick = ({target}) => {
-    select.selectValue(option.value);
-    select.ul.classList.remove("show");
-  };
-  select.ul.append(li)
-}
-
-function getFormattedOptions(options) {
-  return [...options].map(option => {
-    return {
-      value: option.value,
-      label: option.label,
-      selected: option.selected,
-      element: option,
-    }
-  })
-}
-

@@ -1,54 +1,42 @@
-import {$, slider, scrollToTop} from '../common';
+import {ael, qa, qs} from '../constants';
+import shippableTable from "../share/shippable/shippableUnitsTable";
+// import Card_panel from "../share/card_panel/card_panel";
+
+export default class Category {
+   constructor() {
+      this.category = document[qs]('.category');
+      if (!this.category) return false;
+      this.setCardPanel()
+      this.mapShippableTables()
+      // this.cardPanel = new Card_panel()
+      this.category[ael]('click', this.handleClick.bind(this))
+
+   }
+
+   async setCardPanel() {
+      const cardPanel = document[qs](`.card-panel`)
+      if (cardPanel) {
+         const {default: Card_panel} = await import("./../share/card_panel/card_panel")
+         this.cardPanel = new Card_panel()
+      }
+   }
+
+   handleClick({target}) {
+      if (target.classList.contains('blue-button')) {
+         const table = target.closest('[shipable-table]')
+         // const firstRow = table[qs]('.unit-row')
+      } else if (target.classList.contains('short-link')) {
+         this.cardPanel.shortLink(target)
+      }
+   }
 
 
-let category = $('.category').first();
-if (category) init();
-
-function init() {
-  slider();
-  let hoist = $('.hoist').first();
-  if (hoist) hoist.onclick = function () {
-    scrollToTop();
-  };
-
-  let filters = $('.filters .wrap').first();
-  if (!filters) return false;
-  filters.onchange = ({target}) => {
-    let filter = target.closest('.filter');
-    let input = filter.querySelector('input');
-    let f = input.id;
-    new callMethod(f)
-
-  }
-}
-
-
-class callMethod {
-  constructor(func) {
-    this.instoreEls = document.querySelectorAll(`.product[data-instore='0']`);
-    this.priceEls = document.querySelectorAll(`.product[data-price='0']`);
-    this.func = {
-      'instore': 'instore',
-      'price': 'price',
-    };
-    this._init(func);
-  }
-
-  _init(func) {
-    this[this.func[func]]();
-  }
-
-  instore() {
-    this.instoreEls.forEach((p) => {
-      p.classList.toggle('show')
-    })
-  }
-
-  price() {
-    this.priceEls.forEach((p) => {
-      p.classList.toggle('show')
-    })
-  }
-
+   mapShippableTables() {
+      [...this.category[qa]('.shippable-table')]
+         .forEach((table) => {
+            new shippableTable(table)
+         })
+   }
 
 }
+

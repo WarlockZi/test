@@ -3,51 +3,60 @@
 namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
-
-	public $timestamps = false;
+	public $timestamps = true;
 
 	protected $fillable = [
 		'product_id',
 		'count',
+        'unit_id',
 		'sess',
 		'ip',
 		'user_id',
-		'crated_at',
-		'bill_id'
+		'bill_id',
+        'created_at',
+		'created_at',
+        'updated_at',
+        'deleted_at'
 	];
 
-	public function items()
+	public function items():HasMany
 	{
 		return $this->hasMany(OrderItem::class);
 	}
 
-	public function lead()
+	public function lead():BelongsTo
 	{
 		return $this->belongsTo(Lead::class);
 	}
 
-	public function product()
+	public function product():HasOne
 	{
 		return $this->hasOne(Product::class, '1s_id', 'product_id');
 	}
 
-	public function user()
+	public function user():BelongsTo
 	{
 		return $this->belongsTo(User::class);
 	}
 
-	public static function userEmail($builder, $order, $func)
-	{
-		return $order->user->email;
-	}
-
+    public function unit()
+    {
+        return $this->hasOne(Unit::class,'id','unit_id');
+    }
 	public function manager()
 	{
 		return $this->hasOne(User::class);
 	}
 
+    public static function userEmail($builder, $order, $func)
+    {
+        return $order->user->email;
+    }
 
 }

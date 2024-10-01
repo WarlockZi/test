@@ -11,8 +11,8 @@ class PHPMail extends Mail
 		parent::__construct($variant);
 	}
 
-	public function sendRegistrationMail($user)
-	{
+	public function sendRegistrationMail($user): string
+    {
 		$this->mailer->setFrom($this->credits['from'], 'VITEX');
 		$this->mailer->addReplyTo($this->credits['replyTo'], 'Vitex');
 		$this->mailer->addAddress($user['email']);
@@ -31,8 +31,8 @@ class PHPMail extends Mail
 		return 'Письмо для подтверждения email не отправлено';
 	}
 
-	public function returnPassword($user)
-	{
+	public function returnPassword($user): string
+    {
 		$data['body'] = "Ваш новый пароль: " . $password;
 
 		$this->mailer->setFrom($this->credits['from'], 'VITEX');

@@ -17,6 +17,7 @@ $color-white: #ffffff;
 $color-blue: #5199BD;
 $color-warning: #bd5151;
 $color-red: #e30000;
+$color-danger: #b82121;
 
 $color-white-hover: #e7e7e7;
 $color-hover-gray: #e5e5e5;
@@ -32,7 +33,7 @@ $color-gray7: darken($color-gray1, 20%);
 $color-gray8: darken($color-gray1, 30%);
 $color-gray9: darken($color-gray1, 50%);
 $color-gray10: darken($color-gray1, 50%);
-
+$color-gray-browser: #445760;
 
 $textPrimary: #001a34;
 $textSecondary: #707f8d;

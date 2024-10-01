@@ -1,15 +1,18 @@
-<div class="admin-layout_header">
-	<div class="relative">
+<div class="admin-layout_header a-header">
 
-		 <?= $logo; ?>
-		<!--	--><? //= $chips; ?>
-		 <?= $searchPanel; ?>
-		<div class="utils">
+    <? include_once ROOT . '/app/view/share/adminPanel/adminPanel.php'; ?>
 
-				<?= $searchButton; ?>
-		</div>
+    <div class="relative">
 
-		<!--	<a title="Whatsapp" href="whatsapp://send?phone=79814362309"><img src="/pic/WhatsApp.jpg" alt="Написать в Whatsapp" /></a>-->
-		 <?= $user_menu; ?>
-	</div>
+        <?= $logo; ?>
+        <!--	--><? //= $chips; ?>
+        <?= $searchPanel; ?>
+        <div class="utils">
+
+            <?= $searchButton; ?>
+        </div>
+
+        <!--	<a title="Whatsapp" href="whatsapp://send?phone=79814362309"><img src="/pic/WhatsApp.jpg" alt="Написать в Whatsapp" /></a>-->
+        <?= $user_menu; ?>
+    </div>
 </div>

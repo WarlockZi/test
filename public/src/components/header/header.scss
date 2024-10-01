@@ -9,7 +9,135 @@ header {
   background: #fff;
   flex: 0 0 auto;
   align-items: center;
-  background-color: aliceblue;
+
+  .search-panel {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    padding: 10px 10px 0;
+    width: clamp(200px, 50%, 500px);
+    background: #f5f5f5;
+    position: absolute;
+    top: 100%;
+    right: -110vw;
+    transition: transform 600ms ease-out;
+
+    z-index: -1;
+    box-shadow: 0px 11px 20px 0px #ccc;
+
+    &.show {
+      transform: translateX(-110vw);
+      z-index: 1;
+    }
+
+    .input-group {
+      display: flex;
+      width: 100%;
+
+      .close {
+        padding: 5px;
+        background-color: white;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $color-white-hover;
+        }
+
+        svg {
+          pointer-events: none;
+        }
+      }
+
+      .text {
+        border: transparent;
+        width: 90%;
+        height: 29px;
+        padding: 0 0 0 10px;
+      }
+    }
+
+
+
+    .result {
+      position: absolute;
+      display: none;
+      overflow: scroll;
+      overflow-x: hidden;
+      max-height: 80vh;
+      max-width: 100%;
+      top: 100%;
+      left: 0;
+      background-color: #ffffff;
+      box-shadow: 0px 15px 20px 0px #ccc;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      font-size: .7rem;
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #337ab72e;
+        border: 4px solid #ffffff;
+        border-radius: 8px;
+        background-clip: padding-box;
+      }
+
+      &::-webkit-scrollbar {
+        width: 16px;
+      }
+
+      li {
+
+        a {
+          display: flex;
+          align-items: center;
+          background: white;
+          color: #000;
+
+          &.deleted {
+            background-color: rgba(255, 97, 120, 0.6);
+          }
+
+          &:hover {
+            background-color: #f7f7f7;
+          }
+
+          .index {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+          }
+
+          .art {
+            display: flex;
+            padding: 3px;
+            align-items: center;
+            justify-content: center;
+            word-break: break-all;
+            flex-basis: 50px;
+          }
+
+          .name {
+            display: flex;
+            padding: 13px;
+            flex: 1 0;
+          }
+
+          img {
+            width: 50px;
+            height: 50px;
+            padding: 0 5px;
+            object-fit: contain;
+          }
+        }
+
+
+      }
+    }
+
+
+  }
 
 
   .user-menu {
@@ -168,6 +296,8 @@ header {
 
   .header-catalog-menu {
     background-color: $color-main;
+
+    //background-color: $color-main;
     top: 0;
     min-height: 40px;
     display: flex;
@@ -177,6 +307,16 @@ header {
     display: flex;
     position: relative;
     background: $color-main;
+
+    .show-front-a{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      color: white;
+    }
 
     max-width: 1310px;
     width: 100%;
@@ -200,6 +340,12 @@ header {
       fill: transparent;
     }
 
+    .catalog {
+      svg {
+        fill: white;
+      }
+    }
+
     button {
       border: none;
       padding: 0;
@@ -210,6 +356,9 @@ header {
     .cart,
     .promotions,
     .gamburger {
+    }
+
+    .util-item {
       position: relative;
       height: 100%;
       margin: initial;

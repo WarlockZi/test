@@ -8,17 +8,17 @@ use Workerman\Protocols\Http;
 
 class WishController Extends AppController
 {
-	public $model = Http::class;
+	public string $model = Http::class;
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$content = StorageProd::getFileContent('wish');
-		$this->set(compact('content'));
+		$this->setVars(compact('content'));
 	}
 	public function actionSave()
 	{

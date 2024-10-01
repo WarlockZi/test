@@ -10,7 +10,7 @@ use Exception;
 
 class GithubController Extends AppController
 {
-	protected $model = Answer::class;
+	protected string $model = Answer::class;
 
 	public function __construct()
 	{

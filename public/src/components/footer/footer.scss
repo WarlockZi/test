@@ -23,7 +23,6 @@ footer {
     justify-content: center;
     max-width: 700px;
     margin: 0 auto;
-    border-bottom: 1px solid #7a7a7a;
     padding-top: 30px;
     padding-bottom: 30px;
     @include _600{
@@ -41,7 +40,22 @@ footer {
   .legal {
     display: flex;
     justify-content: space-between;
-    gap: 100px;
+    gap: 15px;
+    max-width: 798px;
+    margin: 0 auto;
+    border-top: 1px solid #7a7a7a;
+    padding-top: 10px;
+  }
+  .creator{
+    display: flex;
+    align-items: center;
+
+  }
+  .creator-img{
+    width: 40px;
+    height: 40px;
+    border-radius: 30%;
+    margin-left: 10px;
   }
 
 }

@@ -2,154 +2,110 @@
 
 namespace app\core;
 
+use app\Services\Logger\ErrorLogger;
+
 class Router
 {
-	protected static $routes = [];
-	protected static $route;
-	protected $namespace;
-	protected $controller;
-	protected $uri;
-	protected $url;
-	protected $params;
+    protected Route $route;
+    protected array $routes;
+    protected string $namespace;
+    protected ErrorLogger $errorLogger;
 
-	public function __construct(string $uri)
-	{
-		$this->uri = $uri;
-		$this->url = $this->getUrl($uri);
-		$this->fillRoutes();
-	}
+    public function __construct(string $uri = '')
+    {
+        $this->fillRoutes();
+        $this->matchRoute($uri);
+        $this->errorLogger = new ErrorLogger();
+    }
 
+    protected function matchRoute(): void
+    {
+        $this->route = new Route();
+        foreach ($this->routes as $pattern => $r) {
+            if (preg_match("#$pattern#i", $this->route->getUrl(), $matches)) {
 
-	public static function getRoute():Route
-	{
-		return self::$route;
-	}
+                foreach ($matches as $k => $v) {
+                    if (is_numeric($k)) {
+                        unset($matches[$k]);
+                    }
+                }
 
-	public function matchRoute($url): Route
-	{
-		$route = new Route();
-		$route->setUrl($url);
-		foreach (self::$routes as $pattern => $r) {
-			if (preg_match("#$pattern#i", $url, $matches)) {
+                $matches = array_merge($matches, $r);
+                foreach ($matches as $k => $v) {
+                    $this->route->$k = is_string($v)?strtolower($v):$v;
+                }
 
-				foreach ($matches as $k => $v) {
-					if (is_numeric($k)) {
-						unset($matches[$k]);
-					}
-				}
-				$matches = array_merge($matches, $r);
-				foreach ($matches as $k => $v) {
-					$route->$k = strtolower($v);
-				}
-				self::$route = $route;
-			}
-            else{
-                $route->notFound = true;
+                $this->redirect();
+                $this->route->setNotFound();
+                break;
             }
-		}
-		return $route;
-	}
+        }
+        $this->route->isNotFound() ? $this->route->setActionName('default') : $f = 1;
+    }
+    private function redirect():void
+    {
+        if (!$this->route->redirect) return;
+        $arr = $this->route->getRedirect();
+        $from = key($arr);
+        $to = $arr[$from];
+        $url = $this->route->getUrL();
+        $newUrl = str_replace($from,$to,$url);
 
-	protected function handleErrors(Route $route)
-	{
-		if (!class_exists($route->controller)) {
-			NotFound::controller($route);
-		}
-		if (!method_exists($route->controller, $route->actionName)) {
-			NotFound::action($route);
-		}
-	}
-	protected function parseRoute(){
-		$parcedRoute = $this->matchRoute($this->url);
-		$parcedRoute->setUri($this->uri);
-		$parcedRoute->setParams($this->params);
-		$parcedRoute->setAmin($parcedRoute);
-		$parcedRoute->setController($parcedRoute);
-		$parcedRoute->setAction($parcedRoute);
-		$parcedRoute->setHost();
-		$parcedRoute->setProtocol();
+//        header("HTTP/2 301 Moved Permanently");
+//        header("Location: https://{$this->route->getHost()}".$newUrl);
+        header("Location: https://{$this->route->getHost()}".$newUrl, true, 301);
+        exit();
 
-		self::$route = $parcedRoute;
-	}
+    }
 
-	public function dispatch()
-	{
-		$this->parseRoute();
+    public function dispatch(): void
+    {
+        $controller = $this->route->getController();
+        try {
+            $controller = new $controller();
+        } catch (\Throwable $exception) {
+            $this->handleError($exception);
+            $controller = $this->route->getBaseController();
+            $controller = new $controller;
+        }
+        $controller->setRoute($this->route);
 
-		Router::handleErrors(self::$route);
+        $action = $this->route->getAction();
+        $this->route->setView($this->route->getActionName());
+        try {
+            $controller->$action();
+        } catch (\Throwable $exception) {
+            $this->handleError($exception);
+        }
+        if ($controller->isAjax()) exit;
+        Auth::authorize($this->route);
 
-		$controller = new self::$route->controller;
+        $layout = $this->route->getLayout();
+        $layout = new $layout($this->route, $controller);
+        $layout->render();
+    }
 
-		Auth::autorize();
-		$action = self::$route->actionName;
-		if (!method_exists($controller, $action)) {
-			http_response_code(404);
-			include(ROOT . '/app/view/404/index.php'); // provide your own HTML for the error page
-			die();
-		}
-		$controller->$action();
+    private function handleError($exception): void
+    {
+        if ($_ENV['DEV'] == 1) {
+            echo '<pre>' . $exception->getMessage() . '</pre>';
+            echo '<pre>' . $exception->getTraceAsString() . '</pre>';
+        }
+        $this->errorLogger->write('router error -' . PHP_EOL
+            . $exception->getMessage() . PHP_EOL);
+    }
 
-		$controller->setView();
-	}
+    public function add($regexp, $route = []): void
+    {
+        $this->routes[$regexp] = $route;
+    }
 
-	protected function getUrl($uri)
-	{
-		$arr = explode('?', $uri);
-		if (isset($arr[1])) {
-			$this->getParams($arr[1]);
-		}
-		$url = $arr[0];
-		if (!$url || strpos($url, '=')) return '';
-		return trim($url, '/');
-	}
 
-	public function getParams(string $arr): void
-	{
-		if (!$arr) return;
-		$arr = explode('&', $arr);
-		$params = [];
-		foreach ($arr as $string) {
-			$a = explode('=', $string);
-			$params[$a[0]] = $a[1];
-		}
-		$this->params = $params;
-	}
+    public function fillRoutes(): void
+    {
+        require_once ROOT . '/app/core/routes.php';
+    }
 
-	public static function needsNoAuth()
-	{
-		$route = Router::getRoute();
-		return
-			$route->controllerName === 'Auth' && $route->action === 'login'
-			|| $route->controllerName === 'Cart'
-			|| $route->controllerName === 'Main'
-			|| $route->controllerName === 'Bot'
-			|| $route->controllerName === 'Promotion'
-			|| $route->controllerName === 'Orderitem'
-			|| $route->controllerName === 'Search'
-
-			|| $route->controllerName === 'Sync' && $route->action === 'part'
-			|| $route->controllerName === 'Sync' && $route->action === 'init'
-			|| $route->controllerName === 'Sync' && $route->action === 'load'
-
-			|| $route->controllerName === 'Auth' && $route->action === 'register'
-			|| $route->controllerName === 'Auth' && $route->action === 'returnpass'
-			|| $route->controllerName === 'Auth' && $route->action === 'noconfirm'
-			|| $route->controllerName === 'Auth' && $route->action === 'confirm'
-			|| $route->controllerName === 'Main' && $route->action === 'index'
-			|| $route->controllerName === 'Product' && !$route->admin
-			|| $route->controllerName === 'Category' && !$route->admin
-			|| $route->controllerName === 'Github' && $route->action === 'webhook';
-	}
-
-	public static function add($regexp, $route = [])
-	{
-		self::$routes[$regexp] = $route;
-	}
-
-	public function fillRoutes(): void
-	{
-		require_once ROOT . '/app/core/routes.php';
-	}
 
 }
 

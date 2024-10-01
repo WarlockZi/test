@@ -3,17 +3,26 @@
 namespace app\controller;
 
 use app\Actions\CartAction;
+use app\Actions\Helpers;
 use app\core\Auth;
+use app\core\Icon;
+use app\core\Response;
 use app\model\Lead;
 use app\model\OrderItem;
 use app\model\User;
+use app\Repository\CartRepository;
 use app\Repository\OrderRepository;
+use app\view\Cart\CartView;
 
 class CartController extends AppController
 {
+    protected CartView $cartView;
+    protected CartRepository $repo;
 	public function __construct()
 	{
 		parent::__construct();
+        $this->cartView = new CartView();
+        $this->repo = new CartRepository();
 	}
 
 	public function actionDrop()
@@ -23,34 +32,35 @@ class CartController extends AppController
 		OrderItem::query()
 			->where('sess', $id)
 			->delete();
-
 		if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
-		$this->exitJson(['ok' => true]);
+		Response::exitJson(['ok' => true]);
 
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
-		$lead = Lead::where('sess', session_id())->first();
-		$oItems = OrderRepository::main();
-		$this->set(compact('oItems', 'lead'));
+        $s =  session_id();
+		$lead = Lead::where('sess',$s)->first();
+        $user = Auth::getUser();
+		$products = CartRepository::main();
+        $authed = Auth::isAuthed();
+        $trashedWhite = Icon::trashWhite();
+
+		$this->setVars(compact('products', 'lead', 'user','authed', 'trashedWhite'));
 	}
 
 	public function actionLogin()
 	{
 		$req = $this->ajax;
 
-		$user = User::query()
-			->where('email', $req['email'])
-			->first()
-			->toArray();
+		$user = User::where('email', $req['email'])->first();
 
 		if ($user) {
 			Auth::setAuth($user);
-			CartAction::convertOrderItemsToOrders($req, $user['id']);
-			$this->exitJson(['ok' => true]);
+			$this->repo->convertOrderItemsToOrders($req, $user['id']);
+			Response::exitJson(['ok' => true]);
 		}
-		$this->exitJson(['error' => 'Не правильные данные']);
+		Response::exitJson(['error' => 'Не правильные данные']);
 	}
 
 
@@ -67,9 +77,9 @@ class CartController extends AppController
 			], [$req]);
 
 		if ($lead->wasChanged()) {
-			$this->exitJson(['ok' => true, 'popup' => 'Заказ сохранен!']);
+			Response::exitJson(['ok' => true, 'popup' => 'Заказ сохранен!']);
 		}
-		$this->exitJson(['ok' => true, 'popup' => 'Скоро мы Вам перезвоним!']);
+		Response::exitJson(['ok' => true, 'popup' => 'Скоро мы Вам перезвоним!']);
 	}
 }
 

@@ -7,14 +7,14 @@ use app\model\Answer;
 
 class RequestController Extends AppController
 {
-	protected $model = Answer::class;
+	protected string $model = Answer::class;
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		if ($_ENV['MODE'] === 'production') {
 			$content = file_get_contents('/var/www/vitexopt/data/logs/vitexopt.ru.access.log');
@@ -25,7 +25,7 @@ class RequestController Extends AppController
 		$content = $this->filter($content);
 		$content = $this->decorate($content);
 
-		$this->set(compact('content'));
+		$this->setVars(compact('content'));
 	}
 
 	public function actionPhpinfo()
@@ -33,14 +33,14 @@ class RequestController Extends AppController
 		ob_start();
 		phpinfo();
 		$content = ob_get_clean();
-		$this->set(compact('content'));
+		$this->setVars(compact('content'));
 	}
 
 	public function actionTest()
 	{
 		$this->layout = 'test';
 		$content = 'd';
-		$this->set(compact('content'));
+		$this->setVars(compact('content'));
 	}
 
 	protected function decorate($content)

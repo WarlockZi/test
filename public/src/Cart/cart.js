@@ -1,207 +1,209 @@
-// import './cart.scss'
-import '../components/counter/counter'
-import {$, cookieRemove, getToken, post, time} from '../common'
-import Counter from "../components/counter/counter";
+import './counter1'
+import {$, cookieRemove, formatter, getPhpSession, isAuthed, post} from '../common'
+// import Counter1 from "./counter1";
 import Cookie from "../components/cookie/new/cookie";
 import Modal from "../components/Modal/modal";
 import CartSuccess from "../components/Modal/modals/CartSuccess";
 import CartLogin from "../components/Modal/modals/CartLogin";
 import CartLead from "../components/Modal/modals/CartLead";
+import {ael, it, qa, qs} from '../constants';
+import shippableTable from "../share/shippable/shippableUnitsTable";
 
 export default class Cart {
-  constructor() {
-    let container = $('.user-content .cart .content').first();
-    if (!container) return;
-    this.container = container;
-    this.model = $(this.container).find('[data-model]').dataset.model;
+   constructor() {
+      this.container = $('.user-content .cart .content').first();
+      if (!this.container) return;
 
-    new Modal({
-      button: $('#cartLead').first(),
-      data: new CartLead(),
-      callback: this.modalLeadCallback.bind(this)
-    });
+      this.container[ael]('click', this.handleClick.bind(this));
+      this.container[ael]('keyup', this.handleKeyUp.bind(this));
+      // container[ael]('click', handleShippableUnitsTableClick.bind(this))
 
-    new Modal({
-      button: $('#cartLogin').first(),
-      data: new CartLogin(),
-      callback: this.modalLoginCallback.bind(this)
-    });
+      // this.cartDeadline = this.cartLifeMs + Date.now()
+      this.total = this.container[qs]('.total span');
+      this.$cartEmptyText = this.container[qs]('.empty-cart');
+      this.$cartCount = this.container[qs]('.cart .count');
+      this.rows = this.container[qa]('.row');
+      this.setUrl()
 
-    new Modal({
-      button: $('#cartSuccess').first(),
-      data: new CartSuccess(),
-      callback: this.modalcartSuccessCallback.bind(this)
-    });
+      this.mapTables()
+      this.renderSums()
+      this.cookie = new Cookie();
+      // this.setCounter()
+      this.setModals()
+   }
 
-    this.total = container.querySelector('.total span');
-    this.$cartEmptyText = document.querySelector('.empty-cart');
+   renderSums() {
+      const total = [...this.container[qa]('[shippable-table]')]
+         .reduce((acc, table) => {
+            const price = +table.dataset.price;
+            const sum = [...table[qa]('[unit-row]')].reduce(
+               function (acc, unitRow) {
+                  const multi = +unitRow.dataset.multiplier
+                  const count = +unitRow[qs]('input').value
+                  const sum = multi * price * count
+                  const sub_sum = unitRow[qs]('.subSum')
+                  if (sub_sum) sub_sum[it] = formatter.format(sum)
+                  return acc + sum
+               }.bind(price), 0)
+            const tableSum = table.closest('.row')[qs]('.sub-sum')
+            tableSum[it] = formatter.format(sum)
+            return acc + sum
+         }, 0)
+      this.total[it] = formatter.format(total)
+   }
 
-    this.rows = container.querySelectorAll('.row');
-    this.container.onclick = this.handleClick.bind(this);
-    this.container.onchange = this.rerenderSums.bind(this);
+   mapTables() {
+      [...this.container[qa]('.shippable-table')]
+         .forEach((table) => {
+            new shippableTable(table)
+         })
+   }
 
-    this.cookie = new Cookie();
-    this.counterEl = $('#counter').first();
-    this.cartLifeMs = time.mMs * 30;
-    if (this.counterEl) this.counterStart();
+   counterCallback() {
+      cookieRemove('cartDeadline')
+      this.dropCart().then()
+   }
 
-    this.rerenderSums()
-  }
 
-  async modalLeadCallback(fields, modal) {
-    let name = fields.name.value;
-    let phone = fields.phone.value;
-    let company = fields.company.value;
-    let sess = getToken();
-    let res = await post('/cart/lead', {name, phone, company, sess});
-    modal.close();
-    if (res) {
-      location.reload()
-    }
-  }
-
-  async modalcartSuccessCallback(inputs, modal) {
-    modal.close()
-  }
-
-  async modalLoginCallback(fields, modal) {
-    let email = fields.email.value;
-    let password = fields.password.value;
-    let sess = getToken();
-    let res = await post('/cart/login', {email, password, sess});
-    modal.close();
-    if (res) {
-      location.reload()
-    }
-  }
-
-  rerenderSums() {
-    if (!this.rows.length) return false;
-    let formatter = new Intl.NumberFormat("ru-RU");
-    let total = [].reduce.call(this.rows, (acc, row, accd, rows) => {
-      let price = row.querySelector('.price').dataset.price;
-      let count = row.querySelector('input').value;
-      let multiplier = row.querySelector('[data-multiplier]').value;
-      let sum = price * count * multiplier;
-      row.querySelector('.sum').innerText = formatter.format(sum.toFixed(2)).replace(/,/g, '.');
-      acc += sum;
-      return acc
-    }, 0);
-    this.total.innerText = formatter.format(total.toFixed(2)).replace(/,/g, '.')
-  }
-
-  counterStart() {
-    let rows = $(this.container).find('.row');
-    if (rows) {
-      let cartDeadline = +this.cookie.cookie.get_cookie('cartDeadline');
-      let dif = cartDeadline - Date.now();
-      if (dif >= 0) {
-        this.cookie.cookie.set_cookie('cartDeadline', cartDeadline);
-        this.counter = new Counter(this.counterEl, cartDeadline, this.counterCallback.bind(this))
-      } else {
-        let cartDeadline = this.getDeadline();
-        this.cookie.cookie.set_cookie('cartDeadline', cartDeadline);
-        this.counter = new Counter(this.counterEl, cartDeadline, this.counterCallback.bind(this))
+   async dropCart() {
+      const cartToken = getPhpSession();
+      const res = await post('/cart/drop', {cartToken});
+      if (res?.arr?.ok) {
+         this.showEmptyCart()
       }
-    } else {
-      this.counterCallback()
-    }
-  }
+   }
 
-  getDeadline() {
-    return this.cartLifeMs + Date.now()
-  }
+   rowUnitIds(row) {
+      return [...row[qa]('[unit-row]')].map((unitRow) => {
+         return unitRow.dataset.unitid
+      })
+   }
 
-  counterCallback() {
-    this.nullifyCookie();
-    this.dropCart()
-  }
-
-  nullifyCookie() {
-    cookieRemove('cartDeadline')
-  }
-
-  counterReset() {
-    let cartDeadline = this.getDeadline();
-    this.cookie.cookie.set_cookie('cartDeadline', cartDeadline);
-    if (this.counter) {
-      this.counter.reset(cartDeadline)
-    } else {
-      this.counter = new Counter(this.counterEl, cartDeadline, this.counterCallback.bind(this));
-    }
-  }
-
-  async dropCart() {
-    let cartToken = getToken();
-    let res = await post('/cart/drop', {cartToken});
-    if (res?.arr?.ok) {
-      this.showEmptyCart()
-    }
-  }
-
-  orderItemDTO(target) {
-    let row = target.closest('.row');
-    return {
-      sess: getToken(),
-      product_id: row.dataset.productId
-    }
-  }
-
-  getRows() {
-    let rows = [].map.call(this.rows, (row) => {
+   cartRowDTO(target) {
+      const row = target.closest('.row');
       return {
-        id: row.querySelector('.name').dataset['1sid'],
-        count: row.querySelector('.count').value
+         sess: getPhpSession(),
+         product_id: row.dataset.productId,
+         unit_ids: this.rowUnitIds(row),
       }
-    });
-    return rows
-  }
+   }
 
-  async handleClick({target}) {
-    // debugger
-    if (target.classList.contains('del')) {
-      this.deleteOItem(target)
-    } else if (target.classList.contains('count')) {
-      this.rerenderSums();
-      this.updateOItem(target)
-    }else if(target.classList.contains('plus')){
-      let quantatyInput = target.closest('.step-field').querySelector('input');
-      quantatyInput.value++;
-      this.rerenderSums();
+   async handleClick({target}) {
+      if (target.classList.contains('del')) {
+         // await this.deleteCartRow(target)
+         this.renderSums()
+      } else if (target.classList.contains('plus') || target.classList.contains('minus')) {
+         if (this.rowTotalCount(target.closest('.row'))) {
+            this.renderSums()
+            this.changeCount(target)
+         } else {
+            this.renderSums()
+            // await this.deleteCartRow(target)
+         }
+      }
+   }
 
-    }else if(target.classList.contains('minus')){
-      let quantatyInput = target.closest('.step-field').querySelector('input');
-      quantatyInput.value--;
-      this.rerenderSums();
-    }
-  }
+   changeCount(target) {
+      // const count = target.closest('[unit-row]')[qs]('input').value
+      // const res = post(this.url, count)
+   }
 
-  async deleteOItem(target) {
-    let orderItemDto = this.orderItemDTO(target);
-    let res = await post(`/adminsc/${this.model}/delete`, {...orderItemDto});
-    if (res?.arr?.ok) {
-      target.closest('.row').remove();
-      if (this.countRows() < 1) this.showEmptyCart()
-    }
-  }
+   async handleKeyUp({target}) {
+      if (target.classList.contains('input') && target.tagName === 'INPUT') {
+         this.renderSums()
+         const count = +target.value
+         // if (count) {
+         this.updateOrCreate(target, count)
+         // }
+      }
+   }
 
-  countRows() {
-    return document.querySelectorAll('.row').length
-  }
+   rowTotalCount(table) {
+      return [...table[qa]('input')].reduce((acc, el) => {
+         return acc + (+el.value)
+      }, 0)
+   }
 
-  showEmptyCart() {
-    this.container.innerHTML = '';
-    this.$cartEmptyText.classList.remove('none')
-  }
+   updateOrCreate(target, count) {
+      const product_id = target.closest('[shippable-table]').dataset['1sid'];
+      const unit_id = target.closest('[unit-row]').dataset['unitid'];
+      post(this.url + `/updateOrCreate`, {product_id, unit_id, count})
+   }
 
-  async updateOItem(target) {
-    let product_id = target.closest('.row').dataset.productId;
-    let count = target.value;
-    let sess = getToken();
+   async deleteCartRow(target) {
+      const res = await post(`${this.url}/deleteRow`, this.cartRowDTO(target));
+      if (res?.arr?.ok) {
+         target.closest('.row').remove();
+         if (this.rows.length < 1) this.showEmptyCart()
+         this.renderSums()
+      }
+   }
 
-    let res = await post(`/adminsc/orderItem/updateOrCreate`, {sess, product_id, count});
+   setUrl() {
+      this.url = '/adminsc/orderitem'
+      if (isAuthed()) {
+         this.url = '/adminsc/order'
+      }
+   }
 
-  }
+   showEmptyCart() {
+      this.container.innerHTML = '';
+      this.$cartEmptyText.classList.remove('none')
+      this.$cartCount.classList.add('none')
+   }
 
+   setModals() {
+      const lead = document[qs]('#cartLead')
+      const login = document[qs]('#cartLogin')
+      const success = document[qs]('#cartSuccess')
+      if (lead) {
+         new Modal({
+            button: lead,
+            data: new CartLead(),
+            callback: this.modalLeadCallback.bind(this)
+         });
+      }
+      if (login) {
+         new Modal({
+            button: login,
+            data: new CartLogin(),
+            callback: this.modalLoginCallback.bind(this)
+         });
+      }
 
+      if (success) {
+         new Modal({
+            button: success,
+            data: new CartSuccess(),
+            callback: this.modalcartSuccessCallback.bind(this)
+         });
+      }
+   }
+
+   async modalLeadCallback(fields, modal) {
+      const name = fields.name.value;
+      const phone = fields.phone.value;
+      const company = fields.company.value;
+      const sess = getPhpSession();
+      const res = await post('/cart/lead', {name, phone, company, sess});
+      modal.close();
+      if (res) {
+         location.reload()
+      }
+   }
+
+   async modalcartSuccessCallback(inputs, modal) {
+      modal.close()
+   }
+
+   async modalLoginCallback(fields, modal) {
+      let email = fields.email.value;
+      let password = fields.password.value;
+      let sess = getPhpSession();
+      let res = await post('/cart/login', {email, password, sess});
+      modal.close();
+      if (res) {
+         location.reload()
+      }
+   }
 }

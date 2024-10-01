@@ -1,71 +1,84 @@
-import {post, $} from '../../common'
+import {$, post} from '../../common'
+import Quill from "quill";
+import "quill/dist/quill.core.css";
+import 'quill/dist/quill.snow.css';
 
-export default function quill() {
+export default class MyQuill {
+   constructor(selector = '#detail-text') {
 
-  window.onload = function () {
-    let selector = '#mytextarea'
-    let textarea = $(selector)[0]
-    if (!textarea) return false
+      this.selector = selector
+      this.textarea = $(selector)[0]
+      if (!this.textarea) return false
+      this.toolbar = this.setToolbar()
+      this.options = this.setOptions()
+      this.init()
 
-    let toolbarOptions = [
-      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-      ['blockquote'],
+   }
 
-      // [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-      [{'list': 'ordered'}, {'list': 'bullet'}],
-      [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
-      [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
-      // [{ 'direction': 'rtl' }],                         // text direction
+   setToolbar() {
+      return [
+         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+         ['blockquote'],
 
-      [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
-      // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+         // [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+         [{'list': 'ordered'}, {'list': 'bullet'}],
+         [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+         [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+         // [{ 'direction': 'rtl' }],                         // text direction
 
-      [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-      [{'font': []}],
-      [{'align': []}],
+         [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
+         // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-      ['clean']                                         // remove formatting button
-    ];
+         [{'color': []}, {'background': []}],          // dropdown with defaults from theme
+         [{'font': []}],
+         [{'align': []}],
 
-    let options = {
-      modules: {
-        toolbar: toolbarOptions
-      },
-      placeholder: 'Compose an epic...',
-      // theme: 'bubble'
-      theme: 'snow'
-    };
+         ['clean']                                         // remove formatting button
+      ];
+   }
 
-    let text = textarea.innerText.trim()
+   setOptions() {
+      return {
+         theme: 'snow',
+         // theme: 'bubble'
+         placeholder: 'Compose an epic...',
+         modules: {
+            toolbar: this.toolbar
+         },
+      };
+   }
 
-    let quill = new Quill(selector, options);
 
-    debugger
-    try {
-      const json = JSON.parse(text);
-      quill.setContents(json)
-    } catch (e) {
-      quill.insertText(0, text)
-    }
+   init() {
+      const text = this.textarea.innerText.trim()
 
-    textarea.style.background = '#fff'
+      const quill = new Quill(this.selector, this.options);
 
-    let button = $('#button')[0]
-    button.addEventListener('click', function () {
-
-        let productId = $(`.item-wrap[data-model='product']`)[0].dataset.id
-        let txt = JSON.stringify(quill.getContents())
-
-        post('/adminsc/product/updateOrCreate',
-          {
-            txt,
-            'id': productId
-          }
-        )
+      try {
+         const json = JSON.parse(text);
+         quill.setContents(json)
+      } catch (e) {
       }
-    )
 
-  }
+      this.textarea.style.background = '#fff'
+
+      const button = $('#button')[0]
+      if (button) {
+         button.addEventListener('click', function () {
+
+               const productId = $(`.item-wrap[data-model='product']`)[0].dataset.id
+               const txt = JSON.stringify(quill.getContents())
+
+               post('/adminsc/product/updateOrCreate',
+                  {
+                     txt,
+                     'id': productId
+                  }
+               ).then()
+            }
+         )
+      }
+   }
 }
 
 

@@ -9,14 +9,14 @@ use app\model\Val;
 class ValController Extends AppController
 {
 
-	public $model = Val::class;
+	public string $model = Val::class;
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 
 	}

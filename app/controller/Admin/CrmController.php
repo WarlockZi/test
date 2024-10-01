@@ -16,7 +16,7 @@ class CrmController extends AppController
 	{
 		parent::__construct();
 
-		if (!User::isEmployee(Auth::getUser())){
+		if (!Auth::getUser()->isEmployee()){
 			header('Location:/auth/profile');
 		}
 	}
@@ -30,17 +30,17 @@ class CrmController extends AppController
 	public function actionProdtypes()
 	{
 		$types = App::$app->adminsc->getProd_types();
-		$this->set(compact('types'));
+		$this->setVars(compact('types'));
 	}
 
 	public function actionSiteMap()
 	{
 		$iniCatList = App::$app->category->getInitCategories();
-		$this->set(compact('iniCatList'));
+		$this->setVars(compact('iniCatList'));
 	}
 
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 //		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
@@ -58,13 +58,12 @@ class CrmController extends AppController
 	public function actionPics()
 	{
 		$pics = App::$app->adminsc->findAll('pic');
-		$this->set(compact('pics'));
+		$this->setVars(compact('pics'));
 	}
 
 	public function actionDumpWWW()
 	{
-		if ($this->isAjax()) {
-		}
+
 	}
 
 

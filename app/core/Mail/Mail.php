@@ -102,8 +102,8 @@ class Mail
 		$this->mailer->Password = $credits['pass'];
 	}
 
-	public function send()
-	{
+	public function send(): void
+    {
 		try {
 			$res = $this->mailer->send();
 		} catch (Exception $e) {

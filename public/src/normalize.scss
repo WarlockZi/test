@@ -26,7 +26,7 @@ body {
   padding: 0 calc(0px - (100vw - 100%)) 0 0;
   text-rendering: optimizeLegibility;
   overflow: hidden;
-  background-color: $color-gray1;
+  background-color: $color-white;
 
   @include _500 {
     padding: 0;

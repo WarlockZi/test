@@ -91,16 +91,16 @@ use app\core\Icon;
 					</li>
 				<?else:?>
 					<li class="user-action">
-						<a href="/adminsc/report/productsNoMinimumUnit">Товары без картинок в наличии</a>
+						<a href="/adminsc/report/productsNoImgInstore">Товары без картинок в наличии</a>
 					</li>
 					<li class="user-action">
-						<a href="/adminsc/report/productsWithoutImgNotinstore">Товары без картинок без наличия</a>
+						<a href="/adminsc/report/productsNoImgNotinstore">Товары без картинок без наличия</a>
 					</li>
 					<li class="user-action">
 						<a href="/adminsc/report/productsNoMinimumUnit">Товары без min единиц</a>
 					</li>
 					<li class="user-action">
-						<a href="/adminsc/report/productsHaveOnlyBaseUnit">Товары без доп единиц</a>
+						<a href="/adminsc/report/productsNoDopUnit">Товары без доп единиц</a>
 					</li>
 				<?endif;?>
 
