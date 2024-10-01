@@ -16,7 +16,7 @@ try {
 //        ->first();
 //	Auth::setUser($Olya);
 
-    Cat();
+//    Cat();
     $router = new Router($_SERVER['REQUEST_URI'] ?? '');
     $router->dispatch();
 
