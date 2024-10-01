@@ -40,18 +40,12 @@ function Cat(): void
         } else {
             $localCategory = $category;
             while ($category->parent) {
-                $path[]                        = $category->parent->slug;
-                $str                           = implode('/', array_reverse($path));
+                $path[]   = $category->parent->slug;
+                $str      = implode('/', array_reverse($path));
                 $category = $category->parent;
             }
-            $id =$localCategory->id;
-            if ( $id === 9) {
-                $localCategory->ownProperties->path = $str;
-                $localCategory->ownProperties->save();
-                $c = $localCategory->toArray();
-                $s = $str;
-            }
-            $s = $str;
+            $localCategory->ownProperties->path = $str;
+            $localCategory->ownProperties->save();
         }
     });
 }
