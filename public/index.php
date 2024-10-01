@@ -41,9 +41,9 @@ function Cat(): void
             $localCategory = $category;
             while ($category->parent) {
                 $path[]   = $category->parent->slug;
-                $str      = implode('/', array_reverse($path));
                 $category = $category->parent;
             }
+            $str                                = implode('/', array_reverse($path));
             $localCategory->ownProperties->path = $str;
             $localCategory->ownProperties->save();
         }
