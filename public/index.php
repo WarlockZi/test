@@ -16,11 +16,9 @@ try {
 //        ->first();
 //	Auth::setUser($Olya);
 
-    Cat();
+//    Cat();
     $router = new Router($_SERVER['REQUEST_URI'] ?? '');
     $router->dispatch();
-
-
     exit();
 } catch (Throwable $e) {
     if ($_ENV['DEV'] === '0') {
