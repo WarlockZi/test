@@ -26,10 +26,12 @@
   box-sizing: border-box;
 }
 
-
+[select-new]{
+  border: 1px solid #cccccc;
+}
 [custom-select], [select-new] {
   display: flex;
-  flex: 1 0;
+  width: clamp(20px,100%,432px);
   align-items: center;
   position: relative;
   background-color: white;

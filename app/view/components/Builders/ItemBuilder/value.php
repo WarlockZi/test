@@ -1,6 +1,7 @@
 <div class="value">
 	  <div
-			 <?= $field->datafield; ?>
+			 <?= $field->getDatafield(); ?>
+			 <?= $field->getDatarelation(); ?>
 			 <?= $field->contenteditable; ?>
 			 <?= $field->required; ?>
 	  ><?= $field->value; ?></div>

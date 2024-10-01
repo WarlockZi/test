@@ -9,17 +9,19 @@ use app\model\Promotion;
 use app\model\Unit;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
-use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
+use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
+use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
+use Illuminate\Database\Eloquent\Collection;
 
 class PromotionFormView
 {
 
 	static function edit($promotion)
 	{
-		$link = $promotion->product ? "adminsc/product/edit/{$promotion->product->id}" : 'adminsc/product/list';
+		$link = $promotion->product ? "adminsc/product/edit/{$promotion->product->id}" : 'adminsc/product/table';
 		$promotion = ItemBuilder::build($promotion, 'promotion')
 			->field(
 				ItemFieldBuilder::build('id', $promotion)
@@ -58,7 +60,7 @@ class PromotionFormView
 
 	protected static function unitSelector($selected)
 	{
-		$s = SelectNewBuilder::build(
+		$s = SelectBuilder::build(
 			ArrayOptionsBuilder::build(Unit::all())
 				->selected($selected??0)
 				->initialOption()
@@ -69,30 +71,29 @@ class PromotionFormView
 		return $s;
 	}
 
-	public static function adminIndex($promotions)
+	public static function adminIndex(Collection $promotions)
 	{
 
-		$promotion = MyList::build(Promotion::class)
-			->items($promotions)
-			->pageTitle('Акции')
+		$promotion = Table::build($promotions)
+				->pageTitle('Акции')
 			->column(
-				ListColumnBuilder::build('product')
+				ColumnBuilder::build('product')
 					->function(Promotion::class, 'productLink')
 					->name('Товар')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('count')
+				ColumnBuilder::build('count')
 					->name('От количества')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('active_till')
+				ColumnBuilder::build('active_till')
 					->name('Действует до')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('new_price')
+				ColumnBuilder::build('new_price')
 					->name('Цена по акции')
 					->get()
 			)

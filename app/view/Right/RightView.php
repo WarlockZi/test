@@ -3,26 +3,24 @@
 namespace app\view\Right;
 
 use app\model\Right;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
-use app\view\MyView;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use Illuminate\Database\Eloquent\Model;
 
 class RightView
 {
-	public $model = Right::class;
+
 	public $html;
 
 	public static function listAll(): string
 	{
-		$view = new self;
-		return MyList::build($view->model)
+		return Table::build(Right::all())
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Право')
 					->search()
 					->contenteditable()
@@ -30,7 +28,7 @@ class RightView
 					->width('1fr')
 					->get())
 			->column(
-				ListColumnBuilder::build('description')
+				ColumnBuilder::build('description')
 					->name('Описание')
 					->contenteditable(true)
 					->search(true)
@@ -39,7 +37,6 @@ class RightView
 			)
 			->addButton('ajax')
 			->del()
-			->all()
 			->get();
 	}
 

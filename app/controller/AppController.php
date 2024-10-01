@@ -2,119 +2,125 @@
 
 namespace app\controller;
 
-use app\controller\Interfaces\IModelable;
+use app\core\Response;
 use app\Repository\MorphRepository;
-use app\Repository\SettingsRepository;
-use \Exception;
-use ReflectionClass;
+use Illuminate\Database\Eloquent\Model;
 
-class AppController extends Controller implements IModelable
+class AppController extends Controller
 {
-	protected $model;
-	public array $settings;
+    protected string $model;
+    public array $settings;
 
-	public function __construct()
-	{
-		parent::__construct();
-//		$this->settings = (new SettingsRepository())->initial();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function setView()
-	{
-		$view = $this->getView();
-		$view->render();
-	}
+    public function actionDelete(): void
+    {
+        $id = $this->ajax['id'];
 
-	public function actionDelete()
-	{
-		$id = $this->ajax['id'];
+        if (!$id) Response::exitWithMsg('No id');
+        $model = new $this->model;
 
-		if (!$id) $this->exitWithMsg('No id');
-		$model = new $this->model;
+        $item = $model::find($id);
+        if ($item) {
+            $destroy = $item->delete();
+            Response::exitJson(['id' => $id, 'popup' => 'Ok']);
+        }
+    }
 
-		$item = $model->find((int)$id);
-		if ($item) {
-			$destroy = $item->delete();
-			$this->exitJson(['id' => $id, 'popup' => 'Ok']);
-		}
-	}
+    public function actionAttach(): void
+    {
+        $req = $this->ajax;
 
-	public function actionAttach()
-	{
-		$req = $this->isAjax();
-//		$this->exitWithPopup(var_dump($req));
-		if (!$req) $req = $_POST;
-		if ($_FILES) {
-			MorphRepository::attachWithFiles($_FILES, $req);
-		} else {
-			MorphRepository::attach($req);
-		}
+        if (!$req) $req = $_POST;
+        if ($_FILES) {
+            MorphRepository::attachWithFiles($_FILES, $req);
+        } else {
+            MorphRepository::attach($req);
+        }
 
-		$this->exitWithPopup('ok');
-	}
+        Response::exitWithPopup('ok');
+    }
 
-	public function actionDetach()
-	{
-		$req = $this->ajax;
-		if (!$req) $this->exitWithError('Плохой запрос');
-		MorphRepository::detach($this, $req);
-		$this->exitWithPopup('ok');
-	}
+    public function actionDetach(): void
+    {
+        $req = $this->ajax;
+        if (!$req) Response::exitWithError('Плохой запрос');
+        MorphRepository::detach($this, $req);
+        Response::exitWithPopup('ok');
+    }
+
+    protected function updateOrCreateRelation(array $req): void
+    {
+        $action   = '';
+        $parentId = $req['id'];
+        $relation = $req['relation'];
+        $id       = $req['fields']['id'] ?? null;
+        $fields   = $req['fields'];
+        $model    = $this->model::with($relation)->find($parentId);
+        if ($id) {
+            $rel = $model->$relation->find($id)->updateOrCreate(
+                ['id' => $id],
+                $fields);
+            if ($rel->wasRecentlyCreated) Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
+        } else {
+            if ($model->$relation === null) {
+                $action = 'created';
+                $rel    = $model->$relation()->create($fields);
+            } else {
+                $action = 'updated';
+                $rel    = $model->$relation()->update($fields);
+            }
+        }
+        if ($action === 'created') Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
+
+        Response::exitJson(['popup' => 'Обновлен']);
+    }
+    protected function updateOrCreateMorph(array $req):void
+    {
+        $morph    = $req['morph'];
+        $relation = $morph['relation'];
+        $model    = $this->model::with($relation)->find($req['id']);
+        $created  = $this->model->$relation()->create();
+        $this->model->$relation()->syncWithoutDetaching($created);
+        Response::exitJson(['popup' => 'Создан', 'id' => $created->id]);
+    }
+
+    public function actionUpdateOrCreate(): void
+    {
+        $req = $this->ajax;
+        if (isset($req['relation'])) {
+            $this->updateOrCreateRelation($req);
+        }
+        if (isset($req['morph'])) {
+            $this->updateOrCreateMorph($req);
+        }
+
+        $model = $this->model::updateOrCreate(
+            ['id' => $req['id']],
+            $req
+        );
+
+        if ($model->wasRecentlyCreated) {
+            Response::exitJson(['popup' => 'Создан', 'id' => $model->id]);
+        } else {
+            Response::exitJson(['popup' => 'Обновлен', 'model' => $model->toArray()]);
+        }
+        Response::exitWithError('Ошибка');
+
+    }
 
 
-	/**
-	 * @throws Exception
-	 */
-	public function actionUpdateOrCreate()
-	{
-		$req = $this->ajax;
-		if (!$req) throw new Exception('No request');
+    public function getModel(): Model
+    {
+        return $this->model;
+    }
 
-		if (isset($req['relation'])) {
-			$relation = $req['relation'];
-			$model = $this->model::with($relation)->find($req['id']);
-
-			$created = $model->$relation()->create();
-			$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
-		}
-
-		if (isset($req['morph'])) {
-			$morph = $req['morph'];
-			$relation = $morph['relation'];
-			$model = $this->model::with($relation)->find($req['id']);
-			$created = $model->$relation()->create();
-			$model->$relation()->syncWithoutDetaching($created);
-			$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
-		}
-
-		$model = $this->model::withTrashed()
-		->updateOrCreate(
-			['id' => $req['id']],
-			$req
-		);
-
-		if ($model->wasRecentlyCreated) {
-			$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
-		} else {
-			$this->exitJson(['popup' => 'Обновлен', 'model' => $model->toArray()]);
-		}
-		$this->exitWithError('Ошибка');
-
-	}
-
-	public static function shortClassName($object)
-	{
-		return lcfirst((new ReflectionClass($object))->getShortName());
-	}
-
-	public function getModel()
-	{
-		return $this->model;
-	}
-
-	public function setModel($model)
-	{
-		$this->model = $model;
-	}
+    public function setModel($model): void
+    {
+        $this->model = $model;
+    }
 
 }

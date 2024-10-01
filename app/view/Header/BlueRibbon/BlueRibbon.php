@@ -9,16 +9,16 @@ use app\Repository\BlueRibbonRepository;
 
 class BlueRibbon
 {
-	protected $fs;
-	protected $data;
-
+    private string $str;
 	public function __construct()
 	{
-        $this->data = BlueRibbonRepository::data();
-        $this->fs = new FS(__DIR__.'/templates/');
+        $fs = new FS(__DIR__.'/templates');
+        $data = BlueRibbonRepository::data();
+        $this->str =  $fs->getContent('template', $data);
 	}
-    public function getTemplate(){
-        return $this->fs->getContent('template', $this->data);
-    }
 
+    public function toString()
+    {
+        return $this->str;
+    }
 }

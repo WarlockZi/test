@@ -4,23 +4,18 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\Auth;
-use app\model\Planning;
 use app\model\Todo;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
-use app\view\components\CustomList\CustomList;
 use app\view\Planning\PlanningView;
 
 class PlanningController Extends AppController
 {
 	public $modelName = Todo::class;
-	public $model = 'todo';
+	public string $model = 'todo';
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
 
 	public function actionCreate()
 	{
@@ -28,25 +23,15 @@ class PlanningController Extends AppController
 		where('user_id', Auth::getUser())->
 		get();
 		$daily = PlanningView::listDaily($items);
-		$this->set(compact('daily'));
+		$this->setVars(compact('daily'));
 	}
 
-	public function actionList()
+	public function actionIndex():void
 	{
-		$daily = PlanningView::listDaily(Todo::class);
-		$weekly = PlanningView::listWeekly(Todo::class);
-		$yearly = PlanningView::listYearly(Todo::class);
-		$this->set(compact('daily','weekly','yearly'));
-	}
-
-	private function getTable($items)
-	{
-
-	}
-
-	public function actionIndex()
-	{
-
+        $daily = PlanningView::listDaily();
+        $weekly = PlanningView::listWeekly();
+        $yearly = PlanningView::listYearly();
+        $this->setVars(compact('daily','weekly','yearly'));
 	}
 
 }

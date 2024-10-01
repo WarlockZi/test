@@ -1,48 +1,23 @@
-<?
+<?php
 
-use app\core\Icon;
+use app\view\share\shippable\ShippableUnitsTableFactory;
 
 ?>
 
-<div class="to-cart">
+<div class="product-info">
 
-	<div class="short-link" title='Скопировать короткую ссылку'
-	     data-shortLink= <?= $product->getShortLink(); ?>><?= Icon::link(); ?>
-	</div>
-	<div class="art">Арт. <?= $product->art ?></div>
 
-	<? include __DIR__ . '/price.php' ?>
-	<? include __DIR__ . '/promotion.php' ?>
+    <?= \app\view\share\card_panel\CardPanel::card_panel($product) ?>
+    <div class="art">Арт. <?= $product->art ?></div>
 
-	<? include __DIR__ . '/count.php' ?>
-	<div class="button blue">Добавить в корзину</div>
+    <?php include __DIR__ . '/price.php' ?>
+    <?php include __DIR__ . '/promotion.php' ?>
 
-	<div class="adjust none">
-		<a href="/cart" class="button green">
-			<span class='bigger'>В корзину</span>
-		</a>
+    <div class="instore">
+        <p>Статус: в наличии</p>
+    </div>
 
-		<div class="plus-minus">
-			<button tabindex="0" class="minus">
-					 <?= Icon::minus() ?>
-			</button>
-				<?
-				$produt = $product->toArray();
-				$am = $product->baseUnit->units->toArray();
-				if (isset($product->baseUnit->units->mainUnit)) {
-					$unitName = $product->baseUnit->units->mainUnit->name;
-					$multiplier = $product->baseUnit->units->mainUnit->pivot->multiplier;
-				} else {
-					$unitName = $product->baseUnit->name;
-					$multiplier = 1;
-				}
+    <?= ShippableUnitsTableFactory::create($product, 'product'); ?>
 
-				?>
-			<span class="digit" contenteditable="true">1</span><span><?= $unitName ?></span>
-			<button tabindex="0" class="plus">
-					 <?= Icon::plus1() ?>
-
-			</button>
-		</div>
-	</div>
 </div>
+

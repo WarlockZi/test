@@ -4,87 +4,78 @@
 namespace app\Repository;
 
 
-use app\core\Auth;
-use app\model\Lead;
 use app\model\Order;
 use app\model\OrderItem;
+use app\model\User;
 
 
 class OrderRepository
 {
+    private static function q2()
+    {
+        $orderItems = OrderItem::with('product')
+            ->groupBy('sess')
+            ->get('*');
+        return $orderItems;
+    }
 
-	public static function leadList()
-	{
-		$orders = OrderItem::query()
-			->select('product_id', 'id', 'sess', 'count')
-			->has('lead')
-			->with('lead')
-			->with('product')
-			->groupBy('product_id')
-			->get();
-		return $orders;
-	}
+    public static function leadList()
+    {
+        $orderItems = self::q2();
+//        $orders = OrderItem::query()
+//            ->select('id', 'product_id', 'count', 'sess')
+//            ->whereHas('lead')
+//            ->with('lead')
+//            ->with('product')
+//            ->groupBy('product_id')
+//            ->get();
+        return $orderItems;
+    }
 
-	public static function clientList()
-	{
-		$orders = Order::query()
-			->select('product_id', 'id', 'user_id', 'count')
-			->with('user')
-			->with('product')
-			->orderBy('user_id')
-			->groupBy('user_id')
-			->get();
-		return $orders;
-	}
+    private static function q1()
+    {
+        return
+            $orders = Order::query()
+                ->select('product_id', 'id', 'user_id',)
+                ->with('user', 'product',)
+//            ->orderBy('user_id')
+                ->groupBy('user_id')
+                ->join('orders', 'order.user_id', '=', 'user.id')
+                ->get();
+    }
 
-	public static function edit($id)
-	{
-		$userId = Order::where('id', $id)->first()->user_id;
-		$orders = Order::query()
-			->select('product_id', 'id', 'user_id', 'count')
-			->selectRaw('SUM(count) as total_count')
-			->where('user_id', $userId)
-			->with('user')
-			->with('product.price')
-			->groupBy('product_id')
-			->get();
-		return $orders;
-	}
+    public static function clientList()
+    {
 
-	public static function main()
-	{
-		$user = Auth::getUser();
-		if ($user) {
-			$oItems = Order::query()
-				->select('*')
-				->selectRaw('SUM(count) as count_total')
-				->where('user_id', $user['id'])
-				->whereNull('deleted_at')
-				->with('product.price')
-				->with('product.baseUnit')
-				->with('product.baseUnit.units')
-				->groupBy('product_id')
-				->get();
-			$oI = $oItems->toArray();
-		} else {
-			$oItems = OrderItem::query()
-				->where('sess', session_id())
-				->with('product.price')
-				->get();
-		}
-		return $oItems;
-	}
+        $orders = User::query()
+            ->rightJoin('orders', function ($join) {
+                $join->on('orders.user_id', '=', 'users.id');
+            })
+            ->groupBy('users.id')
+            ->get();
 
-	public static function count()
-	{
-		$sess = session_id();
-		$oItems = OrderItem::where('sess', $sess)->get()->toArray();
-		$count = 0;
-		if ($oItems) {
-			foreach ($oItems as $item) {
-				$count += $item['count'];
-			}
-		}
-		return $count;
-	}
+        return $orders;
+    }
+
+    public static function edit($id)
+    {
+        $userId = Order::where('id', $id)->first()->user_id;
+        $orders = Order::query()
+            ->select('product_id', 'id', 'user_id', 'count', 'unit_id', 'created_at')
+            ->selectRaw('SUM(count) as total_count')
+            ->where('user_id', $userId)
+            ->with('user', 'product','product.activePromotions','product.inactivePromotions', 'unit')
+            ->groupBy('product_id')
+            ->get();
+        $a = $orders->toArray();
+        return $orders;
+    }
+
+    public static function count(): int
+    {
+        return OrderItem::where('sess', session_id())
+            ->whereNull('deleted_at')
+            ->get()
+            ->count();
+    }
 }

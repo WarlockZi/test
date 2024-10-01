@@ -1,0 +1,6 @@
+export const d = 'document'
+export const qs = 'querySelector'
+export const qa = 'querySelectorAll'
+export const ael = 'addEventListener'
+export const st = 'setTimeout'
+export const it = 'innerText'

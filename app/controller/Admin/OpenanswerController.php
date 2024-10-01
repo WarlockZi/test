@@ -4,6 +4,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\FS;
+use app\core\Response;
 use app\model\Openanswer;
 
 
@@ -27,18 +28,18 @@ class OpenanswerController Extends AppController
 				$i = $this->ajax['sort'] ?? 1;
 
 				$html = FS::getFileContent(ROOT . '/app/view/Opentest/edit_BlockAnswer.php');
-				$this->exitJson(['html' => $html]);
+				Response::exitJson(['html' => $html]);
 			}
-			$this->exitWithPopup('ok');
+			Response::exitWithPopup('ok');
 		}
 	}
 
 
-	public function actionDelete()
+	public function actionDelete():void
 	{
 		$id = $this->ajax['id'];
 		if (Openanswer::delete($id)) {
-			$this->exitWithPopup('ok');
+			Response::exitWithPopup('ok');
 		}
 	}
 

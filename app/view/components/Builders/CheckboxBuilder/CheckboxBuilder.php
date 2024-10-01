@@ -5,10 +5,11 @@ namespace app\view\components\Builders\CheckboxBuilder;
 
 
 use app\core\FS;
-use app\view\components\Builders\Builder;
+use app\view\components\Traits\CleanString;
 
-class CheckboxBuilder extends Builder
+class CheckboxBuilder
 {
+    use CleanString;
 	public $field;
 	public $checked;
 
@@ -20,8 +21,7 @@ class CheckboxBuilder extends Builder
 	public $labelClass;
 
 
-	public static function build(string $field,
-															 ?bool $checked)
+	public static function build(string $field, ?bool $checked)
 	{
 		$checkbox = new self();
 		$checkbox->field = "data-field='{$field}'";

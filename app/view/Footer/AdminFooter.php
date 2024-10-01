@@ -4,9 +4,11 @@
 namespace app\view\Footer;
 
 
-use app\controller\FS;
 
-class AdminFooter extends AbstractFooter
+
+use app\core\FS;
+
+class AdminFooter extends Footer
 {
 	public function __construct()
 	{

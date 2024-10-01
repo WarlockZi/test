@@ -1,94 +1,69 @@
 import "./search.scss";
-import {$, debounce, post, createEl} from '../../common'
+import {$, createEl, debounce, post} from '../../common.js'
+import {ael} from "../../constants.js";
 
 export default class Search {
 
-  constructor(admin = false) {
-    this.admin = admin;
-    let button = $('.utils .search').first();
-    let panel = $('.search-panel').first();
-    // debugger
-    if (!button || !panel) return;
-    this.button = button;
-    this.panel = panel;
-    this.text = $(panel).find('.text');
-    this.result = $(panel).find('.result');
-    this.closeBtn = $(panel).find('.close');
+   constructor(admin = false) {
 
-    this.button.onclick = this.showPanel.bind(this);
-    this.panel.onclick = this.closePanel.bind(this);
+      this.admin = admin;
+      const openBtn = $('.utils .search').first();
+      const panel = $('.search-panel').first();
 
-    this.debouncedKeyUp = debounce(this.find, 800);
-    this.text.onkeyup = this.debouncedKeyUp.bind(this);
+      if (!openBtn || !panel) return;
+      this.openBtn = openBtn;
+      this.panel = panel;
 
-    this.closeBtn.onklick = this.closePanel.bind(this)
-  }
+      this.text = $(panel).find('.text');
+      this.result = $(panel).find('.result');
+      this.closeBtn = $(panel).find('.close');
 
-  showPanel() {
-    this.panel.classList.toggle('show');
-    this.result.innerHTML = '';
-    this.text.value = ''
-  }
+      this.debouncedKeyUp = debounce(this.find, 800);
 
-  closePanel({target}) {
-    // let list = target.classList
-    if (
-      target.classList.contains('search-panel') ||
-      target.classList.contains('close')
-    ) {
+      this.text[ael]('keyup', this.debouncedKeyUp.bind(this))
+      this.openBtn[ael]('click', this.togglePanel.bind(this))
+      this.closeBtn[ael]('click', this.togglePanel.bind(this))
+   }
 
+   togglePanel() {
       this.panel.classList.toggle('show');
       this.result.innerHTML = '';
       this.text.value = ''
-    }
-  }
+   }
 
-  async find({target}) {
-    this.result.innerHTML = '';
+   async find({target}) {
+      this.result.innerHTML = '';
 
-    let text = target.value;
-    if (!text) return false;
-    let res = await post('/search', {text});
-    if (res?.arr?.found) {
-      this.result.style.display = 'initial';
-      this.makeString(res?.arr?.found)
-    }
-  }
+      const text = target.value;
+      if (!text) return false;
+      const res = await post('/search', {text});
+      if (res?.arr?.found) {
+         this.result.style.display = 'initial';
+         res?.arr?.found.map((row) => {
+            this.result.append(this.createLi(row))
+         })
+      }
+   }
 
-  makeString(arr) {
-    arr.map((row) => {
-      this.result.append(this.createLi(row))
-    })
-  }
+   createLi(row) {
+      const li = createEl('li');
 
-  composeHref(row) {
-    if (this.admin) {
-      return `/adminsc/product/edit/${row.id}`
-    } else {
-      return `/product/${row.slug}`
-    }
-  }
-
-  createLi(row) {
-    // debugger
-    let li = createEl('li');
-
-    let a = createEl('a');
-    a.href = this.composeHref(row);
-    if (row.deleted_at){
-      a.classList.add('deleted')
-    }
-    li.appendChild(a);
-    let name = createEl('div', 'name', row.name);
-    let art = createEl('div', 'art', row.art);
-    let img = createEl('img');
-    img.src = row.mainImagePath;
-    a.append(art);
-    a.append(name);
-    a.append(img);
-    li.append(a);
-    return li
-  }
+      const a = createEl('a');
+      a.href = this.admin ? `/adminsc/product/edit/${row.id}` : `/product/${row.slug}`;
+      if (row.deleted_at) {
+         a.classList.add('deleted')
+      }
+      li.appendChild(a);
+      const name = createEl('div', 'name', row.name);
+      const art = createEl('div', 'art', row.art);
+      const img = createEl('img');
+      img.src = row.mainImage;
+      a.append(art);
+      a.append(name);
+      a.append(img);
+      li.append(a);
+      return li
+   }
 
 
 }

@@ -18,7 +18,7 @@ final class Entry
     /**
      * The entry value.
      *
-     * @var Value|null
+     * @var \Dotenv\Parser\Value|null
      */
     private $value;
 
@@ -26,7 +26,7 @@ final class Entry
      * Create a new entry instance.
      *
      * @param string                    $name
-     * @param Value|null $value
+     * @param \Dotenv\Parser\Value|null $value
      *
      * @return void
      */
@@ -49,11 +49,11 @@ final class Entry
     /**
      * Get the entry value.
      *
-     * @return Option
+     * @return \PhpOption\Option<\Dotenv\Parser\Value>
      */
     public function getValue()
     {
-        /** @var Option */
+        /** @var \PhpOption\Option<\Dotenv\Parser\Value> */
         return Option::fromValue($this->value);
     }
 }

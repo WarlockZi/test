@@ -1,9 +1,3 @@
-// Using
-//.div {
-//   @include _1200 {
-//       @content;
-//   }
-//}
 @import "var";
 
 @function color($color,$sat,$light,$opacity) {
@@ -18,97 +12,22 @@
   }
 }
 
+@mixin input-clear {
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  }
+}
+
 @mixin cartRowGrey {
-  flex: 0 0 auto;
+  display: flex;
   padding: 10px;
   background-color: #f0f0f0;
   border-radius: 5px;
-  margin: 3px 0;
 }
 
-
-@mixin countSetter {
-
-  .step-field {
-    position: relative;
-    width: 120px;
-    height: 36px;
-
-    input {
-      box-sizing: border-box;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 24px;
-      width: 100%;
-      height: 36px;
-      padding: 4px 72px 8px 10px;
-      background: #FFFFFF;
-      border-radius: 4px;
-      border: 0;
-      color: #363A47;
-      text-align: center;
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      /* display: none; <- Crashes Chrome on hover */
-      -webkit-appearance: none;
-      margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-    }
-
-    .input-line {
-      position: absolute;
-      bottom: 7px;
-      left: 10px;
-      width: 36px;
-      height: 1px;
-      background: #E0E0E0;
-      content: "";
-    }
-
-    .arrow-block {
-      position: absolute;
-      top: 1px;
-      right: 10px;
-
-      .arrow {
-
-        display: block;
-        width: 16px;
-        height: 16px;
-        cursor: pointer;
-        border: 1px solid transparent;
-        border-radius: 2px;
-
-        &:hover {
-          border-color: $color-gray5;
-        }
-
-        &.plus {
-          background-image: url(/pic/icons/arrowUp.svg);
-        }
-
-        &.minus {
-          background-image: url(/pic/icons/arrowUp.svg);
-          transform: rotate(180deg);
-        }
-      }
-
-    }
-
-    .units {
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 24px;
-      position: absolute;
-      top: 4px;
-      right: 32px;
-      color: #363A47;
-      pointer-events: none;
-
-    }
-  }
-
-}
 
 @mixin cartRow {
 
@@ -127,19 +46,30 @@
       object-fit: contain;
     }
 
-    .name-price {
+    .cell {
       @include cartRowGrey;
+    }
+
+    .cart-shippable-table {
+    }
+
+    .name-price {
       display: flex;
-      flex: 1 0 20%;
+      flex: 1;
       flex-direction: column;
       justify-content: space-between;
 
-      .name {
 
-      }
-
-      .price {
+      .price-table {
+        display: grid;
+        grid-template-columns: 85px 110px;
         align-self: end;
+
+        .price {
+          display: flex;
+          justify-content: end;
+          padding-right: 5px;
+        }
       }
     }
 
@@ -152,10 +82,9 @@
 
     .sum {
       @include cartRowGrey;
-      display: flex;
       align-items: center;
       justify-content: end;
-      flex: 0 0 60px;
+      width: 75px;
     }
 
     .del {
@@ -164,6 +93,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      width: 10px;
 
       &:hover {
         background-color: #cccccc;
@@ -178,10 +108,11 @@
 
   .buttons {
     display: flex;
-    flex-direction: column;
     align-items: end;
-    //margin: 0 auto;
-    //width: 50%;
+    display: flex;
+    align-items: end;
+    gap: 10px;
+    justify-content: end;
 
     .button {
       @include colored_button(6px);
@@ -558,16 +489,14 @@ $border-color:$color-main
   font-size: 1.3rem;
   font-weight: 600;
   color: $color-grey-logo;
-  margin: 0;
-  margin-bottom: 15px;
+  margin: 0 0 25px;
 }
 
 @mixin _h2 {
   font-size: 1.0rem;
   font-weight: 600;
   color: $color-grey-logo;
-  margin: 0;
-  margin-bottom: 15px;
+  margin: 0 0 15px;
 }
 
 @mixin _h3 {

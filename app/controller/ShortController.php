@@ -2,40 +2,31 @@
 
 namespace app\controller;
 
-use app\Repository\BreadcrumbsRepository;
-use app\Repository\OrderRepository;
-use app\Repository\ProductRepository;
-
+use app\model\Category;
+use app\model\Product;
 
 class ShortController extends AppController
 {
-	protected $model;
+    protected string $model;
 
-	public function actionIndex()
-	{
-		$short = $this->route->slug;
-		if ($short) {
+    public function actionIndex(): void
+    {
+        $shortLink = $this->route->slug;
+        if (!$shortLink) header("Location:/catalog");
 
-			$this->view = 'product';
-			$product = ProductRepository::short($short);
-			$oItems = OrderRepository::count();
-			if ($product) {
-//				$cat = Category::query()->find($product->category_id);
-				$cat = $product->category_id;
-				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($cat, true,);
-				$this->set(compact('product', 'breadcrumbs', 'oItems'));
-				$this->assets->setItemMeta($product);
-				$this->assets->setProduct();
-				$this->assets->setQuill();
-			} else{
-				$this->notFound = true;
-				$view = $this->getView();
-				$this->assets->setMeta('Страница не найдена');
-				$this->view = $view->get404();
-				http_response_code(404);}
-		} else {
-			header('Location:/category');
-		}
-	}
+        $slug = Product::withWhereHas('ownProperties',
+            fn($query) => $query->where('short_link', 'like', $shortLink)
+        )->first()->slug;
 
+        if ($slug) {
+            header("Location:/product/{$slug}");
+        } else {
+            $slug = Category::withWhereHas('ownProperties',
+                fn($query) => $query->where('short_link', 'like', $shortLink)
+            )->first()->slug;
+            header("Location:/catalog/{$slug}");
+        }
+
+    }
 }
+

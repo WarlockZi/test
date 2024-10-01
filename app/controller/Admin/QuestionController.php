@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Response;
 use app\core\Router;
 use app\Factory\AbstractTestFactory;
 use app\Factory\TestFactory;
@@ -15,7 +16,7 @@ use app\Services\Test\TestEditService;
 
 class QuestionController Extends AppController
 {
-	protected $model = Question::class;
+	protected string $model = Question::class;
 
 	public function __construct()
 	{
@@ -29,9 +30,9 @@ class QuestionController Extends AppController
 			$test = new TestEditService();
 
 			$page_name = 'Редактирование тестов';
-			$this->set(compact('page_name'));
+			$this->setVars(compact('page_name'));
 
-			$this->set(compact('test'));
+			$this->setVars(compact('test'));
 		}
 	}
 
@@ -39,7 +40,7 @@ class QuestionController Extends AppController
 	{
 		$q_ids = $this->ajax['toChange'];
 		Question::sort($q_ids);
-		$this->exitWithPopup('Сортировка сохранена');
+		Response::exitWithPopup('Сортировка сохранена');
 	}
 
 }

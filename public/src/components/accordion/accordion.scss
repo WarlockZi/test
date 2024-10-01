@@ -12,14 +12,13 @@ $font-size-item: .5rem;
   flex: 0 0 17px;
   width: 17px;
   height: 17px;
-  background: url(./img/cd-icons.svg) no-repeat 1px 0;
+  background: url(/assets/icons/cd-icons.svg) no-repeat 1px 0;
 
   transform: rotate(-90deg);
   transition: transform 200ms;
 }
 
 @mixin accordion {
-
   [accordion] {
     display: flex;
     flex-flow: column;
@@ -28,6 +27,7 @@ $font-size-item: .5rem;
 
     .arrow {
       @include arrow;
+
       &.rotate {
         transform: rotate(0deg);
       }
@@ -45,6 +45,15 @@ $font-size-item: .5rem;
           display: flex;
           align-items: center;
           gap: 3px;
+        }
+
+        svg {
+          width: 15px;
+          padding: 3px;
+
+          &.rotate {
+            transform: rotate(-90deg);
+          }
         }
 
       }
@@ -80,7 +89,7 @@ $font-size-item: .5rem;
         .img {
           width: 16px;
           height: 16px;
-          background: url(./img/cd-icons.svg) no-repeat -48px 0;
+          background: url(/assets/icons/cd-icons.svg) no-repeat -48px 0;
           margin: 0 5px;
           flex: 0 0 16px;
         }
@@ -112,6 +121,7 @@ $font-size-item: .5rem;
         height: 100%;
         background-color: lighten($color-main, 10%);
       }
+
       color: lighten($color-main, 10%);
     }
 
@@ -181,7 +191,7 @@ $font-size-item: .5rem;
       .img {
         width: 16px;
         height: 16px;
-        background: url(./img/cd-icons.svg) no-repeat -16px 0;
+        background: url(/assets/icons/cd-icons.svg) no-repeat -16px 0;
         margin: 0 5px;
         flex: 0 0 16px;
       }
@@ -244,18 +254,22 @@ $width-full: 170px;
 
 .accordion_wrap {
   transition: max-width 1s, min-width 1s, margin-right 1s;
-  margin-bottom: 25px;
   display: flex;
   flex-flow: column;
   overflow: hidden;
   font-size: .75rem;
-  min-width: 170px;
-  margin-right: 20px;
+  //min-width: 170px;
+  //margin-right: 20px;
+  z-index: 1;
+
+  &:hover{
+    min-width: 170px;
+  }
 
   @include _1000 {
     margin-right: 0px;
     max-width: 0;
-    min-width: 0;
+    min-width: 57px;
   }
 
   &.open {
@@ -276,8 +290,8 @@ $width-full: 170px;
   }
 }
 
-.admin_sidebar {
-  position: fixed;
+.admin-sidebar {
+  position: relative;
   display: flex;
   flex-flow: column;
   background: $color-admin-sidebar;
@@ -286,32 +300,30 @@ $width-full: 170px;
   max-width: $width-short;
   min-width: $width-short;
   height: 100%;
-  z-index: 2;
 
   &:hover {
     max-width: $width-half;
     min-width: $width-half;
   }
 
-  @include _800 {
-    max-width: $width-short;
-    min-width: $width-short;
-    &:hover {
-      max-width: $width-half;
-      min-width: $width-half;
-    }
-  }
+  //@include _800 {
+  //  max-width: $width-short;
+  //  min-width: $width-short;
+  //  &:hover {
+  //    max-width: $width-half;
+  //    min-width: $width-half;
+  //  }
+  //}
   @include _600 {
-    max-width: 100%;
-    min-width: 100%;
+    max-width: 100vw;
+    min-width: 100vw;
     height: 60px;
     &:hover {
       max-width: 100%;
       min-width: 100%;
     }
   }
-  @include _400 {
-  }
+
 
   .admin_sidebar_header {
 
@@ -327,6 +339,10 @@ $width-full: 170px;
         }
       }
     }
+  }
+
+  &.show {
+    height: -webkit-fill-available;
   }
 
   &.open {
@@ -380,6 +396,11 @@ $width-full: 170px;
     padding: 23px 19px;
     cursor: pointer;
     display: flex;
+
+    path {
+      pointer-events: none;
+
+    }
   }
 
   /* arrow icon */
@@ -399,4 +420,5 @@ $width-full: 170px;
     border-bottom: none;
     flex: 1 0 auto;
   }
+
 }

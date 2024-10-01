@@ -36,19 +36,19 @@ class NotFound extends Controller
         exit();
     }
 
-    public static function controller(Route $route)
-    {
-        $error = "Не найден controller - {$route->controller}";
-        Error::setError($error);
-
-        http_response_code(404);
-        $view = self::setView($route);
-
-        $content = $view->get404();
-        $view->setContent($view->controller);
-        $view->render();
-        exit();
-    }
+//    public static function controller(Route $route)
+//    {
+//        $error = "Не найден controller - {$route->controller}";
+//        Error::setError($error);
+//
+//        http_response_code(404);
+//        $view = self::setView($route);
+//
+//        $content = $view->get404();
+//        $view->setContent($view->controller);
+//        $view->render();
+//        exit();
+//    }
 
     public static function action(Route $route)
     {
@@ -62,7 +62,7 @@ class NotFound extends Controller
 
     protected static function setView(Route $route)
     {
-        if (User::can(Auth::getUser(), ['role_employee']) && $route->admin) {
+        if ($user->can(['role_employee']) && $route->admin) {
             return new AdminView(new self);
         } else {
             return new UserView(new self);

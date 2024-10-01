@@ -1,0 +1,458 @@
+{
+  "Admin/Category/Category.js": {
+    "file": "assets/Category-DDc0bJka.js",
+    "name": "Category",
+    "src": "Admin/Category/Category.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "_Promotion-C8IvO5Ej.js",
+      "_constants-Clh-pk9Y.js"
+    ],
+    "css": [
+      "assets/Category-BpqyPztA.css",
+      "assets/product-BjfEtDHX.css"
+    ]
+  },
+  "Admin/Order/order.js": {
+    "file": "assets/order-8xhIPPov.js",
+    "name": "order",
+    "src": "Admin/Order/order.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_Promotion-C8IvO5Ej.js",
+      "_common-RiEdO0HM.js"
+    ],
+    "css": [
+      "assets/order-B2jhaEIF.css"
+    ]
+  },
+  "Admin/Product/Fields.js": {
+    "file": "assets/Fields-BtEuobqC.js",
+    "name": "Fields",
+    "src": "Admin/Product/Fields.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_Promotion-C8IvO5Ej.js",
+      "_common-RiEdO0HM.js"
+    ]
+  },
+  "Admin/Product/Product.js": {
+    "file": "assets/Product-C-B9gKuB.js",
+    "name": "Product",
+    "src": "Admin/Product/Product.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "_Promotion-C8IvO5Ej.js",
+      "_constants-Clh-pk9Y.js",
+      "_quill-BehQYXAG.js",
+      "_quill.snow-DpC92mTv.js"
+    ],
+    "dynamicImports": [
+      "components/dnd/dnd.js",
+      "Admin/Product/Fields.js",
+      "Admin/Product/Props.js",
+      "share/card_panel/card_panel.js"
+    ],
+    "css": [
+      "assets/Product-g_McCRne.css",
+      "assets/product-BjfEtDHX.css"
+    ]
+  },
+  "Admin/Product/Props.js": {
+    "file": "assets/Props-DzhXhtuY.js",
+    "name": "Props",
+    "src": "Admin/Product/Props.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "Admin/Product/Product.js",
+      "_common-RiEdO0HM.js",
+      "_Promotion-C8IvO5Ej.js",
+      "_constants-Clh-pk9Y.js",
+      "_quill-BehQYXAG.js",
+      "_quill.snow-DpC92mTv.js"
+    ],
+    "css": [
+      "assets/product-BjfEtDHX.css"
+    ]
+  },
+  "Admin/Test/test-do.js": {
+    "file": "assets/test-do-CmcG39tW.js",
+    "name": "test-do",
+    "src": "Admin/Test/test-do.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js"
+    ],
+    "css": [
+      "assets/test-do-B63tKhVy.css"
+    ]
+  },
+  "Admin/Test/test-edit.js": {
+    "file": "assets/test-edit-BU-PV4-e.js",
+    "name": "test-edit",
+    "src": "Admin/Test/test-edit.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "_index-DUZ2fCTA.js"
+    ],
+    "css": [
+      "assets/test-edit-CXQ2oW1T.css"
+    ]
+  },
+  "Admin/admin.js": {
+    "file": "assets/admin-C9bzFrsz.js",
+    "name": "admin",
+    "src": "Admin/admin.js",
+    "isEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "_constants-Clh-pk9Y.js",
+      "components/search/search.js",
+      "_Promotion-C8IvO5Ej.js",
+      "_quill.snow-DpC92mTv.js"
+    ],
+    "dynamicImports": [
+      "_index-DUZ2fCTA.js",
+      "Admin/components/AdminSidebar/AdminSidebar.js",
+      "Admin/Product/Product.js",
+      "Admin/components/catalog-item/catalog-item.js",
+      "Admin/Order/order.js",
+      "components/Modal/modal.js",
+      "Admin/Category/Category.js",
+      "Admin/chartjs/chartjs.js"
+    ],
+    "css": [
+      "assets/admin-8gimtZuh.css"
+    ]
+  },
+  "Admin/chartjs/chartjs.js": {
+    "file": "assets/chartjs-D8I9db7I.js",
+    "name": "chartjs",
+    "src": "Admin/chartjs/chartjs.js",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/chartjs-BPcd8uUI.css"
+    ]
+  },
+  "Admin/components/AdminSidebar/AdminSidebar.js": {
+    "file": "assets/AdminSidebar-TkHm2mCZ.js",
+    "name": "AdminSidebar",
+    "src": "Admin/components/AdminSidebar/AdminSidebar.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "_constants-Clh-pk9Y.js"
+    ],
+    "css": [
+      "assets/AdminSidebar-Cg7ldI_K.css"
+    ]
+  },
+  "Admin/components/catalog-item/catalog-item.js": {
+    "file": "assets/catalog-item-DTjpK1zu.js",
+    "name": "catalog-item",
+    "src": "Admin/components/catalog-item/catalog-item.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "Admin/admin.js",
+      "_common-RiEdO0HM.js",
+      "_constants-Clh-pk9Y.js",
+      "components/search/search.js",
+      "_Promotion-C8IvO5Ej.js",
+      "_quill.snow-DpC92mTv.js"
+    ]
+  },
+  "Auth/auth.js": {
+    "file": "assets/auth-C_SWoc7Z.js",
+    "name": "auth",
+    "src": "Auth/auth.js",
+    "isEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js"
+    ],
+    "dynamicImports": [
+      "Auth/login.js",
+      "components/Modal/modal.js"
+    ],
+    "css": [
+      "assets/auth-D0_YDl2V.css"
+    ]
+  },
+  "Auth/login.js": {
+    "file": "assets/login-Af58raA6.js",
+    "name": "login",
+    "src": "Auth/login.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js"
+    ]
+  },
+  "Cart/cart.js": {
+    "file": "assets/cart-pdevla8F.js",
+    "name": "cart",
+    "src": "Cart/cart.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "components/Modal/modal.js",
+      "_constants-Clh-pk9Y.js",
+      "_shippableUnitsTable-B_ReVYQK.js"
+    ]
+  },
+  "Category/category.js": {
+    "file": "assets/category-CmPHOzMX.js",
+    "name": "category",
+    "src": "Category/category.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "_constants-Clh-pk9Y.js",
+      "_shippableUnitsTable-B_ReVYQK.js"
+    ],
+    "dynamicImports": [
+      "share/card_panel/card_panel.js"
+    ]
+  },
+  "Main/main.js": {
+    "file": "assets/main-Bwp3BUWr.js",
+    "name": "main",
+    "src": "Main/main.js",
+    "isEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "_constants-Clh-pk9Y.js"
+    ],
+    "dynamicImports": [
+      "components/search/search.js",
+      "components/Modal/modal.js",
+      "Category/category.js",
+      "Product/Product.js",
+      "_Promotion-C8IvO5Ej.js",
+      "Cart/cart.js"
+    ],
+    "css": [
+      "assets/main-iQFC3MWZ.css"
+    ],
+    "assets": [
+      "assets/SegoeUI-ClaH7WPz.eot",
+      "assets/SegoeUI-BG4GjXh8.woff2",
+      "assets/SegoeUI-Dl5ofu1j.woff",
+      "assets/SegoeUI-Di2u0v8b.ttf",
+      "assets/SegoeUI-SemiBold-DMA8_Xdm.eot",
+      "assets/SegoeUI-SemiBold-C8949jYN.woff2",
+      "assets/SegoeUI-SemiBold-DohBUyYc.woff",
+      "assets/SegoeUI-SemiBold-Dz0i8Gm2.ttf",
+      "assets/SegoeUI-Light-BnZtI4oA.eot",
+      "assets/SegoeUI-Light-boaydVX5.woff2",
+      "assets/SegoeUI-Light-DRStLrG9.woff",
+      "assets/SegoeUI-Light-BeQwKuIZ.ttf",
+      "assets/SegoeUI-Bold-DK4b92Kj.eot",
+      "assets/SegoeUI-Bold-cHnf7At2.woff2",
+      "assets/SegoeUI-Bold-BxNAyNVj.woff",
+      "assets/SegoeUI-Bold-CqRx-Wgw.ttf"
+    ]
+  },
+  "Product/Product.js": {
+    "file": "assets/Product-BRYyJ542.js",
+    "name": "Product",
+    "src": "Product/Product.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "_quill.snow-DpC92mTv.js",
+      "share/card_panel/card_panel.js",
+      "_shippableUnitsTable-B_ReVYQK.js",
+      "_quill-BehQYXAG.js",
+      "_constants-Clh-pk9Y.js"
+    ],
+    "css": [
+      "assets/Product-Dq_dNiQI.css"
+    ]
+  },
+  "_Promotion-!~{00f}~.js": {
+    "file": "assets/Promotion-C-yV3o17.css",
+    "src": "_Promotion-!~{00f}~.js"
+  },
+  "_Promotion-C8IvO5Ej.js": {
+    "file": "assets/Promotion-C8IvO5Ej.js",
+    "name": "Promotion",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js"
+    ],
+    "css": [
+      "assets/Promotion-C-yV3o17.css"
+    ]
+  },
+  "_common-RiEdO0HM.js": {
+    "file": "assets/common-RiEdO0HM.js",
+    "name": "common"
+  },
+  "_constants-Clh-pk9Y.js": {
+    "file": "assets/constants-Clh-pk9Y.js",
+    "name": "constants"
+  },
+  "_index-!~{004}~.js": {
+    "file": "assets/index-Du3s5jNk.css",
+    "src": "_index-!~{004}~.js"
+  },
+  "_index-DUZ2fCTA.js": {
+    "file": "assets/index-DUZ2fCTA.js",
+    "name": "index",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js"
+    ],
+    "dynamicImports": [
+      "Admin/Test/test-do.js",
+      "Admin/Test/test-edit.js"
+    ],
+    "css": [
+      "assets/index-Du3s5jNk.css"
+    ]
+  },
+  "_product-!~{00r}~.js": {
+    "file": "assets/product-BjfEtDHX.css",
+    "src": "_product-!~{00r}~.js"
+  },
+  "_quill-BehQYXAG.js": {
+    "file": "assets/quill-BehQYXAG.js",
+    "name": "quill",
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "_quill.snow-DpC92mTv.js"
+    ]
+  },
+  "_quill.snow-!~{00g}~.js": {
+    "file": "assets/quill-BS3afWzt.css",
+    "src": "_quill.snow-!~{00g}~.js"
+  },
+  "_quill.snow-DpC92mTv.js": {
+    "file": "assets/quill.snow-DpC92mTv.js",
+    "name": "quill.snow",
+    "css": [
+      "assets/quill-BS3afWzt.css"
+    ]
+  },
+  "_shippableUnitsTable-!~{00t}~.js": {
+    "file": "assets/shippableUnitsTable-Bh11Im--.css",
+    "src": "_shippableUnitsTable-!~{00t}~.js"
+  },
+  "_shippableUnitsTable-B_ReVYQK.js": {
+    "file": "assets/shippableUnitsTable-B_ReVYQK.js",
+    "name": "shippableUnitsTable",
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "_constants-Clh-pk9Y.js"
+    ],
+    "css": [
+      "assets/shippableUnitsTable-Bh11Im--.css"
+    ]
+  },
+  "components/Modal/modal.js": {
+    "file": "assets/modal-DdcVNKq5.js",
+    "name": "modal",
+    "src": "components/Modal/modal.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js"
+    ],
+    "css": [
+      "assets/modal-aJpmGEvw.css"
+    ]
+  },
+  "components/dnd/dnd.js": {
+    "file": "assets/dnd-BIsc27kd.js",
+    "name": "dnd",
+    "src": "components/dnd/dnd.js",
+    "isDynamicEntry": true
+  },
+  "components/search/search.js": {
+    "file": "assets/search-B8zO6gn1.js",
+    "name": "search",
+    "src": "components/search/search.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js",
+      "_constants-Clh-pk9Y.js"
+    ]
+  },
+  "font/Sagoe UI/SegoeUI-Bold.eot": {
+    "file": "assets/SegoeUI-Bold-DK4b92Kj.eot",
+    "src": "font/Sagoe UI/SegoeUI-Bold.eot"
+  },
+  "font/Sagoe UI/SegoeUI-Bold.ttf": {
+    "file": "assets/SegoeUI-Bold-CqRx-Wgw.ttf",
+    "src": "font/Sagoe UI/SegoeUI-Bold.ttf"
+  },
+  "font/Sagoe UI/SegoeUI-Bold.woff": {
+    "file": "assets/SegoeUI-Bold-BxNAyNVj.woff",
+    "src": "font/Sagoe UI/SegoeUI-Bold.woff"
+  },
+  "font/Sagoe UI/SegoeUI-Bold.woff2": {
+    "file": "assets/SegoeUI-Bold-cHnf7At2.woff2",
+    "src": "font/Sagoe UI/SegoeUI-Bold.woff2"
+  },
+  "font/Sagoe UI/SegoeUI-Light.eot": {
+    "file": "assets/SegoeUI-Light-BnZtI4oA.eot",
+    "src": "font/Sagoe UI/SegoeUI-Light.eot"
+  },
+  "font/Sagoe UI/SegoeUI-Light.ttf": {
+    "file": "assets/SegoeUI-Light-BeQwKuIZ.ttf",
+    "src": "font/Sagoe UI/SegoeUI-Light.ttf"
+  },
+  "font/Sagoe UI/SegoeUI-Light.woff": {
+    "file": "assets/SegoeUI-Light-DRStLrG9.woff",
+    "src": "font/Sagoe UI/SegoeUI-Light.woff"
+  },
+  "font/Sagoe UI/SegoeUI-Light.woff2": {
+    "file": "assets/SegoeUI-Light-boaydVX5.woff2",
+    "src": "font/Sagoe UI/SegoeUI-Light.woff2"
+  },
+  "font/Sagoe UI/SegoeUI-SemiBold.eot": {
+    "file": "assets/SegoeUI-SemiBold-DMA8_Xdm.eot",
+    "src": "font/Sagoe UI/SegoeUI-SemiBold.eot"
+  },
+  "font/Sagoe UI/SegoeUI-SemiBold.ttf": {
+    "file": "assets/SegoeUI-SemiBold-Dz0i8Gm2.ttf",
+    "src": "font/Sagoe UI/SegoeUI-SemiBold.ttf"
+  },
+  "font/Sagoe UI/SegoeUI-SemiBold.woff": {
+    "file": "assets/SegoeUI-SemiBold-DohBUyYc.woff",
+    "src": "font/Sagoe UI/SegoeUI-SemiBold.woff"
+  },
+  "font/Sagoe UI/SegoeUI-SemiBold.woff2": {
+    "file": "assets/SegoeUI-SemiBold-C8949jYN.woff2",
+    "src": "font/Sagoe UI/SegoeUI-SemiBold.woff2"
+  },
+  "font/Sagoe UI/SegoeUI.eot": {
+    "file": "assets/SegoeUI-ClaH7WPz.eot",
+    "src": "font/Sagoe UI/SegoeUI.eot"
+  },
+  "font/Sagoe UI/SegoeUI.ttf": {
+    "file": "assets/SegoeUI-Di2u0v8b.ttf",
+    "src": "font/Sagoe UI/SegoeUI.ttf"
+  },
+  "font/Sagoe UI/SegoeUI.woff": {
+    "file": "assets/SegoeUI-Dl5ofu1j.woff",
+    "src": "font/Sagoe UI/SegoeUI.woff"
+  },
+  "font/Sagoe UI/SegoeUI.woff2": {
+    "file": "assets/SegoeUI-BG4GjXh8.woff2",
+    "src": "font/Sagoe UI/SegoeUI.woff2"
+  },
+  "share/card_panel/card_panel.js": {
+    "file": "assets/card_panel-GXqjNSgL.js",
+    "name": "card_panel",
+    "src": "share/card_panel/card_panel.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_common-RiEdO0HM.js"
+    ],
+    "css": [
+      "assets/card_panel-COc34v_C.css"
+    ]
+  }
+}

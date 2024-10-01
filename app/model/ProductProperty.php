@@ -8,18 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductProperty extends Model
 {
-
-	public $timestamps = false;
+	public $timestamps = true;
 	protected $fillable = [
-		'name' => '',
-		'property_id' => '',
-		'val_id' => '',
-		'product_1s_id' => '',
-		'base_equals_main_unit',
+		'product_1s_id',
+		'short_link',
+        'sort',
+		'seo_title',
+		'seo_description',
+		'seo_keywords',
+        'new',
+        'leader',
+        'created_at',
+        'updated_at',
+        'deleted_at',
 	];
 
-
-
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_1s_id');
+    }
 
 	public function property()
 	{

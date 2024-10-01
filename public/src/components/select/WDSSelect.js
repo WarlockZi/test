@@ -7,6 +7,7 @@ export default class WDSSelect {
   constructor(el) {
     if (!el) return;
 
+
     this.field = el.dataset.field;
     this.model = el.closest('.item-wrap')?.dataset.model;
     this.modelId = el.closest('.item-wrap')?.dataset.id;
@@ -44,6 +45,7 @@ export default class WDSSelect {
     this.sel.onblur = () => this.ul.classList.remove("show");
     this.sel.onkeydown = this.keyDownhandler;
 
+    debugger
     el.remove()
   }
 

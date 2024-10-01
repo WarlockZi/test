@@ -1,136 +1,114 @@
 <?php
 
-
 namespace app\core;
-
-
-use app\model\Image;
+use app\Services\Logger\ErrorLogger;
 
 class FS
 {
-    protected $absPath;
+    protected string $absPath;
+    protected ErrorLogger $errorLogger;
 
-    public function __construct(string $absPath)
+    public function __construct(string $absPath = ROOT)
     {
-        $this->absPath = $absPath;
+        $this->absPath = $absPath . DIRECTORY_SEPARATOR;
+        $this->errorLogger = new ErrorLogger();
     }
 
-    public function getContent(string $file, array $data=[])
+    public function getAbsPath(): string
     {
-        $file = FS::platformSlashes($this->absPath.$file.'.php');
-        if (!is_readable($file)) throw new \Exception('File not exist');
+        return $this->absPath;
+    }
+
+    public function getContent(string $file, array $data = []):string
+    {
+        try {
+            $file = FS::platformSlashes($this->absPath . $file . '.php');
+            if (!is_readable($file)) $this->errorLogger->write('not exist - '.$file);
+
+            extract($data);
+            unset($data);
+            unset($fs);
+            ob_start();
+
+            require $file;
+
+            $content = ob_get_clean();
+            return $content;
+        } catch (\Throwable $exception){
+           $callerClass = debug_backtrace()[1]['file']." (line ".debug_backtrace()[1]['line'].")";
+           $callerClass1 = debug_backtrace()[2]['file']." (line ".debug_backtrace()[1]['line'].")";
+           $callerMethod = debug_backtrace()[1]['function'];
+           $callerMethod1 = debug_backtrace()[2]['function'];
+            $content = ob_get_clean();
+            if ($_ENV['DEV']==='1'){
+                return date('y-m-d, h:m:s').PHP_EOL.'<br><br>'.
+                   "class {$callerClass}".PHP_EOL.'<br><br>'.
+                   "class {$callerClass1}".PHP_EOL.'<br><br>'.
+                   "method {$callerMethod}".PHP_EOL.'<br><br>'.
+                   "method {$callerMethod1}".PHP_EOL.'<br><br>'.
+                   $exception;
+            }
+            $this->errorLogger->write($exception);
+            return 'ошибка в файле';
+        }
+
+    }
+
+    public static function resolve(...$paths):string
+    {
+        $path = '';
+        foreach ($paths as $str) {
+            if ($str) $path .= $str . DIRECTORY_SEPARATOR;
+        }
+        return $path;
+    }
+
+    public static function getFileContent(string $file, array $vars = []):string
+    {
+        extract($vars);
         ob_start();
-        require $file;
+        require FS::platformSlashes($file);
         return ob_get_clean();
     }
 
-	public static function getFileContent(string $file, array $vars = [])
-	{
-		extract($vars);
-		ob_start();
-		require FS::platformSlashes($file);
-		return ob_get_clean();
-	}
+    public static function delFilesFromPath(string $path, string $ext = ''): array
+    {
+        $ext     = $ext ?? '*';
+        $files   = glob(ROOT . $path . "*.$ext");
+        $deleted = array();
+        foreach ($files as $file) {
+            array_push($deleted, $file);
+            unlink($file);
+        }
+        return $deleted;
+    }
 
-	public static function delFilesFromPath(string $path, string $ext = ''): array
-	{
-		$ext = $ext ?? '*';
-		$files = glob(ROOT . $path . "*.$ext");
-		$deleted = array();
-		foreach ($files as $file) {
-			array_push($deleted, $file);
-			unlink($file);
-		}
-		return $deleted;
-	}
+    public static function getPath(...$args):string
+    {
+        $s   = DIRECTORY_SEPARATOR;
+        $str = ROOT . $s;
+        foreach ($args as $arg) {
+            $str .= $arg . $s;
+        }
+        return self::platformSlashes($str);
+    }
 
-	public static function getPath(...$args)
-	{
-		$s = DIRECTORY_SEPARATOR;
-		$str = ROOT . $s;
-		foreach ($args as $arg) {
-			$str .= $arg . $s;
-		}
-		return self::platformSlashes($str);
-	}
+    public static function platformSlashes($path):string
+    {
+        return str_replace('/', DIRECTORY_SEPARATOR, $path);
+    }
 
-	public static function platformSlashes($path)
-	{
-		return str_replace('/', DIRECTORY_SEPARATOR, $path);
-	}
+    public static function getOrCreateAbsolutePath(...$args):string
+    {
+        $s   = DIRECTORY_SEPARATOR;
+        $dir = ROOT;
+        foreach ($args as $arg) {
+            $dir .= $s . $arg;
+            if (!is_dir($dir)) {
+                $res = mkdir($dir, 0777);
+            }
+        }
+        return $dir;
+    }
 
-	public static function getAbsoluteImagePath($path, Image $image)
-	{
-		$s = DIRECTORY_SEPARATOR;
-		return "{$path}{$s}{$image->hash}.{$image->type}";
-	}
-
-
-	public static function getOrCreateAbsolutePath(...$args)
-	{
-		$s = DIRECTORY_SEPARATOR;
-		$dir = ROOT;
-		foreach ($args as $arg) {
-			$dir .= $s . $arg;
-			if (!is_dir($dir)) {
-				$res = mkdir($dir, 0777);
-			}
-		}
-		return $dir;
-	}
-
-//    public static function getStoragePath(): string
-//    {
-//        return self::platformSlashes(self::$storagePath);
-//    }
-//
-//    public static function makePath($path)
-//    {
-//        return mkdir($path, 0777, true);
-//    }
-
-//    public static function saveToStorage(string $path, $file, string $fileName): bool
-//    {
-//        $path = self::getOrCreateAbsolutePath(self::$storagePath, $path);
-//        return self::platformSlashes(self::$storagePath);
-//    }
-
-//	public static function getAbsoluteFilePath($path, string $file)
-//	{
-//		$s = DIRECTORY_SEPARATOR;
-//		$path = FS::platformSlashes($path);
-//		return $path . $file;
-//	}
-//	public static function parsePathToString(string $fullPath): string
-//	{
-//		$s = DIRECTORY_SEPARATOR;
-//		$str = '';
-//		$arr = explode('/', $fullPath);
-//		for ($i = 0; $i < count($arr); $i++) {
-//			if ($arr[$i]) {
-//				if ($arr[$i + 1]) {
-//					$str .= $arr[$i] . $s;
-//				} else {
-//					$str .= $arr[$i];
-//				}
-//			}
-//		}
-//		return $str;
-//	}
-
-//	public static function getAbsolutePath(...$args)
-//	{
-//		$s = DIRECTORY_SEPARATOR;
-//		$dir = ROOT;
-//		foreach ($args as $arg) {
-//			if (str_contains($arg, '/')) {
-//				$arg = self::parsePathToString($arg);
-//			}
-//			$dir .= $s . $arg;
-//			if (!is_dir($dir)) {
-//				$res = mkdir($dir, 0777);
-//			}
-//		}
-//		return $dir;
-//	}
 }

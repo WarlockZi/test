@@ -1,0 +1,182 @@
+@import "../../var";
+@import "../../mixin_media";
+
+@mixin arrow-block {
+  .arrows {
+    display: flex;
+    width: 72px;
+    margin-right: 2px;
+    gap: 1px;
+
+    .arrow {
+      display: block;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: $color-main-green;
+      padding: 0px 9px;
+      color: lighten($color-main-green, 35%);
+      cursor: pointer;
+
+      svg {
+        pointer-events: none;
+
+      }
+
+      &:hover {
+        background-color: darken($color-main-green, 10%);
+      }
+
+      &.plus {
+        background-image: url(/pic/icons/arrowUp.svg);
+        transform: rotate(180deg);
+      }
+
+      &.minus {
+        background-image: url(/pic/icons/arrowUp.svg);
+      }
+    }
+
+  }
+}
+
+
+.shippable-table {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &.font-size-0-8-rem {
+    font-size: .8rem;
+  }
+
+  &.font-size-1-0-rem {
+    font-size: 1rem;
+  }
+
+  &.font-size-1-1-rem {
+    font-size: 1.1rem;
+  }
+
+
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 100ms ease-in-out;
+    border: none;
+    flex: 1;
+    font-size: 1em;
+  }
+
+  .blue-button {
+    background-color: $color-main;
+    //margin-bottom: 63px;
+
+    &:hover {
+      background-color: darken($color-main, 10%);
+    }
+  }
+
+  .green-button-wrap {
+    display: none;
+    flex-direction: column;
+  }
+
+  .green-button {
+    background-color: $color-main-green;
+    margin-bottom: 10px;
+    justify-content: center;
+    font-size: 1em;
+
+    &:hover {
+      background-color: darken($color-main-green, 10%);
+    }
+  }
+
+  .unit-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0px;
+
+    .input {
+      text-align: center;
+      border: transparent;
+      border-bottom: 1px solid #e7e7e7;
+      border-radius: 3px;
+      width: 30px;
+      margin-right: 3px;
+      width: 25px;
+      font-size: 1em;
+    }
+
+    @include input-clear;
+
+    .unit-name {
+      display: flex;
+      align-items: start;
+      justify-content: start;
+      margin-right: 3px;
+      font-size: .7em;
+      margin-bottom: 2px;
+
+      .name {
+        width: 30px;
+        margin-bottom: 1px;
+        font-weight: 600;
+        font-size: 1.2em;
+        align-self: end;
+      }
+
+      .description {
+        display: flex;
+        flex-direction: column;
+        width: 50px;
+
+        .contains {
+          font-size: .65em;
+        }
+
+        .cost {
+          font-weight: bold;
+          font-size: .75em;
+
+        }
+      }
+
+    }
+
+    @include arrow-block;
+
+    .sub-sum {
+      display: flex;
+      justify-content: end;
+      width: 68px;
+      font-size: .8em;
+    }
+  }
+
+  .total-bottom {
+    display: flex;
+    justify-content: end;
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 70px;
+      height: 1px;
+      background-color: $color-main-green;
+    }
+  }
+
+}
+
+

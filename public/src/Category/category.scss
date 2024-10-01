@@ -4,10 +4,11 @@
 .category {
   .products-header {
     position: relative;
+    margin-bottom: 35px;
 
-    h1 {
-      @include _h1;
-      margin-bottom: 5px;
+    h2 {
+      @include _h2;
+      font-size: 1.3rem;
     }
 
     .filters {
@@ -22,7 +23,8 @@
     display: flex;
     flex-wrap: wrap;
     max-width: 80vw;
-    gap: 5px;
+    gap: 20px;
+    margin-bottom: 50px;
 
     @include _400 {
       justify-content: center;
@@ -56,7 +58,7 @@
       line-height: 20px;
 
       @include _400 {
-        width: 80%;
+        width: 93%;
       }
 
       img {
@@ -96,9 +98,11 @@
       }
 
       .footer {
-        color: #000;
+        color: $color-gray-max;
+        font-size: 12px;
 
-        .old-price{
+
+        .old-price {
           text-decoration: line-through #707f8d;
           color: #707f8d;
         }
@@ -118,31 +122,26 @@
     gap: 10px;
 
     .category-card {
-      color: $color-gray10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100px;
-      width: 142px;
-      padding: 10px;
-      border: 1px solid #ccc;
+      position: relative;
 
-      &:hover {
-        border: 1px solid $color-main;
+
+      .category-card-a {
+        color: $color-gray10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100px;
+        width: 142px;
+        padding: 10px;
+        border: 1px solid #ccc;
+
+        &:hover {
+          border: 1px solid $color-main;
+        }
       }
     }
   }
 
-  .hoist {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    padding: 10px;
-    background: $color-main;
-    color: #ffffff;
-    cursor: pointer;
-  }
 
 }

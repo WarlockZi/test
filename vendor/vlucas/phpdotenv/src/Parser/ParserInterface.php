@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dotenv\Parser;
 
-use Dotenv\Exception\InvalidFileException;
-
 interface ParserInterface
 {
     /**
@@ -13,9 +11,9 @@ interface ParserInterface
      *
      * @param string $content
      *
-     * @throws InvalidFileException
+     * @throws \Dotenv\Exception\InvalidFileException
      *
-     * @return Entry[]
+     * @return \Dotenv\Parser\Entry[]
      */
     public function parse(string $content);
 }

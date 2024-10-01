@@ -3,47 +3,53 @@
 namespace app\controller;
 
 
-use app\model\Category;
+use app\core\Auth;
+use app\core\Icon;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
-use app\Repository\ProductRepository;
+use app\view\share\card_panel\CardPanel;
 
 
-class CategoryController Extends AppController
+class CategoryController extends AppController
 {
+    protected CardPanel $categoryView;
+    protected CategoryRepository $repo;
 
-	protected $model = Category::class;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->repo         = new CategoryRepository();
+        $this->categoryView = new CardPanel();
+    }
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function actionIndex(): void
+    {
+        if ($this->route->slug) {
+            $this->route->setView('category');
 
-	public function actionIndex()
-	{
-		if ($this->route->slug) {
-			$this->view = 'category';
+            $slug     = $this->route->slug;
+            $category = $this->repo->indexInstore($slug);
 
-			$slug = $this->route->slug;
-			$category = CategoryRepository::indexInstore($slug);
-			if ($category) {
-//				$category->products->filters = ProductRepository::getFilters();
-				$breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
-				$this->set(compact('breadcrumbs', 'category'));
-				$this->assets->setItemMeta($category);
-			}else{
-				$view = $this->getView();
-				$this->view = $view->get404();
-				http_response_code(404);
-			}
+            if ($category) {
+                $admin       = Auth::userIsAdmin();
+                $edit        = Icon::edit();
+                $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
+                $this->setVars(compact('admin', 'edit', 'breadcrumbs', 'category'));
+                $title    = $category->ownProperties->seo_title ?? $category->name;
+                $desc     = $category->ownProperties->seo_description ?? $category->name;
+                $keywords = $category->ownProperties->seo_keywords ?? $category->name;
+                $this->assets->setMeta($title, $desc, $keywords);
+            } else {
+                http_response_code(404);
+            }
 
-		} else {
-			$this->view = 'categories';
+        } else {
+            $this->route->setView('categories');
 
-			$categories = CategoryRepository::indexNoSlug();
+            $categories = CategoryRepository::indexNoSlug();
 
-			$this->set(compact('categories'));
-			$this->assets->setMeta('Категории','Категории:VITEX','Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент');
-		}
-	}
+            $this->setVars(compact('categories'));
+            $this->assets->setMeta('Категории', 'Категории:VITEX', 'Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент');
+        }
+    }
 }

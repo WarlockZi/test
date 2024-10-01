@@ -2,8 +2,9 @@
 
 namespace app\view\Country;
 
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\model\Country;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 
 class CountryView
 {
@@ -14,18 +15,17 @@ class CountryView
 
 	public static function list(string $className)
 	{
-    $countries = $className::all();
-		return MyList::build($className)
+		return Table::build(Country::all())
 			->pageTitle('Страны')
+            ->model('country')
 			->addButton('ajax')
-			->all()
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->width('50px')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->search()
 					->contenteditable()
 					->get()

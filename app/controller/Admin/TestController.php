@@ -3,85 +3,103 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\core\Router;
-use app\Factory\AbstractTestFactory;
+use app\core\Response;
 use app\model\Test;
+use app\Repository\TestRepository;
 use app\view\Test\TestView;
 use app\view\View;
 
 
 class TestController extends AppController
 {
-	public $model = Test::class;
+   private TestView $testView;
+   private TestRepository $repository;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+   public function __construct()
+   {
+      parent::__construct();
+      $this->repository = new TestRepository();
+      $this->testView   = new TestView();
+   }
 
-	public function actionDo(): void
-	{
-		$id = $this->route->id;
-		$test = AbstractTestFactory::getFactory('test')->do($this->route->id);
-		$this->set(compact('test'));
-	}
+   public function actionDo(): void
+   {
+      $id = $this->route->id;
+      if ($id) {
+         $test = TestRepository::do($id);
+         $testView = $this->testView;
+         $this->setVars(compact('test','testView'));
+      } else {
+         $this->view = 'index';
+         $tests = $this->repository->treeAll();
+         $testView = $this->testView;
+         $this->setVars(compact('tests', 'testView'));
+      }
 
-
-	public function actionEdit()
-	{
-		$id = Router::getRoute()->id;
-		$test = Test::query()->find($id);
-
-		if ($test) {
-			$item = TestView::item($test);
-			$this->set(compact('item'));
-
-		} else {
-			$test = '';
-			$this->set(compact('test'));
-		}
-	}
-
-	public function actionIndex()
-	{
-		View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
-	}
-
-	public function actionPathshow()
-	{
-		$this->layout = 'admin';
-		$this->view = 'edit_show';
-		$page_name = 'Создание папки';
-		$this->set(compact('page_name'));
-
-		$paths = $this->paths();
-		$this->set(compact('paths'));
-
-		$test['isTest'] = 0;
-		$rootTests = Test::where('isTest', 0)->get()->toArray();
-		$this->set(compact('rootTests', 'test'));
-	}
-
-	public function actionGetCorrectAnswers()
-	{
-		$this->exitJson(($_SESSION['correct_answers']));
-	}
+   }
 
 
-	public function actionPaths()
-	{
-		exit(json_encode($this->paths()));
-	}
+   public function actionEdit(): void
+   {
+      $id   = $this->route->id;
 
-	private function paths()
-	{
-		return Test::where('isTest', '0')->get()->toArray();
-	}
+      if ($id) {
+         $this->route->setView('edit/edit');
+         $test = TestRepository::do($id);
+         $testView = $this->testView;
+         $this->setVars(compact('test','testView'));
+      } else {
+         $this->route->setView('index');
+         $tests = $this->repository->treeAll();
+         $testView = $this->testView;
+         $this->setVars(compact('tests', 'testView'));
+      }
 
-	public function actionTests()
-	{
-		$this->exitJson(Test::where('isTest', '1')->get()->toArray());
-	}
+//      $test = TestRepository::findById($id);
+//      if ($test) $test = $this->testView->item($test);
+//      $accordion = $this->testView->getAccordion();
+//      $this->set(compact('test', 'accordion'));
+   }
+
+   public function actionIndex(): void
+   {
+      View::setMeta('Система тестирования', 'Система тестирования', 'Система тестирования');
+   }
+
+   public function actionPathshow()
+   {
+      $this->layout = 'admin';
+      $this->view   = 'edit_show';
+      $page_name    = 'Создание папки';
+
+      $paths = $this->paths();
+
+      $test['isTest'] = 0;
+      $rootTests      = Test::where('isTest', 0)->get()->toArray();
+
+      $this->setVars(compact('rootTests', 'page_name', 'paths', 'test'));
+   }
+
+   public function actionGetCorrectAnswers()
+   {
+      Response::exitJson(($_SESSION['correct_answers']));
+   }
+
+
+//   public function actionPaths()
+//   {
+//      exit(json_encode($this->paths()));
+//   }
+
+   private function paths()
+   {
+      return Test::where('isTest', '0')->get()->toArray();
+   }
+
+   public function actionTests()
+   {
+      Response::exitJson(Test::where('isTest', '1')->get()->toArray());
+   }
 
 
 }

@@ -1,27 +1,23 @@
 <?php
 
-
 namespace app\core;
-
 
 class Icon
 {
 
-	public static $commonPicPath = 'pic';
-	public static $commonIconPath = 'icons';
+    public static function __callStatic($name, $arguments): string
+    {
+        $commonPicPath  = 'pic';
+        $commonIconPath = 'icons';
+        $arg            = count($arguments) ?
+            $arguments[0] . DIRECTORY_SEPARATOR :
+            '';
 
-	public static function __callStatic($name, $arguments):string
-	{
-		$arg = count($arguments)?
-			$arguments[0].DIRECTORY_SEPARATOR:
-			'';
+        $path = ROOT . "/{$commonPicPath}/{$commonIconPath}/$arg$name.svg";
+        $file = FS::platformSlashes($path);
+        if (!is_readable($file)) return $file;
 
-		$ext = '.svg';
-		$path = ROOT."/".self::$commonPicPath."/".self::$commonIconPath."/".$arg.$name.$ext;
-		$file = FS::platformSlashes($path);
-		if (!is_readable($file)) return $file;
-
-		return FS::getFileContent($file);
-	}
+        return FS::getFileContent($file);
+    }
 
 }

@@ -1,12 +1,12 @@
 <div class="page-name">
 	Категория
-	<a href="/adminsc/category/edit">
+	<a href="/adminsc/category/create">
 		<button>Добавить</button>
 	</a>
 </div>
 
 <div class="category-tree">
 	<ul>
-		 <?= $accordion; ?>
+		 <?= $categoryTree; ?>
 	</ul>
 </div>

@@ -3,6 +3,8 @@
 namespace app\controller;
 
 
+use app\Actions\Helpers;
+
 class MainController extends AppController
 {
 
@@ -11,10 +13,14 @@ class MainController extends AppController
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
+//        Helpers::copyUnits();
+//        Helpers::makeUnitsShippable();
 		$this->assets->setMeta('Нитриловые перчатки оптом', 'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.', 'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
 	}
+
+
 
 	public function actionPoliticaconf()
 	{
@@ -65,7 +71,7 @@ class MainController extends AppController
 	public function actionNews()
 	{
 		$content = 'Следите за новостями)';
-		$this->set(compact('content'));
+		$this->setVars(compact('content'));
 		$this->assets->setMeta('Новости', 'Новости', 'Новости');
 	}
 

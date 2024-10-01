@@ -1,54 +1,40 @@
-<?
-
-use app\core\Error;
-//require_once __DIR__ . '/helpers.php';
-?>
 <!DOCTYPE html>
 <html>
 <!--ADMIN-LAYOUT-->
 <head>
-	<meta name="token" content="<?= $_SESSION['token'] ?>">
-	<meta name="robots" content="noindex,nofollow"/>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--	<script type="module" crossorigin="true" src="ws://localhost:5174/"></script>-->
-<!--	--><?//include (ROOT.'/public/build/index.html');?>
-<!--	--><?//= vite('main.js') ?>
-	<?= $this->assets->getCss() ?>
-	<?= $this->assets->getCDNCss() ?>
+    <meta name="phpSession" content="<?= $_SESSION['phpSession'] ?? ''; ?>">
+    <meta name="robots" content="noindex,nofollow"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
+
+    <?= $assets->getCss() ?>
 
 </head>
 
 <body>
 
-<div class="admin-layout__container">
+<div class="admin-layout__containe">
 
+    <?= $header; ?>
 
+    <div class="admin-layout_content content">
 
+        <div class="adm-content">
+            <?= $errors; ?>
+            <?= $content; ?>
+        </div
 
+    </div>
 
-
-	<?= $this->getHeader(); ?>
-
-
-
-
-	<div class="admin-layout__content">
-
-		<div class="adm-content">
-		 <?= Error::getErrorHtml() ?>
-				<?= $this->getContent(); ?>
-		</div
-
-	</div>
-
-	<div class="led"></div>
+    <div class="led"></div>
 </div>
 
-<?= $this->getFooter();?>
+<?= $footer; ?>
 
-<?= $this->assets->getJs() ?>
-<?= $this->assets->getCDNJs() ?>
+<?= $assets->getJs() ?>
+
 
 </body>
+
 </html>
