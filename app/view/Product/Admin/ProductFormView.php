@@ -150,7 +150,7 @@ class ProductFormView
                     ->get()
             )
             ->field(
-                ItemFieldBuilder::build('instore', $product)
+                ItemFieldBuilder::build('main_image', $product)
                     ->name('Основная картинка')
                     ->html(self::mainImage($product))
                     ->get()

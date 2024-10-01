@@ -99,8 +99,6 @@ class SyncService
     public function load(): void
     {
         try {
-            $this->logDate();
-            $this->log('Начата ручная загрузка');
             $this->importFilesExist();
 //            $this->trancateService->softTrancate();
             $this->LoadCategories();

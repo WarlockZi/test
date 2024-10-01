@@ -20,10 +20,6 @@
                         </a>
                         <?= \app\view\share\card_panel\CardPanel::categoryCardPanel($child) ?>
                     </div>
-<!--                    <a class="category-card" href="/catalog/--><?php //= $child->slug ?><!--">-->
-<!--                        --><?php //= $child->name ?>
-<!--                    </a>-->
-
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
@@ -33,7 +29,7 @@
 
             <div class="products-header">
                 <h2>Товары в наличии</h2>
-                <!--					--><?php //= $category->products->filters ?>
+
             </div>
 
             <div class="product-wrap">
@@ -51,7 +47,6 @@
 
             <div class="products-header">
                 <h2>Товары под заказ</h2>
-                <!--					--><?php //= $category->products->filters ?>
             </div>
 
             <div class="product-wrap">

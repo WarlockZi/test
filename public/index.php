@@ -1,7 +1,7 @@
 <?php
 
-use app\core\Auth;
 use app\core\Router;
+use app\model\Category;
 
 session_start();
 $_SESSION['phpSession'] = session_id();
@@ -16,8 +16,10 @@ try {
 //        ->first();
 //	Auth::setUser($Olya);
 
+    Cat();
     $router = new Router($_SERVER['REQUEST_URI'] ?? '');
     $router->dispatch();
+
 
     exit();
 } catch (Throwable $e) {
@@ -28,4 +30,29 @@ try {
     exit($e);
 }
 
+function Cat(): void
+{
+    Category::with('parent')->get()->each(function (Category $category) {
+        $path = [];
+        if (!$category->parent) {
+            $category->ownProperties->path = '';
+            $category->ownProperties->save();
+        } else {
+            $localCategory = $category;
+            while ($category->parent) {
+                $path[]                        = $category->parent->slug;
+                $str                           = implode('/', array_reverse($path));
+                $category = $category->parent;
+            }
+            $id =$localCategory->id;
+            if ( $id === 9) {
+                $localCategory->ownProperties->path = $str;
+                $localCategory->ownProperties->save();
+                $c = $localCategory->toArray();
+                $s = $str;
+            }
+            $s = $str;
+        }
+    });
+}
 

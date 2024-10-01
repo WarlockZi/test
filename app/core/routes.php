@@ -3,8 +3,8 @@
 $this->add("^\/(?P<controller>product)\/?(?P<slug>[_a-z0-9-]+)$", ['controller' => 'Product']);
 $this->add("^\/short\/(?P<slug>.+)?\/?$", ['controller' => 'Short']);
 
-$this->add("^\/(?P<controller>catalog)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Category', 'redirect' => ['catalog'=>'category']]);
-$this->add("^\/(?P<controller>category)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Category']);
+$this->add("^\/(?P<controller>catalog)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Category']);
+$this->add("^\/(?P<controller>category)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Category', 'redirect' => ['category'=>'catalog']]);
 
 $this->add("^\/(?P<controller>promotion)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Promotion']);
 $this->add("^\/(?P<controller>main)\/(?P<action>[a-zA-Z0-9]+)$");

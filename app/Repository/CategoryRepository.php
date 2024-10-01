@@ -100,7 +100,8 @@ class CategoryRepository
     {
         $cat = Category::query()
             ->where('category_id', null)
-            ->with('childrenRecursive')
+            ->with('childrenRecursive',)
+            ->with('ownProperties')
             ->select('id', 'name')
             ->whereNull('deleted_at')
             ->get();

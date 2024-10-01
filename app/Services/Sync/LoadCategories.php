@@ -73,15 +73,13 @@ class LoadCategories
 
     protected function setCategoryOwnProps(Category $category): CategoryProperty
     {
-        $catProps = CategoryProperty::updateOrCreate(
-            ['category_1s_id' => $category['1s_id']],
-            ['show_front' => $category->show_front,]
-        );
+        $catProps = CategoryProperty::where('category_1s_id', $category['1s_id'])
+        ->first();
         if (!$catProps->short_link) {
             $catProps->short_link = ShortlinkService::getValidShortLink();
         }
         if (!$catProps->slug) {
-            $catProps->slug = $category->slug ?? SlugService::getValidCategorySlug($category);
+            $catProps->slug = SlugService::getValidCategorySlug($category);
         }
 
         $catProps->save();
