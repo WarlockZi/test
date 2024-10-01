@@ -46,6 +46,7 @@ function Cat(): void
             $str                                = implode('/', array_reverse($path));
             $localCategory->ownProperties->path = $str;
             $localCategory->ownProperties->save();
+            echo $localCategory->ownProperties->path;
         }
     });
 }
