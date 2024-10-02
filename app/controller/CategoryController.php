@@ -5,6 +5,7 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\core\Icon;
+use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
 use app\view\share\card_panel\CardPanel;
@@ -41,6 +42,8 @@ class CategoryController extends AppController
                 $keywords = $category->ownProperties->seo_keywords ?? $category->name;
                 $this->assets->setMeta($title, $desc, $keywords);
             } else {
+                $rootCategories = CategoryRepository::showFrontCategories();
+                $this->setVars(compact('rootCategories'));
                 http_response_code(404);
             }
 
