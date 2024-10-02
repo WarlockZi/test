@@ -1,8 +1,6 @@
 <?php
 
 use app\core\Router;
-use \app\Services\UrlService;
-use \app\Services\MockUserService;
 
 session_start();
 $_SESSION['phpSession'] = session_id();
@@ -10,8 +8,9 @@ $_SESSION['phpSession'] = session_id();
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 try {
-//    MockUserService::mockUser();
-    UrlService::generateUrls();
+//    \app\Services\MockUserService::mockUser();
+//    \app\Services\UrlService::generateUrls();
+//    \app\Services\SiteMapService::generateMap();
 
     $router = new Router($_SERVER['REQUEST_URI'] ?? '');
     $router->dispatch();

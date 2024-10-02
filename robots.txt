@@ -5,7 +5,6 @@ Disallow: /libs/
 Disallow: /config/
 Disallow: /bit/
 Disallow: /app/
-Disallow: /catalog/
 Disallow: /about/
 Disallow: /search/
 Disallow: /adminsc/
