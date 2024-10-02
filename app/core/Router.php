@@ -2,6 +2,7 @@
 
 namespace app\core;
 
+use app\model\Category;
 use app\Services\Logger\ErrorLogger;
 
 class Router
@@ -32,7 +33,7 @@ class Router
 
                 $matches = array_merge($matches, $r);
                 foreach ($matches as $k => $v) {
-                    $this->route->$k = is_string($v)?strtolower($v):$v;
+                    $this->route->$k = is_string($v) ? strtolower($v) : $v;
                 }
 
                 $this->redirect();
@@ -42,20 +43,25 @@ class Router
         }
         $this->route->isNotFound() ? $this->route->setActionName('default') : $f = 1;
     }
-    private function redirect():void
+
+    private function redirect(): void
     {
         if (!$this->route->redirect) return;
-        $arr = $this->route->getRedirect();
-        $from = key($arr);
-        $to = $arr[$from];
-        $url = $this->route->getUrL();
-        $newUrl = str_replace($from,$to,$url);
-
-//        header("HTTP/2 301 Moved Permanently");
-//        header("Location: https://{$this->route->getHost()}".$newUrl);
-        header("Location: https://{$this->route->getHost()}".$newUrl, true, 301);
-        exit();
-
+        $arr    = $this->route->getRedirect();
+        $from   = key($arr);
+        $to     = $arr[$from];
+        $url    = $this->route->getUrL();
+        if ($to==='catalog') {
+            $slug = $this->route->slug;
+            $path = Category::where('slug', $slug)
+                ->with('ownProperties')
+                ->first()->ownProperties->path;
+            $newUrl = str_replace('/category/','',$url);
+            $newUrl = '/catalog/'.$path;
+            header("Location: https://{$this->route->getHost()}" . $newUrl, true, 301);
+            exit();
+        }
+//        $newUrl = str_replace($from, $to, $url);
     }
 
     public function dispatch(): void

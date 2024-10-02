@@ -27,23 +27,13 @@ class CategoryRepository
             ->get();
     }
 
-//    public static function editSelectorExcluded($category): array
-//    {
-//        return Category::query()
-//            ->where('category_id', $category->id)
-//            ->select('id')
-//            ->get()
-//            ->pluck('id')
-//            ->push($category->id)
-//            ->toArray();
-//    }
-
-    public function indexInstore(string $slug)
+    public function indexInstore(string $path)
     {
         $category = Category::query()
-            ->where('slug', $slug)
             ->with('childrenRecursive')
-            ->with('ownProperties')
+            ->withWhereHas('ownProperties',
+                fn($query) => $query->where('path', 'like', $path)
+            )
             ->with('parentRecursive')
             ->with('products.ownProperties')
             ->with('products.orderItems')
@@ -56,7 +46,6 @@ class CategoryRepository
             ->with('products.shippableUnits')
             ->get()
             ->first();
-//        $c = $category->toArray();
         return $category;
 
     }

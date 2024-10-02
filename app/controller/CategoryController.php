@@ -27,7 +27,8 @@ class CategoryController extends AppController
         if ($this->route->slug) {
             $this->route->setView('category');
 
-            $slug     = $this->route->slug;
+            $slug = $this->route->slug;
+
             $category = $this->repo->indexInstore($slug);
 
             if ($category) {

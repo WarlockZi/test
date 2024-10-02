@@ -322,6 +322,11 @@ function setInit(url, body){
    const headers = {"X-Requested-With": "XMLHttpRequest"}
    if (!(body instanceof FormData)) {
       headers["Content-Type"] = "application/x-www-form-urlencoded"
+   }else{
+      return {
+         method: 'POST',
+         body: body
+      }
    }
    return {
       method: 'POST',

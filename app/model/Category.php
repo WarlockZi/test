@@ -27,7 +27,8 @@ class Category extends Model
         'deleted_at',
     ];
 
-    protected $appends = ['shortLink'];
+    protected $appends = ['shortLink','href'];
+
     public function InactivePromotions()
     {
         return $this->products->activepromotions();
@@ -35,14 +36,22 @@ class Category extends Model
 
     protected function getShortLinkAttribute(): string
     {
-        if (!$this->ownProperties){
+        if (!$this->ownProperties) {
             return '';
         }
-        $link = $this->ownProperties->short_link;
+        $link   = $this->ownProperties->short_link;
         $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
-        $host = $_SERVER['HTTP_HOST'] ?? '';
+        $host   = $_SERVER['HTTP_HOST'] ?? '';
         return "{$scheme}://{$host}/short/{$link}";
     }
+    protected function getHrefAttribute(): string
+    {
+        if (!$this->ownProperties) return '';
+
+        $path   = $this->ownProperties->path;
+        return "/catalog/{$path}";
+    }
+
     public function ActivePromotions()
     {
         return $this->products->activepromotions();
@@ -51,10 +60,11 @@ class Category extends Model
     protected static function booted()
     {
         static::Updating(function ($category) {
-            $category->slug = SlugService::slug($category->name);
+            if (!$category->slug) {
+                $category->slug = SlugService::slug($category->name);
+            }
             return $category;
         });
-
     }
 
 
@@ -66,20 +76,18 @@ class Category extends Model
         )->where('slug', '=', 'main');
     }
 
-//    public function seo()
-//    {
-//        return $this
-//            ->hasOne(Seo::class, 'product_category_1sid', '1s_id');
-//    }
 
     public function ownProperties()
     {
         return $this->hasOne(CategoryProperty::class, 'category_1s_id', '1s_id');
     }
-    public function scopeWithWhereHas($query, $relation, $constraint){
+
+    public function scopeWithWhereHas($query, $relation, $constraint)
+    {
         return $query->whereHas($relation, $constraint)
             ->with([$relation => $constraint]);
     }
+
     public function properties()
     {
         return $this->morphToMany(Property::class, 'propertable');
