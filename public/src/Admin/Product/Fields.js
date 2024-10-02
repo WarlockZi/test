@@ -6,10 +6,10 @@ export default class Fields {
     this.$product = $product;
     this.$fields = $('.item_content').first();
 
-    this.$category_id = $(`[data-field="category_id"]`).first();
     this.$promotions = $(`[data-field="active_promotions"]`).first();
+    this.$category_id = $(`[data-field="category_id"]`).first();
     this.$base_unit = $(`[data-field="base_unit"]`).first();
-    this.$manufacturer_id = $(`[data-field="manufacturer_id"]`).first();
+    this.$manufacturer_id = $(`[data-field="manufacturer"]`).first();
     this.$printName = $(`[data-field='print_name']`).first();
     this.$printName.addEventListener('catalogItem.changed', this.changePrintName.bind(this))
 

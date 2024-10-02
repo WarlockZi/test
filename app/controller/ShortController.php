@@ -21,10 +21,10 @@ class ShortController extends AppController
         if ($slug) {
             header("Location:/product/{$slug}");
         } else {
-            $slug = Category::withWhereHas('ownProperties',
+            $path = Category::withWhereHas('ownProperties',
                 fn($query) => $query->where('short_link', 'like', $shortLink)
-            )->first()->slug;
-            header("Location:/catalog/{$slug}");
+            )->first()->ownProperties->path;
+            header("Location:/catalog/{$path}");
         }
 
     }
