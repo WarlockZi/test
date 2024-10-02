@@ -19,12 +19,12 @@ import {$} from "../common";
 
 const loginForm = $("[data-auth='login']").first();
 if (loginForm){
-    const {default:Login} = await import('./login')
+    const {default:Login} = await import('./login.js')
     new Login()
 }
 
 if ($('.modal-wrapper')){
-    const {default:Modal} = await import("../components/Modal/modal")
+    const {default:Modal} = await import("../components/Modal/modal.js")
     new Modal()
 }
 
