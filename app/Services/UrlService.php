@@ -22,7 +22,6 @@ class UrlService
                 $str                                = implode('/', array_reverse($path)).'/'.$localCategory->slug;
                 $localCategory->ownProperties->path = $str;
                 $localCategory->ownProperties->save();
-//                echo $localCategory->ownProperties->path;
             }
         });
     }

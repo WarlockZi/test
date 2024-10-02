@@ -11,7 +11,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 try {
 //    MockUserService::mockUser();
-//    UrlService::generateUrls();
+    UrlService::generateUrls();
 
     $router = new Router($_SERVER['REQUEST_URI'] ?? '');
     $router->dispatch();
