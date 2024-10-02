@@ -8,6 +8,7 @@ Disallow: /app/
 Disallow: /about/
 Disallow: /search/
 Disallow: /adminsc/
+Disallow: /tel*
 
 Disallow: /auth/login
 Disallow: /short/*
@@ -16,6 +17,8 @@ Disallow: /auth/forgot
 Disallow: /auth/returnpass
 Disallow: /main/requisites
 Disallow: /main/politicaconf
+Disallow: /main/returnChange
+Disallow: /main/oferta
 Disallow: /cart
 Disallow: /404
 
