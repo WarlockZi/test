@@ -435,16 +435,14 @@ header {
     &:hover {
       background-color: $color-main-hover;
 
-      ul:not(:has(.mtree)) {
-        position: relative;
-        li{
-          position: absolute;
-          top:0;
-          left: 100%;
-
-        }
-
-      }
+      //ul:not(:has(.mtree)) {
+      //  position: relative;
+      //  li{
+      //    position: absolute;
+      //    top:0;
+      //    left: 100%;
+      //  }
+      //}
 
       ul {
         height: auto;
