@@ -106,6 +106,9 @@
     <li><a href="#">Arctica</a></li>
     <li><a href="#">Antarctica</a></li>
 </ul>
+
+
+
 <style>
 
     ul.mtree {
@@ -150,7 +153,7 @@
      }
 
 
-    // bubba skin
+    /*// bubba skin*/
        ul.mtree.bubba {
            ul {margin-left:0;}
            ul li { font-size: .9em; }
@@ -170,7 +173,7 @@
            li li li li li > a { padding-left: $indent*5; }
        }
 
-    // skinny skin
+    /*// skinny skin*/
        ul.mtree.skinny {
            li { font-size: .9em; }
            a { padding: 0px 18px; color: #555; }
@@ -183,7 +186,7 @@
            ul a {color:#666;}
        }
 
-    // transit skin
+    /*// transit skin*/
        ul.mtree.transit {
            background: #111;
            ul {margin-left: 0;}
@@ -205,7 +208,7 @@
            li li li li li > a { padding-left: $indent*5; }
        }
 
-    // jet skin
+    /*// jet skin*/
        ul.mtree.jet {
            ul { margin-left: 0; }
            li { margin-bottom: 1px; }
@@ -223,7 +226,7 @@
            li li li li li > a { padding-left: $indent*5; }
        }
 
-    // nix skin / below just reverts to default list styles.
+    /*// nix skin / below just reverts to default list styles.*/
                   ul.mtree.nix {
                       background: none;
                       a {display: inline;}
@@ -234,8 +237,8 @@
 
 
 
-    // ** DEMO STUFF **
-    // disregard this ...
+    /*// ** DEMO STUFF ***/
+    /*// disregard this ...*/
        .mtree-demo {
            .mtree {
                background: #EEE;
@@ -245,7 +248,7 @@
            }
        }
 
-    // Skin selector for demo
+    /*// Skin selector for demo*/
        .mtree-skin-selector {
            text-align: center;
            background: #EEE;

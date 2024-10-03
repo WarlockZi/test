@@ -14,10 +14,13 @@ class CategoryRepository
 
     public static function showFrontCategories(): array
     {
-        return Category::query()
+        $rootCats = Category::query()
             ->where('show_front', 1)
-            ->with('childrenNotDeleted')
-            ->get()->toArray();
+//            ->with('childrenNotDeleted')
+            ->with('childrenRecursive')
+            ->get()
+            ->toArray();
+        return $rootCats;
     }
 
     public static function indexNoSlug()
@@ -26,7 +29,11 @@ class CategoryRepository
             ->with('childrenRecursive')
             ->get();
     }
-
+    public static function frontCategories()
+    {
+        return Category::where('show_front', 1)
+            ->get();
+    }
     public function indexInstore(string $path)
     {
         $category = Category::query()

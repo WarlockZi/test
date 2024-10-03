@@ -165,7 +165,7 @@
     ]
   },
   "Auth/auth.js": {
-    "file": "assets/auth-DqF6JD-x.js",
+    "file": "assets/auth-DktFnBMQ.js",
     "name": "auth",
     "src": "Auth/auth.js",
     "isEntry": true,
@@ -216,7 +216,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-CgFp4AVc.js",
+    "file": "assets/main-DI7j7eb3.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
