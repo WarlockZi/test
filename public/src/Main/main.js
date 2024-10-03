@@ -3,6 +3,7 @@ import '../404/404.scss'
 
 import {ael, qs} from '../constants';
 import '../share/hoist/hoist';
+import '../components/header/show-front-menu.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
 

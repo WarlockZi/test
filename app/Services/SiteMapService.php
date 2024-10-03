@@ -7,6 +7,7 @@ class SiteMapService
 
     public static function generateMap()
     {
+        //ToDo
         $self = new self();
         $url  = 'https://vitexopt.ru';
         $ch   = curl_init();
