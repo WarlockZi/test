@@ -20,7 +20,6 @@ class BlueRibbonRepository
 
         return [
             'front_categories' => CategoryRepository::frontCategories(),
-//            'categories' => CategoryRepository::showFrontCategories(),
             'child_categories' => $child_categories,
             'oItems' => CartRepository::count(),
             'icon' => Icon::shoppingCart('feather'),
@@ -32,7 +31,7 @@ class BlueRibbonRepository
         echo '<ul class="show-front_submenu mtree">';
         foreach ($array as $item) {
             echo '<li>';
-            echo $item['name'];
+            echo "<a href='{$item['href']}'>{$item['name']}</a>";
             if (!empty($item['children_recursive'])) {
                 self::buildMenu($item['children_recursive']);
             }
