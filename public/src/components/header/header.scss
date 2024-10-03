@@ -59,7 +59,6 @@ header {
     }
 
 
-
     .result {
       position: absolute;
       display: none;
@@ -308,7 +307,7 @@ header {
     position: relative;
     background: $color-main;
 
-    .show-front-a{
+    .show-front-a {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -435,6 +434,17 @@ header {
 
     &:hover {
       background-color: $color-main-hover;
+
+      ul:not(:has(.mtree)) {
+        position: relative;
+        li{
+          position: absolute;
+          top:0;
+          left: 100%;
+
+        }
+
+      }
 
       ul {
         height: auto;
