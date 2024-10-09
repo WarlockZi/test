@@ -4,9 +4,8 @@
 namespace app\Domain\Product\Image;
 
 
-use app\Domain\Product\Image\AbstractProductImage;
 use app\model\Product;
-use app\Services\ImagickService;
+use app\Services\ImageService\ImagickService;
 
 class ProductMainImageEntity extends AbstractProductImage
 {

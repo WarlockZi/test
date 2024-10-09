@@ -18,14 +18,14 @@
     "illuminate/events": "^8.83",
     "illuminate/database": "^8.83",
     "ext-mysqli": "*",
-    "symfony/validator": "^7.0",
     "ext-pdo": "*",
     "ext-curl": "*",
-    "ext-ssh2": "*",
-    "ext-pthreads": "*"
+    "ext-sockets": "*"
   },
   "config": {
     "platform-check": false
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.4"
   }
-
 }

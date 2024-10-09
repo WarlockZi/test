@@ -49,7 +49,7 @@ final class RepositoryBuilder
     private $immutable;
 
     /**
-     * The variable name allow table.
+     * The variable name allow list.
      *
      * @var string[]|null
      */
@@ -65,7 +65,7 @@ final class RepositoryBuilder
      *
      * @return void
      */
-    private function __construct(array $readers = [], array $writers = [], bool $immutable = false, array $allowList = null)
+    private function __construct(array $readers = [], array $writers = [], bool $immutable = false, ?array $allowList = null)
     {
         $this->readers = $readers;
         $this->writers = $writers;
@@ -238,13 +238,13 @@ final class RepositoryBuilder
     }
 
     /**
-     * Creates a repository builder with the given allow table.
+     * Creates a repository builder with the given allow list.
      *
      * @param string[]|null $allowList
      *
      * @return \Dotenv\Repository\RepositoryBuilder
      */
-    public function allowList(array $allowList = null)
+    public function allowList(?array $allowList = null)
     {
         return new self($this->readers, $this->writers, $this->immutable, $allowList);
     }

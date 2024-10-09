@@ -3,12 +3,29 @@
 @import "user_menu";
 
 
-header {
+.header {
   display: flex;
   flex-direction: column;
-  background: #fff;
+  //background: #2180d1d1;
   flex: 0 0 auto;
   align-items: center;
+  position: fixed;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1;
+
+  &.short {
+    transition: all 1s;
+    z-index: 1;
+
+    & > .info {
+      max-height: 0;
+      overflow: hidden;
+    opacity: 0;
+    }
+  }
+
 
   .search-panel {
     display: flex;
@@ -223,7 +240,7 @@ header {
 
   .menu {
     width: 100%;
-    z-index: 1;
+    //z-index: 1;
   }
 
   .info {
@@ -232,8 +249,11 @@ header {
     width: 100%;
     flex: 1 0 auto;
     justify-content: space-between;
-    margin: 3px 0;
-    //z-index: 1;
+    //margin: 3px 0;
+    transition: max-height 300ms ease, opacity 500ms ;
+    z-index: 1;
+    max-height: 500px;
+    opacity: 1;
 
     .logo {
       display: flex;
@@ -294,7 +314,8 @@ header {
   }
 
   .header-catalog-menu {
-    background-color: $color-main;
+    background-color: #2180d1c7;
+    backdrop-filter: blur(10px);
 
     //background-color: $color-main;
     top: 0;
@@ -305,7 +326,7 @@ header {
   .header-catalog-menu__wrap {
     display: flex;
     position: relative;
-    background: $color-main;
+    //background: $color-main;
 
     .show-front-a {
       position: absolute;
@@ -453,7 +474,7 @@ header {
         box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
         overflow: visible;
         cursor: text;
-        width: fit-content;
+        width: clamp(100%, 100px, 300px);
 
         li {
           cursor: pointer;

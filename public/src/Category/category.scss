@@ -1,7 +1,13 @@
 @import "../var";
 @import "../mixin_media";
 
+.page-name{
+  margin-top: 50px;
+}
+
 .category {
+  margin-bottom: 100px;
+
   .products-header {
     position: relative;
     margin-bottom: 35px;

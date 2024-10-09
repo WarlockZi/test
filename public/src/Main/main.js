@@ -4,11 +4,14 @@ import '../404/404.scss'
 import {ael, qs} from '../constants';
 import '../share/hoist/hoist';
 import '../components/header/show-front-menu.js';
+import '../components/animate/animate.js'
+
 
 document.addEventListener('DOMContentLoaded', async function () {
 
    const admin = window.location.pathname.includes('adminsc')
    if (admin) return false
+
    const searchButton = document[qs]('.utils .search');
    if (searchButton) {
       const {default:Search} = await import('../components/search/search');

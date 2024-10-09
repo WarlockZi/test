@@ -9,13 +9,13 @@ class BlueRibbonRepository
     public static function data()
     {
         $str      = '';
-        $rootCats = CategoryRepository::showFrontCategories();
+        $rootCatProps = CategoryRepository::showFrontCategories();
 
         $child_categories = [];
-        foreach ($rootCats as $rootCat) {
+        foreach ($rootCatProps as $rootCatProp) {
             ob_start();
-            self::buildMenu($rootCat['children_recursive']);
-            $child_categories[$rootCat['name']] = ob_get_clean();
+            self::buildMenu($rootCatProp['category']['children_recursive']);
+            $child_categories[$rootCatProp['category']['name']] = ob_get_clean();
         }
 
         return [

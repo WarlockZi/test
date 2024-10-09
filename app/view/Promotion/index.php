@@ -1,5 +1,5 @@
 <div class="promotions-index">
-	<div class="page-title">
+	<div class="page-name">
 		Акции
 
 	</div>

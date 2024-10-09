@@ -66,7 +66,7 @@ class ProductFormView
         foreach ($product->shippableUnits as $unit) {
             $formattedPrice    = $this->getFormattedPrice($product->price, $unit->pivot->multiplier);
             $promotion         = $product->activePromotions->first() ?? null;
-            $promotionNewPrice = $promotion ? $this->getFormattedPrice($promotion->new_price,1) : '';
+            $promotionNewPrice = $promotion ? $this->getFormattedPrice($promotion->new_price, 1) : '';
             $promotion         = $product->activePromotions->first() ?? null;
             $str               .= $this->fs->getContent('shippableUnitRow',
                 compact('product', 'formattedPrice', 'unit', 'promotion', 'promotionNewPrice'));
@@ -285,7 +285,8 @@ class ProductFormView
 
     protected static function getSeo(Product $product): string
     {
-        return "<div class='show'>" .
+        return $product->ownProperties
+            ? "<div class='show'>" .
             ItemFieldBuilder::build('seo_description', $product->ownProperties)
                 ->name('Description')
                 ->contenteditable()
@@ -301,7 +302,13 @@ class ProductFormView
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
-            "</div>";
+            ItemFieldBuilder::build('seo_h1', $product->ownProperties)
+                ->name('h1')
+                ->contenteditable()
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
+            "</div>"
+            :'Справочник отсутствует';
     }
 
     public static function unitsRow(Unit $unit, string $name, bool $deletable): string
@@ -332,7 +339,7 @@ class ProductFormView
         $noneSelector = SelectBuilder::build(
             ArrayOptionsBuilder::build(Unit::all())
                 ->initialOption()
-                ->excluded($baseUnit->id)
+                ->excluded($baseUnit->id ?? 0)
                 ->get()
         )
             ->class('name')
@@ -361,10 +368,10 @@ class ProductFormView
         return $inactivePromotions . '<hr>' . $activePromotions;
     }
 
-    private static function commonPromotions(Collection $items, string $relation, string $title, bool $addButton, bool $edit):string
+    private static function commonPromotions(Collection $items, string $relation, string $title, bool $addButton, bool $edit): string
     {
         $customList = Table::build($items)
-            ->relation($relation,'promotion')
+            ->relation($relation, 'promotion')
             ->pageTitle($title)
             ->column(
                 ColumnBuilder::build('new_price')

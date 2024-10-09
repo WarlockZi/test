@@ -10,8 +10,8 @@
 @import '../components/popup.scss';
 @import "../components/breadcrumbs";
 
-@import "cart";
-@import "counter";
+@import "./cart";
+
 //@import "../font/Montserrat-7.210/Monserrat";
 
 .danger{
@@ -59,7 +59,7 @@
     flex-direction: column;
     margin: 0 auto;
     width: clamp(310px, 80%, 900px);
-    padding: 25px;
+    padding: 127px 0 0 0 ;
     background-color: white;
     min-height: 250px;
 
@@ -154,6 +154,8 @@
       margin-bottom: 8%;
       margin-top: 3%;
       max-width: 35%;
+      //transition: all 500ms ease;
+
       @include _1000 {
         max-width: 50%;
       }

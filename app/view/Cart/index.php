@@ -3,7 +3,7 @@
 
     <div class="<?= $products->count() ? '' : 'none'; ?> content">
 
-        <div class="page-title">Корзина</div>
+        <div class="page-name">Корзина</div>
 
         <?php include 'counter.php' ?>
 

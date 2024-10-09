@@ -29,6 +29,9 @@ class CategoryProperty extends Model
     {
         return $this->belongsTo(Category::class, 'category_1s_id');
     }
+    public function category(){
+        return $this->belongsTo(Category::class, 'category_1s_id', '1s_id');
+    }
 
 	public function property()
 	{
