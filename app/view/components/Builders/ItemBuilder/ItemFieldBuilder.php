@@ -24,7 +24,7 @@ class ItemFieldBuilder
     public bool $required = false;
     public string $contenteditable = '';
 
-    public static function build(string $fieldName, Model $item):static
+    public static function build(string $fieldName, Model|null $item):static
     {
         $field            = new static();
         $field->field     = $fieldName;
@@ -96,7 +96,6 @@ class ItemFieldBuilder
 
     public function toHtml(string $model): string
     {
-//        $this->dataModel = "data-model=$model";
         $field           = $this;
         ob_start();
         include ROOT . '/app/view/components/Builders/ItemBuilder/row.php';

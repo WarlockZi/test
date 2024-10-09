@@ -1,35 +1,30 @@
-import './admin.scss'
-import './model/cache.js';
-// import '../components/header/header-adm.js'
-import '../components/accordion/accordion.js'
-import '../components/date/date.js'
-
 import {$} from "../common.js"
+import {qs} from '../constants'
+import './common.js'
 
 import './sync1c/sync1c.js'
 import './Planning/planning.js'
 import './Settings/settings.js'
 import './Videoinstructions/videoinstructions.js'
-import Search from "../components/search/search.js"
-import Promotion from "../Promotions/Promotion.js"
 import './ProductFilter/ProductFilter'
 
-import {qs} from '../constants'
+import AdminHeader from "../components/header/header-adm.js";
+import Promotion from "../Promotions/Promotion.js"
+import Search from "../components/search/search.js"
 import Navigate from "./components/Navigate.js";
 import '../components/table/table.js'
-import CatalogItem from "./components/catalog-item/catalog-item.js";
-import MyQuill from "../components/quill/quill.js";
 
-import '../share/scroll/scroll.js'
-import AdminHeader from "../components/header/header-adm.js";
-// import Accordion from "../components/accordion/accordion.js";
+
+
+
+
 $(document).ready(async function () {
-
-
-   new AdminHeader()
 
    const admin = window.location.pathname.includes('adminsc')
    if (!admin) return false
+
+   new AdminHeader()
+
 
    const test = window.location.href.includes("/test")
    if (test){

@@ -5,7 +5,7 @@ namespace app\Domain\Product\Image;
 
 
 use app\model\Product;
-use app\Services\ImagickService;
+use app\Services\ImageService\ImagickService;
 
 class ProductMainImage extends AbstractProductImage
 {

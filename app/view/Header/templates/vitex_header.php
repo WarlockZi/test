@@ -1,4 +1,4 @@
-<header>
+<header class="header">
     <? include_once ROOT. '/app/view/share/adminPanel/adminPanel.php'; ?>
 	<div class="info">
 

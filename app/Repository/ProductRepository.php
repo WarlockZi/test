@@ -19,6 +19,7 @@ class ProductRepository extends AppController
             ->withTrashed()
             ->where('1s_id', $id)
             ->whereNotNull('1s_id')
+//            ->with('price')
             ->with('category.properties.vals')
             ->with('values')
             ->with('ownProperties')

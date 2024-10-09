@@ -8,6 +8,7 @@ use app\Services\SlugService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 class Product extends Model
@@ -49,7 +50,7 @@ class Product extends Model
     }
     protected function getShortLinkAttribute(): string
     {
-        $link = $this->ownProperties->short_link;
+        $link = $this->ownProperties->short_link??'';
 //        if (!$link) {
 //            $link = ShortlinkService::getValidShortLink();
 //            $this->short_link = $link;
@@ -80,7 +81,7 @@ class Product extends Model
 
     public function getPriceAttribute()
     {
-        return $this->priceRelation()->first()->price;
+        return $this->priceRelation()->first()->price??null;
     }
 
     public function getFormattedPriceAttribute()
@@ -88,7 +89,7 @@ class Product extends Model
         return number_format($this->price, 2, '.', ' ');
     }
 
-    public function priceRelation()
+    public function priceRelation():HasOne
     {
         return $this->hasOne(Price::class, '1s_id', '1s_id');
     }
@@ -197,11 +198,11 @@ class Product extends Model
     }
 
 
-    public function seo()
-    {
-        return $this
-            ->hasOne(Seo::class, 'product_category_1sid', '1s_id');
-    }
+//    public function seo()
+//    {
+//        return $this
+//            ->hasOne(Seo::class, 'product_category_1sid', '1s_id');
+//    }
 
     public function values()
     {

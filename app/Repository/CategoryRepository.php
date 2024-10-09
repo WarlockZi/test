@@ -5,6 +5,7 @@ namespace app\Repository;
 
 
 use app\model\Category;
+use app\model\CategoryProperty;
 use app\view\components\Builders\SelectBuilder\optionBuilders\TreeOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use Illuminate\Database\Eloquent\Collection;
@@ -14,10 +15,10 @@ class CategoryRepository
 
     public static function showFrontCategories(): array
     {
-        $rootCats = Category::query()
+        $rootCats = CategoryProperty::query()
             ->where('show_front', 1)
 //            ->with('childrenNotDeleted')
-            ->with('childrenRecursive')
+            ->with('category.childrenRecursive')
             ->get()
             ->toArray();
         return $rootCats;
@@ -29,11 +30,16 @@ class CategoryRepository
             ->with('childrenRecursive')
             ->get();
     }
+
     public static function frontCategories()
     {
-        return Category::where('show_front', 1)
+        $cat = Category::withWhereHas('ownProperties',
+            fn($q) => $q->where('show_front', 1))
             ->get();
+
+        return $cat;
     }
+
     public function indexInstore(string $path)
     {
         $category = Category::query()

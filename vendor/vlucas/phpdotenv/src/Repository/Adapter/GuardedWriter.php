@@ -14,7 +14,7 @@ final class GuardedWriter implements WriterInterface
     private $writer;
 
     /**
-     * The variable name allow table.
+     * The variable name allow list.
      *
      * @var string[]
      */

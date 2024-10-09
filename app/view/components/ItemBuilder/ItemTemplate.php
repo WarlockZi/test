@@ -1,4 +1,4 @@
-<div class='page-title'><?= $pageTitle; ?></div>
+<div class='page-name'><?= $pageTitle; ?></div>
 <div
         class="item-wrap"
         data-model = "<?= $modelName; ?>"

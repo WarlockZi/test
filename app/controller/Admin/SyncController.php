@@ -87,7 +87,7 @@ class SyncController extends AppController
             exit($exc);
         }
         if ($_ENV['DEV'] == '1') {
-            Response::exitWithPopup('Categories loaded');
+            Response::exitWithPopup('Prices, units,  loaded');
         }
 
     }

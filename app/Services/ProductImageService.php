@@ -4,6 +4,7 @@ namespace app\Services;
 
 use app\core\FS;
 use app\model\Product;
+use app\Services\ImageService\ImagickService;
 
 class ProductImageService
 {
@@ -13,63 +14,72 @@ class ProductImageService
     private string $absNoImage;
     private string $art;
     private array $extensions = ['jpg', 'jpeg', 'png'];
+
     public function __construct()
     {
-        $this->absNoImage = FS::platformSlashes(ROOT . $this->relNoImage);
+        $this->absNoImage   = FS::platformSlashes(ROOT . $this->relNoImage);
         $this->absolutePath = FS::platformSlashes(ROOT . $this->relativePath);
     }
+
     public function getArt(Product $product): string
     {
-        $art = str_replace(['/', '//', '\\'], '_', $product->art);
+        $art       = str_replace(['/', '//', '\\'], '_', $product->art);
         $this->art = trim(strip_tags($art));
         return $this->art;
     }
+
     public function getRelativePath(): string
     {
         return $this->relativePath;
     }
+
     public function getAbsolutePath(): string
     {
         return $this->absolutePath;
     }
+
     public function getImageRelativePath(Product $product): string
     {
         $art = $this->getArt($product);
         foreach ($this->extensions as $ext) {
             $relFile = $this->relativePath . $art . ".{$ext}";
-            $file = FS::platformSlashes(ROOT . $relFile);
+            $file    = FS::platformSlashes(ROOT . $relFile);
             if (file_exists($file)) {
                 return $relFile;
             }
         }
         return $this->relNoImage;
     }
+
     public function getImageAbsolutePath(Product $product): string
     {
         $art = $this->getArt($product);
         foreach ($this->extensions as $ext) {
             $relFile = $this->absolutePath . $art . ".{$ext}";
-            $file = FS::platformSlashes($relFile);
+            $file    = FS::platformSlashes($relFile);
             if (file_exists($file)) {
                 return $relFile;
             }
         }
         return '';
     }
+
     public function getRelativeImage(Product $product): string
     {
-        if ($this->getImageRelativePath($product)){
-            return $this->getImageRelativePath($product);
-        }
-        return $this->relNoImage;
+//        if ($this->getImageRelativePath($product)){
+//            return ;
+//        }
+        return $this->getImageRelativePath($product) ?? $this->relNoImage;
     }
+
     public function getAbsoluteImage(Product $product): string
     {
-        if ($this->getImageAbsolutePath($product)){
+        if ($this->getImageAbsolutePath($product)) {
             return $this->getAbsoluteImage($product);
         }
-        return FS::platformSlashes(ROOT.$this->relNoImage);
+        return FS::platformSlashes(ROOT . $this->relNoImage);
     }
+
     protected function getPathWithExt($relOrAbs, $type = null): string
     {
         $type = $type ?? $this->getExtension();
@@ -77,10 +87,12 @@ class ProductImageService
             $this->art .
             '.' . $type;
     }
+
     public function getNoPhoto(): string
     {
         return $this->relNoImage;
     }
+
     public function getExtension(): string
     {
         if ($this->file) {
@@ -89,6 +101,7 @@ class ProductImageService
         }
         return $this->getFromAcceptedTypes();
     }
+
     public function thumbnail()
     {
         $absPath = $this->getImageAbsolutePath();
@@ -108,6 +121,7 @@ class ProductImageService
         $ima->img->clear();
         $ima->img->destroy();
     }
+
     protected function getFromAcceptedTypes()
     {
         foreach ($this->acceptedTypes as $type) {

@@ -115,18 +115,18 @@ function setNodeClass(el, isOpen) {
 }
 
 // List animation sequence
-if ($.Velocity && listAnim) {
-   $.Velocity.Sequences.list = function (element, options, index, size) {
-      $.Velocity.animate(element, {
-         opacity: [1, 0],
-         translateY: [0, -(index + 1)]
-      }, {
-         delay: index * (duration / size / 2),
-         duration: duration,
-         easing: easing
-      });
-   };
-}
+// if ($.Velocity && listAnim) {
+//    $.Velocity.Sequences.list = function (element, options, index, size) {
+//       $.Velocity.animate(element, {
+//          opacity: [1, 0],
+//          translateY: [0, -(index + 1)]
+//       }, {
+//          delay: index * (duration / size / 2),
+//          duration: duration,
+//          easing: easing
+//       });
+//    };
+// }
 
 // Fade in mtree after classes are added.
 // Useful if you have set collapsed = true or applied styles that change the structure so the menu doesn't jump between states after the function executes.

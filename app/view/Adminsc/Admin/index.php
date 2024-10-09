@@ -6,7 +6,7 @@ use app\core\Icon;
 
 <div class="main">
 
-	<div class="page-title">
+	<div class="page-name">
 		Главная
 	</div>
 

@@ -1,5 +1,5 @@
 <div class="no-main-unit">
-	<div class="page-title">
+	<div class="page-name">
 		Товары без основной единицы
 	</div>
 
