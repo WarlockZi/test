@@ -50,7 +50,7 @@ class CategoryController extends AppController
         } else {
             $this->route->setView('categories');
 
-            $categories = CategoryRepository::indexNoSlug();
+            $categories = CategoryRepository::frontCategories();
 
             $this->setVars(compact('categories'));
             $this->assets->setMeta('Категории', 'Категории:VITEX', 'Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент');

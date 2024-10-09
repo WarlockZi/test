@@ -3,19 +3,20 @@
 namespace app\Repository;
 
 use app\core\Icon;
+use Illuminate\Database\Eloquent\Collection;
+
 
 class BlueRibbonRepository
 {
     public static function data()
     {
-        $str      = '';
-        $rootCatProps = CategoryRepository::showFrontCategories();
+        $rootCats = CategoryRepository::frontCategories();
 
         $child_categories = [];
-        foreach ($rootCatProps as $rootCatProp) {
+        foreach ($rootCats as $rootCat) {
             ob_start();
-            self::buildMenu($rootCatProp['category']['children_recursive']);
-            $child_categories[$rootCatProp['category']['name']] = ob_get_clean();
+            self::buildMenu($rootCat->childrenRecursive);
+            $child_categories[$rootCat['name']] = ob_get_clean();
         }
 
         return [
@@ -26,14 +27,14 @@ class BlueRibbonRepository
         ];
     }
 
-    private static function buildMenu($array)
+    private static function buildMenu(Collection $categories)
     {
         echo '<ul class="show-front_submenu mtree">';
-        foreach ($array as $item) {
+        foreach ($categories as $item) {
             echo '<li>';
-            echo "<a href='{$item['href']}'>{$item['name']}</a>";
-            if (!empty($item['children_recursive'])) {
-                self::buildMenu($item['children_recursive']);
+            echo "<a href='{$item->href}'>{$item->name}</a>";
+            if (!empty($item->childrenRecursive)) {
+                self::buildMenu($item->childrenRecursive);
             }
             echo '</li>';
         }
