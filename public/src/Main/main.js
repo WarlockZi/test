@@ -1,14 +1,17 @@
 import './main.scss'
+import '../components/header/show-front-menu.js';
 import '../404/404.scss'
 
 import {ael, qs} from '../constants';
 import '../share/hoist/hoist';
-import '../components/header/show-front-menu.js';
+
 import '../components/animate/animate.js'
+import scroll from '../share/scroll/scroll.js'
 
 
 document.addEventListener('DOMContentLoaded', async function () {
 
+   scroll()
    const admin = window.location.pathname.includes('adminsc')
    if (admin) return false
 

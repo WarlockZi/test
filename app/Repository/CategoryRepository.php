@@ -12,32 +12,22 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CategoryRepository
 {
-
     public static function showFrontCategories(): array
     {
         $rootCats = CategoryProperty::query()
             ->where('show_front', 1)
-//            ->with('childrenNotDeleted')
             ->with('category.childrenRecursive')
             ->get()
             ->toArray();
         return $rootCats;
     }
 
-    public static function indexNoSlug()
-    {
-        return Category::where('show_front', 1)
-            ->with('childrenRecursive')
-            ->get();
-    }
-
     public static function frontCategories()
     {
-        $cat = Category::withWhereHas('ownProperties',
+        return Category::withWhereHas('ownProperties',
             fn($q) => $q->where('show_front', 1))
+            ->with('childrenRecursive')
             ->get();
-
-        return $cat;
     }
 
     public function indexInstore(string $path)
@@ -135,6 +125,14 @@ class CategoryRepository
 //        )
 //            ->name('category')
 //            ->id('category')
+//            ->get();
+//    }
+//    public static function indexNoSlug()
+//    {
+//        return Category::withWhereHas('ownProperties',
+//            fn($q) => $q->where('show_front', 1)
+//        )
+//            ->with('childrenRecursive')
 //            ->get();
 //    }
 

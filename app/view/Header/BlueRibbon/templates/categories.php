@@ -1,13 +1,10 @@
 <?php foreach ($front_categories as $category): ?>
 
-    <div class='h-cat'><?= $category['name']; ?>
+    <div class='h-cat'><?= $category->name; ?>
 
-        <a href="<?= $category['href']; ?>" class='show-front-a'></a>
+        <a href="<?= $category->href; ?>" class='show-front-a'></a>
 
-            <?= $child_categories[$category['name']]; ?>
-            <!--                <li>-->
-            <!--                    <a href="--><?php //= $category['href'] ?><!--">--><?php //= $item['name'] ?><!--</a>-->
-            <!--                </li>-->
+            <?= $child_categories[$category->name]; ?>
 
     </div>
 <?php endforeach; ?>

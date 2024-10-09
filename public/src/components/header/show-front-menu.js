@@ -1,5 +1,5 @@
 import {$} from '../../common.js'
-// init()
+
 function init() {
 
    const ul = $('ul.mtree').first()
