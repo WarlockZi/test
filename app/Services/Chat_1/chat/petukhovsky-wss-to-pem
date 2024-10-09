@@ -1,0 +1,12 @@
+#!/bin/bash
+cp -f /var/www/httpd-cert/petukhovsky/petukhovsky.com_le2.crt /var/www/petukhovsky/data/www/petukhovsky.com/f/simple-web-socket-on-php-chat/chat/pem/petukhovsky.com_le2.crt
+chown petukhovsky /var/www/petukhovsky/data/www/petukhovsky.com/f/simple-web-socket-on-php-chat/chat/pem/petukhovsky.com_le2.crt
+chgrp petukhovsky /var/www/petukhovsky/data/www/petukhovsky.com/f/simple-web-socket-on-php-chat/chat/pem/petukhovsky.com_le2.crt
+chmod 644 /var/www/petukhovsky/data/www/petukhovsky.com/f/simple-web-socket-on-php-chat/chat/pem/petukhovsky.com_le2.crt
+
+
+cp -f /var/www/httpd-cert/petukhovsky/petukhovsky.com_le2.key /var/www/petukhovsky/data/www/petukhovsky.com/f/simple-web-socket-on-php-chat/chat/pem/petukhovsky.com_le2.key
+chown petukhovsky /var/www/petukhovsky/data/www/petukhovsky.com/f/simple-web-socket-on-php-chat/chat/pem/petukhovsky.com_le2.key
+chgrp petukhovsky /var/www/petukhovsky/data/www/petukhovsky.com/f/simple-web-socket-on-php-chat/chat/pem/petukhovsky.com_le2.key
+chmod 644 /var/www/petukhovsky/data/www/petukhovsky.com/f/simple-web-socket-on-php-chat/chat/pem/petukhovsky.com_le2.key
+
