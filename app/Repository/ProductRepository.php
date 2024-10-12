@@ -60,10 +60,14 @@ class ProductRepository extends AppController
 
     public function main(string $slug)
     {
-        $slug = "%{$slug}%";
-        $p    = Product::withWhereHas('ownProperties',
-            fn($q) => $q->where('slug', $slug)
-        )->withTrashed()->first();
+//        $slug = "%{$slug}%";
+        $slug = "$slug";
+//        $p    = Product::withWhereHas('ownProperties',
+//            fn($q) => $q->where('slug', $slug)
+//        )->withTrashed()->first();
+        $p = Product::where('slug', $slug)
+            ->withTrashed()->first();
+
         if (!$p) $p = Product::where('short_link', $slug)->first();
         if ($p) {
             $id      = $p['1s_id'];
