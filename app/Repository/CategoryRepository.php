@@ -12,16 +12,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CategoryRepository
 {
-    public static function showFrontCategories(): array
-    {
-        $rootCats = CategoryProperty::query()
-            ->where('show_front', 1)
-            ->with('category.childrenRecursive')
-            ->get()
-            ->toArray();
-        return $rootCats;
-    }
-
     public static function frontCategories()
     {
         return Category::withWhereHas('ownProperties',

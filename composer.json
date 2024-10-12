@@ -20,7 +20,8 @@
     "ext-mysqli": "*",
     "ext-pdo": "*",
     "ext-curl": "*",
-    "ext-sockets": "*"
+    "ext-sockets": "*",
+    "shuchkin/simplexlsx": "^1.1"
   },
   "config": {
     "platform-check": false

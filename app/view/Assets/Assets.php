@@ -6,6 +6,7 @@ namespace app\view\Assets;
 class Assets
 {
     public function __construct(
+        protected bool $isAdmin = false,
 
         protected Compiler     $compiler = new AssetsVite(),
 //        protected Compiler     $compiler = new AssetsWebpack(),
@@ -17,7 +18,10 @@ class Assets
         $this->cache->setCache();
         $this->setCompiler();
     }
-
+    public function setIsAdmin(): string
+    {
+        $this->isAdmin = true;
+    }
 
     protected function setCompiler(): string
     {
@@ -49,7 +53,7 @@ class Assets
     {
         return $this->seo->getMeta();
     }
-    public function setMeta(string $title, string $desc, string $keywords):void
+    public function setMeta(string $title, string $desc='', string $keywords=''):void
     {
         $this->seo->setMeta($title, $desc, $keywords);
     }

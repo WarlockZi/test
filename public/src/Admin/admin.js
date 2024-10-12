@@ -12,7 +12,10 @@ import AdminHeader from "../components/header/header-adm.js";
 import Promotion from "../Promotions/Promotion.js"
 import Search from "../components/search/search.js"
 import Navigate from "./components/Navigate.js";
+
 import '../components/table/table.js'
+import '../components/popup.scss'
+import '../components/footer/footer.scss'
 
 
 

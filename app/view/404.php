@@ -13,10 +13,10 @@ if ($_ENV["DEV"] === "1") {
 
 <div class="not_found_header">
 
-    <h1 class="not_found_h1">Страница не найдена.</h1>
-
+    <h1 class="not_found_h1">Данная страница не существует!</h1>
     <div class="not_found_p">
         <p>Похоже, здесь ничего не найдено.</p>
+        Вы можете <a href="https://vitexopt.ru">перейти на главную страницу сайта</a>
     </div>
 </div>
 

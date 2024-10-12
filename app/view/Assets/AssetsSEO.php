@@ -15,7 +15,7 @@ class AssetsSEO
 
     public function getMeta(): string
     {
-        return "<title>{$this->title} VITEX</title>" .
+        return "<title>{$this->title}</title>" .
             "<meta name = 'description' content = '{$this->desc}'>" .
             "<meta name = 'keywords' content = '{$this->keywords}'>";
     }

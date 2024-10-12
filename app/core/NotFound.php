@@ -69,4 +69,18 @@ class NotFound extends Controller
         }
     }
 
+    public static function NotFound(string $slug)
+    {
+        http_response_code(404);
+        $file = 'index.php';
+        $path = ROOT . '/app/view/404';
+        $fs = (new FS($path));
+        $view = $fs->getContent('index');
+        return $view;
+//        Error::setError('Страница не найдена');
+//        $this->view = '404';
+        $product = null;
+
+    }
+
 }

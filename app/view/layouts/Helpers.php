@@ -23,6 +23,8 @@ class Helpers
         readonly private string $VITE_HOST = 'http://localhost:5133',
         readonly private string $manifestPath = ROOT . '/public/build/.vite/manifest.json',
         readonly private string $publicPath = '/public/build/',
+        private string $js='',
+        private string $css='',
     )
     {
         $this->isDev    = $this->isDev($entry);
@@ -35,11 +37,21 @@ class Helpers
         return $vite->getAssets();
     }
 
+    public function getCss(): string
+    {
+        return $this->css;
+    }
+    public function getJs():string
+    {
+        return $this->js;
+    }
+
     public function getAssets(): string
     {
-        return "\n" . $this->jsTag()
-            . "\n" . $this->jsPreloadImports()
-            . "\n" . $this->cssTag();
+        $this->js  = "\n" . $this->jsTag()
+            . "\n" . $this->jsPreloadImports();
+        $this->css = "\n" . $this->cssTag();
+        return $this->js . $this->css;
     }
 
     function isDev(string $entry): bool

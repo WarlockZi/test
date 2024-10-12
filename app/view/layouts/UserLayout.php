@@ -11,9 +11,8 @@ use app\view\Header\UserHeader;
 
 class UserLayout extends Layout
 {
-    protected Assets $assets;
-    protected UserHeader $header;
     protected string $view = '';
+    protected UserHeader $header;
     protected FS $viewFs;
     protected string $layout = '';
     protected FS $layoutFs;
@@ -22,12 +21,13 @@ class UserLayout extends Layout
     public function __construct(
         protected Route   $route,
         public Controller $controller,
+        protected Assets  $assets = new UserAssets(),
+
     )
     {
-        $this->assets = new UserAssets();
         $this->header = new UserHeader($this->route);
 
-        $this->view     = $this->route->getView() ?? $this->route->getAction() ?? 'default';
+        $this->view     = $this->controller->view ?? $this->route->getView() ?? $this->route->getAction() ?? 'default';
         $this->viewFs   = new FS(dirname(__DIR__) . DIRECTORY_SEPARATOR . ucfirst($this->route->getControllerName()));
         $this->layout   = "layouts/vitex";
         $this->layoutFs = new FS(dirname(__DIR__));
@@ -35,14 +35,9 @@ class UserLayout extends Layout
         $this->setContent($controller);
     }
 
-    protected function getView(): string
-    {
-        return $this->view;
-    }
-
     public function setContent(Controller $controller): void
     {
-        $this->content['header'] = $this->header->getHeader();
+        $this->content['header']  = $this->header->getHeader();
         $this->content['assets']  = $controller->assets;
         $this->content['content'] = $this->prepareContent($controller->vars);
         $this->content['footer']  = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
@@ -51,6 +46,9 @@ class UserLayout extends Layout
     private function prepareContent($vars): string
     {
         try {
+            if ($this->view === '404') {
+                return(new FS(ROOT.'/app/view'))->getContent('404');
+            }
             return $this->viewFs->getContent($this->getView(), $vars);
         } catch (\Exception $exception) {
             ob_get_clean();

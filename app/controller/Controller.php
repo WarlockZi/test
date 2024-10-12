@@ -21,6 +21,7 @@ class Controller
         $this->setAjaxRequest();
         if (!$this->isAjax()) {
             $this->assets = new Assets();
+//            $this->assets->setIsAdmin();
         }
     }
 
@@ -30,9 +31,9 @@ class Controller
         $this->view = $route->getView();
     }
 
-    public function actionIndex()
+    public function actionIndex():void
     {
-        $this->route->setView('404');
+        $this->view  = '404';
         $this->route->setError('Путь не найден');
         $errors = $this->route->getErrors();
         $this->setVars(compact('errors'));

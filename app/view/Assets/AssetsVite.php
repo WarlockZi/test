@@ -10,10 +10,7 @@ class AssetsVite implements Compiler
     protected array $css = [];
 
     public function __construct(
-        protected $compiler = new Helpers(),
-    )
-    {
-    }
+        protected $compiler = new Helpers(),){}
 
     public function setJs(string $name): void
     {
@@ -27,9 +24,6 @@ class AssetsVite implements Compiler
 
     public function getConfig(): array
     {
-//        $this->host = $_ENV['DEV']
-//            ? $this->setLocalhost($this->compiler)
-//            : '/public/dist/';
         return [
             'protocol' => 'http://',
             'port' => 5173,
@@ -45,12 +39,15 @@ class AssetsVite implements Compiler
 
     public function getCss(): string
     {
-        $str = $this->compiler->client();
-        $str .= $this->compiler->vite('Admin/admin.js');
-        $str .= $this->compiler->vite('Main/main.js');
-        $str .= $this->compiler->vite('Auth/auth.js');
-        return $str;
+        $admin = str_contains($_SERVER['REQUEST_URI'], 'adminsc');
+        return $admin
+            ?
+            $this->compiler->client() .
+            $this->compiler->vite('Admin/admin.js')
+            :
+            $this->compiler->client() .
+            $this->compiler->vite('Main/main.js') .
+            $this->compiler->vite('Auth/auth.js');
+
     }
-
-
 }

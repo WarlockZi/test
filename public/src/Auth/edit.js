@@ -1,5 +1,5 @@
 import './edit.scss'
-import {post, $, popup} from '../common'
+import {post, $} from '../common'
 import getSex from './getSex'
 
 $("#save").on("click", async function (e) {

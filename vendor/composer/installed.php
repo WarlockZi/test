@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '4f072e289ed9f2703ee7c678fe04aad4884a1b90',
+        'reference' => '33563d456db4c5f8798fec6f7bf510a4c96663ad',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '4f072e289ed9f2703ee7c678fe04aad4884a1b90',
+            'reference' => '33563d456db4c5f8798fec6f7bf510a4c96663ad',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -423,6 +423,15 @@
             'install_path' => __DIR__ . '/../sebastian/version',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'shuchkin/simplexlsx' => array(
+            'pretty_version' => '1.1.11',
+            'version' => '1.1.11.0',
+            'reference' => '61a9eb24784a9e8aa702efca3f5c7ec1f040aefb',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../shuchkin/simplexlsx',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'symfony/console' => array(
             'pretty_version' => 'v5.4.44',

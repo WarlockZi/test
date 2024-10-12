@@ -157,18 +157,33 @@ class CategoryFormView
     {
         if (!$categoryProperty) return '';
         return "<div class='show'>" .
-            ItemFieldBuilder::build('seo_description', $categoryProperty)
-                ->name('Description')
-                ->contenteditable()
-                ->relation('ownProperties')
-                ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_title', $categoryProperty)
                 ->name('Title')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
+            ItemFieldBuilder::build('seo_description', $categoryProperty)
+                ->name('Description')
+                ->contenteditable()
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_keywords', $categoryProperty)
                 ->name('Key words')
+                ->contenteditable()
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
+            ItemFieldBuilder::build('seo_h1', $categoryProperty)
+                ->name('h1')
+                ->contenteditable()
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
+            ItemFieldBuilder::build('seo_article', $categoryProperty)
+                ->name('Seo article')
+                ->contenteditable()
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
+            ItemFieldBuilder::build('seo_path', $categoryProperty)
+                ->name('Path')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .

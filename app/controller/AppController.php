@@ -15,6 +15,20 @@ class AppController extends Controller
     {
         parent::__construct();
     }
+    public function __destruct()
+    {
+        if ($this->isAjax()) exit;
+//        $response = new Response();
+//        $response->view();
+
+//        $this->view  = $this->route->getActionName();
+//        $layout = $this->route->getLayout();
+//        $layout = new $layout($this->route, $this);
+//        $layout->render();
+//        exit();
+    }
+
+
 
     public function actionDelete(): void
     {

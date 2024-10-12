@@ -1,3 +1,9 @@
+<?php
+
+use app\core\Auth;
+use app\core\Icon;
+
+?>
 <div class="card-panel">
 
     <div class="short-link"
@@ -6,7 +12,7 @@
     >
         <?= \app\core\Icon::link(); ?>
     </div>
-    <?php if ($userIsAdmin): ?>
-        <a href="/adminsc/category/edit/<?= $category->id ?>" class="edit"><?= $edit ?></a>
+    <?php if (Auth::userIsAdmin()): ?>
+        <a href="/adminsc/category/edit/<?= $category->id ?>" class="edit"><?=Icon::edit(); ?></a>
     <? endif; ?>
 </div>
