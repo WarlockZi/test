@@ -49,7 +49,7 @@ class UserLayout extends Layout
             if ($this->view === '404') {
                 return(new FS(ROOT.'/app/view'))->getContent('404');
             }
-            return $this->viewFs->getContent($this->getView(), $vars);
+            return $this->viewFs->getContent($this->view, $vars);
         } catch (\Exception $exception) {
             ob_get_clean();
             ob_flush();

@@ -444,10 +444,12 @@
         position: absolute;
         height: auto;
         width: 100%;
+        overflow: visible;
 
         .h-cat_item {
           width: 100%;
           padding-left: 5px;
+          background: inherit;
         }
       }
     }
@@ -463,6 +465,12 @@
       cursor: pointer;
       z-index: 2;
 
+      &.level-2{
+        background-color: darken(white, 10%);
+      }
+      &.level-3{
+        background-color: darken(white, 20%);
+      }
       .visible{
         overflow: initial;
         height: fit-content;
@@ -478,6 +486,7 @@
 
         .wrap {
           display: flex;
+          background: inherit;
         }
 
         a {
@@ -497,6 +506,7 @@
           flex: 0 0 15px;
           padding: 5px;
           user-select: none;
+          border-left: 1px solid lightgray;
 
           &:hover {
             background: #ababab33;
