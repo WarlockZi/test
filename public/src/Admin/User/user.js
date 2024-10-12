@@ -1,6 +1,6 @@
 import './users.scss'
 
-import {$, popup, post} from '../../common'
+import {$, post} from '../../common'
 import getSex from '../../Auth/getSex'
 
 export default function user() {

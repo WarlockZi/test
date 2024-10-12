@@ -17,9 +17,9 @@
     <div class="legal">
         <p>© <? echo date('Y') ?> Витекс. Цены, указанные на сайте, не являются публичной офертой, определяемой
             положением Статьи 437 (2) ГК РФ и зависят от объема заказа. ИНН:352507425251</p>
-        <div class="creator">VORONIKLAB
-            <img src="/pic/srvc/creator.jpg" class="creator-img">
-        </div>
+<!--        <div class="creator">VORONIKLAB-->
+<!--            <img src="/pic/srvc/creator.jpg" class="creator-img">-->
+<!--        </div>-->
     </div>
     <? $path = dirname(__FILE__) . DIRECTORY_SEPARATOR.'ya_metrica.php'; ?>
     <? if ($_ENV['DEV']!=="1") {

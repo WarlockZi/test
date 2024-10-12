@@ -5,9 +5,9 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\core\Icon;
-use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
+use app\Services\Seo\CategorySeoService;
 use app\view\share\card_panel\CardPanel;
 
 
@@ -26,29 +26,28 @@ class CategoryController extends AppController
     public function actionIndex(): void
     {
         if ($this->route->slug) {
-            $this->route->setView('category');
+            $this->view = 'category';
 
             $slug = $this->route->slug;
 
             $category = $this->repo->indexInstore($slug);
 
             if ($category) {
-                $admin       = Auth::userIsAdmin();
-                $edit        = Icon::edit();
                 $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
-                $this->setVars(compact('admin', 'edit', 'breadcrumbs', 'category'));
-                $title    = $category->ownProperties->seo_title ?? $category->name;
+                $this->setVars(compact( 'breadcrumbs', 'category'));
+
+                $title    = CategorySeoService::title($category);
                 $desc     = $category->ownProperties->seo_description ?? $category->name;
                 $keywords = $category->ownProperties->seo_keywords ?? $category->name;
                 $this->assets->setMeta($title, $desc, $keywords);
             } else {
-                $rootCategories = CategoryRepository::showFrontCategories();
+                $rootCategories = CategoryRepository::frontCategories();
                 $this->setVars(compact('rootCategories'));
                 http_response_code(404);
             }
 
         } else {
-            $this->route->setView('categories');
+            $this->view = 'categories';
 
             $categories = CategoryRepository::frontCategories();
 

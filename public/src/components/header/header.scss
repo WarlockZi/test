@@ -22,7 +22,7 @@
     & > .info {
       max-height: 0;
       overflow: hidden;
-    opacity: 0;
+      opacity: 0;
     }
   }
 
@@ -250,7 +250,7 @@
     flex: 1 0 auto;
     justify-content: space-between;
     //margin: 3px 0;
-    transition: max-height 300ms ease, opacity 500ms ;
+    transition: max-height 300ms ease, opacity 500ms;
     z-index: 1;
     max-height: 500px;
     opacity: 1;
@@ -316,8 +316,6 @@
   .header-catalog-menu {
     background-color: #2180d1c7;
     backdrop-filter: blur(10px);
-
-    //background-color: $color-main;
     top: 0;
     min-height: 40px;
     display: flex;
@@ -326,7 +324,6 @@
   .header-catalog-menu__wrap {
     display: flex;
     position: relative;
-    //background: $color-main;
 
     .show-front-a {
       position: absolute;
@@ -349,6 +346,7 @@
     position: relative;
     display: flex;
     padding: 0 20px;
+    margin: 0;
     align-items: center;
     justify-content: space-between;
     color: white;
@@ -419,112 +417,95 @@
 
 
   .h-cat {
-    background-color: rgba(#2275ff, 0);
     position: relative;
-    cursor: pointer;
     text-transform: lowercase;
     transition: .5s background-color;
     display: flex;
     align-items: center;
     justify-content: center;
     flex: 1;
+    background-color: rgba(#2275ff, 0);
     color: #fff;
     font: 600 12px/14px intro, "Proxima Nova", sans-serif;
     text-align: center;
     padding: 5px;
     letter-spacing: 1px;
     line-height: 14px;
+    cursor: pointer;
 
     @include _800 {
       display: none;
     }
 
-    //@include mtree;
-
-    &:first-child ul {
-      left: 0;
-
-      &:before {
-        right: 80%;
-      }
-    }
-
-    &:last-child ul {
-      right: 0;
-    }
-
     &:hover {
       background-color: $color-main-hover;
 
-      //ul:not(:has(.mtree)) {
-      //  position: relative;
-      //  li{
-      //    position: absolute;
-      //    top:0;
-      //    left: 100%;
-      //  }
-      //}
-
-      ul {
+      & > .h-cat_submenu {
+        position: absolute;
         height: auto;
-        padding: 10px 0px;
-        max-height: fit-content;
-        background-color: white;
-        top: 100%;
-        box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
-        overflow: visible;
-        cursor: text;
-        width: clamp(100%, 100px, 300px);
+        width: 100%;
 
-        li {
-          cursor: pointer;
-          border-bottom: #f0f0f0 1px solid;
-          transition: .3s;
+        .h-cat_item {
+          width: 100%;
+        }
+      }
+    }
+
+    //&:hover
+
+    .h-cat_submenu {
+      top: 100%;
+      height: 0;
+      //width: clamp(100%, 100px, 300px);
+      max-height: fit-content;
+      background-color: white;
+      box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.28);
+      overflow: hidden;
+      color: black;
+      cursor: pointer;
+      z-index: 2;
+
+      .visible{
+        overflow: initial;
+        height: fit-content;
+      }
+
+      .h-cat_item {
+        display: flex;
+        width: 0;
+        flex-direction: column;
+        //display: flex;
+        justify-content: start;
+        border-bottom: #f0f0f0 1px solid;
+        transition: background-color .3s;
+
+        .wrap {
+          display: flex;
+        }
+
+        a {
+          flex: 1 0 auto;
+          padding: 0 5px;
+          text-align: start;
+          font: 600 11px/30px 'Proxima Nova', sans-serif;
+          color: $color-gray-mid;
 
           &:hover {
             background: #ababab33;
           }
 
-          a {
-            display: flex;
-            text-align: left;
-            padding: 7px 15px;
-          }
+        }
 
-          a:hover {
-            background: #eeeeee;;
+        .arrow {
+          flex: 0 0 15px;
+          padding: 5px;
+          user-select: none;
+
+          &:hover {
+            background: #ababab33;
+
           }
         }
-      }
-    }
-
-    ul {
-      height: 0;
-      position: absolute;
-      top: 45px;
-      overflow: hidden;
-      color: black;
-      z-index: 2;
-
-      li {
-
-        a {
-          font: 600 11px/13px 'Proxima Nova', sans-serif;
-          color: $color-gray-mid;
-        }
-      }
-
-      &:before {
-        content: '';
-        display: block;
-        width: 0;
-        height: 0;
-        transform: rotate(45deg);
-        position: absolute;
-        top: -4px;
-        right: 50%;
-        border-top: 10px solid white;
-        border-left: 10px solid white;
       }
     }
   }

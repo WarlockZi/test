@@ -3,6 +3,7 @@
 @import "../var.scss";
 @import '../normalize.scss';
 
+@import './oferta.scss';
 @import '../Auth/auth.scss';
 @import '../components/footer/footer.scss';
 @import '../components/header/header.scss';
@@ -63,6 +64,10 @@
     background-color: white;
     min-height: 250px;
 
+    .about, .news{
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
     h1 {
       @include _h1;
     }
@@ -375,7 +380,7 @@
 
     .about {
       max-width: 800px;
-      margin: 40px auto;
+      margin: 50px auto;
 
       ol li {
         list-style: circle;

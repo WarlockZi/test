@@ -1,4 +1,4 @@
-<h1 class="page-name">Категории</h1>
+<h1 class="page-name">Каталог</h1>
 <div class="category">
 
     <?php

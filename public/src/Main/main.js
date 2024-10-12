@@ -1,5 +1,5 @@
 import './main.scss'
-import '../components/header/show-front-menu.js';
+import '../components/header/show-front-menu1.js';
 import '../404/404.scss'
 
 import {ael, qs} from '../constants';
@@ -7,10 +7,11 @@ import '../share/hoist/hoist';
 
 import '../components/animate/animate.js'
 import scroll from '../share/scroll/scroll.js'
-
+import headerMenu from '../components/header/show-front-menu.js'
 
 document.addEventListener('DOMContentLoaded', async function () {
 
+   headerMenu()
    scroll()
    const admin = window.location.pathname.includes('adminsc')
    if (admin) return false

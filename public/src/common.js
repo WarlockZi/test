@@ -174,43 +174,40 @@ let validate = {
 //    return false;
 // }
 
-let popup = {
+const popup = {
 
-   show: function (txt, callback) {
-      let close = this.el('div', 'popup__close');
+   show: function (txt) {
+      const  popup = this.el('div','popup');
+
+      const close = this.el('div', 'popup__close');
       close.innerText = 'X';
-      let popup__item = this.el('div', 'popup__item');
 
+      const popup__item = this.el('div', 'popup__item');
       popup__item.innerText = txt;
       popup__item.append(close);
-      let popup = $('.popup')[0];
-      if (!popup) {
-         popup = this.el('div', 'popup')
-      }
+
       popup.append(popup__item);
       popup.addEventListener('click', this.close, true);
       document.body.append(popup);
-      let hideDelay = 5000;
+
+      const hideDelay = 5000;
       setTimeout(() => {
          popup__item.classList.remove('popup__item');
          popup__item.classList.add('popup-hide')
       }, hideDelay);
-      let removeDelay = hideDelay + 950;
+      const removeDelay = hideDelay + 950;
       setTimeout(() => {
          popup__item.remove();
-         if (callback) {
-            callback()
-         }
       }, removeDelay)
    },
 
-   close: function (e) {
-      if (e.target.classList.contains('popup__close')) {
-         let popup = this.closest('.popup').remove()
+   close: function ({target}) {
+      if (target.classList.contains('popup__close')) {
+         this.closest('.popup').remove()
       }
    },
    el: function (tagName, className) {
-      let el = document.createElement(tagName);
+      const el = document.createElement(tagName);
       el.classList.add(className);
       return el
    }
@@ -367,8 +364,8 @@ function showMessage(res) {
 
 function handleResponse(res) {
    try {
-      if (res?.popup || res?.arr?.popup) {
-         popup.show(res.popup ?? res?.arr?.popup)
+      if (res?.arr?.popup) {
+         popup.show(res?.arr?.popup)
       } else {
          showMessage(res)
       }
@@ -386,73 +383,30 @@ function handleResponse(res) {
 }
 
 
-function oldPost(url, data) {
-   return new Promise(async function (resolve, reject) {
-         data.phpSession = getPhpSession();
-
-         let req = new XMLHttpRequest();
-         req.open('POST', url, true);
-         req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-
-         if (data instanceof FormData) {
-            req.send(data);
-         } else {
-            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            req.send('param=' + JSON.stringify(data));
-         }
-
-         req.onerror = function (e) {
-            reject(Error("Network Error" + e.message));
-         };
-         req.onload = function () {
-            resolve(handleResponse(req.response))
-
-            // try {
-            //    if (!IsJson(req.response)) {
-            //       console.log(req.response);
-            //       return
-            //    }
-            //    const res = JSON.parse(req.response);
-            //    let msg = $('.message')[0];
-            //
-            //    if (res?.popup || res?.arr?.popup) {
-            //
-            //       popup.show(res.popup ?? res?.arr?.popup)
-            //    } else if (res.msg) {
-            //       if (msg) {
-            //
-            //          msg.innerHTML = res.msg;
-            //          $(msg).removeClass('success');
-            //          $(msg).removeClass('error')
-            //       }
-            //    } else if (res.success) {
-            //       if (msg) {
-            //          msg.innerHTML = res.success;
-            //          $(msg).addClass('success');
-            //          $(msg).removeClass('error')
-            //       }
-            //    } else if (res.error) {
-            //       msg.innerHTML = res.error;
-            //       $(msg).addClass('error');
-            //       $(msg).removeClass('success');
-            //       error(res.error)
-            //    }
-            //    resolve(res);
-            //
-            // } catch (e) {
-            //    console.log('////////////********* REQUEST ERROR ***********//////////////////////');
-            //    if (IsJson(req.response)) {
-            //       console.log(JSON.parse(req.response));
-            //    } else {
-            //       console.log(req.response);
-            //    }
-            //    return false
-            // }
-
-         }
-      }
-   )
-}
+// function oldPost(url, data) {
+//    return new Promise(async function (resolve, reject) {
+//          data.phpSession = getPhpSession();
+//
+//          let req = new XMLHttpRequest();
+//          req.open('POST', url, true);
+//          req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+//
+//          if (data instanceof FormData) {
+//             req.send(data);
+//          } else {
+//             req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+//             req.send('param=' + JSON.stringify(data));
+//          }
+//
+//          req.onerror = function (e) {
+//             reject(Error("Network Error" + e.message));
+//          };
+//          req.onload = function () {
+//             resolve(handleResponse(req.response))
+//          }
+//       }
+//    )
+// }
 
 
 class ElementCollection extends Array {

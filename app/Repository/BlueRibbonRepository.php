@@ -3,6 +3,7 @@
 namespace app\Repository;
 
 use app\core\Icon;
+use app\model\Category;
 use Illuminate\Database\Eloquent\Collection;
 
 
@@ -27,19 +28,28 @@ class BlueRibbonRepository
         ];
     }
 
-    private static function buildMenu(Collection $categories)
+    private static function buildMenu(Collection $categories, int $i = 1)
     {
-        echo '<ul class="show-front_submenu mtree">';
+        echo "<ul class='h-cat_submenu level-{$i}'>";
         foreach ($categories as $item) {
-            echo '<li>';
-            echo "<a href='{$item->href}'>{$item->name}</a>";
-            if (!empty($item->childrenRecursive)) {
-                self::buildMenu($item->childrenRecursive);
-            }
+            echo "<li class='h-cat_item'>";
+            self::renderLink($item, $i);
             echo '</li>';
         }
         echo '</ul>';
-        echo '<br>';
+    }
+
+    private static function renderLink(Category $item, int $i)
+    {
+        if ($item->childrenRecursive->count()) {
+            echo "<div class = 'wrap'>" .
+                "<a href='{$item->href}'>{$item->name}</a>" .
+                "<span class='arrow'>></span>" .
+                "</div>";
+            self::buildMenu($item->childrenRecursive, ++$i);
+        } else {
+            echo "<a href='{$item->href}'>{$item->name}</a>";
+        }
     }
 
 

@@ -1,5 +1,4 @@
-import {$, popup, post, trimStr} from "../../../common.js"
-import {_answer} from "./del/answer.js";
+import {$, post, trimStr} from "../../../common.js"
 
 class question {
 

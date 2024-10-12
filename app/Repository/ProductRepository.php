@@ -61,7 +61,9 @@ class ProductRepository extends AppController
     public function main(string $slug)
     {
         $slug = "%{$slug}%";
-        $p    = Product::where('slug', 'Like', $slug)->withTrashed()->first();
+        $p    = Product::withWhereHas('ownProperties',
+            fn($q) => $q->where('slug', $slug)
+        )->withTrashed()->first();
         if (!$p) $p = Product::where('short_link', $slug)->first();
         if ($p) {
             $id      = $p['1s_id'];
@@ -85,7 +87,7 @@ class ProductRepository extends AppController
             ->get();
     }
 
-    private static function array_every(array $array, callable $callback):bool
+    private static function array_every(array $array, callable $callback): bool
     {
         return !in_array(false, array_map($callback, $array));
     }

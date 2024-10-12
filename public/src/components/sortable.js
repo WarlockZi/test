@@ -1,5 +1,5 @@
 import Sortable from 'sortablejs'
-import {$, popup, post} from '../common'
+import {$, post} from '../common'
 
 export default function sortable(containerSelector, elSelector, model) {
 

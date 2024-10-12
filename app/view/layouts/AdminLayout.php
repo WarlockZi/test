@@ -56,7 +56,7 @@ class AdminLayout extends Layout
     private function prepareContent($vars): string
     {
         try {
-            $view = $this->getView();
+            $view = $this->view;
             return $content = $this->viewFs->getContent($view, $vars);
         } catch (Exception $exception) {
             ob_get_clean();
@@ -75,11 +75,6 @@ class AdminLayout extends Layout
     protected function setHeader(): string
     {
         return (new AdminHeader(Auth::getUser()))->getHeader();
-    }
-
-    protected function getView(): string
-    {
-        return $this->view;
     }
 
     public function render(): void

@@ -3,6 +3,7 @@ User-agent: *
 Disallow: /tmp/
 Disallow: /config/
 Disallow: /app/
+Disallow: /main/about/
 Disallow: /search/
 Disallow: /adminsc/
 Disallow: /tel*
@@ -14,7 +15,6 @@ Disallow: /auth/register
 Disallow: /auth/forgot
 Disallow: /auth/returnpass
 
-Disallow: /main/about/
 Disallow: /main/requisites
 Disallow: /main/politicaconf
 Disallow: /main/returnChange

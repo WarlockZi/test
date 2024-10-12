@@ -14,8 +14,8 @@ class Router
 
     public function __construct(string $uri = '')
     {
-        $this->fillRoutes();
-        $this->matchRoute($uri);
+        require_once ROOT . '/app/core/routes.php';
+        $this->matchRoute();
         $this->errorLogger = new ErrorLogger();
     }
 
@@ -47,17 +47,18 @@ class Router
     private function redirect(): void
     {
         if (!$this->route->redirect) return;
-        $arr    = $this->route->getRedirect();
-        $from   = key($arr);
-        $to     = $arr[$from];
-        $url    = $this->route->getUrL();
-        if ($to==='catalog') {
+        $arr  = $this->route->getRedirect();
+        $from = key($arr);
+        $to   = $arr[$from];
+        $url  = $this->route->getUrL();
+        if ($to === 'catalog') {
             $slug = $this->route->slug;
-            $path = Category::where('slug', $slug)
+            $cat  = Category::where('slug', $slug)
                 ->with('ownProperties')
-                ->first()->ownProperties->path;
-            $newUrl = str_replace('/category/','',$url);
-            $newUrl = '/catalog/'.$path;
+                ->first();
+            $path = $cat->ownProperties->seoPath ?? $cat->ownProperties->path;
+//            $newUrl = str_replace('/category/','',$url);
+            $newUrl = '/catalog/' . $path;
             header("Location: https://{$this->route->getHost()}" . $newUrl, true, 301);
             exit();
         }
@@ -66,6 +67,8 @@ class Router
 
     public function dispatch(): void
     {
+        Auth::authorize($this->route);
+
         $controller = $this->route->getController();
         try {
             $controller = new $controller();
@@ -77,15 +80,12 @@ class Router
         $controller->setRoute($this->route);
 
         $action = $this->route->getAction();
-        $this->route->setView($this->route->getActionName());
         try {
             $controller->$action();
         } catch (\Throwable $exception) {
             $this->handleError($exception);
         }
-        if ($controller->isAjax()) exit;
-        Auth::authorize($this->route);
-
+        $this->route->setView($this->route->getActionName());
         $layout = $this->route->getLayout();
         $layout = new $layout($this->route, $controller);
         $layout->render();
@@ -104,12 +104,6 @@ class Router
     public function add($regexp, $route = []): void
     {
         $this->routes[$regexp] = $route;
-    }
-
-
-    public function fillRoutes(): void
-    {
-        require_once ROOT . '/app/core/routes.php';
     }
 
 

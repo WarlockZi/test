@@ -3,7 +3,7 @@
     <?php if (!isset($category)): ?>
         <div class="no-categories">
             <H1>Внимание! Приносим свои извинения,
-                но раздел "Название раздела" находится на стадии разработки.
+                но раздел <?= '' ?> находится на стадии разработки.
                 В самое ближайшее время он будет наполнен,
                 и Вы сможете совершить покупку у нас на самых выгодных условиях!
                 В настоящее время Вы можете ознакомиться
@@ -11,9 +11,9 @@
 
             <ol>
 
-                <? foreach ($rootCategories as  $cat ):?>
+                <? foreach ($rootCategories as $cat): ?>
                     <li>
-                        <a href="<?=$cat['href'] ?>"><?= $cat['name']?></a>
+                        <a href="<?= $cat['href'] ?>"><?= $cat['name'] ?></a>
                     </li>
                 <? endforeach ?>
 
@@ -23,7 +23,7 @@
     <?php else: ?>
 
         <?= $breadcrumbs ?? '' ?>
-        <h1><?= "Категория - " . $category->name; ?></h1>
+        <h1><?= $category->ownProperties->seo_h1 ?? $category->name; ?></h1>
 
         <?php if ($category['childrenRecursive']->count()): ?>
 
@@ -44,7 +44,6 @@
 
             <div class="products-header">
                 <h2>Товары в наличии</h2>
-
             </div>
 
             <div class="product-wrap">
@@ -75,7 +74,7 @@
 
             </div>
         <?php endif; ?>
-        <div class="hoist">Наверх</div>
+
     <?php endif; ?>
 
 

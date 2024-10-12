@@ -13,7 +13,7 @@ use app\core\Icon;
     <meta name="MobileOptimized" content="320">
     <meta name="HandheldFriendly" content="True">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="yandex-verification" content="003253e624aad5b6"/>
+<!--    <meta name="yandex-verification" content="003253e624aad5b6"/>-->
     <meta name="yandex-verification" content="127ee751f73e25e0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,6 +37,7 @@ use app\core\Icon;
     <main class="user-content">
         <?= $content; ?>
     </main>
+    <div class="hoist">Наверх</div>
 </div>
 
 <?= $footer; ?>

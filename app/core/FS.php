@@ -35,10 +35,10 @@ class FS
             $content = ob_get_clean();
             return $content;
         } catch (\Throwable $exception){
-           $callerClass = debug_backtrace()[1]['file']." (line ".debug_backtrace()[1]['line'].")";
-           $callerClass1 = debug_backtrace()[2]['file']." (line ".debug_backtrace()[1]['line'].")";
-           $callerMethod = debug_backtrace()[1]['function'];
-           $callerMethod1 = debug_backtrace()[2]['function'];
+           $callerClass = debug_backtrace()[2]['file']." (line ".debug_backtrace()[2]['line'].")";
+           $callerClass1 = debug_backtrace()[3]['file']." (line ".debug_backtrace()[3]['line'].")";
+           $callerMethod = debug_backtrace()[2]['function'];
+           $callerMethod1 = debug_backtrace()[3]['function'];
             $content = ob_get_clean();
             if ($_ENV['DEV']==='1'){
                 return date('y-m-d, h:m:s').PHP_EOL.'<br><br>'.

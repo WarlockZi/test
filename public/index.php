@@ -11,6 +11,7 @@ try {
 //    \app\Services\MockUserService::mockUser();
 //    \app\Services\UrlService::generateUrls();
 //    \app\Services\SiteMapService::generateMap();
+//    new \app\Services\XLService\XLService();
 
     $router = new Router($_SERVER['REQUEST_URI'] ?? '');
     $router->dispatch();

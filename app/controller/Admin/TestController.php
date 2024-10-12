@@ -49,7 +49,7 @@ class TestController extends AppController
          $testView = $this->testView;
          $this->setVars(compact('test','testView'));
       } else {
-         $this->route->setView('index');
+         $this->view = 'index';
          $tests = $this->repository->treeAll();
          $testView = $this->testView;
          $this->setVars(compact('tests', 'testView'));

@@ -12,7 +12,7 @@ class Layout
         if (!class_exists($this->route->getController())) {
             $this->route->setError('Контроллер не найден');
         }
-        $view = $this->viewFs->getAbsPath() . $this->getView() . '.php';
+        $view = $this->viewFs->getAbsPath() . $this->view . '.php';
         if (!is_readable($view)) {
             $this->route->setError('Файл вида не найден -' . $view);
         }
