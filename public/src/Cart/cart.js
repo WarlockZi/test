@@ -1,5 +1,5 @@
 import './counter1'
-import {$, cookieRemove, formatter, getPhpSession, isAuthed, post} from '../common'
+import {$, cookieRemove, formatter, getPhpSession, post} from '../common'
 // import Counter1 from "./counter1";
 import Cookie from "../components/cookie/new/cookie";
 import Modal from "../components/Modal/modal";
@@ -23,7 +23,7 @@ export default class Cart {
       this.$cartEmptyText = this.container[qs]('.empty-cart');
       this.$cartCount = this.container[qs]('.cart .count');
       this.rows = this.container[qa]('.row');
-      this.setUrl()
+      this.url = '/cart'
 
       this.mapTables()
       this.renderSums()
@@ -59,11 +59,6 @@ export default class Cart {
          })
    }
 
-   counterCallback() {
-      cookieRemove('cartDeadline')
-      this.dropCart().then()
-   }
-
 
    async dropCart() {
       const cartToken = getPhpSession();
@@ -90,7 +85,7 @@ export default class Cart {
 
    async handleClick({target}) {
       if (target.classList.contains('del')) {
-         // await this.deleteCartRow(target)
+         await this.deleteCartRow(target)
          this.renderSums()
       } else if (target.classList.contains('plus') || target.classList.contains('minus')) {
          if (this.rowTotalCount(target.closest('.row'))) {
@@ -98,23 +93,18 @@ export default class Cart {
             this.changeCount(target)
          } else {
             this.renderSums()
-            // await this.deleteCartRow(target)
          }
       }
    }
 
    changeCount(target) {
-      // const count = target.closest('[unit-row]')[qs]('input').value
-      // const res = post(this.url, count)
    }
 
    async handleKeyUp({target}) {
       if (target.classList.contains('input') && target.tagName === 'INPUT') {
          this.renderSums()
          const count = +target.value
-         // if (count) {
          this.updateOrCreate(target, count)
-         // }
       }
    }
 
@@ -127,7 +117,7 @@ export default class Cart {
    updateOrCreate(target, count) {
       const product_id = target.closest('[shippable-table]').dataset['1sid'];
       const unit_id = target.closest('[unit-row]').dataset['unitid'];
-      post(this.url + `/updateOrCreate`, {product_id, unit_id, count})
+      post( `${this.url}/updateOrCreate`, {product_id, unit_id, count})
    }
 
    async deleteCartRow(target) {
@@ -136,13 +126,6 @@ export default class Cart {
          target.closest('.row').remove();
          if (this.rows.length < 1) this.showEmptyCart()
          this.renderSums()
-      }
-   }
-
-   setUrl() {
-      this.url = '/adminsc/orderitem'
-      if (isAuthed()) {
-         this.url = '/adminsc/order'
       }
    }
 
@@ -197,13 +180,19 @@ export default class Cart {
    }
 
    async modalLoginCallback(fields, modal) {
-      let email = fields.email.value;
-      let password = fields.password.value;
-      let sess = getPhpSession();
-      let res = await post('/cart/login', {email, password, sess});
+      const email = fields.email.value;
+      const password = fields.password.value;
+      const sess = getPhpSession();
+      const res = await post('/cart/login', {email, password, sess});
       modal.close();
       if (res) {
          location.reload()
       }
    }
+
+   counterCallback() {
+      cookieRemove('cartDeadline')
+      this.dropCart().then()
+   }
+
 }

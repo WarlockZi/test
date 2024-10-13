@@ -11,6 +11,25 @@ use app\model\User;
 
 class OrderRepository
 {
+    public static function deleteItems(string $sess, string $product_id, array $unitIds)
+    {
+        try {
+            foreach ($unitIds as $unitId) {
+                $order = Order::query()
+                    ->where('sess', $sess)
+                    ->where('product_id', $product_id)
+                    ->where('unit_id', $unitId)
+                    ->first();
+                if ($order) $order->delete();
+            }
+            return true;
+        } catch (\Throwable $exception) {
+            $exc = $exception;
+            return false;
+        }
+    }
+
+
     private static function q2()
     {
         $orderItems = OrderItem::with('product')
@@ -22,26 +41,7 @@ class OrderRepository
     public static function leadList()
     {
         $orderItems = self::q2();
-//        $orders = OrderItem::query()
-//            ->select('id', 'product_id', 'count', 'sess')
-//            ->whereHas('lead')
-//            ->with('lead')
-//            ->with('product')
-//            ->groupBy('product_id')
-//            ->get();
         return $orderItems;
-    }
-
-    private static function q1()
-    {
-        return
-            $orders = Order::query()
-                ->select('product_id', 'id', 'user_id',)
-                ->with('user', 'product',)
-//            ->orderBy('user_id')
-                ->groupBy('user_id')
-                ->join('orders', 'order.user_id', '=', 'user.id')
-                ->get();
     }
 
     public static function clientList()
@@ -53,7 +53,6 @@ class OrderRepository
             })
             ->groupBy('users.id')
             ->get();
-
         return $orders;
     }
 
@@ -64,10 +63,10 @@ class OrderRepository
             ->select('product_id', 'id', 'user_id', 'count', 'unit_id', 'created_at')
             ->selectRaw('SUM(count) as total_count')
             ->where('user_id', $userId)
-            ->with('user', 'product','product.activePromotions','product.inactivePromotions', 'unit')
+            ->with('user', 'product', 'product.activePromotions', 'product.inactivePromotions', 'unit')
             ->groupBy('product_id')
             ->get();
-        $a = $orders->toArray();
+        $a      = $orders->toArray();
         return $orders;
     }
 

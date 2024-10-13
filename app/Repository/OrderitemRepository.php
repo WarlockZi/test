@@ -37,7 +37,7 @@ class OrderitemRepository
 
     public function edit($id)
     {
-        $orderItem = OrderItem::with(['product.activePromotions','unit','lead'])->find($id);
+        $orderItem = OrderItem::with(['product.activePromotions', 'unit', 'lead'])->find($id);
         $lead      = Lead::where('sess', $orderItem->sess)->first();
         $oItems    = OrderItem::query()
             ->where('sess', $orderItem->sess)
@@ -82,25 +82,30 @@ class OrderitemRepository
 
     public function deleteItem(string $sess, string $product_id, string $unitId)
     {
-
         $oItem = OrderItem::query()
             ->where('sess', $sess)
             ->where('product_id', $product_id)
             ->where('unit_id', $unitId)
             ->first();
         if ($oItem) $oItem::query()->forceDelete();
-
     }
 
-    public function deleteItems(string $sess, string $product_id, array $unitIds)
+    public static function deleteItems(string $sess, string $product_id, array $unitIds)
     {
-        foreach ($unitIds as $unitId) {
-            $oItem = OrderItem::query()
-                ->where('sess', $sess)
-                ->where('product_id', $product_id)
-                ->where('unit_id', $unitId)
-                ->first();
-            if ($oItem) $oItem::query()->forceDelete();
+        try {
+            foreach ($unitIds as $unitId) {
+                $oItem = OrderItem::query()
+                    ->where('sess', $sess)
+                    ->where('product_id', $product_id)
+                    ->where('unit_id', $unitId)
+                    ->first();
+                if ($oItem) $oItem::query()->forceDelete();
+            }
+            return true;
+        } catch (\Throwable $exception) {
+            $exc = $exception;
+            return false;
         }
+
     }
 }

@@ -1,11 +1,15 @@
-<? use \app\view\share\shippable\ShippableUnitsTableFactory; ?>
+<? use app\core\Icon;
+use \app\view\share\shippable\ShippableUnitsTableFactory;
+
+$authed = \app\core\Auth::isAuthed();
+?>
 <div class="cart">
 
     <div class="<?= $products->count() ? '' : 'none'; ?> content">
 
         <div class="page-name">Корзина</div>
 
-        <?php include 'counter.php' ?>
+<!--        --><?php //include 'counter.php' ?>
 
         <div class="table" data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
 
@@ -28,7 +32,7 @@
                     </div>
 
                     <div class="sub-sum sum"></div>
-                    <div class="del"><?= $trashedWhite; ?></div>
+                    <div class="del"><?= Icon::trashWhite(); ?></div>
                 </div>
 
             <?php endforeach; ?>

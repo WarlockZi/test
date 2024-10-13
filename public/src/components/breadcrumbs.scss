@@ -208,16 +208,10 @@ nav.breadcrumbs-5 {
     display: block;
     height: 27%;
     position: absolute;
-    //left: 0;
     right: 0;
     top: 5px;
     width: 1px;
-    //z-index: 1;
     transform: skewX(45deg);
-    //&:hover {
-    //  background-color: blue;
-    //  cursor: pointer;
-    //}
   }
 
   li:after {
@@ -233,7 +227,7 @@ nav.breadcrumbs-5 {
   li a {
     color: #000;
     text-decoration: none;
-    transition: all 0.3s;
+    transition: color 0.3s;
   }
   li a:hover {
     color: #337AB7;

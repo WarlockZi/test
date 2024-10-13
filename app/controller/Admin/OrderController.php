@@ -22,53 +22,49 @@ class OrderController extends AppController
     public function actionIndex(): void
     {
         $orderItems = OrderRepository::leadList();
-        $leadlist = OrderView::leadList($orderItems);
+        $leadlist   = OrderView::leadList($orderItems);
 
-        $orders = OrderRepository::clientList();
+        $orders     = OrderRepository::clientList();
         $clientlist = OrderView::clientList($orders);
         $this->setVars(compact('clientlist', 'leadlist'));
     }
 
-    public function actionEdit():void
+    public function actionEdit(): void
     {
         $this->view = 'table';
-        $orders = OrderRepository::edit($this->route->id);
-        $table = OrderView::editOrder($orders);
+        $orders     = OrderRepository::edit($this->route->id);
+        $table      = OrderView::editOrder($orders);
         $this->setVars(compact('table'));
     }
 
-    public function actionUpdateOrCreate(): void
+    public static function updateOrCreate(array $req): void
     {
-        $req = $this->ajax;
-        if ($req) {
-            $now = Carbon::now()->toDateTimeString();
-            if (Auth::isAuthed()) {
-                $order = Order::updateOrCreate(
-                    [
-                        'product_id' => $req['product_id'],
-                        'unit_id' => (int)$req['unit_id'],
-                        'sess' => session_id(),
-                        'user_id' => Auth::getUser()['id'],
-                        'deleted_at' => null,
-                    ],
-                    [
-                        'product_id' => $req['product_id'],
-                        'unit_id' => (int)$req['unit_id'],
-                        'sess' => session_id(),
-                        'count' => (int)$req['count'],
-                        'ip' => $_SERVER['REMOTE_ADDR'],
-                        'updated_at' => $now,
-                    ]
-                );
-                if ($order->wasRecentlyCreated) {
-                    Response::exitJson(['popup' => "Добавлено в корзину"]);
-                }
-                if ($order->wasChanged()) {
-                    Response::exitJson(['popup' => "Заказ изменен"]);
-                }
-                Response::exitJson(['popup' => 'не записано', 'error' => "не записано"]);
-            }
+        if (!$req) return;
+
+        $order = Order::updateOrCreate(
+            [
+                'product_id' => $req['product_id'],
+                'unit_id' => (int)$req['unit_id'],
+                'sess' => session_id(),
+                'user_id' => Auth::getUser()['id'],
+                'deleted_at' => null,
+            ],
+            [
+                'product_id' => $req['product_id'],
+                'unit_id' => (int)$req['unit_id'],
+                'sess' => session_id(),
+                'count' => (int)$req['count'],
+                'ip' => $_SERVER['REMOTE_ADDR'],
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]
+        );
+        if ($order->wasRecentlyCreated) {
+            Response::exitJson(['popup' => "Добавлено в корзину"]);
         }
+        if ($order->wasChanged()) {
+            Response::exitJson(['popup' => "Заказ изменен"]);
+        }
+        Response::exitJson(['popup' => 'не записано', 'error' => "не записано"]);
     }
 
     public function actionDelete(): void

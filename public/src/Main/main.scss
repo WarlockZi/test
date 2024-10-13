@@ -15,11 +15,11 @@
 
 //@import "../font/Montserrat-7.210/Monserrat";
 
-.danger{
+.danger {
   color: $color-danger;
 }
 
-.deleted-overlay{
+.deleted-overlay {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,7 +31,7 @@
   top: 109px;
   left: -6px;
 
-  h1.deleted{
+  h1.deleted {
     padding: 33px;
     background-color: tomato;
     color: #fff !important;
@@ -49,9 +49,9 @@
 
 
 .user-content-wrap {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
 
 
   .user-content {
@@ -60,14 +60,41 @@
     flex-direction: column;
     margin: 0 auto;
     width: clamp(310px, 80%, 900px);
-    padding: 127px 0 0 0 ;
+    padding: 127px 0 0 0;
     background-color: white;
     min-height: 250px;
 
-    .about, .news{
+    .about, .news, .contacts {
       margin-top: 50px;
       margin-bottom: 50px;
     }
+
+    .contacts {
+
+      .map{
+        margin-bottom: 30px;
+        margin-top: 30px;
+
+      }
+
+      .how-to-come{
+        font-size: 1rem;
+        margin-bottom: 20px;
+      }
+      .column {
+        margin-bottom: 20px;
+
+        h3 {
+          font-size: 1rem;
+          margin-bottom: 5px;
+        }
+
+        p {
+          margin: 0 0 5px 0;
+        }
+      }
+    }
+
     h1 {
       @include _h1;
     }

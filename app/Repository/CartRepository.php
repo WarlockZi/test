@@ -1,8 +1,6 @@
 <?php
 
-
 namespace app\Repository;
-
 
 use app\core\Auth;
 use app\model\Order;
@@ -70,7 +68,6 @@ class CartRepository
                 ->get();
         }
         return $oItems;
-
     }
 
     public static function edit($id)
@@ -85,34 +82,5 @@ class CartRepository
             ->get();
         return $orders;
     }
-//    public static function leadList()
-//    {
-//        $orders = OrderItem::query()
-//            ->select('id', 'product_id', 'count', 'sess')
-//            ->whereHas('lead')
-//            ->with('lead')
-//            ->with('product')
-//            ->groupBy('product_id')
-//            ->get();
-//        return $orders;
-//    }
-//
-//    public static function clientList()
-//    {
-//        $orders = Order::query()
-//            ->select('product_id', 'id', 'user_id', 'count')
-//            ->with('user')
-//            ->with('product')
-//            ->orderBy('user_id')
-//            ->groupBy('user_id')
-//            ->get();
-//        return $orders;
-//    }
 
-
-//    public static function count(): int
-//    {
-//        $sess = session_id();
-//        return OrderItem::where('sess', $sess)->get()->count();
-//    }
 }
