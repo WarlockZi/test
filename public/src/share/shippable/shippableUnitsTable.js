@@ -1,5 +1,5 @@
 import "./shippableTable.scss";
-import { isAuthed, post} from "../../common";
+import { post} from "../../common";
 import {ael, qs, qa} from '../../constants';
 
 
@@ -122,24 +122,12 @@ export default class shippableTable {
         this.toServer(this.dto(this.greenButtonWrap[qs]('[unit-row]')))
     }
 
-    getUrl(key) {
-        const urls = {
-            "updateOrCreate": "updateOrCreate",
-            "delete": "delete",
-        }
-        const url = urls[key]
-        const orderOrItem = isAuthed()?'order':'orderItem'
-
-        return `/adminsc/${orderOrItem}/${url}`
-    }
-
     deleteOrderItems(tableDTO) {
-        post(this.getUrl('delete'), tableDTO)
+        post(`/cart/delete`, tableDTO)
     }
 
     async toServer(dto) {
-        const url = this.getUrl("updateOrCreate")
-        const res = await post(url, dto)
+        const res = await post(`/cart/updateOrCreate`, dto)
     }
 
     setFormatter() {

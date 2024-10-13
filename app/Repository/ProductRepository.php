@@ -36,7 +36,7 @@ class ProductRepository extends AppController
             ->first();
     }
 
-    protected function mainShortSubquery($id)
+    public function main(string $slug): Product|null
     {
         return Product::query()
             ->withTrashed()
@@ -54,27 +54,8 @@ class ProductRepository extends AppController
             ->with('activepromotions.unit')
             ->with('shippableUnits')
             ->with('orderItems')
-            ->where('1s_id', $id)
-            ->get();
-    }
-
-    public function main(string $slug)
-    {
-//        $slug = "%{$slug}%";
-        $slug = "$slug";
-//        $p    = Product::withWhereHas('ownProperties',
-//            fn($q) => $q->where('slug', $slug)
-//        )->withTrashed()->first();
-        $p = Product::where('slug', $slug)
-            ->withTrashed()->first();
-
-        if (!$p) $p = Product::where('short_link', $slug)->first();
-        if ($p) {
-            $id      = $p['1s_id'];
-            $product = $this->mainShortSubquery($id)->first();;
-            return $product;
-        }
-        return null;
+            ->where('slug', $slug)
+            ->first() ?? null;
     }
 
     public function changePromotion(array $req)

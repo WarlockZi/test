@@ -224,9 +224,7 @@ function getPhpSession() {
       ?? null
 }
 
-function isAuthed() {
-   return !['null', 'undefined', ''].includes(localStorage.getItem('id'));
-}
+
 
 function createEl(tagName, className = '', text = '') {
    let div = document.createElement(tagName);
@@ -630,5 +628,4 @@ export {
    post, get,
    validate, $,
    formatDate,
-   isAuthed
 }

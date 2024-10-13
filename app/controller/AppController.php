@@ -28,16 +28,14 @@ class AppController extends Controller
 //        exit();
     }
 
-
-
     public function actionDelete(): void
     {
         $id = $this->ajax['id'];
 
         if (!$id) Response::exitWithMsg('No id');
-        $model = new $this->model;
+//        $model = new $this->model;
 
-        $item = $model::find($id);
+        $item = $this->model::find($id);
         if ($item) {
             $destroy = $item->delete();
             Response::exitJson(['id' => $id, 'popup' => 'Ok']);

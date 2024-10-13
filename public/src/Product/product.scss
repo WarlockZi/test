@@ -4,18 +4,8 @@
 .product-card {
   display: flex;
   flex-direction: column;
-
-  //.edit{
-  //  position: absolute;
-  //  top: -4px;
-  //  left: -4px;
-  //  padding: 1px 5px;
-  //  border-radius: 5px;
-  //  background-color: #c5ffec;
-  //  &:hover{
-  //    background-color: darken(#c5ffec, 30%);
-  //  }
-  //}
+  padding-top: 15px;
+  padding-bottom: 50px;
 
   h1 {
     font-family: sans-serif;
