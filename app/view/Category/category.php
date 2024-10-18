@@ -47,12 +47,9 @@
             </div>
 
             <div class="product-wrap">
-
-
                 <?php foreach ($category->productsInStore as $product): ?>
                     <?php include 'product_card.php' ?>
                 <?php endforeach; ?>
-
             </div>
 
         <?php endif; ?>
@@ -64,14 +61,11 @@
             </div>
 
             <div class="product-wrap">
-
-
                 <?php foreach ($category->productsNotInStoreInMatrix as $product): ?>
                     <?php if (str_ends_with($product->name, '*')): ?>
                         <?php include 'product_card.php' ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
-
             </div>
         <?php endif; ?>
 

@@ -5,8 +5,10 @@ namespace app\view\layouts;
 use app\controller\Controller;
 use app\core\FS;
 use app\core\Route;
+use app\Repository\CategoryRepository;
 use app\view\Assets\Assets;
 use app\view\Assets\UserAssets;
+use app\view\Footer\UserFooter;
 use app\view\Header\UserHeader;
 
 class UserLayout extends Layout
@@ -25,7 +27,9 @@ class UserLayout extends Layout
 
     )
     {
-        $this->header = new UserHeader($this->route);
+        $rootCategories = CategoryRepository::frontCategories();
+        $this->header = new UserHeader($this->route,$rootCategories);
+        $this->footer = new UserFooter($rootCategories);
 
         $this->view     = $this->controller->view ?? $this->route->getView() ?? $this->route->getAction() ?? 'default';
         $this->viewFs   = new FS(dirname(__DIR__) . DIRECTORY_SEPARATOR . ucfirst($this->route->getControllerName()));
@@ -40,14 +44,14 @@ class UserLayout extends Layout
         $this->content['header']  = $this->header->getHeader();
         $this->content['assets']  = $controller->assets;
         $this->content['content'] = $this->prepareContent($controller->vars);
-        $this->content['footer']  = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
+        $this->content['footer']  = $this->footer->getFooter();
     }
 
     private function prepareContent($vars): string
     {
         try {
             if ($this->view === '404') {
-                return(new FS(ROOT.'/app/view'))->getContent('404');
+                return (new FS(ROOT . '/app/view'))->getContent('404', $vars);
             }
             return $this->viewFs->getContent($this->view, $vars);
         } catch (\Exception $exception) {

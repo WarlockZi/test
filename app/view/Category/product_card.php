@@ -3,7 +3,9 @@
         data-instore="<?= $product->instore ?? 0; ?>"
         data-1sid="<?= $product['1s_id'] ?? 0; ?>"
 >
-    <?= $product->activepromotions->count() ? "<div class='promotion'>Акция</div>" : '';; ?>
+    <?= isset($product->activePromotions) && $product->activePromotions->count()
+        ? "<div class='promotion'>Акция</div>"
+        : ''; ?>
     <a
             href="/product/<?= $product->slug; ?>" class="product">
 

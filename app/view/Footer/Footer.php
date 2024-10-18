@@ -50,5 +50,9 @@ class Footer
     {
         return self::$userCookie;
     }
+    public function getFooter(): string
+    {
+        return $this->footer;
+    }
 
 }

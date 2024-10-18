@@ -8,7 +8,7 @@ use app\Repository\SettingsRepository;
 
 class Address
 {
-	public static $factAddress = '<span itemprop="addressLocality">г. Вологда</span>, <span itemprop="streetAddress">ул. Залинейная 26, скл.4</span>';
+	public static $factAddress = '<span itemprop="addressLocality">г. Вологда,</span><span itemprop="streetAddress">ул. Залинейная 26, скл.4</span>';
 	public static $postCode = '<span itemprop="postalCode">160010</span>';
 
 	public static function getFactAddress(): string

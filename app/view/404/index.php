@@ -1,6 +1,6 @@
 <div class="wrap-404">
 <!--	<img class="img404" src="/pic/srvc/404_.jpg" alt="404 not found">-->
-	<div class="not_found">
+	<div class="not-found">
 
 		<div class="message">
 			<div class="digit">404</div>

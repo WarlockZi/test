@@ -3,7 +3,6 @@ import './category.scss'
 import PropertyTable from "./PropertyTable";
 import {$, post} from "../../common.js";
 import SelectNew from "../../components/select/SelectNew";
-// import Morph from "../../components/morph/morph";
 
 
 export default class Category {
