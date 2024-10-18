@@ -9,12 +9,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BlueRibbonRepository
 {
-    public static function data()
+    public static function data($rootCategories)
     {
-        $rootCats = CategoryRepository::frontCategories();
 
         $child_categories = [];
-        foreach ($rootCats as $rootCat) {
+        foreach ($rootCategories as $rootCat) {
             ob_start();
             self::buildMenu($rootCat->childrenRecursive);
             $child_categories[$rootCat['name']] = ob_get_clean();

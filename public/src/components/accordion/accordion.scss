@@ -265,11 +265,16 @@ $width-full: 170px;
   &:hover{
     min-width: 170px;
   }
-
   @include _1000 {
     margin-right: 0px;
     max-width: 0;
     min-width: 57px;
+  }
+  @include _400 {
+    min-width: 100%;
+    &:hover{
+      min-width: 100%;
+    }
   }
 
   &.open {

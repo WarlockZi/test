@@ -5,7 +5,6 @@ namespace app\Repository;
 
 
 use app\model\Category;
-use app\model\CategoryProperty;
 use app\view\components\Builders\SelectBuilder\optionBuilders\TreeOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use Illuminate\Database\Eloquent\Collection;

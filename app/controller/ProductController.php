@@ -24,10 +24,7 @@ class ProductController extends AppController
 
     public function actionIndex(): void
     {
-        $slug = $this->route->slug;
-        if (!$slug) {
-            header('Location:/category');
-        }
+        if (!$slug = $this->route->slug) header('Location:/category');
 
         try {
             $product = $this->repo->main($slug);
@@ -40,7 +37,6 @@ class ProductController extends AppController
             $oItems          = OrderRepository::count();
             $breadcrumbs     = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category_id, true,);
             $shippablePrices = $this->formView->dopUnitsPrices($product);
-
             $this->setVars(compact('shippablePrices', 'product', 'breadcrumbs', 'oItems'));
 
             $title    = ProductSeoService::title($product);
@@ -48,17 +44,13 @@ class ProductController extends AppController
             $keywords = $product->ownProperties->seo_keywords ?? $product->name;
             $this->assets->setMeta($title, $desc, $keywords);
 
-//            $this->assets->setProduct();
-//         $this->assets->setQuill();http://vitexopt.ru/short/9zL6pN6fL2wL
         } else {
             $this->view = '404';
             http_response_code(404);
-//            Response::notFound();
-//            $this->assets->setMeta('Страница не найдена');
-//            http_response_code(404);
+            $subslug1 = substr($slug, 0, -5);
+            $subslug2 = substr($slug, 0, -27);
+            $similarProducts = ProductRepository::similarProducts($subslug1, $subslug2);
+            $this->setVars(compact( 'similarProducts'));
         }
-
     }
-
-
 }

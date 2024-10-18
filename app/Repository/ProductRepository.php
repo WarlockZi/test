@@ -8,6 +8,7 @@ use app\core\Response;
 use app\model\Product;
 use app\model\ProductUnit;
 use app\Services\ProductImageService;
+use Illuminate\Support\Collection;
 
 class ProductRepository extends AppController
 {
@@ -61,6 +62,15 @@ class ProductRepository extends AppController
     public function changePromotion(array $req)
     {
 
+    }
+
+    public static function similarProducts(string $subslug1, string $subslug2): Collection
+    {
+        return Product::query()
+            ->where('slug', 'LIKE', "%{$subslug1}%")
+            ->orWhere('slug', 'LIKE', "%{$subslug2}%")
+            ->with('activePromotions')
+            ->get();
     }
 
     private static function defaultFilter()

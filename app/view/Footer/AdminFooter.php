@@ -4,8 +4,6 @@
 namespace app\view\Footer;
 
 
-
-
 use app\core\FS;
 
 class AdminFooter extends Footer
@@ -20,8 +18,4 @@ class AdminFooter extends Footer
 		$this->footer= FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
 	}
 
-	public function getFooter()
-	{
-		return $this->footer;
-	}
 }

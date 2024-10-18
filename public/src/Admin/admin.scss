@@ -24,6 +24,12 @@
           "content content"
           "footer footer";
   }
+  @include _400 {
+    grid-template-areas:
+          "sidebar sidebar"
+          "content content"
+          "footer footer";
+  }
 }
 
 .sidebar{

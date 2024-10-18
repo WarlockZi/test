@@ -12,6 +12,92 @@
   }
 }
 
+@mixin product-card{
+  .product-wrap {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 80vw;
+    gap: 20px;
+    margin-bottom: 50px;
+
+    @include _400 {
+      justify-content: center;
+    }
+
+    .column {
+      position: relative;
+      background-color: white;
+
+      .promotion {
+        position: absolute;
+        transform: rotate(90deg);
+        background: red;
+        padding: 5px 10px;
+        top: 10px;
+        right: -7px;
+        color: white;
+        font-size: 13px;
+      }
+    }
+
+    a.product {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 180px;
+      flex: 1;
+      padding: 10px;
+      border: 1px solid $color-gray2;
+      color: $color-gray10;
+      margin-bottom: 0;
+      line-height: 20px;
+
+      @include _400 {
+        width: 93%;
+      }
+
+      img {
+        width: 100%;
+        min-height: 40px;
+        max-height: 240px;
+        object-fit: contain;
+      }
+
+      &[data-instore="0"] {
+        filter: grayscale(0.1);
+        background-color: #fbfbfb;
+
+        img {
+          opacity: 0.8;
+        }
+      }
+
+      &.show {
+        display: flex;
+      }
+
+      &:hover {
+        border: 1px solid $color-main;
+      }
+
+      .name {
+        font-weight: initial;
+        padding: 10px;
+      }
+
+      .footer {
+        color: $color-gray-max;
+        font-size: 12px;
+
+        .old-price {
+          text-decoration: line-through #707f8d;
+          color: #707f8d;
+        }
+      }
+    }
+  }
+}
 
 @mixin mtree{
   ul.mtree {
