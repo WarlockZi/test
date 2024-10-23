@@ -1,4 +1,4 @@
-@import "../../../var";
+@use "../../../var";
 
 .pagination {
   display: flex;
@@ -38,25 +38,25 @@
     background-color: #6e6e6e;
   }
   .filled {
-    background-color: $color-gray-max;
+    background-color: var.$color-gray-max;
   }
 }
 
 
 .pagination__add-question {
-  background-color: $color-main;
+  background-color: var.$color-main;
   border: none;
   color: white;
   padding: 0 6px;
   text-align: center;
   font-size: 1rem;
-  box-shadow: 0 2px 4px 0 $color-main;
+  box-shadow: 0 2px 4px 0 var.$color-main;
   margin: 0 3px 4px 0;
   line-height: 19px;
   cursor: pointer;
 
   &:hover {
-    background-color: $color-main-hover;
+    background-color: var.$color-main-hover;
 
   }
 

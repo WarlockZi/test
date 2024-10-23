@@ -1,6 +1,6 @@
-@import "../var";
-@import "../mixin_media";
-@import "./counter";
+@use "../var";
+@use "../mixin_media";
+@use "counter";
 
 .cart {
 
@@ -15,7 +15,7 @@
 
     .order-item_not-found {
       padding: 10px;
-      color: $color-warning;
+      color: var.$color-warning;
     }
 
     p {
@@ -26,12 +26,12 @@
       margin: 40px auto;
       width: clamp(300px, 40%, 450px);
       font-size: 1rem;
-      color: $color-main-green;
+      color: var.$color-main-green;
       line-height: 3;
     }
 
 
-    @include cartRow;
+    @include mixin_media.cartRow;
 
 
   }
@@ -46,7 +46,7 @@
   .total {
     display: flex;
     justify-content: flex-end;
-    border-bottom: 1px solid $color-gray2;
+    border-bottom: 1px solid var.$color-gray2;
     align-items: center;
 
     .title {

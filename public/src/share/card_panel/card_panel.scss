@@ -1,4 +1,4 @@
-@import "../../var";
+@use "../../var";
 
 .card-panel {
   position: absolute;
@@ -11,16 +11,16 @@
 
   .short-link, .edit {
     padding: 1px 8px;
-      background-color: $color-gray9;
+      background-color: var.$color-gray9;
 
     &:hover {
-      background-color: $color-gray8;
+      background-color: var.$color-gray8;
 
     }
 
     svg {
-      //color: $color-gray-min;
-      color: $color-gray-min;
+      //color: var.$color-gray-min;
+      color: var.$color-gray-min;
       stroke-width: 0px;
       pointer-events: none;
     }

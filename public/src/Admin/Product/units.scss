@@ -1,12 +1,12 @@
-@import "../../var";
-@import "../../mixin_media";
+@use "../../var";
+@use "../../mixin_media";
 
 .units, .properties {
   background: #fff;
   padding: 10px;
 
   .title {
-    @include _h2;
+    @include mixin_media.h2;
   }
 
   .head {
@@ -17,7 +17,7 @@
       display: flex;
       flex: 1;
       padding: 10px;
-      background-color: $color-gray2;
+      background-color: var.$color-gray2;
       align-items: center;
       border: 1px solid #ffffff;
     }
@@ -28,7 +28,7 @@
       align-items: center;
       justify-content: center;
       padding: 10px 0;
-      background-color: $color-gray2;
+      background-color: var.$color-gray2;
       border: 1px solid #ffffff;
     }
   }
@@ -93,7 +93,7 @@
 
 
   .add-unit, .add-property {
-    @include colored_button();
+    @include mixin_media.colored_button();
     align-self: flex-end;
     margin-top: 10px;
     padding: 5px 21px;

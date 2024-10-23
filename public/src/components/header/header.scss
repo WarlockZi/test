@@ -1,12 +1,15 @@
-@import "./mobile-menu";
-@import "phone";
-@import "user_menu";
+@use "sass:color";
+@use "mobile-menu";
+@use "phone";
+@use "user_menu";
+@use "../../mixin_media";
+@use "../../var";
+
 
 
 .header {
   display: flex;
   flex-direction: column;
-  //background: #2180d1d1;
   flex: 0 0 auto;
   align-items: center;
   position: fixed;
@@ -59,7 +62,7 @@
         cursor: pointer;
 
         &:hover {
-          background-color: $color-white-hover;
+          background-color: var.$color-white-hover;
         }
 
         svg {
@@ -157,41 +160,41 @@
 
 
   .user-menu {
-    position: relative;
-    display: flex;
-    align-items: center;
-    font-size: 17px;
-    cursor: pointer;
-    color: #2b303a;
-    padding: 3px 3px 3px 3px;
-    flex: 0 1 auto;
-
-    &:hover {
-      background-color: #f0f0f0;
-    }
-
-    img {
-      border: 2px solid #f5f5f5;
-      border-radius: 50%;
-      vertical-align: middle;
-      margin: 0 6px;
-      width: 44px;
-      @include _600 {
-        width: 30px;
-      }
-    }
+    //position: relative;
+    //display: flex;
+    //align-items: center;
+    //font-size: 17px;
+    //cursor: pointer;
+    //color: #2b303a;
+    //padding: 3px 3px 3px 3px;
+    //flex: 0 1 auto;
+    //
+    //&:hover {
+    //  background-color: #f0f0f0;
+    //}
+    //
+    //img {
+    //  border: 2px solid #f5f5f5;
+    //  border-radius: 50%;
+    //  vertical-align: middle;
+    //  margin: 0 6px;
+    //  width: 44px;
+    //  @include mixin_media.m600 {
+    //    width: 30px;
+    //  }
+    //}
 
     .credits {
       display: flex;
       flex-flow: column;
       flex: 0 0 200px;
-      @include _500 {
+      @include mixin_media.m500 {
         display: none;
       }
 
       .fio {
         font-size: .8rem;
-        @include _600 {
+        @include mixin_media.m600 {
           font-size: .7rem;
         }
       }
@@ -224,7 +227,7 @@
 
       a {
         padding: 5px 10px;
-        color: $color-a;
+        color: var.$color-a;
 
         &:hover {
           background-color: #e5e5e5;
@@ -234,7 +237,7 @@
   }
 
 
-  @include _600 {
+  @include mixin_media.m600 {
     padding: 0;
   }
 
@@ -260,7 +263,7 @@
       align-items: center;
       margin-left: 27px;
 
-      @include _600 {
+      @include mixin_media.m600 {
         margin: 2px;
         padding: 5px;
       }
@@ -268,10 +271,10 @@
       .logo_vitex {
         height: 33px;
 
-        @include _600 {
+        @include mixin_media.m600 {
           height: 20px;
         }
-        @include _500 {
+        @include mixin_media.m500 {
           //width: 50px;
         }
       }
@@ -279,14 +282,14 @@
       .logo_square {
         height: 33px;
 
-        @include _700 {
+        @include mixin_media.m700 {
           display: none;
         }
       }
     }
 
     .phone {
-      @include phone;
+      @include phone.phone;
     }
 
 
@@ -300,7 +303,7 @@
       position: relative;
       flex: 1;
 
-      @include _800 {
+      @include mixin_media.m800 {
         display: none;
       }
 
@@ -310,7 +313,7 @@
         top: 30%;
         width: 15px;
         height: 15px;
-        stroke: $color-main;
+        stroke: var.$color-main;
       }
     }
   }
@@ -341,7 +344,7 @@
     width: 100%;
     margin: 0 auto;
     justify-content: end;
-    @include mobile-menu();
+    @include mobile-menu.mobile-menu();
   }
 
   .utils {
@@ -435,12 +438,12 @@
     line-height: 14px;
     cursor: pointer;
 
-    @include _800 {
+    @include mixin_media.m800 {
       display: none;
     }
 
     &:hover {
-      background-color: $color-main-hover;
+      background-color: var.$color-main-hover;
 
       & > .h-cat_submenu {
         position: absolute;
@@ -452,6 +455,7 @@
           width: 100%;
           padding-left: 5px;
           background: inherit;
+          box-sizing: border-box;
         }
       }
     }
@@ -468,10 +472,10 @@
       z-index: 2;
 
       &.level-2{
-        background-color: darken(white, 10%);
+        background-color: color.adjust(white, $lightness: -10%);
       }
       &.level-3{
-        background-color: darken(white, 20%);
+        background-color: color.adjust(white, $lightness: -20%);
       }
       .visible{
         overflow: initial;
@@ -495,7 +499,7 @@
           flex: 1 0 auto;
           text-align: start;
           font: 600 11px/16px 'Proxima Nova', sans-serif;
-          color: $color-gray-mid;
+          color: var.$color-gray-mid;
           padding: 5px;
           letter-spacing: 0;
 

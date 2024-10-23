@@ -135,8 +135,9 @@ class Table
     {
         $this->columns['del'] = ColumnBuilder::build()
             ->classHeader('head del')
-            ->class('del')
-            ->name(Icon::trashIcon())
+            ->class('cell del')
+//            ->name(Icon::trashIcon())
+            ->callback(fn()=>Icon::trashIcon())
             ->width('50px')
             ->get();
         return $this;
@@ -146,8 +147,8 @@ class Table
     {
         $this->columns['edit'] = ColumnBuilder::build()
             ->classHeader('head edit')
-            ->class('edit')
-            ->name(Icon::editWhite())
+            ->class('cell edit')
+            ->callback(fn()=>Icon::edit())
             ->width('50px')
             ->get();
 
@@ -164,24 +165,23 @@ class Table
     protected function prepareGridHeader(): void
     {
         $columns = '';
-        foreach ($this->columns as $colName => $column) {
+        foreach ($this->columns as $column) {
             $columns .= ' ' . $column->width;
         }
-
         $this->grid .= "style='display: grid; grid-template-columns:{$columns}'";
     }
 
-    protected function getData($column, $item, $field)
-    {
-        if ($column->function) {
-            $func = $column->function;
-            return $column->functionClass::$func($column, $item, $field);
-        } else if ($column->select) {
-            return $column->select->get($item->$field ?? 0);
-        } else {
-            return $item[$field];
-        }
-    }
+//    protected function getData($column, $item, $field)
+//    {
+//        if ($column->function) {
+//            $func = $column->function;
+//            return $column->functionClass::$func($column, $item, $field);
+//        } else if ($column->select) {
+//            return $column->select->get($item->$field ?? 0);
+//        } else {
+//            return $item[$field];
+//        }
+//    }
 
     protected function getEmpty($column)
     {
@@ -198,7 +198,7 @@ class Table
             $this->prepareGridHeader();
             $this->items = $this->take ? $this->items->take($this->take) : $this->items;
             $data        = get_object_vars($this);
-            $content = $this->fs->getContent('TableTemplate', $data);
+            $content = $this->fs->getContent('tableTemplate', $data);
             return $this->clean($content);
 
         } catch (\Throwable $error) {

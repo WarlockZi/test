@@ -20,14 +20,14 @@ $authed = \app\core\Auth::isAuthed();
 
                     <img src="<?= $product->mainImagePath; ?>" alt="<?= $product->name; ?>">
 
-                    <div class="name-price cell">
+                    <div class="cell name-price cell">
                         <a href="/product/<?= $product->slug; ?>"
                            class="name">
                             <?= $product->name; ?>
                         </a>
                     </div>
 
-                    <div class="cell cart-shippable-table">
+                    <div class="cart-shippable-table cell">
                         <?= ShippableUnitsTableFactory::create($product, 'cart'); ?>
                     </div>
 

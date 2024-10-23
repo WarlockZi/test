@@ -1,17 +1,17 @@
-@import "../../var";
+@use "../../var";
 
 .opentest-edit-wrapper {
 
   .question__create-button {
     margin: 10px;
-    background-color: $color-success;
-    border: 1px solid $color-success;
+    background-color: var.$color-success;
+    border: 1px solid var.$color-success;
     color: white;
 
     &:hover {
       background-color: #ffffff;
-      border: 1px solid $color-success;
-      color: $color-success;
+      border: 1px solid var.$color-success;
+      color: var.$color-success;
     }
   }
 

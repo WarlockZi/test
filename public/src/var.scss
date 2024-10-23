@@ -1,3 +1,4 @@
+@use "sass:color";
 //$color-main: #1bbc9b1//;
 
 $color-success: #54bb99;
@@ -5,12 +6,12 @@ $color-main-green: #7ac142;
 
 $color-main: #337ab7;
 //$color-main: var(--color-main);
-$color-main-lighten10: lighten($color-main, 10%);
-$color-main-darken10: darken($color-main, 10%);
+$color-main-lighten10: color.adjust($color-main, $lightness: 10%);
+$color-main-darken10: color.adjust($color-main, $lightness: -10%);
 
-$color-contenteditable: lighten($color-main, 27%);
+$color-contenteditable: color.adjust($color-main, $lightness: 27%);
 $color-main-hover: #2d6b9f;
-$color-main-selected: lighten($color-main, 22%);
+$color-main-selected: color.adjust($color-main, $lightness: 22%);
 
 
 $color-white: #ffffff;
@@ -22,17 +23,17 @@ $color-danger: #b82121;
 $color-white-hover: #e7e7e7;
 $color-hover-gray: #e5e5e5;
 
-$color-gray0: lighten(#f8f8f8, 3%);
+$color-gray0: color.adjust(#f8f8f8, $lightness: 3%);
 $color-gray1: #f8f8f8;
-$color-gray2: darken($color-gray1, 3%);
-$color-gray3: darken($color-gray1, 6%);
-$color-gray4: darken($color-gray1, 9%);
-$color-gray5: darken($color-gray1, 12%);
-$color-gray6: darken($color-gray1, 16%);
-$color-gray7: darken($color-gray1, 20%);
-$color-gray8: darken($color-gray1, 30%);
-$color-gray9: darken($color-gray1, 50%);
-$color-gray10: darken($color-gray1, 50%);
+$color-gray2: color.adjust($color-gray1, $lightness: -3%);
+$color-gray3: color.adjust($color-gray1, $lightness: -6%);
+$color-gray4: color.adjust($color-gray1, $lightness: -9%);
+$color-gray5: color.adjust($color-gray1, $lightness: -12%);
+$color-gray6: color.adjust($color-gray1, $lightness: -16%);
+$color-gray7: color.adjust($color-gray1, $lightness: -20%);
+$color-gray8: color.adjust($color-gray1, $lightness: -30%);
+$color-gray9: color.adjust($color-gray1, $lightness: -50%);
+$color-gray10: color.adjust($color-gray1, $lightness: -50%);
 $color-gray-browser: #445760;
 
 $textPrimary: #001a34;
@@ -40,7 +41,7 @@ $textSecondary: #707f8d;
 $textQuaternary: #96a3ae;
 
 $color-title: #2a2a2a;
-$color-h: lighten($color-title, 10%);
+$color-h: color.adjust($color-title, $lightness: 10%);
 $dark-grey-hover: #343635;
 
 $color-admin-sidebar: #4d5158; // Abbey
@@ -49,7 +50,7 @@ $color-a: #5a5a5a;
 
 $color-grey-logo: #41444a;
 $color-gray-min: #f8f8f8;
-$color-gray-min-hover: darken($color-gray-min, 10%);
+$color-gray-min-hover: color.adjust($color-gray-min, $lightness: -10%);
 
 $color-gray-mid: #565958;
 $color-gray-mid-hover: #4D4F4E;
@@ -76,9 +77,9 @@ $m: '40px';
 $padding-form: 6px;
 $font-size-form: .7rem;
 $margin-form: 0px 5px;
-$border-option-hover-form: 1px solid lighten($color-main, 6%);
-$border-field-hover: 1px solid darken($color-gray4, 10%);
-$background-option-selected-form: lighten($color-main, 6%);
+$border-option-hover-form: 1px solid color.adjust($color-main, $lightness: 6%);
+$border-field-hover: 1px solid color.adjust($color-gray4, $lightness: -10%);
+$background-option-selected-form: color.adjust($color-main, $lightness: 6%);
 $color-option-selected-form: white;
 
 $font-size-table: 0.7rem;

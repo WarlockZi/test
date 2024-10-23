@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BlueRibbonRepository
 {
-    public static function data($rootCategories)
+    public static function data($rootCategories): array
     {
 
         $child_categories = [];
@@ -27,7 +27,7 @@ class BlueRibbonRepository
         ];
     }
 
-    private static function buildMenu(Collection $categories, int $i = 1)
+    private static function buildMenu(Collection $categories, int $i = 1): void
     {
         echo "<ul class='h-cat_submenu level-{$i}'>";
         foreach ($categories as $item) {
@@ -38,7 +38,7 @@ class BlueRibbonRepository
         echo '</ul>';
     }
 
-    private static function renderLink(Category $item, int $i)
+    private static function renderLink(Category $item, int $i): void
     {
         if ($item->childrenRecursive->count()) {
             echo "<div class = 'wrap'>" .

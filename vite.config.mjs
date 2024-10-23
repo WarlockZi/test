@@ -25,7 +25,7 @@ export default defineConfig(async ({command, mode}) => {
       ],
 
       root: 'public/src',
-      base: env.VITE_APP_ENV === 'developmenst'
+      base: env.VITE_APP_ENV !== 'development'
          ? '/'
          : '/public/build/',
 

@@ -1,5 +1,5 @@
-@import "../../var";
-@import "../../mixin_media";
+@use "../../var";
+@use "../../mixin_media";
 
 .test-add {
   content: 'Добавить';
@@ -9,8 +9,8 @@
   margin: 10px 0 0;
   white-space: nowrap;
   cursor: pointer;
-  background-color: $color-main !important;
-  box-shadow: 0 2px 4px 0 $color-main;
+  background-color: var.$color-main !important;
+  box-shadow: 0 2px 4px 0 var.$color-main;
   transition: box-shadow 100ms;
   display: flex;
   justify-content: center;
@@ -19,7 +19,7 @@
   font-size: .8rem;
   min-width: 140px;
 
-  @include _600{
+  @include mixin_media.m600{
     max-width: 100%;
   }
 
@@ -55,7 +55,7 @@
   color: #000;
 
   &:hover {
-    background-color: $color-hover-gray;
+    background-color: var.$color-hover-gray;
   }
 }
 

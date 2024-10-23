@@ -1,4 +1,6 @@
-@import "../../mixin_media";
+@use "../../mixin_media";
+@use "../../var";
+
 
 @mixin mobile-menu {
 
@@ -7,7 +9,7 @@
     top: 100%;
     right: -1000px;
     width: 250px;
-    background: $color-main;
+    background: var.$color-main;
     transition: right 200ms;
 
     //@include _500 {
@@ -28,7 +30,7 @@
       margin: 20px;
       text-align: end;
 
-      @include _500 {
+      @include mixin_media.m500 {
         text-align: center;
       }
 
@@ -39,7 +41,7 @@
         cursor: pointer;
 
         &:hover {
-          background-color: $color-main-hover;
+          background-color: var.$color-main-hover;
         }
       }
     }

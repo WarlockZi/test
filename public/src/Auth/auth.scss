@@ -1,5 +1,5 @@
-@import "../var";
-@import "../mixin_media";
+@use "../var";
+@use "../mixin_media";
 
 
 .auth {
@@ -14,7 +14,7 @@
   min-width: 300px;
 
   h3{
-    @include _h3;
+    @include mixin_media.h3;
   }
 
   p {
@@ -39,7 +39,7 @@
     font-weight: bold;
     font-size: 120%;
     text-align: center;
-    color: $color-gray-max;
+    color: var.$color-gray-max;
     margin-bottom: 20px;
   }
 

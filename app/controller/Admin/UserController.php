@@ -26,8 +26,8 @@ class UserController extends AppController
 	}
 
 
-	public function actionEdit()
-	{
+	public function actionEdit(): void
+    {
 		$item = $this->model::find($this->route->id);
 		$item = UserView::getViewByRole($item, Auth::getUser());
 

@@ -1,15 +1,14 @@
-@import "../../var";
-@import "../../components/dnd/dnd";
-@import "../../components/morph/morph";
+@use "../../var";
+@use "../../mixin_media";
 
 [data-morph-relation] {
 
   .dnd-container {
 
-    @include dnd-container();
+    @include mixin_media.dnd-container;
   }
 
-  @include dnd();
+  @include mixin_media.dnd();
 
   img {
     width: 100px;
@@ -26,10 +25,10 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    border: 1px solid $color-gray2;
+    border: 1px solid var.$color-gray2;
 
     .del, [data-detach] {
-      @include detach();
+      @include mixin_media.detach;
     }
 
     .item {
@@ -72,17 +71,17 @@
     height: 122px;
     border-radius: 5%;
     margin: 5px;
-    background-color: $color-gray1;
-    border: $color-gray3 1px solid;
+    background-color: var.$color-gray1;
+    border: var.$color-gray3 1px solid;
 
     &:hover {
-      background-color: $color-gray0;
-      border: $color-gray5 1px solid;
+      background-color: var.$color-gray0;
+      border: var.$color-gray5 1px solid;
     }
 
     svg {
       path {
-        fill: $color-gray6;
+        fill: var.$color-gray6;
       }
     }
 
@@ -103,7 +102,7 @@
       position: relative;
 
       .del, [data-detach] {
-        @include detach();
+        @include mixin_media.detach;
       }
 
       img {

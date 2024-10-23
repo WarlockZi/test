@@ -1,18 +1,19 @@
-@import "../../var";
+@use "../../var";
 
 .admin-panel {
   position: relative;
-  top: 0px;
+  top: 0;
   left: 0;
   width: 100%;
-  z-index: 3;
   border-top: 1px solid white;
-  background-color: $color-gray-browser;
+  background-color: var.$color-gray-browser;
   transition: top 0.8s ease-in-out;
+  z-index: 1;
 
   &.fixed{
     position: fixed;
-    top: -20px;
+    top: 0;
+    padding-left: 30px;
   }
 
   .row {
@@ -27,7 +28,7 @@
     padding: 6px;
 
     &:hover {
-      background-color: $color-main;
+      background-color: var.$color-main;
 
     }
 

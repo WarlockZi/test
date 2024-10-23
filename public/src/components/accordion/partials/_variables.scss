@@ -1,9 +1,9 @@
-@import './layout';
-@import '../../../var';
+@use './layout';
+@use '../../../var';
 
 // colors
 
-$color-1: $color-admin-sidebar; // Abbey
+$color-1: var.$color-admin-sidebar; // Abbey
 $color-2: #a0f6aa; // Gossip
 $color-3: #ffffff; // White
 

@@ -1,22 +1,25 @@
-@import "../mixin_media.scss";
-@import "../common.scss";
-@import "../var.scss";
-@import '../normalize.scss';
+@use "sass:meta";
+@use "../mixin_media.scss";
+@use "../common.scss";
+@use "../var.scss";
+@use '../normalize.scss';
 
-@import './oferta.scss';
-@import '../Auth/auth.scss';
-@import '../components/footer/footer.scss';
-@import '../components/header/header.scss';
-@import '../components/list.scss';
-@import '../components/popup.scss';
-@import "../components/breadcrumbs";
+@use 'oferta.scss';
+@use '../Auth/auth.scss';
+@use '../components/footer/footer.scss';
+@use '../components/header/header.scss';
+@use '../components/list.scss';
+@use '../components/popup.scss';
+@use "../components/breadcrumbs";
 
-@import "./cart";
+@use "cart";
 
-//@import "../font/Montserrat-7.210/Monserrat";
+@use "../font/Sagoe";
+@use "../font/Montserrat";
+@use "../font/Roboto";
 
 .danger {
-  color: $color-danger;
+  color: var.$color-danger;
 }
 
 .deleted-overlay {
@@ -52,7 +55,7 @@
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-
+  font-family: "Segoe UI", serif;
 
   .user-content {
     display: flex;
@@ -64,6 +67,37 @@
     background-color: white;
     min-height: 250px;
 
+    .typing-animation {
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing 1s steps(20), effect 3.5s step-start infinite alternate;
+
+      &:before {
+        content: '';
+        position: absolute;
+        width: 3px;
+        right: 0;
+        height: 100%;
+        padding-left: 10px;
+        border-right: 3px solid var.$color-main;
+        opacity: 1;
+        animation: blinking 1s infinite alternate;
+
+      }
+    }
+    @keyframes blinking {
+      50% {
+        opacity: 0
+      }
+    }
+
+    @keyframes typing {
+      from {
+        width: 0
+      }
+    }
+
     .about, .news, .contacts {
       margin-top: 50px;
       margin-bottom: 50px;
@@ -71,16 +105,17 @@
 
     .contacts {
 
-      .map{
+      .map {
         margin-bottom: 30px;
         margin-top: 30px;
 
       }
 
-      .how-to-come{
+      .how-to-come {
         font-size: 1rem;
         margin-bottom: 20px;
       }
+
       .column {
         margin-bottom: 20px;
 
@@ -96,23 +131,23 @@
     }
 
     h1 {
-      @include _h1;
+      @include mixin_media.h1;
     }
 
     h2 {
-      @include _h2;
+      @include mixin_media.h2;
       margin-bottom: 25px;
     }
 
     h3 {
-      @include _h3;
+      @include mixin_media.h3;
     }
 
     h4 {
-      @include _h4;
+      @include mixin_media.h4;
     }
 
-    @import "../Category/category";
+    @include meta.load-css("../Category/category");
 
 
   }
@@ -151,7 +186,7 @@
         padding: 5% 10px 3% 17px;
         margin-left: 0;
         color: white;
-        @include _600 {
+        @include mixin_media.m600 {
           margin-left: 0;
         }
       }
@@ -160,19 +195,19 @@
         padding: 5% 17px 3% 10px;
         margin-right: 0;
         color: white;
-        @include _600 {
+        @include mixin_media.m600 {
           margin-right: 0;
         }
       }
 
 
-      @include _900 {
+      @include mixin_media.m900 {
         padding: 12% 40px 8% 40px;
       }
-      @include _600 {
+      @include mixin_media.m600 {
         padding: 8% 15px 6% 15px;
       }
-      @include _300 {
+      @include mixin_media.m300 {
         padding: 5% 20px 3% 20px;
       }
     }
@@ -182,22 +217,20 @@
       display: flex;
       flex-flow: column;
       justify-content: space-between;
-      color: $color-title;
+      color: var.$color-title;
       margin-bottom: 8%;
       margin-top: 3%;
       max-width: 35%;
-      //transition: all 500ms ease;
 
-      @include _1000 {
+      @include mixin_media.m1000 {
         max-width: 50%;
       }
-
-      @include _900 {
+      @include mixin_media.m900 {
       }
-      @include _600 {
+      @include mixin_media.m600 {
         max-width: 55%;
       }
-      @include _300 {
+      @include mixin_media.m300 {
         max-width: 85%;
       }
 
@@ -208,11 +241,11 @@
       font-size: xx-large;
       margin: 0 0 35px;
       letter-spacing: 3px;
-      @include _600 {
+      @include mixin_media.m600 {
         font-size: 22px;
         margin-bottom: 20px;
       }
-      @include _300 {
+      @include mixin_media.m300 {
         font-size: 18px;
         margin-bottom: 10px;
         letter-spacing: 1px;
@@ -222,11 +255,11 @@
     p {
       margin: 0;
       line-height: 25px;
-      @include _600 {
+      @include mixin_media.m600 {
         font-size: 12px;
         line-height: 17px;
       }
-      @include _300 {
+      @include mixin_media.m300 {
         font-size: 10px;
         line-height: 10px;
       }
@@ -259,19 +292,15 @@
         display: none;
       }
 
-
-      @include _600 {
+      @include mixin_media.m600 {
         padding: 10px;
         font-size: 11px;
       }
-      @include _300 {
+      @include mixin_media.m300 {
         padding: 7px;
         font-size: 10px;
       }
-
-
     }
-
   }
 
   .advantages {
@@ -283,17 +312,16 @@
       flex-flow: column;
       align-items: center;
       width: 70%;
-      @include _500 {
+      @include mixin_media.m500 {
         width: 100%;
       }
-
 
       .advantages__title {
         font-size: xx-large;
         font-weight: 600;
         margin: 65px 0;
-        color: $color-title;
-
+        width: 370px;
+        color: var.$color-title;
       }
 
       .advantage__cards-wrap {
@@ -313,8 +341,8 @@
         font-size: 22px;
         font-weight: 600;
         height: 300px;
-        color: $color-title;
-        @include _600 {
+        color: var.$color-title;
+        @include mixin_media.m600 {
           padding: 17px;
         }
 
@@ -322,19 +350,19 @@
         &.assortiment,
         &.certificates,
         &.result {
+
           svg {
             position: absolute;
-            top: -54px;
-            right: 14%;
-            width: 169px;
+            top: -77px;
+            right: -2%;
+            width: 138px;
             height: 208px;
-            filter: blur(6px);
+            filter: blur(3px);
             stroke: var(--color-main);
             opacity: 0.3;
-            //z-index: -1;
+            animation: stagger 3s infinite;
           }
         }
-
       }
 
       p {
@@ -355,10 +383,11 @@
     font-size: xx-large;
     font-weight: 600;
     margin-bottom: 65px;
-    color: $color-title;
+    color: var.$color-title;
 
     .workflow__title {
       margin: 50px 0;
+      width: 280px;
     }
 
     .workflow__wrap {
@@ -366,7 +395,8 @@
       flex-flow: column;
       align-items: start;
       padding-left: 160px;
-      @include _600 {
+
+      @include mixin_media.m600 {
         padding: 72px;
       }
 

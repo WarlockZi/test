@@ -1,6 +1,6 @@
-//@import "logo";
-@import "user_menu";
-
+@use "user_menu";
+@use "../../mixin_media";
+@use "../../var";
 
 .admin-layout_header {
   position: relative;
@@ -13,15 +13,12 @@
   min-width: 100%;
   max-height: 52px;
   top: 0;
-  //z-index: 1;
-  //margin-top: 25px;
 
-  @include _600 {
+  @include mixin_media.m600 {
     display: none;
   }
 
   .utils {
-    //background-color: darkred;
     display: flex;
     flex: 1 0;
     justify-content: flex-end;
@@ -38,7 +35,7 @@
       padding: 0 10px;
 
       &:hover {
-        background-color: $color-white-hover;
+        background-color: var.$color-white-hover;
       }
 
       svg {
@@ -85,7 +82,7 @@
         cursor: pointer;
 
         &:hover {
-          background-color: $color-white-hover;
+          background-color: var.$color-white-hover;
         }
 
         svg {

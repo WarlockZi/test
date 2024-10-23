@@ -1,10 +1,10 @@
-@import "var";
-@import "mixin_media";
-@import "./share/adminPanel/adminPanel";
+@use "var";
+@use "mixin_media";
+@use "share/adminPanel/adminPanel";
 
 
 .errors {
-  @include error;
+  @include mixin_media.error;
   margin-bottom: 20px;
 
 }
@@ -39,19 +39,19 @@ select {
 }
 
 .button.button-outlined.button-success {
-  @include colored_button(3px, $color-success, $color-white)
+  @include mixin_media.colored_button(3px, var.$color-success, var.$color-white)
 }
 
 .button.button-outlined {
-  @include colored_button(3px, $color-main, $color-white, $color-main)
+  @include mixin_media.colored_button(3px, var.$color-main, var.$color-white, var.$color-main)
 }
 
 .button.button-filled.button-success {
-  @include colored_button(3px, $color-white, $color-success)
+  @include mixin_media.colored_button(3px, var.$color-white, var.$color-success)
 }
 
 .button.button-filled {
-  @include colored_button(3px, $color-white, $color-main)
+  @include mixin_media.colored_button(3px, var.$color-white, var.$color-main)
 }
 
 

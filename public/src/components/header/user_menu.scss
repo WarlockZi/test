@@ -1,5 +1,5 @@
-@import "../../var";
-@import "../../mixin_media";
+@use "../../var";
+@use "../../mixin_media";
 
 .user-menu {
   position: relative;
@@ -7,7 +7,7 @@
   align-items: center;
   font-size: 17px;
   cursor: pointer;
-  color: #2b303a;
+  //color: #2b303a;
   padding: 3px 3px 3px 3px;
   flex: 0 1 auto;
 
@@ -21,7 +21,7 @@
     vertical-align: middle;
     margin: 0 6px;
     width: 44px;
-    @include _600 {
+    @include mixin_media.m600 {
       width: 30px;
     }
   }
@@ -34,7 +34,7 @@
 
     .fio {
       font-size: .8rem;
-      @include _600 {
+      @include mixin_media.m600 {
         font-size: .8rem;
       }
     }
@@ -46,9 +46,6 @@
 
   //&:after {
   //  content: '☰';
-  //  display: block;
-  //  padding: 3px 8px;
-  //  align-self: center;
   //}
 
   &:hover > .menu {
@@ -71,7 +68,7 @@
 
     a {
       padding: 5px 10px;
-      color: $color-a;
+      color: var.$color-a;
 
       &:hover {
         background-color: #e5e5e5;
@@ -94,7 +91,7 @@
   border-radius: 0px;
   padding: 5px 15px;
   z-index: 2;
-  @include _500 {
+  @include mixin_media.m500 {
     padding: 3px 10px;
   }
 
@@ -125,7 +122,7 @@
       a {
         display: inline-block;
         padding: 10px 15px;
-        color: $color-a;
+        color: var.$color-a;
       }
     }
   }
@@ -138,8 +135,10 @@
 .user-credits {
   display: none;
 
-  @include _600 {
+  @include mixin_media.m600 {
     display: flex;
+    color: white;
+    margin-right: 20px;
   }
 
   .user-menu {

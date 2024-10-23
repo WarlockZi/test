@@ -45,7 +45,7 @@ use app\core\Icon;
 
 <div class="advantages">
 	<div class="advantages__wrap">
-		<div class="advantages__title">Почему выбирают нас</div>
+		<div class="advantages__title typing-animation">Почему выбирают нас</div>
 		<div class="advantage__cards-wrap">
 
 			<div class="advantage__card assortiment">
@@ -80,7 +80,7 @@ use app\core\Icon;
 </div>
 
 <div class="workflow">
-	<div class="workflow__title">Как мы работаем</div>
+	<div class="workflow__title typing-animation">Как мы работаем</div>
 	<div class="workflow__wrap">
 		<div class="step">Делаете заказ на сайте или звоните менеджеру</div>
 		<div class="step">Мы отправляем Вам счет</div>
