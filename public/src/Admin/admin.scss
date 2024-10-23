@@ -1,123 +1,48 @@
-@import '../common.scss';
-@import '../var.scss';
-@import "../mixin_media";
-@import '../normalize.scss';
-@import "../components/neon";
-//@import "../components/led.scss";
-//@import "./Order/order";
+@use '../var.scss';
+@use "../mixin_media";
+@use '../common.scss';
+@use '../normalize.scss';
+//@use "../components/led.scss";
 
-@include chips;
 
-@include error;
+@include mixin_media.chips;
 
-.admin-layout__containe{
+@include mixin_media.error;
+
+.admin-layout {
   display: grid;
-  grid-template-columns: 57px 1fr;
-  grid-template-rows: 110px auto 260px;
+  grid-template-columns: 30px 1fr;
+  grid-template-rows: 100px auto 260px;
   grid-template-areas:
           "sidebar a-header"
           "sidebar content"
           "footer footer";
-  @include _600 {
-    grid-template-areas:
-          "sidebar a-header"
-          "content content"
-          "footer footer";
-  }
-  @include _400 {
+
+  @include mixin_media.m600 {
+    grid-template-rows: 60px auto 260px;
     grid-template-areas:
           "sidebar sidebar"
           "content content"
           "footer footer";
   }
-}
 
-.sidebar{
-  grid-area: sidebar;
-}
-.a-header{
-  grid-area: a-header;
-}
-.content{
-  grid-area: content;
-  padding: 0 20px;
-  margin-bottom: 50px;
-  min-height: 80vh;
-
-}
-.footer{
-  grid-area: footer;
-}
-
-
-.admin-layout__container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  flex: 1 0 auto;
-  margin-top: 0;
-
-  @include _600 {
-    flex-wrap: wrap;
-    flex: 0;
+  .sidebar {
+    grid-area: sidebar;
   }
 
-  .adm-content {
-    padding: 65px 30px;
-    min-height: 50vh;
-
-    button {
-      @include colored_button();
-      padding: 5px;
-      margin: 0 5px;
-    }
-
-
-    @include _600 {
-      padding: 85px 30px;
-    }
+  .a-header {
+    grid-area: a-header;
   }
 
-
-  .admin-layout_content {
-    display: flex;
-    flex-flow: column;
-    flex: 1 1 auto;
-    padding-left: 60px;
-
-    @include _600 {
-      padding-left: 0;
-    }
-
-    .user-actions {
-      display: flex;
-      gap: 10px;
-
-      .user-action {
-        display: block;
-        background-color: white;
-        border-radius: 5px;
-
-        &:hover{
-          background-color: #cccccc;
-        }
-
-        a{
-          display: block;
-          padding: 10px 15px;
-          color: $color-gray-mid;
-        }
-      }
-    }
+  .content {
+    grid-area: content;
+    padding: 0 20px;
+    margin-bottom: 50px;
+    min-height: 80vh;
 
   }
 
-
+  .footer {
+    grid-area: footer;
+  }
 }
-
-
-
-
-
-
-

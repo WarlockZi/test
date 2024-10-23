@@ -1,4 +1,4 @@
-@import "../../mixin_media";
+@use "../../mixin_media";
 .main {
 
   .container {
@@ -33,13 +33,13 @@
       //min-width: 180px !important;
     }
 
-    @include _1000{
+    @include mixin_media.m1000{
       flex:1 0 20%;
     }
-    @include _800{
+    @include mixin_media.m800{
       flex:1 0 30%;
     }
-    @include _600{
+    @include mixin_media.m600{
       flex:1 0 90%;
     }
     .icon{

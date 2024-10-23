@@ -50,15 +50,15 @@ class Router
         $arr  = $this->route->getRedirect();
         $from = key($arr);
         $to   = $arr[$from];
-        $url  = $this->route->getUrL();
+//        $url  = $this->route->getUrL();
         if ($to === 'catalog') {
             $slug = $this->route->slug;
             $cat  = Category::where('slug', $slug)
                 ->with('ownProperties')
                 ->first();
             $path = $cat->ownProperties->seoPath ?? $cat->ownProperties->path;
-//            $newUrl = str_replace('/category/','',$url);
-            $newUrl = '/catalog/' . $path;
+            $path = "/{$path}";
+            $newUrl = '/catalog' . $path;
             header("Location: https://{$this->route->getHost()}" . $newUrl, true, 301);
             exit();
         }

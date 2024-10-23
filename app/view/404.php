@@ -19,7 +19,7 @@ if ($_ENV["DEV"] === "1") {
         </div>
     </div>
 
-    <? if ($similarProducts): ?>
+    <? if (isset($similarProducts)): ?>
 
         <div class="similar-products">
             <h2 class="similar-products__header">Похожие товары</h2>

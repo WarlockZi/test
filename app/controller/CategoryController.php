@@ -3,8 +3,6 @@
 namespace app\controller;
 
 
-use app\core\Auth;
-use app\core\Icon;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
 use app\Services\Seo\CategorySeoService;

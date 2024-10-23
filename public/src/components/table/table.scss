@@ -1,13 +1,13 @@
-@import "../../var";
-@import "../../mixin_media";
-@import "filter";
+@use "../../var";
+@use"../../mixin_media";
+@use "filter";
 
 [custom-table] {
   background-color: #fff;
   padding-bottom: 10px;
   //margin-left: 15px;
 
-  @include _600 {
+  @include mixin_media.m600 {
     width: 90vw;
     overflow-x: auto;
   }
@@ -30,7 +30,7 @@
     margin-bottom: 15px;
     font-size: 1.2rem;
     font-weight: 600;
-    color: $color-admin-sidebar;
+    color: var.$color-admin-sidebar;
   }
 
   .custom-table {
@@ -64,11 +64,12 @@
 
     .cell {
       display: flex;
-      //align-items: center;
+      align-items: center;
       justify-content: center;
+      min-height: 60px;
 
       &:hover {
-        background-color: $color-gray1;
+        background-color: var.$color-gray1;
       }
 
       &.left {
@@ -85,66 +86,51 @@
     > * {
       border: 1px solid transparent;
       padding: 5px 3px;
-      border-bottom: solid 1px $color-gray4;
-      font-size: $font-size-table;
+      border-bottom: solid 1px var.$color-gray4;
+      font-size: var.$font-size-table;
       min-height: .875rem;
       word-break: break-word;
     }
 
-    .edit:hover {
-      //background-color: lighten($color-main, 45%);
-
-      svg {
-        stroke: #ffffff;
-      }
-    }
-
-    .del:hover {
-      svg {
-        fill: #ffffff;
-      }
-    }
-
-    @mixin headEdit {
-      justify-content: center;
-      align-items: center;
-      display: flex;
-      cursor: pointer;
-    }
-
-    @mixin delEditBcgrnd {
+    .del:not(.head) {
       background-size: 47px 19px;
       background-repeat: no-repeat;
       background-position: center;
-    }
-
-    .edit {
-      @include headEdit;
-      @include delEditBcgrnd;
-      //background-image: url("/pic/icons/editWhite.svg");
-    }
-
-    .del {
-      @include headEdit;
-      @include delEditBcgrnd;
-      //background-image: url("/pic/icons/trashWhite.svg");
-    }
-
-    .del:not(.head) {
-      background-image: url("/pic/icons/trashIcon.svg");
-      @include delEditBcgrnd;
       min-height: .7rem;
+      color: var.$color-red;
+      cursor: pointer;
+      transition: color .2s ease-in-out, background-color .2s ease-in-out;
+
+      &:hover {
+        background-color: lighten(var.$color-red, 25%);
+        color: white;
+      }
+      svg{
+        pointer-events: none;
+      }
     }
 
     .edit:not(.head) {
-      background-image: url("/pic/icons/edit.svg");
-      @include delEditBcgrnd;
+      background-size: 47px 19px;
+      background-repeat: no-repeat;
+      background-position: center;
       min-height: .7rem;
+      color: var.$color-main;
+      cursor: pointer;
+      transition: color .2s ease-in-out, background-color .2s ease-in-out;
+
+      &:hover {
+        background-color: lighten(var.$color-main,25%);
+        color: white;
+      }
+      svg{
+        pointer-events: none;
+      }
     }
 
     .head {
       padding: 2px 5px;
-      background-color: $color-admin-sidebar;
+      background-color: var.$color-admin-sidebar;
       color: #fff;
       font-weight: normal;
       border-right: 1px solid #ffffff;
@@ -231,7 +217,7 @@
       margin: 20px 10px;
 
       $border-radius: 10%;
-      @include colored_button($border-radius);
+      @include mixin_media.colored_button($border-radius);
       align-self: end;
     }
   }

@@ -70,7 +70,7 @@ class ProductRepository extends AppController
             ->where('slug', 'LIKE', "%{$subslug1}%")
             ->orWhere('slug', 'LIKE', "%{$subslug2}%")
             ->with('activePromotions')
-            ->get();
+            ->get()??new \Illuminate\Database\Eloquent\Collection;
     }
 
     private static function defaultFilter()

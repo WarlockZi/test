@@ -1,4 +1,4 @@
-@import "../../mixin_media";
+@use "../../mixin_media";
 
 .test-head {
   display: flex;
@@ -11,5 +11,5 @@
   display: flex;
   align-items: center;
   margin-bottom: 15px;
-  @include _h2;
+  @include mixin_media.h2;
 }

@@ -14,7 +14,7 @@
 
 <body>
 
-<div class="admin-layout__containe">
+<div class="admin-layout">
 
     <?= $header; ?>
 
@@ -27,7 +27,7 @@
 
     </div>
 
-    <div class="led"></div>
+<!--    <div class="led"></div>-->
 </div>
 
 <?= $footer; ?>

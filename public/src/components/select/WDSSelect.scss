@@ -1,5 +1,5 @@
-@import "../../var";
-@import "../../mixin_media";
+@use "../../var";
+@use "../../mixin_media";
 
 /// CLASS = TYPE 1
 [custom-select] .type1 {
@@ -43,7 +43,7 @@
 
 
   &:focus-visible {
-    outline: 1px solid $color-gray5;
+    outline: 1px solid var.$color-gray5;
   }
 
   // TITLE
@@ -51,10 +51,10 @@
     display: inline-block;
     position: absolute;
 
-    @include _h4;
+    @include mixin_media.h4;
 
     &:focus-visible {
-      outline: 1px solid $color-gray5;
+      outline: 1px solid var.$color-gray5;
     }
   }
 
@@ -104,7 +104,7 @@
     overflow-y: auto;
     background-color: #ffffff;
     z-index: 1;
-    box-shadow: #445e8882 1px 3px 3px 0px;
+    box-shadow: #445e8882 1px 3px 3px 0;
 
     &.show {
       display: block;
@@ -119,12 +119,12 @@
       border: 1px solid transparent;
 
       &:hover {
-        border: $border-option-hover-form;
+        border: var.$border-option-hover-form;
       }
 
       &.selected {
-        background-color: $background-option-selected-form;
-        color: $color-option-selected-form;
+        background-color: var.$background-option-selected-form;
+        color: var.$color-option-selected-form;
       }
 
     }

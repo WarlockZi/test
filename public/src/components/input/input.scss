@@ -1,11 +1,12 @@
-@import "../../var";
+@use "../../var";
+@use "../../mixin_media";
 
 $color-auto-fill: #d9e2f0;
 $secondary-color: #7f7f7f;
 $color-input: #323030;
 
 .centered {
-  margin: 10px 0px;
+  margin: 10px 0;
   top: 0;
   bottom: 0;
   left: 0;
@@ -19,25 +20,25 @@ $color-input: #323030;
   input {
     display: block;
     width: 100%;
-    padding: $padding-input-with-label;
+    padding: var.$padding-input-with-label;
     color: #323030;
     transition: 0.3s ease;
-    background: $color-gray1;
-    border: 1px solid $color-gray2;
+    background: var.$color-gray1;
+    border: 1px solid var.$color-gray2;
     box-sizing: border-box;
 
     &:valid {
 
       ~ label {
         top: 0;
-        @include _h4;
+        @include mixin_media.h4;
       }
     }
 
     // Stop Chrome's hideous pale yellow background on auto-fill
     &:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0px 1000px $color-auto-fill inset;
-      -webkit-text-fill-color: $color-input;
+      -webkit-box-shadow: 0 0 0 1000px var.$color-auto-fill inset;
+      -webkit-text-fill-color: var.$color-input;
       // border-bottom-color: rgba(white, .5);
     }
   }
@@ -45,7 +46,7 @@ $color-input: #323030;
   label {
     position: absolute;
     top: 0px;
-    color: $color-main;
+    color: var.$color-main;
     font: 400 14px Arial, Serif;
     cursor: text;
     transition: .25s ease;

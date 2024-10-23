@@ -93,8 +93,7 @@ class AuthController extends AppController
 
     public function actionProfile(): void
     {
-        $userArr = Auth::getUser();
-        $user    = User::find($userArr['id']);
+        $user = Auth::getUser();
 
         if ($user->can(['role_employee'])) {
             if ($user->can(['role_admin'])) {

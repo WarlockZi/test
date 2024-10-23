@@ -10,8 +10,8 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 try {
 //    \app\Services\MockUserService::mockUser();
 //    \app\Services\UrlService::generateUrls();
-//    \app\Services\SiteMapService::generateMap();
 //    new \app\Services\XLService\XLService();
+//    \app\Services\SiteMapService::generateMap();
 
     $router = new Router($_SERVER['REQUEST_URI'] ?? '');
     $router->dispatch();

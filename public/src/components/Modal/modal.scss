@@ -1,4 +1,5 @@
-@import "../../var";
+@use "../../var";
+
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
 
 .modal-wrapper {
@@ -15,7 +16,7 @@
     height: 100%;
     position: absolute;
     top: 0;
-    left: 0px;
+    left: 0;
     content: "";
     background: rgba(0, 0, 0, 0.25);
     z-index: 3;
@@ -32,7 +33,7 @@
     left: 50%;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0px 2px 16px rgba(80, 80, 80, 0.9);
+    box-shadow: 0 2px 16px rgba(80, 80, 80, 0.9);
     background: #15172b;
     color: #eee;
 
@@ -51,7 +52,7 @@
       top: 10px;
       right: 10px;
       border-radius: 1000px;
-      background: $color-main;
+      background: var.$color-main;
       font-weight: bold;
       text-decoration: none;
       color: #fff;
@@ -195,10 +196,10 @@
     border-radius: 10px;
     text-transform: uppercase;
     color: white;
-    background-color: $color-main;
+    background-color: var.$color-main;
 
     &:hover {
-      background-color: $color-main-hover;
+      background-color: var.$color-main-hover;
     }
   }
 }

@@ -86,7 +86,7 @@ class CategoryRepository
             ->select('id', 'name')
             ->whereNull('deleted_at')
             ->get();
-//        $arr = $cat->toArray();
+        $arr = $cat->toArray();
         return $cat;
     }
 

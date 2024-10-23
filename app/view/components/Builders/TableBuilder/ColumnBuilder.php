@@ -9,7 +9,7 @@ class ColumnBuilder
 
     public $field = 'id';
     public $dataField;
-    public $class;
+    public $class = "class='cell left'";
     public $classHeader;
 
     public $name;

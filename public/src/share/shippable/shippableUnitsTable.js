@@ -1,7 +1,5 @@
-import "./shippableTable.scss";
 import { post} from "../../common";
 import {ael, qs, qa} from '../../constants';
-
 
 export default class shippableTable {
     constructor(target) {

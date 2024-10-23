@@ -1,6 +1,5 @@
 import {$} from "../../common.js";
 
-
 export default function scroll() {
 
    const header = $('.header').first()
@@ -12,6 +11,7 @@ export default function scroll() {
    );
 
    function handle(){
+      if (header)
          window.scrollY > 30 ? header.classList.add('short') : header.classList.remove('short')
    }
 }

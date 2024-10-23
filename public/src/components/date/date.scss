@@ -1,12 +1,12 @@
-@import "../../var";
+@use "../../var";
 
 [custom-date] {
-  padding: $padding-form;
-  font-size: $font-size-form;
+  padding: var.$padding-form;
+  font-size: var.$font-size-form;
   border: 1px solid transparent;
   font-family: inherit;
 
   &:hover {
-    border: $border-field-hover;
+    border: var.$border-field-hover;
   }
 }

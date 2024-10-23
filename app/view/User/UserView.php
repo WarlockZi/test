@@ -11,6 +11,7 @@ use app\view\components\Builders\Date\DateBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
+use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
@@ -25,11 +26,11 @@ abstract class UserView
 	public $model;
 	public $html;
 
-	public static function getViewByRole(Model $userToEdit, $thisUser)
-	{
+	public static function getViewByRole(Model $userToEdit, $thisUser): string
+    {
 		if ($userToEdit) {
-			if ($user->can(['role_employee'])) {
-				if ($user->can(['role_admin'])) {
+			if ($thisUser->can(['role_employee'])) {
+				if ($thisUser->can(['role_admin'])) {
 					return UserView::admin($userToEdit);
 				}
 				return UserView::employee($userToEdit);
@@ -40,8 +41,8 @@ abstract class UserView
 		return UserView::noElement();
 	}
 
-	public static function getAdminTab(Model $user)
-	{
+	public static function getAdminTab(Model $user): ItemTabBuilder
+    {
 		if (is_string($user->rights)) {
 			$user->rights = explode(',', $user->rights);
 		}
@@ -49,8 +50,8 @@ abstract class UserView
 			->html(self::getRights($user));
 	}
 
-	public static function guest($item)
-	{
+	public static function guest($item): string
+    {
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item->fi())
 			->save()
@@ -106,9 +107,8 @@ abstract class UserView
 			->get();
 	}
 
-	public static function employee($item)
-	{
-
+	public static function employee($item): string
+    {
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
 			->toList('adminsc/user/table', '', false)
@@ -166,8 +166,8 @@ abstract class UserView
 			->get();
 	}
 
-	public static function admin(Model $item)
-	{
+	public static function admin(User $item): string
+    {
 
 		return ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
@@ -299,8 +299,8 @@ abstract class UserView
 			->get();
 	}
 
-	public static function getBirhtdate(Model $user)
-	{
+	public static function getBirhtdate(Model $user): string
+    {
 		return DateBuilder::build($user->birthDate)
 			->field('birthDate')
 			->get();

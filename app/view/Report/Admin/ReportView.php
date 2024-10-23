@@ -18,12 +18,14 @@ class ReportView
             ->column(
                 ColumnBuilder::build('id')
                     ->name('ID')
+                    ->class('cell left')
                     ->width('15px')
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('art')
                     ->name('Арт')
+                    ->class('cell left')
                     ->search()
                     ->width('70px')
                     ->get()
@@ -55,6 +57,7 @@ class ReportView
             )
             ->column(
                 ColumnBuilder::build('instore')
+                    ->class('cell')
                     ->name('Количество')
                     ->width('50px')
                     ->get()

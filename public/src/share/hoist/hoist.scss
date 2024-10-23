@@ -1,4 +1,4 @@
-@import "../../var";
+@use "../../var";
 
 .hoist {
     position: fixed;
@@ -6,7 +6,7 @@
     right: 20px;
     display: flex;
     padding: 10px;
-    background-color: $color-main;
+    background-color: var.$color-main;
     color: #ffffff;
     cursor: pointer;
 }

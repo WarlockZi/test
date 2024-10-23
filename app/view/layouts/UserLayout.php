@@ -24,7 +24,6 @@ class UserLayout extends Layout
         protected Route   $route,
         public Controller $controller,
         protected Assets  $assets = new UserAssets(),
-
     )
     {
         $rootCategories = CategoryRepository::frontCategories();

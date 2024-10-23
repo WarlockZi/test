@@ -1,5 +1,6 @@
-@import "../mixin_media";
-@import "../var";
+@use "../mixin_media";
+@use "../var";
+@use "./../share/shippable/shippableTable";
 
 .product-card {
   display: flex;
@@ -16,7 +17,7 @@
     align-items: flex-start;
     margin-bottom: 10px;
 
-    @include _600 {
+    @include mixin_media.m600 {
       flex-direction: column;
       align-items: center;
     }
@@ -34,7 +35,7 @@
         height: 100%;
       }
 
-      @include _600 {
+      @include mixin_media.m600 {
         width: 90%;
         max-width: 420px;
         margin-bottom: 10px;
@@ -76,7 +77,7 @@
       box-shadow: 0 20px 12px -16px rgb(0 30 85 / 10%), 0 8px 24px 18px rgb(0 30 85 / 5%);
 
 
-      //@include shippable-table;
+      @include mixin_media.shippable;
 
       //@include green;
 
@@ -152,26 +153,11 @@
         .old-price {
           width: 40%;
           font-size: 1rem;
-          text-decoration: line-through $textSecondary;
-          color: $textSecondary
+          text-decoration: line-through var.$textSecondary;
+          color: var.$textSecondary
         }
 
       }
-
-      //.button {
-      //  display: flex;
-      //  align-items: center;
-      //  justify-content: center;
-      //  background-color: $color-main;
-      //  padding: 18px 9px;
-      //  color: #ffffff;
-      //  border-radius: 20px;
-      //
-      //  &:hover {
-      //    background-color: darken($color-main, 10%);
-      //    cursor: pointer;
-      //  }
-      //}
     }
 
     .detail-image {
@@ -190,10 +176,10 @@
       width: 48px;
       height: 48px;
       padding: 10px;
-      border: 2px solid $color-gray-min;
+      border: 2px solid var.$color-gray-min;
 
       &:hover {
-        border: 2px solid lighten($color-main, 20%);
+        border: 2px solid lighten(var.$color-main, 20%);
         border-radius: 3px;
       }
 
@@ -243,7 +229,7 @@
 
     .property {
       width: 50%;
-      color: $textSecondary;
+      color: var.$textSecondary;
       position: relative;
       box-sizing: border-box;
       display: block;
@@ -251,7 +237,7 @@
       word-break: break-word;
 
       &:before {
-        border-bottom: 1px dotted $textSecondary;
+        border-bottom: 1px dotted var.$textSecondary;
         bottom: 0.2em;
         content: "";
         display: block;
@@ -262,7 +248,7 @@
 
       span {
         align-items: flex-start;
-        background: $color-white;
+        background: var.$color-white;
         display: inline;
         padding-right: 3px;
         position: relative;
@@ -270,7 +256,7 @@
     }
 
     .value {
-      color: $textPrimary;
+      color: var.$textPrimary;
       width: 50%;
       padding: 0 10px 0 3px;
       position: relative;
@@ -290,7 +276,7 @@
       width: 300px;
       height: 300px;
       object-fit: contain;
-      border: 1px solid $color-gray-min;
+      border: 1px solid var.$color-gray-min;
       padding: 10px;
     }
   }
@@ -313,7 +299,7 @@
   }
 
   h3 {
-    @include _h3;
+    @include mixin_media.h3;
     padding: 10px;
     color: #ffffff;
     font-weight: normal;
@@ -322,7 +308,7 @@
 }
 
 .info-wrap {
-  @include info-tag;
+  @include mixin_media.info-tag;
 }
 
 

@@ -1,19 +1,10 @@
-@import "mixin_media";
-@import "var";
-
-@font-face {
-  font-family: "RobotoMedium";
-  font-style: normal;
-  font-weight: 500;
-  src: url("/public/src/font/RobotoMedium/RobotoMedium.woff") format("woff"),
-  url("/public/src/font/RobotoMedium/RobotoMedium.ttf") format("truetype");
-}
+@use "mixin_media";
+@use "var";
 
 html {
   height: 100%;
   overflow-y: scroll;
 }
-
 
 body {
   position: relative;
@@ -26,11 +17,7 @@ body {
   padding: 0 calc(0px - (100vw - 100%)) 0 0;
   text-rendering: optimizeLegibility;
   overflow: hidden;
-  background-color: $color-white;
-
-  @include _500 {
-    padding: 0;
-  }
+  background-color: var.$color-white;
 
 }
 
@@ -57,9 +44,7 @@ textarea:focus,
   outline: transparent;
 }
 
-.df {
-  display: flex !important;
-}
+
 [hidden] {
   display: none !important;
 }

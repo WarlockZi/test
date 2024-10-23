@@ -1,9 +1,9 @@
-@import "../var";
+@use "../var";
 
 .breadcrumbs {
   display: flex;
   margin: 0px 0 15px;
-  color: $color-a;
+  color: var.$color-a;
   font-size: .7rem;
 
   a {
@@ -50,7 +50,7 @@ nav.breadcrumbs-4 {
     background: #BFE2FF;
 
     a {
-      color: $color-gray-max;
+      color: var.$color-gray-max;
 
     }
   }
@@ -87,7 +87,7 @@ nav.breadcrumbs-1 {
     a, div {
       color: #FFF;
       display: block;
-      background: $color-main;
+      background: var.$color-main;
       text-decoration: none;
       position: relative;
       height: 24px;
@@ -104,7 +104,7 @@ nav.breadcrumbs-1 {
         content: "";
         position: absolute;
         top: 0;
-        border: 0 solid $color-main;
+        border: 0 solid var.$color-main;
         border-width: 12px 10px;
         width: 0;
         height: 0;
@@ -119,47 +119,47 @@ nav.breadcrumbs-1 {
       &:after {
         left: 100%;
         border-color: transparent;
-        border-left-color: $color-main;
+        border-left-color: var.$color-main;
       }
 
       &:hover {
-        background-color: $color-main-lighten10;
+        background-color: var.$color-main-lighten10;
         //color: #000;
       }
 
       &:hover:before {
-        border-color: $color-main-lighten10;
+        border-color: var.$color-main-lighten10;
         border-left-color: transparent;
       }
 
       &:hover:after {
-        border-left-color: $color-main-lighten10;
+        border-left-color: var.$color-main-lighten10;
       }
     }
 
     &:nth-child(even) a {
-      background-color: $color-main-hover;
+      background-color: var.$color-main-hover;
 
       &:before {
-        border-color: $color-main-hover;
+        border-color: var.$color-main-hover;
         border-left-color: transparent;
       }
 
       &:after {
-        border-left-color: $color-main-hover;
+        border-left-color: var.$color-main-hover;
       }
 
       &:hover {
-        background-color: $color-main-lighten10;
+        background-color: var.$color-main-lighten10;
       }
 
       &:hover:before {
-        border-color: $color-main-lighten10;
+        border-color: var.$color-main-lighten10;
         border-left-color: transparent;
       }
 
       &:hover:after {
-        border-left-color: $color-main-lighten10;
+        border-left-color: var.$color-main-lighten10;
       }
 
     }

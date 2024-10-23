@@ -48,7 +48,7 @@ class Table {
       } else if (
          target.className === '.del:not(.head)'
          || target.closest('.del:not(.head)')) {
-         const res = this.modelDel(target.closest('.del:not(.head)'))
+         this.modelDel(target.closest('.del:not(.head)'))
 
          /// edit
       } else if (target.className === 'edit:not(.head)'
@@ -78,7 +78,6 @@ class Table {
    }
 
    edit(target) {
-      // debugger
       const model = this.relation ? this.relationModel : this.model;
       const id = this.relation ? target.dataset.id : this.modelId??target.dataset.id;
       window.location = `/adminsc/${model}/edit/${id}`;

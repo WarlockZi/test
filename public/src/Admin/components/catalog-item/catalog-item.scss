@@ -1,7 +1,6 @@
-@import "../../../var";
-@import "../../../mixin_media";
-@import "../../../components/dnd/dnd";
-@import "../../../components/breadcrumbs";
+@use "../../../var";
+@use "../../../mixin_media";
+@use "../../../components/breadcrumbs";
 
 .ql-toolbar.ql-snow {
   button {
@@ -13,7 +12,6 @@
 .profile {
   min-width: 400px;
   max-width: 70%;
-  //margin: 30px 0;
 }
 
 
@@ -23,26 +21,19 @@
   max-width: 85%;
   position: relative;
   padding: 0;
-  font-size: $font-size;
+  font-size: var.$font-size;
 
   .dnd-container {
-    @include dnd-container;
+    @include mixin_media.dnd-container;
   }
 
   .dnd-image {
     display: flex;
   }
 
-  @include _800 {
+  @include mixin_media.m800 {
     max-width: 100%;
   }
-
-  //&[data-model='product'] {
-  //.category {
-  //  margin: 10px 0;
-  //  text-transform: uppercase;
-  //  font-weight: 600;
-  //}
 
   .properties {
     display: flex;
@@ -63,8 +54,6 @@
       }
     }
   }
-
-  //}
 }
 
 
@@ -91,10 +80,10 @@
       max-width: 75px;
       border-left: 3px solid transparent;
       color: #555;
-      background-color: $color-gray3;
+      background-color: var.$color-gray3;
       min-height: 1.5rem;
 
-      @include _400 {
+      @include mixin_media.m400 {
         font-size: 10px;
       }
 
@@ -105,23 +94,22 @@
 
       &:hover {
         cursor: pointer;
-        background-color: $color-gray5;
+        background-color: var.$color-gray5;
       }
 
       &.active {
         color: #fff;
         background: #4d5158;
-        border-left: 2px solid $color-main;
-        border-bottom: 1px solid $color-gray3;
-        //border-left: 1px solid #ddd;
-        border-right: 2px solid $color-gray3;
+        border-left: 2px solid var.$color-main;
+        border-bottom: 1px solid var.$color-gray3;
+        border-right: 2px solid var.$color-gray3;
       }
     }
   }
 }
 
 .item_content {
-  background-color: $color-gray3;
+  background-color: var.$color-gray3;
   padding: 20px;
   min-width: 460px;
 
@@ -147,19 +135,18 @@
     }
 
     .text:not([contenteditable]) {
-      margin: $margin-form;
+      margin: var.$margin-form;
     }
 
     [contenteditable] {
       background-color: white;
-      padding: $padding-form;
+      padding: var.$padding-form;
       box-sizing: border-box;
       flex: 1 0 auto;
     }
 
     .value {
-      //padding: $padding-form;
-      margin: $margin-form;
+      margin: var.$margin-form;
       flex: 1 0 160px;
       position: relative;
 
@@ -170,7 +157,7 @@
 
       & > [contenteditable]:hover,
       & [custom-select]:hover {
-        border: $border-field-hover;
+        border: var.$border-field-hover;
       }
 
       .checkbox {
@@ -249,10 +236,9 @@
       border-radius: 3%;
       background-color: #f3f2f2;
       border: #e9e9e9 1px solid;
-      //pointer-events: none;
 
       &:hover, &.hover {
-        background-color: $color-gray-mid;
+        background-color: var.$color-gray-mid;
         border: #d9d9d9 1px solid;
       }
 
@@ -269,7 +255,7 @@
     }
 
     .content {
-      background-color: $color-gray3;
+      background-color: var.$color-gray3;
       display: flex;
       flex-flow: column;
 
@@ -301,51 +287,31 @@
 
 
     .save {
-      @include delete(
+      @include mixin_media.delete(
               $width: 35px,
               $height: 35px,
               $svg-width: 25px,
-              $color: $color-main);
-      border: 1px solid $color-main;
+              $color: var.$color-main);
+      border: 1px solid var.$color-main;
     }
 
     .to-list {
-      @include delete(
+      @include mixin_media.delete(
               $width: 135px,
               $height: 35px,
               $svg-width: 25px,
-              $color: $color-main);
-      border: 1px solid $color-main;
+              $color: var.$color-main);
+      border: 1px solid var.$color-main;
 
     }
 
-
-    //.save, .to-table {
-    //  padding: 10px 15px;
-    //  $border-radius: 3%;
-    //  line-height: 1.2rem;
-    //  @include colored_button($border-radius);
-    //  align-self: end;
-    //
-    //  &:hover {
-    //    svg {
-    //      fill: $color-main;
-    //    }
-    //  }
-    //
-    //  svg {
-    //    fill: #ffffff;
-    //  }
-    //}
-
-
     .del, [soft-del] {
-      @include delete(
+      @include mixin_media.delete(
               $width: 35px,
               $height: 35px,
               $svg-width: 25px,
-              $color: $color-warning);
-      border: 1px solid $color-warning;
+              $color: var.$color-warning);
+      border: 1px solid var.$color-warning;
     }
   }
 

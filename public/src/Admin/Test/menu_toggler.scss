@@ -1,4 +1,4 @@
-@import "../../mixin_media";
+@use "../../mixin_media";
 
 
 .accordion-open {
@@ -17,14 +17,14 @@
   border: 1px solid transparent;
   font-size: 0.7rem;
 
-  @include _1000 {
+  @include mixin_media.m1000 {
     display: flex;
   }
 
 
   &:hover {
-    border: 1px solid $color-main;
+    border: 1px solid var.$color-main;
     background-color: white;
-    color: $color-main;
+    color: var.$color-main;
   }
 }

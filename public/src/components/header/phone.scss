@@ -1,5 +1,5 @@
-@import "../../var";
-@import "../../mixin_media";
+@use "../../var";
+@use "../../mixin_media";
 
 /***** Всплывающие телефоны */
 @mixin phone {
@@ -11,7 +11,7 @@
   padding: 0 25px;
   white-space: nowrap;
 
-  @include _500 {
+  @include mixin_media.m500 {
     font-family: 'Proxima Nova', sans-serif;
     font-size: .8rem;
     font-weight: bold;
@@ -22,7 +22,7 @@
     padding: 25px 30px;
     height: auto;
     overflow: visible;
-    @include _500{
+    @include mixin_media.m500{
       font-size: .8rem;
       right: -80px;
       padding: 10px;
@@ -40,9 +40,9 @@
       top: 30%;
       display: inline-block;
       border: 5px solid transparent;
-      border-top-color: $color-main;
+      border-top-color: var.$color-main;
       margin-left: 9px;
-      @include _500 {
+      @include mixin_media.m500 {
         position: absolute;
         top: 8px;
       }
@@ -56,7 +56,7 @@
     padding-top: 0;
     height: 0;
     z-index: 6;
-    @include _600 {
+    @include mixin_media.m600 {
       right: 0;
       left: initial;
     }

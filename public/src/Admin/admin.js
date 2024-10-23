@@ -7,22 +7,24 @@ import './Planning/planning.js'
 import './Settings/settings.js'
 import './Videoinstructions/videoinstructions.js'
 import './ProductFilter/ProductFilter'
+import './Category/Category.js'
 
-import AdminHeader from "../components/header/header-adm.js";
 import Promotion from "../Promotions/Promotion.js"
+
 import Search from "../components/search/search.js"
 import Navigate from "./components/Navigate.js";
-
 import '../components/table/table.js'
 import '../components/popup.scss'
+import adminScroll from  '../share/scroll/adminScroll.js'
+
+import AdminHeader from "../components/header/header-adm.js";
 import '../components/footer/footer.scss'
-
-
 
 
 
 $(document).ready(async function () {
 
+   adminScroll()
    const admin = window.location.pathname.includes('adminsc')
    if (!admin) return false
 
@@ -34,7 +36,7 @@ $(document).ready(async function () {
       const {default:Test} = await import('./Test/index.js')
    }
 
-   const AdminSidebar = $('.admin-sidebar').first()
+   const AdminSidebar = $('.sidebar').first()
    if (AdminSidebar){
       const {default: Accordion} = await import('../Admin/components/AdminSidebar/AdminSidebar.js')
       new Accordion(AdminSidebar)
