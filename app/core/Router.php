@@ -52,14 +52,14 @@ class Router
         $to   = $arr[$from];
 //        $url  = $this->route->getUrL();
         if ($to === 'catalog') {
-            $slug = $this->route->slug;
-            $cat  = Category::where('slug', $slug)
+            $slug   = $this->route->slug;
+            $cat    = Category::where('slug', $slug)
                 ->with('ownProperties')
                 ->first();
-            $path = $cat->ownProperties->seoPath ?? $cat->ownProperties->path;
-            $path = "/{$path}";
+            $path   = $cat->ownProperties->seoPath ?? $cat->ownProperties->path;
+            $path   = $path ? "/{$path}" : "";
             $newUrl = '/catalog' . $path;
-            header("Location: https://{$this->route->getHost()}" . $newUrl, true, 301);
+            header("Location: https://{$this->route->getHost()}{$newUrl}", true, 301);
             exit();
         }
 //        $newUrl = str_replace($from, $to, $url);

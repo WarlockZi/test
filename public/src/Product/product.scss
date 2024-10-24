@@ -1,6 +1,5 @@
 @use "../mixin_media";
 @use "../var";
-@use "./../share/shippable/shippableTable";
 
 .product-card {
   display: flex;
@@ -27,7 +26,6 @@
       flex: 1;
       margin-right: 7%;
       height: 100%;
-      //aspect-ratio: 2/1;
 
       & > img {
         object-fit: contain;
@@ -78,8 +76,6 @@
 
 
       @include mixin_media.shippable;
-
-      //@include green;
 
       .promotions {
         position: relative;
