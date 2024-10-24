@@ -2,12 +2,10 @@
 
 namespace app\controller;
 
-
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
 use app\Services\Seo\CategorySeoService;
 use app\view\share\card_panel\CardPanel;
-
 
 class CategoryController extends AppController
 {
