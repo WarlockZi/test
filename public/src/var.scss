@@ -1,11 +1,11 @@
 @use "sass:color";
-//$color-main: #1bbc9b1//;
 
 $color-success: #54bb99;
 $color-main-green: #7ac142;
 
+
 $color-main: #337ab7;
-//$color-main: var(--color-main);
+
 $color-main-lighten10: color.adjust($color-main, $lightness: 10%);
 $color-main-darken10: color.adjust($color-main, $lightness: -10%);
 
@@ -84,6 +84,3 @@ $color-option-selected-form: white;
 
 $font-size-table: 0.7rem;
 $font-size: 0.7rem;
-//:root{
-//  --color-main: #337ab7;
-//}
