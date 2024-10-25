@@ -2,7 +2,6 @@
 
 namespace app\core;
 
-use app\model\Category;
 use app\Services\Logger\ErrorLogger;
 
 class Router
@@ -36,33 +35,11 @@ class Router
                     $this->route->$k = is_string($v) ? strtolower($v) : $v;
                 }
 
-                $this->redirect();
                 $this->route->setNotFound();
                 break;
             }
         }
         $this->route->isNotFound() ? $this->route->setActionName('default') : $f = 1;
-    }
-
-    private function redirect(): void
-    {
-        if (!$this->route->redirect) return;
-        $arr  = $this->route->getRedirect();
-        $from = key($arr);
-        $to   = $arr[$from];
-//        $url  = $this->route->getUrL();
-        if ($to === 'catalog') {
-            $slug   = $this->route->slug;
-            $cat    = Category::where('slug', $slug)
-                ->with('ownProperties')
-                ->first();
-            $path   = $cat->ownProperties->seoPath ?? $cat->ownProperties->path;
-            $path   = $path ? "/{$path}" : "";
-            $newUrl = '/catalog' . $path;
-            header("Location: https://{$this->route->getHost()}{$newUrl}", true, 301);
-            exit();
-        }
-//        $newUrl = str_replace($from, $to, $url);
     }
 
     public function dispatch(): void

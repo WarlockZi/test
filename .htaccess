@@ -7,10 +7,13 @@ RewriteBase /
 #ErrorDocument 403 /public/403.html
 #ErrorDocument 404 /public/404.html
 
-RewriteCond %{REQUEST_URI} ^(.*)/$
-RewriteCond %{REQUEST_URI} ^[^/]$
-RewriteRule ^(.*)/*$ public/$1 [R=302,l]
 
+
+RewriteRule ^(category/)(.*)?$ catalog$2 [R=301,l]
+
+RewriteCond %{REQUEST_URI} ^(.*)/?$ [NC]
+RewriteCond %{REQUEST_URI} !^[^/]$
+RewriteRule ^(.*)/$ $1 [R=307,l]
 
 RewriteCond %{REQUEST_URI} !^/pic.*
 RewriteCond %{REQUEST_URI} !/robots.txt$

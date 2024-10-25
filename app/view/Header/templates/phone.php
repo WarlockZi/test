@@ -2,7 +2,7 @@
 
 	<a href="tel:+79815068191">8 (909) 594-29-11</a>
 	<p>email: 10@vitexopt.ru</p>
-    <a href="/category/">category</a>
+<!--    <a href="/category/">category</a>-->
 
 	<div class="wrap">
 		<div class="inner">

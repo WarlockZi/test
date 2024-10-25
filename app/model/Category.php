@@ -76,7 +76,6 @@ class Category extends Model
         )->where('slug', '=', 'main');
     }
 
-
     public function ownProperties()
     {
         return $this->hasOne(CategoryProperty::class, 'category_1s_id', '1s_id');

@@ -4,14 +4,12 @@ namespace app\Services\Filters;
 
 use app\core\Auth;
 use app\model\FilterUser;
-use app\Repository\CategoryRepository;
 use app\Repository\ProductFilterRepository;
-use app\view\components\Builders\SelectBuilder\optionBuilders\TreeOptionsBuilder;
+use app\view\Category\CategoryFormView;
 use app\view\Filter\FilterView;
 
 class ProductFilterService
 {
-    private array $initialfilters;
     private array $userFilters;
     private string $userFilterString;
     private string $filterPanel;
@@ -76,12 +74,7 @@ class ProductFilterService
 
     public function getInitialFilters(): array
     {
-        $CategoryFlatNestedArray = TreeOptionsBuilder::build(
-            CategoryRepository::treeAll(),
-            'childrenRecursive',
-            2)
-            ->initialOption()
-            ->getFlatNestedArray();
+        $CategoryFlatNestedArray = CategoryFormView::productFilterSelector($_POST);
         return include 'productFilters.php';
     }
 
@@ -108,6 +101,11 @@ class ProductFilterService
     }
 
 
+    private function getSelectedCategoryName($value):string
+    {
+            preg_match('/selected>(&nbsp;)*(.*?)\<\/option/', $value['options'], $matches);
+            return $matches[2];
+    }
     public function setUserFilterString(array $req, array $initialFilters): string
     {
         $notNull = array_filter($req, function ($filter) {
@@ -117,7 +115,10 @@ class ProductFilterService
         foreach ($initialFilters as $filter => $value) {
             $filterRuName = $value['title'];
             if (array_key_exists($filter, $notNull)) {
-                $selected     = $value['options'][$notNull[$filter]];
+
+                $selected = $filter === 'category'
+                    ? $this->getSelectedCategoryName($value)
+                    : $value['options'][$notNull[$filter]];;
                 $selectedSpan = "<span class='selected-value'>{$selected}</span>";
                 $filterSpan   = "<span class='selected-filter'>{$filterRuName}{$selectedSpan}</span>";
             } else {
@@ -140,13 +141,5 @@ class ProductFilterService
     {
         return $this->filterPanel;
     }
-//    public function mergeInitialAndUserFilters(array $init, array $users)
-//
-//        foreach ($users as $index => $filter) {
-//            if (key_exists(key($filter), $this->initialfilters)) {
-//                $this->initialfilters[key($filter)]['selected'] = true;
-//
-//            }
-//        }
-//    }
+
 }

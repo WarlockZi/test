@@ -20,12 +20,10 @@ abstract class TreeBuilder
     protected $localtab;
 
     protected $initialOption;
-    protected array $flatArray = [];
 
-    public function __construct(Collection $collection, string $relation, int $multiply = 1, string $tab = '&nbsp;')
+    public function __construct(array $items, string $relation, int $multiply = 1, string $tab = '&nbsp;')
     {
-        $this->arr      = $collection->toArray();
-        $this->items    = $collection;
+        $this->arr      = $items;
         $this->relation = $relation;
         $this->multiply = $multiply;
         $this->tab      = $tab;

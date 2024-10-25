@@ -5,8 +5,6 @@ namespace app\Repository;
 
 
 use app\model\Category;
-use app\view\components\Builders\SelectBuilder\optionBuilders\TreeOptionsBuilder;
-use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use Illuminate\Database\Eloquent\Collection;
 
 class CategoryRepository
@@ -81,48 +79,15 @@ class CategoryRepository
     {
         $cat = Category::query()
             ->where('category_id', null)
-            ->with('childrenRecursive',)
-            ->with('ownProperties')
+            ->with(['childrenRecursive' => function ($q) {
+                    $q->select('id', 'name','category_id');
+                }]
+            )
             ->select('id', 'name')
             ->whereNull('deleted_at')
-            ->get();
-        $arr = $cat->toArray();
+            ->get(['id', 'name'])
+        ;
         return $cat;
     }
-
-    public static function selector(?int $selected = 0, ?int $excluded = -1): string
-    {
-        return SelectBuilder::build(
-            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
-                ->initialOption()
-                ->selected($selected)
-                ->excluded($excluded)
-                ->get()
-        )
-            ->field('category_id')
-            ->get();
-    }
-
-//    public static function reportProductSelector(?int $selected = 0, ?int $excluded = -1): string
-//    {
-//        return SelectBuilder::build(
-//            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
-//                ->initialOption()
-//                ->selected($selected)
-//                ->excluded($excluded)
-//                ->get()
-//        )
-//            ->name('category')
-//            ->id('category')
-//            ->get();
-//    }
-//    public static function indexNoSlug()
-//    {
-//        return Category::withWhereHas('ownProperties',
-//            fn($q) => $q->where('show_front', 1)
-//        )
-//            ->with('childrenRecursive')
-//            ->get();
-//    }
 
 }

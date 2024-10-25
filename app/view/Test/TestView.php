@@ -62,7 +62,7 @@ class TestView
     public function testSelector(int $selected, int $excluded): string
     {
         return $this->clean(SelectBuilder::build(
-            TreeOptionsBuilder::build(TestRepository::treeAll(), 'children', 2)
+            TreeOptionsBuilder::build(TestRepository::treeAll(), 2)
                 ->initialOption()
                 ->selected($selected)
                 ->excluded($excluded)
