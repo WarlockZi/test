@@ -18,22 +18,8 @@
         <div class="bottom">
             <a href="/auth/register">Регистрация</a>
             <a href="/auth/returnpass">Забыли пароль</a>
-
-            <?
-            $url = 'https://vitexopt.ru';
-            $params = array(
-                'client_id' => '1cacd478c22b49c1a22e59ac811d0fc0',
-                'redirect_uri' => $url,
-                'response_type' => 'token',
-                'state' => '123'
-            );
-
-            $url = 'https://oauth.yandex.ru/authorize?' . urldecode(http_build_query($params));
-            ?>
-
-            <hr>
-            <hr>
             <a href="<?= $url ?>">Авторизация Яндекс</a>
+
         </div>
     </div>
 </main>

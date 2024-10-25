@@ -23,9 +23,6 @@ class AuthController extends AppController
 
         $this->userRepository = new UserRepository();
         $this->mailer         = new PHPMail('env');
-//        if (!$this->ajax) {
-//            $this->assets->setAuth();
-//        }
     }
 
     public function actionRegister(): void
@@ -65,8 +62,7 @@ class AuthController extends AppController
 
             $req    = new Request();
             $errors = $req->checkLoginCredentials($data);
-            if ($errors)
-                Response::exitJson(['errors' => $errors, 'popup' => $errors]);
+            if ($errors) Response::exitJson(['errors' => $errors, 'popup' => $errors]);
             $user = User::where('email',$data['email'])->first();
 
             if (!$user) Response::exitJson(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
@@ -87,6 +83,17 @@ class AuthController extends AppController
                 Response::exitJson(['role' => 'user', 'id' => $user['id']]);
             }
         }
+
+        $params = array(
+            'client_id' => '1cacd478c22b49c1a22e59ac811d0fc0',
+            'redirect_uri' => 'https://vitexopt.ru/auth/yandexauth',
+            'response_type' => 'token',
+            'state' => '123'
+        );
+
+        $url = 'https://oauth.yandex.ru/authorize?' . urldecode(http_build_query($params));
+
+        $this->setVars(compact('url'));
         $this->view = 'login';
     }
 
