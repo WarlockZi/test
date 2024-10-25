@@ -11,22 +11,31 @@ import headerMenu from '../components/header/show-front-menu.js'
 
 document.addEventListener('DOMContentLoaded', async function () {
 
-   debugger
-   // const url = "https://vi-prod"
-   const url = 'https://vitexopt.ru'
+
+   const url = "https://vi-prod"
+   // const url = 'https://vitexopt.ru'
    window.YaAuthSuggest.init(
       {
          client_id: "1cacd478c22b49c1a22e59ac811d0fc0",
          response_type: "token",
-         redirect_uri: url
+         redirect_uri: "https://vitexopt.ru"
       },
-      url,
-      { view: "default" }
+      "https://vitexopt.ru",
+      {
+         view: "button",
+         parentId: "buttonContainerId",
+         buttonSize: 'm',
+         buttonView: 'main',
+         buttonTheme: 'light',
+         buttonBorderRadius: "0",
+         buttonIcon: 'ya',
+      }
    )
       .then(({handler}) => handler())
       .then(data => console.log('Сообщение с токеном', data))
       .catch(error => console.log('Обработка ошибки', error))
-   YaSendSuggestToken(url)
+
+   // YaSendSuggestToken(url, {flag: true})
 
    headerMenu()
    scroll()
@@ -35,13 +44,13 @@ document.addEventListener('DOMContentLoaded', async function () {
 
    const searchButton = document[qs]('.utils .search');
    if (searchButton) {
-      const {default:Search} = await import('../components/search/search');
+      const {default: Search} = await import('../components/search/search');
       new Search()
    }
 
    const gumburger = document[qs]('.gamburger');
    if (gumburger) {
-      gumburger[ael]('click', function (e){
+      gumburger[ael]('click', function (e) {
          const mm = e.target.closest('.utils')[qs]('.mobile-menu');
          mm.classList.toggle('show')
       })
