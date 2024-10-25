@@ -109,7 +109,7 @@
     }
 
     .test-name {
-      @include _h1;
+      @include mixin_media.h1;
       margin-bottom: 20px;
       font-weight: normal;
     }

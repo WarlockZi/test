@@ -42,7 +42,7 @@
   height: 20px;
 
   $border-radius: 75%;
-  @include colored_button($border-radius);
+  @include mixin_media.colored_button($border-radius);
   align-self: end;
 
   &:hover {
@@ -53,7 +53,6 @@
 .test-edit__cont {
   display: flex;
   @include mixin_media.m800 {
-    //flex-flow: column;
   }
 }
 
@@ -210,7 +209,7 @@
           }
 
           .delete {
-            @include white_svg_button(
+            @include mixin_media.colored_svg_button(
                     $width: 20px,
                     $height: 100%,
                     $svg-width: 15px,
@@ -287,7 +286,7 @@
 
 
   .question__create-button {
-    @include colored_button(1px, var.$color-white, darken(var.$color-success, 25%), darken(var.$color-success, 25%));
+    @include mixin_media.colored_button(1px, var.$color-white, darken(var.$color-success, 25%), darken(var.$color-success, 25%));
     align-self: self-end;
     margin: 10px 0;
     padding: 5px 10px;
@@ -308,7 +307,7 @@
     min-width: 35px;
 
     &:before {
-      @include _chevron();
+      @include mixin_media.chevron;
       border-right: 2px solid darken(var.$color-success, 25%);
       border-top: 2px solid darken(var.$color-success, 25%);
     }
@@ -318,7 +317,7 @@
 
   .question__delete {
 
-    @include white_svg_button(
+    @include mixin_media.white_svg_button(
             $width: 35px,
             $height: 100%,
             $svg-width: 20px,

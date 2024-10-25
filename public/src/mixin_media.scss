@@ -1303,7 +1303,7 @@ $border-color:var.$color-main
 }
 
 
-@mixin _chevron($top:30%) {
+@mixin chevron($top:30%) {
   content: '';
   display: inline-block;
   cursor: pointer;
