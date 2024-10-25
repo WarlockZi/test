@@ -13,11 +13,14 @@ use app\core\Icon;
     <meta name="MobileOptimized" content="320">
     <meta name="HandheldFriendly" content="True">
     <meta name="apple-mobile-web-app-capable" content="yes">
-<!--    <meta name="yandex-verification" content="003253e624aad5b6"/>-->
+    <!--    <meta name="yandex-verification" content="003253e624aad5b6"/>-->
     <meta name="yandex-verification" content="127ee751f73e25e0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
+
+    <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
+
 
     <?= $assets->getMeta(); ?>
 

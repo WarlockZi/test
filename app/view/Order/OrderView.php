@@ -12,7 +12,6 @@ use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use app\view\components\Builders\TableBuilder\TableHeader\TableHeader;
-use app\view\components\CustomSelect\CustomSelect;
 use Illuminate\Database\Eloquent\Collection;
 
 
@@ -24,7 +23,6 @@ class OrderView
     public static function orderItemEdit(Collection $items): string
     {
         $users = User::all();
-//        $users = User::whereIn([160,167])->get();
         return Table::build($items)
             ->header(
                 TableHeader::build()

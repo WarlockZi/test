@@ -127,7 +127,33 @@ class CategoryFormView
         } catch (Throwable $exception) {
             return $exception;
         }
-
+    }
+    public static function selector(int $selected = 0, int $excluded = -1): string
+    {
+        return SelectBuilder::build(
+            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
+                ->initialOption()
+                ->selected($selected)
+                ->excluded($excluded)
+                ->get()
+        )
+            ->field('category_id')
+            ->class('categories')
+            ->get();
+    }
+    public static function productFilterSelector(array $req): string
+    {
+        $selected = $req['category'];
+        return SelectBuilder::build(
+            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
+                ->initialOption()
+                ->selected($selected)
+                ->get()
+        )
+            ->field('category_id')
+            ->name('category')
+            ->class('categories')
+            ->get();
     }
     public static function getChildCategories(Category $category): ItemTabBuilder
     {
@@ -218,7 +244,7 @@ class CategoryFormView
             ->del()
             ->get();
     }
-    protected static function categorySelector(Category $category): string
+    public static function categorySelector(Category $category): string
     {
         return SelectBuilder::build(
             TreeOptionsBuilder::build(
@@ -229,8 +255,6 @@ class CategoryFormView
                 ->excluded($category->id)
                 ->get()
         )
-//            ->relation('ownProperties', 'ownProperties')
-
             ->field('category_id')
             ->get();
 

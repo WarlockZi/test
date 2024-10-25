@@ -5,7 +5,6 @@
 [custom-table] {
   background-color: #fff;
   padding-bottom: 10px;
-  //margin-left: 15px;
 
   @include mixin_media.m600 {
     width: 90vw;
@@ -34,6 +33,7 @@
   }
 
   .custom-table {
+    overflow-x: auto;
 
     [contenteditable] {
       display: flex;

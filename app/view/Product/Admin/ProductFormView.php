@@ -11,6 +11,7 @@ use app\model\Unit;
 use app\Repository\CategoryRepository;
 use app\Repository\ProductRepository;
 use app\Services\ProductImageService;
+use app\view\Category\CategoryFormView;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
@@ -110,7 +111,7 @@ class ProductFormView
             ->field(
                 ItemFieldBuilder::build('category_id', $product)
                     ->name('Категория')
-                    ->html(CategoryRepository::selector($product->category_id))
+                    ->html(CategoryFormView::selector($product->category_id))
                     ->get()
             )
             ->field(

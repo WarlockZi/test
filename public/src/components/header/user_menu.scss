@@ -75,9 +75,7 @@
       }
     }
   }
-
 }
-
 
 .guest-menu {
   position: relative;
@@ -88,9 +86,12 @@
   color: #2b303a;
   flex: 0 1 auto;
   border: 1px solid grey;
-  border-radius: 0px;
+  border-radius: 0;
   padding: 5px 15px;
   z-index: 2;
+  margin: 5px 0;
+  max-height: 36px;
+
   @include mixin_media.m500 {
     padding: 3px 10px;
   }

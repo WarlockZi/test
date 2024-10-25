@@ -8,17 +8,15 @@ use app\model\Test;
 use app\Repository\TestRepository;
 use app\view\Accordion\AccordionBuilder;
 use app\view\Accordion\AccordionView;
-use app\view\components\Builders\Builder;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 use Illuminate\Database\Eloquent\Collection;
 
 
-class TestEditView extends Builder
+class TestEditView
 {
    private FS $fs;
    protected string $accordion = '';
@@ -142,7 +140,7 @@ class TestEditView extends Builder
    public function testSelector(int $selected, int $excluded): string
    {
       return $this->clean(SelectBuilder::build(
-         TreeOptionsBuilder::build(TestRepository::treeAll(), 'children', 2)
+         TreeOptionsBuilder::build(TestRepository::treeAll(), 2)
             ->initialOption()
             ->selected($selected)
             ->excluded($excluded)

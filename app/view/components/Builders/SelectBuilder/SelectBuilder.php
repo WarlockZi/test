@@ -16,6 +16,7 @@ class SelectBuilder
     private string $title = '';
     private string $relation = '';
     private string $field = '';
+    private string $name = '';
     private string $options;
     private string $initialOption = '';
 
@@ -42,13 +43,16 @@ class SelectBuilder
     public function relation(string $relation, string $relationModel):static
     {
         $this->relation = "data-relation='{$relation}' data-relationmodel='{$relationModel}'";
-//        $this->relation = "data-relation='$relation'";
         return $this;
     }
-
     public function field(string $field):static
     {
         $this->field = "data-field='$field'";
+        return $this;
+    }
+    public function name(string $name):static
+    {
+        $this->name = "name='$name'";
         return $this;
     }
 

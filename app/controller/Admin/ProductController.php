@@ -27,7 +27,7 @@ class ProductController extends AppController
         $this->service = new ProductService();
     }
 
-    public function actionSaveMainImage()
+    public function actionSaveMainImage(): void
     {
         $file    = $_FILES['file'];
         $product = Product::find($_POST['productId']);
