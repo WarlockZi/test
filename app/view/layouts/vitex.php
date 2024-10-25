@@ -20,8 +20,7 @@ use app\core\Icon;
     <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
 
     <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
-
-
+    <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script>
     <?= $assets->getMeta(); ?>
 
     <?= $assets->getCss(); ?>
@@ -29,8 +28,6 @@ use app\core\Icon;
 </head>
 
 <? include_once __DIR__ . '/google.php'; ?>
-
-
 <body>
 
 <?= $header; ?>
@@ -38,6 +35,7 @@ use app\core\Icon;
 
 <div class="user-content-wrap">
     <main class="user-content">
+
         <?= $content; ?>
     </main>
     <div class="hoist">Наверх</div>
