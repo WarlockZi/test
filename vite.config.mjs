@@ -1,13 +1,14 @@
 import {defineConfig, loadEnv} from 'vite'
-// import vue from '@vitejs/plugin-vue'
 import liveReload from 'vite-plugin-live-reload'
 import path from 'node:path'
+// import {browserslistToTargets} from 'lightningcss';
 
 export default defineConfig(async ({command, mode}) => {
    const env = loadEnv(mode, process.cwd())
    console.log(env)
 
    return {
+
       define: {
          'env': env
       },
@@ -30,10 +31,21 @@ export default defineConfig(async ({command, mode}) => {
          : '/public/build/',
 
       css: {
+         preprocessorOptions: {
+            scss: {
+               api: 'modern-compiler', // or "modern", "legacy"
+               importers: [
+                  // ...
+               ],
+            },
+         },
          devSourcemap: true,
+         // transformer:'lightningcss',
+         // targets: browserslistToTargets(['since 2022'])
       },
 
       build: {
+         // cssMinify: 'lightningcss',
          // output dir for production build
          outDir: '../../public/build',
          emptyOutDir: true,
@@ -72,6 +84,8 @@ export default defineConfig(async ({command, mode}) => {
       // https://vuejs.org/guide/scaling-up/tooling.html#note-on-in-browser-template-compilation
       resolve: {
          alias: {
+            '@assets': path.resolve('./pic'),
+            '@fonts': path.resolve(__dirname,'pic','fonts')
             // vue: 'vue/dist/vue.esm-bundler.js'
          }
       }

@@ -102,7 +102,7 @@
       transition: color .2s ease-in-out, background-color .2s ease-in-out;
 
       &:hover {
-        background-color: lighten(var.$color-red, 25%);
+        background-color: mixin_media.lighter(var.$color-red, 25%);
         color: white;
       }
       svg{
@@ -120,7 +120,7 @@
       transition: color .2s ease-in-out, background-color .2s ease-in-out;
 
       &:hover {
-        background-color: lighten(var.$color-main,25%);
+        background-color: mixin_media.lighter(var.$color-main,25%);
         color: white;
       }
       svg{
@@ -146,7 +146,7 @@
         width: 15px;
         height: 15px;
         right: 10px;
-        background: url("/pic/icons/upDown.svg") 0 0/15px 15px no-repeat;
+        background: url("@assets/icons/upDown.svg") 0 0/15px 15px no-repeat;
       }
 
       input {
@@ -154,7 +154,7 @@
         position: relative;
         margin: 0;
         width: 1px;
-        background-image: url("/pic/icons/search.svg");
+        background-image: url("@assets/icons/search.svg");
         background-repeat: no-repeat;
         background-position: 3px 3px, center;
         background-size: 12px;

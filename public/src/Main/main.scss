@@ -18,6 +18,17 @@
 @use "../font/Montserrat";
 @use "../font/Roboto";
 
+@keyframes blinking {
+  50% {
+    opacity: 0
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+}
 .danger {
   color: var.$color-danger;
 }
@@ -86,17 +97,7 @@
 
       }
     }
-    @keyframes blinking {
-      50% {
-        opacity: 0
-      }
-    }
 
-    @keyframes typing {
-      from {
-        width: 0
-      }
-    }
 
     .about, .news, .contacts {
       margin-top: 50px;
@@ -157,23 +158,22 @@
     display: flex;
     flex-flow: column;
     align-items: start;
-    //min-height: 47vw;
 
     &.gloves {
-      background: url("/pic/srvc/main/site-gloves.jpg") no-repeat;
+      background: url(@assets/srvc/main/site-gloves.jpg) no-repeat;
       background-position: center right;
       background-size: cover;
     }
 
     &.boot-cover {
-      background: url("/pic/srvc/main/site-bootcover-824.jpg") no-repeat;
+      background: url(@assets/srvc/main/site-bootcover-824.jpg) no-repeat;
       background-position: center left;
       background-size: cover;
       align-items: flex-end;
     }
 
     &.endosirynge {
-      background: url("/pic/srvc/main/site-syringe-gradientt.jpg") no-repeat;
+      background: url(@assets/srvc/main/site-syringe-gradientt.jpg) no-repeat;
       background-position: center right;
       background-size: cover;
     }

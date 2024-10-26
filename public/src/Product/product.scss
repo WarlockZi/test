@@ -1,5 +1,6 @@
 @use "../mixin_media";
 @use "../var";
+@use "sass:color";
 
 .product-card {
   display: flex;
@@ -107,7 +108,8 @@
         .red {
           color: red;
         }
-        .mb-5{
+
+        .mb-5 {
           margin-bottom: 10px;
         }
 
@@ -175,7 +177,7 @@
       border: 2px solid var.$color-gray-min;
 
       &:hover {
-        border: 2px solid lighten(var.$color-main, 20%);
+        border: 2px solid mixin_media.lighter(var.$color-main, 20%);
         border-radius: 3px;
       }
 

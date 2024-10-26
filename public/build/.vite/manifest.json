@@ -1,4 +1,136 @@
 {
+  "../../pic/fonts/Montserrat/Montserrat-Bold.woff": {
+    "file": "assets/Montserrat-Bold-AjXBcRZK.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Bold.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-Bold.woff2": {
+    "file": "assets/Montserrat-Bold-CS-j1_qt.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Bold.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-BoldItalic.woff": {
+    "file": "assets/Montserrat-BoldItalic-CrRqSqjw.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-BoldItalic.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-BoldItalic.woff2": {
+    "file": "assets/Montserrat-BoldItalic-CjS4Mvxa.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-BoldItalic.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-ExtraBold.woff": {
+    "file": "assets/Montserrat-ExtraBold-BCPMg1QM.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraBold.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-ExtraBold.woff2": {
+    "file": "assets/Montserrat-ExtraBold-70ZczXHW.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraBold.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-ExtraLight.woff": {
+    "file": "assets/Montserrat-ExtraLight-V8MRgcDG.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraLight.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-ExtraLight.woff2": {
+    "file": "assets/Montserrat-ExtraLight-DOYgW3iN.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraLight.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-ExtraLightItalic.woff": {
+    "file": "assets/Montserrat-ExtraLightItalic-Dq6ra1Cd.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraLightItalic.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-ExtraLightItalic.woff2": {
+    "file": "assets/Montserrat-ExtraLightItalic-D5APANIf.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraLightItalic.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-Italic.woff": {
+    "file": "assets/Montserrat-Italic-DonUEn3N.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Italic.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-Italic.woff2": {
+    "file": "assets/Montserrat-Italic-Bc4-UENN.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Italic.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-Light.woff": {
+    "file": "assets/Montserrat-Light-DRHVd2pU.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Light.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-Light.woff2": {
+    "file": "assets/Montserrat-Light-DMNqPbP2.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Light.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-LightItalic.woff": {
+    "file": "assets/Montserrat-LightItalic-CPbd91LM.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-LightItalic.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-LightItalic.woff2": {
+    "file": "assets/Montserrat-LightItalic-BZr8MUZm.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-LightItalic.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-Medium.woff": {
+    "file": "assets/Montserrat-Medium-CXViaPTE.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Medium.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-Medium.woff2": {
+    "file": "assets/Montserrat-Medium-Bt0TmzT6.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Medium.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-MediumItalic.woff": {
+    "file": "assets/Montserrat-MediumItalic-lCfOBi_3.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-MediumItalic.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-MediumItalic.woff2": {
+    "file": "assets/Montserrat-MediumItalic-O6XsabXG.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-MediumItalic.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-Regular.woff": {
+    "file": "assets/Montserrat-Regular-Vqt_CiU6.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Regular.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-Regular.woff2": {
+    "file": "assets/Montserrat-Regular-BN6Mfz0M.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Regular.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-SemiBold.woff": {
+    "file": "assets/Montserrat-SemiBold-CXDnkWC_.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-SemiBold.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-SemiBold.woff2": {
+    "file": "assets/Montserrat-SemiBold-BRzpPi05.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-SemiBold.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-SemiBoldItalic.woff": {
+    "file": "assets/Montserrat-SemiBoldItalic-DfRX5mDE.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-SemiBoldItalic.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-SemiBoldItalic.woff2": {
+    "file": "assets/Montserrat-SemiBoldItalic-C1Z3Pl61.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-SemiBoldItalic.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-Thin.woff": {
+    "file": "assets/Montserrat-Thin-PHtJL9BV.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Thin.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-Thin.woff2": {
+    "file": "assets/Montserrat-Thin-D1xUYMrq.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-Thin.woff2"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-ThinItalic.woff": {
+    "file": "assets/Montserrat-ThinItalic-C695WUSM.woff",
+    "src": "../../pic/fonts/Montserrat/Montserrat-ThinItalic.woff"
+  },
+  "../../pic/fonts/Montserrat/Montserrat-ThinItalic.woff2": {
+    "file": "assets/Montserrat-ThinItalic-W4662FnK.woff2",
+    "src": "../../pic/fonts/Montserrat/Montserrat-ThinItalic.woff2"
+  },
+  "../../pic/fonts/Roboto/RobotoMedium.ttf": {
+    "file": "assets/RobotoMedium-BkAVR2hu.ttf",
+    "src": "../../pic/fonts/Roboto/RobotoMedium.ttf"
+  },
+  "../../pic/fonts/Roboto/RobotoMedium.woff": {
+    "file": "assets/RobotoMedium-kyWEzQDe.woff",
+    "src": "../../pic/fonts/Roboto/RobotoMedium.woff"
+  },
+  "../../pic/fonts/Roboto/RobotoMono.ttf": {
+    "file": "assets/RobotoMono-DvlFQosn.ttf",
+    "src": "../../pic/fonts/Roboto/RobotoMono.ttf"
+  },
   "../../pic/fonts/Sagoe/SegoeUI-Bold.eot": {
     "file": "assets/SegoeUI-Bold-DK4b92Kj.eot",
     "src": "../../pic/fonts/Sagoe/SegoeUI-Bold.eot"
@@ -63,8 +195,32 @@
     "file": "assets/SegoeUI-BG4GjXh8.woff2",
     "src": "../../pic/fonts/Sagoe/SegoeUI.woff2"
   },
+  "../../pic/srvc/404_bg_pages.webp": {
+    "file": "assets/404_bg_pages-t04f92DB.webp",
+    "src": "../../pic/srvc/404_bg_pages.webp"
+  },
+  "../../pic/srvc/full-logo.jpg": {
+    "file": "assets/full-logo-ChTBevMV.jpg",
+    "src": "../../pic/srvc/full-logo.jpg"
+  },
+  "../../pic/srvc/main/header-big.png": {
+    "file": "assets/header-big-D1qoGQQT.png",
+    "src": "../../pic/srvc/main/header-big.png"
+  },
+  "../../pic/srvc/main/site-bootcover-824.jpg": {
+    "file": "assets/site-bootcover-824-Bg7t8PBS.jpg",
+    "src": "../../pic/srvc/main/site-bootcover-824.jpg"
+  },
+  "../../pic/srvc/main/site-gloves.jpg": {
+    "file": "assets/site-gloves-DaQmbnZR.jpg",
+    "src": "../../pic/srvc/main/site-gloves.jpg"
+  },
+  "../../pic/srvc/main/site-syringe-gradientt.jpg": {
+    "file": "assets/site-syringe-gradientt-B2U5JXi3.jpg",
+    "src": "../../pic/srvc/main/site-syringe-gradientt.jpg"
+  },
   "Admin/Category/Category.js": {
-    "file": "assets/Category-eo0Imhz6.js",
+    "file": "assets/Category-BKfLHjhS.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -81,7 +237,7 @@
     ]
   },
   "Admin/Order/order.js": {
-    "file": "assets/order-DUyT4Xu3.js",
+    "file": "assets/order-Din830lM.js",
     "name": "order",
     "src": "Admin/Order/order.js",
     "isDynamicEntry": true,
@@ -90,7 +246,7 @@
       "_common-CBISCspz.js"
     ],
     "css": [
-      "assets/order-DwQyIllq.css"
+      "assets/order-CBzavuwf.css"
     ]
   },
   "Admin/Product/Fields.js": {
@@ -104,7 +260,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-G_EDCEcD.js",
+    "file": "assets/Product-DHbkIOsK.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -129,7 +285,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-D4G2RyqC.js",
+    "file": "assets/Props--NvLvy9P.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -160,14 +316,14 @@
     ]
   },
   "Admin/Test/test-edit.js": {
-    "file": "assets/test-edit-C9O-2HR1.js",
+    "file": "assets/test-edit-B06LVRTZ.js",
     "name": "test-edit",
     "src": "Admin/Test/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_common-CBISCspz.js",
-      "_index-lUlAePYS.js",
+      "_index-B-IsrHtA.js",
       "_constants-Clh-pk9Y.js",
       "_quill.snow-CLSoiTIt.js",
       "_Promotion-CIo3W8Ce.js",
@@ -179,7 +335,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-B-GK5eMh.js",
+    "file": "assets/admin-D9g6T9PB.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -191,7 +347,7 @@
       "components/search/search.js"
     ],
     "dynamicImports": [
-      "_index-lUlAePYS.js",
+      "_index-B-IsrHtA.js",
       "Admin/components/AdminSidebar/AdminSidebar.js",
       "Admin/Product/Product.js",
       "Admin/components/catalog-item/catalog-item.js",
@@ -201,8 +357,11 @@
       "Admin/chartjs/chartjs.js"
     ],
     "css": [
-      "assets/admin-DGoPGYss.css",
+      "assets/admin-69sG8k4K.css",
       "assets/popup-Dv_TwhNX.css"
+    ],
+    "assets": [
+      "assets/header-big-D1qoGQQT.png"
     ]
   },
   "Admin/chartjs/chartjs.js": {
@@ -215,7 +374,7 @@
     ]
   },
   "Admin/components/AdminSidebar/AdminSidebar.js": {
-    "file": "assets/AdminSidebar-DwCaYd22.js",
+    "file": "assets/AdminSidebar-BET6WH29.js",
     "name": "AdminSidebar",
     "src": "Admin/components/AdminSidebar/AdminSidebar.js",
     "isDynamicEntry": true,
@@ -224,11 +383,11 @@
       "_constants-Clh-pk9Y.js"
     ],
     "css": [
-      "assets/AdminSidebar-hw3qDqLA.css"
+      "assets/AdminSidebar-DfqOPkuV.css"
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-COIe2rcX.js",
+    "file": "assets/catalog-item-DYhODhQm.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
@@ -245,7 +404,7 @@
     ]
   },
   "Auth/auth.js": {
-    "file": "assets/auth-Czk7WNqP.js",
+    "file": "assets/auth-u77R603-.js",
     "name": "auth",
     "src": "Auth/auth.js",
     "isEntry": true,
@@ -257,7 +416,7 @@
       "components/Modal/modal.js"
     ],
     "css": [
-      "assets/auth-Custt_K1.css",
+      "assets/auth-CSc_yG7j.css",
       "assets/popup-Dv_TwhNX.css"
     ]
   },
@@ -297,7 +456,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-DTUXTk0s.js",
+    "file": "assets/main-CzTjHhfw.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -314,9 +473,10 @@
       "Cart/cart.js"
     ],
     "css": [
-      "assets/main-DBRkpxlH.css"
+      "assets/main-CeD3b75G.css"
     ],
     "assets": [
+      "assets/header-big-D1qoGQQT.png",
       "assets/SegoeUI-ClaH7WPz.eot",
       "assets/SegoeUI-BG4GjXh8.woff2",
       "assets/SegoeUI-Dl5ofu1j.woff",
@@ -332,11 +492,49 @@
       "assets/SegoeUI-Bold-DK4b92Kj.eot",
       "assets/SegoeUI-Bold-cHnf7At2.woff2",
       "assets/SegoeUI-Bold-BxNAyNVj.woff",
-      "assets/SegoeUI-Bold-CqRx-Wgw.ttf"
+      "assets/SegoeUI-Bold-CqRx-Wgw.ttf",
+      "assets/Montserrat-Thin-D1xUYMrq.woff2",
+      "assets/Montserrat-Thin-PHtJL9BV.woff",
+      "assets/Montserrat-ThinItalic-W4662FnK.woff2",
+      "assets/Montserrat-ThinItalic-C695WUSM.woff",
+      "assets/Montserrat-ExtraLight-DOYgW3iN.woff2",
+      "assets/Montserrat-ExtraLight-V8MRgcDG.woff",
+      "assets/Montserrat-ExtraLightItalic-D5APANIf.woff2",
+      "assets/Montserrat-ExtraLightItalic-Dq6ra1Cd.woff",
+      "assets/Montserrat-Light-DMNqPbP2.woff2",
+      "assets/Montserrat-Light-DRHVd2pU.woff",
+      "assets/Montserrat-LightItalic-BZr8MUZm.woff2",
+      "assets/Montserrat-LightItalic-CPbd91LM.woff",
+      "assets/Montserrat-Regular-BN6Mfz0M.woff2",
+      "assets/Montserrat-Regular-Vqt_CiU6.woff",
+      "assets/Montserrat-Italic-Bc4-UENN.woff2",
+      "assets/Montserrat-Italic-DonUEn3N.woff",
+      "assets/Montserrat-Medium-Bt0TmzT6.woff2",
+      "assets/Montserrat-Medium-CXViaPTE.woff",
+      "assets/Montserrat-MediumItalic-O6XsabXG.woff2",
+      "assets/Montserrat-MediumItalic-lCfOBi_3.woff",
+      "assets/Montserrat-SemiBold-BRzpPi05.woff2",
+      "assets/Montserrat-SemiBold-CXDnkWC_.woff",
+      "assets/Montserrat-SemiBoldItalic-C1Z3Pl61.woff2",
+      "assets/Montserrat-SemiBoldItalic-DfRX5mDE.woff",
+      "assets/Montserrat-Bold-CS-j1_qt.woff2",
+      "assets/Montserrat-Bold-AjXBcRZK.woff",
+      "assets/Montserrat-BoldItalic-CjS4Mvxa.woff2",
+      "assets/Montserrat-BoldItalic-CrRqSqjw.woff",
+      "assets/Montserrat-ExtraBold-70ZczXHW.woff2",
+      "assets/Montserrat-ExtraBold-BCPMg1QM.woff",
+      "assets/RobotoMedium-kyWEzQDe.woff",
+      "assets/RobotoMedium-BkAVR2hu.ttf",
+      "assets/RobotoMono-DvlFQosn.ttf",
+      "assets/site-gloves-DaQmbnZR.jpg",
+      "assets/site-bootcover-824-Bg7t8PBS.jpg",
+      "assets/site-syringe-gradientt-B2U5JXi3.jpg",
+      "assets/404_bg_pages-t04f92DB.webp",
+      "assets/full-logo-ChTBevMV.jpg"
     ]
   },
   "Product/Product.js": {
-    "file": "assets/Product-BMKOKilZ.js",
+    "file": "assets/Product-Cn3TcFhm.js",
     "name": "Product",
     "src": "Product/Product.js",
     "isDynamicEntry": true,
@@ -349,7 +547,7 @@
       "_constants-Clh-pk9Y.js"
     ],
     "css": [
-      "assets/Product-DS0cEt8I.css"
+      "assets/Product-Bc80kkfs.css"
     ]
   },
   "_Promotion-!~{00f}~.js": {
@@ -379,8 +577,8 @@
     "file": "assets/index-CJybINCP.css",
     "src": "_index-!~{004}~.js"
   },
-  "_index-lUlAePYS.js": {
-    "file": "assets/index-lUlAePYS.js",
+  "_index-B-IsrHtA.js": {
+    "file": "assets/index-B-IsrHtA.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [

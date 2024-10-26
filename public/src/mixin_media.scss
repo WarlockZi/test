@@ -3,6 +3,14 @@
 
 //@use "share/shippable/shippableTable";
 
+@function lighter($color, $value) {
+  @return color.adjust($color, $lightness: $value);
+}
+
+@function darker($color, $value) {
+  @return color.adjust($color, $lightness: -$value);
+}
+
 @function color($color,$sat,$light,$opacity) {
   @if $color == red {
     @return hsl(0deg, $sat*1%, $light*1%, $opacity*1%);
@@ -267,12 +275,12 @@
       }
 
       &.plus {
-        background-image: url(/pic/icons/arrowUp.svg);
+        background-image: url(@assets/icons/arrowUp.svg);
         transform: rotate(180deg);
       }
 
       &.minus {
-        background-image: url(/pic/icons/arrowUp.svg);
+        background-image: url(@assets/icons/arrowUp.svg);
       }
     }
 
@@ -640,25 +648,6 @@
       > a {
         font-weight: bold;
       }
-    }
-
-    li.mtree-open {
-    }
-
-    li.mtree-closed {
-    }
-
-    ul.mtree-level-1 {
-    }
-
-    ul.mtree-level-2 {
-    }
-
-    ul.mtree-level-3 {
-    }
-
-    li.mtree-active {
-
     }
   }
 
