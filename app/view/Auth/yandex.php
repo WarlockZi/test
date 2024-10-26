@@ -1,6 +1,6 @@
-<? foreach ($userData as $key=>$data): ?>
+<? foreach ($userData as $key => $data): ?>
 
-<?=$key;?>
-<?=$data;?>
+    <?=$key; ?>
+    <?=$data; ?>
 
 <? endforeach ?>
