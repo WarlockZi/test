@@ -1,12 +1,3 @@
-<!--<script type="module">-->
-<!--   YaSendSuggestToken(-->
-<!--      'https://vitexopt.ru',-->
-<!--      {-->
-<!--         flag: true-->
-<!--      }-->
-<!--   )-->
-<!--</script>-->
-
 <main>
 
 
