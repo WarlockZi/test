@@ -1,2 +1,1 @@
-<?php
-$userData;
+<?=$userData;?>
