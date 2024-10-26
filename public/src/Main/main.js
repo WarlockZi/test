@@ -10,17 +10,17 @@ import scroll from '../share/scroll/scroll.js'
 import headerMenu from '../components/header/show-front-menu.js'
 
 document.addEventListener('DOMContentLoaded', async function () {
-   window.YaAuthSuggest.init(
-      {
-         client_id: "1cacd478c22b49c1a22e59ac811d0fc0",
-         response_type: "token",
-         redirect_uri: "https://vitexopt.ru/auth/yandex"
-      },
-      "https://vitexopt.ru",
-   )
-      .then(({handler}) => handler())
-      .then(data => console.log('Сообщение с токеном', data))
-      .catch(error => console.log('Обработка ошибки', error))
+   // window.YaAuthSuggest.init(
+   //    {
+   //       client_id: "1cacd478c22b49c1a22e59ac811d0fc0",
+   //       response_type: "token",
+   //       redirect_uri: "https://vitexopt.ru/auth/yandex"
+   //    },
+   //    "https://vitexopt.ru",
+   // )
+   //    .then(({handler}) => handler())
+   //    .then(data => console.log('Сообщение с токеном', data))
+   //    .catch(error => console.log('Обработка ошибки', error))
 
    // YaSendSuggestToken(
    //    'https://vitexopt.ru',
