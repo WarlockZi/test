@@ -8,6 +8,7 @@ class AuthValidator
     {
         return
             strtolower($route->controller) === 'auth' && $route->action === 'login'
+            ||strtolower($route->controller) === 'auth' && $route->action === 'yandex'
             || strtolower($route->controller) === 'cart'
             || strtolower($route->controller) === 'main'
             || strtolower($route->controller) === 'bot'

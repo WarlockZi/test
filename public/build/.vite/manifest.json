@@ -195,32 +195,8 @@
     "file": "assets/SegoeUI-BG4GjXh8.woff2",
     "src": "../../pic/fonts/Sagoe/SegoeUI.woff2"
   },
-  "../../pic/srvc/404_bg_pages.webp": {
-    "file": "assets/404_bg_pages-t04f92DB.webp",
-    "src": "../../pic/srvc/404_bg_pages.webp"
-  },
-  "../../pic/srvc/full-logo.jpg": {
-    "file": "assets/full-logo-ChTBevMV.jpg",
-    "src": "../../pic/srvc/full-logo.jpg"
-  },
-  "../../pic/srvc/main/header-big.png": {
-    "file": "assets/header-big-D1qoGQQT.png",
-    "src": "../../pic/srvc/main/header-big.png"
-  },
-  "../../pic/srvc/main/site-bootcover-824.jpg": {
-    "file": "assets/site-bootcover-824-Bg7t8PBS.jpg",
-    "src": "../../pic/srvc/main/site-bootcover-824.jpg"
-  },
-  "../../pic/srvc/main/site-gloves.jpg": {
-    "file": "assets/site-gloves-DaQmbnZR.jpg",
-    "src": "../../pic/srvc/main/site-gloves.jpg"
-  },
-  "../../pic/srvc/main/site-syringe-gradientt.jpg": {
-    "file": "assets/site-syringe-gradientt-B2U5JXi3.jpg",
-    "src": "../../pic/srvc/main/site-syringe-gradientt.jpg"
-  },
   "Admin/Category/Category.js": {
-    "file": "assets/Category-BKfLHjhS.js",
+    "file": "assets/Category-DX8vagqk.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -237,7 +213,7 @@
     ]
   },
   "Admin/Order/order.js": {
-    "file": "assets/order-Din830lM.js",
+    "file": "assets/order-DUyT4Xu3.js",
     "name": "order",
     "src": "Admin/Order/order.js",
     "isDynamicEntry": true,
@@ -246,7 +222,7 @@
       "_common-CBISCspz.js"
     ],
     "css": [
-      "assets/order-CBzavuwf.css"
+      "assets/order-DwQyIllq.css"
     ]
   },
   "Admin/Product/Fields.js": {
@@ -260,7 +236,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-DHbkIOsK.js",
+    "file": "assets/Product-CAqqhwsn.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -285,7 +261,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props--NvLvy9P.js",
+    "file": "assets/Props-4nkt4bbu.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -316,14 +292,14 @@
     ]
   },
   "Admin/Test/test-edit.js": {
-    "file": "assets/test-edit-B06LVRTZ.js",
+    "file": "assets/test-edit-C3vlNhzN.js",
     "name": "test-edit",
     "src": "Admin/Test/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_common-CBISCspz.js",
-      "_index-B-IsrHtA.js",
+      "_index-ERhTM2wJ.js",
       "_constants-Clh-pk9Y.js",
       "_quill.snow-CLSoiTIt.js",
       "_Promotion-CIo3W8Ce.js",
@@ -335,7 +311,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-D9g6T9PB.js",
+    "file": "assets/admin-ScrJddO9.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -347,7 +323,7 @@
       "components/search/search.js"
     ],
     "dynamicImports": [
-      "_index-B-IsrHtA.js",
+      "_index-ERhTM2wJ.js",
       "Admin/components/AdminSidebar/AdminSidebar.js",
       "Admin/Product/Product.js",
       "Admin/components/catalog-item/catalog-item.js",
@@ -357,11 +333,8 @@
       "Admin/chartjs/chartjs.js"
     ],
     "css": [
-      "assets/admin-69sG8k4K.css",
+      "assets/admin-DGoPGYss.css",
       "assets/popup-Dv_TwhNX.css"
-    ],
-    "assets": [
-      "assets/header-big-D1qoGQQT.png"
     ]
   },
   "Admin/chartjs/chartjs.js": {
@@ -374,7 +347,7 @@
     ]
   },
   "Admin/components/AdminSidebar/AdminSidebar.js": {
-    "file": "assets/AdminSidebar-BET6WH29.js",
+    "file": "assets/AdminSidebar-BislpUoo.js",
     "name": "AdminSidebar",
     "src": "Admin/components/AdminSidebar/AdminSidebar.js",
     "isDynamicEntry": true,
@@ -383,11 +356,11 @@
       "_constants-Clh-pk9Y.js"
     ],
     "css": [
-      "assets/AdminSidebar-DfqOPkuV.css"
+      "assets/AdminSidebar-CK0p7-PH.css"
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-DYhODhQm.js",
+    "file": "assets/catalog-item-BM8gzfZh.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
@@ -404,7 +377,7 @@
     ]
   },
   "Auth/auth.js": {
-    "file": "assets/auth-u77R603-.js",
+    "file": "assets/auth-Czk7WNqP.js",
     "name": "auth",
     "src": "Auth/auth.js",
     "isEntry": true,
@@ -416,7 +389,7 @@
       "components/Modal/modal.js"
     ],
     "css": [
-      "assets/auth-CSc_yG7j.css",
+      "assets/auth-Custt_K1.css",
       "assets/popup-Dv_TwhNX.css"
     ]
   },
@@ -456,7 +429,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-B4iP6dga.js",
+    "file": "assets/main-B3zTKTRM.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -473,10 +446,9 @@
       "Cart/cart.js"
     ],
     "css": [
-      "assets/main-CeD3b75G.css"
+      "assets/main-Cb1kanIF.css"
     ],
     "assets": [
-      "assets/header-big-D1qoGQQT.png",
       "assets/SegoeUI-ClaH7WPz.eot",
       "assets/SegoeUI-BG4GjXh8.woff2",
       "assets/SegoeUI-Dl5ofu1j.woff",
@@ -525,16 +497,11 @@
       "assets/Montserrat-ExtraBold-BCPMg1QM.woff",
       "assets/RobotoMedium-kyWEzQDe.woff",
       "assets/RobotoMedium-BkAVR2hu.ttf",
-      "assets/RobotoMono-DvlFQosn.ttf",
-      "assets/site-gloves-DaQmbnZR.jpg",
-      "assets/site-bootcover-824-Bg7t8PBS.jpg",
-      "assets/site-syringe-gradientt-B2U5JXi3.jpg",
-      "assets/404_bg_pages-t04f92DB.webp",
-      "assets/full-logo-ChTBevMV.jpg"
+      "assets/RobotoMono-DvlFQosn.ttf"
     ]
   },
   "Product/Product.js": {
-    "file": "assets/Product-Cn3TcFhm.js",
+    "file": "assets/Product-BMKOKilZ.js",
     "name": "Product",
     "src": "Product/Product.js",
     "isDynamicEntry": true,
@@ -547,7 +514,7 @@
       "_constants-Clh-pk9Y.js"
     ],
     "css": [
-      "assets/Product-Bc80kkfs.css"
+      "assets/Product-DS0cEt8I.css"
     ]
   },
   "_Promotion-!~{00f}~.js": {
@@ -577,8 +544,8 @@
     "file": "assets/index-CJybINCP.css",
     "src": "_index-!~{004}~.js"
   },
-  "_index-B-IsrHtA.js": {
-    "file": "assets/index-B-IsrHtA.js",
+  "_index-ERhTM2wJ.js": {
+    "file": "assets/index-ERhTM2wJ.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [
