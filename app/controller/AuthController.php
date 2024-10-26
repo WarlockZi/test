@@ -9,6 +9,7 @@ use app\core\Response;
 use app\model\User;
 use app\Repository\UserRepository;
 use app\Services\YandexAuth\YaAuthService;
+use app\view\components\Builders\MyAccordion\MyAccordion;
 use app\view\User\UserView;
 
 class AuthController extends AppController
@@ -55,7 +56,9 @@ class AuthController extends AppController
     }
     public function actionYandex(): void
     {
-        new YaAuthService();
+        $userData = new YaAuthService();
+        $this->setVars(compact('userData'));
+
     }
     public function actionLogin(): void
     {
@@ -84,8 +87,6 @@ class AuthController extends AppController
                 Response::exitJson(['role' => 'user', 'id' => $user['id']]);
             }
         }
-
-
 
         $url = 'https://oauth.yandex.ru/authorize?' . urldecode(http_build_query(
             array(
