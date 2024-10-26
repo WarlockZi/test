@@ -2,6 +2,9 @@
 @use "../../mixin_media";
 @use "../../components/input/input";
 @use "test-head";
+@use "sass:color";
+
+$color-lighter: color.adjust(var.$color-success, $lightness: -25%);
 
 .opentest-edit-wrapper {
 
@@ -133,7 +136,7 @@
       background-color: white;
       position: relative;
       font-size: 0.8rem;
-      color: darken(var.$color-success, 25%);
+      color: mixin_media.darker(var.$color-success, 25%);
 
       &:focus-visible {
         outline: none !important;
@@ -188,7 +191,7 @@
             padding: 5px;
             font-size: .8rem;
             flex-basis: 20px;
-            color: darken(var.$color-main, 39%);
+            color: mixin_media.darker(var.$color-main, 39%);
           }
 
           .correct {
@@ -201,7 +204,7 @@
             flex: 1;
             font-size: .8rem;
             border: 1px solid transparent;
-            color: darken(var.$color-success, 19%);
+            color: mixin_media.darker(var.$color-success, 19%);
 
             &:hover {
               border: 1px solid var.$color-gray4;
@@ -233,7 +236,7 @@
         background-color: #fff;
         padding: 0;
         font-weight: 600;
-        color: darken(var.$color-success, 25%);
+        color: $color-lighter;
       }
 
       .question__save {
@@ -286,7 +289,7 @@
 
 
   .question__create-button {
-    @include mixin_media.colored_button(1px, var.$color-white, darken(var.$color-success, 25%), darken(var.$color-success, 25%));
+    @include mixin_media.colored_button(1px, var.$color-white, $color-lighter, $color-lighter);
     align-self: self-end;
     margin: 10px 0;
     padding: 5px 10px;
@@ -308,8 +311,8 @@
 
     &:before {
       @include mixin_media.chevron;
-      border-right: 2px solid darken(var.$color-success, 25%);
-      border-top: 2px solid darken(var.$color-success, 25%);
+      border-right: 2px solid $color-lighter;
+      border-top: 2px solid $color-lighter;
     }
 
   }

@@ -6,9 +6,9 @@ $width-short: 30px;
 $width-full: 170px;
 $height-full: 400px;
 $height-min: 60px;
-$dark: darken(var.$color-gray9, 25%);
-$border-bottom: lighten(var.$color-admin-sidebar, 5%) 1px solid;
-$border-top: darken(var.$color-admin-sidebar, 5%) 1px solid;
+$dark: mixin_media.darker(var.$color-gray9, 25%);
+$border-bottom: mixin_media.lighter(var.$color-admin-sidebar, 5%) 1px solid;
+$border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
 
 
 .sidebar {
@@ -82,7 +82,7 @@ $border-top: darken(var.$color-admin-sidebar, 5%) 1px solid;
       & ~ a {
         padding: 2px 2px 2px 19px;
         align-items: center;
-        background-color: lighten(var.$color-admin-sidebar, 25%);
+        background-color: mixin_media.lighter(var.$color-admin-sidebar, 25%);
       }
 
       @include mixin_media.m600 {
@@ -95,7 +95,7 @@ $border-top: darken(var.$color-admin-sidebar, 5%) 1px solid;
 
       a {
         padding: 4px 2px 4px 0;
-        background-color: lighten(var.$color-admin-sidebar, 5%);
+        background-color: mixin_media.lighter(var.$color-admin-sidebar, 5%);
         align-items: center;
       }
 
@@ -151,7 +151,7 @@ $border-top: darken(var.$color-admin-sidebar, 5%) 1px solid;
         .arrow {
           width: 12px;
           height: 12px;
-          background: url(/assets/icons/arrowUp.svg) no-repeat 1px 0;
+          background: url(@assets/icons/arrowUp.svg) no-repeat 1px 0;
           color: white;
           transform: rotate(-90deg);
           position: absolute;
@@ -192,14 +192,14 @@ $border-top: darken(var.$color-admin-sidebar, 5%) 1px solid;
 
       .current {
         &:before {
-          color: lighten(var.$color-main, 10%);
+          color: mixin_media.lighter(var.$color-main, 10%);
           content: '';
           position: absolute;
           display: block;
           left: 0;
           width: 4px;
           height: 100%;
-          background-color: lighten(var.$color-main, 10%);
+          background-color: mixin_media.lighter(var.$color-main, 10%);
         }
 
       }
