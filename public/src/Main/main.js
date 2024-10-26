@@ -17,15 +17,7 @@ document.addEventListener('DOMContentLoaded', async function () {
          redirect_uri: "https://vitexopt.ru/auth/yandex"
       },
       tokenPageOrigin,
-      {
-         view: "button",
-         parentId: "buttonContainerId",
-         buttonSize: 'xs',
-         buttonView: 'icon',
-         buttonTheme: 'light',
-         buttonBorderRadius: "4",
-         buttonIcon: 'ya',
-      }
+      "https://vitexopt.ru",
    )
       .then(({handler}) => handler())
       .then(data => console.log('Сообщение с токеном', data))
