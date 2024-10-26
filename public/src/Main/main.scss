@@ -160,21 +160,18 @@
     align-items: start;
 
     &.gloves {
-      background: url(@assets/srvc/main/site-gloves.jpg) no-repeat;
-      background-position: center right;
+      background: url(/pic/srvc/main/site-gloves.jpg) no-repeat center right;
       background-size: cover;
     }
 
     &.boot-cover {
-      background: url(@assets/srvc/main/site-bootcover-824.jpg) no-repeat;
-      background-position: center left;
+      background: url(/pic/srvc/main/site-bootcover-824.jpg) no-repeat center left;
       background-size: cover;
       align-items: flex-end;
     }
 
     &.endosirynge {
-      background: url(@assets/srvc/main/site-syringe-gradientt.jpg) no-repeat;
-      background-position: center right;
+      background: url(/pic/srvc/main/site-syringe-gradientt.jpg) no-repeat center right;
       background-size: cover;
     }
 

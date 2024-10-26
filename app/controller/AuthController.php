@@ -15,17 +15,14 @@ class AuthController extends AppController
 {
     protected PHPMail $mailer;
     protected UserRepository $userRepository;
-
     public function __construct()
     {
         parent::__construct();
 //		$bot = new TelegramBot();
 //		$bot->send('Что так');
-
         $this->userRepository = new UserRepository();
         $this->mailer         = new PHPMail('env');
     }
-
     public function actionRegister(): void
     {
         $req = $this->ajax;
@@ -58,12 +55,17 @@ class AuthController extends AppController
     }
     public function actionYandex(): void
     {
+        header('Location:https://oauth.yandex.ru/authorize?response_type=token&client_id=1cacd478c22b49c1a22e59ac811d0fc0');
+        var_dump($_GET);
+        var_dump($_POST);
         new YaAuthService();
 
 
     }
     public function actionLogin(): void
     {
+        var_dump($_GET);
+        var_dump($_POST);
         if ($data = $this->ajax) {
 
             $req    = new Request();
@@ -92,7 +94,7 @@ class AuthController extends AppController
 
         $params = array(
             'client_id' => '1cacd478c22b49c1a22e59ac811d0fc0',
-            'redirect_uri' => 'https://vitexopt.ru/auth/yandexauth',
+            'redirect_uri' => 'https://vitexopt.ru/auth/yandex',
             'response_type' => 'token',
             'state' => '123'
         );

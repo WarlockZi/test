@@ -1,6 +1,7 @@
 import {defineConfig, loadEnv} from 'vite'
 import liveReload from 'vite-plugin-live-reload'
 import path from 'node:path'
+
 // import {browserslistToTargets} from 'lightningcss';
 
 export default defineConfig(async ({command, mode}) => {
@@ -26,9 +27,9 @@ export default defineConfig(async ({command, mode}) => {
       ],
 
       root: 'public/src',
-      base: env.VITE_APP_ENV !== 'development'
-         ? '/'
-         : '/public/build/',
+      base: env.VITE_APP_ENV === 'development'
+         ? '/public/build/'
+         : '/',
 
       css: {
          preprocessorOptions: {
@@ -84,8 +85,7 @@ export default defineConfig(async ({command, mode}) => {
       // https://vuejs.org/guide/scaling-up/tooling.html#note-on-in-browser-template-compilation
       resolve: {
          alias: {
-            '@assets': path.resolve('./pic'),
-            '@fonts': path.resolve(__dirname,'pic','fonts')
+            '@fonts': path.resolve(__dirname, 'pic', 'fonts')
             // vue: 'vue/dist/vue.esm-bundler.js'
          }
       }

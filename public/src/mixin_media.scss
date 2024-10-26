@@ -275,12 +275,12 @@
       }
 
       &.plus {
-        background-image: url(@assets/icons/arrowUp.svg);
+        background-image: url(/pic/icons/arrowUp.svg);
         transform: rotate(180deg);
       }
 
       &.minus {
-        background-image: url(@assets/icons/arrowUp.svg);
+        background-image: url(/pic/icons/arrowUp.svg);
       }
     }
 
