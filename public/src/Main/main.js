@@ -10,24 +10,21 @@ import scroll from '../share/scroll/scroll.js'
 import headerMenu from '../components/header/show-front-menu.js'
 
 document.addEventListener('DOMContentLoaded', async function () {
-
-
-   const url = "https://vi-prod"
-   // const url = 'https://vitexopt.ru'
    window.YaAuthSuggest.init(
       {
          client_id: "1cacd478c22b49c1a22e59ac811d0fc0",
          response_type: "token",
-         redirect_uri: "https://vitexopt.ru"
+         redirect_uri: "https://vitexopt.ru/auth/"
       },
+      tokenPageOrigin,
       "https://vitexopt.ru",
       {
          view: "button",
          parentId: "buttonContainerId",
-         buttonSize: 'm',
-         buttonView: 'main',
+         buttonSize: 'xs',
+         buttonView: 'icon',
          buttonTheme: 'light',
-         buttonBorderRadius: "0",
+         buttonBorderRadius: "4",
          buttonIcon: 'ya',
       }
    )
