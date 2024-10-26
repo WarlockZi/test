@@ -40,7 +40,7 @@ class FS
            $callerMethod = debug_backtrace()[2]['function'];
            $callerMethod1 = debug_backtrace()[3]['function'];
             $content = ob_get_clean();
-            if ($_ENV['DEV']==='1'){
+            if ($_ENV['DEV']==='0'){
                 return date('y-m-d, h:m:s').PHP_EOL.'<br><br>'.
                    "class {$callerClass}".PHP_EOL.'<br><br>'.
                    "class {$callerClass1}".PHP_EOL.'<br><br>'.
