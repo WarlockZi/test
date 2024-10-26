@@ -36,7 +36,7 @@ class FS
             return $content;
         } catch (\Throwable $exception){
             $content = ob_get_clean();
-            if ($_ENV['DEV']==='1'){
+            if ($_ENV['DEV']==='0'){
            $callerClass = debug_backtrace()[2]['file']." (line ".debug_backtrace()[2]['line'].")";
            $callerClass1 = debug_backtrace()[3]['file']." (line ".debug_backtrace()[3]['line'].")";
            $callerMethod = debug_backtrace()[2]['function'];
