@@ -6,10 +6,6 @@ class YaAuthService
 {
 public function __construct()
 {
-    print_r($_GET);
-    print_r($_POST);
-
-    $state = $_GET['state']; // 123
 
     if (!empty($_GET['code'])) {
         // Отправляем код для получения токена (POST-запрос).

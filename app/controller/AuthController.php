@@ -55,17 +55,10 @@ class AuthController extends AppController
     }
     public function actionYandex(): void
     {
-//        header('Location:https://oauth.yandex.ru/authorize?response_type=token&client_id=1cacd478c22b49c1a22e59ac811d0fc0');
-        var_dump($_GET);
-        var_dump($_POST);
         new YaAuthService();
-
-
     }
     public function actionLogin(): void
     {
-        var_dump($_GET);
-        var_dump($_POST);
         if ($data = $this->ajax) {
 
             $req    = new Request();
@@ -92,16 +85,18 @@ class AuthController extends AppController
             }
         }
 
-        $params = array(
-            'client_id' => '1cacd478c22b49c1a22e59ac811d0fc0',
-            'redirect_uri' => 'https://vitexopt.ru/auth/yandex',
-            'response_type' => 'token',
-            'state' => '123'
-        );
 
-        $url = 'https://oauth.yandex.ru/authorize?' . urldecode(http_build_query($params));
+
+        $url = 'https://oauth.yandex.ru/authorize?' . urldecode(http_build_query(
+            array(
+                'client_id' => '1cacd478c22b49c1a22e59ac811d0fc0',
+                'redirect_uri' => 'https://vitexopt.ru/auth/yandex',
+                'response_type' => 'code',
+                'state' => '123'
+            )));
 
         $this->setVars(compact('url'));
+
         $this->view = 'login';
     }
 
