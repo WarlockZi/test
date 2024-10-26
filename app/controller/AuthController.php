@@ -55,7 +55,11 @@ class AuthController extends AppController
             }
         }
     }
+    public function actionYandexauth(): void
+    {
 
+
+    }
     public function actionLogin(): void
     {
         if ($data = $this->ajax) {
