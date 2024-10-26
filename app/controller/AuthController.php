@@ -55,7 +55,7 @@ class AuthController extends AppController
     }
     public function actionYandex(): void
     {
-        header('Location:https://oauth.yandex.ru/authorize?response_type=token&client_id=1cacd478c22b49c1a22e59ac811d0fc0');
+//        header('Location:https://oauth.yandex.ru/authorize?response_type=token&client_id=1cacd478c22b49c1a22e59ac811d0fc0');
         var_dump($_GET);
         var_dump($_POST);
         new YaAuthService();
