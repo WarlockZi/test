@@ -8,6 +8,7 @@ use app\core\Request;
 use app\core\Response;
 use app\model\User;
 use app\Repository\UserRepository;
+use app\Services\YandexAuth\YaAuthService;
 use app\view\User\UserView;
 
 class AuthController extends AppController
@@ -55,8 +56,9 @@ class AuthController extends AppController
             }
         }
     }
-    public function actionYandexauth(): void
+    public function actionYandex(): void
     {
+        new YaAuthService();
 
 
     }

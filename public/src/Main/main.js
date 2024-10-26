@@ -14,10 +14,9 @@ document.addEventListener('DOMContentLoaded', async function () {
       {
          client_id: "1cacd478c22b49c1a22e59ac811d0fc0",
          response_type: "token",
-         redirect_uri: "https://vitexopt.ru/auth/"
+         redirect_uri: "https://vitexopt.ru/auth/yandex"
       },
       tokenPageOrigin,
-      "https://vitexopt.ru",
       {
          view: "button",
          parentId: "buttonContainerId",
