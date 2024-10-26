@@ -23,12 +23,12 @@ document.addEventListener('DOMContentLoaded', async function () {
       .then(data => console.log('Сообщение с токеном', data))
       .catch(error => console.log('Обработка ошибки', error))
 
-   YaSendSuggestToken(
-      'https://vitexopt.ru',
-      {
-         flag: true
-      }
-   )
+   // YaSendSuggestToken(
+   //    'https://vitexopt.ru',
+   //    {
+   //       flag: true
+   //    }
+   // )
 
    headerMenu()
    scroll()

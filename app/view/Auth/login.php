@@ -1,3 +1,12 @@
+<script>
+   YaSendSuggestToken(
+      'https://vitexopt.ru',
+      {
+         flag: true
+      }
+   )
+</script>
+
 <main>
 
 
