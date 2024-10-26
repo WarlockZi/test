@@ -56,7 +56,9 @@ class AuthController extends AppController
     }
     public function actionYandex(): void
     {
+        $this->view = 'yandex';
         $userData = new YaAuthService();
+
         $this->setVars(compact('userData'));
 
     }
