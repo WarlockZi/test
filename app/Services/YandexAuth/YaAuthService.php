@@ -6,8 +6,8 @@ class YaAuthService
 {
 public function __construct()
 {
-    var_dump($_GET);
-    var_dump($_POST);
+    print_r($_GET);
+    print_r($_POST);
 
     $state = $_GET['state']; // 123
 
