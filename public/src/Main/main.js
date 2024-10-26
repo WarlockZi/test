@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', async function () {
          response_type: "token",
          redirect_uri: "https://vitexopt.ru/auth/yandex"
       },
-      tokenPageOrigin,
       "https://vitexopt.ru",
    )
       .then(({handler}) => handler())
