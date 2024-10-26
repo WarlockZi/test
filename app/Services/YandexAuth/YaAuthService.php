@@ -39,7 +39,7 @@ public function __construct()
             curl_close($ch);
 
             $info = json_decode($info, true);
-            print_r($info);
+            return $info;
         }
     }
 }
