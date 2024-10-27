@@ -78,6 +78,7 @@ class YaAuthService
                 'is_avatar_empty' => $this->info['is_avatar_empty'],
                 'default_phone' => $this->info['default_phone'],
                 'psuid' => $this->info['psuid'],
+                'rights' => '',
 
             ]
         );
