@@ -60,10 +60,11 @@ class AuthController extends AppController
     {
         $this->view = 'yandex';
         $userData   = (new YaAuthService())->userData();
+
+        $this->setVars(compact('userData'));
         header('Location:/');
         exit;
 
-        $this->setVars(compact('userData'));
     }
 
     public function actionLogin(): void
