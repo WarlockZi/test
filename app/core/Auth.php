@@ -64,7 +64,7 @@ class Auth
         $_SESSION['id'] = $user->getId();
     }
 
-    public static function setUser(User $mockuser): void
+    public static function setUser(IUser $mockuser): void
     {
         self::$user = $mockuser;
     }
