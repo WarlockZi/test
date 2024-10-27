@@ -45,6 +45,12 @@ class UserYandex extends Model implements IUser
     {
         return $this->id;
     }
+    public function can($rights = []): bool
+    {
+        $has = $this->hasRights($rights);
+        $su  = Auth::isSU();
+        return ($has || $su);
+    }
 
 
 
