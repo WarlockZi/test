@@ -51,6 +51,10 @@ class UserYandex extends Model implements IUser
         $su  = Auth::isSU();
         return ($has || $su);
     }
+    public function hasRights(array $rights): bool
+    {
+        return !!array_intersect($this->rights, $rights);
+    }
 
 
 
