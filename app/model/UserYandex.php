@@ -21,6 +21,7 @@ class UserYandex extends Model implements IUser
         'login',
         'client_id',
         'display_name',
+        'real_name',
         'first_name',
         'last_name',
         'sex',
