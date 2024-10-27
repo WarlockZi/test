@@ -60,9 +60,7 @@ class YaAuthService
     private function login(): void
     {
         $userYandex = UserYandex::updateOrCreate(
-            [
-                'ya_id' => $this->info['id']
-            ],
+            ['ya_id' => $this->info['id']],
             [
                 'ya_id' => $this->info['id'],
                 'login' => $this->info['login'],
