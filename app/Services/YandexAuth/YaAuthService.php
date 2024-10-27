@@ -2,9 +2,14 @@
 
 namespace app\Services\YandexAuth;
 
+use app\core\Auth;
+use app\model\UserYandex;
+use Throwable;
+
 class YaAuthService
 {
-    private array $info=[];
+    private array $info = [];
+
     public function __construct()
     {
 
@@ -28,7 +33,6 @@ class YaAuthService
 
             $data = json_decode($data, true);
             if (!empty($data['access_token'])) {
-//            if (!empty($data['access_token'])) {
                 // Токен получили, получаем данные пользователя.
                 $ch = curl_init('https://login.yandex.ru/info');
                 curl_setopt($ch, CURLOPT_POST, 1);
@@ -41,10 +45,46 @@ class YaAuthService
                 curl_close($ch);
 
                 $this->info = json_decode($info, true);
-            }else{
+
+                try {
+                    $this->login();
+                } catch (Throwable $exception) {
+                    echo $exception;
+                }
+            } else {
 
             }
         }
+    }
+
+    private function login(): void
+    {
+        UserYandex::updateOrCreate(
+            [
+                'ya_id' => $this->info['ya_id']
+            ],
+            [
+                'ya_id' => $this->info['ya_id'],
+                'login' => $this->info['login'],
+                'client_id' => $this->info['client_id'],
+                'display_name' => $this->info['display_name'],
+                'first_name' => $this->info['first_name'],
+                'last_name' => $this->info['last_name'],
+                'sex' => $this->info['sex'],
+                'default_email' => $this->info['default_email'],
+                'emails' => $this->info['emails'],
+                'birthday' => $this->info['birthday'],
+                'default_avatar_id' => $this->info['default_avatar_id'],
+                'is_avatar_empty' => $this->info['is_avatar_empty'],
+                'default_phone' => $this->info['default_phone'],
+                'psuid' => $this->info['psuid'],
+
+            ]
+        );
+
+        Auth::setAuth($user);
+        Auth::setUser($user);
+
     }
 
     public function userData()

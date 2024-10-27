@@ -4,12 +4,13 @@ namespace app\model;
 
 
 use app\core\Auth;
+use app\core\IUser;
 use app\Repository\ImageRepository;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Model
+class User extends Model implements IUser
 {
     use softDeletes;
 
@@ -32,6 +33,7 @@ class User extends Model
         'updated_at',
         'deleted_at',
     ];
+
 
     protected function rights(): Attribute
     {
@@ -73,4 +75,8 @@ class User extends Model
         return !!array_intersect($this->rights, $rights);
     }
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }
