@@ -45,7 +45,10 @@ class User extends Model implements IUser
     {
         return "{$this->surName} {$this->name} {$this->middleName}";
     }
-
+    public function mail(): string
+    {
+        return $this->email;
+    }
     public function fi(): string
     {
         return "{$this->surName} {$this->name}";
@@ -78,5 +81,10 @@ class User extends Model implements IUser
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function isSU(): bool
+    {
+        // TODO: Implement isSU() method.
     }
 }

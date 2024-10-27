@@ -5,7 +5,6 @@ namespace app\model;
 
 use app\core\Auth;
 use app\core\IUser;
-use app\Repository\ImageRepository;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -42,6 +41,11 @@ class UserYandex extends Model implements IUser
     {
         return Attribute::get(fn(string $rights) => explode(',', $rights));
     }
+    public function avatar(): string
+    {
+        $href = "https://avatars.yandex.net/get-yapic/{$this->default_avatar_id}/islands-50";
+        return  $href;
+    }
 
     public function getId():int
     {
@@ -59,6 +63,18 @@ class UserYandex extends Model implements IUser
     }
 
 
+    public function isSU(): bool
+    {
+        // TODO: Implement isSU() method.
+    }
 
+    public function fi(): string
+    {
+       return $this->real_name;
+    }
+    public function mail(): string
+    {
+        return $this->default_email;
+    }
 
 }

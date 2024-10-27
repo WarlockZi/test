@@ -3,26 +3,25 @@
 namespace app\core;
 
 use app\model\User;
+use app\model\UserYandex;
 
 class Auth
 {
     protected static IUser|null $user = null;
     protected static Auth $instance;
-    protected function __construct(){}
-    protected function __clone(){}
-    public function __wakeup(){
+
+    protected function __construct()
+    {
+    }
+
+    protected function __clone()
+    {
+    }
+
+    public function __wakeup()
+    {
         throw new \Exception("Cannot unserialize a singleton.");
     }
-
-    public static function getInstance(): self
-    {
-        $cls = static::class;
-        if (!isset(self::$instance[$cls])) {
-            self::$instance[$cls] = new static();
-        }
-        return self::$instance[$cls];
-    }
-
 
     public static function hasPphSession(array $req): bool
     {
@@ -38,10 +37,15 @@ class Auth
         return self::$user ?? self::auth();
     }
 
-    private static function auth(): User|null
+    private static function auth(): IUser|null
     {
+        $_SESSION['yandex_id']=2;
         if (isset($_SESSION['id']) && $_SESSION['id']) {
             self::$user = User::find($_SESSION['id']);
+            return self::$user;
+        }
+        if (isset($_SESSION['yandex_id']) && $_SESSION['yandex_id']) {
+            self::$user = UserYandex::find($_SESSION['yandex_id']);
             return self::$user;
         }
         return null;
@@ -49,9 +53,7 @@ class Auth
 
     public static function isSU(): bool
     {
-        $envEmail = $_ENV['SU_EMAIL'];
-        $userEmail = self::$user['email'];
-        return $envEmail===$userEmail;
+        return $_ENV['SU_EMAIL'] === self::$user['email'];
     }
 
     public static function isOlya(): bool
@@ -62,12 +64,14 @@ class Auth
     public static function setAuth(IUser $user): void
     {
         $_SESSION['id'] = $user->getId();
+        $_SESSION['yandex_id'] = $user->getId();
     }
 
     public static function setUser(IUser $mockuser): void
     {
         self::$user = $mockuser;
     }
+
     public static function userIsAdmin(): bool
     {
         return self::$user && self::$user->can(['role_admin']);
@@ -78,7 +82,7 @@ class Auth
         return !!self::getUser();
     }
 
-    public static function authorize(Route $route): User|null
+    public static function authorize(Route $route): IUser|null
     {
         if (AuthValidator::needsNoAuth($route)) {
             return null;//no user
@@ -103,13 +107,5 @@ class Auth
         return $user;
     }
 
-//    public static function getAuth(): User|null
-//    {
-//        if (!isset($_SESSION['id']) || $_SESSION['id']) return null;
-//        $user = User::find($_SESSION['id']);
-//
-//        self::$user = $user ?? null;
-//        return $user;
-//    }
 }
 

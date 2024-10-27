@@ -4,7 +4,6 @@
     <div class="auth" data-auth="login">
         <h1 class="title">Вход на сайт</h1>
         <div class='message'></div>
-        <? $f = 1; ?>
 
         <input type="email" name="email" autocomplete="on"/>
 
