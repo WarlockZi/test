@@ -62,8 +62,8 @@ class AuthController extends AppController
         $userData   = (new YaAuthService())->userData();
 
         $this->setVars(compact('userData'));
-        header('Location:/');
-        exit;
+//        header('Location:/');
+//        exit;
 
     }
 
