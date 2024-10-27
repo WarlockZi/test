@@ -9,6 +9,5 @@
             <span> <?= $data; ?></span>
         </p>
 
-
     <? endforeach; ?>
 <? endif; ?>

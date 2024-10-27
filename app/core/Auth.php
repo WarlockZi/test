@@ -6,7 +6,7 @@ use app\model\User;
 
 class Auth
 {
-    protected static User|null $user = null;
+    protected static IUser|null $user = null;
     protected static Auth $instance;
     protected function __construct(){}
     protected function __clone(){}
