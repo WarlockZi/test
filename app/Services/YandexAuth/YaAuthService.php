@@ -59,7 +59,7 @@ class YaAuthService
 
     private function login(): void
     {
-        UserYandex::updateOrCreate(
+        $userYandex = UserYandex::updateOrCreate(
             [
                 'ya_id' => $this->info['ya_id']
             ],
@@ -82,8 +82,8 @@ class YaAuthService
             ]
         );
 
-        Auth::setAuth($user);
-        Auth::setUser($user);
+        Auth::setAuth($userYandex);
+        Auth::setUser($userYandex);
 
     }
 
