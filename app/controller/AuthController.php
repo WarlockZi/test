@@ -62,7 +62,6 @@ class AuthController extends AppController
         $userData   = (new YaAuthService())->userData();
 
         $this->setVars(compact('userData'));
-
     }
 
     public function actionLogin(): void
@@ -79,7 +78,7 @@ class AuthController extends AppController
             if (!$user->confirm) Response::exitWithSuccess('Зайдите на почту чтобы подтвердить регистрацию');
             if ($user->password !== $this->userRepository->preparePassword($data['password'])) {
                 Auth::setUser($user);
-                if (!Auth::isSU()) {
+                if (!$user->isSU()) {
                     Response::exitWithError('Не верный email или пароль');// Если данные правильные, запоминаем пользователя (в сессию)
                 }
             }
