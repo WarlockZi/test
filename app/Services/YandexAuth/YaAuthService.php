@@ -95,15 +95,14 @@ class YaAuthService
 
         Auth::setAuth($userYandex);
         Auth::setUser($userYandex);
-
     }
 
     public function userData()
     {
-        if ($this->info) {
-            header("Location:/");
-            exit;
-        }
+//        if ($this->info) {
+//            header("Location:/");
+//            exit;
+//        }
 
         return $this->info;
 
