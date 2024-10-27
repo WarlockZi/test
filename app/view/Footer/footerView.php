@@ -45,7 +45,7 @@
         <!--        </div>-->
     </div>
     <? $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ya_metrica.php'; ?>
-    <? if ($_ENV['DEV'] !== "1") {
+    <? if (!DEV) {
         include $path;
     } ?>
 </footer>

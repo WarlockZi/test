@@ -9,17 +9,9 @@ class TreeOptionsBuilder extends TreeBuilder
 {
     public static function build(Collection $collection, string $relation, int $multiply = 1, string $tab = '&nbsp;'): self
     {
-        return new self($collection->toArray(), $relation, $multiply, $tab);
+        return new self($collection, $relation, $multiply, $tab);
     }
 
-//    public function getFlatNestedArray(): array
-//    {
-//        $arr = $this->items->toArray();
-//
-//        $res = $this->flatten($arr);
-//        return $res;
-//    }
-//
 //    protected function flatten(array $array): array
 //    {
 //        $arr = array();
@@ -34,7 +26,6 @@ class TreeOptionsBuilder extends TreeBuilder
 //        });
 //        return $arr;
 //    }
-
 
     protected function isExcluded(int $id)
     {

@@ -31,13 +31,7 @@ class CategoryController extends AppController
         $category    = CategoryFormView::edit($category);
         $this->setVars(compact('category', 'breadcrumbs'));
     }
-//    public function actionCreate(): void
-//    {
-//        $this->view = 'edit';
-//        $category = Category::create();
-//        $category     = CategoryArrayFormView::edit($category->id);
-//        $this->set(compact('category'));
-//    }
+
     public function actionChangeproperty()
     {
         $this->repo->changeProperty($this->ajax);

@@ -196,7 +196,7 @@
     "src": "../../pic/fonts/Sagoe/SegoeUI.woff2"
   },
   "Admin/Category/Category.js": {
-    "file": "assets/Category-DX8vagqk.js",
+    "file": "assets/Category-Br33074n.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -236,7 +236,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-CAqqhwsn.js",
+    "file": "assets/Product-_OrVOk5q.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -261,7 +261,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-4nkt4bbu.js",
+    "file": "assets/Props-CXXHpZIZ.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -292,14 +292,14 @@
     ]
   },
   "Admin/Test/test-edit.js": {
-    "file": "assets/test-edit-C3vlNhzN.js",
+    "file": "assets/test-edit-OoDfz9Rm.js",
     "name": "test-edit",
     "src": "Admin/Test/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_common-CBISCspz.js",
-      "_index-ERhTM2wJ.js",
+      "_index-CHzUzKqm.js",
       "_constants-Clh-pk9Y.js",
       "_quill.snow-CLSoiTIt.js",
       "_Promotion-CIo3W8Ce.js",
@@ -311,7 +311,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-ScrJddO9.js",
+    "file": "assets/admin-Clogj2Da.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -323,7 +323,7 @@
       "components/search/search.js"
     ],
     "dynamicImports": [
-      "_index-ERhTM2wJ.js",
+      "_index-CHzUzKqm.js",
       "Admin/components/AdminSidebar/AdminSidebar.js",
       "Admin/Product/Product.js",
       "Admin/components/catalog-item/catalog-item.js",
@@ -333,7 +333,7 @@
       "Admin/chartjs/chartjs.js"
     ],
     "css": [
-      "assets/admin-DGoPGYss.css",
+      "assets/admin-DOvH6BYk.css",
       "assets/popup-Dv_TwhNX.css"
     ]
   },
@@ -360,7 +360,7 @@
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-BM8gzfZh.js",
+    "file": "assets/catalog-item-BN4ZXlNz.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
@@ -429,7 +429,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-CapxWzc4.js",
+    "file": "assets/main-BbO0ccSo.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -446,7 +446,7 @@
       "Cart/cart.js"
     ],
     "css": [
-      "assets/main-C8ib9S8o.css"
+      "assets/main-CkCrqAsP.css"
     ],
     "assets": [
       "assets/SegoeUI-ClaH7WPz.eot",
@@ -544,8 +544,8 @@
     "file": "assets/index-CJybINCP.css",
     "src": "_index-!~{004}~.js"
   },
-  "_index-ERhTM2wJ.js": {
-    "file": "assets/index-ERhTM2wJ.js",
+  "_index-CHzUzKqm.js": {
+    "file": "assets/index-CHzUzKqm.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [

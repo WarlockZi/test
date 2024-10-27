@@ -70,7 +70,7 @@ class Router
 
     private function handleError($exception): void
     {
-        if ($_ENV['DEV'] == 1) {
+        if (DEV) {
             echo '<pre>' . $exception->getMessage() . '</pre>';
             echo '<pre>' . $exception->getTraceAsString() . '</pre>';
         }

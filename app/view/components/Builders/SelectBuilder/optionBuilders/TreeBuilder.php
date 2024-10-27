@@ -21,9 +21,10 @@ abstract class TreeBuilder
 
     protected $initialOption;
 
-    public function __construct(array $items, string $relation, int $multiply = 1, string $tab = '&nbsp;')
+    public function __construct(Collection $items, string $relation, int $multiply = 1, string $tab = '&nbsp;')
     {
-        $this->arr      = $items;
+        $this->items      = $items;
+        $this->arr      = $items->toArray();
         $this->relation = $relation;
         $this->multiply = $multiply;
         $this->tab      = $tab;

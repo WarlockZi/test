@@ -9,13 +9,13 @@ use app\core\Response;
 use app\model\User;
 use app\Repository\UserRepository;
 use app\Services\YandexAuth\YaAuthService;
-use app\view\components\Builders\MyAccordion\MyAccordion;
 use app\view\User\UserView;
 
 class AuthController extends AppController
 {
     protected PHPMail $mailer;
     protected UserRepository $userRepository;
+
     public function __construct()
     {
         parent::__construct();
@@ -24,6 +24,7 @@ class AuthController extends AppController
         $this->userRepository = new UserRepository();
         $this->mailer         = new PHPMail('env');
     }
+
     public function actionRegister(): void
     {
         $req = $this->ajax;
@@ -54,14 +55,16 @@ class AuthController extends AppController
             }
         }
     }
+
     public function actionYandex(): void
     {
         $this->view = 'yandex';
-        $userData = (new YaAuthService())->userData();
+        $userData   = (new YaAuthService())->userData();
 
         $this->setVars(compact('userData'));
 
     }
+
     public function actionLogin(): void
     {
         if ($data = $this->ajax) {
@@ -69,7 +72,7 @@ class AuthController extends AppController
             $req    = new Request();
             $errors = $req->checkLoginCredentials($data);
             if ($errors) Response::exitJson(['errors' => $errors, 'popup' => $errors]);
-            $user = User::where('email',$data['email'])->first();
+            $user = User::where('email', $data['email'])->first();
 
             if (!$user) Response::exitJson(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
 
@@ -90,17 +93,25 @@ class AuthController extends AppController
             }
         }
 
-        $url = 'https://oauth.yandex.ru/authorize?' . urldecode(http_build_query(
-            array(
-                'client_id' => '1cacd478c22b49c1a22e59ac811d0fc0',
-                'redirect_uri' => 'https://vitexopt.ru/auth/yandex',
-                'response_type' => 'code',
-                'state' => '123'
-            )));
+        $url = $this->getUrl();
 
         $this->setVars(compact('url'));
 
         $this->view = 'login';
+    }
+
+    private function getUrl(): string
+    {
+        if (DEV) {
+            return 'https://vi-prod/auth/yandex';
+        }
+        return 'https://oauth.yandex.ru/authorize?' . urldecode(http_build_query(
+                array(
+                    'client_id' => '1cacd478c22b49c1a22e59ac811d0fc0',
+                    'redirect_uri' => 'https://vitexopt.ru/auth/yandex',
+                    'response_type' => 'code',
+                    'state' => '123'
+                )));
     }
 
 

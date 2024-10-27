@@ -1,5 +1,5 @@
 <?php
-if ($_ENV["DEV"] === "1") {
+if (DEV) {
     if (isset($errors) && is_array($errors)) {
 
         foreach ($errors as $error) {

@@ -39,7 +39,6 @@ class Auth
 
     private static function auth(): IUser|null
     {
-        $_SESSION['yandex_id']=2;
         if (isset($_SESSION['id']) && $_SESSION['id']) {
             self::$user = User::find($_SESSION['id']);
             return self::$user;
@@ -56,15 +55,13 @@ class Auth
         return $_ENV['SU_EMAIL'] === self::$user['email'];
     }
 
-    public static function isOlya(): bool
-    {
-        return 'vitex018@yandex.ru' === Auth::getUser()['email'];
-    }
-
     public static function setAuth(IUser $user): void
     {
-        $_SESSION['id'] = $user->getId();
-        $_SESSION['yandex_id'] = $user->getId();
+        if ($user instanceof User) {
+            $_SESSION['id'] = $user->getId();
+        } elseif ($user instanceof UserYandex) {
+            $_SESSION['yandex_id'] = $user->getId();
+        }
     }
 
     public static function setUser(IUser $mockuser): void
@@ -95,15 +92,13 @@ class Auth
         }
 
         self::setAuth($user);
-        if (!$user['confirm'] == "1") {
+        if ($user instanceof User && !$user['confirm'] == "1") {
             $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
             header("Location:/auth/noconfirm");
             exit();
         }
+        define('SU', $user->mail() === $_ENV['SU_EMAIL']);
 
-        if ($user['email'] === $_ENV['SU_EMAIL']) {
-            define('SU', true);
-        }
         return $user;
     }
 

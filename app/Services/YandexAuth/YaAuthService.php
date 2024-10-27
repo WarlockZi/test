@@ -3,6 +3,7 @@
 namespace app\Services\YandexAuth;
 
 use app\core\Auth;
+use app\model\Mock\MockYandexUser;
 use app\model\UserYandex;
 use Throwable;
 
@@ -12,7 +13,20 @@ class YaAuthService
 
     public function __construct()
     {
+        if (DEV) {
+            $this->setMockYandexUser();
+        } else {
+            $this->setYandexUser();
+        }
+        try {
+            $this->login();
+        } catch (Throwable $exception) {
+            echo $exception;
+        }
+    }
 
+    private function setYandexUser(): void
+    {
         if (!empty($_GET['code'])) {
             // Отправляем код для получения токена (POST-запрос).
             $params = array(
@@ -46,15 +60,13 @@ class YaAuthService
 
                 $this->info = json_decode($info, true);
 
-                try {
-                    $this->login();
-                } catch (Throwable $exception) {
-                    echo $exception;
-                }
-            } else {
-
             }
         }
+    }
+
+    private function setMockYandexUser(): void
+    {
+            $this->info = (new MockYandexUser())->get()->attributesToArray();
     }
 
     private function login(): void
@@ -71,13 +83,13 @@ class YaAuthService
                 'last_name' => $this->info['last_name'],
                 'sex' => $this->info['sex'],
                 'default_email' => $this->info['default_email'],
-                'emails' => $this->info['emails'],
+                'emails' => implode(',',$this->info['emails']),
                 'birthday' => $this->info['birthday'],
                 'default_avatar_id' => $this->info['default_avatar_id'],
                 'is_avatar_empty' => $this->info['is_avatar_empty'],
                 'default_phone' => $this->info['default_phone'],
                 'psuid' => $this->info['psuid'],
-                'rights' => '',
+                'rights' => implode(',',[]),
             ]
         );
 

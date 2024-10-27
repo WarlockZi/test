@@ -3,14 +3,15 @@
 namespace app\Services\AdminSidebar;
 
 use app\core\Icon;
+use app\core\IUser;
 use app\model\User;
 
 class AdminSidebar
 {
-    private User $user;
+    private IUser $user;
     private array $sidebar;
 
-    public static function build(User $user): string
+    public static function build(IUser $user): string
     {
         $self          = new self();
         $self->user    = $user;

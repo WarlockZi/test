@@ -82,9 +82,16 @@ class User extends Model implements IUser
     {
         return $this->id;
     }
-
+    public function isOlya(): bool
+    {
+        return 'vitex018@yandex.ru' === $this->mail();
+    }
     public function isSU(): bool
     {
-        // TODO: Implement isSU() method.
+        return $_ENV['SU_EMAIL'] === $this->mail();
+    }
+    public function isAdmin(): bool
+    {
+        return $this->can(['role_admin']);
     }
 }
