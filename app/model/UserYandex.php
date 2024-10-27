@@ -31,6 +31,7 @@ class UserYandex extends Model implements IUser
         'is_avatar_empty',
         'default_phone',
         'psuid',
+        'rights',
         'created_at',
         'updated_at',
         'deleted_at',
