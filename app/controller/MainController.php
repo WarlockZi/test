@@ -14,6 +14,7 @@ class MainController extends AppController
 
     public function actionIndex(): void
     {
+        echo $_SESSION['yandex_id'];
         $this->assets->setMeta('Нитриловые перчатки оптом',
             'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.',
             'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
