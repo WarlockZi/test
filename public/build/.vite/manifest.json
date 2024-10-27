@@ -377,7 +377,7 @@
     ]
   },
   "Auth/auth.js": {
-    "file": "assets/auth-Czk7WNqP.js",
+    "file": "assets/auth-gs6i2vHy.js",
     "name": "auth",
     "src": "Auth/auth.js",
     "isEntry": true,
@@ -389,7 +389,7 @@
       "components/Modal/modal.js"
     ],
     "css": [
-      "assets/auth-Custt_K1.css",
+      "assets/auth-I8Qn5mK0.css",
       "assets/popup-Dv_TwhNX.css"
     ]
   },
@@ -429,7 +429,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-BXjfGuQ1.js",
+    "file": "assets/main-_aQUJV_O.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -446,7 +446,7 @@
       "Cart/cart.js"
     ],
     "css": [
-      "assets/main-Cb1kanIF.css"
+      "assets/main-CxNAmuwq.css"
     ],
     "assets": [
       "assets/SegoeUI-ClaH7WPz.eot",

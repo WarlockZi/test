@@ -3,7 +3,10 @@
 <? endif; ?>
 <? foreach ($userData as $key => $data): ?>
 
-    <?= $key; ?>
+    <p>
+        <span><?= $key; ?></span>
+        <span> <?= $data; ?></span>
+    </p>
     <?= $data; ?>
 
 <? endforeach; ?>
