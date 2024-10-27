@@ -59,9 +59,9 @@ class Auth
         return 'vitex018@yandex.ru' === Auth::getUser()['email'];
     }
 
-    public static function setAuth(User $user): void
+    public static function setAuth(IUser $user): void
     {
-        $_SESSION['id'] = $user->id;
+        $_SESSION['id'] = $user->getId();
     }
 
     public static function setUser(User $mockuser): void
