@@ -1,4 +1,4 @@
-<? if ($_ENV['DEV'] !== '1'): ?>
+<? if (!DEV): ?>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-04HQG70W2B"></script>
     <script>

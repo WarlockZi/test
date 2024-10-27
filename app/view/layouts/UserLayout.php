@@ -57,7 +57,7 @@ class UserLayout extends Layout
             ob_get_clean();
             ob_flush();
             $this->route->setError("В файле вида произошла ошибка");
-            if ($_ENV['DEV'] === '1') {
+            if (DEV) {
                 $this->route->setError($exception);
             } else {
                 $this->route->setError($exception->getMessage());

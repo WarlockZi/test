@@ -54,7 +54,7 @@ class UserYandex extends Model implements IUser
     public function can($rights = []): bool
     {
         $has = $this->hasRights($rights);
-        $su  = Auth::isSU();
+        $su  = $this->isSU();
         return ($has || $su);
     }
     public function hasRights(array $rights): bool
@@ -62,12 +62,18 @@ class UserYandex extends Model implements IUser
         return !!array_intersect($this->rights, $rights);
     }
 
-
+    public function isOlya(): bool
+    {
+        return 'vitex018@yandex.ru' === $this->mail();
+    }
     public function isSU(): bool
     {
-        // TODO: Implement isSU() method.
+        return $_ENV['SU_EMAIL'] === $this->mail();
     }
-
+    public function isAdmin(): bool
+    {
+        return $this->can(['role_admin']);
+    }
     public function fi(): string
     {
        return $this->real_name;
@@ -76,5 +82,4 @@ class UserYandex extends Model implements IUser
     {
         return $this->default_email;
     }
-
 }

@@ -128,6 +128,7 @@ class CategoryFormView
             return $exception;
         }
     }
+
     public static function selector(int $selected = 0, int $excluded = -1): string
     {
         return SelectBuilder::build(
@@ -141,9 +142,10 @@ class CategoryFormView
             ->class('categories')
             ->get();
     }
+
     public static function productFilterSelector(array $req): string
     {
-        $selected = $req['category'];
+        $selected = $req['category'] ?? 0;
         return SelectBuilder::build(
             TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
                 ->initialOption()
@@ -155,6 +157,7 @@ class CategoryFormView
             ->class('categories')
             ->get();
     }
+
     public static function getChildCategories(Category $category): ItemTabBuilder
     {
         return ItemTabBuilder::build('Подкатегории')
@@ -179,6 +182,7 @@ class CategoryFormView
                     ->get()
             );
     }
+
     protected static function getSeo(CategoryProperty|null $categoryProperty): string
     {
         if (!$categoryProperty) return '';
@@ -244,16 +248,24 @@ class CategoryFormView
             ->del()
             ->get();
     }
+
     public static function categorySelector(Category $category): string
     {
+
+//        $tree  = TreeABuilder::build(
+//            CategoryRepository::treeAll(), 'children_recursive', 2)
+//            ->href('/adminsc/category/edit/')
+//            ->get();
+        $tree1 = TreeOptionsBuilder::build(
+            CategoryRepository::treeAll(),
+            'children_recursive', 2)
+            ->initialOption()
+            ->selected($category->category_id)
+            ->excluded($category->id)
+            ->get();
+
         return SelectBuilder::build(
-            TreeOptionsBuilder::build(
-                CategoryRepository::treeAll(),
-                'children_recursive', 2)
-                ->initialOption()
-                ->selected($category->category_id)
-                ->excluded($category->id)
-                ->get()
+            $tree1
         )
             ->field('category_id')
             ->get();
@@ -286,6 +298,5 @@ class CategoryFormView
             ->href('/adminsc/category/edit/')
             ->get();
         return "<ul class='category-tree'>" . $tree . "</ul>";
-
     }
 }

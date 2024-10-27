@@ -5,6 +5,7 @@ namespace app\view\Header\Admin;
 
 
 use app\core\FS;
+use app\core\IUser;
 use app\model\User;
 
 class AdminHeader
@@ -15,7 +16,7 @@ class AdminHeader
 	protected string $commonTemplates;
 	protected string $blueRibbonTemplates;
 
-	public function __construct(User $user)
+	public function __construct(IUser $user)
 	{
 		$this->user = $user->toArray();
 		$this->templates = __DIR__ . '/templates/';

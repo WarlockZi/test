@@ -8,6 +8,7 @@ use app\Services\Logger\FileLogger;
 use app\Services\Sync\SyncService;
 use app\Services\Sync\TrancateService;
 use Illuminate\Support\Carbon;
+use Throwable;
 
 class SyncController extends AppController
 {
@@ -56,7 +57,7 @@ class SyncController extends AppController
         $this->logger->write(Carbon::now());
         $this->logger->write('Начата ручная загрузка');
         $this->service->load();
-        if ($_ENV['DEV'] == 1) {
+        if (DEV) {
             Response::exitWithPopup('Все перенесено');
         }
         exit();
@@ -65,7 +66,7 @@ class SyncController extends AppController
     public function actionLoadCategories(): void
     {
         $this->service->LoadCategories();
-        if ($_ENV['DEV'] == '1') {
+        if (DEV) {
             Response::exitWithPopup('Categories loaded');
         }
     }
@@ -73,7 +74,7 @@ class SyncController extends AppController
     public function actionLoadProducts(): void
     {
         $this->service->LoadProducts();
-        if ($_ENV['DEV'] == '1') {
+        if (DEV) {
             Response::exitWithPopup('Products loaded');
         }
     }
@@ -86,7 +87,7 @@ class SyncController extends AppController
             $exc = $exception;
             exit($exc);
         }
-        if ($_ENV['DEV'] == '1') {
+        if (DEV) {
             Response::exitWithPopup('Prices, units,  loaded');
         }
 

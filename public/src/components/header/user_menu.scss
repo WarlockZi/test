@@ -124,6 +124,8 @@
         display: inline-block;
         padding: 10px 15px;
         color: var.$color-a;
+        width: 100%;
+        box-sizing: border-box;
       }
     }
   }

@@ -17,7 +17,7 @@ try {
     $router->dispatch();
     exit();
 } catch (Throwable $e) {
-    if ($_ENV['DEV'] === '0') {
+    if (!DEV) {
         $logger = new \app\Services\Logger\ErrorLogger();
         $logger->write($e);
     }

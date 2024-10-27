@@ -122,7 +122,7 @@ class SyncService
     {
         $this->logDate();
         $this->logger->write('- error -' . $msg . PHP_EOL . $e);
-        if ($_ENV['DEV'] == '1') {
+        if (DEV) {
             Response::exitWithPopup($msg);
         }
         exit();
