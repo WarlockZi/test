@@ -68,6 +68,7 @@ class YaAuthService
                 'login' => $this->info['login'],
                 'client_id' => $this->info['client_id'],
                 'display_name' => $this->info['display_name'],
+                'real_name' => $this->info['real_name'],
                 'first_name' => $this->info['first_name'],
                 'last_name' => $this->info['last_name'],
                 'sex' => $this->info['sex'],
