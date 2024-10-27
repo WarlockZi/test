@@ -1,51 +1,43 @@
-<?
+<?php
 
 use app\core\Auth;
-use \app\model\User;
-use \app\core\Icon;
+use app\core\Icon;
 
 
 $user = Auth::getUser(); ?>
-<? if (!$user): ?>
+<?php if (!$user): ?>
 
-	<div class="guest-menu" aria-label="login">
+	<menu class="guest-menu" aria-label="login">
 		 <?= Icon::user(); ?>
-		Вход
+		<span>Вход</span>
 
 		<ul class="guest-menu__menu">
-			<li>
-				<a href="/auth/login" rel="nofollow">Войти</a>
-			</li>
-			<li>
-				<a href="/auth/register" rel="nofollow">Регистрация</a>
-			</li>
-			<li>
-				<a href="/auth/returnpass" rel="nofollow">Забыл пароль</a>
-			</li>
+			<li><a href="/auth/login" rel="nofollow">Войти</a></li>
+			<li><a href="/auth/register" rel="nofollow">Регистрация</a></li>
+			<li><a href="/auth/returnpass" rel="nofollow">Забыл пароль</a></li>
 		</ul>
 
-	</div>
+	</menu>
 
-<? else: ?>
+<?php else: ?>
 
 	<div class="user-menu">
 		<img src="<?= $user->avatar() ?? ''; ?>" alt="">
 
 		<div class="credits">
-			<div class="fio"><?= "{$user->fi()}"; ?></div>
-<!--			<div class="fio">--><?php //= "{$user['surName']} {$user['name']}"; ?><!--</div>-->
-			<div class="email"><?= $user['email']; ?></div>
+			<div class="fio"><?= $user->fi(); ?></div>
+			<div class="email"><?= $user->mail(); ?></div>
 		</div>
 
 		<div class="menu">
 			<a href="/auth/profile">Изменить свой профиль</a>
-				<? if ($user->can(['role_employee'])): ?>
+            <?php if ($user->can(['role_employee'])): ?>
 			  <a class="list__item" href="/adminsc">Admin</a>
-				<? endif; ?>
+            <?php endif; ?>
 
 			<a href="/auth/logout" aria-label="logout" onclick="localStorage.setItem('id', null)">
 					 <?= Icon::logout2(); ?>Выход</a>
 		</div>
 	</div>
 
-<? endif; ?>
+<?php endif; ?>

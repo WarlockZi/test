@@ -80,7 +80,6 @@ class YaAuthService
                 'default_phone' => $this->info['default_phone'],
                 'psuid' => $this->info['psuid'],
                 'rights' => '',
-
             ]
         );
 
@@ -91,6 +90,11 @@ class YaAuthService
 
     public function userData()
     {
+        if ($this->info) {
+            header("Location:/");
+            exit;
+        }
+
         return $this->info;
 
     }

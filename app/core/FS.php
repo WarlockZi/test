@@ -38,18 +38,14 @@ class FS
             $content = ob_get_clean();
             if ($_ENV['DEV']==='1'){
            $callerClass = debug_backtrace()[2]['file']." (line ".debug_backtrace()[2]['line'].")";
-           $callerClass1 = debug_backtrace()[3]['file']." (line ".debug_backtrace()[3]['line'].")";
-           $callerClass2 = debug_backtrace()[4]['file']." (line ".debug_backtrace()[4]['line'].")";
            $callerMethod = debug_backtrace()[2]['function'];
+           $callerClass1 = debug_backtrace()[3]['file']." (line ".debug_backtrace()[3]['line'].")";
            $callerMethod1 = debug_backtrace()[3]['function'];
-           $callerMethod2 = debug_backtrace()[4]['function'];
                 return date('y-m-d, h:m:s').PHP_EOL.'<br><br>' .
                     "class {$callerClass}" . PHP_EOL . '<br><br>' .
                     "class {$callerClass1}" . PHP_EOL . '<br><br>' .
-                    "class {$callerClass2}" . PHP_EOL . '<br><br>' .
                     "method {$callerMethod}" . PHP_EOL . '<br><br>' .
                     "method {$callerMethod1}" . PHP_EOL . '<br><br>'.
-                    "method {$callerMethod2}" . PHP_EOL . '<br><br>'.
                    $exception;
             }
             $this->errorLogger->write($exception);
