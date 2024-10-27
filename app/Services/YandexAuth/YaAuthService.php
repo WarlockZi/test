@@ -61,10 +61,10 @@ class YaAuthService
     {
         $userYandex = UserYandex::updateOrCreate(
             [
-                'ya_id' => $this->info['ya_id']
+                'ya_id' => $this->info['id']
             ],
             [
-                'ya_id' => $this->info['ya_id'],
+                'ya_id' => $this->info['id'],
                 'login' => $this->info['login'],
                 'client_id' => $this->info['client_id'],
                 'display_name' => $this->info['display_name'],
