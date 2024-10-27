@@ -33,7 +33,7 @@ class Auth
         return false;
     }
 
-    public static function getUser(): User|null
+    public static function getUser(): IUser|null
     {
         return self::$user ?? self::auth();
     }
