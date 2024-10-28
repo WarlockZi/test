@@ -79,27 +79,18 @@ class Auth
         return !!self::getUser();
     }
 
-    public static function authorize(Route $route): IUser|null
+    public static function authorize(Route $route): void
     {
-        if (AuthValidator::needsNoAuth($route)) {
-            return null;//no user
-        }
-
         $user = self::getUser();
-        if (!$user) {
-            header("Location:/auth/login");
-            exit();
-        }
 
-        self::setAuth($user);
+        if (!$user) return;
+
         if ($user instanceof User && !$user['confirm'] == "1") {
             $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
             header("Location:/auth/noconfirm");
             exit();
         }
         define('SU', $user->mail() === $_ENV['SU_EMAIL']);
-
-        return $user;
     }
 
 }

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UserYandex extends Model implements IUser
 {
     use softDeletes;
+
     public $table = 'users_yandex';
 
     public $timestamps = true;
@@ -40,22 +41,25 @@ class UserYandex extends Model implements IUser
     {
         return Attribute::get(fn(string $rights) => explode(',', $rights));
     }
+
     public function avatar(): string
     {
         $href = "https://avatars.yandex.net/get-yapic/{$this->default_avatar_id}/islands-50";
-        return  $href;
+        return $href;
     }
 
-    public function getId():int
+    public function getId(): int
     {
         return $this->id;
     }
+
     public function can($rights = []): bool
     {
         $has = $this->hasRights($rights);
         $su  = $this->isSU();
         return ($has || $su);
     }
+
     public function hasRights(array $rights): bool
     {
         return !!array_intersect($this->rights, $rights);
@@ -65,18 +69,27 @@ class UserYandex extends Model implements IUser
     {
         return 'vitex018@yandex.ru' === $this->mail();
     }
+
     public function isSU(): bool
     {
         return $_ENV['SU_EMAIL'] === $this->mail();
     }
+
     public function isAdmin(): bool
     {
         return $this->can(['role_admin']);
     }
+
+    public function isEmployee(): bool
+    {
+        return $this->can(['role_employee']);
+    }
+
     public function fi(): string
     {
-       return $this->real_name;
+        return $this->real_name;
     }
+
     public function mail(): string
     {
         return $this->default_email;

@@ -52,7 +52,9 @@ abstract class UserView
 
 	public static function guest($item): string
     {
-		return ItemBuilder::build($item, 'user')
+
+		return $item
+            ?ItemBuilder::build($item, 'user')
 			->pageTitle('Редактировать пользователя: ' . $item->fi())
 			->save()
 			->field(
@@ -104,7 +106,8 @@ abstract class UserView
 					)
 					->get()
 			)
-			->get();
+			->get()
+            :"Вы не зарегистрировались";
 	}
 
 	public static function employee($item): string
