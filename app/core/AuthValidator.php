@@ -10,7 +10,7 @@ class AuthValidator
             strtolower($route->controller) === 'auth' && $route->action === 'login'
             ||strtolower($route->controller) === 'auth' && $route->action === 'yandex'
             || strtolower($route->controller) === 'cart'
-            || strtolower($route->controller) === 'main'
+//            || strtolower($route->controller) === 'main'
             || strtolower($route->controller) === 'bot'
             || strtolower($route->controller) === 'promotion'
             || strtolower($route->controller) === 'orderitem'
@@ -25,7 +25,7 @@ class AuthValidator
             || strtolower($route->controller) === 'auth' && $route->action === 'returnpass'
             || strtolower($route->controller) === 'auth' && $route->action === 'noconfirm'
             || strtolower($route->controller) === 'auth' && $route->action === 'confirm'
-            || strtolower($route->controller) === 'main' && $route->action === 'index'
+//            || strtolower($route->controller) === 'main' && $route->action === 'index'
             || strtolower($route->controller) === 'product' && !$route->admin
             || strtolower($route->controller) === 'short'
             || strtolower($route->controller) === 'category' && !$route->admin
