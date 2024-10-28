@@ -61,9 +61,9 @@ class AuthController extends AppController
         $this->view = 'yandex';
         $userData   = (new YaAuthService())->userData();
 
-        $this->setVars(compact('userData'));
-//        header('Location:/');
-//        exit;
+//        $this->setVars(compact('userData'));
+        header('Location:/');
+        exit;
 
     }
 
@@ -121,7 +121,7 @@ class AuthController extends AppController
     {
         $user = Auth::getUser();
 
-        if ($user->can(['role_employee'])) {
+        if ($user?->can(['role_employee'])) {
             if ($user->can(['role_admin'])) {
                 $item = UserView::admin($user);
             } else {
@@ -129,7 +129,7 @@ class AuthController extends AppController
             }
 
         } else {
-            $item = UserView::guest($user);;
+            $item = UserView::guest($user);
         }
 
         $this->setVars(compact('item'));

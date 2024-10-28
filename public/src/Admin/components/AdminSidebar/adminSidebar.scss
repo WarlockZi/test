@@ -163,7 +163,6 @@ $border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
 
           &.rotate {
             transform: rotate(0deg);
-            //background-color: $dark;
           }
         }
       }

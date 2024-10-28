@@ -251,11 +251,6 @@ class CategoryFormView
 
     public static function categorySelector(Category $category): string
     {
-
-//        $tree  = TreeABuilder::build(
-//            CategoryRepository::treeAll(), 'children_recursive', 2)
-//            ->href('/adminsc/category/edit/')
-//            ->get();
         $tree1 = TreeOptionsBuilder::build(
             CategoryRepository::treeAll(),
             'children_recursive', 2)

@@ -20,15 +20,6 @@ class Response
         $layout->render();
         exit();
     }
-    public static function notFound(string $file = '', array $data = [], int $status=200): string
-    {
-//        $this->assets->setMeta('Страница не найдена');
-//            http_response_code(404);
-//        $layout = Auth::userIsAdmin() ? $this->layout : 'app\view\layouts\UserLayout';
-        $layout = new $layout($this->route, $this);
-        $layout->render();
-        exit();
-    }
 
     public static function exitJson(array $arr = []): void
     {
@@ -43,11 +34,6 @@ class Response
             exit(json_encode(['arr' => ['popup' => $msg]]));
         }
         exit();
-    }
-
-    public static function dbResponse(): void
-    {
-
     }
 
     public static function exitWithMsg(string $msg): void
@@ -73,5 +59,14 @@ class Response
         }
         exit();
     }
+    //    public static function notFound(string $file = '', array $data = [], int $status=200): string
+//    {
+////        $this->assets->setMeta('Страница не найдена');
+////            http_response_code(404);
+////        $layout = Auth::userIsAdmin() ? $this->layout : 'app\view\layouts\UserLayout';
+//        $layout = new $layout($this->route, $this);
+//        $layout->render();
+//        exit();
+//    }
 
 }

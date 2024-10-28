@@ -66,7 +66,7 @@
         height: 150px;
         min-width: 150px;
         z-index: 1;
-        border: 1px solid hsl(90% 20% 90%);
+        border: 1px solid hsl(90deg 20% 90%);
       }
     }
 
@@ -159,7 +159,7 @@
         width: 15px;
         height: 15px;
         right: 10px;
-        background: url("/pic/icons/upDown.svg") 0 0/15px 15px no-repeat;
+        background: url(/pic/icons/upDown.svg) 0 0/15px 15px no-repeat;
       }
 
       input {
@@ -167,7 +167,7 @@
         position: relative;
         margin: 0;
         width: 1px;
-        background-image: url("/pic/icons/search.svg");
+        background-image: url(/pic/icons/search.svg);
         background-repeat: no-repeat;
         background-position: 3px 3px, center;
         background-size: 12px;
@@ -193,9 +193,6 @@
         cursor: initial;
         align-items: center;
 
-        &:hover {
-          //background-color: #5b626e;
-        }
       }
 
       &.edit {

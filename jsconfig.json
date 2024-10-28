@@ -2,7 +2,10 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@fonts/*": ["pic/fonts/*"]
+      "@fonts/*": ["pic/fonts/*"],
+      "@pic": ["pic"],
+      "@main/*": ["pic/main/*"],
+      "@icons": ["/pic/icons"]
     }
   }
 }
