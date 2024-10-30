@@ -22,12 +22,33 @@ class Category extends Model
         'img',
         'category_id',
         'show_front',
+        'seo_title',
+        'seo_desc',
+        'seo_keywords',
+        'seo_h1',
+        'seo_h2',
+        'seo_article',
+        'seo_path',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    protected $appends = ['shortLink','href'];
+    protected $appends = ['shortLink', 'href'];
+
+    public function seo_title()
+    {
+        return $this->ownProperties->seo_title ?? $this->name . " - купить оптом недорого в интернет-магазине VITEX в Вологде";
+    }
+    public function seo_description()
+    {
+        return $this->ownProperties->seo_description ?? $this->name . ". Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
+    }
+
+    public function seo_article()
+    {
+        return $this->ownProperties->seo_article ?? $this->description ?? $this->name;
+    }
 
     public function InactivePromotions()
     {
@@ -44,11 +65,12 @@ class Category extends Model
         $host   = $_SERVER['HTTP_HOST'] ?? '';
         return "{$scheme}://{$host}/short/{$link}";
     }
+
     protected function getHrefAttribute(): string
     {
         if (!$this->ownProperties) return '';
 
-        $path   = $this->ownProperties->path;
+        $path = $this->ownProperties->path;
         return "/catalog/{$path}";
     }
 

@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
 use app\Services\Seo\CategorySeoService;
@@ -32,8 +33,8 @@ class CategoryController extends AppController
                 $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
                 $this->setVars(compact( 'breadcrumbs', 'category'));
 
-                $title    = CategorySeoService::title($category);
-                $desc     = $category->ownProperties->seo_description ?? $category->name;
+                $title    = $category->seo_title();
+                $desc     = $category->seo_description();
                 $keywords = $category->ownProperties->seo_keywords ?? $category->name;
                 $this->assets->setMeta($title, $desc, $keywords);
             } else {

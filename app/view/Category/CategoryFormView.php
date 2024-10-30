@@ -30,15 +30,10 @@ class CategoryFormView
             return ItemBuilder::build($category, 'category')
                 ->pageTitle('Категория :  ' . $category->name)
                 ->field(
-                    ItemFieldBuilder::build('id', $category)
-                        ->name('ID')
-                        ->get()
-                )
-                ->field(
                     ItemFieldBuilder::build('slug', $category)
                         ->name('Адрес')
                         ->html(
-                            "<a href='$category->href}'>{$category->href}</a>"
+                            "<a href='$category->href'>{$category->href}</a>"
                         )
                         ->get()
                 )
@@ -65,6 +60,11 @@ class CategoryFormView
                         ->html(
                             self::categorySelector($category)
                         )
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('id', $category)
+                        ->name('ID')
                         ->get()
                 )
                 ->tab(
@@ -122,7 +122,7 @@ class CategoryFormView
                         )
 
                 )
-                ->toList('adminsc/category/table', 'К списку категорий')
+                ->toList('adminsc/category', 'К списку категорий')
                 ->get();
         } catch (Throwable $exception) {
             return $exception;
@@ -203,12 +203,12 @@ class CategoryFormView
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_h1', $categoryProperty)
-                ->name('h1')
+                ->name('H 1')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
-            ItemFieldBuilder::build('seo_article', $categoryProperty)
-                ->name('Seo article')
+            ItemFieldBuilder::build('seo_h2', $categoryProperty)
+                ->name('H 2')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
@@ -217,10 +217,21 @@ class CategoryFormView
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
+            ItemFieldBuilder::build('seo_article', $categoryProperty)
+                ->name('Seo article')
+                ->html(self::getSeoArticle($categoryProperty))
+                ->id('seo_atricle')
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
             "</div>";
 
     }
-
+    public static function getSeoArticle($categoryProperty): string
+    {
+        ob_start();
+        include __DIR__ . './Admin/seoArticle.php';
+        return ob_get_clean();
+    }
     protected static function getProducts(Category $category): string
     {
         return Table::build($category['products'])

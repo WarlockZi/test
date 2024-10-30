@@ -1,7 +1,7 @@
 <?php
 
 use app\core\Router;
-
+session_unset();
 session_start();
 $_SESSION['phpSession'] = session_id();
 

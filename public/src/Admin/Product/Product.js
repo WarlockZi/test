@@ -3,7 +3,7 @@ import './units'
 import './Props.js'
 import {objAndFiles2FormData, post} from '../../common.js'
 import {qs} from '../../constants'
-import MyQuill from "../../components/quill/quill.js";
+import MyQuill from "../../components/quill/MyQuill.js";
 
 export default class Product {
    constructor() {
@@ -12,11 +12,12 @@ export default class Product {
       this.product = product
 
       this.setProps().then()
-      // const fields = this.setFields()
+
       this.setFields().then()
       this.setDragNDrop().then()
       this.setCardPanel().then()
       new MyQuill('#detail-text');
+      new MyQuill('#seo_article', true,true,true);
    }
 
    async setDragNDrop() {

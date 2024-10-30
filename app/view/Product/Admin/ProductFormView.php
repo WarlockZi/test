@@ -8,7 +8,6 @@ use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Promotion;
 use app\model\Unit;
-use app\Repository\CategoryRepository;
 use app\Repository\ProductRepository;
 use app\Services\ProductImageService;
 use app\view\Category\CategoryFormView;
@@ -304,8 +303,16 @@ class ProductFormView
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_h1', $product->ownProperties)
-                ->name('h1')
+                ->name('H1')
                 ->contenteditable()
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
+            ItemFieldBuilder::build('seo_article', $product->ownProperties)
+                ->name('Seo article')
+                ->id('seo_article')
+                ->html(
+                    self::getSeoArticle($product)
+                )
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
             "</div>"
@@ -360,7 +367,12 @@ class ProductFormView
         include __DIR__ . '/../description.php';
         return ob_get_clean();
     }
-
+    protected static function getSeoArticle($product): string
+    {
+        ob_start();
+        include __DIR__ . '/../seoArticle.php';
+        return ob_get_clean();
+    }
     protected static function promotions($product): string
     {
         $inactivePromotions = self::commonPromotions($product->inactivePromotions, 'inactivePromotions', 'Неактивные акции', false, false);

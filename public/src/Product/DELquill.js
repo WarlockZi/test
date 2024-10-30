@@ -2,11 +2,11 @@ import {$, post} from "../common";
 import Quill from "quill";
 import "quill/dist/quill.core.css";
 import 'quill/dist/quill.snow.css';
-export const quill = () => {
+export const quilld = () => {
 
+debugger
   const quillSelector = '.detail-text';
   const textarea = $(quillSelector)[0];
-
   if (textarea) {
     createQuill()
   }
@@ -14,14 +14,12 @@ export const quill = () => {
   function getOptions() {
     const isAdmin = window.location.pathname.split('/').includes('adminsc')
     const toolbar =
-      isAdmin ?
-        {
-          toolbar: [
+      isAdmin
+         ?
+        {toolbar: [
             ["bold", "italic", "underline", "blockquote"],
             [{align: "justify"}, {align: "center"}, {align: "right"}],
-            // ['link', 'image'],
-          ]
-        }
+          ]}
         : {toolbar:false}
 
     return {
@@ -37,6 +35,7 @@ export const quill = () => {
   function createQuill() {
     const quill = new Quill(quillSelector, getOptions());
     const delta = quill.getContents();
+
     setContent(quill, delta)
     quill.on(Quill.events.TEXT_CHANGE, updateContent.bind(quill));
   }
@@ -67,15 +66,15 @@ export const quill = () => {
   //   })
   // }
 
-  async function update(txt) {
-    let id = $('[data-field="id"]').first()
-    id = +id.innerText
-    const data = {id, txt}
-    const res = await post(
-      '/adminsc/product/updateOrCreate',
-      data
-    )
-  }
+  // async function update(txt) {
+  //   let id = $('[data-field="id"]').first()
+  //   id = +id.innerText
+  //   const data = {id, txt}
+  //   const res = await post(
+  //     '/adminsc/product/updateOrCreate',
+  //     data
+  //   )
+  // }
 
   function isJsonString(str) {
     try {

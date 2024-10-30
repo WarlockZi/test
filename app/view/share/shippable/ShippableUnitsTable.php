@@ -87,7 +87,7 @@ class ShippableUnitsTable
 
     private function getOrders()
     {
-        return Auth::isAuthed() ? $this->product->orders : $this->product->orderItems;
+        return Auth::getUser() ? $this->product->orders : $this->product->orderItems;
     }
 
     private function getCost(int $count, int $multiplier): string

@@ -6,6 +6,7 @@ namespace app\Repository;
 
 use app\model\Category;
 use app\model\Product;
+use app\view\share\card_panel\CardPanel;
 
 class BreadcrumbsRepository
 {
@@ -53,12 +54,12 @@ class BreadcrumbsRepository
 			$slug = $admin ? "edit/{$cat->id}" : "{$cat->ownProperties->path}";
 			if ($i === 0) {
 				if (!$linkLast) {
-					$str = "<li><div>{$cat->name}</div></li>" . $str;
+					$str = "<li><div>{$cat->name}</div>".CardPanel::categoryCardPanel($category,true)."</li>" . $str ;
 				} else {
-					$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a></li>" . $str;
+					$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a>".CardPanel::categoryCardPanel($category,true)."</li>" . $str;
 				}
 			} else {
-				$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a></li>" . $str;
+				$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a>".CardPanel::categoryCardPanel($category,true)."</li>" . $str;
 			}
 		}
 

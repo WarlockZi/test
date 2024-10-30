@@ -44,6 +44,7 @@ class CartController extends AppController
 
     public function actionIndex(): void
     {
+//        session_unset();
         $lead     = Lead::where('sess', session_id())->first();
         $user     = Auth::getUser();
         $products = CartRepository::main();
@@ -88,7 +89,7 @@ class CartController extends AppController
         $unit_ids   = $this->ajax['unit_ids'];
 
         if (!$product_id) Response::exitWithMsg('No id');
-        $trashed = Auth::isAuthed()
+        $trashed = Auth::getUser()
             ? $this->orderRepo::deleteItems($sess, $product_id, $unit_ids)
             : $this->orderItemRepo->deleteItems($sess, $product_id, $unit_ids);
         if ($trashed) {
@@ -100,7 +101,7 @@ class CartController extends AppController
 
     public function actionUpdateOrCreate(): void
     {
-        if (Auth::isAuthed()) {
+        if (Auth::getUser()) {
             OrderController::updateOrCreate($this->ajax);
         } else {
             OrderitemController::updateOrCreate($this->ajax);

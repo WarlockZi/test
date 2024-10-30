@@ -8,4 +8,4 @@ import '../components/date/date.js'
 // import '../share/scroll/scroll.js'
 
 import CatalogItem from "./components/catalog-item/catalog-item.js";
-import MyQuill from "../components/quill/quill.js";
+import MyQuill from "../components/quill/MyQuill.js";

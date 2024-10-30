@@ -14,17 +14,16 @@ class CardPanel
 {
 	public static function card_panel(Product $product): string
 	{
-        $userIsAdmin = Auth::userIsAdmin();
+        $userIsAdmin = Auth::getUser()?->isAdmin();
         $fs = new FS(__DIR__);
         $edit = Icon::edit();
 		return $fs->getContent('product_card_panel', compact('product', 'edit', 'userIsAdmin'));
 	}
-    public static function categoryCardPanel(Category $category): string
+    public static function categoryCardPanel(Category $category, bool $forBreadcrumbs=false): string
     {
-        $userIsAdmin = Auth::userIsAdmin();
         $fs = new FS(__DIR__);
         $edit = Icon::edit();
-        return $fs->getContent('category_card_panel', compact('category', 'edit', 'userIsAdmin'));
+        return $fs->getContent('category_card_panel', compact('category', 'edit','forBreadcrumbs'));
     }
 
 }

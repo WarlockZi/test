@@ -124,14 +124,14 @@ function getFieldUrl(model, id) {
 
 
 function cachePage(className) {
-   let html = $(className)[0].outerHTML;
+   const html = $(className)[0].outerHTML;
    return trimStr(html)
 }
 
-let validate = {
+const validate = {
    sort: () => {
-      let error = this.nextElementSibling;
-      let ar = this.value.match(/\D+/);
+      const error = this.nextElementSibling;
+      const ar = this.value.match(/\D+/);
       if (ar) {
          error.innerText = 'Только цифры';
          error.style.opacity = '1'
@@ -143,9 +143,9 @@ let validate = {
    },
    email: (email) => {
       if (!email) return false;
-      let text = "Неправильный формат почты";
-      let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      let res = re.test(String(email).toLowerCase());
+      const text = "Неправильный формат почты";
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const res = re.test(String(email).toLowerCase());
       if (!res) return text;
       return false
    },
@@ -162,17 +162,6 @@ let validate = {
    }
 };
 
-
-// function up() {
-//    var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-//    if (top > 0) {
-//       window.scrollBy(0, -100);
-//       var t = setTimeout('up()', 20);
-//    }
-//    else
-//       clearTimeout(t);
-//    return false;
-// }
 
 const popup = {
 
@@ -224,6 +213,60 @@ function getPhpSession() {
       ?? null
 }
 
+function sanitizeInput(input) {
+   const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+      "(": '&fp',
+      ")": '&bp',
+      "/": '&fs',
+      "\\": '&bs',
+      ".": '&dot',
+      ";": '&sc',
+      "|": '&or',
+      "?php": '&?php',
+      "delete": '&del',
+   };
+   const reg = /[&<>"'.()\/\\;]/gi;
+   return input.replace(reg, (match) => {
+      return map[match];
+   });
+}
+
+function emailValidator(mail){
+   const email = decodeURI(mail) //иначе русские буквы после @ шифруются в url
+   // const eng = '[а-яА-Я]*'
+   const min = 2
+   // const at = '@'
+   const minLengthAfterAt = '(.){2,}@(.){2,}'
+   const dot = '.'
+   const domainLength = '^(.){2,}@(.){2,}\.(.){2,}$'
+   const errors = []
+
+   const replacePattern = /[a-zA-Z\@\-\_\.]*/
+   if (email.replace(replacePattern,'').length) {
+      errors.push("Разрешены только английские")
+   }
+   if (email.length < min) {
+      errors.push("Длина меньше 2")
+   }
+   if (!/[\@]/.test(email)) {
+      errors.push("Нет знака @")
+   }
+   if (!email.match(minLengthAfterAt)) {
+      errors.push("Меньше 2 знаков после @")
+   }
+   if (!email.includes(dot)) {
+      errors.push("Нет точки")
+   }
+   if (!email.match(domainLength)) {
+      errors.push("Меньше 2 знаков После точки")
+   }
+   return errors
+}
 
 
 function createEl(tagName, className = '', text = '') {
@@ -234,7 +277,6 @@ function createEl(tagName, className = '', text = '') {
    div.innerText = text ? text : '';
    return div
 }
-
 class createElement {
    constructor() {
       this.attributes = []
@@ -261,7 +303,6 @@ class createElement {
    }
 
    html(html) {
-      debugger;
       this._html = html;
       return this
    }
@@ -609,6 +650,7 @@ function addTooltip(args) {
 
 
 export {
+   sanitizeInput,
    createElement,
    time,
    scrollToTop,
@@ -616,7 +658,7 @@ export {
    setCookie,
    getCookie,
    createEl,
-
+   emailValidator,
    getPhpSession,
    slider,
    cachePage,

@@ -2,17 +2,23 @@ import {$, post} from '../../common'
 import Quill from "quill";
 import "quill/dist/quill.core.css";
 import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
 
 export default class MyQuill {
-   constructor(selector = '#detail-text') {
-
+   constructor(selector = '#detail-text', autosave = false, toolbar = false, editable = false, theme = 'snow') {
+      // debugger
+      this.model = $('[data-model]').first()?.dataset?.model ?? null
+      this.id = $('[data-model]').first()?.dataset?.id ?? null
+      this.button = $('#button').first()
       this.selector = selector
-      this.textarea = $(selector)[0]
-      if (!this.textarea) return false
-      this.toolbar = this.setToolbar()
+
+      this.autosave = autosave
+      this.editable = editable
+      this.contents = $(selector).first().innerText;
+
+      this.toolbar = toolbar ? this.setToolbar() : false
       this.options = this.setOptions()
       this.init()
-
    }
 
    setToolbar() {
@@ -40,7 +46,7 @@ export default class MyQuill {
    setOptions() {
       return {
          theme: 'snow',
-         // theme: 'bubble'
+         // theme: 'bubble',
          placeholder: 'Compose an epic...',
          modules: {
             toolbar: this.toolbar
@@ -48,27 +54,44 @@ export default class MyQuill {
       };
    }
 
+   dto(change) {
+      return {
+         id: this.id,
+         relation: "ownProperties",
+         fields: {
+            "seo_article": change,
+         }
+      }
+   }
 
    init() {
-      const text = this.textarea.innerText.trim()
 
       const quill = new Quill(this.selector, this.options);
 
-      try {
-         const json = JSON.parse(text);
+      if (this.isJson(this.contents)) {
+         const json = JSON.parse(this.contents);
          quill.setContents(json)
-      } catch (e) {
+      } else {
+         quill.setText(this.contents)
       }
 
-      this.textarea.style.background = '#fff'
+      if (!this.editable) quill.enable(false)
 
-      const button = $('#button')[0]
-      if (button) {
-         button.addEventListener('click', function () {
+      if (this.autosave) {
 
+         quill.on('text-change', function (delta) {
+
+            post(`/adminsc/${this.model}/updateOrCreate`,
+               this.dto(JSON.stringify(quill.getContents()))
+            )
+         }.bind(this));
+      }
+
+
+      if (this.button) {
+         this.button.addEventListener('click', function () {
                const productId = $(`.item-wrap[data-model='product']`)[0].dataset.id
                const txt = JSON.stringify(quill.getContents())
-
                post('/adminsc/product/updateOrCreate',
                   {
                      txt,
@@ -77,6 +100,15 @@ export default class MyQuill {
                ).then()
             }
          )
+      }
+   }
+
+   isJson(json) {
+      try {
+         JSON.parse(json);
+         return true
+      } catch (e) {
+         return false;
       }
    }
 }

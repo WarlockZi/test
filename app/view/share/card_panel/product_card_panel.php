@@ -11,7 +11,7 @@ use app\core\Auth;
     >
         <?= \app\core\Icon::link(); ?>
     </div>
-    <?php if (Auth::userIsAdmin()): ?>
+    <?php if (Auth::getUser()?->isAdmin()): ?>
         <a href="/adminsc/product/edit/<?= $product->id ?>" class="edit"><?= \app\core\Icon::edit(); ?></a>
     <? endif; ?>
 </div>
