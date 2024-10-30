@@ -13,6 +13,7 @@ class ItemFieldBuilder
 
     public string $relation='';
     public string $name;
+    public string $id;
 
     public string $html;
 //    public string $dataModel;
@@ -43,7 +44,11 @@ class ItemFieldBuilder
         $this->name = $name;
         return $this;
     }
-
+    public function id($id):static
+    {
+        $this->id = "id='$id'";
+        return $this;
+    }
     public function link(string $link):static
     {
         $this->link = $link;

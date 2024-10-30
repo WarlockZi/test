@@ -113,7 +113,7 @@ class Route
 
     public function setLayout(): void
     {
-        $this->layout = ($this->admin && Auth::isAuthed())
+        $this->layout = ($this->admin && Auth::getUser())
             ? AdminLayout::class
             : UserLayout::class;
     }

@@ -20,33 +20,30 @@ export default class CartLead extends Cart{
   }
 
   setFields() {
-    let name = (new FieldBuilder())
+    const name = (new FieldBuilder())
       .id('name')
       .badgeWidth('150px')
       .required()
       .placeholder('как к Вам обращаться')
       .pattern('[а-яА-Я]{1,}')
-      // .error('заполните, пожалуйста, ваше имя')
       .get()
     ;
 
-    let phone = (new FieldBuilder)
+    const phone = (new FieldBuilder)
       .id('phone')
       .badgeWidth('130px')
       .required()
       .placeholder('сотовый для связи')
       .pattern('[0-9-+_()]{6,17}')
-      // .error('телефон состоит минимум из 10 цифр')
       .get()
     ;
 
-    let company = (new FieldBuilder)
+    const company = (new FieldBuilder)
       .id('company')
       .badgeWidth('175px')
       .required()
       .placeholder('название Вашей компании')
       .pattern('[a-zA-Zа-яА-я\\s()]{3,}')
-      // .error('заполните, пожалуйста, название вашей компании')
       .get()
     ;
     this.fields =  {name, phone, company}

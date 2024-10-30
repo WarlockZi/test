@@ -17,6 +17,9 @@
     align-items: flex-start;
     margin-bottom: 10px;
 
+    background: linear-gradient(331deg, mixin_media.lighter(var.$color-main,50), transparent);
+    padding: 32px 13px;
+
     @include mixin_media.m600 {
       flex-direction: column;
       align-items: center;
@@ -25,7 +28,7 @@
     .main-image {
       width: 30%;
       flex: 1;
-      margin-right: 7%;
+      margin-right: 4%;
       height: 100%;
 
       & > img {
@@ -72,8 +75,10 @@
       border-radius: 20px;
       box-sizing: border-box;
       padding: 20px;
+      margin-right: 20px;
       min-height: 66px;
-      box-shadow: 0 20px 12px -16px rgb(0 30 85 / 10%), 0 8px 24px 18px rgb(0 30 85 / 5%);
+      box-shadow: -7px -7px 7px rgba(255, 255, 255, .8), 7px 7px 7px rgba(94, 104, 121, .8);
+      //box-shadow: 0 20px 12px -16px rgb(0 30 85 / 10%), 0 8px 24px 18px rgb(0 30 85 / 5%);
 
 
       @include mixin_media.shippable;
@@ -223,7 +228,7 @@
   .properties {
     font-size: .8rem;
     flex: 0 0 27%;
-    margin-left: 20px;
+    margin-bottom: 20px;
 
     .property {
       width: 50%;
@@ -307,6 +312,10 @@
 
 .info-wrap {
   @include mixin_media.info-tag;
+}
+
+.ql-container.ql-snow{
+  border: none !important;
 }
 
 

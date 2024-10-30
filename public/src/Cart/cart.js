@@ -1,5 +1,5 @@
 import './counter1'
-import {$, cookieRemove, formatter, getPhpSession, post} from '../common'
+import {$, cookieRemove, formatter, getPhpSession, post, sanitizeInput,} from '../common'
 // import Counter1 from "./counter1";
 import Cookie from "../components/cookie/new/cookie";
 import Modal from "../components/Modal/modal";
@@ -117,7 +117,7 @@ export default class Cart {
    updateOrCreate(target, count) {
       const product_id = target.closest('[shippable-table]').dataset['1sid'];
       const unit_id = target.closest('[unit-row]').dataset['unitid'];
-      post( `${this.url}/updateOrCreate`, {product_id, unit_id, count})
+      post(`${this.url}/updateOrCreate`, {product_id, unit_id, count})
    }
 
    async deleteCartRow(target) {
@@ -164,9 +164,9 @@ export default class Cart {
    }
 
    async modalLeadCallback(fields, modal) {
-      const name = fields.name.value;
-      const phone = fields.phone.value;
-      const company = fields.company.value;
+      const name = sanitizeInput(fields.name.value);
+      const phone = sanitizeInput(fields.phone.value);
+      const company = sanitizeInput(fields.company.value);
       const sess = getPhpSession();
       const res = await post('/cart/lead', {name, phone, company, sess});
       modal.close();
@@ -175,13 +175,15 @@ export default class Cart {
       }
    }
 
+// <script>alert('dd');</sctipt>
+
    async modalcartSuccessCallback(inputs, modal) {
       modal.close()
    }
 
    async modalLoginCallback(fields, modal) {
-      const email = fields.email.value;
-      const password = fields.password.value;
+      const email = sanitizeInput(fields.email.value);
+      const password = sanitizeInput(fields.password.value);
       const sess = getPhpSession();
       const res = await post('/cart/login', {email, password, sess});
       modal.close();

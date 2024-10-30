@@ -99,13 +99,7 @@ class YaAuthService
 
     public function userData()
     {
-        if ($this->info) {
-            header("Location:/");
-            exit;
-        }
-
         return $this->info;
-
     }
 
 }

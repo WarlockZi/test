@@ -8,8 +8,12 @@ RewriteBase /
 #ErrorDocument 404 /public/404.html
 
 
+RewriteCond %{REQUEST_URI} !robots.txt
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 
-RewriteRule ^(category/)(.*)?$ catalog$2 [R=301,l]
+RewriteRule ^(category/)(.*)?$ catalog/$2 [R=301,l]
 
 RewriteCond %{REQUEST_URI} ^(.*)/?$ [NC]
 RewriteCond %{REQUEST_URI} !^[^/]$

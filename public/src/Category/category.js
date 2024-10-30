@@ -1,5 +1,6 @@
 import {ael, qa, qs} from '../constants';
 import shippableTable from "../share/shippable/shippableUnitsTable";
+import MyQuill from "../components/quill/MyQuill.js";
 // import Card_panel from "../share/card_panel/card_panel";
 
 export default class Category {
@@ -8,7 +9,8 @@ export default class Category {
       if (!this.category) return false;
       this.setCardPanel()
       this.mapShippableTables()
-      // this.cardPanel = new Card_panel()
+
+      new MyQuill('#seo_article');
       this.category[ael]('click', this.handleClick.bind(this))
 
    }

@@ -74,11 +74,6 @@ class Auth
         return self::$user && self::$user->can(['role_admin']);
     }
 
-    public static function isAuthed(): bool
-    {
-        return !!self::getUser();
-    }
-
     public static function authorize(Route $route): void
     {
         $user = self::getUser();
@@ -92,6 +87,10 @@ class Auth
         }
         define('SU', $user->mail() === $_ENV['SU_EMAIL']);
     }
+//    public static function isAuthed(): bool
+//    {
+//        return !!self::getUser();
+//    }
 
 }
 

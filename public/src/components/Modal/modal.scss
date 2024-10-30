@@ -70,9 +70,10 @@
       flex-direction: column;
 
       .input-container {
-        display: flex;
-        height: 50px;
         position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 50px;
         width: 100%;
         margin: 20px 0;
 
@@ -82,44 +83,36 @@
           border: 0;
           color: #eee;
           font-size: 18px;
-          height: 100%;
+          min-height: 50px;
           outline: 0;
           padding: 4px 20px 0;
           width: 100%;
           caret-color: rgb(255, 255, 255);
-
-          //&:-webkit-autofill:selected{
-          //  background-color: #303245 !important;
-          //}
+          margin-bottom: 10px;
 
           &:-webkit-autofill,
           &:-webkit-autofill:hover,
           &:-webkit-autofill:focus,
-          //&:-webkit-autofill:selected,
           &:-webkit-autofill:active{
             -webkit-box-shadow:0 0 0 1000px #303245 inset !important; ;
             transition: background-color 5000s ease-in-out 0s;
             -webkit-text-fill-color: #eee !important;
           }
 
-          &:not(:placeholder-shown):not(:focus):invalid {
-            border: 1px solid #dc2f55;
-          }
+          //&:not(:placeholder-shown):not(:focus):invalid {
+          //  border: 1px solid #dc2f55;
+          //}
 
-          &:not(:placeholder-shown):not(:focus):valid {
-            border: 1px solid #2fdcdb;
-          }
+          //&:not(:placeholder-shown):not(:focus):valid {
+          //  border: 1px solid #2fdcdb;
+          //}
 
-          &:not(:placeholder-shown):not(:focus):invalid ~ label  {
-            color: #dc2f55;
-          }
-
-          &:not(:placeholder-shown):not(:focus):valid ~ label {
-            color: #2fdcdb;
-          }
-
-          //&:focus:invalid ~ label {
+          //&:not(:placeholder-shown):not(:focus):invalid ~ label  {
           //  color: #dc2f55;
+          //}
+
+          //&:not(:placeholder-shown):not(:focus):valid ~ label {
+          //  color: #2fdcdb;
           //}
 
           &:focus ~ .badge,
@@ -160,6 +153,10 @@
           transition: transform 200ms, color 200ms;
           top: 20px;
           padding-left: 5px;
+        }
+        #emailError{
+          align-self: start;
+          color: brown;
         }
       }
     }

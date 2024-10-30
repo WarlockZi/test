@@ -3,6 +3,7 @@ import './category.scss'
 import PropertyTable from "./PropertyTable";
 import {$, post} from "../../common.js";
 import SelectNew from "../../components/select/SelectNew";
+import MyQuill from "../../components/quill/MyQuill.js";
 
 
 export default class Category {
@@ -14,6 +15,7 @@ export default class Category {
       this.setShowOnFrontPage()
       this.setProperties()
       this.setImage()
+      new MyQuill('#seo_article', true,true,true);
    }
 
    setCategoryId() {

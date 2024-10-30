@@ -4,7 +4,6 @@ namespace app\model;
 
 
 use app\Services\ProductImageService;
-use app\Services\SlugService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -37,27 +36,50 @@ class Product extends Model
     protected $casts = [
         'art' => 'string',
     ];
-    protected $appends = ['price', 'mainImage','shortLink'];
+    protected $appends = ['price', 'mainImage', 'shortLink'];
 
     public function ownProperties()
     {
         return $this->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
     }
 
-    public function scopeWithWhereHas($query, $relation, $constraint){
+
+
+    public function seo_h1()
+    {
+        return $this->ownProperties->seo_h1 ?? $this->name;
+    }
+    public function seo_article()
+    {
+        return $this->ownProperties->seo_article ?? $this->ownProperties->seo_description??'Описание товара отстутствует';
+    }
+
+    public function seo_title()
+    {
+        return $this->ownProperties->seo_title ?? $this->name . " - купить в Вологде оптом выгодно - VITEX";
+    }
+
+    public function seo_description()
+    {
+        return $this->ownProperties->seo_description ?? $this->name . " Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
+    }
+
+    public function scopeWithWhereHas($query, $relation, $constraint)
+    {
         return $query->whereHas($relation, $constraint)
             ->with([$relation => $constraint]);
     }
+
     protected function getShortLinkAttribute(): string
     {
-        $link = $this->ownProperties->short_link??'';
+        $link = $this->ownProperties->short_link ?? '';
 //        if (!$link) {
 //            $link = ShortlinkService::getValidShortLink();
 //            $this->short_link = $link;
 //            $this->save();
 //        }
         $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
-        $host = $_SERVER['HTTP_HOST'] ?? '';
+        $host   = $_SERVER['HTTP_HOST'] ?? '';
         return "{$scheme}://{$host}/short/{$link}";
     }
 
@@ -81,7 +103,7 @@ class Product extends Model
 
     public function getPriceAttribute()
     {
-        return $this->priceRelation()->first()->price??null;
+        return $this->priceRelation()->first()->price ?? null;
     }
 
     public function getFormattedPriceAttribute()
@@ -89,29 +111,29 @@ class Product extends Model
         return number_format($this->price, 2, '.', ' ');
     }
 
-    public function priceRelation():HasOne
+    public function priceRelation(): HasOne
     {
         return $this->hasOne(Price::class, '1s_id', '1s_id');
     }
 
     protected function getUnitsTableAttribute()
     {
-        $arr = [];
-        $units = $this->units;
+        $arr      = [];
+        $units    = $this->units;
         $baseUnit = $this->baseUnit->name;
         foreach ($units as $unit) {
-            $price = number_format((float)$this->price, 2, '.', ' ');
-            $formatted_sum = number_format((float)$this->price * $unit->pivot->multiplier, 2, '.', ' ');
-            $pivot = $unit->pivot;
-            $sid = $pivot->product_1s_id;
-            $arr[$sid]['price'] = (float)$this->price;
-            $arr[$sid]['currency'] = '₽';
-            $arr[$sid]['1s_id'] = $sid;
-            $arr[$sid]['name'] = $unit->name;
-            $arr[$sid]['base_unit_name'] = $baseUnit;
-            $arr[$sid]['multiplier'] = $unit->pivot->multiplier;
+            $price                        = number_format((float)$this->price, 2, '.', ' ');
+            $formatted_sum                = number_format((float)$this->price * $unit->pivot->multiplier, 2, '.', ' ');
+            $pivot                        = $unit->pivot;
+            $sid                          = $pivot->product_1s_id;
+            $arr[$sid]['price']           = (float)$this->price;
+            $arr[$sid]['currency']        = '₽';
+            $arr[$sid]['1s_id']           = $sid;
+            $arr[$sid]['name']            = $unit->name;
+            $arr[$sid]['base_unit_name']  = $baseUnit;
+            $arr[$sid]['multiplier']      = $unit->pivot->multiplier;
             $arr[$sid]['formatted_price'] = $price;
-            $arr[$sid]['formatted_sum'] = $formatted_sum;
+            $arr[$sid]['formatted_sum']   = $formatted_sum;
         }
         return $arr;
     }
@@ -119,17 +141,17 @@ class Product extends Model
     protected function getBaseUnitPriceAttribute()
     {
         $baseUnit = $this->baseUnit;
-        $price = number_format((float)$this->price, 2, '.', ' ');
+        $price    = number_format((float)$this->price, 2, '.', ' ');
         return "{$price} ₽ / {$baseUnit->name}";
     }
 
     protected function priceWithCurrncyUnitPromotion(float $number, string $currency, string $oldPrice)
     {
         $promos = $this->promotions;
-        $str = '';
+        $str    = '';
         foreach ($promos as $promo) {
             $newPrice = "{$promo->new_price} ";
-            $str .= "{$newPrice} <span class='old-price'>{$oldPrice}</span> {$currency} / {$this->baseUnit->name}";
+            $str      .= "{$newPrice} <span class='old-price'>{$oldPrice}</span> {$currency} / {$this->baseUnit->name}";
         }
         return $str;
     }
@@ -146,19 +168,19 @@ class Product extends Model
         return $query->whereHas('mainImages');
     }
 
-    public function orderItems():HasMany
+    public function orderItems(): HasMany
     {
+        $sess = $_SESSION['phpSession']??null;
         $orderItems = $this
             ->hasMany(OrderItem::class, 'product_id', '1s_id')
             ->whereNull('deleted_at')
-            ->where('sess', $_SESSION['phpSession'])//            ->get()
+            ->where('sess', $sess)
         ;
 //        $oI = $orderItems->toArray();
-
         return $orderItems;
     }
 
-    public function orders():HasMany
+    public function orders(): HasMany
     {
         $orders = $this
             ->hasMany(Order::class, 'product_id', '1s_id')

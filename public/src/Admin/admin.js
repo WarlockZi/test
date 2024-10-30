@@ -24,6 +24,12 @@ import '../components/footer/footer.scss'
 
 $(document).ready(async function () {
 
+   const cardPanel = document[qs](`.card-panel`)
+   if (cardPanel) {
+      const {default: Card_panel} = await import("./../share/card_panel/card_panel")
+      new Card_panel()
+   }
+
    adminScroll()
    const admin = window.location.pathname.includes('adminsc')
    if (!admin) return false
@@ -52,11 +58,6 @@ $(document).ready(async function () {
       const {default: CatalogItem} = await import('./components/catalog-item/catalog-item.js')
       new CatalogItem(catalogItem)
    }
-   // const customCatalogItem = $('.item-wrap')[0];
-   // if (customCatalogItem){
-   //    new CatalogItem(customCatalogItem)
-   // }
-
 
    if (document[qs]('.order-edit')) {
       const {default: Order} = await import('./Order/order.js')
@@ -83,30 +84,6 @@ $(document).ready(async function () {
    if (chart){
       const {default: MyChart} = await import('./chartjs/chartjs.js')
    }
-
-   // const settings = window.location.pathname ==='/adminsc/settings'
-   // if (settings)   {
-   //    const {default:Settings} = await import('./Settings/settings.js')
-   // }
-
-
-   // tooltips();
-
-
-   // const property = document[qs](`.properties[custom-table]`)
-   // if (property) {
-   //    const {default: Property} = await import('./Property/Property.js')
-   //    new Property(property)
-   // }
-   // multiselect();
-   // radio();
-   // morph();
-   // new MyQuill('#detail-text');
-   // testEdit();
-
-
-
-
 });
 
 

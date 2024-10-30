@@ -1,7 +1,7 @@
 <? use app\core\Icon;
-use \app\view\share\shippable\ShippableUnitsTableFactory;
+use app\view\share\shippable\ShippableUnitsTableFactory;
 
-$authed = \app\core\Auth::isAuthed();
+$authed = \app\core\Auth::getUser();
 ?>
 <div class="cart">
 
@@ -9,7 +9,7 @@ $authed = \app\core\Auth::isAuthed();
 
         <div class="page-name">Корзина</div>
 
-<!--        --><?php //include 'counter.php' ?>
+        <!--        --><?php //include 'counter.php' ?>
 
         <div class="table" data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
 
@@ -43,16 +43,15 @@ $authed = \app\core\Auth::isAuthed();
                 <span></span>&nbsp;&nbsp;₽
             </div>
 
-            <?php if (!$authed && !$lead): ?>
+<!--            --><?php //if (!$authed && !$lead): ?>
+
+
                 <div class="buttons">
                     <div class="button" id="cartLead">Оставить свои данные</div>
                     <div class="button" id="cartLogin">Войти</div>
-                </div>
-            <?php else: ?>
-                <div class="buttons">
                     <div class="button" id="cartSuccess">Оформить заказ</div>
                 </div>
-            <?php endif; ?>
+<!--            --><?php //endif; ?>
 
         </div>
 
