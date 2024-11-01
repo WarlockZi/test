@@ -16,7 +16,7 @@ use app\core\Icon;
     <meta name="yandex-verification" content="127ee751f73e25e0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
+    <link rel="icon" href="../../../pic/srvc/logo-square.svg" type="image/svg+xml">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
