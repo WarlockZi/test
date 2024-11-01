@@ -85,10 +85,11 @@ export default defineConfig(async ({command, mode}) => {
       // https://vuejs.org/guide/scaling-up/tooling.html#note-on-in-browser-template-compilation
       resolve: {
          alias: {
-            '@pic': `${path.resolve(__dirname, 'pic')}/`,
-            '@main': `${path.resolve(__dirname, 'pic','srvc','main')}/`,
+            // '@pic': `${path.resolve(__dirname, 'pic')}/`,
+            // '@main': `${path.resolve(__dirname, 'pic','srvc','main')}/`,
             '@icons': `${path.resolve(__dirname, 'pic', 'icons')}/`,
-            '@fonts': path.resolve(__dirname, 'pic', 'fonts')
+            '@fonts': path.resolve(__dirname, 'pic', 'fonts'),
+            '@ss': `${path.resolve(__dirname, 'public', 'src','font')}/`
             // vue: 'vue/dist/vue.esm-bundler.js'
          }
       }

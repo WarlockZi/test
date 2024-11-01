@@ -1,6 +1,5 @@
 import {$, createElement, post} from '../../common'
 import WDSSelect from "../../components/select/WDSSelect";
-import cartLogin from "../../components/Modal/modals/CartLogin";
 
 export default class Property {
   constructor(selectSelector) {

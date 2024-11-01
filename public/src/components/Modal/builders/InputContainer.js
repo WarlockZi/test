@@ -18,13 +18,18 @@ export default class InputContainer {
          _errorEl,
       } = settings;
 
-      this.container = document.createElement('div');
-      this.container.classList.add('input-container');
+      this.container = (new createElement).tag('div').attr('class', 'input-container').get();
 
       this.input = document.createElement('input');
       if (_onKeyUp) this.input.addEventListener('keyup', _onKeyUp.bind(this));
       if (_onInput) this.input.addEventListener('input', _onInput.bind(this));
-      if (_type) this.input.type = _type;
+      if (_type) {
+         this.input.type = _type;
+         if (_type === 'password') {
+            this.showPass()
+         }
+
+      }
       this.input.placeholder = ' ';
       if (_className) this.input.classList.add(_className);
       if (_hidden) this.input.hidden = _hidden;
@@ -35,12 +40,10 @@ export default class InputContainer {
       if (_pattern) this.input.pattern = _pattern;
       this.input.id = _id;
 
-      this.labelBadge = document.createElement('div');
-      this.labelBadge.classList.add('badge');
+      this.labelBadge = (new createElement).tag('div').attr('class', 'badge').get();
       this.labelBadge.style.width = _badgeWidth;
 
-      this.label = document.createElement('label');
-      this.label.innerText = _placeholder;
+      this.label = (new createElement).tag('label').text(_placeholder).get();
       this.label.htmlFor = _id;
 
       this.container.append(this.input);
@@ -63,4 +66,15 @@ export default class InputContainer {
 
       return this.container
    }
+
+   showPass() {
+      const showPass = (new createElement).tag('span').attr('class', 'password-control').get()
+      showPass.addEventListener('click', function ({target}) {
+         target.parentNode.querySelector('input').type = target.parentNode.querySelector('input').type === 'password' ? 'text' : 'password'
+         target.classList.toggle('view')
+      });
+      this.container.append(showPass)
+   }
+
+
 }

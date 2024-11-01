@@ -1354,37 +1354,34 @@ $border-color:var.$color-main
 }
 
 @mixin h1 {
-  font-size: 1.3rem;
+  font-size: 2rem;
   font-weight: 600;
   color: var.$color-grey-logo;
   margin: 0 0 25px;
 }
 
 @mixin h2 {
-  font-size: 1.0rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: var.$color-grey-logo;
   margin: 0 0 15px;
 }
 
 @mixin h3 {
-  font-size: 0.8rem;
+  font-size: 1.17rem;
   font-weight: 600;
   color: var.$color-grey-logo;
-  margin: 0;
-  margin-bottom: 15px;
+  margin: 0 0 15px;
 }
 
 @mixin h4 {
-  font-size: 0.6rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var.$color-grey-logo;
-  margin: 0;
-  margin-bottom: 15px;
+  margin: 0 0 15px;
 }
 
 
 .page-name {
-  margin: 0 0 15px 0;
-  @include h2;
+  @include h1;
 }

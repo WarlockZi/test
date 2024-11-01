@@ -6,25 +6,19 @@ export default class cartLogin extends Cart {
    constructor() {
       super();
       this.title = 'Вход';
-      this.submitText = 'Войти';
-      this.setFields();
-      // this.setFooter();
-   }
-
-   setFields() {
-
-      const email = (new FieldBuilder)
+      this.fields.push((new FieldBuilder)
          .id('email')
          .required()
          .name('email')
-         .type('text')
+         .type('text') //not email as in transforms cyrillic to punicode
          .onInput(this.onInputEmail.bind(this))
          .errorEl('#emailError')
          .badgeWidth('55px')
          .placeholder('email')
-         .get();
+         .get()
+      );
 
-      const password = (new FieldBuilder)
+      this.fields.push((new FieldBuilder)
          .id('password')
          .required()
          .name('password')
@@ -32,10 +26,12 @@ export default class cartLogin extends Cart {
          // .autocomplete()
          .badgeWidth('65px')
          .placeholder('пароль')
-         .get();
+         .get()
+      );
+      this.submitText = 'Войти';
 
-      this.fields = {email, password}
    }
+
 
    onInputEmail({target}) {
       const email = target.value

@@ -7,7 +7,7 @@ $authed = \app\core\Auth::getUser();
 
     <div class="<?= $products->count() ? '' : 'none'; ?> content">
 
-        <div class="page-name">Корзина</div>
+        <h1 class="page-name">Корзина</h1>
 
         <!--        --><?php //include 'counter.php' ?>
 
@@ -43,15 +43,15 @@ $authed = \app\core\Auth::getUser();
                 <span></span>&nbsp;&nbsp;₽
             </div>
 
-<!--            --><?php //if (!$authed && !$lead): ?>
-
-
-                <div class="buttons">
-                    <div class="button" id="cartLead">Оставить свои данные</div>
-                    <div class="button" id="cartLogin">Войти</div>
+            <div class="buttons">
+                <?php if (!$authed && !$lead): ?>
                     <div class="button" id="cartSuccess">Оформить заказ</div>
-                </div>
-<!--            --><?php //endif; ?>
+                <? else: ?>
+                    <!--                    <div class="button" id="cartLead">Оставить свои данные</div>-->
+                    <!--                    <div class="button" id="cartLogin">Войти</div>-->
+                    <div class="button" id="cartLogin">Оформить заказ</div>
+                <?php endif; ?>
+            </div>
 
         </div>
 

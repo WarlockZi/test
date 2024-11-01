@@ -278,11 +278,12 @@
     flex: 1;
     background-color: rgba(#2275ff, 0);
     color: #fff;
-    font: 600 12px/14px intro, "Proxima Nova", sans-serif;
+    font-weight: 600;
+    line-height: 14px;
+    font-size: 14px;
     text-align: center;
     padding: 5px;
     letter-spacing: 1px;
-    line-height: 14px;
     cursor: pointer;
 
     @include mixin_media.m800 {
@@ -345,7 +346,8 @@
         a {
           flex: 1 0 auto;
           text-align: start;
-          font: 600 11px/16px 'Proxima Nova', sans-serif;
+          font-weight: 600;
+          line-height: 16px;
           color: var.$color-gray-mid;
           padding: 5px;
           letter-spacing: 0;

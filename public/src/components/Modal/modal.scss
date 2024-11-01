@@ -1,6 +1,10 @@
 @use "../../var";
+@use "../../mixin_media";
+@use "@ss/Sagoe";
+@use "@ss/Montserrat";
+@use "@ss/Roboto";
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
+//@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
 
 .modal-wrapper {
   box-sizing: border-box;
@@ -26,9 +30,10 @@
 
   .modal-box {
     position: fixed;
-    width: 400px;
-    padding: 5%;
-    transform: translate(-50%, -50%) scale(.5);
+    width: clamp(200px, 100vw, 400px);
+    padding-block: 30px;
+    padding-inline: clamp(10px, 15px, 20px);
+    transform: translate(-50%, -50%) scale(0.5);
     top: 50%;
     left: 50%;
     border-radius: 20px;
@@ -36,10 +41,13 @@
     box-shadow: 0 2px 16px rgba(80, 80, 80, 0.9);
     background: #15172b;
     color: #eee;
+    box-sizing: border-box;
 
     .title {
-      margin-bottom: 20px;
-      font-size: 20px;
+      @include mixin_media.h2;
+      color: #fff;
+      margin-bottom: 40px;
+      //font-size: 20px;
     }
 
     .modal-close {
@@ -75,10 +83,10 @@
         flex-direction: column;
         min-height: 50px;
         width: 100%;
-        margin: 20px 0;
+        margin: 0 0 20px 0;
 
         input {
-          background-color: #303245;
+          //flex: 1;
           border-radius: 12px;
           border: 0;
           color: #eee;
@@ -86,15 +94,16 @@
           min-height: 50px;
           outline: 0;
           padding: 4px 20px 0;
-          width: 100%;
+          //width: 100%;
+          background-color: #303245;
           caret-color: rgb(255, 255, 255);
           margin-bottom: 10px;
 
           &:-webkit-autofill,
           &:-webkit-autofill:hover,
           &:-webkit-autofill:focus,
-          &:-webkit-autofill:active{
-            -webkit-box-shadow:0 0 0 1000px #303245 inset !important; ;
+          &:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 1000px #303245 inset !important;;
             transition: background-color 5000s ease-in-out 0s;
             -webkit-text-fill-color: #eee !important;
           }
@@ -154,7 +163,8 @@
           top: 20px;
           padding-left: 5px;
         }
-        #emailError{
+
+        #emailError {
           align-self: start;
           color: brown;
         }
@@ -166,6 +176,22 @@
       display: flex;
       align-items: center;
       font-size: 12px;
+    }
+
+    .footer {
+      #submit {
+        padding: 17px 30px;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+        text-transform: uppercase;
+        color: white;
+        background-color: var.$color-main;
+
+        &:hover {
+          background-color: var.$color-main-hover;
+        }
+      }
     }
 
   }
@@ -185,18 +211,5 @@
     transform: translate(-50%, -50%) scale(0.5);
   }
 
-  #submit {
-    padding: 15px 30px 15px 30px;
-    margin: 10px 0;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-    text-transform: uppercase;
-    color: white;
-    background-color: var.$color-main;
 
-    &:hover {
-      background-color: var.$color-main-hover;
-    }
-  }
 }
