@@ -59,7 +59,6 @@ export default class Cart {
          })
    }
 
-
    async dropCart() {
       const cartToken = getPhpSession();
       const res = await post('/cart/drop', {cartToken});
@@ -137,7 +136,8 @@ export default class Cart {
 
    setModals() {
       const lead = document[qs]('#cartLead')
-      const login = document[qs]('#cartLogin')
+      // const login = document[qs]('#cartLogin')
+      const login = document[qs]('.guest-menu')
       const success = document[qs]('#cartSuccess')
       if (lead) {
          new Modal({
@@ -163,20 +163,6 @@ export default class Cart {
       }
    }
 
-   async modalLeadCallback(fields, modal) {
-      const name = sanitizeInput(fields.name.value);
-      const phone = sanitizeInput(fields.phone.value);
-      const company = sanitizeInput(fields.company.value);
-      const sess = getPhpSession();
-      const res = await post('/cart/lead', {name, phone, company, sess});
-      modal.close();
-      if (res) {
-         location.reload()
-      }
-   }
-
-// <script>alert('dd');</sctipt>
-
    async modalcartSuccessCallback(inputs, modal) {
       modal.close()
    }
@@ -196,5 +182,17 @@ export default class Cart {
       cookieRemove('cartDeadline')
       this.dropCart().then()
    }
+   // async modalLeadCallback(fields, modal) {
+   //    const name = sanitizeInput(fields.name.value);
+   //    const phone = sanitizeInput(fields.phone.value);
+   //    const company = sanitizeInput(fields.company.value);
+   //    const sess = getPhpSession();
+   //    const res = await post('/cart/lead', {name, phone, company, sess});
+   //    modal.close();
+   //    if (res) {
+   //       location.reload()
+   //    }
+   // }
 
+// <script>alert('dd');</sctipt>
 }

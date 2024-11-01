@@ -4,9 +4,6 @@ export default class FieldBuilder {
   constructor() {
     this._type = 'text';
     this._required = false;
-    this._badgeWidth = '50px';
-    this._id = 'name';
-    this._placeholder = 'email';
     this._autocomplete = false
   }
 
