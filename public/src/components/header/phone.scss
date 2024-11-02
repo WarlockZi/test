@@ -30,6 +30,7 @@
 
   .email{
     @include mixin_media.h4;
+    margin: 0;
   }
 
   & > a {
