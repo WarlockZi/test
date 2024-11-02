@@ -12,21 +12,6 @@ class TreeOptionsBuilder extends TreeBuilder
         return new self($collection, $relation, $multiply, $tab);
     }
 
-//    protected function flatten(array $array): array
-//    {
-//        $arr = array();
-//        $id  = '';
-//        array_walk_recursive($array, function ($k, $v) use (&$arr, &$id) {
-//            if ($v === 'id') {
-//                $arr[$k] = $k;
-//                $id      = $k;
-//            } elseif ($v === 'name') {
-//                $arr[$id] = $k;
-//            }
-//        });
-//        return $arr;
-//    }
-
     protected function isExcluded(int $id)
     {
         if (is_array($this->excluded)) {
@@ -62,6 +47,19 @@ class TreeOptionsBuilder extends TreeBuilder
             "<option value='{$initialOptionValue}'>{$initialOptionLabel}</option>";
         return $this;
     }
-
+//    protected function flatten(array $array): array
+//    {
+//        $arr = array();
+//        $id  = '';
+//        array_walk_recursive($array, function ($k, $v) use (&$arr, &$id) {
+//            if ($v === 'id') {
+//                $arr[$k] = $k;
+//                $id      = $k;
+//            } elseif ($v === 'name') {
+//                $arr[$id] = $k;
+//            }
+//        });
+//        return $arr;
+//    }
 
 }

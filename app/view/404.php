@@ -9,7 +9,7 @@ if (DEV) {
 }
 
 ?>
-<main class="not-found">
+<div class="not-found">
 
     <div class="not-found_header">
 
@@ -19,18 +19,6 @@ if (DEV) {
         </div>
     </div>
 
-    <? if (isset($similarProducts)): ?>
-
-        <div class="similar-products">
-            <h2 class="similar-products__header">Похожие товары</h2>
-            <div class="product-wrap">
-                <? foreach ($similarProducts as $product): ?>
-                    <?php include ROOT . '/app/view/Category/product_card.php' ?>
-                <? endforeach ?>
-            </div>
-
-        </div>
-    <? endif; ?>
 
     <div class="not-found_wrap">
         <div class="not-found_container">
@@ -43,5 +31,18 @@ if (DEV) {
         </div>
     </div>
 
+</div>
 
-</main>
+<? if (isset($similarProducts)): ?>
+
+    <div class="similar-products">
+        <h2 class="similar-products__header">Похожие товары</h2>
+        <div class="product-wrap">
+            <? foreach ($similarProducts as $product): ?>
+                <?php include ROOT . '/app/view/Category/product_card.php' ?>
+            <? endforeach ?>
+        </div>
+
+    </div>
+<? endif; ?>
+

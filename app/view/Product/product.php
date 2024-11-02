@@ -23,7 +23,7 @@ if ($product): ?>
         <div class="info-wrap">
             <div class="info-tag">Информация о товаре</div>
             <div class="properties">
-                <h1><?=$product->seo_h1()?></h1>
+                <h2><?=$product->seo_h1()?></h2>
 
                 <div id="seo-article"><?=$product->seo_article()?></div>
 
