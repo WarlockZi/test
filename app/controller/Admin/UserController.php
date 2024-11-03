@@ -9,7 +9,7 @@ use app\model\User;
 use app\view\User\UserView;
 
 
-class UserController extends AppController
+class UserController extends AdminscController
 {
 	public string $model = User::class;
 	public $modelName = 'user';

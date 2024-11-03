@@ -7,7 +7,7 @@ use app\core\Response;
 use app\model\Promotion;
 use app\view\Promotion\PromotionFormView;
 
-class PromotionController Extends AppController
+class PromotionController Extends AdminscController
 {
 	public string $model = Promotion::class;
 

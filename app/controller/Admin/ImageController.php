@@ -8,7 +8,7 @@ use app\model\Image;
 use app\Repository\ImageRepository;
 use app\view\Image\ImageView;
 
-class ImageController Extends AppController
+class ImageController Extends AdminscController
 {
 	public string $model = Image::class;
 

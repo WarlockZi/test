@@ -8,25 +8,35 @@
 
             <ul class="utils">
 
-                <a href="/catalog" class="util-item catalog" title="Каталог">
-                    <?= Icon::catalog() ?>
-                </a>
+                <li>
+                    <a href="/catalog" class="util-item catalog" title="Каталог">
+                        <?= Icon::catalog() ?>
+                    </a>
+                </li>
+
+                <li>
+                    <button class="util-item search" title="Поиск">
+                        <?= Icon::search('feather'); ?>
+                    </button>
+                </li>
 
 
-                <button class="util-item search" title="Поиск">
-                    <?= Icon::search('feather'); ?>
-                </button>
+                <li>
+                    <a href="/cart" class="util-item cart" title="Корзина">
+                        <div class="count<?= $oItems->count() ? ' show' : ''; ?>"><?= $oItems->count(); ?></div>
+                        <?= Icon::shoppingCart('feather') ?>
+                    </a>
+                </li>
 
-                <a href="/cart" class="util-item cart" title="Корзина">
-                    <div class="count<?= $oItems->count() ? ' show' : ''; ?>"><?= $oItems->count(); ?></div>
-                    <?= Icon::shoppingCart('feather') ?>
-                </a>
+                <li>
+                    <a href="/promotion" class="util-item promotions" title="Акции">
+                        <?= Icon::promotions() ?>
+                    </a>
+                </li>
 
-                <a href="/promotion" class="util-item promotions" title="Акции">
-                    <?= Icon::promotions() ?>
-                </a>
-
-                <? include 'mobileMenu.php' ?>
+                <li>
+                    <? include 'mobileMenu.php' ?>
+                </li>
             </ul>
 
         </div>

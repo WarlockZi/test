@@ -5,7 +5,7 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\model\Answer;
 
-class RequestController Extends AppController
+class RequestController Extends AdminscController
 {
 	protected string $model = Answer::class;
 

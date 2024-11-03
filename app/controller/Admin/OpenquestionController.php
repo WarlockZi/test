@@ -9,7 +9,7 @@ use app\core\Router;
 use app\model\Opentest;
 
 
-class OpenquestionController Extends AppController
+class OpenquestionController Extends AdminscController
 {
   public function __construct()
   {

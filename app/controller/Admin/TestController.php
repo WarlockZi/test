@@ -10,7 +10,7 @@ use app\view\Test\TestView;
 use app\view\View;
 
 
-class TestController extends AppController
+class TestController extends AdminscController
 {
    private TestView $testView;
    private TestRepository $repository;

@@ -9,7 +9,7 @@ use app\Services\Filters\ProductFilterService;
 use app\view\Report\Admin\ReportView;
 
 
-class ReportController extends AppController
+class ReportController extends AdminscController
 {
     private ReportRepository $repo;
     private ReportView $formView;

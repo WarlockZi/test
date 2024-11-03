@@ -10,7 +10,7 @@ use app\Services\Sync\TrancateService;
 use Illuminate\Support\Carbon;
 use Throwable;
 
-class SyncController extends AppController
+class SyncController extends AdminscController
 {
     public function __construct(
         protected SyncService     $service = new SyncService(),

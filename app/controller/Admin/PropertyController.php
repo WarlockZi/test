@@ -9,7 +9,7 @@ use app\model\Property;
 use app\view\Property\PropertyView;
 
 
-class PropertyController Extends AppController
+class PropertyController Extends AdminscController
 {
 	public string $model = Property::class;
     public function __construct()

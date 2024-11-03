@@ -6,7 +6,7 @@ use app\controller\AppController;
 use app\model\manufacturer;
 use app\view\manufacturer\manufacturerView;
 
-class ManufacturerController Extends AppController
+class ManufacturerController Extends AdminscController
 {
 	public string $model = manufacturer::class;
 

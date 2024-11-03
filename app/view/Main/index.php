@@ -50,29 +50,26 @@ use app\core\Icon;
 
 			<div class="advantage__card assortiment">
 				<?= Icon::checkSquare('feather'); ?>
-				Ассортимент
-
+				<h3>Ассортимент</h3>
 				<p>Легко сориентироваться. Ничего лишнего.</p>
-
 			</div>
 
 			<div class="advantage__card delivery">
 				<?= Icon::truck('feather'); ?>
-				Доставка
+				<h3>Доставка</h3>
 				<p>Согласуем с Вами сроки поставки.</p>
 
 			</div>
 
 			<div class="advantage__card result">
 				<?= Icon::package('feather'); ?>
-
-				Наличие
+				<h3>Наличие</h3>
 				<p>Обеспечиваем достаточное количество товара на складе.</p>
 			</div>
 
 			<div class="advantage__card certificates">
 				<?= Icon::layers('feather'); ?>
-				Сертификаты
+				<h3>Сертификаты</h3>
 				<p>Предоставляем сертификаты по запросу.</p>
 			</div>
 		</div>

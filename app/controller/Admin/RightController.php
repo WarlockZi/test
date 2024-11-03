@@ -11,7 +11,7 @@ use app\view\Right\RightView;
 
 
 
-class RightController Extends AppController
+class RightController Extends AdminscController
 {
 	public string $model = Right::class;
 	public $modelName = 'right';
