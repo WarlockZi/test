@@ -8,7 +8,7 @@ use app\controller\AppController;
 use app\model\Tag;
 use app\view\Tag\TagView;
 
-class TagController extends AppController
+class TagController extends AdminscController
 {
 
 	public string $model = Tag::class;

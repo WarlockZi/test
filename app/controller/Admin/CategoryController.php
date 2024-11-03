@@ -8,7 +8,7 @@ use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
 use app\view\Category\CategoryFormView;
 
-class CategoryController extends AppController
+class CategoryController extends AdminscController
 {
     public string $model = Category::class;
 

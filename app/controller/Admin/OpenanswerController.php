@@ -8,7 +8,7 @@ use app\core\Response;
 use app\model\Openanswer;
 
 
-class OpenanswerController Extends AppController
+class OpenanswerController Extends AdminscController
 {
 	private $model = Openanswer::class;
 	private $table = 'openanswers';

@@ -9,7 +9,7 @@ use app\model\User;
 use app\view\View;
 
 
-class CrmController extends AppController
+class CrmController extends AdminscController
 {
 
 	public function __construct()

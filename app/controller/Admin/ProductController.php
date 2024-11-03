@@ -13,7 +13,7 @@ use app\Services\ProductService;
 use app\view\Product\Admin\ProductFormView;
 
 
-class ProductController extends AppController
+class ProductController extends AdminscController
 {
     protected string $model = Product::class;
 

@@ -171,42 +171,40 @@
     top: 0;
     min-height: 40px;
     display: flex;
-  }
 
-  .header-catalog-menu__wrap {
-    display: flex;
-    position: relative;
+    .header-catalog-menu__wrap {
+      display: flex;
+      position: relative;
 
-    .show-front-a {
-      position: absolute;
+      .show-front-a {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        color: white;
+      }
+
+      max-width: 1310px;
       width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      color: white;
+      margin: 0 auto;
+      justify-content: end;
+      @include mobile-menu.mobile-menu();
     }
-
-    max-width: 1310px;
-    width: 100%;
-    margin: 0 auto;
-    justify-content: end;
-    @include mobile-menu.mobile-menu();
   }
 
   .utils {
     position: relative;
     display: flex;
-    padding: 0 20px;
     margin: 0;
-    align-items: center;
     justify-content: space-between;
     color: white;
 
     svg {
-      width: 17px;
+      width: clamp(10px, 5vw, 17px);
       height: 17px;
-      padding: 0 15px;
+      padding: 0 clamp(8px, 4vw, 15px);
       fill: transparent;
     }
 
@@ -220,12 +218,6 @@
       border: none;
       padding: 0;
       background-color: inherit;
-    }
-
-    .search,
-    .cart,
-    .promotions,
-    .gamburger {
     }
 
     .util-item {
@@ -243,15 +235,13 @@
     }
 
     .cart {
-      min-height: 50px;
-
       .count {
         display: none;
         position: absolute;
         bottom: 15%;
-        right: 24px;
-        width: 6px;
-        height: 6px;
+        right: -2px;
+        width: clamp(1px, 1vw, 6px);
+        height: clamp(1px, 1vw, 6px);
         color: #ffffff;
         background-color: red;
         border-radius: 50%;
@@ -319,13 +309,15 @@
       cursor: pointer;
       z-index: 2;
 
-      &.level-2{
+      &.level-2 {
         background-color: color.adjust(white, $lightness: -10%);
       }
-      &.level-3{
+
+      &.level-3 {
         background-color: color.adjust(white, $lightness: -20%);
       }
-      .visible{
+
+      .visible {
         overflow: initial;
         height: fit-content;
       }

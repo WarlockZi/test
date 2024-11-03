@@ -10,7 +10,7 @@ use app\Repository\OrderRepository;
 use app\view\Order\OrderView;
 use Carbon\Carbon;
 
-class OrderController extends AppController
+class OrderController extends AdminscController
 {
     protected string $model = Order::class;
 

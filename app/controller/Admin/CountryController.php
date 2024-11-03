@@ -6,7 +6,7 @@ use app\controller\AppController;
 use app\model\Country;
 use app\view\Country\CountryView;
 
-class CountryController Extends AppController
+class CountryController Extends AdminscController
 {
 	public string $model = Country::class;
 

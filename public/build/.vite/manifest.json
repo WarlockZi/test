@@ -196,7 +196,7 @@
     "src": "../../pic/fonts/Sagoe/SegoeUI.woff2"
   },
   "Admin/Category/Category.js": {
-    "file": "assets/Category-C_YXAXOu.js",
+    "file": "assets/Category-CIfZoIjD.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -237,7 +237,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-C1zsV8jb.js",
+    "file": "assets/Product-C8TI6oin.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -262,7 +262,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-5Wz7j439.js",
+    "file": "assets/Props-_1joq5Sw.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -293,14 +293,14 @@
     ]
   },
   "Admin/Test/test-edit.js": {
-    "file": "assets/test-edit-9ony9hjw.js",
+    "file": "assets/test-edit-D9h1-Q8s.js",
     "name": "test-edit",
     "src": "Admin/Test/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_common-Boy4RmlM.js",
-      "_index-DoOvCtdl.js",
+      "_index-BU6ouWPN.js",
       "_constants-Clh-pk9Y.js",
       "_quill.bubble--vF6heEE.js",
       "_Promotion-2rFPK4NU.js",
@@ -312,7 +312,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-otg0x61v.js",
+    "file": "assets/admin-BaiafDCk.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -325,7 +325,7 @@
     ],
     "dynamicImports": [
       "share/card_panel/card_panel.js",
-      "_index-DoOvCtdl.js",
+      "_index-BU6ouWPN.js",
       "Admin/components/AdminSidebar/AdminSidebar.js",
       "Admin/Product/Product.js",
       "Admin/components/catalog-item/catalog-item.js",
@@ -335,7 +335,7 @@
       "Admin/chartjs/chartjs.js"
     ],
     "css": [
-      "assets/admin-BVKnf1Y1.css",
+      "assets/admin-KjBAQJ-I.css",
       "assets/popup-Dv_TwhNX.css"
     ]
   },
@@ -362,7 +362,7 @@
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-B1KffBNp.js",
+    "file": "assets/catalog-item-CdAO6VDs.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
@@ -433,7 +433,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-DggVD1Ob.js",
+    "file": "assets/main-Cwi2nKka.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -450,58 +450,7 @@
       "Cart/cart.js"
     ],
     "css": [
-      "assets/main-BB51y-41.css"
-    ],
-    "assets": [
-      "assets/SegoeUI-ClaH7WPz.eot",
-      "assets/SegoeUI-BG4GjXh8.woff2",
-      "assets/SegoeUI-Dl5ofu1j.woff",
-      "assets/SegoeUI-Di2u0v8b.ttf",
-      "assets/SegoeUI-SemiBold-DMA8_Xdm.eot",
-      "assets/SegoeUI-SemiBold-C8949jYN.woff2",
-      "assets/SegoeUI-SemiBold-DohBUyYc.woff",
-      "assets/SegoeUI-SemiBold-Dz0i8Gm2.ttf",
-      "assets/SegoeUI-Light-BnZtI4oA.eot",
-      "assets/SegoeUI-Light-boaydVX5.woff2",
-      "assets/SegoeUI-Light-DRStLrG9.woff",
-      "assets/SegoeUI-Light-BeQwKuIZ.ttf",
-      "assets/SegoeUI-Bold-DK4b92Kj.eot",
-      "assets/SegoeUI-Bold-cHnf7At2.woff2",
-      "assets/SegoeUI-Bold-BxNAyNVj.woff",
-      "assets/SegoeUI-Bold-CqRx-Wgw.ttf",
-      "assets/Montserrat-Thin-D1xUYMrq.woff2",
-      "assets/Montserrat-Thin-PHtJL9BV.woff",
-      "assets/Montserrat-ThinItalic-W4662FnK.woff2",
-      "assets/Montserrat-ThinItalic-C695WUSM.woff",
-      "assets/Montserrat-ExtraLight-DOYgW3iN.woff2",
-      "assets/Montserrat-ExtraLight-V8MRgcDG.woff",
-      "assets/Montserrat-ExtraLightItalic-D5APANIf.woff2",
-      "assets/Montserrat-ExtraLightItalic-Dq6ra1Cd.woff",
-      "assets/Montserrat-Light-DMNqPbP2.woff2",
-      "assets/Montserrat-Light-DRHVd2pU.woff",
-      "assets/Montserrat-LightItalic-BZr8MUZm.woff2",
-      "assets/Montserrat-LightItalic-CPbd91LM.woff",
-      "assets/Montserrat-Regular-BN6Mfz0M.woff2",
-      "assets/Montserrat-Regular-Vqt_CiU6.woff",
-      "assets/Montserrat-Italic-Bc4-UENN.woff2",
-      "assets/Montserrat-Italic-DonUEn3N.woff",
-      "assets/Montserrat-Medium-Bt0TmzT6.woff2",
-      "assets/Montserrat-Medium-CXViaPTE.woff",
-      "assets/Montserrat-MediumItalic-O6XsabXG.woff2",
-      "assets/Montserrat-MediumItalic-lCfOBi_3.woff",
-      "assets/Montserrat-SemiBold-BRzpPi05.woff2",
-      "assets/Montserrat-SemiBold-CXDnkWC_.woff",
-      "assets/Montserrat-SemiBoldItalic-C1Z3Pl61.woff2",
-      "assets/Montserrat-SemiBoldItalic-DfRX5mDE.woff",
-      "assets/Montserrat-Bold-CS-j1_qt.woff2",
-      "assets/Montserrat-Bold-AjXBcRZK.woff",
-      "assets/Montserrat-BoldItalic-CjS4Mvxa.woff2",
-      "assets/Montserrat-BoldItalic-CrRqSqjw.woff",
-      "assets/Montserrat-ExtraBold-70ZczXHW.woff2",
-      "assets/Montserrat-ExtraBold-BCPMg1QM.woff",
-      "assets/RobotoMedium-kyWEzQDe.woff",
-      "assets/RobotoMedium-BkAVR2hu.ttf",
-      "assets/RobotoMono-DvlFQosn.ttf"
+      "assets/main-BGYqtDoc.css"
     ]
   },
   "Product/Product.js": {
@@ -556,8 +505,8 @@
     "file": "assets/index-CJybINCP.css",
     "src": "_index-!~{005}~.js"
   },
-  "_index-DoOvCtdl.js": {
-    "file": "assets/index-DoOvCtdl.js",
+  "_index-BU6ouWPN.js": {
+    "file": "assets/index-BU6ouWPN.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [

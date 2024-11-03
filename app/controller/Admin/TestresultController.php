@@ -11,7 +11,7 @@ use app\model\TestResult;
 use app\Services\Test\TestDoService;
 
 
-class TestresultController extends AppController
+class TestresultController extends AdminscController
 {
    private TestDoService $service;
    public function __construct()

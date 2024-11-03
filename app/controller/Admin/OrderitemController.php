@@ -13,7 +13,7 @@ use app\view\Order\OrderView;
 use Carbon\Carbon;
 
 
-class OrderitemController extends AppController
+class OrderitemController extends AdminscController
 {
     public function __construct(
         protected OrderView           $orderView = new OrderView(),

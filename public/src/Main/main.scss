@@ -14,9 +14,9 @@
 
 @use "cart";
 
-@use "../font/Sagoe";
-@use "../font/Montserrat";
-@use "../font/Roboto";
+//@use "../font/Sagoe";
+//@use "../font/Montserrat";
+//@use "../font/Roboto";
 
 @keyframes blinking {
   50% {
@@ -29,6 +29,7 @@
     width: 0
   }
 }
+
 .danger {
   color: var.$color-danger;
 }
@@ -66,14 +67,13 @@
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  font-family: "Segoe UI", serif;
 
   .user-content {
     display: flex;
     flex: 1;
     flex-direction: column;
     margin: 0 auto;
-    width: clamp(310px, 80%, 900px);
+    width: clamp(100px, 100%, 900px);
     padding: 127px 0 100px;
     background-color: white;
     min-height: 250px;
@@ -311,14 +311,15 @@
       width: 70%;
       @include mixin_media.m500 {
         width: 100%;
+
       }
 
       .advantages__title {
-        font-size: xx-large;
         font-weight: 600;
         margin: 65px 0;
-        width: 370px;
         color: var.$color-title;
+        font-size: clamp(.9rem, 7vw, 2rem);
+        width: clamp(186px, 77vw, 350px);
       }
 
       .advantage__cards-wrap {
@@ -337,54 +338,53 @@
         box-sizing: border-box;
         font-size: 22px;
         font-weight: 600;
-        height: 300px;
+        height: clamp(160px, 32vw, 300px);
         color: var.$color-title;
+
         @include mixin_media.m600 {
           padding: 17px;
+          box-sizing: border-box;
+          max-width: 100%;
         }
 
-        &.delivery,
-        &.assortiment,
-        &.certificates,
-        &.result {
-
-          svg {
-            position: absolute;
-            top: -77px;
-            right: -2%;
-            width: 138px;
-            height: 208px;
-            filter: blur(3px);
-            stroke: var(--color-main);
-            opacity: 0.3;
-            animation: stagger 3s infinite;
-          }
+        svg {
+          position: absolute;
+          top: -77px;
+          right: -2%;
+          width: clamp(57px, 13vw, 150px);
+          height: 208px;
+          filter: blur(3px);
+          stroke: var(--color-main);
+          opacity: 0.3;
+          animation: stagger 3s infinite;
         }
-      }
 
-      p {
-        font-weight: initial;
-        font-size: 1rem;
+        h3 {
+          font-size: clamp(.3rem, 6vw, 1rem);
+        }
+
+        p {
+          font-weight: initial;
+          font-size: clamp(.3rem, 4vw, 1rem);
+        }
       }
     }
-
-
   }
-
 
   .workflow {
     display: flex;
     flex-flow: column;
     align-items: center;
     justify-content: center;
-    font-size: xx-large;
+    font-size: 2rem;
     font-weight: 600;
     margin-bottom: 65px;
     color: var.$color-title;
 
     .workflow__title {
       margin: 50px 0;
-      width: 280px;
+      font-size: clamp(.9rem, 7vw, 2rem);
+      width: clamp(125px, 60vw, 280px);
     }
 
     .workflow__wrap {

@@ -10,9 +10,13 @@
   line-height: 21px;
   padding: 5px 25px;
   white-space: nowrap;
+  font-size: clamp(.6rem, 5vw, .8rem);
+
+  @include mixin_media.m400 {
+    display: none;
+  }
 
   @include mixin_media.m500 {
-    font-size: .8rem;
     font-weight: bold;
     padding-right: 0;
   }
@@ -21,16 +25,17 @@
     padding: 25px 30px;
     height: auto;
     overflow: visible;
-    @include mixin_media.m500{
+    @include mixin_media.m500 {
       font-size: .8rem;
       right: -80px;
       padding: 10px;
     }
   }
 
-  .email{
+  .email {
     @include mixin_media.h4;
     margin: 0;
+    font-size: clamp(.6rem, 5vw, .8rem);
   }
 
   & > a {
