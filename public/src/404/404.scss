@@ -3,6 +3,16 @@
 @use "./../share/card_panel/card_panel";
 
 
+.similar-products {
+
+  .similar-products__header {
+    font-size: 2rem;
+  }
+
+  @include mixin_media.product-card;
+  @include mixin_media.shippable;
+}
+
 .not-found {
   position: relative;
   font-size: 2.5rem;
@@ -18,15 +28,6 @@
     font-size: 2rem;
   }
 
-  .similar-products {
-
-    .similar-products__header {
-      font-size: 2rem;
-    }
-
-    @include mixin_media.product-card;
-    @include mixin_media.shippable;
-  }
 
   .not-found_header {
     top: 0;
