@@ -1,34 +1,17 @@
 import './main.scss'
 import '../components/header/show-front-menu1.js';
 import '../404/404.scss'
-
-import {ael, qs} from '../constants';
 import '../share/hoist/hoist';
-
 import '../components/animate/animate.js'
+import {ael, qs} from '../constants';
 import scroll from '../share/scroll/scroll.js'
 import headerMenu from '../components/header/show-front-menu.js'
 
+import IntObserver from "../share/scroll/IntObserver.js";
+
 document.addEventListener('DOMContentLoaded', async function () {
-   // window.YaAuthSuggest.init(
-   //    {
-   //       client_id: "1cacd478c22b49c1a22e59ac811d0fc0",
-   //       response_type: "token",
-   //       redirect_uri: "https://vitexopt.ru/auth/yandex"
-   //    },
-   //    "https://vitexopt.ru",
-   // )
-   //    .then(({handler}) => handler())
-   //    .then(data => console.log('Сообщение с токеном', data))
-   //    .catch(error => console.log('Обработка ошибки', error))
 
-   // YaSendSuggestToken(
-   //    'https://vitexopt.ru',
-   //    {
-   //       flag: true
-   //    }
-   // )
-
+   IntObserver()
    headerMenu()
    scroll()
    const admin = window.location.pathname.includes('adminsc')
@@ -48,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       })
    }
    // debugger
-   const modal = document[qs]('.modal-wrapper')
+   const modal = document[qs]('.modal')
    if (modal) {
       const {default: Modal} = await import("../components/Modal/modal.js")
       new Modal()
@@ -76,6 +59,25 @@ document.addEventListener('DOMContentLoaded', async function () {
       const {default: Cart} = await import('../Cart/cart.js')
       new Cart()
    }
+   // window.YaAuthSuggest.init(
+   //    {
+   //       client_id: "1cacd478c22b49c1a22e59ac811d0fc0",
+   //       response_type: "token",
+   //       redirect_uri: "https://vitexopt.ru/auth/yandex"
+   //    },
+   //    "https://vitexopt.ru",
+   // )
+   //    .then(({handler}) => handler())
+   //    .then(data => console.log('Сообщение с токеном', data))
+   //    .catch(error => console.log('Обработка ошибки', error))
+
+   // YaSendSuggestToken(
+   //    'https://vitexopt.ru',
+   //    {
+   //       flag: true
+   //    }
+   // )
+
 });
 
 

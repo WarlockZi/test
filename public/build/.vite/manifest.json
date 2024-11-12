@@ -1,211 +1,15 @@
 {
-  "../../pic/fonts/Montserrat/Montserrat-Bold.woff": {
-    "file": "assets/Montserrat-Bold-AjXBcRZK.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Bold.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-Bold.woff2": {
-    "file": "assets/Montserrat-Bold-CS-j1_qt.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Bold.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-BoldItalic.woff": {
-    "file": "assets/Montserrat-BoldItalic-CrRqSqjw.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-BoldItalic.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-BoldItalic.woff2": {
-    "file": "assets/Montserrat-BoldItalic-CjS4Mvxa.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-BoldItalic.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-ExtraBold.woff": {
-    "file": "assets/Montserrat-ExtraBold-BCPMg1QM.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraBold.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-ExtraBold.woff2": {
-    "file": "assets/Montserrat-ExtraBold-70ZczXHW.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraBold.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-ExtraLight.woff": {
-    "file": "assets/Montserrat-ExtraLight-V8MRgcDG.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraLight.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-ExtraLight.woff2": {
-    "file": "assets/Montserrat-ExtraLight-DOYgW3iN.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraLight.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-ExtraLightItalic.woff": {
-    "file": "assets/Montserrat-ExtraLightItalic-Dq6ra1Cd.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraLightItalic.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-ExtraLightItalic.woff2": {
-    "file": "assets/Montserrat-ExtraLightItalic-D5APANIf.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-ExtraLightItalic.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-Italic.woff": {
-    "file": "assets/Montserrat-Italic-DonUEn3N.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Italic.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-Italic.woff2": {
-    "file": "assets/Montserrat-Italic-Bc4-UENN.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Italic.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-Light.woff": {
-    "file": "assets/Montserrat-Light-DRHVd2pU.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Light.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-Light.woff2": {
-    "file": "assets/Montserrat-Light-DMNqPbP2.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Light.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-LightItalic.woff": {
-    "file": "assets/Montserrat-LightItalic-CPbd91LM.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-LightItalic.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-LightItalic.woff2": {
-    "file": "assets/Montserrat-LightItalic-BZr8MUZm.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-LightItalic.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-Medium.woff": {
-    "file": "assets/Montserrat-Medium-CXViaPTE.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Medium.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-Medium.woff2": {
-    "file": "assets/Montserrat-Medium-Bt0TmzT6.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Medium.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-MediumItalic.woff": {
-    "file": "assets/Montserrat-MediumItalic-lCfOBi_3.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-MediumItalic.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-MediumItalic.woff2": {
-    "file": "assets/Montserrat-MediumItalic-O6XsabXG.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-MediumItalic.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-Regular.woff": {
-    "file": "assets/Montserrat-Regular-Vqt_CiU6.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Regular.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-Regular.woff2": {
-    "file": "assets/Montserrat-Regular-BN6Mfz0M.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Regular.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-SemiBold.woff": {
-    "file": "assets/Montserrat-SemiBold-CXDnkWC_.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-SemiBold.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-SemiBold.woff2": {
-    "file": "assets/Montserrat-SemiBold-BRzpPi05.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-SemiBold.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-SemiBoldItalic.woff": {
-    "file": "assets/Montserrat-SemiBoldItalic-DfRX5mDE.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-SemiBoldItalic.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-SemiBoldItalic.woff2": {
-    "file": "assets/Montserrat-SemiBoldItalic-C1Z3Pl61.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-SemiBoldItalic.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-Thin.woff": {
-    "file": "assets/Montserrat-Thin-PHtJL9BV.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Thin.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-Thin.woff2": {
-    "file": "assets/Montserrat-Thin-D1xUYMrq.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-Thin.woff2"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-ThinItalic.woff": {
-    "file": "assets/Montserrat-ThinItalic-C695WUSM.woff",
-    "src": "../../pic/fonts/Montserrat/Montserrat-ThinItalic.woff"
-  },
-  "../../pic/fonts/Montserrat/Montserrat-ThinItalic.woff2": {
-    "file": "assets/Montserrat-ThinItalic-W4662FnK.woff2",
-    "src": "../../pic/fonts/Montserrat/Montserrat-ThinItalic.woff2"
-  },
-  "../../pic/fonts/Roboto/RobotoMedium.ttf": {
-    "file": "assets/RobotoMedium-BkAVR2hu.ttf",
-    "src": "../../pic/fonts/Roboto/RobotoMedium.ttf"
-  },
-  "../../pic/fonts/Roboto/RobotoMedium.woff": {
-    "file": "assets/RobotoMedium-kyWEzQDe.woff",
-    "src": "../../pic/fonts/Roboto/RobotoMedium.woff"
-  },
-  "../../pic/fonts/Roboto/RobotoMono.ttf": {
-    "file": "assets/RobotoMono-DvlFQosn.ttf",
-    "src": "../../pic/fonts/Roboto/RobotoMono.ttf"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-Bold.eot": {
-    "file": "assets/SegoeUI-Bold-DK4b92Kj.eot",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-Bold.eot"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-Bold.ttf": {
-    "file": "assets/SegoeUI-Bold-CqRx-Wgw.ttf",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-Bold.ttf"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-Bold.woff": {
-    "file": "assets/SegoeUI-Bold-BxNAyNVj.woff",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-Bold.woff"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-Bold.woff2": {
-    "file": "assets/SegoeUI-Bold-cHnf7At2.woff2",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-Bold.woff2"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-Light.eot": {
-    "file": "assets/SegoeUI-Light-BnZtI4oA.eot",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-Light.eot"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-Light.ttf": {
-    "file": "assets/SegoeUI-Light-BeQwKuIZ.ttf",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-Light.ttf"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-Light.woff": {
-    "file": "assets/SegoeUI-Light-DRStLrG9.woff",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-Light.woff"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-Light.woff2": {
-    "file": "assets/SegoeUI-Light-boaydVX5.woff2",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-Light.woff2"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-SemiBold.eot": {
-    "file": "assets/SegoeUI-SemiBold-DMA8_Xdm.eot",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-SemiBold.eot"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-SemiBold.ttf": {
-    "file": "assets/SegoeUI-SemiBold-Dz0i8Gm2.ttf",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-SemiBold.ttf"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-SemiBold.woff": {
-    "file": "assets/SegoeUI-SemiBold-DohBUyYc.woff",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-SemiBold.woff"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI-SemiBold.woff2": {
-    "file": "assets/SegoeUI-SemiBold-C8949jYN.woff2",
-    "src": "../../pic/fonts/Sagoe/SegoeUI-SemiBold.woff2"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI.eot": {
-    "file": "assets/SegoeUI-ClaH7WPz.eot",
-    "src": "../../pic/fonts/Sagoe/SegoeUI.eot"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI.ttf": {
-    "file": "assets/SegoeUI-Di2u0v8b.ttf",
-    "src": "../../pic/fonts/Sagoe/SegoeUI.ttf"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI.woff": {
-    "file": "assets/SegoeUI-Dl5ofu1j.woff",
-    "src": "../../pic/fonts/Sagoe/SegoeUI.woff"
-  },
-  "../../pic/fonts/Sagoe/SegoeUI.woff2": {
-    "file": "assets/SegoeUI-BG4GjXh8.woff2",
-    "src": "../../pic/fonts/Sagoe/SegoeUI.woff2"
-  },
   "Admin/Category/Category.js": {
-    "file": "assets/Category-CIfZoIjD.js",
+    "file": "assets/Category-CpEu2XwG.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
-      "_common-Boy4RmlM.js",
-      "_Promotion-2rFPK4NU.js",
-      "_constants-Clh-pk9Y.js",
-      "_MyQuill-BEp9jv_H.js",
+      "_common-DxHL9myf.js",
+      "_Promotion-kcwj_kQJ.js",
+      "_constants-D_Ps4z6O.js",
+      "_MyQuill-4mIDI2Tb.js",
       "_quill.bubble--vF6heEE.js",
       "components/search/search.js"
     ],
@@ -214,39 +18,39 @@
     ]
   },
   "Admin/Order/order.js": {
-    "file": "assets/order-DsqbVL-n.js",
+    "file": "assets/order-BMF64e_j.js",
     "name": "order",
     "src": "Admin/Order/order.js",
     "isDynamicEntry": true,
     "imports": [
-      "_Promotion-2rFPK4NU.js",
-      "_common-Boy4RmlM.js"
+      "_Promotion-kcwj_kQJ.js",
+      "_common-DxHL9myf.js"
     ],
     "css": [
       "assets/order-CPFFkws8.css"
     ]
   },
   "Admin/Product/Fields.js": {
-    "file": "assets/Fields-LjKcDkjd.js",
+    "file": "assets/Fields-z6v-bfXG.js",
     "name": "Fields",
     "src": "Admin/Product/Fields.js",
     "isDynamicEntry": true,
     "imports": [
-      "_Promotion-2rFPK4NU.js",
-      "_common-Boy4RmlM.js"
+      "_Promotion-kcwj_kQJ.js",
+      "_common-DxHL9myf.js"
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-C8TI6oin.js",
+    "file": "assets/Product-DhBHghAj.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js",
+      "_common-DxHL9myf.js",
       "Admin/admin.js",
-      "_Promotion-2rFPK4NU.js",
-      "_constants-Clh-pk9Y.js",
-      "_MyQuill-BEp9jv_H.js",
+      "_Promotion-kcwj_kQJ.js",
+      "_constants-D_Ps4z6O.js",
+      "_MyQuill-4mIDI2Tb.js",
       "_quill.bubble--vF6heEE.js",
       "components/search/search.js"
     ],
@@ -262,48 +66,48 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-_1joq5Sw.js",
+    "file": "assets/Props-Byy23rZh.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/Product/Product.js",
-      "_common-Boy4RmlM.js",
-      "_Promotion-2rFPK4NU.js",
+      "_common-DxHL9myf.js",
+      "_Promotion-kcwj_kQJ.js",
       "Admin/admin.js",
-      "_constants-Clh-pk9Y.js",
+      "_constants-D_Ps4z6O.js",
       "_quill.bubble--vF6heEE.js",
       "components/search/search.js",
-      "_MyQuill-BEp9jv_H.js"
+      "_MyQuill-4mIDI2Tb.js"
     ],
     "css": [
       "assets/popup-Dv_TwhNX.css"
     ]
   },
   "Admin/Test/test-do.js": {
-    "file": "assets/test-do-DLfHeWY5.js",
+    "file": "assets/test-do-CqNA7Guy.js",
     "name": "test-do",
     "src": "Admin/Test/test-do.js",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js"
+      "_common-DxHL9myf.js"
     ],
     "css": [
       "assets/test-do-CY5BA42n.css"
     ]
   },
   "Admin/Test/test-edit.js": {
-    "file": "assets/test-edit-D9h1-Q8s.js",
+    "file": "assets/test-edit-Do1-v1BD.js",
     "name": "test-edit",
     "src": "Admin/Test/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
-      "_common-Boy4RmlM.js",
-      "_index-BU6ouWPN.js",
-      "_constants-Clh-pk9Y.js",
+      "_common-DxHL9myf.js",
+      "_index-DgFqh8Lg.js",
+      "_constants-D_Ps4z6O.js",
       "_quill.bubble--vF6heEE.js",
-      "_Promotion-2rFPK4NU.js",
+      "_Promotion-kcwj_kQJ.js",
       "components/search/search.js"
     ],
     "css": [
@@ -312,20 +116,20 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-BaiafDCk.js",
+    "file": "assets/admin-BsuH35wz.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js",
-      "_constants-Clh-pk9Y.js",
+      "_common-DxHL9myf.js",
+      "_constants-D_Ps4z6O.js",
       "_quill.bubble--vF6heEE.js",
-      "_Promotion-2rFPK4NU.js",
+      "_Promotion-kcwj_kQJ.js",
       "components/search/search.js"
     ],
     "dynamicImports": [
       "share/card_panel/card_panel.js",
-      "_index-BU6ouWPN.js",
+      "_index-DgFqh8Lg.js",
       "Admin/components/AdminSidebar/AdminSidebar.js",
       "Admin/Product/Product.js",
       "Admin/components/catalog-item/catalog-item.js",
@@ -335,7 +139,7 @@
       "Admin/chartjs/chartjs.js"
     ],
     "css": [
-      "assets/admin-KjBAQJ-I.css",
+      "assets/admin-9goU__Cn.css",
       "assets/popup-Dv_TwhNX.css"
     ]
   },
@@ -349,29 +153,29 @@
     ]
   },
   "Admin/components/AdminSidebar/AdminSidebar.js": {
-    "file": "assets/AdminSidebar-FgG4vK2a.js",
+    "file": "assets/AdminSidebar-4nGcNow_.js",
     "name": "AdminSidebar",
     "src": "Admin/components/AdminSidebar/AdminSidebar.js",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js",
-      "_constants-Clh-pk9Y.js"
+      "_common-DxHL9myf.js",
+      "_constants-D_Ps4z6O.js"
     ],
     "css": [
       "assets/AdminSidebar-UzyVTL-J.css"
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-CdAO6VDs.js",
+    "file": "assets/catalog-item-Cy9sqbP3.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
-      "_common-Boy4RmlM.js",
-      "_constants-Clh-pk9Y.js",
+      "_common-DxHL9myf.js",
+      "_constants-D_Ps4z6O.js",
       "_quill.bubble--vF6heEE.js",
-      "_Promotion-2rFPK4NU.js",
+      "_Promotion-kcwj_kQJ.js",
       "components/search/search.js"
     ],
     "css": [
@@ -379,53 +183,53 @@
     ]
   },
   "Auth/auth.js": {
-    "file": "assets/auth-CDSRnbQg.js",
+    "file": "assets/auth-Z_DaJGNO.js",
     "name": "auth",
     "src": "Auth/auth.js",
     "isEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js"
+      "_common-DxHL9myf.js"
     ],
     "dynamicImports": [
       "Auth/login.js",
       "components/Modal/modal.js"
     ],
     "css": [
-      "assets/auth-PzTOyQtE.css",
+      "assets/auth-DvAbdpkg.css",
       "assets/popup-Dv_TwhNX.css"
     ]
   },
   "Auth/login.js": {
-    "file": "assets/login-CnIrrZqb.js",
+    "file": "assets/login-Czaw_nXD.js",
     "name": "login",
     "src": "Auth/login.js",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js"
+      "_common-DxHL9myf.js"
     ]
   },
   "Cart/cart.js": {
-    "file": "assets/cart-C_XcnVfj.js",
+    "file": "assets/cart-BrmJk9G5.js",
     "name": "cart",
     "src": "Cart/cart.js",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js",
+      "_common-DxHL9myf.js",
       "components/Modal/modal.js",
-      "_constants-Clh-pk9Y.js",
-      "_shippableUnitsTable-CxJT_S2e.js"
+      "_constants-D_Ps4z6O.js",
+      "_shippableUnitsTable-B73e7E0p.js"
     ]
   },
   "Category/category.js": {
-    "file": "assets/category-Cw2RupQ1.js",
+    "file": "assets/category-CYldWg_a.js",
     "name": "category",
     "src": "Category/category.js",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js",
-      "_constants-Clh-pk9Y.js",
-      "_shippableUnitsTable-CxJT_S2e.js",
-      "_MyQuill-BEp9jv_H.js",
+      "_common-DxHL9myf.js",
+      "_constants-D_Ps4z6O.js",
+      "_shippableUnitsTable-B73e7E0p.js",
+      "_MyQuill-4mIDI2Tb.js",
       "_quill.bubble--vF6heEE.js"
     ],
     "dynamicImports": [
@@ -433,48 +237,48 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-Cwi2nKka.js",
+    "file": "assets/main-B9oqivR1.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js",
-      "_constants-Clh-pk9Y.js"
+      "_common-DxHL9myf.js",
+      "_constants-D_Ps4z6O.js"
     ],
     "dynamicImports": [
       "components/search/search.js",
       "components/Modal/modal.js",
       "Category/category.js",
       "Product/Product.js",
-      "_Promotion-2rFPK4NU.js",
+      "_Promotion-kcwj_kQJ.js",
       "Cart/cart.js"
     ],
     "css": [
-      "assets/main-BGYqtDoc.css"
+      "assets/main-CaUeW2JT.css"
     ]
   },
   "Product/Product.js": {
-    "file": "assets/Product-BYGSXBJJ.js",
+    "file": "assets/Product-DyuFFPvj.js",
     "name": "Product",
     "src": "Product/Product.js",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js",
+      "_common-DxHL9myf.js",
       "share/card_panel/card_panel.js",
-      "_shippableUnitsTable-CxJT_S2e.js",
-      "_MyQuill-BEp9jv_H.js",
-      "_constants-Clh-pk9Y.js",
+      "_shippableUnitsTable-B73e7E0p.js",
+      "_MyQuill-4mIDI2Tb.js",
+      "_constants-D_Ps4z6O.js",
       "_quill.bubble--vF6heEE.js"
     ],
     "css": [
       "assets/Product-B5juHuGe.css"
     ]
   },
-  "_MyQuill-BEp9jv_H.js": {
-    "file": "assets/MyQuill-BEp9jv_H.js",
+  "_MyQuill-4mIDI2Tb.js": {
+    "file": "assets/MyQuill-4mIDI2Tb.js",
     "name": "MyQuill",
     "imports": [
-      "_common-Boy4RmlM.js",
+      "_common-DxHL9myf.js",
       "_quill.bubble--vF6heEE.js"
     ]
   },
@@ -482,35 +286,35 @@
     "file": "assets/Promotion-B7FCyWX3.css",
     "src": "_Promotion-!~{00g}~.js"
   },
-  "_Promotion-2rFPK4NU.js": {
-    "file": "assets/Promotion-2rFPK4NU.js",
+  "_Promotion-kcwj_kQJ.js": {
+    "file": "assets/Promotion-kcwj_kQJ.js",
     "name": "Promotion",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js"
+      "_common-DxHL9myf.js"
     ],
     "css": [
       "assets/Promotion-B7FCyWX3.css"
     ]
   },
-  "_common-Boy4RmlM.js": {
-    "file": "assets/common-Boy4RmlM.js",
+  "_common-DxHL9myf.js": {
+    "file": "assets/common-DxHL9myf.js",
     "name": "common"
   },
-  "_constants-Clh-pk9Y.js": {
-    "file": "assets/constants-Clh-pk9Y.js",
+  "_constants-D_Ps4z6O.js": {
+    "file": "assets/constants-D_Ps4z6O.js",
     "name": "constants"
   },
   "_index-!~{005}~.js": {
     "file": "assets/index-CJybINCP.css",
     "src": "_index-!~{005}~.js"
   },
-  "_index-BU6ouWPN.js": {
-    "file": "assets/index-BU6ouWPN.js",
+  "_index-DgFqh8Lg.js": {
+    "file": "assets/index-DgFqh8Lg.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js"
+      "_common-DxHL9myf.js"
     ],
     "dynamicImports": [
       "Admin/Test/test-do.js",
@@ -535,75 +339,25 @@
       "assets/quill-GClCj9AP.css"
     ]
   },
-  "_shippableUnitsTable-CxJT_S2e.js": {
-    "file": "assets/shippableUnitsTable-CxJT_S2e.js",
+  "_shippableUnitsTable-B73e7E0p.js": {
+    "file": "assets/shippableUnitsTable-B73e7E0p.js",
     "name": "shippableUnitsTable",
     "imports": [
-      "_common-Boy4RmlM.js",
-      "_constants-Clh-pk9Y.js"
+      "_common-DxHL9myf.js",
+      "_constants-D_Ps4z6O.js"
     ]
   },
   "components/Modal/modal.js": {
-    "file": "assets/modal-Cmk2ACTR.js",
+    "file": "assets/modal-CFaqzGnW.js",
     "name": "modal",
     "src": "components/Modal/modal.js",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js"
+      "_common-DxHL9myf.js",
+      "_constants-D_Ps4z6O.js"
     ],
     "css": [
-      "assets/modal-D2zHcDFg.css"
-    ],
-    "assets": [
-      "assets/SegoeUI-ClaH7WPz.eot",
-      "assets/SegoeUI-BG4GjXh8.woff2",
-      "assets/SegoeUI-Dl5ofu1j.woff",
-      "assets/SegoeUI-Di2u0v8b.ttf",
-      "assets/SegoeUI-SemiBold-DMA8_Xdm.eot",
-      "assets/SegoeUI-SemiBold-C8949jYN.woff2",
-      "assets/SegoeUI-SemiBold-DohBUyYc.woff",
-      "assets/SegoeUI-SemiBold-Dz0i8Gm2.ttf",
-      "assets/SegoeUI-Light-BnZtI4oA.eot",
-      "assets/SegoeUI-Light-boaydVX5.woff2",
-      "assets/SegoeUI-Light-DRStLrG9.woff",
-      "assets/SegoeUI-Light-BeQwKuIZ.ttf",
-      "assets/SegoeUI-Bold-DK4b92Kj.eot",
-      "assets/SegoeUI-Bold-cHnf7At2.woff2",
-      "assets/SegoeUI-Bold-BxNAyNVj.woff",
-      "assets/SegoeUI-Bold-CqRx-Wgw.ttf",
-      "assets/Montserrat-Thin-D1xUYMrq.woff2",
-      "assets/Montserrat-Thin-PHtJL9BV.woff",
-      "assets/Montserrat-ThinItalic-W4662FnK.woff2",
-      "assets/Montserrat-ThinItalic-C695WUSM.woff",
-      "assets/Montserrat-ExtraLight-DOYgW3iN.woff2",
-      "assets/Montserrat-ExtraLight-V8MRgcDG.woff",
-      "assets/Montserrat-ExtraLightItalic-D5APANIf.woff2",
-      "assets/Montserrat-ExtraLightItalic-Dq6ra1Cd.woff",
-      "assets/Montserrat-Light-DMNqPbP2.woff2",
-      "assets/Montserrat-Light-DRHVd2pU.woff",
-      "assets/Montserrat-LightItalic-BZr8MUZm.woff2",
-      "assets/Montserrat-LightItalic-CPbd91LM.woff",
-      "assets/Montserrat-Regular-BN6Mfz0M.woff2",
-      "assets/Montserrat-Regular-Vqt_CiU6.woff",
-      "assets/Montserrat-Italic-Bc4-UENN.woff2",
-      "assets/Montserrat-Italic-DonUEn3N.woff",
-      "assets/Montserrat-Medium-Bt0TmzT6.woff2",
-      "assets/Montserrat-Medium-CXViaPTE.woff",
-      "assets/Montserrat-MediumItalic-O6XsabXG.woff2",
-      "assets/Montserrat-MediumItalic-lCfOBi_3.woff",
-      "assets/Montserrat-SemiBold-BRzpPi05.woff2",
-      "assets/Montserrat-SemiBold-CXDnkWC_.woff",
-      "assets/Montserrat-SemiBoldItalic-C1Z3Pl61.woff2",
-      "assets/Montserrat-SemiBoldItalic-DfRX5mDE.woff",
-      "assets/Montserrat-Bold-CS-j1_qt.woff2",
-      "assets/Montserrat-Bold-AjXBcRZK.woff",
-      "assets/Montserrat-BoldItalic-CjS4Mvxa.woff2",
-      "assets/Montserrat-BoldItalic-CrRqSqjw.woff",
-      "assets/Montserrat-ExtraBold-70ZczXHW.woff2",
-      "assets/Montserrat-ExtraBold-BCPMg1QM.woff",
-      "assets/RobotoMedium-kyWEzQDe.woff",
-      "assets/RobotoMedium-BkAVR2hu.ttf",
-      "assets/RobotoMono-DvlFQosn.ttf"
+      "assets/modal-Bf_5AeMv.css"
     ]
   },
   "components/dnd/dnd.js": {
@@ -613,22 +367,22 @@
     "isDynamicEntry": true
   },
   "components/search/search.js": {
-    "file": "assets/search-CFft0GjV.js",
+    "file": "assets/search-DVdw46YM.js",
     "name": "search",
     "src": "components/search/search.js",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js",
-      "_constants-Clh-pk9Y.js"
+      "_common-DxHL9myf.js",
+      "_constants-D_Ps4z6O.js"
     ]
   },
   "share/card_panel/card_panel.js": {
-    "file": "assets/card_panel-C8i2A5fw.js",
+    "file": "assets/card_panel-DG-MESDa.js",
     "name": "card_panel",
     "src": "share/card_panel/card_panel.js",
     "isDynamicEntry": true,
     "imports": [
-      "_common-Boy4RmlM.js"
+      "_common-DxHL9myf.js"
     ],
     "css": [
       "assets/card_panel-ebMfmDJg.css"

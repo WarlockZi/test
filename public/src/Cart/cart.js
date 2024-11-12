@@ -1,13 +1,12 @@
 import './counter1'
-import {$, cookieRemove, formatter, getPhpSession, post, sanitizeInput,} from '../common'
+import {$, cookieRemove, formatter, getPhpSession, post} from '../common'
 // import Counter1 from "./counter1";
 import Cookie from "../components/cookie/new/cookie";
 import Modal from "../components/Modal/modal";
-import CartSuccess from "../components/Modal/modals/CartSuccess";
 import CartLogin from "../components/Modal/modals/CartLogin";
-import CartLead from "../components/Modal/modals/CartLead";
 import {ael, it, qa, qs} from '../constants';
 import shippableTable from "../share/shippable/shippableUnitsTable";
+import Register from "../components/Modal/modals/Register.js";
 
 export default class Cart {
    constructor() {
@@ -89,14 +88,11 @@ export default class Cart {
       } else if (target.classList.contains('plus') || target.classList.contains('minus')) {
          if (this.rowTotalCount(target.closest('.row'))) {
             this.renderSums()
-            this.changeCount(target)
+            // this.changeCount(target)
          } else {
             this.renderSums()
          }
       }
-   }
-
-   changeCount(target) {
    }
 
    async handleKeyUp({target}) {
@@ -135,64 +131,23 @@ export default class Cart {
    }
 
    setModals() {
-      const lead = document[qs]('#cartLead')
-      // const login = document[qs]('#cartLogin')
-      const login = document[qs]('.guest-menu')
-      const success = document[qs]('#cartSuccess')
-      if (lead) {
-         new Modal({
-            button: lead,
-            data: new CartLead(),
-            callback: this.modalLeadCallback.bind(this)
-         });
-      }
-      if (login) {
-         new Modal({
-            button: login,
-            data: new CartLogin(),
-            callback: this.modalLoginCallback.bind(this)
-         });
-      }
-
-      if (success) {
-         new Modal({
-            button: success,
-            data: new CartSuccess(),
-            callback: this.modalcartSuccessCallback.bind(this)
-         });
-      }
+      new Modal({
+         triggers: ['.guest-menu', '#cartLogin'],
+         boxes: new CartLogin(),
+      });
    }
 
-   async modalcartSuccessCallback(inputs, modal) {
-      modal.close()
-   }
-
-   async modalLoginCallback(fields, modal) {
-      const email = sanitizeInput(fields.email.value);
-      const password = sanitizeInput(fields.password.value);
-      const sess = getPhpSession();
-      const res = await post('/cart/login', {email, password, sess});
-      modal.close();
-      if (res) {
-         location.reload()
-      }
-   }
-
-   counterCallback() {
-      cookieRemove('cartDeadline')
-      this.dropCart().then()
-   }
    // async modalLeadCallback(fields, modal) {
    //    const name = sanitizeInput(fields.name.value);
    //    const phone = sanitizeInput(fields.phone.value);
    //    const company = sanitizeInput(fields.company.value);
    //    const sess = getPhpSession();
    //    const res = await post('/cart/lead', {name, phone, company, sess});
-   //    modal.close();
-   //    if (res) {
-   //       location.reload()
-   //    }
    // }
 
-// <script>alert('dd');</sctipt>
+   counterCallback() {
+      cookieRemove('cartDeadline')
+      this.dropCart().then()
+   }
+
 }

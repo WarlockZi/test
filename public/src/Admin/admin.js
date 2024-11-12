@@ -64,7 +64,7 @@ $(document).ready(async function () {
       new Order()
    }
 
-   if (document[qs]('.modal-wrapper')) {
+   if (document[qs]('.modal')) {
       const {default: Modal} = await import("../components/Modal/modal.js")
       new Modal
    }

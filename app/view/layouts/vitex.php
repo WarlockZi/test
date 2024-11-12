@@ -53,19 +53,15 @@ use app\core\Icon;
 
 <?php //= $assets->getCDNJs(); ?>
 
-<div class="modal-wrapper" data-modal="default">
+<div class="modal invisible" data-modal="default">
     <div class="overlay"></div>
-    <form class="modal-box">
-        <div class="title">Заголовок</div>
-        <div class="modal-close"><?= Icon::close() ?></div>
-        <div class="content"></div>
-        <div class="footer"></div>
-    </form>
-
-    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-    </svg>
+    <div class="wrap">
+        <div class="box">
+            <div class="title">Заголовок</div>
+            <div class="modal-close"><?= Icon::close() ?></div>
+            <div class="content"></div>
+        </div>
+    </div>
 
 </div>
 

@@ -7,6 +7,7 @@ import 'quill/dist/quill.bubble.css';
 export default class MyQuill {
    constructor(selector = '#detail-text', autosave = false, toolbar = false, editable = false, theme = 'snow') {
       // debugger
+     if (!$(selector)) return false
       this.model = $('[data-model]').first()?.dataset?.model ?? null
       this.id = $('[data-model]').first()?.dataset?.id ?? null
       this.button = $('#button').first()

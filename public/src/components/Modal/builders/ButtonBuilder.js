@@ -1,8 +1,9 @@
-import InputContainer from "./InputContainer";
 
-export default class FieldBuilder {
-  constructor() {
-    this._type = 'text';
+export default class ButtonBuilder {
+  constructor(props) {
+    this._id = props.id;
+    this._callback = props.callback;
+    this._text = props.text;
   }
 
   id(id) {

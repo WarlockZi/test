@@ -57,7 +57,10 @@ class MainController extends AppController
             'Новости',
             'Новости');
     }
-
+    public function actionSitemap(): void
+    {
+        $f = 1;
+    }
     public function actionYandexauth(): void
     {
         $f = 1;

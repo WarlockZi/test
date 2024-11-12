@@ -247,11 +247,14 @@ function emailValidator(mail){
    const errors = []
 
    const replacePattern = /[a-zA-Z\@\-\_\.]*/
+   if (!email.length) {
+      errors.push("Поле не должно быть пустым")
+   }
    if (email.replace(replacePattern,'').length) {
       errors.push("Разрешены только английские")
    }
    if (email.length < min) {
-      errors.push("Длина меньше 2")
+      errors.push("Длина меньше 2 символов")
    }
    if (!/[\@]/.test(email)) {
       errors.push("Нет знака @")

@@ -34,6 +34,9 @@
             <li>
                 <a href="/main/oferta">Оферта</a>
             </li>
+            <li>
+                <a href="/main/sitemap">Карта сайта</a>
+            </li>
         </ul>
 
     </nav>

@@ -20,7 +20,7 @@ footer {
 
   .menu {
     display: flex;
-    gap: 15px;
+    gap: 65px;
     justify-content: center;
     max-width: 700px;
     margin: 0 auto;
@@ -31,6 +31,7 @@ footer {
     }
 
     .column {
+      flex: 1;
       li {
         padding: 5px;
 
