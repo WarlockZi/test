@@ -62,30 +62,4 @@ $(document).ready(async () => {
       },'-=600')
 
 
-   // //img syringe
-   // const syrImgAnimate = () => anime({
-   //    targets: '.endosirynge',
-   //    easing: 'easeOutExpo',
-   //    opacity: opacity(),
-   //    translateX: fromRight(),
-   // })
-   // //text syringe
-   // const syrTxtAnimate = () => anime({
-   //    targets: '.endosirynge .banner__text',
-   //    easing: 'easeOutExpo',
-   //    opacity: opacity(50, 550),
-   //    translateX: fromLeft(50, 550),
-   // })
-   // const img = document.querySelector(".endosirynge")
-   // const callback = (entries, observer) => {
-   //    entries.forEach((entry) => {
-   //       if (entry.isIntersecting) {
-   //          syrImgAnimate()
-   //          syrTxtAnimate()
-   //       }
-   //    })
-   // }
-   // const options = {    threshold: 0.5}
-   // const myObserver = new IntersectionObserver(callback, options)
-   // myObserver.observe(img)
 })

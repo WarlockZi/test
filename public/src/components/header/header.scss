@@ -113,6 +113,7 @@
       @include mixin_media.m600 {
         margin: 2px;
         padding: 5px;
+        width: clamp(68px, 38vw, 87px);
       }
 
       .logo_vitex {

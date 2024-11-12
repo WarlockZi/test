@@ -45,11 +45,11 @@ $authed = \app\core\Auth::getUser();
 
             <div class="buttons">
                 <?php if (!$authed && !$lead): ?>
-                    <div class="button" id="cartSuccess">Оформить заказ</div>
-                <? else: ?>
-                    <!--                    <div class="button" id="cartLead">Оставить свои данные</div>-->
-                    <!--                    <div class="button" id="cartLogin">Войти</div>-->
-                    <div class="button" id="cartLogin">Оформить заказ</div>
+                    <!--                    <div class="button" id="cartSuccess">Оформить заказ</div>-->
+                    <!--                --><? // else: ?>
+                    <!--                                        <div class="button" id="cartLead">Оставить свои данные</div>-->
+                    <div class="button" id="cartLogin">Войти</div>
+                    <!--                    <div class="button" id="cartLogin">Оформить заказ</div>-->
                 <?php endif; ?>
             </div>
 

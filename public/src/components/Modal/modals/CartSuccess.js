@@ -1,18 +1,17 @@
 import {createElement} from "../../../common";
-import Cart from "./Cart";
 
-export default class CartSuccess extends Cart{
+
+export default class CartSuccess {
   constructor() {
-    super();
-    this.title = 'Заказ принят в обработку';
 
+    this.content = []
     this.content.push(new createElement()
        .tag('div')
        .attr('class', 'text')
        .text('Какое-то сообщение')
        .get()
     )
-    this.footer.push((new createElement())
+    this.content.push((new createElement())
        .tag('div')
        .attr('id', 'submit')
        .attr('class', 'button')

@@ -1,12 +1,11 @@
 import FieldBuilder from "../builders/FieldBuilder";
-import {createElement} from "../../../common";
-import Cart from "./Cart";
+import {createElement, getPhpSession, post, sanitizeInput} from "../../../common";
 
-export default class CartLead extends Cart {
+
+export default class CartLead {
    constructor() {
-      super();
-      this.title = 'Данные для связи';
-      this.fields.push((new FieldBuilder())
+      this.content = []
+      this.content.push((new FieldBuilder())
          .id('name')
          .badgeWidth('150px')
          .required()
@@ -14,7 +13,7 @@ export default class CartLead extends Cart {
          .pattern('[а-яА-Я]{1,}')
          .get()
       );
-      this.fields.push((new FieldBuilder)
+      this.content.push((new FieldBuilder)
          .id('company')
          .badgeWidth('175px')
          .required()
@@ -22,7 +21,7 @@ export default class CartLead extends Cart {
          .pattern('[a-zA-Zа-яА-я\\s()]{3,}')
          .get()
       );
-      this.fields.push((new FieldBuilder)
+      this.content.push((new FieldBuilder)
          .id('phone')
          .badgeWidth('130px')
          .required()
@@ -31,9 +30,7 @@ export default class CartLead extends Cart {
          .get()
       );
 
-      this.submitText = 'отправить данные';
-
-      this.footer.push((new createElement())
+      this.content.push((new createElement())
          .tag('div')
          .attr('class', 'button')
          .text('Отправляя данные, вы соглашаетесь на обработку персональных данных')
@@ -41,4 +38,5 @@ export default class CartLead extends Cart {
       );
 
    }
+
 }
