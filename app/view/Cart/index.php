@@ -15,12 +15,12 @@ $authed = \app\core\Auth::getUser();
 
             <?php foreach ($products as $i => $product): ?>
 
-                <div class="row" data-product-id="<?= $product['1s_id']; ?>">
+                <div class="row cart-item" data-product-id="<?= $product['1s_id']; ?>">
                     <div class="num cell"><?= ++$i; ?></div>
 
                     <img src="<?= $product->mainImagePath; ?>" alt="<?= $product->name; ?>">
 
-                    <div class="cell name-price cell">
+                    <div class="name-price cell">
                         <a href="/product/<?= $product->slug; ?>"
                            class="name">
                             <?= $product->name; ?>
@@ -31,8 +31,8 @@ $authed = \app\core\Auth::getUser();
                         <?= ShippableUnitsTableFactory::create($product, 'cart'); ?>
                     </div>
 
-                    <div class="sub-sum sum"></div>
-                    <div class="del"><?= Icon::trashWhite(); ?></div>
+                    <div class="sub-sum sum cell"></div>
+                    <div class="del cell"><?= Icon::trashWhite(); ?></div>
                 </div>
 
             <?php endforeach; ?>

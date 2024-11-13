@@ -1,43 +1,55 @@
 <footer class="footer">
     <nav class="menu">
 
-        <? if (isset($rootCategories)): ?>
+        <div class="column">
 
-            <ul class="column">
-                <? foreach ($rootCategories as $category): ?>
-                    <li>
-                        <a href="/catalog/<?= $category->ownProperties->path; ?>"><?= mb_strtolower($category->name); ?></a>
-                    </li>
+            <h4>Категории</h4>
 
-                <? endforeach ?>
+            <? if (isset($rootCategories)): ?>
+                <ul>
+                    <? foreach ($rootCategories as $category): ?>
+                        <li>
+                            <a href="/catalog/<?= $category->ownProperties->path; ?>"><?= mb_strtolower($category->name); ?></a>
+                        </li>
+
+                    <? endforeach ?>
+                </ul>
+            <? endif; ?>
+        </div>
+
+        <div class="column">
+
+            <h4>Информация</h4>
+
+            <ul>
+                <li>
+                    <a href="/main/contacts">Контакты</a>
+                </li>
+                <li>
+                    <a href="/main/requisites">Реквизиты</a>
+                </li>
+                <li>
+                    <a href="/main/news">Новости</a>
+                </li>
             </ul>
-        <? endif; ?>
-
-        <ul class="column">
-            <li>
-                <a href="/main/contacts">Контакты</a>
-            </li>
-            <li>
-                <a href="/main/requisites">Реквизиты</a>
-            </li>
-            <li>
-                <a href="/main/news">Новости</a>
-            </li>
-        </ul>
-        <ul class="column">
-            <li>
-                <a href="/main/returnChange">Возврат и обмен</a>
-            </li>
-            <li>
-                <a href="/main/politicaconf">Политика конфиденциальности</a>
-            </li>
-            <li>
-                <a href="/main/oferta">Оферта</a>
-            </li>
-            <li>
-                <a href="/main/sitemap">Карта сайта</a>
-            </li>
-        </ul>
+        </div>
+        <div class="column">
+            <h4>Для клиентов</h4>
+            <ul>
+                <li>
+                    <a href="/main/returnChange">Возврат и обмен</a>
+                </li>
+                <li>
+                    <a href="/main/politicaconf">Политика конфиденциальности</a>
+                </li>
+                <li>
+                    <a href="/main/oferta">Оферта</a>
+                </li>
+                <li>
+                    <a href="/main/sitemap">Карта сайта</a>
+                </li>
+            </ul>
+        </div>
 
     </nav>
     <div class="legal">

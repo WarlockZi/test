@@ -27,7 +27,8 @@ footer {
     padding-top: 30px;
     padding-bottom: 30px;
     @include mixin_media.m600 {
-      gap: 0;
+      gap: 10px;
+      flex-direction: column;
     }
 
     .column {
