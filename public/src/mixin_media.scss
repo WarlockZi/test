@@ -449,15 +449,20 @@
     display: flex;
     gap: 5px;
     font-size: .8rem;
+    @include m600{
+      gap: 0;
+    }
 
 
     .num {
       @include cartRowGrey;
+      grid-area: id;
     }
 
     img {
       width: 100px;
       object-fit: contain;
+      grid-area: img;
     }
 
     .cell {
@@ -466,13 +471,16 @@
 
     .cart-shippable-table {
       @include shippable;
+      grid-area: shippable;
     }
 
     .name-price {
+      grid-area: name;
       display: flex;
       flex: 1;
       flex-direction: column;
       justify-content: space-between;
+
 
 
       .price-table {
@@ -498,7 +506,7 @@
       @include cartRowGrey;
       align-items: center;
       justify-content: end;
-      width: 75px;
+      grid-area: sum;
     }
 
     .del {
@@ -507,7 +515,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      width: 10px;
+      grid-area: del;
 
       &:hover {
         background-color: #cccccc;
@@ -619,359 +627,6 @@
           text-decoration: line-through #707f8d;
           color: #707f8d;
         }
-      }
-    }
-  }
-}
-
-@mixin mtree {
-  ul.mtree {
-    opacity: 0;
-    margin-left: 0;
-    padding: 1.2em;
-
-    ul {
-      margin-left: 1em; // Set default indent level (or set 0)
-    }
-
-    li {
-      list-style: none; // Lets remove default bullets for all elements
-    }
-
-    a {
-      @extend %mtree-transition;
-      display: block;
-    }
-
-    li.mtree-node {
-      > a {
-        font-weight: bold;
-      }
-    }
-  }
-
-  %mtree-transition {
-    -webkit-transition: all 300ms ease-out;
-    -moz-transition: all 300ms ease-out;
-    -ms-transition: all 300ms ease-out;
-    -o-transition: all 300ms ease-out;
-    transition: all 300ms ease-out;
-  }
-
-
-  /*// bubba skin*/
-  ul.mtree.bubba {
-    ul {
-      margin-left: 0;
-    }
-
-    ul li {
-      font-size: .9em;
-    }
-
-    li.mtree-node > a:after {
-      content: '›';
-      margin-left: .5em;
-      font-weight: normal;
-    }
-
-    li.mtree-node > a {
-      font-weight: bold;
-      text-transform: upperCase;
-    }
-
-    > li {
-      border-bottom: 1px solid #DDD;
-    }
-
-    > li:last-child {
-      border-bottom: none;
-    }
-
-    li:last-child > a {
-      border: none;
-    }
-
-    > li.mtree-open > a {
-      background: #DDD;
-    }
-
-    li > a:hover {
-      background: #DDD;
-    }
-
-    li.mtree-active > a {
-      background: #FFC000;
-      color: #FFF;
-    }
-
-    $indent: 1em;
-
-    a {
-      padding: 7px 0 7px $indent;
-    }
-
-    li li > a {
-      padding-left: $indent*2;
-    }
-
-    li li li > a {
-      padding-left: $indent*3;
-    }
-
-    li li li li > a {
-      padding-left: $indent*4;
-    }
-
-    li li li li li > a {
-      padding-left: $indent*5;
-    }
-  }
-
-  /*// skinny skin*/
-  ul.mtree.skinny {
-    li {
-      font-size: .9em;
-    }
-
-    a {
-      padding: 0 18px;
-      color: #555;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    li.mtree-node:before {
-      float: left;
-      margin-left: .5em;
-      zoom: .8;
-      margin-top: .1em;
-      color: #777;
-    }
-
-    li.mtree-open:before {
-      content: '-';
-    }
-
-    li.mtree-closed:before {
-      content: '+';
-    }
-
-    ul > li:first-child {
-      margin-top: .1em;
-    }
-
-    ul > li:last-child {
-      margin-bottom: .3em;
-    }
-
-    ul a {
-      color: #666;
-    }
-  }
-
-  /*// transit skin*/
-  ul.mtree.transit {
-    background: #111;
-
-    ul {
-      margin-left: 0;
-    }
-
-    ul > li {
-      font-size: .9em;
-    }
-
-    li.mtree-node {
-      position: relative;
-    }
-
-    li.mtree-node > a:before {
-      color: #CCC;
-      font-weight: normal;
-      position: absolute;
-      right: 20px;
-    }
-
-    li.mtree-open > a:before {
-      content: '-';
-    }
-
-    li.mtree-closed > a:before {
-      content: '+';
-    }
-
-    ul > li:first-child {
-      margin-top: 1px;
-    }
-
-    li.mtree-open > a {
-      background: #222;
-    }
-
-    li > a:hover, li.mtree-active > a {
-      background: #333;
-      color: #FFF;
-    }
-
-    li.mtree-node > ul > li:last-child {
-      margin-bottom: .5em;
-      padding-bottom: .5em;
-      border-bottom: 1px solid #333;
-    }
-
-    li.mtree-node:last-child > ul > li:last-child {
-      margin-bottom: 0;
-      padding-bottom: 0;
-      border-bottom: none;
-    }
-
-    $indent: .8em;
-
-    a {
-      padding: 5px 0 5px $indent;
-      color: #CCC;
-    }
-
-    li li > a {
-      padding-left: $indent*2;
-    }
-
-    li li li > a {
-      padding-left: $indent*3;
-    }
-
-    li li li li > a {
-      padding-left: $indent*4;
-    }
-
-    li li li li li > a {
-      padding-left: $indent*5;
-    }
-  }
-
-  /*// jet skin*/
-  ul.mtree.jet {
-    ul {
-      margin-left: 0;
-    }
-
-    li {
-      margin-bottom: 1px;
-    }
-
-    li:last-child {
-      margin-bottom: 0;
-    }
-
-    li:first-child {
-      margin-top: 1px;
-    }
-
-    li.mtree-active a {
-      background: #E3E3E3;
-    }
-
-    li.mtree-active li:last-child > a {
-      border-radius: 0 0 3px 3px;
-    }
-
-    li.mtree-active > a {
-      background: #008cba;
-      color: #FFF;
-      border-radius: 3px 3px 0 0;
-    }
-
-    li > a:hover {
-      background: #FFC000;
-      color: #FFF;
-    }
-
-    $indent: 1em;
-
-    a {
-      padding: 5px 0 5px $indent;
-    }
-
-    li li > a {
-      padding-left: $indent*2;
-    }
-
-    li li li > a {
-      padding-left: $indent*3;
-    }
-
-    li li li li > a {
-      padding-left: $indent*4;
-    }
-
-    li li li li li > a {
-      padding-left: $indent*5;
-    }
-  }
-
-  /*// nix skin / below just reverts to default list styles.*/
-  ul.mtree.nix {
-    background: none;
-
-    a {
-      display: inline;
-    }
-
-    ul {
-      margin-left: 1em;
-    }
-
-    ul > li {
-      list-style-position: inside;
-    }
-
-    li {
-      list-style: disc;
-    }
-  }
-
-
-  /*// ** DEMO STUFF ***/
-  /*// disregard this ...*/
-  .mtree-demo {
-    .mtree {
-      background: #EEE;
-      margin: 20px auto;
-      max-width: 320px;
-      border-radius: 3px;
-    }
-  }
-
-  /*// Skin selector for demo*/
-  .mtree-skin-selector {
-    text-align: center;
-    background: #EEE;
-    padding: 10px 0 15px;
-
-    li {
-      display: inline-block;
-      float: none;
-    }
-
-    button {
-      padding: 5px 10px;
-      margin-bottom: 1px;
-      background: #BBB;
-
-      &:hover {
-        background: #999;
-      }
-
-      &.active {
-        background: #999;
-        font-weight: bold;
-      }
-
-      &.csl.active {
-        background: #FFC000;
       }
     }
   }
@@ -1353,33 +1008,38 @@ $border-color:var.$color-main
 }
 
 @mixin h1 {
-  font-size: 2rem;
+  font-size: clamp(1rem, 5vw, 2rem);
   font-weight: 600;
   color: var.$color-grey-logo;
-  margin: 0 0 25px;
+  margin: 0 0 clamp(15px, 5vw, 25px);
 }
 
 @mixin h2 {
-  font-size: 1.5rem;
+  font-size: clamp(.8rem, 4vw, 1.5rem);
   font-weight: 600;
   color: var.$color-grey-logo;
-  margin: 0 0 15px;
+  margin: 0 0 clamp(10px, 4vw, 15px);
 }
 
 @mixin h3 {
-  font-size: 1.17rem;
+  font-size: clamp(.6rem, 3.5vw, 1.17rem);
   font-weight: 600;
   color: var.$color-grey-logo;
-  margin: 0 0 15px;
+  margin: 0 0 clamp(9px, 3.5vw, 14px);
 }
 
 @mixin h4 {
-  font-size: 1rem;
+  font-size: clamp(.5rem, 3vw, 1rem);
   font-weight: 600;
+  color: var.$color-grey-logo;
+  margin: 0 0 clamp(8px, 3.3vw, 13px);
+}
+
+@mixin p {
+  font-size: clamp(.4rem, 3vw, .9rem);
   color: var.$color-grey-logo;
   margin: 0 0 15px;
 }
-
 
 .page-name {
   @include h1;

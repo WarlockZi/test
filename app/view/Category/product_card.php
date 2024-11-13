@@ -14,7 +14,7 @@
         <div class="footer">
 
             <p>Цена: <?= $product->instore ? $product->baseUnitPrice : "<span class='danger'>от</span> ".$product->baseUnitPrice; ?></p>
-            <p>Статус: <?= $product->instore ? "в наличии" : "<span class='danger'>под заказ</span>"; ?></p>
+            <p>Статус: <?= $product->instore ? "<span class='success'>в наличии</span>" : "<span class='danger'>под заказ</span>"; ?></p>
             <p>Артикул: <?= $product->art ?? ''; ?></p>
         </div>
     </a>
