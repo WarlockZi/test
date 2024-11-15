@@ -24,6 +24,33 @@ use Throwable;
 
 class CategoryFormView
 {
+    public static function sitemap()
+    {
+        $cat = CategoryRepository::treeAll()->toArray();
+        $uls = '';
+        foreach ($cat as $item) {
+            $sti = self::mapCategories($item);
+            $uls .= $sti;
+        }
+        $ul = "<ul>{$uls}</ul>";
+        echo($ul);
+
+    }
+
+    protected static function mapCategories(array $cat, string $string = ''): string
+    {
+        foreach ($cat as $item) {
+            $string .= $cat['name'] . "<br>";
+            if ($cat['children_recursive']) {
+                self::mapCategories($cat['children_recursive'], $string);
+            } else {
+                $string .= $cat['name'] . "<br>";
+            }
+        }
+        return $string;
+    }
+
+
     public static function edit(Category $category): string
     {
         try {
@@ -226,12 +253,14 @@ class CategoryFormView
             "</div>";
 
     }
+
     public static function getSeoArticle($categoryProperty): string
     {
         ob_start();
         include __DIR__ . './Admin/seoArticle.php';
         return ob_get_clean();
     }
+
     protected static function getProducts(Category $category): string
     {
         return Table::build($category['products'])

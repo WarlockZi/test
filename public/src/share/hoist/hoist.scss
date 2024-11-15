@@ -7,9 +7,8 @@
     right: 20px;
     display: flex;
     padding: 5px;
-    background-color: var.$color-main;
     color: #ffffff;
     border-radius: 50%;
-    border: 1px solid color.adjust(var.$color-main, $lightness:-25%);
     cursor: pointer;
+    box-shadow: inset -9px -7px 13px 6px rgb(44 121 179 / 83%);
 }

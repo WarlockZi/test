@@ -218,19 +218,19 @@ function sanitizeInput(input) {
       '&': '&amp;',
       '<': '&lt;',
       '>': '&gt;',
-      '"': '&quot;',
+      // '"': '&quot;',
       "'": '&#39;',
       "(": '&fp',
       ")": '&bp',
       "/": '&fs',
       "\\": '&bs',
-      ".": '&dot',
+      // ".": '&dot',
       ";": '&sc',
       "|": '&or',
       "?php": '&?php',
       "delete": '&del',
    };
-   const reg = /[&<>"'.()\/\\;]/gi;
+   const reg = /[&<>'()\/\\;]/gi;
    return input.replace(reg, (match) => {
       return map[match];
    });

@@ -3,11 +3,14 @@ import '../components/header/show-front-menu1.js';
 import '../404/404.scss'
 import '../share/hoist/hoist';
 import '../components/animate/animate.js'
-import {ael, qs} from '../constants';
+import {qs} from '../constants';
 import scroll from '../share/scroll/scroll.js'
 import headerMenu from '../components/header/show-front-menu.js'
 
 import IntObserver from "../share/scroll/IntObserver.js";
+import MobileMenu from "@src/components/header/mobile-menu.js";
+import Modal from "@src/components/Modal/modal.js";
+import CartLogin from "@src/components/Modal/modals/CartLogin.js";
 
 document.addEventListener('DOMContentLoaded', async function () {
 
@@ -23,13 +26,21 @@ document.addEventListener('DOMContentLoaded', async function () {
       new Search()
    }
 
-   const gumburger = document[qs]('.gamburger');
-   if (gumburger) {
-      gumburger[ael]('click', function (e) {
-         const mm = e.target.closest('.utils')[qs]('.mobile-menu');
-         mm.classList.toggle('show')
-      })
-   }
+   new Modal({
+      triggers: ['.guest-menu', '#cartLogin'],
+      boxes: new CartLogin(),
+   });
+
+   // const gumburger = document[qs]('.gamburger');
+   new MobileMenu()
+
+   // const gumburger = document[qs]('.gamburger');
+   // if (gumburger) {
+   //    gumburger[ael]('click', function (e) {
+   //       const mm = e.target.closest('.utils')[qs]('.mobile-menu');
+   //       mm.classList.toggle('show')
+   //    })
+   // }
    // debugger
    const modal = document[qs]('.modal')
    if (modal) {

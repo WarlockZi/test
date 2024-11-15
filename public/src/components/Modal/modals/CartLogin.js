@@ -1,6 +1,7 @@
 import FieldBuilder from "../builders/FieldBuilder";
 
 import {createElement, emailValidator, getPhpSession, post, sanitizeInput} from "../../../common.js";
+import {qs} from "@src/constants.js";
 
 export default class cartLogin {
    constructor() {
@@ -138,11 +139,13 @@ export default class cartLogin {
    createButton(text){
       return (new createElement()).tag('button').attr('type', 'submit').attr('class', 'button').attr('id', 'forgot').text(text).get()
    }
-   async login({target}) {
-      const email = sanitizeInput(fields.email.value);
-      const password = sanitizeInput(fields.password.value);
+   async login(e) {
+      e.preventDefault()
+      const form = e.target.closest('.box')
+      const email = sanitizeInput(form[qs]('input#email').value);
+      const password = sanitizeInput(form[qs]('input#password').value);
       const sess = getPhpSession();
-      const res = await post('/cart/login', {email, password, sess});
+      const res = await post('/auth/login', {email, password, sess});
       if (res) {
          location.reload()
       }

@@ -199,7 +199,7 @@
       color: var.$color-title;
       margin-bottom: 8%;
       margin-top: 3%;
-      max-width: clamp(35%, 70vw, 85%);
+      max-width: clamp(35%, 70vw, 65%);
     }
 
   }
@@ -244,7 +244,7 @@
         position: absolute;
         top: -77px;
         right: -2%;
-        width: clamp(57px, 13vw, 150px);
+        width: clamp(57px, 13vw, 110px);
         height: 208px;
         filter: blur(3px);
         stroke: var.$color-main;

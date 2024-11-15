@@ -5,6 +5,7 @@
 @use "../../mixin_media";
 @use "../../var";
 
+@include mobile-menu.nav-drill;
 .header {
   display: flex;
   flex-direction: column;
@@ -191,7 +192,8 @@
       width: 100%;
       margin: 0 auto;
       justify-content: end;
-      @include mobile-menu.mobile-menu();
+      //@include mobile-menu.nav-drill;
+      //@include mobile-menu.mobile-menu();
     }
   }
 

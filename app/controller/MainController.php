@@ -3,6 +3,11 @@
 namespace app\controller;
 
 
+use app\model\Category;
+use app\Repository\CategoryRepository;
+use app\view\Category\CategoryFormView;
+use app\view\components\Builders\SelectBuilder\optionBuilders\TreeABuilder;
+
 class MainController extends AppController
 {
     public function __construct(
@@ -58,10 +63,10 @@ class MainController extends AppController
     }
     public function actionSitemap(): void
     {
-//        $this->view= 'default';
-//        $content = file_get_contents(ROOT.'/sitemap1.htm');
+        $tree = CategoryFormView::sitemap();
+        $categories = "<ul class='category-tree'>" . $tree . "</ul>";
         $content = file_get_contents(ROOT.'/sitemap.html');
-        $this->setVars(compact('content'));
+        $this->setVars(compact('content', 'categories'));
     }
     public function actionYandexauth(): void
     {
