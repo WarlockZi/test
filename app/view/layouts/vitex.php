@@ -44,7 +44,7 @@ use app\core\Icon;
 
         <?= $content; ?>
     </main>
-    <div class="hoist"><?=Icon::scrollup();?></div>
+    <div class="hoist" title="Наверх"><?=Icon::scrollup();?></div>
 </div>
 
 <?= $footer; ?>
