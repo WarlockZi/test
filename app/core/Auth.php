@@ -44,7 +44,7 @@ class Auth
             return self::$user;
         }
         if (isset($_SESSION['yandex_id']) && $_SESSION['yandex_id']) {
-            self::$user = UserYandex::find($_SESSION['yandex_id']);
+            self::$user = UserYandex::with('role')->find($_SESSION['yandex_id']);
             return self::$user;
         }
         return null;
