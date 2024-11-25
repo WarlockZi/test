@@ -50,7 +50,7 @@ export default defineConfig(async ({command, mode}) => {
          rollupOptions: {
             input: {
                admin: path.resolve(__dirname, 'public/src/Admin/admin.js'),
-               auth: path.resolve(__dirname, 'public/src/Auth/auth.js'),
+               // auth: path.resolve(__dirname, 'public/src/Auth/auth.js'),
                main: path.resolve(__dirname, 'public/src/Main/main.js'),
             }
          }
