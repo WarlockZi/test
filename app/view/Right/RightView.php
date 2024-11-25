@@ -36,6 +36,7 @@ class RightView
 					->get()
 			)
 			->addButton('ajax')
+            ->model('right')
 			->del()
 			->get();
 	}

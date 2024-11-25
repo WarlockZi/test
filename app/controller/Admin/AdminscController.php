@@ -12,13 +12,9 @@ class AdminscController extends AppController
     public function __construct()
     {
         parent::__construct();
-
-        if (!Auth::getUser()?->isEmployee()) {
-            header('Location:/auth/login');
-        }
     }
 
-    public function actionClearCache()
+    public function actionClearCache(): void
     {
         $path = ROOT . "/tmp/cache/*.txt";
         array_map("unlink", glob($path));
@@ -26,19 +22,20 @@ class AdminscController extends AppController
     }
 
 
-    public function actionSiteMap()
+    public function actionSiteMap(): void
     {
         $iniCatList = App::$app->category->getInitCategories();
         $this->setVars(compact('iniCatList'));
     }
 
-    public function actionPics()
+    public function actionPics(): void
     {
         $pics = App::$app->adminsc->findAll('pic');
         $this->setVars(compact('pics'));
     }
     public function actionIndex(): void
     {
+//        $this->view = 'index';
     }
     public function createSiteMap()
     {

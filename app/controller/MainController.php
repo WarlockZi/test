@@ -63,8 +63,8 @@ class MainController extends AppController
     }
     public function actionSitemap(): void
     {
-        $tree = CategoryFormView::sitemap();
-        $categories = "<ul class='category-tree'>" . $tree . "</ul>";
+//        $tree = CategoryFormView::sitemap();
+        $categories = "<ul class='category-tree'>" .  "</ul>";
         $content = file_get_contents(ROOT.'/sitemap.html');
         $this->setVars(compact('content', 'categories'));
     }
@@ -73,10 +73,12 @@ class MainController extends AppController
         $f = 1;
     }
 
-    public function actionArticles()
+    public function actionStatii()
     {
     }
-
+    public function actionGarantii()
+    {
+    }
     public function actionPoliticaconf()
     {
     }

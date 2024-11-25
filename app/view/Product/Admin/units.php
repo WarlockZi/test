@@ -29,7 +29,7 @@ use app\core\Icon;
 
             <?php foreach ($units as $unit): ?>
                 <?php if (!$unit->pivot->is_base): ?>
-                    <div class="row">
+                    <div class="row" data-productUnitId="<?=$unit->pivot->id?>">
                         <?= ProductFormView::unitsRow($unit,$baseUnit->name,true) ?>
                     </div>
                 <?php endif; ?>

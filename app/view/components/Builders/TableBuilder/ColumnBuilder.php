@@ -79,7 +79,7 @@ class ColumnBuilder
 
     public function search(): self
     {
-        $this->search = '<input type="text">';
+        $this->search = '<input type="text" data-search>';
         return $this;
     }
 

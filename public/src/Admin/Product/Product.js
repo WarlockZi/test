@@ -1,9 +1,11 @@
 import './product.scss'
-import './units'
+import './units.scss'
+import {objAndFiles2FormData, post, $} from '../../common.js'
 import './Props.js'
-import {objAndFiles2FormData, post} from '../../common.js'
 import {qs} from '../../constants'
 import MyQuill from "../../components/quill/MyQuill.js";
+import Select from "@src/components/select/SelectNew.js";
+// import UnitTable from './UnitTable'
 
 export default class Product {
    constructor() {
@@ -16,8 +18,15 @@ export default class Product {
       this.setFields().then()
       this.setDragNDrop().then()
       this.setCardPanel().then()
-      new MyQuill('#detail-text');
+      new MyQuill('#detail-text', true,true,true);
       new MyQuill('#seo_article', true,true,true);
+      this.setUnitsCustomSelects()
+   }
+   setUnitsCustomSelects(){
+      const units = $('.units [custom-select]');
+      [].forEach.call(units, (unit)=>{
+         new Select(unit)
+      })
    }
 
    async setDragNDrop() {

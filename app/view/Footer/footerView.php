@@ -5,7 +5,7 @@
 
             <h4>Категории</h4>
 
-            <? if (isset($rootCategories)): ?>
+            <? if (!empty($rootCategories)): ?>
                 <ul>
                     <? foreach ($rootCategories as $category): ?>
                         <li>

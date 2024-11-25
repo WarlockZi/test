@@ -33,7 +33,7 @@
   }
 
   .custom-table {
-    overflow-x: auto;
+    //overflow-x: auto;
 
     [contenteditable] {
       display: flex;
@@ -90,12 +90,24 @@
 
     input[type=checkbox] {
       width: 20px;
-      height: 20px;
+      display: inline-flex;
       cursor: pointer;
+      height: calc(100% - 2px);
+
+      //&:before{
+      //  content: "";
+      //  display: block;
+      //  width: 1em;
+      //  height: 1em;
+      //  margin: 0;
+      //  border: 1px solid #ccc;
+      //  background: #fff;
+      //}
     }
 
     > * {
       border: 1px solid transparent;
+      box-sizing: border-box;
       padding: 5px 3px;
       border-bottom: solid 1px var.$color-gray4;
       font-size: var.$font-size-table;

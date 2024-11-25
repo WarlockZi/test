@@ -4,7 +4,7 @@ namespace app\controller;
 
 use app\core\Response;
 use app\Repository\MorphRepository;
-use Illuminate\Database\Eloquent\Model;
+use Throwable;
 
 class AppController extends Controller
 {
@@ -15,6 +15,7 @@ class AppController extends Controller
     {
         parent::__construct();
     }
+
     public function __destruct()
     {
         if ($this->isAjax()) exit;
@@ -23,14 +24,13 @@ class AppController extends Controller
     public function actionDelete(): void
     {
         $id = $this->ajax['id'];
-
         if (!$id) Response::exitWithMsg('No id');
-//        $model = new $this->model;
 
-        $item = $this->model::find($id);
-        if ($item) {
-            $destroy = $item->delete();
+        $destroyed = $this->model::destroy($id);
+        if ($destroyed) {
             Response::exitJson(['id' => $id, 'popup' => 'Ok']);
+        } else {
+            Response::exitJson(['popup' => 'Не удален']);
         }
     }
 
@@ -59,16 +59,36 @@ class AppController extends Controller
     protected function updateOrCreateRelation(array $req): void
     {
         $action   = '';
-        $parentId = $req['id'];
-        $relation = $req['relation'];
-        $id       = $req['fields']['id'] ?? null;
-        $fields   = $req['fields'];
-        $model    = $this->model::with($relation)->find($parentId);
-        if ($id) {
-            $rel = $model->$relation->find($id)->updateOrCreate(
-                ['id' => $id],
-                $fields);
-            if ($rel->wasRecentlyCreated) Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
+        $modalId  = $req['id'];
+        $relationName = $req['relation']['name'];
+        $pivot    = $req['relation']['pivot'];
+        $model    = $this->model::with($relationName)->find($modalId);
+
+        if ($relationName) {//for has many models
+            if (!empty($req['relation']['fields'])){
+                $key   = key($req['relation']['fields']) ?? null;
+                $value = $req['relation']['fields'][$key] ?? null;
+                $withRelation = $model->$relationName->pivot->$key = $value;
+                $withRelation->save();
+            }else{
+                $id = $req['relation']['id'];
+                $withRelation = $model->$relationName()->sync([$id]);
+            }
+
+            if ($pivot) {
+                $id                 = $pivot['id'];
+                $pivotField         = $req['relation']['pivot']['field'];
+                $pivotValue         = $req['relation']['pivot']['value'];
+                $pivot              = $model->$relationName()->find($id)->pivot;
+                $pivot->$pivotField = $pivotValue;
+                try {
+                    $pivot->save();
+                    Response::exitJson(['popup' => 'Изменен']);
+                } catch (Throwable $exception) {
+                    Response::exitJson(['popup' => 'Ошибка']);
+                }
+            }
+
         } else {
             if ($model->$relation === null) {
                 $action = 'created';
@@ -78,11 +98,13 @@ class AppController extends Controller
                 $rel    = $model->$relation()->update($fields);
             }
         }
+
         if ($action === 'created') Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
 
         Response::exitJson(['popup' => 'Обновлен']);
     }
-    protected function updateOrCreateMorph(array $req):void
+
+    protected function updateOrCreateMorph(array $req): void
     {
         $morph    = $req['morph'];
         $relation = $morph['relation'];
@@ -95,17 +117,19 @@ class AppController extends Controller
     public function actionUpdateOrCreate(): void
     {
         $req = $this->ajax;
-        if (isset($req['relation'])) {
+        if (!empty($req['relation']['name'])) {
             $this->updateOrCreateRelation($req);
         }
-        if (isset($req['morph'])) {
+        if (!empty($req['fields'])) {
+            $id    = $req['id'] ?? null;
+            $model = $this->model::updateOrCreate(
+                ['id' => $id],
+                $req['fields']
+            );
+        }
+        if (!empty($req['morph'])) {
             $this->updateOrCreateMorph($req);
         }
-
-        $model = $this->model::updateOrCreate(
-            ['id' => $req['id']],
-            $req
-        );
 
         if ($model->wasRecentlyCreated) {
             Response::exitJson(['popup' => 'Создан', 'id' => $model->id]);
@@ -113,18 +137,6 @@ class AppController extends Controller
             Response::exitJson(['popup' => 'Обновлен', 'model' => $model->toArray()]);
         }
         Response::exitWithError('Ошибка');
-
-    }
-
-
-    public function getModel(): Model
-    {
-        return $this->model;
-    }
-
-    public function setModel($model): void
-    {
-        $this->model = $model;
     }
 
 }

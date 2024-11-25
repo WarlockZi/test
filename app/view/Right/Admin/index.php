@@ -1,7 +1,5 @@
+<div class="page-name">Права</div>
 
-
-	<div class="page-name">Права</div>
-
-	<?=$list;?>
+<?= $list; ?>
 
 

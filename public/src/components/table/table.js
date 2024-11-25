@@ -1,75 +1,74 @@
 import './table.scss';
 import {$, debounce, post} from '../../common';
+import {ael} from "@src/constants.js";
+import DTO from "@src/Admin/DTO.js";
+import Select from "@src/components/select/SelectNew.js";
 
-class Table {
+
+export default class Table {
    constructor(table) {
       this.table = table;
       this.model = table.dataset.model ?? table.closest('[data-model]')?.dataset.model;
       this.modelId = table.dataset.id ?? table.closest('[data-model]')?.dataset.id;
       this.relation = table.dataset.relation ?? null;
       this.relationModel = table.dataset.relationmodel ?? null;
-      // this.field = table.dataset.field;
-
-      this.url = `/adminsc/${this.model}/updateOrCreate`
-
+      this.updateOrCreateUrl = `/adminsc/${this.model}/updateOrCreate`
       this.headers = $('.head');
-      this.inputs = $('.head input');
+      this.inputs = $('[data-search]');
       this.hidden = $('[hidden]');
-      this.editable = $('[contenteditable]');
-      this.sortables = $('[data-sort]');
-      // this.add_button = $('.add-model');
-      this.ids = this.getIds();
-      this.rows = this.fillRows();
-      this.WSSelects = $('[custom-select]');
 
-      [].forEach.call(this.WSSelects, (select) => {
-         select.onchange = this.customSelectChange
-      });
-      this.table.addEventListener('click', this.handleClick.bind(this));
-      this.table.addEventListener('keyup', this.handleKeyUp.bind(this));
-      this.table.addEventListener('paste', this.handlePaste.bind(this));
-
-      this.debouncedInput = debounce(this.handleInput);
-      this.directions = Array
-         .from(this.sortables)
-         .map(function (sortable) {
-            return ''
-         });
+      this.table[ael]('click', this.handleClick.bind(this));
+      this.table[ael]('keyup', debounce(this.handleKeyup.bind(this)).bind(this));
+      this.table[ael]('paste', this.handlePaste.bind(this));
+      if (!this.relation) {
+         this.table[ael]('customSelect.changed', this.selectChange.bind(this));
+         this.table[ael]('checkbox.changed', this.checkboxChange.bind(this));
+         this.setSortables()
+         this.setSelects()
+         this.setCheckboxes()
+      }
+      this.setSortables()
    }
 
+   async checkboxChange({target, detail}) {
+      const dto = new DTO(this.modelId, target)
+      await post(this.updateOrCreateUrl, dto)
+   }
+
+   async selectChange(detail) {
+      const target = detail.target
+      const modelId = target.parentNode?.dataset?.id
+      this.update(modelId, detail.target)
+   }
+   async update(modelId, target) {
+      const dto = new DTO(modelId, target)
+      const res = await post(`/adminsc/${this.model}/updateorcreate`, dto)
+   }
    async handleClick(e) {
       const target = e.target;
 
       /// create
       if (target.className === 'add-model') {
-         this.createModel(target)
+         this.updateOrcreate(target)
+
+         /// edit
+      } else if (target.classList.contains('edit')) {
+         this.edit(target)
 
          /// delete
       } else if (
-         target.className === '.del:not(.head)'
-         || target.closest('.del:not(.head)')) {
-         this.modelDel(target.closest('.del:not(.head)'))
-
-         /// edit
-      } else if (target.className === 'edit:not(.head)'
-         || target.closest('.edit:not(.head)')) {
-         e.preventDefault();
-         this.edit(target)
+         target.classList.contains('del') && !target.classList.contains('head')) {
+         this.modelDel(target)
 
          // checkbox
       } else if (target.type === 'checkbox') {
-         const funct = target.dataset.func
-         const base_is_shippable = target.checked
-         const product_1s_id = target.dataset['1sid']
-         const data = {base_is_shippable, product_1s_id}
-         await post(`/adminsc/${this.model}/${funct}`, data)
 
          /// sort
       } else if (target.classList.contains('head')
          || target.classList.contains('icon')) {
          const header = target.closest('.head');
          if (header.hasAttribute('data-sort')) {
-            const index = [].findIndex.call(sortables, (el, i, inputs) => {
+            const index = [].findIndex.call(this.sortables, (el, i, inputs) => {
                return el === header
             });
             this.sortColumn(index)
@@ -78,23 +77,14 @@ class Table {
    }
 
    edit(target) {
+      if (target.classList.contains('head')) return false
       const model = this.relation ? this.relationModel : this.model;
-      const id = this.relation ? target.dataset.id : this.modelId??target.dataset.id;
+      const id = this.relation ? target.dataset.id : this.modelId ?? target.dataset.id;
       window.location = `/adminsc/${model}/edit/${id}`;
    }
 
-   async customSelectChange({target}) {
-      const wrapper = target.closest('[data-model]');
-      if (!wrapper) return false
-
-      const selected = target.options.selectedIndex;
-      const id = target.options[selected].value;
-      const data = {[this.field]: id, id: this.modelId};
-      const res = await post(this.url, data)
-   }
-
    getIds() {
-      let els = $(this.table)[0].querySelectorAll('[data-id]');
+      const els = $(this.table)[0].querySelectorAll('[data-id]');
       return [].filter.call(els, function (el) {
          return el.dataset.id !== '0'
       })
@@ -107,62 +97,54 @@ class Table {
    }
 
    handleKeyUp(e) {
-      let target = e.target;
       e.cancelBubble = true;
+      const target = e.target;
 
       // contenteditable
       if (target.hasAttribute('contenteditable')) {
          this.debouncedInput(target)
 
          /// search
-      } else if (target.closest('.head')) {
+      } else if (target.hasAttribute('data-search')) {
          const header = target.closest('.head');
          const index = [].findIndex.call(this.headers, (el, i, inputs) => {
             return el === header
          });
-         this.search(index, target)
+         this.search(target, index)
       }
    }
 
 /// INPUT
-   async handleInput(target) {
-      // const model = this.makeServerModel(target);
-      const data = this.createModel(target);
-      const res = await post(this.url, data);
-      if (res.arr.id) {
-         this.newRow(res?.arr.id).bind(this)
+   async handleKeyup({target}) {
+      if (target.hasAttribute('data-search')) {
+         this.search(target)
+      } else if (target.hasAttribute('contenteditable')) {
+         // this.debouncedInput(target)
+         const res = await post(this.updateOrCreateUrl, this.DTO(target));
+         if (res?.arr?.id) {
+            this.newRow(res?.arr.id)
+         }
       }
    }
 
-
    // DELETE
-   async modelDel(el) {
+   async modelDel(target) {
       if (!confirm('Удалить?')) return;
-      let id = el.dataset['id'];
-      let res = await post(`/adminsc/${this.model}/delete`, {id});
+      const id = target.dataset['id'];
+      const res = await post(`/adminsc/${this.model}/delete`, {id});
       if (res) {
-         delView(id)
+         this.delRow(id)
       }
    }
 
    // UPDATE OR CREATE
-   createModel(target) {
-      return {
-         "model": this.model,
-         "id": this.modelId,
-         "relation": this.relation,
-         "fields": this.relationDTO(target),
-      };
-   }
-
-
-   relationDTO(target) {
-      if (!this.relation) return null
-      return {
-         id: target.dataset.id,
-         [target.dataset.field]:target.innerText,
+   async updateOrcreate(target) {
+      const res = await post(this.updateOrCreateUrl, this.DTO(target))
+      if (res.arr.id) {
+         this.newRow(res?.arr.id)
       }
    }
+
 
    newRow(id) {
       [].forEach.call(this.hidden, function (el) {
@@ -189,25 +171,22 @@ class Table {
 
 
 /// SEARCH
-   showAllRows() {
-      [].forEach.call(this.rows, (row) => {
-         [].forEach.call(row, el => {
-            el.style.display = 'flex'
-         })
-      })
-   }
-
-   search(index, input) {
-      this.showAllRows();
-      const value = input.value;
-
-      [].forEach.call(this.inputs, (inp) => {
-         if (inp !== input) inp.value = ''
+   search(target, iddex) {
+      const rows = this.fillRows();
+      [].forEach.call(rows, (row) => {
+         [].forEach.call(row, el => el.style.display = 'flex')
       });
 
-      [].forEach.call(this.rows, function (row) {
+      [].forEach.call(this.inputs, (input) => {
+         if (input !== target) input.value = ''
+      });
+      const targetHead = target.closest('.head')
+      const index = [].findIndex.call(this.headers, (el) => {
+         return el === targetHead
+      });
+      [].forEach.call(rows, function (row) {
          const str = row[index].innerText;
-         const regexp = new RegExp(`${value}`, 'gi');
+         const regexp = new RegExp(`${target.value}`, 'gi');
          if (!str.match(regexp)) {
             [].forEach.call(row, el => {
                el.style.display = 'none'
@@ -217,10 +196,10 @@ class Table {
    }
 
    fillRows() {
-      /// get table rows array
-      let rows = [];
-      for (let i = 0; i < this.ids.length; i++) {
-         let id = this.ids[i].dataset.id;
+      const rows = [];
+      const ids = this.getIds()
+      for (let i = 0; i < ids.length; i++) {
+         let id = ids[i].dataset.id;
          let row = $(this.table)[0].querySelectorAll(`[data-id='${id}']`);
          rows.push(row)
       }
@@ -230,11 +209,8 @@ class Table {
 // SORT
    sortColumn(index) {
       const rows = this.fillRows();
-      // Получить текущее направление
       const direction = this.directions[index] || 'asc';
-      // Фактор по направлению
       const multiplier = (direction === 'asc') ? 1 : -1;
-
       const newRows = Array.from(rows);
 
       newRows.sort(function (rowA, rowB) {
@@ -252,7 +228,7 @@ class Table {
             case a === b:
                return 0;
          }
-      });
+      }.bind(this));
 
       // Удалить старые строки
       [].forEach.call(rows, function (nodeList) {
@@ -271,9 +247,8 @@ class Table {
          [].forEach.call(newRow, el => {
             this.headers[this.headers.length - 1].after(el)
          })
-      });
+      }.bind(this));
    }
-
 
    transform(index, content) {// Преобразовать содержимое данной ячейки в заданном столбце
       if (!this.sortables[index]) return;
@@ -281,28 +256,33 @@ class Table {
       return type === 'number' ? parseFloat(content) : content
    }
 
-
-   save(model) {
-      return post(this.url, model.model)
-   }
-
-
-   makeServerModel(target) {
-      const modelName = this.model
-      return {
-         model: {
-            id: target.dataset.id,
-            [target.dataset.field]: target.innerText
-         },
-         modelName
-      };
-   }
-
-   delView(id) {
-      const arr = $(`[data-id='${id}']`);
-      [].forEach.call(arr, function (el) {
-         el.remove()
+   delRow(id) {
+      const cells = $(`[data-id='${id}']`);
+      [].forEach.call(cells, function (cell) {
+         cell.remove()
       })
+   }
+
+
+   setSortables() {
+      this.sortables = $('[data-sort]');
+      this.directions = Array.from(this.sortables)
+         .map(function (sortable) {
+            return ''
+         });
+   }
+   setSelects() {
+      const selects = $('[custom-select]');
+      [].forEach.call(selects, (select) => {
+         new Select(select)
+      });
+   }
+
+   setCheckboxes() {
+      const checkboxes = $('[my-checkbox]');
+      [].forEach.call(checkboxes, (checkbox) => {
+         checkbox[ael]('change', this.checkboxChange.bind(this))
+      });
    }
 }
 
@@ -312,4 +292,3 @@ if (tables) {
       new Table(table)
    })
 }
-export default Table

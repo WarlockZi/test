@@ -2,6 +2,7 @@
 
 namespace app\core;
 
+use app\controller\Controller;
 use app\Services\Logger\ErrorLogger;
 
 class Router
@@ -58,7 +59,11 @@ class Router
 
         $action = $this->route->getAction();
         try {
-            $controller->$action();
+            if (method_exists($controller, $action)) {
+                $controller->$action();
+            } else{
+                $controller->actionNotFound();
+            }
         } catch (\Throwable $exception) {
             $this->handleError($exception);
         }
@@ -71,8 +76,8 @@ class Router
     private function handleError($exception): void
     {
         if (DEV) {
-            echo '<pre>' . $exception->getMessage() . '</pre>';
-            echo '<pre>' . $exception->getTraceAsString() . '</pre>';
+            $this->route->setError($exception->getMessage());
+            $this->route->setError($exception->getTraceAsString());
         }
         $this->errorLogger->write('router error -' . PHP_EOL
             . $exception->getMessage() . PHP_EOL);

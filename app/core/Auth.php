@@ -39,8 +39,8 @@ class Auth
 
     private static function auth(): IUser|null
     {
-        if (isset($_SESSION['id']) && $_SESSION['id']) {
-            self::$user = User::find($_SESSION['id']);
+        if (!empty($_SESSION['id'])) {
+            self::$user = User::with('role')->find($_SESSION['id']);
             return self::$user;
         }
         if (isset($_SESSION['yandex_id']) && $_SESSION['yandex_id']) {

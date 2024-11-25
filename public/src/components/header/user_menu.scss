@@ -81,26 +81,21 @@
   position: relative;
   display: flex;
   align-items: center;
-  font-size: 17px;
   cursor: pointer;
   color: #2b303a;
   flex: 0 1 auto;
   border: 1px solid grey;
   border-radius: 0;
   z-index: 2;
-  margin: 5px 0;
   max-height: 36px;
-  padding: 5px 15px;
-
-  @include mixin_media.m500 {
-    padding: 3px clamp(2px, 2vw, 10px);
-    font-size: clamp(10px, 10vw, 17px);
-
-  }
+  padding: clamp(3px, 2vw, 7px) clamp(3px, 2vw, 15px);
+  font-size: clamp(10px, 10vw, 17px);
+  margin: 5px 2px 5px 0;
 
   svg {
+    height: clamp(8px, 4vw, 17px);
     width: clamp(10px, 4vw, 17px);
-    padding-right: 10px;
+    padding-right: clamp(5px, 2vw, 10px);
   }
 
   span {

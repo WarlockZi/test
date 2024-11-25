@@ -9,7 +9,7 @@ use Throwable;
 
 class YaAuthService
 {
-    private array $info = [];
+    private array $user = [];
 
     public function __construct()
     {
@@ -58,38 +58,37 @@ class YaAuthService
                 $info = curl_exec($ch);
                 curl_close($ch);
 
-                $this->info = json_decode($info, true);
-
+                $this->user = json_decode($info, true);
             }
         }
     }
 
     private function setMockYandexUser(): void
     {
-            $this->info = (new MockYandexUser())->get()->attributesToArray();
+        $this->user = (new MockYandexUser())->get()->attributesToArray();
     }
 
     private function login(): void
     {
         $userYandex = UserYandex::updateOrCreate(
-            ['ya_id' => $this->info['id']],
+            ['ya_id' => $this->user['id']],
             [
-                'ya_id' => $this->info['id'],
-                'login' => $this->info['login'],
-                'client_id' => $this->info['client_id'],
-                'display_name' => $this->info['display_name'],
-                'real_name' => $this->info['real_name'],
-                'first_name' => $this->info['first_name'],
-                'last_name' => $this->info['last_name'],
-                'sex' => $this->info['sex'],
-                'default_email' => $this->info['default_email'],
-                'emails' => implode(',',$this->info['emails']),
-                'birthday' => $this->info['birthday'],
-                'default_avatar_id' => $this->info['default_avatar_id'],
-                'is_avatar_empty' => $this->info['is_avatar_empty'],
-                'default_phone' => $this->info['default_phone'],
-                'psuid' => $this->info['psuid'],
-                'rights' => implode(',',[]),
+                'ya_id' => $this->user['id'],
+                'login' => $this->user['login'],
+                'client_id' => $this->user['client_id'],
+                'display_name' => $this->user['display_name'],
+                'real_name' => $this->user['real_name'],
+                'first_name' => $this->user['first_name'],
+                'last_name' => $this->user['last_name'],
+                'sex' => $this->user['sex'],
+                'default_email' => $this->user['default_email'],
+                'emails' => implode(',', $this->user['emails']),
+                'birthday' => $this->user['birthday'],
+                'default_avatar_id' => $this->user['default_avatar_id'],
+                'is_avatar_empty' => $this->user['is_avatar_empty'],
+                'default_phone' => $this->user['default_phone'],
+                'psuid' => $this->user['psuid'],
+                'rights' => implode(',', []),
             ]
         );
 
@@ -97,9 +96,9 @@ class YaAuthService
         Auth::setUser($userYandex);
     }
 
-    public function userData()
+    public function getUser()
     {
-        return $this->info;
+        return $this->user;
     }
 
 }

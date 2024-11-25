@@ -40,7 +40,7 @@ $authed = \app\core\Auth::getUser();
 
             <div class="total">
                 <div class="title">Всего -&nbsp;&nbsp;</div>
-                <span></span>&nbsp;&nbsp;₽
+                <span></span>
             </div>
 
             <div class="buttons">

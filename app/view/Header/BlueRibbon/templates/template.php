@@ -22,7 +22,7 @@
 
 
                 <li>
-                    <a href="/cart" class="util-item cart" title="Корзина">
+                    <a href="/cart" class="util-item cart-link" title="Корзина">
                         <div class="count<?= $oItems->count() ? ' show' : ''; ?>"><?= $oItems->count(); ?></div>
                         <?= Icon::shoppingCart('feather') ?>
                     </a>

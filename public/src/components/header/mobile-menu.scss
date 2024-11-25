@@ -43,6 +43,9 @@
     height: 100%;
 
     .hamburger {
+      display: flex;
+      align-items: center;
+      height: 100%;
       margin-left: auto;
       color: $white;
       cursor: pointer;
@@ -54,7 +57,7 @@
   }
   .nav-drill {
     margin-top: 40px;
-    transform: translateX(100%);
+    transform: translateX(125vw);
 
     * {
       box-sizing: border-box;
@@ -62,7 +65,7 @@
   }
   .nav-is-toggled {
     .nav-drill {
-      transform: translateX(0);
+      transform: translateX(-125vw);
     }
 
     &::after {
@@ -72,7 +75,7 @@
   }
 
   $nav-width: 250px;
-  $nav-padding: 0.875em 1em;
+  $nav-padding: clamp(0.4em, 1vw, 0.875em) clamp(0.6em, 2vw, 1em);
   $nav-border-color: $primary-color-tint-5;
   $nav-background-color: $white;
   $nav-icon-font: 'Material Icons';
@@ -92,14 +95,16 @@
       position: fixed;
       z-index: 100;
       top: 0;
-      right: 0;
+      right: -125vw;
       width: $nav-width;
       height: 100vh;
       background-color: $nav-background-color;
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
-      transition: 0.45s;
+      transition: transform ease-in-out 0.6s;
+      max-width: 100vw;
+      border-left: 1px solid color.adjust(var.$color-main,$lightness:50%);
     }
 
     &-items {
@@ -117,7 +122,7 @@
       padding: $nav-padding;
       background-color: $nav-background-color;
       color: $link-color;
-      font-size: 1rem;
+      font-size: clamp(.6rem, 4vw,1rem);
       line-height: 1.5em;
       font-weight: 300;
     }

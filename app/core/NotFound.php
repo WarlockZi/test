@@ -21,10 +21,6 @@ class NotFound extends Controller
         $this->file404 = ROOT . '/app/view/404/index.php';
     }
 
-    public function getModel()
-    {
-    }
-
     public static function url(string $url)
     {
         $error = "Плохой запрос url - {$url}";

@@ -1,21 +1,18 @@
-import {$, post} from '../../common'
+import {ael} from "@src/constants.js";
 
-class Checkbox {
-  constructor(context, e) {
-    $('[my-checkbox]').on('change', this.changeHandle.bind(context))
-  }
+export default class Checkbox {
+   constructor(checkbox) {
+      this.id = checkbox.id;
+      this.checkbox = checkbox;
+      checkbox[ael]('change', this.changed.bind(this));
+   }
 
-  async changeHandle({target}) {
-    let field = target?.dataset.field
-
-    let data = {
-      id:this.id,
-      [field]:+target.checked
-    }
-    let res = await post(`/adminsc/${this.model}/updateOrCreate`,data)
-  }
-}
-
-export default function checkbox() {
-  return new Checkbox(...arguments)
+   async changed({target}) {
+      target.dataset.pivotValue= +target.checked
+      this.checkbox.dispatchEvent(
+         new CustomEvent('checkbox.changed', {
+            bubbles:true,
+            detail: target.checked})
+      );
+   }
 }

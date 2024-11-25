@@ -10,7 +10,7 @@ import headerMenu from '../components/header/show-front-menu.js'
 import IntObserver from "../share/scroll/IntObserver.js";
 import MobileMenu from "@src/components/header/mobile-menu.js";
 import Modal from "@src/components/Modal/modal.js";
-import CartLogin from "@src/components/Modal/modals/CartLogin.js";
+import CartLogin from "@src/Auth/CartLogin.js";
 
 document.addEventListener('DOMContentLoaded', async function () {
 
