@@ -11,6 +11,7 @@ use app\model\Unit;
 use app\Repository\ProductRepository;
 use app\Services\ProductImageService;
 use app\view\Category\CategoryFormView;
+use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
@@ -191,7 +192,7 @@ class ProductFormView
             ->tab(
                 ItemTabBuilder::build('Единицы')
                     ->html(
-                        self::units($product)
+                        self::newUnits($product)
                     )
             )
             ->tab(
@@ -227,6 +228,80 @@ class ProductFormView
             ->get();
     }
 
+    protected static function newUnits(Product $product): string
+    {
+        $baseUnit = $product->baseUnit;
+        $table    = Table::build($product->units)
+            ->class('units')
+            ->relation('units', 'productUnit')
+            ->pageTitle("Единица")
+            ->column(
+                ColumnBuilder::build('id')
+                    ->name('Единица')
+                    ->html(
+                        SelectBuilder::build(
+                            ArrayOptionsBuilder::build(Unit::all())
+                                ->get()
+                        )
+                            ->get()
+                    )
+                    ->get()
+            )
+            ->column(
+                ColumnBuilder::build('multiplier')
+                    ->name('Коэфф')
+                    ->callback(function ($unit) {
+                        return $unit->pivot->multiplier;
+                    })
+                    ->contenteditable()
+                    ->get()
+            )
+            ->column(
+                ColumnBuilder::build('base_unit')
+                    ->name('Базовая ед')
+                    ->callback(function () use ($baseUnit) {
+                        return $baseUnit->name;
+                    })
+                    ->get()
+            )
+            ->column(
+                ColumnBuilder::build('is_shippable')
+                    ->name('Отгруж ед')
+                    ->callback(function ($unit) {
+                        return CheckboxBuilder::build()
+                            ->checked($unit->pivot->is_shippable)
+                            ->data('id', $unit->id)
+                            ->data('pivot-field', 'is_shippable')
+                            ->data('pivot-value', $unit->pivot->is_shippable)
+                            ->data('relation', 'units')
+                            ->get();
+                    })
+                    ->get()
+            )
+            ->del()
+            ->addButton()
+            ->get();
+        return $table;
+
+    }
+
+    protected static function units(Product $product): string
+    {
+        $fs           = new FS(__DIR__);
+        $baseUnit     = $product->units()->where('is_base', 1)->first();
+        $units        = $product->units;
+        $noneSelector = SelectBuilder::build(
+            ArrayOptionsBuilder::build(Unit::all())
+                ->initialOption()
+                ->excluded($baseUnit->id ?? 0)
+                ->get()
+        )
+            ->class('name')
+            ->get();
+        $multiplier   = self::multiplier(null);
+        return $fs->getContent('units', compact('units', 'noneSelector', 'baseUnit', 'multiplier'));
+    }
+
     public static function getManufacturer(Product $p): string
     {
         $select = SelectBuilder::build(
@@ -240,7 +315,7 @@ class ProductFormView
         return $select;
     }
 
-    public static function mainImage(Product $p)
+    public static function mainImage(Product $p): string
     {
         $dnd  = DndBuilder::make('product/uploads', 'add-file');
         $src  = (new ProductImageService)->getRelativeImage($p);
@@ -248,7 +323,6 @@ class ProductFormView
         return "<div class='dnd-container'>{$dnd}<img src = '{$src}' title = '{$name}' alt = '{$name}'/></div>";
     }
 
-//77.222.62.219
     protected static function getImage(Product $product, string $relation, string $slug, bool $many = false): string
     {
         $imgs = ImageView::morphImages($product, $relation);
@@ -316,7 +390,7 @@ class ProductFormView
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
             "</div>"
-            :'Справочник отсутствует';
+            : 'Справочник отсутствует';
     }
 
     public static function unitsRow(Unit $unit, string $name, bool $deletable): string
@@ -339,23 +413,6 @@ class ProductFormView
         return $fs->getContent('unitRow', compact('is_base', 'selector', 'name', 'shippable', 'multiplier', 'deletable'));
     }
 
-    protected static function units(Product $product): string
-    {
-        $fs           = new FS(__DIR__);
-        $baseUnit     = $product->units()->where('is_base', 1)->first();
-        $units        = $product->units;
-        $noneSelector = SelectBuilder::build(
-            ArrayOptionsBuilder::build(Unit::all())
-                ->initialOption()
-                ->excluded($baseUnit->id ?? 0)
-                ->get()
-        )
-            ->class('name')
-            ->get();
-        $multiplier   = self::multiplier(null);
-        return $fs->getContent('units', compact('units', 'noneSelector', 'baseUnit', 'multiplier'));
-    }
-
     private static function multiplier($mult): string
     {
         return $mult ? "<input class='multiplier' type='number' value='{$mult}'>" : "<div class='multiplier'></div>";
@@ -367,12 +424,14 @@ class ProductFormView
         include __DIR__ . '/../description.php';
         return ob_get_clean();
     }
+
     protected static function getSeoArticle($product): string
     {
         ob_start();
         include __DIR__ . '/../seoArticle.php';
         return ob_get_clean();
     }
+
     protected static function promotions($product): string
     {
         $inactivePromotions = self::commonPromotions($product->inactivePromotions, 'inactivePromotions', 'Неактивные акции', false, false);

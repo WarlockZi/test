@@ -1,11 +1,8 @@
 <?php
 
 use app\core\Icon;
-use app\Services\CatalogMobileMenu\CatalogMobileMenuService;
-
 
 ?>
-
 <button class="nav-top util-item">
     <span class="hamburger material-icons" id="ham"><?= Icon::menu('feather') ?></span>
 </button>
@@ -16,12 +13,10 @@ use app\Services\CatalogMobileMenu\CatalogMobileMenuService;
             <a class="nav-link nav-expand-link" href="#">
                 Каталог
             </a>
-
-            <?=(new CatalogMobileMenuService())->get();?>
-
+            <?= $mobile_categories ?>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/main/contacts">
+            <a class="nav-link" href="/mai n/contacts">
                 Контакты
             </a>
         </li>
@@ -38,6 +33,16 @@ use app\Services\CatalogMobileMenu\CatalogMobileMenuService;
         <li class="nav-item">
             <a class="nav-link" href="/main/about">
                 О нас
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/main/statii">
+                Статьи
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/main/garantii">
+                Гарантии
             </a>
         </li>
     </ul>

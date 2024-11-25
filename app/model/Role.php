@@ -4,9 +4,17 @@
 namespace app\model;
 
 
-class Role
+use Illuminate\Database\Eloquent\Model;
+
+class Role extends Model
 {
-	protected $timestaps = false;
+    public $timestamps = false;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'sort'
+    ];
 
 	public function users(){
 

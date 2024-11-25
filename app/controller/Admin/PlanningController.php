@@ -2,7 +2,6 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
 use app\core\Auth;
 use app\model\Todo;
 use app\view\Planning\PlanningView;

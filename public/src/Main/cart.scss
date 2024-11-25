@@ -3,7 +3,7 @@
 @use "counter";
 
 .cart {
-  padding: 0 10px;
+  //padding: 0 10px;
 
   .content {
 
@@ -23,11 +23,12 @@
 
         @include mixin_media.m600 {
           grid-template-columns: 20px 100px 1fr 1fr 50px;
-          grid-template-rows: 50px 1fr 100px;
+          grid-template-rows: max-content 1fr 100px;
           grid-template-areas:
                   'id name name name name'
                   'img img shippable shippable shippable'
                   'sum sum sum sum del';
+          grid-auto-rows: max-content;
           div:first-child{
             border-top-left-radius: 5px;
           }
@@ -44,8 +45,33 @@
           .cell {
             border-radius: 0;
           }
-        }
-      ;
+        };
+        @include mixin_media.m400 {
+          grid-template-columns: 20px 100px 1fr 1fr 50px;
+          grid-template-rows: max-content 1fr max-content;
+          grid-template-areas:
+                  'id name name name name'
+                  'img img img img img'
+                  'shippable shippable shippable shippable shippable'
+                  'sum sum sum sum del';
+          grid-auto-rows: max-content;
+          div:first-child{
+            border-top-left-radius: 5px;
+          }
+          div:nth-child(3){
+            border-top-right-radius: 5px;
+          }
+          div:nth-child(5){
+            border-bottom-left-radius: 5px;
+          }
+          div:last-child{
+            border-bottom-right-radius: 5px;
+          }
+
+          .cell {
+            border-radius: 0;
+          }
+        };
       }
 
     }
@@ -88,7 +114,7 @@
 
     .title {
       font-weight: 600;
-
+      flex: 1 0 100px
     }
 
     span {
@@ -96,7 +122,7 @@
       justify-content: end;
       margin: 10px 0;
       padding: 10px;
-      flex: 0 0 150px;
+      flex: 0 0 100px;
     }
 
   }

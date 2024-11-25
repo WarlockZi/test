@@ -12,7 +12,8 @@ class UserYandex extends Model implements IUser
 {
     use softDeletes;
 
-    public $table = 'users_yandex';
+    public $table = 'user_yandex';
+
 
     public $timestamps = true;
     protected $fillable = [
@@ -36,6 +37,16 @@ class UserYandex extends Model implements IUser
         'updated_at',
         'deleted_at',
     ];
+
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Role::class)
+            ->using(RoleUserYandex::class)
+            ->withTimestamps()
+            //            ->withPivot('user_yandex_id', 'role_id')
+            ;
+
+    }
 
     protected function rights(): Attribute
     {

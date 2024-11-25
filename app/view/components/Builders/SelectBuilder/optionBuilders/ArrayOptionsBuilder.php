@@ -14,10 +14,10 @@ class ArrayOptionsBuilder
     protected array $fieldsMap;
     protected string $field = 'name';
 
-    public static function build(Collection $collection, array $fieldsMap = []): ArrayOptionsBuilder
+    public static function build(array|Collection $array, array $fieldsMap = []): ArrayOptionsBuilder
     {
         $arrayOptions            = new self();
-        $arrayOptions->arr       = $collection->toArray();
+        $arrayOptions->arr       = is_array($array)? $array: $array->toArray();
         $arrayOptions->fieldsMap = $fieldsMap;
         return $arrayOptions;
     }
@@ -48,7 +48,7 @@ class ArrayOptionsBuilder
         return $string;
     }
 
-    public function selected(int $selected): ArrayOptionsBuilder
+    public function selected(null|int $selected): ArrayOptionsBuilder
     {
         if ($selected) {
             $this->selected = $selected;

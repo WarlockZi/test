@@ -5,20 +5,20 @@ import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 
 export default class MyQuill {
-   constructor(selector = '#detail-text', autosave = false, toolbar = false, editable = false, theme = 'snow') {
-      // debugger
-     if (!$(selector)) return false
-      this.model = $('[data-model]').first()?.dataset?.model ?? null
-      this.id = $('[data-model]').first()?.dataset?.id ?? null
+   constructor(selector = '#detail-text', autosave = false, toolbar = false, editable = false, theme = 'snow', dto = null,) {
+      if (!$(selector)) return false
+      this.model = $('[data-model]').first()?.dataset?.model ?? dto.model
+      this.id = $('[data-model]').first()?.dataset?.id ?? dto.id
       this.button = $('#button').first()
       this.selector = selector
 
       this.autosave = autosave
       this.editable = editable
-      this.contents = $(selector).first().innerText;
+      this.contents = $(selector).first().innerText ?? '\\n';
 
       this.toolbar = toolbar ? this.setToolbar() : false
       this.options = this.setOptions()
+      this.dto = dto
       this.init()
    }
 
@@ -55,35 +55,23 @@ export default class MyQuill {
       };
    }
 
-   dto(change) {
-      return {
-         id: this.id,
-         relation: "ownProperties",
-         fields: {
-            "seo_article": change,
-         }
-      }
-   }
-
    init() {
-
       const quill = new Quill(this.selector, this.options);
-
       if (this.isJson(this.contents)) {
-         const json = JSON.parse(this.contents);
+         const json = JSON.parse(this.contents+'\n');
          quill.setContents(json)
       } else {
          quill.setText(this.contents)
       }
-
       if (!this.editable) quill.enable(false)
-
       if (this.autosave) {
-
          quill.on('text-change', function (delta) {
+            const id = quill.id
+            const content = JSON.stringify(quill.getContents())
+            const dto = this.dto(content)
 
-            post(`/adminsc/${this.model}/updateOrCreate`,
-               this.dto(JSON.stringify(quill.getContents()))
+            post(`/adminsc/${dto.model}/updateOrCreate`,
+               dto
             )
          }.bind(this));
       }

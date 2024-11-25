@@ -2,11 +2,8 @@ import './counter1'
 import {$, cookieRemove, formatter, getPhpSession, post} from '../common'
 // import Counter1 from "./counter1";
 import Cookie from "../components/cookie/new/cookie";
-import Modal from "../components/Modal/modal";
-import CartLogin from "../components/Modal/modals/CartLogin";
 import {ael, it, qa, qs} from '../constants';
 import shippableTable from "../share/shippable/shippableUnitsTable";
-import Register from "../components/Modal/modals/Register.js";
 
 export default class Cart {
    constructor() {
@@ -28,7 +25,6 @@ export default class Cart {
       this.renderSums()
       this.cookie = new Cookie();
       // this.setCounter()
-      this.setModals()
    }
 
    renderSums() {
@@ -129,21 +125,6 @@ export default class Cart {
       this.$cartEmptyText.classList.remove('none')
       this.$cartCount.classList.add('none')
    }
-
-   setModals() {
-      new Modal({
-         triggers: ['.guest-menu', '#cartLogin'],
-         boxes: new CartLogin(),
-      });
-   }
-
-   // async modalLeadCallback(fields, modal) {
-   //    const name = sanitizeInput(fields.name.value);
-   //    const phone = sanitizeInput(fields.phone.value);
-   //    const company = sanitizeInput(fields.company.value);
-   //    const sess = getPhpSession();
-   //    const res = await post('/cart/lead', {name, phone, company, sess});
-   // }
 
    counterCallback() {
       cookieRemove('cartDeadline')

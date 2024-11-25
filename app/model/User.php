@@ -34,21 +34,39 @@ class User extends Model implements IUser
         'deleted_at',
     ];
 
-
+//    protected function role(): Attribute
+//    {
+//        return Attribute::get(fn(string $this->role) => explode(',', $rights));
+//    }
     protected function rights(): Attribute
     {
-        return Attribute::get(fn(string $rights) => explode(',', $rights));
+        return Attribute::get(fn(string|null $rights) => !empty($rights)?explode(',', $rights):[]);
     }
 
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Role::class)
+            ->using(RoleUser::class);
+    }
+
+    public function can($rights = []): bool
+    {
+        $has   = $this->hasRights($rights);
+        $su    = Auth::isSU();
+        $admin = Auth::getUser()->role->first()->name === 'role_admin';
+        return ($has || $su || $admin);
+    }
 
     public function fio(): string
     {
         return "{$this->surName} {$this->name} {$this->middleName}";
     }
+
     public function mail(): string
     {
         return $this->email;
     }
+
     public function fi(): string
     {
         return "{$this->surName} {$this->name}";
@@ -61,12 +79,6 @@ class User extends Model implements IUser
             : ImageRepository::getImg('/pic/srvc/main/ava_male.png');
     }
 
-    public function can($rights = []): bool
-    {
-        $has = $this->hasRights($rights);
-        $su  = Auth::isSU();
-        return ($has || $su);
-    }
 
     public function isEmployee(): bool
     {
@@ -82,14 +94,17 @@ class User extends Model implements IUser
     {
         return $this->id;
     }
+
     public function isOlya(): bool
     {
         return 'vitex018@yandex.ru' === $this->mail();
     }
+
     public function isSU(): bool
     {
         return $_ENV['SU_EMAIL'] === $this->mail();
     }
+
     public function isAdmin(): bool
     {
         return $this->can(['role_admin']);

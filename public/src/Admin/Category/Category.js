@@ -10,12 +10,10 @@ export default class Category {
    constructor(el) {
       this.el = el;
       this.id = el.dataset.id
-
       this.setCategoryId()
-      this.setShowOnFrontPage()
       this.setProperties()
-      this.setImage()
-      new MyQuill('#seo_article', true,true,true);
+
+      new MyQuill('#seo_article', true,true,true,'snow',this.dto());
    }
 
    setCategoryId() {
@@ -29,22 +27,15 @@ export default class Category {
       new PropertyTable(this.el.querySelector(`[data-relation="properties"]`))
    }
 
-   setShowOnFrontPage() {
-      // new Checkbox(this.el.querySelector(`[data-relation="properties"]`))
-   }
-
-   setImage() {
-      // this.$mainImage = this.$el.querySelector('.mainImage');
-      // new Morph($('[data-dnd]').first(), $category)
-      // this.__dto = this.dto()
-   }
-
-   dto() {
+   dto(change) {
       return {
-         id: this.el.dataset.id,
+         id: this.id,
+         relation: "ownProperties",
+         fields: {
+            "seo_article": change,
+         }
       }
    }
-
    attachCategory({detail}) {
       const data = {
          id: this.id,
@@ -57,15 +48,4 @@ export default class Category {
       post(`/adminsc/category/updateOrCreate`, data)
    }
 
-
-// async function addMainImg(files) {
-//   let catId = $('.item-wrap')[0].dataset.id;
-//   let slugNameId = 1;
-//   let imagable = new Imageable();
-//   let morph = await new Morph(imagable, new Category(catId, slugNameId), files);
-//
-//   let src = await post(imagable.urlOne, morph?.data);
-//   let appendTo = ".image[data-model='category']";
-//   let appendOneImage = morph.appendOneImage(appendTo, src?.arr[0])
-// }
 }

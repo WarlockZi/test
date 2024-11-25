@@ -214,6 +214,7 @@ function getPhpSession() {
 }
 
 function sanitizeInput(input) {
+   if (!input) return
    const map = {
       '&': '&amp;',
       '<': '&lt;',
@@ -236,6 +237,23 @@ function sanitizeInput(input) {
    });
 }
 
+function passwordValidator(pass){
+   const min = 6
+   const errors = []
+
+   const replacePattern = /[a-zA-Z0-9\@\-\_\.А-я]*/
+   if (!pass.length) {
+      errors.push("Поле не должно быть пустым")
+   }
+   if (pass.replace(replacePattern,'').length) {
+      errors.push("Разрешены только английские")
+   }
+   if (pass.length < min) {
+      errors.push("Длина меньше 6 символов")
+   }
+
+   return errors
+}
 function emailValidator(mail){
    const email = decodeURI(mail) //иначе русские буквы после @ шифруются в url
    // const eng = '[а-яА-Я]*'
@@ -246,7 +264,7 @@ function emailValidator(mail){
    const domainLength = '^(.){2,}@(.){2,}\.(.){2,}$'
    const errors = []
 
-   const replacePattern = /[a-zA-Z\@\-\_\.]*/
+   const replacePattern = /[a-zA-Z0-9\@\-\_\.]*/
    if (!email.length) {
       errors.push("Поле не должно быть пустым")
    }
@@ -653,6 +671,8 @@ function addTooltip(args) {
 
 
 export {
+   passwordValidator,
+   emailValidator,
    sanitizeInput,
    createElement,
    time,
@@ -661,7 +681,6 @@ export {
    setCookie,
    getCookie,
    createEl,
-   emailValidator,
    getPhpSession,
    slider,
    cachePage,

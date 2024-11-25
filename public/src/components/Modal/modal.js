@@ -34,10 +34,8 @@ export default class Modal {
    }
 
    removeClasses({target}) {
-      // target.style.visibility = '0';
       target.classList.remove('transform-in')
       target.classList.remove('translate-left')
-      // target.removeEventListener('transitionend', this.removeClasses)
    }
 
    show() {
@@ -53,12 +51,11 @@ export default class Modal {
       openedBox[ael]('transitionend', this.transitionHandler.bind(this))
       openedBox.removeEventListener('transitionend', this.transitionHandler, {once:true})
       openedBox.classList.remove('transform-in');
-
-      this.modal.classList.add('invisible');
       this.overlay.classList.remove('blur')
    }
 
    transitionHandler() {
+      this.modal.classList.add('invisible');
       this.wrap[qa]('.box[id]').forEach(box => box.remove())
    }
 
@@ -73,7 +70,7 @@ export default class Modal {
             const row = box[i];
             for (let j in row) {
                if (j > 0) {
-                  boxClone.querySelector('.content').appendChild(row[j])
+                  boxClone[qs]('.content').appendChild(row[j])
                }
             }
          }

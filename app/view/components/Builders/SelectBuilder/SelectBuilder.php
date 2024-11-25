@@ -69,11 +69,5 @@ class SelectBuilder
         $data = get_object_vars($this);
         return $this->clean($this->fs->getContent('templates/SelectBuilderTemplate', $data));
     }
-//    public function getOptions(): string
-//    {
-//        return $this->options;
-//    }
-
-
 
 }

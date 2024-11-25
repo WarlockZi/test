@@ -1,6 +1,12 @@
 import {$} from "../common.js"
 import {qs} from '../constants'
-import './common.js'
+import '../components/footer/footer.scss'
+import '../components/popup.scss'
+import './admin.scss'
+// import './common.js'
+import './model/cache.js';
+import '../components/accordion/accordion.js'
+import '../components/date/date.js'
 
 import './sync1c/sync1c.js'
 import './Planning/planning.js'
@@ -14,16 +20,26 @@ import Promotion from "../Promotions/Promotion.js"
 import Search from "../components/search/search.js"
 import Navigate from "./components/Navigate.js";
 import '../components/table/table.js'
-import '../components/popup.scss'
 import adminScroll from  '../share/scroll/adminScroll.js'
 
 import AdminHeader from "../components/header/header-adm.js";
-import '../components/footer/footer.scss'
+import Pages from "@src/Admin/Pages/pages.js";
+import Users from "@src/Admin/User/users.js";
+import User from "@src/Admin/User/user.js";
 
 
 
 $(document).ready(async function () {
 
+   if (window.location.pathname === '/adminsc/pages') {
+      new Pages
+   }
+   else if (window.location.pathname === '/adminsc/user'){
+      new Users
+   }
+   else if (window.location.pathname.startsWith('/adminsc/user/edit')){
+      new User
+   }
    const cardPanel = document[qs](`.card-panel`)
    if (cardPanel) {
       const {default: Card_panel} = await import("./../share/card_panel/card_panel")

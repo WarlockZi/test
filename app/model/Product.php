@@ -43,8 +43,6 @@ class Product extends Model
         return $this->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
     }
 
-
-
     public function seo_h1()
     {
         return $this->ownProperties->seo_h1 ?? $this->name;
@@ -212,7 +210,7 @@ class Product extends Model
             ->wherePivot('is_shippable', '=', '1');
     }
 
-    public function units()
+    public function units(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this
             ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')

@@ -4,6 +4,7 @@ namespace app\Repository;
 
 use app\core\Icon;
 use app\model\Category;
+use app\Services\CatalogMobileMenu\CatalogMobileMenuService;
 use Illuminate\Database\Eloquent\Collection;
 
 
@@ -24,6 +25,7 @@ class BlueRibbonRepository
             'child_categories' => $child_categories,
             'oItems' => CartRepository::count(),
             'icon' => Icon::shoppingCart('feather'),
+            'mobile_categories'=>(new CatalogMobileMenuService())->get(),
         ];
     }
 

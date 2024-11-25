@@ -101,6 +101,12 @@ class AdminSidebar
                         "permissions" => [],
                     ],
                     [
+                        "name" => "Пользователи Yandex",
+                        "href" => "/adminsc/useryandex",
+                        "class" => "neon",
+                        "permissions" => [],
+                    ],
+                    [
                         "name" => "crm",
                         "href" => "/adminsc/crm",
                         "class" => "neon",
@@ -129,6 +135,12 @@ class AdminSidebar
                     [
                         "name" => "Права",
                         "href" => "/adminsc/right",
+                        "class" => "neon",
+                        "permissions" => [],
+                    ],
+                    [
+                        "name" => "Роли",
+                        "href" => "/adminsc/role",
                         "class" => "neon",
                         "permissions" => [],
                     ],
@@ -171,6 +183,12 @@ class AdminSidebar
                     [
                         "name" => "Задачи",
                         "href" => "//adminsc/planning",
+                        "class" => "neon",
+                        "permissions" => [],
+                    ],
+                    [
+                        "name" => "Страницы",
+                        "href" => "/adminsc/pages",
                         "class" => "neon",
                         "permissions" => [],
                     ],

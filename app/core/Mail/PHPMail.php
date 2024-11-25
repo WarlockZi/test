@@ -2,6 +2,7 @@
 
 namespace app\core\Mail;
 
+use app\model\User;
 use app\view\Mail\MailView;
 
 class PHPMail extends Mail
@@ -31,10 +32,8 @@ class PHPMail extends Mail
 		return 'Письмо для подтверждения email не отправлено';
 	}
 
-	public function returnPassword($user): string
+	public function sendNewPasswordMail(User $user, string $newPass): string
     {
-		$data['body'] = "Ваш новый пароль: " . $password;
-
 		$this->mailer->setFrom($this->credits['from'], 'VITEX');
 		$this->mailer->addReplyTo($this->credits['replyTo'], 'Vitex');
 		$this->mailer->addAddress($user['email']);
@@ -42,15 +41,16 @@ class PHPMail extends Mail
 		$this->mailer->Subject = 'VITEX|новый пароль';
 
 		$this->mailer->isHTML(true);
-		$this->mailer->Body = MailView::returnPass($user);
-		$this->mailer->AltBody = MailView::returnPassAlt($user);
+		$this->mailer->Body = "Ваш новый пароль: " . $newPass;;
+		$this->mailer->AltBody = "Ваш новый пароль: " . $newPass;;
 
 		$this->mailer->addCustomHeader("List-Unsubscribe", "<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$user['email']}>");
 
-		if ($this->mailer->send()) {
-			return 'Письмо для подтверждения email отправлено';
-		}
-		return 'Письмо для подтверждения email не отправлено';
+        return $this->mailer->send();
+//		if () {
+//			return 'Письмо для подтверждения email отправлено';
+//		}
+//		return 'Письмо для подтверждения email не отправлено';
 	}
 
 

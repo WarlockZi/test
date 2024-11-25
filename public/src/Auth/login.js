@@ -32,7 +32,7 @@ export default class Login {
             $(this.msg).addClass('error');
             return false
         }
-        const suemail = env.VITE_SU_EMAIL;
+        const suemail = env?.VITE_SU_EMAIL;
         const su = suemail === this.email.value;
         if (!su) {
             error = validate.password(this.pass.value);

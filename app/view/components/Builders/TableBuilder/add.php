@@ -4,8 +4,5 @@
 
 <?php elseif ($addButton === 'redirect'): ?>
 
-<!--	<a href="/adminsc/--><?php //= $modelName ?><!--/show"-->
-<!--	   class="add-model">+-->
-<!--	</a>-->
 
 <?php endif; ?>

@@ -27,8 +27,8 @@ class UserLayout extends Layout
     )
     {
         $rootCategories = CategoryRepository::frontCategories();
-        $this->header = new UserHeader($this->route,$rootCategories);
-        $this->footer = new UserFooter($rootCategories);
+        $this->header   = new UserHeader($this->route, $rootCategories);
+        $this->footer   = new UserFooter($rootCategories);
 
         $this->view     = $this->controller->view ?? $this->route->getView() ?? $this->route->getAction() ?? 'default';
         $this->viewFs   = new FS(dirname(__DIR__) . DIRECTORY_SEPARATOR . ucfirst($this->route->getControllerName()));
@@ -52,7 +52,9 @@ class UserLayout extends Layout
             if ($this->view === '404') {
                 return (new FS(ROOT . '/app/view'))->getContent('404', $vars);
             }
-            return $this->viewFs->getContent($this->view, $vars);
+            if (file_exists($this->viewFs->getAbsPath() . $this->view . '.php'))
+                return $this->viewFs->getContent($this->view, $vars);
+            return (new FS(ROOT . '/app/view'))->getContent('default', $vars);
         } catch (\Exception $exception) {
             ob_get_clean();
             ob_flush();

@@ -11,11 +11,11 @@ $user = Auth::getUser(); ?>
 		 <?= Icon::user(); ?>
 		<span>Вход</span>
 
-		<ul class="guest-menu__menu">
-			<li><a href="/auth/login" rel="nofollow">Войти</a></li>
-			<li><a href="/auth/register" rel="nofollow">Регистрация</a></li>
-			<li><a href="/auth/returnpass" rel="nofollow">Забыл пароль</a></li>
-		</ul>
+<!--		<ul class="guest-menu__menu">-->
+<!--			<li><a href="/auth/login" rel="nofollow">Войти</a></li>-->
+<!--			<li><a href="/auth/register" rel="nofollow">Регистрация</a></li>-->
+<!--			<li><a href="/auth/returnpass" rel="nofollow">Забыл пароль</a></li>-->
+<!--		</ul>-->
 
 	</menu>
 

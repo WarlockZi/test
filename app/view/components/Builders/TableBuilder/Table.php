@@ -136,7 +136,6 @@ class Table
         $this->columns['del'] = ColumnBuilder::build()
             ->classHeader('head del')
             ->class('cell del')
-//            ->name(Icon::trashIcon())
             ->callback(fn()=>Icon::trashIcon())
             ->width('50px')
             ->get();
@@ -170,18 +169,6 @@ class Table
         }
         $this->grid .= "style='display: grid; grid-template-columns:{$columns}'";
     }
-
-//    protected function getData($column, $item, $field)
-//    {
-//        if ($column->function) {
-//            $func = $column->function;
-//            return $column->functionClass::$func($column, $item, $field);
-//        } else if ($column->select) {
-//            return $column->select->get($item->$field ?? 0);
-//        } else {
-//            return $item[$field];
-//        }
-//    }
 
     protected function getEmpty($column)
     {
