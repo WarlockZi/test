@@ -3,7 +3,7 @@ import {qs} from '../constants'
 import '../components/footer/footer.scss'
 import '../components/popup.scss'
 import './admin.scss'
-// import './common.js'
+
 import './model/cache.js';
 import '../components/accordion/accordion.js'
 import '../components/date/date.js'
@@ -31,20 +31,20 @@ import User from "@src/Admin/User/user.js";
 
 $(document).ready(async function () {
 
-   if (window.location.pathname === '/adminsc/pages') {
-      new Pages
-   }
-   else if (window.location.pathname === '/adminsc/user'){
-      new Users
-   }
-   else if (window.location.pathname.startsWith('/adminsc/user/edit')){
-      new User
-   }
-   const cardPanel = document[qs](`.card-panel`)
-   if (cardPanel) {
-      const {default: Card_panel} = await import("./../share/card_panel/card_panel")
-      new Card_panel()
-   }
+   // if (window.location.pathname === '/adminsc/pages') {
+   //    new Pages
+   // }
+   // else if (window.location.pathname === '/adminsc/user'){
+   //    new Users
+   // }
+   // else if (window.location.pathname.startsWith('/adminsc/user/edit')){
+   //    new User
+   // }
+   // const cardPanel = document[qs](`.card-panel`)
+   // if (cardPanel) {
+   //    const {default: Card_panel} = await import("./../share/card_panel/card_panel")
+   //    new Card_panel()
+   // }
 
    adminScroll()
    const admin = window.location.pathname.includes('adminsc')
