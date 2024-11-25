@@ -173,7 +173,7 @@ export default class cartLogin {
          if (res?.arr?.role === 'employee') {
             window.location = '/adminsc'
          } else if (res?.arr?.role === 'user') {
-            window.location = '/auth/cabinet'
+            window.location = '/auth/profile'
          } else if (res?.error) {
 
          }
