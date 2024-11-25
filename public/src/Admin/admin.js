@@ -31,32 +31,32 @@ import User from "@src/Admin/User/user.js";
 
 $(document).ready(async function () {
 
-   // if (window.location.pathname === '/adminsc/pages') {
-   //    new Pages
-   // }
-   // else if (window.location.pathname === '/adminsc/user'){
-   //    new Users
-   // }
-   // else if (window.location.pathname.startsWith('/adminsc/user/edit')){
-   //    new User
-   // }
-   // const cardPanel = document[qs](`.card-panel`)
-   // if (cardPanel) {
-   //    const {default: Card_panel} = await import("./../share/card_panel/card_panel")
-   //    new Card_panel()
-   // }
+   if (window.location.pathname === '/adminsc/pages') {
+      new Pages
+   }
+   else if (window.location.pathname === '/adminsc/user'){
+      new Users
+   }
+   else if (window.location.pathname.startsWith('/adminsc/user/edit')){
+      new User
+   }
+   const cardPanel = document[qs](`.card-panel`)
+   if (cardPanel) {
+      const {default: Card_panel} = await import("./../share/card_panel/card_panel")
+      new Card_panel()
+   }
 
    adminScroll()
    const admin = window.location.pathname.includes('adminsc')
    if (!admin) return false
 
-   new AdminHeader()
+   // new AdminHeader()
 
 
-   const test = window.location.href.includes("/test")
-   if (test){
-      const {default:Test} = await import('./Test/index.js')
-   }
+   // const test = window.location.href.includes("/test")
+   // if (test){
+   //    const {default:Test} = await import('./Test/index.js')
+   // }
 
    const AdminSidebar = $('.sidebar').first()
    if (AdminSidebar){
