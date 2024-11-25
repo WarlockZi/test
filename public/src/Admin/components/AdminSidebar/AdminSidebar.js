@@ -1,6 +1,6 @@
 import './adminSidebar.scss'
-import {$} from '../../../common'
-import {ael, qs} from "../../../constants.js";
+import {$} from '@src/common.js'
+import {ael, qs} from "@src/constants.js";
 
 export default class AdminSidebar {
    constructor(sidebar) {
