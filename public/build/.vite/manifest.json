@@ -171,7 +171,7 @@
     ]
   },
   "Auth/auth.js": {
-    "file": "assets/auth-BV5o3y-7.js",
+    "file": "assets/auth-gB49Uy8O.js",
     "name": "auth",
     "src": "Auth/auth.js",
     "isEntry": true,
@@ -187,7 +187,7 @@
     ]
   },
   "Auth/login.js": {
-    "file": "assets/login-sNysL9aU.js",
+    "file": "assets/login-Dpp8LAg6.js",
     "name": "login",
     "src": "Auth/login.js",
     "isDynamicEntry": true,
@@ -222,7 +222,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-3_FuTcF7.js",
+    "file": "assets/main-C9uztkuN.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
