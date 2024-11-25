@@ -6,6 +6,7 @@ interface IUser
 {
     public function getId():int;
     public function can(array $rights):bool;
+    public function role();
     public function isSU():bool;
     public function isAdmin():bool;
     public function isEmployee():bool;
