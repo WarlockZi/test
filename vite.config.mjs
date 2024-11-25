@@ -45,7 +45,7 @@ export default defineConfig(async ({command, mode}) => {
          emptyOutDir: true,
          target: 'esnext',
          manifest: true,
-         // sourcemap: true,
+         sourcemap: true,
 
          rollupOptions: {
             input: {
