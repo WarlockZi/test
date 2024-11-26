@@ -8,7 +8,7 @@ import {$, debounce} from '../../common.js'
 
 import {_test} from "./model/test.js";
 
-import sortable from "../../components/sortable.js"
+// import sortable from "../../components/sortable.js"
 import pagination from "../../components/pagination/pagination.js";
 
 import answer from "./Mode/Answer.js";

@@ -1,6 +1,6 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-DFI2w8Yj.js",
+    "file": "assets/Category-Ch9lhC1W.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -36,7 +36,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-CeEcRikm.js",
+    "file": "assets/Product-_c13npvh.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -58,7 +58,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-C2w5azau.js",
+    "file": "assets/Props-Bf-W4LEn.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -72,7 +72,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-kImGN_0D.js",
+    "file": "assets/admin-XFVLuLWm.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -118,7 +118,7 @@
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-CpjMUxnC.js",
+    "file": "assets/catalog-item-DBhGUWZn.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
@@ -158,7 +158,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-DMnIz7pN.js",
+    "file": "assets/main-Dx4eraqn.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -175,7 +175,7 @@
       "Cart/cart.js"
     ],
     "css": [
-      "assets/main-CUdb9qrx.css"
+      "assets/main-Cr2QMpIm.css"
     ]
   },
   "Product/Product.js": {
