@@ -23,11 +23,11 @@ export default class Table {
       if (!this.relation) {
          this.table[ael]('customSelect.changed', this.selectChange.bind(this));
          this.table[ael]('checkbox.changed', this.checkboxChange.bind(this));
-         this.setSortables()
+         // this.setSortables()
          this.setSelects()
          this.setCheckboxes()
       }
-      this.setSortables()
+      // this.setSortables()
    }
 
    async checkboxChange({target, detail}) {

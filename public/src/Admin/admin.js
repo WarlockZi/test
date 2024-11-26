@@ -46,7 +46,7 @@ $(document).ready(async function () {
       new Card_panel()
    }
 
-   adminScroll()
+   // adminScroll()
    const admin = window.location.pathname.includes('adminsc')
    if (!admin) return false
 

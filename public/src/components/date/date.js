@@ -1,7 +1,7 @@
 import {$, fragmentDate} from '../../common'
 import './date.scss'
 import {ael} from "@src/constants.js";
-import dispatchEvent from "sortablejs/src/EventDispatcher.js";
+// import dispatchEvent from "sortablejs/src/EventDispatcher.js";
 
 const dates = $('[custom-date]')
 
