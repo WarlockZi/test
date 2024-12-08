@@ -196,7 +196,7 @@ export default class cartLogin {
          content.innerHTML = 'Эта почта уже зарегистрирована. Войдите в систему по кнопке внизу Войти или, если не помните пароль, восстановите пароль по кнопке Забыл пароль';
 
       } else {
-         content.innerHTML = res?.arr?.error;
+         content.innerHTML = res?.arr?.error??'Неизвестная ошибка';
       }
    }
 

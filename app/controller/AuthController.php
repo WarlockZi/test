@@ -59,10 +59,9 @@ class AuthController extends AppController
             if (!$req['email']) Response::exitJson(['error' => 'empty email', 'popup' => 'Заполните email' . "\n"]);
             if (!$req['password']) Response::exitJson(['error' => 'empty password', 'popup' => 'Заполните пароль' . "\n"]);
 
-            $user = $this->userRepository->getByEmail($req['email']);
-            if (!empty($user)) {
-//            User::where('email', $req['email'])->first())
-                Response::exitJson(['error' => 'email exists',
+            if (!empty($this->userRepository->getByEmail($req['email']))) {
+                Response::exitJson(['error' => 'mail exists',
+                    'message'=>'Такая почта уже существует',
                     'popup' => 'Такая почта уже зарегистрирована. Либо войдите под своим паролем. Либо восстановите его.' . "\n"
                 ]);
             }
@@ -71,12 +70,12 @@ class AuthController extends AppController
             if ($user) {
                 $message = "Пользователь создан\n";
                 try {
-                    $sent = mail("vvoronik@yandex.ru", "My Subject", "Line 1\nLine 2\nLine 3");
+                    $sent = mail("https://www.mail-tester.com/ ", "My Subject", "Line 1\nLine 2\nLine 3");
                     $this->mailer->sendRegistrationMail($user);
                     Response::exitJson(['success' => 'confirm', 'popup' => $message . "\n"]);
                 } catch (Throwable $exception) {
                     $message .= "Письмо не отправлено";
-                    Response::exitJson(['error' => 'not sent', 'popup' => $message . "\n"]);
+                    Response::exitJson(['error' => 'Письмо не отправлено', 'popup' => $message . "\n"]);
                 }
 
             } else {
