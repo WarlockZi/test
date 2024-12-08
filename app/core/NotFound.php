@@ -18,7 +18,7 @@ class NotFound extends Controller
         parent::__construct();
         $this->assets = new UserAssets();
         $this->assets->setMeta('Страница не найдена', 'Страница не найдена');
-        $this->file404 = ROOT . '/app/view/404/index.php';
+        $this->file404 = ROOT . '/app/view/404/del_index.php';
     }
 
     public static function url(string $url)
@@ -68,7 +68,7 @@ class NotFound extends Controller
     public static function NotFound(string $slug)
     {
         http_response_code(404);
-        $file = 'index.php';
+        $file = 'del_index.php';
         $path = ROOT . '/app/view/404';
         $fs = (new FS($path));
         $view = $fs->getContent('index');

@@ -1,6 +1,3 @@
-
-
-
 <?php $checkboxChecked = (!empty($userFilters) && key_exists($filterName, $userFilters)) ? "checked" : ""; ?>
 
 <div class="filter-save">

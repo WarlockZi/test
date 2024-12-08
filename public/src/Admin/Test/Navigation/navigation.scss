@@ -1,0 +1,21 @@
+@use '../../../mixin_media';
+
+.navigation {
+  display: flex;
+  margin-bottom: 20px;
+  flex-flow: column;
+
+  .info {
+    margin: 0 20px;
+  }
+
+  .pagination__wrap {
+
+  }
+
+  .test-name {
+    @include mixin_media.h1;
+    margin-bottom: 20px;
+    font-weight: normal;
+  }
+}

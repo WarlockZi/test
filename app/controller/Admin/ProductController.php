@@ -3,7 +3,6 @@
 namespace app\controller\Admin;
 
 
-use app\controller\AppController;
 use app\core\Response;
 use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
@@ -47,8 +46,6 @@ class ProductController extends AdminscController
             $product = null;
             $this->setVars(compact('product',));
         }
-//        $this->assets->setProduct();
-//        $this->assets->setQuill();
     }
 
 

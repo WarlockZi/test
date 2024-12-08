@@ -30,7 +30,7 @@ class UserLayout extends Layout
         $this->header   = new UserHeader($this->route, $rootCategories);
         $this->footer   = new UserFooter($rootCategories);
 
-        $this->view     = $this->controller->view ?? $this->route->getView() ?? $this->route->getAction() ?? 'default';
+        $this->view    = $this->controller->view ?? $this->route->getView() ?? $this->route->getAction() ?? 'default';
         $this->viewFs   = new FS(dirname(__DIR__) . DIRECTORY_SEPARATOR . ucfirst($this->route->getControllerName()));
         $this->layout   = "layouts/vitex";
         $this->layoutFs = new FS(dirname(__DIR__));

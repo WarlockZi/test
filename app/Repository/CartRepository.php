@@ -5,60 +5,61 @@ namespace app\Repository;
 use app\core\Auth;
 use app\model\Order;
 use app\model\OrderItem;
-use app\model\Product;
 use Illuminate\Database\Eloquent\Collection;
 
 class CartRepository
 {
-    public static function main(): Collection
+    public static function main(): array|null
     {
-        $user = Auth::getUser();
-        if ($user) {
-            $products = Product::query()
-                ->whereHas('orders')
-                ->with('orders')
-//                ->selectRaw('SUM(count) as count_total')
-                ->whereNull('deleted_at')
-                ->with('units')
-                ->get();
-
-        } else {
-            $products = Product::query()
-                ->whereHas('orderItems')
-                ->with('orderItems')
-                ->with('units')
-                ->get();
-        }
-        $oItem = $products->toArray();
-        return $products;
+        $order = Order::query()
+            ->where('user_id', Auth::getUser()->id)
+            ->whereNull('submitted')
+            ->with(['items' => function ($query) {
+                $query->pluck('name','item.product_id');
+            }])
+            ->with('items.product.units')
+            ->get()
+            ->toArray()
+            ?? null;
+        return $order;
     }
-   public static function convertOrderItemsToOrders(array $req, $userId): void
-   {
-      $oItems = OrderItem::query()
-         ->where('sess', $req['sess'])
-         ->whereNull('deleted_at')
-         ->get();
 
-      foreach ($oItems as $item) {
-         $itemArr            = $item->toArray();
-         $itemArr['user_id'] = $userId;
-         Order::query()->create($itemArr);
-         $item->forceDelete();
-      }
-   }
+    public static function unsubmittedOrders(): Collection|null
+    {
+        return Order::query()
+            ->where('user_id', Auth::getUser()->id)
+            ->whereNotNull('submitted')
+            ->with('items.product.units')
+            ->get() ?? null;
+    }
+
+    public static function convertOrderItemsToOrders(array $req, $userId): void
+    {
+        $oItems = OrderItem::query()
+            ->where('sess', $req['sess'])
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($oItems as $item) {
+            $itemArr            = $item->toArray();
+            $itemArr['user_id'] = $userId;
+            Order::query()->create($itemArr);
+            $item->forceDelete();
+        }
+    }
+
     public static function count()
     {
         $user = Auth::getUser();
         $sess = session_id();
         if ($user) {
             $oItems = Order::query()
-                ->select('user_id', 'sess', 'product_id', 'deleted_at', 'count')
-                ->selectRaw('SUM(count) as count_total')
+                ->select('user_id', 'sess', 'deleted_at')
+//                ->selectRaw('SUM(count) as count_total')
                 ->where('user_id', $user['id'])
                 ->where('sess', $sess)
-                ->whereNull('deleted_at')
+//                ->whereNull('deleted_at')
                 ->with('product')
-                ->groupBy('product_id')
                 ->get();
         } else {
             $oItems = OrderItem::query()

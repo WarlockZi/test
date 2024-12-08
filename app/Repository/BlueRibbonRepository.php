@@ -12,12 +12,11 @@ class BlueRibbonRepository
 {
     public static function data($rootCategories): array
     {
-
         $child_categories = [];
         foreach ($rootCategories as $rootCat) {
             ob_start();
-            self::buildMenu($rootCat->childrenRecursive);
-            $child_categories[$rootCat['name']] = ob_get_clean();
+            self::buildMenu($rootCat->childrenRecursive->toArray());
+            $child_categories[$rootCat->name] = ob_get_clean();
         }
 
         return [
@@ -29,7 +28,7 @@ class BlueRibbonRepository
         ];
     }
 
-    private static function buildMenu(Collection $categories, int $i = 1): void
+    private static function buildMenu(array $categories, int $i = 1): void
     {
         echo "<ul class='h-cat_submenu level-{$i}'>";
         foreach ($categories as $item) {
@@ -40,16 +39,16 @@ class BlueRibbonRepository
         echo '</ul>';
     }
 
-    private static function renderLink(Category $item, int $i): void
+    private static function renderLink(array $item, int $i): void
     {
-        if ($item->childrenRecursive->count()) {
+        if (count($item['children_recursive'])) {
             echo "<div class = 'wrap'>" .
-                "<a href='{$item->href}'>{$item->name}</a>" .
+                "<a href='{$item['href']}'>{$item['name']}</a>" .
                 "<span class='arrow'>></span>" .
                 "</div>";
-            self::buildMenu($item->childrenRecursive, ++$i);
+            self::buildMenu($item['children_recursive'], ++$i);
         } else {
-            echo "<a href='{$item->href}'>{$item->name}</a>";
+            echo "<a href='{$item['href']}'>{$item['name']}</a>";
         }
     }
 

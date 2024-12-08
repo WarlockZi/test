@@ -1,0 +1,20 @@
+@use '../../mixin_media';
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+
+  .finish-test {
+    @include mixin_media.test_button;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+
+    #prev, #next {
+      @include mixin_media.test_button;
+    }
+  }
+}

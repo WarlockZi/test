@@ -5,6 +5,7 @@ namespace app\view\User;
 
 
 use app\core\ConfigNew;
+use app\core\IUser;
 use app\model\Right;
 use app\model\Role;
 use app\model\User;
@@ -161,7 +162,7 @@ abstract class UserView
             ->get();
     }
 
-    public static function admin(User $item): string
+    public static function admin(IUser $item): string
     {
         return ItemBuilder::build($item, 'user')
             ->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
@@ -311,14 +312,13 @@ abstract class UserView
         return RightView::getCheckList($configRights, $rights, $user);
     }
 
-
-    public static function getSex(User $item)
+    public static function getSex(User $item): string
     {
         $options = ArrayOptionsBuilder::build([
             ['id' => 'm', 'name' => 'М'],
             ['id' => 'f', 'name' => 'Ж']
         ])
-            ->selected((int)$item->sex)
+            ->selected($item->sex)
             ->get();
 
         return SelectBuilder::build($options)

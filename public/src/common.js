@@ -118,14 +118,10 @@ function getMorphUrl(model, id) {
    return `/adminsc/${model}/createOrUpdate/${id}`
 }
 
-function getFieldUrl(model, id) {
-   return `/adminsc/${model}/createOrUpdate/${id}`
-}
-
-
 function cachePage(className) {
-   const html = $(className)[0].outerHTML;
-   return trimStr(html)
+   const html = $(className).first().outerHTML;
+   // return html
+   return damn_ampersand(trimStr(html))
 }
 
 const validate = {
@@ -166,7 +162,7 @@ const validate = {
 const popup = {
 
    show: function (txt) {
-      const  popup = this.el('div','popup');
+      const popup = this.el('div', 'popup');
 
       const close = this.el('div', 'popup__close');
       close.innerText = 'X';
@@ -237,7 +233,7 @@ function sanitizeInput(input) {
    });
 }
 
-function passwordValidator(pass){
+function passwordValidator(pass) {
    const min = 6
    const errors = []
 
@@ -245,7 +241,7 @@ function passwordValidator(pass){
    if (!pass.length) {
       errors.push("Поле не должно быть пустым")
    }
-   if (pass.replace(replacePattern,'').length) {
+   if (pass.replace(replacePattern, '').length) {
       errors.push("Разрешены только английские")
    }
    if (pass.length < min) {
@@ -254,7 +250,8 @@ function passwordValidator(pass){
 
    return errors
 }
-function emailValidator(mail){
+
+function emailValidator(mail) {
    const email = decodeURI(mail) //иначе русские буквы после @ шифруются в url
    // const eng = '[а-яА-Я]*'
    const min = 2
@@ -268,7 +265,7 @@ function emailValidator(mail){
    if (!email.length) {
       errors.push("Поле не должно быть пустым")
    }
-   if (email.replace(replacePattern,'').length) {
+   if (email.replace(replacePattern, '').length) {
       errors.push("Разрешены только английские")
    }
    if (email.length < min) {
@@ -298,6 +295,7 @@ function createEl(tagName, className = '', text = '') {
    div.innerText = text ? text : '';
    return div
 }
+
 class createElement {
    constructor() {
       this.attributes = []
@@ -363,10 +361,10 @@ const time = {
    'dMs': 60 * 60 * 24 * 1000,
 };
 
-async function post(url, data = {}) {
-   const init = setInit(url, data)
+async function post(url, data = {}, headers = {}) {
+   const init = setInit(url, data, headers)
    const res = await sendPost(url, init)
-      .catch(err=>{
+      .catch(err => {
          console.log(err)
       })
    handleResponse(res)
@@ -374,12 +372,16 @@ async function post(url, data = {}) {
    return res
 }
 
-function setInit(url, body){
+function isEmptyObj(obj) {
+   return !Object.keys(obj).length
+}
+
+function setInit(url, body, headers) {
    body.phpSession = getPhpSession();
-   const headers = {"X-Requested-With": "XMLHttpRequest"}
+   headers = isEmptyObj(headers) ? {"X-Requested-With": "XMLHttpRequest"} : headers
    if (!(body instanceof FormData)) {
       headers["Content-Type"] = "application/x-www-form-urlencoded"
-   }else{
+   } else {
       return {
          method: 'POST',
          body: body
@@ -388,20 +390,22 @@ function setInit(url, body){
    return {
       method: 'POST',
       headers,
-      body: 'params=' + JSON.stringify(body),
+      body: 'params=' + JSON.stringify(body,null,2),
    }
 }
-
+function damn_ampersand(str){
+   return str.replaceAll('&', '%26');
+}
 function sendPost(url, init) {
    return new Promise(async (resolve, reject) => {
       const res = await fetch(url, init)
-         .then(async res=>{
+         .then(async res => {
             if (res.status === 200) {
                const data = await res.json()
                resolve(data)
             }
          })
-         .catch(err=>{
+         .catch(err => {
             console.log("Fetch error" + err.message)
             reject(err.message)
          })

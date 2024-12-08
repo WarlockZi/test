@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 class ArrayOptionsBuilder
 {
     private array $arr;
-    protected int $selected = 0;
+    protected null|int|string $selected = 0;
     protected array $excluded = [];
     protected string $initialOption = '';
     protected array $fieldsMap;
@@ -48,7 +48,7 @@ class ArrayOptionsBuilder
         return $string;
     }
 
-    public function selected(null|int $selected): ArrayOptionsBuilder
+    public function selected(null|int|string $selected): ArrayOptionsBuilder
     {
         if ($selected) {
             $this->selected = $selected;

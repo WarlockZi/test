@@ -12,13 +12,15 @@ class Order extends Model
 	public $timestamps = true;
 
 	protected $fillable = [
+		'user_id',
+		'user_id',
 		'product_id',
-		'count',
         'unit_id',
+		'bill_id',
+		'count',
 		'sess',
 		'ip',
-		'user_id',
-		'bill_id',
+		'submitted',
         'created_at',
 		'created_at',
         'updated_at',

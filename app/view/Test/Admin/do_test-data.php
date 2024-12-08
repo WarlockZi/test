@@ -1,6 +1,8 @@
+<? include ROOT . '/app/view/Test/Admin/test_edit_prev_next_buttons.php' ?>
+
 <div class="test-data test-do">
 
-	<? foreach ($test->questions as $id_quest => $question): ?>
+    <? foreach ($test->questions as $id_quest => $question): ?>
 	  <div class="question" data-id="<?= $question->id; ?>">
 
 		  <div class="q">
@@ -26,11 +28,4 @@
 
 	  </div>
 	<? endforeach; ?>
-
-
 </div>
-<? include ROOT . '/app/view/Test/Admin/test_edit_prev_next_buttons.php' ?>
-
-<div class="test-do__finish-btn" data-id="<?= $test->id; ?>">ЗАКОНЧИТЬ ТЕСТ</div>
-<!--</div>-->
-

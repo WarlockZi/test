@@ -1,8 +1,8 @@
-<?php if ($product->activepromotions->count()): ?>
+<?php if ($order->activepromotions->count()): ?>
 
 	<div class="promotions">
 		<div class="promotion">Акция</div>
-        <?php foreach ($product->activepromotions as $promotion): ?>
+        <?php foreach ($order->activepromotions as $promotion): ?>
 		  <div class="conditions">При покупке от
 					<?= $promotion->count?? '<b style="color:red;">неустановленного количества</b>';; ?>&nbsp;
 					<?= $promotion->unit->name

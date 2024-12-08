@@ -1,12 +1,12 @@
 <select id="shippableSelector">
 
-    <?php if ($product->shippableUnits->count()): ?>
-        <?php foreach ($product->shippableUnits as $shippable): ?>
+    <?php if ($order->shippableUnits->count()): ?>
+        <?php foreach ($order->shippableUnits as $shippable): ?>
             <option value="<?= $shippable->id ?>"><?= $shippable->name ?></option>
         <?php endforeach; ?>
 
     <?php else: ?>
-        <option value="<?= $product->baseUnit->id ?>"><?= $product->baseUnit->name ?></option>
+        <option value="<?= $order->baseUnit->id ?>"><?= $order->baseUnit->name ?></option>
     <?php endif; ?>
 
 </select>

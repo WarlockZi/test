@@ -1,8 +1,8 @@
-<? $arr = $product->unitsTable[$product['1s_id']]; ?>
+<? $arr = $order->unitsTable[$order['1s_id']]; ?>
 <div class="price">
 
     <div class="new-price">
-        <?="{$arr['formatted_price']} {$arr['currency']} / {$product->baseUnit->name}";?>
+        <?="{$arr['formatted_price']} {$arr['currency']} / {$order->baseUnit->name}";?>
     </div>
 
 </div>

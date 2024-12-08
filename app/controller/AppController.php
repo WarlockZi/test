@@ -28,7 +28,7 @@ class AppController extends Controller
 
         $destroyed = $this->model::destroy($id);
         if ($destroyed) {
-            Response::exitJson(['id' => $id, 'popup' => 'Ok']);
+            Response::exitJson(['id' => $id, 'popup' => 'Удален']);
         } else {
             Response::exitJson(['popup' => 'Не удален']);
         }
@@ -70,7 +70,7 @@ class AppController extends Controller
                 $value = $req['relation']['fields'][$key] ?? null;
                 $withRelation = $model->$relationName->pivot->$key = $value;
                 $withRelation->save();
-            }else{
+            }else if ($req['relation']['id']) {
                 $id = $req['relation']['id'];
                 $withRelation = $model->$relationName()->sync([$id]);
             }
@@ -89,15 +89,16 @@ class AppController extends Controller
                 }
             }
 
-        } else {
-            if ($model->$relation === null) {
-                $action = 'created';
-                $rel    = $model->$relation()->create($fields);
-            } else {
-                $action = 'updated';
-                $rel    = $model->$relation()->update($fields);
-            }
         }
+//        else {
+//            if ($model->$relation === null) {
+//                $action = 'created';
+//                $rel    = $model->$relation()->create($fields);
+//            } else {
+//                $action = 'updated';
+//                $rel    = $model->$relation()->update($fields);
+//            }
+//        }
 
         if ($action === 'created') Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
 

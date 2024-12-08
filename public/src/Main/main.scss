@@ -70,11 +70,11 @@
     flex-direction: column;
     margin: 0 auto;
     width: clamp(100px, 100%, 900px);
-    padding: 127px 0 100px;
+    padding: 150px 0 100px;
     background-color: white;
     min-height: 250px;
 
-    @include mixin_media.m800{
+    @include mixin_media.m800 {
       padding-left: 5px;
       padding-right: 5px;
     }
@@ -156,7 +156,7 @@
     flex-flow: column;
     align-items: start;
 
-    .h3 {
+    .h3, .h1 {
       color: #ffffff;
       font-size: clamp(1rem, 5vw, 1.8rem);
       margin: 0 0 clamp(10px, 5vw, 35px);

@@ -36,13 +36,16 @@ class Product extends Model
     protected $casts = [
         'art' => 'string',
     ];
-    protected $appends = ['price', 'mainImage', 'shortLink'];
+    protected $appends = [
+        'price',
+        'mainImage',
+//        'shortLink'
+    ];
 
-    public function ownProperties()
+    public function ownProperties(): HasOne
     {
         return $this->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
     }
-
     public function seo_h1()
     {
         return $this->ownProperties->seo_h1 ?? $this->name;
@@ -71,11 +74,6 @@ class Product extends Model
     protected function getShortLinkAttribute(): string
     {
         $link = $this->ownProperties->short_link ?? '';
-//        if (!$link) {
-//            $link = ShortlinkService::getValidShortLink();
-//            $this->short_link = $link;
-//            $this->save();
-//        }
         $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
         $host   = $_SERVER['HTTP_HOST'] ?? '';
         return "{$scheme}://{$host}/short/{$link}";
@@ -140,7 +138,7 @@ class Product extends Model
     {
         $baseUnit = $this->baseUnit;
         $price    = number_format((float)$this->price, 2, '.', ' ');
-        return "{$price} ₽ / {$baseUnit->name}";
+        return "{$price} ₽ / {$baseUnit?->name}";
     }
 
     protected function priceWithCurrncyUnitPromotion(float $number, string $currency, string $oldPrice)
@@ -309,45 +307,8 @@ class Product extends Model
             'imageable',
         )->where('slug', 'bigpack');
     }
-//   public function mainImage()
-//   {
-//       $art = $this->art;
-//       $file = ROOT. '/pic/product/upload/'.$art.'.jpg';
-//       return file_exists($file);
-//   }
 
 
-//    public function dopUnits()
-//    {
-//        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-//            ->withPivot('is_shippable', 'multiplier')->wherePivotNull('is_base');
-//    }
-
-//    protected function shortLink(): Attribute
-//    {
-//        return Attribute::get(
-//            function () {
-//                $link = $this->getRawOriginal('short_link');
-//                $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
-//                $host = $_SERVER['HTTP_HOST'] ?? '';
-//                return "{$scheme}://{$host}/short/{$link}";
-//            }
-//        );
-//    }
-    protected static function booted()
-    {
-//        static::Updating(function ($product) {
-//            $product->slug = Slug::slug($product->print_name);
-//            return $product;
-//        });
-    }
-
-//    public function save(array $options = [])
-//    {
-//        if (!$this->short_link)
-//            $this->short_link = ShortlinkService::getValidShortLink();
-//        parent::save($options);
-//    }
 }
 
 

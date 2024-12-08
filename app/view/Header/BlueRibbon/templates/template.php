@@ -2,7 +2,7 @@
 
 <nav class="menu">
     <div class="header-catalog-menu">
-        <? include 'searchPanel.php' ?>
+        <? include 'search_panel.php' ?>
         <div class="header-catalog-menu__wrap">
             <? include 'categories.php' ?>
 
@@ -35,7 +35,7 @@
                 </li>
 
                 <li>
-                    <? include 'mobileMenu.php' ?>
+                    <? include 'mobile_menu.php' ?>
                 </li>
             </ul>
 

@@ -3,31 +3,33 @@
 namespace app\view\share\shippable;
 
 
-use app\model\Product;
+use app\model\Order;
+use app\model\OrderItem;
 
 class ShippableUnitsTableFactory
 {
     private ShippableUnitsTable $self;
-    private Product $product;
+
+    private OrderItem $orderItem;
     private ShippableUnitsTable $table;
 
-    public function __construct(Product $product)
+
+    public function __construct(OrderItem $order)
     {
-        $this->product = $product;
+        $this->order = $order;
     }
 
-    public static function create(Product $product, string $module, ): string
+    public static function create(OrderItem $orderItem, string $module,): string
     {
-        $self        = new self($product);
-        $self->table = new ShippableUnitsTable($product);
+        $self        = new self($orderItem);
+        $self->table = new ShippableUnitsTable($orderItem);
         if ($module === 'product') {
             return $self->table->blueButton()->fontSize(1)->greenButton()->desription()->totalRowSum()->get();
         } elseif ($module === 'category') {
             return $self->table->blueButton()->greenButton()->desription()->get();
-
+        } elseif ($module === 'cart') {
+            return $self->table->desription()->get(); //cart
         }
-        return $self->table->desription()->get(); //cart
-
+        return '';
     }
-
 }

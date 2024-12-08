@@ -1,14 +1,14 @@
-<?php if ($product->units->count()): ?>
-    <?php foreach ($product->units as $unit): ?>
+<?php if ($order->units->count()): ?>
+    <?php foreach ($order->units as $unit): ?>
 
         <?php
-        $u = $product->units->toArray();
+        $u = $order->units->toArray();
         $formattedPrice     = $unit->pivot->multiplier
-            ? number_format($product->price * $unit->pivot->multiplier, 2, '.', ' ')
-            : $product->formattedPrice;
+            ? number_format($order->price * $unit->pivot->multiplier, 2, '.', ' ')
+            : $order->formattedPrice;
         $multipliedBaseUnit = $unit->pivot->multiplier
-            ? "{$unit->name} ({$unit->pivot->multiplier} {$product->baseUnit->name})"
-            : $product->baseUnit->name;
+            ? "{$unit->name} ({$unit->pivot->multiplier} {$order->baseUnit->name})"
+            : $order->baseUnit->name;
 
         ?>
         <div class="price">

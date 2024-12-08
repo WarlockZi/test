@@ -10,6 +10,7 @@ use app\model\User;
 use app\Repository\UserRepository;
 use app\Services\YandexAuth\YaAuthService;
 use app\view\User\UserView;
+use Throwable;
 
 class AuthController extends AppController
 {
@@ -22,7 +23,32 @@ class AuthController extends AppController
 //		$bot = new TelegramBot();
 //		$bot->send('Что так');
         $this->userRepository = new UserRepository();
-        $this->mailer         = new PHPMail('env');
+        $this->mailer         = new PHPMail('vitex');
+//        $this->mailer         = new PHPMail('env');
+//        $this->mailer         = new PHPMail('yandexnew');
+    }
+
+    public function actionReturnpass(): void
+    {
+        if ($req = $this->ajax) {
+            $_SESSION['id'] = '';
+            $user           = $this->userRepository->getByEmail($req['email']);
+
+            if ($user) {
+                $newPassword    = $this->userRepository->randomPassword();
+                $hashedPassword = $this->userRepository->preparePassword($newPassword);
+                $this->userRepository->changePassword($user, $hashedPassword);
+
+                try {
+                    $this->mailer->sendNewPasswordMail($user, $newPassword);
+                    Response::exitJson(['success' => true, 'popup' => 'Новый пароль проверьте на почте']);
+                } catch (\Throwable $exception) {
+                    Response::exitJson(['error' => 'not sent', 'popup' => 'Ошибка']);
+                }
+            } else {
+                Response::exitWithError("Пользователя с таким e-mail нет");
+            }
+        }
     }
 
     public function actionRegister(): void
@@ -33,21 +59,26 @@ class AuthController extends AppController
             if (!$req['email']) Response::exitJson(['error' => 'empty email', 'popup' => 'Заполните email' . "\n"]);
             if (!$req['password']) Response::exitJson(['error' => 'empty password', 'popup' => 'Заполните пароль' . "\n"]);
 
-            if (User::where('email', $req['email'])->first())
+            $user = $this->userRepository->getByEmail($req['email']);
+            if (!empty($user)) {
+//            User::where('email', $req['email'])->first())
                 Response::exitJson(['error' => 'email exists',
                     'popup' => 'Такая почта уже зарегистрирована. Либо войдите под своим паролем. Либо восстановите его.' . "\n"
                 ]);
+            }
 
             $user = $this->userRepository->createUser($req);
             if ($user) {
                 $message = "Пользователь создан\n";
-                $sent    = $this->mailer->sendRegistrationMail($user);
-                if ($sent) {
-                    Response::exitJson(['success' => 'confirm', 'popup' => $message . "\n" . $sent]);
-                } else {
+                try {
+                    $sent = mail("vvoronik@yandex.ru", "My Subject", "Line 1\nLine 2\nLine 3");
+                    $this->mailer->sendRegistrationMail($user);
+                    Response::exitJson(['success' => 'confirm', 'popup' => $message . "\n"]);
+                } catch (Throwable $exception) {
                     $message .= "Письмо не отправлено";
-                    Response::exitJson(['error' => 'not sent', 'popup' => $message . "\n" . $sent]);
+                    Response::exitJson(['error' => 'not sent', 'popup' => $message . "\n"]);
                 }
+
             } else {
                 Response::exitJson(['ьу' => 'no user', 'popup' => "Пользователь не создан"]);
             }
@@ -72,7 +103,7 @@ class AuthController extends AppController
 
             if (!$user) Response::exitJson(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
 
-            if (!$user->confirm) Response::exitJson(['popup'=>'Зайдите на почту чтобы подтвердить регистрацию','error'=>'Зайдите на почту чтобы подтвердить регистрацию']);
+            if (!$user->confirm) Response::exitJson(['popup' => 'Зайдите на почту чтобы подтвердить регистрацию', 'error' => 'Зайдите на почту чтобы подтвердить регистрацию']);
             if ($user->password !== $this->userRepository->preparePassword($data['password'])) {
                 Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
                 if (!$user->isSU()) {
@@ -82,18 +113,17 @@ class AuthController extends AppController
             Auth::setAuth($user);
             Auth::setUser($user);
 
-            if ($user->role === 'role_employee') {
+            if ($user->isEmployee()) {
                 Response::exitJson(['role' => 'employee', 'id' => $user['id']]);
+            } else if ($user->isAdmin()) {
+                Response::exitJson(['role' => 'admin', 'id' => $user['id']]);
             } else {
-                Response::exitJson(['role' => 'user', 'id' => $user['id']]);
+                Response::exitJson(['role' => 'guest', 'id' => $user['id']]);
             }
+            $url = $this->getUrl();
+            $this->setVars(compact('url'));
+
         }
-
-        $url = $this->getUrl();
-
-        $this->setVars(compact('url'));
-
-        $this->view = 'login';
     }
 
     private function getUrl(): string
@@ -129,18 +159,16 @@ class AuthController extends AppController
 
     public function actionChangePassword(): void
     {
-        if ($data = $this->ajax) {
-            if (!$data['old_password'] || !$data['new_password'])
+        if ($req = $this->ajax) {
+            if (!$req['old_password'] || !$req['new_password'])
                 Response::exitWithError('Заполните старый и новый пароль');
 
-            $old_password = $this->userRepository->preparePassword($data['old_password']);
-
-            $user = User::where('password', $old_password)
-                ->get()->toArray();
+            $old_password = $this->userRepository->preparePassword($req['old_password']);
+            $user         = $this->userRepository->getByPass($old_password);
 
             if ($user) {
                 $user        = $user[0];
-                $newPassword = $this->userRepository->preparePassword($data['new_password']);
+                $newPassword = $this->userRepository->preparePassword($req['new_password']);
                 $res         = User::where('id', $user['id'])
                     ->update(['password' => $newPassword]);
                 if ($res) {
@@ -150,29 +178,6 @@ class AuthController extends AppController
                 }
             } else {
                 Response::exitWithError('Не правильный старый пароль (');
-            }
-        }
-    }
-
-    public function actionReturnpass(): void
-    {
-        if ($req = $this->ajax) {
-            $_SESSION['id'] = '';
-            $user           = $this->userRepository->getByEmail($req['email']);
-
-            if ($user) {
-                $newPassword    = $this->userRepository->randomPassword();
-                $hashedPassword = $this->userRepository->preparePassword($newPassword);
-                $this->userRepository->changePassword($user, $hashedPassword);
-
-                try {
-                    $this->mailer->sendNewPasswordMail($user, $newPassword);
-                    Response::exitJson(['success' => true, 'popup' => 'Новый пароль проверьте на почте']);
-                } catch (\Throwable $exception) {
-                    Response::exitJson(['error' => 'not sent', 'popup' => 'Ошибка']);
-                }
-            } else {
-                Response::exitWithError("Пользователя с таким e-mail нет");
             }
         }
     }
@@ -209,18 +214,6 @@ class AuthController extends AppController
         }
     }
 
-
-    public static function user(): array|bool
-    {
-        if (isset($_SESSION['id']) && $_SESSION['id']) return false;
-
-        $user = User::where('id', $_SESSION['id'])->first();
-        if (!$user) return false;
-
-        return $user->toArray();
-
-    }
-
     public function actionUnautherized(): void
     {
         $view = 'unautherized';
@@ -230,4 +223,11 @@ class AuthController extends AppController
     {
         $view = 'unautherized'; // для почтовой отписки
     }
+//    public static function user(): array|bool
+//    {
+//        if (isset($_SESSION['id']) && $_SESSION['id']) return false;
+//        $user = User::where('id', $_SESSION['id'])->first();
+//        if (!$user) return false;
+//        return $user->toArray();
+//    }
 }

@@ -1,8 +1,9 @@
 import './table.scss';
+// import '../select/selectNew.scss';
 import {$, debounce, post} from '../../common';
 import {ael} from "@src/constants.js";
 import DTO from "@src/Admin/DTO.js";
-import Select from "@src/components/select/SelectNew.js";
+import SelectNew from "../../components/select/SelectNew.js";
 
 
 export default class Table {
@@ -23,11 +24,11 @@ export default class Table {
       if (!this.relation) {
          this.table[ael]('customSelect.changed', this.selectChange.bind(this));
          this.table[ael]('checkbox.changed', this.checkboxChange.bind(this));
-         // this.setSortables()
-         this.setSelects()
          this.setCheckboxes()
       }
-      // this.setSortables()
+         // this.setSortables()
+      this.setSelects()
+      this.setSortables()
    }
 
    async checkboxChange({target, detail}) {
@@ -40,10 +41,12 @@ export default class Table {
       const modelId = target.parentNode?.dataset?.id
       this.update(modelId, detail.target)
    }
+
    async update(modelId, target) {
       const dto = new DTO(modelId, target)
       const res = await post(`/adminsc/${this.model}/updateorcreate`, dto)
    }
+
    async handleClick(e) {
       const target = e.target;
 
@@ -96,31 +99,14 @@ export default class Table {
       e.target.innerText = ''
    }
 
-   handleKeyUp(e) {
-      e.cancelBubble = true;
-      const target = e.target;
 
-      // contenteditable
-      if (target.hasAttribute('contenteditable')) {
-         this.debouncedInput(target)
-
-         /// search
-      } else if (target.hasAttribute('data-search')) {
-         const header = target.closest('.head');
-         const index = [].findIndex.call(this.headers, (el, i, inputs) => {
-            return el === header
-         });
-         this.search(target, index)
-      }
-   }
 
 /// INPUT
    async handleKeyup({target}) {
       if (target.hasAttribute('data-search')) {
          this.search(target)
       } else if (target.hasAttribute('contenteditable')) {
-         // this.debouncedInput(target)
-         const res = await post(this.updateOrCreateUrl, this.DTO(target));
+         const res = await post(this.updateOrCreateUrl, new DTO(target.dataset.id, target));
          if (res?.arr?.id) {
             this.newRow(res?.arr.id)
          }
@@ -271,11 +257,14 @@ export default class Table {
             return ''
          });
    }
+
    setSelects() {
-      const selects = $('[custom-select]');
-      [].forEach.call(selects, (select) => {
-         new Select(select)
-      });
+
+         const selects = $('[select-new]:has(option)');
+         [].forEach.call(selects, (select)=>{
+            new SelectNew(select)
+         })
+
    }
 
    setCheckboxes() {
@@ -292,3 +281,20 @@ if (tables) {
       new Table(table)
    })
 }
+// handleKeyUp(e) {
+//    e.cancelBubble = true;
+//    const target = e.target;
+//
+//    // contenteditable
+//    if (target.hasAttribute('contenteditable')) {
+//       this.debouncedInput(target)
+//
+//       /// search
+//    } else if (target.hasAttribute('data-search')) {
+//       const header = target.closest('.head');
+//       const index = [].findIndex.call(this.headers, (el, i, inputs) => {
+//          return el === header
+//       });
+//       this.search(target, index)
+//    }
+// }

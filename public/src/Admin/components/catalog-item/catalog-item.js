@@ -3,6 +3,8 @@ import {$, debounce, post} from '@src/common.js';
 import {ael} from "@src/constants.js";
 import DTO from "@src/Admin/DTO.js";
 import Checkbox from "@src/components/checkbox/checkbox.js";
+import SelectNew from "@src/components/select/SelectNew.js";
+import CustomDate from "@src/components/date/date.js";
 
 export default class CatalogItem {
    constructor(catalogItem) {
@@ -11,6 +13,8 @@ export default class CatalogItem {
       this.model = catalogItem.dataset.model;
       this.id = +catalogItem.dataset.id;
       this.setCheckboxes()
+      this.setSelects()
+      this.setDates()
 
       catalogItem[ael]('click', this.handleClick.bind(this))
       catalogItem[ael]('keyup', debounce(this.handleKeyup.bind(this)))
@@ -22,6 +26,18 @@ export default class CatalogItem {
       const checks = $('[my-checkbox]');
       [].forEach.call(checks, function (check){
          new Checkbox(check)
+      })
+   }
+   setDates() {
+      const dates = $('[custom-date]');
+      [].forEach.call(dates, function (date){
+         new CustomDate(date)
+      })
+   }
+   setSelects() {
+      const selects = $('[select-new]:has(option)');
+      [].forEach.call(selects, function (select){
+         new SelectNew(select)
       })
    }
    async handleChexboxChange({target}) {

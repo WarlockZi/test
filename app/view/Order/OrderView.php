@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class OrderView
 {
-
     public $model = Order::class;
     public $html;
     public static function orderItemEdit(Collection $items): string

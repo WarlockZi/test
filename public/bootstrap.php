@@ -1,8 +1,6 @@
 <?php
 
 use app\core\FS;
-use \app\Services\Chat\ChatService;
-use \app\Services\Chat\WebsocketServer;
 
 ini_set("short_open_tag", 1);
 ini_set('memory_limit', '256M');

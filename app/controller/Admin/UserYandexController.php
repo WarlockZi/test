@@ -6,7 +6,6 @@ use app\core\Auth;
 use app\core\Response;
 use app\model\User;
 use app\model\UserYandex;
-use app\Repository\UserRepository;
 use app\Repository\UserYandexRepository;
 use app\view\User\UserView;
 use app\view\UserYandex\UserYandexView;

@@ -1,6 +1,6 @@
 <div class="filter-wrap">
     <div class="filter-badge-title">Фильтры</div>
-    <?= $filterService->getFilterPanel(); ?>
+        <?= $filterService->getFilterPanel(); ?>
 </div>
 <?= $filterService->getUserFilterString(); ?>
-<?= $productList; ?>
+<?= $productsTable; ?>

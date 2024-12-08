@@ -14,9 +14,10 @@ class OrderItem extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'order_id',
         'product_id',
-        'count',
         'unit_id',
+        'count',
         'sess',
         'ip',
         'created_at',
@@ -49,8 +50,5 @@ class OrderItem extends Model
     public function unit()
     {
         return $this->hasOne(Unit::class, 'id','unit_id');
-
     }
-
-
 }

@@ -286,10 +286,6 @@ abstract class UserYandexView
                         return self::roleSelector($user);
                     })
                     ->get())
-            ->column(
-                ColumnBuilder::build('confirm')
-                    ->name('co')
-                    ->get())
             ->edit()
             ->del()
             ->get();
