@@ -12,40 +12,43 @@
       flex-direction: column;
       gap: 5px;
       overflow-x: auto;
-
+      max-width: calc(100vw - 35px);
 
       .cart-item {
         display: grid;
-        grid-template-columns: 17px 126px 1fr 300px 100px 35px;
+        grid-template-columns: 20px 125px minmax(155px, 400px) 205px 110px 40px;
         grid-template-rows: 100px;
         grid-template-areas:
                   'id img name shippable sum del';
 
-        @include mixin_media.m600 {
+        @include mixin_media.m700 {
           grid-template-columns: 20px 100px 1fr 1fr 50px;
-          grid-template-rows: max-content 1fr 100px;
+          grid-template-rows: max-content 1fr 40px;
           grid-template-areas:
                   'id name name name name'
                   'img img shippable shippable shippable'
                   'sum sum sum sum del';
           grid-auto-rows: max-content;
-          div:first-child{
+          gap:0;
+
+          div:first-child {
             border-top-left-radius: 5px;
           }
-          div:nth-child(3){
+          div:nth-child(3) {
             border-top-right-radius: 5px;
           }
-          div:nth-child(5){
+          div:nth-child(5) {
             border-bottom-left-radius: 5px;
           }
-          div:last-child{
+          div:last-child {
             border-bottom-right-radius: 5px;
           }
 
           .cell {
             border-radius: 0;
           }
-        };
+        }
+      ;
         @include mixin_media.m400 {
           grid-template-columns: 20px 100px 1fr 1fr 50px;
           grid-template-rows: max-content 1fr max-content;
@@ -55,23 +58,24 @@
                   'shippable shippable shippable shippable shippable'
                   'sum sum sum sum del';
           grid-auto-rows: max-content;
-          div:first-child{
+          div:first-child {
             border-top-left-radius: 5px;
           }
-          div:nth-child(3){
+          div:nth-child(3) {
             border-top-right-radius: 5px;
           }
-          div:nth-child(5){
+          div:nth-child(5) {
             border-bottom-left-radius: 5px;
           }
-          div:last-child{
+          div:last-child {
             border-bottom-right-radius: 5px;
           }
 
           .cell {
             border-radius: 0;
           }
-        };
+        }
+      ;
       }
 
     }
@@ -113,6 +117,7 @@
     align-items: center;
 
     .title {
+      font-size: 1.5rem;
       font-weight: 600;
       flex: 1 0 100px
     }

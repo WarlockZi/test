@@ -4,6 +4,7 @@
 namespace app\Repository;
 
 
+use app\core\Cache;
 use app\model\Category;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -11,31 +12,39 @@ class CategoryRepository
 {
     public static function frontCategories()
     {
-        return Category::withWhereHas('ownProperties',
-            fn($q) => $q->where('show_front', 1))
-            ->with('childrenRecursive')
-            ->get();
+        return Cache::get('rootCategories',
+            function () {
+                return Category::withWhereHas('ownProperties',
+                    fn($q) => $q->where('show_front', 1))
+                    ->with('childrenRecursive')
+                    ->get();
+            },
+            1000
+        );
     }
 
-    public function indexInstore(string $path)
+    public function indexInstore(string $url)
     {
-        $category = Category::query()
-            ->with('childrenRecursive')
-            ->withWhereHas('ownProperties',
-                fn($query) => $query->where('path', 'like', $path)
-            )
-            ->with('parentRecursive')
-            ->with('products.ownProperties')
-            ->with('products.orderItems')
-            ->with('productsInStore')
-            ->with('productsNotInStoreInMatrix')
-            ->with(['products.activepromotions' => function ($q) {
-                $q->whereNull('active_till');
-            }])
-            ->with('products.inactivepromotions')
-            ->with('products.shippableUnits')
-            ->get()
-            ->first();
+        $category = Cache::get('categoryWithProducts', function () use ($url) {
+            return Category::query()
+                ->with('childrenRecursive')
+                ->withWhereHas('ownProperties',
+                    fn($query) => $query->where('path', 'like', $url)
+                )
+//            ->with('parentRecursive')
+                ->with('products.ownProperties')
+                ->with('products.orderItems')
+                ->with('productsInStore')
+                ->with('productsNotInStoreInMatrix')
+                ->with(['products.activepromotions' => function ($q) {
+                    $q->whereNull('active_till');
+                }])
+                ->with('products.inactivepromotions')
+                ->with('products.shippableUnits')
+                ->get()
+                ->first();
+        });
+
         return $category;
 
     }
@@ -77,16 +86,23 @@ class CategoryRepository
 
     public static function treeAll(): Collection
     {
-        $cat = Category::query()
-            ->where('category_id', null)
-            ->with(['childrenRecursive' => function ($q) {
-                    $q->select('id', 'name','category_id');
-                }]
-            )
-            ->select('id', 'name')
-            ->whereNull('deleted_at')
-            ->get(['id', 'name'])
-        ;
+//        Cache::delete('categoryTree');
+        $cat = Cache::get(
+            'categoryTree',
+            function () {
+                $cats = Category::query()
+                    ->where('category_id', null)
+                    ->with(['childrenRecursive' => function ($q) {
+                            $q->select('id', 'name', 'category_id');
+                        }]
+                    )
+                    ->select('id', 'name')
+                    ->whereNull('deleted_at')
+                    ->get(['id', 'name']);
+                return $cats;
+            },
+            10
+        );
         return $cat;
     }
 

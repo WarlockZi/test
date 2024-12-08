@@ -26,7 +26,7 @@ use app\controller\Address; ?>
 
         <div class="column">
             <h3>телeфоны :</h3>
-            <a href="tel:+79217131767"><span itemprop="telephone">8-921-713-17-67</span></a>
+            <a href="tel:+79217131767"><span itemprop="telephone" onClick = ym(7715905,'reachGoal','click_on_phone')>8-921-713-17-67 </span></a>
         </div>
     </div>
 

@@ -27,11 +27,11 @@ class Table
     private string $dataModel = '';
     private string $html = '';
     private string $addButton = '';
-    private Collection $items;
+    private Collection|null $items;
 
     private FS $fs;
 
-    public static function build(Collection $items):self
+    public static function build(Collection|null $items):self
     {
         $list            = new static();
         $list->items = $items;

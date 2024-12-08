@@ -8,7 +8,7 @@ export default class DTO {
       const fields = relFields ? {[relFields]: target?.dataset?.value ?? target.innerText ?? target.checked} : {}
       this.relation = {
          name: target?.dataset?.relation ?? '',
-         id: target?.dataset?.value ?? 0,
+         id: target?.dataset?.value ??target?.dataset?.id?? 0,
          fields,
          pivot: {
             field: target?.dataset?.pivotField,

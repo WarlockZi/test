@@ -7,11 +7,11 @@ use app\core\Auth;
 
     <div class="short-link"
          title='Скопировать короткую ссылку'
-         data-shortLink= <?= $product->shortLink; ?>
+         data-shortLink= <?= $order->shortLink; ?>
     >
         <?= \app\core\Icon::link(); ?>
     </div>
     <?php if (Auth::getUser()?->isAdmin()): ?>
-        <a href="/adminsc/product/edit/<?= $product->id ?>" class="edit"><?= \app\core\Icon::edit(); ?></a>
+        <a href="/adminsc/product/edit/<?= $order->id ?>" class="edit"><?= \app\core\Icon::edit(); ?></a>
     <? endif; ?>
 </div>

@@ -24,7 +24,6 @@ class CategoryController extends AppController
     {
         if ($this->route->slug) {
             $this->view = 'category';
-
             $slug = $this->route->slug;
 
             $category = $this->repo->indexInstore($slug);

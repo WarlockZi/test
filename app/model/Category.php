@@ -65,7 +65,14 @@ class Category extends Model
         $host   = $_SERVER['HTTP_HOST'] ?? '';
         return "{$scheme}://{$host}/short/{$link}";
     }
-
+    public function getFlatSelfAndChildrenAttribute()
+    {
+        return collect([$this])->merge(
+            $this->childrenRecursive->flatMap(function($q){
+                return $q->flatSelfAndChildren ?? collect([$this->id, $this->name, $this->category_id]);
+            })
+        );
+    }
     protected function getHrefAttribute(): string
     {
         if (!$this->ownProperties) return '';

@@ -12,6 +12,20 @@
   white-space: nowrap;
   font-size: clamp(.6rem, 5vw, .8rem);
 
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 46%;
+    display: inline-block;
+    border: 5px solid transparent;
+    border-top-color: var.$color-main;
+    margin-left: 9px;
+    @include mixin_media.m500 {
+      position: absolute;
+      top: 8px;
+    }
+  }
   @include mixin_media.m400 {
     display: none;
   }
@@ -36,26 +50,14 @@
     @include mixin_media.h4;
     margin: 0;
     font-size: clamp(.6rem, 5vw, .8rem);
+
   }
 
   & > a {
     position: relative;
     color: #4e4e4e;
 
-    &:after {
-      content: '';
-      position: absolute;
-      left: -25px;
-      top: 30%;
-      display: inline-block;
-      border: 5px solid transparent;
-      border-top-color: var.$color-main;
-      margin-left: 9px;
-      @include mixin_media.m500 {
-        position: absolute;
-        top: 8px;
-      }
-    }
+
   }
 
   .wrap {

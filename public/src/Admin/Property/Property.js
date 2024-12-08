@@ -1,5 +1,5 @@
 import {$, createElement, post} from '../../common'
-import WDSSelect from "../../components/select/WDSSelect";
+import SelectNew from "../../components/select/SelectNew.js";
 
 export default class Property {
   constructor(selectSelector) {
@@ -100,7 +100,7 @@ export default class Property {
     row.append(multiplier);
     row.append(baseUnit);
     row.append(del);
-    new WDSSelect(selector);
+    new SelectNew(selector);
 
     this.$rows.append(row)
   }

@@ -31,7 +31,7 @@ $user = Auth::getUser(); ?>
 
 		<div class="menu">
 			<a href="/auth/profile">Изменить свой профиль</a>
-            <?php if ($user->can(['role_employee'])): ?>
+            <?php if ($user->isEmployee()||$user->isAdmin()): ?>
 			  <a class="list__item" href="/adminsc">Admin</a>
             <?php endif; ?>
 

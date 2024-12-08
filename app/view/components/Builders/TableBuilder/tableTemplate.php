@@ -31,7 +31,7 @@
         <?= $emptyRow; ?>
 
         <!--		 Data rows-->
-        <?php if ($items->count()): ?>
+        <?php if (!empty($items)): ?>
 
 
             <?php foreach ($items as $item): ?>
@@ -60,7 +60,7 @@
 
     </div>
 
-    <?php if (!$items->count()): ?>
+    <?php if (empty($items)): ?>
         <h3 class="no-items">Элементы не найдены</h3>
     <?php endif; ?>
 

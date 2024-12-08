@@ -6,7 +6,7 @@ use app\core\Icon;
 <a href="/catalog/perchatki_medicinskie" class="banner gloves">
     <div class="banner__text">
         <div class="banner__container right">
-            <h3 class="h3">Медицинские перчатки</h3>
+            <h1 class="h1">Медицинские перчатки оптом «Витекс»</h1>
             <p class="p">Нитриловые перчатки добавят комфорта
                 в работе. Плотно облегает руку. Минимально
                 сокращают чувствительность.

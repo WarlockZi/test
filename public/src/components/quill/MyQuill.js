@@ -7,8 +7,8 @@ import 'quill/dist/quill.bubble.css';
 export default class MyQuill {
    constructor(selector = '#detail-text', autosave = false, toolbar = false, editable = false, theme = 'snow', dto = null,) {
       if (!$(selector)) return false
-      this.model = $('[data-model]').first()?.dataset?.model ?? dto.model
-      this.id = $('[data-model]').first()?.dataset?.id ?? dto.id
+      this.model = $('[data-model]').first()?.dataset?.model ?? dto?.model ?? null
+      this.id = $('[data-model]').first()?.dataset?.id ?? dto?.id ?? null
       this.button = $('#button').first()
       this.selector = selector
 
@@ -58,7 +58,7 @@ export default class MyQuill {
    init() {
       const quill = new Quill(this.selector, this.options);
       if (this.isJson(this.contents)) {
-         const json = JSON.parse(this.contents+'\n');
+         const json = JSON.parse(this.contents + '\n');
          quill.setContents(json)
       } else {
          quill.setText(this.contents)

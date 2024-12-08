@@ -1,5 +1,5 @@
 <select
-        custom-select
+        select-new
 <?= $title ?? ''; ?>
 <?= $field ?? ''; ?>
 <?= $name ?? ''; ?>

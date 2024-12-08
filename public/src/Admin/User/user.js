@@ -1,7 +1,7 @@
 import './users.scss'
 
 import {$} from '../../common'
-import Select from "@src/components/select/SelectNew.js";
+import SelectNew from "@src/components/select/SelectNew.js";
 
 export default class User {
    constructor() {
@@ -11,9 +11,9 @@ export default class User {
    }
 
    setSelects() {
-      const selects = $(' [custom-select]');
+      const selects = $('[select-new]:has(option)');
       [].forEach.call(selects, (select) => {
-         new Select(select)
+         new SelectNew(select)
       })
    }
    setRights()

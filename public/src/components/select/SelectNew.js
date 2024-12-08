@@ -1,11 +1,11 @@
-import './WDSSelect.scss'
+import './selectNew.scss'
 
-import {createElement} from "../../common";
+import {$, createElement} from "../../common";
 
-export default class Select {
+export default class SelectNew {
 
    constructor(el) {
-      if (!el) return;
+      if (!el | !$(el).find('option')) return;
 
       this.ul = (new createElement()).tag("ul").attr('class', "options").get();
       this.label = (new createElement()).tag("span").get();
@@ -51,6 +51,7 @@ export default class Select {
    createSelectTag(el) {
       const selectTag = this.setSelectTag(el)
       if (el.hasAttribute('data-field')) selectTag.attr('data-field', el.dataset.field)
+      if (el.hasAttribute('name')) selectTag.attr('name', el.name)
       if (el.hasAttribute('data-relation')) selectTag.attr('data-relation', el.dataset.relation)
       if (el.hasAttribute('data-pivot')) selectTag.attr('data-pivot', el.dataset.pivot)
       if (el.firstElementChild.hasAttribute('data-relation')) selectTag.attr('data-relation', el.firstChild.dataset.relation)

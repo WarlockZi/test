@@ -23,6 +23,23 @@
   }
 }
 
+@mixin test_button {
+  justify-content: center;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: var.$color-main;
+  color: #ffffff;
+  display: flex;
+  font-weight: 400;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+
+  &:hover {
+    transition: box-shadow 100ms;
+    box-shadow: 2px 2px 12px 0px #6a8784;
+  }
+}
 @mixin search-panel {
   .search-panel {
     display: flex;
@@ -550,10 +567,9 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    //max-width: 80vw;
     gap: 20px;
     margin-bottom: 50px;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 
     @include m400 {
       justify-content: center;

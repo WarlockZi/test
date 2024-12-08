@@ -80,10 +80,6 @@ class User extends Model implements IUser
     }
 
 
-    public function isEmployee(): bool
-    {
-        return $this->hasRights(['role_employee']);
-    }
 
     public function hasRights(array $rights): bool
     {
@@ -107,6 +103,17 @@ class User extends Model implements IUser
 
     public function isAdmin(): bool
     {
-        return $this->can(['role_admin']);
+        return $this->role->contains(function ($role) {
+            return $role->name === 'role_admin';
+        });
+//        return $this->can(['role_admin']);
+    }
+
+    public function isEmployee(): bool
+    {
+        return $this->role->contains(function ($role) {
+            return $role->name === 'role_employee';
+        });
+//        return $this->hasRights(['role_employee']);
     }
 }

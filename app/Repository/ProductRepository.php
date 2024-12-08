@@ -70,7 +70,7 @@ class ProductRepository extends AppController
             ->where('slug', 'LIKE', "%{$subslug1}%")
             ->orWhere('slug', 'LIKE', "%{$subslug2}%")
             ->with('activePromotions')
-            ->get()??new \Illuminate\Database\Eloquent\Collection;
+            ->get() ?? new \Illuminate\Database\Eloquent\Collection;
     }
 
     private static function defaultFilter()
@@ -89,6 +89,7 @@ class ProductRepository extends AppController
 
     public static function filter($req)
     {
+//        if (empty($req)) return;
         $nullEvry = self::array_every($req, function ($f) {
             return $f == 0;
         });
@@ -96,16 +97,16 @@ class ProductRepository extends AppController
             return self::defaultFilter();
         };
         extract($req);
-        $query = Product::query();
+        $query = Product::query()->take(10);
 
-        if (isset($instore)) {
+        if (!empty($instore)) {
             if ($instore === '1') {
                 $query->where('instore', '>', 0);
             } elseif ($instore === '2') {
                 $query->where('instore', '=', 0);
             }
         }
-        if (isset($baseIsShippable)) {
+        if (!empty($baseIsShippable)) {
             if ($baseIsShippable === "1") {
                 $query->whereHas('units', function ($q) {
                     $q->where('base_is_shippable', 1);
@@ -114,10 +115,13 @@ class ProductRepository extends AppController
                 $query->whereHas('units', function ($q) {
                     $q->where('base_is_shippable', 0);
                 });
+            } elseif ($baseIsShippable === "3") {
+                $query->withCount('units')
+                ->having('units_count', '=', 1);
             }
         }
 
-        if (isset($deleted)) {
+        if (!empty($deleted)) {
             if ($deleted == "1") { //все
                 $query->withTrashed();
             } elseif ($deleted === "2") { // не удаленные
@@ -127,7 +131,7 @@ class ProductRepository extends AppController
             }
         }
 
-        if (isset($matrix)) {
+        if (!empty($matrix)) {
             if ($matrix === '1') {
                 $query->where("name", 'REGEXP', "\\*$");
             } elseif ($matrix === '2') {
@@ -135,17 +139,17 @@ class ProductRepository extends AppController
             }
         }
 
-        if (isset($take)) {
+        if (!empty($take)) {
             if ($take === "1") {
                 $query->take(20);
             } else if ($take === "2") {
                 $query->take(40);
             } else {
-//                $query->take(10);
+                $query->take(10);
             }
         }
 
-        if (isset($category)) {
+        if (!empty($category)) {
             if ($category) {
                 $query->where('category_id', $category);
             }
@@ -155,7 +159,7 @@ class ProductRepository extends AppController
             ->groupBy('art')
             ->get();
 
-        if (isset($image)) {
+        if (!empty($image)) {
             $noImg = (new ProductImageService())->getNoPhoto();
             if ($image === "1") {
                 $p = $p->filter(function ($product) use ($noImg) {

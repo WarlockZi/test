@@ -1,40 +1,42 @@
-<? use app\core\Icon;
+<?php use app\core\Icon;
 use app\view\share\shippable\ShippableUnitsTableFactory;
 
 $authed = \app\core\Auth::getUser();
 ?>
 <div class="cart">
 
-    <div class="<?= $products->count() ? '' : 'none'; ?> content">
+    <div class="<?= $orders->count() ? '' : 'none'; ?> content">
 
         <h1 class="page-name">Корзина</h1>
 
-        <!--        --><?php //include 'counter.php' ?>
-
         <div class="table" data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
 
-            <?php foreach ($products as $i => $product): ?>
+            <?php foreach ($orders as $order): ?>
 
-                <div class="row cart-item" data-product-id="<?= $product['1s_id']; ?>">
-                    <div class="num cell"><?= ++$i; ?></div>
+                <?php foreach ($order->items as $i => $orderItem): ?>
 
-                    <img src="<?= $product->mainImagePath; ?>" alt="<?= $product->name; ?>">
+                    <div class="row cart-item" data-product-id="<?= $orderItem['product_id']; ?>">
+                        <div class="num cell"><?= ++$i; ?></div>
 
-                    <div class="name-price cell">
-                        <a href="/product/<?= $product->slug; ?>"
-                           class="name">
-                            <?= $product->name; ?>
-                        </a>
+                        <img src="<?= $orderItem->product?->mainImagePath; ?>" alt="<?= $orderItem->product?->name; ?>">
+
+                        <div class="name-price cell">
+                            <a href="/product/<?= $orderItem->product?->slug; ?>"
+                               class="name">
+                                <?= $orderItem->product?->name; ?>
+                            </a>
+                        </div>
+
+                        <div class="cart-shippable-table cell">
+
+                            <?= ShippableUnitsTableFactory::create($orderItem, 'cart'); ?>
+                        </div>
+
+                        <div class="sub-sum sum cell"></div>
+                        <div class="del cell"><?= Icon::trashWhite(); ?></div>
                     </div>
 
-                    <div class="cart-shippable-table cell">
-                        <?= ShippableUnitsTableFactory::create($product, 'cart'); ?>
-                    </div>
-
-                    <div class="sub-sum sum cell"></div>
-                    <div class="del cell"><?= Icon::trashWhite(); ?></div>
-                </div>
-
+                <?php endforeach; ?>
             <?php endforeach; ?>
 
 
@@ -44,19 +46,20 @@ $authed = \app\core\Auth::getUser();
             </div>
 
             <div class="buttons">
-                <?php if (!$authed && !$lead): ?>
-                    <!--                    <div class="button" id="cartSuccess">Оформить заказ</div>-->
-                    <!--                --><? // else: ?>
-                    <!--                                        <div class="button" id="cartLead">Оставить свои данные</div>-->
-                    <div class="button" id="cartLogin">Войти</div>
-                    <!--                    <div class="button" id="cartLogin">Оформить заказ</div>-->
+                <?php if (!\app\core\Auth::getUser()): ?>
+                    <div class="button" id="cartLogin"
+                         title="Чтобы оформить заказ Вам &#10;необходимо зарегистрироваться &#10;или войти под своей учеткой">
+                        Войти
+                    </div>
+                <?php else: ?>
+                    <div class="button" id="cartSubmit">Оформить заказ</div>
                 <?php endif; ?>
             </div>
 
         </div>
 
     </div>
-    <div class="empty-cart <?= $products->count() ? 'none' : ''; ?>">
+    <div class="empty-cart <?= $orders->count() ? 'none' : ''; ?>">
         Корзина пуста
     </div>
 </div>

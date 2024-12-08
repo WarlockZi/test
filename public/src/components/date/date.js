@@ -1,16 +1,14 @@
-import {$, fragmentDate} from '../../common'
+import {fragmentDate} from '../../common'
 import './date.scss'
 import {ael} from "@src/constants.js";
-// import dispatchEvent from "sortablejs/src/EventDispatcher.js";
 
-const dates = $('[custom-date]')
-
-if (dates) {
-   for (let date of dates) {
-      date[ael]('change', onChange)
+export default class CustomDate {
+   constructor(date) {
+      this.date = date;
+      this.date[ael]('change', this.onChange.bind(this));
    }
 
-   function onChange({target}) {
+   onChange({target}) {
       const {yyyy, mm, dd} = fragmentDate(target.value)
       const formated = `${yyyy}-${mm}-${dd}`
       target.setAttribute('data-value', formated)

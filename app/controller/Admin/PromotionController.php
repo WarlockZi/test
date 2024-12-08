@@ -26,8 +26,8 @@ class PromotionController Extends AdminscController
 	public function actionIndex():void
 	{
 		$promotions = Promotion::with('product')->get();
-		$promotions = PromotionFormView::adminIndex($promotions);
-		$this->setVars(compact('promotions'));
+		$content = PromotionFormView::adminIndex($promotions);
+		$this->setVars(compact('content'));
 	}
     public function actionUpdateOrCreate(): void
     {

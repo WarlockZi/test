@@ -20,8 +20,8 @@ class CrmController extends AdminscController
 			header('Location:/auth/profile');
 		}
 	}
-	public function actionClearCache()
-	{
+	public function actionClearCache(): void
+    {
 		$path = ROOT . "/tmp/cache/*.txt";
 		array_map("unlink", glob($path));
 		exit('Успешно');
@@ -33,8 +33,8 @@ class CrmController extends AdminscController
 		$this->setVars(compact('types'));
 	}
 
-	public function actionSiteMap()
-	{
+	public function actionSiteMap(): void
+    {
 		$iniCatList = App::$app->category->getInitCategories();
 		$this->setVars(compact('iniCatList'));
 	}
@@ -55,8 +55,8 @@ class CrmController extends AdminscController
 	{
 	}
 
-	public function actionPics()
-	{
+	public function actionPics(): void
+    {
 		$pics = App::$app->adminsc->findAll('pic');
 		$this->setVars(compact('pics'));
 	}

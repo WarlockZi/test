@@ -162,9 +162,10 @@ export default class cartLogin {
    }
 
    async login(e) {
+      YM('click_on_login')
       const dto = this.authDTO(e)
       const res = await post('/auth/login', dto);
-      if (res?.arr?.role) {
+      if (res?.arr) {
          const content = e.target.closest('.content')
          content.innerHTML = 'Вход выполнен'
 
@@ -172,15 +173,17 @@ export default class cartLogin {
          localStorage.setItem('id', id)
          if (res?.arr?.role === 'employee') {
             window.location = '/adminsc'
-         } else if (res?.arr?.role === 'user') {
+         } else if (res?.arr?.role === 'guest') {
             window.location = '/auth/profile'
+         } else if (res?.arr?.role === 'admin') {
+            window.location = '/adminsc'
          } else if (res?.error) {
-
          }
       }
    }
 
    async register(e) {
+      YM('click_on_register')
       const res = await post('/auth/register', this.authDTO(e));
       const content = e.target.closest('.content')
       if (res?.arr?.success) {

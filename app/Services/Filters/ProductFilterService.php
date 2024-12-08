@@ -3,13 +3,20 @@
 namespace app\Services\Filters;
 
 use app\core\Auth;
+use app\core\Cache;
+use app\core\FS;
+use app\model\Category;
 use app\model\FilterUser;
+use app\Repository\CategoryRepository;
 use app\Repository\ProductFilterRepository;
-use app\view\Category\CategoryFormView;
+use app\view\components\Traits\CleanString;
 use app\view\Filter\FilterView;
 
 class ProductFilterService
 {
+    use CleanString;
+
+    private FS $fs;
     private array $userFilters;
     private string $userFilterString;
     private string $filterPanel;
@@ -18,42 +25,39 @@ class ProductFilterService
 
     public function __construct()
     {
+        $this->fs               = new FS(__DIR__);
         $this->filterView       = new FilterView();
         $this->filterRepository = new ProductFilterRepository();
     }
 
-    public function setUserFilters(): array
+    public function setUserFilters(): void
     {
-        $userFilters = ProductFilterRepository::product(Auth::getUser()['id']);
+        $userFilters = ProductFilterRepository::product(Auth::getUser()->id);
 
-        $obj = $userFilters ? json_decode($userFilters['name']) : null;
-        if (empty($obj)) {
-            $obj = new \stdClass();
+        if (empty($userFilters)) {
+            $this->userFilters = [];
+        } else {
+            $obj       = json_decode($userFilters['name']);
+            $formatted = [];
+            foreach ($obj as $filter => $selected) {
+                $formatted[$filter]['id'] = $selected;
+            }
+            $this->userFilters = $formatted;
         }
-        $args      = get_object_vars($obj);
-        $formatted = [];
-        foreach ($args as $filter => $selected) {
-            $formatted[$filter]['id'] = $selected;
-        }
-        $this->userFilters = $formatted;
-        return $formatted;
     }
 
     public function saveUserFilters(array $req): array
     {
         $reqFilters = $this->getUserFilters($req);
         $json       = json_encode($reqFilters);
-        $find       = [
-            "user_id" => Auth::getUser()['id'],
-            "model" => 'product',
-        ];
-        $new        = [
-            "user_id" => Auth::getUser()['id'],
-            "model" => 'product',
-            'name' => $json,
-        ];
-
-        FilterUser::updateOrCreate($find, $new)->toArray();
+        FilterUser::updateOrCreate(
+            ["user_id" => Auth::getUser()['id'],
+                "model" => 'product',
+            ],
+            ["user_id" => Auth::getUser()['id'],
+                "model" => 'product',
+                'name' => $json,
+            ]);
         return $reqFilters;
 
     }
@@ -72,15 +76,35 @@ class ProductFilterService
         return $userFilters;
     }
 
+
     public function getInitialFilters(): array
     {
-        $CategoryFlatNestedArray = CategoryFormView::productFilterSelector($_POST);
+        $CategoryFlatNestedArray = [];
+        foreach (CategoryRepository::frontCategories()->reverse() as $rootCat) {
+            $c                       = Category::find($rootCat->id)
+                ->flatSelfAndChildren
+                ->map(function ($q) {
+                    return $q;
+                })
+                ->keyBy('id')
+                ->toArray();
+            $result                  = array_combine(
+                array_keys($c),
+                array_map(function ($v) {
+                    return $v['name'];
+                }, $c)
+            );
+            $CategoryFlatNestedArray = [...$result, ...$CategoryFlatNestedArray];
+        }
+
         return include 'productFilters.php';
     }
 
     public function get(): ProductFilterService
     {
-        $initialFilters         = $this->getInitialFilters();
+        $initialFilters         = Cache::get('initialFilters', function () {
+            return $this->getInitialFilters();
+        },10);
         $this->userFilterString = $this->setUserFilterString($_POST, $initialFilters);
         $this->setUserFilters();
 
@@ -96,16 +120,17 @@ class ProductFilterService
                 ->emptyOption()
                 ->get();
         }
-        $this->filterPanel = $this->filterView->getProductFilter($filters);
+        $this->filterPanel = $this->clean($this->filterView->getProductFilter($filters));
         return $this;
     }
 
 
-    private function getSelectedCategoryName($value):string
+    private function getSelectedCategoryName($value): string
     {
-            preg_match('/selected>(&nbsp;)*(.*?)\<\/option/', $value['options'], $matches);
-            return $matches[2];
+        preg_match('/selected>(&nbsp;)*(.*?)\<\/option/', $value['options'], $matches);
+        return $matches[2];
     }
+
     public function setUserFilterString(array $req, array $initialFilters): string
     {
         $notNull = array_filter($req, function ($filter) {
@@ -115,10 +140,10 @@ class ProductFilterService
         foreach ($initialFilters as $filter => $value) {
             $filterRuName = $value['title'];
             if (array_key_exists($filter, $notNull)) {
-
-                $selected = $filter === 'category'
-                    ? $this->getSelectedCategoryName($value)
-                    : $value['options'][$notNull[$filter]];;
+                $selected = $value['options'][$notNull[$filter]];
+//                $selected = $filter === 'category'
+//                    ? $this->getSelectedCategoryName($value)
+//                    : $value['options'][$notNull[$filter]];
                 $selectedSpan = "<span class='selected-value'>{$selected}</span>";
                 $filterSpan   = "<span class='selected-filter'>{$filterRuName}{$selectedSpan}</span>";
             } else {

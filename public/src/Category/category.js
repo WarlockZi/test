@@ -7,7 +7,7 @@ export default class Category {
    constructor() {
       this.category = document[qs]('.category');
       if (!this.category) return false;
-      this.setCardPanel()
+      this.setCardPanel().then()
       this.mapShippableTables()
 
       new MyQuill('#seo_article');
@@ -26,7 +26,6 @@ export default class Category {
    handleClick({target}) {
       if (target.classList.contains('blue-button')) {
          const table = target.closest('[shipable-table]')
-         // const firstRow = table[qs]('.unit-row')
       } else if (target.classList.contains('short-link')) {
          this.cardPanel.shortLink(target)
       }

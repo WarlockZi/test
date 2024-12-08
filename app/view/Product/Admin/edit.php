@@ -1,7 +1,7 @@
-<?php if ($product): ?>
+<?php if ($order): ?>
 
 	<?= $breadcrumbs; ?>
-	<?= $product ?>
+	<?= $order ?>
 
 <?php else: ?>
 	<div>Такого товара нет</div>
