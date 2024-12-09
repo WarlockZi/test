@@ -4,18 +4,19 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\core\FS;
+use app\core\Mail\PHPMail;
 use app\core\Request;
 use app\core\Response;
 use app\model\User;
 use app\Repository\UserRepository;
-use app\Services\Mail\ServerMailer;
+
 use app\Services\YandexAuth\YaAuthService;
 use app\view\User\UserView;
 use Throwable;
 
 class AuthController extends AppController
 {
-    protected ServerMailer $mailer;
+    protected PHPMail $mailer;
     protected UserRepository $userRepository;
 
     public function __construct()
@@ -25,7 +26,7 @@ class AuthController extends AppController
 //		$bot->send('Что так');
         $this->userRepository = new UserRepository();
 //        $this->mailer         = new ServerMailer;
-//        $this->mailer         = new PHPMail('env');
+        $this->mailer         = new PHPMail('env');
 //        $this->mailer         = new PHPMail('yandexnew');
     }
 
@@ -41,8 +42,13 @@ class AuthController extends AppController
                 $this->userRepository->changePassword($user, $hashedPassword);
 
                 try {
+
+//                    $res = $this->mailer->sendNewPasswordMail($user, $newPassword);
                     $path = ROOT . FS::platformSlashes("/app/Services/Mail/ServerMailer.php");
-                    $sent = shell_exec("php $path");
+                    $executable = 1;
+                    exec("php $path",$output);
+//                    $sent = shell_exec("php {$path}");
+//                    $s = mail('vvoronik@yandex.ru', 'subj', 'mess');
 //                    $sent = $this->mailer->mail(['vvoronik@yandex.ru'], 'VITEX|Новый пароль', $newPassword);
                     Response::exitJson(['success' => true, 'popup' => 'Новый пароль проверьте на почте']);
                 } catch (\Throwable $exception) {

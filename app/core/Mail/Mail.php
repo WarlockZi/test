@@ -5,6 +5,8 @@ namespace app\core\Mail;
 
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 use stdClass;
 
 class Mail
@@ -80,6 +82,7 @@ class Mail
         $this->mailer          = new PHPMailer(true);
         $this->mailer->CharSet = 'UTF-8';
         $this->mailer->isSMTP();
+        $this->mailer->SMTPDebug = 1;
 
         $this->mailer->Port       = $credits['port'];
         $this->mailer->SMTPAuth   = true;
@@ -88,6 +91,15 @@ class Mail
         $this->mailer->Host     = $credits['host'];
         $this->mailer->Username = $credits['user'];
         $this->mailer->Password = $credits['pass'];
+
+        $this->mailer->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+
     }
 
     public static function toBase64($str)

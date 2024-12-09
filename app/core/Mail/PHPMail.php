@@ -5,6 +5,7 @@ namespace app\core\Mail;
 use app\core\FS;
 use app\model\User;
 use app\view\Mail\MailView;
+use Throwable;
 
 class PHPMail extends Mail
 {
@@ -44,7 +45,7 @@ class PHPMail extends Mail
 
         $this->mailer->addCustomHeader("List-Unsubscribe", "<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$user['email']}>");
 
-        $this->mailer->send();
+            $this->mailer->send();
     }
 
     public function sendTestResults($post, $resid): void
@@ -59,7 +60,7 @@ class PHPMail extends Mail
         $this->mailer->addCustomHeader("List-Unsubscribe", "<mailto:vvoronik@yandex.ru?subject=unsubscribe&email=vvoronik@yandex.ru>");
 //        $data['to'] = self::getMailsToSendIfRightResults($data['to'], $post['errorCnt']);
 //        $data['altBody'] = "Ссылка на страницу с результатами: тут";
-         $this->mailer->send();
+        $this->mailer->send();
     }
 
     private static function prepareBodyTestResults($data, $id): string
