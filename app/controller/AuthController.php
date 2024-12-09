@@ -3,18 +3,19 @@
 namespace app\controller;
 
 use app\core\Auth;
-use app\core\Mail\PHPMail;
+use app\core\FS;
 use app\core\Request;
 use app\core\Response;
 use app\model\User;
 use app\Repository\UserRepository;
+use app\Services\Mail\ServerMailer;
 use app\Services\YandexAuth\YaAuthService;
 use app\view\User\UserView;
 use Throwable;
 
 class AuthController extends AppController
 {
-    protected PHPMail $mailer;
+    protected ServerMailer $mailer;
     protected UserRepository $userRepository;
 
     public function __construct()
@@ -23,7 +24,7 @@ class AuthController extends AppController
 //		$bot = new TelegramBot();
 //		$bot->send('Что так');
         $this->userRepository = new UserRepository();
-        $this->mailer         = new PHPMail('vitex');
+//        $this->mailer         = new ServerMailer;
 //        $this->mailer         = new PHPMail('env');
 //        $this->mailer         = new PHPMail('yandexnew');
     }
@@ -40,7 +41,9 @@ class AuthController extends AppController
                 $this->userRepository->changePassword($user, $hashedPassword);
 
                 try {
-                    $this->mailer->sendNewPasswordMail($user, $newPassword);
+                    $path = ROOT . FS::platformSlashes("/app/Services/Mail/ServerMailer.php");
+                    $sent = shell_exec("php $path");
+//                    $sent = $this->mailer->mail(['vvoronik@yandex.ru'], 'VITEX|Новый пароль', $newPassword);
                     Response::exitJson(['success' => true, 'popup' => 'Новый пароль проверьте на почте']);
                 } catch (\Throwable $exception) {
                     Response::exitJson(['error' => 'not sent', 'popup' => 'Ошибка']);
@@ -61,7 +64,7 @@ class AuthController extends AppController
 
             if (!empty($this->userRepository->getByEmail($req['email']))) {
                 Response::exitJson(['error' => 'mail exists',
-                    'message'=>'Такая почта уже существует',
+                    'message' => 'Такая почта уже существует',
                     'popup' => 'Такая почта уже зарегистрирована. Либо войдите под своим паролем. Либо восстановите его.' . "\n"
                 ]);
             }
