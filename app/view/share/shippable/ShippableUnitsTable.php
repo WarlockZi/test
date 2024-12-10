@@ -84,11 +84,6 @@ class ShippableUnitsTable
         return '';
     }
 
-    private function getOrders()
-    {
-        return Auth::getUser() ? $this->product->orders : $this->product->orderItems;
-    }
-
     private function getCost(int $count, int $multiplier): string
     {
         return $this->format($count * $multiplier * (float)$this->price);
@@ -123,7 +118,8 @@ class ShippableUnitsTable
 
     private function getCount($unit)
     {
-        $o = $this->getOrders()->filter(
+        if (!isset($this->product->orders?->orderItems)) return 0;
+        $o = $this->product->orders?->orderItems?->filter(
             function ($order) use ($unit) {
                 return $order->unit_id === $unit['id'];
             }
@@ -137,7 +133,9 @@ class ShippableUnitsTable
         foreach ($this->units as $unit) {
             $count      = $this->getCount($unit);
             $multiplier = $unit->pivot->multiplier ?? 1;
-            $orderItemId = $this->product->orderItems->contains($unit->id) ?? 0;
+            $orderItemId = isset($this->product?->orders?->orderItems)
+                    ?$this->product->orders->orderItems->contains($unit->id)
+                    : 0;
             $arr        = [
                 'orderItemId'=>$orderItemId,
                 "unit" => $unit,

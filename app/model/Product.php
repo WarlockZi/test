@@ -3,6 +3,7 @@
 namespace app\model;
 
 
+use app\core\Auth;
 use app\Services\ProductImageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -178,11 +179,19 @@ class Product extends Model
 
     public function orders(): HasMany
     {
-        $orders = $this
-            ->hasMany(Order::class, 'product_id', '1s_id')
-            ->whereNull('deleted_at')
-            ->where('sess', $_SESSION['phpSession'])//            ->get()
-        ;
+        $user = Auth::getUser();
+        if ($user) {
+            $orders = $this
+                ->hasMany(Order::class, 'user_id', 'id')
+//                ->where('sess', session_id())//            ->get()
+            ;
+        }else{
+            $orders = $this
+                ->hasMany(Order::class, 'sess', session_id())
+//                ->where('sess', session_id())//            ->get()
+            ;
+        }
+
 //        $oI = $orders->toArray();
 
         return $orders;

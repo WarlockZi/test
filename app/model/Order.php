@@ -27,7 +27,7 @@ class Order extends Model
         'deleted_at'
 	];
 
-	public function items():HasMany
+	public function orderItems():HasMany
 	{
 		return $this->hasMany(OrderItem::class);
 	}
