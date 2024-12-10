@@ -4,6 +4,7 @@
 namespace app\Repository;
 
 
+use app\core\Auth;
 use app\model\Order;
 use app\model\OrderItem;
 use app\model\User;
@@ -72,9 +73,17 @@ class OrderRepository
 
     public static function count(): int
     {
-        return OrderItem::where('sess', session_id())
-            ->whereNull('deleted_at')
-            ->get()
-            ->count();
+        $user = Auth::getUser();
+        if ($user) {
+            return Order::where('user_id', $user->id)
+//                ->whereNull('deleted_at')
+                ->get()
+                ->count();
+        } else {
+            return Order::where('sess', session_id())
+//                ->whereNull('deleted_at')
+                ->get()
+                ->count();
+        }
     }
 }

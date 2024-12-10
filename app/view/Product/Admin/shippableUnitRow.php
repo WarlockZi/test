@@ -4,7 +4,7 @@
     <span>₽ /</span>
     <div class='unit'>
         <span class="unit-name"><?= $unit->name ?></span>
-        <span> (<?= $unit->pivot->multiplier ?? 1; ?><?= $order->baseUnit->name; ?>)</span>
+        <span> (<?= $unit->pivot->multiplier ?? 1; ?><?= $product->baseUnit->name; ?>)</span>
     </div>
 </div>
 

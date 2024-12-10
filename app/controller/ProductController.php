@@ -34,10 +34,10 @@ class ProductController extends AppController
         }
         $this->view = 'product';
         if ($product) {
-            $oItems          = OrderRepository::count();
+            $order          = OrderRepository::count();
             $breadcrumbs     = BreadcrumbsRepository::getCategoryBreadcrumbs($product->category_id, true,);
             $shippablePrices = $this->formView->dopUnitsPrices($product);
-            $this->setVars(compact('shippablePrices', 'product', 'breadcrumbs', 'oItems'));
+            $this->setVars(compact('shippablePrices', 'product', 'breadcrumbs', 'order'));
 
             $title    = $product->seo_title();
             $desc     = $product->seo_description();

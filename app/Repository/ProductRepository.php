@@ -54,7 +54,7 @@ class ProductRepository extends AppController
             ->with('bigpackImages')
             ->with('activepromotions.unit')
             ->with('shippableUnits')
-            ->with('orderItems')
+            ->with('orders.orderItems')
             ->where('slug', $slug)
             ->first() ?? null;
     }
