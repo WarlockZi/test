@@ -25,13 +25,12 @@ class CategoryRepository
 
     public function indexInstore(string $url)
     {
-        $category = Cache::get('categoryWithProducts', function () use ($url) {
+        return Cache::get('categoryWithProducts', function () use ($url) {
             return Category::query()
                 ->with('childrenRecursive')
                 ->withWhereHas('ownProperties',
                     fn($query) => $query->where('path', 'like', $url)
                 )
-//            ->with('parentRecursive')
                 ->with('products.ownProperties')
                 ->with('products.orderItems')
                 ->with('productsInStore')
@@ -44,9 +43,6 @@ class CategoryRepository
                 ->get()
                 ->first();
         });
-
-        return $category;
-
     }
 
     public static function changeProperty(array $req): void
