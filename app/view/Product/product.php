@@ -1,7 +1,7 @@
 <?php
-if ($order): ?>
+if ($product): ?>
 
-    <?php if ($order->deleted_at): ?>
+    <?php if ($product->deleted_at): ?>
         <div class="deleted-overlay">
             <h1 class="deleted">
                 Товар закончился
@@ -9,10 +9,10 @@ if ($order): ?>
 
         </div>
     <?php endif; ?>
-    <div class="product-card" data-1sid="<?= $order['1s_id']; ?>">
+    <div class="product-card" data-1sid="<?= $product['1s_id']; ?>">
 
         <?= $breadcrumbs ?>
-        <h1><?= $order['print_name']; ?></h1>
+        <h1><?= $product['print_name']; ?></h1>
 
 
         <div class="product-card_hero">
@@ -23,11 +23,11 @@ if ($order): ?>
         <div class="info-wrap">
             <div class="info-tag">Информация о товаре</div>
             <div class="properties">
-                <h2><?=$order->seo_h1()?></h2>
+                <h2><?=$product->seo_h1()?></h2>
 
-                <div id="seo-article"><?=$order->seo_article()?></div>
+                <div id="seo-article"><?=$product->seo_article()?></div>
 
-                <?php foreach ($order->values as $value): ?>
+                <?php foreach ($product->values as $value): ?>
                     <?php include __DIR__ . '/property.php'; ?>
                 <?php endforeach; ?>
             </div>
@@ -36,7 +36,7 @@ if ($order): ?>
         <div class="info-wrap">
             <div class="info-tag">Характеристики</div>
 
-            <article id="detail-text"><?= $order->txt; ?></article>
+            <article id="detail-text"><?= $product->txt; ?></article>
         </div>
 
 

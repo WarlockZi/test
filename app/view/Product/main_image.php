@@ -1,6 +1,6 @@
 <div class='main-image'>
-    <figure class="zoom" style="background-image: url('<?= $order->mainImage; ?>')">
-        <img src='<?= $order->mainImage; ?>' title='<?= $order->name ?>' alt='<?= $order->name; ?>'/>
+    <figure class="zoom" style="background-image: url('<?= $product->mainImage; ?>')">
+        <img src='<?= $product->mainImage; ?>' title='<?= $product->name ?>' alt='<?= $product->name; ?>'/>
     </figure>
 </div>
 
