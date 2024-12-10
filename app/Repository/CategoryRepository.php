@@ -26,15 +26,15 @@ class CategoryRepository
     public function indexInstore(string $url)
     {
         return Cache::get('categoryWithProducts', function () use ($url) {
-            return Category::query()
+            $cat = Category::query()
                 ->with('childrenRecursive')
                 ->withWhereHas('ownProperties',
                     fn($query) => $query->where('path', 'like', $url)
                 )
                 ->with('products.ownProperties')
-                ->with('products.orderItems')
-                ->with('productsInStore')
-                ->with('productsNotInStoreInMatrix')
+//                ->with('products.orders.items')
+                ->with('productsInStore.orders.orderItems')
+                ->with('productsNotInStoreInMatrix.orders.orderItems')
                 ->with(['products.activepromotions' => function ($q) {
                     $q->whereNull('active_till');
                 }])
@@ -42,7 +42,8 @@ class CategoryRepository
                 ->with('products.shippableUnits')
                 ->get()
                 ->first();
-        });
+            return $cat;
+        }, 10);
     }
 
     public static function changeProperty(array $req): void
