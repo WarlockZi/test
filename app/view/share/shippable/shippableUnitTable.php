@@ -3,7 +3,7 @@
         class="unit-row"
         data-unitId="<?= $unit->id; ?>"
         data-multiplier="<?= $multiplier; ?>"
-        data-orderitem-id="<?= $orderItem->id; ?>"
+        data-orderitem-id="<?= $orderItemId; ?>"
 >
     <input type="text" class="input" value="<?= $count; ?>" onclick="this.value??'';">
 

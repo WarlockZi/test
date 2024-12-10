@@ -54,7 +54,7 @@ class CartController extends AppController
     {
         $lead   = Lead::where('sess', session_id())->first();
         $user   = Auth::getUser();
-        $orders = Auth::getUser()?CartRepository::main():[];
+        $orders = CartRepository::main();
 
         $this->setVars(compact('orders', 'lead', 'user'));
     }

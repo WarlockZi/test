@@ -12,17 +12,17 @@ use stdClass;
 class Mail
 {
     protected array $credits;
-    protected PHPMailer $mailer;
+    protected $mailer;
 
     public function __construct(string $variant)
     {
+        $this->setMailer($variant);
         $this->credits = $this->setVariant($variant);
-        $this->setMailer();
     }
 
     protected function setVariant(string $variant): array
     {
-        $variants = new stdClass();
+        $variants = new PHPMailer();
         $variants->env = [
             'mail' => env('SMTP_FROM_EMAIL'),
             'host' => env('SMTP_HOST'),
@@ -37,7 +37,8 @@ class Mail
             'host' => 'smtp.yandex.com',
             'port' => '465',
             'user' => "vvoronik@yandex.ru",
-            'pass' => "cvygknpfqqdxxmis", // пароль для стороннего приложения
+            'app_key' => $_ENV['YANDEX_APP_KEY'], // пароль для стороннего приложения
+//            'pass' => $_ENV['YANDEX_APP_KEY'], // пароль для стороннего приложения
             'from' => 'vvoronik@yandex.ru',
             'replyTo' => 'vvoronik@yandex.ru',
             'to' => 'vitaliy04111979@gmail.com',
@@ -57,7 +58,7 @@ class Mail
             'host' => 'smtp.gmail.com',
             'port' => '465',
             'user' => 'vitaliy04111979@gmail.com',
-            'pass' => 'hooliGan35',
+            'pass' => $_ENV['GOOGlE_PASS'],
             'from' => 'vitaliy04111979@gmail.com',
             'replyTo' => 'vvoronik@yandex.ru',
             'to' => 'vvoronik@yandex.ru',
@@ -77,9 +78,14 @@ class Mail
 
     protected function setMailer(): void
     {
+        if ($this->variant!=='console') {
+            $this->mailer = new PHPMailer(true);
+        }else{
+            $this->mailer = new ConsoleMailer();
+        }
         $credits = $this->credits;
 
-        $this->mailer          = new PHPMailer(true);
+//        $this->mailer          = new PHPMailer(true);
         $this->mailer->CharSet = 'UTF-8';
         $this->mailer->isSMTP();
         $this->mailer->SMTPDebug = 1;

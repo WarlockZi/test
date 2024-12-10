@@ -9,13 +9,40 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CartRepository
 {
+    public static function count()
+    {
+        $oItems = Order::query();
+        $user   = Auth::getUser();
+        $sess   = session_id();
+        if ($user) {
+            $oItems
+                ->select('user_id', 'deleted_at')
+//                ->selectRaw('SUM(count) as count_total')
+                ->where('user_id', $user['id'])
+//                ->where('sess', $sess)
+                ->with('product')
+                ->get();
+        } else {
+            $oItems
+                ->where('sess', session_id())
+                ->with('product')
+//                ->groupBy('product_id')
+                ->get();
+        }
+        return $oItems;
+    }
     public static function main(): array|null
     {
-        $order = Order::query()
-            ->where('user_id', Auth::getUser()->id)
-            ->whereNull('submitted')
+        $q    = Order::query();
+        $user = Auth::getUser();
+        if ($user) {
+            $q = $q->where('user_id', Auth::getUser()->id);
+        } else {
+            $q = $q->where('sess', session_id());
+        }
+        $order = $q->whereNull('submitted')
             ->with(['items' => function ($query) {
-                $query->pluck('name','item.product_id');
+                $query->pluck('name', 'item.product_id');
             }])
             ->with('items.product.units')
             ->get()
@@ -48,28 +75,7 @@ class CartRepository
         }
     }
 
-    public static function count()
-    {
-        $user = Auth::getUser();
-        $sess = session_id();
-        if ($user) {
-            $oItems = Order::query()
-                ->select('user_id', 'sess', 'deleted_at')
-//                ->selectRaw('SUM(count) as count_total')
-                ->where('user_id', $user['id'])
-                ->where('sess', $sess)
-//                ->whereNull('deleted_at')
-                ->with('product')
-                ->get();
-        } else {
-            $oItems = OrderItem::query()
-                ->where('sess', session_id())
-                ->with('product')
-                ->groupBy('product_id')
-                ->get();
-        }
-        return $oItems;
-    }
+
 
     public static function edit($id)
     {
