@@ -11,17 +11,17 @@ use app\model\OrderItem;
 
 class OrderitemRepository
 {
-    public static function leadList()
-    {
-        $orderItem = OrderItem::query()
-            ->select('product_id', 'id', 'sess', 'count')
-            ->has('lead')
-            ->with('lead')
-            ->with('product')
-            ->groupBy('product_id')
-            ->get();
-        return $orderItem;
-    }
+//    public static function leadList()
+//    {
+//        $orderItem = OrderItem::query()
+//            ->select('product_id', 'id', 'sess', 'count')
+//            ->has('lead')
+//            ->with('lead')
+//            ->with('product')
+//            ->groupBy('product_id')
+//            ->get();
+//        return $orderItem;
+//    }
 
     public static function clientList()
     {
@@ -35,15 +35,15 @@ class OrderitemRepository
         return $orders;
     }
 
-    public function edit($id)
-    {
-        $orderItem = OrderItem::with(['product.activePromotions', 'unit', 'lead'])->find($id);
-        $lead      = Lead::where('sess', $orderItem->sess)->first();
-        $oItems    = OrderItem::query()
-            ->where('sess', $orderItem->sess)
-            ->get();
-        return compact('oItems', 'lead');
-    }
+//    public function edit($id)
+//    {
+//        $orderItem = OrderItem::with(['product.activePromotions', 'unit', 'lead'])->find($id);
+//        $lead      = Lead::where('sess', $orderItem->sess)->first();
+//        $oItems    = OrderItem::query()
+//            ->where('sess', $orderItem->sess)
+//            ->get();
+//        return compact('oItems', 'lead');
+//    }
 
 
     public static function main()
@@ -69,8 +69,7 @@ class OrderitemRepository
 
     public static function count()
     {
-        $sess   = session_id();
-        $oItems = OrderItem::where('sess', $sess)->get()->toArray();
+        $oItems = OrderItem::where('sess', session_id())->get()->toArray();
         $count  = 0;
         if ($oItems) {
             foreach ($oItems as $item) {

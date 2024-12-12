@@ -8,6 +8,7 @@ use app\Services\ProductImageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
@@ -165,35 +166,48 @@ class Product extends Model
         return $query->whereHas('mainImages');
     }
 
-    public function orderItems(): HasMany
+    public function orderItems(): hasManyThrough
     {
-        $sess = $_SESSION['phpSession']??null;
         $orderItems = $this
-            ->hasMany(OrderItem::class, 'product_id', '1s_id')
-            ->whereNull('deleted_at')
-            ->where('sess', $sess)
-        ;
-//        $oI = $orderItems->toArray();
+            ->hasManyThrough(
+                OrderItem::class,
+                OrderProduct::class,
+                'product_id',//get product on ORDER_PRODUCT table
+                'product_id',//get orderItem on ORDERITEMS table
+                '1s_id', // PRODUCT primary key
+                'product_id',// ORDERITEMS product key
+            );
+
         return $orderItems;
     }
-
+    public function unsubmittedOrders(): HasMany
+    {
+        $user = Auth::getUser();
+        if ($user) {
+            $orders = $this
+                ->hasMany(Order::class, 'user_id', 'id')
+                ->where('submitted', '0')
+            ;
+        }else{
+            $orders = $this
+                ->hasMany(Order::class, 'sess', session_id())
+                ->where('submitted', '0')
+            ;
+        }
+        return $orders;
+    }
     public function orders(): HasMany
     {
         $user = Auth::getUser();
         if ($user) {
             $orders = $this
                 ->hasMany(Order::class, 'user_id', 'id')
-//                ->where('sess', session_id())//            ->get()
             ;
         }else{
             $orders = $this
                 ->hasMany(Order::class, 'sess', session_id())
-//                ->where('sess', session_id())//            ->get()
             ;
         }
-
-//        $oI = $orders->toArray();
-
         return $orders;
     }
 

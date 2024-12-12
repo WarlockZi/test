@@ -5,31 +5,31 @@ $authed = \app\core\Auth::getUser();
 ?>
 <div class="cart">
 
-    <div class="<?= $orders->count() ? '' : 'none'; ?> content">
+    <h1>Корзина</h1>
 
-        <h1 class="page-name">Корзина</h1>
+    <div class="<?= !empty($order->products) ? '' : 'none'; ?> content">
 
         <div class="table" data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
 
-            <?php foreach ($orders as $order): ?>
+<!--            --><?php //foreach ($order as $order): ?>
 
-                <?php foreach ($order->items as $i => $orderItem): ?>
+                <?php foreach ($order->products as $i => $product): ?>
 
-                    <div class="row cart-item" data-product-id="<?= $orderItem['product_id']; ?>">
+                    <div class="row cart-item" data-product-id="<?= $product['product_id']; ?>">
                         <div class="num cell"><?= ++$i; ?></div>
 
-                        <img src="<?= $orderItem->product?->mainImagePath; ?>" alt="<?= $orderItem->product?->name; ?>">
+                        <img src="<?= $product->mainImagePath; ?>" alt="<?= $product->name; ?>">
 
                         <div class="name-price cell">
-                            <a href="/product/<?= $orderItem->product?->slug; ?>"
+                            <a href="/product/<?= $product->slug; ?>"
                                class="name">
-                                <?= $orderItem->product?->name; ?>
+                                <?= $product->name; ?>
                             </a>
                         </div>
 
                         <div class="cart-shippable-table cell">
 
-                            <?= ShippableUnitsTableFactory::create($orderItem, 'cart'); ?>
+                            <?= ShippableUnitsTableFactory::create($product, 'cart'); ?>
                         </div>
 
                         <div class="sub-sum sum cell"></div>
@@ -37,7 +37,7 @@ $authed = \app\core\Auth::getUser();
                     </div>
 
                 <?php endforeach; ?>
-            <?php endforeach; ?>
+<!--            --><?php //endforeach; ?>
 
 
             <div class="total">
@@ -59,7 +59,7 @@ $authed = \app\core\Auth::getUser();
         </div>
 
     </div>
-    <div class="empty-cart <?= $orders->count() ? 'none' : ''; ?>">
+    <div class="empty-cart <?= empty($order->products) ? 'none' : ''; ?>">
         Корзина пуста
     </div>
 </div>

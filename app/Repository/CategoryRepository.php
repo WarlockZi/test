@@ -25,25 +25,32 @@ class CategoryRepository
 
     public function indexInstore(string $url)
     {
-        return Cache::get('categoryWithProducts', function () use ($url) {
-            $cat = Category::query()
-                ->with('childrenRecursive')
-                ->withWhereHas('ownProperties',
-                    fn($query) => $query->where('path', 'like', $url)
-                )
-                ->with('products.ownProperties')
-//                ->with('products.orders.items')
-                ->with('productsInStore.orders.orderItems')
-                ->with('productsNotInStoreInMatrix.orders.orderItems')
-                ->with(['products.activepromotions' => function ($q) {
-                    $q->whereNull('active_till');
-                }])
-                ->with('products.inactivepromotions')
-                ->with('products.shippableUnits')
-                ->get()
-                ->first();
-            return $cat;
-        }, 10);
+        return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
+            function () use ($url) {
+                $cat = Category::query()
+                    ->with('childrenRecursive')
+                    ->withWhereHas('ownProperties',
+                        fn($query) => $query->where('path', 'like', $url)
+                    )
+                    ->with('productsInStore.unsubmittedOrders.orderItems')
+                    ->with('productsInStore.ownProperties')
+                    ->with('productsInStore.inactivepromotions')
+                    ->with('productsInStore.shippableUnits')
+                    ->with(['productsInStore.activepromotions' => function ($q) {
+                        $q->whereNull('active_till');
+                    }])
+                    ->with('productsNotInStoreInMatrix.unsubmittedOrders.orderItems')
+                    ->with('productsNotInStoreInMatrix.ownProperties')
+                    ->with('productsNotInStoreInMatrix.inactivepromotions')
+                    ->with('productsNotInStoreInMatrix.shippableUnits')
+                    ->with(['productsNotInStoreInMatrix.activepromotions' => function ($q) {
+                        $q->whereNull('active_till');
+                    }])
+                    ->get()
+                    ->first();
+
+                return $cat;
+            }, 10);
     }
 
     public static function changeProperty(array $req): void
@@ -98,7 +105,7 @@ class CategoryRepository
                     ->get(['id', 'name']);
                 return $cats;
             },
-            10
+            1000
         );
         return $cat;
     }

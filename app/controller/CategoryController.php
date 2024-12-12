@@ -2,10 +2,11 @@
 
 namespace app\controller;
 
-use app\core\Auth;
+use app\core\Helpers;
 use app\model\Order;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
+use app\Repository\OrderRepository;
 use app\view\share\card_panel\CardPanel;
 
 class CategoryController extends AppController
@@ -25,19 +26,14 @@ class CategoryController extends AppController
         if ($this->route->slug) {
             $this->view = 'category';
             $slug       = $this->route->slug;
-
             $category = $this->repo->indexInstore($slug);
 
             if ($category) {
-                $user     = Auth::getUser();
-                if ($user) {
-                    $orders = Order::where('user_id', $user->id)->get();
-                } else {
-                    $orders = Order::where('sess', session_id())->get();
-                }
-
+//                Helpers::profile();
+//                $unsubmittedOrder = OrderRepository::userUnsubmittedOrders();
+//                Helpers::profile();
                 $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
-                $this->setVars(compact('breadcrumbs', 'category','orders'));
+                $this->setVars(compact('breadcrumbs', 'category'));
 
                 $title    = $category->seo_title();
                 $desc     = $category->seo_description();

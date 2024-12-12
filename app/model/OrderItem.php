@@ -18,8 +18,6 @@ class OrderItem extends Model
         'product_id',
         'unit_id',
         'count',
-        'sess',
-        'ip',
         'created_at',
         'updated_at',
         'deleted_at'
@@ -29,7 +27,11 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Order::class);
     }
-
+    public function scopeWithWhereHas($query, $relation, $constraint)
+    {
+        return $query->whereHas($relation, $constraint)
+            ->with([$relation => $constraint]);
+    }
     public static function leadData($columnBuilder, $orderItem, $fieldName)
     {
         $name    = $orderItem?->lead?->name ?? 'имя';
@@ -43,10 +45,10 @@ class OrderItem extends Model
         return $this->hasOne(Product::class, '1s_id', 'product_id');
     }
 
-    public function lead()
-    {
-        return $this->hasOne(Lead::class, 'sess', 'sess');
-    }
+//    public function lead()
+//    {
+//        return $this->hasOne(Lead::class, 'sess', 'sess');
+//    }
     public function unit()
     {
         return $this->hasOne(Unit::class, 'id','unit_id');

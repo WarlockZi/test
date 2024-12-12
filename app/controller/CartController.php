@@ -2,16 +2,14 @@
 
 namespace app\controller;
 
-use app\controller\Admin\OrderController;
-use app\controller\Admin\OrderitemController;
 use app\core\Auth;
 use app\core\Response;
-use app\model\Lead;
 use app\model\OrderItem;
 use app\Repository\CartRepository;
 use app\Repository\OrderitemRepository;
 use app\Repository\OrderRepository;
 use app\view\Cart\CartView;
+use Throwable;
 
 class CartController extends AppController
 {
@@ -33,7 +31,7 @@ class CartController extends AppController
         if (!isset($this->ajax['cartToken'])) exit('No cart sess');
         $id = $this->ajax['cartToken'];
         OrderItem::query()
-            ->where('sess', $id)
+//            ->where('sess', $id)
             ->delete();
         if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
         Response::exitJson(['ok' => true]);
@@ -44,7 +42,7 @@ class CartController extends AppController
         if (!isset($this->ajax['cartToken'])) exit('No cart sess');
         $id = $this->ajax['cartToken'];
         OrderItem::query()
-            ->where('sess', $id)
+//            ->where('sess', $id)
             ->delete();
         if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
         Response::exitJson(['ok' => true]);
@@ -52,11 +50,14 @@ class CartController extends AppController
 
     public function actionIndex(): void
     {
-        $lead   = Lead::where('sess', session_id())->first();
-        $user   = Auth::getUser();
-        $orders = CartRepository::main();
+        $user = Auth::getUser();
+        try {
+            $order = CartRepository::main();
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
 
-        $this->setVars(compact('orders', 'lead', 'user'));
+        $this->setVars(compact('order', 'user'));
     }
 
     public function actionDeleterow(): void
@@ -78,11 +79,7 @@ class CartController extends AppController
 
     public function actionUpdateOrCreate(): void
     {
-        if (Auth::getUser()) {
-            OrderController::updateOrCreate($this->ajax);
-        } else {
-            OrderitemController::updateOrCreate($this->ajax);
-        }
+        OrderRepository::updateOrCreate($this->ajax);
     }
 }
 

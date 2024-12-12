@@ -24,7 +24,8 @@
     "shuchkin/simplexlsx": "^1.1",
     "arthurkushman/php-wss": "^2.0",
     "monolog/monolog": "^3.7",
-    "ext-memcached": "*"
+    "ext-memcached": "*",
+    "ext-xdebug": "*"
   },
   "config": {
     "platform-check": false

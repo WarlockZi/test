@@ -2,6 +2,7 @@
 
 namespace app\Services\CatalogMobileMenu;
 
+use app\core\Cache;
 use app\core\FS;
 use app\Repository\CategoryRepository;
 
@@ -15,7 +16,12 @@ class CatalogMobileMenuService
         $this->string     = '';
         $this->fs         = new FS(__DIR__);
         $this->categories = CategoryRepository::treeAll()->toArray();
-        $this->recurse($this->categories);
+        Cache::get('categoryRecurse',
+            function () {
+                $this->recurse($this->categories);
+                return $this->string;
+            },
+            10);
     }
 
     public function recurse($arr)
@@ -31,6 +37,7 @@ class CatalogMobileMenuService
                 $this->string .= $this->fs->getContent('li', compact('cat'));
             }
         }
+
     }
 
     public function get(): string
