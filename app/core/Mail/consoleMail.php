@@ -8,7 +8,8 @@ $to   = $argv[0];
 $subj = $argv[1];
 $body = $argv[2];
 $headers = $argv[3];
-if (mail($to, $subj, $body,$headers)) {
+
+if (mail($to, $subj, $body)) {
     return true;
 } else {
     return false;
