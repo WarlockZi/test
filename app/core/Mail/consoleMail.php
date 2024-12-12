@@ -5,9 +5,10 @@ $subj = 'test';
 $body = 'test';
 
 $to   = $argv[0];
-$subj = $argv[0];
-$body = $argv[0];
-if (mail($to, $subj, $body)) {
+$subj = $argv[1];
+$body = $argv[2];
+$headers = $argv[3];
+if (mail($to, $subj, $body,$headers)) {
     return true;
 } else {
     return false;

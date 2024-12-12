@@ -30,14 +30,18 @@ class ConsoleMailer implements Mailer
         $path = ROOT . FS::platformSlashes("/app/core/Mail/consoleMail.php");
         $d    = $this->headers;
         $to   = implode(',', $to);
-        try {
-            if (exec("php -f $path -- -$to -$subject -$body", $output)) {
-                return true;
+        if ($_ENV['DEV']) {
+            mail($to, $subject, $body, $d);
+        } else {
+            try {
+                if (exec("php -f $path -- -$to -$subject -$body -$d", $output)) {
+                    return true;
+                }
+            } catch (Throwable $exception) {
+                $exc = $exception;
             }
-        } catch (Throwable $exception) {
-            $exc = $exception;
-        }
             return false;
-
+        }
     }
+
 }
