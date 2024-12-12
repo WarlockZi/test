@@ -4,19 +4,19 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\core\FS;
+use app\core\Mail\ConsoleMailer;
 use app\core\Mail\PHPMail;
 use app\core\Request;
 use app\core\Response;
 use app\model\User;
 use app\Repository\UserRepository;
-
 use app\Services\YandexAuth\YaAuthService;
 use app\view\User\UserView;
 use Throwable;
 
 class AuthController extends AppController
 {
-    protected PHPMail $mailer;
+    protected $mailer;
     protected UserRepository $userRepository;
 
     public function __construct()
@@ -26,12 +26,13 @@ class AuthController extends AppController
 //		$bot->send('Что так');
         $this->userRepository = new UserRepository();
 //        $this->mailer         = new ServerMailer;
-        $this->mailer         = new PHPMail('console');
+//        $this->mailer         = new PHPMail('env');
 //        $this->mailer         = new PHPMail('yandexnew');
     }
 
     public function actionReturnpass(): void
     {
+        $this->mailer = new ConsoleMailer();
         if ($req = $this->ajax) {
             $_SESSION['id'] = '';
             $user           = $this->userRepository->getByEmail($req['email']);
@@ -44,9 +45,9 @@ class AuthController extends AppController
                 try {
                     $path = ROOT . FS::platformSlashes("/app/Services/Mail/ServerMailer.php");
 
-                    exec("php $path",$output);
+//                    exec("php $path", $output);
 //                    $s = mail('vvoronik@yandex.ru', 'subj', 'mess');
-//                    $sent = $this->mailer->mail(['vvoronik@yandex.ru'], 'VITEX|Новый пароль', $newPassword);
+                    $sent = $this->mailer->send(['vvoronik@yandex.ru'], 'VITEX|Новый пароль', $newPassword);
                     Response::exitJson(['success' => true,
                         'popup' => 'Новый пароль проверьте на почте']);
                 } catch (\Throwable $exception) {
@@ -101,6 +102,7 @@ class AuthController extends AppController
 
     public function actionLogin(): void
     {
+//        $this->mailer         = new PHPMail('env');
         if ($data = $this->ajax) {
             $req    = new Request();
             $errors = $req->checkLoginCredentials($data);

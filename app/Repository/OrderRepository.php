@@ -5,13 +5,66 @@ namespace app\Repository;
 
 
 use app\core\Auth;
+use app\core\Response;
 use app\model\Order;
 use app\model\OrderItem;
+use app\model\Product;
 use app\model\User;
+use Throwable;
 
 
 class OrderRepository
 {
+    public static function updateOrCreate(array $req): void
+    {
+        if (!$req) return;
+        $user = Auth::getUser();
+        if ($user) {
+            $order = Order::firstOrCreate([
+                'user_id' => $user->id,
+            ], [
+                'user_id' => $user->id,
+                'ip' => $_SERVER['SERVER_ADDR'],
+            ]);
+        } else {
+            $order = Order::firstOrCreate([
+                'sess' => session_id(),
+            ], [
+                'sess' => session_id(),
+                'ip' => $_SERVER['SERVER_ADDR'],
+            ]);
+        }
+
+        $product = Product::where('1s_id', $req['product_id'])->first();
+        $order->products()->syncWithoutDetaching($product['1s_id']);
+        $orderItm = OrderItem::updateOrCreate(
+            [
+                'order_id' => $order->id,
+                'product_id' => $req['product_id'],
+                'unit_id' => $req['unit_id'],
+            ],
+            [
+                'order_id' => $order->id,
+                'product_id' => $req['product_id'],
+                'unit_id' => $req['unit_id'],
+                'count' => $req['count'],
+            ]
+        );
+        try {
+            $product->orderItems()->sync($orderItm->id);
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
+
+        if ($orderItm->wasRecentlyCreated) {
+            Response::exitJson(['popup' => "Добавлено в корзину"]);
+        }
+        if ($orderItm->wasChanged()) {
+            Response::exitJson(['popup' => "Заказ изменен"]);
+        }
+        Response::exitJson(['popup' => 'не записано', 'error' => "не записано"]);
+    }
+
     public static function deleteItems(string $sess, string $product_id, array $unitIds)
     {
         try {
@@ -37,6 +90,23 @@ class OrderRepository
             ->groupBy('sess')
             ->get('*');
         return $orderItems;
+    }
+
+    public static function userUnsubmittedOrders(): Order
+    {
+        $user = Auth::getUser();
+        if ($user) {
+            $order = Order::where([
+                'user_id' => $user->id,
+                'submitted' => '0'
+            ])->with('orderItems.product.units')->first();
+        } else {
+            $order = Order::where([
+                'sess' => session_id(),
+                'submitted' => '0'
+            ])->with('orderItems.product.units')->first();
+        }
+        return $order;
     }
 
     public static function leadList()
@@ -76,12 +146,10 @@ class OrderRepository
         $user = Auth::getUser();
         if ($user) {
             return Order::where('user_id', $user->id)
-//                ->whereNull('deleted_at')
                 ->get()
                 ->count();
         } else {
             return Order::where('sess', session_id())
-//                ->whereNull('deleted_at')
                 ->get()
                 ->count();
         }

@@ -2,7 +2,6 @@
 
 namespace app\view\share\shippable;
 
-use app\core\Auth;
 use app\core\FS;
 use app\model\Product;
 use Illuminate\Database\Eloquent\Collection;
@@ -20,7 +19,7 @@ class ShippableUnitsTable
     private bool $totalRowSum = false;
     private float $price = 0;
 
-    public function __construct(Product $product)
+    public function __construct(Product|array $product)
     {
         $this->fs           = new FS(__DIR__);
         $this->product      = $product;
@@ -131,13 +130,14 @@ class ShippableUnitsTable
     {
         $subSum = 0;
         foreach ($this->units as $unit) {
-            $count      = $this->getCount($unit);
-            $multiplier = $unit->pivot->multiplier ?? 1;
-            $orderItemId = isset($this->product?->orders?->orderItems)
-                    ?$this->product->orders->orderItems->contains($unit->id)
-                    : 0;
-            $arr        = [
-                'orderItemId'=>$orderItemId,
+            $count       = $this->getCount($unit);
+            $multiplier  = $unit->pivot->multiplier ?? 1;
+            $orderItem = $this->product->orderItems->filter(function ($item)use($unit){
+                return $item->unit_id === $unit['id'];
+            });
+
+            $arr         = [
+                'orderItem' => $orderItem->first(),
                 "unit" => $unit,
                 "baseUnit" => $this->baseUnitName,
                 "count" => $count,

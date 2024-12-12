@@ -90,15 +90,6 @@ class AppController extends Controller
             }
 
         }
-//        else {
-//            if ($model->$relation === null) {
-//                $action = 'created';
-//                $rel    = $model->$relation()->create($fields);
-//            } else {
-//                $action = 'updated';
-//                $rel    = $model->$relation()->update($fields);
-//            }
-//        }
 
         if ($action === 'created') Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
 

@@ -5,25 +5,24 @@ namespace app\core\Mail;
 
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-use stdClass;
 
 class Mail
 {
     protected array $credits;
     protected $mailer;
+    protected $variant;
 
     public function __construct(string $variant)
     {
+        $this->variant = $variant;
+        $this->credits = $this->setCredits($variant);
         $this->setMailer($variant);
-        $this->credits = $this->setVariant($variant);
     }
 
-    protected function setVariant(string $variant): array
+    protected function setCredits(string $variant): array
     {
-        $variants = new PHPMailer();
-        $variants->env = [
+        $variants            = new PHPMailer();
+        $variants->env       = [
             'mail' => env('SMTP_FROM_EMAIL'),
             'host' => env('SMTP_HOST'),
             'port' => env('SMTP_PORT'),
@@ -43,7 +42,7 @@ class Mail
             'replyTo' => 'vvoronik@yandex.ru',
             'to' => 'vitaliy04111979@gmail.com',
         ];
-        $variants->yandex = [
+        $variants->yandex    = [
             'mail' => 'vvoronik@yandex.ru',
             'host' => 'smtp.yandex.com',
             'port' => '465',
@@ -53,7 +52,7 @@ class Mail
             'replyTo' => 'vvoronik@yandex.ru',
             'to' => 'vitaliy04111979@gmail.com',
         ];
-        $variants->google = [
+        $variants->google    = [
             'mail' => 'vitaliy04111979@gmail.com',
             'host' => 'smtp.gmail.com',
             'port' => '465',
@@ -63,7 +62,7 @@ class Mail
             'replyTo' => 'vvoronik@yandex.ru',
             'to' => 'vvoronik@yandex.ru',
         ];
-        $variants->vitex = [
+        $variants->vitex     = [
             'mail' => 'vitexopt@vitexopt.ru',
             'host' => 'smtp.vitexopt.ru',
             'port' => '465',
@@ -78,12 +77,12 @@ class Mail
 
     protected function setMailer(): void
     {
-        if ($this->variant!=='console') {
-            $this->mailer = new PHPMailer(true);
-        }else{
+        if ($this->variant === 'console') {
             $this->mailer = new ConsoleMailer();
+        } else {
+            $this->mailer = new PHPMailer(true);
+            $credits      = $this->credits;
         }
-        $credits = $this->credits;
 
 //        $this->mailer          = new PHPMailer(true);
         $this->mailer->CharSet = 'UTF-8';
@@ -112,6 +111,7 @@ class Mail
     {
         return "=?utf-8?b?" . base64_encode($str) . "?=";
     }
+
     public function send(): void
     {
         $res = $this->mailer->send();

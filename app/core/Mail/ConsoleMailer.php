@@ -3,6 +3,7 @@
 namespace app\core\Mail;
 
 use app\core\FS;
+use Throwable;
 
 class ConsoleMailer implements Mailer
 {
@@ -28,7 +29,15 @@ class ConsoleMailer implements Mailer
         }
         $path = ROOT . FS::platformSlashes("/app/core/Mail/consoleMail.php");
         $d    = $this->headers;
-        exec("php $path",$output);
-//        $res = mail('vvoronik@yandex.ru', 'subj', 'mess');
+        $to   = implode(',', $to);
+        try {
+            if (exec("php -f $path -- -$to -$subject -$body", $output)) {
+                return true;
+            }
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
+            return false;
+
     }
 }

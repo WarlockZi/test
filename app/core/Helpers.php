@@ -1,11 +1,9 @@
 <?php
 
-namespace app\Actions;
+namespace app\core;
 
-use app\core\Response;
 use app\model\Product;
 use app\model\ProductUnit;
-use app\model\Unitable;
 use app\Services\Logger\FileLogger;
 
 class Helpers
@@ -93,7 +91,7 @@ class Helpers
         foreach ($products as $product) {
             if (count($product['units']) === 1) {
                 $unit = $product['units'][0];
-                if ($unit['pivot']['is_base']===1) {
+                if ($unit['pivot']['is_base'] === 1) {
                     $pu = ProductUnit::query()
                         ->where('product_1s_id', $unit['pivot']['product_1s_id'])
                         ->where('id', $unit['pivot']['id'])
@@ -114,6 +112,10 @@ class Helpers
         }
     }
 
+    public static function profile()
+    {
+        echo xdebug_time_index() . ' сек. <br>';
+    }
 
     private function copyBaseUnits()
     {
@@ -128,6 +130,7 @@ class Helpers
             ProductUnit::create($model);
         }
     }
+
     private function cleanBaseUnits()
     {
         $duplicates = ProductUnit::select('product_1s_id', 'unit_id', 'multiplier', 'is_base')
@@ -136,7 +139,7 @@ class Helpers
             ->get();
 
         $logger = new FileLogger();
-        $logger->write('duplicates->count -'.$duplicates->count());
+        $logger->write('duplicates->count -' . $duplicates->count());
         if (!$duplicates->count()) return null;
         foreach ($duplicates as $duplicate) {
             $res = ProductUnit::where('product_1s_id', $duplicate->product_1s_id)
@@ -149,6 +152,7 @@ class Helpers
         }
         return true;
     }
+
 // clean ports and start port 4000
     public function serve()
     {

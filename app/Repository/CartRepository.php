@@ -6,48 +6,41 @@ use app\core\Auth;
 use app\model\Order;
 use app\model\OrderItem;
 use Illuminate\Database\Eloquent\Collection;
+use Throwable;
 
 class CartRepository
 {
     public static function count()
     {
-        $oItems = Order::query();
         $user   = Auth::getUser();
-        $sess   = session_id();
         if ($user) {
-            $oItems
+            $order = Order::query()
                 ->select('user_id', 'deleted_at')
 //                ->selectRaw('SUM(count) as count_total')
                 ->where('user_id', $user['id'])
-//                ->where('sess', $sess)
-                ->with('product')
+                ->with('products.orderItems')
                 ->get();
         } else {
-            $oItems
+            $order = Order::query()
                 ->where('sess', session_id())
-                ->with('product')
-//                ->groupBy('product_id')
+                ->with('products')
                 ->get();
         }
-        return $oItems;
+        return $order;
     }
-    public static function main(): array|null
+
+    public static function main(): Order
     {
-        $q    = Order::query();
         $user = Auth::getUser();
         if ($user) {
-            $q = $q->where('user_id', Auth::getUser()->id);
+            $order = Order::query()->where('user_id', Auth::getUser()->id);
         } else {
-            $q = $q->where('sess', session_id());
+            $order = Order::query()->where('sess', session_id());
         }
-        $order = $q->whereNull('submitted')
-            ->with(['items' => function ($query) {
-                $query->pluck('name', 'item.product_id');
-            }])
-            ->with('items.product.units')
-            ->get()
-            ->toArray()
-            ?? null;
+        $order    = $order->whereNull('submitted')
+            ->with('products.orderItems.unit')
+            ->first();
+        $o = $order->toArray();
         return $order;
     }
 
@@ -74,7 +67,6 @@ class CartRepository
             $item->forceDelete();
         }
     }
-
 
 
     public static function edit($id)

@@ -24,6 +24,7 @@ class Response
     public static function exitJson(array $arr = []): void
     {
         if ($arr) {
+            header('Content-Type: application/json');
             exit(json_encode(['arr' => $arr]));
         }
     }
