@@ -34,7 +34,7 @@ class ConsoleMailer implements Mailer
             mail($to, $subject, $body, $d);
         } else {
             try {
-                if (exec("php -f $path $to $subject $body", $output)) {
+                if (exec("php -f $path -$to -$subject -$body", $output)) {
                     return true;
                 }
             } catch (Throwable $exception) {
