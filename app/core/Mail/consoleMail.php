@@ -1,7 +1,7 @@
 <?php
 
 $to   = 'vvoronik@yandex.ru';
-$subj = 'test';
+//$subj = 'test';
 $body = 'test';
 
 //$to   = $argv[1];
@@ -9,7 +9,7 @@ $body = 'test';
 //$body = $argv[3];
 
 //$to   = $argv[0];
-//$subj = $argv[1];
+$subj = $argv[1];
 //$body = $argv[2];
 ////$headers = $argv[3];
 //
