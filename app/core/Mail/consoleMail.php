@@ -1,9 +1,4 @@
 <?php
-
-//$to   = 'vvoronik@yandex.ru';
-//$subj = 'test';
-//$body = 'test';
-
 $to   = $argv[1];
 $subj = $argv[2];
 $body = $argv[3];

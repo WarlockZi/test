@@ -82,7 +82,7 @@ class YaAuthService
                 'last_name' => $this->user['last_name'],
                 'sex' => $this->user['sex'],
                 'default_email' => $this->user['default_email'],
-                'emails' => implode(',', $this->user['emails']),
+                'emails' => implode(',', $this->user['emails'])??null,
                 'birthday' => $this->user['birthday'],
                 'default_avatar_id' => $this->user['default_avatar_id'],
                 'is_avatar_empty' => $this->user['is_avatar_empty'],
