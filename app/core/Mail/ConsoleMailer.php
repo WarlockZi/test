@@ -32,7 +32,7 @@ class ConsoleMailer implements Mailer
         $to   = is_string($to) ? $to : implode(',', $to);
 
         return [
-            $path, $to ,'test','body text and other',
+            $path, $to, 'test', 'body text and other',
         ];
     }
 
@@ -40,16 +40,16 @@ class ConsoleMailer implements Mailer
     {
         list($path, $to, $subj, $body) = $this->forgotPassEmail($to);
 
-        if ($_ENV['DEV']) {
-            mail($to, $subj, $body);
-        } else {
-            try {
-                if (exec("php -f $path $to $subj \"$body\"", $output)) {
-                    return true;
-                }
-            } catch (Throwable $exception) {
-                $exc = $exception;
+        try {
+            if ($_ENV['DEV']) {
+                mail($to, $subj, $body);
+                return true;
+            } else {
+                exec("php -f $path $to $subj \"$body\"", $output);
+                return true;
             }
+        } catch (Throwable $exception) {
+            $exc = $exception;
         }
         return false;
     }
