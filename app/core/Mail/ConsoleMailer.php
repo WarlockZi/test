@@ -18,7 +18,7 @@ class ConsoleMailer implements Mailer
 
     }
 
-    public function send(array $to, string $subject, string $body, string $type = 'text'): bool
+    protected function forgotPassEmail(array|string $to)
     {
         if ($type = 'html') {
             $additionalHeaders = [
@@ -29,12 +29,19 @@ class ConsoleMailer implements Mailer
         }
         $path = ROOT . FS::platformSlashes("/app/core/Mail/consoleMail.php");
         $d    = $this->headers;
-        $to   = implode(',', $to);
-        $to   = 'vvoronik@yandex.ru';
-        $subj = 'test';
-        $body = 'body text and other';
+        $to   = is_string($to) ? $to : implode(',', $to);
+
+        return [
+            $path, $to ,'test','body text and other',
+        ];
+    }
+
+    public function send(array $to, string $subject, string $body, string $type = 'text'): bool
+    {
+        list($path, $to, $subj, $body) = $this->forgotPassEmail($to);
+
         if ($_ENV['DEV']) {
-            mail($to, $subj, $body, $d);
+            mail($to, $subj, $body);
         } else {
             try {
                 if (exec("php -f $path $to $subj \"$body\"", $output)) {
@@ -44,7 +51,7 @@ class ConsoleMailer implements Mailer
                 $exc = $exception;
             }
         }
-            return false;
+        return false;
     }
 
 }
