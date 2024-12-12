@@ -40,6 +40,7 @@
     box-shadow: 2px 2px 12px 0px #6a8784;
   }
 }
+
 @mixin search-panel {
   .search-panel {
     display: flex;
@@ -309,6 +310,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    gap: 2px;
 
     &.font-size-0-8-rem {
       font-size: .8rem;
@@ -466,7 +468,7 @@
     display: flex;
     gap: 5px;
     font-size: .8rem;
-    @include m600{
+    @include m600 {
       gap: 0;
     }
 
@@ -497,7 +499,6 @@
       flex: 1;
       flex-direction: column;
       justify-content: space-between;
-
 
 
       .price-table {
@@ -601,7 +602,7 @@
       border: 1px solid var.$color-gray2;
       color: var.$color-gray10;
       margin-bottom: 0;
-      line-height: clamp(12px, 4vw,20px);
+      line-height: clamp(12px, 4vw, 20px);
 
       @include m400 {
         width: 93%;
@@ -641,7 +642,7 @@
         color: var.$color-gray-max;
         font-size: 12px;
 
-        p{
+        p {
           margin-bottom: clamp(1px, 2vw, 15px);
         }
 

@@ -71,17 +71,17 @@ class YaAuthService
     private function login(): void
     {
         $userYandex = UserYandex::updateOrCreate(
-            ['ya_id' => $this->user['id']],
+            ['ya_id' => $this->user['id']??null],
             [
-                'ya_id' => $this->user['id'],
-                'login' => $this->user['login'],
-                'client_id' => $this->user['client_id'],
-                'display_name' => $this->user['display_name'],
-                'real_name' => $this->user['real_name'],
-                'first_name' => $this->user['first_name'],
-                'last_name' => $this->user['last_name'],
-                'sex' => $this->user['sex'],
-                'default_email' => $this->user['default_email'],
+                'ya_id' => $this->user['id']??null,
+                'login' => $this->user['login']??null,
+                'client_id' => $this->user['client_id']??null,
+                'display_name' => $this->user['display_name']??null,
+                'real_name' => $this->user['real_name']??null,
+                'first_name' => $this->user['first_name']??null,
+                'last_name' => $this->user['last_name']??null,
+                'sex' => $this->user['sex']??null,
+                'default_email' => $this->user['default_email']??null,
                 'emails' => implode(',', $this->user['emails'])??null,
                 'birthday' => $this->user['birthday'],
                 'default_avatar_id' => $this->user['default_avatar_id'],
