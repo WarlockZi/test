@@ -32,12 +32,12 @@ class ConsoleMailer implements Mailer
         $to   = implode(',', $to);
         $to   = 'vvoronik@yandex.ru';
         $subj = 'test';
-        $body = 'test';
+        $body = 'body text and other';
         if ($_ENV['DEV']) {
             mail($to, $subj, $body, $d);
         } else {
             try {
-                if (exec("php -f $path $to $subj", $output)) {
+                if (exec("php -f $path $to \"$subj\"", $output)) {
                     return true;
                 }
             } catch (Throwable $exception) {
