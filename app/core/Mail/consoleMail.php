@@ -4,13 +4,13 @@
 //$subj = 'test';
 //$body = 'test';
 
-$to   = $argv[1];
-$subj = $argv[2];
-$body = $argv[3];
+//$to   = $argv[1];
+//$subj = $argv[2];
+//$body = $argv[3];
 
-//$to   = $argv[0];
-//$subj = $argv[1];
-//$body = $argv[2];
+$to   = $argv[0];
+$subj = $argv[1];
+$body = $argv[2];
 ////$headers = $argv[3];
 //
 //$to   = $_SERVER['argv'][0];
