@@ -85,7 +85,8 @@ export default class UnitTable {
    }
 
    async unitChanged(obj) {
-      let data = this.dto(obj.target.closest('.row'));
+      debugger
+      const data = this.dto(obj.target.closest('.row'));
       data.morphed.new_id = obj.detail.next.value;
       data.morphed.old_id = obj.detail.prev.value;
       if (obj.detail.next.value)

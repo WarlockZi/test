@@ -72,11 +72,11 @@ class AppController extends Controller
                 $withRelation->save();
             }else if ($req['relation']['id']) {
                 $id = $req['relation']['id'];
-                $withRelation = $model->$relationName()->sync([$id]);
+                $withRelation = $model->$relationName()->syncWithoutDetaching([$id]);
             }
 
             if ($pivot) {
-                $id                 = $pivot['id'];
+                $id                 = $req['relation']['id'];
                 $pivotField         = $req['relation']['pivot']['field'];
                 $pivotValue         = $req['relation']['pivot']['value'];
                 $pivot              = $model->$relationName()->find($id)->pivot;
