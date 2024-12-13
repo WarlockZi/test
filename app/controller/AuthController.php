@@ -43,7 +43,6 @@ class AuthController extends AppController
                 $this->userRepository->changePassword($user, $hashedPassword);
 
                 try {
-//                    $path = ROOT . FS::platformSlashes("/app/Services/Mail/ServerMailer.php");
                     $sent = $this->mailer->send('forgotPassword',[$user, $newPassword]);
                     Response::exitJson(['success' => true,
                         'popup' => 'Новый пароль проверьте на почте']);
