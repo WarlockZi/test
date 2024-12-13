@@ -10,6 +10,7 @@ use app\model\Order;
 use app\model\OrderItem;
 use app\model\Product;
 use app\model\User;
+use Illuminate\Database\Eloquent\Collection;
 use Throwable;
 
 
@@ -146,12 +147,11 @@ class OrderRepository
         $user = Auth::getUser();
         if ($user) {
             return Order::where('user_id', $user->id)
-                ->get()
-                ->count();
+                ->pluck('user_id')->count();
         } else {
-            return Order::where('sess', session_id())
-                ->get()
-                ->count();
+            $count = Order::where('sess', session_id())
+                ->pluck('sess')->count();
+            return $count;
         }
     }
 }

@@ -26,7 +26,9 @@ export default class Search {
    }
 
    togglePanel() {
-      YM('click_search')
+      if (!undefined == window.ym) {
+         YM('click_search')
+      }
       this.panel.classList.toggle('show');
       this.result.innerHTML = '';
       this.text.value = ''

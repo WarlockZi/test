@@ -6,6 +6,10 @@ html {
   overflow-y: scroll;
 }
 
+//* {
+//  border: 1px solid red;
+//}
+
 body {
   position: relative;
   display: flex;
@@ -18,6 +22,7 @@ body {
   text-rendering: optimizeLegibility;
   overflow: hidden;
   background-color: var.$color-white;
+
 
 }
 
@@ -53,6 +58,6 @@ textarea:focus,
   display: none !important;
 }
 
-[contenteditable]:focus-visible{
+[contenteditable]:focus-visible {
   outline: transparent;
 }

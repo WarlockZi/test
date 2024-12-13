@@ -43,15 +43,12 @@ class AuthController extends AppController
                 $this->userRepository->changePassword($user, $hashedPassword);
 
                 try {
-                    $path = ROOT . FS::platformSlashes("/app/Services/Mail/ServerMailer.php");
-
-//                    exec("php $path", $output);
-//                    $s = mail('vvoronik@yandex.ru', 'subj', 'mess');
-                    $sent = $this->mailer->send(['vvoronik@yandex.ru'], 'VITEX|Новый пароль', $newPassword);
+//                    $path = ROOT . FS::platformSlashes("/app/Services/Mail/ServerMailer.php");
+                    $sent = $this->mailer->send('forgotPassword',[$user, $newPassword]);
                     Response::exitJson(['success' => true,
                         'popup' => 'Новый пароль проверьте на почте']);
                 } catch (\Throwable $exception) {
-                    Response::exitJson(['error' => 'not sent', 'popup' => 'Ошибка']);
+                    Response::exitJson(['error' => 'not sent', 'popup' => 'Ошибка отправки письма']);
                 }
             } else {
                 Response::exitWithError("Пользователя с таким e-mail нет");
@@ -78,8 +75,9 @@ class AuthController extends AppController
             if ($user) {
                 $message = "Пользователь создан\n";
                 try {
-                    $sent = mail("https://www.mail-tester.com/ ", "My Subject", "Line 1\nLine 2\nLine 3");
-                    $this->mailer->sendRegistrationMail($user);
+                    $sent = $this->mailer->send('registration',[$user, $newPassword]);
+//                    $sent = mail("https://www.mail-tester.com/ ", "My Subject", "Line 1\nLine 2\nLine 3");
+//                    $this->mailer->sendRegistrationMail($user);
                     Response::exitJson(['success' => 'confirm', 'popup' => $message . "\n"]);
                 } catch (Throwable $exception) {
                     $message .= "Письмо не отправлено";

@@ -16,7 +16,7 @@ use app\core\Icon;
             <?= $mobile_categories ?>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/mai n/contacts">
+            <a class="nav-link" href="/main/contacts">
                 Контакты
             </a>
         </li>

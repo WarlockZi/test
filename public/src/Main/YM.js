@@ -1,4 +1,5 @@
 export default function YM(name, id = 7715905, goal = 'reachGoal') {
+   if (window['ym'] === undefined) return
    const consts = {
       click_on_phone: 'click_on_phone',
       click_on_email: 'click_on_email',
@@ -13,7 +14,6 @@ export default function YM(name, id = 7715905, goal = 'reachGoal') {
       to_social: 'to_social',
       click_search: 'poisk_tovarov',
    }
-   if (window['ym'] === undefined) return
    window['ym'](id, goal, consts.name)
 
 }

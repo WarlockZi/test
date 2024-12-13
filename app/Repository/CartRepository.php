@@ -10,26 +10,8 @@ use Throwable;
 
 class CartRepository
 {
-    public static function count()
-    {
-        $user   = Auth::getUser();
-        if ($user) {
-            $order = Order::query()
-                ->select('user_id', 'deleted_at')
-//                ->selectRaw('SUM(count) as count_total')
-                ->where('user_id', $user['id'])
-                ->with('products.orderItems')
-                ->get();
-        } else {
-            $order = Order::query()
-                ->where('sess', session_id())
-                ->with('products')
-                ->get();
-        }
-        return $order;
-    }
 
-    public static function main(): Order
+    public static function main(): Order|null
     {
         $user = Auth::getUser();
         if ($user) {
@@ -40,7 +22,7 @@ class CartRepository
         $order    = $order->whereNull('submitted')
             ->with('products.orderItems.unit')
             ->first();
-        $o = $order->toArray();
+//        $o = $order->toArray();
         return $order;
     }
 
@@ -51,21 +33,6 @@ class CartRepository
             ->whereNotNull('submitted')
             ->with('items.product.units')
             ->get() ?? null;
-    }
-
-    public static function convertOrderItemsToOrders(array $req, $userId): void
-    {
-        $oItems = OrderItem::query()
-            ->where('sess', $req['sess'])
-            ->whereNull('deleted_at')
-            ->get();
-
-        foreach ($oItems as $item) {
-            $itemArr            = $item->toArray();
-            $itemArr['user_id'] = $userId;
-            Order::query()->create($itemArr);
-            $item->forceDelete();
-        }
     }
 
 
