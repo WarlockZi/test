@@ -67,17 +67,6 @@ class OrderitemRepository
         return $oItems;
     }
 
-    public static function count()
-    {
-        $oItems = OrderItem::where('sess', session_id())->get()->toArray();
-        $count  = 0;
-        if ($oItems) {
-            foreach ($oItems as $item) {
-                $count += $item['count'];
-            }
-        }
-        return $count;
-    }
 
     public function deleteItem(string $sess, string $product_id, string $unitId)
     {

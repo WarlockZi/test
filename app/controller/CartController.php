@@ -9,7 +9,6 @@ use app\Repository\CartRepository;
 use app\Repository\OrderitemRepository;
 use app\Repository\OrderRepository;
 use app\view\Cart\CartView;
-use Throwable;
 
 class CartController extends AppController
 {
@@ -51,11 +50,7 @@ class CartController extends AppController
     public function actionIndex(): void
     {
         $user = Auth::getUser();
-        try {
-            $order = CartRepository::main();
-        } catch (Throwable $exception) {
-            $exc = $exception;
-        }
+        $order = CartRepository::main();
 
         $this->setVars(compact('order', 'user'));
     }

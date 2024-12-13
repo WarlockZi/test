@@ -4,6 +4,7 @@
 
         <div class="row">
             <a href="/adminsc/report/filter">фильтры</a>
+            <a href="/adminsc/cache/clear">Очистить кэш</a>
 
             <?php if (Auth::getUser()->isSU()): ?>
                 <a href="/zip/download">Download</a>
