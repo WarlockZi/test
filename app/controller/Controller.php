@@ -55,11 +55,9 @@ class Controller
         $this->vars = array_merge($this->vars, $vars);
     }
 
-
-
     public function setAjaxRequest(): void
     {
-        if (isset($_POST['params'])) {
+        if (!empty($_POST['params'])) {
             $req = json_decode($_POST['params'], true);
             if (!Auth::hasPphSession($req)) Response::exitWithError('плохой ключ сессии');
             if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])

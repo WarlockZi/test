@@ -18,6 +18,7 @@ use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
+use app\view\components\Builders\SelectBuilder\optionBuilders\PluckOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
@@ -238,13 +239,18 @@ class ProductFormView
             ->column(
                 ColumnBuilder::build('id')
                     ->name('Единица')
-                    ->html(
-                        SelectBuilder::build(
-                            ArrayOptionsBuilder::build(Unit::all())
+                    ->callback(function ($unit)use($baseUnit){
+                        $u = Unit::pluck('name', 'id');
+                        if ($unit->id ===$baseUnit->id) {
+                            return $baseUnit->name;
+                        }
+                        return SelectBuilder::build(
+                            PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
+                                ->selected($unit->id)
                                 ->get()
                         )
-                            ->get()
-                    )
+                            ->get();
+                    })
                     ->get()
             )
             ->column(
@@ -259,7 +265,10 @@ class ProductFormView
             ->column(
                 ColumnBuilder::build('base_unit')
                     ->name('Базовая ед')
-                    ->callback(function () use ($baseUnit) {
+                    ->callback(function ($unit) use ($baseUnit) {
+                        if ($unit->id ===$baseUnit->id) {
+                            return '';
+                        }
                         return $baseUnit->name;
                     })
                     ->get()
@@ -285,22 +294,22 @@ class ProductFormView
 
     }
 
-    protected static function units(Product $product): string
-    {
-        $fs           = new FS(__DIR__);
-        $baseUnit     = $product->units()->where('is_base', 1)->first();
-        $units        = $product->units;
-        $noneSelector = SelectBuilder::build(
-            ArrayOptionsBuilder::build(Unit::all())
-                ->initialOption()
-                ->excluded($baseUnit->id ?? 0)
-                ->get()
-        )
-            ->class('name')
-            ->get();
-        $multiplier   = self::multiplier(null);
-        return $fs->getContent('units', compact('units', 'noneSelector', 'baseUnit', 'multiplier'));
-    }
+//    protected static function units(Product $product): string
+//    {
+//        $fs           = new FS(__DIR__);
+//        $baseUnit     = $product->units()->where('is_base', 1)->first();
+//        $units        = $product->units;
+//        $noneSelector = SelectBuilder::build(
+//            ArrayOptionsBuilder::build(Unit::all())
+//                ->initialOption()
+//                ->excluded($baseUnit->id ?? 0)
+//                ->get()
+//        )
+//            ->class('name')
+//            ->get();
+//        $multiplier   = self::multiplier(null);
+//        return $fs->getContent('units', compact('units', 'noneSelector', 'baseUnit', 'multiplier'));
+//    }
 
     public static function getManufacturer(Product $p): string
     {

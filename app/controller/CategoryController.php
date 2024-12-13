@@ -40,7 +40,7 @@ class CategoryController extends AppController
                 $keywords = $category->ownProperties->seo_keywords ?? $category->name;
                 $this->assets->setMeta($title, $desc, $keywords);
             } else {
-                $rootCategories = CategoryRepository::frontCategories();
+                $rootCategories = CategoryRepository::rootCategories();
                 $this->setVars(compact('rootCategories'));
                 http_response_code(404);
             }
@@ -48,7 +48,7 @@ class CategoryController extends AppController
         } else {
             $this->view = 'categories';
 
-            $categories = CategoryRepository::frontCategories();
+            $categories = CategoryRepository::rootCategories();
 
             $this->setVars(compact('categories'));
             $this->assets->setMeta('Категории', 'Категории:VITEX', 'Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент');

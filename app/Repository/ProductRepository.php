@@ -10,7 +10,7 @@ use app\model\ProductUnit;
 use app\Services\ProductImageService;
 use Illuminate\Support\Collection;
 
-class ProductRepository extends AppController
+class ProductRepository
 {
     public function edit(int $id)
     {
@@ -89,7 +89,6 @@ class ProductRepository extends AppController
 
     public static function filter($req)
     {
-//        if (empty($req)) return;
         $nullEvry = self::array_every($req, function ($f) {
             return $f == 0;
         });

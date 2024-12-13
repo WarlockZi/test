@@ -73,6 +73,8 @@ class AppController extends Controller
             }else if ($req['relation']['id']) {
                 $id = $req['relation']['id'];
                 $withRelation = $model->$relationName()->syncWithoutDetaching([$id]);
+            }else if ($req['relation']['id']===0) {
+
             }
 
             if ($pivot) {

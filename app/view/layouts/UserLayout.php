@@ -26,7 +26,7 @@ class UserLayout extends Layout
         protected Assets  $assets = new UserAssets(),
     )
     {
-        $rootCategories = CategoryRepository::frontCategories();
+        $rootCategories = CategoryRepository::rootCategories();
         $this->header   = new UserHeader($this->route, $rootCategories);
         $this->footer   = new UserFooter($rootCategories);
 

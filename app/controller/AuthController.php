@@ -58,6 +58,7 @@ class AuthController extends AppController
 
     public function actionRegister(): void
     {
+        $this->mailer = new ConsoleMailer();
         $req = $this->ajax;
         if ($req) {
             if (!$req) Response::exitJson(['error' => 'empty fields', 'popup' => 'Заполните поля' . "\n"]);
@@ -75,7 +76,7 @@ class AuthController extends AppController
             if ($user) {
                 $message = "Пользователь создан\n";
                 try {
-                    $sent = $this->mailer->send('registration',[$user, $newPassword]);
+                    $sent = $this->mailer->send('registration',[$user]);
 //                    $sent = mail("https://www.mail-tester.com/ ", "My Subject", "Line 1\nLine 2\nLine 3");
 //                    $this->mailer->sendRegistrationMail($user);
                     Response::exitJson(['success' => 'confirm', 'popup' => $message . "\n"]);
