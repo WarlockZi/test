@@ -6,6 +6,10 @@ use app\core\FS;
 
 class MaiRepository
 {
+    protected static array $headers = [
+        'From' => 'vitexopt@vitexopt.ru',
+        'Reply-To' => 'vitexopt@vitexopt.ru',
+    ];
     public static function forgotPassword(array $props): array
     {
         return [
@@ -13,6 +17,7 @@ class MaiRepository
             1 => $props[0]->email,
             2 => 'VITEX|новый пароль',
             3 => 'Ваш новый пароль - '.$props[1],
+            4 => self::$headers,
         ];
 //        return [
 //            'path' => ROOT . FS::platformSlashes("/app/core/Mail/consoleMail.php"),
