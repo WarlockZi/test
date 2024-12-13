@@ -64,7 +64,7 @@ class FilterView
         $args = get_object_vars($this);
         return $this->fs->getContent('filter', $args);
     }
-    public function getProductFilter(string $filters)
+    public function getProductFilterPanel(string $filters)
     {
         return $this->fs->getContent('productFilter', compact('filters'));
     }

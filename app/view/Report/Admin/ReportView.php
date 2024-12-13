@@ -73,7 +73,6 @@ class ReportView
 
             ->edit()
             ->del()
-            ->addButton()
             ->get() ?? 'Установите фильтры';
     }
 

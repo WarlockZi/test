@@ -26,7 +26,7 @@ export default class Table {
          this.table[ael]('checkbox.changed', this.checkboxChange.bind(this));
          this.setCheckboxes()
       }
-         // this.setSortables()
+      // this.setSortables()
       this.setSelects()
       this.setSortables()
    }
@@ -100,7 +100,6 @@ export default class Table {
    }
 
 
-
 /// INPUT
    async handleKeyup({target}) {
       if (target.hasAttribute('data-search')) {
@@ -125,7 +124,7 @@ export default class Table {
 
    // UPDATE OR CREATE
    async updateOrcreate(target) {
-      const res = await post(this.updateOrCreateUrl, this.DTO(target))
+      const res = await post(this.updateOrCreateUrl, new DTO(this.modelId, target))
       if (res.arr.id) {
          this.newRow(res?.arr.id)
       }
@@ -249,7 +248,6 @@ export default class Table {
       })
    }
 
-
    setSortables() {
       this.sortables = $('[data-sort]');
       this.directions = Array.from(this.sortables)
@@ -260,10 +258,10 @@ export default class Table {
 
    setSelects() {
 
-         const selects = $('[select-new]:has(option)');
-         [].forEach.call(selects, (select)=>{
-            new SelectNew(select)
-         })
+      const selects = $('[select-new]:has(option)');
+      [].forEach.call(selects, (select) => {
+         new SelectNew(select)
+      })
 
    }
 
@@ -281,20 +279,3 @@ if (tables) {
       new Table(table)
    })
 }
-// handleKeyUp(e) {
-//    e.cancelBubble = true;
-//    const target = e.target;
-//
-//    // contenteditable
-//    if (target.hasAttribute('contenteditable')) {
-//       this.debouncedInput(target)
-//
-//       /// search
-//    } else if (target.hasAttribute('data-search')) {
-//       const header = target.closest('.head');
-//       const index = [].findIndex.call(this.headers, (el, i, inputs) => {
-//          return el === header
-//       });
-//       this.search(target, index)
-//    }
-// }

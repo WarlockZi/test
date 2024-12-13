@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CategoryRepository
 {
-    public static function frontCategories()
+    public static function rootCategories()
     {
         return Cache::get('rootCategories',
             function () {

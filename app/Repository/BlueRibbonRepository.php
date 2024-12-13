@@ -18,7 +18,7 @@ class BlueRibbonRepository
         }
 
         return [
-            'front_categories' => CategoryRepository::frontCategories(),
+            'front_categories' => CategoryRepository::rootCategories(),
             'child_categories' => $child_categories,
             'oItemsCount' => OrderRepository::count(),
             'icon' => Icon::shoppingCart('feather'),

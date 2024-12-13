@@ -1,7 +1,7 @@
 import './ProductFilter.css'
 import {ael, qa} from "@src/constants.js";
 import {$, post} from "@src/common.js";
-import {document} from "postcss";
+import SelectNew from "@src/components/select/SelectNew.js";
 
 export default class ProductFilter {
    constructor() {
@@ -11,6 +11,13 @@ export default class ProductFilter {
       this.url = '/adminsc/report/filter'
       this.submitBttn = $(this.wrap).find('.filter-button')
       this.submitBttn[ael]('click', this.submit.bind(this))
+      this.setSelects()
+   }
+   setSelects(){
+      const selects = this.wrap[qa](`[select-new]`);
+      [].map.call(selects, select => {
+         new SelectNew(select)
+      });
    }
 
    async submit(e) {
@@ -30,12 +37,14 @@ export default class ProductFilter {
 
       const headers = {
          "Content-Type": "application/x-www-form-urlencoded",
-         "Accept": "text/html",
+         "Accept": "application/json",
       }
-      const res = await post(this.url, req, headers);
+      const res = await post(this.url, req);
+
       $('.used-filters').first().innerHTML = res?.arr?.filterString
       $('.list-filter').first().innerHTML = res?.arr?.filterPanel
       const table = $('[custom-table]').first()
       table.innerHTML = res?.arr?.products
+      this.setSelects()
    }
 }

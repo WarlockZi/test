@@ -3,7 +3,9 @@
 
 namespace app\view\components\Builders\SelectBuilder\optionBuilders;
 
-use Illuminate\Database\Eloquent\Collection;
+//use Illuminate\Database\Eloquent\Collection;
+
+use Illuminate\Support\Collection;
 
 class ArrayOptionsBuilder
 {
@@ -13,6 +15,7 @@ class ArrayOptionsBuilder
     protected string $initialOption = '';
     protected array $fieldsMap;
     protected string $field = 'name';
+//    protected array $items = [];
 
     public static function build(array|Collection $array, array $fieldsMap = []): ArrayOptionsBuilder
     {
@@ -27,7 +30,7 @@ class ArrayOptionsBuilder
     {
         if (!count($this->arr) && !$this->initialOption) $this->initialOption();
         $str = $this->initialOption;
-        $str .= $this->options($this->arr, '');
+        $str .= $this->options('');
         return $str;
     }
 
@@ -37,12 +40,12 @@ class ArrayOptionsBuilder
         return $this;
     }
 
-    public function options($items, string $string = ''): string
+    public function options(string $string = ''): string
     {
-        foreach ($items as $item) {
+        foreach ($this->arr as $item) {
             $id = $item['id'];
             if (in_array($id, $this->excluded)) continue;
-            $selected = $id == $this->selected ? "selected" : '';
+            $selected = ($id == $this->selected) ? "selected" : '';
             $string   .= "<option value = $id $selected>{$item[$this->field]}</option>";
         }
         return $string;

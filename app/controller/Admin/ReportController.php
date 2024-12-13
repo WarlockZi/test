@@ -16,35 +16,34 @@ class ReportController extends AdminscController
     private ProductRepository $productRepository;
     private ProductFilterService $productFilterService;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->formView          = new ReportView();
+        $this->productRepository = new ProductRepository();
+        $this->filterService     = new ProductFilterService($this->ajax);
+    }
+
     public function actionFilter(): void
     {
-        $req = [];
+        $req = $this->ajax;
+        $this->filterService->saveUserFilters($req);
 
-        if (!empty($_POST)) {
-            $req = $_POST;
-            $this->productFilterService->saveUserFilters($req);
-        }
-
-        $filterService = $this->productFilterService->get();
-        $products      = $this->productRepository::filter($req);
-        $productsTable   = $this->formView->filter($products, 'Фильтр');
-        if ($_POST) {
+        $userFilters   = empty($req) ? $this->filterService->getUserFilters() : $req;
+        $products      = $this->productRepository::filter($userFilters);
+        $productsTable = $this->formView->filter($products, 'Фильтр');
+        $_POST         = null;
+        $filterService = $this->filterService;
+        if ($req) {
             Response::exitJson([
                 'products' => $productsTable,
-                'filtersSting' => $filterService->getUserFilterString(),
-                'filterPanel'=>$filterService->getFilterPanel()]);
+                'filterString' => $filterService->getUserFilterString(),
+                'filterPanel' => $filterService->getFilterPanel()]);
         }
         $this->setVars(compact('productsTable', 'filterService'));
     }
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->repo                 = new ReportRepository();
-        $this->formView             = new ReportView();
-        $this->productRepository    = new ProductRepository();
-        $this->productFilterService = new ProductFilterService();
-    }
+
 }
 
 
