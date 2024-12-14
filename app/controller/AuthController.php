@@ -32,7 +32,8 @@ class AuthController extends AppController
 
     public function actionReturnpass(): void
     {
-        $this->mailer = $_ENV['DEV']?new ConsoleMailer():new PHPMail('env');
+        $this->mailer = new PHPMail('env');
+//        $this->mailer = $_ENV['DEV']?new ConsoleMailer():new PHPMail('env');
         if ($req = $this->ajax) {
             $_SESSION['id'] = '';
             $user           = $this->userRepository->getByEmail($req['email']);

@@ -27,7 +27,7 @@ class Mail
             'host' => env('SMTP_HOST'),
             'port' => env('SMTP_PORT'),
             'user' => env('SMTP_USERNAME'),
-            'pass' => env('YANDEX_APP_KEY'), // пароль для стороннего приложения
+            'pass' => env('YANDEX_APP_KEY1'), // пароль для стороннего приложения
             'from' => env('SMTP_FROM_EMAIL'),
             'replyTo' => env('SMTP_FROM_EMAIL'),
         ];
@@ -83,8 +83,6 @@ class Mail
             $this->mailer = new PHPMailer(true);
             $credits      = $this->credits;
         }
-
-//        $this->mailer          = new PHPMailer(true);
         $this->mailer->CharSet = 'UTF-8';
         $this->mailer->isSMTP();
         $this->mailer->SMTPDebug = 1;
