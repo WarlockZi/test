@@ -3,7 +3,7 @@
 namespace app\core\Mail;
 
 use app\core\FS;
-use app\Repository\MaiRepository;
+use app\Repository\MailConsoleRepository;
 use Throwable;
 
 class ConsoleMailer implements Mailer
@@ -18,9 +18,9 @@ class ConsoleMailer implements Mailer
     {
     }
 
-    public function send(string $function, array $props=[]): bool
+    public function send(string $function='', array $props=[]): bool
     {
-        list($path, $to, $subj, $body, $headers) = MaiRepository::$function($props);
+        list($path, $to, $subj, $body, $headers) = MailConsoleRepository::$function($props);
 
         try {
             !$_ENV['DEV'] ? mail($to, $subj, $body) : exec("php -f $path $to $subj \"$body\" $headers", $output);

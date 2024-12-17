@@ -1,8 +1,12 @@
 <div class="promotions-index">
 	<div class="page-name">
 		Акции
-
 	</div>
+
+    <? if (!$promotions->count()): ?>
+        <p>В даный момент актыивных акций нет, но скоро, возможно, появятся</p>
+    <? endif; ?>
+
 
 	<? foreach ($promotions as $promotion): ?>
 		<? if ($promotion && $promotion->product): ?>

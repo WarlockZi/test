@@ -5,84 +5,80 @@ namespace app\core\Mail;
 
 
 use PHPMailer\PHPMailer\PHPMailer;
+use function PHPUnit\Framework\isInstanceOf;
 
 class Mail
 {
     protected array $credits;
-    protected $mailer;
-    protected $variant;
+    protected PHPMailer|ConsoleMailer $mailer;
+    protected string $variant;
 
     public function __construct(string $variant)
     {
         $this->variant = $variant;
-        $this->credits = $this->setCredits($variant);
-        $this->setMailer($variant);
+        $this->credits = $this->setCredits();
+        $this->mailer  = ($this->variant === 'console')
+            ? new ConsoleMailer()
+            : new PHPMailer(true);
+        $this->setMailer();
     }
 
-    protected function setCredits(string $variant): array
+    protected function setCredits(): array
     {
-        $variants            = new PHPMailer();
-        $variants->env       = [
-            'mail' => env('SMTP_FROM_EMAIL'),
-            'host' => env('SMTP_HOST'),
-            'port' => env('SMTP_PORT'),
-            'user' => env('SMTP_USERNAME'),
-            'pass' => env('YANDEX_APP_KEY1'), // пароль для стороннего приложения
-            'from' => env('SMTP_FROM_EMAIL'),
-            'replyTo' => env('SMTP_FROM_EMAIL'),
+        $variants = [
+            'env' => [
+                'mail' => env('SMTP_FROM_EMAIL'),
+                'host' => env('SMTP_HOST'),
+                'port' => env('SMTP_PORT'),
+                'user' => env('SMTP_USERNAME'),
+                'pass' => env('YANDEX_APP_KEY1'), // пароль для стороннего приложения
+                'from' => env('SMTP_FROM_EMAIL'),
+                'replyTo' => env('SMTP_FROM_EMAIL'),
+            ],
+            'yandexnew' => [
+                'app_key' => $_ENV['YANDEX_APP_KEY'], // пароль для стороннего приложения
+            ],
+
+            'vitex' => [
+                'mail' => 'vitexopt@vitexopt.ru',
+                'host' => 'smtp.vitexopt.ru',
+                'port' => '465',
+                'user' => "vitexopt@vitexopt.ru",
+                'pass' => "KiteKite35",
+                'from' => 'vitexopt@vitexopt.ru',
+                'replyTo' => 'vvoronik@yandex.ru',
+                'to' => 'vitaliy04111979@gmail.com',
+            ],
         ];
-        $variants->yandexnew = [
-            'mail' => 'vvoronik@yandex.ru',
-            'host' => 'smtp.yandex.com',
-            'port' => '465',
-            'user' => "vvoronik@yandex.ru",
-            'app_key' => $_ENV['YANDEX_APP_KEY'], // пароль для стороннего приложения
-//            'pass' => $_ENV['YANDEX_APP_KEY'], // пароль для стороннего приложения
-            'from' => 'vvoronik@yandex.ru',
-            'replyTo' => 'vvoronik@yandex.ru',
-            'to' => 'vitaliy04111979@gmail.com',
-        ];
-        $variants->yandex    = [
-            'mail' => 'vvoronik@yandex.ru',
-            'host' => 'smtp.yandex.com',
-            'port' => '465',
-            'user' => "vvoronik@yandex.ru",
-            'pass' => "hooliGan35",
-            'from' => 'vvoronik@yandex.ru',
-            'replyTo' => 'vvoronik@yandex.ru',
-            'to' => 'vitaliy04111979@gmail.com',
-        ];
-        $variants->google    = [
-            'mail' => 'vitaliy04111979@gmail.com',
-            'host' => 'smtp.gmail.com',
-            'port' => '465',
-            'user' => 'vitaliy04111979@gmail.com',
-            'pass' => $_ENV['GOOGlE_PASS'],
-            'from' => 'vitaliy04111979@gmail.com',
-            'replyTo' => 'vvoronik@yandex.ru',
-            'to' => 'vvoronik@yandex.ru',
-        ];
-        $variants->vitex     = [
-            'mail' => 'vitexopt@vitexopt.ru',
-            'host' => 'smtp.vitexopt.ru',
-            'port' => '465',
-            'user' => "vitexopt@vitexopt.ru",
-            'pass' => "KiteKite35",
-            'from' => 'vitexopt@vitexopt.ru',
-            'replyTo' => 'vvoronik@yandex.ru',
-            'to' => 'vitaliy04111979@gmail.com',
-        ];
-        return $variants->$variant;
+
+        return $variants[$this->variant];
     }
+
+
+    public function setToFromBody(array $props)
+    {
+        $mailDTO = [
+            'To' => array('email', 'name'),
+            'From' => 'email',
+            'FromName' => 'name',
+            'MsgHTML' => 'dd',
+            'AltBody' => 'dd',
+
+        ];
+        if (!empty($props['to'])) {
+            $this->mailer->AddAddress($props['to']['email'], $props['to']['name']);
+        }
+        $this->mailer->From = $props['From'] ?? "";
+        $this->mailer->FromName = $props['FromName'] ?? "";
+        $this->mailer->MsgHTML($props['MsgHTML'] ?? "");
+        $this->mailer->AltBody = $props['AltBody']??"";
+    }
+
 
     protected function setMailer(): void
     {
-        if ($this->variant === 'console') {
-            $this->mailer = new ConsoleMailer();
-        } else {
-            $this->mailer = new PHPMailer(true);
-            $credits      = $this->credits;
-        }
+        if (!isInstanceOf(PHPMailer::class)) return;
+        $credits               = $this->credits;
         $this->mailer->CharSet = 'UTF-8';
         $this->mailer->isSMTP();
         $this->mailer->SMTPDebug = 1;
@@ -102,7 +98,6 @@ class Mail
                 'allow_self_signed' => true
             )
         );
-
     }
 
     public static function toBase64($str)
@@ -112,6 +107,15 @@ class Mail
 
     public function send(): void
     {
-        $res = $this->mailer->send();
+        try {
+            $this->mailer->send();
+            echo 'Message sent';
+        } catch (\Throwable $e) {
+            echo 'Mailer Error';
+            $this->mailer->getSMTPInstance()->reset();
+        }
+        $this->mailer->clearAddresses();
+        $this->mailer->clearAttachments();
+
     }
 }

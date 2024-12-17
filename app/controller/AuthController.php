@@ -3,8 +3,6 @@
 namespace app\controller;
 
 use app\core\Auth;
-use app\core\FS;
-use app\core\Mail\ConsoleMailer;
 use app\core\Mail\PHPMail;
 use app\core\Request;
 use app\core\Response;
@@ -27,7 +25,7 @@ class AuthController extends AppController
         $this->userRepository = new UserRepository();
 //        $this->mailer         = new ServerMailer;
 //        $this->mailer         = new PHPMail('env');
-//        $this->mailer         = new PHPMail('yandexnew');
+        $this->mailer = new PHPMail();
     }
 
     public function actionReturnpass(): void
@@ -44,7 +42,7 @@ class AuthController extends AppController
                 $this->userRepository->changePassword($user, $hashedPassword);
 
                 try {
-                    $sent = $this->mailer->send('forgotPassword',[$user, $newPassword]);
+                    $sent = $this->mailer->send('forgotPassword', [$user, $newPassword]);
                     Response::exitJson(['success' => true,
                         'popup' => 'Новый пароль проверьте на почте']);
                 } catch (\Throwable $exception) {
@@ -58,8 +56,8 @@ class AuthController extends AppController
 
     public function actionRegister(): void
     {
-        $this->mailer = new ConsoleMailer();
-        $req = $this->ajax;
+        $this->mailer = new PHPMail();
+        $req          = $this->ajax;
         if ($req) {
             if (!$req) Response::exitJson(['error' => 'empty fields', 'popup' => 'Заполните поля' . "\n"]);
             if (!$req['email']) Response::exitJson(['error' => 'empty email', 'popup' => 'Заполните email' . "\n"]);
@@ -76,7 +74,7 @@ class AuthController extends AppController
             if ($user) {
                 $message = "Пользователь создан\n";
                 try {
-                    $sent = $this->mailer->send('registration',[$user]);
+                    $sent = $this->mailer->sendRegistrationMail($user);
 //                    $sent = mail("https://www.mail-tester.com/ ", "My Subject", "Line 1\nLine 2\nLine 3");
 //                    $this->mailer->sendRegistrationMail($user);
                     Response::exitJson(['success' => 'confirm', 'popup' => $message . "\n"]);
@@ -213,12 +211,12 @@ class AuthController extends AppController
             exit();
         }
 
-        $user['confirm'] = "1";
         Auth::setAuth($user);
-        if ($user->update()) {
-            header('Location:/auth/success');
-            Response::exitWithPopup('"Вы успешно подтвердили свой E-mail."');
+        if ($user->update(['confirm' => 1])) {
+            header('Location:/');
+//            Response::exitJson(['success' => 'Вы успешно подтвердили почту', 'popup=' => 'Вы успешно подтвердили почту']);
         }
+        Response::exitJson(['error' => 'Произошла ошибка', 'popup=' => 'Произошла ошибка']);
     }
 
     public function actionUnautherized(): void

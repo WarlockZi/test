@@ -60,7 +60,7 @@ class TestresultController extends AdminscController
 //        if ($_ENV['TEST_EMAIL_ALL_SEND']) {
 //            Response::exitJson(['popup'=>'mail not sent']);
 //        }
-        $mailer = new PHPMail('env');
+        $mailer = new PHPMailer('env');
 //        $mailer = new PHPMail('yandexnew');
 
         $sent = $mailer->sendTestResults($post, $resid);

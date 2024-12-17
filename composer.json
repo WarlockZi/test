@@ -25,7 +25,8 @@
     "arthurkushman/php-wss": "^2.0",
     "monolog/monolog": "^3.7",
     "ext-memcached": "*",
-    "ext-xdebug": "*"
+    "ext-xdebug": "*",
+    "ext-imap": "*"
   },
   "config": {
     "platform-check": false

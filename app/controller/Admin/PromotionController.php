@@ -16,8 +16,8 @@ class PromotionController Extends AdminscController
 		parent::__construct();
 	}
 
-	public function actionEdit()
-	{
+	public function actionEdit(): void
+    {
 		$id = $this->route->id;
 		$promotion = Promotion::with('product')->firstOrCreate(['id'=>$id]);
 		$promotion = PromotionFormView::edit($promotion);

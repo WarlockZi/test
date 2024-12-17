@@ -21,7 +21,7 @@ const config = {
     // bot: path.resolve(src, 'bot/js/app.js'),
     auth: path.resolve(src, 'Auth/auth.js'),
     main: path.resolve(src, 'Main/main.js'),
-    cookie: path.resolve(src, 'components/cookie/cookie.js'),
+    cookie: path.resolve(src, 'components/chatLocalStorage/chatLocalStorage.js'),
     common: path.resolve(src, 'common.js'),
     // table: path.resolve(src, 'components/table/table.js'),
     product: path.resolve(src, 'Product/Product.js'),

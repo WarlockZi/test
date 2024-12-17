@@ -2,6 +2,7 @@ import './main.scss'
 import '../components/header/show-front-menu1.js';
 import '../404/404.scss'
 import '../share/hoist/hoist';
+import '../share/chat/Chat';
 import '../components/animate/animate.js'
 import {qs} from '../constants';
 import scroll from '../share/scroll/scroll.js'
@@ -15,10 +16,14 @@ import CatalogItem from "@src/Admin/components/catalog-item/catalog-item.js";
 import {$} from "@src/common.js";
 import YM from "@src/Main/YM.js";
 import Search from "@src/components/search/search.js";
+import ChatLocalStorage from "@src/share/chatLocalStorage/ChatLocalStorage.js";
+import Chat from "@src/share/chat/chat.js";
 
 window.YM = YM
 document.addEventListener('DOMContentLoaded', async function () {
 
+   new Chat()
+   new ChatLocalStorage()
 
    const path = window.location.pathname;
    if (path.startsWith('/auth/profile')) {

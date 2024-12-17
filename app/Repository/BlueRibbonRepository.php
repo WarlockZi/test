@@ -2,6 +2,7 @@
 
 namespace app\Repository;
 
+use app\core\Cache;
 use app\core\Icon;
 use app\Services\CatalogMobileMenu\CatalogMobileMenuService;
 
@@ -10,20 +11,27 @@ class BlueRibbonRepository
 {
     public static function data($rootCategories): array
     {
-        $child_categories = [];
-        foreach ($rootCategories as $rootCat) {
-            ob_start();
-            self::buildMenu($rootCat->childrenRecursive->toArray());
-            $child_categories[$rootCat->name] = ob_get_clean();
-        }
-
         return [
             'front_categories' => CategoryRepository::rootCategories(),
-            'child_categories' => $child_categories,
+            'child_categories' => self::getRootCategories($rootCategories),
             'oItemsCount' => OrderRepository::count(),
             'icon' => Icon::shoppingCart('feather'),
-            'mobile_categories'=>(new CatalogMobileMenuService())->get(),
+            'mobile_categories' => (new CatalogMobileMenuService())->get(),
         ];
+    }
+
+    private static function getRootCategories($rootCategories): array
+    {
+        return Cache::get('blueRibbonCategories',
+            function () use ($rootCategories) {
+                $child_categories = [];
+                foreach ($rootCategories as $rootCat) {
+                    ob_start();
+                    self::buildMenu($rootCat->childrenRecursive->toArray());
+                    $child_categories[$rootCat->name] = ob_get_clean();
+                }
+                return $child_categories;
+            }, 1000);
     }
 
     private static function buildMenu(array $categories, int $i = 1): void

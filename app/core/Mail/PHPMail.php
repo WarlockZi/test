@@ -5,30 +5,66 @@ namespace app\core\Mail;
 use app\core\FS;
 use app\model\User;
 use app\view\Mail\MailView;
+use PHPMailer\PHPMailer\PHPMailer;
 use Throwable;
 
-class PHPMail extends Mail
+
+class PHPMail
 {
-    public function __construct(string $variant)
+    protected PHPMailer $mailer;
+
+    public function __construct()
     {
-        parent::__construct($variant);
+        $this->setMailer();
     }
 
-    public function sendRegistrationMail($user): void
+    protected function setMailer(): void
     {
-        $this->mailer->setFrom($this->credits['from'], 'VITEX');
-        $this->mailer->addReplyTo($this->credits['replyTo'], 'Vitex');
-        $this->mailer->addAddress($user['email']);
+        $mailer = new PHPMailer();
 
-        $this->mailer->Subject = 'Регистрация VITEX';
+        $mailer->CharSet = 'UTF-8';
+        $mailer->isSMTP();
+        $mailer->SMTPDebug = 1;
 
-        $this->mailer->isHTML(true);
-        $this->mailer->Body    = MailView::registration($user);
-        $this->mailer->AltBody = MailView::registrationAlt($user);
+        $mailer->Port       = env('SMTP_PORT');
+        $mailer->SMTPAuth   = true;
+        $mailer->SMTPSecure = 'ssl';
 
-        $this->mailer->addCustomHeader("List-Unsubscribe", "<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$user['email']}>");
+        $mailer->Host     = env('SMTP_HOST');
+        $mailer->Username = env('SMTP_USERNAME');
+        $mailer->Password = env('YANDEX_APP_KEY1');
 
-        $this->mailer->send();
+        $mailer->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+        $this->mailer        = $mailer;
+    }
+
+    public function sendRegistrationMail($user): bool
+    {
+        try {
+            $this->mailer->setFrom(env('SMTP_FROM_EMAIL'), env('SMTP_FROM_NAME'));
+            $this->mailer->addReplyTo(env('SMTP_REPLY_TO'), env('SMTP_FROM_NAME'));
+            $this->mailer->addAddress($user['email']);
+
+            $this->mailer->Subject = 'Регистрация VITEX';
+
+            $this->mailer->isHTML(true);
+            $this->mailer->Body    = MailView::registration($user);
+            $this->mailer->AltBody = MailView::registrationAlt($user);
+
+            $this->mailer->addCustomHeader("List-Unsubscribe", "<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$user['email']}>");
+
+            $this->mailer->send();
+            return true;
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
+            return false;
     }
 
     public function sendNewPasswordMail(User $user, string $newPass): void
@@ -45,7 +81,7 @@ class PHPMail extends Mail
 
         $this->mailer->addCustomHeader("List-Unsubscribe", "<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$user['email']}>");
 
-            $this->mailer->send();
+        $this->mailer->send();
     }
 
     public function sendTestResults($post, $resid): void

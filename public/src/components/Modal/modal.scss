@@ -73,31 +73,8 @@
       }
 
       .modal-close {
-        position: absolute;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        top: 10px;
-        right: 10px;
-        border-radius: 1000px;
-        background: var.$color-main;
-        font-weight: bold;
-        text-decoration: none;
-        color: #fff;
-        line-height: 190%;
-        cursor: pointer;
-        transition: transform ease 0.5s;
-        padding: 5px;
+        @include mixin_media.modal-close;
 
-        svg {
-          pointer-events: none;
-          width: clamp(5px, 3vw, 20px);
-          height: clamp(5px, 3vw, 20px);
-        }
-
-        &:hover {
-          transform: rotate(180deg);
-        }
       }
 
       .content {
