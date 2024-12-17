@@ -44,7 +44,14 @@ use app\core\Icon;
 
         <?= $content; ?>
     </main>
-    <div class="hoist" title="Наверх"><?=Icon::scrollup();?></div>
+<!--    <div class="chat-icon" title="Чат">--><?php //=Icon::chat2();?><!--</div>-->
+    <form class="chat-form" id="chatForm">
+        <div class="modal-close"><?= Icon::close() ?></div>
+        <div class="messages"></div>
+        <input type="text" class="chat-name-input" data-user-name placeholder="Здравствуйте, как Вас зовут?">
+    </form>
+
+    <div class="hoist" title="Наверх"><?=Icon::scrollup1();?></div>
 </div>
 
 <?= $footer; ?>

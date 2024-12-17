@@ -4,43 +4,34 @@ namespace app\Repository;
 
 use app\core\FS;
 
-class MaiRepository
+class MailYandexRepository
 {
-    protected static array $headers = [
-        'From' => 'vitexopt@vitexopt.ru',
-        'Reply-To' => 'vitexopt@vitexopt.ru',
-    ];
+    public function __construct()
+    {
+
+    }
+
+
     public static function forgotPassword(array $props): array
     {
         return [
-            0 => ROOT . FS::platformSlashes("/app/core/Mail/consoleMail.php"),
             1 => $props[0]->email,
             2 => 'VITEX|новый пароль',
-            3 => 'Ваш новый пароль - '.$props[1],
-            4 => self::$headers,
+            3 => 'Ваш новый пароль - ' . $props[1],
         ];
-//        return [
-//            'path' => ROOT . FS::platformSlashes("/app/core/Mail/consoleMail.php"),
-//            'to' => $props[0]->email,
-//            'subject' => 'test',
-//            'body' => 'body text and other',
-//        ];
+
     }
+
     public static function registration(array $props): array
     {
         return [
-            0 => ROOT . FS::platformSlashes("/app/core/Mail/consoleMail.php"),
             1 => $props[0]->email,
             2 => "VITEX|регистрация",
             3 => "Для завершения регистрации пройдите по ссылке <a href = {$props[0]->hash}>Подтвердить</a>",
         ];
-//        return [
-//            'path' => ROOT . FS::platformSlashes("/app/core/Mail/consoleMail.php"),
-//            'to' => $props[0]->email,
-//            'subject' => 'test',
-//            'body' => 'body text and other',
-//        ];
+
     }
+
     protected function setHeaders(string $type): void
     {
         $additionalHeaders = '';

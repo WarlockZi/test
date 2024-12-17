@@ -1,14 +1,23 @@
 @use "../../var";
 @use "sass:color";
 
-.hoist {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
+.hoist svg {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  padding: 5px;
+  width: 40px;
+  height: 40px;
+  color: var.$color-main;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  &:hover {
+    color: color.adjust(var.$color-main, $lightness: 10%);
     padding: 5px;
-    color: #ffffff;
+    border: 1px solid color.adjust(var.$color-main, $saturation: 70%, $lightness:30%);
     border-radius: 50%;
-    cursor: pointer;
-    box-shadow: inset -9px -7px 13px 6px rgb(44 121 179 / 83%);
+  }
 }

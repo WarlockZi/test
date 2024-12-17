@@ -34,13 +34,9 @@ class User extends Model implements IUser
         'deleted_at',
     ];
 
-//    protected function role(): Attribute
-//    {
-//        return Attribute::get(fn(string $this->role) => explode(',', $rights));
-//    }
     protected function rights(): Attribute
     {
-        return Attribute::get(fn(string|null $rights) => !empty($rights)?explode(',', $rights):[]);
+        return Attribute::get(fn(string|null $rights) => !empty($rights) ? explode(',', $rights) : []);
     }
 
     public function role(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -53,13 +49,16 @@ class User extends Model implements IUser
     {
         $has   = $this->hasRights($rights);
         $su    = Auth::isSU();
-        $admin = Auth::getUser()->role->first()->name === 'role_admin';
+        $admin = Auth::getUser()?->role?->first()?->name === 'role_admin';
         return ($has || $su || $admin);
     }
 
     public function fio(): string
     {
-        return "{$this->surName} {$this->name} {$this->middleName}";
+        $surname    = $this->surName ?? '*';
+        $name       = $this->name ?? '*';
+        $middleName = $this->middleName ?? '*';
+        return "{$surname} {$name} {$middleName}";
     }
 
     public function mail(): string
@@ -69,7 +68,9 @@ class User extends Model implements IUser
 
     public function fi(): string
     {
-        return "{$this->surName} {$this->name}";
+        $surname = $this->surName ?? '*';
+        $name    = $this->name ?? '*';
+        return "{$surname} {$name}";
     }
 
     public function avatar(): string
@@ -78,7 +79,6 @@ class User extends Model implements IUser
             ? ImageRepository::getImg('/pic/srvc/main/ava_female.jpg')
             : ImageRepository::getImg('/pic/srvc/main/ava_male.png');
     }
-
 
 
     public function hasRights(array $rights): bool
@@ -106,7 +106,6 @@ class User extends Model implements IUser
         return $this->role->contains(function ($role) {
             return $role->name === 'role_admin';
         });
-//        return $this->can(['role_admin']);
     }
 
     public function isEmployee(): bool
@@ -114,6 +113,9 @@ class User extends Model implements IUser
         return $this->role->contains(function ($role) {
             return $role->name === 'role_employee';
         });
-//        return $this->hasRights(['role_employee']);
     }
+    //    protected function role(): Attribute
+//    {
+//        return Attribute::get(fn(string $this->role) => explode(',', $rights));
+//    }
 }

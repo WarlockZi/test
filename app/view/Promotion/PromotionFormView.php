@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Collection;
 class PromotionFormView
 {
 
-    static function edit($promotion)
+    static function edit($promotion): string
     {
         $link      = $promotion->product ? "adminsc/product/edit/{$promotion->product->id}" : 'adminsc/product/table';
         $promotion = ItemBuilder::build($promotion, 'promotion')
@@ -58,7 +58,7 @@ class PromotionFormView
         return $promotion;
     }
 
-    protected static function unitSelector($selected)
+    protected static function unitSelector($selected): string
     {
         $s = SelectBuilder::build(
             ArrayOptionsBuilder::build(Unit::all())
@@ -73,7 +73,6 @@ class PromotionFormView
 
     public static function adminIndex(Collection $promotions): string
     {
-
         $promotion = Table::build($promotions)
             ->pageTitle('Акции. Чтобы завести Акцию, найдите карточку товара. Нажмите + во вкладке Акции')
             ->model('promotion')

@@ -49,7 +49,7 @@ class ItemBuilder
 
     public function pageTitle(string $pageTitle): static
     {
-        $this->pageTitle = $pageTitle ? "<div class='page-title'>$pageTitle</div>" : '';
+        $this->pageTitle = $pageTitle ? "<div class='page-name'>$pageTitle</div>" : '';
         return $this;
     }
 
