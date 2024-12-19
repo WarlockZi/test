@@ -1,6 +1,6 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-Df9KVnas.js",
+    "file": "assets/Category-xcJ0s9xQ.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -33,7 +33,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-BkLDHBSe.js",
+    "file": "assets/Product-tQTG37e3.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -54,7 +54,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-69Ked08K.js",
+    "file": "assets/Props-CeE5HVgb.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -67,7 +67,7 @@
     ]
   },
   "Admin/Test/TestDo/TestDo.js": {
-    "file": "assets/TestDo-BD4AWyjB.js",
+    "file": "assets/TestDo-DhKPzkLB.js",
     "name": "TestDo",
     "src": "Admin/Test/TestDo/TestDo.js",
     "isDynamicEntry": true,
@@ -79,14 +79,14 @@
     ]
   },
   "Admin/Test/TestEdit/test-edit.js": {
-    "file": "assets/test-edit-Cjh6RixC.js",
+    "file": "assets/test-edit-CgQGZdHA.js",
     "name": "test-edit",
     "src": "Admin/Test/TestEdit/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_DTO-fQ5yvRWl.js",
-      "_index-DlvFlAhE.js",
+      "_index-fvp9c3tK.js",
       "_MyQuill-DaU4FAjb.js",
       "Promotions/Promotion.js"
     ],
@@ -95,7 +95,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-ByRGHf3e.js",
+    "file": "assets/admin-LEmAagiC.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -106,7 +106,7 @@
     ],
     "dynamicImports": [
       "components/Modal/modal.js",
-      "_index-DlvFlAhE.js",
+      "_index-fvp9c3tK.js",
       "Admin/chartjs/chartjs.js",
       "share/card_panel/card_panel.js",
       "Admin/Product/Product.js",
@@ -128,7 +128,7 @@
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-CuN06MEa.js",
+    "file": "assets/catalog-item-JQaQfQtX.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
@@ -164,7 +164,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-DOSFK12F.js",
+    "file": "assets/main-GECytpSR.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -240,8 +240,8 @@
     "file": "assets/index-DYGhe8tp.css",
     "src": "_index-!~{004}~.js"
   },
-  "_index-DlvFlAhE.js": {
-    "file": "assets/index-DlvFlAhE.js",
+  "_index-fvp9c3tK.js": {
+    "file": "assets/index-fvp9c3tK.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [

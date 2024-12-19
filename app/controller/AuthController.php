@@ -121,7 +121,7 @@ class AuthController extends AppController
             if ($user->isEmployee()) {
                 Response::exitJson(['role' => 'employee', 'id' => $user['id']]);
             } else if ($user->isAdmin()) {
-                Response::exitJson(['role' => 'admin', 'id' => $user['id']]);
+                Response::exitJson(['role' => 'guest', 'id' => $user['id']]);
             } else {
                 Response::exitJson(['role' => 'guest', 'id' => $user['id']]);
             }
