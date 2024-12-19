@@ -2,6 +2,7 @@
 
 namespace app\view\Report\Admin;
 
+use app\Repository\ProductFilterRepository;
 use app\Services\ProductService;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
@@ -9,8 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ReportView
 {
-    public function filter(Collection|null $products, string $title): string
+    public function filter(array $userFilters, string $title): string
     {
+        $repo = new ProductFilterRepository();
+        $products      = $repo::filterProducts($userFilters);
         return Table::build($products)
             ->pageTitle($title)
             ->model('product')

@@ -147,9 +147,11 @@ class OrderRepository
         $user = Auth::getUser();
         if ($user) {
             return Order::where('user_id', $user->id)
+                ->whereNull('submitted')
                 ->pluck('user_id')->count();
         } else {
             $count = Order::where('sess', session_id())
+                ->whereNull('submitted')
                 ->pluck('sess')->count();
             return $count;
         }

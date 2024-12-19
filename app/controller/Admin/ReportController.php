@@ -3,44 +3,50 @@
 namespace app\controller\Admin;
 
 use app\core\Response;
-use app\Repository\ProductRepository;
-use app\Repository\ReportRepository;
+use app\Repository\ProductFilterRepository;
 use app\Services\Filters\ProductFilterService;
 use app\view\Report\Admin\ReportView;
 
 
 class ReportController extends AdminscController
 {
-    private ReportRepository $repo;
     private ReportView $formView;
-    private ProductRepository $productRepository;
-    private ProductFilterService $productFilterService;
+    private ProductFilterService $service;
+    private ProductFilterRepository $repository;
 
     public function __construct()
     {
         parent::__construct();
-        $this->formView          = new ReportView();
-        $this->productRepository = new ProductRepository();
-        $this->filterService     = new ProductFilterService($this->ajax);
+        $this->formView   = new ReportView();
+        $this->repository = new ProductFilterRepository();
+        $this->service    = new ProductFilterService();
     }
 
     public function actionFilter(): void
     {
         $req = $this->ajax;
-        $this->filterService->saveUserFilters($req);
+        if (empty($req)) {
+            $selectFilters = $this->service->getSavedFilters();
+            $filterPanel   = $this->service->getFilterPanel($selectFilters);
+        } else {
+            list($selectFilters, $toSaveFilters) = $this->service->filtersFromReq($req);
+            $filterString = $this->service->getFilterString($selectFilters);
+            $filterPanel  = $this->service->getFilterPanel($selectFilters, $toSaveFilters);
+        }
+//            $filters     = $this->service->filtersFromReq($req);
 
-        $userFilters   = empty($req) ? $this->filterService->getUserFilters() : $req;
-        $products      = $this->productRepository::filter($userFilters);
-        $productsTable = $this->formView->filter($products, 'Фильтр');
-        $_POST         = null;
-        $filterService = $this->filterService;
+        $filterString = $this->service->getFilterString($selectFilters);
+        $checked      = [];
+
+        $productsTable = $this->formView->filter($selectFilters, 'Фильтр');
+
         if ($req) {
             Response::exitJson([
-                'products' => $productsTable,
-                'filterString' => $filterService->getUserFilterString(),
-                'filterPanel' => $filterService->getFilterPanel()]);
+                'productsTable' => $productsTable,
+                'filterString' => $filterString,
+                'filterPanel' => $filterPanel]);
         }
-        $this->setVars(compact('productsTable', 'filterService'));
+        $this->setVars(compact('productsTable', 'filterString', 'filterPanel'));
     }
 
 

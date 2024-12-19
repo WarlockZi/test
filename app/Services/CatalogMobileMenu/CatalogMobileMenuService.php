@@ -8,14 +8,16 @@ use app\Repository\CategoryRepository;
 
 class CatalogMobileMenuService
 {
-    private array $categories;
+    private array $categories=[];
     private string $string;
 
     public function __construct()
     {
-        $this->string     = '';
-        $this->fs         = new FS(__DIR__);
-        $this->categories = CategoryRepository::treeAll()->toArray();
+        $this->string = '';
+        $this->fs     = new FS(__DIR__);
+        Cache::get('catalogMobileMenu', function () {
+            $this->categories = CategoryRepository::treeAll()->toArray();
+        }, 10000);
         Cache::get('categoryRecurse',
             function () {
                 $this->recurse($this->categories);

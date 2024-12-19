@@ -5,8 +5,11 @@
         <select <?= $name ?? '' ?> select-new>
             <?= $emptyOption ?? '' ?>
             <? foreach ($options as $key => $value): ?>
-                <? $selected = (array_key_exists($filterName, $userFilters)
-                    && $key == $userFilters[$filterName]['id']) ? 'selected' : ''; ?>
+                <? $selected =
+                    ($key===(int)$userFilters[$filterName]
+                    && isset($userFilters[$filterName]))
+                    ? 'selected'
+                    : ''; ?>
                 <option value="<?= $key ?>" <?= $selected ?>><?= $value; ?></option>
             <? endforeach; ?>
 
