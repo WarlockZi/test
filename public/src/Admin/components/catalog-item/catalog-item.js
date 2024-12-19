@@ -1,10 +1,10 @@
 import './catalog-item.scss';
-import {$, debounce, post} from '@src/common.js';
-import {ael} from "@src/constants.js";
-import DTO from "@src/Admin/DTO.js";
-import Checkbox from "@src/components/checkbox/checkbox.js";
-import SelectNew from "@src/components/select/SelectNew.js";
-import CustomDate from "@src/components/date/date.js";
+import {$, debounce, post} from '../../../common.js';
+import {ael} from "../../../constants.js";
+import DTO from "../../../Admin/DTO.js";
+import Checkbox from "../../../components/checkbox/checkbox.js";
+import SelectNew from "../../../components/select/SelectNew.js";
+import CustomDate from "../../../components/date/date.js";
 
 export default class CatalogItem {
    constructor(catalogItem) {
