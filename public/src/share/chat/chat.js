@@ -8,7 +8,7 @@ export default class Chat {
       this.form = document[qs]('#chatForm');
       this.messages = this.form[qs]('.messages');
       this.input = this.form[qs]('input');
-      this.icon[ael]('click', this.iconClickHandler.bind(this));
+      this.icon?this.icon[ael]('click', this.iconClickHandler.bind(this)):'';
       this.form[ael]('click', this.formClickHandler.bind(this));
       this.form[ael]('keyup', this.handleKeyup.bind(this));
       this.user = this.getUser()

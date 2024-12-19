@@ -65,7 +65,7 @@ $(document).ready(async function () {
       const {default: MyChart} = await import('./chartjs/chartjs.js')
    }
    else if (window.location.pathname === '/adminsc/report/filter'){
-      new ProductFilter()
+      new ProductFilter($('.products-filter').first())
    }
    // else if (window.location.pathname.startsWith('/adminsc/test/do')){
    //    new TestDo($('.test-do').first())
