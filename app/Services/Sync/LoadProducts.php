@@ -71,15 +71,17 @@ class LoadProducts
         $prodProps = ProductProperty::where('product_1s_id', $product['1s_id'])
             ->first();
         if (!$prodProps) {
-            ProductProperty::create([
+            $ownProps = ProductProperty::create([
                 'product_1s_id' => $product['1s_id'],
                 'short_link' => ShortlinkService::getValidShortLink(),
+                'txt'=>$product->txt,
             ]);
         }
         if ($prodProps && !$prodProps->short_link) {
             $prodProps->short_link = ShortlinkService::getValidShortLink();
             $prodProps->save();
         }
+
     }
 
     protected function fillNewProduct($good): array
@@ -110,11 +112,6 @@ class LoadProducts
         }
         return $slug;
 
-//        $g['slug'] = Slug::slug($g['print_name']);
-//        if (Product::where('slug', $g['slug'])->first()) {
-//            $g['slug'] = $g['slug'] . '_' . Slug::slug($g['art']);
-//        }
-//        return $g;
     }
 
     private function setCategory($good, $g): string

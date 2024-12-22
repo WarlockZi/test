@@ -102,7 +102,7 @@ class OrderView
                     ->width('1fr')
                     ->get())
             ->edit()
-            ->addButton('ajax')
+            ->addButton()
             ->get();
     }
 

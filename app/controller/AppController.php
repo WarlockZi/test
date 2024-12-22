@@ -58,26 +58,17 @@ class AppController extends Controller
 
     protected function updateOrCreateRelation(array $req): void
     {
-        $action   = '';
-        $modalId  = $req['id'];
+        $action       = '';
+        $modalId      = $req['id'];
         $relationName = $req['relation']['name'];
-        $pivot    = $req['relation']['pivot'];
-        $model    = $this->model::with($relationName)->find($modalId);
+        $pivot        = $req['relation']['pivot'];
+        $model        = $this->model::with($relationName)->find($modalId);
 
         if ($relationName) {//for has many models
-            if (!empty($req['relation']['fields'])){
-                $key   = key($req['relation']['fields']) ?? null;
-                $value = $req['relation']['fields'][$key] ?? null;
-                $withRelation = $model->$relationName->pivot->$key = $value;
-                $withRelation->save();
-            }else if ($req['relation']['id']) {
-                $id = $req['relation']['id'];
-                $withRelation = $model->$relationName()->syncWithoutDetaching([$id]);
-            }else if ($req['relation']['id']===0) {
-
-            }
-
             if ($pivot) {
+                if (!$req['relation']['pivot']['field']) {
+                    Response::exitJson(['popup' => 'Добавлен','success' => true]);
+                }
                 $id                 = $req['relation']['id'];
                 $pivotField         = $req['relation']['pivot']['field'];
                 $pivotValue         = $req['relation']['pivot']['value'];
@@ -90,7 +81,19 @@ class AppController extends Controller
                     Response::exitJson(['popup' => 'Ошибка']);
                 }
             }
-
+            if (!empty($req['relation']['fields'])) {
+                $key                        = key($req['relation']['fields']) ?? null;
+                $value                      = $req['relation']['fields'][$key] ?? null;
+                $model->$relationName->$key = $value;
+//                    $withRelation = $model->$relationName->$key = $value;
+//                    $withRelation = $model->$relationName->pivot->$key = $value;
+                $model->push();
+            } else if ($req['relation']['id']) {
+                $id           = $req['relation']['id'];
+                $withRelation = $model->$relationName()->syncWithoutDetaching([$id]);
+            } else if ($req['relation']['id'] === 0) {
+                $withRelation = $model->$relationName()->attach($model->$relationName[1]);
+            }
         }
 
         if ($action === 'created') Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);

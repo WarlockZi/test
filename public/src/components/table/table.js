@@ -1,7 +1,7 @@
 import './table.scss';
 // import '../select/selectNew.scss';
 import {$, debounce, post} from '../../common';
-import {ael} from "@src/constants.js";
+import {ael, qa, qs} from "@src/constants.js";
 import DTO from "@src/Admin/DTO.js";
 import SelectNew from "../../components/select/SelectNew.js";
 
@@ -16,11 +16,12 @@ export default class Table {
       this.updateOrCreateUrl = `/adminsc/${this.model}/updateOrCreate`
       this.headers = $('.head');
       this.inputs = $('[data-search]');
-      this.hidden = $('[hidden]');
+      this.hidden = this.table[qa]('[hidden]');
 
       this.table[ael]('click', this.handleClick.bind(this));
       this.table[ael]('keyup', debounce(this.handleKeyup.bind(this)).bind(this));
       this.table[ael]('paste', this.handlePaste.bind(this));
+      this.table[ael]('customSelect.changed', this.selectChange.bind(this));
       if (!this.relation) {
          this.table[ael]('customSelect.changed', this.selectChange.bind(this));
          this.table[ael]('checkbox.changed', this.checkboxChange.bind(this));
@@ -76,7 +77,10 @@ export default class Table {
             });
             this.sortColumn(index)
          }
+      } else if (target.closest('[select-new]')) {
+         const select = target.closest('[select-new]')
       }
+
    }
 
    edit(target) {
@@ -125,9 +129,20 @@ export default class Table {
    // UPDATE OR CREATE
    async updateOrcreate(target) {
       const res = await post(this.updateOrCreateUrl, new DTO(this.modelId, target))
-      if (res.arr.id) {
+      if (res.arr?.success) {
+         this.copyEmptyRow(target)
+      } else {
          this.newRow(res?.arr.id)
       }
+   }
+
+   copyEmptyRow() {
+      [].forEach.call(this.hidden, (cell) => {
+         const clone = cell.cloneNode(true)
+         clone.removeAttribute('hidden')
+         const table = this.table[qa]('.custom-table')[0]
+         table.append(clone)
+      })
    }
 
 

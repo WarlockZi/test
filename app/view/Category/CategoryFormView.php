@@ -138,7 +138,7 @@ class CategoryFormView
                                 ->relation('childrenDeleted', 'category')
                                 ->edit()
                                 ->del()
-                                ->addButton('ajax')
+                                ->addButton()
                                 ->get()
                         )
                 )
@@ -205,7 +205,7 @@ class CategoryFormView
                     ->relation('childrenNotDeleted', 'category')
                     ->edit()
                     ->del()
-                    ->addButton('ajax')
+                    ->addButton()
                     ->get()
             );
     }
@@ -266,7 +266,7 @@ class CategoryFormView
         return Table::build($category['products'])
             ->pageTitle('Товары категории')
             ->relation('products', 'product')
-            ->addButton('ajax')
+            ->addButton()
             ->column(
                 ColumnBuilder::build('id')
                     ->width("40px")
@@ -320,7 +320,7 @@ class CategoryFormView
                     ->get()
             )
             ->edit()
-            ->addButton('ajax')
+            ->addButton()
             ->get();
 
         return $content;

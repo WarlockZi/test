@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\Actions\SearchAction;
 use app\core\Response;
 use app\Repository\SearchRepository;
 

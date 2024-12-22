@@ -85,7 +85,7 @@ class PropertyView
 									->get()
 							)
 							->del()
-							->addButton('ajax')
+							->addButton()
 							->get()
 					)
 			)

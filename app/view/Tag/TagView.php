@@ -15,7 +15,7 @@ class TagView
 		return Table::build(Tag::all())
 			->pageTitle('Тэги')
 			->del()
-			->addButton('ajax')
+			->addButton()
 			->column(
 				ColumnBuilder::build('id')
 					->get()

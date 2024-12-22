@@ -185,6 +185,7 @@ export default class cartLogin {
    async register(e) {
       YM('click_on_register')
       const res = await post('/auth/register', this.authDTO(e));
+      debugger
       const content = e.target.closest('.content')
       if (res?.arr?.success) {
          content.innerHTML =

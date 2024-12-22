@@ -17,11 +17,11 @@ export default class Modal {
       this.closeEl = $(this.modal).find('.modal-close');
 
       this.triggers.forEach((trigger) => {
-         if (cqs(trigger)) cqs(trigger).addEventListener('click', this.show.bind(this));
+         if (cqs(trigger)) cqs(trigger)[ael]('click', this.show.bind(this));
       })
 
-      this.overlay.addEventListener('click', this.close.bind(this));
-      this.modal.addEventListener('modal.switch', this.switch.bind(this));
+      this.overlay[ael]('click', this.close.bind(this));
+      this.modal[ael]('modal.switch', this.switch.bind(this));
    }
 
    switch({target}) {
@@ -46,11 +46,12 @@ export default class Modal {
    }
 
    close({target}) {
+      // this.overlay.
       if (!target.classList.contains('modal-close') && !target.classList.contains('overlay')) return
       const openedBox = this.wrap[qs]('.transform-in')
       openedBox[ael]('transitionend', this.transitionHandler.bind(this))
-      openedBox.removeEventListener('transitionend', this.transitionHandler, {once:true})
-      openedBox.classList.remove('transform-in');
+      openedBox?.removeEventListener('transitionend', this.transitionHandler, {once:true})
+      openedBox?.classList.remove('transform-in');
       this.overlay.classList.remove('blur')
    }
 

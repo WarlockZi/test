@@ -27,13 +27,24 @@ class ColumnBuilder
     public $functionClass;
 
     public $select = false;
+    public mixed $emptyRow = '';
 
-    public static function build(string $title=''): self
+    public static function build(string $title = ''): self
     {
         $column            = new static();
         $column->field     = $title;
         $column->dataField = $title ? "data-field='{$title}'" : '';
         return $column;
+    }
+
+    public function emptyRow(mixed $emptyRow): self
+    {
+        if (is_callable($emptyRow)) {
+            $this->emptyRow = call_user_func($emptyRow);
+        } else {
+            $this->emptyRow = $emptyRow;
+        }
+        return $this;
     }
 
     public function class(string $class): self
@@ -112,6 +123,7 @@ class ColumnBuilder
         $this->hidden = 'hidden';
         return $this;
     }
+
 
     public function contenteditable(): self
     {

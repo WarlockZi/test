@@ -8,7 +8,3 @@ export const it = 'innerText'
 
 export const cqa = document.querySelectorAll.bind(document)
 export const cqs = document.querySelector.bind(document)
-// export const cons = {
-//    QS: document.querySelector.bind(document),
-//    QSA: document.querySelectorAll.bind(document),
-// }

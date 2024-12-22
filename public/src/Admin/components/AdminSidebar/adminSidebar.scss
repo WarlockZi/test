@@ -16,21 +16,25 @@ $border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
   flex-flow: column;
   font-size: .75rem;
   z-index: 1;
+  //max-width: $width-short;
+  //min-width: $width-short;
+  width: $width-short;
+  transition: width .2s ease-in-out;
+  overflow: hidden;
+
+  &:hover {
+    width: $width-full;
+    //min-width: $width-full;
+  }
 
   .wrap {
     position: relative;
     display: flex;
     flex-flow: column;
     background: var.$color-admin-sidebar;
-    transition: min-width .4s ease-in-out, min-height .2s ease-in-out;
-    overflow: hidden;
     min-height: $height-min;
-    min-width: $width-short;
     flex: 1;
 
-    &:hover {
-      min-width: $width-full;
-    }
 
     &.show {
       min-height: $height-full;

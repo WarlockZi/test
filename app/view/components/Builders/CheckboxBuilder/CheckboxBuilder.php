@@ -43,7 +43,7 @@ class CheckboxBuilder
         return $this;
     }
 
-    public function data(string $postfix, string $value): static
+    public function data(string $postfix, string|null $value): static
     {
         $this->data .= $this->data . "data-$postfix=$value ";
         return $this;

@@ -34,7 +34,7 @@ use app\core\Icon;
 </head>
 
 <? include_once __DIR__ . '/google.php'; ?>
-<body>
+<body class="preload">
 
 <?= $header; ?>
 

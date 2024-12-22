@@ -36,7 +36,7 @@ class Cache
         }
     }
 
-    public static function set(string $key, callable $data, int $seconds = 6, string $path = ''): string|array|object
+    public static function set(string $key, callable $data, int $seconds = 6, string $path = ''): string|array|object|null
     {
         if (is_callable($data)) {
             $unserialized    = $data();
@@ -54,7 +54,7 @@ class Cache
         return $unserialized;
     }
 
-    public static function delete($key)
+    public static function delete($key): void
     {
         $file = FS::platformSlashes(self::$path."$key.txt");
         if (file_exists($file)) {

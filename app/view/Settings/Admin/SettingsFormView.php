@@ -86,7 +86,7 @@ class SettingsFormView
 
 			->edit()
 			->del()
-			->addButton('ajax')
+			->addButton()
 			->get();
 	}
 

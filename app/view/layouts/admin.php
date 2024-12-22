@@ -12,7 +12,7 @@
 
 </head>
 
-<body>
+<body class="preload">
 
 <div class="admin-layout">
 

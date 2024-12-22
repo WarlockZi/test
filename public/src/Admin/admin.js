@@ -33,6 +33,8 @@ import TestDo from "@src/Admin/Test/TestDo/TestDo.js";
 
 $(document).ready(async function () {
 
+   document.body.classList.remove('preload');
+
    const admin = window.location.pathname.includes('adminsc')
    if (!admin) return false
 

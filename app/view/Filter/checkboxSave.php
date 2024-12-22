@@ -1,6 +1,12 @@
-<?php $checkboxChecked = (!empty($userFilters) && key_exists($filterName, $userFilters)) ? "checked" : ""; ?>
+
+<?php $checkboxChecked =
+    (key_exists($filterName, $toSave))
+        ? "checked"
+        : ""; ?>
 
 <div class="filter-save">
-    <label class="label" for="<?= $checkboxName ?>-filter">сохранять</label>
-    <input type="checkbox" <?= $checkboxChecked ?? ''; ?> name="<?= $checkboxName ?>-filter" id="<?= $checkboxName ?>-filter">
+    <label class="label" for="<?= $filterName ?>-filter">сохранять</label>
+    <input type="checkbox" <?= $checkboxChecked ?? ''; ?>
+           name="<?= $filterName ?>-filter"
+           id="<?= $filterName ?>-filter">
 </div>
