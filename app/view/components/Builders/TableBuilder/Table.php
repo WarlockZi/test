@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 class Table
 {
     use CleanString;
+
     private string $pageTitle = '';
     private string $header = '';
     private string $grid = '';
@@ -31,11 +32,11 @@ class Table
 
     private FS $fs;
 
-    public static function build(Collection|null $items):self
+    public static function build(Collection|null $items): self
     {
-        $list            = new static();
+        $list        = new static();
         $list->items = $items;
-        $list->fs        = new FS(__DIR__);
+        $list->fs    = new FS(__DIR__);
 
         return $list;
     }
@@ -47,7 +48,7 @@ class Table
     }
 
 
-    public function link(string $field, string $classHeader, string $class, string $name, string $width, string $className, string $funcName):void
+    public function link(string $field, string $classHeader, string $class, string $name, string $width, string $className, string $funcName): void
     {
         $this->columns[$field] = ColumnBuilder::build($field)
             ->classHeader($classHeader)
@@ -66,20 +67,23 @@ class Table
 
     public function relation(string $relation, string $relationModel): static
     {
-        $this->dataRelation = "data-relation='$relation'";
+        $this->dataRelation      = "data-relation='$relation'";
         $this->dataRelationModel = "data-relationModel='$relationModel'";
         return $this;
     }
+
     public function model(string $model): static
     {
         $this->dataModel = "data-model='$model'";
         return $this;
     }
+
     public function pageTitle(string $pageTitle): static
     {
         $this->pageTitle = $pageTitle;
         return $this;
     }
+
     public function header(string $header): static
     {
         $this->header = $header;
@@ -104,13 +108,14 @@ class Table
 
     protected function getDelButton(int $itemId): string
     {
-        if ($this->headDelCol) {
-            $hidden = $itemId ? '' : 'hidden';
-            $str    = "<div {$hidden} class='del' $this->dataModel " .
-                "data-id='{$itemId}'></div>";
-            return $str;
-        }
-        return '';
+//        if ($this->headDelCol) {
+        $hidden    = $itemId ? '' : 'hidden';
+        $trashIcon = Icon::trashIcon();
+        $str       = "<div {$hidden} class='del cell' $this->dataModel " .
+            "data-id='{$itemId}'>$trashIcon</div>";
+        return $str;
+//        }
+//        return '';
     }
 
     protected function emptyRow(): string
@@ -118,6 +123,7 @@ class Table
         if (!$this->addButton) return '';
         $str = '';
         foreach ($this->columns as $field => $column) {
+            if ($field==='del') continue;
 
             $str .= "<div hidden {$column->class} " .
                 $column->dataField .
@@ -136,7 +142,7 @@ class Table
         $this->columns['del'] = ColumnBuilder::build()
             ->classHeader('head del')
             ->class('cell del')
-            ->callback(fn()=>Icon::trashIcon())
+            ->callback(fn() => Icon::trashIcon())
             ->width('50px')
             ->get();
         return $this;
@@ -147,16 +153,16 @@ class Table
         $this->columns['edit'] = ColumnBuilder::build()
             ->classHeader('head edit')
             ->class('cell edit')
-            ->callback(fn()=>Icon::edit())
+            ->callback(fn() => Icon::edit())
             ->width('50px')
             ->get();
 
         return $this;
     }
 
-    public function addButton(string $ajaxOrRedirect='ajax'): static
+    public function addButton(string $pivot = ''): static
     {
-        $this->addButton = $ajaxOrRedirect;
+        $this->addButton = $pivot;
         $this->add       = $this->fs->getContent('add', ['addButton' => $this->addButton]);
         return $this;
     }
@@ -172,20 +178,23 @@ class Table
 
     protected function getEmpty($column)
     {
-        if ($column->select) {
-            return $column->select->getEmpty();
+        if ($column->emptyRow) {
+            if (is_callable($column->emptyRow)) {
+                return call_user_func($column->emptyRow);
+            }
+            return $column->emptyRow;
         }
         return '';
     }
 
-    public function get():string
+    public function get(): string
     {
         try {
             $this->emptyRow = $this->emptyRow();
             $this->prepareGridHeader();
             $this->items = $this->take ? $this->items->take($this->take) : $this->items;
             $data        = get_object_vars($this);
-            $content = $this->fs->getContent('tableTemplate', $data);
+            $content     = $this->fs->getContent('tableTemplate', $data);
             return $this->clean($content);
 
         } catch (\Throwable $error) {

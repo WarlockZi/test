@@ -3,7 +3,6 @@
 namespace app\Services\Filters;
 
 use app\core\Auth;
-use app\core\Cache;
 use app\core\FS;
 use app\model\Category;
 use app\model\FilterUser;
@@ -39,10 +38,7 @@ class ProductFilterService
 
     public function getFilterString(array $req): string
     {
-//        if (empty($req)) {
-//            $req = $this->filtersFromReq($req);
-////            $req = $this->userFiltersDB($req);
-//        }
+
         $notNull = array_filter($req, function ($filter) {
             return $filter <> '0' && $filter <> 'on';
         });
@@ -71,29 +67,29 @@ class ProductFilterService
         $toSaveFilters = [];
         foreach ($req as $string => $value) {
             if (str_ends_with($string, '-filter')) {
-                $key               = str_replace('-filter', '', $string);
-                $value             = $req[$key];
+                $key                 = str_replace('-filter', '', $string);
+                $value               = $req[$key];
                 $toSaveFilters[$key] = $value;
-            }else{
+            } else {
                 $selectFilters[$string] = $value;
             }
         }
-        return compact('selectFilters', 'toSaveFilters');
+        $arr = [0 => $selectFilters, 1 => $toSaveFilters];
+        return $arr;
     }
 
 
-    public function getFilterPanel(array $selectFilters, array $checked=[]): string
+    public function getFilterPanel(array $toFilter = [], array $toSave = []): string
     {
+        $toSave  = count($toSave) ? $toSave : $toFilter;
         $filters = '';
         foreach ($this->initialFilters as $filterName => $filterOptions) {
             $filters .= $this->filterView
                 ->filterName($filterName)
-//                ->checked($checked)
-                ->userFilters($selectFilters)
+                ->toFilter($toFilter)
+                ->toSave($toSave)
                 ->options($filterOptions['options'])
-                ->selectName($filterName)
                 ->title($filterOptions['title'])
-                ->checkboxSave($checked)
                 ->emptyOption()
                 ->get();
         }
@@ -106,9 +102,9 @@ class ProductFilterService
         return (int)preg_grep($pattern, $keys);
     }
 
-    public function saveUserFilters(array $reqFilters): void
+    public function saveFilters(array $toSave): void
     {
-        $json = json_encode($reqFilters);
+        $json = json_encode($toSave);
         FilterUser::updateOrCreate(
             ["user_id" => Auth::getUser()['id'],
                 "model" => 'product',
@@ -121,39 +117,39 @@ class ProductFilterService
 
     protected function categoriesSelector(): array
     {
-        return Cache::get('productFilterCategoriesSelector', function () {
-            $CategoryFlatNestedArray = [0 => ''];
-            foreach (CategoryRepository::rootCategories()->reverse() as $rootCat) {
-                $c      = Category::find($rootCat->id)
-                    ->flatSelfAndChildren
-                    ->map(function ($q) {
-                        return $q;
-                    })
-                    ->keyBy('id')
-                    ->toArray();
-                $result = array_combine(
-                    array_keys($c),
-                    array_map(function ($v) use (&$CategoryFlatNestedArray) {
-                        $CategoryFlatNestedArray[$v['id']] = $v['name'];
-                    }, $c)
-                );
-            }
-            return $CategoryFlatNestedArray;
-        }, 10000);
+//        return Cache::get('productFilterCategoriesSelector', function () {
+        $CategoryFlatNestedArray = [0 => ''];
+        foreach (CategoryRepository::rootCategories()->reverse() as $rootCat) {
+            $c      = Category::find($rootCat->id)
+                ->flatSelfAndChildren
+                ->map(function ($q) {
+                    return $q;
+                })
+                ->keyBy('id')
+                ->toArray();
+            $result = array_combine(
+                array_keys($c),
+                array_map(function ($v) use (&$CategoryFlatNestedArray) {
+                    $CategoryFlatNestedArray[$v['id']] = $v['name'];
+                }, $c)
+            );
+        }
+        return $CategoryFlatNestedArray;
+//        }, 10000);
     }
 
     public function getInitialFilters(): array
     {
-        return Cache::get('initialFilters', function () {
-            $CategoryFlatNestedArray = $this->categoriesSelector();
-            return include 'productFilters.php';
-        }, 10);
+//        return Cache::get('initialFilters', function () {
+        $CategoryFlatNestedArray = $this->categoriesSelector();
+        return include 'productFilters.php';
+//        }, 10);
     }
 
-    private function userFiltersDB(array $req): array
-    {
-        return array_map(function ($key) {
-            return $key['id'];
-        }, $req);
-    }
+//    private function userFiltersDB(array $req): array
+//    {
+//        return array_map(function ($key) {
+//            return $key['id'];
+//        }, $req);
+//    }
 }

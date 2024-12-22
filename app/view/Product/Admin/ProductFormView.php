@@ -237,11 +237,15 @@ class ProductFormView
             ->relation('units', 'productUnit')
             ->pageTitle("Единица")
             ->column(
-                ColumnBuilder::build('id')
+                ColumnBuilder::build('unit')
+                    ->emptyRow(SelectBuilder::build(
+                        PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
+                            ->get())
+                        ->get())
                     ->name('Единица')
-                    ->callback(function ($unit)use($baseUnit){
-                        $u = Unit::pluck('name', 'id');
-                        if ($unit->id ===$baseUnit->id) {
+                    ->callback(function ($unit) use ($baseUnit) {
+//                        $u = Unit::pluck('name', 'id');
+                        if ($unit->id === $baseUnit->id) {
                             return $baseUnit->name;
                         }
                         return SelectBuilder::build(
@@ -255,6 +259,7 @@ class ProductFormView
             )
             ->column(
                 ColumnBuilder::build('multiplier')
+                    ->emptyRow('1')
                     ->name('Коэфф')
                     ->callback(function ($unit) {
                         return $unit->pivot->multiplier;
@@ -264,9 +269,12 @@ class ProductFormView
             )
             ->column(
                 ColumnBuilder::build('base_unit')
+                    ->emptyRow(function () use ($baseUnit) {
+                        return $baseUnit->name;
+                    })
                     ->name('Базовая ед')
                     ->callback(function ($unit) use ($baseUnit) {
-                        if ($unit->id ===$baseUnit->id) {
+                        if ($unit->id === $baseUnit->id) {
                             return '';
                         }
                         return $baseUnit->name;
@@ -275,6 +283,15 @@ class ProductFormView
             )
             ->column(
                 ColumnBuilder::build('is_shippable')
+                    ->emptyRow(function () {
+                        return CheckboxBuilder::build()
+                            ->checked(false)
+                            ->data('id', 0)
+                            ->data('pivot-field', 'is_shippable')
+                            ->data('pivot-value', 0)
+                            ->data('relation', 'units')
+                            ->get();
+                    })
                     ->name('Отгруж ед')
                     ->callback(function ($unit) {
                         return CheckboxBuilder::build()
@@ -288,7 +305,7 @@ class ProductFormView
                     ->get()
             )
             ->del()
-            ->addButton()
+            ->addButton('pivot')
             ->get();
         return $table;
 
@@ -471,7 +488,7 @@ class ProductFormView
                 ->get()
             );
         if ($addButton) {
-            $customList = $customList->addButton('ajax');
+            $customList = $customList->addButton();
         }
         if ($edit) {
             $customList = $customList->edit();
@@ -522,7 +539,7 @@ class ProductFormView
             )
             ->edit()
             ->del()
-            ->addButton('ajax')
+            ->addButton()
             ->get();
     }
 

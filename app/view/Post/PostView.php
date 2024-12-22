@@ -136,7 +136,7 @@ class PostView
             )
 			->edit()
 			->del()
-			->addButton('ajax')
+			->addButton()
 			->get();
 	}
 

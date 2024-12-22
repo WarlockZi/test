@@ -22,12 +22,11 @@ nav.breadcrumbs-4 {
   font-family: Verdana, sans-serif;
 
   li {
-    //position: relative;
     margin: 1px 0;
     background: #337AB7;
     text-decoration: none;
     padding: 0 10px 0 10px;
-    transition: all 0.3s;
+    transition: background 0.3s;
 
     a {
       color: #fff;
@@ -43,7 +42,7 @@ nav.breadcrumbs-4 {
     border-width: 15px 0 15px 10px;
     border-style: solid;
     border-color: transparent transparent transparent #337AB7;
-    transition: all 0.3s;
+    //transition: border-color 0.3s;
   }
 
   li:hover {
@@ -71,8 +70,9 @@ nav.breadcrumbs-4 {
     padding-right: 20px;
     border-radius: 0 6px 6px 0;
   }
-
 }
+
+
 
 nav.breadcrumbs-1 {
   list-style: none;
@@ -97,7 +97,7 @@ nav.breadcrumbs-1 {
       margin-right: 23px;
       font-size: .7rem;
       font-family: Verdana, sans-serif;
-      transition: all 0.3s;
+      transition: color 0.3s;
 
       &:before,
       &:after {
@@ -108,7 +108,7 @@ nav.breadcrumbs-1 {
         border-width: 12px 10px;
         width: 0;
         height: 0;
-        transition: all 0.3s;
+        //transition: all 0.3s;
       }
 
       &:before {

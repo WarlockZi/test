@@ -9,7 +9,6 @@ import CustomDate from "../../../components/date/date.js";
 export default class CatalogItem {
    constructor(catalogItem) {
       if (!catalogItem) return false
-      debugger
 
       this.model = catalogItem.dataset.model;
       this.id = +catalogItem.dataset.id;

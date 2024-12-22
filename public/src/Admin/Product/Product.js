@@ -5,23 +5,31 @@ import './Props.js'
 import {qs} from '../../constants'
 import MyQuill from "../../components/quill/MyQuill.js";
 import SelectNew from "@src/components/select/SelectNew.js";
-// import UnitTable from './UnitTable'
+import DTO from "@src/Admin/DTO.js";
+import QuillFactory from "@src/components/quill/QuillFactory.js";
+import {QuillConst} from "@src/components/quill/QuillConstans.js";
 
 export default class Product {
    constructor() {
       const product = document[qs](`.item-wrap[data-model='product']`)
       if (!product) return false;
       this.product = product
+      this.model = 'product'
+      this.id = $(this.product).find(`[data-field='id']`).innerText
 
       this.setProps().then()
 
-      // this.setFields().then()
       this.setDragNDrop().then()
       this.setCardPanel().then()
-      new MyQuill('#detail-text', true,true,true);
-      new MyQuill('#seo_article', true,true,true);
+
+      QuillFactory.create('.txt', QuillConst.ADMIN_PRODUCT_DESCRIPTION);
+      QuillFactory.create('#seo_article', QuillConst.ADMIN_PRODUCT_SEO_ARTICLE);
+      // new MyQuill('#seo_article', true,true,true);
       this.setUnitsCustomSelects()
    }
+   // dto(){
+   //    return (new DTO(this.id)).model = 'product'
+   // }
    setUnitsCustomSelects(){
       const units = $('.units [custom-select]');
       [].forEach.call(units, (unit)=>{

@@ -32,12 +32,9 @@ class ReportController extends AdminscController
             list($selectFilters, $toSaveFilters) = $this->service->filtersFromReq($req);
             $filterString = $this->service->getFilterString($selectFilters);
             $filterPanel  = $this->service->getFilterPanel($selectFilters, $toSaveFilters);
+            $this->service->saveFilters($toSaveFilters);
         }
-//            $filters     = $this->service->filtersFromReq($req);
-
         $filterString = $this->service->getFilterString($selectFilters);
-        $checked      = [];
-
         $productsTable = $this->formView->filter($selectFilters, 'Фильтр');
 
         if ($req) {

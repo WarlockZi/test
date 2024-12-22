@@ -22,6 +22,8 @@ import Chat from "@src/share/chat/chat.js";
 window.YM = YM
 document.addEventListener('DOMContentLoaded', async function () {
 
+   document.body.classList.remove('preload');//to prevent initial transitions
+
    new Chat()
    new ChatLocalStorage()
 

@@ -1,8 +1,9 @@
-<?php if ($addButton === 'ajax'): ?>
+<?php
+if ($addButton === 'pivot') {
+    $data = "data-pivot-field";
+}
+?>
 
-	<div class="add-model">+</div>
-
-<?php elseif ($addButton === 'redirect'): ?>
+<div class="add-model" <?= $data??'' ?>>+</div>
 
 
-<?php endif; ?>

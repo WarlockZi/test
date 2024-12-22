@@ -23,15 +23,12 @@ class AuthController extends AppController
 //		$bot = new TelegramBot();
 //		$bot->send('Что так');
         $this->userRepository = new UserRepository();
-//        $this->mailer         = new ServerMailer;
-//        $this->mailer         = new PHPMail('env');
-        $this->mailer = new PHPMail();
     }
 
     public function actionReturnpass(): void
     {
-        $this->mailer = new PHPMail('env');
-//        $this->mailer = $_ENV['DEV']?new ConsoleMailer():new PHPMail('env');
+        $this->mailer = new PHPMail();
+
         if ($req = $this->ajax) {
             $_SESSION['id'] = '';
             $user           = $this->userRepository->getByEmail($req['email']);
@@ -42,7 +39,7 @@ class AuthController extends AppController
                 $this->userRepository->changePassword($user, $hashedPassword);
 
                 try {
-                    $sent = $this->mailer->send('forgotPassword', [$user, $newPassword]);
+                    $sent = $this->mailer->sendNewPasswordMail($user, $newPassword);
                     Response::exitJson(['success' => true,
                         'popup' => 'Новый пароль проверьте на почте']);
                 } catch (\Throwable $exception) {
@@ -72,19 +69,15 @@ class AuthController extends AppController
 
             $user = $this->userRepository->createUser($req);
             if ($user) {
-                $message = "Пользователь создан\n";
-                try {
-                    $sent = $this->mailer->sendRegistrationMail($user);
-//                    $sent = mail("https://www.mail-tester.com/ ", "My Subject", "Line 1\nLine 2\nLine 3");
-//                    $this->mailer->sendRegistrationMail($user);
-                    Response::exitJson(['success' => 'confirm', 'popup' => $message . "\n"]);
+                    try {
+                    $this->mailer->sendRegistrationMail($user);
+                    Response::exitJson(['success' => true, 'popup' => 'Письмо с регистрацией отпрвлено на указанный Вами email']);
                 } catch (Throwable $exception) {
-                    $message .= "Письмо не отправлено";
-                    Response::exitJson(['error' => 'Письмо не отправлено', 'popup' => $message . "\n"]);
+                    Response::exitJson(['error' => true, 'popup' => 'Письмо не отправлено']);
                 }
 
             } else {
-                Response::exitJson(['ьу' => 'no user', 'popup' => "Пользователь не создан"]);
+                Response::exitJson(['error' => 'no user', 'popup' => "Пользователь не создан"]);
             }
         }
     }
@@ -99,7 +92,6 @@ class AuthController extends AppController
 
     public function actionLogin(): void
     {
-//        $this->mailer         = new PHPMail('env');
         if ($data = $this->ajax) {
             $req    = new Request();
             $errors = $req->checkLoginCredentials($data);

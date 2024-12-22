@@ -18,7 +18,7 @@ class CountryView
 		return Table::build(Country::all())
 			->pageTitle('Страны')
             ->model('country')
-			->addButton('ajax')
+			->addButton()
 			->column(
 				ColumnBuilder::build('id')
 					->width('50px')

@@ -39,7 +39,7 @@ class RolesView
 					->width('1fr')
 					->get()
 			)
-			->addButton('ajax')
+			->addButton()
             ->model('role')
 			->del()
 			->get();

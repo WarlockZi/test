@@ -56,7 +56,7 @@ class VideoinstructionView
 					->get()
 			)
 			->del()
-			->addButton('ajax')
+			->addButton()
 			->get();
 	}
 

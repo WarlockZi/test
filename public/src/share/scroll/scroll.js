@@ -2,16 +2,38 @@ import {$} from "../../common.js";
 
 export default function scroll() {
 
-   const header = $('.header').first()
+   var prevScrollpos = window.pageYOffset;
 
-   document.addEventListener(
-      'scroll',
-      handle.bind(header),
-      {passive: true}
-   );
+   /* Get the header element and it's position */
+   var headerDiv = document.querySelector("header");
+   var headerBottom = headerDiv.offsetTop + headerDiv.offsetHeight;
 
-   function handle(){
-      if (header)
-         window.scrollY > 30 ? header.classList.add('short') : header.classList.remove('short')
+   window.onscroll = function() {
+      var currentScrollPos = window.pageYOffset;
+
+      /* if we're scrolling up, or we haven't passed the header,
+         show the header at the top */
+      if (prevScrollpos > currentScrollPos  || currentScrollPos < headerBottom){
+         headerDiv.style.top = "0";
+      }
+      else{
+         /* otherwise we're scrolling down & have passed the header so hide it */
+         headerDiv.style.top = "-7.2rem";
+      }
+
+      prevScrollpos = currentScrollPos;
    }
+
+   // const header = $('.header').first()
+   //
+   // document.addEventListener(
+   //    'scroll',
+   //    handle.bind(header),
+   //    {passive: true}
+   // );
+   //
+   // function handle(){
+   //    if (header)
+   //       window.scrollY > 30 ? header.classList.add('short') : header.classList.remove('short')
+   // }
 }

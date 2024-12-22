@@ -6,10 +6,10 @@
             <?= $emptyOption ?? '' ?>
             <? foreach ($options as $key => $value): ?>
                 <? $selected =
-                    ($key===(int)$userFilters[$filterName]
-                    && isset($userFilters[$filterName]))
-                    ? 'selected'
-                    : ''; ?>
+                    ($key === (int)$toFilter[$filterName]
+                        && isset($toFilter[$filterName]))
+                        ? 'selected'
+                        : ''; ?>
                 <option value="<?= $key ?>" <?= $selected ?>><?= $value; ?></option>
             <? endforeach; ?>
 
@@ -19,8 +19,7 @@
         <?= $options; ?>
     <? endif; ?>
 
-    <? if ($checkboxSave): ?>
-        <? include 'checkboxSave.php' ?>
-    <? endif; ?>
+
+    <? include 'checkboxSave.php' ?>
 
 </div>

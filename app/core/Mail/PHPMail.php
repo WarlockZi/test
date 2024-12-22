@@ -24,7 +24,7 @@ class PHPMail
 
         $mailer->CharSet = 'UTF-8';
         $mailer->isSMTP();
-        $mailer->SMTPDebug = 1;
+//        $mailer->SMTPDebug = 1;
 
         $mailer->Port       = env('SMTP_PORT');
         $mailer->SMTPAuth   = true;
@@ -32,7 +32,11 @@ class PHPMail
 
         $mailer->Host     = env('SMTP_HOST');
         $mailer->Username = env('SMTP_USERNAME');
-        $mailer->Password = env('YANDEX_APP_KEY1');
+        if ($_ENV['DEV']) {
+            $mailer->Password = env('YANDEX_APP_KEY_DEV');
+        } else {
+            $mailer->Password = env('YANDEX_APP_KEY1');
+        }
 
         $mailer->SMTPOptions = array(
             'ssl' => array(
@@ -44,14 +48,13 @@ class PHPMail
         $this->mailer        = $mailer;
     }
 
-    public function sendRegistrationMail($user): bool
+    public function sendRegistrationMail($user): void
     {
-        try {
             $this->mailer->setFrom(env('SMTP_FROM_EMAIL'), env('SMTP_FROM_NAME'));
             $this->mailer->addReplyTo(env('SMTP_REPLY_TO'), env('SMTP_FROM_NAME'));
             $this->mailer->addAddress($user['email']);
 
-            $this->mailer->Subject = 'Регистрация VITEX';
+            $this->mailer->Subject = 'VITEX|регистрация';
 
             $this->mailer->isHTML(true);
             $this->mailer->Body    = MailView::registration($user);
@@ -60,17 +63,12 @@ class PHPMail
             $this->mailer->addCustomHeader("List-Unsubscribe", "<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$user['email']}>");
 
             $this->mailer->send();
-            return true;
-        } catch (Throwable $exception) {
-            $exc = $exception;
-        }
-            return false;
     }
 
-    public function sendNewPasswordMail(User $user, string $newPass): void
+    public function sendNewPasswordMail(User $user, string $newPass): bool
     {
-        $this->mailer->setFrom($this->credits['from'], 'VITEX');
-        $this->mailer->addReplyTo($this->credits['replyTo'], 'Vitex');
+        $this->mailer->setFrom(env('SMTP_FROM_EMAIL'), env('SMTP_FROM_NAME'));
+        $this->mailer->addReplyTo(env('SMTP_REPLY_TO'), env('SMTP_FROM_NAME'));
         $this->mailer->addAddress($user['email']);
 
         $this->mailer->Subject = 'VITEX|новый пароль';
@@ -81,7 +79,14 @@ class PHPMail
 
         $this->mailer->addCustomHeader("List-Unsubscribe", "<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$user['email']}>");
 
-        $this->mailer->send();
+        try {
+            $this->mailer->send();
+            return true;
+        } catch (Throwable $exception) {
+            $exc = $exception;
+            return false;
+        }
+
     }
 
     public function sendTestResults($post, $resid): void

@@ -11,7 +11,8 @@ class FilterView
     private array $checked;
     private string|null $name;
     private string $filterName;
-    private array $userFilters;
+    private array $toFilter;
+    private array $toSave;
     private string $title;
     private bool $checkboxSave;
     private string|null $checkboxName;
@@ -32,6 +33,7 @@ class FilterView
 
     public function filterName(string $filterName): self
     {
+        $this->name = "name='{$filterName}'";
         $this->filterName = $filterName;
         return $this;
     }
@@ -42,17 +44,21 @@ class FilterView
         return $this;
     }
 
-    public function userFilters(array $userFilters): self
+    public function toFilter(array $toFilter): self
     {
-        $this->userFilters = $userFilters;
+        $this->toFilter = $toFilter;
         return $this;
     }
-
-    public function selectName(string $name): FilterView
+    public function toSave(array $toSave): self
     {
-        $this->name = "name='{$name}'";
+        $this->toSave = $toSave;
         return $this;
     }
+//    public function selectName(string $name): FilterView
+//    {
+//        $this->name = "name='{$name}'";
+//        return $this;
+//    }
 
     public function checkboxSave(string|null $name, bool $checked = false): FilterView
     {

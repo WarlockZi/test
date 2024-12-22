@@ -19,7 +19,8 @@ class CartRepository
         } else {
             $order = Order::query()->where('sess', session_id());
         }
-        $order    = $order->whereNull('submitted')
+        $order    = $order
+//            ->whereNull('submitted')
             ->with('products.orderItems.unit')
             ->first();
 //        $o = $order->toArray();
