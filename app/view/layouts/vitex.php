@@ -51,7 +51,7 @@ use app\core\Icon;
         <input type="text" class="chat-name-input" data-user-name placeholder="Здравствуйте, как Вас зовут?">
     </form>
 
-    <div class="hoist" title="Наверх"><?=Icon::scrollUp1();?></div>
+
 </div>
 
 <?= $footer; ?>
@@ -71,6 +71,6 @@ use app\core\Icon;
     </div>
 
 </div>
-
+<div class="hoist" title="Наверх"><?=Icon::scrollUp1();?></div>
 </body>
 </html>

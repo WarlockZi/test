@@ -18,11 +18,15 @@ import YM from "@src/Main/YM.js";
 import Search from "@src/components/search/search.js";
 import ChatLocalStorage from "@src/share/chatLocalStorage/ChatLocalStorage.js";
 import Chat from "@src/share/chat/chat.js";
+import Feedback from "@src/Feedback/Feedback.js";
 
 window.YM = YM
 document.addEventListener('DOMContentLoaded', async function () {
 
    document.body.classList.remove('preload');//to prevent initial transitions
+
+   const feedbackButton = $('#feedback-submit').first()
+   if (feedbackButton) new Feedback(feedbackButton)
 
    new Chat()
    new ChatLocalStorage()

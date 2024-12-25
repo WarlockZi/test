@@ -15,7 +15,6 @@
     "build": "webpack --mode production",
     "dev": "webpack -w",
     "serve": "webpack serve --mode development",
-
     "vdev": "vite",
     "vprev": "vite preview",
     "vbuild": "vite build "
@@ -56,6 +55,7 @@
     "vite-plugin-php": "^1.0.11"
   },
   "dependencies": {
-    "quill": "^2.0.2"
+    "quill": "^2.0.2",
+    "strip-js": "^1.2.0"
   }
 }
