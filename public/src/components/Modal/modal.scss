@@ -66,7 +66,7 @@
         transform: translate(-100vw, -50%);
       }
 
-      .title {
+       .title {
         @include mixin_media.h2;
         color: #fff;
         margin-bottom: clamp(5px, 3vw, 40px);

@@ -1,2 +1,0 @@
-import{$ as r,t as s}from"./search-CVjB7PCw.js";class o{constructor(){if(this.el=r("[data-shortLink]").first(),this.el)return!1}shortLink(a){navigator.permissions.query({name:"clipboard-write"}).then(async t=>{(t.state==="granted"||t.state==="prompt")&&await navigator.clipboard.writeText(a.dataset.shortlink).then(()=>{s.show("Ссылка скопирована")})})}}export{o as default};
-//# sourceMappingURL=card_panel-DyIOGTsg.js.map
