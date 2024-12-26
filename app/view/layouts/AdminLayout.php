@@ -54,7 +54,7 @@ class AdminLayout extends Layout
         $this->content['assets']  = $this->setAssets($controller);
         $this->content['content'] = $this->prepareContent($controller->vars);
         $this->content['errors']  = $this->route->getErrorsHtml();
-        $this->content['footer']  = $this->setFooter($controller->vars);
+//        $this->content['footer']  = $this->setFooter($controller->vars);
     }
 
     private function prepareContent($vars): string

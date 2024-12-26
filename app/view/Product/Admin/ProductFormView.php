@@ -409,7 +409,7 @@ class ProductFormView
                 ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_article', $product->ownProperties)
                 ->name('Seo article')
-                ->id('seo_article')
+                ->id('seo-article')
                 ->html(
                     self::getSeoArticle($product)
                 )

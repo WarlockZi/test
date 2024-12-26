@@ -1,8 +1,8 @@
 export default class DTO {
    constructor(id = 0, target = null) {
-      this.id = id ?? 0
+      this.id = target?.parentNode?.dataset?.id ?? id ?? 0
       this.fields = {
-         [target?.dataset?.field]: target?.dataset?.value ?? target?.innerText ?? target?.checked
+         [target?.dataset?.field]: target?.dataset?.value ?? target?.checked ?? target?.innerText
       }
       const relFields = target?.dataset?.field
       const fields = relFields ? {[relFields]: target?.dataset?.value ?? target.innerText ?? target.checked} : {}

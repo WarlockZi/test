@@ -247,7 +247,7 @@ class CategoryFormView
             ItemFieldBuilder::build('seo_article', $categoryProperty)
                 ->name('Seo article')
                 ->html(self::getSeoArticle($categoryProperty))
-                ->id('seo_atricle')
+                ->id('seo-article')
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
             "</div>";

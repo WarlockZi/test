@@ -30,7 +30,7 @@
 <!--    <div class="led"></div>-->
 </div>
 
-<?= $footer; ?>
+<?php //= $footer; ?>
 
 <?= $assets->getJs() ?>
 

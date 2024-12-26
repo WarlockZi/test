@@ -1,7 +1,7 @@
 import './feedback.scss';
 import {ael, qa, qs} from "@src/constants.js";
 import stripjs from 'strip-js';
-import {debounce} from "@src/common.js";
+import {debounce, emailValidator, post} from "@src/common.js";
 
 
 export default class Feedback {
@@ -10,14 +10,17 @@ export default class Feedback {
 
       this.button = button
 
-      this.form = button.closest('.feedback')
-      this.inputs = this.form[qa]('.input-container input')
+      this.formWrapper = button.closest('.feedback')
+      this.form = this.formWrapper[qs]('form')
+      this.title = this.formWrapper[qs]('.feedback-title')
+      this.checkmark = this.formWrapper[qs]('.check-icon')
+      this.inputs = this.formWrapper[qa]('.input-container input')
 
       this.setInputs()
       this.setErrorTags()
 
-      this.button[ael]('submit', this.handleSubmit.bind(this))
-      this.form[ael]('keyup', debounce(this.handelKeyup.bind(this), 1800))
+      this.formWrapper[ael]('submit', this.handleSubmit.bind(this))
+      this.formWrapper[ael]('keyup', debounce(this.handelKeyup.bind(this), 1000))
    }
 
 
@@ -27,10 +30,10 @@ export default class Feedback {
          if (target.id === 'name') {
             const nameErr = stripjs(target.value)
          } else if (target.id === 'email') {
-            const emailErr = emailValidator(target.value)
-            this.emailError.innerText = emailValidator(target.value)[0]
+            this.emailError.innerText = emailValidator(target.value)[0] ?? ''
          } else if (target.id === 'phone') {
-            const phoneErr = phoneValidator(target.value)
+            const phoneErr = phoneValidator(target.value)[0] ?? ''
+            this.phoneError.innerText = phoneValidator(target.value)[0] ?? ''
          } else if (target.id === 'message') {
             const messageErr = stripjs(target.value)
          }
@@ -38,21 +41,52 @@ export default class Feedback {
    }
 
 
-   handleSubmit(e) {
+   async handleSubmit(e) {
       e.preventDefault()
+
+      const {emailValidator, phoneValidator} = await import('@src/common.js')
+      if (emailValidator(this.email.value).length
+         || phoneValidator(this.phone.value).length) return
+      const res = await post('/feedback/updateOrCreate', this.dto())
+      if (res?.arr?.id) {
+         this.title.innerText = 'Сообщение отправлено'
+         this.title.classList.add('sent')
+         this.checkmark.classList.remove('none')
+         setTimeout(function () {
+            this.form.reset()
+            this.checkmark.classList.add('none')
+            this.title.classList.remove('sent')
+            this.title.innerText = 'Напишите свой вопрос';
+         }.bind(this), 2_000)
+
+      }
+
+   }
+
+   dto() {
+      return {
+         id: 0,
+         fields: {
+            name: stripjs(this.name.value),
+            email: stripjs(this.email.value),
+            phone: stripjs(this.phone.value),
+            message: stripjs(this.message.value),
+            // phpSession: getPhpSession()
+         }
+      }
    }
 
    setInputs() {
-      this.name = this.form[qs]('#name')
-      this.email = this.form[qs]('#email')
-      this.phone = this.form[qs]('#phone')
-      this.message = this.form[qs]('#message')
+      this.name = this.formWrapper[qs]('#name')
+      this.email = this.formWrapper[qs]('#email')
+      this.phone = this.formWrapper[qs]('#phone')
+      this.message = this.formWrapper[qs]('#message')
    }
 
    setErrorTags() {
-      this.nameError = this.form[qs]('#nameError')
-      this.emailError = this.form[qs]('#emailError')
-      this.phoneError = this.form[qs]('#phoneError')
-      this.messageError = this.form[qs]('#messageError')
+      this.nameError = this.formWrapper[qs]('#nameError')
+      this.emailError = this.formWrapper[qs]('#emailError')
+      this.phoneError = this.formWrapper[qs]('#phoneError')
+      this.messageError = this.formWrapper[qs]('#messageError')
    }
 }

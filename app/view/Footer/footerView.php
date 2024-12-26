@@ -54,6 +54,16 @@
 
         <div class="column feedback flex-4">
             <h4 class="feedback-title">Напишите свой вопрос</h4>
+
+            <div class="success-checkmark">
+                <div class="check-icon none">
+                    <span class="icon-line line-tip"></span>
+                    <span class="icon-line line-long"></span>
+                    <div class="icon-circle"></div>
+                    <div class="icon-fix"></div>
+                </div>
+            </div>
+
             <form class="form" method="POST" action="/feedback/message">
 
                 <div class="input-container">
@@ -78,7 +88,7 @@
                 </div>
 
                 <div class="input-container textarea">
-                    <textarea name="message" placeholder=" " id="message" rows="6"></textarea>
+                    <textarea name="message" placeholder=" " id="message" rows="6" class="textarea"></textarea>
                     <div class="badge"></div>
                     <label for="message">Сообщение</label>
                     <div id="messageError"></div>

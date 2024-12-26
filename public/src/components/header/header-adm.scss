@@ -23,6 +23,41 @@
     flex: 1 0;
     justify-content: flex-end;
 
+    .feedback {
+      position: relative;
+      height: 100%;
+      cursor: pointer;
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        color: black;
+        width: 23px;
+        height: 23px;
+      }
+
+      &:hover {
+        background-color: var.$color-white-hover;
+      }
+
+      .count {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        text-align: center;
+        background-color: darkred;
+        border-radius: 50%;
+        color: white;
+        font-size: 0.6rem;
+        line-height: 20px;
+      }
+    }
+
     button {
       border: none;
       padding: 0;
@@ -52,7 +87,7 @@
   @include mixin_media.search-panel;
 
 
-  .relative{
+  .relative {
     position: relative;
     display: flex;
     justify-content: space-between;

@@ -28,8 +28,7 @@ import User from "@src/Admin/User/user.js";
 import AdminSidebar from "@src/Admin/components/AdminSidebar/AdminSidebar.js";
 import ProductFilter from "../Admin/ProductFilter/ProductFilter.js";
 import Promotion from "@src/Promotions/Promotion.js";
-import TestDo from "@src/Admin/Test/TestDo/TestDo.js";
-// import Promotion from "../Promotions/Promotion.js"
+
 
 $(document).ready(async function () {
 

@@ -236,13 +236,13 @@ function phoneValidator(phone) {
    const errors = []
    const min = 11
    const max = 19
-   const replacePattern = /[0-9\(\)\s]*/g
+   const replacePattern = /[0-9\(\)\s\+-]*/g
 
    if (!phone.length) {
       errors.push("Поле должно быть заполнено")
    }
    if (phone.replace(replacePattern, '').length) {
-      errors.push("Разрешены цифры, пробелы и скобки")
+      errors.push("Разрешены цифры, пробел, скобки, знак +, знак -")
    }
    if (phone.length < min) {
       errors.push(`Длина меньше ${min} символов`)

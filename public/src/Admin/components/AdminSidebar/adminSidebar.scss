@@ -16,15 +16,18 @@ $border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
   flex-flow: column;
   font-size: .75rem;
   z-index: 1;
-  //max-width: $width-short;
-  //min-width: $width-short;
   width: $width-short;
   transition: width .2s ease-in-out;
-  overflow: hidden;
 
   &:hover {
     width: $width-full;
-    //min-width: $width-full;
+  }
+
+  @include mixin_media.m600 {
+    width: auto;
+    &:hover {
+      width: auto;
+    }
   }
 
   .wrap {
@@ -34,15 +37,14 @@ $border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
     background: var.$color-admin-sidebar;
     min-height: $height-min;
     flex: 1;
-
+    overflow: hidden;
 
     &.show {
       min-height: $height-full;
       min-width: $width-full;
-      overflow: hidden;
 
       .accordion {
-        height: 700px;
+        max-height: 700px;
       }
     }
 
@@ -78,7 +80,7 @@ $border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
       flex-flow: column;
       color: white;
       font-size: .65rem;
-      transition: height .4s ease-in-out, min-width .5s ease-in-out;
+      transition: max-height .4s ease-in-out, min-width .5s ease-in-out;
       min-width: $width-full;
 
       @include mixin_media.neon;
@@ -90,7 +92,7 @@ $border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
       }
 
       @include mixin_media.m600 {
-        height: 0;
+        max-height: 0;
       }
 
       &.show {
