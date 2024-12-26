@@ -22,7 +22,7 @@
     margin: 0 6px;
     width: 44px;
     @include mixin_media.m600 {
-      width: 30px;
+      width: clamp(1rem, 11vw, 2rem);
     }
   }
 
@@ -142,7 +142,7 @@
   @include mixin_media.m600 {
     display: flex;
     color: white;
-    margin-right: 20px;
+    margin-right: clamp(.01rem, 1vw, 1.5rem);
   }
 
   .user-menu {

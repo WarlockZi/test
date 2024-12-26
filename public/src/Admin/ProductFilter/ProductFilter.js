@@ -1,5 +1,5 @@
 import './ProductFilter.css'
-import {ael, qa} from "@src/constants.js";
+import {ael, qa, qs} from "@src/constants.js";
 import {$, post} from "@src/common.js";
 import SelectNew from "@src/components/select/SelectNew.js";
 
@@ -7,6 +7,7 @@ export default class ProductFilter {
    constructor(productsFilter) {
       if (!productsFilter) return
       this.wrap = productsFilter
+      this.panel = productsFilter[qs]('.list-filter')
       this.url = '/adminsc/report/filter'
       this.wrap[ael]('click', this.handleClick.bind(this))
       this.setSelects()
@@ -37,7 +38,7 @@ export default class ProductFilter {
          return null;
       });
 
-      const checked = this.wrap[qa](`[type='checkbox']:checked`);
+      const checked = this.panel[qa](`[type='checkbox']:checked`);
       [].forEach.call(checked, check => {
          req[check.name] = 'on'
       })

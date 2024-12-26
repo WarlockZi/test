@@ -29,7 +29,7 @@ class ReportView
                     ->name('Арт')
                     ->class('cell left')
                     ->search()
-                    ->width('70px')
+                    ->width('minmax(30px, 70px)')
                     ->get()
             )
             ->column(
@@ -37,7 +37,7 @@ class ReportView
                     ->name('Наименование')
                     ->class('cell left')
                     ->search()
-                    ->width('1fr')
+                    ->width('minmax(60px,1fr)')
                     ->get()
             )
             ->column(

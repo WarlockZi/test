@@ -6,11 +6,9 @@
 [custom-table] {
   background-color: #fff;
   padding-bottom: 10px;
-
-
+  max-width: 1300px;
 
   @include mixin_media.m600 {
-    width: 90vw;
     overflow-x: auto;
   }
 
