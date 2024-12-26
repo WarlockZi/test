@@ -1,4 +1,5 @@
 @use '../var';
+@use '../components/checkbox/animatedCheckmark';
 
 $input-color: #303245;
 
@@ -8,9 +9,46 @@ $input-color: #303245;
   backdrop-filter: blur(1px) brightness(70%) saturate(4);
   padding-inline: 10px;
 
+  .success-checkmark {
+    margin: 0 auto;
+    position: absolute;
+    top: 39%;
+    left: 10%;
+    z-index: 3;
+    transform: scale(.3);
+
+    @include animatedCheckmark.success-checkmark();
+
+  }
+
   .feedback-title {
     font-size: 1.2rem;
     margin-block: 20px;
+
+    //&.before{
+    //  &:before{
+    //    content: 'd';
+    //    position: absolute;
+    //    top: 47%;
+    //    left: 15%;
+    //  }
+    //}
+
+    &.sent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: black;
+      width: 100%;
+      height: 100%;
+      background-color: floralwhite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      margin: 0;
+      border-radius: 5px;
+    }
   }
 
 
@@ -20,9 +58,9 @@ $input-color: #303245;
     flex-direction: column;
     min-height: 20px;
     width: 100%;
-    gap: 10px;
+    //gap: 10px;
 
-    input, textarea {
+    input, .textarea {
       resize: vertical;
       border-radius: 12px;
       border: 0;
@@ -86,26 +124,31 @@ $input-color: #303245;
     }
 
     #emailError, #nameError, #emailError, #phoneError {
+      margin-left: 20px;
       align-self: start;
       color: brown;
-      height: clamp(.5rem, 2vw, 1rem);
-      padding-top: 3px;
-      font-size: clamp(.5rem, 2vw, 1rem);
+      height: clamp(1.5rem, 2vw, 1rem);
+      padding-top: 2px;
+      padding-bottom: 4px;
+      font-size: clamp(.2rem, 1vw, 1rem);
     }
   }
 
 
-  .feedback-submit{
+  .feedback-submit {
     padding: 10px;
     align-self: stretch;
     margin-top: 20px;
-    justify-self:stretch;
+    justify-self: stretch;
     margin-bottom: 10px;
   }
-  .textarea{
+
+  .textarea {
     min-height: 100px;
-    .badge{
+
+    .badge {
       width: 92px;
     }
+
   }
 }

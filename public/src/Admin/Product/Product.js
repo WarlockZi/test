@@ -22,8 +22,9 @@ export default class Product {
       this.setDragNDrop().then()
       this.setCardPanel().then()
 
+
       QuillFactory.create('.txt', QuillConst.ADMIN_PRODUCT_DESCRIPTION);
-      QuillFactory.create('#seo_article', QuillConst.ADMIN_PRODUCT_SEO_ARTICLE);
+      QuillFactory.create('#seo-article', QuillConst.ADMIN_PRODUCT_SEO_ARTICLE);
       // new MyQuill('#seo_article', true,true,true);
       this.setUnitsCustomSelects()
    }

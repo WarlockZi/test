@@ -15,7 +15,30 @@ class AppController extends Controller
     {
         parent::__construct();
     }
+    public function actionUpdateOrCreate(): void
+    {
+        $req = $this->ajax;
+        if (!empty($req['relation']['name'])) {
+            $this->updateOrCreateRelation($req);
+        }
+        if (!empty($req['fields'])) {
+            $id    = $req['id'] ?? null;
+            $model = $this->model::updateOrCreate(
+                ['id' => $id],
+                $req['fields']
+            );
+        }
+        if (!empty($req['morph'])) {
+            $this->updateOrCreateMorph($req);
+        }
 
+        if ($model->wasRecentlyCreated) {
+            Response::exitJson(['popup' => 'Создан', 'id' => $model->id]);
+        } else {
+            Response::exitJson(['popup' => 'Обновлен', 'model' => $model->toArray()]);
+        }
+        Response::exitWithError('Ошибка');
+    }
     public function __destruct()
     {
         if ($this->isAjax()) exit;
@@ -111,29 +134,6 @@ class AppController extends Controller
         Response::exitJson(['popup' => 'Создан', 'id' => $created->id]);
     }
 
-    public function actionUpdateOrCreate(): void
-    {
-        $req = $this->ajax;
-        if (!empty($req['relation']['name'])) {
-            $this->updateOrCreateRelation($req);
-        }
-        if (!empty($req['fields'])) {
-            $id    = $req['id'] ?? null;
-            $model = $this->model::updateOrCreate(
-                ['id' => $id],
-                $req['fields']
-            );
-        }
-        if (!empty($req['morph'])) {
-            $this->updateOrCreateMorph($req);
-        }
 
-        if ($model->wasRecentlyCreated) {
-            Response::exitJson(['popup' => 'Создан', 'id' => $model->id]);
-        } else {
-            Response::exitJson(['popup' => 'Обновлен', 'model' => $model->toArray()]);
-        }
-        Response::exitWithError('Ошибка');
-    }
 
 }

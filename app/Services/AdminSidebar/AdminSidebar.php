@@ -89,6 +89,12 @@ class AdminSidebar
                         "permissions" => [],
                     ],
                     [
+                        "name" => "Сообщения клиентов",
+                        "href" => "/adminsc/feedback",
+                        "class" => "neon",
+                        "permissions" => [],
+                    ],
+                    [
                         "name" => "Заказы",
                         "href" => "/adminsc/order",
                         "class" => "neon",

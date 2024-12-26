@@ -8,12 +8,13 @@ class MockUserService
 {
     public static function mockUser()
     {
-        $user     = Auth::getUser();
-        $mockUser = \app\model\User::query()->find(160);
-        $Olya     = \app\model\User::query()
+        $Olya = \app\model\User::query()
             ->where('email', 'vitex018@yandex.ru')
             ->first();
-        Auth::setUser($Olya);
+        $Oleg = \app\model\User::query()
+            ->where('email', 'molchinoleg@mail.ru')
+            ->first();
+        Auth::setUser($Oleg);
     }
 
 }

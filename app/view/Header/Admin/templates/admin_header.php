@@ -5,10 +5,12 @@
     <div class="relative">
 
         <?= $logo; ?>
-        <!--	--><? //= $chips; ?>
+
         <?= $searchPanel; ?>
         <div class="utils">
 
+
+            <?= $feedback??''; ?>
             <?= $searchButton; ?>
         </div>
 

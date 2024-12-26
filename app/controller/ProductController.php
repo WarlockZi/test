@@ -6,7 +6,6 @@ use app\core\NotFound;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\OrderRepository;
 use app\Repository\ProductRepository;
-use app\Services\Seo\ProductSeoService;
 use app\view\Product\Admin\ProductFormView;
 
 
