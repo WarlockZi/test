@@ -22,7 +22,8 @@ export default class AdminSidebar {
 
    openUl(target) {
       const li = target.closest('li')
-      if (!li.classList.contains('open')) {
+      if (!li) return
+      if (!li?.classList?.contains('open')) {
          this.closeUls()
       }
       li.classList.toggle('open')

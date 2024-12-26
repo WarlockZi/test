@@ -12,7 +12,7 @@ use app\view\UserYandex\UserYandexView;
 use Throwable;
 
 
-class UserYandexController extends AdminscController
+class UseryandexController extends AdminscController
 {
     public function __construct(
         public UserYandexRepository $repo = new UserYandexRepository,
