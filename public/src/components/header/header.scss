@@ -6,7 +6,7 @@
 @use "../../var";
 
 @include mobile-menu.nav-drill;
-.header {
+.burger {
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;

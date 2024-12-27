@@ -30,7 +30,6 @@ class ReportController extends AdminscController
             $filterPanel   = $this->service->getFilterPanel($selectFilters);
         } else {
             list($selectFilters, $toSaveFilters) = $this->service->filtersFromReq($req);
-//            $filterString = $this->service->getFilterString($selectFilters);
             $filterPanel  = $this->service->getFilterPanel($selectFilters, $toSaveFilters);
             $this->service->saveFilters($toSaveFilters);
         }

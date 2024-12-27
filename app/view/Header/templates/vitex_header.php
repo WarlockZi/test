@@ -1,4 +1,4 @@
-<header class="header">
+<header class="burger">
     <? include_once ROOT. '/app/view/share/adminPanel/adminPanel.php'; ?>
 	<div class="info">
 

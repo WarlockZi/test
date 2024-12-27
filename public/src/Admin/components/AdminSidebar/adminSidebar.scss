@@ -4,7 +4,7 @@
 
 $width-short: 30px;
 $width-full: 170px;
-$height-full: 1000px;
+$height-full: 500px;
 $height-min: 60px;
 $dark: mixin_media.darker(var.$color-gray9, 25%);
 $border-bottom: mixin_media.lighter(var.$color-admin-sidebar, 5%) 1px solid;
@@ -17,7 +17,18 @@ $border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
   font-size: .75rem;
   z-index: 1;
   width: $width-short;
-  transition: width .2s ease-in;
+  transition: width .2s ease-in, max-height .3s ease-out;
+
+  &.show {
+    min-width: $width-full;
+    max-height: $height-full;
+
+    .wrap {
+      .accordion {
+        max-height: $height-full;
+      }
+    }
+  }
 
   &:hover {
     width: $width-full;
@@ -25,6 +36,8 @@ $border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
 
   @include mixin_media.m600 {
     width: auto;
+    max-height: 0;
+    overflow: hidden;
 
     &:hover {
       width: auto;
@@ -40,14 +53,6 @@ $border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
     flex: 1;
     overflow: hidden;
 
-    &.show {
-      min-height: $height-full;
-      min-width: $width-full;
-
-      .accordion {
-        max-height: $height-full;
-      }
-    }
 
     @include mixin_media.m600 {
       max-width: 100vw;
@@ -59,21 +64,22 @@ $border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
       }
     }
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-
-      #burger {
-        min-width: 20px;
-        padding: 23px 5px;
-        cursor: pointer;
-        display: flex;
-
-        path {
-          pointer-events: none;
-        }
-      }
-    }
+    //.burger {
+    //  display: flex;
+    //  justify-content: space-between;
+    //
+    //  #burger {
+    //    min-width: 20px;
+    //    padding: 23px 5px;
+    //    cursor: pointer;
+    //    display: flex;
+    //    pointer-events: none;
+    //
+    //    path {
+    //      pointer-events: none;
+    //    }
+    //  }
+    //}
 
 
     .accordion {
