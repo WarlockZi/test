@@ -7,14 +7,18 @@ export default class AdminSidebar {
       if (!sidebar) return false
 
       this.sidebar = sidebar
-      this.burger = sidebar[qs]('#burger')
-      sidebar[ael]('click', this.handleClick.bind(this));
+      this.sidebar[ael]('click', this.handleClick.bind(this));
+
+
+      this.burger = document[qs]('.burger')
+      this.burger[ael]('click', this.handleClick.bind(this));
 
    }
 
    handleClick({target}) {
       if (target === this.burger) {
-         this.sidebar[qs]('.wrap').classList.toggle('show')
+         this.sidebar.classList.toggle('show')
+
       } else {
          this.openUl(target)
       }

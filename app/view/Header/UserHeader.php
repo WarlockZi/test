@@ -21,7 +21,7 @@ class UserHeader
         $this->fs           = new FS(__DIR__ . '/templates');
         $data['blueRibbon'] = (new BlueRibbon($rootCategories))->toString();
         $data['index']      = $route->isHome();
-        $data['logo']       = Icon::logo_squre1() . Icon::logo_vitex1();
+        $data['logo']       = Icon::logo_square1() . Icon::logo_vitex1();
         $this->header       = $this->fs->getContent('vitex_header', $data);
     }
 

@@ -11,15 +11,16 @@
 .admin-layout {
   display: grid;
   grid-template-columns: 30px 1fr;
-  grid-template-rows: 100px auto 260px;
+  grid-template-rows: 80px auto 260px;
   grid-template-areas:
-          "sidebar a-header"
+          "a-header a-header"
           "sidebar content"
-          "footer footer";
+          "sidebar footer";
 
   @include mixin_media.m600 {
-    grid-template-rows: 60px auto 260px;
+    grid-template-rows: auto auto 260px;
     grid-template-areas:
+          "a-header a-header"
           "sidebar sidebar"
           "content content"
           "footer footer";
@@ -38,7 +39,7 @@
     padding: 0 clamp(3px, 2vw, 20px);
     margin-bottom: 50px;
     min-height: 80vh;
-
+    margin-top: 10px;
   }
 
   .footer {
