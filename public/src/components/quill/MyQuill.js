@@ -69,7 +69,7 @@ export default class MyQuill {
       } else {
          this.quill.setText(this.contents)
       }
-      if (!this.editable) quill.enable(false)
+      if (!this.editable) this.quill.enable(false)
       if (this.autosave) {
          this.quill.on('text-change', function (delta) {
             // const content = JSON.stringify(quill.getContents())
