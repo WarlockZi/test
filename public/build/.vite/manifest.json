@@ -1,13 +1,13 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-BT2tVH8a.js",
+    "file": "assets/Category-Nx7AFkwf.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_search-CxgNiI2j.js",
-      "_MyQuill-CLgBwkg2.js",
+      "_MyQuill-Cr6WswKE.js",
       "Promotions/Promotion.js"
     ]
   },
@@ -33,14 +33,14 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-DVLcwbji.js",
+    "file": "assets/Product-8SZJ_ubQ.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
     "imports": [
       "_search-CxgNiI2j.js",
       "Admin/admin.js",
-      "_MyQuill-CLgBwkg2.js",
+      "_MyQuill-Cr6WswKE.js",
       "Promotions/Promotion.js"
     ],
     "dynamicImports": [
@@ -54,7 +54,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-DI9JAMx7.js",
+    "file": "assets/Props-DULEm0Hc.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -62,7 +62,7 @@
       "Admin/Product/Product.js",
       "_search-CxgNiI2j.js",
       "Admin/admin.js",
-      "_MyQuill-CLgBwkg2.js",
+      "_MyQuill-Cr6WswKE.js",
       "Promotions/Promotion.js"
     ]
   },
@@ -79,15 +79,15 @@
     ]
   },
   "Admin/Test/TestEdit/test-edit.js": {
-    "file": "assets/test-edit-BO9KP_C4.js",
+    "file": "assets/test-edit-4_zGtZ4e.js",
     "name": "test-edit",
     "src": "Admin/Test/TestEdit/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_search-CxgNiI2j.js",
-      "_index-DxkyIi5q.js",
-      "_MyQuill-CLgBwkg2.js",
+      "_index-CBmxs6q0.js",
+      "_MyQuill-Cr6WswKE.js",
       "Promotions/Promotion.js"
     ],
     "css": [
@@ -95,18 +95,18 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-BLv8D_5X.js",
+    "file": "assets/admin-fwclcwBq.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
     "imports": [
       "_search-CxgNiI2j.js",
-      "_MyQuill-CLgBwkg2.js",
+      "_MyQuill-Cr6WswKE.js",
       "Promotions/Promotion.js"
     ],
     "dynamicImports": [
       "components/Modal/modal.js",
-      "_index-DxkyIi5q.js",
+      "_index-CBmxs6q0.js",
       "Admin/chartjs/chartjs.js",
       "share/card_panel/card_panel.js",
       "Admin/Product/Product.js",
@@ -150,21 +150,21 @@
     ]
   },
   "Category/category.js": {
-    "file": "assets/category-DZJUiIWv.js",
+    "file": "assets/category-CpYycnSK.js",
     "name": "category",
     "src": "Category/category.js",
     "isDynamicEntry": true,
     "imports": [
       "_search-CxgNiI2j.js",
       "_shippableUnitsTable-VzyoRnq_.js",
-      "_MyQuill-CLgBwkg2.js"
+      "_MyQuill-Cr6WswKE.js"
     ],
     "dynamicImports": [
       "share/card_panel/card_panel.js"
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-Baqy264T.js",
+    "file": "assets/main-CE_i1n4L.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -187,7 +187,7 @@
     ]
   },
   "Product/Product.js": {
-    "file": "assets/Product-CtEHl4oO.js",
+    "file": "assets/Product-BeRlQCe1.js",
     "name": "Product",
     "src": "Product/Product.js",
     "isDynamicEntry": true,
@@ -195,7 +195,7 @@
       "_search-CxgNiI2j.js",
       "share/card_panel/card_panel.js",
       "_shippableUnitsTable-VzyoRnq_.js",
-      "_MyQuill-CLgBwkg2.js"
+      "_MyQuill-Cr6WswKE.js"
     ],
     "css": [
       "assets/Product-BJU9PV5y.css"
@@ -217,8 +217,8 @@
     "file": "assets/MyQuill-GClCj9AP.css",
     "src": "_MyQuill-!~{00c}~.js"
   },
-  "_MyQuill-CLgBwkg2.js": {
-    "file": "assets/MyQuill-CLgBwkg2.js",
+  "_MyQuill-Cr6WswKE.js": {
+    "file": "assets/MyQuill-Cr6WswKE.js",
     "name": "MyQuill",
     "imports": [
       "_search-CxgNiI2j.js"
@@ -231,8 +231,8 @@
     "file": "assets/index-DYGhe8tp.css",
     "src": "_index-!~{004}~.js"
   },
-  "_index-DxkyIi5q.js": {
-    "file": "assets/index-DxkyIi5q.js",
+  "_index-CBmxs6q0.js": {
+    "file": "assets/index-CBmxs6q0.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [

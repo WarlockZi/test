@@ -50,7 +50,7 @@ debugger
   }
   function setContent(quill, delta) {
     const innertext = textarea.innerText;
-    if (isJsonString(innertext)) {
+    if (isJson(innertext)) {
       const text = JSON.parse(innertext);
       quill.setContents(text)
     } else {
@@ -76,12 +76,5 @@ debugger
   //   )
   // }
 
-  function isJsonString(str) {
-    try {
-      JSON.parse(str);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  }
+
 }
