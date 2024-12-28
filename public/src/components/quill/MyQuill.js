@@ -1,4 +1,4 @@
-import {$, post} from '../../common'
+import {$, IsJson, post} from '../../common'
 import Quill from "quill";
 import "quill/dist/quill.core.css";
 import 'quill/dist/quill.snow.css';
@@ -59,20 +59,11 @@ export default class MyQuill {
 
    dto() {
       return new DTO(this.id, this.el)
-      // this._dto.relation = this.relation
-      // return new DTO(){
-      //    id:this.id,
-      //    content: JSON.stringify(this.quill.getContents()),
-      // }
-      // const productId = $(`.item-wrap[data-model='product']`)[0].dataset.id
-      // const txt = JSON.stringify(quill.getContents())
-      // post('/adminsc/product/updateOrCreate',
-      //    {txt,'id': productId})
    }
 
    init() {
       this.quill = new Quill(this.selector, this.options);
-      if (this.isJson(this.contents)) {
+      if (IsJson(this.contents)) {
          const json = JSON.parse(this.contents + '\n');
          this.quill.setContents(json)
       } else {
@@ -89,7 +80,7 @@ export default class MyQuill {
       if (this.button) {
          this.button.addEventListener('click', function () {
                const productId = $(`.item-wrap[data-model='product']`)[0].dataset.id
-               const txt = JSON.stringify(quill.getContents())
+               const txt = JSON.stringify(this.quill.getContents())
                post('/adminsc/product/updateOrCreate',
                   {
                      txt,
@@ -101,14 +92,6 @@ export default class MyQuill {
       }
    }
 
-   isJson(json) {
-      try {
-         JSON.parse(json);
-         return true
-      } catch (e) {
-         return false;
-      }
-   }
 }
 
 
