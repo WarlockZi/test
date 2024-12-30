@@ -7,6 +7,7 @@ use app\core\Auth;
 use app\Services\ProductImageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -44,6 +45,31 @@ class Product extends Model
 //        'shortLink'
     ];
 
+//    public function orderProducts(): HasMany
+//    {
+//
+//    }
+//    public function orderItems(): BelongsToMany
+//    {
+//        $orderItems = $this
+//
+//
+//        return $orderItems;
+//    }
+//    public function orderItems(): hasManyThrough
+//    {
+//        $orderItems = $this
+//            ->hasManyThrough(
+//                OrderItem::class,
+//                OrderProduct::class,
+//                'product_id',//get product on ORDER_PRODUCT table
+//                'product_id',//get orderItem on ORDERITEMS table
+//                '1s_id', // PRODUCT primary key
+//                'product_id',// ORDERITEMS product key
+//            );
+//
+//        return $orderItems;
+//    }
     public function ownProperties(): HasOne
     {
         return $this->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
@@ -166,20 +192,6 @@ class Product extends Model
         return $query->whereHas('mainImages');
     }
 
-    public function orderItems(): hasManyThrough
-    {
-        $orderItems = $this
-            ->hasManyThrough(
-                OrderItem::class,
-                OrderProduct::class,
-                'product_id',//get product on ORDER_PRODUCT table
-                'product_id',//get orderItem on ORDERITEMS table
-                '1s_id', // PRODUCT primary key
-                'product_id',// ORDERITEMS product key
-            );
-
-        return $orderItems;
-    }
     public function unsubmittedOrders(): HasMany
     {
         $user = Auth::getUser();

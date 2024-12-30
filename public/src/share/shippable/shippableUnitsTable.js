@@ -111,6 +111,7 @@ export default class shippableTable {
       this.greenButtonWrap.style.display = 'flex'
       const count = +this.greenButtonWrap[qs]('input').value
       this.greenButtonWrap[qs]('input').value = count ? count : 1
+      this.renderSums()
       this.blueButton.style.display = 'none'
       this.toServer(this.dto(this.greenButtonWrap[qs]('[unit-row]')))
    }
