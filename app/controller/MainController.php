@@ -27,7 +27,7 @@ class MainController extends AppController
     public function actionContacts()
     {
         $this->assets->setMeta(
-            'Контактная информация',
+            'Контакты - Витекс',
             'Контакты' . $this->titleTail,
             'Контакты');
     }
@@ -67,6 +67,10 @@ class MainController extends AppController
         $categories = "<ul class='category-tree'>" .  "</ul>";
         $content = file_get_contents(ROOT.'/sitemap.html');
         $this->setVars(compact('content', 'categories'));
+        $this->assets->setMeta(
+            'Карта сайта - Витекс',
+            'Карта сайта ' . $this->titleTail,
+            'Карта сайта');
     }
     public function actionYandexauth(): void
     {
@@ -75,16 +79,32 @@ class MainController extends AppController
 
     public function actionStatii()
     {
+        $this->assets->setMeta(
+            'Статьи - Витекс',
+            'Статьи ' . $this->titleTail,
+            'Статьи');
     }
     public function actionGarantii()
     {
+        $this->assets->setMeta(
+            'Гарантии - Витекс',
+            'Гарантии ' . $this->titleTail,
+            'Гарантии');
     }
     public function actionPoliticaconf()
     {
+        $this->assets->setMeta(
+            'Политика конфиденциальности - Витекс',
+            'Политика конфиденциальности ' . $this->titleTail,
+            'Политика конфиденциальности');
     }
 
     public function actionRequisites()
     {
+        $this->assets->setMeta(
+            'Реквизиты - Витекс',
+            'Реквизиты ' . $this->titleTail,
+            'Реквизиты');
     }
 
     public function actionDiscount()
