@@ -24,7 +24,6 @@ export default class Product{
       }
 
       zoom()
-      debugger
       new MyQuill('#seo-article');
       new MyQuill('#detail-text');
    }

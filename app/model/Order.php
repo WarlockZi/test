@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Order extends Model
 {
@@ -21,6 +22,20 @@ class Order extends Model
     public function orderProduct(): HasMany
     {
         return $this->hasMany(OrderProduct::class);
+    }
+    public function orderItems(): hasManyThrough
+    {
+        $orderItems = $this
+            ->hasManyThrough(
+                OrderItem::class,
+                Product::class,
+                'product_id',//get product on PRODUCT table
+                'product_id',//get orderItem on ORDERITEMS table
+                '1s_id', // PRODUCT primary key
+                'product_id',// ORDERITEMS product key
+            );
+
+        return $orderItems;
     }
 
     public function products(): belongsToMany

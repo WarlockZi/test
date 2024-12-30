@@ -51,7 +51,8 @@ class OrderRepository
             ]
         );
         try {
-            $product->orderItems()->sync($orderItm->id);
+            $order->products()->orderItems()->updateOrCreate($orderItm->id);
+            $product->orderItems()->associate($orderItm->id);
         } catch (Throwable $exception) {
             $exc = $exception;
         }
