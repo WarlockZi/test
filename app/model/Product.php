@@ -56,20 +56,20 @@ class Product extends Model
 //
 //        return $orderItems;
 //    }
-//    public function orderItems(): hasManyThrough
-//    {
-//        $orderItems = $this
-//            ->hasManyThrough(
-//                OrderItem::class,
-//                OrderProduct::class,
-//                'product_id',//get product on ORDER_PRODUCT table
-//                'product_id',//get orderItem on ORDERITEMS table
-//                '1s_id', // PRODUCT primary key
-//                'product_id',// ORDERITEMS product key
-//            );
-//
-//        return $orderItems;
-//    }
+    public function orderItems(): hasManyThrough
+    {
+        $orderItems = $this
+            ->hasManyThrough(
+                OrderItem::class,
+                OrderProduct::class,
+                'product_id',//get product on ORDER_PRODUCT table
+                'product_id',//get orderItem on ORDERITEMS table
+                '1s_id', // PRODUCT primary key
+                'product_id',// ORDERITEMS product key
+            );
+
+        return $orderItems;
+    }
     public function ownProperties(): HasOne
     {
         return $this->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
