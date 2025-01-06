@@ -11,6 +11,7 @@ export default class Cart {
       this.container[ael]('click', this.handleClick.bind(this));
       this.container[ael]('keyup', this.handleKeyUp.bind(this));
 
+      this.orderId = this.container[qs]('[data-order-id]').dataset.orderId;
       this.total = this.container[qs]('.total span');
       this.$cartEmptyText = this.container[qs]('.empty-cart');
       this.$cartCount = this.container[qs]('.cart .count');
@@ -21,11 +22,15 @@ export default class Cart {
    }
 
    async submitCart() {
-      const rows = [].map.call(this.rows, (row) => {
-         return this.cartRowDTO(row)
-      })
-      rows.sess = getPhpSession()
-      const res = post('/cart/submit', rows)
+      // const rows = [].map.call(this.rows, (row) => {
+      //    return this.cartRowDTO(row)
+      // })
+      const orderId = this.orderId
+
+      const res = post('/cart/submit', {orderId})
+      if (res.ok){
+
+      }
 
 
    }
@@ -33,8 +38,9 @@ export default class Cart {
    rowUnits(row) {
       const rows = {};
       [...row[qa]('[unit-row]')].map((unitRow) => {
-         const key = unitRow.dataset.unitid
-         rows[key] = unitRow[qs]('input').value
+         const unitid = unitRow.dataset.unitid
+         const count = +unitRow[qs]('input').value
+         if (count) rows[unitid] = count
       })
       return rows
    }

@@ -2,7 +2,7 @@
     <?= $class; ?>
     <?= $dataModel; ?>
     <?= $dataRelation; ?>
-    <?= $dataRelationModel; ?>
+    <?= $dataRelationType; ?>
 >
 
     <div class='table-title'><?= $pageTitle; ?></div>
@@ -45,6 +45,8 @@
                         <div
                                 data-id='<?= $item['id']??0; ?>'
                                 <?= $c->dataField; ?>
+                                <?= $c->pivot; ?>
+                                <?= $c->attach; ?>
                                 <?= $c->class; ?>
                                 <?= $c->contenteditable; ?>
                         >

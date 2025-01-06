@@ -2,8 +2,8 @@ import './table.scss';
 // import '../select/selectNew.scss';
 import {$, debounce, post} from '../../common';
 import {ael, qa, qs} from "@src/constants.js";
-import DTO from "@src/Admin/DTO.js";
 import SelectNew from "../../components/select/SelectNew.js";
+import TableDTO from "@src/Admin/TableDTO.js";
 
 
 export default class Table {
@@ -12,7 +12,7 @@ export default class Table {
       this.model = table.dataset.model ?? table.closest('[data-model]')?.dataset.model;
       this.modelId = table.dataset.id ?? table.closest('[data-model]')?.dataset.id;
       this.relation = table.dataset.relation ?? null;
-      this.relationModel = table.dataset.relationmodel ?? null;
+      this.relationType = table.dataset.relationtype ?? null;
       this.updateOrCreateUrl = `/adminsc/${this.model}/updateOrCreate`
       this.headers = $('.head');
       this.inputs = $('[data-search]');
@@ -25,26 +25,39 @@ export default class Table {
       if (!this.relation) {
          this.table[ael]('customSelect.changed', this.selectChange.bind(this));
          this.table[ael]('checkbox.changed', this.checkboxChange.bind(this));
-         this.setCheckboxes()
       }
+      this.setCheckboxes()
       // this.setSortables()
       this.setSelects()
       this.setSortables()
    }
 
-   async checkboxChange({target, detail}) {
-      const dto = new DTO(this.modelId, target)
+   async checkboxChange(e) {
+      // const dto = new DTO(this.modelId, e.target)
+      // const res = await post(`/adminsc/${this.model}/updateorcreate`, dto)
+      const dto = new TableDTO(e.target)
       await post(this.updateOrCreateUrl, dto)
    }
 
-   async selectChange(detail) {
+   async selectChange({detail}) {
       const target = detail.target
-      const modelId = target.parentNode?.dataset?.id
-      this.update(modelId, detail.target)
+      const dto = new TableDTO(target, detail?.prev?.value)
+      const res = await post(`/adminsc/${this.model}/updateorcreate`, dto)
+      if (res?.arr?.detach){
+         const prevCells = this.table[qa](`[data-id='${detail.prev.value}']`)
+         for (let prevCell of prevCells) {
+            prevCell.dataset.id = detail.next.value
+         }
+      }else {
+         const prevCells = this.table[qa](`[data-id='0']:not([hidden])`)
+         for (let prevCell of prevCells) {
+            prevCell.dataset.id = detail.next.value
+         }
+      }
    }
 
    async update(modelId, target) {
-      const dto = new DTO(modelId, target)
+      const dto = new TableDTO(target)
       const res = await post(`/adminsc/${this.model}/updateorcreate`, dto)
    }
 
@@ -53,7 +66,8 @@ export default class Table {
 
       /// create
       if (target.className === 'add-model') {
-         this.updateOrcreate(target)
+         this.copyEmptyRow()
+         // this.updateOrcreate(target)
 
          /// edit
       } else if (target.classList.contains('edit')) {
@@ -64,10 +78,6 @@ export default class Table {
          target.classList.contains('del') && !target.classList.contains('head')) {
          this.modelDel(target)
 
-         // checkbox
-      } else if (target.type === 'checkbox') {
-
-         /// sort
       } else if (target.classList.contains('head')
          || target.classList.contains('icon')) {
          const header = target.closest('.head');
@@ -77,8 +87,6 @@ export default class Table {
             });
             this.sortColumn(index)
          }
-      } else if (target.closest('[select-new]')) {
-         const select = target.closest('[select-new]')
       }
 
    }
@@ -109,7 +117,7 @@ export default class Table {
       if (target.hasAttribute('data-search')) {
          this.search(target)
       } else if (target.hasAttribute('contenteditable')) {
-         const res = await post(this.updateOrCreateUrl, new DTO(target.dataset.id, target));
+         const res = await post(this.updateOrCreateUrl, new TableDTO(target));
          if (res?.arr?.id) {
             this.newRow(res?.arr.id)
          }
@@ -119,17 +127,20 @@ export default class Table {
    // DELETE
    async modelDel(target) {
       if (!confirm('Удалить?')) return;
-      const id = target.dataset['id'];
-      const res = await post(`/adminsc/${this.model}/delete`, {id});
-      if (res) {
-         this.delRow(id)
+      const id = this.modelId;
+      const relationId = target.dataset['id'];
+      const relationType = this.relationType ?? null;
+      const relationName = this.relation ?? null;
+      const res = await post(`/adminsc/${this.model}/delete`, {id, relationName, relationType, relationId});
+      if (res?.arr?.deleted) {
+         this.delRow(res?.arr?.deleted)
       }
    }
 
    // UPDATE OR CREATE
    async updateOrcreate(target) {
-      const res = await post(this.updateOrCreateUrl, new DTO(this.modelId, target))
-      if (res.arr?.success) {
+      const res = await post(this.updateOrCreateUrl, new TableDTO(target))
+      if (res?.arr?.success) {
          this.copyEmptyRow(target)
       } else {
          this.newRow(res?.arr.id)
@@ -138,10 +149,11 @@ export default class Table {
 
    copyEmptyRow() {
       [].forEach.call(this.hidden, (cell) => {
-         const clone = cell.cloneNode(true)
-         clone.removeAttribute('hidden')
+         const cloneCell = cell.cloneNode(true)
+         cloneCell.removeAttribute('hidden')
+         this.addSelectInNewRow(cloneCell)
          const table = this.table[qa]('.custom-table')[0]
-         table.append(clone)
+         table.append(cloneCell)
       })
    }
 
@@ -151,8 +163,11 @@ export default class Table {
             const newEl = el.cloneNode(true);
             newEl.removeAttribute('hidden');
 
+            this.addSelectInNewRow(newEl)
             const tableContent = $(this.table).find('.custom-table');
             tableContent.appendChild(newEl);
+
+
             if (['id'].includes(newEl.dataset.field)) {
                newEl.innerText = id
             } else if (
@@ -167,6 +182,24 @@ export default class Table {
 
          }.bind(this)
       );
+   }
+
+   addSelectInNewRow(newEl) {
+      if (newEl[qs]('[select-new]')) {
+         const select = newEl[qs]('[select-new]')
+         this.removeUsedSelectOptions(select)
+         new SelectNew(select)
+      }
+   }
+
+   removeUsedSelectOptions(select) {
+      const usedSelects = this.table[qa]('[data-attach]');
+      [].forEach.call(usedSelects, (usedSelects) => {
+         [].forEach.call(select.options, (option) => {
+            if (option.value === usedSelects.dataset.id) option.remove()
+         })
+      })
+
    }
 
 
@@ -272,16 +305,16 @@ export default class Table {
    }
 
    setSelects() {
-
       const selects = $('[select-new]:has(option)');
       [].forEach.call(selects, (select) => {
-         new SelectNew(select)
+         if (!select.parentNode.hasAttribute('hidden'))
+            new SelectNew(select)
       })
 
    }
 
    setCheckboxes() {
-      const checkboxes = $('[my-checkbox]');
+      const checkboxes = this.table[qa]('[my-checkbox]');
       [].forEach.call(checkboxes, (checkbox) => {
          checkbox[ael]('change', this.checkboxChange.bind(this))
       });
