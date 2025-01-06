@@ -4,9 +4,7 @@ namespace app\Repository;
 
 use app\core\Auth;
 use app\model\Order;
-use app\model\OrderItem;
 use Illuminate\Database\Eloquent\Collection;
-use Throwable;
 
 class CartRepository
 {
@@ -15,15 +13,16 @@ class CartRepository
     {
         $user = Auth::getUser();
         if ($user) {
-            $order = Order::query()->where('user_id', Auth::getUser()->id);
+            $q = Order::where('user_id', Auth::getUser()->id);
         } else {
-            $order = Order::query()->where('sess', session_id());
+            $q = Order::where('sess', session_id());
         }
-        $order    = $order
-//            ->whereNull('submitted')
+        $order = $q
+            ->whereNull('submitted')
             ->with('products.orderItems.unit')
             ->first();
-//        $o = $order->toArray();
+
+        $a = $order->toArray();
         return $order;
     }
 

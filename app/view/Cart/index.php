@@ -7,7 +7,7 @@ $authed = \app\core\Auth::getUser();
 
     <h1>Корзина</h1>
 
-    <? if (empty($order->products)): ?>
+    <? if (empty($order) || !$order?->products?->count()): ?>
 
         <div class="empty-cart">
             Корзина пуста
@@ -17,13 +17,11 @@ $authed = \app\core\Auth::getUser();
 
     <div class="content">
 
-        <div class="table" data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
-
-            <!--            --><?php //foreach ($order as $order): ?>
+        <div class="table" data-order-id="<?= $order->id; ?>">
 
             <?php foreach ($order?->products as $i => $product): ?>
 
-                <div class="row cart-item" data-product-id="<?= $product['product_id']; ?>">
+                <div class="row cart-item" data-product-id="<?= $product['1s_id']; ?>">
                     <div class="num cell"><?= ++$i; ?></div>
 
                     <img src="<?= $product->mainImagePath; ?>" alt="<?= $product->name; ?>">
@@ -45,7 +43,6 @@ $authed = \app\core\Auth::getUser();
                 </div>
 
             <?php endforeach; ?>
-            <!--            --><?php //endforeach; ?>
 
 
             <div class="total">

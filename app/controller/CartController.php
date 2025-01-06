@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\core\Auth;
 use app\core\Response;
+use app\model\Order;
 use app\model\OrderItem;
 use app\Repository\CartRepository;
 use app\Repository\OrderitemRepository;
@@ -24,13 +25,20 @@ class CartController extends AppController
         $this->cartView = new CartView();
         $this->repo     = new CartRepository();
     }
+    public function actionIndex(): void
+    {
+        $user = Auth::getUser();
+        $order = CartRepository::main();
+//        $a = $order->toArray();
+
+        $this->setVars(compact('order', 'user'));
+    }
 
     public function actionDrop(): void
     {
         if (!isset($this->ajax['cartToken'])) exit('No cart sess');
         $id = $this->ajax['cartToken'];
         OrderItem::query()
-//            ->where('sess', $id)
             ->delete();
         if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
         Response::exitJson(['ok' => true]);
@@ -38,33 +46,23 @@ class CartController extends AppController
 
     public function actionSubmit(): void
     {
-        if (!isset($this->ajax['cartToken'])) exit('No cart sess');
-        $id = $this->ajax['cartToken'];
-        OrderItem::query()
-//            ->where('sess', $id)
-            ->delete();
-        if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
+        $orderId = $this->ajax['orderId'];
+        if (empty($orderId)) exit('No cart order id');
+        Order::find($orderId)->update(['submitted' => 1]);
+//        if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
         Response::exitJson(['ok' => true]);
     }
 
-    public function actionIndex(): void
-    {
-        $user = Auth::getUser();
-        $order = CartRepository::main();
-
-        $this->setVars(compact('order', 'user'));
-    }
 
     public function actionDeleterow(): void
     {
-        $product_id = $this->ajax['product_id'];
-        $sess       = $this->ajax['sess'];
-        $unit_ids   = $this->ajax['unit_ids'];
+        $req = $this->ajax;
+        $product_id =$req['product_id'];
+        $unit_ids   = $req['units'];
 
         if (!$product_id) Response::exitWithMsg('No id');
-        $trashed = Auth::getUser()
-            ? $this->orderRepo::deleteItems($sess, $product_id, $unit_ids)
-            : $this->orderItemRepo->deleteItems($sess, $product_id, $unit_ids);
+        $trashed = $this->orderRepo::detachItems($product_id, $unit_ids);
+
         if ($trashed) {
             Response::exitJson(['ok' => true, 'popup' => 'Удален']);
         }

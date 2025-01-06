@@ -35,12 +35,14 @@ class CategoryRepository
                     ->with('productsInStore.unsubmittedOrders.orderItems')
                     ->with('productsInStore.ownProperties')
                     ->with('productsInStore.inactivepromotions')
+                    ->with('productsInStore.orderItems')
                     ->with('productsInStore.shippableUnits')
                     ->with(['productsInStore.activepromotions' => function ($q) {
                         $q->whereNull('active_till');
                     }])
                     ->with('productsNotInStoreInMatrix.unsubmittedOrders.orderItems')
                     ->with('productsNotInStoreInMatrix.ownProperties')
+                    ->with('productsNotInStoreInMatrix.orderItems')
                     ->with('productsNotInStoreInMatrix.inactivepromotions')
                     ->with('productsNotInStoreInMatrix.shippableUnits')
                     ->with(['productsNotInStoreInMatrix.activepromotions' => function ($q) {

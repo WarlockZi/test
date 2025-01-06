@@ -7,9 +7,7 @@ use app\core\Auth;
 use app\Services\ProductImageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
@@ -45,42 +43,27 @@ class Product extends Model
 //        'shortLink'
     ];
 
-//    public function orderProducts(): HasMany
-//    {
-//
-//    }
-//    public function orderItems(): BelongsToMany
-//    {
-//        $orderItems = $this
-//
-//
-//        return $orderItems;
-//    }
-    public function orderItems(): hasManyThrough
+    public function orderItems(): HasMany
     {
-        $orderItems = $this
-            ->hasManyThrough(
-                OrderItem::class,
-                OrderProduct::class,
-                'product_id',//get product on ORDER_PRODUCT table
-                'product_id',//get orderItem on ORDERITEMS table
-                '1s_id', // PRODUCT primary key
-                'product_id',// ORDERITEMS product key
-            );
-
-        return $orderItems;
+        $orderId = $this?->orders()->first()?->id;
+        return $this->hasMany(OrderItem::class,
+            'product_id', '1s_id')
+            ->where('order_id', $orderId);
     }
+
     public function ownProperties(): HasOne
     {
         return $this->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
     }
+
     public function seo_h1()
     {
         return $this->ownProperties->seo_h1 ?? $this->name;
     }
+
     public function seo_article()
     {
-        return $this->ownProperties->seo_article ?? $this->ownProperties->seo_description??'Описание товара отстутствует';
+        return $this->ownProperties->seo_article ?? $this->ownProperties->seo_description ?? 'Описание товара отстутствует';
     }
 
     public function seo_title()
@@ -101,10 +84,22 @@ class Product extends Model
 
     protected function getShortLinkAttribute(): string
     {
-        $link = $this->ownProperties->short_link ?? '';
+        $link   = $this->ownProperties->short_link ?? '';
         $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
         $host   = $_SERVER['HTTP_HOST'] ?? '';
         return "{$scheme}://{$host}/short/{$link}";
+    }
+
+    public function orders()
+    {
+        $user = Auth::getUser();
+        if ($user) {
+            return $this
+                ->belongsToMany(Order::class)
+                ->where('user_id', $user->id);
+        }
+        return $this
+            ->hasMany(Order::class, 'sess', session_id());
     }
 
     protected function castAttribute($key, $value)
@@ -198,30 +193,15 @@ class Product extends Model
         if ($user) {
             $orders = $this
                 ->hasMany(Order::class, 'user_id', 'id')
-                ->where('submitted', '0')
-            ;
-        }else{
+                ->where('submitted', '0');
+        } else {
             $orders = $this
                 ->hasMany(Order::class, 'sess', session_id())
-                ->where('submitted', '0')
-            ;
+                ->where('submitted', '0');
         }
         return $orders;
     }
-    public function orders(): HasMany
-    {
-        $user = Auth::getUser();
-        if ($user) {
-            $orders = $this
-                ->hasMany(Order::class, 'user_id', 'id')
-            ;
-        }else{
-            $orders = $this
-                ->hasMany(Order::class, 'sess', session_id())
-            ;
-        }
-        return $orders;
-    }
+
 
     public function getBaseUnitAttribute()
     {
@@ -250,18 +230,10 @@ class Product extends Model
             ->withPivot('id', 'multiplier', 'is_base', 'is_shippable')->orderByPivot('multiplier');
     }
 
-
-//    public function seo()
-//    {
-//        return $this
-//            ->hasOne(Seo::class, 'product_category_1sid', '1s_id');
-//    }
-
     public function values()
     {
         return $this->morphToMany(Val::class, 'valuable');
     }
-
 
     public function promotions()
     {
@@ -274,7 +246,6 @@ class Product extends Model
         return $this
             ->hasMany(Promotion::class, 'product_1s_id', '1s_id')
             ->where('active_till', '>=', Carbon::today()->toDateString());
-//            ->orWhereNull('active_till');
     }
 
     public function inactivePromotions()

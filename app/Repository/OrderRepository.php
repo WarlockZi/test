@@ -9,52 +9,99 @@ use app\core\Response;
 use app\model\Order;
 use app\model\OrderItem;
 use app\model\Product;
-use app\model\User;
+use Illuminate\Database\Eloquent\Collection;
 use Throwable;
 
 
 class OrderRepository
 {
+    public static function submitted(): Collection
+    {
+        return Order::
+        whereNotNull('submitted')
+            ->with('products.orderItems.unit')
+            ->get();
+    }
+
+    public static function unsubmitted(): Collection
+    {
+        return Order::
+        whereNull('submitted')
+            ->with('products.orderItems.unit')
+            ->get();
+    }
+
+    public static function deleteOrderItem(Order $order, Product $product, string $unit_id,)
+    {
+        return OrderItem::where([
+            'order_id' => $order->id,
+            'product_id' => $product['1s_id'],
+            'unit_id' => $unit_id,
+        ])
+            ->delete();
+    }
+
+    public static function updateOrCreateOrderItem(Order $order, Product $product, string $unit_id, $count)
+    {
+        return OrderItem::updateOrCreate([
+            'order_id' => $order->id,
+            'product_id' => $product['1s_id'],
+            'unit_id' => $unit_id,
+        ],
+            [
+                'order_id' => $order->id,
+                'product_id' => $product['1s_id'],
+                'unit_id' => $unit_id,
+                'count' => $count,
+            ]);
+    }
+
+    public static function createOrder()
+    {
+        try {
+            $user = Auth::getUser();
+            if ($user) {
+                $order = Order::firstOrCreate([
+                    'user_id' => $user->id,
+                    'submitted' => NULL
+                ], [
+                    'user_id' => $user->id,
+                    'ip' => $_SERVER['SERVER_ADDR'],
+                    'submitted' => NULL,
+                ]);
+                $order->load('products.orderItems.unit');
+
+            } else {
+                $order = Order::firstOrCreate([
+                    'sess' => session_id(),
+                    'submitted' => NULL
+                ], [
+                    'sess' => session_id(),
+                    'ip' => $_SERVER['SERVER_ADDR'],
+                    'submitted' => NULL,
+                ]);
+                $order->load('products.orderItems.unit');
+            }
+            return $order;
+        } catch (Throwable $exception) {
+            return null;
+        }
+    }
+
     public static function updateOrCreate(array $req): void
     {
         if (!$req) return;
-        $user = Auth::getUser();
-        if ($user) {
-            $order = Order::firstOrCreate([
-                'user_id' => $user->id,
-            ], [
-                'user_id' => $user->id,
-                'ip' => $_SERVER['SERVER_ADDR'],
-            ]);
-        } else {
-            $order = Order::firstOrCreate([
-                'sess' => session_id(),
-            ], [
-                'sess' => session_id(),
-                'ip' => $_SERVER['SERVER_ADDR'],
-            ]);
-        }
-
+        $order   = self::createOrder();
         $product = Product::where('1s_id', $req['product_id'])->first();
-        $order->products()->syncWithoutDetaching($product['1s_id']);
-        $orderItm = OrderItem::updateOrCreate(
-            [
-                'order_id' => $order->id,
-                'product_id' => $req['product_id'],
-                'unit_id' => $req['unit_id'],
-            ],
-            [
-                'order_id' => $order->id,
-                'product_id' => $req['product_id'],
-                'unit_id' => $req['unit_id'],
-                'count' => $req['count'],
-            ]
-        );
-        try {
-            $order->products()->orderItems()->updateOrCreate($orderItm->id);
-            $product->orderItems()->associate($orderItm->id);
-        } catch (Throwable $exception) {
-            $exc = $exception;
+        $order->products()->sync($req['product_id'], false);
+
+        if (!$req['count']) {
+            $res = self::deleteOrderItem($order, $product, $req['unit_id']);
+            if ($product->orderItems->count() === 0) {
+                $order->products()->detach($product['1s_id']);
+            }
+        } else {
+            $orderItm = self::updateOrCreateOrderItem($order, $product, $req['unit_id'], (int)$req['count']);
         }
 
         if ($orderItm->wasRecentlyCreated) {
@@ -66,17 +113,22 @@ class OrderRepository
         Response::exitJson(['popup' => 'не записано', 'error' => "не записано"]);
     }
 
-    public static function deleteItems(string $sess, string $product_id, array $unitIds)
+    public static function detachItems(string $product_id, array $unitIds): bool
     {
+        $order = CartRepository::main();
         try {
-            foreach ($unitIds as $unitId) {
-                $order = Order::query()
-                    ->where('sess', $sess)
-                    ->where('product_id', $product_id)
+            foreach ($unitIds as $unitId => $count) {
+//                $orderItem = $order->products->orderItems()->where('unit_id', $unitId)->first();
+                $product = $order->products->where('1s_id', $product_id)->first();
+                $deleted = $product->orderItems
                     ->where('unit_id', $unitId)
-                    ->first();
-                if ($order) $order->delete();
+                    ->first()
+                    ->forceDelete();
+
+                $a = $product->toArray();
+
             }
+            $order->products()->detach($product->id);
             return true;
         } catch (\Throwable $exception) {
             $exc = $exception;
@@ -116,29 +168,25 @@ class OrderRepository
         return $orderItems;
     }
 
-    public static function clientList()
-    {
-
-        $orders = User::query()
-            ->rightJoin('orders', function ($join) {
-                $join->on('orders.user_id', '=', 'users.id');
-            })
-            ->groupBy('users.id')
-            ->get();
-        return $orders;
-    }
+//    public static function clientList()
+//    {
+//        $orders = User::query()
+//            ->rightJoin('orders', function ($join) {
+//                $join->on('orders.user_id', '=', 'users.id');
+//            })
+//            ->groupBy('users.id')
+//            ->get();
+//        return $orders;
+//    }
 
     public static function edit($id)
     {
-        $userId = Order::where('id', $id)->first()->user_id;
-        $orders = Order::query()
-            ->select('product_id', 'id', 'user_id', 'count', 'unit_id', 'created_at')
-            ->selectRaw('SUM(count) as total_count')
-            ->where('user_id', $userId)
-            ->with('user', 'product', 'product.activePromotions', 'product.inactivePromotions', 'unit')
-            ->groupBy('product_id')
-            ->get();
-        $a      = $orders->toArray();
+        $orders = Order::
+            with('user',
+            'products.orderItems.unit',
+            'products.activePromotions',
+            'products.inactivePromotions')
+            ->find($id);
         return $orders;
     }
 
