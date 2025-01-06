@@ -14,8 +14,8 @@ class OrderItem extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'order_id',
         'product_id',
+        'order_id',
         'unit_id',
         'count',
         'created_at',
@@ -40,16 +40,12 @@ class OrderItem extends Model
         return  "{$name} - {$company} - {$phone}";
 	}
 
-    public function product()
+    public function product(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Product::class, '1s_id', 'product_id');
     }
 
-//    public function lead()
-//    {
-//        return $this->hasOne(Lead::class, 'sess', 'sess');
-//    }
-    public function unit()
+    public function unit(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Unit::class, 'id','unit_id');
     }

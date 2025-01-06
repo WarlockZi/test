@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
-<!--ADMIN-LAYOUT-->
+<html lang="ru">
+<!--ADMI N-LAYOUT-->
 <head>
     <meta name="phpSession" content="<?= $_SESSION['phpSession'] ?? ''; ?>">
     <meta name="robots" content="noindex,nofollow"/>
     <meta charset="utf-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
 

@@ -24,7 +24,7 @@ class Table
     private string $emptyRow = '';
     private string $add = '';
     private string $dataRelation = '';
-    private string $dataRelationModel = '';
+    private string $dataRelationType = '';
     private string $dataModel = '';
     private string $html = '';
     private string $addButton = '';
@@ -65,10 +65,10 @@ class Table
         return $this;
     }
 
-    public function relation(string $relation, string $relationModel): static
+    public function relation(string $relation, string $relationType): static
     {
         $this->dataRelation      = "data-relation='$relation'";
-        $this->dataRelationModel = "data-relationModel='$relationModel'";
+        $this->dataRelationType = "data-relationType='$relationType'";
         return $this;
     }
 

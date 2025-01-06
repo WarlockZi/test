@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Order extends Model
 {
@@ -23,27 +22,26 @@ class Order extends Model
     {
         return $this->hasMany(OrderProduct::class);
     }
-    public function orderItems(): hasManyThrough
+    public function orderItems(): \Illuminate\Support\Collection
     {
-        $orderItems = $this
-            ->hasManyThrough(
-                OrderItem::class,
-                Product::class,
-                'product_id',//get product on PRODUCT table
-                'product_id',//get orderItem on ORDERITEMS table
-                '1s_id', // PRODUCT primary key
-                'product_id',// ORDERITEMS product key
-            );
-
-        return $orderItems;
+        $orderItems = [];
+        $this->products()
+            ->each(function ($product, $key) use (&$orderItems) {
+                $orderItems[] = $product->orderItem;
+            });
+        return collect($orderItems);
     }
 
-    public function products(): belongsToMany
+    public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'order_products',
-            'order_id', 'product_id',
-            'id', '1s_id')
-            ->withPivot('order_id', 'product_id');
+        return $this->belongsToMany(Product::class,
+            'order_product',
+            'order_id',
+            'product_id',
+            'id',
+            '1s_id')
+            ->withPivot('order_id', 'product_id')
+            ->whereHas('orderItems');
     }
 
     public function user(): BelongsTo
@@ -65,24 +63,4 @@ class Order extends Model
     {
         return $order->user->email;
     }
-//	public function orderItems():HasMany
-//	{
-//		return $this->hasMany(OrderItem::class);
-//	}
-//	public function product():HasOne
-//	{
-//		return $this->hasOne(Product::class, '1s_id', 'product_id');
-//	}
-
-//	public function lead():BelongsTo
-//	{
-//		return $this->belongsTo(Lead::class);
-//	}
-//    public function orderItems():belongsToMany
-//    {
-//        return $this->belongsToMany(OrderItem::class)
-//            ->withPivot('order_id','product_id')
-//            ->with('')
-//            ;
-//    }
 }

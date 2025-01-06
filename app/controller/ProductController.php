@@ -38,10 +38,10 @@ class ProductController extends AppController
             $shippablePrices = $this->formView->dopUnitsPrices($product);
             $this->setVars(compact('shippablePrices', 'product', 'breadcrumbs', 'order'));
 
-            $title    = $product->seo_title();
-            $desc     = $product->seo_description();
-            $keywords = $product->ownProperties->seo_keywords ?? $product->name;
-            $this->assets->setMeta($title, $desc, $keywords);
+            $this->assets->setMeta(
+                $product->seo_title(),
+                $product->seo_description(),
+                $product->ownProperties->seo_keywords ?? $product->name);
 
         } else {
             $this->view = '404';

@@ -3,26 +3,25 @@
 
 namespace app\Repository;
 
-use app\controller\AppController;
 use app\core\Response;
 use app\model\Product;
 use app\model\ProductUnit;
-use app\Services\ProductImageService;
 use Illuminate\Support\Collection;
 
 class ProductRepository
 {
     public function edit(int $id)
     {
-        $id = Product::where('id', $id)->withTrashed()->first()['1s_id'];
-
         return Product::query()
             ->withTrashed()
-            ->where('1s_id', $id)
+            ->where('id', $id)
             ->whereNotNull('1s_id')
-//            ->with('price')
             ->with('category.properties.vals')
             ->with('values')
+            ->with('units')
+//            ->with(['units'=>function ($q) {
+//                $q->orderBy('multiplier');
+//            }])
             ->with('ownProperties')
             ->with('category.parentRecursive')
             ->with('category.parents')
@@ -54,7 +53,8 @@ class ProductRepository
             ->with('bigpackImages')
             ->with('activepromotions.unit')
             ->with('shippableUnits')
-            ->with('orders.orderItems')
+            ->with('orders')
+            ->with('orderItems')
             ->where('slug', $slug)
             ->first() ?? null;
     }
@@ -66,11 +66,13 @@ class ProductRepository
 
     public static function similarProducts(string $subslug1, string $subslug2): Collection
     {
-        return Product::query()
+        $q = Product::query()
             ->where('slug', 'LIKE', "%{$subslug1}%")
-            ->orWhere('slug', 'LIKE', "%{$subslug2}%")
-            ->with('activePromotions')
-            ->get() ?? new \Illuminate\Database\Eloquent\Collection;
+            ->with('activePromotions');
+        if ($subslug2) {
+            $q->orWhere('slug', 'LIKE', "%{$subslug2}%");
+        }
+        return $q->get() ?? new \Illuminate\Database\Eloquent\Collection;
     }
 
     private static function defaultFilter()

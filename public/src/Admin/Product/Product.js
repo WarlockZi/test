@@ -1,11 +1,9 @@
 import './product.scss'
 import './units.scss'
-import {objAndFiles2FormData, post, $} from '../../common.js'
+import {$, objAndFiles2FormData, post} from '../../common.js'
 import './Props.js'
 import {qs} from '../../constants'
-import MyQuill from "../../components/quill/MyQuill.js";
 import SelectNew from "@src/components/select/SelectNew.js";
-import DTO from "@src/Admin/DTO.js";
 import QuillFactory from "@src/components/quill/QuillFactory.js";
 import {QuillConst} from "@src/components/quill/QuillConstans.js";
 
@@ -22,19 +20,15 @@ export default class Product {
       this.setDragNDrop().then()
       this.setCardPanel().then()
 
-
       QuillFactory.create('.txt', QuillConst.ADMIN_PRODUCT_DESCRIPTION);
       QuillFactory.create('#seo-article', QuillConst.ADMIN_PRODUCT_SEO_ARTICLE);
-      // new MyQuill('#seo_article', true,true,true);
       this.setUnitsCustomSelects()
    }
-   // dto(){
-   //    return (new DTO(this.id)).model = 'product'
-   // }
-   setUnitsCustomSelects(){
+
+   setUnitsCustomSelects() {
       const units = $('.units [custom-select]');
-      [].forEach.call(units, (unit)=>{
-         new SelectNew(unit)
+      [].forEach.call(units, (unit) => {
+         if (unit.dataset.id) new SelectNew(unit)
       })
    }
 
