@@ -29,9 +29,6 @@ class CategoryController extends AppController
             $category = $this->repo->indexInstore($slug);
 
             if ($category) {
-//                Helpers::profile();
-//                $unsubmittedOrder = OrderRepository::userUnsubmittedOrders();
-//                Helpers::profile();
                 $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($category->id, false, false);
                 $this->setVars(compact('breadcrumbs', 'category'));
 

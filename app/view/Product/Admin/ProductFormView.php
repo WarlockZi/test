@@ -234,17 +234,18 @@ class ProductFormView
         $baseUnit = $product->baseUnit;
         $table    = Table::build($product->units)
             ->class('units')
-            ->relation('units', 'productUnit')
+            ->relation('units', 'attach')
             ->pageTitle("Единица")
             ->column(
                 ColumnBuilder::build('unit')
+                    ->removeDataField()
+                    ->attach()
                     ->emptyRow(SelectBuilder::build(
                         PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
                             ->get())
                         ->get())
                     ->name('Единица')
                     ->callback(function ($unit) use ($baseUnit) {
-//                        $u = Unit::pluck('name', 'id');
                         if ($unit->id === $baseUnit->id) {
                             return $baseUnit->name;
                         }
@@ -260,6 +261,8 @@ class ProductFormView
             ->column(
                 ColumnBuilder::build('multiplier')
                     ->emptyRow('1')
+                    ->removeDataField()
+                    ->pivot('multiplier')
                     ->name('Коэфф')
                     ->callback(function ($unit) {
                         return $unit->pivot->multiplier;
@@ -269,10 +272,12 @@ class ProductFormView
             )
             ->column(
                 ColumnBuilder::build('base_unit')
+//                    ->pivot('base_unit')
+                    ->name('Базовая ед')
+                    ->removeDataField()
                     ->emptyRow(function () use ($baseUnit) {
                         return $baseUnit->name;
                     })
-                    ->name('Базовая ед')
                     ->callback(function ($unit) use ($baseUnit) {
                         if ($unit->id === $baseUnit->id) {
                             return '';
@@ -283,12 +288,14 @@ class ProductFormView
             )
             ->column(
                 ColumnBuilder::build('is_shippable')
+                    ->removeDataField()
+                    ->pivot('is_shippable')
                     ->emptyRow(function () {
                         return CheckboxBuilder::build()
                             ->checked(false)
                             ->data('id', 0)
-                            ->data('pivot-field', 'is_shippable')
-                            ->data('pivot-value', 0)
+//                            ->data('pivot-field', 'is_shippable')
+                            ->data('pivot', 'is_shippable')
                             ->data('relation', 'units')
                             ->get();
                     })
@@ -297,8 +304,8 @@ class ProductFormView
                         return CheckboxBuilder::build()
                             ->checked($unit->pivot->is_shippable)
                             ->data('id', $unit->id)
-                            ->data('pivot-field', 'is_shippable')
-                            ->data('pivot-value', $unit->pivot->is_shippable)
+                            ->data('pivot', 'is_shippable')
+//                            ->data('pivot-value', $unit->pivot->is_shippable)
                             ->data('relation', 'units')
                             ->get();
                     })
@@ -310,23 +317,6 @@ class ProductFormView
         return $table;
 
     }
-
-//    protected static function units(Product $product): string
-//    {
-//        $fs           = new FS(__DIR__);
-//        $baseUnit     = $product->units()->where('is_base', 1)->first();
-//        $units        = $product->units;
-//        $noneSelector = SelectBuilder::build(
-//            ArrayOptionsBuilder::build(Unit::all())
-//                ->initialOption()
-//                ->excluded($baseUnit->id ?? 0)
-//                ->get()
-//        )
-//            ->class('name')
-//            ->get();
-//        $multiplier   = self::multiplier(null);
-//        return $fs->getContent('units', compact('units', 'noneSelector', 'baseUnit', 'multiplier'));
-//    }
 
     public static function getManufacturer(Product $p): string
     {

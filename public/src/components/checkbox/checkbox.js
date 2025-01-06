@@ -4,7 +4,7 @@ export default class Checkbox {
    constructor(checkbox) {
       this.id = checkbox.id;
       this.checkbox = checkbox;
-      this.field = checkbox?.dataset?.field ?? null;
+      // this.field = checkbox?.dataset?.field ?? null;
       checkbox[ael]('change', this.changed.bind(this));
    }
 

@@ -56,7 +56,7 @@ export default class shippableTable {
       const input = row[qs]('input')
       const count = +input.value
       if (count < 2) {
-         input.value = ''
+         input.value = '0'
       } else {
          input.value--
          row.dataset.rowSum = input.value
@@ -75,6 +75,7 @@ export default class shippableTable {
       this.renderSums()
       if (count === 0) {
          this.showBlueButton()
+         this.toServer(this.dto(row))
       } else {
          this.toServer(this.dto(row))
       }

@@ -20,30 +20,40 @@ export default class CatalogItem {
       catalogItem[ael]('keyup', debounce(this.handleKeyup.bind(this)))
       catalogItem[ael]('date.changed', this.handleDateChange.bind(this))
       catalogItem[ael]('customSelect.changed', this.handleSelectChange.bind(this))
-      catalogItem[ael]('checkbox.changed', this.handleChexboxChange.bind(this))
+      if (this.model) {
+         catalogItem[ael]('checkbox.changed', this.handleChexboxChange.bind(this))
+      }
    }
+
    setCheckboxes() {
       const checks = $('[my-checkbox]');
-      [].forEach.call(checks, function (check){
+      [].forEach.call(checks, function (check) {
          new Checkbox(check)
       })
    }
+
    setDates() {
       const dates = $('[custom-date]');
-      [].forEach.call(dates, function (date){
+      [].forEach.call(dates, function (date) {
          new CustomDate(date)
       })
    }
+
    setSelects() {
       const selects = $('[select-new]:has(option)');
-      [].forEach.call(selects, function (select){
-         new SelectNew(select)
+      [].forEach.call(selects, function (select) {
+         if (!select.parentNode.hasAttribute('hidden'))
+            new SelectNew(select)
       })
    }
-   async handleChexboxChange({target}) {
+
+   handleChexboxChange({target}) {
+      if (target.closest('[custom-table]')) return
       this.update(target)
    }
+
    async handleSelectChange({target}) {
+      if (target.closest('[custom-table]')) return
       this.update(target)
    }
 
@@ -52,6 +62,7 @@ export default class CatalogItem {
    }
 
    async handleKeyup({target}) {
+      if (target.closest('.custom-table')) return false
       if (!target.hasAttribute('contenteditable') ||
          !target.dataset.field) return false
       const dto = new DTO(this.id, target)
@@ -77,7 +88,8 @@ export default class CatalogItem {
    }
 
    async update(target) {
+      if (target.closest('[custom-table]')) return
       const dto = new DTO(this.id, target)
-      let res = await post(`/adminsc/${this.model}/updateorcreate`, dto)
+      const res = await post(`/adminsc/${this.model}/updateorcreate`, dto)
    }
 }

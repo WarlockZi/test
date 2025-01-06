@@ -20,6 +20,8 @@ class ColumnBuilder
     public $width = 'auto';
     public $hidden;
     public $contenteditable;
+    public $pivot;
+    public string $attach = '';
 
     public $html;
     public $function;
@@ -37,6 +39,18 @@ class ColumnBuilder
         return $column;
     }
 
+    public function attach(): static
+    {
+        $this->attach = 'data-attach=true';
+        return $this;
+    }
+
+    public function removeDataField(): static
+    {
+        $this->dataField = '';
+        return $this;
+    }
+
     public function emptyRow(mixed $emptyRow): self
     {
         if (is_callable($emptyRow)) {
@@ -50,6 +64,12 @@ class ColumnBuilder
     public function class(string $class): self
     {
         $this->class = "class='{$class}'";
+        return $this;
+    }
+
+    public function pivot(string $pivotField): self
+    {
+        $this->pivot = "data-pivot='{$pivotField}'";
         return $this;
     }
 
