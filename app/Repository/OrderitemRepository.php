@@ -23,17 +23,17 @@ class OrderitemRepository
 //        return $orderItem;
 //    }
 
-    public static function clientList()
-    {
-        $orders = Order::query()
-            ->select('product_id', 'id', 'user_id', 'count')
-            ->with('user')
-            ->with('product')
-            ->orderBy('user_id')
-            ->groupBy('user_id')
-            ->get();
-        return $orders;
-    }
+//    public static function clientList()
+//    {
+//        $orders = Order::query()
+//            ->select('product_id', 'id', 'user_id', 'count')
+//            ->with('user')
+//            ->with('product')
+//            ->orderBy('user_id')
+//            ->groupBy('user_id')
+//            ->get();
+//        return $orders;
+//    }
 
 //    public function edit($id)
 //    {

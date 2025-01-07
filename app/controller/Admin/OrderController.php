@@ -21,35 +21,21 @@ class OrderController extends AdminscController
 
     public function actionIndex(): void
     {
-        $orderItems = OrderRepository::leadList();
-        $leadlist   = OrderView::leadList($orderItems);
+        $submitted     = OrderRepository::submitted();
+        $unsubmitted     = OrderRepository::unsubmitted();
 
-        $orders     = OrderRepository::clientList();
-        $clientlist = OrderView::clientList($orders);
-        $this->setVars(compact('clientlist', 'leadlist'));
+        $submittedTable     = OrderView::table($submitted);
+        $unsubmittedTable     = OrderView::table($unsubmitted);
+
+        $this->setVars(compact('submittedTable', 'unsubmittedTable'));
     }
 
     public function actionEdit(): void
     {
         $this->view = 'table';
-        $orders     = OrderRepository::edit($this->route->id);
-        $table      = OrderView::editOrder($orders);
+        $order     = OrderRepository::edit($this->route->id);
+        $table      = OrderView::editOrder($order);
         $this->setVars(compact('table'));
-    }
-
-    public function actionSubmit(array $req): void
-    {
-        $order = $this->model->create([
-            'user_id' => Auth::getUser()->id,
-            'sess' => session_id(),
-            'ip' => $_SERVER['REMOTE_ADDR'],
-        ]);
-        foreach ($req['orderItems'] as $orderItem) {
-            OrderItem::where('id',$orderItem['id'])
-                ->update(['order_id' => $order->id]);
-
-        }
-
     }
 
     public static function updateOrCreate(array $req): void
@@ -60,14 +46,12 @@ class OrderController extends AdminscController
             [
                 'product_id' => $req['product_id'],
                 'unit_id' => (int)$req['unit_id'],
-//                'sess' => session_id(),
                 'deleted_at' => null,
             ],
             [
                 'product_id' => $req['product_id'],
                 'unit_id' => (int)$req['unit_id'],
                 'count' => (int)$req['count'],
-//                'sess' => session_id(),
                 'ip' => $_SERVER['REMOTE_ADDR'],
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]
@@ -97,4 +81,19 @@ class OrderController extends AdminscController
             Response::exitJson(['error' => 'не удален', 'popup' => 'не удален']);
         }
     }
+
+//    public function actionSubmit(array $req): void
+//    {
+//        $order = $this->model->create([
+//            'user_id' => Auth::getUser()->id,
+//            'sess' => session_id(),
+//            'ip' => $_SERVER['REMOTE_ADDR'],
+//        ]);
+//        foreach ($req['orderItems'] as $orderItem) {
+//            OrderItem::where('id',$orderItem['id'])
+//                ->update(['order_id' => $order->id]);
+//        }
+//
+//    }
+
 }
