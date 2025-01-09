@@ -209,7 +209,7 @@
       width: clamp(10px, 5vw, 17px);
       height: 17px;
       padding: 0 clamp(8px, 4vw, 15px);
-      fill: transparent;
+      //fill: transparent;
     }
 
     .catalog {
@@ -232,10 +232,21 @@
       cursor: pointer;
       align-items: center;
       color: inherit;
+      fill: white;
+
 
       &:hover {
         background-color: #285f8f;
       }
+    }
+
+    .like {
+      stroke: white;
+    }
+
+    .compare {
+        stroke: white;
+        stroke-width: 3px;
     }
 
     .cart-link {

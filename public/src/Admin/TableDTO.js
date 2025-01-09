@@ -4,6 +4,7 @@ export default class TableDTO {
       this.target = target;
 //model
       this.id = target?.closest('.item-wrap')?.dataset?.id
+      ?? target?.parentNode?.dataset?.id
 
       this.fields = target?.dataset?.field ?? false
 

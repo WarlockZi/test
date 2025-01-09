@@ -388,7 +388,7 @@ class ProductFormView
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_keywords', $product->ownProperties)
-                ->name('Key words')
+                ->name('Список запросов')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .

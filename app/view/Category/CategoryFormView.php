@@ -225,7 +225,7 @@ class CategoryFormView
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_keywords', $categoryProperty)
-                ->name('Key words')
+                ->name('Список запросов')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .

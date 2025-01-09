@@ -1,7 +1,7 @@
 import './feedback.scss';
 import {ael, qa, qs} from "@src/constants.js";
 import stripjs from 'strip-js';
-import {debounce, emailValidator, post} from "@src/common.js";
+import {debounce, emailValidator, getPhpSession, post} from "@src/common.js";
 
 
 export default class Feedback {
@@ -71,8 +71,8 @@ export default class Feedback {
             email: stripjs(this.email.value),
             phone: stripjs(this.phone.value),
             message: stripjs(this.message.value),
-            // phpSession: getPhpSession()
-         }
+         },
+         phpSession: getPhpSession()
       }
    }
 

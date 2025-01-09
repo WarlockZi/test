@@ -72,6 +72,7 @@ class AppController extends Controller
         if (!empty($req['relation']['name'])) {
             $this->updateOrCreateRelation($req);
         }
+
         if (!empty($req['fields'])) {
             $id    = $req['id'] ?? null;
             $model = $this->model::updateOrCreate(
@@ -79,6 +80,7 @@ class AppController extends Controller
                 $req['fields']
             );
         }
+
         if (!empty($req['morph'])) {
             $this->updateOrCreateMorph($req);
         }
@@ -93,7 +95,7 @@ class AppController extends Controller
 
     public function __destruct()
     {
-        if ($this->isAjax()) exit;
+        if (!empty($this->ajax)) exit;
     }
 
     public function actionDelete(): void

@@ -33,11 +33,15 @@
                 </li>
 
                 <li>
-                    <a href="/promotion" class="util-item promotions" title="Акции">
-                        <?= Icon::promotions() ?>
+                    <a href="/like/page" class="util-item like" title="Избранное">
+                        <?= Icon::heart() ?>
                     </a>
                 </li>
-
+                <li>
+                    <a href="/compare/page" class="util-item compare" title="Сравнить товары">
+                        <?= Icon::chart() ?>
+                    </a>
+                </li>
                 <li>
                     <? include 'mobile_menu.php' ?>
                 </li>
