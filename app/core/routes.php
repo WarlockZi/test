@@ -5,6 +5,7 @@ $this->add("^\/short\/(?P<slug>.+)?\/?$", ['controller' => 'Short']);
 
 $this->add("^\/(?P<controller>catalog)\/?(?P<slug>[_a-zA-Z0-9-\/%]+)?$", ['controller' => 'Category']);
 $this->add("^\/(?P<controller>category)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Category', 'redirect' => ['category'=>'catalog']]);
+//$this->add("^\/(?P<controller>like)$", ['controller' => 'Like']);
 
 $this->add("^\/(?P<controller>promotion)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Promotion']);
 $this->add("^\/(?P<controller>main)\/(?P<action>[a-zA-Z0-9]+)$");
@@ -15,4 +16,4 @@ $this->add("^\/cart\/?(?P<action>[a-zA-Z]+)?$", ['controller' => 'Cart']);
 $this->add("^\/adminsc\/?$", ['controller' => 'Adminsc','action'=>'index']);
 $this->add("^\/adminsc\/?(?P<controller>[a-z-]+)?\/?(?P<action>[a-z-]+)?\/?(?P<id>[0-9]+)?$");
 $this->add("^\/$", ['controller' => 'Main', 'action' => 'index']);
-$this->add("^\/(?P<controller>[a-zA-Z]+)\/(?<action>[a-zA-Z0-9]+)?\/?(?<id>[0-9a-zA-z]+)?");
+$this->add("^\/(?P<controller>[a-zA-Z]+)\/?(?<action>[a-zA-Z0-9]+)?\/?(?<id>[0-9a-zA-z]+)?");

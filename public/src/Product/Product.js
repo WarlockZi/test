@@ -4,6 +4,7 @@ import Card_panel from '../share/card_panel/card_panel'
 import {$} from "../common";
 import shippableTable from "../share/shippable/shippableUnitsTable";
 import MyQuill from "../components/quill/MyQuill.js";
+import {ael} from "@src/constants.js";
 
 
 export default class Product{
@@ -11,6 +12,10 @@ export default class Product{
    constructor(){
       const product = $('.product-card').first();
       if (!product) return false
+
+      this.products = $('.product-wrap').first()
+      this.products[ael]('click', this.handleClick.bind(this))
+
       const table = $('.shippable-table').first()
 
       new shippableTable(table)
@@ -27,5 +32,7 @@ export default class Product{
       new MyQuill('#seo-article');
       new MyQuill('#detail-text');
    }
+
+
 }
 

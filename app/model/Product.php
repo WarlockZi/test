@@ -53,7 +53,21 @@ class Product extends Model
 
     public function ownProperties(): HasOne
     {
-        return $this->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
+        return $this
+            ->hasOne(ProductProperty::class, 'product_1s_id', '1s_id')
+            ;
+    }
+
+    public function like(): HasOne
+    {
+        return $this->hasOne(Like::class, 'product_id', '1s_id')
+            ->where('user_id', Auth::getUser()->getId());
+    }
+
+    public function compare(): HasOne
+    {
+        return $this->hasOne(compare::class, 'product_id', '1s_id')
+            ->where('user_id', Auth::getUser()->getId());
     }
 
     public function seo_h1()

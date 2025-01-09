@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\model\Feedback;
+use app\Services\TelegramBot\TelegramBot;
 
 class FeedbackController extends AppController
 {
@@ -12,7 +13,18 @@ class FeedbackController extends AppController
     {
         parent::__construct();
     }
+    public function actionUpdateOrCreate(): void
+    {
+        $req = $this->ajax;
+        $tg = new TelegramBot();
+        $tg->send($this->formatMessage($req['fields']));
+//        parent::actionUpdateOrCreate();
+    }
 
+    private function formatMessage(array $req): string
+    {
+        return implode("%0A", $req);// add new line
+    }
 
     public function actionMessage(): void
     {

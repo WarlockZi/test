@@ -107,7 +107,10 @@ class Category extends Model
 
     public function ownProperties()
     {
-        return $this->hasOne(CategoryProperty::class, 'category_1s_id', '1s_id');
+        return $this
+            ->hasOne(CategoryProperty::class, 'category_1s_id', '1s_id')
+
+            ;
     }
 
     public function scopeWithWhereHas($query, $relation, $constraint)
@@ -153,8 +156,20 @@ class Category extends Model
             ->with('mainImages')
             ->with('promotions')
             ->with('units')
+            ->with('like')
             ->with('ownProperties')
-            ->orderBy('name');
+            ->select(['products.*','prices.price as product_price'])
+            ->join('prices', 'prices.1s_id', '=', 'products.1s_id')
+            ->orderBy('product_price')
+//            ->paginate('3')
+        ;
+        ;
+//            ->with(['ownProperties'=>function ($q) {
+//                $q->orderBy('price');
+//            }])
+//            ->orderBy('ownProperties.price');
+            ;
+//            ->orderBy('ownProperties.price');
 
         return $pInStore;
     }
