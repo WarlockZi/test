@@ -25,10 +25,8 @@ class Auth
 
     public static function hasPphSession(array &$req): bool
     {
-        if ($req && isset($req['phpSession']) && $req['phpSession'] && $_SESSION['phpSession'] === $req['phpSession']) {
-            return true;
-        }
-        return false;
+        return !empty($req['phpSession']
+            && $_SESSION['phpSession'] === $req['phpSession']);
     }
 
     public static function getUser(): IUser|null

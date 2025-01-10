@@ -46,6 +46,7 @@ export default defineConfig(async ({command, mode}) => {
          target: 'esnext',
          manifest: true,
          sourcemap: true,
+         analyze:true,
 
          rollupOptions: {
             input: {

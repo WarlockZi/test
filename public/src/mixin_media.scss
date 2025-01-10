@@ -1084,7 +1084,8 @@ $border-color:var.$color-main
 }
 
 @mixin p {
-  font-size: clamp(.4rem, 3vw, .9rem);
+  font-size: clamp(.75rem, 3vw, .9rem);
+  line-height: clamp(1rem, 3vw, 1.2rem);
   color: var.$color-grey-logo;
   margin: 0 0 15px;
 }
