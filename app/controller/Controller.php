@@ -60,7 +60,7 @@ class Controller
     {
         if (empty($_POST['params'])) return;
         $req = json_decode($_POST['params'], true);
-        if (!Auth::hasPphSession($req)) Response::exitWithError('плохой ключ сессии');
+        if (!Auth::validatePphSession($req)) Response::exitWithError('плохой ключ сессии');
         if ($this->isAjax()) {
             unset($req['phpSession']);
             $this->ajax = $req;

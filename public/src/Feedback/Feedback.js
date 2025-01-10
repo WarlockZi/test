@@ -64,15 +64,16 @@ export default class Feedback {
    }
 
    dto() {
+      const message = this.message.value.replace(/[^a-z\u0400-\u04FF]/gi," ");
       return {
          id: 0,
          fields: {
             name: stripjs(this.name.value),
             email: stripjs(this.email.value),
             phone: stripjs(this.phone.value),
-            message: stripjs(this.message.value),
+            message: message,
          },
-         phpSession: getPhpSession()
+         // phpSession: getPhpSession()
       }
    }
 
