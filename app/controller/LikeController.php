@@ -36,16 +36,21 @@ class LikeController extends AppController
 
     public function actionUpdateOrCreate(): void
     {
-        $req  = $this->ajax;
-        $user = Auth::getUser();
+        $req   = $this->ajax;
+        $user  = Auth::getUser();
+
+        $field = $user ? 'user_id' : 'sess';
+        $value = $user ? Auth::getUser()->getId() : session_id();
         $like = Like::updateOrCreate([
-            'user_id' => $user->getId(),
+            $field => $value,
             'product_id' => $req['fields']['product_id'],
         ], [
-            'user_id' => $user->getId(),
+            $field => $value,
             'product_id' => $req['fields']['product_id'],
         ]);
         Response::exitJson(['liked' => true]);
+
+
 
     }
 

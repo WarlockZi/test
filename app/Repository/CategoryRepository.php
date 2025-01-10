@@ -4,6 +4,7 @@
 namespace app\Repository;
 
 
+use app\core\Auth;
 use app\core\Cache;
 use app\model\Category;
 use Illuminate\Database\Eloquent\Collection;
@@ -27,7 +28,8 @@ class CategoryRepository
     {
         return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
             function () use ($url) {
-                $cat = Category::query()
+                $user = Auth::getUser();
+                $q    = Category::query()
                     ->with('childrenRecursive')
                     ->withWhereHas('ownProperties',
                         fn($query) => $query->where('path', 'like', $url)
@@ -35,8 +37,7 @@ class CategoryRepository
                     ->with('productsInStore.unsubmittedOrders.orderItems')
                     ->with('productsInStore.ownProperties')
 //                    ->orderBy('productsInStore.ownProperties.price')
-                    ->with('productsInStore.like')
-                    ->with('productsInStore.compare')
+//                    ->with('productsInStore.like')
                     ->with('productsInStore.inactivepromotions')
                     ->with('productsInStore.orderItems')
                     ->with('productsInStore.shippableUnits')
@@ -50,9 +51,17 @@ class CategoryRepository
                     ->with('productsNotInStoreInMatrix.shippableUnits')
                     ->with(['productsNotInStoreInMatrix.activepromotions' => function ($q) {
                         $q->whereNull('active_till');
-                    }])
-                    ->get()
-                    ->first();
+                    }]);
+
+                $s=  session_id();
+//                if ($user) {
+                    $cat =  $q->with('productsInStore.compare')
+                        ->with('productsInStore.like')
+                        ->get()->first();
+
+//                }else{
+//                    $cat = $q->get()->first();
+//                }
 
                 return $cat;
             }, 10);

@@ -11,6 +11,7 @@ class Like extends Pivot
     protected $table = 'likes';
 
 	protected $fillable = [
+        'sess',
 		'user_id',
 		'product_id',
 	];

@@ -42,9 +42,7 @@ class UserYandex extends Model implements IUser
     {
         return $this->belongsToMany(Role::class)
             ->using(RoleUserYandex::class)
-            ->withTimestamps()
-            //            ->withPivot('user_yandex_id', 'role_id')
-            ;
+            ->withTimestamps();
 
     }
 
