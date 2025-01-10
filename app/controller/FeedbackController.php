@@ -18,7 +18,7 @@ class FeedbackController extends AppController
         $req = $this->ajax;
         $tg = new TelegramBot();
         $tg->send($this->formatMessage($req['fields']));
-//        parent::actionUpdateOrCreate();
+        parent::actionUpdateOrCreate();
     }
 
     private function formatMessage(array $req): string

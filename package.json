@@ -52,10 +52,12 @@
     "vite": "^5.2.12",
     "vite-plugin-live-reload": "^3.0.3",
     "vite-plugin-mkcert": "^1.17.5",
+    "vite-plugin-node-polyfills": "^0.22.0",
     "vite-plugin-php": "^1.0.11"
   },
   "dependencies": {
     "quill": "^2.0.2",
-    "strip-js": "^1.2.0"
+    "strip-js": "^1.2.0",
+    "vite-bundle-visualizer": "^1.2.1"
   }
 }
