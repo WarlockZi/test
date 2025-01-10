@@ -23,7 +23,7 @@ class Auth
         throw new \Exception("Cannot unserialize a singleton.");
     }
 
-    public static function hasPphSession(array &$req): bool
+    public static function validatePphSession(array &$req): bool
     {
         return !empty($req['phpSession']
             && $_SESSION['phpSession'] === $req['phpSession']);
