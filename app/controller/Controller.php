@@ -39,6 +39,7 @@ class Controller
         $errors = $this->route->getErrors();
         $this->setVars(compact('errors'));
     }
+
     public function setRoute(Route $route): void
     {
         $this->route = $route;
@@ -57,13 +58,12 @@ class Controller
 
     public function setAjaxRequest(): void
     {
-        if (!empty($_POST['params'])) {
-            $req = json_decode($_POST['params'], true);
-            if (!Auth::hasPphSession($req)) Response::exitWithError('плохой ключ сессии');
-            if ($this->isAjax()) {
-                unset($req['phpSession']);
-                $this->ajax = $req;
-            }
+        if (empty($_POST['params'])) return;
+        $req = json_decode($_POST['params'], true);
+        if (!Auth::hasPphSession($req)) Response::exitWithError('плохой ключ сессии');
+        if ($this->isAjax()) {
+            unset($req['phpSession']);
+            $this->ajax = $req;
         }
     }
 
