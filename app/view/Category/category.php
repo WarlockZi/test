@@ -1,6 +1,6 @@
 <div class="category">
 
-    <?php if (!isset($category)): ?>
+    <?php if (empty($category)): ?>
         <div class="no-categories">
             <H1>Внимание! Приносим свои извинения,
                 но раздел <?= '' ?> находится на стадии разработки.

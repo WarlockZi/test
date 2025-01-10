@@ -11,6 +11,7 @@ class Compare extends Pivot
     protected $table = 'compares';
 
 	protected $fillable = [
+        'sess',
 		'user_id',
 		'product_id',
 	];

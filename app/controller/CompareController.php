@@ -36,15 +36,20 @@ class CompareController extends AppController
 
     public function actionUpdateOrCreate(): void
     {
-        $req     = $this->ajax;
-        $compare = Compare::updateOrCreate([
-            'user_id' => Auth::getUser()->getId(),
+        $req   = $this->ajax;
+        $user  = Auth::getUser();
+
+        $field = $user ? 'user_id' : 'sess';
+        $value = $user ? Auth::getUser()->getId() : session_id();
+        $c = Compare::updateOrCreate([
+            $field => $value,
             'product_id' => $req['fields']['product_id'],
         ], [
-            'user_id' => Auth::getUser()->getId(),
+            $field => $value,
             'product_id' => $req['fields']['product_id'],
         ]);
         Response::exitJson(['compared' => 1]);
+
 
     }
 }

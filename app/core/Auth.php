@@ -77,17 +77,14 @@ class Auth
 
         if (!$user) return;
 
-        if ($user instanceof User && $user['confirm'] == 0) {
-            $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
-//            header("Location:/auth/noconfirm");
-//            exit();
+        if ($user instanceof User) {
+            define('SU', $user->mail() === $_ENV['SU_EMAIL']);
+            if ($user['confirm'] == 0) {
+                $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
+            }
         }
-        define('SU', $user->mail() === $_ENV['SU_EMAIL']);
     }
-//    public static function isAuthed(): bool
-//    {
-//        return !!self::getUser();
-//    }
+
 
 }
 

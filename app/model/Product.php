@@ -40,7 +40,6 @@ class Product extends Model
     protected $appends = [
         'price',
         'mainImage',
-//        'shortLink'
     ];
 
     public function orderItems(): HasMany
@@ -54,20 +53,25 @@ class Product extends Model
     public function ownProperties(): HasOne
     {
         return $this
-            ->hasOne(ProductProperty::class, 'product_1s_id', '1s_id')
-            ;
+            ->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
     }
 
     public function like(): HasOne
     {
+        $user  = Auth::getUser();
+        $field = $user ? 'user_id' : 'sess';
+        $value = $user ? Auth::getUser()->getId() : session_id();
         return $this->hasOne(Like::class, 'product_id', '1s_id')
-            ->where('user_id', Auth::getUser()->getId());
+            ->where($field, $value);
     }
 
     public function compare(): HasOne
     {
-        return $this->hasOne(compare::class, 'product_id', '1s_id')
-            ->where('user_id', Auth::getUser()->getId());
+        $user  = Auth::getUser();
+        $field = $user ? 'user_id' : 'sess';
+        $value = $user ? Auth::getUser()->getId() : session_id();
+        return $this->hasOne(Compare::class, 'product_id', '1s_id')
+            ->where($field, $value);
     }
 
     public function seo_h1()
