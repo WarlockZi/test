@@ -59,7 +59,7 @@ class Controller
     public function setAjaxRequest(): void
     {
         if (empty($_POST['params'])) return;
-        $req = json_decode($_POST['params'], true);
+        $req = json_decode($_POST['params'], true)??[];
         if (!Auth::validatePphSession($req)) Response::exitWithError('плохой ключ сессии');
         if ($this->isAjax()) {
             unset($req['phpSession']);
