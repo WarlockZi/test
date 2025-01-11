@@ -4,9 +4,10 @@
 namespace app\controller;
 
 
-use app\core\Auth;
 use app\core\Response;
 use app\model\Like;
+use app\Repository\LikeRepository;
+use app\view\Like\LikeView;
 
 class LikeController extends AppController
 {
@@ -19,37 +20,27 @@ class LikeController extends AppController
 
     public function actionPage(): void
     {
-        $like = Like::where('user_id', Auth::getUser()->getId())
-            ->get();
-        $this->setVars(compact('like'));
-        Response::exitJson(['liked' => 1]);
+        $likes   = LikeRepository::all();
+        $content = LikeView::all($likes);
+        $this->setVars(compact('content'));
     }
 
     public function actionDel(): void
     {
-        $req  = $this->ajax;
-        $like = Like::where('user_id', Auth::getUser()->getId())
-            ->where('product_id', $req['fields']['product_id'])
-            ->delete();
-        Response::exitJson(['disliked' => 1]);
+        $req = $this->ajax;
+        if (LikeRepository::del($req)) {
+            Response::exitJson(['disliked' => true]);
+        }
+        Response::exitJson(['disliked' => false]);
     }
 
     public function actionUpdateOrCreate(): void
     {
-        $req   = $this->ajax;
-        $user  = Auth::getUser();
-
-        $field = $user ? 'user_id' : 'sess';
-        $value = $user ? Auth::getUser()->getId() : session_id();
-        $like = Like::updateOrCreate([
-            $field => $value,
-            'product_id' => $req['fields']['product_id'],
-        ], [
-            $field => $value,
-            'product_id' => $req['fields']['product_id'],
-        ]);
-        Response::exitJson(['liked' => true]);
-
+        $req = $this->ajax;
+        if (LikeRepository::updateOrCreate($req)) {
+            Response::exitJson(['liked' => true]);
+        }
+        Response::exitJson(['liked' => false]);
 
 
     }

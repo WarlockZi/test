@@ -35,12 +35,16 @@ document.addEventListener('DOMContentLoaded', async function () {
    if (path.startsWith('/auth/profile')) {
       new CatalogItem($('.item-wrap').first())
 
-   } else if (path.startsWith('/cart')) {
+   }
+   else if (path.startsWith('/cart')) {
       YM('url_cart')
       const {default: Cart} = await import('../Cart/Cart.js')
       new Cart()
    }
-
+   else if (path.startsWith('/like/page')) {
+      const {default: Like} = await import('../Like/Like.js')
+      new Like()
+   }
    IntObserver()
    headerMenu()
    scroll()

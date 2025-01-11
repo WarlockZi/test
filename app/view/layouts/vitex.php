@@ -12,7 +12,7 @@ use app\core\Icon;
     <meta http-equiv="cleartype" content="on"/>
     <meta name="MobileOptimized" content="320">
     <meta name="HandheldFriendly" content="True">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
 
     <meta name="yandex-verification" content="003253e624aad5b6" />
     <meta name="google-site-verification" content="ktYoLMSeI5bAy0NCfzOmoV28u50Fe8TJKF_v_582olI" />
