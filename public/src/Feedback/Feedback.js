@@ -73,7 +73,7 @@ export default class Feedback {
             phone: stripjs(this.phone.value),
             message: message,
          },
-         // phpSession: getPhpSession()
+         phpSession: getPhpSession()
       }
    }
 
