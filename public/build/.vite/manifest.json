@@ -163,8 +163,17 @@
       "share/card_panel/card_panel.js"
     ]
   },
+  "Like/Like.js": {
+    "file": "assets/Like-BtXtojOo.js",
+    "name": "Like",
+    "src": "Like/Like.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DF5JQ23V.js"
+    ]
+  },
   "Main/main.js": {
-    "file": "assets/main-3lz58yzp.js",
+    "file": "assets/main-BwJfPfPA.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -177,6 +186,7 @@
       "_search-DF5JQ23V.js",
       "_search-DF5JQ23V.js",
       "Cart/Cart.js",
+      "Like/Like.js",
       "components/Modal/modal.js",
       "Category/category.js",
       "Product/Product.js",
