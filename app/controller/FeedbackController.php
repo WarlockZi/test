@@ -16,7 +16,7 @@ class FeedbackController extends AppController
     public function actionUpdateOrCreate(): void
     {
         $req = $this->ajax;
-        $tg = new TelegramBot();
+        $tg = new TelegramBot('question');
         $tg->send($this->formatMessage($req['fields']));
         parent::actionUpdateOrCreate();
     }

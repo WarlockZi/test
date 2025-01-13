@@ -53,15 +53,9 @@ class CategoryRepository
                         $q->whereNull('active_till');
                     }]);
 
-                $s=  session_id();
-//                if ($user) {
-                    $cat =  $q->with('productsInStore.compare')
-                        ->with('productsInStore.like')
-                        ->get()->first();
-
-//                }else{
-//                    $cat = $q->get()->first();
-//                }
+                $cat = $q->with('productsInStore.compare')
+                    ->with('productsInStore.like')
+                    ->get()->first();
 
                 return $cat;
             }, 10);
@@ -89,7 +83,7 @@ class CategoryRepository
         }
     }
 
-    public static function edit(?int $id)
+    public static function edit(?int $id): \Illuminate\Database\Eloquent\Model|Collection|\Illuminate\Database\Eloquent\Builder|null
     {
         return Category::with(
             'products',

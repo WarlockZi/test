@@ -63,7 +63,7 @@
       }
 
       &:hover > img {
-        left: -300%;
+        left: -200px;
         top: -50%;
         height: 150px;
         min-width: 150px;
@@ -117,7 +117,7 @@
       transition: color .2s ease-in-out, background-color .2s ease-in-out;
 
       &:hover {
-        background-color: mixin_media.lighter(var.$color-red, 25%);
+        background-color: mixin_media.lighter(var.$color-red, 5%);
         color: white;
       }
 

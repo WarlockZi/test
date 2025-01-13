@@ -11,8 +11,8 @@ use app\view\Like\LikeView;
 
 class LikeController extends AppController
 {
+    public string $model = Like::class;
     public function __construct(
-        public string $model = Like::class,
     )
     {
         parent::__construct();
@@ -41,8 +41,6 @@ class LikeController extends AppController
             Response::exitJson(['liked' => true]);
         }
         Response::exitJson(['liked' => false]);
-
-
     }
 
 }

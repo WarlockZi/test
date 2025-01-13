@@ -41,7 +41,7 @@
       top: 50%;
       left: 50%;
       width: clamp(200px, 100vw, 400px);
-      padding-block: clamp(20px, 3vw, 30px);
+      padding-block: clamp(25px, 12vh, 45px);
       padding-inline: clamp(10px, 15px, 20px);
       border-radius: 20px;
       text-align: center;
@@ -69,7 +69,7 @@
        .title {
         @include mixin_media.h2;
         color: #fff;
-        margin-bottom: clamp(5px, 3vw, 40px);
+        margin-bottom: clamp(5px, 5vh, 20px);
       }
 
       .modal-close {

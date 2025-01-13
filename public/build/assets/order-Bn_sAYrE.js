@@ -1,2 +1,0 @@
-import{$ as r,S as s,p as i}from"./search-DF5JQ23V.js";class n{constructor(){this.$order=r(".order-edit").first(),this.$order&&(this.billId=r(this.$order).find("#order-id"),this.$manager=r("[select-new]").first(),new s(this.$manager),this.$order.addEventListener("customSelect.changed",this.changeUser.bind(this)),this.$bill=r(".bill").first())}changeUser({detail:t}){debugger;let e=this.dto(this,t);i("/adminsc/order/updateOrCreate",e)}dto(t,e){return{id:t.id,prev:e?.prev,next:e?.next}}}export{n as default};
-//# sourceMappingURL=order-Bn_sAYrE.js.map
