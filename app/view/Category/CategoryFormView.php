@@ -257,7 +257,7 @@ class CategoryFormView
     public static function getSeoArticle($categoryProperty): string
     {
         ob_start();
-        include __DIR__ . './Admin/seoArticle.php';
+        include __DIR__ . '/Admin/seoArticle.php';
         return ob_get_clean();
     }
 
