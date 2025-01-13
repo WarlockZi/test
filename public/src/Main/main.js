@@ -19,6 +19,7 @@ import Search from "@src/components/search/search.js";
 import ChatLocalStorage from "@src/share/chatLocalStorage/ChatLocalStorage.js";
 import Chat from "@src/share/chat/chat.js";
 import Feedback from "@src/Feedback/Feedback.js";
+import CallMe from "@src/CallMe/CallMe.js";
 
 window.YM = YM
 document.addEventListener('DOMContentLoaded', async function () {
@@ -43,12 +44,16 @@ document.addEventListener('DOMContentLoaded', async function () {
    }
    else if (path.startsWith('/like/page')) {
       const {default: Like} = await import('../Like/Like.js')
-      new Like()
+   }
+   else if (path.startsWith('/compare/page')) {
+      const {default: Compare} = await import('../Compare/Compare.js')
+      new Compare()
    }
    IntObserver()
    headerMenu()
    scroll()
 
+   new CallMe
    new Search
    new MobileMenu
 

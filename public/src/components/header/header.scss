@@ -107,6 +107,13 @@
     max-height: 500px;
     opacity: 1;
 
+    .call-me{
+      @include mixin_media.colored_button(3px);
+      padding: 10px 15px;
+      font-size: clamp(.875rem, 5vw, 1rem);
+      line-height: 1rem;
+    }
+
     .logo {
       display: flex;
       align-items: center;

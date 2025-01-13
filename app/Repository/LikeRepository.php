@@ -15,7 +15,9 @@ class LikeRepository
         $user  = Auth::getUser();
         $field = $user ? 'user_id' : 'sess';
         $value = $user ? Auth::getUser()->getId() : session_id();
-        $likes = Like::where($field, $value)->get();
+        $likes = Like::where($field, $value)
+            ->with('product')
+            ->get();
         return $likes;
     }
 

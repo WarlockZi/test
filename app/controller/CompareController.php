@@ -7,6 +7,9 @@ namespace app\controller;
 use app\core\Auth;
 use app\core\Response;
 use app\model\Compare;
+use app\Repository\CompareRepository;
+use app\view\CompareView\CompareView;
+
 
 class CompareController extends AppController
 {
@@ -19,19 +22,19 @@ class CompareController extends AppController
 
     public function actionPage(): void
     {
-        $compare = Compare::with('user', 'product')
-            ->where('user_id', Auth::getUser()->getId())
-            ->get();
-        Response::exitJson(['discompared' => 1]);
+        $compares   = CompareRepository::all();
+        $content = CompareView::all($compares);
+        $this->setVars(compact('content'));
+
     }
 
     public function actionDel(): void
     {
-        $req     = $this->ajax;
-        $compare = Compare::where('user_id', Auth::getUser()->getId())
-            ->where('product_id', $req['fields']['product_id'])
-            ->delete();
-        Response::exitJson(['discompared' => 1]);
+        $req = $this->ajax;
+        if (CompareRepository::del($req)) {
+            Response::exitJson(['discompared' => true]);
+        }
+        Response::exitJson(['discompared' => false]);
     }
 
     public function actionUpdateOrCreate(): void

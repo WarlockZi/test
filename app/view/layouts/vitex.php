@@ -74,6 +74,7 @@ use app\core\Icon;
     </div>
 
 </div>
-<div class="hoist" title="Наверх"><?=Icon::scrollUp1();?></div>
+<button id="fixed-call-me" class="fixed call-me" title="Перезвоните мне !"><?=Icon::phone();?></button>
+<button class="fixed hoist" title="Наверх"><?=Icon::scrollUp1();?></button>
 </body>
 </html>

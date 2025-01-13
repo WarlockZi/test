@@ -78,7 +78,7 @@ export default class Feedback {
       }
    }
 
-   setInputs() {
+   setInputs()  {
       this.name = this.formWrapper[qs]('#name')
       this.email = this.formWrapper[qs]('#email')
       this.phone = this.formWrapper[qs]('#phone')

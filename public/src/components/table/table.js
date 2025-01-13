@@ -127,13 +127,15 @@ export default class Table {
    // DELETE
    async modelDel(target) {
       if (!confirm('Удалить?')) return;
-      const id = this.modelId;
-      const relationId = target.dataset['id'];
-      const relationType = this.relationType ?? null;
-      const relationName = this.relation ?? null;
-      const res = await post(`/adminsc/${this.model}/delete`, {id, relationName, relationType, relationId});
-      if (res?.arr?.deleted) {
-         this.delRow(res?.arr?.deleted)
+      const dto = new TableDTO(target)
+      // const id = this.modelId;
+      // const relationId = target.dataset['id'];
+      // const relationType = this.relationType ?? null;
+      // const relationName = this.relation ?? null;
+      // const res = await post(`/adminsc/${this.model}/delete`, {id, relationName, relationType, relationId});
+      const res = await post(`/adminsc/${this.model}/delete`, dto);
+      if (res?.arr?.id) {
+         this.delRow(res?.arr?.id)
       }
    }
 

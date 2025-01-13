@@ -17,7 +17,7 @@
 
             <p>Цена: <?= $product->instore
                     ? $product->baseUnitPrice
-                    : "<span class='danger'>от</span> ".$product->baseUnitPrice; ?></p>
+                    : "<span class='danger'>от</span> " . $product->baseUnitPrice; ?></p>
             <p>Статус: <?= $product->instore
                     ? "<span class='success'>в наличии</span>"
                     : "<span class='danger'>под заказ</span>"; ?></p>
@@ -30,5 +30,8 @@
 
     <?= \app\view\share\card_panel\CardPanel::card_panel($product) ?>
 
+    <? if (isset($txt)): ?>
+        <div class="txt"><?= $txt ?? '' ?></div>
+    <? endif; ?>
 
 </div>

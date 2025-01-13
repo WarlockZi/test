@@ -4,6 +4,7 @@ export default class TableDTO {
       this.target = target;
 //model
       this.id = target?.closest('.item-wrap')?.dataset?.id
+      ?? target?.dataset?.id
       ?? target?.parentNode?.dataset?.id
 
       this.fields = target?.dataset?.field ?? false
@@ -49,27 +50,10 @@ export default class TableDTO {
          }
       }
       if (!this.fields) delete this.fields
+      if (!this.relation) delete this.relation
       delete this.attach
       delete this.pivot
       delete this.target
 
    }
-
-
-//    const
-//    relFields = target?.dataset?.field
-//    const
-//    fields = relFields ? {[relFields]: target?.dataset?.value ?? target.innerText ?? target.checked} : {}
-//    this
-// .
-//    relation = {
-//       name: target?.dataset?.relation ?? target?.closest('[data-relation]')?.dataset?.relation ?? '',
-//       id: target?.dataset?.value ?? target?.dataset?.id ?? 0,
-//       fields,
-//       pivot: {
-//          field: target?.dataset?.pivotField ?? target?.parentNode?.dataset?.pivot,
-//          value: target?.dataset?.pivotValue ?? target?.innerText
-//       }
-//    }
-// }
 }

@@ -7,14 +7,16 @@ import MyQuill from "../components/quill/MyQuill.js";
 import {ael} from "@src/constants.js";
 
 
-export default class Product{
+export default class Product {
 
-   constructor(){
+   constructor() {
       const product = $('.product-card').first();
       if (!product) return false
 
       this.products = $('.product-wrap').first()
-      this.products[ael]('click', this.handleClick.bind(this))
+      if (this.products) {
+         this.products[ael]('click', this.handleClick.bind(this))
+      }
 
       const table = $('.shippable-table').first()
 
