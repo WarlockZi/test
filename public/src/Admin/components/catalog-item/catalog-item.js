@@ -5,6 +5,7 @@ import DTO from "../../../Admin/DTO.js";
 import Checkbox from "../../../components/checkbox/checkbox.js";
 import SelectNew from "../../../components/select/SelectNew.js";
 import CustomDate from "../../../components/date/date.js";
+import RelationDTO from "@src/Admin/RelationDTO.js";
 
 export default class CatalogItem {
    constructor(catalogItem) {
@@ -65,7 +66,12 @@ export default class CatalogItem {
       if (target.closest('.custom-table')) return false
       if (!target.hasAttribute('contenteditable') ||
          !target.dataset.field) return false
-      const dto = new DTO(this.id, target)
+      let dto = {}
+      if (target.dataset.relation) {
+         dto = new RelationDTO(target)
+      } else {
+         dto = new DTO(this.id, target)
+      }
       const res = await post(`/adminsc/${this.model}/updateOrCreate`, dto)
       if (res) {
          target.dispatchEvent(new CustomEvent('catalogItem.changed',
