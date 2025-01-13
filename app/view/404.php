@@ -33,7 +33,7 @@ if (DEV) {
 
 </div>
 
-<? if ($similarProducts->count()): ?>
+<? if (!empty($similarProducts) && $similarProducts->count()): ?>
 
     <div class="similar-products">
         <h2 class="similar-products__header">Похожие товары</h2>
