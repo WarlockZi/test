@@ -1,14 +1,14 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-B4mzqADI.js",
+    "file": "assets/Category-C7TpwMDz.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_search-CM1Tatb6.js",
+      "_QuillFactory-B-m-JjYU.js",
       "_MyQuill-DcSx1sFp.js",
-      "_QuillFactory-BDI6e4EJ.js",
       "_table-kSt3ZMz0.js",
       "Promotions/Promotion.js"
     ]
@@ -35,14 +35,14 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-CjqTYr8r.js",
+    "file": "assets/Product-D0X4RKnu.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
     "imports": [
       "_search-CM1Tatb6.js",
       "Admin/admin.js",
-      "_QuillFactory-BDI6e4EJ.js",
+      "_QuillFactory-B-m-JjYU.js",
       "_MyQuill-DcSx1sFp.js",
       "_table-kSt3ZMz0.js",
       "Promotions/Promotion.js"
@@ -58,7 +58,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-BSHyjwY9.js",
+    "file": "assets/Props--6ZjuoOl.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -69,7 +69,7 @@
       "_MyQuill-DcSx1sFp.js",
       "_table-kSt3ZMz0.js",
       "Promotions/Promotion.js",
-      "_QuillFactory-BDI6e4EJ.js"
+      "_QuillFactory-B-m-JjYU.js"
     ]
   },
   "Admin/Test/TestDo/TestDo.js": {
@@ -85,14 +85,14 @@
     ]
   },
   "Admin/Test/TestEdit/test-edit.js": {
-    "file": "assets/test-edit-Bcu3OVJe.js",
+    "file": "assets/test-edit-BVqH95bY.js",
     "name": "test-edit",
     "src": "Admin/Test/TestEdit/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_search-CM1Tatb6.js",
-      "_index-DDe1JFSj.js",
+      "_index-DXGsHsLo.js",
       "_MyQuill-DcSx1sFp.js",
       "_table-kSt3ZMz0.js",
       "Promotions/Promotion.js"
@@ -102,7 +102,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-D9c5BZIq.js",
+    "file": "assets/admin-C-CAz3wh.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -114,7 +114,7 @@
     ],
     "dynamicImports": [
       "components/Modal/modal.js",
-      "_index-DDe1JFSj.js",
+      "_index-DXGsHsLo.js",
       "Admin/chartjs/chartjs.js",
       "share/card_panel/card_panel.js",
       "Admin/Product/Product.js",
@@ -259,8 +259,8 @@
       "assets/MyQuill-GClCj9AP.css"
     ]
   },
-  "_QuillFactory-BDI6e4EJ.js": {
-    "file": "assets/QuillFactory-BDI6e4EJ.js",
+  "_QuillFactory-B-m-JjYU.js": {
+    "file": "assets/QuillFactory-B-m-JjYU.js",
     "name": "QuillFactory",
     "imports": [
       "_MyQuill-DcSx1sFp.js",
@@ -271,8 +271,8 @@
     "file": "assets/index-DmAyeOWP.css",
     "src": "_index-!~{004}~.js"
   },
-  "_index-DDe1JFSj.js": {
-    "file": "assets/index-DDe1JFSj.js",
+  "_index-DXGsHsLo.js": {
+    "file": "assets/index-DXGsHsLo.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [

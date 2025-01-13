@@ -3,7 +3,6 @@ import './category.scss'
 import PropertyTable from "./PropertyTable";
 import {$, post} from "../../common.js";
 import SelectNew from "../../components/select/SelectNew";
-import MyQuill from "../../components/quill/MyQuill.js";
 import QuillFactory from "@src/components/quill/QuillFactory.js";
 import {QuillConst} from "@src/components/quill/QuillConstans.js";
 
@@ -15,14 +14,11 @@ export default class Category {
       this.setCategoryId()
       this.setProperties()
       QuillFactory.create('#seo-article', QuillConst.ADMIN_CATEGORY_SEO_ARTICLE);
-      // new MyQuill('#seo_article', true,true,true,'snow',this.dto());
    }
 
    setCategoryId() {
       const el = $(`[data-field='category_id']`).first()
       const parentSelector = new SelectNew(el);
-      // parentSelector.sel.addEventListener('customSelect.changed', this.attachCategory.bind(this))
-
    }
 
    setProperties() {
