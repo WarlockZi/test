@@ -1,6 +1,6 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-C7TpwMDz.js",
+    "file": "assets/Category-BIv5f1Zs.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -35,7 +35,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-D0X4RKnu.js",
+    "file": "assets/Product-DzMQqnIY.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -58,7 +58,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props--6ZjuoOl.js",
+    "file": "assets/Props-CNEg_Tdl.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -85,14 +85,14 @@
     ]
   },
   "Admin/Test/TestEdit/test-edit.js": {
-    "file": "assets/test-edit-BVqH95bY.js",
+    "file": "assets/test-edit-CmpyTOoq.js",
     "name": "test-edit",
     "src": "Admin/Test/TestEdit/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_search-CM1Tatb6.js",
-      "_index-DXGsHsLo.js",
+      "_index-ksOQneL1.js",
       "_MyQuill-DcSx1sFp.js",
       "_table-kSt3ZMz0.js",
       "Promotions/Promotion.js"
@@ -102,7 +102,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-C-CAz3wh.js",
+    "file": "assets/admin-BXUrYgVX.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -114,7 +114,7 @@
     ],
     "dynamicImports": [
       "components/Modal/modal.js",
-      "_index-DXGsHsLo.js",
+      "_index-ksOQneL1.js",
       "Admin/chartjs/chartjs.js",
       "share/card_panel/card_panel.js",
       "Admin/Product/Product.js",
@@ -136,7 +136,7 @@
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-DpwvnKwI.js",
+    "file": "assets/catalog-item-BB1d3XFI.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
@@ -194,7 +194,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-CepmSU7J.js",
+    "file": "assets/main-6ZzkAW4w.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -271,8 +271,8 @@
     "file": "assets/index-DmAyeOWP.css",
     "src": "_index-!~{004}~.js"
   },
-  "_index-DXGsHsLo.js": {
-    "file": "assets/index-DXGsHsLo.js",
+  "_index-ksOQneL1.js": {
+    "file": "assets/index-ksOQneL1.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [
