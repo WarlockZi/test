@@ -11,6 +11,10 @@ class AdminscController extends AppController
 {
     public function __construct()
     {
+        if (!Auth::getUser()) {
+            header("Location:/");
+            exit();
+        }
         parent::__construct();
     }
 
@@ -35,11 +39,6 @@ class AdminscController extends AppController
     }
     public function actionIndex(): void
     {
-        if (!Auth::getUser()) {
-            header('Location:/');
-            exit();
-        }
-//        $this->view = 'index';
     }
     public function createSiteMap()
     {
