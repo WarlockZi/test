@@ -26,7 +26,7 @@ import Pages from "@src/Admin/Pages/pages.js";
 import Users from "@src/Admin/User/users.js";
 import User from "@src/Admin/User/user.js";
 import AdminSidebar from "@src/Admin/components/AdminSidebar/AdminSidebar.js";
-import ProductFilter from "../Admin/ProductFilter/ProductFilter.js";
+// import ProductFilter from "../Admin/ProductFilter/ProductFilter.js";
 import Promotion from "@src/Promotions/Promotion.js";
 
 
@@ -66,6 +66,7 @@ $(document).ready(async function () {
       const {default: MyChart} = await import('./chartjs/chartjs.js')
    }
    else if (window.location.pathname === '/adminsc/report/filter'){
+      const {default:ProductFilter}  = await import('./ProductFilter/productFilter.js')
       new ProductFilter($('.products-filter').first())
    }
    // else if (window.location.pathname.startsWith('/adminsc/test/do')){
