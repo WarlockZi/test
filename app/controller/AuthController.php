@@ -142,8 +142,8 @@ class AuthController extends AppController
     {
         $user = Auth::getUser();
 
-        if ($user?->can(['role_employee'])) {
-            if ($user->can(['role_admin'])) {
+        if ($user->isEmployee()) {
+            if ($user->isAdmin()) {
                 $item = UserView::admin($user);
             } else {
                 $item = UserView::employee($user);
@@ -199,7 +199,7 @@ class AuthController extends AppController
         $user = User::where('hash', $hash)->first();
 
         if (!$user) {
-            header('Location:/auth/login');
+            header('Location:/');
             exit();
         }
 

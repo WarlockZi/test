@@ -1,0 +1,2 @@
+import{$ as r,e}from"./search-Ds-m9dKU.js";class o{constructor(){if(this.el=r("[data-shortLink]").first(),this.el)return!1}shortLink(a){navigator.permissions.query({name:"clipboard-write"}).then(async t=>{(t.state==="granted"||t.state==="prompt")&&await navigator.clipboard.writeText(a.dataset.shortlink).then(()=>{e.show("Ссылка скопирована")})})}}export{o as default};
+//# sourceMappingURL=card_panel-DrgwCLU_.js.map

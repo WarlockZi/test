@@ -1,6 +1,14 @@
 import FieldBuilder from "../components/Modal/builders/FieldBuilder.js";
 
-import {createElement, emailValidator, passwordValidator,getPhpSession, post, sanitizeInput} from "../common.js";
+import {
+   createElement,
+   emailValidator,
+   passwordValidator,
+   getPhpSession,
+   post,
+   sanitizeInput,
+   popup
+} from "../common.js";
 import {qs} from "@src/constants.js";
 
 export default class cartLogin {
@@ -179,6 +187,8 @@ export default class cartLogin {
             window.location = '/adminsc'
          } else if (res?.error) {
          }
+      }else if (res?.error){
+         popup.show(res?.error)
       }
    }
 

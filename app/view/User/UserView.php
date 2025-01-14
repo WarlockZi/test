@@ -26,8 +26,8 @@ abstract class UserView
     public static function getViewByRole(Model $userToEdit, $thisUser): string
     {
         if (!$userToEdit) return '';
-        if ($thisUser->can(['role_employee'])) {
-            if ($thisUser->can(['role_admin'])) {
+        if ($thisUser->isEmployee()) {
+            if ($thisUser->isAdmin()) {
                 return self::admin($userToEdit);
             }
             return self::employee($userToEdit);
@@ -48,6 +48,12 @@ abstract class UserView
     {
         return ItemBuilder::build($item, 'user')
                 ->pageTitle('Редактировать пользователя: ' . $item->fi())
+            ->field(
+                ItemFieldBuilder::build('роль', $item)
+                    ->html($item->role[0]->name)
+                    ->name('роль')
+                    ->get()
+            )
                 ->field(
                     ItemFieldBuilder::build('id', $item)
                         ->name('ID')
@@ -105,8 +111,14 @@ abstract class UserView
         return ItemBuilder::build($item, 'user')
             ->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
             ->toList('adminsc/user/table', '', false)
-            ->save()
+//            ->save()
             ->del(false)
+            ->field(
+                ItemFieldBuilder::build('роль', $item)
+                    ->html($item->role[0]->name)
+                    ->name('роль')
+                    ->get()
+            )
             ->field(
                 ItemFieldBuilder::build('id', $item)
                     ->name('ID')
