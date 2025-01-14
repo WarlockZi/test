@@ -37,7 +37,7 @@ class ItemBuilder
         $view->dataModel = "data-model='{$model}'";
         $view->model     = $model;
         $view->item      = $item->toArray();
-        $view->id        = "data-id='{$view->item['id']}'";
+        $view->id         = "data-id='{$view->item['id']}'";
         return $view;
     }
 
