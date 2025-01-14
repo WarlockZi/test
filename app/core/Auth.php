@@ -68,9 +68,12 @@ class Auth
 
     public static function userIsAdmin(): bool
     {
-        return self::$user && self::$user->can(['role_admin']);
+        return self::$user && self::$user->isAdmin();
     }
-
+    public static function userIsEmployee(): bool
+    {
+        return self::$user && self::$user->isEmployee();
+    }
     public static function authorize(Route $route): void
     {
         $user = self::getUser();

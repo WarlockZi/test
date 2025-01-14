@@ -20,7 +20,7 @@ class AdminSidebar
         foreach ($self->sidebar as $item) {
             if ($item['children']) {
                 if ($item['permissions']) {
-                    if ($self->user->can($item['permissions'])) {
+                    if ($self->hasPermitions($item['permissions'])) {
                         echo $self->ul($item);
                     }
                 } else {
@@ -37,9 +37,13 @@ class AdminSidebar
             }
         }
         return ob_get_clean();
-
     }
 
+    private function hasPermitions(array $permitions):bool
+    {
+        return $this->user->can($permitions);
+
+    }
     private function a(array $item): void
     {
         $f = ROOT . "/app/Services/AdminSidebar/a.php";

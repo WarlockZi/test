@@ -11,11 +11,20 @@ class AdminscController extends AppController
 {
     public function __construct()
     {
-        if (!Auth::getUser()) {
-            header("Location:/");
-            exit();
-        }
+        $this->isEmployee();
         parent::__construct();
+
+    }
+
+    protected function isEmployee()
+    {
+        $user = Auth::getUser();
+        if (!$user->role->firstWhere('name', 'role_employee')) {
+            if (!$user->role->firstWhere('name', 'role_admin')) {
+                header("Location:/");
+                exit();
+            }
+        }
     }
 
     public function actionClearCache(): void
@@ -37,15 +46,19 @@ class AdminscController extends AppController
         $pics = App::$app->adminsc->findAll('pic');
         $this->setVars(compact('pics'));
     }
+
     public function actionIndex(): void
     {
     }
+
     public function createSiteMap()
     {
     }
+
     public function actionDumpSQL()
     {
     }
+
     public function actionDumpWWW()
     {
     }

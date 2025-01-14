@@ -45,15 +45,29 @@ class User extends Model implements IUser
             ->using(RoleUser::class);
     }
 
+
     public function can($rights = []): bool
     {
-        $has   = $this->hasRights($rights);
-        $su    = Auth::isSU();
-        $admin = Auth::getUser()?->role?->first()?->name === 'role_admin';
-        return ($has || $su || $admin);
+        $has     = $this->hasRights($rights);
+        $hasRole = $this->hasRoles($rights);
+        $su      = Auth::isSU();
+        $admin   = Auth::userIsAdmin();
+        return ($has || $su || $admin || $hasRole);
     }
 
-    public function fio(): string
+    public function hasRoles(array $rights): bool
+    {
+        foreach ($rights as $right) {
+            if (str_starts_with($right, 'role_')) {
+                if (!!Auth::getUser()->role->firstWhere('name', $right) === false) return false;
+            }
+        }
+        return true;
+    }
+
+
+    public
+    function fio(): string
     {
         $surname    = $this->surName ?? '*';
         $name       = $this->name ?? '*';
@@ -61,19 +75,22 @@ class User extends Model implements IUser
         return "{$surname} {$name} {$middleName}";
     }
 
-    public function mail(): string
+    public
+    function mail(): string
     {
         return $this->email;
     }
 
-    public function fi(): string
+    public
+    function fi(): string
     {
         $surname = $this->surName ?? '*';
         $name    = $this->name ?? '*';
         return "{$surname} {$name}";
     }
 
-    public function avatar(): string
+    public
+    function avatar(): string
     {
         return $this['sex'] === 'f'
             ? ImageRepository::getImg('/pic/srvc/main/ava_female.jpg')
@@ -81,41 +98,42 @@ class User extends Model implements IUser
     }
 
 
-    public function hasRights(array $rights): bool
+    public
+    function hasRights(array $rights): bool
     {
         return !!array_intersect($this->rights, $rights);
     }
 
-    public function getId(): int
+    public
+    function getId(): int
     {
         return $this->id;
     }
 
-    public function isOlya(): bool
+    public
+    function isOlya(): bool
     {
         return 'vitex018@yandex.ru' === $this->mail();
     }
 
-    public function isSU(): bool
+    public
+    function isSU(): bool
     {
         return $_ENV['SU_EMAIL'] === $this->mail();
     }
 
-    public function isAdmin(): bool
+    public
+    function isAdmin(): bool
     {
-        return $this->role->contains(function ($role) {
-            return $role->name === 'role_admin';
-        });
+        return !!$this->role->firstWhere('name', 'role_admin');
     }
 
-    public function isEmployee(): bool
+    public
+    function isEmployee(): bool
     {
-        return $this->role->contains(function ($role) {
-            return $role->name === 'role_employee';
-        });
+        return !!$this->role->firstWhere('name', 'role_employee');
+//        return $this->role->contains(function ($role) {
+//            return $role->name === 'role_employee';
+//        });
     }
-    //    protected function role(): Attribute
-//    {
-//        return Attribute::get(fn(string $this->role) => explode(',', $rights));
-//    }
 }

@@ -234,11 +234,11 @@ class CategoryFormView
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
-            ItemFieldBuilder::build('seo_h2', $categoryProperty)
-                ->name('H 2')
-                ->contenteditable()
-                ->relation('ownProperties')
-                ->get()->toHtml('product') .
+//            ItemFieldBuilder::build('seo_h2', $categoryProperty)
+//                ->name('H 2')
+//                ->contenteditable()
+//                ->relation('ownProperties')
+//                ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_path', $categoryProperty)
                 ->name('Path')
                 ->contenteditable()
