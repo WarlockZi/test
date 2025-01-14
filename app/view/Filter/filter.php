@@ -7,7 +7,7 @@
             <? foreach ($options as $key => $value): ?>
                 <? $selected =
                     ($key === (int)$toFilter[$filterName]
-                        && isset($toFilter[$filterName]))
+                        && !empty($toFilter[$filterName]))
                         ? 'selected'
                         : ''; ?>
                 <option value="<?= $key ?>" <?= $selected ?>><?= $value; ?></option>
