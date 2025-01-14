@@ -35,6 +35,10 @@ class AdminscController extends AppController
     }
     public function actionIndex(): void
     {
+        if (!Auth::getUser()) {
+            header('Location:/');
+            exit();
+        }
 //        $this->view = 'index';
     }
     public function createSiteMap()
