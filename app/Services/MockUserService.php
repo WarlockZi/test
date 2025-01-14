@@ -14,7 +14,10 @@ class MockUserService
         $Oleg = \app\model\User::query()
             ->where('email', 'molchinoleg@mail.ru')
             ->first();
-        Auth::setUser($Oleg);
+        $yandexVvoronik = \app\model\UserYandex::query()
+            ->where('default_email', 'vvoronik@yandex.ru')
+            ->first();
+        Auth::setUser($yandexVvoronik);
     }
 
 }

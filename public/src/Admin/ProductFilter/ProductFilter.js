@@ -5,6 +5,7 @@ import SelectNew from "@src/components/select/SelectNew.js";
 
 export default class ProductFilter {
    constructor(productsFilter) {
+      debugger
       if (!productsFilter) return
       this.wrap = productsFilter
       this.panel = productsFilter[qs]('.list-filter')
