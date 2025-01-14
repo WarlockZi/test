@@ -8,9 +8,9 @@ export default defineConfig(async ({command, mode}) => {
    const rootCssPath = path.resolve(__dirname, 'public','src')
    return {
 
-      // define: {
-      //    'env': env
-      // },
+      define: {
+         'env': env
+      },
       plugins: [
          // vue(),
          // basicSsl(),
@@ -31,7 +31,6 @@ export default defineConfig(async ({command, mode}) => {
       css: {
          preprocessorOptions: {
             scss: {
-               // additionalData: `@use "@src/_consts";`,
                api: 'modern-compiler', // or "modern", "legacy"
                importers: [
                ],
