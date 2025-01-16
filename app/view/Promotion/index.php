@@ -1,7 +1,7 @@
 <div class="promotions-index">
-	<div class="page-name">
+	<h1 class="page-name">
 		Акции
-	</div>
+	</h1>
 
     <? if (!$promotions->count()): ?>
         <p>В даный момент актыивных акций нет, но скоро, возможно, появятся</p>
