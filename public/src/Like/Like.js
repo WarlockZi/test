@@ -1,5 +1,5 @@
 import {$} from "@src/common.js";
-import Table from "@src/components/table/table.js";
+import Table from "@src/components/table/Table.js";
 
 export default class Like{
    constructor(){

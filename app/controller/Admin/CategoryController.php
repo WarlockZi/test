@@ -2,17 +2,19 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
 use app\model\Category;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
+use app\Services\Breadcrumbs\AdminBreadcrumbsService;
+use app\Services\Breadcrumbs\BreadcrumbsService;
 use app\view\Category\CategoryFormView;
 
 class CategoryController extends AdminscController
 {
-    public string $model = Category::class;
-
-    public function __construct()
+    public function __construct(
+        public string              $model = Category::class,
+        private AdminBreadcrumbsService $breadcrumbsService = new AdminBreadcrumbsService(),
+    )
     {
         parent::__construct();
     }
@@ -26,8 +28,8 @@ class CategoryController extends AdminscController
     public function actionEdit(): void
     {
         $id          = $this->route->id;
-        $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($id, false, true);
         $category    = CategoryRepository::edit($id);
+        $breadcrumbs = $this->breadcrumbsService->getCategoryBreadcrumbs($category);
         $category    = CategoryFormView::edit($category);
         $this->setVars(compact('category', 'breadcrumbs'));
     }

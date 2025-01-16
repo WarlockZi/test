@@ -66,9 +66,6 @@ class ProductImageService
 
     public function getRelativeImage(Product $product): string
     {
-//        if ($this->getImageRelativePath($product)){
-//            return ;
-//        }
         return $this->getImageRelativePath($product) ?? $this->relNoImage;
     }
 

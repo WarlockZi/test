@@ -16,7 +16,7 @@ class CrmController extends AdminscController
 	{
 		parent::__construct();
 
-		if (!Auth::getUser()->isEmployee()){
+		if (!Auth::userIsEmployee()){
 			header('Location:/auth/profile');
 		}
 	}

@@ -93,7 +93,7 @@ class AdminSidebar
                         "permissions" => [],
                     ],
                     [
-                        "name" => "Сообщения клиентов",
+                        "name" => "Сообщения пользователей",
                         "href" => "/adminsc/feedback",
                         "class" => "neon",
                         "permissions" => [],

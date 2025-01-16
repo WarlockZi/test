@@ -38,6 +38,7 @@ class Controller
         $this->route->setError('Путь не найден');
         $errors = $this->route->getErrors();
         $this->setVars(compact('errors'));
+        http_response_code(404);
     }
 
     public function setRoute(Route $route): void
