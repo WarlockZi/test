@@ -8,6 +8,7 @@ export default class Category {
    constructor() {
       this.category = document[qs]('.category');
       if (!this.category) return false;
+
       this.setCardPanel().then()
       this.mapShippableTables()
 

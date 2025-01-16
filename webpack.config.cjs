@@ -23,7 +23,7 @@ const config = {
     main: path.resolve(src, 'Main/main.js'),
     cookie: path.resolve(src, 'components/chatLocalStorage/chatLocalStorage.js'),
     common: path.resolve(src, 'common.js'),
-    // table: path.resolve(src, 'components/table/table.js'),
+    // table: path.resolve(src, 'components/table/Table.js'),
     product: path.resolve(src, 'Product/Product.js'),
     dnd: path.resolve(src, 'components/dnd/dnd.js'),
     // breadcrumbs: path.resolve(src, 'components/breadcrumbs.js'),

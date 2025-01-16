@@ -10,8 +10,11 @@ use app\view\share\card_panel\CardPanel;
 
 class BreadcrumbsRepository
 {
+    public function __construct()
+    {
+    }
 
-  private static function getPrefix(bool $admin):string
+    private static function getPrefix(bool $admin):string
   {
     return 	$admin ? '/adminsc/category/' : '/catalog';
   }

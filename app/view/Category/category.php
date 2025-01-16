@@ -68,7 +68,7 @@
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-        <h2 class="seo_h2"><?= $category->ownProperties->seo_h2; ?></h2>
+
         <div id="seo_article">
             <?= $category->seo_article() ?>
         </div>

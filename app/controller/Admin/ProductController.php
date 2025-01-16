@@ -8,22 +8,24 @@ use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
 use app\Repository\ProductFilterRepository;
 use app\Repository\ProductRepository;
+use app\Services\Breadcrumbs\AdminBreadcrumbsService;
 use app\Services\ProductService;
 use app\view\Product\Admin\ProductFormView;
 
 
 class ProductController extends AdminscController
 {
-    protected string $model = Product::class;
 
-    private ProductRepository $repo;
-    private ProductService $service;
 
-    public function __construct()
+    public function __construct(
+        protected string                $model = Product::class,
+        private ProductRepository       $repo = new ProductRepository(),
+        private ProductService          $service = new ProductService(),
+        private AdminBreadcrumbsService $breadcrumbsService = new AdminBreadcrumbsService(),
+
+    )
     {
         parent::__construct();
-        $this->repo    = new ProductRepository();
-        $this->service = new ProductService();
     }
 
     public function actionSaveMainImage(): void
@@ -40,7 +42,7 @@ class ProductController extends AdminscController
 
         if ($prod) {
             $product     = ProductFormView::edit($prod);
-            $breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);
+            $breadcrumbs = $this->breadcrumbsService->getProductBreadcrumbs($prod->category);
             $this->setVars(compact('product', 'breadcrumbs'));
         } else {
             $product = null;

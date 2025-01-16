@@ -31,6 +31,7 @@ class CategoryRepository
                 $user = Auth::getUser();
                 $q    = Category::query()
                     ->with('childrenRecursive')
+                    ->with('parentRecursive')
                     ->withWhereHas('ownProperties',
                         fn($query) => $query->where('path', 'like', $url)
                     )

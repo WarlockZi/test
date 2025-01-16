@@ -88,6 +88,14 @@ class PromotionFormView
                     ->get()
             )
             ->column(
+                ColumnBuilder::build('unit')
+                    ->name('единиц')
+                    ->callback(function ($promotion){
+                        return $promotion->unit->name??'не установлена';
+                    })
+                    ->get()
+            )
+            ->column(
                 ColumnBuilder::build('active_till')
                     ->name('Действует до')
                     ->get()
