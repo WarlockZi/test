@@ -1,6 +1,6 @@
 <div class='phone column' >
 
-	<a href="tel:+79815068191" onClick = YM('click_on_phone')>8 (909) 594-29-11</a>
+	<a href="tel:+79815068191" onClick = YM('click_on_phone') itemprop="telephone" telephone>8 (909) 594-29-11</a>
 	<a href="mailto:10@vitexopt.ru"  onClick = YM('click_on_email') class="email">10@vitexopt.ru</a>
 <!--    <a href="/category/">category</a>-->
 
