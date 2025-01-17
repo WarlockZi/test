@@ -36,6 +36,7 @@ $(document).ready(async function () {
 
    const admin = window.location.pathname.includes('adminsc')
    if (!admin) return false
+   debugger
 
    const table = $('[custom-table]').first()
    if (table) {
@@ -43,7 +44,6 @@ $(document).ready(async function () {
       new Tables
    }
    new Search(true);
-   debugger
    new Navigation;
    new AdminHeader()
    adminScroll()
