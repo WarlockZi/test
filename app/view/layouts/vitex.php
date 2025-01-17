@@ -44,6 +44,9 @@ use app\core\Icon;
 
 <div class="user-content-wrap">
     <main class="user-content">
+        <? if (\app\core\Auth::userIsAdmin()): ?>
+            <div class="admin-gap"></div>
+        <? endif; ?>
 
         <?= $content; ?>
     </main>

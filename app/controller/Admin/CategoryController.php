@@ -3,10 +3,8 @@
 namespace app\controller\Admin;
 
 use app\model\Category;
-use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
 use app\Services\Breadcrumbs\AdminBreadcrumbsService;
-use app\Services\Breadcrumbs\BreadcrumbsService;
 use app\view\Category\CategoryFormView;
 
 class CategoryController extends AdminscController

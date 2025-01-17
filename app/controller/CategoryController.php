@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
 use app\Services\Breadcrumbs\BreadcrumbsService;
 use app\view\share\card_panel\CardPanel;

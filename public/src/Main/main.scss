@@ -73,6 +73,9 @@
     padding: 100px 0 100px;
     background-color: white;
     min-height: 250px;
+    .admin-gap{
+      height: 30px;
+    }
 
     @include mixin_media.m800 {
       padding-left: 5px;

@@ -1,6 +1,6 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-hOOoSeKI.js",
+    "file": "assets/Category-Dmd0mL9G.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -33,7 +33,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-FPb5fn1L.js",
+    "file": "assets/Product-_CRzRHZ4.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -54,7 +54,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-DUudmjN0.js",
+    "file": "assets/Props-yXckBHVX.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -67,7 +67,7 @@
     ]
   },
   "Admin/ProductFilter/ProductFilter.js": {
-    "file": "assets/ProductFilter-DAYykcMO.js",
+    "file": "assets/ProductFilter-TRFVe7Tu.js",
     "name": "ProductFilter",
     "src": "Admin/ProductFilter/ProductFilter.js",
     "isDynamicEntry": true,
@@ -90,14 +90,14 @@
     ]
   },
   "Admin/Test/TestEdit/test-edit.js": {
-    "file": "assets/test-edit-DQdUJVQ4.js",
+    "file": "assets/test-edit-ByeA0rO_.js",
     "name": "test-edit",
     "src": "Admin/Test/TestEdit/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_search-uOMQXYvZ.js",
-      "_index-C80P3XeJ.js",
+      "_index-w4Rr8omK.js",
       "_MyQuill-DcsoDn4c.js"
     ],
     "css": [
@@ -105,7 +105,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-DUkquPFT.js",
+    "file": "assets/admin-CWu5zt2t.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -115,7 +115,7 @@
     ],
     "dynamicImports": [
       "components/table/Tables.js",
-      "_index-C80P3XeJ.js",
+      "_index-w4Rr8omK.js",
       "Admin/chartjs/chartjs.js",
       "Admin/ProductFilter/ProductFilter.js",
       "Promotions/Promotion.js",
@@ -140,7 +140,7 @@
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-CXA1hqFz.js",
+    "file": "assets/catalog-item-Dh3Eb_a4.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
@@ -148,7 +148,7 @@
       "_search-uOMQXYvZ.js"
     ],
     "css": [
-      "assets/catalog-item-CC5C5WoE.css"
+      "assets/catalog-item-DfbgkaLy.css"
     ]
   },
   "Cart/Cart.js": {
@@ -198,7 +198,7 @@
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-Btx9XKpA.js",
+    "file": "assets/main-BRsLudeV.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -219,7 +219,7 @@
       "Promotions/Promotion.js"
     ],
     "css": [
-      "assets/main-C-Nr_09e.css"
+      "assets/main-1eut-7mL.css"
     ]
   },
   "Product/Product.js": {
@@ -289,8 +289,8 @@
     "file": "assets/index-DmAyeOWP.css",
     "src": "_index-!~{004}~.js"
   },
-  "_index-C80P3XeJ.js": {
-    "file": "assets/index-C80P3XeJ.js",
+  "_index-w4Rr8omK.js": {
+    "file": "assets/index-w4Rr8omK.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [
