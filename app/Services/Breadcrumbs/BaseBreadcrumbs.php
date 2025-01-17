@@ -2,17 +2,22 @@
 
 namespace app\Services\Breadcrumbs;
 
+use app\core\FS;
 use app\model\Category;
 use app\view\share\card_panel\CardPanel;
 
 class BaseBreadcrumbs
 {
     public function __construct(
+        protected          $fs = new FS(__DIR__),
+        protected Category $category = new Category(),
         protected string   $class = 'breadcrumbs-5',
         protected string   $namespace = '/adminsc/category',
-        protected string   $breadcrumbs = '',
         protected bool     $isLastLink = false,
-        protected Category $category = new Category(),
+        protected string   $breadcrumbs = '',
+        protected string   $panel = '',
+        protected string   $slug = '',
+        protected string   $href = '',
     )
     {
     }
@@ -36,17 +41,30 @@ class BaseBreadcrumbs
         $arrayCategories = $this->flatCategoryParents();
         $catCount        = count($arrayCategories) - 1;
         foreach ($arrayCategories as $i => $cat) {
-            $slug  = "edit/{$cat->id}";
-            $panel = CardPanel::categoryCardPanel($this->category, true);
+            $this->category = $cat;
+            $this->slug     = $this->namespace === 'admin' ? "/adminsc/category/edit/{$cat->id}" : $cat->href;
+            $this->panel    = CardPanel::categoryCardPanel($this->category, true);
+            $this->index    = $catCount - $i + 1;
             if (!$this->isLastLink && ($catCount === $i)) {
-                $this->breadcrumbs = "<li><a href='{$this->namespace}/{$slug}'>{$cat->name}</a>{$panel}</li>{$this->breadcrumbs}";
+                $this->breadcrumbs = $this->lastLink();
             } else {
-                $this->breadcrumbs = "<li><div>{$cat->name}</div>{$panel}</li>{$this->breadcrumbs}";
+                $this->breadcrumbs = $this->link();
             }
         }
-        $str = "<li><a href='{$this->namespace}'>Категории</a></li>{$this->breadcrumbs}";
-        return "<nav class='{$this->class}'>{$str}</nav>";
+        return $this->getWrapper();
+
     }
 
+    private function lastLink(): string
+    {
+        $obj = get_object_vars($this);
+        return $this->fs->getContent('link', compact('obj'));
+    }
+
+    private function link(): string
+    {
+        $obj = get_object_vars($this);
+        return $this->fs->getContent('lastLink', compact('obj'));
+    }
 
 }
