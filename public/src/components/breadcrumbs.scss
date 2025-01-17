@@ -21,6 +21,10 @@ nav.breadcrumbs-4 {
   flex-wrap: wrap;
   font-family: Verdana, sans-serif;
 
+  ul {
+    display: flex;
+  }
+
   li {
     margin: 1px 0;
     background: #337AB7;
@@ -71,7 +75,6 @@ nav.breadcrumbs-4 {
     border-radius: 0 6px 6px 0;
   }
 }
-
 
 
 nav.breadcrumbs-1 {
@@ -190,7 +193,8 @@ nav.breadcrumbs-5 {
 
   a:hover {
   }
-  ul{
+
+  ul {
     display: flex;
   }
 
@@ -227,11 +231,13 @@ nav.breadcrumbs-5 {
   li:last-of-type:after {
     display: none;
   }
+
   li a {
     color: #000;
     text-decoration: none;
     transition: color 0.3s;
   }
+
   li a:hover {
     color: #337AB7;
   }
