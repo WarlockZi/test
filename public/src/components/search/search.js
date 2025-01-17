@@ -11,6 +11,7 @@ export default class Search {
       const panel = $('.search-panel').first();
 
       if (!openBtn || !panel) return;
+
       this.openBtn = openBtn;
       this.panel = panel;
 
