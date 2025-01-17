@@ -36,12 +36,11 @@ $(document).ready(async function () {
 
    const admin = window.location.pathname.includes('adminsc')
    if (!admin) return false
-   debugger
 
    const table = $('[custom-table]').first()
    if (table) {
       const {default: Tables} = await import( '../components/table/Tables.js')
-      new Tables
+      // new Tables
    }
    new Search(true);
    new Navigation;
