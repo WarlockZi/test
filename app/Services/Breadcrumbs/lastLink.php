@@ -11,7 +11,7 @@ $tagEnd = (($obj['namespace'] === 'admin') && $obj['isLastLink'])
     ? "</a>"
     : "</div>";
 ?>
-<li<?= $ListItem; ?>>
+<li <?= $ListItem; ?>>
 
 <?= $tagStart ?>
     <span itemprop="name">
