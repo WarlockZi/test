@@ -1,6 +1,6 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-B8HiUVPk.js",
+    "file": "assets/Category-CdaRhGAc.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -33,7 +33,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-CprotLqr.js",
+    "file": "assets/Product-CveTwxjm.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -54,7 +54,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-yBiJplnn.js",
+    "file": "assets/Props-C8PvSHsM.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -67,7 +67,7 @@
     ]
   },
   "Admin/ProductFilter/ProductFilter.js": {
-    "file": "assets/ProductFilter-Db4J_BNC.js",
+    "file": "assets/ProductFilter-DJBjfrev.js",
     "name": "ProductFilter",
     "src": "Admin/ProductFilter/ProductFilter.js",
     "isDynamicEntry": true,
@@ -90,14 +90,14 @@
     ]
   },
   "Admin/Test/TestEdit/test-edit.js": {
-    "file": "assets/test-edit-BjPjbU6a.js",
+    "file": "assets/test-edit-D_PZFMGO.js",
     "name": "test-edit",
     "src": "Admin/Test/TestEdit/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_search-uOMQXYvZ.js",
-      "_index-BFNlx4zU.js",
+      "_index-CQ5MrYOO.js",
       "_MyQuill-DcsoDn4c.js"
     ],
     "css": [
@@ -105,7 +105,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-BnPNwfhK.js",
+    "file": "assets/admin-RX4gO75X.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -115,15 +115,15 @@
     ],
     "dynamicImports": [
       "components/table/Tables.js",
-      "_index-BFNlx4zU.js",
+      "_index-CQ5MrYOO.js",
       "Admin/chartjs/chartjs.js",
       "Admin/ProductFilter/ProductFilter.js",
       "Promotions/Promotion.js",
       "components/Modal/modal.js",
       "share/card_panel/card_panel.js",
       "Admin/Product/Product.js",
-      "Admin/components/catalog-item/catalog-item.js",
       "Admin/Order/order.js",
+      "Admin/components/catalog-item/catalog-item.js",
       "Admin/Category/Category.js"
     ],
     "css": [
@@ -289,8 +289,8 @@
     "file": "assets/index-DmAyeOWP.css",
     "src": "_index-!~{004}~.js"
   },
-  "_index-BFNlx4zU.js": {
-    "file": "assets/index-BFNlx4zU.js",
+  "_index-CQ5MrYOO.js": {
+    "file": "assets/index-CQ5MrYOO.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [

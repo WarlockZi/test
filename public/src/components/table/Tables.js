@@ -1,4 +1,5 @@
 import {$} from "@src/common.js";
+import './table.scss';
 import Table from "@src/components/table/Table.js";
 
 export default class Tables {
