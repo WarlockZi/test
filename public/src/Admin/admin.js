@@ -88,17 +88,17 @@ $(document).ready(async function () {
       const {default: Product} = await import('./Product/Product.js')
       new Product();
    }
-   const catalogItem = document[qs]('.item-wrap')
-   if (catalogItem) {
-      const {default: CatalogItem} = await import('./components/catalog-item/catalog-item.js')
-      new CatalogItem(catalogItem)
-   }
+
 
    if (document[qs]('.order-edit')) {
       const {default: Order} = await import('./Order/order.js')
       new Order()
    }
-
+   const catalogItem = document[qs]('.item-wrap')
+   if (catalogItem) {
+      const {default: CatalogItem} = await import('./components/catalog-item/catalog-item.js')
+      new CatalogItem(catalogItem)
+   }
    const category = document[qs](`.item-wrap[data-model='category']`)
    if (category) {
       const {default: Category} = await import('./Category/Category.js')
