@@ -43,6 +43,7 @@ $(document).ready(async function () {
       new Tables
    }
    new Search(true);
+   debugger
    new Navigation;
    new AdminHeader()
    adminScroll()

@@ -1,6 +1,6 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-CjgFxRU8.js",
+    "file": "assets/Category-Bay0gqwe.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -33,7 +33,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-CJDdWmAE.js",
+    "file": "assets/Product-CxLVL2Ps.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -54,7 +54,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-VivyujN1.js",
+    "file": "assets/Props-CNmdkAPh.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -67,7 +67,7 @@
     ]
   },
   "Admin/ProductFilter/ProductFilter.js": {
-    "file": "assets/ProductFilter-C4ePZE6y.js",
+    "file": "assets/ProductFilter-dyd1mVGe.js",
     "name": "ProductFilter",
     "src": "Admin/ProductFilter/ProductFilter.js",
     "isDynamicEntry": true,
@@ -90,14 +90,14 @@
     ]
   },
   "Admin/Test/TestEdit/test-edit.js": {
-    "file": "assets/test-edit-Cxo1an3H.js",
+    "file": "assets/test-edit-alkhTvTL.js",
     "name": "test-edit",
     "src": "Admin/Test/TestEdit/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_search-uOMQXYvZ.js",
-      "_index-Dm89NDnS.js",
+      "_index-BCOr7mhl.js",
       "_MyQuill-DcsoDn4c.js"
     ],
     "css": [
@@ -105,7 +105,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-C87_13e_.js",
+    "file": "assets/admin-FpE3UCGC.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -115,7 +115,7 @@
     ],
     "dynamicImports": [
       "components/table/Tables.js",
-      "_index-Dm89NDnS.js",
+      "_index-BCOr7mhl.js",
       "Admin/chartjs/chartjs.js",
       "Admin/ProductFilter/ProductFilter.js",
       "Promotions/Promotion.js",
@@ -289,8 +289,8 @@
     "file": "assets/index-DmAyeOWP.css",
     "src": "_index-!~{004}~.js"
   },
-  "_index-Dm89NDnS.js": {
-    "file": "assets/index-Dm89NDnS.js",
+  "_index-BCOr7mhl.js": {
+    "file": "assets/index-BCOr7mhl.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [
