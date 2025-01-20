@@ -161,6 +161,7 @@ export default class shippableTable {
          count: row[qs]('input').value,
          unit_id: row.dataset.unitid,
          product_id: this.sid,
+         loc_storage_cart_id:localStorage.getItem('loc_storage_cart_id')
       }
    }
 

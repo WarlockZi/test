@@ -11,12 +11,12 @@ class CartRepository
 
     public static function main(): Order|null
     {
-        $user = Auth::getUser();
-        if ($user) {
-            $q = Order::where('user_id', Auth::getUser()->id);
-        } else {
-            $q = Order::where('sess', session_id());
-        }
+        $user  = Auth::getUser();
+        $field = $user ? 'user_id' : 'loc_storage_cart_id';
+        $value = $user ? $user->id : $_COOKIE['loc_storage_cart_id'] ?? 'no';
+
+        $q = Order::where($field, $value);
+
         $order = $q
             ->whereNull('submitted')
             ->with('products.orderItems.unit')

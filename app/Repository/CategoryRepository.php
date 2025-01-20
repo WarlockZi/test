@@ -28,37 +28,18 @@ class CategoryRepository
     {
         return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
             function () use ($url) {
-                $user = Auth::getUser();
                 $q    = Category::query()
                     ->with('childrenRecursive')
                     ->with('parentRecursive')
                     ->withWhereHas('ownProperties',
                         fn($query) => $query->where('path', 'like', $url)
                     )
-                    ->with('productsInStore.unsubmittedOrders.orderItems')
-                    ->with('productsInStore.ownProperties')
-//                    ->orderBy('productsInStore.ownProperties.price')
-//                    ->with('productsInStore.like')
-                    ->with('productsInStore.inactivepromotions')
-                    ->with('productsInStore.orderItems')
-                    ->with('productsInStore.shippableUnits')
-                    ->with(['productsInStore.activepromotions' => function ($q) {
-                        $q->whereNull('active_till');
-                    }])
-                    ->with('productsNotInStoreInMatrix.unsubmittedOrders.orderItems')
-                    ->with('productsNotInStoreInMatrix.ownProperties')
-                    ->with('productsNotInStoreInMatrix.orderItems')
-                    ->with('productsNotInStoreInMatrix.inactivepromotions')
-                    ->with('productsNotInStoreInMatrix.shippableUnits')
-                    ->with(['productsNotInStoreInMatrix.activepromotions' => function ($q) {
-                        $q->whereNull('active_till');
-                    }]);
-
-                $cat = $q->with('productsInStore.compare')
-                    ->with('productsInStore.like')
+                    ->with('productsInStore')
+                    ->with('productsNotInStoreInMatrix')
                     ->get()->first();
+                $c = $q->toArray();
 
-                return $cat;
+                return $q;
             }, 10);
     }
 

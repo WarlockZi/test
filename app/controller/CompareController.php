@@ -43,7 +43,7 @@ class CompareController extends AppController
         $user  = Auth::getUser();
 
         $field = $user ? 'user_id' : 'sess';
-        $value = $user ? Auth::getUser()->getId() : session_id();
+        $value = $user ? $user->id : session_id();
         $c = Compare::updateOrCreate([
             $field => $value,
             'product_id' => $req['fields']['product_id'],

@@ -2,7 +2,6 @@
 
 namespace app\controller\Admin;
 
-use app\core\Auth;
 use app\core\Response;
 use app\model\Order;
 use app\model\OrderItem;
@@ -81,19 +80,4 @@ class OrderController extends AdminscController
             Response::exitJson(['error' => 'не удален', 'popup' => 'не удален']);
         }
     }
-
-//    public function actionSubmit(array $req): void
-//    {
-//        $order = $this->model->create([
-//            'user_id' => Auth::getUser()->id,
-//            'sess' => session_id(),
-//            'ip' => $_SERVER['REMOTE_ADDR'],
-//        ]);
-//        foreach ($req['orderItems'] as $orderItem) {
-//            OrderItem::where('id',$orderItem['id'])
-//                ->update(['order_id' => $order->id]);
-//        }
-//
-//    }
-
 }
