@@ -13,7 +13,7 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
-        'sess',
+        'loc_storage_cart_id',
         'ip',
         'submitted',
     ];

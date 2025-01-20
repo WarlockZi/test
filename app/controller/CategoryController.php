@@ -27,7 +27,7 @@ class CategoryController extends AppController
             $slug       = $this->route->slug;
             $category   = $this->repo->indexInstore($slug);
 
-            $rootCategories = CategoryRepository::rootCategories();
+            $rootCategories = CategoryRepository::rootCategories()??'';
             if ($category) {
                 $breadcrumbs = $this->breadcrumbsService->getCategoryBreadcrumbs($category, false, false);
                 $this->setVars(compact('breadcrumbs', 'category', 'rootCategories'));

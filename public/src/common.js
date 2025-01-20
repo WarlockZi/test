@@ -232,6 +232,7 @@ function sanitizeInput(input) {
       return map[match];
    });
 }
+
 function phoneValidator(phone) {
    const errors = []
    const min = 11
@@ -409,12 +410,14 @@ function setInit(url, body, headers) {
    return {
       method: 'POST',
       headers,
-      body: 'params=' + JSON.stringify(body,null,2),
+      body: 'params=' + JSON.stringify(body, null, 2),
    }
 }
-function damn_ampersand(str){
+
+function damn_ampersand(str) {
    return str.replaceAll('&', '%26');
 }
+
 function sendPost(url, init) {
    return new Promise(async (resolve, reject) => {
       const res = await fetch(url, init)
@@ -621,8 +624,8 @@ function cookieExists(key) {
    return !!match
 }
 
-function setCookie(key, value, digit, unit, path = '/') {
-   let units = {
+function getCookieExpires(digit, unit) {
+   const units = {
       s: 1,
       m: 60,
       h: 60 * 60,
@@ -632,9 +635,16 @@ function setCookie(key, value, digit, unit, path = '/') {
       y: 60 * 60 * 24 * 365
    };
 
-   let date = new Date();
+   const date = new Date();
    date.setTime(date.getTime() + (digit * units.unit));
-   document.cookie = `${key}=${value}; expires=${date} path=${path}; SameSite=lax`
+   return date
+}
+
+function setCookie(key, value, digit, unit, path = '/', domain = 'vitexopt.ru', Secure = false, HttpOnly = false) {
+   const expires = getCookieExpires(digit, unit)
+   const secure = Secure ? 'Secure' : '';
+   const httpOnly = HttpOnly ? 'HttpOnly' : '';
+   document.cookie = `${key}=${value}; expires=${expires} path=${path}; SameSite=lax;${secure};${httpOnly}`
 }
 
 function slider() {

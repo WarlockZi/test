@@ -56,32 +56,23 @@ class OrderRepository
             ]);
     }
 
-    public static function createOrder()
+    public static function createOrder(string $loc_storage_cart_id)
     {
         try {
-            $user = Auth::getUser();
-            if ($user) {
-                $order = Order::firstOrCreate([
-                    'user_id' => $user->id,
-                    'submitted' => NULL
-                ], [
-                    'user_id' => $user->id,
-                    'ip' => $_SERVER['SERVER_ADDR'],
-                    'submitted' => NULL,
-                ]);
-                $order->load('products.orderItems.unit');
+            $user  = Auth::getUser();
+            $field = $user ? 'user_id' : 'loc_storage_cart_id';
+            $value = $user ? $user->id : $loc_storage_cart_id;
 
-            } else {
-                $order = Order::firstOrCreate([
-                    'sess' => session_id(),
-                    'submitted' => NULL
-                ], [
-                    'sess' => session_id(),
-                    'ip' => $_SERVER['SERVER_ADDR'],
-                    'submitted' => NULL,
-                ]);
-                $order->load('products.orderItems.unit');
-            }
+            $order = Order::firstOrCreate([
+                $field => $value,
+                'submitted' => NULL
+            ], [
+                $field => $value,
+                'ip' => $_SERVER['SERVER_ADDR'],
+                'submitted' => NULL,
+            ]);
+            $order->load('products.orderItems.unit');
+
             return $order;
         } catch (Throwable $exception) {
             return null;
@@ -91,9 +82,10 @@ class OrderRepository
     public static function updateOrCreate(array $req): void
     {
         if (!$req) return;
-        $order   = self::createOrder();
+        $order   = self::createOrder($req['loc_storage_cart_id']);
         $product = Product::where('1s_id', $req['product_id'])->first();
         $order->products()->sync($req['product_id'], false);
+        $order->load('products.orderItems.unit');
 
         if (!$req['count']) {
             $res = self::deleteOrderItem($order, $product, $req['unit_id']);
@@ -168,21 +160,11 @@ class OrderRepository
         return $orderItems;
     }
 
-//    public static function clientList()
-//    {
-//        $orders = User::query()
-//            ->rightJoin('orders', function ($join) {
-//                $join->on('orders.user_id', '=', 'users.id');
-//            })
-//            ->groupBy('users.id')
-//            ->get();
-//        return $orders;
-//    }
 
     public static function edit($id)
     {
         $orders = Order::
-            with('user',
+        with('user',
             'products.orderItems.unit',
             'products.activePromotions',
             'products.inactivePromotions')
@@ -192,24 +174,19 @@ class OrderRepository
 
     public static function count(): int
     {
-        $user = Auth::getUser();
-        if ($user) {
-            $order = Order::where('user_id', $user->id)
-                ->select('id')
-                ->with(['products' => function ($q) {
-                    return $q->select('name');
-                }])
-                ->whereNull('submitted')
-                ->first();
-        } else {
-            $order = Order::where('sess', session_id())
-                ->select('id')
-                ->with(['products' => function ($q) {
-                    return $q->select('name');
-                }])
-                ->whereNull('submitted')
-                ->first();
-        }
+        $user   = Auth::getUser();
+
+        $field = $user ? 'user_id' : 'loc_storage_cart_id';
+        $value = $user ? $user->id : $_COOKIE['loc_storage_cart_id'] ?? 'no';
+
+        $order = Order::where($field, $value)
+            ->select('id')
+            ->with(['products' => function ($q) {
+                return $q->select('name');
+            }])
+            ->whereNull('submitted')
+            ->first();
+
         return $order?->products->count() ?? 0;
     }
 }

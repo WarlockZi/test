@@ -1,5 +1,3 @@
-import {$} from "../../common.js";
-
 export default function scroll() {
 
    var prevScrollpos = window.pageYOffset;
@@ -24,16 +22,4 @@ export default function scroll() {
       prevScrollpos = currentScrollPos;
    }
 
-   // const header = $('.header').first()
-   //
-   // document.addEventListener(
-   //    'scroll',
-   //    handle.bind(header),
-   //    {passive: true}
-   // );
-   //
-   // function handle(){
-   //    if (header)
-   //       window.scrollY > 30 ? header.classList.add('short') : header.classList.remove('short')
-   // }
 }

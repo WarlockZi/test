@@ -36,10 +36,59 @@ class Category extends Model
 
     protected $appends = ['shortLink', 'href'];
 
+    public function productsNotInStore()
+    {
+        return $this->hasMany(Product::class)
+            ->where('instore', 0)
+            ->with('mainImages')
+            ->orderBy('name');
+    }
+
+    public function productsNotInStoreInMatrix(): HasMany
+    {
+        return $this->hasMany(Product::class)
+            ->where('instore', 0)
+            ->where('name', 'regexp', '\\s?\\*\\s?$')
+            ->with('mainImages')
+            ->with('ownProperties')
+            ->with('orderItems')
+            ->with('shippableUnits')
+            ->with('inactivepromotions')
+            ->with(['activepromotions' => function ($q) {
+                $q->whereNull('active_till');
+            }])
+            ->orderBy('name');
+    }
+
+    public function productsInStore()
+    {
+        $pInStore = $this->hasMany(Product::class)
+            ->where('instore', '<>', 0)
+            ->with('mainImages')
+            ->with('orderItems')
+            ->with('shippableUnits')
+            ->with('inactivepromotions')
+            ->with(['activepromotions' => function ($q) {
+                $q->whereNull('active_till');
+            }])
+            ->with('compare')
+            ->with('like')
+            ->with('units')
+            ->with('ownProperties')
+//            ->with('prices')
+//            ->select(['products.*', 'prices.price as product_price'])
+//            ->join('prices', 'prices.1s_id', '=', 'products.1s_id')
+//            ->orderBy('product_price')
+        ;
+
+        return $pInStore;
+    }
+
     public function seo_title()
     {
         return $this->ownProperties->seo_title ?? $this->name . " - купить оптом недорого в интернет-магазине VITEX в Вологде";
     }
+
     public function seo_description()
     {
         return $this->ownProperties->seo_description ?? $this->name . ". Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
@@ -65,14 +114,16 @@ class Category extends Model
         $host   = $_SERVER['HTTP_HOST'] ?? '';
         return "{$scheme}://{$host}/short/{$link}";
     }
+
     public function getFlatSelfAndChildrenAttribute()
     {
         return collect([$this])->merge(
-            $this->childrenRecursive->flatMap(function($q){
+            $this->childrenRecursive->flatMap(function ($q) {
                 return $q->flatSelfAndChildren ?? collect([$this->id, $this->name, $this->category_id]);
             })
         );
     }
+
     protected function getHrefAttribute(): string
     {
         if (!$this->ownProperties) return '';
@@ -108,9 +159,7 @@ class Category extends Model
     public function ownProperties()
     {
         return $this
-            ->hasOne(CategoryProperty::class, 'category_1s_id', '1s_id')
-
-            ;
+            ->hasOne(CategoryProperty::class, 'category_1s_id', '1s_id');
     }
 
     public function scopeWithWhereHas($query, $relation, $constraint)
@@ -131,39 +180,6 @@ class Category extends Model
             ;
     }
 
-    public function productsNotInStore()
-    {
-        return $this->hasMany(Product::class)
-            ->where('instore', 0)
-            ->with('mainImages')
-            ->orderBy('name');
-    }
-
-    public function productsNotInStoreInMatrix(): HasMany
-    {
-        return $this->hasMany(Product::class)
-            ->where('instore', 0)
-            ->where('name', 'regexp', '\\s?\\*\\s?$')
-            ->with('mainImages')
-            ->with('ownProperties')
-            ->orderBy('name');
-    }
-
-    public function productsInStore()
-    {
-        $pInStore = $this->hasMany(Product::class)
-            ->where('instore', '<>', 0)
-            ->with('mainImages')
-            ->with('promotions')
-            ->with('units')
-            ->with('ownProperties')
-            ->select(['products.*','prices.price as product_price'])
-            ->join('prices', 'prices.1s_id', '=', 'products.1s_id')
-            ->orderBy('product_price')
-        ;
-
-        return $pInStore;
-    }
 
     public function cat()
     {

@@ -60,7 +60,7 @@ class Product extends Model
     {
         $user  = Auth::getUser();
         $field = $user ? 'user_id' : 'sess';
-        $value = $user ? Auth::getUser()->getId() : session_id();
+        $value = $user ? $user->id : session_id();
         return $this->hasOne(Like::class, 'product_id', '1s_id')
             ->where($field, $value);
     }
@@ -116,8 +116,9 @@ class Product extends Model
                 ->belongsToMany(Order::class)
                 ->where('user_id', $user->id);
         }
+
         return $this
-            ->hasMany(Order::class, 'sess', session_id());
+            ->hasMany(Order::class, 'loc_storage_cart_id', Auth::getUser());
     }
 
     protected function castAttribute($key, $value)
@@ -208,15 +209,12 @@ class Product extends Model
     public function unsubmittedOrders(): HasMany
     {
         $user = Auth::getUser();
-        if ($user) {
+        $field = $user ? 'user_id' : 'loc_storage_cart_id';
+        $value = $user ? $user->id : $_COOKIE['loc_storage_cart_id'] ?? 'no';
             $orders = $this
-                ->hasMany(Order::class, 'user_id', 'id')
+                ->hasMany(Order::class, $field, $value)
                 ->where('submitted', '0');
-        } else {
-            $orders = $this
-                ->hasMany(Order::class, 'sess', session_id())
-                ->where('submitted', '0');
-        }
+
         return $orders;
     }
 

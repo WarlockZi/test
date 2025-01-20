@@ -20,6 +20,7 @@ import ChatLocalStorage from "@src/share/chatLocalStorage/ChatLocalStorage.js";
 import Chat from "@src/share/chat/chat.js";
 import Feedback from "@src/Feedback/Feedback.js";
 import CallMe from "@src/CallMe/CallMe.js";
+import setLocalStorageCartId from "@src/share/cart_id/cart_id.js";
 
 window.YM = YM
 document.addEventListener('DOMContentLoaded', async function () {
@@ -29,13 +30,21 @@ document.addEventListener('DOMContentLoaded', async function () {
    const feedbackButton = $('#feedback-submit').first()
    if (feedbackButton) new Feedback(feedbackButton)
 
-   new Chat()
-   new ChatLocalStorage()
+   new Chat
+   new ChatLocalStorage
+   new CallMe
+   new Search
+   new MobileMenu
+
+   IntObserver()
+   headerMenu()
+   scroll()
+   setLocalStorageCartId()
+
 
    const path = window.location.pathname;
    if (path.startsWith('/auth/profile')) {
       new CatalogItem($('.item-wrap').first())
-
    }
    else if (path.startsWith('/cart')) {
       YM('url_cart')
@@ -49,13 +58,8 @@ document.addEventListener('DOMContentLoaded', async function () {
       const {default: Compare} = await import('../Compare/Compare.js')
       new Compare()
    }
-   IntObserver()
-   headerMenu()
-   scroll()
 
-   new CallMe
-   new Search
-   new MobileMenu
+
 
    const admin = window.location.pathname.includes('adminsc')
    if (admin) return false
