@@ -45,8 +45,7 @@ class Product extends Model
     public function orderItems(): HasMany
     {
         list($field, $value) = Auth::getCartFieldValue();
-        $orderId = Order::where($field, $value)->whereNull('submitted')->first()->id;
-//        $orderId = Order::where()->first()?->id;
+        $orderId = Order::where($field, $value)?->whereNull('submitted')?->first()?->id;
         return $this->hasMany(OrderItem::class,
             'product_id', '1s_id')
             ->where('order_id', $orderId);
