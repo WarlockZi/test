@@ -44,7 +44,7 @@ class Auth
     {
         $user  = Auth::getUser();
         $field = $user ? 'user_id' : 'loc_storage_cart_id';
-        $value = $user ? $user->id : $_COOKIE['loc_storage_cart_id'] ?? 'no';
+        $value = $user ? $user->id : $_COOKIE['loc_storage_cart_id'] ?? NULL;
         return [$field, $value];
     }
 
