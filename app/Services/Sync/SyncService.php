@@ -102,7 +102,7 @@ class SyncService
     {
         try {
             $this->importFilesExist();
-//            $this->trancateService->softTrancate();
+            $this->trancateService->softTrancate();
             $this->LoadCategories();
             $this->LoadProducts();
             $this->LoadPrices();
