@@ -74,8 +74,10 @@ class LoadCategories
 
     protected function setCategoryOwnProps(Category $category): CategoryProperty
     {
-        $catProps = CategoryProperty::where('category_1s_id', $category['1s_id'])
-        ->first();
+        $catProps = CategoryProperty::firstOrCreate(
+            ['category_1s_id'=>$category['1s_id']],
+            ['category_1s_id'=>$category['1s_id']],
+        );
         if (!$catProps->short_link) {
             $catProps->short_link = ShortlinkService::getValidShortLink();
         }
