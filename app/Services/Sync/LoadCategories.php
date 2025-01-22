@@ -77,13 +77,13 @@ class LoadCategories
         $catProps = CategoryProperty::firstOrCreate(
             ['category_1s_id' => $category['1s_id']],
             ['category_1s_id' => $category['1s_id'],
-                'slug' => SlugService::getValidCategorySlug($category)],
+                'slug' => SlugService::getCategorySlug($category)],
         );
         if (!$catProps->short_link) {
             $catProps->short_link = ShortlinkService::getValidShortLink();
         }
 //        if (!$catProps->slug) {
-//            $catProps->slug = SlugService::getValidCategorySlug($category);
+//            $catProps->slug = SlugService::getCategorySlug($category);
 //        }
         if (!$catProps->path) {
             UrlService::setCateoryOwnPropPath($category);

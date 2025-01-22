@@ -37,9 +37,9 @@ class SlugService
         }
         return $slug;
     }
-    public static function getValidCategorySlug(Category $category): string
+    public static function getCategorySlug(Category $category): string
     {
-        $slug = SlugService::slug($category['print_name']);
+        $slug = SlugService::slug($category['name']);
         if (Category::where('slug', $slug)->first()) {
             $slug = "{$slug}_{$category['s_id']}";
             $i    = 0;
