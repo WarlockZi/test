@@ -41,7 +41,7 @@ class SlugService
     {
         $slug = SlugService::slug($category['name']);
         if (Category::where('slug', $slug)->first()) {
-            $slug = "{$slug}_{$category['s_id']}";
+            $slug = "{$slug}_{$category['1s_id']}";
             $i    = 0;
             while (Category::where('slug', $slug)->first()) {
                 $slug = "$slug" . "_" . "$i++";
