@@ -12,7 +12,7 @@ class CategoryController extends AppController
     public function __construct(
         protected CardPanel          $categoryView = new CardPanel(),
         protected CategoryRepository $repo = new CategoryRepository(),
-        private BreadcrumbsService $breadcrumbsService = new BreadcrumbsService(),
+        private BreadcrumbsService   $breadcrumbsService = new BreadcrumbsService(),
 
     )
     {
@@ -22,12 +22,12 @@ class CategoryController extends AppController
 
     public function actionIndex(): void
     {
-        if ($this->route->slug) {
+        $slug = $this->route->slug;
+        if ($slug) {
             $this->view = 'category';
-            $slug       = $this->route->slug;
             $category   = $this->repo->indexInstore($slug);
 
-            $rootCategories = CategoryRepository::rootCategories()??'';
+            $rootCategories = CategoryRepository::rootCategories() ?? '';
             if ($category) {
                 $breadcrumbs = $this->breadcrumbsService->getCategoryBreadcrumbs($category, false, false);
                 $this->setVars(compact('breadcrumbs', 'category', 'rootCategories'));

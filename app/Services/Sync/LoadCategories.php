@@ -7,6 +7,7 @@ use app\model\Category;
 use app\model\CategoryProperty;
 use app\Services\ShortlinkService;
 use app\Services\SlugService;
+use app\Services\UrlService;
 
 class LoadCategories
 {
@@ -81,7 +82,9 @@ class LoadCategories
         if (!$catProps->slug) {
             $catProps->slug = SlugService::getValidCategorySlug($category);
         }
-
+        if (!$catProps->path) {
+            UrlService::setCateoryOwnPropPath($category);
+        }
         $catProps->save();
         return $catProps;
     }

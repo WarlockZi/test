@@ -14,7 +14,7 @@
 }
 [custom-select], [select-new] {
   display: flex;
-  width: clamp(136px,20vw,436px);
+  width: clamp(136px,20vw,100%);
   align-items: center;
   position: relative;
   background-color: white;

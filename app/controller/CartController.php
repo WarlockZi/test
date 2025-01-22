@@ -27,11 +27,9 @@ class CartController extends AppController
     }
     public function actionIndex(): void
     {
-        $user = Auth::getUser();
-        $order = CartRepository::main();
+        $order = OrderRepository::cart();;
 //        $a = $order->toArray();
-
-        $this->setVars(compact('order', 'user'));
+        $this->setVars(compact('order'));
     }
 
     public function actionDrop(): void

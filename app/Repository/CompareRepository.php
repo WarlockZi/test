@@ -11,9 +11,7 @@ class CompareRepository
 {
     public static function all()
     {
-        $user  = Auth::getUser();
-        $field = $user ? 'user_id' : 'sess';
-        $value = $user ? Auth::getUser()->getId() : session_id();
+        list($field, $value) = Auth::getCartFieldValue();
         $compares = Compare::where($field, $value)
             ->with('product')
             ->get();
@@ -22,9 +20,7 @@ class CompareRepository
 
     public static function updateOrCreate($req): bool
     {
-        $user  = Auth::getUser();
-        $field = $user ? 'user_id' : 'sess';
-        $value = $user ? Auth::getUser()->getId() : session_id();
+        list($field, $value) = Auth::getCartFieldValue();
         try {
             Compare::updateOrCreate([
                 $field => $value,
@@ -40,9 +36,7 @@ class CompareRepository
     }
     public static function del($req): bool
     {
-        $user  = Auth::getUser();
-        $field = $user ? 'user_id' : 'sess';
-        $value = $user ? Auth::getUser()->getId() : session_id();
+        list($field, $value) = Auth::getCartFieldValue();
         try {
             $compare = Compare::where($field, $value)
                 ->where('product_id', $req['fields']['product_id'])

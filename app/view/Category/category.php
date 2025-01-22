@@ -11,11 +11,13 @@
 
             <ol>
 
-                <? foreach ($rootCategories as $cat): ?>
-                    <li>
-                        <a href="<?= $cat['href'] ?>"><?= $cat['name'] ?></a>
-                    </li>
-                <? endforeach ?>
+                <? if (is_array($rootCategories) && !empty($rootCategories)): ?>
+                    <? foreach ($rootCategories as $cat): ?>
+                        <li>
+                            <a href="<?= $cat['href'] ?>"><?= $cat['name'] ?></a>
+                        </li>
+                    <? endforeach ?>
+                <? endif; ?>
 
             </ol>
 

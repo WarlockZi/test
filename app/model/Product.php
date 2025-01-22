@@ -44,32 +44,56 @@ class Product extends Model
 
     public function orderItems(): HasMany
     {
-        $orderId = $this?->orders()->first()?->id;
+        list($field, $value) = Auth::getCartFieldValue();
+        $orderId = Order::where($field, $value)->whereNull('submitted')->first()->id;
+//        $orderId = Order::where()->first()?->id;
         return $this->hasMany(OrderItem::class,
             'product_id', '1s_id')
             ->where('order_id', $orderId);
     }
 
+    public function orderProduct()
+    {
+        $oI = $this->hasOne(
+            OrderProduct::class,
+            'product_id',
+            '1s_id',
+        )->with('orderItems');
+
+        return $oI;
+    }
+
+    public function orders()
+    {
+        $user = Auth::getUser();
+        if ($user) {
+            return $this
+                ->belongsToMany(Order::class)
+                ->where('user_id', $user->id);
+        }
+
+        return $this
+            ->hasMany(Order::class, 'loc_storage_cart_id', Auth::getUser());
+    }
+
     public function ownProperties(): HasOne
     {
         return $this
-            ->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
+            ->hasOne(ProductProperty::class,
+                'product_1s_id',
+                '1s_id');
     }
 
     public function like(): HasOne
     {
-        $user  = Auth::getUser();
-        $field = $user ? 'user_id' : 'sess';
-        $value = $user ? $user->id : session_id();
+        list($field, $value) = Auth::getCartFieldValue();
         return $this->hasOne(Like::class, 'product_id', '1s_id')
             ->where($field, $value);
     }
 
     public function compare(): HasOne
     {
-        $user  = Auth::getUser();
-        $field = $user ? 'user_id' : 'sess';
-        $value = $user ? Auth::getUser()->getId() : session_id();
+        list($field, $value) = Auth::getCartFieldValue();
         return $this->hasOne(Compare::class, 'product_id', '1s_id')
             ->where($field, $value);
     }
@@ -106,19 +130,6 @@ class Product extends Model
         $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
         $host   = $_SERVER['HTTP_HOST'] ?? '';
         return "{$scheme}://{$host}/short/{$link}";
-    }
-
-    public function orders()
-    {
-        $user = Auth::getUser();
-        if ($user) {
-            return $this
-                ->belongsToMany(Order::class)
-                ->where('user_id', $user->id);
-        }
-
-        return $this
-            ->hasMany(Order::class, 'loc_storage_cart_id', Auth::getUser());
     }
 
     protected function castAttribute($key, $value)
@@ -208,12 +219,10 @@ class Product extends Model
 
     public function unsubmittedOrders(): HasMany
     {
-        $user = Auth::getUser();
-        $field = $user ? 'user_id' : 'loc_storage_cart_id';
-        $value = $user ? $user->id : $_COOKIE['loc_storage_cart_id'] ?? 'no';
-            $orders = $this
-                ->hasMany(Order::class, $field, $value)
-                ->where('submitted', '0');
+        list($field, $value) = Auth::getCartFieldValue();
+        $orders = $this
+            ->hasMany(Order::class, $field, $value)
+            ->where('submitted', '0');
 
         return $orders;
     }

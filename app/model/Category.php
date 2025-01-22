@@ -51,7 +51,7 @@ class Category extends Model
             ->where('name', 'regexp', '\\s?\\*\\s?$')
             ->with('mainImages')
             ->with('ownProperties')
-            ->with('orderItems')
+//            ->with('orderItems')
             ->with('shippableUnits')
             ->with('inactivepromotions')
             ->with(['activepromotions' => function ($q) {
@@ -65,7 +65,8 @@ class Category extends Model
         $pInStore = $this->hasMany(Product::class)
             ->where('instore', '<>', 0)
             ->with('mainImages')
-            ->with('orderItems')
+            ->with('orderProduct')
+//            ->with('orderItems')
             ->with('shippableUnits')
             ->with('inactivepromotions')
             ->with(['activepromotions' => function ($q) {
@@ -75,6 +76,14 @@ class Category extends Model
             ->with('like')
             ->with('units')
             ->with('ownProperties')
+
+//            ->with(['priceRelation' => function ($q) {
+//                $q->orderBy('price');
+//            }])
+
+//            ->with(['prices'=>function ($q) {
+//                $q->orderBy('price.price', 'asc');
+//            }])
 //            ->with('prices')
 //            ->select(['products.*', 'prices.price as product_price'])
 //            ->join('prices', 'prices.1s_id', '=', 'products.1s_id')
