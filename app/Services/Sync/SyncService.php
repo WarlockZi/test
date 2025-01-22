@@ -66,14 +66,16 @@ class SyncService
         exit('success');
     }
 
-    private function importFilesExist(): void
+    private function importFilesExist(): bool
     {
         if (!is_readable($this->importFile)) {
             $this->logger->write('Отсутстует файл importFile');
             if (!is_readable($this->offerFile)) {
                 $this->logger->write('Отсутстует файл offerFile');
+                return false;
             }
         }
+        return true;
     }
 
 

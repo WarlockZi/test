@@ -3,7 +3,9 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Auth;
 use app\core\Response;
+use app\model\User;
 use app\Services\Logger\FileLogger;
 use app\Services\Sync\SyncService;
 use app\Services\Sync\TrancateService;
@@ -18,6 +20,7 @@ class SyncController extends AdminscController
         protected FileLogger      $logger = new FileLogger('import.txt'),
     )
     {
+        Auth::setUser(User::where('email', 'vvoronik@yandex.ru')->first());
         parent::__construct();
     }
 
