@@ -67,10 +67,11 @@ class CategoryFormView
                 ->field(
                     ItemFieldBuilder::build('name', $category)
                         ->name('Наименование в 1c')
-                        ->contenteditable()
+//                        ->contenteditable()
                         ->required()
                         ->get()
                 )
+
                 ->field(
                     ItemFieldBuilder::build('show_front', $category)
                         ->name('Показывать на главоной')
