@@ -76,7 +76,8 @@ class LoadCategories
     {
         $catProps = CategoryProperty::firstOrCreate(
             ['category_1s_id'=>$category['1s_id']],
-            ['category_1s_id'=>$category['1s_id']],
+            ['category_1s_id'=>$category['1s_id'],
+                'slug'=>SlugService::getValidCategorySlug($category)],
         );
         if (!$catProps->short_link) {
             $catProps->short_link = ShortlinkService::getValidShortLink();
