@@ -4,7 +4,6 @@
 namespace app\Repository;
 
 
-use app\core\Auth;
 use app\core\Cache;
 use app\model\Category;
 use Illuminate\Database\Eloquent\Collection;
@@ -28,7 +27,7 @@ class CategoryRepository
     {
         return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
             function () use ($url) {
-                $q    = Category::query()
+                $products = Category::query()
                     ->with('childrenRecursive')
                     ->with('parentRecursive')
                     ->withWhereHas('ownProperties',
@@ -37,9 +36,12 @@ class CategoryRepository
                     ->with('productsInStore')
                     ->with('productsNotInStoreInMatrix')
                     ->get()->first();
-                $c = $q->toArray();
+                $c        = $products->toArray();
 
-                return $q;
+
+                $c = $products->toArray();
+
+                return $products;
             }, 10);
     }
 
@@ -80,7 +82,6 @@ class CategoryRepository
 
     public static function treeAll(): Collection
     {
-//        Cache::delete('categoryTree');
         $cat = Cache::get(
             'categoryTree',
             function () {

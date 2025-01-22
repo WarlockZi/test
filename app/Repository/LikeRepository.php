@@ -12,9 +12,7 @@ class LikeRepository
 {
     public static function all()
     {
-        $user  = Auth::getUser();
-        $field = $user ? 'user_id' : 'sess';
-        $value = $user ? Auth::getUser()->getId() : session_id();
+        list($field, $value) = Auth::getCartFieldValue();
         $likes = Like::where($field, $value)
             ->with('product')
             ->get();
@@ -23,9 +21,7 @@ class LikeRepository
 
     public static function updateOrCreate($req): bool
     {
-        $user  = Auth::getUser();
-        $field = $user ? 'user_id' : 'sess';
-        $value = $user ? Auth::getUser()->getId() : session_id();
+        list($field, $value) = Auth::getCartFieldValue();
         try {
             Like::updateOrCreate([
                 $field => $value,
@@ -41,9 +37,7 @@ class LikeRepository
     }
     public static function del($req): bool
     {
-        $user  = Auth::getUser();
-        $field = $user ? 'user_id' : 'sess';
-        $value = $user ? Auth::getUser()->getId() : session_id();
+        list($field, $value) = Auth::getCartFieldValue();
         try {
             $like = Like::where($field, $value)
                 ->where('product_id', $req['fields']['product_id'])

@@ -22,16 +22,21 @@ class Order extends Model
     {
         return $this->hasMany(OrderProduct::class);
     }
-    public function orderItems(): \Illuminate\Support\Collection
+    public function orderItems(): HasMany
     {
-        $orderItems = [];
-        $this->products()
-            ->each(function ($product, $key) use (&$orderItems) {
-                $orderItems[] = $product->orderItem;
-            });
-        return collect($orderItems);
+        return $this->hasMany(OrderItem::class)
+            ->groupBy('product_id')
+            ->with('product');
     }
-
+//    public function orderItems(): \Illuminate\Support\Collection
+//    {
+//        $orderItems = [];
+//        $this->products()
+//            ->each(function ($product, $key) use (&$orderItems) {
+//                $orderItems[] = $product->orderItem;
+//            });
+//        return collect($orderItems);
+//    }
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class,
@@ -41,6 +46,7 @@ class Order extends Model
             'id',
             '1s_id')
             ->withPivot('order_id', 'product_id')
+//            ->with('orderItem')
             ->whereHas('orderItems');
     }
 

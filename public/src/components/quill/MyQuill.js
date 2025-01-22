@@ -6,7 +6,12 @@ import 'quill/dist/quill.bubble.css';
 import DTO from "@src/Admin/DTO.js";
 
 export default class MyQuill {
-   constructor(selector = '#detail-text', autosave = false, toolbar = false, editable = false, theme = 'snow', dto = null,) {
+   constructor(selector = '#detail-text',
+               autosave = false,
+               toolbar = false,
+               editable = false,
+               theme = 'snow',
+               dto = null,) {
       const el = $(selector).first()
       if (!el) return false
       this.el = el
@@ -69,7 +74,7 @@ export default class MyQuill {
       } else {
          this.quill.setText(this.contents)
       }
-      if (!this.editable) this.quill.enable(false)
+      this.quill.enable(this.editable)
       if (this.autosave) {
          this.quill.on('text-change', function (delta) {
             // const content = JSON.stringify(quill.getContents())

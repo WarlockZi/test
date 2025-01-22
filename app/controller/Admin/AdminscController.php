@@ -19,7 +19,7 @@ class AdminscController extends AppController
     protected function isEmployee()
     {
         $user = Auth::getUser();
-        if (!$user->role->firstWhere('name', 'role_employee')) {
+        if (!$user?->role->firstWhere('name', 'role_employee')) {
             if (!$user->role->firstWhere('name', 'role_admin')) {
                 header("Location:/");
                 exit();

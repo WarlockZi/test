@@ -8,6 +8,7 @@ use app\core\Auth;
 use app\core\Response;
 use app\model\Order;
 use app\model\OrderItem;
+use app\model\OrderProduct;
 use app\model\Product;
 use Illuminate\Database\Eloquent\Collection;
 use Throwable;
@@ -56,22 +57,17 @@ class OrderRepository
             ]);
     }
 
-    public static function createOrder(string $loc_storage_cart_id)
+    public static function firstOrCreateOrder(string $loc_storage_cart_id)
     {
         try {
-            $user  = Auth::getUser();
-            $field = $user ? 'user_id' : 'loc_storage_cart_id';
-            $value = $user ? $user->id : $loc_storage_cart_id;
-
+            list($field, $value) = Auth::getCartFieldValue();
             $order = Order::firstOrCreate([
                 $field => $value,
                 'submitted' => NULL
             ], [
                 $field => $value,
                 'ip' => $_SERVER['SERVER_ADDR'],
-                'submitted' => NULL,
             ]);
-            $order->load('products.orderItems.unit');
 
             return $order;
         } catch (Throwable $exception) {
@@ -82,19 +78,24 @@ class OrderRepository
     public static function updateOrCreate(array $req): void
     {
         if (!$req) return;
-        $order   = self::createOrder($req['loc_storage_cart_id']);
+        list($field, $value) = Auth::getCartFieldValue();
+        $order = Order::where($field,$value)->first();
+        $orderProduct = OrderProductRepository::firstOrCreate($order->id, $req['product_id']);
+//        $orderItem =
+//        $orderProduct;
+        $order   = self::firstOrCreateOrder($req['loc_storage_cart_id']);
         $product = Product::where('1s_id', $req['product_id'])->first();
-        $order->products()->sync($req['product_id'], false);
+        $f       = $order->products()->attach($req['product_id']);
         $order->load('products.orderItems.unit');
 
-        if (!$req['count']) {
-            $res = self::deleteOrderItem($order, $product, $req['unit_id']);
-            if ($product->orderItems->count() === 0) {
-                $order->products()->detach($product['1s_id']);
-            }
-        } else {
-            $orderItm = self::updateOrCreateOrderItem($order, $product, $req['unit_id'], (int)$req['count']);
-        }
+//        if (!$req['count']) {
+//            $res = self::deleteOrderItem($order, $product, $req['unit_id']);
+//            if ($product->orderItems->count() === 0) {
+//                $order->products()->detach($product['1s_id']);
+//            }
+//        } else {
+//            $orderItm = self::updateOrCreateOrderItem($order, $product, $req['unit_id'], (int)$req['count']);
+//        }
 
         if ($orderItm->wasRecentlyCreated) {
             Response::exitJson(['popup' => "Добавлено в корзину"]);
@@ -107,7 +108,7 @@ class OrderRepository
 
     public static function detachItems(string $product_id, array $unitIds): bool
     {
-        $order = CartRepository::main();
+        $order = OrderRepository::cart();
         try {
             foreach ($unitIds as $unitId => $count) {
 //                $orderItem = $order->products->orderItems()->where('unit_id', $unitId)->first();
@@ -137,29 +138,20 @@ class OrderRepository
         return $orderItems;
     }
 
-    public static function userUnsubmittedOrders(): Order
+    public static function cart()
     {
-        $user = Auth::getUser();
-        if ($user) {
-            $order = Order::where([
-                'user_id' => $user->id,
-                'submitted' => '0'
-            ])->with('orderItems.product.units')->first();
-        } else {
-            $order = Order::where([
-                'sess' => session_id(),
-                'submitted' => '0'
-            ])->with('orderItems.product.units')->first();
-        }
+        list($field, $value) = Auth::getCartFieldValue();
+        $order = Order::query()
+            ->where($field, $value)
+            ->whereNull('submitted')
+            ->with('products.orderItems')
+
+//            ->with('orderItems')
+            ->first();
+        $c     = $order->toArray();
+//        $order->load('products.orderItems');
         return $order;
     }
-
-    public static function leadList()
-    {
-        $orderItems = self::q2();
-        return $orderItems;
-    }
-
 
     public static function edit($id)
     {
@@ -174,10 +166,7 @@ class OrderRepository
 
     public static function count(): int
     {
-        $user   = Auth::getUser();
-
-        $field = $user ? 'user_id' : 'loc_storage_cart_id';
-        $value = $user ? $user->id : $_COOKIE['loc_storage_cart_id'] ?? 'no';
+        list($field, $value) = Auth::getCartFieldValue();
 
         $order = Order::where($field, $value)
             ->select('id')
