@@ -7,7 +7,6 @@ use app\model\Category;
 use app\model\CategoryProperty;
 use app\Services\Logger\ErrorLogger;
 use app\Services\ShortlinkService;
-use app\Services\SlugService;
 use app\Services\UrlService;
 use Throwable;
 
@@ -61,7 +60,7 @@ class LoadCategories
         $item['1s_id']       = $group['Ид'];
         $item['category_id'] = $this->parent;
 
-        $item['name']       = $group['Наименование'];
+        $item['name'] = $group['Наименование'];
 //        $item['slug']       = SlugService::slug($item['name']);
         $item['deleted_at'] = NULL;
 
@@ -96,9 +95,9 @@ class LoadCategories
             $catProps->save();
             return $catProps;
         } catch (Throwable $exception) {
-            $this->logger->write($exception);
-            $exc = $exception;
-            throw new \Exception('load category own props failed: ' . $exc->getMessage());
+            $exc = 'load category own props failed: ' . $exception->getTraceAsString();
+            $this->logger->write($exc);
+            throw new \Exception($exc);
         }
 
     }
