@@ -5,9 +5,11 @@ namespace app\Services\Sync;
 
 use app\model\Category;
 use app\model\CategoryProperty;
+use app\Services\Logger\ErrorLogger;
 use app\Services\ShortlinkService;
 use app\Services\SlugService;
 use app\Services\UrlService;
+use Throwable;
 
 class LoadCategories
 {
@@ -18,6 +20,7 @@ class LoadCategories
         public array            $deleted = [],
         public array            $created = [],
         private array           $existed = [],
+        private ErrorLogger     $logger = new ErrorLogger,
     )
     {
         $xml        = simplexml_load_file($this->file);
@@ -74,23 +77,30 @@ class LoadCategories
 
     protected function setCategoryOwnProps(Category $category): CategoryProperty
     {
-        $catProps = CategoryProperty::firstOrCreate(
-            ['category_1s_id' => $category['1s_id']],
-            ['category_1s_id' => $category['1s_id']
+        try {
+            $catProps = CategoryProperty::firstOrCreate(
+                ['category_1s_id' => $category['1s_id']],
+                ['category_1s_id' => $category['1s_id']
 //                'slug' => SlugService::getCategorySlug($category)
-            ],
-        );
-        if (!$catProps->short_link) {
-            $catProps->short_link = ShortlinkService::getValidShortLink();
-        }
+                ],
+            );
+            if (!$catProps->short_link) {
+                $catProps->short_link = ShortlinkService::getValidShortLink();
+            }
 //        if (!$catProps->slug) {
 //            $catProps->slug = SlugService::getCategorySlug($category);
 //        }
-        if (!$catProps->path) {
-            UrlService::setCateoryOwnPropPath($category);
+            if (!$catProps->path) {
+                UrlService::setCateoryOwnPropPath($category);
+            }
+            $catProps->save();
+            return $catProps;
+        } catch (Throwable $exception) {
+            $this->logger->write($exception);
+            $exc = $exception;
+            throw new \Exception('load category own props failed: ' . $exc->getMessage());
         }
-        $catProps->save();
-        return $catProps;
+
     }
 
     protected function isAssoc(array $arr): bool
