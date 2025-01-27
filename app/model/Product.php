@@ -54,6 +54,7 @@ class Product extends Model
             'id' //in order_product
         );
     }
+
     public function orderProduct()
     {
         $oI = $this->hasOne(
@@ -63,17 +64,22 @@ class Product extends Model
         );
         return $oI;
     }
-    public function order():HasOne
+
+    public function order(): HasOne|null
     {
         list($field, $value) = Auth::getCartFieldValue();
-        $order = Order::where($field,$value)->first();
-        return $this->hasOne(OrderProduct::class,
-        'product_id',
-        '1s_id',
-        )
-            ->where('order_id', $order->id)
-            ;
+        $order = Order::where($field, $value)->first();
+
+        return !empty($order)
+
+            ? $this->hasOne(OrderProduct::class,
+                'product_id',
+                '1s_id',
+            )->where('order_id', $order->id)
+
+            : null;
     }
+
     public function orders()
     {
         $user = Auth::getUser();
