@@ -7,6 +7,7 @@ use app\model\Category;
 use app\model\CategoryProperty;
 use app\Services\Logger\ErrorLogger;
 use app\Services\ShortlinkService;
+use app\Services\SlugService;
 use app\Services\UrlService;
 use Throwable;
 
@@ -61,7 +62,7 @@ class LoadCategories
         $item['category_id'] = $this->parent;
 
         $item['name'] = $group['Наименование'];
-//        $item['slug']       = SlugService::slug($item['name']);
+        $item['slug']       = SlugService::slug($item['name']);
         $item['deleted_at'] = NULL;
 
         $cat      = Category::withTrashed()
