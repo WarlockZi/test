@@ -37,18 +37,20 @@ class SlugService
         }
         return $slug;
     }
+
     public static function getCategorySlug(Category $category): string
     {
         $slug = SlugService::slug($category['name']);
         if (Category::where('slug', $slug)->first()) {
-            $slug = "{$slug}_0";
-            $i    = 0;
             while (Category::where('slug', $slug)->first()) {
+                $slug = "{$slug}_0";
+                $i    = 0;
                 $slug = "$slug" . "_" . "++$i";
             }
         }
         return $slug;
     }
+
     public static function slug($str, $options = array()): string
     {
         $self = new self();
