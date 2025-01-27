@@ -56,12 +56,12 @@ class OrderController extends AdminscController
             ]
         );
         if ($order->wasRecentlyCreated) {
-            Response::exitJson(['popup' => "Добавлено в корзину"]);
+            Response::json(['popup' => "Добавлено в корзину"]);
         }
         if ($order->wasChanged()) {
-            Response::exitJson(['popup' => "Заказ изменен"]);
+            Response::json(['popup' => "Заказ изменен"]);
         }
-        Response::exitJson(['popup' => 'не записано', 'error' => "не записано"]);
+        Response::json(['popup' => 'не записано', 'error' => "не записано"]);
     }
 
     public function actionDelete(): void
@@ -75,9 +75,9 @@ class OrderController extends AdminscController
                     ->whereNull('deleted_at')
                     ->update(['deleted_at' => Carbon::today()]);
             }
-            Response::exitJson(['ok' => 'ok', 'popup' => 'удален']);
+            Response::json(['ok' => 'ok', 'popup' => 'удален']);
         } catch (\Throwable $exception) {
-            Response::exitJson(['error' => 'не удален', 'popup' => 'не удален']);
+            Response::json(['error' => 'не удален', 'popup' => 'не удален']);
         }
     }
 }

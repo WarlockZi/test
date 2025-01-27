@@ -3,6 +3,7 @@
 namespace app\model;
 
 
+use app\core\Auth;
 use app\Services\SlugService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -51,7 +52,6 @@ class Category extends Model
             ->where('name', 'regexp', '\\s?\\*\\s?$')
             ->with('mainImages')
             ->with('ownProperties')
-//            ->with('orderItems')
             ->with('shippableUnits')
             ->with('inactivepromotions')
             ->with(['activepromotions' => function ($q) {
@@ -65,8 +65,7 @@ class Category extends Model
         $pInStore = $this->hasMany(Product::class)
             ->where('instore', '<>', 0)
             ->with('mainImages')
-            ->with('orderProduct')
-//            ->with('orderItems')
+            ->with('order.orderitems')
             ->with('shippableUnits')
             ->with('inactivepromotions')
             ->with(['activepromotions' => function ($q) {
@@ -77,13 +76,6 @@ class Category extends Model
             ->with('units')
             ->with('ownProperties')
 
-//            ->with(['priceRelation' => function ($q) {
-//                $q->orderBy('price');
-//            }])
-
-//            ->with(['prices'=>function ($q) {
-//                $q->orderBy('price.price', 'asc');
-//            }])
 //            ->with('prices')
 //            ->select(['products.*', 'prices.price as product_price'])
 //            ->join('prices', 'prices.1s_id', '=', 'products.1s_id')

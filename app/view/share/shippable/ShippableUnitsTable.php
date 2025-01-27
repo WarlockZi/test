@@ -132,7 +132,7 @@ class ShippableUnitsTable
         foreach ($this->units as $unit) {
             $count       = $this->getCount($unit);
             $multiplier  = $unit->pivot->multiplier ?? 1;
-            $orderItem = $this->product->orderProduct?->orderItems->filter(function ($item)use($unit){
+            $orderItem = $this->product?->order?->orderItems->filter(function ($item)use($unit){
                 return $item->unit_id === $unit['id'];
             });
 

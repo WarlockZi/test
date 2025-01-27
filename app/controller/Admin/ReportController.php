@@ -37,7 +37,7 @@ class ReportController extends AdminscController
         $productsTable = $this->formView->filter($selectFilters, 'Фильтр');
 
         if ($req) {
-            Response::exitJson([
+            Response::json([
                 'productsTable' => $productsTable,
                 'filterString' => $filterString,
                 'filterPanel' => $filterPanel]);

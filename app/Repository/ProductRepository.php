@@ -54,7 +54,8 @@ class ProductRepository
             ->with('activepromotions.unit')
             ->with('shippableUnits')
             ->with('orders')
-            ->with('orderItems')
+            ->with('like')
+            ->with('compare')
             ->where('slug', $slug)
             ->first() ?? null;
     }
@@ -136,7 +137,7 @@ class ProductRepository
             ProductUnit::where('product_1s_id', $productId)
                 ->where('unit_id', $unitId)
                 ->delete();
-            Response::exitJson(['popup' => 'удален', 'ok' => 'ok']);
+            Response::json(['popup' => 'удален', 'ok' => 'ok']);
         } catch (\Throwable $exception) {
             Response::exitWithPopup('не удален');
         }

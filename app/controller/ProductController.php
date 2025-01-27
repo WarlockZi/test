@@ -11,7 +11,6 @@ use app\view\Product\Admin\ProductFormView;
 
 class ProductController extends AppController
 {
-
     public function __construct(
         protected ProductFormView   $formView = new ProductFormView(),
         protected ProductRepository $repo = new ProductRepository(),

@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', async function () {
    }
    else if (path.startsWith('/like/page')) {
       const {default: Like} = await import('../Like/Like.js')
+      new Like
    }
    else if (path.startsWith('/compare/page')) {
       const {default: Compare} = await import('../Compare/Compare.js')

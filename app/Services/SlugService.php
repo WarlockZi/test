@@ -41,15 +41,15 @@ class SlugService
     {
         $slug = SlugService::slug($category['name']);
         if (Category::where('slug', $slug)->first()) {
-            $slug = "{$slug}_{$category['1s_id']}";
+            $slug = "{$slug}_0";
             $i    = 0;
             while (Category::where('slug', $slug)->first()) {
-                $slug = "$slug" . "_" . "$i++";
+                $slug = "$slug" . "_" . "++$i";
             }
         }
         return $slug;
     }
-    public static function slug($str, $options = array())
+    public static function slug($str, $options = array()): string
     {
         $self = new self();
 

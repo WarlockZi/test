@@ -6,7 +6,7 @@ use app\core\Icon;
 ?>
 <? if ($forBreadcrumbs): ?>
     <div class="card-panel">
-        <?php if (Auth::getUser()?->isAdmin()): ?>
+        <?php if (Auth::userIsAdmin()): ?>
             <a href="/adminsc/category/edit/<?= $category->id ?>" class="edit card-panel-item"><?=Icon::edit(); ?></a>
         <? endif; ?>
     </div>
@@ -19,7 +19,7 @@ use app\core\Icon;
         >
             <?= \app\core\Icon::link(); ?>
         </div>
-        <?php if (Auth::getUser()?->isAdmin()): ?>
+        <?php if (Auth::userIsAdmin()): ?>
             <a href="/adminsc/category/edit/<?= $category->id ?>" class="edit card-panel-item"><?=Icon::edit(); ?></a>
         <? endif; ?>
     </div>

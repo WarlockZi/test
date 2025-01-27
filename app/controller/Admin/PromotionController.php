@@ -39,7 +39,7 @@ class PromotionController Extends AdminscController
             $promotion = Promotion::with($relation)->find($id);
 
             $created = $promotion->$relation()->create();
-            Response::exitJson(['popup' => 'Создан', 'id' => $created->id]);
+            Response::json(['popup' => 'Создан', 'id' => $created->id]);
         }
 
         $promotion = Promotion::updateOrCreate(
@@ -48,11 +48,11 @@ class PromotionController Extends AdminscController
         );
 
         if ($promotion->wasRecentlyCreated) {
-            Response::exitJson(['popup' => 'Создан', 'id' => $promotion->id]);
+            Response::json(['popup' => 'Создан', 'id' => $promotion->id]);
         } else {
-            Response::exitJson(['popup' => 'Обновлен', 'model' => $promotion->toArray()]);
+            Response::json(['popup' => 'Обновлен', 'model' => $promotion->toArray()]);
         }
-        Response::exitWithError('Ошибка');
+        Response::json(['error' => 'Ошибка']);
 
     }
 }

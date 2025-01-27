@@ -28,7 +28,7 @@ class ProductService
         $pu->base_is_shippable = (int)$req['base_is_shippable'];
         $pu->is_shippable = (int)$req['base_is_shippable'];
         $pu->save();
-        Response::exitJson(['popup' => 'ok']);
+        Response::json(['popup' => 'ok']);
     }
 
     public function saveMainImage(array $file, Product $product): string

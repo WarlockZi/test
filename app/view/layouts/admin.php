@@ -7,7 +7,7 @@
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
+    <link rel="icon" href="/assets/srvc/<?= !!DEV ? "logo-square-dev.svg" : "logo-square.svg" ?>" type="image/svg+xml">
 
     <?= $assets->getCss() ?>
 

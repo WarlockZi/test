@@ -23,7 +23,7 @@ class LikeRepository
     {
         list($field, $value) = Auth::getCartFieldValue();
         try {
-            Like::updateOrCreate([
+            $like = Like::updateOrCreate([
                 $field => $value,
                 'product_id' => $req['fields']['product_id'],
             ], [
@@ -39,9 +39,7 @@ class LikeRepository
     {
         list($field, $value) = Auth::getCartFieldValue();
         try {
-            $like = Like::where($field, $value)
-                ->where('product_id', $req['fields']['product_id'])
-                ->delete();
+            $like = Like::find($req['id'])->delete();
             return true;
         } catch (Throwable $exception) {
             return false;

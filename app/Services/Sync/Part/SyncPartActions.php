@@ -149,7 +149,7 @@ use app\Storage\{StorageDev, StorageImport, StorageLog};
 	{
 		$content = 'LOG<br>' . file_get_contents($this->log);
 		if (isset($_POST['param'])) {
-			Response::exitJson(['success' => true, 'content' => $content]);
+			Response::json(['success' => true, 'content' => $content]);
 		}
 	}
 	public function logclear()
@@ -157,7 +157,7 @@ use app\Storage\{StorageDev, StorageImport, StorageLog};
 		file_put_contents($this->log, '');
 
 		$content = StorageLog::getFileContent('log.txt');
-		Response::exitJson(['success' => 'success', 'content' => $content]);
+		Response::json(['success' => 'success', 'content' => $content]);
 	}
 	public function part()
 	{

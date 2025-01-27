@@ -34,19 +34,19 @@ class AppController extends Controller
                 $pivot->$pivotField = $pivotValue;
                 try {
                     $pivot->save();
-                    Response::exitJson(['popup' => 'Изменен']);
+                    Response::json(['popup' => 'Изменен']);
                 } catch (Throwable $exception) {
-                    Response::exitJson(['popup' => 'Ошибка']);
+                    Response::json(['popup' => 'Ошибка']);
                 }
             } elseif ($attach) {
                 $detach = $req['relation']['detach'] ?? null;
                 if ($detach) {
                     $model->$relationName()->attach($req['relation']['attach']);
                     $model->$relationName()->detach($req['relation']['detach']);
-                    Response::exitJson(['popup' => 'Заменен', 'attach' => $attach, 'detached' => $detach]);
+                    Response::json(['popup' => 'Заменен', 'attach' => $attach, 'detached' => $detach]);
                 } else {
                     $model->$relationName()->syncWithoutDetaching($detach);
-                    Response::exitJson(['popup' => 'Заменен', 'attach' => $attach]);
+                    Response::json(['popup' => 'Заменен', 'attach' => $attach]);
                 }
 
             }
@@ -63,7 +63,7 @@ class AppController extends Controller
 
 //        if ($action === 'created') Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
 
-        Response::exitJson(['popup' => 'Обновлен']);
+        Response::json(['popup' => 'Обновлен']);
     }
 
     public function actionUpdateOrCreate(): void
@@ -86,11 +86,11 @@ class AppController extends Controller
         }
 
         if ($model->wasRecentlyCreated) {
-            Response::exitJson(['popup' => 'Создан', 'id' => $model->id]);
+            Response::json(['popup' => 'Создан', 'id' => $model->id]);
         } else {
-            Response::exitJson(['popup' => 'Обновлен', 'model' => $model->toArray()]);
+            Response::json(['popup' => 'Обновлен', 'model' => $model->toArray()]);
         }
-        Response::exitWithError('Ошибка');
+        Response::json(['error' => 'Ошибка']);
     }
 
     public function __destruct()
@@ -101,7 +101,7 @@ class AppController extends Controller
     public function actionDelete(): void
     {
         $id = $this->ajax['id'];
-        if (!$id) Response::exitWithMsg('No id');
+        if (!$id) Response::json(['msg'=>'No id']);
         $model        = $this->model::find($id);
         $relationType = $this->ajax['relationType'] ?? null;
         if (!empty($relationType)) {
@@ -109,15 +109,15 @@ class AppController extends Controller
             if ($relationType === 'attach') {
                 $relationId = $this->ajax['relationId'] ?? null;
                 if ($model->$relationName()->detach($relationId)) {
-                    Response::exitJson(['deleted' => $relationId, 'popup' => 'Удален']);
+                    Response::json(['deleted' => $relationId, 'popup' => 'Удален']);
                 }
             }
         } else {
             $destroyed = $this->model::destroy($id);
             if ($destroyed) {
-                Response::exitJson(['id' => $id, 'popup' => 'Удален']);
+                Response::json(['id' => $id, 'popup' => 'Удален']);
             } else {
-                Response::exitJson(['popup' => 'Не удален']);
+                Response::json(['popup' => 'Не удален']);
             }
         }
 
@@ -141,7 +141,7 @@ class AppController extends Controller
     public function actionDetach(): void
     {
         $req = $this->ajax;
-        if (!$req) Response::exitWithError('Плохой запрос');
+        if (!$req) Response::json(['error' => 'Плохой запрос']);
         MorphRepository::detach($this, $req);
         Response::exitWithPopup('ok');
     }
@@ -154,7 +154,7 @@ class AppController extends Controller
         $model    = $this->model::with($relation)->find($req['id']);
         $created  = $this->model->$relation()->create();
         $this->model->$relation()->syncWithoutDetaching($created);
-        Response::exitJson(['popup' => 'Создан', 'id' => $created->id]);
+        Response::json(['popup' => 'Создан', 'id' => $created->id]);
     }
 
 

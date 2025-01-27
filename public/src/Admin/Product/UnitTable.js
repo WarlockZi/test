@@ -60,6 +60,7 @@ export default class UnitTable {
    }
 
    createRow() {
+      debugger
       const baseUnitText = this.$baseUnit.selectedOptions[0].innerText;
 
       const row = (new createElement()).tag('div').attr('class', 'row').get();

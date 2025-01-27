@@ -35,7 +35,7 @@ class ImageController Extends AdminscController
 				->wherePivot('slug', $post['slug'])
 				->detach($morphed->id);
 
-			Response::exitWithSuccess('ok');
+			Response::json(['success' =>'ok']);
 		}
 	}
 
@@ -60,7 +60,7 @@ class ImageController Extends AdminscController
 
 		$srcs = ImageRepository::sync($images, $morphed, $morph['slug'], 'many',false);
 		if ($srcs) {
-			Response::exitJson($srcs);
+			Response::json($srcs);
 		}
 		Response::exitWithPopup("Уже есть");
 	}
@@ -85,7 +85,7 @@ class ImageController Extends AdminscController
 
 		$res = ImageRepository::sync($image, $morphed, $morph['slug'], 'one', true);
 		if ($res) {
-			Response::exitJson($res);
+			Response::json($res);
 		}
 		Response::exitWithPopup("Уже есть такая картинка");
 
