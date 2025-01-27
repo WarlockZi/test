@@ -62,7 +62,7 @@ class LoadCategories
         $item['category_id'] = $this->parent;
 
         $item['name']       = $group['Наименование'];
-        $item['slug']       = SlugService::slug($item['name']);
+//        $item['slug']       = SlugService::slug($item['name']);
         $item['deleted_at'] = NULL;
 
         $cat      = Category::withTrashed()
