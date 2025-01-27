@@ -32,9 +32,9 @@ class CompareController extends AppController
     {
         $req = $this->ajax;
         if (CompareRepository::del($req)) {
-            Response::exitJson(['discompared' => true]);
+            Response::json(['discompared' => true]);
         }
-        Response::exitJson(['discompared' => false]);
+        Response::json(['discompared' => false]);
     }
 
     public function actionUpdateOrCreate(): void
@@ -49,7 +49,7 @@ class CompareController extends AppController
             $field => $value,
             'product_id' => $req['fields']['product_id'],
         ]);
-        Response::exitJson(['compared' => 1]);
+        Response::json(['compared' => 1]);
 
 
     }

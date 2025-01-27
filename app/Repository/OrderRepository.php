@@ -8,7 +8,6 @@ use app\core\Auth;
 use app\core\Response;
 use app\model\Order;
 use app\model\OrderItem;
-use app\model\OrderProduct;
 use app\model\Product;
 use Illuminate\Database\Eloquent\Collection;
 use Throwable;
@@ -77,33 +76,17 @@ class OrderRepository
 
     public static function updateOrCreate(array $req): void
     {
-        if (!$req) return;
-        list($field, $value) = Auth::getCartFieldValue();
-        $order = Order::where($field,$value)->first();
-        $orderProduct = OrderProductRepository::firstOrCreate($order->id, $req['product_id']);
-//        $orderItem =
-//        $orderProduct;
-        $order   = self::firstOrCreateOrder($req['loc_storage_cart_id']);
-        $product = Product::where('1s_id', $req['product_id'])->first();
-        $f       = $order->products()->attach($req['product_id']);
-        $order->load('products.orderItems.unit');
-
-//        if (!$req['count']) {
-//            $res = self::deleteOrderItem($order, $product, $req['unit_id']);
-//            if ($product->orderItems->count() === 0) {
-//                $order->products()->detach($product['1s_id']);
-//            }
-//        } else {
-//            $orderItm = self::updateOrCreateOrderItem($order, $product, $req['unit_id'], (int)$req['count']);
-//        }
-
-        if ($orderItm->wasRecentlyCreated) {
-            Response::exitJson(['popup' => "Добавлено в корзину"]);
+        try {
+            $order        = self::firstOrCreateOrder($req['loc_storage_cart_id']);
+            $orderProduct = OrderProductRepository::firstOrCreate($order->id, $req['product_id']);
+            $orderItem    = OrderItemRepository::updateOrCreate($orderProduct, $req);
+            $order->load('products.orderItems.unit');
+            Response::json(['popup' => 'заказ изменен', 'success' => "записано"]);
+        } catch (Throwable $exception) {
+            Response::json(['popup' => 'не записано', 'error' => "не записано"]);
         }
-        if ($orderItm->wasChanged()) {
-            Response::exitJson(['popup' => "Заказ изменен"]);
-        }
-        Response::exitJson(['popup' => 'не записано', 'error' => "не записано"]);
+
+
     }
 
     public static function detachItems(string $product_id, array $unitIds): bool
@@ -111,15 +94,8 @@ class OrderRepository
         $order = OrderRepository::cart();
         try {
             foreach ($unitIds as $unitId => $count) {
-//                $orderItem = $order->products->orderItems()->where('unit_id', $unitId)->first();
                 $product = $order->products->where('1s_id', $product_id)->first();
-                $deleted = $product->orderItems
-                    ->where('unit_id', $unitId)
-                    ->first()
-                    ->forceDelete();
-
-                $a = $product->toArray();
-
+                $a       = $product->toArray();
             }
             $order->products()->detach($product->id);
             return true;
@@ -141,15 +117,10 @@ class OrderRepository
     public static function cart()
     {
         list($field, $value) = Auth::getCartFieldValue();
-        $order = Order::query()
-            ->where($field, $value)
-            ->whereNull('submitted')
-            ->with('products.orderItems')
-
-//            ->with('orderItems')
+        $order = Order::where($field, $value)
+            ->with('products')
             ->first();
-        $c     = $order->toArray();
-//        $order->load('products.orderItems');
+        $o     = $order->toArray();
         return $order;
     }
 

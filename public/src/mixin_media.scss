@@ -392,7 +392,9 @@
           width: 30px;
           margin-bottom: 1px;
           font-weight: 600;
-          font-size: 1.2em;
+          font-size: .65rem;
+          display: flex;
+          align-self: center;
         }
 
         .description {
@@ -579,8 +581,9 @@
       position: relative;
       background-color: white;
       width: 180px;
-      .txt{
-        flex:2;
+
+      .txt {
+        flex: 2;
       }
 
       .promotion {
@@ -1038,6 +1041,7 @@ $border-color:var.$color-main
   color: var.$color-grey-logo;
   margin: 0 0 clamp(15px, 5vw, 25px);
 }
+
 @mixin modal-close {
   position: absolute;
   display: inline-flex;
@@ -1065,6 +1069,7 @@ $border-color:var.$color-main
     transform: rotate(180deg);
   }
 }
+
 @mixin h2 {
   font-size: clamp(.8rem, 4vw, 1.5rem);
   font-weight: 600;

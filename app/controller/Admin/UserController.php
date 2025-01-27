@@ -46,9 +46,9 @@ class UserController extends AdminscController
     {
         if ($data = $this->ajax) {
             if (!Auth::getUser()->can(['user_delete']))
-                Response::exitJson(['popup'=>'Не хватает прав']);
+                Response::json(['popup'=>'Не хватает прав']);
             User::find($data['id'])->delete();
-            Response::exitJson(['popup'=>'Удален']);
+            Response::json(['popup'=>'Удален']);
         }
     }
 

@@ -107,7 +107,7 @@ class SyncController extends AdminscController
     public function actionLogshow(): void
     {
         if (isset($_POST['param'])) {
-            Response::exitJson([
+            Response::json([
                 'success' => true,
                 'content' => 'Log' . PHP_EOL . $this->logger->read()
             ]);
@@ -117,7 +117,7 @@ class SyncController extends AdminscController
     public function actionLogclear(): void
     {
         $this->logger->clear();
-        Response::exitJson(['success' => 'success', 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
+        Response::json(['success' => 'success', 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
     }
 
 }

@@ -19,6 +19,6 @@ class SearchController extends AppController
 	{
 		if (!$this->ajax) exit();
 		$res = $this->service->index($this->ajax['text']);
-		Response::exitJson(['found' => $res]);
+		Response::json(['found' => $res]);
 	}
 }

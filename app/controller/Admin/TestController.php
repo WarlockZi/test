@@ -83,7 +83,7 @@ class TestController extends AdminscController
 
     public function actionGetCorrectAnswers()
     {
-        Response::exitJson(($_SESSION['correct_answers']));
+        Response::json(($_SESSION['correct_answers']));
     }
 
 
@@ -99,7 +99,7 @@ class TestController extends AdminscController
 
     public function actionTests()
     {
-        Response::exitJson(Test::where('isTest', '1')->get()->toArray());
+        Response::json(Test::where('isTest', '1')->get()->toArray());
     }
 
 

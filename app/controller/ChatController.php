@@ -16,7 +16,7 @@ class ChatController extends AppController
         ], [
             'php_session' => $req['chatId']
         ]);
-        Response::exitJson(['user_name' =>$chat->user_name,'messages'=>$chat->messages]);
+        Response::json(['user_name' =>$chat->user_name,'messages'=>$chat->messages]);
     }
 
 }

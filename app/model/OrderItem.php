@@ -14,6 +14,7 @@ class OrderItem extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'order_product_id',
         'product_id',
         'order_id',
         'unit_id',

@@ -28,18 +28,16 @@ class CartController extends AppController
     public function actionIndex(): void
     {
         $order = OrderRepository::cart();;
-//        $a = $order->toArray();
         $this->setVars(compact('order'));
     }
 
     public function actionDrop(): void
     {
-        if (!isset($this->ajax['cartToken'])) exit('No cart sess');
-        $id = $this->ajax['cartToken'];
+//        if (!isset($this->ajax['cartToken'])) exit('No cart sess');
         OrderItem::query()
             ->delete();
         if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
-        Response::exitJson(['ok' => true]);
+        Response::json(['ok' => true]);
     }
 
     public function actionSubmit(): void
@@ -48,7 +46,7 @@ class CartController extends AppController
         if (empty($orderId)) exit('No cart order id');
         Order::find($orderId)->update(['submitted' => 1]);
 //        if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
-        Response::exitJson(['ok' => true]);
+        Response::json(['ok' => true]);
     }
 
 
@@ -58,11 +56,11 @@ class CartController extends AppController
         $product_id =$req['product_id'];
         $unit_ids   = $req['units'];
 
-        if (!$product_id) Response::exitWithMsg('No id');
+        if (!$product_id) Response::json(['msg'=>'No id']);
         $trashed = $this->orderRepo::detachItems($product_id, $unit_ids);
 
         if ($trashed) {
-            Response::exitJson(['ok' => true, 'popup' => 'Удален']);
+            Response::json(['ok' => true, 'popup' => 'Удален']);
         }
         Response::exitWithPopup('Не удален');
 

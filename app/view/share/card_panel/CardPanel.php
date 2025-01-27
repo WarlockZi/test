@@ -14,10 +14,9 @@ class CardPanel
 {
 	public static function card_panel(Product $product): string
 	{
-        $userIsAdmin = Auth::getUser()?->isAdmin();
         $fs = new FS(__DIR__);
         $edit = Icon::edit();
-		return $fs->getContent('product_card_panel', compact('product', 'edit', 'userIsAdmin'));
+		return $fs->getContent('product_card_panel', compact('product', 'edit'));
 	}
     public static function categoryCardPanel(Category $category, bool $forBreadcrumbs=false): string
     {

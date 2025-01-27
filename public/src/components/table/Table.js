@@ -13,10 +13,11 @@ export default class Table {
       this.modelId = table.dataset.id ?? table.closest('[data-model]')?.dataset.id;
       this.relation = table.dataset.relation ?? null;
       this.relationType = table.dataset.relationtype ?? null;
-      this.updateOrCreateUrl = `/adminsc/${this.model}/updateOrCreate`
       this.headers = $('.head');
       this.inputs = $('[data-search]');
       this.hidden = this.table[qa]('[hidden]');
+      this.delUrl = `/adminsc/${this.model}/del`;
+      this.updateOrCreateUrl = `/adminsc/${this.model}/updateOrCreate`
 
       this.table[ael]('click', this.handleClick.bind(this));
       this.table[ael]('keyup', debounce(this.handleKeyup.bind(this)).bind(this));
@@ -27,14 +28,15 @@ export default class Table {
          this.table[ael]('checkbox.changed', this.checkboxChange.bind(this));
       }
       this.setCheckboxes()
-      // this.setSortables()
       this.setSelects()
       this.setSortables()
    }
 
+   setDelUrl(delUrl) {
+      this.delUrl = delUrl
+   }
+
    async checkboxChange(e) {
-      // const dto = new DTO(this.modelId, e.target)
-      // const res = await post(`/adminsc/${this.model}/updateorcreate`, dto)
       const dto = new TableDTO(e.target)
       await post(this.updateOrCreateUrl, dto)
    }
@@ -43,12 +45,12 @@ export default class Table {
       const target = detail.target
       const dto = new TableDTO(target, detail?.prev?.value)
       const res = await post(`/adminsc/${this.model}/updateorcreate`, dto)
-      if (res?.arr?.detach){
+      if (res?.arr?.detach) {
          const prevCells = this.table[qa](`[data-id='${detail.prev.value}']`)
          for (let prevCell of prevCells) {
             prevCell.dataset.id = detail.next.value
          }
-      }else {
+      } else {
          const prevCells = this.table[qa](`[data-id='0']:not([hidden])`)
          for (let prevCell of prevCells) {
             prevCell.dataset.id = detail.next.value
@@ -67,7 +69,6 @@ export default class Table {
       /// create
       if (target.className === 'add-model') {
          this.copyEmptyRow()
-         // this.updateOrcreate(target)
 
          /// edit
       } else if (target.classList.contains('edit')) {
@@ -128,12 +129,7 @@ export default class Table {
    async modelDel(target) {
       if (!confirm('Удалить?')) return;
       const dto = new TableDTO(target)
-      // const id = this.modelId;
-      // const relationId = target.dataset['id'];
-      // const relationType = this.relationType ?? null;
-      // const relationName = this.relation ?? null;
-      // const res = await post(`/adminsc/${this.model}/delete`, {id, relationName, relationType, relationId});
-      const res = await post(`/adminsc/${this.model}/delete`, dto);
+      const res = await post(this.delUrl, dto);
       if (res?.arr?.id) {
          this.delRow(res?.arr?.id)
       }

@@ -32,7 +32,7 @@ class ProductController extends AdminscController
     {
         $file    = $_FILES['file'];
         $product = Product::find($_POST['productId']);
-        Response::exitJson([$this->service->saveMainImage($file, $product) ?? 'ошибка сохнанения']);
+        Response::json([$this->service->saveMainImage($file, $product) ?? 'ошибка сохнанения']);
     }
 
     public function actionEdit(): void
@@ -54,7 +54,7 @@ class ProductController extends AdminscController
     public function actionFilter(): void
     {
         $res = ProductFilterRepository::make($_POST)->get();
-        Response::exitJson($res);
+        Response::json($res);
     }
 
     public function actionChangeval()
@@ -87,11 +87,5 @@ class ProductController extends AdminscController
         ProductService::changeBaseIsShippable($this->ajax);
     }
 
-//    public function actionTrashed(): void
-//    {
-//        $items   = $this->repo->trashed();
-//        $trashed = ProductArrayFormView::table($items, 'Удаленные товары');
-//        $this->set(compact('trashed'));
-//    }
 }
 

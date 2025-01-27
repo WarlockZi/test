@@ -8,6 +8,7 @@ use app\Services\ProductImageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
@@ -42,26 +43,37 @@ class Product extends Model
         'mainImage',
     ];
 
-    public function orderItems(): HasMany
+    public function orderItems(): HasManyThrough
     {
-        list($field, $value) = Auth::getCartFieldValue();
-        $orderId = Order::where($field, $value)?->whereNull('submitted')?->first()?->id;
-        return $this->hasMany(OrderItem::class,
-            'product_id', '1s_id')
-            ->where('order_id', $orderId);
+        return $this->hasManyThrough(
+            OrderItem::class,
+            OrderProduct::class,
+            'product_id', //in order_product
+            'order_product_id',//in OrderItem
+            '1s_id', //in Product
+            'id' //in order_product
+        );
     }
-
     public function orderProduct()
     {
         $oI = $this->hasOne(
             OrderProduct::class,
             'product_id',
             '1s_id',
-        )->with('orderItems');
-
+        );
         return $oI;
     }
-
+    public function order():HasOne
+    {
+        list($field, $value) = Auth::getCartFieldValue();
+        $order = Order::where($field,$value)->first();
+        return $this->hasOne(OrderProduct::class,
+        'product_id',
+        '1s_id',
+        )
+            ->where('order_id', $order->id)
+            ;
+    }
     public function orders()
     {
         $user = Auth::getUser();

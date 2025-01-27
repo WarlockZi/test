@@ -28,7 +28,7 @@ class OpenanswerController Extends AdminscController
 				$i = $this->ajax['sort'] ?? 1;
 
 				$html = FS::getFileContent(ROOT . '/app/view/Opentest/edit_BlockAnswer.php');
-				Response::exitJson(['html' => $html]);
+				Response::json(['html' => $html]);
 			}
 			Response::exitWithPopup('ok');
 		}

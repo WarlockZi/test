@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Order extends Model
 {
@@ -18,25 +19,6 @@ class Order extends Model
         'submitted',
     ];
 
-    public function orderProduct(): HasMany
-    {
-        return $this->hasMany(OrderProduct::class);
-    }
-    public function orderItems(): HasMany
-    {
-        return $this->hasMany(OrderItem::class)
-            ->groupBy('product_id')
-            ->with('product');
-    }
-//    public function orderItems(): \Illuminate\Support\Collection
-//    {
-//        $orderItems = [];
-//        $this->products()
-//            ->each(function ($product, $key) use (&$orderItems) {
-//                $orderItems[] = $product->orderItem;
-//            });
-//        return collect($orderItems);
-//    }
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class,
@@ -45,10 +27,54 @@ class Order extends Model
             'product_id',
             'id',
             '1s_id')
-            ->withPivot('order_id', 'product_id')
-//            ->with('orderItem')
-            ->whereHas('orderItems');
+            ->withWhereHas('orderItems',
+                fn($q)=>$q->where('count','>',0))
+            ->groupBy('product_id')//            ->whereHas('orderItems')
+            ;
     }
+
+    public function productsHaveOrderItems(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class,
+            'order_product',
+            'order_id',
+            'product_id',
+            'id',
+            '1s_id')
+            ->whereHas('orderItems', function ($orderItem) {
+                $orderItem->where('count', '>', 0);
+            })
+
+//            ->whereHas('orderItemsNotNull', function ($query) {
+//                $query->where('count','>','0');
+//            })
+            ->groupBy('product_id')// ->whereHas('orderItems')
+            ;
+    }
+
+    public function scopeWithWhereHas($query, $relation, $constraint)
+    {
+        return $query->whereHas($relation, $constraint)
+            ->with([$relation => $constraint]);
+    }
+
+    public function orderProduct(): HasMany
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+
+    public function orderItems(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            OrderItem::class,
+            OrderProduct::class,
+            'product_id', //in order_product
+            'product_id',//in OrderItem
+            'id', //in Order
+            'product_id', //in order_product
+        );
+    }
+
 
     public function user(): BelongsTo
     {

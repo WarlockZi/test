@@ -7,5 +7,6 @@ export default class Like{
       if (!like) return false
 
       const table = new Table(like)
+      table.setDelUrl('/like/del')
    }
 }

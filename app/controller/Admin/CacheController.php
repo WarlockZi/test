@@ -17,7 +17,7 @@ class CacheController extends AdminscController
     {
         $path = ROOT . "/tmp/cache/*.txt";
         array_map("unlink", glob($path));
-        Response::exitJson(['popup' => 'Успешно']);
+        Response::json(['popup' => 'Успешно']);
     }
 
 
