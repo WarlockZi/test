@@ -14,21 +14,10 @@ class Category extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        '1s_id',
         'name',
-        'description',
-        'sort',
         'slug',
-        'img',
-        'category_id',
-        'show_front',
-        'seo_title',
-        'seo_desc',
-        'seo_keywords',
-        'seo_h1',
-        'seo_h2',
-        'seo_article',
-        'seo_path',
+        '1s_category_id',
+        '1s_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -38,7 +27,9 @@ class Category extends Model
 
     public function productsNotInStore()
     {
-        return $this->hasMany(Product::class)
+        return $this->hasMany(Product::class,
+            '1s_category_id',
+            '1s_id')
             ->where('instore', 0)
             ->with('mainImages')
             ->orderBy('name');
@@ -46,7 +37,9 @@ class Category extends Model
 
     public function productsNotInStoreInMatrix(): HasMany
     {
-        return $this->hasMany(Product::class)
+        return $this->hasMany(Product::class,
+            '1s_category_id',
+            '1s_id')
             ->where('instore', 0)
             ->where('name', 'regexp', '\\s?\\*\\s?$')
             ->with('mainImages')
@@ -184,8 +177,8 @@ class Category extends Model
     public function cat()
     {
         return $this->belongsTo(Category::class,
-        '1s_id',
-        '1s_category_id',
+            '1s_id',
+            '1s_category_id',
         );
     }
 
