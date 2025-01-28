@@ -42,7 +42,7 @@ class CategoryRepository
                 $c = $products->toArray();
 
                 return $products;
-            }, 10);
+            }, 5);
     }
 
     public static function changeProperty(array $req): void

@@ -52,14 +52,14 @@ class LoadCategories
             foreach ($groups as $group) {
                 $this->run($group);
             }
-            $this->parent = null;
+//            $this->parent = null;
         }
     }
 
     protected function fillItem(array $group): Category
     {
         $item['1s_id']       = $group['Ид'];
-        $item['category_id'] = $this->parent;
+        $item['1s_category_id'] = $this->parent;
 
         $item['name'] = $group['Наименование'];
         $item['slug']       = SlugService::slug($item['name']);
