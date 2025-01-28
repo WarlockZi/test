@@ -11,7 +11,7 @@
 
             <ol>
 
-                <? if (is_array($rootCategories) && !empty($rootCategories)): ?>
+                <? if (!empty($rootCategories) && is_array($rootCategories)): ?>
                     <? foreach ($rootCategories as $cat): ?>
                         <li>
                             <a href="<?= $cat['href'] ?>"><?= $cat['name'] ?></a>
