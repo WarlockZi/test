@@ -27,6 +27,7 @@ class BaseBreadcrumbs
         $cats  = [];
         $categ = $this->category;
         array_push($cats, $this->category);
+        $c = $this->category->toArray();
         if ($categ->parentRecursive) {
             while ($categ->parentRecursive) {
                 array_push($cats, $categ->parentRecursive);

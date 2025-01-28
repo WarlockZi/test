@@ -3,7 +3,6 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\core\App;
 use app\core\Auth;
 
 
@@ -37,14 +36,10 @@ class AdminscController extends AppController
 
     public function actionSiteMap(): void
     {
-        $iniCatList = App::$app->category->getInitCategories();
-        $this->setVars(compact('iniCatList'));
     }
 
     public function actionPics(): void
     {
-        $pics = App::$app->adminsc->findAll('pic');
-        $this->setVars(compact('pics'));
     }
 
     public function actionIndex(): void

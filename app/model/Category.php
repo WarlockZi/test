@@ -3,7 +3,6 @@
 namespace app\model;
 
 
-use app\core\Auth;
 use app\Services\SlugService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -62,7 +61,9 @@ class Category extends Model
 
     public function productsInStore()
     {
-        $pInStore = $this->hasMany(Product::class)
+        $pInStore = $this->hasMany(Product::class,
+            '1s_category_id',
+            '1s_id')
             ->where('instore', '<>', 0)
             ->with('mainImages')
             ->with('order.orderitems')
@@ -120,17 +121,16 @@ class Category extends Model
     {
         return collect([$this])->merge(
             $this->childrenRecursive->flatMap(function ($q) {
-                return $q->flatSelfAndChildren ?? collect([$this->id, $this->name, $this->category_id]);
+                return $q->flatSelfAndChildren ?? collect([$this->id, $this->name, $this['1s_category_id']]);
             })
         );
     }
 
     protected function getHrefAttribute(): string
     {
-        if (!$this->ownProperties) return '';
-
-        $path = $this->ownProperties->path;
-        return "/catalog/{$path}";
+        return !$this->ownProperties
+            ? ""
+            : "/catalog/{$this->ownProperties->path}";
     }
 
     public function ActivePromotions()
@@ -181,16 +181,18 @@ class Category extends Model
             ;
     }
 
-
     public function cat()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class,
+        '1s_id',
+        '1s_category_id',
+        );
     }
 
-    public function category()
-    {
-        return $this->parent()->with('parentRecursive');
-    }
+//    public function category()
+//    {
+//        return $this->parent()->with('parentRecursive');
+//    }
 
     public function parents()
     {
@@ -199,7 +201,8 @@ class Category extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class,
+            '1s_category_id');
     }
 
     public function parentRecursive()
@@ -216,14 +219,14 @@ class Category extends Model
     public function childrenNotDeleted()
     {
         return $this
-            ->hasMany(Category::class, 'category_id')
+            ->hasMany(Category::class, '1s_category_id')
             ->whereNull('deleted_at');
     }
 
     public function childrenDeleted()
     {
         return $this
-            ->hasMany(Category::class, 'category_id')
+            ->hasMany(Category::class, '1s_category_id')
             ->whereNotNull('deleted_at');
     }
 

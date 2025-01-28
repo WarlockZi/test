@@ -1,5 +1,5 @@
 <?php
-if ($product): ?>
+if (!empty($product)): ?>
 
     <?php if ($product->deleted_at): ?>
         <div class="deleted-overlay">

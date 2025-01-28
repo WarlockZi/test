@@ -35,8 +35,6 @@ class CrmController extends AdminscController
 
 	public function actionSiteMap(): void
     {
-		$iniCatList = App::$app->category->getInitCategories();
-		$this->setVars(compact('iniCatList'));
 	}
 
 
