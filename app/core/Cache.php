@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Collection;
 class Cache
 {
     private static $instance = null;
+    public static $timeLife100 = 100;
+    public static $timeLife1_000 = 1_000;
+    public static $timeLife10_000 = 10_000;
     private static string $path = ROOT . '/tmp/cache/';
 
     private function __construct()
-    {}
+    {
+//        self::cacheOff();
+    }
 
     private static function getInstance()
     {
@@ -52,6 +57,12 @@ class Cache
             return new Collection(json_decode($unserialized));
         }
         return $unserialized;
+    }
+    private static function cacheOff(): void
+    {
+        self::$timeLife100 = 1;
+        self::$timeLife1_000 = 1;
+        self::$timeLife10_000 = 1;
     }
 
     public static function delete($key): void

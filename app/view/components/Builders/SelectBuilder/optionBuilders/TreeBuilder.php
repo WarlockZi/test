@@ -15,9 +15,9 @@ abstract class TreeBuilder
     protected string $tab;
     protected array $arr;
 
-    protected int|null $selected = null;
+    protected int|string|null $selected = null;
     protected string $selectedField;
-    protected string $selectedValue;
+
     protected $excluded = null;
     protected $localtab;
 
@@ -35,9 +35,10 @@ abstract class TreeBuilder
     }
 
 
-    public function selected(?int $selected):self
+    public function selected(int|string $selected, string $field = 'id'):self
     {
         $this->selected = $selected;
+        $this->selectedField = $field;
         return $this;
     }
     public function selectedByField(array $selected):self

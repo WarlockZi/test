@@ -19,7 +19,7 @@ class CategoryRepository
                     ->with('childrenRecursive')
                     ->get();
             },
-            1
+            Cache::$timeLife1_000
         );
     }
 
@@ -39,7 +39,7 @@ class CategoryRepository
                 $c        = $category->toArray();
 
                 return $category;
-            }, 5);
+            }, Cache::$timeLife1_000);
     }
 
     public static function changeProperty(array $req): void
@@ -88,12 +88,12 @@ class CategoryRepository
                             $q->select('id', 'name', '1s_category_id');
                         }]
                     )
-                    ->select('id', 'name')
+                    ->select('1s_category_id', 'id', 'name')
                     ->whereNull('deleted_at')
-                    ->get(['id', 'name']);
+                    ->get(['id', '1s_category_id', 'name']);
                 return $cats;
             },
-            1000
+            Cache::$timeLife1_000
         );
         return $cat;
     }

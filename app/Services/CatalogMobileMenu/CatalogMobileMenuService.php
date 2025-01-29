@@ -17,13 +17,13 @@ class CatalogMobileMenuService
         $this->fs     = new FS(__DIR__);
         Cache::get('catalogMobileMenu', function () {
             $this->categories = CategoryRepository::treeAll()->toArray();
-        }, 10000);
+        }, Cache::$timeLife10_000);
         Cache::get('categoryRecurse',
             function () {
                 $this->recurse($this->categories);
                 return $this->string;
             },
-            10);
+            Cache::$timeLife1_000);
     }
 
     public function recurse($arr)
