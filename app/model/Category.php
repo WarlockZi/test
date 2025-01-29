@@ -5,6 +5,7 @@ namespace app\model;
 
 use app\Services\SlugService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -174,7 +175,7 @@ class Category extends Model
             ;
     }
 
-    public function cat()
+    public function cat(): BelongsTo
     {
         return $this->belongsTo(Category::class,
             '1s_id',

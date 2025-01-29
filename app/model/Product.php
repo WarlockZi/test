@@ -7,6 +7,7 @@ use app\core\Auth;
 use app\Services\ProductImageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -25,9 +26,9 @@ class Product extends Model
         'art',
         'txt',
         'slug',
-        'category_id',
         'image_id',
         'manufacturer_id',
+        'category_id',
         '1s_category_id',
         '1s_id',
         'instore',
@@ -308,9 +309,12 @@ class Product extends Model
         return $this->belongsTo(Category::class)->with('parentRecursive.properties.vals');
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class,
+            '1s_category_id',
+            '1s_id',
+        );
     }
 
     public function categories()

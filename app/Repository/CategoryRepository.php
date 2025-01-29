@@ -86,9 +86,9 @@ class CategoryRepository
             'categoryTree',
             function () {
                 $cats = Category::query()
-                    ->where('category_id', null)
+                    ->where('1s_category_id', null)
                     ->with(['childrenRecursive' => function ($q) {
-                            $q->select('id', 'name', 'category_id');
+                            $q->select('id', 'name', '1s_category_id');
                         }]
                     )
                     ->select('id', 'name')
