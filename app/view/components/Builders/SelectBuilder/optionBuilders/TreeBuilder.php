@@ -15,7 +15,9 @@ abstract class TreeBuilder
     protected string $tab;
     protected array $arr;
 
-    protected $selected = null;
+    protected int|null $selected = null;
+    protected string $selectedField;
+    protected string $selectedValue;
     protected $excluded = null;
     protected $localtab;
 
@@ -38,7 +40,13 @@ abstract class TreeBuilder
         $this->selected = $selected;
         return $this;
     }
-
+    public function selectedByField(array $selected):self
+    {
+        $key =  array_keys($selected)[0];
+        $this->selectedField = $key;
+        $this->selectedValue = $selected[$key];
+        return $this;
+    }
     public function excluded($excluded):self
     {
         $this->excluded = $excluded;
@@ -47,9 +55,13 @@ abstract class TreeBuilder
 
     protected function validateFormat():void
     {
-        $first = $this->arr[0];
-        if (!isset($first['id']) || !isset($first['name'])) Error::setError('no name or id');
-        if (!isset($first[$this->relation])) Error::setError('no relation');
+        try {
+            $first = @$this->arr[0];
+            if (!isset($first['id']) || !isset($first['name'])) Error::setError('no name or id');
+            if (!isset($first[$this->relation])) Error::setError('no relation');
+        }catch (\Throwable $exception){
+            $exception->getMessage();
+        }
     }
     public function get(): string
     {

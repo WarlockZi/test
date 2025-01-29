@@ -86,7 +86,7 @@ class CategoryFormView
                     ItemFieldBuilder::build('category_id', $category)
                         ->name('Принадлежит')
                         ->html(
-                            self::categorySelector($category)
+                            self::selectorByField([])
                         )
                         ->get()
                 )
@@ -170,7 +170,37 @@ class CategoryFormView
             ->class('categories')
             ->get();
     }
+    public static function categorySelector(Category $category): string
+    {
+        $tree1 = TreeOptionsBuilder::build(
+            CategoryRepository::treeAll(),
+            'children_recursive', 2)
+            ->initialOption()
+            ->selected($category['1s_category_id'])
+            ->excluded($category->id)
+            ->get();
 
+        return SelectBuilder::build(
+            $tree1
+        )
+            ->field('category_id')
+            ->get();
+
+    }
+
+    public static function selectorByField(array $selected, int $excluded = -1): string
+    {
+        return SelectBuilder::build(
+            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
+                ->initialOption()
+                ->selectedByField($selected)
+                ->excluded($excluded)
+                ->get()
+        )
+            ->field('category_id')
+            ->class('categories')
+            ->get();
+    }
     public static function productFilterSelector(array $req): string
     {
         $selected = $req['category'] ?? 0;
@@ -290,29 +320,11 @@ class CategoryFormView
             ->get();
     }
 
-    public static function categorySelector(Category $category): string
-    {
-        $tree1 = TreeOptionsBuilder::build(
-            CategoryRepository::treeAll(),
-            'children_recursive', 2)
-            ->initialOption()
-            ->selected($category->category_id)
-            ->excluded($category->id)
-            ->get();
-
-        return SelectBuilder::build(
-            $tree1
-        )
-            ->field('category_id')
-            ->get();
-
-    }
 
     public static function properties(Collection $properties): string
     {
         $content = Table::build($properties)
             ->pageTitle('Св-ва категории')
-//            ->model('property')
             ->relation('properties', 'property')
             ->column(
                 ColumnBuilder::build('name')
