@@ -5,7 +5,7 @@ $ListItem = ($obj['namespace'] === 'admin')
 
 $tagStart = (($obj['namespace'] === 'admin') && $obj['isLastLink'])
     ? "<a itemprop='item' href='{$obj['slug']}'>"
-    : "<div itemprop='item' >";
+    : "<div itemprop='item'>";
 
 $tagEnd = (($obj['namespace'] === 'admin') && $obj['isLastLink'])
     ? "</a>"
@@ -19,6 +19,6 @@ $tagEnd = (($obj['namespace'] === 'admin') && $obj['isLastLink'])
         </span>
 <?= $tagEnd; ?>
 
-    <meta itemprop="position" content="<?= $obj['index']+1; ?>"/>
+    <meta itemprop="position" content="<?= $obj['index'] + 1; ?>"/>
 <?= $obj['panel']; ?>
     </li><?= $obj['breadcrumbs']; ?>

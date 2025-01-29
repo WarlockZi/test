@@ -170,16 +170,19 @@ class Category extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class)
-            ->orderByDesc('name')//->groupBy('instore')
+        return $this->hasMany(Product::class,
+            "1s_category_id",
+            '1s_id'
+        )
+            ->orderByDesc('name')
             ;
     }
 
     public function cat(): BelongsTo
     {
         return $this->belongsTo(Category::class,
-            '1s_id',
             '1s_category_id',
+            '1s_id',
         );
     }
 
@@ -196,7 +199,9 @@ class Category extends Model
     public function parent()
     {
         return $this->belongsTo(Category::class,
-            '1s_category_id');
+            '1s_category_id',
+            '1s_id'
+        );
     }
 
     public function parentRecursive()

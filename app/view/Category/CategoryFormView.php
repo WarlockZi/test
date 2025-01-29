@@ -86,7 +86,7 @@ class CategoryFormView
                     ItemFieldBuilder::build('category_id', $category)
                         ->name('Принадлежит')
                         ->html(
-                            self::selectorByField([])
+                            self::selectorByField(['1s_category_id'=>$category['1s_category_id']])
                         )
                         ->get()
                 )
