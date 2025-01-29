@@ -213,7 +213,10 @@ class Category extends Model
     public function childrenNotDeleted()
     {
         return $this
-            ->hasMany(Category::class, '1s_category_id')
+            ->hasMany(Category::class,
+                '1s_category_id',
+                '1s_id'
+            )
             ->whereNull('deleted_at');
     }
 

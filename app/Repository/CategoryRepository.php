@@ -19,7 +19,7 @@ class CategoryRepository
                     ->with('childrenRecursive')
                     ->get();
             },
-            1000
+            1
         );
     }
 
@@ -27,7 +27,7 @@ class CategoryRepository
     {
         return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
             function () use ($url) {
-                $products = Category::query()
+                $category = Category::query()
                     ->with('childrenRecursive')
                     ->with('parentRecursive')
                     ->withWhereHas('ownProperties',
@@ -36,12 +36,9 @@ class CategoryRepository
                     ->with('productsInStore')
                     ->with('productsNotInStoreInMatrix')
                     ->get()->first();
-                $c        = $products->toArray();
+                $c        = $category->toArray();
 
-
-                $c = $products->toArray();
-
-                return $products;
+                return $category;
             }, 5);
     }
 

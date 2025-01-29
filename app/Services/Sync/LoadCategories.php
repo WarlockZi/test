@@ -16,7 +16,7 @@ class LoadCategories
     public function __construct(
         readonly private string $file,
         private array           $data = [],
-        private int|null        $parent = 0,
+        private string|null     $parent = NULL,
         public array            $deleted = [],
         public array            $created = [],
         private array           $existed = [],
@@ -39,29 +39,31 @@ class LoadCategories
         });
     }
 
-    protected function run($groups): void
+    protected function run($groups, $level = 0): void
     {
-        if ($this->isAssoc($groups)) {
+        if (!$this->isAssoc($groups)) {
+            foreach ($groups as $group) {
+                if ($level === 0) {
+                    $this->parent = null;
+                }
+                $this->run($group, 0);
+            }
+        } else {
             $item                         = $this->fillItem($groups);
             $this->existed[$groups['Ид']] = $groups['Ид'];
             if (isset($groups['Группы'])) {
-                $this->parent = $item['id'];
-                $this->run($groups['Группы']['Группа']);
+                $this->parent = $item['1s_id'];
+                $this->run($groups['Группы']['Группа'], ++$level);
             }
-        } else {
-            foreach ($groups as $group) {
-                $this->run($group);
-            }
-//            $this->parent = null;
         }
     }
 
     protected function fillItem(array $group): Category
     {
-        $item['1s_id']       = $group['Ид'];
+        $item['1s_id']          = $group['Ид'];
         $item['1s_category_id'] = $this->parent;
 
-        $item['name'] = $group['Наименование'];
+        $item['name']       = $group['Наименование'];
         $item['slug']       = SlugService::slug($item['name']);
         $item['deleted_at'] = NULL;
 
