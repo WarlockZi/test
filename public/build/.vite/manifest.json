@@ -1,6 +1,6 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-DM84Jjdz.js",
+    "file": "assets/Category-3MPWU_p7.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -33,7 +33,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-B6TQUbBI.js",
+    "file": "assets/Product-Ddx71tCF.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -54,7 +54,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-DoM1YnON.js",
+    "file": "assets/Props-6ruJ6Ah1.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -67,7 +67,7 @@
     ]
   },
   "Admin/ProductFilter/ProductFilter.js": {
-    "file": "assets/ProductFilter-BUNgsruP.js",
+    "file": "assets/ProductFilter-BzQn0iSH.js",
     "name": "ProductFilter",
     "src": "Admin/ProductFilter/ProductFilter.js",
     "isDynamicEntry": true,
@@ -90,14 +90,14 @@
     ]
   },
   "Admin/Test/TestEdit/test-edit.js": {
-    "file": "assets/test-edit-MRzE63T5.js",
+    "file": "assets/test-edit-BVQjxnf9.js",
     "name": "test-edit",
     "src": "Admin/Test/TestEdit/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_search-maXjdn-c.js",
-      "_index-D5ASBQ4M.js",
+      "_index-BhkG-wNS.js",
       "_MyQuill-BEzRfrce.js"
     ],
     "css": [
@@ -105,7 +105,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-DELFWlCN.js",
+    "file": "assets/admin-BLT7MX8o.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -115,7 +115,7 @@
     ],
     "dynamicImports": [
       "components/table/Tables.js",
-      "_index-D5ASBQ4M.js",
+      "_index-BhkG-wNS.js",
       "Admin/chartjs/chartjs.js",
       "Admin/ProductFilter/ProductFilter.js",
       "Promotions/Promotion.js",
@@ -140,7 +140,7 @@
     ]
   },
   "Admin/components/catalog-item/catalog-item.js": {
-    "file": "assets/catalog-item-BkL7eD01.js",
+    "file": "assets/catalog-item-Ce7m_5Gr.js",
     "name": "catalog-item",
     "src": "Admin/components/catalog-item/catalog-item.js",
     "isDynamicEntry": true,
@@ -148,7 +148,7 @@
       "_search-maXjdn-c.js"
     ],
     "css": [
-      "assets/catalog-item-BieoTK1p.css"
+      "assets/catalog-item-DYLOAFwQ.css"
     ]
   },
   "Cart/Cart.js": {
@@ -188,17 +188,17 @@
     ]
   },
   "Like/Like.js": {
-    "file": "assets/Like-BNsNpGfW.js",
+    "file": "assets/Like-g_AUD6TY.js",
     "name": "Like",
     "src": "Like/Like.js",
     "isDynamicEntry": true,
     "imports": [
       "_search-maXjdn-c.js",
-      "_Table-BqM8q6OI.js"
+      "_Table-DhLyt-3R.js"
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-CK-EK23f.js",
+    "file": "assets/main-DE0fdatH.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -219,7 +219,7 @@
       "Promotions/Promotion.js"
     ],
     "css": [
-      "assets/main-rzrzFE7k.css"
+      "assets/main-CqsUdcy9.css"
     ]
   },
   "Product/Product.js": {
@@ -275,8 +275,8 @@
     "file": "assets/Table-BqCz7GlE.css",
     "src": "_Table-!~{00l}~.js"
   },
-  "_Table-BqM8q6OI.js": {
-    "file": "assets/Table-BqM8q6OI.js",
+  "_Table-DhLyt-3R.js": {
+    "file": "assets/Table-DhLyt-3R.js",
     "name": "Table",
     "imports": [
       "_search-maXjdn-c.js"
@@ -289,8 +289,8 @@
     "file": "assets/index-DmAyeOWP.css",
     "src": "_index-!~{004}~.js"
   },
-  "_index-D5ASBQ4M.js": {
-    "file": "assets/index-D5ASBQ4M.js",
+  "_index-BhkG-wNS.js": {
+    "file": "assets/index-BhkG-wNS.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [
@@ -343,13 +343,13 @@
     "isDynamicEntry": true
   },
   "components/table/Tables.js": {
-    "file": "assets/Tables-Dw3dFZp7.js",
+    "file": "assets/Tables-4j8rJfMj.js",
     "name": "Tables",
     "src": "components/table/Tables.js",
     "isDynamicEntry": true,
     "imports": [
       "_search-maXjdn-c.js",
-      "_Table-BqM8q6OI.js"
+      "_Table-DhLyt-3R.js"
     ]
   },
   "share/card_panel/card_panel.js": {

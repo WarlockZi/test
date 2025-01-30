@@ -196,6 +196,9 @@ nav.breadcrumbs-5 {
 
   ul {
     display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    margin-bottom: 10px;
   }
 
   li {

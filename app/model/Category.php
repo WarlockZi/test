@@ -7,6 +7,7 @@ use app\Services\SlugService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
@@ -151,10 +152,11 @@ class Category extends Model
         )->where('slug', '=', 'main');
     }
 
-    public function ownProperties()
+    public function ownProperties(): HasOne
     {
-        return $this
-            ->hasOne(CategoryProperty::class, 'category_1s_id', '1s_id');
+        return $this->hasOne(CategoryProperty::class,
+            '1s_category_id',
+            '1s_id');
     }
 
     public function scopeWithWhereHas($query, $relation, $constraint)
@@ -174,29 +176,11 @@ class Category extends Model
             "1s_category_id",
             '1s_id'
         )
-            ->orderByDesc('name')
-            ;
+            ->orderByDesc('name');
     }
 
-    public function cat(): BelongsTo
-    {
-        return $this->belongsTo(Category::class,
-            '1s_category_id',
-            '1s_id',
-        );
-    }
 
-//    public function category()
-//    {
-//        return $this->parent()->with('parentRecursive');
-//    }
-
-    public function parents()
-    {
-        return $this->cat()->with('parents');
-    }
-
-    public function parent()
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class,
             '1s_category_id',
@@ -204,32 +188,43 @@ class Category extends Model
         );
     }
 
-    public function parentRecursive()
+    public function parentRecursive(): BelongsTo
     {
         return $this->parent()->with('parentRecursive');
     }
 
-
-    public function childrenRecursive()
+    public function childrenRecursive(): HasMany
     {
         return $this->childrenNotDeleted()->with('childrenRecursive');
     }
 
-    public function childrenNotDeleted()
+    public function childrenNotDeleted(): HasMany
     {
-        return $this
-            ->hasMany(Category::class,
-                '1s_category_id',
-                '1s_id'
-            )
-            ->whereNull('deleted_at');
+        return $this->hasMany(Category::class,
+            '1s_category_id',
+            '1s_id',
+        );
     }
 
     public function childrenDeleted()
     {
         return $this
-            ->hasMany(Category::class, '1s_category_id')
+            ->hasMany(Category::class,
+                '1s_category_id',
+                '1s_id')
             ->whereNotNull('deleted_at');
     }
+//    public function cat(): BelongsTo
+//    {
+//        return $this->belongsTo(Category::class,
+//            '1s_category_id',
+//            '1s_id',
+//        );
+//    }
+//
+//    public function parents(): BelongsTo
+//    {
+//        return $this->cat()->with('parents');
+//    }
 
 }

@@ -13,9 +13,7 @@ class Cache
     private static string $path = ROOT . '/tmp/cache/';
 
     private function __construct()
-    {
-//        self::cacheOff();
-    }
+    {}
 
     private static function getInstance()
     {
@@ -58,7 +56,7 @@ class Cache
         }
         return $unserialized;
     }
-    private static function cacheOff(): void
+    public static function off(): void
     {
         self::$timeLife100 = 1;
         self::$timeLife1_000 = 1;
