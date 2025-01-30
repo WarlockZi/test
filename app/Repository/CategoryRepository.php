@@ -25,6 +25,7 @@ class CategoryRepository
 
     public function indexInstore(string $url)
     {
+        Cache::off();
         return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
             function () use ($url) {
                 $category = Category::query()
@@ -79,18 +80,11 @@ class CategoryRepository
 
     public static function treeAll(): Collection
     {
-        $cat = Cache::get(
-            'categoryTree',
+        $cat = Cache::get('categoryTree',
             function () {
-                $cats = Category::query()
-                    ->where('1s_category_id', null)
-                    ->with(['childrenRecursive' => function ($q) {
-                            $q->select('id', 'name', '1s_category_id');
-                        }]
-                    )
-                    ->select('1s_category_id', 'id', 'name')
-                    ->whereNull('deleted_at')
-                    ->get(['id', '1s_category_id', 'name']);
+                $cats = Category::whereNull('1s_category_id')
+                    ->with('childrenRecursive')
+                    ->get(['id', '1s_id','1s_category_id', 'name']);
                 return $cats;
             },
             Cache::$timeLife1_000

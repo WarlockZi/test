@@ -8,6 +8,7 @@ import TableDTO from "@src/Admin/TableDTO.js";
 
 export default class Table {
    constructor(table) {
+      debugger
       this.table = table;
       this.model = table.dataset.model ?? table.closest('[data-model]')?.dataset.model;
       this.modelId = table.dataset.id ?? table.closest('[data-model]')?.dataset.id;
@@ -19,7 +20,7 @@ export default class Table {
       this.delUrl = `/adminsc/${this.model}/del`;
       this.updateOrCreateUrl = `/adminsc/${this.model}/updateOrCreate`
 
-      this.table[ael]('click', this.handleClick.bind(this));
+      this.table[ael]('click', this.handleClick.bind(this),true);
       this.table[ael]('keyup', debounce(this.handleKeyup.bind(this)).bind(this));
       this.table[ael]('paste', this.handlePaste.bind(this));
       this.table[ael]('customSelect.changed', this.selectChange.bind(this));

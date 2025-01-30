@@ -81,8 +81,8 @@ class LoadCategories
     {
         try {
             $catProps = CategoryProperty::firstOrCreate(
-                ['category_1s_id' => $category['1s_id']],
-                ['category_1s_id' => $category['1s_id']
+                ['1s_category_id' => $category['1s_id']],
+                ['1s_category_id' => $category['1s_id']
 //                'slug' => SlugService::getCategorySlug($category)
                 ],
             );
