@@ -15,9 +15,9 @@ class TreeOptionsBuilder extends TreeBuilder
     protected function isExcluded(array $item): bool
     {
         if (is_array($this->excluded)) {
-            return in_array($id, $this->excluded);
+            return in_array($item[$this->selectedField], $this->excluded);
         }
-        return $this->excluded === $id;
+        return $this->excluded === $item[$this->selectedField];
     }
 
     protected function getOption(array $item, int $level): string
