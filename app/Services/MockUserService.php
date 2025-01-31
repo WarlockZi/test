@@ -3,21 +3,24 @@
 namespace app\Services;
 
 use app\core\Auth;
+use \app\model\User;
+use app\model\UserYandex;
 
 class MockUserService
 {
     public static function mockUser()
     {
-        $Olya = \app\model\User::query()
-            ->where('email', 'vitex018@yandex.ru')
+        $MarinaDemis = User::where('email', 'p.shishkov@demis.ru')
             ->first();
-        $Oleg = \app\model\User::query()
-            ->where('email', 'molchinoleg@mail.ru')
+        $Olya = User::where('email', 'vitex018@yandex.ru')
             ->first();
-        $yandexVvoronik = \app\model\UserYandex::query()
-            ->where('default_email', 'vvoronik@yandex.ru')
+        $Oleg = User::where('email', 'molchinoleg@mail.ru')
             ->first();
-        Auth::setUser($yandexVvoronik);
+        $yandexVvoronik = UserYandex::where('default_email', 'vvoronik@yandex.ru')
+            ->first();
+
+
+        Auth::setUser($MarinaDemis);
     }
 
 }

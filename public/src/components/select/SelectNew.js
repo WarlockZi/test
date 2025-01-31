@@ -3,7 +3,6 @@ import './selectNew.scss'
 import {$, createElement} from "../../common";
 
 export default class SelectNew {
-
    constructor(el) {
       if (!el | !$(el).find('option')) return;
 
@@ -60,7 +59,7 @@ export default class SelectNew {
       return selectTag.get();
    }
 
-   setSelectTag(el){
+   setSelectTag(el) {
       return (new createElement())
          .tag("div")
          .className(el?.className)
@@ -69,6 +68,7 @@ export default class SelectNew {
          .attr("data-value", this?.selectedOption?.value ?? '')
          .attr('tabindex', '0')
    }
+
    handleSelectBlur() {
       this.ul.classList.remove("show");
    }

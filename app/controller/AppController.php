@@ -49,13 +49,12 @@ class AppController extends Controller
                     Response::json(['popup' => 'Заменен', 'attach' => $attach]);
                 }
 
-            }
-            if (!empty($req['relation']['fields'])) {
+            }elseif (!empty($req['relation']['fields'])) {
                 $key                        = key($req['relation']['fields']) ?? null;
                 $value                      = $req['relation']['fields'][$key] ?? null;
                 $model->$relationName->$key = $value;
                 $model->push();
-            } else if ($req['relation']['id']) {
+            } elseif ($req['relation']['id']) {
 //                $id           = $req['relation']['id'];
 //                $withRelation = $model->$relationName()->syncWithoutDetaching([$id]);
             }

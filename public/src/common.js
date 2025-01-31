@@ -228,9 +228,10 @@ function sanitizeInput(input) {
       "delete": '&del',
    };
    const reg = /[&<>'()\/\\;]/gi;
-   return input.replace(reg, (match) => {
+   const sanitized = input.replace(reg, (match) => {
       return map[match];
    });
+   return sanitized.trim();
 }
 
 function phoneValidator(phone) {
