@@ -40,7 +40,7 @@ $(document).ready(async function () {
    const table = $('[custom-table]').first()
    if (table) {
       const {default: Tables} = await import( '../components/table/Tables.js')
-      // new Tables
+      new Tables
    }
    new Search(true);
    new Navigation;
@@ -52,9 +52,9 @@ $(document).ready(async function () {
    if (window.location.pathname === '/adminsc/pages') {
       new Pages
    } else if (window.location.pathname === '/adminsc/user') {
-      new Users
+      // new Users
    } else if (window.location.pathname.startsWith('/adminsc/user/edit')) {
-      new User
+      // new User
    } else if (window.location.href.includes("/test")) {
       const {default: Test} = await import('./Test/index.js')
    } else if (window.location.pathname === '/adminsc') {
