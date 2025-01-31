@@ -25,6 +25,9 @@ import setLocalStorageCartId from "@src/share/cart_id/cart_id.js";
 window.YM = YM
 document.addEventListener('DOMContentLoaded', async function () {
 
+   const admin = window.location.pathname.includes('adminsc')
+   if (admin) return false
+
    document.body.classList.remove('preload');//to prevent initial transitions
 
    const feedbackButton = $('#feedback-submit').first()
@@ -62,8 +65,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
 
-   const admin = window.location.pathname.includes('adminsc')
-   if (admin) return false
+
 
 
    new Modal({

@@ -1,6 +1,7 @@
 <?php
 
 use app\core\Router;
+
 session_unset();
 session_start();
 $_SESSION['phpSession'] = session_id();
@@ -8,7 +9,9 @@ $_SESSION['phpSession'] = session_id();
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 try {
-    \app\Services\MockUserService::mockUser();
+    if (DEV) {
+//        \app\Services\MockUserService::mockUser();
+    }
 //    \app\Services\UrlService::generateUrls();
 //    new \app\Services\XLService\XLService();
 //    \app\Services\SiteMapService::generateMap();
