@@ -198,11 +198,6 @@ const popup = {
    }
 };
 
-async function get(key) {
-   let p = window.location.search;
-   p = p.match(new RegExp(key + '=([^&=]+)'));
-   return p ? p[1] : false;
-}
 
 function getPhpSession() {
    return document.querySelector('meta[name="phpSession"]').getAttribute('content')
@@ -382,8 +377,15 @@ const time = {
    'dMs': 60 * 60 * 24 * 1000,
 };
 
+async function del(url, data = {}, headers = {}) {
+   let p = window.location.search;
+   p = p.match(new RegExp(key + '=([^&=]+)'));
+   return p ? p[1] : false;
+}
+
+
 async function post(url, data = {}, headers = {}) {
-   const init = setInit(url, data, headers)
+   const init = setPostBodyHeaders(url, data, headers)
    const res = await sendPost(url, init)
       .catch(err => {
          console.log(err)
@@ -393,11 +395,12 @@ async function post(url, data = {}, headers = {}) {
    return res
 }
 
+
 function isEmptyObj(obj) {
    return !Object.keys(obj).length
 }
 
-function setInit(url, body, headers) {
+function setPostBodyHeaders(url, body, headers) {
    body.phpSession = getPhpSession();
    headers = isEmptyObj(headers) ? {"X-Requested-With": "XMLHttpRequest"} : headers
    if (!(body instanceof FormData)) {

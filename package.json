@@ -39,7 +39,7 @@
     "node-quill-converter": "^0.0.0",
     "postcss": "^8.4.38",
     "postcss-loader": "^8.1.1",
-    "pre-commit": "^1.2.2",
+    "pre-commit": "^1.0.10",
     "prettier": "^3.3.0",
     "sass": "^1.77.4",
     "sass-loader": "^14.2.1",
@@ -56,6 +56,7 @@
     "vite-plugin-php": "^1.0.11"
   },
   "dependencies": {
+    "axios": "^1.7.9",
     "quill": "^2.0.2",
     "strip-js": "^1.2.0",
     "vite-bundle-visualizer": "^1.2.1"
