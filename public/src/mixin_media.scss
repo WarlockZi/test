@@ -963,14 +963,22 @@ $border-color:var.$color-main
   cursor: pointer;
   box-sizing: border-box;
   border: 1px solid $border-color;
-  transition: background 500ms, color 500ms;
+  transition: background 300ms, color 300ms;
   user-select: none;
+
 
   &:hover {
     color: $background;
     background: $color;
     border: 1px solid $background;
   }
+  &[disabled]{
+       background-color: var.$color-gray-browser;
+       border: 1px solid lighter(var.$color-gray-browser, 10%);
+       color: var.$color-gray8;
+       &:hover{}
+     }
+
 }
 
 

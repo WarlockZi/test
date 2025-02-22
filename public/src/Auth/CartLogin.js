@@ -9,6 +9,10 @@ import {
    sanitizeInput,
    popup
 } from "../common.js";
+
+import PhoneValidator from "@src/components/validator/PhoneValidator.js";
+import EmailValidator from "@src/components/validator/EmailValidator.js";
+
 import {qs} from "@src/constants.js";
 
 export default class cartLogin {

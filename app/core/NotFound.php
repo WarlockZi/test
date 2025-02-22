@@ -4,9 +4,8 @@
 namespace app\core;
 
 use app\controller\Controller;
-use app\model\User;
+use app\Services\AssetsService\UserAssets;
 use app\view\AdminView;
-use app\view\Assets\UserAssets;
 use app\view\UserView;
 
 class NotFound extends Controller

@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Collection;
 class Cache
 {
     private static $instance = null;
-    public static $timeLife100 = 100;
-    public static $timeLife1_000 = 1_000;
-    public static $timeLife10_000 = 10_000;
+    public static bool $enabled= true;
+    public static int $timeLife100 = 100;
+    public static int $timeLife1_000 = 1_000;
+    public static int $timeLife10_000 = 10_000;
     private static string $path = ROOT . '/tmp/cache/';
 
     private function __construct()
@@ -27,9 +28,9 @@ class Cache
     public static function get(string $key, string|array|callable $data, int $seconds = 10, $path = '')
     {
         $file = FS::platformSlashes(self::$path . $path . $key . '.txt');
-        if (is_readable($file)) {
+        if (is_readable($file) && self::$enabled) {
             $content = unserialize(file_get_contents($file));
-            if (time() <= $content['end_time']) {
+            if (time() <= $content['end_time'] && self::$enabled) {
                 return $content['data'];
             } else {
                 return self::set($key, $data, $seconds, $path);
@@ -58,6 +59,7 @@ class Cache
     }
     public static function off(): void
     {
+        self::$enabled = false;
         self::$timeLife100 = 1;
         self::$timeLife1_000 = 1;
         self::$timeLife10_000 = 1;

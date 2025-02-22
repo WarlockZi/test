@@ -29,13 +29,20 @@ use app\core\Icon;
 
     <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
     <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script>
+
+    <script type="module" src="https://localhost:5173/@vite/client"></script>
+    <script type="module" src="https://localhost:5173/Main/main.js"></script>
+
     <?= $assets->getMeta(); ?>
 
-    <?= $assets->getCss(); ?>
+
+    //assets
+<!--    --><?php //=  $assets->getCss();?>
 
 </head>
 
-<? include_once __DIR__ . '/google.php'; ?>
+<?// include_once __DIR__ . '/google.php'; ?>
+
 <body class="preload">
 
 <?= $header; ?>

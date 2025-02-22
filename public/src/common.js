@@ -229,26 +229,7 @@ function sanitizeInput(input) {
    return sanitized.trim();
 }
 
-function phoneValidator(phone) {
-   const errors = []
-   const min = 11
-   const max = 19
-   const replacePattern = /[0-9\(\)\s\+-]*/g
 
-   if (!phone.length) {
-      errors.push("Поле должно быть заполнено")
-   }
-   if (phone.replace(replacePattern, '').length) {
-      errors.push("Разрешены цифры, пробел, скобки, знак +, знак -")
-   }
-   if (phone.length < min) {
-      errors.push(`Длина меньше ${min} символов`)
-   }
-   if (phone.length > max) {
-      errors.push(`Длина больше ${max} символов`)
-   }
-   return errors
-}
 
 function passwordValidator(pass) {
    const min = 6
@@ -301,7 +282,6 @@ function emailValidator(mail) {
    }
    return errors
 }
-
 
 function createEl(tagName, className = '', text = '') {
    let div = document.createElement(tagName);
@@ -709,7 +689,7 @@ function addTooltip(args) {
 
 export {
    passwordValidator,
-   phoneValidator,
+   // phoneValidator,
    emailValidator,
    sanitizeInput,
    createElement,
@@ -727,7 +707,7 @@ export {
    popup,
    debounce,
    IsJson,
-   post, get,
+   post,
    validate, $,
    formatDate,
 }

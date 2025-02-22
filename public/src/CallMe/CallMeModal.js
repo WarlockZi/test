@@ -1,7 +1,8 @@
 import FieldBuilder from "../components/Modal/builders/FieldBuilder.js";
 
-import {createElement, emailValidator, passwordValidator,getPhpSession, post, sanitizeInput} from "../common.js";
+import {createElement, getPhpSession, post, sanitizeInput} from "../common.js";
 import {qs} from "@src/constants.js";
+import PhoneValidator from "@src/components/validator/PhoneValidator.js";
 
 export default class CallMeModal {
    constructor() {
@@ -18,32 +19,54 @@ export default class CallMeModal {
          this.getLoginWarning(),
       ]
    }
+   showErrors(container,errors){
+      container[qs]('#phoneError').innerText = errors.length ? errors[0] : ''
+      container.classList.toggle('invalid',!!errors.length)
+      container.classList.toggle('valid',!errors.length)
+   }
+   enableButton(container,errors){
+      const button = container.closest('.box')[qs]('#callme')
+      button.disabled = !!errors.length
+   }
+   onKeyUpPhone({target}) {
+      const container = target.closest('.input-container');
+      const errors = new PhoneValidator({
+         value:target.value,
+         required:true,
+         min:11,
+         max:19,
+      })
+      this.showErrors(container,errors)
+      this.enableButton(container,errors)
+
+   }
 
    getPhoneInput() {
       return (new FieldBuilder)
          .id('phone')
+         .placeholder('Тел.')
          .required()
          .name('phone')
          .type('text')
-         .errorEl('#emailError')
+         .errorEl('#phoneError')
          .badgeWidth('65px')
-         .placeholder('телефон')
+         .onKeyUp(this.onKeyUpPhone.bind(this))
          .get()
    }
 
    getCallMeButton() {
-      const registerButton = this.createButton("Заказать звонок")
-      registerButton.addEventListener('click', this.callme.bind(this))
-      return registerButton
+      const button = this.createButton("Заказать звонок")
+      button.disabled = true
+      button.addEventListener('click', this.callme.bind(this))
+      return button
    }
 
    getLoginWarning() {
       return (new createElement()).tag('p').text("Оставляя свои данные, вы соглашаетесь с политикой конфиденциальности").get()
    }
 
-
    createButton(text) {
-      return (new createElement()).tag('button').attr('type', 'submit').attr('class', 'button').attr('id', 'forgot').text(text).get()
+      return (new createElement()).tag('button').attr('type', 'submit').attr('class', 'button').attr('id', 'callme').text(text).get()
    }
 
 
@@ -55,7 +78,7 @@ export default class CallMeModal {
          content.innerHTML =
             '<p>-Ждите звонка на указанный номер.</p>'
       } else {
-         content.innerHTML = res?.arr?.error??'Неизвестная ошибка';
+         content.innerHTML = res?.arr?.error ?? 'Неизвестная ошибка';
       }
    }
 
@@ -64,8 +87,9 @@ export default class CallMeModal {
       e.preventDefault()
       const form = e.target.closest('.box')
       return {
-         phone:sanitizeInput(form[qs]('input#phone')?.value) ?? null,
-         php_session:getPhpSession() ?? null}
+         phone: sanitizeInput(form[qs]('input#phone')?.value) ?? null,
+         php_session: getPhpSession() ?? null
+      }
    }
 
 }

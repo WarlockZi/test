@@ -5,7 +5,8 @@
       "@fonts/*": ["pic/fonts/*"],
       "@pic": ["pic"],
       "@main/*": ["pic/main/*"],
-      "@icons": ["/pic/icons"]
+      "@icons": ["/pic/icons"],
+      "@src": ["/public/src"]
     }
   }
 }
