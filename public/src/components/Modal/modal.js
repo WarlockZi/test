@@ -46,7 +46,6 @@ export default class Modal {
    }
 
    close({target}) {
-      // this.overlay.
       if (!target.classList.contains('modal-close') && !target.classList.contains('overlay')) return
       const openedBox = this.wrap[qs]('.transform-in')
       openedBox[ael]('transitionend', this.transitionHandler.bind(this))

@@ -6,8 +6,8 @@ use app\controller\Controller;
 use app\core\Auth;
 use app\core\FS;
 use app\core\Route;
-use app\view\Assets\AdminAssets;
-use app\view\Assets\Assets;
+use app\Services\AssetsService\AdminAssets;
+use app\Services\AssetsService\Assets;
 use app\view\Header\Admin\AdminHeader;
 use Exception;
 

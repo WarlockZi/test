@@ -66,7 +66,7 @@
         transform: translate(-100vw, -50%);
       }
 
-       .title {
+      .title {
         @include mixin_media.h2;
         color: #fff;
         margin-bottom: clamp(5px, 5vh, 20px);
@@ -81,7 +81,7 @@
         display: flex;
         flex-direction: column;
 
-        .yandex{
+        .yandex {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -100,6 +100,33 @@
           min-height: 20px;
           width: 100%;
           margin: 22px 0 0 0;
+
+          &.valid {
+            input {
+              outline: 1px, solid, var.$color-main;
+            }
+
+            label {
+              color: var.$color-main;
+            }
+
+            #emailError, #phoneError, #passwordError {
+              color: var.$color-main;
+            }
+          }
+
+          &.invalid {
+            input {
+              outline: 1px solid brown;
+            }
+            label {
+              color: brown;
+            }
+
+            #emailError, #phoneError, #passwordError {
+              color: brown;
+            }
+          }
 
           input {
             border-radius: 12px;
@@ -131,9 +158,9 @@
               transform: translateY(-25px) translateX(10px) scale(0.75);
             }
 
-            &:not(:placeholder-shown) ~ label {
-              color: #808097;
-            }
+            //&:not(:placeholder-shown) ~ label {
+            //  color: #808097;
+            //}
           }
 
           .badge {
@@ -163,7 +190,7 @@
             font-size: clamp(.6rem, 4vw, 1rem);
           }
 
-          #emailError {
+          #emailError, #phoneError {
             align-self: start;
             color: brown;
             height: clamp(.5rem, 2vw, 1rem);

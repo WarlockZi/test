@@ -6,8 +6,8 @@ use app\controller\Controller;
 use app\core\FS;
 use app\core\Route;
 use app\Repository\CategoryRepository;
-use app\view\Assets\Assets;
-use app\view\Assets\UserAssets;
+use app\Services\AssetsService\Assets;
+use app\Services\AssetsService\UserAssets;
 use app\view\Footer\UserFooter;
 use app\view\Header\UserHeader;
 
