@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\core\Cache;
 use app\core\Response;
 use app\Repository\MorphRepository;
 use Throwable;
@@ -13,6 +14,7 @@ class AppController extends Controller
 
     public function __construct()
     {
+        Cache::off();
         parent::__construct();
     }
 
