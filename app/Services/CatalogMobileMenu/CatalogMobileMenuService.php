@@ -10,6 +10,7 @@ class CatalogMobileMenuService
 {
     private array $categories=[];
     private string $string;
+    private FS $fs;
 
     public function __construct()
     {
