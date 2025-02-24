@@ -10,7 +10,7 @@ export default defineConfig(async ({command, mode}) => {
       const host = env.VITE_HOST ?? 'localhost'
 
       return {
-         root: 'public/src',
+         // root: 'public/src',
          base: env.VITE_DEV
             ? ''
             : './build',
@@ -23,6 +23,7 @@ export default defineConfig(async ({command, mode}) => {
             port: env.VITE_PORT,
             hmr: {host}
          },
+
          build: {
             outDir: '../build',
             emptyOutDir: true,
