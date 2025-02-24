@@ -8,6 +8,7 @@ use app\core\Route;
 use app\Repository\CategoryRepository;
 use app\Services\AssetsService\Assets;
 use app\Services\AssetsService\UserAssets;
+use app\view\Footer\Footer;
 use app\view\Footer\UserFooter;
 use app\view\Header\UserHeader;
 
@@ -15,6 +16,7 @@ class UserLayout extends Layout
 {
     protected string $view = '';
     protected UserHeader $header;
+    protected UserFooter $footer;
     protected FS $viewFs;
     protected string $layout = '';
     protected FS $layoutFs;
