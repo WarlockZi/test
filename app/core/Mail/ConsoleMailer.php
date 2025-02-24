@@ -23,7 +23,7 @@ class ConsoleMailer implements Mailer
         list($path, $to, $subj, $body, $headers) = MailConsoleRepository::$function($props);
 
         try {
-            !$_ENV['DEV'] ? mail($to, $subj, $body) : exec("php -f $path $to $subj \"$body\" $headers", $output);
+            !DEV ? mail($to, $subj, $body) : exec("php -f $path $to $subj \"$body\" $headers", $output);
             return true;
         } catch (Throwable $exception) {
             $exc = $exception;

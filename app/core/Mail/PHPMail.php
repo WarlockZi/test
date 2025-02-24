@@ -32,7 +32,7 @@ class PHPMail
 
         $mailer->Host     = env('SMTP_HOST');
         $mailer->Username = env('SMTP_USERNAME');
-        if ($_ENV['DEV']) {
+        if (DEV) {
             $mailer->Password = env('YANDEX_APP_KEY_DEV');
         } else {
             $mailer->Password = env('YANDEX_APP_KEY1');
