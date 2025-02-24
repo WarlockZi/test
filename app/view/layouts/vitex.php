@@ -42,6 +42,7 @@ use app\core\Icon;
         <?= $assets->getCss(); ?>
     <? endif; ?>
 
+
 </head>
 
 <? // include_once __DIR__ . '/google.php'; ?>
