@@ -27,7 +27,7 @@ class Helpers
 
     )
     {
-        $this->isDev = $_ENV['DEV'] === '1';
+        $this->isDev = DEV;
         $this->serverStarted = $this->loadedFromDevServer($this->entry);
         $this->manifest = $this->getManifest();
     }

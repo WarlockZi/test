@@ -7,52 +7,24 @@ export default defineConfig(async ({command, mode}) => {
       const env = loadEnv(mode, process.cwd())
       console.log('command - ' + command)
 
-      const host = 'localhost'
-      const port = 5173
+      const host = env.VITE_HOST ?? 'localhost'
 
       return {
+         root: 'public/src',
+         base: env.VITE_DEV
+            ? ''
+            : './build',
+
          server: {
             cors: true,
             host: host,
-            // origin: 'apo',//это чтобы admin-accordion arrow svg (assets) мог загружаться из css
             strictPort: true,
             https: true,
-            port,
+            port: env.VITE_PORT,
             hmr: {host}
          },
-
-         define: {
-            'env': env
-         },
-         plugins: [
-            // vue(),
-            basicSsl(),
-            liveReload([
-               // edit live reload paths according to your source code
-               // __dirname + '/(app|config|views)/**/*.php',
-               // __dirname + '/public/src/**/*.js',
-               // __dirname + '/public/src/**/*.scss',
-               __dirname + '/public/**/*.php',
-               __dirname + '/app/**/*.php',
-            ]),
-         ],
-
-         root: 'public/src',
-         base: env.VITE_APP_ENV === 'development'
-            ? ''
-            : './',
-
-         css: {
-            preprocessorOptions: {
-               scss: {
-                  api: 'modern-compiler', // or "modern", "legacy"
-               },
-            },
-            devSourcemap: true,
-         },
-
          build: {
-            outDir: '../../public/build',
+            outDir: '../build',
             emptyOutDir: true,
             target: 'esnext',
             manifest: true,
@@ -66,12 +38,36 @@ export default defineConfig(async ({command, mode}) => {
                }
             }
          },
+         plugins: [
+            basicSsl(),
+            liveReload([
+               // __dirname + '/(app|config|views)/**/*.php',
+               __dirname + '/public/**/*.php',
+               __dirname + '/app/**/*.php',
+            ]),
+         ],
+
+
+         css: {
+            preprocessorOptions: {
+               scss: {
+                  api: 'modern-compiler', // or "modern", "legacy"
+               },
+            },
+            devSourcemap: true,
+         },
+
+
 
          resolve: {
             alias: {
                '@src': `${path.resolve(__dirname, 'public', 'src')}`
             }
-         }
+         },
+
+         define: {
+            'env': env
+         },
       }
    }
 )
