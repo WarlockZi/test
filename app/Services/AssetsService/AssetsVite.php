@@ -53,6 +53,7 @@ class AssetsVite implements Compiler
             $this->compiler->vite('Auth/auth.js');
 //            $this->compiler->vite('auth.js');
 
+
         return $assets;
 
     }
