@@ -4,7 +4,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 
-class MorphController Extends AppController
+class MorphController Extends AdminscController
 {
 
 	public function __construct(array $route)

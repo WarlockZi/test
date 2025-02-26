@@ -1,4 +1,4 @@
-@import "../var";
+@use "../var";
 
 .list {
   display: flex;
@@ -9,17 +9,17 @@
 
   .list__header {
     font-size: 2em;
-    color: $color-a;
+    color: var.$color-a;
     margin: 15px 0;
   }
 
   .list__item {
-    color: $color-a;
+    color: var.$color-a;
     border: 1px solid #eee;
     padding: 10px;
 
     &:hover {
-      background-color: $color-white-hover;
+      background-color: var.$color-white-hover;
     }
   }
 }

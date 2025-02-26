@@ -1,27 +1,24 @@
 User-agent: *
 
 Disallow: /tmp/
-Disallow: /libs/
 Disallow: /config/
-Disallow: /bit/
 Disallow: /app/
-Disallow: /catalog/
-Disallow: /about/
+Disallow: /main/about/
 Disallow: /search/
 Disallow: /adminsc/
+Disallow: /tel*
+
+Disallow: /short/*
 
 Disallow: /auth/login
-Disallow: /short/*
 Disallow: /auth/register
 Disallow: /auth/forgot
 Disallow: /auth/returnpass
-Disallow: /main/requisites
-Disallow: /main/politicaconf
+
 Disallow: /cart
 Disallow: /404
 
-Disallow: /*?
+Disallow: /?*
 
 Sitemap: https://vitexopt.ru/sitemap.xml
-Host: https://vitexopt.ru
 

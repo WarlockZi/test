@@ -1,50 +1,142 @@
-//@import "logo";
-@import "user_menu";
-
+@use "user_menu";
+@use "../../mixin_media";
+@use "../../var";
 
 .admin-layout_header {
-  background: #fff;
+  position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  max-width: 1310px;
   border-bottom: 1px solid #f0f0f0;
-  max-height: 52px;
-  position: absolute;
-  top: 0;
+  background: #fff;
+  max-width: 1310px;
   min-width: 100%;
-  z-index: 1;
+  //max-height: 52px;
+  top: 0;
 
-  @include _600 {
-    display: none;
+  @include mixin_media.m600 {
+    //display: none;
   }
 
-  .relative{
-    position: relative;
+  .a-header-main {
     display: flex;
-    justify-content: space-between;
-    background-color: whitesmoke;
-    min-width: 100%;
-  }
 
-  .logo {
-    display: flex;
-    flex: 0 1;
-    align-items: center;
-    padding-left: 77px;
+    .burger {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      background-color: whitesmoke;
 
-    .logo_vitex {
-      max-width: 140px;
-      margin: 0 10px;
+      svg#burger {
+        background: var.$color-admin-sidebar;
+        align-items: center;
+        padding-inline: 10px;
+        height: 100%;
+        display: none;
+        pointer-events: none;
+
+        @include mixin_media.m600 {
+          display: flex;
+        }
+      }
     }
 
+    .logo_square {
+      max-width: 140px;
+      margin-left: 10px;
+      padding-inline: 2px;
+    }
+
+    .logo_vitex {
+      color: var.$color-admin-sidebar;
+      @include mixin_media.m600 {
+        display: none;
+      }
+    }
+
+    .utils {
+      display: flex;
+      flex: 1 0;
+      justify-content: flex-end;
+
+      .feedback {
+        position: relative;
+        height: 100%;
+        cursor: pointer;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          color: black;
+          width: 23px;
+          height: 23px;
+        }
+
+        &:hover {
+          background-color: var.$color-white-hover;
+        }
+
+        .count {
+          position: absolute;
+          top: 10px;
+          right: 0;
+          width: 20px;
+          height: 20px;
+          vertical-align: middle;
+          text-align: center;
+          background-color: var.$color-main;
+          border-radius: 50%;
+          color: white;
+          font-size: 0.6rem;
+          line-height: 20px;
+        }
+      }
+
+      button {
+        border: none;
+        padding: 0;
+        background-color: inherit;
+      }
+
+      .search {
+        height: 100%;
+        cursor: pointer;
+        padding: 0 10px;
+
+        &:hover {
+          background-color: var.$color-white-hover;
+        }
+
+        svg {
+          width: 30px;
+          height: 100%;
+          stroke: black;
+        }
+      }
+    }
+
+
+    @include mixin_media.search-panel;
+
+
+    .logo {
+      display: flex;
+      flex: 0 1;
+      align-items: center;
+      padding-left: 0;
+
+
+      .logo_vitex {
+        max-width: 140px;
+        margin: 0 10px;
+      }
+
+    }
+
+
   }
 
-
 }
 
-
-hr {
-  margin: 15px 0 20px;
-  border: 0;
-  border-top: 1px solid #ecedef;
-}

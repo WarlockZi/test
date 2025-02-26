@@ -1,0 +1,31 @@
+@use "../../mixin_media";
+@use "../../var";
+
+
+.accordion-open {
+  display: none;
+  position: relative;
+  transition: transform 1s;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  cursor: pointer;
+  background-color: #337ab7;
+  color: white;
+  margin-right: -4px;
+  width: 150px;
+  border: 1px solid transparent;
+  font-size: 0.7rem;
+
+  @include mixin_media.m1000 {
+    display: flex;
+  }
+
+
+  &:hover {
+    border: 1px solid var.$color-main;
+    background-color: white;
+    color: var.$color-main;
+  }
+}

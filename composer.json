@@ -2,9 +2,7 @@
   "autoload": {
     "psr-4": {
       "Dotenv\\": "vendor/vlucas/phpdotenv/src",
-      "app\\": "app",
-      "Engine\\": "engine",
-      "Engine\\DI\\": "engine/DI"
+      "app\\": "app"
     }
   },
   "classmap": [
@@ -13,12 +11,27 @@
   ],
   "require": {
     "ext-json": "*",
+    "ext-zip": "*",
     "ext-simplexml": "*",
-    "ext-imagick": "*",
     "phpmailer/phpmailer": "^6.4",
     "vlucas/phpdotenv": "^5.3",
     "illuminate/events": "^8.83",
-    "illuminate/database": "^8.83"
+    "illuminate/database": "^8.83",
+    "ext-mysqli": "*",
+    "ext-pdo": "*",
+    "ext-curl": "*",
+    "ext-sockets": "*",
+    "shuchkin/simplexlsx": "^1.1",
+    "arthurkushman/php-wss": "^2.0",
+    "monolog/monolog": "^3.7",
+    "ext-memcached": "*",
+    "ext-xdebug": "*",
+    "ext-imap": "*"
+  },
+  "config": {
+    "platform-check": false
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.4"
   }
-
 }

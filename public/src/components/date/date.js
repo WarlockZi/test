@@ -1,17 +1,21 @@
-import {$, fragmentDate} from '../../common'
+import {fragmentDate} from '../../common'
 import './date.scss'
+import {ael} from "@src/constants.js";
 
-let dates = $('[custom-date]')
+export default class CustomDate {
+   constructor(date) {
+      this.date = date;
+      this.date[ael]('change', this.onChange.bind(this));
+   }
 
-if (dates){
-  for (let date of dates) {
-    date.onchange = function ({target}) {
-      let {yyyy,mm,dd} = fragmentDate(target.value)
-
-      let formated = `${yyyy}-${mm}-${dd}`
-      let d = target.value
-      target.setAttribute('data-value',formated)
-    }
-
-  }
+   onChange({target}) {
+      const {yyyy, mm, dd} = fragmentDate(target.value)
+      const formated = `${yyyy}-${mm}-${dd}`
+      target.setAttribute('data-value', formated)
+      const customEvent =
+         new CustomEvent('date.changed',
+            {bubbles: true, cancelable: true, detail: {value: formated}}
+         )
+      target.dispatchEvent(customEvent)
+   }
 }

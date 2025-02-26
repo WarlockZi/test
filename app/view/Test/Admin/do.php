@@ -1,17 +1,13 @@
 <section class="test-do">
-
-	<? include ROOT . '/app/view/Test/test_head.php'; ?>
-
-	<div class="content">
-
-		 <?= $test->getAccordion(); ?>
-
-		<div class="test">
-
-				<?= $test->getPagination(); ?>
-				<?= $test->getContent(); ?>
-
-		</div>
-
+    <div class="test-head">
+        <div class="accordion-open">Выбрать тест</div>
+    </div>
+    <div class="test">
+       <?= $testView->getAccordion(); ?>
+        <div class="content">
+           <?= $testView->getPagination($test); ?>
+           <?= $testView->getContent($test); ?>
+        </div>
+    </div>
 </section>
 

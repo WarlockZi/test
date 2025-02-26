@@ -1,0 +1,8 @@
+.filter-containers{
+    display: flex;
+    gap: 10px;
+
+    .filter-container{
+
+    }
+}

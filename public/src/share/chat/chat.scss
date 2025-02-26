@@ -1,0 +1,95 @@
+@use '../../var';
+@use "sass:color";
+@use "../../mixin_media";
+
+#chatForm {
+  position: fixed;
+  bottom: 17px;
+  right: 8px;
+  width: 0;
+  height: 0;
+  background-color: white;
+  border-radius: 10px;
+  z-index: 1;
+  transition: all .5s;
+  overflow: hidden;
+  border: 1px solid transparent;
+
+  &.open {
+    width: 217px;
+    height: 275px;
+    border: 1px solid var.$color-main;
+  }
+
+  .messages{
+    padding-block: 40px;
+  }
+  .message {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding-inline: 10px;
+    margin-bottom: 5px;
+
+    &.user {
+      margin-right: 20px;
+      background-color: #d7f0f4;
+    }
+
+    &.manager {
+      margin-left: 20px;
+      background-color: #e1fcec;
+    }
+  }
+
+
+  .modal-close {
+    @include mixin_media.modal-close;
+
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  .chat-name-input {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    border-color: #0dcaf0;
+    border-radius: 5px;
+    width: 90%;
+    border-style: solid;
+
+    &:focus-visible {
+      //border-style: solid;
+      //border-color: var.$color-main;
+      outline-color: blue;
+    }
+  }
+}
+
+.chat-icon {
+  svg {
+    position: fixed;
+    bottom: 90px;
+    right: 27px;
+    width: 40px;
+    height: 40px;
+    color: var.$color-main;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+
+    &:hover {
+      animation: twirk-animation 1s infinite linear;
+      color: color.adjust(var.$color-main, $lightness: 10%);
+      transform-origin: bottom left;
+    }
+  }
+
+  @keyframes twirk-animation {
+    50% {
+      transform: rotate(10deg);
+    }
+  }
+}

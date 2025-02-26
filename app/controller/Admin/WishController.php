@@ -6,19 +6,19 @@ use app\controller\AppController;
 use app\Storage\StorageProd;
 use Workerman\Protocols\Http;
 
-class WishController Extends AppController
+class WishController Extends AdminscController
 {
-	public $model = Http::class;
+	public string $model = Http::class;
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$content = StorageProd::getFileContent('wish');
-		$this->set(compact('content'));
+		$this->setVars(compact('content'));
 	}
 	public function actionSave()
 	{

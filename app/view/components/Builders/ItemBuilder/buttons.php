@@ -1,7 +1,7 @@
 <!--  BUTTONS  -->
 <div class="item_buttons">
 
-	<? use app\core\Icon;
+    <?php use app\core\Icon;
 
 	 if ($this->del): ?>
 	  <div class="del"
@@ -11,28 +11,28 @@
 			 <?= Icon::trashIcon() ?>
 	  </div>
 
-	<? endif; ?>
+     <?php endif; ?>
 
-	<? if ($this->softDel): ?>
+    <?php if ($this->softDel): ?>
 	  <div soft-del>
 			 <?= Icon::trashIcon() ?>
 	  </div>
-	<? endif; ?>
+    <?php endif; ?>
 
 
-	<? if ($this->save): ?>
+    <?php if ($this->save): ?>
 	  <div class="save"
 	       data-model="<?= $this->model; ?>"
 	       data-id="<?= $this->item['id']; ?>">
 			 <?= Icon::save();?>
 	  </div>
-	<? endif; ?>
+    <?php endif; ?>
 
-	<? if ($this->toList): ?>
+    <?php if ($this->toList): ?>
 	  <a href="<?=$this->toListHref; ?>"
 	     class="to-list">
 			 <?= $this->toListText ?>
 	  </a>
-	<? endif; ?>
+    <?php endif; ?>
 
 </div>

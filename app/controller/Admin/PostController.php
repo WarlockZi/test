@@ -3,27 +3,25 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\core\Route;
+use app\core\Response;
 use app\model\Post;
 use app\view\Post\PostView;
 
-
-class PostController Extends AppController
+class PostController Extends AdminscController
 {
-	public  $model = Post::class;
-	public  $modelName = 'post';
-	public  $tableName = 'posts';
+	public  string $model = Post::class;
+//	public  $modelName = 'post';
 
 	public function __construct()
 	{
 		parent::__construct();
-
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
-		$list = PostView::listAll();
-		$this->set(compact('list'));
+        $this->view = 'table';
+		$table = PostView::index();
+		$this->setVars(compact('table'));
 	}
 
 
@@ -31,12 +29,12 @@ class PostController Extends AppController
 	{
 		if ($this->ajax) {
 			$this->model::update($this->ajax);
-			$this->exitWithPopup('ok');
+			Response::exitWithPopup('ok');
 		}
 		$id = $this->route['id'];
 
 		$item = PostView::item($id);
-		$this->set(compact('item'));
+		$this->setVars(compact('item'));
 	}
 
 	private function getItem($item, $chiefs, $subordinates)
@@ -55,29 +53,17 @@ class PostController Extends AppController
 	}
 
 
-	public function actionDelete()
+	public function actionDelete():void
 	{
 		$id = $this->ajax['id'] ?? $_POST['id'];
 
 		if ($this->model::delete($id)) {
-			$this->exitWithPopup("ok");
+			Response::exitWithPopup("ok");
 		}
 
-		header('Location:/adminsc/post/list');
+		header('Location:/adminsc/post/table');
 	}
 
-//	public function actionUpdateOrCreate()
-//	{
-//		if ($this->ajax) {
-//			if ($id = Post::updateOrCreate($this->ajax)) {
-//				if (is_bool($id)) {
-//					$this->exitWithPopup('Сохранено');
-//				}else{
-//					$this->exitJson(['id'=>$id,'msg'=>'Создан']);
-//				}
-//			}
-//		}
-//	}
 
 
 }

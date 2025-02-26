@@ -61,7 +61,7 @@ class SidebarBuilder
 	private function checkRights(): bool
 	{
 		if (isset($this->item['rights'])) {
-			if (User::can($this->user, $this->item['rights'])) {
+			if ($user->can($this->item['rights'])) {
 				return true;
 			}
 			return false;

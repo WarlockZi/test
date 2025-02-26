@@ -1,107 +1,110 @@
+import {$} from "../common.js"
+import {qs} from '../constants'
+import '../components/footer/footer.scss'
+import '../components/popup.scss'
 import './admin.scss'
-import './model/cache';
 
-import '../components/header/header-adm'
-import '../components/header/search/search'
-import '../components/accordion/accordion'
-import '../components/admin_sidebar'
-import '../components/date/date';
+import './model/cache.js';
+import '../components/accordion/accordion.js'
+import '../components/date/date.js'
 
-import {$} from "../common";
-
-import '../Test/test_results/test_results'
-import '../Test/opentest-edit'
-import testEdit from '../Test/test-edit'
-import '../Test/do'
-import '../Test/open_test'
+import './sync1c/sync1c.js'
+import './Planning/planning.js'
+import './Settings/settings.js'
+import './Videoinstructions/videoinstructions.js'
+import './ProductFilter/ProductFilter'
+import './Category/Category.js'
 
 
-import './sync1c/sync1c';
-// import './chart/chart';
-import './chartjs/chartjs';
-import quill from '../components/quill/quill';
+import AdminHeader from "../components/header/header-adm.js";
+import Search from "../components/search/search.js"
+// import '../components/table/Table.js'
+import adminScroll from '../share/scroll/adminScroll.js'
+import Navigation from "./components/Navigation.js";
 
-
-import './Planning/planning'
-import './Settings/settings'
-import './Videoinstructions/videoinstructions'
-import './Category/category1'
-import rights from './Rights/rights'
-import category from './Category/category1'
-// import pagination from './Product/pagination'
-import product from './Product/product'
-
-import user from './User/user'
-
-
-import radio from '@components/radio/radio'
-import multiselect from '@components/multiselect/multiselect'
-import catalogItem from '@components/catalog-item/catalog-item'
-import tooltips from '../components/tooltip/tooltip';
-import error from '../components/error/error';
-import select from '../components/select/select';
-import accordionShow from '../components/accordion-show';
-import morph from '../components/morph/morph';
-import Search from "../components/header/search/search";
-import Promotion from "../Promotions/Promotion";
-import Order from "../Admin/Order/order";
+import Pages from "@src/Admin/Pages/pages.js";
+import Users from "@src/Admin/User/users.js";
+import User from "@src/Admin/User/user.js";
+import AdminSidebar from "@src/Admin/components/AdminSidebar/AdminSidebar.js";
+// import ProductFilter from "../Admin/ProductFilter/ProductFilter.js";
+// import Promotion from "@src/Promotions/Promotion.js";
 
 
 $(document).ready(async function () {
 
-  new Order();
-  new Promotion();
-  new Search(true);
+   document.body.classList.remove('preload');
 
-  morph();
-  navigate(window.location.pathname);
-  radio();
-  multiselect();
-  catalogItem();
-  tooltips();
-  quill();
-  accordionShow();
+   const admin = window.location.pathname.includes('adminsc')
+   if (!admin) return false
 
-  testEdit();
-  product();
-  category();
-
-  function navigate(str) {
-    if (/\/adminsc\/settings/.test(str)
-      || /\/adminsc\/right\/list/.test(str)
-      || /\/adminsc\/post\/list/.test(str) ||
-      /\/adminsc\/todo\/list/.test(str)) {
-      // rights()
-      $("[settings]").addClass('current')
+   const table = $('[custom-table]').first()
+   if (table) {
+      const {default: Tables} = await import( '../components/table/Tables.js')
+      new Tables
+   }
+   new Search(true)
+   new Navigation
+   new AdminHeader
+   adminScroll()
+   const adminSidebar=$('.sidebar').first()
+   new AdminSidebar(adminSidebar)
 
 
-    } else if (/\/auth\/profile/.test(str)) {
-      // user()
-    } else if (/\/adminsc\/crm/.test(str)) {
-      $("[crm]").addClass('current')
+   if (window.location.pathname === '/adminsc/pages') {
+      new Pages
+   } else if (window.location.pathname === '/adminsc/user') {
+      // new Users
+   } else if (window.location.pathname.startsWith('/adminsc/user/edit')) {
+      // new User
+   } else if (window.location.href.includes("/test")) {
+      const {default: Test} = await import('./Test/index.js')
+   } else if (window.location.pathname === '/adminsc') {
+      const {default: MyChart} = await import('./chartjs/chartjs.js')
+   } else if (window.location.pathname === '/adminsc/report/filter') {
+      const {default: ProductFilter} = await import('./ProductFilter/productFilter.js')
+      new ProductFilter($('.products-filter').first())
+   }
+   // else if (window.location.pathname.startsWith('/adminsc/test/do')){
+   //    new TestDo($('.test-do').first())
+   // }
+   const promotion = $('.promotion-edit').first();
+   if (promotion) {
+      const {default:Promotion} = await import("@src/Promotions/Promotion.js")
+      new Promotion;
+   }
+
+   if (document[qs]('.modal')) {
+      const {default: Modal} = await import("../components/Modal/modal.js")
+      new Modal
+   }
+
+   const cardPanel = document[qs](`.card-panel`)
+   if (cardPanel) {
+      const {default: Card_panel} = await import("./../share/card_panel/card_panel")
+      new Card_panel()
+   }
+
+   const product = document[qs](`.item-wrap[data-model='product']`)
+   if (product) {
+      const {default: Product} = await import('./Product/Product.js')
+      new Product();
+   }
 
 
-    } else if (/\/adminsc\/planning/.test(str)) {
-      $("[plan]").addClass('current')
-
-    } else if (
-      /\/adminsc\/category/.test(str) ||
-      /\/adminsc\/product/.test(str)
-    ) {
-      $("[catalog]").addClass('current')
-
-    } else if (
-      /\/test/.test(str)
-      || /\/opentest/.test(str)
-      || /\/adminsc\/opentest/.test(str)
-      || /\/adminsc\/test/.test(str)) {
-      $("[test]").addClass('current')
-
-    } else {
-      $("[href='/adminsc']").addClass('current')
-    }
-
-  }
+   if (document[qs]('.order-edit')) {
+      const {default: Order} = await import('./Order/order.js')
+      new Order()
+   }
+   const catalogItem = document[qs]('.item-wrap')
+   if (catalogItem) {
+      const {default: CatalogItem} = await import('./components/catalog-item/catalog-item.js')
+      new CatalogItem(catalogItem)
+   }
+   const category = document[qs](`.item-wrap[data-model='category']`)
+   if (category) {
+      const {default: Category} = await import('./Category/Category.js')
+      new Category(category)
+   }
 
 });
 

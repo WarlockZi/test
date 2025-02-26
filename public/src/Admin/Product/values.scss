@@ -1,4 +1,4 @@
-@import "../../var";
+@use "../../var";
 
 .values {
   display: flex;
@@ -7,9 +7,9 @@
   .category {
     margin: 3px 0;
     font-weight: 600;
-    color: $color-gray-mid;
+    color: var.$color-gray-mid;
     &:hover{
-      background-color: $color-gray2;
+      background-color: var.$color-gray2;
     }
   }
 

@@ -8,10 +8,10 @@ use app\model\Val;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use app\view\components\Builders\Morph\MorphBuilder;
-use app\view\components\Builders\SelectBuilder\ArrayOptionsBuilder;
+use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 
 
@@ -20,32 +20,31 @@ class PropertyView
 	public $modelName = Property::class;
 	public $model = 'property';
 
-	public static function listAll()
+	public static function index():string
 	{
-		$view = new self;
-		return MyList::build($view->modelName)
-			->all()
+		return Table::build(Property::all())
+            ->model('property')
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->width('50px')
 					->name('Id')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Название')
 					->search()
 					->sort()
 					->contenteditable()
 					->get()
 			)->column(
-				ListColumnBuilder::build('show_as')
+				ColumnBuilder::build('show_as')
 					->contenteditable()
 					->name('Показывать как')
 					->get()
 			)
 			->edit()
 			->del()
-			->addButton('ajax')
+			->addButton()
 			->get();
 	}
 
@@ -53,16 +52,16 @@ class PropertyView
 	public static function edit($id)
 	{
 		$view = new self();
-		$item = $view->modelName::with('categories', 'products', 'vals')->find($id);
-		return ItemBuilder::build($item, 'property')
-			->pageTitle('Свойство : ' . $item->name)
+		$prop = $view->modelName::with('categories', 'products', 'vals')->find($id);
+		return ItemBuilder::build($prop, 'property')
+			->pageTitle('Свойство : ' . $prop->name)
 			->field(
-				ItemFieldBuilder::build('id', $item)
+				ItemFieldBuilder::build('id', $prop)
 					->name('ID')
 					->get()
 			)
 			->field(
-				ItemFieldBuilder::build('name', $item)
+				ItemFieldBuilder::build('name', $prop)
 					->name('Наименование')
 					->contenteditable()
 					->get()
@@ -70,36 +69,35 @@ class PropertyView
 			->tab(
 				ItemTabBuilder::build('Значения')
 					->html(
-						MyList::build(Val::class)
-							->items($item->vals)
-							->relation('vals')
+						Table::build($prop->vals,)
+							->relation('vals', 'value')
 							->column(
-								ListColumnBuilder::build('id')
+								ColumnBuilder::build('id')
 									->name('ID')
 									->width('40px')
 									->get()
 							)
 							->column(
-								ListColumnBuilder::build('name')
+								ColumnBuilder::build('name')
 									->name('Наименование')
 									->contenteditable()
 									->width('1fr')
 									->get()
 							)
 							->del()
-							->addButton('ajax')
+							->addButton()
 							->get()
 					)
 			)
 			->tab(
 				ItemTabBuilder::build('Принадлежит')
 					->html(
-						self::getMorphs($item)
+						self::getMorphs($prop)
 					)
 			)
 			->del()
 			->save()
-			->toList('adminsc/property/list')
+			->toList('adminsc/property/table')
 			->get();
 
 	}

@@ -1,12 +1,8 @@
 <div class="value">
-
-<!--	--><?// if ($field->html): ?>
-<!--		--><?//= $field->html; ?>
-<!--	--><?// else: ?>
-<!--	--><?// endif; ?>
-
 	  <div
-			 <?= $field->datafield; ?>
+			 <?= $field->id??''; ?>
+			 <?= $field->getDatafield(); ?>
+			 <?= $field->getDatarelation(); ?>
 			 <?= $field->contenteditable; ?>
 			 <?= $field->required; ?>
 	  ><?= $field->value; ?></div>
