@@ -3,23 +3,23 @@
 namespace app\controller;
 
 use app\model\Promotion;
+use app\Repository\PromotionRepository;
 
 class PromotionController Extends AppController
 {
-	public $model = Promotion::class;
+	public string $model = Promotion::class;
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
-		$promotions = Promotion::with('product.baseUnit')
-			->with('product.price')
-			->get();
-		$this->set(compact('promotions'));
-		$this->assets->setMeta("Акции", "Акции","Акции");
+		$promotions = PromotionRepository::product();
+
+		$this->setVars(compact('promotions'));
+		$this->assets->setMeta("Акции", "Акции", "Акции");
 	}
 
 }

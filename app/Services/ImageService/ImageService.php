@@ -2,7 +2,7 @@
 
 namespace app\Services\ImageService;
 
-class ImageService implements IImage
+abstract class ImageService implements IImage
 {
 	public $img;
 	protected string $absPath;

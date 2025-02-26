@@ -7,23 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
 
-	public $model = 'post';
+//	public $model = 'post';
 
 	protected $fillable = [
-		'name' => '',
-		'chief' => '',
-		'subordinate' => '',
+		'name',
+		'full_name',
+		'post_id',
 	];
-
 
 	public function chief()
 	{
-		return $this->hasOne(Post::class,'id','chief');
+		return $this->hasOne(Post::class,'id','post_id');
 	}
 
-	public function subordinates()
-	{
-		return $this->hasMany(Post::class,'chief','id');
-	}
 
 }

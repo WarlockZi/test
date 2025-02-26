@@ -9,19 +9,19 @@ use app\model\User;
 use app\view\View;
 
 
-class CrmController extends AppController
+class CrmController extends AdminscController
 {
 
 	public function __construct()
 	{
 		parent::__construct();
 
-		if (!User::isEmployee(Auth::getUser())){
+		if (!Auth::userIsEmployee()){
 			header('Location:/auth/profile');
 		}
 	}
-	public function actionClearCache()
-	{
+	public function actionClearCache(): void
+    {
 		$path = ROOT . "/tmp/cache/*.txt";
 		array_map("unlink", glob($path));
 		exit('Успешно');
@@ -30,17 +30,15 @@ class CrmController extends AppController
 	public function actionProdtypes()
 	{
 		$types = App::$app->adminsc->getProd_types();
-		$this->set(compact('types'));
+		$this->setVars(compact('types'));
 	}
 
-	public function actionSiteMap()
-	{
-		$iniCatList = App::$app->category->getInitCategories();
-		$this->set(compact('iniCatList'));
+	public function actionSiteMap(): void
+    {
 	}
 
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 //		View::setMeta('Администрирование', 'Администрирование', 'Администрирование');
 	}
@@ -55,16 +53,15 @@ class CrmController extends AppController
 	{
 	}
 
-	public function actionPics()
-	{
+	public function actionPics(): void
+    {
 		$pics = App::$app->adminsc->findAll('pic');
-		$this->set(compact('pics'));
+		$this->setVars(compact('pics'));
 	}
 
 	public function actionDumpWWW()
 	{
-		if ($this->isAjax()) {
-		}
+
 	}
 
 

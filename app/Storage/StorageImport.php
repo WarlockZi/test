@@ -6,7 +6,7 @@ namespace app\Storage;
 
 class StorageImport extends Storage
 {
-	protected $path;
+	protected string $path;
 
 	public function __construct()
 	{
@@ -14,7 +14,8 @@ class StorageImport extends Storage
 		$this->path = $this->storagePath.'import'.DIRECTORY_SEPARATOR;
 	}
 
-
-
-
+    public function getStoragePath(): string
+    {
+       return $this->path;
+    }
 }

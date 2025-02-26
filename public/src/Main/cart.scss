@@ -1,0 +1,138 @@
+@use "../var";
+@use "../mixin_media";
+@use "counter";
+
+.cart {
+  //padding: 0 10px;
+
+  .content {
+
+    .table {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      overflow-x: auto;
+      max-width: calc(100vw - 35px);
+
+      .cart-item {
+        display: grid;
+        grid-template-columns: 20px 125px minmax(155px, 400px) 205px 110px 40px;
+        grid-template-rows: 100px;
+        grid-template-areas:
+                  'id img name shippable sum del';
+
+        @include mixin_media.m700 {
+          grid-template-columns: 20px 100px 1fr 1fr 50px;
+          grid-template-rows: max-content 1fr 40px;
+          grid-template-areas:
+                  'id name name name name'
+                  'img img shippable shippable shippable'
+                  'sum sum sum sum del';
+          grid-auto-rows: max-content;
+          gap:0;
+
+          div:first-child {
+            border-top-left-radius: 5px;
+          }
+          div:nth-child(3) {
+            border-top-right-radius: 5px;
+          }
+          div:nth-child(5) {
+            border-bottom-left-radius: 5px;
+          }
+          div:last-child {
+            border-bottom-right-radius: 5px;
+          }
+
+          .cell {
+            border-radius: 0;
+          }
+        }
+      ;
+        @include mixin_media.m400 {
+          grid-template-columns: 20px 100px 1fr 1fr 50px;
+          grid-template-rows: max-content 1fr max-content;
+          grid-template-areas:
+                  'id name name name name'
+                  'img img img img img'
+                  'shippable shippable shippable shippable shippable'
+                  'sum sum sum sum del';
+          grid-auto-rows: max-content;
+          border: 1px solid var.$color-gray7;
+          border-radius: 5px;
+
+          div:first-child {
+            border-top-left-radius: 5px;
+          }
+          div:nth-child(3) {
+            border-top-right-radius: 5px;
+          }
+          div:nth-child(5) {
+            border-bottom-left-radius: 5px;
+          }
+          div:last-child {
+            border-bottom-right-radius: 5px;
+          }
+
+          .cell {
+            border-radius: 0;
+          }
+        }
+      ;
+      }
+
+    }
+
+    .order-item_not-found {
+      padding: 10px;
+      color: var.$color-warning;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+
+    .message {
+      margin: 40px auto;
+      width: clamp(300px, 40%, 450px);
+      font-size: 1rem;
+      color: var.$color-main-green;
+      line-height: 3;
+    }
+
+
+    @include mixin_media.cartRow;
+
+
+  }
+
+  .empty-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30vh;
+  }
+
+  .total {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid var.$color-gray2;
+    align-items: center;
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      flex: 1 0 100px
+    }
+
+    span {
+      display: flex;
+      justify-content: end;
+      margin: 10px 0;
+      padding: 10px;
+      flex: 0 0 100px;
+    }
+
+  }
+}
+

@@ -3,233 +3,155 @@
 
 namespace app\Repository;
 
-use app\controller\AppController;
-use app\controller\Controller;
-use app\core\FS;
+use app\core\Response;
 use app\model\Product;
-use app\Services\ShortlinkService;
-use app\view\Image\ImageView;
-use Illuminate\Database\Capsule\Manager as DB;
-use Illuminate\Database\Eloquent\Collection;
+use app\model\ProductUnit;
+use Illuminate\Support\Collection;
 
-class ProductRepository extends AppController
+class ProductRepository
 {
+    public function edit(int $id)
+    {
+        return Product::query()
+            ->withTrashed()
+            ->where('id', $id)
+            ->whereNotNull('1s_id')
+            ->with('category.properties.vals')
+            ->with('values')
+            ->with('units')
+//            ->with(['units'=>function ($q) {
+//                $q->orderBy('multiplier');
+//            }])
+            ->with('ownProperties')
+            ->with('category.parentRecursive')
+//            ->with('category.parent')
+            ->with('mainImages')
+            ->with('manufacturer.country')
+            ->with('detailImages')
+            ->with('promotions')
+            ->with('activePromotions')
+            ->with('inactivePromotions')
+            ->with('smallpackImages')
+            ->with('bigpackImages')
+            ->first();
+    }
 
-	public static function edit(int $id)
-	{
-		$id = Product::where('id', $id)->first()['1s_id'];
-		return Product::query()
-			->where('1s_id', $id)
-			->with('category.properties.vals')
-			->with('values')
-			->with('category.parentRecursive')
-			->with('category.parents')
-			->with('mainImages')
-			->with('manufacturer.country')
-			->with('properties')
-			->with('detailImages')
-			->with('promotions')
-			->with('smallpackImages')
-			->with('bigpackImages')
-			->with(['baseUnit' => function ($query) use ($id) {
-				$query->with(['units' => function ($query) use ($id) {
-						$query->wherePivot('product_id', $id)->get();
-					}]
-				);
-			}])
-			->first();
-	}
+    public function main(string $slug): Product|null
+    {
+        return Product::query()
+            ->withTrashed()
+//            ->orderBy('sort')
+            ->with('category.properties.vals')
+            ->with('ownProperties')
+            ->with('category.parentRecursive')
+//            ->with('category.parents')
+            ->with('mainImages')
+            ->with('values.property')
+            ->with('manufacturer.country')
+            ->with('detailImages')
+            ->with('smallpackImages')
+            ->with('bigpackImages')
+            ->with('activepromotions.unit')
+            ->with('shippableUnits')
+            ->with('orders')
+            ->with('like')
+            ->with('compare')
+            ->where('slug', $slug)
+            ->first() ?? null;
+    }
 
-	public static function main(string $slug)
-	{
-		$p = Product::where('slug', $slug)->first();
-		if (!$p) $p = Product::where('short_link', $slug)->first();
-		$id = $p['1s_id'];
-		$product = Product::query()
-			->orderBy('sort')
-			->with('category.properties.vals')
-			->with('category.parentRecursive')
-			->with('category.parents')
-			->with('price')
-			->with('mainImages')
-			->with('values.property')
-			->with('manufacturer.country')
-			->with('detailImages')
-			->with('smallpackImages')
-			->with('bigpackImages')
-			->with('promotions.unit')
-			->with('seo')
-			->with(['baseUnit' => function ($query) use ($id) {
-				$query->with(['units' => function ($query) use ($id) {
-						$query->wherePivot('product_id', $id)->get();
-					}]
-				);
-			}])
-			->where('1s_id', $id)
-			->first();
+    public function changePromotion(array $req)
+    {
 
-//		$product->mainImage = (new ProductMainImage($product))->getRelativePath();
-		return $product;
-	}
+    }
 
-	public static function short(string $short)
-	{
-		$p = Product::where('short_link', $short)->first();
-		$id = $p['1s_id'];
-		$product = Product::query()
-			->orderBy('sort')
-			->with('category.properties.vals')
-			->with('category.parentRecursive')
-			->with('category.parents')
-			->with('price')
-			->with('mainImages')
-			->with('values.property')
-			->with('manufacturer.country')
-			->with('detailImages')
-			->with('smallpackImages')
-			->with('bigpackImages')
-			->with('promotions.unit')
-			->with('seo')
-			->with(['baseUnit' => function ($query) use ($id) {
-				$query->with(['units' => function ($query) use ($id) {
-						$query->wherePivot('product_id', $id)->get();
-					}]
-				);
-			}])
-			->where('1s_id', $id)
-			->first();
+    public static function similarProducts(string $subslug1, string $subslug2): Collection
+    {
+        $q = Product::query()
+            ->where('slug', 'LIKE', "%{$subslug1}%")
+            ->with('activePromotions');
+        if ($subslug2) {
+            $q->orWhere('slug', 'LIKE', "%{$subslug2}%");
+        }
+        return $q->get() ?? new \Illuminate\Database\Eloquent\Collection;
+    }
 
-//		$product->mainImage = (new ProductMainImage($product))->getRelativePath();
-		return $product;
-	}
-	public static function noMinimumUnit()
-	{
-		$unitables = DB::table('unitables')
-			->orderBy('product_id')
-			->get()
-			->groupBy('product_id')
-			->filter(function ($i) {
-				$o = $i->filter(function ($v) {
-					return $v->main;
-				});
-				if (!$o->count()) return $i;
-			});
-		$arr = new Collection();
+    private static function defaultFilter()
+    {
+        return Product::query()
+            ->withTrashed()
+            ->take(10)
+            ->groupBy('art')
+            ->get();
+    }
 
-		foreach ($unitables as $id => $unitable) {
-			$prod = Product::where('1s_id', $id)
-				->with('properties')
-				->get()->first();
+    public function changeVal(array $req): void
+    {
+        $product = Product::find($req['product_id']);
+        $newVal  = $req['morphed']['new_id'];
+        $oldVal  = $req['morphed']['old_id'];
 
-			if ($prod) {
-				if ($prod->instore) {
-					if ($prod->properties) {
-						if (!$prod->properties->base_equals_main_unit)
-							$arr->push($prod);
-					} else {
-						$arr->push($prod);
-					}
-				}
-			}
-		}
-		return Collection::make($arr);
-	}
+        if (!$oldVal) {
+            $product->values()->attach($newVal);
+            exit(json_encode(['popup' => 'Добавлен']));
 
-	public static function haveOnlyBaseUnit()
-	{
-		$all = DB::select("select * from `products` where instore > 0 and not exists (select * from `unitables` as `b` where `b`.`product_id` = `products`.`1s_id`)");
-		return $all;
-	}
+        } else if (!$newVal) {
+            $product->values()->detach($oldVal);
+            exit(json_encode(['popup' => 'Удален']));
 
-	protected static function getP($products)
-	{
-		foreach ($products as $k => $product)
-			return $product;
-	}
+        } else {
+            if ($newVal === $oldVal) exit(json_encode(['popup' => 'Одинаковые значения']));
+            $product->values()->detach($oldVal);
+            $product->values()->attach($newVal);
+            exit(json_encode(['popup' => 'Поменян']));
+        }
+    }
 
-	public static function list()
-	{
-		return Product::query()
-			->with('price')
-			->take(20)
-			->orderBy('id', "DESC")
-			->get();
-	}
+    public function changeUnit(array $req): void
+    {
+        $productId   = $req['pivot']['product_id'];
+        $unitId      = $req['morphed']['new_id'];
+        $productUnit = [
+            'unit_id' => $unitId,
+            'multiplier' => $req['pivot']['multiplier'],
+            'is_shippable' => $req['pivot']['is_shippable'],
+        ];
 
-	public static function hasMainImage(Product $p)
-	{
-		return $p->mainImagePath == '/pic/srvc/nophoto-min.jpg';
-	}
+        try {
+            $unit = ProductUnit::query()
+                ->updateOrCreate(
+                    ['product_1s_id' => $productId,
+                        'unit_id' => $unitId],
+                    $productUnit);
+            Response::exitWithPopup('изменено');
+        } catch (\Throwable $exception) {
+            Response::exitWithPopup('не изменено');
+        }
+    }
 
-	public static function hasNoImgInStore()
-	{
-		$productsInstoreWithStars = Product::query()
-			->select('art', 'name', 'id', 'instore')
-			->where("name", 'REGEXP', "\\*$");
+    public function deleteUnit(array $req): void
+    {
+        try {
+            $productId = $req['pivot']['product_id'];
+            $unitId    = $req['morphed']['old_id'];
+            ProductUnit::where('product_1s_id', $productId)
+                ->where('unit_id', $unitId)
+                ->delete();
+            Response::json(['popup' => 'удален', 'ok' => 'ok']);
+        } catch (\Throwable $exception) {
+            Response::exitWithPopup('не удален');
+        }
+    }
 
-		$products = Product::query()
-			->select('art', 'name', 'id', 'instore')
-			->where('instore', '>', 0)
-			->where("name", 'NOT REGEXP', "\\*$")
-			->union($productsInstoreWithStars)
-			->get();
-		$a = $products->toArray();
+    public function trashed()
+    {
+        return Product::query()
+            ->with('price')
+            ->onlyTrashed()
+            ->with('mainImages')
+            ->take(20)
+            ->orderBy('id', "DESC")
+            ->get();
+    }
 
-		$arr = new Collection();
-		foreach ($products as $product) {
-			if (self::hasMainImage($product)) {
-				$arr->push($product);
-			}
-		}
-		return $arr;
-	}
-
-	public static function hasNoImgNotInStore()
-	{
-		$products = Product::query()
-			->select('art', 'name', 'id', 'instore')
-			->where('instore', '<', 0)
-			->get();
-
-		$arr = new Collection();
-		foreach ($products as $product) {
-//			$file = StorageImg::getFile('product/uploads/' . $product->art . '.jpg');
-			if (self::hasMainImage($product)) {
-				$arr->push($product);
-			}
-		}
-		return $arr;
-	}
-
-	public static function clear()
-	{
-		$deleted = FS::delFilesFromPath("\pic\product\\");
-		ImageRepository::delAll();
-	}
-
-	public static function priceStatic($column, $item, $d)
-	{
-		return $item->getRelation('price')->price ?? 0;
-	}
-
-	public static function imageStatic($column, $item, $d)
-	{
-		$art = trim($item->art);
-		$src = "/pic/product/uploads/{$art}.jpg";
-		if (is_file(ROOT . $src)) {
-			return "<img style='width: 50px; height: 50px;' src='{$src}'>";
-		} else {
-			return ImageView::noImage();
-		}
-	}
-
-	public static function getFilters()
-	{
-		$self = new static();
-		$filters = [
-			'instore' => 'Показать с остатком = 0',
-			'price' => 'Показать c ценой = 0',
-		];
-		return FS::getFileContent('./filters.php', compact('filters'));
-	}
 }

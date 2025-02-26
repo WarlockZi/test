@@ -4,148 +4,73 @@ namespace app\controller;
 
 
 use app\core\Auth;
-use app\core\FS;
+use app\core\Response;
 use app\core\Route;
-use app\core\Router;
-use app\model\User;
-use app\view\AdminView;
-use app\view\Assets\Assets;
-use app\view\UserView;
+use app\Services\AssetsService\Assets;
 
-abstract class Controller
+class Controller
 {
-	public $vars = [];
+    public array $vars = [];
+    public string $view = 'index';
+    protected Route $route;
+    protected array $ajax = [];
+    public Assets $assets;
 
-	protected $token;
-	protected $route;
-	protected $ajax;
-	protected $auth;
-	protected $layout;
-	protected $layoutPath = ROOT . '/app/view/layouts/';
+    function __construct()
+    {
+        $this->setAjaxRequest();
+        if (!$this->isAjax()) {
+            $this->assets = new Assets();
+        }
+    }
 
-	protected $assets;
+    public function actionIndex(): void
+    {
+        $this->view = '404';
+        $this->route->setError('Путь не найден');
+        $errors = $this->route->getErrors();
+        $this->setVars(compact('errors'));
+    }
 
-	function __construct()
-	{
-		if (!$this->isAjax()) {
-			$this->assets = new Assets();
-			$this->route = new Route();
-			$this->token = $this->createToken();
-		}
-	}
+    public function actionNotFound(): void
+    {
+        $this->view = '404';
+        $this->route->setError('Путь не найден');
+        $errors = $this->route->getErrors();
+        $this->setVars(compact('errors'));
+        http_response_code(404);
+    }
 
-	public function getView()
-	{
-		if ($this->route->isAdmin() && User::can(Auth::getUser(), ['role_employee'])) {
-			return new AdminView($this);
-		} else {
-			return new UserView($this);
-		}
-	}
+    public function setRoute(Route $route): void
+    {
+        $this->route = $route;
+        $this->view  = $route->getView();
+    }
 
-	public function getViewPath()
-	{
-		$admin = $this->route->isAdmin() ? 'Admin' : '';
-		$path = FS::platformSlashes(ROOT . "/app/view/" . "{$this->route->getControllerName()}/" . $admin);
-		return $path;
-	}
+    public function getRoute(): Route
+    {
+        return $this->route;
+    }
 
-	protected function createToken(): string
-	{
-		return $_SESSION['token'] = session_id();
-	}
+    public function setVars($vars): void
+    {
+        $this->vars = array_merge($this->vars, $vars);
+    }
 
-	public function getLayout(): string
-	{
-		$layout = $this->layoutPath . $this->layout . '.php';
-		if (is_readable($layout)) {
-			return $layout;
-		}
-		return false;
-	}
+    public function setAjaxRequest(): void
+    {
+        if (empty($_POST['params'])) return;
+        $req = json_decode($_POST['params'], true)??[];
+        if (!Auth::validatePphSession($req)) Response::json(['error' => 'плохой ключ сессии']);
+        if ($this->isAjax()) {
+            unset($req['phpSession']);
+            $this->ajax = $req;
+        }
+    }
 
-	public function getRoute()
-	{
-		return $this->route;
-	}
-
-	public function set($vars)
-	{
-		$this->vars = array_merge($this->vars, $vars);
-	}
-
-
-	public function badToken(array $data): bool
-	{
-		if (!$data || !isset($data['token']) || !$data['token']) return false;
-		if (!$_SESSION['token'] === $data['token']
-		) {
-			unset($data['token']);
-			return true;
-		}
-		return false;
-	}
-
-	public function getAssets(): Assets
-	{
-		return $this->assets;
-	}
-
-	public function isAjax(): array
-	{
-		if (isset($_POST['param'])) {
-
-			$req = json_decode($_POST['param'], true);
-
-			if ($this->badToken($req)) return [];
-
-			if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-				&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
-				unset($req['token']);
-				$this->ajax = $req;
-				return $req;
-			}
-		}
-		return [];
-	}
-
-	public function exitJson(array $arr = []): void
-	{
-		if ($arr) {
-			exit(json_encode(['arr' => $arr]));
-		}
-	}
-
-	public function exitWithPopup(string $msg): void
-	{
-		if ($msg) {
-			exit(json_encode(['popup' => $msg]));
-		}
-		exit();
-	}
-
-	public function exitWithMsg(string $msg): void
-	{
-		if ($msg) {
-			exit(json_encode(['msg' => $msg]));
-		}
-		exit();
-	}
-
-	public function exitWithSuccess(string $msg): void
-	{
-		if ($msg) {
-			exit(json_encode(['success' => $msg]));
-		}
-		exit();
-	}
-
-	public function exitWithError(string $msg): void
-	{
-		if ($msg) {
-			exit(json_encode(['error' => $msg]));
-		}
-		exit();
-	}
+    public function isAjax(): bool
+    {
+        return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+    }
 
 }

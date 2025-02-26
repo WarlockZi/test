@@ -6,13 +6,17 @@ namespace app\Repository;
 
 use app\model\Category;
 use app\model\Product;
+use app\view\share\card_panel\CardPanel;
 
 class BreadcrumbsRepository
 {
+    public function __construct()
+    {
+    }
 
-  private static function getPrefix(bool $admin):string
+    private static function getPrefix(bool $admin):string
   {
-    return 	$admin ? '/adminsc/category/' : '/category/';
+    return 	$admin ? '/adminsc/category/' : '/catalog';
   }
 
 	private static function flatCategoryParents(Category $category): array
@@ -27,10 +31,7 @@ class BreadcrumbsRepository
 		return $cats;
 	}
 
-	public static function getProductBreadcrumbs(Product $product,
-																								bool $linkLast = false,
-																								bool $admin = false,
-																								string $class = 'breadcrumbs-4'){
+	public static function getProductBreadcrumbs(Product $product, bool $linkLast = false, bool $admin = false, string $class = 'breadcrumbs-4'){
 	  if ($product->category){
 	    return self::getCategoryBreadcrumbs($product->category->id, $linkLast, $admin, $class);
     }
@@ -40,29 +41,28 @@ class BreadcrumbsRepository
     return "<nav class='{$class}'>{$str}</nav>";
   }
 
-	public static function getCategoryBreadcrumbs(?int $id,
-																								bool $linkLast = false,
-																								bool $admin = false,
-																								string $class = 'breadcrumbs-5'):string
+	public static function getCategoryBreadcrumbs(?int $id, bool $linkLast = false, bool $admin = false, string $class = 'breadcrumbs-5'):string
 	{
 		if ($id == null) return "Категории";
 		$str = '';
 		$prefix = self::getPrefix($admin);
-		$category = Category::with('parentRecursive')->find($id);
+		$category = Category::with('parentRecursive')
+            ->with('ownProperties')
+            ->find($id);
 		if (!$category) return "Категории";
 
 		$arrayCategories = self::flatCategoryParents($category);
 
 		foreach ($arrayCategories as $i => $cat) {
-			$slug = $admin ? "edit/{$cat->id}" : "{$cat->slug}";
+			$slug = $admin ? "edit/{$cat->id}" : "{$cat->ownProperties->path}";
 			if ($i === 0) {
 				if (!$linkLast) {
-					$str = "<li><div>{$cat->name}</div></li>" . $str;
+					$str = "<li><div>{$cat->name}</div>".CardPanel::categoryCardPanel($category,true)."</li>" . $str ;
 				} else {
-					$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a></li>" . $str;
+					$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a>".CardPanel::categoryCardPanel($category,true)."</li>" . $str;
 				}
 			} else {
-				$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a></li>" . $str;
+				$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a>".CardPanel::categoryCardPanel($category,true)."</li>" . $str;
 			}
 		}
 

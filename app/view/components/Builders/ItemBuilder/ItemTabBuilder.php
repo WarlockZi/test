@@ -4,23 +4,24 @@
 namespace app\view\components\Builders\ItemBuilder;
 
 
-use app\view\components\Builders\Builder;
+use app\view\components\Traits\CleanString;
 
-class ItemTabBuilder extends Builder
+class ItemTabBuilder
 {
+    use CleanString;
 	public $model='';
 	public $html='';
 	public $tabTitle='';
 	public $field='';
 
-	public static function build(string $title)
+	public static function build(string $title):self
 	{
 		$view = new self();
 		$view->tabTitle = $title;
 		return $view;
 	}
 
-	public function html(string $html):ItemTabBuilder
+	public function html(string $html):static
 	{
 		$this->html = $this->clean($html);
 		return $this;

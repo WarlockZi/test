@@ -1,112 +1,42 @@
-@import "../var";
-@import "../mixin_media";
+@use "../var";
+@use "../mixin_media";
 
 .category {
+  margin-top: 15px;
+  margin-bottom: 100px;
+
+  .ql-editor{
+    padding-inline: 0;
+  }
+
+  h1{
+    font-size: 1.7rem;
+    margin-bottom: 0.8rem;
+  }
+
   .products-header {
     position: relative;
+    margin-bottom: 35px;
 
-    h1 {
-      @include _h1;
-      margin-bottom: 5px;
+    h2 {
+      @include mixin_media.h2;
+      font-size: 1.3rem;
     }
 
     .filters {
-      @include slider;
+      @include mixin_media.slider;
     }
-
+  }
+  .seo_h2{
+    font-size: 1.5rem;
+    margin-left: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
   }
 
+  @include mixin_media.product-card;
 
-  .product-wrap {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 80vw;
-    gap: 5px;
-
-    @include _400 {
-      justify-content: center;
-    }
-
-    .column {
-      position: relative;
-
-      .promotion {
-        position: absolute;
-        transform: rotate(90deg);
-        background: red;
-        padding: 5px 10px;
-        top: 10px;
-        right: -7px;
-        color: white;
-        font-size: 13px;
-      }
-    }
-
-    a.product {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 180px;
-      flex: 1;
-      padding: 10px;
-      border: 1px solid $color-gray2;
-      color: $color-gray10;
-      margin-bottom: 0;
-      line-height: 20px;
-
-      @include _400 {
-        width: 80%;
-      }
-
-      img {
-        width: 100%;
-        min-height: 40px;
-        max-height: 240px;
-        object-fit: contain;
-      }
-
-      &[data-instore="0"] {
-        filter: grayscale(0.1);
-        background-color: #fbfbfb;
-
-        img {
-          opacity: 0.8;
-        }
-
-        //display: none;
-      }
-
-      &[data-price^="0"] {
-        //display: none;
-      }
-
-      &.show {
-        display: flex;
-      }
-
-
-      &:hover {
-        border: 1px solid $color-main;
-      }
-
-      .name {
-        font-weight: initial;
-        padding: 10px;
-      }
-
-      .footer {
-        color: #000;
-
-        .old-price{
-          text-decoration: line-through #707f8d;
-          color: #707f8d;
-        }
-      }
-
-    }
-
-  }
+  @include mixin_media.shippable;
 
   .category-wrap, .category-child-wrap {
     font-size: 0.8rem;
@@ -118,31 +48,26 @@
     gap: 10px;
 
     .category-card {
-      color: $color-gray10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100px;
-      width: 142px;
-      padding: 10px;
-      border: 1px solid #ccc;
+      position: relative;
 
-      &:hover {
-        border: 1px solid $color-main;
+      .category-card-a {
+        color: var.$color-gray10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100px;
+        width: 142px;
+        padding: 10px;
+        border: 1px solid #ccc;
+
+        &:hover {
+          border: 1px solid var.$color-main;
+        }
       }
     }
   }
-
-  .hoist {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    padding: 10px;
-    background: $color-main;
-    color: #ffffff;
-    cursor: pointer;
+  .ql-container.ql-snow{
+    border: none !important;
   }
-
 }

@@ -2,58 +2,92 @@
 
 namespace app\core;
 
+use Illuminate\Database\Eloquent\Collection;
+
 class Cache
 {
-	public static function get($key, $path = '')
-	{
-		$file = ROOT . '/tmp/cache/' . $path . md5($key) . '.txt';
-		if (is_readable($file)) {
-			$content = unserialize(file_get_contents($file));
-			if (time() <= $content['end_time']) {
-				return $content['data'];
-			}
-		}
-		return false;
-	}
+    private static $instance = null;
+    public static bool $enabled= true;
+    public static int $timeLife100 = 100;
+    public static int $timeLife1_000 = 1_000;
+    public static int $timeLife10_000 = 10_000;
+    private static string $path = ROOT . '/tmp/cache/';
 
-	private static function mkdir_r($dirName, $rights = 0755)
-	{
-		str_contains('/', $dirName) ?
-			$dirs = explode('/', $dirName) :
-			$dirs = explode('\\', $dirName);
-		$slash = DIRECTORY_SEPARATOR;
-		$dir = ROOT;
-		foreach ($dirs as $part) {
-			if ($part) {
-				$dir .= $slash . $part;
-				if (!is_dir($dir)) {
-					mkdir($dir, $rights);
-				}
-			}
-		}
-		return $dir;
-	}
+    private function __construct()
+    {}
 
-	public static function set(string $key, $data, int $seconds = 3600)
-	{
-		$content['data'] = $data;
-		$content['end_time'] = time() + $seconds;
-		$dir = self::mkdir_r('\tmp\cache');
-		$file = $dir . DIRECTORY_SEPARATOR . md5($key) . '.txt';
+    private static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self;
+            return self::$instance;
+        }
+        return self::$instance;
+    }
 
-		if (file_put_contents($file, serialize($content))) {
-			return true;
-		}
-		return false;
-	}
+    public static function get(string $key, string|array|callable $data, int $seconds = 10, $path = '')
+    {
+        $file = FS::platformSlashes(self::$path . $path . $key . '.txt');
+        if (is_readable($file) && self::$enabled) {
+            $content = unserialize(file_get_contents($file));
+            if (time() <= $content['end_time'] && self::$enabled) {
+                return $content['data'];
+            } else {
+                return self::set($key, $data, $seconds, $path);
+            }
+        } else {
+            return self::set($key, $data, $seconds, $path);
+        }
+    }
 
+    public static function set(string $key, callable $data, int $seconds = 6, string $path = ''): string|array|object|null
+    {
+        if (is_callable($data)) {
+            $unserialized    = $data();
+            $content['data'] = $unserialized;
+        }
+        $content['end_time'] = time() + $seconds;
+        $dir                 = FS::platformSlashes(self::mkdir_r("tmp/cache/$path"));
+        $file                = $dir . $key . '.txt';
 
-	public static function delete($key)
-	{
-		$file = ROOT . '/' . md5($key) . '.txt';
-		if (file_exists($file)) {
-			unlink($file);
-		}
-	}
+        $content = serialize($content);
+        file_put_contents($file, $content);
+        if (is_string($unserialized)) {
+            return new Collection(json_decode($unserialized));
+        }
+        return $unserialized;
+    }
+    public static function off(): void
+    {
+        self::$enabled = false;
+        self::$timeLife100 = 1;
+        self::$timeLife1_000 = 1;
+        self::$timeLife10_000 = 1;
+    }
 
+    public static function delete($key): void
+    {
+        $file = FS::platformSlashes(self::$path."$key.txt");
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
+
+    private static function mkdir_r($dirName, $rights = 0755): string
+    {
+        str_contains('/', $dirName) ?
+            $dirs = explode('/', $dirName) :
+            $dirs = explode('\\', $dirName);
+        $slash = DIRECTORY_SEPARATOR;
+        $dir   = ROOT;
+        foreach ($dirs as $part) {
+            if ($part) {
+                $dir .= $slash . $part;
+                if (!is_dir($dir)) {
+                    mkdir($dir, $rights);
+                }
+            }
+        }
+        return $dir;
+    }
 }

@@ -3,42 +3,51 @@
 namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderItem extends Model
 {
-	use SoftDeletes;
-	public $table = 'orderItems';
-//	public $model = 'orderItem';
-	public $timestamps = true;
+    use SoftDeletes;
 
-	protected $fillable = [
-		'product_id',
-		'count',
-		'sess',
-		'ip',
-		'crated_at',
-	];
+    public $table = 'orderitems';
+    public $timestamps = true;
 
-	public function order()
-	{
-		return $this->belongsTo(Order::class);
+    protected $fillable = [
+        'order_product_id',
+        'product_id',
+        'order_id',
+        'unit_id',
+        'count',
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
+    public function order():BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
+    public function scopeWithWhereHas($query, $relation, $constraint)
+    {
+        return $query->whereHas($relation, $constraint)
+            ->with([$relation => $constraint]);
+    }
+    public static function leadData($columnBuilder, $orderItem, $fieldName)
+    {
+        $name    = $orderItem?->lead?->name ?? 'имя';
+        $company = $orderItem?->lead?->company ?? 'компания';
+        $phone   = $orderItem?->lead?->phone ?? 'телефон';
+        return  "{$name} - {$company} - {$phone}";
 	}
 
-	public static function leadData($columnBuilder, $orderItem, $fieldName)
-	{
-		return $orderItem->lead->name . ' - ' . $orderItem->lead->company. ' - ' . $orderItem->lead->phone;
-	}
+    public function product(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Product::class, '1s_id', 'product_id');
+    }
 
-	public function product()
-	{
-		return $this->hasOne(Product::class, '1s_id', 'product_id');
-	}
-
-	public function lead()
-	{
-		return $this->hasOne(Lead::class, 'sess', 'sess');
-	}
-
-
+    public function unit(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Unit::class, 'id','unit_id');
+    }
 }

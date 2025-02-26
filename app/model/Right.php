@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Right extends Model
 {
 
+    public $timestamps = true;
 	protected $fillable = [
-		'name' => '',
-		'description' => '',
+		'name',
+		'description',
 	];
 
 	public function user()

@@ -1,10 +1,10 @@
-@import "../../var";
+@use "../../var";
 
 .rights-table {
   display: grid;
   grid-template-columns: 50px 1fr 1fr 40px 40px;
   flex-flow: column;
-  background-color: $color-gray2;
+  background-color: var.$color-gray2;
   gap: 2px;
   margin: 30px 0;
 
@@ -19,17 +19,17 @@
     padding: 5px 10px;
 
     &:focus-visible {
-      outline: 1px solid $color-main;
+      outline: 1px solid var.$color-main;
     }
   }
 
   .head {
-    background-color: $color-grey-logo;
+    background-color: var.$color-grey-logo;
     color: #fff;
   }
 
   .right.new > * {
-    border: 1px solid $color-gray4;
+    border: 1px solid var.$color-gray4;
   }
 
   .name, .description {
@@ -40,12 +40,12 @@
     display: flex;
     align-items: center;
     svg .save {
-      fill: $color-success;
+      fill: var.$color-success;
       //pointer-events: none; // это чтобы не срабатывал клик на svg
     }
 
     &:hover {
-      background-color: $color-success;
+      background-color: var.$color-success;
       cursor: pointer;
 
       svg .save {
@@ -59,12 +59,12 @@
     align-items: center;
 
     svg {
-      fill: $color-warning;
+      fill: var.$color-warning;
       //pointer-events: none; // это чтобы не срабатывал клик на svg
     }
 
     &:hover {
-      background-color: $color-warning;
+      background-color: var.$color-warning;
       cursor: pointer;
 
       svg {

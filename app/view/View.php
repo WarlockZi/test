@@ -4,63 +4,37 @@ namespace app\view;
 
 use app\controller\Controller;
 use app\core\Auth;
-use app\view\Assets\Assets;
-use app\view\Interfaces\IErrors;
-use app\view\Interfaces\IFooterable;
-use app\view\Interfaces\ILayout;
-use app\view\Interfaces\IRenderable;
+use app\core\FS;
+use app\core\Route;
+use app\model\User;
+use app\Services\AssetsService\Assets;
 
-abstract class View implements IFooterable, IRenderable, IErrors, ILayout
+abstract class View
 {
+    protected Controller $controller;
+    protected FS $fs;
+    public User|null $user;
+    public string $header;
+    public string $content;
+    public string $footer;
+    protected string $view;
+    public Assets $assets;
 
-	public $controller;
-	public $viewFile;
-	protected $view;
-	public $errors;
-	public $user;
+    function __construct(Route $route)
+    {
+        $this->fs         = new FS(__DIR__ . '/');
+        $this->user       = Auth::getUser();
+        $this->view       = ($route->getView() ?? 'index');
+    }
 
-	protected $header;
-	protected $content;
-	protected $footer;
+    public function getContent():string
+    {
+        return $this->content;
+    }
 
-	protected Assets $assets;
-
-	function __construct(Controller $controller)
-	{
-		$this->controller = $controller;
-		$this->user = Auth::getUser();
-		$this->view = $this->getViewFile($controller);
-	}
-
-	public function getContent()
-	{
-		return $this->content;
-	}
-
-	public function getFileContent(string $file, array $vars = [])
-	{
-		extract($vars);
-		if (is_file($file)) {
-			ob_start();
-			require $file;
-			return ob_get_clean();
-		}
-		return '';
-	}
-
-
-	public function render()
-	{
-		$this->setContent($this->controller);
-		echo self::getFileContent($this->layout);
-	}
-
-	public static function toFile($page_cache)
-	{
-		$file = ROOT . '/public/src/template.html';
-		if (is_readable($file)) {
-			file_put_contents($file, $page_cache);
-		}
-	}
-
+    public function render():void
+    {
+        $this->setContent($this->controller);
+        echo $this->fs->getContent($this->layout, ['view' => $this]);
+    }
 }

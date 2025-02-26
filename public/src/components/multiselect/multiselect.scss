@@ -1,5 +1,5 @@
-@import "../../var";
-@import "../../mixin_media";
+@use "../../var";
+@use "../../mixin_media";
 
 [multi-select] {
   position: relative;
@@ -71,7 +71,7 @@
       }
 
       label {
-        font-size: $font-size-form;
+        font-size: var.$font-size-form;
         padding: 0.25rem 0.5rem;
         width: 100%;
         flex: 1 0 auto;

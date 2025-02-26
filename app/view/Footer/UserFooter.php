@@ -5,21 +5,22 @@ namespace app\view\Footer;
 
 
 use app\core\FS;
+use Illuminate\Support\Collection;
 
-class UserFooter extends AbstractFooter
+class UserFooter extends Footer
 {
-	public function __construct()
-	{
-		$this->setFooter();
-	}
 
-	public function setFooter()
-	{
-		$this->footer= FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
-	}
+    public function __construct(
+        private Collection $rootCategories
+    )
+    {
+        $this->setFooter();
+    }
 
-	public function getFooter()
-	{
-		return $this->footer;
-	}
+    public function setFooter(): void
+    {
+        $rootCategories = $this->rootCategories;
+        $this->footer = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php', compact('rootCategories'));
+    }
+
 }

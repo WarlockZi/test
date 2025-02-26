@@ -2,85 +2,90 @@
 
 namespace app\controller\Admin;
 
-use app\Actions\ProductAction;
-use app\controller\AppController;
+
+use app\core\Response;
 use app\model\Product;
 use app\Repository\BreadcrumbsRepository;
+use app\Repository\ProductFilterRepository;
 use app\Repository\ProductRepository;
-use app\Services\Slug;
-use app\view\Product\ProductFormView;
+use app\Services\Breadcrumbs\AdminBreadcrumbsService;
+use app\Services\ProductService;
+use app\view\Product\Admin\ProductFormView;
 
 
-class ProductController extends AppController
+class ProductController extends AdminscController
 {
-	public $model = Product::class;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
-	public function actionEdit()
-	{
-		$id = $this->route->id;
-		$prod = ProductRepository::edit($id);
-		if ($prod) {
-			$product = ProductFormView::edit($prod);
-			$breadcrumbs = BreadcrumbsRepository::getProductBreadcrumbs($prod, true, true);
-		}
-		$this->set(compact('product', 'breadcrumbs'));
-		$this->assets->setProduct();
-		$this->assets->setQuill();
-	}
+    public function __construct(
+        protected string                $model = Product::class,
+        private ProductRepository       $repo = new ProductRepository(),
+        private ProductService          $service = new ProductService(),
+        private AdminBreadcrumbsService $breadcrumbsService = new AdminBreadcrumbsService(),
 
-	public function actionList()
-	{
-		$items = ProductRepository::list();
-		$list = ProductFormView::list($items);
-		$this->set(compact('list'));
-	}
+    )
+    {
+        parent::__construct();
+    }
 
-//	public function actionUpdateOrCreate()
-//	{
-//		try {
-//			if (isset($this->ajax['print_name'])) {
-//				$this->ajax['slug'] = Slug::slug($this->ajax['print_name']);
-//			}
-//			parent::actionUpdateOrCreate();
-//		} catch (\Exception $exception) {
-//			$this->exitJson(['error' => $exception->getMessage()]);
-//		}
-//	}
+    public function actionSaveMainImage(): void
+    {
+        $file    = $_FILES['file'];
+        $product = Product::find($_POST['productId']);
+        Response::json([$this->service->saveMainImage($file, $product) ?? 'ошибка сохнанения']);
+    }
 
-	public function actionChangeval()
-	{
-		ProductAction::changeVal($this->ajax);
-	}
+    public function actionEdit(): void
+    {
+        $id   = $this->route->id;
+        $prod = $this->repo->edit($id);
 
-	public function actionChangeunit()
-	{
-		ProductAction::changeUnit($this->ajax);
-	}
+        if ($prod) {
+            $product     = ProductFormView::edit($prod);
+            $breadcrumbs = $this->breadcrumbsService->getProductBreadcrumbs($prod->category);
+            $this->setVars(compact('product', 'breadcrumbs'));
+        } else {
+            $product = null;
+            $this->setVars(compact('product',));
+        }
+    }
 
-	public function actionAttachmainimage()
-	{
-		if (!$_FILES['file']) $this->exitWithPopup('Ошибка - не передан файл');
-		$productId = $_POST['productId'];
-		if (!$productId) $this->exitWithPopup('Ошибка - нет id продукта');
-		$srcs = ProductAction::attachMainImage($_FILES['file'], $productId);
-		if ($srcs) $this->exitJson([$srcs]);
-	}
 
-	public function actionChangepromotion()
-	{
-		ProductAction::changePromotion($this->ajax);
-	}
+    public function actionFilter(): void
+    {
+        $res = ProductFilterRepository::make($_POST)->get();
+        Response::json($res);
+    }
 
-	public function actionSetbaseequalmainunit()
-	{
-		if (ProductAction::setBaseEqualMainUnit($this->ajax)) {
-			$this->exitWithPopup('Обновлено');
-		}
-		$this->exitJson(['popup' => 'ошибка']);
-	}
+    public function actionChangeval()
+    {
+        $this->repo->changeVal($this->ajax);
+    }
+
+    public function actionDeleteunit(): void
+    {
+        $this->repo->deleteUnit($this->ajax);
+    }
+
+    public function actionChangeunit()
+    {
+        $this->repo->changeUnit($this->ajax);
+    }
+
+    public function actionBaseIsShippable(): void
+    {
+        ProductService::changeBaseIsShippable($this->ajax);
+    }
+
+    public function actionChangepromotion()
+    {
+        ProductAction::changePromotion($this->ajax);
+    }
+
+    public function actionChangebaseisshippable(): void
+    {
+        ProductService::changeBaseIsShippable($this->ajax);
+    }
+
 }
+

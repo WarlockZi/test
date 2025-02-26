@@ -1,4 +1,4 @@
-@import "../../var";
+@use "../../var";
 
 .user-table {
   display: flex;
@@ -8,18 +8,18 @@
     box-sizing: border-box;
 
     &:focus-visible {
-      outline: $color-blue 1px solid;
+      outline: var.$color-blue 1px solid;
     }
   }
 
 
   .user.head > * {
-    background-color: $color-grey-logo;
+    background-color: var.$color-grey-logo;
     color: #fff;
   }
 
   .user.new > * {
-    border: 1px solid $color-blue;
+    border: 1px solid var.$color-blue;
   }
 
   .user {
@@ -40,7 +40,7 @@
     }
 
     .del {
-      background-color: $color-warning;
+      background-color: var.$color-warning;
       color: #fff;
       height: 100%;
 

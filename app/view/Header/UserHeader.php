@@ -5,44 +5,28 @@ namespace app\view\Header;
 
 
 use app\core\FS;
-use app\Repository\SettingsRepository;
+use app\core\Icon;
+use app\core\Route;
 use app\view\Header\BlueRibbon\BlueRibbon;
+use Illuminate\Support\Collection;
 
 
 class UserHeader
 {
-	public $route;
-	public $header;
-	public $frontCategories;
-	public $index;
-	public $logo;
+    protected string $header;
+    protected FS $fs;
 
-	public $phone;
-	public $location;
-	public $userMenu;
+    public function __construct(Route $route, Collection $rootCategories)
+    {
+        $this->fs           = new FS(__DIR__ . '/templates');
+        $data['blueRibbon'] = (new BlueRibbon($rootCategories))->toString();
+        $data['index']      = $route->isHome();
+        $data['logo']       = Icon::logo_square1() . Icon::logo_vitex1();
+        $this->header       = $this->fs->getContent('vitex_header', $data);
+    }
 
-	public $path = __DIR__.'/templates/';
-	public $pathBlue = __DIR__.'/BlueRibbon/templates/';
-
-	public function __construct($route)
-	{
-		$this->route = $route;
-		$header = $this;
-		$this->blueRibbon = (new BlueRibbon())->getTemplate();
-		$this->phone = (FS::getFileContent($this->path.'phone.php'));
-		$settings = (new SettingsRepository())->all();
-		$this->location = FS::getFileContent($this->path.'location.php', compact('settings'));
-		$this->userMenu = FS::getFileContent($this->path.'user_menu.php');
-		$this->logo = FS::getFileContent($this->path.'logo.php', compact('route'));
-		$this->phone = FS::getFileContent($this->pathBlue . 'searchPanel.php');
-		$this->loc = FS::getFileContent($this->pathBlue  . 'searchPanel.php');
-//		$this->logo = FS::getFileContent($this->pathBlue  . 'searchPanel.php');
-		$this->gUserMenu = FS::getFileContent($this->pathBlue  . 'searchPanel.php');
-		$this->gSearchPanel = FS::getFileContent($this->pathBlue  . 'searchPanel.php');
-		$this->gHeader = $this->header;
-		$this->header =
-			FS::getFileContent($this->path.'vitex_header.php',
-				compact('header'));
-	}
-
+    public function getHeader()
+    {
+        return $this->header;
+    }
 }

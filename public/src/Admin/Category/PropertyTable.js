@@ -1,27 +1,18 @@
-import {$, post} from "../../common";
+import {$, post} from "../../common.js";
 import SelectNew from "../../components/select/SelectNew";
+import {ael, qa, qs} from "../../constants.js";
 
 export default class PropertyTable {
-  constructor($el) {
-    this.$el = $el;
-    this.$rows = this.$el.querySelector('.rows');
-    this.rows = this.$el.querySelectorAll('.rows>.row');
-    this.$addBtn = this.$el.querySelector('.add-property');
-    this.setup()
+  constructor(el) {
+    this.el = el;
+    // this.rowsWrap = this.el[qs]('.rows');
+    // this.rows = this.el[qa]('.rows>.row');
+    this.$addBtn = this.el[qs]('.add-property');
+
+    if (this.$addBtn) this.$addBtn[ael]('click',this.newRow.bind(this));
+
   }
 
-  setup() {
-    if (this.$addBtn) this.$addBtn.onclick = this.newRow.bind(this);
-
-    this.rows.forEach((row) => {
-      if (!row.classList.contains('none')) {
-        new SelectNew($(row).find('[custom-select]'))
-      }
-    });
-
-    this.$rows.addEventListener('customSelect.changed', this.propertyChange.bind(this));
-    this.$rows.addEventListener('click', this.handleClick.bind(this))
-  }
 
   async handleClick({target}) {
     {
@@ -58,7 +49,7 @@ export default class PropertyTable {
 
   dto(obj = {}) {
     return {
-      category_id: this.$el.closest(`[data-model="category"]`).dataset.id,
+      category_id: this.el.closest(`[data-model="category"]`).dataset.id,
       morphed: {
         old_id: +obj?.detail?.prev?.value,
         new_id: +obj?.detail?.next?.value
@@ -67,9 +58,9 @@ export default class PropertyTable {
   }
 
   newRow() {
-    let $clone = this.$rows.querySelector('.none .row').cloneNode(true);
+    let $clone = this.rowsWrap.querySelector('.none .row').cloneNode(true);
     new SelectNew($($clone).find('[custom-select]'));
-    this.$rows.append($clone)
+    this.rowsWrap.append($clone)
   }
 
 
