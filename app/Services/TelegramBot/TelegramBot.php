@@ -12,16 +12,16 @@ class TelegramBot
     public function __construct(string $channel)
     {
         $this->setChanel($channel);
-        $this->TELEGRAM_VitexTestBot_TOKEN     = $_ENV['TELEGRAM_VitexTestBot_TOKEN'];
+        $this->TELEGRAM_VitexTestBot_TOKEN     = env('TELEGRAM_VitexTestBot_TOKEN');
     }
 
     private function setChanel($channel): void
     {
         if ($channel===TGChannel::callme->name) {
-            $this->chat_id = '-100'.$_ENV['TELEGRAM_VITEX_CALLME_CHANNAL_ID'];
+            $this->chat_id = '-100'.env('TELEGRAM_VITEX_CALLME_CHANNAL_ID');
 
         }elseif ($channel===TGChannel::question->name){
-            $this->chat_id = '-100'.$_ENV['TELEGRAM_VITEX_SALES_CHANNAL_ID'];
+            $this->chat_id = '-100'.env('TELEGRAM_VITEX_SALES_CHANNAL_ID');
         }
 
     }

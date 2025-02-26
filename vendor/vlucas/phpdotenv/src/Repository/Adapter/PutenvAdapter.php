@@ -42,7 +42,7 @@ final class PutenvAdapter implements AdapterInterface
      */
     private static function isSupported()
     {
-        return \function_exists('getenv') && \function_exists('putenv');
+        return \function_exists('env') && \function_exists('putenv');
     }
 
     /**
@@ -55,7 +55,7 @@ final class PutenvAdapter implements AdapterInterface
     public function read(string $name)
     {
         /** @var \PhpOption\Option<string> */
-        return Option::fromValue(\getenv($name), false)->filter(static function ($value) {
+        return Option::fromValue(\env($name), false)->filter(static function ($value) {
             return \is_string($value);
         });
     }

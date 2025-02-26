@@ -93,7 +93,7 @@ class PHPMail
     {
         $this->mailer->setFrom($this->credits['from'], 'VITEX');
         $this->mailer->addReplyTo($this->credits['replyTo'], 'Vitex');
-        $this->mailer->addAddress($_ENV['TEST_EMAIL_ALL']);
+        $this->mailer->addAddress(env('TEST_EMAIL_ALL'));
         $this->mailer->Subject = "{$post['user']}:{$post['errorCnt']} ош из {$post['questionCnt']}";
         $this->mailer->isHTML(true);
         $this->mailer->Body = self::prepareBodyTestResults($post, $resid - 1);

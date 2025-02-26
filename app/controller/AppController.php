@@ -14,7 +14,6 @@ class AppController extends Controller
 
     public function __construct()
     {
-        Cache::off();
         parent::__construct();
     }
 
