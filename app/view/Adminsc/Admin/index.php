@@ -6,7 +6,7 @@ use app\core\Icon;
 
 <div class="main">
 
-	<div class="page-title">
+	<div class="page-name">
 		Главная
 	</div>
 
@@ -89,28 +89,10 @@ use app\core\Icon;
 					<li class="user-action">
 						<a href="/adminsc/sync">1s Sync</a>
 					</li>
-				<?else:?>
-					<li class="user-action">
-						<a href="/adminsc/report/productsNoMinimumUnit">Товары без картинок в наличии</a>
-					</li>
-					<li class="user-action">
-						<a href="/adminsc/report/productsWithoutImgNotinstore">Товары без картинок без наличия</a>
-					</li>
-					<li class="user-action">
-						<a href="/adminsc/report/productsNoMinimumUnit">Товары без min единиц</a>
-					</li>
-					<li class="user-action">
-						<a href="/adminsc/report/productsHaveOnlyBaseUnit">Товары без доп единиц</a>
-					</li>
+
 				<?endif;?>
 
-
-
 			</ul>
-
-
 		</div>
-
 	</div>
-
 </div>

@@ -69,8 +69,8 @@ class MyAccordion extends Builder
 		return $this;
 	}
 
-	public function get()
-	{
+	public function get(): string
+    {
 		$this->showCat($this->tree);
 		$html = $this->make();
 
@@ -142,7 +142,6 @@ href='{$this->link_label_after}{$item['id']}'>" .
 	function li($item, $lev)
 	{
 		ob_start();
-//		$isTest = $item['isTest'] === '1' ? 'data-istest' : '';
 		include ROOT . "/app/view/widgets/Accordion/li.php";
 		return ob_get_clean();
 	}
@@ -174,11 +173,3 @@ href='{$this->link_label_after}{$item['id']}'>" .
 	}
 }
 
-
-//		'model' => new \app\model\Opentest,
-//	'models' => \app\model\Opentest::findAllWhere('enable', '1'),
-//	'class' => 'opentest-edit',
-//	'label_after' => "",
-//	'link' => "/adminsc/opentest/do/",
-//	'parentFieldName' => "opentest_id",
-//	'nameFieldName' => "name",

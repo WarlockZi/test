@@ -6,90 +6,89 @@ use app\core\Icon;
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-	<!--	VITEX-LAYOUT-->
-	<meta charset="utf-8">
-	<meta name="token" content="<?= $_SESSION['token'] ?>">
-	<meta http-equiv="cleartype" content="on"/>
-	<meta name="MobileOptimized" content="320">
-	<meta name="HandheldFriendly" content="True">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="yandex-verification" content="003253e624aad5b6"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="/logo-square.svg" type="image/svg+xml">
-	<?= $this->getCanonical(); ?>
-	<script
-			type="module"
-	>
+    <!--	VITEX-LAYOUT-->
+    <meta charset="utf-8">
+    <meta name="phpSession" content="<?= $_SESSION['phpSession'] ?? ''; ?>">
+    <meta http-equiv="cleartype" content="on"/>
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="mobile-web-app-capable" content="yes">
 
-	</script>
-	<script
-			type="module"
-	>
-     // import m from '/public/src/Main/main.js'
-     // // Then some JavaScript in the browser:
-     // var conn = new WebSocket('ws://localhost:8080/echo');
-     // conn.onmessage = function (e) {
-     //   console.log(e.data);
-     // };
-     // conn.onopen = function (e) {
-     //   conn.send('Hello Me!');
-     // };
-     // debugger
-     // if (m) {
-	  //
-     // }
-	</script>
-	<!--	<script type="module" src="http://192.168.1.212:3000/public/src/"></script>-->
-	<!--	<script type="module" src="../../../public/src/Main/main.js"></script>-->
-	<!--	<script type="module" src="https://localhost:4000/public/src/Main/main.js"></script>-->
-	<!--	--><? //include (ROOT.'/public/build/index.html');?>
-	<!--	--><? //= vite('main.js') ?>
-	<!--	--><?php //echo $cssBundle ?>
-	<?= $this->assets->getMeta(); ?>
+    <meta name="yandex-verification" content="003253e624aad5b6"/>
+    <meta name="google-site-verification" content="ktYoLMSeI5bAy0NCfzOmoV28u50Fe8TJKF_v_582olI"/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/assets/srvc/<?= DEV ? "logo-square-dev.svg" : "logo-square.svg" ?>" type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
 
 
-	<!--	--><? //= $this->assets->getCss(); ?>
-	<!--	--><? //= $this->assets->getCDNCss(); ?>
+    <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
+    <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script>
+
+
+    <?= $assets->getMeta(); ?>
+
+
+    //assets
+    <? if (DEV): ?>
+<!--        <script type="module" src="https://vi-prod:5173/@vite/client"></script>-->
+<!--        <script type="module" src="https://vi-prod:5173/build/Main/main.js"></script>-->
+        <?= $assets->getCss(); ?>
+    <? else: ?>
+        <?= $assets->getCss(); ?>
+    <? endif; ?>
+
 
 </head>
 
-<body>
+<? // include_once __DIR__ . '/google.php'; ?>
 
-<?= $this->header->getHeader(); ?>
+<body class="preload">
+
+<?= $header; ?>
+
 
 <div class="user-content-wrap">
-	<main class="user-content">
-		 <?= $this->getContent(); ?>
-	</main>
-</div>
+    <main class="user-content">
+        <? if (\app\core\Auth::userIsAdmin()): ?>
+            <div class="admin-gap"></div>
+        <? endif; ?>
 
-<?= $this->getFooter(); ?>
+        <?= $content; ?>
+    </main>
+    <!--    <div class="chat-icon" title="Чат">--><?php //=Icon::chat2();?><!--</div>-->
+    <form class="chat-form" id="chatForm">
+        <div class="modal-close"><?= Icon::close() ?></div>
+        <div class="messages"></div>
+        <input type="text" class="chat-name-input" data-user-name placeholder="Здравствуйте, как Вас зовут?">
+    </form>
 
-<? //= Footer::getUserCookie(); ?>
-
-<? //= $this->assets->getJs(); ?>
-<? //= $this->assets->getCDNJs(); ?>
-
-<? //= Footer::getYaMetrica(); ?>
-<? //= Footer::getVK(); ?>
-
-
-<div class="modal-wrapper" data-modal="default">
-	<div class="overlay"></div>
-	<form class="modal-box">
-		<div class="title">Заголовок</div>
-		<div class="modal-close"><?= Icon::close() ?></div>
-		<div class="content"></div>
-		<div class="footer"></div>
-	</form>
-
-	<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-		<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-		<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-	</svg>
 
 </div>
 
+<?= $footer; ?>
+
+<?= $assets->getJs(); ?>
+
+<?php //= $assets->getCDNJs(); ?>
+
+<div class="modal invisible" data-modal="default">
+    <div class="overlay"></div>
+    <div class="wrap">
+        <div class="box">
+            <div class="title">Заголовок</div>
+            <div class="modal-close"><?= Icon::close() ?></div>
+            <div class="content"></div>
+        </div>
+    </div>
+
+</div>
+<button id="fixed-call-me" class="fixed call-me" title="Заказать обратный звонок"><?= Icon::phone(); ?></button>
+<button id="hoist" class="fixed hoist" title="Наверх"><?= Icon::scrollUp1(); ?></button>
 </body>
 </html>

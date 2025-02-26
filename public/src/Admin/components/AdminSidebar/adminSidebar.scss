@@ -1,0 +1,225 @@
+@use '../../../var';
+@use '../../../mixin_media';
+
+
+$width-short: 30px;
+$width-full: 170px;
+$height-full: 500px;
+$height-min: 60px;
+$dark: mixin_media.darker(var.$color-gray9, 25%);
+$border-bottom: mixin_media.lighter(var.$color-admin-sidebar, 5%) 1px solid;
+$border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
+
+
+.sidebar {
+  display: flex;
+  flex-flow: column;
+  font-size: .75rem;
+  z-index: 1;
+  width: $width-short;
+  transition: width .2s ease-in, max-height .3s ease-out;
+
+  &.show {
+    min-width: $width-full;
+    max-height: $height-full;
+
+    .wrap {
+      .accordion {
+        max-height: $height-full;
+      }
+    }
+  }
+
+  &:hover {
+    width: $width-full;
+  }
+
+  @include mixin_media.m600 {
+    width: auto;
+    max-height: 0;
+    overflow: hidden;
+
+    &:hover {
+      width: auto;
+    }
+  }
+
+  .wrap {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    background: var.$color-admin-sidebar;
+    min-height: $height-min;
+    flex: 1;
+    overflow: hidden;
+
+
+    @include mixin_media.m600 {
+      max-width: 100vw;
+      min-width: 100vw;
+      height: 60px;
+      &:hover {
+        max-width: 100%;
+        min-width: 100%;
+      }
+    }
+
+    //.burger {
+    //  display: flex;
+    //  justify-content: space-between;
+    //
+    //  #burger {
+    //    min-width: 20px;
+    //    padding: 23px 5px;
+    //    cursor: pointer;
+    //    display: flex;
+    //    pointer-events: none;
+    //
+    //    path {
+    //      pointer-events: none;
+    //    }
+    //  }
+    //}
+
+
+    .accordion {
+      display: flex;
+      flex-flow: column;
+      color: white;
+      font-size: .65rem;
+      transition: max-height .4s ease-in-out, min-width .5s ease-in-out;
+      min-width: $width-full;
+
+      @include mixin_media.neon;
+
+      & ~ a {
+        padding: 2px 2px 2px 19px;
+        align-items: center;
+        background-color: mixin_media.lighter(var.$color-admin-sidebar, 25%);
+      }
+
+      @include mixin_media.m600 {
+        max-height: 0;
+      }
+
+      &.show {
+        height: auto;
+      }
+
+      a {
+        padding: 4px 2px 4px 0;
+        background-color: mixin_media.lighter(var.$color-admin-sidebar, 5%);
+        align-items: center;
+      }
+
+      a, li {
+        @include mixin_media.m600 {
+          min-width: $width-full;
+          box-sizing: border-box;
+        }
+
+        @include mixin_media.m1000 {
+          box-sizing: border-box;
+        }
+      }
+
+      svg {
+        margin: 0 9px;
+        height: 15px;
+        flex: 0 0 15px;
+      }
+
+      ul {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .1s ease-in-out;
+
+        & > a {
+          padding: 4px 0 4px 26px;
+          background-color: $dark;
+        }
+
+        //&.open {
+        //  max-height: 200px;
+        //}
+      }
+
+      li {
+        flex-direction: column;
+        background-color: var.$color-admin-sidebar;
+
+        &.open {
+          background-color: $dark;
+
+          & > ul {
+            max-height: 500px;
+          }
+
+          & > .label {
+            border-bottom: $border-bottom;
+          }
+        }
+
+
+        .arrow {
+          width: 12px;
+          height: 12px;
+          background: url(/pic/icons/arrowUp.svg) no-repeat 1px 0;
+          color: white;
+          transform: rotate(-90deg);
+          position: absolute;
+          right: 8px;
+          top: 4px;
+          display: block;
+          transition: transform ease .1s;
+          transform-origin: center;
+
+          &.rotate {
+            transform: rotate(0deg);
+          }
+        }
+      }
+
+      li, a {
+        position: relative;
+        display: flex;
+        min-height: 10px;
+        color: #ffffff;
+        user-select: none;
+        cursor: pointer;
+        border-bottom: $border-bottom;
+        border-top: $border-top;
+
+        &:hover {
+          background: $dark;
+        }
+      }
+
+      .label {
+        padding: 4px 0;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+      }
+
+      .current {
+        &:before {
+          color: mixin_media.lighter(var.$color-main, 10%);
+          content: '';
+          position: absolute;
+          display: block;
+          left: 0;
+          width: 4px;
+          height: 100%;
+          background-color: mixin_media.lighter(var.$color-main, 10%);
+        }
+
+      }
+    }
+
+    .admin_sidebar-tail {
+      border-bottom: none;
+      flex: 1 0 auto;
+    }
+  }
+}

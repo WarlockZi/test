@@ -7,26 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Videoinstruction extends Model
 {
-//	public  $model = 'videoinstruction';
-  public $timestamps = false;
+    public $timestamps = false;
 
-  protected $fillable = [
-    'name',
-    'link',
-    'user_id',
-    'sort',
-    'tag',
-  ];
+    protected $fillable = [
+        'name',
+        'link',
+        'user_id',
+        'sort',
+        'tag',
+    ];
 
-  protected $attributes = [
-    'name'=>'видео',
-    'link'=>'https://youtube.com'
-  ];
+    protected $attributes = [
+        'name' => 'видео',
+        'link' => 'https://youtube.com'
+    ];
 
-  public function empty()
-  {
-    return $this->fillable;
-  }
+    public function empty()
+    {
+        return $this->fillable;
+    }
 
 
 }

@@ -8,7 +8,7 @@ const port = 3009
 export default defineConfig({
   // root: resolve(__dirname, './public'),
   base: '',
-  // base: process.env.VITE_APP_ENV === 'development'
+  // base: process..env.VITE_APP_ENV === 'development'
   //   ? '/'
   //   : '/',
 

@@ -2,57 +2,82 @@
 
 namespace app\controller\Admin;
 
-
-use app\controller\AppController;
-use app\core\Route;
+use app\core\Response;
 use app\model\Order;
+use app\model\OrderItem;
 use app\Repository\OrderRepository;
 use app\view\Order\OrderView;
 use Carbon\Carbon;
 
-
-class OrderController Extends AppController
+class OrderController extends AdminscController
 {
-	public $model = Order::class;
+    protected string $model = Order::class;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function actionIndex()
-	{
-		$orderItems = OrderRepository::leadList();
-		$leadlist = OrderView::leadList($orderItems);
-		$orders = OrderRepository::clientList();
-		$clientlist = OrderView::clientList($orders);
-		$this->set(compact('clientlist', 'leadlist'));
-	}
+    public function actionIndex(): void
+    {
+        $submitted     = OrderRepository::submitted();
+        $unsubmitted     = OrderRepository::unsubmitted();
 
-	public function actionEdit()
-	{
-		$orderId = $this->route->id;
-		$orders = OrderRepository::edit($orderId);
-		$this->set(compact('orders'));
-	}
+        $submittedTable     = OrderView::table($submitted);
+        $unsubmittedTable     = OrderView::table($unsubmitted);
 
+        $this->setVars(compact('submittedTable', 'unsubmittedTable'));
+    }
 
-	public function actionDelete()
-	{
-		$id = $this->ajax['product_id'];
+    public function actionEdit(): void
+    {
+        $this->view = 'table';
+        $order     = OrderRepository::edit($this->route->id);
+        $table      = OrderView::editOrder($order);
+        $this->setVars(compact('table'));
+    }
 
-		if (!$id) $this->exitWithMsg('No id');
-		$model = new $this->model;
+    public static function updateOrCreate(array $req): void
+    {
+        if (!$req) return;
 
-		$item = $model->where('product_id', $id)->first();
-		if ($item) {
-			$destroyed =
-				$item::query()
-				->update(['deleted_at' => Carbon::today()]);
-			$this->exitJson(['ok' => 'ok', 'popup' => 'удален']);
-		}
-		$this->exitJson(['error' => 'не удален', 'popup' => 'не удален']);
-	}
+        $order = OrderItem::updateOrCreate(
+            [
+                'product_id' => $req['product_id'],
+                'unit_id' => (int)$req['unit_id'],
+                'deleted_at' => null,
+            ],
+            [
+                'product_id' => $req['product_id'],
+                'unit_id' => (int)$req['unit_id'],
+                'count' => (int)$req['count'],
+                'ip' => $_SERVER['REMOTE_ADDR'],
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]
+        );
+        if ($order->wasRecentlyCreated) {
+            Response::json(['popup' => "Добавлено в корзину"]);
+        }
+        if ($order->wasChanged()) {
+            Response::json(['popup' => "Заказ изменен"]);
+        }
+        Response::json(['popup' => 'не записано', 'error' => "не записано"]);
+    }
 
-
+    public function actionDelete(): void
+    {
+        $req = $this->ajax;
+        try {
+            foreach ($req['unit_ids'] as $unit_id) {
+                Order::query()
+                    ->where('product_id', $req['product_id'])
+                    ->where('unit_id', $unit_id)
+                    ->whereNull('deleted_at')
+                    ->update(['deleted_at' => Carbon::today()]);
+            }
+            Response::json(['ok' => 'ok', 'popup' => 'удален']);
+        } catch (\Throwable $exception) {
+            Response::json(['error' => 'не удален', 'popup' => 'не удален']);
+        }
+    }
 }

@@ -1,6 +1,6 @@
 import './sync1c.scss'
 import {Sync} from './Sync'
-import {$, popup, post} from '../../common'
+import {$} from '../../common'
 
 let $sync = $('.sync').first();
 if ($sync) {

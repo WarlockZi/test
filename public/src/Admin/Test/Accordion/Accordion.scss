@@ -1,0 +1,50 @@
+@use '../../../var';
+
+.accordion_wrap {
+  display: flex;
+  flex-direction: column;
+
+  [accordion] {
+    li {
+      Label {
+        span {
+          background-color: var.$color-gray6;
+          position: relative;
+          display: flex;
+          place-content: center start;
+          gap: 10px;
+
+          .before {
+
+            .arrow-1 {
+              width: 15px;
+              position: absolute;
+              right: 0;
+              top: 30%;
+              padding-right: 10px;
+            }
+          }
+
+          tag {
+            display: flex;
+            align-items: center;
+          }
+        }
+
+        a {
+          display: flex;
+          color: var.$color-gray9;
+
+          &:hover {
+            color: var.$color-gray-max;
+            text-decoration: underline;
+          }
+        }
+      }
+
+      ul {
+        padding-left: 15px;
+      }
+    }
+  }
+}

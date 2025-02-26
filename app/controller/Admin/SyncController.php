@@ -2,129 +2,123 @@
 
 namespace app\controller\Admin;
 
-use app\Actions\SyncActions;
 use app\controller\AppController;
-use app\Repository\SyncRepository;
+use app\core\Auth;
+use app\core\Response;
+use app\model\User;
 use app\Services\Logger\FileLogger;
-use app\Storage\StorageDev;
-use app\Storage\StorageImport;
+use app\Services\Sync\SyncService;
+use app\Services\Sync\TrancateService;
+use Illuminate\Support\Carbon;
+use Throwable;
 
-class SyncController extends AppController
+class SyncController extends AdminscController
 {
-	public $model = xml::class;
-	protected $rawPost;
-	protected $storage;
-	protected $filename;
-	protected $viewPath = ROOT . '/app/view/Sync/Admin/';
-	protected $actions;
-	protected $repo;
-	protected $route;
-	protected $logger = false;
-	protected $importFile = false;
-	protected $offerFile = false;
+    public function __construct(
+        protected SyncService     $service = new SyncService(),
+        protected TrancateService $trancateService = new TrancateService(),
+        protected FileLogger      $logger = new FileLogger('import.txt'),
+    )
+    {
+        Auth::setUser(User::where('email', 'vvoronik@yandex.ru')->first());
+        parent::__construct();
+    }
 
-	public function __construct()
-	{
-		parent::__construct();
-
-		$this->setStorage();
-		$this->logger = new FileLogger('load.log');
-
-		$this->importFile = $this->storage::getFile('import0_1.xml');
-		$this->offerFile = $this->storage::getFile('offers0_1.xml');
-
-		$this->repo = new SyncRepository($this->route, $this->importFile, $this->offerFile, $this->logger);
-		$this->actions = new SyncActions($this->repo, $this->route);
-	}
-
-	public function setStorage()
-	{
-		$this->importPath = StorageImport::getPath();
-		if ($_ENV['DEV'] == '1') {
-			$this->storage = StorageDev::class;
-		} else {
-			$this->storage = StorageImport::class;
-		}
-	}
-
-	public function actionInit()
-	{
-		try {
-			$this->actions->init();
-			$this->logger->write("Файлы из 1с загружены");
-		} catch (\Exception $e) {
-			$message = PHP_EOL. "---SyncControllerError---". PHP_EOL. $e. PHP_EOL. $e->getMessage(). PHP_EOL;
-			$this->logger->write($message);
-			exit('Выгрузка на сайт не удалась. Подробности в load.log');
-		}
-	}
-
-	public function actionLoad()
-	{
-		$this->actions->load();
-	}
-
-	public function actionRemoveall()
-	{
-		$this->repo->softTrancate();
-	}
-
-	public function actionRemovecategories()
-	{
-		$this->repo->softRemoveCategories();
-	}
-
-	public function actionRemoveproducts()
-	{
-		$this->repo->softRemoveProducts();
-	}
-
-	public function actionRemoveprices()
-	{
-		$this->repo->removePrices();
-	}
+    public function actionInit(): void
+    {
+        $this->service->requestFrom1s($this->route);
+        exit('done');
+    }
 
 
-	public function actionLoadCategories()
-	{
-		$this->repo->LoadCategories();
-	}
-
-	public function actionLoadProducts()
-	{
-		$this->repo->LoadProducts();
-	}
-
-	public function actionLoadPrices()
-	{
-		$this->repo->LoadPrices();
-	}
-
-
-	public function actionIndex()//init
-	{
-		$tree = [];
-		$this->set(compact('tree'));
-	}
-
-	public function actionLogshow()
-	{
-		if (isset($_POST['param'])) {
-			$this->exitJson(['success' => true, 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
-		}
-	}
-
-	public function actionLogclear()
-	{
-		$this->logger->clear();
-		$this->exitJson(['success' => 'success', 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
-	}
+    //remove
+    public function actionRemoveall(): void
+    {
+        $this->trancateService->softTrancate();
+    }
+    public function actionTruncate(): void
+    {
+        $this->trancateService->trancate();
+    }
+    public function actionRemovecategories(): void
+    {
+        $this->trancateService->softRemoveCategories();
+    }
+    public function actionRemoveproducts(): void
+    {
+        $this->trancateService->softRemoveProducts();
+    }
+    public function actionRemoveprices(): void
+    {
+        $this->trancateService->removePrices();
+    }
 
 
-	public function actionTruncate()
-	{
-		$this->repo->trancate();
-	}
+    //load
+    public function actionLoad(): void
+    {
+        $this->logger->write(Carbon::now());
+        $this->logger->write('Начата ручная загрузка');
+        $this->service->load();
+        if (DEV) {
+            Response::exitWithPopup('Все перенесено');
+        }
+        exit();
+    }
+
+    public function actionLoadCategories(): void
+    {
+        $this->service->LoadCategories();
+        if (DEV) {
+            Response::exitWithPopup('Categories loaded');
+        }
+    }
+
+    public function actionLoadProducts(): void
+    {
+        $this->service->LoadProducts();
+        if (DEV) {
+            Response::exitWithPopup('Products loaded');
+        }
+    }
+
+    public function actionLoadPrices(): void
+    {
+        try {
+            $this->service->LoadPrices();
+        } catch (Throwable $exception) {
+            $exc = $exception;
+            exit($exc);
+        }
+        if (DEV) {
+            Response::exitWithPopup('Prices, units,  loaded');
+        }
+
+    }
+
+
+///// web
+    public function actionIndex(): void//init
+    {
+        $tree = [];
+        $this->setVars(compact('tree'));
+    }
+
+    public function actionLogshow(): void
+    {
+        if (isset($_POST['param'])) {
+            Response::json([
+                'success' => true,
+                'content' => 'Log' . PHP_EOL . $this->logger->read()
+            ]);
+        }
+    }
+
+    public function actionLogclear(): void
+    {
+        $this->logger->clear();
+        Response::json(['success' => 'success', 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
+    }
 
 }
 

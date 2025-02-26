@@ -2,64 +2,63 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
 use app\core\Auth;
+use app\core\Response;
 use app\model\User;
+use app\Repository\UserRepository;
 use app\view\User\UserView;
+use Throwable;
 
 
-class UserController extends AppController
+class UserController extends AdminscController
 {
-	public $model = User::class;
-	public $modelName = 'user';
+    public function __construct(
+        public UserRepository $repo = new UserRepository,
+        public string         $model = User::class,
+    )
+    {
+        parent::__construct();
+    }
+
+    public function actionIndex(): void
+    {
+        $content = UserView::listAll();
+        $this->setVars(compact('content'));
+    }
 
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function actionEdit(): void
+    {
+        $user    = $this->model::find($this->route->id);
+        $content = UserView::getViewByRole($user, Auth::getUser());
 
-	public function actionIndex()
-	{
-		$user = Auth::getUser();
-		Auth::checkAuthorized($user, ['role_admin']);
+        $this->setVars(compact('content'));
 
-		$list = UserView::listAll();
-		$this->set(compact('list'));
-	}
-
-
-	public function actionEdit()
-	{
-		$item = $this->model::find($this->route->id);
-		$item = UserView::getViewByRole($item, Auth::getUser());
-
-		$this->set(compact('item'));
-
-		if ($user = $this->ajax) {
-			$user['id'] = $_SESSION['id'];
-			User::updateOrCreate($user);
-			$this->exitWithPopup('Сохранено');
-		}
-	}
+        if ($user = $this->ajax) {
+            $user['id'] = $_SESSION['id'];
+            User::updateOrCreate($user);
+            Response::exitWithPopup('Сохранено');
+        }
+    }
 
 
-	public function actionDelete()
-	{
-		if ($data = $this->ajax) {
-			if (User::can($this->user, ['user_delete'])) {
-				User::delete($data['id']);
-				$this->exitWithPopup('ok');
-			} else {
-				$this->exitWithPopup('Не хватает прав');
-			}
-		}
-	}
+    public function actionDelete(): void
+    {
+        if ($data = $this->ajax) {
+            if (!Auth::getUser()->can(['user_delete']))
+                Response::json(['popup'=>'Не хватает прав']);
+            User::find($data['id'])->delete();
+            Response::json(['popup'=>'Удален']);
+        }
+    }
 
-//	public function actionChange()
-//	{
-//		$this->view = 'list';
-//		$users = User::all();
-//		$this->set(compact('users'));
-//	}
+    public function actionChangeRole(): void
+    {
+        try {
+            $this->repo->changeRole($this->ajax);
+            Response::exitWithPopup('изменено');
+        } catch (Throwable $exception) {
+            Response::exitWithPopup('не изменено');
+        }
+    }
 }

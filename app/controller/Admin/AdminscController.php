@@ -3,70 +3,60 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\core\App;
 use app\core\Auth;
-use app\model\User;
-use app\view\View;
 
 
 class AdminscController extends AppController
 {
+    public function __construct()
+    {
+        $this->isEmployee();
+        parent::__construct();
 
-	public function __construct()
-	{
-		parent::__construct();
+    }
 
-		if (!User::isEmployee(Auth::getUser())){
-			header('Location:/auth/profile');
-		}
+    protected function isEmployee()
+    {
+        $user = Auth::getUser();
+        if (!$user?->role->firstWhere('name', 'role_employee')) {
+            if (!$user->role->firstWhere('name', 'role_admin')) {
+                header("Location:/");
+                exit();
+            }
+        }
+    }
 
-	}
-	public function actionClearCache()
-	{
-		$path = ROOT . "/tmp/cache/*.txt";
-		array_map("unlink", glob($path));
-		exit('Успешно');
-	}
-
-	public function actionProdtypes()
-	{
-		$types = App::$app->adminsc->getProd_types();
-		$this->set(compact('types'));
-	}
-
-	public function actionSiteMap()
-	{
-		$iniCatList = App::$app->category->getInitCategories();
-		$this->set(compact('iniCatList'));
-	}
+    public function actionClearCache(): void
+    {
+        $path = ROOT . "/tmp/cache/*.txt";
+        array_map("unlink", glob($path));
+        exit('Успешно');
+    }
 
 
-	public function actionIndex()
-	{
-		$this->assets->setCDNJs("https://cdn.jsdelivr.net/npm/chart.js", true);
-	}
+    public function actionSiteMap(): void
+    {
+    }
 
+    public function actionPics(): void
+    {
+    }
 
-	public function createSiteMap()
-	{
-	}
+    public function actionIndex(): void
+    {
+    }
 
-	public function actionDumpSQL()
-	{
-	}
+    public function createSiteMap()
+    {
+    }
 
-	public function actionPics()
-	{
-		$pics = App::$app->adminsc->findAll('pic');
-		$this->set(compact('pics'));
-	}
+    public function actionDumpSQL()
+    {
+    }
 
-	public function actionDumpWWW()
-	{
-		if ($this->isAjax()) {
-		}
-	}
-
+    public function actionDumpWWW()
+    {
+    }
 
 }
 

@@ -1,9 +1,9 @@
-@import "../var";
+@use "../var";
 
 .breadcrumbs {
   display: flex;
   margin: 0px 0 15px;
-  color: $color-a;
+  color: var.$color-a;
   font-size: .7rem;
 
   a {
@@ -21,13 +21,16 @@ nav.breadcrumbs-4 {
   flex-wrap: wrap;
   font-family: Verdana, sans-serif;
 
+  ul {
+    display: flex;
+  }
+
   li {
-    //position: relative;
     margin: 1px 0;
     background: #337AB7;
     text-decoration: none;
     padding: 0 10px 0 10px;
-    transition: all 0.3s;
+    transition: background 0.3s;
 
     a {
       color: #fff;
@@ -43,14 +46,14 @@ nav.breadcrumbs-4 {
     border-width: 15px 0 15px 10px;
     border-style: solid;
     border-color: transparent transparent transparent #337AB7;
-    transition: all 0.3s;
+    //transition: border-color 0.3s;
   }
 
   li:hover {
     background: #BFE2FF;
 
     a {
-      color: $color-gray-max;
+      color: var.$color-gray-max;
 
     }
   }
@@ -71,8 +74,8 @@ nav.breadcrumbs-4 {
     padding-right: 20px;
     border-radius: 0 6px 6px 0;
   }
-
 }
+
 
 nav.breadcrumbs-1 {
   list-style: none;
@@ -87,7 +90,7 @@ nav.breadcrumbs-1 {
     a, div {
       color: #FFF;
       display: block;
-      background: $color-main;
+      background: var.$color-main;
       text-decoration: none;
       position: relative;
       height: 24px;
@@ -97,18 +100,18 @@ nav.breadcrumbs-1 {
       margin-right: 23px;
       font-size: .7rem;
       font-family: Verdana, sans-serif;
-      transition: all 0.3s;
+      transition: color 0.3s;
 
       &:before,
       &:after {
         content: "";
         position: absolute;
         top: 0;
-        border: 0 solid $color-main;
+        border: 0 solid var.$color-main;
         border-width: 12px 10px;
         width: 0;
         height: 0;
-        transition: all 0.3s;
+        //transition: all 0.3s;
       }
 
       &:before {
@@ -119,47 +122,47 @@ nav.breadcrumbs-1 {
       &:after {
         left: 100%;
         border-color: transparent;
-        border-left-color: $color-main;
+        border-left-color: var.$color-main;
       }
 
       &:hover {
-        background-color: $color-main-lighten10;
+        background-color: var.$color-main-lighten10;
         //color: #000;
       }
 
       &:hover:before {
-        border-color: $color-main-lighten10;
+        border-color: var.$color-main-lighten10;
         border-left-color: transparent;
       }
 
       &:hover:after {
-        border-left-color: $color-main-lighten10;
+        border-left-color: var.$color-main-lighten10;
       }
     }
 
     &:nth-child(even) a {
-      background-color: $color-main-hover;
+      background-color: var.$color-main-hover;
 
       &:before {
-        border-color: $color-main-hover;
+        border-color: var.$color-main-hover;
         border-left-color: transparent;
       }
 
       &:after {
-        border-left-color: $color-main-hover;
+        border-left-color: var.$color-main-hover;
       }
 
       &:hover {
-        background-color: $color-main-lighten10;
+        background-color: var.$color-main-lighten10;
       }
 
       &:hover:before {
-        border-color: $color-main-lighten10;
+        border-color: var.$color-main-lighten10;
         border-left-color: transparent;
       }
 
       &:hover:after {
-        border-left-color: $color-main-lighten10;
+        border-left-color: var.$color-main-lighten10;
       }
 
     }
@@ -185,10 +188,17 @@ nav.breadcrumbs-1 {
 }
 
 nav.breadcrumbs-5 {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   padding: 0;
 
   a:hover {
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    margin-bottom: 10px;
   }
 
   li {
@@ -208,16 +218,10 @@ nav.breadcrumbs-5 {
     display: block;
     height: 27%;
     position: absolute;
-    //left: 0;
     right: 0;
     top: 5px;
     width: 1px;
-    //z-index: 1;
     transform: skewX(45deg);
-    //&:hover {
-    //  background-color: blue;
-    //  cursor: pointer;
-    //}
   }
 
   li:after {
@@ -230,11 +234,13 @@ nav.breadcrumbs-5 {
   li:last-of-type:after {
     display: none;
   }
+
   li a {
     color: #000;
     text-decoration: none;
-    transition: all 0.3s;
+    transition: color 0.3s;
   }
+
   li a:hover {
     color: #337AB7;
   }
