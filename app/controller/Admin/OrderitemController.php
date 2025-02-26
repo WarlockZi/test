@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 
-use app\controller\AppController;
+use app\core\Auth;
 use app\core\Response;
 use app\model\Lead;
 use app\model\Order;
@@ -13,7 +13,7 @@ use app\view\Order\OrderView;
 use Carbon\Carbon;
 
 
-class OrderitemController extends AppController
+class OrderitemController extends AdminscController
 {
     public function __construct(
         protected OrderView           $orderView = new OrderView(),
@@ -37,7 +37,7 @@ class OrderitemController extends AppController
                 $orderItem->order()->associate($order);
                 $orderItem->save();
             }
-            Response::exitJson(['ok']);
+            Response::json(['ok']);
         }
     }
 
@@ -46,30 +46,16 @@ class OrderitemController extends AppController
         $product_id = $this->ajax['product_id'];
         $sess       = $this->ajax['sess'];
 
-        if (!$product_id) Response::exitWithMsg('No id');
+        if (!$product_id) Response::json(['msg'=>'No id']);
         $trashed = $this->repo->deleteItem($sess, $product_id, $unit_ids);
 
         if ($trashed) {
-            Response::exitJson(['ok' => true, 'popup' => 'Удален']);
+            Response::json(['ok' => true, 'popup' => 'Удален']);
         }
         Response::exitWithPopup('Не удален');
 
     }
 
-//    public function actionDeleterow(): void
-//    {
-//        $product_id = $this->ajax['product_id'];
-//        $sess       = $this->ajax['sess'];
-//        $unit_ids   = $this->ajax['unit_ids'];
-//
-//        if (!$product_id) Response::exitWithMsg('No id');
-//        $trashed = $this->repo->deleteItems($sess, $product_id, $unit_ids);
-//
-//        if ($trashed) {
-//            Response::exitJson(['ok' => true, 'popup' => 'Удален']);
-//        }
-//        Response::exitWithPopup('Не удален');
-//    }
 
     public function actionIndex(): void
     {
@@ -84,34 +70,6 @@ class OrderitemController extends AppController
         $this->setVars(compact('table'));
     }
 
-    public static function updateOrCreate(array $req): void
-    {
-        if (!$req) return;
 
-        $orderItm = OrderItem::updateOrCreate(
-            [
-                'product_id' => $req['product_id'],
-                'sess' => session_id(),
-                'deleted_at' => null,
-                'unit_id' => (int)$req['unit_id'],
-            ],
-            [
-                'product_id' => $req['product_id'],
-                'sess' => session_id(),
-                'count' => (int)$req['count'],
-                'unit_id' => (int)$req['unit_id'],
-                'ip' => $_SERVER['REMOTE_ADDR'],
-                'updated_at' => Carbon::now()->toDateTimeString(),
-            ]
-        );
-
-        if ($orderItm->wasRecentlyCreated) {
-            Response::exitJson(['popup' => "Добавлено в корзину"]);
-        }
-        if ($orderItm->wasChanged()) {
-            Response::exitJson(['popup' => "Заказ изменен"]);
-        }
-        Response::exitJson(['popup' => 'не записано', 'error' => "не записано"]);
-    }
 
 }

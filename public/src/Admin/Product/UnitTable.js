@@ -1,6 +1,6 @@
 import {$, createElement, post} from '../../common.js'
 import SelectNew from "../../components/select/SelectNew";
-import {it, qa} from '../../constants'
+import {ael, it, qa, qs} from '../../constants'
 
 
 export default class UnitTable {
@@ -10,21 +10,20 @@ export default class UnitTable {
 
       this.product1sId = $(`[data-field='1s_id']`).first().innerText;
 
-      // this.$baseUnit = this.$table.find(`select`).first();
-      // this.baseUnitId = this.$baseUnit.options[this.$baseUnit.selectedIndex].value;
+      this.$baseUnit = this.$table[qs](`select`);
+      this.baseUnitId = [].filter.call(this.$baseUnit.options, el => el.classList.contains('selected'));
 
-      this.$addUnit = $('.add-unit').first();
+      this.addButton = $('.add-model').first();
       this.$rows = $('.rows').first();
-      // this.$selector = $(this.$rows).find('[select-new]');
-      this.$emtyRow = $(this.$rows).find('.none');
+      // this.$emtyRow = $(this.$rows).find('.none');
 
-      this.$addUnit.onclick = this.createRow.bind(this);
-      this.$rows.onchange = this.handleChange.bind(this);
-      this.$rows.onkeyup = this.handleKeyUp.bind(this);
-      this.$rows.onclick = this.clickRow.bind(this);
-      this.$rows.addEventListener('customSelect.changed', this.unitChanged.bind(this));
+      this.addButton[ael]('click', this.createRow.bind(this));
+      this.$rows[ael]('change', this.handleChange.bind(this));
+      this.$rows[ael]('keyup', this.handleKeyUp.bind(this));
+      this.$rows[ael]('click', this.handleClick.bind(this));
+      this.$rows[ael]('customSelect.changed', this.unitChanged.bind(this));
 
-      // this.initSelects();
+      this.initSelects();
       setTimeout(this.deleteSelected.bind(this), 800)
    }
 
@@ -61,6 +60,7 @@ export default class UnitTable {
    }
 
    createRow() {
+      debugger
       const baseUnitText = this.$baseUnit.selectedOptions[0].innerText;
 
       const row = (new createElement()).tag('div').attr('class', 'row').get();
@@ -86,7 +86,8 @@ export default class UnitTable {
    }
 
    async unitChanged(obj) {
-      let data = this.dto(obj.target.closest('.row'));
+      debugger
+      const data = this.dto(obj.target.closest('.row'));
       data.morphed.new_id = obj.detail.next.value;
       data.morphed.old_id = obj.detail.prev.value;
       if (obj.detail.next.value)
@@ -124,7 +125,7 @@ export default class UnitTable {
       )
    }
 
-   async clickRow({target}) {
+   async handleClick({target}) {
       if (target.classList.contains('del')) {
          let row = target.closest('.row');
          let data = this.dto(row);
@@ -145,10 +146,10 @@ export default class UnitTable {
 
    async handleChange({target}) {
       if (target.type === 'checkbox' && target.hasAttribute('data-isbase')) {
-         const base_is_shippable = +target.checked
-         const product_1s_id = this.product1sId
-         const data = {product_1s_id,base_is_shippable}
-         const res = await post('/adminsc/product/changeBaseIsShippable', data);
+         // const base_is_shippable = +target.checked
+         // const product_1s_id = this.product1sId
+         // const data = {product_1s_id, base_is_shippable}
+         // const res = await post('/adminsc/product/changeBaseIsShippable', data);
       } else {
          this.update(target, this)
       }
@@ -158,10 +159,13 @@ export default class UnitTable {
       const row = target.closest('.row');
       const chosenUnit = +$(row).find('[select-new]').dataset.value;
       if (!chosenUnit) return false;
-      const data = self.dto(row);
+      const data = self.newDTO(row);
       data.morphed.new_id = data.morphed.old_id;
 
       const res = await post('/adminsc/product/changeUnit', data);
+   }
+
+   newDTO(row) {
 
    }
 

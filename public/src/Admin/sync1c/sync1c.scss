@@ -1,5 +1,7 @@
 @use "../../var";
 @use "../../mixin_media";
+@use "sass:color";
+
 
 
 .requests {
@@ -97,7 +99,7 @@
       border-radius: 4px;
       width: 100%;
       box-sizing: border-box;
-      border: 1px solid lighten(var.$color-main, 20%);
+      border: 1px solid mixin_media.lighter(var.$color-main, 20%);
 
     }
 

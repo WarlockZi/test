@@ -4,42 +4,42 @@
 namespace app\Repository;
 
 
+use app\core\Cache;
 use app\model\Category;
-use app\view\components\Builders\SelectBuilder\optionBuilders\TreeOptionsBuilder;
-use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use Illuminate\Database\Eloquent\Collection;
 
 class CategoryRepository
 {
-    public static function frontCategories()
+    public static function rootCategories()
     {
-        return Category::withWhereHas('ownProperties',
-            fn($q) => $q->where('show_front', 1))
-            ->with('childrenRecursive')
-            ->get();
+        return Cache::get('rootCategories',
+            function () {
+                return Category::withWhereHas('ownProperties',
+                    fn($q) => $q->where('show_front', 1))
+                    ->with('childrenRecursive')
+                    ->get();
+            },
+            Cache::$timeLife1_000
+        );
     }
 
-    public function indexInstore(string $path)
+    public function indexInstore(string $url)
     {
-        $category = Category::query()
-            ->with('childrenRecursive')
-            ->withWhereHas('ownProperties',
-                fn($query) => $query->where('path', 'like', $path)
-            )
-            ->with('parentRecursive')
-            ->with('products.ownProperties')
-            ->with('products.orderItems')
-            ->with('productsInStore')
-            ->with('productsNotInStoreInMatrix')
-            ->with(['products.activepromotions' => function ($q) {
-                $q->whereNull('active_till');
-            }])
-            ->with('products.inactivepromotions')
-            ->with('products.shippableUnits')
-            ->get()
-            ->first();
-        return $category;
+        return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
+            function () use ($url) {
+                $category = Category::query()
+                    ->with('childrenRecursive')
+                    ->with('parentRecursive')
+                    ->withWhereHas('ownProperties',
+                        fn($query) => $query->where('path', 'like', $url)
+                    )
+                    ->with('productsInStore')
+                    ->with('productsNotInStoreInMatrix')
+                    ->get()->first();
+                $c        = $category->toArray();
 
+                return $category;
+            }, Cache::$timeLife1_000);
     }
 
     public static function changeProperty(array $req): void
@@ -64,7 +64,7 @@ class CategoryRepository
         }
     }
 
-    public static function edit(?int $id)
+    public static function edit(?int $id): \Illuminate\Database\Eloquent\Model|Collection|\Illuminate\Database\Eloquent\Builder|null
     {
         return Category::with(
             'products',
@@ -79,50 +79,16 @@ class CategoryRepository
 
     public static function treeAll(): Collection
     {
-        $cat = Category::query()
-            ->where('category_id', null)
-            ->with('childrenRecursive',)
-            ->with('ownProperties')
-            ->select('id', 'name')
-            ->whereNull('deleted_at')
-            ->get();
-        $arr = $cat->toArray();
+        $cat = Cache::get('categoryTree',
+            function () {
+                $cats = Category::whereNull('1s_category_id')
+                    ->with('childrenRecursive')
+                    ->get(['id', '1s_id','1s_category_id', 'name']);
+                return $cats;
+            },
+            Cache::$timeLife1_000
+        );
         return $cat;
     }
-
-    public static function selector(?int $selected = 0, ?int $excluded = -1): string
-    {
-        return SelectBuilder::build(
-            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
-                ->initialOption()
-                ->selected($selected)
-                ->excluded($excluded)
-                ->get()
-        )
-            ->field('category_id')
-            ->get();
-    }
-
-//    public static function reportProductSelector(?int $selected = 0, ?int $excluded = -1): string
-//    {
-//        return SelectBuilder::build(
-//            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
-//                ->initialOption()
-//                ->selected($selected)
-//                ->excluded($excluded)
-//                ->get()
-//        )
-//            ->name('category')
-//            ->id('category')
-//            ->get();
-//    }
-//    public static function indexNoSlug()
-//    {
-//        return Category::withWhereHas('ownProperties',
-//            fn($q) => $q->where('show_front', 1)
-//        )
-//            ->with('childrenRecursive')
-//            ->get();
-//    }
 
 }

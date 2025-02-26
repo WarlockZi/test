@@ -1,0 +1,62 @@
+@use "../../../var";
+@use "../../../mixin_media";
+
+.test-add {
+  content: 'Добавить';
+  position: relative;
+  color: #fff;
+  padding: 8px 15px;
+  margin: 10px 0 0;
+  white-space: nowrap;
+  cursor: pointer;
+  background-color: var.$color-main !important;
+  box-shadow: 0 2px 4px 0 var.$color-main;
+  transition: box-shadow 100ms;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+  margin-bottom: 100px;
+  font-size: .8rem;
+  min-width: 140px;
+
+  @include mixin_media.m600{
+    max-width: 100%;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  &:hover > .test-add-wrap {
+    opacity: 1;
+    top: 100%;
+  }
+}
+
+.test-add-wrap {
+  display: flex;
+  position: absolute;
+  flex-flow: column;
+  top: 7px;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  background-color: white;
+  color: black;
+  box-shadow: 0 2px 4px 0 rgb(177 202 243 / 61%);
+  transition: opacity 400ms, top 200ms;
+}
+
+.test-add-test,
+.test-add-path {
+  display: flex;
+  padding: 5px;
+  font-size: .8rem;
+  color: #000;
+
+  &:hover {
+    background-color: var.$color-hover-gray;
+  }
+}
+
+

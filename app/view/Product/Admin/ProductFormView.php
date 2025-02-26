@@ -8,15 +8,17 @@ use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Promotion;
 use app\model\Unit;
-use app\Repository\CategoryRepository;
 use app\Repository\ProductRepository;
 use app\Services\ProductImageService;
+use app\view\Category\CategoryFormView;
+use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
+use app\view\components\Builders\SelectBuilder\optionBuilders\PluckOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
@@ -108,9 +110,9 @@ class ProductFormView
                     ->get()
             )
             ->field(
-                ItemFieldBuilder::build('category_id', $product)
+                ItemFieldBuilder::build('1s_id', $product)
                     ->name('Категория')
-                    ->html(CategoryRepository::selector($product->category_id))
+                    ->html(CategoryFormView::selectorByField(['1s_id'=>$product->category['1s_id']]))
                     ->get()
             )
             ->field(
@@ -191,7 +193,7 @@ class ProductFormView
             ->tab(
                 ItemTabBuilder::build('Единицы')
                     ->html(
-                        self::units($product)
+                        self::newUnits($product)
                     )
             )
             ->tab(
@@ -227,6 +229,95 @@ class ProductFormView
             ->get();
     }
 
+    protected static function newUnits(Product $product): string
+    {
+        $baseUnit = $product->baseUnit;
+        $table    = Table::build($product->units)
+            ->class('units')
+            ->relation('units', 'attach')
+            ->pageTitle("Единица")
+            ->column(
+                ColumnBuilder::build('unit')
+                    ->removeDataField()
+                    ->attach()
+                    ->emptyRow(SelectBuilder::build(
+                        PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
+                            ->get())
+                        ->get())
+                    ->name('Единица')
+                    ->callback(function ($unit) use ($baseUnit) {
+                        if ($unit->id === $baseUnit->id) {
+                            return $baseUnit->name;
+                        }
+                        return SelectBuilder::build(
+                            PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
+                                ->selected($unit->id)
+                                ->get()
+                        )
+                            ->get();
+                    })
+                    ->get()
+            )
+            ->column(
+                ColumnBuilder::build('multiplier')
+                    ->emptyRow('1')
+                    ->removeDataField()
+                    ->pivot('multiplier')
+                    ->name('Коэфф')
+                    ->callback(function ($unit) {
+                        return $unit->pivot->multiplier;
+                    })
+                    ->contenteditable()
+                    ->get()
+            )
+            ->column(
+                ColumnBuilder::build('base_unit')
+//                    ->pivot('base_unit')
+                    ->name('Базовая ед')
+                    ->removeDataField()
+                    ->emptyRow(function () use ($baseUnit) {
+                        return $baseUnit->name;
+                    })
+                    ->callback(function ($unit) use ($baseUnit) {
+                        if ($unit->id === $baseUnit->id) {
+                            return '';
+                        }
+                        return $baseUnit->name;
+                    })
+                    ->get()
+            )
+            ->column(
+                ColumnBuilder::build('is_shippable')
+                    ->removeDataField()
+                    ->pivot('is_shippable')
+                    ->emptyRow(function () {
+                        return CheckboxBuilder::build()
+                            ->checked(false)
+                            ->data('id', 0)
+//                            ->data('pivot-field', 'is_shippable')
+                            ->data('pivot', 'is_shippable')
+                            ->data('relation', 'units')
+                            ->get();
+                    })
+                    ->name('Отгруж ед')
+                    ->callback(function ($unit) {
+                        return CheckboxBuilder::build()
+                            ->checked($unit->pivot->is_shippable)
+                            ->data('id', $unit->id)
+                            ->data('pivot', 'is_shippable')
+//                            ->data('pivot-value', $unit->pivot->is_shippable)
+                            ->data('relation', 'units')
+                            ->get();
+                    })
+                    ->get()
+            )
+            ->del()
+            ->addButton('pivot')
+            ->get();
+        return $table;
+
+    }
+
     public static function getManufacturer(Product $p): string
     {
         $select = SelectBuilder::build(
@@ -240,7 +331,7 @@ class ProductFormView
         return $select;
     }
 
-    public static function mainImage(Product $p)
+    public static function mainImage(Product $p): string
     {
         $dnd  = DndBuilder::make('product/uploads', 'add-file');
         $src  = (new ProductImageService)->getRelativeImage($p);
@@ -248,7 +339,6 @@ class ProductFormView
         return "<div class='dnd-container'>{$dnd}<img src = '{$src}' title = '{$name}' alt = '{$name}'/></div>";
     }
 
-//77.222.62.219
     protected static function getImage(Product $product, string $relation, string $slug, bool $many = false): string
     {
         $imgs = ImageView::morphImages($product, $relation);
@@ -298,17 +388,25 @@ class ProductFormView
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_keywords', $product->ownProperties)
-                ->name('Key words')
+                ->name('Список запросов')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_h1', $product->ownProperties)
-                ->name('h1')
+                ->name('H1')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
+            ItemFieldBuilder::build('seo_article', $product->ownProperties)
+                ->name('Seo article')
+                ->id('seo-article')
+                ->html(
+                    self::getSeoArticle($product)
+                )
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
             "</div>"
-            :'Справочник отсутствует';
+            : 'Справочник отсутствует';
     }
 
     public static function unitsRow(Unit $unit, string $name, bool $deletable): string
@@ -331,23 +429,6 @@ class ProductFormView
         return $fs->getContent('unitRow', compact('is_base', 'selector', 'name', 'shippable', 'multiplier', 'deletable'));
     }
 
-    protected static function units(Product $product): string
-    {
-        $fs           = new FS(__DIR__);
-        $baseUnit     = $product->units()->where('is_base', 1)->first();
-        $units        = $product->units;
-        $noneSelector = SelectBuilder::build(
-            ArrayOptionsBuilder::build(Unit::all())
-                ->initialOption()
-                ->excluded($baseUnit->id ?? 0)
-                ->get()
-        )
-            ->class('name')
-            ->get();
-        $multiplier   = self::multiplier(null);
-        return $fs->getContent('units', compact('units', 'noneSelector', 'baseUnit', 'multiplier'));
-    }
-
     private static function multiplier($mult): string
     {
         return $mult ? "<input class='multiplier' type='number' value='{$mult}'>" : "<div class='multiplier'></div>";
@@ -357,6 +438,13 @@ class ProductFormView
     {
         ob_start();
         include __DIR__ . '/../description.php';
+        return ob_get_clean();
+    }
+
+    protected static function getSeoArticle($product): string
+    {
+        ob_start();
+        include __DIR__ . '/../seoArticle.php';
         return ob_get_clean();
     }
 
@@ -390,7 +478,7 @@ class ProductFormView
                 ->get()
             );
         if ($addButton) {
-            $customList = $customList->addButton('ajax');
+            $customList = $customList->addButton();
         }
         if ($edit) {
             $customList = $customList->edit();
@@ -441,7 +529,7 @@ class ProductFormView
             )
             ->edit()
             ->del()
-            ->addButton('ajax')
+            ->addButton()
             ->get();
     }
 

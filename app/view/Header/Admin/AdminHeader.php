@@ -5,39 +5,32 @@ namespace app\view\Header\Admin;
 
 
 use app\core\FS;
-use app\model\User;
+use app\core\IUser;
+use app\Repository\FeedbackRepository;
 
 class AdminHeader
 {
-	protected string $header;
-	protected array $user;
-	protected string $templates;
-	protected string $commonTemplates;
-	protected string $blueRibbonTemplates;
+    protected string $header;
 
-	public function __construct(User $user)
-	{
-		$this->user = $user->toArray();
-		$this->templates = __DIR__ . '/templates/';
-		$this->commonTemplates = dirname(__DIR__ ). '/templates/';
-		$this->blueRibbonTemplates = dirname(__DIR__ ). '/BlueRibbon/templates/';
+    public function __construct(IUser $user)
+    {
+        $fs = new FS(dirname(__DIR__));
 
-        $logo = FS::getFileContent($this->templates.'logo_VITEX_grey.php');
-        $chips = $user->can()
-            ? FS::getFileContent($this->templates.'chips.php')
-            : '';
-        $searchPanel = FS::getFileContent($this->blueRibbonTemplates . 'searchPanel.php');
-        $searchButton = FS::getFileContent($this->blueRibbonTemplates . 'searchButton.php');
-        $user_menu = FS::getFileContent(ROOT . '/app/view/Header/templates/user_menu.php');
+//        $logo         = $fs->getContent('/Admin/templates/logo_VITEX_grey');
+        $searchPanel  = $fs->getContent('/BlueRibbon/templates/search_panel');
+        $searchButton = $fs->getContent('/BlueRibbon/templates/search_button');
+        $feedbackCount = FeedbackRepository::getCount();
+        $feedback     = $fs->getContent('/BlueRibbon/templates/feedback',compact('feedbackCount'));
+        $userMenu     = $fs->getContent('/templates/user_menu');
 
-        $vars = compact('user', 'logo', 'chips', 'user_menu', 'searchPanel','searchButton');
-        $adminSidebar = FS::getFileContent($this->templates .'admin_menu__accordion.php', $vars);
-        $adminHeader = FS::getFileContent($this->templates .'admin_header.php', $vars);
+        $vars         = compact('user',  'userMenu', 'searchPanel', 'feedback','searchButton');
+        $adminSidebar = $fs->getContent('/Admin/templates/admin_menu_accordion', $vars);
+        $adminHeader  = $fs->getContent('/Admin/templates/admin_header', $vars);
         $this->header = $adminSidebar . $adminHeader;
-	}
+    }
 
-	public function getHeader()
-	{
-		return $this->header;
-	}
+    public function getHeader()
+    {
+        return $this->header;
+    }
 }

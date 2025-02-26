@@ -11,6 +11,7 @@ export default class Search {
       const panel = $('.search-panel').first();
 
       if (!openBtn || !panel) return;
+
       this.openBtn = openBtn;
       this.panel = panel;
 
@@ -26,6 +27,9 @@ export default class Search {
    }
 
    togglePanel() {
+      if (!undefined == window.ym) {
+         YM('click_search')
+      }
       this.panel.classList.toggle('show');
       this.result.innerHTML = '';
       this.text.value = ''

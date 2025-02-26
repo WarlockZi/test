@@ -13,7 +13,7 @@ class AssetsCache
 
     public function setCache(): void
     {
-        $this->cache = $_ENV['DEV'] ? false : false;
+        $this->cache = DEV ? false : false;
     }
 
 }

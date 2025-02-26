@@ -1,26 +1,32 @@
-<? use app\core\Icon;
-use \app\view\share\shippable\ShippableUnitsTableFactory;
+<?php use app\core\Icon;
+use app\view\share\shippable\ShippableUnitsTableFactory;
 
-$authed = \app\core\Auth::isAuthed();
+$authed = \app\core\Auth::getUser();
 ?>
 <div class="cart">
 
-    <div class="<?= $products->count() ? '' : 'none'; ?> content">
+    <h1>Корзина</h1>
 
-        <div class="page-name">Корзина</div>
+    <? if (empty($order) || !$order?->products?->count()): ?>
 
-<!--        --><?php //include 'counter.php' ?>
+        <div class="empty-cart">
+            Корзина пуста
+        </div>
 
-        <div class="table" data-model="<?= $authed ? 'order' : 'orderItem'; ?>">
+    <? else: ?>
 
-            <?php foreach ($products as $i => $product): ?>
+    <div class="content">
 
-                <div class="row" data-product-id="<?= $product['1s_id']; ?>">
+        <div class="table" data-order-id="<?= $order->id; ?>">
+
+            <?php foreach ($order?->products as $i => $product): ?>
+
+                <div class="row cart-item" data-product-id="<?= $product['1s_id']; ?>">
                     <div class="num cell"><?= ++$i; ?></div>
 
                     <img src="<?= $product->mainImagePath; ?>" alt="<?= $product->name; ?>">
 
-                    <div class="cell name-price cell">
+                    <div class="name-price cell">
                         <a href="/product/<?= $product->slug; ?>"
                            class="name">
                             <?= $product->name; ?>
@@ -28,11 +34,12 @@ $authed = \app\core\Auth::isAuthed();
                     </div>
 
                     <div class="cart-shippable-table cell">
+
                         <?= ShippableUnitsTableFactory::create($product, 'cart'); ?>
                     </div>
 
-                    <div class="sub-sum sum"></div>
-                    <div class="del"><?= Icon::trashWhite(); ?></div>
+                    <div class="sub-sum sum cell"></div>
+                    <div class="del cell"><?= Icon::trashWhite(); ?></div>
                 </div>
 
             <?php endforeach; ?>
@@ -40,28 +47,26 @@ $authed = \app\core\Auth::isAuthed();
 
             <div class="total">
                 <div class="title">Всего -&nbsp;&nbsp;</div>
-                <span></span>&nbsp;&nbsp;₽
+                <span></span>
             </div>
 
-            <?php if (!$authed && !$lead): ?>
-                <div class="buttons">
-                    <div class="button" id="cartLead">Оставить свои данные</div>
-                    <div class="button" id="cartLogin">Войти</div>
-                </div>
-            <?php else: ?>
-                <div class="buttons">
-                    <div class="button" id="cartSuccess">Оформить заказ</div>
-                </div>
-            <?php endif; ?>
+            <div class="buttons">
+                <?php if (!\app\core\Auth::getUser()): ?>
+                    <div class="button" id="cartLogin"
+                         title="Чтобы оформить заказ Вам &#10;необходимо зарегистрироваться &#10;или войти под своей учеткой">
+                        Войти
+                    </div>
+                <?php else: ?>
+                    <div class="button" id="cartSubmit">Оформить заказ</div>
+                <?php endif; ?>
+            </div>
 
         </div>
 
     </div>
-    <div class="empty-cart <?= $products->count() ? 'none' : ''; ?>">
-        Корзина пуста
-    </div>
-</div>
 
+</div>
+<? endif; ?>
 
 
 

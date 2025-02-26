@@ -1,0 +1,154 @@
+@use '../var';
+@use '../components/checkbox/animatedCheckmark';
+
+$input-color: #303245;
+
+.feedback {
+  border: 1px solid var.$color-gray7;
+  border-radius: 10px;
+  backdrop-filter: blur(1px) brightness(70%) saturate(4);
+  padding-inline: 10px;
+
+  .success-checkmark {
+    margin: 0 auto;
+    position: absolute;
+    top: 39%;
+    left: 10%;
+    z-index: 3;
+    transform: scale(.3);
+
+    @include animatedCheckmark.success-checkmark();
+
+  }
+
+  .feedback-title {
+    font-size: 1.2rem;
+    margin-block: 20px;
+
+    //&.before{
+    //  &:before{
+    //    content: 'd';
+    //    position: absolute;
+    //    top: 47%;
+    //    left: 15%;
+    //  }
+    //}
+
+    &.sent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: black;
+      width: 100%;
+      height: 100%;
+      background-color: floralwhite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      margin: 0;
+      border-radius: 5px;
+    }
+  }
+
+
+  .input-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 20px;
+    width: 100%;
+    //gap: 10px;
+
+    input, .textarea {
+      resize: vertical;
+      border-radius: 12px;
+      border: 0;
+      color: #eee;
+      font-size: clamp(.7rem, 4vw, 1.1rem);
+      min-height: clamp(10px, 10vw, 35px);
+      outline: 0;
+      padding: 4px 20px 0;
+      background-color: #303245;
+      caret-color: rgb(255, 255, 255);
+
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 1000px $input-color inset !important;;
+        transition: background-color 5000s ease-in-out 0s;
+        -webkit-text-fill-color: #eee !important;
+      }
+
+      &:focus ~ .badge,
+      &:not(:placeholder-shown) ~ .badge {
+        transform: translateY(8px);
+        background-color: $input-color;
+      }
+
+      &:focus ~ label,
+      &:not(:placeholder-shown) ~ label {
+        transform: translateY(-25px) translateX(10px) scale(0.75);
+      }
+
+      &:not(:placeholder-shown) ~ label {
+        color: #808097;
+      }
+    }
+
+    .badge {
+      border-radius: 10px;
+      height: 20px;
+      left: 20px;
+      position: absolute;
+      top: -21px;
+      transform: translateY(0);
+      transition: transform 200ms, background-color 200ms;
+      width: 76px;
+    }
+
+    label {
+      color: #a5a5a5;
+      left: 20px;
+      //top: 12px;
+      top: 17px;
+      transform: translateY(-27%);
+      line-height: 14px;
+      pointer-events: none;
+      position: absolute;
+      transform-origin: 0 50%;
+      transition: transform 200ms, color 200ms;
+      padding-left: 5px;
+      font-size: clamp(.6rem, 4vw, 1rem);
+    }
+
+    #emailError, #nameError, #phoneError {
+      margin-left: 20px;
+      align-self: start;
+      color: brown;
+      height: clamp(1.5rem, 2vw, 1rem);
+      padding-top: 2px;
+      padding-bottom: 4px;
+      font-size: clamp(.2rem, 1vw, 1rem);
+    }
+  }
+
+
+  .feedback-submit {
+    padding: 10px;
+    align-self: stretch;
+    margin-top: 20px;
+    justify-self: stretch;
+    margin-bottom: 10px;
+  }
+
+  .textarea {
+    min-height: 100px;
+
+    .badge {
+      width: 92px;
+    }
+
+  }
+}

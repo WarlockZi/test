@@ -1,19 +1,20 @@
 <?php use app\core\Auth; ?>
-<?php if (Auth::userIsAdmin()): ?>
+<?php if (Auth::getUser()?->isAdmin()): ?>
     <div class="admin-panel">
 
         <div class="row">
-<!--            <a href="/adminsc/report/productsNoImgInstore">без картинок</a>-->
-<!--            <a href="/adminsc/report/Productsnominunit">без мин упак</a>-->
-<!--            <a href="/adminsc/report/Productsnoshippable">без мин единицы</a>-->
             <a href="/adminsc/report/filter">фильтры</a>
+            <a href="/adminsc/cache/clear">Очистить кэш</a>
+            <label>Log bar
+                <input type="checkbox">
+            </label>
 
-            <?php if (Auth::isSU(Auth::getUser()['email'])): ?>
+            <?php if (Auth::getUser()->isSU()): ?>
                 <a href="/zip/download">Download</a>
                 <a href="/adminsc/sync"> Sync</a>
             <?php endif; ?>
 
-            <?php if (Auth::isOlya()): ?>
+            <?php if (Auth::getUser()->isOlya()): ?>
             <?php endif; ?>
 
         </div>

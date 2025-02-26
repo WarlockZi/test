@@ -14,7 +14,7 @@ use app\Services\Test\TestDoService;
 use app\Services\Test\TestEditService;
 
 
-class QuestionController Extends AppController
+class QuestionController Extends AdminscController
 {
 	protected string $model = Question::class;
 

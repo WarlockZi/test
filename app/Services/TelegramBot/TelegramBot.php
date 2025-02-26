@@ -6,31 +6,38 @@ namespace app\Services\TelegramBot;
 
 class TelegramBot
 {
+    private string $TELEGRAM_VitexTestBot_TOKEN;
+    private string $chat_id;
 
-	public function __construct()
-	{
-		define('TELEGRAM_TOKEN', '6674932414:AAGyg42Rntkd-MqGJWQS6sA-mUMyMMTXA4w');
-		define('TELEGRAM_CHATID', '315610444');
-	}
+    public function __construct(string $channel)
+    {
+        $this->setChanel($channel);
+        $this->TELEGRAM_VitexTestBot_TOKEN     = env('TELEGRAM_VitexTestBot_TOKEN');
+    }
+
+    private function setChanel($channel): void
+    {
+        if ($channel===TGChannel::callme->name) {
+            $this->chat_id = '-100'.env('TELEGRAM_VITEX_CALLME_CHANNAL_ID');
+
+        }elseif ($channel===TGChannel::question->name){
+            $this->chat_id = '-100'.env('TELEGRAM_VITEX_SALES_CHANNAL_ID');
+        }
+
+    }
 
 
-	public function send($text)
-	{
-		$ch = curl_init();
-		curl_setopt_array(
-			$ch,
-			array(
-				CURLOPT_URL => 'https://api.telegram.org/bot' . TELEGRAM_TOKEN . '/sendMessage',
-				CURLOPT_POST => TRUE,
-				CURLOPT_RETURNTRANSFER => TRUE,
-				CURLOPT_TIMEOUT => 10,
-				CURLOPT_POSTFIELDS => array(
-					'chat_id' => TELEGRAM_CHATID,
-					'text' => $text,
-				),
-			)
-		);
-		curl_exec($ch);
-	}
+    public function send($text): void
+    {
+        $token = $this->TELEGRAM_VitexTestBot_TOKEN;
 
+        $url = "https://api.telegram.org/bot";
+        $action = '/sendMessage?';
+        $chatId = "chat_id={$this->chat_id}&";
+        $text = "text=Перезвоните мне $text";
+
+        $string = "{$url}{$token}{$action}{$chatId}{$text}";
+
+        $resp =file_get_contents($string);
+    }
 }

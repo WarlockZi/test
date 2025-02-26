@@ -2,10 +2,14 @@
     <div class="title"><?= $title ?? '' ?></div>
 
     <? if (is_array($options)): ?>
-        <select <?= $name ?? '' ?>>
+        <select <?= $name ?? '' ?> select-new>
             <?= $emptyOption ?? '' ?>
             <? foreach ($options as $key => $value): ?>
-                <? $selected = (array_key_exists($filterName, $userFilters) && $key == $userFilters[$filterName]['id']) ? 'selected' : ''; ?>
+                <? $selected =
+                    ($key === (int)$toFilter[$filterName]
+                        && !empty($toFilter[$filterName]))
+                        ? 'selected'
+                        : ''; ?>
                 <option value="<?= $key ?>" <?= $selected ?>><?= $value; ?></option>
             <? endforeach; ?>
 
@@ -15,8 +19,7 @@
         <?= $options; ?>
     <? endif; ?>
 
-    <? if ($checkboxSave): ?>
-        <? include 'checkboxSave.php' ?>
-    <? endif; ?>
+
+    <? include 'checkboxSave.php' ?>
 
 </div>

@@ -23,7 +23,7 @@ if (loginForm){
     new Login()
 }
 
-if ($('.modal-wrapper')){
+if ($('.modal')){
     const {default:Modal} = await import("../components/Modal/modal.js")
     new Modal()
 }

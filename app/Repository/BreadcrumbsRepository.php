@@ -6,13 +6,17 @@ namespace app\Repository;
 
 use app\model\Category;
 use app\model\Product;
+use app\view\share\card_panel\CardPanel;
 
 class BreadcrumbsRepository
 {
+    public function __construct()
+    {
+    }
 
-  private static function getPrefix(bool $admin):string
+    private static function getPrefix(bool $admin):string
   {
-    return 	$admin ? '/adminsc/category/' : '/catalog/';
+    return 	$admin ? '/adminsc/category/' : '/catalog';
   }
 
 	private static function flatCategoryParents(Category $category): array
@@ -53,12 +57,12 @@ class BreadcrumbsRepository
 			$slug = $admin ? "edit/{$cat->id}" : "{$cat->ownProperties->path}";
 			if ($i === 0) {
 				if (!$linkLast) {
-					$str = "<li><div>{$cat->name}</div></li>" . $str;
+					$str = "<li><div>{$cat->name}</div>".CardPanel::categoryCardPanel($category,true)."</li>" . $str ;
 				} else {
-					$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a></li>" . $str;
+					$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a>".CardPanel::categoryCardPanel($category,true)."</li>" . $str;
 				}
 			} else {
-				$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a></li>" . $str;
+				$str = "<li><a href='{$prefix}{$slug}'>{$cat->name}</a>".CardPanel::categoryCardPanel($category,true)."</li>" . $str;
 			}
 		}
 

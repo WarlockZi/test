@@ -7,7 +7,7 @@ use app\core\Response;
 use app\model\Post;
 use app\view\Post\PostView;
 
-class PostController Extends AppController
+class PostController Extends AdminscController
 {
 	public  string $model = Post::class;
 //	public  $modelName = 'post';

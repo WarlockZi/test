@@ -7,13 +7,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font: bold 17px/21px 'Proxima Nova', sans-serif;
-  padding: 0 25px;
+  line-height: 21px;
+  padding: 5px 25px;
   white-space: nowrap;
+  font-size: clamp(.6rem, 5vw, .8rem);
+
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 46%;
+    display: inline-block;
+    border: 5px solid transparent;
+    border-top-color: var.$color-main;
+    margin-left: 9px;
+    @include mixin_media.m500 {
+      position: absolute;
+      top: 8px;
+    }
+  }
+  @include mixin_media.m400 {
+    display: none;
+  }
 
   @include mixin_media.m500 {
-    font-family: 'Proxima Nova', sans-serif;
-    font-size: .8rem;
     font-weight: bold;
     padding-right: 0;
   }
@@ -22,31 +39,25 @@
     padding: 25px 30px;
     height: auto;
     overflow: visible;
-    @include mixin_media.m500{
+    @include mixin_media.m500 {
       font-size: .8rem;
       right: -80px;
       padding: 10px;
     }
   }
 
+  .email {
+    @include mixin_media.h4;
+    margin: 0;
+    font-size: clamp(.6rem, 5vw, .8rem);
+
+  }
+
   & > a {
     position: relative;
     color: #4e4e4e;
 
-    &:after {
-      content: '';
-      position: absolute;
-      left: -25px;
-      top: 30%;
-      display: inline-block;
-      border: 5px solid transparent;
-      border-top-color: var.$color-main;
-      margin-left: 9px;
-      @include mixin_media.m500 {
-        position: absolute;
-        top: 8px;
-      }
-    }
+
   }
 
   .wrap {
@@ -67,7 +78,6 @@
       box-shadow: 0 6px 12px hsl(168, 10%, 60%);
       font-family: inherit;
       font-size: .9rem;
-      //font: 15px/19px 'Proxima Nova', sans-serif;
       color: #181617;
       padding: 0 30px;
       height: 0;

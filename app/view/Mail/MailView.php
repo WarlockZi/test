@@ -5,16 +5,15 @@ namespace app\view\Mail;
 
 
 use app\core\FS;
+use app\model\User;
 
 class MailView
 {
-	public static function registration($user)
-	{
-		$hash = $user['hash'];
+	public static function registration($user): string
+    {
 		$server = $_SERVER['HTTP_ORIGIN'];
-
-		$confirmHref = "{$server}/auth/confirm/{$hash}";
-		$unsubscribeHref = "{$server}/auth/unsubscribe?email={$hash}";
+		$confirmHref = "{$server}/auth/confirm/{$user['hash']}";
+		$unsubscribeHref = "{$server}/auth/unsubscribe?email={$user['hash']}";
 		return FS::getFileContent(__DIR__ . '/registration.php', compact('confirmHref', 'unsubscribeHref'));
 	}
 
@@ -23,11 +22,12 @@ class MailView
 		return "Подтверждение почты: <a href = '{$user['hash']}'>нажать сюда</a>";
 	}
 
-	public static function returnPass($user)
+	public static function returnPass(User $user): string
 	{
-		$pass = $user['hash'];
-
-		return FS::getFileContent(__DIR__ . '/registration.php', compact('confirmHref', 'unsubscribeHref'));
+        $server = $_SERVER['HTTP_ORIGIN'];
+        $confirmHref = "{$server}/auth/confirm/{$user['hash']}";
+        $unsubscribeHref = "{$server}/auth/unsubscribe?email={$user['hash']}";
+		return FS::getFileContent(__DIR__ . '/returnPass.php', compact('confirmHref', 'unsubscribeHref'));
 	}
 
 	public static function returnPassAlt($user)

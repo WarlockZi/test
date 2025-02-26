@@ -21,7 +21,12 @@
     "ext-pdo": "*",
     "ext-curl": "*",
     "ext-sockets": "*",
-    "shuchkin/simplexlsx": "^1.1"
+    "shuchkin/simplexlsx": "^1.1",
+    "arthurkushman/php-wss": "^2.0",
+    "monolog/monolog": "^3.7",
+    "ext-memcached": "*",
+    "ext-xdebug": "*",
+    "ext-imap": "*"
   },
   "config": {
     "platform-check": false

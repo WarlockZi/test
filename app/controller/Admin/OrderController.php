@@ -2,15 +2,14 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\Auth;
 use app\core\Response;
 use app\model\Order;
+use app\model\OrderItem;
 use app\Repository\OrderRepository;
 use app\view\Order\OrderView;
 use Carbon\Carbon;
 
-class OrderController extends AppController
+class OrderController extends AdminscController
 {
     protected string $model = Order::class;
 
@@ -21,19 +20,20 @@ class OrderController extends AppController
 
     public function actionIndex(): void
     {
-        $orderItems = OrderRepository::leadList();
-        $leadlist   = OrderView::leadList($orderItems);
+        $submitted     = OrderRepository::submitted();
+        $unsubmitted     = OrderRepository::unsubmitted();
 
-        $orders     = OrderRepository::clientList();
-        $clientlist = OrderView::clientList($orders);
-        $this->setVars(compact('clientlist', 'leadlist'));
+        $submittedTable     = OrderView::table($submitted);
+        $unsubmittedTable     = OrderView::table($unsubmitted);
+
+        $this->setVars(compact('submittedTable', 'unsubmittedTable'));
     }
 
     public function actionEdit(): void
     {
         $this->view = 'table';
-        $orders     = OrderRepository::edit($this->route->id);
-        $table      = OrderView::editOrder($orders);
+        $order     = OrderRepository::edit($this->route->id);
+        $table      = OrderView::editOrder($order);
         $this->setVars(compact('table'));
     }
 
@@ -41,30 +41,27 @@ class OrderController extends AppController
     {
         if (!$req) return;
 
-        $order = Order::updateOrCreate(
+        $order = OrderItem::updateOrCreate(
             [
                 'product_id' => $req['product_id'],
                 'unit_id' => (int)$req['unit_id'],
-                'sess' => session_id(),
-                'user_id' => Auth::getUser()['id'],
                 'deleted_at' => null,
             ],
             [
                 'product_id' => $req['product_id'],
                 'unit_id' => (int)$req['unit_id'],
-                'sess' => session_id(),
                 'count' => (int)$req['count'],
                 'ip' => $_SERVER['REMOTE_ADDR'],
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]
         );
         if ($order->wasRecentlyCreated) {
-            Response::exitJson(['popup' => "Добавлено в корзину"]);
+            Response::json(['popup' => "Добавлено в корзину"]);
         }
         if ($order->wasChanged()) {
-            Response::exitJson(['popup' => "Заказ изменен"]);
+            Response::json(['popup' => "Заказ изменен"]);
         }
-        Response::exitJson(['popup' => 'не записано', 'error' => "не записано"]);
+        Response::json(['popup' => 'не записано', 'error' => "не записано"]);
     }
 
     public function actionDelete(): void
@@ -78,9 +75,9 @@ class OrderController extends AppController
                     ->whereNull('deleted_at')
                     ->update(['deleted_at' => Carbon::today()]);
             }
-            Response::exitJson(['ok' => 'ok', 'popup' => 'удален']);
+            Response::json(['ok' => 'ok', 'popup' => 'удален']);
         } catch (\Throwable $exception) {
-            Response::exitJson(['error' => 'не удален', 'popup' => 'не удален']);
+            Response::json(['error' => 'не удален', 'popup' => 'не удален']);
         }
     }
 }

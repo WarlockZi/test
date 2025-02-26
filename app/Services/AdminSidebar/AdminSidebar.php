@@ -3,14 +3,15 @@
 namespace app\Services\AdminSidebar;
 
 use app\core\Icon;
+use app\core\IUser;
 use app\model\User;
 
 class AdminSidebar
 {
-    private User $user;
+    private IUser $user;
     private array $sidebar;
 
-    public static function build(User $user): string
+    public static function build(IUser $user): string
     {
         $self          = new self();
         $self->user    = $user;
@@ -19,7 +20,7 @@ class AdminSidebar
         foreach ($self->sidebar as $item) {
             if ($item['children']) {
                 if ($item['permissions']) {
-                    if ($self->user->can($item['permissions'])) {
+                    if ($self->hasPermitions($item['permissions'])) {
                         echo $self->ul($item);
                     }
                 } else {
@@ -36,9 +37,13 @@ class AdminSidebar
             }
         }
         return ob_get_clean();
-
     }
 
+    private function hasPermitions(array $permitions):bool
+    {
+        return $this->user->can($permitions);
+
+    }
     private function a(array $item): void
     {
         $f = ROOT . "/app/Services/AdminSidebar/a.php";
@@ -88,6 +93,12 @@ class AdminSidebar
                         "permissions" => [],
                     ],
                     [
+                        "name" => "Сообщения пользователей",
+                        "href" => "/adminsc/feedback",
+                        "class" => "neon",
+                        "permissions" => [],
+                    ],
+                    [
                         "name" => "Заказы",
                         "href" => "/adminsc/order",
                         "class" => "neon",
@@ -96,6 +107,12 @@ class AdminSidebar
                     [
                         "name" => "Пользователи",
                         "href" => "/adminsc/user",
+                        "class" => "neon",
+                        "permissions" => [],
+                    ],
+                    [
+                        "name" => "Пользователи Yandex",
+                        "href" => "/adminsc/useryandex",
                         "class" => "neon",
                         "permissions" => [],
                     ],
@@ -128,6 +145,12 @@ class AdminSidebar
                     [
                         "name" => "Права",
                         "href" => "/adminsc/right",
+                        "class" => "neon",
+                        "permissions" => [],
+                    ],
+                    [
+                        "name" => "Роли",
+                        "href" => "/adminsc/role",
                         "class" => "neon",
                         "permissions" => [],
                     ],
@@ -170,6 +193,12 @@ class AdminSidebar
                     [
                         "name" => "Задачи",
                         "href" => "//adminsc/planning",
+                        "class" => "neon",
+                        "permissions" => [],
+                    ],
+                    [
+                        "name" => "Страницы",
+                        "href" => "/adminsc/pages",
                         "class" => "neon",
                         "permissions" => [],
                     ],

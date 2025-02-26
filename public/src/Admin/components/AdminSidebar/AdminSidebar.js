@@ -1,20 +1,24 @@
 import './adminSidebar.scss'
-import {$} from '../../../common'
-import {ael, qs} from "../../../constants.js";
+import {$} from '@src/common.js'
+import {ael, qs} from "@src/constants.js";
 
 export default class AdminSidebar {
    constructor(sidebar) {
       if (!sidebar) return false
 
       this.sidebar = sidebar
-      this.burger = sidebar[qs]('#burger')
-      sidebar[ael]('click', this.handleClick.bind(this));
+      this.sidebar[ael]('click', this.handleClick.bind(this));
+
+
+      this.burger = document[qs]('.burger')
+      this.burger[ael]('click', this.handleClick.bind(this));
 
    }
 
    handleClick({target}) {
       if (target === this.burger) {
-         this.sidebar[qs]('.wrap').classList.toggle('show')
+         this.sidebar.classList.toggle('show')
+
       } else {
          this.openUl(target)
       }
@@ -22,7 +26,8 @@ export default class AdminSidebar {
 
    openUl(target) {
       const li = target.closest('li')
-      if (!li.classList.contains('open')) {
+      if (!li) return
+      if (!li?.classList?.contains('open')) {
          this.closeUls()
       }
       li.classList.toggle('open')

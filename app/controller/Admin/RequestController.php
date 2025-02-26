@@ -5,7 +5,7 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\model\Answer;
 
-class RequestController Extends AppController
+class RequestController Extends AdminscController
 {
 	protected string $model = Answer::class;
 
@@ -16,7 +16,7 @@ class RequestController Extends AppController
 
 	public function actionIndex():void
 	{
-		if ($_ENV['MODE'] === 'production') {
+		if (DEV) {
 			$content = file_get_contents('/var/www/vitexopt/data/logs/vitexopt.ru.access.log');
 		} else {
 			$content = file_get_contents(__DIR__ . '/vitexopt.ru.access.log');

@@ -66,7 +66,7 @@ class TodoView
 			)
 			->edit()
 			->del()
-			->addButton('ajax')
+			->addButton()
 			->get();
 
 	}

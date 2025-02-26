@@ -19,7 +19,7 @@ class ManufacturerView
 			->get();
 		return Table::build($items)
 			->pageTitle('Поставщики')
-			->addButton('ajax')
+			->addButton()
 			->column(
 				ColumnBuilder::build('id')
 					->width('50px')

@@ -20,6 +20,8 @@ class ColumnBuilder
     public $width = 'auto';
     public $hidden;
     public $contenteditable;
+    public $pivot;
+    public string $attach = '';
 
     public $html;
     public $function;
@@ -27,8 +29,9 @@ class ColumnBuilder
     public $functionClass;
 
     public $select = false;
+    public mixed $emptyRow = '';
 
-    public static function build(string $title=''): self
+    public static function build(string $title = ''): self
     {
         $column            = new static();
         $column->field     = $title;
@@ -36,9 +39,37 @@ class ColumnBuilder
         return $column;
     }
 
+    public function attach(): static
+    {
+        $this->attach = 'data-attach=true';
+        return $this;
+    }
+
+    public function removeDataField(): static
+    {
+        $this->dataField = '';
+        return $this;
+    }
+
+    public function emptyRow(mixed $emptyRow): self
+    {
+        if (is_callable($emptyRow)) {
+            $this->emptyRow = call_user_func($emptyRow);
+        } else {
+            $this->emptyRow = $emptyRow;
+        }
+        return $this;
+    }
+
     public function class(string $class): self
     {
         $this->class = "class='{$class}'";
+        return $this;
+    }
+
+    public function pivot(string $pivotField): self
+    {
+        $this->pivot = "data-pivot='{$pivotField}'";
         return $this;
     }
 
@@ -79,7 +110,7 @@ class ColumnBuilder
 
     public function search(): self
     {
-        $this->search = '<input type="text">';
+        $this->search = '<input type="text" data-search>';
         return $this;
     }
 
@@ -112,6 +143,7 @@ class ColumnBuilder
         $this->hidden = 'hidden';
         return $this;
     }
+
 
     public function contenteditable(): self
     {

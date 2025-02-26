@@ -3,11 +3,13 @@
 namespace app\model;
 
 
+use app\core\Auth;
 use app\Services\ProductImageService;
-use app\Services\SlugService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
@@ -24,9 +26,9 @@ class Product extends Model
         'art',
         'txt',
         'slug',
-        'category_id',
         'image_id',
         'manufacturer_id',
+        'category_id',
         '1s_category_id',
         '1s_id',
         'instore',
@@ -37,27 +39,114 @@ class Product extends Model
     protected $casts = [
         'art' => 'string',
     ];
-    protected $appends = ['price', 'mainImage','shortLink'];
+    protected $appends = [
+        'price',
+        'mainImage',
+    ];
 
-    public function ownProperties()
+    public function orderItems(): HasManyThrough
     {
-        return $this->hasOne(ProductProperty::class, 'product_1s_id', '1s_id');
+        return $this->hasManyThrough(
+            OrderItem::class,
+            OrderProduct::class,
+            'product_id', //in order_product
+            'order_product_id',//in OrderItem
+            '1s_id', //in Product
+            'id' //in order_product
+        );
     }
 
-    public function scopeWithWhereHas($query, $relation, $constraint){
+    public function orderProduct()
+    {
+        $oI = $this->hasOne(
+            OrderProduct::class,
+            'product_id',
+            '1s_id',
+        );
+        return $oI;
+    }
+
+    public function order(): HasOne|null
+    {
+        list($field, $value) = Auth::getCartFieldValue();
+        $order = Order::where($field, $value)->first();
+
+        return !empty($order)
+
+            ? $this->hasOne(OrderProduct::class,
+                'product_id',
+                '1s_id',
+            )->where('order_id', $order->id)
+
+            : null;
+    }
+
+    public function orders()
+    {
+        $user = Auth::getUser();
+        if ($user) {
+            return $this
+                ->belongsToMany(Order::class)
+                ->where('user_id', $user->id);
+        }
+
+        return $this
+            ->hasMany(Order::class, 'loc_storage_cart_id', Auth::getUser());
+    }
+
+    public function ownProperties(): HasOne
+    {
+        return $this
+            ->hasOne(ProductProperty::class,
+                'product_1s_id',
+                '1s_id');
+    }
+
+    public function like(): HasOne
+    {
+        list($field, $value) = Auth::getCartFieldValue();
+        return $this->hasOne(Like::class, 'product_id', '1s_id')
+            ->where($field, $value);
+    }
+
+    public function compare(): HasOne
+    {
+        list($field, $value) = Auth::getCartFieldValue();
+        return $this->hasOne(Compare::class, 'product_id', '1s_id')
+            ->where($field, $value);
+    }
+
+    public function seo_h1()
+    {
+        return $this->ownProperties->seo_h1 ?? $this->name;
+    }
+
+    public function seo_article()
+    {
+        return $this->ownProperties->seo_article ?? $this->ownProperties->seo_description ?? 'Описание товара отстутствует';
+    }
+
+    public function seo_title()
+    {
+        return $this->ownProperties->seo_title ?? $this->name . " - купить в Вологде оптом выгодно - VITEX";
+    }
+
+    public function seo_description()
+    {
+        return $this->ownProperties->seo_description ?? $this->name . " Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
+    }
+
+    public function scopeWithWhereHas($query, $relation, $constraint)
+    {
         return $query->whereHas($relation, $constraint)
             ->with([$relation => $constraint]);
     }
+
     protected function getShortLinkAttribute(): string
     {
-        $link = $this->ownProperties->short_link??'';
-//        if (!$link) {
-//            $link = ShortlinkService::getValidShortLink();
-//            $this->short_link = $link;
-//            $this->save();
-//        }
+        $link   = $this->ownProperties->short_link ?? '';
         $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
-        $host = $_SERVER['HTTP_HOST'] ?? '';
+        $host   = $_SERVER['HTTP_HOST'] ?? '';
         return "{$scheme}://{$host}/short/{$link}";
     }
 
@@ -81,7 +170,7 @@ class Product extends Model
 
     public function getPriceAttribute()
     {
-        return $this->priceRelation()->first()->price??null;
+        return $this->priceRelation()->first()->price ?? null;
     }
 
     public function getFormattedPriceAttribute()
@@ -89,29 +178,29 @@ class Product extends Model
         return number_format($this->price, 2, '.', ' ');
     }
 
-    public function priceRelation():HasOne
+    public function priceRelation(): HasOne
     {
         return $this->hasOne(Price::class, '1s_id', '1s_id');
     }
 
     protected function getUnitsTableAttribute()
     {
-        $arr = [];
-        $units = $this->units;
+        $arr      = [];
+        $units    = $this->units;
         $baseUnit = $this->baseUnit->name;
         foreach ($units as $unit) {
-            $price = number_format((float)$this->price, 2, '.', ' ');
-            $formatted_sum = number_format((float)$this->price * $unit->pivot->multiplier, 2, '.', ' ');
-            $pivot = $unit->pivot;
-            $sid = $pivot->product_1s_id;
-            $arr[$sid]['price'] = (float)$this->price;
-            $arr[$sid]['currency'] = '₽';
-            $arr[$sid]['1s_id'] = $sid;
-            $arr[$sid]['name'] = $unit->name;
-            $arr[$sid]['base_unit_name'] = $baseUnit;
-            $arr[$sid]['multiplier'] = $unit->pivot->multiplier;
+            $price                        = number_format((float)$this->price, 2, '.', ' ');
+            $formatted_sum                = number_format((float)$this->price * $unit->pivot->multiplier, 2, '.', ' ');
+            $pivot                        = $unit->pivot;
+            $sid                          = $pivot->product_1s_id;
+            $arr[$sid]['price']           = (float)$this->price;
+            $arr[$sid]['currency']        = '₽';
+            $arr[$sid]['1s_id']           = $sid;
+            $arr[$sid]['name']            = $unit->name;
+            $arr[$sid]['base_unit_name']  = $baseUnit;
+            $arr[$sid]['multiplier']      = $unit->pivot->multiplier;
             $arr[$sid]['formatted_price'] = $price;
-            $arr[$sid]['formatted_sum'] = $formatted_sum;
+            $arr[$sid]['formatted_sum']   = $formatted_sum;
         }
         return $arr;
     }
@@ -119,17 +208,17 @@ class Product extends Model
     protected function getBaseUnitPriceAttribute()
     {
         $baseUnit = $this->baseUnit;
-        $price = number_format((float)$this->price, 2, '.', ' ');
-        return "{$price} ₽ / {$baseUnit->name}";
+        $price    = number_format((float)$this->price, 2, '.', ' ');
+        return "{$price} ₽ / {$baseUnit?->name}";
     }
 
     protected function priceWithCurrncyUnitPromotion(float $number, string $currency, string $oldPrice)
     {
         $promos = $this->promotions;
-        $str = '';
+        $str    = '';
         foreach ($promos as $promo) {
             $newPrice = "{$promo->new_price} ";
-            $str .= "{$newPrice} <span class='old-price'>{$oldPrice}</span> {$currency} / {$this->baseUnit->name}";
+            $str      .= "{$newPrice} <span class='old-price'>{$oldPrice}</span> {$currency} / {$this->baseUnit->name}";
         }
         return $str;
     }
@@ -146,29 +235,16 @@ class Product extends Model
         return $query->whereHas('mainImages');
     }
 
-    public function orderItems():HasMany
+    public function unsubmittedOrders(): HasMany
     {
-        $orderItems = $this
-            ->hasMany(OrderItem::class, 'product_id', '1s_id')
-            ->whereNull('deleted_at')
-            ->where('sess', $_SESSION['phpSession'])//            ->get()
-        ;
-//        $oI = $orderItems->toArray();
-
-        return $orderItems;
-    }
-
-    public function orders():HasMany
-    {
+        list($field, $value) = Auth::getCartFieldValue();
         $orders = $this
-            ->hasMany(Order::class, 'product_id', '1s_id')
-            ->whereNull('deleted_at')
-            ->where('sess', $_SESSION['phpSession'])//            ->get()
-        ;
-//        $oI = $orders->toArray();
+            ->hasMany(Order::class, $field, $value)
+            ->where('submitted', '0');
 
         return $orders;
     }
+
 
     public function getBaseUnitAttribute()
     {
@@ -190,25 +266,17 @@ class Product extends Model
             ->wherePivot('is_shippable', '=', '1');
     }
 
-    public function units()
+    public function units(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this
             ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
             ->withPivot('id', 'multiplier', 'is_base', 'is_shippable')->orderByPivot('multiplier');
     }
 
-
-//    public function seo()
-//    {
-//        return $this
-//            ->hasOne(Seo::class, 'product_category_1sid', '1s_id');
-//    }
-
     public function values()
     {
         return $this->morphToMany(Val::class, 'valuable');
     }
-
 
     public function promotions()
     {
@@ -221,7 +289,6 @@ class Product extends Model
         return $this
             ->hasMany(Promotion::class, 'product_1s_id', '1s_id')
             ->where('active_till', '>=', Carbon::today()->toDateString());
-//            ->orWhereNull('active_till');
     }
 
     public function inactivePromotions()
@@ -242,9 +309,12 @@ class Product extends Model
         return $this->belongsTo(Category::class)->with('parentRecursive.properties.vals');
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class,
+            '1s_category_id',
+            '1s_id',
+        );
     }
 
     public function categories()
@@ -289,45 +359,8 @@ class Product extends Model
             'imageable',
         )->where('slug', 'bigpack');
     }
-//   public function mainImage()
-//   {
-//       $art = $this->art;
-//       $file = ROOT. '/pic/product/upload/'.$art.'.jpg';
-//       return file_exists($file);
-//   }
 
 
-//    public function dopUnits()
-//    {
-//        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-//            ->withPivot('is_shippable', 'multiplier')->wherePivotNull('is_base');
-//    }
-
-//    protected function shortLink(): Attribute
-//    {
-//        return Attribute::get(
-//            function () {
-//                $link = $this->getRawOriginal('short_link');
-//                $scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
-//                $host = $_SERVER['HTTP_HOST'] ?? '';
-//                return "{$scheme}://{$host}/short/{$link}";
-//            }
-//        );
-//    }
-    protected static function booted()
-    {
-//        static::Updating(function ($product) {
-//            $product->slug = Slug::slug($product->print_name);
-//            return $product;
-//        });
-    }
-
-//    public function save(array $options = [])
-//    {
-//        if (!$this->short_link)
-//            $this->short_link = ShortlinkService::getValidShortLink();
-//        parent::save($options);
-//    }
 }
 
 

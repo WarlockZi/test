@@ -48,7 +48,7 @@ class UnitFormView
         $list =
             Table::build($items)
                 ->pageTitle('Единицы измерения')
-                ->addButton('ajax')
+                ->addButton()
                 ->column(
                     ColumnBuilder::build('id')
                         ->width('50px')
@@ -106,7 +106,7 @@ class UnitFormView
     {
         return Table::build(Unit::all())
             ->pageTitle('Единицы измерения')
-            ->addButton('ajax')
+            ->addButton()
             ->column(
                 ColumnBuilder::build('id')
                     ->width('50px')

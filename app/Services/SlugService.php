@@ -37,19 +37,21 @@ class SlugService
         }
         return $slug;
     }
-    public static function getValidCategorySlug(Category $category): string
+
+    public static function getCategorySlug(Category $category): string
     {
-        $slug = SlugService::slug($category['print_name']);
+        $slug = SlugService::slug($category['name']);
         if (Category::where('slug', $slug)->first()) {
-            $slug = "{$slug}_{$category['s_id']}";
-            $i    = 0;
             while (Category::where('slug', $slug)->first()) {
-                $slug = "$slug" . "_" . "$i++";
+                $slug = "{$slug}_0";
+                $i    = 0;
+                $slug = "$slug" . "_" . "++$i";
             }
         }
         return $slug;
     }
-    public static function slug($str, $options = array())
+
+    public static function slug($str, $options = array()): string
     {
         $self = new self();
 

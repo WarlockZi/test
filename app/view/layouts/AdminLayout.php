@@ -6,8 +6,8 @@ use app\controller\Controller;
 use app\core\Auth;
 use app\core\FS;
 use app\core\Route;
-use app\view\Assets\AdminAssets;
-use app\view\Assets\Assets;
+use app\Services\AssetsService\AdminAssets;
+use app\Services\AssetsService\Assets;
 use app\view\Header\Admin\AdminHeader;
 use Exception;
 
@@ -38,8 +38,12 @@ class AdminLayout extends Layout
             $this->view = $view;
             $path       = dirname(__DIR__) . DIRECTORY_SEPARATOR;
         } else {
-            $this->view = 'Admin/' . $view;
+            $this->view = '/Admin/' . $view;
             $path       = dirname(__DIR__) . DIRECTORY_SEPARATOR . ucfirst($this->route->getControllerName());
+            if (!file_exists($path.$this->view.'.php')) {
+                $path =ROOT.'/app/view';
+                $this->view = 'default';
+            }
         }
         $this->viewFs = new FS($path);
     }
@@ -50,7 +54,7 @@ class AdminLayout extends Layout
         $this->content['assets']  = $this->setAssets($controller);
         $this->content['content'] = $this->prepareContent($controller->vars);
         $this->content['errors']  = $this->route->getErrorsHtml();
-        $this->content['footer']  = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
+//        $this->content['footer']  = $this->setFooter($controller->vars);
     }
 
     private function prepareContent($vars): string
@@ -65,7 +69,11 @@ class AdminLayout extends Layout
             return $this->layoutFs->getContent('default', ['errors' => $this->route->getErrors()]);
         }
     }
-
+    protected function setFooter($vars): string
+    {
+        $fs = new FS(ROOT . '/app/view/Footer');
+        return $fs->getContent('footerView',compact('vars'));
+    }
     protected function setAssets($controller): Assets
     {
         $assets = new AdminAssets();

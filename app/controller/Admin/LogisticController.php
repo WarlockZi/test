@@ -4,7 +4,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 
-class LogisticController extends AppController
+class LogisticController extends AdminscController
 {
 
 	public function __construct()

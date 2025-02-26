@@ -4,16 +4,16 @@
 
 	<div class="leads">
 		<div class="title">
-			Заказы Лидов
+			Подтвержденные заказы
 		</div>
-		 <?= $leadlist; ?>
+		 <?= $submittedTable ?>
 	</div>
 
 	<div class="clients">
 		<div class="title">
-			Заказы Клиентов
+            Неподтвержденные заказы
 		</div>
-		 <?= $clientlist; ?>
+		 <?= $unsubmittedTable; ?>
 	</div>
 
 </div>

@@ -11,10 +11,10 @@ class UserAssets extends Assets
 	{
 		parent::__construct();
 		$this->setJs('main');
-//		$this->setJs('cookie');
+//		$this->setJs('chatLocalStorage');
 
 		$this->setCss('main');
-		$this->setCss('cookie');
+		$this->setCss('chatLocalStorage');
 
 //		$this->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
 //		$this->setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");

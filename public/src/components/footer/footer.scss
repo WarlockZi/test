@@ -1,7 +1,6 @@
 @use "../../mixin_media";
 @use "../../var";
 
-
 footer {
   flex-flow: column;
   flex: 0 0 auto;
@@ -21,17 +20,20 @@ footer {
 
   .menu {
     display: flex;
-    gap: 15px;
+    gap: 65px;
     justify-content: center;
-    max-width: 700px;
+    max-width: 1310px;
     margin: 0 auto;
     padding-top: 30px;
     padding-bottom: 30px;
-    @include mixin_media.m600 {
-      gap: 0;
+
+    @include mixin_media.m900 {
+      gap: 10px;
+      flex-direction: column;
     }
 
     .column {
+
       li {
         padding: 5px;
 
@@ -69,7 +71,7 @@ footer {
     display: flex;
     justify-content: space-between;
     gap: 15px;
-    max-width: 798px;
+    max-width: 1310px;
     margin: 0 auto;
     border-top: 1px solid #7a7a7a;
     padding-top: 10px;

@@ -30,6 +30,7 @@ class SearchRepository
                     "art" => $product->art,
                     "mainImage" => $product->mainImage,
                     "slug" => $product->slug,
+                    "id"   => $product->id,
                 ];
             })->toArray();
     }

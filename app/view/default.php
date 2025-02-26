@@ -1,4 +1,3 @@
-default
 <?php
 if (isset($errors) && is_array($errors)) {
 

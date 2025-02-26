@@ -1,4 +1,5 @@
 @use './../../var';
+@use './../../mixin_media';
 
 .used-filters {
   display: flex;
@@ -33,7 +34,7 @@
   z-index: 10;
 
   &:hover {
-    transform: translate3d(-100%, 0, 0);
+    transform: translate(-100%, 0);
   }
 
   .filter-badge-title {
@@ -41,7 +42,7 @@
     align-items: center;
     position: absolute;
     left: -61px;
-    top: 23px;
+    top: 60px;
     padding: 10px;
     background-color: var.$color-main;
     transform: rotate(270deg);
@@ -66,13 +67,16 @@
     background-color: var.$color-gray-browser;
 
     .btn.filter-button {
-      align-self: center;
+      @include mixin_media.colored_button();
+      padding: 10px;
+      align-self: end;
     }
 
     .filter {
       display: flex;
       flex-direction: column;
       margin-bottom: 10px;
+      max-width: 250px;
 
       .title {
         font-size: 1rem;

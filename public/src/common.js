@@ -118,20 +118,16 @@ function getMorphUrl(model, id) {
    return `/adminsc/${model}/createOrUpdate/${id}`
 }
 
-function getFieldUrl(model, id) {
-   return `/adminsc/${model}/createOrUpdate/${id}`
-}
-
-
 function cachePage(className) {
-   let html = $(className)[0].outerHTML;
-   return trimStr(html)
+   const html = $(className).first().outerHTML;
+   // return html
+   return damn_ampersand(trimStr(html))
 }
 
-let validate = {
+const validate = {
    sort: () => {
-      let error = this.nextElementSibling;
-      let ar = this.value.match(/\D+/);
+      const error = this.nextElementSibling;
+      const ar = this.value.match(/\D+/);
       if (ar) {
          error.innerText = 'Только цифры';
          error.style.opacity = '1'
@@ -143,9 +139,9 @@ let validate = {
    },
    email: (email) => {
       if (!email) return false;
-      let text = "Неправильный формат почты";
-      let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      let res = re.test(String(email).toLowerCase());
+      const text = "Неправильный формат почты";
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const res = re.test(String(email).toLowerCase());
       if (!res) return text;
       return false
    },
@@ -163,21 +159,10 @@ let validate = {
 };
 
 
-// function up() {
-//    var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-//    if (top > 0) {
-//       window.scrollBy(0, -100);
-//       var t = setTimeout('up()', 20);
-//    }
-//    else
-//       clearTimeout(t);
-//    return false;
-// }
-
 const popup = {
 
    show: function (txt) {
-      const  popup = this.el('div','popup');
+      const popup = this.el('div', 'popup');
 
       const close = this.el('div', 'popup__close');
       close.innerText = 'X';
@@ -213,18 +198,90 @@ const popup = {
    }
 };
 
-async function get(key) {
-   let p = window.location.search;
-   p = p.match(new RegExp(key + '=([^&=]+)'));
-   return p ? p[1] : false;
-}
 
 function getPhpSession() {
    return document.querySelector('meta[name="phpSession"]').getAttribute('content')
       ?? null
 }
 
+function sanitizeInput(input) {
+   if (!input) return
+   const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      // '"': '&quot;',
+      "'": '&#39;',
+      "(": '&fp',
+      ")": '&bp',
+      "/": '&fs',
+      "\\": '&bs',
+      // ".": '&dot',
+      ";": '&sc',
+      "|": '&or',
+      "?php": '&?php',
+      "delete": '&del',
+   };
+   const reg = /[&<>'()\/\\;]/gi;
+   const sanitized = input.replace(reg, (match) => {
+      return map[match];
+   });
+   return sanitized.trim();
+}
 
+
+
+function passwordValidator(pass) {
+   const min = 6
+   const errors = []
+
+   const replacePattern = /[a-zA-Z0-9\@\-\_\.А-я]*/
+   if (!pass.length) {
+      errors.push("Поле не должно быть пустым")
+   }
+   if (pass.replace(replacePattern, '').length) {
+      errors.push("Разрешены только английские")
+   }
+   if (pass.length < min) {
+      errors.push("Длина меньше 6 символов")
+   }
+   return errors
+}
+
+function emailValidator(mail) {
+   const email = decodeURI(mail) //иначе русские буквы после @ шифруются в url
+   // const eng = '[а-яА-Я]*'
+   const min = 2
+   // const at = '@'
+   const minLengthAfterAt = '(.){2,}@(.){2,}'
+   const dot = '.'
+   const domainLength = '^(.){2,}@(.){2,}\.(.){2,}$'
+   const errors = []
+
+   const replacePattern = /[a-zA-Z0-9\@\-\_\.]*/
+   if (!email.length) {
+      errors.push("Поле не должно быть пустым")
+   }
+   if (email.replace(replacePattern, '').length) {
+      errors.push("Разрешены только английские")
+   }
+   if (email.length < min) {
+      errors.push("Длина меньше 2 символов")
+   }
+   if (!/[\@]/.test(email)) {
+      errors.push("Нет знака @")
+   }
+   if (!email.match(minLengthAfterAt)) {
+      errors.push("Меньше 2 знаков после @")
+   }
+   if (!email.includes(dot)) {
+      errors.push("Нет точки")
+   }
+   if (!email.match(domainLength)) {
+      errors.push("Меньше 2 знаков После точки")
+   }
+   return errors
+}
 
 function createEl(tagName, className = '', text = '') {
    let div = document.createElement(tagName);
@@ -261,7 +318,6 @@ class createElement {
    }
 
    html(html) {
-      debugger;
       this._html = html;
       return this
    }
@@ -301,10 +357,17 @@ const time = {
    'dMs': 60 * 60 * 24 * 1000,
 };
 
-async function post(url, data = {}) {
-   const init = setInit(url, data)
+async function del(url, data = {}, headers = {}) {
+   let p = window.location.search;
+   p = p.match(new RegExp(key + '=([^&=]+)'));
+   return p ? p[1] : false;
+}
+
+
+async function post(url, data = {}, headers = {}) {
+   const init = setPostBodyHeaders(url, data, headers)
    const res = await sendPost(url, init)
-      .catch(err=>{
+      .catch(err => {
          console.log(err)
       })
    handleResponse(res)
@@ -312,12 +375,17 @@ async function post(url, data = {}) {
    return res
 }
 
-function setInit(url, body){
+
+function isEmptyObj(obj) {
+   return !Object.keys(obj).length
+}
+
+function setPostBodyHeaders(url, body, headers) {
    body.phpSession = getPhpSession();
-   const headers = {"X-Requested-With": "XMLHttpRequest"}
+   headers = isEmptyObj(headers) ? {"X-Requested-With": "XMLHttpRequest"} : headers
    if (!(body instanceof FormData)) {
       headers["Content-Type"] = "application/x-www-form-urlencoded"
-   }else{
+   } else {
       return {
          method: 'POST',
          body: body
@@ -326,20 +394,24 @@ function setInit(url, body){
    return {
       method: 'POST',
       headers,
-      body: 'params=' + JSON.stringify(body),
+      body: 'params=' + JSON.stringify(body, null, 2),
    }
+}
+
+function damn_ampersand(str) {
+   return str.replaceAll('&', '%26');
 }
 
 function sendPost(url, init) {
    return new Promise(async (resolve, reject) => {
       const res = await fetch(url, init)
-         .then(async res=>{
+         .then(async res => {
             if (res.status === 200) {
                const data = await res.json()
                resolve(data)
             }
          })
-         .catch(err=>{
+         .catch(err => {
             console.log("Fetch error" + err.message)
             reject(err.message)
          })
@@ -536,8 +608,8 @@ function cookieExists(key) {
    return !!match
 }
 
-function setCookie(key, value, digit, unit, path = '/') {
-   let units = {
+function getCookieExpires(digit, unit) {
+   const units = {
       s: 1,
       m: 60,
       h: 60 * 60,
@@ -547,9 +619,16 @@ function setCookie(key, value, digit, unit, path = '/') {
       y: 60 * 60 * 24 * 365
    };
 
-   let date = new Date();
+   const date = new Date();
    date.setTime(date.getTime() + (digit * units.unit));
-   document.cookie = `${key}=${value}; expires=${date} path=${path}; SameSite=lax`
+   return date
+}
+
+function setCookie(key, value, digit, unit, path = '/', domain = 'vitexopt.ru', Secure = false, HttpOnly = false) {
+   const expires = getCookieExpires(digit, unit)
+   const secure = Secure ? 'Secure' : '';
+   const httpOnly = HttpOnly ? 'HttpOnly' : '';
+   document.cookie = `${key}=${value}; expires=${expires} path=${path}; SameSite=lax;${secure};${httpOnly}`
 }
 
 function slider() {
@@ -609,6 +688,10 @@ function addTooltip(args) {
 
 
 export {
+   passwordValidator,
+   // phoneValidator,
+   emailValidator,
+   sanitizeInput,
    createElement,
    time,
    scrollToTop,
@@ -616,7 +699,6 @@ export {
    setCookie,
    getCookie,
    createEl,
-
    getPhpSession,
    slider,
    cachePage,
@@ -625,7 +707,7 @@ export {
    popup,
    debounce,
    IsJson,
-   post, get,
+   post,
    validate, $,
    formatDate,
 }

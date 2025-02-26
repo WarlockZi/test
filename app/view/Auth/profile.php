@@ -1,6 +1,6 @@
-<main class="profile">
+<div class="profile">
     <div class='message'></div>
-    <?= $item; ?>
-</main>
+    <?= $item?? "Вы не зарегистрировались"; ?>
+</div>
 
 

@@ -2,7 +2,6 @@
 
 namespace app\view\share\shippable;
 
-use app\core\Auth;
 use app\core\FS;
 use app\model\Product;
 use Illuminate\Database\Eloquent\Collection;
@@ -20,7 +19,7 @@ class ShippableUnitsTable
     private bool $totalRowSum = false;
     private float $price = 0;
 
-    public function __construct(Product $product)
+    public function __construct(Product|array $product)
     {
         $this->fs           = new FS(__DIR__);
         $this->product      = $product;
@@ -49,7 +48,6 @@ class ShippableUnitsTable
         if ($this->greenButton)
             return "<div class='green-button-wrap'>{$this->greenButton}{$this->rows()}</div>";
         return $this->rows();
-
     }
 
     public function blueButton(string $text = "Добавить"): ShippableUnitsTable
@@ -83,11 +81,6 @@ class ShippableUnitsTable
             return "<div class='sub-sum' sub-sum>{$rowSum}</div>";
         }
         return '';
-    }
-
-    private function getOrders()
-    {
-        return Auth::isAuthed() ? $this->product->orders : $this->product->orderItems;
     }
 
     private function getCost(int $count, int $multiplier): string
@@ -124,7 +117,8 @@ class ShippableUnitsTable
 
     private function getCount($unit)
     {
-        $o = $this->getOrders()->filter(
+        if (!isset($this->product->orders?->orderItems)) return 0;
+        $o = $this->product->orders?->orderItems?->filter(
             function ($order) use ($unit) {
                 return $order->unit_id === $unit['id'];
             }
@@ -136,9 +130,14 @@ class ShippableUnitsTable
     {
         $subSum = 0;
         foreach ($this->units as $unit) {
-            $count      = $this->getCount($unit);
-            $multiplier = $unit->pivot->multiplier ?? 1;
-            $arr        = [
+            $count       = $this->getCount($unit);
+            $multiplier  = $unit->pivot->multiplier ?? 1;
+            $orderItem = $this->product?->order?->orderItems->filter(function ($item)use($unit){
+                return $item->unit_id === $unit['id'];
+            });
+
+            $arr         = [
+                'orderItem' => $orderItem?->first(),
                 "unit" => $unit,
                 "baseUnit" => $this->baseUnitName,
                 "count" => $count,

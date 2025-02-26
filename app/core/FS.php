@@ -35,17 +35,17 @@ class FS
             $content = ob_get_clean();
             return $content;
         } catch (\Throwable $exception){
-           $callerClass = debug_backtrace()[2]['file']." (line ".debug_backtrace()[2]['line'].")";
-           $callerClass1 = debug_backtrace()[3]['file']." (line ".debug_backtrace()[3]['line'].")";
-           $callerMethod = debug_backtrace()[2]['function'];
-           $callerMethod1 = debug_backtrace()[3]['function'];
             $content = ob_get_clean();
-            if ($_ENV['DEV']==='1'){
-                return date('y-m-d, h:m:s').PHP_EOL.'<br><br>'.
-                   "class {$callerClass}".PHP_EOL.'<br><br>'.
-                   "class {$callerClass1}".PHP_EOL.'<br><br>'.
-                   "method {$callerMethod}".PHP_EOL.'<br><br>'.
-                   "method {$callerMethod1}".PHP_EOL.'<br><br>'.
+            if (DEV){
+           $callerClass = debug_backtrace()[2]['file']." (line ".debug_backtrace()[2]['line'].")";
+           $callerMethod = debug_backtrace()[2]['function'];
+           $callerClass1 = debug_backtrace()[3]['file']." (line ".debug_backtrace()[3]['line'].")";
+           $callerMethod1 = debug_backtrace()[3]['function'];
+                return date('y-m-d, h:m:s').PHP_EOL.'<br><br>' .
+                    "class {$callerClass}" . PHP_EOL . '<br><br>' .
+                    "class {$callerClass1}" . PHP_EOL . '<br><br>' .
+                    "method {$callerMethod}" . PHP_EOL . '<br><br>' .
+                    "method {$callerMethod1}" . PHP_EOL . '<br><br>'.
                    $exception;
             }
             $this->errorLogger->write($exception);

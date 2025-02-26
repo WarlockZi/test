@@ -1,11 +1,10 @@
-import './WDSSelect.scss'
+import './selectNew.scss'
 
-import {createElement} from "../../common";
+import {$, createElement} from "../../common";
 
-export default class Select {
-
+export default class SelectNew {
    constructor(el) {
-      if (!el) return;
+      if (!el | !$(el).find('option')) return;
 
       this.ul = (new createElement()).tag("ul").attr('class', "options").get();
       this.label = (new createElement()).tag("span").get();
@@ -33,12 +32,6 @@ export default class Select {
    }
 
    getFormattedOptions(options) {
-      // this.options.forEach(option => {
-      //    // li.onclick = ({target}) => {
-      //    //   select.selectValue(option.value);
-      //    //   select.ul.classList.remove("show");
-      //    // };
-      // });
       return [...options].map(option => {
          const li = (new createElement()).tag("li").text(option.label).attr('data-value', option.value).get();
          if (option.selected) li.classList.add("selected");
@@ -55,18 +48,25 @@ export default class Select {
    }
 
    createSelectTag(el) {
-      const selectTag = (new createElement())
+      const selectTag = this.setSelectTag(el)
+      if (el.hasAttribute('data-field')) selectTag.attr('data-field', el.dataset.field)
+      if (el.hasAttribute('name')) selectTag.attr('name', el.name)
+      if (el.hasAttribute('data-relation')) selectTag.attr('data-relation', el.dataset.relation)
+      if (el.hasAttribute('data-pivot')) selectTag.attr('data-pivot', el.dataset.pivot)
+      if (el.firstElementChild.hasAttribute('data-relation')) selectTag.attr('data-relation', el.firstChild.dataset.relation)
+      if (el.firstElementChild.hasAttribute('data-relationmodel')) selectTag.attr('data-relationmodel', el.firstChild.dataset.relationmodel)
+
+      return selectTag.get();
+   }
+
+   setSelectTag(el) {
+      return (new createElement())
          .tag("div")
          .className(el?.className)
          .field(el.dataset.field)
          .attr("select-new", '')
          .attr("data-value", this?.selectedOption?.value ?? '')
          .attr('tabindex', '0')
-      if (el.hasAttribute('data-field')) selectTag.attr('data-field', el.dataset.field)
-      if (el.firstChild.hasAttribute('data-relation')) selectTag.attr('data-relation', el.firstChild.dataset.relation)
-      if (el.firstChild.hasAttribute('data-relationmodel')) selectTag.attr('data-relationmodel', el.firstChild.dataset.relationmodel)
-
-      return selectTag.get();
    }
 
    handleSelectBlur() {

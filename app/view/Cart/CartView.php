@@ -27,8 +27,6 @@ class CartView
         return 'цена - не определена';
     }
 
-
-
     protected static function getOptions(Unit $unit, int $selecedId): string
     {
         $id         = $unit->id;
@@ -38,22 +36,4 @@ class CartView
         $html       = "<option data-multiplier='{$multiplier}' data-id='{$id}' {$seleced}>{$name}</option>";
 
         return $html;
-    }
-    //    public static function shippableUnitsSelector(Product $product, int $selectedId): string
-//    {
-//        $options = '';
-//        if ($product->shippableUnits()->count()) {
-//            foreach ($product->shippableUnits as $unit) {
-//                $options .= self::getOptions($unit, $selectedId);
-//            }
-//        } else {
-//            $options .= self::getOptions($product->baseUnit, $selectedId);
-//        }
-//        return "<select class='units' data-unitSelector>{$options}</select>";
-//    }
-//    public static function cartTable(Product $product): string
-//    {
-//        $cartView = new self();
-//        return $cartView->fs->getContent('cartTable', compact('product'));
-//    }
-}
+    }}
