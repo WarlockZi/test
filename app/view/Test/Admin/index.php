@@ -6,9 +6,14 @@
         <hr/>
         <a href="<?= '/adminsc/test/do' ?>">Проходить тесты</a>
 
-       <? foreach ($tests as $test): ?>
-           <a href="/adminsc/test/do/<?= $test->id ?>"><?= $test->name; ?></a>
-       <? endforeach; ?>
+        <ul>
+
+            <? foreach ($tests as $test): ?>
+                <li>
+                    <a href="/adminsc/test/do/<?= $test->id ?>"><?= $test->name; ?></a>
+                </li>
+            <? endforeach; ?>
+        </ul>
 
     </div>
 </section>

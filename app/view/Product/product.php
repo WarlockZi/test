@@ -1,5 +1,5 @@
 <?php
-if ($product): ?>
+if (!empty($product)): ?>
 
     <?php if ($product->deleted_at): ?>
         <div class="deleted-overlay">
@@ -20,11 +20,13 @@ if ($product): ?>
             <? include 'card/toCart.php' ?>
         </div>
 
-
-
         <div class="info-wrap">
-            <div class="info-tag">Характеристики</div>
+            <div class="info-tag">Информация о товаре</div>
             <div class="properties">
+                <h2><?=$product->seo_h1()?></h2>
+
+                <div id="seo-article"><?=$product->seo_article()?></div>
+
                 <?php foreach ($product->values as $value): ?>
                     <?php include __DIR__ . '/property.php'; ?>
                 <?php endforeach; ?>
@@ -32,11 +34,12 @@ if ($product): ?>
         </div>
 
         <div class="info-wrap">
-            <div class="info-tag">Информация о товаре</div>
-            <article class="detail-text">
-                <?= $product['txt']; ?>
-            </article>
+            <div class="info-tag">Характеристики</div>
+
+            <article id="detail-text"><?= $product->txt; ?></article>
         </div>
+
+
 
         <?php //include __DIR__.'/card/olsoLike.php'?>
         <?php //include __DIR__.'/card/rating.php'?>

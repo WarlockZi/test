@@ -8,7 +8,7 @@ use app\core\Route;
 class UserView extends View
 {
     protected string $layout = "/layouts/vitex";
-    protected static string $noViewError = ROOT . '/app/view/404/index.php';
+    protected static string $noViewError = ROOT . '/app/view/404/del_index.php';
 
     public function __construct(Route $route)
     {

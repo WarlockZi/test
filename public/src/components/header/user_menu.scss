@@ -22,7 +22,7 @@
     margin: 0 6px;
     width: 44px;
     @include mixin_media.m600 {
-      width: 30px;
+      width: clamp(1rem, 11vw, 2rem);
     }
   }
 
@@ -75,29 +75,31 @@
       }
     }
   }
-
 }
-
 
 .guest-menu {
   position: relative;
   display: flex;
   align-items: center;
-  font-size: 17px;
   cursor: pointer;
   color: #2b303a;
   flex: 0 1 auto;
   border: 1px solid grey;
-  border-radius: 0px;
-  padding: 5px 15px;
+  border-radius: 0;
   z-index: 2;
-  @include mixin_media.m500 {
-    padding: 3px 10px;
-  }
+  max-height: 36px;
+  padding: clamp(3px, 2vw, 7px) clamp(3px, 2vw, 15px);
+  font-size: clamp(10px, 10vw, 17px);
+  margin: 5px 2px 5px 0;
 
   svg {
-    width: 17px;
-    padding-right: 10px;
+    height: clamp(8px, 4vw, 17px);
+    width: clamp(10px, 4vw, 17px);
+    padding-right: clamp(5px, 2vw, 10px);
+  }
+
+  span {
+    font-size: clamp(10px, 5vw, 17px);
   }
 
   .guest-menu__menu {
@@ -123,6 +125,8 @@
         display: inline-block;
         padding: 10px 15px;
         color: var.$color-a;
+        width: 100%;
+        box-sizing: border-box;
       }
     }
   }
@@ -138,7 +142,7 @@
   @include mixin_media.m600 {
     display: flex;
     color: white;
-    margin-right: 20px;
+    margin-right: clamp(.01rem, 1vw, 1.5rem);
   }
 
   .user-menu {

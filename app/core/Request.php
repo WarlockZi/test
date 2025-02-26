@@ -16,7 +16,7 @@ class Request
          $textrequest = '';
       }
       // Очищаем опасные запросы
-      if (preg_match("/[^(\w)=.,@:;\s]/", $textrequest)) {
+      if (preg_match("/[=,:;\s]/", $textrequest)) {
          $textrequest = '';
       }
       return $textrequest;

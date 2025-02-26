@@ -2,31 +2,51 @@
 
 <nav class="menu">
     <div class="header-catalog-menu">
-        <? include 'searchPanel.php' ?>
+        <? include 'search_panel.php' ?>
         <div class="header-catalog-menu__wrap">
             <? include 'categories.php' ?>
 
             <ul class="utils">
 
-                <a href="/catalog" class="util-item catalog" title="Каталог">
-                    <?= Icon::catalog() ?>
-                </a>
+                <li>
+                    <a href="/catalog" class="util-item catalog" title="Каталог">
+                        <?= Icon::catalog() ?>
+                    </a>
+                </li>
+
+                <li>
+                    <button class="util-item search" title="Поиск">
+                        <?= Icon::search('feather'); ?>
+                    </button>
+                </li>
 
 
-                <button class="util-item search" title="Поиск">
-                    <?= Icon::search('feather'); ?>
-                </button>
+                <li>
+                    <a href="/cart" class="util-item cart-link" title="Корзина">
 
-                <a href="/cart" class="util-item cart" title="Корзина">
-                    <div class="count<?= $oItems->count() ? ' show' : ''; ?>"><?= $oItems->count(); ?></div>
-                    <?= Icon::shoppingCart('feather') ?>
-                </a>
+                        <? if ($oItemsCount): ?>
+                            <div class="count show"><?= $oItemsCount; ?></div>
+                        <? endif; ?>
 
-                <a href="/promotion" class="util-item promotions" title="Акции">
-                    <?= Icon::promotions() ?>
-                </a>
+                        <?= Icon::shoppingCart('feather') ?>
+                    </a>
+                </li>
 
-                <? include 'mobileMenu.php' ?>
+
+                <li>
+                    <a href="/compare/page" class="util-item compare" title="Сравнить товары">
+                        <?= Icon::chart() ?>
+                    </a>
+                </li>
+                <li>
+                    <a href="/like/page" class="util-item like" title="Избранное">
+                        <?= Icon::heart() ?>
+                    </a>
+                </li>
+
+                <li>
+                    <? include 'mobile_menu.php' ?>
+                </li>
             </ul>
 
         </div>

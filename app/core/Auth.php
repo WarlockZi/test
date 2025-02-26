@@ -3,45 +3,59 @@
 namespace app\core;
 
 use app\model\User;
+use app\model\UserYandex;
 
 class Auth
 {
-    protected static User|null $user = null;
+    protected static IUser|null $user = null;
     protected static Auth $instance;
-    protected function __construct(){}
-    protected function __clone(){}
-    public function __wakeup(){
+    protected static string $cartId;
+
+    protected function __construct()
+    {
+    }
+
+    protected function __clone()
+    {
+    }
+
+    public function __wakeup()
+    {
         throw new \Exception("Cannot unserialize a singleton.");
     }
 
-    public static function getInstance(): self
+    public static function validatePphSession(array $req): bool
     {
-        $cls = static::class;
-        if (!isset(self::$instance[$cls])) {
-            self::$instance[$cls] = new static();
-        }
-        return self::$instance[$cls];
+        return !empty($req['phpSession']
+            && $_SESSION['phpSession'] === $req['phpSession']);
     }
 
-
-    public static function hasPphSession(array $req): bool
-    {
-        if ($req && isset($req['phpSession']) && $req['phpSession'] && $_SESSION['phpSession'] === $req['phpSession']) {
-            unset($req['phpSession']);
-            return true;
-        }
-        return false;
-    }
-
-    public static function getUser(): User|null
+    public static function getUser(): IUser|null
     {
         return self::$user ?? self::auth();
     }
 
-    private static function auth(): User|null
+    public static function setCartId(string $cartId): void
     {
-        if (isset($_SESSION['id']) && $_SESSION['id']) {
-            self::$user = User::find($_SESSION['id']);
+        self::$cartId = $cartId;
+    }
+
+    public static function getCartFieldValue(): array
+    {
+        $user  = Auth::getUser();
+        $field = $user ? 'user_id' : 'loc_storage_cart_id';
+        $value = $user ? $user->id : $_COOKIE['loc_storage_cart_id'] ?? NULL;
+        return [$field, $value];
+    }
+
+    private static function auth(): IUser|null
+    {
+        if (!empty($_SESSION['id'])) {
+            self::$user = User::with('role')->find($_SESSION['id']);
+            return self::$user;
+        }
+        if (isset($_SESSION['yandex_id']) && $_SESSION['yandex_id']) {
+            self::$user = UserYandex::with('role')->find($_SESSION['yandex_id']);
             return self::$user;
         }
         return null;
@@ -49,67 +63,47 @@ class Auth
 
     public static function isSU(): bool
     {
-        $envEmail = $_ENV['SU_EMAIL'];
-        $userEmail = self::$user['email'];
-        return $envEmail===$userEmail;
+        return env('SU_EMAIL') === self::$user['email'];
     }
 
-    public static function isOlya(): bool
+    public static function setAuth(IUser $user): void
     {
-        return 'vitex018@yandex.ru' === Auth::getUser()['email'];
+        if ($user instanceof User) {
+            $_SESSION['id'] = $user->getId();
+        } elseif ($user instanceof UserYandex) {
+            $_SESSION['yandex_id'] = $user->getId();
+        }
     }
 
-    public static function setAuth(User $user): void
-    {
-        $_SESSION['id'] = $user->id;
-    }
-
-    public static function setUser(User $mockuser): void
+    public static function setUser(IUser $mockuser): void
     {
         self::$user = $mockuser;
     }
+
     public static function userIsAdmin(): bool
     {
-        return self::$user && self::$user->can(['role_admin']);
+        return self::$user && self::$user->isAdmin();
     }
 
-    public static function isAuthed(): bool
+    public static function userIsEmployee(): bool
     {
-        return !!self::getUser();
+        return self::$user && self::$user->isEmployee();
     }
 
-    public static function authorize(Route $route): User|null
+    public static function authorize(Route $route): void
     {
-        if (AuthValidator::needsNoAuth($route)) {
-            return null;//no user
-        }
-
         $user = self::getUser();
-        if (!$user) {
-            header("Location:/auth/login");
-            exit();
-        }
 
-        self::setAuth($user);
-        if (!$user['confirm'] == "1") {
-            $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
-            header("Location:/auth/noconfirm");
-            exit();
-        }
+        if (!$user) return;
 
-        if ($user['email'] === $_ENV['SU_EMAIL']) {
-            define('SU', true);
+        if ($user instanceof User) {
+            define('SU', $user->mail() === env('SU_EMAIL'));
+            if ($user['confirm'] == 0) {
+                $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
+            }
         }
-        return $user;
     }
 
-//    public static function getAuth(): User|null
-//    {
-//        if (!isset($_SESSION['id']) || $_SESSION['id']) return null;
-//        $user = User::find($_SESSION['id']);
-//
-//        self::$user = $user ?? null;
-//        return $user;
-//    }
+
 }
 

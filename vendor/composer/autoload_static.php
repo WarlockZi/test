@@ -32,6 +32,11 @@ class ComposerStaticInit91999aaa44b9ba3d130847ce23721506
         array (
             'app\\' => 4,
         ),
+        'W' => 
+        array (
+            'WSSC\\' => 5,
+            'WSSCTEST\\' => 9,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
@@ -49,11 +54,16 @@ class ComposerStaticInit91999aaa44b9ba3d130847ce23721506
         'P' => 
         array (
             'Psr\\SimpleCache\\' => 16,
+            'Psr\\Log\\' => 8,
             'Psr\\Container\\' => 14,
             'Psr\\Clock\\' => 10,
             'PhpParser\\' => 10,
             'PhpOption\\' => 10,
             'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
         ),
         'I' => 
         array (
@@ -90,6 +100,14 @@ class ComposerStaticInit91999aaa44b9ba3d130847ce23721506
         'app\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
+        ),
+        'WSSC\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/arthurkushman/php-wss/src',
+        ),
+        'WSSCTEST\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/arthurkushman/php-wss/tests',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -139,6 +157,10 @@ class ComposerStaticInit91999aaa44b9ba3d130847ce23721506
         array (
             0 => __DIR__ . '/..' . '/psr/simple-cache/src',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/src',
+        ),
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
@@ -158,6 +180,10 @@ class ComposerStaticInit91999aaa44b9ba3d130847ce23721506
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'Illuminate\\Support\\' => 
         array (

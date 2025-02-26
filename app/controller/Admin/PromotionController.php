@@ -7,7 +7,7 @@ use app\core\Response;
 use app\model\Promotion;
 use app\view\Promotion\PromotionFormView;
 
-class PromotionController Extends AppController
+class PromotionController Extends AdminscController
 {
 	public string $model = Promotion::class;
 
@@ -16,8 +16,8 @@ class PromotionController Extends AppController
 		parent::__construct();
 	}
 
-	public function actionEdit()
-	{
+	public function actionEdit(): void
+    {
 		$id = $this->route->id;
 		$promotion = Promotion::with('product')->firstOrCreate(['id'=>$id]);
 		$promotion = PromotionFormView::edit($promotion);
@@ -25,9 +25,9 @@ class PromotionController Extends AppController
 	}
 	public function actionIndex():void
 	{
-		$promotions = Promotion::with('product')->get();
-		$promotions = PromotionFormView::adminIndex($promotions);
-		$this->setVars(compact('promotions'));
+		$promotions = Promotion::with('product','unit')->get();
+		$content = PromotionFormView::adminIndex($promotions);
+		$this->setVars(compact('content'));
 	}
     public function actionUpdateOrCreate(): void
     {
@@ -39,7 +39,7 @@ class PromotionController Extends AppController
             $promotion = Promotion::with($relation)->find($id);
 
             $created = $promotion->$relation()->create();
-            Response::exitJson(['popup' => 'Создан', 'id' => $created->id]);
+            Response::json(['popup' => 'Создан', 'id' => $created->id]);
         }
 
         $promotion = Promotion::updateOrCreate(
@@ -48,11 +48,11 @@ class PromotionController Extends AppController
         );
 
         if ($promotion->wasRecentlyCreated) {
-            Response::exitJson(['popup' => 'Создан', 'id' => $promotion->id]);
+            Response::json(['popup' => 'Создан', 'id' => $promotion->id]);
         } else {
-            Response::exitJson(['popup' => 'Обновлен', 'model' => $promotion->toArray()]);
+            Response::json(['popup' => 'Обновлен', 'model' => $promotion->toArray()]);
         }
-        Response::exitWithError('Ошибка');
+        Response::json(['error' => 'Ошибка']);
 
     }
 }

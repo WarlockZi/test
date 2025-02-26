@@ -8,7 +8,7 @@ use app\core\Route;
 use app\model\Videoinstruction;
 use app\view\Videoinstruction\VideoinstructionView;
 
-class VideoinstructionController Extends AppController
+class VideoinstructionController Extends AdminscController
 {
 
 	protected string $model = Videoinstruction::class;

@@ -2,12 +2,11 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
 use app\core\Auth;
 use app\model\Todo;
 use app\view\Planning\PlanningView;
 
-class PlanningController Extends AppController
+class PlanningController Extends AdminscController
 {
 	public $modelName = Todo::class;
 	public string $model = 'todo';

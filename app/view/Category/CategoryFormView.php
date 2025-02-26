@@ -24,37 +24,60 @@ use Throwable;
 
 class CategoryFormView
 {
+    public static function sitemap()
+    {
+        $cat = CategoryRepository::treeAll()->toArray();
+        $uls = '';
+        foreach ($cat as $item) {
+            $sti = self::mapCategories($item);
+            $uls .= $sti;
+        }
+        $ul = "<ul>{$uls}</ul>";
+        echo($ul);
+
+    }
+
+    protected static function mapCategories(array $cat, string $string = ''): string
+    {
+        foreach ($cat as $item) {
+            $string .= $cat['name'] . "<br>";
+            if ($cat['children_recursive']) {
+                self::mapCategories($cat['children_recursive'], $string);
+            } else {
+                $string .= $cat['name'] . "<br>";
+            }
+        }
+        return $string;
+    }
+
+
     public static function edit(Category $category): string
     {
         try {
             return ItemBuilder::build($category, 'category')
                 ->pageTitle('Категория :  ' . $category->name)
                 ->field(
-                    ItemFieldBuilder::build('id', $category)
-                        ->name('ID')
-                        ->get()
-                )
-                ->field(
                     ItemFieldBuilder::build('slug', $category)
                         ->name('Адрес')
                         ->html(
-                            "<a href='$category->href}'>{$category->href}</a>"
+                            "<a href='$category->href'>{$category->href}</a>"
                         )
                         ->get()
                 )
                 ->field(
                     ItemFieldBuilder::build('name', $category)
                         ->name('Наименование в 1c')
-                        ->contenteditable()
+//                        ->contenteditable()
                         ->required()
                         ->get()
                 )
+
                 ->field(
                     ItemFieldBuilder::build('show_front', $category)
                         ->name('Показывать на главоной')
                         ->html(
-                            CheckboxBuilder::build('show_front',
-                                $category->show_front)
+                            CheckboxBuilder::build()
+                                ->field('show_front',$category->show_front)
                                 ->get()
                         )
                         ->get()
@@ -63,8 +86,13 @@ class CategoryFormView
                     ItemFieldBuilder::build('category_id', $category)
                         ->name('Принадлежит')
                         ->html(
-                            self::categorySelector($category)
+                            self::selectorByField(['1s_category_id'=>$category['1s_category_id']])
                         )
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('id', $category)
+                        ->name('ID')
                         ->get()
                 )
                 ->tab(
@@ -111,7 +139,7 @@ class CategoryFormView
                                 ->relation('childrenDeleted', 'category')
                                 ->edit()
                                 ->del()
-                                ->addButton('ajax')
+                                ->addButton()
                                 ->get()
                         )
                 )
@@ -122,13 +150,72 @@ class CategoryFormView
                         )
 
                 )
-                ->toList('adminsc/category/table', 'К списку категорий')
+                ->toList('adminsc/category', 'К списку категорий')
                 ->get();
         } catch (Throwable $exception) {
             return $exception;
         }
+    }
+
+    public static function selector(int $selected = 0, int $excluded = -1): string
+    {
+        return SelectBuilder::build(
+            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
+                ->initialOption()
+                ->selected($selected)
+                ->excluded($excluded)
+                ->get()
+        )
+            ->field('category_id')
+            ->class('categories')
+            ->get();
+    }
+    public static function categorySelector(Category $category): string
+    {
+        $tree1 = TreeOptionsBuilder::build(
+            CategoryRepository::treeAll(),
+            'children_recursive', 2)
+            ->initialOption()
+            ->selected($category['1s_category_id'])
+            ->excluded($category->id)
+            ->get();
+
+        return SelectBuilder::build(
+            $tree1
+        )
+            ->field('category_id')
+            ->get();
 
     }
+
+    public static function selectorByField(array $selected, int $excluded = -1): string
+    {
+        return SelectBuilder::build(
+            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
+                ->initialOption()
+                ->selectedByField($selected)
+                ->excluded($excluded)
+                ->get()
+        )
+            ->field('category_id')
+            ->class('categories')
+            ->get();
+    }
+    public static function productFilterSelector(array $req): string
+    {
+        $selected = $req['category'] ?? 0;
+        return SelectBuilder::build(
+            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
+                ->initialOption()
+                ->selected($selected)
+                ->get()
+        )
+            ->field('category_id')
+            ->name('category')
+            ->class('categories')
+            ->get();
+    }
+
     public static function getChildCategories(Category $category): ItemTabBuilder
     {
         return ItemTabBuilder::build('Подкатегории')
@@ -149,10 +236,11 @@ class CategoryFormView
                     ->relation('childrenNotDeleted', 'category')
                     ->edit()
                     ->del()
-                    ->addButton('ajax')
+                    ->addButton()
                     ->get()
             );
     }
+
     protected static function getSeo(CategoryProperty|null $categoryProperty): string
     {
         if (!$categoryProperty) return '';
@@ -168,27 +256,40 @@ class CategoryFormView
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_keywords', $categoryProperty)
-                ->name('Key words')
+                ->name('Список запросов')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_h1', $categoryProperty)
-                ->name('h1')
+                ->name('H 1')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
-            ItemFieldBuilder::build('seo_article', $categoryProperty)
-                ->name('Seo article')
-                ->contenteditable()
-                ->relation('ownProperties')
-                ->get()->toHtml('product') .
+//            ItemFieldBuilder::build('seo_h2', $categoryProperty)
+//                ->name('H 2')
+//                ->contenteditable()
+//                ->relation('ownProperties')
+//                ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_path', $categoryProperty)
                 ->name('Path')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
+            ItemFieldBuilder::build('seo_article', $categoryProperty)
+                ->name('Seo article')
+                ->html(self::getSeoArticle($categoryProperty))
+                ->id('seo-article')
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
             "</div>";
 
+    }
+
+    public static function getSeoArticle($categoryProperty): string
+    {
+        ob_start();
+        include __DIR__ . '/Admin/seoArticle.php';
+        return ob_get_clean();
     }
 
     protected static function getProducts(Category $category): string
@@ -196,7 +297,7 @@ class CategoryFormView
         return Table::build($category['products'])
             ->pageTitle('Товары категории')
             ->relation('products', 'product')
-            ->addButton('ajax')
+            ->addButton()
             ->column(
                 ColumnBuilder::build('id')
                     ->width("40px")
@@ -218,29 +319,12 @@ class CategoryFormView
             ->del()
             ->get();
     }
-    protected static function categorySelector(Category $category): string
-    {
-        return SelectBuilder::build(
-            TreeOptionsBuilder::build(
-                CategoryRepository::treeAll(),
-                'children_recursive', 2)
-                ->initialOption()
-                ->selected($category->category_id)
-                ->excluded($category->id)
-                ->get()
-        )
-//            ->relation('ownProperties', 'ownProperties')
 
-            ->field('category_id')
-            ->get();
-
-    }
 
     public static function properties(Collection $properties): string
     {
         $content = Table::build($properties)
             ->pageTitle('Св-ва категории')
-//            ->model('property')
             ->relation('properties', 'property')
             ->column(
                 ColumnBuilder::build('name')
@@ -249,7 +333,7 @@ class CategoryFormView
                     ->get()
             )
             ->edit()
-            ->addButton('ajax')
+            ->addButton()
             ->get();
 
         return $content;
@@ -262,6 +346,5 @@ class CategoryFormView
             ->href('/adminsc/category/edit/')
             ->get();
         return "<ul class='category-tree'>" . $tree . "</ul>";
-
     }
 }

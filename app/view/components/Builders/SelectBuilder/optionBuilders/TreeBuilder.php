@@ -15,17 +15,18 @@ abstract class TreeBuilder
     protected string $tab;
     protected array $arr;
 
-    protected $selected = null;
+    protected int|string|null $selected = null;
+    protected string $selectedField;
+
     protected $excluded = null;
     protected $localtab;
 
     protected $initialOption;
-    protected array $flatArray = [];
 
-    public function __construct(Collection $collection, string $relation, int $multiply = 1, string $tab = '&nbsp;')
+    public function __construct(Collection $items, string $relation, int $multiply = 1, string $tab = '&nbsp;')
     {
-        $this->arr      = $collection->toArray();
-        $this->items    = $collection;
+        $this->items      = $items;
+        $this->arr      = $items->toArray();
         $this->relation = $relation;
         $this->multiply = $multiply;
         $this->tab      = $tab;
@@ -34,12 +35,19 @@ abstract class TreeBuilder
     }
 
 
-    public function selected(?int $selected):self
+    public function selected(int|string $selected, string $field = 'id'):self
     {
         $this->selected = $selected;
+        $this->selectedField = $field;
         return $this;
     }
-
+    public function selectedByField(array $selected):self
+    {
+        $key =  array_keys($selected)[0];
+        $this->selectedField = $key;
+        $this->selectedValue = $selected[$key];
+        return $this;
+    }
     public function excluded($excluded):self
     {
         $this->excluded = $excluded;
@@ -48,9 +56,13 @@ abstract class TreeBuilder
 
     protected function validateFormat():void
     {
-        $first = $this->arr[0];
-        if (!isset($first['id']) || !isset($first['name'])) Error::setError('no name or id');
-        if (!isset($first[$this->relation])) Error::setError('no relation');
+        try {
+            $first = @$this->arr[0];
+            if (!isset($first['id']) || !isset($first['name'])) Error::setError('no name or id');
+            if (!isset($first[$this->relation])) Error::setError('no relation');
+        }catch (\Throwable $exception){
+            $exception->getMessage();
+        }
     }
     public function get(): string
     {

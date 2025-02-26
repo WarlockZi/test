@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html>
-<!--ADMIN-LAYOUT-->
+<html lang="ru">
+<!--ADMI N-LAYOUT-->
 <head>
     <meta name="phpSession" content="<?= $_SESSION['phpSession'] ?? ''; ?>">
     <meta name="robots" content="noindex,nofollow"/>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/logo-square.svg" type="image/svg+xml">
 
-    <?= $assets->getCss() ?>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/assets/srvc/<?= DEV ? "logo-square-dev.svg" : "logo-square.svg" ?>" type="image/svg+xml">
+    <script type="module" src="https://localhost:5173/@vite/client"></script>
+    <script type="module" src="https://localhost:5173/Admin/admin.js"></script>
+<!--    --><?php //= $assets->getCss() ?>
 
 </head>
 
-<body>
+<body class="preload">
 
 <div class="admin-layout">
 
@@ -30,7 +32,7 @@
 <!--    <div class="led"></div>-->
 </div>
 
-<?= $footer; ?>
+<?php //= $footer; ?>
 
 <?= $assets->getJs() ?>
 

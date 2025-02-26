@@ -1,3 +1,4 @@
+
 <?php foreach ($front_categories as $category): ?>
 
     <div class='h-cat'><?= $category->name; ?>

@@ -8,31 +8,15 @@ class Response
         private int $status = 200,
         private string $view = 'index',
         $fs  = new FS(ROOT.'/app/view')
-
     )
     {
     }
+//
 
-    public function view(string $file, array $data = [], int $status=200): string
-    {
-        $layout = Auth::userIsAdmin() ? $this->layout : 'app\view\layouts\UserLayout';
-        $layout = new $layout($this->route, $this);
-        $layout->render();
-        exit();
-    }
-    public static function notFound(string $file = '', array $data = [], int $status=200): string
-    {
-//        $this->assets->setMeta('Страница не найдена');
-//            http_response_code(404);
-//        $layout = Auth::userIsAdmin() ? $this->layout : 'app\view\layouts\UserLayout';
-        $layout = new $layout($this->route, $this);
-        $layout->render();
-        exit();
-    }
-
-    public static function exitJson(array $arr = []): void
+    public static function json(array $arr = []): void
     {
         if ($arr) {
+            header('Content-Type: application/json');
             exit(json_encode(['arr' => $arr]));
         }
     }
@@ -44,34 +28,21 @@ class Response
         }
         exit();
     }
-
-    public static function dbResponse(): void
-    {
-
-    }
-
-    public static function exitWithMsg(string $msg): void
-    {
-        if ($msg) {
-            exit(json_encode(['msg' => $msg]));
-        }
-        exit();
-    }
-
-    public static function exitWithSuccess(string $msg): void
-    {
-        if ($msg) {
-            exit(json_encode(['success' => $msg]));
-        }
-        exit();
-    }
-
-    public static function exitWithError(string $msg): void
-    {
-        if ($msg) {
-            exit(json_encode(['error' => $msg]));
-        }
-        exit();
-    }
+//    public function response(string|array $response, $status = 200)
+//    {
+//        http_response_code($status);
+//        if (is_array($response)) {
+//            self::json($response);
+//        }
+//        exit($response);
+//    }
+//
+//    public function view(string $file, array $data = [], int $status=200): string
+//    {
+//        $layout = Auth::userIsAdmin() ? $this->layout : 'app\view\layouts\UserLayout';
+//        $layout = new $layout($this->route, $this);
+//        $layout->render();
+//        exit();
+//    }
 
 }

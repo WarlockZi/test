@@ -9,19 +9,19 @@ use app\model\User;
 use app\view\View;
 
 
-class CrmController extends AppController
+class CrmController extends AdminscController
 {
 
 	public function __construct()
 	{
 		parent::__construct();
 
-		if (!Auth::getUser()->isEmployee()){
+		if (!Auth::userIsEmployee()){
 			header('Location:/auth/profile');
 		}
 	}
-	public function actionClearCache()
-	{
+	public function actionClearCache(): void
+    {
 		$path = ROOT . "/tmp/cache/*.txt";
 		array_map("unlink", glob($path));
 		exit('Успешно');
@@ -33,10 +33,8 @@ class CrmController extends AppController
 		$this->setVars(compact('types'));
 	}
 
-	public function actionSiteMap()
-	{
-		$iniCatList = App::$app->category->getInitCategories();
-		$this->setVars(compact('iniCatList'));
+	public function actionSiteMap(): void
+    {
 	}
 
 
@@ -55,8 +53,8 @@ class CrmController extends AppController
 	{
 	}
 
-	public function actionPics()
-	{
+	public function actionPics(): void
+    {
 		$pics = App::$app->adminsc->findAll('pic');
 		$this->setVars(compact('pics'));
 	}

@@ -12,19 +12,16 @@ use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use app\view\components\Builders\TableBuilder\TableHeader\TableHeader;
-use app\view\components\CustomSelect\CustomSelect;
 use Illuminate\Database\Eloquent\Collection;
 
 
 class OrderView
 {
-
     public $model = Order::class;
     public $html;
     public static function orderItemEdit(Collection $items): string
     {
         $users = User::all();
-//        $users = User::whereIn([160,167])->get();
         return Table::build($items)
             ->header(
                 TableHeader::build()
@@ -62,15 +59,14 @@ class OrderView
                     ->name('Единица')
                     ->width('60px')
                     ->get())
-//            ->edit()
             ->get();
     }
 
 
-    public static function leadList($items): string
+    public static function table($items): string
     {
-        $list = Table::build($items)
-            ->model('orderitem')
+        $table = Table::build($items)
+            ->model('order')
             ->column(
                 ColumnBuilder::build('id')
                     ->name('ID')
@@ -83,35 +79,22 @@ class OrderView
                     ->search()
                     ->width('1fr')
                     ->get())
-            ->edit()
-            ->get();
-        return $list;
-    }
-
-    public static function clientList($items): string
-    {
-        return Table::build($items)
-            ->model('order')
             ->column(
-                ColumnBuilder::build('id')
-                    ->name('ID')
-                    ->get())
-            ->column(
-                ColumnBuilder::build('user')
+                ColumnBuilder::build('created_at')
                     ->class('left')
-                    ->callback(fn(User $user)=>(string)$user->email)
-                    ->name('Клиент')
+                    ->name('Дата')
                     ->search()
-                    ->width('1fr')
+                    ->width('150px')
                     ->get())
             ->edit()
-            ->addButton('ajax')
             ->get();
+        return $table;
     }
 
-    public static function editOrder(Collection $orders): string
+
+    public static function editOrder(Order $order): string
     {
-        return Table::build($orders)
+        return Table::build($order->products)
             ->model('order')
             ->pageTitle('Заказ')
             ->column(
@@ -122,67 +105,34 @@ class OrderView
             ->column(
                 ColumnBuilder::build('Товар')
                     ->class('left')
-                    ->callback(fn($order) => (string)
-                    "<a href='/adminsc/product/edit/{$order->product->id}'>{$order->product->name}</a>"
+                    ->callback(fn($product) =>
+                    "<a href='/adminsc/product/edit/{$product->id}'>{$product->name}</a>"
                     )
                     ->width("1fr")
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('Картинка')
-                    ->callback(fn($order) => "<img class='img' src='{$order->product->mainImage}' alt=''{$order->product->name}'>")
+                    ->class('left img')
+                    ->callback(fn($product) => "<img class='img' src='{$product->mainImage}' alt=''{$product->name}'>")
                     ->width("50px")
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('Кол-во')
-                    ->callback(fn($order) => (string)$order->count)
-                    ->width("30px")
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('Цена')
-                    ->callback(fn($order) => (string)$order->product->price)
+                    ->callback(fn($product) => $product->price)
                     ->width("60px")
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('Уп')
-                    ->callback(fn($order) => (string)$order->unit->name)
-                    ->width("40px")
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('Акция')
-                    ->callback(fn($order) => (string)$order->product->activePromotions)
-                    ->width("50px")
                     ->get()
             )
             ->header(
                 TableHeader::build()
-                    ->add('Клиент', $orders[0]->user->fi() ?? 'отсутствует')
-                    ->add('Email', $orders[0]->user->email ?? 'отсутствует')
-                    ->add('Дата', $orders[0]->created_at ?? 'отсутствует')
+                    ->add('Клиент', $order->user->fi() ?? 'отсутствует')
+                    ->add('Email', $order->user->email ?? 'отсутствует')
+                    ->add('Дата', $order->created_at ?? 'отсутствует')
                     ->get()
             )
             ->get();
 
     }
-//    public static function listAll(): string
-//    {
-//        return Table::build(Order::all())
-//            ->model('order')
-//            ->column(
-//                ColumnBuilder::build('id')
-//                    ->name('ID')
-//                    ->get())
-//            ->column(
-//                ColumnBuilder::build('name')
-//                    ->name('Наименование')
-//                    ->search()
-//                    ->width('1fr')
-//                    ->get())
-//            ->edit()
-//            ->get();
-//    }
+
 }

@@ -3,21 +3,24 @@
 
 namespace app\view\components\Builders\SelectBuilder\optionBuilders;
 
-use Illuminate\Database\Eloquent\Collection;
+//use Illuminate\Database\Eloquent\Collection;
+
+use Illuminate\Support\Collection;
 
 class ArrayOptionsBuilder
 {
     private array $arr;
-    protected int $selected = 0;
+    protected null|int|string $selected = 0;
     protected array $excluded = [];
     protected string $initialOption = '';
     protected array $fieldsMap;
     protected string $field = 'name';
+//    protected array $items = [];
 
-    public static function build(Collection $collection, array $fieldsMap = []): ArrayOptionsBuilder
+    public static function build(array|Collection $array, array $fieldsMap = []): ArrayOptionsBuilder
     {
         $arrayOptions            = new self();
-        $arrayOptions->arr       = $collection->toArray();
+        $arrayOptions->arr       = is_array($array)? $array: $array->toArray();
         $arrayOptions->fieldsMap = $fieldsMap;
         return $arrayOptions;
     }
@@ -27,7 +30,7 @@ class ArrayOptionsBuilder
     {
         if (!count($this->arr) && !$this->initialOption) $this->initialOption();
         $str = $this->initialOption;
-        $str .= $this->options($this->arr, '');
+        $str .= $this->options('');
         return $str;
     }
 
@@ -37,18 +40,18 @@ class ArrayOptionsBuilder
         return $this;
     }
 
-    public function options($items, string $string = ''): string
+    public function options(string $string = ''): string
     {
-        foreach ($items as $item) {
+        foreach ($this->arr as $item) {
             $id = $item['id'];
             if (in_array($id, $this->excluded)) continue;
-            $selected = $id == $this->selected ? "selected" : '';
+            $selected = ($id == $this->selected) ? "selected" : '';
             $string   .= "<option value = $id $selected>{$item[$this->field]}</option>";
         }
         return $string;
     }
 
-    public function selected(int $selected): ArrayOptionsBuilder
+    public function selected(null|int|string $selected): ArrayOptionsBuilder
     {
         if ($selected) {
             $this->selected = $selected;

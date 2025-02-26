@@ -10,7 +10,7 @@ use app\Repository\UnitRepository;
 use app\view\Unit\UnitFormView;
 
 
-class UnitController extends AppController
+class UnitController extends AdminscController
 {
     private UnitRepository $repo;
     protected string $model = Unit::class;

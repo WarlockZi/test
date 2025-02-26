@@ -10,7 +10,9 @@ class FilterUser extends Model
 	public $timestamps = false;
 
 	protected $fillable = [
-		'name','user_id','model',
+		'name',
+        'user_id',
+        'model',
 	];
 
 }

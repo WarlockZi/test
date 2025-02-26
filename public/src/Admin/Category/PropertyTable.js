@@ -11,14 +11,6 @@ export default class PropertyTable {
 
     if (this.$addBtn) this.$addBtn[ael]('click',this.newRow.bind(this));
 
-    // this.rows.forEach((row) => {
-    //   if (!row.classList.contains('none')) {
-    //     new SelectNew($(row).find('[custom-select]'))
-    //   }
-    // });
-
-    // this.rowsWrap.addEventListener('customSelect.changed', this.propertyChange.bind(this));
-    // this.rowsWrap.addEventListener('click', this.handleClick.bind(this))
   }
 
 

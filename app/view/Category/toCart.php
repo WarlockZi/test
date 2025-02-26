@@ -4,7 +4,7 @@
 
     <div class="green-button-wrap">
         <a href="/cart" class="button green-button">Перейти в корзину</a>
-        <?= \app\view\Cart\CartView::cartTable($product) ?>
+        <?= \app\view\Cart\CartView::cartTable($order) ?>
     </div>
 
 </div>

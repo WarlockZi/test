@@ -1,6 +1,6 @@
 <div class="category">
 
-    <?php if (!isset($category)): ?>
+    <?php if (empty($category)): ?>
         <div class="no-categories">
             <H1>Внимание! Приносим свои извинения,
                 но раздел <?= '' ?> находится на стадии разработки.
@@ -11,11 +11,13 @@
 
             <ol>
 
-                <? foreach ($rootCategories as $cat): ?>
-                    <li>
-                        <a href="<?= $cat['href'] ?>"><?= $cat['name'] ?></a>
-                    </li>
-                <? endforeach ?>
+                <? if (!empty($rootCategories) && is_array($rootCategories)): ?>
+                    <? foreach ($rootCategories as $cat): ?>
+                        <li>
+                            <a href="<?= $cat['href'] ?>"><?= $cat['name'] ?></a>
+                        </li>
+                    <? endforeach ?>
+                <? endif; ?>
 
             </ol>
 
@@ -68,6 +70,10 @@
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
+
+        <div id="seo_article">
+            <?= $category->seo_article() ?>
+        </div>
 
     <?php endif; ?>
 

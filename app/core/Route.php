@@ -113,7 +113,7 @@ class Route
 
     public function setLayout(): void
     {
-        $this->layout = ($this->admin && Auth::isAuthed())
+        $this->layout = ($this->admin && Auth::getUser())
             ? AdminLayout::class
             : UserLayout::class;
     }
@@ -174,7 +174,7 @@ class Route
 
     public function getLayout(): string
     {
-        return Auth::userIsAdmin() ? $this->layout : 'app\view\layouts\UserLayout';
+        return Auth::userIsAdmin() || Auth::userIsEmployee() ? $this->layout : 'app\view\layouts\UserLayout';
     }
 
     public function getController(): string
@@ -227,6 +227,7 @@ class Route
     {
         $this->controller = $controller;
     }
+
     public function setRedirect(array $redirect): void
     {
         $this->redirect = $redirect;

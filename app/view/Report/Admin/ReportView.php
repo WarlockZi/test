@@ -2,7 +2,7 @@
 
 namespace app\view\Report\Admin;
 
-use app\model\Product;
+use app\Repository\ProductFilterRepository;
 use app\Services\ProductService;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
@@ -10,8 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ReportView
 {
-    public function filter(Collection|null $products, string $title): string
+    public function filter(array $userFilters, string $title): string
     {
+        $repo = new ProductFilterRepository();
+        $products      = $repo::filterProducts($userFilters);
         return Table::build($products)
             ->pageTitle($title)
             ->model('product')
@@ -27,7 +29,7 @@ class ReportView
                     ->name('Арт')
                     ->class('cell left')
                     ->search()
-                    ->width('70px')
+                    ->width('minmax(30px, 70px)')
                     ->get()
             )
             ->column(
@@ -35,7 +37,7 @@ class ReportView
                     ->name('Наименование')
                     ->class('cell left')
                     ->search()
-                    ->width('1fr')
+                    ->width('minmax(60px,1fr)')
                     ->get()
             )
             ->column(
@@ -53,6 +55,7 @@ class ReportView
                     ->name('Картинка')
                     ->function(ProductService::class, 'productImg')
                     ->width('50px')
+                    ->class('img')
                     ->get()
             )
             ->column(
@@ -73,128 +76,7 @@ class ReportView
 
             ->edit()
             ->del()
-            ->addButton()
             ->get() ?? 'Установите фильтры';
-    }
-
-    public function haveDopUnit(Collection $products, string $title): string
-    {
-        return Table::build($products)
-            ->pageTitle($title)
-            ->column(
-                ColumnBuilder::build('id')
-                    ->name('ID')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('art')
-                    ->name('Арт')
-                    ->search()
-                    ->width('70px')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('name')
-                    ->name('Наименование')
-                    ->contenteditable()
-                    ->search()
-                    ->width('1fr')
-                    ->get()
-            )
-            ->edit()
-            ->del()
-            ->addButton('ajax')
-            ->get();
-    }
-
-    public function noDopUnit(Collection $products): string
-    {
-        return Table::build($products)
-            ->pageTitle('Товары имеющие только базовую единицу')
-            ->column(
-                ColumnBuilder::build('id')
-                    ->name('ID')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('art')
-                    ->name('Арт')
-                    ->search()
-                    ->width('70px')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('name')
-                    ->name('Наименование')
-                    ->contenteditable()
-                    ->search()
-                    ->width('1fr')
-                    ->get()
-            )
-            ->edit()
-            ->del()
-            ->addButton('ajax')
-            ->get();
-    }
-
-    public function noMinUnitList($products, string $title): string
-    {
-        return Table::build(Product::class)
-            ->pageTitle($title)
-            ->column(
-                ColumnBuilder::build('id')
-                    ->name('ID')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('art')
-                    ->name('Арт')
-                    ->search()
-                    ->width('70px')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('name')
-                    ->name('Наименование')
-                    ->contenteditable()
-                    ->search()
-                    ->width('1fr')
-                    ->get()
-            )
-            ->edit()
-            ->del()
-            ->addButton('ajax')
-            ->get();
-    }
-
-    public function noImgNoInstoreList(Collection $products, string $title): string
-    {
-        return Table::build(Product::class)
-            ->pageTitle($title)
-            ->column(
-                ColumnBuilder::build('id')
-                    ->name('ID')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('art')
-                    ->name('Арт')
-                    ->search()
-                    ->width('70px')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('name')
-                    ->name('Наименование')
-                    ->contenteditable()
-                    ->search()
-                    ->width('1fr')
-                    ->get()
-            )
-            ->edit()
-            ->del()
-            ->addButton('ajax')
-            ->get();
     }
 
 }

@@ -7,7 +7,7 @@ use app\core\Auth;
 use app\core\FS;
 use app\core\Route;
 use app\model\User;
-use app\view\Assets\Assets;
+use app\Services\AssetsService\Assets;
 
 abstract class View
 {

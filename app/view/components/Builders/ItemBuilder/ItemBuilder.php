@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 class ItemBuilder
 {
     use CleanString;
+
     private string $model;
     private string $dataModel;
     private string $id;
@@ -29,36 +30,36 @@ class ItemBuilder
 
     public string $html = '';
 
-    public static function build(?Model $item, string $model):static
+    public static function build(?Model $item, string $model): static
     {
         $view            = new static();
         $name            = $view->getModelName($item->getTable());
         $view->dataModel = "data-model='{$model}'";
         $view->model     = $model;
         $view->item      = $item->toArray();
-        $view->id        = "data-id='{$view->item['id']}'";
+        $view->id         = "data-id='{$view->item['id']}'";
         return $view;
     }
 
-    public function class(string $class):static
+    public function class(string $class): static
     {
         $this->class = $class;
         return $this;
     }
 
-    public function pageTitle(string $pageTitle):static
+    public function pageTitle(string $pageTitle): static
     {
-        $this->pageTitle = $pageTitle ? "<div class='page-title'>$pageTitle</div>" : '';
+        $this->pageTitle = $pageTitle ? "<div class='page-name'>$pageTitle</div>" : '';
         return $this;
     }
 
-    public function field(ItemFieldBuilder $field):static
+    public function field(ItemFieldBuilder $field): static
     {
         $this->fields[] = $field;
         return $this;
     }
 
-    public function tab($tab):static
+    public function tab($tab): static
     {
         $this->tabs[] = $tab;
         return $this;
@@ -77,7 +78,7 @@ class ItemBuilder
         return Str::studly(Str::singular($table));
     }
 
-    public function del(bool $isAdmin = true):static
+    public function del(bool $isAdmin = true): static
     {
         if ($isAdmin) {
             $this->del = true;
@@ -85,26 +86,26 @@ class ItemBuilder
         return $this;
     }
 
-    public function sid(Product $product):static
+    public function sid(Product $product): static
     {
         $this->sid = "data-sid='{$product['1s_id']}'";
         return $this;
     }
 
-    public function softDel():static
+    public function softDel(): static
     {
         $this->del     = false;
         $this->softDel = true;
         return $this;
     }
 
-    public function save():static
+    public function save(): static
     {
         $this->save = true;
         return $this;
     }
 
-    public function toList(string $href = '', string $text = '', bool $isAdmin = true):static
+    public function toList(string $href = '', string $text = '', bool $isAdmin = true): static
     {
         if ($isAdmin) {
             $this->toList = true;

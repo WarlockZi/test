@@ -5,18 +5,22 @@ namespace app\Services\Sync;
 
 use app\model\Category;
 use app\model\CategoryProperty;
+use app\Services\Logger\ErrorLogger;
 use app\Services\ShortlinkService;
 use app\Services\SlugService;
+use app\Services\UrlService;
+use Throwable;
 
 class LoadCategories
 {
     public function __construct(
         readonly private string $file,
         private array           $data = [],
-        private int|null        $parent = 0,
+        private string|null     $parent = NULL,
         public array            $deleted = [],
         public array            $created = [],
         private array           $existed = [],
+        private ErrorLogger     $logger = new ErrorLogger,
     )
     {
         $xml        = simplexml_load_file($this->file);
@@ -35,27 +39,29 @@ class LoadCategories
         });
     }
 
-    protected function run($groups): void
+    protected function run($groups, $level = 0): void
     {
-        if ($this->isAssoc($groups)) {
+        if (!$this->isAssoc($groups)) {
+            foreach ($groups as $group) {
+                if ($level === 0) {
+                    $this->parent = null;
+                }
+                $this->run($group, 0);
+            }
+        } else {
             $item                         = $this->fillItem($groups);
             $this->existed[$groups['Ид']] = $groups['Ид'];
             if (isset($groups['Группы'])) {
-                $this->parent = $item['id'];
-                $this->run($groups['Группы']['Группа']);
+                $this->parent = $item['1s_id'];
+                $this->run($groups['Группы']['Группа'], ++$level);
             }
-        } else {
-            foreach ($groups as $group) {
-                $this->run($group);
-            }
-            $this->parent = null;
         }
     }
 
     protected function fillItem(array $group): Category
     {
-        $item['1s_id']       = $group['Ид'];
-        $item['category_id'] = $this->parent;
+        $item['1s_id']          = $group['Ид'];
+        $item['1s_category_id'] = $this->parent;
 
         $item['name']       = $group['Наименование'];
         $item['slug']       = SlugService::slug($item['name']);
@@ -73,17 +79,30 @@ class LoadCategories
 
     protected function setCategoryOwnProps(Category $category): CategoryProperty
     {
-        $catProps = CategoryProperty::where('category_1s_id', $category['1s_id'])
-        ->first();
-        if (!$catProps->short_link) {
-            $catProps->short_link = ShortlinkService::getValidShortLink();
-        }
-        if (!$catProps->slug) {
-            $catProps->slug = SlugService::getValidCategorySlug($category);
+        try {
+            $catProps = CategoryProperty::firstOrCreate(
+                ['1s_category_id' => $category['1s_id']],
+                ['1s_category_id' => $category['1s_id']
+//                'slug' => SlugService::getCategorySlug($category)
+                ],
+            );
+            if (!$catProps->short_link) {
+                $catProps->short_link = ShortlinkService::getValidShortLink();
+            }
+//        if (!$catProps->slug) {
+//            $catProps->slug = SlugService::getCategorySlug($category);
+//        }
+            if (!$catProps->path) {
+                UrlService::setCateoryOwnPropPath($category);
+            }
+            $catProps->save();
+            return $catProps;
+        } catch (Throwable $exception) {
+            $exc = 'load category own props failed: ' . $exception->getTraceAsString();
+            $this->logger->write($exc);
+            throw new \Exception($exc);
         }
 
-        $catProps->save();
-        return $catProps;
     }
 
     protected function isAssoc(array $arr): bool

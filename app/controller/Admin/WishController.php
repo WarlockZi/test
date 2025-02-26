@@ -6,7 +6,7 @@ use app\controller\AppController;
 use app\Storage\StorageProd;
 use Workerman\Protocols\Http;
 
-class WishController Extends AppController
+class WishController Extends AdminscController
 {
 	public string $model = Http::class;
 

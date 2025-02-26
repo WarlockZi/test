@@ -1,14 +1,14 @@
 @use "../../var";
-@use"../../mixin_media";
+@use "../../mixin_media";
 @use "filter";
+@use "../select/selectNew";
 
 [custom-table] {
   background-color: #fff;
   padding-bottom: 10px;
-  //margin-left: 15px;
+  max-width: 1300px;
 
   @include mixin_media.m600 {
-    width: 90vw;
     overflow-x: auto;
   }
 
@@ -34,6 +34,7 @@
   }
 
   .custom-table {
+    //overflow-x: auto;
 
     [contenteditable] {
       display: flex;
@@ -47,14 +48,27 @@
     }
 
     .img {
-      max-width: 100%;
-      object-fit: contain;
-      max-height: 60px;
-      transition: all .3s;
+      position: relative;
+      box-sizing: border-box;
 
-      &:hover {
+      img {
+        top: 0;
+        left: 0;
         position: absolute;
-        min-height: 100px;
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+        transition: all .3s;
+        box-sizing: border-box;
+      }
+
+      &:hover > img {
+        left: -200px;
+        top: -50%;
+        height: 150px;
+        min-width: 150px;
+        z-index: 1;
+        border: 1px solid hsl(90deg 20% 90%);
       }
     }
 
@@ -66,7 +80,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 60px;
 
       &:hover {
         background-color: var.$color-gray1;
@@ -79,12 +92,14 @@
 
     input[type=checkbox] {
       width: 20px;
-      height: 20px;
+      display: inline-flex;
       cursor: pointer;
+      height: calc(100% - 2px);
     }
 
     > * {
       border: 1px solid transparent;
+      box-sizing: border-box;
       padding: 5px 3px;
       border-bottom: solid 1px var.$color-gray4;
       font-size: var.$font-size-table;
@@ -102,10 +117,11 @@
       transition: color .2s ease-in-out, background-color .2s ease-in-out;
 
       &:hover {
-        background-color: lighten(var.$color-red, 25%);
+        background-color: mixin_media.lighter(var.$color-red, 5%);
         color: white;
       }
-      svg{
+
+      svg {
         pointer-events: none;
       }
     }
@@ -120,10 +136,11 @@
       transition: color .2s ease-in-out, background-color .2s ease-in-out;
 
       &:hover {
-        background-color: lighten(var.$color-main,25%);
+        background-color: mixin_media.lighter(var.$color-main, 25%);
         color: white;
       }
-      svg{
+
+      svg {
         pointer-events: none;
       }
     }
@@ -146,7 +163,7 @@
         width: 15px;
         height: 15px;
         right: 10px;
-        background: url("/pic/icons/upDown.svg") 0 0/15px 15px no-repeat;
+        background: url(/pic/icons/upDown.svg) 0 0/15px 15px no-repeat;
       }
 
       input {
@@ -154,7 +171,7 @@
         position: relative;
         margin: 0;
         width: 1px;
-        background-image: url("/pic/icons/search.svg");
+        background-image: url(/pic/icons/search.svg);
         background-repeat: no-repeat;
         background-position: 3px 3px, center;
         background-size: 12px;
@@ -180,9 +197,6 @@
         cursor: initial;
         align-items: center;
 
-        &:hover {
-          //background-color: #5b626e;
-        }
       }
 
       &.edit {

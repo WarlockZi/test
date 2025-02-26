@@ -2,7 +2,7 @@
 
 namespace app\core;
 
-use app\model\Category;
+use app\controller\Controller;
 use app\Services\Logger\ErrorLogger;
 
 class Router
@@ -36,33 +36,11 @@ class Router
                     $this->route->$k = is_string($v) ? strtolower($v) : $v;
                 }
 
-                $this->redirect();
                 $this->route->setNotFound();
                 break;
             }
         }
         $this->route->isNotFound() ? $this->route->setActionName('default') : $f = 1;
-    }
-
-    private function redirect(): void
-    {
-        if (!$this->route->redirect) return;
-        $arr  = $this->route->getRedirect();
-        $from = key($arr);
-        $to   = $arr[$from];
-//        $url  = $this->route->getUrL();
-        if ($to === 'catalog') {
-            $slug = $this->route->slug;
-            $cat  = Category::where('slug', $slug)
-                ->with('ownProperties')
-                ->first();
-            $path = $cat->ownProperties->seoPath ?? $cat->ownProperties->path;
-            $path = "/{$path}";
-            $newUrl = '/catalog' . $path;
-            header("Location: https://{$this->route->getHost()}" . $newUrl, true, 301);
-            exit();
-        }
-//        $newUrl = str_replace($from, $to, $url);
     }
 
     public function dispatch(): void
@@ -81,7 +59,11 @@ class Router
 
         $action = $this->route->getAction();
         try {
-            $controller->$action();
+            if (method_exists($controller, $action)) {
+                $controller->$action();
+            } else{
+                $controller->actionNotFound();
+            }
         } catch (\Throwable $exception) {
             $this->handleError($exception);
         }
@@ -93,9 +75,9 @@ class Router
 
     private function handleError($exception): void
     {
-        if ($_ENV['DEV'] == 1) {
-            echo '<pre>' . $exception->getMessage() . '</pre>';
-            echo '<pre>' . $exception->getTraceAsString() . '</pre>';
+        if (DEV) {
+            $this->route->setError($exception->getMessage());
+            $this->route->setError($exception->getTraceAsString());
         }
         $this->errorLogger->write('router error -' . PHP_EOL
             . $exception->getMessage() . PHP_EOL);

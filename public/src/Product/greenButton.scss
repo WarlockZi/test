@@ -1,3 +1,6 @@
+@use "../mixin_media";
+@use "../var";
+
 @mixin green() {
 
   .adjust {
@@ -21,7 +24,7 @@
       position: relative;
 
       &:hover {
-        background: darken(#10c44c, 10%);
+        background: mixin_media.darker(#10c44c, 10%);
       }
 
       .bigger {
@@ -55,7 +58,7 @@
         cursor: pointer;
 
         &:hover {
-          background-color: darken(aliceblue, 3%);
+          background-color: mixin_media.darker(aliceblue, 3%);
         }
 
         svg {

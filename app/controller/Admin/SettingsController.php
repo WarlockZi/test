@@ -8,7 +8,7 @@ use app\Repository\SettingsRepository;
 use app\view\Settings\Admin\SettingsFormView;
 
 
-class SettingsController Extends AppController
+class SettingsController Extends AdminscController
 {
 	public string $model = Settings::class;
 	public function __construct()

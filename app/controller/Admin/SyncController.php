@@ -3,13 +3,16 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Auth;
 use app\core\Response;
+use app\model\User;
 use app\Services\Logger\FileLogger;
 use app\Services\Sync\SyncService;
 use app\Services\Sync\TrancateService;
 use Illuminate\Support\Carbon;
+use Throwable;
 
-class SyncController extends AppController
+class SyncController extends AdminscController
 {
     public function __construct(
         protected SyncService     $service = new SyncService(),
@@ -17,6 +20,7 @@ class SyncController extends AppController
         protected FileLogger      $logger = new FileLogger('import.txt'),
     )
     {
+        Auth::setUser(User::where('email', 'vvoronik@yandex.ru')->first());
         parent::__construct();
     }
 
@@ -56,7 +60,7 @@ class SyncController extends AppController
         $this->logger->write(Carbon::now());
         $this->logger->write('Начата ручная загрузка');
         $this->service->load();
-        if ($_ENV['DEV'] == 1) {
+        if (DEV) {
             Response::exitWithPopup('Все перенесено');
         }
         exit();
@@ -65,7 +69,7 @@ class SyncController extends AppController
     public function actionLoadCategories(): void
     {
         $this->service->LoadCategories();
-        if ($_ENV['DEV'] == '1') {
+        if (DEV) {
             Response::exitWithPopup('Categories loaded');
         }
     }
@@ -73,7 +77,7 @@ class SyncController extends AppController
     public function actionLoadProducts(): void
     {
         $this->service->LoadProducts();
-        if ($_ENV['DEV'] == '1') {
+        if (DEV) {
             Response::exitWithPopup('Products loaded');
         }
     }
@@ -86,7 +90,7 @@ class SyncController extends AppController
             $exc = $exception;
             exit($exc);
         }
-        if ($_ENV['DEV'] == '1') {
+        if (DEV) {
             Response::exitWithPopup('Prices, units,  loaded');
         }
 
@@ -103,7 +107,7 @@ class SyncController extends AppController
     public function actionLogshow(): void
     {
         if (isset($_POST['param'])) {
-            Response::exitJson([
+            Response::json([
                 'success' => true,
                 'content' => 'Log' . PHP_EOL . $this->logger->read()
             ]);
@@ -113,7 +117,7 @@ class SyncController extends AppController
     public function actionLogclear(): void
     {
         $this->logger->clear();
-        Response::exitJson(['success' => 'success', 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
+        Response::json(['success' => 'success', 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
     }
 
 }

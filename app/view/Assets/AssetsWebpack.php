@@ -9,7 +9,7 @@ class AssetsWebpack implements Compiler
 
     public function getConfig(): array
     {
-        if ($_ENV['DEV'] === "1") {
+        if (DEV) {
             return [
                 'protocol' => 'http://',
                 'h1' => 'localhost',

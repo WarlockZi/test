@@ -23,7 +23,7 @@ trait Log
     {
         $this->logDate();
         $this->logger->write('- error -' . $msg . PHP_EOL . $e);
-        if ($_ENV['DEV'] == '1') {
+        if (DEV) {
             Response::exitWithPopup($msg);
         }
         exit();
@@ -33,7 +33,7 @@ trait Log
     {
         $this->logDate();
         $this->logger->write($msg);
-        if ($_ENV['DEV'] == '1') {
+        if (DEV == '1') {
             Response::exitWithPopup($msg);
         }
     }

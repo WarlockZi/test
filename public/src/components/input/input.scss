@@ -37,15 +37,15 @@ $color-input: #323030;
 
     // Stop Chrome's hideous pale yellow background on auto-fill
     &:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0 1000px var.$color-auto-fill inset;
-      -webkit-text-fill-color: var.$color-input;
+      -webkit-box-shadow: 0 0 0 1000px $color-auto-fill inset;
+      -webkit-text-fill-color: $color-input;
       // border-bottom-color: rgba(white, .5);
     }
   }
 
   label {
     position: absolute;
-    top: 0px;
+    top: 0;
     color: var.$color-main;
     font: 400 14px Arial, Serif;
     cursor: text;

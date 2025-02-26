@@ -8,29 +8,53 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  z-index: 1;
 
-  .short-link, .edit {
-    padding: 1px 8px;
-      background-color: var.$color-gray9;
+  .compare {
+    stroke-width: 2px;
+  }
+
+  .card-panel-item {
+    padding: 3px 8px;
+    background-color: var.$color-gray9;
+    color: var.$color-gray-min;
+    display: flex;
+    align-items: center;
+
+    &.green {
+      svg {
+        color: var.$color-main-green;
+        stroke-width: 3px;
+      }
+    }
+
+    &.red {
+      svg {
+        stroke: var.$color-red;
+        stroke-width: 2px;
+      }
+    }
 
     &:hover {
       background-color: var.$color-gray8;
-
     }
 
     svg {
-      //color: var.$color-gray-min;
-      color: var.$color-gray-min;
-      stroke-width: 0px;
       pointer-events: none;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .short-link, .edit {
+    svg {
+      stroke-width: 0;
     }
   }
 
   .edit {
     svg {
       stroke-width: 2px;
-      width: 12px;
-      height: 16px;
     }
   }
 }

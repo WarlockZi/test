@@ -28,14 +28,14 @@ class Footer
 
     public static function setYaMetrica(): void
     {
-        if ($_ENV['DEV'] !== 0) {
+        if (DEV) {
             self::$yaMetrica = FS::getFileContent(ROOT . '/app/view/components/footer/ya_metrica.php');
         }
     }
 
     public static function getYaMetrica():string
     {
-        if ($_ENV['DEV'] !== 0) {
+        if (DEV) {
             return self::$yaMetrica;
         }
         return '';

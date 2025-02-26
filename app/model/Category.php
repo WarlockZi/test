@@ -5,7 +5,9 @@ namespace app\model;
 
 use app\Services\SlugService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
@@ -14,20 +16,85 @@ class Category extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        '1s_id',
         'name',
-        'description',
-        'sort',
         'slug',
-        'img',
-        'category_id',
-        'show_front',
+        '1s_category_id',
+        '1s_id',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    protected $appends = ['shortLink','href'];
+    protected $appends = ['shortLink', 'href'];
+
+    public function productsNotInStore()
+    {
+        return $this->hasMany(Product::class,
+            '1s_category_id',
+            '1s_id')
+            ->where('instore', 0)
+            ->with('mainImages')
+            ->orderBy('name');
+    }
+
+    public function productsNotInStoreInMatrix(): HasMany
+    {
+        return $this->hasMany(Product::class,
+            '1s_category_id',
+            '1s_id')
+            ->where('instore', 0)
+            ->where('name', 'regexp', '\\s?\\*\\s?$')
+            ->with('mainImages')
+            ->with('ownProperties')
+            ->with('shippableUnits')
+            ->with('inactivepromotions')
+            ->with(['activepromotions' => function ($q) {
+                $q->whereNull('active_till');
+            }])
+            ->orderBy('name');
+    }
+
+    public function productsInStore()
+    {
+        $pInStore = $this->hasMany(Product::class,
+            '1s_category_id',
+            '1s_id')
+            ->where('instore', '<>', 0)
+            ->with('mainImages')
+            ->with('order.orderitems')
+            ->with('shippableUnits')
+            ->with('inactivepromotions')
+            ->with(['activepromotions' => function ($q) {
+                $q->whereNull('active_till');
+            }])
+            ->with('compare')
+            ->with('like')
+            ->with('units')
+            ->with('ownProperties')
+
+//            ->with('prices')
+//            ->select(['products.*', 'prices.price as product_price'])
+//            ->join('prices', 'prices.1s_id', '=', 'products.1s_id')
+//            ->orderBy('product_price')
+        ;
+
+        return $pInStore;
+    }
+
+    public function seo_title()
+    {
+        return $this->ownProperties->seo_title ?? $this->name . " - купить оптом недорого в интернет-магазине VITEX в Вологде";
+    }
+
+    public function seo_description()
+    {
+        return $this->ownProperties->seo_description ?? $this->name . ". Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
+    }
+
+    public function seo_article()
+    {
+        return $this->ownProperties->seo_article ?? $this->description ?? $this->name;
+    }
 
     public function InactivePromotions()
     {
@@ -44,12 +111,21 @@ class Category extends Model
         $host   = $_SERVER['HTTP_HOST'] ?? '';
         return "{$scheme}://{$host}/short/{$link}";
     }
+
+    public function getFlatSelfAndChildrenAttribute()
+    {
+        return collect([$this])->merge(
+            $this->childrenRecursive->flatMap(function ($q) {
+                return $q->flatSelfAndChildren ?? collect([$this->id, $this->name, $this['1s_category_id']]);
+            })
+        );
+    }
+
     protected function getHrefAttribute(): string
     {
-        if (!$this->ownProperties) return '';
-
-        $path   = $this->ownProperties->path;
-        return "/catalog/{$path}";
+        return !$this->ownProperties
+            ? ""
+            : "/catalog/{$this->ownProperties->path}";
     }
 
     public function ActivePromotions()
@@ -76,10 +152,11 @@ class Category extends Model
         )->where('slug', '=', 'main');
     }
 
-
-    public function ownProperties()
+    public function ownProperties(): HasOne
     {
-        return $this->hasOne(CategoryProperty::class, 'category_1s_id', '1s_id');
+        return $this->hasOne(CategoryProperty::class,
+            '1s_category_id',
+            '1s_id');
     }
 
     public function scopeWithWhereHas($query, $relation, $constraint)
@@ -95,85 +172,59 @@ class Category extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class)
-            ->orderByDesc('name')//->groupBy('instore')
-            ;
+        return $this->hasMany(Product::class,
+            "1s_category_id",
+            '1s_id'
+        )
+            ->orderByDesc('name');
     }
 
-    public function productsNotInStore()
+
+    public function parent(): BelongsTo
     {
-        return $this->hasMany(Product::class)
-            ->where('instore', 0)
-            ->with('mainImages')
-            ->orderBy('name');
+        return $this->belongsTo(Category::class,
+            '1s_category_id',
+            '1s_id'
+        );
     }
 
-    public function productsNotInStoreInMatrix(): HasMany
-    {
-        return $this->hasMany(Product::class)
-            ->where('instore', 0)
-            ->where('name', 'regexp', '\\s?\\*\\s?$')
-            ->with('mainImages')
-            ->with('ownProperties')
-            ->orderBy('name');
-    }
-
-    public function productsInStore()
-    {
-        $pInStore = $this->hasMany(Product::class)
-            ->where('instore', '<>', 0)
-            ->with('mainImages')
-            ->with('promotions')
-            ->with('units')
-            ->with('ownProperties')
-            ->orderBy('name');
-
-        return $pInStore;
-    }
-
-    public function cat()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function category()
+    public function parentRecursive(): BelongsTo
     {
         return $this->parent()->with('parentRecursive');
     }
 
-    public function parents()
-    {
-        return $this->cat()->with('parents');
-    }
-
-    public function parent()
-    {
-        return $this->belongsTo(Category::class, 'category_id');
-    }
-
-    public function parentRecursive()
-    {
-        return $this->parent()->with('parentRecursive');
-    }
-
-
-    public function childrenRecursive()
+    public function childrenRecursive(): HasMany
     {
         return $this->childrenNotDeleted()->with('childrenRecursive');
     }
 
-    public function childrenNotDeleted()
+    public function childrenNotDeleted(): HasMany
     {
-        return $this
-            ->hasMany(Category::class, 'category_id')
-            ->whereNull('deleted_at');
+        return $this->hasMany(Category::class,
+            '1s_category_id',
+            '1s_id',
+        );
     }
 
     public function childrenDeleted()
     {
         return $this
-            ->hasMany(Category::class, 'category_id')
+            ->hasMany(Category::class,
+                '1s_category_id',
+                '1s_id')
             ->whereNotNull('deleted_at');
     }
+//    public function cat(): BelongsTo
+//    {
+//        return $this->belongsTo(Category::class,
+//            '1s_category_id',
+//            '1s_id',
+//        );
+//    }
+//
+//    public function parents(): BelongsTo
+//    {
+//        return $this->cat()->with('parents');
+//    }
 
 }

@@ -1,5 +1,5 @@
 <?php
-if ($_ENV["DEV"] === "1") {
+if (DEV) {
     if (isset($errors) && is_array($errors)) {
 
         foreach ($errors as $error) {
@@ -7,9 +7,9 @@ if ($_ENV["DEV"] === "1") {
         };
     }
 }
-
+http_response_code(404);
 ?>
-<main class="not-found">
+<div class="not-found">
 
     <div class="not-found_header">
 
@@ -19,18 +19,6 @@ if ($_ENV["DEV"] === "1") {
         </div>
     </div>
 
-    <? if (isset($similarProducts)): ?>
-
-        <div class="similar-products">
-            <h2 class="similar-products__header">Похожие товары</h2>
-            <div class="product-wrap">
-                <? foreach ($similarProducts as $product): ?>
-                    <?php include ROOT . '/app/view/Category/product_card.php' ?>
-                <? endforeach ?>
-            </div>
-
-        </div>
-    <? endif; ?>
 
     <div class="not-found_wrap">
         <div class="not-found_container">
@@ -43,5 +31,18 @@ if ($_ENV["DEV"] === "1") {
         </div>
     </div>
 
+</div>
 
-</main>
+<? if (!empty($similarProducts) && $similarProducts->count()): ?>
+
+    <div class="similar-products">
+        <h2 class="similar-products__header">Похожие товары</h2>
+        <div class="product-wrap">
+            <? foreach ($similarProducts as $product): ?>
+                <?php include ROOT . '/app/view/Category/product_card.php' ?>
+            <? endforeach ?>
+        </div>
+
+    </div>
+<? endif; ?>
+

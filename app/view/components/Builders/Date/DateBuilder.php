@@ -22,11 +22,12 @@ class DateBuilder
 	public string $max = "max='2030-01-01'";
 	public string $format = 'yy-mm-dd';
 
-	public static function build($data): DateBuilder
+	public static function build(string|null $date): DateBuilder
     {
 		$self = new self();
         $self->fs = new FS(__DIR__);
-		$value = date('Y-m-d', strtotime(time()));
+
+		$value = date('Y-m-d', strtotime($date??''));
         $self->value = "value='{$value}'" ;
 		return $self;
 	}

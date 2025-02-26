@@ -2,7 +2,7 @@
     <?= $class; ?>
     <?= $dataModel; ?>
     <?= $dataRelation; ?>
-    <?= $dataRelationModel; ?>
+    <?= $dataRelationType; ?>
 >
 
     <div class='table-title'><?= $pageTitle; ?></div>
@@ -31,7 +31,7 @@
         <?= $emptyRow; ?>
 
         <!--		 Data rows-->
-        <?php if ($items->count()): ?>
+        <?php if (!empty($items)): ?>
 
 
             <?php foreach ($items as $item): ?>
@@ -45,6 +45,8 @@
                         <div
                                 data-id='<?= $item['id']??0; ?>'
                                 <?= $c->dataField; ?>
+                                <?= $c->pivot; ?>
+                                <?= $c->attach; ?>
                                 <?= $c->class; ?>
                                 <?= $c->contenteditable; ?>
                         >
@@ -60,7 +62,7 @@
 
     </div>
 
-    <?php if (!$items->count()): ?>
+    <?php if (empty($items)): ?>
         <h3 class="no-items">Элементы не найдены</h3>
     <?php endif; ?>
 

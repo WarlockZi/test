@@ -5,7 +5,6 @@ export default class Card_panel {
    constructor() {
       this.el = $(`[data-shortLink]`).first()
       if (this.el) return false
-
    }
 
    shortLink(target) {

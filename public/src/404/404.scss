@@ -3,31 +3,31 @@
 @use "./../share/card_panel/card_panel";
 
 
+.similar-products {
+
+  .similar-products__header {
+    font-size: 2rem;
+  }
+
+  @include mixin_media.product-card;
+  @include mixin_media.shippable;
+}
+
 .not-found {
   position: relative;
-  font-family: 'Sagoe UI', 'Montserrat', serif;
   font-size: 2.5rem;
-  padding: 30px 10px ;
-  margin: .5rem -25px 1rem;
+  padding: 30px 20px ;
+  margin: .5rem 0 1rem;
   font-weight: 500;
   line-height: 1.2;
   color: inherit;
-  background-image: url("/pic/srvc/404_bg_pages.webp");
+  background-image: url(/pic/srvc/404_bg_pages.webp);
 
 
   .not-found_actions {
     font-size: 2rem;
   }
 
-  .similar-products {
-
-    .similar-products__header {
-      font-size: 2rem;
-    }
-
-    @include mixin_media.product-card;
-    @include mixin_media.shippable;
-  }
 
   .not-found_header {
     top: 0;
@@ -45,7 +45,7 @@
     position: relative;
     min-height: 445px;
     background-color: white;
-    background-image: url("/pic/srvc/full-logo.jpg");
+    background-image: url(/pic/srvc/full-logo.jpg);
     background-position: center;
     background-repeat: no-repeat;
     margin: .5rem 0 1rem;

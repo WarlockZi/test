@@ -14,11 +14,11 @@ class OrderItem extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'order_product_id',
         'product_id',
-        'count',
+        'order_id',
         'unit_id',
-        'sess',
-        'ip',
+        'count',
         'created_at',
         'updated_at',
         'deleted_at'
@@ -28,7 +28,11 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Order::class);
     }
-
+    public function scopeWithWhereHas($query, $relation, $constraint)
+    {
+        return $query->whereHas($relation, $constraint)
+            ->with([$relation => $constraint]);
+    }
     public static function leadData($columnBuilder, $orderItem, $fieldName)
     {
         $name    = $orderItem?->lead?->name ?? 'имя';
@@ -37,20 +41,13 @@ class OrderItem extends Model
         return  "{$name} - {$company} - {$phone}";
 	}
 
-    public function product()
+    public function product(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Product::class, '1s_id', 'product_id');
     }
 
-    public function lead()
-    {
-        return $this->hasOne(Lead::class, 'sess', 'sess');
-    }
-    public function unit()
+    public function unit(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Unit::class, 'id','unit_id');
-
     }
-
-
 }
