@@ -32,7 +32,7 @@ class PHPMail
 
         $mailer->Host     = env('SMTP_HOST');
         $mailer->Username = env('SMTP_USERNAME');
-        if ($_ENV['DEV']) {
+        if (DEV) {
             $mailer->Password = env('YANDEX_APP_KEY_DEV');
         } else {
             $mailer->Password = env('YANDEX_APP_KEY1');
@@ -93,7 +93,7 @@ class PHPMail
     {
         $this->mailer->setFrom($this->credits['from'], 'VITEX');
         $this->mailer->addReplyTo($this->credits['replyTo'], 'Vitex');
-        $this->mailer->addAddress($_ENV['TEST_EMAIL_ALL']);
+        $this->mailer->addAddress(env('TEST_EMAIL_ALL'));
         $this->mailer->Subject = "{$post['user']}:{$post['errorCnt']} ош из {$post['questionCnt']}";
         $this->mailer->isHTML(true);
         $this->mailer->Body = self::prepareBodyTestResults($post, $resid - 1);

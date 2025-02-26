@@ -10,18 +10,19 @@ class CatalogMobileMenuService
 {
     private array $categories=[];
     private string $string;
+    private FS $fs;
 
     public function __construct()
     {
         $this->string = '';
         $this->fs     = new FS(__DIR__);
-        Cache::get('catalogMobileMenu', function () {
-            $this->categories = CategoryRepository::treeAll()->toArray();
+        $this->categories =Cache::get('catalogMobileMenu', function () {
+             return CategoryRepository::treeAll()->toArray();
         }, Cache::$timeLife10_000);
+
         Cache::get('categoryRecurse',
             function () {
                 $this->recurse($this->categories);
-                return $this->string;
             },
             Cache::$timeLife1_000);
     }

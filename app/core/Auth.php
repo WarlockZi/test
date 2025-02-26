@@ -63,7 +63,7 @@ class Auth
 
     public static function isSU(): bool
     {
-        return $_ENV['SU_EMAIL'] === self::$user['email'];
+        return env('SU_EMAIL') === self::$user['email'];
     }
 
     public static function setAuth(IUser $user): void
@@ -97,7 +97,7 @@ class Auth
         if (!$user) return;
 
         if ($user instanceof User) {
-            define('SU', $user->mail() === $_ENV['SU_EMAIL']);
+            define('SU', $user->mail() === env('SU_EMAIL'));
             if ($user['confirm'] == 0) {
                 $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
             }

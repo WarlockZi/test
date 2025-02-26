@@ -8,26 +8,25 @@ namespace app\view\layouts;
 
 // you might check @vitejs/plugin-legacy if you need to support older browsers
 // https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
-function vite(string $entry): string
-{
-    $vite = new helpers($entry);
-    return $vite->getAssets();
-}
 
 class Helpers
 {
     public function __construct(
         readonly private string $entry = '',
         private array           $manifest = [],
-        private bool            $isDev = false,
-        readonly private string $VITE_HOST = 'http://localhost:5133',
+        private bool            $serverStarted = false,
+//        readonly private string $viteHost = 'https://localhost:5133/',
+//        readonly private string $viteHost = 'https://vi-prod:5133/public/build/',
+        readonly private string $viteHost = 'https://localhost:5173/',
+        readonly private string $viteAssets = 'assets/',
         readonly private string $manifestPath = ROOT . '/public/build/.vite/manifest.json',
         readonly private string $publicPath = '/public/build/',
-        private string $js='',
-        private string $css='',
+        private string          $js = '',
+        private string          $css = '',
+
     )
     {
-        $this->isDev    = $this->isDev($entry);
+//        $this->serverStarted = $this->loadedFromDevServer($this->entry);
         $this->manifest = $this->getManifest();
     }
 
@@ -41,7 +40,8 @@ class Helpers
     {
         return $this->css;
     }
-    public function getJs():string
+
+    public function getJs(): string
     {
         return $this->js;
     }
@@ -54,52 +54,61 @@ class Helpers
         return $this->js . $this->css;
     }
 
-    function isDev(string $entry): bool
+    private function loadedFromDevServer(string $entry): bool
     {
+        if (empty($entry)) return false;
         static $exists = null;
         if ($exists !== null) {
             return $exists;
         }
-        $handle = curl_init($this->VITE_HOST . '/' . $entry);
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handle, CURLOPT_NOBODY, true);
+        $url = "$this->viteHost{$this->publicPath}{$entry}";
+        $url = "$this->viteHost{$entry}";
+//        $url = $this->VITE_HOST . '/' . $entry;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CAINFO, "D:/ospanel/userdata/config/cacert.pem");
+        curl_setopt($ch, CURLOPT_NOBODY, true);
 
-        curl_exec($handle);
-        $error = curl_errno($handle);
-        curl_close($handle);
+        curl_exec($ch);
+        $error = curl_errno($ch);
+        curl_close($ch);
 
         return $exists = !$error;
     }
 
     function client(): string
     {
-        $url = $this->isDev
-            ? $this->VITE_HOST . "{$this->publicPath}" . $this->entry
+        $url = $this->serverStarted
+            ? $this->viteHost . "{$this->publicPath}" . $this->entry
             : $this->assetUrl();
 
-        if (!$url) return '';
-        if ($this->isDev) {
-            return "\n<script type='module' src='$this->VITE_HOST{$this->publicPath}@vite/client'></script>";
-        }
-        return "";
+//        if (!$url) return '';
+        $public = '/public/build';
+        $public = '';
+//        $public = '/public/build/.vite';
+
+        return DEV
+            ? "\n<script type='module' src='$this->viteHost{$public}@vite/client'></script>"
+//            ? "\n<script type='module' src='$this->VITE_HOST{$this->publicPath}@vite/client'></script>"
+            : "";
     }
 
     function jsTag(): string
     {
-        $url = $this->isDev
-            ? $this->VITE_HOST . "{$this->publicPath}" . $this->entry
+        $first = $this->viteHost . "{$this->publicPath}" . $this->entry;
+        $first = $this->viteHost  . $this->entry;
+        $url = DEV
+            ? $first
             : $this->assetUrl();
 
-        if (!$url) return '';
-        if ($this->isDev) {
-            return "<script type='module' src='$url'></script>";
-        }
-        return "<script type='module' src='$url'></script>";
+        return !empty($url)
+            ? "<script type='module' src='$url'></script>"
+            : '';
     }
 
     function jsPreloadImports(): string
     {
-        if ($this->isDev) return '';
+        if (!$this->serverStarted) return '';
 
         $res = '';
         foreach ($this->importsUrls() as $url) {
@@ -111,7 +120,7 @@ class Helpers
     function cssTag(): string
     {
         // not needed on dev, it's inject by Vite
-        if ($this->isDev) return '';
+        if ($this->serverStarted) return '';
 
         $tags = '';
         foreach ($this->cssUrls() as $url) {

@@ -14,12 +14,12 @@ use app\core\Icon;
     <meta name="HandheldFriendly" content="True">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <meta name="yandex-verification" content="003253e624aad5b6" />
-    <meta name="google-site-verification" content="ktYoLMSeI5bAy0NCfzOmoV28u50Fe8TJKF_v_582olI" />
+    <meta name="yandex-verification" content="003253e624aad5b6"/>
+    <meta name="google-site-verification" content="ktYoLMSeI5bAy0NCfzOmoV28u50Fe8TJKF_v_582olI"/>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/assets/srvc/<?= !!DEV ? "logo-square-dev.svg" : "logo-square.svg" ?>" type="image/svg+xml">
+    <link rel="icon" href="/assets/srvc/<?= DEV ? "logo-square-dev.svg" : "logo-square.svg" ?>" type="image/svg+xml">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,13 +29,25 @@ use app\core\Icon;
 
     <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
     <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script>
+
+
     <?= $assets->getMeta(); ?>
 
-    <?= $assets->getCss(); ?>
+
+    //assets
+    <? if (DEV): ?>
+<!--        <script type="module" src="https://vi-prod:5173/@vite/client"></script>-->
+<!--        <script type="module" src="https://vi-prod:5173/build/Main/main.js"></script>-->
+        <?= $assets->getCss(); ?>
+    <? else: ?>
+        <?= $assets->getCss(); ?>
+    <? endif; ?>
+
 
 </head>
 
-<? include_once __DIR__ . '/google.php'; ?>
+<? // include_once __DIR__ . '/google.php'; ?>
+
 <body class="preload">
 
 <?= $header; ?>
@@ -49,7 +61,7 @@ use app\core\Icon;
 
         <?= $content; ?>
     </main>
-<!--    <div class="chat-icon" title="Чат">--><?php //=Icon::chat2();?><!--</div>-->
+    <!--    <div class="chat-icon" title="Чат">--><?php //=Icon::chat2();?><!--</div>-->
     <form class="chat-form" id="chatForm">
         <div class="modal-close"><?= Icon::close() ?></div>
         <div class="messages"></div>
@@ -76,7 +88,7 @@ use app\core\Icon;
     </div>
 
 </div>
-<button id="fixed-call-me" class="fixed call-me" title="Заказать обратный звонок"><?=Icon::phone();?></button>
-<button id="hoist" class="fixed hoist" title="Наверх"><?=Icon::scrollUp1();?></button>
+<button id="fixed-call-me" class="fixed call-me" title="Заказать обратный звонок"><?= Icon::phone(); ?></button>
+<button id="hoist" class="fixed hoist" title="Наверх"><?= Icon::scrollUp1(); ?></button>
 </body>
 </html>

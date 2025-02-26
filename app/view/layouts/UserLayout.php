@@ -6,8 +6,9 @@ use app\controller\Controller;
 use app\core\FS;
 use app\core\Route;
 use app\Repository\CategoryRepository;
-use app\view\Assets\Assets;
-use app\view\Assets\UserAssets;
+use app\Services\AssetsService\Assets;
+use app\Services\AssetsService\UserAssets;
+use app\view\Footer\Footer;
 use app\view\Footer\UserFooter;
 use app\view\Header\UserHeader;
 
@@ -15,6 +16,7 @@ class UserLayout extends Layout
 {
     protected string $view = '';
     protected UserHeader $header;
+    protected UserFooter $footer;
     protected FS $viewFs;
     protected string $layout = '';
     protected FS $layoutFs;
@@ -24,6 +26,7 @@ class UserLayout extends Layout
         protected Route   $route,
         public Controller $controller,
         protected Assets  $assets = new UserAssets(),
+
     )
     {
         $rootCategories = CategoryRepository::rootCategories();

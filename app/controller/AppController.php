@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\core\Cache;
 use app\core\Response;
 use app\Repository\MorphRepository;
 use Throwable;

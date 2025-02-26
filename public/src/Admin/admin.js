@@ -42,11 +42,7 @@ $(document).ready(async function () {
       const {default: Tables} = await import( '../components/table/Tables.js')
       new Tables
    }
-   new Search(true);
-   new Navigation;
-   new AdminHeader()
    adminScroll()
-   new AdminSidebar($('.sidebar').first())
 
 
    if (window.location.pathname === '/adminsc/pages') {

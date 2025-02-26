@@ -6,7 +6,7 @@ namespace app\controller;
 use app\core\Auth;
 use app\core\Response;
 use app\core\Route;
-use app\view\Assets\Assets;
+use app\Services\AssetsService\Assets;
 
 class Controller
 {

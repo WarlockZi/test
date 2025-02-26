@@ -25,7 +25,6 @@ class CategoryRepository
 
     public function indexInstore(string $url)
     {
-//        Cache::off();
         return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
             function () use ($url) {
                 $category = Category::query()

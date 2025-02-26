@@ -16,7 +16,7 @@ class RequestController Extends AdminscController
 
 	public function actionIndex():void
 	{
-		if ($_ENV['MODE'] === 'production') {
+		if (DEV) {
 			$content = file_get_contents('/var/www/vitexopt/data/logs/vitexopt.ru.access.log');
 		} else {
 			$content = file_get_contents(__DIR__ . '/vitexopt.ru.access.log');

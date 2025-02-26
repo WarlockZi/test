@@ -7,9 +7,10 @@
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/assets/srvc/<?= !!DEV ? "logo-square-dev.svg" : "logo-square.svg" ?>" type="image/svg+xml">
-
-    <?= $assets->getCss() ?>
+    <link rel="icon" href="/assets/srvc/<?= DEV ? "logo-square-dev.svg" : "logo-square.svg" ?>" type="image/svg+xml">
+    <script type="module" src="https://localhost:5173/@vite/client"></script>
+    <script type="module" src="https://localhost:5173/Admin/admin.js"></script>
+<!--    --><?php //= $assets->getCss() ?>
 
 </head>
 
