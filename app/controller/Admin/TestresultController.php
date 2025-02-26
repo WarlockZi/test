@@ -34,7 +34,7 @@ class TestresultController extends AdminscController
     private static function getMailsToSendIfRightResults($mailsTo, $errCount)
     {
         $sendIfLessOrEqualThen = 0;
-        $mails                 = explode(',', $_ENV['TEST_EMAIL_ONLY_CORRECT']);
+        $mails                 = explode(',', env('TEST_EMAIL_ONLY_CORRECT'));
 
         if ((int)$errCount <= $sendIfLessOrEqualThen) {
             return array_merge($mailsTo, $mails);
@@ -57,7 +57,7 @@ class TestresultController extends AdminscController
 
     private function sendTestResult($post, $resid): void
     {
-//        if ($_ENV['TEST_EMAIL_ALL_SEND']) {
+//        if (env('TEST_EMAIL_ALL_SEND']) {
 //            Response::exitJson(['popup'=>'mail not sent']);
 //        }
         $mailer = new PHPMailer('env');

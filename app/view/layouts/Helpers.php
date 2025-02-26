@@ -14,11 +14,10 @@ class Helpers
     public function __construct(
         readonly private string $entry = '',
         private array           $manifest = [],
-        private bool            $isDev = false,
         private bool            $serverStarted = false,
 //        readonly private string $viteHost = 'https://localhost:5133/',
 //        readonly private string $viteHost = 'https://vi-prod:5133/public/build/',
-        readonly private string $viteHost = 'https://vi-prod:5133/',
+        readonly private string $viteHost = 'https://localhost:5173/',
         readonly private string $viteAssets = 'assets/',
         readonly private string $manifestPath = ROOT . '/public/build/.vite/manifest.json',
         readonly private string $publicPath = '/public/build/',
@@ -27,8 +26,7 @@ class Helpers
 
     )
     {
-        $this->isDev = DEV;
-        $this->serverStarted = $this->loadedFromDevServer($this->entry);
+//        $this->serverStarted = $this->loadedFromDevServer($this->entry);
         $this->manifest = $this->getManifest();
     }
 
@@ -66,13 +64,14 @@ class Helpers
         $url = "$this->viteHost{$this->publicPath}{$entry}";
         $url = "$this->viteHost{$entry}";
 //        $url = $this->VITE_HOST . '/' . $entry;
-        $handle = curl_init($url);
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handle, CURLOPT_NOBODY, true);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CAINFO, "D:/ospanel/userdata/config/cacert.pem");
+        curl_setopt($ch, CURLOPT_NOBODY, true);
 
-        curl_exec($handle);
-        $error = curl_errno($handle);
-        curl_close($handle);
+        curl_exec($ch);
+        $error = curl_errno($ch);
+        curl_close($ch);
 
         return $exists = !$error;
     }
@@ -88,7 +87,7 @@ class Helpers
         $public = '';
 //        $public = '/public/build/.vite';
 
-        return $this->isDev
+        return DEV
             ? "\n<script type='module' src='$this->viteHost{$public}@vite/client'></script>"
 //            ? "\n<script type='module' src='$this->VITE_HOST{$this->publicPath}@vite/client'></script>"
             : "";
@@ -98,7 +97,7 @@ class Helpers
     {
         $first = $this->viteHost . "{$this->publicPath}" . $this->entry;
         $first = $this->viteHost  . $this->entry;
-        $url = $this->isDev
+        $url = DEV
             ? $first
             : $this->assetUrl();
 

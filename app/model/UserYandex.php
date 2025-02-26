@@ -81,7 +81,7 @@ class UserYandex extends Model implements IUser
 
     public function isSU(): bool
     {
-        return $_ENV['SU_EMAIL'] === $this->mail();
+        return env('SU_EMAIL') === $this->mail();
     }
 
     public function isAdmin(): bool

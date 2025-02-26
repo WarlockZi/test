@@ -36,7 +36,7 @@ class Mail
                 'replyTo' => env('SMTP_FROM_EMAIL'),
             ],
             'yandexnew' => [
-                'app_key' => $_ENV['YANDEX_APP_KEY'], // пароль для стороннего приложения
+                'app_key' => env('YANDEX_APP_KEY'), // пароль для стороннего приложения
             ],
 
             'vitex' => [
