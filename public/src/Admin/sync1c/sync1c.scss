@@ -1,6 +1,7 @@
-@import "../../var";
-@import "../../mixin_media";
-@import "../../components/dnd/dnd";
+@use "../../var";
+@use "../../mixin_media";
+@use "sass:color";
+
 
 
 .requests {
@@ -15,7 +16,7 @@
     flex-direction: column;
     user-select: initial;
 
-    .req{
+    .req {
       padding: 5px;
       background-color: #f5ff0026;
     }
@@ -28,10 +29,12 @@
       background-color: #e8e8e8;
       margin: 0 10px;
     }
+
     .ip {
       background-color: rgba(0, 255, 24, 0.09);
       margin-left: 10px;
     }
+
     .some {
       background-color: #ff330017;
       margin-right: 10px;
@@ -43,25 +46,47 @@
 .sync {
   display: flex;
 
-  .container.files {
-    @include dnd;
+  .buttons-block {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+
+    .buttons-block-left {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 2;
+
+    }
+
+    .buttons-block-right {
+      display: flex;
+      justify-content: center;
+
+    }
   }
 
-  .button{
-    @include colored_button();
+
+  .container.files {
+    @include mixin_media.dnd;
+  }
+
+  .button {
+    @include mixin_media.colored_button();
+    padding: 5px 20px;
 
   }
 
   .container {
-    width: 51%;
+
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap:5px;
+    gap: 5px;
     padding: 15px;
 
     span.file {
-      @include colored_button;
+      @include mixin_media.colored_button;
       width: 100px;
     }
 
@@ -74,7 +99,7 @@
       border-radius: 4px;
       width: 100%;
       box-sizing: border-box;
-      border: 1px solid lighten($color-main, 20%);
+      border: 1px solid mixin_media.lighter(var.$color-main, 20%);
 
     }
 

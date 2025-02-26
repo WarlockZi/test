@@ -1,2 +1,0 @@
-import './header-adm.scss'
-

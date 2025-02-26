@@ -1,8 +1,9 @@
 import Sortable from 'sortablejs'
-import {$, popup, post} from '../common'
+import {$, post} from '../common'
 
 export default function sortable(containerSelector, elSelector, model) {
 
+  debugger
   let container = $(containerSelector)[0];
   if (container) {
 

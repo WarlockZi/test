@@ -9,7 +9,7 @@ use \app\view\Question\QuestionView;
 
 	<div class="test-edit-wrapper">
 
-		 <? TestView::testHead(); ?>
+		 <? include ROOT . '/app/view/Test/test_head.php'; ?>
 
 		<div class="test-edit__cont">
 

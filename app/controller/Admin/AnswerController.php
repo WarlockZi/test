@@ -5,9 +5,9 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\model\Answer;
 
-class AnswerController Extends AppController
+class AnswerController Extends AdminscController
 {
-	protected $model = Answer::class;
+	protected string $model = Answer::class;
 
 	public function __construct()
 	{

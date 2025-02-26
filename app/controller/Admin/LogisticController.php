@@ -4,7 +4,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 
-class LogisticController extends AppController
+class LogisticController extends AdminscController
 {
 
 	public function __construct()
@@ -17,7 +17,7 @@ class LogisticController extends AppController
 		$key = '74ca418bbf3c680227905417d3f17589';
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$myCurl = curl_init();
 

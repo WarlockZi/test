@@ -1,27 +1,30 @@
-<h1 class="page-name">Категории</h1>
+<h1 class="page-name">Каталог</h1>
 <div class="category">
 
-	<? use app\view\Category\CategoryView;
+    <?php
 
-	if (isset($categories) && $categories): ?>
+    if (isset($categories) && $categories): ?>
 
-	  <div class="category-child-wrap">
-			 <? foreach ($categories as $category): ?>
-				 <? if ($category): ?>
+        <div class="category-child-wrap">
+            <?php foreach ($categories as $category): ?>
+                <?php if ($category): ?>
 
-				 <a class="category-card" href="/category/<?= $category->slug; ?>">
-							 <?= $category->name ?>
-<!--							 --><?//= CategoryView::getMainImage($category) ?>
-				 </a>
-				 <? endif; ?>
+                    <div class="category-card">
+                        <a class="category-card-a" href="/catalog/<?= $category->slug; ?>">
+                            <?= $category->name ?>
+                        </a>
+                        <?= \app\view\share\card_panel\CardPanel::categoryCardPanel($category) ?>
+                    </div>
 
-			 <? endforeach; ?>
-	  </div>
+                <?php endif; ?>
 
-	<? else: ?>
-	  <div class="no-categories">
-		  <H1>Категорий нет</H1>
-	  </div>
-	<? endif; ?>
+            <?php endforeach; ?>
+        </div>
+
+    <?php else: ?>
+        <div class="no-categories">
+            <H1>Категорий нет</H1>
+        </div>
+    <?php endif; ?>
 
 </div>

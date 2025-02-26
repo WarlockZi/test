@@ -1,0 +1,36 @@
+@use "../../var";
+
+.admin-panel {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-top: 1px solid white;
+  background-color: var.$color-gray-browser;
+  transition: top 0.8s ease-in-out;
+  z-index: 1;
+
+  &.fixed{
+    position: fixed;
+    top: 0;
+    padding-left: 30px;
+  }
+
+  .row {
+    font-size: .7rem;
+    display: flex;
+    gap: 10px;
+  }
+
+  a {
+    display: block;
+    color: white;
+    padding: 6px;
+
+    &:hover {
+      background-color: var.$color-main;
+
+    }
+
+  }
+}

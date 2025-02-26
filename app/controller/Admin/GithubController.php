@@ -8,9 +8,9 @@ use app\Services\Logger\FileLogger;
 use Carbon\Traits\Date;
 use Exception;
 
-class GithubController Extends AppController
+class GithubController Extends AdminscController
 {
-	protected $model = Answer::class;
+	protected string $model = Answer::class;
 
 	public function __construct()
 	{

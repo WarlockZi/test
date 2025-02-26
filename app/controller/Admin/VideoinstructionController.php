@@ -8,30 +8,29 @@ use app\core\Route;
 use app\model\Videoinstruction;
 use app\view\Videoinstruction\VideoinstructionView;
 
-class VideoinstructionController Extends AppController
+class VideoinstructionController Extends AdminscController
 {
 
-	protected $model = Videoinstruction::class;
+	protected string $model = Videoinstruction::class;
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$videos = Videoinstruction::where('id', '>', 0)
 //			->orderBy(['tag', 'sort'])
 			->orderBy('tag')
 			->orderBy('sort')
 			->get();
-		$this->set(compact('videos'));
+		$this->setVars(compact('videos'));
 	}
 
 	public function actionEdit()
 	{
-		Auth::checkAuthorized(Auth::getUser(), ['role_admin']);
 		$VideoinstructionsView = VideoinstructionView::listAll();
-		$this->set(compact('VideoinstructionsView'));
+		$this->setVars(compact('VideoinstructionsView'));
 	}
 }

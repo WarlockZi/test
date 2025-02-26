@@ -1,3 +1,3 @@
-<?= $breadcrumbs; ?>
+<?= $breadcrumbs??''; ?>
 
 <?= $category; ?>

@@ -4,108 +4,91 @@
 namespace app\Repository;
 
 
+use app\core\Cache;
 use app\model\Category;
-use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\SelectBuilder\TreeOptionsBuilder;
 use Illuminate\Database\Eloquent\Collection;
 
 class CategoryRepository
 {
+    public static function rootCategories()
+    {
+        return Cache::get('rootCategories',
+            function () {
+                return Category::withWhereHas('ownProperties',
+                    fn($q) => $q->where('show_front', 1))
+                    ->with('childrenRecursive')
+                    ->get();
+            },
+            Cache::$timeLife1_000
+        );
+    }
 
-  public static function indexNoSlug()
-  {
-    return Category::with('childrenRecursive')
-		->whereNull('category_id')
-      ->get();
-  }
+    public function indexInstore(string $url)
+    {
+        return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
+            function () use ($url) {
+                $category = Category::query()
+                    ->with('childrenRecursive')
+                    ->with('parentRecursive')
+                    ->withWhereHas('ownProperties',
+                        fn($query) => $query->where('path', 'like', $url)
+                    )
+                    ->with('productsInStore')
+                    ->with('productsNotInStoreInMatrix')
+                    ->get()->first();
+                $c        = $category->toArray();
 
-	public static function getHeaderCategories()
-	{
-		return Category::query()
-			->where('show_front', 1)
-			->with('childrenNotDeleted')
-			->get();
-	}
+                return $category;
+            }, Cache::$timeLife1_000);
+    }
 
-  public static function editSelectorExcluded($category): array
-  {
-    $d = Category::query()
-      ->where('category_id', $category->id)
-      ->select('id')
-      ->get()
-      ->pluck('id')
-      ->push($category->id)
-      ->toArray();
-    return $d;
-  }
+    public static function changeProperty(array $req): void
+    {
+        $category = Category::find($req['category_id']);
+        $newVal   = $req['morphed']['new_id'];
+        $oldVal   = $req['morphed']['old_id'];
 
-  public static function indexInstore(string $slug){
-		return Category::query()
-			->where('slug', $slug)
-			->with('childrenRecursive')
-			->with('parentRecursive')
-			->with('productsInStore')
-//			->with('productsNotInStore')
-			->with('productsNotInStoreInMatrix')
-//			->with('ActivePromotions')
-			->with('products.activepromotions')
-			->with('products.inactivepromotions')
-			->with('seo')
-//      ->with('productsNotInStore')
-			->get()
-			->first();
-	}
+        if (!$oldVal) {
+            $category->properties()->attach($newVal);
+            exit(json_encode(['popup' => 'Добавлен']));
 
-  public static function edit(?int $id)
-  {
-    if ($id == null)
-      return Category::create();
-    return Category::with(
-      'products',
-      'childrenNotDeleted',
-      'childrenDeleted',
-      'parentRecursive.properties',
-      'properties',
-      'mainImages')
-      ->find($id);
-  }
+        } else if (!$newVal) {
+            $category->properties()->detach($oldVal);
+            exit(json_encode(['ok' => 'ok', 'popup' => 'Удален']));
 
-  public static function treeAll(): Collection
-  {
-    return Category::query()
-      ->where('category_id', null)
-      ->with('childrenRecursive')
-      ->select('id', 'name')
-      ->whereNull('deleted_at')
-      ->get();
-  }
+        } else {
+            if ($newVal === $oldVal) exit(json_encode(['popup' => 'Одинаковые значения']));
+            $category->properties()->detach($oldVal);
+            $category->properties()->attach($newVal);
+            exit(json_encode(['popup' => 'Поменян']));
+        }
+    }
 
-  public static function selector(?int $selected, ?int $excluded = -1): string
-  {
-    return SelectBuilder::build(
-      TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
-        ->initialOption()
-        ->selected($selected)
-        ->excluded($excluded)
-        ->get()
-    )
-      ->field('category_id')
-      ->get();
-  }
+    public static function edit(?int $id): \Illuminate\Database\Eloquent\Model|Collection|\Illuminate\Database\Eloquent\Builder|null
+    {
+        return Category::with(
+            'products',
+            'childrenNotDeleted',
+            'childrenDeleted',
+            'parentRecursive.properties',
+            'properties',
+            'ownProperties',
+            'mainImages')
+            ->findOrNew($id);
+    }
 
-  public static function selector1(?int $selected, ?array $excluded = []): string
-  {
-    return SelectBuilder::build(
-      TreeOptionsBuilder::build(
-          CategoryRepository::treeAll(),
-          'children_recursive', 2)
-        ->initialOption()
-        ->selected($selected)
-        ->excluded($excluded)
-        ->get()
-    )
-      ->field('category_id')
-      ->get();
-  }
+    public static function treeAll(): Collection
+    {
+        $cat = Cache::get('categoryTree',
+            function () {
+                $cats = Category::whereNull('1s_category_id')
+                    ->with('childrenRecursive')
+                    ->get(['id', '1s_id','1s_category_id', 'name']);
+                return $cats;
+            },
+            Cache::$timeLife1_000
+        );
+        return $cat;
+    }
 
 }

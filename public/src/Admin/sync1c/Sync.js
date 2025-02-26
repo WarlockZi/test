@@ -1,4 +1,4 @@
-import {$, popup, post} from "../../common";
+import {$, post} from "../../common";
 
 export class Sync {
   constructor($sync) {

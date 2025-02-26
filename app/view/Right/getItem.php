@@ -6,7 +6,7 @@ use app\view\components\CustomRadio\CustomRadio;
 use app\view\components\CustomSelect\CustomSelect;
 
 if ($item) {
-	if (User::can($this->user, ['role_employee'])) {
+	if ($user->can(['role_employee'])) {
 		return getEmployeeHtml($item, $this);
 	} else {
 		return getUserHtml($item, $this);

@@ -1,0 +1,14 @@
+@use "../../mixin_media";
+
+.test-head {
+  display: flex;
+  margin-bottom: 20px;
+  flex-direction: column;
+}
+
+.page-name {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  @include mixin_media.h2;
+}

@@ -1,74 +1,81 @@
 <div class="category">
 
-	<? use app\core\Auth;
-	use app\core\Icon;
-	use app\view\Category\CategoryView;
+    <?php if (empty($category)): ?>
+        <div class="no-categories">
+            <H1>Внимание! Приносим свои извинения,
+                но раздел <?= '' ?> находится на стадии разработки.
+                В самое ближайшее время он будет наполнен,
+                и Вы сможете совершить покупку у нас на самых выгодных условиях!
+                В настоящее время Вы можете ознакомиться
+                с ассортиментом других разделов нашего сайта:</H1>
 
-	if (!isset($category)): ?>
-	  <div class="no-categories">
-		  <H1>Такой категории нет</H1>
-	  </div>
-	<? else: ?>
+            <ol>
 
-		<?= $breadcrumbs ?? '' ?>
+                <? if (!empty($rootCategories) && is_array($rootCategories)): ?>
+                    <? foreach ($rootCategories as $cat): ?>
+                        <li>
+                            <a href="<?= $cat['href'] ?>"><?= $cat['name'] ?></a>
+                        </li>
+                    <? endforeach ?>
+                <? endif; ?>
 
-		<? if ($category['childrenRecursive']->count()): ?>
-		  <h1>Подкатегории</h1>
+            </ol>
 
-		  <div class="category-child-wrap">
-					<? foreach ($category['childrenRecursive'] as $child): ?>
-				 <a class="category-card" href="/category/<?= $child->slug ?>">
-							 <?= $child->name ?>
-					 <!--							 --><? //= CategoryView::getMainImage($child) ?>
-				 </a>
+        </div>
+    <?php else: ?>
 
-					<? endforeach; ?>
-		  </div>
-		<? endif; ?>
+        <?= $breadcrumbs ?? '' ?>
+        <h1><?= $category->ownProperties->seo_h1 ?? $category->name; ?></h1>
 
-		<? if ($category->productsInStore->count()): ?>
+        <?php if ($category['childrenRecursive']->count()): ?>
 
-		  <div class="products-header">
-			  <h1>Товары в наличии</h1>
-			  <!--					--><? //= $category->products->filters ?>
-		  </div>
+            <div class="category-child-wrap">
+                <?php foreach ($category['childrenRecursive'] as $child): ?>
+                    <div class="category-card">
+                        <a class="category-card-a" href="<?= $child->href; ?>">
+                            <?= $child->name ?>
+                        </a>
+                        <?= \app\view\share\card_panel\CardPanel::categoryCardPanel($child) ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
-		  <div class="product-wrap">
-					<? $admin = Auth::isAdmin();
-					$icon = Icon::edit(); ?>
 
-					<? foreach ($category->productsInStore as $product): ?>
-						<?= CategoryView::getProductCard($product, $icon) ?>
-					<? endforeach; ?>
+        <?php if ($category->productsInStore->count()): ?>
 
-		  </div>
+            <div class="products-header">
+                <h2>Товары в наличии</h2>
+            </div>
 
-		<? endif; ?>
+            <div class="product-wrap">
+                <?php foreach ($category->productsInStore as $product): ?>
+                    <?php include 'product_card.php' ?>
+                <?php endforeach; ?>
+            </div>
 
-		<? if ($category->productsNotInStoreInMatrix->count()): ?>
+        <?php endif; ?>
 
-		  <div class="products-header">
-			  <br>
-			  <br>
-			  <h1>Товары под заказ</h1>
-			  <!--					--><? //= $category->products->filters ?>
-		  </div>
+        <?php if ($category->productsNotInStoreInMatrix->count()): ?>
 
-		  <div class="product-wrap">
+            <div class="products-header">
+                <h2>Товары под заказ</h2>
+            </div>
 
-					<? $admin = Auth::isAdmin();
-					$icon = Icon::edit(); ?>
+            <div class="product-wrap">
+                <?php foreach ($category->productsNotInStoreInMatrix as $product): ?>
+                    <?php if (str_ends_with($product->name, '*')): ?>
+                        <?php include 'product_card.php' ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
-					<? foreach ($category->productsNotInStoreInMatrix as $product): ?>
-						<? if (str_ends_with($product->name,'*')): ?>
-							<?= CategoryView::getProductCard($product, $icon) ?>
-						<? endif; ?>
-					<? endforeach; ?>
+        <div id="seo_article">
+            <?= $category->seo_article() ?>
+        </div>
 
-		  </div>
-		<? endif; ?>
-	  <div class="hoist">Наверх</div>
-	<? endif; ?>
+    <?php endif; ?>
 
 
 </div>

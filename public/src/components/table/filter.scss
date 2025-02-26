@@ -1,0 +1,105 @@
+@use './../../var';
+@use './../../mixin_media';
+
+.used-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  max-width: 80%;
+  font-size: .8rem;
+
+  span {
+    padding-left: 5px;
+  }
+
+  .selected-filter {
+    border: 1px solid var.$color-main;
+    padding: 5px;
+  }
+
+  .selected-value {
+    font-weight: bold;
+  }
+
+}
+
+.filter-wrap {
+  display: flex;
+  position: fixed;
+  top: 95px;
+  left: 100%;
+  transition: all 200ms ease-in-out;
+  transform: translate3d(0, 0, 0);
+  z-index: 10;
+
+  &:hover {
+    transform: translate(-100%, 0);
+  }
+
+  .filter-badge-title {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: -61px;
+    top: 60px;
+    padding: 10px;
+    background-color: var.$color-main;
+    transform: rotate(270deg);
+    color: white;
+    cursor: pointer;
+  }
+
+  .list-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    min-width: max-content;
+    max-width: 95vw;
+    margin-bottom: 10px;
+    align-items: start;
+    flex-wrap: wrap;
+    backdrop-filter: blur(10px);
+    opacity: 0.97;
+    color: white;
+    max-height: 80vh;
+    background-color: var.$color-gray-browser;
+
+    .btn.filter-button {
+      @include mixin_media.colored_button();
+      padding: 10px;
+      align-self: end;
+    }
+
+    .filter {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+      max-width: 250px;
+
+      .title {
+        font-size: 1rem;
+        margin-bottom: 5px;
+      }
+
+      select {
+        margin-bottom: 3px;
+      }
+
+      .filter-save {
+        display: flex;
+        align-items: center;
+
+        label {
+          font-size: 12px;
+
+        }
+
+        input {
+
+        }
+      }
+    }
+  }
+}

@@ -8,15 +8,15 @@ use app\controller\AppController;
 use app\model\Tag;
 use app\view\Tag\TagView;
 
-class TagController extends AppController
+class TagController extends AdminscController
 {
 
-	public $model = Tag::class;
+	public string $model = Tag::class;
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 		$tags = TagView::list(Tag::class);
-		$this->set(compact('tags'));
+		$this->setVars(compact('tags'));
 	}
 
 }

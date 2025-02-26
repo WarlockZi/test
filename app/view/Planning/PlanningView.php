@@ -5,72 +5,63 @@ namespace app\view\Planning;
 
 
 use app\model\Todo;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
-use Illuminate\Database\Eloquent\Collection;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 
 
 class PlanningView
 {
-
-	public $modelName = Todo::class;
-
 	public static function listDaily(): string
 	{
-		$view = new self;
 		$items = Todo::where('type','день')->get();
-		return MyList::build($view->modelName)
-			->items($items)
+		return Table::build($items)
+            ->model('todo')
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Наименование')
 					->sort()
 					->contenteditable()
 					->search()
 					->width('1fr')
 					->get())
-//			->all()
 			->edit()
 			->get();
 	}
 	public static function listWeekly(): string
 	{
-		$view = new self;
 		$items = Todo::where('type','неделя')->get();
-		return MyList::build($view->modelName)
-			->items($items)
+		return Table::build($items)
+            ->model('todo')
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Наименование')
 					->sort()
 					->contenteditable()
 					->search()
 					->width('1fr')
 					->get())
-//			->all()
 			->edit()
 			->get();
 	}
 	public static function listYearly(): string
 	{
-		$view = new self;
 		$items = Todo::where('type','год')->get();
-		return MyList::build($view->modelName)
-			->items($items)
+		return Table::build($items)
+            ->model('todo')
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name('ID')
 					->get())
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name('Наименование')
 					->sort()
 					->contenteditable()
@@ -81,6 +72,5 @@ class PlanningView
 			->edit()
 			->get();
 	}
-
 
 }

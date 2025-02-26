@@ -1,13 +1,8 @@
 import InputContainer from "./InputContainer";
 
 export default class FieldBuilder {
-  constructor(props) {
+  constructor() {
     this._type = 'text';
-    this._required = false;
-    this._badgeWidth = '50px';
-    this._id = 'name';
-    this._placeholder = 'email';
-    this._autocomplete = false
   }
 
   id(id) {
@@ -38,7 +33,6 @@ export default class FieldBuilder {
     this._placeholder = placeholder;
     return this
   }
-
   class(value) {
     this._class = value;
     return this
@@ -56,7 +50,14 @@ export default class FieldBuilder {
     this._errorEl = errorEl;
     return this
   }
-
+  onKeyUp(callback) {
+    this._onKeyUp = callback;
+    return this
+  }
+  onInput(callback) {
+    this._onInput = callback;
+    return this
+  }
   get() {
     return new InputContainer(this)
   }

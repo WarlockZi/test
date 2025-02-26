@@ -2,118 +2,160 @@
 
 namespace app\controller;
 
-use app\controller\Interfaces\IModelable;
+use app\core\Cache;
+use app\core\Response;
 use app\Repository\MorphRepository;
-use app\Repository\SettingsRepository;
-use \Exception;
-use ReflectionClass;
+use Throwable;
 
-class AppController extends Controller implements IModelable
+class AppController extends Controller
 {
-	protected $model;
-	public array $settings;
+    protected string $model;
+    public array $settings;
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->settings = (new SettingsRepository())->initial();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function setView()
-	{
-		$view = $this->getView();
-		$view->render();
-	}
+    protected function updateOrCreateRelation(array $req): void
+    {
+        $action       = '';
+        $modalId      = $req['id'];
+        $relationName = $req['relation']['name']??null;
+        $pivot        = $req['relation']['pivot']??null;
+        $attach       = $req['relation']['attach'] ?? null;
+        $model        = $this->model::with($relationName)->find($modalId);
 
-	public function actionDelete()
-	{
-		$id = $this->ajax['id'];
+        if ($relationName) {//for has many models
+            if ($pivot) {
+                $id                 = $req['relation']['id'];
+                $pivotField         = array_keys($pivot)[0];
+                $pivotValue         = $req['relation']['pivot'][$pivotField];
+                $pivot              = $model->$relationName()->find($id)->pivot;
+                $pivot->$pivotField = $pivotValue;
+                try {
+                    $pivot->save();
+                    Response::json(['popup' => 'Изменен']);
+                } catch (Throwable $exception) {
+                    Response::json(['popup' => 'Ошибка']);
+                }
+            } elseif ($attach) {
+                $detach = $req['relation']['detach'] ?? null;
+                if ($detach) {
+                    $model->$relationName()->attach($req['relation']['attach']);
+                    $model->$relationName()->detach($req['relation']['detach']);
+                    Response::json(['popup' => 'Заменен', 'attach' => $attach, 'detached' => $detach]);
+                } else {
+                    $model->$relationName()->syncWithoutDetaching($detach);
+                    Response::json(['popup' => 'Заменен', 'attach' => $attach]);
+                }
 
-		if (!$id) $this->exitWithMsg('No id');
-		$model = new $this->model;
+            }elseif (!empty($req['relation']['fields'])) {
+                $key                        = key($req['relation']['fields']) ?? null;
+                $value                      = $req['relation']['fields'][$key] ?? null;
+                $model->$relationName->$key = $value;
+                $model->push();
+            } elseif ($req['relation']['id']) {
+//                $id           = $req['relation']['id'];
+//                $withRelation = $model->$relationName()->syncWithoutDetaching([$id]);
+            }
+        }
 
-		$item = $model->find((int)$id);
-		if ($item) {
-			$destroy = $item->delete();
-			$this->exitJson(['id' => $id, 'popup' => 'Ok']);
-		}
-	}
+//        if ($action === 'created') Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
 
-	public function actionAttach()
-	{
-		$req = $this->isAjax();
-//		$this->exitWithPopup(var_dump($req));
-		if (!$req) $req = $_POST;
-		if ($_FILES) {
-			MorphRepository::attachWithFiles($_FILES, $req);
-		} else {
-			MorphRepository::attach($req);
-		}
+        Response::json(['popup' => 'Обновлен']);
+    }
 
-		$this->exitWithPopup('ok');
-	}
+    public function actionUpdateOrCreate(): void
+    {
+        $req = $this->ajax;
+        if (!empty($req['relation']['name'])) {
+            $this->updateOrCreateRelation($req);
+        }
 
-	public function actionDetach()
-	{
-		$req = $this->ajax;
-		if (!$req) $this->exitWithError('Плохой запрос');
-		MorphRepository::detach($this, $req);
-		$this->exitWithPopup('ok');
-	}
+        if (!empty($req['fields'])) {
+            $id    = $req['id'] ?? null;
+            $model = $this->model::updateOrCreate(
+                ['id' => $id],
+                $req['fields']
+            );
+        }
+
+        if (!empty($req['morph'])) {
+            $this->updateOrCreateMorph($req);
+        }
+
+        if ($model->wasRecentlyCreated) {
+            Response::json(['popup' => 'Создан', 'id' => $model->id]);
+        } else {
+            Response::json(['popup' => 'Обновлен', 'model' => $model->toArray()]);
+        }
+        Response::json(['error' => 'Ошибка']);
+    }
+
+    public function __destruct()
+    {
+        if (!empty($this->ajax)) exit;
+    }
+
+    public function actionDelete(): void
+    {
+        $id = $this->ajax['id'];
+        if (!$id) Response::json(['msg'=>'No id']);
+        $model        = $this->model::find($id);
+        $relationType = $this->ajax['relationType'] ?? null;
+        if (!empty($relationType)) {
+            $relationName = $this->ajax['relationName'] ?? null;
+            if ($relationType === 'attach') {
+                $relationId = $this->ajax['relationId'] ?? null;
+                if ($model->$relationName()->detach($relationId)) {
+                    Response::json(['deleted' => $relationId, 'popup' => 'Удален']);
+                }
+            }
+        } else {
+            $destroyed = $this->model::destroy($id);
+            if ($destroyed) {
+                Response::json(['id' => $id, 'popup' => 'Удален']);
+            } else {
+                Response::json(['popup' => 'Не удален']);
+            }
+        }
 
 
-	/**
-	 * @throws Exception
-	 */
-	public function actionUpdateOrCreate()
-	{
-		$req = $this->ajax;
-		if (!$req) throw new Exception('No request');
+    }
 
-		if (isset($req['relation'])) {
-			$relation = $req['relation'];
-			$model = $this->model::with($relation)->find($req['id']);
+    public function actionAttach(): void
+    {
+        $req = $this->ajax;
 
-			$created = $model->$relation()->create();
-			$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
-		}
+        if (!$req) $req = $_POST;
+        if ($_FILES) {
+            MorphRepository::attachWithFiles($_FILES, $req);
+        } else {
+            MorphRepository::attach($req);
+        }
 
-		if (isset($req['morph'])) {
-			$morph = $req['morph'];
-			$relation = $morph['relation'];
-			$model = $this->model::with($relation)->find($req['id']);
-			$created = $model->$relation()->create();
-			$model->$relation()->syncWithoutDetaching($created);
-			$this->exitJson(['popup' => 'Создан', 'id' => $created->id]);
-		}
+        Response::exitWithPopup('ok');
+    }
 
-		$model = $this->model::updateOrCreate(
-			['id' => $req['id']],
-			$req
-		);
+    public function actionDetach(): void
+    {
+        $req = $this->ajax;
+        if (!$req) Response::json(['error' => 'Плохой запрос']);
+        MorphRepository::detach($this, $req);
+        Response::exitWithPopup('ok');
+    }
 
-		if ($model->wasRecentlyCreated) {
-			$this->exitJson(['popup' => 'Создан', 'id' => $model->id]);
-		} else {
-			$this->exitJson(['popup' => 'Обновлен', 'model' => $model->toArray()]);
-		}
-		$this->exitWithError('Ошибка');
 
-	}
+    protected function updateOrCreateMorph(array $req): void
+    {
+        $morph    = $req['morph'];
+        $relation = $morph['relation'];
+        $model    = $this->model::with($relation)->find($req['id']);
+        $created  = $this->model->$relation()->create();
+        $this->model->$relation()->syncWithoutDetaching($created);
+        Response::json(['popup' => 'Создан', 'id' => $created->id]);
+    }
 
-	public static function shortClassName($object)
-	{
-		return lcfirst((new ReflectionClass($object))->getShortName());
-	}
-
-	public function getModel()
-	{
-		return $this->model;
-	}
-
-	public function setModel($model)
-	{
-		$this->model = $model;
-	}
 
 }
