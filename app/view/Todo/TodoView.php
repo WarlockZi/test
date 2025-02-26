@@ -5,8 +5,8 @@ namespace app\view\Todo;
 
 
 use app\model\Todo;
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 
 
 class TodoView
@@ -16,10 +16,9 @@ class TodoView
 	{
 		$dailyTodos = Todo::where('type', 'daily')->get();
 
-		return MyList::build(Todo::class)
-			->items($dailyTodos)
+		return Table::build($dailyTodos)
 			->column(
-				ListColumnBuilder::build('id')
+				ColumnBuilder::build('id')
 					->name("ID")
 					->width('50px')
 //					->type('number')
@@ -28,7 +27,7 @@ class TodoView
 			)
 
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->name("Наименование")
 					->width('1fr')
 					->contenteditable()
@@ -37,7 +36,7 @@ class TodoView
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('description')
+				ColumnBuilder::build('description')
 					->name("Описание")
 					->width('1fr')
 					->contenteditable()
@@ -47,7 +46,7 @@ class TodoView
 			)
 
 			->column(
-				ListColumnBuilder::build('post_id')
+				ColumnBuilder::build('post_id')
 					->name("Должность")
 					->width('1fr')
 					->contenteditable()
@@ -57,7 +56,7 @@ class TodoView
 			)
 
 			->column(
-				ListColumnBuilder::build('type')
+				ColumnBuilder::build('type')
 					->name("Цикличность")
 					->width('150px')
 					->contenteditable()
@@ -67,7 +66,7 @@ class TodoView
 			)
 			->edit()
 			->del()
-			->addButton('ajax')
+			->addButton()
 			->get();
 
 	}

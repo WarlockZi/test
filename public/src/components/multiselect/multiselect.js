@@ -43,7 +43,7 @@ export default function multiselect() {
           ul.classList.toggle('show')
 
 // нажатие по крестику чипа
-        } else if (['view.components.Builders.ListBuilder.del'].includes(target.className)) {
+        } else if (['view.components.Builders.TableBuilder.del'].includes(target.className)) {
           let id = target.closest('.chip').dataset.id
           toggleBackground(id)
           let chip = target.closest('.chip')

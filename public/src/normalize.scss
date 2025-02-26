@@ -1,19 +1,21 @@
-@import "mixin_media";
-@import "var";
-
-@font-face {
-  font-family: "RobotoMedium";
-  font-style: normal;
-  font-weight: 500;
-  src: url("/public/src/font/RobotoMedium/RobotoMedium.woff") format("woff"),
-  url("/public/src/font/RobotoMedium/RobotoMedium.ttf") format("truetype");
-}
+@use "mixin_media";
+@use "var";
 
 html {
   height: 100%;
   overflow-y: scroll;
 }
 
+//* {
+//  border: 1px solid red;
+//}
+
+.preload * {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+}
 
 body {
   position: relative;
@@ -21,16 +23,13 @@ body {
   min-height: 100%;
   flex-direction: column;
   margin: 0;
-  font-family: arial, sans-serif;
+  font-family: "Roboto", "Montserrat", sans-serif;
   /*скрыть дерганье страницы в появлении полосы прокрутки*/
   padding: 0 calc(0px - (100vw - 100%)) 0 0;
   text-rendering: optimizeLegibility;
   overflow: hidden;
-  background-color: $color-gray1;
+  background-color: var.$color-white;
 
-  @include _500 {
-    padding: 0;
-  }
 
 }
 
@@ -57,9 +56,7 @@ textarea:focus,
   outline: transparent;
 }
 
-.df {
-  display: flex !important;
-}
+
 [hidden] {
   display: none !important;
 }
@@ -68,6 +65,6 @@ textarea:focus,
   display: none !important;
 }
 
-[contenteditable]:focus-visible{
+[contenteditable]:focus-visible {
   outline: transparent;
 }

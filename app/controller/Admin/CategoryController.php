@@ -2,51 +2,44 @@
 
 namespace app\controller\Admin;
 
-
-use app\Actions\CategoryAction;
-use app\controller\AppController;
 use app\model\Category;
-use app\Repository\BreadcrumbsRepository;
 use app\Repository\CategoryRepository;
+use app\Services\Breadcrumbs\AdminBreadcrumbsService;
 use app\view\Category\CategoryFormView;
 
-
-class CategoryController extends AppController
+class CategoryController extends AdminscController
 {
-
-  public $model = Category::class;
-
-  public function __construct()
-  {
-    parent::__construct();
-  }
-
-  public function actionIndex()
-  {
-    $categories = CategoryRepository::treeAll();
-    $accordion = '';
-    if ($categories->count()) {
-      $accordion = CategoryFormView::indexTree($categories) ;
+    public function __construct(
+        public string              $model = Category::class,
+        private AdminBreadcrumbsService $breadcrumbsService = new AdminBreadcrumbsService(),
+    )
+    {
+        parent::__construct();
     }
-    $this->set(compact('accordion'));
-  }
 
-  public function actionEdit()
-  {
-    $id = $this->route->id;
-    $breadcrumbs = BreadcrumbsRepository::getCategoryBreadcrumbs($id, false, true);
-    $category = CategoryFormView::edit($id);
-    $this->set(compact('category', 'breadcrumbs',
-		));
-  }
-	public function actionChangeproperty()
-	{
-		CategoryAction::changeProperty($this->ajax);
-	}
+    public function actionIndex(): void
+    {
+        $categoryTree = CategoryFormView::list();
+        $this->setVars(compact('categoryTree'));
+    }
 
-  public function actionList()
-  {
-    $table = CategoryFormView::list();
-    $this->set(compact('table'));
-  }
+    public function actionEdit(): void
+    {
+        $id          = $this->route->id;
+        $category    = CategoryRepository::edit($id);
+        $breadcrumbs = $this->breadcrumbsService->getCategoryBreadcrumbs($category);
+        $category    = CategoryFormView::edit($category);
+        $this->setVars(compact('category', 'breadcrumbs'));
+    }
+
+    public function actionChangeproperty()
+    {
+        $this->repo->changeProperty($this->ajax);
+    }
+
+    public function actionList()
+    {
+        $table = CategoryFormView::list();
+        $this->setVars(compact('table'));
+    }
 }

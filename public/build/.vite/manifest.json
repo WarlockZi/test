@@ -1,0 +1,386 @@
+{
+  "Admin/Category/Category.js": {
+    "file": "assets/Category-TBe5l8x_.js",
+    "name": "Category",
+    "src": "Admin/Category/Category.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "Admin/admin.js",
+      "_search-DV8UsOr4.js",
+      "_SelectNew-ChaMbA7q.js",
+      "_QuillFactory-D71DNIk_.js",
+      "_MyQuill-gEQ7mOZi.js"
+    ]
+  },
+  "Admin/Order/order.js": {
+    "file": "assets/order-BdzMdRVU.js",
+    "name": "order",
+    "src": "Admin/Order/order.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_SelectNew-ChaMbA7q.js",
+      "_search-DV8UsOr4.js"
+    ],
+    "css": [
+      "assets/order-a0agzArA.css"
+    ]
+  },
+  "Admin/Product/Fields.js": {
+    "file": "assets/Fields-CWXWrzKZ.js",
+    "name": "Fields",
+    "src": "Admin/Product/Fields.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_SelectNew-ChaMbA7q.js",
+      "_search-DV8UsOr4.js"
+    ]
+  },
+  "Admin/Product/Product.js": {
+    "file": "assets/Product-DR_V03EO.js",
+    "name": "Product",
+    "src": "Admin/Product/Product.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "Admin/admin.js",
+      "_SelectNew-ChaMbA7q.js",
+      "_QuillFactory-D71DNIk_.js",
+      "_MyQuill-gEQ7mOZi.js"
+    ],
+    "dynamicImports": [
+      "components/dnd/dnd.js",
+      "Admin/Product/Fields.js",
+      "Admin/Product/Props.js",
+      "share/card_panel/card_panel.js"
+    ],
+    "css": [
+      "assets/Product-Cx1xAnsF.css"
+    ]
+  },
+  "Admin/Product/Props.js": {
+    "file": "assets/Props-ZvsUNlbz.js",
+    "name": "Props",
+    "src": "Admin/Product/Props.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "Admin/Product/Product.js",
+      "_search-DV8UsOr4.js",
+      "_SelectNew-ChaMbA7q.js",
+      "Admin/admin.js",
+      "_MyQuill-gEQ7mOZi.js",
+      "_QuillFactory-D71DNIk_.js"
+    ]
+  },
+  "Admin/ProductFilter/ProductFilter.js": {
+    "file": "assets/ProductFilter-8nV8kJXn.js",
+    "name": "ProductFilter",
+    "src": "Admin/ProductFilter/ProductFilter.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "Admin/admin.js",
+      "_search-DV8UsOr4.js",
+      "_SelectNew-ChaMbA7q.js",
+      "_MyQuill-gEQ7mOZi.js"
+    ]
+  },
+  "Admin/Test/TestDo/TestDo.js": {
+    "file": "assets/TestDo-DIR6CFVI.js",
+    "name": "TestDo",
+    "src": "Admin/Test/TestDo/TestDo.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js"
+    ],
+    "css": [
+      "assets/TestDo-D6IyUqVr.css"
+    ]
+  },
+  "Admin/Test/TestEdit/test-edit.js": {
+    "file": "assets/test-edit-CuhrlD5e.js",
+    "name": "test-edit",
+    "src": "Admin/Test/TestEdit/test-edit.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "Admin/admin.js",
+      "_search-DV8UsOr4.js",
+      "_index-B0zPbto0.js",
+      "_MyQuill-gEQ7mOZi.js"
+    ],
+    "css": [
+      "assets/test-edit-BaL4Q1vr.css"
+    ]
+  },
+  "Admin/admin.js": {
+    "file": "assets/admin-DGH2t94a.js",
+    "name": "admin",
+    "src": "Admin/admin.js",
+    "isEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "_MyQuill-gEQ7mOZi.js"
+    ],
+    "dynamicImports": [
+      "components/table/Tables.js",
+      "_index-B0zPbto0.js",
+      "Admin/chartjs/chartjs.js",
+      "Admin/ProductFilter/ProductFilter.js",
+      "Promotions/Promotion.js",
+      "components/Modal/modal.js",
+      "share/card_panel/card_panel.js",
+      "Admin/Product/Product.js",
+      "Admin/Order/order.js",
+      "Admin/components/catalog-item/catalog-item.js",
+      "Admin/Category/Category.js"
+    ],
+    "css": [
+      "assets/admin-DXYdymVZ.css"
+    ]
+  },
+  "Admin/chartjs/chartjs.js": {
+    "file": "assets/chartjs-D-JIgSlQ.js",
+    "name": "chartjs",
+    "src": "Admin/chartjs/chartjs.js",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/chartjs-Dap-k2NF.css"
+    ]
+  },
+  "Admin/components/catalog-item/catalog-item.js": {
+    "file": "assets/catalog-item-Bz23nGZh.js",
+    "name": "catalog-item",
+    "src": "Admin/components/catalog-item/catalog-item.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "_SelectNew-ChaMbA7q.js"
+    ],
+    "css": [
+      "assets/catalog-item-DYLOAFwQ.css"
+    ]
+  },
+  "Cart/Cart.js": {
+    "file": "assets/Cart-CWTUTWt-.js",
+    "name": "Cart",
+    "src": "Cart/Cart.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "_shippableUnitsTable-Bwh8pAV1.js"
+    ]
+  },
+  "Category/category.js": {
+    "file": "assets/category-yYTTZ133.js",
+    "name": "category",
+    "src": "Category/category.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "_shippableUnitsTable-Bwh8pAV1.js",
+      "_MyQuill-gEQ7mOZi.js"
+    ],
+    "dynamicImports": [
+      "share/card_panel/card_panel.js"
+    ]
+  },
+  "Compare/Compare.js": {
+    "file": "assets/Compare-Ui8ezI9m.js",
+    "name": "Compare",
+    "src": "Compare/Compare.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js"
+    ],
+    "css": [
+      "assets/Compare-Dot20Hvq.css"
+    ]
+  },
+  "Like/Like.js": {
+    "file": "assets/Like-BL9EXMQc.js",
+    "name": "Like",
+    "src": "Like/Like.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "_Table-Bs1rjaZk.js",
+      "_SelectNew-ChaMbA7q.js"
+    ]
+  },
+  "Main/main.js": {
+    "file": "assets/main-BpfpODNR.js",
+    "name": "main",
+    "src": "Main/main.js",
+    "isEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "components/Modal/modal.js",
+      "Admin/components/catalog-item/catalog-item.js",
+      "_SelectNew-ChaMbA7q.js"
+    ],
+    "dynamicImports": [
+      "_search-DV8UsOr4.js",
+      "_search-DV8UsOr4.js",
+      "components/Modal/modal.js",
+      "Cart/Cart.js",
+      "Like/Like.js",
+      "Compare/Compare.js",
+      "Category/category.js",
+      "Product/Product.js",
+      "Promotions/Promotion.js"
+    ],
+    "css": [
+      "assets/main-BuvvURq4.css"
+    ]
+  },
+  "Product/Product.js": {
+    "file": "assets/Product-Cgf-i3b6.js",
+    "name": "Product",
+    "src": "Product/Product.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "share/card_panel/card_panel.js",
+      "_shippableUnitsTable-Bwh8pAV1.js",
+      "_MyQuill-gEQ7mOZi.js"
+    ],
+    "css": [
+      "assets/Product-Cs04jsrO.css"
+    ]
+  },
+  "Promotions/Promotion.js": {
+    "file": "assets/Promotion-BnmbatjM.js",
+    "name": "Promotion",
+    "src": "Promotions/Promotion.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "_SelectNew-ChaMbA7q.js"
+    ],
+    "css": [
+      "assets/Promotion--2U3bzhI.css"
+    ]
+  },
+  "_MyQuill-!~{00f}~.js": {
+    "file": "assets/MyQuill-B2DiOfU9.css",
+    "src": "_MyQuill-!~{00f}~.js"
+  },
+  "_MyQuill-gEQ7mOZi.js": {
+    "file": "assets/MyQuill-gEQ7mOZi.js",
+    "name": "MyQuill",
+    "imports": [
+      "_search-DV8UsOr4.js"
+    ],
+    "css": [
+      "assets/MyQuill-B2DiOfU9.css"
+    ]
+  },
+  "_QuillFactory-D71DNIk_.js": {
+    "file": "assets/QuillFactory-D71DNIk_.js",
+    "name": "QuillFactory",
+    "imports": [
+      "_MyQuill-gEQ7mOZi.js",
+      "_search-DV8UsOr4.js"
+    ]
+  },
+  "_SelectNew-ChaMbA7q.js": {
+    "file": "assets/SelectNew-ChaMbA7q.js",
+    "name": "SelectNew",
+    "imports": [
+      "_search-DV8UsOr4.js"
+    ]
+  },
+  "_Table-!~{00m}~.js": {
+    "file": "assets/Table-7z3EdDOS.css",
+    "src": "_Table-!~{00m}~.js"
+  },
+  "_Table-Bs1rjaZk.js": {
+    "file": "assets/Table-Bs1rjaZk.js",
+    "name": "Table",
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "_SelectNew-ChaMbA7q.js"
+    ],
+    "css": [
+      "assets/Table-7z3EdDOS.css"
+    ]
+  },
+  "_index-!~{004}~.js": {
+    "file": "assets/index-DmAyeOWP.css",
+    "src": "_index-!~{004}~.js"
+  },
+  "_index-B0zPbto0.js": {
+    "file": "assets/index-B0zPbto0.js",
+    "name": "index",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "Admin/admin.js"
+    ],
+    "dynamicImports": [
+      "Admin/Test/TestDo/TestDo.js",
+      "Admin/Test/TestEdit/test-edit.js"
+    ],
+    "css": [
+      "assets/index-DmAyeOWP.css"
+    ]
+  },
+  "_search-!~{00e}~.js": {
+    "file": "assets/search-CWOthOO5.css",
+    "src": "_search-!~{00e}~.js"
+  },
+  "_search-DV8UsOr4.js": {
+    "file": "assets/search-DV8UsOr4.js",
+    "name": "search",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/search-CWOthOO5.css"
+    ]
+  },
+  "_shippableUnitsTable-Bwh8pAV1.js": {
+    "file": "assets/shippableUnitsTable-Bwh8pAV1.js",
+    "name": "shippableUnitsTable",
+    "imports": [
+      "_search-DV8UsOr4.js"
+    ]
+  },
+  "components/Modal/modal.js": {
+    "file": "assets/modal-97p8d6xo.js",
+    "name": "modal",
+    "src": "components/Modal/modal.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js"
+    ],
+    "css": [
+      "assets/modal-CsdT2GQ5.css"
+    ]
+  },
+  "components/dnd/dnd.js": {
+    "file": "assets/dnd-BIsc27kd.js",
+    "name": "dnd",
+    "src": "components/dnd/dnd.js",
+    "isDynamicEntry": true
+  },
+  "components/table/Tables.js": {
+    "file": "assets/Tables-CKu94998.js",
+    "name": "Tables",
+    "src": "components/table/Tables.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js",
+      "_Table-Bs1rjaZk.js",
+      "_SelectNew-ChaMbA7q.js"
+    ]
+  },
+  "share/card_panel/card_panel.js": {
+    "file": "assets/card_panel-BcHNe63H.js",
+    "name": "card_panel",
+    "src": "share/card_panel/card_panel.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_search-DV8UsOr4.js"
+    ],
+    "css": [
+      "assets/card_panel-UF59AJVy.css"
+    ]
+  }
+}

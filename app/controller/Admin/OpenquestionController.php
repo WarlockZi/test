@@ -3,12 +3,13 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
+use app\core\Response;
 use app\core\Route;
 use app\core\Router;
 use app\model\Opentest;
 
 
-class OpenquestionController Extends AppController
+class OpenquestionController Extends AdminscController
 {
   public function __construct()
   {
@@ -18,7 +19,7 @@ class OpenquestionController Extends AppController
   public function actionEdit()
   {
     $page_name = 'Редактирование jnrhsns] тестов';
-    $this->set(compact('page_name'));
+    $this->setVars(compact('page_name'));
 
     $id = Router::getRoute()->id;
 
@@ -27,7 +28,7 @@ class OpenquestionController Extends AppController
         ->orderBy('sort')
         ->find($id);
 
-      $this->set(compact('test'));
+      $this->setVars(compact('test'));
     }
   }
 
@@ -35,7 +36,7 @@ class OpenquestionController Extends AppController
   {
     $q_ids = $this->ajax['toChange'];
     Opentest::sort($q_ids);
-    $this->exitWithPopup('Сортировка сохранена');
+    Response::exitWithPopup('Сортировка сохранена');
   }
 
 

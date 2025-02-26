@@ -1,0 +1,240 @@
+@use "../../var";
+@use "../../mixin_media";
+@use "filter";
+@use "../select/selectNew";
+
+[custom-table] {
+  background-color: #fff;
+  padding-bottom: 10px;
+  max-width: 1300px;
+
+  @include mixin_media.m600 {
+    overflow-x: auto;
+  }
+
+  .table-header-row {
+    font-size: .7rem;
+    margin-bottom: 7px;
+
+    &:nth-last-of-type(3) {
+      margin-bottom: 15px;
+    }
+  }
+
+  .no-items {
+    font-size: .8rem;
+    color: darkred;
+  }
+
+  .table-title {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var.$color-admin-sidebar;
+  }
+
+  .custom-table {
+    //overflow-x: auto;
+
+    [contenteditable] {
+      display: flex;
+      align-items: center;
+      font-size: .8rem;
+    }
+
+    [contenteditable]:hover {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .img {
+      position: relative;
+      box-sizing: border-box;
+
+      img {
+        top: 0;
+        left: 0;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+        transition: all .3s;
+        box-sizing: border-box;
+      }
+
+      &:hover > img {
+        left: -200px;
+        top: -50%;
+        height: 150px;
+        min-width: 150px;
+        z-index: 1;
+        border: 1px solid hsl(90deg 20% 90%);
+      }
+    }
+
+    .font-size-1-5em {
+      font-size: 1.5rem;
+    }
+
+    .cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: var.$color-gray1;
+      }
+
+      &.left {
+        justify-content: start;
+      }
+    }
+
+    input[type=checkbox] {
+      width: 20px;
+      display: inline-flex;
+      cursor: pointer;
+      height: calc(100% - 2px);
+    }
+
+    > * {
+      border: 1px solid transparent;
+      box-sizing: border-box;
+      padding: 5px 3px;
+      border-bottom: solid 1px var.$color-gray4;
+      font-size: var.$font-size-table;
+      min-height: .875rem;
+      word-break: break-word;
+    }
+
+    .del:not(.head) {
+      background-size: 47px 19px;
+      background-repeat: no-repeat;
+      background-position: center;
+      min-height: .7rem;
+      color: var.$color-red;
+      cursor: pointer;
+      transition: color .2s ease-in-out, background-color .2s ease-in-out;
+
+      &:hover {
+        background-color: mixin_media.lighter(var.$color-red, 5%);
+        color: white;
+      }
+
+      svg {
+        pointer-events: none;
+      }
+    }
+
+    .edit:not(.head) {
+      background-size: 47px 19px;
+      background-repeat: no-repeat;
+      background-position: center;
+      min-height: .7rem;
+      color: var.$color-main;
+      cursor: pointer;
+      transition: color .2s ease-in-out, background-color .2s ease-in-out;
+
+      &:hover {
+        background-color: mixin_media.lighter(var.$color-main, 25%);
+        color: white;
+      }
+
+      svg {
+        pointer-events: none;
+      }
+    }
+
+    .head {
+      padding: 2px 5px;
+      background-color: var.$color-admin-sidebar;
+      color: #fff;
+      font-weight: normal;
+      border-right: 1px solid #ffffff;
+      box-sizing: border-box;
+      display: flex;
+      flex-flow: column;
+      position: relative;
+      min-height: 27px;
+
+
+      .icon {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        right: 10px;
+        background: url(/pic/icons/upDown.svg) 0 0/15px 15px no-repeat;
+      }
+
+      input {
+        cursor: text;
+        position: relative;
+        margin: 0;
+        width: 1px;
+        background-image: url(/pic/icons/search.svg);
+        background-repeat: no-repeat;
+        background-position: 3px 3px, center;
+        background-size: 12px;
+        padding-left: 17px;
+        border-radius: 10px;
+        border: none;
+        transition: width 300ms ease-in-out;
+
+        &:focus {
+          width: 50%;
+        }
+
+        svg {
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      }
+
+      &.edit,
+      &.del {
+        text-align: center;
+        cursor: initial;
+        align-items: center;
+
+      }
+
+      &.edit {
+        svg {
+          stroke: white;
+          stroke-width: 1px;
+        }
+
+      }
+
+      &.del svg {
+        fill: white;
+      }
+
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+
+    .add-model {
+      justify-self: end;
+      font-size: 1.5rem;
+      width: 30px;
+      height: 30px;
+      margin: 20px 10px;
+
+      $border-radius: 10%;
+      @include mixin_media.colored_button($border-radius);
+      align-self: end;
+    }
+  }
+
+
+}

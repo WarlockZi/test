@@ -1,45 +1,42 @@
-<?
-
-use app\core\Error;
-
-?>
 <!DOCTYPE html>
-<html>
-<!--ADMIN-LAYOUT-->
+<html lang="ru">
+<!--ADMI N-LAYOUT-->
 <head>
-	<meta name="token" content="<?= $_SESSION['token'] ?>">
-	<meta name="robots" content="noindex,nofollow"/>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
+    <meta name="phpSession" content="<?= $_SESSION['phpSession'] ?? ''; ?>">
+    <meta name="robots" content="noindex,nofollow"/>
+    <meta charset="utf-8">
 
-	<?= $this->assets->getCss() ?>
-	<?= $this->assets->getCDNCss() ?>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/assets/srvc/<?= DEV ? "logo-square-dev.svg" : "logo-square.svg" ?>" type="image/svg+xml">
+    <script type="module" src="https://localhost:5173/@vite/client"></script>
+    <script type="module" src="https://localhost:5173/Admin/admin.js"></script>
+<!--    --><?php //= $assets->getCss() ?>
+
 </head>
 
-<body>
+<body class="preload">
 
-<div class="admin-layout__container">
+<div class="admin-layout">
 
-	<?= $this->getHeader(); ?>
+    <?= $header; ?>
 
+    <div class="admin-layout_content content">
 
-	<div class="admin-layout__content">
+        <div class="adm-content">
+            <?= $errors; ?>
+            <?= $content; ?>
+        </div
 
-		<div class="adm-content">
-		 <?= Error::getErrorHtml() ?>
-				<?= $this->getContent(); ?>
-		</div
+    </div>
 
-	</div>
-
-	<div class="led"></div>
+<!--    <div class="led"></div>-->
 </div>
 
-<?= $this->getFooter();?>
+<?php //= $footer; ?>
 
-<?= $this->assets->getJs() ?>
-<?= $this->assets->getCDNJs() ?>
+<?= $assets->getJs() ?>
+
 
 </body>
+
 </html>

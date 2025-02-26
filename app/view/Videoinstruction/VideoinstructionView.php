@@ -6,8 +6,8 @@ namespace app\view\Videoinstruction;
 
 use app\model\Videoinstruction;
 
-use app\view\components\Builders\ListBuilder\ListColumnBuilder;
-use app\view\components\Builders\ListBuilder\MyList;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 
 class VideoinstructionView
 {
@@ -17,9 +17,10 @@ class VideoinstructionView
 	public static function listAll()
 	{
 		$view = new self;
-		return MyList::build($view->model)
+        $items = Videoinstruction::all();
+		return Table::build($items)
 			->column(
-				ListColumnBuilder::build('sort')
+				ColumnBuilder::build('sort')
 					->width('50px')
 					->name('№')
 					->sort()
@@ -27,7 +28,7 @@ class VideoinstructionView
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('name')
+				ColumnBuilder::build('name')
 					->width('auto')
 					->contenteditable()
 					->name('Название')
@@ -35,27 +36,27 @@ class VideoinstructionView
 
 			)
 			->column(
-				ListColumnBuilder::build('link')
+				ColumnBuilder::build('link')
 					->contenteditable()
 					->width('auto')
 					->name('Ссылка')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('tag')
+				ColumnBuilder::build('tag')
 					->contenteditable()
 					->width('auto')
 					->name('Группа')
 					->get()
 			)
 			->column(
-				ListColumnBuilder::build('user_id')
+				ColumnBuilder::build('user_id')
 					->width('50px')
 					->name('Польз')
 					->get()
 			)
 			->del()
-			->addButton('ajax')
+			->addButton()
 			->get();
 	}
 

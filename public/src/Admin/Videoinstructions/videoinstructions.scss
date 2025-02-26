@@ -1,5 +1,5 @@
-@import "../../mixin_media";
-@import "../../var";
+@use "../../mixin_media";
+@use "../../var";
 
 .videoinstructions {
 
@@ -8,11 +8,11 @@
     gap: 5px;
 
     h1{
-      @include _h4
+      @include mixin_media.h4
     }
 
     a {
-      @include colored_button(10px, $color-success);
+      @include mixin_media.colored_button(10px, var.$color-success);
       font-size: 0.8rem;
       justify-content: flex-start;
       max-width: 300px;
@@ -23,7 +23,7 @@
       background-color: #e9e9e9;
 
       &:hover {
-        background-color: darken(#cccccc, 10%);
+        background-color: mixin_media.darker(#cccccc, 10%);
         color: red;
       }
 

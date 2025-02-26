@@ -1,10 +1,16 @@
-@import "../../mixin_media";
+@use "../../mixin_media";
+
+
+.category-tree {
+  display: flex;
+  flex-direction: column;
+}
 
 .category-tree{
 
-  @include tree();
+  @include mixin_media.tree();
 
-  box-shadow: white 0px 0px 9px 16px;
+  box-shadow: white 0 0 9px 16px;
 
   a:hover{
     transition: all 100ms;

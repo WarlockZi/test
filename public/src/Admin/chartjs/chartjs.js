@@ -2,6 +2,14 @@
 import './chart.scss'
 import Chart from 'chart.js/auto'
 
+export default class MyChart{
+   constructor(){
+      this.income()
+   }
+
+   income(){}
+
+}
 (async function () {
   if (!document.getElementById('income')) return false;
 

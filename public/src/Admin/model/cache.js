@@ -1,6 +1,4 @@
 import {$, post} from "../../common";
-// import "../../components/popup.scss";
-
 
 let _cache = {
     clearCache: async function () {

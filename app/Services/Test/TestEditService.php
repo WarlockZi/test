@@ -10,20 +10,11 @@ class TestEditService
 	protected $accordion;
 	protected $content;
 
-	public function __construct()
-	{
+	public function __construct(){}
 
-	}
+	public function getTitle(){}
 
-	public function getTitle()
-	{
-
-	}
-
-	public function setTitle()
-	{
-
-	}
+	public function setTitle(){}
 
 	public function getAccordion()
 	{

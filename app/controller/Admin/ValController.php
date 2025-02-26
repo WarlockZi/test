@@ -6,17 +6,17 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\model\Val;
 
-class ValController Extends AppController
+class ValController Extends AdminscController
 {
 
-	public $model = Val::class;
+	public string $model = Val::class;
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 
 	}

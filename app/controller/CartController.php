@@ -2,74 +2,73 @@
 
 namespace app\controller;
 
-use app\Actions\CartAction;
 use app\core\Auth;
-use app\model\Lead;
+use app\core\Response;
+use app\model\Order;
 use app\model\OrderItem;
-use app\model\User;
+use app\Repository\CartRepository;
+use app\Repository\OrderitemRepository;
 use app\Repository\OrderRepository;
+use app\view\Cart\CartView;
 
 class CartController extends AppController
 {
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    protected CartView $cartView;
+    protected CartRepository $repo;
 
-	public function actionDrop()
-	{
-		if (!isset($this->ajax['cartToken'])) exit('No cart sess');
-		$id = $this->ajax['cartToken'];
-		OrderItem::query()
-			->where('sess', $id)
-			->delete();
+    public function __construct(
+        protected OrderRepository     $orderRepo = new OrderRepository(),
+        protected OrderitemRepository $orderItemRepo = new OrderitemRepository(),
+    )
+    {
+        parent::__construct();
+        $this->cartView = new CartView();
+        $this->repo     = new CartRepository();
+    }
+    public function actionIndex(): void
+    {
+        $order = OrderRepository::cart();;
+        $this->setVars(compact('order'));
+    }
 
-		if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
-		$this->exitJson(['ok' => true]);
+    public function actionDrop(): void
+    {
+//        if (!isset($this->ajax['cartToken'])) exit('No cart sess');
+        OrderItem::query()
+            ->delete();
+        if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
+        Response::json(['ok' => true]);
+    }
 
-	}
-
-	public function actionIndex()
-	{
-		$lead = Lead::where('sess', session_id())->first();
-		$oItems = OrderRepository::main();
-		$this->set(compact('oItems', 'lead'));
-	}
-
-	public function actionLogin()
-	{
-		$req = $this->ajax;
-
-		$user = User::query()
-			->where('email', $req['email'])
-			->first()
-			->toArray();
-
-		if ($user) {
-			Auth::setAuth($user);
-			CartAction::convertOrderItemsToOrders($req, $user['id']);
-			$this->exitJson(['ok' => true]);
-		}
-		$this->exitJson(['error' => 'Не правильные данные']);
-	}
+    public function actionSubmit(): void
+    {
+        $orderId = $this->ajax['orderId'];
+        if (empty($orderId)) exit('No cart order id');
+        Order::find($orderId)->update(['submitted' => 1]);
+//        if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
+        Response::json(['ok' => true]);
+    }
 
 
-	public function actionLead()
-	{
-		$req = $this->ajax;
+    public function actionDeleterow(): void
+    {
+        $req = $this->ajax;
+        $product_id =$req['product_id'];
+        $unit_ids   = $req['units'];
 
-		$lead = Lead::query()
-			->updateOrCreate([
-				'name' => $req['name'],
-				'phone' => $req['phone'],
-				'company' => $req['company'],
-				'sess' => $req['sess'],
-			], [$req]);
+        if (!$product_id) Response::json(['msg'=>'No id']);
+        $trashed = $this->orderRepo::detachItems($product_id, $unit_ids);
 
-		if ($lead->wasChanged()) {
-			$this->exitJson(['ok' => true, 'popup' => 'Заказ сохранен!']);
-		}
-		$this->exitJson(['ok' => true, 'popup' => 'Скоро мы Вам перезвоним!']);
-	}
+        if ($trashed) {
+            Response::json(['ok' => true, 'popup' => 'Удален']);
+        }
+        Response::exitWithPopup('Не удален');
+
+    }
+
+    public function actionUpdateOrCreate(): void
+    {
+        OrderRepository::updateOrCreate($this->ajax);
+    }
 }
 

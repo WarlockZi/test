@@ -6,20 +6,20 @@ use app\controller\AppController;
 use app\model\Country;
 use app\view\Country\CountryView;
 
-class CountryController Extends AppController
+class CountryController Extends AdminscController
 {
-	public $model = Country::class;
+	public string $model = Country::class;
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function actionIndex()
+	public function actionIndex():void
 	{
 
 		$countries = CountryView::list($this->model);
-		$this->set(compact('countries'));
+		$this->setVars(compact('countries'));
 	}
 
 }

@@ -1,67 +1,58 @@
-<?
+<?php
+if (!empty($product)): ?>
 
-use app\core\Auth;
-use app\core\Icon;
+    <?php if ($product->deleted_at): ?>
+        <div class="deleted-overlay">
+            <h1 class="deleted">
+                Товар закончился
+            </h1>
 
-use app\view\Product\ProductFormView;
-use \app\view\Product\ProductView;
+        </div>
+    <?php endif; ?>
+    <div class="product-card" data-1sid="<?= $product['1s_id']; ?>">
 
-
-if ($product): ?>
-
-
-	<div class="product-card" data-id="<?= $product['1s_id']; ?>">
-
-		 <?= $breadcrumbs ?>
-		<h1><?= $product['print_name']; ?></h1>
-
-
-		<div class="main-image-wrapper">
-
-			<div class="detail-image">
-					 <?= ProductFormView::getCardImages('', $product->detailImages); ?>
-			</div>
-
-				<?= ProductView::getCardMainImage($product) ?>
-				<? include __DIR__.'/card/toCart.php'?>
-		</div>
-
-		<!--		--><? //include __DIR__.'/card/packs.php'?>
-
-		 <? if (Auth::isAdmin()): ?>
-		  <div class="product-card__edit">
-			  <a href="/adminsc/product/edit/<?= $product->id ?>">Редакт</a>
-		  </div>
-		 <? endif; ?>
-
-		<div class="info-wrap">
-			<div class="info-tag">Характеристики</div>
-			<div class="properties">
-					 <? foreach ($product->values as $value): ?>
-						 <? include __DIR__. '/property.php'; ?>
-					 <? endforeach; ?>
-			</div>
-		</div>
-
-		<div class="info-wrap">
-			<div class="info-tag">Информация о товаре</div>
-			<article class="detail-text">
-					 <?= $product['txt']; ?>
-			</article>
-		</div>
-
-		 <? //include __DIR__.'/card/olsoLike.php'?>
-		 <? //include __DIR__.'/card/rating.php'?>
+        <?= $breadcrumbs ?>
+        <h1><?= $product['print_name']; ?></h1>
 
 
-		 <?= Icon::star() ?>
-		<!--		 --><? // include __DIR__ . '/card/reviews.php' ?>
-		<!--		 --><? // include __DIR__ . '/card/alsoViewd.php.php' ?>
+        <div class="product-card_hero">
+            <? include 'main_image.php'?>
+            <? include 'card/toCart.php' ?>
+        </div>
 
-	</div>
+        <div class="info-wrap">
+            <div class="info-tag">Информация о товаре</div>
+            <div class="properties">
+                <h2><?=$product->seo_h1()?></h2>
+
+                <div id="seo-article"><?=$product->seo_article()?></div>
+
+                <?php foreach ($product->values as $value): ?>
+                    <?php include __DIR__ . '/property.php'; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="info-wrap">
+            <div class="info-tag">Характеристики</div>
+
+            <article id="detail-text"><?= $product->txt; ?></article>
+        </div>
 
 
-<? else: ?>
-	<div>Такого товара нет</div>
-	<a href="/adminsc/category">Перейти в каталог</a>
+
+        <?php //include __DIR__.'/card/olsoLike.php'?>
+        <?php //include __DIR__.'/card/rating.php'?>
+
+
+<!--        --><?php //= Icon::star() ?>
+        <!--		 --><?php // include __DIR__ . '/card/reviews.php' ?>
+        <!--		 --><?php // include __DIR__ . '/card/alsoViewd.php.php' ?>
+
+    </div>
+
+
+<?php else: ?>
+    <div>Такого товара нет</div>
+    <a href="/adminsc/category">Перейти в каталог</a>
 <? endif; ?>

@@ -1,4 +1,4 @@
-<div class="df">
+<div class="flex">
 	<span></span>
 	<a href="/adminsc/category/edit/<?= $item['id'] ?>"
 	   class="level-<?= $level ?>">
