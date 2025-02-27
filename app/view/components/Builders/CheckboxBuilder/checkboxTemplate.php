@@ -7,5 +7,3 @@
 	<?= $box['pivot']??''; ?>
 	<?= $box['checked']?'checked':''; ?>
 >
-
-
