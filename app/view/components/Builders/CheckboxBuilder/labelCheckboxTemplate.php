@@ -1,16 +1,16 @@
 <label
-    <?= $box->labelClass; ?>
-    <?= $box->for; ?>
+	<?= $box->labelClass; ?>
+	<?= $box->for; ?>
 >
-    <?= $box->label; ?>
+	<?= $box->label; ?>
 
-    <input
-            my-checkbox
-            type="checkbox"
-        <?= $box->data; ?>
-        <?= $box->id; ?>
-        <?= $box->class; ?>
-        <?= $box->field; ?>
-        <?= $box->checked; ?>
-    >
+	<input
+			my-checkbox
+			type="checkbox"
+		 <?= $box->id; ?>
+		 <?= $box->class; ?>
+		 <?= $box->field; ?>
+		 <?= $box->checked; ?>
+	>
 </label>
+
