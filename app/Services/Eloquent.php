@@ -10,9 +10,9 @@ $capsule = new Capsule;
 $capsule->addConnection([
 	'driver'    => 'mysql',
 	'host'      => 'localhost',
-	'database'  => $_ENV['DB_DB'],
-	'username'  => $_ENV['DB_USER'],
-	'password'  => $_ENV['DB_PASSWORD'],
+	'database'  => env('DB_DB'),
+	'username'  => env('DB_USER'),
+	'password'  => env('DB_PASSWORD'),
 	'charset'   => 'utf8',
 	'collation' => 'utf8_unicode_ci',
 	'prefix'    => '',

@@ -36,8 +36,9 @@ use app\core\Icon;
 
     //assets
     <? if (DEV): ?>
-        <script type="module" src="https://vi-prod:5173/@vite/client"></script>
-        <script type="module" src="https://vi-prod:5173/Main/main"></script>
+<!--        <script type="module" src="https://vi-prod:5173/@vite/client"></script>-->
+<!--        <script type="module" src="https://vi-prod:5173/build/Main/main.js"></script>-->
+        <?= $assets->getCss(); ?>
     <? else: ?>
         <?= $assets->getCss(); ?>
     <? endif; ?>

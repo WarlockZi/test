@@ -36,7 +36,7 @@ use app\Storage\{StorageDev, StorageImport, StorageLog};
 	{
 //		$this->log = StorageLog::getFile('log.txt');
 		$this->importPath = StorageImport::getPath();
-		if ($_ENV['MODE'] === 'development') {
+		if (DEV) {
 			$this->storage = StorageDev::class;
 		} else {
 			$this->storage = StorageImport::class;

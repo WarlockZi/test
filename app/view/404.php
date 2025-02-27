@@ -7,7 +7,7 @@ if (DEV) {
         };
     }
 }
-
+http_response_code(404);
 ?>
 <div class="not-found">
 
