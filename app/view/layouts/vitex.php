@@ -34,7 +34,6 @@ use app\core\Icon;
     <?= $assets->getMeta(); ?>
 
 
-    //assets
     <? if (DEV): ?>
 <!--        <script type="module" src="https://vi-prod:5173/@vite/client"></script>-->
 <!--        <script type="module" src="https://vi-prod:5173/build/Main/main.js"></script>-->

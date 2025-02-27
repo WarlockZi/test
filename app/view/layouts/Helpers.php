@@ -82,14 +82,11 @@ class Helpers
             ? $this->viteHost . "{$this->publicPath}" . $this->entry
             : $this->assetUrl();
 
-//        if (!$url) return '';
         $public = '/public/build';
         $public = '';
-//        $public = '/public/build/.vite';
 
         return DEV
             ? "\n<script type='module' src='$this->viteHost{$public}@vite/client'></script>"
-//            ? "\n<script type='module' src='$this->VITE_HOST{$this->publicPath}@vite/client'></script>"
             : "";
     }
 
