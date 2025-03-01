@@ -2,7 +2,7 @@
 
 namespace app\Services\AssetsService;
 
-use app\view\layouts\Helpers;
+use app\Services\Vite\Helpers;
 
 class AssetsVite implements Compiler
 {
