@@ -70,9 +70,9 @@ class CheckboxBuilder
     {
         $box = get_object_vars($this);
         if ($this->label) {
-            return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/labelCheckboxTemplate.php', compact('box'));
+            return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/LabelCheckboxTemplate.php', compact('box'));
         } else {
-            return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/checkboxTemplate.php', compact('box'));
+            return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/CheckboxTemplate.php', compact('box'));
         }
     }
 
