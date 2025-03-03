@@ -1,4 +1,4 @@
-import './SelectNew.scss'
+import './selectNew.scss'
 
 import {$, createElement} from "../../common";
 

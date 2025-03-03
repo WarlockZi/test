@@ -7,21 +7,18 @@ export default defineConfig(async ({command, mode}) => {
       const env = loadEnv(mode, process.cwd())
       console.log('command - ' + command)
 
-      const host = env.VITE_HOST ?? 'localhost'
+      const host = env.VITE_HOST
 
       return {
-         // root: 'public/src',
+         root: 'public/src',
          base: env.VITE_DEV
-            ? ''
-            : './build',
+            ? '/'
+            : '/build/',
 
          server: {
             cors: true,
-            host: host,
             strictPort: true,
-            https: true,
             port: env.VITE_PORT,
-            hmr: {host}
          },
 
          build: {
@@ -57,8 +54,6 @@ export default defineConfig(async ({command, mode}) => {
             },
             devSourcemap: true,
          },
-
-
 
          resolve: {
             alias: {

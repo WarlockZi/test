@@ -18,6 +18,11 @@ class Assets
         $this->cache->setCache();
         $this->setCompiler();
     }
+    public function icon():string
+    {
+        $link = DEV ? "/pic/srvc/logo-square-dev.svg" : "/pic/srvc/logo-square.svg";
+        return"<link rel='icon' href='{$link}' type='image/svg+xml'>";
+    }
 
     protected function setCompiler(): string
     {

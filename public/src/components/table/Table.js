@@ -1,5 +1,5 @@
 import './table.scss';
-// import '../select/SelectNew.scss';
+// import '../select/selectNew.scss';
 import {$, debounce, post} from '../../common';
 import {ael, qa, qs} from "@src/constants.js";
 import SelectNew from "../../components/select/SelectNew.js";

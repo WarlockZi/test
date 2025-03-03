@@ -34,13 +34,14 @@
     "stylelint-config-standard": "^36.0.1",
     "tinymce": "^7.1.1",
     "typescript": "^5.4.5",
-    "vite": "^5.2.12",
+    "vite": "^6.2.0",
     "vite-plugin-live-reload": "^3.0.2",
     "vite-plugin-mkcert": "^1.17.5",
     "vite-plugin-node-polyfills": "^0.3.1",
     "vite-plugin-php": "^1.0.11"
   },
   "dependencies": {
+
     "axios": "^1.7.9",
     "quill": "^2.0.2",
     "strip-js": "^1.2.0",

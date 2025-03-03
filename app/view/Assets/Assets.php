@@ -3,220 +3,76 @@
 
 namespace app\view\Assets;
 
-
-use Illuminate\Database\Eloquent\Model;
-
 class Assets
 {
-	protected $host;
-	protected $port;
-	protected $cache = false;
+    public function __construct(
+        protected bool $isAdmin = false,
 
-	protected $js = [];
-	protected $css = [];
-	protected $CDNjs = [];
-	protected $CDNcss = [];
+        protected Compiler     $compiler = new AssetsVite(),
+//        protected Compiler     $compiler = new AssetsWebpack(),
+        public AssetsSEO      $seo = new AssetsSEO(),
+        public AssetsCDN      $CDN = new AssetsCDN(),
+        public AssetsCache    $cache = new AssetsCache(),
+    )
+    {
+        $this->cache->setCache();
+        $this->setCompiler();
+    }
+    public function setIsAdmin(): string
+    {
+        $this->isAdmin = true;
+    }
 
-	protected $title;
-	protected $desc;
-	protected $keywords;
+    protected function setCompiler(): string
+    {
+        extract($this->compiler->getConfig());
+        return "{$protocol}{$h1}{$port}{$path}";
+    }
 
-	protected $canonical;
+    public function setJs(string $name): void
+    {
+        $this->compiler->setJs($name);
+    }
 
-	public function __construct()
-	{
-		$this->setCache();
-		$this->setHost();
-		$this->setPort(5000);
-	}
+    public function setCss(string $name):void
+    {
+        $this->compiler->setCss($name);
+    }
 
-	public function getMeta()
-	{
-		return "<title>{$this->title}</title>" .
-			"<meta name = 'description' content = '{$this->desc}'>" .
-			"<meta name = 'keywords' content = '{$this->keywords}'>";
-	}
+    public function getJS(): string
+    {
+        return $this->compiler->getJs();
+    }
 
-	public function setItemMeta(Model $item)
-	{
-		$this->title = $item->seo? $item->seo->title : $item->name;
-		$this->desc = $item->seo? $item->seo->description : $item->name;
-		$this->keywords = $item->seo? $item->seo->keywords : $item->name;
-	}
+    public function getCss(string $str = ''):string
+    {
+        return $this->compiler->getCss();
+    }
 
-	public function setMeta(string $title, string $desc = '', string $keywords = '')
-	{
-		$this->title = $title ? $title : 'Медицинкские перчатки';
-		$this->desc = $desc ? $desc : 'Медицинкские перчатки';
-		$this->keywords = $keywords ? $keywords : 'Медицинкские перчатки';
-	}
-
-	public function setJs(string $name)
-	{
-		$this->js[] = $name;
-	}
-
-	/**
-	 * @param string $src
-	 * @param bool $defer
-	 * @param bool $async
-	 */
-	public function setCDNJs(string $src, bool $defer = false, bool $async = false): void
-	{
-		$this->CDNjs[] = ['src' => $src, 'defer' => $defer ? 'defer' : '', 'async' => $async ? 'async' : ''];
-	}	
-
-	public function setCDNCss(string $src): void
-	{
-		$this->CDNcss[] = $src;
-	}
-
-	public function getCDNJs(): string
-	{
-		$str = '';
-		foreach ($this->CDNjs as $CDNjs) {
-			$str .= "<script {$CDNjs['defer']} {$CDNjs['async']}  src='{$CDNjs['src']}'></script>";
-		}
-		return $str;
-	}
-
-	public function getCDNCss(): string
-	{
-		$str = '';
-		foreach ($this->CDNcss as $CDNcss) {
-			$str .= "<link href='{$CDNcss}' rel='stylesheet' type='text/css'>";
-		}
-		return $str;
-	}
-
-	public function unsetJs(string $name)
-	{
-		unset($this->js[$name]);
-	}
-
-	public function unsetCss($name)
-	{
-		unset($this->css[$name]);
-	}
-
-	public function setPort(int $port)
-	{
-		$this->port = $_ENV['DEV']
-			? ":".$port
-			: '';
-
-	}
-	public function setHost()
-	{
-		$this->host = $_ENV['DEV']
-			? 'http://localhost'
-//			: '/public/dist/';
-			: '';
-	}
-
-	public function getHost()
-	{
-		return $this->host;
-	}
-
-	public function setCss(string $name)
-	{
-		$this->css[] = $name;
-	}
-
-	protected function getTime()
-	{
-		return ($this->cache) ? "?" . time() : "";
-	}
-
-	public function getJS(string $str = ''): string
-	{
-		foreach ($this->js as $name) {
-			$str .= "<script src='{$this->host}{$this->port}/dist/dist/{$name}.js{$this->getTime()}' defer></script>";
-		}
-		return $str;
-	}
-
-	public function getCss(string $str = '')
-	{
-		foreach ($this->css as $name) {
-			$str .= "<link href='{$this->host}{$this->port}/dist/{$name}.css{$this->getTime()}' rel='stylesheet' type='text/css'>";
-		}
-		return $str;
-	}
-
-	public function getCssArray()
-	{
-		return $this->css;
-	}
-
-	public function getJsArray()
-	{
-		return $this->js;
-	}
-
-	public function getCDNCssArray()
-	{
-		return $this->CDNcss;
-	}
-
-	public function getCDNJsArray()
-	{
-		return $this->CDNjs;
-	}
-
-	public function setCache(): void
-	{
-		if ($_ENV['DEV']) {
-			$this->cache = false;
-		} else {
-			$this->cache = false;
-		}
-	}
-
-	public function getCache(): bool
-	{
-		return $this->cache;
-	}
-
-	public function setQuill()
-	{
-//		$this->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.bubble.css");
-		$this->setCDNJs("https://cdn.quilljs.com/1.3.6/quill.js");
-		$this->setCDNCss("https://cdn.quilljs.com/1.3.6/quill.snow.css");
-	}
-
-	public function setProduct()
-	{
-		$this->setJs('product');
-		$this->setCss('product');
-	}
-
-
-	public function setAuth()
-	{
-		$this->setJs('auth');
-		$this->setCss('auth');
-	}
-
-	public function merge(Assets $assets)
-	{
-		foreach ($assets->getJsArray() as $js) {
-			$this->setJs($js);
-		}
-		foreach ($assets->getCssArray() as $css) {
-			$this->setCss($css);
-		}
-		foreach ($assets->getCDNJsArray() as $js) {
-			$this->setCDNJs($js['src'], $js['defer']==='defer', $js['async']==='async',);
-		}
-		foreach ($assets->getCDNCssArray() as $css) {
-			$this->setCDNCss($css);
-		}
-		$this->title = $this->title . $assets->title . ' | VITEX';
-		$this->desc = $this->desc . $assets->desc;
-		$this->keywords = $this->keywords . $assets->keywords;
-
-	}
+    public function getMeta():string
+    {
+        return $this->seo->getMeta();
+    }
+    public function setMeta(string $title, string $desc='', string $keywords=''):void
+    {
+        $this->seo->setMeta($title, $desc, $keywords);
+    }
+//    public function merge(Assets $controllerAssets): void
+//    {
+//        array_merge([$controllerAssets, $this->compiler->getJs()]);
+//        foreach ($controllerAssets->js as $js) {
+//            $this->setJs($js);
+//        }
+//        foreach ($controllerAssets->css as $css) {
+//            $this->setCss($css);
+//        }
+//        foreach ($controllerAssets->CDNjs as $js) {
+//            $this->setCDNJs($js['src'], $js['defer'] === 'defer', $js['async'] === 'async',);
+//        }
+//        foreach ($controllerAssets->CDNCss as $css) {
+//            $this->setCDNCss($css);
+//        }
+//        $this->seo->merge($this);
+//    }
 
 }

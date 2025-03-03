@@ -237,5 +237,30 @@ class Route
     {
         return $_SERVER['HTTP_HOST'];
     }
+//    public function setSlug(string $slug): void
+//    {
+//        $this->slug = $slug;
+//    }
+//
+//    public function setId(string $id): void
+//    {
+//        $this->id = $id;
+//    }
+
+//
+//    public function setProtocol()
+//    {
+//        $this->protocol = $_SERVER['REQUEST_SCHEME'];
+//    }
+//    public function setControllerName(string $controllerName): void
+//    {
+//        $this->controllerName = $controllerName;
+//    }
+//    public function setController(): void
+//    {
+//        $this->setNamespace();
+//        $this->controllerName = ucfirst($this->controller);
+//        $this->controller     = $this->namespace . $this->controllerName . 'Controller';
+//    }
 
 }

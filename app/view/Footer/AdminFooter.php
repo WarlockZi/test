@@ -4,9 +4,9 @@
 namespace app\view\Footer;
 
 
-use app\controller\FS;
+use app\core\FS;
 
-class AdminFooter extends AbstractFooter
+class AdminFooter extends Footer
 {
 	public function __construct()
 	{
@@ -18,8 +18,4 @@ class AdminFooter extends AbstractFooter
 		$this->footer= FS::getFileContent(ROOT . '/app/view/Footer/footerView.php');
 	}
 
-	public function getFooter()
-	{
-		return $this->footer;
-	}
 }

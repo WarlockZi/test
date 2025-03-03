@@ -193,7 +193,7 @@
         top: 0;
         left: 0;
         z-index: 1;
-        color: white;
+        //color: red;
       }
 
       max-width: 1310px;
@@ -279,17 +279,15 @@
     }
   }
 
-
   .h-cat {
     position: relative;
     text-transform: lowercase;
-    transition: .5s background-color;
+    transition: .3s background-color;
     display: flex;
     align-items: center;
     justify-content: center;
     flex: 1;
-    background-color: rgba(#2275ff, 0);
-    color: #fff;
+    color: white;
     font-weight: 600;
     line-height: 14px;
     font-size: 14px;

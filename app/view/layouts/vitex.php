@@ -15,11 +15,10 @@ use app\core\Icon;
     <meta name="mobile-web-app-capable" content="yes">
 
     <meta name="yandex-verification" content="003253e624aad5b6"/>
-    <meta name="google-site-verification" content="ktYoLMSeI5bAy0NCfzOmoV28u50Fe8TJKF_v_582olI"/>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/assets/srvc/<?= DEV ? "logo-square-dev.svg" : "logo-square.svg" ?>" type="image/svg+xml">
+    <?=$assets->icon();?>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,10 +33,15 @@ use app\core\Icon;
     <?= $assets->getMeta(); ?>
 
 
+    //assets
     <? if (DEV): ?>
-<!--        <script type="module" src="https://vi-prod:5173/@vite/client"></script>-->
-<!--        <script type="module" src="https://vi-prod:5173/build/Main/main.js"></script>-->
-        <?= $assets->getCss(); ?>
+        <?
+        $domain = env('VITE_PROTOCOL') . '://'
+            . env('VITE_HOST') . ':'
+            . env('VITE_PORT'); ?>
+        <script type="module" src="<?= $domain; ?>/@vite/client"></script>
+        <script type="module" src="<?=$domain?>/Main/main.js"></script>
+        <!--        --><?php //= $assets->getCss(); ?>
     <? else: ?>
         <?= $assets->getCss(); ?>
     <? endif; ?>

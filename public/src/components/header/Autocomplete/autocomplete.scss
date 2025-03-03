@@ -1,12 +1,12 @@
-@import "../../../var";
-@import "../../../mixin_media";
+@use "../../../var";
+@use "../../../mixin_media";
 
 .search-wrap {
 
   .search {
     position: relative;
     //height: 32px;
-    background: $color-main;
+    background: var.$color-main;
     margin: 2px 15px;
     display: flex;
     height: 100%;
@@ -14,13 +14,13 @@
 
   .search-top {
     display: none;
-    @include _800 {
+    @include mixin_media.m800 {
       display: flex;
     }
   }
 
   .search-header {
-    @include _800 {
+    @include mixin_media.m800 {
       display: none;
     }
   }
