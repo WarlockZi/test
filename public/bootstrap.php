@@ -10,6 +10,8 @@ require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "auto
 (Dotenv\Dotenv::createImmutable(ROOT, '.env'))->load();
 define('DEV', env("VITE_DEV"));
 
+\app\core\Cache::$enabled = env('CACHE');
+
 if (DEV) {
     ini_set('display_errors', 'On');
     error_reporting(E_ALL | E_STRICT);

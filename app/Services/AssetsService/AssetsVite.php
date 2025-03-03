@@ -28,7 +28,7 @@ class AssetsVite implements Compiler
         return [
             'protocol' => 'http://',
             'port' => 5173,
-            'path' => '/dist/',
+            'path' => '/build/',
             'h1' => '127.0.0.1',
         ];
     }
@@ -49,9 +49,7 @@ class AssetsVite implements Compiler
             :
             $this->compiler->client() .
             $this->compiler->vite('Main/main.js') .
-//            $this->compiler->vite('main.js') .
             $this->compiler->vite('Auth/auth.js');
-//            $this->compiler->vite('auth.js');
 
         return $assets;
 

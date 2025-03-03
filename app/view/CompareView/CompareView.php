@@ -12,8 +12,11 @@ class CompareView
         foreach ($compares as $compare) {
             $compareCards .= (new CompareCard($compare))->toHtml();
         }
-        $title = '<h1 class="compare-h1">Страница сравнения товаров</h1>';
+        $compareCards = !empty($compareCards)
+            ? $compareCards
+            : 'Вы не добавили товары для сравнения';
+        $title        = '<h1 class="compare-h1">Страница сравнения товаров</h1>';
 
-        return "$title<div class='product-wrap' data-compare>$compareCards";
+        return "$title<div class='product-wrap' data-compare>$compareCards</div>";
     }
 }
