@@ -8,6 +8,7 @@
 /.vscode
 /composer.phar
 /.env
+/.git
 /app/Storage/dev/*
 /app/Storage/prod/*
 /app/Storage/log/*

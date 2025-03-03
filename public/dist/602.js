@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkmy_webpack_project=self.webpackChunkmy_webpack_project||[]).push([[602],{602:(t,e,a)=>{a.d(e,{default:()=>s});var r=a(6584);class s{constructor(){if(this.el=(0,r.$)("[data-shortLink]").first(),this.el)return!1}shortLink(t){navigator.permissions.query({name:"clipboard-write"}).then((async e=>{"granted"!==e.state&&"prompt"!==e.state||await navigator.clipboard.writeText(t.dataset.shortlink).then((()=>{r.lY.show("Ссылка скопирована")}))}))}}}}]);
-//# sourceMappingURL=602.js.map
