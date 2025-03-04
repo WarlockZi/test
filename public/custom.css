@@ -1,0 +1,56 @@
+.pay-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.pay-icons img {
+    height: 35px;
+}
+
+.colpay {
+    justify-content: space-between;
+}
+
+
+.foot-cont{
+    margin-top: 15px;
+}
+
+.foot-cont>div{
+    color: #fff;
+    margin-bottom: 10px;
+}
+.foot-cont>div span{
+    color: #9b9b9b;
+    font-weight: bold;
+}
+
+header.burger{
+    top: 0px!important;
+}
+
+.fixed.hoist{
+    width: 80px;
+    height: 80px;
+}
+.fixed.hoist svg rect{
+    fill: currentcolor;
+}
+.fixed.hoist svg path, .fixed.call-me svg path{
+    fill: #fff;
+}
+.fixed.call-me{
+    width: 80px;
+    height: 80px;
+    bottom: 100px;
+}
+.fixed.call-me svg{
+    width: 80px;
+    height: 64px;
+    padding: 15px;
+    box-sizing: border-box;
+    fill: currentcolor;
+    border: none;
+    background: #1a72b8;
+}

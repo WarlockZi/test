@@ -1,7 +1,9 @@
 <footer class="footer">
     <nav class="menu">
 
-        <div class="column flex-2">
+        <div class="column flex-2 colpay">
+
+            <div>
 
             <h4>Категории</h4>
 
@@ -15,6 +17,25 @@
                     <?php endforeach ?>
                 </ul>
             <?php endif; ?>
+
+            </div>
+
+            <div class="foot-cont">
+                <div>
+                    <span>Телефон:</span> <a href="tel:+79217131767">8-921-713-17-67</a>
+                </div>
+                <div>
+                    <span>Почта:</span> <a href="mailto:10@vitexopt.ru">10@vitexopt.ru</a>
+                </div>
+                <div>
+                    <span>Адрес:</span> 160010, г. Вологда,ул. Залинейная 26, скл.4
+                </div>                        
+            </div>
+
+            <div class="pay-icons">
+                <img src="/pic/icons/mir.svg">
+                <img src="/pic/icons/sbp.svg">
+            </div>
         </div>
 
         <div class="column flex-1">

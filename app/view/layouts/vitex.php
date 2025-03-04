@@ -46,6 +46,7 @@ use app\core\Icon;
         <?= $assets->getCss(); ?>
     <? endif; ?>
 
+    <link rel='stylesheet' href='/public/custom.css'>
 
 </head>
 
