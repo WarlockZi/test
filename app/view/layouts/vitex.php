@@ -33,6 +33,7 @@ use app\core\Icon;
     <?= $assets->getMeta(); ?>
 
     //assets
+    <link rel='stylesheet' href='/public/custom.css'>
 
     <?= $assets->getCss(); ?>
 </head>
