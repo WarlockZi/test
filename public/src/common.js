@@ -1,4 +1,4 @@
-// import './common.scss'
+"use strict";
 
 const scrollToTop = () => {
    const c = document.documentElement.scrollTop || document.body.scrollTop;
@@ -19,10 +19,10 @@ export function objAndFiles2FormData(obj, files, formData = new FormData) {
    self.formData = formData;
    if (typeof (files) === 'FileList') {
       for (let i = 0; i < files.length; i++) {
-         self.formData.append(i, files[i])
+         self.formData.append(i, files[i]);
       }
    } else {
-      self.formData.append('file', files)
+      self.formData.append('file', files);
    }
    self.createFormData = function (obj, subKeyStr = '') {
 
@@ -48,7 +48,7 @@ const debounce = (fn, time = 700) => {
       const functionCall = () => fn.apply(this, arguments);
       clearTimeout(timeout);
       timeout = setTimeout(functionCall, time);
-   }
+   };
 };
 
 function IsJson(str) {
@@ -77,7 +77,7 @@ function replaceTs(str) {
 }
 
 function replaceSpace(str) {
-   var re = new RegExp('\s', "g");
+   var re = new RegExp('s', "g");
    return str.replace(re, "");
 }
 
@@ -85,15 +85,14 @@ function replaceBackSpace(str) {
    return str.trim();
 }
 
-function formatDate(date, time) {
+function formatDate(date = 1, time) {
    let t = new Date();
    let now = t.now();
    let dateArr = now.split('-');
-   debugger;
    let formattedDate = dateArr.forEach((s) => {
       if (s === 'yyyy') return t.getFullYear;
-      if (s === 'm') return t.getMonth
-   })
+      if (s === 'm') return t.getMonth;
+   });
 }
 
 function trimStr(str) {
@@ -102,26 +101,26 @@ function trimStr(str) {
    str = replaceTs(str);
    // str = replaceSpace(str)
    str = replaceBackSpace(str);
-   return str
+   return str;
 }
 
 function setMorph(data) {
    if (!data.model) return;
    if (!data.id) return;
    if (!data.morph) return;
-   let url = getMorphUrl(data.model, data.id)
+   let url = getMorphUrl(data.model, data.id);
 
 
 }
 
 function getMorphUrl(model, id) {
-   return `/adminsc/${model}/createOrUpdate/${id}`
+   return `/adminsc/${model}/createOrUpdate/${id}`;
 }
 
 function cachePage(className) {
    const html = $(className).first().outerHTML;
    // return html
-   return damn_ampersand(trimStr(html))
+   return damn_ampersand(trimStr(html));
 }
 
 const validate = {
@@ -130,10 +129,10 @@ const validate = {
       const ar = this.value.match(/\D+/);
       if (ar) {
          error.innerText = 'Только цифры';
-         error.style.opacity = '1'
+         error.style.opacity = '1';
       } else {
          if (error.style.opacity === "1") {
-            error.style.opacity = '0'
+            error.style.opacity = '0';
          }
       }
    },
@@ -143,18 +142,14 @@ const validate = {
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       const res = re.test(String(email).toLowerCase());
       if (!res) return text;
-      return false
+      return false;
    },
    password: (password) => {
       if (!password) return false;
-      let text = "Пароль может состоять из \n " +
-         "- Большие латинские бкувы \n" +
-         "- Маленькие латинские буквы \n" +
-         "- Цифры \n" +
-         "- Должен содержать не менее 6 символов";
+      let text = "Пароль может состоять из - Большие латинские бкувы - Маленькие латинские буквы";
       let res = /^[a-zA-Z0-9-_!#$%^&*()]{6,30}$/.test(password);
       if (!res) return text;
-      return false
+      return false;
    }
 };
 
@@ -178,34 +173,34 @@ const popup = {
       const hideDelay = 5000;
       setTimeout(() => {
          popup__item.classList.remove('popup__item');
-         popup__item.classList.add('popup-hide')
+         popup__item.classList.add('popup-hide');
       }, hideDelay);
       const removeDelay = hideDelay + 950;
       setTimeout(() => {
          popup__item.remove();
-      }, removeDelay)
+      }, removeDelay);
    },
 
    close: function ({target}) {
       if (target.classList.contains('popup__close')) {
-         this.closest('.popup').remove()
+         this.closest('.popup').remove();
       }
    },
    el: function (tagName, className) {
       const el = document.createElement(tagName);
       el.classList.add(className);
-      return el
+      return el;
    }
 };
 
 
 function getPhpSession() {
    return document.querySelector('meta[name="phpSession"]').getAttribute('content')
-      ?? null
+      ?? null;
 }
 
 function sanitizeInput(input) {
-   if (!input) return
+   if (!input) return;
    const map = {
       '&': '&amp;',
       '<': '&lt;',
@@ -232,55 +227,55 @@ function sanitizeInput(input) {
 
 
 function passwordValidator(pass) {
-   const min = 6
-   const errors = []
+   const min = 6;
+   const errors = [];
 
-   const replacePattern = /[a-zA-Z0-9\@\-\_\.А-я]*/
+   const replacePattern = /[a-zA-Z0-9\@\-\_\.А-я]*/;
    if (!pass.length) {
-      errors.push("Поле не должно быть пустым")
+      errors.push("Поле не должно быть пустым");
    }
    if (pass.replace(replacePattern, '').length) {
-      errors.push("Разрешены только английские")
+      errors.push("Разрешены только английские");
    }
    if (pass.length < min) {
-      errors.push("Длина меньше 6 символов")
+      errors.push("Длина меньше 6 символов");
    }
-   return errors
+   return errors;
 }
 
 function emailValidator(mail) {
-   const email = decodeURI(mail) //иначе русские буквы после @ шифруются в url
+   const email = decodeURI(mail); //иначе русские буквы после @ шифруются в url
    // const eng = '[а-яА-Я]*'
-   const min = 2
+   const min = 2;
    // const at = '@'
-   const minLengthAfterAt = '(.){2,}@(.){2,}'
-   const dot = '.'
-   const domainLength = '^(.){2,}@(.){2,}\.(.){2,}$'
-   const errors = []
+   const minLengthAfterAt = '(.){2,}@(.){2,}';
+   const dot = '.';
+   const domainLength = '^(.){2,}@(.){2,}\.(.){2,}$';
+   const errors = [];
 
-   const replacePattern = /[a-zA-Z0-9\@\-\_\.]*/
+   const replacePattern = /[a-zA-Z0-9\@\-\_\.]*/;
    if (!email.length) {
-      errors.push("Поле не должно быть пустым")
+      errors.push("Поле не должно быть пустым");
    }
    if (email.replace(replacePattern, '').length) {
-      errors.push("Разрешены только английские")
+      errors.push("Разрешены только английские");
    }
    if (email.length < min) {
-      errors.push("Длина меньше 2 символов")
+      errors.push("Длина меньше 2 символов");
    }
    if (!/[\@]/.test(email)) {
-      errors.push("Нет знака @")
+      errors.push("Нет знака @");
    }
    if (!email.match(minLengthAfterAt)) {
-      errors.push("Меньше 2 знаков после @")
+      errors.push("Меньше 2 знаков после @");
    }
    if (!email.includes(dot)) {
-      errors.push("Нет точки")
+      errors.push("Нет точки");
    }
    if (!email.match(domainLength)) {
-      errors.push("Меньше 2 знаков После точки")
+      errors.push("Меньше 2 знаков После точки");
    }
-   return errors
+   return errors;
 }
 
 function createEl(tagName, className = '', text = '') {
@@ -289,42 +284,42 @@ function createEl(tagName, className = '', text = '') {
       div.classList.add(className);
    }
    div.innerText = text ? text : '';
-   return div
+   return div;
 }
 
 class createElement {
    constructor() {
-      this.attributes = []
+      this.attributes = [];
    }
 
    tag(tag) {
       this.tag = tag;
-      return this
+      return this;
    }
 
    className(className) {
       this._className = className;
-      return this
+      return this;
    }
 
    field(field) {
       this._field = field;
-      return this
+      return this;
    }
 
    text(txt) {
       this._text = txt;
-      return this
+      return this;
    }
 
    html(html) {
       this._html = html;
-      return this
+      return this;
    }
 
    attr(key, value) {
       this.attributes.push([key, value]);
-      return this
+      return this;
    }
 
    get() {
@@ -333,18 +328,18 @@ class createElement {
          el.innerText = this._text;
       }
       if (this._html) {
-         el.innerHTML = this._html
+         el.innerHTML = this._html;
       }
       if (this._className) {
-         el.classList.add(this._className)
+         el.classList.add(this._className);
       }
       if (this._field) {
-         el.dataset.field = this._field
+         el.dataset.field = this._field;
       }
       this.attributes.forEach((entry, i) => {
-         el.setAttribute(entry[0], entry[1])
+         el.setAttribute(entry[0], entry[1]);
       });
-      return el
+      return el;
    }
 }
 
@@ -365,37 +360,37 @@ async function del(url, data = {}, headers = {}) {
 
 
 async function post(url, data = {}, headers = {}) {
-   const init = setPostBodyHeaders(url, data, headers)
+   const init = setPostBodyHeaders(url, data, headers);
    const res = await sendPost(url, init)
       .catch(err => {
-         console.log(err)
-      })
-   handleResponse(res)
-   showMessage(res)
-   return res
+         console.log(err);
+      });
+   handleResponse(res);
+   showMessage(res);
+   return res;
 }
 
 
 function isEmptyObj(obj) {
-   return !Object.keys(obj).length
+   return !Object.keys(obj).length;
 }
 
 function setPostBodyHeaders(url, body, headers) {
    body.phpSession = getPhpSession();
-   headers = isEmptyObj(headers) ? {"X-Requested-With": "XMLHttpRequest"} : headers
+   headers = isEmptyObj(headers) ? {"X-Requested-With": "XMLHttpRequest"} : headers;
    if (!(body instanceof FormData)) {
-      headers["Content-Type"] = "application/x-www-form-urlencoded"
+      headers["Content-Type"] = "application/x-www-form-urlencoded";
    } else {
       return {
          method: 'POST',
          body: body
-      }
+      };
    }
    return {
       method: 'POST',
       headers,
       body: 'params=' + JSON.stringify(body, null, 2),
-   }
+   };
 }
 
 function damn_ampersand(str) {
@@ -407,20 +402,20 @@ function sendPost(url, init) {
       const res = await fetch(url, init)
          .then(async res => {
             if (res.status === 200) {
-               const data = await res.json()
-               resolve(data)
+               const data = await res.json();
+               resolve(data);
             }
          })
          .catch(err => {
-            console.log("Fetch error" + err.message)
-            reject(err.message)
-         })
-   })
+            console.log("Fetch error" + err.message);
+            reject(err.message);
+         });
+   });
 }
 
 function showMessage(res) {
    const msg = $('.message')[0];
-   if (!msg) return false
+   if (!msg) return false;
    if (res.msg) {
       msg.innerHTML = res.msg;
    } else if (res.success) {
@@ -429,15 +424,15 @@ function showMessage(res) {
       msg.innerHTML = res.error;
    }
    $(msg).removeClass('success');
-   $(msg).removeClass('error')
+   $(msg).removeClass('error');
 }
 
 function handleResponse(res) {
    try {
       if (res?.arr?.popup) {
-         popup.show(res?.arr?.popup)
+         popup.show(res?.arr?.popup);
       } else {
-         showMessage(res)
+         showMessage(res);
       }
       return (res);
 
@@ -448,7 +443,7 @@ function handleResponse(res) {
       } else {
          console.log(res.response);
       }
-      return false
+      return false;
    }
 }
 
@@ -483,102 +478,102 @@ class ElementCollection extends Array {
 
    on(event, cbOrSelector, cb) {
       if (typeof cbOrSelector === 'function') {
-         this.forEach(e => e.addEventListener(event, cbOrSelector))
+         this.forEach(e => e.addEventListener(event, cbOrSelector));
       } else {
          let elems = this[0].querySelectorAll(cbOrSelector);
          elems.forEach(elem => {
-            elem.addEventListener(event, cb)
-         })
+            elem.addEventListener(event, cb);
+         });
       }
    }
 
    value = function () {
-      return this[0].getAttribute('value')
+      return this[0].getAttribute('value');
    };
    first = function () {
-      return this[0]
+      return this[0];
    };
    attr = function (attrName, attrVal) {
       if (attrVal) {
-         this[0].setAttribute(attrName, attrVal)
+         this[0].setAttribute(attrName, attrVal);
       }
-      return this[0].getAttribute(attrName)
+      return this[0].getAttribute(attrName);
    };
    selectedIndexValue = function () {
       if (this.length)
-         return this[0].selectedOptions[0].value
+         return this[0].selectedOptions[0].value;
    };
    options = function () {
-      if (this.length) return this[0].options
+      if (this.length) return this[0].options;
    };
    count = function () {
-      return this.length
+      return this.length;
    };
    text = function () {
-      if (this.length) return this[0].innerText
+      if (this.length) return this[0].innerText;
    };
    checked = function () {
-      if (this.length) return this[0].checked
+      if (this.length) return this[0].checked;
    };
    getWithStyle = function (attr, val) {
       let arr = [];
       this.forEach((s) => {
          if (s.style[attr] === val) {
-            arr.push(s)
+            arr.push(s);
          }
       });
-      return arr
+      return arr;
    };
    addClass = function (className) {
       this.forEach((s) => {
-         s.classList.add(className)
-      })
+         s.classList.add(className);
+      });
    };
    removeClass = function (className) {
       this.forEach((s) => {
-         s.classList.remove(className)
-      })
+         s.classList.remove(className);
+      });
    };
    hasClass = function (className) {
-      if (this.classList.contains(className)) return true
+      if (this.classList.contains(className)) return true;
    };
    append = function (el) {
-      this[0].appendChild(el)
+      this[0].appendChild(el);
    };
    find = function (item) {
       if (typeof item === 'string') {
-         return this[0].querySelector(item)
+         return this[0].querySelector(item);
       } else {
          let filtered = this[0].filter((el) => {
-            return el === item
+            return el === item;
          });
-         return filtered[0]
+         return filtered[0];
       }
    };
    findAll = function (item) {
       if (typeof item === 'string') {
-         return this[0].querySelectorAll(item)
+         return this[0].querySelectorAll(item);
       }
    };
 
 
    css = function (attr, val) {
       if (!val) {
-         return this[0].style[attr]
+         return this[0].style[attr];
       }
       this.forEach((s) => {
-         s.style[attr] = val
-      })
+         s.style[attr] = val;
+      });
    };
 
    ready(cb) {
       const isReady = this.some(e => {
-         return e.readyState != null && e.readyState != 'loading'
+         return e.readyState != null && e.readyState != 'loading';
       });
       if (isReady) {
-         cb()
+         cb();
       } else {
-         document.addEventListener('DOMContentLoaded', cb)
+         document.addEventListener('DOMContentLoaded', cb);
       }
    }
 }
@@ -586,26 +581,26 @@ class ElementCollection extends Array {
 
 function $(selector) {
    if (typeof selector === 'string' || selector instanceof String) {
-      return new ElementCollection(...document.querySelectorAll(selector))
+      return new ElementCollection(...document.querySelectorAll(selector));
    } else {
-      return new ElementCollection(selector)
+      return new ElementCollection(selector);
    }
 }
 
 function getCookie(key) {
    let match = document.cookie.match('(^|;)?' + key + '=([^;]*)');
-   return match ? match[2] : false
+   return match ? match[2] : false;
 }
 
 function cookieRemove(key) {
    if (cookieExists(key))
       document.cookie = key + '=; Max-Age=-1;';
-   return false
+   return false;
 }
 
 function cookieExists(key) {
    let match = document.cookie.match('(^|;)?' + key + '=([^;]*)');
-   return !!match
+   return !!match;
 }
 
 function getCookieExpires(digit, unit) {
@@ -621,14 +616,14 @@ function getCookieExpires(digit, unit) {
 
    const date = new Date();
    date.setTime(date.getTime() + (digit * units.unit));
-   return date
+   return date;
 }
 
 function setCookie(key, value, digit, unit, path = '/', domain = 'vitexopt.ru', Secure = false, HttpOnly = false) {
-   const expires = getCookieExpires(digit, unit)
+   const expires = getCookieExpires(digit, unit);
    const secure = Secure ? 'Secure' : '';
    const httpOnly = HttpOnly ? 'HttpOnly' : '';
-   document.cookie = `${key}=${value}; expires=${expires} path=${path}; SameSite=lax;${secure};${httpOnly}`
+   document.cookie = `${key}=${value}; expires=${expires} path=${path}; SameSite=lax;${secure};${httpOnly}`;
 }
 
 function slider() {
@@ -638,12 +633,12 @@ function slider() {
       if (target.classList.contains('slide')) {
          let wrap = slider.querySelector('.wrap');
          if (!wrap.style.height) {
-            wrap.style.height = wrap.scrollHeight + 'px'
+            wrap.style.height = wrap.scrollHeight + 'px';
          } else {
-            wrap.style.height = ''
+            wrap.style.height = '';
          }
       }
-   }
+   };
 }
 
 export function fragmentDate(date, order, y, m, d, glue) {
@@ -663,7 +658,7 @@ export function fragmentDate(date, order, y, m, d, glue) {
 
    if (dd < 10) dd = '0' + dd;
    if (mm < 10) mm = '0' + mm;
-   return {yyyy, mm, dd, M, D, wd}
+   return {yyyy, mm, dd, M, D, wd};
 }
 
 function addTooltip(args) {
@@ -676,14 +671,14 @@ function addTooltip(args) {
 
          el.append(tip);
          let remove = () => tip.remove();
-         tip.addEventListener('mousemove', remove.bind(tip), true)
+         tip.addEventListener('mousemove', remove.bind(tip), true);
       }.bind(args);
 
       el.onmouseleave = () => {
          let tip = el.querySelector('.tip');
-         tip.remove()
-      }
-   })
+         tip.remove();
+      };
+   });
 }
 
 
@@ -710,4 +705,4 @@ export {
    post,
    validate, $,
    formatDate,
-}
+};

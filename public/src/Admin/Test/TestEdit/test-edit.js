@@ -43,14 +43,14 @@ function handleClick({target}) {
   } else if (target.classList.contains('test-path__create')) {
     _test.path_create()
 
-  } else if (!!target.closest('.question__delete')) {
+  } else if (target.closest('.question__delete')) {
     question(target).delete()
   } else if (target.classList.contains('question__create-button')) {
     question(target).create()
-  } else if (!!target.closest('.question__show-answers')) {
+  } else if (target.closest('.question__show-answers')) {
     question(target).showAnswers()
 
-  } else if (!!target.closest('.delete')) {
+  } else if (target.closest('.delete')) {
     answer(target).delete()
   } else if (target.classList.contains('answer__create-button')) {
     answer(target).create()
@@ -74,7 +74,7 @@ async function handleKeyup({target}) {
 }
 
 async function handleChange({target}) {
-  if (!!target.closest('.question-edit__parent-select')) {
+  if (target.closest('.question-edit__parent-select')) {
    question(target).changeParent()
   }
 }

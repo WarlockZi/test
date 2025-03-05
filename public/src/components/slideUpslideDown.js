@@ -1,7 +1,7 @@
 
 export default function connect(selector, duration, easing)
 {
-    conf:{
+    {
         var button = d.getElementById("button"),
             ease = d.getElementById("easing"),
             element = d.getElementById("element"),
