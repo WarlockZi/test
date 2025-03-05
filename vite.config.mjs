@@ -5,13 +5,15 @@ import path from 'node:path';
 
 export default defineConfig(async ({command, mode}) => {
       const env = loadEnv(mode, process.cwd());
-      console.log('dev - ' + !env.VITE_DEV);
+      console.log('dev - ' + env.VITE_DEV);
 
-      const host = env.VITE_HOST;
+      const base = env.VITE_DEV
+         ? '/'
+         : '/public/build/'
 
       return {
          root: 'public/src',
-         base: env.VITE_DEV ? '/' : '/',
+         base ,
 
          server: {
             cors: true,
@@ -30,6 +32,7 @@ export default defineConfig(async ({command, mode}) => {
             rollupOptions: {
                input: {
                   auth: path.resolve(__dirname, 'public/src/Auth/auth.js'),
+                  admin: path.resolve(__dirname, 'public/src/Admin/admin.js'),
                   main: path.resolve(__dirname, 'public/src/Main/main.js'),
                },
             },

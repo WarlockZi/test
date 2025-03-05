@@ -11,7 +11,9 @@ class AssetsVite implements Compiler
 
     public function __construct(
         protected $compiler = new Helpers()
-    ){}
+    )
+    {
+    }
 
     public function setJs(string $name): void
     {
@@ -44,12 +46,12 @@ class AssetsVite implements Compiler
 
         $assets = $admin
             ?
-            $this->compiler->client() .
-            $this->compiler->vite('Admin/admin.js')
+            $this->compiler->client()
+            . $this->compiler->vite('Admin/admin.js')
             :
-            $this->compiler->client() .
-            $this->compiler->vite('Main/main.js') .
-            $this->compiler->vite('Auth/auth.js');
+            $this->compiler->client()
+            . $this->compiler->vite('Main/main.js')
+            . $this->compiler->vite('Auth/auth.js');
 
         return $assets;
 

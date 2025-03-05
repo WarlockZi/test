@@ -18,7 +18,7 @@ use app\core\Icon;
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?=$assets->icon();?>
+    <?= $assets->icon(); ?>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,14 +32,9 @@ use app\core\Icon;
 
     <?= $assets->getMeta(); ?>
 
-
     //assets
 
-
-        <?= $assets->getCss(); ?>
-
-
-
+    <?= $assets->getCss(); ?>
 </head>
 
 <? // include_once __DIR__ . '/google.php'; ?>
