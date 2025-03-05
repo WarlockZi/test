@@ -27,16 +27,16 @@ class Mail
     {
         $variants = [
             'env' => [
-                'mail' => env('SMTP_FROM_EMAIL'),
-                'host' => env('SMTP_HOST'),
-                'port' => env('SMTP_PORT'),
-                'user' => env('SMTP_USERNAME'),
-                'pass' => env('YANDEX_APP_KEY1'), // пароль для стороннего приложения
-                'from' => env('SMTP_FROM_EMAIL'),
-                'replyTo' => env('SMTP_FROM_EMAIL'),
+                'mail' => getenv('SMTP_FROM_EMAIL'),
+                'host' => getenv('SMTP_HOST'),
+                'port' => getenv('SMTP_PORT'),
+                'user' => getenv('SMTP_USERNAME'),
+                'pass' => getenv('YANDEX_APP_KEY1'), // пароль для стороннего приложения
+                'from' => getenv('SMTP_FROM_EMAIL'),
+                'replyTo' => getenv('SMTP_FROM_EMAIL'),
             ],
             'yandexnew' => [
-                'app_key' => env('YANDEX_APP_KEY'), // пароль для стороннего приложения
+                'app_key' => getenv('YANDEX_APP_KEY'), // пароль для стороннего приложения
             ],
 
             'vitex' => [
