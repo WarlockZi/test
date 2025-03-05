@@ -19,6 +19,7 @@ class BaseBreadcrumbs
         protected string   $panel = '',
         protected string   $slug = '',
         protected string   $href = '',
+        protected int   $index = 0,
     )
     {
     }
