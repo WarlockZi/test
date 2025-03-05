@@ -20,7 +20,7 @@ class DB {
             PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb3_general_ci",
         ];
         try {
-            $this->pdo = new PDO(getenv('DB_DSN'), getenv('DB_USER'), getenv('DB_PASSWORD'), $options);
+            $this->pdo = new PDO(env('DB_DSN'), env('DB_USER'), env('DB_PASSWORD'), $options);
         } catch (PDOException $e) {
             die('Подключение не удалось: ' . $e->getMessage());
         }
