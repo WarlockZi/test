@@ -8,11 +8,9 @@ define('ROOT', dirname(__DIR__));
 
 require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
 (Dotenv\Dotenv::createImmutable(ROOT, '.env'))->load();
-<<<<<<< HEAD
-define('DEV', !$_ENV["VITE_DEV"]);
-=======
+
 define('DEV', env("VITE_DEV"));
->>>>>>> 587a1a236b1f683c6d6db4674743ce5917668201
+
 
 if (DEV) {
     ini_set('display_errors', 'On');

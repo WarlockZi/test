@@ -14,10 +14,6 @@ class Helpers
     public function __construct(
         readonly private string $entry = '',
         private array           $manifest = [],
-<<<<<<< HEAD
-        private bool            $isDev = false,
-=======
->>>>>>> 587a1a236b1f683c6d6db4674743ce5917668201
         private bool            $serverStarted = false,
 //        readonly private string $viteHost = 'https://localhost:5133/',
 //        readonly private string $viteHost = 'https://vi-prod:5133/public/build/',
@@ -30,12 +26,9 @@ class Helpers
 
     )
     {
-<<<<<<< HEAD
-        $this->isDev = DEV;
-        $this->serverStarted = $this->loadedFromDevServer($this->entry);
-=======
+
 //        $this->serverStarted = $this->loadedFromDevServer($this->entry);
->>>>>>> 587a1a236b1f683c6d6db4674743ce5917668201
+
         $this->manifest = $this->getManifest();
     }
 
@@ -73,16 +66,12 @@ class Helpers
         $url = "$this->viteHost{$this->publicPath}{$entry}";
         $url = "$this->viteHost{$entry}";
 //        $url = $this->VITE_HOST . '/' . $entry;
-<<<<<<< HEAD
-        $handle = curl_init($url);
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handle, CURLOPT_NOBODY, true);
-=======
+
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CAINFO, "D:/ospanel/userdata/config/cacert.pem");
         curl_setopt($ch, CURLOPT_NOBODY, true);
->>>>>>> 587a1a236b1f683c6d6db4674743ce5917668201
+
 
         curl_exec($ch);
         $error = curl_errno($ch);
