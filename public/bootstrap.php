@@ -15,7 +15,6 @@ require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "auto
 \app\Services\DotEnv::load(ROOT . DIRECTORY_SEPARATOR . ".env");
 
 define('DEV', env("VITE_DEV"));
-echo phpinfo();
 
 Cache::$enabled = env('CACHE');
 
