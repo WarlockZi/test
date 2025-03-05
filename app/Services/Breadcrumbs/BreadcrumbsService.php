@@ -9,6 +9,7 @@ class BreadcrumbsService extends BaseBreadcrumbs
 
     public function __construct(
         protected string $breadcrumbs = '',
+        protected string $categoryHref ='',
     )
     {
         parent::__construct();
