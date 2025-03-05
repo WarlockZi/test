@@ -34,17 +34,10 @@ use app\core\Icon;
 
 
     //assets
-    <? if (DEV): ?>
-        <?
-        $domain = env('VITE_PROTOCOL') . '://'
-            . env('VITE_HOST') . ':'
-            . env('VITE_PORT'); ?>
-        <script type="module" src="<?= $domain; ?>/@vite/client"></script>
-        <script type="module" src="<?=$domain?>/Main/main.js"></script>
-        <!--        --><?php //= $assets->getCss(); ?>
-    <? else: ?>
+
+
         <?= $assets->getCss(); ?>
-    <? endif; ?>
+
 
 
 </head>

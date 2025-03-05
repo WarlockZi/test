@@ -13,18 +13,24 @@ class Helpers
 {
     public function __construct(
         readonly private string $entry = '',
-        private string          $viteHost = '',
+        private string          $devHost = '',
         private array           $manifest = [],
         private string          $manifestPath = '',
-        private string          $publicPath = '',
+        private string          $productionPath = '',
         private string          $js = '',
         private string          $css = '',
 
     )
     {
-        $this->manifestPath = ROOT . env('VITE_MANIFEST_PATH');
-        $this->publicPath   = env('VITE_PRODUCTION_PATH');
-        $this->viteHost     = env('VITE_PROTOCOL') . '://' . env('VITE_HOST') . env('VITE_PORT') . '/';
+        $this->manifestPath   = ROOT . env('VITE_MANIFEST_PATH');
+        $this->productionPath = env('VITE_PRODUCTION_PATH');
+        $this->devHost = env('VITE_PROTOCOL')
+            .'://'
+            .env('VITE_HOST')
+            .':'
+            .env('VITE_PORT')
+            .'/'
+        ;
         $this->manifest     = $this->getManifest();
     }
 
@@ -44,16 +50,16 @@ class Helpers
 
     function client(): string
     {
-        return !DEV
-            ? "\n<script type='module' src='$this->viteHost@vite/client'></script>"
+        return DEV
+            ? "<script type='module' src='$this->devHost@vite/client'></script>"
             : "";
     }
 
     function jsTag(): string
     {
-        if (DEV) return '';
-        $url = $this->viteHost . $this->entry;
+        if (DEV) return "<script type='module' src='{$this->devHost}{$this->entry}'></script>";
 
+        $url = $this->productionPath . $this->manifest[$this->entry]['file'];
         return !empty($url)
             ? "<script type='module' src='$url'></script>"
             : '';
@@ -72,6 +78,7 @@ class Helpers
 
     function jsPreloadImports(): string
     {
+        if (DEV) return '';
         $res = '';
         foreach ($this->importsUrls() as $url) {
             $res .= "<link rel='modulepreload' href='$url'>";
@@ -84,12 +91,12 @@ class Helpers
         $urls = [];
         if (!empty($this->manifest[$this->entry]['imports'])) {
             foreach ($this->manifest[$this->entry]['imports'] as $imports) {
-                $urls[] = $this->publicPath . $this->manifest[$imports]['file'];
+                $urls[] = $this->productionPath . $this->manifest[$imports]['file'];
             }
         }
         if (!empty($this->manifest[$this->entry]['dynamicImports'])) {
             foreach ($this->manifest[$this->entry]['dynamicImports'] as $imports) {
-                $urls[] = $this->publicPath . $this->manifest[$imports]['file'];
+                $urls[] = $this->productionPath . $this->manifest[$imports]['file'];
             }
         }
         return $urls;
@@ -100,7 +107,7 @@ class Helpers
         $urls = [];
         if (!empty($this->manifest[$this->entry]['css'])) {
             foreach ($this->manifest[$this->entry]['css'] as $file) {
-                $urls[] = $this->publicPath . $file;
+                $urls[] = $this->productionPath . $file;
             }
         }
         return $urls;
