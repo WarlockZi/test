@@ -26,16 +26,16 @@ class PHPMail
         $mailer->isSMTP();
 //        $mailer->SMTPDebug = 1;
 
-        $mailer->Port       = env('SMTP_PORT');
+        $mailer->Port       = getenv('SMTP_PORT');
         $mailer->SMTPAuth   = true;
         $mailer->SMTPSecure = 'ssl';
 
-        $mailer->Host     = env('SMTP_HOST');
-        $mailer->Username = env('SMTP_USERNAME');
+        $mailer->Host     = getenv('SMTP_HOST');
+        $mailer->Username = getenv('SMTP_USERNAME');
         if (DEV) {
-            $mailer->Password = env('YANDEX_APP_KEY_DEV');
+            $mailer->Password = getenv('YANDEX_APP_KEY_DEV');
         } else {
-            $mailer->Password = env('YANDEX_APP_KEY1');
+            $mailer->Password = getenv('YANDEX_APP_KEY1');
         }
 
         $mailer->SMTPOptions = array(
@@ -50,8 +50,8 @@ class PHPMail
 
     public function sendRegistrationMail($user): void
     {
-            $this->mailer->setFrom(env('SMTP_FROM_EMAIL'), env('SMTP_FROM_NAME'));
-            $this->mailer->addReplyTo(env('SMTP_REPLY_TO'), env('SMTP_FROM_NAME'));
+            $this->mailer->setFrom(getenv('SMTP_FROM_EMAIL'), getenv('SMTP_FROM_NAME'));
+            $this->mailer->addReplyTo(getenv('SMTP_REPLY_TO'), getenv('SMTP_FROM_NAME'));
             $this->mailer->addAddress($user['email']);
 
             $this->mailer->Subject = 'VITEX|регистрация';
@@ -67,8 +67,8 @@ class PHPMail
 
     public function sendNewPasswordMail(User $user, string $newPass): bool
     {
-        $this->mailer->setFrom(env('SMTP_FROM_EMAIL'), env('SMTP_FROM_NAME'));
-        $this->mailer->addReplyTo(env('SMTP_REPLY_TO'), env('SMTP_FROM_NAME'));
+        $this->mailer->setFrom(getenv('SMTP_FROM_EMAIL'), getenv('SMTP_FROM_NAME'));
+        $this->mailer->addReplyTo(getenv('SMTP_REPLY_TO'), getenv('SMTP_FROM_NAME'));
         $this->mailer->addAddress($user['email']);
 
         $this->mailer->Subject = 'VITEX|новый пароль';
@@ -93,7 +93,7 @@ class PHPMail
     {
         $this->mailer->setFrom($this->credits['from'], 'VITEX');
         $this->mailer->addReplyTo($this->credits['replyTo'], 'Vitex');
-        $this->mailer->addAddress(env('TEST_EMAIL_ALL'));
+        $this->mailer->addAddress(getenv('TEST_EMAIL_ALL'));
         $this->mailer->Subject = "{$post['user']}:{$post['errorCnt']} ош из {$post['questionCnt']}";
         $this->mailer->isHTML(true);
         $this->mailer->Body = self::prepareBodyTestResults($post, $resid - 1);
