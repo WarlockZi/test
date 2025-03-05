@@ -23,10 +23,11 @@ if (loginForm){
     new Login()
 }
 
-if ($('.modal')){
+if ($('.modal').first()){
     const {default:Modal} = await import("../components/Modal/modal.js")
     new Modal()
 }
+const f= 1
 
 showPassword();
 

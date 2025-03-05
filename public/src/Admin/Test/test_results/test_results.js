@@ -8,7 +8,7 @@ if (testResults) {
 }
 
 function handleClick({target}) {
-  if (!!target.closest('.del-btn')) {
+  if (target.closest('.del-btn')) {
     let testresult = new Testresult()
     let id = target.closest('.del-btn').dataset.row
     testresult.delete(id)

@@ -1,11 +1,11 @@
-import './main.scss'
+import './main.scss';
 import '../components/header/show-front-menu1.js';
-import '../404/404.scss'
+import '../404/404.scss';
 import '../share/hoist/hoist';
-import '../components/animate/animate.js'
+import '../components/animate/animate.js';
 import {qs} from '../constants';
-import scroll from '../share/scroll/scroll.js'
-import headerMenu from '../components/header/show-front-menu.js'
+import scroll from '../share/scroll/scroll.js';
+import headerMenu from '../components/header/show-front-menu.js';
 // import '../share/chat/Chat';
 import Chat from "@src/share/chat/chat.js"; //не удалять - стили пропадут
 import IntObserver from "../share/scroll/IntObserver.js";
@@ -21,66 +21,65 @@ import Feedback from "@src/Feedback/Feedback.js";
 import CallMe from "@src/CallMe/CallMe.js";
 import setLocalStorageCartId from "@src/share/cart_id/cart_id.js";
 
-window.YM = YM
+window.YM = YM;
 document.addEventListener('DOMContentLoaded', async function () {
 
-   const admin = window.location.pathname.includes('adminsc')
-   if (admin) return false
+   const admin = window.location.pathname.includes('adminsc');
+   if (admin) return false;
 
    document.body.classList.remove('preload');//to prevent initial transitions
 
-   const feedbackButton = $('#feedback-submit').first()
-   if (feedbackButton) new Feedback(feedbackButton)
+   const feedbackButton = $('#feedback-submit').first();
+   if (feedbackButton) new Feedback(feedbackButton);
 
    // new Chat
-   new ChatLocalStorage
-   new CallMe
-   new Search
-   new MobileMenu
+   new ChatLocalStorage;
+   new CallMe;
+   new Search;
+   new MobileMenu;
    new Modal({
       triggers: ['.guest-menu', '#cartLogin'],
       boxes: new CartLogin(),
    });
 
-   const modal = document[qs]('.modal')
+   const modal = document[qs]('.modal');
    if (modal) {
-      const {default: Modal} = await import("../components/Modal/modal.js")
-      new Modal()
+      const {default: Modal} = await import("../components/Modal/modal.js");
+      new Modal();
    }
-   IntObserver()
-   headerMenu()
-   scroll()
-   setLocalStorageCartId()
+   IntObserver();
+   headerMenu();
+   scroll();
+   setLocalStorageCartId();
 
 
    const path = window.location.pathname;
    if (path.startsWith('/auth/profile')) {
-      new CatalogItem($('.item-wrap').first())
+      new CatalogItem($('.item-wrap').first());
 
    } else if (path.startsWith('/cart')) {
-      YM('url_cart')
-      const {default: Cart} = await import('../Cart/Cart.js')
-      new Cart()
+      YM('url_cart');
+      const {default: Cart} = await import('../Cart/Cart.js');
+      new Cart();
 
    } else if (path.startsWith('/like/page')) {
-      const {default: Like} = await import('../Like/Like.js')
-      new Like
+      const {default: Like} = await import('../Like/Like.js');
+      new Like;
 
    } else if (path.startsWith('/compare/page')) {
-      const {default: Compare} = await import('../Compare/Compare.js')
-      new Compare()
+      const {default: Compare} = await import('../Compare/Compare.js');
+      new Compare();
 
    } else if (path.startsWith('/catalog')) {
-      const {default: Category} = await import('../Category/category.js')
-      new Category()
+      const {default: Category} = await import('../Category/category.js');
+      new Category();
 
    } else if (path.startsWith('/product')) {
-      debugger
-      const {default: Product} = await import('../Product/Product.js')
-      new Product()
+      const {default: Product} = await import('../Product/Product.js');
+      new Product();
 
    } else if (path.startsWith('/promotions')) {
-      const {default: Promotions} = await import('../Promotions/Promotion.js')
+      const {default: Promotions} = await import('../Promotions/Promotion.js');
       new Promotions;
    }
 
