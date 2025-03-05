@@ -119,7 +119,7 @@ class User extends Model implements IUser
     public
     function isSU(): bool
     {
-        return getenv('SU_EMAIL') === $this->mail();
+        return env('SU_EMAIL') === $this->mail();
     }
 
     public

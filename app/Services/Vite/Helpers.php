@@ -22,13 +22,13 @@ class Helpers
 
     )
     {
-        $this->manifestPath   = ROOT . getenv('VITE_MANIFEST_PATH');
-        $this->productionPath = getenv('VITE_PRODUCTION_PATH');
-        $this->devHost = getenv('VITE_PROTOCOL')
+        $this->manifestPath   = ROOT . env('VITE_MANIFEST_PATH');
+        $this->productionPath = env('VITE_PRODUCTION_PATH');
+        $this->devHost = env('VITE_PROTOCOL')
             .'://'
-            .getenv('VITE_HOST')
+            .env('VITE_HOST')
             .':'
-            .getenv('VITE_PORT')
+            .env('VITE_PORT')
             .'/'
         ;
         $this->manifest     = $this->getManifest();
