@@ -8,6 +8,10 @@
 
             <ul class="utils">
 
+                <li class="mob-burger">
+                    <? include 'mobile_menu.php' ?>
+                </li>
+
                 <li>
                     <a href="/catalog" class="util-item catalog" title="Каталог">
                         <?= Icon::catalog() ?>
@@ -44,9 +48,6 @@
                     </a>
                 </li>
 
-                <li>
-                    <? include 'mobile_menu.php' ?>
-                </li>
             </ul>
 
         </div>

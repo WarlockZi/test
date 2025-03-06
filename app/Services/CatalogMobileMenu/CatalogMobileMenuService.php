@@ -34,6 +34,7 @@ class CatalogMobileMenuService
             if (count($cat['children_recursive'])) {
                 $self         = $this;
                 $this->string .= $this->fs->getContent('li-expand', compact('cat', 'self'));
+                $this->string .= $this->fs->getContent('li', compact('cat'));
                 $this->recurse($cat['children_recursive']);
                 $this->string .= '</ul></li>';
             } else {
