@@ -17,19 +17,6 @@ require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "auto
 
 define('DEV', env("VITE_DEV"));
 
-Cache::$enabled = env('CACHE');
-//$r = new \Illuminate\Support\Facades\Redis();
-$g= new Memcached();
-$g->addServer('localhost', 11211);
-$g->set('key', 'value',3300);
-
-$v = $g->get('key')."<br><br><br>";
-//$r->set('rr',1001);
-echo $v;
-echo $v;
-echo $v;
-echo $v;
-
 if (DEV) {
     ini_set('display_errors', 'On');
     error_reporting(E_ALL | E_STRICT);
