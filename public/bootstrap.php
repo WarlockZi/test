@@ -18,16 +18,6 @@ define('DEV', env("VITE_DEV"));
 
 Cache::$enabled = env('CACHE');
 
-$g= new Memcached();
-$g->addServer('localhost', 11211);
-$g->set('key', 'value',3300);
-
-$v = $g->get('key')."<br><br><br>";
-
-echo $v;
-echo $v;
-echo $v;
-echo $v;
 
 if (DEV) {
     ini_set('display_errors', 'On');
