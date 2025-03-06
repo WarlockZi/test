@@ -8,22 +8,12 @@ class Cache
 {
     private static $instance = null;
     public static bool $enabled= true;
+    public static int $timeLife1 = 1;
+    public static int $timeLife10 = 10;
     public static int $timeLife100 = 100;
     public static int $timeLife1_000 = 1_000;
     public static int $timeLife10_000 = 10_000;
     private static string $path = ROOT . '/tmp/cache/';
-
-    private function __construct()
-    {}
-
-    private static function getInstance()
-    {
-        if (!self::$instance) {
-            self::$instance = new self;
-            return self::$instance;
-        }
-        return self::$instance;
-    }
 
     public static function get(string $key, string|array|callable $data, int $seconds = 10, $path = '')
     {
@@ -89,5 +79,17 @@ class Cache
             }
         }
         return $dir;
+    }
+    private function __construct(){}
+    // Защита от клонирования
+    private function __clone() {}
+
+    private static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self;
+            return self::$instance;
+        }
+        return self::$instance;
     }
 }

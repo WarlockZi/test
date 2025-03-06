@@ -31,7 +31,7 @@ class BlueRibbonRepository
                     $child_categories[$rootCat->name] = ob_get_clean();
                 }
                 return $child_categories;
-            }, Cache::$timeLife1_000);
+            }, Cache::$timeLife1);
     }
 
     private static function buildMenu(array $categories, int $i = 1): void
