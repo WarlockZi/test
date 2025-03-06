@@ -32,9 +32,9 @@ use app\core\Icon;
 
     <?= $assets->getMeta(); ?>
 
-    <link rel='stylesheet' href='/public/custom.css'>
 
     <?= $assets->getCss(); ?>
+    <link rel='stylesheet' href='/public/custom.css'>
 </head>
 
 <? // include_once __DIR__ . '/google.php'; ?>
