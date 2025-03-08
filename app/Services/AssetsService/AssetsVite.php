@@ -42,18 +42,18 @@ class AssetsVite implements Compiler
 
     public function getCss(): string
     {
-        $admin = str_contains($_SERVER['REQUEST_URI'], 'adminsc');
+        $admin  = str_contains($_SERVER['REQUEST_URI'], 'adminsc');
+        $assets = '';
+
+        if (DEV) {
+            $assets = $this->compiler->client();
+        }
 
         $assets = $admin
-            ?
-            $this->compiler->client()
-            . $this->compiler->vite('Admin/admin.js')
-            :
-            $this->compiler->client()
-            . $this->compiler->vite('Main/main.js')
+            ? $assets . $this->compiler->vite('Admin/admin.js')
+            : $assets . $this->compiler->vite('Main/main.js')
             . $this->compiler->vite('Auth/auth.js');
 
         return $assets;
-
     }
 }
