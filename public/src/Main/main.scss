@@ -73,8 +73,21 @@
     padding: 100px 0 100px;
     background-color: white;
     min-height: 250px;
-    .admin-gap{
+
+    .admin-gap {
       height: 30px;
+    }
+
+    ul.custom-list {
+      padding-left: 20px;
+
+      li {
+        font-size: clamp(.75rem, 3vw, .9rem);
+        line-height: clamp(1rem, 3vw, 1.2rem);
+        color: #41444a;
+        margin: 0 0 15px;
+        list-style: disc;
+      }
     }
 
     @include mixin_media.m800 {

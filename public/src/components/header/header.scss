@@ -7,6 +7,7 @@
 
 @include mobile-menu.nav-drill;
 .burger {
+  top: 0 !important;
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -211,6 +212,56 @@
     margin: 0;
     justify-content: space-between;
     color: white;
+
+    @media(min-width:800px){
+      .mob-burger{
+        display: none;
+      }
+    }
+
+    @media(max-width:800px){
+      .burger .header-catalog-menu .header-catalog-menu__wrap{
+        justify-content: flex-start;
+      }
+      .mob-burger{
+        display: block;
+      }
+      .burger .info .call-me{
+        display: none;
+      }
+      .mob-burger .nav-drill{
+        flex-direction: column;
+      }
+      .mob-burger .nav-items{
+        flex: unset;
+      }
+      .mob-menu-contacts{
+        margin-top: 50px;
+        padding-left: 15px;
+      }
+      .mob-menu-contacts a{
+        color: #4e4e4e;
+        display: block;
+        font-size: 15px;
+        margin-bottom: 10px;
+      }
+      .mob-burger .mob-menu-contacts .call-me {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #1a72b8;
+        border-radius: 3px;
+        color: #fff;
+        cursor: pointer;
+        box-sizing: border-box;
+        border: 1px solid #1a72b8;
+        transition: background .3s, color .3s;
+        user-select: none;
+        padding: 10px 15px;
+        font-size: clamp(.875rem, 5vw, 1rem);
+        line-height: 1rem;
+      }
+    }
 
     svg {
       width: clamp(10px, 5vw, 17px);

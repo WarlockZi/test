@@ -39,21 +39,38 @@ class LoadCategories
         });
     }
 
-    protected function run($groups, $level = 0): void
+//    protected function run($groups): void
+//    {
+//        if ($this->isAssoc($groups)) {
+//            $item                         = $this->fillItem($groups);
+//            $this->existed[$groups['Ид']] = $groups['Ид'];
+//            if (isset($groups['Группы'])) {
+//                $this->parent = $item['id'];
+//                $this->run($groups['Группы']['Группа']);
+//            }
+//        } else {
+//            foreach ($groups as $group) {
+//                $this->run($group);
+//            }
+////            $this->parent = null;
+//        }
+//    }
+
+    protected function run($groups, $level = 0, $parent = null): void
     {
         if (!$this->isAssoc($groups)) {
             foreach ($groups as $group) {
-                if ($level === 0) {
-                    $this->parent = null;
-                }
-                $this->run($group, 0);
+//                if ($level === 0) {
+//                    $this->parent = null;
+//                }
+                $this->run($group, $level, $parent);
             }
         } else {
             $item                         = $this->fillItem($groups);
             $this->existed[$groups['Ид']] = $groups['Ид'];
             if (isset($groups['Группы'])) {
                 $this->parent = $item['1s_id'];
-                $this->run($groups['Группы']['Группа'], ++$level);
+                $this->run($groups['Группы']['Группа'], ++$level, $parent);
             }
         }
     }
