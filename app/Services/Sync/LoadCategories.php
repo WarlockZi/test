@@ -16,7 +16,6 @@ class LoadCategories
     public function __construct(
         readonly private string $file,
         private array           $data = [],
-        private string|null     $parent = NULL,
         public array            $deleted = [],
         public array            $created = [],
         private array           $existed = [],
@@ -39,46 +38,27 @@ class LoadCategories
         });
     }
 
-//    protected function run($groups): void
-//    {
-//        if ($this->isAssoc($groups)) {
-//            $item                         = $this->fillItem($groups);
-//            $this->existed[$groups['Ид']] = $groups['Ид'];
-//            if (isset($groups['Группы'])) {
-//                $this->parent = $item['id'];
-//                $this->run($groups['Группы']['Группа']);
-//            }
-//        } else {
-//            foreach ($groups as $group) {
-//                $this->run($group);
-//            }
-////            $this->parent = null;
-//        }
-//    }
 
     protected function run($groups, $level = 0, $parent = null): void
     {
         if (!$this->isAssoc($groups)) {
             foreach ($groups as $group) {
-                if ($level === 0) {
-                    $this->parent = null;
-                }
                 $this->run($group, $level, $parent);
             }
         } else {
-            $item                         = $this->fillItem($groups);
+            $item                         = $this->fillItem($groups, $parent);
             $this->existed[$groups['Ид']] = $groups['Ид'];
             if (isset($groups['Группы'])) {
-                $this->parent = $item['1s_id'];
+                $parent = $item['1s_id'];
                 $this->run($groups['Группы']['Группа'], ++$level, $parent);
             }
         }
     }
 
-    protected function fillItem(array $group): Category
+    protected function fillItem(array $group, string|null $parent): Category
     {
         $item['1s_id']          = $group['Ид'];
-        $item['1s_category_id'] = $this->parent;
+        $item['1s_category_id'] = $parent;
 
         $item['name']       = $group['Наименование'];
         $item['slug']       = SlugService::slug($item['name']);
@@ -86,7 +66,7 @@ class LoadCategories
 
         $cat      = Category::withTrashed()
             ->updateOrCreate(['1s_id' => $item['1s_id']], $item);
-        $catProps = $this->setCategoryOwnProps($cat);
+        $this->setCategoryOwnProps($cat);
 
         if ($cat->wasRecentlyCreated) {
             $this->created[] = $cat['name'];

@@ -33,34 +33,34 @@ footer {
     }
 
     .column {
-      &.colpay{
+      &.colpay {
+        justify-content: space-between;
 
-          justify-content: space-between;
-
-        &.foot-cont{
+        .foot-cont {
           margin-top: 15px;
-          &>div{
+
+          & > div {
             color: #fff;
             margin-bottom: 10px;
-            span{
+
+            span {
               color: #9b9b9b;
               font-weight: bold;
             }
-            a{
-
-            }
           }
-
         }
-        &.pay-icons{
+
+        .pay-icons {
           display: flex;
           gap: 10px;
           margin-top: 10px;
-          img{
+
+          img {
             height: 35px;
           }
         }
       }
+
       li {
         padding: 5px;
 

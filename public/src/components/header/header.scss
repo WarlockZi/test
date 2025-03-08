@@ -110,7 +110,9 @@
 
     .call-me{
       @include mixin_media.colored_button(3px);
-      padding: 10px 15px;
+      padding-block: clamp(0.175rem, 1vw, 10px);
+      padding-inline: clamp(0.075rem, 2vw, 10px);
+      margin-block: 1px;
       font-size: clamp(.875rem, 5vw, 1rem);
       line-height: 1rem;
     }

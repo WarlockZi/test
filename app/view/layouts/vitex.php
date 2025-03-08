@@ -37,8 +37,6 @@ use app\core\Icon;
     <link rel='stylesheet' href='/public/custom.css'>
 </head>
 
-<? // include_once __DIR__ . '/google.php'; ?>
-
 <body class="preload">
 
 <?= $header; ?>
