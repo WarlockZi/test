@@ -60,9 +60,9 @@ class LoadCategories
     {
         if (!$this->isAssoc($groups)) {
             foreach ($groups as $group) {
-//                if ($level === 0) {
-//                    $this->parent = null;
-//                }
+                if ($level === 0) {
+                    $this->parent = null;
+                }
                 $this->run($group, $level, $parent);
             }
         } else {
