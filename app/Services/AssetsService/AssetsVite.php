@@ -15,15 +15,6 @@ class AssetsVite implements Compiler
     {
     }
 
-    public function setJs(string $name): void
-    {
-        $this->js[] = $name;
-    }
-
-    public function setCss(string $name): void
-    {
-        $this->css[] = $name;
-    }
 
     public function getConfig(): array
     {
@@ -33,11 +24,6 @@ class AssetsVite implements Compiler
             'path' => '/build/',
             'h1' => '127.0.0.1',
         ];
-    }
-
-    public function getJs(): string
-    {
-        return '';
     }
 
     public function getCss(): string
@@ -55,5 +41,19 @@ class AssetsVite implements Compiler
             . $this->compiler->vite('Auth/auth.js');
 
         return $assets;
+    }
+
+    public function getJs(): string
+    {
+        return '';
+    }
+    public function setJs(string $name): void
+    {
+        $this->js[] = $name;
+    }
+
+    public function setCss(string $name): void
+    {
+        $this->css[] = $name;
     }
 }
