@@ -17,12 +17,12 @@
 
         <? foreach ($menu as $id => $item): ?>
 
-        <div class="page" data-id="<?= $id ?>">
+            <div class="page" data-id="<?= $id ?>">
 
-            <div class="quill" data-id="<?= $id ?>" data-field="cotnent">
-                <?= $item->content; ?>
+                <div class="quill" data-id="<?= $id ?>" data-field="cotnent">
+                    <?= $item->content; ?>
+                </div>
             </div>
-        </div>
 
 
         <? endforeach; ?>

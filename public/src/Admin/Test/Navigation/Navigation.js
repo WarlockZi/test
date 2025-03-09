@@ -1,5 +1,5 @@
-import './navigation.scss'
+import "./navigation.scss";
+
 export default class Navigation {
-   constructor() {
-   }
+  constructor() {}
 }

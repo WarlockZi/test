@@ -23,14 +23,16 @@
   .new-price {
     @extend .center;
     flex-direction: column;
-    .price{
+
+    .price {
 
     }
-    .count{
+
+    .count {
     }
   }
 
-  .active-till{
+  .active-till {
     @extend .center;
 
   }

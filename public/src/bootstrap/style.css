@@ -4,7 +4,7 @@
     backdrop-filter: saturate(180%) blur(20px);
 }
 
-.site-header a{
-    color:black;
-    text-decoration:none;
+.site-header a {
+    color: black;
+    text-decoration: none;
 }

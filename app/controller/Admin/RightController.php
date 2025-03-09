@@ -10,24 +10,23 @@ use app\model\User;
 use app\view\Right\RightView;
 
 
-
-class RightController Extends AdminscController
+class RightController extends AdminscController
 {
-	public string $model = Right::class;
+    public string $model = Right::class;
 //	public $modelName = 'right';
 //	public $tableName = 'rights';
 
-	public function __construct()
-	{
-		parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
 
-	}
+    }
 
-	public function actionIndex():void
-	{
-		$list = RightView::listAll();
-		$this->setVars(compact('list'));
-	}
+    public function actionIndex(): void
+    {
+        $list = RightView::listAll();
+        $this->setVars(compact('list'));
+    }
 
 //	public function actionDelete():void
 //	{

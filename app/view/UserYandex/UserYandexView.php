@@ -271,7 +271,7 @@ abstract class UserYandexView
             ->column(
                 ColumnBuilder::build('default_phone')
                     ->name('phone')
-                    ->callback(function ($userY){
+                    ->callback(function ($userY) {
                         $obj = json_decode($userY->default_phone);
                         return $obj->number;
                     })

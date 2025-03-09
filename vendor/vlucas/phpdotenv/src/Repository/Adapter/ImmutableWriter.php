@@ -46,7 +46,7 @@ final class ImmutableWriter implements WriterInterface
      * Write to an environment variable, if possible.
      *
      * @param non-empty-string $name
-     * @param string           $value
+     * @param string $value
      *
      * @return bool
      */
@@ -67,6 +67,20 @@ final class ImmutableWriter implements WriterInterface
         $this->loaded[$name] = '';
 
         return true;
+    }
+
+    /**
+     * Determine if the given variable is externally defined.
+     *
+     * That is, is it an "existing" variable.
+     *
+     * @param non-empty-string $name
+     *
+     * @return bool
+     */
+    private function isExternallyDefined(string $name)
+    {
+        return $this->reader->read($name)->isDefined() && !isset($this->loaded[$name]);
     }
 
     /**
@@ -92,19 +106,5 @@ final class ImmutableWriter implements WriterInterface
         unset($this->loaded[$name]);
 
         return true;
-    }
-
-    /**
-     * Determine if the given variable is externally defined.
-     *
-     * That is, is it an "existing" variable.
-     *
-     * @param non-empty-string $name
-     *
-     * @return bool
-     */
-    private function isExternallyDefined(string $name)
-    {
-        return $this->reader->read($name)->isDefined() && !isset($this->loaded[$name]);
     }
 }

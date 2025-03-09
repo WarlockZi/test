@@ -7,7 +7,8 @@
 POST https://vi-production/adminsc/product/edit/256
 Content-Type: application/x-www-form-urlencoded
 
-id=99&content=new-element
+id = 99 &
+content = new-element
 
 ###
 #		$myCurl = curl_init();
@@ -34,4 +35,5 @@ id=99&content=new-element
 POST https://vi-production/adminsc/product/edit/256
 Content-Type: application/x-www-form-urlencoded
 
-id=99&content=new-element
+id = 99 &
+content = new-element

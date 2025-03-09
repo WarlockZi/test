@@ -20,7 +20,7 @@ class UserFooter extends Footer
     public function setFooter(): void
     {
         $rootCategories = $this->rootCategories;
-        $this->footer = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php', compact('rootCategories'));
+        $this->footer   = FS::getFileContent(ROOT . '/app/view/Footer/footerView.php', compact('rootCategories'));
     }
 
 }

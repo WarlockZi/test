@@ -29,12 +29,6 @@ class ShippableUnitsTable
         $this->fontSize     = $this->fontSize((float)$this->fontSize)->fontSize ?? '';
     }
 
-    public function greenButton(string $text = "Перейти в корзину"): ShippableUnitsTable
-    {
-        $this->greenButton = "<button class='button green-button'>{$text}</button>";
-        return $this;
-    }
-
     public function fontSize(float $fontSize): ShippableUnitsTable
     {
         $integerPart    = (int)$fontSize;
@@ -43,11 +37,10 @@ class ShippableUnitsTable
         return $this;
     }
 
-    private function getGreenButton(): string
+    public function greenButton(string $text = "Перейти в корзину"): ShippableUnitsTable
     {
-        if ($this->greenButton)
-            return "<div class='green-button-wrap'>{$this->greenButton}{$this->rows()}</div>";
-        return $this->rows();
+        $this->greenButton = "<button class='button green-button'>{$text}</button>";
+        return $this;
     }
 
     public function blueButton(string $text = "Добавить"): ShippableUnitsTable
@@ -68,19 +61,61 @@ class ShippableUnitsTable
         return $this;
     }
 
-    private function format(float $number)
+    public function get(): string
     {
-        return number_format($number, 2, '.', ' ') . ' ₽';
+        return
+            "<div class='shippable-table {$this->fontSize}' " .
+            "data-price='{$this->product->price}'" .
+            " shippable-table " .
+            "data-1sid='{$this->product['1s_id']}'>" .
+            $this->blueButton .
+            $this->getGreenButton() .
+            "</div>";
     }
 
-
-    private function getRowSum(int $count, int $multiplier): string
+    private function getGreenButton(): string
     {
-        if ($this->totalRowSum) {
-            $rowSum = $this->format($multiplier * $this->price * $count);
-            return "<div class='sub-sum' sub-sum>{$rowSum}</div>";
+        if ($this->greenButton)
+            return "<div class='green-button-wrap'>{$this->greenButton}{$this->rows()}</div>";
+        return $this->rows();
+    }
+
+    private function rows($rows = ''): string
+    {
+        $subSum = 0;
+        foreach ($this->units as $unit) {
+            $count      = $this->getCount($unit);
+            $multiplier = $unit->pivot->multiplier ?? 1;
+            $orderItem  = $this->product?->order?->orderItems->filter(function ($item) use ($unit) {
+                return $item->unit_id === $unit['id'];
+            });
+
+            $arr = [
+                'orderItem' => $orderItem?->first(),
+                "unit" => $unit,
+                "baseUnit" => $this->baseUnitName,
+                "count" => $count,
+                "price" => $this->price,
+                "multiplier" => $multiplier,
+                "cost" => $this->getCost((int)$count, (int)$multiplier),
+                "description" => $this->getDesription($count, $multiplier),
+                "totalRowSum" => $this->getRowSum($count, $multiplier),
+            ];
+
+            $rows .= $this->fs->getContent('shippableUnitTable', $arr);
         }
-        return '';
+        return $rows;
+    }
+
+    private function getCount($unit)
+    {
+        if (!isset($this->product->orders?->orderItems)) return 0;
+        $o = $this->product->orders?->orderItems?->filter(
+            function ($order) use ($unit) {
+                return $order->unit_id === $unit['id'];
+            }
+        );
+        return $o->first()->count ?? 0;
     }
 
     private function getCost(int $count, int $multiplier): string
@@ -98,14 +133,14 @@ class ShippableUnitsTable
         return '';
     }
 
-    private function formatNumber(int $number): string
-    {
-        return number_format($number, 0, '', ' ');
-    }
-
     private function getDesctiptionCount(int $count, int $multiplier): string
     {
         return "<span class='contains'>{$this->formatNumber($multiplier)} {$this->baseUnitName}</span>";
+    }
+
+    private function formatNumber(int $number): string
+    {
+        return number_format($number, 0, '', ' ');
     }
 
     private function getDesctiptionPrice(int $multiplier): string
@@ -115,53 +150,17 @@ class ShippableUnitsTable
         return "<span class='cost' data-cost='{$cost}'>{$price}</span>";
     }
 
-    private function getCount($unit)
+    private function getRowSum(int $count, int $multiplier): string
     {
-        if (!isset($this->product->orders?->orderItems)) return 0;
-        $o = $this->product->orders?->orderItems?->filter(
-            function ($order) use ($unit) {
-                return $order->unit_id === $unit['id'];
-            }
-        );
-        return $o->first()->count ?? 0;
-    }
-
-    private function rows($rows = ''): string
-    {
-        $subSum = 0;
-        foreach ($this->units as $unit) {
-            $count       = $this->getCount($unit);
-            $multiplier  = $unit->pivot->multiplier ?? 1;
-            $orderItem = $this->product?->order?->orderItems->filter(function ($item)use($unit){
-                return $item->unit_id === $unit['id'];
-            });
-
-            $arr         = [
-                'orderItem' => $orderItem?->first(),
-                "unit" => $unit,
-                "baseUnit" => $this->baseUnitName,
-                "count" => $count,
-                "price" => $this->price,
-                "multiplier" => $multiplier,
-                "cost" => $this->getCost((int)$count, (int)$multiplier),
-                "description" => $this->getDesription($count, $multiplier),
-                "totalRowSum" => $this->getRowSum($count, $multiplier),
-            ];
-
-            $rows .= $this->fs->getContent('shippableUnitTable', $arr);
+        if ($this->totalRowSum) {
+            $rowSum = $this->format($multiplier * $this->price * $count);
+            return "<div class='sub-sum' sub-sum>{$rowSum}</div>";
         }
-        return $rows;
+        return '';
     }
 
-    public function get(): string
+    private function format(float $number)
     {
-        return
-            "<div class='shippable-table {$this->fontSize}' " .
-            "data-price='{$this->product->price}'" .
-            " shippable-table " .
-            "data-1sid='{$this->product['1s_id']}'>" .
-            $this->blueButton .
-            $this->getGreenButton() .
-            "</div>";
+        return number_format($number, 2, '.', ' ') . ' ₽';
     }
 }

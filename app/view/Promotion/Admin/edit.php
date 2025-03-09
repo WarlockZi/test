@@ -1,5 +1,5 @@
 <div class="promotion-edit">
 
-<?=$promotion?>
+    <?= $promotion ?>
 
 </div>

@@ -33,7 +33,7 @@ class Footer
         }
     }
 
-    public static function getYaMetrica():string
+    public static function getYaMetrica(): string
     {
         if (DEV) {
             return self::$yaMetrica;
@@ -50,6 +50,7 @@ class Footer
     {
         return self::$userCookie;
     }
+
     public function getFooter(): string
     {
         return $this->footer;

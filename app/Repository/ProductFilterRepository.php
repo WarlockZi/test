@@ -15,12 +15,14 @@ class ProductFilterRepository
             ->where('model', 'product')
             ->select('name')
             ->first();
-        return $userFilters ? json_decode($userFilters->name,true) : [];
+        return $userFilters ? json_decode($userFilters->name, true) : [];
     }
+
     private static function array_every(array $array, callable $callback): bool
     {
         return !in_array(false, array_map($callback, $array));
     }
+
     public static function filterProducts($req)
     {
         extract($req);

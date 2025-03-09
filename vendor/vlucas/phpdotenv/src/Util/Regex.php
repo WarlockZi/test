@@ -40,6 +40,29 @@ final class Regex
     }
 
     /**
+     * Perform a preg operation, wrapping up the result.
+     *
+     * @template V
+     *
+     * @param callable(string):V $operation
+     * @param string $subject
+     *
+     * @return \GrahamCampbell\ResultType\Result<V,string>
+     */
+    private static function pregAndWrap(callable $operation, string $subject)
+    {
+        $result = $operation($subject);
+
+        if (\preg_last_error() !== \PREG_NO_ERROR) {
+            /** @var \GrahamCampbell\ResultType\Result<V,string> */
+            return Error::create(\preg_last_error_msg());
+        }
+
+        /** @var \GrahamCampbell\ResultType\Result<V,string> */
+        return Success::create($result);
+    }
+
+    /**
      * Perform a preg match all, wrapping up the result.
      *
      * @param string $pattern
@@ -50,16 +73,16 @@ final class Regex
     public static function occurrences(string $pattern, string $subject)
     {
         return self::pregAndWrap(static function (string $subject) use ($pattern) {
-            return (int) @\preg_match_all($pattern, $subject);
+            return (int)@\preg_match_all($pattern, $subject);
         }, $subject);
     }
 
     /**
      * Perform a preg replace callback, wrapping up the result.
      *
-     * @param string   $pattern
+     * @param string $pattern
      * @param callable $callback
-     * @param string   $subject
+     * @param string $subject
      * @param int|null $limit
      *
      * @return \GrahamCampbell\ResultType\Result<string,string>
@@ -67,7 +90,7 @@ final class Regex
     public static function replaceCallback(string $pattern, callable $callback, string $subject, ?int $limit = null)
     {
         return self::pregAndWrap(static function (string $subject) use ($pattern, $callback, $limit) {
-            return (string) @\preg_replace_callback($pattern, $callback, $subject, $limit ?? -1);
+            return (string)@\preg_replace_callback($pattern, $callback, $subject, $limit ?? -1);
         }, $subject);
     }
 
@@ -83,30 +106,7 @@ final class Regex
     {
         return self::pregAndWrap(static function (string $subject) use ($pattern) {
             /** @var string[] */
-            return (array) @\preg_split($pattern, $subject);
+            return (array)@\preg_split($pattern, $subject);
         }, $subject);
-    }
-
-    /**
-     * Perform a preg operation, wrapping up the result.
-     *
-     * @template V
-     *
-     * @param callable(string):V $operation
-     * @param string             $subject
-     *
-     * @return \GrahamCampbell\ResultType\Result<V,string>
-     */
-    private static function pregAndWrap(callable $operation, string $subject)
-    {
-        $result = $operation($subject);
-
-        if (\preg_last_error() !== \PREG_NO_ERROR) {
-            /** @var \GrahamCampbell\ResultType\Result<V,string> */
-            return Error::create(\preg_last_error_msg());
-        }
-
-        /** @var \GrahamCampbell\ResultType\Result<V,string> */
-        return Success::create($result);
     }
 }

@@ -6,13 +6,13 @@
   flex-direction: column;
 }
 
-.category-tree{
+.category-tree {
 
   @include mixin_media.tree();
 
   box-shadow: white 0 0 9px 16px;
 
-  a:hover{
+  a:hover {
     transition: all 100ms;
     background-color: #8b8f8e;
     color: white;

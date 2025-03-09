@@ -1,7 +1,7 @@
 <div
-		data-detach
-		data-id="<?= $item->id; ?>"
-	<?= $item->class ?>
+        data-detach
+        data-id="<?= $item->id; ?>"
+    <?= $item->class ?>
 >
-	x
+    x
 </div>

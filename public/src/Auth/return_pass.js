@@ -1,4 +1,4 @@
-import {$, post} from "../common"
+import { $, post } from "../common";
 
 
 // let returnpass = $(`[data-auth="returnpass"]`)[0];

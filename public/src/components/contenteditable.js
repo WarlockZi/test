@@ -1,4 +1,1 @@
-export default function contenteditable() {
-
-}
-
+export default function contenteditable() {}

@@ -6,22 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lead extends Model
 {
-	public $timestamps = true;
+    public $timestamps = true;
 
-	protected $fillable = [
-		'name',
-		'surname',
-		'middle_name',
-		'mobile',
-		'code',
-		'phone',
-		'company',
-		'sess'
-	];
+    protected $fillable = [
+        'name',
+        'surname',
+        'middle_name',
+        'mobile',
+        'code',
+        'phone',
+        'company',
+        'sess'
+    ];
 
-	public function items()
-	{
-		return $this->hasMany(OrderItem::class);
-	}
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 
 }

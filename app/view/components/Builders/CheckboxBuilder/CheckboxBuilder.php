@@ -26,20 +26,22 @@ class CheckboxBuilder
     {
         return new self();
     }
+
     public function pivot(string $field): static
     {
         $this->pivot = "data-pivot=$field";
         return $this;
     }
+
     public function field(string $field): static
     {
         $this->field = "data-field=$field";
         return $this;
     }
 
-    public function checked($checked=true): static
+    public function checked($checked = true): static
     {
-        $this->checked = $checked?"checked":"";
+        $this->checked = $checked ? "checked" : "";
         return $this;
     }
 

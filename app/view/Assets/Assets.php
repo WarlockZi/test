@@ -6,21 +6,17 @@ namespace app\view\Assets;
 class Assets
 {
     public function __construct(
-        protected bool $isAdmin = false,
+        protected bool     $isAdmin = false,
 
-        protected Compiler     $compiler = new AssetsVite(),
+        protected Compiler $compiler = new AssetsVite(),
 //        protected Compiler     $compiler = new AssetsWebpack(),
-        public AssetsSEO      $seo = new AssetsSEO(),
-        public AssetsCDN      $CDN = new AssetsCDN(),
-        public AssetsCache    $cache = new AssetsCache(),
+        public AssetsSEO   $seo = new AssetsSEO(),
+        public AssetsCDN   $CDN = new AssetsCDN(),
+        public AssetsCache $cache = new AssetsCache(),
     )
     {
         $this->cache->setCache();
         $this->setCompiler();
-    }
-    public function setIsAdmin(): string
-    {
-        $this->isAdmin = true;
     }
 
     protected function setCompiler(): string
@@ -29,12 +25,17 @@ class Assets
         return "{$protocol}{$h1}{$port}{$path}";
     }
 
+    public function setIsAdmin(): string
+    {
+        $this->isAdmin = true;
+    }
+
     public function setJs(string $name): void
     {
         $this->compiler->setJs($name);
     }
 
-    public function setCss(string $name):void
+    public function setCss(string $name): void
     {
         $this->compiler->setCss($name);
     }
@@ -44,16 +45,17 @@ class Assets
         return $this->compiler->getJs();
     }
 
-    public function getCss(string $str = ''):string
+    public function getCss(string $str = ''): string
     {
         return $this->compiler->getCss();
     }
 
-    public function getMeta():string
+    public function getMeta(): string
     {
         return $this->seo->getMeta();
     }
-    public function setMeta(string $title, string $desc='', string $keywords=''):void
+
+    public function setMeta(string $title, string $desc = '', string $keywords = ''): void
     {
         $this->seo->setMeta($title, $desc, $keywords);
     }

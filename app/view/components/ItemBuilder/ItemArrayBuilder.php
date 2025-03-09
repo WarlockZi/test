@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class ItemArrayBuilder
 {
     use CleanString;
+
     private string $toListText;
     private string $toListHref;
     private string $pageTitle;
@@ -33,7 +34,7 @@ class ItemArrayBuilder
     {
         $this->fs     = new FS(__DIR__);
         $this->dataId = '';
-        $this->html = '';
+        $this->html   = '';
     }
 
     public static function build(Model $item, string $modelName)

@@ -5,7 +5,6 @@
 @use '../controls';
 
 
-
 .test-do, .opentest-do {
   display: flex;
   flex-flow: column;
@@ -26,7 +25,6 @@
     width: 100%;
     margin-right: 20px;
   }
-
 
 
   .test {
@@ -76,8 +74,6 @@
       }
     }
   }
-
-
 
 
   .menu.menu-open {
@@ -191,6 +187,7 @@
 
   input {
     display: none;
+
     &:checked + label {
       border: 1px solid #dae5f8;
     }

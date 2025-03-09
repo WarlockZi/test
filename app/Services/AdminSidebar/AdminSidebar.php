@@ -39,11 +39,12 @@ class AdminSidebar
         return ob_get_clean();
     }
 
-    private function hasPermitions(array $permitions):bool
+    private function hasPermitions(array $permitions): bool
     {
         return $this->user->can($permitions);
 
     }
+
     private function a(array $item): void
     {
         $f = ROOT . "/app/Services/AdminSidebar/a.php";

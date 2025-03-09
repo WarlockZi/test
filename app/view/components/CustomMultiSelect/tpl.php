@@ -1,8 +1,8 @@
-<?$tab=str_repeat($this->tab,$level)?>
+<? $tab = str_repeat($this->tab, $level) ?>
 <option value="<?= $item['id'] ?>">
-	<?= $tab??'' ?><?= $item['name'] ?>
+    <?= $tab ?? '' ?><?= $item['name'] ?>
 </option>
-<?if(isset($item['childs'])){
-	$this->getChilds($item['childs'],$level);
-}?>
+<? if (isset($item['childs'])) {
+    $this->getChilds($item['childs'], $level);
+} ?>
 

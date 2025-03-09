@@ -1,8 +1,8 @@
-import './sync1c.scss'
-import {Sync} from './Sync'
-import {$} from '../../common'
+import "./sync1c.scss";
+import { Sync } from "./Sync";
+import { $ } from "../../common";
 
-let $sync = $('.sync').first();
+let $sync = $(".sync").first();
 if ($sync) {
-  new Sync($sync)
+  new Sync($sync);
 }

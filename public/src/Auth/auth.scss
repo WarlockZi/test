@@ -13,7 +13,7 @@
   word-break: break-word;
   min-width: 300px;
 
-  h3{
+  h3 {
     @include mixin_media.h3;
   }
 
@@ -42,7 +42,6 @@
     color: var.$color-gray-max;
     margin-bottom: 20px;
   }
-
 
 
   .pass {
@@ -113,7 +112,7 @@
     align-items: stretch;
     flex-flow: column;
 
-    .yandex{
+    .yandex {
       display: block;
       background-repeat: no-repeat;
       background-position: center;
@@ -148,6 +147,7 @@
 
   .radio-wrap {
     display: flex;
+
     label {
       display: flex;
       align-items: center;

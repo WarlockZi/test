@@ -1,4 +1,5 @@
 @use "../../mixin_media";
+
 .main {
 
   .container {
@@ -11,7 +12,7 @@
 
   }
 
-  #map{
+  #map {
     width: 600px;
     height: 600px;
   }
@@ -20,45 +21,49 @@
   .block {
     display: flex;
     flex-direction: column;
-    background: linear-gradient(90deg, rgba(43,31,255,1) 0%, rgba(159,0,155,1) 100%);;
+    background: linear-gradient(90deg, rgba(43, 31, 255, 1) 0%, rgba(159, 0, 155, 1) 100%);;
     border-radius: 16px;
     padding: 10px;
     color: #ffffff;
     min-height: 140px;
     flex: 1 0 190px;
 
-    canvas{
+    canvas {
       width: clamp(180px, 100%, 240px) !important;
       justify-self: flex-end;
       //min-width: 180px !important;
     }
 
-    @include mixin_media.m1000{
-      flex:1 0 20%;
+    @include mixin_media.m1000 {
+      flex: 1 0 20%;
     }
-    @include mixin_media.m800{
-      flex:1 0 30%;
+    @include mixin_media.m800 {
+      flex: 1 0 30%;
     }
-    @include mixin_media.m600{
-      flex:1 0 90%;
+    @include mixin_media.m600 {
+      flex: 1 0 90%;
     }
-    .icon{
-      svg{
-        fill:#fff;
+
+    .icon {
+      svg {
+        fill: #fff;
       }
     }
 
-    &.income{
-      background: linear-gradient(90deg, rgba(43,31,255,1) 0%, rgba(159,0,155,1) 100%);
+    &.income {
+      background: linear-gradient(90deg, rgba(43, 31, 255, 1) 0%, rgba(159, 0, 155, 1) 100%);
     }
-    &.supplied{
-      background: linear-gradient(90deg, rgba(71,222,22,1) 0%, rgba(182,201,0,1) 100%);
+
+    &.supplied {
+      background: linear-gradient(90deg, rgba(71, 222, 22, 1) 0%, rgba(182, 201, 0, 1) 100%);
     }
-    &.newCustomers{
-      background: linear-gradient(90deg, rgba(222,135,22,1) 0%, rgba(214,18,18,1) 100%);
+
+    &.newCustomers {
+      background: linear-gradient(90deg, rgba(222, 135, 22, 1) 0%, rgba(214, 18, 18, 1) 100%);
     }
-    &.efficient{
-      background: linear-gradient(90deg, rgba(219,22,222,1) 0%, rgba(137,18,214,1) 100%);
+
+    &.efficient {
+      background: linear-gradient(90deg, rgba(219, 22, 222, 1) 0%, rgba(137, 18, 214, 1) 100%);
     }
 
     .row {
@@ -66,21 +71,22 @@
       justify-content: space-between;
     }
 
-    .digit{
+    .digit {
       font-weight: 600;
       margin-bottom: 5px;
     }
-    .name{
+
+    .name {
       font-size: 12px;
     }
 
-    .graph-title{
+    .graph-title {
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .graph{
+    .graph {
       width: 106px;
       height: 100px;
     }

@@ -31,7 +31,7 @@ class PluckOptionsBuilder
 
     public function options(string $string = ''): string
     {
-        foreach ($this->collection as $id=>$item) {
+        foreach ($this->collection as $id => $item) {
             if (in_array($id, $this->excluded)) continue;
             $selected = ($id == $this->selected) ? "selected" : '';
             $string   .= "<option value = $id $selected>$item</option>";

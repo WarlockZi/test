@@ -4,11 +4,13 @@ namespace app\Services\Chat;
 
 class WebsocketServer
 {
-    public function __construct($config) {
+    public function __construct($config)
+    {
         $this->config = $config;
     }
 
-    public function start() {
+    public function start()
+    {
         //открываем серверный сокет
         $server = stream_socket_server("tcp://{$this->config['host']}:{$this->config['port']}", $errorNumber, $errorString);
 
@@ -28,10 +30,11 @@ class WebsocketServer
         }
     }
 
-    protected function spawnWorkers() {
-        $master = null;
+    protected function spawnWorkers()
+    {
+        $master  = null;
         $workers = array();
-        $i = 0;
+        $i       = 0;
         while ($i < $this->config['workers']) {
             $i++;
             //создаём парные сокеты, через них будут связываться мастер и воркер

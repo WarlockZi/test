@@ -12,7 +12,7 @@ class FeedbackView
 
     public function all()
     {
-        $table= Table::build(Feedback::all())
+        $table = Table::build(Feedback::all())
             ->model('feedback')
             ->pageTitle('Сообщения пользователей')
             ->column(

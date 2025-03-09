@@ -7,11 +7,13 @@ class WebsocketMaster
     protected $workers = array();
     protected $clients = array();
 
-    public function __construct($workers) {
+    public function __construct($workers)
+    {
         $this->clients = $this->workers = $workers;
     }
 
-    public function start() {
+    public function start()
+    {
         while (true) {
             //подготавливаем массив всех сокетов, которые нужно обработать
             $read = $this->clients;

@@ -1,5 +1,3 @@
-import './create/create'
+import "./create/create";
 
-import './planning.scss'
-
-
+import "./planning.scss";

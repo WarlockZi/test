@@ -7,12 +7,12 @@ use app\model\User;
 
 class UserController extends AppController
 {
-	public string $model = User::class;
+    public string $model = User::class;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
 //	public function actionIndex():void
 //	{

@@ -28,7 +28,7 @@ class Order extends Model
             'id',
             '1s_id')
             ->withWhereHas('orderItems',
-                fn($q)=>$q->where('count','>',0))
+                fn($q) => $q->where('count', '>', 0))
             ->groupBy('product_id')//            ->whereHas('orderItems')
             ;
     }

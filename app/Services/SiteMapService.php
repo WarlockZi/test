@@ -64,7 +64,7 @@ class SiteMapService
         foreach ($hrefs as $href) {
             $url = "{$this->host}{$href}";
 //            return;
-            $page = $this->getPage($url);
+            $page  = $this->getPage($url);
             $hrefs = $this->searchLinks($page, $href);
             $this->cleanHrefs();
         }

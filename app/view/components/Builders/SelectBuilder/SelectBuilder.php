@@ -20,7 +20,7 @@ class SelectBuilder
     private string $options;
     private string $initialOption = '';
 
-    public static function build(string $options):static
+    public static function build(string $options): static
     {
         $select          = new static();
         $select->fs      = new FS(__DIR__);
@@ -29,34 +29,37 @@ class SelectBuilder
     }
 
 
-    public function class(string $class):static
+    public function class(string $class): static
     {
         $this->class = "class='$class'";
         return $this;
     }
 
-    public function title(string $title):static
+    public function title(string $title): static
     {
         $this->title = "title='$title'";
         return $this;
     }
-    public function relation(string $relation, string $relationModel):static
+
+    public function relation(string $relation, string $relationModel): static
     {
         $this->relation = "data-relation='{$relation}' data-relationmodel='{$relationModel}'";
         return $this;
     }
-    public function field(string $field):static
+
+    public function field(string $field): static
     {
         $this->field = "data-field='$field'";
         return $this;
     }
-    public function name(string $name):static
+
+    public function name(string $name): static
     {
         $this->name = "name='$name'";
         return $this;
     }
 
-    public function initialOption(string $initialOptionLabel = '', int $initialOptionValue = 0):static
+    public function initialOption(string $initialOptionLabel = '', int $initialOptionValue = 0): static
     {
         $this->initialOption =
             "<option value='$initialOptionValue'>$initialOptionLabel</option>";
@@ -64,7 +67,7 @@ class SelectBuilder
         return $this;
     }
 
-    public function get():string
+    public function get(): string
     {
         $data = get_object_vars($this);
         return $this->clean($this->fs->getContent('templates/SelectBuilderTemplate', $data));

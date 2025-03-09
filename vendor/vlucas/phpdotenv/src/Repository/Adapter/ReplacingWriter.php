@@ -39,14 +39,14 @@ final class ReplacingWriter implements WriterInterface
     {
         $this->writer = $writer;
         $this->reader = $reader;
-        $this->seen = [];
+        $this->seen   = [];
     }
 
     /**
      * Write to an environment variable, if possible.
      *
      * @param non-empty-string $name
-     * @param string           $value
+     * @param string $value
      *
      * @return bool
      */
@@ -54,23 +54,6 @@ final class ReplacingWriter implements WriterInterface
     {
         if ($this->exists($name)) {
             return $this->writer->write($name, $value);
-        }
-
-        // succeed if nothing to do
-        return true;
-    }
-
-    /**
-     * Delete an environment variable, if possible.
-     *
-     * @param non-empty-string $name
-     *
-     * @return bool
-     */
-    public function delete(string $name)
-    {
-        if ($this->exists($name)) {
-            return $this->writer->delete($name);
         }
 
         // succeed if nothing to do
@@ -100,5 +83,22 @@ final class ReplacingWriter implements WriterInterface
         }
 
         return false;
+    }
+
+    /**
+     * Delete an environment variable, if possible.
+     *
+     * @param non-empty-string $name
+     *
+     * @return bool
+     */
+    public function delete(string $name)
+    {
+        if ($this->exists($name)) {
+            return $this->writer->delete($name);
+        }
+
+        // succeed if nothing to do
+        return true;
     }
 }

@@ -1,4 +1,3 @@
-import './test-update.scss'
+import "./test-update.scss";
 
-export default function testUpdate() {
-}
+export default function testUpdate() {}

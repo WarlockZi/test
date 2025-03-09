@@ -23,8 +23,8 @@ class XLService
                 $i++;
                 if ($i < 4) continue;
                 $address = $row[0];
-                $oldH1     = $row[2];
-                $newH1     = $row[3];
+                $oldH1   = $row[2];
+                $newH1   = $row[3];
                 $this->findCategory($address, $newH1);
             }
         } else {
@@ -34,9 +34,9 @@ class XLService
 
     private function findCategory(string $address, string $newH1)
     {
-        $path = parse_url($address)['path'];
-        $arr  = explode('/', $path);
-        $slug = array_pop($arr);
+        $path    = parse_url($address)['path'];
+        $arr     = explode('/', $path);
+        $slug    = array_pop($arr);
         $catProp = CategoryProperty::where('slug', $slug)->first();
         if ($catProp) {
             $catProp->seo_h1 = $newH1;

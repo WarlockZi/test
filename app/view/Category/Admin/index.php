@@ -1,6 +1,5 @@
-
 <div class="category-tree">
-	<ul>
-		 <?= $categoryTree; ?>
-	</ul>
+    <ul>
+        <?= $categoryTree; ?>
+    </ul>
 </div>

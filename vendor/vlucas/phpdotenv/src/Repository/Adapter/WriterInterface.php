@@ -10,7 +10,7 @@ interface WriterInterface
      * Write to an environment variable, if possible.
      *
      * @param non-empty-string $name
-     * @param string           $value
+     * @param string $value
      *
      * @return bool
      */

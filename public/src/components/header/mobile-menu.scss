@@ -12,12 +12,12 @@
   $grey: #eaeaea;
 
   $primary-color: var.$color-main;
-  $primary-color-dark: color.adjust($primary-color, $lightness:-10%);
-  $primary-color-tint-1: color.adjust($primary-color, $lightness:10%);
-  $primary-color-tint-2: color.adjust($primary-color, $lightness:20%);
-  $primary-color-tint-3: color.adjust($primary-color, $lightness:30%);
-  $primary-color-tint-4: color.adjust($primary-color, $lightness:40%);
-  $primary-color-tint-5: color.adjust($primary-color, $lightness:50%);
+  $primary-color-dark: color.adjust($primary-color, $lightness: -10%);
+  $primary-color-tint-1: color.adjust($primary-color, $lightness: 10%);
+  $primary-color-tint-2: color.adjust($primary-color, $lightness: 20%);
+  $primary-color-tint-3: color.adjust($primary-color, $lightness: 30%);
+  $primary-color-tint-4: color.adjust($primary-color, $lightness: 40%);
+  $primary-color-tint-5: color.adjust($primary-color, $lightness: 50%);
   $primary-font: "Fira Sans", Arial, sans-serif;
 
   $link-color: $primary-color;
@@ -104,7 +104,7 @@
       -webkit-overflow-scrolling: touch;
       transition: transform ease-in-out 0.6s;
       max-width: 100vw;
-      border-left: 1px solid color.adjust(var.$color-main,$lightness:50%);
+      border-left: 1px solid color.adjust(var.$color-main, $lightness: 50%);
     }
 
     &-items {
@@ -122,7 +122,7 @@
       padding: $nav-padding;
       background-color: $nav-background-color;
       color: $link-color;
-      font-size: clamp(.6rem, 4vw,1rem);
+      font-size: clamp(.6rem, 4vw, 1rem);
       line-height: 1.5em;
       font-weight: 300;
     }

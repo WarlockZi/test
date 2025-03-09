@@ -11,22 +11,24 @@ class TableHeader
     private array $rows = [];
     private FS $fs;
 
-    public static function build ():self
+    public static function build(): self
     {
-        $tableHeader = new self;
+        $tableHeader     = new self;
         $tableHeader->fs = new FS(__DIR__);
         return $tableHeader;
     }
+
     public function add(string $title, string $html): self
     {
         $this->rows[$title] = $html;
         return $this;
     }
+
     public function get(): string
     {
         $string = '';
-        foreach ($this->rows as $title=>$html) {
-            $string .= $this->fs->getContent( "row", compact('title', 'html') );
+        foreach ($this->rows as $title => $html) {
+            $string .= $this->fs->getContent("row", compact('title', 'html'));
         }
         return $string;
     }

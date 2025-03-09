@@ -33,7 +33,7 @@ class FilterView
 
     public function filterName(string $filterName): self
     {
-        $this->name = "name='{$filterName}'";
+        $this->name       = "name='{$filterName}'";
         $this->filterName = $filterName;
         return $this;
     }
@@ -49,6 +49,7 @@ class FilterView
         $this->toFilter = $toFilter;
         return $this;
     }
+
     public function toSave(array $toSave): self
     {
         $this->toSave = $toSave;

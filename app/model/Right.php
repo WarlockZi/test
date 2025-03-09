@@ -9,15 +9,15 @@ class Right extends Model
 {
 
     public $timestamps = true;
-	protected $fillable = [
-		'name',
-		'description',
-	];
+    protected $fillable = [
+        'name',
+        'description',
+    ];
 
-	public function user()
-	{
-		return $this->hasMany(User::class);
-	}
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 
 
 }

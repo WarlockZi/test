@@ -14,7 +14,9 @@ class Chat_2
         $this->SocketServer(60);
 
     }
-    private function SocketServer($limit = 0) {
+
+    private function SocketServer($limit = 0)
+    {
         $starttime = time();
         echo 'SERVER START' . PHP_EOL;
 

@@ -21,8 +21,8 @@ class AppController extends Controller
     {
         $action       = '';
         $modalId      = $req['id'];
-        $relationName = $req['relation']['name']??null;
-        $pivot        = $req['relation']['pivot']??null;
+        $relationName = $req['relation']['name'] ?? null;
+        $pivot        = $req['relation']['pivot'] ?? null;
         $attach       = $req['relation']['attach'] ?? null;
         $model        = $this->model::with($relationName)->find($modalId);
 
@@ -50,7 +50,7 @@ class AppController extends Controller
                     Response::json(['popup' => 'Заменен', 'attach' => $attach]);
                 }
 
-            }elseif (!empty($req['relation']['fields'])) {
+            } elseif (!empty($req['relation']['fields'])) {
                 $key                        = key($req['relation']['fields']) ?? null;
                 $value                      = $req['relation']['fields'][$key] ?? null;
                 $model->$relationName->$key = $value;
@@ -101,7 +101,7 @@ class AppController extends Controller
     public function actionDelete(): void
     {
         $id = $this->ajax['id'];
-        if (!$id) Response::json(['msg'=>'No id']);
+        if (!$id) Response::json(['msg' => 'No id']);
         $model        = $this->model::find($id);
         $relationType = $this->ajax['relationType'] ?? null;
         if (!empty($relationType)) {

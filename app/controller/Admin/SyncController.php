@@ -36,18 +36,22 @@ class SyncController extends AdminscController
     {
         $this->trancateService->softTrancate();
     }
+
     public function actionTruncate(): void
     {
         $this->trancateService->trancate();
     }
+
     public function actionRemovecategories(): void
     {
         $this->trancateService->softRemoveCategories();
     }
+
     public function actionRemoveproducts(): void
     {
         $this->trancateService->softRemoveProducts();
     }
+
     public function actionRemoveprices(): void
     {
         $this->trancateService->removePrices();

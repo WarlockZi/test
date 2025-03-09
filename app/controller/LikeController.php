@@ -12,8 +12,8 @@ use app\view\Like\LikeView;
 class LikeController extends AppController
 {
     public string $model = Like::class;
-    public function __construct(
-    )
+
+    public function __construct()
     {
         parent::__construct();
     }

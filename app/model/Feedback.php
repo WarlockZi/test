@@ -8,16 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feedback extends Model
 {
-	public $timestamps = true;
+    public $timestamps = true;
 
-	protected $fillable = [
-		'name',
-		'phone',
-		'email',
-		'message',
+    protected $fillable = [
+        'name',
+        'phone',
+        'email',
+        'message',
         'done'
-	];
-
+    ];
 
 
 }

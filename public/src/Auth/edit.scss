@@ -1,16 +1,18 @@
-.popup__wrapper{
+.popup__wrapper {
   position: absolute;
   display: flex;
   flex-flow: column;
   top: -100%;
   left: -100%;
   max-width: 500px;
-  .popup{
+
+  .popup {
     display: flex;
     max-width: 200px;
     position: absolute;
     top: -100%;
-    .close{
+
+    .close {
       display: flex;
       position: absolute;
     }

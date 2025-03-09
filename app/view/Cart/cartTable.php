@@ -1,5 +1,5 @@
 <?php foreach ($order->shippableUnits as $shippableUnit): ?>
-    <div class="unit-row" data-unitId="<?=$shippableUnit->id?>">
+    <div class="unit-row" data-unitId="<?= $shippableUnit->id ?>">
         <button class="button minus">-</button>
         <input type="number" class="input">
         <button class="button plus">+</button>

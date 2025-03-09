@@ -2,19 +2,19 @@
 @use "../../mixin_media";
 
 
-
 .value,
 .options,
 .option {
   box-sizing: border-box;
 }
 
-[select-new]{
+[select-new] {
   border: 1px solid #cccccc;
 }
+
 [custom-select], [select-new] {
   display: flex;
-  width: clamp(136px,20vw,100%);
+  width: clamp(136px, 20vw, 100%);
   align-items: center;
   position: relative;
   background-color: white;

@@ -2,18 +2,20 @@
 
 namespace app\core;
 
-class App {
+class App
+{
 
 
-  public static $app;
-  public static $DI;
+    public static $app;
+    public static $DI;
 
-  public function __construct($di) {
+    public function __construct($di)
+    {
 
-  	self::$DI = $di;
+        self::$DI = $di;
 
 //    self::$app = Registry::instance();
 
-  }
+    }
 
 }

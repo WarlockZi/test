@@ -31,11 +31,13 @@ class TrancateService
         }
         $this->log('--- products  soft deleted ---');
     }
+
     public function softRemovePrices(): void
     {
         Price::truncate();
         $this->log('--- price  soft deleted ---');
     }
+
     public function softRemoveCategories(): void
     {
         foreach (Category::all() as $model) {
@@ -50,11 +52,13 @@ class TrancateService
         Price::truncate();
         $this->log('--- price  deleted ---');
     }
+
     private function removeProducts(): void
     {
         Product::truncate();
         $this->log('--- products  deleted ---');
     }
+
     private function removeCategories(): void
     {
         Category::truncate();

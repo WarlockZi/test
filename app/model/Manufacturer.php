@@ -9,27 +9,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Manufacturer extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $fillable = [
-		'name',
-		'country_id'
-	];
+    protected $fillable = [
+        'name',
+        'country_id'
+    ];
 
-	public function country()
-	{
-		return $this->belongsTo(Country::class);
-	}
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 
-	public static function countrySelect($column, $item)
-	{
-		return SelectBuilder::build(ArrayOptionsBuilder::build(Country::all())
-			->initialOption()
-			->selected($item->country->id)
-			->get()
-		)
-			->get();
-	}
+    public static function countrySelect($column, $item)
+    {
+        return SelectBuilder::build(ArrayOptionsBuilder::build(Country::all())
+            ->initialOption()
+            ->selected($item->country->id)
+            ->get()
+        )
+            ->get();
+    }
 
 
 }

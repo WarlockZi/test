@@ -12,8 +12,8 @@ class ReportView
 {
     public function filter(array $userFilters, string $title): string
     {
-        $repo = new ProductFilterRepository();
-        $products      = $repo::filterProducts($userFilters);
+        $repo     = new ProductFilterRepository();
+        $products = $repo::filterProducts($userFilters);
         return Table::build($products)
             ->pageTitle($title)
             ->model('product')
@@ -73,7 +73,6 @@ class ReportView
                     ->width('30px')
                     ->get()
             )
-
             ->edit()
             ->del()
             ->get() ?? 'Установите фильтры';

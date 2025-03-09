@@ -1,5 +1,4 @@
-
-	<div class="unautherized" >
-		Не хватает прав :(
-	</div>
+<div class="unautherized">
+    Не хватает прав :(
+</div>
 

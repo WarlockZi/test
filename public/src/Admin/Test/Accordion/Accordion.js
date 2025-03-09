@@ -1,4 +1,3 @@
-import './Accordion.scss';
-export default class Accordion {
+import "./Accordion.scss";
 
-}
+export default class Accordion {}

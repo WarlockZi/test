@@ -74,7 +74,7 @@ class LoadProducts
             $ownProps = ProductProperty::create([
                 'product_1s_id' => $product['1s_id'],
                 'short_link' => ShortlinkService::getValidShortLink(),
-                'txt'=>$product->txt,
+                'txt' => $product->txt,
             ]);
         }
         if ($prodProps && !$prodProps->short_link) {

@@ -14,33 +14,33 @@ use app\Services\Test\TestDoService;
 use app\Services\Test\TestEditService;
 
 
-class QuestionController Extends AdminscController
+class QuestionController extends AdminscController
 {
-	protected string $model = Question::class;
+    protected string $model = Question::class;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function actionEdit()
-	{
-		$id = Router::getRoute()->id;
-		if ($id) {
-			$test = new TestEditService();
+    public function actionEdit()
+    {
+        $id = Router::getRoute()->id;
+        if ($id) {
+            $test = new TestEditService();
 
-			$page_name = 'Редактирование тестов';
-			$this->setVars(compact('page_name'));
+            $page_name = 'Редактирование тестов';
+            $this->setVars(compact('page_name'));
 
-			$this->setVars(compact('test'));
-		}
-	}
+            $this->setVars(compact('test'));
+        }
+    }
 
-	public function actionSort()
-	{
-		$q_ids = $this->ajax['toChange'];
-		Question::sort($q_ids);
-		Response::exitWithPopup('Сортировка сохранена');
-	}
+    public function actionSort()
+    {
+        $q_ids = $this->ajax['toChange'];
+        Question::sort($q_ids);
+        Response::exitWithPopup('Сортировка сохранена');
+    }
 
 }

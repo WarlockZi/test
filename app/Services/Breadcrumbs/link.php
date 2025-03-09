@@ -17,7 +17,7 @@ $ListItem = ($obj['namespace'] === 'admin')
         <?= $obj['category']->name; ?>
         </span>
         </a>
-        <meta itemprop="position" content="<?= $obj['index']+1; ?>"/>
+        <meta itemprop="position" content="<?= $obj['index'] + 1; ?>"/>
         <?= $obj['panel']; ?>
     </li>
 <?= $obj['breadcrumbs']; ?>

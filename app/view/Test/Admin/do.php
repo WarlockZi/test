@@ -3,10 +3,10 @@
         <div class="accordion-open">Выбрать тест</div>
     </div>
     <div class="test">
-       <?= $testView->getAccordion(); ?>
+        <?= $testView->getAccordion(); ?>
         <div class="content">
-           <?= $testView->getPagination($test); ?>
-           <?= $testView->getContent($test); ?>
+            <?= $testView->getPagination($test); ?>
+            <?= $testView->getContent($test); ?>
         </div>
     </div>
 </section>

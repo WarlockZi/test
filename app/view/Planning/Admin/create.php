@@ -1,9 +1,8 @@
+<section class="planning-create">
 
-	<section class="planning-create">
+    Ежедневные
 
-		Ежедневные
-
-		 <?= $daily; ?>
+    <?= $daily; ?>
 
 
-	</section>
+</section>

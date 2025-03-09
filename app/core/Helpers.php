@@ -117,43 +117,6 @@ class Helpers
         echo xdebug_time_index() . ' сек. <br>';
     }
 
-    private function copyBaseUnits()
-    {
-        $p = Product::all()->toArray();
-        foreach ($p as $pr) {
-            $model = [
-                'product_1s_id' => $pr['1s_id'],
-                'unit_id' => $pr['base_unit'],
-                'multiplier' => 1,
-                'is_base' => 1,
-            ];
-            ProductUnit::create($model);
-        }
-    }
-
-    private function cleanBaseUnits()
-    {
-        $duplicates = ProductUnit::select('product_1s_id', 'unit_id', 'multiplier', 'is_base')
-            ->groupBy('product_1s_id', 'unit_id', 'multiplier', 'is_base')
-            ->havingRaw('COUNT(*) > 1')
-            ->get();
-
-        $logger = new FileLogger();
-        $logger->write('duplicates->count -' . $duplicates->count());
-        if (!$duplicates->count()) return null;
-        foreach ($duplicates as $duplicate) {
-            $res = ProductUnit::where('product_1s_id', $duplicate->product_1s_id)
-                ->where('unit_id', $duplicate->unit_id)
-                ->where('multiplier', $duplicate->multiplier)
-                ->where('is_base', $duplicate->is_base)
-                ->orderBy('unit_id', 'asc')
-                ->skip(1)
-                ->delete();
-        }
-        return true;
-    }
-
-// clean ports and start port 4000
     public function serve()
     {
         $host = '127.0.0.1';
@@ -180,5 +143,43 @@ class Helpers
 //				echo "<p>{$self->host}:{$port} is not responding. Error {$errno}: {$errstr} </p>" . "\n";
             }
         }
+    }
+
+    private function copyBaseUnits()
+    {
+        $p = Product::all()->toArray();
+        foreach ($p as $pr) {
+            $model = [
+                'product_1s_id' => $pr['1s_id'],
+                'unit_id' => $pr['base_unit'],
+                'multiplier' => 1,
+                'is_base' => 1,
+            ];
+            ProductUnit::create($model);
+        }
+    }
+
+// clean ports and start port 4000
+
+    private function cleanBaseUnits()
+    {
+        $duplicates = ProductUnit::select('product_1s_id', 'unit_id', 'multiplier', 'is_base')
+            ->groupBy('product_1s_id', 'unit_id', 'multiplier', 'is_base')
+            ->havingRaw('COUNT(*) > 1')
+            ->get();
+
+        $logger = new FileLogger();
+        $logger->write('duplicates->count -' . $duplicates->count());
+        if (!$duplicates->count()) return null;
+        foreach ($duplicates as $duplicate) {
+            $res = ProductUnit::where('product_1s_id', $duplicate->product_1s_id)
+                ->where('unit_id', $duplicate->unit_id)
+                ->where('multiplier', $duplicate->multiplier)
+                ->where('is_base', $duplicate->is_base)
+                ->orderBy('unit_id', 'asc')
+                ->skip(1)
+                ->delete();
+        }
+        return true;
     }
 }

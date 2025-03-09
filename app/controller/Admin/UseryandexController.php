@@ -16,7 +16,7 @@ class UseryandexController extends AdminscController
 {
     public function __construct(
         public UserYandexRepository $repo = new UserYandexRepository,
-        public string         $model = UserYandex::class,
+        public string               $model = UserYandex::class,
     )
     {
         parent::__construct();
@@ -48,9 +48,9 @@ class UseryandexController extends AdminscController
     {
         if ($data = $this->ajax) {
             if (!Auth::getUser()->can(['user_delete']))
-                Response::json(['popup'=>'Не хватает прав']);
+                Response::json(['popup' => 'Не хватает прав']);
             User::find($data['id'])->delete();
-            Response::json(['popup'=>'Удален']);
+            Response::json(['popup' => 'Удален']);
         }
     }
 

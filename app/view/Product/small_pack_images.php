@@ -1,4 +1,4 @@
-<?//
+<? //
 //use \app\Repository\ImageRepository;
 //ob_start();
 //?>
@@ -12,18 +12,18 @@
 <!--	<div class="images">-->
 <!---->
 <!---->
-<!--		--><?// foreach ($product->smallPackImages as $img): ?>
+<!--		--><? // foreach ($product->smallPackImages as $img): ?>
 <!--			<div class="image">-->
-<!--				--><?//
+<!--				--><? //
 //				$ext = ImageRepository::getFileExt($img->type);
 //				$path = "/pic/product/{$img->hash}.{$ext}";
 //				$src = ImageRepository::getImg($path);
 //				?>
-<!--				<img class="" src="--><?//= $src ?><!--" alt="">-->
-<!--				<div class="del" data-id="--><?//=$img->id??''?><!--" data-tag="delSmallPackImage">x</div>-->
+<!--				<img class="" src="--><? //= $src ?><!--" alt="">-->
+<!--				<div class="del" data-id="--><? //=$img->id??''?><!--" data-tag="delSmallPackImage">x</div>-->
 <!--			</div>-->
-<!--		--><?// endforeach; ?>
+<!--		--><? // endforeach; ?>
 <!--	</div>-->
 <!--</div>-->
 <!---->
-<?// return ob_get_clean(); ?>
+<? // return ob_get_clean(); ?>

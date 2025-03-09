@@ -5,10 +5,10 @@
     </div>
 
     <div class="test-edit__cont">
-       <?= $testView->getAccordion(); ?>
+        <?= $testView->getAccordion(); ?>
 
         <div class="extra-wrap">
-           <?= $test ?? "Выберите тест для редактирования"; ?>
+            <?= $test ?? "Выберите тест для редактирования"; ?>
         </div>
 
     </div>

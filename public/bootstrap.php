@@ -1,8 +1,6 @@
 <?php
 
 use app\core\FS;
-use \app\core\Cache;
-use \Illuminate\Support\Facades\Redis;
 
 ini_set("short_open_tag", 1);
 ini_set('memory_limit', '256M');
@@ -12,6 +10,7 @@ function env($key)
 {
     return $_ENV[$key];
 }
+
 require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
 \app\Services\DotEnv::load(ROOT . DIRECTORY_SEPARATOR . ".env");
 

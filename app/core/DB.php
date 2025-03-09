@@ -6,13 +6,15 @@ use Exception;
 use PDO;
 use PDOException;
 
-class DB {
+class DB
+{
 
-    public PDO $pdo;
     protected static DB $instance;
     protected static array $queries = [];
+    public PDO $pdo;
 
-    public function __construct() {
+    public function __construct()
+    {
 
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -34,23 +36,24 @@ class DB {
         return self::$instance;
     }
 
-    public function execute($sql, $params = []) {
-        $stmt = $this->pdo->prepare($sql);
-        try {
-           return $stmt->execute($params);
-        } catch (Exception $ex) {
-           exit($ex);
-        }
-    }
-
     public function query($sql, $params = []): false|array
     {
         $stmt = $this->pdo->prepare($sql);
-        $res = $stmt->execute($params);
+        $res  = $stmt->execute($params);
         if ($res !== false) {
             return $stmt->fetchAll();
         }
         return [];
+    }
+
+    public function execute($sql, $params = [])
+    {
+        $stmt = $this->pdo->prepare($sql);
+        try {
+            return $stmt->execute($params);
+        } catch (Exception $ex) {
+            exit($ex);
+        }
     }
 
 }

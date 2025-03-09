@@ -24,22 +24,24 @@ class OrderItem extends Model
         'deleted_at'
     ];
 
-    public function order():BelongsTo
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }
+
     public function scopeWithWhereHas($query, $relation, $constraint)
     {
         return $query->whereHas($relation, $constraint)
             ->with([$relation => $constraint]);
     }
+
     public static function leadData($columnBuilder, $orderItem, $fieldName)
     {
         $name    = $orderItem?->lead?->name ?? 'имя';
         $company = $orderItem?->lead?->company ?? 'компания';
         $phone   = $orderItem?->lead?->phone ?? 'телефон';
-        return  "{$name} - {$company} - {$phone}";
-	}
+        return "{$name} - {$company} - {$phone}";
+    }
 
     public function product(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
@@ -48,6 +50,6 @@ class OrderItem extends Model
 
     public function unit(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne(Unit::class, 'id','unit_id');
+        return $this->hasOne(Unit::class, 'id', 'unit_id');
     }
 }

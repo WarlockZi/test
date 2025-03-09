@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class ItemArrayFieldBuilder
 {
     use CleanString;
+
     private string $fieldName;
     private ItemArrayFieldBuilder $field;
     private array $item;
@@ -32,21 +33,21 @@ class ItemArrayFieldBuilder
 
     public static function build(string $fieldName, Model $item)
     {
-        $field = new static();
-        $field->fieldName = $fieldName;
-        $field->fs = new FS(__DIR__);
-        $field->dataField = '';
+        $field                  = new static();
+        $field->fieldName       = $fieldName;
+        $field->fs              = new FS(__DIR__);
+        $field->dataField       = '';
         $field->contenteditable = '';
-        $field->hidden = '';
-        $field->required = '';
-        $field->html = '';
-        $field->del = false;
-        $field->softDel = false;
-        $field->edit = false;
-        $field->save = false;
-        $field->toList = false;
-        $field->fieldObj = $field;
-        $field->item = $item->toArray();
+        $field->hidden          = '';
+        $field->required        = '';
+        $field->html            = '';
+        $field->del             = false;
+        $field->softDel         = false;
+        $field->edit            = false;
+        $field->save            = false;
+        $field->toList          = false;
+        $field->fieldObj        = $field;
+        $field->item            = $item->toArray();
         return $field;
     }
 
@@ -95,7 +96,7 @@ class ItemArrayFieldBuilder
     public function toHtml(string $model): string
     {
         $this->dataModel = "data-model={$model}";
-        $this->field = $this;
+        $this->field     = $this;
 
         $data = get_object_vars($this);
         return $this->fs->getContent('row', $data);
@@ -109,8 +110,8 @@ class ItemArrayFieldBuilder
 
     public function get()
     {
-        $this->name = $this->name ?? $this->fieldName;
-        $val = $this->item[$this->fieldName]??'';
+        $this->name  = $this->name ?? $this->fieldName;
+        $val         = $this->item[$this->fieldName] ?? '';
         $this->value = $this->html ?? $val;
         return $this;
     }
@@ -147,8 +148,8 @@ class ItemArrayFieldBuilder
 
     public function getValue()
     {
-        $value =  !!$this->html ? $this->html : $this->item[$this->fieldName];
-        return $value??"NULL";
+        $value = !!$this->html ? $this->html : $this->item[$this->fieldName];
+        return $value ?? "NULL";
     }
 
     public function getDataModel(): string

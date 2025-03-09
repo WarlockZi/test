@@ -25,6 +25,7 @@ class CartController extends AppController
         $this->cartView = new CartView();
         $this->repo     = new CartRepository();
     }
+
     public function actionIndex(): void
     {
         $order = OrderRepository::cart();;
@@ -52,11 +53,11 @@ class CartController extends AppController
 
     public function actionDeleterow(): void
     {
-        $req = $this->ajax;
-        $product_id =$req['product_id'];
+        $req        = $this->ajax;
+        $product_id = $req['product_id'];
         $unit_ids   = $req['units'];
 
-        if (!$product_id) Response::json(['msg'=>'No id']);
+        if (!$product_id) Response::json(['msg' => 'No id']);
         $trashed = $this->orderRepo::detachItems($product_id, $unit_ids);
 
         if ($trashed) {

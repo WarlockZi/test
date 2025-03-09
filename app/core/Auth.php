@@ -15,24 +15,10 @@ class Auth
     {
     }
 
-    protected function __clone()
-    {
-    }
-
-    public function __wakeup()
-    {
-        throw new \Exception("Cannot unserialize a singleton.");
-    }
-
     public static function validatePphSession(array $req): bool
     {
         return !empty($req['phpSession']
             && $_SESSION['phpSession'] === $req['phpSession']);
-    }
-
-    public static function getUser(): IUser|null
-    {
-        return self::$user ?? self::auth();
     }
 
     public static function setCartId(string $cartId): void
@@ -46,6 +32,16 @@ class Auth
         $field = $user ? 'user_id' : 'loc_storage_cart_id';
         $value = $user ? $user->id : $_COOKIE['loc_storage_cart_id'] ?? NULL;
         return [$field, $value];
+    }
+
+    public static function getUser(): IUser|null
+    {
+        return self::$user ?? self::auth();
+    }
+
+    public static function setUser(IUser $mockuser): void
+    {
+        self::$user = $mockuser;
     }
 
     private static function auth(): IUser|null
@@ -75,11 +71,6 @@ class Auth
         }
     }
 
-    public static function setUser(IUser $mockuser): void
-    {
-        self::$user = $mockuser;
-    }
-
     public static function userIsAdmin(): bool
     {
         return self::$user && self::$user->isAdmin();
@@ -102,6 +93,15 @@ class Auth
                 $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
             }
         }
+    }
+
+    public function __wakeup()
+    {
+        throw new \Exception("Cannot unserialize a singleton.");
+    }
+
+    protected function __clone()
+    {
     }
 
 

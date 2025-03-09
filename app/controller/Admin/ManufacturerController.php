@@ -6,19 +6,19 @@ use app\controller\AppController;
 use app\model\manufacturer;
 use app\view\manufacturer\manufacturerView;
 
-class ManufacturerController Extends AdminscController
+class ManufacturerController extends AdminscController
 {
-	public string $model = manufacturer::class;
+    public string $model = manufacturer::class;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function actionIndex():void
-	{
-		$manufacturers = ManufacturerView::list($this->model);
-		$this->setVars(compact('manufacturers'));
-	}
+    public function actionIndex(): void
+    {
+        $manufacturers = ManufacturerView::list($this->model);
+        $this->setVars(compact('manufacturers'));
+    }
 
 }

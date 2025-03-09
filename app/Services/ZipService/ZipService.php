@@ -63,7 +63,7 @@ class ZipService
                         }
                     } catch (Throwable $exception) {
                         $exc = $exception;
-                        $this->errorLogger->write(PHP_EOL . ' -- file not added'.$exc);
+                        $this->errorLogger->write(PHP_EOL . ' -- file not added' . $exc);
                     }
 
                 } else {

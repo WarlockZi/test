@@ -5,18 +5,18 @@
 
             <div>
 
-            <h4>Категории</h4>
+                <h4>Категории</h4>
 
-            <?php if (!empty($rootCategories)): ?>
-                <ul>
-                    <?php foreach ($rootCategories as $category): ?>
-                        <li>
-                            <a href="/catalog/<?= $category->ownProperties->path; ?>"><?= mb_strtolower($category->name); ?></a>
-                        </li>
+                <?php if (!empty($rootCategories)): ?>
+                    <ul>
+                        <?php foreach ($rootCategories as $category): ?>
+                            <li>
+                                <a href="/catalog/<?= $category->ownProperties->path; ?>"><?= mb_strtolower($category->name); ?></a>
+                            </li>
 
-                    <?php endforeach ?>
-                </ul>
-            <?php endif; ?>
+                        <?php endforeach ?>
+                    </ul>
+                <?php endif; ?>
 
             </div>
 
@@ -29,7 +29,7 @@
                 </div>
                 <div>
                     <span>Адрес:</span> 160010, г. Вологда,ул. Залинейная 26, скл.4
-                </div>                        
+                </div>
             </div>
 
             <div class="pay-icons">
@@ -115,7 +115,8 @@
                     <div id="messageError"></div>
                 </div>
 
-                <button type="submit" class="button button-filled feedback-submit" id="feedback-submit">Отправить</button>
+                <button type="submit" class="button button-filled feedback-submit" id="feedback-submit">Отправить
+                </button>
             </form>
         </div>
 

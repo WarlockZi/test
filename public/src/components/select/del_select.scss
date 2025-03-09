@@ -1,4 +1,5 @@
 @use "../../var";
+
 .select {
   position: relative;
   width: 100%;
@@ -6,7 +7,7 @@
   //display: none;
 
 
-  label{
+  label {
     font: var.$font-label;
     position: absolute;
     top: 0px;
@@ -14,7 +15,7 @@
     color: var.$color-main;
   }
 
-  &:focus>label{
+  &:focus > label {
     font: var.$font-label-focus;
 
   }

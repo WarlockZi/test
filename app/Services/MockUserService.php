@@ -19,7 +19,7 @@ class MockUserService
         $yandexVvoronik = UserYandex::where('default_email', 'vvoronik@yandex.ru')
             ->first();
 
-            Auth::setUser($MarinaDemis);
+        Auth::setUser($MarinaDemis);
     }
 
 }

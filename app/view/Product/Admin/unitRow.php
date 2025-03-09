@@ -1,6 +1,6 @@
 <?= $selector ?>
 
-<?= $multiplier;?>
+<?= $multiplier; ?>
 
 <div class="base-unit"><?= $name ?></div>
 

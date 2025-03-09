@@ -1,3 +1,1 @@
-
-
-	<button class="clearCache">Очистить кэш</button>
+<button class="clearCache">Очистить кэш</button>

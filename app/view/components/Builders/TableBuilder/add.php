@@ -4,6 +4,6 @@ if ($addButton === 'pivot') {
 }
 ?>
 
-<div class="add-model" <?= $data??'' ?>>+</div>
+<div class="add-model" <?= $data ?? '' ?>>+</div>
 
 

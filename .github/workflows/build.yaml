@@ -24,6 +24,6 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-             cd ${{ secrets.SERVER_PATH }}
-             git pull master
-             git pull dev
+            cd ${{ secrets.SERVER_PATH }}
+            git pull master
+            git pull dev

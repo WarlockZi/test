@@ -5,12 +5,13 @@ namespace app\core;
 class Response
 {
     public function __construct(
-        private int $status = 200,
+        private int    $status = 200,
         private string $view = 'index',
-        $fs  = new FS(ROOT.'/app/view')
+                       $fs = new FS(ROOT . '/app/view')
     )
     {
     }
+
 //
 
     public static function json(array $arr = []): void

@@ -27,10 +27,12 @@ class UserRepository
     {
         $user->update(['password' => $newPassword]);
     }
+
     public function getByPass(string $password): User
     {
         return User::where('password', $password)->get();
     }
+
     public function randomPassword(): string
     {
         return ShortlinkService::create(8);

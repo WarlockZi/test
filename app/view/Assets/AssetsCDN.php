@@ -7,16 +7,6 @@ class AssetsCDN
     protected array $CDNjs = [];
     protected array $CDNCss = [];
 
-    public function setCDNJs(string $src, bool $defer = false, bool $async = false): void
-    {
-        $this->CDNjs[] = ['src' => $src, 'defer' => $defer ? 'defer' : '', 'async' => $async ? 'async' : ''];
-    }
-
-    public function setCDNCss(string $src): void
-    {
-        $this->CDNcss[] = $src;
-    }
-
     public function getCDNJs(): string
     {
         $str = '';
@@ -26,6 +16,11 @@ class AssetsCDN
         return $str;
     }
 
+    public function setCDNJs(string $src, bool $defer = false, bool $async = false): void
+    {
+        $this->CDNjs[] = ['src' => $src, 'defer' => $defer ? 'defer' : '', 'async' => $async ? 'async' : ''];
+    }
+
     public function getCDNCss(): string
     {
         $str = '';
@@ -33,5 +28,10 @@ class AssetsCDN
             $str .= "<link href='{$CDNcss}' rel='stylesheet' type='text/css'>";
         }
         return $str;
+    }
+
+    public function setCDNCss(string $src): void
+    {
+        $this->CDNcss[] = $src;
     }
 }

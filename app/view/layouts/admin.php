@@ -7,11 +7,11 @@
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?=$assets->icon();?>
+    <?= $assets->icon(); ?>
 
     <script type="module" src="https://localhost:5173/@vite/client"></script>
     <script type="module" src="https://localhost:5173/Admin/admin.js"></script>
-<!--    --><?php //= $assets->getCss() ?>
+    <!--    --><?php //= $assets->getCss() ?>
 
 </head>
 
@@ -30,7 +30,7 @@
 
     </div>
 
-<!--    <div class="led"></div>-->
+    <!--    <div class="led"></div>-->
 </div>
 
 <?php //= $footer; ?>

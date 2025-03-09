@@ -9,23 +9,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Price extends Model
 {
 //	use SoftDeletes;
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $fillable = [
-		'1s_id',
-		'1s_art',
-		'unit',
-		'unit_code',
-		'currency',
-		'price',
-		'1s_type_code',
-	];
+    protected $fillable = [
+        '1s_id',
+        '1s_art',
+        'unit',
+        'unit_code',
+        'currency',
+        'price',
+        '1s_type_code',
+    ];
 
 
-	public function product()
-	{
-		return $this->belongsTo(Product::class);
-	}
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 
 
 }

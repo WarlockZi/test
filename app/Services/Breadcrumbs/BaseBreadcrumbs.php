@@ -19,7 +19,7 @@ class BaseBreadcrumbs
         protected string   $panel = '',
         protected string   $slug = '',
         protected string   $href = '',
-        protected int   $index = 0,
+        protected int      $index = 0,
     )
     {
     }
@@ -45,7 +45,7 @@ class BaseBreadcrumbs
             $this->slug     = $this->namespace === 'admin' ? "/adminsc/category/edit/{$cat->id}" : $cat->href;
             $this->panel    = CardPanel::categoryCardPanel($this->category, true);
             $this->index    = $catCount - $i + 1;
-            if (!$this->isLastLink && $i===0) {
+            if (!$this->isLastLink && $i === 0) {
                 $this->breadcrumbs = $this->lastLink();
             } else {
                 $this->breadcrumbs = $this->link();

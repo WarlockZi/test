@@ -15,12 +15,13 @@ class ArrayOptionsBuilder
     protected string $initialOption = '';
     protected array $fieldsMap;
     protected string $field = 'name';
+
 //    protected array $items = [];
 
     public static function build(array|Collection $array, array $fieldsMap = []): ArrayOptionsBuilder
     {
         $arrayOptions            = new self();
-        $arrayOptions->arr       = is_array($array)? $array: $array->toArray();
+        $arrayOptions->arr       = is_array($array) ? $array : $array->toArray();
         $arrayOptions->fieldsMap = $fieldsMap;
         return $arrayOptions;
     }

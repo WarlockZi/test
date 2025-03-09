@@ -1,10 +1,9 @@
+<div class="page-name">Свойства</div>
 
-	<div class="page-name">Свойства</div>
+<?= $list ?>
 
-	<?= $list ?>
-
-<!--	--><?// foreach ($properties as $property): ?>
+<!--	--><? // foreach ($properties as $property): ?>
 <!--	  <div>-->
-<!--			 --><?//= $property['name']; ?>
+<!--			 --><? //= $property['name']; ?>
 <!--	  </div>-->
-<!--	--><?// endforeach; ?>
+<!--	--><? // endforeach; ?>

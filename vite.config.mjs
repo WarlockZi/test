@@ -9,11 +9,11 @@ export default defineConfig(async ({command, mode}) => {
 
       const base = env.VITE_DEV
          ? '/'
-         : '/public/build/'
+         : '/public/build/';
 
       return {
          root: 'public/src',
-         base ,
+         base,
 
          server: {
             cors: true,

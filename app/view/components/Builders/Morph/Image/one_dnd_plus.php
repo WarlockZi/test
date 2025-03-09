@@ -1,8 +1,8 @@
 <div
-		data-dnd
-	<?= $this->dndClass; ?>
-	<?= $this->dndAppendTo; ?>
-	<?= $this->dndToolTip; ?>
+        data-dnd
+    <?= $this->dndClass; ?>
+    <?= $this->dndAppendTo; ?>
+    <?= $this->dndToolTip; ?>
 >
-	<?= $this->dndContent; ?>
+    <?= $this->dndContent; ?>
 </div>

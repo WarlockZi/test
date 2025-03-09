@@ -8,14 +8,14 @@ use Illuminate\Events\Dispatcher;
 
 $capsule = new Capsule;
 $capsule->addConnection([
-	'driver'    => 'mysql',
-	'host'      => 'localhost',
-	'database'  => env('DB_DB'),
-	'username'  => env('DB_USER'),
-	'password'  => env('DB_PASSWORD'),
-	'charset'   => 'utf8',
-	'collation' => 'utf8_unicode_ci',
-	'prefix'    => '',
+    'driver' => 'mysql',
+    'host' => 'localhost',
+    'database' => env('DB_DB'),
+    'username' => env('DB_USER'),
+    'password' => env('DB_PASSWORD'),
+    'charset' => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix' => '',
 ]);
 
 // Set the event dispatcher used by Eloquent models... (optional)

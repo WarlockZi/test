@@ -1,34 +1,33 @@
-import {$, post} from "../common";
+import { $, post } from "../common";
 import Quill from "quill";
 import "quill/dist/quill.core.css";
-import 'quill/dist/quill.snow.css';
-export const quilld = () => {
+import "quill/dist/quill.snow.css";
 
-debugger
-  const quillSelector = '.detail-text';
+export const quilld = () => {
+  debugger;
+  const quillSelector = ".detail-text";
   const textarea = $(quillSelector)[0];
   if (textarea) {
-    createQuill()
+    createQuill();
   }
 
   function getOptions() {
-    const isAdmin = window.location.pathname.split('/').includes('adminsc')
-    const toolbar =
-      isAdmin
-         ?
-        {toolbar: [
+    const isAdmin = window.location.pathname.split("/").includes("adminsc");
+    const toolbar = isAdmin
+      ? {
+          toolbar: [
             ["bold", "italic", "underline", "blockquote"],
-            [{align: "justify"}, {align: "center"}, {align: "right"}],
-          ]}
-        : {toolbar:false}
+            [{ align: "justify" }, { align: "center" }, { align: "right" }],
+          ],
+        }
+      : { toolbar: false };
 
     return {
       debug: "warn",
-      modules:
-      toolbar,
-      placeholder: 'Нет информации...',
+      modules: toolbar,
+      placeholder: "Нет информации...",
       readOnly: !isAdmin,
-      theme: 'snow' //'bubble'
+      theme: "snow", //'bubble'
     };
   }
 
@@ -36,23 +35,25 @@ debugger
     const quill = new Quill(quillSelector, getOptions());
     const delta = quill.getContents();
 
-    setContent(quill, delta)
+    setContent(quill, delta);
     quill.on(Quill.events.TEXT_CHANGE, updateContent.bind(quill));
   }
+
   function formatDelta(delta) {
-    return JSON.stringify(delta.ops, null, 2)
+    return JSON.stringify(delta.ops, null, 2);
   }
 
   function updateContent(delta) {
     const tfs = this.getContents();
-    const json = JSON.stringify(tfs)
-    this.update(json)
+    const json = JSON.stringify(tfs);
+    this.update(json);
   }
+
   function setContent(quill, delta) {
     const innertext = textarea.innerText;
     if (isJson(innertext)) {
       const text = JSON.parse(innertext);
-      quill.setContents(text)
+      quill.setContents(text);
     } else {
       // let text = fromText(delta, quill,innertext);
     }
@@ -75,6 +76,4 @@ debugger
   //     data
   //   )
   // }
-
-
-}
+};

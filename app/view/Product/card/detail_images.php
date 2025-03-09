@@ -1,10 +1,10 @@
-<div class="<?=$class?>">
+<div class="<?= $class ?>">
 
-	<? if ($title): ?>
-	  <h2><?= $title; ?></h2>
-	<? endif; ?>
+    <? if ($title): ?>
+        <h2><?= $title; ?></h2>
+    <? endif; ?>
 
-	<div class="images">
-		 <?= $detail_image ?>
-	</div>
+    <div class="images">
+        <?= $detail_image ?>
+    </div>
 </div>

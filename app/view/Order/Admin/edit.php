@@ -1,4 +1,4 @@
-<?=$table??'';?>
+<?= $table ?? ''; ?>
 
 <div class="order-edit">
 
@@ -16,7 +16,7 @@
         <div class="manager">
             дата -
             <strong>
-            <?=$orders[0]->created_at?>
+                <?= $orders[0]->created_at ?>
 
             </strong>
         </div>
@@ -25,7 +25,7 @@
     <div class="row manager">
         <div class="manager">
             Менеджер -
-            <strong><?=$manager??'заказ не обработан'?></strong>
+            <strong><?= $manager ?? 'заказ не обработан' ?></strong>
         </div>
     </div>
     <hr>
@@ -35,7 +35,8 @@
             <div class="row">
                 <div class="num"><?= $order->id ?></div>
                 <div class="name-price">
-                    <a href="/adminsc/product/edit/<?=$order->product->id?>" class="name"><?= $order->product->name ?></a>
+                    <a href="/adminsc/product/edit/<?= $order->product->id ?>"
+                       class="name"><?= $order->product->name ?></a>
                     <div class="price"></div>
                     <!--		  <div class="id">--><?php //= $order->user->email ?><!--</div>-->
                 </div>
