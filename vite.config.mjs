@@ -2,6 +2,7 @@ import {defineConfig, loadEnv} from 'vite';
 import liveReload from 'vite-plugin-live-reload';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 import path from 'node:path';
+import { NodePackageImporter } from 'sass-embedded';
 
 export default defineConfig(async ({command, mode}) => {
       const env = loadEnv(mode, process.cwd());
@@ -9,11 +10,11 @@ export default defineConfig(async ({command, mode}) => {
 
       const base = env.VITE_DEV
          ? '/'
-         : '/public/build/'
+         : './';
 
       return {
          root: 'public/src',
-         base ,
+         base,
 
          server: {
             cors: true,
@@ -51,6 +52,7 @@ export default defineConfig(async ({command, mode}) => {
             preprocessorOptions: {
                scss: {
                   api: 'modern-compiler', // or "modern", "legacy"
+                  importers: [new NodePackageImporter()],
                },
             },
             devSourcemap: true,
