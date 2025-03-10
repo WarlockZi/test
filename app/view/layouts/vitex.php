@@ -26,18 +26,22 @@ use app\core\Icon;
           rel="stylesheet">
 
 
-    <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
-    <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script>
+    <? if (!DEV): ?>
+        <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
+        <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script>
+
+    <? endif; ?>
 
 
     <?= $assets->getMeta(); ?>
 
-
+    <!--    vite assets-->
     <?= $assets->getCss(); ?>
+    <!--    vite assets-->
+
     <link rel='stylesheet' href='/public/custom.css'>
 </head>
 
-<? // include_once __DIR__ . '/google.php'; ?>
 
 <body class="preload">
 

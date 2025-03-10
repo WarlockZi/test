@@ -44,14 +44,16 @@ class AssetsVite implements Compiler
     {
         $admin = str_contains($_SERVER['REQUEST_URI'], 'adminsc');
 
-        $assets = $admin
-            ?
-            $this->compiler->client()
-            . $this->compiler->vite('Admin/admin.js')
-            :
-            $this->compiler->client()
-            . $this->compiler->vite('Main/main.js')
-            . $this->compiler->vite('Auth/auth.js');
+        $assets = '';
+        if (DEV) {
+            $assets .= $this->compiler->client();
+        }
+
+        $assets .= $admin
+            ? $this->compiler->vite('Admin/admin.js')
+            : $this->compiler->vite('Main/main.js')
+//            . $this->compiler->vite('Auth/auth.js')
+        ;
 
         return $assets;
 
