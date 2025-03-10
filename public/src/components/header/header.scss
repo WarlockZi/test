@@ -108,7 +108,7 @@
     max-height: 500px;
     opacity: 1;
 
-    .call-me{
+    .call-me {
       @include mixin_media.colored_button(3px);
       padding-block: clamp(0.175rem, 1vw, 10px);
       padding-inline: clamp(0.075rem, 2vw, 10px);
@@ -305,8 +305,8 @@
     }
 
     .compare {
-        stroke: white;
-        stroke-width: 3px;
+      stroke: white;
+      stroke-width: 3px;
     }
 
     .cart-link {
