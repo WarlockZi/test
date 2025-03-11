@@ -25,6 +25,4 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd ${{ secrets.SERVER_PATH }}
-            git pull dev
-            git pull master
-            node -v
+            git pull --all
