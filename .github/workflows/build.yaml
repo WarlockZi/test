@@ -26,4 +26,9 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd ${{ secrets.SERVER_PATH }}
+<<<<<<< HEAD
             git pull --all
+=======
+            git pull origin master
+            git pull origin dev
+>>>>>>> 34ae65b937a2b63dfa5b35d77ee96d0c5a192494
