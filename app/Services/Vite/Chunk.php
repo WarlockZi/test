@@ -32,17 +32,17 @@ class Chunk
         /**
          * Indicates whether this chunk is an entry point.
          */
-        public readonly bool $isEntry,
+        public readonly bool    $isEntry,
 
         /**
          * Indicates whether this chunk is a dynamic entry point.
          */
-        public readonly bool $isDynamicEntry,
+        public readonly bool    $isDynamicEntry,
 
         /**
          * Path to the published file, relative to Vite's `build.outDir`.
          */
-        public readonly string $file,
+        public readonly string  $file,
 
         /**
          * Paths to published CSS files imported by this chunk,
@@ -50,7 +50,7 @@ class Chunk
          *
          * @var string[]
          */
-        public readonly array $css,
+        public readonly array   $css,
 
         /**
          * Paths to published assets imported by this chunk,
@@ -58,22 +58,23 @@ class Chunk
          *
          * @var string[]
          */
-        public readonly array $assets,
+        public readonly array   $assets,
 
         /**
          * List of chunk names of other chunks (statically) imported by this chunk.
          *
          * @var string[]
          */
-        public readonly array $imports,
+        public readonly array   $imports,
 
         /**
          * Links of chunk names of other chunks (dynamically) imported by this chunk.
          *
          * @var string[]
          */
-        public readonly array $dynamicImports,
-    ) {
+        public readonly array   $dynamicImports,
+    )
+    {
     }
 
     public static function create(array $chunk): self

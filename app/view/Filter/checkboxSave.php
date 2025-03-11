@@ -1,4 +1,3 @@
-
 <?php $checkboxChecked =
     (key_exists($filterName, $toSave))
         ? "checked"

@@ -22,17 +22,17 @@ abstract class View
 
     function __construct(Route $route)
     {
-        $this->fs         = new FS(__DIR__ . '/');
-        $this->user       = Auth::getUser();
-        $this->view       = ($route->getView() ?? 'index');
+        $this->fs   = new FS(__DIR__ . '/');
+        $this->user = Auth::getUser();
+        $this->view = ($route->getView() ?? 'index');
     }
 
-    public function getContent():string
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function render():void
+    public function render(): void
     {
         $this->setContent($this->controller);
         echo $this->fs->getContent($this->layout, ['view' => $this]);

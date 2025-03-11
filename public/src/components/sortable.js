@@ -1,38 +1,35 @@
-import Sortable from 'sortablejs'
-import {$, post} from '../common'
+import Sortable from "sortablejs";
+import { $, post } from "../common";
 
 export default function sortable(containerSelector, elSelector, model) {
-
-  debugger
+  debugger;
   let container = $(containerSelector)[0];
   if (container) {
-
     let sortable = Sortable.create(container, {
       animation: 150,
       onEnd: function (evt) {
-        let oldI = evt.oldIndex
-        let newI = evt.newIndex
+        let oldI = evt.oldIndex;
+        let newI = evt.newIndex;
         if (oldI > newI) {
-          sort(oldI)
+          sort(oldI);
         } else {
-          sort(newI)
+          sort(newI);
         }
 
         async function sort(upToQestionNumber) {
           let els = $(elSelector);
-          els.length = upToQestionNumber-1
+          els.length = upToQestionNumber - 1;
 
           let toChange = els.map((el) => {
-            return el.dataset.id
-          })
+            return el.dataset.id;
+          });
 
-          let res = await post(`/adminsc/${model}/sort`, {toChange})
+          let res = await post(`/adminsc/${model}/sort`, { toChange });
           els.map((el, i) => {
-            $(el).find('.sort').innerText = i + 1
-          })
+            $(el).find(".sort").innerText = i + 1;
+          });
         }
       },
-    })
-
+    });
   }
 }

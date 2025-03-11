@@ -6,14 +6,18 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Cache
 {
-    private static $instance = null;
-    public static bool $enabled= true;
+    public static bool $enabled = true;
     public static int $timeLife1 = 1;
     public static int $timeLife10 = 10;
     public static int $timeLife100 = 100;
     public static int $timeLife1_000 = 1_000;
     public static int $timeLife10_000 = 10_000;
+    private static $instance = null;
     private static string $path = ROOT . '/tmp/cache/';
+
+    private function __construct()
+    {
+    }
 
     public static function get(string $key, string|array|callable $data, int $seconds = 10, $path = '')
     {
@@ -47,21 +51,6 @@ class Cache
         }
         return $unserialized;
     }
-    public static function off(): void
-    {
-        self::$enabled = false;
-        self::$timeLife100 = 1;
-        self::$timeLife1_000 = 1;
-        self::$timeLife10_000 = 1;
-    }
-
-    public static function delete($key): void
-    {
-        $file = FS::platformSlashes(self::$path."$key.txt");
-        if (file_exists($file)) {
-            unlink($file);
-        }
-    }
 
     private static function mkdir_r($dirName, $rights = 0755): string
     {
@@ -80,9 +69,24 @@ class Cache
         }
         return $dir;
     }
-    private function __construct(){}
+
+    public static function off(): void
+    {
+        self::$enabled        = false;
+        self::$timeLife100    = 1;
+        self::$timeLife1_000  = 1;
+        self::$timeLife10_000 = 1;
+    }
+
+    public static function delete($key): void
+    {
+        $file = FS::platformSlashes(self::$path . "$key.txt");
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
+
     // Защита от клонирования
-    private function __clone() {}
 
     private static function getInstance()
     {
@@ -91,5 +95,9 @@ class Cache
             return self::$instance;
         }
         return self::$instance;
+    }
+
+    private function __clone()
+    {
     }
 }

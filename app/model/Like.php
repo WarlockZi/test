@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Like extends Pivot
 {
-	public $timestamps = true;
+    public $timestamps = true;
     protected $table = 'likes';
 
-	protected $fillable = [
+    protected $fillable = [
         'loc_storage_cart_id',
-		'user_id',
-		'product_id',
-	];
+        'user_id',
+        'product_id',
+    ];
 
     public function product(): HasOne
     {

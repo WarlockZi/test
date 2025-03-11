@@ -1,6 +1,6 @@
 <? if ($setting): ?>
 
-	<?= $setting ?>
+    <?= $setting ?>
 
 
 <? endif; ?>

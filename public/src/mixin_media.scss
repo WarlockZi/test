@@ -972,12 +972,14 @@ $border-color:var.$color-main
     background: $color;
     border: 1px solid $background;
   }
-  &[disabled]{
-       background-color: var.$color-gray-browser;
-       border: 1px solid lighter(var.$color-gray-browser, 10%);
-       color: var.$color-gray8;
-       &:hover{}
-     }
+  &[disabled] {
+    background-color: var.$color-gray-browser;
+    border: 1px solid lighter(var.$color-gray-browser, 10%);
+    color: var.$color-gray8;
+
+    &:hover {
+    }
+  }
 
 }
 

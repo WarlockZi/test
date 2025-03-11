@@ -2,7 +2,7 @@
 <div class="price">
 
     <div class="new-price">
-        <?="{$arr['formatted_price']} {$arr['currency']} / {$product->baseUnit->name}";?>
+        <?= "{$arr['formatted_price']} {$arr['currency']} / {$product->baseUnit->name}"; ?>
     </div>
 
 </div>

@@ -1,76 +1,74 @@
-import {$, post, trimStr} from "../../../common.js"
+import { $, post, trimStr } from "../../../common.js";
 
 class question {
-
   constructor(el) {
-    this.sort = document.querySelectorAll('.questions>.question-edit').length + 1 ?? 0
+    this.sort =
+      document.querySelectorAll(".questions>.question-edit").length + 1 ?? 0;
   }
 
   async questionCreate(target) {
-    let question = $('.empty .question-edit').first()
-    let clone = question.cloneNode(true)
-    let questionModel = this.getQuestionModel(clone)
-    let res = await post(`/adminsc/question/updateOrCreate`, questionModel)
+    let question = $(".empty .question-edit").first();
+    let clone = question.cloneNode(true);
+    let questionModel = this.getQuestionModel(clone);
+    let res = await post(`/adminsc/question/updateOrCreate`, questionModel);
     if (res) {
-      clone.querySelector('.sort').innerText = $('.question-edit').length
-      clone.querySelector('.question__delete').dataset.id =
-        clone.dataset.id = res.arr.id
-      target.before(clone)
+      clone.querySelector(".sort").innerText = $(".question-edit").length;
+      clone.querySelector(".question__delete").dataset.id = clone.dataset.id =
+        res.arr.id;
+      target.before(clone);
     }
   }
 
   getQuestionModel(el) {
     return {
       id: +el.dataset.id,
-      qustion: trimStr(el.querySelector('.text').innerText),
-      test_id: +window.location.href.split('/').pop(),
-      sort: +el.closest('.question-edit').querySelector('.sort').innerText,
-    }
+      qustion: trimStr(el.querySelector(".text").innerText),
+      test_id: +window.location.href.split("/").pop(),
+      sort: +el.closest(".question-edit").querySelector(".sort").innerText,
+    };
   }
 
   async changeParent(target) {
+    let question = target.closest(".question-edit");
+    let id = question.dataset.id;
+    let opt = target.options[target.selectedIndex];
+    let test_id = opt.dataset["questionParentId"];
 
-    let question = target.closest('.question-edit')
-    let id = question.dataset.id
-    let opt = target.options[target.selectedIndex]
-    let test_id = opt.dataset['questionParentId']
-
-    let res = await post('/adminsc/question/changeParent', {id, test_id})
+    let res = await post("/adminsc/question/changeParent", { id, test_id });
     if (res) {
-      question.remove()
+      question.remove();
     }
   }
 
   showAnswers(target) {
-
-    let row = target.closest('.question-edit')
-    let answers = $(row).find('.question__answers')
-    answers.classList.toggle('height')
-    answers.classList.toggle('scale')
-    target.classList.toggle('rotate')
+    let row = target.closest(".question-edit");
+    let answers = $(row).find(".question__answers");
+    answers.classList.toggle("height");
+    answers.classList.toggle("scale");
+    target.classList.toggle("rotate");
   }
 
   async del(target) {
-    let model = target.dataset.model
-    let el = null
-    if (model === 'answer') {
-      el = target.closest('.answer')
-    } else if (model === 'question') {
-      el = target.closest('.question-edit')
+    let model = target.dataset.model;
+    let el = null;
+    if (model === "answer") {
+      el = target.closest(".answer");
+    } else if (model === "question") {
+      el = target.closest(".question-edit");
     }
-    let id = +target.dataset.id
-    if (confirm('Удалить?')) {
-      let res = await post(`/adminsc/${model}/delete`, {id})
+    let id = +target.dataset.id;
+    if (confirm("Удалить?")) {
+      let res = await post(`/adminsc/${model}/delete`, { id });
       if (res) {
-        el.remove()
+        el.remove();
       }
     }
   }
 
   async saveQuestion(target) {
-    let el = target.closest('.question-edit')
-    let question = _question.getQuestionModel(el)
-    let res = await post('/adminsc/question/UpdateOrCreate', question)
+    let el = target.closest(".question-edit");
+    let question = _question.getQuestionModel(el);
+    let res = await post("/adminsc/question/UpdateOrCreate", question);
   }
 
   // getAnswers(question) {
@@ -87,4 +85,4 @@ class question {
   // }
 }
 
-export let _question = new question
+export let _question = new question();

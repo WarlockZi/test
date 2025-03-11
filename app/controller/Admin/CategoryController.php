@@ -10,7 +10,7 @@ use app\view\Category\CategoryFormView;
 class CategoryController extends AdminscController
 {
     public function __construct(
-        public string              $model = Category::class,
+        public string                   $model = Category::class,
         private AdminBreadcrumbsService $breadcrumbsService = new AdminBreadcrumbsService(),
     )
     {

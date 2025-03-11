@@ -20,11 +20,11 @@ class OrderController extends AdminscController
 
     public function actionIndex(): void
     {
-        $submitted     = OrderRepository::submitted();
-        $unsubmitted     = OrderRepository::unsubmitted();
+        $submitted   = OrderRepository::submitted();
+        $unsubmitted = OrderRepository::unsubmitted();
 
-        $submittedTable     = OrderView::table($submitted);
-        $unsubmittedTable     = OrderView::table($unsubmitted);
+        $submittedTable   = OrderView::table($submitted);
+        $unsubmittedTable = OrderView::table($unsubmitted);
 
         $this->setVars(compact('submittedTable', 'unsubmittedTable'));
     }
@@ -32,7 +32,7 @@ class OrderController extends AdminscController
     public function actionEdit(): void
     {
         $this->view = 'table';
-        $order     = OrderRepository::edit($this->route->id);
+        $order      = OrderRepository::edit($this->route->id);
         $table      = OrderView::editOrder($order);
         $this->setVars(compact('table'));
     }

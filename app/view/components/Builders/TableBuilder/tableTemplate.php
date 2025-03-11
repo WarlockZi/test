@@ -6,7 +6,7 @@
 >
 
     <div class='table-title'><?= $pageTitle; ?></div>
-    <?=$header ; ?>
+    <?= $header; ?>
 
     <div class="custom-table"
         <?= $grid ?>
@@ -43,12 +43,12 @@
                     <?php else: ?>
 
                         <div
-                                data-id='<?= $item['id']??0; ?>'
-                                <?= $c->dataField; ?>
-                                <?= $c->pivot; ?>
-                                <?= $c->attach; ?>
-                                <?= $c->class; ?>
-                                <?= $c->contenteditable; ?>
+                                data-id='<?= $item['id'] ?? 0; ?>'
+                            <?= $c->dataField; ?>
+                            <?= $c->pivot; ?>
+                            <?= $c->attach; ?>
+                            <?= $c->class; ?>
+                            <?= $c->contenteditable; ?>
                         >
                             <?= $c->getData($c, $item, $field); ?>
                         </div>

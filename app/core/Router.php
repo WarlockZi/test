@@ -2,7 +2,6 @@
 
 namespace app\core;
 
-use app\controller\Controller;
 use app\Services\Logger\ErrorLogger;
 
 class Router
@@ -61,7 +60,7 @@ class Router
         try {
             if (method_exists($controller, $action)) {
                 $controller->$action();
-            } else{
+            } else {
                 $controller->actionNotFound();
             }
         } catch (\Throwable $exception) {

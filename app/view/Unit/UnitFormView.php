@@ -7,12 +7,12 @@ namespace app\view\Unit;
 use app\model\Unit;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
-use app\view\components\Builders\TableBuilder\Table;
-use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
+use app\view\components\Builders\TableBuilder\ColumnBuilder;
+use app\view\components\Builders\TableBuilder\Table;
 use Illuminate\Database\Eloquent\Collection;
 
 class UnitFormView
@@ -27,21 +27,6 @@ class UnitFormView
                 ->html($list)
                 ->get();
     }
-
-
-    public static function selector($excluded = 0, $selected = 0): string
-    {
-        $selector = SelectBuilder::build(
-            ArrayOptionsBuilder::build(Unit::all())
-                ->initialOption()
-                ->selected($selected)
-                ->excluded($excluded)
-                ->get()
-        )->get();
-
-        return $selector;
-    }
-
 
     protected static function morphs(Collection $items)
     {
@@ -81,6 +66,19 @@ class UnitFormView
                 ->del()
                 ->get();
         return $list;
+    }
+
+    public static function selector($excluded = 0, $selected = 0): string
+    {
+        $selector = SelectBuilder::build(
+            ArrayOptionsBuilder::build(Unit::all())
+                ->initialOption()
+                ->selected($selected)
+                ->excluded($excluded)
+                ->get()
+        )->get();
+
+        return $selector;
     }
 
     public static function editItem($unit): string

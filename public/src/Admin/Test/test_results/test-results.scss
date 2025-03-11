@@ -8,11 +8,13 @@
     display: flex;
     flex-flow: column;
     padding: 20px;
-    p{
+
+    p {
       margin: 5px 0;
       font-weight: 600;
       font-size: 1rem;
     }
+
     .to-list {
       @include colored_button();
       align-self: flex-start;

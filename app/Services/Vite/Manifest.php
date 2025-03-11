@@ -28,7 +28,7 @@ class Manifest
          *
          * In development mode, Vite will dynamically inject CSS and JS tags.
          */
-        private bool $dev,
+        private bool   $dev,
 
         /**
          * Absolute path to the `manifest.json` file.
@@ -46,7 +46,8 @@ class Manifest
          * to a CDN or other asset server, if you are serving assets from a different domain.
          */
         private string $base_path,
-    ) {
+    )
+    {
         if ($this->dev) {
             // In development mode, we don't need the `manifest.json` file:
 
@@ -213,8 +214,8 @@ class Manifest
 
                 if (isset($this->preload_types[$type])) {
                     $preload = $this->preload_types[$type];
-                    $type = $preload['type'];
-                    $as = $preload['as'];
+                    $type    = $preload['type'];
+                    $as      = $preload['as'];
 
                     $tags[] = "<link rel=\"preload\" as=\"{$as}\" type=\"{$type}\" href=\"{$this->base_path}{$asset}\" />";
                 }
@@ -267,7 +268,7 @@ class Manifest
                 throw new RuntimeException("Entry not found in manifest: {$entry}");
             }
 
-            if (! $chunk->isEntry) {
+            if (!$chunk->isEntry) {
                 throw new RuntimeException("Chunk is not an entry point: {$entry}");
             }
 

@@ -50,19 +50,19 @@ class PHPMail
 
     public function sendRegistrationMail($user): void
     {
-            $this->mailer->setFrom(env('SMTP_FROM_EMAIL'), env('SMTP_FROM_NAME'));
-            $this->mailer->addReplyTo(env('SMTP_REPLY_TO'), env('SMTP_FROM_NAME'));
-            $this->mailer->addAddress($user['email']);
+        $this->mailer->setFrom(env('SMTP_FROM_EMAIL'), env('SMTP_FROM_NAME'));
+        $this->mailer->addReplyTo(env('SMTP_REPLY_TO'), env('SMTP_FROM_NAME'));
+        $this->mailer->addAddress($user['email']);
 
-            $this->mailer->Subject = 'VITEX|регистрация';
+        $this->mailer->Subject = 'VITEX|регистрация';
 
-            $this->mailer->isHTML(true);
-            $this->mailer->Body    = MailView::registration($user);
-            $this->mailer->AltBody = MailView::registrationAlt($user);
+        $this->mailer->isHTML(true);
+        $this->mailer->Body    = MailView::registration($user);
+        $this->mailer->AltBody = MailView::registrationAlt($user);
 
-            $this->mailer->addCustomHeader("List-Unsubscribe", "<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$user['email']}>");
+        $this->mailer->addCustomHeader("List-Unsubscribe", "<mailto:vvoronik@yandex.ru?subject=unsubscribe&email={$user['email']}>");
 
-            $this->mailer->send();
+        $this->mailer->send();
     }
 
     public function sendNewPasswordMail(User $user, string $newPass): bool

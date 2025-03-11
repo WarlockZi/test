@@ -5,11 +5,11 @@
   margin-top: 15px;
   margin-bottom: 100px;
 
-  .ql-editor{
+  .ql-editor {
     padding-inline: 0;
   }
 
-  h1{
+  h1 {
     font-size: 1.7rem;
     margin-bottom: 0.8rem;
   }
@@ -27,7 +27,8 @@
       @include mixin_media.slider;
     }
   }
-  .seo_h2{
+
+  .seo_h2 {
     font-size: 1.5rem;
     margin-left: 15px;
     margin-bottom: 5px;
@@ -67,7 +68,8 @@
       }
     }
   }
-  .ql-container.ql-snow{
+
+  .ql-container.ql-snow {
     border: none !important;
   }
 }

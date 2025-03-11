@@ -11,12 +11,12 @@ use app\view\Tag\TagView;
 class TagController extends AdminscController
 {
 
-	public string $model = Tag::class;
+    public string $model = Tag::class;
 
-	public function actionIndex():void
-	{
-		$tags = TagView::list(Tag::class);
-		$this->setVars(compact('tags'));
-	}
+    public function actionIndex(): void
+    {
+        $tags = TagView::list(Tag::class);
+        $this->setVars(compact('tags'));
+    }
 
 }

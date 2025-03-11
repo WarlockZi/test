@@ -11,6 +11,7 @@ class Tags
         public readonly string $preload = '',
         public readonly string $css = '',
         public readonly string $js = ''
-    ) {
+    )
+    {
     }
 }

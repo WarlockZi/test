@@ -10,7 +10,9 @@ class AssetsVite implements Compiler
     protected array $css = [];
 
     public function __construct(
-        protected $compiler = new Helpers(),){}
+        protected $compiler = new Helpers(),)
+    {
+    }
 
     public function setJs(string $name): void
     {

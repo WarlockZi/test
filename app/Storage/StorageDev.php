@@ -6,11 +6,11 @@ namespace app\Storage;
 
 class StorageDev extends Storage
 {
-	protected $path;
+    protected $path;
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->path = $this->storagePath.'dev'.DIRECTORY_SEPARATOR;
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->path = $this->storagePath . 'dev' . DIRECTORY_SEPARATOR;
+    }
 }

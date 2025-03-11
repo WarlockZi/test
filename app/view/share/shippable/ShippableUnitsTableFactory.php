@@ -14,7 +14,7 @@ class ShippableUnitsTableFactory
     public function __construct(Product|array $product)
     {
         $this->product = $product;
-    } 
+    }
 
     public static function create(Product|array $product, string $module): string
     {

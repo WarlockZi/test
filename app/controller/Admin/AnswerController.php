@@ -5,14 +5,14 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\model\Answer;
 
-class AnswerController Extends AdminscController
+class AnswerController extends AdminscController
 {
-	protected string $model = Answer::class;
+    protected string $model = Answer::class;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
 //	public function actionShow()
 //	{

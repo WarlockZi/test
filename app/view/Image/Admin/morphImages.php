@@ -3,15 +3,15 @@
 use app\Repository\ImageRepository;
 
 $path = "/{$item->imagePath}/{$item->path}/{$item->hash}.{$item->type}";
-$src = ImageRepository::getImg($path);
+$src  = ImageRepository::getImg($path);
 
 ?>
 
 <div class="wrap">
-	<div class="item">
+    <div class="item">
 
-		<img class="" src="<?= $src ?>" alt="">
-	</div>
-	<?= self::getDetach($item); ?>
+        <img class="" src="<?= $src ?>" alt="">
+    </div>
+    <?= self::getDetach($item); ?>
 
 </div>

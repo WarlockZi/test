@@ -17,11 +17,11 @@ class Unit extends Model
 
     public $timestamps = false;
 
-	public function product()
-	{
-		return $this->belongsTo(Product::class,
-			'base_unit');
-	}
+    public function product()
+    {
+        return $this->belongsTo(Product::class,
+            'base_unit');
+    }
 
 }
 

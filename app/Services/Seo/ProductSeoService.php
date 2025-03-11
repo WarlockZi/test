@@ -11,6 +11,7 @@ class ProductSeoService
 //        $seoH1 = $product->ownProperties->seo_h1;
 //        $text = " - купить в Вологде оптом выгодно - VITEX";
     }
+
     public static function desc(string $description): string
     {
         return $description;

@@ -112,7 +112,7 @@ class ProductFormView
             ->field(
                 ItemFieldBuilder::build('1s_id', $product)
                     ->name('Категория')
-                    ->html(CategoryFormView::selectorByField(['1s_id'=>$product->category['1s_id']]))
+                    ->html(CategoryFormView::selectorByField(['1s_id' => $product->category['1s_id']]))
                     ->get()
             )
             ->field(

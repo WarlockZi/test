@@ -31,6 +31,15 @@ class NotFound extends Controller
         exit();
     }
 
+    protected static function setView(Route $route)
+    {
+        if ($user->can(['role_employee']) && $route->admin) {
+            return new AdminView(new self);
+        } else {
+            return new UserView(new self);
+        }
+    }
+
     public static function action(Route $route)
     {
         $error = "Плохой action - {$route->action} у контроллера - {$route->controller::shortClassName($route->controller)}";
@@ -41,21 +50,12 @@ class NotFound extends Controller
         exit();
     }
 
-    protected static function setView(Route $route)
-    {
-        if ($user->can(['role_employee']) && $route->admin) {
-            return new AdminView(new self);
-        } else {
-            return new UserView(new self);
-        }
-    }
-
     public static function NotFound(string $slug)
     {
         http_response_code(404);
         $file = 'del_index.php';
         $path = ROOT . '/app/view/404';
-        $fs = (new FS($path));
+        $fs   = (new FS($path));
         $view = $fs->getContent('index');
         return $view;
 //        Error::setError('Страница не найдена');

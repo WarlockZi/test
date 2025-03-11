@@ -22,8 +22,8 @@ class CompareController extends AppController
 
     public function actionPage(): void
     {
-        $compares   = CompareRepository::all();
-        $content = CompareView::all($compares);
+        $compares = CompareRepository::all();
+        $content  = CompareView::all($compares);
         $this->setVars(compact('content'));
 
     }
@@ -39,7 +39,7 @@ class CompareController extends AppController
 
     public function actionUpdateOrCreate(): void
     {
-        $req   = $this->ajax;
+        $req = $this->ajax;
         list($field, $value) = Auth::getCartFieldValue();
 
         $c = Compare::updateOrCreate([

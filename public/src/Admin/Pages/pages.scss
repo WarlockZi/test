@@ -17,6 +17,7 @@
       padding: 10px 15px;
       cursor: pointer;
       transition: background-color .5s, color .5s;
+
       &.active {
         background-color: var.$color-main;
         color: #fff;

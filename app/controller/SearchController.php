@@ -7,18 +7,18 @@ use app\Repository\SearchRepository;
 
 class SearchController extends AppController
 {
-	private SearchRepository $service;
+    private SearchRepository $service;
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->service = new SearchRepository();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->service = new SearchRepository();
+    }
 
-	public function actionIndex():void
-	{
-		if (!$this->ajax) exit();
-		$res = $this->service->index($this->ajax['text']);
-		Response::json(['found' => $res]);
-	}
+    public function actionIndex(): void
+    {
+        if (!$this->ajax) exit();
+        $res = $this->service->index($this->ajax['text']);
+        Response::json(['found' => $res]);
+    }
 }

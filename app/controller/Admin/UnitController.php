@@ -72,7 +72,7 @@ class UnitController extends AdminscController
     public function actionIndex(): void
     {
         $this->view = 'table';
-        $table = UnitFormView::index();
+        $table      = UnitFormView::index();
         $this->setVars(compact('table'));
     }
 

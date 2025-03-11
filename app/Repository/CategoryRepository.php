@@ -83,7 +83,7 @@ class CategoryRepository
             function () {
                 $cats = Category::whereNull('1s_category_id')
                     ->with('childrenRecursive')
-                    ->get(['id', '1s_id','1s_category_id', 'name']);
+                    ->get(['id', '1s_id', '1s_category_id', 'name']);
                 return $cats;
             },
             Cache::$timeLife1_000

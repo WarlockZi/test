@@ -19,6 +19,7 @@ class OrderView
 {
     public $model = Order::class;
     public $html;
+
     public static function orderItemEdit(Collection $items): string
     {
         $users = User::all();
@@ -30,8 +31,8 @@ class OrderView
                             ArrayOptionsBuilder::build($users)
                                 ->get()
                         )
-                        ->get())
-                ->get()
+                            ->get())
+                    ->get()
             )
             ->pageTitle('Заказ незарегистрированного пользователя')
             ->model('order')
@@ -42,20 +43,24 @@ class OrderView
             ->column(
                 ColumnBuilder::build('name')
                     ->class('left')
-                    ->callback(function ($item) {return $item->product->name??'нет';})
+                    ->callback(function ($item) {
+                        return $item->product->name ?? 'нет';
+                    })
                     ->name('Наименование')
                     ->search()
                     ->width('1fr')
                     ->get())
             ->column(
                 ColumnBuilder::build('count')
-                    ->callback(fn ($item)=> $item->count??'0')
+                    ->callback(fn($item) => $item->count ?? '0')
                     ->name('Количество')
                     ->width('50px')
                     ->get())
             ->column(
                 ColumnBuilder::build('Единица')
-                    ->callback(function ($item) {return $item->unit->name??'0';})
+                    ->callback(function ($item) {
+                        return $item->unit->name ?? '0';
+                    })
                     ->name('Единица')
                     ->width('60px')
                     ->get())
@@ -105,8 +110,7 @@ class OrderView
             ->column(
                 ColumnBuilder::build('Товар')
                     ->class('left')
-                    ->callback(fn($product) =>
-                    "<a href='/adminsc/product/edit/{$product->id}'>{$product->name}</a>"
+                    ->callback(fn($product) => "<a href='/adminsc/product/edit/{$product->id}'>{$product->name}</a>"
                     )
                     ->width("1fr")
                     ->get()

@@ -1,5 +1,5 @@
 <div class="parents">
 
-<?=$parents;?>
+    <?= $parents; ?>
 
 </div>

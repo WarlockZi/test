@@ -40,8 +40,8 @@ class AdminLayout extends Layout
         } else {
             $this->view = '/Admin/' . $view;
             $path       = dirname(__DIR__) . DIRECTORY_SEPARATOR . ucfirst($this->route->getControllerName());
-            if (!file_exists($path.$this->view.'.php')) {
-                $path =ROOT.'/app/view';
+            if (!file_exists($path . $this->view . '.php')) {
+                $path       = ROOT . '/app/view';
                 $this->view = 'default';
             }
         }
@@ -69,11 +69,13 @@ class AdminLayout extends Layout
             return $this->layoutFs->getContent('default', ['errors' => $this->route->getErrors()]);
         }
     }
+
     protected function setFooter($vars): string
     {
         $fs = new FS(ROOT . '/app/view/Footer');
-        return $fs->getContent('footerView',compact('vars'));
+        return $fs->getContent('footerView', compact('vars'));
     }
+
     protected function setAssets($controller): Assets
     {
         $assets = new AdminAssets();

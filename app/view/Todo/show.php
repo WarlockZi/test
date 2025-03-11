@@ -1,8 +1,6 @@
+<div class="page-name">Функции</div>
 
-
-	<div class="page-name">Функции</div>
-
-	<?=$table->html;?>
+<?= $table->html; ?>
 
 
 

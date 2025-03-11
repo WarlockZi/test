@@ -8,7 +8,7 @@
         <p>
             <span><strong><?= $key; ?></strong></span>
 
-            <span> <?=is_array($data)?implode(',', $data):$data;?></span>
+            <span> <?= is_array($data) ? implode(',', $data) : $data; ?></span>
         </p>
 
     <? endforeach; ?>

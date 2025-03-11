@@ -10,25 +10,25 @@ use app\view\components\Builders\TableBuilder\Table;
 class TagView
 {
 
-	public static function list(string $className)
-	{
-		return Table::build(Tag::all())
-			->pageTitle('Тэги')
-			->del()
-			->addButton()
-			->column(
-				ColumnBuilder::build('id')
-					->get()
-			)
-			->column(
-				ColumnBuilder::build('name')
-					->search()
-					->contenteditable()
-					->get()
-			)
-			->get();
+    public static function list(string $className)
+    {
+        return Table::build(Tag::all())
+            ->pageTitle('Тэги')
+            ->del()
+            ->addButton()
+            ->column(
+                ColumnBuilder::build('id')
+                    ->get()
+            )
+            ->column(
+                ColumnBuilder::build('name')
+                    ->search()
+                    ->contenteditable()
+                    ->get()
+            )
+            ->get();
 
 
-	}
+    }
 
 }

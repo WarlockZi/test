@@ -1,23 +1,25 @@
 @use "../../var";
 
-.test-update__group{
+.test-update__group {
   margin-bottom: 10px;
   display: flex;
   flex-flow: column;
   align-items: flex-start;
   gap: 10px;
 }
-.test-update__buttons{
+
+.test-update__buttons {
   display: flex;
   gap: 10px;
 }
-.children{
+
+.children {
   .test-edit__child {
     font-size: .7rem;
   }
 }
 
-.test-path-add__th{
+.test-path-add__th {
   justify-self: end;
   text-align: end;
 

@@ -1,7 +1,5 @@
+<div class="page-name">Должности</div>
 
-
-	<div class="page-name">Должности</div>
-
-	<?=$list;?>
+<?= $list; ?>
 
 

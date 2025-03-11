@@ -24,14 +24,13 @@ class Helpers
     {
         $this->manifestPath   = ROOT . env('VITE_MANIFEST_PATH');
         $this->productionPath = env('VITE_PRODUCTION_PATH');
-        $this->devHost = env('VITE_PROTOCOL')
-            .'://'
-            .env('VITE_HOST')
-            .':'
-            .env('VITE_PORT')
-            .'/'
-        ;
-        $this->manifest     = $this->getManifest();
+        $this->devHost        = env('VITE_PROTOCOL')
+            . '://'
+            . env('VITE_HOST')
+            . ':'
+            . env('VITE_PORT')
+            . '/';
+        $this->manifest       = $this->getManifest();
     }
 
     public function vite(string $entry): string

@@ -1,7 +1,7 @@
 <div class='page-name'><?= $pageTitle; ?></div>
 <div
         class="item-wrap"
-        data-model = "<?= $modelName; ?>"
+        data-model="<?= $modelName; ?>"
         data-id="<?= $item['id']; ?>"
 >
 

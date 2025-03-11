@@ -13,9 +13,10 @@ use Illuminate\Database\Eloquent\Collection;
 class TestView
 {
     use CleanString;
-    private FS $fs;
+
     protected string $pagination = '';
     protected string $title = '<h2>Выберите тест</h2>';
+    private FS $fs;
 
     public function __construct()
     {
@@ -27,11 +28,11 @@ class TestView
         return AccordionView::testDo();
     }
 
-    public function getContent($test): string
+    public function getTestContent(int $id): string
     {
-        return FS::getFileContent(ROOT . '/app/view/Test/Admin/do_test-data.php', compact('test'));
+        $h = new TestDoService($id);
+        return "<div class='test-do'>" . $h->getPagination() . $h->getContent() . "</div>";
     }
-
 
     public function getPagination($test): string
     {
@@ -52,12 +53,10 @@ class TestView
         return "<div class='pagination'>{$pagination}</div>";
     }
 
-    public function getTestContent(int $id): string
+    public function getContent($test): string
     {
-        $h = new TestDoService($id);
-        return "<div class='test-do'>" . $h->getPagination() . $h->getContent() . "</div>";
+        return FS::getFileContent(ROOT . '/app/view/Test/Admin/do_test-data.php', compact('test'));
     }
-
 
     public function testSelector(int $selected, int $excluded): string
     {

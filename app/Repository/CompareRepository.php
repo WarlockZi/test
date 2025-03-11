@@ -34,6 +34,7 @@ class CompareRepository
             return false;
         }
     }
+
     public static function del($req): bool
     {
         list($field, $value) = Auth::getCartFieldValue();

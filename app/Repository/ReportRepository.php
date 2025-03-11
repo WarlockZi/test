@@ -86,7 +86,7 @@ class ReportRepository extends AppController
     private function hasMainImage($product): bool
     {
         $piService = new ProductImageService();
-        $src = $piService->getImageRelativePath($product);
+        $src       = $piService->getImageRelativePath($product);
         if (!$src) {
             return false;
         }

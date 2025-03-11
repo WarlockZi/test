@@ -13,10 +13,11 @@ class FeedbackController extends AppController
     {
         parent::__construct();
     }
+
     public function actionUpdateOrCreate(): void
     {
         $req = $this->ajax;
-        $tg = new TelegramBot('question');
+        $tg  = new TelegramBot('question');
         $tg->send($this->formatMessage($req['fields']));
         parent::actionUpdateOrCreate();
     }

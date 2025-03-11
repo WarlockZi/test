@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class FilterUser extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $fillable = [
-		'name',
+    protected $fillable = [
+        'name',
         'user_id',
         'model',
-	];
+    ];
 
 }

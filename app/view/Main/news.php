@@ -2,5 +2,5 @@
 
     <h1>Новости</h1>
 
-	<?= $content; ?>
+    <?= $content; ?>
 </main>

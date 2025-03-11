@@ -11,16 +11,18 @@ abstract class WebsocketWorker
     protected $handshakes = array();
     protected $ips = array();
 
-    public function __construct($server, $master) {
+    public function __construct($server, $master)
+    {
         $this->server = $server;
         $this->master = $master;
-        $this->pid = posix_getpid();
+        $this->pid    = posix_getpid();
     }
 
-    public function start() {
+    public function start()
+    {
         while (true) {
             //подготавливаем массив всех сокетов, которые нужно обработать
-            $read = $this->clients;
+            $read   = $this->clients;
             $read[] = $this->server;
             $read[] = $this->master;
 
@@ -44,7 +46,7 @@ abstract class WebsocketWorker
                     } else {
                         @$this->ips[$address[0]]++;
 
-                        $this->clients[intval($client)] = $client;
+                        $this->clients[intval($client)]    = $client;
                         $this->handshakes[intval($client)] = array();//отмечаем, что нужно сделать рукопожатие
                     }
                 }
@@ -110,7 +112,8 @@ abstract class WebsocketWorker
         }
     }
 
-    protected function handshake($client) {
+    protected function handshake($client)
+    {
         $key = $this->handshakes[intval($client)];
 
         if (!$key) {
@@ -128,7 +131,7 @@ abstract class WebsocketWorker
         } else {
             //отправляем заголовок согласно протоколу вебсокета
             $SecWebSocketAccept = base64_encode(pack('H*', sha1($key . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
-            $upgrade = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" .
+            $upgrade            = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" .
                 "Upgrade: websocket\r\n" .
                 "Connection: Upgrade\r\n" .
                 "Sec-WebSocket-Accept:$SecWebSocketAccept\r\n\r\n";
@@ -141,7 +144,7 @@ abstract class WebsocketWorker
 
     protected function encode($payload, $type = 'text', $masked = false)
     {
-        $frameHead = array();
+        $frameHead     = array();
         $payloadLength = strlen($payload);
 
         switch ($type) {
@@ -169,7 +172,7 @@ abstract class WebsocketWorker
         // set mask and payload length (using 1, 3 or 9 bytes)
         if ($payloadLength > 65535) {
             $payloadLengthBin = str_split(sprintf('%064b', $payloadLength), 8);
-            $frameHead[1] = ($masked === true) ? 255 : 127;
+            $frameHead[1]     = ($masked === true) ? 255 : 127;
             for ($i = 0; $i < 8; $i++) {
                 $frameHead[$i + 2] = bindec($payloadLengthBin[$i]);
             }
@@ -179,9 +182,9 @@ abstract class WebsocketWorker
             }
         } elseif ($payloadLength > 125) {
             $payloadLengthBin = str_split(sprintf('%016b', $payloadLength), 8);
-            $frameHead[1] = ($masked === true) ? 254 : 126;
-            $frameHead[2] = bindec($payloadLengthBin[0]);
-            $frameHead[3] = bindec($payloadLengthBin[1]);
+            $frameHead[1]     = ($masked === true) ? 254 : 126;
+            $frameHead[2]     = bindec($payloadLengthBin[0]);
+            $frameHead[3]     = bindec($payloadLengthBin[1]);
         } else {
             $frameHead[1] = ($masked === true) ? $payloadLength + 128 : $payloadLength;
         }
@@ -212,14 +215,14 @@ abstract class WebsocketWorker
     protected function decode($data)
     {
         $unmaskedPayload = '';
-        $decodedData = array();
+        $decodedData     = array();
 
         // estimate frame type:
-        $firstByteBinary = sprintf('%08b', ord($data[0]));
+        $firstByteBinary  = sprintf('%08b', ord($data[0]));
         $secondByteBinary = sprintf('%08b', ord($data[1]));
-        $opcode = bindec(substr($firstByteBinary, 4, 4));
-        $isMasked = ($secondByteBinary[0] == '1') ? true : false;
-        $payloadLength = ord($data[1]) & 127;
+        $opcode           = bindec(substr($firstByteBinary, 4, 4));
+        $isMasked         = ($secondByteBinary[0] == '1') ? true : false;
+        $payloadLength    = ord($data[1]) & 127;
 
         // unmasked frame is received:
         if (!$isMasked) {
@@ -256,22 +259,22 @@ abstract class WebsocketWorker
         }
 
         if ($payloadLength === 126) {
-            $mask = substr($data, 4, 4);
+            $mask          = substr($data, 4, 4);
             $payloadOffset = 8;
-            $dataLength = bindec(sprintf('%08b', ord($data[2])) . sprintf('%08b', ord($data[3]))) + $payloadOffset;
+            $dataLength    = bindec(sprintf('%08b', ord($data[2])) . sprintf('%08b', ord($data[3]))) + $payloadOffset;
         } elseif ($payloadLength === 127) {
-            $mask = substr($data, 10, 4);
+            $mask          = substr($data, 10, 4);
             $payloadOffset = 14;
-            $tmp = '';
+            $tmp           = '';
             for ($i = 0; $i < 8; $i++) {
                 $tmp .= sprintf('%08b', ord($data[$i + 2]));
             }
             $dataLength = bindec($tmp) + $payloadOffset;
             unset($tmp);
         } else {
-            $mask = substr($data, 2, 4);
+            $mask          = substr($data, 2, 4);
             $payloadOffset = 6;
-            $dataLength = $payloadLength + $payloadOffset;
+            $dataLength    = $payloadLength + $payloadOffset;
         }
 
         /**
@@ -292,7 +295,7 @@ abstract class WebsocketWorker
             }
             $decodedData['payload'] = $unmaskedPayload;
         } else {
-            $payloadOffset = $payloadOffset - 4;
+            $payloadOffset          = $payloadOffset - 4;
             $decodedData['payload'] = substr($data, $payloadOffset);
         }
 

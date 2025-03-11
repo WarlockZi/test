@@ -1,4 +1,4 @@
-import './videoinstructions.scss'
+import "./videoinstructions.scss";
 
 
 // import {$} from '../../common'

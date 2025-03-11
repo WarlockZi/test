@@ -54,27 +54,6 @@ class Mail
         return $variants[$this->variant];
     }
 
-
-    public function setToFromBody(array $props)
-    {
-        $mailDTO = [
-            'To' => array('email', 'name'),
-            'From' => 'email',
-            'FromName' => 'name',
-            'MsgHTML' => 'dd',
-            'AltBody' => 'dd',
-
-        ];
-        if (!empty($props['to'])) {
-            $this->mailer->AddAddress($props['to']['email'], $props['to']['name']);
-        }
-        $this->mailer->From = $props['From'] ?? "";
-        $this->mailer->FromName = $props['FromName'] ?? "";
-        $this->mailer->MsgHTML($props['MsgHTML'] ?? "");
-        $this->mailer->AltBody = $props['AltBody']??"";
-    }
-
-
     protected function setMailer(): void
     {
         if (!isInstanceOf(PHPMailer::class)) return;
@@ -103,6 +82,25 @@ class Mail
     public static function toBase64($str)
     {
         return "=?utf-8?b?" . base64_encode($str) . "?=";
+    }
+
+    public function setToFromBody(array $props)
+    {
+        $mailDTO = [
+            'To' => array('email', 'name'),
+            'From' => 'email',
+            'FromName' => 'name',
+            'MsgHTML' => 'dd',
+            'AltBody' => 'dd',
+
+        ];
+        if (!empty($props['to'])) {
+            $this->mailer->AddAddress($props['to']['email'], $props['to']['name']);
+        }
+        $this->mailer->From     = $props['From'] ?? "";
+        $this->mailer->FromName = $props['FromName'] ?? "";
+        $this->mailer->MsgHTML($props['MsgHTML'] ?? "");
+        $this->mailer->AltBody = $props['AltBody'] ?? "";
     }
 
     public function send(): void

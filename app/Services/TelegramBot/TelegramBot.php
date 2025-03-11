@@ -12,16 +12,16 @@ class TelegramBot
     public function __construct(string $channel)
     {
         $this->setChanel($channel);
-        $this->TELEGRAM_VitexTestBot_TOKEN     = env('TELEGRAM_VitexTestBot_TOKEN');
+        $this->TELEGRAM_VitexTestBot_TOKEN = env('TELEGRAM_VitexTestBot_TOKEN');
     }
 
     private function setChanel($channel): void
     {
-        if ($channel===TGChannel::callme->name) {
-            $this->chat_id = '-100'.env('TELEGRAM_VITEX_CALLME_CHANNAL_ID');
+        if ($channel === TGChannel::callme->name) {
+            $this->chat_id = '-100' . env('TELEGRAM_VITEX_CALLME_CHANNAL_ID');
 
-        }elseif ($channel===TGChannel::question->name){
-            $this->chat_id = '-100'.env('TELEGRAM_VITEX_SALES_CHANNAL_ID');
+        } elseif ($channel === TGChannel::question->name) {
+            $this->chat_id = '-100' . env('TELEGRAM_VITEX_SALES_CHANNAL_ID');
         }
 
     }
@@ -31,13 +31,13 @@ class TelegramBot
     {
         $token = $this->TELEGRAM_VitexTestBot_TOKEN;
 
-        $url = "https://api.telegram.org/bot";
+        $url    = "https://api.telegram.org/bot";
         $action = '/sendMessage?';
         $chatId = "chat_id={$this->chat_id}&";
-        $text = "text=Перезвоните мне $text";
+        $text   = "text=Перезвоните мне $text";
 
         $string = "{$url}{$token}{$action}{$chatId}{$text}";
 
-        $resp =file_get_contents($string);
+        $resp = file_get_contents($string);
     }
 }

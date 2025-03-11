@@ -39,6 +39,7 @@
   .save {
     display: flex;
     align-items: center;
+
     svg .save {
       fill: var.$color-success;
       //pointer-events: none; // это чтобы не срабатывал клик на svg

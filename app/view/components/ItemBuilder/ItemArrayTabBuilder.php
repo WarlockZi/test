@@ -9,6 +9,7 @@ use app\view\components\Traits\CleanString;
 class ItemArrayTabBuilder
 {
     use CleanString;
+
     public string $html;
     public string $tabTitle;
     public string $field;
@@ -20,7 +21,7 @@ class ItemArrayTabBuilder
         $view           = new self();
         $view->html     = '';
         $view->tabTitle = $title;
-        $view->field = '';
+        $view->field    = '';
         return $view;
     }
 

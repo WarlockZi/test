@@ -90,8 +90,8 @@ class PromotionFormView
             ->column(
                 ColumnBuilder::build('unit')
                     ->name('единиц')
-                    ->callback(function ($promotion){
-                        return $promotion->unit->name??'не установлена';
+                    ->callback(function ($promotion) {
+                        return $promotion->unit->name ?? 'не установлена';
                     })
                     ->get()
             )

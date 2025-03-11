@@ -19,14 +19,13 @@ class ProductService
 
     public static function changeBaseIsShippable(array $req): void
     {
-        $pu = ProductUnit::query()
+        $pu                    = ProductUnit::query()
             ->where('product_1s_id', $req['product_1s_id'])
             ->where('is_base', 1)
             ->where('multiplier', 1)
-            ->first()
-            ;
+            ->first();
         $pu->base_is_shippable = (int)$req['base_is_shippable'];
-        $pu->is_shippable = (int)$req['base_is_shippable'];
+        $pu->is_shippable      = (int)$req['base_is_shippable'];
         $pu->save();
         Response::json(['popup' => 'ok']);
     }
@@ -37,10 +36,10 @@ class ProductService
         $absPath = $this->imageService->getAbsolutePath();
 
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $art = $this->imageService->getArt($product);
-        $name = $art . ".{$extension}";
+        $art       = $this->imageService->getArt($product);
+        $name      = $art . ".{$extension}";
 
-        $uploaded_file = $file['tmp_name'];
+        $uploaded_file    = $file['tmp_name'];
         $destination_path = $absPath . $name;
 
         if (move_uploaded_file($uploaded_file, $destination_path)) {
@@ -54,7 +53,7 @@ class ProductService
     {
         if (!isset($product->baseUnit->pivot)) return '';
         $baseIsShippable = $product->baseUnit->pivot->base_is_shippable;
-        $checked = $baseIsShippable ? "checked" : '';
+        $checked         = $baseIsShippable ? "checked" : '';
         return "<input type='checkbox' {$checked} data-func='changeBaseIsShippable' data-1sid='{$product['1s_id']}'>";
     }
 
@@ -65,7 +64,7 @@ class ProductService
 
     private function deletePreviousFile(Product $product): void
     {
-        $image = $this->imageService->getRelativeImage($product);
+        $image   = $this->imageService->getRelativeImage($product);
         $noPhoto = $this->imageService->getNoPhoto();
         if ($image !== $noPhoto) {
             unlink($image);
@@ -75,7 +74,7 @@ class ProductService
     public static function productImg($col, $product, $field): string
     {
         $productImageService = new ProductImageService();
-        $imgPath = $productImageService->getRelativeImage($product);
+        $imgPath             = $productImageService->getRelativeImage($product);
         return "<img src='{$imgPath}' loading='lazy'>";
     }
 
@@ -113,7 +112,7 @@ class ProductService
     public function reduceQuality(int $quality)
     {
         $imageService = new ImagickService($this->getAbsolutePath());
-        $q = $imageService->img->getImageCompressionQuality();
+        $q            = $imageService->img->getImageCompressionQuality();
         if ($q > $quality) {
             $imageService->img->setImageCompressionQuality($quality);
             $imageService->img->writeImage();

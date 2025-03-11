@@ -17,7 +17,7 @@ class LikeView
             ->column(
                 ColumnBuilder::build('product')
                     ->name('Название')
-                    ->callback(function ($like){
+                    ->callback(function ($like) {
                         return $like->product->print_name;
                     })
                     ->get()
@@ -26,13 +26,12 @@ class LikeView
                 ColumnBuilder::build('Картинка')
                     ->name('Картинка')
                     ->class('img')
-                    ->callback(function ($like){
+                    ->callback(function ($like) {
                         return "<img src='{$like->product->mainImage}'>";
                     })
                     ->get()
             )
             ->del()
-
             ->get();
 
     }

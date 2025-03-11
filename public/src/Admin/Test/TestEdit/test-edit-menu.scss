@@ -19,7 +19,7 @@
   font-size: .8rem;
   min-width: 140px;
 
-  @include mixin_media.m600{
+  @include mixin_media.m600 {
     max-width: 100%;
   }
 

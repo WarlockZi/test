@@ -25,7 +25,7 @@ abstract class TreeBuilder
 
     public function __construct(Collection $items, string $relation, int $multiply = 1, string $tab = '&nbsp;')
     {
-        $this->items      = $items;
+        $this->items    = $items;
         $this->arr      = $items->toArray();
         $this->relation = $relation;
         $this->multiply = $multiply;
@@ -35,35 +35,38 @@ abstract class TreeBuilder
     }
 
 
-    public function selected(int|string $selected, string $field = 'id'):self
+    public function selected(int|string $selected, string $field = 'id'): self
     {
-        $this->selected = $selected;
+        $this->selected      = $selected;
         $this->selectedField = $field;
         return $this;
     }
-    public function selectedByField(array $selected):self
+
+    public function selectedByField(array $selected): self
     {
-        $key =  array_keys($selected)[0];
+        $key                 = array_keys($selected)[0];
         $this->selectedField = $key;
         $this->selectedValue = $selected[$key];
         return $this;
     }
-    public function excluded($excluded):self
+
+    public function excluded($excluded): self
     {
         $this->excluded = $excluded;
         return $this;
     }
 
-    protected function validateFormat():void
+    protected function validateFormat(): void
     {
         try {
             $first = @$this->arr[0];
             if (!isset($first['id']) || !isset($first['name'])) Error::setError('no name or id');
             if (!isset($first[$this->relation])) Error::setError('no relation');
-        }catch (\Throwable $exception){
+        } catch (\Throwable $exception) {
             $exception->getMessage();
         }
     }
+
     public function get(): string
     {
         $str = $this->initialOption;

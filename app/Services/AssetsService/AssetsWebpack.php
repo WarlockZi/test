@@ -42,6 +42,7 @@ class AssetsWebpack implements Compiler
         }
         return $str;
     }
+
     public function setJs(string $name): void
     {
         $this->js[] = $name;

@@ -33,26 +33,6 @@ class Route
     protected bool $notFound = true;
     protected array $errors = [];
 
-    public function getRedirect(): array
-    {
-        return $this->redirect;
-    }
-
-    public function getUrL(): string
-    {
-        return $this->url;
-    }
-
-    public function getUri(): string
-    {
-        return $this->uri;
-    }
-
-    public function setUri(string $uri): void
-    {
-        $this->uri = $uri;
-    }
-
     public function __construct()
     {
         $this->uri = $_SERVER['REQUEST_URI'];
@@ -62,14 +42,19 @@ class Route
         $this->setNamespace();
     }
 
-    public function setView(string $view): void
+    public function getRedirect(): array
     {
-        $this->view = $view;
+        return $this->redirect;
     }
 
-    public function getView(): string
+    public function setRedirect(array $redirect): void
     {
-        return $this->view ?? $this->action ?? 'index';
+        $this->redirect = $redirect;
+    }
+
+    public function getUrL(): string
+    {
+        return $this->url;
     }
 
     protected function setUrl(): void
@@ -84,9 +69,24 @@ class Route
         $this->url = '/' . trim($url, '/');
     }
 
-    public function setAction(Route $route): void
+    public function getUri(): string
     {
-        $this->actionName = 'action' . ucfirst($route->action);
+        return $this->uri;
+    }
+
+    public function setUri(string $uri): void
+    {
+        $this->uri = $uri;
+    }
+
+    public function getView(): string
+    {
+        return $this->view ?? $this->action ?? 'index';
+    }
+
+    public function setView(string $view): void
+    {
+        $this->view = $view;
     }
 
     public function setActionName(string $action): void
@@ -106,23 +106,6 @@ class Route
         $this->params = $params;
     }
 
-    public function setAdmin(): void
-    {
-        $this->admin = str_contains($this->uri, 'adminsc');
-    }
-
-    public function setLayout(): void
-    {
-        $this->layout = ($this->admin && Auth::getUser())
-            ? AdminLayout::class
-            : UserLayout::class;
-    }
-
-    public function setNotFound(): void
-    {
-        $this->notFound = false;
-    }
-
     public function setError(string $error): void
     {
         $this->errors[] = $error;
@@ -133,14 +116,14 @@ class Route
         return 'action' . ucfirst($this->action);
     }
 
+    public function setAction(Route $route): void
+    {
+        $this->actionName = 'action' . ucfirst($route->action);
+    }
+
     public function getActionName(): string
     {
         return $this->action;
-    }
-
-    public function isAdmin(): bool
-    {
-        return $this->admin;
     }
 
     public function isHome(): bool
@@ -153,6 +136,43 @@ class Route
         return $this->notFound;
     }
 
+    public function setNotFound(): void
+    {
+        $this->notFound = false;
+    }
+
+    public function getBaseController(): string
+    {
+        return $this->baseController;
+    }
+
+    public function getLayout(): string
+    {
+        return Auth::userIsAdmin() || Auth::userIsEmployee() ? $this->layout : 'app\view\layouts\UserLayout';
+    }
+
+    public function setLayout(): void
+    {
+        $this->layout = ($this->admin && Auth::getUser())
+            ? AdminLayout::class
+            : UserLayout::class;
+    }
+
+    public function getController(): string
+    {
+        return $this->controller ? $this->getNamespace() . $this->getControllerFullName() : Controller::class;
+    }
+
+    public function setController(string $controller): void
+    {
+        $this->controller = $controller;
+    }
+
+    public function getNamespace(): string
+    {
+        return $this->isAdmin() ? "{$this->namespace}" : $this->namespace;
+    }
+
     public function setNamespace(): void
     {
         if ($this->isAdmin()) {
@@ -162,24 +182,14 @@ class Route
         }
     }
 
-    public function getBaseController(): string
+    public function isAdmin(): bool
     {
-        return $this->baseController;
+        return $this->admin;
     }
 
-    public function getNamespace(): string
+    public function setAdmin(): void
     {
-        return $this->isAdmin() ? "{$this->namespace}" : $this->namespace;
-    }
-
-    public function getLayout(): string
-    {
-        return Auth::userIsAdmin() || Auth::userIsEmployee() ? $this->layout : 'app\view\layouts\UserLayout';
-    }
-
-    public function getController(): string
-    {
-        return $this->controller ? $this->getNamespace() . $this->getControllerFullName() : Controller::class;
+        $this->admin = str_contains($this->uri, 'adminsc');
     }
 
     public function getControllerFullName(): string
@@ -206,6 +216,11 @@ class Route
         return $str;
     }
 
+    public function __get($name)
+    {
+        return (property_exists($this, $name)) ? $this->$name : '';
+    }
+
     public function __set($name, $value): void
     {
         if (property_exists($this, $name)) {
@@ -213,29 +228,14 @@ class Route
         }
     }
 
-    public function __get($name)
+    public function getHost(): string
     {
-        return (property_exists($this, $name)) ? $this->$name : '';
+        return $_SERVER['HTTP_HOST'];
     }
 
     public function setHost()
     {
         $this->host = $_SERVER['HTTP_HOST'];
-    }
-
-    public function setController(string $controller): void
-    {
-        $this->controller = $controller;
-    }
-
-    public function setRedirect(array $redirect): void
-    {
-        $this->redirect = $redirect;
-    }
-
-    public function getHost(): string
-    {
-        return $_SERVER['HTTP_HOST'];
     }
 //    public function setSlug(string $slug): void
 //    {

@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class ChatMessge extends Pivot
 {
-	public $timestamps = true;
+    public $timestamps = true;
 
-	protected $fillable = [
-		'user_name',
+    protected $fillable = [
+        'user_name',
         'php_session'
-	];
+    ];
 
     public function comments()
     {

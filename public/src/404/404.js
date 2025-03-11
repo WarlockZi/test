@@ -1,1 +1,1 @@
-import "./404.scss"
+import "./404.scss";

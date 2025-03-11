@@ -5,90 +5,92 @@ namespace app\view\components\Builders\Date;
 
 
 use app\core\FS;
+
 //use app\view\components\Builders\Builder;
 
 class DateBuilder
 {
 
-	public FS $fs;
-	public string $class = '';
-	public string $model = '';
-	public string $field = '';
-	public string $value;
-	public string $day = '';
-	public string $month = '';
-	public string $year = '';
-	public string $min = "min='1965-01-01'";
-	public string $max = "max='2030-01-01'";
-	public string $format = 'yy-mm-dd';
+    public FS $fs;
+    public string $class = '';
+    public string $model = '';
+    public string $field = '';
+    public string $value;
+    public string $day = '';
+    public string $month = '';
+    public string $year = '';
+    public string $min = "min='1965-01-01'";
+    public string $max = "max='2030-01-01'";
+    public string $format = 'yy-mm-dd';
 
-	public static function build(string|null $date): DateBuilder
+    public static function build(string|null $date): DateBuilder
     {
-		$self = new self();
+        $self     = new self();
         $self->fs = new FS(__DIR__);
 
-		$value = date('Y-m-d', strtotime($date??''));
-        $self->value = "value='{$value}'" ;
-		return $self;
-	}
+        $value       = date('Y-m-d', strtotime($date ?? ''));
+        $self->value = "value='{$value}'";
+        return $self;
+    }
 
-	public function field($field): static
+    public function field($field): static
     {
-		$this->field = "data-field='{$field}'";
-		return $this;
-	}
-	public function model($model): static
-    {
-		$this->model = "data-model='{$model}'";
-		return $this;
-	}
+        $this->field = "data-field='{$field}'";
+        return $this;
+    }
 
-	public function class($class): static
+    public function model($model): static
     {
-		$this->class = "class='{$class}'";
-		return $this;
-	}
+        $this->model = "data-model='{$model}'";
+        return $this;
+    }
 
-	public function min($min): static
+    public function class($class): static
     {
-		$this->min = "min='{$min}'";
-		return $this;
-	}
+        $this->class = "class='{$class}'";
+        return $this;
+    }
 
-	public function max($max): static
+    public function min($min): static
     {
-		$this->max = "max='{$max}'";
-		return $this;
-	}
+        $this->min = "min='{$min}'";
+        return $this;
+    }
 
-	public function format($format): static
+    public function max($max): static
     {
-		$this->format = $format;
-		return $this;
-	}
+        $this->max = "max='{$max}'";
+        return $this;
+    }
 
-	public function day($day): static
+    public function format($format): static
     {
-		$this->day = $day;
-		return $this;
-	}
+        $this->format = $format;
+        return $this;
+    }
 
-	public function month($month): static
+    public function day($day): static
     {
-		$this->month = $month;
-		return $this;
-	}
+        $this->day = $day;
+        return $this;
+    }
 
-	public function year($year): static
+    public function month($month): static
     {
-		$this->year = $year;
-		return $this;
-	}
+        $this->month = $month;
+        return $this;
+    }
 
-	public function get(): string
+    public function year($year): static
     {
-		$date = $this;
-		return FS::getFileContent(ROOT . '/app/view/components/Builders/Date/Date.php',compact('date'));
-	}
+        $this->year = $year;
+        return $this;
+    }
+
+    public function get(): string
+    {
+        $date = $this;
+        return FS::getFileContent(ROOT . '/app/view/components/Builders/Date/Date.php', compact('date'));
+    }
 
 }

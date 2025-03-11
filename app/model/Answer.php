@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $fillable = [
-		'question_id','answer','correct_answer','pica','sort'
-	];
+    protected $fillable = [
+        'question_id', 'answer', 'correct_answer', 'pica', 'sort'
+    ];
 
 }

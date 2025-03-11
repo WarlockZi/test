@@ -1,12 +1,12 @@
-import {$} from "@src/common.js";
+import { $ } from "@src/common.js";
 import Table from "@src/components/table/Table.js";
 
-export default class Like{
-   constructor(){
-      const like = $('[custom-table].likes').first()
-      if (!like) return false
+export default class Like {
+  constructor() {
+    const like = $("[custom-table].likes").first();
+    if (!like) return false;
 
-      const table = new Table(like)
-      table.setDelUrl('/like/del')
-   }
+    const table = new Table(like);
+    table.setDelUrl("/like/del");
+  }
 }

@@ -7,21 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Openquestion extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $fillable = [
-		'question',
-		'opentest_id',
-		'pic',
-		'sort'
-	];
+    protected $fillable = [
+        'question',
+        'opentest_id',
+        'pic',
+        'sort'
+    ];
 
-	public function opentest(){
-		return $this->belongsTo(Opentest::class);
-	}
-	public function answers(){
-		return $this->hasMany(Openanswer::class);
-	}
+    public function opentest()
+    {
+        return $this->belongsTo(Opentest::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Openanswer::class);
+    }
 
 //	public static function sort($q_ids){
 //		$model = new static();

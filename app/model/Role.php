@@ -16,8 +16,9 @@ class Role extends Model
         'sort'
     ];
 
-	public function users(){
+    public function users()
+    {
 
-	}
+    }
 
 }

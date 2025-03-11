@@ -5,15 +5,18 @@ namespace app\Services\Chat;
 
 class WebsocketHandler extends WebsocketWorker
 {
-    protected function onOpen($client, $info) {//вызывается при соединении с новым клиентом
+    protected function onOpen($client, $info)
+    {//вызывается при соединении с новым клиентом
 
     }
 
-    protected function onClose($client) {//вызывается при закрытии соединения клиентом
+    protected function onClose($client)
+    {//вызывается при закрытии соединения клиентом
 
     }
 
-    protected function onMessage($client, $data) {//вызывается при получении сообщения от клиента
+    protected function onMessage($client, $data)
+    {//вызывается при получении сообщения от клиента
         $data = $this->decode($data);
 
         if (!$data['payload']) {
@@ -31,15 +34,18 @@ class WebsocketHandler extends WebsocketWorker
         $this->sendHelper($message);
     }
 
-    protected function onSend($data) {//вызывается при получении сообщения от мастера
+    protected function onSend($data)
+    {//вызывается при получении сообщения от мастера
         $this->sendHelper($data);
     }
 
-    protected function send($message) {//отправляем сообщение на мастер, чтобы он разослал его на все воркеры
+    protected function send($message)
+    {//отправляем сообщение на мастер, чтобы он разослал его на все воркеры
         @fwrite($this->master, $message);
     }
 
-    private function sendHelper($data) {
+    private function sendHelper($data)
+    {
         $data = $this->encode($data);
 
         $write = $this->clients;

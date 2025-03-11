@@ -9,7 +9,7 @@ use app\view\Feedback\FeedbackView;
 class FeedbackController extends AppController
 {
     public function __construct(
-        public string $model = Feedback::class,
+        public string       $model = Feedback::class,
         public FeedbackView $feedbackView = new FeedbackView()
     )
     {

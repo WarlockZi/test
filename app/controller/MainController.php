@@ -61,17 +61,19 @@ class MainController extends AppController
             'Новости' . $this->titleTail,
             'Новости');
     }
+
     public function actionSitemap(): void
     {
 //        $tree = CategoryFormView::sitemap();
-        $categories = "<ul class='category-tree'>" .  "</ul>";
-        $content = file_get_contents(ROOT.'/sitemap.html');
+        $categories = "<ul class='category-tree'>" . "</ul>";
+        $content    = file_get_contents(ROOT . '/sitemap.html');
         $this->setVars(compact('content', 'categories'));
         $this->assets->setMeta(
             'Карта сайта - Витекс',
             'Карта сайта ' . $this->titleTail,
             'Карта сайта');
     }
+
     public function actionYandexauth(): void
     {
         $f = 1;
@@ -84,6 +86,7 @@ class MainController extends AppController
             'Статьи ' . $this->titleTail,
             'Статьи');
     }
+
     public function actionGarantii()
     {
         $this->assets->setMeta(
@@ -91,6 +94,7 @@ class MainController extends AppController
             'Гарантии ' . $this->titleTail,
             'Гарантии');
     }
+
     public function actionPoliticaconf()
     {
         $this->assets->setMeta(

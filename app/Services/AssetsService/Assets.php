@@ -6,22 +6,23 @@ namespace app\Services\AssetsService;
 class Assets
 {
     public function __construct(
-        protected bool $isAdmin = false,
+        protected bool     $isAdmin = false,
 
-        protected Compiler     $compiler = new AssetsVite(),
+        protected Compiler $compiler = new AssetsVite(),
 //        protected Compiler     $compiler = new AssetsWebpack(),
-        public AssetsSEO      $seo = new AssetsSEO(),
-        public AssetsCDN      $CDN = new AssetsCDN(),
-        public AssetsCache    $cache = new AssetsCache(),
+        public AssetsSEO   $seo = new AssetsSEO(),
+        public AssetsCDN   $CDN = new AssetsCDN(),
+        public AssetsCache $cache = new AssetsCache(),
     )
     {
         $this->cache->setCache();
         $this->setCompiler();
     }
-    public function icon():string
+
+    public function icon(): string
     {
         $link = DEV ? "/pic/srvc/logo-square-dev.svg" : "/pic/srvc/logo-square.svg";
-        return"<link rel='icon' href='{$link}' type='image/svg+xml'>";
+        return "<link rel='icon' href='{$link}' type='image/svg+xml'>";
     }
 
     protected function setCompiler(): string
@@ -35,7 +36,7 @@ class Assets
         $this->compiler->setJs($name);
     }
 
-    public function setCss(string $name):void
+    public function setCss(string $name): void
     {
         $this->compiler->setCss($name);
     }
@@ -45,16 +46,17 @@ class Assets
         return $this->compiler->getJs();
     }
 
-    public function getCss(string $str = ''):string
+    public function getCss(string $str = ''): string
     {
         return $this->compiler->getCss();
     }
 
-    public function getMeta():string
+    public function getMeta(): string
     {
         return $this->seo->getMeta();
     }
-    public function setMeta(string $title, string $desc='', string $keywords=''):void
+
+    public function setMeta(string $title, string $desc = '', string $keywords = ''): void
     {
         $this->seo->setMeta($title, $desc, $keywords);
     }

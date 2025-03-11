@@ -16,16 +16,16 @@ if (!empty($product)): ?>
 
 
         <div class="product-card_hero">
-            <? include 'main_image.php'?>
+            <? include 'main_image.php' ?>
             <? include 'card/toCart.php' ?>
         </div>
 
         <div class="info-wrap">
             <div class="info-tag">Информация о товаре</div>
             <div class="properties">
-                <h2><?=$product->seo_h1()?></h2>
+                <h2><?= $product->seo_h1() ?></h2>
 
-                <div id="seo-article"><?=$product->seo_article()?></div>
+                <div id="seo-article"><?= $product->seo_article() ?></div>
 
                 <?php foreach ($product->values as $value): ?>
                     <?php include __DIR__ . '/property.php'; ?>
@@ -40,12 +40,11 @@ if (!empty($product)): ?>
         </div>
 
 
-
         <?php //include __DIR__.'/card/olsoLike.php'?>
         <?php //include __DIR__.'/card/rating.php'?>
 
 
-<!--        --><?php //= Icon::star() ?>
+        <!--        --><?php //= Icon::star() ?>
         <!--		 --><?php // include __DIR__ . '/card/reviews.php' ?>
         <!--		 --><?php // include __DIR__ . '/card/alsoViewd.php.php' ?>
 

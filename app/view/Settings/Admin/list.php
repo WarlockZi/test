@@ -1,3 +1,3 @@
 <div class="wrap-settings">
-	<?=$list;?>
+    <?= $list; ?>
 </div>

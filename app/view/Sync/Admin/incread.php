@@ -1,3 +1,3 @@
 <div class="sync">
-	<?= $content ?? ''; ?>
+    <?= $content ?? ''; ?>
 </div>

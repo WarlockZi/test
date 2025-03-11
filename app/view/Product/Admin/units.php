@@ -24,13 +24,13 @@ use app\core\Icon;
 
 
             <div class="row">
-                <?= ProductFormView::unitsRow($baseUnit, '',false); ?>
+                <?= ProductFormView::unitsRow($baseUnit, '', false); ?>
             </div>
 
             <?php foreach ($units as $unit): ?>
                 <?php if (!$unit->pivot->is_base): ?>
-                    <div class="row" data-productUnitId="<?=$unit->pivot->id?>">
-                        <?= ProductFormView::unitsRow($unit,$baseUnit->name,true) ?>
+                    <div class="row" data-productUnitId="<?= $unit->pivot->id ?>">
+                        <?= ProductFormView::unitsRow($unit, $baseUnit->name, true) ?>
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>

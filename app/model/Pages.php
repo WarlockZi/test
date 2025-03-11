@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pages extends Model
 {
-	public $timestamps = true;
+    public $timestamps = true;
 
-	protected $fillable = [
+    protected $fillable = [
         'name',
-		'seo_title',
+        'seo_title',
         'seo_description',
         'seo_keywords',
         'content'
-	];
+    ];
 
 }

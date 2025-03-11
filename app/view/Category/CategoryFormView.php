@@ -71,13 +71,12 @@ class CategoryFormView
                         ->required()
                         ->get()
                 )
-
                 ->field(
                     ItemFieldBuilder::build('show_front', $category)
                         ->name('Показывать на главоной')
                         ->html(
                             CheckboxBuilder::build()
-                                ->field('show_front',$category->show_front)
+                                ->field('show_front', $category->show_front)
                                 ->get()
                         )
                         ->get()
@@ -86,7 +85,7 @@ class CategoryFormView
                     ItemFieldBuilder::build('category_id', $category)
                         ->name('Принадлежит')
                         ->html(
-                            self::selectorByField(['1s_category_id'=>$category['1s_category_id']])
+                            self::selectorByField(['1s_category_id' => $category['1s_category_id']])
                         )
                         ->get()
                 )
@@ -170,6 +169,7 @@ class CategoryFormView
             ->class('categories')
             ->get();
     }
+
     public static function categorySelector(Category $category): string
     {
         $tree1 = TreeOptionsBuilder::build(
@@ -201,6 +201,7 @@ class CategoryFormView
             ->class('categories')
             ->get();
     }
+
     public static function productFilterSelector(array $req): string
     {
         $selected = $req['category'] ?? 0;

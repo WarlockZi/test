@@ -1,6 +1,6 @@
 <header class="burger">
-    <? include_once ROOT. '/app/view/share/adminPanel/adminPanel.php'; ?>
-	<div class="info" itemscope itemtype="https://schema.org/Organization">
+    <? include_once ROOT . '/app/view/share/adminPanel/adminPanel.php'; ?>
+    <div class="info" itemscope itemtype="https://schema.org/Organization">
 
         <div class="column none">
             <h3>Компания</h3>
@@ -13,7 +13,7 @@
         <?php include 'call_me.php'; ?>
         <?php include 'user_menu.php'; ?>
 
-	</div>
+    </div>
 
-	<?=	$blueRibbon; ?>
+    <?= $blueRibbon; ?>
 </header>

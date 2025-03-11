@@ -20,9 +20,9 @@ interface RepositoryInterface
      *
      * @param string $name
      *
+     * @return string|null
      * @throws \InvalidArgumentException
      *
-     * @return string|null
      */
     public function get(string $name);
 
@@ -32,9 +32,9 @@ interface RepositoryInterface
      * @param string $name
      * @param string $value
      *
+     * @return bool
      * @throws \InvalidArgumentException
      *
-     * @return bool
      */
     public function set(string $name, string $value);
 
@@ -43,9 +43,9 @@ interface RepositoryInterface
      *
      * @param string $name
      *
+     * @return bool
      * @throws \InvalidArgumentException
      *
-     * @return bool
      */
     public function clear(string $name);
 }

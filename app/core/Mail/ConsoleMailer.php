@@ -2,7 +2,6 @@
 
 namespace app\core\Mail;
 
-use app\core\FS;
 use app\Repository\MailConsoleRepository;
 use Throwable;
 
@@ -18,7 +17,7 @@ class ConsoleMailer implements Mailer
     {
     }
 
-    public function send(string $function='', array $props=[]): bool
+    public function send(string $function = '', array $props = []): bool
     {
         list($path, $to, $subj, $body, $headers) = MailConsoleRepository::$function($props);
 

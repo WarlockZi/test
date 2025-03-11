@@ -67,7 +67,7 @@ class Table
 
     public function relation(string $relation, string $relationType): static
     {
-        $this->dataRelation      = "data-relation='$relation'";
+        $this->dataRelation     = "data-relation='$relation'";
         $this->dataRelationType = "data-relationType='$relationType'";
         return $this;
     }
@@ -123,7 +123,7 @@ class Table
         if (!$this->addButton) return '';
         $str = '';
         foreach ($this->columns as $field => $column) {
-            if ($field==='del') continue;
+            if ($field === 'del') continue;
 
             $str .= "<div hidden {$column->class} " .
                 $column->dataField .

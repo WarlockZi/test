@@ -1,9 +1,13 @@
 {
-  "plugins": ["@babel/syntax-dynamic-import",
-    ["babel-plugin-root-import", {
-      "rootPathSuffix": "./public/src",
-      "rootPathPrefix": "@"
-    }]
+  "plugins": [
+    "@babel/syntax-dynamic-import",
+    [
+      "babel-plugin-root-import",
+      {
+        "rootPathSuffix": "./public/src",
+        "rootPathPrefix": "@"
+      }
+    ]
   ],
   "presets": [
     [

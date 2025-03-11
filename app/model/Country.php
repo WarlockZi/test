@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $fillable = [
-		'name',
-	];
+    protected $fillable = [
+        'name',
+    ];
 
-	public function manufacturers()
-	{
-		return $this->hasMany(manufacturer::class);
-	}
+    public function manufacturers()
+    {
+        return $this->hasMany(manufacturer::class);
+    }
 
 
 }

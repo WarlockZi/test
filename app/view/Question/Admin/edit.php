@@ -7,25 +7,25 @@ use \app\view\Question\QuestionView;
 ?>
 
 
-	<div class="test-edit-wrapper">
+<div class="test-edit-wrapper">
 
-		 <? include ROOT . '/app/view/Test/test_head.php'; ?>
+    <? include ROOT . '/app/view/Test/test_head.php'; ?>
 
-		<div class="test-edit__cont">
+    <div class="test-edit__cont">
 
-				<?= AccordionView::testEdit() ;
-						$test = QuestionView::getEditContent($test);
-						if ($test):
-				?>
-							<?= $test;?>
+        <?= AccordionView::testEdit();
+        $test = QuestionView::getEditContent($test);
+        if ($test):
+            ?>
+            <?= $test; ?>
 
 
-				<?else:?>
-							<div class=''>Выберите тест для редактирования</div>
-				<?endif;?>
+        <? else:?>
+            <div class=''>Выберите тест для редактирования</div>
+        <? endif; ?>
 
-		</div>
-	</div>
+    </div>
+</div>
 
 
 

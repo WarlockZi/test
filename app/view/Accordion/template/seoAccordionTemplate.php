@@ -108,171 +108,380 @@
 </ul>
 
 
-
 <style>
 
     ul.mtree {
-           opacity: 0;
-       margin-left: 0;
-       padding: 1.2em;
-       ul {
-           margin-left: 1em; // Set default indent level (or set 0)
-       }
+        opacity: 0;
+        margin-left: 0;
+        padding: 1.2em;
 
-       li {
-           list-style: none; // Lets remove default bullets for all elements
-       }
+        ul {
+            margin-left: 1em;
+        / / Set default indent level (or set 0)
+        }
 
-       a {
-           @extend %mtree-transition;
-           display: block;
-       }
+        li {
+            list-style: none;
+        / / Lets remove default bullets for all elements
+        }
 
-       li.mtree-node {
-       > a { font-weight: bold; }
-       }
+        a {
+            @extend %mtree-transition;
+            display: block;
+        }
 
-       li.mtree-open {}
-       li.mtree-closed {}
-       ul.mtree-level-1 {
-       }
-           ul.mtree-level-2 { }
-           ul.mtree-level-3 { }
+        li.mtree-node {
+            > a {
+                font-weight: bold;
+            }
+        }
 
-       li.mtree-active {
+        li.mtree-open {
+        }
 
-       }
-       }
+        li.mtree-closed {
+        }
 
-    %mtree-transition {
-         -webkit-transition: all 300ms ease-out;
-         -moz-transition: all 300ms ease-out;
-         -ms-transition: all 300ms ease-out;
-         -o-transition: all 300ms ease-out;
-         transition: all 300ms ease-out;
-     }
+        ul.mtree-level-1 {
+        }
+
+        ul.mtree-level-2 {
+        }
+
+        ul.mtree-level-3 {
+        }
+
+        li.mtree-active {
+
+        }
+    }
+
+    %
+    mtree-transition {
+        -webkit-transition: all 300ms ease-out;
+        -moz-transition: all 300ms ease-out;
+        -ms-transition: all 300ms ease-out;
+        -o-transition: all 300ms ease-out;
+        transition: all 300ms ease-out;
+    }
 
 
     /*// bubba skin*/
-       ul.mtree.bubba {
-           ul {margin-left:0;}
-           ul li { font-size: .9em; }
-           li.mtree-node > a:after {content: '›'; margin-left:.5em; font-weight: normal; }
-           li.mtree-node > a { font-weight: bold; text-transform: upperCase;}
-           > li {border-bottom: 1px solid #DDD;}
-           > li:last-child {border-bottom: none;}
-           li:last-child > a {border: none; }
-           > li.mtree-open > a { background: #DDD; }
-           li > a:hover { background: #DDD;}
-           li.mtree-active > a { background: #FFC000; color: #FFF; }
-           $indent: 1em;
-           a { padding: 7px 0px 7px $indent; }
-           li li > a { padding-left: $indent*2; }
-           li li li > a { padding-left: $indent*3; }
-           li li li li > a { padding-left: $indent*4; }
-           li li li li li > a { padding-left: $indent*5; }
-       }
+    ul.mtree.bubba {
+        ul {
+            margin-left: 0;
+        }
+
+        ul li {
+            font-size: .9em;
+        }
+
+        li.mtree-node > a:after {
+            content: '›';
+            margin-left: .5em;
+            font-weight: normal;
+        }
+
+        li.mtree-node > a {
+            font-weight: bold;
+            text-transform: upperCase;
+        }
+
+        > li {
+            border-bottom: 1px solid #DDD;
+        }
+
+        > li:last-child {
+            border-bottom: none;
+        }
+
+        li:last-child > a {
+            border: none;
+        }
+
+        > li.mtree-open > a {
+            background: #DDD;
+        }
+
+        li > a:hover {
+            background: #DDD;
+        }
+
+        li.mtree-active > a {
+            background: #FFC000;
+            color: #FFF;
+        }
+
+        $ indent: 1em;
+
+        a {
+            padding: 7px 0px 7px $ indent;
+        }
+
+        li li > a {
+            padding-left: $ indent *2;
+        }
+
+        li li li > a {
+            padding-left: $ indent *3;
+        }
+
+        li li li li > a {
+            padding-left: $ indent *4;
+        }
+
+        li li li li li > a {
+            padding-left: $ indent *5;
+        }
+    }
 
     /*// skinny skin*/
-       ul.mtree.skinny {
-           li { font-size: .9em; }
-           a { padding: 0px 18px; color: #555; }
-           a:hover { text-decoration: underline; }
-           li.mtree-node:before { float: left; margin-left: .5em; zoom: .8; margin-top: .1em; color: #777;}
-           li.mtree-open:before { content: '-'; }
-           li.mtree-closed:before { content: '+'; }
-           ul > li:first-child { margin-top: .1em; }
-           ul > li:last-child { margin-bottom: .3em; }
-           ul a {color:#666;}
-       }
+    ul.mtree.skinny {
+        li {
+            font-size: .9em;
+        }
+
+        a {
+            padding: 0px 18px;
+            color: #555;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        li.mtree-node:before {
+            float: left;
+            margin-left: .5em;
+            zoom: .8;
+            margin-top: .1em;
+            color: #777;
+        }
+
+        li.mtree-open:before {
+            content: '-';
+        }
+
+        li.mtree-closed:before {
+            content: '+';
+        }
+
+        ul > li:first-child {
+            margin-top: .1em;
+        }
+
+        ul > li:last-child {
+            margin-bottom: .3em;
+        }
+
+        ul a {
+            color: #666;
+        }
+    }
 
     /*// transit skin*/
-       ul.mtree.transit {
-           background: #111;
-           ul {margin-left: 0;}
-           ul > li {font-size:.9em; }
-           li.mtree-node {position:relative;}
-           li.mtree-node > a:before { color:#CCC; font-weight:normal; position: absolute; right: 20px; }
-           li.mtree-open > a:before { content: '-';}
-           li.mtree-closed > a:before { content: '+'; }
-           ul > li:first-child { margin-top: 1px; }
-           li.mtree-open > a {background: #222; }
-           li > a:hover, li.mtree-active > a {background: #333; color: #FFF; }
-           li.mtree-node > ul > li:last-child { margin-bottom: .5em; padding-bottom: .5em; border-bottom: 1px solid #333;}
-           li.mtree-node:last-child > ul > li:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none;}
-           $indent: .8em;
-           a { padding: 5px 0px 5px $indent; color: #CCC; }
-           li li > a { padding-left: $indent*2; }
-           li li li > a { padding-left: $indent*3; }
-           li li li li > a { padding-left: $indent*4; }
-           li li li li li > a { padding-left: $indent*5; }
-       }
+    ul.mtree.transit {
+        background: #111;
+
+        ul {
+            margin-left: 0;
+        }
+
+        ul > li {
+            font-size: .9em;
+        }
+
+        li.mtree-node {
+            position: relative;
+        }
+
+        li.mtree-node > a:before {
+            color: #CCC;
+            font-weight: normal;
+            position: absolute;
+            right: 20px;
+        }
+
+        li.mtree-open > a:before {
+            content: '-';
+        }
+
+        li.mtree-closed > a:before {
+            content: '+';
+        }
+
+        ul > li:first-child {
+            margin-top: 1px;
+        }
+
+        li.mtree-open > a {
+            background: #222;
+        }
+
+        li > a:hover, li.mtree-active > a {
+            background: #333;
+            color: #FFF;
+        }
+
+        li.mtree-node > ul > li:last-child {
+            margin-bottom: .5em;
+            padding-bottom: .5em;
+            border-bottom: 1px solid #333;
+        }
+
+        li.mtree-node:last-child > ul > li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        $ indent: .8em;
+
+        a {
+            padding: 5px 0px 5px $ indent;
+            color: #CCC;
+        }
+
+        li li > a {
+            padding-left: $ indent *2;
+        }
+
+        li li li > a {
+            padding-left: $ indent *3;
+        }
+
+        li li li li > a {
+            padding-left: $ indent *4;
+        }
+
+        li li li li li > a {
+            padding-left: $ indent *5;
+        }
+    }
 
     /*// jet skin*/
-       ul.mtree.jet {
-           ul { margin-left: 0; }
-           li { margin-bottom: 1px; }
-           li:last-child { margin-bottom: 0px; }
-           li:first-child { margin-top: 1px; }
-           li.mtree-active a { background: #E3E3E3; }
-           li.mtree-active li:last-child > a {border-radius: 0px 0px 3px 3px;}
-           li.mtree-active > a { background: #008cba; color:#FFF; border-radius: 3px 3px 0px 0px;}
-           li > a:hover { background: #FFC000; color: #FFF;}
-           $indent: 1em;
-           a { padding: 5px 0px 5px $indent; }
-           li li > a { padding-left: $indent*2; }
-           li li li > a { padding-left: $indent*3; }
-           li li li li > a { padding-left: $indent*4; }
-           li li li li li > a { padding-left: $indent*5; }
-       }
+    ul.mtree.jet {
+        ul {
+            margin-left: 0;
+        }
+
+        li {
+            margin-bottom: 1px;
+        }
+
+        li:last-child {
+            margin-bottom: 0px;
+        }
+
+        li:first-child {
+            margin-top: 1px;
+        }
+
+        li.mtree-active a {
+            background: #E3E3E3;
+        }
+
+        li.mtree-active li:last-child > a {
+            border-radius: 0px 0px 3px 3px;
+        }
+
+        li.mtree-active > a {
+            background: #008cba;
+            color: #FFF;
+            border-radius: 3px 3px 0px 0px;
+        }
+
+        li > a:hover {
+            background: #FFC000;
+            color: #FFF;
+        }
+
+        $ indent: 1em;
+
+        a {
+            padding: 5px 0px 5px $ indent;
+        }
+
+        li li > a {
+            padding-left: $ indent *2;
+        }
+
+        li li li > a {
+            padding-left: $ indent *3;
+        }
+
+        li li li li > a {
+            padding-left: $ indent *4;
+        }
+
+        li li li li li > a {
+            padding-left: $ indent *5;
+        }
+    }
 
     /*// nix skin / below just reverts to default list styles.*/
-                  ul.mtree.nix {
-                      background: none;
-                      a {display: inline;}
-                      ul { margin-left: 1em; }
-                      ul > li { list-style-position: inside; }
-                      li {list-style: disc;}
-                  }
+    ul.mtree.nix {
+        background: none;
 
+        a {
+            display: inline;
+        }
+
+        ul {
+            margin-left: 1em;
+        }
+
+        ul > li {
+            list-style-position: inside;
+        }
+
+        li {
+            list-style: disc;
+        }
+    }
 
 
     /*// ** DEMO STUFF ***/
     /*// disregard this ...*/
-       .mtree-demo {
-           .mtree {
-               background: #EEE;
-               margin: 20px auto;
-               max-width: 320px;
-               border-radius: 3px;
-           }
-       }
+    .mtree-demo {
+        .mtree {
+            background: #EEE;
+            margin: 20px auto;
+            max-width: 320px;
+            border-radius: 3px;
+        }
+    }
 
     /*// Skin selector for demo*/
-       .mtree-skin-selector {
-           text-align: center;
-           background: #EEE;
-           padding: 10px 0 15px;
-           li {
-               display: inline-block;
-               float: none;
-           }
-           button {
-               padding: 5px 10px;
-               margin-bottom: 1px;
-               background: #BBB;
-               &:hover {
-                   background: #999;
-               }
-               &.active {
-                   background: #999;
-                   font-weight: bold;
-               }
-               &.csl.active {
-                   background: #FFC000;
-               }
-           }
-       }
+    .mtree-skin-selector {
+        text-align: center;
+        background: #EEE;
+        padding: 10px 0 15px;
+
+        li {
+            display: inline-block;
+            float: none;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin-bottom: 1px;
+            background: #BBB;
+
+            &:hover {
+                background: #999;
+            }
+
+            &.active {
+                background: #999;
+                font-weight: bold;
+            }
+
+            &.csl.active {
+                background: #FFC000;
+            }
+        }
+    }
 </style>
 
 <script>
@@ -283,7 +492,7 @@
    ;(function ($, window, document, undefined) {
 
       // Only apply if mtree list exists
-      if($('ul.mtree').length) {
+      if ($('ul.mtree').length) {
 
 
          // Settings
@@ -295,22 +504,26 @@
 
 
          // Set initial styles
-         $('.mtree ul').css({'overflow':'hidden', 'height': (collapsed) ? 0 : 'auto', 'display': (collapsed) ? 'none' : 'block' });
+         $('.mtree ul').css({
+            'overflow': 'hidden',
+            'height': (collapsed) ? 0 : 'auto',
+            'display': (collapsed) ? 'none' : 'block',
+         });
 
          // Get node elements, and add classes for styling
          var node = $('.mtree li:has(ul)');
-         node.each(function(index, val) {
-            $(this).children(':first-child').css('cursor', 'pointer')
+         node.each(function (index, val) {
+            $(this).children(':first-child').css('cursor', 'pointer');
             $(this).addClass('mtree-node mtree-' + ((collapsed) ? 'closed' : 'open'));
             $(this).children('ul').addClass('mtree-level-' + ($(this).parentsUntil($('ul.mtree'), 'ul').length + 1));
          });
 
          // Set mtree-active class on list items for last opened element
-         $('.mtree li > *:first-child').on('click.mtree-active', function(e){
-            if($(this).parent().hasClass('mtree-closed')) {
+         $('.mtree li > *:first-child').on('click.mtree-active', function (e) {
+            if ($(this).parent().hasClass('mtree-closed')) {
                $('.mtree-active').not($(this).parent()).removeClass('mtree-active');
                $(this).parent().addClass('mtree-active');
-            } else if($(this).parent().hasClass('mtree-open')){
+            } else if ($(this).parent().hasClass('mtree-open')) {
                $(this).parent().removeClass('mtree-active');
             } else {
                $('.mtree-active').not($(this).parent()).removeClass('mtree-active');
@@ -319,33 +532,33 @@
          });
 
          // Set node click elements, preferably <a> but node links can be <span> also
-         node.children(':first-child').on('click.mtree', function(e){
+         node.children(':first-child').on('click.mtree', function (e) {
 
             // element vars
             var el = $(this).parent().children('ul').first();
             var isOpen = $(this).parent().hasClass('mtree-open');
 
             // close other elements on same level if opening
-            if((close_same_level || $('.csl').hasClass('active')) && !isOpen) {
+            if ((close_same_level || $('.csl').hasClass('active')) && !isOpen) {
                var close_items = $(this).closest('ul').children('.mtree-open').not($(this).parent()).children('ul');
 
                // Velocity.js
-               if($.Velocity) {
+               if ($.Velocity) {
                   close_items.velocity({
-                     height: 0
+                     height: 0,
                   }, {
                      duration: duration,
                      easing: easing,
                      display: 'none',
                      delay: 100,
-                     complete: function(){
-                        setNodeClass($(this).parent(), true)
-                     }
+                     complete: function () {
+                        setNodeClass($(this).parent(), true);
+                     },
                   });
 
                   // jQuery fallback
                } else {
-                  close_items.delay(100).slideToggle(duration, function(){
+                  close_items.delay(100).slideToggle(duration, function () {
                      setNodeClass($(this).parent(), true);
                   });
                }
@@ -355,22 +568,22 @@
             el.css({'height': 'auto'});
 
             // listAnim: animate child elements when opening
-            if(!isOpen && $.Velocity && listAnim) el.find(' > li, li.mtree-open > ul > li').css({'opacity':0}).velocity('stop').velocity('list');
+            if (!isOpen && $.Velocity && listAnim) el.find(' > li, li.mtree-open > ul > li').css({'opacity': 0}).velocity('stop').velocity('list');
 
             // Velocity.js animate element
-            if($.Velocity) {
+            if ($.Velocity) {
                el.velocity('stop').velocity({
                   //translateZ: 0, // optional hardware-acceleration is automatic on mobile
-                  height: isOpen ? [0, el.outerHeight()] : [el.outerHeight(), 0]
-               },{
+                  height: isOpen ? [0, el.outerHeight()] : [el.outerHeight(), 0],
+               }, {
                   queue: false,
                   duration: duration,
                   easing: easing,
                   display: isOpen ? 'none' : 'block',
                   begin: setNodeClass($(this).parent(), isOpen),
-                  complete: function(){
-                     if(!isOpen) $(this).css('height', 'auto');
-                  }
+                  complete: function () {
+                     if (!isOpen) $(this).css('height', 'auto');
+                  },
                });
 
                // jQuery fallback animate element
@@ -385,7 +598,7 @@
 
          // Function for updating node class
          function setNodeClass(el, isOpen) {
-            if(isOpen) {
+            if (isOpen) {
                el.removeClass('mtree-open').addClass('mtree-closed');
             } else {
                el.removeClass('mtree-closed').addClass('mtree-open');
@@ -393,23 +606,23 @@
          }
 
          // List animation sequence
-         if($.Velocity && listAnim) {
+         if ($.Velocity && listAnim) {
             $.Velocity.Sequences.list = function (element, options, index, size) {
                $.Velocity.animate(element, {
-                  opacity: [1,0],
-                  translateY: [0, -(index+1)]
+                  opacity: [1, 0],
+                  translateY: [0, -(index + 1)],
                }, {
-                  delay: index*(duration/size/2),
+                  delay: index * (duration / size / 2),
                   duration: duration,
-                  easing: easing
+                  easing: easing,
                });
             };
          }
 
          // Fade in mtree after classes are added.
          // Useful if you have set collapsed = true or applied styles that change the structure so the menu doesn't jump between states after the function executes.
-         if($('.mtree').css('opacity') == 0) {
-            if($.Velocity) {
+         if ($('.mtree').css('opacity') == 0) {
+            if ($.Velocity) {
                $('.mtree').css('opacity', 1).children().css('opacity', 0).velocity('list');
             } else {
                $('.mtree').show(200);
@@ -420,28 +633,28 @@
 
 
    /* DEMO STUFF */
-   $(document).ready(function() {
+   $(document).ready(function () {
       var mtree = $('ul.mtree');
 
       // Skin selector for demo
       mtree.wrap('<div class=mtree-demo></div>');
-      var skins = ['bubba','skinny','transit','jet','nix'];
+      var skins = ['bubba', 'skinny', 'transit', 'jet', 'nix'];
       mtree.addClass(skins[0]);
       $('body').prepend('<div class="mtree-skin-selector"><ul class="button-group radius"></ul></div>');
       var s = $('.mtree-skin-selector');
-      $.each(skins, function(index, val) {
+      $.each(skins, function (index, val) {
          s.find('ul').append('<li><button class="small skin">' + val + '</button></li>');
       });
       s.find('ul').append('<li><button class="small csl active">Close Same Level</button></li>');
-      s.find('button.skin').each(function(index){
-         $(this).on('click.mtree-skin-selector', function(){
+      s.find('button.skin').each(function (index) {
+         $(this).on('click.mtree-skin-selector', function () {
             s.find('button.skin.active').removeClass('active');
             $(this).addClass('active');
             mtree.removeClass(skins.join(' ')).addClass(skins[index]);
          });
-      })
+      });
       s.find('button:first').addClass('active');
-      s.find('.csl').on('click.mtree-close-same-level', function(){
+      s.find('.csl').on('click.mtree-close-same-level', function () {
          $(this).toggleClass('active');
       });
    });

@@ -5,21 +5,21 @@ namespace app\controller;
 use app\model\Promotion;
 use app\Repository\PromotionRepository;
 
-class PromotionController Extends AppController
+class PromotionController extends AppController
 {
-	public string $model = Promotion::class;
+    public string $model = Promotion::class;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function actionIndex():void
-	{
-		$promotions = PromotionRepository::product();
+    public function actionIndex(): void
+    {
+        $promotions = PromotionRepository::product();
 
-		$this->setVars(compact('promotions'));
-		$this->assets->setMeta("Акции", "Акции", "Акции");
-	}
+        $this->setVars(compact('promotions'));
+        $this->assets->setMeta("Акции", "Акции", "Акции");
+    }
 
 }

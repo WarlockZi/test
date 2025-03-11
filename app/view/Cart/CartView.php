@@ -8,9 +8,21 @@ use app\model\Unit;
 class CartView
 {
     private FS $fs;
+
     public function __construct()
     {
         $this->fs = new FS(__DIR__);
+    }
+
+    protected static function getOptions(Unit $unit, int $selecedId): string
+    {
+        $id         = $unit->id;
+        $seleced    = $selecedId === $id ? "selected='selected'" : '';
+        $name       = $unit->name;
+        $multiplier = $unit->pivot->multiplier ?? 1;
+        $html       = "<option data-multiplier='{$multiplier}' data-id='{$id}' {$seleced}>{$name}</option>";
+
+        return $html;
     }
 
     public function priceWithCurrencyUnit()
@@ -26,14 +38,4 @@ class CartView
         }
         return 'цена - не определена';
     }
-
-    protected static function getOptions(Unit $unit, int $selecedId): string
-    {
-        $id         = $unit->id;
-        $seleced    = $selecedId === $id ? "selected='selected'" : '';
-        $name       = $unit->name;
-        $multiplier = $unit->pivot->multiplier ?? 1;
-        $html       = "<option data-multiplier='{$multiplier}' data-id='{$id}' {$seleced}>{$name}</option>";
-
-        return $html;
-    }}
+}

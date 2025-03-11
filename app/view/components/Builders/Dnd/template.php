@@ -4,12 +4,12 @@ use app\core\Icon;
 
 ?>
 <div
-		dnd
-	<?= $dnd->path; ?>
-	<?= $dnd->class; ?>
-	<?= $dnd->tooltip; ?>
+        dnd
+    <?= $dnd->path; ?>
+    <?= $dnd->class; ?>
+    <?= $dnd->tooltip; ?>
 >
-	<?= Icon::download() ?>
+    <?= Icon::download() ?>
 </div>
 
 

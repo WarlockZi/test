@@ -1,9 +1,9 @@
-import {getPhpSession} from "@src/common.js";
+import { getPhpSession } from "@src/common.js";
 
 export default class ChatLocalStorage {
-   constructor() {
-      if (!localStorage.getItem('vitex-chat-id')){
-         localStorage.setItem('vitex-chat-id', getPhpSession());
-      }
-   }
+  constructor() {
+    if (!localStorage.getItem("vitex-chat-id")) {
+      localStorage.setItem("vitex-chat-id", getPhpSession());
+    }
+  }
 }

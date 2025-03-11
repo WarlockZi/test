@@ -13,13 +13,13 @@
 
     <div class="promotion-price red mb-5">
         <div class=" price-for-unit new-price"><?= $promotionNewPrice ?></div>
-            <span>₽ /  от</span>
+        <span>₽ /  от</span>
 
-            <div class="unit">
+        <div class="unit">
 
-                <span class="unit-name"><?= $promotion->count; ?></span>
-                <span><?= $unit->name ?></span>
-            </div>
+            <span class="unit-name"><?= $promotion->count; ?></span>
+            <span><?= $unit->name ?></span>
+        </div>
 
     </div>
 
