@@ -1,2 +1,0 @@
-import{$ as r,post as a}from"./common-CWUZwUnI.js";import{a as c,D as t}from"./search-Btw97w8w.js";class n{constructor(){const s=r("[data-compare]").first();if(!s)return!1;s[c]("click",this.handleClick.bind(this))}handleClick({target:s}){s.classList.contains("compare")&&this.remove(s)}async remove(s){const o=s.closest(".column");(await a("/compare/del",this.productDTO(s)))?.arr?.discompared&&o.remove()}productDTO(s){const o=new t(s);return o.fields={product_id:s.closest("[data-1sid]").dataset["1sid"]},o}}export{n as default};
-//# sourceMappingURL=Compare-CdmU6XzP.js.map
