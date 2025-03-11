@@ -9,9 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= $assets->icon(); ?>
 
-    <script type="module" src="https://localhost:5173/@vite/client"></script>
-    <script type="module" src="https://localhost:5173/Admin/admin.js"></script>
-    <!--    --><?php //= $assets->getCss() ?>
+<!--    <script type="module" src="https://localhost:5173/@vite/client"></script>-->
+<!--    <script type="module" src="https://localhost:5173/Admin/admin.js"></script>-->
+        <?= $assets->getCss() ?>
 
 </head>
 
