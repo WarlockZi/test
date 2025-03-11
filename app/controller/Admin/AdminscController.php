@@ -4,25 +4,24 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\core\Auth;
+use app\core\IUser;
 
 
 class AdminscController extends AppController
 {
     public function __construct()
     {
-        $this->isEmployee();
+        $this->checkPermition(Auth::getUser());
         parent::__construct();
 
     }
 
-    protected function isEmployee()
+    protected function checkPermition(IUser $user): void
     {
-        $user = Auth::getUser();
-        if (!$user?->role->firstWhere('name', 'role_employee')) {
-            if (!$user->role->firstWhere('name', 'role_admin')) {
-                header("Location:/");
-                exit();
-            }
+        $roles = $user->role()->get();
+        if (!$roles->contains('name','=','role_admin')
+            || !$roles->contains('name','=','role_employee')) {
+            header("Location:/");
         }
     }
 

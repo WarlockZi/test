@@ -2,7 +2,6 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
 use app\core\Auth;
 use app\core\Response;
 use app\model\User;
