@@ -27,3 +27,4 @@ jobs:
             cd ${{ secrets.SERVER_PATH }}
             git pull dev
             git pull master
+            node -v
