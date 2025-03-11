@@ -112,10 +112,10 @@ class Helpers
         return $urls;
     }
 
-    function getManifest(): array
+    function getManifest(): array|null
     {
         $content = file_get_contents($this->manifestPath);
-        return json_decode($content, true);
+        return json_decode($content, true)??null;
     }
 
     public function getCss(): string
