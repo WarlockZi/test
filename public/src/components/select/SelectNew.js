@@ -34,6 +34,17 @@ export default class SelectNew {
     return this;
   }
 
+<<<<<<< HEAD
+=======
+  get selectedOption() {
+    return this.options.find((option) => option.selected);
+  }
+
+  get selectedOptionIndex() {
+    return this.options.indexOf(this.selectedOption);
+  }
+
+>>>>>>> 34ae65b937a2b63dfa5b35d77ee96d0c5a192494
   getFormattedOptions(options) {
     return [...options].map((option) => {
       const li = new createElement()
@@ -134,6 +145,7 @@ export default class SelectNew {
     }
   }
 
+<<<<<<< HEAD
   get selectedOption() {
     return this.options.find((option) => option.selected);
   }
@@ -142,6 +154,8 @@ export default class SelectNew {
     return this.options.indexOf(this.selectedOption);
   }
 
+=======
+>>>>>>> 34ae65b937a2b63dfa5b35d77ee96d0c5a192494
   selectValue(value) {
     const next = this.options.find((option) => {
       return option.value === value;

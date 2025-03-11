@@ -7,6 +7,10 @@ import { qs } from "../constants";
 import scroll from "../share/scroll/scroll.js";
 import headerMenu from "../components/header/show-front-menu.js";
 // import '../share/chat/Chat';
+<<<<<<< HEAD
+=======
+import Chat from "@src/share/chat/chat.js"; //не удалять - стили пропадут
+>>>>>>> 34ae65b937a2b63dfa5b35d77ee96d0c5a192494
 import IntObserver from "../share/scroll/IntObserver.js";
 import MobileMenu from "@src/components/header/mobile-menu.js";
 import Modal from "@src/components/Modal/modal.js";
@@ -19,7 +23,10 @@ import ChatLocalStorage from "@src/share/chatLocalStorage/ChatLocalStorage.js";
 import Feedback from "@src/Feedback/Feedback.js";
 import CallMe from "@src/CallMe/CallMe.js";
 import setLocalStorageCartId from "@src/share/cart_id/cart_id.js";
+<<<<<<< HEAD
 import "vite/modulepreload-polyfill";
+=======
+>>>>>>> 34ae65b937a2b63dfa5b35d77ee96d0c5a192494
 
 window.YM = YM;
 document.addEventListener("DOMContentLoaded", async function () {
