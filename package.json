@@ -39,7 +39,7 @@
     "typescript": "^5.4.5",
     "vite": "^6.2.0",
     "vite-plugin-live-reload": "^3.0.2",
-    "vite-plugin-mkcert": "^1.17.5",
+    "vite-plugin-mkcert": "^1.17.7",
     "vite-plugin-node-polyfills": "^0.3.1",
     "vite-plugin-php": "^1.0.11"
   },

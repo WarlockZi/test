@@ -1,6 +1,6 @@
 import {defineConfig, loadEnv} from 'vite';
 import liveReload from 'vite-plugin-live-reload';
-import basicSsl from '@vitejs/plugin-basic-ssl';
+import mkcert from 'vite-plugin-mkcert';
 import path from 'node:path';
 import { NodePackageImporter } from 'sass-embedded';
 
@@ -9,7 +9,7 @@ export default defineConfig(async ({command, mode}) => {
       console.log('dev - ' + env.VITE_DEV);
 
       const base = env.VITE_DEV
-         ? '/'
+         ? ''
          : './';
 
       return {
@@ -17,6 +17,7 @@ export default defineConfig(async ({command, mode}) => {
          base,
 
          server: {
+            https:true,
             cors: true,
             strictPort: true,
             port: env.VITE_PORT,
@@ -39,7 +40,7 @@ export default defineConfig(async ({command, mode}) => {
             },
          },
          plugins: [
-            basicSsl(),
+            mkcert(),
             liveReload([
                // __dirname + '/(app|config|views)/**/*.php',
                __dirname + '/public/**/*.php',

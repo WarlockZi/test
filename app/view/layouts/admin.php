@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
-<!--ADMI N-LAYOUT-->
+<!--ADMIN-LAYOUT-->
 <head>
     <meta name="phpSession" content="<?= $_SESSION['phpSession'] ?? ''; ?>">
     <meta name="robots" content="noindex,nofollow"/>

@@ -72,9 +72,7 @@ class SyncController extends AdminscController
     public function actionLoadCategories(): void
     {
         $this->service->LoadCategories();
-        if (DEV) {
-            Response::exitWithPopup('Categories loaded');
-        }
+        Response::exitWithPopup('Categories loaded');
     }
 
     public function actionLoadProducts(): void

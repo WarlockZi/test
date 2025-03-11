@@ -20,7 +20,7 @@ class AdminscController extends AppController
     {
         $roles = $user->role()->get();
         if (!$roles->contains('name','=','role_admin')
-            || !$roles->contains('name','=','role_employee')) {
+            && !$roles->contains('name','=','role_employee')) {
             header("Location:/");
         }
     }
