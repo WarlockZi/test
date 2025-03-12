@@ -5,7 +5,7 @@
         <div class="row">
             <a href="/adminsc/report/filter">фильтры</a>
             <a href="/adminsc/cache/clear">Очистить кэш</a>
-            <label>Log bar
+            <label class="item">Log bar
                 <input type="checkbox">
             </label>
 

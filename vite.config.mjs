@@ -45,6 +45,7 @@ export default defineConfig(async ({command, mode}) => {
                // __dirname + '/(app|config|views)/**/*.php',
                __dirname + '/public/**/*.php',
                __dirname + '/app/**/*.php',
+               __dirname + '/.env',
             ]),
          ],
 

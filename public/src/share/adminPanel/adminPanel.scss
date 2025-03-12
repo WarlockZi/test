@@ -10,6 +10,12 @@
   transition: top 0.8s ease-in-out;
   z-index: 1;
 
+  .item{
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
   &.fixed {
     position: fixed;
     top: 0;

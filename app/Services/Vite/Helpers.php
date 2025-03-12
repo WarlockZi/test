@@ -24,7 +24,8 @@ class Helpers
     {
         $this->manifestPath   = ROOT . env('VITE_MANIFEST_PATH');
         $this->productionPath = env('VITE_PRODUCTION_PATH');
-        $this->devHost        = env('VITE_PROTOCOL')
+        $this->devHost        =
+            env('VITE_PROTOCOL')
             . '://'
             . env('VITE_HOST')
             . ':'
@@ -118,15 +119,15 @@ class Helpers
         return json_decode($content, true)??null;
     }
 
-    public function getCss(): string
-    {
-        return $this->css;
-    }
+//    public function getCss(): string
+//    {
+//        return $this->css;
+//    }
 
-    public function getJs(): string
-    {
-        return $this->js;
-    }
+//    public function getJs(): string
+//    {
+//        return $this->js;
+//    }
 }
 
 
