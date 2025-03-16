@@ -6,6 +6,7 @@
 /node_modules/
 /.idea/
 /.vscode
+/vendor
 /composer.phar
 /.env
 /.git

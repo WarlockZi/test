@@ -1,5 +1,5 @@
 import { $, debounce, getPhpSession, post } from "../common";
-import shippableTable from "../share/shippable/shippableUnitsTable";
+import shippableTable from "@components/shippable/shippableUnitsTable";
 import { d, qs } from "../constants";
 
 export default class toCart {

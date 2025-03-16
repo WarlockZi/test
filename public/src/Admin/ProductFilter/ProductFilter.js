@@ -8,7 +8,7 @@ export default class ProductFilter {
     if (!productsFilter) return;
     this.wrap = productsFilter;
     this.panel = productsFilter[qs](".list-filter");
-    this.url = "/adminsc/report/filter";
+    this.url = "/adminsc/report/updateFilter";
     this.wrap[ael]("click", this.handleClick.bind(this));
     this.setSelects();
   }

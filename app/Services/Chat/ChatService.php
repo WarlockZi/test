@@ -2,8 +2,6 @@
 
 namespace app\Services\Chat;
 
-use app\Services\Chat_2\Chat_2;
-
 class ChatService
 {
     public function __construct(

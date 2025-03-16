@@ -1,5 +1,5 @@
 import { ael, qa, qs } from "../constants";
-import shippableTable from "../share/shippable/shippableUnitsTable";
+import shippableTable from "@components/shippable/shippableUnitsTable";
 import MyQuill from "../components/quill/MyQuill.js";
 import { post } from "@src/common.js";
 import DTO from "@src/Admin/DTO.js";
@@ -20,7 +20,7 @@ export default class Category {
     const cardPanel = document[qs](`.card-panel`);
     if (cardPanel) {
       const { default: Card_panel } = await import(
-        "./../share/card_panel/card_panel"
+        "@components/card_panel/card_panel"
       );
       this.cardPanel = new Card_panel();
     }

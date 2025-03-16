@@ -26,7 +26,8 @@
     "monolog/monolog": "^3.7",
     "ext-memcached": "*",
     "ext-xdebug": "*",
-    "ext-imap": "*"
+    "ext-imap": "*",
+    "spatie/laravel-sitemap": "^6.4"
   },
   "config": {
     "platform-check": false

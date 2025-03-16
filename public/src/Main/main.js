@@ -1,16 +1,16 @@
 import "./main.scss";
 import "../components/header/show-front-menu1.js";
 import "../404/404.scss";
-import "../share/hoist/hoist";
+import "@components/hoist/hoist";
 import "../components/animate/animate.js";
 import { qs } from "../constants";
-import scroll from "../share/scroll/scroll.js";
+import scroll from "@components/scroll/scroll.js";
 import headerMenu from "../components/header/show-front-menu.js";
 // import '../share/chat/Chat';
 
-import Chat from "@src/share/chat/chat.js"; //не удалять - стили пропадут
+import Chat from "@components/chat/chat.js"; //не удалять - стили пропадут
 
-import IntObserver from "../share/scroll/IntObserver.js";
+import IntObserver from "@components/scroll/IntObserver.js";
 import MobileMenu from "@src/components/header/mobile-menu.js";
 import Modal from "@src/components/Modal/modal.js";
 import CartLogin from "@src/Auth/CartLogin.js";
@@ -18,10 +18,10 @@ import CatalogItem from "@src/Admin/components/catalog-item/catalog-item.js";
 import { $ } from "@src/common.js";
 import YM from "@src/Main/YM.js";
 import Search from "@src/components/search/search.js";
-import ChatLocalStorage from "@src/share/chatLocalStorage/ChatLocalStorage.js";
+import ChatLocalStorage from "@components/chatLocalStorage/ChatLocalStorage.js";
 import Feedback from "@src/Feedback/Feedback.js";
 import CallMe from "@src/CallMe/CallMe.js";
-import setLocalStorageCartId from "@src/share/cart_id/cart_id.js";
+import setLocalStorageCartId from "@components/cart_id/cart_id.js";
 
 // import "vite/modulepreload-polyfill";
 

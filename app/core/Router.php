@@ -58,11 +58,10 @@ class Router
 
         $action = $this->route->getAction();
         try {
-            if (method_exists($controller, $action)) {
-                $controller->$action();
-            } else {
-                $controller->actionNotFound();
-            }
+            method_exists($controller, $action)
+                ? $controller->$action()
+                : $controller->actionNotFound();
+
         } catch (\Throwable $exception) {
             $this->handleError($exception);
         }
