@@ -1,9 +1,7 @@
 <?php
 
 
-namespace app\view\components\card_panel;
-
-
+namespace app\view\components\cardPanel;
 use app\core\FS;
 use app\core\Icon;
 use app\model\Category;

@@ -35,7 +35,7 @@
                         <a class="category-card-a" href="<?= $child->href; ?>">
                             <?= $child->name ?>
                         </a>
-                        <?= \app\view\share\card_panel\CardPanel::categoryCardPanel($child) ?>
+                        <?= \app\view\components\cardPanel\CardPanel::categoryCardPanel($child) ?>
                     </div>
                 <?php endforeach; ?>
             </div>
