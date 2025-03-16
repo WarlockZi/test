@@ -63,6 +63,7 @@ export default defineConfig(async ({command, mode}) => {
          resolve: {
             alias: {
                '@src': `${path.resolve(__dirname, 'public', 'src')}`,
+               '@components': path.resolve(__dirname, 'public', 'src', 'components'),
             },
          },
 

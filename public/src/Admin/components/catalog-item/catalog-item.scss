@@ -145,6 +145,10 @@
       flex: 1 0 auto;
     }
 
+    [data-list='bullet'] > [contenteditable] { //for quill
+      padding: 0;
+    }
+
     .value {
       margin: var.$margin-form;
       flex: 1 0 160px;

@@ -55,13 +55,8 @@ class FilterView
         $this->toSave = $toSave;
         return $this;
     }
-//    public function selectName(string $name): FilterView
-//    {
-//        $this->name = "name='{$name}'";
-//        return $this;
-//    }
 
-    public function checkboxSave(string|null $name, bool $checked = false): FilterView
+    public function checkboxSave(string|null $name, bool $checked = false): self
     {
         $this->checkboxSave    = true;
         $this->checkboxChecked = $checked ? 'checked' : '';
@@ -69,7 +64,7 @@ class FilterView
         return $this;
     }
 
-    public function options(array|string $options): FilterView
+    public function options(array|string $options): self
     {
         $this->options = $options;
         return $this;
@@ -87,9 +82,13 @@ class FilterView
         return $this->fs->getContent('filter', $args);
     }
 
-    public function getProductFilterPanel(string $filters)
+    public function getProductFilterPanel(string $filters): string
     {
         return $this->fs->getContent('productFilter', compact('filters'));
     }
-
+    //    public function selectName(string $name): FilterView
+//    {
+//        $this->name = "name='{$name}'";
+//        return $this;
+//    }
 }

@@ -4,7 +4,7 @@ namespace app\Services\Breadcrumbs;
 
 use app\core\FS;
 use app\model\Category;
-use app\view\share\card_panel\CardPanel;
+use app\view\components\card_panel\CardPanel;
 
 class BaseBreadcrumbs
 {

@@ -1,5 +1,5 @@
 <?php $checkboxChecked =
-    (key_exists($filterName, $toSave))
+    (key_exists($filterName, $toSave) && $toSave!=="0")
         ? "checked"
         : ""; ?>
 

@@ -1,8 +1,8 @@
 import "./product.scss";
 import { zoom } from "./zoom";
-import Card_panel from "../share/card_panel/card_panel";
+import Card_panel from "@components/card_panel/card_panel";
 import { $ } from "../common";
-import shippableTable from "../share/shippable/shippableUnitsTable";
+import shippableTable from "@components/shippable/shippableUnitsTable";
 import MyQuill from "../components/quill/MyQuill.js";
 import { ael } from "@src/constants.js";
 
