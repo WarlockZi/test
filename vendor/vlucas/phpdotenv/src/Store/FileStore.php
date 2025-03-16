@@ -33,15 +33,15 @@ final class FileStore implements StoreInterface
     /**
      * Create a new file store instance.
      *
-     * @param string[] $filePaths
-     * @param bool $shortCircuit
+     * @param string[]    $filePaths
+     * @param bool        $shortCircuit
      * @param string|null $fileEncoding
      *
      * @return void
      */
     public function __construct(array $filePaths, bool $shortCircuit, ?string $fileEncoding = null)
     {
-        $this->filePaths    = $filePaths;
+        $this->filePaths = $filePaths;
         $this->shortCircuit = $shortCircuit;
         $this->fileEncoding = $fileEncoding;
     }
@@ -49,9 +49,9 @@ final class FileStore implements StoreInterface
     /**
      * Read the content of the environment file(s).
      *
-     * @return string
      * @throws \Dotenv\Exception\InvalidEncodingException|\Dotenv\Exception\InvalidPathException
      *
+     * @return string
      */
     public function read()
     {

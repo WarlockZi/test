@@ -44,17 +44,17 @@ final class StoreBuilder
     /**
      * Create a new store builder instance.
      *
-     * @param string[] $paths
-     * @param string[] $names
-     * @param bool $shortCircuit
+     * @param string[]    $paths
+     * @param string[]    $names
+     * @param bool        $shortCircuit
      * @param string|null $fileEncoding
      *
      * @return void
      */
     private function __construct(array $paths = [], array $names = [], bool $shortCircuit = false, ?string $fileEncoding = null)
     {
-        $this->paths        = $paths;
-        $this->names        = $names;
+        $this->paths = $paths;
+        $this->names = $names;
         $this->shortCircuit = $shortCircuit;
         $this->fileEncoding = $fileEncoding;
     }

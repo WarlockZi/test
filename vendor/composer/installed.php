@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '1b6ab08a953eb1cfc6e538890965069d880ec4fd',
+        'reference' => 'dda8359ceb6a82738894be70453719ff643648a6',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '1b6ab08a953eb1cfc6e538890965069d880ec4fd',
+            'reference' => 'dda8359ceb6a82738894be70453719ff643648a6',
             'dev_requirement' => false,
         ),
         'arthurkushman/php-wss' => array(
@@ -439,8 +439,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '3.0.0',
-                1 => '1.0|2.0',
+                0 => '1.0|2.0',
+                1 => '3.0.0',
             ),
         ),
         'psr/simple-cache' => array(

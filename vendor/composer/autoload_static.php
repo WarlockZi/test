@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit91999aaa44b9ba3d130847ce23721506
+class ComposerStaticInit41be56c38c00af780313cdf2feebedb4
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -237,8 +237,8 @@ class ComposerStaticInit91999aaa44b9ba3d130847ce23721506
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -294,8 +294,8 @@ class ComposerStaticInit91999aaa44b9ba3d130847ce23721506
         ),
         'Illuminate\\Support\\' => 
         array (
-            0 => __DIR__ . '/..' . '/illuminate/collections',
-            1 => __DIR__ . '/..' . '/illuminate/macroable',
+            0 => __DIR__ . '/..' . '/illuminate/macroable',
+            1 => __DIR__ . '/..' . '/illuminate/collections',
             2 => __DIR__ . '/..' . '/illuminate/support',
         ),
         'Illuminate\\Pipeline\\' => 
@@ -1574,9 +1574,9 @@ class ComposerStaticInit91999aaa44b9ba3d130847ce23721506
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit91999aaa44b9ba3d130847ce23721506::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit91999aaa44b9ba3d130847ce23721506::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit91999aaa44b9ba3d130847ce23721506::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit41be56c38c00af780313cdf2feebedb4::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit41be56c38c00af780313cdf2feebedb4::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit41be56c38c00af780313cdf2feebedb4::$classMap;
 
         }, null, ClassLoader::class);
     }

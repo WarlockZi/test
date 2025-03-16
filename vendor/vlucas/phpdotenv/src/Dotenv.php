@@ -50,51 +50,33 @@ class Dotenv
     /**
      * Create a new dotenv instance.
      *
-     * @param \Dotenv\Store\StoreInterface $store
-     * @param \Dotenv\Parser\ParserInterface $parser
-     * @param \Dotenv\Loader\LoaderInterface $loader
+     * @param \Dotenv\Store\StoreInterface           $store
+     * @param \Dotenv\Parser\ParserInterface         $parser
+     * @param \Dotenv\Loader\LoaderInterface         $loader
      * @param \Dotenv\Repository\RepositoryInterface $repository
      *
      * @return void
      */
     public function __construct(
-        StoreInterface      $store,
-        ParserInterface     $parser,
-        LoaderInterface     $loader,
+        StoreInterface $store,
+        ParserInterface $parser,
+        LoaderInterface $loader,
         RepositoryInterface $repository
-    )
-    {
-        $this->store      = $store;
-        $this->parser     = $parser;
-        $this->loader     = $loader;
+    ) {
+        $this->store = $store;
+        $this->parser = $parser;
+        $this->loader = $loader;
         $this->repository = $repository;
-    }
-
-    /**
-     * Create a new mutable dotenv instance with default repository.
-     *
-     * @param string|string[] $paths
-     * @param string|string[]|null $names
-     * @param bool $shortCircuit
-     * @param string|null $fileEncoding
-     *
-     * @return \Dotenv\Dotenv
-     */
-    public static function createMutable($paths, $names = null, bool $shortCircuit = true, ?string $fileEncoding = null)
-    {
-        $repository = RepositoryBuilder::createWithDefaultAdapters()->make();
-
-        return self::create($repository, $paths, $names, $shortCircuit, $fileEncoding);
     }
 
     /**
      * Create a new dotenv instance.
      *
      * @param \Dotenv\Repository\RepositoryInterface $repository
-     * @param string|string[] $paths
-     * @param string|string[]|null $names
-     * @param bool $shortCircuit
-     * @param string|null $fileEncoding
+     * @param string|string[]                        $paths
+     * @param string|string[]|null                   $names
+     * @param bool                                   $shortCircuit
+     * @param string|null                            $fileEncoding
      *
      * @return \Dotenv\Dotenv
      */
@@ -102,11 +84,11 @@ class Dotenv
     {
         $builder = $names === null ? StoreBuilder::createWithDefaultName() : StoreBuilder::createWithNoNames();
 
-        foreach ((array)$paths as $path) {
+        foreach ((array) $paths as $path) {
             $builder = $builder->addPath($path);
         }
 
-        foreach ((array)$names as $name) {
+        foreach ((array) $names as $name) {
             $builder = $builder->addName($name);
         }
 
@@ -118,12 +100,29 @@ class Dotenv
     }
 
     /**
+     * Create a new mutable dotenv instance with default repository.
+     *
+     * @param string|string[]      $paths
+     * @param string|string[]|null $names
+     * @param bool                 $shortCircuit
+     * @param string|null          $fileEncoding
+     *
+     * @return \Dotenv\Dotenv
+     */
+    public static function createMutable($paths, $names = null, bool $shortCircuit = true, ?string $fileEncoding = null)
+    {
+        $repository = RepositoryBuilder::createWithDefaultAdapters()->make();
+
+        return self::create($repository, $paths, $names, $shortCircuit, $fileEncoding);
+    }
+
+    /**
      * Create a new mutable dotenv instance with default repository with the putenv adapter.
      *
-     * @param string|string[] $paths
+     * @param string|string[]      $paths
      * @param string|string[]|null $names
-     * @param bool $shortCircuit
-     * @param string|null $fileEncoding
+     * @param bool                 $shortCircuit
+     * @param string|null          $fileEncoding
      *
      * @return \Dotenv\Dotenv
      */
@@ -139,10 +138,10 @@ class Dotenv
     /**
      * Create a new immutable dotenv instance with default repository.
      *
-     * @param string|string[] $paths
+     * @param string|string[]      $paths
      * @param string|string[]|null $names
-     * @param bool $shortCircuit
-     * @param string|null $fileEncoding
+     * @param bool                 $shortCircuit
+     * @param string|null          $fileEncoding
      *
      * @return \Dotenv\Dotenv
      */
@@ -156,10 +155,10 @@ class Dotenv
     /**
      * Create a new immutable dotenv instance with default repository with the putenv adapter.
      *
-     * @param string|string[] $paths
+     * @param string|string[]      $paths
      * @param string|string[]|null $names
-     * @param bool $shortCircuit
-     * @param string|null $fileEncoding
+     * @param bool                 $shortCircuit
+     * @param string|null          $fileEncoding
      *
      * @return \Dotenv\Dotenv
      */
@@ -176,10 +175,10 @@ class Dotenv
     /**
      * Create a new dotenv instance with an array backed repository.
      *
-     * @param string|string[] $paths
+     * @param string|string[]      $paths
      * @param string|string[]|null $names
-     * @param bool $shortCircuit
-     * @param string|null $fileEncoding
+     * @param bool                 $shortCircuit
+     * @param string|null          $fileEncoding
      *
      * @return \Dotenv\Dotenv
      */
@@ -198,9 +197,9 @@ class Dotenv
      *
      * @param string $content
      *
-     * @return array<string,string|null>
      * @throws \Dotenv\Exception\InvalidFileException
      *
+     * @return array<string,string|null>
      */
     public static function parse(string $content)
     {
@@ -214,9 +213,9 @@ class Dotenv
     /**
      * Read and load environment file(s).
      *
-     * @return array<string,string|null>
      * @throws \Dotenv\Exception\InvalidPathException|\Dotenv\Exception\InvalidEncodingException|\Dotenv\Exception\InvalidFileException
      *
+     * @return array<string,string|null>
      */
     public function load()
     {
@@ -228,9 +227,9 @@ class Dotenv
     /**
      * Read and load environment file(s), silently failing if no files can be read.
      *
-     * @return array<string,string|null>
      * @throws \Dotenv\Exception\InvalidEncodingException|\Dotenv\Exception\InvalidFileException
      *
+     * @return array<string,string|null>
      */
     public function safeLoad()
     {
@@ -251,7 +250,7 @@ class Dotenv
      */
     public function required($variables)
     {
-        return (new Validator($this->repository, (array)$variables))->required();
+        return (new Validator($this->repository, (array) $variables))->required();
     }
 
     /**
@@ -263,6 +262,6 @@ class Dotenv
      */
     public function ifPresent($variables)
     {
-        return new Validator($this->repository, (array)$variables);
+        return new Validator($this->repository, (array) $variables);
     }
 }

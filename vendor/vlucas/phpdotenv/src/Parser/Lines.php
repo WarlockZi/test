@@ -32,8 +32,8 @@ final class Lines
      */
     public static function process(array $lines)
     {
-        $output          = [];
-        $multiline       = false;
+        $output = [];
+        $multiline = false;
         $multilineBuffer = [];
 
         foreach ($lines as $line) {
@@ -50,8 +50,8 @@ final class Lines
     /**
      * Used to make all multiline variable process.
      *
-     * @param bool $multiline
-     * @param string $line
+     * @param bool     $multiline
+     * @param string   $line
      * @param string[] $buffer
      *
      * @return array{bool,string,string[]}
@@ -70,8 +70,8 @@ final class Lines
 
             if (self::looksLikeMultilineStop($line, $startsOnCurrentLine)) {
                 $multiline = false;
-                $line      = \implode("\n", $buffer);
-                $buffer    = [];
+                $line = \implode("\n", $buffer);
+                $buffer = [];
             }
         }
 
@@ -96,7 +96,7 @@ final class Lines
      * Determine if the given line can be the start of a multiline variable.
      *
      * @param string $line
-     * @param bool $started
+     * @param bool   $started
      *
      * @return bool
      */
