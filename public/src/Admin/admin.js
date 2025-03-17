@@ -18,7 +18,7 @@ import "./Category/Category.js";
 import AdminHeader from "../components/header/header-adm.js";
 import Search from "../components/search/search.js";
 // import '../components/table/Table.js'
-import adminScroll from "../share/scroll/adminScroll.js";
+import adminScroll from "@components/scroll/adminScroll.js";
 import Navigation from "./components/Navigation.js";
 
 import Pages from "@src/Admin/Pages/pages.js";
@@ -79,7 +79,7 @@ $(document).ready(async function () {
   const cardPanel = document[qs](`.card-panel`);
   if (cardPanel) {
     const { default: Card_panel } = await import(
-      "./../share/card_panel/card_panel"
+      "@components/card_panel/card_panel"
     );
     new Card_panel();
   }

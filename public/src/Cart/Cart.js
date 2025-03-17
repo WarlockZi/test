@@ -1,7 +1,7 @@
 import "./counter1";
 import { $, formatter, getPhpSession, post } from "../common";
 import { ael, it, qa, qs } from "../constants";
-import shippableTable from "../share/shippable/shippableUnitsTable";
+import shippableTable from "@components/shippable/shippableUnitsTable";
 
 export default class Cart {
   constructor() {

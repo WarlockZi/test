@@ -54,7 +54,7 @@ export default class Product {
     const cardPanel = document[qs](`.cardPanel`);
     if (cardPanel) {
       const { default: cardPanel } = await import(
-        "./../../share/card_panel/card_panel"
+        "@components/card_panel/card_panel"
       );
       new cardPanel();
     }

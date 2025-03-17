@@ -272,7 +272,7 @@ class CategoryFormView
 //                ->relation('ownProperties')
 //                ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_path', $categoryProperty)
-                ->name('Path')
+                ->name('Seo путь')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .

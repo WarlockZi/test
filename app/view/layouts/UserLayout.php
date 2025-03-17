@@ -8,9 +8,8 @@ use app\core\Route;
 use app\Repository\CategoryRepository;
 use app\Services\AssetsService\Assets;
 use app\Services\AssetsService\UserAssets;
-use app\view\Footer\Footer;
-use app\view\Footer\UserFooter;
-use app\view\Header\UserHeader;
+use app\view\components\Footer\UserFooter;
+use app\view\components\Header\UserHeader;
 
 class UserLayout extends Layout
 {

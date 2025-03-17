@@ -11,7 +11,10 @@ function env($key)
 {
     return $_ENV[$key];
 }
-require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
+
+$path = ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
+require_once $path;
+
 \app\Services\DotEnv::load(ROOT . DIRECTORY_SEPARATOR . ".env");
 
 define('DEV', env("VITE_DEV"));

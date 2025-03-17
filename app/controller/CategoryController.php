@@ -4,7 +4,7 @@ namespace app\controller;
 
 use app\Repository\CategoryRepository;
 use app\Services\Breadcrumbs\BreadcrumbsService;
-use app\view\share\card_panel\CardPanel;
+use app\view\components\cardPanel\CardPanel;
 
 class CategoryController extends AppController
 {

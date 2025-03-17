@@ -45,6 +45,7 @@ export default defineConfig(async ({command, mode}) => {
                // __dirname + '/(app|config|views)/**/*.php',
                __dirname + '/public/**/*.php',
                __dirname + '/app/**/*.php',
+               __dirname + '/.env',
             ]),
          ],
 
@@ -62,6 +63,7 @@ export default defineConfig(async ({command, mode}) => {
          resolve: {
             alias: {
                '@src': `${path.resolve(__dirname, 'public', 'src')}`,
+               '@components': path.resolve(__dirname, 'public', 'src', 'components'),
             },
          },
 

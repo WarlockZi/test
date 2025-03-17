@@ -1,7 +1,7 @@
 <div class="filter">
     <div class="title"><?= $title ?? '' ?></div>
 
-    <? if (is_array($options)): ?>
+<!--    --><?// if (is_array($options)): ?>
         <select <?= $name ?? '' ?> select-new>
             <?= $emptyOption ?? '' ?>
             <? foreach ($options as $key => $value): ?>
@@ -15,9 +15,9 @@
 
         </select>
 
-    <? elseif (is_string($options)): ?>
-        <?= $options; ?>
-    <? endif; ?>
+<!--    --><?// elseif (is_string($options)): ?>
+<!--        --><?php //= $options; ?>
+<!--    --><?// endif; ?>
 
 
     <? include 'checkboxSave.php' ?>

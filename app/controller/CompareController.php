@@ -8,7 +8,7 @@ use app\core\Auth;
 use app\core\Response;
 use app\model\Compare;
 use app\Repository\CompareRepository;
-use app\view\CompareView\CompareView;
+use app\view\Compare\CompareView;
 
 
 class CompareController extends AppController

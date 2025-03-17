@@ -8,7 +8,7 @@ use app\core\FS;
 use app\core\Route;
 use app\Services\AssetsService\AdminAssets;
 use app\Services\AssetsService\Assets;
-use app\view\Header\Admin\AdminHeader;
+use app\view\components\Header\Admin\AdminHeader;
 use Exception;
 
 class AdminLayout extends Layout

@@ -20,6 +20,7 @@ try {
 //    $handler = new \app\Services\Chat_3\ServerHandler();
 //    $client = new \app\Services\Chat_3\Client();
 
+exit('true');
     $router = new Router($_SERVER['REQUEST_URI'] ?? '');
     $router->dispatch();
     exit();
