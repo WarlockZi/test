@@ -32,7 +32,6 @@
     </a>
 
 
-
     <?= ShippableUnitsTableFactory::create($product, 'category'); ?>
 
     <?= CardPanel::card_panel($product) ?>
