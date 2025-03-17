@@ -27,4 +27,3 @@ jobs:
           script: |
             cd ${{ secrets.SERVER_PATH }}
             git pull --all
-            npm run vbuild
