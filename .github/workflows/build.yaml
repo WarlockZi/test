@@ -26,5 +26,5 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd ${{ secrets.SERVER_PATH }}
-            npm run vbuild
             git pull --all
+            npm run vbuild
