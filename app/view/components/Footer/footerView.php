@@ -52,6 +52,23 @@
                 <li>
                     <a href="/main/news">Новости</a>
                 </li>
+
+                <li>
+                    <a href="/promotion">Акции</a>
+                </li>
+                <li>
+                    <a href="/main/about">О Компании</a>
+                </li>
+                <li>
+                    <a href="/main/statii">Статьи</a>
+                </li>
+                <li>
+                    <a href="/main/garantii">Гарантии</a>
+                </li>
+            </ul>
+        </div>
+        <div class="column flex-2">
+
             </ul>
         </div>
         <div class="column flex-2">
