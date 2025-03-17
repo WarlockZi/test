@@ -2,13 +2,51 @@
     "name": "vitex/test",
     "description": "sit",
     "type": "project",
-    "require": {
-    },
+
     "license": "MIT",
     "authors": [
         {
             "name": "Vitalik",
-            "email": "dd@dd.dd"
+            "email": "vvoronik@yandex.ru"
         }
-    ]
+    ],
+    
+  "autoload": {
+    "psr-4": {
+      "Dotenv\\": "vendor/vlucas/phpdotenv/src",
+      "app\\": "app"
+    }
+  },
+  "classmap": [
+    "vendor/vlucas/phpdotenv/src",
+    "app"
+  ],
+  "require": {
+    "ext-json": "*",
+    "ext-zip": "*",
+    "ext-simplexml": "*",
+    "phpmailer/phpmailer": "^6.4",
+    "vlucas/phpdotenv": "^5.3",
+    "illuminate/events": "^8.83",
+    "illuminate/database": "^8.83",
+    "ext-mysqli": "*",
+    "ext-pdo": "*",
+    "ext-curl": "*",
+    "ext-sockets": "*",
+    "shuchkin/simplexlsx": "^1.1",
+    "arthurkushman/php-wss": "^2.0",
+    "monolog/monolog": "^3.7",
+    "ext-memcached": "*",
+    "ext-xdebug": "*",
+    "ext-imap": "*",
+    "spatie/laravel-sitemap": "^6.4"
+  },
+  "config": {
+    "platform-check": false
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.4"
+  }
+
+
 }

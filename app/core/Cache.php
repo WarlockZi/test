@@ -10,8 +10,8 @@ class Cache
     public static int $timeLife1 = 1;
     public static int $timeLife10 = 10;
     public static int $timeLife100 = 100;
-    public static int $timeLife1_000 = 1_000;
-    public static int $timeLife10_000 = 10_000;
+    public static int $timeLife1_000 = 1000;
+    public static int $timeLife10_000 = 10000;
     private static $instance = null;
     private static string $path = ROOT . '/tmp/cache/';
 

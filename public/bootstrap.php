@@ -2,6 +2,7 @@
 
 use app\core\FS;
 use \app\core\Cache;
+use \app\Services\DotEnv;
 
 ini_set("short_open_tag", 1);
 ini_set('memory_limit', '256M');
@@ -15,7 +16,7 @@ function env($key)
 $path = ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
 require_once $path;
 
-// \app\Services\DotEnv::load(ROOT . DIRECTORY_SEPARATOR . ".env");
+DotEnv::load(ROOT . DIRECTORY_SEPARATOR . ".env");
 
 define('DEV', env("VITE_DEV"));
 
