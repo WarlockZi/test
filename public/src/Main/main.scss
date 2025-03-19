@@ -14,7 +14,7 @@
 @use "../components/breadcrumbs";
 @use "cart";
 
-
+//@import "@srvc";
 @keyframes blinking {
   50% {
     opacity: 0
@@ -185,18 +185,19 @@
     }
 
     &.gloves {
-      background: url(/pic/srvc/main/site-gloves.jpg) no-repeat center right;
+      background: url('/storage/app/srvc/main/site-gloves.jpg') no-repeat center right;
       background-size: cover;
     }
 
     &.boot-cover {
-      background: url(/pic/srvc/main/site-bootcover-824.jpg) no-repeat center left;
+      background: url('/storage/app/srvc/main/site-bootcover-824.jpg') no-repeat center left;
+      //background: url(/storage/app/srvc/main/site-bootcover-824.jpg) no-repeat center left;
       background-size: cover;
       align-items: flex-end;
     }
 
     &.endosirynge {
-      background: url(/pic/srvc/main/site-syringe-gradientt.jpg) no-repeat center right;
+      background: url('/storage/app/srvc/main/site-syringe-gradientt.jpg') no-repeat center right;
       background-size: cover;
     }
 

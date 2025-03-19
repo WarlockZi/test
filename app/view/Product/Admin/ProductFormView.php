@@ -333,7 +333,7 @@ class ProductFormView
 
     public static function mainImage(Product $p): string
     {
-        $dnd  = DndBuilder::make('product/uploads', 'add-file');
+        $dnd  = DndBuilder::make('product/Uploads', 'add-file');
         $src  = (new ProductImageService)->getRelativeImage($p);
         $name = $p->name;
         return "<div class='dnd-container'>{$dnd}<img src = '{$src}' title = '{$name}' alt = '{$name}'/></div>";

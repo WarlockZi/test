@@ -2,7 +2,7 @@
 .vscode/
 .git
 refs/
-
+phpstorm.config.js
 .env
 !/tmp/
 tmp/*
@@ -13,13 +13,17 @@ app/Storage/dev/*
 app/Storage/prod/*
 app/Storage/log/*
 app/Storage/import/*
+
+storage/*
+
 pic/product/*
 pic/category/*
 pic/video/*
+
 vite/*
 
 node_modules/
 
-vendor/*
 composer.phar
 composer.lock
+vendor/*

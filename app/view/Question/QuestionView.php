@@ -17,7 +17,7 @@ class QuestionView
     public static function getImg(Question $question): string
     {
         if ($question->picq) {
-            $src = ImageRepository::getImg('/pic/' . $question->picq);
+            $src = ImageRepository::getImg('/Pic/' . $question->picq);
             return "<div class='qpic'><img class='test-qpic' src='{$src}'</div>";
         }
         return '';

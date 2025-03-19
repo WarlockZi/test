@@ -10,8 +10,8 @@ class StorageImg extends Storage
 //  public function __construct()
 //  {
 //    parent::__construct();
-//    $this->relativePath = '/pic/';
-//    $this->path = ROOT.DIRECTORY_SEPARATOR.'pic'.DIRECTORY_SEPARATOR;
+//    $this->relativePath = '/Pic/';
+//    $this->path = ROOT.DIRECTORY_SEPARATOR.'Pic'.DIRECTORY_SEPARATOR;
 //    return $this;
 //  }
 

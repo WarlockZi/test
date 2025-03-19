@@ -21,9 +21,9 @@ abstract class AbstractProductImage
     {
         $this->product           = $product;
         $this->file              = $file;
-        $this->relativePath      = '/pic/product/uploads/';
-        $this->absolutePath      = FS::platformSlashes(ROOT . '/pic/product/uploads/');
-        $this->absoluteThumbPath = ROOT . '/pic/product/thumbs/';
+        $this->relativePath      = '/Pic/product/Uploads/';
+        $this->absolutePath      = FS::platformSlashes(ROOT . '/Pic/product/Uploads/');
+        $this->absoluteThumbPath = ROOT . '/Pic/product/thumbs/';
         $this->acceptedTypes     = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
         $this->types             = [
             "image/jpg" => "jpg",

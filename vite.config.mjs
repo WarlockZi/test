@@ -2,14 +2,15 @@ import {defineConfig, loadEnv} from 'vite';
 import liveReload from 'vite-plugin-live-reload';
 import mkcert from 'vite-plugin-mkcert';
 import path from 'node:path';
-import { NodePackageImporter } from 'sass-embedded';
+import {NodePackageImporter} from 'sass-embedded';
+import {fileURLToPath, URL} from 'node:url';
 
 export default defineConfig(async ({command, mode}) => {
       const env = loadEnv(mode, process.cwd());
       console.log('dev - ' + env.VITE_DEV);
 
       const base = env.VITE_DEV
-         ? ''
+         ? './'
          : './public/build/';
 
       return {
@@ -17,7 +18,7 @@ export default defineConfig(async ({command, mode}) => {
          base,
 
          server: {
-            https:true,
+            https: true,
             cors: true,
             strictPort: true,
             port: env.VITE_PORT,
@@ -40,6 +41,7 @@ export default defineConfig(async ({command, mode}) => {
             },
          },
          plugins: [
+
             mkcert(),
             liveReload([
                // __dirname + '/(app|config|views)/**/*.php',
@@ -61,10 +63,26 @@ export default defineConfig(async ({command, mode}) => {
          },
 
          resolve: {
-            alias: {
-               '@src': `${path.resolve(__dirname, 'public', 'src')}`,
-               '@components': path.resolve(__dirname, 'public', 'src', 'components'),
-            },
+            alias:
+               {
+            '@src': `${path.resolve(__dirname, 'public', 'src')}`,
+            '@components': path.resolve(__dirname, 'public', 'src', 'components'),
+            '@srvc': path.resolve(__dirname, 'storage', 'app', 'srvc'),
+            // '@fonts': path.resolve(__dirname, 'storage','app','Font'),
+            //    [
+            //       {
+            //          find: '@srvc',
+            //          replacement: fileURLToPath(new URL('./storage/app/srvc', import.meta.url)),
+            //       },
+            //       {
+            //          find: '@src',
+            //          replacement: fileURLToPath(new URL('./src', import.meta.url)),
+            //       },                  {
+            //       find: '@components',
+            //       replacement: fileURLToPath(new URL('./src/components', import.meta.url)),
+            //    },
+            //    ],
+         },
          },
 
          define: {

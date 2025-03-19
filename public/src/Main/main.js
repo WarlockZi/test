@@ -1,11 +1,12 @@
 import "./main.scss";
 import "../components/header/show-front-menu1.js";
 import "../404/404.scss";
-import "@components/hoist/hoist";
+import "@components/hoist/hoist.js";
 import "../components/animate/animate.js";
 import { qs } from "../constants";
 import scroll from "@components/scroll/scroll.js";
 import headerMenu from "../components/header/show-front-menu.js";
+
 // import '../share/chat/Chat';
 
 import Chat from "@components/chat/chat.js"; //не удалять - стили пропадут

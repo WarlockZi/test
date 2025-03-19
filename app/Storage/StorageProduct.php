@@ -12,8 +12,8 @@ class StorageProduct
     public function __construct()
     {
 //		parent::__construct();
-        $this->relativePath      = '/pic/';
-        $this->productImagesPath = 'product/uploads/';
+        $this->relativePath      = '/Pic/';
+        $this->productImagesPath = 'product/Uploads/';
     }
 
     public function getImagePath()

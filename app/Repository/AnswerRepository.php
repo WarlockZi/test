@@ -14,7 +14,7 @@ class AnswerRepository
     public static function getImg(Answer $answer): string
     {
         if ($answer->pica) {
-            $src = ImageRepository::getImg('/pic/' . $answer->pica);
+            $src = ImageRepository::getImg('/Pic/' . $answer->pica);
             return "<div class='apic'><img src='{$src}'></div>";
         }
         return '';
