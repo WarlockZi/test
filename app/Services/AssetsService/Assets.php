@@ -21,7 +21,7 @@ class Assets
 
     public function icon(): string
     {
-        $link = DEV ? PIC_SERVICE."logo-square-dev.svg" : "PIC_SERVICElogo-square.svg";
+        $link = DEV ? PIC_SERVICE."logo-square-dev.svg" : PIC_SERVICE."logo-square.svg";
         return "<link rel='icon' href='{$link}' type='image/svg+xml'>";
     }
 

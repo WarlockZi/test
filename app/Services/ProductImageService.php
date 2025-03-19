@@ -10,7 +10,7 @@ class ProductImageService
 {
     private string $relativePath = "/Pic/product/Uploads/";
     private string $absolutePath;
-    private string $relNoImage = "PIC_SERVICEnophoto-min.jpg";
+    private string $relNoImage = PIC_SERVICE."nophoto-min.jpg";
     private string $absNoImage;
     private string $art;
     private array $extensions = ['jpg', 'jpeg', 'png'];
