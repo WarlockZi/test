@@ -6,7 +6,6 @@ on:
       - "master"
       - "dev"
 
-
 jobs:
   deploy:
     name: deploy
@@ -27,3 +26,7 @@ jobs:
           script: |
             cd ${{ secrets.SERVER_PATH }}
             git pull --all
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          args: "--ignore-platform-reqs --optimize-autoloader"

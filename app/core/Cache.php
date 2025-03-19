@@ -2,6 +2,7 @@
 
 namespace app\core;
 
+use app\Exceptions\Cache\CacheError;
 use Illuminate\Database\Eloquent\Collection;
 
 class Cache
@@ -13,7 +14,7 @@ class Cache
     public static int $timeLife1_000 = 1000;
     public static int $timeLife10_000 = 10000;
     private static $instance = null;
-    private static string $path = ROOT . '/tmp/cache/';
+    private static string $path = ROOT . '/storage/framework/caches/';
 
     private function __construct()
     {
@@ -36,13 +37,15 @@ class Cache
 
     public static function set(string $key, callable $data, int $seconds = 6, string $path = ''): string|array|object|null
     {
+        $dir                 = FS::platformSlashes(self::mkdir_r("storage/framework/caches/$path"));
+        $file                = $dir . $key . '.txt';
+//        if (!is_readable($file)) throw new CacheError();
+
         if (is_callable($data)) {
             $unserialized    = $data();
             $content['data'] = $unserialized;
         }
         $content['end_time'] = time() + $seconds;
-        $dir                 = FS::platformSlashes(self::mkdir_r("tmp/cache/$path"));
-        $file                = $dir . $key . '.txt';
 
         $content = serialize($content);
         file_put_contents($file, $content);

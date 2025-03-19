@@ -1,3 +1,9 @@
+
+<?php
+    use \app\view\components\shippable\ShippableUnitsTableFactory;
+
+    use \app\view\components\cardPanel\CardPanel;
+?>
 <div
         class="column"
         data-instore="<?= $product->instore ?? 0; ?>"
@@ -26,9 +32,9 @@
     </a>
 
 
-    <?= \app\view\share\shippable\ShippableUnitsTableFactory::create($product, 'category'); ?>
+    <?= ShippableUnitsTableFactory::create($product, 'category'); ?>
 
-    <?= \app\view\share\card_panel\CardPanel::card_panel($product) ?>
+    <?= CardPanel::card_panel($product) ?>
 
     <? if (isset($txt)): ?>
         <div class="txt"><?= $txt ?? '' ?></div>

@@ -9,7 +9,7 @@ class Image extends Model
 {
 
     public $timestamps = true;
-    public $imagePath = 'pic';
+    public $imagePath = 'Pic';
 
     protected $fillable = [
         'hash',  // ds11f1789w7g9a7f89  255

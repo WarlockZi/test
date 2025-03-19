@@ -1,5 +1,5 @@
 <div class="wrap-404">
-    <!--	<img class="img404" src="/pic/srvc/404_.jpg" alt="404 not found">-->
+    <!--	<img class="img404" src="PIC_SERVICE404_.jpg" alt="404 not found">-->
     <div class="not-found">
 
         <div class="message">

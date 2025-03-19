@@ -4,8 +4,7 @@
 namespace app\Services\Logger;
 
 
-use app\core\Response;
-use app\Storage\StorageLog;
+use app\Services\Storage\StorageLog;
 
 class FileLogger implements ILogger
 {
