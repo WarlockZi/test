@@ -11,8 +11,8 @@ tmp/cache/*
 
 app/Storage/dev/*
 app/Storage/prod/*
-app/Storage/log/*
-app/Storage/import/*
+storage/app/log/*
+storage/app/import/*
 
 storage/*
 

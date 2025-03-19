@@ -23,7 +23,7 @@ class ZipController extends AppController
 
         $this->service
             ->files($files)
-            ->path('/app/Storage/import/')
+            ->path('/app/storage/import/')
             ->zipname('import.zip')
             ->createZip()
             ->download();

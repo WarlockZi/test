@@ -28,7 +28,7 @@ class ErrorLogger implements ILogger
 
     public function setFile(string $fileName): ILogger
     {
-        $this->logFile = FS::platformSlashes(ROOT . '/app/Storage/log/' . $fileName);
+        $this->logFile = FS::platformSlashes(ROOT . '/app/storage/logs/' . $fileName);
         return $this;
     }
 
