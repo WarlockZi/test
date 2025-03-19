@@ -7,6 +7,8 @@ RewriteBase /
 #ErrorDocument 403 /public/403.html
 #ErrorDocument 404 /public/404.html
 
+RewriteCond %{HTTP_HOST} ^www\.(.*) [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 RewriteCond %{REQUEST_URI} !robots.txt
 RewriteCond %{HTTPS} off
