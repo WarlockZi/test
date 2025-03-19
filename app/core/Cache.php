@@ -37,7 +37,7 @@ class Cache
 
     public static function set(string $key, callable $data, int $seconds = 6, string $path = ''): string|array|object|null
     {
-        $dir                 = FS::platformSlashes(self::mkdir_r("tmp/cache/$path"));
+        $dir                 = FS::platformSlashes(self::mkdir_r("storage/framework/caches/$path"));
         $file                = $dir . $key . '.txt';
         if (!is_readable($file)) throw new CacheError();
 
