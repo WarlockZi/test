@@ -8,9 +8,9 @@ use app\Services\ImageService\ImagickService;
 
 class ProductImageService
 {
-    private string $relativePath = "/Pic/product/Uploads/";
-    private string $absolutePath;
+    private string $relativePath = "/storage/app/pic/product/";
     private string $relNoImage = PIC_SERVICE."nophoto-min.jpg";
+    private string $absolutePath;
     private string $absNoImage;
     private string $art;
     private array $extensions = ['jpg', 'jpeg', 'png'];
