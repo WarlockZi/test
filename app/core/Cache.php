@@ -14,7 +14,7 @@ class Cache
     public static int $timeLife1_000 = 1_000;
     public static int $timeLife10_000 = 10_000;
     private static $instance = null;
-    private static string $path = ROOT . '/tmp/cache/';
+    private static string $path = ROOT . '/storage/framework/caches/';
 
     private function __construct()
     {
