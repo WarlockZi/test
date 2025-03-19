@@ -10,7 +10,7 @@ class ErrorLogger implements ILogger
 {
     protected string $logFile;
 
-    public function __construct($fileName = 'errors.txt')
+    public function __construct($fileName = 'errors/errors.txt')
     {
         $this->setFile($fileName);
     }
