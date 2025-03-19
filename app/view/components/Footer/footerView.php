@@ -182,8 +182,8 @@
             </div>
 
             <div class="pay-icons">
-                <img src="/pic/icons/mir.svg">
-                <img src="/pic/icons/sbp.svg">
+                <img src="../../../../storage/app/svg/mir.svg">
+                <img src="../../../../storage/app/svg/sbp.svg">
             </div>
         </div>
 
@@ -201,6 +201,23 @@
                 <li>
                     <a href="/main/news">Новости</a>
                 </li>
+
+                <li>
+                    <a href="/promotion">Акции</a>
+                </li>
+                <li>
+                    <a href="/main/about">О Компании</a>
+                </li>
+                <li>
+                    <a href="/main/statii">Статьи</a>
+                </li>
+                <li>
+                    <a href="/main/garantii">Гарантии</a>
+                </li>
+            </ul>
+        </div>
+        <div class="column flex-2">
+
             </ul>
         </div>
         <div class="column flex-2">
@@ -274,7 +291,7 @@
         <p>© <?php echo date('Y') ?> Витекс. Цены, указанные на сайте, не являются публичной офертой, определяемой
             положением Статьи 437 (2) ГК РФ и зависят от объема заказа. ИНН:352507425251</p>
         <!--        <div class="creator">VORONIKLAB-->
-        <!--            <img src="/pic/srvc/creator.jpg" class="creator-img">-->
+        <!--            <img src="PIC_SERVICEcreator.jpg" class="creator-img">-->
         <!--        </div>-->
     </div>
     <?php

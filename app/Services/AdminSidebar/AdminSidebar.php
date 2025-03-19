@@ -453,7 +453,7 @@ class AdminSidebar
                         "permissions" => [],
                     ],
                     [
-                        "name" => "1c Sync",
+                        "name" => "1c Sync1s",
                         "href" => "/adminsc/sync",
                         "class" => "neon",
                         "permissions" => [],

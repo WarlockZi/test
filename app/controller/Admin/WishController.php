@@ -2,8 +2,7 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\Storage\StorageProd;
+use app\Services\Storage\StorageProd;
 use Workerman\Protocols\Http;
 
 class WishController extends AdminscController

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ImageView
 {
-    public static $noPhotoRelative = '/pic/srvc/nophoto-min.jpg';
+    public static $noPhotoRelative = PIC_SERVICE . "/nophoto-min.jpg";
 
     public string $model = Image::class;
 

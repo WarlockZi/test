@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ImageRepository
 {
-    public static $picPath = '/pic/';
+    public static $picPath = '/Pic/';
     public static $size = 1000000;
     public static $model = Image::class;
 
@@ -162,7 +162,7 @@ class ImageRepository
 
     public static function getImgByHash(ColumnBuilder $list, Image $image, string $field)
     {
-        $picPath = "/pic/{$image['path']}/{$image['hash']}";
+        $picPath = "/Pic/{$image['path']}/{$image['hash']}";
         foreach (self::$acceptedTypes as $acceptedType) {
             $file = "{$picPath}.{$acceptedType}";
             if (is_readable(ROOT . $file)) {

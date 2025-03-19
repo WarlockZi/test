@@ -18,6 +18,9 @@ require_once $path;
 // \app\Services\DotEnv::load(ROOT . DIRECTORY_SEPARATOR . ".env");
 
 define('DEV', env("VITE_DEV"));
+define('PIC_SERVICE', env("PIC_SERVICE"));
+define('PIC_PRODUCT', env("PIC_PRODUCT"));
+define('PIC_SVG', env("PIC_SVG"));
 
 Cache::$enabled = env('CACHE');
 

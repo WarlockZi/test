@@ -56,7 +56,7 @@ class CrmController extends AdminscController
 
     public function actionPics(): void
     {
-        $pics = App::$app->adminsc->findAll('pic');
+        $pics = App::$app->adminsc->findAll('Pic');
         $this->setVars(compact('pics'));
     }
 

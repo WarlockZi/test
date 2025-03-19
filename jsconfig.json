@@ -3,7 +3,10 @@
     "baseUrl": "./",
     "paths": {
       "@fonts/*": [
-        "pic/fonts/*"
+        "storage/app/font/*"
+      ],
+      "@srvc/*": [
+        "storage/app/srvc/*"
       ],
       "@pic": [
         "pic"

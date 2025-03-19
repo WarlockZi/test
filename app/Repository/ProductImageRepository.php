@@ -4,7 +4,7 @@
 namespace app\Repository;
 
 
-use app\Storage\StorageProduct;
+use app\Services\Storage\StorageProduct;
 
 class ProductImageRepository
 {

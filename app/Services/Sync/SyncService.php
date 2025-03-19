@@ -5,7 +5,7 @@ namespace app\Services\Sync;
 use app\core\Response;
 use app\core\Route;
 use app\Services\Logger\FileLogger;
-use app\Storage\StorageImport;
+use app\Services\Storage\StorageImport;
 
 class SyncService
 {

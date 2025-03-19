@@ -16,7 +16,7 @@
 <!--			<div class="image">-->
 <!--				--><? //
 //				$ext = ImageRepository::getFileExt($img->type);
-//				$path = "/pic/product/{$img->hash}.{$ext}";
+//				$path = "/Pic/product/{$img->hash}.{$ext}";
 //				$src = ImageRepository::getImg($path);
 //				?>
 <!--				<img class="" src="--><? //= $src ?><!--" alt="">-->

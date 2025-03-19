@@ -10,7 +10,7 @@ class Openanswer extends Model
         'openquestion_id' => 0,
         'answer' => '',
         'is_correct' => '0',
-        'pic' => ''
+        'Pic' => ''
     ];
 
     public function openquestion()
