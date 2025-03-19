@@ -7,7 +7,7 @@ class Icon
 
     public static function __callStatic($name, $arguments): string
     {
-        $svgPath = 'storage/app/Svg';
+        $svgPath = 'storage/app/svg';
 
         $arg = count($arguments)
             ? $arguments[0] . DIRECTORY_SEPARATOR

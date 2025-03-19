@@ -33,8 +33,8 @@
             </div>
 
             <div class="pay-icons">
-                <img src="../../../../storage/app/Svg/mir.svg">
-                <img src="../../../../storage/app/Svg/sbp.svg">
+                <img src="../../../../storage/app/svg/mir.svg">
+                <img src="../../../../storage/app/svg/sbp.svg">
             </div>
         </div>
 
