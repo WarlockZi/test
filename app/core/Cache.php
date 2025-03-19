@@ -66,6 +66,7 @@ class Cache
             if ($part) {
                 $dir .= $slash . $part;
                 if (!is_dir($dir)) {
+                    echo $dir;
                     mkdir($dir, $rights);
                 }
             }
