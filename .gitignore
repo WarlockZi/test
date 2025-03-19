@@ -1,0 +1,14 @@
+.idea/
+.vscode/
+.git
+refs/
+.env
+
+storage/*
+
+vite/*
+node_modules/
+
+composer.phar
+composer.lock
+vendor/*
