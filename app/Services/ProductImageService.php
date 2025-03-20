@@ -44,6 +44,7 @@ class ProductImageService
         foreach ($this->extensions as $ext) {
             $relFile = $this->relativePath . $art . ".{$ext}";
             $file    = FS::platformSlashes(ROOT . $relFile);
+            echo "file - {$file} <br> relFile - {$relFile} <br>";
             if (file_exists($file)) {
                 return $relFile;
             }
