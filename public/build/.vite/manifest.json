@@ -1,6 +1,6 @@
 {
   "Admin/Category/Category.js": {
-    "file": "assets/Category-BX-ChPCZ.js",
+    "file": "assets/Category-CN_so8e8.js",
     "name": "Category",
     "src": "Admin/Category/Category.js",
     "isDynamicEntry": true,
@@ -15,7 +15,7 @@
     ]
   },
   "Admin/Order/order.js": {
-    "file": "assets/order-CMz1AWc5.js",
+    "file": "assets/order-Cpt7sdSo.js",
     "name": "order",
     "src": "Admin/Order/order.js",
     "isDynamicEntry": true,
@@ -26,7 +26,7 @@
       "_constants-D_Ps4z6O.js"
     ],
     "css": [
-      "assets/order-a0agzArA.css"
+      "assets/order-BY6eKoLG.css"
     ]
   },
   "Admin/Product/Fields.js": {
@@ -42,7 +42,7 @@
     ]
   },
   "Admin/Product/Product.js": {
-    "file": "assets/Product-Bpokqjk_.js",
+    "file": "assets/Product-BUtqyhZp.js",
     "name": "Product",
     "src": "Admin/Product/Product.js",
     "isDynamicEntry": true,
@@ -66,7 +66,7 @@
     ]
   },
   "Admin/Product/Props.js": {
-    "file": "assets/Props-Bq-mqxW6.js",
+    "file": "assets/Props-WmrlHDFm.js",
     "name": "Props",
     "src": "Admin/Product/Props.js",
     "isDynamicEntry": true,
@@ -82,7 +82,7 @@
     ]
   },
   "Admin/ProductFilter/ProductFilter.js": {
-    "file": "assets/ProductFilter-BePc7-iA.js",
+    "file": "assets/ProductFilter-DW0iktJ2.js",
     "name": "ProductFilter",
     "src": "Admin/ProductFilter/ProductFilter.js",
     "isDynamicEntry": true,
@@ -109,14 +109,14 @@
     ]
   },
   "Admin/Test/TestEdit/test-edit.js": {
-    "file": "assets/test-edit-DezzjUco.js",
+    "file": "assets/test-edit-WCse5LY8.js",
     "name": "test-edit",
     "src": "Admin/Test/TestEdit/test-edit.js",
     "isDynamicEntry": true,
     "imports": [
       "Admin/admin.js",
       "_common-DnUtA5kF.js",
-      "_index-DcO0JK5Z.js",
+      "_index-CiXf_8DY.js",
       "_constants-D_Ps4z6O.js",
       "_search-BDRlSmDO.js",
       "_MyQuill-BnALqy0A.js",
@@ -127,7 +127,7 @@
     ]
   },
   "Admin/admin.js": {
-    "file": "assets/admin-CMR3Tk1e.js",
+    "file": "assets/admin-Dj2iNH6n.js",
     "name": "admin",
     "src": "Admin/admin.js",
     "isEntry": true,
@@ -139,7 +139,7 @@
     ],
     "dynamicImports": [
       "components/table/Tables.js",
-      "_index-DcO0JK5Z.js",
+      "_index-CiXf_8DY.js",
       "Admin/chartjs/chartjs.js",
       "Admin/ProductFilter/ProductFilter.js",
       "Promotions/Promotion.js",
@@ -151,7 +151,7 @@
       "Admin/Category/Category.js"
     ],
     "css": [
-      "assets/admin-PTbVSuCk.css"
+      "assets/admin-DRmpSEau.css"
     ]
   },
   "Admin/chartjs/chartjs.js": {
@@ -179,7 +179,7 @@
     ]
   },
   "Auth/auth.js": {
-    "file": "assets/auth-DxpQGCZd.js",
+    "file": "assets/auth-Di_7K8yf.js",
     "name": "auth",
     "src": "Auth/auth.js",
     "isEntry": true,
@@ -192,7 +192,7 @@
       "components/Modal/modal.js"
     ],
     "css": [
-      "assets/auth-DMRiKA_E.css"
+      "assets/auth-CrE0RhwN.css"
     ]
   },
   "Auth/login.js": {
@@ -232,7 +232,7 @@
     ]
   },
   "Compare/Compare.js": {
-    "file": "assets/Compare-N2F1opsn.js",
+    "file": "assets/Compare-DWbCQKmb.js",
     "name": "Compare",
     "src": "Compare/Compare.js",
     "isDynamicEntry": true,
@@ -242,24 +242,24 @@
       "_search-BDRlSmDO.js"
     ],
     "css": [
-      "assets/Compare-Dot20Hvq.css"
+      "assets/Compare-BLJryx44.css"
     ]
   },
   "Like/Like.js": {
-    "file": "assets/Like-DiL0Eje8.js",
+    "file": "assets/Like-Wq4OQA6s.js",
     "name": "Like",
     "src": "Like/Like.js",
     "isDynamicEntry": true,
     "imports": [
       "_common-DnUtA5kF.js",
-      "_Table-d1P8M7-K.js",
+      "_Table-Ci4qV2Rd.js",
       "_constants-D_Ps4z6O.js",
       "_SelectNew-Ddq9kzI4.js",
       "_search-BDRlSmDO.js"
     ]
   },
   "Main/main.js": {
-    "file": "assets/main-BM-4s963.js",
+    "file": "assets/main-DHSFT-tz.js",
     "name": "main",
     "src": "Main/main.js",
     "isEntry": true,
@@ -283,11 +283,11 @@
       "Promotions/Promotion.js"
     ],
     "css": [
-      "assets/main-BzWsJQbb.css"
+      "assets/main-YEaW2SPZ.css"
     ]
   },
   "Product/Product.js": {
-    "file": "assets/Product-BXP8y6Hp.js",
+    "file": "assets/Product-BisoXXW-.js",
     "name": "Product",
     "src": "Product/Product.js",
     "isDynamicEntry": true,
@@ -300,7 +300,7 @@
       "_search-BDRlSmDO.js"
     ],
     "css": [
-      "assets/Product-Cs04jsrO.css"
+      "assets/Product-tch29QFY.css"
     ]
   },
   "Promotions/Promotion.js": {
@@ -351,12 +351,8 @@
       "_common-DnUtA5kF.js"
     ]
   },
-  "_Table-D1uFYMdJ.css": {
-    "file": "assets/Table-D1uFYMdJ.css",
-    "src": "_Table-D1uFYMdJ.css"
-  },
-  "_Table-d1P8M7-K.js": {
-    "file": "assets/Table-d1P8M7-K.js",
+  "_Table-Ci4qV2Rd.js": {
+    "file": "assets/Table-Ci4qV2Rd.js",
     "name": "Table",
     "imports": [
       "_common-DnUtA5kF.js",
@@ -364,8 +360,12 @@
       "_SelectNew-Ddq9kzI4.js"
     ],
     "css": [
-      "assets/Table-D1uFYMdJ.css"
+      "assets/Table-DVC5uO6I.css"
     ]
+  },
+  "_Table-DVC5uO6I.css": {
+    "file": "assets/Table-DVC5uO6I.css",
+    "src": "_Table-DVC5uO6I.css"
   },
   "_common-DnUtA5kF.js": {
     "file": "assets/common-DnUtA5kF.js",
@@ -394,8 +394,8 @@
     "file": "assets/index-ByH27O8_.css",
     "src": "_index-ByH27O8_.css"
   },
-  "_index-DcO0JK5Z.js": {
-    "file": "assets/index-DcO0JK5Z.js",
+  "_index-CiXf_8DY.js": {
+    "file": "assets/index-CiXf_8DY.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [
@@ -435,7 +435,7 @@
     ]
   },
   "components/Modal/modal.js": {
-    "file": "assets/modal-GfK2hrWP.js",
+    "file": "assets/modal-DPYp7qck.js",
     "name": "modal",
     "src": "components/Modal/modal.js",
     "isDynamicEntry": true,
@@ -444,7 +444,7 @@
       "_constants-D_Ps4z6O.js"
     ],
     "css": [
-      "assets/modal-CsdT2GQ5.css"
+      "assets/modal-CKZnJzOE.css"
     ]
   },
   "components/card_panel/card_panel.js": {
@@ -466,13 +466,13 @@
     "isDynamicEntry": true
   },
   "components/table/Tables.js": {
-    "file": "assets/Tables-BO3JhRyU.js",
+    "file": "assets/Tables-Bc8Qvdpb.js",
     "name": "Tables",
     "src": "components/table/Tables.js",
     "isDynamicEntry": true,
     "imports": [
       "_common-DnUtA5kF.js",
-      "_Table-d1P8M7-K.js",
+      "_Table-Ci4qV2Rd.js",
       "_constants-D_Ps4z6O.js",
       "_SelectNew-Ddq9kzI4.js",
       "_search-BDRlSmDO.js"

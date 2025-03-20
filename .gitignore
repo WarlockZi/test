@@ -2,26 +2,11 @@
 .vscode/
 .git
 refs/
-phpstorm.config.js
 .env
-!/tmp/
-tmp/*
-!/tmp/cache/
-tmp/cache/*
-
-app/Storage/dev/*
-app/Storage/prod/*
-storage/app/log/*
-storage/app/import/*
 
 storage/*
 
-pic/product/*
-pic/category/*
-pic/video/*
-
 vite/*
-
 node_modules/
 
 composer.phar
