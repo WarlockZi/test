@@ -1,13 +1,14 @@
 <?php
 
-use app\view\share\shippable\ShippableUnitsTableFactory;
+use \app\view\components\cardPanel\CardPanel;
+use \app\view\components\shippable\ShippableUnitsTableFactory;
 
 ?>
 
 <div class="product-info">
 
 
-    <?= \app\view\share\card_panel\CardPanel::card_panel($product) ?>
+    <?= CardPanel::card_panel($product) ?>
     <div class="art">Арт. <?= $product->art ?></div>
 
     <?php include __DIR__ . '/price.php' ?>

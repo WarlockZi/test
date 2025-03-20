@@ -292,12 +292,12 @@
       }
 
       &.plus {
-        background-image: url(/pic/icons/arrowUp.svg);
+        background-image: url(#{var.$svg_path}arrowUp.svg);
         transform: rotate(180deg);
       }
 
       &.minus {
-        background-image: url(/pic/icons/arrowUp.svg);
+        background-image: url(#{var.$svg_path}arrowUp.svg);
       }
     }
 

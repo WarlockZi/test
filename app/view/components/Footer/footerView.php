@@ -182,8 +182,8 @@
             </div>
 
             <div class="pay-icons">
-                <img src="../../../../storage/app/svg/mir.svg">
-                <img src="../../../../storage/app/svg/sbp.svg">
+                <img src="/storage/app/svg/mir.svg">
+                <img src="/storage/app/svg/sbp.svg">
             </div>
         </div>
 

@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ImageRepository
 {
-    public static $picPath = '/Pic/';
+    public static $picPath = '/storage/app/pic/';
     public static $size = 1000000;
     public static $model = Image::class;
 

@@ -164,7 +164,7 @@ $border-top: mixin_media.darker(var.$color-admin-sidebar, 5%) 1px solid;
         .arrow {
           width: 12px;
           height: 12px;
-          background: url(/pic/icons/arrowUp.svg) no-repeat 1px 0;
+          background: url(#{var.$svg_path}arrowUp.svg) no-repeat 1px 0;
           color: white;
           transform: rotate(-90deg);
           position: absolute;
