@@ -6,7 +6,7 @@ namespace app\Repository;
 
 use app\model\Category;
 use app\model\Product;
-use app\view\share\card_panel\CardPanel;
+use app\view\components\CardPanel\CardPanel;
 
 class BreadcrumbsRepository
 {

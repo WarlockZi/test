@@ -163,7 +163,7 @@
         width: 15px;
         height: 15px;
         right: 10px;
-        background: url(/pic/icons/upDown.svg) 0 0/15px 15px no-repeat;
+        background: url(#{var.$svg_path}upDown.svg) 0 0/15px 15px no-repeat;
       }
 
       input {
@@ -171,7 +171,7 @@
         position: relative;
         margin: 0;
         width: 1px;
-        background-image: url(/pic/icons/search.svg);
+        background-image: url(#{var.$svg_path}search.svg);
         background-repeat: no-repeat;
         background-position: 3px 3px, center;
         background-size: 12px;

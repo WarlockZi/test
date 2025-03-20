@@ -13,7 +13,7 @@
                         <a class="category-card-a" href="/catalog/<?= $category->slug; ?>">
                             <?= $category->name ?>
                         </a>
-                        <?= \app\view\share\card_panel\CardPanel::categoryCardPanel($category) ?>
+                        <?= \app\view\components\CardPanel\CardPanel::categoryCardPanel($category) ?>
                     </div>
 
                 <?php endif; ?>
