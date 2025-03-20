@@ -93,8 +93,8 @@ class User extends Model implements IUser
     function avatar(): string
     {
         return $this['sex'] === 'f'
-            ? ImageRepository::getImg(PIC_SERVICE."/main/ava_female.jpg")
-            : ImageRepository::getImg(PIC_SERVICE."/main/ava_male.png");
+            ? ImageRepository::getImg(PIC_SERVICE."main/ava_female.jpg")
+            : ImageRepository::getImg(PIC_SERVICE."main/ava_male.png");
     }
 
 
