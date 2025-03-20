@@ -11,7 +11,7 @@ class StorageImport extends Storage
     public function __construct()
     {
         parent::__construct();
-        $this->path = $this->storagePath . 'import' . DIRECTORY_SEPARATOR;
+        $this->path = $this->path . 'import' . DIRECTORY_SEPARATOR;
     }
 
     public function getStoragePath(): string

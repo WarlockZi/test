@@ -11,6 +11,6 @@ class StorageDev extends Storage
     public function __construct()
     {
         parent::__construct();
-        $this->path = $this->storagePath . 'dev' . DIRECTORY_SEPARATOR;
+        $this->path = $this->path . 'dev' . DIRECTORY_SEPARATOR;
     }
 }

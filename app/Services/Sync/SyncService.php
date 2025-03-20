@@ -19,7 +19,6 @@ class SyncService
         protected TrancateService $trancateService = new TrancateService,
     )
     {
-
         $this->importPath = $this->storage->getStoragePath();
         $this->importFile = $this->storage::getFile('import0_1.xml');
         $this->offerFile  = $this->storage::getFile('offers0_1.xml');
@@ -56,14 +55,19 @@ class SyncService
     protected function zip(): void
     {
         $this->log('init');
-        exit("zip=no\nfile_limit=10000000");
+        exit("zip=no\nfile_limit=10_000_000");
     }
 
     protected function file($filename): void
     {
-        file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
-        $this->log('file');
-        exit('success');
+        try {
+            file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
+            $this->log('file');
+            exit('success');
+        } catch (\Throwable $exception) {
+            $this->log('file load fail. '.$exception->getMessage());
+            exit('file load fail.');
+        }
     }
 
     private function importFilesExist(): bool
