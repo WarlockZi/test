@@ -10,7 +10,7 @@
     "app"
   ],
   "require": {
-
+    "ext-simplexml": "*",
     "phpmailer/phpmailer": "^6.4",
     "illuminate/events": "^8.83",
     "illuminate/database": "^8.83",
