@@ -126,7 +126,7 @@
                 </div>
 
                 <div class="input-container textarea">
-                    <textarea name="message" placeholder=" " id="message" rows="6" class="textarea"></textarea>
+                    <textarea name="message" placeholder=" " required="" id="message" rows="6" class="textarea"></textarea>
                     <div class="badge"></div>
                     <label for="message">Сообщение</label>
                     <div id="messageError"></div>
