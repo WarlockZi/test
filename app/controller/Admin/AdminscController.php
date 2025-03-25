@@ -16,8 +16,9 @@ class AdminscController extends AppController
         if ($user) {
             $this->checkPermition($user);
             parent::__construct();
-        }
+        }else{
             header("Location:/");
+        }
 //        return View::noPermition();
     }
 
