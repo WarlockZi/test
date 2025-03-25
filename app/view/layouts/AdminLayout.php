@@ -15,9 +15,9 @@ class AdminLayout extends Layout
 {
     protected string $view;
     protected FS $viewFs;
-    protected string $layout;
-    protected FS $layoutFs;
-    protected array $content;
+//    protected string $layout;
+//    protected FS $layoutFs;
+//    protected array $content;
 
     public function __construct(
         protected Route $route,
@@ -87,9 +87,9 @@ class AdminLayout extends Layout
         return (new AdminHeader(Auth::getUser()))->getHeader();
     }
 
-    public function render(): void
-    {
-        echo $this->layoutFs->getContent($this->layout, $this->content);
-    }
+//    public function render(): void
+//    {
+//        echo $this->layoutFs->getContent($this->layout, $this->content);
+//    }
 
 }

@@ -14,6 +14,9 @@ function env($key)
 require_once ROOT . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
 \app\Services\DotEnv::load(ROOT . DIRECTORY_SEPARATOR . ".env");
 
+
+//require_once './blade/blade.php';
+
 define('DEV', env("VITE_DEV"));
 define('PIC_SERVICE', env("PIC_SERVICE"));
 define('PIC_PRODUCT', env("PIC_PRODUCT"));

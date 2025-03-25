@@ -8,6 +8,7 @@ class TelegramBot
 {
     private string $TELEGRAM_VitexTestBot_TOKEN;
     private string $chat_id;
+    private string $chat_first_name;
 
     public function __construct(string $channel)
     {

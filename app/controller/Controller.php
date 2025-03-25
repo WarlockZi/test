@@ -24,6 +24,11 @@ class Controller
         }
     }
 
+    public function __destruct()
+    {
+        if (!empty($this->ajax)) exit;
+    }
+
     public function actionIndex(): void
     {
         $this->view = '404';

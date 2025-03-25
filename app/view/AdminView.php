@@ -16,17 +16,9 @@ class AdminView extends View
     public function __construct(Controller $controller)
     {
         parent::__construct($controller);
-//		new \app\view\Vite('main.js');
-
         $this->defaultView = "/default";
         $this->noViewError = "Файл вида не найден";
-//        $this->setHeader($this->user);
-//        $this->setFooter();
-//        if ($this->controller->getRoute()->action === 'test') {
-//            $this->setTestAssets();
-//        } else {
-//            $this->setAssets();
-//        }
+
     }
 
     public function setContent(Controller $controller): void

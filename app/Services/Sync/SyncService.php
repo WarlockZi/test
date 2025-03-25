@@ -58,7 +58,7 @@ class SyncService
         exit("zip=no\nfile_limit=10_000_000");
     }
 
-    protected function file($filename): void
+    protected function file(string $filename): void
     {
         try {
             file_put_contents($this->importPath . $filename, file_get_contents('php://input'));

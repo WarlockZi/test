@@ -72,10 +72,7 @@ class UserLayout extends Layout
     }
 
 
-    public function render(): void
-    {
-        echo $this->layoutFs->getContent($this->layout, $this->content);
-    }
+
 
 
 }

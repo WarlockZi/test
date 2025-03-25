@@ -44,30 +44,28 @@ class Router
 
     public function dispatch(): void
     {
-        Auth::authorize($this->route);
 
-        $controller = $this->route->getController();
         try {
+            Auth::authorize($this->route);
+            $controller = $this->route->getController();
+            if (!Permitions::isEmployeeOrAdmin($this->route)) {
+                header("Location:/");
+                exit();
+            }
             $controller = new $controller();
-        } catch (\Throwable $exception) {
-            $this->handleError($exception);
-            $controller = $this->route->getBaseController();
-            $controller = new $controller;
-        }
-        $controller->setRoute($this->route);
-
-        $action = $this->route->getAction();
-        try {
+            $controller->setRoute($this->route);
+            $action = $this->route->getAction();
             method_exists($controller, $action)
                 ? $controller->$action()
                 : $controller->actionNotFound();
-
         } catch (\Throwable $exception) {
+            $controller = $this->route->getBaseController();
             $this->handleError($exception);
+            $controller = new $controller;
         }
+
         $this->route->setView($this->route->getActionName());
-        $layout = $this->route->getLayout();
-        $layout = new $layout($this->route, $controller);
+        $layout = $this->route->getLayout($this->route, $controller);
         $layout->render();
     }
 

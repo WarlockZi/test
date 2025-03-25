@@ -16,7 +16,7 @@ class Storage
 
     public function __construct()
     {
-        $this->path        = FS::platformSlashes(ROOT . '/app/storage/app/');
+        $this->path = FS::platformSlashes(ROOT . '/storage/app/');
     }
 
     public static function getFile(string $file): string
