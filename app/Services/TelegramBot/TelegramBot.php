@@ -8,11 +8,12 @@ class TelegramBot
 {
     private string $TELEGRAM_VitexTestBot_TOKEN;
     private string $chat_id;
-    private string $chat_first_name;
+    private string $text;
 
     public function __construct(string $channel)
     {
         $this->setChanel($channel);
+        $this->setText($channel);
         $this->TELEGRAM_VitexTestBot_TOKEN = env('TELEGRAM_VitexTestBot_TOKEN');
     }
 
@@ -24,9 +25,16 @@ class TelegramBot
         } elseif ($channel === TGChannel::question->name) {
             $this->chat_id = '-100' . env('TELEGRAM_VITEX_SALES_CHANNAL_ID');
         }
-
     }
+    private function setText($channel): void
+    {
+        if ($channel === TGChannel::callme->name) {
+            $this->text = "text=Перезвоните мне ";
 
+        } elseif ($channel === TGChannel::question->name) {
+            $this->text = "text=Сообщение обратной связи от";
+        }
+    }
 
     public function send($text): void
     {
@@ -35,7 +43,7 @@ class TelegramBot
         $url    = "https://api.telegram.org/bot";
         $action = '/sendMessage?';
         $chatId = "chat_id={$this->chat_id}&";
-        $text   = "text=Перезвоните мне $text";
+        $text   = $this->text. $text;
 
         $string = "{$url}{$token}{$action}{$chatId}{$text}";
 
