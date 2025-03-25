@@ -11,6 +11,6 @@ class StorageXml extends Storage
     public function __construct()
     {
         parent::__construct();
-        $this->path = $this->path . 'xml' . DIRECTORY_SEPARATOR;
+        $this->path = $this->path . 'app/xml' . DIRECTORY_SEPARATOR;
     }
 }

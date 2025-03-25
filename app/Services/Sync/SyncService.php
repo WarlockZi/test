@@ -6,6 +6,7 @@ use app\core\Response;
 use app\core\Route;
 use app\Services\Logger\FileLogger;
 use app\Services\Storage\StorageImport;
+use JetBrains\PhpStorm\NoReturn;
 
 class SyncService
 {
@@ -46,7 +47,7 @@ class SyncService
         }
     }
 
-    protected function checkauth(): void
+    #[NoReturn] protected function checkauth(): void
     {
         $this->log('checkauth');
         exit("success\ninc\n777777\n55fdsa55");
@@ -65,7 +66,7 @@ class SyncService
             $this->log('file');
             exit('success');
         } catch (\Throwable $exception) {
-            $this->log('file load fail. '.$exception->getMessage());
+            $this->log('file load fail. ' . $exception->getMessage());
             exit('file load fail.');
         }
     }
@@ -105,13 +106,14 @@ class SyncService
     public function load(): void
     {
         try {
-            $this->importFilesExist();
+            if ($this->importFilesExist()) {
 //            $this->trancateService->softTrancate();
-            $this->LoadCategories();
-            $this->LoadProducts();
-            $this->LoadPrices();
-            $this->log('Load успех' . PHP_EOL);
-
+                $this->LoadCategories();
+                $this->LoadProducts();
+                $this->LoadPrices();
+                $this->log('Load успех' . PHP_EOL);
+            }
+            throw new \Exception('import file not found');
         } catch (\Throwable $e) {
             $this->logError("--- Ошибка load ", $e);
         }

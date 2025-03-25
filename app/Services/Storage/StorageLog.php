@@ -11,6 +11,6 @@ class StorageLog extends Storage
     public function __construct()
     {
         parent::__construct();
-        $this->path = $this->path . 'logs' . DIRECTORY_SEPARATOR;
+        $this->path = $this->path . 'logs' . DIRECTORY_SEPARATOR. 'import'.DIRECTORY_SEPARATOR;
     }
 }
