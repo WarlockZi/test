@@ -6,6 +6,7 @@ namespace app\core;
 
 use app\controller\Controller;
 use app\view\layouts\AdminLayout;
+use app\view\layouts\Layout;
 use app\view\layouts\UserLayout;
 
 class Route
@@ -19,7 +20,7 @@ class Route
 
     protected string $layout;
     protected string $view;
-    protected bool $admin;
+    protected bool $isAdmin;
 
     protected string $slug = '';
     protected string $id = "0";
@@ -37,7 +38,7 @@ class Route
     {
         $this->uri = $_SERVER['REQUEST_URI'];
         $this->setUrl();
-        $this->setAdmin();
+        $this->setIsAdmin();
         $this->setLayout();
         $this->setNamespace();
     }
@@ -146,21 +147,26 @@ class Route
         return $this->baseController;
     }
 
-    public function getLayout(): string
+    public function getLayout(Route $route, Controller $controller): Layout
     {
-        return Auth::userIsAdmin() || Auth::userIsEmployee() ? $this->layout : 'app\view\layouts\UserLayout';
+        $layout = $this->isAdmin
+            ? $this->layout
+            : 'app\view\layouts\UserLayout';
+        return new $layout($route, $controller);
     }
 
     public function setLayout(): void
     {
-        $this->layout = ($this->admin && Auth::getUser())
+        $this->layout = ($this->isAdmin && Auth::getUser())
             ? AdminLayout::class
             : UserLayout::class;
     }
 
     public function getController(): string
     {
-        return $this->controller ? $this->getNamespace() . $this->getControllerFullName() : Controller::class;
+        return $this->controller
+            ? $this->getNamespace() . $this->getControllerFullName()
+            : Controller::class;
     }
 
     public function setController(string $controller): void
@@ -170,7 +176,9 @@ class Route
 
     public function getNamespace(): string
     {
-        return $this->isAdmin() ? "{$this->namespace}" : $this->namespace;
+        return $this->isAdmin()
+            ? "{$this->namespace}"
+            : $this->namespace;
     }
 
     public function setNamespace(): void
@@ -184,12 +192,12 @@ class Route
 
     public function isAdmin(): bool
     {
-        return $this->admin;
+        return $this->isAdmin;
     }
 
-    public function setAdmin(): void
+    public function setIsAdmin(): void
     {
-        $this->admin = str_contains($this->uri, 'adminsc');
+        $this->isAdmin = str_contains($this->uri, 'adminsc');
     }
 
     public function getControllerFullName(): string

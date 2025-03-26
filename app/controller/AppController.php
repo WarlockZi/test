@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\controller;
 
@@ -91,11 +92,6 @@ class AppController extends Controller
             Response::json(['popup' => 'Обновлен', 'model' => $model->toArray()]);
         }
         Response::json(['error' => 'Ошибка']);
-    }
-
-    public function __destruct()
-    {
-        if (!empty($this->ajax)) exit;
     }
 
     public function actionDelete(): void

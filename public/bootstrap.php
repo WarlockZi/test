@@ -18,6 +18,9 @@ require_once $path;
 
 DotEnv::load(ROOT . DIRECTORY_SEPARATOR . ".env");
 
+
+//require_once './blade/blade.php';
+
 define('DEV', env("VITE_DEV"));
 define('PIC_SERVICE', env("PIC_SERVICE"));
 define('PIC_PRODUCT', env("PIC_PRODUCT"));

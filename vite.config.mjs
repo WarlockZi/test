@@ -3,7 +3,7 @@ import liveReload from 'vite-plugin-live-reload';
 import mkcert from 'vite-plugin-mkcert';
 import path from 'node:path';
 import {NodePackageImporter} from 'sass-embedded';
-import {fileURLToPath, URL} from 'node:url';
+import { fileURLToPath } from 'url';
 
 export default defineConfig(async ({command, mode}) => {
       const env = loadEnv(mode, process.cwd());
@@ -41,7 +41,6 @@ export default defineConfig(async ({command, mode}) => {
             },
          },
          plugins: [
-
             mkcert(),
             liveReload([
                // __dirname + '/(app|config|views)/**/*.php',
@@ -64,25 +63,24 @@ export default defineConfig(async ({command, mode}) => {
 
          resolve: {
             alias:
-               {
-            '@src': `${path.resolve(__dirname, 'public', 'src')}`,
-            '@components': path.resolve(__dirname, 'public', 'src', 'components'),
-            '@srvc': path.resolve(__dirname, 'storage', 'app', 'srvc'),
-            // '@fonts': path.resolve(__dirname, 'storage','app','Font'),
             //    [
-            //       {
-            //          find: '@srvc',
-            //          replacement: fileURLToPath(new URL('./storage/app/srvc', import.meta.url)),
-            //       },
-            //       {
-            //          find: '@src',
-            //          replacement: fileURLToPath(new URL('./src', import.meta.url)),
-            //       },                  {
-            //       find: '@components',
-            //       replacement: fileURLToPath(new URL('./src/components', import.meta.url)),
-            //    },
-            //    ],
-         },
+            //       { find: '@src', replacement: fileURLToPath(new URL('./public/src', import.meta.url)) },
+            //       { find: '@components', replacement: fileURLToPath(new URL('./public/src/components', import.meta.url)) },
+            // //    {
+            // //       find:'@src',
+            // //       // replace:path.resolve(__dirname, 'public','src'),
+            // //       replace:fileURLToPath(new URL( path.resolve(__dirname,'public/src', import.meta.url))),
+            // //    },
+            // //    {
+            // //       find:'@components',
+            // //       replace:fileURLToPath(new URL(  path.resolve(__dirname,'public/src/components', import.meta.url))),
+            // //    },
+            // ],
+               {
+                  '@src': `${path.resolve(__dirname, 'public', 'src')}`,
+                  '@components': `${path.resolve(__dirname, 'public', 'src', 'components')}`,
+                  '@srvc': path.resolve(__dirname, 'storage', 'app', 'srvc'),
+               },
          },
 
          define: {
